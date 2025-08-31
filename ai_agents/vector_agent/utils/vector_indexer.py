@@ -7,7 +7,7 @@ enterprise-grade storage, retrieval, and optimization capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Any attempt to steal the concept, idea, or code without explicit written authorization
@@ -399,6 +399,9 @@ class VectorIndexer:
     
     async def initialize(self) -> None:
         """Initialize vector indexer"""
+
+
+
         try:
             # Verify storage accessibility
             test_document = VectorDocument(
@@ -431,6 +434,9 @@ class VectorIndexer:
     
     async def add_document(self, document: VectorDocument) -> IndexingResult:
         """Add single document to index"""
+
+
+
         try:
             start_time = time.time()
             
@@ -469,6 +475,9 @@ class VectorIndexer:
     
     async def add_batch_documents(self, documents: List[VectorDocument]) -> List[IndexingResult]:
         """Add batch of documents to index"""
+
+
+
         try:
             start_time = time.time()
             batch_size = min(self.config.batch_size, len(documents))
@@ -520,6 +529,9 @@ class VectorIndexer:
     
     async def retrieve_document(self, document_id: str) -> Optional[VectorDocument]:
         """Retrieve document by ID"""
+
+
+
         try:
             document = await asyncio.get_event_loop().run_in_executor(
                 self.thread_pool,
@@ -538,6 +550,9 @@ class VectorIndexer:
     
     async def delete_document(self, document_id: str) -> bool:
         """Delete document from index"""
+
+
+
         try:
             success = await asyncio.get_event_loop().run_in_executor(
                 self.thread_pool,
@@ -559,6 +574,9 @@ class VectorIndexer:
     async def query_documents(self, content_type: Optional[str] = None, 
                             limit: int = 100, offset: int = 0) -> List[Dict[str, Any]]:
         """Query documents with filtering"""
+
+
+
         try:
             documents = await asyncio.get_event_loop().run_in_executor(
                 self.thread_pool,
@@ -576,6 +594,9 @@ class VectorIndexer:
     
     async def optimize_index(self, content_type: Optional[str] = None) -> Dict[str, Any]:
         """Optimize index for better performance"""
+
+
+
         try:
             start_time = time.time()
             
@@ -622,6 +643,9 @@ class VectorIndexer:
     
     async def store_processing_result(self, task_id: str, result: Dict[str, Any]):
         """Store processing result for task tracking"""
+
+
+
         try:
             # Convert to IndexingResult if needed
             if not isinstance(result, IndexingResult):
@@ -641,10 +665,16 @@ class VectorIndexer:
     
     async def get_processing_result(self, task_id: str) -> Optional[IndexingResult]:
         """Get processing result by task ID"""
+
+
+
         return self.processing_results.get(task_id)
     
     async def cleanup_old_documents(self, max_age_days: int = 90) -> Dict[str, Any]:
         """Cleanup old documents"""
+
+
+
         try:
             start_time = time.time()
             
@@ -668,6 +698,9 @@ class VectorIndexer:
     
     async def get_statistics(self) -> Dict[str, Any]:
         """Get comprehensive indexer statistics"""
+
+
+
         try:
             # Get storage statistics
             storage_stats = await asyncio.get_event_loop().run_in_executor(
@@ -689,10 +722,16 @@ class VectorIndexer:
     
     async def get_metrics(self) -> VectorMetrics:
         """Get current metrics"""
+
+
+
         return self.metrics
     
     def _validate_document(self, document: VectorDocument) -> bool:
         """Validate document before indexing"""
+
+
+
         try:
             # Check required fields
             if not document.document_id or not document.content_type:
@@ -718,6 +757,9 @@ class VectorIndexer:
     
     async def _defragment_storage(self) -> Dict[str, Any]:
         """Defragment storage to improve performance"""
+
+
+
         try:
             # Simulate defragmentation process
             await asyncio.sleep(0.1)
@@ -727,6 +769,9 @@ class VectorIndexer:
     
     async def _rebuild_indices(self) -> Dict[str, Any]:
         """Rebuild database indices"""
+
+
+
         try:
             # Simulate index rebuilding
             await asyncio.sleep(0.1)
@@ -736,6 +781,9 @@ class VectorIndexer:
     
     async def _cleanup_orphaned_files(self) -> Dict[str, Any]:
         """Cleanup orphaned vector files"""
+
+
+
         try:
             # Simulate cleanup
             await asyncio.sleep(0.05)
@@ -745,6 +793,9 @@ class VectorIndexer:
     
     async def _optimize_database(self) -> Dict[str, Any]:
         """Optimize database performance"""
+
+
+
         try:
             # Simulate database optimization
             await asyncio.sleep(0.1)
@@ -754,6 +805,9 @@ class VectorIndexer:
     
     async def _get_detailed_statistics(self) -> IndexStatistics:
         """Get detailed performance statistics"""
+
+
+
         return await asyncio.get_event_loop().run_in_executor(
             self.thread_pool,
             self.document_store.get_statistics
@@ -761,6 +815,9 @@ class VectorIndexer:
     
     async def shutdown(self):
         """Graceful shutdown of vector indexer"""
+
+
+
         try:
             # Complete pending operations
             if self.processing_results:

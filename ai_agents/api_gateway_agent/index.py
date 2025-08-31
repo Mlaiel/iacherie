@@ -7,7 +7,7 @@ health monitoring, and management utilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -55,6 +55,9 @@ class APIGatewayManager:
     
     async def initialize(self) -> bool:
         """Initialize all gateway components"""
+
+
+
         try:
             logger.info("Initializing API Gateway components...")
             
@@ -76,6 +79,9 @@ class APIGatewayManager:
     
     async def shutdown(self):
         """Gracefully shutdown API Gateway"""
+
+
+
         try:
             logger.info("Shutting down API Gateway...")
             
@@ -89,6 +95,9 @@ class APIGatewayManager:
     
     async def get_health_status(self) -> Dict[str, Any]:
         """Get comprehensive health status"""
+
+
+
         try:
             if not self.gateway_agent:
                 return {"status": "not_initialized", "components": {}}
@@ -181,6 +190,9 @@ class APIGatewayManager:
     
     async def _update_component_status(self):
         """Update component status tracking"""
+
+
+
         try:
             current_time = datetime.utcnow().isoformat()
             
@@ -202,10 +214,16 @@ class APIGatewayManager:
     
     def get_configuration(self) -> Dict[str, Any]:
         """Get current configuration"""
+
+
+
         return self.config.dict()
     
     async def update_configuration(self, config_updates: Dict[str, Any]) -> bool:
         """Update configuration dynamically"""
+
+
+
         try:
             # Update configuration
             for key, value in config_updates.items():
@@ -232,6 +250,9 @@ class APIGatewayManager:
     
     async def reload_services(self) -> bool:
         """Reload service configurations"""
+
+
+
         try:
             if not self.gateway_agent:
                 return False
@@ -256,6 +277,9 @@ class APIGatewayManager:
     
     def get_comprehensive_stats(self) -> Dict[str, Any]:
         """Get comprehensive API Gateway statistics"""
+
+
+
         try:
             stats = {
                 "timestamp": datetime.utcnow().isoformat(),
@@ -325,6 +349,9 @@ async def shutdown_api_gateway():
 
 def get_gateway_manager() -> Optional[APIGatewayManager]:
     """Get current gateway manager instance"""
+
+
+
     return gateway_manager
 
 

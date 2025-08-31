@@ -1,5 +1,5 @@
 """
-🌍 Policy Manager - Ultra-Professional DRM Policy Engine
+ Policy Manager - Ultra-Professional DRM Policy Engine
 ======================================================
 
 Advanced geographical, device, and temporal policy management system for
@@ -8,12 +8,12 @@ comprehensive digital rights enforcement and compliance.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL NOTICE:
+ CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing and usage rights.
 
-🎯 PROJECT TEAM SPECIALTIES:
+ PROJECT TEAM SPECIALTIES:
 - Lead AI Developer & Solution Architect: Advanced AI/ML systems and intelligent automation
 - Backend Senior Engineer: Enterprise-grade backend architecture and microservices  
 - ML Engineer: Machine learning models and predictive analytics
@@ -165,6 +165,9 @@ class PolicyManager:
         
     async def initialize(self) -> bool:
         """Initialize policy manager."""
+
+
+
         try:
             # Load default policies
             await self._load_default_policies()
@@ -216,6 +219,9 @@ class PolicyManager:
     
     async def _initialize_geoip(self) -> None:
         """Initialize GeoIP database."""
+
+
+
         try:
             self.geoip_reader = geoip2.database.Reader(self.geoip_db_path)
         except Exception as e:
@@ -622,6 +628,9 @@ class PolicyManager:
     
     async def _get_location_info(self, ip_address: str) -> Optional[Dict[str, Any]]:
         """Get location information for an IP address."""
+
+
+
         try:
             if not self.geoip_reader:
                 return None
@@ -647,6 +656,9 @@ class PolicyManager:
     
     async def _parse_device_info(self, user_agent: str) -> Dict[str, Any]:
         """Parse device information from user agent."""
+
+
+
         try:
             parsed = parse(user_agent)
             
@@ -682,6 +694,9 @@ class PolicyManager:
     
     def _compare_versions(self, version1: str, version2: str) -> int:
         """Compare two version strings. Returns -1, 0, or 1."""
+
+
+
         try:
             v1_parts = [int(x) for x in version1.split('.')]
             v2_parts = [int(x) for x in version2.split('.')]
@@ -757,6 +772,9 @@ class PolicyManager:
     
     async def create_policy(self, policy_type: str, policy_data: Dict[str, Any]) -> str:
         """Create a new policy."""
+
+
+
         try:
             policy_id = f"{policy_type}_{datetime.now().isoformat()}"
             
@@ -774,6 +792,9 @@ class PolicyManager:
     
     async def update_policy(self, policy_type: str, policy_id: str, policy_data: Dict[str, Any]) -> bool:
         """Update an existing policy."""
+
+
+
         try:
             if policy_type in self.policies and policy_id in self.policies[policy_type]:
                 self.policies[policy_type][policy_id].update(policy_data)
@@ -789,6 +810,9 @@ class PolicyManager:
     
     async def delete_policy(self, policy_type: str, policy_id: str) -> bool:
         """Delete a policy."""
+
+
+
         try:
             if policy_type in self.policies and policy_id in self.policies[policy_type]:
                 del self.policies[policy_type][policy_id]
@@ -828,6 +852,9 @@ class PolicyManager:
     
     async def get_policy_statistics(self) -> Dict[str, Any]:
         """Get policy enforcement statistics."""
+
+
+
         try:
             stats = {
                 "total_policies": sum(len(policies) for policies in self.policies.values()),
@@ -856,6 +883,9 @@ class PolicyManager:
 
     async def cleanup(self) -> None:
         """Cleanup resources."""
+
+
+
         try:
             if hasattr(self, 'geoip_reader') and self.geoip_reader:
                 self.geoip_reader.close()

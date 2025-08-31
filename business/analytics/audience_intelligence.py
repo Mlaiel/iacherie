@@ -94,6 +94,9 @@ class AudienceIntelligenceSystem:
         
     async def initialize(self) -> None:
         """Initialize audience intelligence system"""
+
+
+
         try:
             await self._setup_database_tables()
             await self._load_audience_models()
@@ -172,6 +175,9 @@ class AudienceIntelligenceSystem:
 
     async def analyze_audience_comprehensive(self, creator_id: str, platform: str) -> AudienceProfile:
         """Perform comprehensive audience analysis with AI-powered insights"""
+
+
+
         try:
             # Collect audience data from multiple sources
             demographic_data = await self._collect_demographic_data(creator_id, platform)
@@ -221,6 +227,9 @@ class AudienceIntelligenceSystem:
 
     async def _collect_demographic_data(self, creator_id: str, platform: str) -> Dict[str, Any]:
         """Collect demographic data from platform APIs and internal data"""
+
+
+
         try:
             # In full implementation, this would integrate with actual platform APIs
             # For now, return simulated realistic data
@@ -266,6 +275,9 @@ class AudienceIntelligenceSystem:
 
     async def _collect_behavioral_data(self, creator_id: str, platform: str) -> Dict[str, float]:
         """Collect behavioral metrics and patterns"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 # Get interaction patterns from stored data
@@ -305,6 +317,9 @@ class AudienceIntelligenceSystem:
 
     async def _collect_engagement_data(self, creator_id: str, platform: str) -> Dict[str, Any]:
         """Collect detailed engagement patterns and preferences"""
+
+
+
         try:
             return {
                 'peak_activity_hours': [9, 12, 15, 18, 20, 21],
@@ -343,6 +358,9 @@ class AudienceIntelligenceSystem:
 
     async def _perform_audience_segmentation(self, creator_id: str, demographic_data: Dict, behavioral_data: Dict) -> Dict[AudienceSegment, float]:
         """Perform AI-powered audience segmentation"""
+
+
+
         try:
             # Prepare features for clustering
             features = []
@@ -411,6 +429,9 @@ class AudienceIntelligenceSystem:
 
     async def _calculate_growth_metrics(self, creator_id: str, platform: str) -> Dict[str, float]:
         """Calculate audience growth and retention metrics"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 # Get historical follower counts
@@ -532,6 +553,9 @@ class AudienceIntelligenceSystem:
 
     async def _store_audience_profile(self, profile: AudienceProfile) -> None:
         """Store audience profile in database"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 await conn.execute("""
@@ -568,6 +592,9 @@ class AudienceIntelligenceSystem:
 
     async def generate_audience_insights(self, creator_id: str, platform: str) -> List[AudienceInsight]:
         """Generate comprehensive AI-powered audience insights with recommendations"""
+
+
+
         try:
             # Get latest audience profile
             profile = await self._get_latest_audience_profile(creator_id, platform)
@@ -605,6 +632,9 @@ class AudienceIntelligenceSystem:
 
     async def _get_latest_audience_profile(self, creator_id: str, platform: str) -> Optional[AudienceProfile]:
         """Get the most recent audience profile"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 record = await conn.fetchrow("""
@@ -637,6 +667,9 @@ class AudienceIntelligenceSystem:
 
     async def _generate_segment_insight(self, creator_id: str, segment: AudienceSegment, percentage: float, profile: AudienceProfile) -> Optional[AudienceInsight]:
         """Generate insights specific to audience segment"""
+
+
+
         try:
             insight_id = f"segment_{creator_id}_{segment.value}_{int(datetime.now().timestamp())}"
             
@@ -706,6 +739,9 @@ class AudienceIntelligenceSystem:
 
     async def _generate_demographic_insight(self, creator_id: str, profile: AudienceProfile) -> Optional[AudienceInsight]:
         """Generate demographic-based insights"""
+
+
+
         try:
             demographics = profile.demographics
             age_dist = demographics.get('age_distribution', {})
@@ -737,6 +773,9 @@ class AudienceIntelligenceSystem:
 
     async def _generate_growth_insight(self, creator_id: str, profile: AudienceProfile) -> Optional[AudienceInsight]:
         """Generate growth-related insights"""
+
+
+
         try:
             growth_metrics = profile.growth_metrics
             growth_rate = growth_metrics.get('follower_growth_rate', 0)
@@ -777,6 +816,9 @@ class AudienceIntelligenceSystem:
 
     async def _store_audience_insight(self, insight: AudienceInsight) -> None:
         """Store audience insight in database"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 await conn.execute("""
@@ -802,6 +844,9 @@ class AudienceIntelligenceSystem:
 
     async def get_audience_dashboard_data(self, creator_id: str, platform: str) -> Dict[str, Any]:
         """Get comprehensive audience data for dashboard"""
+
+
+
         try:
             profile = await self._get_latest_audience_profile(creator_id, platform)
             if not profile:

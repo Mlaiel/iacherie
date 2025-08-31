@@ -133,6 +133,9 @@ class PerformanceTracker:
     
     def _collect_system_metrics(self):
         """Collect system performance metrics."""
+
+
+
         try:
             # CPU and Memory usage
             process = psutil.Process()
@@ -153,6 +156,9 @@ class PerformanceTracker:
                       success: bool = True,
                       error_type: Optional[str] = None):
         """Record a request for performance tracking."""
+
+
+
         try:
             end_time = time.time()
             response_time_ms = (end_time - start_time) * 1000
@@ -195,6 +201,9 @@ class PerformanceTracker:
     
     def _calculate_derived_metrics(self):
         """Calculate derived performance metrics."""
+
+
+
         try:
             # Throughput (requests per second)
             if self.request_times:
@@ -226,6 +235,9 @@ class PerformanceTracker:
     
     def _calculate_quality_score(self) -> float:
         """Calculate composite quality score."""
+
+
+
         try:
             # Weighted combination of different metrics
             accuracy_weight = 0.3
@@ -263,6 +275,9 @@ class PerformanceTracker:
     
     def _update_aggregated_metrics(self):
         """Update aggregated metrics over time periods."""
+
+
+
         try:
             current_time = datetime.now()
             
@@ -301,6 +316,9 @@ class PerformanceTracker:
     
     def _check_alerts(self):
         """Check performance alerts."""
+
+
+
         try:
             for alert in self.alerts:
                 if not alert.enabled:
@@ -326,6 +344,9 @@ class PerformanceTracker:
     
     def _get_metric_value(self, metric_type: MetricType) -> Optional[float]:
         """Get current value for a metric type."""
+
+
+
         try:
             if metric_type == MetricType.LATENCY:
                 return self.current_metrics.latency_ms
@@ -349,6 +370,9 @@ class PerformanceTracker:
     
     def _trigger_alert(self, alert: PerformanceAlert, current_value: float):
         """Trigger performance alert."""
+
+
+
         try:
             alert_data = {
                 'agent_id': self.agent_id,
@@ -372,18 +396,30 @@ class PerformanceTracker:
     
     def get_current_metrics(self) -> AgentMetrics:
         """Get current performance metrics."""
+
+
+
         return self.current_metrics
     
     def get_metrics_history(self, limit: int = 100) -> List[AgentMetrics]:
         """Get metrics history."""
+
+
+
         return list(self.metrics_history)[-limit:]
     
     def get_aggregated_metrics(self) -> Dict[str, Any]:
         """Get aggregated metrics."""
+
+
+
         return self.aggregated_metrics
     
     def export_metrics(self) -> Dict[str, Any]:
         """Export all metrics for analysis."""
+
+
+
         return {
             'agent_id': self.agent_id,
             'current_metrics': {
@@ -431,6 +467,9 @@ class OptimizationEngine:
     
     def analyze_performance(self) -> Dict[str, Any]:
         """Analyze current performance and suggest optimizations."""
+
+
+
         try:
             current_metrics = self.performance_tracker.get_current_metrics()
             aggregated_metrics = self.performance_tracker.get_aggregated_metrics()
@@ -467,6 +506,9 @@ class OptimizationEngine:
     
     def optimize(self, strategy: str, parameters: Dict[str, Any] = None) -> bool:
         """Apply optimization strategy."""
+
+
+
         try:
             if strategy not in self.optimization_strategies:
                 logger.error(f"Unknown optimization strategy: {strategy}")
@@ -495,6 +537,9 @@ class OptimizationEngine:
     
     def _reduce_latency_strategy(self, parameters: Dict) -> bool:
         """Strategy to reduce response latency using advanced optimization techniques."""
+
+
+
         try:
             logger.info("Applying comprehensive latency reduction optimizations")
             
@@ -526,6 +571,9 @@ class OptimizationEngine:
     
     def _improve_throughput_strategy(self, parameters: Dict) -> bool:
         """Strategy to improve throughput using parallel processing and optimization."""
+
+
+
         try:
             logger.info("Applying comprehensive throughput improvement optimizations")
             
@@ -558,6 +606,9 @@ class OptimizationEngine:
     
     def _reduce_memory_strategy(self, parameters: Dict) -> bool:
         """Strategy to reduce memory usage using advanced memory management."""
+
+
+
         try:
             logger.info("Applying comprehensive memory reduction optimizations")
             
@@ -660,6 +711,9 @@ class OptimizationEngine:
     
     def get_optimization_history(self) -> List[Dict]:
         """Get optimization history."""
+
+
+
         return self.optimization_history
     
     def register_strategy(self, name: str, strategy_func: Callable):

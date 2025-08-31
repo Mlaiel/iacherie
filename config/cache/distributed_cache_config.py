@@ -250,10 +250,16 @@ class DistributedCacheConfig(BaseModel):
     
     def get_healthy_nodes(self) -> List[CacheNode]:
         """Get list of healthy nodes"""
+
+
+
         return [node for node in self.nodes.values() if node.is_healthy]
     
     def get_nodes_by_region(self, region_name: str) -> List[CacheNode]:
         """Get nodes in specific region"""
+
+
+
         return [node for node in self.nodes.values() if node.region == region_name]
     
     def calculate_consistent_hash(self, key: str) -> List[CacheNode]:

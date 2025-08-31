@@ -163,6 +163,9 @@ async def create_license_agreement(
     user: dict = Depends(get_current_user)
 ):
     """Create a new licensing agreement"""
+
+
+
     try:
         # Verify content ownership
         async with database_manager.get_postgres_session() as session:
@@ -243,6 +246,9 @@ async def get_license_agreements(
     user: dict = Depends(get_current_user)
 ):
     """Get user's license agreements"""
+
+
+
     try:
         query = """
             SELECT la.license_id, la.content_id, la.licensee_name, la.licensee_email,
@@ -305,6 +311,9 @@ async def create_license_template(
     user: dict = Depends(get_current_user)
 ):
     """Create a license template"""
+
+
+
     try:
         # Create license template
         async with database_manager.get_postgres_session() as session:
@@ -345,6 +354,9 @@ async def record_royalty_payment(
     user: dict = Depends(get_current_user)
 ):
     """Record a royalty payment"""
+
+
+
     try:
         # Verify license ownership
         async with database_manager.get_postgres_session() as session:
@@ -412,6 +424,9 @@ async def track_usage(
     user: dict = Depends(get_current_user)
 ):
     """Track content usage for licensing"""
+
+
+
     try:
         # Verify license exists and is active
         async with database_manager.get_postgres_session() as session:
@@ -465,6 +480,9 @@ async def generate_license_report(
     user: dict = Depends(get_current_user)
 ):
     """Generate license usage and compliance report"""
+
+
+
     try:
         # Verify license ownership
         async with database_manager.get_postgres_session() as session:
@@ -580,6 +598,9 @@ async def update_license_status(
     user: dict = Depends(get_current_user)
 ):
     """Update license agreement status"""
+
+
+
     try:
         async with database_manager.get_postgres_session() as session:
             # Verify ownership
@@ -643,6 +664,9 @@ async def get_licensing_dashboard(
     user: dict = Depends(get_current_user)
 ):
     """Get licensing analytics dashboard"""
+
+
+
     try:
         start_date = datetime.utcnow() - timedelta(days=days)
         
@@ -730,6 +754,9 @@ async def delete_license_agreement(
     user: dict = Depends(get_current_user)
 ):
     """Delete a license agreement (only if draft status)"""
+
+
+
     try:
         async with database_manager.get_postgres_session() as session:
             # Check status
@@ -787,6 +814,9 @@ def _validate_status_transition(current_status: str, new_status: str) -> bool:
 # Background task functions
 async def _generate_license_contract(license_id: str, agreement: LicenseAgreement, user: dict):
     """Generate license contract document"""
+
+
+
     try:
         # Generate contract using licensing engine
         contract_data = await licensing_engine.generate_contract(agreement, user)

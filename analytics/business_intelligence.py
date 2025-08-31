@@ -146,6 +146,9 @@ class ContentPerformanceAnalyzer:
         time_range: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
         """Analyze content performance across multiple dimensions"""
+
+
+
         try:
             if not content_data:
                 return {"error": "No content data provided"}
@@ -179,6 +182,9 @@ class ContentPerformanceAnalyzer:
     
     async def _calculate_performance_metrics(self, df: pd.DataFrame) -> Dict[str, Any]:
         """Calculate aggregate performance metrics"""
+
+
+
         return {
             "total_content": len(df),
             "total_views": df.get("views", pd.Series([0])).sum(),
@@ -217,6 +223,9 @@ class ContentPerformanceAnalyzer:
         time_range: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
         """Analyze performance trends over time"""
+
+
+
         try:
             if 'timestamp' not in df.columns:
                 return {"error": "No timestamp data available"}
@@ -255,6 +264,9 @@ class ContentPerformanceAnalyzer:
     
     def _calculate_growth_rate(self, df: pd.DataFrame, metric: str) -> float:
         """Calculate growth rate for a metric"""
+
+
+
         try:
             if metric not in df.columns or len(df) < 2:
                 return 0.0
@@ -273,6 +285,9 @@ class ContentPerformanceAnalyzer:
     
     def _determine_trend_direction(self, df: pd.DataFrame) -> str:
         """Determine overall trend direction"""
+
+
+
         try:
             if 'engagement_rate' not in df.columns:
                 return "unknown"
@@ -336,6 +351,9 @@ class ContentPerformanceAnalyzer:
         content_features: Dict[str, Any]
     ) -> Dict[str, float]:
         """Predict content performance using ML models"""
+
+
+
         try:
             # Prepare features for prediction
             features = self._prepare_features_for_prediction(content_features)
@@ -397,6 +415,9 @@ class UserBehaviorAnalyzer:
         time_range: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
         """Comprehensive user behavior analysis"""
+
+
+
         try:
             if not user_data:
                 return {"error": "No user data provided"}
@@ -433,6 +454,9 @@ class UserBehaviorAnalyzer:
     
     async def _calculate_engagement_metrics(self, df: pd.DataFrame) -> Dict[str, Any]:
         """Calculate user engagement metrics"""
+
+
+
         return {
             "total_users": len(df),
             "active_users": len(df[df.get("session_duration", 0) > 0]),
@@ -450,6 +474,9 @@ class UserBehaviorAnalyzer:
     
     async def _segment_users(self, df: pd.DataFrame) -> Dict[str, Any]:
         """Segment users based on behavior patterns"""
+
+
+
         try:
             if len(df) < 10:  # Need minimum data for clustering
                 return {"error": "Insufficient data for segmentation"}
@@ -550,6 +577,9 @@ class UserBehaviorAnalyzer:
     
     async def _analyze_churn_risk(self, df: pd.DataFrame) -> Dict[str, Any]:
         """Analyze user churn risk"""
+
+
+
         try:
             # Calculate churn indicators
             churn_indicators = {}
@@ -673,6 +703,9 @@ class PredictiveAnalyticsEngine:
         horizon: timedelta
     ) -> Optional[PredictiveInsight]:
         """Predict future revenue trends"""
+
+
+
         try:
             if 'revenue' not in df.columns or 'timestamp' not in df.columns:
                 return None
@@ -728,6 +761,9 @@ class PredictiveAnalyticsEngine:
         horizon: timedelta
     ) -> Optional[PredictiveInsight]:
         """Predict user growth patterns"""
+
+
+
         try:
             if 'user_id' not in df.columns or 'timestamp' not in df.columns:
                 return None
@@ -778,6 +814,9 @@ class PredictiveAnalyticsEngine:
         horizon: timedelta
     ) -> Optional[PredictiveInsight]:
         """Predict content performance trends"""
+
+
+
         try:
             if 'content_type' not in df.columns or 'engagement_rate' not in df.columns:
                 return None
@@ -897,6 +936,9 @@ class BusinessIntelligenceManager:
         include_predictions: bool = True
     ) -> Dict[str, Any]:
         """Generate comprehensive business intelligence report"""
+
+
+
         try:
             report = {
                 "report_id": f"bi_report_{datetime.utcnow().timestamp()}",
@@ -1003,6 +1045,9 @@ class BusinessIntelligenceManager:
     
     async def get_real_time_dashboard(self) -> Dict[str, Any]:
         """Get real-time dashboard data"""
+
+
+
         return {
             "last_updated": datetime.utcnow().isoformat(),
             "system_metrics": self.metrics,

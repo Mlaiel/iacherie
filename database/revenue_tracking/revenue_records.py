@@ -184,6 +184,9 @@ class RevenueRecordManager:
         Returns:
             RevenueRecord: Enregistrement créé
         """
+
+
+
         try:
             # Calcul du montant net après frais plateforme
             platform_fee = Decimal("0")
@@ -254,6 +257,9 @@ class RevenueRecordManager:
         Returns:
             RevenueRecord: Enregistrement mis à jour
         """
+
+
+
         try:
             async with self.db.get_session() as session:
                 record = await session.query(RevenueRecord).filter(
@@ -310,6 +316,9 @@ class RevenueRecordManager:
         Returns:
             Dict: Résumé des revenus
         """
+
+
+
         try:
             if not start_date:
                 start_date = datetime.utcnow() - timedelta(days=30)
@@ -416,6 +425,9 @@ class RevenueRecordManager:
         Returns:
             Dict: Résultats du traitement en lot
         """
+
+
+
         try:
             results = {
                 "success_count": 0,

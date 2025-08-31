@@ -58,12 +58,15 @@ try:
     _imports_successful = True
     
 except ImportError as e:
-    print(f"⚠️ Import warning: {e}")
+    print(f" Import warning: {e}")
     print("Running in demo mode without full module imports...")
     _imports_successful = False
 
 def get_ai_system_info():
     """Get comprehensive information about the AI system."""
+
+
+
     return {
         "system_name": "IA Influencer Agent AI Module",
         "version": "1.0.0",
@@ -94,32 +97,32 @@ def demo_ai_processing():
     """Demonstrate AI processing capabilities."""
     info = get_ai_system_info()
     
-    print("🚀 IA Influencer Agent AI System")
+    print(" IA Influencer Agent AI System")
     print("=" * 50)
-    print(f"📧 Developer: {info['author']} ({info['email']})")
-    print(f"📄 Version: {info['version']}")
+    print(f" Developer: {info['author']} ({info['email']})")
+    print(f" Version: {info['version']}")
     print()
     
-    print("🎯 AI Capabilities:")
+    print(" AI Capabilities:")
     for capability in info['capabilities']:
-        print(f"  ✅ {capability}")
+        print(f"   {capability}")
     print()
     
-    print("📁 Supported Formats:")
+    print(" Supported Formats:")
     for format_type in info['supported_formats']:
-        print(f"  🎵 {format_type}")
+        print(f"   {format_type}")
     print()
     
-    print("🌐 Distribution Platforms:")
+    print(" Distribution Platforms:")
     for platform in info['platforms']:
-        print(f"  📡 {platform}")
+        print(f"   {platform}")
     print()
     
-    print("🔄 Business Logic Flow:")
+    print(" Business Logic Flow:")
     print(f"  {info['business_logic']}")
     print()
     
-    print("⚠️ Legal Notice:")
+    print(" Legal Notice:")
     print("  This system is protected by copyright.")
     print("  Unauthorized use is strictly prohibited.")
     print("  © 2025 Fahed Mlaiel. All rights reserved.")

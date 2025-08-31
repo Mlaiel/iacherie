@@ -8,13 +8,13 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Security Expert, Anti-Piracy Specialist, Content Protection Engineer, AI Security Expert
 Copyright: Fahed Mlaiel - All rights reserved
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
 
-🎯 LOGIQUE MÉTIER INTÉGRÉE :
+ LOGIQUE MÉTIER INTÉGRÉE :
 - Protection automatique dès l'upload
 - Fingerprinting AI multi-format avancé  
 - Surveillance web temps réel
@@ -297,6 +297,9 @@ class DuplicateContentScanner(ContentScanner):
     
     async def _extract_url_fingerprint(self, url: str) -> Optional[Dict[str, Any]]:
         """Extract fingerprint from content at URL"""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url, timeout=30) as response:
@@ -322,6 +325,9 @@ class DuplicateContentScanner(ContentScanner):
         fp2: Dict[str, Any]
     ) -> float:
         """Compare two fingerprints and return similarity score"""
+
+
+
         try:
             # Simple hash comparison (would be more sophisticated in reality)
             if fp1.get('content_hash') == fp2.get('content_hash'):
@@ -446,6 +452,9 @@ class ContentProtectionEngine:
     
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default configuration for protection engine"""
+
+
+
         return {
             "monitoring_enabled": True,
             "real_time_scanning": True,
@@ -524,6 +533,9 @@ class ContentProtectionEngine:
         Returns:
             Protection results and recommendations
         """
+
+
+
         try:
             self.logger.info(f"Starting content protection for: {content_data.get('content_id')}")
             
@@ -607,6 +619,9 @@ class ContentProtectionEngine:
         policy: ProtectionPolicy
     ) -> Optional[MonitoringTarget]:
         """Set up continuous monitoring for content"""
+
+
+
         try:
             fingerprint = content_data.get('fingerprint')
             if not fingerprint:
@@ -846,6 +861,9 @@ class ContentProtectionEngine:
     
     def _violation_to_dict(self, violation: ContentViolation) -> Dict[str, Any]:
         """Convert violation object to dictionary"""
+
+
+
         return {
             'violation_id': violation.violation_id,
             'content_id': violation.content_id,
@@ -869,6 +887,9 @@ class ContentProtectionEngine:
         reviewer_notes: Optional[str] = None
     ) -> bool:
         """Resolve a content violation"""
+
+
+
         try:
             if violation_id not in self.violations:
                 raise ValueError(f"Violation not found: {violation_id}")
@@ -891,6 +912,9 @@ class ContentProtectionEngine:
     
     async def mark_false_positive(self, violation_id: str, reviewer_notes: Optional[str] = None) -> bool:
         """Mark a violation as false positive"""
+
+
+
         try:
             if violation_id not in self.violations:
                 raise ValueError(f"Violation not found: {violation_id}")
@@ -965,6 +989,9 @@ class ContentProtectionEngine:
     
     async def create_protection_policy(self, policy_data: Dict[str, Any]) -> str:
         """Create a new protection policy"""
+
+
+
         try:
             policy = ProtectionPolicy(
                 policy_id=policy_data.get('policy_id', str(uuid.uuid4())),
@@ -989,6 +1016,9 @@ class ContentProtectionEngine:
     
     def get_protection_policies(self) -> Dict[str, Dict[str, Any]]:
         """Get all protection policies"""
+
+
+
         return {
             policy_id: {
                 'name': policy.name,

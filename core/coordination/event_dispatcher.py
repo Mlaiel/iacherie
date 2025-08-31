@@ -7,12 +7,12 @@ routing, and coordination for the IA-Influencer-Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This event dispatching system is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization.
 
-🎯 BUSINESS LOGIC:
+ BUSINESS LOGIC:
 Event Generation → Routing → Filtering → Processing → Distribution → Acknowledgment
 """
 
@@ -243,6 +243,9 @@ class EventDispatcher:
     
     def subscribe(self, subscription: EventSubscription) -> bool:
         """Register a new event subscription"""
+
+
+
         try:
             # Validate subscription
             if not self._validate_subscription(subscription):
@@ -266,6 +269,9 @@ class EventDispatcher:
     
     def _validate_subscription(self, subscription: EventSubscription) -> bool:
         """Validate event subscription configuration"""
+
+
+
         try:
             # Required fields
             if not all([subscription.subscription_id, subscription.subscriber_id, subscription.callback]):
@@ -317,6 +323,9 @@ class EventDispatcher:
         expires_in_seconds: int = None
     ) -> str:
         """Publish an event to the system"""
+
+
+
         try:
             event_id = str(uuid.uuid4())
             
@@ -363,6 +372,9 @@ class EventDispatcher:
     
     async def _queue_event(self, event: Event):
         """Queue event for processing"""
+
+
+
         try:
             # Check if event has expired
             if event.expires_at and event.expires_at <= datetime.now(timezone.utc):
@@ -458,6 +470,9 @@ class EventDispatcher:
     
     async def _process_event(self, event: Event, worker_id: str):
         """Process a single event"""
+
+
+
         try:
             start_time = datetime.now(timezone.utc)
             event.status = EventStatus.PROCESSING
@@ -497,6 +512,9 @@ class EventDispatcher:
     
     def _find_matching_subscriptions(self, event: Event) -> List[str]:
         """Find subscriptions that match the event"""
+
+
+
         try:
             matching = []
             
@@ -528,6 +546,9 @@ class EventDispatcher:
     
     def _event_matches_filter(self, event: Event, filters: EventFilter) -> bool:
         """Check if event matches subscription filters"""
+
+
+
         try:
             # Event type filter
             if filters.event_types and event.event_type not in filters.event_types:
@@ -583,6 +604,9 @@ class EventDispatcher:
     
     async def _deliver_event(self, event: Event, subscription: EventSubscription):
         """Deliver event to a subscription"""
+
+
+
         try:
             delivery_id = str(uuid.uuid4())
             
@@ -616,6 +640,9 @@ class EventDispatcher:
         delivery: EventDelivery
     ) -> bool:
         """Attempt to deliver event to subscription"""
+
+
+
         try:
             # Prepare callback data
             callback_data = {
@@ -668,6 +695,9 @@ class EventDispatcher:
         delivery: EventDelivery
     ):
         """Handle failed event delivery"""
+
+
+
         try:
             delivery.retry_count += 1
             
@@ -704,6 +734,9 @@ class EventDispatcher:
         delay_seconds: float
     ):
         """Schedule event delivery retry"""
+
+
+
         try:
             await asyncio.sleep(delay_seconds)
             
@@ -738,6 +771,9 @@ class EventDispatcher:
     
     def unsubscribe(self, subscription_id: str) -> bool:
         """Remove event subscription"""
+
+
+
         try:
             if subscription_id not in self.subscriptions:
                 return False
@@ -841,6 +877,9 @@ class EventDispatcher:
     
     async def replay_dead_letter_events(self, max_events: int = 100) -> int:
         """Replay events from dead letter queue"""
+
+
+
         try:
             replayed = 0
             
@@ -866,6 +905,9 @@ class EventDispatcher:
     
     def cleanup_expired_events(self) -> int:
         """Cleanup expired events from storage"""
+
+
+
         try:
             current_time = datetime.now(timezone.utc)
             expired_events = []
@@ -897,6 +939,9 @@ class EventDispatcher:
     
     def shutdown(self):
         """Shutdown event dispatcher and cleanup"""
+
+
+
         try:
             self.stop_processing()
             

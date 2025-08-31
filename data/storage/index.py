@@ -8,7 +8,7 @@ Responsibility: Unified storage interface and coordination
 Technologies: Python, Async/await, Multi-cloud orchestration
 ==========================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -179,10 +179,13 @@ class StorageIndex:
         # Semaphore for operation concurrency
         self.operation_semaphore = asyncio.Semaphore(config.max_concurrent_operations)
         
-        self.logger.info("🎯 StorageIndex initialized with unified orchestration")
+        self.logger.info(" StorageIndex initialized with unified orchestration")
     
     def _initialize_managers(self):
         """Initialize all storage managers"""
+
+
+
         try:
             base_path = Path(self.config.storage_base_path)
             base_path.mkdir(parents=True, exist_ok=True)
@@ -230,7 +233,7 @@ class StorageIndex:
             # Initialize cloud storage manager
             self.storage_manager = StorageManager([])  # Configurations added later
             
-            self.logger.info("✅ All storage managers initialized successfully")
+            self.logger.info(" All storage managers initialized successfully")
             
         except Exception as e:
             self.logger.error(f"Failed to initialize storage managers: {e}")
@@ -277,7 +280,7 @@ class StorageIndex:
                 
                 # Step 1: File processing and validation
                 if self.file_manager:
-                    self.logger.info(f"📁 Processing file: {filename}")
+                    self.logger.info(f" Processing file: {filename}")
                     
                     file_result = await self.file_manager.upload_file(
                         file_data=file_data,
@@ -302,7 +305,7 @@ class StorageIndex:
                 
                 # Step 2: Version control
                 if self.version_manager and create_version and operation.file_path:
-                    self.logger.info(f"🔄 Creating version for: {operation.file_id}")
+                    self.logger.info(f" Creating version for: {operation.file_id}")
                     
                     version_result = await self.version_manager.create_version(
                         file_id=operation.file_id,
@@ -317,7 +320,7 @@ class StorageIndex:
                 
                 # Step 3: Backup creation
                 if self.backup_manager and create_backup and operation.file_path:
-                    self.logger.info(f"🛡️ Creating backup for: {operation.file_id}")
+                    self.logger.info(f" Creating backup for: {operation.file_id}")
                     
                     backup_result = await self.backup_manager.backup_file(
                         file_id=operation.file_id,
@@ -339,10 +342,10 @@ class StorageIndex:
                 
                 operation.success = True
                 
-                self.logger.info(f"✅ Content stored successfully: {operation.file_id}")
+                self.logger.info(f" Content stored successfully: {operation.file_id}")
                 
             except Exception as e:
-                self.logger.error(f"❌ Content storage failed: {str(e)}")
+                self.logger.error(f" Content storage failed: {str(e)}")
                 operation.error_message = str(e)
                 operation.success = False
             
@@ -495,10 +498,10 @@ class StorageIndex:
                     operation.backup_result = backup_result
                 
                 operation.success = True
-                self.logger.info(f"✅ Content updated successfully: {file_id}")
+                self.logger.info(f" Content updated successfully: {file_id}")
                 
             except Exception as e:
-                self.logger.error(f"❌ Content update failed: {str(e)}")
+                self.logger.error(f" Content update failed: {str(e)}")
                 operation.error_message = str(e)
                 operation.success = False
             
@@ -570,10 +573,10 @@ class StorageIndex:
                         version_type=VersionType.MINOR
                     )
             
-            self.logger.info(f"🗑️ Content {'permanently ' if permanent else ''}deleted: {file_id}")
+            self.logger.info(f" Content {'permanently ' if permanent else ''}deleted: {file_id}")
             
         except Exception as e:
-            self.logger.error(f"❌ Content deletion failed: {str(e)}")
+            self.logger.error(f" Content deletion failed: {str(e)}")
             operation.error_message = str(e)
             operation.success = False
         
@@ -595,6 +598,9 @@ class StorageIndex:
         Returns:
             Version comparison result or None
         """
+
+
+
         try:
             if not self.version_manager:
                 return None
@@ -626,6 +632,9 @@ class StorageIndex:
         Returns:
             Restore job result or None
         """
+
+
+
         try:
             if not self.backup_manager:
                 return None
@@ -653,6 +662,9 @@ class StorageIndex:
         Returns:
             Complete file history
         """
+
+
+
         try:
             history = {
                 "file_id": file_id,
@@ -696,6 +708,9 @@ class StorageIndex:
         Returns:
             Complete storage statistics across all managers
         """
+
+
+
         try:
             stats = {
                 "timestamp": datetime.now().isoformat(),
@@ -735,6 +750,9 @@ class StorageIndex:
     
     async def _complete_operation(self, operation: StorageOperation) -> StorageOperation:
         """Complete storage operation and update metrics"""
+
+
+
         try:
             # Calculate processing time
             processing_time = (datetime.now() - operation.timestamp).total_seconds()
@@ -787,6 +805,9 @@ class StorageIndex:
         Returns:
             Number of files cleaned up
         """
+
+
+
         try:
             total_cleaned = 0
             
@@ -824,6 +845,9 @@ class StorageIndex:
         Returns:
             Health status of all components
         """
+
+
+
         try:
             health = {
                 "timestamp": datetime.now().isoformat(),

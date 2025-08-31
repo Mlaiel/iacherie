@@ -8,7 +8,7 @@ for optimal cost and performance balance.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -172,6 +172,9 @@ class ActiveStageManager(LifecycleStageManager):
     
     async def can_transition_to(self, stage: LifecycleStage, entry: ArchiveEntry) -> bool:
         """Active stage can transition to any other stage"""
+
+
+
         return stage in [LifecycleStage.COLD, LifecycleStage.FROZEN, LifecycleStage.DEEP_ARCHIVE]
     
     async def transition_to_stage(self, entry: ArchiveEntry, target_stage: LifecycleStage) -> bool:
@@ -194,6 +197,9 @@ class ActiveStageManager(LifecycleStageManager):
     
     async def get_stage_cost(self, entry: ArchiveEntry) -> float:
         """Calculate active stage storage cost"""
+
+
+
         return entry.compressed_size * 0.023 / (1024**3) * 30  # $0.023/GB/month
 
 
@@ -202,6 +208,9 @@ class ColdStageManager(LifecycleStageManager):
     
     async def can_transition_to(self, stage: LifecycleStage, entry: ArchiveEntry) -> bool:
         """Cold stage can transition to frozen or deep archive"""
+
+
+
         return stage in [LifecycleStage.FROZEN, LifecycleStage.DEEP_ARCHIVE, LifecycleStage.ACTIVE]
     
     async def transition_to_stage(self, entry: ArchiveEntry, target_stage: LifecycleStage) -> bool:
@@ -223,6 +232,9 @@ class ColdStageManager(LifecycleStageManager):
     
     async def get_stage_cost(self, entry: ArchiveEntry) -> float:
         """Calculate cold stage storage cost"""
+
+
+
         return entry.compressed_size * 0.0125 / (1024**3) * 30  # $0.0125/GB/month
 
 
@@ -231,6 +243,9 @@ class FrozenStageManager(LifecycleStageManager):
     
     async def can_transition_to(self, stage: LifecycleStage, entry: ArchiveEntry) -> bool:
         """Frozen stage can transition to deep archive or back to cold/active"""
+
+
+
         return stage in [LifecycleStage.DEEP_ARCHIVE, LifecycleStage.COLD, LifecycleStage.ACTIVE]
     
     async def transition_to_stage(self, entry: ArchiveEntry, target_stage: LifecycleStage) -> bool:
@@ -252,6 +267,9 @@ class FrozenStageManager(LifecycleStageManager):
     
     async def get_stage_cost(self, entry: ArchiveEntry) -> float:
         """Calculate frozen stage storage cost"""
+
+
+
         return entry.compressed_size * 0.004 / (1024**3) * 30  # $0.004/GB/month
 
 
@@ -260,6 +278,9 @@ class DeepArchiveStageManager(LifecycleStageManager):
     
     async def can_transition_to(self, stage: LifecycleStage, entry: ArchiveEntry) -> bool:
         """Deep archive can transition back to any stage but with cost implications"""
+
+
+
         return stage in [LifecycleStage.ACTIVE, LifecycleStage.COLD, LifecycleStage.FROZEN, LifecycleStage.EXPIRED]
     
     async def transition_to_stage(self, entry: ArchiveEntry, target_stage: LifecycleStage) -> bool:
@@ -286,6 +307,9 @@ class DeepArchiveStageManager(LifecycleStageManager):
     
     async def get_stage_cost(self, entry: ArchiveEntry) -> float:
         """Calculate deep archive stage storage cost"""
+
+
+
         return entry.compressed_size * 0.00099 / (1024**3) * 30  # $0.00099/GB/month
 
 
@@ -317,6 +341,9 @@ class ArchivalLifecycleManager:
     
     async def add_policy(self, policy: LifecyclePolicy) -> bool:
         """Add a new lifecycle policy"""
+
+
+
         try:
             # Validate policy
             if not await self._validate_policy(policy):
@@ -332,6 +359,9 @@ class ArchivalLifecycleManager:
     
     async def remove_policy(self, policy_id: str) -> bool:
         """Remove a lifecycle policy"""
+
+
+
         try:
             if policy_id in self.policies:
                 del self.policies[policy_id]
@@ -345,6 +375,9 @@ class ArchivalLifecycleManager:
     
     async def evaluate_transitions(self, entries: List[ArchiveEntry]) -> List[LifecycleTransition]:
         """Evaluate entries for potential lifecycle transitions"""
+
+
+
         try:
             transitions = []
             
@@ -371,6 +404,9 @@ class ArchivalLifecycleManager:
     
     async def execute_transition(self, transition: LifecycleTransition) -> bool:
         """Execute a lifecycle transition"""
+
+
+
         try:
             transition.status = "in_progress"
             transition.started_at = datetime.utcnow()
@@ -432,6 +468,9 @@ class ArchivalLifecycleManager:
     
     async def get_lifecycle_status(self, archive_id: str) -> Dict[str, Any]:
         """Get detailed lifecycle status for an archive"""
+
+
+
         try:
             # In real implementation, fetch from database
             return {
@@ -451,6 +490,9 @@ class ArchivalLifecycleManager:
     
     async def optimize_costs(self, target_reduction: float = 0.3) -> Dict[str, Any]:
         """Analyze and recommend cost optimization strategies"""
+
+
+
         try:
             # Analyze current storage costs and usage patterns
             current_cost = 0.0
@@ -484,6 +526,9 @@ class ArchivalLifecycleManager:
     
     async def _validate_policy(self, policy: LifecyclePolicy) -> bool:
         """Validate lifecycle policy configuration"""
+
+
+
         try:
             # Check basic policy structure
             if not policy.policy_id or not policy.name:
@@ -506,6 +551,9 @@ class ArchivalLifecycleManager:
     
     async def _validate_transition_rule(self, rule: TransitionRule) -> bool:
         """Validate individual transition rule"""
+
+
+
         try:
             # Check stage compatibility
             if rule.from_stage == rule.to_stage:
@@ -530,6 +578,9 @@ class ArchivalLifecycleManager:
     
     async def _has_conflicting_rules(self, rules: List[TransitionRule]) -> bool:
         """Check for conflicting transition rules"""
+
+
+
         try:
             # Group rules by source stage
             stage_rules = {}
@@ -554,6 +605,9 @@ class ArchivalLifecycleManager:
     
     async def _should_transition(self, entry: ArchiveEntry, rule: TransitionRule) -> bool:
         """Determine if an entry should transition according to a rule"""
+
+
+
         try:
             # Check content type filter
             if rule.content_types and entry.content_type not in rule.content_types:
@@ -586,6 +640,9 @@ class ArchivalLifecycleManager:
     
     async def _evaluate_trigger_conditions(self, entry: ArchiveEntry, rule: TransitionRule) -> bool:
         """Evaluate trigger-specific conditions"""
+
+
+
         try:
             if rule.trigger_type == TransitionTrigger.AGE_BASED:
                 return await self._evaluate_age_trigger(entry, rule)

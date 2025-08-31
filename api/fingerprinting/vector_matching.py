@@ -80,6 +80,9 @@ class IndexManager:
     
     def create_index(self, content_type: str) -> faiss.Index:
         """Create optimized FAISS index for specific content type."""
+
+
+
         try:
             if self.config.index_type == "flat":
                 # Flat index for exact search (best quality)
@@ -144,6 +147,9 @@ class IndexManager:
         metadata: Dict[str, Any]
     ) -> None:
         """Add vector to appropriate index with thread safety."""
+
+
+
         try:
             index = self.get_or_create_index(content_type)
             
@@ -178,6 +184,9 @@ class IndexManager:
         top_k: Optional[int] = None
     ) -> List[MatchResult]:
         """Search for similar vectors in the index."""
+
+
+
         try:
             index = self.get_or_create_index(content_type)
             top_k = top_k or min(self.config.max_results, index.ntotal)
@@ -225,6 +234,9 @@ class IndexManager:
     
     async def save_index(self, content_type: str, file_path: str) -> None:
         """Save FAISS index to disk."""
+
+
+
         try:
             if content_type in self.indices:
                 index = self.indices[content_type]
@@ -246,6 +258,9 @@ class IndexManager:
     
     async def load_index(self, content_type: str, file_path: str) -> None:
         """Load FAISS index from disk."""
+
+
+
         try:
             if Path(file_path).exists():
                 # Load FAISS index
@@ -269,6 +284,9 @@ class IndexManager:
     
     def get_index_stats(self, content_type: str) -> Dict[str, Any]:
         """Get statistics for a specific index."""
+
+
+
         try:
             if content_type in self.indices:
                 index = self.indices[content_type]
@@ -319,6 +337,9 @@ class AdvancedVectorMatcher:
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
         """Add content fingerprint to the matching system."""
+
+
+
         try:
             full_metadata = {
                 'fingerprint_hash': fingerprint_hash,
@@ -388,6 +409,9 @@ class AdvancedVectorMatcher:
         top_k: Optional[int] = None
     ) -> List[List[MatchResult]]:
         """Find matches for multiple queries efficiently."""
+
+
+
         try:
             # Process queries concurrently
             tasks = []
@@ -442,6 +466,9 @@ class AdvancedVectorMatcher:
     
     def get_performance_stats(self) -> Dict[str, Any]:
         """Get performance statistics for the matching system."""
+
+
+
         return {
             **self.match_stats,
             'cache_size': len(self.query_cache),
@@ -461,6 +488,9 @@ class AdvancedVectorMatcher:
     
     async def save_all_indices(self, base_path: str) -> None:
         """Save all indices to disk."""
+
+
+
         try:
             base_dir = Path(base_path)
             base_dir.mkdir(parents=True, exist_ok=True)
@@ -477,6 +507,9 @@ class AdvancedVectorMatcher:
     
     async def load_all_indices(self, base_path: str) -> None:
         """Load all indices from disk."""
+
+
+
         try:
             base_dir = Path(base_path)
             

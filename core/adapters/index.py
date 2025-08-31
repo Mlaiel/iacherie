@@ -112,6 +112,9 @@ class AdapterModuleLoader:
     
     async def _load_adapter_module(self, module_name: str) -> Optional[AdapterModuleInfo]:
         """Load a specific adapter module and extract adapter classes."""
+
+
+
         try:
             # Import the module
             full_module_name = f"backend.core.adapters.{module_name}"
@@ -159,6 +162,9 @@ class AdapterModuleLoader:
     
     def get_adapter_class(self, class_name: str) -> Optional[Type[BasePlatformAdapter]]:
         """Get an adapter class by name."""
+
+
+
         return self.adapter_classes.get(class_name)
     
     def get_adapters_by_platform_type(self, platform_type: PlatformType) -> List[Type[BasePlatformAdapter]]:
@@ -171,6 +177,9 @@ class AdapterModuleLoader:
     
     def get_module_info(self, module_name: str) -> Optional[AdapterModuleInfo]:
         """Get information about a loaded module."""
+
+
+
         return self.loaded_modules.get(module_name)
     
     def list_all_adapters(self) -> Dict[str, List[str]]:
@@ -355,6 +364,9 @@ class AdapterIndexManager:
     
     def get_adapter_class(self, class_name: str) -> Optional[Type[BasePlatformAdapter]]:
         """Get an adapter class by name."""
+
+
+
         return self.module_loader.get_adapter_class(class_name)
     
     def list_adapters_by_platform(self, platform_type: PlatformType) -> List[str]:
@@ -364,6 +376,9 @@ class AdapterIndexManager:
     
     async def reload_module(self, module_name: str) -> bool:
         """Reload a specific adapter module."""
+
+
+
         try:
             # Unload existing module
             if module_name in self.module_loader.loaded_modules:

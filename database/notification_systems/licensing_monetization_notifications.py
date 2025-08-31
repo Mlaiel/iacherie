@@ -158,6 +158,9 @@ class LicensingMonetizationManager:
         Returns:
             Résultat du traitement
         """
+
+
+
         try:
             # Channels par défaut si non spécifiés
             if notification_channels is None:
@@ -229,7 +232,7 @@ class LicensingMonetizationManager:
         if event_type == LicensingEventType.LICENSE_GRANTED:
             return {
                 **base_data,
-                "title": f"🎉 Nouvelle licence accordée",
+                "title": f" Nouvelle licence accordée",
                 "message": f"Une licence {data.revenue_source.value} de {data.amount} {data.currency} a été accordée pour votre contenu.",
                 "priority": "high" if data.amount > 1000 else "normal",
                 "category": "license_success",
@@ -248,7 +251,7 @@ class LicensingMonetizationManager:
         elif event_type == LicensingEventType.ROYALTY_PAYMENT:
             return {
                 **base_data,
-                "title": f"💰 Paiement de royalties reçu",
+                "title": f" Paiement de royalties reçu",
                 "message": f"Vous avez reçu {data.amount} {data.currency} en royalties de {data.revenue_source.value}.",
                 "priority": "high",
                 "category": "payment_received",
@@ -262,7 +265,7 @@ class LicensingMonetizationManager:
             milestone_reached = self._get_milestone_reached(data.amount)
             return {
                 **base_data,
-                "title": f"🏆 Étape de revenus atteinte!",
+                "title": f" Étape de revenus atteinte!",
                 "message": f"Félicitations! Vous avez atteint {milestone_reached} {data.currency} de revenus cumulés.",
                 "priority": "high",
                 "category": "milestone_achievement",
@@ -280,7 +283,7 @@ class LicensingMonetizationManager:
             opportunity_value = data.licensing_metadata.get("estimated_value", 0)
             return {
                 **base_data,
-                "title": f"🚀 Nouvelle opportunité de monétisation",
+                "title": f" Nouvelle opportunité de monétisation",
                 "message": f"Une opportunité de {data.revenue_source.value} d'une valeur estimée de {opportunity_value} {data.currency} est disponible.",
                 "priority": "medium",
                 "category": "business_opportunity",
@@ -302,7 +305,7 @@ class LicensingMonetizationManager:
         elif event_type == LicensingEventType.PAYMENT_PROCESSED:
             return {
                 **base_data,
-                "title": f"✅ Paiement traité avec succès",
+                "title": f" Paiement traité avec succès",
                 "message": f"Votre paiement de {data.amount} {data.currency} a été traité et sera disponible sous 1-3 jours ouvrables.",
                 "priority": "normal",
                 "category": "payment_confirmation",
@@ -318,7 +321,7 @@ class LicensingMonetizationManager:
         elif event_type == LicensingEventType.PAYMENT_FAILED:
             return {
                 **base_data,
-                "title": f"❌ Échec de paiement",
+                "title": f" Échec de paiement",
                 "message": f"Le paiement de {data.amount} {data.currency} a échoué. Veuillez vérifier vos informations bancaires.",
                 "priority": "high",
                 "category": "payment_error",
@@ -338,7 +341,7 @@ class LicensingMonetizationManager:
         elif event_type == LicensingEventType.CONTRACT_SIGNED:
             return {
                 **base_data,
-                "title": f"📝 Contrat signé électroniquement",
+                "title": f" Contrat signé électroniquement",
                 "message": f"Le contrat pour {data.revenue_source.value} a été signé. Durée: {data.license_duration} jours.",
                 "priority": "normal",
                 "category": "contract_execution",
@@ -355,7 +358,7 @@ class LicensingMonetizationManager:
         elif event_type == LicensingEventType.TAX_DOCUMENT_GENERATED:
             return {
                 **base_data,
-                "title": f"📊 Document fiscal généré",
+                "title": f" Document fiscal généré",
                 "message": f"Votre document fiscal pour les revenus de {data.revenue_source.value} est prêt à télécharger.",
                 "priority": "medium",
                 "category": "tax_documentation",
@@ -372,7 +375,7 @@ class LicensingMonetizationManager:
         elif event_type == LicensingEventType.LICENSING_VIOLATION:
             return {
                 **base_data,
-                "title": f"⚠️ Violation de licence détectée",
+                "title": f" Violation de licence détectée",
                 "message": f"Une utilisation non autorisée de votre contenu licencié a été détectée.",
                 "priority": "urgent",
                 "category": "license_violation",
@@ -389,7 +392,7 @@ class LicensingMonetizationManager:
         else:
             return {
                 **base_data,
-                "title": f"📢 Événement licensing {event_type.value}",
+                "title": f" Événement licensing {event_type.value}",
                 "message": f"Un événement de licensing s'est produit pour votre contenu.",
                 "priority": "normal",
                 "category": "general_licensing",
@@ -448,6 +451,9 @@ class LicensingMonetizationManager:
         data: LicensingNotificationData
     ):
         """Traitement spécialisé selon le type d'événement de licensing"""
+
+
+
         
         try:
             if event_type == LicensingEventType.LICENSE_GRANTED:
@@ -730,6 +736,9 @@ class LicensingMonetizationManager:
 
     async def _create_celebration_content(self, data: LicensingNotificationData) -> Dict[str, Any]:
         """Crée du contenu de célébration"""
+
+
+
         return {"type": "milestone_celebration", "content": "Congratulations!"}
 
     async def _share_milestone_achievement(self, data: LicensingNotificationData, content: Dict[str, Any]):
@@ -758,6 +767,9 @@ class LicensingMonetizationManager:
 
     async def _get_user_balance(self, user_id: str) -> Decimal:
         """Récupère le solde de l'utilisateur"""
+
+
+
         return Decimal("0.00")  # Stub
 
     async def _initiate_automatic_payment(self, user_id: str, amount: Decimal):
@@ -766,6 +778,9 @@ class LicensingMonetizationManager:
 
     async def _get_milestone_progress(self, user_id: str) -> Dict[str, Any]:
         """Récupère le progrès vers les étapes"""
+
+
+
         return {"current_revenue": "0", "next_milestone": 100}
 
     # Méthodes de notification (stubs pour intégration)

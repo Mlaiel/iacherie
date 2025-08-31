@@ -377,6 +377,9 @@ class RedisConfig:
 
     def _create_sentinel_client(self, database: int = 0) -> Redis:
         """Create Redis client using Sentinel"""
+
+
+
         try:
             sentinel = Sentinel(self.credentials.sentinel_hosts)
             return sentinel.master_for(
@@ -391,6 +394,9 @@ class RedisConfig:
 
     def _create_cluster_client(self) -> Redis:
         """Create Redis cluster client"""
+
+
+
         try:
             from rediscluster import RedisCluster
             
@@ -458,26 +464,44 @@ class RedisConfig:
 
     def get_cache_client(self) -> Redis:
         """Get Redis client optimized for caching operations"""
+
+
+
         return self.create_client(database=0, client_name="cache")
 
     def get_session_client(self) -> Redis:
         """Get Redis client for session management"""
+
+
+
         return self.create_client(database=1, client_name="session")
 
     def get_queue_client(self) -> Redis:
         """Get Redis client for task queue operations (Celery)"""
+
+
+
         return self.create_client(database=2, client_name="queue")
 
     def get_pubsub_client(self) -> Redis:
         """Get Redis client for pub/sub messaging"""
+
+
+
         return self.create_client(database=3, client_name="pubsub")
 
     def get_analytics_client(self) -> Redis:
         """Get Redis client for analytics data"""
+
+
+
         return self.create_client(database=4, client_name="analytics")
 
     def get_real_time_client(self) -> aioredis.Redis:
         """Get async Redis client for real-time operations"""
+
+
+
         return self.create_async_client(database=5, client_name="realtime")
 
     def get_tenant_client(self, tenant_id: str) -> Redis:
@@ -591,6 +615,9 @@ class RedisConfig:
     
     def _optimize_cluster_memory_settings(self, cluster_client) -> None:
         """Optimize memory-related cluster settings"""
+
+
+
         try:
             # Enable lazy freeing for better performance
             cluster_client.config_set('lazyfree-lazy-eviction', 'yes')
@@ -610,6 +637,9 @@ class RedisConfig:
     
     def _optimize_cluster_network_settings(self, cluster_client) -> None:
         """Optimize network-related cluster settings"""
+
+
+
         try:
             # TCP keepalive settings
             cluster_client.config_set('tcp-keepalive', '60')
@@ -628,6 +658,9 @@ class RedisConfig:
     
     def _setup_cluster_monitoring(self, cluster_client) -> None:
         """Setup cluster monitoring and health checks"""
+
+
+
         try:
             # Enable slow log monitoring
             cluster_client.config_set('slowlog-log-slower-than', '10000')  # 10ms

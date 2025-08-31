@@ -7,7 +7,7 @@ quality enhancement, and advanced analysis capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -233,6 +233,9 @@ class VideoProcessor:
         Returns:
             Video information dictionary
         """
+
+
+
         try:
             probe = ffmpeg.probe(video_path)
             
@@ -556,6 +559,9 @@ class VideoProcessor:
     
     async def cleanup(self):
         """Cleanup temporary files and resources"""
+
+
+
         try:
             if self.temp_dir.exists():
                 import shutil
@@ -918,6 +924,9 @@ class VideoAnalyzer:
     
     async def _analyze_audio(self, video_path: str) -> Dict[str, Any]:
         """Analyze audio properties and quality"""
+
+
+
         try:
             probe = ffmpeg.probe(video_path)
             audio_streams = [s for s in probe['streams'] if s['codec_type'] == 'audio']
@@ -942,6 +951,9 @@ class VideoAnalyzer:
     
     async def cleanup(self):
         """Cleanup temporary files"""
+
+
+
         try:
             if self.temp_dir.exists():
                 import shutil

@@ -262,6 +262,9 @@ class DataHarvester:
         Returns:
             str: ID de la cible créée
         """
+
+
+
         try:
             target_id = self._generate_target_id(source_url)
             
@@ -310,6 +313,9 @@ class DataHarvester:
 
     async def _test_url_accessibility(self, url: str) -> bool:
         """Test l'accessibilité d'une URL"""
+
+
+
         try:
             if not self.session:
                 self.session = aiohttp.ClientSession()
@@ -328,6 +334,9 @@ class DataHarvester:
         Args:
             target_id: ID de cible spécifique (optionnel)
         """
+
+
+
         try:
             if not self.session:
                 self.session = aiohttp.ClientSession()
@@ -450,6 +459,9 @@ class DataHarvester:
 
     async def _harvest_web_page(self, target: HarvestingTarget) -> Dict[str, Any]:
         """Collecte une page web"""
+
+
+
         try:
             # Récupération du contenu HTML
             html_content = await self._fetch_html_content(target.source_url)
@@ -490,6 +502,9 @@ class DataHarvester:
 
     async def _fetch_html_content(self, url: str) -> str:
         """Récupère le contenu HTML d'une URL"""
+
+
+
         try:
             # Tentative avec requête HTTP simple
             try:
@@ -518,6 +533,9 @@ class DataHarvester:
 
     async def _fetch_with_selenium(self, url: str) -> str:
         """Récupère le contenu avec Selenium (pour JavaScript)"""
+
+
+
         try:
             # Exécution dans le pool de threads
             loop = asyncio.get_event_loop()
@@ -635,6 +653,9 @@ class DataHarvester:
 
     def _extract_number(self, text: str) -> Optional[float]:
         """Extrait un nombre d'un texte"""
+
+
+
         try:
             # Nettoyage du texte
             clean_text = re.sub(r'[^\d.,]', '', text)
@@ -648,6 +669,9 @@ class DataHarvester:
 
     def _parse_date(self, text: str) -> Optional[str]:
         """Parse une date depuis un texte"""
+
+
+
         try:
             from dateutil import parser
             parsed_date = parser.parse(text)
@@ -694,6 +718,9 @@ class DataHarvester:
 
     def _is_valid_url(self, url: str) -> bool:
         """Valide une URL"""
+
+
+
         try:
             result = urlparse(url)
             return all([result.scheme, result.netloc])
@@ -770,6 +797,9 @@ class DataHarvester:
 
     async def _harvest_api(self, target: HarvestingTarget) -> Dict[str, Any]:
         """Collecte depuis une API"""
+
+
+
         try:
             # Configuration de la requête
             method = target.extraction_rules.get('method', 'GET')
@@ -839,6 +869,9 @@ class DataHarvester:
 
     async def _harvest_rss_feed(self, target: HarvestingTarget) -> Dict[str, Any]:
         """Collecte depuis un flux RSS"""
+
+
+
         try:
             import feedparser
             
@@ -898,6 +931,9 @@ class DataHarvester:
 
     async def _harvest_youtube(self, target: HarvestingTarget) -> Dict[str, Any]:
         """Collecte YouTube spécialisée"""
+
+
+
         try:
             # Extraction de l'ID de la vidéo ou chaîne depuis l'URL
             url = target.source_url
@@ -930,6 +966,9 @@ class DataHarvester:
 
     async def _harvest_twitter(self, target: HarvestingTarget) -> Dict[str, Any]:
         """Collecte Twitter spécialisée"""
+
+
+
         try:
             url = target.source_url
             data = {
@@ -961,6 +1000,9 @@ class DataHarvester:
 
     async def _harvest_instagram(self, target: HarvestingTarget) -> Dict[str, Any]:
         """Collecte Instagram spécialisée"""
+
+
+
         try:
             url = target.source_url
             data = {
@@ -1006,6 +1048,9 @@ class DataHarvester:
         raw_data: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Traite et valide les données collectées"""
+
+
+
         try:
             # Nettoyage des données
             cleaned_data = self._clean_data(raw_data)
@@ -1136,6 +1181,9 @@ class DataHarvester:
 
     async def _save_csv_file(self, file_path: str, data: Dict[str, Any]) -> None:
         """Sauvegarde un fichier CSV"""
+
+
+
         try:
             # Recherche de données tabulaires
             tabular_data = None
@@ -1207,6 +1255,9 @@ class DataHarvester:
 
     async def _download_media_file(self, url: str, harvest_id: str, index: int) -> Optional[str]:
         """Télécharge un fichier média"""
+
+
+
         try:
             async with self.session.get(url) as response:
                 if response.status == 200:
@@ -1252,6 +1303,9 @@ class DataHarvester:
 
     async def _save_xml_file(self, file_path: str, data: Dict[str, Any]) -> None:
         """Sauvegarde XML"""
+
+
+
         try:
             import xml.etree.ElementTree as ET
             
@@ -1284,6 +1338,9 @@ class DataHarvester:
 
     async def _save_excel_file(self, file_path: str, data: Dict[str, Any]) -> None:
         """Sauvegarde Excel"""
+
+
+
         try:
             with pd.ExcelWriter(file_path, engine='openpyxl') as writer:
                 # Chaque liste d'objets devient une feuille
@@ -1308,6 +1365,9 @@ class DataHarvester:
         data: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Génère les métadonnées de collecte"""
+
+
+
         return {
             'target_id': target.target_id,
             'source_url': target.source_url,
@@ -1366,6 +1426,9 @@ class DataHarvester:
     # Helper methods for social media data extraction
     def _extract_youtube_title(self, soup: BeautifulSoup) -> str:
         """Extrait le titre d'une vidéo YouTube"""
+
+
+
         try:
             # Recherche dans les métadonnées
             title_tag = soup.find('meta', property='og:title')
@@ -1383,6 +1446,9 @@ class DataHarvester:
     
     def _extract_youtube_description(self, soup: BeautifulSoup) -> str:
         """Extrait la description d'une vidéo YouTube"""
+
+
+
         try:
             desc_tag = soup.find('meta', property='og:description')
             if desc_tag:
@@ -1393,6 +1459,9 @@ class DataHarvester:
     
     def _extract_youtube_channel(self, soup: BeautifulSoup) -> str:
         """Extrait le nom de la chaîne YouTube"""
+
+
+
         try:
             channel_tag = soup.find('meta', {'name': 'author'})
             if channel_tag:
@@ -1403,6 +1472,9 @@ class DataHarvester:
     
     def _extract_youtube_views(self, soup: BeautifulSoup) -> str:
         """Extrait le nombre de vues YouTube"""
+
+
+
         try:
             # Recherche de patterns de vues dans le HTML
             for script in soup.find_all('script'):
@@ -1415,6 +1487,9 @@ class DataHarvester:
     
     def _extract_youtube_date(self, soup: BeautifulSoup) -> str:
         """Extrait la date de publication YouTube"""
+
+
+
         try:
             date_tag = soup.find('meta', {'itemprop': 'datePublished'})
             if date_tag:
@@ -1425,6 +1500,9 @@ class DataHarvester:
     
     def _extract_youtube_thumbnails(self, soup: BeautifulSoup) -> List[str]:
         """Extrait les URLs des miniatures YouTube"""
+
+
+
         try:
             thumbnails = []
             thumb_tag = soup.find('meta', property='og:image')
@@ -1436,6 +1514,9 @@ class DataHarvester:
     
     def _extract_twitter_username(self, soup: BeautifulSoup) -> str:
         """Extrait le nom d'utilisateur Twitter"""
+
+
+
         try:
             # Recherche dans les métadonnées Twitter
             username_tag = soup.find('meta', {'name': 'twitter:creator'})
@@ -1447,6 +1528,9 @@ class DataHarvester:
     
     def _extract_twitter_text(self, soup: BeautifulSoup) -> str:
         """Extrait le texte du tweet"""
+
+
+
         try:
             desc_tag = soup.find('meta', property='og:description')
             if desc_tag:
@@ -1457,6 +1541,9 @@ class DataHarvester:
     
     def _extract_twitter_date(self, soup: BeautifulSoup) -> str:
         """Extrait la date du tweet"""
+
+
+
         try:
             # Recherche dans les métadonnées structurées
             date_tag = soup.find('meta', {'name': 'twitter:label1'})
@@ -1470,6 +1557,9 @@ class DataHarvester:
     
     def _extract_twitter_retweets(self, soup: BeautifulSoup) -> str:
         """Extrait le nombre de retweets"""
+
+
+
         try:
             # Pattern générique pour les métriques Twitter
             return "N/A"
@@ -1478,6 +1568,9 @@ class DataHarvester:
     
     def _extract_twitter_likes(self, soup: BeautifulSoup) -> str:
         """Extrait le nombre de likes"""
+
+
+
         try:
             return "N/A"
         except Exception:
@@ -1485,6 +1578,9 @@ class DataHarvester:
     
     def _extract_twitter_media(self, soup: BeautifulSoup) -> List[str]:
         """Extrait les URLs des médias Twitter"""
+
+
+
         try:
             media = []
             img_tag = soup.find('meta', property='og:image')
@@ -1496,6 +1592,9 @@ class DataHarvester:
     
     def _extract_instagram_username(self, soup: BeautifulSoup) -> str:
         """Extrait le nom d'utilisateur Instagram"""
+
+
+
         try:
             # Recherche dans les métadonnées
             title_tag = soup.find('title')
@@ -1509,6 +1608,9 @@ class DataHarvester:
     
     def _extract_instagram_caption(self, soup: BeautifulSoup) -> str:
         """Extrait la légende Instagram"""
+
+
+
         try:
             desc_tag = soup.find('meta', property='og:description')
             if desc_tag:
@@ -1519,6 +1621,9 @@ class DataHarvester:
     
     def _extract_instagram_date(self, soup: BeautifulSoup) -> str:
         """Extrait la date de publication Instagram"""
+
+
+
         try:
             # Instagram utilise des structures complexes, extraction basique
             return ""
@@ -1527,6 +1632,9 @@ class DataHarvester:
     
     def _extract_instagram_likes(self, soup: BeautifulSoup) -> str:
         """Extrait le nombre de likes Instagram"""
+
+
+
         try:
             return "N/A"
         except Exception:
@@ -1534,6 +1642,9 @@ class DataHarvester:
     
     def _extract_instagram_comments(self, soup: BeautifulSoup) -> str:
         """Extrait le nombre de commentaires Instagram"""
+
+
+
         try:
             return "N/A"
         except Exception:
@@ -1541,6 +1652,9 @@ class DataHarvester:
     
     def _extract_instagram_media(self, soup: BeautifulSoup) -> List[str]:
         """Extrait les URLs des médias Instagram"""
+
+
+
         try:
             media = []
             img_tag = soup.find('meta', property='og:image')

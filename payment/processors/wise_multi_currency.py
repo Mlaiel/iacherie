@@ -1,5 +1,5 @@
 """
-🌍 Wise Multi-Currency Payment Processor
+ Wise Multi-Currency Payment Processor
 ========================================
 
 Advanced Wise (formerly TransferWise) payment processor for international
@@ -180,6 +180,9 @@ class WiseMultiCurrencyProcessor:
     
     async def get_profiles(self) -> List[WiseProfile]:
         """Get user profiles"""
+
+
+
         try:
             # Simulate API call
             await asyncio.sleep(0.1)
@@ -207,6 +210,9 @@ class WiseMultiCurrencyProcessor:
     
     async def get_accounts(self, profile_id: int) -> List[WiseAccount]:
         """Get borderless accounts for a profile"""
+
+
+
         try:
             # Simulate API call
             await asyncio.sleep(0.1)
@@ -243,6 +249,9 @@ class WiseMultiCurrencyProcessor:
         amount: Optional[Decimal] = None
     ) -> WiseExchangeRate:
         """Get real-time exchange rate"""
+
+
+
         try:
             # Simulate API call
             await asyncio.sleep(0.05)
@@ -296,6 +305,9 @@ class WiseMultiCurrencyProcessor:
         target_amount: Optional[Decimal] = None
     ) -> Dict[str, Any]:
         """Create a transfer quote"""
+
+
+
         try:
             if not source_amount and not target_amount:
                 raise ValueError("Either source_amount or target_amount must be specified")
@@ -347,6 +359,9 @@ class WiseMultiCurrencyProcessor:
         transfer_purpose: TransferPurpose = TransferPurpose.DIGITAL_SERVICES
     ) -> WiseTransfer:
         """Create a transfer from quote"""
+
+
+
         try:
             transfer_id = int(f"1{uuid.uuid4().hex[:8]}", 16) % 10000000
             
@@ -380,6 +395,9 @@ class WiseMultiCurrencyProcessor:
         profile_id: int
     ) -> Dict[str, Any]:
         """Fund a transfer (simulate bank transfer or card payment)"""
+
+
+
         try:
             # Simulate funding process
             await asyncio.sleep(0.2)
@@ -401,6 +419,9 @@ class WiseMultiCurrencyProcessor:
     
     async def get_transfer_status(self, transfer_id: int) -> Dict[str, Any]:
         """Get current transfer status"""
+
+
+
         try:
             # Simulate API call
             await asyncio.sleep(0.1)
@@ -438,6 +459,9 @@ class WiseMultiCurrencyProcessor:
     
     async def cancel_transfer(self, transfer_id: int) -> Dict[str, Any]:
         """Cancel a transfer (if still possible)"""
+
+
+
         try:
             # Check if transfer can be cancelled
             status = await self.get_transfer_status(transfer_id)
@@ -461,6 +485,9 @@ class WiseMultiCurrencyProcessor:
     
     async def handle_webhook(self, headers: Dict[str, str], body: str) -> Dict[str, Any]:
         """Handle Wise webhook events"""
+
+
+
         try:
             # Verify webhook signature
             if not self._verify_webhook_signature(headers, body):
@@ -487,6 +514,9 @@ class WiseMultiCurrencyProcessor:
     
     def _verify_webhook_signature(self, headers: Dict[str, str], body: str) -> bool:
         """Verify Wise webhook signature"""
+
+
+
         try:
             if not self.webhook_secret:
                 return True  # Skip verification if no secret configured
@@ -554,6 +584,9 @@ class WiseMultiCurrencyProcessor:
     
     def get_supported_currencies(self) -> Dict[str, Dict[str, Any]]:
         """Get all supported currencies"""
+
+
+
         return WiseCurrency.CURRENCIES
 
 

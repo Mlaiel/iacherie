@@ -102,6 +102,9 @@ class RabbitMQManager:
 
     def _get_default_config(self) -> RabbitMQClusterConfig:
         """Get default RabbitMQ cluster configuration"""
+
+
+
         return RabbitMQClusterConfig(
             cluster_name="ia-influencer-rabbitmq",
             nodes=[
@@ -135,6 +138,9 @@ class RabbitMQManager:
 
     async def deploy_cluster(self) -> Dict[str, Union[str, bool, int]]:
         """Deploy complete RabbitMQ cluster"""
+
+
+
         try:
             logger.info("Starting RabbitMQ cluster deployment")
             
@@ -181,6 +187,9 @@ class RabbitMQManager:
 
     async def _create_cluster_network(self) -> None:
         """Create Docker network for cluster communication"""
+
+
+
         try:
             network_name = f"{self.config.cluster_name}-network"
             
@@ -204,6 +213,9 @@ class RabbitMQManager:
 
     async def _deploy_node(self, node_config: RabbitMQNodeConfig) -> Dict[str, Union[str, int]]:
         """Deploy individual RabbitMQ node"""
+
+
+
         try:
             # Generate Erlang cookie for cluster
             erlang_cookie = self._generate_erlang_cookie()
@@ -277,6 +289,9 @@ class RabbitMQManager:
 
     async def _form_cluster(self) -> None:
         """Form RabbitMQ cluster from deployed nodes"""
+
+
+
         try:
             if len(self.config.nodes) < 2:
                 logger.info("Single node deployment, skipping cluster formation")
@@ -297,6 +312,9 @@ class RabbitMQManager:
 
     async def _join_node_to_cluster(self, node_config: RabbitMQNodeConfig, primary_node: RabbitMQNodeConfig) -> None:
         """Join a node to the cluster"""
+
+
+
         try:
             # Execute cluster join commands in container
             container = self.docker_client.containers.get(node_config.name)
@@ -325,6 +343,9 @@ class RabbitMQManager:
 
     async def _configure_virtual_host(self) -> None:
         """Configure virtual host and user permissions"""
+
+
+
         try:
             # Get primary node container
             primary_node = self.config.nodes[0]
@@ -353,6 +374,9 @@ class RabbitMQManager:
 
     async def _setup_messaging_topology(self) -> None:
         """Setup exchanges, queues, and bindings for IA processing"""
+
+
+
         try:
             # Connect to RabbitMQ
             connection = await self._get_connection()
@@ -382,6 +406,9 @@ class RabbitMQManager:
 
     def _get_exchanges_config(self) -> List[ExchangeConfig]:
         """Get exchange configurations for IA processing"""
+
+
+
         return [
             ExchangeConfig(
                 name="ia.content",
@@ -524,6 +551,9 @@ class RabbitMQManager:
 
     async def _get_connection(self) -> Connection:
         """Get connection to RabbitMQ cluster"""
+
+
+
         try:
             if self.connection_pool:
                 return await self.connection_pool.acquire()
@@ -542,6 +572,9 @@ class RabbitMQManager:
 
     async def _setup_connection_pool(self) -> None:
         """Setup connection pool for high-performance messaging"""
+
+
+
         try:
             async def get_connection():
                 primary_node = self.config.nodes[0]
@@ -558,6 +591,9 @@ class RabbitMQManager:
 
     async def _enable_monitoring(self) -> None:
         """Enable cluster monitoring and health checks"""
+
+
+
         try:
             # Start health monitoring task
             health_task = asyncio.create_task(self._monitor_cluster_health())
@@ -613,6 +649,9 @@ class RabbitMQManager:
 
     async def get_cluster_status(self) -> Dict[str, Union[str, int, List[Dict]]]:
         """Get comprehensive cluster status"""
+
+
+
         try:
             node_statuses = []
             
@@ -656,6 +695,9 @@ class RabbitMQManager:
 
     async def _get_cluster_stats(self) -> Dict[str, Union[int, float]]:
         """Get cluster statistics"""
+
+
+
         try:
             # This would integrate with RabbitMQ Management API
             # For now, return mock data
@@ -677,6 +719,9 @@ class RabbitMQManager:
 
     async def publish_message(self, exchange_name: str, routing_key: str, message: Dict, priority: int = 0) -> bool:
         """Publish message to exchange"""
+
+
+
         try:
             connection = await self._get_connection()
             channel = await connection.channel()
@@ -703,6 +748,9 @@ class RabbitMQManager:
 
     async def shutdown_cluster(self) -> Dict[str, Union[str, bool]]:
         """Gracefully shutdown the cluster"""
+
+
+
         try:
             logger.info("Starting cluster shutdown")
             
@@ -732,6 +780,9 @@ class RabbitMQManager:
 
     def export_cluster_config(self) -> Dict:
         """Export current cluster configuration"""
+
+
+
         return {
             "cluster_config": self.config.dict(),
             "deployment_timestamp": time.time(),

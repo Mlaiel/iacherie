@@ -14,7 +14,7 @@ This module implements state-of-the-art AI-powered content protection including:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-🔒 ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 🔒
+ ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 
 This code, architecture, algorithms, and all associated intellectual property 
 are the exclusive property of Fahed Mlaiel. Any unauthorized use, copying, 
 modification, reverse engineering, distribution, or commercialization without 
@@ -32,15 +32,15 @@ LEGAL CONSEQUENCES for violation include but are not limited to:
 For legitimate licensing inquiries, contact: mlaiel@live.de
 
 Expert Development Team Specializations:
-✅ Lead AI Developer & Software Architect - Advanced AI/ML algorithms
-✅ Senior Backend Engineer - Python/FastAPI/Django enterprise architecture  
-✅ Machine Learning Engineer - TensorFlow/PyTorch/Hugging Face model development
-✅ Database Administrator - PostgreSQL/Redis/MongoDB high-performance systems
-✅ Security Engineer - Cryptography/Blockchain/Zero-trust architecture
-✅ Microservices Architect - Distributed systems and service mesh design
-✅ Audio Processing Engineer - Digital signal processing and acoustic fingerprinting
-✅ DevOps Engineer - Kubernetes/Docker/CI-CD automation and infrastructure
-✅ AI Prompt Engineer - Advanced language model optimization and fine-tuning
+ Lead AI Developer & Software Architect - Advanced AI/ML algorithms
+ Senior Backend Engineer - Python/FastAPI/Django enterprise architecture  
+ Machine Learning Engineer - TensorFlow/PyTorch/Hugging Face model development
+ Database Administrator - PostgreSQL/Redis/MongoDB high-performance systems
+ Security Engineer - Cryptography/Blockchain/Zero-trust architecture
+ Microservices Architect - Distributed systems and service mesh design
+ Audio Processing Engineer - Digital signal processing and acoustic fingerprinting
+ DevOps Engineer - Kubernetes/Docker/CI-CD automation and infrastructure
+ AI Prompt Engineer - Advanced language model optimization and fine-tuning
 
 Advanced Business Logic Implementation:
 Creator Upload → AI Content Analysis & Classification → Rights Verification & Registration
@@ -384,6 +384,9 @@ def get_system_info() -> Dict[str, Any]:
     Returns:
         System information dictionary
     """
+
+
+
     return SYSTEM_INFO.copy()
 
 
@@ -393,6 +396,9 @@ def get_module_version() -> str:
     Returns:
         Version string
     """
+
+
+
     return __version__
 
 
@@ -458,7 +464,7 @@ def print_legal_notice():
     Copyright: {__copyright__}
 {'='*80}
 
-🔒 INTELLECTUAL PROPERTY LEGAL NOTICE 🔒
+ INTELLECTUAL PROPERTY LEGAL NOTICE 
 
 This software and all associated intellectual property are the exclusive 
 property of Fahed Mlaiel. Unauthorized use is strictly prohibited and will 
@@ -472,25 +478,25 @@ For licensing inquiries, contact: {__email__}
 
 def print_system_banner():
     """Print system startup banner with key information"""
-    banner = f"""╔═══════════════════════════════════════════════════════════════════════════════╗
-║                 ULTRA-INDUSTRIAL CONTENT PROTECTION SYSTEM                   ║
-║                        Version: {__version__:<25}                        ║
-║                        Author: {__author__:<26}                         ║
-║                        Status: {'Production Ready' if IMPORT_SUCCESS else 'Import Error':<26}                         ║
-╠═══════════════════════════════════════════════════════════════════════════════╣
-║  Advanced AI-Powered Content Security & Rights Management                    ║
-║                                                                               ║
-║  🛡️  Multi-Modal Content Fingerprinting                                      ║
-║  🔐  Quantum-Resistant Encryption                                            ║  
-║  ⛓️   Blockchain Ownership Verification                                       ║
-║  🔍  Real-Time Piracy Detection                                              ║
-║  ⚖️   Automated DMCA Compliance                                               ║
-║  📊  Advanced Analytics & Reporting                                          ║
-║  🌐  Multi-Platform Integration                                              ║
-║                                                                               ║
-║  Copyright © 2025 Fahed Mlaiel. All rights reserved.                        ║
-║  Unauthorized use is strictly prohibited.                                    ║
-╚═══════════════════════════════════════════════════════════════════════════════╝
+    banner = f"""
+                 ULTRA-INDUSTRIAL CONTENT PROTECTION SYSTEM                   
+                        Version: {__version__:<25}                        
+                        Author: {__author__:<26}                         
+                        Status: {'Production Ready' if IMPORT_SUCCESS else 'Import Error':<26}                         
+
+  Advanced AI-Powered Content Security & Rights Management                    
+                                                                               
+    Multi-Modal Content Fingerprinting                                      
+    Quantum-Resistant Encryption                                              
+     Blockchain Ownership Verification                                       
+    Real-Time Piracy Detection                                              
+     Automated DMCA Compliance                                               
+    Advanced Analytics & Reporting                                          
+    Multi-Platform Integration                                              
+                                                                               
+  Copyright © 2025 Fahed Mlaiel. All rights reserved.                        
+  Unauthorized use is strictly prohibited.                                    
+
 """    print(banner)
 
 
@@ -538,7 +544,10 @@ def module_health_check() -> bool:
     
     Returns:
         True if module is healthy, False otherwise
-    """    try:
+    """
+
+
+    try:
         verification = verify_installation()
         return verification["module_loaded"] and len(verification["issues"]) == 0
     except Exception as e:
@@ -610,4 +619,7 @@ class ContentProtectionSystem:
 
 # Convenience function for quick setup
 def create_protection_system(config=None):
-    """Create a configured content protection system"""    return ContentProtectionSystem(config)
+    """Create a configured content protection system"""
+
+
+    return ContentProtectionSystem(config)

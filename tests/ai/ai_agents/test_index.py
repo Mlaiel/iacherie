@@ -23,7 +23,7 @@ imports, exports, and module initialization.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -131,6 +131,9 @@ class TestAgentFactory:
     @pytest.fixture
     def factory(self):
         """Create AgentFactory instance"""
+
+
+
         return AgentFactory()
     
     def test_factory_initialization(self, factory):
@@ -234,6 +237,9 @@ class TestAgentManager:
     @pytest.fixture
     def manager(self):
         """Create AgentManager instance"""
+
+
+
         return AgentManager()
     
     def test_manager_initialization(self, manager):

@@ -287,6 +287,9 @@ class OpenAIAdapter(BaseAIAdapter):
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
     async def generate_embeddings(self, texts: List[str]) -> List[List[float]]:
         """Generate embeddings using OpenAI models."""
+
+
+
         try:
             response = await self.client.embeddings.create(
                 model="text-embedding-ada-002",
@@ -513,6 +516,9 @@ class HuggingFaceAdapter(BaseAIAdapter):
     
     async def generate_embeddings(self, texts: List[str]) -> List[List[float]]:
         """Generate embeddings using Hugging Face models."""
+
+
+
         try:
             model_config = self.models_config[AIModelType.EMBEDDINGS.value]
             
@@ -567,6 +573,9 @@ class AIAdapterFactory:
     @classmethod
     def get_supported_providers(cls) -> List[AIProvider]:
         """Get list of supported AI providers."""
+
+
+
         return list(cls._adapters.keys())
 
 class AIAdapterManager:

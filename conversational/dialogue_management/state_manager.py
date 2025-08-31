@@ -8,7 +8,7 @@ for multi-party creator collaborations and content monetization workflows.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -1056,6 +1056,9 @@ class StateManager:
 
     async def _execute_state_action(self, conversation_id: str, action: str, state_id: str):
         """Execute individual state action"""
+
+
+
         
         try:
             if action == "log_error":
@@ -1088,6 +1091,9 @@ class StateManager:
 
     async def _execute_transition_action(self, conversation_id: str, action: str, transition_data: Dict[str, Any]):
         """Execute individual transition action"""
+
+
+
         
         try:
             if action == "create_support_ticket":
@@ -1194,6 +1200,9 @@ class StateManager:
 
     async def _persist_conversation_state(self, conv_state: ConversationState):
         """Persist conversation state to Redis"""
+
+
+
         
         try:
             state_data = {
@@ -1401,6 +1410,9 @@ class StateManager:
 
     def get_state_metrics(self) -> Dict[str, Any]:
         """Get state management metrics"""
+
+
+
         
         return {
             "global_metrics": self.metrics,

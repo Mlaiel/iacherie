@@ -70,6 +70,9 @@ class TestClientManager:
     @pytest.fixture
     def sample_registration_data(self):
         """Sample client registration data."""
+
+
+
         return ClientRegistrationData(
             email="test.creator@example.com",
             password="SecurePassword123!",
@@ -475,12 +478,18 @@ def event_loop():
 @pytest.fixture
 def mock_database_session():
     """Mock database session for testing."""
+
+
+
     return Mock()
 
 
 @pytest.fixture
 def sample_client_data():
     """Sample client data for testing."""
+
+
+
     return {
         "id": str(uuid4()),
         "email": "test@example.com",
@@ -515,14 +524,14 @@ if __name__ == "__main__":
     print("🧪 IA Influencer Agent - Client Module Test Suite")
     print("=" * 55)
     print()
-    print("🔧 Developed by: Fahed Mlaiel <mlaiel@live.de>")
-    print("📧 Contact: mlaiel@live.de") 
-    print("🏢 Project: IA Influencer Agent with Advanced Content Protection")
+    print(" Developed by: Fahed Mlaiel <mlaiel@live.de>")
+    print(" Contact: mlaiel@live.de") 
+    print(" Project: IA Influencer Agent with Advanced Content Protection")
     print()
-    print("⚖️ WARNING: This code is proprietary and confidential.")
+    print(" WARNING: This code is proprietary and confidential.")
     print("   Unauthorized use is strictly prohibited.")
     print()
-    print("🏃 Running tests...")
+    print(" Running tests...")
     
     # Run pytest programmatically
     pytest.main([__file__, "-v", "--tb=short"])

@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -312,6 +312,9 @@ class ProtectionPolicy(Base):
         enforcement_level: EnforcementLevel = EnforcementLevel.STANDARD_ENFORCEMENT
     ) -> 'ProtectionPolicy':
         """Create a default protection policy"""
+
+
+
         return cls(
             user_id=user_id,
             policy_type=policy_type,
@@ -324,6 +327,9 @@ class ProtectionPolicy(Base):
     @classmethod
     def create_copyright_policy(cls, user_id: str, content_id: str = None) -> 'ProtectionPolicy':
         """Create a standard copyright protection policy"""
+
+
+
         return cls(
             user_id=user_id,
             content_id=content_id,
@@ -479,6 +485,9 @@ class ProtectionPolicy(Base):
     
     def get_performance_summary(self) -> Dict[str, Any]:
         """Get comprehensive performance summary"""
+
+
+
         return {
             'execution_metrics': {
                 'total_executions': self.executions_count,

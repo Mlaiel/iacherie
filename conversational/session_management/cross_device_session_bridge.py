@@ -8,7 +8,7 @@ content creators across mobile, desktop, and web platforms.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copy, modification, or distribution without 
 explicit written permission is strictly prohibited.
@@ -244,6 +244,9 @@ class DeviceSessionSynchronizer:
         user_id: str
     ) -> bool:
         """Register device for cross-device sessions"""
+
+
+
         
         try:
             # Detect device capabilities
@@ -301,6 +304,9 @@ class DeviceSessionSynchronizer:
         user_id: str
     ) -> bool:
         """Start session on specific device"""
+
+
+
         
         try:
             # Get or create session state
@@ -355,6 +361,9 @@ class DeviceSessionSynchronizer:
         state_changes: Dict[str, Any]
     ) -> bool:
         """Synchronize session state changes across devices"""
+
+
+
         
         try:
             session_state = self.session_states.get(session_id)
@@ -397,6 +406,9 @@ class DeviceSessionSynchronizer:
         reason: HandoffReason
     ) -> bool:
         """Handoff session from one device to another"""
+
+
+
         
         try:
             session_state = self.session_states.get(session_id)
@@ -452,6 +464,9 @@ class DeviceSessionSynchronizer:
     
     async def _sync_loop(self):
         """Background sync processing loop"""
+
+
+
         
         try:
             while True:
@@ -477,6 +492,9 @@ class DeviceSessionSynchronizer:
     
     async def _process_sync_operation(self, operation: Dict[str, Any]):
         """Process individual sync operation"""
+
+
+
         
         try:
             session_id = operation["session_id"]
@@ -511,6 +529,9 @@ class DeviceSessionSynchronizer:
     
     async def _apply_state_changes(self, session_state: SessionState, changes: Dict[str, Any]):
         """Apply state changes to session"""
+
+
+
         
         try:
             for change_type, change_data in changes.items():
@@ -530,6 +551,9 @@ class DeviceSessionSynchronizer:
     
     async def _send_sync_update(self, device_id: str, operation: Dict[str, Any]):
         """Send sync update to specific device"""
+
+
+
         
         try:
             # Check if device is online
@@ -553,6 +577,9 @@ class DeviceSessionSynchronizer:
     
     async def _periodic_sync(self):
         """Periodic synchronization for all active sessions"""
+
+
+
         
         try:
             current_time = datetime.utcnow()
@@ -570,6 +597,9 @@ class DeviceSessionSynchronizer:
     
     async def _sync_session_across_devices(self, session_id: str):
         """Sync session state across all active devices"""
+
+
+
         
         try:
             session_state = self.session_states.get(session_id)
@@ -664,6 +694,9 @@ class DeviceSessionSynchronizer:
         session_state: SessionState
     ) -> bool:
         """Validate if handoff is compatible between devices"""
+
+
+
         
         try:
             # Check basic compatibility
@@ -733,6 +766,9 @@ class DeviceSessionSynchronizer:
     
     async def _prepare_handoff_data(self, session_id: str, from_device_id: str) -> Dict[str, Any]:
         """Prepare data for session handoff"""
+
+
+
         
         try:
             session_state = self.session_states.get(session_id)
@@ -763,6 +799,9 @@ class DeviceSessionSynchronizer:
         reason: HandoffReason
     ) -> bool:
         """Execute session handoff"""
+
+
+
         
         try:
             # Send handoff data to target device
@@ -807,6 +846,9 @@ class DeviceSessionSynchronizer:
         timeout: int
     ) -> bool:
         """Wait for handoff confirmation from target device"""
+
+
+
         
         try:
             # This would typically wait for a WebSocket message or event
@@ -820,6 +862,9 @@ class DeviceSessionSynchronizer:
     
     async def _complete_handoff(self, session_id: str, from_device_id: str, to_device_id: str):
         """Complete session handoff process"""
+
+
+
         
         try:
             session_state = self.session_states.get(session_id)
@@ -848,6 +893,9 @@ class DeviceSessionSynchronizer:
     
     async def _cleanup_loop(self):
         """Background cleanup task"""
+
+
+
         
         try:
             while True:
@@ -866,6 +914,9 @@ class DeviceSessionSynchronizer:
     
     async def _cleanup_inactive_sessions(self):
         """Clean up inactive session states"""
+
+
+
         
         try:
             current_time = datetime.utcnow()
@@ -888,6 +939,9 @@ class DeviceSessionSynchronizer:
     
     async def _cleanup_offline_devices(self):
         """Clean up offline device registrations"""
+
+
+
         
         try:
             current_time = datetime.utcnow()
@@ -922,6 +976,9 @@ class DeviceSessionSynchronizer:
     
     async def _cache_session_state(self, session_state: SessionState):
         """Cache session state in Redis"""
+
+
+
         
         try:
             cache_key = f"cross_device_session:{session_state.session_id}"
@@ -941,6 +998,9 @@ class DeviceSessionSynchronizer:
     
     async def _persist_session_state(self, session_state: SessionState):
         """Persist session state to database"""
+
+
+
         
         try:
             async with get_async_session() as session:
@@ -987,6 +1047,9 @@ class DeviceSessionSynchronizer:
     
     async def _cache_device_info(self, device_id: str, device_info: DeviceInfo):
         """Cache device information"""
+
+
+
         
         try:
             cache_key = f"device_info:{device_id}"
@@ -1007,6 +1070,9 @@ class DeviceSessionSynchronizer:
     
     async def _cache_device_session(self, device_id: str, device_session: DeviceSessionInfo):
         """Cache device session information"""
+
+
+
         
         try:
             cache_key = f"device_session:{device_id}"
@@ -1021,6 +1087,9 @@ class DeviceSessionSynchronizer:
     
     async def _get_device_session(self, device_id: str) -> Optional[DeviceSessionInfo]:
         """Get device session information"""
+
+
+
         
         try:
             cache_key = f"device_session:{device_id}"
@@ -1037,6 +1106,9 @@ class DeviceSessionSynchronizer:
     
     async def _queue_offline_sync(self, device_id: str, operation: Dict[str, Any]):
         """Queue operation for offline device sync"""
+
+
+
         
         try:
             offline_queue_key = f"offline_sync:{device_id}"
@@ -1064,6 +1136,9 @@ class DeviceSessionSynchronizer:
     
     async def _initialize_device_sync(self, session_id: str, device_id: str):
         """Initialize sync for new device"""
+
+
+
         
         try:
             session_state = self.session_states.get(session_id)
@@ -1089,6 +1164,9 @@ class DeviceSessionSynchronizer:
     
     async def _notify_device_joined(self, session_id: str, device_id: str):
         """Notify other devices about new device joining"""
+
+
+
         
         try:
             session_state = self.session_states.get(session_id)
@@ -1121,6 +1199,9 @@ class MobileDesktopSessionSync:
     
     async def optimize_mobile_sync(self, session_id: str, device_id: str) -> bool:
         """Optimize sync for mobile devices (battery, network)"""
+
+
+
         
         try:
             device_info = self.synchronizer.device_registry.get(device_id)
@@ -1166,6 +1247,9 @@ class SessionContinuityManager:
     
     async def ensure_continuity(self, session_id: str) -> bool:
         """Ensure session continuity across all devices"""
+
+
+
         
         try:
             session_state = self.synchronizer.session_states.get(session_id)
@@ -1242,6 +1326,9 @@ class SessionContinuityManager:
     
     async def _validate_state_consistency(self, session_id: str) -> bool:
         """Validate state consistency across devices"""
+
+
+
         
         try:
             session_state = self.synchronizer.session_states.get(session_id)
@@ -1315,11 +1402,17 @@ class CrossDeviceSessionBridge:
     
     async def get_device_info(self, device_id: str) -> Optional[DeviceInfo]:
         """Get device information"""
+
+
+
         
         return self.synchronizer.device_registry.get(device_id)
     
     async def get_bridge_statistics(self) -> Dict[str, Any]:
         """Get comprehensive bridge statistics"""
+
+
+
         
         try:
             return {

@@ -8,7 +8,7 @@ Responsibility: Production-grade storage security and data protection
 Technologies: Python, Encryption, Access Control, Compliance, Audit
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -165,6 +165,9 @@ class AccessToken:
     
     def is_valid(self) -> bool:
         """Check if token is still valid"""
+
+
+
         return datetime.now() < self.expires_at and self.usage_count < 1000
 
 
@@ -221,7 +224,7 @@ class SecurityMetrics:
 
 class StorageSecurityManager:
     """
-    🎯 Industrial Storage Security Manager - IA-Influencer-Agent
+     Industrial Storage Security Manager - IA-Influencer-Agent
     
     Enterprise-grade storage security management providing:
     - Advanced encryption with multiple algorithms and key management
@@ -259,10 +262,13 @@ class StorageSecurityManager:
         # Initialize master key
         self._initialize_master_key()
         
-        logger.info("🔐 StorageSecurityManager initialized with enterprise security")
+        logger.info(" StorageSecurityManager initialized with enterprise security")
     
     def _create_default_security_policy(self) -> SecurityPolicy:
         """Create default security policy"""
+
+
+
         return SecurityPolicy(
             policy_name="default_ia_influencer",
             security_level=SecurityLevel.CONFIDENTIAL,
@@ -277,6 +283,9 @@ class StorageSecurityManager:
     
     def _initialize_master_key(self):
         """Initialize master encryption key"""
+
+
+
         try:
             # In production, this would load from secure key management system
             master_key_env = os.getenv("STORAGE_MASTER_KEY")
@@ -286,16 +295,19 @@ class StorageSecurityManager:
             else:
                 # Generate new master key
                 self._master_key = secrets.token_bytes(32)
-                logger.warning("⚠️ Generated new master key - store securely in production!")
+                logger.warning(" Generated new master key - store securely in production!")
             
-            logger.info("✅ Master key initialized")
+            logger.info(" Master key initialized")
             
         except Exception as e:
-            logger.error(f"❌ Master key initialization failed: {e}")
+            logger.error(f" Master key initialization failed: {e}")
             raise
     
     async def classify_data_security(self, content: bytes, metadata: Dict[str, Any]) -> SecurityLevel:
         """Classify data based on content and metadata for appropriate security level"""
+
+
+
         try:
             # Content-based classification
             content_str = content.decode('utf-8', errors='ignore').lower()
@@ -336,12 +348,15 @@ class StorageSecurityManager:
                 return SecurityLevel.PUBLIC
                 
         except Exception as e:
-            logger.error(f"❌ Data classification failed: {e}")
+            logger.error(f" Data classification failed: {e}")
             return SecurityLevel.CONFIDENTIAL  # Default to secure
     
     async def encrypt_data(self, data: bytes, security_level: SecurityLevel, 
                           user_id: str, metadata: Optional[Dict] = None) -> Dict[str, Any]:
         """Encrypt data with appropriate algorithm based on security level"""
+
+
+
         try:
             start_time = datetime.now()
             
@@ -420,16 +435,19 @@ class StorageSecurityManager:
                 }
             )
             
-            logger.info(f"🔐 Data encrypted successfully - Level: {security_level.value}, Size: {len(data)} bytes")
+            logger.info(f" Data encrypted successfully - Level: {security_level.value}, Size: {len(data)} bytes")
             return encryption_result
             
         except Exception as e:
-            logger.error(f"❌ Data encryption failed: {e}")
+            logger.error(f" Data encryption failed: {e}")
             raise
     
     async def decrypt_data(self, encrypted_data_info: Dict[str, Any], user_id: str, 
                           access_token: str) -> bytes:
         """Decrypt data with access control verification"""
+
+
+
         try:
             start_time = datetime.now()
             
@@ -485,11 +503,11 @@ class StorageSecurityManager:
                 }
             )
             
-            logger.info(f"🔓 Data decrypted successfully - Size: {len(decrypted_data)} bytes")
+            logger.info(f" Data decrypted successfully - Size: {len(decrypted_data)} bytes")
             return decrypted_data
             
         except Exception as e:
-            logger.error(f"❌ Data decryption failed: {e}")
+            logger.error(f" Data decryption failed: {e}")
             
             # Log failed decryption attempt
             await self._log_audit_event(
@@ -540,6 +558,9 @@ class StorageSecurityManager:
     async def _get_encryption_key(self, security_level: SecurityLevel, 
                                  algorithm: EncryptionAlgorithm) -> EncryptionKey:
         """Get or generate encryption key for given security level and algorithm"""
+
+
+
         try:
             # Look for existing active key
             key_id = f"{security_level.value}_{algorithm.value}_v1"
@@ -572,11 +593,11 @@ class StorageSecurityManager:
             
             self.encryption_keys[key_id] = encryption_key
             
-            logger.info(f"🔑 Generated new encryption key: {key_id}")
+            logger.info(f" Generated new encryption key: {key_id}")
             return encryption_key
             
         except Exception as e:
-            logger.error(f"❌ Encryption key generation failed: {e}")
+            logger.error(f" Encryption key generation failed: {e}")
             raise
     
     def _get_policy_for_security_level(self, security_level: SecurityLevel) -> SecurityPolicy:
@@ -593,6 +614,9 @@ class StorageSecurityManager:
                                  ip_address: Optional[str] = None, user_agent: Optional[str] = None,
                                  duration_hours: int = 24) -> str:
         """Create secure access token with specified permissions"""
+
+
+
         try:
             token_id = secrets.token_urlsafe(32)
             session_id = secrets.token_urlsafe(16)
@@ -639,15 +663,18 @@ class StorageSecurityManager:
                 }
             )
             
-            logger.info(f"🎫 Access token created for user {user_id} with {len(permissions)} permissions")
+            logger.info(f" Access token created for user {user_id} with {len(permissions)} permissions")
             return jwt_token
             
         except Exception as e:
-            logger.error(f"❌ Access token creation failed: {e}")
+            logger.error(f" Access token creation failed: {e}")
             raise
     
     async def _verify_access_token(self, jwt_token: str, user_id: str) -> bool:
         """Verify access token validity and permissions"""
+
+
+
         try:
             # Decode JWT
             payload = jwt.decode(jwt_token, self._master_key, algorithms=["HS256"])
@@ -678,21 +705,24 @@ class StorageSecurityManager:
             
         except jwt.ExpiredSignatureError:
             self.metrics.failed_authentications += 1
-            logger.warning(f"⚠️ Expired access token for user {user_id}")
+            logger.warning(f" Expired access token for user {user_id}")
             return False
         except jwt.InvalidTokenError:
             self.metrics.failed_authentications += 1
-            logger.warning(f"⚠️ Invalid access token for user {user_id}")
+            logger.warning(f" Invalid access token for user {user_id}")
             return False
         except Exception as e:
             self.metrics.failed_authentications += 1
-            logger.error(f"❌ Access token verification failed: {e}")
+            logger.error(f" Access token verification failed: {e}")
             return False
     
     async def rotate_encryption_keys(self, security_level: Optional[SecurityLevel] = None) -> Dict[str, Any]:
         """Rotate encryption keys for security"""
+
+
+
         try:
-            logger.info("🔄 Starting encryption key rotation...")
+            logger.info(" Starting encryption key rotation...")
             
             rotation_results = []
             
@@ -751,10 +781,10 @@ class StorageSecurityManager:
                     
                     self.metrics.key_rotation_count += 1
                     
-                    logger.info(f"🔑 Rotated key: {old_key.key_id} → {new_key_id}")
+                    logger.info(f" Rotated key: {old_key.key_id} → {new_key_id}")
                     
                 except Exception as e:
-                    logger.error(f"❌ Failed to rotate key {old_key.key_id}: {e}")
+                    logger.error(f" Failed to rotate key {old_key.key_id}: {e}")
                     continue
             
             # Log audit event
@@ -776,11 +806,11 @@ class StorageSecurityManager:
                 "rotation_time": datetime.now().isoformat()
             }
             
-            logger.info(f"✅ Key rotation completed - {len(rotation_results)} keys rotated")
+            logger.info(f" Key rotation completed - {len(rotation_results)} keys rotated")
             return result
             
         except Exception as e:
-            logger.error(f"❌ Key rotation failed: {e}")
+            logger.error(f" Key rotation failed: {e}")
             return {"success": False, "error": str(e)}
     
     async def _log_audit_event(self, event_type: str, user_id: Optional[str], resource: str, 
@@ -789,6 +819,9 @@ class StorageSecurityManager:
                               threat_level: ThreatLevel = ThreatLevel.LOW, suspicious: bool = False,
                               metadata: Optional[Dict[str, Any]] = None):
         """Log security audit event"""
+
+
+
         try:
             event_id = secrets.token_urlsafe(16)
             
@@ -820,10 +853,13 @@ class StorageSecurityManager:
                 self.audit_events = self.audit_events[-10000:]
             
         except Exception as e:
-            logger.error(f"❌ Audit logging failed: {e}")
+            logger.error(f" Audit logging failed: {e}")
     
     async def _analyze_suspicious_activity(self, event: SecurityAuditEvent):
         """Analyze event for suspicious activity patterns"""
+
+
+
         try:
             if not event.user_id:
                 return
@@ -856,7 +892,7 @@ class StorageSecurityManager:
                 )
                 
                 self.metrics.threats_detected += 1
-                logger.warning(f"🚨 Suspicious activity detected for user {event.user_id}")
+                logger.warning(f" Suspicious activity detected for user {event.user_id}")
             
             # Check for unusual access patterns
             if event.source_ip:
@@ -880,16 +916,19 @@ class StorageSecurityManager:
                         }
                     )
                     
-                    logger.warning(f"⚠️ User {event.user_id} accessing from {len(user_ips)} different IPs")
+                    logger.warning(f" User {event.user_id} accessing from {len(user_ips)} different IPs")
             
         except Exception as e:
-            logger.error(f"❌ Suspicious activity analysis failed: {e}")
+            logger.error(f" Suspicious activity analysis failed: {e}")
     
     async def generate_compliance_report(self, standard: ComplianceStandard, 
                                         start_date: datetime, end_date: datetime) -> Dict[str, Any]:
         """Generate compliance report for specified standard and time period"""
+
+
+
         try:
-            logger.info(f"📋 Generating {standard.value.upper()} compliance report...")
+            logger.info(f" Generating {standard.value.upper()} compliance report...")
             
             # Filter audit events for time period
             relevant_events = [
@@ -947,15 +986,18 @@ class StorageSecurityManager:
                 "generated_by": "StorageSecurityManager"
             }
             
-            logger.info(f"✅ {standard.value.upper()} compliance report generated")
+            logger.info(f" {standard.value.upper()} compliance report generated")
             return compliance_report
             
         except Exception as e:
-            logger.error(f"❌ Compliance report generation failed: {e}")
+            logger.error(f" Compliance report generation failed: {e}")
             return {"error": str(e)}
     
     async def _generate_gdpr_compliance(self, events: List[SecurityAuditEvent]) -> Dict[str, Any]:
         """Generate GDPR-specific compliance status"""
+
+
+
         try:
             # GDPR Article 32 - Security of processing
             security_measures = {
@@ -991,11 +1033,14 @@ class StorageSecurityManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ GDPR compliance analysis failed: {e}")
+            logger.error(f" GDPR compliance analysis failed: {e}")
             return {"overall_score": 0, "error": str(e)}
     
     async def _generate_ccpa_compliance(self, events: List[SecurityAuditEvent]) -> Dict[str, Any]:
         """Generate CCPA-specific compliance status"""
+
+
+
         try:
             # CCPA requirements
             ccpa_requirements = {
@@ -1018,11 +1063,14 @@ class StorageSecurityManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ CCPA compliance analysis failed: {e}")
+            logger.error(f" CCPA compliance analysis failed: {e}")
             return {"overall_score": 0, "error": str(e)}
     
     async def _generate_hipaa_compliance(self, events: List[SecurityAuditEvent]) -> Dict[str, Any]:
         """Generate HIPAA-specific compliance status"""
+
+
+
         try:
             # HIPAA Security Rule requirements
             security_requirements = {
@@ -1044,11 +1092,14 @@ class StorageSecurityManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ HIPAA compliance analysis failed: {e}")
+            logger.error(f" HIPAA compliance analysis failed: {e}")
             return {"overall_score": 0, "error": str(e)}
     
     async def _generate_sox_compliance(self, events: List[SecurityAuditEvent]) -> Dict[str, Any]:
         """Generate SOX-specific compliance status"""
+
+
+
         try:
             # SOX Section 404 - Internal controls
             internal_controls = {
@@ -1070,11 +1121,14 @@ class StorageSecurityManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ SOX compliance analysis failed: {e}")
+            logger.error(f" SOX compliance analysis failed: {e}")
             return {"overall_score": 0, "error": str(e)}
     
     async def _generate_iso27001_compliance(self, events: List[SecurityAuditEvent]) -> Dict[str, Any]:
         """Generate ISO 27001-specific compliance status"""
+
+
+
         try:
             # ISO 27001 Annex A controls
             security_controls = {
@@ -1105,12 +1159,15 @@ class StorageSecurityManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ ISO 27001 compliance analysis failed: {e}")
+            logger.error(f" ISO 27001 compliance analysis failed: {e}")
             return {"overall_score": 0, "error": str(e)}
     
     async def _generate_compliance_recommendations(self, standard: ComplianceStandard, 
                                                   events: List[SecurityAuditEvent]) -> List[str]:
         """Generate compliance recommendations"""
+
+
+
         try:
             recommendations = []
             
@@ -1152,11 +1209,14 @@ class StorageSecurityManager:
             return recommendations
             
         except Exception as e:
-            logger.error(f"❌ Compliance recommendations generation failed: {e}")
+            logger.error(f" Compliance recommendations generation failed: {e}")
             return []
     
     async def get_security_metrics(self) -> Dict[str, Any]:
         """Get comprehensive security metrics"""
+
+
+
         try:
             # Update metrics
             self.metrics.last_updated = datetime.now()
@@ -1212,7 +1272,7 @@ class StorageSecurityManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Security metrics calculation failed: {e}")
+            logger.error(f" Security metrics calculation failed: {e}")
             return {"error": str(e)}
 
 
@@ -1223,11 +1283,17 @@ security_manager = StorageSecurityManager()
 # Factory Functions
 def create_security_manager(custom_policy: Optional[SecurityPolicy] = None) -> StorageSecurityManager:
     """Factory function to create security manager instance"""
+
+
+
     return StorageSecurityManager(custom_policy)
 
 
 def create_high_security_policy() -> SecurityPolicy:
     """Create high-security policy for sensitive data"""
+
+
+
     return SecurityPolicy(
         policy_name="high_security_ia_influencer",
         security_level=SecurityLevel.RESTRICTED,
@@ -1251,6 +1317,9 @@ def create_high_security_policy() -> SecurityPolicy:
 # Usage Example
 async def main():
     """Example usage of StorageSecurityManager"""
+
+
+
     try:
         # Create security manager with high-security policy
         security_mgr = create_security_manager(create_high_security_policy())
@@ -1303,7 +1372,7 @@ async def main():
         print(f"Security metrics: {json.dumps(metrics, indent=2)}")
         
     except Exception as e:
-        logger.error(f"❌ Example failed: {e}")
+        logger.error(f" Example failed: {e}")
 
 
 if __name__ == "__main__":

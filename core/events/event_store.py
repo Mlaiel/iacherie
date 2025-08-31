@@ -4,7 +4,7 @@ Module: backend/core/events/event_store.py
 Architecture: Event Persistence and Stream Management
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 
 Description:
@@ -127,6 +127,9 @@ class PostgreSQLEventStore(EventStoreBackend):
     
     async def initialize(self):
         """Initialise la connexion PostgreSQL"""
+
+
+
         try:
             self.engine = create_async_engine(self.connection_string)
             self.pool = await asyncpg.create_pool(self.connection_string)
@@ -181,6 +184,9 @@ class PostgreSQLEventStore(EventStoreBackend):
     
     async def store_event(self, event: Event, stream_id: str) -> bool:
         """Stocke un événement dans PostgreSQL"""
+
+
+
         try:
             insert_event = """
             INSERT INTO events (
@@ -224,6 +230,9 @@ class PostgreSQLEventStore(EventStoreBackend):
     
     async def get_event(self, event_id: str) -> Optional[Event]:
         """Récupère un événement par ID"""
+
+
+
         try:
             query = """
             SELECT id, event_type, event_source, event_subject, event_data,
@@ -261,6 +270,9 @@ class PostgreSQLEventStore(EventStoreBackend):
     
     async def query_events(self, query: EventQuery) -> List[Event]:
         """Recherche d'événements selon une requête"""
+
+
+
         try:
             # Construction de la requête SQL
             sql_parts = ["SELECT * FROM events WHERE 1=1"]
@@ -353,6 +365,9 @@ class PostgreSQLEventStore(EventStoreBackend):
     
     async def get_stream_info(self, stream_id: str) -> Dict[str, Any]:
         """Informations sur un stream"""
+
+
+
         try:
             query = """
             SELECT stream_type, created_at, last_event_at, event_count, metadata
@@ -443,10 +458,16 @@ class EventStream:
     
     async def append(self, event: Event) -> bool:
         """Ajoute un événement au stream"""
+
+
+
         return await self.store.store_event(event, self.stream_id)
     
     def get_cursor(self) -> EventStreamCursor:
         """Retourne le curseur actuel"""
+
+
+
         return self._cursor
     
     def set_cursor(self, cursor: EventStreamCursor):
@@ -539,6 +560,9 @@ class EventStore:
         limit: int = 100
     ) -> List[Event]:
         """Récupère les événements d'un stream"""
+
+
+
         return await self.backend.get_stream_events(stream_id, from_position, limit)
     
     def _is_cache_valid(self, cache_key: str) -> bool:
@@ -561,6 +585,9 @@ class EventStore:
     
     def get_stats(self) -> Dict[str, Any]:
         """Retourne les statistiques"""
+
+
+
         return {
             "stats": self._stats.copy(),
             "cache_size": len(self._cache),

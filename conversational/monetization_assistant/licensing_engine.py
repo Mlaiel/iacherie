@@ -472,6 +472,9 @@ class LicensingEngine:
     
     async def initialize(self) -> None:
         """Initialize the licensing engine with all dependencies."""
+
+
+
         try:
             logger.info("Initializing licensing engine...")
             
@@ -548,6 +551,9 @@ class LicensingEngine:
         
     async def initialize(self) -> None:
         """Initialize the licensing engine."""
+
+
+
         try:
             await self._blockchain_service.initialize()
             await self._legal_api_manager.initialize()
@@ -574,6 +580,9 @@ class LicensingEngine:
         Returns:
             Registered content asset
         """
+
+
+
         try:
             # Generate asset ID
             asset_id = str(uuid.uuid4())
@@ -634,6 +643,9 @@ class LicensingEngine:
         Returns:
             License proposal
         """
+
+
+
         try:
             # Get asset information
             asset = await self._get_content_asset(asset_id)
@@ -697,6 +709,9 @@ class LicensingEngine:
         Returns:
             Evaluation result and next steps
         """
+
+
+
         try:
             # Get proposal
             proposal = await self._get_license_proposal(proposal_id)
@@ -759,6 +774,9 @@ class LicensingEngine:
         Returns:
             Generated contract document
         """
+
+
+
         try:
             # Get agreement details
             agreement = await self._get_license_agreement(agreement_id)
@@ -816,6 +834,9 @@ class LicensingEngine:
         Returns:
             Usage analysis and compliance status
         """
+
+
+
         try:
             # Get license agreement
             agreement = await self._get_license_agreement(license_id)
@@ -871,6 +892,9 @@ class LicensingEngine:
         Returns:
             Licensing revenue breakdown
         """
+
+
+
         try:
             # Get active licenses for creator
             active_licenses = await self._get_creator_active_licenses(

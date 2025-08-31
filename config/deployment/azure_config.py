@@ -70,6 +70,9 @@ class AzureConfig:
     
     def get_resource_group_configuration(self) -> Dict[str, Any]:
         """Generate resource group configuration"""
+
+
+
         return {
             "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
             "contentVersion": "1.0.0.0",
@@ -107,6 +110,9 @@ class AzureConfig:
     
     def get_virtual_network_configuration(self) -> Dict[str, Any]:
         """Generate virtual network configuration"""
+
+
+
         return {
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2023-05-01",
@@ -291,6 +297,9 @@ class AzureConfig:
     
     def get_aks_configuration(self) -> Dict[str, Any]:
         """Generate AKS cluster configuration"""
+
+
+
         return {
             "type": "Microsoft.ContainerService/managedClusters",
             "apiVersion": "2023-10-01",
@@ -388,6 +397,9 @@ class AzureConfig:
     
     def get_postgresql_configuration(self) -> Dict[str, Any]:
         """Generate Azure Database for PostgreSQL configuration"""
+
+
+
         return {
             "type": "Microsoft.DBforPostgreSQL/flexibleServers",
             "apiVersion": "2022-12-01",
@@ -427,6 +439,9 @@ class AzureConfig:
     
     def get_redis_cache_configuration(self) -> Dict[str, Any]:
         """Generate Azure Cache for Redis configuration"""
+
+
+
         return {
             "type": "Microsoft.Cache/Redis",
             "apiVersion": "2023-08-01",
@@ -548,6 +563,9 @@ class AzureConfig:
     
     def get_key_vault_configuration(self) -> Dict[str, Any]:
         """Generate Azure Key Vault configuration"""
+
+
+
         return {
             "type": "Microsoft.KeyVault/vaults",
             "apiVersion": "2023-07-01",
@@ -581,6 +599,9 @@ class AzureConfig:
     
     def get_function_app_configuration(self) -> Dict[str, Any]:
         """Generate Azure Functions configuration"""
+
+
+
         return {
             "type": "Microsoft.Web/sites",
             "apiVersion": "2023-01-01",
@@ -698,6 +719,9 @@ class AzureConfig:
     
     def get_log_analytics_configuration(self) -> Dict[str, Any]:
         """Generate Log Analytics workspace configuration"""
+
+
+
         return {
             "type": "Microsoft.OperationalInsights/workspaces",
             "apiVersion": "2023-09-01",
@@ -719,6 +743,9 @@ class AzureConfig:
     
     def get_application_insights_configuration(self) -> Dict[str, Any]:
         """Generate Application Insights configuration"""
+
+
+
         return {
             "type": "Microsoft.Insights/components",
             "apiVersion": "2020-02-02",
@@ -819,6 +846,9 @@ class AzureConfig:
     
     def get_deployment_script(self) -> str:
         """Generate Azure deployment script"""
+
+
+
         return f'''#!/bin/bash
 # Azure deployment script for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -830,26 +860,26 @@ LOCATION="{self.location}"
 RESOURCE_GROUP="{self.resource_group_name}"
 TEMPLATE_FILE="azure-infrastructure.json"
 
-echo "🚀 Deploying IA-Influencer Agent to Azure..."
+echo " Deploying IA-Influencer Agent to Azure..."
 echo "Environment: $ENVIRONMENT"
 echo "Location: $LOCATION"
 echo "Resource Group: $RESOURCE_GROUP"
 
 # Check prerequisites
 if ! command -v az &> /dev/null; then
-    echo "❌ Azure CLI is not installed"
+    echo " Azure CLI is not installed"
     exit 1
 fi
 
 # Check Azure login
 if ! az account show &> /dev/null; then
-    echo "❌ Not logged in to Azure"
+    echo " Not logged in to Azure"
     echo "Run: az login"
     exit 1
 fi
 
 # Create resource group
-echo "📦 Creating resource group..."
+echo " Creating resource group..."
 az group create \\
     --name $RESOURCE_GROUP \\
     --location "$LOCATION" \\
@@ -860,7 +890,7 @@ az group create \\
         Email=mlaiel@live.de
 
 # Validate ARM template
-echo "✅ Validating ARM template..."
+echo " Validating ARM template..."
 az deployment group validate \\
     --resource-group $RESOURCE_GROUP \\
     --template-file $TEMPLATE_FILE \\
@@ -870,7 +900,7 @@ az deployment group validate \\
         postgresPassword="$(openssl rand -base64 32)"
 
 # Deploy infrastructure
-echo "📊 Deploying infrastructure..."
+echo " Deploying infrastructure..."
 az deployment group create \\
     --resource-group $RESOURCE_GROUP \\
     --template-file $TEMPLATE_FILE \\
@@ -880,24 +910,24 @@ az deployment group create \\
         postgresPassword="$(openssl rand -base64 32)"
 
 # Get deployment outputs
-echo "📋 Getting deployment outputs..."
+echo " Getting deployment outputs..."
 az deployment group show \\
     --resource-group $RESOURCE_GROUP \\
     --name azuredeploy \\
     --query properties.outputs
 
 # Configure kubectl for AKS
-echo "⚙️ Configuring kubectl for AKS..."
+echo " Configuring kubectl for AKS..."
 az aks get-credentials \\
     --resource-group $RESOURCE_GROUP \\
     --name ia-influencer-agent-aks-$ENVIRONMENT
 
 # Verify AKS connection
-echo "🔍 Verifying AKS connection..."
+echo " Verifying AKS connection..."
 kubectl get nodes
 
-echo "✅ Azure infrastructure deployed successfully!"
-echo "🎯 Next steps:"
+echo " Azure infrastructure deployed successfully!"
+echo " Next steps:"
 echo "1. Deploy Kubernetes manifests: kubectl apply -f k8s-manifests/"
 echo "2. Configure DNS: Update Azure DNS records"
 echo "3. Setup monitoring: Configure Azure Monitor"
@@ -906,6 +936,9 @@ echo "4. Configure CI/CD: Setup GitHub Actions with Azure"
     
     def get_terraform_configuration(self) -> str:
         """Generate Terraform configuration for Azure"""
+
+
+
         return f'''# Terraform configuration for IA-Influencer Agent on Azure
 # Author: Fahed Mlaiel <mlaiel@live.de>
 

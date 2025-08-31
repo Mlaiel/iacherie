@@ -599,21 +599,33 @@ class Content(Base):
     @hybrid_property
     def file_size_mb(self):
         """File size in megabytes"""
+
+
+
         return self.file_size_bytes / (1024 * 1024) if self.file_size_bytes else 0
     
     @hybrid_property
     def processing_duration_seconds(self):
         """Processing duration in seconds"""
+
+
+
         return self.processing_duration_ms / 1000 if self.processing_duration_ms else 0
     
     @hybrid_property
     def is_multimedia(self):
         """Check if content is multimedia type"""
+
+
+
         return self.content_type == ContentType.MULTIMEDIA
     
     @hybrid_property
     def is_deleted(self):
         """Check if content is soft-deleted"""
+
+
+
         return self.deleted_at is not None
     
     # Comprehensive indexes for performance

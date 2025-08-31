@@ -201,7 +201,10 @@ class WebCrawler:
         self.logger.info("WebCrawler initialized successfully")
     
     def _initialize_crawler_components(self):
-        """Initialize crawler components and sessions."""        try:
+        """Initialize crawler components and sessions."""
+
+
+        try:
             # HTTP session with connection pooling
             self.session_connector = aiohttp.TCPConnector(
                 limit=self.max_concurrent_requests,
@@ -234,7 +237,10 @@ class WebCrawler:
             raise CrawlerException(f"Crawler initialization error: {e}")
     
     def _setup_browser_automation(self):
-        """Set up browser automation with Selenium."""        try:
+        """Set up browser automation with Selenium."""
+
+
+        try:
             # Chrome options for headless browsing
             self.chrome_options = Options()
             self.chrome_options.add_argument('--headless')
@@ -264,7 +270,10 @@ class WebCrawler:
             self.browser_automation = False
     
     def _get_default_user_agents(self) -> List[str]:
-        """Get list of realistic user agents for anti-detection."""        return [
+        """Get list of realistic user agents for anti-detection."""
+
+
+        return [
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
             'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Firefox/89.0',
@@ -281,7 +290,10 @@ class WebCrawler:
         
         Sets up comprehensive crawling target with platform-specific
         settings, content filters, and extraction rules.
-        """        try:
+        """
+
+
+        try:
             self.logger.info(f"Creating crawl target: {target_config.get('name', 'Unknown')}")
             
             # Generate unique target ID
@@ -373,7 +385,10 @@ class WebCrawler:
         
         Initiates comprehensive crawling session with specified strategy
         and begins content discovery and analysis process.
-        """        try:
+        """
+
+
+        try:
             self.logger.info(f"Starting crawl session for target: {target_id}")
             
             # Validate target exists
@@ -1084,7 +1099,10 @@ class WebCrawler:
         return True
     
     async def cleanup_crawler_resources(self):
-        """Clean up crawler resources and connections."""        try:
+        """Clean up crawler resources and connections."""
+
+
+        try:
             # Close HTTP connector
             if hasattr(self, 'session_connector') and self.session_connector:
                 await self.session_connector.close()

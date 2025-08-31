@@ -5,7 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project Team: Multi-format Creator Platform with AI Protection & Monetization
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.

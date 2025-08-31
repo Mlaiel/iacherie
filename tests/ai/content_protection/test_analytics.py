@@ -23,7 +23,7 @@ in enterprise-grade content protection systems with real business logic implemen
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-🔒 ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 🔒
+ ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 
 This code and all associated concepts, algorithms, and implementations are the 
 exclusive intellectual property of Fahed Mlaiel. Any unauthorized use, copying, 
 modification, or distribution without explicit written permission is STRICTLY 

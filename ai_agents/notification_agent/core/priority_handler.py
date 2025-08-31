@@ -7,7 +7,7 @@ handling intelligent priority classification, urgency detection, and priority-ba
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -124,14 +124,23 @@ class PriorityQueue:
         
     def peek_next(self) -> Optional[Tuple[float, NotificationModel]]:
         """Peek at next notification without removing it"""
+
+
+
         return self.notifications[0] if self.notifications else None
         
     def size(self) -> int:
         """Get current queue size"""
+
+
+
         return len(self.notifications)
         
     def is_empty(self) -> bool:
         """Check if queue is empty"""
+
+
+
         return len(self.notifications) == 0
 
 
@@ -196,6 +205,9 @@ class UrgencyClassifier:
         Returns:
             Tuple of (urgency_level, confidence_score)
         """
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -247,6 +259,9 @@ class UrgencyClassifier:
         context: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
         """Extract comprehensive features for urgency classification"""
+
+
+
         try:
             features = {
                 # Content features
@@ -283,6 +298,9 @@ class UrgencyClassifier:
             
     async def _extract_urgency_keywords(self, content: Dict[str, Any]) -> List[str]:
         """Extract urgency-indicating keywords from content"""
+
+
+
         try:
             urgency_keywords = [
                 'urgent', 'critical', 'immediate', 'emergency', 'asap',
@@ -307,6 +325,9 @@ class UrgencyClassifier:
         context_adjustment: Tuple[UrgencyLevel, float]
     ) -> Tuple[UrgencyLevel, float]:
         """Combine multiple predictions using weighted ensemble"""
+
+
+
         try:
             # Define weights for different prediction sources
             weights = {
@@ -356,6 +377,9 @@ class UrgencyClassifier:
             
     async def _update_classification_metrics(self, processing_time: float, confidence: float):
         """Update classification performance metrics"""
+
+
+
         try:
             self.classification_metrics['total_classifications'] += 1
             
@@ -447,6 +471,9 @@ class PriorityHandler:
         
     def _load_priority_rules(self) -> List[PriorityRule]:
         """Load priority rules from configuration"""
+
+
+
         try:
             rules_config = self.config.get('priority_rules', [])
             rules = []
@@ -468,6 +495,9 @@ class PriorityHandler:
             
     def _load_escalation_policies(self) -> Dict[str, Any]:
         """Load escalation policies configuration"""
+
+
+
         return self.config.get('escalation_policies', {
             'max_wait_time_urgent': 300,  # 5 minutes
             'max_wait_time_high': 900,    # 15 minutes
@@ -477,6 +507,9 @@ class PriorityHandler:
         
     async def start_processing(self):
         """Start priority-based notification processing"""
+
+
+
         try:
             self.logger.info("Starting PriorityHandler processing")
             self.is_running = True
@@ -507,6 +540,9 @@ class PriorityHandler:
             
     async def stop_processing(self):
         """Stop priority processing gracefully"""
+
+
+
         try:
             self.logger.info("Stopping PriorityHandler processing")
             self.is_running = False
@@ -538,6 +574,9 @@ class PriorityHandler:
         Returns:
             Priority decision with detailed reasoning
         """
+
+
+
         try:
             # Classify urgency using AI
             urgency_level, confidence = await self.urgency_classifier.classify_urgency(
@@ -602,6 +641,9 @@ class PriorityHandler:
             
     async def get_next_notification(self) -> Optional[Tuple[NotificationModel, PriorityDecision]]:
         """Get next highest priority notification for processing"""
+
+
+
         try:
             # Check queues in priority order
             for priority in [
@@ -652,6 +694,9 @@ class PriorityHandler:
         context: Optional[Dict[str, Any]]
     ) -> PriorityFactors:
         """Calculate comprehensive priority factors"""
+
+
+
         try:
             # Base urgency score
             urgency_score = self._urgency_level_to_score(urgency_level)
@@ -717,6 +762,9 @@ class PriorityHandler:
         context: Optional[Dict[str, Any]]
     ) -> float:
         """Assess business impact of notification"""
+
+
+
         try:
             impact_score = 0.5  # Default
             
@@ -740,6 +788,9 @@ class PriorityHandler:
             
     async def _get_user_preference_weight(self, user_id: str, context: Optional[Dict[str, Any]]) -> float:
         """Get user preference weight for notification priority"""
+
+
+
         try:
             # Default weight
             weight = 0.5
@@ -764,6 +815,9 @@ class PriorityHandler:
         context: Optional[Dict[str, Any]]
     ) -> float:
         """Calculate time sensitivity of notification"""
+
+
+
         try:
             sensitivity = 0.5  # Default
             
@@ -811,6 +865,9 @@ class PriorityHandler:
         context: Optional[Dict[str, Any]]
     ) -> float:
         """Assess collaboration value of notification"""
+
+
+
         try:
             if 'collaboration' not in notification.type.lower():
                 return 0.0
@@ -839,6 +896,9 @@ class PriorityHandler:
         context: Optional[Dict[str, Any]]
     ) -> float:
         """Assess security relevance of notification"""
+
+
+
         try:
             if 'security' not in notification.type.lower():
                 return 0.0
@@ -870,6 +930,9 @@ class PriorityHandler:
         context: Optional[Dict[str, Any]]
     ) -> float:
         """Assess revenue impact of notification"""
+
+
+
         try:
             if not context or 'revenue_impact' not in context:
                 return 0.0
@@ -896,6 +959,9 @@ class PriorityHandler:
         context: Optional[Dict[str, Any]]
     ) -> float:
         """Assess engagement potential of notification"""
+
+
+
         try:
             potential = 0.5  # Default
             
@@ -919,6 +985,9 @@ class PriorityHandler:
             
     async def _calculate_final_priority_score(self, factors: PriorityFactors) -> float:
         """Calculate final priority score from all factors"""
+
+
+
         try:
             # Weighted combination of factors
             weights = {
@@ -1001,6 +1070,9 @@ class PriorityHandler:
         
     async def _generate_processing_hints(self, urgency_level: UrgencyLevel) -> Dict[str, Any]:
         """Generate processing hints based on urgency level"""
+
+
+
         try:
             hints = {
                 'preferred_channels': [],
@@ -1040,6 +1112,9 @@ class PriorityHandler:
             
     async def _generate_escalation_rules(self, urgency_level: UrgencyLevel) -> Dict[str, Any]:
         """Generate escalation rules based on urgency level"""
+
+
+
         try:
             rules = {
                 'enabled': False,
@@ -1078,6 +1153,9 @@ class PriorityHandler:
             
     async def _generate_delivery_constraints(self, urgency_level: UrgencyLevel) -> Dict[str, Any]:
         """Generate delivery constraints based on urgency level"""
+
+
+
         try:
             constraints = {
                 'respect_quiet_hours': True,
@@ -1144,6 +1222,9 @@ class PriorityHandler:
         priority: NotificationPriority
     ):
         """Delegate notification processing to notification agent"""
+
+
+
         try:
             # Import here to avoid circular imports
             from .notification_agent import NotificationAgent
@@ -1241,6 +1322,9 @@ class PriorityHandler:
                 
     async def _update_queue_metrics(self):
         """Update queue size metrics"""
+
+
+
         try:
             for priority, queue in self.priority_queues.items():
                 self.performance_metrics['queue_sizes'][priority.value] = queue.size()
@@ -1250,6 +1334,9 @@ class PriorityHandler:
             
     async def _process_remaining_notifications(self):
         """Process any remaining notifications during shutdown"""
+
+
+
         try:
             total_remaining = 0
             
@@ -1274,6 +1361,9 @@ class PriorityHandler:
             
     async def get_queue_statistics(self) -> Dict[str, Any]:
         """Get comprehensive queue statistics"""
+
+
+
         try:
             statistics = {
                 'queue_sizes': {},
@@ -1374,6 +1464,9 @@ class PriorityHandler:
         
     async def initialize_handler(self):
         """Initialize the priority handler with all components"""
+
+
+
         try:
             self.logger.info("Initializing PriorityHandler with AI-driven classification")
             
@@ -1422,6 +1515,9 @@ class PriorityHandler:
         Returns:
             Comprehensive priority decision with reasoning
         """
+
+
+
         try:
             # Extract priority factors from notification and context
             factors = await self._extract_priority_factors(
@@ -1493,6 +1589,9 @@ class PriorityHandler:
         Returns:
             queue_position_id: Unique identifier for queue position
         """
+
+
+
         try:
             priority_level = priority_decision.final_priority
             
@@ -1550,6 +1649,9 @@ class PriorityHandler:
         Returns:
             success: Whether escalation was successful
         """
+
+
+
         try:
             # Find notification in queues
             current_queue, notification = await self._find_notification_in_queues(
@@ -1618,6 +1720,9 @@ class PriorityHandler:
             
     async def get_queue_status(self) -> Dict[str, Any]:
         """Get comprehensive status of all priority queues"""
+
+
+
         try:
             queue_status = {
                 'queues': {},
@@ -1672,6 +1777,9 @@ class PriorityHandler:
         priority_preferences: Dict[str, Any]
     ) -> bool:
         """Update user's priority preferences and profile"""
+
+
+
         try:
             # Validate priority preferences
             if not await self._validate_priority_preferences(priority_preferences):
@@ -1698,6 +1806,9 @@ class PriorityHandler:
             
     async def _initialize_priority_queues(self):
         """Initialize priority queues for each priority level"""
+
+
+
         try:
             queue_configs = self.config.get('queue_configs', {})
             
@@ -1720,6 +1831,9 @@ class PriorityHandler:
             
     async def _load_priority_configurations(self):
         """Load priority rules and context weights"""
+
+
+
         try:
             # Load priority rules
             rules_config = self.config.get('priority_rules', {})
@@ -1758,6 +1872,9 @@ class PriorityHandler:
         user_preferences: Optional[Dict[str, Any]] = None
     ) -> PriorityFactors:
         """Extract comprehensive priority factors from notification data"""
+
+
+
         try:
             factors = PriorityFactors()
             
@@ -1826,6 +1943,9 @@ class PriorityHandler:
         context: Dict[str, Any]
     ) -> float:
         """Analyze business impact of the notification"""
+
+
+
         try:
             business_impact = 50.0  # Base impact
             
@@ -1865,6 +1985,9 @@ class PriorityHandler:
         user_preferences: Dict[str, Any]
     ) -> float:
         """Calculate weighting based on user preferences"""
+
+
+
         try:
             # Get user's priority preferences
             channel_preferences = user_preferences.get('channel_preferences', {})
@@ -1894,6 +2017,9 @@ class PriorityHandler:
         context: Dict[str, Any]
     ) -> float:
         """Analyze time sensitivity of notification"""
+
+
+
         try:
             sensitivity = 50.0
             
@@ -1953,6 +2079,9 @@ class PriorityHandler:
                 
     async def _process_queue_batch(self, queue: PriorityQueue):
         """Process a batch of notifications from a priority queue"""
+
+
+
         try:
             batch_size = min(
                 int(queue.processing_rate * self.system_load_factor),
@@ -1989,6 +2118,9 @@ class PriorityHandler:
         priority_score: float
     ):
         """Process individual notification"""
+
+
+
         try:
             # This would integrate with the main notification delivery system
             # For now, we'll just log the processing
@@ -2021,6 +2153,9 @@ class UrgencyClassifier:
         
     async def initialize_classifier(self):
         """Initialize the urgency classification system"""
+
+
+
         try:
             # Load pre-trained model if available
             await self._load_classification_model()
@@ -2053,6 +2188,9 @@ class UrgencyClassifier:
         Returns:
             Tuple of (urgency_level, confidence_score)
         """
+
+
+
         try:
             # Extract features
             features = await self._extract_urgency_features(notification, context)
@@ -2087,6 +2225,9 @@ class UrgencyClassifier:
         context: Dict[str, Any]
     ) -> np.ndarray:
         """Extract feature vector for urgency classification"""
+
+
+
         try:
             features = []
             
@@ -2134,6 +2275,9 @@ class UrgencyClassifier:
         features: np.ndarray
     ) -> Tuple[UrgencyLevel, float]:
         """Rule-based urgency classification as fallback"""
+
+
+
         try:
             score = 0.0
             confidence = 0.7  # Rule-based has moderate confidence
@@ -2191,6 +2335,9 @@ class UrgencyClassifier:
         feedback_context: Dict[str, Any]
     ) -> bool:
         """Update classifier with feedback for improved accuracy"""
+
+
+
         try:
             # Find the original classification
             for record in self.training_data:

@@ -1,5 +1,5 @@
 """
-🎼 Genre Classifier - AI-Powered Music Genre Classification System
+ Genre Classifier - AI-Powered Music Genre Classification System
 
 Advanced machine learning-based music genre classification engine using
 multi-feature analysis and deep learning models for accurate genre identification.
@@ -52,7 +52,7 @@ class GenreClassificationResult:
 
 class GenreClassifier:
     """
-    🎼 Professional Music Genre Classification Engine
+     Professional Music Genre Classification Engine
     
     AI-powered genre classification using advanced feature extraction
     and machine learning models for accurate music categorization.
@@ -108,6 +108,9 @@ class GenreClassifier:
         Returns:
             Genre classification result
         """
+
+
+
         try:
             self.logger.info("Starting genre classification...")
             
@@ -343,6 +346,9 @@ class GenreClassifier:
         Real-time genre classification for single frame
         Optimized for low-latency processing
         """
+
+
+
         try:
             # Extract basic features quickly
             rms_energy = np.sqrt(np.mean(frame ** 2))

@@ -1,5 +1,5 @@
 """
-🔐 Encryption Engine - IA Influencer Agent Platform Enterprise
+ Encryption Engine - IA Influencer Agent Platform Enterprise
 ==============================================================
 Module: backend/data_management/storage/encryption_engine.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Enterprise encryption engine for secure content protection
 with advanced key management and compliance features.
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -838,6 +838,9 @@ class EncryptionEngine:
     
     def get_encryption_statistics(self) -> Dict[str, Any]:
         """Get comprehensive encryption statistics"""
+
+
+
         return {
             'total_encryptions': self.metrics['total_encryptions'],
             'total_decryptions': self.metrics['total_decryptions'],
@@ -865,6 +868,9 @@ class EncryptionEngine:
     
     async def rotate_keys(self) -> Dict[str, Any]:
         """Trigger key rotation"""
+
+
+
         return self.key_manager.rotate_keys()
 
 # Export main classes

@@ -7,7 +7,7 @@ Provides intelligent format identification, validation, and metadata extraction.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -173,6 +173,9 @@ class MultimediaFormatDetector:
     
     def _initialize_format_signatures(self) -> List[FormatSignature]:
         """Initialize format detection signatures"""
+
+
+
         return [
             # Video formats
             FormatSignature(MediaFormat.MP4, b'\x00\x00\x00\x18ftypmp4', 0),
@@ -212,6 +215,9 @@ class MultimediaFormatDetector:
     
     def _initialize_mime_mappings(self) -> Dict[str, MediaFormat]:
         """Initialize MIME type to format mappings"""
+
+
+
         return {
             # Video
             'video/mp4': MediaFormat.MP4,
@@ -252,6 +258,9 @@ class MultimediaFormatDetector:
     
     def _initialize_format_type_mappings(self) -> Dict[MediaFormat, MediaType]:
         """Initialize format to media type mappings"""
+
+
+
         return {
             # Video formats
             MediaFormat.MP4: MediaType.VIDEO,
@@ -446,6 +455,9 @@ class MultimediaFormatDetector:
     
     async def _detect_by_extension(self, file_extension: str) -> Optional[Dict[str, Any]]:
         """Detect format using file extension"""
+
+
+
         try:
             format_enum = MediaFormat(file_extension.lower())
             return {
@@ -824,6 +836,9 @@ class MultimediaFormatDetector:
     
     async def is_format_supported(self, format_name: str) -> bool:
         """Check if format is supported"""
+
+
+
         try:
             MediaFormat(format_name.lower())
             return True
@@ -832,6 +847,9 @@ class MultimediaFormatDetector:
     
     async def get_format_info(self, format_name: str) -> Optional[Dict[str, Any]]:
         """Get information about a specific format"""
+
+
+
         try:
             format_enum = MediaFormat(format_name.lower())
             media_type = self.format_type_mappings.get(format_enum, MediaType.UNKNOWN)

@@ -40,7 +40,7 @@ Author: Fahed Mlaiel
 Contact: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  MAXIMUM SECURITY SURVEILLANCE IP WARNING: Unauthorized use, reproduction, reverse 
+  MAXIMUM SECURITY SURVEILLANCE IP WARNING: Unauthorized use, reproduction, reverse 
     engineering, or distribution of this web surveillance code is strictly prohibited. 
     This system contains proprietary surveillance algorithms, anti-detection methods, 
     and intelligence gathering techniques protected by international copyright laws, 
@@ -204,6 +204,9 @@ class WebSurveillanceEngine:
         
     def _initialize_platform_apis(self):
         """Initialize platform API configurations"""
+
+
+
         try:
             # YouTube Data API
             self.youtube_service = build('youtube', 'v3', 
@@ -220,6 +223,9 @@ class WebSurveillanceEngine:
     
     def _initialize_driver_pool(self, pool_size: int = 3):
         """Initialize Selenium driver pool for web scraping"""
+
+
+
         try:
             for i in range(pool_size):
                 chrome_options = ChromeOptions()
@@ -257,6 +263,9 @@ class WebSurveillanceEngine:
         Returns:
             Target ID for the created surveillance target
         """
+
+
+
         try:
             # Generate fingerprints for all content types
             fingerprints = {}
@@ -320,6 +329,9 @@ class WebSurveillanceEngine:
         Returns:
             True if monitoring started successfully
         """
+
+
+
         try:
             tasks = []
             for target_id in target_ids:
@@ -355,6 +367,9 @@ class WebSurveillanceEngine:
         Returns:
             SurveillanceReport with comprehensive scan results
         """
+
+
+
         try:
             target = await self._load_surveillance_target(target_id)
             if not target:
@@ -412,6 +427,9 @@ class WebSurveillanceEngine:
     
     async def _monitor_platform_real_time(self, target: SurveillanceTarget):
         """Real-time monitoring for a specific platform"""
+
+
+
         try:
             while target.active:
                 detections = []
@@ -438,6 +456,9 @@ class WebSurveillanceEngine:
     
     async def _deep_scan_youtube(self, target: SurveillanceTarget, depth: int) -> List[DetectionResult]:
         """Deep scan YouTube for content matches"""
+
+
+
         try:
             detections = []
             
@@ -470,6 +491,9 @@ class WebSurveillanceEngine:
     
     async def _deep_scan_instagram(self, target: SurveillanceTarget, depth: int) -> List[DetectionResult]:
         """Deep scan Instagram for content matches"""
+
+
+
         try:
             detections = []
             
@@ -500,6 +524,9 @@ class WebSurveillanceEngine:
     
     async def _deep_scan_tiktok(self, target: SurveillanceTarget, depth: int) -> List[DetectionResult]:
         """Deep scan TikTok for content matches using web scraping"""
+
+
+
         try:
             detections = []
             
@@ -543,6 +570,9 @@ class WebSurveillanceEngine:
     
     async def _deep_scan_twitter(self, target: SurveillanceTarget, depth: int) -> List[DetectionResult]:
         """Deep scan Twitter for content matches"""
+
+
+
         try:
             detections = []
             
@@ -593,6 +623,9 @@ class WebSurveillanceEngine:
     
     async def _deep_scan_web(self, target: SurveillanceTarget, depth: int) -> List[DetectionResult]:
         """Generic web scanning using search engines"""
+
+
+
         try:
             detections = []
             
@@ -620,6 +653,9 @@ class WebSurveillanceEngine:
     
     async def _analyze_youtube_video(self, video_url: str, target: SurveillanceTarget) -> Optional[DetectionResult]:
         """Analyze YouTube video for content matches"""
+
+
+
         try:
             # Download video using pytube
             yt = pytube.YouTube(video_url)
@@ -673,6 +709,9 @@ class WebSurveillanceEngine:
     
     async def _analyze_instagram_media(self, media: Dict, target: SurveillanceTarget) -> Optional[DetectionResult]:
         """Analyze Instagram media for content matches"""
+
+
+
         try:
             # Download media
             media_url = media.get('thumbnail_url') or media.get('video_url')
@@ -730,6 +769,9 @@ class WebSurveillanceEngine:
     
     async def _analyze_tiktok_video(self, video_url: str, target: SurveillanceTarget, driver) -> Optional[DetectionResult]:
         """Analyze TikTok video for content matches"""
+
+
+
         try:
             # Navigate to video page
             driver.get(video_url)
@@ -785,6 +827,9 @@ class WebSurveillanceEngine:
     
     async def _analyze_twitter_tweet(self, tweet_element, target: SurveillanceTarget) -> Optional[DetectionResult]:
         """Analyze Twitter tweet for content matches"""
+
+
+
         try:
             # Extract tweet text
             try:
@@ -851,6 +896,9 @@ class WebSurveillanceEngine:
     
     async def _analyze_web_page(self, page_url: str, target: SurveillanceTarget) -> Optional[DetectionResult]:
         """Analyze generic web page for content matches"""
+
+
+
         try:
             # Fetch page content
             async with aiohttp.ClientSession() as session:
@@ -899,6 +947,9 @@ class WebSurveillanceEngine:
     
     async def _compare_fingerprints(self, fp1: Any, fp2: Any) -> float:
         """Compare two fingerprints and return similarity score"""
+
+
+
         try:
             # This would use the fingerprint engine's comparison methods
             # Simplified version for now
@@ -922,6 +973,9 @@ class WebSurveillanceEngine:
     
     async def _take_screenshot(self, url: str) -> Optional[str]:
         """Take screenshot of URL for evidence"""
+
+
+
         try:
             if not self.driver_pool:
                 return None
@@ -941,6 +995,9 @@ class WebSurveillanceEngine:
     
     async def _take_screenshot_with_driver(self, driver, url: str) -> Optional[str]:
         """Take screenshot using existing driver"""
+
+
+
         try:
             screenshot_path = f"/tmp/evidence_{int(time.time())}.png"
             driver.save_screenshot(screenshot_path)
@@ -951,6 +1008,9 @@ class WebSurveillanceEngine:
     
     async def _google_search(self, query: str, num_results: int) -> List[str]:
         """Perform Google search and return URLs"""
+
+
+
         try:
             # This would use Google Custom Search API
             # Simplified version for now
@@ -1005,6 +1065,9 @@ class WebSurveillanceEngine:
     
     async def _handle_detection_alert(self, detection: DetectionResult, target: SurveillanceTarget):
         """Handle detection alert by notifying user and taking action"""
+
+
+
         try:
             # Store alert in database
             alert_data = {
@@ -1029,6 +1092,9 @@ class WebSurveillanceEngine:
     
     async def _send_detection_notification(self, user_id: int, detection: DetectionResult):
         """Send notification to user about detection"""
+
+
+
         try:
             # This would integrate with notification service
             # For now, just log the notification
@@ -1042,6 +1108,9 @@ class WebSurveillanceEngine:
     
     async def _store_surveillance_target(self, target: SurveillanceTarget) -> str:
         """Store surveillance target in database"""
+
+
+
         try:
             target_id = f"target_{target.user_id}_{target.content_id}_{target.platform.value}_{int(time.time())}"
             
@@ -1075,6 +1144,9 @@ class WebSurveillanceEngine:
     
     async def _load_surveillance_target(self, target_id: str) -> Optional[SurveillanceTarget]:
         """Load surveillance target from database"""
+
+
+
         try:
             query = """
                 SELECT user_id, content_id, platform, search_terms, fingerprints, metadata,
@@ -1105,6 +1177,9 @@ class WebSurveillanceEngine:
     
     async def _store_detection_result(self, detection: DetectionResult) -> bool:
         """Store detection result in database"""
+
+
+
         try:
             query = """
                 INSERT INTO detection_results 
@@ -1138,6 +1213,9 @@ class WebSurveillanceEngine:
     
     async def _store_surveillance_report(self, report: SurveillanceReport) -> bool:
         """Store surveillance report in database"""
+
+
+
         try:
             query = """
                 INSERT INTO surveillance_reports 
@@ -1171,6 +1249,9 @@ class WebSurveillanceEngine:
     
     async def _store_alert(self, alert_data: Dict[str, Any]) -> bool:
         """Store alert in database"""
+
+
+
         try:
             query = """
                 INSERT INTO surveillance_alerts 
@@ -1203,6 +1284,9 @@ class WebSurveillanceEngine:
     
     def __del__(self):
         """Cleanup driver pool on destruction"""
+
+
+
         try:
             for driver in self.driver_pool:
                 driver.quit()

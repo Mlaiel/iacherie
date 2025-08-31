@@ -94,6 +94,9 @@ class RedisCacheStorageProvider(CacheStorageProvider):
     
     async def connect(self) -> None:
         """Establish Redis connection."""
+
+
+
         try:
             # Create connection pool
             self.connection_pool = redis.ConnectionPool.from_url(
@@ -118,6 +121,9 @@ class RedisCacheStorageProvider(CacheStorageProvider):
     
     async def disconnect(self) -> None:
         """Close Redis connection."""
+
+
+
         try:
             if self.redis_client:
                 await self.redis_client.close()
@@ -135,6 +141,9 @@ class RedisCacheStorageProvider(CacheStorageProvider):
     
     async def health_check(self) -> bool:
         """Check Redis health."""
+
+
+
         try:
             if not self.is_connected or not self.redis_client:
                 return False
@@ -149,6 +158,9 @@ class RedisCacheStorageProvider(CacheStorageProvider):
     
     def _get_cache_key(self, record_id: str) -> str:
         """Get formatted cache key."""
+
+
+
         return f"{self.key_prefix}{record_id}"
     
     def _serialize_data(self, data: Any) -> Tuple[bytes, bool]:
@@ -288,6 +300,9 @@ class RedisCacheStorageProvider(CacheStorageProvider):
         ttl_seconds: int
     ) -> bool:
         """Set value with time-to-live."""
+
+
+
         try:
             cache_key = self._get_cache_key(key)
             serialized_data, _ = self._serialize_data(value)
@@ -301,6 +316,9 @@ class RedisCacheStorageProvider(CacheStorageProvider):
     
     async def get_ttl(self, key: str) -> Optional[int]:
         """Get remaining TTL for key."""
+
+
+
         try:
             cache_key = self._get_cache_key(key)
             ttl = await self.redis_client.ttl(cache_key)
@@ -318,6 +336,9 @@ class RedisCacheStorageProvider(CacheStorageProvider):
         additional_seconds: int
     ) -> bool:
         """Extend TTL for existing key."""
+
+
+
         try:
             cache_key = self._get_cache_key(key)
             current_ttl = await self.redis_client.ttl(cache_key)
@@ -483,6 +504,9 @@ class RedisCacheStorageProvider(CacheStorageProvider):
     
     async def delete_record(self, record_id: str) -> bool:
         """Delete a record from cache."""
+
+
+
         try:
             cache_key = self._get_cache_key(record_id)
             result = await self.redis_client.delete(cache_key)
@@ -522,6 +546,9 @@ class RedisCacheStorageProvider(CacheStorageProvider):
     
     async def exists(self, record_id: str) -> bool:
         """Check if record exists in cache."""
+
+
+
         try:
             cache_key = self._get_cache_key(record_id)
             result = await self.redis_client.exists(cache_key)
@@ -536,6 +563,9 @@ class RedisCacheStorageProvider(CacheStorageProvider):
         options: QueryOptions
     ) -> AsyncIterator[Tuple[str, Any, Optional[StorageMetadata]]]:
         """Query records using key patterns."""
+
+
+
         try:
             # Build pattern from filters
             pattern = self.key_prefix + "*"
@@ -602,6 +632,9 @@ class RedisCacheStorageProvider(CacheStorageProvider):
         filters: Optional[List[QueryFilter]] = None
     ) -> int:
         """Count records in cache."""
+
+
+
         try:
             pattern = self.key_prefix + "*"
             count = 0
@@ -631,10 +664,16 @@ class RedisCacheStorageProvider(CacheStorageProvider):
         metadata: Optional[StorageMetadata] = None
     ) -> bool:
         """Update an existing record (same as store for cache)."""
+
+
+
         return await self.store_record(record_id, data, metadata)
     
     async def get_statistics(self) -> StorageStats:
         """Get cache statistics."""
+
+
+
         try:
             # Get basic Redis info
             info = await self.redis_client.info('memory')
@@ -759,6 +798,9 @@ class InMemoryCacheStorageProvider(CacheStorageProvider):
     
     async def connect(self) -> None:
         """Initialize in-memory cache."""
+
+
+
         try:
             # Start cleanup task
             self._cleanup_task = asyncio.create_task(self._cleanup_expired_entries())
@@ -772,6 +814,9 @@ class InMemoryCacheStorageProvider(CacheStorageProvider):
     
     async def disconnect(self) -> None:
         """Close in-memory cache."""
+
+
+
         try:
             # Cancel cleanup task
             if self._cleanup_task:
@@ -794,6 +839,9 @@ class InMemoryCacheStorageProvider(CacheStorageProvider):
     
     async def health_check(self) -> bool:
         """Check in-memory cache health."""
+
+
+
         return self.is_connected
     
     async def _cleanup_expired_entries(self) -> None:
@@ -838,6 +886,9 @@ class InMemoryCacheStorageProvider(CacheStorageProvider):
         metadata: Optional[StorageMetadata] = None
     ) -> bool:
         """Store a record in memory cache."""
+
+
+
         try:
             self._evict_if_needed()
             
@@ -871,6 +922,9 @@ class InMemoryCacheStorageProvider(CacheStorageProvider):
         include_metadata: bool = True
     ) -> Optional[Tuple[Any, Optional[StorageMetadata]]]:
         """Retrieve a record from memory cache."""
+
+
+
         try:
             entry = self._cache.get(record_id)
             
@@ -905,6 +959,9 @@ class InMemoryCacheStorageProvider(CacheStorageProvider):
         ttl_seconds: int
     ) -> bool:
         """Set value with time-to-live."""
+
+
+
         try:
             self._evict_if_needed()
             
@@ -926,6 +983,9 @@ class InMemoryCacheStorageProvider(CacheStorageProvider):
     
     async def get_ttl(self, key: str) -> Optional[int]:
         """Get remaining TTL for key."""
+
+
+
         try:
             entry = self._cache.get(key)
             if entry:
@@ -943,6 +1003,9 @@ class InMemoryCacheStorageProvider(CacheStorageProvider):
         additional_seconds: int
     ) -> bool:
         """Extend TTL for existing key."""
+
+
+
         try:
             entry = self._cache.get(key)
             if entry:
@@ -969,6 +1032,9 @@ class InMemoryCacheStorageProvider(CacheStorageProvider):
     
     async def delete_record(self, record_id: str) -> bool:
         """Delete a record from memory cache."""
+
+
+
         try:
             removed = self._cache.pop(record_id, None) is not None
             self._access_times.pop(record_id, None)
@@ -1005,6 +1071,9 @@ class InMemoryCacheStorageProvider(CacheStorageProvider):
     
     async def get_statistics(self) -> StorageStats:
         """Get memory cache statistics."""
+
+
+
         try:
             # Count non-expired entries
             current_time = time.time()

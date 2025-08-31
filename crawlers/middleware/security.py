@@ -874,6 +874,9 @@ class SecurityMiddleware:
 # Factory function for dependency injection
 def get_security_middleware() -> SecurityMiddleware:
     """Get security middleware instance"""
+
+
+
     return SecurityMiddleware()
 
 

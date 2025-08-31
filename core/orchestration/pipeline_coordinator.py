@@ -7,7 +7,7 @@ pipelines with intelligent load balancing, resource optimization, and quality ga
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -198,6 +198,9 @@ class PipelineCoordinator:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             # Validate pipeline definition
             if not await self._validate_pipeline_definition(pipeline_def):
@@ -237,6 +240,9 @@ class PipelineCoordinator:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             if not asyncio.iscoroutinefunction(processor_func):
                 raise ValueError("Processor must be an async function")
@@ -262,6 +268,9 @@ class PipelineCoordinator:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             if not asyncio.iscoroutinefunction(validator_func):
                 raise ValueError("Validator must be an async function")
@@ -610,6 +619,9 @@ class PipelineCoordinator:
     
     async def _validate_pipeline_definition(self, pipeline_def: PipelineDefinition) -> bool:
         """Validate pipeline definition structure."""
+
+
+
         try:
             # Check basic structure
             if not pipeline_def.pipeline_id or not pipeline_def.name:
@@ -699,6 +711,9 @@ class PipelineCoordinator:
     
     async def add_resource_pool(self, pool: ResourcePool) -> bool:
         """Add a new resource pool."""
+
+
+
         try:
             self.resource_pools[pool.pool_id] = pool
             
@@ -718,10 +733,16 @@ class PipelineCoordinator:
     
     async def get_pipeline_status(self, execution_id: str) -> Optional[PipelineExecution]:
         """Get current pipeline execution status."""
+
+
+
         return self.active_executions.get(execution_id)
     
     async def cancel_pipeline(self, execution_id: str) -> bool:
         """Cancel running pipeline execution."""
+
+
+
         try:
             if execution_id in self.active_executions:
                 execution = self.active_executions[execution_id]
@@ -744,6 +765,9 @@ class PipelineCoordinator:
     
     async def get_coordination_stats(self) -> Dict[str, Any]:
         """Get coordinator performance statistics."""
+
+
+
         return {
             **self.coordination_stats,
             'active_pipelines': len(self.active_executions),

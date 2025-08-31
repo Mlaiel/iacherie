@@ -7,7 +7,7 @@ community engagement, and personalized interaction across all platforms.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
@@ -224,9 +224,12 @@ class ConversationalAIAgent(BaseAIAgent):
     
     def _load_response_templates(self) -> Dict[str, List[str]]:
         """Load response templates for different conversation types"""
+
+
+
         return {
             'greeting': [
-                "Hi {name}! Thanks for reaching out! 😊",
+                "Hi {name}! Thanks for reaching out! ",
                 "Hello {name}! Great to hear from you!",
                 "Hey there {name}! How can I help you today?"
             ],
@@ -236,9 +239,9 @@ class ConversationalAIAgent(BaseAIAgent):
                 "Hello {name}! I appreciate you thinking of me for this collaboration. I'd love to learn more!"
             ],
             'fan_appreciation': [
-                "Thank you so much {name}! Your support means everything to me! ❤️",
+                "Thank you so much {name}! Your support means everything to me! ",
                 "You're amazing {name}! Thank you for being such an incredible supporter!",
-                "This just made my day, {name}! Thank you for the kind words! 🙏"
+                "This just made my day, {name}! Thank you for the kind words! "
             ],
             'business_inquiry': [
                 "Hi {name}! Thank you for your business inquiry. I'll review the details and get back to you within 24 hours.",
@@ -254,6 +257,9 @@ class ConversationalAIAgent(BaseAIAgent):
     
     async def process_incoming_message(self, message_content: str, user_info: Dict[str, Any], platform: SocialPlatform) -> ConversationMessage:
         """Process incoming message and create conversation context"""
+
+
+
         try:
             # Create or update conversation context
             conversation = await self._get_or_create_conversation(user_info, platform)
@@ -285,6 +291,9 @@ class ConversationalAIAgent(BaseAIAgent):
     
     async def generate_response(self, conversation_id: str, message_id: str, custom_instructions: Optional[str] = None) -> ResponseGeneration:
         """Generate intelligent response for conversation"""
+
+
+
         try:
             if conversation_id not in self.active_conversations:
                 raise ValueError(f"Conversation {conversation_id} not found")
@@ -357,6 +366,9 @@ class ConversationalAIAgent(BaseAIAgent):
     
     async def _analyze_message(self, message: ConversationMessage, conversation: ConversationContext):
         """Perform comprehensive message analysis"""
+
+
+
         try:
             # Sentiment analysis
             message.sentiment_score = await self.sentiment_analyzer.analyze_sentiment(message.content)
@@ -450,6 +462,9 @@ class ConversationalAIAgent(BaseAIAgent):
     
     async def _generate_intelligent_response(self, conversation: ConversationContext, message: Dict[str, Any], custom_instructions: Optional[str] = None) -> ResponseGeneration:
         """Generate intelligent, personalized response"""
+
+
+
         try:
             # Determine response strategy
             response_type = self._determine_response_type(conversation, message)
@@ -547,7 +562,7 @@ class ConversationalAIAgent(BaseAIAgent):
         elif conversation.follower_status == 'non_follower':
             return "If you enjoy my content, consider following for more updates!"
         elif 'music' in conversation.conversation_topics:
-            return "Check out my latest track if you haven't already! 🎵"
+            return "Check out my latest track if you haven't already! "
         return None
     
     def _calculate_response_confidence(self, response: str, conversation: ConversationContext) -> float:

@@ -326,6 +326,9 @@ class ErrorReporter:
         
     async def report_error(self, error_info: ErrorInfo):
         """Report error for monitoring and analytics"""
+
+
+
         try:
             # Store detailed error information
             error_key = f"errors:{error_info.error_id}"
@@ -401,6 +404,9 @@ class ErrorReporter:
     
     async def get_error_statistics(self, time_range: str = "24h") -> Dict[str, Any]:
         """Get error statistics for specified time range"""
+
+
+
         try:
             now = time.time()
             
@@ -472,6 +478,9 @@ class ErrorHandlingMiddleware:
                          context: Dict[str, Any] = None,
                          operation: Callable = None) -> Any:
         """Main error handling method"""
+
+
+
         try:
             # Create error information
             error_info = await self.create_error_info(error, context)
@@ -594,6 +603,9 @@ class ErrorHandlingMiddleware:
     @asynccontextmanager
     async def error_context(self, context: Dict[str, Any] = None):
         """Context manager for automatic error handling"""
+
+
+
         try:
             yield
         except Exception as error:
@@ -601,6 +613,9 @@ class ErrorHandlingMiddleware:
     
     async def get_error_dashboard_data(self) -> Dict[str, Any]:
         """Get error data for monitoring dashboard"""
+
+
+
         try:
             # Get error statistics
             hourly_stats = await self.error_reporter.get_error_statistics("24h")
@@ -635,6 +650,9 @@ class ErrorHandlingMiddleware:
 # Factory function for dependency injection
 def get_error_handling_middleware() -> ErrorHandlingMiddleware:
     """Get error handling middleware instance"""
+
+
+
     return ErrorHandlingMiddleware()
 
 

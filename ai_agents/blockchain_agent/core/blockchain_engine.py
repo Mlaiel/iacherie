@@ -54,6 +54,9 @@ class BlockchainEngine:
 
     async def start(self) -> None:
         """Start the blockchain processing engine"""
+
+
+
         try:
             self.is_running = True
             logger.info("BlockchainEngine started successfully")
@@ -63,6 +66,9 @@ class BlockchainEngine:
 
     async def process(self, data: Dict[str, Any]) -> BlockchainResult:
         """Process blockchain operation"""
+
+
+
         try:
             job_id = data.get('job_id', 'auto-generated')
             

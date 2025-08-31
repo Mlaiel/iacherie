@@ -10,7 +10,7 @@ Provides module information, health checks, and initialization utilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -100,6 +100,9 @@ class SchedulingAgentModule:
         Returns:
             Initialization status report
         """
+
+
+
         try:
             config = config or {}
             initialization_report = {
@@ -210,6 +213,9 @@ class SchedulingAgentModule:
     
     async def _check_component_health(self, component_name: str, component: Any) -> Dict[str, Any]:
         """Check health of individual component"""
+
+
+
         try:
             health_info = {
                 'status': 'healthy',
@@ -251,6 +257,9 @@ class SchedulingAgentModule:
     
     def get_module_info(self) -> Dict[str, Any]:
         """Get comprehensive module information"""
+
+
+
         return {
             **MODULE_INFO,
             'initialized': self.initialized,
@@ -263,10 +272,16 @@ class SchedulingAgentModule:
     
     def get_component(self, component_name: str) -> Optional[Any]:
         """Get initialized component by name"""
+
+
+
         return self.components.get(component_name)
     
     async def shutdown(self) -> Dict[str, Any]:
         """Gracefully shutdown the module and cleanup resources"""
+
+
+
         try:
             shutdown_report = {
                 'module': MODULE_INFO['name'],
@@ -316,27 +331,45 @@ _module_instance = SchedulingAgentModule()
 
 async def initialize_module(config: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     """Initialize the scheduling agent module"""
+
+
+
     return await _module_instance.initialize(config)
 
 def get_module_info() -> Dict[str, Any]:
     """Get module information"""
+
+
+
     return _module_instance.get_module_info()
 
 def get_component(component_name: str) -> Optional[Any]:
     """Get initialized component"""
+
+
+
     return _module_instance.get_component(component_name)
 
 async def shutdown_module() -> Dict[str, Any]:
     """Shutdown the module"""
+
+
+
     return await _module_instance.shutdown()
 
 def is_initialized() -> bool:
     """Check if module is initialized"""
+
+
+
     return _module_instance.initialized
 
 # Health check endpoint
 async def health_check() -> Dict[str, Any]:
     """Perform module health check"""
+
+
+
     try:
         if not _module_instance.initialized:
             return {

@@ -7,7 +7,7 @@ session synchronization for content protection and monetization workflows.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  STRICT LEGAL WARNING ⚠️
+  STRICT LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copy, modification, or distribution without 
 explicit written permission is strictly prohibited.

@@ -99,6 +99,9 @@ class RevenueData:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             "platform": self.platform.value,
             "revenue_type": self.revenue_type.value,
@@ -130,6 +133,9 @@ class SpotifyRevenueIntegration:
         end_date: datetime
     ) -> List[RevenueData]:
         """Get Spotify artist analytics and revenue data"""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 headers = {
@@ -202,6 +208,9 @@ class YouTubeRevenueIntegration:
         end_date: datetime
     ) -> List[RevenueData]:
         """Get YouTube channel revenue data"""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 headers = {
@@ -287,6 +296,9 @@ class InstagramRevenueIntegration:
         end_date: datetime
     ) -> List[RevenueData]:
         """Get Instagram creator insights and estimated revenue"""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 params = {
@@ -373,6 +385,9 @@ class TikTokRevenueIntegration:
         end_date: datetime
     ) -> List[RevenueData]:
         """Get TikTok creator revenue data"""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 headers = {
@@ -468,6 +483,9 @@ class PlatformRevenueAggregator:
         session: AsyncSession
     ) -> bool:
         """Add platform credentials for user"""
+
+
+
         try:
             if not credentials.is_valid():
                 raise ValueError(f"Invalid credentials for {credentials.platform.value}")
@@ -553,6 +571,9 @@ class PlatformRevenueAggregator:
         session: AsyncSession
     ) -> None:
         """Store revenue data in database"""
+
+
+
         try:
             for data in revenue_data:
                 # Check if record already exists
@@ -599,6 +620,9 @@ class PlatformRevenueAggregator:
         session: AsyncSession
     ) -> Dict[str, Any]:
         """Get total revenue across all platforms"""
+
+
+
         try:
             result = await session.execute(
                 select(

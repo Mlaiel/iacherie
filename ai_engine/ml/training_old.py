@@ -7,7 +7,7 @@ hyperparameter optimization, and experiment tracking.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Contact: mlaiel@live.de
@@ -235,6 +235,9 @@ class ModelTrainer:
         
     def _setup_experiment_tracking(self):
         """Initialize experiment tracking systems"""
+
+
+
         try:
             if MLFLOW_AVAILABLE and self.config.use_mlflow:
                 mlflow.set_tracking_uri("./mlruns")
@@ -707,6 +710,9 @@ class ModelTrainer:
         test_loader: Optional[DataLoader] = None
     ) -> TrainingResult:
         """Synchronous training wrapper"""
+
+
+
         return asyncio.run(self.train_async(model, train_loader, val_loader, test_loader))
 
 
@@ -818,6 +824,9 @@ class DistributedTrainingManager:
         config: TrainingConfig
     ):
         """Worker function for distributed training"""
+
+
+
         try:
             # Setup distributed sampler
             if hasattr(train_loader.dataset, '__len__'):

@@ -271,6 +271,9 @@ class LineageTracker(BaseManager):
     
     async def initialize(self) -> None:
         """Initialize the lineage tracker"""
+
+
+
         try:
             await self._load_lineage_data()
             self.logger.info("Lineage tracker initialized successfully")
@@ -304,6 +307,9 @@ class LineageTracker(BaseManager):
         Returns:
             str: Event ID
         """
+
+
+
         try:
             # Create lineage event
             event = LineageEvent(
@@ -347,6 +353,9 @@ class LineageTracker(BaseManager):
         Returns:
             DataLineage: Complete lineage information
         """
+
+
+
         return self.content_lineages.get(content_id)
     
     async def get_upstream_dependencies(
@@ -364,6 +373,9 @@ class LineageTracker(BaseManager):
         Returns:
             List[str]: List of upstream content IDs
         """
+
+
+
         try:
             # Find content node in graph
             content_node_id = await self._get_content_node_id(content_id)
@@ -401,6 +413,9 @@ class LineageTracker(BaseManager):
         Returns:
             List[str]: List of impacted content IDs
         """
+
+
+
         try:
             # Find content node in graph
             content_node_id = await self._get_content_node_id(content_id)
@@ -438,6 +453,9 @@ class LineageTracker(BaseManager):
         Returns:
             List[Dict]: Path with nodes and events
         """
+
+
+
         try:
             source_node_id = await self._get_content_node_id(source_content_id)
             target_node_id = await self._get_content_node_id(target_content_id)
@@ -541,6 +559,9 @@ class LineageTracker(BaseManager):
         Returns:
             Dict with complexity analysis
         """
+
+
+
         try:
             lineage = await self.get_content_lineage(content_id)
             if not lineage:
@@ -596,6 +617,9 @@ class LineageTracker(BaseManager):
         Returns:
             Dict with complete lineage report
         """
+
+
+
         try:
             lineage = await self.get_content_lineage(content_id)
             if not lineage:
@@ -656,6 +680,9 @@ class LineageTracker(BaseManager):
     
     async def get_metrics(self) -> Dict[str, Any]:
         """Get lineage tracking metrics"""
+
+
+
         return {
             **self.metrics,
             "total_content_tracked": len(self.content_lineages),
@@ -798,6 +825,9 @@ class LineageTracker(BaseManager):
     
     async def _load_lineage_data(self) -> None:
         """Load lineage data from database"""
+
+
+
         try:
             logger.info("Loading lineage data from database")
             
@@ -837,6 +867,9 @@ class LineageTracker(BaseManager):
     
     async def _build_lineage_graph(self) -> None:
         """Build networkx graph from lineage entries"""
+
+
+
         try:
             # Clear existing graph
             self.lineage_graph.clear()

@@ -253,11 +253,11 @@ class MonetizationSeedsManager:
                 'details': results
             }
             
-            logger.info(f"✅ Monetization seeds initialized successfully in {duration:.2f}s")
+            logger.info(f" Monetization seeds initialized successfully in {duration:.2f}s")
             return summary
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize monetization seeds: {str(e)}")
+            logger.error(f" Failed to initialize monetization seeds: {str(e)}")
             raise
     
     async def _initialize_revenue_models(self) -> Dict[str, Any]:

@@ -140,6 +140,9 @@ class MultilingualSEO:
         Returns:
             MultilingualSEOResult with all localized versions and recommendations
         """
+
+
+
         try:
             logger.info(f"Starting multilingual SEO optimization for {len(target_markets)} markets")
             
@@ -399,7 +402,7 @@ class MultilingualSEO:
         
         if primary_search_engine == "baidu" and region == Region.CHINA:
             # Baidu prefers Chinese language content with specific structure
-            content = f"[适用于中国市场] {content}"
+            content = f"[] {content}"
         
         elif primary_search_engine == "yandex" and region == Region.RUSSIA:
             # Yandex optimizations
@@ -407,7 +410,7 @@ class MultilingualSEO:
         
         elif primary_search_engine == "naver" and region == Region.KOREA:
             # Naver optimizations
-            content = f"[한국 시장용] {content}"
+            content = f"[ ] {content}"
         
         # Regional keyword optimization
         regional_terms = {
@@ -439,8 +442,8 @@ class MultilingualSEO:
             Region.AUSTRALIA: ["Australian", "Australia", "Aussie"],
             Region.GERMANY: ["German", "Deutschland"],
             Region.FRANCE: ["French", "France", "français"],
-            Region.JAPAN: ["Japanese", "Japan", "日本"],
-            Region.CHINA: ["Chinese", "China", "中国"]
+            Region.JAPAN: ["Japanese", "Japan", ""],
+            Region.CHINA: ["Chinese", "China", ""]
         }
         
         if region in regional_modifiers:
@@ -462,7 +465,7 @@ class MultilingualSEO:
             # Add simplified and traditional character variations
             for keyword in keywords:
                 if keyword not in adapted_keywords:
-                    adapted_keywords.append(f"{keyword}中文")
+                    adapted_keywords.append(f"{keyword}")
         
         return adapted_keywords[:len(keywords) * 2]  # Limit expansion
 
@@ -485,8 +488,8 @@ class MultilingualSEO:
         market_specific = {
             (Language.GERMAN, Region.GERMANY): ["qualität", "präzision", "engineering"],
             (Language.FRENCH, Region.FRANCE): ["qualité", "élégance", "art de vivre"],
-            (Language.JAPANESE, Region.JAPAN): ["品質", "技術", "革新"],
-            (Language.CHINESE, Region.CHINA): ["质量", "创新", "发展"],
+            (Language.JAPANESE, Region.JAPAN): ["", "", ""],
+            (Language.CHINESE, Region.CHINA): ["", "", ""],
             (Language.SPANISH, Region.SPAIN): ["calidad", "tradición", "excelencia"],
             (Language.SPANISH, Region.MEXICO): ["valor", "familia", "comunidad"]
         }
@@ -501,8 +504,8 @@ class MultilingualSEO:
             Language.FRENCH: ["comment", "qu'est-ce que", "meilleur"],
             Language.GERMAN: ["wie", "was ist", "beste"],
             Language.SPANISH: ["cómo", "qué es", "mejor"],
-            Language.CHINESE: ["如何", "什么是", "最好的"],
-            Language.JAPANESE: ["どのように", "何ですか", "最高の"]
+            Language.CHINESE: ["", "", ""],
+            Language.JAPANESE: ["", "", ""]
         }
         
         if language in question_words:
@@ -776,6 +779,9 @@ class MultilingualSEO:
 
     def _initialize_language_mappings(self) -> Dict[str, Dict[str, str]]:
         """Initialize language mappings for translation"""
+
+
+
         
         return {
             "common_terms": {
@@ -785,8 +791,8 @@ class MultilingualSEO:
                     "es": "hola",
                     "it": "ciao",
                     "pt": "olá",
-                    "zh": "你好",
-                    "ja": "こんにちは",
+                    "zh": "",
+                    "ja": "",
                     "ar": "مرحبا",
                     "ru": "привет"
                 },
@@ -796,8 +802,8 @@ class MultilingualSEO:
                     "es": "gracias",
                     "it": "grazie",
                     "pt": "obrigado",
-                    "zh": "谢谢",
-                    "ja": "ありがとう",
+                    "zh": "",
+                    "ja": "",
                     "ar": "شكرا",
                     "ru": "спасибо"
                 }
@@ -806,6 +812,9 @@ class MultilingualSEO:
 
     def _initialize_cultural_data(self) -> Dict[str, Dict[str, Dict[str, Any]]]:
         """Initialize cultural adaptation data"""
+
+
+
         
         return {
             "zh": {  # Chinese
@@ -834,6 +843,9 @@ class MultilingualSEO:
 
     def _initialize_search_engines(self) -> Dict[str, str]:
         """Initialize primary search engines by region"""
+
+
+
         
         return {
             "CN": "baidu",

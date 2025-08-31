@@ -16,7 +16,7 @@ Key Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  LEGAL WARNING:
+  LEGAL WARNING:
 This code is proprietary and confidential. Any unauthorized copying, modification, 
 distribution, or use without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and may result in legal action.
@@ -151,6 +151,9 @@ class ProxyValidator:
     
     async def validate_proxy(self, proxy: ProxyInstance) -> bool:
         """Validate proxy functionality and performance"""
+
+
+
         try:
             proxy_url = self._build_proxy_url(proxy.config)
             
@@ -288,6 +291,9 @@ class ProxyRotator:
     
     def _least_used_selection(self, proxies: List[ProxyInstance]) -> ProxyInstance:
         """Select least used proxy"""
+
+
+
         return min(proxies, key=lambda p: p.metrics.total_requests)
     
     def _performance_based_selection(self, proxies: List[ProxyInstance]) -> ProxyInstance:
@@ -386,6 +392,9 @@ class ProxyManager:
     
     async def initialize(self) -> None:
         """Initialize proxy manager and start monitoring"""
+
+
+
         try:
             # Start validation monitoring
             self.validation_task = asyncio.create_task(self._monitor_proxy_health())
@@ -464,6 +473,9 @@ class ProxyManager:
     async def get_proxy(self, group: str = "default", 
                        requirements: Optional[Dict[str, Any]] = None) -> Optional[ProxyInstance]:
         """Get optimal proxy for use"""
+
+
+
         try:
             # Get proxies from group
             proxy_ids = self.proxy_groups.get(group, [])
@@ -505,6 +517,9 @@ class ProxyManager:
                                  success: bool, response_time: float = 0.0,
                                  error: Optional[str] = None) -> None:
         """Report proxy usage result for metrics update"""
+
+
+
         try:
             if success:
                 proxy.metrics.successful_requests += 1
@@ -740,6 +755,9 @@ class ProxyManager:
 def create_residential_proxy_config(host: str, port: int, 
                                    username: str, password: str) -> ProxyConfiguration:
     """Create residential proxy configuration"""
+
+
+
     return ProxyConfiguration(
         host=host,
         port=port,

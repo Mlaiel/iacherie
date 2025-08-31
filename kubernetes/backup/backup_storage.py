@@ -146,6 +146,9 @@ class LocalStorageBackend(StorageBackendInterface):
         metadata: BackupMetadata
     ) -> bool:
         """Store backup data locally."""
+
+
+
         try:
             backup_file = self.base_path / f"{backup_id}.backup"
             metadata_file = self.metadata_path / f"{backup_id}.json"
@@ -183,6 +186,9 @@ class LocalStorageBackend(StorageBackendInterface):
     
     async def retrieve_backup(self, backup_id: str) -> Optional[Union[bytes, Dict[str, Any]]]:
         """Retrieve backup data from local storage."""
+
+
+
         try:
             backup_file = self.base_path / f"{backup_id}.backup"
             
@@ -204,6 +210,9 @@ class LocalStorageBackend(StorageBackendInterface):
     
     async def delete_backup(self, backup_id: str) -> bool:
         """Delete backup data from local storage."""
+
+
+
         try:
             backup_file = self.base_path / f"{backup_id}.backup"
             metadata_file = self.metadata_path / f"{backup_id}.json"
@@ -223,6 +232,9 @@ class LocalStorageBackend(StorageBackendInterface):
     
     async def list_backups(self) -> List[str]:
         """List available backups in local storage."""
+
+
+
         try:
             backup_files = list(self.base_path.glob("*.backup"))
             return [f.stem for f in backup_files]
@@ -232,6 +244,9 @@ class LocalStorageBackend(StorageBackendInterface):
     
     async def get_backup_metadata(self, backup_id: str) -> Optional[BackupMetadata]:
         """Get backup metadata from local storage."""
+
+
+
         try:
             metadata_file = self.metadata_path / f"{backup_id}.json"
             
@@ -259,6 +274,9 @@ class LocalStorageBackend(StorageBackendInterface):
     
     async def verify_backup(self, backup_id: str) -> bool:
         """Verify backup integrity in local storage."""
+
+
+
         try:
             backup_file = self.base_path / f"{backup_id}.backup"
             metadata_file = self.metadata_path / f"{backup_id}.json"
@@ -271,6 +289,9 @@ class LocalStorageBackend(StorageBackendInterface):
     
     async def get_storage_usage(self) -> Dict[str, Any]:
         """Get local storage usage information."""
+
+
+
         try:
             total_size = 0
             file_count = 0

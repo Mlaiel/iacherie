@@ -1246,6 +1246,9 @@ class ServiceDeployer(BaseComponent):
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Deploy a batch of service instances (for rolling deployments)"""
+
+
+
         
         return await self.deploy_services(batch, environment, context)
 
@@ -1309,10 +1312,16 @@ class ServiceDeployer(BaseComponent):
 
     async def get_deployment_status(self, deployment_id: str) -> Optional[Dict[str, Any]]:
         """Get deployment status"""
+
+
+
         return self.active_deployments.get(deployment_id)
 
     async def list_active_deployments(self) -> List[Dict[str, Any]]:
         """List all active deployments"""
+
+
+
         return [
             {
                 'deployment_id': deployment_id,

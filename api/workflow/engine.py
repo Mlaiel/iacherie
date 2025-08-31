@@ -141,6 +141,9 @@ class WorkflowExecutionContext:
     
     def get_variable(self, key: str, default: Any = None) -> Any:
         """Get runtime variable."""
+
+
+
         return self.variables.get(key, default)
     
     def set_stage_result(self, stage_id: str, result: Dict) -> None:
@@ -172,6 +175,9 @@ class WorkflowExecutionContext:
     
     def to_dict(self) -> Dict:
         """Convert context to dictionary."""
+
+
+
         return {
             "workflow_id": self.workflow_id,
             "template_id": self.template.id,
@@ -976,6 +982,9 @@ class EnterpriseWorkflowEngine:
     
     def _get_resource_utilization(self, workflow_id: str) -> Dict:
         """Get current resource utilization for workflow."""
+
+
+
         return {
             "cpu_usage": 0.15,
             "memory_usage": 0.08,

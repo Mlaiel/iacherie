@@ -7,7 +7,7 @@ Predictive Analytics Agent module following unified IA Influencer specifications
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This metadata documentation and architectural specifications are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -80,7 +80,7 @@ MODULE_METADATA = {
     # Legal protection notices
     "legal_protection": {
         "intellectual_property_notice": """
-        🔒 INTELLECTUAL PROPERTY PROTECTION:
+         INTELLECTUAL PROPERTY PROTECTION:
         All algorithms, methodologies, and implementations within this module are proprietary
         intellectual property of Fahed Mlaiel. Any attempt to reverse engineer, copy, or
         redistribute this code without explicit written permission is strictly prohibited
@@ -425,14 +425,23 @@ class ModuleDocumentation:
     
     def get_component_info(self, component_name: str) -> Dict[str, Any]:
         """Get detailed information about a specific component"""
+
+
+
         return self.architecture.get("core_components", {}).get(component_name, {})
     
     def get_integration_details(self, integration_type: str) -> Dict[str, Any]:
         """Get integration details for a specific type"""
+
+
+
         return self.integrations.get(f"{integration_type}_integrations", {})
     
     def get_performance_targets(self, metric_type: str) -> Dict[str, Any]:
         """Get performance targets for a specific metric type"""
+
+
+
         return self.performance.get(metric_type, {})
 
 # Create module documentation instance

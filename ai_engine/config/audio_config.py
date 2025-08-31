@@ -7,7 +7,7 @@ Ultra-Advanced Audio Configuration Module
 PROPRIETARY SOFTWARE - ALL RIGHTS RESERVED
 Copyright © 2025 Fahed Mlaiel (mlaiel@live.de)
 
-⚠️  STRICT COPYRIGHT WARNING ⚠️
+  STRICT COPYRIGHT WARNING 
 This software and its source code are the exclusive property of Fahed Mlaiel.
 Any unauthorized copying, distribution, modification, or use of this code
 without explicit written permission from Fahed Mlaiel is strictly prohibited
@@ -725,6 +725,9 @@ class AudioConfig:
 
     def export_settings(self) -> Dict[str, Any]:
         """Export configuration as dictionary"""
+
+
+
         return asdict(self)
 
     def import_settings(self, settings: Dict[str, Any]):

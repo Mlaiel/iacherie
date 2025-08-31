@@ -1,5 +1,5 @@
 """
-💰 Royalty Calculator - Advanced Revenue Calculation Engine
+ Royalty Calculator - Advanced Revenue Calculation Engine
 =========================================================
 
 Professional royalty and revenue calculation system:
@@ -110,7 +110,7 @@ class CalculationResult:
 
 class RoyaltyCalculator:
     """
-    🚀 Professional royalty calculation engine
+     Professional royalty calculation engine
     
     Advanced system for calculating royalties with support for complex
     structures, multi-tier rates, and international compliance.
@@ -228,6 +228,9 @@ class RoyaltyCalculator:
     
     def _initialize_currency_converter(self):
         """Initialize currency conversion service."""
+
+
+
         try:
             # This would integrate with a real currency service
             # For now, using static rates
@@ -251,7 +254,7 @@ class RoyaltyCalculator:
         custom_terms: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """
-        💰 Calculate comprehensive royalty structure
+         Calculate comprehensive royalty structure
         
         Args:
             content_info: Information about the content
@@ -262,6 +265,9 @@ class RoyaltyCalculator:
         Returns:
             royalty_structure: Complete royalty calculation structure
         """
+
+
+
         try:
             self.logger.info(f"Calculating royalty structure for {license_type} in {jurisdiction}")
             
@@ -681,6 +687,9 @@ class RoyaltyCalculator:
     
     def get_calculator_metrics(self) -> Dict[str, Any]:
         """Get royalty calculator performance metrics."""
+
+
+
         return {
             **{k: float(v) if isinstance(v, Decimal) else v for k, v in self.metrics.items()},
             'supported_jurisdictions': len(self.statutory_rates),

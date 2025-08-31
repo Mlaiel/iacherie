@@ -1283,6 +1283,9 @@ class PipelineExecutor(BaseComponent):
 
     async def _cleanup_resource(self, resource: Dict[str, Any]) -> None:
         """Cleanup a temporary resource"""
+
+
+
         
         try:
             resource_type = resource.get('type')
@@ -1485,6 +1488,9 @@ class PipelineExecutor(BaseComponent):
 
     def _create_execution_summary(self, execution: PipelineExecution) -> Dict[str, Any]:
         """Create execution summary for recording"""
+
+
+
         
         return {
             'execution_id': execution.execution_id,
@@ -1645,6 +1651,9 @@ class PipelineExecutor(BaseComponent):
 
     async def list_active_pipelines(self) -> List[Dict[str, Any]]:
         """List all active pipeline executions"""
+
+
+
         
         return [
             {
@@ -1660,6 +1669,9 @@ class PipelineExecutor(BaseComponent):
 
     async def get_pipeline_definitions(self) -> List[Dict[str, Any]]:
         """Get all available pipeline definitions"""
+
+
+
         
         return [
             {

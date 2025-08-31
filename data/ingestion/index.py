@@ -8,7 +8,7 @@ to all ingestion capabilities and orchestration functionality.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code is proprietary and confidential. Any unauthorized copying, distribution,
 or use without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is
 strictly prohibited and will result in legal action.
@@ -107,6 +107,9 @@ class DataIngestionOrchestrator:
         Returns:
             Complete ingestion result
         """
+
+
+
         try:
             self.logger.info(f"Starting single content ingestion for user: {request.user_id}")
             
@@ -140,6 +143,9 @@ class DataIngestionOrchestrator:
         Returns:
             Batch ID for tracking
         """
+
+
+
         try:
             self.logger.info(f"Starting batch ingestion with {len(items)} items")
             
@@ -191,6 +197,9 @@ class DataIngestionOrchestrator:
         Returns:
             Metadata collection
         """
+
+
+
         try:
             self.logger.info(f"Extracting metadata for: {filename}")
             
@@ -218,6 +227,9 @@ class DataIngestionOrchestrator:
         Returns:
             Processing result
         """
+
+
+
         try:
             self.logger.info(f"Processing content: {filename}")
             
@@ -245,6 +257,9 @@ class DataIngestionOrchestrator:
         Returns:
             Status information
         """
+
+
+
         try:
             # Try as single content first
             status = await self.content_manager.get_ingestion_status(content_id)
@@ -280,6 +295,9 @@ class DataIngestionOrchestrator:
         Returns:
             Comprehensive metrics
         """
+
+
+
         try:
             return await self.batch_processor.get_batch_metrics(batch_id)
             
@@ -294,6 +312,9 @@ class DataIngestionOrchestrator:
         Returns:
             Summary of active operations
         """
+
+
+
         try:
             active_batches = await self.batch_processor.list_active_batches()
             
@@ -309,6 +330,9 @@ class DataIngestionOrchestrator:
     
     async def pause_batch(self, batch_id: str) -> bool:
         """Pause batch processing"""
+
+
+
         try:
             return await self.batch_processor.pause_batch(batch_id)
         except Exception as e:
@@ -317,6 +341,9 @@ class DataIngestionOrchestrator:
     
     async def resume_batch(self, batch_id: str) -> bool:
         """Resume paused batch processing"""
+
+
+
         try:
             return await self.batch_processor.resume_batch(batch_id)
         except Exception as e:
@@ -325,6 +352,9 @@ class DataIngestionOrchestrator:
     
     async def cancel_batch(self, batch_id: str) -> bool:
         """Cancel batch processing"""
+
+
+
         try:
             return await self.batch_processor.cancel_batch(batch_id)
         except Exception as e:
@@ -341,6 +371,9 @@ class DataIngestionOrchestrator:
         Returns:
             Cleanup statistics
         """
+
+
+
         try:
             cleaned_batches = await self.batch_processor.cleanup_completed_batches(hours)
             
@@ -360,6 +393,9 @@ class DataIngestionOrchestrator:
         Returns:
             Ingestion capabilities configuration
         """
+
+
+
         try:
             # Collect supported formats from all processors
             supported_formats = {}
@@ -408,6 +444,9 @@ class DataIngestionOrchestrator:
         Returns:
             Health status of all components
         """
+
+
+
         try:
             health_status = {
                 'overall_status': 'healthy',
@@ -469,6 +508,9 @@ class DataIngestionOrchestrator:
     
     async def _validate_ingestion_request(self, request: IngestionRequest):
         """Validate ingestion request"""
+
+
+
         try:
             if not request.user_id:
                 raise ValueError("User ID is required")
@@ -516,6 +558,9 @@ async def create_ingestion_orchestrator(db_session: AsyncSession, redis_client: 
     Returns:
         Initialized DataIngestionOrchestrator
     """
+
+
+
     try:
         orchestrator = DataIngestionOrchestrator(
             db_session, redis_client, storage_manager, 

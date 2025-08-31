@@ -269,6 +269,9 @@ class ResourceScheduler:
     
     async def initialize(self) -> None:
         """Initialize resource scheduler."""
+
+
+
         try:
             # Initialize default resource pools
             await self._initialize_default_pools()
@@ -361,6 +364,9 @@ class ResourceScheduler:
     
     async def _get_system_info(self) -> Dict[str, Any]:
         """Get system resource information."""
+
+
+
         try:
             # CPU information
             cpu_count = psutil.cpu_count(logical=True)
@@ -436,6 +442,9 @@ class ResourceScheduler:
         allow_burst: bool = False
     ) -> Optional[ResourceAllocation]:
         """Allocate resources for a task."""
+
+
+
         try:
             allocation_start = time.time()
             timeout = timeout or self.config['allocation_timeout']
@@ -548,6 +557,9 @@ class ResourceScheduler:
         priority: int
     ) -> Optional[ResourceAllocation]:
         """Execute the resource allocation plan."""
+
+
+
         try:
             allocated_quota = ResourceQuota()
             pool_allocations = {}
@@ -614,6 +626,9 @@ class ResourceScheduler:
     
     async def deallocate_resources(self, allocation_id: str) -> bool:
         """Deallocate resources."""
+
+
+
         try:
             allocation = self.active_allocations.get(allocation_id)
             if not allocation:
@@ -692,6 +707,9 @@ class ResourceScheduler:
     
     async def _monitor_system_resources(self) -> None:
         """Monitor system resource usage."""
+
+
+
         try:
             # Get current system usage
             cpu_percent = psutil.cpu_percent(interval=1)
@@ -802,6 +820,9 @@ class ResourceScheduler:
         current_utilization: float
     ) -> None:
         """Trigger scaling action for a pool."""
+
+
+
         try:
             self.scaling_in_progress.add(pool.pool_id)
             self.last_scaling_time[pool.pool_id] = datetime.utcnow()
@@ -848,6 +869,9 @@ class ResourceScheduler:
         scaling_factor: float
     ) -> bool:
         """Execute scaling action."""
+
+
+
         try:
             if action == ScalingAction.SCALE_UP:
                 # Increase capacity

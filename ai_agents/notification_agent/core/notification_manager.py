@@ -7,7 +7,7 @@ handling complex notification workflows, scheduling, templating, and delivery or
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -149,6 +149,9 @@ class NotificationManager:
         
     async def start_manager(self):
         """Start notification manager with all processing components"""
+
+
+
         try:
             self.logger.info("Starting NotificationManager with advanced capabilities")
             
@@ -180,6 +183,9 @@ class NotificationManager:
             
     async def stop_manager(self):
         """Gracefully stop notification manager"""
+
+
+
         try:
             self.logger.info("Stopping NotificationManager")
             
@@ -208,6 +214,9 @@ class NotificationManager:
         workflow_config: Dict[str, Any]
     ) -> str:
         """Create and register a new notification workflow"""
+
+
+
         try:
             # Validate workflow configuration
             if not await self._validate_workflow_config(workflow_config):
@@ -249,6 +258,9 @@ class NotificationManager:
         context: Dict[str, Any]
     ) -> bool:
         """Trigger execution of a specific workflow"""
+
+
+
         try:
             workflow = self.active_workflows.get(workflow_id)
             if not workflow:
@@ -284,6 +296,9 @@ class NotificationManager:
         schedule_params: Dict[str, Any]
     ) -> str:
         """Schedule a notification with advanced scheduling options"""
+
+
+
         try:
             # Generate schedule ID
             schedule_id = str(uuid.uuid4())
@@ -348,6 +363,9 @@ class NotificationManager:
         alert_config: Dict[str, Any]
     ) -> str:
         """Create and register a new alert configuration"""
+
+
+
         try:
             # Generate alert ID
             alert_id = str(uuid.uuid4())
@@ -388,6 +406,9 @@ class NotificationManager:
         trigger_data: Dict[str, Any]
     ) -> bool:
         """Trigger a specific alert with context data"""
+
+
+
         try:
             alert = self.active_alerts.get(alert_id)
             if not alert:
@@ -433,6 +454,9 @@ class NotificationManager:
             
     async def get_workflow_status(self, workflow_id: str) -> Dict[str, Any]:
         """Get comprehensive workflow execution status"""
+
+
+
         try:
             workflow = self.active_workflows.get(workflow_id)
             if not workflow:
@@ -459,6 +483,9 @@ class NotificationManager:
             
     async def get_alert_status(self, alert_id: str) -> Dict[str, Any]:
         """Get comprehensive alert status and history"""
+
+
+
         try:
             alert = self.active_alerts.get(alert_id)
             if not alert:
@@ -499,6 +526,9 @@ class NotificationManager:
                 
     async def _execute_workflow(self, workflow: NotificationWorkflow):
         """Execute a notification workflow"""
+
+
+
         try:
             # Update workflow status
             workflow.status = NotificationWorkflowStatus.RUNNING
@@ -778,6 +808,9 @@ class NotificationManager:
         
     async def start_manager(self):
         """Start the notification manager with all processing services"""
+
+
+
         try:
             self.logger.info("Starting NotificationManager with advanced orchestration")
             
@@ -806,6 +839,9 @@ class NotificationManager:
             
     async def stop_manager(self):
         """Gracefully stop the notification manager"""
+
+
+
         try:
             self.logger.info("Stopping NotificationManager")
             
@@ -847,6 +883,9 @@ class NotificationManager:
         Returns:
             workflow_id: Unique workflow identifier
         """
+
+
+
         try:
             workflow_id = str(uuid.uuid4())
             
@@ -899,6 +938,9 @@ class NotificationManager:
         Returns:
             success: Whether workflow was successfully triggered
         """
+
+
+
         try:
             workflow = self.workflows.get(workflow_id)
             if not workflow:
@@ -964,6 +1006,9 @@ class NotificationManager:
         Returns:
             schedule_id: Unique schedule identifier
         """
+
+
+
         try:
             schedule_id = str(uuid.uuid4())
             
@@ -1016,6 +1061,9 @@ class NotificationManager:
     # Additional helper methods for comprehensive functionality
     async def _load_active_workflows(self):
         """Load active workflows from repository"""
+
+
+
         try:
             stored_workflows = await self.repository.get_active_workflows()
             for workflow_data in stored_workflows:
@@ -1029,6 +1077,9 @@ class NotificationManager:
             
     async def _complete_active_workflows(self):
         """Complete any remaining active workflows during shutdown"""
+
+
+
         try:
             for workflow_id, workflow in list(self.active_workflows.items()):
                 if workflow.status == NotificationWorkflowStatus.RUNNING:
@@ -1040,6 +1091,9 @@ class NotificationManager:
             
     async def _check_trigger_conditions(self, workflow: NotificationWorkflow, context: Dict[str, Any]) -> bool:
         """Check if workflow trigger conditions are met"""
+
+
+
         try:
             conditions = workflow.trigger_conditions
             
@@ -1067,6 +1121,9 @@ class NotificationManager:
             
     async def _calculate_workflow_priority(self, workflow: NotificationWorkflow, context: Dict[str, Any]) -> int:
         """Calculate workflow execution priority"""
+
+
+
         try:
             base_priority = 5  # Default medium priority
             
@@ -1092,6 +1149,9 @@ class NotificationManager:
             
     async def _process_immediate_notification(self, notification_config: Dict[str, Any]):
         """Process immediate notification"""
+
+
+
         try:
             # Create notification context
             context = NotificationContext(
@@ -1112,6 +1172,9 @@ class NotificationManager:
             
     async def _schedule_next_occurrence(self, schedule_id: str):
         """Schedule next occurrence for recurring notifications"""
+
+
+
         try:
             schedule = self.recurring_schedules.get(schedule_id)
             if not schedule:
@@ -1144,6 +1207,9 @@ class NotificationManager:
             
     async def _setup_conditional_monitoring(self, schedule_id: str, schedule_entry: Dict[str, Any]):
         """Set up monitoring for conditional notifications"""
+
+
+
         try:
             conditions = schedule_entry["schedule_params"]["conditions"]
             
@@ -1158,6 +1224,9 @@ class NotificationManager:
             
     async def _add_to_batch_queue(self, schedule_entry: Dict[str, Any]):
         """Add notification to batch optimization queue"""
+
+
+
         try:
             # Add to batch processing queue
             batch_key = self._calculate_batch_key(schedule_entry)
@@ -1181,6 +1250,9 @@ class NotificationManager:
         
     async def _setup_alert_monitoring(self, alert: NotificationAlert):
         """Set up monitoring for alert conditions"""
+
+
+
         try:
             for condition in alert.conditions:
                 await self.monitoring.register_alert_condition(
@@ -1192,6 +1264,9 @@ class NotificationManager:
             
     async def _is_alert_in_cooldown(self, alert_id: str) -> bool:
         """Check if alert is in cooldown period"""
+
+
+
         try:
             alert = self.active_alerts.get(alert_id)
             if not alert:
@@ -1214,6 +1289,9 @@ class NotificationManager:
             
     async def _validate_alert_trigger(self, alert: NotificationAlert, trigger_data: Dict[str, Any]) -> bool:
         """Validate alert trigger conditions"""
+
+
+
         try:
             for condition in alert.conditions:
                 metric_name = condition["metric"]
@@ -1239,6 +1317,9 @@ class NotificationManager:
             
     async def _create_alert_notification(self, alert: NotificationAlert, trigger_data: Dict[str, Any]) -> Dict[str, Any]:
         """Create notification for triggered alert"""
+
+
+
         try:
             return {
                 "type": "alert",
@@ -1256,6 +1337,9 @@ class NotificationManager:
             
     async def _send_alert_notification(self, alert_notification: Dict[str, Any]):
         """Send alert notification"""
+
+
+
         try:
             # Use notification agent to send alert
             from .notification_agent import NotificationAgent, NotificationType
@@ -1278,6 +1362,9 @@ class NotificationManager:
             
     async def _setup_alert_escalation(self, alert: NotificationAlert, trigger_data: Dict[str, Any]):
         """Set up alert escalation if configured"""
+
+
+
         try:
             for escalation in alert.escalation_rules:
                 # Schedule escalation after delay
@@ -1301,6 +1388,9 @@ class NotificationManager:
             
     async def _apply_step_context(self, step: Dict[str, Any], workflow_context: Dict[str, Any]) -> Dict[str, Any]:
         """Apply workflow context to notification step"""
+
+
+
         try:
             step_context = step.copy()
             
@@ -1320,6 +1410,9 @@ class NotificationManager:
             
     async def _execute_notification_step(self, step: Dict[str, Any], context: Dict[str, Any]) -> Dict[str, Any]:
         """Execute individual notification step"""
+
+
+
         try:
             # Create notification configuration
             notification_config = {
@@ -1340,10 +1433,16 @@ class NotificationManager:
             
     async def _check_step_success(self, step: Dict[str, Any], result: Dict[str, Any]) -> bool:
         """Check if notification step was successful"""
+
+
+
         return result.get("status") == "success"
         
     async def _handle_step_failure(self, workflow: NotificationWorkflow, step_index: int, result: Dict[str, Any]):
         """Handle notification step failure"""
+
+
+
         try:
             failure_config = workflow.failure_handling
             
@@ -1366,6 +1465,9 @@ class NotificationManager:
             
     async def _process_scheduled_notification(self, schedule: Dict[str, Any]):
         """Process a scheduled notification"""
+
+
+
         try:
             await self._process_immediate_notification(schedule["notification_config"])
             
@@ -1381,6 +1483,9 @@ class NotificationManager:
             
     async def _should_execute_recurring(self, schedule: Dict[str, Any]) -> bool:
         """Check if recurring notification should be executed"""
+
+
+
         try:
             last_execution = schedule.get("last_executed")
             if not last_execution:
@@ -1410,6 +1515,9 @@ class NotificationManager:
             
     async def _execute_recurring_notification(self, schedule: Dict[str, Any]):
         """Execute recurring notification"""
+
+
+
         try:
             await self._process_immediate_notification(schedule["notification_config"])
             
@@ -1424,6 +1532,9 @@ class NotificationManager:
             
     async def _check_alert_conditions(self, alert: NotificationAlert) -> bool:
         """Check if alert conditions are met"""
+
+
+
         try:
             # Get current metrics
             current_metrics = await self.monitoring.get_current_metrics()
@@ -1451,6 +1562,9 @@ class NotificationManager:
             
     async def _analyze_template_performance(self) -> Dict[str, Dict[str, float]]:
         """Analyze template performance metrics"""
+
+
+
         try:
             performance_data = {}
             
@@ -1473,6 +1587,9 @@ class NotificationManager:
             
     async def _optimize_template(self, template_id: str, performance: Dict[str, float]):
         """Optimize underperforming template"""
+
+
+
         try:
             # Get template content
             template = await self.repository.get_template(template_id)
@@ -1503,6 +1620,9 @@ class NotificationManager:
         
     async def _compile_management_report(self) -> Dict[str, Any]:
         """Compile comprehensive management report"""
+
+
+
         try:
             return {
                 "report_date": datetime.utcnow().isoformat(),
@@ -1528,6 +1648,9 @@ class NotificationManager:
             
     async def _send_management_report(self, report: Dict[str, Any]):
         """Send management report to administrators"""
+
+
+
         try:
             # Create management report notification
             report_notification = {
@@ -1573,6 +1696,9 @@ class AlertDispatcher:
         escalation_level: int = 1
     ) -> bool:
         """Dispatch critical alert with immediate delivery"""
+
+
+
         try:
             # Determine alert channels based on severity
             channels = await self._determine_alert_channels(alert_data, escalation_level)
@@ -1653,6 +1779,9 @@ class AlertDispatcher:
         Returns:
             alert_id: Unique alert identifier
         """
+
+
+
         try:
             alert_id = str(uuid.uuid4())
             
@@ -1703,6 +1832,9 @@ class AlertDispatcher:
         Returns:
             success: Whether alert was successfully triggered
         """
+
+
+
         try:
             alert = self.active_alerts.get(alert_id)
             if not alert:
@@ -1755,6 +1887,9 @@ class AlertDispatcher:
         channel: Optional[NotificationChannel] = None
     ) -> List[Dict[str, Any]]:
         """Get available notification templates with filtering"""
+
+
+
         try:
             templates = await self.template_engine.get_templates(
                 template_type=template_type,
@@ -1788,6 +1923,9 @@ class AlertDispatcher:
         Returns:
             template_id: Unique template identifier
         """
+
+
+
         try:
             template_id = await self.template_engine.create_template(
                 name=template_name,
@@ -1806,6 +1944,9 @@ class AlertDispatcher:
             
     async def get_workflow_status(self, workflow_id: str) -> Dict[str, Any]:
         """Get comprehensive workflow execution status"""
+
+
+
         try:
             workflow = self.workflows.get(workflow_id)
             if not workflow:
@@ -1834,6 +1975,9 @@ class AlertDispatcher:
             
     async def get_system_analytics(self) -> Dict[str, Any]:
         """Get comprehensive system analytics and performance metrics"""
+
+
+
         try:
             analytics = {
                 "performance_stats": self.performance_stats.copy(),
@@ -1990,6 +2134,9 @@ class AlertDispatcher:
         notification_sequence: List[Dict[str, Any]]
     ) -> bool:
         """Validate workflow configuration"""
+
+
+
         try:
             # Validate trigger conditions
             if not trigger_conditions:
@@ -2012,6 +2159,9 @@ class AlertDispatcher:
             
     async def _validate_notification_config(self, notification_config: Dict[str, Any]) -> bool:
         """Validate individual notification configuration"""
+
+
+
         try:
             required_fields = ['type', 'content', 'channels']
             
@@ -2040,6 +2190,9 @@ class AlertDispatcher:
         escalation_rules: List[Dict[str, Any]]
     ) -> bool:
         """Validate alert configuration"""
+
+
+
         try:
             # Validate alert type
             valid_alert_types = [
@@ -2067,6 +2220,9 @@ class AlertDispatcher:
             
     def _generate_success_criteria(self, notification_sequence: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Generate success criteria for workflow"""
+
+
+
         return {
             'minimum_delivery_rate': 0.8,
             'maximum_failure_rate': 0.2,
@@ -2079,6 +2235,9 @@ class AlertDispatcher:
         
     def _generate_failure_handling(self) -> Dict[str, Any]:
         """Generate failure handling configuration"""
+
+
+
         return {
             'retry_attempts': 3,
             'retry_delay': 300,  # 5 minutes
@@ -2116,6 +2275,9 @@ class AlertDispatcher:
         Returns:
             success: Whether alert was successfully dispatched
         """
+
+
+
         try:
             # Get escalation chain for this alert
             escalation_chain = self._get_escalation_chain(alert, escalation_level)
@@ -2155,6 +2317,9 @@ class AlertDispatcher:
         escalation_level: int
     ) -> List[Dict[str, Any]]:
         """Get escalation chain for alert based on severity and level"""
+
+
+
         try:
             # Filter escalation rules by level
             applicable_rules = [
@@ -2176,6 +2341,9 @@ class AlertDispatcher:
         escalation_step: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Execute individual escalation step"""
+
+
+
         try:
             action_type = escalation_step.get('action')
             

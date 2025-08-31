@@ -8,7 +8,7 @@ and business intelligence for photographers, influencers, and visual artists.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -260,6 +260,9 @@ class ImageAgent(BaseAgent):
 
     def _initialize_engines(self) -> None:
         """Initialize all processing engines and AI models"""
+
+
+
         try:
             # Computer Vision Engine
             self.cv_engine = ComputerVisionEngine(
@@ -437,6 +440,9 @@ class ImageAgent(BaseAgent):
 
     async def _load_image(self, image_path: Path) -> Image.Image:
         """Load and validate image file"""
+
+
+
         try:
             image = Image.open(image_path)
             
@@ -461,6 +467,9 @@ class ImageAgent(BaseAgent):
 
     async def _extract_metadata(self, image: Image.Image, image_path: Path) -> ImageMetadata:
         """Extract comprehensive metadata from image"""
+
+
+
         try:
             # Basic metadata
             stat = image_path.stat()
@@ -560,6 +569,9 @@ class ImageAgent(BaseAgent):
         options: Dict[str, Any]
     ) -> ImageAnalysisResult:
         """Comprehensive AI-powered image analysis"""
+
+
+
         try:
             # Convert image for analysis
             image_tensor = self.transforms["analyze"](image).unsqueeze(0)
@@ -699,6 +711,9 @@ class ImageAgent(BaseAgent):
 
     def _extract_dominant_colors(self, image: np.ndarray, k: int = 5) -> List[str]:
         """Extract dominant colors using K-means clustering"""
+
+
+
         try:
             # Reshape image to be a list of pixels
             data = image.reshape((-1, 3))
@@ -724,6 +739,9 @@ class ImageAgent(BaseAgent):
 
     def _analyze_composition(self, image: np.ndarray) -> float:
         """Analyze image composition using rule of thirds and other principles"""
+
+
+
         try:
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             h, w = gray.shape
@@ -826,6 +844,9 @@ class ImageAgent(BaseAgent):
         options: Dict[str, Any]
     ) -> ImageEnhancementResult:
         """AI-powered image enhancement and quality improvement"""
+
+
+
         try:
             start_time = time.time()
             original_size = len(image.tobytes())
@@ -933,6 +954,9 @@ class ImageAgent(BaseAgent):
         options: Dict[str, Any]
     ) -> ImageProtectionResult:
         """Comprehensive image content protection and analysis"""
+
+
+
         try:
             # Generate multiple types of fingerprints
             fingerprint = await self._create_fingerprint(image, metadata, options)
@@ -985,6 +1009,9 @@ class ImageAgent(BaseAgent):
         robust_hash: str
     ) -> List[Dict[str, Any]]:
         """Search for similar images in database"""
+
+
+
         try:
             matches = []
             
@@ -1027,6 +1054,9 @@ class ImageAgent(BaseAgent):
         metadata: ImageMetadata
     ) -> str:
         """Analyze copyright status of the image"""
+
+
+
         try:
             # Check EXIF for copyright information
             if metadata.exif_data:
@@ -1046,6 +1076,9 @@ class ImageAgent(BaseAgent):
 
     async def _detect_watermark(self, image: Image.Image) -> bool:
         """Detect presence of watermarks in the image"""
+
+
+
         try:
             # Convert to grayscale for analysis
             gray = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2GRAY)
@@ -1073,6 +1106,9 @@ class ImageAgent(BaseAgent):
 
     async def _detect_tampering(self, image: Image.Image, metadata: ImageMetadata) -> bool:
         """Detect if image has been tampered with or manipulated"""
+
+
+
         try:
             # Error Level Analysis (ELA) for JPEG compression artifacts
             if metadata.format == ImageFormat.JPEG:
@@ -1183,6 +1219,9 @@ class ImageAgent(BaseAgent):
         options: Dict[str, Any]
     ) -> ImageOptimizationResult:
         """Optimize image for web, storage, and SEO"""
+
+
+
         try:
             original_format = metadata.format
             original_size = metadata.file_size
@@ -1271,6 +1310,9 @@ class ImageAgent(BaseAgent):
         metadata: ImageMetadata
     ) -> Dict[str, Any]:
         """Generate SEO-optimized alt text and keywords"""
+
+
+
         try:
             # Use computer vision to analyze image content
             detected_objects = await self.cv_engine.detect_objects(image)
@@ -1391,6 +1433,9 @@ class ImageAgent(BaseAgent):
         metadata: ImageMetadata
     ) -> None:
         """Save processed image with metadata preservation"""
+
+
+
         try:
             output_path = Path(output_path)
             output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -1432,6 +1477,9 @@ class ImageAgent(BaseAgent):
 
     async def get_processing_stats(self) -> Dict[str, Any]:
         """Get comprehensive processing statistics"""
+
+
+
         try:
             stats = await super().get_processing_stats()
             

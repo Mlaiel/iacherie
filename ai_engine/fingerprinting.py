@@ -43,6 +43,9 @@ class AudioFingerprinter:
     
     async def generate_fingerprint(self, audio_data: np.ndarray) -> Dict[str, Any]:
         """Generate comprehensive audio fingerprint"""
+
+
+
         try:
             fingerprint_data = {}
             
@@ -148,6 +151,9 @@ class VideoFingerprinter:
     async def generate_fingerprint(self, video_frames: List[np.ndarray], 
                                  fps: float) -> Dict[str, Any]:
         """Generate comprehensive video fingerprint"""
+
+
+
         try:
             fingerprint_data = {}
             
@@ -306,6 +312,9 @@ class ImageFingerprinter:
     
     async def generate_fingerprint(self, image: Image.Image) -> Dict[str, Any]:
         """Generate comprehensive image fingerprint"""
+
+
+
         try:
             fingerprint_data = {}
             
@@ -338,6 +347,9 @@ class ImageFingerprinter:
     
     async def _generate_perceptual_hashes(self, image: Image.Image) -> Dict[str, str]:
         """Generate multiple perceptual hashes"""
+
+
+
         return {
             "phash": str(imagehash.phash(image)),
             "dhash": str(imagehash.dhash(image)),
@@ -437,6 +449,9 @@ class TextFingerprinter:
     
     async def generate_fingerprint(self, text: str) -> Dict[str, Any]:
         """Generate comprehensive text fingerprint"""
+
+
+
         try:
             fingerprint_data = {}
             
@@ -538,6 +553,9 @@ class TextFingerprinter:
     
     async def _generate_structural_fingerprint(self, text: str) -> Dict[str, Any]:
         """Generate structural fingerprint"""
+
+
+
         return {
             "sentence_count": text.count('.') + text.count('!') + text.count('?'),
             "paragraph_count": text.count('\n\n') + 1,
@@ -567,6 +585,9 @@ class FingerprintEngine:
     
     async def generate_fingerprint(self, content_type: str, content_data: Any) -> Dict[str, Any]:
         """Generate fingerprint for any content type"""
+
+
+
         try:
             logger.info(f"Generating fingerprint for {content_type} content")
             
@@ -590,6 +611,9 @@ class FingerprintEngine:
     async def compare_fingerprints(self, fp1: Dict[str, Any], fp2: Dict[str, Any], 
                                  content_type: str) -> float:
         """Compare two fingerprints and return similarity score"""
+
+
+
         try:
             if content_type == "audio":
                 return await self._compare_audio_fingerprints(fp1, fp2)

@@ -4,7 +4,7 @@ Revenue Allocation Engine - Intelligent revenue distribution and allocation opti
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  STRICT COPYRIGHT WARNING ⚠️
+  STRICT COPYRIGHT WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, reproduction, modification, or distribution without explicit 
 written permission from the author is strictly prohibited.
@@ -91,6 +91,9 @@ class AllocationTarget:
     @property
     def is_satisfied(self) -> bool:
         """Check if allocation constraints are satisfied"""
+
+
+
         return (self.minimum_allocation <= self.current_allocation <= self.maximum_allocation)
 
 
@@ -153,6 +156,9 @@ class PerformanceBasedOptimizer(BaseAllocationOptimizer):
         constraints: Dict[str, Any]
     ) -> List[AllocationTarget]:
         """Optimize based on performance scores"""
+
+
+
         try:
             # Calculate total performance score
             total_performance = sum(target.performance_score for target in targets)
@@ -192,6 +198,9 @@ class RiskAdjustedOptimizer(BaseAllocationOptimizer):
         constraints: Dict[str, Any]
     ) -> List[AllocationTarget]:
         """Optimize based on risk-adjusted returns"""
+
+
+
         try:
             # Calculate risk-adjusted scores
             risk_adjusted_scores = []
@@ -237,6 +246,9 @@ class DynamicOptimizer(BaseAllocationOptimizer):
         constraints: Dict[str, Any]
     ) -> List[AllocationTarget]:
         """Optimize using mathematical optimization"""
+
+
+
         try:
             n_targets = len(targets)
             
@@ -326,6 +338,9 @@ class RevenueAllocator:
         
     async def initialize(self) -> None:
         """Initialize revenue allocator"""
+
+
+
         try:
             # Initialize optimizers
             self.optimizers = {
@@ -349,6 +364,9 @@ class RevenueAllocator:
         constraints: Optional[Dict[str, Any]] = None
     ) -> AllocationResult:
         """Allocate revenue across targets using specified strategy"""
+
+
+
         try:
             validate_allocation_data({'total_amount': total_amount, 'targets': targets})
             
@@ -420,6 +438,9 @@ class RevenueAllocator:
         targets: List[AllocationTarget]
     ) -> AllocationMetrics:
         """Calculate allocation performance metrics"""
+
+
+
         try:
             allocated_amount = sum(target.current_allocation for target in targets)
             unallocated_amount = total_amount - allocated_amount
@@ -563,6 +584,9 @@ class RevenueAllocator:
         strategy: Optional[AllocationStrategy] = None
     ) -> AllocationResult:
         """Rebalance existing allocation"""
+
+
+
         try:
             # Find original allocation
             original_allocation = next(
@@ -598,6 +622,9 @@ class RevenueAllocator:
         scenarios: List[Dict[str, Any]]
     ) -> Dict[str, AllocationResult]:
         """Simulate different allocation scenarios"""
+
+
+
         try:
             results = {}
             
@@ -659,6 +686,9 @@ class RevenueAllocator:
         total_amount: Decimal
     ) -> List[AllocationTarget]:
         """Optimize allocation constraints for better results"""
+
+
+
         try:
             optimized_targets = []
             
@@ -708,6 +738,9 @@ class RevenueAllocator:
     
     async def get_allocation_analytics(self, period_days: int = 30) -> Dict[str, Any]:
         """Get allocation analytics for specified period"""
+
+
+
         try:
             # Filter allocations by period
             cutoff_date = datetime.utcnow() - timedelta(days=period_days)
@@ -781,6 +814,9 @@ class RevenueAllocator:
     
     async def export_allocation_report(self, allocation_id: str) -> Dict[str, Any]:
         """Export detailed allocation report"""
+
+
+
         try:
             allocation = next(
                 (a for a in self.allocation_history if a.allocation_id == allocation_id),

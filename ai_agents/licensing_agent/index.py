@@ -7,7 +7,7 @@ quick access to all core functionality and streamlined initialization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -188,11 +188,17 @@ class LicensingAgentFactory:
     @classmethod
     def get_instance(cls, instance_id: str) -> Optional[Any]:
         """Get an existing instance by ID"""
+
+
+
         return cls._instances.get(instance_id)
     
     @classmethod
     def list_instances(cls) -> List[str]:
         """List all created instances"""
+
+
+
         return list(cls._instances.keys())
     
     @classmethod

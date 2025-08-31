@@ -189,10 +189,16 @@ class SerializationRegistry:
         logger.debug(f"Registered serializer: {name}")
     
     def get_serializer(self, name: str) -> Optional[Type]:
-        """Get serializer by name."""        return self._serializers.get(name)
+        """Get serializer by name."""
+
+
+        return self._serializers.get(name)
     
     def list_serializers(self) -> List[str]:
-        """List available serializers."""        return list(self._serializers.keys())
+        """List available serializers."""
+
+
+        return list(self._serializers.keys())
 
 class SerializerManager:
     """    Central serializer management system.
@@ -489,13 +495,19 @@ class SerializerManager:
         return cipher.decrypt(data)
     
     def get_serializer(self, name: str) -> Optional[Type]:
-        """Get specialized serializer by name."""        return self.registry.get_serializer(name)
+        """Get specialized serializer by name."""
+
+
+        return self.registry.get_serializer(name)
     
     def register_serializer(self, name: str, serializer_class: Type) -> None:
         """Register custom serializer."""        self.registry.register_serializer(name, serializer_class)
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Get serialization metrics."""        return self.metrics.get_statistics()
+        """Get serialization metrics."""
+
+
+        return self.metrics.get_statistics()
     
     def reset_metrics(self) -> None:
         """Reset performance metrics."""        self.metrics.reset()

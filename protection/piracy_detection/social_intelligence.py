@@ -1,5 +1,5 @@
 """
-🌐 Social Network Intelligence Engine
+ Social Network Intelligence Engine
 =====================================
 
 Advanced social media intelligence and network analysis for content tracking.
@@ -7,7 +7,7 @@ Advanced social media intelligence and network analysis for content tracking.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
+ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
 and will result in immediate legal action under German and international copyright law.
 
@@ -247,6 +247,9 @@ class SocialNetworkIntelligence:
     
     async def initialize(self) -> bool:
         """Initialize the social network intelligence engine."""
+
+
+
         try:
             self.logger.info("Initializing Social Network Intelligence Engine...")
             
@@ -276,6 +279,9 @@ class SocialNetworkIntelligence:
     
     async def _initialize_ai_models(self) -> None:
         """Initialize AI models for social analysis."""
+
+
+
         try:
             # Sentiment analysis model
             self.sentiment_analyzer = pipeline(
@@ -300,6 +306,9 @@ class SocialNetworkIntelligence:
     
     async def _setup_platform_clients(self) -> None:
         """Setup API clients for social media platforms."""
+
+
+
         try:
             # Twitter API client
             if self.config.get('twitter_bearer_token'):
@@ -335,6 +344,9 @@ class SocialNetworkIntelligence:
     
     async def _initialize_data_storage(self) -> None:
         """Initialize data storage connections."""
+
+
+
         try:
             # Redis for caching and real-time data
             self.redis_client = aioredis.from_url(
@@ -357,6 +369,9 @@ class SocialNetworkIntelligence:
     
     async def _create_database_tables(self) -> None:
         """Create necessary database tables."""
+
+
+
         try:
             async with self.postgres_pool.acquire() as conn:
                 # Social profiles table
@@ -430,6 +445,9 @@ class SocialNetworkIntelligence:
     
     async def _load_network_data(self) -> None:
         """Load existing network data from storage."""
+
+
+
         try:
             async with self.postgres_pool.acquire() as conn:
                 # Load social profiles
@@ -454,6 +472,9 @@ class SocialNetworkIntelligence:
     
     async def _start_real_time_monitoring(self) -> None:
         """Start real-time monitoring of social platforms."""
+
+
+
         try:
             # Create monitoring tasks for each platform
             monitoring_tasks = []
@@ -472,6 +493,9 @@ class SocialNetworkIntelligence:
     
     async def _monitor_platform(self, platform: str) -> None:
         """Monitor a specific social media platform."""
+
+
+
         try:
             while True:
                 # Platform-specific monitoring logic
@@ -586,6 +610,9 @@ class SocialNetworkIntelligence:
         self, content_id: str, start_date: datetime, end_date: datetime
     ) -> List[ContentPost]:
         """Gather all mentions of content across social platforms."""
+
+
+
         try:
             all_mentions = []
             
@@ -617,6 +644,9 @@ class SocialNetworkIntelligence:
     
     async def _build_propagation_network(self, content_mentions: List[ContentPost]) -> nx.DiGraph:
         """Build content propagation network graph."""
+
+
+
         try:
             propagation_graph = nx.DiGraph()
             
@@ -649,6 +679,9 @@ class SocialNetworkIntelligence:
     
     async def _analyze_propagation_paths(self, propagation_network: nx.DiGraph) -> List[PropagationPath]:
         """Analyze content propagation paths through the network."""
+
+
+
         try:
             propagation_paths = []
             
@@ -685,6 +718,9 @@ class SocialNetworkIntelligence:
     
     async def _identify_key_influencers(self, content_mentions: List[ContentPost]) -> List[SocialProfile]:
         """Identify key influencers involved in content propagation."""
+
+
+
         try:
             influencer_metrics = defaultdict(lambda: {
                 'total_engagement': 0,
@@ -725,6 +761,9 @@ class SocialNetworkIntelligence:
     
     async def _analyze_content_sentiment(self, content_mentions: List[ContentPost]) -> Dict[str, Any]:
         """Analyze sentiment of content mentions."""
+
+
+
         try:
             if not self.sentiment_analysis_enabled:
                 return {}
@@ -808,6 +847,9 @@ class SocialNetworkIntelligence:
     
     async def close(self) -> None:
         """Clean up resources."""
+
+
+
         try:
             # Cancel monitoring tasks
             if hasattr(self, 'monitoring_tasks'):

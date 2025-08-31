@@ -53,6 +53,9 @@ async def get_analytics_overview(
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
     """Get analytics overview for user"""
+
+
+
     try:
         user_id = current_user["user_id"]
         
@@ -108,6 +111,9 @@ async def get_content_analytics(
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
     """Get detailed content analytics"""
+
+
+
     try:
         user_id = current_user["user_id"]
         
@@ -174,6 +180,9 @@ async def get_platform_analytics(
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
     """Get platform-specific analytics"""
+
+
+
     try:
         user_id = current_user["user_id"]
         

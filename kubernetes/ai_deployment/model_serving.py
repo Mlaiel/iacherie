@@ -120,6 +120,9 @@ class ModelServingDeployment:
     
     def _initialize_clients(self) -> None:
         """Initialize Kubernetes, Docker, and Redis clients"""
+
+
+
         try:
             # Kubernetes client
             config.load_incluster_config()
@@ -153,6 +156,9 @@ class ModelServingDeployment:
         Returns:
             Infrastructure deployment summary
         """
+
+
+
         try:
             self.status = "deploying_infrastructure"
             logger.info("Deploying model serving infrastructure")
@@ -228,6 +234,9 @@ class ModelServingDeployment:
         Returns:
             Model deployment result
         """
+
+
+
         try:
             model_id = f"{config.model_name}-{config.model_version}"
             logger.info(f"Deploying model for serving: {model_id}")
@@ -296,6 +305,9 @@ class ModelServingDeployment:
     
     async def _ensure_serving_namespace(self) -> None:
         """Create serving namespace"""
+
+
+
         try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
@@ -924,6 +936,9 @@ class ModelServingDeployment:
     
     async def _validate_serving_infrastructure(self) -> bool:
         """Validate serving infrastructure deployment"""
+
+
+
         try:
             # Check essential services
             essential_services = [
@@ -1297,6 +1312,9 @@ class ModelServingDeployment:
     
     async def _cleanup_failed_infrastructure(self) -> None:
         """Clean up failed infrastructure deployment"""
+
+
+
         try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
@@ -1306,6 +1324,9 @@ class ModelServingDeployment:
     
     async def _cleanup_failed_model_deployment(self, model_name: str, model_version: str) -> None:
         """Clean up failed model deployment"""
+
+
+
         try:
             model_id = f"{model_name}-{model_version}"
             
@@ -1343,6 +1364,9 @@ class ModelServingDeployment:
     
     async def get_serving_metrics(self) -> Dict[str, Any]:
         """Get comprehensive serving metrics"""
+
+
+
         try:
             metrics = {
                 "infrastructure_status": self.status,
@@ -1375,6 +1399,9 @@ class ModelServingDeployment:
     
     async def cleanup(self) -> None:
         """Clean up entire serving infrastructure"""
+
+
+
         try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)

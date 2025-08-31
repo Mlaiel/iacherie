@@ -162,6 +162,9 @@ class SSLValidator:
         Returns:
             Validation result
         """
+
+
+
         try:
             # Load certificate
             with open(cert_path, 'rb') as cert_file:
@@ -206,6 +209,9 @@ class SSLValidator:
         Returns:
             Validation result
         """
+
+
+
         try:
             # Load certificate
             with open(cert_path, 'rb') as f:
@@ -400,6 +406,9 @@ class SSLValidator:
         ca_path: Optional[Path]
     ) -> bool:
         """Verify certificate chain using OpenSSL"""
+
+
+
         try:
             with tempfile.TemporaryDirectory() as temp_dir:
                 temp_path = Path(temp_dir)
@@ -575,6 +584,9 @@ class SSLScanner:
     
     def _scan_certificate(self, hostname: str, port: int) -> Dict[str, Any]:
         """Scan SSL certificate"""
+
+
+
         try:
             context = ssl.create_default_context()
             
@@ -830,6 +842,9 @@ class SSLScanner:
     
     def _measure_handshake_time(self, hostname: str, port: int) -> float:
         """Measure SSL handshake time"""
+
+
+
         try:
             start_time = time.time()
             
@@ -1021,6 +1036,9 @@ class CertificateConverter:
         Returns:
             True if conversion successful
         """
+
+
+
         try:
             # Load certificate based on input format
             if input_format.upper() == "PEM":
@@ -1067,6 +1085,9 @@ class CertificateConverter:
         password: Optional[str] = None
     ) -> bool:
         """Convert PKCS#12 certificate"""
+
+
+
         try:
             # Use OpenSSL for PKCS#12 conversion
             cmd = ["openssl", "pkcs12", "-in", str(input_path)]
@@ -1113,6 +1134,9 @@ class CertificateConverter:
         Returns:
             True if extraction successful
         """
+
+
+
         try:
             cmd = [
                 "openssl", "pkcs12", "-in", str(pkcs12_path),
@@ -1168,6 +1192,9 @@ class SSLTestServer:
         Returns:
             True if server started successfully
         """
+
+
+
         try:
             import http.server
             import socketserver
@@ -1239,6 +1266,9 @@ class OpenSSLWrapper:
         Returns:
             True if generation successful
         """
+
+
+
         try:
             if algorithm.upper() == "RSA":
                 cmd = ["openssl", "genrsa", "-out", str(output_path), str(key_size)]
@@ -1285,6 +1315,9 @@ class OpenSSLWrapper:
         Returns:
             True if generation successful
         """
+
+
+
         try:
             cmd = [
                 "openssl", "req", "-new",
@@ -1356,6 +1389,9 @@ class OpenSSLWrapper:
         Returns:
             Tuple of (success, output)
         """
+
+
+
         try:
             cmd = ["openssl", "verify"]
             
@@ -1396,6 +1432,9 @@ def create_ssl_scanner(timeout: int = 10, threads: int = 5) -> SSLScanner:
     Returns:
         Configured SSL scanner
     """
+
+
+
     return SSLScanner(timeout=timeout, threads=threads)
 
 

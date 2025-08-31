@@ -8,7 +8,7 @@ Provides migration scripts and schema evolution tools.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  STRICT WARNING FOR UNAUTHORIZED USE:
+  STRICT WARNING FOR UNAUTHORIZED USE:
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use without explicit written 
 permission is strictly prohibited and will result in legal action.
@@ -78,6 +78,9 @@ class MigrationManager:
     
     def init_alembic(self, directory: str = "migrations") -> bool:
         """Initialize Alembic in the project"""
+
+
+
         try:
             if not self.config:
                 # Create basic alembic.ini
@@ -159,6 +162,9 @@ from backend.data.models.content_model import Base
 # Set target metadata
 target_metadata = Base.metadata
 """
+
+
+
         
         try:
             with open(env_py_path, 'r') as f:
@@ -184,6 +190,9 @@ target_metadata = Base.metadata
     
     def create_migration(self, message: str, autogenerate: bool = True) -> bool:
         """Create a new migration"""
+
+
+
         try:
             if not self.config:
                 logger.error("Alembic not configured")
@@ -207,6 +216,9 @@ target_metadata = Base.metadata
     
     def upgrade(self, revision: str = "head") -> bool:
         """Upgrade database to specified revision"""
+
+
+
         try:
             if not self.config:
                 logger.error("Alembic not configured")
@@ -222,6 +234,9 @@ target_metadata = Base.metadata
     
     def downgrade(self, revision: str) -> bool:
         """Downgrade database to specified revision"""
+
+
+
         try:
             if not self.config:
                 logger.error("Alembic not configured")
@@ -237,6 +252,9 @@ target_metadata = Base.metadata
     
     def get_current_revision(self) -> Optional[str]:
         """Get current database revision"""
+
+
+
         try:
             with self.engine.connect() as connection:
                 context = MigrationContext.configure(connection)
@@ -247,6 +265,9 @@ target_metadata = Base.metadata
     
     def get_history(self) -> List[Dict[str, Any]]:
         """Get migration history"""
+
+
+
         try:
             if not self.config:
                 return []
@@ -411,6 +432,9 @@ class SchemaValidator:
 
 def create_initial_migration_script() -> str:
     """Generate initial migration script content"""
+
+
+
     return '''"""Initial migration: Create all tables
 
 Revision ID: 001_initial
@@ -445,6 +469,9 @@ def downgrade():
 
 def get_migration_commands() -> Dict[str, str]:
     """Get common migration commands for reference"""
+
+
+
     return {
         'init': 'alembic init migrations',
         'create_migration': 'alembic revision --autogenerate -m "Migration message"',

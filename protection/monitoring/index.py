@@ -1,5 +1,5 @@
 """
-🔍 Content Protection Monitoring Index
+ Content Protection Monitoring Index
 =====================================
 
 Main entry point and service orchestrator for the comprehensive content protection monitoring system.
@@ -17,7 +17,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
-⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
+ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
@@ -164,6 +164,9 @@ class MonitoringIndex:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             logger.info("Initializing Content Protection Monitoring Index...")
             
@@ -187,6 +190,9 @@ class MonitoringIndex:
 
     async def _initialize_services(self) -> None:
         """Initialize all monitoring services."""
+
+
+
         try:
             # Initialize Analytics first (required by other services)
             logger.info("Initializing Analytics service...")
@@ -286,12 +292,18 @@ class MonitoringIndex:
         @self.app.get("/health")
         async def health_check():
             """Get system health status."""
+
+
+
             return await self.get_system_health()
         
         # Service status endpoint
         @self.app.get("/status")
         async def system_status():
             """Get detailed system status."""
+
+
+
             return await self.get_system_status()
         
         # Start monitoring endpoint
@@ -301,6 +313,9 @@ class MonitoringIndex:
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
             """Start content monitoring for a fingerprint."""
+
+
+
             try:
                 session_id = await self.start_content_monitoring(
                     fingerprint_id=request.fingerprint_id,
@@ -320,6 +335,9 @@ class MonitoringIndex:
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
             """Stop monitoring for a session."""
+
+
+
             try:
                 success = await self.stop_content_monitoring(session_id)
                 return {"session_id": session_id, "status": "stopped" if success else "failed"}
@@ -333,6 +351,9 @@ class MonitoringIndex:
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
             """Get active monitoring sessions for a user."""
+
+
+
             try:
                 sessions = await self.get_active_monitoring_sessions(user_id)
                 return {"user_id": user_id, "sessions": sessions}
@@ -346,6 +367,9 @@ class MonitoringIndex:
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
             """Get dashboard data for a user."""
+
+
+
             try:
                 data = await self.get_dashboard_data(user_id)
                 return data
@@ -359,6 +383,9 @@ class MonitoringIndex:
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
             """Generate a monitoring report."""
+
+
+
             try:
                 report = await self.generate_report(
                     template_id=request.template_id,
@@ -380,6 +407,9 @@ class MonitoringIndex:
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
             """Download a generated report."""
+
+
+
             try:
                 file_path = await self.download_report(report_id, format)
                 if file_path and file_path.exists():
@@ -400,6 +430,9 @@ class MonitoringIndex:
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
             """Run system performance optimization."""
+
+
+
             try:
                 result = await self.optimize_system_performance(
                     optimization_type=request.optimization_type,
@@ -418,6 +451,9 @@ class MonitoringIndex:
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
             """Get analytics data for a user."""
+
+
+
             try:
                 analytics_data = await self.get_analytics_data(user_id, time_range)
                 return analytics_data
@@ -428,6 +464,9 @@ class MonitoringIndex:
         @self.app.websocket("/ws/{user_id}")
         async def websocket_endpoint(websocket: WebSocket, user_id: int):
             """WebSocket endpoint for real-time monitoring updates."""
+
+
+
             try:
                 await self.handle_websocket_connection(websocket, user_id)
             except Exception as e:
@@ -773,6 +812,9 @@ class MonitoringIndex:
 
     async def _health_check_loop(self) -> None:
         """Background task for health monitoring."""
+
+
+
         try:
             while self.status == MonitoringIndexStatus.RUNNING:
                 await self._check_service_health()
@@ -782,6 +824,9 @@ class MonitoringIndex:
 
     async def _cleanup_loop(self) -> None:
         """Background task for cleanup operations."""
+
+
+
         try:
             while self.status == MonitoringIndexStatus.RUNNING:
                 await self._perform_cleanup()
@@ -791,6 +836,9 @@ class MonitoringIndex:
 
     async def _check_service_health(self) -> None:
         """Check health of all services."""
+
+
+
         try:
             services = {
                 'realtime_monitor': self.realtime_monitor,
@@ -819,6 +867,9 @@ class MonitoringIndex:
 
     async def _perform_cleanup(self) -> None:
         """Perform cleanup operations."""
+
+
+
         try:
             # Cleanup old reports
             if self.report_generator:
@@ -853,6 +904,9 @@ class MonitoringIndex:
 
     def _load_default_config(self) -> Dict[str, Any]:
         """Load default configuration."""
+
+
+
         return {
             "cors_origins": ["*"],
             "analytics": {
@@ -975,7 +1029,7 @@ def create_monitoring_app(config: Optional[Dict[str, Any]] = None) -> FastAPI:
 
 # Legal notice and copyright
 LEGAL_NOTICE = """
-⚖️ LEGAL WARNING ⚖️
+ LEGAL WARNING 
 
 This software is the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de).
 

@@ -7,7 +7,7 @@ environment-specific settings, security parameters, and performance tuning.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -381,6 +381,9 @@ def get_config() -> CrawlingAgentConfig:
     """
     Get the global configuration instance
     """
+
+
+
     return load_config_from_environment()
 
 # Pre-configured settings for different environments

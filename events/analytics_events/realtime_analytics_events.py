@@ -6,7 +6,7 @@ Provides live dashboard updates, anomaly detection, and instant insights.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel - All rights reserved
-⚠️  WARNING: This code and concept are proprietary to Fahed Mlaiel.
+  WARNING: This code and concept are proprietary to Fahed Mlaiel.
     Any unauthorized use, copying, or distribution without explicit written 
     permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 
@@ -110,6 +110,9 @@ class RealtimeAnalyticsEvent(BaseEvent):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert realtime analytics event to dictionary"""
+
+
+
         return {
             **asdict(self),
             'metric_type': self.metric_type.value,
@@ -169,6 +172,9 @@ class RealtimeAnalyticsEventHandler(BaseEventHandler):
         
     async def handle(self, event: RealtimeAnalyticsEvent) -> Dict[str, Any]:
         """Process real-time analytics event with streaming"""
+
+
+
         try:
             # Validate event data
             await self._validate_event(event)

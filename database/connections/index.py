@@ -397,6 +397,9 @@ class DatabaseConnectionsIndex:
     
     async def _setup_monitoring(self):
         """Setup monitoring for all database connections."""
+
+
+
         try:
             # Initialize health monitoring
             health_monitor = DatabaseHealthMonitor()
@@ -486,6 +489,9 @@ class DatabaseConnectionsIndex:
         tenant_id: Optional[str] = None
     ):
         """Release database connection back to pool."""
+
+
+
         try:
             if tenant_id:
                 await self.tenant_manager._release_tenant_connection(tenant_id, connection)

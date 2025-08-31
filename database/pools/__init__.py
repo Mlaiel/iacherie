@@ -177,6 +177,9 @@ async def initialize_all_pools(config_dir: str = "config/pools", master_key: str
     Returns:
         bool: True if all components initialized successfully
     """
+
+
+
     try:
         # Initialize core components
         pool_manager_ok = await initialize_pool_manager()
@@ -196,14 +199,14 @@ async def initialize_all_pools(config_dir: str = "config/pools", master_key: str
         ])
         
         if success:
-            print("✅ All database connection pools initialized successfully")
+            print(" All database connection pools initialized successfully")
         else:
-            print("❌ Some pool components failed to initialize")
+            print(" Some pool components failed to initialize")
             
         return success
         
     except Exception as e:
-        print(f"❌ Pool initialization failed: {e}")
+        print(f" Pool initialization failed: {e}")
         return False
 
 def get_pool_summary() -> dict:
@@ -213,18 +216,21 @@ def get_pool_summary() -> dict:
     Returns:
         dict: Summary of pool status and configuration
     """
+
+
+
     try:
         summary = {
             "version": __version__,
             "components": {
-                "pool_manager": "✅ Available",
-                "configuration_manager": "✅ Available", 
-                "monitoring_manager": "✅ Available",
-                "elasticsearch_pool": "✅ Available",
-                "mongodb_pool": "✅ Available",
-                "vector_store_pool": "✅ Available",
-                "object_storage_pool": "✅ Available",
-                "cache_pool": "✅ Available"
+                "pool_manager": " Available",
+                "configuration_manager": " Available", 
+                "monitoring_manager": " Available",
+                "elasticsearch_pool": " Available",
+                "mongodb_pool": " Available",
+                "vector_store_pool": " Available",
+                "object_storage_pool": " Available",
+                "cache_pool": " Available"
             },
             "features": [
                 "Multi-database connection pooling",

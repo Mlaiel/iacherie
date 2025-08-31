@@ -8,7 +8,7 @@ Fournit une surveillance, des rapports et une conformité réglementaire exhaust
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2024-2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LEGAL STRICT ⚠️
+  AVERTISSEMENT LEGAL STRICT 
 Ce code et tous les concepts associés sont la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants s'exposent à des poursuites judiciaires.
@@ -89,6 +89,9 @@ class LicenseAuditManager:
     
     async def initialize(self):
         """Initialise le gestionnaire d'audit."""
+
+
+
         try:
             await self._setup_audit_rules()
             await self._setup_retention_policies()

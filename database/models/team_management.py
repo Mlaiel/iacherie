@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -302,6 +302,9 @@ class TeamManagement(Base):
         **kwargs
     ) -> 'TeamManagement':
         """Create a new organization"""
+
+
+
         return cls.create_team(
             name=name,
             team_type=TeamType.ORGANIZATION,
@@ -387,6 +390,9 @@ class TeamManagement(Base):
     
     def get_team_statistics(self) -> Dict[str, Any]:
         """Get comprehensive team statistics"""
+
+
+
         return {
             'basic_info': {
                 'team_id': self.team_id,
@@ -566,6 +572,9 @@ class TeamInvitation(Base):
     
     def is_expired(self) -> bool:
         """Check if invitation is expired"""
+
+
+
         return datetime.now(timezone.utc) >= self.expires_at
     
     def accept_invitation(self, user_id: str) -> None:

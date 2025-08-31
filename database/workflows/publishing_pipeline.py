@@ -9,7 +9,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -528,6 +528,9 @@ class PublishingPipelineManager:
     
     async def _process_publishing_job(self, job_id: str):
         """Process publishing job through pipeline stages"""
+
+
+
         try:
             job = self.db_session.query(PublishingJob).filter(
                 PublishingJob.id == job_id
@@ -884,16 +887,28 @@ class QualityValidator:
     
     async def _validate_video_quality(self, path: str, rules: Dict) -> Dict[str, Any]:
         """Validate video content quality"""
+
+
+
         return {'valid': True, 'score': 0.95, 'issues': []}
     
     async def _validate_audio_quality(self, path: str, rules: Dict) -> Dict[str, Any]:
         """Validate audio content quality"""
+
+
+
         return {'valid': True, 'score': 0.95, 'issues': []}
     
     async def _validate_image_quality(self, path: str, rules: Dict) -> Dict[str, Any]:
         """Validate image content quality"""
+
+
+
         return {'valid': True, 'score': 0.95, 'issues': []}
     
     async def _validate_text_quality(self, path: str, rules: Dict) -> Dict[str, Any]:
         """Validate text content quality"""
+
+
+
         return {'valid': True, 'score': 0.95, 'issues': []}

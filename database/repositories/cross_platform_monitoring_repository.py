@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -81,6 +81,9 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
         Returns:
             Created PlatformMonitoring instance
         """
+
+
+
         try:
             monitoring_data = {
                 "content_fingerprint_id": content_fingerprint_id,
@@ -119,6 +122,9 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
         Returns:
             List of PlatformMonitoring instances due for scanning
         """
+
+
+
         try:
             current_time = datetime.now(timezone.utc)
             
@@ -156,6 +162,9 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
         Returns:
             Updated PlatformMonitoring instance
         """
+
+
+
         try:
             monitoring_job = await self.get_by_id(monitoring_id)
             if not monitoring_job:
@@ -209,6 +218,9 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
         Returns:
             Created ScanResult instance
         """
+
+
+
         try:
             scan_duration = (scan_completed_at - scan_started_at).total_seconds()
             
@@ -268,6 +280,9 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
         Returns:
             Created ViolationDetection instance
         """
+
+
+
         try:
             violation_data = {
                 "platform_monitoring_id": monitoring_id,
@@ -324,6 +339,9 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
         Returns:
             List of PlatformMonitoring instances
         """
+
+
+
         try:
             query = self.db_session.query(self.model).filter(
                 self.model.user_id == user_id
@@ -364,6 +382,9 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
         Returns:
             List of ViolationDetection instances
         """
+
+
+
         try:
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=days)
             
@@ -408,6 +429,9 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
         Returns:
             Updated ViolationDetection instance
         """
+
+
+
         try:
             violation = self.db_session.query(ViolationDetection).filter(
                 ViolationDetection.id == violation_id
@@ -451,6 +475,9 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
         Returns:
             Dictionary containing monitoring analytics
         """
+
+
+
         try:
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=period_days)
             
@@ -561,6 +588,9 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
         Returns:
             Updated PlatformMonitoring instance
         """
+
+
+
         try:
             monitoring_job = await self.get_by_id(monitoring_id)
             if not monitoring_job:
@@ -592,6 +622,9 @@ class CrossPlatformMonitoringRepository(BaseRepository[PlatformMonitoring]):
         Returns:
             Updated PlatformMonitoring instance
         """
+
+
+
         try:
             monitoring_job = await self.get_by_id(monitoring_id)
             if not monitoring_job:

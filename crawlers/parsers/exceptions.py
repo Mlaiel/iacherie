@@ -8,7 +8,7 @@ Provides detailed error handling for various parsing scenarios.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de

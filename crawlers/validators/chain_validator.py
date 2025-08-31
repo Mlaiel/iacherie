@@ -124,6 +124,9 @@ class ValidationChainResult:
     @property
     def has_critical_failures(self) -> bool:
         """Check if chain has critical failures"""
+
+
+
         return len(self.critical_failures) > 0
     
     @property

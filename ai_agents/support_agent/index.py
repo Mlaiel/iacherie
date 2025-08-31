@@ -9,7 +9,7 @@ support, and performance analytics.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -75,6 +75,9 @@ class SupportAgentIndex:
         initialize_defaults: bool = True
     ):
         """Initialize all support agent system components"""
+
+
+
         try:
             self.redis_client = redis_client
             self.db_session = db_session
@@ -125,10 +128,10 @@ class SupportAgentIndex:
                     if hasattr(component, 'initialize'):
                         await component.initialize()
                     self.component_health[component_name] = True
-                    logger.info(f"✅ {component_name} initialized successfully")
+                    logger.info(f" {component_name} initialized successfully")
                 except Exception as e:
                     self.component_health[component_name] = False
-                    logger.error(f"❌ Failed to initialize {component_name}: {str(e)}")
+                    logger.error(f" Failed to initialize {component_name}: {str(e)}")
                     if component_name == "agent_manager":
                         # Agent manager is critical
                         raise
@@ -140,10 +143,10 @@ class SupportAgentIndex:
             # Record initialization metrics
             await self._record_system_metric("system_startup", 1.0)
             
-            logger.info("🚀 Support Agent system fully initialized and operational")
+            logger.info(" Support Agent system fully initialized and operational")
             
         except Exception as e:
-            logger.error(f"💥 Critical failure during Support Agent initialization: {str(e)}")
+            logger.error(f" Critical failure during Support Agent initialization: {str(e)}")
             raise SupportError(f"System initialization failed: {str(e)}")
     
     async def process_support_request(
@@ -261,6 +264,9 @@ class SupportAgentIndex:
         limit: int = 50
     ) -> Dict[str, Any]:
         """Get comprehensive conversation history with analytics"""
+
+
+
         try:
             # Get conversation analytics
             analytics = await self.conversation_flow_manager.get_conversation_analytics(conversation_id)
@@ -291,6 +297,9 @@ class SupportAgentIndex:
         user_id: Optional[str] = None
     ) -> Dict[str, Any]:
         """Search knowledge base with multi-language support"""
+
+
+
         try:
             # Detect language if not provided
             if language:
@@ -370,6 +379,9 @@ class SupportAgentIndex:
         specialty: Optional[str] = None
     ) -> Dict[str, Any]:
         """Create manual escalation to human agent"""
+
+
+
         try:
             escalation_request = await self.escalation_manager.create_escalation(
                 conversation_id=conversation_id,
@@ -407,6 +419,9 @@ class SupportAgentIndex:
         include_detailed_metrics: bool = False
     ) -> Dict[str, Any]:
         """Get comprehensive system analytics and performance metrics"""
+
+
+
         try:
             # Calculate time range
             if time_period == "last_24h":
@@ -596,8 +611,11 @@ class SupportAgentIndex:
     
     async def shutdown(self):
         """Gracefully shutdown all support agent system components"""
+
+
+
         try:
-            logger.info("🔄 Initiating graceful shutdown of Support Agent system...")
+            logger.info(" Initiating graceful shutdown of Support Agent system...")
             
             shutdown_tasks = []
             
@@ -615,9 +633,9 @@ class SupportAgentIndex:
                 if component and hasattr(component, 'shutdown'):
                     try:
                         await component.shutdown()
-                        logger.info(f"✅ {component_name} shutdown complete")
+                        logger.info(f" {component_name} shutdown complete")
                     except Exception as e:
-                        logger.error(f"❌ Error shutting down {component_name}: {str(e)}")
+                        logger.error(f" Error shutting down {component_name}: {str(e)}")
             
             # Clear active conversations
             self.active_conversations.clear()
@@ -629,10 +647,10 @@ class SupportAgentIndex:
             # Mark as not initialized
             self.is_initialized = False
             
-            logger.info("🛑 Support Agent system shutdown complete")
+            logger.info(" Support Agent system shutdown complete")
             
         except Exception as e:
-            logger.error(f"💥 Error during shutdown: {str(e)}")
+            logger.error(f" Error during shutdown: {str(e)}")
     
     # Private helper methods
     
@@ -670,6 +688,9 @@ class SupportAgentIndex:
         intent: Optional[str]
     ) -> List[Any]:
         """Search knowledge base with context"""
+
+
+
         try:
             # Map conversation intent to knowledge category
             category_mapping = {
@@ -701,6 +722,9 @@ class SupportAgentIndex:
         user_id: str
     ) -> bool:
         """Check if escalation to human agent is needed"""
+
+
+
         try:
             # Low AI confidence
             if conversation_response.get("confidence", 1.0) < 0.6:
@@ -736,6 +760,9 @@ class SupportAgentIndex:
         message: str
     ) -> Dict[str, Any]:
         """Handle escalation to human agent"""
+
+
+
         try:
             # Determine escalation reason and priority
             confidence = conversation_response.get("confidence", 1.0)
@@ -788,6 +815,9 @@ class SupportAgentIndex:
         user_id: str
     ) -> Dict[str, Any]:
         """Generate comprehensive response combining all AI capabilities"""
+
+
+
         try:
             base_response = conversation_response.get("response", {})
             
@@ -889,6 +919,9 @@ I'm adding you to the queue for human assistance. Estimated wait time: {escalati
     
     async def _record_system_metric(self, metric_name: str, value: float):
         """Record system performance metric"""
+
+
+
         try:
             if self.analytics:
                 metric = PerformanceMetric(
@@ -908,6 +941,9 @@ I'm adding you to the queue for human assistance. Estimated wait time: {escalati
         user_id: str
     ):
         """Record comprehensive request metrics"""
+
+
+
         try:
             self.total_response_time += processing_time
             
@@ -979,6 +1015,9 @@ async def quick_support_response(
     language: Optional[str] = None
 ) -> Dict[str, Any]:
     """Quick support response for simple integrations"""
+
+
+
     try:
         agent = await get_support_agent()
         return await agent.process_support_request(
@@ -999,6 +1038,9 @@ async def batch_process_support_requests(
     requests: List[Dict[str, Any]]
 ) -> List[Dict[str, Any]]:
     """Process multiple support requests in batch"""
+
+
+
     try:
         agent = await get_support_agent()
         results = []
@@ -1087,6 +1129,9 @@ def get_default_config() -> dict:
     Returns:
         dict: Default configuration dictionary
     """
+
+
+
     return {
         "conversation_model_config": {
             "model_name": "microsoft/DialoGPT-medium",

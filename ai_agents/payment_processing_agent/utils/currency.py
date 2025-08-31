@@ -7,7 +7,7 @@ historical data, multi-provider support, and caching for performance.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -101,6 +101,9 @@ class ExchangeRate:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             "from_currency": self.from_currency,
             "to_currency": self.to_currency,
@@ -477,6 +480,9 @@ class CurrencyConverter:
         to_currency: str
     ) -> Optional[ExchangeRate]:
         """Parse provider response into ExchangeRate object"""
+
+
+
         try:
             if provider == CurrencyProvider.EXCHANGE_RATES_API:
                 if "rates" in data and to_currency in data["rates"]:
@@ -571,10 +577,16 @@ class CurrencyConverter:
 
     def get_supported_currencies(self) -> List[str]:
         """Get list of supported currency codes"""
+
+
+
         return sorted(list(self.supported_currencies))
 
     async def validate_currency_pair(self, from_currency: str, to_currency: str) -> bool:
         """Validate if currency pair is supported"""
+
+
+
         try:
             await self.get_exchange_rate(from_currency, to_currency, use_cache=False)
             return True

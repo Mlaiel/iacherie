@@ -130,6 +130,9 @@ class BehaviorAnalyzer:
         Returns:
             Behavioral analysis results with risk score
         """
+
+
+
         try:
             # Extract behavior metrics
             current_metrics = await self._extract_behavior_metrics(
@@ -404,6 +407,9 @@ class BehaviorAnalyzer:
         historical_data: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Get user's historical behavior baselines"""
+
+
+
         try:
             # Try to get from cache first
             cache_key = f"behavior_baseline:{user_id}"
@@ -538,6 +544,9 @@ class BehaviorAnalyzer:
         historical_baselines: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Generate comprehensive behavior profile"""
+
+
+
         return {
             'session_characteristics': {
                 'duration_minutes': current_metrics.session_duration / 60,
@@ -613,6 +622,9 @@ class BehaviorAnalyzer:
 
     async def _update_behavior_history(self, user_id: str, metrics: BehaviorMetrics):
         """Update user's behavior history for future baseline calculations"""
+
+
+
         try:
             history_key = f"behavior_history:{user_id}"
             
@@ -641,6 +653,9 @@ class BehaviorAnalyzer:
         behavior_samples: List[Dict[str, Any]]
     ):
         """Learn and update normal behavior patterns for a user"""
+
+
+
         try:
             if len(behavior_samples) < 5:
                 logger.warning(f"Insufficient behavior samples for user {user_id}")
@@ -682,6 +697,9 @@ class BehaviorAnalyzer:
 
     async def get_behavior_trends(self, user_id: str, days: int = 7) -> Dict[str, Any]:
         """Get behavior trends over time for a user"""
+
+
+
         try:
             history_key = f"behavior_history:{user_id}"
             history_records = await self.redis_client.lrange(history_key, 0, -1)

@@ -372,6 +372,9 @@ class PlatformAPICacheManager:
     
     def get_cache_statistics(self) -> Dict[str, Any]:
         """Get comprehensive API cache statistics"""
+
+
+
         return {
             "total_platforms": len(set(config.platform for config in self.config.get_all_platform_configs().values())),
             "total_endpoints": len(self.config.get_all_platform_configs()),

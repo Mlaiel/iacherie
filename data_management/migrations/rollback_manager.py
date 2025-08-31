@@ -1,5 +1,5 @@
 """
-🔄 Rollback Management System - Ultra-Industrial Migration Recovery & Safety Engine
+ Rollback Management System - Ultra-Industrial Migration Recovery & Safety Engine
 ==================================================================================
 
 Enterprise-grade rollback management system for IA Influencer Agent platform:
@@ -20,7 +20,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-🔒 ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 🔒
+ ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 
 ==================================================
 This rollback management system, architecture, and all associated concepts are the exclusive 
 intellectual property of Fahed Mlaiel. Any unauthorized use, copying, modification, reverse 
@@ -243,6 +243,9 @@ class RollbackRiskAssessment:
     
     def _assess_data_volume_risk(self, session: Session) -> float:
         """Assess risk based on data volume"""
+
+
+
         try:
             # Get total database size
             size_query = """
@@ -510,6 +513,9 @@ class RecoveryValidator:
                 LEFT JOIN {parent_table} p ON true
                 WHERE p.id IS NULL AND c.id IS NOT NULL;
                 """
+
+
+
                 
                 try:
                     result = session.execute(text(violation_query))
@@ -630,6 +636,9 @@ class RecoveryValidator:
     async def _calculate_performance_impact(self, session: Session, 
                                           original_state: Dict[str, Any]) -> float:
         """Calculate performance impact of rollback"""
+
+
+
         try:
             # Simple performance impact calculation
             baseline_time = original_state.get('performance_baseline', 1.0)
@@ -833,6 +842,9 @@ class RollbackManager:
     
     def _generate_validation_steps(self, migration: BaseMigration) -> List[Dict[str, Any]]:
         """Generate validation steps for rollback plan"""
+
+
+
         return [
             {
                 'step_id': 'schema_validation',

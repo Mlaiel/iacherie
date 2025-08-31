@@ -133,6 +133,9 @@ class BlockchainConnector:
         Returns:
             True if at least one connection is successful
         """
+
+
+
         try:
             self.metrics.status = ConnectionStatus.CONNECTING
             connected_count = 0
@@ -185,6 +188,9 @@ class BlockchainConnector:
         Returns:
             True if connection is valid
         """
+
+
+
         try:
             start_time = time.time()
             
@@ -252,6 +258,9 @@ class BlockchainConnector:
         Returns:
             Gas price in wei
         """
+
+
+
         try:
             w3 = self.get_web3_instance()
             if not w3:
@@ -275,6 +284,9 @@ class BlockchainConnector:
     
     async def _get_oracle_gas_price(self) -> Optional[int]:
         """Get gas price from external oracle (e.g., ETH Gas Station)."""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(self.config.gas_price_oracle) as response:
@@ -305,6 +317,9 @@ class BlockchainConnector:
         Returns:
             Estimated gas limit
         """
+
+
+
         try:
             w3 = self.get_web3_instance()
             if not w3:
@@ -363,6 +378,9 @@ class BlockchainConnector:
     
     def get_metrics(self) -> ConnectionMetrics:
         """Get current connection metrics."""
+
+
+
         return self.metrics
     
     async def shutdown(self) -> None:
@@ -633,10 +651,16 @@ class MultiChainConnector:
     
     def get_connector(self, network: NetworkType) -> Optional[BlockchainConnector]:
         """Get connector for specific network."""
+
+
+
         return self.connectors.get(network)
     
     def get_all_connectors(self) -> Dict[NetworkType, BlockchainConnector]:
         """Get all active connectors."""
+
+
+
         return self.connectors.copy()
     
     async def get_best_network_for_operation(

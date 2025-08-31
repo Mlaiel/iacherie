@@ -1,5 +1,5 @@
 """
-⚠️ Custom Exceptions for Content Fingerprinting System
+ Custom Exceptions for Content Fingerprinting System
 =======================================================
 
 Comprehensive exception hierarchy for multi-modal content fingerprinting,
@@ -75,6 +75,9 @@ class FingerprintingBaseException(Exception):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert exception to dictionary for serialization."""
+
+
+
         return {
             'error_code': self.error_code,
             'message': self.message,
@@ -89,10 +92,16 @@ class FingerprintingBaseException(Exception):
     
     def __str__(self) -> str:
         """String representation of the exception."""
+
+
+
         return f"[{self.error_code}] {self.message}"
     
     def __repr__(self) -> str:
         """Detailed representation of the exception."""
+
+
+
         return (f"{self.__class__.__name__}(error_code='{self.error_code}', "
                 f"message='{self.message}', severity='{self.severity.value}')")
 

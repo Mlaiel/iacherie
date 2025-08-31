@@ -169,6 +169,9 @@ async def compose_music(
     user: dict = Depends(get_current_user)
 ):
     """Generate AI-composed music based on parameters"""
+
+
+
     try:
         task_id = str(uuid.uuid4())
         
@@ -214,6 +217,9 @@ async def analyze_music(
     user: dict = Depends(get_current_user)
 ):
     """Analyze music content using AI"""
+
+
+
     try:
         # Verify file ownership
         async with database_manager.get_postgres_session() as session:
@@ -273,6 +279,9 @@ async def get_ai_recommendations(
     user: dict = Depends(get_current_user)
 ):
     """Get AI-powered recommendations"""
+
+
+
     try:
         # Get user's content history
         async with database_manager.get_postgres_session() as session:
@@ -342,6 +351,9 @@ async def generate_content(
     user: dict = Depends(get_current_user)
 ):
     """Generate AI content (lyrics, descriptions, etc.)"""
+
+
+
     try:
         task_id = str(uuid.uuid4())
         
@@ -388,6 +400,9 @@ async def transfer_style(
     user: dict = Depends(get_current_user)
 ):
     """Apply style transfer to content"""
+
+
+
     try:
         # Verify source content ownership
         async with database_manager.get_postgres_session() as session:
@@ -462,6 +477,9 @@ async def get_task_status(
     user: dict = Depends(get_current_user)
 ):
     """Get AI agent task status"""
+
+
+
     try:
         async with database_manager.get_postgres_session() as session:
             result = await session.execute("""
@@ -507,6 +525,9 @@ async def get_user_tasks(
     user: dict = Depends(get_current_user)
 ):
     """Get user's AI agent tasks"""
+
+
+
     try:
         query = """
             SELECT task_id, agent_type, request_data, status, progress,
@@ -562,6 +583,9 @@ async def cancel_task(
     user: dict = Depends(get_current_user)
 ):
     """Cancel an AI agent task"""
+
+
+
     try:
         async with database_manager.get_postgres_session() as session:
             # Check if task exists and belongs to user
@@ -606,6 +630,9 @@ async def cancel_task(
 @router.get("/capabilities", response_model=Dict[str, Any])
 async def get_ai_capabilities():
     """Get available AI agent capabilities and models"""
+
+
+
     try:
         capabilities = {
             "music_composition": {
@@ -690,6 +717,9 @@ async def get_ai_capabilities():
 # Background processing functions
 async def _process_music_composition(task_id: str, request: MusicCompositionRequest, user: dict):
     """Process music composition task"""
+
+
+
     try:
         # Update status to processing
         await _update_task_status(task_id, TaskStatus.PROCESSING, 10.0, "Initializing composition")
@@ -742,6 +772,9 @@ async def _process_music_composition(task_id: str, request: MusicCompositionRequ
 async def _process_music_analysis(task_id: str, request: MusicAnalysisRequest, 
                                   file_path: str, user: dict):
     """Process music analysis task"""
+
+
+
     try:
         await _update_task_status(task_id, TaskStatus.PROCESSING, 20.0, "Loading audio file")
         
@@ -789,6 +822,9 @@ async def _process_music_analysis(task_id: str, request: MusicAnalysisRequest,
 
 async def _process_content_generation(task_id: str, request: ContentGenerationRequest, user: dict):
     """Process content generation task"""
+
+
+
     try:
         await _update_task_status(task_id, TaskStatus.PROCESSING, 30.0, "Generating content")
         
@@ -840,6 +876,9 @@ async def _process_content_generation(task_id: str, request: ContentGenerationRe
 async def _process_style_transfer(task_id: str, request: StyleTransferRequest, 
                                   source_info: tuple, user: dict):
     """Process style transfer task"""
+
+
+
     try:
         await _update_task_status(task_id, TaskStatus.PROCESSING, 20.0, "Loading source content")
         
@@ -888,6 +927,9 @@ async def _process_style_transfer(task_id: str, request: StyleTransferRequest,
 async def _update_task_status(task_id: str, status: TaskStatus, progress: float, 
                              step: str, result: Optional[Dict[str, Any]] = None):
     """Update AI agent task status"""
+
+
+
     try:
         async with database_manager.get_postgres_session() as session:
             if result:

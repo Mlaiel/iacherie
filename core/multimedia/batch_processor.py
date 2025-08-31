@@ -7,7 +7,7 @@ Provides distributed processing, job scheduling, and resource optimization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -223,6 +223,9 @@ class MultimediaBatchProcessor:
         
     async def initialize(self):
         """Initialize the batch processor"""
+
+
+
         try:
             # Initialize worker pool
             max_workers = min(self.config.max_concurrent_jobs, multiprocessing.cpu_count())
@@ -254,6 +257,9 @@ class MultimediaBatchProcessor:
             
     async def submit_job(self, job: BatchJob) -> str:
         """Submit a job for processing"""
+
+
+
         try:
             # Validate job
             await self._validate_job(job)
@@ -297,6 +303,9 @@ class MultimediaBatchProcessor:
         
     async def cancel_job(self, job_id: str) -> bool:
         """Cancel a job"""
+
+
+
         try:
             job = await self.get_job_status(job_id)
             if not job:
@@ -330,6 +339,9 @@ class MultimediaBatchProcessor:
             
     async def retry_job(self, job_id: str) -> bool:
         """Retry a failed job"""
+
+
+
         try:
             job = await self.get_job_status(job_id)
             if not job or job.status != JobStatus.FAILED:
@@ -361,6 +373,9 @@ class MultimediaBatchProcessor:
         offset: int = 0
     ) -> List[BatchJob]:
         """List jobs with optional filtering"""
+
+
+
         try:
             jobs = list(self.jobs.values())
             
@@ -380,6 +395,9 @@ class MultimediaBatchProcessor:
             
     async def get_statistics(self) -> Dict[str, Any]:
         """Get processing statistics"""
+
+
+
         try:
             # Update uptime
             uptime = datetime.now(timezone.utc) - self.stats["system_uptime"]
@@ -423,6 +441,9 @@ class MultimediaBatchProcessor:
         
     async def health_check(self) -> Dict[str, Any]:
         """System health check"""
+
+
+
         try:
             health = {
                 "status": "healthy",
@@ -493,6 +514,9 @@ class MultimediaBatchProcessor:
                 
     async def _start_job(self, job_id: str):
         """Start processing a job"""
+
+
+
         try:
             job = self.jobs[job_id]
             job.status = JobStatus.RUNNING
@@ -516,6 +540,9 @@ class MultimediaBatchProcessor:
             
     async def _process_job(self, job: BatchJob):
         """Process a batch job"""
+
+
+
         try:
             # Get processing function
             if job.processing_function not in self.processing_functions:
@@ -722,6 +749,9 @@ class MultimediaBatchProcessor:
                 
     async def _call_handler(self, handler: Callable, data: Any):
         """Call event handler safely"""
+
+
+
         try:
             if asyncio.iscoroutinefunction(handler):
                 await handler(data)

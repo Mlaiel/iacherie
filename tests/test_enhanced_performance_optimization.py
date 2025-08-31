@@ -290,6 +290,9 @@ class TestCacheStrategyEnhancements:
     
     def test_cache_operations(self):
         """Test basic cache operations"""
+
+
+
         try:
             from crawlers.caching.memory_cache import MemoryCache
             
@@ -316,6 +319,9 @@ class TestCacheStrategyEnhancements:
     
     def test_cache_metrics(self):
         """Test cache performance metrics"""
+
+
+
         try:
             from crawlers.caching.metrics import CacheMetrics
             

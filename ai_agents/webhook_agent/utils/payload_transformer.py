@@ -7,7 +7,7 @@ for multi-platform integrations with advanced mapping and validation.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission from Fahed Mlaiel <mlaiel@live.de> is strictly prohibited.
@@ -343,6 +343,9 @@ class PayloadTransformer:
         Returns:
             Validation result
         """
+
+
+
         try:
             # Determine validation schema
             validation_schema = custom_schema
@@ -392,6 +395,9 @@ class PayloadTransformer:
 
     async def get_supported_platforms(self) -> List[str]:
         """Get list of supported platforms"""
+
+
+
         return [platform.value for platform in self._platform_mappings.keys()]
 
     async def get_platform_mapping(
@@ -399,6 +405,9 @@ class PayloadTransformer:
         platform: PlatformType
     ) -> Optional[PlatformMapping]:
         """Get platform mapping configuration"""
+
+
+
         return self._platform_mappings.get(platform)
 
     async def clear_cache(self) -> None:
@@ -691,6 +700,9 @@ class PayloadTransformer:
         context: TransformationContext
     ) -> tuple:
         """Apply individual transformation rule"""
+
+
+
         try:
             # Check conditions
             if rule.conditions and not self._check_conditions(payload, rule.conditions):
@@ -779,6 +791,9 @@ class PayloadTransformer:
         schema: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Validate payload against JSON schema"""
+
+
+
         try:
             validate(payload, schema)
             return {'valid': True}
@@ -837,6 +852,9 @@ class PayloadTransformer:
 
     def _get_generic_mapping(self) -> PlatformMapping:
         """Get generic platform mapping for unknown platforms"""
+
+
+
         return self._platform_mappings.get(PlatformType.WEBHOOK_GENERIC)
 
     # Utility methods for field operations

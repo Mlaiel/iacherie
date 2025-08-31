@@ -8,7 +8,7 @@ Provides detailed metrics, trends, and performance analysis for protection syste
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  AVERTISSEMENT STRICT - PROPRIÉTÉ INTELLECTUELLE ⚠️
+  AVERTISSEMENT STRICT - PROPRIÉTÉ INTELLECTUELLE 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, modification ou distribution sans autorisation 
 écrite explicite de l'auteur est strictement interdite et constitue une violation 
@@ -193,6 +193,9 @@ class ProtectionAnalytics:
         Returns:
             Protection metrics data
         """
+
+
+
         try:
             # Calculate date range
             end_date = datetime.utcnow()
@@ -265,6 +268,9 @@ class ProtectionAnalytics:
         Returns:
             List of violation trends
         """
+
+
+
         try:
             # Calculate date range
             end_date = datetime.utcnow()
@@ -326,6 +332,9 @@ class ProtectionAnalytics:
         Returns:
             List of platform analytics
         """
+
+
+
         try:
             # Calculate date range
             end_date = datetime.utcnow()
@@ -396,6 +405,9 @@ class ProtectionAnalytics:
         Returns:
             List of threat intelligence data
         """
+
+
+
         try:
             # Get threat data from various sources
             threat_data = await self._collect_threat_data(user_id, threat_types)
@@ -453,6 +465,9 @@ class ProtectionAnalytics:
         Returns:
             Comprehensive analytics report
         """
+
+
+
         try:
             # Calculate date range
             end_date = datetime.utcnow()
@@ -520,6 +535,9 @@ class ProtectionAnalytics:
         Returns:
             Real-time metrics data
         """
+
+
+
         try:
             # Check cache first
             cache_key = f"realtime_metrics:{user_id}"
@@ -577,6 +595,9 @@ class ProtectionAnalytics:
         Returns:
             ROI metrics data
         """
+
+
+
         try:
             # Calculate date range
             end_date = datetime.utcnow()
@@ -768,6 +789,9 @@ class ProtectionAnalytics:
     
     async def _get_user_monitored_platforms(self, user_id: str) -> List[str]:
         """Get user's monitored platforms"""
+
+
+
         try:
             # Implementation would query user's platform configurations
             return ['youtube', 'instagram', 'tiktok', 'twitter', 'facebook']
@@ -778,6 +802,9 @@ class ProtectionAnalytics:
     async def _get_platform_data(self, user_id: str, platform: str, 
                                start_date: datetime, end_date: datetime) -> Dict[str, Any]:
         """Get platform-specific data for period"""
+
+
+
         try:
             # Mock implementation - would query actual platform data
             return {
@@ -793,6 +820,9 @@ class ProtectionAnalytics:
     async def _calculate_platform_compliance_score(self, platform: str, 
                                                  platform_data: Dict[str, Any]) -> float:
         """Calculate platform compliance score"""
+
+
+
         try:
             takedown_requests = platform_data.get('takedown_requests', 0)
             successful_takedowns = platform_data.get('successful_takedowns', 0)
@@ -814,6 +844,9 @@ class ProtectionAnalytics:
     async def _determine_platform_threat_level(self, platform: str, 
                                              platform_data: Dict[str, Any]) -> str:
         """Determine platform threat level"""
+
+
+
         try:
             violations = platform_data.get('violations_detected', 0)
             success_rate = platform_data.get('successful_takedowns', 0) / max(platform_data.get('takedown_requests', 1), 1)
@@ -831,6 +864,9 @@ class ProtectionAnalytics:
     
     async def _collect_threat_data(self, user_id: str, threat_types: Optional[List[str]]) -> List[Dict]:
         """Collect threat data from various sources"""
+
+
+
         try:
             # Mock threat data - would integrate with threat intelligence feeds
             threats = [
@@ -861,6 +897,9 @@ class ProtectionAnalytics:
     
     async def _analyze_attack_patterns(self, threat: Dict) -> List[str]:
         """Analyze attack patterns for threat"""
+
+
+
         try:
             threat_type = threat.get('type', '')
             
@@ -880,6 +919,9 @@ class ProtectionAnalytics:
     
     async def _calculate_threat_confidence(self, threat: Dict) -> float:
         """Calculate threat confidence level"""
+
+
+
         try:
             # Base confidence from source
             source_confidence = {
@@ -903,6 +945,9 @@ class ProtectionAnalytics:
     
     async def _identify_affected_content(self, user_id: str, threat: Dict) -> List[str]:
         """Identify content affected by threat"""
+
+
+
         try:
             # Mock implementation - would analyze threat indicators against user content
             return [f"content_{i}" for i in range(1, np.random.randint(2, 8))]
@@ -913,6 +958,9 @@ class ProtectionAnalytics:
     
     async def _get_mitigation_status(self, threat: Dict) -> str:
         """Get threat mitigation status"""
+
+
+
         try:
             # Determine mitigation status based on threat age and type
             threat_age = (datetime.utcnow() - threat.get('first_detected', datetime.utcnow())).days
@@ -930,6 +978,9 @@ class ProtectionAnalytics:
     
     async def _classify_threat_severity(self, threat: Dict) -> str:
         """Classify threat severity"""
+
+
+
         try:
             severity_indicators = threat.get('severity_indicators', [])
             threat_type = threat.get('type', '')
@@ -956,6 +1007,9 @@ class ProtectionAnalytics:
     async def _generate_executive_summary(self, user_id: str, start_date: datetime, 
                                         end_date: datetime) -> Dict[str, Any]:
         """Generate executive summary"""
+
+
+
         try:
             # Calculate key metrics
             total_violations = await self._get_violations_detected_count(user_id, start_date, end_date)
@@ -998,6 +1052,9 @@ class ProtectionAnalytics:
     async def _generate_detailed_metrics(self, user_id: str, start_date: datetime, 
                                        end_date: datetime) -> Dict[str, Any]:
         """Generate detailed metrics"""
+
+
+
         try:
             # Performance metrics
             detection_accuracy = await self._calculate_overall_detection_accuracy(user_id, start_date, end_date)
@@ -1043,6 +1100,9 @@ class ProtectionAnalytics:
     async def _generate_recommendations(self, user_id: str, executive_summary: Dict, 
                                       detailed_metrics: Dict, trends_analysis: List) -> List[str]:
         """Generate actionable recommendations"""
+
+
+
         try:
             recommendations = []
             
@@ -1092,10 +1152,16 @@ class ProtectionAnalytics:
     
     async def _get_violations_detected_count(self, user_id: str, start_date: datetime, end_date: datetime) -> int:
         """Get count of violations detected in period"""
+
+
+
         return np.random.randint(10, 50)
     
     async def _get_resolved_violations_count(self, user_id: str, start_date: datetime, end_date: datetime) -> int:
         """Get count of resolved violations in period"""
+
+
+
         return np.random.randint(8, 40)
     
     async def _get_top_threat_platforms(self, user_id: str, start_date: datetime, end_date: datetime) -> List[str]:
@@ -1105,54 +1171,93 @@ class ProtectionAnalytics:
     
     async def _calculate_revenue_impact(self, user_id: str, start_date: datetime, end_date: datetime) -> float:
         """Calculate estimated revenue impact"""
+
+
+
         return np.random.uniform(1000, 10000)
     
     async def _calculate_overall_detection_accuracy(self, user_id: str, start_date: datetime, end_date: datetime) -> float:
         """Calculate overall detection accuracy"""
+
+
+
         return np.random.uniform(0.85, 0.95)
     
     async def _calculate_overall_response_time(self, user_id: str, start_date: datetime, end_date: datetime) -> float:
         """Calculate overall response time"""
+
+
+
         return np.random.uniform(12, 36)
     
     async def _calculate_false_positive_rate(self, user_id: str, start_date: datetime, end_date: datetime) -> float:
         """Calculate false positive rate"""
+
+
+
         return np.random.uniform(0.05, 0.15)
     
     async def _get_total_scans_count(self, user_id: str, start_date: datetime, end_date: datetime) -> int:
         """Get total scans count"""
+
+
+
         return np.random.randint(1000, 5000)
     
     async def _get_unique_violations_count(self, user_id: str, start_date: datetime, end_date: datetime) -> int:
         """Get unique violations count"""
+
+
+
         return np.random.randint(20, 80)
     
     async def _get_repeat_violations_count(self, user_id: str, start_date: datetime, end_date: datetime) -> int:
         """Get repeat violations count"""
+
+
+
         return np.random.randint(5, 25)
     
     async def _calculate_automation_rate(self, user_id: str, start_date: datetime, end_date: datetime) -> float:
         """Calculate automation rate"""
+
+
+
         return np.random.uniform(0.7, 0.9)
     
     async def _calculate_cost_per_violation(self, user_id: str, start_date: datetime, end_date: datetime) -> float:
         """Calculate cost per violation"""
+
+
+
         return np.random.uniform(10, 100)
     
     async def _get_active_violations_count(self, user_id: str) -> int:
         """Get active violations count"""
+
+
+
         return np.random.randint(5, 25)
     
     async def _get_recent_detections_count(self, user_id: str, since: datetime) -> int:
         """Get recent detections count"""
+
+
+
         return np.random.randint(3, 15)
     
     async def _get_pending_takedowns_count(self, user_id: str) -> int:
         """Get pending takedowns count"""
+
+
+
         return np.random.randint(2, 12)
     
     async def _get_system_health_score(self, user_id: str) -> float:
         """Get system health score"""
+
+
+
         return np.random.uniform(0.85, 0.98)
     
     async def _get_current_threat_level(self, user_id: str) -> str:
@@ -1162,14 +1267,23 @@ class ProtectionAnalytics:
     
     async def _calculate_protection_costs(self, user_id: str, start_date: datetime, end_date: datetime) -> float:
         """Calculate protection costs"""
+
+
+
         return np.random.uniform(500, 3000)
     
     async def _calculate_revenue_protected(self, user_id: str, start_date: datetime, end_date: datetime) -> float:
         """Calculate revenue protected"""
+
+
+
         return np.random.uniform(2000, 15000)
     
     async def _calculate_legal_costs_avoided(self, user_id: str, start_date: datetime, end_date: datetime) -> float:
         """Calculate legal costs avoided"""
+
+
+
         return np.random.uniform(1000, 8000)
     
     async def _calculate_break_even_period(self, costs: float, benefits: float) -> float:

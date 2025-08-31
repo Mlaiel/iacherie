@@ -1,5 +1,5 @@
 """
-💰 Advanced Royalty Management System - Comprehensive Rights & Revenue Management
+ Advanced Royalty Management System - Comprehensive Rights & Revenue Management
 ================================================================================
 
 Ultra-sophisticated royalty calculation and distribution system for licensing:
@@ -14,7 +14,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Music Industry Expert + Financial Engineer + Rights Specialist + Revenue Analyst
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ LEGAL WARNING:
+ LEGAL WARNING:
 This software is protected by international copyright law and trade secret law.
 Unauthorized reproduction, distribution, or reverse engineering is strictly prohibited
 and may result in severe civil and criminal penalties. Users must comply with all
@@ -833,7 +833,7 @@ class AIRoyaltyOptimizer:
 
 class AdvancedRoyaltyManager:
     """
-    🚀 Advanced royalty management system with AI optimization
+     Advanced royalty management system with AI optimization
     
     Comprehensive system for calculating, tracking, and optimizing
     royalty payments across multiple platforms, territories, and rights holders.
@@ -869,6 +869,9 @@ class AdvancedRoyaltyManager:
 
     async def register_rights_holder(self, rights_holder: RightsHolder) -> str:
         """Register a new rights holder in the system."""
+
+
+
         try:
             # Validate rights holder data
             if not rights_holder.name or not rights_holder.email:
@@ -901,6 +904,9 @@ class AdvancedRoyaltyManager:
 
     async def create_calculation_rule(self, rule: RoyaltyCalculationRule) -> str:
         """Create a new royalty calculation rule."""
+
+
+
         try:
             # Validate rule
             if rule.base_rate < Decimal('0.00'):
@@ -1031,6 +1037,9 @@ class AdvancedRoyaltyManager:
         payment_method: str = "bank_transfer"
     ) -> RoyaltyPayment:
         """Process royalty payment for a rights holder."""
+
+
+
         try:
             # Validate rights holder
             if holder_id not in self.rights_holders:
@@ -1155,6 +1164,9 @@ class AdvancedRoyaltyManager:
         optimization_goals: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Optimize royalty rates for specific content using AI."""
+
+
+
         try:
             # Get historical usage data for content
             content_usage = [

@@ -7,7 +7,7 @@ NFT minting, smart contracts, and decentralized monetization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps
 
-⚠️ PROPRIÉTÉ EXCLUSIVE DE FAHED MLAIEL
+ PROPRIÉTÉ EXCLUSIVE DE FAHED MLAIEL
 Toute tentative de copie, vol ou réutilisation sans autorisation écrite
 de Fahed Mlaiel (mlaiel@live.de) sera poursuivie en justice selon la loi allemande.
 """
@@ -130,6 +130,9 @@ class BlockchainAPIsConfig:
     
     def _get_network_configs(self) -> Dict[BlockchainNetwork, BlockchainConfig]:
         """Get blockchain network configurations."""
+
+
+
         return {
             BlockchainNetwork.ETHEREUM_MAINNET: BlockchainConfig(
                 network=BlockchainNetwork.ETHEREUM_MAINNET,
@@ -182,6 +185,9 @@ class BlockchainAPIsConfig:
     
     def _get_contract_configs(self) -> Dict[str, SmartContractConfig]:
         """Get smart contract configurations."""
+
+
+
         return {
             'ia_content_nft': SmartContractConfig(
                 contract_type=ContractType.NFT_COLLECTION,
@@ -299,6 +305,9 @@ class BlockchainAPIsConfig:
     
     def _get_nft_collection_configs(self) -> Dict[str, Dict[str, Any]]:
         """Get NFT collection configurations."""
+
+
+
         return {
             'music_nfts': {
                 'collection_name': 'IA-Influencer Music',
@@ -357,6 +366,9 @@ class BlockchainAPIsConfig:
     
     def _get_marketplace_configs(self) -> Dict[str, Dict[str, Any]]:
         """Get marketplace configurations."""
+
+
+
         return {
             'primary_marketplace': {
                 'platform_fee': Decimal("2.5"),
@@ -387,6 +399,9 @@ class BlockchainAPIsConfig:
     
     def _get_royalty_configs(self) -> Dict[str, Dict[str, Any]]:
         """Get royalty configurations."""
+
+
+
         return {
             'creator_royalties': {
                 'default_percentage': Decimal("10.0"),
@@ -419,6 +434,9 @@ class BlockchainAPIsConfig:
     
     def _get_protection_configs(self) -> Dict[str, Dict[str, Any]]:
         """Get content protection configurations."""
+
+
+
         return {
             'on_chain_protection': {
                 'content_hashing': 'sha256',
@@ -454,6 +472,9 @@ class BlockchainAPIsConfig:
     
     def _get_wallet_configs(self) -> Dict[str, Dict[str, Any]]:
         """Get wallet configurations."""
+
+
+
         return {
             'supported_wallets': {
                 'metamask': {
@@ -496,14 +517,23 @@ class BlockchainAPIsConfig:
     
     def get_network_config(self, network: BlockchainNetwork) -> Optional[BlockchainConfig]:
         """Get blockchain network configuration."""
+
+
+
         return self.networks.get(network)
     
     def get_contract_config(self, contract_name: str) -> Optional[SmartContractConfig]:
         """Get smart contract configuration."""
+
+
+
         return self.contracts.get(contract_name)
     
     def get_nft_collection_config(self, collection_name: str) -> Optional[Dict[str, Any]]:
         """Get NFT collection configuration."""
+
+
+
         return self.nft_collections.get(collection_name)
 
 
@@ -513,16 +543,25 @@ blockchain_apis_config = BlockchainAPIsConfig()
 
 def get_blockchain_network(network: BlockchainNetwork) -> Optional[BlockchainConfig]:
     """Get blockchain network configuration."""
+
+
+
     return blockchain_apis_config.get_network_config(network)
 
 
 def get_smart_contract(contract_name: str) -> Optional[SmartContractConfig]:
     """Get smart contract configuration."""
+
+
+
     return blockchain_apis_config.get_contract_config(contract_name)
 
 
 def get_nft_collection(collection_name: str) -> Optional[Dict[str, Any]]:
     """Get NFT collection configuration."""
+
+
+
     return blockchain_apis_config.get_nft_collection_config(collection_name)
 
 

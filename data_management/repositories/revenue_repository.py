@@ -1,5 +1,5 @@
 """
-💰 Revenue Repository - IA Influencer Agent Platform Enterprise
+ Revenue Repository - IA Influencer Agent Platform Enterprise
 ===============================================================
 Module: backend/data_management/repositories/revenue_repository.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Revenue Management Repository - Production-Ready
 Responsibility: Advanced revenue tracking, calculations, and payment processing
 ========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
@@ -181,6 +181,9 @@ class RevenueRepository(BaseRepository[RevenueEntry]):
                                to_currency: Currency, 
                                date: datetime = None) -> Decimal:
         """Calculate exchange rate between currencies"""
+
+
+
         try:
             if from_currency == to_currency:
                 return Decimal('1.0')
@@ -213,6 +216,9 @@ class RevenueRepository(BaseRepository[RevenueEntry]):
                             creator_id: str, 
                             country_code: str = None) -> Decimal:
         """Calculate tax amount based on location and regulations"""
+
+
+
         try:
             if self.tax_service:
                 return Decimal(str(self.tax_service.calculate_tax(
@@ -249,6 +255,9 @@ class RevenueRepository(BaseRepository[RevenueEntry]):
     
     def _calculate_service_fee(self, gross_amount: Decimal) -> Decimal:
         """Calculate our service fee"""
+
+
+
         return gross_amount * self.service_fee_rate
     
     def _calculate_net_amounts(self, gross_amount: Decimal, 
@@ -277,6 +286,9 @@ class RevenueRepository(BaseRepository[RevenueEntry]):
                            metadata: Dict[str, Any] = None,
                            country_code: str = None) -> RevenueEntry:
         """Create a new revenue entry with automatic calculations"""
+
+
+
         try:
             # Generate unique ID
             revenue_id = self._generate_revenue_id()
@@ -344,6 +356,9 @@ class RevenueRepository(BaseRepository[RevenueEntry]):
                           period_end: datetime = None,
                           currency: Currency = Currency.EUR) -> RevenueSummary:
         """Get comprehensive revenue summary for a creator"""
+
+
+
         try:
             # Default to last 30 days if no period specified
             if not period_end:
@@ -452,6 +467,9 @@ class RevenueRepository(BaseRepository[RevenueEntry]):
                              period_start: datetime, 
                              period_end: datetime) -> float:
         """Calculate revenue growth rate compared to previous period"""
+
+
+
         try:
             period_duration = period_end - period_start
             previous_start = period_start - period_duration
@@ -490,6 +508,9 @@ class RevenueRepository(BaseRepository[RevenueEntry]):
                       payment_method: str = "bank_transfer",
                       recipient_details: Dict[str, Any] = None) -> PaymentRequest:
         """Process payout for creator's pending revenue"""
+
+
+
         try:
             # Get pending revenue
             pending_filters = {
@@ -577,6 +598,9 @@ class RevenueRepository(BaseRepository[RevenueEntry]):
                             period_start: datetime = None,
                             period_end: datetime = None) -> List[RevenueEntry]:
         """Get revenue entries for a specific platform"""
+
+
+
         try:
             filters = {'platform': platform}
             
@@ -595,6 +619,9 @@ class RevenueRepository(BaseRepository[RevenueEntry]):
                                period_start: datetime = None,
                                period_end: datetime = None) -> List[Dict[str, Any]]:
         """Get top earning creators for a period"""
+
+
+
         try:
             filters = {}
             
@@ -635,6 +662,9 @@ class RevenueRepository(BaseRepository[RevenueEntry]):
     
     def detect_revenue_anomalies(self, creator_id: str = None) -> List[Dict[str, Any]]:
         """Detect unusual revenue patterns for fraud prevention"""
+
+
+
         try:
             anomalies = []
             
@@ -682,6 +712,9 @@ class RevenueRepository(BaseRepository[RevenueEntry]):
     # Base Repository Implementation
     def create(self, entity: RevenueEntry, **kwargs) -> RevenueEntry:
         """Create new revenue entry"""
+
+
+
         try:
             self._validate_entity(entity)
             
@@ -702,6 +735,9 @@ class RevenueRepository(BaseRepository[RevenueEntry]):
     
     def get_by_id(self, entity_id: str, use_cache: bool = True) -> Optional[RevenueEntry]:
         """Get revenue entry by ID"""
+
+
+
         try:
             # Check cache first
             if use_cache and self._cache_enabled and self.cache:
@@ -729,6 +765,9 @@ class RevenueRepository(BaseRepository[RevenueEntry]):
     
     def update(self, entity: RevenueEntry, **kwargs) -> RevenueEntry:
         """Update revenue entry"""
+
+
+
         try:
             self._validate_entity(entity)
             
@@ -749,6 +788,9 @@ class RevenueRepository(BaseRepository[RevenueEntry]):
     
     def delete(self, entity_id: str, soft_delete: bool = True) -> bool:
         """Delete revenue entry (soft delete recommended for financial records)"""
+
+
+
         try:
             if soft_delete:
                 # Mark as cancelled instead of deleting
@@ -775,6 +817,9 @@ class RevenueRepository(BaseRepository[RevenueEntry]):
     def list(self, filters: Dict[str, Any] = None, limit: int = 100, 
              offset: int = 0, order_by: str = None) -> List[RevenueEntry]:
         """List revenue entries with filtering"""
+
+
+
         try:
             # Build query
             query_filters = filters or {}
@@ -814,6 +859,9 @@ class AsyncRevenueRepository(AsyncBaseRepository[RevenueEntry]):
     
     async def create(self, entity: RevenueEntry, **kwargs) -> RevenueEntry:
         """Create revenue entry asynchronously"""
+
+
+
         try:
             await self._validate_entity(entity)
             
@@ -834,6 +882,9 @@ class AsyncRevenueRepository(AsyncBaseRepository[RevenueEntry]):
     
     async def get_by_id(self, entity_id: str, use_cache: bool = True) -> Optional[RevenueEntry]:
         """Get revenue entry by ID asynchronously"""
+
+
+
         try:
             # Check cache first
             if use_cache and self._cache_enabled and self.cache:
@@ -861,6 +912,9 @@ class AsyncRevenueRepository(AsyncBaseRepository[RevenueEntry]):
     
     async def update(self, entity: RevenueEntry, **kwargs) -> RevenueEntry:
         """Update revenue entry asynchronously"""
+
+
+
         try:
             await self._validate_entity(entity)
             
@@ -881,6 +935,9 @@ class AsyncRevenueRepository(AsyncBaseRepository[RevenueEntry]):
     
     async def delete(self, entity_id: str, soft_delete: bool = True) -> bool:
         """Delete revenue entry asynchronously"""
+
+
+
         try:
             if soft_delete:
                 entry = await self.get_by_id(entity_id)
@@ -905,6 +962,9 @@ class AsyncRevenueRepository(AsyncBaseRepository[RevenueEntry]):
     async def list(self, filters: Dict[str, Any] = None, limit: int = 100, 
                   offset: int = 0, order_by: str = None) -> List[RevenueEntry]:
         """List revenue entries asynchronously"""
+
+
+
         try:
             query_filters = filters or {}
             

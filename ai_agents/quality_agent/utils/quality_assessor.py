@@ -7,7 +7,7 @@ Provides detailed scoring, metrics calculation, and quality benchmarking.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -328,6 +328,9 @@ class QualityAssessor:
         metadata: Optional[Dict[str, Any]] = None
     ) -> AssessmentResult:
         """Assess technical quality aspects"""
+
+
+
         
         try:
             if content_type in [ContentType.AUDIO, ContentType.MUSIC]:
@@ -354,6 +357,9 @@ class QualityAssessor:
         criterion: AssessmentCriteria
     ) -> AssessmentResult:
         """Assess audio technical quality"""
+
+
+
         
         try:
             # Load audio file
@@ -429,6 +435,9 @@ class QualityAssessor:
         criterion: AssessmentCriteria
     ) -> AssessmentResult:
         """Assess video technical quality"""
+
+
+
         
         try:
             # Open video file
@@ -511,6 +520,9 @@ class QualityAssessor:
         metadata: Optional[Dict[str, Any]] = None
     ) -> AssessmentResult:
         """Assess creative and artistic quality"""
+
+
+
         
         try:
             metrics = {}
@@ -582,6 +594,9 @@ class QualityAssessor:
     # Helper methods for specific analysis tasks
     def _calculate_video_stability(self, frames: List[np.ndarray]) -> float:
         """Calculate video stability score"""
+
+
+
         try:
             if len(frames) < 2:
                 return 0.5
@@ -610,6 +625,9 @@ class QualityAssessor:
 
     def _analyze_image_composition(self, image: np.ndarray) -> float:
         """Analyze image composition quality"""
+
+
+
         try:
             # Rule of thirds analysis
             height, width = image.shape[:2]
@@ -650,6 +668,9 @@ class QualityAssessor:
 
     def _analyze_color_harmony(self, image: np.ndarray) -> float:
         """Analyze color harmony in image"""
+
+
+
         try:
             if len(image.shape) != 3:
                 return 0.5
@@ -687,6 +708,9 @@ class QualityAssessor:
 
     def _analyze_text_creativity(self, text: str) -> float:
         """Analyze text creativity and originality"""
+
+
+
         try:
             # Vocabulary diversity
             words = text.lower().split()
@@ -715,6 +739,9 @@ class QualityAssessor:
 
     def _analyze_musical_harmony(self, y: np.ndarray, sr: int) -> float:
         """Analyze musical harmony and chord progressions"""
+
+
+
         try:
             # Chromagram analysis
             chromagram = librosa.feature.chroma_stft(y=y, sr=sr)
@@ -733,6 +760,9 @@ class QualityAssessor:
 
     def _analyze_rhythm_complexity(self, y: np.ndarray, sr: int) -> float:
         """Analyze rhythmic complexity and patterns"""
+
+
+
         try:
             # Tempo and beat tracking
             tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
@@ -954,6 +984,9 @@ class QualityAssessor:
 
     def _initialize_nlp_models(self):
         """Initialize NLP models for text analysis"""
+
+
+
         try:
             # Download required NLTK data
             import nltk
@@ -1050,6 +1083,9 @@ class QualityAssessor:
 
     def _load_industry_benchmarks(self) -> Dict[str, Dict[str, float]]:
         """Load industry quality benchmarks"""
+
+
+
         
         return {
             "audio": {
@@ -1178,6 +1214,9 @@ class ContentScorer:
         content_type: ContentType
     ) -> float:
         """Generate quick quality score (0-100)"""
+
+
+
         
         try:
             if content_type in [ContentType.AUDIO, ContentType.MUSIC]:
@@ -1197,6 +1236,9 @@ class ContentScorer:
 
     async def _quick_audio_score(self, content_path: str) -> float:
         """Quick audio quality score"""
+
+
+
         try:
             y, sr = librosa.load(content_path, duration=30)  # Analyze first 30 seconds
             
@@ -1216,6 +1258,9 @@ class ContentScorer:
 
     async def _quick_video_score(self, content_path: str) -> float:
         """Quick video quality score"""
+
+
+
         try:
             cap = cv2.VideoCapture(content_path)
             
@@ -1237,6 +1282,9 @@ class ContentScorer:
 
     async def _quick_image_score(self, content_path: str) -> float:
         """Quick image quality score"""
+
+
+
         try:
             image = cv2.imread(content_path)
             height, width = image.shape[:2]
@@ -1256,6 +1304,9 @@ class ContentScorer:
 
     async def _quick_text_score(self, content_path: str) -> float:
         """Quick text quality score"""
+
+
+
         try:
             with open(content_path, 'r', encoding='utf-8') as f:
                 text = f.read()

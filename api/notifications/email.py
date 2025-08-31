@@ -41,6 +41,9 @@ class EmailNotifier:
                            content_type: str, from_email: Optional[str], 
                            attachments: Optional[List[Dict]]) -> Dict:
         """Send email via SMTP."""
+
+
+
         try:
             sender_email = from_email or self.default_sender
             
@@ -90,6 +93,9 @@ class EmailNotifier:
                                content_type: str, from_email: Optional[str],
                                attachments: Optional[List[Dict]]) -> Dict:
         """Send email via SendGrid API."""
+
+
+
         try:
             import sendgrid
             from sendgrid.helpers.mail import Mail, Attachment, FileContent, FileName, FileType
@@ -135,6 +141,9 @@ class EmailNotifier:
 
     def _add_attachment(self, msg: MIMEMultipart, attachment_info: Dict):
         """Add attachment to email message."""
+
+
+
         try:
             filename = attachment_info.get("filename", "attachment")
             content = attachment_info.get("content", "")
@@ -165,11 +174,11 @@ class EmailNotifier:
             
             <h3>What you can do:</h3>
             <ul>
-                <li>📤 Upload multi-format content (audio, video, images, text)</li>
-                <li>🛡️ Protect your content with AI-powered rights management</li>
-                <li>🚀 Optimize your content for maximum SEO impact</li>
+                <li> Upload multi-format content (audio, video, images, text)</li>
+                <li> Protect your content with AI-powered rights management</li>
+                <li> Optimize your content for maximum SEO impact</li>
                 <li>🤝 Find collaboration opportunities with other creators</li>
-                <li>📊 Distribute across multiple platforms automatically</li>
+                <li> Distribute across multiple platforms automatically</li>
             </ul>
             
             <p>Get started by uploading your first piece of content!</p>
@@ -182,6 +191,9 @@ class EmailNotifier:
         </body>
         </html>
         """
+
+
+
         
         return await self.send_email(user_email, subject, content, "html")
 
@@ -192,15 +204,15 @@ class EmailNotifier:
         content = f"""
         <html>
         <body>
-            <h2>Content Processing Complete! ✅</h2>
+            <h2>Content Processing Complete! </h2>
             <p>Your content "<strong>{content_info.get('title', 'Unknown')}</strong>" has been successfully processed.</p>
             
             <h3>Processing Results:</h3>
             <ul>
-                <li>🛡️ Rights Protection: {content_info.get('protection_status', 'Enabled')}</li>
-                <li>🔍 SEO Optimization: {content_info.get('seo_score', 'High')}</li>
+                <li> Rights Protection: {content_info.get('protection_status', 'Enabled')}</li>
+                <li> SEO Optimization: {content_info.get('seo_score', 'High')}</li>
                 <li>🤝 Collaboration Matches: {content_info.get('collaboration_count', 3)} found</li>
-                <li>📱 Distribution Ready: {content_info.get('platform_count', 5)} platforms</li>
+                <li> Distribution Ready: {content_info.get('platform_count', 5)} platforms</li>
             </ul>
             
             <p>Your content is now ready for distribution!</p>
@@ -215,12 +227,12 @@ class EmailNotifier:
 
     async def send_protection_alert_email(self, user_email: str, alert_info: Dict) -> Dict:
         """Send alert when content protection issue is detected."""
-        subject = f"🚨 Content Protection Alert: {alert_info.get('content_title', 'Your Content')}"
+        subject = f" Content Protection Alert: {alert_info.get('content_title', 'Your Content')}"
         
         content = f"""
         <html>
         <body>
-            <h2 style="color: #ff6b6b;">🚨 Content Protection Alert</h2>
+            <h2 style="color: #ff6b6b;"> Content Protection Alert</h2>
             <p>We've detected potential unauthorized use of your content:</p>
             
             <h3>Content Details:</h3>
@@ -277,5 +289,8 @@ class EmailNotifier:
         </body>
         </html>
         """
+
+
+
         
         return await self.send_email(user_email, subject, content, "html")

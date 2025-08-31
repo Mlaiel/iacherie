@@ -8,7 +8,7 @@ Responsibility: Advanced AI-powered content protection across all platforms
 Technologies: Python, FastAPI, TensorFlow, PyTorch, OpenCV, ChromaPrint, FAISS
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -165,7 +165,7 @@ class ViolationAlert:
 
 class ProtectionManager(ABC):
     """
-    🛡️ Advanced Content Protection Manager - IA-Influencer-Agent
+     Advanced Content Protection Manager - IA-Influencer-Agent
     
     Responsabilité:
     Gestionnaire industriel de protection de contenu avec IA avancée
@@ -212,7 +212,7 @@ class ProtectionManager(ABC):
         self._vector_store = None
         self._blockchain_client = None
         
-        logger.info(f"🛡️ Protection Manager initialized - Level: {self.config.protection_level}")
+        logger.info(f" Protection Manager initialized - Level: {self.config.protection_level}")
     
     @abstractmethod
     async def initialize_pool(self) -> bool:
@@ -296,6 +296,9 @@ class ProtectionManager(ABC):
         Returns:
             ContentFingerprint: Generated fingerprint with protection
         """
+
+
+
         try:
             # Generate AI fingerprint
             fingerprint = await self.generate_fingerprint(
@@ -317,11 +320,11 @@ class ProtectionManager(ABC):
             if self.config.blockchain_verification:
                 await self._register_blockchain(fingerprint)
             
-            logger.info(f"🛡️ Content protected: {fingerprint.id}")
+            logger.info(f" Content protected: {fingerprint.id}")
             return fingerprint
             
         except Exception as e:
-            logger.error(f"❌ Protection failed: {e}")
+            logger.error(f" Protection failed: {e}")
             raise
     
     async def scan_violations(
@@ -373,7 +376,7 @@ class ProtectionManager(ABC):
                     if isinstance(result, list):
                         violations.extend(result)
                     elif isinstance(result, Exception):
-                        logger.error(f"❌ Violation scan error: {result}")
+                        logger.error(f" Violation scan error: {result}")
             
             # Store new violations
             with self._lock:
@@ -391,11 +394,11 @@ class ProtectionManager(ABC):
             if critical_violations and self.config.auto_takedown:
                 await self._process_critical_violations(critical_violations)
             
-            logger.info(f"🔍 Scan completed: {len(violations)} violations found")
+            logger.info(f" Scan completed: {len(violations)} violations found")
             return violations
             
         except Exception as e:
-            logger.error(f"❌ Violation scan failed: {e}")
+            logger.error(f" Violation scan failed: {e}")
             return []
     
     async def get_protection_analytics(
@@ -522,7 +525,7 @@ class ProtectionManager(ABC):
                 try:
                     violations = await self.detect_violations(fingerprint)
                     if violations:
-                        logger.info(f"🚨 New violations detected for {fingerprint.id}")
+                        logger.info(f" New violations detected for {fingerprint.id}")
                         # Process critical violations immediately
                         critical = [v for v in violations if v.severity == ViolationSeverity.CRITICAL]
                         if critical and self.config.auto_takedown:
@@ -533,7 +536,7 @@ class ProtectionManager(ABC):
                 except asyncio.CancelledError:
                     break
                 except Exception as e:
-                    logger.error(f"❌ Monitoring error for {fingerprint.id}: {e}")
+                    logger.error(f" Monitoring error for {fingerprint.id}: {e}")
                     await asyncio.sleep(60)  # Wait before retry
         
         task = asyncio.create_task(monitor_loop())
@@ -551,10 +554,13 @@ class ProtectionManager(ABC):
         successful = sum(1 for result in results if result is True)
         self._metrics["successful_takedowns"] += successful
         
-        logger.info(f"⚡ Processed {successful}/{len(violations)} critical violations")
+        logger.info(f" Processed {successful}/{len(violations)} critical violations")
     
     async def _register_blockchain(self, fingerprint: ContentFingerprint) -> bool:
         """Register fingerprint on blockchain for immutable verification"""
+
+
+
         try:
             if not self._blockchain_client:
                 return False
@@ -568,11 +574,11 @@ class ProtectionManager(ABC):
             fingerprint.metadata["blockchain_hash"] = blockchain_hash
             fingerprint.metadata["blockchain_registered"] = True
             
-            logger.info(f"⛓️ Blockchain registered: {fingerprint.id}")
+            logger.info(f" Blockchain registered: {fingerprint.id}")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Blockchain registration failed: {e}")
+            logger.error(f" Blockchain registration failed: {e}")
             return False
     
     def _calculate_violation_trend(self, violations: List[ViolationAlert]) -> Dict[str, float]:
@@ -609,13 +615,16 @@ class ProtectionManager(ABC):
         """Context manager for protection operations"""
         session_id = str(uuid.uuid4())
         try:
-            logger.info(f"🔒 Protection session started: {session_id}")
+            logger.info(f" Protection session started: {session_id}")
             yield session_id
         finally:
-            logger.info(f"🔓 Protection session ended: {session_id}")
+            logger.info(f" Protection session ended: {session_id}")
     
     async def cleanup(self) -> bool:
         """Cleanup protection resources"""
+
+
+
         try:
             # Cancel all monitoring tasks
             for task in self._monitoring_tasks.values():
@@ -645,7 +654,7 @@ class ProtectionManager(ABC):
             return True
             
         except Exception as e:
-            logger.error(f"❌ Protection cleanup failed: {e}")
+            logger.error(f" Protection cleanup failed: {e}")
             return False
     
     def get_stats(self) -> Dict[str, Any]:

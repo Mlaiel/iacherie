@@ -112,6 +112,9 @@ class AudioFingerprinter:
         
     async def generate_chromaprint(self, audio_data: bytes) -> Tuple[str, List[float]]:
         """Generate Chromaprint fingerprint"""
+
+
+
         try:
             import tempfile
             from pathlib import Path
@@ -146,6 +149,9 @@ class AudioFingerprinter:
     
     async def generate_spectral_fingerprint(self, audio_data: bytes) -> Tuple[str, List[float]]:
         """Generate spectral fingerprint"""
+
+
+
         try:
             import tempfile
             from pathlib import Path
@@ -215,6 +221,9 @@ class VideoFingerprinter:
         
     async def generate_perceptual_fingerprint(self, video_data: bytes) -> Tuple[str, List[float]]:
         """Generate perceptual hash fingerprint"""
+
+
+
         try:
             import tempfile
             from pathlib import Path
@@ -284,6 +293,9 @@ class VideoFingerprinter:
     
     async def generate_motion_fingerprint(self, video_data: bytes) -> Tuple[str, List[float]]:
         """Generate motion-based fingerprint"""
+
+
+
         try:
             import tempfile
             from pathlib import Path
@@ -379,6 +391,9 @@ class ImageFingerprinter:
         
     async def generate_perceptual_hash(self, image_data: bytes) -> Tuple[str, List[float]]:
         """Generate perceptual hash fingerprint"""
+
+
+
         try:
             from io import BytesIO
             
@@ -401,6 +416,9 @@ class ImageFingerprinter:
     
     async def generate_difference_hash(self, image_data: bytes) -> Tuple[str, List[float]]:
         """Generate difference hash fingerprint"""
+
+
+
         try:
             from io import BytesIO
             
@@ -422,6 +440,9 @@ class ImageFingerprinter:
     
     async def generate_advanced_features(self, image_data: bytes) -> Tuple[str, List[float]]:
         """Generate advanced feature-based fingerprint"""
+
+
+
         try:
             from io import BytesIO
             import cv2
@@ -511,6 +532,9 @@ class TextFingerprinter:
         
     async def generate_semantic_fingerprint(self, text_data: str) -> Tuple[str, List[float]]:
         """Generate semantic fingerprint using NLP"""
+
+
+
         try:
             # Simple word frequency-based approach if BERT not available
             if not self.embedder:
@@ -570,6 +594,9 @@ class TextFingerprinter:
     
     async def generate_structural_fingerprint(self, text_data: str) -> Tuple[str, List[float]]:
         """Generate structural fingerprint based on text structure"""
+
+
+
         try:
             # Analyze text structure
             features = []
@@ -880,6 +907,9 @@ class FingerprintingMiddleware:
 # Factory function for dependency injection
 def get_fingerprinting_middleware() -> FingerprintingMiddleware:
     """Get fingerprinting middleware instance"""
+
+
+
     return FingerprintingMiddleware()
 
 

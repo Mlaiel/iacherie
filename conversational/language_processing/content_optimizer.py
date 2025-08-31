@@ -16,7 +16,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Specialist + DevOps Expert
 Copyright: Fahed Mlaiel - All Rights Reserved
 
-⚠️  STRICT LEGAL WARNING: 
+  STRICT LEGAL WARNING: 
     This proprietary code is protected by international copyright law.
     Unauthorized use, copying, distribution, modification, or reverse engineering 
     is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -179,6 +179,9 @@ class SEOAnalyzer:
         
     def _initialize_models(self):
         """Initialize SEO analysis models"""
+
+
+
         try:
             # Load spaCy model
             self.nlp = spacy.load("en_core_web_lg")
@@ -213,6 +216,9 @@ class SEOAnalyzer:
         Returns:
             SEOAnalysis with detailed SEO metrics
         """
+
+
+
         try:
             # Keyword density analysis
             keyword_density = await self._analyze_keyword_density(content, target_keywords)
@@ -265,6 +271,9 @@ class SEOAnalyzer:
             
     async def _analyze_keyword_density(self, content: str, keywords: List[str]) -> Dict[str, float]:
         """Analyze keyword density"""
+
+
+
         try:
             content_lower = content.lower()
             word_count = len(content.split())
@@ -283,6 +292,9 @@ class SEOAnalyzer:
             
     async def _analyze_keyword_distribution(self, content: str, keywords: List[str]) -> Dict[str, List[int]]:
         """Analyze keyword distribution throughout content"""
+
+
+
         try:
             words = content.lower().split()
             distribution = {}
@@ -306,6 +318,9 @@ class SEOAnalyzer:
             
     async def _extract_recommended_keywords(self, content: str, existing_keywords: List[str]) -> List[str]:
         """Extract additional recommended keywords"""
+
+
+
         try:
             if not self.keyword_extractor:
                 return []
@@ -329,6 +344,9 @@ class SEOAnalyzer:
             
     async def _generate_meta_suggestions(self, content: str, keywords: List[str]) -> Dict[str, str]:
         """Generate meta tag suggestions"""
+
+
+
         try:
             # Extract first sentence for meta description base
             sentences = re.split(r'[.!?]+', content)
@@ -355,6 +373,9 @@ class SEOAnalyzer:
             
     async def _analyze_content_length(self, content: str, keywords: List[str]) -> str:
         """Analyze and recommend content length"""
+
+
+
         try:
             word_count = len(content.split())
             
@@ -375,6 +396,9 @@ class SEOAnalyzer:
             
     async def _identify_internal_link_opportunities(self, content: str) -> List[str]:
         """Identify opportunities for internal linking"""
+
+
+
         try:
             if not self.nlp:
                 return []
@@ -401,6 +425,9 @@ class SEOAnalyzer:
             
     async def _extract_semantic_keywords(self, content: str, primary_keywords: List[str]) -> List[str]:
         """Extract semantically related keywords"""
+
+
+
         try:
             if not self.nlp:
                 return []
@@ -424,6 +451,9 @@ class SEOAnalyzer:
             
     async def _analyze_search_intent_match(self, content: str, keywords: List[str]) -> float:
         """Analyze how well content matches search intent"""
+
+
+
         try:
             # Simple intent matching based on content patterns
             intent_indicators = {
@@ -464,6 +494,9 @@ class SEOAnalyzer:
         search_intent_match: float
     ) -> float:
         """Calculate overall SEO score"""
+
+
+
         try:
             score_components = []
             
@@ -570,6 +603,9 @@ class ContentOptimizer:
         Returns:
             OptimizationResult with optimized content and analysis
         """
+
+
+
         try:
             original_content = request.content
             optimized_content = original_content
@@ -665,6 +701,9 @@ class ContentOptimizer:
         request: OptimizationRequest
     ) -> Tuple[str, List[str]]:
         """Apply SEO optimizations to content"""
+
+
+
         try:
             optimized_content = content
             improvements = []
@@ -715,6 +754,9 @@ class ContentOptimizer:
         request: OptimizationRequest
     ) -> EngagementAnalysis:
         """Analyze content engagement potential"""
+
+
+
         try:
             # Emotional triggers analysis
             emotional_triggers = []
@@ -812,6 +854,9 @@ class ContentOptimizer:
         request: OptimizationRequest
     ) -> Tuple[str, List[str]]:
         """Apply engagement optimizations"""
+
+
+
         try:
             optimized_content = content
             improvements = []
@@ -819,10 +864,10 @@ class ContentOptimizer:
             # Add call-to-action if missing
             if engagement_analysis.call_to_action_strength < 0.3 and request.include_cta:
                 platform_ctas = {
-                    Platform.INSTAGRAM: "Double tap if you agree! 💖",
-                    Platform.TIKTOK: "Follow for more tips! 🚀",
-                    Platform.TWITTER: "What's your take? Reply below 👇",
-                    Platform.LINKEDIN: "Share your thoughts in the comments 💭"
+                    Platform.INSTAGRAM: "Double tap if you agree! ",
+                    Platform.TIKTOK: "Follow for more tips! ",
+                    Platform.TWITTER: "What's your take? Reply below ",
+                    Platform.LINKEDIN: "Share your thoughts in the comments "
                 }
                 
                 cta = platform_ctas.get(request.platform, "Let us know what you think!")
@@ -845,12 +890,12 @@ class ContentOptimizer:
             # Enhance emotional appeal
             if len(engagement_analysis.emotional_triggers) < 2:
                 emotion_enhancers = {
-                    Platform.INSTAGRAM: "✨ Amazing insights ahead! ✨",
-                    Platform.TIKTOK: "🔥 This will blow your mind! 🔥",
-                    Platform.TWITTER: "🚨 Thread alert: Game-changing info below 🚨"
+                    Platform.INSTAGRAM: " Amazing insights ahead! ",
+                    Platform.TIKTOK: " This will blow your mind! ",
+                    Platform.TWITTER: " Thread alert: Game-changing info below "
                 }
                 
-                enhancer = emotion_enhancers.get(request.platform, "🌟 Don't miss this! 🌟")
+                enhancer = emotion_enhancers.get(request.platform, " Don't miss this! ")
                 optimized_content = f"{enhancer}\n\n{optimized_content}"
                 improvements.append("Added emotional appeal elements")
                 
@@ -866,6 +911,9 @@ class ContentOptimizer:
         request: OptimizationRequest
     ) -> PlatformOptimization:
         """Analyze platform-specific optimization opportunities"""
+
+
+
         try:
             config = self.platform_configs.get(request.platform, {})
             
@@ -914,6 +962,9 @@ class ContentOptimizer:
             
     async def _generate_hashtag_suggestions(self, content: str, request: OptimizationRequest) -> List[str]:
         """Generate platform-appropriate hashtag suggestions"""
+
+
+
         try:
             hashtags = []
             
@@ -1027,6 +1078,9 @@ class ContentOptimizer:
         
     async def _analyze_content_structure(self, content: str, platform: Platform) -> Dict[str, Any]:
         """Analyze content structure for platform optimization"""
+
+
+
         try:
             structure = {
                 'has_hook': False,
@@ -1045,7 +1099,7 @@ class ContentOptimizer:
             
             # Check for hook (engaging first sentence)
             if sentences and len(sentences[0].split()) < 15:
-                hook_indicators = ['imagine', 'what if', 'did you know', '🔥', '✨', '🚨']
+                hook_indicators = ['imagine', 'what if', 'did you know', '', '', '']
                 if any(indicator in sentences[0].lower() for indicator in hook_indicators):
                     structure['has_hook'] = True
                     
@@ -1071,6 +1125,9 @@ class ContentOptimizer:
         request: OptimizationRequest
     ) -> Tuple[str, List[str]]:
         """Apply platform-specific optimizations"""
+
+
+
         try:
             optimized_content = content
             improvements = []
@@ -1102,6 +1159,9 @@ class ContentOptimizer:
         request: OptimizationRequest
     ) -> Tuple[str, List[str]]:
         """Apply readability optimizations"""
+
+
+
         try:
             optimized_content = content
             improvements = []
@@ -1162,6 +1222,9 @@ class ContentOptimizer:
         request: OptimizationRequest
     ) -> List[str]:
         """Generate alternative content versions"""
+
+
+
         try:
             alternatives = []
             
@@ -1180,12 +1243,12 @@ class ContentOptimizer:
                 emoji_version = content
                 # Add relevant emojis
                 emoji_map = {
-                    'music': '🎵',
-                    'photo': '📸',
-                    'video': '🎥',
-                    'tip': '💡',
+                    'music': '',
+                    'photo': '',
+                    'video': '',
+                    'tip': '',
                     'amazing': '🤩',
-                    'love': '❤️'
+                    'love': ''
                 }
                 
                 for word, emoji in emoji_map.items():
@@ -1206,6 +1269,9 @@ class ContentOptimizer:
         request: OptimizationRequest
     ) -> Dict[str, float]:
         """Predict content performance metrics"""
+
+
+
         try:
             # Simple performance prediction based on content features
             predictions = {}
@@ -1246,6 +1312,9 @@ class ContentOptimizer:
         engagement_analysis: Optional[EngagementAnalysis]
     ) -> List[str]:
         """Generate final optimization recommendations"""
+
+
+
         try:
             recommendations = []
             
@@ -1289,6 +1358,9 @@ class ContentOptimizer:
         engagement_analysis: Optional[EngagementAnalysis]
     ) -> float:
         """Calculate overall optimization score"""
+
+
+
         try:
             score_components = []
             

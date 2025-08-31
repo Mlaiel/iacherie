@@ -23,7 +23,7 @@ Copyright: All rights reserved. Unauthorized use prohibited.
 Project: IA Influencer Agent - Ultra-Advanced Industrial Platform
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + DevOps + Legal Automation
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 ALL RIGHTS RESERVED. UNAUTHORIZED USE PROHIBITED.
 This code belongs exclusively to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use will result in immediate legal action.
@@ -198,6 +198,9 @@ class AdvancedNotificationEngine:
     
     def _initialize_channels(self) -> None:
         """Initialize communication channel clients"""
+
+
+
         try:
             # Email configuration
             if self.settings.smtp_host:
@@ -233,6 +236,9 @@ class AdvancedNotificationEngine:
     
     async def send_notification(self, request: NotificationRequest) -> Dict[str, Any]:
         """Send notification through multiple channels"""
+
+
+
         try:
             notification_id = self._generate_notification_id()
             
@@ -294,6 +300,9 @@ class AdvancedNotificationEngine:
         request: NotificationRequest
     ) -> Dict[str, Any]:
         """Send notification via specific channel"""
+
+
+
         try:
             if channel == NotificationChannel.EMAIL:
                 return await self._send_email(recipients, content, request)
@@ -323,6 +332,9 @@ class AdvancedNotificationEngine:
         request: NotificationRequest
     ) -> Dict[str, Any]:
         """Send email notifications"""
+
+
+
         try:
             if not self.email_config:
                 raise ValueError("Email not configured")
@@ -389,6 +401,9 @@ class AdvancedNotificationEngine:
         request: NotificationRequest
     ) -> Dict[str, Any]:
         """Send SMS notifications"""
+
+
+
         try:
             if not self.sms_client:
                 raise ValueError("SMS client not configured")
@@ -437,6 +452,9 @@ class AdvancedNotificationEngine:
         request: NotificationRequest
     ) -> Dict[str, Any]:
         """Send Slack notifications"""
+
+
+
         try:
             if not self.slack_client:
                 raise ValueError("Slack client not configured")
@@ -488,6 +506,9 @@ class AdvancedNotificationEngine:
         request: NotificationRequest
     ) -> Dict[str, Any]:
         """Send Discord notifications"""
+
+
+
         try:
             if not self.discord_bot:
                 raise ValueError("Discord bot not configured")
@@ -550,6 +571,9 @@ class AdvancedNotificationEngine:
         request: NotificationRequest
     ) -> Dict[str, Any]:
         """Send webhook notifications"""
+
+
+
         try:
             results = []
             
@@ -611,6 +635,9 @@ class AdvancedNotificationEngine:
         request: NotificationRequest
     ) -> Dict[str, Any]:
         """Send push notifications"""
+
+
+
         try:
             # This would integrate with a push notification service
             # like Firebase Cloud Messaging, Apple Push Notification Service, etc.
@@ -681,6 +708,9 @@ class AdvancedNotificationEngine:
     
     async def _prepare_message_content(self, content: MessageContent) -> MessageContent:
         """Prepare and render message content using templates"""
+
+
+
         try:
             if content.template_id:
                 # Load template
@@ -735,6 +765,9 @@ class AdvancedNotificationEngine:
     
     async def _log_notification_request(self, notification_id: str, request: NotificationRequest) -> None:
         """Log notification request to database"""
+
+
+
         try:
             async with get_async_session() as session:
                 notification_log = NotificationLog(
@@ -755,6 +788,9 @@ class AdvancedNotificationEngine:
     
     async def _update_notification_log(self, notification_id: str, delivery_results: Dict[str, Any]) -> None:
         """Update notification log with delivery results"""
+
+
+
         try:
             async with get_async_session() as session:
                 await session.execute(
@@ -772,6 +808,9 @@ class AdvancedNotificationEngine:
     
     async def _add_email_attachment(self, msg: MIMEMultipart, attachment_path: str) -> None:
         """Add attachment to email message"""
+
+
+
         try:
             with open(attachment_path, "rb") as attachment:
                 part = MIMEBase('application', 'octet-stream')
@@ -794,6 +833,9 @@ class AdvancedNotificationEngine:
         priority: NotificationPriority = NotificationPriority.HIGH
     ) -> Dict[str, Any]:
         """Create and send violation alert notification"""
+
+
+
         try:
             # Prepare recipients
             notification_recipients = [
@@ -806,7 +848,7 @@ class AdvancedNotificationEngine:
             
             # Prepare content
             content = MessageContent(
-                subject=f"🚨 Copyright Violation Detected - {violation_data.get('platform', 'Unknown Platform')}",
+                subject=f" Copyright Violation Detected - {violation_data.get('platform', 'Unknown Platform')}",
                 body=self._create_violation_alert_body(violation_data),
                 template_id="violation_alert",
                 variables=violation_data
@@ -830,6 +872,9 @@ class AdvancedNotificationEngine:
     
     def _create_violation_alert_body(self, violation_data: Dict[str, Any]) -> str:
         """Create violation alert email body"""
+
+
+
         return f"""
         <h2>Copyright Violation Detected</h2>
         
@@ -861,6 +906,9 @@ class AdvancedNotificationEngine:
         recipients: List[str]
     ) -> Dict[str, Any]:
         """Create and send DMCA status update notification"""
+
+
+
         try:
             # Determine priority based on status
             status = dmca_data.get('status', '')
@@ -903,13 +951,13 @@ class AdvancedNotificationEngine:
         """Create DMCA status update email body"""
         status = dmca_data.get('status', 'Unknown')
         status_icon = {
-            'submitted': '📤',
-            'acknowledged': '✅',
+            'submitted': '',
+            'acknowledged': '',
             'processing': '⏳',
-            'complied': '🎉',
-            'rejected': '❌',
-            'escalated': '⚠️'
-        }.get(status, '📋')
+            'complied': '',
+            'rejected': '',
+            'escalated': ''
+        }.get(status, '')
         
         return f"""
         <h2>{status_icon} DMCA Notice Status Update</h2>
@@ -956,6 +1004,9 @@ class EscalationManager:
         escalation_delays: List[timedelta]
     ) -> bool:
         """Setup automated escalation rule"""
+
+
+
         try:
             self.escalation_rules[rule_id] = {
                 "trigger_conditions": trigger_conditions,
@@ -972,6 +1023,9 @@ class EscalationManager:
     
     async def check_escalation_triggers(self) -> None:
         """Check for escalation triggers and initiate escalations"""
+
+
+
         try:
             # This would be called periodically
             # Implementation depends on specific escalation logic

@@ -4,7 +4,7 @@ Module: backend/core/events/webhook_manager.py
 Architecture: Webhook Processing and External Integrations
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 
 Description:
@@ -198,6 +198,9 @@ class WebhookTransformer:
     @staticmethod
     def _default_transform(event: Event) -> Dict[str, Any]:
         """Transformation par défaut"""
+
+
+
         return {
             "webhook_version": "1.0",
             "timestamp": datetime.now(timezone.utc).isoformat(),
@@ -218,6 +221,9 @@ class WebhookTransformer:
     @staticmethod
     def _apply_template(event: Event, template: str) -> Dict[str, Any]:
         """Applique un template de transformation"""
+
+
+
         try:
             # Variables disponibles
             variables = {
@@ -424,6 +430,9 @@ class WebhookManager:
     
     def register_endpoint(self, endpoint: WebhookEndpoint) -> str:
         """Enregistre un endpoint webhook"""
+
+
+
         try:
             # Validation de l'URL
             parsed_url = urlparse(endpoint.url)
@@ -459,6 +468,9 @@ class WebhookManager:
     
     def get_endpoint(self, endpoint_id: str) -> Optional[WebhookEndpoint]:
         """Récupère un endpoint par ID"""
+
+
+
         return self._endpoints.get(endpoint_id)
     
     def get_endpoints(
@@ -560,6 +572,9 @@ class WebhookManager:
     
     async def _handle_delivery(self, delivery: WebhookDelivery):
         """Traite une livraison webhook"""
+
+
+
         try:
             endpoint = self._endpoints.get(delivery.endpoint_id)
             if not endpoint:
@@ -619,6 +634,9 @@ class WebhookManager:
     
     def get_delivery(self, delivery_id: str) -> Optional[WebhookDelivery]:
         """Récupère une livraison par ID"""
+
+
+
         return self._deliveries.get(delivery_id)
     
     def get_deliveries(
@@ -643,6 +661,9 @@ class WebhookManager:
     
     def get_stats(self) -> Dict[str, Any]:
         """Retourne les statistiques"""
+
+
+
         return {
             "stats": self._stats.copy(),
             "queue_size": self._delivery_queue.qsize(),

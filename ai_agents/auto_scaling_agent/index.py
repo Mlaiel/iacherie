@@ -71,9 +71,9 @@ class AutoScalingAgentOrchestrator:
         self.running = False
         self.start_time = None
         
-        logger.info("🚀 Initialisation Auto Scaling Agent Orchestrateur")
-        logger.info(f"📧 Propriétaire: Fahed Mlaiel (mlaiel@live.de)")
-        logger.info(f"🔒 Copyright: © 2025 - Tous Droits Réservés")
+        logger.info(" Initialisation Auto Scaling Agent Orchestrateur")
+        logger.info(f" Propriétaire: Fahed Mlaiel (mlaiel@live.de)")
+        logger.info(f" Copyright: © 2025 - Tous Droits Réservés")
     
     def _get_default_config(self) -> Dict[str, Any]:
         """
@@ -82,6 +82,9 @@ class AutoScalingAgentOrchestrator:
         Returns:
             Dict: Configuration système par défaut
         """
+
+
+
         return {
             'auto_scaling_manager': {
                 'check_interval': 30,
@@ -128,8 +131,11 @@ class AutoScalingAgentOrchestrator:
         """
         Initialise tous les composants du système
         """
+
+
+
         try:
-            logger.info("🔧 Initialisation des composants système...")
+            logger.info(" Initialisation des composants système...")
             
             # Initialisation Auto Scaling Manager
             self.components['auto_scaling_manager'] = AutoScalingManager(
@@ -161,18 +167,21 @@ class AutoScalingAgentOrchestrator:
                 self.config.get('threshold_manager', {})
             )
             
-            logger.info("✅ Tous les composants initialisés avec succès")
+            logger.info(" Tous les composants initialisés avec succès")
             
         except Exception as e:
-            logger.error(f"❌ Erreur lors de l'initialisation: {e}")
+            logger.error(f" Erreur lors de l'initialisation: {e}")
             raise
     
     async def start_all_components(self):
         """
         Démarre tous les composants système
         """
+
+
+
         try:
-            logger.info("🚀 Démarrage de tous les composants...")
+            logger.info(" Démarrage de tous les composants...")
             
             # Démarrage des tâches de surveillance
             tasks = []
@@ -183,7 +192,7 @@ class AutoScalingAgentOrchestrator:
                     self.components['auto_scaling_manager'].start_monitoring()
                 )
                 tasks.append(task)
-                logger.info("✅ Auto Scaling Manager démarré")
+                logger.info(" Auto Scaling Manager démarré")
             
             # Resource Monitor
             if 'resource_monitor' in self.components:
@@ -191,7 +200,7 @@ class AutoScalingAgentOrchestrator:
                     self.components['resource_monitor'].start_monitoring()
                 )
                 tasks.append(task)
-                logger.info("✅ Resource Monitor démarré")
+                logger.info(" Resource Monitor démarré")
             
             # Metrics Collector
             if 'metrics_collector' in self.components:
@@ -199,7 +208,7 @@ class AutoScalingAgentOrchestrator:
                     self.components['metrics_collector'].start_collection()
                 )
                 tasks.append(task)
-                logger.info("✅ Metrics Collector démarré")
+                logger.info(" Metrics Collector démarré")
             
             # Threshold Manager
             if 'threshold_manager' in self.components:
@@ -207,38 +216,41 @@ class AutoScalingAgentOrchestrator:
                     self.components['threshold_manager'].start_monitoring()
                 )
                 tasks.append(task)
-                logger.info("✅ Threshold Manager démarré")
+                logger.info(" Threshold Manager démarré")
             
             # Attendre toutes les tâches
             if tasks:
                 await asyncio.gather(*tasks, return_exceptions=True)
                 
         except Exception as e:
-            logger.error(f"❌ Erreur lors du démarrage: {e}")
+            logger.error(f" Erreur lors du démarrage: {e}")
             raise
     
     async def start(self):
         """
         Démarre l'orchestrateur complet
         """
+
+
+
         try:
             self.start_time = datetime.now()
             self.running = True
             
-            logger.info("🎯 Démarrage Auto Scaling Agent Orchestrateur")
+            logger.info(" Démarrage Auto Scaling Agent Orchestrateur")
             logger.info(f"⏰ Heure de démarrage: {self.start_time}")
             
             # Initialisation et démarrage
             await self.initialize_components()
             await self.start_all_components()
             
-            logger.info("🏆 Auto Scaling Agent opérationnel!")
-            logger.info("📊 Surveillance temps réel active")
+            logger.info(" Auto Scaling Agent opérationnel!")
+            logger.info(" Surveillance temps réel active")
             logger.info("🤖 IA de scaling activée")
-            logger.info("⚡ Optimisation performance en cours")
+            logger.info(" Optimisation performance en cours")
             
         except Exception as e:
-            logger.error(f"💥 Erreur critique au démarrage: {e}")
+            logger.error(f" Erreur critique au démarrage: {e}")
             self.running = False
             raise
     
@@ -246,8 +258,11 @@ class AutoScalingAgentOrchestrator:
         """
         Arrêt gracieux de l'orchestrateur
         """
+
+
+
         try:
-            logger.info("🛑 Arrêt Auto Scaling Agent...")
+            logger.info(" Arrêt Auto Scaling Agent...")
             self.running = False
             
             # Arrêt des composants
@@ -255,19 +270,19 @@ class AutoScalingAgentOrchestrator:
                 try:
                     if hasattr(component, 'stop'):
                         await component.stop()
-                    logger.info(f"✅ {name} arrêté")
+                    logger.info(f" {name} arrêté")
                 except Exception as e:
-                    logger.error(f"❌ Erreur arrêt {name}: {e}")
+                    logger.error(f" Erreur arrêt {name}: {e}")
             
             # Calcul du temps d'exécution
             if self.start_time:
                 uptime = datetime.now() - self.start_time
-                logger.info(f"⏱️ Temps d'exécution: {uptime}")
+                logger.info(f"⏱ Temps d'exécution: {uptime}")
             
-            logger.info("👋 Auto Scaling Agent arrêté avec succès")
+            logger.info(" Auto Scaling Agent arrêté avec succès")
             
         except Exception as e:
-            logger.error(f"❌ Erreur lors de l'arrêt: {e}")
+            logger.error(f" Erreur lors de l'arrêt: {e}")
     
     def get_system_status(self) -> Dict[str, Any]:
         """
@@ -304,7 +319,7 @@ def signal_handler(signum, frame):
     """
     Gestionnaire de signaux pour arrêt gracieux
     """
-    logger.info(f"📡 Signal reçu: {signum}")
+    logger.info(f" Signal reçu: {signum}")
     if orchestrator:
         asyncio.create_task(orchestrator.stop())
     sys.exit(0)
@@ -323,11 +338,11 @@ async def main():
     try:
         # Affichage bannière copyright
         print("\n" + "="*80)
-        print("🚀 IA INFLUENCER AGENT - AUTO SCALING SYSTEM")
+        print(" IA INFLUENCER AGENT - AUTO SCALING SYSTEM")
         print("="*80)
         print(f"© 2025 Fahed Mlaiel - Tous Droits Réservés")
-        print(f"📧 Propriétaire: Fahed Mlaiel (mlaiel@live.de)")
-        print(f"🔒 Propriété Intellectuelle Protégée")
+        print(f" Propriétaire: Fahed Mlaiel (mlaiel@live.de)")
+        print(f" Propriété Intellectuelle Protégée")
         print("="*80 + "\n")
         
         # Création et démarrage de l'orchestrateur
@@ -341,12 +356,12 @@ async def main():
             # Affichage périodique du statut
             if datetime.now().second % 60 == 0:
                 status = orchestrator.get_system_status()
-                logger.info(f"📊 Système actif - Uptime: {status['uptime']:.0f}s")
+                logger.info(f" Système actif - Uptime: {status['uptime']:.0f}s")
     
     except KeyboardInterrupt:
-        logger.info("⌨️ Interruption clavier détectée")
+        logger.info("⌨ Interruption clavier détectée")
     except Exception as e:
-        logger.error(f"💥 Erreur critique: {e}")
+        logger.error(f" Erreur critique: {e}")
     finally:
         if orchestrator:
             await orchestrator.stop()
@@ -368,8 +383,11 @@ if __name__ == "__main__":
     """
     Point d'entrée principal
     """
+
+
+
     try:
         asyncio.run(main())
     except Exception as e:
-        logger.error(f"💥 Erreur fatale: {e}")
+        logger.error(f" Erreur fatale: {e}")
         sys.exit(1)

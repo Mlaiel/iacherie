@@ -33,7 +33,7 @@ async def example_comprehensive_content_analysis():
     including optimization, monetization, and performance strategies.
     """
     
-    print("🎯 Example 1: Comprehensive Content Analysis")
+    print(" Example 1: Comprehensive Content Analysis")
     print("=" * 60)
     
     try:
@@ -48,11 +48,11 @@ async def example_comprehensive_content_analysis():
             objectives=["increase_engagement", "grow_subscribers", "monetize_content"]
         )
         
-        print(f"✅ Analysis completed for {len(results)} services")
+        print(f" Analysis completed for {len(results)} services")
         
         # Display key insights from each service
         for service_type, response in results.items():
-            print(f"\n📊 {service_type.value.upper()} GUIDANCE:")
+            print(f"\n {service_type.value.upper()} GUIDANCE:")
             print(f"   Confidence Score: {response.confidence_score:.2f}")
             print(f"   Recommendations: {len(response.recommendations)}")
             print(f"   Insights: {len(response.insights)}")
@@ -64,12 +64,12 @@ async def example_comprehensive_content_analysis():
             
             # Show warnings if any
             if response.warnings:
-                print(f"   ⚠️  Warnings: {response.warnings}")
+                print(f"     Warnings: {response.warnings}")
         
         return results
         
     except Exception as e:
-        print(f"❌ Error in comprehensive analysis: {e}")
+        print(f" Error in comprehensive analysis: {e}")
         return None
 
 
@@ -81,7 +81,7 @@ async def example_platform_specific_optimization():
     with specific requirements for each platform.
     """
     
-    print("\n🎯 Example 2: Platform-Specific Optimization")
+    print("\n Example 2: Platform-Specific Optimization")
     print("=" * 60)
     
     try:
@@ -97,7 +97,7 @@ async def example_platform_specific_optimization():
             objectives=["educational_value", "high_retention"]
         )
         
-        print("🎥 YouTube Optimization Results:")
+        print(" YouTube Optimization Results:")
         print(f"   Optimization Score: {youtube_guidance.metrics.get('optimization_score', 'N/A')}")
         print(f"   Expected Reach Increase: {youtube_guidance.metrics.get('potential_reach_increase', 'N/A')}")
         print(f"   Top Actions: {youtube_guidance.next_steps[:3]}")
@@ -113,7 +113,7 @@ async def example_platform_specific_optimization():
             objectives=["viral_potential", "quick_engagement"]
         )
         
-        print("\n📱 TikTok Optimization Results:")
+        print("\n TikTok Optimization Results:")
         print(f"   Optimization Score: {tiktok_guidance.metrics.get('optimization_score', 'N/A')}")
         print(f"   Expected Engagement: {tiktok_guidance.metrics.get('engagement_improvement', 'N/A')}")
         print(f"   Top Actions: {tiktok_guidance.next_steps[:3]}")
@@ -121,7 +121,7 @@ async def example_platform_specific_optimization():
         return {"youtube": youtube_guidance, "tiktok": tiktok_guidance}
         
     except Exception as e:
-        print(f"❌ Error in platform optimization: {e}")
+        print(f" Error in platform optimization: {e}")
         return None
 
 
@@ -133,7 +133,7 @@ async def example_monetization_strategy():
     revenue through strategic monetization guidance.
     """
     
-    print("\n🎯 Example 3: Advanced Monetization Strategy")
+    print("\n Example 3: Advanced Monetization Strategy")
     print("=" * 60)
     
     try:
@@ -148,23 +148,23 @@ async def example_monetization_strategy():
             objectives=["maximize_revenue", "brand_partnerships", "product_sales"]
         )
         
-        print("💰 Monetization Strategy Results:")
+        print(" Monetization Strategy Results:")
         print(f"   Revenue Potential: ${monetization_guidance.metrics.get('revenue_potential', 0):,.2f}/month")
         print(f"   Partnership Score: {monetization_guidance.metrics.get('partnership_score', 0)}")
         print(f"   Monetization Readiness: {monetization_guidance.metrics.get('monetization_readiness', 0):.1%}")
         
-        print("\n📈 Revenue Recommendations:")
+        print("\n Revenue Recommendations:")
         for i, rec in enumerate(monetization_guidance.recommendations[:3], 1):
             print(f"   {i}. {rec}")
         
-        print("\n🎯 Action Plan:")
+        print("\n Action Plan:")
         for i, step in enumerate(monetization_guidance.next_steps[:5], 1):
             print(f"   {i}. {step}")
         
         return monetization_guidance
         
     except Exception as e:
-        print(f"❌ Error in monetization strategy: {e}")
+        print(f" Error in monetization strategy: {e}")
         return None
 
 
@@ -176,7 +176,7 @@ async def example_trend_based_content_creation():
     brand alignment and optimal timing.
     """
     
-    print("\n🎯 Example 4: Trend-Based Content Creation")
+    print("\n Example 4: Trend-Based Content Creation")
     print("=" * 60)
     
     try:
@@ -190,15 +190,15 @@ async def example_trend_based_content_creation():
             objectives=["viral_content", "trend_alignment", "audience_growth"]
         )
         
-        print("📈 Trend Analysis Results:")
+        print(" Trend Analysis Results:")
         print(f"   Trend Alignment Score: {trend_guidance.metrics.get('trend_alignment_score', 0):.2f}")
         print(f"   Viral Potential: {trend_guidance.metrics.get('viral_potential', 0):.1%}")
         print(f"   Trend Coverage: {trend_guidance.metrics.get('trend_coverage', 0)} trends")
         
-        print("\n🔥 Trending Opportunities:")
+        print("\n Trending Opportunities:")
         for insight in trend_guidance.insights[:3]:
             if insight['type'] == 'viral_potential':
-                print(f"   📊 {insight['type'].title()}: {insight.get('data', 'No data')}")
+                print(f"    {insight['type'].title()}: {insight.get('data', 'No data')}")
         
         # Get scheduling guidance for optimal timing
         scheduling_guidance = await get_specific_content_guidance(
@@ -217,7 +217,7 @@ async def example_trend_based_content_creation():
         return {"trends": trend_guidance, "scheduling": scheduling_guidance}
         
     except Exception as e:
-        print(f"❌ Error in trend analysis: {e}")
+        print(f" Error in trend analysis: {e}")
         return None
 
 
@@ -229,7 +229,7 @@ async def example_brand_safety_compliance():
     before approving content for publication.
     """
     
-    print("\n🎯 Example 5: Brand Safety & Compliance Check")
+    print("\n Example 5: Brand Safety & Compliance Check")
     print("=" * 60)
     
     try:
@@ -245,25 +245,25 @@ async def example_brand_safety_compliance():
             objectives=["compliance", "professional_image", "risk_mitigation"]
         )
         
-        print("🛡️ Brand Safety Analysis:")
+        print(" Brand Safety Analysis:")
         print(f"   Safety Score: {safety_guidance.metrics.get('safety_score', 0):.2f}/1.0")
         print(f"   Compliance Score: {safety_guidance.metrics.get('compliance_score', 0):.2f}/1.0")
         print(f"   Risk Level: {safety_guidance.metrics.get('risk_level', 'Unknown')}")
         
         # Check for warnings
         if safety_guidance.warnings:
-            print("\n⚠️  Safety Warnings:")
+            print("\n  Safety Warnings:")
             for warning in safety_guidance.warnings:
                 print(f"   • {warning}")
         
-        print("\n✅ Safety Recommendations:")
+        print("\n Safety Recommendations:")
         for i, rec in enumerate(safety_guidance.recommendations[:5], 1):
             print(f"   {i}. {rec}")
         
         return safety_guidance
         
     except Exception as e:
-        print(f"❌ Error in brand safety analysis: {e}")
+        print(f" Error in brand safety analysis: {e}")
         return None
 
 
@@ -275,7 +275,7 @@ async def example_collaboration_discovery():
     reach and access new audiences.
     """
     
-    print("\n🎯 Example 6: Strategic Collaboration Discovery")
+    print("\n Example 6: Strategic Collaboration Discovery")
     print("=" * 60)
     
     try:
@@ -294,18 +294,18 @@ async def example_collaboration_discovery():
         print(f"   Opportunity Count: {collaboration_guidance.metrics.get('opportunity_count', 0)}")
         print(f"   Network Strength: {collaboration_guidance.metrics.get('network_strength', 0):.2f}")
         
-        print("\n🎯 Collaboration Opportunities:")
+        print("\n Collaboration Opportunities:")
         for insight in collaboration_guidance.insights[:3]:
-            print(f"   📊 {insight['type'].replace('_', ' ').title()}: Available")
+            print(f"    {insight['type'].replace('_', ' ').title()}: Available")
         
-        print("\n📝 Collaboration Action Plan:")
+        print("\n Collaboration Action Plan:")
         for i, step in enumerate(collaboration_guidance.next_steps[:4], 1):
             print(f"   {i}. {step}")
         
         return collaboration_guidance
         
     except Exception as e:
-        print(f"❌ Error in collaboration discovery: {e}")
+        print(f" Error in collaboration discovery: {e}")
         return None
 
 
@@ -317,7 +317,7 @@ async def example_performance_tracking():
     and optimization recommendations based on historical data.
     """
     
-    print("\n🎯 Example 7: Comprehensive Performance Tracking")
+    print("\n Example 7: Comprehensive Performance Tracking")
     print("=" * 60)
     
     try:
@@ -330,17 +330,17 @@ async def example_performance_tracking():
             objectives=["performance_optimization", "growth_acceleration", "roi_improvement"]
         )
         
-        print("📊 Performance Analysis:")
+        print(" Performance Analysis:")
         print(f"   Overall Performance Score: {performance_guidance.metrics.get('overall_performance_score', 0):.2f}")
         print(f"   Growth Rate: {performance_guidance.metrics.get('growth_rate', 0):.1%}")
         print(f"   Engagement Trend: {performance_guidance.metrics.get('engagement_trend', 'Stable')}")
         
-        print("\n📈 Key Performance Insights:")
+        print("\n Key Performance Insights:")
         for insight in performance_guidance.insights[:3]:
             insight_type = insight['type'].replace('_', ' ').title()
-            print(f"   📊 {insight_type}: Data available")
+            print(f"    {insight_type}: Data available")
         
-        print("\n🚀 Performance Optimization Plan:")
+        print("\n Performance Optimization Plan:")
         for i, rec in enumerate(performance_guidance.recommendations[:4], 1):
             if isinstance(rec, dict) and 'type' in rec:
                 print(f"   {i}. {rec['type'].replace('_', ' ').title()}: Implemented")
@@ -350,7 +350,7 @@ async def example_performance_tracking():
         return performance_guidance
         
     except Exception as e:
-        print(f"❌ Error in performance tracking: {e}")
+        print(f" Error in performance tracking: {e}")
         return None
 
 
@@ -362,7 +362,7 @@ async def example_creative_content_generation():
     and innovative content concepts.
     """
     
-    print("\n🎯 Example 8: AI-Powered Creative Content Generation")
+    print("\n Example 8: AI-Powered Creative Content Generation")
     print("=" * 60)
     
     try:
@@ -376,26 +376,26 @@ async def example_creative_content_generation():
             objectives=["creative_innovation", "audience_engagement", "content_variety"]
         )
         
-        print("🎨 Creative Analysis:")
+        print(" Creative Analysis:")
         print(f"   Creativity Score: {creative_guidance.metrics.get('creativity_score', 0):.2f}")
         print(f"   Idea Diversity: {creative_guidance.metrics.get('idea_diversity', 0)} themes")
         print(f"   Trend Alignment: {creative_guidance.metrics.get('trend_alignment', 0):.1%}")
         
-        print("\n💡 Creative Recommendations:")
+        print("\n Creative Recommendations:")
         for i, rec in enumerate(creative_guidance.recommendations[:4], 1):
             if isinstance(rec, dict) and 'type' in rec:
                 print(f"   {i}. {rec['type'].replace('_', ' ').title()}: Generated")
             else:
                 print(f"   {i}. Creative concept available")
         
-        print("\n🎯 Creative Implementation Steps:")
+        print("\n Creative Implementation Steps:")
         for i, step in enumerate(creative_guidance.next_steps[:5], 1):
             print(f"   {i}. {step}")
         
         return creative_guidance
         
     except Exception as e:
-        print(f"❌ Error in creative assistance: {e}")
+        print(f" Error in creative assistance: {e}")
         return None
 
 
@@ -407,7 +407,7 @@ async def example_orchestrator_direct_usage():
     custom workflows and detailed control.
     """
     
-    print("\n🎯 Example 9: Direct Orchestrator Usage")
+    print("\n Example 9: Direct Orchestrator Usage")
     print("=" * 60)
     
     try:
@@ -437,12 +437,12 @@ async def example_orchestrator_direct_usage():
             }
         )
         
-        print("⚙️ Processing Advanced Request...")
+        print(" Processing Advanced Request...")
         
         # Process comprehensive guidance
         results = await orchestrator.process_comprehensive_guidance(request)
         
-        print(f"✅ Advanced Analysis Completed: {len(results)} services processed")
+        print(f" Advanced Analysis Completed: {len(results)} services processed")
         
         # Analyze cross-service insights
         high_confidence_services = [
@@ -450,7 +450,7 @@ async def example_orchestrator_direct_usage():
             if response.confidence_score > 0.8
         ]
         
-        print(f"🎯 High Confidence Services ({len(high_confidence_services)}):")
+        print(f" High Confidence Services ({len(high_confidence_services)}):")
         for service in high_confidence_services:
             response = results[service]
             print(f"   • {service.value}: {response.confidence_score:.2f} confidence")
@@ -460,7 +460,7 @@ async def example_orchestrator_direct_usage():
         for response in results.values():
             all_recommendations.extend(response.recommendations)
         
-        print(f"\n📊 Total Recommendations Generated: {len(all_recommendations)}")
+        print(f"\n Total Recommendations Generated: {len(all_recommendations)}")
         
         # Check for conflicts or issues
         services_with_warnings = [
@@ -469,7 +469,7 @@ async def example_orchestrator_direct_usage():
         ]
         
         if services_with_warnings:
-            print(f"\n⚠️  Services with Warnings: {len(services_with_warnings)}")
+            print(f"\n  Services with Warnings: {len(services_with_warnings)}")
             for service in services_with_warnings:
                 warnings = results[service].warnings
                 print(f"   • {service.value}: {len(warnings)} warnings")
@@ -477,7 +477,7 @@ async def example_orchestrator_direct_usage():
         return results
         
     except Exception as e:
-        print(f"❌ Error in advanced orchestrator usage: {e}")
+        print(f" Error in advanced orchestrator usage: {e}")
         return None
 
 
@@ -487,7 +487,7 @@ async def run_all_examples():
     of the content guidance system.
     """
     
-    print("🚀 CONTENT GUIDANCE SYSTEM - COMPREHENSIVE EXAMPLES")
+    print(" CONTENT GUIDANCE SYSTEM - COMPREHENSIVE EXAMPLES")
     print("=" * 80)
     print(f"Started at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print()
@@ -521,10 +521,10 @@ async def run_all_examples():
                 "result": result
             }
             
-            print(f"\n✅ {example_name} completed in {processing_time:.2f}s")
+            print(f"\n {example_name} completed in {processing_time:.2f}s")
             
         except Exception as e:
-            print(f"\n❌ {example_name} failed: {e}")
+            print(f"\n {example_name} failed: {e}")
             example_results[example_name] = {
                 "success": False,
                 "error": str(e)
@@ -535,14 +535,14 @@ async def run_all_examples():
     
     # Final summary
     print("\n" + "=" * 80)
-    print("📊 EXECUTION SUMMARY")
+    print(" EXECUTION SUMMARY")
     print("=" * 80)
     
     successful_examples = [name for name, result in example_results.items() if result["success"]]
     failed_examples = [name for name, result in example_results.items() if not result["success"]]
     
-    print(f"✅ Successful Examples: {len(successful_examples)}/{len(examples)}")
-    print(f"❌ Failed Examples: {len(failed_examples)}")
+    print(f" Successful Examples: {len(successful_examples)}/{len(examples)}")
+    print(f" Failed Examples: {len(failed_examples)}")
     
     if successful_examples:
         total_time = sum(
@@ -550,11 +550,11 @@ async def run_all_examples():
             if result["success"]
         )
         avg_time = total_time / len(successful_examples)
-        print(f"⏱️  Average Processing Time: {avg_time:.2f}s")
-        print(f"⏱️  Total Processing Time: {total_time:.2f}s")
+        print(f"⏱  Average Processing Time: {avg_time:.2f}s")
+        print(f"⏱  Total Processing Time: {total_time:.2f}s")
     
     if failed_examples:
-        print(f"\n❌ Failed Examples: {', '.join(failed_examples)}")
+        print(f"\n Failed Examples: {', '.join(failed_examples)}")
     
     print(f"\nCompleted at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 80)

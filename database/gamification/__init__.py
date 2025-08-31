@@ -1,5 +1,5 @@
 """
-🎮 Gamification Database Module - IA Influencer Agent Platform Enterprise
+ Gamification Database Module - IA Influencer Agent Platform Enterprise
 ==========================================================================
 Module: backend/database/gamification/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Gamification Database Module - Production-Ready
 Responsibility: Enterprise gamification data persistence and repository management
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de

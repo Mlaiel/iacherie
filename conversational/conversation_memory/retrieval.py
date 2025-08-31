@@ -8,7 +8,7 @@ content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING: Unauthorized use strictly prohibited ⚠️
+  LEGAL WARNING: Unauthorized use strictly prohibited 
 Contact: mlaiel@live.de
 """
 
@@ -65,6 +65,9 @@ class SearchQuery:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for caching"""
+
+
+
         return {
             "text_query": self.text_query,
             "user_id": self.user_id,
@@ -92,6 +95,9 @@ class SearchResult:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for API responses"""
+
+
+
         return {
             "conversation": self.conversation.to_dict(),
             "relevance_score": self.relevance_score,
@@ -145,6 +151,9 @@ class ConversationRetriever(RetrievalInterface):
     
     async def initialize(self):
         """Initialize retrieval components"""
+
+
+
         try:
             await asyncio.gather(
                 self.long_term_memory.initialize(),
@@ -172,6 +181,9 @@ class ConversationRetriever(RetrievalInterface):
         Returns:
             Ranked list of search results
         """
+
+
+
         try:
             # Check cache first
             cache_key = f"search:{hash(str(query.to_dict()))}"
@@ -251,6 +263,9 @@ class ConversationRetriever(RetrievalInterface):
         Returns:
             List of related conversations
         """
+
+
+
         try:
             # Get source conversation
             source_conversation = await self.long_term_memory.get(conversation_id)
@@ -401,6 +416,9 @@ class SemanticSearch:
     
     async def initialize(self):
         """Initialize semantic search components"""
+
+
+
         try:
             await self.vector_store.initialize()
             logger.info("SemanticSearch components initialized")
@@ -419,6 +437,9 @@ class SemanticSearch:
         Returns:
             List of semantically similar conversations
         """
+
+
+
         try:
             if not query.text_query:
                 return []
@@ -469,6 +490,9 @@ class SemanticSearch:
         vector_result: Dict[str, Any]
     ) -> Optional[ConversationRecord]:
         """Get full conversation record from vector search result"""
+
+
+
         try:
             conversation_id = vector_result["conversation_id"]
             
@@ -599,6 +623,9 @@ class ContextualRetriever:
     
     async def initialize(self):
         """Initialize contextual retrieval components"""
+
+
+
         try:
             await self.long_term_memory.initialize()
             logger.info("ContextualRetriever initialized")
@@ -617,6 +644,9 @@ class ContextualRetriever:
         Returns:
             List of contextually relevant conversations
         """
+
+
+
         try:
             # Build database query
             db_query = {
@@ -804,6 +834,9 @@ class ContentAwareRetriever:
     
     async def initialize(self):
         """Initialize content-aware retrieval components"""
+
+
+
         try:
             await self.long_term_memory.initialize()
             logger.info("ContentAwareRetriever initialized")
@@ -822,6 +855,9 @@ class ContentAwareRetriever:
         Returns:
             List of content-relevant conversations
         """
+
+
+
         try:
             search_results = []
             
@@ -1021,6 +1057,9 @@ class CollaborationMemoryRetriever:
     
     async def initialize(self):
         """Initialize collaboration retrieval components"""
+
+
+
         try:
             await self.long_term_memory.initialize()
             logger.info("CollaborationMemoryRetriever initialized")
@@ -1039,6 +1078,9 @@ class CollaborationMemoryRetriever:
         Returns:
             List of collaboration-relevant conversations
         """
+
+
+
         try:
             # Build query for collaboration conversations
             db_query = {

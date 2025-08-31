@@ -1,5 +1,5 @@
 """
-📊 Data Models - IA Influencer Agent Platform Enterprise  
+ Data Models - IA Influencer Agent Platform Enterprise  
 =========================================================
 Module: backend/data_management/models/revenue_model.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Data Models - Production-Ready
 Responsibility: Revenue and monetization data models
 ================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
@@ -146,6 +146,9 @@ class RevenueModel:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for serialization"""
+
+
+
         return {
             'revenue_id': self.revenue_id,
             'creator_id': self.creator_id,
@@ -241,6 +244,9 @@ class RevenueModel:
     
     def is_valid(self) -> bool:
         """Check if model is valid"""
+
+
+
         return len(self.validate()) == 0
     
     def calculate_effective_rate(self) -> Decimal:
@@ -252,6 +258,9 @@ class RevenueModel:
     
     def get_fee_breakdown(self) -> Dict[str, Decimal]:
         """Get detailed fee breakdown"""
+
+
+
         return {
             'platform_fee': self.platform_fee,
             'service_fee': self.service_fee,
@@ -315,6 +324,9 @@ class RevenueSummaryModel:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for serialization"""
+
+
+
         return {
             'summary_id': self.summary_id,
             'creator_id': self.creator_id,
@@ -379,6 +391,9 @@ class PaymentRequestModel:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for serialization"""
+
+
+
         return {
             'request_id': self.request_id,
             'creator_id': self.creator_id,
@@ -402,6 +417,9 @@ class PaymentRequestModel:
     
     def can_retry(self) -> bool:
         """Check if payment can be retried"""
+
+
+
         return (self.status == PaymentStatus.FAILED and 
                 self.retry_count < self.max_retries)
     

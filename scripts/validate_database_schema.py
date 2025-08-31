@@ -49,19 +49,19 @@ class DatabaseValidator:
             issues.append(f"Database directory not found: {self.database_dir}")
             return False, issues
         
-        logger.info("✅ Database directory found")
+        logger.info(" Database directory found")
         
         # Check migrations directory
         if not self.migrations_dir.exists():
             issues.append(f"Migrations directory not found: {self.migrations_dir}")
         else:
-            logger.info("✅ Migrations directory found")
+            logger.info(" Migrations directory found")
         
         # Check schema file
         if not self.schema_file.exists():
             issues.append(f"Schema file not found: {self.schema_file}")
         else:
-            logger.info("✅ Schema file found")
+            logger.info(" Schema file found")
         
         # Check for migration files
         if self.migrations_dir.exists():
@@ -69,7 +69,7 @@ class DatabaseValidator:
             migration_files = [f for f in migration_files if f.name != "__init__.py"]
             
             if migration_files:
-                logger.info(f"✅ Found {len(migration_files)} migration files")
+                logger.info(f" Found {len(migration_files)} migration files")
             else:
                 issues.append("No migration files found")
         
@@ -101,12 +101,12 @@ class DatabaseValidator:
                 if component not in schema_content:
                     issues.append(f"Schema missing component: {component}")
                 else:
-                    logger.info(f"✅ Found schema component: {component}")
+                    logger.info(f" Found schema component: {component}")
             
             # Check for table definitions
             table_patterns = re.findall(r'CREATE TABLE IF NOT EXISTS (\w+)', schema_content)
             if table_patterns:
-                logger.info(f"✅ Found {len(table_patterns)} table definitions:")
+                logger.info(f" Found {len(table_patterns)} table definitions:")
                 for table in table_patterns:
                     logger.info(f"   - {table}")
             else:
@@ -115,7 +115,7 @@ class DatabaseValidator:
             # Validate Python syntax
             try:
                 compile(schema_content, self.schema_file, 'exec')
-                logger.info("✅ Schema file Python syntax is valid")
+                logger.info(" Schema file Python syntax is valid")
             except SyntaxError as e:
                 issues.append(f"Schema file syntax error: {str(e)}")
             
@@ -141,7 +141,7 @@ class DatabaseValidator:
             issues.append("No migration files found")
             return False, {"issues": issues}
         
-        logger.info(f"📁 Found {len(migration_files)} migration files")
+        logger.info(f" Found {len(migration_files)} migration files")
         
         for migration_file in migration_files:
             file_issues = []
@@ -165,14 +165,14 @@ class DatabaseValidator:
                 
                 for pattern in required_patterns:
                     if re.search(pattern, content, re.IGNORECASE):
-                        logger.info(f"✅ {migration_file.name}: Found {pattern}")
+                        logger.info(f" {migration_file.name}: Found {pattern}")
                     else:
                         file_issues.append(f"Missing pattern: {pattern}")
                 
                 # Check Python syntax
                 try:
                     compile(content, migration_file, 'exec')
-                    logger.info(f"✅ {migration_file.name}: Python syntax valid")
+                    logger.info(f" {migration_file.name}: Python syntax valid")
                 except SyntaxError as e:
                     file_issues.append(f"Syntax error: {str(e)}")
                 
@@ -191,7 +191,7 @@ class DatabaseValidator:
                         found_operations.append(op)
                 
                 if found_operations:
-                    logger.info(f"✅ {migration_file.name}: Found DB operations: {found_operations}")
+                    logger.info(f" {migration_file.name}: Found DB operations: {found_operations}")
                     file_details['operations'] = found_operations
                 else:
                     file_issues.append("No database operations found")
@@ -227,7 +227,7 @@ class DatabaseValidator:
             manager_path = self.migrations_dir / manager_file
             if manager_path.exists():
                 found_managers.append(manager_file)
-                logger.info(f"✅ Found migration manager: {manager_file}")
+                logger.info(f" Found migration manager: {manager_file}")
         
         if not found_managers:
             issues.append("No migration manager/runner found")
@@ -235,14 +235,14 @@ class DatabaseValidator:
         # Check for dependency resolver
         dependency_resolver = self.migrations_dir / "dependency_resolver.py"
         if dependency_resolver.exists():
-            logger.info("✅ Found dependency resolver")
+            logger.info(" Found dependency resolver")
         else:
             issues.append("Dependency resolver not found")
         
         # Check for rollback manager
         rollback_manager = self.migrations_dir / "rollback_manager.py"
         if rollback_manager.exists():
-            logger.info("✅ Found rollback manager")
+            logger.info(" Found rollback manager")
         else:
             issues.append("Rollback manager not found (recommended)")
         
@@ -263,7 +263,7 @@ class DatabaseValidator:
         for config_path in config_paths:
             if config_path.exists():
                 found_configs.append(str(config_path))
-                logger.info(f"✅ Found database config: {config_path}")
+                logger.info(f" Found database config: {config_path}")
         
         if not found_configs:
             issues.append("No database configuration found")
@@ -271,14 +271,14 @@ class DatabaseValidator:
         # Check for connection pooling
         pool_files = list(self.database_dir.glob("**/pool*.py"))
         if pool_files:
-            logger.info(f"✅ Found {len(pool_files)} connection pool configurations")
+            logger.info(f" Found {len(pool_files)} connection pool configurations")
         else:
             issues.append("No connection pooling configuration found")
         
         # Check for database models
         models_files = list(self.database_dir.glob("**/models.py"))
         if models_files:
-            logger.info(f"✅ Found {len(models_files)} model files")
+            logger.info(f" Found {len(models_files)} model files")
         else:
             issues.append("No database models found")
         
@@ -290,10 +290,10 @@ class DatabaseValidator:
 # Database Migration Test Script
 set -e
 
-echo "🗄️ Testing Ainflue Database Migrations..."
+echo " Testing Ainflue Database Migrations..."
 
 # Start PostgreSQL if not running
-echo "🔧 Starting PostgreSQL..."
+echo " Starting PostgreSQL..."
 docker compose up -d postgres
 
 # Wait for PostgreSQL to be ready
@@ -301,11 +301,11 @@ echo "⏳ Waiting for PostgreSQL to be ready..."
 sleep 30
 
 # Test database connection
-echo "🔌 Testing database connection..."
+echo " Testing database connection..."
 docker exec ainflue-postgres pg_isready -U ainflue -d ainflue_platform
 
 # Run migrations
-echo "📋 Running database migrations..."
+echo " Running database migrations..."
 python3 -c "
 import asyncio
 import sys
@@ -315,9 +315,9 @@ async def run_migrations():
     try:
         from database.schema import create_tables
         await create_tables()
-        print('✅ Schema creation completed')
+        print(' Schema creation completed')
     except Exception as e:
-        print(f'❌ Schema creation failed: {e}')
+        print(f' Schema creation failed: {e}')
         return False
     
     # Run individual migrations if available
@@ -325,11 +325,11 @@ async def run_migrations():
         from database.migrations.migration_runner import MigrationRunner
         runner = MigrationRunner()
         await runner.run_all_migrations()
-        print('✅ All migrations completed')
+        print(' All migrations completed')
     except ImportError:
-        print('ℹ️ Migration runner not available, skipping migration tests')
+        print('ℹ Migration runner not available, skipping migration tests')
     except Exception as e:
-        print(f'❌ Migration failed: {e}')
+        print(f' Migration failed: {e}')
         return False
     
     return True
@@ -339,10 +339,10 @@ sys.exit(0 if result else 1)
 "
 
 # Verify database structure
-echo "🔍 Verifying database structure..."
+echo " Verifying database structure..."
 docker exec ainflue-postgres psql -U ainflue -d ainflue_platform -c "\\dt"
 
-echo "🎉 Database migration test completed!"
+echo " Database migration test completed!"
 """
         return script_content
     
@@ -361,10 +361,10 @@ echo "🎉 Database migration test completed!"
         for package in required_packages:
             try:
                 __import__(package)
-                logger.info(f"✅ Package available: {package}")
+                logger.info(f" Package available: {package}")
             except ImportError:
                 missing_packages.append(package)
-                logger.warning(f"⚠️ Package missing: {package}")
+                logger.warning(f" Package missing: {package}")
         
         if missing_packages:
             issues.append(f"Missing packages: {missing_packages}")
@@ -390,6 +390,9 @@ logger = logging.getLogger(__name__)
 
 async def create_tables():
     """Create basic database tables"""
+
+
+
     try:
         # This is a placeholder - implement actual database connection
         logger.info("Creating database tables...")
@@ -430,11 +433,11 @@ async def create_tables():
         for table_name in tables:
             logger.info(f"  - {table_name}")
         
-        logger.info("✅ Schema validation completed")
+        logger.info(" Schema validation completed")
         return True
         
     except Exception as e:
-        logger.error(f"❌ Schema creation failed: {e}")
+        logger.error(f" Schema creation failed: {e}")
         return False
 
 if __name__ == "__main__":
@@ -445,11 +448,11 @@ if __name__ == "__main__":
         with open(self.schema_file, 'w') as f:
             f.write(basic_schema)
         
-        logger.info(f"✅ Generated basic schema file: {self.schema_file}")
+        logger.info(f" Generated basic schema file: {self.schema_file}")
     
     def run_validation(self) -> Dict[str, Any]:
         """Run complete database validation"""
-        logger.info("🗄️ Starting Database Schema and Migration Validation")
+        logger.info(" Starting Database Schema and Migration Validation")
         
         # Check basic structure
         logger.info("\n" + "="*60)
@@ -460,7 +463,7 @@ if __name__ == "__main__":
         
         # Generate basic schema if missing
         if not structure_valid and "Schema file not found" in str(structure_issues):
-            logger.info("🔧 Generating basic schema file...")
+            logger.info(" Generating basic schema file...")
             self.generate_basic_schema()
             structure_valid, structure_issues = self.validate_database_structure()
         
@@ -504,7 +507,7 @@ if __name__ == "__main__":
         script_path = self.project_root / "test_database_migrations.sh"
         script_path.write_text(script_content)
         script_path.chmod(0o755)
-        logger.info(f"✅ Generated database test script: {script_path}")
+        logger.info(f" Generated database test script: {script_path}")
         
         # Compile results
         self.validation_results = {
@@ -551,7 +554,7 @@ Database Schema and Migration Validation Report
         
         # Structure
         struct = self.validation_results['structure']
-        report += f"📁 Database Structure: {'✅ VALID' if struct['valid'] else '❌ ISSUES'}\n"
+        report += f" Database Structure: {' VALID' if struct['valid'] else ' ISSUES'}\n"
         if struct['issues']:
             for issue in struct['issues']:
                 report += f"   • {issue}\n"
@@ -559,7 +562,7 @@ Database Schema and Migration Validation Report
         
         # Schema
         schema = self.validation_results['schema']
-        report += f"📋 Database Schema: {'✅ VALID' if schema['valid'] else '❌ ISSUES'}\n"
+        report += f" Database Schema: {' VALID' if schema['valid'] else ' ISSUES'}\n"
         report += f"   File: {schema['file_path']}\n"
         if schema['issues']:
             for issue in schema['issues']:
@@ -568,7 +571,7 @@ Database Schema and Migration Validation Report
         
         # Migrations
         migrations = self.validation_results['migrations']
-        report += f"🔄 Migration Files: {'✅ VALID' if migrations['valid'] else '❌ ISSUES'}\n"
+        report += f" Migration Files: {' VALID' if migrations['valid'] else ' ISSUES'}\n"
         if 'details' in migrations and 'total_files' in migrations['details']:
             report += f"   Files Found: {migrations['details']['total_files']}\n"
         if 'details' in migrations and 'issues' in migrations['details']:
@@ -578,7 +581,7 @@ Database Schema and Migration Validation Report
         
         # Dependencies
         deps = self.validation_results['dependencies']
-        report += f"🔗 Migration Dependencies: {'✅ VALID' if deps['valid'] else '❌ ISSUES'}\n"
+        report += f" Migration Dependencies: {' VALID' if deps['valid'] else ' ISSUES'}\n"
         if deps['issues']:
             for issue in deps['issues']:
                 report += f"   • {issue}\n"
@@ -586,7 +589,7 @@ Database Schema and Migration Validation Report
         
         # Connections
         conn = self.validation_results['connections']
-        report += f"🔌 Database Connections: {'✅ VALID' if conn['valid'] else '❌ ISSUES'}\n"
+        report += f" Database Connections: {' VALID' if conn['valid'] else ' ISSUES'}\n"
         if conn['issues']:
             for issue in conn['issues']:
                 report += f"   • {issue}\n"
@@ -594,7 +597,7 @@ Database Schema and Migration Validation Report
         
         # Packages
         packages = self.validation_results['packages']
-        report += f"📦 Required Packages: {'✅ AVAILABLE' if packages['valid'] else '⚠️ MISSING'}\n"
+        report += f" Required Packages: {' AVAILABLE' if packages['valid'] else ' MISSING'}\n"
         if packages['issues']:
             for issue in packages['issues']:
                 report += f"   • {issue}\n"
@@ -614,15 +617,15 @@ Database Schema and Migration Validation Report
         
         report += "SUMMARY\n"
         report += "="*40 + "\n"
-        report += f"Database Configuration: {'✅ VALID' if all_valid else '⚠️ NEEDS ATTENTION'}\n"
-        report += f"Required Packages: {'✅ AVAILABLE' if packages['valid'] else '⚠️ MISSING'}\n"
+        report += f"Database Configuration: {' VALID' if all_valid else ' NEEDS ATTENTION'}\n"
+        report += f"Required Packages: {' AVAILABLE' if packages['valid'] else ' MISSING'}\n"
         
         if all_valid and packages['valid']:
-            report += "\n🎉 Database configurations are valid and ready!\n"
+            report += "\n Database configurations are valid and ready!\n"
             report += "\nTo test database setup:\n"
             report += f"   bash {self.validation_results['test_script']}\n"
         else:
-            report += "\n⚠️ Some database configurations need attention.\n"
+            report += "\n Some database configurations need attention.\n"
             if not packages['valid']:
                 report += "   Install missing packages before proceeding.\n"
         
@@ -634,7 +637,7 @@ def main():
     script_dir = Path(__file__).parent
     project_root = script_dir.parent
     
-    logger.info("🗄️ Database Schema and Migration Validation")
+    logger.info(" Database Schema and Migration Validation")
     logger.info(f"Project Root: {project_root}")
     
     validator = DatabaseValidator(str(project_root))
@@ -646,7 +649,7 @@ def main():
     report_path.write_text(report)
     
     print(report)
-    logger.info(f"📄 Report saved to: {report_path}")
+    logger.info(f" Report saved to: {report_path}")
     
     # Return appropriate exit code
     all_valid = (
@@ -658,10 +661,10 @@ def main():
     )
     
     if all_valid:
-        logger.info("🎉 All database configurations are valid!")
+        logger.info(" All database configurations are valid!")
         return 0
     else:
-        logger.warning("⚠️ Some database configurations need attention!")
+        logger.warning(" Some database configurations need attention!")
         return 1
 
 

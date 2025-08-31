@@ -1,5 +1,5 @@
 """
-📅 Backup Scheduler - Intelligent Backup Scheduling System
+ Backup Scheduler - Intelligent Backup Scheduling System
 =======================================================
 Module: backend/data_management/backups/backup_scheduler.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Scheduling System - Enterprise Production-Ready
 Responsibility: Planification intelligente et automatisation des sauvegardes
 ===============================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -88,6 +88,9 @@ class ScheduleConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit en dictionnaire"""
+
+
+
         return {
             "schedule_type": self.schedule_type.value,
             "priority": self.priority.value,
@@ -176,6 +179,9 @@ class BackupScheduler:
     
     async def start(self):
         """Démarre le planificateur"""
+
+
+
         try:
             self.scheduler.start()
             logger.info("Backup scheduler started successfully")
@@ -189,6 +195,9 @@ class BackupScheduler:
     
     async def stop(self):
         """Arrête le planificateur"""
+
+
+
         try:
             self.scheduler.shutdown(wait=True)
             logger.info("Backup scheduler stopped")
@@ -220,6 +229,9 @@ class BackupScheduler:
         Returns:
             BackupScheduleJob: Job planifié créé
         """
+
+
+
         try:
             # Conversion paths
             source_path_objects = [Path(p) for p in source_paths]
@@ -729,6 +741,9 @@ class BackupScheduler:
         Returns:
             bool: True si supprimé avec succès
         """
+
+
+
         try:
             # Suppression du scheduler
             self.scheduler.remove_job(job_id)
@@ -757,6 +772,9 @@ class BackupScheduler:
         Returns:
             bool: True si pausé avec succès
         """
+
+
+
         try:
             self.scheduler.pause_job(job_id)
             
@@ -781,6 +799,9 @@ class BackupScheduler:
         Returns:
             bool: True si repris avec succès
         """
+
+
+
         try:
             self.scheduler.resume_job(job_id)
             
@@ -835,6 +856,9 @@ class BackupScheduler:
         Returns:
             Optional[BackupScheduleJob]: Job si trouvé
         """
+
+
+
         return self.scheduled_jobs.get(job_id)
     
     async def update_job_schedule(
@@ -852,6 +876,9 @@ class BackupScheduler:
         Returns:
             bool: True si mis à jour avec succès
         """
+
+
+
         try:
             if job_id not in self.scheduled_jobs:
                 return False
@@ -995,6 +1022,9 @@ class ConditionalScheduler(BackupScheduler):
     
     def _initialize_condition_evaluators(self) -> Dict[str, Callable]:
         """Initialise les évaluateurs de conditions personnalisées"""
+
+
+
         return {
             "file_changes": self._evaluate_file_changes,
             "system_load": self._evaluate_system_load,

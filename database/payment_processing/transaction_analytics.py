@@ -185,6 +185,9 @@ class AdvancedTransactionAnalytics:
         """
         Generate real-time analytics dashboard data
         """
+
+
+
         try:
             # Parallel data fetching
             tasks = [
@@ -223,6 +226,9 @@ class AdvancedTransactionAnalytics:
         """
         Comprehensive revenue trend analysis
         """
+
+
+
         try:
             # Calculate date range
             end_date = datetime.utcnow()
@@ -292,6 +298,9 @@ class AdvancedTransactionAnalytics:
         """
         Advanced customer segmentation using ML clustering
         """
+
+
+
         try:
             # Get customer transaction data
             customer_data = await self._get_customer_analytics_data()
@@ -368,6 +377,9 @@ class AdvancedTransactionAnalytics:
         """
         Comprehensive payment method performance analysis
         """
+
+
+
         try:
             # Get payment method data
             performance_data = await self.transaction_repo.get_payment_method_analytics()
@@ -427,6 +439,9 @@ class AdvancedTransactionAnalytics:
         """
         Generate predictive analytics for business insights
         """
+
+
+
         try:
             predictions = {}
             
@@ -511,6 +526,9 @@ class AdvancedTransactionAnalytics:
     
     async def _get_real_time_metrics(self) -> Dict[str, Any]:
         """Get real-time transaction metrics"""
+
+
+
         try:
             # Last 5 minutes
             start_time = datetime.utcnow() - timedelta(minutes=5)
@@ -532,6 +550,9 @@ class AdvancedTransactionAnalytics:
     
     async def _predict_revenue_trends(self, revenue_data: List[Dict], timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
         """Predict future revenue trends"""
+
+
+
         try:
             if len(revenue_data) < 3:
                 return {'error': 'Insufficient data for prediction'}
@@ -638,10 +659,16 @@ class VisualizationGenerator:
     
     async def generate_dashboard_charts(self, data: Dict[str, Any]) -> Dict[str, str]:
         """Generate dashboard charts"""
+
+
+
         return {}
     
     async def create_trend_chart(self, data: List[Dict]) -> str:
         """Create trend visualization"""
+
+
+
         return ""
 
 

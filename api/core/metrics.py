@@ -617,14 +617,23 @@ _business_metrics = BusinessMetrics(_registry)
 
 def get_metrics_collector() -> IMetricsCollector:
     """Get global metrics collector."""
+
+
+
     return _collector
 
 
 def get_metrics_registry() -> MetricsRegistry:
     """Get global metrics registry."""
+
+
+
     return _registry
 
 
 def get_business_metrics() -> BusinessMetrics:
     """Get business metrics instance."""
+
+
+
     return _business_metrics

@@ -142,6 +142,9 @@ class LogEntry:
     
     def to_json(self) -> str:
         """Convert log entry to JSON string"""
+
+
+
         return json.dumps(self.to_dict())
     
     def to_ecs_format(self) -> Dict[str, Any]:
@@ -213,6 +216,9 @@ class LogProcessor:
     
     def process(self, log_entry: LogEntry) -> Optional[LogEntry]:
         """Process log entry through enrichers and filters"""
+
+
+
         try:
             # Apply filters first
             for filter_func in self.filters:
@@ -319,6 +325,9 @@ class ConsoleLogWriter:
     
     async def write(self, entries: List[LogEntry]) -> bool:
         """Write entries to console with colors"""
+
+
+
         try:
             for entry in entries:
                 if self.format_type == LogFormat.JSON:
@@ -419,6 +428,9 @@ class FileLogWriter:
     
     async def _compress_file(self, file_path: Path):
         """Compress rotated log file"""
+
+
+
         try:
             compressed_path = file_path.with_suffix(file_path.suffix + ".gz")
             
@@ -462,6 +474,9 @@ class ElasticsearchLogWriter:
     
     async def write(self, entries: List[LogEntry]) -> bool:
         """Write entries to Elasticsearch using bulk API"""
+
+
+
         try:
             if not entries:
                 return True
@@ -526,6 +541,9 @@ class RedisLogWriter:
     
     async def write(self, entries: List[LogEntry]) -> bool:
         """Write entries to Redis stream"""
+
+
+
         try:
             redis = await self._get_redis()
             
@@ -570,6 +588,9 @@ class S3LogWriter:
     
     async def write(self, entries: List[LogEntry]) -> bool:
         """Write entries to S3 as compressed JSON"""
+
+
+
         try:
             if not entries:
                 return True
@@ -625,6 +646,9 @@ class FluentdLogWriter:
     
     async def write(self, entries: List[LogEntry]) -> bool:
         """Write entries to Fluentd"""
+
+
+
         try:
             for entry in entries:
                 self.sender.emit(entry.to_dict())
@@ -815,6 +839,9 @@ class LogAggregator:
                          entries: List[LogEntry],
                          destination: LogDestination):
         """Safely write to a destination with error handling"""
+
+
+
         try:
             success = await writer.write(entries)
             if not success:
@@ -967,6 +994,9 @@ async def log_critical(aggregator: LogAggregator, message: str, module: str, **k
     
     def to_json(self) -> str:
         """Convert log entry to JSON string"""
+
+
+
         return json.dumps(self.to_dict())
 
 
@@ -1126,6 +1156,9 @@ class FileDestination(LogDestination):
     
     async def send_logs(self, logs: List[LogEntry]) -> bool:
         """Send logs to file"""
+
+
+
         try:
             for log in logs:
                 log_file = self.log_directory / f"{log.service}-{datetime.now().strftime('%Y-%m-%d')}.log"

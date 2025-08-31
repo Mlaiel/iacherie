@@ -7,7 +7,7 @@ API key management, role-based access control, and security monitoring.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -135,6 +135,9 @@ class AuthMiddleware:
         Raises:
             HTTPException: If authentication fails
         """
+
+
+
         try:
             # Check if path should bypass authentication
             if self._should_bypass_auth(request.url.path):
@@ -177,6 +180,9 @@ class AuthMiddleware:
     
     async def _authenticate_jwt(self, request: Request) -> Optional[UserContext]:
         """Authenticate using JWT token"""
+
+
+
         try:
             # Extract token from Authorization header
             credentials: HTTPAuthorizationCredentials = await self.security(request)
@@ -235,6 +241,9 @@ class AuthMiddleware:
     
     async def _authenticate_api_key(self, request: Request) -> Optional[UserContext]:
         """Authenticate using API key"""
+
+
+
         try:
             # Extract API key from header
             api_key = request.headers.get("X-API-Key")
@@ -327,6 +336,9 @@ class AuthMiddleware:
         expires_delta: Optional[timedelta] = None
     ) -> str:
         """Create JWT access token"""
+
+
+
         try:
             if expires_delta:
                 expire = datetime.utcnow() + expires_delta
@@ -356,6 +368,9 @@ class AuthMiddleware:
     
     def create_refresh_token(self, user_id: str) -> str:
         """Create JWT refresh token"""
+
+
+
         try:
             expire = datetime.utcnow() + timedelta(seconds=self.refresh_expiration)
             
@@ -425,6 +440,9 @@ class AuthMiddleware:
         Returns:
             Tuple of (key_id, api_key)
         """
+
+
+
         try:
             import secrets
             
@@ -472,6 +490,9 @@ class AuthMiddleware:
     
     async def revoke_api_key(self, key_id: str) -> bool:
         """Revoke API key"""
+
+
+
         try:
             if key_id in self.api_keys:
                 self.api_keys[key_id].is_active = False
@@ -491,6 +512,9 @@ class AuthMiddleware:
     
     def check_permission(self, user_context: UserContext, required_permission: str) -> bool:
         """Check if user has required permission"""
+
+
+
         try:
             # Admin users have all permissions
             if "admin" in user_context.roles:
@@ -545,6 +569,9 @@ class AuthMiddleware:
     
     def get_auth_stats(self) -> Dict[str, Any]:
         """Get authentication statistics"""
+
+
+
         try:
             active_api_keys = sum(1 for key in self.api_keys.values() if key.is_active)
             expired_api_keys = sum(

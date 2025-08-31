@@ -10,7 +10,7 @@ Project: IA-Influencer Agent + Content Protection Platform
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps
 
 Copyright Notice:
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This code and all associated concepts, algorithms, and implementations are the exclusive 
 intellectual property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, reproduction, 
 distribution, modification, or appropriation of this code, in whole or in part, without 
@@ -254,6 +254,9 @@ class SpectralAnalysisConfig:
     
     def _initialize_analysis_profiles(self) -> Dict[str, Dict[str, Any]]:
         """Initialize analysis profiles for different use cases"""
+
+
+
         return {
             "music_analysis": {
                 "description": "Optimized for music analysis",
@@ -456,6 +459,9 @@ class SpectralAnalysisConfig:
         Returns:
             List of (lower_freq, upper_freq) tuples
         """
+
+
+
         return self._frequency_bands.get(band_type, [])
     
     def create_custom_frequency_bands(self, 
@@ -475,6 +481,9 @@ class SpectralAnalysisConfig:
         Returns:
             List of frequency bands
         """
+
+
+
         try:
             if scale == FrequencyScale.LINEAR:
                 frequencies = np.linspace(min_freq, max_freq, num_bands + 1)
@@ -507,18 +516,30 @@ class SpectralAnalysisConfig:
     
     def _hz_to_mel(self, hz: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
         """Convert frequency in Hz to mel scale"""
+
+
+
         return 2595.0 * np.log10(1.0 + hz / 700.0)
     
     def _mel_to_hz(self, mel: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
         """Convert mel scale to frequency in Hz"""
+
+
+
         return 700.0 * (10.0 ** (mel / 2595.0) - 1.0)
     
     def _hz_to_bark(self, hz: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
         """Convert frequency in Hz to Bark scale"""
+
+
+
         return 13.0 * np.arctan(0.00076 * hz) + 3.5 * np.arctan((hz / 7500.0) ** 2)
     
     def _bark_to_hz(self, bark: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
         """Convert Bark scale to frequency in Hz (approximation)"""
+
+
+
         return 600.0 * np.sinh(bark / 4.0)
     
     def get_analysis_profile(self, profile_name: str) -> Dict[str, Any]:
@@ -531,6 +552,9 @@ class SpectralAnalysisConfig:
         Returns:
             Analysis profile configuration
         """
+
+
+
         return self._analysis_profiles.get(profile_name, {})
     
     def apply_analysis_profile(self, profile_name: str) -> bool:
@@ -543,6 +567,9 @@ class SpectralAnalysisConfig:
         Returns:
             Success status
         """
+
+
+
         try:
             profile = self.get_analysis_profile(profile_name)
             if not profile:
@@ -616,6 +643,9 @@ class SpectralAnalysisConfig:
         Returns:
             Optimal parameters
         """
+
+
+
         try:
             if max_frequency is None:
                 max_frequency = sample_rate / 2
@@ -787,6 +817,9 @@ class SpectralAnalysisConfig:
         Returns:
             Feature extraction configuration
         """
+
+
+
         return {
             "enabled_features": [feature.value for feature in self.feature_config.enabled_features],
             "centroid_percentile": self.feature_config.centroid_percentile,
@@ -817,6 +850,9 @@ class SpectralAnalysisConfig:
         Returns:
             Complete analysis configuration
         """
+
+
+
         try:
             # Apply appropriate profile
             if use_case in self._analysis_profiles:
@@ -891,6 +927,9 @@ class SpectralAnalysisConfig:
     
     def export_config(self) -> Dict[str, Any]:
         """Export complete spectral analysis configuration"""
+
+
+
         try:
             return {
                 "spectral_params": {

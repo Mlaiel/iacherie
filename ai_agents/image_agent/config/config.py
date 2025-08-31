@@ -7,7 +7,7 @@ settings, security configurations, and performance optimizations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -146,6 +146,9 @@ class ImageAgentConfig:
     
     def _get_base_config(self) -> Dict[str, Any]:
         """Get base configuration settings"""
+
+
+
         return {
             "processing": ProcessingConfig(),
             "security": SecurityConfig(),
@@ -308,34 +311,58 @@ class ImageAgentConfig:
     
     def get_processing_config(self) -> ProcessingConfig:
         """Get processing configuration"""
+
+
+
         return self._config.get("processing", ProcessingConfig())
     
     def get_security_config(self) -> SecurityConfig:
         """Get security configuration"""
+
+
+
         return self._config.get("security", SecurityConfig())
     
     def get_ai_model_config(self) -> AIModelConfig:
         """Get AI model configuration"""
+
+
+
         return self._config.get("ai_models", AIModelConfig())
     
     def get_storage_config(self) -> StorageConfig:
         """Get storage configuration"""
+
+
+
         return self._config.get("storage", StorageConfig())
     
     def get_analytics_config(self) -> AnalyticsConfig:
         """Get analytics configuration"""
+
+
+
         return self._config.get("analytics", AnalyticsConfig())
     
     def get_integration_config(self) -> IntegrationConfig:
         """Get integration configuration"""
+
+
+
         return self._config.get("integration", IntegrationConfig())
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert configuration to dictionary"""
+
+
+
         return self._config.copy()
     
     def save_to_file(self, filename: str):
         """Save current configuration to file"""
+
+
+
         try:
             with open(filename, 'w') as f:
                 json.dump(self._config, f, indent=2, default=str)

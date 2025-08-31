@@ -21,21 +21,21 @@ Comprehensive testing for real-time system monitoring, resource tracking,
 performance monitoring, health status assessment, and alert generation.
 
 Expert Team Specialties:
-✅ Lead Dev + Architecte Développeur IA
-✅ Développeur Backend Senior (Python/FastAPI/Django)
-✅ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face)
-✅ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
-✅ Spécialiste Sécurité Backend
-✅ Architecte Microservices
-✅ Développeur Audio
-✅ DevOps Engineer
-✅ IA Prompt Engineer
+ Lead Dev + Architecte Développeur IA
+ Développeur Backend Senior (Python/FastAPI/Django)
+ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face)
+ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
+ Spécialiste Sécurité Backend
+ Architecte Microservices
+ Développeur Audio
+ DevOps Engineer
+ IA Prompt Engineer
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Email: mlaiel@live.de
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  STRICT LEGAL WARNING & COPYRIGHT PROTECTION ⚠️
+  STRICT LEGAL WARNING & COPYRIGHT PROTECTION 
 This entire test suite is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing inquiries.
 """
@@ -71,6 +71,9 @@ class TestSystemMonitoringComprehensive:
     @pytest.fixture
     def monitoring_config(self):
         """Sample monitoring configuration"""
+
+
+
         return {
             'monitoring_level': MonitoringLevel.DETAILED,
             'collection_interval': 1,
@@ -879,6 +882,9 @@ class TestAlertingSystem:
     @pytest.fixture
     def alert_config(self):
         """Alert configuration for testing"""
+
+
+
         return {
             'thresholds': {
                 'cpu_percent': {'warning': 70, 'critical': 90},

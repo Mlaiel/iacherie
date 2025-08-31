@@ -12,7 +12,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL WARNING ⚠️
+  CRITICAL WARNING 
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
 Any unauthorized use, reproduction, distribution, or reverse engineering 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -90,6 +90,9 @@ class SpotifyCrawler(PlatformCrawler):
     
     async def _initialize_api_client(self):
         """Initialize Spotify Web API client"""
+
+
+
         try:
             # Set up client credentials flow
             client_credentials_manager = SpotifyClientCredentials(
@@ -112,6 +115,9 @@ class SpotifyCrawler(PlatformCrawler):
     
     async def _test_api_connection(self):
         """Test API connection"""
+
+
+
         try:
             # Test with simple API call
             featured_playlists = self.spotify_client.featured_playlists(limit=1)
@@ -133,6 +139,9 @@ class SpotifyCrawler(PlatformCrawler):
         Returns:
             List of found music items
         """
+
+
+
         try:
             await self._check_rate_limit()
             
@@ -190,6 +199,9 @@ class SpotifyCrawler(PlatformCrawler):
         Returns:
             Content metadata dictionary
         """
+
+
+
         try:
             # Extract Spotify ID and type from URL
             spotify_id, content_type = self._extract_spotify_id_from_url(content_url)
@@ -225,6 +237,9 @@ class SpotifyCrawler(PlatformCrawler):
         Returns:
             Preview audio data bytes or None if failed
         """
+
+
+
         try:
             # Extract track ID from URL
             spotify_id, content_type = self._extract_spotify_id_from_url(content_url)
@@ -258,6 +273,9 @@ class SpotifyCrawler(PlatformCrawler):
         Returns:
             List of artist's tracks
         """
+
+
+
         try:
             # Search for artist first
             artist_results = self.spotify_client.search(
@@ -316,6 +334,9 @@ class SpotifyCrawler(PlatformCrawler):
         Returns:
             Audio features dictionary
         """
+
+
+
         try:
             features = self.spotify_client.audio_features(track_id)
             
@@ -338,6 +359,9 @@ class SpotifyCrawler(PlatformCrawler):
         Returns:
             Playlist analysis data
         """
+
+
+
         try:
             # Get playlist info
             playlist = self.spotify_client.playlist(playlist_id)
@@ -399,6 +423,9 @@ class SpotifyCrawler(PlatformCrawler):
         Returns:
             Monitoring session ID
         """
+
+
+
         try:
             monitoring_id = f"spotify_releases_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
             
@@ -532,6 +559,9 @@ class SpotifyCrawler(PlatformCrawler):
     async def _process_single_track(self, track: Dict[str, Any], 
                                   album: Dict[str, Any] = None) -> Dict[str, Any]:
         """Process single track data"""
+
+
+
         try:
             # Use provided album data or track's album data
             album_data = album or track.get('album', {})
@@ -564,6 +594,9 @@ class SpotifyCrawler(PlatformCrawler):
     
     async def _get_track_metadata(self, track_id: str) -> Dict[str, Any]:
         """Get detailed track metadata"""
+
+
+
         try:
             track = self.spotify_client.track(track_id)
             audio_features = await self.get_track_audio_features(track_id)
@@ -579,6 +612,9 @@ class SpotifyCrawler(PlatformCrawler):
     
     async def _get_album_metadata(self, album_id: str) -> Dict[str, Any]:
         """Get detailed album metadata"""
+
+
+
         try:
             album = self.spotify_client.album(album_id)
             
@@ -609,6 +645,9 @@ class SpotifyCrawler(PlatformCrawler):
     
     async def _get_artist_metadata(self, artist_id: str) -> Dict[str, Any]:
         """Get detailed artist metadata"""
+
+
+
         try:
             artist = self.spotify_client.artist(artist_id)
             
@@ -637,6 +676,9 @@ class SpotifyCrawler(PlatformCrawler):
     
     async def _get_playlist_metadata(self, playlist_id: str) -> Dict[str, Any]:
         """Get detailed playlist metadata"""
+
+
+
         try:
             return await self.analyze_playlist(playlist_id)
             
@@ -646,6 +688,9 @@ class SpotifyCrawler(PlatformCrawler):
     
     def _extract_spotify_id_from_url(self, url: str) -> Tuple[Optional[str], Optional[str]]:
         """Extract Spotify ID and content type from URL"""
+
+
+
         try:
             # Pattern for Spotify URLs
             import re
@@ -689,6 +734,9 @@ class SpotifyCrawler(PlatformCrawler):
     
     async def _calculate_average_audio_features(self, tracks: List[Dict[str, Any]]) -> Dict[str, float]:
         """Calculate average audio features for a collection of tracks"""
+
+
+
         try:
             feature_keys = ['danceability', 'energy', 'speechiness', 'acousticness',
                           'instrumentalness', 'liveness', 'valence', 'tempo']
@@ -753,6 +801,9 @@ class SpotifyCrawler(PlatformCrawler):
     async def _send_new_release_notification(self, album: Dict[str, Any], 
                                            callback_url: str, monitoring_id: str):
         """Send notification for new release"""
+
+
+
         try:
             notification_data = {
                 'monitoring_id': monitoring_id,

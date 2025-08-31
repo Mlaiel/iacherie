@@ -1,5 +1,5 @@
 """
-🎵 Waveform Generation Engine - Advanced DSP and Signal Synthesis
+ Waveform Generation Engine - Advanced DSP and Signal Synthesis
 
 This module provides comprehensive waveform generation capabilities including
 oscillators, synthesis algorithms, and advanced DSP techniques.
@@ -7,7 +7,7 @@ oscillators, synthesis algorithms, and advanced DSP techniques.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ LEGAL WARNING: Unauthorized use prohibited. Contact mlaiel@live.de for licensing.
+ LEGAL WARNING: Unauthorized use prohibited. Contact mlaiel@live.de for licensing.
 """
 
 import numpy as np
@@ -305,6 +305,9 @@ class NoiseOscillator(BaseOscillator):
             
     def _generate_white_noise(self, num_samples: int) -> np.ndarray:
         """Generate white noise."""
+
+
+
         return self.config.amplitude * self.noise_state.randn(num_samples).astype(np.float32)
         
     def _generate_pink_noise(self, num_samples: int) -> np.ndarray:

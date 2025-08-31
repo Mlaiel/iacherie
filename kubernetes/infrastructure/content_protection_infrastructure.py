@@ -7,11 +7,11 @@ and violation detection across multiple platforms and media types.
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
-⚠️  This software is protected by international copyright laws.         ⚠️
-⚠️  Unauthorized reproduction, distribution, or use is strictly        ⚠️
-⚠️  prohibited and may result in severe civil and criminal penalties.  ⚠️
-⚠️  All rights reserved to Fahed Mlaiel (mlaiel@live.de).             ⚠️
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED 
+  This software is protected by international copyright laws.         
+  Unauthorized reproduction, distribution, or use is strictly        
+  prohibited and may result in severe civil and criminal penalties.  
+  All rights reserved to Fahed Mlaiel (mlaiel@live.de).             
 """
 
 import asyncio
@@ -146,6 +146,9 @@ class AudioFingerprintEngine:
         
     async def generate_audio_fingerprint(self, audio_file_path: str) -> Tuple[str, np.ndarray]:
         """Generate audio fingerprint using multiple algorithms"""
+
+
+
         try:
             # Chromaprint fingerprinting
             duration, raw_fingerprints = chromaprint.decode_fingerprint(
@@ -191,6 +194,9 @@ class VideoFingerprintEngine:
         
     async def generate_video_fingerprint(self, video_file_path: str) -> Tuple[str, np.ndarray]:
         """Generate video fingerprint using frame analysis and perceptual hashing"""
+
+
+
         try:
             cap = cv2.VideoCapture(video_file_path)
             fps = cap.get(cv2.CAP_PROP_FPS)
@@ -259,6 +265,9 @@ class ImageFingerprintEngine:
     
     async def generate_image_fingerprint(self, image_file_path: str) -> Tuple[str, np.ndarray]:
         """Generate image fingerprint using CLIP embeddings and perceptual hashing"""
+
+
+
         try:
             # Load image
             image = cv2.imread(image_file_path)
@@ -320,6 +329,9 @@ class TextFingerprintEngine:
     
     async def generate_text_fingerprint(self, text_content: str) -> Tuple[str, np.ndarray]:
         """Generate text fingerprint using semantic embeddings and stylistic features"""
+
+
+
         try:
             features = []
             
@@ -387,6 +399,9 @@ class ContentProtectionInfrastructureManager:
         
     async def initialize_protection_infrastructure(self) -> Dict[str, Any]:
         """Initialize complete content protection infrastructure"""
+
+
+
         try:
             logger.info("Initializing content protection infrastructure...")
             
@@ -429,6 +444,9 @@ class ContentProtectionInfrastructureManager:
                                          user_id: str,
                                          protection_level: ProtectionLevel = ProtectionLevel.STANDARD) -> ContentFingerprint:
         """Generate comprehensive content fingerprint"""
+
+
+
         try:
             content_id = str(uuid.uuid4())
             
@@ -476,6 +494,9 @@ class ContentProtectionInfrastructureManager:
 
     async def scan_for_violations(self, platforms: Optional[List[Platform]] = None) -> List[ViolationAlert]:
         """Scan platforms for content violations"""
+
+
+
         try:
             platforms = platforms or self.spec.monitoring_platforms
             violations = []
@@ -496,6 +517,9 @@ class ContentProtectionInfrastructureManager:
 
     async def start_real_time_monitoring(self) -> Dict[str, Any]:
         """Start real-time content monitoring across all platforms"""
+
+
+
         try:
             if self.monitoring_active:
                 return {"status": "already_active", "message": "Real-time monitoring already running"}
@@ -530,6 +554,9 @@ class ContentProtectionInfrastructureManager:
 
     async def process_violation_alert(self, alert: ViolationAlert) -> Dict[str, Any]:
         """Process and handle violation alert with automated actions"""
+
+
+
         try:
             # Verify violation with additional checks
             verification_result = await self._verify_violation(alert)
@@ -588,6 +615,9 @@ class ContentProtectionInfrastructureManager:
 
     async def _setup_faiss_database(self) -> Dict[str, Any]:
         """Setup FAISS vector database for fingerprint similarity search"""
+
+
+
         try:
             import faiss
             
@@ -611,6 +641,9 @@ class ContentProtectionInfrastructureManager:
 
     async def _setup_monitoring_infrastructure(self) -> Dict[str, Any]:
         """Setup monitoring infrastructure"""
+
+
+
         return {
             "status": "configured",
             "platforms": [p.value for p in self.spec.monitoring_platforms],
@@ -620,6 +653,9 @@ class ContentProtectionInfrastructureManager:
 
     async def _setup_crawling_engines(self) -> Dict[str, Any]:
         """Setup web crawling engines for each platform"""
+
+
+
         return {
             "status": "configured",
             "engines": {
@@ -633,6 +669,9 @@ class ContentProtectionInfrastructureManager:
 
     async def _setup_alert_system(self) -> Dict[str, Any]:
         """Setup real-time alert system"""
+
+
+
         return {
             "status": "configured",
             "real_time_alerts": self.spec.enable_real_time_alerts,
@@ -642,6 +681,9 @@ class ContentProtectionInfrastructureManager:
 
     async def _setup_legal_integration(self) -> Dict[str, Any]:
         """Setup legal integration for automated DMCA and takedowns"""
+
+
+
         return {
             "status": "configured" if self.spec.legal_integration else "disabled",
             "dmca_automation": True,
@@ -702,10 +744,16 @@ class ContentProtectionInfrastructureManager:
 
     async def _verify_violation(self, alert: ViolationAlert) -> Dict[str, Any]:
         """Verify violation with additional checks"""
+
+
+
         return {"is_valid": True, "verification_score": 0.95}
 
     async def _collect_violation_evidence(self, alert: ViolationAlert) -> Dict[str, Any]:
         """Collect evidence for violation"""
+
+
+
         return {
             "screenshot_url": f"evidence/{alert.alert_id}/screenshot.png",
             "metadata_captured": True,
@@ -714,6 +762,9 @@ class ContentProtectionInfrastructureManager:
 
     async def _determine_response_actions(self, alert: ViolationAlert) -> Dict[str, Any]:
         """Determine appropriate response actions"""
+
+
+
         return {
             "notify_user": True,
             "collect_evidence": True,
@@ -722,6 +773,9 @@ class ContentProtectionInfrastructureManager:
 
     async def _execute_automated_takedown(self, alert: ViolationAlert) -> Dict[str, Any]:
         """Execute automated takedown request"""
+
+
+
         return {
             "status": "submitted",
             "platform": alert.platform.value,
@@ -731,6 +785,9 @@ class ContentProtectionInfrastructureManager:
 
     async def _initiate_legal_process(self, alert: ViolationAlert) -> Dict[str, Any]:
         """Initiate legal process for serious violations"""
+
+
+
         return {
             "status": "initiated",
             "legal_case_id": str(uuid.uuid4()),

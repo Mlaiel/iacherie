@@ -1,5 +1,5 @@
 """
-🚨 Alert System - IA Influencer Agent Surveillance Module
+ Alert System - IA Influencer Agent Surveillance Module
 ========================================================
 
 Real-time alert system for notifying creators of copyright infringements,
@@ -153,6 +153,9 @@ class NotificationChannel:
     
     async def format_message(self, alert: Alert) -> Dict[str, str]:
         """Format message for this channel"""
+
+
+
         return {
             "subject": alert.title,
             "body": alert.message
@@ -222,7 +225,7 @@ class EmailNotificationChannel(NotificationChannel):
         <body style="font-family: Arial, sans-serif; margin: 20px;">
             <div style="border-left: 4px solid {color}; padding-left: 20px; margin-bottom: 20px;">
                 <h2 style="color: {color}; margin-top: 0;">
-                    🚨 {alert.title}
+                     {alert.title}
                 </h2>
                 <p style="color: #6c757d; margin-bottom: 10px;">
                     <strong>Severity:</strong> {alert.severity.value.upper()} | 
@@ -321,15 +324,15 @@ class SlackNotificationChannel(NotificationChannel):
         try:
             # Create Slack payload
             severity_emojis = {
-                AlertSeverity.INFO: "ℹ️",
+                AlertSeverity.INFO: "ℹ",
                 AlertSeverity.LOW: "🟢",
                 AlertSeverity.MEDIUM: "🟡",
                 AlertSeverity.HIGH: "🟠",
-                AlertSeverity.CRITICAL: "🔴",
-                AlertSeverity.EMERGENCY: "🚨"
+                AlertSeverity.CRITICAL: "",
+                AlertSeverity.EMERGENCY: ""
             }
             
-            emoji = severity_emojis.get(alert.severity, "⚠️")
+            emoji = severity_emojis.get(alert.severity, "")
             
             payload = {
                 "text": f"{emoji} *{alert.title}*",
@@ -406,7 +409,7 @@ class SMSNotificationChannel(NotificationChannel):
         
         try:
             # Create short SMS message
-            message = f"🚨 {alert.severity.value.upper()}: {alert.title[:100]}..."
+            message = f" {alert.severity.value.upper()}: {alert.title[:100]}..."
             
             # Simulate SMS API call
             await asyncio.sleep(0.1)
@@ -438,6 +441,9 @@ class AlertSystem:
     
     async def initialize(self) -> None:
         """Initialize alert system"""
+
+
+
         try:
             # Initialize notification channels
             await self._initialize_channels()
@@ -881,6 +887,9 @@ class AlertSystem:
     
     async def health_check(self) -> Dict[str, Any]:
         """Perform health check on alert system"""
+
+
+
         return {
             "system": "healthy" if self.initialized else "unhealthy",
             "queue_size": self.alert_queue.qsize(),

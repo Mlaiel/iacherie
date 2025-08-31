@@ -136,6 +136,9 @@ class SentimentAnalytics:
     
     async def initialize_sentiment_models(self):
         """Initialize sentiment analysis and emotion detection models."""
+
+
+
         try:
             self.logger.info("Initializing sentiment analytics models")
             
@@ -167,6 +170,9 @@ class SentimentAnalytics:
     
     async def analyze_text_sentiment(self, text: str, context: Optional[Dict[str, Any]] = None) -> SentimentScore:
         """Perform comprehensive sentiment analysis on text."""
+
+
+
         try:
             text_id = f"text_{int(datetime.utcnow().timestamp())}"
             
@@ -228,6 +234,9 @@ class SentimentAnalytics:
     
     async def analyze_conversation_sentiment_flow(self, conversation_turns: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Analyze sentiment flow throughout a conversation."""
+
+
+
         try:
             sentiment_timeline = []
             user_sentiment_scores = []
@@ -290,6 +299,9 @@ class SentimentAnalytics:
     
     async def build_user_emotional_profile(self, user_id: str) -> EmotionalProfile:
         """Build comprehensive emotional profile for a user."""
+
+
+
         try:
             # Get user's conversation history
             user_conversations = await self._get_user_conversations(user_id)
@@ -360,6 +372,9 @@ class SentimentAnalytics:
     
     async def generate_emotional_intelligence_insights(self, time_period: int = 30) -> Dict[str, Any]:
         """Generate insights about emotional intelligence and sentiment patterns."""
+
+
+
         try:
             # Get sentiment data for the period
             sentiment_data = await self._get_sentiment_data_by_period(time_period)
@@ -398,6 +413,9 @@ class SentimentAnalytics:
     
     async def predict_user_emotional_state(self, user_id: str, recent_messages: List[str]) -> Dict[str, Any]:
         """Predict user's current emotional state based on recent interactions."""
+
+
+
         try:
             # Get user's emotional profile
             if user_id not in self.emotional_profiles:
@@ -440,6 +458,9 @@ class SentimentAnalytics:
     
     async def _analyze_with_roberta(self, text: str) -> Dict[str, float]:
         """Analyze sentiment using RoBERTa model."""
+
+
+
         try:
             results = self.sentiment_models['roberta'](text)
             
@@ -463,6 +484,9 @@ class SentimentAnalytics:
     
     def _analyze_with_vader(self, text: str) -> Dict[str, float]:
         """Analyze sentiment using VADER."""
+
+
+
         try:
             scores = self.vader_analyzer.polarity_scores(text)
             return {
@@ -478,6 +502,9 @@ class SentimentAnalytics:
     
     def _analyze_with_textblob(self, text: str) -> Dict[str, float]:
         """Analyze sentiment using TextBlob."""
+
+
+
         try:
             blob = textblob.TextBlob(text)
             return {
@@ -491,6 +518,9 @@ class SentimentAnalytics:
     
     async def _classify_emotions(self, text: str) -> Dict[EmotionType, float]:
         """Classify emotions in text."""
+
+
+
         try:
             emotion_results = self.emotion_classifier(text)
             

@@ -8,7 +8,7 @@ Handles licensing, ownership verification, and automated rights enforcement.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  AVERTISSEMENT STRICT - PROPRIÉTÉ INTELLECTUELLE ⚠️
+  AVERTISSEMENT STRICT - PROPRIÉTÉ INTELLECTUELLE 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, modification ou distribution sans autorisation 
 écrite explicite de l'auteur est strictement interdite et constitue une violation 
@@ -149,6 +149,9 @@ class RightsManager:
         Returns:
             Ownership registration ID
         """
+
+
+
         try:
             # Validate ownership percentage
             current_ownership = await self._get_total_ownership_percentage(content_id)
@@ -202,6 +205,9 @@ class RightsManager:
         Returns:
             Rights verification result
         """
+
+
+
         try:
             verification_id = str(uuid.uuid4())
             
@@ -266,6 +272,9 @@ class RightsManager:
         Returns:
             License agreement ID
         """
+
+
+
         try:
             # Validate licensor rights
             licensor_verification = await self.verify_rights(
@@ -323,6 +332,9 @@ class RightsManager:
         Returns:
             Transfer success status
         """
+
+
+
         try:
             # Verify transferor rights
             transferor_verification = await self.verify_rights(
@@ -398,6 +410,9 @@ class RightsManager:
         Returns:
             List of ownership records
         """
+
+
+
         try:
             # Get current ownership records
             ownership_records = await self._get_all_ownership_records(content_id)
@@ -460,6 +475,9 @@ class RightsManager:
         Returns:
             Revocation success status
         """
+
+
+
         try:
             # Get license agreement
             agreement = await self._get_license_agreement(license_id)

@@ -6,7 +6,7 @@ Provides foundational infrastructure for all analytics event handlers.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel - All rights reserved
-⚠️  WARNING: This code and concept are proprietary to Fahed Mlaiel.
+  WARNING: This code and concept are proprietary to Fahed Mlaiel.
     Any unauthorized use, copying, or distribution without explicit written 
     permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 
@@ -337,6 +337,9 @@ class BaseAnalyticsEventHandler(ABC):
     
     async def get_metrics(self) -> Dict[str, Any]:
         """Get handler metrics"""
+
+
+
         return {
             'handler_name': self.name,
             'is_active': self.is_active,
@@ -385,6 +388,9 @@ class BaseAnalyticsEventHandler(ABC):
     
     async def _cache_result(self, event_id: str, result: Dict[str, Any]) -> None:
         """Cache processing result"""
+
+
+
         try:
             cache_key = f"analytics_result:{self.name}:{event_id}"
             cache_value = json.dumps(result, default=str)

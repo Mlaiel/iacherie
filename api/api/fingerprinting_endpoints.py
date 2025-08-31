@@ -110,6 +110,9 @@ async def create_fingerprint(
     - Text: BERT/RoBERTa embeddings + semantic analysis
     - Document: OCR + structure analysis + content extraction
     """
+
+
+
     try:
         # Parse request data
         import json
@@ -248,6 +251,9 @@ async def search_similar_content(
     - Fuzzy matching for modified content
     - Real-time detection alerts
     """
+
+
+
     try:
         # Validate fingerprint ID exists
         if search_request.fingerprint_id:
@@ -337,6 +343,9 @@ async def setup_content_monitoring(
     - Spotify, SoundCloud, Apple Music, Amazon Music
     - Generic web crawling with custom rules
     """
+
+
+
     try:
         # Validate all fingerprint IDs belong to user
         fingerprints = db.query(ContentFingerprint).filter(
@@ -413,6 +422,9 @@ async def get_fingerprint_details(
     db: Session = Depends(get_db)
 ):
     """Get detailed information about a specific fingerprint."""
+
+
+
     try:
         fingerprint = db.query(ContentFingerprint).filter(
             ContentFingerprint.id == fingerprint_id,
@@ -457,6 +469,9 @@ async def get_user_fingerprints(
     db: Session = Depends(get_db)
 ):
     """Get all fingerprints for the current user with optional filtering."""
+
+
+
     try:
         query = db.query(ContentFingerprint).filter(
             ContentFingerprint.user_id == current_user.id
@@ -496,6 +511,9 @@ async def delete_fingerprint(
     vector_service: VectorSearchService = Depends()
 ):
     """Delete a fingerprint and all associated monitoring."""
+
+
+
     try:
         fingerprint = db.query(ContentFingerprint).filter(
             ContentFingerprint.id == fingerprint_id,

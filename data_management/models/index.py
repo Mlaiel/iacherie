@@ -1,5 +1,5 @@
 """
-🗄️ Data Models Index - IA Influencer Agent Platform Enterprise
+ Data Models Index - IA Influencer Agent Platform Enterprise
 ===============================================================
 Module: backend/data_management/models/index.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Data Models Index and Registry - Ultra Production-Ready
 Responsibility: Central index for all data models with utilities and factory methods
 ==================================================================================
 
-⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
+  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -57,10 +57,16 @@ class ModelRegistry:
     
     def get_model(self, name: str) -> Optional[Type]:
         """Get model class by name"""
+
+
+
         return self._models.get(name.lower())
     
     def list_models(self) -> List[str]:
         """List all registered model names"""
+
+
+
         return list(self._models.keys())
     
     def create_instance(self, model_name: str, **kwargs) -> Any:
@@ -126,6 +132,9 @@ class ModelFactory:
     
     def create_content(self, creator_id: str, tenant_id: str, **kwargs) -> ContentModel:
         """Create a new content model instance"""
+
+
+
         return self.registry.create_instance('content', 
                                             creator_id=creator_id, 
                                             tenant_id=tenant_id, 
@@ -133,6 +142,9 @@ class ModelFactory:
     
     def create_creator(self, user_id: str, tenant_id: str, email: str, **kwargs) -> CreatorModel:
         """Create a new creator model instance"""
+
+
+
         return self.registry.create_instance('creator',
                                             user_id=user_id,
                                             tenant_id=tenant_id,
@@ -141,6 +153,9 @@ class ModelFactory:
     
     def create_monetization(self, creator_id: str, tenant_id: str, **kwargs) -> MonetizationModel:
         """Create a new monetization model instance"""
+
+
+
         return self.registry.create_instance('monetization',
                                             creator_id=creator_id,
                                             tenant_id=tenant_id,
@@ -253,18 +268,30 @@ model_validator = ModelValidator()
 # Utility functions
 def get_all_models() -> Dict[str, Type]:
     """Get all registered models"""
+
+
+
     return model_registry._models.copy()
 
 def create_model_instance(model_name: str, **kwargs) -> Any:
     """Quick utility to create model instance"""
+
+
+
     return model_factory.registry.create_instance(model_name, **kwargs)
 
 def serialize_models(models: List[Any]) -> List[Dict[str, Any]]:
     """Serialize multiple model instances"""
+
+
+
     return [model_serializer.serialize_model(model) for model in models]
 
 def get_model_schema(model_name: str) -> Dict[str, Any]:
     """Get model schema information"""
+
+
+
     return model_registry.get_model_info(model_name)
 
 # Export public interface

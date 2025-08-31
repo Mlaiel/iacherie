@@ -8,7 +8,7 @@ maintaining load distribution efficiency.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ WARNING: This code is proprietary and confidential.
+ WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
@@ -122,10 +122,16 @@ class SessionManager:
     
     def _generate_secret_key(self) -> str:
         """Generate a secure secret key"""
+
+
+
         return base64.b64encode(uuid.uuid4().bytes + uuid.uuid4().bytes).decode('utf-8')
     
     async def initialize(self) -> None:
         """Initialize session manager"""
+
+
+
         try:
             logger.info("Initializing Session Manager...")
             
@@ -263,6 +269,9 @@ class SessionManager:
                            user_agent: str, service_name: str,
                            metadata: Optional[Dict[str, Any]] = None) -> str:
         """Create a new user session"""
+
+
+
         try:
             session_id = self._generate_session_id(user_id, ip_address)
             
@@ -309,6 +318,9 @@ class SessionManager:
     async def get_server_for_session(self, session_id: str, 
                                    service_name: str) -> Optional[ServerNode]:
         """Get the server node for a session"""
+
+
+
         try:
             # Check local cache first
             session = self.active_sessions.get(session_id)
@@ -395,6 +407,9 @@ class SessionManager:
     async def _failover_session(self, session: UserSession, 
                               service_name: str) -> Optional[str]:
         """Failover session to a healthy node"""
+
+
+
         try:
             # Get new server node
             new_node_id = await self._select_server_node(
@@ -431,6 +446,9 @@ class SessionManager:
     
     async def _store_session_in_redis(self, session: UserSession) -> None:
         """Store session data in Redis"""
+
+
+
         try:
             key = f"session:{session.session_id}"
             data = {
@@ -454,6 +472,9 @@ class SessionManager:
     
     async def _load_session_from_redis(self, session_id: str) -> Optional[UserSession]:
         """Load session data from Redis"""
+
+
+
         try:
             key = f"session:{session_id}"
             data = self.redis_client.get(key)
@@ -568,6 +589,9 @@ class SessionManager:
     
     async def shutdown(self) -> None:
         """Shutdown session manager"""
+
+
+
         try:
             logger.info("Shutting down Session Manager...")
             

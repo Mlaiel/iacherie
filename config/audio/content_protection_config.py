@@ -10,7 +10,7 @@ Project: IA-Influencer Agent + Content Protection Platform
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps
 
 Copyright Notice:
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This code and all associated concepts, algorithms, and implementations are the exclusive 
 intellectual property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, reproduction, 
 distribution, modification, or appropriation of this code, in whole or in part, without 
@@ -747,12 +747,21 @@ content_protection_config = ContentProtectionConfig()
 # Export commonly used functions
 def get_protection_profile(profile_name: str) -> ProtectionProfile:
     """Get content protection profile"""
+
+
+
     return content_protection_config.get_protection_profile(profile_name)
 
 def validate_protection_setup(profile_name: str, content_metadata: Dict[str, Any]) -> Dict[str, Any]:
     """Validate protection setup for content"""
+
+
+
     return content_protection_config.validate_protection_setup(profile_name, content_metadata)
 
 def get_protection_recommendations(content_type: str, creator_tier: str, budget_level: str) -> Dict[str, Any]:
     """Get personalized protection recommendations"""
+
+
+
     return content_protection_config.get_protection_recommendations(content_type, creator_tier, budget_level)

@@ -7,7 +7,7 @@ in creative professional communications and workflow management.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
@@ -138,6 +138,9 @@ class SemanticIntentAnalyzer:
     
     def _initialize_models(self):
         """Initialize semantic analysis models"""
+
+
+
         try:
             # Load sentence transformer for embeddings
             model_name = self.config.model.transformer_model_name
@@ -162,6 +165,9 @@ class SemanticIntentAnalyzer:
     
     def _load_domain_knowledge(self):
         """Load domain-specific knowledge and vocabularies"""
+
+
+
         try:
             # Creative industry domain vocabulary
             self.domain_vocabulary = {
@@ -374,6 +380,9 @@ class SemanticIntentAnalyzer:
     
     def _calculate_emotional_valence(self, text: str) -> float:
         """Calculate emotional valence (-1 to 1)"""
+
+
+
         try:
             sentiment_results = self.sentiment_analyzer(text)
             
@@ -861,6 +870,9 @@ class SemanticIntentAnalyzer:
     
     def get_intent_embedding(self, text: str) -> np.ndarray:
         """Get embedding vector for given text"""
+
+
+
         return self.sentence_transformer.encode(text)
     
     def compare_intents(self, text1: str, text2: str) -> float:

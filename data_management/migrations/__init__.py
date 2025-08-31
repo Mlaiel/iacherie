@@ -1,5 +1,5 @@
 """
-🔄 Data Management Migrations Module - Ultra-Industrial Database Evolution Suite
+ Data Management Migrations Module - Ultra-Industrial Database Evolution Suite
 ==============================================================================
 
 Enterprise-grade database migration system for IA Influencer Agent platform:
@@ -20,7 +20,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-🔒 ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 🔒
+ ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 
 ==================================================
 This database migration system, architecture, and all associated concepts are the exclusive 
 intellectual property of Fahed Mlaiel. Any unauthorized use, copying, modification, reverse 

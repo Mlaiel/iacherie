@@ -282,7 +282,7 @@ class BlogTemplates:
 
 {recommendation}""",
                 'verdicts': ['Worth Every Penny', 'A Solid Choice', 'Has Potential', 'Skip This One'],
-                'rating_scales': ['⭐⭐⭐⭐⭐', '⭐⭐⭐⭐', '⭐⭐⭐', '⭐⭐', '⭐']
+                'rating_scales': ['', '', '', '', '']
             },
             'quick_review': {
                 'structure': """# Quick Take: {product_name}
@@ -527,6 +527,9 @@ class BlogTemplates:
         Returns:
             Template structure and metadata
         """
+
+
+
         try:
             category_templates = getattr(self, f"{template_category}_templates", {})
             template = category_templates.get(template_type, {})
@@ -558,6 +561,9 @@ class BlogTemplates:
         Returns:
             Complete blog post content
         """
+
+
+
         try:
             template = self.get_template(template_category, template_type, content_data)
             
@@ -641,14 +647,14 @@ class BlogTemplates:
         if '{pros}' in content:
             pros = content_data.get('pros', [])
             if pros:
-                pros_formatted = '\n'.join([f"✅ {pro}" for pro in pros])
+                pros_formatted = '\n'.join([f" {pro}" for pro in pros])
                 content = content.replace('{pros}', pros_formatted)
         
         # Fill cons
         if '{cons}' in content:
             cons = content_data.get('cons', [])
             if cons:
-                cons_formatted = '\n'.join([f"❌ {con}" for con in cons])
+                cons_formatted = '\n'.join([f" {con}" for con in cons])
                 content = content.replace('{cons}', cons_formatted)
         
         return content
@@ -684,7 +690,7 @@ class BlogTemplates:
         # Fill rating
         if '{rating}' in content:
             rating = content_data.get('rating', 4)
-            stars = '⭐' * int(rating)
+            stars = '' * int(rating)
             content = content.replace('{rating}', f"{stars} ({rating}/5)")
         
         # Fill year
@@ -730,6 +736,9 @@ class BlogTemplates:
     
     def _get_default_blog_template(self) -> Dict[str, Any]:
         """Get default blog template"""
+
+
+
         return {
             'structure': """# {title}
 
@@ -770,6 +779,9 @@ Thanks for reading! Share your thoughts in the comments below.
     
     def get_available_templates(self, category: str) -> List[str]:
         """Get available templates for category"""
+
+
+
         try:
             category_templates = getattr(self, f"{category}_templates", {})
             return list(category_templates.keys())
@@ -778,6 +790,9 @@ Thanks for reading! Share your thoughts in the comments below.
     
     def get_all_categories(self) -> List[str]:
         """Get all template categories"""
+
+
+
         return [
             'tutorial', 'list', 'thought_leadership', 'review', 
             'news', 'story', 'seo'
@@ -824,9 +839,9 @@ Thanks for reading! Share your thoughts in the comments below.
         first_paragraph = content.split('\n\n')[1] if '\n\n' in content else content[:200]
         
         snippets = {
-            'twitter': f"📝 New blog post: {title}\n\n{first_paragraph[:200]}...\n\nRead more: [link] #blog #content",
-            'linkedin': f"📖 I just published a new article: {title}\n\n{first_paragraph[:300]}...\n\nWhat are your thoughts on this topic? Share in the comments!\n\n#blog #article #content",
-            'facebook': f"New blog post alert! 📚\n\n{title}\n\n{first_paragraph[:400]}...\n\nCheck it out and let me know what you think in the comments! 👇"
+            'twitter': f" New blog post: {title}\n\n{first_paragraph[:200]}...\n\nRead more: [link] #blog #content",
+            'linkedin': f" I just published a new article: {title}\n\n{first_paragraph[:300]}...\n\nWhat are your thoughts on this topic? Share in the comments!\n\n#blog #article #content",
+            'facebook': f"New blog post alert! \n\n{title}\n\n{first_paragraph[:400]}...\n\nCheck it out and let me know what you think in the comments! "
         }
         
         return snippets
@@ -843,10 +858,16 @@ class ArticleTemplate:
     
     def render(self, data: Dict[str, Any]) -> str:
         """Render the article template with data"""
+
+
+
         return f"# {data.get('title', 'Article Title')}\n\n{data.get('content', 'Article content goes here.')}"
     
     def get_structure(self) -> Dict[str, Any]:
         """Get the template structure"""
+
+
+
         return {
             'sections': self.content_sections,
             'metadata': self.metadata
@@ -872,6 +893,9 @@ class ArticleTemplate:
     
     def get_structure(self) -> Dict[str, Any]:
         """Get the template structure"""
+
+
+
         return {
             'title': self.title,
             'subtitle': self.subtitle,

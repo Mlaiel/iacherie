@@ -292,6 +292,9 @@ class MailchimpAdapter(BaseEmailAdapter):
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
     async def create_contact(self, contact: EmailContact) -> bool:
         """Create or update a contact in Mailchimp."""
+
+
+
         try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}",
@@ -338,6 +341,9 @@ class MailchimpAdapter(BaseEmailAdapter):
     
     async def create_template(self, template: EmailTemplate) -> bool:
         """Create an email template in Mailchimp."""
+
+
+
         try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}",
@@ -374,6 +380,9 @@ class MailchimpAdapter(BaseEmailAdapter):
     
     async def create_campaign(self, campaign: EmailCampaign) -> bool:
         """Create an email campaign in Mailchimp."""
+
+
+
         try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}",
@@ -449,6 +458,9 @@ class MailchimpAdapter(BaseEmailAdapter):
     
     async def send_campaign(self, campaign_id: str) -> bool:
         """Send a Mailchimp campaign."""
+
+
+
         try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}",
@@ -477,6 +489,9 @@ class MailchimpAdapter(BaseEmailAdapter):
     
     async def get_campaign_stats(self, campaign_id: str) -> Optional[CampaignStats]:
         """Get Mailchimp campaign statistics."""
+
+
+
         try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}"
@@ -530,6 +545,9 @@ class MailchimpAdapter(BaseEmailAdapter):
     
     async def create_audience_segment(self, name: str, criteria: Dict[str, Any]) -> str:
         """Create an audience segment in Mailchimp."""
+
+
+
         try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}",
@@ -598,6 +616,9 @@ class SendGridAdapter(BaseEmailAdapter):
     
     async def create_contact(self, contact: EmailContact) -> bool:
         """Create or update a contact in SendGrid."""
+
+
+
         try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}",
@@ -634,6 +655,9 @@ class SendGridAdapter(BaseEmailAdapter):
     
     async def create_template(self, template: EmailTemplate) -> bool:
         """Create a template in SendGrid."""
+
+
+
         try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}",
@@ -687,6 +711,9 @@ class SendGridAdapter(BaseEmailAdapter):
     
     async def create_campaign(self, campaign: EmailCampaign) -> bool:
         """Create a campaign in SendGrid."""
+
+
+
         try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}",
@@ -730,6 +757,9 @@ class SendGridAdapter(BaseEmailAdapter):
     
     async def send_campaign(self, campaign_id: str) -> bool:
         """Send a SendGrid campaign."""
+
+
+
         try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}",
@@ -763,6 +793,9 @@ class SendGridAdapter(BaseEmailAdapter):
     
     async def get_campaign_stats(self, campaign_id: str) -> Optional[CampaignStats]:
         """Get SendGrid campaign statistics."""
+
+
+
         try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}"
@@ -819,6 +852,9 @@ class SendGridAdapter(BaseEmailAdapter):
     
     async def create_audience_segment(self, name: str, criteria: Dict[str, Any]) -> str:
         """Create an audience segment in SendGrid."""
+
+
+
         try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}",
@@ -874,6 +910,9 @@ class EmailAdapterFactory:
     @classmethod
     def get_supported_platforms(cls) -> List[EmailPlatform]:
         """Get list of supported email platforms."""
+
+
+
         return list(cls._adapters.keys())
 
 class EmailAdapterManager:

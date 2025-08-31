@@ -8,7 +8,7 @@ unauthorized use of protected content across digital platforms.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Enterprise Content Protection Platform - Web Monitoring Core
 
-⚠️  COPYRIGHT NOTICE ⚠️
+  COPYRIGHT NOTICE 
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
@@ -338,6 +338,9 @@ class TikTokCrawler(BaseCrawler):
     
     async def _extract_tiktok_video_data(self, element) -> Dict[str, Any]:
         """Extract data from TikTok video element."""
+
+
+
         try:
             link_element = element.find_element(By.TAG_NAME, 'a')
             url = link_element.get_attribute('href')
@@ -453,6 +456,9 @@ class WebMonitoringEngine:
     
     def _initialize_crawlers(self) -> Dict[str, BaseCrawler]:
         """Initialize platform-specific crawlers."""
+
+
+
         return {
             PlatformType.YOUTUBE: YouTubeCrawler(),
             PlatformType.TIKTOK: TikTokCrawler(),
@@ -462,6 +468,9 @@ class WebMonitoringEngine:
     
     async def add_monitoring_target(self, target: MonitoringTarget) -> bool:
         """Add content for monitoring."""
+
+
+
         try:
             self.monitoring_targets[target.content_id] = target
             
@@ -497,6 +506,9 @@ class WebMonitoringEngine:
     
     async def _start_monitoring_job(self, target: MonitoringTarget) -> bool:
         """Start a monitoring job for a target."""
+
+
+
         try:
             # Cancel existing job if running
             if target.content_id in self.active_jobs:
@@ -571,6 +583,9 @@ class WebMonitoringEngine:
     
     async def _calculate_similarity(self, target: MonitoringTarget, result: Dict) -> float:
         """Calculate similarity between target and found content."""
+
+
+
         try:
             # This would involve downloading and fingerprinting the found content
             # Then comparing with the target content's fingerprint
@@ -611,6 +626,9 @@ class WebMonitoringEngine:
     
     async def _handle_violation(self, violation: ViolationResult):
         """Handle detected content violation."""
+
+
+
         try:
             # Log the violation
             logger.warning(

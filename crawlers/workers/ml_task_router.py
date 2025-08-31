@@ -8,7 +8,7 @@ Responsibility: ML-powered task routing, optimization, and load balancing
 Technologies: Deep Learning, Reinforcement Learning, Real-time Analytics, Predictive Routing
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -227,6 +227,9 @@ class MLTaskRouter:
     
     async def start(self) -> bool:
         """Start the ML task router"""
+
+
+
         try:
             if self.is_running:
                 logger.warning("MLTaskRouter is already running")
@@ -244,31 +247,37 @@ class MLTaskRouter:
             asyncio.create_task(self._model_training_loop())
             asyncio.create_task(self._worker_profile_update_loop())
             
-            logger.info(f"🚀 MLTaskRouter {self.router_id} started")
+            logger.info(f" MLTaskRouter {self.router_id} started")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to start MLTaskRouter: {e}")
+            logger.error(f" Failed to start MLTaskRouter: {e}")
             self.is_running = False
             return False
     
     async def stop(self) -> bool:
         """Stop the ML task router"""
+
+
+
         try:
             self.is_running = False
             
             # Save trained models
             await self._save_models()
             
-            logger.info(f"🛑 MLTaskRouter {self.router_id} stopped")
+            logger.info(f" MLTaskRouter {self.router_id} stopped")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to stop MLTaskRouter: {e}")
+            logger.error(f" Failed to stop MLTaskRouter: {e}")
             return False
     
     async def route_task(self, task: CrawlerTask, available_workers: List[str], strategy: RoutingStrategy = RoutingStrategy.ML_PREDICTED) -> Optional[RoutingDecision]:
         """Route a task to the optimal worker using ML"""
+
+
+
         try:
             if not self.is_running:
                 logger.error("MLTaskRouter is not running")
@@ -307,16 +316,19 @@ class MLTaskRouter:
                 self.routing_results[task.task_id] = decision
                 self.routing_history.append(decision)
                 
-                logger.info(f"🎯 Task {task.task_id} routed to worker {decision.selected_worker_id} (confidence: {decision.confidence_score:.3f})")
+                logger.info(f" Task {task.task_id} routed to worker {decision.selected_worker_id} (confidence: {decision.confidence_score:.3f})")
             
             return decision
             
         except Exception as e:
-            logger.error(f"❌ Failed to route task {task.task_id}: {e}")
+            logger.error(f" Failed to route task {task.task_id}: {e}")
             return await self._fallback_routing(task, available_workers)
     
     async def _extract_task_features(self, task: CrawlerTask) -> TaskFeatures:
         """Extract comprehensive features from a task"""
+
+
+
         try:
             # Basic task analysis
             complexity_score = await self._calculate_task_complexity(task)
@@ -355,11 +367,14 @@ class MLTaskRouter:
             return task_features
             
         except Exception as e:
-            logger.error(f"❌ Failed to extract task features: {e}")
+            logger.error(f" Failed to extract task features: {e}")
             raise
     
     async def _ml_routing(self, task_features: TaskFeatures, worker_profiles: Dict[str, WorkerProfile]) -> Optional[RoutingDecision]:
         """Perform ML-based intelligent routing"""
+
+
+
         try:
             best_worker = None
             best_score = float('-inf')
@@ -424,11 +439,14 @@ class MLTaskRouter:
             return decision
             
         except Exception as e:
-            logger.error(f"❌ Failed ML routing: {e}")
+            logger.error(f" Failed ML routing: {e}")
             return None
     
     async def _performance_optimized_routing(self, task_features: TaskFeatures, worker_profiles: Dict[str, WorkerProfile]) -> Optional[RoutingDecision]:
         """Route based on performance optimization"""
+
+
+
         try:
             best_worker = None
             best_performance = float('-inf')
@@ -470,11 +488,14 @@ class MLTaskRouter:
             )
             
         except Exception as e:
-            logger.error(f"❌ Failed performance optimized routing: {e}")
+            logger.error(f" Failed performance optimized routing: {e}")
             return None
     
     async def _load_balanced_routing(self, task_features: TaskFeatures, worker_profiles: Dict[str, WorkerProfile]) -> Optional[RoutingDecision]:
         """Route based on load balancing"""
+
+
+
         try:
             # Sort workers by current load (ascending)
             sorted_workers = sorted(
@@ -506,11 +527,14 @@ class MLTaskRouter:
             return None
             
         except Exception as e:
-            logger.error(f"❌ Failed load balanced routing: {e}")
+            logger.error(f" Failed load balanced routing: {e}")
             return None
     
     async def _deadline_aware_routing(self, task_features: TaskFeatures, worker_profiles: Dict[str, WorkerProfile]) -> Optional[RoutingDecision]:
         """Route with deadline awareness"""
+
+
+
         try:
             if task_features.deadline is None:
                 # Fall back to performance optimized routing
@@ -563,11 +587,14 @@ class MLTaskRouter:
             )
             
         except Exception as e:
-            logger.error(f"❌ Failed deadline aware routing: {e}")
+            logger.error(f" Failed deadline aware routing: {e}")
             return None
     
     async def _rl_routing(self, task_features: TaskFeatures, worker_profiles: Dict[str, WorkerProfile]) -> Optional[RoutingDecision]:
         """Reinforcement learning based routing"""
+
+
+
         try:
             # This would implement RL-based routing in a full implementation
             # For now, fall back to ML routing
@@ -575,11 +602,14 @@ class MLTaskRouter:
             return await self._ml_routing(task_features, worker_profiles)
             
         except Exception as e:
-            logger.error(f"❌ Failed RL routing: {e}")
+            logger.error(f" Failed RL routing: {e}")
             return None
     
     async def _fallback_routing(self, task: CrawlerTask, available_workers: List[str]) -> Optional[RoutingDecision]:
         """Simple fallback routing when ML routing fails"""
+
+
+
         try:
             if not available_workers:
                 return None
@@ -602,11 +632,14 @@ class MLTaskRouter:
             )
             
         except Exception as e:
-            logger.error(f"❌ Failed fallback routing: {e}")
+            logger.error(f" Failed fallback routing: {e}")
             return None
     
     async def update_worker_profile(self, worker_id: str, metrics: Dict[str, Any]):
         """Update worker profile with new metrics"""
+
+
+
         try:
             if worker_id not in self.worker_profiles:
                 # Create new profile
@@ -638,13 +671,16 @@ class MLTaskRouter:
             if "specializations" in metrics:
                 profile.specializations = metrics["specializations"]
             
-            logger.debug(f"📊 Updated worker profile: {worker_id}")
+            logger.debug(f" Updated worker profile: {worker_id}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to update worker profile {worker_id}: {e}")
+            logger.error(f" Failed to update worker profile {worker_id}: {e}")
     
     async def report_task_completion(self, task_id: str, success: bool, completion_time: float, worker_id: str):
         """Report task completion for model learning"""
+
+
+
         try:
             if task_id in self.routing_results:
                 decision = self.routing_results[task_id]
@@ -666,13 +702,16 @@ class MLTaskRouter:
                 # Collect training data
                 await self._collect_training_data(decision, success, completion_time)
                 
-                logger.debug(f"📈 Reported completion for task {task_id}: success={success}, time={completion_time:.2f}s")
+                logger.debug(f" Reported completion for task {task_id}: success={success}, time={completion_time:.2f}s")
             
         except Exception as e:
-            logger.error(f"❌ Failed to report task completion: {e}")
+            logger.error(f" Failed to report task completion: {e}")
     
     async def _initialize_ml_models(self):
         """Initialize and load ML models"""
+
+
+
         try:
             # Initialize neural networks
             feature_size = 20  # Adjustable based on feature engineering
@@ -691,10 +730,10 @@ class MLTaskRouter:
             # Try to load pre-trained models
             await self._load_models()
             
-            logger.info("✅ ML models initialized successfully")
+            logger.info(" ML models initialized successfully")
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize ML models: {e}")
+            logger.error(f" Failed to initialize ML models: {e}")
     
     async def _routing_processing_loop(self):
         """Process routing requests"""
@@ -704,7 +743,7 @@ class MLTaskRouter:
                 await asyncio.sleep(0.1)
                 
             except Exception as e:
-                logger.error(f"❌ Error in routing processing loop: {e}")
+                logger.error(f" Error in routing processing loop: {e}")
                 await asyncio.sleep(1)
     
     async def _performance_monitoring_loop(self):
@@ -718,7 +757,7 @@ class MLTaskRouter:
                 await asyncio.sleep(60)
                 
             except Exception as e:
-                logger.error(f"❌ Error in performance monitoring loop: {e}")
+                logger.error(f" Error in performance monitoring loop: {e}")
                 await asyncio.sleep(10)
     
     async def _model_training_loop(self):
@@ -733,7 +772,7 @@ class MLTaskRouter:
                 await asyncio.sleep(3600)
                 
             except Exception as e:
-                logger.error(f"❌ Error in model training loop: {e}")
+                logger.error(f" Error in model training loop: {e}")
                 await asyncio.sleep(300)
     
     async def _worker_profile_update_loop(self):
@@ -748,7 +787,7 @@ class MLTaskRouter:
                 await asyncio.sleep(30)
                 
             except Exception as e:
-                logger.error(f"❌ Error in worker profile update loop: {e}")
+                logger.error(f" Error in worker profile update loop: {e}")
                 await asyncio.sleep(10)
     
     def _map_priority_to_score(self, priority: TaskPriority) -> float:
@@ -763,6 +802,9 @@ class MLTaskRouter:
     
     async def get_router_status(self) -> Dict[str, Any]:
         """Get current router status"""
+
+
+
         return {
             "router_id": self.router_id,
             "is_running": self.is_running,
@@ -796,6 +838,9 @@ class MLTaskRouter:
     
     async def _estimate_resource_requirements(self, task: CrawlerTask) -> Dict[str, float]:
         """Estimate resource requirements"""
+
+
+
         return {
             "cpu": 0.5,
             "memory": 512.0,  # MB
@@ -867,6 +912,9 @@ class MLTaskRouter:
     
     async def _predict_performance(self, combined_features: np.ndarray) -> Tuple[float, float]:
         """Predict task completion time and success probability"""
+
+
+
         try:
             if self.performance_predictor is None:
                 # Fallback prediction
@@ -883,7 +931,7 @@ class MLTaskRouter:
             return completion_time, success_prob
             
         except Exception as e:
-            logger.error(f"❌ Failed to predict performance: {e}")
+            logger.error(f" Failed to predict performance: {e}")
             return 300.0, 0.8
     
     async def _calculate_routing_score(self, task_features: TaskFeatures, worker_profile: WorkerProfile, completion_time: float, success_prob: float) -> float:
@@ -919,6 +967,9 @@ class MLTaskRouter:
     # Placeholder methods for model training and management
     async def _load_models(self):
         """Load pre-trained models"""
+
+
+
         try:
             # Try to load saved models
             pass
@@ -927,51 +978,69 @@ class MLTaskRouter:
     
     async def _save_models(self):
         """Save trained models"""
+
+
+
         try:
             # Save models to disk
             pass
         except Exception as e:
-            logger.error(f"❌ Failed to save models: {e}")
+            logger.error(f" Failed to save models: {e}")
     
     async def _retrain_models(self):
         """Retrain models with new data"""
+
+
+
         try:
-            logger.info("🔄 Retraining ML models...")
+            logger.info(" Retraining ML models...")
             # Implement model retraining
         except Exception as e:
-            logger.error(f"❌ Failed to retrain models: {e}")
+            logger.error(f" Failed to retrain models: {e}")
     
     async def _update_model_metrics(self):
         """Update model performance metrics"""
+
+
+
         try:
             # Calculate metrics based on performance feedback
             pass
         except Exception as e:
-            logger.error(f"❌ Failed to update model metrics: {e}")
+            logger.error(f" Failed to update model metrics: {e}")
     
     async def _collect_training_data(self, decision: RoutingDecision, success: bool, completion_time: float):
         """Collect data for model training"""
+
+
+
         try:
             # Store training examples
             pass
         except Exception as e:
-            logger.error(f"❌ Failed to collect training data: {e}")
+            logger.error(f" Failed to collect training data: {e}")
     
     async def _calculate_performance_metrics(self):
         """Calculate routing performance metrics"""
+
+
+
         try:
             # Calculate various performance metrics
             pass
         except Exception as e:
-            logger.error(f"❌ Failed to calculate performance metrics: {e}")
+            logger.error(f" Failed to calculate performance metrics: {e}")
     
     async def _sync_worker_profiles(self):
         """Sync worker profiles from worker pool"""
+
+
+
         try:
             # Sync with worker pool
             pass
         except Exception as e:
-            logger.error(f"❌ Failed to sync worker profiles: {e}")
+            logger.error(f" Failed to sync worker profiles: {e}")
 
 
 # Global router instance
@@ -980,6 +1049,9 @@ _ml_task_router: Optional[MLTaskRouter] = None
 
 async def get_ml_task_router() -> Optional[MLTaskRouter]:
     """Get the global ML task router instance"""
+
+
+
     return _ml_task_router
 
 
@@ -996,15 +1068,15 @@ async def initialize_ml_task_router(config: Dict[str, Any] = None) -> bool:
         success = await _ml_task_router.start()
         
         if success:
-            logger.info("✅ MLTaskRouter initialized successfully")
+            logger.info(" MLTaskRouter initialized successfully")
         else:
-            logger.error("❌ Failed to initialize MLTaskRouter")
+            logger.error(" Failed to initialize MLTaskRouter")
             _ml_task_router = None
         
         return success
         
     except Exception as e:
-        logger.error(f"❌ Failed to initialize MLTaskRouter: {e}")
+        logger.error(f" Failed to initialize MLTaskRouter: {e}")
         _ml_task_router = None
         return False
 
@@ -1022,14 +1094,14 @@ async def shutdown_ml_task_router() -> bool:
         _ml_task_router = None
         
         if success:
-            logger.info("✅ MLTaskRouter shutdown successfully")
+            logger.info(" MLTaskRouter shutdown successfully")
         else:
-            logger.error("❌ Failed to shutdown MLTaskRouter")
+            logger.error(" Failed to shutdown MLTaskRouter")
         
         return success
         
     except Exception as e:
-        logger.error(f"❌ Failed to shutdown MLTaskRouter: {e}")
+        logger.error(f" Failed to shutdown MLTaskRouter: {e}")
         return False
 
 

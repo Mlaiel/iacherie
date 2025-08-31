@@ -10,7 +10,7 @@ business logic integration for content creators ecosystem.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE - INTELLECTUAL PROPERTY PROTECTION:
+  CRITICAL LEGAL NOTICE - INTELLECTUAL PROPERTY PROTECTION:
 This code, concept, and intellectual property are the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 
 STRICTLY PROHIBITED WITHOUT EXPLICIT WRITTEN AUTHORIZATION:
@@ -588,6 +588,9 @@ class NotificationDispatcher:
         self, notification: NotificationModel, channel: ChannelType
     ) -> str:
         """Get a simple fallback template"""
+
+
+
         return f"Notification: {notification.title or 'Update from IA Influencer Platform'}"
     
     async def _fetch_user_preferences_from_db(self, user_id: str) -> Dict[str, Any]:

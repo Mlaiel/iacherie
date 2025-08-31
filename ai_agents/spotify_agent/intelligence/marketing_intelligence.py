@@ -7,7 +7,7 @@ audience targeting, content optimization, and ROI tracking for multi-platform di
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -160,6 +160,9 @@ class MarketingIntelligenceEngine:
 
     async def analyze_audience_segments(self, user_id: str, data_timeframe: int = 30) -> List[AudienceSegment]:
         """Perform advanced audience segmentation using ML algorithms"""
+
+
+
         try:
             cache_key = f"audience_segments:{user_id}:{data_timeframe}"
             cached_segments = await self.cache_manager.get(cache_key)
@@ -194,6 +197,9 @@ class MarketingIntelligenceEngine:
 
     async def optimize_campaign_performance(self, campaign: MarketingCampaign) -> Dict[str, Any]:
         """Use AI to optimize marketing campaign performance"""
+
+
+
         try:
             # Analyze current campaign performance
             current_performance = await self._analyze_campaign_metrics(campaign)
@@ -234,6 +240,9 @@ class MarketingIntelligenceEngine:
 
     async def generate_content_strategy(self, user_id: str, campaign_goals: List[str]) -> Dict[str, Any]:
         """Generate AI-powered content marketing strategy"""
+
+
+
         try:
             # Analyze audience preferences
             audience_preferences = await self._analyze_audience_content_preferences(user_id)
@@ -274,6 +283,9 @@ class MarketingIntelligenceEngine:
 
     async def analyze_competitor_strategies(self, user_id: str, competitor_ids: List[str]) -> Dict[str, Any]:
         """Perform comprehensive competitor marketing analysis"""
+
+
+
         try:
             competitor_analyses = {}
             
@@ -324,6 +336,9 @@ class MarketingIntelligenceEngine:
 
     async def track_campaign_roi(self, campaign: MarketingCampaign) -> Dict[str, Any]:
         """Advanced ROI tracking and attribution analysis"""
+
+
+
         try:
             # Calculate direct ROI metrics
             direct_roi = await self._calculate_direct_roi(campaign)
@@ -356,6 +371,9 @@ class MarketingIntelligenceEngine:
 
     async def _collect_audience_data(self, user_id: str, timeframe_days: int) -> List[Dict[str, Any]]:
         """Collect comprehensive audience data from multiple sources"""
+
+
+
         try:
             # This would integrate with various data sources
             # For now, return mock data structure
@@ -384,6 +402,9 @@ class MarketingIntelligenceEngine:
 
     async def _prepare_segmentation_features(self, audience_data: List[Dict[str, Any]]) -> np.ndarray:
         """Prepare features for audience segmentation"""
+
+
+
         try:
             features = []
             
@@ -407,6 +428,9 @@ class MarketingIntelligenceEngine:
     async def _perform_audience_clustering(self, features: np.ndarray, 
                                          audience_data: List[Dict[str, Any]]) -> List[AudienceSegment]:
         """Perform clustering to identify audience segments"""
+
+
+
         try:
             if len(features) == 0:
                 return []
@@ -461,6 +485,9 @@ class MarketingIntelligenceEngine:
     async def _enhance_segments_with_insights(self, segments: List[AudienceSegment], 
                                             audience_data: List[Dict[str, Any]]) -> List[AudienceSegment]:
         """Enhance segments with advanced behavioral insights"""
+
+
+
         try:
             for segment in segments:
                 # Add psychographic profiling

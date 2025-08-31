@@ -1,5 +1,5 @@
 """
-📊 Enterprise Schema Version Manager - Ultra-Industrial Version Control System
+ Enterprise Schema Version Manager - Ultra-Industrial Version Control System
 =============================================================================
 Module: backend/database/migrations/schema_versioning.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Version Controller - Ultra Enterprise Production-Ready
 Responsibility: Advanced schema versioning for content protection and monetization evolution
 ==========================================================================================
 
-⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
+  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -140,10 +140,13 @@ class EnterpriseSchemaVersionManager:
         # Metrics and monitoring
         self.metrics = VersionMetrics()
         
-        logger.info("✅ Enterprise Schema Version Manager initialized")
+        logger.info(" Enterprise Schema Version Manager initialized")
     
     async def initialize(self) -> bool:
         """Initialize version manager with comprehensive tracking"""
+
+
+
         try:
             # Setup version tracking tables
             await self._ensure_version_tables()
@@ -160,11 +163,11 @@ class EnterpriseSchemaVersionManager:
             # Load metrics
             await self._load_version_metrics()
             
-            logger.info("🚀 Schema Version Manager fully initialized")
+            logger.info(" Schema Version Manager fully initialized")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize Schema Version Manager: {e}")
+            logger.error(f" Failed to initialize Schema Version Manager: {e}")
             return False
     
     async def get_current_version(self) -> Optional[str]:
@@ -189,11 +192,14 @@ class EnterpriseSchemaVersionManager:
                 return None
                 
         except Exception as e:
-            logger.error(f"❌ Failed to get current version: {e}")
+            logger.error(f" Failed to get current version: {e}")
             return None
     
     async def get_version_info(self, version: str) -> Optional[Dict[str, Any]]:
         """Get comprehensive information about a specific version"""
+
+
+
         try:
             async with self.connection_manager.get_session() as session:
                 result = await session.execute(text("""
@@ -225,7 +231,7 @@ class EnterpriseSchemaVersionManager:
                 }
                 
         except Exception as e:
-            logger.error(f"❌ Failed to get version info: {e}")
+            logger.error(f" Failed to get version info: {e}")
             return None
     
     async def create_new_version(
@@ -260,11 +266,11 @@ class EnterpriseSchemaVersionManager:
                 # Update compatibility matrix
                 await self._update_compatibility_matrix(new_version)
                 
-                logger.info(f"✅ Created new schema version: {new_version}")
+                logger.info(f" Created new schema version: {new_version}")
                 return new_version
                 
             except Exception as e:
-                logger.error(f"❌ Failed to create new version: {e}")
+                logger.error(f" Failed to create new version: {e}")
                 raise
     
     async def apply_version(
@@ -302,11 +308,11 @@ class EnterpriseSchemaVersionManager:
                 self.current_version = version
                 self.active_versions.add(version)
                 
-                logger.info(f"✅ Applied schema version: {version}")
+                logger.info(f" Applied schema version: {version}")
                 return True
                 
             except Exception as e:
-                logger.error(f"❌ Failed to apply version {version}: {e}")
+                logger.error(f" Failed to apply version {version}: {e}")
                 await self._update_version_metrics("apply_failed", version)
                 return False
     
@@ -348,11 +354,11 @@ class EnterpriseSchemaVersionManager:
                 
                 self.current_version = target_version
                 
-                logger.info(f"✅ Rolled back to schema version: {target_version}")
+                logger.info(f" Rolled back to schema version: {target_version}")
                 return True
                 
             except Exception as e:
-                logger.error(f"❌ Failed to rollback to version {target_version}: {e}")
+                logger.error(f" Failed to rollback to version {target_version}: {e}")
                 await self._update_version_metrics("rollback_failed", target_version)
                 return False
     
@@ -362,6 +368,9 @@ class EnterpriseSchemaVersionManager:
         to_version: str
     ) -> Dict[str, Any]:
         """Get detailed diff between two schema versions"""
+
+
+
         try:
             # Get version information
             from_info = await self.get_version_info(from_version)
@@ -390,11 +399,14 @@ class EnterpriseSchemaVersionManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to get version diff: {e}")
+            logger.error(f" Failed to get version diff: {e}")
             return {"error": str(e)}
     
     async def get_version_metrics(self) -> Dict[str, Any]:
         """Get comprehensive version management metrics"""
+
+
+
         try:
             # Update current metrics
             await self._calculate_current_metrics()
@@ -416,7 +428,7 @@ class EnterpriseSchemaVersionManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to get version metrics: {e}")
+            logger.error(f" Failed to get version metrics: {e}")
             return {"error": str(e)}
     
     async def cleanup_old_versions(
@@ -425,6 +437,9 @@ class EnterpriseSchemaVersionManager:
         older_than_days: int = None
     ) -> List[str]:
         """Clean up old and unused schema versions"""
+
+
+
         
         try:
             keep_count = keep_versions or self.config.max_supported_versions
@@ -448,13 +463,16 @@ class EnterpriseSchemaVersionManager:
             return cleaned_versions
             
         except Exception as e:
-            logger.error(f"❌ Failed to cleanup old versions: {e}")
+            logger.error(f" Failed to cleanup old versions: {e}")
             return []
     
     # Private implementation methods
     
     async def _ensure_version_tables(self):
         """Ensure version tracking tables exist"""
+
+
+
         try:
             async with self.connection_manager.get_session() as session:
                 await session.execute(text("""
@@ -502,14 +520,17 @@ class EnterpriseSchemaVersionManager:
                 """))
                 
                 await session.commit()
-                logger.info("✅ Version tracking tables ensured")
+                logger.info(" Version tracking tables ensured")
                 
         except Exception as e:
-            logger.error(f"❌ Failed to ensure version tables: {e}")
+            logger.error(f" Failed to ensure version tables: {e}")
             raise
     
     async def _load_version_history(self):
         """Load version history from database"""
+
+
+
         try:
             async with self.connection_manager.get_session() as session:
                 result = await session.execute(text("""
@@ -531,13 +552,16 @@ class EnterpriseSchemaVersionManager:
                     if not row.is_deprecated:
                         self.active_versions.add(row.version_number)
                 
-                logger.info(f"📊 Loaded {len(self.version_history)} version records")
+                logger.info(f" Loaded {len(self.version_history)} version records")
                 
         except Exception as e:
-            logger.warning(f"⚠️ Could not load version history: {e}")
+            logger.warning(f" Could not load version history: {e}")
     
     async def _build_compatibility_matrix(self):
         """Build version compatibility matrix"""
+
+
+
         try:
             async with self.connection_manager.get_session() as session:
                 result = await session.execute(text("""
@@ -551,22 +575,25 @@ class EnterpriseSchemaVersionManager:
                     
                     self.compatibility_matrix[row.from_version][row.to_version] = CompatibilityLevel(row.compatibility_level)
                 
-                logger.info(f"🔗 Built compatibility matrix with {len(self.compatibility_matrix)} entries")
+                logger.info(f" Built compatibility matrix with {len(self.compatibility_matrix)} entries")
                 
         except Exception as e:
-            logger.warning(f"⚠️ Could not build compatibility matrix: {e}")
+            logger.warning(f" Could not build compatibility matrix: {e}")
     
     async def _initialize_current_version(self):
         """Initialize current version tracking"""
         current = await self.get_current_version()
         if current:
             self.current_version = current
-            logger.info(f"📍 Current schema version: {current}")
+            logger.info(f" Current schema version: {current}")
         else:
-            logger.warning("⚠️ No current version found")
+            logger.warning(" No current version found")
     
     async def _load_version_metrics(self):
         """Load version metrics from database"""
+
+
+
         try:
             # Calculate metrics from database
             async with self.connection_manager.get_session() as session:
@@ -580,10 +607,10 @@ class EnterpriseSchemaVersionManager:
                 # Success rate calculation would go here
                 self.metrics.success_rate = 95.0  # Placeholder
                 
-                logger.info("📊 Version metrics loaded")
+                logger.info(" Version metrics loaded")
                 
         except Exception as e:
-            logger.warning(f"⚠️ Could not load version metrics: {e}")
+            logger.warning(f" Could not load version metrics: {e}")
     
     async def _generate_version_number(self, version_type: VersionType) -> str:
         """Generate new version number based on strategy and type"""
@@ -630,6 +657,9 @@ class EnterpriseSchemaVersionManager:
     
     async def _generate_timestamp_version(self) -> str:
         """Generate timestamp-based version"""
+
+
+
         return datetime.utcnow().strftime("%Y%m%d%H%M%S")
     
     async def _generate_hybrid_version(self, version_type: VersionType) -> str:
@@ -646,6 +676,9 @@ class EnterpriseSchemaVersionManager:
     
     async def _version_exists(self, version: str) -> bool:
         """Check if version already exists"""
+
+
+
         try:
             async with self.connection_manager.get_session() as session:
                 result = await session.execute(text("""
@@ -660,6 +693,9 @@ class EnterpriseSchemaVersionManager:
     
     async def _record_version_creation(self, version_record: SchemaVersion):
         """Record new version creation in database"""
+
+
+
         try:
             async with self.connection_manager.get_session() as session:
                 await session.execute(text("""
@@ -683,7 +719,7 @@ class EnterpriseSchemaVersionManager:
                 self.version_history.append(version_record)
                 
         except Exception as e:
-            logger.error(f"❌ Failed to record version creation: {e}")
+            logger.error(f" Failed to record version creation: {e}")
             raise
     
     async def _update_compatibility_matrix(self, new_version: str):
@@ -701,6 +737,9 @@ class EnterpriseSchemaVersionManager:
     
     async def _check_version_compatibility(self, version: str) -> CompatibilityLevel:
         """Check compatibility of version with current schema"""
+
+
+
         return CompatibilityLevel.FULL_COMPATIBLE  # Placeholder
     
     async def _apply_version_internal(self, version: str, migration_id: Optional[str], current_version: Optional[str]):
@@ -709,6 +748,9 @@ class EnterpriseSchemaVersionManager:
     
     async def _update_current_version(self, version: str, migration_id: str):
         """Update current version tracking"""
+
+
+
         try:
             async with self.connection_manager.get_session() as session:
                 # Mark all versions as not current
@@ -724,7 +766,7 @@ class EnterpriseSchemaVersionManager:
                 await session.commit()
                 
         except Exception as e:
-            logger.error(f"❌ Failed to update current version: {e}")
+            logger.error(f" Failed to update current version: {e}")
     
     async def _update_version_metrics(self, action: str, version: str):
         """Update version metrics after actions"""
@@ -732,10 +774,16 @@ class EnterpriseSchemaVersionManager:
     
     async def _validate_rollback_path(self, from_version: str, to_version: str) -> Optional[List[str]]:
         """Validate rollback path between versions"""
+
+
+
         return [from_version, to_version]  # Placeholder
     
     async def _create_version_backup(self, version: str) -> str:
         """Create backup before version operations"""
+
+
+
         return f"backup_{version}_{datetime.utcnow().isoformat()}"
     
     async def _execute_rollback_sequence(self, rollback_path: List[str], backup_location: Optional[str]):
@@ -744,30 +792,51 @@ class EnterpriseSchemaVersionManager:
     
     async def _get_version_migration_history(self, session: AsyncSession, version: str) -> List[Dict]:
         """Get migration history for specific version"""
+
+
+
         return []  # Placeholder
     
     async def _get_version_compatibility(self, version: str) -> Dict[str, Any]:
         """Get compatibility information for version"""
+
+
+
         return {}  # Placeholder
     
     async def _calculate_schema_diff(self, from_version: str, to_version: str) -> Dict[str, Any]:
         """Calculate schema differences between versions"""
+
+
+
         return {}  # Placeholder
     
     async def _get_migration_path(self, from_version: str, to_version: str) -> List[str]:
         """Get migration path between versions"""
+
+
+
         return []  # Placeholder
     
     async def _analyze_version_compatibility(self, from_version: str, to_version: str) -> Dict[str, Any]:
         """Analyze compatibility between versions"""
+
+
+
         return {}  # Placeholder
     
     async def _estimate_migration_time(self, from_version: str, to_version: str) -> int:
         """Estimate migration time between versions"""
+
+
+
         return 30  # Placeholder minutes
     
     async def _assess_migration_risk(self, from_version: str, to_version: str) -> Dict[str, Any]:
         """Assess migration risk between versions"""
+
+
+
         return {"risk_level": "low"}  # Placeholder
     
     async def _calculate_current_metrics(self):
@@ -776,14 +845,23 @@ class EnterpriseSchemaVersionManager:
     
     async def _get_version_distribution(self) -> Dict[str, int]:
         """Get version distribution statistics"""
+
+
+
         return {}  # Placeholder
     
     async def _get_cleanup_candidates(self, keep_count: int, retention_days: int) -> List[str]:
         """Get versions eligible for cleanup"""
+
+
+
         return []  # Placeholder
     
     async def _is_safe_to_remove(self, version: str) -> bool:
         """Check if version is safe to remove"""
+
+
+
         return False  # Conservative placeholder
     
     async def _remove_version(self, version: str):
@@ -792,6 +870,9 @@ class EnterpriseSchemaVersionManager:
     
     async def _calculate_compatibility(self, version1: str, version2: str) -> CompatibilityLevel:
         """Calculate compatibility between two versions"""
+
+
+
         return CompatibilityLevel.FULL_COMPATIBLE  # Placeholder
 
 

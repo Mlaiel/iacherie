@@ -1,5 +1,5 @@
 """
-🌐 Middleware - IA-Influencer-Agent API Layer
+ Middleware - IA-Influencer-Agent API Layer
 ==================================================================
 Expert: BACKEND_SENIOR + MICROSERVICES_ARCHITECT
 Architecture: RESTful API + GraphQL + WebSocket
@@ -47,6 +47,9 @@ class APIError(BaseModel):
 
 async def authentication_middleware(request: Request, credentials: HTTPAuthorizationCredentials = Depends(security)):
     """Middleware d'authentification"""
+
+
+
     try:
         # JWT validation implementation for middleware
         token = credentials.credentials
@@ -168,6 +171,9 @@ class MiddlewareAPI:
         @self.app.get("/health")
         async def health_check():
             """Vérification de santé de l'API"""
+
+
+
             return APIResponse(
                 success=True,
                 data={"status": "healthy", "version": "1.0.0"},
@@ -180,6 +186,9 @@ class MiddlewareAPI:
             auth_data: dict = Depends(authentication_middleware)
         ):
             """Récupération des données"""
+
+
+
             try:
                 # Middleware-aware business logic implementation
                 # Access user context from middleware
@@ -239,6 +248,9 @@ class MiddlewareAPI:
             auth_data: dict = Depends(authentication_middleware)
         ):
             """Création de données"""
+
+
+
             try:
                 # Middleware-enhanced validation and creation
                 # Use middleware user context for authorization
@@ -325,6 +337,9 @@ class WebSocketManager:
 
 def create_middleware_api(app: FastAPI) -> MiddlewareAPI:
     """Factory pour créer l'API Middleware"""
+
+
+
     return MiddlewareAPI(app)
 
 __all__ = [

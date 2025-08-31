@@ -325,7 +325,10 @@ def get_module_info() -> Dict[str, Any]:
     
     Returns:
         Dict[str, Any]: Informations détaillées du module
-    """    return {
+    """
+
+
+    return {
         "name": "Enterprise Notification Systems Database",
         "version": __version__,
         "build": __build__,
@@ -353,7 +356,10 @@ async def get_health_status() -> Dict[str, Any]:
     
     Returns:
         Dict[str, Any]: État de santé complet
-    """    try:
+    """
+
+
+    try:
         # Import modules pour vérification
         from . import email_manager, push_manager, realtime_manager, alert_manager, queue_manager
         
@@ -391,7 +397,10 @@ async def get_performance_metrics() -> NotificationMetrics:
     
     Returns:
         NotificationMetrics: Métriques de performance
-    """    try:
+    """
+
+
+    try:
         # Import modules pour calcul des métriques
         from . import email_manager, push_manager, realtime_manager
         

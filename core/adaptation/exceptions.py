@@ -39,6 +39,9 @@ class AdaptationError(Exception):
     
     def to_dict(self) -> dict:
         """Convert exception to comprehensive dictionary format"""
+
+
+
         return {
             "error_id": self.error_id,
             "error_type": self.__class__.__name__,

@@ -60,6 +60,9 @@ class TestFingerprintingAgent:
     @pytest.fixture
     def sample_audio_data(self):
         """Sample audio data for testing"""
+
+
+
         return {
             'file_path': '/tmp/test_audio.mp3',
             'duration': 180.5,
@@ -71,6 +74,9 @@ class TestFingerprintingAgent:
     @pytest.fixture
     def sample_video_data(self):
         """Sample video data for testing"""
+
+
+
         return {
             'file_path': '/tmp/test_video.mp4',
             'duration': 300.0,
@@ -209,6 +215,9 @@ class TestMonetizationAgent:
     @pytest.fixture
     def sample_content_usage(self):
         """Sample content usage data"""
+
+
+
         return {
             'content_id': 'content_12345',
             'platform_usage': [
@@ -349,6 +358,9 @@ class TestCollaborationAgent:
     @pytest.fixture
     def sample_creator_profile(self):
         """Sample creator profile for matching"""
+
+
+
         return {
             'creator_id': 'creator_123',
             'name': 'Test Creator',
@@ -517,9 +529,9 @@ if __name__ == "__main__":
         print("Running AI Agents Core Tests...")
         
         # Test structure validation
-        print("✓ Fingerprinting Agent test structure created")
-        print("✓ Monetization Agent test structure created")
-        print("✓ Collaboration Agent test structure created")
+        print(" Fingerprinting Agent test structure created")
+        print(" Monetization Agent test structure created")
+        print(" Collaboration Agent test structure created")
         print("All AI Agents core tests passed basic validation!")
     
     asyncio.run(run_simple_tests())

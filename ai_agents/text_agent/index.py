@@ -7,7 +7,7 @@ and their advanced enterprise-grade capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -81,6 +81,9 @@ class TextAgentSystem:
         Returns:
             Dict containing comprehensive analysis results
         """
+
+
+
         try:
             self.system_stats["total_requests"] += 1
             
@@ -153,6 +156,9 @@ class TextAgentSystem:
         Returns:
             Dict containing generated content and metadata
         """
+
+
+
         try:
             self.system_stats["total_requests"] += 1
             
@@ -203,6 +209,9 @@ class TextAgentSystem:
         Returns:
             Dict containing translation results and analysis
         """
+
+
+
         try:
             self.system_stats["total_requests"] += 1
             
@@ -255,6 +264,9 @@ class TextAgentSystem:
         Returns:
             Dict containing plagiarism detection results
         """
+
+
+
         try:
             self.system_stats["total_requests"] += 1
             
@@ -297,6 +309,9 @@ class TextAgentSystem:
         Returns:
             List of processing results
         """
+
+
+
         try:
             if operation == "analyze":
                 results = []
@@ -322,6 +337,9 @@ class TextAgentSystem:
     
     async def get_system_health(self) -> Dict[str, Any]:
         """Get comprehensive system health status"""
+
+
+
         try:
             # Get component health
             agent_stats = await self.agent_manager.get_aggregate_stats()

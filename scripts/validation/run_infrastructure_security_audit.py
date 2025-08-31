@@ -39,7 +39,7 @@ class InfrastructureSecurityAuditor:
         
     def run_complete_audit(self) -> Dict[str, Any]:
         """Run complete infrastructure security audit"""
-        print("🛡️  STARTING COMPREHENSIVE INFRASTRUCTURE SECURITY AUDIT")
+        print("  STARTING COMPREHENSIVE INFRASTRUCTURE SECURITY AUDIT")
         print("=" * 80)
         print("Addressing requirement: 'Security audit complet infrastructure'")
         print("=" * 80)
@@ -64,7 +64,7 @@ class InfrastructureSecurityAuditor:
     
     def _audit_file_permissions(self):
         """Audit file system permissions"""
-        print("\\n🔒 Auditing File System Permissions...")
+        print("\\n Auditing File System Permissions...")
         
         audit_results = {
             "category": "File Permissions",
@@ -90,10 +90,13 @@ class InfrastructureSecurityAuditor:
                     self._check_file_permissions(path, audit_results)
         
         self.audit_results["file_permissions"] = audit_results
-        print(f"   ✅ File permissions audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
+        print(f"    File permissions audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
     
     def _check_file_permissions(self, path: Path, audit_results: Dict):
         """Check permissions for a specific file/directory"""
+
+
+
         try:
             stat = path.stat()
             mode = oct(stat.st_mode)[-3:]
@@ -136,7 +139,7 @@ class InfrastructureSecurityAuditor:
     
     def _audit_configuration_security(self):
         """Audit configuration security"""
-        print("\\n⚙️  Auditing Configuration Security...")
+        print("\\n  Auditing Configuration Security...")
         
         audit_results = {
             "category": "Configuration Security",
@@ -155,7 +158,7 @@ class InfrastructureSecurityAuditor:
         self._check_python_config(audit_results)
         
         self.audit_results["configuration"] = audit_results
-        print(f"   ✅ Configuration security audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
+        print(f"    Configuration security audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
     
     def _check_environment_config(self, audit_results: Dict):
         """Check environment configuration security"""
@@ -271,7 +274,7 @@ class InfrastructureSecurityAuditor:
     
     def _audit_dependency_security(self):
         """Audit dependency security"""
-        print("\\n📦 Auditing Dependency Security...")
+        print("\\n Auditing Dependency Security...")
         
         audit_results = {
             "category": "Dependency Security",
@@ -287,7 +290,7 @@ class InfrastructureSecurityAuditor:
         self._check_dependency_integrity(audit_results)
         
         self.audit_results["dependencies"] = audit_results
-        print(f"   ✅ Dependency security audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
+        print(f"    Dependency security audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
     
     def _check_vulnerable_dependencies(self, audit_results: Dict):
         """Check for known vulnerable dependencies"""
@@ -361,7 +364,7 @@ class InfrastructureSecurityAuditor:
     
     def _audit_code_security(self):
         """Audit code security"""
-        print("\\n💻 Auditing Code Security...")
+        print("\\n Auditing Code Security...")
         
         audit_results = {
             "category": "Code Security",
@@ -380,7 +383,7 @@ class InfrastructureSecurityAuditor:
         self._check_xss_patterns(audit_results)
         
         self.audit_results["code_security"] = audit_results
-        print(f"   ✅ Code security audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
+        print(f"    Code security audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
     
     def _check_hardcoded_secrets(self, audit_results: Dict):
         """Check for hardcoded secrets in code"""
@@ -508,7 +511,7 @@ class InfrastructureSecurityAuditor:
     
     def _audit_runtime_security(self):
         """Audit runtime security"""
-        print("\\n🏃 Auditing Runtime Security...")
+        print("\\n Auditing Runtime Security...")
         
         audit_results = {
             "category": "Runtime Security",
@@ -524,7 +527,7 @@ class InfrastructureSecurityAuditor:
         self._check_memory_security(audit_results)
         
         self.audit_results["runtime"] = audit_results
-        print(f"   ✅ Runtime security audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
+        print(f"    Runtime security audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
     
     def _check_process_security(self, audit_results: Dict):
         """Check process security"""
@@ -569,7 +572,7 @@ class InfrastructureSecurityAuditor:
     
     def _audit_network_security(self):
         """Audit network security"""
-        print("\\n🌐 Auditing Network Security...")
+        print("\\n Auditing Network Security...")
         
         audit_results = {
             "category": "Network Security",
@@ -591,11 +594,11 @@ class InfrastructureSecurityAuditor:
         audit_results["checks"].append(check_result)
         
         self.audit_results["network"] = audit_results
-        print(f"   ✅ Network security audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
+        print(f"    Network security audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
     
     def _audit_data_protection(self):
         """Audit data protection"""
-        print("\\n🔐 Auditing Data Protection...")
+        print("\\n Auditing Data Protection...")
         
         audit_results = {
             "category": "Data Protection",
@@ -625,11 +628,11 @@ class InfrastructureSecurityAuditor:
         audit_results["checks"].extend([encryption_check, data_handling_check])
         
         self.audit_results["data_protection"] = audit_results
-        print(f"   ✅ Data protection audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
+        print(f"    Data protection audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
     
     def _audit_access_controls(self):
         """Audit access controls"""
-        print("\\n🔑 Auditing Access Controls...")
+        print("\\n Auditing Access Controls...")
         
         audit_results = {
             "category": "Access Controls",
@@ -659,11 +662,11 @@ class InfrastructureSecurityAuditor:
         audit_results["checks"].extend([auth_check, authz_check])
         
         self.audit_results["access_controls"] = audit_results
-        print(f"   ✅ Access controls audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
+        print(f"    Access controls audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
     
     def _audit_logging_security(self):
         """Audit logging and monitoring security"""
-        print("\\n📋 Auditing Logging Security...")
+        print("\\n Auditing Logging Security...")
         
         audit_results = {
             "category": "Logging Security",
@@ -693,11 +696,11 @@ class InfrastructureSecurityAuditor:
         audit_results["checks"].extend([audit_logging_check, log_protection_check])
         
         self.audit_results["logging"] = audit_results
-        print(f"   ✅ Logging security audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
+        print(f"    Logging security audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
     
     def _audit_compliance_requirements(self):
         """Audit compliance requirements"""
-        print("\\n📜 Auditing Compliance Requirements...")
+        print("\\n Auditing Compliance Requirements...")
         
         audit_results = {
             "category": "Compliance",
@@ -734,22 +737,22 @@ class InfrastructureSecurityAuditor:
         audit_results["checks"].extend([gdpr_check, sox_check, general_check])
         
         self.audit_results["compliance"] = audit_results
-        print(f"   ✅ Compliance audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
+        print(f"    Compliance audit completed: {audit_results['score']}/{audit_results['total']} checks passed")
     
     def _generate_audit_report(self, duration: float) -> Dict[str, Any]:
         """Generate comprehensive audit report"""
         success_rate = (self.passed_checks / self.total_checks) * 100 if self.total_checks > 0 else 0
         
         print("\\n" + "=" * 80)
-        print("🛡️  COMPREHENSIVE INFRASTRUCTURE SECURITY AUDIT REPORT")
+        print("  COMPREHENSIVE INFRASTRUCTURE SECURITY AUDIT REPORT")
         print("=" * 80)
         print(f"Audit Duration: {duration:.2f} seconds")
         print(f"Total Security Checks: {self.total_checks}")
-        print(f"✅ Passed Checks: {self.passed_checks:.1f}")
-        print(f"❌ Failed Checks: {self.failed_checks}")
-        print(f"⚠️  Warnings: {len(self.warnings)}")
-        print(f"🚨 Critical Issues: {len(self.critical_issues)}")
-        print(f"📈 Security Score: {success_rate:.1f}%")
+        print(f" Passed Checks: {self.passed_checks:.1f}")
+        print(f" Failed Checks: {self.failed_checks}")
+        print(f"  Warnings: {len(self.warnings)}")
+        print(f" Critical Issues: {len(self.critical_issues)}")
+        print(f" Security Score: {success_rate:.1f}%")
         
         # Risk assessment
         if success_rate >= 90:
@@ -760,29 +763,29 @@ class InfrastructureSecurityAuditor:
             risk_color = "🟡"
         else:
             risk_level = "HIGH"
-            risk_color = "🔴"
+            risk_color = ""
         
-        print(f"🎯 Risk Level: {risk_color} {risk_level}")
+        print(f" Risk Level: {risk_color} {risk_level}")
         
         # Detailed results by category
-        print("\\n📊 AUDIT RESULTS BY CATEGORY:")
+        print("\\n AUDIT RESULTS BY CATEGORY:")
         print("-" * 80)
         
         for category, results in self.audit_results.items():
             category_success = (results["score"] / results["total"]) * 100 if results["total"] > 0 else 100
-            status_icon = "✅" if category_success >= 80 else "⚠️" if category_success >= 60 else "❌"
+            status_icon = "" if category_success >= 80 else "" if category_success >= 60 else ""
             print(f"{status_icon} {results['category']}: {results['score']:.1f}/{results['total']} ({category_success:.1f}%)")
         
         # Critical Issues
         if self.critical_issues:
-            print("\\n🚨 CRITICAL SECURITY ISSUES:")
+            print("\\n CRITICAL SECURITY ISSUES:")
             print("-" * 80)
             for issue in self.critical_issues:
-                print(f"   🔴 {issue}")
+                print(f"    {issue}")
         
         # Warnings
         if self.warnings:
-            print("\\n⚠️  SECURITY WARNINGS:")
+            print("\\n  SECURITY WARNINGS:")
             print("-" * 80)
             for warning in self.warnings[:10]:  # Show first 10 warnings
                 print(f"   🟡 {warning}")
@@ -790,55 +793,55 @@ class InfrastructureSecurityAuditor:
                 print(f"   ... and {len(self.warnings) - 10} more warnings")
         
         # Recommendations
-        print("\\n💡 SECURITY RECOMMENDATIONS:")
+        print("\\n SECURITY RECOMMENDATIONS:")
         print("-" * 80)
         
         recommendations = []
         
         if self.critical_issues:
-            recommendations.append("🔴 Address critical security issues immediately")
+            recommendations.append(" Address critical security issues immediately")
         
         if len(self.warnings) > 5:
             recommendations.append("🟡 Review and address security warnings")
         
         if success_rate < 85:
-            recommendations.append("📈 Improve security posture to achieve >85% score")
+            recommendations.append(" Improve security posture to achieve >85% score")
         
         if not recommendations:
-            recommendations.append("✅ Security posture is good - continue monitoring")
+            recommendations.append(" Security posture is good - continue monitoring")
         
         for i, rec in enumerate(recommendations, 1):
             print(f"   {i}. {rec}")
         
         # Compliance status
-        print("\\n📜 COMPLIANCE STATUS:")
+        print("\\n COMPLIANCE STATUS:")
         print("-" * 80)
         
         compliance_frameworks = ["GDPR", "SOX", "ISO27001", "PCI-DSS"]
         for framework in compliance_frameworks:
             compliance_score = success_rate  # Simplified - in reality would be framework-specific
             if compliance_score >= 90:
-                status = "✅ COMPLIANT"
+                status = " COMPLIANT"
             elif compliance_score >= 75:
-                status = "⚠️  PARTIALLY COMPLIANT"
+                status = "  PARTIALLY COMPLIANT"
             else:
-                status = "❌ NON-COMPLIANT"
+                status = " NON-COMPLIANT"
             print(f"   {framework}: {status} ({compliance_score:.1f}%)")
         
         print("\\n" + "=" * 80)
-        print("🎯 REQUIREMENT FULFILLMENT STATUS")
+        print(" REQUIREMENT FULFILLMENT STATUS")
         print("=" * 80)
         print("Original Requirement: 'Security audit complet infrastructure'")
-        print("Implementation Status: ✅ FULLY COMPLETED")
+        print("Implementation Status:  FULLY COMPLETED")
         print("\\nAudit Coverage:")
-        print("  ✅ File system permissions and configuration")
-        print("  ✅ Dependencies and package security")
-        print("  ✅ Code security and vulnerability patterns")
-        print("  ✅ Runtime and process security")
-        print("  ✅ Network and data protection")
-        print("  ✅ Access controls and authentication")
-        print("  ✅ Logging and audit trail security")
-        print("  ✅ Compliance requirements (GDPR, SOX, etc.)")
+        print("   File system permissions and configuration")
+        print("   Dependencies and package security")
+        print("   Code security and vulnerability patterns")
+        print("   Runtime and process security")
+        print("   Network and data protection")
+        print("   Access controls and authentication")
+        print("   Logging and audit trail security")
+        print("   Compliance requirements (GDPR, SOX, etc.)")
         
         return {
             "total_checks": self.total_checks,
@@ -857,6 +860,9 @@ class InfrastructureSecurityAuditor:
 
 def main():
     """Main execution function"""
+
+
+
     try:
         auditor = InfrastructureSecurityAuditor()
         report = auditor.run_complete_audit()
@@ -868,7 +874,7 @@ def main():
         with open(report_file, 'w') as f:
             json.dump(report, f, indent=2, default=str)
         
-        print(f"\\n📄 Detailed audit report saved to: {report_file}")
+        print(f"\\n Detailed audit report saved to: {report_file}")
         
         # Exit with appropriate code
         if report["critical_issues"] == 0 and report["success_rate"] >= 75:
@@ -877,10 +883,10 @@ def main():
             sys.exit(1)
             
     except KeyboardInterrupt:
-        print("\\n🛑 Security audit interrupted by user")
+        print("\\n Security audit interrupted by user")
         sys.exit(130)
     except Exception as e:
-        print(f"\\n💥 Security audit failed: {str(e)}")
+        print(f"\\n Security audit failed: {str(e)}")
         sys.exit(1)
 
 

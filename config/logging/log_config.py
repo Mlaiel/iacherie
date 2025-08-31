@@ -299,6 +299,9 @@ class LogConfig:
     
     def _build_filters(self) -> Dict[str, Any]:
         """Build filter configurations"""
+
+
+
         return {
             'security_filter': {
                 '()': 'backend.config.logging.log_filtering_config.SecurityLogFilter'
@@ -542,6 +545,9 @@ class LogConfig:
     
     def get_config_dict(self) -> Dict[str, Any]:
         """Get the current logging configuration as dictionary"""
+
+
+
         return self._config.copy()
     
     def update_log_level(self, logger_name: str, level: Union[str, int]) -> None:

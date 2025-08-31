@@ -2,7 +2,7 @@
 Comprehensive testing package for industrial-grade AI recommendation platform
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
-⚠️  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
+  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
     code, or intellectual property without explicit written authorization 
     from Fahed Mlaiel is strictly prohibited and will result in legal action.
 
@@ -75,7 +75,7 @@ logger = logging.getLogger(__name__)
 class ContentRecommendationTests(unittest.TestCase):
     """Ultra-Advanced Content Recommendation Test Suite"""    
     def setUp(self):
-        logger.info("🔧 Setting up Content Recommendation Tests")
+        logger.info(" Setting up Content Recommendation Tests")
     
     def test_content_recommendation(self):
         logger.info("🧪 Testing content recommendation")
@@ -84,7 +84,7 @@ class ContentRecommendationTests(unittest.TestCase):
 class CreatorMatchingTests(unittest.TestCase):
     """Ultra-Advanced Creator Matching Test Suite"""    
     def setUp(self):
-        logger.info("🔧 Setting up Creator Matching Tests")
+        logger.info(" Setting up Creator Matching Tests")
     
     def test_creator_matching(self):
         logger.info("🧪 Testing creator matching")
@@ -93,7 +93,7 @@ class CreatorMatchingTests(unittest.TestCase):
 class AudienceTargetingTests(unittest.TestCase):
     """Ultra-Advanced Audience Targeting Test Suite"""    
     def setUp(self):
-        logger.info("🔧 Setting up Audience Targeting Tests")
+        logger.info(" Setting up Audience Targeting Tests")
     
     def test_audience_targeting(self):
         logger.info("🧪 Testing audience targeting")
@@ -102,7 +102,7 @@ class AudienceTargetingTests(unittest.TestCase):
 class CollaborationSuggestionTests(unittest.TestCase):
     """Ultra-Advanced Collaboration Suggestion Test Suite"""    
     def setUp(self):
-        logger.info("🔧 Setting up Collaboration Suggestion Tests")
+        logger.info(" Setting up Collaboration Suggestion Tests")
     
     def test_collaboration_suggestion(self):
         logger.info("🧪 Testing collaboration suggestion")
@@ -111,7 +111,7 @@ class CollaborationSuggestionTests(unittest.TestCase):
 class TrendAnalysisTests(unittest.TestCase):
     """Ultra-Advanced Trend Analysis Test Suite"""    
     def setUp(self):
-        logger.info("🔧 Setting up Trend Analysis Tests")
+        logger.info(" Setting up Trend Analysis Tests")
     
     def test_trend_analysis(self):
         logger.info("🧪 Testing trend analysis")

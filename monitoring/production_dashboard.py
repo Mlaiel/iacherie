@@ -333,25 +333,25 @@ class ProductionReadinessDashboard:
         checklist['performance_requirements'] = [
             {
                 'item': 'Response Time: <2s pour 95% des API calls',
-                'status': '✅' if perf_reqs['response_time']['compliant'] else '❌',
+                'status': '' if perf_reqs['response_time']['compliant'] else '',
                 'current_value': perf_reqs['response_time']['current'],
                 'compliant': perf_reqs['response_time']['compliant']
             },
             {
                 'item': 'Throughput: 10,000+ requests/second',
-                'status': '✅' if perf_reqs['throughput']['compliant'] else '❌',
+                'status': '' if perf_reqs['throughput']['compliant'] else '',
                 'current_value': perf_reqs['throughput']['current'],
                 'compliant': perf_reqs['throughput']['compliant']
             },
             {
                 'item': 'Uptime: 99.9% (8.77 heures downtime/an max)',
-                'status': '✅' if perf_reqs['uptime']['compliant'] else '❌',
+                'status': '' if perf_reqs['uptime']['compliant'] else '',
                 'current_value': perf_reqs['uptime']['current'],
                 'compliant': perf_reqs['uptime']['compliant']
             },
             {
                 'item': 'Scalability: Auto-scale 1-1000 instances',
-                'status': '✅' if perf_reqs['scalability']['compliant'] else '❌',
+                'status': '' if perf_reqs['scalability']['compliant'] else '',
                 'current_value': perf_reqs['scalability']['current'],
                 'compliant': perf_reqs['scalability']['compliant']
             }
@@ -363,25 +363,25 @@ class ProductionReadinessDashboard:
         checklist['quality_requirements'] = [
             {
                 'item': 'Test Coverage: >85% pour code critique',
-                'status': '✅' if qual_reqs['test_coverage']['compliant'] else '❌',
+                'status': '' if qual_reqs['test_coverage']['compliant'] else '',
                 'current_value': qual_reqs['test_coverage']['current'],
                 'compliant': qual_reqs['test_coverage']['compliant']
             },
             {
                 'item': 'Security: Zero vulnerabilités critiques/hautes',
-                'status': '✅' if qual_reqs['security']['compliant'] else '❌',
+                'status': '' if qual_reqs['security']['compliant'] else '',
                 'current_value': qual_reqs['security']['current'],
                 'compliant': qual_reqs['security']['compliant']
             },
             {
                 'item': 'Documentation: 100% APIs documentées',
-                'status': '✅' if qual_reqs['documentation']['compliant'] else '❌',
+                'status': '' if qual_reqs['documentation']['compliant'] else '',
                 'current_value': qual_reqs['documentation']['current'],
                 'compliant': qual_reqs['documentation']['compliant']
             },
             {
                 'item': 'Monitoring: 50+ métriques métier',
-                'status': '✅' if qual_reqs['monitoring']['compliant'] else '❌',
+                'status': '' if qual_reqs['monitoring']['compliant'] else '',
                 'current_value': qual_reqs['monitoring']['current'],
                 'compliant': qual_reqs['monitoring']['compliant']
             }

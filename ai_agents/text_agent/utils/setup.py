@@ -8,7 +8,7 @@ Downloads required models and verifies installation.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -25,6 +25,9 @@ logger = logging.getLogger(__name__)
 
 def run_command(command, description=""):
     """Run shell command and handle errors"""
+
+
+
     try:
         logger.info(f"Running: {description or command}")
         result = subprocess.run(command, shell=True, check=True, capture_output=True, text=True)
@@ -39,12 +42,15 @@ def run_command(command, description=""):
 
 def check_package(package_name, import_name=None):
     """Check if a Python package is installed"""
+
+
+
     try:
         importlib.import_module(import_name or package_name)
-        logger.info(f"✓ {package_name} is installed")
+        logger.info(f" {package_name} is installed")
         return True
     except ImportError:
-        logger.warning(f"✗ {package_name} is not installed")
+        logger.warning(f" {package_name} is not installed")
         return False
 
 def setup_nltk_data():
@@ -80,7 +86,7 @@ def setup_nltk_data():
                             logger.info(f"Downloading NLTK dataset: {dataset}")
                             nltk.download(dataset, quiet=True)
         
-        logger.info("✓ NLTK data setup complete")
+        logger.info(" NLTK data setup complete")
         return True
         
     except Exception as e:
@@ -106,7 +112,7 @@ def setup_spacy_models():
             success = False
     
     if success:
-        logger.info("✓ spaCy models setup complete")
+        logger.info(" spaCy models setup complete")
     
     return success
 
@@ -149,11 +155,11 @@ def test_basic_functionality():
     try:
         # Test imports
         from . import TextAgent, TextProcessor, AITextGenerator
-        logger.info("✓ Basic imports successful")
+        logger.info(" Basic imports successful")
         
         # Test initialization
         processor = TextProcessor()
-        logger.info("✓ TextProcessor initialization successful")
+        logger.info(" TextProcessor initialization successful")
         
         # Test basic processing
         import asyncio
@@ -162,7 +168,7 @@ def test_basic_functionality():
             return result.processed_text
         
         processed = asyncio.run(test_processing())
-        logger.info(f"✓ Basic text processing successful: {processed}")
+        logger.info(f" Basic text processing successful: {processed}")
         
         return True
         
@@ -189,7 +195,7 @@ def main():
             sys.exit(1)
     
     logger.info("\n=== Text Agent Setup Complete ===")
-    logger.info("✓ All components are installed and configured correctly")
+    logger.info(" All components are installed and configured correctly")
     logger.info("The Text Agent module is ready for use!")
 
 if __name__ == "__main__":

@@ -1,10 +1,10 @@
-"""🛡️ IA Influencer Agent - Business Protection Module
+""" IA Influencer Agent - Business Protection Module
 ==================================================================
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 ==================================================================
 
-⚠️  COPYRIGHT NOTICE & LEGAL WARNING ⚠️
+  COPYRIGHT NOTICE & LEGAL WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copy, distribution, or modification of this code
 without explicit written permission is strictly prohibited and will be
@@ -372,7 +372,10 @@ PLATFORM_ENDPOINTS = {
 }
 
 def get_module_info():
-    """Get module information and capabilities"""    return {
+    """Get module information and capabilities"""
+
+
+    return {
         'name': 'IA Influencer Agent - Protection Module',
         'version': __version__,
         'author': __author__,

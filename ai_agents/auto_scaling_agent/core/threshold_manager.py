@@ -195,6 +195,9 @@ class ThresholdManager(BaseAgent):
 
     async def start_monitoring(self):
         """Start threshold monitoring"""
+
+
+
         try:
             if self.is_monitoring:
                 self.logger.warning("Threshold monitoring already active")
@@ -225,6 +228,9 @@ class ThresholdManager(BaseAgent):
 
     async def stop_monitoring(self):
         """Stop threshold monitoring"""
+
+
+
         try:
             self.is_monitoring = False
             
@@ -320,6 +326,9 @@ class ThresholdManager(BaseAgent):
 
     async def _evaluate_all_thresholds(self):
         """Evaluate all active thresholds"""
+
+
+
         try:
             with self.threshold_lock:
                 # Get current metric values (this would integrate with metrics collector)
@@ -341,6 +350,9 @@ class ThresholdManager(BaseAgent):
     async def _evaluate_threshold(self, threshold: Threshold, 
                                  current_metrics: Dict[str, float]):
         """Evaluate a single threshold"""
+
+
+
         try:
             metric_value = current_metrics.get(threshold.metric_name)
             if metric_value is None:
@@ -371,6 +383,9 @@ class ThresholdManager(BaseAgent):
     async def _evaluate_threshold_group(self, group: ThresholdGroup,
                                        current_metrics: Dict[str, float]):
         """Evaluate a threshold group"""
+
+
+
         try:
             violation_count = 0
             total_thresholds = len(group.thresholds)
@@ -415,6 +430,9 @@ class ThresholdManager(BaseAgent):
     def _evaluate_condition(self, value: float, operator: ComparisonOperator,
                            threshold: float, secondary_threshold: Optional[float] = None) -> bool:
         """Evaluate threshold condition"""
+
+
+
         try:
             if operator == ComparisonOperator.GREATER_THAN:
                 return value > threshold
@@ -445,6 +463,9 @@ class ThresholdManager(BaseAgent):
 
     async def _get_threshold_value(self, threshold: Threshold) -> float:
         """Get threshold value (static or calculated)"""
+
+
+
         try:
             if threshold.threshold_type == ThresholdType.STATIC:
                 return threshold.value
@@ -461,6 +482,9 @@ class ThresholdManager(BaseAgent):
 
     async def _calculate_adaptive_threshold(self, threshold: Threshold) -> float:
         """Calculate adaptive threshold based on historical data"""
+
+
+
         try:
             metric_history = self.metric_history.get(threshold.metric_name, deque())
             
@@ -492,6 +516,9 @@ class ThresholdManager(BaseAgent):
     async def _handle_threshold_violation(self, threshold: Threshold,
                                          current_value: float, threshold_value: float):
         """Handle threshold violation"""
+
+
+
         try:
             violation_key = f"{threshold.threshold_id}_{threshold.metric_name}"
             
@@ -540,6 +567,9 @@ class ThresholdManager(BaseAgent):
 
     async def _handle_threshold_recovery(self, threshold: Threshold):
         """Handle threshold recovery"""
+
+
+
         try:
             violation_key = f"{threshold.threshold_id}_{threshold.metric_name}"
             
@@ -566,6 +596,9 @@ class ThresholdManager(BaseAgent):
     async def _handle_group_violation(self, group: ThresholdGroup,
                                      violation_count: int, total_thresholds: int):
         """Handle threshold group violation"""
+
+
+
         try:
             # Group violation handling logic
             self.logger.warning(
@@ -578,6 +611,9 @@ class ThresholdManager(BaseAgent):
 
     async def _handle_group_recovery(self, group: ThresholdGroup):
         """Handle threshold group recovery"""
+
+
+
         try:
             # Group recovery handling logic
             self.logger.info(f"Threshold group recovered: {group.name}")
@@ -587,6 +623,9 @@ class ThresholdManager(BaseAgent):
 
     async def _send_violation_notification(self, violation: ThresholdViolation):
         """Send violation notification"""
+
+
+
         try:
             # Check notification cooldown
             cooldown_key = f"{violation.threshold_id}_{violation.severity.value}"
@@ -621,6 +660,9 @@ class ThresholdManager(BaseAgent):
 
     async def _send_recovery_notification(self, violation: ThresholdViolation):
         """Send recovery notification"""
+
+
+
         try:
             notification_data = {
                 "type": "threshold_recovery",
@@ -648,6 +690,9 @@ class ThresholdManager(BaseAgent):
 
     async def _update_dynamic_thresholds(self):
         """Update dynamic thresholds based on configuration"""
+
+
+
         try:
             for metric_name, config in self.dynamic_configs.items():
                 try:
@@ -667,6 +712,9 @@ class ThresholdManager(BaseAgent):
 
     async def _calculate_dynamic_threshold(self, config: DynamicThresholdConfig) -> float:
         """Calculate dynamic threshold based on configuration"""
+
+
+
         try:
             metric_history = self.metric_history.get(config.metric_name, deque())
             
@@ -710,6 +758,9 @@ class ThresholdManager(BaseAgent):
 
     async def _get_current_metrics(self) -> Dict[str, float]:
         """Get current metric values (integration point)"""
+
+
+
         try:
             # This would integrate with the metrics collector
             # For now, return simulated values
@@ -730,6 +781,9 @@ class ThresholdManager(BaseAgent):
 
     async def _cleanup_old_violations(self):
         """Clean up old and resolved violations"""
+
+
+
         try:
             current_time = datetime.now()
             violations_to_remove = []
@@ -754,6 +808,9 @@ class ThresholdManager(BaseAgent):
 
     async def _analyze_threshold_performance(self):
         """Analyze threshold performance and detect issues"""
+
+
+
         try:
             # Analyze false positive rate
             recent_violations = [
@@ -785,6 +842,9 @@ class ThresholdManager(BaseAgent):
 
     async def _optimize_thresholds(self):
         """Optimize thresholds based on performance analysis"""
+
+
+
         try:
             # Simple optimization logic
             # In production, this would use more sophisticated ML algorithms
@@ -810,6 +870,9 @@ class ThresholdManager(BaseAgent):
 
     async def _initialize_default_thresholds(self):
         """Initialize default thresholds"""
+
+
+
         try:
             default_thresholds = [
                 Threshold(
@@ -872,6 +935,9 @@ class ThresholdManager(BaseAgent):
 
     async def _initialize_dynamic_configs(self):
         """Initialize dynamic threshold configurations"""
+
+
+
         try:
             default_configs = [
                 DynamicThresholdConfig(
@@ -898,6 +964,9 @@ class ThresholdManager(BaseAgent):
 
     async def add_threshold(self, threshold: Threshold):
         """Add a new threshold"""
+
+
+
         try:
             with self.threshold_lock:
                 self.thresholds[threshold.threshold_id] = threshold
@@ -911,6 +980,9 @@ class ThresholdManager(BaseAgent):
 
     async def update_threshold(self, threshold_id: str, updates: Dict[str, Any]):
         """Update an existing threshold"""
+
+
+
         try:
             with self.threshold_lock:
                 if threshold_id not in self.thresholds:
@@ -933,6 +1005,9 @@ class ThresholdManager(BaseAgent):
 
     async def remove_threshold(self, threshold_id: str):
         """Remove a threshold"""
+
+
+
         try:
             with self.threshold_lock:
                 if threshold_id in self.thresholds:
@@ -955,6 +1030,9 @@ class ThresholdManager(BaseAgent):
 
     async def get_threshold_status(self) -> Dict[str, Any]:
         """Get comprehensive threshold status"""
+
+
+
         try:
             return {
                 "total_thresholds": len(self.thresholds),
@@ -982,6 +1060,9 @@ class ThresholdManager(BaseAgent):
 
     async def health_check(self) -> Dict[str, Any]:
         """Health check for threshold manager"""
+
+
+
         try:
             active_tasks = len([task for task in self.monitor_tasks if not task.done()])
             

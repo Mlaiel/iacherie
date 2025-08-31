@@ -7,7 +7,7 @@ performance monitoring, and general helper operations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
@@ -137,6 +137,9 @@ def extract_keywords(
     Returns:
         List of extracted keywords
     """
+
+
+
     try:
         # Tokenize and clean
         words = re.findall(r'\b\w+\b', text.lower())
@@ -196,6 +199,9 @@ def calculate_text_complexity(text: str) -> Dict[str, float]:
     Returns:
         Dictionary of complexity metrics
     """
+
+
+
     try:
         words = text.split()
         sentences = re.split(r'[.!?]+', text)
@@ -278,6 +284,9 @@ class ConfidenceCalibrator:
     
     def fit_calibrators(self) -> None:
         """Fit calibration models using collected data"""
+
+
+
         try:
             # Fit per-intent calibrators
             for intent, data in self.calibration_data.items():
@@ -451,6 +460,9 @@ class PerformanceMonitor:
     
     def get_current_metrics(self) -> Dict[str, Any]:
         """Get current performance metrics"""
+
+
+
         return {
             'statistics': self.stats.copy(),
             'recent_response_times': {
@@ -579,6 +591,9 @@ def validate_text_input(
     Returns:
         Tuple of (is_valid, error_message)
     """
+
+
+
     try:
         # Check basic requirements
         if not text or not isinstance(text, str):
@@ -620,6 +635,9 @@ def format_confidence_score(confidence: float, precision: int = 2) -> str:
 
 def calculate_entropy(probabilities: List[float]) -> float:
     """Calculate entropy of probability distribution"""
+
+
+
     try:
         probabilities = np.array(probabilities)
         # Add small epsilon to avoid log(0)
@@ -668,6 +686,9 @@ def batch_iterator(items: List[Any], batch_size: int):
 
 def safe_json_serialize(obj: Any) -> str:
     """Safely serialize object to JSON"""
+
+
+
     try:
         return json.dumps(obj, default=str, ensure_ascii=False)
     except Exception as e:

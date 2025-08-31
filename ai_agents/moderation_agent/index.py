@@ -7,7 +7,7 @@ Provides easy access to all components, configurations, and utilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -153,11 +153,11 @@ result = await agent.moderate_image(
 
 # Enhanced results for creators
 if result.action == ModerationAction.APPROVE:
-    print(f"✅ Content approved for monetization")
+    print(f" Content approved for monetization")
     print(f"SEO Score: {result.seo_optimization_score}")
     print(f"Engagement Prediction: {result.engagement_prediction}")
 else:
-    print(f"❌ Issues detected: {result.violation_summary}")
+    print(f" Issues detected: {result.violation_summary}")
     print(f"Improvement Suggestions: {result.improvement_recommendations}")
 """,
     
@@ -233,10 +233,10 @@ for content_name, content_info in creator_content.items():
     
     # Creator-specific insights
     print(f"\\n{content_name.upper()} Analysis:")
-    print(f"✅ Monetization Ready: {result.monetization_ready}")
-    print(f"📈 SEO Score: {result.seo_score}/100")
-    print(f"🎯 Target Audience: {result.recommended_audience}")
-    print(f"💰 Revenue Potential: {result.revenue_potential}")
+    print(f" Monetization Ready: {result.monetization_ready}")
+    print(f" SEO Score: {result.seo_score}/100")
+    print(f" Target Audience: {result.recommended_audience}")
+    print(f" Revenue Potential: {result.revenue_potential}")
     
     if result.collaboration_opportunities:
         print(f"🤝 Collaboration Matches: {len(result.collaboration_opportunities)}")
@@ -247,7 +247,7 @@ creator_report = await agent.generate_creator_report(
     creator_profile="musician_pop_indie"
 )
 
-print(f"\\n📊 CREATOR PERFORMANCE REPORT:")
+print(f"\\n CREATOR PERFORMANCE REPORT:")
 print(f"Overall Content Quality Score: {creator_report.overall_quality_score}")
 print(f"Platform Readiness: {creator_report.platform_readiness}")
 print(f"Revenue Optimization Score: {creator_report.revenue_optimization_score}")
@@ -286,25 +286,25 @@ stream_session = await agent.start_live_stream_monitoring(
 
 # Real-time stream analytics and moderation
 async for stream_analysis in stream_session.get_real_time_analytics():
-    print(f"⏱️  Stream Time: {stream_analysis.elapsed_time}")
-    print(f"👥 Live Viewers: {stream_analysis.viewer_count}")
-    print(f"💬 Chat Sentiment: {stream_analysis.chat_sentiment}")
-    print(f"🎵 Audio Quality: {stream_analysis.audio_quality_score}")
-    print(f"📹 Video Quality: {stream_analysis.video_quality_score}")
-    print(f"⚠️  Violations Detected: {len(stream_analysis.violations)}")
+    print(f"⏱  Stream Time: {stream_analysis.elapsed_time}")
+    print(f" Live Viewers: {stream_analysis.viewer_count}")
+    print(f" Chat Sentiment: {stream_analysis.chat_sentiment}")
+    print(f" Audio Quality: {stream_analysis.audio_quality_score}")
+    print(f" Video Quality: {stream_analysis.video_quality_score}")
+    print(f"  Violations Detected: {len(stream_analysis.violations)}")
     
     # Automatic performance optimization suggestions
     if stream_analysis.optimization_suggestions:
         for suggestion in stream_analysis.optimization_suggestions:
-            print(f"💡 Suggestion: {suggestion}")
+            print(f" Suggestion: {suggestion}")
     
     # Highlight detection for later content creation
     if stream_analysis.potential_highlights:
-        print(f"✨ Highlights Detected: {len(stream_analysis.potential_highlights)}")
+        print(f" Highlights Detected: {len(stream_analysis.potential_highlights)}")
 
 # End stream and generate comprehensive report
 stream_report = await agent.stop_live_stream_monitoring("musician_live_performance_2025")
-print(f"\\n📊 LIVE STREAM PERFORMANCE REPORT:")
+print(f"\\n LIVE STREAM PERFORMANCE REPORT:")
 print(f"Total Duration: {stream_report.total_duration}")
 print(f"Peak Viewers: {stream_report.peak_viewer_count}")
 print(f"Engagement Rate: {stream_report.engagement_rate}")
@@ -348,7 +348,7 @@ batch_result = await batch_processor.process_batch(
     }
 )
 
-print(f"📦 Batch Processing Complete:")
+print(f" Batch Processing Complete:")
 print(f"Total Items: {batch_result.total_items}")
 print(f"Successfully Processed: {batch_result.successful_count}")
 print(f"Failed Items: {batch_result.failed_count}")
@@ -1006,16 +1006,16 @@ def validate_config(config):
     
     for key in required_keys:
         if key not in config:
-            print(f"❌ Missing required config key: {key}")
+            print(f" Missing required config key: {key}")
         else:
-            print(f"✅ Found config key: {key}")
+            print(f" Found config key: {key}")
     
     # Validate thresholds
     thresholds = config.get("moderation_thresholds", {})
     if thresholds.get("auto_approve", 1.0) >= thresholds.get("auto_block", 0.0):
-        print("❌ Invalid threshold configuration")
+        print(" Invalid threshold configuration")
     else:
-        print("✅ Threshold configuration valid")
+        print(" Threshold configuration valid")
 """
     }
 }
@@ -1253,7 +1253,7 @@ def print_quick_reference():
     print(f"Copyright: {__copyright__}")
     print("=" * 80)
     
-    print("\n📋 CORE COMPONENTS:")
+    print("\n CORE COMPONENTS:")
     for component, info in COMPONENT_DESCRIPTIONS.items():
         print(f"\n{component}:")
         print(f"  • {info['description']}")
@@ -1261,15 +1261,15 @@ def print_quick_reference():
             for feature in info['key_features'][:3]:
                 print(f"    - {feature}")
     
-    print("\n🚀 QUICK START:")
+    print("\n QUICK START:")
     print(QUICK_START_EXAMPLES["basic_agent_creation"])
     
-    print("\n📊 PERFORMANCE:")
+    print("\n PERFORMANCE:")
     print(f"  • Text Analysis: {PERFORMANCE_BENCHMARKS['processing_speed']['text_analysis']}")
     print(f"  • Image Processing: {PERFORMANCE_BENCHMARKS['processing_speed']['image_processing']}")
     print(f"  • Accuracy: {PERFORMANCE_BENCHMARKS['accuracy_metrics']['nsfw_classification']['accuracy']}% NSFW detection")
     
-    print("\n⚠️  LEGAL NOTICE:")
+    print("\n  LEGAL NOTICE:")
     print("This is proprietary software owned by Fahed Mlaiel.")
     print("Unauthorized use is strictly prohibited.")
     print("Contact mlaiel@live.de for licensing.")
@@ -1317,22 +1317,22 @@ def print_quick_reference():
     """
     
     print("""
-╔══════════════════════════════════════════════════════════════════════════════════╗
-║                    MODERATION AGENT - QUICK REFERENCE GUIDE                     ║
-║                      Ultra-Advanced AI Content Safety System                    ║
-║                                                                                  ║
-║  Author: Fahed Mlaiel <mlaiel@live.de>                                          ║
-║  Copyright: © 2025 Fahed Mlaiel. All rights reserved.                          ║
-║                                                                                  ║
-║  ⚠️  LEGAL WARNING: Unauthorized use strictly prohibited                        ║
-║  📧 Licensing: mlaiel@live.de                                                   ║
-╚══════════════════════════════════════════════════════════════════════════════════╝
 
-🚀 QUICK START EXAMPLES:
-══════════════════════════════════════════════════════════════════════════════════
+                    MODERATION AGENT - QUICK REFERENCE GUIDE                     
+                      Ultra-Advanced AI Content Safety System                    
+                                                                                  
+  Author: Fahed Mlaiel <mlaiel@live.de>                                          
+  Copyright: © 2025 Fahed Mlaiel. All rights reserved.                          
+                                                                                  
+    LEGAL WARNING: Unauthorized use strictly prohibited                        
+   Licensing: mlaiel@live.de                                                   
 
-📝 Basic Text Moderation:
-──────────────────────────
+
+ QUICK START EXAMPLES:
+
+
+ Basic Text Moderation:
+
 from moderation_agent import ModerationAgent
 
 agent = ModerationAgent(agent_id="content_moderator_1")
@@ -1344,8 +1344,8 @@ result = await agent.moderate_text(
 )
 print(f"Decision: {result.action}, Confidence: {result.confidence}")
 
-🖼️  Advanced Image Analysis:
-──────────────────────────
+  Advanced Image Analysis:
+
 result = await agent.moderate_image(
     image_path="/path/to/image.jpg",
     content_id="img_456",
@@ -1353,12 +1353,12 @@ result = await agent.moderate_image(
 )
 
 if result.monetization_ready:
-    print("✅ Ready for monetization!")
+    print(" Ready for monetization!")
     print(f"SEO Score: {result.seo_score}/100")
     print(f"Revenue Potential: {result.revenue_potential}")
 
-🎵 Music Creator Pipeline:
-─────────────────────────
+ Music Creator Pipeline:
+
 # Complete music analysis with copyright and quality checks
 audio_result = await agent.moderate_audio(
     audio_path="/uploads/new_song.mp3",
@@ -1374,8 +1374,8 @@ print(f"Copyright Status: {audio_result.copyright_status}")
 print(f"Audio Quality: {audio_result.technical_quality_score}/100")
 print(f"Collaboration Matches: {len(audio_result.collaboration_opportunities)}")
 
-🔴 Live Stream Monitoring:
-──────────────────────────
+ Live Stream Monitoring:
+
 stream_session = await agent.start_live_stream_monitoring(
     stream_id="live_performance_2025",
     stream_config={
@@ -1390,17 +1390,17 @@ async for analytics in stream_session.get_real_time_analytics():
     print(f"Violations: {len(analytics.violations)}")
     print(f"Engagement: {analytics.engagement_rate}")
 
-📊 PERFORMANCE BENCHMARKS:
-══════════════════════════════════════════════════════════════════════════════════
+ PERFORMANCE BENCHMARKS:
 
-⚡ Processing Speed:
+
+ Processing Speed:
   • Text Analysis: < 100ms average (43,000 texts/minute)
   • Image Processing: < 500ms average (12,000 images/minute)  
   • Video Analysis: < 2s per minute of content
   • Audio Transcription: < 30s per minute
   • Live Stream: Real-time with < 1s delay
 
-🎯 Accuracy Metrics:
+ Accuracy Metrics:
   • Toxicity Detection: 95.7% precision, 93.2% recall
   • NSFW Classification: 97.1% accuracy
   • Violence Recognition: 94.8% precision
@@ -1408,18 +1408,18 @@ async for analytics in stream_session.get_real_time_analytics():
   • Copyright Detection: 98.5% for music, 94.7% for images
   • False Positive Rate: < 2.1% across all models
 
-💼 Business Impact:
+ Business Impact:
   • 95% Automated Content Approval
   • 85% Reduction in Human Moderation
   • 25% Average Revenue Increase for Creators
   • 99.9% Platform Compliance Rate
   • 80% Faster Time-to-Monetization
 
-🔧 ADVANCED CONFIGURATION:
-══════════════════════════════════════════════════════════════════════════════════
+ ADVANCED CONFIGURATION:
 
-🎨 Creator-Focused Setup:
-─────────────────────────
+
+ Creator-Focused Setup:
+
 config = {
     "creator_features": {
         "monetization_checks": True,
@@ -1442,8 +1442,8 @@ config = {
 
 agent = ModerationAgent(agent_id="creator_agent", config=config)
 
-🏢 Enterprise Integration:
-──────────────────────────
+ Enterprise Integration:
+
 enterprise_config = {
     "performance": {
         "parallel_workers": 50,
@@ -1462,53 +1462,53 @@ enterprise_config = {
     }
 }
 
-🎯 INDUSTRY-SPECIFIC PATTERNS:
-══════════════════════════════════════════════════════════════════════════════════
+ INDUSTRY-SPECIFIC PATTERNS:
 
-🎵 Music Streaming Platform:
-────────────────────────────
+
+ Music Streaming Platform:
+
 • Audio copyright detection and licensing
 • Music quality analysis and optimization
 • Artist collaboration matching
 • Playlist optimization algorithms
 • Revenue and streaming potential prediction
 
-📱 Social Media Platform:
-─────────────────────────
+ Social Media Platform:
+
 • Real-time multi-format content analysis
 • Live stream monitoring and intervention
 • Viral content detection and optimization
 • Influencer brand safety verification
 • Community guidelines enforcement
 
-🎓 Educational Platform:
-────────────────────────
+ Educational Platform:
+
 • Academic integrity and plagiarism detection
 • Age-appropriate content classification
 • Educational value assessment
 • Misinformation and fact-checking
 • Learning outcome optimization
 
-🏢 Enterprise Communication:
-────────────────────────────
+ Enterprise Communication:
+
 • Professional communication standards
 • Corporate policy compliance
 • Sensitive information detection
 • Workplace harassment prevention
 • Brand consistency monitoring
 
-🛠️  TROUBLESHOOTING GUIDE:
-══════════════════════════════════════════════════════════════════════════════════
+  TROUBLESHOOTING GUIDE:
 
-🐛 Common Issues:
-─────────────────
+
+ Common Issues:
+
 • Slow Processing: Check GPU memory, optimize batch sizes
 • High False Positives: Adjust thresholds, retrain models
 • Memory Issues: Use model quantization, implement cleanup
 • API Timeouts: Scale horizontally, implement queuing
 
-🔍 Diagnostic Commands:
-───────────────────────
+ Diagnostic Commands:
+
 # Check system resources
 import psutil, GPUtil
 print(f"CPU: {psutil.cpu_percent()}%, Memory: {psutil.virtual_memory().percent}%")
@@ -1519,58 +1519,58 @@ start = time.time()
 result = await agent.moderate_text("test", "test_123")
 print(f"Processing time: {time.time() - start:.2f}s")
 
-📚 DOCUMENTATION & SUPPORT:
-══════════════════════════════════════════════════════════════════════════════════
+ DOCUMENTATION & SUPPORT:
 
-📖 Available Documentation:
+
+ Available Documentation:
   • README.md - English documentation
   • README.de.md - German documentation  
   • README.fr.md - French documentation
   • TECHNICAL_DOCS.md - Developer technical guide
 
-🆘 Support Channels:
+ Support Channels:
   • Email: mlaiel@live.de
   • Response Time: 24-48 hours for enterprise
   • Emergency Support: Available for production issues
   • SLA: 99.9% uptime guarantee
 
-⚖️  LEGAL INFORMATION:
-══════════════════════════════════════════════════════════════════════════════════
+  LEGAL INFORMATION:
 
-📜 Copyright Notice:
+
+ Copyright Notice:
 This moderation agent system and all associated intellectual property are the
 exclusive property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use,
 copying, distribution, modification, or commercialization is strictly prohibited.
 
-🔒 Security Notice:
+ Security Notice:
 All content processed through this system is encrypted and handled according to
 GDPR, COPPA, and other relevant data protection regulations. No user content is
 permanently stored without explicit consent.
 
-💼 Licensing:
+ Licensing:
 For commercial licensing inquiries, custom implementations, or enterprise
 support contracts, contact: mlaiel@live.de
 
-═══════════════════════════════════════════════════════════════════════════════════
 
-🚀 Ready to get started? Initialize your agent with:
+
+ Ready to get started? Initialize your agent with:
    from moderation_agent import ModerationAgent
    agent = ModerationAgent("your_agent_id")
    await agent.initialize()
 
-💡 Need help? Call print_quick_reference() anytime for this guide!
+ Need help? Call print_quick_reference() anytime for this guide!
 
-═══════════════════════════════════════════════════════════════════════════════════
+
 """)
 
 # Additional helper function for component exploration
 def explore_components():
     """Print detailed component information"""
-    print("\\n🔍 MODERATION AGENT COMPONENTS EXPLORER:")
+    print("\\n MODERATION AGENT COMPONENTS EXPLORER:")
     print("=" * 80)
     
     for component_name, details in COMPONENT_DESCRIPTIONS.items():
-        print(f"\\n📦 {component_name}:")
+        print(f"\\n {component_name}:")
         print(f"   Purpose: {details['purpose']}")
         print(f"   Business Value: {details['business_value']}")
         
@@ -1585,15 +1585,15 @@ def explore_components():
 
 def show_performance_metrics():
     """Display comprehensive performance metrics"""
-    print("\\n📊 COMPREHENSIVE PERFORMANCE METRICS:")
+    print("\\n COMPREHENSIVE PERFORMANCE METRICS:")
     print("=" * 80)
     
     for category, metrics in PERFORMANCE_BENCHMARKS.items():
-        print(f"\\n🏆 {category.upper().replace('_', ' ')}:")
+        print(f"\\n {category.upper().replace('_', ' ')}:")
         
         if isinstance(metrics, dict):
             for metric_name, values in metrics.items():
-                print(f"  📈 {metric_name.replace('_', ' ').title()}:")
+                print(f"   {metric_name.replace('_', ' ').title()}:")
                 if isinstance(values, dict):
                     for key, value in values.items():
                         print(f"    • {key.replace('_', ' ').title()}: {value}")

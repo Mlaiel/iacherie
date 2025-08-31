@@ -182,6 +182,9 @@ class ThresholdConditionEvaluator(AlertConditionEvaluator):
     
     async def evaluate(self, rule: AlertRule, context: Dict[str, Any]) -> bool:
         """Évaluer une condition de seuil"""
+
+
+
         try:
             current_value = context.get("value")
             threshold_value = rule.threshold_value
@@ -216,6 +219,9 @@ class PatternConditionEvaluator(AlertConditionEvaluator):
     
     async def evaluate(self, rule: AlertRule, context: Dict[str, Any]) -> bool:
         """Évaluer une condition de motif"""
+
+
+
         try:
             conditions = rule.conditions
             pattern_type = conditions.get("pattern_type")
@@ -286,6 +292,9 @@ class AlertEngine:
         
     async def initialize(self):
         """Initialiser le moteur d'alertes"""
+
+
+
         try:
             await self._load_rules()
             await self._load_escalation_policies()
@@ -304,6 +313,9 @@ class AlertEngine:
     
     async def create_rule(self, rule: AlertRule) -> str:
         """Créer une règle d'alerte"""
+
+
+
         try:
             # Sauvegarder en base
             rule_id = await self._save_rule(rule)
@@ -320,6 +332,9 @@ class AlertEngine:
     
     async def evaluate_conditions(self, rule_id: str, context: Dict[str, Any]) -> Optional[Alert]:
         """Évaluer les conditions d'une règle"""
+
+
+
         try:
             rule = self.rules.get(rule_id)
             if not rule or not rule.is_active:
@@ -355,6 +370,9 @@ class AlertEngine:
     
     async def acknowledge_alert(self, alert_id: str, user_id: str, notes: Optional[str] = None) -> bool:
         """Acquitter une alerte"""
+
+
+
         try:
             alert = self.active_alerts.get(alert_id)
             if not alert or alert.status != AlertStatus.ACTIVE:
@@ -384,6 +402,9 @@ class AlertEngine:
     
     async def resolve_alert(self, alert_id: str, user_id: str, notes: Optional[str] = None) -> bool:
         """Résoudre une alerte"""
+
+
+
         try:
             alert = self.active_alerts.get(alert_id)
             if not alert:
@@ -411,6 +432,9 @@ class AlertEngine:
     
     async def suppress_alert(self, alert_id: str, duration: int, user_id: str) -> bool:
         """Supprimer temporairement une alerte"""
+
+
+
         try:
             alert = self.active_alerts.get(alert_id)
             if not alert:
@@ -441,6 +465,9 @@ class AlertEngine:
     
     async def _create_or_update_alert(self, rule: AlertRule, context: Dict[str, Any]) -> Alert:
         """Créer ou mettre à jour une alerte"""
+
+
+
         try:
             # Chercher une alerte existante pour cette règle
             existing_alert = None
@@ -500,6 +527,9 @@ class AlertEngine:
     
     async def _schedule_escalation(self, alert: Alert):
         """Programmer l'escalade d'une alerte"""
+
+
+
         try:
             # Trouver la politique d'escalade appropriée
             policy = await self._find_escalation_policy(alert)
@@ -555,6 +585,9 @@ class AlertEngine:
     
     async def _process_escalation(self, alert: Alert):
         """Traiter l'escalade d'une alerte"""
+
+
+
         try:
             policy = await self._find_escalation_policy(alert)
             if not policy:
@@ -588,6 +621,9 @@ class AlertEngine:
     
     async def _execute_escalation_action(self, alert: Alert, action_config: Dict[str, Any], escalation_step: int):
         """Exécuter une action d'escalade"""
+
+
+
         try:
             action_type = EscalationAction(action_config["type"])
             recipients = action_config.get("recipients", [])
@@ -624,6 +660,9 @@ class AlertEngine:
     
     async def _send_alert_notification(self, notification: AlertNotification):
         """Envoyer une notification d'alerte"""
+
+
+
         try:
             # Sauvegarder la notification
             await self._save_notification(notification)
@@ -697,6 +736,9 @@ class AlertEngine:
     
     async def _is_suppressed(self, rule_id: str) -> bool:
         """Vérifier si une règle est supprimée"""
+
+
+
         try:
             key = f"alert:suppressed:rule:{rule_id}"
             return await self.redis.exists(key)

@@ -466,10 +466,16 @@ class BaseAPIConnector(ABC, Generic[T]):
     
     def get_status(self) -> APIConnectionStatus:
         """Get current connection status"""
+
+
+
         return self.status
     
     def get_error_count(self) -> int:
         """Get current error count"""
+
+
+
         return self.error_count
     
     def reset_error_count(self):
@@ -489,6 +495,9 @@ class StreamingPlatformConnector(BaseAPIConnector[Dict[str, Any]]):
     
     async def authenticate(self) -> bool:
         """Authenticate with streaming platform"""
+
+
+
         try:
             if self.credentials.auth_type == APIAuthType.OAUTH2:
                 return await self._oauth2_authenticate()
@@ -665,6 +674,9 @@ class PaymentGatewayConnector(BaseAPIConnector[Dict[str, Any]]):
     
     async def authenticate(self) -> bool:
         """Authenticate with payment gateway"""
+
+
+
         try:
             test_response = await self.test_connection()
             if test_response.success:
@@ -678,6 +690,9 @@ class PaymentGatewayConnector(BaseAPIConnector[Dict[str, Any]]):
     
     async def refresh_credentials(self) -> bool:
         """Refresh credentials (mostly not needed for payment gateways)"""
+
+
+
         return await self.authenticate()
     
     def _prepare_auth_headers(self) -> Dict[str, str]:
@@ -734,6 +749,9 @@ class PaymentGatewayConnector(BaseAPIConnector[Dict[str, Any]]):
     
     def validate_webhook(self, payload: str, signature: str, endpoint_secret: str) -> bool:
         """Validate webhook signature"""
+
+
+
         try:
             if self.provider == APIProvider.STRIPE:
                 # Stripe webhook validation
@@ -778,6 +796,9 @@ class APIConnectorManager:
     
     async def add_connector(self, credentials: APICredentials) -> bool:
         """Add new API connector"""
+
+
+
         try:
             provider = credentials.provider
             
@@ -805,6 +826,9 @@ class APIConnectorManager:
     
     def get_connector(self, provider: APIProvider) -> Optional[BaseAPIConnector]:
         """Get connector for specific provider"""
+
+
+
         return self.connectors.get(provider)
     
     async def remove_connector(self, provider: APIProvider) -> bool:
@@ -851,6 +875,9 @@ class APIConnectorManager:
     
     def get_all_statuses(self) -> Dict[APIProvider, APIConnectionStatus]:
         """Get status of all connectors"""
+
+
+
         return {provider: connector.get_status() 
                 for provider, connector in self.connectors.items()}
     

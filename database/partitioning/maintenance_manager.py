@@ -19,7 +19,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING 🚨
+ INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
@@ -212,6 +212,9 @@ class HealthMonitor:
     
     def _partition_exists(self, session: Session, partition_name: str) -> bool:
         """Check if partition exists"""
+
+
+
         try:
             result = session.execute(text(f"""
                 SELECT EXISTS (
@@ -225,6 +228,9 @@ class HealthMonitor:
     
     def _get_partition_statistics(self, session: Session, partition_name: str) -> Dict[str, Any]:
         """Get basic partition statistics"""
+
+
+
         try:
             result = session.execute(text(f"""
                 SELECT 
@@ -251,6 +257,9 @@ class HealthMonitor:
     
     def _calculate_bloat_ratio(self, session: Session, partition_name: str) -> float:
         """Calculate table bloat ratio"""
+
+
+
         try:
             # Simplified bloat calculation
             result = session.execute(text(f"""
@@ -273,6 +282,9 @@ class HealthMonitor:
     
     def _check_index_usage(self, session: Session, partition_name: str) -> Dict[str, float]:
         """Check index usage statistics"""
+
+
+
         try:
             result = session.execute(text(f"""
                 SELECT 
@@ -299,6 +311,9 @@ class HealthMonitor:
     
     def _check_fragmentation(self, session: Session, partition_name: str) -> float:
         """Check table fragmentation level"""
+
+
+
         try:
             # PostgreSQL-specific fragmentation check
             result = session.execute(text(f"""
@@ -316,6 +331,9 @@ class HealthMonitor:
     
     def _get_maintenance_history(self, session: Session, partition_name: str) -> Dict[str, datetime]:
         """Get maintenance operation history"""
+
+
+
         try:
             # This would typically come from a maintenance log table
             # For now, using PostgreSQL statistics
@@ -342,6 +360,9 @@ class HealthMonitor:
     
     def _calculate_query_performance(self, session: Session, partition_name: str) -> float:
         """Calculate average query performance"""
+
+
+
         try:
             # This would typically use query performance statistics
             # Simplified implementation
@@ -475,6 +496,9 @@ class MaintenanceScheduler:
         
     def schedule_maintenance(self, task: MaintenanceTask) -> bool:
         """Schedule maintenance task"""
+
+
+
         try:
             with self.schedule_lock:
                 # Validate task
@@ -607,6 +631,9 @@ class MaintenanceScheduler:
     
     def _is_system_load_acceptable(self) -> bool:
         """Check if system load is acceptable for maintenance"""
+
+
+
         try:
             cpu_percent = psutil.cpu_percent(interval=1)
             memory_percent = psutil.virtual_memory().percent
@@ -662,6 +689,9 @@ class MaintenanceExecutor:
         
     def execute_task(self, task: MaintenanceTask) -> bool:
         """Execute maintenance task"""
+
+
+
         try:
             logger.info(f"Executing maintenance task: {task.task_id} ({task.task_type.value})")
             
@@ -692,6 +722,9 @@ class MaintenanceExecutor:
     
     def _execute_vacuum(self, task: MaintenanceTask) -> bool:
         """Execute VACUUM operation"""
+
+
+
         try:
             with self.session_factory() as session:
                 vacuum_type = task.parameters.get('vacuum_type', 'standard')
@@ -713,6 +746,9 @@ class MaintenanceExecutor:
     
     def _execute_analyze(self, task: MaintenanceTask) -> bool:
         """Execute ANALYZE operation"""
+
+
+
         try:
             with self.session_factory() as session:
                 session.execute(text(f"ANALYZE {task.target_partition}"))
@@ -726,6 +762,9 @@ class MaintenanceExecutor:
     
     def _execute_reindex(self, task: MaintenanceTask) -> bool:
         """Execute REINDEX operation"""
+
+
+
         try:
             with self.session_factory() as session:
                 # REINDEX entire table
@@ -740,6 +779,9 @@ class MaintenanceExecutor:
     
     def _execute_compress(self, task: MaintenanceTask) -> bool:
         """Execute compression operation"""
+
+
+
         try:
             # This would implement table compression
             # For PostgreSQL, this might involve creating a compressed copy
@@ -752,6 +794,9 @@ class MaintenanceExecutor:
     
     def _execute_backup(self, task: MaintenanceTask) -> bool:
         """Execute backup operation"""
+
+
+
         try:
             # This would implement partition backup
             # Could use pg_dump for specific partition
@@ -764,6 +809,9 @@ class MaintenanceExecutor:
     
     def _execute_optimize(self, task: MaintenanceTask) -> bool:
         """Execute optimization operation"""
+
+
+
         try:
             # Combined optimization: VACUUM + ANALYZE + index optimization
             with self.session_factory() as session:
@@ -778,6 +826,9 @@ class MaintenanceExecutor:
     
     def _execute_health_check(self, task: MaintenanceTask) -> bool:
         """Execute health check"""
+
+
+
         try:
             # Health check would be performed by HealthMonitor
             logger.info(f"Health check completed for {task.target_partition}")
@@ -789,6 +840,9 @@ class MaintenanceExecutor:
     
     def _execute_statistics_update(self, task: MaintenanceTask) -> bool:
         """Execute statistics update"""
+
+
+
         try:
             with self.session_factory() as session:
                 session.execute(text(f"ANALYZE {task.target_partition}"))
@@ -857,6 +911,9 @@ class MaintenanceManager:
     
     def schedule_maintenance_task(self, task: MaintenanceTask) -> bool:
         """Schedule maintenance task"""
+
+
+
         return self.scheduler.schedule_maintenance(task)
     
     def create_maintenance_task(self, 
@@ -894,6 +951,9 @@ class MaintenanceManager:
     
     def force_maintenance(self, partition_name: str, table_name: str = None) -> bool:
         """Force immediate maintenance for partition"""
+
+
+
         try:
             # Create and schedule high-priority maintenance tasks
             tasks = [
@@ -923,10 +983,16 @@ class MaintenanceManager:
     
     def check_partition_health(self, partition_name: str, table_name: str) -> PartitionHealth:
         """Check partition health"""
+
+
+
         return self.health_monitor.check_partition_health(partition_name, table_name)
     
     def get_health_summary(self) -> Dict[str, Any]:
         """Get health summary for all registered partitions"""
+
+
+
         try:
             health_summary = {
                 'total_partitions': len(self.partition_registry),
@@ -986,6 +1052,9 @@ class MaintenanceManager:
     
     def _monitoring_cycle(self):
         """Single monitoring cycle"""
+
+
+
         try:
             # Check for ready tasks
             ready_tasks = self.scheduler.get_next_tasks()
@@ -1006,6 +1075,9 @@ class MaintenanceManager:
     
     def _execute_task_wrapper(self, task: MaintenanceTask):
         """Wrapper for task execution with proper error handling"""
+
+
+
         try:
             success = self.executor.execute_task(task)
             self.scheduler.mark_task_completed(task.task_id, success, task.error_message)
@@ -1016,6 +1088,9 @@ class MaintenanceManager:
     
     def _perform_automated_health_checks(self):
         """Perform automated health checks and schedule maintenance"""
+
+
+
         try:
             current_hour = datetime.utcnow().hour
             
@@ -1054,6 +1129,9 @@ class MaintenanceManager:
     
     def generate_maintenance_report(self, period_days: int = 7) -> MaintenanceReport:
         """Generate comprehensive maintenance report"""
+
+
+
         try:
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(days=period_days)
@@ -1138,6 +1216,9 @@ class MaintenanceManager:
     
     def get_system_status(self) -> Dict[str, Any]:
         """Get comprehensive maintenance system status"""
+
+
+
         try:
             with self._lock:
                 pending_tasks = len(self.scheduler.task_queue)
@@ -1178,6 +1259,9 @@ class MaintenanceManager:
     
     def shutdown(self):
         """Shutdown maintenance manager gracefully"""
+
+
+
         try:
             logger.info("Shutting down maintenance manager...")
             

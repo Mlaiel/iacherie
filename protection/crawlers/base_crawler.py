@@ -1,5 +1,5 @@
 """
-🔍 Enterprise Base Platform Crawler Infrastructure
+ Enterprise Base Platform Crawler Infrastructure
 =================================================
 
 Advanced abstract base class and standardized structures for enterprise-grade 
@@ -20,7 +20,7 @@ Enterprise Features:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
+ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
 """
@@ -149,10 +149,16 @@ class PerformanceMetrics:
     
     def get_avg_response_time(self) -> float:
         """Calculate average response time."""
+
+
+
         return sum(self.request_times) / len(self.request_times) if self.request_times else 0.0
     
     def get_success_rate(self) -> float:
         """Calculate success rate percentage."""
+
+
+
         return (self.success_count / max(self.total_requests, 1)) * 100
 
 class BasePlatformCrawler(ABC):
@@ -277,6 +283,9 @@ class BasePlatformCrawler(ABC):
     
     def _load_rate_limits(self) -> RateLimitInfo:
         """Load platform-specific rate limits from configuration."""
+
+
+
         return RateLimitInfo(
             requests_per_minute=self.config.get('rate_limit_rpm', self.DEFAULT_RATE_LIMITS.requests_per_minute),
             requests_per_hour=self.config.get('rate_limit_rph', self.DEFAULT_RATE_LIMITS.requests_per_hour),
@@ -359,6 +368,9 @@ class BasePlatformCrawler(ABC):
     
     def _get_random_user_agent(self) -> str:
         """Get random user agent for anti-detection."""
+
+
+
         return random.choice(self.user_agents)
     
     def _get_next_proxy(self) -> Optional[str]:
@@ -378,6 +390,9 @@ class BasePlatformCrawler(ABC):
     
     def _is_duplicate_content(self, content_hash: str) -> bool:
         """Check if content has been seen before."""
+
+
+
         return content_hash in self.seen_content_hashes
     
     def _add_to_content_cache(self, result: CrawlResult):
@@ -463,6 +478,9 @@ class BasePlatformCrawler(ABC):
         Returns:
             True if monitoring started successfully
         """
+
+
+
         try:
             if monitor_id in self.monitoring_tasks:
                 logger.warning(f"Monitoring already active for {monitor_id}")
@@ -491,6 +509,9 @@ class BasePlatformCrawler(ABC):
         Returns:
             True if monitoring stopped successfully
         """
+
+
+
         try:
             if monitor_id in self.monitoring_tasks:
                 self.monitoring_tasks[monitor_id].cancel()
@@ -570,6 +591,9 @@ class BasePlatformCrawler(ABC):
         Returns:
             Dictionary with status information
         """
+
+
+
         return {
             "platform": self.platform,
             "status": self.status.value,

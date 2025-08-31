@@ -7,7 +7,7 @@ anomaly identification, and intelligent event relationship mapping.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, distribution, or commercialization is strictly prohibited.
 """
@@ -167,6 +167,9 @@ class EventCorrelator:
 
     async def initialize(self) -> bool:
         """Initialize event correlation system with ML models"""
+
+
+
         try:
             # Load pre-trained correlation patterns
             await self._load_correlation_patterns()
@@ -320,6 +323,9 @@ class EventCorrelator:
         Returns:
             Detected attack patterns and indicators
         """
+
+
+
         try:
             # Enrich security events with contextual information
             enriched_events = await self._enrich_security_events(security_events)
@@ -384,6 +390,9 @@ class EventCorrelator:
         Returns:
             Learned pattern results and model updates
         """
+
+
+
         try:
             # Prepare historical data for ML analysis
             feature_matrix = await self._extract_correlation_features(historical_events)
@@ -448,6 +457,9 @@ class EventCorrelator:
         Returns:
             Predicted event sequences and probabilities
         """
+
+
+
         try:
             # Extract sequence patterns from current events
             current_patterns = await self._extract_sequence_patterns(current_events)
@@ -500,6 +512,9 @@ class EventCorrelator:
         Returns:
             Detailed correlation insights and analytics
         """
+
+
+
         try:
             end_time = datetime.now(timezone.utc)
             start_time = end_time - time_period

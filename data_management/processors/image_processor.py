@@ -1,5 +1,5 @@
 """
-🖼️ Image Processor - IA Influencer Agent Platform Enterprise
+ Image Processor - IA Influencer Agent Platform Enterprise
 =============================================================
 Module: backend/data_management/processors/image_processor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Image Processing - Enterprise Production-Ready
 Responsibility: Traitement avancé des images pour créateurs multi-format
 ===========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -63,6 +63,9 @@ class ImageProcessor(BaseProcessor):
     
     def _init_ai_models(self):
         """Initialize AI models for content analysis"""
+
+
+
         try:
             # CLIP model for semantic analysis
             self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
@@ -95,6 +98,9 @@ class ImageProcessor(BaseProcessor):
     
     def process(self, input_data: Any) -> Dict[str, Any]:
         """Traite une image complètement"""
+
+
+
         try:
             # Load image
             image_data = self._load_image(input_data)
@@ -338,6 +344,9 @@ class ImageProcessor(BaseProcessor):
     
     def _estimate_noise(self, gray_image: np.ndarray) -> float:
         """Estime le niveau de bruit"""
+
+
+
         return cv2.fastNlMeansDenoising(gray_image).var()
     
     def _calculate_quality_score(self, sharpness: float, brightness: float, 
@@ -479,6 +488,9 @@ class ImageProcessor(BaseProcessor):
     
     def _extract_semantic_features(self, pil_image: Image.Image) -> Dict[str, Any]:
         """Extraction de caractéristiques sémantiques avec CLIP"""
+
+
+
         try:
             inputs = self.clip_processor(images=pil_image, return_tensors="pt")
             with torch.no_grad():

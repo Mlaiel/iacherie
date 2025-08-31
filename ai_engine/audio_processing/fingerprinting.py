@@ -1,5 +1,5 @@
 """
-🔬 Audio Fingerprinting Module - Advanced Content Identification Engine
+ Audio Fingerprinting Module - Advanced Content Identification Engine
 
 Professional audio fingerprinting and content matching system for the IA Influencer Agent platform.
 Implements state-of-the-art audio identification algorithms for copyright protection and content discovery.
@@ -53,6 +53,9 @@ class AudioFingerprint:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert fingerprint to dictionary for storage"""
+
+
+
         return {
             'fingerprint_data': self._serialize_fingerprint_data(),
             'fingerprint_type': self.fingerprint_type.value,
@@ -111,7 +114,7 @@ class MatchResult:
 
 class SpectralLandmarkExtractor:
     """
-    🗺️ Spectral Landmark Extraction Engine
+     Spectral Landmark Extraction Engine
     
     Advanced landmark-based fingerprinting similar to Shazam algorithm:
     - Peak detection in spectral domain
@@ -147,6 +150,9 @@ class SpectralLandmarkExtractor:
         Returns:
             List of landmarks as (time_frame, freq_bin, target_time_frame) tuples
         """
+
+
+
         try:
             # Compute spectrogram
             stft = librosa.stft(
@@ -264,7 +270,7 @@ class SpectralLandmarkExtractor:
 
 class AudioFingerprinter:
     """
-    🔍 Professional Audio Fingerprinting Engine
+     Professional Audio Fingerprinting Engine
     
     Advanced multi-algorithm fingerprinting system:
     - Multiple fingerprinting algorithms
@@ -291,6 +297,9 @@ class AudioFingerprinter:
     
     def _init_database(self):
         """Initialize fingerprint database"""
+
+
+
         try:
             with sqlite3.connect(str(self.database_path)) as conn:
                 cursor = conn.cursor()
@@ -346,6 +355,9 @@ class AudioFingerprinter:
         Returns:
             AudioFingerprint object
         """
+
+
+
         try:
             duration = len(audio_data) / sample_rate
             
@@ -388,6 +400,9 @@ class AudioFingerprinter:
                                                 audio_data: np.ndarray, 
                                                 sample_rate: int) -> np.ndarray:
         """Generate spectral hash fingerprint"""
+
+
+
         try:
             # Compute mel spectrogram
             mel_spec = librosa.feature.melspectrogram(
@@ -420,6 +435,9 @@ class AudioFingerprinter:
                                             audio_data: np.ndarray, 
                                             sample_rate: int) -> np.ndarray:
         """Generate MFCC-based hash fingerprint"""
+
+
+
         try:
             # Extract MFCC features
             mfcc = librosa.feature.mfcc(
@@ -446,6 +464,9 @@ class AudioFingerprinter:
                                               audio_data: np.ndarray, 
                                               sample_rate: int) -> bytes:
         """Generate Chromaprint-style fingerprint"""
+
+
+
         try:
             # Extract chroma features
             chroma = librosa.feature.chroma_cqt(
@@ -489,6 +510,9 @@ class AudioFingerprinter:
                                            audio_data: np.ndarray, 
                                            sample_rate: int) -> Dict[str, Any]:
         """Generate combined fingerprint using multiple algorithms"""
+
+
+
         try:
             combined = {}
             
@@ -506,6 +530,9 @@ class AudioFingerprinter:
     
     async def store_fingerprint(self, fingerprint: AudioFingerprint) -> bool:
         """Store fingerprint in database"""
+
+
+
         try:
             with sqlite3.connect(str(self.database_path)) as conn:
                 cursor = conn.cursor()
@@ -541,6 +568,9 @@ class AudioFingerprinter:
                              audio_id: str, 
                              fingerprint_type: FingerprintType) -> Optional[AudioFingerprint]:
         """Load fingerprint from database"""
+
+
+
         try:
             with sqlite3.connect(str(self.database_path)) as conn:
                 cursor = conn.cursor()
@@ -590,7 +620,7 @@ class AudioFingerprinter:
 
 class ContentMatcher:
     """
-    🎯 Advanced Audio Content Matching Engine
+     Advanced Audio Content Matching Engine
     
     High-performance content matching system:
     - Multi-algorithm matching strategies
@@ -632,6 +662,9 @@ class ContentMatcher:
         Returns:
             List of match results sorted by similarity
         """
+
+
+
         try:
             if min_similarity is None:
                 min_similarity = self.similarity_thresholds.get(
@@ -685,6 +718,9 @@ class ContentMatcher:
     async def _load_candidate_fingerprints(self, 
                                          fingerprint_type: FingerprintType) -> List[AudioFingerprint]:
         """Load candidate fingerprints from database"""
+
+
+
         try:
             candidates = []
             
@@ -725,6 +761,9 @@ class ContentMatcher:
                                   query_fp: AudioFingerprint,
                                   candidate_fp: AudioFingerprint) -> float:
         """Calculate similarity between two fingerprints"""
+
+
+
         try:
             fingerprint_type = query_fp.fingerprint_type
             
@@ -853,6 +892,9 @@ class ContentMatcher:
         Returns:
             List of potential copyright violations
         """
+
+
+
         try:
             # Find high-similarity matches
             matches = await self.find_matches(
@@ -878,6 +920,9 @@ class ContentMatcher:
                                    query_fingerprints: List[AudioFingerprint],
                                    max_results_per_query: int = 5) -> Dict[str, List[MatchResult]]:
         """Perform batch content matching for multiple queries"""
+
+
+
         try:
             results = {}
             
@@ -897,6 +942,9 @@ class ContentMatcher:
     
     def get_database_statistics(self) -> Dict[str, Any]:
         """Get fingerprint database statistics"""
+
+
+
         try:
             stats = {}
             

@@ -55,7 +55,7 @@ Integrity Checker - Data Integrity and Consistency Validation
 Enterprise-grade data integrity checking system for multi-format content.
 Provides comprehensive integrity validation, corruption detection, and consistency verification.
 
-⚠️  COPYRIGHT WARNING ⚠️
+  COPYRIGHT WARNING 
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or theft of this code or concept without explicit 
 written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and 
@@ -475,6 +475,9 @@ class IntegrityChecker:
         expected_checksums: Optional[Dict[str, str]]
     ):
         """Perform checksum validation"""
+
+
+
         
         try:
             # Calculate checksums
@@ -544,6 +547,9 @@ class IntegrityChecker:
     
     async def _check_structure(self, content_bytes: bytes, content_type: str, result: IntegrityResult):
         """Check content structure integrity"""
+
+
+
         
         try:
             if content_type == "audio":
@@ -567,6 +573,9 @@ class IntegrityChecker:
     
     async def _check_audio_structure(self, content_bytes: bytes, result: IntegrityResult):
         """Check audio file structure integrity"""
+
+
+
         
         try:
             # Check for common audio signatures
@@ -627,6 +636,9 @@ class IntegrityChecker:
     
     async def _check_image_structure(self, content_bytes: bytes, result: IntegrityResult):
         """Check image file structure integrity"""
+
+
+
         
         try:
             # Check image signatures
@@ -689,6 +701,9 @@ class IntegrityChecker:
     
     async def _check_text_structure(self, content_bytes: bytes, result: IntegrityResult):
         """Check text file structure integrity"""
+
+
+
         
         try:
             # Detect encoding
@@ -735,6 +750,9 @@ class IntegrityChecker:
     
     async def _check_generic_structure(self, content_bytes: bytes, result: IntegrityResult):
         """Generic structure check for unknown content types"""
+
+
+
         
         try:
             # Check file size
@@ -815,6 +833,9 @@ class IntegrityChecker:
     
     async def _check_corruption(self, content_bytes: bytes, content_type: str, result: IntegrityResult):
         """Check for content corruption indicators"""
+
+
+
         
         try:
             # Check for repeating patterns (possible corruption)
@@ -859,6 +880,9 @@ class IntegrityChecker:
     
     async def _check_image_corruption(self, content_bytes: bytes, result: IntegrityResult):
         """Check for image-specific corruption"""
+
+
+
         
         try:
             # JPEG corruption indicators
@@ -909,6 +933,9 @@ class IntegrityChecker:
     
     async def _check_audio_corruption(self, content_bytes: bytes, result: IntegrityResult):
         """Check for audio-specific corruption"""
+
+
+
         
         try:
             # MP3 corruption indicators
@@ -960,6 +987,9 @@ class IntegrityChecker:
     
     async def _check_format_integrity(self, content_bytes: bytes, content_type: str, result: IntegrityResult):
         """Check format-specific integrity requirements"""
+
+
+
         
         try:
             # Format-specific integrity checks would go here
@@ -993,6 +1023,9 @@ class IntegrityChecker:
         metadata: Optional[Dict[str, Any]]
     ):
         """Check metadata integrity and consistency"""
+
+
+
         
         try:
             if metadata:
@@ -1032,6 +1065,9 @@ class IntegrityChecker:
     
     async def _check_encoding_integrity(self, content_bytes: bytes, content_type: str, result: IntegrityResult):
         """Check encoding integrity for text content"""
+
+
+
         
         try:
             if content_type == "text":
@@ -1109,6 +1145,9 @@ class IntegrityChecker:
     
     def get_known_checksum(self, content_id: str) -> Optional[Dict[str, str]]:
         """Get known checksums for content"""
+
+
+
         return self.known_checksums.get(content_id)
     
     def create_integrity_profile(self, profile: IntegrityProfile):
@@ -1118,6 +1157,9 @@ class IntegrityChecker:
     
     def list_profiles(self) -> List[str]:
         """List available integrity profiles"""
+
+
+
         return list(self.profiles.keys())
     
     def get_integrity_statistics(self) -> Dict[str, Any]:
@@ -1345,6 +1387,9 @@ class IntegrityChecker:
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Verify content checksum"""
+
+
+
         
         try:
             # Calculate actual checksum
@@ -1400,6 +1445,9 @@ class IntegrityChecker:
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Validate content structure"""
+
+
+
         
         try:
             # Content type specific structure validation
@@ -1430,6 +1478,9 @@ class IntegrityChecker:
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Check reference integrity (external dependencies)"""
+
+
+
         
         try:
             result = {
@@ -1496,6 +1547,9 @@ class IntegrityChecker:
         content_type: str
     ) -> Dict[str, Any]:
         """Detect content corruption"""
+
+
+
         
         try:
             result = {

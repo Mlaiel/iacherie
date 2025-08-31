@@ -7,7 +7,7 @@ Provides instant visibility into content performance across all platforms.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Development Team: Lead AI Developer, Senior Backend Engineer, ML Engineer, DBA, Security Expert
 
-⚠️ INTELLECTUAL PROPERTY WARNING ⚠️
+ INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 """
@@ -99,6 +99,9 @@ class DashboardAlert:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for JSON serialization"""
+
+
+
         return {
             "id": self.id,
             "title": self.title,
@@ -214,6 +217,9 @@ class RealTimeDashboard:
     
     async def _save_session_to_db(self, user_id: str, session_token: str, config: Dict[str, Any]):
         """Save dashboard session to database"""
+
+
+
         try:
             session = DashboardSession(
                 user_id=user_id,
@@ -234,6 +240,9 @@ class RealTimeDashboard:
     
     async def _update_session_status(self, session_token: str, is_active: bool):
         """Update session status in database"""
+
+
+
         try:
             session = self.db_session.query(DashboardSession).filter(
                 DashboardSession.session_token == session_token
@@ -250,6 +259,9 @@ class RealTimeDashboard:
     
     async def _send_initial_dashboard_data(self, session_token: str):
         """Send initial dashboard data to connected user"""
+
+
+
         try:
             session_info = self.user_sessions.get(session_token)
             if not session_info:
@@ -279,6 +291,9 @@ class RealTimeDashboard:
     
     async def _get_widget_data(self, user_id: str, widget: DashboardWidget) -> Dict[str, Any]:
         """Get data for specific dashboard widget"""
+
+
+
         try:
             if widget == DashboardWidget.REAL_TIME_METRICS:
                 return await self._get_real_time_metrics(user_id)
@@ -379,6 +394,9 @@ class RealTimeDashboard:
     
     async def _get_platform_comparison(self, user_id: str) -> Dict[str, Any]:
         """Get platform comparison data"""
+
+
+
         return {
             "widget_type": "platform_comparison",
             "data": {
@@ -408,6 +426,9 @@ class RealTimeDashboard:
     
     async def _get_trending_content(self, user_id: str) -> Dict[str, Any]:
         """Get trending content data"""
+
+
+
         return {
             "widget_type": "trending_content",
             "data": {
@@ -435,6 +456,9 @@ class RealTimeDashboard:
     
     async def _get_audience_insights(self, user_id: str) -> Dict[str, Any]:
         """Get audience insights data"""
+
+
+
         return {
             "widget_type": "audience_insights",
             "data": {
@@ -455,6 +479,9 @@ class RealTimeDashboard:
     
     async def _get_revenue_tracking(self, user_id: str) -> Dict[str, Any]:
         """Get revenue tracking data"""
+
+
+
         return {
             "widget_type": "revenue_tracking",
             "data": {
@@ -489,6 +516,9 @@ class RealTimeDashboard:
     
     async def _get_optimization_suggestions(self, user_id: str) -> Dict[str, Any]:
         """Get optimization suggestions"""
+
+
+
         return {
             "widget_type": "optimization_suggestions",
             "data": {
@@ -512,6 +542,9 @@ class RealTimeDashboard:
     
     async def _get_growth_trends(self, user_id: str) -> Dict[str, Any]:
         """Get growth trends data"""
+
+
+
         return {
             "widget_type": "growth_trends",
             "data": {
@@ -536,6 +569,9 @@ class RealTimeDashboard:
     
     async def _get_competitor_analysis(self, user_id: str) -> Dict[str, Any]:
         """Get competitor analysis data"""
+
+
+
         return {
             "widget_type": "competitor_analysis",
             "data": {
@@ -555,6 +591,9 @@ class RealTimeDashboard:
     
     async def _start_real_time_updates(self, session_token: str):
         """Start real-time updates for connected user"""
+
+
+
         try:
             session_info = self.user_sessions.get(session_token)
             if not session_info:
@@ -593,6 +632,9 @@ class RealTimeDashboard:
     
     async def _check_and_send_alerts(self, session_token: str, user_id: str):
         """Check for new alerts and send to user"""
+
+
+
         try:
             new_alerts = await self.alert_manager.get_new_alerts(user_id)
             
@@ -643,6 +685,9 @@ class RealTimeDashboard:
     
     async def update_widget_configuration(self, session_token: str, widget_config: Dict[str, Any]) -> bool:
         """Update widget configuration for user session"""
+
+
+
         try:
             if session_token not in self.user_sessions:
                 return False
@@ -681,6 +726,9 @@ class AlertManager:
     
     async def create_alert(self, user_id: str, alert: DashboardAlert) -> bool:
         """Create new alert for user"""
+
+
+
         try:
             alert_key = f"alerts:{user_id}:{alert.id}"
             alert_data = json.dumps(alert.to_dict())
@@ -701,6 +749,9 @@ class AlertManager:
     
     async def get_user_alerts(self, user_id: str) -> List[DashboardAlert]:
         """Get all active alerts for user"""
+
+
+
         try:
             user_alerts_key = f"user_alerts:{user_id}"
             alert_ids = self.redis_client.lrange(user_alerts_key, 0, -1)
@@ -743,6 +794,9 @@ class AlertManager:
     
     async def dismiss_alert(self, user_id: str, alert_id: str) -> bool:
         """Dismiss specific alert"""
+
+
+
         try:
             alert_key = f"alerts:{user_id}:{alert_id}"
             user_alerts_key = f"user_alerts:{user_id}"

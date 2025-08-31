@@ -106,11 +106,17 @@ class TestComplianceValidator:
     @pytest.fixture
     def compliance_validator(self):
         """Fixture pour le validateur de compliance."""
+
+
+
         return ComplianceValidator()
     
     @pytest.fixture
     def sample_compliant_content(self):
         """Génère du contenu conforme pour les tests."""
+
+
+
         return {
             'content_type': 'image',
             'platform': 'instagram',
@@ -141,6 +147,9 @@ class TestComplianceValidator:
     @pytest.fixture
     def sample_violating_content(self):
         """Génère du contenu avec violations pour les tests."""
+
+
+
         return {
             'content_type': 'video',
             'platform': 'youtube',
@@ -234,16 +243,25 @@ class TestPlatformPolicyChecker:
     @pytest.fixture
     def instagram_checker(self):
         """Fixture pour le vérificateur Instagram."""
+
+
+
         return PlatformPolicyChecker('instagram')
     
     @pytest.fixture
     def youtube_checker(self):
         """Fixture pour le vérificateur YouTube."""
+
+
+
         return PlatformPolicyChecker('youtube')
     
     @pytest.fixture
     def tiktok_checker(self):
         """Fixture pour le vérificateur TikTok."""
+
+
+
         return PlatformPolicyChecker('tiktok')
     
     def test_instagram_policy_validation(self, instagram_checker):
@@ -341,6 +359,9 @@ class TestLegalComplianceAnalyzer:
     @pytest.fixture
     def legal_analyzer(self):
         """Fixture pour l'analyseur légal."""
+
+
+
         return LegalComplianceAnalyzer()
     
     def test_gdpr_compliance_check(self, legal_analyzer):
@@ -462,6 +483,9 @@ class TestContentModerationEngine:
     @pytest.fixture
     def moderation_engine(self):
         """Fixture pour le moteur de modération."""
+
+
+
         return ContentModerationEngine()
     
     def test_text_content_moderation(self, moderation_engine):
@@ -577,6 +601,9 @@ class TestPrivacyComplianceChecker:
     @pytest.fixture
     def privacy_checker(self):
         """Fixture pour le vérificateur de vie privée."""
+
+
+
         return PrivacyComplianceChecker()
     
     def test_personal_data_detection(self, privacy_checker):
@@ -650,6 +677,9 @@ class TestComplianceReporting:
     @pytest.fixture
     def compliance_report(self):
         """Fixture pour le rapport de compliance."""
+
+
+
         return ComplianceReport() if 'ComplianceReport' in globals() else None
     
     def test_generate_compliance_report(self, compliance_report):

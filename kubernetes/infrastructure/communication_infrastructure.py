@@ -17,7 +17,7 @@ Features:
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED 
 """
 
 import asyncio
@@ -155,6 +155,9 @@ class CommunicationInfrastructureManager:
         
     async def deploy_communication_infrastructure(self, spec: CommunicationInfrastructureSpec) -> Dict[str, Any]:
         """Deploy comprehensive real-time communication infrastructure"""
+
+
+
         try:
             results = {}
             logger.info("Deploying real-time communication infrastructure for IA Influencer platform")
@@ -233,6 +236,9 @@ class CommunicationInfrastructureManager:
     
     async def _deploy_websocket_infrastructure(self, spec: CommunicationInfrastructureSpec) -> Dict[str, Any]:
         """Deploy WebSocket infrastructure for real-time communication"""
+
+
+
         try:
             # Deploy WebSocket gateway
             websocket_gateway = client.V1Deployment(
@@ -350,6 +356,9 @@ class CommunicationInfrastructureManager:
     
     async def _deploy_notification_services(self, spec: CommunicationInfrastructureSpec) -> Dict[str, Any]:
         """Deploy comprehensive notification services"""
+
+
+
         try:
             # Deploy unified notification service
             notification_service = client.V1Deployment(
@@ -481,6 +490,9 @@ class CommunicationInfrastructureManager:
     
     async def _deploy_live_streaming_infrastructure(self, spec: CommunicationInfrastructureSpec) -> Dict[str, Any]:
         """Deploy live streaming infrastructure for content creators"""
+
+
+
         try:
             # Deploy streaming media server
             streaming_server = client.V1Deployment(
@@ -581,6 +593,9 @@ class CommunicationInfrastructureManager:
     
     async def send_notification(self, notification: NotificationMessage) -> Dict[str, Any]:
         """Send notification through specified delivery channels"""
+
+
+
         try:
             delivery_results = {}
             
@@ -633,6 +648,9 @@ class CommunicationInfrastructureManager:
     
     async def broadcast_event(self, event: EventMessage) -> Dict[str, Any]:
         """Broadcast event to all relevant subscribers"""
+
+
+
         try:
             # Validate event message
             if not event.event_id:
@@ -665,6 +683,9 @@ class CommunicationInfrastructureManager:
     
     async def get_communication_status(self, namespace: str = "ia-influencer-communication") -> Dict[str, Any]:
         """Get comprehensive communication infrastructure status"""
+
+
+
         try:
             status = {
                 'overall_health': 'healthy',
@@ -748,6 +769,9 @@ def create_notification_message(user_id: str, notification_type: NotificationTyp
                                title: str, content: str, 
                                channels: List[DeliveryChannel]) -> NotificationMessage:
     """Create a standardized notification message"""
+
+
+
     return NotificationMessage(
         message_id=str(uuid.uuid4()),
         user_id=user_id,
@@ -761,6 +785,9 @@ def create_notification_message(user_id: str, notification_type: NotificationTyp
 def create_event_message(stream_type: StreamType, event_type: str, 
                         payload: Dict[str, Any], user_id: str = None) -> EventMessage:
     """Create a standardized event message"""
+
+
+
     return EventMessage(
         event_id=str(uuid.uuid4()),
         stream_type=stream_type,
@@ -779,6 +806,6 @@ def format_content_upload_notification(creator_name: str, content_title: str,
 
 def format_revenue_notification(amount: float, currency: str = "USD") -> Tuple[str, str]:
     """Format revenue notification"""
-    title = "💰 Revenue Earned!"
+    title = " Revenue Earned!"
     content = f"You've earned {currency} {amount:.2f} from your content. Keep creating!"
     return title, content

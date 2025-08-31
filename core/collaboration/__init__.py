@@ -5,7 +5,7 @@ Developed by: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved - Unauthorized use is strictly prohibited
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive property of Fahed Mlaiel.
 Any attempt to steal, copy, or reproduce this concept, idea, or code
 without explicit written authorization from Fahed Mlaiel is strictly forbidden

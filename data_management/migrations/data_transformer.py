@@ -1,5 +1,5 @@
 """
-🔄 Data Transformer - Enterprise Data Migration and Transformation Engine
+ Data Transformer - Enterprise Data Migration and Transformation Engine
 =========================================================================
 
 Ultra-advanced data transformation system for IA Influencer Agent platform:
@@ -13,7 +13,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+ UNAUTHORIZED USE STRICTLY PROHIBITED 
 This data transformation engine is protected intellectual property.
 Contact mlaiel@live.de for licensing inquiries.
 """
@@ -202,6 +202,9 @@ class DataTransformer:
         - Numpy arrays to pickle format for database storage
         - JSON to structured format for analytics
         """
+
+
+
         try:
             if source_format == DataFormat.NUMPY and target_format == DataFormat.PICKLE:
                 if isinstance(data, np.ndarray):
@@ -406,6 +409,9 @@ class DataTransformer:
             
     async def _migrate_fingerprint_schema(self, row: Any) -> Dict[str, Any]:
         """Migrate fingerprint data to new schema format"""
+
+
+
         return {
             "fingerprint_id": str(row[0]),  # Generate UUID from legacy ID
             "hash_fingerprint": row[1],     # Copy hash
@@ -513,4 +519,7 @@ class DataTransformer:
         
     async def _get_session(self) -> Session:
         """Get database session"""
+
+
+
         return self.session_maker()

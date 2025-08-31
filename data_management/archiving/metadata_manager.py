@@ -7,7 +7,7 @@ indexing, search capabilities, schema management, and content classification.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -262,6 +262,9 @@ class MetadataValidator:
         Returns:
             Tuple of (is_valid, error_messages)
         """
+
+
+
         try:
             errors = []
             
@@ -358,6 +361,9 @@ class MetadataIndexer:
     
     async def index_metadata(self, entry: MetadataEntry, schema: MetadataSchema):
         """Index metadata entry for search"""
+
+
+
         try:
             entry_id = entry.entry_id
             
@@ -384,6 +390,9 @@ class MetadataIndexer:
     
     async def search_index(self, criteria: SearchCriteria) -> List[str]:
         """Search indexed metadata"""
+
+
+
         try:
             candidate_entry_ids = set()
             
@@ -569,6 +578,9 @@ class ArchivalMetadataManager:
     
     async def create_schema(self, schema: MetadataSchema) -> bool:
         """Create a new metadata schema"""
+
+
+
         try:
             # Validate schema
             if not await self._validate_schema(schema):
@@ -591,6 +603,9 @@ class ArchivalMetadataManager:
     
     async def update_schema(self, schema_id: str, updates: Dict[str, Any]) -> bool:
         """Update an existing schema"""
+
+
+
         try:
             if schema_id not in self.schemas:
                 raise ArchivalError(f"Schema not found: {schema_id}")
@@ -613,6 +628,9 @@ class ArchivalMetadataManager:
     
     async def add_metadata(self, entry: MetadataEntry) -> bool:
         """Add metadata entry for archived content"""
+
+
+
         try:
             # Validate schema exists
             if entry.schema_id not in self.schemas:
@@ -645,6 +663,9 @@ class ArchivalMetadataManager:
     
     async def update_metadata(self, entry_id: str, updates: Dict[str, Any]) -> bool:
         """Update existing metadata entry"""
+
+
+
         try:
             if entry_id not in self.metadata_entries:
                 raise ArchivalError(f"Metadata entry not found: {entry_id}")
@@ -682,6 +703,9 @@ class ArchivalMetadataManager:
     
     async def search_metadata(self, criteria: SearchCriteria) -> Tuple[List[SearchResult], int]:
         """Search metadata with advanced criteria"""
+
+
+
         try:
             self.total_searches += 1
             
@@ -737,10 +761,16 @@ class ArchivalMetadataManager:
     
     async def get_metadata(self, entry_id: str) -> Optional[MetadataEntry]:
         """Get metadata entry by ID"""
+
+
+
         return self.metadata_entries.get(entry_id)
     
     async def get_metadata_by_archive(self, archive_id: str) -> List[MetadataEntry]:
         """Get all metadata entries for an archive"""
+
+
+
         return [
             entry for entry in self.metadata_entries.values()
             if entry.archive_id == archive_id
@@ -748,14 +778,23 @@ class ArchivalMetadataManager:
     
     async def get_schema(self, schema_id: str) -> Optional[MetadataSchema]:
         """Get schema by ID"""
+
+
+
         return self.schemas.get(schema_id)
     
     async def list_schemas(self) -> List[MetadataSchema]:
         """List all available schemas"""
+
+
+
         return list(self.schemas.values())
     
     async def get_metadata_stats(self) -> Dict[str, Any]:
         """Get comprehensive metadata statistics"""
+
+
+
         try:
             # Schema statistics
             active_schemas = sum(1 for s in self.schemas.values() if s.active)
@@ -795,6 +834,9 @@ class ArchivalMetadataManager:
     
     async def _validate_schema(self, schema: MetadataSchema) -> bool:
         """Validate schema definition"""
+
+
+
         try:
             # Basic validation
             if not schema.schema_id or not schema.name or not schema.version:
@@ -813,6 +855,9 @@ class ArchivalMetadataManager:
     
     async def _matches_criteria(self, entry: MetadataEntry, criteria: SearchCriteria) -> bool:
         """Check if entry matches search criteria"""
+
+
+
         try:
             # Date range filters
             if criteria.created_after and entry.created_at < criteria.created_after:
@@ -840,6 +885,9 @@ class ArchivalMetadataManager:
     
     async def _calculate_relevance(self, entry: MetadataEntry, criteria: SearchCriteria) -> float:
         """Calculate relevance score for search result"""
+
+
+
         try:
             score = 0.0
             
@@ -874,6 +922,9 @@ class ArchivalMetadataManager:
     
     async def _create_summary(self, entry: MetadataEntry) -> Dict[str, Any]:
         """Create summary of metadata entry"""
+
+
+
         try:
             # Select most important fields for summary
             summary = {}
@@ -893,6 +944,9 @@ class ArchivalMetadataManager:
     
     async def _initialize_default_schemas(self):
         """Initialize default metadata schemas"""
+
+
+
         try:
             # Audio content schema
             audio_schema = MetadataSchema(

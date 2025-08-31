@@ -222,6 +222,9 @@ class TestAPIHealthAndStatus:
     @pytest.fixture
     def api_client(self):
         """Create API client for testing"""
+
+
+
         return APIEndpoints()
     
     @pytest.mark.integration

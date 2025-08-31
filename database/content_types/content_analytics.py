@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Analytics Expert, Data Scientist, Business Intelligence Specialist  
 Copyright: Fahed Mlaiel - All rights reserved
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
@@ -161,6 +161,9 @@ class AnalyticsEngine:
     
     def _initialize_calculators(self) -> Dict[str, callable]:
         """Initialize metric calculation functions"""
+
+
+
         return {
             'engagement_rate': self._calculate_engagement_rate,
             'conversion_rate': self._calculate_conversion_rate,
@@ -178,6 +181,9 @@ class AnalyticsEngine:
         platform_data: Dict[Platform, Dict[str, Any]]
     ) -> Dict[str, Any]:
         """Process comprehensive analytics for content across platforms"""
+
+
+
         try:
             analytics_results = {}
             

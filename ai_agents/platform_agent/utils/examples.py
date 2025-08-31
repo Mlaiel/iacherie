@@ -7,7 +7,7 @@ with real-world scenarios and enterprise patterns.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -70,12 +70,12 @@ class PlatformAgentExamples:
             }
         )
         
-        print(f"✅ Platform Agent created with {len(platforms)} platforms")
+        print(f" Platform Agent created with {len(platforms)} platforms")
         
         # Check platform connections
         for platform in platforms:
             health = await self.platform_agent.check_platform_health(platform)
-            print(f"📊 {platform.value}: {health.status} ({health.response_time}ms)")
+            print(f" {platform.value}: {health.status} ({health.response_time}ms)")
     
     async def example_2_content_upload(self):
         """Example 2: Upload and distribute content across platforms"""
@@ -111,12 +111,12 @@ class PlatformAgentExamples:
             # Process results
             for platform, result in results.items():
                 if result.success:
-                    print(f"✅ {platform}: Published successfully - {result.platform_url}")
+                    print(f" {platform}: Published successfully - {result.platform_url}")
                 else:
-                    print(f"❌ {platform}: Failed - {result.error_message}")
+                    print(f" {platform}: Failed - {result.error_message}")
                     
         except Exception as e:
-            print(f"❌ Distribution failed: {str(e)}")
+            print(f" Distribution failed: {str(e)}")
     
     async def example_3_ai_optimization(self):
         """Example 3: AI-powered content optimization"""
@@ -145,13 +145,13 @@ class PlatformAgentExamples:
             )
             
             for platform, result in optimization_results.items():
-                print(f"🎨 {platform}:")
+                print(f" {platform}:")
                 print(f"   Quality Score: {result.quality_score}")
                 print(f"   File Size: {result.optimized_size_mb:.1f} MB")
                 print(f"   Processing Time: {result.processing_time:.2f}s")
                 
         except Exception as e:
-            print(f"❌ Optimization failed: {str(e)}")
+            print(f" Optimization failed: {str(e)}")
     
     async def example_4_real_time_sync(self):
         """Example 4: Real-time synchronization across platforms"""
@@ -178,19 +178,19 @@ class PlatformAgentExamples:
                 }
             )
             
-            print(f"🔄 Sync started for {len(sync_result.platforms)} platforms")
+            print(f" Sync started for {len(sync_result.platforms)} platforms")
             
             # Monitor sync status
             for i in range(5):  # Monitor for 5 cycles
                 await asyncio.sleep(10)  # Wait 10 seconds
                 
                 status = await self.platform_agent.get_sync_status(content_id)
-                print(f"📊 Sync Status #{i+1}:")
+                print(f" Sync Status #{i+1}:")
                 for platform, platform_status in status.platforms.items():
                     print(f"   {platform}: {platform_status.status} - {platform_status.last_sync}")
                     
         except Exception as e:
-            print(f"❌ Sync failed: {str(e)}")
+            print(f" Sync failed: {str(e)}")
     
     async def example_5_collaboration_matching(self):
         """Example 5: AI-powered collaboration matching"""
@@ -213,14 +213,14 @@ class PlatformAgentExamples:
             print(f"🤝 Found {len(matches)} potential collaborations:")
             
             for match in matches[:3]:  # Show top 3
-                print(f"   👤 {match.artist_name} ({match.platform})")
+                print(f"    {match.artist_name} ({match.platform})")
                 print(f"      Followers: {match.follower_count:,}")
                 print(f"      Compatibility: {match.compatibility_score:.1f}%")
                 print(f"      Suggested Type: {match.collaboration_type}")
                 print()
                 
         except Exception as e:
-            print(f"❌ Collaboration matching failed: {str(e)}")
+            print(f" Collaboration matching failed: {str(e)}")
     
     async def example_6_analytics_and_insights(self):
         """Example 6: Advanced analytics and insights"""
@@ -238,7 +238,7 @@ class PlatformAgentExamples:
                 ]
             )
             
-            print("📊 Platform Performance:")
+            print(" Platform Performance:")
             for platform, metrics in analytics.platform_metrics.items():
                 print(f"   {platform}:")
                 print(f"      Views: {metrics.views:,}")
@@ -254,7 +254,7 @@ class PlatformAgentExamples:
                 print(f"     Confidence: {insight.confidence:.1f}%")
                 
         except Exception as e:
-            print(f"❌ Analytics failed: {str(e)}")
+            print(f" Analytics failed: {str(e)}")
     
     async def example_7_automated_workflow(self):
         """Example 7: Automated content workflow"""
@@ -300,15 +300,15 @@ class PlatformAgentExamples:
             }
             
             workflow_id = await self.platform_agent.create_workflow(workflow_config)
-            print(f"⚡ Automated workflow created: {workflow_id}")
+            print(f" Automated workflow created: {workflow_id}")
             
             # Monitor workflow execution
             status = await self.platform_agent.get_workflow_status(workflow_id)
-            print(f"📋 Workflow Status: {status.state}")
-            print(f"📅 Next Run: {status.next_execution}")
+            print(f" Workflow Status: {status.state}")
+            print(f" Next Run: {status.next_execution}")
             
         except Exception as e:
-            print(f"❌ Workflow creation failed: {str(e)}")
+            print(f" Workflow creation failed: {str(e)}")
     
     async def example_8_error_handling(self):
         """Example 8: Comprehensive error handling"""
@@ -331,12 +331,12 @@ class PlatformAgentExamples:
             )
             
         except PlatformConnectionException as e:
-            print(f"🔌 Connection Error: {e.user_message}")
+            print(f" Connection Error: {e.user_message}")
             print(f"   Platform: {e.platform}")
             print(f"   Retry after: {e.retry_after}s")
             
         except ContentValidationException as e:
-            print(f"📝 Validation Error: {e.user_message}")
+            print(f" Validation Error: {e.user_message}")
             print(f"   Errors: {', '.join(e.validation_errors)}")
             
         except RateLimitException as e:
@@ -345,7 +345,7 @@ class PlatformAgentExamples:
             print(f"   Retry after: {e.retry_after}s")
             
         except Exception as e:
-            print(f"❌ Unexpected error: {str(e)}")
+            print(f" Unexpected error: {str(e)}")
     
     async def example_9_configuration_management(self):
         """Example 9: Configuration management"""
@@ -355,10 +355,10 @@ class PlatformAgentExamples:
         # Get current configuration
         config = get_config()
         
-        print(f"🔧 Current Environment: {config.environment.value}")
-        print(f"🔧 Debug Mode: {config.debug}")
-        print(f"🔧 AI Optimization: {config.ai.enable_ai_optimization}")
-        print(f"🔧 Max Concurrent Uploads: {config.max_concurrent_uploads}")
+        print(f" Current Environment: {config.environment.value}")
+        print(f" Debug Mode: {config.debug}")
+        print(f" AI Optimization: {config.ai.enable_ai_optimization}")
+        print(f" Max Concurrent Uploads: {config.max_concurrent_uploads}")
         
         # Validate configuration
         from .config import config_manager
@@ -366,17 +366,17 @@ class PlatformAgentExamples:
         validation_errors = config_manager.validate_config()
         
         if validation_errors['critical']:
-            print("🚨 Critical Configuration Issues:")
+            print(" Critical Configuration Issues:")
             for error in validation_errors['critical']:
                 print(f"   • {error}")
         
         if validation_errors['warning']:
-            print("⚠️  Configuration Warnings:")
+            print("  Configuration Warnings:")
             for warning in validation_errors['warning']:
                 print(f"   • {warning}")
         
         if not validation_errors['critical'] and not validation_errors['warning']:
-            print("✅ Configuration is valid")
+            print(" Configuration is valid")
     
     async def example_10_monitoring_and_alerts(self):
         """Example 10: Monitoring and alerting"""
@@ -404,26 +404,26 @@ class PlatformAgentExamples:
             }
             
             monitor_id = await self.platform_agent.setup_monitoring(monitoring_config)
-            print(f"📊 Monitoring setup complete: {monitor_id}")
+            print(f" Monitoring setup complete: {monitor_id}")
             
             # Get current metrics
             metrics = await self.platform_agent.get_current_metrics()
             
-            print("📈 Current Metrics:")
+            print(" Current Metrics:")
             print(f"   Upload Success Rate: {metrics.upload_success_rate:.1f}%")
             print(f"   Avg Response Time: {metrics.avg_response_time:.0f}ms")
             print(f"   Error Rate: {metrics.error_rate:.2f}%")
             print(f"   Active Connections: {metrics.active_connections}")
             
         except Exception as e:
-            print(f"❌ Monitoring setup failed: {str(e)}")
+            print(f" Monitoring setup failed: {str(e)}")
 
 
 # Main execution function
 async def run_all_examples():
     """Run all platform agent examples"""
     
-    print("🚀 Platform Agent Examples - Comprehensive Demo")
+    print(" Platform Agent Examples - Comprehensive Demo")
     print("=" * 60)
     
     examples = PlatformAgentExamples()
@@ -446,23 +446,23 @@ async def run_all_examples():
     for i, example_method in enumerate(example_methods, 1):
         try:
             await example_method()
-            print(f"\n✅ Example {i} completed successfully")
+            print(f"\n Example {i} completed successfully")
         except Exception as e:
-            print(f"\n❌ Example {i} failed: {str(e)}")
+            print(f"\n Example {i} failed: {str(e)}")
         
         if i < len(example_methods):
             print("\n" + "-" * 40)
             await asyncio.sleep(1)  # Brief pause between examples
     
-    print("\n🎉 All examples completed!")
-    print("📚 For more information, check the documentation in README files")
+    print("\n All examples completed!")
+    print(" For more information, check the documentation in README files")
 
 
 # Quick start function
 async def quick_start_example():
     """Quick start example for new users"""
     
-    print("🚀 Platform Agent - Quick Start")
+    print(" Platform Agent - Quick Start")
     print("=" * 40)
     
     try:
@@ -475,25 +475,25 @@ async def quick_start_example():
             platforms=[PlatformType.SPOTIFY, PlatformType.YOUTUBE]
         )
         
-        print("✅ Platform Agent initialized")
+        print(" Platform Agent initialized")
         
         # 3. Check platform health
         for platform in [PlatformType.SPOTIFY, PlatformType.YOUTUBE]:
             health = await agent.check_platform_health(platform)
-            print(f"📊 {platform.value}: {health.status}")
+            print(f" {platform.value}: {health.status}")
         
         # 4. Show available features
         features = await agent.get_available_features()
-        print(f"🎯 Available Features: {len(features)} total")
+        print(f" Available Features: {len(features)} total")
         for feature in features[:5]:  # Show first 5
             print(f"   • {feature}")
         
-        print("\n🎉 Quick start completed successfully!")
-        print("💡 Run run_all_examples() for comprehensive demonstrations")
+        print("\n Quick start completed successfully!")
+        print(" Run run_all_examples() for comprehensive demonstrations")
         
     except Exception as e:
-        print(f"❌ Quick start failed: {str(e)}")
-        print("💡 Check your configuration and platform credentials")
+        print(f" Quick start failed: {str(e)}")
+        print(" Check your configuration and platform credentials")
 
 
 if __name__ == "__main__":

@@ -151,6 +151,9 @@ class RevenueTracker:
         
     def _initialize_platform_rates(self) -> Dict[PlatformType, Dict[str, float]]:
         """Initialize platform-specific revenue rates"""
+
+
+
         return {
             PlatformType.YOUTUBE: {
                 "rpm_base": 2.5,  # Revenue per mille (thousand views)
@@ -213,6 +216,9 @@ class RevenueTracker:
         metadata: Optional[Dict[str, Any]] = None
     ) -> RevenueRecord:
         """Track a new revenue entry"""
+
+
+
         try:
             # Convert to USD for standardization
             usd_amount = self._convert_to_usd(amount, currency)
@@ -257,6 +263,9 @@ class RevenueTracker:
         platform: Optional[PlatformType] = None
     ) -> Dict[str, Any]:
         """Get comprehensive revenue summary"""
+
+
+
         try:
             if not start_date:
                 start_date = datetime.now() - timedelta(days=30)
@@ -350,6 +359,9 @@ class RevenueTracker:
         timeframe_days: int = 30
     ) -> List[RevenueInsight]:
         """Generate actionable revenue insights"""
+
+
+
         try:
             insights = []
             
@@ -449,6 +461,9 @@ class RevenueTracker:
         forecast_days: int = 30
     ) -> RevenueForecast:
         """Generate revenue forecast based on historical data"""
+
+
+
         try:
             # Get historical data (last 90 days)
             historical_start = datetime.now() - timedelta(days=90)
@@ -547,6 +562,9 @@ class RevenueTracker:
         user_id: str
     ) -> Dict[str, Any]:
         """Generate personalized revenue optimization recommendations"""
+
+
+
         try:
             # Get user's performance data
             summary = await self.get_revenue_summary(user_id)
@@ -711,6 +729,9 @@ class RevenueTracker:
         end_date: datetime
     ) -> List[Dict[str, Any]]:
         """Calculate daily revenue trend"""
+
+
+
         try:
             records = self.db.query(AnalyticsModel).filter(
                 AnalyticsModel.user_id == user_id,

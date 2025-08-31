@@ -6,7 +6,7 @@ ML model parameters, performance thresholds, and optimization settings.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel - All rights reserved
-⚠️  WARNING: This code and concept are proprietary to Fahed Mlaiel.
+  WARNING: This code and concept are proprietary to Fahed Mlaiel.
     Any unauthorized use, copying, or distribution without explicit written 
     permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 
@@ -387,6 +387,9 @@ class AnalyticsConfig:
     
     def get_model_config(self, model_type: MLModelType) -> MLModelConfig:
         """Get configuration for specific ML model"""
+
+
+
         return self.ml_models.get(model_type)
     
     def update_model_config(self, model_type: MLModelType, config: MLModelConfig) -> None:
@@ -395,10 +398,16 @@ class AnalyticsConfig:
     
     def get_threshold(self, threshold_name: str) -> Any:
         """Get specific performance threshold"""
+
+
+
         return getattr(self.thresholds, threshold_name, None)
     
     def validate_config(self) -> bool:
         """Validate configuration completeness and correctness"""
+
+
+
         try:
             # Validate database configuration
             if not all([self.database.host, self.database.database, 
@@ -425,6 +434,9 @@ class AnalyticsConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert configuration to dictionary"""
+
+
+
         return {
             "environment": self.environment.value,
             "database": self.database.__dict__,

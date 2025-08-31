@@ -1,5 +1,5 @@
 """
-📊 Analytics Processor - IA Influencer Agent Platform Enterprise
+ Analytics Processor - IA Influencer Agent Platform Enterprise
 ===============================================================
 Module: backend/data_management/processors/analytics_processor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Analytics Processing - Enterprise Production-Ready Ultra Advanc
 Responsibility: Traitement avancé d'analytics avec ML predictive et insights business
 ===================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Toute tentative de vol de ce concept, de cette idée ou de ce code sans autorisation personnelle claire 
 et écrite de Fahed Mlaiel est strictement interdite et sera poursuivie en justice selon la loi allemande.
@@ -252,6 +252,9 @@ class AnalyticsProcessor(BaseProcessor):
     
     def _prepare_dataframe(self, metrics_data: Dict[str, Any], time_period: str) -> pd.DataFrame:
         """Prépare un DataFrame à partir des données métriques"""
+
+
+
         try:
             # Extract time series data
             data_points = []
@@ -513,6 +516,9 @@ class AnalyticsProcessor(BaseProcessor):
     
     def _calculate_trend_strength(self, decomp) -> float:
         """Calcule la force de la tendance"""
+
+
+
         try:
             trend_var = np.var(decomp.trend.dropna())
             residual_var = np.var(decomp.resid.dropna())
@@ -522,6 +528,9 @@ class AnalyticsProcessor(BaseProcessor):
     
     def _calculate_seasonal_strength(self, decomp) -> float:
         """Calcule la force de la saisonnalité"""
+
+
+
         try:
             seasonal_var = np.var(decomp.seasonal.dropna())
             residual_var = np.var(decomp.resid.dropna())
@@ -1344,4 +1353,7 @@ class AsyncAnalyticsProcessor(AsyncBaseProcessor):
     
     async def validate_input(self, input_data: Any) -> bool:
         """Validation asynchrone"""
+
+
+
         return self.sync_processor.validate_input(input_data)

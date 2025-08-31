@@ -7,7 +7,7 @@ Ultra-Advanced Configuration Module Integrity Checker
 PROPRIETARY SOFTWARE - ALL RIGHTS RESERVED
 Copyright © 2025 Fahed Mlaiel (mlaiel@live.de)
 
-⚠️  STRICT COPYRIGHT WARNING ⚠️
+  STRICT COPYRIGHT WARNING 
 This software and its source code are the exclusive property of Fahed Mlaiel.
 Any unauthorized copying, distribution, modification, or use of this code
 without explicit written permission from Fahed Mlaiel is strictly prohibited
@@ -38,7 +38,7 @@ class ConfigurationModuleChecker:
         
     def check_all_modules(self) -> Dict[str, Any]:
         """Check all configuration modules"""
-        logger.info("🔍 Starting comprehensive configuration module check...")
+        logger.info(" Starting comprehensive configuration module check...")
         
         # Define expected modules
         expected_modules = [
@@ -97,18 +97,18 @@ class ConfigurationModuleChecker:
                     elif callable(attr):
                         result['functions'].append(attr_name)
             
-            logger.info(f"✅ Module {module_name}: {len(result['classes'])} classes, {len(result['enums'])} enums")
+            logger.info(f" Module {module_name}: {len(result['classes'])} classes, {len(result['enums'])} enums")
             
         except ImportError as e:
             result['status'] = 'import_error'
             result['errors'].append(f"Import error: {str(e)}")
-            logger.error(f"❌ Module {module_name}: Import failed - {e}")
+            logger.error(f" Module {module_name}: Import failed - {e}")
             self.errors.append(f"{module_name}: {e}")
             
         except Exception as e:
             result['status'] = 'error'
             result['errors'].append(f"General error: {str(e)}")
-            logger.error(f"❌ Module {module_name}: Error - {e}")
+            logger.error(f" Module {module_name}: Error - {e}")
             self.errors.append(f"{module_name}: {e}")
         
         return result
@@ -138,18 +138,18 @@ class ConfigurationModuleChecker:
             result['all_imports'] = True
             result['status'] = 'success'
             
-            logger.info("✅ Main __init__.py: All core components available")
+            logger.info(" Main __init__.py: All core components available")
             
         except ImportError as e:
             result['status'] = 'import_error'
             result['errors'].append(f"Import error: {str(e)}")
-            logger.error(f"❌ Main __init__.py: Import failed - {e}")
+            logger.error(f" Main __init__.py: Import failed - {e}")
             self.errors.append(f"__init__: {e}")
             
         except Exception as e:
             result['status'] = 'error'
             result['errors'].append(f"General error: {str(e)}")
-            logger.error(f"❌ Main __init__.py: Error - {e}")
+            logger.error(f" Main __init__.py: Error - {e}")
             self.errors.append(f"__init__: {e}")
         
         return result
@@ -182,16 +182,16 @@ class ConfigurationModuleChecker:
                             'lines': len(content.splitlines()),
                             'has_copyright': 'Fahed Mlaiel' in content
                         }
-                        logger.info(f"✅ Documentation {filename}: {result['files'][filename]['lines']} lines")
+                        logger.info(f" Documentation {filename}: {result['files'][filename]['lines']} lines")
                 except Exception as e:
                     result['files'][filename] = {
                         'exists': True,
                         'error': str(e)
                     }
-                    logger.error(f"❌ Documentation {filename}: Error reading - {e}")
+                    logger.error(f" Documentation {filename}: Error reading - {e}")
             else:
                 result['files'][filename] = {'exists': False}
-                logger.warning(f"⚠️ Documentation {filename}: File not found")
+                logger.warning(f" Documentation {filename}: File not found")
         
         return result
     
@@ -241,29 +241,29 @@ class ConfigurationModuleChecker:
         summary = report['summary']
         
         print("\n" + "="*80)
-        print("🔍 CONFIGURATION MODULE INTEGRITY CHECK SUMMARY")
+        print(" CONFIGURATION MODULE INTEGRITY CHECK SUMMARY")
         print("="*80)
-        print(f"📊 Total Modules: {summary['total_modules']}")
-        print(f"✅ Successful: {summary['successful_modules']}")
-        print(f"📈 Success Rate: {summary['success_rate']:.1f}%")
-        print(f"❌ Errors: {len(self.errors)}")
+        print(f" Total Modules: {summary['total_modules']}")
+        print(f" Successful: {summary['successful_modules']}")
+        print(f" Success Rate: {summary['success_rate']:.1f}%")
+        print(f" Errors: {len(self.errors)}")
         
         if summary['success_rate'] >= 90:
-            print("🎉 STATUS: EXCELLENT - Module is ready for production!")
+            print(" STATUS: EXCELLENT - Module is ready for production!")
         elif summary['success_rate'] >= 75:
-            print("✅ STATUS: GOOD - Minor issues to address")
+            print(" STATUS: GOOD - Minor issues to address")
         elif summary['success_rate'] >= 50:
-            print("⚠️ STATUS: NEEDS IMPROVEMENT - Several issues found")
+            print(" STATUS: NEEDS IMPROVEMENT - Several issues found")
         else:
-            print("❌ STATUS: CRITICAL - Major issues require immediate attention")
+            print(" STATUS: CRITICAL - Major issues require immediate attention")
         
         if self.errors:
-            print("\n🚨 ERRORS FOUND:")
+            print("\n ERRORS FOUND:")
             for error in self.errors:
                 print(f"   • {error}")
         
         if report.get('recommendations'):
-            print("\n💡 RECOMMENDATIONS:")
+            print("\n RECOMMENDATIONS:")
             for rec in report['recommendations']:
                 print(f"   • {rec}")
         
@@ -275,7 +275,7 @@ def main():
     checker = ConfigurationModuleChecker()
     
     try:
-        print("🚀 Starting IA Influencer Agent Configuration Module Check...")
+        print(" Starting IA Influencer Agent Configuration Module Check...")
         results = checker.check_all_modules()
         checker.print_summary()
         
@@ -286,8 +286,8 @@ def main():
             sys.exit(0)
             
     except Exception as e:
-        logger.error(f"💥 Fatal error during module check: {e}")
-        print(f"💥 FATAL ERROR: {e}")
+        logger.error(f" Fatal error during module check: {e}")
+        print(f" FATAL ERROR: {e}")
         sys.exit(1)
 
 

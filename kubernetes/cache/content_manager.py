@@ -216,6 +216,9 @@ class ContentCacheManager:
         Returns:
             bool: True if successfully stored, False otherwise
         """
+
+
+
         try:
             start_time = time.time()
             
@@ -299,6 +302,9 @@ class ContentCacheManager:
         Returns:
             ContentCacheEntry if found, None otherwise
         """
+
+
+
         try:
             start_time = time.time()
             
@@ -363,6 +369,9 @@ class ContentCacheManager:
         Returns:
             bool: True if content exists, False otherwise
         """
+
+
+
         try:
             # Check memory cache
             if content_id in self._memory_cache:
@@ -391,6 +400,9 @@ class ContentCacheManager:
         Returns:
             bool: True if successfully invalidated, False otherwise
         """
+
+
+
         try:
             success = True
             
@@ -461,6 +473,9 @@ class ContentCacheManager:
         Returns:
             Dict containing cache statistics
         """
+
+
+
         try:
             hit_rate = (
                 self._cache_stats["hits"] / 
@@ -548,6 +563,9 @@ class ContentCacheManager:
         metadata: Dict[str, Any]
     ) -> float:
         """Calculate AI optimization score for content"""
+
+
+
         try:
             score = 0.0
             
@@ -595,6 +613,9 @@ class ContentCacheManager:
 
     async def _store_in_redis(self, cache_entry: ContentCacheEntry) -> None:
         """Store cache entry in Redis with proper serialization"""
+
+
+
         try:
             # Serialize the cache entry
             serialized_data = pickle.dumps(cache_entry)
@@ -611,10 +632,16 @@ class ContentCacheManager:
 
     async def _retrieve_from_memory(self, content_id: str) -> Optional[ContentCacheEntry]:
         """Retrieve cache entry from memory"""
+
+
+
         return self._memory_cache.get(content_id)
 
     async def _retrieve_from_redis(self, content_id: str) -> Optional[ContentCacheEntry]:
         """Retrieve cache entry from Redis"""
+
+
+
         try:
             serialized_data = await self.redis_client.get(f"content:{content_id}")
             if serialized_data:

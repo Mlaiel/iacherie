@@ -174,6 +174,9 @@ class DatabaseModuleRegistry:
         Returns:
             List[str]: Liste des noms de modules
         """
+
+
+
         return list(self.modules.keys())
     
     def get_module_info(self, module_name: str) -> Dict[str, Any]:
@@ -205,6 +208,9 @@ class DatabaseModuleRegistry:
         Returns:
             Dict[str, Any]: Informations de tous les modules
         """
+
+
+
         return {
             module_name: self.get_module_info(module_name)
             for module_name in self.modules.keys()
@@ -220,6 +226,9 @@ def get_database_status() -> Dict[str, Any]:
     Returns:
         Dict[str, Any]: Statut du module database
     """
+
+
+
     return {
         "name": "Database Module - IA Influencer Agent",
         "version": "2.0.0",
@@ -240,6 +249,9 @@ def initialize_database_modules() -> bool:
     Returns:
         bool: True si l'initialisation réussie, False sinon
     """
+
+
+
     try:
         logger.info("Initializing database modules...")
         

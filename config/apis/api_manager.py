@@ -84,6 +84,9 @@ class APIConfigValidator:
         Returns:
             True if valid, False otherwise
         """
+
+
+
         try:
             if not config:
                 logger.error("Configuration is None or empty")
@@ -139,6 +142,9 @@ class APIManager:
     
     def _load_configurations(self):
         """Load all API configurations"""
+
+
+
         try:
             # Load platform configurations
             for name, config in PLATFORM_CONFIGS.items():
@@ -179,6 +185,9 @@ class APIManager:
             config: Configuration object
             config_type: Type of configuration
         """
+
+
+
         try:
             # Validate configuration
             if not self.validator.validate_config(config, config_type):
@@ -212,14 +221,23 @@ class APIManager:
     
     def get_api_config(self, api_name: str) -> Optional[Dict[str, Any]]:
         """Get API configuration by name"""
+
+
+
         return self.configs.get(api_name, {}).get('config')
     
     def get_all_configs(self) -> Dict[str, Any]:
         """Get all API configurations"""
+
+
+
         return {name: data['config'] for name, data in self.configs.items()}
     
     def get_configs_by_type(self, config_type: str) -> Dict[str, Any]:
         """Get configurations by type"""
+
+
+
         return {
             name: data['config'] 
             for name, data in self.configs.items() 
@@ -228,6 +246,9 @@ class APIManager:
     
     def get_active_configs(self) -> Dict[str, Any]:
         """Get only active configurations"""
+
+
+
         return {
             name: data['config'] 
             for name, data in self.configs.items() 
@@ -244,6 +265,9 @@ class APIManager:
         Returns:
             APIHealthCheck result
         """
+
+
+
         try:
             config = self.get_api_config(api_name)
             if not config:
@@ -371,10 +395,16 @@ class APIManager:
     
     def get_usage_metrics(self, api_name: str) -> Optional[APIUsageMetrics]:
         """Get usage metrics for specific API"""
+
+
+
         return self.usage_metrics.get(api_name)
     
     def get_all_usage_metrics(self) -> Dict[str, APIUsageMetrics]:
         """Get usage metrics for all APIs"""
+
+
+
         return self.usage_metrics.copy()
     
     def reset_usage_metrics(self, api_name: Optional[str] = None):
@@ -403,10 +433,16 @@ class APIManager:
     
     def get_api_status(self, api_name: str) -> Optional[APIStatus]:
         """Get API status"""
+
+
+
         return self.configs.get(api_name, {}).get('status')
     
     def export_configuration(self, file_path: str):
         """Export current configuration to file"""
+
+
+
         try:
             export_data = {
                 'environment': self.environment,

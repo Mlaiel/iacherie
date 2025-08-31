@@ -1,5 +1,5 @@
 """
-🎵 Audio Content Fingerprinting Service
+ Audio Content Fingerprinting Service
 =======================================
 
 Enterprise-grade audio fingerprinting with multiple algorithms:
@@ -79,6 +79,9 @@ class ChromaprintExtractor:
         Returns:
             Dictionary containing fingerprint data and metadata
         """
+
+
+
         try:
             # Load audio with librosa
             y, sr = librosa.load(audio_path, sr=None, mono=True)
@@ -153,6 +156,9 @@ class EssentiaAnalyzer:
         
     def _initialize_algorithms(self) -> Dict[str, Any]:
         """Initialize Essentia algorithms."""
+
+
+
         try:
             return {
                 'windowing': es.Windowing(type='hann'),
@@ -180,6 +186,9 @@ class EssentiaAnalyzer:
         Returns:
             Dictionary containing extracted features
         """
+
+
+
         try:
             # Load audio
             loader = es.MonoLoader(filename=audio_path)
@@ -202,6 +211,9 @@ class EssentiaAnalyzer:
     
     def _extract_basic_features(self, audio: np.ndarray) -> Dict[str, Any]:
         """Extract basic audio features."""
+
+
+
         try:
             duration = len(audio) / 44100.0  # Assuming 44.1kHz
             rms_energy = es.RMS()(audio)
@@ -219,6 +231,9 @@ class EssentiaAnalyzer:
     
     def _extract_spectral_features(self, audio: np.ndarray) -> Dict[str, Any]:
         """Extract spectral domain features."""
+
+
+
         try:
             # Frame-based analysis
             frame_size = 2048
@@ -256,6 +271,9 @@ class EssentiaAnalyzer:
     
     def _extract_rhythmic_features(self, audio: np.ndarray) -> Dict[str, Any]:
         """Extract rhythm and tempo features."""
+
+
+
         try:
             tempo_estimator = es.PercivalBpmEstimator()
             onset_rate = es.OnsetRate()
@@ -273,6 +291,9 @@ class EssentiaAnalyzer:
     
     def _extract_harmonic_features(self, audio: np.ndarray) -> Dict[str, Any]:
         """Extract harmonic and tonal features."""
+
+
+
         try:
             key_extractor = es.KeyExtractor()
             key, scale, strength = key_extractor(audio)
@@ -288,6 +309,9 @@ class EssentiaAnalyzer:
     
     def _extract_perceptual_features(self, audio: np.ndarray) -> Dict[str, Any]:
         """Extract perceptual audio features."""
+
+
+
         try:
             loudness = es.LoudnessEBUR128()
             loudness_value = loudness(audio)
@@ -317,6 +341,9 @@ class SpectralHashGenerator:
         Returns:
             Dictionary containing hash and metadata
         """
+
+
+
         try:
             # Load audio
             y, sr = librosa.load(audio_path, sr=22050, mono=True)
@@ -388,6 +415,9 @@ class NeuralAudioEmbedding:
         
     def _initialize_model(self):
         """Initialize the pre-trained model."""
+
+
+
         try:
             self.processor = Wav2Vec2Processor.from_pretrained(self.model_name)
             self.model = Wav2Vec2Model.from_pretrained(self.model_name)
@@ -487,6 +517,9 @@ class AudioFingerprintingService:
         Returns:
             FingerprintResult containing all fingerprint data
         """
+
+
+
         try:
             logger.info(f"Processing audio fingerprint for: {audio_path}")
             
@@ -537,6 +570,9 @@ class AudioFingerprintingService:
     
     async def _extract_metadata(self, audio_path: str) -> AudioMetadata:
         """Extract comprehensive audio metadata."""
+
+
+
         try:
             y, sr = librosa.load(audio_path, sr=None, mono=True)
             
@@ -587,24 +623,36 @@ class AudioFingerprintingService:
     
     async def _run_chromaprint(self, audio_path: str) -> Dict[str, Any]:
         """Run Chromaprint fingerprinting."""
+
+
+
         return await asyncio.get_event_loop().run_in_executor(
             None, self.chromaprint_extractor.extract_fingerprint, audio_path
         )
     
     async def _run_essentia(self, audio_path: str) -> Dict[str, Any]:
         """Run Essentia analysis."""
+
+
+
         return await asyncio.get_event_loop().run_in_executor(
             None, self.essentia_analyzer.extract_features, audio_path
         )
     
     async def _run_spectral_hash(self, audio_path: str) -> Dict[str, Any]:
         """Run spectral hash generation."""
+
+
+
         return await asyncio.get_event_loop().run_in_executor(
             None, self.spectral_hasher.generate_hash, audio_path
         )
     
     async def _run_neural_embedding(self, audio_path: str) -> Dict[str, Any]:
         """Run neural embedding extraction."""
+
+
+
         return await asyncio.get_event_loop().run_in_executor(
             None, self.neural_embedder.extract_embedding, audio_path
         )
@@ -700,6 +748,9 @@ class AudioFingerprintingService:
     
     def _neural_similarity(self, emb1: List[float], emb2: List[float]) -> float:
         """Calculate neural embedding similarity using cosine similarity."""
+
+
+
         try:
             emb1_array = np.array(emb1)
             emb2_array = np.array(emb2)

@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + DBA + DevOps
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
+ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION 
 ==================================================================
 This code and all associated intellectual property are the EXCLUSIVE property of Fahed Mlaiel.
 ANY unauthorized use, copying, modification, distribution, or commercialization without 
@@ -135,6 +135,9 @@ class ProtectionAnalyticsEngine:
         Returns:
             Dictionary with dashboard metrics and KPIs
         """
+
+
+
         try:
             start_time = datetime.now()
             end_date = datetime.now(timezone.utc)
@@ -224,6 +227,9 @@ class ProtectionAnalyticsEngine:
         Returns:
             Comprehensive pattern analysis results
         """
+
+
+
         try:
             start_date = datetime.now(timezone.utc) - timedelta(days=analysis_period_days)
             
@@ -294,6 +300,9 @@ class ProtectionAnalyticsEngine:
         Returns:
             Threat intelligence report with actionable intelligence
         """
+
+
+
         try:
             start_date = datetime.now(timezone.utc) - timedelta(days=intelligence_period_days)
             
@@ -366,6 +375,9 @@ class ProtectionAnalyticsEngine:
         Returns:
             Comprehensive ROI analysis
         """
+
+
+
         try:
             start_date = datetime.now(timezone.utc) - timedelta(days=calculation_period_days)
             
@@ -436,6 +448,9 @@ class ProtectionAnalyticsEngine:
         Returns:
             Comprehensive compliance report
         """
+
+
+
         try:
             start_date = datetime.now(timezone.utc) - timedelta(days=reporting_period_days)
             
@@ -487,6 +502,9 @@ class ProtectionAnalyticsEngine:
     
     async def _calculate_core_metrics(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
         """Calculate core protection metrics"""
+
+
+
         try:
             # Violation counts
             total_violations = await self.db_session.query(ViolationReport).filter(
@@ -546,6 +564,9 @@ class ProtectionAnalyticsEngine:
     
     async def _calculate_performance_metrics(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
         """Calculate performance metrics"""
+
+
+
         try:
             # Response time analysis
             alerts_with_response = await self.db_session.query(ProtectionAlert).filter(
@@ -586,6 +607,9 @@ class ProtectionAnalyticsEngine:
     
     async def _calculate_platform_metrics(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
         """Calculate platform-specific metrics"""
+
+
+
         try:
             # Platform distribution
             platform_violations = await self.db_session.query(
@@ -623,6 +647,9 @@ class ProtectionAnalyticsEngine:
         group_by: str
     ) -> List[Dict[str, Any]]:
         """Generate time series metrics data"""
+
+
+
         try:
             # Time series for violations
             violation_series = await self.db_session.query(
@@ -669,6 +696,9 @@ class ProtectionAnalyticsEngine:
     
     async def _calculate_risk_indicators(self) -> Dict[str, Any]:
         """Calculate current risk indicators"""
+
+
+
         try:
             # Recent high-severity violations
             recent_critical = await self.db_session.query(ViolationReport).filter(
@@ -714,6 +744,9 @@ class ProtectionAnalyticsEngine:
     
     async def _analyze_trends(self, time_series: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Analyze trends in time series data"""
+
+
+
         try:
             if len(time_series) < 2:
                 return {"trend": "insufficient_data"}
@@ -829,62 +862,104 @@ class ProtectionAnalyticsEngine:
     
     async def _analyze_threat_landscape(self, start_date: datetime) -> Dict[str, Any]:
         """Analyze current threat landscape"""
+
+
+
         return {"threat_level": "medium", "active_threats": []}
     
     async def _detect_emerging_threats(self, start_date: datetime) -> List[Dict[str, Any]]:
         """Detect emerging threats"""
+
+
+
         return []
     
     async def _analyze_attack_vectors(self, start_date: datetime) -> Dict[str, Any]:
         """Analyze attack vectors"""
+
+
+
         return {"vectors": []}
     
     async def _profile_threat_actors(self, start_date: datetime) -> List[Dict[str, Any]]:
         """Profile threat actors"""
+
+
+
         return []
     
     async def _analyze_threat_infrastructure(self, start_date: datetime) -> Dict[str, Any]:
         """Analyze threat infrastructure"""
+
+
+
         return {"infrastructure": []}
     
     async def _analyze_countermeasure_effectiveness(self, start_date: datetime) -> Dict[str, Any]:
         """Analyze countermeasure effectiveness"""
+
+
+
         return {"effectiveness": 85}
     
     # ROI calculation methods (placeholders)
     
     async def _calculate_protection_costs(self, start_date: datetime) -> Dict[str, Any]:
         """Calculate protection costs"""
+
+
+
         return {"total_cost": 10000, "breakdown": {}}
     
     async def _calculate_protection_benefits(self, start_date: datetime) -> Dict[str, Any]:
         """Calculate protection benefits"""
+
+
+
         return {"total_benefits": 15000, "breakdown": {}}
     
     async def _estimate_prevented_losses(self, start_date: datetime) -> Dict[str, Any]:
         """Estimate prevented losses"""
+
+
+
         return {"total_prevented": 25000, "breakdown": {}}
     
     async def _calculate_time_savings(self, start_date: datetime) -> Dict[str, Any]:
         """Calculate time savings"""
+
+
+
         return {"hours_saved": 100, "value": 5000}
     
     # Compliance methods (placeholders)
     
     async def _analyze_gdpr_compliance(self, start_date: datetime) -> Dict[str, Any]:
         """Analyze GDPR compliance"""
+
+
+
         return {"compliance_items": [], "score": 85}
     
     async def _analyze_ccpa_compliance(self, start_date: datetime) -> Dict[str, Any]:
         """Analyze CCPA compliance"""
+
+
+
         return {"compliance_items": [], "score": 90}
     
     async def _analyze_dmca_compliance(self, start_date: datetime) -> Dict[str, Any]:
         """Analyze DMCA compliance"""
+
+
+
         return {"compliance_items": [], "score": 95}
     
     async def _analyze_general_compliance(self, start_date: datetime, framework: str) -> Dict[str, Any]:
         """Analyze general compliance framework"""
+
+
+
         return {"compliance_items": [], "score": 80}
     
     # Storage methods (placeholders)

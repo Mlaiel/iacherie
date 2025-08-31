@@ -15,7 +15,7 @@ Team Specialties:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️ STRICT WARNING ⚠️
+ STRICT WARNING 
 This proprietary orchestration technology and workflow management systems
 belong exclusively to Fahed Mlaiel. Any unauthorized use, reverse engineering,
 or competitive implementation will result in immediate legal action.
@@ -172,6 +172,9 @@ class WorkflowManager:
         """
         Execute a complete workflow with error handling and monitoring
         """
+
+
+
         try:
             workflow_id = str(uuid4())
             logger.info(f"Starting workflow execution: {workflow_id} ({workflow_type.value})")
@@ -452,6 +455,9 @@ class WorkflowManager:
         """
         Get detailed workflow execution status
         """
+
+
+
         try:
             async with AsyncDatabaseSession() as session:
                 # Get workflow execution
@@ -510,6 +516,9 @@ class WorkflowManager:
         """
         Cancel running workflow
         """
+
+
+
         try:
             async with AsyncDatabaseSession() as session:
                 execution = await session.get(WorkflowExecution, workflow_id)
@@ -574,6 +583,9 @@ class PipelineMonitor:
         """
         Comprehensive system health check
         """
+
+
+
         try:
             health_report = {
                 "timestamp": datetime.utcnow().isoformat(),
@@ -620,6 +632,9 @@ class PipelineMonitor:
 
     async def _check_pipeline_health(self, pipeline_name: str) -> Dict[str, Any]:
         """Check health of individual pipeline"""
+
+
+
         try:
             # Get recent task statistics
             end_time = datetime.utcnow()
@@ -688,6 +703,9 @@ class PipelineMonitor:
 
     async def _get_workflow_metrics(self) -> Dict[str, Any]:
         """Get workflow execution metrics"""
+
+
+
         try:
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(hours=24)
@@ -734,6 +752,9 @@ class PipelineMonitor:
 
     async def _check_resource_usage(self) -> Dict[str, Any]:
         """Check system resource usage"""
+
+
+
         try:
             import psutil
             
@@ -836,6 +857,9 @@ class HealthChecker:
         """
         Run complete health check cycle with alerting
         """
+
+
+
         try:
             logger.info("Starting health check cycle")
             
@@ -868,6 +892,9 @@ class HealthChecker:
 
     async def _send_health_alerts(self, alerts: List[Dict[str, Any]], health_report: Dict[str, Any]):
         """Send health alerts to administrators"""
+
+
+
         try:
             high_severity_alerts = [a for a in alerts if a.get("severity") == "high"]
             
@@ -892,6 +919,9 @@ class HealthChecker:
 
     async def _send_critical_alert(self, error_message: str):
         """Send critical system alert"""
+
+
+
         try:
             await self.notification_manager.send_admin_alert(
                 "Critical System Error",
@@ -907,6 +937,9 @@ class HealthChecker:
 
     async def _save_health_metrics(self, health_report: Dict[str, Any]):
         """Save health metrics to database"""
+
+
+
         try:
             metrics = WorkflowMetrics(
                 id=str(uuid4()),

@@ -7,7 +7,7 @@ Provides real-world test data, performance monitoring, and security validation.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
@@ -67,12 +67,18 @@ def event_loop():
 @pytest.fixture
 def test_config() -> Dict[str, Any]:
     """Test configuration fixture"""
+
+
+
     return TEST_CONFIG.copy()
 
 
 @pytest.fixture
 def basic_agent_config() -> AgentConfiguration:
     """Basic agent configuration for testing"""
+
+
+
     return AgentConfiguration(
         agent_id="test_agent_basic",
         agent_name="Basic Test Agent",
@@ -88,6 +94,9 @@ def basic_agent_config() -> AgentConfiguration:
 @pytest.fixture
 def advanced_agent_config() -> AgentConfiguration:
     """Advanced agent configuration for testing"""
+
+
+
     return AgentConfiguration(
         agent_id="test_agent_advanced",
         agent_name="Advanced Test Agent",
@@ -146,12 +155,18 @@ async def mock_agent(basic_agent_config) -> AsyncGenerator[MockAIAgent, None]:
 @pytest.fixture
 def agent_registry() -> AgentRegistry:
     """Agent registry fixture"""
+
+
+
     return AgentRegistry()
 
 
 @pytest.fixture
 def sample_task() -> AgentTask:
     """Sample task fixture"""
+
+
+
     return AgentTask(
         task_type="test_task",
         context={"test_data": "sample"},
@@ -162,6 +177,9 @@ def sample_task() -> AgentTask:
 @pytest.fixture
 def performance_tasks() -> list[AgentTask]:
     """Performance testing tasks fixture"""
+
+
+
     return [
         AgentTask(
             task_type=f"perf_task_{i}",
@@ -203,6 +221,9 @@ class PerformanceMonitor:
     
     def get_measurement(self, name: str) -> float:
         """Get a measurement result"""
+
+
+
         return self.measurements.get(name, 0.0)
     
     def assert_performance(self, name: str, max_time: float):
@@ -214,6 +235,9 @@ class PerformanceMonitor:
 @pytest.fixture
 def performance_monitor() -> PerformanceMonitor:
     """Performance monitor fixture"""
+
+
+
     return PerformanceMonitor()
 
 
@@ -252,6 +276,9 @@ def pytest_collection_modifyitems(config, items):
 # Test data generators
 def generate_test_tasks(count: int = 10) -> list[AgentTask]:
     """Generate test tasks"""
+
+
+
     return [
         AgentTask(
             task_type=f"generated_task_{i}",

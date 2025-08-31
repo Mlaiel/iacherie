@@ -65,6 +65,9 @@ class GlobalCacheConfig:
     @classmethod
     def from_env(cls) -> 'GlobalCacheConfig':
         """Create configuration from environment variables"""
+
+
+
         return cls(
             redis_host=os.getenv('CACHE_REDIS_HOST', 'localhost'),
             redis_port=int(os.getenv('CACHE_REDIS_PORT', '6379')),
@@ -101,6 +104,9 @@ class GlobalCacheConfig:
     @classmethod
     def from_file(cls, config_path: str) -> 'GlobalCacheConfig':
         """Create configuration from JSON file"""
+
+
+
         try:
             with open(config_path, 'r') as f:
                 config_data = json.load(f)
@@ -110,6 +116,9 @@ class GlobalCacheConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'redis': {
                 'host': self.redis_host,
@@ -196,6 +205,9 @@ def extract_namespace(cache_key: str, separator: str = ":") -> str:
 
 def extract_key_parts(cache_key: str, separator: str = ":") -> list:
     """Extract key parts from cache key"""
+
+
+
     return cache_key.split(separator)
 
 # Serialization utilities
@@ -415,6 +427,9 @@ _global_profiler = CacheProfiler()
 
 def get_cache_profiler() -> CacheProfiler:
     """Get global cache profiler"""
+
+
+
     return _global_profiler
 
 # Cache warming utilities

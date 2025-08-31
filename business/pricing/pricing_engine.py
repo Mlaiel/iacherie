@@ -1,5 +1,5 @@
 """
-🚀 Pricing Engine - Industrial-Grade Dynamic Pricing & Revenue Optimization
+ Pricing Engine - Industrial-Grade Dynamic Pricing & Revenue Optimization
 =========================================================================
 
 Ultra-advanced pricing management system for multi-format content creators.
@@ -20,7 +20,7 @@ Project Team Specialists:
 Created by: Fahed Mlaiel <mlaiel@live.de>
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
+ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED 
 
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized copying, modification, distribution, or use of this code or its
@@ -333,6 +333,9 @@ class PricingEngine:
         Returns:
             PricingMetrics with optimized pricing recommendations
         """
+
+
+
         try:
             # Validate input
             if not pricing_model:
@@ -1054,6 +1057,9 @@ class PricingEngine:
         market_insights: MarketInsights
     ) -> Dict[str, float]:
         """Prepare features for ML model"""
+
+
+
         
         return {
             'base_price': float(pricing_model.base_price),
@@ -1087,6 +1093,9 @@ class PricingEngine:
         
     async def _get_cached_pricing(self, cache_key: str) -> Optional[PricingMetrics]:
         """Get cached pricing result"""
+
+
+
         
         try:
             cached_data = await self._redis_client.get(cache_key)
@@ -1100,6 +1109,9 @@ class PricingEngine:
         
     async def _cache_pricing_result(self, cache_key: str, metrics: PricingMetrics):
         """Cache pricing result"""
+
+
+
         
         try:
             # Convert to serializable format

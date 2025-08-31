@@ -1,5 +1,5 @@
 """
-🚀 Platform Revenue Manager - Multi-Platform Revenue Integration System
+ Platform Revenue Manager - Multi-Platform Revenue Integration System
 ======================================================================
 
 Industrial-grade platform revenue management system handling integrations
@@ -12,7 +12,7 @@ Created by: Fahed Mlaiel <mlaiel@live.de>
 Team Specialists:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
+ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED 
 Contact mlaiel@live.de for licensing inquiries.
 
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Platform Revenue Management
@@ -140,6 +140,9 @@ class PlatformRevenueManager:
         
     async def initialize(self):
         """Initialize platform revenue manager"""
+
+
+
         try:
             # Initialize all platform integrations
             for platform_name, integration in self.platforms.items():
@@ -178,6 +181,9 @@ class PlatformRevenueManager:
         Returns:
             Dictionary of sync results by platform
         """
+
+
+
         try:
             # Validate creator exists and has platform connections
             creator_platforms = await self._get_creator_platform_connections(creator_id)
@@ -347,6 +353,9 @@ class PlatformRevenueManager:
         Returns:
             Comprehensive platform revenue summary
         """
+
+
+
         try:
             # Get revenue data by platform
             platform_query = """
@@ -456,6 +465,9 @@ class PlatformRevenueManager:
                                              platform: str,
                                              raw_data: Dict[str, Any]) -> Dict[str, Any]:
         """Normalize platform-specific revenue data to standard format"""
+
+
+
         try:
             # Get platform configuration
             config = self._platform_configs.get(platform, {})
@@ -507,6 +519,9 @@ class PlatformRevenueManager:
 
     async def _normalize_spotify_data(self, raw_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
         """Normalize Spotify revenue data"""
+
+
+
         return {
             'external_id': raw_data.get('track_uri', ''),
             'revenue_type': 'streaming',
@@ -573,6 +588,9 @@ class PlatformRevenueManager:
                              platform: Optional[str] = None,
                              limit: int = 50) -> List[Dict[str, Any]]:
         """Get synchronization history for a creator"""
+
+
+
         try:
             conditions = ["creator_id = %s"]
             params = [creator_id]
@@ -621,6 +639,9 @@ class PlatformRevenueManager:
 
     async def cleanup(self):
         """Cleanup platform revenue manager resources"""
+
+
+
         try:
             # Stop background sync tasks
             await self._stop_background_sync_tasks()

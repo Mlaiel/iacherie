@@ -1,5 +1,5 @@
 """
-⚡ Enterprise Rate Limiting Engine
+ Enterprise Rate Limiting Engine
 =================================
 
 Advanced intelligent rate limiting system with predictive analysis,
@@ -21,7 +21,7 @@ Features:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
+ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
 """
@@ -258,6 +258,9 @@ class AdaptiveRateLimiter:
     
     def get_current_limit(self) -> int:
         """Get current adjusted limit."""
+
+
+
         return self.current_limit
 
 class PriorityQueue:
@@ -293,10 +296,16 @@ class PriorityQueue:
     
     def size(self) -> int:
         """Get total queue size."""
+
+
+
         return self.pending_count
     
     def size_by_priority(self) -> Dict[Priority, int]:
         """Get queue size by priority."""
+
+
+
         return {priority: len(queue) for priority, queue in self.queues.items()}
 
 class IntelligentRateLimiter:
@@ -621,14 +630,23 @@ class IntelligentRateLimiter:
     
     def get_platform_status(self, platform: str) -> Optional[RateLimitStatus]:
         """Get current rate limit status for platform."""
+
+
+
         return self.status_cache.get(platform)
     
     def get_all_status(self) -> Dict[str, RateLimitStatus]:
         """Get rate limit status for all platforms."""
+
+
+
         return self.status_cache.copy()
     
     def get_queue_status(self) -> Dict[str, Any]:
         """Get current queue status."""
+
+
+
         return {
             'total_pending': self.request_queue.size(),
             'by_priority': self.request_queue.size_by_priority(),

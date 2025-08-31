@@ -1,5 +1,5 @@
 """
-🚀 Pricing Validators - Comprehensive Pricing Validation System
+ Pricing Validators - Comprehensive Pricing Validation System
 ==============================================================
 
 Advanced validation system for pricing data integrity, business rule compliance,
@@ -20,7 +20,7 @@ Project Team Specialists:
 Created by: Fahed Mlaiel <mlaiel@live.de>
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
+ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED 
 
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized copying, modification, distribution, or use of this code or its
@@ -1007,6 +1007,9 @@ class PricingValidator:
     # Helper methods
     def _load_validation_rules(self) -> Dict[str, Any]:
         """Load validation rules configuration"""
+
+
+
         
         return {
             'platform_rules': {
@@ -1072,6 +1075,9 @@ class PricingValidator:
         
     async def _get_tier_limits(self, tier_name: str) -> Dict[str, Any]:
         """Get limits for a specific tier"""
+
+
+
         
         return self.validation_rules.get('tier_limits', {}).get(tier_name.lower(), {
             'max_base_price': Decimal('99.99'),
@@ -1103,6 +1109,9 @@ class PricingValidator:
         
     async def _get_recent_calculation_count(self, creator_id: str) -> int:
         """Get recent calculation count for rate limiting"""
+
+
+
         
         try:
             cache_key = f"calculation_count:{creator_id}:{datetime.utcnow().hour}"
@@ -1128,6 +1137,9 @@ class PricingValidator:
         validation_results: List[ValidationResult]
     ) -> Dict[str, Any]:
         """Generate validation summary"""
+
+
+
         
         return {
             'validation_types': {

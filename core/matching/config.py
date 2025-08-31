@@ -8,7 +8,7 @@ performance optimization, and security parameters.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This configuration module contains proprietary settings and algorithms
 developed by Fahed Mlaiel. Unauthorized use is prohibited.
 """
@@ -247,6 +247,9 @@ class ConfigurationManager:
     
     def _load_configuration(self) -> None:
         """Load configuration from files and environment variables"""
+
+
+
         try:
             # Load from YAML file if exists
             if os.path.exists(self.config_path):
@@ -264,6 +267,9 @@ class ConfigurationManager:
     
     def _load_from_yaml(self) -> None:
         """Load configuration from YAML file"""
+
+
+
         try:
             with open(self.config_path, 'r') as file:
                 config_data = yaml.safe_load(file)
@@ -324,6 +330,9 @@ class ConfigurationManager:
     
     def _set_config_value(self, config_path: tuple, value: str) -> None:
         """Set configuration value from environment variable"""
+
+
+
         try:
             # Convert string value to appropriate type
             converted_value = self._convert_env_value(value)
@@ -398,6 +407,9 @@ class ConfigurationManager:
     
     def get_config(self) -> MatchingModuleConfig:
         """Get the current configuration"""
+
+
+
         return self.config
     
     def save_configuration(self, file_path: Optional[str] = None) -> None:
@@ -510,6 +522,9 @@ def get_config_manager() -> ConfigurationManager:
 
 def get_config() -> MatchingModuleConfig:
     """Get current configuration"""
+
+
+
     return get_config_manager().get_config()
 
 

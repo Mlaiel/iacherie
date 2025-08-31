@@ -20,7 +20,7 @@ Team Specialists:
 - IA Prompt Engineer: AI security prompts
 
 Contact: mlaiel@live.de
-⚠️ LEGAL WARNING: Any unauthorized use, copying, distribution, or commercialization 
+ LEGAL WARNING: Any unauthorized use, copying, distribution, or commercialization 
 of this code without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will result in immediate legal action.
 """
@@ -155,6 +155,9 @@ class DatabaseEncryptionManager:
     
     def _initialize_master_keys(self):
         """Initialize master encryption keys"""
+
+
+
         try:
             # Generate master key if not exists
             master_key_id = "master_key_2025"
@@ -190,6 +193,9 @@ class DatabaseEncryptionManager:
         purpose: str = ""
     ) -> EncryptionKey:
         """Generate new encryption key"""
+
+
+
         try:
             key_id = f"{key_type.value}_{uuid.uuid4().hex[:8]}"
             
@@ -563,6 +569,9 @@ class DatabaseEncryptionManager:
         Returns:
             New key ID
         """
+
+
+
         try:
             if key_id not in self.keys:
                 raise ValueError(f"Key not found: {key_id}")
@@ -624,14 +633,23 @@ class DatabaseEncryptionManager:
     
     def get_key_info(self, key_id: str) -> Optional[EncryptionKey]:
         """Get encryption key information"""
+
+
+
         return self.keys.get(key_id)
     
     def list_active_keys(self) -> List[EncryptionKey]:
         """List all active encryption keys"""
+
+
+
         return [key for key in self.keys.values() if key.is_active]
     
     def get_encryption_metrics(self) -> Dict[str, Any]:
         """Get encryption performance metrics"""
+
+
+
         return {
             "operations_count": self.metrics.operations_count,
             "total_data_size": self.metrics.total_data_size,
@@ -653,6 +671,9 @@ class DatabaseEncryptionManager:
             backup_path: Path to backup file
             encryption_key: Optional key for backup encryption
         """
+
+
+
         try:
             # Prepare key backup data
             backup_data = {
@@ -699,6 +720,9 @@ class DatabaseEncryptionManager:
     
     async def cleanup_expired_keys(self):
         """Clean up expired encryption keys"""
+
+
+
         try:
             current_time = datetime.now()
             expired_keys = []

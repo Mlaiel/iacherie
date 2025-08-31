@@ -1,5 +1,5 @@
 """
-🎵 Neural Vocoder Engine - Advanced AI-Powered Audio Synthesis
+ Neural Vocoder Engine - Advanced AI-Powered Audio Synthesis
 
 This module implements state-of-the-art neural vocoding techniques for
 high-quality audio synthesis from spectral representations.
@@ -7,7 +7,7 @@ high-quality audio synthesis from spectral representations.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ LEGAL WARNING: Unauthorized use prohibited. Contact mlaiel@live.de for licensing.
+ LEGAL WARNING: Unauthorized use prohibited. Contact mlaiel@live.de for licensing.
 """
 
 import torch
@@ -290,6 +290,9 @@ class HiFiGANVocoder(BaseVocoder):
         
     def forward(self, mel_spectrogram: torch.Tensor) -> torch.Tensor:
         """Generate waveform using HiFi-GAN."""
+
+
+
         return self.generator(mel_spectrogram).squeeze(1)
         
     def load_checkpoint(self, checkpoint_path: str) -> None:
@@ -327,6 +330,9 @@ class MelGANVocoder(BaseVocoder):
     def _make_upsampling_block(self, in_channels: int, out_channels: int, 
                               kernel_size: int, stride: int) -> nn.Sequential:
         """Create upsampling block for MelGAN."""
+
+
+
         return nn.Sequential(
             nn.ConvTranspose1d(in_channels, out_channels, kernel_size, stride, 
                               padding=(kernel_size - stride) // 2),
@@ -344,6 +350,9 @@ class MelGANVocoder(BaseVocoder):
         
     def forward(self, mel_spectrogram: torch.Tensor) -> torch.Tensor:
         """Generate waveform using MelGAN."""
+
+
+
         return self.generator(mel_spectrogram).squeeze(1)
         
     def load_checkpoint(self, checkpoint_path: str) -> None:
@@ -460,6 +469,9 @@ class NeuralVocoderManager:
         
     def get_vocoder_info(self) -> Dict:
         """Get information about all registered vocoders."""
+
+
+
         return {
             name: {
                 'type': type(vocoder).__name__,

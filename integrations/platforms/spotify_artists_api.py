@@ -179,6 +179,9 @@ class SpotifyArtistsAPI:
             
     async def get_current_user_profile(self, tokens: OAuthTokens) -> Dict[str, Any]:
         """Get current user's Spotify profile"""
+
+
+
         return await self._make_request("GET", "me", tokens)
         
     async def get_artist_info(self, tokens: OAuthTokens, artist_id: str) -> SpotifyArtist:
@@ -347,6 +350,9 @@ class SpotifyArtistsAPI:
         
     async def get_track_analysis(self, tokens: OAuthTokens, track_id: str) -> Dict[str, Any]:
         """Get detailed audio analysis for a track"""
+
+
+
         return await self._make_request("GET", f"audio-analysis/{track_id}", tokens)
         
     async def get_user_playlists(

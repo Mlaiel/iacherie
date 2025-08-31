@@ -159,6 +159,9 @@ class AdvisoryOrchestrator:
         Returns:
             Session ID for tracking
         """
+
+
+
         try:
             logger.info(f"Advisory service requested by user {user_id}, type: {session_type}")
             
@@ -229,6 +232,9 @@ class AdvisoryOrchestrator:
         Returns:
             AdvisoryResponse if session is complete, None otherwise
         """
+
+
+
         try:
             session = self.active_sessions.get(session_id)
             if not session:
@@ -258,6 +264,9 @@ class AdvisoryOrchestrator:
         Returns:
             Session status information
         """
+
+
+
         try:
             session = self.active_sessions.get(session_id)
             if not session:
@@ -290,6 +299,9 @@ class AdvisoryOrchestrator:
         Returns:
             Success status
         """
+
+
+
         try:
             session = self.active_sessions.get(session_id)
             if not session:
@@ -329,6 +341,9 @@ class AdvisoryOrchestrator:
         Returns:
             Advisory insights and analytics
         """
+
+
+
         try:
             if time_period is None:
                 time_period = timedelta(days=30)
@@ -383,6 +398,9 @@ class AdvisoryOrchestrator:
     
     async def _execute_advisory_session(self, session: AdvisorySession) -> None:
         """Execute complete advisory session."""
+
+
+
         try:
             session.status = SessionStatus.IN_PROGRESS
             start_time = datetime.utcnow()
@@ -440,6 +458,9 @@ class AdvisoryOrchestrator:
     
     async def _create_execution_plan(self, session: AdvisorySession) -> Dict[str, Any]:
         """Create execution plan for advisory session."""
+
+
+
         try:
             session_type = session.request.session_type
             scope = session.request.scope
@@ -499,6 +520,9 @@ class AdvisoryOrchestrator:
         execution_plan: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Execute advisory components according to plan."""
+
+
+
         try:
             component_results = {}
             parallel_groups = execution_plan.get("parallel_groups", [])
@@ -536,6 +560,9 @@ class AdvisoryOrchestrator:
     
     async def _execute_component(self, component: str, session: AdvisorySession) -> Dict[str, Any]:
         """Execute individual advisory component."""
+
+
+
         try:
             request = session.request
             user_id = request.user_id
@@ -708,6 +735,9 @@ class AdvisoryOrchestrator:
     
     async def _cleanup_session_resources(self, session: AdvisorySession):
         """Clean up resources used during advisory session"""
+
+
+
         try:
             # Clean up temporary files
             if hasattr(session, 'temp_files') and session.temp_files:
@@ -715,9 +745,9 @@ class AdvisoryOrchestrator:
                     try:
                         if os.path.exists(temp_file):
                             os.remove(temp_file)
-                            logger.debug(f"🗑️ Removed temp file: {temp_file}")
+                            logger.debug(f" Removed temp file: {temp_file}")
                     except Exception as e:
-                        logger.warning(f"⚠️ Failed to remove temp file {temp_file}: {e}")
+                        logger.warning(f" Failed to remove temp file {temp_file}: {e}")
             
             # Release memory-intensive resources
             if hasattr(session, 'ml_models') and session.ml_models:
@@ -728,7 +758,7 @@ class AdvisoryOrchestrator:
                         del model
                         logger.debug(f"🧹 Cleaned up ML model: {model_name}")
                     except Exception as e:
-                        logger.warning(f"⚠️ Failed to cleanup model {model_name}: {e}")
+                        logger.warning(f" Failed to cleanup model {model_name}: {e}")
             
             # Clear cache entries for this session
             if hasattr(self, 'cache_manager') and self.cache_manager:
@@ -740,13 +770,16 @@ class AdvisoryOrchestrator:
             session.cleanup_completed = True
             session.cleanup_timestamp = datetime.utcnow()
             
-            logger.info(f"✅ Session resources cleaned up: {session.session_id}")
+            logger.info(f" Session resources cleaned up: {session.session_id}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to cleanup session resources for {session.session_id}: {e}")
+            logger.error(f" Failed to cleanup session resources for {session.session_id}: {e}")
     
     async def _send_completion_notifications(self, session: AdvisorySession):
         """Send notifications about session completion"""
+
+
+
         try:
             # Prepare notification data
             notification_data = {
@@ -761,7 +794,7 @@ class AdvisoryOrchestrator:
             # Send email notification
             if hasattr(self, 'notification_manager') and self.notification_manager:
                 email_template = {
-                    "subject": "🎯 Advisory Session Completed",
+                    "subject": " Advisory Session Completed",
                     "body": f"""
                     Your advisory session has been completed successfully!
                     
@@ -804,10 +837,10 @@ class AdvisoryOrchestrator:
                     notification_data
                 )
             
-            logger.info(f"📧 Completion notifications sent for session {session.session_id}")
+            logger.info(f" Completion notifications sent for session {session.session_id}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to send completion notifications for {session.session_id}: {e}")
+            logger.error(f" Failed to send completion notifications for {session.session_id}: {e}")
             # Don't raise - notification failure shouldn't break the session
     
     async def _generate_advisory_response(self, session: AdvisorySession, include_details: bool) -> AdvisoryResponse:

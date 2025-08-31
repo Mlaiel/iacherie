@@ -1,14 +1,14 @@
-"""🚀 Platform Core Communication System - IA Influencer Agent Platform Enterprise
+""" Platform Core Communication System - IA Influencer Agent Platform Enterprise
 ==============================================================================
 Module: backend/platform_core/communication/
 Author: Fahed Mlaiel (mlaiel@live.de)
 ==============================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 SYSTÈME DE COMMUNICATION INTER-SERVICES
+ SYSTÈME DE COMMUNICATION INTER-SERVICES
 Communication WebSocket et REST API pour coordination des microservices
 - WebSocket real-time pour notifications instantanées
 - REST API pour communication synchrone

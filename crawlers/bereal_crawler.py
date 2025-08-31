@@ -241,6 +241,9 @@ class BeRealCrawler(BaseCrawler):
         Returns:
             bool: Authentication success status
         """
+
+
+
         try:
             headers = {
                 "User-Agent": f"BeReal/{self.client_version} (com.bereal.ft; build:99999; iOS 16.0.0)",
@@ -424,6 +427,9 @@ class BeRealCrawler(BaseCrawler):
 
     async def _search_discovery(self, query: str, limit: int) -> List[BeRealContent]:
         """Search BeReal discovery feed"""
+
+
+
         try:
             params = {
                 "limit": limit,
@@ -445,6 +451,9 @@ class BeRealCrawler(BaseCrawler):
 
     async def _search_friends_feed(self, query: str, limit: int) -> List[BeRealContent]:
         """Search user's friends feed"""
+
+
+
         try:
             params = {
                 "limit": limit,
@@ -641,6 +650,9 @@ class BeRealCrawler(BaseCrawler):
         Returns:
             BeRealAnalytics: Comprehensive analytics data
         """
+
+
+
         try:
             start_time, end_time = analysis_period
             
@@ -748,6 +760,9 @@ class BeRealCrawler(BaseCrawler):
 
     async def _parse_post_data(self, data: Dict[str, Any]) -> BeRealContent:
         """Parse BeReal post data into structured format"""
+
+
+
         try:
             # Parse user data
             user_data = data.get("user", {})
@@ -894,6 +909,9 @@ class BeRealCrawler(BaseCrawler):
         features2: Dict[str, Any]
     ) -> float:
         """Calculate similarity score between two content features"""
+
+
+
         try:
             scores = []
             
@@ -956,6 +974,9 @@ class BeRealCrawler(BaseCrawler):
 
     async def _check_protection_status(self, content: BeRealContent) -> str:
         """Check if content violates protection policies"""
+
+
+
         try:
             if content.post_id in self.protected_content:
                 return "protected"
@@ -983,6 +1004,9 @@ class BeRealCrawler(BaseCrawler):
 
     async def close(self):
         """Close crawler and cleanup resources"""
+
+
+
         try:
             await self.cache_manager.close()
             await super().close()

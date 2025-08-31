@@ -91,6 +91,9 @@ class PlatformCredentials:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'platform': self.platform.value,
             'auth_type': self.auth_type.value,
@@ -266,6 +269,9 @@ class SpotifyAPI(BasePlatformAPI):
         
     async def authenticate(self) -> bool:
         """Authenticate with Spotify using Client Credentials flow"""
+
+
+
         try:
             auth_url = "https://accounts.spotify.com/api/token"
             
@@ -676,6 +682,9 @@ class CredentialsManager:
     
     def save_credentials(self, credentials: PlatformCredentials) -> bool:
         """Save platform credentials"""
+
+
+
         try:
             with self._lock:
                 with sqlite3.connect(self.database_path) as conn:
@@ -710,6 +719,9 @@ class CredentialsManager:
     
     def get_credentials(self, platform: PlatformType, user_id: str) -> Optional[PlatformCredentials]:
         """Get platform credentials for user"""
+
+
+
         try:
             with sqlite3.connect(self.database_path) as conn:
                 conn.row_factory = sqlite3.Row
@@ -758,6 +770,9 @@ class PlatformIntegrationManager:
     
     async def get_platform_api(self, platform: PlatformType, user_id: str) -> Optional[BasePlatformAPI]:
         """Get authenticated platform API instance"""
+
+
+
         try:
             # Get credentials
             credentials = self.credentials_manager.get_credentials(platform, user_id)
@@ -842,6 +857,9 @@ class PlatformIntegrationManager:
     async def _post_to_platform(self, platform: PlatformType, user_id: str,
                               content_data: Dict[str, Any]) -> PostingResult:
         """Post content to specific platform"""
+
+
+
         try:
             api = await self.get_platform_api(platform, user_id)
             if not api:
@@ -943,6 +961,9 @@ class WebhookHandler:
                            request_data: Dict[str, Any],
                            headers: Dict[str, str]) -> Dict[str, Any]:
         """Handle incoming webhook from platform"""
+
+
+
         try:
             handler = self.webhook_handlers.get(platform)
             if not handler:

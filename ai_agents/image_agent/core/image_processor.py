@@ -7,7 +7,7 @@ image manipulation, format conversion, and quality optimization capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -249,6 +249,9 @@ class ImageProcessor:
 
     async def _load_image(self, image_input: Union[str, Path, Image.Image, np.ndarray]) -> Image.Image:
         """Load image from various input types"""
+
+
+
         try:
             if isinstance(image_input, Image.Image):
                 image = image_input.copy()
@@ -299,6 +302,9 @@ class ImageProcessor:
 
     async def _load_raw_image(self, raw_path: Path) -> Image.Image:
         """Load and process RAW image files"""
+
+
+
         try:
             with rawpy.imread(str(raw_path)) as raw:
                 # Apply basic RAW processing
@@ -366,6 +372,9 @@ class ImageProcessor:
         params: ProcessingParams
     ) -> Image.Image:
         """Resize image with advanced resampling"""
+
+
+
         try:
             width = operation_params.get('width')
             height = operation_params.get('height')
@@ -420,6 +429,9 @@ class ImageProcessor:
         params: ProcessingParams
     ) -> Image.Image:
         """Crop image with various crop modes"""
+
+
+
         try:
             crop_mode = operation_params.get('mode', 'box')
             
@@ -457,6 +469,9 @@ class ImageProcessor:
 
     async def _smart_crop(self, image: Image.Image, params: Dict[str, Any]) -> Image.Image:
         """Smart crop using edge detection and interest points"""
+
+
+
         try:
             target_width = params['width']
             target_height = params['height']
@@ -508,6 +523,9 @@ class ImageProcessor:
         params: ProcessingParams
     ) -> Image.Image:
         """Apply various image filters"""
+
+
+
         try:
             filter_type = operation_params.get('type', 'blur')
             intensity = operation_params.get('intensity', 1.0)
@@ -571,6 +589,9 @@ class ImageProcessor:
 
     async def _apply_motion_blur(self, image: Image.Image, params: Dict[str, Any]) -> Image.Image:
         """Apply motion blur effect"""
+
+
+
         try:
             angle = params.get('angle', 0)
             distance = params.get('distance', 10)
@@ -608,6 +629,9 @@ class ImageProcessor:
 
     async def _advanced_noise_reduction(self, image: Image.Image, params: Dict[str, Any]) -> Image.Image:
         """Advanced noise reduction using multiple techniques"""
+
+
+
         try:
             strength = params.get('strength', 10)
             preserve_edges = params.get('preserve_edges', True)
@@ -634,6 +658,9 @@ class ImageProcessor:
 
     async def _bilateral_filter(self, image: Image.Image, params: Dict[str, Any]) -> Image.Image:
         """Apply bilateral filter for edge-preserving smoothing"""
+
+
+
         try:
             d = params.get('d', 9)
             sigma_color = params.get('sigma_color', 75)
@@ -654,6 +681,9 @@ class ImageProcessor:
         params: ProcessingParams
     ) -> Image.Image:
         """Adjust image brightness"""
+
+
+
         try:
             factor = operation_params.get('factor', 1.0)
             enhancer = ImageEnhance.Brightness(image)
@@ -669,6 +699,9 @@ class ImageProcessor:
         params: ProcessingParams
     ) -> Image.Image:
         """Adjust image contrast"""
+
+
+
         try:
             factor = operation_params.get('factor', 1.0)
             enhancer = ImageEnhance.Contrast(image)
@@ -684,6 +717,9 @@ class ImageProcessor:
         params: ProcessingParams
     ) -> Image.Image:
         """Adjust color saturation"""
+
+
+
         try:
             factor = operation_params.get('factor', 1.0)
             enhancer = ImageEnhance.Color(image)
@@ -698,6 +734,9 @@ class ImageProcessor:
         processed: Image.Image
     ) -> Dict[str, float]:
         """Calculate quality metrics comparing original and processed images"""
+
+
+
         try:
             # Convert to numpy arrays
             orig_array = np.array(original)
@@ -747,6 +786,9 @@ class ImageProcessor:
 
     def _calculate_ssim(self, img1: np.ndarray, img2: np.ndarray) -> float:
         """Calculate Structural Similarity Index"""
+
+
+
         try:
             from skimage.metrics import structural_similarity as ssim
             
@@ -766,6 +808,9 @@ class ImageProcessor:
 
     def _calculate_sharpness(self, image: np.ndarray) -> float:
         """Calculate image sharpness using Laplacian variance"""
+
+
+
         try:
             if len(image.shape) == 3:
                 gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
@@ -784,6 +829,9 @@ class ImageProcessor:
         params: ProcessingParams
     ) -> None:
         """Save processed image with optimized settings"""
+
+
+
         try:
             output_path = Path(output_path)
             output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -907,6 +955,9 @@ class ImageProcessor:
 
     async def _reduce_noise(self, image: Image.Image, operation_params: Dict[str, Any], params: ProcessingParams) -> Image.Image:
         """Reduce image noise"""
+
+
+
         return await self._advanced_noise_reduction(image, operation_params)
 
     async def _enhance_image(self, image: Image.Image, operation_params: Dict[str, Any], params: ProcessingParams) -> Image.Image:
@@ -1074,6 +1125,9 @@ class ImageAnalyzer:
 
     async def analyze_comprehensive(self, image: Image.Image) -> Dict[str, Any]:
         """Perform comprehensive image analysis"""
+
+
+
         try:
             results = {}
             

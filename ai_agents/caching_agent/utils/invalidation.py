@@ -117,6 +117,9 @@ class TTLInvalidationStrategy(InvalidationStrategy):
         cache_entries: Dict[str, Any]
     ) -> bool:
         """Always proceed with TTL invalidation"""
+
+
+
         return True
     
     async def get_invalidation_candidates(
@@ -175,6 +178,9 @@ class TagBasedInvalidation(InvalidationStrategy):
         cache_entries: Dict[str, Any]
     ) -> bool:
         """Proceed if we have tags to invalidate"""
+
+
+
         return bool(event.tags)
     
     async def get_invalidation_candidates(
@@ -537,8 +543,14 @@ class InvalidationEngine:
     
     def get_metrics(self) -> Dict[str, Any]:
         """Get invalidation engine metrics"""
+
+
+
         return self.metrics.copy()
     
     def get_queue_size(self) -> int:
         """Get current invalidation queue size"""
+
+
+
         return self.event_queue.qsize()

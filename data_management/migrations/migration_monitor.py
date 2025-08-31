@@ -1,5 +1,5 @@
 """
-📊 Migration Metrics & Monitoring System - Ultra-Industrial Performance Analytics Engine
+ Migration Metrics & Monitoring System - Ultra-Industrial Performance Analytics Engine
 ======================================================================================
 
 Advanced monitoring and metrics collection system for IA Influencer Agent migrations:
@@ -20,7 +20,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-🔒 ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 🔒
+ ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 
 ==================================================
 This migration monitoring system, algorithms, and all associated analytics concepts are the 
 exclusive intellectual property of Fahed Mlaiel. Any unauthorized use, copying, modification, 
@@ -254,6 +254,9 @@ class MigrationPredictor:
     
     def _extract_features(self, migration_info: Dict[str, Any]) -> Dict[str, Any]:
         """Extract features from migration information"""
+
+
+
         return {
             'migration_type': migration_info.get('category', 'unknown'),
             'dependency_count': len(migration_info.get('dependencies', [])),
@@ -361,6 +364,9 @@ class ResourceMonitor:
     
     def get_current_snapshot(self) -> ResourceSnapshot:
         """Get current resource snapshot"""
+
+
+
         try:
             # CPU usage
             cpu_percent = psutil.cpu_percent(interval=None)

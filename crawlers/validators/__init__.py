@@ -699,7 +699,10 @@ def get_validation_system_metrics() -> Dict[str, Any]:
 
 
 def get_validation_system_info() -> Dict[str, Any]:
-    """Get detailed validation system information"""    return {
+    """Get detailed validation system information"""
+
+
+    return {
         "system_name": "IA Influencer Agent - Advanced Validation System",
         "version": __version__,
         "author": __author__,

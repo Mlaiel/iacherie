@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🔍 TODO Business Impact Analyzer - AINFLUE Project
+ TODO Business Impact Analyzer - AINFLUE Project
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -123,6 +123,9 @@ class TodoBusinessImpactAnalyzer:
 
     def analyze_file(self, file_path: Path) -> Optional[TodoAnalysis]:
         """Analyser un fichier Python pour les TODOs et impact business"""
+
+
+
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
@@ -297,10 +300,10 @@ class TodoBusinessImpactAnalyzer:
 
     def scan_repository(self) -> None:
         """Scanner tout le repository pour les TODOs"""
-        logger.info(f"🔍 Scanning repository: {self.project_root}")
+        logger.info(f" Scanning repository: {self.project_root}")
         
         python_files = list(self.project_root.rglob("*.py"))
-        logger.info(f"📁 Found {len(python_files)} Python files")
+        logger.info(f" Found {len(python_files)} Python files")
         
         for file_path in python_files:
             # Ignorer certains fichiers
@@ -311,7 +314,7 @@ class TodoBusinessImpactAnalyzer:
             if analysis and (analysis.todo_count > 0 or analysis.empty_methods > 0 or analysis.not_implemented_errors > 0):
                 self.analysis_results.append(analysis)
         
-        logger.info(f"✅ Analyzed {len(self.analysis_results)} files with implementation gaps")
+        logger.info(f" Analyzed {len(self.analysis_results)} files with implementation gaps")
 
     def generate_summary_report(self) -> Dict:
         """Générer un rapport de synthèse"""
@@ -406,24 +409,24 @@ class TodoBusinessImpactAnalyzer:
         with open(output_path, 'w', encoding='utf-8') as f:
             json.dump(report, f, indent=2, ensure_ascii=False)
         
-        logger.info(f"📄 Rapport détaillé sauvegardé: {output_path}")
+        logger.info(f" Rapport détaillé sauvegardé: {output_path}")
 
     def generate_markdown_report(self) -> str:
         """Générer un rapport Markdown lisible"""
         summary = self.generate_summary_report()
         
         if not summary:
-            return "# 🔍 Aucune analyse disponible\n\nAucun fichier avec des gaps d'implémentation trouvé."
+            return "#  Aucune analyse disponible\n\nAucun fichier avec des gaps d'implémentation trouvé."
         
         # En-tête du rapport
-        report = f"""# 🔍 ANALYSE BUSINESS IMPACT - IMPLÉMENTATIONS TODO
+        report = f"""#  ANALYSE BUSINESS IMPACT - IMPLÉMENTATIONS TODO
 
 **Date d'analyse**: {summary['scan_date'][:19]}  
 **Repository**: Ainflue IA Influencer Agent Platform
 
 ---
 
-## 📊 STATISTIQUES GÉNÉRALES
+##  STATISTIQUES GÉNÉRALES
 
 | Métrique | Valeur |
 |----------|--------|
@@ -431,22 +434,22 @@ class TodoBusinessImpactAnalyzer:
 | **TODOs totaux** | {summary['statistics']['total_todos']:,} |
 | **Méthodes vides** | {summary['statistics']['total_empty_methods']:,} |
 | **NotImplementedError** | {summary['statistics']['total_not_implemented']:,} |
-| **🚨 TOTAL GAPS** | **{summary['statistics']['total_implementation_gaps']:,}** |
+| ** TOTAL GAPS** | **{summary['statistics']['total_implementation_gaps']:,}** |
 
 ---
 
-## 🎯 RÉPARTITION PAR IMPACT BUSINESS
+##  RÉPARTITION PAR IMPACT BUSINESS
 
 """
         
         # Répartition par impact business
         impact_order = [BusinessImpact.CRITICAL, BusinessImpact.HIGH, BusinessImpact.MEDIUM, BusinessImpact.LOW, BusinessImpact.MINIMAL]
         impact_icons = {
-            BusinessImpact.CRITICAL: "🔴",
+            BusinessImpact.CRITICAL: "",
             BusinessImpact.HIGH: "🟠", 
             BusinessImpact.MEDIUM: "🟡",
-            BusinessImpact.LOW: "🔵",
-            BusinessImpact.MINIMAL: "⚪"
+            BusinessImpact.LOW: "",
+            BusinessImpact.MINIMAL: ""
         }
         
         for impact in impact_order:
@@ -462,25 +465,25 @@ class TodoBusinessImpactAnalyzer:
         # Répartition par type de code
         report += """---
 
-## 🏗️ RÉPARTITION PAR TYPE DE CODE
+##  RÉPARTITION PAR TYPE DE CODE
 
 """
         
         type_icons = {
-            CodeType.BUSINESS_CORE: "💼",
+            CodeType.BUSINESS_CORE: "",
             CodeType.AI_AGENTS: "🤖",
-            CodeType.API_EXTERNAL: "🌐",
-            CodeType.CRAWLERS: "🕷️",
-            CodeType.SECURITY: "🔒",
-            CodeType.INFRASTRUCTURE: "🏗️",
-            CodeType.UTILITIES: "🔧",
+            CodeType.API_EXTERNAL: "",
+            CodeType.CRAWLERS: "",
+            CodeType.SECURITY: "",
+            CodeType.INFRASTRUCTURE: "",
+            CodeType.UTILITIES: "",
             CodeType.TESTS: "🧪",
-            CodeType.DOCS: "📚"
+            CodeType.DOCS: ""
         }
         
         for code_type_str, data in summary['by_code_type'].items():
             code_type = CodeType(code_type_str)
-            icon = type_icons.get(code_type, "📁")
+            icon = type_icons.get(code_type, "")
             report += f"""### {icon} **{code_type_str.upper()}**
 - **Fichiers**: {data['count']}
 - **Priorité moyenne**: {data['avg_priority']:.1f}/100
@@ -491,7 +494,7 @@ class TodoBusinessImpactAnalyzer:
         # Top priorités critiques
         report += """---
 
-## 🚨 TOP PRIORITÉS CRITIQUES
+##  TOP PRIORITÉS CRITIQUES
 
 """
         
@@ -511,9 +514,9 @@ class TodoBusinessImpactAnalyzer:
 
 ---
 
-## 💡 RECOMMANDATIONS D'ACTIONS
+##  RECOMMANDATIONS D'ACTIONS
 
-### 🔴 **ACTIONS CRITIQUES** (Impact Business CRITICAL)
+###  **ACTIONS CRITIQUES** (Impact Business CRITICAL)
 """
         
         critical_files_all = [a for a in summary['critical_low_implementation']]
@@ -528,7 +531,7 @@ class TodoBusinessImpactAnalyzer:
    - **APIs externes**: {', '.join(file_analysis['external_apis'][:3])}
 """
         else:
-            report += "\n✅ *Tous les fichiers critiques ont une implémentation acceptable.*\n"
+            report += "\n *Tous les fichiers critiques ont une implémentation acceptable.*\n"
         
         # Actions par type
         report += """
@@ -538,10 +541,10 @@ class TodoBusinessImpactAnalyzer:
         
         domain_priorities = {
             'ai_agents': "🤖 **Agents IA**: Finaliser les agents de fingerprinting, monétisation et collaboration",
-            'business_core': "💼 **Business Logic**: Compléter les modules de licensing et revenue management", 
-            'api_external': "🌐 **APIs Externes**: Implémenter les connecteurs Spotify, YouTube, Instagram",
-            'crawlers': "🕷️ **Crawlers**: Développer les crawlers de contenu avec gestion des APIs",
-            'security': "🔒 **Sécurité**: Finaliser la protection de contenu et gestion des droits"
+            'business_core': " **Business Logic**: Compléter les modules de licensing et revenue management", 
+            'api_external': " **APIs Externes**: Implémenter les connecteurs Spotify, YouTube, Instagram",
+            'crawlers': " **Crawlers**: Développer les crawlers de contenu avec gestion des APIs",
+            'security': " **Sécurité**: Finaliser la protection de contenu et gestion des droits"
         }
         
         for domain, description in domain_priorities.items():
@@ -551,7 +554,7 @@ class TodoBusinessImpactAnalyzer:
         
         report += """---
 
-## 🎯 PROCHAINES ÉTAPES
+##  PROCHAINES ÉTAPES
 
 1. **Phase 1 - Critique**: Compléter tous les fichiers CRITICAL (impact business bloquant)
 2. **Phase 2 - Business**: Finaliser les modules HIGH impact (fonctionnalités business)
@@ -560,16 +563,19 @@ class TodoBusinessImpactAnalyzer:
 
 ---
 
-*📊 Rapport généré automatiquement par TODO Business Impact Analyzer*  
-*🚀 Pour une analyse détaillée, consultez le fichier JSON complet*
+* Rapport généré automatiquement par TODO Business Impact Analyzer*  
+* Pour une analyse détaillée, consultez le fichier JSON complet*
 """
+
+
+
         
         return report
 
 
 def main():
     """Point d'entrée principal"""
-    parser = argparse.ArgumentParser(description="🔍 TODO Business Impact Analyzer for Ainflue")
+    parser = argparse.ArgumentParser(description=" TODO Business Impact Analyzer for Ainflue")
     parser.add_argument("--project-root", default=".", help="Chemin vers la racine du projet")
     parser.add_argument("--output-json", default="todo_business_impact_analysis.json", 
                        help="Fichier de sortie JSON")
@@ -597,18 +603,18 @@ def main():
     with open(output_md_path, 'w', encoding='utf-8') as f:
         f.write(markdown_report)
     
-    logger.info(f"📄 Rapport Markdown sauvegardé: {output_md_path}")
+    logger.info(f" Rapport Markdown sauvegardé: {output_md_path}")
     
     # Afficher le résumé
     summary = analyzer.generate_summary_report()
     if summary:
         stats = summary['statistics']
-        print(f"\n🎯 RÉSUMÉ DE L'ANALYSE:")
-        print(f"   📁 Fichiers avec gaps: {stats['total_files_with_gaps']:,}")
-        print(f"   🚨 Total gaps: {stats['total_implementation_gaps']:,}")
-        print(f"   📊 Rapports générés: {args.output_json}, {args.output_md}")
+        print(f"\n RÉSUMÉ DE L'ANALYSE:")
+        print(f"    Fichiers avec gaps: {stats['total_files_with_gaps']:,}")
+        print(f"    Total gaps: {stats['total_implementation_gaps']:,}")
+        print(f"    Rapports générés: {args.output_json}, {args.output_md}")
     else:
-        print("\n✅ Aucun gap d'implémentation trouvé!")
+        print("\n Aucun gap d'implémentation trouvé!")
 
 
 if __name__ == "__main__":

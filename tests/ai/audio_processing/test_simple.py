@@ -33,7 +33,7 @@ def test_basic_audio():
     assert np.max(audio) <= 1.0
     assert np.min(audio) >= -1.0
     
-    print(f"✅ Generated {len(audio)} samples")
+    print(f" Generated {len(audio)} samples")
 
 def test_audio_rms():
     """Test RMS calculation"""
@@ -46,7 +46,7 @@ def test_audio_rms():
     # RMS of sine wave should be ~0.707
     assert 0.7 < rms < 0.71
     
-    print(f"✅ RMS: {rms:.6f}")
+    print(f" RMS: {rms:.6f}")
 
 def test_fft_peak():
     """Test FFT peak detection"""
@@ -64,11 +64,11 @@ def test_fft_peak():
     
     assert abs(detected_freq - freq) < 1
     
-    print(f"✅ Detected freq: {detected_freq:.1f} Hz")
+    print(f" Detected freq: {detected_freq:.1f} Hz")
 
 if __name__ == "__main__":
-    print("🎵 Running simple audio tests...")
+    print(" Running simple audio tests...")
     test_basic_audio()
     test_audio_rms()
     test_fft_peak()
-    print("✅ All tests passed!")
+    print(" All tests passed!")

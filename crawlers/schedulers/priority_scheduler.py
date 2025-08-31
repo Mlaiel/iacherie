@@ -193,6 +193,9 @@ class ScheduledTask:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary representation."""
+
+
+
         return {
             'task_id': self.task_id,
             'task_type': self.task_type.value,
@@ -312,6 +315,9 @@ class PriorityScheduler:
     
     def _initialize_ml_predictor(self) -> None:
         """Initialize ML predictor for scheduling optimization."""
+
+
+
         try:
             # Simple ML predictor for task execution time and success probability
             self.ml_predictor = {
@@ -405,6 +411,9 @@ class PriorityScheduler:
     
     async def _apply_ml_optimization(self, task: ScheduledTask) -> None:
         """Apply ML optimization to task parameters."""
+
+
+
         try:
             # Extract features for ML prediction
             features = {
@@ -594,6 +603,9 @@ class PriorityScheduler:
     
     async def _start_task_execution(self, task: ScheduledTask) -> None:
         """Start executing a task."""
+
+
+
         try:
             # Allocate resources
             await self._allocate_resources(task)
@@ -624,6 +636,9 @@ class PriorityScheduler:
     
     async def _execute_task(self, task: ScheduledTask) -> None:
         """Execute a task (placeholder for actual execution logic)."""
+
+
+
         try:
             start_time = time.time()
             
@@ -885,6 +900,9 @@ class PriorityScheduler:
     
     def get_metrics(self) -> SchedulerMetrics:
         """Get current scheduler metrics."""
+
+
+
         return self.metrics
     
     async def optimize_queue(self) -> None:

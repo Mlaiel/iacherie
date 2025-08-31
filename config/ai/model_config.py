@@ -286,6 +286,9 @@ class AIModelConfig(BaseSettings):
     
     def get_model_config_dict(self) -> Dict[str, Any]:
         """Export complete model configuration as dictionary."""
+
+
+
         return {
             "registry": {
                 "url": self.MODEL_REGISTRY_URL,

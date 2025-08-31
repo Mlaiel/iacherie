@@ -8,7 +8,7 @@ Handles dynamic content and complex interactions.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️ CRITICAL LEGAL WARNING ⚠️
+ CRITICAL LEGAL WARNING 
 UNAUTHORIZED USE, COPYING, OR DISTRIBUTION IS STRICTLY PROHIBITED AND WILL RESULT IN IMMEDIATE LEGAL ACTION.
 This technology is EXCLUSIVE property of Fahed Mlaiel. Contact: mlaiel@live.de for licensing.
 """
@@ -305,6 +305,9 @@ class SeleniumScraper:
                         
     async def _click_element(self, element) -> bool:
         """Click element with human-like behavior."""
+
+
+
         try:
             # Scroll to element first
             self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
@@ -330,6 +333,9 @@ class SeleniumScraper:
             
     async def _type_text(self, element, text: str) -> bool:
         """Type text with human-like typing speed."""
+
+
+
         try:
             element.clear()
             await asyncio.sleep(random.uniform(0.2, 0.5))
@@ -348,6 +354,9 @@ class SeleniumScraper:
             
     async def _clear_element(self, element) -> bool:
         """Clear element content."""
+
+
+
         try:
             element.clear()
             return True
@@ -357,6 +366,9 @@ class SeleniumScraper:
             
     async def _scroll_to_element(self, element) -> bool:
         """Scroll to element."""
+
+
+
         try:
             self.driver.execute_script("arguments[0].scrollIntoView(true);", element)
             await asyncio.sleep(random.uniform(0.5, 1.5))
@@ -367,6 +379,9 @@ class SeleniumScraper:
             
     async def _take_screenshot(self, filename: Optional[str] = None) -> str:
         """Take screenshot and return filename."""
+
+
+
         try:
             if not filename:
                 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -382,6 +397,9 @@ class SeleniumScraper:
             
     async def _extract_text(self, element) -> str:
         """Extract text from element."""
+
+
+
         try:
             return element.text
         except Exception as e:
@@ -390,6 +408,9 @@ class SeleniumScraper:
             
     async def _extract_attribute(self, element, attribute: str) -> str:
         """Extract attribute from element."""
+
+
+
         try:
             return element.get_attribute(attribute) or ""
         except Exception as e:
@@ -398,6 +419,9 @@ class SeleniumScraper:
             
     async def _extract_html(self, element) -> str:
         """Extract HTML from element."""
+
+
+
         try:
             return element.get_attribute('outerHTML') or ""
         except Exception as e:
@@ -406,6 +430,9 @@ class SeleniumScraper:
             
     async def _execute_javascript(self, script: str) -> Any:
         """Execute JavaScript code."""
+
+
+
         try:
             return self.driver.execute_script(script)
         except Exception as e:
@@ -414,6 +441,9 @@ class SeleniumScraper:
             
     async def _hover_element(self, element) -> bool:
         """Hover over element."""
+
+
+
         try:
             actions = ActionChains(self.driver)
             actions.move_to_element(element)
@@ -426,6 +456,9 @@ class SeleniumScraper:
             
     async def _select_dropdown(self, element, value: str) -> bool:
         """Select dropdown value."""
+
+
+
         try:
             from selenium.webdriver.support.ui import Select
             select = Select(element)
@@ -438,10 +471,16 @@ class SeleniumScraper:
             
     async def _wait_for_element(self, selector: str, timeout: int):
         """Wait for element to appear."""
+
+
+
         return await self._find_element(selector, timeout)
         
     async def scroll_page(self, direction: str = 'down', amount: int = 3) -> bool:
         """Scroll page in specified direction."""
+
+
+
         try:
             body = self.driver.find_element(By.TAG_NAME, 'body')
             
@@ -491,6 +530,9 @@ class SeleniumScraper:
         
     async def extract_all_links(self) -> List[Dict[str, str]]:
         """Extract all links from current page."""
+
+
+
         try:
             links = self.driver.find_elements(By.TAG_NAME, 'a')
             
@@ -514,6 +556,9 @@ class SeleniumScraper:
             
     async def extract_all_images(self) -> List[Dict[str, str]]:
         """Extract all images from current page."""
+
+
+
         try:
             images = self.driver.find_elements(By.TAG_NAME, 'img')
             
@@ -538,6 +583,9 @@ class SeleniumScraper:
             
     async def get_page_source(self) -> str:
         """Get current page source."""
+
+
+
         try:
             return self.driver.page_source
         except Exception as e:
@@ -546,6 +594,9 @@ class SeleniumScraper:
             
     async def get_current_url(self) -> str:
         """Get current page URL."""
+
+
+
         try:
             return self.driver.current_url
         except Exception as e:
@@ -554,6 +605,9 @@ class SeleniumScraper:
             
     async def refresh_page(self):
         """Refresh current page."""
+
+
+
         try:
             self.driver.refresh()
             await asyncio.sleep(random.uniform(2, 4))
@@ -562,6 +616,9 @@ class SeleniumScraper:
             
     async def go_back(self):
         """Navigate back in browser history."""
+
+
+
         try:
             self.driver.back()
             await asyncio.sleep(random.uniform(1, 2))
@@ -570,6 +627,9 @@ class SeleniumScraper:
             
     async def go_forward(self):
         """Navigate forward in browser history."""
+
+
+
         try:
             self.driver.forward()
             await asyncio.sleep(random.uniform(1, 2))

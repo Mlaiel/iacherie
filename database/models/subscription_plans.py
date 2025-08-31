@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -316,6 +316,9 @@ class SubscriptionPlan(Base):
     @classmethod
     def create_basic_plan(cls) -> 'SubscriptionPlan':
         """Create a basic subscription plan"""
+
+
+
         return cls(
             tier=PlanTier.BASIC,
             name="Basic Plan",
@@ -338,6 +341,9 @@ class SubscriptionPlan(Base):
     @classmethod
     def create_premium_plan(cls) -> 'SubscriptionPlan':
         """Create a premium subscription plan"""
+
+
+
         return cls(
             tier=PlanTier.PREMIUM,
             name="Premium Plan",
@@ -399,6 +405,9 @@ class SubscriptionPlan(Base):
     
     def is_trial_available(self) -> bool:
         """Check if free trial is available"""
+
+
+
         return (
             self.has_free_trial and
             self.trial_period_days and
@@ -494,6 +503,9 @@ class SubscriptionPlan(Base):
     
     def get_pricing_summary(self) -> Dict[str, Any]:
         """Get comprehensive pricing summary"""
+
+
+
         return {
             'base_pricing': {
                 'price': float(self.price),

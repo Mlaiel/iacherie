@@ -1,5 +1,5 @@
 """
-🌐 Graphql Api - IA-Influencer-Agent API Layer
+ Graphql Api - IA-Influencer-Agent API Layer
 ==================================================================
 Expert: BACKEND_SENIOR + MICROSERVICES_ARCHITECT
 Architecture: RESTful API + GraphQL + WebSocket
@@ -47,6 +47,9 @@ class APIError(BaseModel):
 
 async def authentication_middleware(request: Request, credentials: HTTPAuthorizationCredentials = Depends(security)):
     """Middleware d'authentification"""
+
+
+
     try:
         # JWT validation implementation for GraphQL
         token = credentials.credentials
@@ -137,6 +140,9 @@ class GraphqlApiAPI:
         @self.app.get("/health")
         async def health_check():
             """Vérification de santé de l'API"""
+
+
+
             return APIResponse(
                 success=True,
                 data={"status": "healthy", "version": "1.0.0"},
@@ -149,6 +155,9 @@ class GraphqlApiAPI:
             auth_data: dict = Depends(authentication_middleware)
         ):
             """Récupération des données"""
+
+
+
             try:
                 # GraphQL business logic implementation
                 # Support GraphQL-style field selection and relationships
@@ -205,6 +214,9 @@ class GraphqlApiAPI:
             auth_data: dict = Depends(authentication_middleware)
         ):
             """Création de données"""
+
+
+
             try:
                 # GraphQL mutation validation and creation
                 # Support GraphQL input types and mutations
@@ -280,6 +292,9 @@ class WebSocketManager:
 
 def create_graphqlapi_api(app: FastAPI) -> GraphqlApiAPI:
     """Factory pour créer l'API Graphql Api"""
+
+
+
     return GraphqlApiAPI(app)
 
 __all__ = [

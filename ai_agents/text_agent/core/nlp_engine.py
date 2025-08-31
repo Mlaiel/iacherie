@@ -7,7 +7,7 @@ semantic analysis, and intelligent text understanding for content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -157,6 +157,9 @@ class NLPEngine:
     
     def _init_sentiment_analyzers(self):
         """Initialize multiple sentiment analysis models"""
+
+
+
         try:
             # VADER sentiment analyzer (rule-based)
             self.sentiment_analyzers['vader'] = VaderAnalyzer()
@@ -181,6 +184,9 @@ class NLPEngine:
     
     def _init_emotion_analyzer(self):
         """Initialize emotion analysis model"""
+
+
+
         try:
             self.emotion_analyzer = pipeline(
                 "text-classification",
@@ -195,6 +201,9 @@ class NLPEngine:
     
     def _init_language_models(self):
         """Initialize spaCy language models"""
+
+
+
         try:
             # Load multiple language models
             language_models = {
@@ -221,6 +230,9 @@ class NLPEngine:
     
     def _init_semantic_models(self):
         """Initialize semantic analysis models"""
+
+
+
         try:
             # Sentence transformer for embeddings
             self.sentence_transformer = SentenceTransformer('all-MiniLM-L6-v2')
@@ -510,6 +522,9 @@ class NLPEngine:
     
     async def _ensemble_sentiment_scores(self, scores: Dict[str, Dict]) -> Tuple[float, float, float]:
         """Combine sentiment scores from multiple analyzers"""
+
+
+
         try:
             polarities = []
             subjectivities = []
@@ -574,6 +589,9 @@ class NLPEngine:
     
     async def _analyze_emotions(self, text: str) -> Dict[str, float]:
         """Extract emotional content from text"""
+
+
+
         try:
             if not self.emotion_analyzer:
                 return {}
@@ -594,6 +612,9 @@ class NLPEngine:
     
     async def _extract_nltk_entities(self, text: str) -> List[EntityResult]:
         """Extract entities using NLTK"""
+
+
+
         try:
             # Tokenize and tag
             tokens = word_tokenize(text)
@@ -629,6 +650,9 @@ class NLPEngine:
     
     async def _extract_topics_lda(self, tfidf_matrix, feature_names, num_topics) -> List[TopicResult]:
         """Extract topics using Latent Dirichlet Allocation"""
+
+
+
         try:
             lda = LatentDirichletAllocation(
                 n_components=num_topics,
@@ -662,6 +686,9 @@ class NLPEngine:
     
     async def _extract_topics_kmeans(self, tfidf_matrix, feature_names, num_topics) -> List[TopicResult]:
         """Extract topics using K-means clustering"""
+
+
+
         try:
             kmeans = KMeans(n_clusters=num_topics, random_state=42, n_init=10)
             kmeans.fit(tfidf_matrix)
@@ -693,6 +720,9 @@ class NLPEngine:
     
     async def _extract_semantic_concepts(self, text: str) -> List[str]:
         """Extract semantic concepts from text"""
+
+
+
         try:
             # Simple concept extraction using TF-IDF
             tfidf_matrix = self.tfidf_vectorizer.fit_transform([text])
@@ -711,6 +741,9 @@ class NLPEngine:
     
     async def _calculate_coherence(self, text: str) -> float:
         """Calculate text coherence score"""
+
+
+
         try:
             sentences = sent_tokenize(text)
             if len(sentences) < 2:
@@ -746,6 +779,9 @@ class NLPEngine:
     
     def get_analysis_stats(self) -> Dict[str, Any]:
         """Get analysis statistics"""
+
+
+
         return {
             **self.analysis_stats,
             "models_loaded": len(self.nlp_models),
@@ -788,6 +824,9 @@ class SentimentAnalyzer:
         Returns:
             Dict containing detailed sentiment analysis with context
         """
+
+
+
         try:
             # Basic sentiment analysis
             sentiment_result = await self.nlp_engine.analyze_sentiment(text)

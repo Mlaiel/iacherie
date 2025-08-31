@@ -7,12 +7,12 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel - Unauthorized use strictly prohibited
 License: Proprietary - Contact for licensing
 
-⚠️ WARNING: This code is the intellectual property of Fahed Mlaiel.
+ WARNING: This code is the intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or modification is strictly
 prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 
-🎵 PROFESSIONAL AUDIO SEPARATION SUITE 🎵
+ PROFESSIONAL AUDIO SEPARATION SUITE 
 - Advanced AI-powered source separation
 - Multi-format support (vocals, instruments, drums, bass)
 - Real-time processing capabilities
@@ -137,7 +137,10 @@ except Exception as e:
 
 # Module information for introspection
 def get_module_info():
-    """Get comprehensive module information."""    return {
+    """Get comprehensive module information."""
+
+
+    return {
         "name": "audio.separation",
         "version": __version__,
         "author": __author__, 

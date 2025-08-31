@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -460,6 +460,9 @@ class AuditLog(Base):
     
     def is_security_relevant(self) -> bool:
         """Check if this log entry is security-relevant"""
+
+
+
         return (
             self.security_event or
             self.suspicious_activity or
@@ -470,6 +473,9 @@ class AuditLog(Base):
     
     def is_compliance_relevant(self) -> bool:
         """Check if this log entry is compliance-relevant"""
+
+
+
         return (
             self.compliance_event or
             bool(self.compliance_relevance) or
@@ -514,6 +520,9 @@ class AuditLog(Base):
     
     def should_alert(self) -> bool:
         """Determine if this event should trigger an alert"""
+
+
+
         return (
             self.get_risk_score() > 15.0 or
             self.severity in [Severity.CRITICAL, Severity.HIGH] or
@@ -527,6 +536,9 @@ class AuditLog(Base):
     @classmethod
     def create_log(cls, log_data: Dict[str, Any], user_id: str = None) -> 'AuditLog':
         """Create AuditLog from event data"""
+
+
+
         return cls(
             user_id=user_id,
             action_type=ActionType(log_data.get('action_type', 'read')),

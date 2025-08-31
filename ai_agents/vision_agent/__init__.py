@@ -7,7 +7,7 @@ with advanced image/video processing, AI-powered analysis, and privacy protectio
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -90,13 +90,22 @@ MODULE_INFO = {
 }
 
 def get_module_info():
-    """Get comprehensive module information"""    return MODULE_INFO.copy()
+    """Get comprehensive module information"""
+
+
+    return MODULE_INFO.copy()
 
 def get_version():
-    """Get module version"""    return __version__
+    """Get module version"""
+
+
+    return __version__
 
 def get_available_components():
-    """Get list of available vision processing components"""    return [
+    """Get list of available vision processing components"""
+
+
+    return [
         {
             'name': 'VisionOrchestrator',
             'description': 'Main coordination system for all vision operations',
@@ -152,7 +161,10 @@ def create_vision_system(config_path=None):
         
     Returns:
         Configured VisionOrchestrator instance
-    """    try:
+    """
+
+
+    try:
         # Load configuration
         if config_path:
             config = VisionAgentConfig(config_path)
@@ -168,10 +180,13 @@ def create_vision_system(config_path=None):
         raise RuntimeError(f"Failed to create vision system: {e}")
 
 def create_vision_agent():
-    """Legacy factory function for backward compatibility"""    return create_vision_system()
+    """Legacy factory function for backward compatibility"""
+
+
+    return create_vision_system()
 
 # Legal and licensing information
-LEGAL_NOTICE = """⚠️  CRITICAL LEGAL NOTICE - PROPRIETARY SOFTWARE ⚠️
+LEGAL_NOTICE = """  CRITICAL LEGAL NOTICE - PROPRIETARY SOFTWARE 
 
 This software and all associated intellectual property are the exclusive property of:
 
@@ -210,7 +225,10 @@ def print_legal_notice():
     """Print the legal notice and licensing information"""    print(LEGAL_NOTICE)
 
 def get_legal_notice():
-    """Get the legal notice text"""    return LEGAL_NOTICE
+    """Get the legal notice text"""
+
+
+    return LEGAL_NOTICE
 
 # Module initialization
 import logging
@@ -218,7 +236,7 @@ logger = logging.getLogger(__name__)
 
 logger.info(f"IA Influencer Agent Vision System v{__version__} initialized")
 logger.info(f"Author: {__author__} <{__email__}>")
-logger.info("⚠️  Proprietary software - Unauthorized use prohibited")
+logger.info("  Proprietary software - Unauthorized use prohibited")
 
 # Export legal notice for documentation
 __doc__ += "\n\n" + LEGAL_NOTICE

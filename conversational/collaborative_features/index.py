@@ -7,7 +7,7 @@ and services for the IA Influencer Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will result in legal action.
@@ -40,6 +40,9 @@ class CollaborativeFeaturesRegistry:
     
     async def initialize_services(self, config: Dict[str, Any]) -> None:
         """Initialize all collaborative services"""
+
+
+
         try:
             if self._initialized:
                 return
@@ -74,6 +77,9 @@ class CollaborativeFeaturesRegistry:
     
     def list_available_services(self) -> List[str]:
         """List all available collaborative services"""
+
+
+
         return list(self._services.keys())
 
 
@@ -96,6 +102,9 @@ class CollaborationWorkflowManager:
         project_details: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Start a comprehensive collaboration workflow"""
+
+
+
         try:
             workflow_id = f"workflow_{workflow_type}_{len(self.active_workflows)}"
             
@@ -168,6 +177,9 @@ collaboration_registry = CollaborativeFeaturesRegistry()
 
 async def get_collaboration_service(service_name: str) -> Any:
     """Get a collaboration service from the global registry"""
+
+
+
     return collaboration_registry.get_service(service_name)
 
 
@@ -178,6 +190,9 @@ async def initialize_collaboration_features(config: Dict[str, Any] = None) -> No
 
 def get_feature_summary() -> Dict[str, Any]:
     """Get summary of all collaborative features"""
+
+
+
     return {
         "module_name": "collaborative_features",
         "version": "1.0.0",

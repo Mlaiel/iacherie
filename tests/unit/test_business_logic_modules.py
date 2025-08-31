@@ -72,6 +72,9 @@ class MockAnalyticsEngine:
     
     def get_metric_count(self, event_type: str) -> int:
         """Get count of specific metric"""
+
+
+
         return len(self.metrics.get(event_type, []))
 
 

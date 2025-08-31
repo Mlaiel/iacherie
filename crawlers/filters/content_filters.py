@@ -12,7 +12,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 
-⚠️ STRICT COPYRIGHT PROTECTION ⚠️
+ STRICT COPYRIGHT PROTECTION 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 
@@ -139,6 +139,9 @@ class IntelligentContentAnalyzer:
     
     async def analyze_content_comprehensive(self, content_item: ContentItem) -> Dict[str, Any]:
         """Perform comprehensive content analysis."""
+
+
+
         try:
             analysis_result = {
                 "content_type": await self._classify_content_type(content_item),
@@ -164,6 +167,9 @@ class IntelligentContentAnalyzer:
     
     async def _classify_content_type(self, content_item: ContentItem) -> str:
         """Classify the basic content type."""
+
+
+
         try:
             mime_type = content_item.mime_type or mimetypes.guess_type(content_item.source_path or "")[0]
             
@@ -197,6 +203,9 @@ class IntelligentContentAnalyzer:
     
     async def _determine_content_category(self, content_item: ContentItem) -> ContentCategory:
         """Determine specific content category."""
+
+
+
         try:
             content_type = await self._classify_content_type(content_item)
             
@@ -218,6 +227,9 @@ class IntelligentContentAnalyzer:
     
     async def _categorize_audio_content(self, content_item: ContentItem) -> ContentCategory:
         """Categorize audio content specifically."""
+
+
+
         try:
             # Analyze filename and metadata for clues
             filename = content_item.filename or ""
@@ -254,6 +266,9 @@ class IntelligentContentAnalyzer:
     
     async def _categorize_video_content(self, content_item: ContentItem) -> ContentCategory:
         """Categorize video content specifically."""
+
+
+
         try:
             filename = content_item.filename or ""
             
@@ -272,6 +287,9 @@ class IntelligentContentAnalyzer:
     
     async def _categorize_image_content(self, content_item: ContentItem) -> ContentCategory:
         """Categorize image content specifically."""
+
+
+
         try:
             filename = content_item.filename or ""
             
@@ -290,6 +308,9 @@ class IntelligentContentAnalyzer:
     
     async def _categorize_text_content(self, content_item: ContentItem) -> ContentCategory:
         """Categorize text content specifically."""
+
+
+
         try:
             filename = content_item.filename or ""
             content_text = str(content_item.raw_content or "")
@@ -315,6 +336,9 @@ class IntelligentContentAnalyzer:
     
     async def _assess_content_complexity(self, content_item: ContentItem) -> ContentComplexity:
         """Assess the complexity level of content."""
+
+
+
         try:
             complexity_score = 0
             
@@ -354,6 +378,9 @@ class IntelligentContentAnalyzer:
     
     async def _extract_content_metadata(self, content_item: ContentItem) -> ContentMetadata:
         """Extract comprehensive metadata from content."""
+
+
+
         try:
             metadata = ContentMetadata()
             
@@ -441,6 +468,9 @@ class IntelligentContentAnalyzer:
     
     async def _calculate_quality_score(self, content_item: ContentItem) -> float:
         """Calculate content quality score."""
+
+
+
         try:
             score = 0.5  # Base score
             
@@ -471,6 +501,9 @@ class IntelligentContentAnalyzer:
     
     async def _calculate_authenticity_score(self, content_item: ContentItem) -> float:
         """Calculate content authenticity score."""
+
+
+
         try:
             score = 0.7  # Base authenticity score
             
@@ -497,6 +530,9 @@ class IntelligentContentAnalyzer:
     
     async def _assess_content_quality(self, content_item: ContentItem) -> Dict[str, Any]:
         """Assess overall content quality."""
+
+
+
         return {
             "overall_score": await self._calculate_quality_score(content_item),
             "authenticity_score": await self._calculate_authenticity_score(content_item),
@@ -611,6 +647,9 @@ class IntelligentContentAnalyzer:
     
     async def _generate_content_fingerprint(self, content_item: ContentItem, analysis: Dict[str, Any]) -> str:
         """Generate unique content fingerprint."""
+
+
+
         try:
             fingerprint_data = {
                 "filename": content_item.filename,
@@ -640,6 +679,9 @@ class ContentFilterOrchestrator:
     
     async def process_content_comprehensive(self, content_item: ContentItem) -> FilterResponse:
         """Process content through comprehensive filtering pipeline."""
+
+
+
         try:
             start_time = time.time()
             

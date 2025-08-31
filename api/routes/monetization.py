@@ -142,6 +142,9 @@ async def connect_platform(
     user: dict = Depends(get_current_user)
 ):
     """Connect a monetization platform"""
+
+
+
     try:
         # Validate platform connection
         validation_result = await platform_apis.validate_connection(
@@ -208,6 +211,9 @@ async def get_revenue_summary(
     user: dict = Depends(get_current_user)
 ):
     """Get revenue summary and analytics"""
+
+
+
     try:
         # Calculate period dates
         if period == "7d":
@@ -310,6 +316,9 @@ async def add_revenue_stream(
     user: dict = Depends(get_current_user)
 ):
     """Add a manual revenue stream entry"""
+
+
+
     try:
         # Convert amount to USD for analytics
         amount_usd = await revenue_calculator.convert_to_usd(stream.amount, stream.currency)
@@ -352,6 +361,9 @@ async def create_monetization_goal(
     user: dict = Depends(get_current_user)
 ):
     """Create a new monetization goal"""
+
+
+
     try:
         # Convert target amount to USD
         target_amount_usd = await revenue_calculator.convert_to_usd(goal.target_amount, goal.currency)
@@ -390,6 +402,9 @@ async def get_monetization_goals(
     user: dict = Depends(get_current_user)
 ):
     """Get user's monetization goals with progress"""
+
+
+
     try:
         query = """
             SELECT goal_id, title, target_amount, currency, target_amount_usd,
@@ -448,6 +463,9 @@ async def request_payout(
     user: dict = Depends(get_current_user)
 ):
     """Request a payout of earned revenue"""
+
+
+
     try:
         # Check available balance
         async with database_manager.get_postgres_session() as session:
@@ -512,6 +530,9 @@ async def create_licensing_deal(
     user: dict = Depends(get_current_user)
 ):
     """Create a new licensing deal"""
+
+
+
     try:
         # Verify content ownership
         async with database_manager.get_postgres_session() as session:
@@ -575,6 +596,9 @@ async def generate_revenue_report(
     user: dict = Depends(get_current_user)
 ):
     """Generate detailed revenue report"""
+
+
+
     try:
         report_id = str(uuid.uuid4())
         
@@ -684,6 +708,9 @@ async def generate_revenue_report(
 # Background task functions
 async def _sync_platform_revenue(user_id: str, platform: str):
     """Sync revenue data from platform APIs"""
+
+
+
     try:
         # Get platform connection
         async with database_manager.get_postgres_session() as session:
@@ -732,6 +759,9 @@ async def _sync_platform_revenue(user_id: str, platform: str):
 
 async def _process_payout(payout_id: str, payout_request: PayoutRequest, user: dict):
     """Process payout request"""
+
+
+
     try:
         # Update status to processing
         async with database_manager.get_postgres_session() as session:
@@ -786,6 +816,9 @@ async def _process_payout(payout_id: str, payout_request: PayoutRequest, user: d
 
 async def _update_goals_progress(user_id: str, platform: str, revenue_type: str, amount_usd: float):
     """Update progress towards monetization goals"""
+
+
+
     try:
         async with database_manager.get_postgres_session() as session:
             # Find matching goals
@@ -818,6 +851,9 @@ async def _update_goals_progress(user_id: str, platform: str, revenue_type: str,
 async def _calculate_goal_progress(user_id: str, goal_id: str, platforms: List[str], 
                                   revenue_types: List[str], created_at: datetime) -> float:
     """Calculate current progress towards a goal"""
+
+
+
     try:
         async with database_manager.get_postgres_session() as session:
             # Build dynamic query based on goal criteria

@@ -132,6 +132,9 @@ class KubernetesManager(BaseDeploymentManager):
 
     def _init_kubernetes_clients(self) -> None:
         """Initialize Kubernetes API clients."""
+
+
+
         try:
             if self.cluster_config:
                 config.load_kube_config(config_file=self.cluster_config)
@@ -161,6 +164,9 @@ class KubernetesManager(BaseDeploymentManager):
         Returns:
             True if successful, False otherwise
         """
+
+
+
         try:
             namespace_metadata = client.V1ObjectMeta(
                 name=namespace,
@@ -193,6 +199,9 @@ class KubernetesManager(BaseDeploymentManager):
         Returns:
             True if deployment successful, False otherwise
         """
+
+
+
         try:
             # Ensure namespace exists
             await self.create_namespace(config.namespace)
@@ -244,6 +253,9 @@ class KubernetesManager(BaseDeploymentManager):
 
     async def _create_deployment(self, config: DeploymentConfig) -> bool:
         """Create Kubernetes deployment."""
+
+
+
         try:
             # Container specification
             container = client.V1Container(
@@ -310,6 +322,9 @@ class KubernetesManager(BaseDeploymentManager):
 
     async def _create_service(self, config: DeploymentConfig) -> bool:
         """Create Kubernetes service."""
+
+
+
         try:
             service_spec = client.V1ServiceSpec(
                 selector={"app": config.name},
@@ -348,6 +363,9 @@ class KubernetesManager(BaseDeploymentManager):
 
     async def _create_ingress(self, config: DeploymentConfig) -> bool:
         """Create Kubernetes ingress."""
+
+
+
         try:
             ingress_spec = client.V1IngressSpec(
                 rules=[
@@ -409,6 +427,9 @@ class KubernetesManager(BaseDeploymentManager):
         Returns:
             True if scaling successful, False otherwise
         """
+
+
+
         try:
             # Patch deployment with new replica count
             body = {"spec": {"replicas": replicas}}
@@ -438,6 +459,9 @@ class KubernetesManager(BaseDeploymentManager):
         Returns:
             True if update successful, False otherwise
         """
+
+
+
         try:
             # Get current deployment
             deployment = self.v1_apps.read_namespaced_deployment(
@@ -484,6 +508,9 @@ class KubernetesManager(BaseDeploymentManager):
         Returns:
             Deployment status information
         """
+
+
+
         try:
             deployment = self.v1_apps.read_namespaced_deployment(
                 name=deployment_name,
@@ -552,6 +579,9 @@ class KubernetesManager(BaseDeploymentManager):
         Returns:
             True if deletion successful, False otherwise
         """
+
+
+
         try:
             # Delete deployment
             self.v1_apps.delete_namespaced_deployment(
@@ -609,6 +639,9 @@ class KubernetesManager(BaseDeploymentManager):
         Returns:
             True if HPA created successfully, False otherwise
         """
+
+
+
         try:
             hpa_spec = client.V1HorizontalPodAutoscalerSpec(
                 scale_target_ref=client.V1CrossVersionObjectReference(
@@ -694,6 +727,9 @@ class KubernetesManager(BaseDeploymentManager):
 
     def _requires_ingress(self, config: DeploymentConfig) -> bool:
         """Check if deployment requires ingress."""
+
+
+
         return config.name in ["api-gateway", "frontend", "monitoring-dashboard"]
 
     async def _wait_for_deployment_ready(self, deployment_name: str, namespace: str, timeout: int = 600) -> bool:
@@ -747,6 +783,9 @@ class KubernetesManager(BaseDeploymentManager):
         Returns:
             Cluster resource information
         """
+
+
+
         try:
             nodes = self.v1_core.list_node()
             pods = self.v1_core.list_pod_for_all_namespaces()
@@ -800,6 +839,9 @@ class KubernetesManager(BaseDeploymentManager):
         Returns:
             True if cleanup successful, False otherwise
         """
+
+
+
         try:
             # Get all namespaces managed by the platform
             namespaces = self.v1_core.list_namespace(

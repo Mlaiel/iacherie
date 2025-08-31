@@ -212,6 +212,9 @@ class APIRateLimiter:
             
     async def _check_redis_rate_limit(self, key: str, rule: RateLimitRule) -> RateLimitStatus:
         """Check rate limit using Redis backend"""
+
+
+
         try:
             if not REDIS_AVAILABLE:
                 return await self._check_memory_rate_limit(key, rule)

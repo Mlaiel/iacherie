@@ -8,7 +8,7 @@ Architecture: Real-time currency conversion with automated hedging and rate opti
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe Projet: Lead AI Developer + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  AVERTISSEMENT DE PROPRIÉTÉ INTELLECTUELLE ⚠️
+  AVERTISSEMENT DE PROPRIÉTÉ INTELLECTUELLE 
 Ce code et concept sont la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Violation = Poursuites judiciaires selon le droit allemand et international.
@@ -390,6 +390,9 @@ class CurrencyConversionEngine:
         """
         Convertit un montant d'une devise à une autre
         """
+
+
+
         try:
             # Récupération du taux de change
             exchange_rate = await self._get_optimal_exchange_rate(
@@ -563,6 +566,9 @@ class CurrencyHedgingEngine:
         """
         Crée une opération de couverture
         """
+
+
+
         try:
             # Détermination de l'instrument de couverture
             hedge_instrument = await self._select_hedge_instrument(

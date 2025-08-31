@@ -4,26 +4,26 @@ Revenue Insights Engine - Advanced AI-powered revenue intelligence and insights 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  STRICT COPYRIGHT WARNING ⚠️
+  STRICT COPYRIGHT WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, reproduction, modification, or distribution without explicit 
 written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 REVENUE INSIGHTS ENGINE - ENTERPRISE EDITION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 
 Developed by Expert Team:
-🎯 Lead Dev IA: Fahed Mlaiel (Advanced AI/ML Architecture)
-🛠️  Backend Senior: System Architecture & Performance Optimization  
+ Lead Dev IA: Fahed Mlaiel (Advanced AI/ML Architecture)
+  Backend Senior: System Architecture & Performance Optimization  
 🤖 ML Engineer: Revenue Forecasting & Optimization Algorithms
-🗄️  DBA: Advanced Data Management & Analytics
-🔒 Security Expert: Enterprise-Grade Security & Encryption
-🚀 Microservices: Scalable Distributed Architecture
-🎵 Audio Expert: Audio Revenue Stream Optimization
-⚙️  DevOps: Production Infrastructure & Monitoring
+  DBA: Advanced Data Management & Analytics
+ Security Expert: Enterprise-Grade Security & Encryption
+ Microservices: Scalable Distributed Architecture
+ Audio Expert: Audio Revenue Stream Optimization
+  DevOps: Production Infrastructure & Monitoring
 🧠 IA Prompt Engineer: AI-Powered Decision Making
 """
 
@@ -107,6 +107,9 @@ class ActionableInsight:
     @property
     def age_hours(self) -> int:
         """Get age of insight in hours"""
+
+
+
         return int((datetime.utcnow() - self.created_at).total_seconds() / 3600)
     
     @property
@@ -131,6 +134,9 @@ class InsightCluster:
     @property
     def insight_count(self) -> int:
         """Get number of insights in cluster"""
+
+
+
         return len(self.insights)
 
 
@@ -167,6 +173,9 @@ class RevenueInsightsEngine:
         
     async def initialize(self) -> None:
         """Initialize insights engine"""
+
+
+
         try:
             # Initialize ML models
             await self._initialize_ml_models()
@@ -283,6 +292,9 @@ class RevenueInsightsEngine:
         context: Optional[Dict[str, Any]] = None
     ) -> List[ActionableInsight]:
         """Generate comprehensive revenue insights"""
+
+
+
         try:
             insights = []
             context = context or {}
@@ -1146,6 +1158,9 @@ class RevenueInsightsEngine:
         time_period: int = 7  # days
     ) -> Dict[str, Any]:
         """Get summary of insights from specified time period"""
+
+
+
         try:
             cutoff_date = datetime.utcnow() - timedelta(days=time_period)
             
@@ -1228,6 +1243,9 @@ class RevenueInsightsEngine:
         include_details: bool = True
     ) -> Dict[str, Any]:
         """Export comprehensive insights report"""
+
+
+
         try:
             report = {
                 'report_info': {

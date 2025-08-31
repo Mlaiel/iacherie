@@ -10,7 +10,7 @@ Created: 2025-08-30
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -207,6 +207,9 @@ class PerceptualQualityAnalyzer:
     
     def _initialize_perceptual_models(self) -> Dict[str, Any]:
         """Initialize perceptual quality models"""
+
+
+
         return {
             "loudness_standards": {
                 "streaming": -14.0,  # LUFS
@@ -233,6 +236,9 @@ class PerceptualQualityAnalyzer:
     async def analyze_perceptual_quality(self, audio: np.ndarray, 
                                        sample_rate: int = 44100) -> Dict[str, float]:
         """Comprehensive perceptual quality analysis"""
+
+
+
         try:
             analysis = {}
             
@@ -262,6 +268,9 @@ class PerceptualQualityAnalyzer:
     
     async def _analyze_loudness(self, audio: np.ndarray, sample_rate: int) -> Dict[str, float]:
         """Analyze loudness characteristics"""
+
+
+
         try:
             # Ensure stereo for loudness measurement
             if audio.ndim == 1:
@@ -308,6 +317,9 @@ class PerceptualQualityAnalyzer:
     
     async def _analyze_dynamic_range(self, audio: np.ndarray) -> Dict[str, float]:
         """Analyze dynamic range characteristics"""
+
+
+
         try:
             # RMS and peak analysis
             rms = np.sqrt(np.mean(audio ** 2))
@@ -365,6 +377,9 @@ class PerceptualQualityAnalyzer:
     async def _analyze_frequency_balance(self, audio: np.ndarray, 
                                        sample_rate: int) -> Dict[str, float]:
         """Analyze frequency balance and spectral characteristics"""
+
+
+
         try:
             # Compute spectrum
             fft = np.fft.rfft(audio)
@@ -436,6 +451,9 @@ class PerceptualQualityAnalyzer:
     
     async def _analyze_stereo_imaging(self, audio: np.ndarray) -> Dict[str, float]:
         """Analyze stereo imaging characteristics"""
+
+
+
         try:
             if audio.ndim == 1:
                 return {
@@ -517,6 +535,9 @@ class PerceptualQualityAnalyzer:
     
     async def _analyze_distortion(self, audio: np.ndarray, sample_rate: int) -> Dict[str, float]:
         """Analyze distortion and artifacts"""
+
+
+
         try:
             # Clipping detection
             clipping_threshold = 0.99
@@ -586,6 +607,9 @@ class PerceptualQualityAnalyzer:
     async def _analyze_temporal_stability(self, audio: np.ndarray, 
                                         sample_rate: int) -> Dict[str, float]:
         """Analyze temporal stability and consistency"""
+
+
+
         try:
             # Segment audio into blocks
             block_duration = 1.0  # 1 second blocks
@@ -684,6 +708,9 @@ class RemixQualityAssessor:
     
     def _initialize_reference_models(self) -> Dict[str, Any]:
         """Initialize reference quality models and benchmarks"""
+
+
+
         return {
             "professional_standards": {
                 "minimum_dr": 8.0,
@@ -714,6 +741,9 @@ class RemixQualityAssessor:
                                  assessment_level: AssessmentLevel = AssessmentLevel.COMPREHENSIVE,
                                  genre: Optional[str] = None) -> QualityAssessment:
         """Comprehensive remix quality assessment"""
+
+
+
         try:
             start_time = datetime.now()
             assessment_id = f"assessment_{int(start_time.timestamp())}"
@@ -806,6 +836,9 @@ class RemixQualityAssessor:
     async def _extract_audio_features(self, audio: np.ndarray, 
                                     sample_rate: int) -> np.ndarray:
         """Extract comprehensive audio features for neural network"""
+
+
+
         try:
             features = []
             
@@ -877,6 +910,9 @@ class RemixQualityAssessor:
     
     async def _predict_quality_with_neural_network(self, features: np.ndarray) -> Dict[str, float]:
         """Predict quality scores using neural network"""
+
+
+
         try:
             # Convert to tensor
             features_tensor = torch.FloatTensor(features).unsqueeze(0)
@@ -911,6 +947,9 @@ class RemixQualityAssessor:
     async def _perform_technical_analysis(self, audio: np.ndarray, 
                                         sample_rate: int) -> Dict[str, Any]:
         """Perform detailed technical analysis"""
+
+
+
         try:
             technical_analysis = {}
             
@@ -969,6 +1008,9 @@ class RemixQualityAssessor:
                                           reference: np.ndarray,
                                           sample_rate: int) -> Dict[str, float]:
         """Perform comparative analysis against reference"""
+
+
+
         try:
             comparison = {}
             
@@ -1034,6 +1076,9 @@ class RemixQualityAssessor:
                                         perceptual_analysis: Dict[str, float],
                                         technical_analysis: Dict[str, Any]) -> Dict[QualityDimension, float]:
         """Analyze quality across different dimensions"""
+
+
+
         try:
             dimension_scores = {}
             
@@ -1099,6 +1144,9 @@ class RemixQualityAssessor:
                                              perceptual_analysis: Dict[str, float],
                                              genre: Optional[str]) -> float:
         """Calculate overall quality score with weighted components"""
+
+
+
         try:
             # Base neural network score
             neural_overall = neural_scores.get("overall_quality", 0.7)
@@ -1142,6 +1190,9 @@ class RemixQualityAssessor:
     
     async def _determine_quality_grade(self, overall_score: float) -> QualityGrade:
         """Determine quality grade based on overall score"""
+
+
+
         try:
             thresholds = self.reference_models["quality_thresholds"]
             
@@ -1164,6 +1215,9 @@ class RemixQualityAssessor:
                                               perceptual_analysis: Dict[str, float],
                                               technical_analysis: Dict[str, Any]) -> List[QualityRecommendation]:
         """Generate quality improvement recommendations"""
+
+
+
         try:
             recommendations = []
             
@@ -1262,6 +1316,9 @@ class RemixQualityAssessor:
     
     def get_assessment_statistics(self) -> Dict[str, Any]:
         """Get assessment performance statistics"""
+
+
+
         try:
             if not self.assessment_history:
                 return {"total_assessments": 0}

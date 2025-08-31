@@ -1,5 +1,5 @@
 """
-🔧 Environment Manager - IA-Influencer-Agent
+ Environment Manager - IA-Influencer-Agent
 ==================================================================
 Project Creator & Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
@@ -7,7 +7,7 @@ Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert +
 Date: 2025-08-24
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -529,6 +529,9 @@ class EnvironmentManager:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             self.logger.info("Initializing environment manager...")
             
@@ -1250,6 +1253,9 @@ class EnvironmentManager:
     
     async def _load_existing_environments(self) -> None:
         """Load existing environment configurations from storage"""
+
+
+
         try:
             env_dir = Path(self.config_path) / "environments"
             if env_dir.exists():
@@ -1274,6 +1280,9 @@ class EnvironmentManager:
     
     async def _detect_current_environment(self) -> None:
         """Detect current environment from system variables or configuration"""
+
+
+
         try:
             # Check environment variable
             env_name = os.getenv("IA_INFLUENCER_ENVIRONMENT")
@@ -1346,6 +1355,9 @@ class EnvironmentManager:
         Returns:
             EnvironmentConfiguration: Created environment configuration
         """
+
+
+
         try:
             self.logger.info(f"Creating environment: {name} (type: {env_type.value})")
             
@@ -1395,10 +1407,16 @@ class EnvironmentManager:
     
     async def get_environment(self, name: str) -> Optional[EnvironmentConfiguration]:
         """Get environment configuration by name"""
+
+
+
         return self.environments.get(name)
     
     async def list_environments(self) -> List[EnvironmentConfiguration]:
         """List all available environment configurations"""
+
+
+
         return list(self.environments.values())
     
     async def update_environment(
@@ -1416,6 +1434,9 @@ class EnvironmentManager:
         Returns:
             EnvironmentConfiguration: Updated environment configuration
         """
+
+
+
         try:
             if name not in self.environments:
                 raise ValueError(f"Environment {name} not found")
@@ -1463,6 +1484,9 @@ class EnvironmentManager:
         Returns:
             bool: True if deletion successful
         """
+
+
+
         try:
             if name not in self.environments:
                 raise ValueError(f"Environment {name} not found")
@@ -1659,6 +1683,9 @@ class EnvironmentManager:
         Returns:
             Dict containing deployment results
         """
+
+
+
         try:
             if name not in self.environments:
                 raise ValueError(f"Environment {name} not found")
@@ -1710,6 +1737,9 @@ class EnvironmentManager:
     
     async def get_environment_status(self, name: str) -> Dict[str, Any]:
         """Get comprehensive status of environment"""
+
+
+
         try:
             if name not in self.environments:
                 raise ValueError(f"Environment {name} not found")
@@ -1759,6 +1789,9 @@ class EnvironmentManager:
     
     async def backup_environment(self, name: str) -> Dict[str, Any]:
         """Create backup of environment configuration"""
+
+
+
         try:
             if name not in self.environments:
                 raise ValueError(f"Environment {name} not found")
@@ -1847,6 +1880,9 @@ class EnvironmentManager:
     
     async def _save_environment(self, env_config: EnvironmentConfiguration) -> None:
         """Save environment configuration to storage"""
+
+
+
         try:
             env_file = Path(self.config_path) / "environments" / f"{env_config.name}.yaml"
             env_data = asdict(env_config)
@@ -1862,6 +1898,9 @@ class EnvironmentManager:
     
     async def get_status(self) -> Dict[str, Any]:
         """Get environment manager status"""
+
+
+
         return {
             "initialized": self.initialized,
             "environments_count": len(self.environments),
@@ -2080,6 +2119,9 @@ __all__ = [
         Returns:
             Complete environment configuration
         """
+
+
+
         try:
             # Get template for environment type
             template = self.templates.get(env_type, {})
@@ -2192,6 +2234,9 @@ __all__ = [
         Returns:
             Environment configuration or None
         """
+
+
+
         return self.environments.get(env_type)
     
     async def set_environment(self, env_type: EnvironmentType) -> bool:
@@ -2204,6 +2249,9 @@ __all__ = [
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             if env_type not in self.environments:
                 await self.create_environment(env_type)
@@ -2239,6 +2287,9 @@ __all__ = [
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             if env_type not in self.environments:
                 raise ValueError(f"Environment {env_type.value} not found")
@@ -2280,10 +2331,16 @@ __all__ = [
     
     async def list_environments(self) -> List[str]:
         """List all configured environments"""
+
+
+
         return [env_type.value for env_type in self.environments.keys()]
     
     async def get_status(self) -> Dict[str, Any]:
         """Get environment manager status"""
+
+
+
         return {
             "current_environment": self.current_environment.value if self.current_environment else None,
             "configured_environments": await self.list_environments(),

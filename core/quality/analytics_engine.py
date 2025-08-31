@@ -253,11 +253,17 @@ class AnalyticsReport:
     
     def get_critical_insights(self) -> List[QualityInsight]:
         """Get critical priority insights"""
+
+
+
         return [insight for insight in self.insights 
                 if insight.priority == InsightPriority.CRITICAL]
     
     def get_insights_by_type(self, insight_type: InsightType) -> List[QualityInsight]:
         """Get insights by type"""
+
+
+
         return [insight for insight in self.insights 
                 if insight.insight_type == insight_type]
     

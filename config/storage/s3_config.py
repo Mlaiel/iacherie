@@ -188,6 +188,9 @@ class S3Config:
     
     def get_transfer_config(self) -> boto3.s3.transfer.TransferConfig:
         """Get optimized transfer configuration for large files."""
+
+
+
         return boto3.s3.transfer.TransferConfig(
             multipart_threshold=self.multipart_threshold,
             multipart_chunksize=self.multipart_chunksize,
@@ -198,6 +201,9 @@ class S3Config:
     
     def validate_configuration(self) -> bool:
         """Validate S3 configuration and connectivity."""
+
+
+
         try:
             client = self.get_client()
             client.list_buckets()
@@ -214,6 +220,9 @@ class S3Config:
     
     def get_content_types(self) -> List[str]:
         """Get list of supported content types."""
+
+
+
         return list(self.buckets.keys())
 
 # Global S3 configuration instance

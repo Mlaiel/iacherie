@@ -1,5 +1,5 @@
 """
-🗄️ Advanced Data Pipeline Orchestrator - IA Influencer Agent Platform Enterprise
+ Advanced Data Pipeline Orchestrator - IA Influencer Agent Platform Enterprise
 ===============================================================================
 Module: backend/data_management/pipeline/orchestration_engine.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Pipeline Orchestration Engine - Enterprise Production-Ready
 Responsibility: Orchestration complète des workflows de traitement de données multi-format
 =======================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -20,14 +20,14 @@ Indexing → Analytics → Protection Setup → Monitoring → Distribution →
 Revenue Tracking → Performance Optimization
 
 ARCHITECTURE PIPELINE:
-├── 🎯 Workflow Engine (Directed Acyclic Graph)
-├── 🔧 Task Scheduler (Celery + Redis)
-├── 📊 Progress Monitoring (Real-time status)
-├── 🔄 Error Recovery (Automatic retries)
-├── 🛡️ Quality Gates (ML validation)
-├── 📈 Performance Metrics (Throughput tracking)
-├── 🎮 Resource Management (Auto-scaling)
-└── 🚀 Optimization Engine (Dynamic tuning)
+  Workflow Engine (Directed Acyclic Graph)
+  Task Scheduler (Celery + Redis)
+  Progress Monitoring (Real-time status)
+  Error Recovery (Automatic retries)
+  Quality Gates (ML validation)
+  Performance Metrics (Throughput tracking)
+  Resource Management (Auto-scaling)
+  Optimization Engine (Dynamic tuning)
 """
 
 from typing import Dict, List, Any, Optional, Union, Tuple, Callable
@@ -382,6 +382,9 @@ class DataPipelineOrchestrator:
         Returns:
             PipelineExecution: Résultat de l'exécution
         """
+
+
+
         try:
             # Création de l'exécution de pipeline
             execution_id = str(uuid.uuid4())
@@ -761,6 +764,9 @@ class DataPipelineOrchestrator:
     
     def _setup_data_streams(self, tasks: List[TaskDefinition]) -> Dict[str, Any]:
         """Configure les flux de données pour le mode streaming"""
+
+
+
         return {
             "input_stream": "content_input_queue",
             "processing_streams": {task.task_id: f"{task.task_id}_stream" for task in tasks},
@@ -854,6 +860,9 @@ class DataPipelineOrchestrator:
     
     async def get_pipeline_status(self, execution_id: str) -> Optional[PipelineExecution]:
         """Récupère le statut d'une pipeline"""
+
+
+
         return self.active_pipelines.get(execution_id)
     
     async def cancel_pipeline(self, execution_id: str) -> bool:
@@ -906,6 +915,9 @@ class DataPipelineOrchestrator:
     
     def _identify_bottlenecks(self, historical_data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Identifie les goulots d'étranglement"""
+
+
+
         return [
             {
                 "task": "fingerprinting",

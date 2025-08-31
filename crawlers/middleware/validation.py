@@ -265,6 +265,9 @@ class SchemaValidator:
     
     async def validate_data_type(self, value: Any, data_type: DataType) -> tuple[bool, str]:
         """Validate value against specific data type"""
+
+
+
         try:
             if data_type == DataType.TEXT:
                 return isinstance(value, str), "Value must be text"
@@ -393,6 +396,9 @@ class SchemaValidator:
     # Built-in custom validators
     async def _validate_json(self, value: Any) -> tuple[bool, str]:
         """Validate JSON format"""
+
+
+
         try:
             if isinstance(value, str):
                 json.loads(value)
@@ -484,6 +490,9 @@ class SchemaValidator:
     
     async def _validate_date_range(self, value: Any) -> tuple[bool, str]:
         """Validate date is within reasonable range"""
+
+
+
         try:
             if isinstance(value, str):
                 date_obj = datetime.fromisoformat(value.replace('Z', '+00:00'))
@@ -766,6 +775,9 @@ class ValidationMiddleware:
     
     async def store_validation_result(self, result: ContentValidationResult):
         """Store validation result for analytics and monitoring"""
+
+
+
         try:
             # Store in Redis with expiration
             result_key = f"validation_results:{result.content_id}"
@@ -784,6 +796,9 @@ class ValidationMiddleware:
     
     async def update_validation_statistics(self, result: ContentValidationResult):
         """Update validation statistics for monitoring"""
+
+
+
         try:
             now = time.time()
             hour_window = int(now // 3600)
@@ -814,6 +829,9 @@ class ValidationMiddleware:
     
     async def get_validation_statistics(self, time_range: str = "24h") -> Dict[str, Any]:
         """Get validation statistics for specified time range"""
+
+
+
         try:
             now = time.time()
             
@@ -874,6 +892,9 @@ class ValidationMiddleware:
 # Factory function for dependency injection
 def get_validation_middleware() -> ValidationMiddleware:
     """Get validation middleware instance"""
+
+
+
     return ValidationMiddleware()
 
 

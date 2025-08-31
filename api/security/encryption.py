@@ -97,10 +97,16 @@ class EncryptionKey:
     
     def is_expired(self) -> bool:
         """Check if key has expired"""
+
+
+
         return self.expires_at is not None and datetime.now(timezone.utc) > self.expires_at
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert key to dictionary (excluding sensitive material)"""
+
+
+
         return {
             'key_id': self.key_id,
             'key_type': self.key_type.value,
@@ -510,6 +516,9 @@ class EllipticCurveEncryption(BaseEncryptor):
     
     def encrypt(self, data: bytes, key: EncryptionKey, **kwargs) -> EncryptionResult:
         """ECC encryption using ECIES (Elliptic Curve Integrated Encryption Scheme)"""
+
+
+
         try:
             if key.key_type != KeyType.ASYMMETRIC_PUBLIC:
                 raise EncryptionError("ECC encryption requires public key")
@@ -567,6 +576,9 @@ class EllipticCurveEncryption(BaseEncryptor):
     
     def decrypt(self, encrypted_result: EncryptionResult, key: EncryptionKey) -> bytes:
         """ECC decryption using ECIES"""
+
+
+
         try:
             if key.key_type != KeyType.ASYMMETRIC_PRIVATE:
                 raise EncryptionError("ECC decryption requires private key")
@@ -735,6 +747,9 @@ class HashingService:
     
     def verify_password(self, password: str, password_hash: str) -> bool:
         """Verify password against hash"""
+
+
+
         try:
             return self.pwd_context.verify(password, password_hash)
         except Exception:
@@ -782,6 +797,9 @@ class HashingService:
     def verify_hash(self, data: bytes, hash_value: bytes, salt: bytes,
                     algorithm: HashingAlgorithm = HashingAlgorithm.SHA256) -> bool:
         """Verify data against hash"""
+
+
+
         try:
             computed_hash, _ = self.hash_data(data, algorithm, salt)
             return hmac.compare_digest(hash_value, computed_hash)
@@ -843,6 +861,9 @@ class HashingService:
     def verify_hmac(self, data: bytes, mac: bytes, key: bytes,
                     algorithm: HashingAlgorithm = HashingAlgorithm.SHA256) -> bool:
         """Verify HMAC authentication"""
+
+
+
         try:
             expected_mac = self.generate_hmac(data, key, algorithm)
             return hmac.compare_digest(mac, expected_mac)
@@ -874,6 +895,9 @@ class KeyManagementService:
     
     async def store_key(self, key: EncryptionKey, encrypt_at_rest: bool = True) -> bool:
         """Store encryption key securely"""
+
+
+
         try:
             redis_client = await aioredis.from_url(self.redis_url)
             
@@ -1014,6 +1038,9 @@ class KeyManagementService:
     
     async def delete_key(self, key_id: str) -> bool:
         """Securely delete encryption key"""
+
+
+
         try:
             redis_client = await aioredis.from_url(self.redis_url)
             

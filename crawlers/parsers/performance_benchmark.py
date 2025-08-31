@@ -7,7 +7,7 @@ Ultra-professional performance benchmarking and stress testing for the parsers m
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
@@ -172,7 +172,7 @@ class ParsersBenchmark:
     
     async def benchmark_economic_parser(self, iterations: int = 100) -> BenchmarkResult:
         """Benchmark economic intelligence parser"""
-        logger.info(f"💰 Benchmarking economic parser ({iterations} iterations)")
+        logger.info(f" Benchmarking economic parser ({iterations} iterations)")
         
         try:
             from .economic_parsers import EconomicIntelligenceEngine, RevenueRecord, RevenueSource, Currency
@@ -288,7 +288,7 @@ class ParsersBenchmark:
     
     async def benchmark_trend_parser(self, iterations: int = 100) -> BenchmarkResult:
         """Benchmark trend analysis parser"""
-        logger.info(f"📈 Benchmarking trend parser ({iterations} iterations)")
+        logger.info(f" Benchmarking trend parser ({iterations} iterations)")
         
         try:
             from .trend_parsers import TrendDetectionEngine, ViralityPredictor
@@ -343,7 +343,7 @@ class ParsersBenchmark:
     
     async def stress_test_concurrent_operations(self, max_concurrent: int = 50) -> StressTestResult:
         """Stress test with concurrent operations"""
-        logger.info(f"🔥 Running stress test (max {max_concurrent} concurrent operations)")
+        logger.info(f" Running stress test (max {max_concurrent} concurrent operations)")
         
         async def test_operation():
             """Single test operation"""
@@ -411,7 +411,7 @@ class ParsersBenchmark:
     
     async def run_comprehensive_benchmark(self) -> Dict[str, Any]:
         """Run comprehensive benchmark suite"""
-        logger.info("🚀 Starting comprehensive performance benchmark...")
+        logger.info(" Starting comprehensive performance benchmark...")
         
         # Individual parser benchmarks
         semantic_result = await self.benchmark_semantic_parser()
@@ -490,13 +490,13 @@ class ParsersBenchmark:
         with open(filename, 'w') as f:
             json.dump(results_data, f, indent=2)
         
-        logger.info(f"📊 Benchmark results saved to {filename}")
+        logger.info(f" Benchmark results saved to {filename}")
 
 
 async def main():
     """Main benchmark execution"""
     logger.info("=" * 80)
-    logger.info("🚀 IA INFLUENCER AGENT - PARSERS MODULE PERFORMANCE BENCHMARK")
+    logger.info(" IA INFLUENCER AGENT - PARSERS MODULE PERFORMANCE BENCHMARK")
     logger.info("=" * 80)
     logger.info("Author: Fahed Mlaiel <mlaiel@live.de>")
     logger.info("Copyright: © 2025 Fahed Mlaiel. All rights reserved.")
@@ -510,18 +510,18 @@ async def main():
         
         # Display results
         logger.info("\n" + "=" * 80)
-        logger.info("📊 BENCHMARK RESULTS SUMMARY")
+        logger.info(" BENCHMARK RESULTS SUMMARY")
         logger.info("=" * 80)
         
         for parser_name, result in results['individual_benchmarks'].items():
-            logger.info(f"\n🔹 {parser_name.upper()}")
+            logger.info(f"\n {parser_name.upper()}")
             logger.info(f"   Throughput: {result.throughput_ops_per_second:.2f} ops/sec")
             logger.info(f"   Success Rate: {result.success_rate:.1f}%")
             logger.info(f"   Memory Usage: {result.memory_usage_mb:.2f} MB")
             logger.info(f"   CPU Usage: {result.cpu_usage_percent:.1f}%")
         
         stress_result = results['stress_test']
-        logger.info(f"\n🔥 STRESS TEST RESULTS")
+        logger.info(f"\n STRESS TEST RESULTS")
         logger.info(f"   Total Operations: {stress_result.total_operations}")
         logger.info(f"   Average Response Time: {stress_result.average_response_time:.3f}s")
         logger.info(f"   95th Percentile: {stress_result.p95_response_time:.3f}s")
@@ -530,7 +530,7 @@ async def main():
         logger.info(f"   CPU Peak: {stress_result.cpu_peak_percent:.1f}%")
         
         summary = results['summary']
-        logger.info(f"\n🎯 OVERALL PERFORMANCE")
+        logger.info(f"\n OVERALL PERFORMANCE")
         logger.info(f"   Grade: {summary['benchmark_grade']}")
         logger.info(f"   Average Throughput: {summary['average_throughput_ops_per_sec']:.2f} ops/sec")
         logger.info(f"   Average Success Rate: {summary['average_success_rate_percent']:.1f}%")
@@ -538,10 +538,10 @@ async def main():
         # Save results
         benchmark.save_results()
         
-        logger.info("\n🎉 Benchmark completed successfully!")
+        logger.info("\n Benchmark completed successfully!")
         
     except Exception as e:
-        logger.error(f"💥 Benchmark failed: {e}")
+        logger.error(f" Benchmark failed: {e}")
         return 1
     
     return 0

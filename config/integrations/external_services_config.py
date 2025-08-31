@@ -391,10 +391,16 @@ class ExternalServiceManager:
     
     def get_service_config(self, provider: ServiceProvider) -> Optional[Dict[str, Any]]:
         """Get configuration for a specific service provider."""
+
+
+
         return self.service_configs.get(provider)
     
     def is_service_enabled(self, provider: ServiceProvider) -> bool:
         """Check if a service provider is enabled."""
+
+
+
         return provider in self.service_configs
     
     def get_enabled_services(self, category: Optional[ServiceCategory] = None) -> List[ServiceProvider]:
@@ -443,6 +449,9 @@ class ExternalServiceManager:
     
     def get_health_config(self, provider: ServiceProvider) -> ServiceHealthConfig:
         """Get health check configuration for a specific provider."""
+
+
+
         return ServiceHealthConfig()
 
 

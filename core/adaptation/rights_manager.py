@@ -359,6 +359,9 @@ class RightsManager:
     
     def _load_copyright_frameworks(self) -> Dict[str, Any]:
         """Load international copyright law frameworks"""
+
+
+
         return {
             "us_copyright": {
                 "duration": "life_plus_70",
@@ -379,6 +382,9 @@ class RightsManager:
     
     def _load_licensing_templates(self) -> Dict[str, Any]:
         """Load licensing agreement templates"""
+
+
+
         return {
             "standard_license": {},
             "creative_commons": {},
@@ -388,6 +394,9 @@ class RightsManager:
     
     def _load_creator_rights_profiles(self) -> Dict[str, Any]:
         """Load creator-specific rights management profiles"""
+
+
+
         return {
             "musician": {
                 "primary_rights": ["copyright", "performance_rights", "mechanical_rights"],
@@ -408,6 +417,9 @@ class RightsManager:
     
     async def _analyze_content_rights(self, request: RightsRequest) -> Dict[str, Any]:
         """Analyze content to determine rights requirements"""
+
+
+
         return {
             "content_type": "determined_from_analysis",
             "originality_score": 0.95,
@@ -423,6 +435,9 @@ class RightsManager:
         analysis: Dict[str, Any]
     ) -> RightsRegistration:
         """Create comprehensive rights registration"""
+
+
+
         return RightsRegistration(
             registration_id=rights_id,
             content_id=request.content_id,
@@ -452,12 +467,18 @@ class RightsManager:
     
     async def _register_blockchain_rights(self, registration: RightsRegistration) -> str:
         """Register rights on blockchain for immutable proof"""
+
+
+
         return hashlib.sha256(
             f"{registration.registration_id}_{registration.registration_date}".encode()
         ).hexdigest()
     
     def _generate_rights_recommendations(self, request: RightsRequest) -> List[str]:
         """Generate rights management recommendations"""
+
+
+
         return [
             "Enable continuous monitoring for maximum protection",
             "Consider international registration for global protection",
@@ -466,6 +487,9 @@ class RightsManager:
     
     def _generate_next_actions(self, request: RightsRequest) -> List[str]:
         """Generate recommended next actions"""
+
+
+
         return [
             "Monitor protection status in dashboard",
             "Review licensing opportunities",
@@ -474,6 +498,9 @@ class RightsManager:
     
     async def _estimate_content_value(self, request: RightsRequest) -> Dict[str, float]:
         """Estimate content value for rights management"""
+
+
+
         return {
             "licensing_potential": 1000.0,
             "infringement_risk": 0.15,

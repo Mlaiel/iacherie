@@ -7,7 +7,7 @@ content similarity search, and machine learning embeddings storage.
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED 
 """
 
 import asyncio
@@ -104,6 +104,9 @@ class VectorDatabaseManager:
         
     async def deploy_vector_database(self, config: VectorDatabaseConfig) -> Dict[str, Any]:
         """Deploy vector database infrastructure"""
+
+
+
         try:
             if config.database_type == VectorDatabaseType.FAISS:
                 return await self._deploy_faiss(config)
@@ -124,6 +127,9 @@ class VectorDatabaseManager:
     
     async def _deploy_faiss(self, config: VectorDatabaseConfig) -> Dict[str, Any]:
         """Deploy FAISS-based vector database"""
+
+
+
         try:
             results = {}
             
@@ -318,6 +324,9 @@ class VectorDatabaseManager:
     
     async def _create_faiss_indices(self, config: VectorDatabaseConfig) -> Dict[str, Any]:
         """Create FAISS indices"""
+
+
+
         try:
             indices_created = {}
             
@@ -375,6 +384,9 @@ class VectorDatabaseManager:
     
     async def _deploy_pinecone(self, config: VectorDatabaseConfig) -> Dict[str, Any]:
         """Deploy Pinecone vector database"""
+
+
+
         try:
             # Initialize Pinecone (would need API key)
             # pinecone.init(api_key="your-api-key", environment="us-west1-gcp")
@@ -414,6 +426,9 @@ class VectorDatabaseManager:
     
     async def _deploy_weaviate(self, config: VectorDatabaseConfig) -> Dict[str, Any]:
         """Deploy Weaviate vector database"""
+
+
+
         try:
             # Create Weaviate deployment
             weaviate_deployment = client.V1Deployment(
@@ -530,6 +545,9 @@ class VectorDatabaseManager:
     
     async def _deploy_milvus(self, config: VectorDatabaseConfig) -> Dict[str, Any]:
         """Deploy Milvus vector database"""
+
+
+
         try:
             # Create Milvus deployment using Helm-like configuration
             milvus_deployment = client.V1Deployment(
@@ -599,6 +617,9 @@ class VectorDatabaseManager:
     
     async def _deploy_qdrant(self, config: VectorDatabaseConfig) -> Dict[str, Any]:
         """Deploy Qdrant vector database"""
+
+
+
         try:
             # Create Qdrant deployment
             qdrant_deployment = client.V1Deployment(
@@ -668,6 +689,9 @@ class VectorDatabaseManager:
     
     async def create_ia_influencer_vector_db(self, namespace: str = "ia-influencer") -> Dict[str, Any]:
         """Create complete vector database setup for IA Influencer platform"""
+
+
+
         try:
             results = {}
             
@@ -787,6 +811,9 @@ class VectorDatabaseManager:
     
     async def _create_vector_db_api_service(self, namespace: str) -> Dict[str, Any]:
         """Create vector database API service"""
+
+
+
         try:
             # Create API service deployment
             api_deployment = client.V1Deployment(
@@ -888,6 +915,9 @@ class VectorDatabaseManager:
     
     async def _create_embeddings_service(self, namespace: str) -> Dict[str, Any]:
         """Create embeddings processing service"""
+
+
+
         try:
             # Embeddings service deployment
             embeddings_deployment = client.V1Deployment(
@@ -964,6 +994,9 @@ class VectorDatabaseManager:
     
     async def _create_vector_db_monitoring(self, namespace: str) -> Dict[str, Any]:
         """Create vector database monitoring"""
+
+
+
         try:
             # ServiceMonitor for vector databases
             service_monitor = {
@@ -1044,6 +1077,9 @@ class VectorDatabaseManager:
     
     async def get_vector_database_status(self, namespace: str = "ia-influencer") -> Dict[str, Any]:
         """Get vector database status"""
+
+
+
         try:
             status = {
                 'databases': {

@@ -7,7 +7,7 @@ for multi-platform integrations with advanced monitoring and analytics.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission from Fahed Mlaiel <mlaiel@live.de> is strictly prohibited.
@@ -155,6 +155,9 @@ class WebhookRegistry:
 
     async def initialize(self) -> None:
         """Initialize webhook registry with required services"""
+
+
+
         try:
             # Initialize Redis connection
             self._redis_client = await aioredis.from_url(
@@ -208,6 +211,9 @@ class WebhookRegistry:
         Returns:
             Registration result with endpoint details
         """
+
+
+
         try:
             # Check user endpoint limit
             user_endpoint_count = await self._get_user_endpoint_count(user_id)
@@ -281,6 +287,9 @@ class WebhookRegistry:
         platform: str = None
     ) -> Optional[WebhookEndpointConfig]:
         """Get endpoint configuration by URL and platform"""
+
+
+
         try:
             # Check cache first
             for endpoint in self._endpoint_cache.values():
@@ -308,6 +317,9 @@ class WebhookRegistry:
 
     async def get_endpoint_by_id(self, endpoint_id: str) -> Optional[WebhookEndpointConfig]:
         """Get endpoint configuration by ID"""
+
+
+
         try:
             # Check cache first
             if endpoint_id in self._endpoint_cache:
@@ -338,6 +350,9 @@ class WebhookRegistry:
         active_only: bool = True
     ) -> List[WebhookEndpointConfig]:
         """Get all endpoints for a user"""
+
+
+
         try:
             endpoints = []
             
@@ -369,6 +384,9 @@ class WebhookRegistry:
         updates: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Update webhook endpoint configuration"""
+
+
+
         try:
             # Get existing endpoint
             endpoint = await self.get_endpoint_by_id(endpoint_id)
@@ -415,6 +433,9 @@ class WebhookRegistry:
 
     async def delete_endpoint(self, endpoint_id: str) -> Dict[str, Any]:
         """Delete webhook endpoint"""
+
+
+
         try:
             # Get endpoint
             endpoint = await self.get_endpoint_by_id(endpoint_id)
@@ -451,6 +472,9 @@ class WebhookRegistry:
 
     async def verify_endpoint(self, endpoint_id: str) -> Dict[str, Any]:
         """Verify webhook endpoint connectivity and configuration"""
+
+
+
         try:
             endpoint = await self.get_endpoint_by_id(endpoint_id)
             if not endpoint:
@@ -481,6 +505,9 @@ class WebhookRegistry:
         error_message: Optional[str] = None
     ) -> None:
         """Record webhook request metrics for endpoint"""
+
+
+
         try:
             # Update endpoint metrics
             if endpoint_id not in self._endpoint_metrics:
@@ -527,6 +554,9 @@ class WebhookRegistry:
         user_id: str = None
     ) -> Dict[str, Any]:
         """Get endpoint performance metrics"""
+
+
+
         try:
             if endpoint_id:
                 # Get specific endpoint metrics
@@ -598,6 +628,9 @@ class WebhookRegistry:
 
     async def health_check(self) -> Dict[str, Any]:
         """Comprehensive health check for webhook registry"""
+
+
+
         return {
             'status': 'healthy',
             'redis_connected': self._redis_client is not None,
@@ -611,6 +644,9 @@ class WebhookRegistry:
 
     async def shutdown(self) -> None:
         """Graceful shutdown of webhook registry"""
+
+
+
         try:
             logger.info("Shutting down WebhookRegistry")
             
@@ -674,6 +710,9 @@ class WebhookRegistry:
 
     async def _get_user_endpoint_count(self, user_id: str) -> int:
         """Get count of active endpoints for user"""
+
+
+
         try:
             count = 0
             for endpoint in self._endpoint_cache.values():
@@ -790,6 +829,9 @@ class WebhookRegistry:
 
     async def _store_endpoint_in_db(self, endpoint: WebhookEndpointConfig) -> None:
         """Store endpoint configuration in database"""
+
+
+
         try:
             # Encrypt secret if provided
             secret_hash = None
@@ -820,6 +862,9 @@ class WebhookRegistry:
 
     async def _update_endpoint_in_db(self, endpoint: WebhookEndpointConfig) -> None:
         """Update endpoint configuration in database"""
+
+
+
         try:
             db_endpoint = self.db_session.query(WebhookEndpointModel).filter(
                 WebhookEndpointModel.endpoint_id == endpoint.endpoint_id
@@ -847,6 +892,9 @@ class WebhookRegistry:
 
     async def _load_endpoint_from_db(self, endpoint_id: str) -> Optional[WebhookEndpointConfig]:
         """Load endpoint configuration from database"""
+
+
+
         try:
             db_endpoint = self.db_session.query(WebhookEndpointModel).filter(
                 WebhookEndpointModel.endpoint_id == endpoint_id
@@ -867,6 +915,9 @@ class WebhookRegistry:
         platform: str = None
     ) -> Optional[WebhookEndpointConfig]:
         """Load endpoint configuration from database by URL"""
+
+
+
         try:
             query = self.db_session.query(WebhookEndpointModel).filter(
                 WebhookEndpointModel.url == url,
@@ -894,6 +945,9 @@ class WebhookRegistry:
         active_only: bool = True
     ) -> List[WebhookEndpointConfig]:
         """Load user endpoints from database"""
+
+
+
         try:
             query = self.db_session.query(WebhookEndpointModel).filter(
                 WebhookEndpointModel.user_id == user_id
@@ -915,6 +969,9 @@ class WebhookRegistry:
 
     async def _load_endpoints_from_db(self) -> None:
         """Load all active endpoints from database"""
+
+
+
         try:
             db_endpoints = self.db_session.query(WebhookEndpointModel).filter(
                 WebhookEndpointModel.active == True
@@ -931,6 +988,9 @@ class WebhookRegistry:
 
     def _convert_db_to_config(self, db_endpoint: WebhookEndpointModel) -> WebhookEndpointConfig:
         """Convert database model to configuration object"""
+
+
+
         return WebhookEndpointConfig(
             endpoint_id=db_endpoint.endpoint_id,
             user_id=db_endpoint.user_id,
@@ -947,6 +1007,9 @@ class WebhookRegistry:
 
     async def _cache_endpoint_in_redis(self, endpoint: WebhookEndpointConfig) -> None:
         """Cache endpoint configuration in Redis"""
+
+
+
         try:
             if self._redis_client:
                 endpoint_data = {
@@ -978,6 +1041,9 @@ class WebhookRegistry:
 
     async def _get_endpoint_from_redis(self, endpoint_id: str) -> Optional[WebhookEndpointConfig]:
         """Get endpoint configuration from Redis cache"""
+
+
+
         try:
             if self._redis_client:
                 cache_key = f"webhook_endpoint:{endpoint_id}"
@@ -1011,6 +1077,9 @@ class WebhookRegistry:
 
     async def _get_endpoint_from_redis_by_key(self, cache_key: str) -> Optional[WebhookEndpointConfig]:
         """Get endpoint configuration from Redis by cache key"""
+
+
+
         try:
             if self._redis_client:
                 cached_data = await self._redis_client.get(cache_key)
@@ -1027,6 +1096,9 @@ class WebhookRegistry:
 
     def _convert_dict_to_config(self, data: Dict[str, Any]) -> WebhookEndpointConfig:
         """Convert dictionary to endpoint configuration"""
+
+
+
         return WebhookEndpointConfig(
             endpoint_id=data['endpoint_id'],
             user_id=data['user_id'],
@@ -1046,6 +1118,9 @@ class WebhookRegistry:
 
     async def _remove_endpoint_from_redis(self, endpoint_id: str) -> None:
         """Remove endpoint configuration from Redis cache"""
+
+
+
         try:
             if self._redis_client:
                 cache_key = f"webhook_endpoint:{endpoint_id}"
@@ -1062,6 +1137,9 @@ class WebhookRegistry:
 
     async def _update_registry_metrics(self) -> None:
         """Update registry-wide metrics"""
+
+
+
         try:
             self._metrics.total_endpoints = len([e for e in self._endpoint_cache.values() if e.active])
             self._metrics.active_endpoints = len([e for e in self._endpoint_cache.values() if e.active])

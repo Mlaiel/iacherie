@@ -8,7 +8,7 @@ Responsibility: Content versioning, rollback, and change tracking for creators
 Technologies: Python, Git-like versioning, Delta compression, Conflict resolution
 ===========================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -209,7 +209,7 @@ class VersionManager:
         self.auto_merge_threshold = 0.95  # Similarity threshold for auto-merge
         self.max_merge_attempts = 3
         
-        self.logger.info("🔄 VersionManager initialized with industrial capabilities")
+        self.logger.info(" VersionManager initialized with industrial capabilities")
     
     def _create_version_structure(self):
         """Create organized version storage directory structure"""
@@ -230,7 +230,7 @@ class VersionManager:
         for directory in directories:
             (self.storage_path / directory).mkdir(parents=True, exist_ok=True)
         
-        self.logger.info(f"📁 Version structure created at {self.storage_path}")
+        self.logger.info(f" Version structure created at {self.storage_path}")
     
     async def create_version(self,
                             file_id: str,
@@ -255,6 +255,9 @@ class VersionManager:
         Returns:
             Created version information
         """
+
+
+
         try:
             start_time = datetime.now()
             
@@ -271,7 +274,7 @@ class VersionManager:
             
             # Check if content actually changed
             if previous_version and previous_version.content_hash == content_hash:
-                self.logger.info(f"📄 No content changes detected for {file_id}")
+                self.logger.info(f" No content changes detected for {file_id}")
                 return previous_version
             
             # Store version data
@@ -332,15 +335,18 @@ class VersionManager:
             # Cleanup old versions if needed
             await self._cleanup_old_versions(file_id)
             
-            self.logger.info(f"✅ Version created: {version_number} for {file_id}")
+            self.logger.info(f" Version created: {version_number} for {file_id}")
             return version_info
             
         except Exception as e:
-            self.logger.error(f"❌ Version creation failed: {str(e)}")
+            self.logger.error(f" Version creation failed: {str(e)}")
             raise
     
     async def _get_latest_version(self, file_id: str, branch_name: str = "main") -> Optional[VersionInfo]:
         """Get the latest version for a file on a specific branch"""
+
+
+
         try:
             # Load versions from storage if not in memory
             if file_id not in self.versions:
@@ -427,6 +433,9 @@ class VersionManager:
     
     async def _create_delta(self, old_path: str, new_path: str, version_id: str) -> Dict[str, Any]:
         """Create delta/diff between two versions"""
+
+
+
         try:
             old_path = Path(old_path)
             new_path = Path(new_path)
@@ -469,6 +478,9 @@ class VersionManager:
     
     async def _save_version_metadata(self, version_info: VersionInfo):
         """Save version metadata to storage"""
+
+
+
         try:
             metadata_dir = self.storage_path / "versions" / "metadata" / version_info.file_id
             metadata_dir.mkdir(parents=True, exist_ok=True)
@@ -510,6 +522,9 @@ class VersionManager:
     
     async def _update_branch_info(self, file_id: str, branch_name: str, version_info: VersionInfo):
         """Update branch information with new version"""
+
+
+
         try:
             branch_key = f"{file_id}_{branch_name}"
             
@@ -545,6 +560,9 @@ class VersionManager:
     
     async def _save_branch_metadata(self, branch_key: str, branch_info: BranchInfo):
         """Save branch metadata to storage"""
+
+
+
         try:
             branch_dir = self.storage_path / "versions" / "branches"
             branch_path = branch_dir / f"{branch_key}.json"
@@ -572,6 +590,9 @@ class VersionManager:
     
     async def _load_file_versions(self, file_id: str):
         """Load all versions for a file from storage"""
+
+
+
         try:
             metadata_dir = self.storage_path / "versions" / "metadata" / file_id
             
@@ -625,6 +646,9 @@ class VersionManager:
     
     async def get_version(self, file_id: str, version_id: str) -> Optional[VersionInfo]:
         """Get specific version by ID"""
+
+
+
         try:
             if file_id not in self.versions:
                 await self._load_file_versions(file_id)
@@ -641,6 +665,9 @@ class VersionManager:
     
     async def get_version_content(self, version_info: VersionInfo) -> bytes:
         """Get content for a specific version"""
+
+
+
         try:
             # If direct storage exists, return it
             if Path(version_info.storage_path).exists():
@@ -662,6 +689,9 @@ class VersionManager:
     
     async def _apply_delta(self, base_content: bytes, delta_path: str) -> bytes:
         """Apply delta to base content to reconstruct version"""
+
+
+
         try:
             # Read compressed delta
             async with aiofiles.open(delta_path, 'rb') as f:
@@ -682,6 +712,9 @@ class VersionManager:
     async def list_versions(self, file_id: str, branch_name: Optional[str] = None, 
                            limit: int = 50) -> List[VersionInfo]:
         """List versions for a file with optional filtering"""
+
+
+
         try:
             if file_id not in self.versions:
                 await self._load_file_versions(file_id)
@@ -703,6 +736,9 @@ class VersionManager:
     
     async def compare_versions(self, file_id: str, version_a: str, version_b: str) -> VersionComparison:
         """Compare two versions and return differences"""
+
+
+
         try:
             version_info_a = await self.get_version(file_id, version_a)
             version_info_b = await self.get_version(file_id, version_b)
@@ -819,6 +855,9 @@ class VersionManager:
     async def rollback_to_version(self, file_id: str, target_version_id: str, 
                                  rolled_back_by: str, reason: str = "") -> VersionInfo:
         """Rollback file to a specific version"""
+
+
+
         try:
             target_version = await self.get_version(file_id, target_version_id)
             if not target_version:
@@ -859,7 +898,7 @@ class VersionManager:
             # Cleanup temp file
             temp_path.unlink(missing_ok=True)
             
-            self.logger.info(f"🔄 Rolled back {file_id} to version {target_version.version_number}")
+            self.logger.info(f" Rolled back {file_id} to version {target_version.version_number}")
             return rollback_version
             
         except Exception as e:
@@ -869,6 +908,9 @@ class VersionManager:
     async def create_branch(self, file_id: str, branch_name: str, 
                            created_by: str, from_version: Optional[str] = None) -> BranchInfo:
         """Create new branch for parallel development"""
+
+
+
         try:
             # Determine source version
             if from_version:
@@ -901,7 +943,7 @@ class VersionManager:
             self.branches[branch_key] = branch_info
             await self._save_branch_metadata(branch_key, branch_info)
             
-            self.logger.info(f"🌿 Created branch {branch_name} for {file_id}")
+            self.logger.info(f" Created branch {branch_name} for {file_id}")
             return branch_info
             
         except Exception as e:
@@ -911,6 +953,9 @@ class VersionManager:
     async def merge_branches(self, file_id: str, source_branch: str, target_branch: str,
                             merged_by: str, resolution_strategy: ConflictResolution = ConflictResolution.AUTO_MERGE) -> MergeResult:
         """Merge one branch into another"""
+
+
+
         try:
             # Get latest versions from both branches
             source_version = await self._get_latest_version(file_id, source_branch)
@@ -993,7 +1038,7 @@ class VersionManager:
             # Save merge result
             await self._save_merge_result(file_id, result)
             
-            self.logger.info(f"🔀 Merge {'completed' if can_auto_merge else 'failed'}: {source_branch} → {target_branch}")
+            self.logger.info(f" Merge {'completed' if can_auto_merge else 'failed'}: {source_branch} → {target_branch}")
             return result
             
         except Exception as e:
@@ -1002,6 +1047,9 @@ class VersionManager:
     
     async def _auto_merge_content(self, source_version: VersionInfo, target_version: VersionInfo) -> bytes:
         """Automatically merge content from two versions"""
+
+
+
         try:
             # Get content from both versions
             source_content = await self.get_version_content(source_version)
@@ -1064,6 +1112,9 @@ class VersionManager:
     
     async def _save_merge_result(self, file_id: str, merge_result: MergeResult):
         """Save merge result for auditing"""
+
+
+
         try:
             merge_dir = self.storage_path / "versions" / "merges" / file_id
             merge_dir.mkdir(parents=True, exist_ok=True)
@@ -1090,6 +1141,9 @@ class VersionManager:
     
     async def _cleanup_old_versions(self, file_id: str):
         """Clean up old versions based on retention policy"""
+
+
+
         try:
             if file_id not in self.versions:
                 return
@@ -1127,6 +1181,9 @@ class VersionManager:
     
     async def _remove_version(self, version: VersionInfo):
         """Remove version data and metadata"""
+
+
+
         try:
             # Remove version data file
             if Path(version.storage_path).exists():
@@ -1149,6 +1206,9 @@ class VersionManager:
     
     async def get_version_history(self, file_id: str, branch_name: str = "main") -> List[Dict[str, Any]]:
         """Get complete version history for a file"""
+
+
+
         try:
             versions = await self.list_versions(file_id, branch_name)
             
@@ -1177,6 +1237,9 @@ class VersionManager:
     
     async def get_statistics(self) -> Dict[str, Any]:
         """Get comprehensive version management statistics"""
+
+
+
         try:
             stats = {
                 "total_files": len(self.versions),

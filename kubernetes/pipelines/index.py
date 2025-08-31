@@ -57,36 +57,36 @@ except ImportError as e:
 def display_banner():
     """Display the IA Influencer Agent banner"""
     banner = """
-╔══════════════════════════════════════════════════════════════════════════════╗
-║                                                                              ║
-║    ██╗ █████╗     ██╗███╗   ██╗███████╗██╗     ██╗   ██╗███████╗███╗   ██╗ ║
-║    ██║██╔══██╗    ██║████╗  ██║██╔════╝██║     ██║   ██║██╔════╝████╗  ██║ ║
-║    ██║███████║    ██║██╔██╗ ██║█████╗  ██║     ██║   ██║█████╗  ██╔██╗ ██║ ║
-║    ██║██╔══██║    ██║██║╚██╗██║██╔══╝  ██║     ██║   ██║██╔══╝  ██║╚██╗██║ ║
-║    ██║██║  ██║    ██║██║ ╚████║██║     ███████╗╚██████╔╝███████╗██║ ╚████║ ║
-║    ╚═╝╚═╝  ╚═╝    ╚═╝╚═╝  ╚═══╝╚═╝     ╚══════╝ ╚═════╝ ╚══════╝╚═╝  ╚═══╝ ║
-║                                                                              ║
-║                     ██████╗ ██╗██████╗ ███████╗██╗     ██╗███╗   ██╗███████╗║
-║                     ██╔══██╗██║██╔══██╗██╔════╝██║     ██║████╗  ██║██╔════╝║
-║                     ██████╔╝██║██████╔╝█████╗  ██║     ██║██╔██╗ ██║█████╗  ║
-║                     ██╔═══╝ ██║██╔═══╝ ██╔══╝  ██║     ██║██║╚██╗██║██╔══╝  ║
-║                     ██║     ██║██║     ███████╗███████╗██║██║ ╚████║███████╗║
-║                     ╚═╝     ╚═╝╚═╝     ╚══════╝╚══════╝╚═╝╚═╝  ╚═══╝╚══════╝║
-║                                                                              ║
-║               ENTERPRISE-GRADE DEPLOYMENT PIPELINE MANAGEMENT               ║
-║                                                                              ║
-╚══════════════════════════════════════════════════════════════════════════════╝
 
-    🚀 IA Influencer Agent - Pipeline Management System
+                                                                              
+                         
+                     
+                       
+                     
+                  
+                      
+                                                                              
+                               
+                            
+                               
+                                
+                                
+                                 
+                                                                              
+               ENTERPRISE-GRADE DEPLOYMENT PIPELINE MANAGEMENT               
+                                                                              
+
+
+     IA Influencer Agent - Pipeline Management System
     
     Author: Fahed Mlaiel <mlaiel@live.de>
     Copyright: © 2025 Fahed Mlaiel. All rights reserved.
     
-    ⚠️  WARNING: This software is proprietary and confidential.
+      WARNING: This software is proprietary and confidential.
         Unauthorized use is strictly prohibited and will be prosecuted
         to the full extent of the law.
     
-    🏗️  Enterprise Features:
+      Enterprise Features:
         • Multi-environment CI/CD pipelines
         • Advanced security scanning & compliance
         • Real-time monitoring & analytics
@@ -94,14 +94,14 @@ def display_banner():
         • REST API with real-time streaming
         • Kubernetes-native deployment
     
-    📋 Quick Commands:
+     Quick Commands:
         python index.py start                    # Start pipeline system
         python index.py execute build staging    # Execute build pipeline
         python index.py scan /path/to/project    # Run security scan
         python index.py status                   # Show system status
         python index.py --help                   # Show all commands
     
-    🔗 API Documentation:
+     API Documentation:
         http://localhost:8080/docs               # Swagger UI
         http://localhost:8080/redoc              # ReDoc
     
@@ -124,7 +124,7 @@ def check_dependencies():
             missing_packages.append(package)
     
     if missing_packages:
-        print(f"❌ Missing required packages: {', '.join(missing_packages)}")
+        print(f" Missing required packages: {', '.join(missing_packages)}")
         print("   Please install them with: pip install -r requirements.txt")
         return False
     
@@ -135,7 +135,7 @@ def show_system_info():
     python_version = f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
     
     print(f"""
-    📊 System Information:
+     System Information:
        • Python Version: {python_version}
        • Platform: {sys.platform}
        • Working Directory: {os.getcwd()}
@@ -173,10 +173,10 @@ def main_entry():
         # Call the main orchestrator function
         main()
     except KeyboardInterrupt:
-        print("\n🛑 Operation cancelled by user")
+        print("\n Operation cancelled by user")
         sys.exit(0)
     except Exception as e:
-        print(f"❌ Error: {str(e)}")
+        print(f" Error: {str(e)}")
         print("   For help, run: python index.py --help")
         sys.exit(1)
 

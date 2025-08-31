@@ -1,5 +1,5 @@
 """
-🎬 Video Fingerprinting Engine - IA Influencer Agent Platform Enterprise
+ Video Fingerprinting Engine - IA Influencer Agent Platform Enterprise
 ========================================================================
 Module: backend/data_management/fingerprinting/video_fingerprint.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Video Fingerprinting - Ultra Enterprise Production-Ready
 Responsibility: Advanced video fingerprinting with OpenCV, YOLO, and perceptual hashing
 =======================================================================================
 
-⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
+  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -20,14 +20,14 @@ Scene Detection → Feature Extraction → Vector Embedding → FAISS Indexing �
 Real-time Monitoring → Violation Detection → Revenue Protection
 
 VIDEO FINGERPRINTING TECHNOLOGIES:
-├── 🎥 OpenCV (Computer Vision Processing)
-├── 🔍 Perceptual Hashing (pHash + dHash + aHash)
-├── 🤖 YOLO (Object Detection & Recognition)
-├── 🎬 Scene Detection (Shot Boundary + Content)
-├── 🌊 Motion Analysis (Optical Flow + Vectors)
-├── 🧠 Deep Features (CNN + ResNet + EfficientNet)
-├── 📊 Temporal Analysis (Frame Sequences + Patterns)
-└── 🛡️ Protection System (Monitoring + Takedown)
+  OpenCV (Computer Vision Processing)
+  Perceptual Hashing (pHash + dHash + aHash)
+ 🤖 YOLO (Object Detection & Recognition)
+  Scene Detection (Shot Boundary + Content)
+  Motion Analysis (Optical Flow + Vectors)
+ 🧠 Deep Features (CNN + ResNet + EfficientNet)
+  Temporal Analysis (Frame Sequences + Patterns)
+  Protection System (Monitoring + Takedown)
 """
 
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -138,6 +138,9 @@ class VideoProcessor(ABC):
     @abstractmethod
     def get_name(self) -> str:
         """Get processor name"""
+
+
+
         return f"default_{self.__class__.__name__.lower()}"
 
 class OpenCVProcessor(VideoProcessor):
@@ -151,6 +154,9 @@ class OpenCVProcessor(VideoProcessor):
     
     async def process(self, video_path: str, config: VideoFingerprintConfig) -> Dict[str, Any]:
         """Traite la vidéo avec OpenCV"""
+
+
+
         try:
             start_time = time.time()
             
@@ -236,6 +242,9 @@ class OpenCVProcessor(VideoProcessor):
     
     def _calculate_quality_metrics(self, frames_data: List[Dict[str, Any]]) -> Dict[str, float]:
         """Calcule les métriques de qualité vidéo"""
+
+
+
         try:
             if not frames_data:
                 return {}
@@ -259,6 +268,9 @@ class OpenCVProcessor(VideoProcessor):
     
     def _calculate_frame_consistency(self, frames_data: List[Dict[str, Any]]) -> float:
         """Calcule la consistance entre les frames"""
+
+
+
         try:
             if len(frames_data) < 2:
                 return 1.0
@@ -287,6 +299,9 @@ class PerceptualHashProcessor(VideoProcessor):
     
     async def process(self, video_path: str, config: VideoFingerprintConfig) -> Dict[str, Any]:
         """Génère des hash perceptuels pour les frames"""
+
+
+
         try:
             start_time = time.time()
             
@@ -346,6 +361,9 @@ class PerceptualHashProcessor(VideoProcessor):
     
     def _generate_video_hash(self, frame_hashes: List[Dict[str, Any]]) -> Dict[str, str]:
         """Génère un hash global de la vidéo"""
+
+
+
         try:
             video_hash = {}
             
@@ -369,6 +387,9 @@ class PerceptualHashProcessor(VideoProcessor):
     
     def _calculate_hash_statistics(self, frame_hashes: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Calcule des statistiques sur les hash"""
+
+
+
         try:
             stats = {
                 "unique_hashes": {},
@@ -418,6 +439,9 @@ class YOLOFrameProcessor(VideoProcessor):
     
     async def process(self, video_path: str, config: VideoFingerprintConfig) -> Dict[str, Any]:
         """Détecte les objets dans les frames vidéo"""
+
+
+
         try:
             start_time = time.time()
             
@@ -469,6 +493,9 @@ class YOLOFrameProcessor(VideoProcessor):
     
     async def _simulate_yolo_processing(self, video_path: str, config: VideoFingerprintConfig) -> Dict[str, Any]:
         """Simulation du traitement YOLO pour la démo"""
+
+
+
         try:
             # Classes d'objets communes
             common_objects = [
@@ -530,6 +557,9 @@ class YOLOFrameProcessor(VideoProcessor):
     
     def _analyze_detected_objects(self, detections: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Analyse les objets détectés dans toute la vidéo"""
+
+
+
         try:
             analysis = {
                 "total_detections": 0,
@@ -595,6 +625,9 @@ class MotionVectorProcessor(VideoProcessor):
     
     async def process(self, video_path: str, config: VideoFingerprintConfig) -> Dict[str, Any]:
         """Analyse les vecteurs de mouvement dans la vidéo"""
+
+
+
         try:
             start_time = time.time()
             
@@ -701,6 +734,9 @@ class MotionVectorProcessor(VideoProcessor):
     
     def _analyze_motion_patterns(self, motion_data: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Analyse les patterns de mouvement globaux"""
+
+
+
         try:
             if not motion_data:
                 return {}
@@ -811,6 +847,9 @@ class VideoFingerprintEngine:
         Returns:
             Dictionnaire contenant toutes les empreintes générées
         """
+
+
+
         try:
             start_time = datetime.now()
             
@@ -884,6 +923,9 @@ class VideoFingerprintEngine:
     
     def _combine_features(self, processors_results: Dict[str, Any]) -> Dict[str, Any]:
         """Combine les caractéristiques de tous les processeurs"""
+
+
+
         try:
             combined = {
                 "video_hashes": {},
@@ -932,10 +974,16 @@ class VideoFingerprintEngine:
     
     def get_supported_formats(self) -> List[str]:
         """Retourne les formats vidéo supportés"""
+
+
+
         return [".mp4", ".avi", ".mov", ".mkv", ".webm", ".flv"]
     
     def get_processor_status(self) -> Dict[str, bool]:
         """Retourne le statut des processeurs"""
+
+
+
         return {
             "opencv": "opencv" in self.processors,
             "perceptual_hash": "perceptual_hash" in self.processors,

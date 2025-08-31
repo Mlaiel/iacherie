@@ -6,7 +6,7 @@ creators → upload multi-format → AI processing → protection → monetizati
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️ STRICT COPYRIGHT NOTICE ⚠️
+ STRICT COPYRIGHT NOTICE 
 This code is proprietary and confidential to Fahed Mlaiel.
 Any unauthorized use, copying, modification, or distribution
 without explicit written permission is strictly prohibited.
@@ -128,6 +128,9 @@ class MobileContentPipeline:
     
     def _initialize_engines(self):
         """Initialize all processing engines."""
+
+
+
         try:
             self.content_processor = ContentProcessor()
             self.fingerprint_engine = FingerprintEngine()
@@ -443,6 +446,9 @@ class MobileContentPipeline:
     
     async def get_processing_status(self, content_id: str) -> Optional[ProcessingResult]:
         """Get current processing status for content."""
+
+
+
         return self.active_processes.get(content_id)
     
     async def cancel_processing(self, content_id: str) -> bool:

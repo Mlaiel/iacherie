@@ -71,10 +71,16 @@ class ValidationReport:
     
     def has_errors(self) -> bool:
         """Check if report contains errors."""
+
+
+
         return len(self.errors) > 0
     
     def has_critical_errors(self) -> bool:
         """Check if report contains critical errors."""
+
+
+
         return any(r.level == ValidationLevel.CRITICAL for r in self.errors)
     
     def get_error_summary(self) -> str:
@@ -86,6 +92,9 @@ class ValidationReport:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert report to dictionary."""
+
+
+
         return {
             "valid": self.valid,
             "timestamp": self.timestamp.isoformat(),
@@ -153,6 +162,9 @@ class WorkflowValidator:
     
     def validate_schedule_expression(self, cron_expr: str) -> ValidationResult:
         """Validate cron schedule expression."""
+
+
+
         try:
             # Basic cron validation
             parts = cron_expr.split()
@@ -1044,6 +1056,9 @@ class WorkflowValidator:
     
     def _validate_cron_value(self, value: str, range_tuple: tuple) -> bool:
         """Validate individual cron value against range."""
+
+
+
         try:
             if value == '*':
                 return True
@@ -1115,6 +1130,9 @@ class WorkflowValidator:
     
     def _check_circular_dependencies(self, pipeline_def: Dict[str, Any]) -> List[ValidationResult]:
         """Check for circular dependencies in pipeline."""
+
+
+
         return []  # Already handled in _validate_step_dependencies
     
     def _check_resource_usage(self, pipeline_def: Dict[str, Any]) -> List[ValidationResult]:
@@ -1128,10 +1146,16 @@ class WorkflowValidator:
     
     def _check_workflow_timeout(self, workflow_def: Dict[str, Any]) -> List[ValidationResult]:
         """Check workflow timeout configuration."""
+
+
+
         return []  # Already handled in _validate_workflow_settings
     
     def _check_parallel_limits(self, workflow_def: Dict[str, Any]) -> List[ValidationResult]:
         """Check parallel execution limits."""
+
+
+
         return []  # Already handled in _validate_workflow_settings
     
     def _check_trigger_conflicts(self, automation_def: Dict[str, Any]) -> List[ValidationResult]:

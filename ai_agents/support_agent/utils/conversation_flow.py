@@ -8,7 +8,7 @@ conversation orchestration for customer support interactions.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -602,6 +602,9 @@ class ConversationFlowManager:
     
     async def _generate_troubleshooting_response(self, context: ConversationContext) -> Dict[str, Any]:
         """Generate troubleshooting follow-up response"""
+
+
+
         return {
             "message": "How did that work for you? Did any of those steps help resolve the issue?",
             "suggestions": [
@@ -617,6 +620,9 @@ class ConversationFlowManager:
     
     async def _generate_escalation_response(self, context: ConversationContext) -> Dict[str, Any]:
         """Generate escalation response"""
+
+
+
         return {
             "message": "I understand this issue needs more specialized help. Let me connect you with one of our human support specialists who can provide more detailed assistance.\n\nThey'll be able to access your account and provide personalized troubleshooting.\n\nExpected wait time: 5-10 minutes.",
             "escalation_ticket_id": str(uuid.uuid4()),
@@ -627,6 +633,9 @@ class ConversationFlowManager:
     
     async def _generate_feedback_response(self, context: ConversationContext) -> Dict[str, Any]:
         """Generate feedback collection response"""
+
+
+
         return {
             "message": "Before we wrap up, I'd love to get your feedback:\n\nHow would you rate the help you received today? Was I able to resolve your issue to your satisfaction?",
             "rating_options": ["Excellent", "Good", "Fair", "Poor"],
@@ -643,6 +652,9 @@ class ConversationFlowManager:
     
     async def _generate_closing_response(self, context: ConversationContext) -> Dict[str, Any]:
         """Generate closing response"""
+
+
+
         return {
             "message": "Thank you for using IA-Influencer support! I'm glad I could help you today.\n\nFeel free to reach out anytime if you have more questions. Have a great day creating amazing content!",
             "session_summary": {
@@ -657,6 +669,9 @@ class ConversationFlowManager:
     
     async def _generate_default_response(self, context: ConversationContext) -> Dict[str, Any]:
         """Generate default response for unknown states"""
+
+
+
         return {
             "message": "I'm here to help! Could you please let me know what specific issue you're facing with the IA-Influencer platform?",
             "confidence": 0.6,
@@ -682,6 +697,9 @@ class ConversationFlowManager:
     
     async def _persist_context(self, context: ConversationContext):
         """Persist conversation context to Redis"""
+
+
+
         try:
             context_data = {
                 "conversation_id": context.conversation_id,
@@ -709,6 +727,9 @@ class ConversationFlowManager:
     
     async def _load_context(self, conversation_id: str) -> Optional[ConversationContext]:
         """Load conversation context from Redis"""
+
+
+
         try:
             data = await self.redis_client.get(f"conversation:{conversation_id}")
             if not data:

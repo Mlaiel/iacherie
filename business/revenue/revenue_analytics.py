@@ -1,5 +1,5 @@
 """
-🚀 Revenue Analytics - Ultra-Advanced Revenue Analytics & Insights Engine
+ Revenue Analytics - Ultra-Advanced Revenue Analytics & Insights Engine
 ========================================================================
 
 Industrial-grade revenue analytics system providing comprehensive insights,
@@ -12,7 +12,7 @@ Created by: Fahed Mlaiel <mlaiel@live.de>
 Team Specialists:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
+ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED 
 Contact mlaiel@live.de for licensing inquiries.
 
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Revenue Analytics
@@ -146,6 +146,9 @@ class RevenueAnalytics:
         
     async def initialize(self):
         """Initialize the revenue analytics system"""
+
+
+
         try:
             # Initialize analytics engine
             await self.analytics_engine.initialize()
@@ -187,6 +190,9 @@ class RevenueAnalytics:
         Returns:
             Comprehensive revenue analytics report
         """
+
+
+
         try:
             # Determine date range based on timeframe
             if not date_range:
@@ -286,6 +292,9 @@ class RevenueAnalytics:
                                        timeframe: AnalyticsTimeframe,
                                        date_range: Tuple[datetime, datetime]) -> RevenueMetrics:
         """Calculate comprehensive revenue metrics"""
+
+
+
         try:
             # Query revenue data for the period
             revenue_query = """
@@ -357,6 +366,9 @@ class RevenueAnalytics:
                                            metrics: RevenueMetrics,
                                            timeframe: AnalyticsTimeframe) -> List[AnalyticsInsight]:
         """Generate AI-powered performance insights"""
+
+
+
         try:
             insights = []
             
@@ -430,6 +442,9 @@ class RevenueAnalytics:
                                           creator_id: str,
                                           date_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
         """Analyze performance across different platforms"""
+
+
+
         try:
             # Get platform-specific metrics
             platform_query = """
@@ -525,6 +540,9 @@ class RevenueAnalytics:
                                     timeframe: AnalyticsTimeframe,
                                     date_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
         """Perform comprehensive trend analysis"""
+
+
+
         try:
             # Get time-series revenue data
             if timeframe == AnalyticsTimeframe.DAILY:
@@ -615,6 +633,9 @@ class RevenueAnalytics:
                                           creator_id: str,
                                           timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
         """Generate AI-powered revenue predictions"""
+
+
+
         try:
             # Get historical data for prediction model
             historical_data = await self._get_historical_revenue_data(creator_id, 90)  # Last 90 days
@@ -654,6 +675,9 @@ class RevenueAnalytics:
                                         creator_id: str,
                                         metrics: RevenueMetrics) -> Dict[str, Any]:
         """Perform benchmark analysis against peers and industry"""
+
+
+
         try:
             # Get creator category and tier for benchmarking
             creator_info = await self.db.fetch_one("""
@@ -743,6 +767,9 @@ class RevenueAnalytics:
 
     async def cleanup(self):
         """Cleanup analytics resources"""
+
+
+
         try:
             # Cleanup analytics engine
             await self.analytics_engine.cleanup()

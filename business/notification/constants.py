@@ -722,9 +722,9 @@ LANGUAGE_CODES = {
     "it": {"name": "Italian", "native": "Italiano"},
     "pt": {"name": "Portuguese", "native": "Português"},
     "ru": {"name": "Russian", "native": "Русский"},
-    "ja": {"name": "Japanese", "native": "日本語"},
-    "ko": {"name": "Korean", "native": "한국어"},
-    "zh": {"name": "Chinese", "native": "中文"}
+    "ja": {"name": "Japanese", "native": ""},
+    "ko": {"name": "Korean", "native": ""},
+    "zh": {"name": "Chinese", "native": ""}
 }
 
 
@@ -1014,7 +1014,7 @@ WORKFLOW_TEMPLATES = {
                     "notification_type": "monetization_opportunity",
                     "priority": "urgent",
                     "channels": ["email", "push", "sms"],
-                    "title": "💰 Revenue Opportunity Available",
+                    "title": " Revenue Opportunity Available",
                     "message": "New monetization opportunity worth ${estimated_revenue} is available!"
                 },
                 "on_success": "completion"

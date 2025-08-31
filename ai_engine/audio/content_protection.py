@@ -476,6 +476,9 @@ class ContentProtector:
     
     def get_protection_status(self, protection_id: str) -> Optional[ProtectionResult]:
         """Get protection status by ID"""
+
+
+
         return self.protected_content.get(protection_id)
     
     def get_infringement_detections(
@@ -483,6 +486,9 @@ class ContentProtector:
         protection_id: str
     ) -> List[InfringementDetection]:
         """Get infringement detections for protected content"""
+
+
+
         return [
             detection for detection in self.infringement_detections.values()
             if detection.original_protection_id == protection_id

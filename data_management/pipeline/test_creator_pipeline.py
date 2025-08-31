@@ -3,7 +3,7 @@ IA Influencer Agent - Tests de la Pipeline Créateur
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ AVERTISSEMENT DE PROPRIÉTÉ INTELLECTUELLE ⚠️
+ AVERTISSEMENT DE PROPRIÉTÉ INTELLECTUELLE 
 Ce code et tous les concepts associés sont la propriété exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation écrite 
 explicite de l'auteur est strictement interdite et constitue une violation du 
@@ -26,6 +26,9 @@ from ..config import (
 @pytest.fixture
 def sample_creator_data():
     """Données de test pour un créateur"""
+
+
+
     return {
         'creator_id': 'test_musician_001',
         'creator_type': 'musician',
@@ -41,6 +44,9 @@ def sample_creator_data():
 @pytest.fixture
 def sample_content_data():
     """Données de test pour du contenu"""
+
+
+
     return {
         'content_id': 'test_track_001',
         'title': 'Test Track',
@@ -56,6 +62,9 @@ class TestCreatorWorkflowOrchestrator:
     @pytest.mark.asyncio
     async def test_workflow_orchestrator_import(self):
         """Test que l'orchestrateur peut être importé"""
+
+
+
         try:
             from ..creator_workflows import CreatorWorkflowOrchestrator
             orchestrator = CreatorWorkflowOrchestrator()
@@ -66,6 +75,9 @@ class TestCreatorWorkflowOrchestrator:
     @pytest.mark.asyncio
     async def test_musician_workflow_execution(self, sample_creator_data, sample_content_data):
         """Test d'exécution du workflow musicien"""
+
+
+
         try:
             from ..creator_workflows import CreatorWorkflowOrchestrator
             
@@ -98,6 +110,9 @@ class TestPlatformIntegrations:
     @pytest.mark.asyncio
     async def test_platform_manager_import(self):
         """Test que le gestionnaire de plateformes peut être importé"""
+
+
+
         try:
             from ..platform_integrations import CreatorPlatformManager
             manager = CreatorPlatformManager()
@@ -108,6 +123,9 @@ class TestPlatformIntegrations:
     @pytest.mark.asyncio
     async def test_spotify_integration(self, sample_creator_data, sample_content_data):
         """Test de l'intégration Spotify"""
+
+
+
         try:
             from ..platform_integrations import SpotifyIntegration
             
@@ -138,6 +156,9 @@ class TestMonetizationAnalytics:
     @pytest.mark.asyncio
     async def test_monetization_analyzer_import(self):
         """Test que l'analyseur de monétisation peut être importé"""
+
+
+
         try:
             from ..monetization_analytics import CreatorMonetizationAnalyzer
             analyzer = CreatorMonetizationAnalyzer()
@@ -148,6 +169,9 @@ class TestMonetizationAnalytics:
     @pytest.mark.asyncio
     async def test_revenue_analysis(self, sample_creator_data):
         """Test d'analyse des revenus"""
+
+
+
         try:
             from ..monetization_analytics import CreatorMonetizationAnalyzer
             
@@ -183,6 +207,9 @@ class TestContentProcessors:
     @pytest.mark.asyncio
     async def test_creator_content_processor_import(self):
         """Test que le processeur de contenu créateur peut être importé"""
+
+
+
         try:
             from ..processors import CreatorContentProcessor
             processor = CreatorContentProcessor()
@@ -193,6 +220,9 @@ class TestContentProcessors:
     @pytest.mark.asyncio
     async def test_content_processing(self, sample_creator_data, sample_content_data):
         """Test de traitement du contenu"""
+
+
+
         try:
             from ..processors import CreatorContentProcessor
             
@@ -223,6 +253,9 @@ class TestContentTransformers:
     @pytest.mark.asyncio
     async def test_creator_content_transformer_import(self):
         """Test que le transformateur de contenu créateur peut être importé"""
+
+
+
         try:
             from ..transformers import CreatorContentTransformer
             transformer = CreatorContentTransformer()
@@ -233,6 +266,9 @@ class TestContentTransformers:
     @pytest.mark.asyncio
     async def test_platform_optimization(self, sample_content_data):
         """Test d'optimisation pour les plateformes"""
+
+
+
         try:
             from ..transformers import CreatorContentTransformer
             
@@ -299,6 +335,9 @@ class TestIntegrationWorkflow:
     @pytest.mark.asyncio
     async def test_complete_musician_pipeline(self, sample_creator_data, sample_content_data):
         """Test de la pipeline complète pour un musicien"""
+
+
+
         try:
             from ..creator_workflows import CreatorWorkflowOrchestrator
             from ..platform_integrations import CreatorPlatformManager

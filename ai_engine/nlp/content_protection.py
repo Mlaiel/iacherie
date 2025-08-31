@@ -7,7 +7,7 @@ and intellectual property rights enforcement for creator content.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
 
@@ -134,6 +134,9 @@ class ContentProtectionEngine:
     
     def _initialize_protection_algorithms(self):
         """Initialize various protection algorithms."""
+
+
+
         try:
             # Text similarity threshold
             self.text_similarity_threshold = 0.85
@@ -161,6 +164,9 @@ class ContentProtectionEngine:
     
     def _load_protection_policies(self):
         """Load content protection policies."""
+
+
+
         try:
             self.protection_policies = {
                 'text_content': {
@@ -216,6 +222,9 @@ class ContentProtectionEngine:
         Returns:
             ContentFingerprint: Generated content fingerprint
         """
+
+
+
         try:
             content_id = self._generate_content_id(content, creator_id)
             
@@ -262,6 +271,9 @@ class ContentProtectionEngine:
         metadata: Optional[Dict[str, Any]]
     ) -> ContentFingerprint:
         """Protect text content with fingerprinting."""
+
+
+
         try:
             # Generate text fingerprint
             fingerprint_hash = self._generate_text_fingerprint(content)
@@ -304,6 +316,9 @@ class ContentProtectionEngine:
         metadata: Optional[Dict[str, Any]]
     ) -> ContentFingerprint:
         """Protect image content with hashing and watermarking."""
+
+
+
         try:
             # Load image if path provided
             if isinstance(content, str):
@@ -357,6 +372,9 @@ class ContentProtectionEngine:
         metadata: Optional[Dict[str, Any]]
     ) -> ContentFingerprint:
         """Protect audio content with fingerprinting."""
+
+
+
         try:
             # Load audio data
             if isinstance(content, str):
@@ -420,6 +438,9 @@ class ContentProtectionEngine:
         metadata: Optional[Dict[str, Any]]
     ) -> ContentFingerprint:
         """Protect video content with fingerprinting and watermarking."""
+
+
+
         try:
             # Load video
             if isinstance(content, str):
@@ -490,6 +511,9 @@ class ContentProtectionEngine:
         Returns:
             List[SecurityThreat]: Detected security threats
         """
+
+
+
         try:
             threats = []
             
@@ -518,6 +542,9 @@ class ContentProtectionEngine:
         threshold: Optional[float]
     ) -> List[SecurityThreat]:
         """Detect text plagiarism using similarity analysis."""
+
+
+
         try:
             threats = []
             threshold = threshold or self.text_similarity_threshold
@@ -566,6 +593,9 @@ class ContentProtectionEngine:
         threshold: Optional[float]
     ) -> List[SecurityThreat]:
         """Detect image theft using perceptual hashing."""
+
+
+
         try:
             threats = []
             threshold = threshold or 10  # Hamming distance threshold
@@ -622,6 +652,9 @@ class ContentProtectionEngine:
         threshold: Optional[float]
     ) -> List[SecurityThreat]:
         """Detect audio piracy using acoustic fingerprinting."""
+
+
+
         try:
             threats = []
             threshold = threshold or 0.8
@@ -679,6 +712,9 @@ class ContentProtectionEngine:
         threshold: Optional[float]
     ) -> List[SecurityThreat]:
         """Detect video theft using frame-based comparison."""
+
+
+
         try:
             threats = []
             threshold = threshold or 0.85
@@ -742,6 +778,9 @@ class ContentProtectionEngine:
         creator_id: str
     ) -> ProtectionReport:
         """Generate comprehensive protection report for content."""
+
+
+
         try:
             # Get content fingerprint
             fingerprint = self.fingerprint_database.get(content_id)
@@ -786,6 +825,9 @@ class ContentProtectionEngine:
     
     def _generate_content_id(self, content: Any, creator_id: str) -> str:
         """Generate unique content identifier."""
+
+
+
         try:
             content_str = str(content)[:1000]  # Limit for hashing
             timestamp = str(int(datetime.now().timestamp()))
@@ -798,6 +840,9 @@ class ContentProtectionEngine:
     
     def _generate_text_fingerprint(self, content: str) -> str:
         """Generate fingerprint for text content."""
+
+
+
         try:
             # Normalize text
             normalized = re.sub(r'\s+', ' ', content.lower().strip())
@@ -817,6 +862,9 @@ class ContentProtectionEngine:
     
     def _generate_verification_signature(self, content_id: str, creator_id: str, fingerprint_hash: str) -> str:
         """Generate verification signature for content authenticity."""
+
+
+
         try:
             # Create signature using HMAC
             secret_key = f"ia_influencer_agent_{creator_id}".encode()
@@ -830,6 +878,9 @@ class ContentProtectionEngine:
     
     def _add_invisible_text_watermark(self, content: str, creator_id: str) -> str:
         """Add invisible watermark to text content."""
+
+
+
         try:
             # Use zero-width characters as invisible watermark
             watermark_chars = ['\u200B', '\u200C', '\u200D', '\uFEFF']  # Zero-width characters
@@ -859,6 +910,9 @@ class ContentProtectionEngine:
     
     def _add_image_watermark(self, image: Image.Image, creator_id: str, protection_level: ContentSecurityLevel) -> Image.Image:
         """Add watermark to image content."""
+
+
+
         try:
             from PIL import ImageDraw, ImageFont
             
@@ -923,6 +977,9 @@ class ContentProtectionEngine:
     
     def _add_audio_watermark(self, audio_data: np.ndarray, creator_id: str, sample_rate: int) -> np.ndarray:
         """Add inaudible watermark to audio content."""
+
+
+
         try:
             # Create a copy of audio data
             watermarked = audio_data.copy()
@@ -957,6 +1014,9 @@ class ContentProtectionEngine:
     
     def _add_video_watermark(self, video_path: str, creator_id: str, protection_level: ContentSecurityLevel) -> str:
         """Add watermark to video content."""
+
+
+
         try:
             # This would use ffmpeg or similar for video processing
             # Simplified implementation - in reality would use video processing library
@@ -976,6 +1036,9 @@ class ContentProtectionEngine:
     
     async def _register_on_blockchain(self, fingerprint: ContentFingerprint) -> str:
         """Register content fingerprint on blockchain for immutable proof."""
+
+
+
         try:
             # Blockchain registration implementation
             # This would integrate with blockchain networks like Ethereum, Hyperledger, etc.
@@ -1000,6 +1063,9 @@ class ContentProtectionEngine:
     
     def _assess_threat_level(self, similarity_score: float) -> ThreatLevel:
         """Assess threat level based on similarity score."""
+
+
+
         try:
             if similarity_score >= 0.95:
                 return ThreatLevel.CRITICAL
@@ -1015,6 +1081,9 @@ class ContentProtectionEngine:
     
     def _calculate_image_similarity(self, suspicious_hashes: List, fingerprint: ContentFingerprint) -> float:
         """Calculate image similarity score."""
+
+
+
         try:
             # Simplified similarity calculation
             # In reality, would compare actual hash values
@@ -1025,6 +1094,9 @@ class ContentProtectionEngine:
     
     def _calculate_audio_similarity(self, suspicious_mfccs: np.ndarray, fingerprint: ContentFingerprint) -> float:
         """Calculate audio similarity score."""
+
+
+
         try:
             # Simplified similarity calculation
             # In reality, would compare MFCC features
@@ -1035,6 +1107,9 @@ class ContentProtectionEngine:
     
     def _calculate_video_similarity(self, suspicious_frames: List[str], fingerprint: ContentFingerprint) -> float:
         """Calculate video similarity score."""
+
+
+
         try:
             # Simplified similarity calculation
             # In reality, would compare frame hashes
@@ -1045,6 +1120,9 @@ class ContentProtectionEngine:
     
     def _calculate_security_score(self, fingerprint: ContentFingerprint, threats: List[SecurityThreat]) -> float:
         """Calculate overall security score for content."""
+
+
+
         try:
             base_score = 0.8  # Base security score
             
@@ -1070,6 +1148,9 @@ class ContentProtectionEngine:
     
     def _determine_protection_status(self, fingerprint: ContentFingerprint, threats: List[SecurityThreat]) -> str:
         """Determine overall protection status."""
+
+
+
         try:
             if len(threats) == 0:
                 return "protected"
@@ -1089,6 +1170,9 @@ class ContentProtectionEngine:
         threats: List[SecurityThreat]
     ) -> List[str]:
         """Generate protection improvement recommendations."""
+
+
+
         try:
             recommendations = []
             
@@ -1123,6 +1207,9 @@ class ContentProtectionEngine:
     
     def _check_compliance_status(self, fingerprint: ContentFingerprint) -> Dict[str, str]:
         """Check compliance with various standards and regulations."""
+
+
+
         try:
             compliance = {
                 'dmca_compliant': 'yes' if fingerprint.protection_level != ContentSecurityLevel.PUBLIC else 'partial',
@@ -1155,6 +1242,9 @@ class ContentRightsManager:
         creator_id: str
     ) -> str:
         """Create content license with specific terms."""
+
+
+
         try:
             license_id = f"license_{content_id}_{int(datetime.now().timestamp())}"
             
@@ -1185,6 +1275,9 @@ class ContentRightsManager:
         duration: Optional[timedelta] = None
     ):
         """Grant usage permission to specific user."""
+
+
+
         try:
             permission = {
                 'grantee_id': grantee_id,
@@ -1204,6 +1297,9 @@ class ContentRightsManager:
     
     def check_usage_permission(self, content_id: str, user_id: str) -> bool:
         """Check if user has permission to use content."""
+
+
+
         try:
             permissions = self.usage_permissions.get(content_id, [])
             

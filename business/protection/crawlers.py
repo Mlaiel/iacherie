@@ -1,11 +1,11 @@
 """
-🕷️ Crawlers Manager - IA-Influencer-Agent  
+ Crawlers Manager - IA-Influencer-Agent  
 ==================================================================
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 ==================================================================
 
-⚠️  COPYRIGHT NOTICE & LEGAL WARNING ⚠️
+  COPYRIGHT NOTICE & LEGAL WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copy, distribution, or modification of this code
 without explicit written permission is strictly prohibited and will be
@@ -349,6 +349,9 @@ class YouTubeCrawler:
     
     def _extract_video_id(self, url: str) -> str:
         """Extract video ID from YouTube URL"""
+
+
+
         try:
             parsed = urlparse(url)
             if 'watch' in parsed.path:
@@ -532,6 +535,9 @@ class SpotifyCrawler:
     
     async def _get_access_token(self) -> None:
         """Get Spotify access token"""
+
+
+
         try:
             auth_url = "https://accounts.spotify.com/api/token"
             
@@ -709,8 +715,11 @@ class CrawlerManagerService(ICrawlerManagerService):
         
     async def initialize(self) -> bool:
         """Initialize crawler manager service"""
+
+
+
         try:
-            self.logger.info("🚀 Initializing Crawler Manager Service")
+            self.logger.info(" Initializing Crawler Manager Service")
             
             # Setup rate limiters for each platform
             self._setup_rate_limiters()
@@ -720,11 +729,11 @@ class CrawlerManagerService(ICrawlerManagerService):
                 await self._setup_proxy_rotation()
             
             self.status = CrawlerManagerStatus.ACTIVE
-            self.logger.info("✅ Crawler Manager Service initialized successfully")
+            self.logger.info(" Crawler Manager Service initialized successfully")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Crawler Manager initialization failed: {e}")
+            self.logger.error(f" Crawler Manager initialization failed: {e}")
             self.status = CrawlerManagerStatus.ERROR
             return False
     
@@ -743,7 +752,7 @@ class CrawlerManagerService(ICrawlerManagerService):
             if not crawler:
                 raise ValueError(f"No crawler available for platform: {platform}")
             
-            self.logger.info(f"🕷️ Crawling {platform.value} for terms: {search_terms}")
+            self.logger.info(f" Crawling {platform.value} for terms: {search_terms}")
             
             # Execute platform-specific crawling
             if platform == PlatformType.YOUTUBE:
@@ -767,10 +776,10 @@ class CrawlerManagerService(ICrawlerManagerService):
             crawler_result.success = True
             
             self.status = CrawlerManagerStatus.ACTIVE
-            self.logger.info(f"✅ Platform crawl completed: {crawler_result.total_results} results found")
+            self.logger.info(f" Platform crawl completed: {crawler_result.total_results} results found")
             
         except Exception as e:
-            self.logger.error(f"❌ Platform crawling failed: {e}")
+            self.logger.error(f" Platform crawling failed: {e}")
             crawler_result.success = False
             crawler_result.error_message = str(e)
             self.status = CrawlerManagerStatus.ERROR
@@ -782,7 +791,7 @@ class CrawlerManagerService(ICrawlerManagerService):
         all_results = []
         
         try:
-            self.logger.info(f"🔍 Monitoring {len(content_fingerprints)} content fingerprints")
+            self.logger.info(f" Monitoring {len(content_fingerprints)} content fingerprints")
             
             # Create monitoring tasks for each platform
             monitor_tasks = []
@@ -858,6 +867,9 @@ class CrawlResult:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert result to dictionary"""
+
+
+
         return {
             'result_id': self.result_id,
             'target_id': self.target_id,
@@ -897,6 +909,9 @@ class UserAgentRotator:
     
     def get_random_user_agent(self) -> str:
         """Get random user agent"""
+
+
+
         return random.choice(self.user_agents)
 
 
@@ -949,6 +964,9 @@ class ContentAnalyzer:
     
     def analyze_text_similarity(self, text1: str, text2: str) -> float:
         """Calculate text similarity using TF-IDF and cosine similarity"""
+
+
+
         try:
             if not text1 or not text2:
                 return 0.0
@@ -969,6 +987,9 @@ class ContentAnalyzer:
     
     def _preprocess_text(self, text: str) -> str:
         """Preprocess text for analysis"""
+
+
+
         try:
             # Convert to lowercase and tokenize
             tokens = word_tokenize(text.lower())
@@ -989,6 +1010,9 @@ class ContentAnalyzer:
     
     def analyze_image_similarity(self, image_path1: str, image_path2: str) -> float:
         """Calculate image similarity using perceptual hashing"""
+
+
+
         try:
             with Image.open(image_path1) as img1, Image.open(image_path2) as img2:
                 # Calculate perceptual hashes
@@ -1019,6 +1043,9 @@ class SeleniumCrawler:
     
     async def initialize(self):
         """Initialize Selenium driver"""
+
+
+
         try:
             options = ChromeOptions()
             options.add_argument('--headless')
@@ -1051,6 +1078,9 @@ class SeleniumCrawler:
     
     async def crawl_url(self, url: str, wait_for_element: str = None) -> Dict[str, Any]:
         """Crawl URL using Selenium"""
+
+
+
         try:
             if not self.driver:
                 await self.initialize()
@@ -1113,6 +1143,9 @@ class SeleniumCrawler:
     
     def cleanup(self):
         """Cleanup Selenium resources"""
+
+
+
         try:
             if self.driver:
                 self.driver.quit()
@@ -1132,6 +1165,9 @@ class PlatformSpecificCrawler:
     
     async def search_content(self, query: str, limit: int = 10) -> List[Dict[str, Any]]:
         """Search for content on specific platform"""
+
+
+
         try:
             if self.platform == PlatformType.YOUTUBE:
                 return await self._search_youtube(query, limit)
@@ -1152,6 +1188,9 @@ class PlatformSpecificCrawler:
     
     async def _search_youtube(self, query: str, limit: int) -> List[Dict[str, Any]]:
         """Search YouTube (web scraping approach)"""
+
+
+
         try:
             search_url = f"https://www.youtube.com/results?search_query={quote(query)}"
             
@@ -1195,6 +1234,9 @@ class PlatformSpecificCrawler:
     
     async def _search_instagram(self, query: str, limit: int) -> List[Dict[str, Any]]:
         """Search Instagram (limited web scraping)"""
+
+
+
         try:
             # Instagram heavily restricts scraping, so this is a simplified approach
             # In production, you'd use Instagram's official API
@@ -1231,6 +1273,9 @@ class PlatformSpecificCrawler:
     
     async def _search_twitter(self, query: str, limit: int) -> List[Dict[str, Any]]:
         """Search Twitter (web scraping approach)"""
+
+
+
         try:
             # Note: Twitter has strict API policies, this is a simplified example
             search_url = f"https://twitter.com/search?q={quote(query)}&src=typed_query"
@@ -1252,6 +1297,9 @@ class PlatformSpecificCrawler:
     
     async def _search_tiktok(self, query: str, limit: int) -> List[Dict[str, Any]]:
         """Search TikTok (web scraping approach)"""
+
+
+
         try:
             # TikTok heavily uses JavaScript, would need Selenium for full functionality
             search_url = f"https://www.tiktok.com/search?q={quote(query)}"
@@ -1272,6 +1320,9 @@ class PlatformSpecificCrawler:
     
     async def _search_soundcloud(self, query: str, limit: int) -> List[Dict[str, Any]]:
         """Search SoundCloud (web scraping approach)"""
+
+
+
         try:
             search_url = f"https://soundcloud.com/search?q={quote(query)}"
             
@@ -1314,6 +1365,9 @@ class PlatformSpecificCrawler:
     
     async def _search_generic_web(self, query: str, limit: int) -> List[Dict[str, Any]]:
         """Search generic web using search engines"""
+
+
+
         try:
             # Use DuckDuckGo as it's more crawler-friendly
             search_url = f"https://html.duckduckgo.com/html/?q={quote(query)}"
@@ -1402,6 +1456,9 @@ class CrawlerManager:
     
     async def initialize(self):
         """Initialize the crawler manager"""
+
+
+
         try:
             self.status = CrawlerManagerStatus.ACTIVE
             
@@ -1438,6 +1495,9 @@ class CrawlerManager:
     
     async def crawl_target(self, target: CrawlTarget) -> List[CrawlResult]:
         """Crawl a specific target"""
+
+
+
         try:
             if self.status != CrawlerManagerStatus.ACTIVE:
                 raise RuntimeError("Crawler manager is not active")
@@ -1505,6 +1565,9 @@ class CrawlerManager:
     
     async def _crawl_platform_target(self, target: CrawlTarget) -> List[CrawlResult]:
         """Crawl target on specific platform"""
+
+
+
         try:
             results = []
             platform_crawler = self.platform_crawlers.get(target.platform)
@@ -1557,6 +1620,9 @@ class CrawlerManager:
     
     async def _crawl_urls(self, urls: List[str], target: CrawlTarget) -> List[CrawlResult]:
         """Crawl specific URLs"""
+
+
+
         try:
             results = []
             
@@ -1654,6 +1720,9 @@ class CrawlerManager:
     
     async def _crawl_with_session(self, url: str) -> Optional[Dict[str, Any]]:
         """Crawl URL using aiohttp session"""
+
+
+
         try:
             headers = {}
             
@@ -1730,6 +1799,9 @@ class CrawlerManager:
     
     async def _check_robots_txt(self, url: str) -> bool:
         """Check if URL is allowed by robots.txt"""
+
+
+
         try:
             parsed_url = urlparse(url)
             robots_url = f"{parsed_url.scheme}://{parsed_url.netloc}/robots.txt"
@@ -1747,6 +1819,9 @@ class CrawlerManager:
     
     async def get_crawl_statistics(self) -> Dict[str, Any]:
         """Get comprehensive crawl statistics"""
+
+
+
         try:
             return {
                 'total_crawls': self.crawl_stats['total_crawls'],
@@ -1769,6 +1844,9 @@ class CrawlerManager:
     
     async def cleanup(self):
         """Cleanup crawler resources"""
+
+
+
         try:
             self.status = CrawlerManagerStatus.INACTIVE
             
@@ -1841,6 +1919,9 @@ class CrawlerManagerFactory:
         **kwargs
     ) -> CrawlerManagerConfig:
         """Create crawler manager configuration"""
+
+
+
         return CrawlerManagerConfig(
             max_concurrent_crawlers=max_concurrent_crawlers,
             crawl_interval_seconds=crawl_interval_seconds,
@@ -1850,6 +1931,9 @@ class CrawlerManagerFactory:
 
 def extract_domain(url: str) -> str:
     """Extract domain from URL"""
+
+
+
     try:
         parsed = urlparse(url)
         return parsed.netloc
@@ -1859,6 +1943,9 @@ def extract_domain(url: str) -> str:
 
 def is_valid_url(url: str) -> bool:
     """Check if URL is valid"""
+
+
+
     try:
         result = urlparse(url)
         return all([result.scheme, result.netloc])

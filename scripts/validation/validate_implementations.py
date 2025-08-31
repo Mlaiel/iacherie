@@ -24,16 +24,16 @@ def validate_ai_agent_implementations():
             
         # Check for improved implementations
         if "self.models = {}" in content and "self.algorithms = [" in content:
-            results.append("✅ TrendPredictionEngine properly initialized")
+            results.append(" TrendPredictionEngine properly initialized")
         else:
-            results.append("❌ TrendPredictionEngine still has placeholder implementation")
+            results.append(" TrendPredictionEngine still has placeholder implementation")
             
         if "self.platforms = [" in content and "logger.info" in content:
-            results.append("✅ SocialListeningEngine properly initialized")
+            results.append(" SocialListeningEngine properly initialized")
         else:
-            results.append("❌ SocialListeningEngine still has placeholder implementation")
+            results.append(" SocialListeningEngine still has placeholder implementation")
     else:
-        results.append("❌ Trend analyzer file not found")
+        results.append(" Trend analyzer file not found")
     
     # Check distribution agent implementations  
     dist_file = "ai_agents/distribution_agent/core/coordinator.py"
@@ -52,11 +52,11 @@ def validate_ai_agent_implementations():
         
         for method in loop_methods:
             if f"while self.is_running:" in content and f"def {method}" in content:
-                results.append(f"✅ {method} properly implemented with monitoring loop")
+                results.append(f" {method} properly implemented with monitoring loop")
             else:
-                results.append(f"❌ {method} still has placeholder implementation")
+                results.append(f" {method} still has placeholder implementation")
     else:
-        results.append("❌ Distribution coordinator file not found")
+        results.append(" Distribution coordinator file not found")
     
     return results
 
@@ -80,11 +80,11 @@ def validate_database_workflows():
         
         for platform in platforms:
             if f"required_fields = [" in content and f"class {platform}" in content:
-                results.append(f"✅ {platform} validation properly implemented")
+                results.append(f" {platform} validation properly implemented")
             else:
-                results.append(f"❌ {platform} still has placeholder validation")
+                results.append(f" {platform} still has placeholder validation")
     else:
-        results.append("❌ Content distribution workflows file not found")
+        results.append(" Content distribution workflows file not found")
     
     return results
 
@@ -99,11 +99,11 @@ def validate_core_engines():
             content = f.read()
             
         if "logger.warning(\"Using default configuration provider" in content:
-            results.append("✅ ConfigurationProvider has meaningful default implementation")
+            results.append(" ConfigurationProvider has meaningful default implementation")
         else:
-            results.append("❌ ConfigurationProvider still raises NotImplementedError")
+            results.append(" ConfigurationProvider still raises NotImplementedError")
     else:
-        results.append("❌ AI engine file not found")
+        results.append(" AI engine file not found")
     
     # Check audio engine  
     audio_engine_file = "core/engines/audio_engine.py"
@@ -112,17 +112,17 @@ def validate_core_engines():
             content = f.read()
             
         if "self.is_initialized = True" in content and "Mock PyAudio initialized" in content:
-            results.append("✅ PyAudio mock properly implemented with initialization")
+            results.append(" PyAudio mock properly implemented with initialization")
         else:
-            results.append("❌ PyAudio mock still has placeholder implementation")
+            results.append(" PyAudio mock still has placeholder implementation")
     else:
-        results.append("❌ Audio engine file not found")
+        results.append(" Audio engine file not found")
     
     return results
 
 def main():
     """Run validation tests"""
-    print("🔍 Implementation Validation Report")
+    print(" Implementation Validation Report")
     print("=" * 50)
     
     # Validate AI agents
@@ -132,31 +132,31 @@ def main():
         print(f"  {result}")
     
     # Validate database workflows
-    print("\n🗄️  Database Workflow Implementations:")
+    print("\n  Database Workflow Implementations:")
     db_results = validate_database_workflows()
     for result in db_results:
         print(f"  {result}")
     
     # Validate core engines
-    print("\n⚙️  Core Engine Implementations:")
+    print("\n  Core Engine Implementations:")
     engine_results = validate_core_engines()
     for result in engine_results:
         print(f"  {result}")
     
     # Summary
     all_results = ai_results + db_results + engine_results
-    success_count = len([r for r in all_results if r.startswith("✅")])
+    success_count = len([r for r in all_results if r.startswith("")])
     total_count = len(all_results)
     
-    print(f"\n📊 Summary:")
+    print(f"\n Summary:")
     print(f"  Successful implementations: {success_count}/{total_count}")
     print(f"  Success rate: {(success_count/total_count)*100:.1f}%")
     
     if success_count == total_count:
-        print("\n🎉 All critical implementations completed successfully!")
+        print("\n All critical implementations completed successfully!")
         return 0
     else:
-        print(f"\n⚠️  {total_count - success_count} implementations need attention")
+        print(f"\n  {total_count - success_count} implementations need attention")
         return 1
 
 if __name__ == "__main__":

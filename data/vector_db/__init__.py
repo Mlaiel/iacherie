@@ -10,7 +10,7 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 ATTENTION: Ce code est protégé par les droits d'auteur.
 Toute reproduction, distribution ou modification non autorisée est strictement interdite.
 
-⚠️ COPYRIGHT WARNING ⚠️
+ COPYRIGHT WARNING 
 This code is protected by copyright law. Any unauthorized reproduction, distribution, 
 modification, or use of this code without explicit written permission from 
 Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in legal action.
@@ -120,7 +120,10 @@ class FAISSBackend(VectorBackend):
         self.reverse_id_maps: Dict[str, Dict[int, str]] = {}
         
     async def create_index(self, name: str, dimension: int, metric: str = "cosine") -> bool:
-        """Create a new FAISS index."""        try:
+        """Create a new FAISS index."""
+
+
+        try:
             if metric == "cosine":
                 # Use IndexFlatIP for cosine similarity
                 index = faiss.IndexFlatIP(dimension)
@@ -145,7 +148,10 @@ class FAISSBackend(VectorBackend):
     
     async def add_vectors(self, index_name: str, vectors: np.ndarray,
                          ids: List[str], metadata: List[Dict]) -> bool:
-        """Add vectors to FAISS index."""        try:
+        """Add vectors to FAISS index."""
+
+
+        try:
             if index_name not in self.indices:
                 raise ValueError(f"Index '{index_name}' not found")
             
@@ -175,7 +181,10 @@ class FAISSBackend(VectorBackend):
     
     async def search(self, index_name: str, query_vector: np.ndarray,
                     k: int = 10, threshold: float = 0.8) -> List[VectorSearchResult]:
-        """Search for similar vectors in FAISS index."""        try:
+        """Search for similar vectors in FAISS index."""
+
+
+        try:
             if index_name not in self.indices:
                 raise ValueError(f"Index '{index_name}' not found")
             
@@ -221,7 +230,10 @@ class FAISSBackend(VectorBackend):
             return []
     
     async def delete_vectors(self, index_name: str, ids: List[str]) -> bool:
-        """Delete vectors from FAISS index (rebuild required)."""        try:
+        """Delete vectors from FAISS index (rebuild required)."""
+
+
+        try:
             if index_name not in self.indices:
                 raise ValueError(f"Index '{index_name}' not found")
             
@@ -249,7 +261,10 @@ class ChromaBackend(VectorBackend):
         self.collections: Dict[str, Any] = {}
         
     async def create_index(self, name: str, dimension: int, metric: str = "cosine") -> bool:
-        """Create a new ChromaDB collection."""        try:
+        """Create a new ChromaDB collection."""
+
+
+        try:
             collection = self.client.create_collection(
                 name=name,
                 metadata={"dimension": dimension, "metric": metric}
@@ -265,7 +280,10 @@ class ChromaBackend(VectorBackend):
     
     async def add_vectors(self, index_name: str, vectors: np.ndarray,
                          ids: List[str], metadata: List[Dict]) -> bool:
-        """Add vectors to ChromaDB collection."""        try:
+        """Add vectors to ChromaDB collection."""
+
+
+        try:
             if index_name not in self.collections:
                 raise ValueError(f"Collection '{index_name}' not found")
             
@@ -290,7 +308,10 @@ class ChromaBackend(VectorBackend):
     
     async def search(self, index_name: str, query_vector: np.ndarray,
                     k: int = 10, threshold: float = 0.8) -> List[VectorSearchResult]:
-        """Search for similar vectors in ChromaDB collection."""        try:
+        """Search for similar vectors in ChromaDB collection."""
+
+
+        try:
             if index_name not in self.collections:
                 raise ValueError(f"Collection '{index_name}' not found")
             
@@ -327,7 +348,10 @@ class ChromaBackend(VectorBackend):
             return []
     
     async def delete_vectors(self, index_name: str, ids: List[str]) -> bool:
-        """Delete vectors from ChromaDB collection."""        try:
+        """Delete vectors from ChromaDB collection."""
+
+
+        try:
             if index_name not in self.collections:
                 raise ValueError(f"Collection '{index_name}' not found")
             
@@ -379,7 +403,10 @@ class VectorDBManager:
             
         Returns:
             Success status
-        """        try:
+        """
+
+
+        try:
             index_name = f"{content_type}_index"
             
             # Create backend index
@@ -419,7 +446,10 @@ class VectorDBManager:
             
         Returns:
             Embedding vector
-        """        try:
+        """
+
+
+        try:
             embedding = self.embedding_model.encode(text)
             return embedding.astype(np.float32)
             
@@ -435,7 +465,10 @@ class VectorDBManager:
             
         Returns:
             Embedding vector
-        """        try:
+        """
+
+
+        try:
             # Combine different audio features into a single vector
             features = []
             
@@ -477,7 +510,10 @@ class VectorDBManager:
             
         Returns:
             Success status
-        """        try:
+        """
+
+
+        try:
             index_name = f"{content_type}_index"
             
             if index_name not in self.indices:
@@ -513,7 +549,10 @@ class VectorDBManager:
             
         Returns:
             List of similar content results
-        """        try:
+        """
+
+
+        try:
             index_name = f"{content_type}_index"
             
             if index_name not in self.indices:
@@ -542,7 +581,10 @@ class VectorDBManager:
             
         Returns:
             Similarity score or None if not found
-        """        try:
+        """
+
+
+        try:
             # This would require storing vectors separately or rebuilding from content
             # For now, return placeholder implementation
             logger.warning("Direct content similarity detection not implemented")
@@ -561,7 +603,10 @@ class VectorDBManager:
             
         Returns:
             Success status
-        """        try:
+        """
+
+
+        try:
             index_name = f"{content_type}_index"
             
             if index_name not in self.indices:
@@ -588,7 +633,10 @@ class VectorDBManager:
             
         Returns:
             Index statistics
-        """        try:
+        """
+
+
+        try:
             index_name = f"{content_type}_index"
             
             if index_name not in self.indices:
@@ -625,7 +673,10 @@ class VectorDBManager:
         
         Returns:
             System status information
-        """        return {
+        """
+
+
+        return {
             'backend_type': self.backend_type,
             'embedding_model': self.embedding_model_name,
             'embedding_dimension': self.embedding_dimension,
@@ -716,7 +767,10 @@ class SimilaritySearcher:
             
         Returns:
             Ranked results
-        """        try:
+        """
+
+
+        try:
             # Implement relevance scoring based on metadata
             for result in results:
                 relevance_score = result.similarity_score

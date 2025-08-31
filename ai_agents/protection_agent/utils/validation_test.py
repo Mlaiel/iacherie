@@ -13,12 +13,12 @@ import traceback
 
 def test_imports():
     """Test all imports from the protection agent module"""
-    print("🔍 Testing Protection Agent imports...")
+    print(" Testing Protection Agent imports...")
     
     try:
         # Test main module import
         from . import __version__, __author__, __email__
-        print(f"✅ Module metadata: v{__version__} by {__author__}")
+        print(f" Module metadata: v{__version__} by {__author__}")
         
         # Test main classes import
         from . import (
@@ -30,7 +30,7 @@ def test_imports():
             AdvancedWatermarkingEngine,
             ProtectionManager
         )
-        print("✅ Core classes imported successfully")
+        print(" Core classes imported successfully")
         
         # Test utility functions
         from . import (
@@ -39,7 +39,7 @@ def test_imports():
             get_status,
             get_metrics
         )
-        print("✅ Utility functions imported successfully")
+        print(" Utility functions imported successfully")
         
         # Test data structures
         from . import (
@@ -54,7 +54,7 @@ def test_imports():
             ProtectionRequest,
             MonitoringAlert
         )
-        print("✅ Data structures imported successfully")
+        print(" Data structures imported successfully")
         
         # Test enums
         from . import (
@@ -65,18 +65,18 @@ def test_imports():
             UsageType,
             BatchOperationType
         )
-        print("✅ Enums imported successfully")
+        print(" Enums imported successfully")
         
         return True
         
     except Exception as e:
-        print(f"❌ Import test failed: {str(e)}")
+        print(f" Import test failed: {str(e)}")
         traceback.print_exc()
         return False
 
 def test_basic_functionality():
     """Test basic functionality without external dependencies"""
-    print("\n🔧 Testing basic functionality...")
+    print("\n Testing basic functionality...")
     
     try:
         from . import ProtectionAgentIndex, get_protection_index
@@ -86,9 +86,9 @@ def test_basic_functionality():
         index2 = get_protection_index()
         
         if index1 is index2:
-            print("✅ Singleton pattern working correctly")
+            print(" Singleton pattern working correctly")
         else:
-            print("❌ Singleton pattern failed")
+            print(" Singleton pattern failed")
             return False
         
         # Test configuration
@@ -99,9 +99,9 @@ def test_basic_functionality():
         
         index = ProtectionAgentIndex(config)
         if index.config == config:
-            print("✅ Configuration initialization working")
+            print(" Configuration initialization working")
         else:
-            print("❌ Configuration initialization failed")
+            print(" Configuration initialization failed")
             return False
         
         # Test metrics
@@ -109,21 +109,21 @@ def test_basic_functionality():
         required_keys = ['timestamp', 'metrics', 'service_health', 'uptime_info']
         
         if all(key in metrics for key in required_keys):
-            print("✅ Performance metrics working correctly")
+            print(" Performance metrics working correctly")
         else:
-            print("❌ Performance metrics missing keys")
+            print(" Performance metrics missing keys")
             return False
         
         return True
         
     except Exception as e:
-        print(f"❌ Functionality test failed: {str(e)}")
+        print(f" Functionality test failed: {str(e)}")
         traceback.print_exc()
         return False
 
 def test_class_instantiation():
     """Test that main classes can be instantiated"""
-    print("\n🏗️ Testing class instantiation...")
+    print("\n Testing class instantiation...")
     
     try:
         from . import (
@@ -139,33 +139,33 @@ def test_class_instantiation():
         config = {}
         
         analyzer = AdvancedContentAnalyzer()
-        print("✅ AdvancedContentAnalyzer instantiated")
+        print(" AdvancedContentAnalyzer instantiated")
         
         copyright_mgr = AdvancedCopyrightManager(config)
-        print("✅ AdvancedCopyrightManager instantiated")
+        print(" AdvancedCopyrightManager instantiated")
         
         rights_mgr = AdvancedRightsManager(config)
-        print("✅ AdvancedRightsManager instantiated")
+        print(" AdvancedRightsManager instantiated")
         
         watermark_engine = AdvancedWatermarkingEngine(config)
-        print("✅ AdvancedWatermarkingEngine instantiated")
+        print(" AdvancedWatermarkingEngine instantiated")
         
         protection_mgr = ProtectionManager(config)
-        print("✅ ProtectionManager instantiated")
+        print(" ProtectionManager instantiated")
         
         protection_agent = ProtectionAgent(config)
-        print("✅ ProtectionAgent instantiated")
+        print(" ProtectionAgent instantiated")
         
         return True
         
     except Exception as e:
-        print(f"❌ Class instantiation test failed: {str(e)}")
+        print(f" Class instantiation test failed: {str(e)}")
         traceback.print_exc()
         return False
 
 def validate_module():
     """Run complete module validation"""
-    print("🚀 Starting Protection Agent Module Validation")
+    print(" Starting Protection Agent Module Validation")
     print("=" * 60)
     
     tests = [
@@ -176,24 +176,24 @@ def validate_module():
     
     results = {}
     for test_name, test_func in tests:
-        print(f"\n📋 Running {test_name}...")
+        print(f"\n Running {test_name}...")
         results[test_name] = test_func()
     
     print("\n" + "=" * 60)
-    print("📊 VALIDATION RESULTS")
+    print(" VALIDATION RESULTS")
     print("=" * 60)
     
     for test_name, passed in results.items():
-        status = "✅ PASSED" if passed else "❌ FAILED"
+        status = " PASSED" if passed else " FAILED"
         print(f"{test_name}: {status}")
     
     all_passed = all(results.values())
     
     if all_passed:
-        print("\n🎉 ALL TESTS PASSED - Module is ready for production!")
-        print("🛡️ Protection Agent is fully operational")
+        print("\n ALL TESTS PASSED - Module is ready for production!")
+        print(" Protection Agent is fully operational")
     else:
-        print("\n🚨 SOME TESTS FAILED - Please check the issues above")
+        print("\n SOME TESTS FAILED - Please check the issues above")
         return False
     
     return True

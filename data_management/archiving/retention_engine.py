@@ -8,7 +8,7 @@ management for legal and business requirements.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -418,6 +418,9 @@ class RetentionEngine:
     
     def get_policy(self, policy_id: str) -> Optional[RetentionPolicy]:
         """Get retention policy by ID"""
+
+
+
         return self.policies.get(policy_id)
     
     def find_applicable_policy(
@@ -633,6 +636,9 @@ class RetentionEngine:
         executed_by: str = "system"
     ) -> bool:
         """Execute a retention action"""
+
+
+
         
         try:
             self.logger.info(f"Executing retention action {action.value} for content {content_id}")

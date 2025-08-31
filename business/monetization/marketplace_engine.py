@@ -1,5 +1,5 @@
 """
-🎯 Marketplace Engine - IA-Influencer-Agent
+ Marketplace Engine - IA-Influencer-Agent
 ==================================================================
 Expert: BUSINESS_ANALYST + FINTECH_EXPERT
 Type: MONETIZATION
@@ -70,19 +70,22 @@ class MarketplaceEngineManager:
         
     async def start(self) -> bool:
         """Démarrage du gestionnaire"""
+
+
+
         try:
             self.status = MarketplaceEngineStatus.ACTIVE
-            self.logger.info(f"🚀 Marketplace Engine Manager démarré")
+            self.logger.info(f" Marketplace Engine Manager démarré")
             return True
         except Exception as e:
-            self.logger.error(f"❌ Erreur démarrage: {e}")
+            self.logger.error(f" Erreur démarrage: {e}")
             self.status = MarketplaceEngineStatus.ERROR
             return False
     
     async def stop(self) -> bool:
         """Arrêt du gestionnaire"""
         self.status = MarketplaceEngineStatus.INACTIVE
-        self.logger.info(f"⏹️ Marketplace Engine Manager arrêté")
+        self.logger.info(f"⏹ Marketplace Engine Manager arrêté")
         return True
 
 class MarketplaceEngineService(IMarketplaceEngineService):
@@ -94,17 +97,23 @@ class MarketplaceEngineService(IMarketplaceEngineService):
     
     async def initialize(self) -> bool:
         """Initialisation du service"""
+
+
+
         try:
-            self.logger.info(f"🔧 Initialisation Marketplace Engine Service")
+            self.logger.info(f" Initialisation Marketplace Engine Service")
             return True
         except Exception as e:
-            self.logger.error(f"❌ Erreur initialisation: {e}")
+            self.logger.error(f" Erreur initialisation: {e}")
             return False
     
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Traitement principal des données"""
+
+
+
         try:
-            self.logger.info(f"⚡ Traitement Marketplace Engine")
+            self.logger.info(f" Traitement Marketplace Engine")
             
             # Validation des données
             if not await self.validate(data):
@@ -120,7 +129,7 @@ class MarketplaceEngineService(IMarketplaceEngineService):
             }
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur traitement: {e}")
+            self.logger.error(f" Erreur traitement: {e}")
             return {
                 "status": "error", 
                 "error": str(e),
@@ -213,6 +222,9 @@ async def create_marketplaceengine_service(config: Optional[MarketplaceEngineCon
 
 def get_marketplaceengine_status() -> Dict[str, Any]:
     """Récupération du statut du module"""
+
+
+
     return {
         "module": "Marketplace Engine",
         "version": "1.0.0",
@@ -231,6 +243,9 @@ class MarketplaceEngineAPI:
     
     async def health_check(self) -> Dict[str, Any]:
         """Vérification de santé du module"""
+
+
+
         return {
             "status": "healthy",
             "module": "Marketplace Engine",

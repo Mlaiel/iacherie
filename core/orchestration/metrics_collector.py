@@ -7,7 +7,7 @@ real-time monitoring, advanced analytics, and intelligent alerting capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -209,6 +209,9 @@ class MetricsCollector:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             if not await self._validate_metric_definition(definition):
                 return False
@@ -244,6 +247,9 @@ class MetricsCollector:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             if metric_id not in self.metric_definitions:
                 # Auto-register with default configuration
@@ -285,6 +291,9 @@ class MetricsCollector:
         Returns:
             bool: Success status
         """
+
+
+
         return await self.record(metric_id, value, tags)
     
     async def gauge(self, metric_id: str, value: Union[int, float], tags: Optional[Dict[str, str]] = None) -> bool:
@@ -299,6 +308,9 @@ class MetricsCollector:
         Returns:
             bool: Success status
         """
+
+
+
         return await self.record(metric_id, value, tags)
     
     async def timer(self, metric_id: str, duration: float, tags: Optional[Dict[str, str]] = None) -> bool:
@@ -313,6 +325,9 @@ class MetricsCollector:
         Returns:
             bool: Success status
         """
+
+
+
         return await self.record(metric_id, duration, tags)
     
     async def histogram(self, metric_id: str, value: Union[int, float], tags: Optional[Dict[str, str]] = None) -> bool:
@@ -327,6 +342,9 @@ class MetricsCollector:
         Returns:
             bool: Success status
         """
+
+
+
         return await self.record(metric_id, value, tags)
     
     async def get_metric_values(
@@ -348,6 +366,9 @@ class MetricsCollector:
         Returns:
             List of metric values
         """
+
+
+
         try:
             if metric_id not in self.raw_metrics:
                 return []
@@ -388,6 +409,9 @@ class MetricsCollector:
         Returns:
             List of aggregated metrics
         """
+
+
+
         try:
             if metric_id not in self.aggregated_metrics:
                 return []
@@ -420,6 +444,9 @@ class MetricsCollector:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             if not await self._validate_alert_rule(rule):
                 return False
@@ -451,6 +478,9 @@ class MetricsCollector:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             if alert_id not in self.active_alerts:
                 return False
@@ -482,6 +512,9 @@ class MetricsCollector:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             if alert_id not in self.active_alerts:
                 return False
@@ -517,6 +550,9 @@ class MetricsCollector:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             if not await self._validate_dashboard(dashboard):
                 return False
@@ -546,6 +582,9 @@ class MetricsCollector:
         Returns:
             Dashboard data with current values
         """
+
+
+
         try:
             if dashboard_id not in self.dashboards:
                 return None
@@ -580,6 +619,9 @@ class MetricsCollector:
         Returns:
             Analysis results
         """
+
+
+
         try:
             end_time = datetime.now()
             start_time = end_time - timedelta(seconds=time_window)
@@ -675,6 +717,9 @@ class MetricsCollector:
     
     async def _aggregate_metric(self, metric_id: str, interval: int, end_time: datetime) -> None:
         """Aggregate metric for specific interval."""
+
+
+
         try:
             start_time = end_time - timedelta(seconds=interval)
             
@@ -762,6 +807,9 @@ class MetricsCollector:
     
     async def _evaluate_alert_rule(self, rule: AlertRule, current_time: datetime) -> None:
         """Evaluate individual alert rule."""
+
+
+
         try:
             # Get recent values
             start_time = current_time - timedelta(seconds=rule.time_window)
@@ -800,6 +848,9 @@ class MetricsCollector:
     
     def _evaluate_condition(self, value: Union[int, float], condition: str, threshold: Union[int, float]) -> bool:
         """Evaluate alert condition."""
+
+
+
         try:
             if condition.startswith('>'):
                 return value > threshold
@@ -1049,18 +1100,30 @@ class MetricsCollector:
     
     async def _validate_metric_definition(self, definition: MetricDefinition) -> bool:
         """Validate metric definition."""
+
+
+
         return bool(definition.metric_id and definition.name and definition.unit)
     
     async def _validate_alert_rule(self, rule: AlertRule) -> bool:
         """Validate alert rule."""
+
+
+
         return bool(rule.rule_id and rule.metric_id and rule.condition and rule.message)
     
     async def _validate_dashboard(self, dashboard: Dashboard) -> bool:
         """Validate dashboard configuration."""
+
+
+
         return bool(dashboard.dashboard_id and dashboard.name)
     
     async def get_active_alerts(self) -> List[Dict[str, Any]]:
         """Get all active alerts."""
+
+
+
         return [
             {
                 'alert_id': alert.alert_id,
@@ -1108,6 +1171,9 @@ class MetricsCollector:
     
     async def get_collector_stats(self) -> Dict[str, Any]:
         """Get metrics collector statistics."""
+
+
+
         return {
             **self.collector_stats,
             'registered_metrics': len(self.metric_definitions),

@@ -147,6 +147,9 @@ class ResourceAllocationManager:
         
     def _initialize_resource_limits(self):
         """Initialize default resource limits based on system capabilities."""
+
+
+
         try:
             # CPU limits
             cpu_count = psutil.cpu_count()
@@ -252,6 +255,9 @@ class ResourceAllocationManager:
                 
     def _collect_system_metrics(self) -> ResourceMetrics:
         """Collect current system resource metrics."""
+
+
+
         try:
             # CPU metrics
             cpu_percent = psutil.cpu_percent(interval=None)
@@ -308,6 +314,9 @@ class ResourceAllocationManager:
             
     def _get_gpu_utilization(self) -> Optional[float]:
         """Get GPU utilization if available."""
+
+
+
         try:
             import GPUtil
             gpus = GPUtil.getGPUs()
@@ -345,6 +354,9 @@ class ResourceAllocationManager:
                 
     def _measure_actual_usage(self, allocation: ResourceAllocation) -> float:
         """Measure actual resource usage for an allocation."""
+
+
+
         try:
             resource_type = allocation.request.resource_type
             
@@ -381,6 +393,9 @@ class ResourceAllocationManager:
         
     def _check_resource_violations(self, metrics: ResourceMetrics):
         """Check for resource limit violations and take action."""
+
+
+
         try:
             violations = []
             
@@ -441,6 +456,9 @@ class ResourceAllocationManager:
         
     async def _send_resource_alert(self, resource_name: str, current_usage: float, limit: float):
         """Send resource violation alert."""
+
+
+
         try:
             alert_data = {
                 'type': 'resource_violation',
@@ -467,6 +485,9 @@ class ResourceAllocationManager:
         Returns:
             Allocation ID if successful, None otherwise
         """
+
+
+
         try:
             self.allocation_stats['total_requests'] += 1
             
@@ -498,6 +519,9 @@ class ResourceAllocationManager:
             
     def _validate_request(self, request: ResourceRequest) -> bool:
         """Validate resource allocation request."""
+
+
+
         try:
             # Check if resource type is supported
             if request.resource_type not in self.resource_limits:
@@ -523,6 +547,9 @@ class ResourceAllocationManager:
             
     def _can_allocate_immediately(self, request: ResourceRequest) -> bool:
         """Check if resource can be allocated immediately."""
+
+
+
         try:
             resource_type = request.resource_type
             limit = self.resource_limits[resource_type]
@@ -551,6 +578,9 @@ class ResourceAllocationManager:
         
     async def _allocate_resource(self, request: ResourceRequest) -> Optional[str]:
         """Allocate resource to request."""
+
+
+
         try:
             allocation_id = f"{request.task_id}_{int(time.time())}"
             
@@ -695,10 +725,16 @@ class ResourceAllocationManager:
         Returns:
             True if successful, False otherwise
         """
+
+
+
         return self._release_allocation(allocation_id)
         
     def _release_allocation(self, allocation_id: str) -> bool:
         """Internal method to release allocation."""
+
+
+
         try:
             if allocation_id not in self.active_allocations:
                 self.logger.warning(f"Allocation not found: {allocation_id}")
@@ -736,6 +772,9 @@ class ResourceAllocationManager:
         
     async def _optimize_allocations(self):
         """Optimize current resource allocations."""
+
+
+
         try:
             # Identify underutilized allocations
             underutilized = []
@@ -755,6 +794,9 @@ class ResourceAllocationManager:
             
     async def get_resource_usage(self) -> Dict[str, Any]:
         """Get current resource usage statistics."""
+
+
+
         try:
             usage_stats = {}
             
@@ -811,6 +853,9 @@ class ResourceAllocationManager:
             
     async def cleanup(self):
         """Cleanup resources and stop monitoring."""
+
+
+
         try:
             # Stop monitoring
             self.stop_monitoring()
@@ -831,6 +876,9 @@ class ResourceAllocationManager:
 # Factory function
 def create_resource_allocation_manager(config: Optional[ResourceConfig] = None) -> ResourceAllocationManager:
     """Create and return a resource allocation manager instance."""
+
+
+
     return ResourceAllocationManager(config)
 
 

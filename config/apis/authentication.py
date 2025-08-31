@@ -70,6 +70,9 @@ class AuthToken:
     @property
     def is_valid(self) -> bool:
         """Check if token is valid"""
+
+
+
         return bool(self.access_token) and not self.is_expired
 
 @dataclass
@@ -185,6 +188,9 @@ class OAuth2Manager:
         Returns:
             AuthToken or None if failed
         """
+
+
+
         try:
             # Verify state
             state_data = self.verify_state(state)
@@ -236,6 +242,9 @@ class OAuth2Manager:
         Returns:
             New AuthToken or None if failed
         """
+
+
+
         try:
             data = {
                 'grant_type': 'refresh_token',
@@ -276,6 +285,9 @@ class OAuth2Manager:
         Returns:
             AuthToken or None if failed
         """
+
+
+
         try:
             data = {
                 'grant_type': 'client_credentials',
@@ -319,12 +331,18 @@ class APIKeyManager:
     
     def get_auth_headers(self) -> Dict[str, str]:
         """Get headers with API key authentication"""
+
+
+
         return {
             self.config.api_key_header: self.config.api_key
         }
     
     def validate_api_key(self) -> bool:
         """Validate API key is present"""
+
+
+
         return bool(self.config.api_key)
 
 class JWTManager:
@@ -345,6 +363,9 @@ class JWTManager:
     
     def verify_jwt(self, token: str) -> Optional[Dict[str, Any]]:
         """Verify JWT token"""
+
+
+
         try:
             payload = jwt_lib.decode(
                 token, 
@@ -439,6 +460,9 @@ class APIAuthenticationManager:
         Returns:
             Authenticated ClientSession or None
         """
+
+
+
         try:
             headers = {}
             

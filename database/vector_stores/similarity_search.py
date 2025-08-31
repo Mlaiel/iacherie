@@ -209,6 +209,9 @@ class SimilaritySearchEngine:
         Returns:
             Tuple of (search results, explanation)
         """
+
+
+
         try:
             start_time = datetime.now()
             self.search_stats["total_searches"] += 1
@@ -300,6 +303,9 @@ class SimilaritySearchEngine:
         Returns:
             List of search results for each query
         """
+
+
+
         try:
             # Group queries by content type for optimization
             grouped_queries = {}
@@ -352,6 +358,9 @@ class SimilaritySearchEngine:
         Returns:
             List of (content_id1, content_id2, similarity_score) tuples
         """
+
+
+
         try:
             duplicates = []
             
@@ -420,6 +429,9 @@ class SimilaritySearchEngine:
             relevance_scores: Relevance scores for each result
             user_rating: Overall user rating (0-1)
         """
+
+
+
         try:
             if session_id not in self.active_sessions:
                 logger.warning(f"Session {session_id} not found for feedback")
@@ -474,6 +486,9 @@ class SimilaritySearchEngine:
         Returns:
             Analytics data
         """
+
+
+
         try:
             analytics = {
                 "global_metrics": self.search_stats.copy(),
@@ -730,6 +745,9 @@ class SimilaritySearchEngine:
         raw_results: List[Any]
     ) -> SearchExplanation:
         """Generate detailed search explanation"""
+
+
+
         return SearchExplanation(
             query_analysis={
                 "content_type": query.content_type,
@@ -813,6 +831,9 @@ class SimilaritySearchEngine:
     
     async def _get_result_vector(self, result: Any) -> Optional[np.ndarray]:
         """Get vector embedding for result"""
+
+
+
         try:
             # Get from database
             async with get_db_session() as session:
@@ -873,6 +894,9 @@ class SimilaritySearchEngine:
     
     def _initialize_content_configs(self) -> Dict[str, Dict[str, Any]]:
         """Initialize content type specific configurations"""
+
+
+
         return {
             "audio": {
                 "default_threshold": 0.85,
@@ -915,6 +939,9 @@ class SimilaritySearchEngine:
     # Similarity calculation methods
     def _cosine_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
         """Calculate cosine similarity"""
+
+
+
         return float(cosine_similarity(vec1.reshape(1, -1), vec2.reshape(1, -1))[0, 0])
     
     def _euclidean_distance(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
@@ -966,6 +993,9 @@ class SimilaritySearchEngine:
     
     async def close(self) -> None:
         """Close search engine and cleanup resources"""
+
+
+
         try:
             # Clear active sessions
             self.active_sessions.clear()

@@ -8,7 +8,7 @@ Project: IA Influencer Agent + Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL WARNING:
+ CRITICAL LEGAL WARNING:
 This code, concept, and intellectual property are exclusively owned by Fahed Mlaiel.
 Any unauthorized use, copying, distribution, reverse engineering, or commercialization 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
@@ -179,6 +179,9 @@ class ContentAnalyzer:
     
     async def _get_creator_content_analytics(self, creator_id: str) -> List[Dict[str, Any]]:
         """Get content analytics data"""
+
+
+
         return [
             {
                 'content_id': 'content_001',
@@ -306,6 +309,9 @@ class ContentPortfolio:
         Returns:
             Complete portfolio data
         """
+
+
+
         try:
             # Get creator profile
             profile = await self.profile_manager.get_creator_profile(creator_id)
@@ -343,6 +349,9 @@ class ContentPortfolio:
     
     async def _get_optimization_opportunities(self, creator_id: str) -> List[Dict[str, Any]]:
         """Get content optimization opportunities"""
+
+
+
         return [
             {
                 'type': 'underperforming_content',
@@ -362,6 +371,9 @@ class ContentPortfolio:
     
     async def create_content_item(self, creator_id: str, content_data: Dict[str, Any]) -> ContentItem:
         """Create new content item in portfolio"""
+
+
+
         try:
             content_id = f"content_{creator_id}_{datetime.utcnow().timestamp()}"
             

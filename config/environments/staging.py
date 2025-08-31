@@ -1,12 +1,12 @@
 """
-🔧 Staging Environment Configuration - IA-Influencer-Agent
+ Staging Environment Configuration - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps + Backend Senior + ML Engineer + DBA + Security
 Date: 2025-08-15
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -153,6 +153,9 @@ class StagingConfigManager(BaseEnvironmentConfigManager):
         
     def validate_configuration(self) -> bool:
         """Valide la configuration staging"""
+
+
+
         try:
             # Vérifications importantes pour staging
             assert self.database_config is not None, "Configuration base de données requise"
@@ -184,11 +187,14 @@ class StagingConfigManager(BaseEnvironmentConfigManager):
             return True
             
         except (AssertionError, AttributeError) as e:
-            print(f"❌ Erreur validation configuration staging: {e}")
+            print(f" Erreur validation configuration staging: {e}")
             return False
             
     def get_staging_features(self) -> Dict[str, Any]:
         """Retourne les fonctionnalités spécifiques au staging"""
+
+
+
         return {
             "hot_reload": False,
             "debug_mode": False,
@@ -210,6 +216,9 @@ class StagingConfigManager(BaseEnvironmentConfigManager):
         
     def get_testing_settings(self) -> Dict[str, Any]:
         """Paramètres spécifiques aux tests en staging"""
+
+
+
         return {
             "load_testing_enabled": True,
             "integration_tests_enabled": True,
@@ -223,6 +232,9 @@ class StagingConfigManager(BaseEnvironmentConfigManager):
         
     def get_staging_urls(self) -> Dict[str, str]:
         """URLs utiles pour staging"""
+
+
+
         return {
             "api_docs": f"https://staging-api.ia-influencer.com/docs",
             "redoc": f"https://staging-api.ia-influencer.com/redoc",
@@ -234,6 +246,9 @@ class StagingConfigManager(BaseEnvironmentConfigManager):
         
     def get_data_management_settings(self) -> Dict[str, Any]:
         """Paramètres de gestion des données staging"""
+
+
+
         return {
             "data_anonymization": True,
             "synthetic_data_generation": True,

@@ -5,7 +5,7 @@ Architecture: Advanced Business Process Orchestration via Events
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 INTERDIT : Copie, reproduction, modification, ou usage sans autorisation écrite explicite.
 Toute violation sera poursuivie selon la loi allemande et française.
@@ -495,6 +495,9 @@ class WorkflowEngine:
     
     async def _execute_workflow(self, instance: WorkflowInstance, step_id: str):
         """Exécute un workflow à partir d'une étape"""
+
+
+
         try:
             while step_id and instance.status == WorkflowStatus.RUNNING:
                 step = instance.steps.get(step_id)
@@ -705,10 +708,16 @@ class WorkflowEngine:
     
     def get_instance(self, instance_id: str) -> Optional[WorkflowInstance]:
         """Retourne une instance de workflow"""
+
+
+
         return self.instances.get(instance_id)
     
     def get_instances_by_workflow(self, workflow_id: str) -> List[WorkflowInstance]:
         """Retourne toutes les instances d'un workflow"""
+
+
+
         return [
             instance for instance in self.instances.values()
             if instance.workflow_id == workflow_id
@@ -716,6 +725,9 @@ class WorkflowEngine:
     
     def get_stats(self) -> Dict[str, Any]:
         """Retourne les statistiques"""
+
+
+
         return {
             "stats": self.stats.copy(),
             "definitions_count": len(self.definitions),

@@ -182,6 +182,9 @@ class AnalyticsEngine:
         Returns:
             Dictionary of revenue analytics metrics
         """
+
+
+
         try:
             # Check cache first
             cache_key = f"revenue_analytics:{user_id}:{period_days}"
@@ -298,6 +301,9 @@ class AnalyticsEngine:
         Returns:
             Complete performance report
         """
+
+
+
         try:
             # Calculate date range
             end_date = datetime.utcnow()
@@ -372,6 +378,9 @@ class AnalyticsEngine:
         Returns:
             Time series analysis data
         """
+
+
+
         try:
             # Calculate date range
             end_date = datetime.utcnow()
@@ -445,6 +454,9 @@ class AnalyticsEngine:
         Returns:
             Revenue predictions
         """
+
+
+
         try:
             # Check cache first
             cache_key = f"revenue_prediction:{user_id}:{prediction_days}"
@@ -498,6 +510,9 @@ class AnalyticsEngine:
         Returns:
             Dashboard visualization data
         """
+
+
+
         try:
             visualizations = {}
             
@@ -694,6 +709,9 @@ class AnalyticsEngine:
     
     async def _get_from_cache(self, key: str) -> Optional[Dict]:
         """Get data from cache"""
+
+
+
         try:
             cached_data = await self.redis.get(key)
             return json.loads(cached_data) if cached_data else None
@@ -702,6 +720,9 @@ class AnalyticsEngine:
     
     async def _save_to_cache(self, key: str, data: Dict, ttl: int = None):
         """Save data to cache"""
+
+
+
         try:
             ttl = ttl or self.cache_ttl
             await self.redis.setex(key, ttl, json.dumps(data, default=str))

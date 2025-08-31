@@ -8,7 +8,7 @@ Responsibility: Multi-jurisdiction compliance, regulatory adherence, and legal l
 Technologies: Python, Legal Frameworks, Regulatory APIs, Compliance Monitoring
 ================================================================================
 
-⚠️  PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
+  PROPRIETARY SOFTWARE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -540,6 +540,9 @@ class RegionalCompliance:
         data_processing_purposes: List[str] = None
     ) -> ComplianceAssessment:
         """Assess content compliance across multiple regions"""
+
+
+
         try:
             content_id = f"content_{hash(content) % 10000}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
@@ -751,6 +754,9 @@ class RegionalCompliance:
         custom_clauses: List[str] = None
     ) -> Dict[str, Any]:
         """Generate compliance document from template"""
+
+
+
         try:
             if template_type not in self.compliance_templates:
                 raise ValueError(f"Unknown template type: {template_type}")
@@ -870,6 +876,9 @@ class RegionalCompliance:
         transfer_mechanism: str
     ) -> Dict[str, Any]:
         """Validate cross-border data transfer compliance"""
+
+
+
         try:
             validation_result = {
                 "is_permitted": False,
@@ -941,6 +950,9 @@ class RegionalCompliance:
     
     async def get_compliance_statistics(self) -> Dict[str, Any]:
         """Get compliance engine statistics"""
+
+
+
         return {
             "regional_regulations": len(self.regional_regulations),
             "compliance_rules": len(self.compliance_rules),
@@ -967,6 +979,9 @@ class RegionalCompliance:
     
     async def health_check(self) -> bool:
         """Health check for regional compliance service"""
+
+
+
         try:
             # Check if regulations are loaded
             if not self.regional_regulations:

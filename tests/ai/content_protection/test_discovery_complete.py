@@ -29,7 +29,7 @@ Team Specialties:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This code, concept, and intellectual property are exclusively owned by Fahed Mlaiel.
 Any unauthorized use, copying, distribution, reverse engineering, or commercialization 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
@@ -98,6 +98,9 @@ class TestDiscoveryModuleComplete:
     @pytest.fixture
     async def mock_content_data(self):
         """Mock content data for testing"""
+
+
+
         return {
             'content_id': str(uuid.uuid4()),
             'title': 'Test AI Music Track',

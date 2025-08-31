@@ -17,7 +17,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Email: mlaiel@live.de
 Project: IA Influencer Agent + Content Protection Platform
 
-⚠️  STRICT COPYRIGHT WARNING ⚠️
+  STRICT COPYRIGHT WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, modification, or distribution is strictly prohibited
 and will result in immediate legal action under German and international law.
@@ -503,6 +503,9 @@ class FingerprintStorageManager:
         Returns:
             List of similar fingerprints with similarity scores
         """
+
+
+
         try:
             async with self.get_session() as session:
                 # Multi-hash similarity search
@@ -561,6 +564,9 @@ class FingerprintStorageManager:
         Returns:
             Success status
         """
+
+
+
         try:
             async with self.get_session() as session:
                 query = select(FingerprintStorageModel).where(
@@ -613,6 +619,9 @@ class FingerprintStorageManager:
         Returns:
             Success status
         """
+
+
+
         try:
             async with self.get_session() as session:
                 query = update(FingerprintStorageModel).where(
@@ -649,6 +658,9 @@ class FingerprintStorageManager:
         Returns:
             Dictionary containing storage statistics
         """
+
+
+
         try:
             async with self.get_session() as session:
                 # Count fingerprints by type and status
@@ -753,6 +765,9 @@ class FingerprintStorageManager:
         change_reason: str
     ):
         """Create version tracking record"""
+
+
+
         try:
             version_record = FingerprintVersionModel(
                 fingerprint_id=fingerprint_id,
@@ -815,6 +830,9 @@ class FingerprintStorageManager:
     
     async def _update_access_tracking(self, session: AsyncSession, fingerprint_id: str):
         """Update access tracking for fingerprint"""
+
+
+
         try:
             await session.execute(
                 update(FingerprintStorageModel)
@@ -855,6 +873,9 @@ class FingerprintStorageManager:
         fingerprint: FingerprintStorageModel
     ) -> float:
         """Calculate similarity score between hashes"""
+
+
+
         try:
             # Implement sophisticated similarity calculation
             # This is a simplified version - real implementation would use
@@ -920,6 +941,9 @@ class FingerprintStorageManager:
         Returns:
             Number of fingerprints cleaned up
         """
+
+
+
         try:
             async with self.get_session() as session:
                 # Find expired fingerprints
@@ -1043,6 +1067,9 @@ __all__ = [
         Returns:
             ContentFingerprint object or None if not found
         """
+
+
+
         try:
             async with self.db_manager.get_session() as session:
                 query = select(FingerprintStorageModel).where(
@@ -1091,6 +1118,9 @@ __all__ = [
         Returns:
             List of matching ContentFingerprint objects
         """
+
+
+
         try:
             async with self.db_manager.get_session() as session:
                 query = select(FingerprintStorageModel)
@@ -1147,6 +1177,9 @@ __all__ = [
         Returns:
             bool: True if updated successfully
         """
+
+
+
         try:
             async with self.db_manager.get_session() as session:
                 query = update(FingerprintStorageModel).where(
@@ -1176,6 +1209,9 @@ __all__ = [
         Returns:
             bool: True if deleted successfully
         """
+
+
+
         try:
             async with self.db_manager.get_session() as session:
                 # Delete matches first (foreign key constraint)
@@ -1215,6 +1251,9 @@ __all__ = [
         Returns:
             Dictionary with storage statistics
         """
+
+
+
         try:
             async with self.db_manager.get_session() as session:
                 base_query = select(FingerprintStorageModel)
@@ -1408,6 +1447,9 @@ __all__ = [
     
     async def cleanup_expired_fingerprints(self) -> int:
         """Clean up expired fingerprints"""
+
+
+
         try:
             async with self.db_manager.get_session() as session:
                 now = datetime.now(timezone.utc)

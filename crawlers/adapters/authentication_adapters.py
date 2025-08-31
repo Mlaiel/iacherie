@@ -280,6 +280,9 @@ class AuthToken:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert token to dictionary."""
+
+
+
         return {
             'access_token': self.access_token,
             'token_type': self.token_type.value,
@@ -574,6 +577,9 @@ class AuthenticationAdapter(ABC):
     
     def is_authenticated(self) -> bool:
         """Check if currently authenticated."""
+
+
+
         return (self.current_token is not None and 
                 not self.current_token.is_expired)
 
@@ -593,6 +599,9 @@ class OAuth2Adapter(AuthenticationAdapter):
     
     async def authenticate(self) -> AuthResult:
         """Perform OAuth2 authentication."""
+
+
+
         try:
             # Prepare token request
             data = {
@@ -761,6 +770,9 @@ class JWTAdapter(AuthenticationAdapter):
     
     async def authenticate(self) -> AuthResult:
         """Generate JWT token."""
+
+
+
         try:
             # Prepare JWT payload
             now = datetime.now()
@@ -807,6 +819,9 @@ class JWTAdapter(AuthenticationAdapter):
     
     async def refresh_token(self) -> AuthResult:
         """Refresh JWT token (generate new one)."""
+
+
+
         return await self.authenticate()
     
     def get_auth_headers(self) -> Dict[str, str]:
@@ -821,6 +836,9 @@ class JWTAdapter(AuthenticationAdapter):
     
     def verify_token(self, token: str) -> Dict[str, Any]:
         """Verify and decode JWT token."""
+
+
+
         try:
             payload = jwt.decode(
                 token,
@@ -846,6 +864,9 @@ class APIKeyAdapter(AuthenticationAdapter):
     
     async def authenticate(self) -> AuthResult:
         """Set up API key authentication (no actual auth needed)."""
+
+
+
         try:
             # Create a pseudo-token for consistency
             self.current_token = AuthToken(
@@ -871,6 +892,9 @@ class APIKeyAdapter(AuthenticationAdapter):
     
     async def refresh_token(self) -> AuthResult:
         """API keys don't need refresh."""
+
+
+
         return AuthResult(success=True, token=self.current_token)
     
     def get_auth_headers(self) -> Dict[str, str]:
@@ -917,6 +941,9 @@ class BasicAuthAdapter(AuthenticationAdapter):
     
     async def authenticate(self) -> AuthResult:
         """Set up Basic authentication."""
+
+
+
         try:
             # Encode credentials
             credentials = f"{self.config.username}:{self.config.password}"
@@ -949,6 +976,9 @@ class BasicAuthAdapter(AuthenticationAdapter):
     
     async def refresh_token(self) -> AuthResult:
         """Basic auth doesn't need refresh."""
+
+
+
         return AuthResult(success=True, token=self.current_token)
     
     def get_auth_headers(self) -> Dict[str, str]:
@@ -977,6 +1007,9 @@ class CertificateAdapter(AuthenticationAdapter):
     
     async def authenticate(self) -> AuthResult:
         """Load and validate certificate."""
+
+
+
         try:
             # Load certificate
             async with aiofiles.open(self.config.certificate_path, 'rb') as f:
@@ -1119,6 +1152,9 @@ class AuthenticationManager:
     
     def get_adapter(self, name: str) -> Optional[AuthenticationAdapter]:
         """Get authentication adapter by name."""
+
+
+
         return self.adapters.get(name)
     
     def get_auth_headers(self, adapter_name: str) -> Dict[str, str]:

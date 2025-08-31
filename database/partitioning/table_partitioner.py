@@ -17,7 +17,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING 🚨
+ INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
@@ -85,6 +85,9 @@ class TablePartitioner(ABC):
 
     def _create_base_indexes(self, session: Session, partition_name: str):
         """Create base indexes common to all partitions"""
+
+
+
         try:
             # Primary key index (usually exists by default)
             session.execute(text(f"""
@@ -110,6 +113,9 @@ class TablePartitioner(ABC):
 
     def validate_partition_health(self, partition_name: str) -> bool:
         """Validate partition health and integrity"""
+
+
+
         try:
             with self.session_factory() as session:
                 # Check if partition exists
@@ -153,6 +159,9 @@ class TablePartitioner(ABC):
 
     def get_partition_statistics(self, partition_name: str) -> Dict[str, Any]:
         """Get comprehensive statistics for a partition"""
+
+
+
         try:
             with self.session_factory() as session:
                 stats_query = text(f"""
@@ -225,6 +234,9 @@ class ContentFingerprintPartitioner(TablePartitioner):
 
     def create_partitions(self) -> bool:
         """Create time+user composite partitions for content fingerprints"""
+
+
+
         try:
             with self.session_factory() as session:
                 current_date = datetime.utcnow().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
@@ -273,6 +285,9 @@ class ContentFingerprintPartitioner(TablePartitioner):
 
     def _create_fingerprint_indexes(self, session: Session, partition_name: str):
         """Create specialized indexes for fingerprint operations"""
+
+
+
         try:
             # Base indexes
             self._create_base_indexes(session, partition_name)
@@ -369,6 +384,9 @@ class RevenueTrackingPartitioner(TablePartitioner):
 
     def create_partitions(self) -> bool:
         """Create temporal partitions for revenue tracking"""
+
+
+
         try:
             with self.session_factory() as session:
                 current_date = datetime.utcnow().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
@@ -404,6 +422,9 @@ class RevenueTrackingPartitioner(TablePartitioner):
 
     def _create_revenue_indexes(self, session: Session, partition_name: str):
         """Create specialized indexes for revenue operations"""
+
+
+
         try:
             # Base indexes
             self._create_base_indexes(session, partition_name)
@@ -452,6 +473,9 @@ class RevenueTrackingPartitioner(TablePartitioner):
 
     def get_partition_name(self, created_at: datetime) -> str:
         """Get partition name for given timestamp"""
+
+
+
         return f"revenue_tracking_{created_at.strftime('%Y_%m')}"
 
     def get_partition_for_data(self, created_at: datetime = None, **kwargs) -> str:
@@ -498,6 +522,9 @@ class ProtectionAlertPartitioner(TablePartitioner):
 
     def create_partitions(self) -> bool:
         """Create time+severity composite partitions for protection alerts"""
+
+
+
         try:
             with self.session_factory() as session:
                 current_date = datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0)
@@ -546,6 +573,9 @@ class ProtectionAlertPartitioner(TablePartitioner):
 
     def _create_alert_indexes(self, session: Session, partition_name: str):
         """Create specialized indexes for alert operations"""
+
+
+
         try:
             # Base indexes
             self._create_base_indexes(session, partition_name)
@@ -646,6 +676,9 @@ class UserContentPartitioner(TablePartitioner):
 
     def create_partitions(self) -> bool:
         """Create user-based hash partitions for user content"""
+
+
+
         try:
             with self.session_factory() as session:
                 # Create hash partitions based on user_id
@@ -675,6 +708,9 @@ class UserContentPartitioner(TablePartitioner):
 
     def _create_user_content_indexes(self, session: Session, partition_name: str):
         """Create specialized indexes for user content operations"""
+
+
+
         try:
             # Base indexes
             self._create_base_indexes(session, partition_name)
@@ -780,6 +816,9 @@ class AnalyticsPartitioner(TablePartitioner):
 
     def create_partitions(self) -> bool:
         """Create temporal partitions for analytics data"""
+
+
+
         try:
             with self.session_factory() as session:
                 current_date = datetime.utcnow().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
@@ -815,6 +854,9 @@ class AnalyticsPartitioner(TablePartitioner):
 
     def _create_analytics_indexes(self, session: Session, partition_name: str):
         """Create specialized indexes for analytics operations"""
+
+
+
         try:
             # Base indexes
             self._create_base_indexes(session, partition_name)
@@ -864,6 +906,9 @@ class AnalyticsPartitioner(TablePartitioner):
 
     def get_partition_name(self, created_at: datetime) -> str:
         """Get partition name for given timestamp"""
+
+
+
         return f"{self.table_name}_{created_at.strftime('%Y_%m')}"
 
     def get_partition_for_data(self, created_at: datetime = None, **kwargs) -> str:
@@ -914,6 +959,9 @@ class AuditLogPartitioner(TablePartitioner):
 
     def create_partitions(self) -> bool:
         """Create temporal partitions for audit logs"""
+
+
+
         try:
             with self.session_factory() as session:
                 current_date = datetime.utcnow().replace(day=1, hour=0, minute=0, second=0, microsecond=0)
@@ -949,6 +997,9 @@ class AuditLogPartitioner(TablePartitioner):
 
     def _create_audit_indexes(self, session: Session, partition_name: str):
         """Create specialized indexes for audit operations"""
+
+
+
         try:
             # Base indexes
             self._create_base_indexes(session, partition_name)
@@ -1012,6 +1063,9 @@ class AuditLogPartitioner(TablePartitioner):
 
     def get_partition_name(self, created_at: datetime) -> str:
         """Get partition name for given timestamp"""
+
+
+
         return f"audit_logs_{created_at.strftime('%Y_%m')}"
 
     def get_partition_for_data(self, created_at: datetime = None, **kwargs) -> str:

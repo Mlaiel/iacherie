@@ -6,7 +6,7 @@ Developed by: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Senior Backend + ML Engineer + DBA + Security Expert + 
                Microservices Architect + Audio Engineer + DevOps + AI Prompt Engineer
 
-⚠️ INTELLECTUAL PROPERTY WARNING:
+ INTELLECTUAL PROPERTY WARNING:
 This audio watermarking engine, concept, and all associated code are the exclusive intellectual 
 property of Fahed Mlaiel. Any unauthorized use, copying, modification, or distribution 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly 
@@ -106,6 +106,9 @@ class PsychoacousticModel:
         frequencies: np.ndarray
     ) -> np.ndarray:
         """Calculate psychoacoustic masking threshold"""
+
+
+
         try:
             # Convert to dB
             spectrum_db = 20 * np.log10(np.abs(audio_spectrum) + 1e-10)
@@ -147,6 +150,9 @@ class SpectralWatermarkEngine:
         strength: AudioWatermarkStrength
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
         """Embed watermark using spread spectrum technique"""
+
+
+
         try:
             if not AUDIO_AVAILABLE:
                 raise ValueError("Audio libraries not available")
@@ -259,6 +265,9 @@ class SpectralWatermarkEngine:
         expected_bits: int
     ) -> Tuple[List[int], float]:
         """Detect spread spectrum watermark"""
+
+
+
         try:
             if not AUDIO_AVAILABLE:
                 return [], 0.0
@@ -340,6 +349,9 @@ class SpectralWatermarkEngine:
         frames_modified: int
     ) -> AudioWatermarkMetrics:
         """Calculate audio watermarking quality metrics"""
+
+
+
         try:
             # Ensure same length
             min_len = min(len(original), len(watermarked))
@@ -399,6 +411,9 @@ class WaveletWatermarkEngine:
         strength: AudioWatermarkStrength
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
         """Embed watermark in wavelet domain"""
+
+
+
         try:
             if not AUDIO_AVAILABLE:
                 raise ValueError("Audio libraries not available")
@@ -475,6 +490,9 @@ class WaveletWatermarkEngine:
         expected_bits: int
     ) -> Tuple[List[int], float]:
         """Detect watermark in wavelet domain"""
+
+
+
         try:
             # Decompose both signals
             watermarked_coeffs = pywt.wavedec(watermarked_audio, self.wavelet_type, level=self.decomposition_levels)
@@ -574,6 +592,9 @@ class AudioWatermarkEngine:
         Returns:
             Tuple of (watermarked_audio, embedding_info)
         """
+
+
+
         try:
             start_time = datetime.now()
             
@@ -646,6 +667,9 @@ class AudioWatermarkEngine:
         Returns:
             Tuple of (extracted_data, confidence, detection_info)
         """
+
+
+
         try:
             start_time = datetime.now()
             
@@ -725,6 +749,9 @@ class AudioWatermarkEngine:
         strength: AudioWatermarkStrength
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
         """LSB embedding implementation"""
+
+
+
         try:
             # Convert to 16-bit integers for LSB manipulation
             audio_int = (audio_data * 32767).astype(np.int16)
@@ -790,6 +817,9 @@ class AudioWatermarkEngine:
         expected_bits: int
     ) -> Tuple[List[int], float]:
         """LSB detection implementation"""
+
+
+
         try:
             audio_int = (watermarked_audio * 32767).astype(np.int16)
             
@@ -828,6 +858,9 @@ class AudioWatermarkEngine:
         strength: AudioWatermarkStrength
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
         """Echo hiding implementation"""
+
+
+
         try:
             strength_params = {
                 AudioWatermarkStrength.TRANSPARENT: {"delay_0": 0.3, "delay_1": 0.6, "alpha": 0.05},
@@ -883,6 +916,9 @@ class AudioWatermarkEngine:
         expected_bits: int
     ) -> Tuple[List[int], float]:
         """Echo detection implementation"""
+
+
+
         try:
             # Simplified echo detection - would need autocorrelation analysis
             extracted_bits = [0] * expected_bits  # Placeholder
@@ -902,6 +938,9 @@ class AudioWatermarkEngine:
         strength: AudioWatermarkStrength
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
         """Phase coding implementation"""
+
+
+
         try:
             # STFT for phase manipulation
             stft = librosa.stft(audio_data, n_fft=self.config.frame_size, hop_length=self.config.hop_length)
@@ -961,6 +1000,9 @@ class AudioWatermarkEngine:
         expected_bits: int
     ) -> Tuple[List[int], float]:
         """Phase detection implementation"""
+
+
+
         try:
             if original_audio is None:
                 logger.warning("Phase detection requires original audio")

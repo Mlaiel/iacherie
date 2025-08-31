@@ -59,6 +59,9 @@ class PlatformPerformanceComparator:
         
     async def initialize(self) -> None:
         """Initialize platform comparator"""
+
+
+
         try:
             await self._setup_database_tables()
             logger.info("Platform Performance Comparator initialized successfully")
@@ -89,6 +92,9 @@ class PlatformPerformanceComparator:
 
     async def compare_platform_performance(self, creator_id: str) -> Dict[str, Any]:
         """Compare performance across all creator's platforms"""
+
+
+
         try:
             # Get latest metrics for all platforms
             platform_data = await self._get_platform_metrics(creator_id)
@@ -115,6 +121,9 @@ class PlatformPerformanceComparator:
 
     async def _get_platform_metrics(self, creator_id: str) -> List[PlatformMetrics]:
         """Get latest platform metrics for creator"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 records = await conn.fetch("""
@@ -147,6 +156,9 @@ class PlatformPerformanceComparator:
 
     def _rank_platforms(self, platform_data: List[PlatformMetrics]) -> Dict[str, Any]:
         """Rank platforms by various performance metrics"""
+
+
+
         try:
             rankings = {
                 'by_followers': sorted(platform_data, key=lambda x: x.followers, reverse=True),
@@ -176,6 +188,9 @@ class PlatformPerformanceComparator:
 
     def _analyze_engagement_patterns(self, platform_data: List[PlatformMetrics]) -> Dict[str, Any]:
         """Analyze engagement patterns across platforms"""
+
+
+
         try:
             if not platform_data:
                 return {}
@@ -208,6 +223,9 @@ class PlatformPerformanceComparator:
 
     def _analyze_growth_patterns(self, platform_data: List[PlatformMetrics]) -> Dict[str, Any]:
         """Analyze growth patterns across platforms"""
+
+
+
         try:
             growth_rates = [p.growth_rate for p in platform_data]
             
@@ -236,6 +254,9 @@ class PlatformPerformanceComparator:
 
     def _analyze_content_formats(self, platform_data: List[PlatformMetrics]) -> Dict[str, Any]:
         """Analyze top performing content formats by platform"""
+
+
+
         try:
             format_analysis = {}
             
@@ -326,6 +347,9 @@ class PlatformPerformanceComparator:
 
     def _suggest_cross_platform_strategy(self, platform_data: List[PlatformMetrics]) -> Dict[str, Any]:
         """Suggest cross-platform content and growth strategy"""
+
+
+
         try:
             # Identify strongest and weakest platforms
             strongest_platform = max(platform_data, key=lambda x: x.avg_performance_score)
@@ -374,6 +398,9 @@ class PlatformPerformanceComparator:
 
     async def get_competitive_analysis(self, creator_id: str, competitor_ids: List[str]) -> Dict[str, Any]:
         """Get competitive analysis against other creators"""
+
+
+
         try:
             # Get creator's metrics
             creator_metrics = await self._get_platform_metrics(creator_id)
@@ -409,6 +436,9 @@ class PlatformPerformanceComparator:
     def _calculate_competitive_benchmarks(self, creator_metrics: List[PlatformMetrics], 
                                         competitor_data: Dict[str, List[PlatformMetrics]]) -> Dict[str, Any]:
         """Calculate competitive benchmarks"""
+
+
+
         try:
             benchmarks = {}
             

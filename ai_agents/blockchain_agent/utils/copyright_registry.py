@@ -12,7 +12,7 @@ Enterprise blockchain-based copyright registry providing:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 - All Rights Reserved
 
-⚠️ IMPORTANT LEGAL NOTICE ⚠️
+ IMPORTANT LEGAL NOTICE 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
@@ -183,6 +183,9 @@ class CopyrightRegistry:
     
     def _initialize_cryptographic_keys(self):
         """Initialize cryptographic keys for document signing."""
+
+
+
         try:
             if rsa and serialization:
                 # Generate RSA key pair for document signing
@@ -227,6 +230,9 @@ class CopyrightRegistry:
         Returns:
             str: Copyright claim ID
         """
+
+
+
         try:
             claim_id = str(uuid.uuid4())
             
@@ -325,6 +331,9 @@ class CopyrightRegistry:
         Returns:
             Dict containing verification results
         """
+
+
+
         try:
             # Find copyright claims for this content
             matching_claims = [
@@ -405,6 +414,9 @@ class CopyrightRegistry:
         Returns:
             str: Transfer transaction ID
         """
+
+
+
         try:
             if claim_id not in self.copyright_claims:
                 raise ValueError(f"Copyright claim not found: {claim_id}")
@@ -494,6 +506,9 @@ class CopyrightRegistry:
         Returns:
             str: Evidence ID
         """
+
+
+
         try:
             if claim_id not in self.copyright_claims:
                 raise ValueError(f"Copyright claim not found: {claim_id}")
@@ -552,6 +567,9 @@ class CopyrightRegistry:
         Returns:
             Dict containing DMCA notice details
         """
+
+
+
         try:
             if claim_id not in self.copyright_claims:
                 raise ValueError(f"Copyright claim not found: {claim_id}")
@@ -666,6 +684,9 @@ class CopyrightRegistry:
     
     async def _generate_legal_document(self, claim: CopyrightClaim) -> Dict[str, Any]:
         """Generate formal legal copyright registration document."""
+
+
+
         return {
             'document_type': 'copyright_registration',
             'claim_id': claim.id,
@@ -694,6 +715,9 @@ class CopyrightRegistry:
         new_owner_name: str
     ) -> Dict[str, Any]:
         """Generate legal document for copyright ownership transfer."""
+
+
+
         return {
             'document_type': 'copyright_transfer',
             'transfer_id': transfer.transfer_id,
@@ -720,6 +744,9 @@ class CopyrightRegistry:
     
     async def _generate_dmca_document(self, dmca_notice: Dict[str, Any]) -> Dict[str, Any]:
         """Generate formal DMCA takedown notice document."""
+
+
+
         return {
             'document_type': 'dmca_takedown_notice',
             'title': 'Digital Millennium Copyright Act Takedown Notice',
@@ -767,6 +794,9 @@ Signed: {dmca_notice['copyright_owner']['name']}
     
     async def _calculate_hash(self, content: str) -> str:
         """Calculate SHA-256 hash of content."""
+
+
+
         return hashlib.sha256(content.encode()).hexdigest()
     
     async def _calculate_file_hash(self, file_path: str) -> str:
@@ -820,6 +850,9 @@ Signed: {dmca_notice['copyright_owner']['name']}
     
     def _serialize_claim(self, claim: CopyrightClaim) -> Dict[str, Any]:
         """Serialize copyright claim for API responses."""
+
+
+
         return {
             'id': claim.id,
             'title': claim.title,

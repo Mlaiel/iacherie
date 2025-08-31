@@ -140,6 +140,9 @@ class EmbeddingsEngine:
     
     def _initialize_models(self):
         """Initialize embedding models"""
+
+
+
         try:
             if TRANSFORMERS_AVAILABLE:
                 # Initialize sentence transformers pipeline
@@ -589,6 +592,9 @@ class EmbeddingsEngine:
         metric: SimilarityMetric
     ) -> float:
         """Calculate similarity between two vectors"""
+
+
+
         try:
             if metric == SimilarityMetric.COSINE:
                 # Cosine similarity
@@ -814,6 +820,9 @@ class EmbeddingsEngine:
     
     def _calculate_space_coverage(self, embedding_matrix: np.ndarray) -> float:
         """Calculate how well the embeddings cover the vector space"""
+
+
+
         try:
             if len(embedding_matrix) < 2:
                 return 0.0
@@ -863,6 +872,9 @@ class EmbeddingsEngine:
     
     def save_embeddings(self, filepath: str) -> bool:
         """Save embeddings to file"""
+
+
+
         try:
             # Convert to serializable format
             data = {
@@ -898,6 +910,9 @@ class EmbeddingsEngine:
     
     def load_embeddings(self, filepath: str) -> bool:
         """Load embeddings from file"""
+
+
+
         try:
             if not os.path.exists(filepath):
                 logger.error(f"File not found: {filepath}")
@@ -939,6 +954,9 @@ class EmbeddingsEngine:
     
     def get_embedding(self, text_id: str) -> Optional[TextEmbedding]:
         """Get specific embedding by ID"""
+
+
+
         return self.embedding_store.get(text_id)
     
     def remove_embedding(self, text_id: str) -> bool:

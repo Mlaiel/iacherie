@@ -6,7 +6,7 @@ business intelligence, revenue optimization, and enterprise-grade security.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This module contains proprietary algorithms and business logic developed
 by Fahed Mlaiel. Unauthorized use, reproduction, or distribution is prohibited.
 

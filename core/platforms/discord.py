@@ -43,6 +43,9 @@ class DiscordPlatform(PlatformBase):
     
     async def authenticate(self) -> bool:
         """Authenticate with Discord Bot Token"""
+
+
+
         try:
             if not self.bot_token:
                 logger.error("Discord requires bot_token")
@@ -76,10 +79,16 @@ class DiscordPlatform(PlatformBase):
     
     async def refresh_token(self) -> bool:
         """Refresh Discord token (not applicable for bot tokens)"""
+
+
+
         return await self.authenticate()
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
         """Make authenticated request to Discord API"""
+
+
+
         try:
             session = await self._get_session()
             
@@ -124,6 +133,9 @@ class DiscordPlatform(PlatformBase):
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
         """Send message to Discord channel"""
+
+
+
         try:
             channel_id = metadata.tags[0] if metadata.tags else None
             if not channel_id:
@@ -191,6 +203,9 @@ class DiscordPlatform(PlatformBase):
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
         """Get Discord message analytics"""
+
+
+
         try:
             # Discord doesn't provide built-in analytics
             # We can get message reactions and basic info
@@ -221,6 +236,9 @@ class DiscordPlatform(PlatformBase):
     
     async def get_message_analytics(self, channel_id: str, message_id: str) -> Dict[str, Any]:
         """Get specific message analytics"""
+
+
+
         try:
             # Get message details
             message = await self._make_request('GET', f'/channels/{channel_id}/messages/{message_id}')
@@ -259,6 +277,9 @@ class DiscordPlatform(PlatformBase):
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
         """Search messages in Discord (requires guild access)"""
+
+
+
         try:
             # Discord search requires specific guild/channel access
             # This is a placeholder implementation
@@ -271,6 +292,9 @@ class DiscordPlatform(PlatformBase):
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
         """Get user's messages from Discord (limited by API)"""
+
+
+
         try:
             # Discord doesn't provide an endpoint to get all user messages
             # You need to search within specific channels/guilds
@@ -283,6 +307,9 @@ class DiscordPlatform(PlatformBase):
     
     async def delete_content(self, content_id: str, channel_id: str = None) -> bool:
         """Delete Discord message"""
+
+
+
         try:
             if not channel_id:
                 logger.error("Discord message deletion requires channel_id")
@@ -303,6 +330,9 @@ class DiscordPlatform(PlatformBase):
     
     async def update_content(self, content_id: str, metadata: ContentMetadata, channel_id: str = None) -> bool:
         """Update Discord message"""
+
+
+
         try:
             if not channel_id:
                 logger.error("Discord message update requires channel_id")
@@ -340,6 +370,9 @@ class DiscordPlatform(PlatformBase):
     
     async def get_guild_info(self, guild_id: str) -> Optional[Dict[str, Any]]:
         """Get Discord guild (server) information"""
+
+
+
         try:
             result = await self._make_request('GET', f'/guilds/{guild_id}')
             
@@ -367,6 +400,9 @@ class DiscordPlatform(PlatformBase):
     
     async def get_channel_info(self, channel_id: str) -> Optional[Dict[str, Any]]:
         """Get Discord channel information"""
+
+
+
         try:
             result = await self._make_request('GET', f'/channels/{channel_id}')
             
@@ -391,6 +427,9 @@ class DiscordPlatform(PlatformBase):
     
     async def get_guild_channels(self, guild_id: str) -> List[Dict[str, Any]]:
         """Get channels in a Discord guild"""
+
+
+
         try:
             result = await self._make_request('GET', f'/guilds/{guild_id}/channels')
             
@@ -417,6 +456,9 @@ class DiscordPlatform(PlatformBase):
     async def create_channel(self, guild_id: str, name: str, channel_type: int = 0, 
                            topic: str = None) -> Optional[str]:
         """Create a new Discord channel"""
+
+
+
         try:
             channel_data = {
                 'name': name,
@@ -441,6 +483,9 @@ class DiscordPlatform(PlatformBase):
     
     async def add_reaction(self, channel_id: str, message_id: str, emoji: str) -> bool:
         """Add reaction to Discord message"""
+
+
+
         try:
             # Encode emoji for URL
             import urllib.parse
@@ -460,6 +505,9 @@ class DiscordPlatform(PlatformBase):
     
     async def send_dm(self, user_id: str, message: str) -> Optional[str]:
         """Send direct message to Discord user"""
+
+
+
         try:
             # Create DM channel first
             dm_data = {'recipient_id': user_id}

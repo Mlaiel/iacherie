@@ -1,5 +1,5 @@
 """
-📈 Scaling Configuration Manager - IA-Influencer-Agent
+ Scaling Configuration Manager - IA-Influencer-Agent
 ==================================================================
 Project Creator & Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
@@ -7,7 +7,7 @@ Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert +
 Date: 2025-08-24
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -186,6 +186,9 @@ class ScalingConfigManager:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             # Load default scaling configurations
             await self._load_default_configurations()
@@ -577,6 +580,9 @@ class ScalingConfigManager:
         decision: Dict[str, Any]
     ) -> None:
         """Execute scaling action"""
+
+
+
         try:
             action = decision["action"]
             current_capacity = await self._get_current_capacity(service_name, policy.resource_type)
@@ -611,6 +617,9 @@ class ScalingConfigManager:
     
     async def _scale_resource(self, service_name: str, policy: ScalingPolicy, new_capacity: int) -> bool:
         """Scale resource to new capacity"""
+
+
+
         try:
             # Implementation would execute actual scaling
             # For Kubernetes: update HPA or deployment replicas
@@ -776,6 +785,9 @@ class ScalingConfigManager:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             self.scaling_configs[service_name] = config
             
@@ -812,6 +824,9 @@ class ScalingConfigManager:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             if service_name not in self.scaling_configs:
                 raise ValueError(f"Service not found: {service_name}")
@@ -845,6 +860,9 @@ class ScalingConfigManager:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             if service_name not in self.scaling_configs:
                 raise ValueError(f"Service not found: {service_name}")
@@ -912,4 +930,7 @@ class ScalingConfigManager:
     
     async def get_status(self) -> Dict[str, Any]:
         """Get scaling manager status"""
+
+
+
         return await self.get_scaling_status()

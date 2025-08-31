@@ -7,7 +7,7 @@ Comprehensive format handling, transcoding, and optimization for all content typ
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 This software is proprietary and confidential. Any unauthorized use, copying, 
 distribution, or commercialization without explicit written permission is 
 strictly prohibited and will result in legal action.
@@ -264,7 +264,7 @@ class FormatCapabilities:
 
 class FormatProcessor:
     """
-    🔄 ENTERPRISE FORMAT PROCESSOR
+     ENTERPRISE FORMAT PROCESSOR
     
     Industrial-grade format conversion and optimization engine with
     comprehensive support for all content types and platform-specific optimization.
@@ -339,6 +339,9 @@ class FormatProcessor:
     
     async def initialize(self) -> bool:
         """Initialize the format processor"""
+
+
+
         try:
             # Load format capabilities
             await self._load_format_capabilities()
@@ -351,11 +354,11 @@ class FormatProcessor:
                 self.config.temp_directory = tempfile.mkdtemp()
             
             self._initialized = True
-            self.logger.info("✅ Format processor initialized successfully")
+            self.logger.info(" Format processor initialized successfully")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize format processor: {e}")
+            self.logger.error(f" Failed to initialize format processor: {e}")
             return False
     
     async def convert_format(
@@ -381,6 +384,9 @@ class FormatProcessor:
         Returns:
             Conversion result
         """
+
+
+
         try:
             if not self._initialized:
                 await self.initialize()
@@ -492,6 +498,9 @@ class FormatProcessor:
         Returns:
             Optimization result
         """
+
+
+
         try:
             # Get platform preset
             preset = self.config.platform_presets.get(platform)
@@ -554,6 +563,9 @@ class FormatProcessor:
         Returns:
             Batch conversion results
         """
+
+
+
         try:
             batch_id = str(uuid.uuid4())
             batch_results = []
@@ -634,6 +646,9 @@ class FormatProcessor:
     
     async def get_format_info(self, format_name: str) -> Dict[str, Any]:
         """Get information about a specific format"""
+
+
+
         try:
             capabilities = self._format_capabilities.get(format_name)
             if not capabilities:
@@ -656,6 +671,9 @@ class FormatProcessor:
     
     async def get_supported_conversions(self) -> Dict[str, Any]:
         """Get list of supported format conversions"""
+
+
+
         try:
             conversions = {}
             
@@ -704,6 +722,9 @@ class FormatProcessor:
         input_format: InputFormat
     ) -> Dict[str, Any]:
         """Validate input content and format"""
+
+
+
         try:
             # Basic validation
             if isinstance(input_content, (str, Path)):
@@ -743,6 +764,9 @@ class FormatProcessor:
         input_format: InputFormat
     ) -> str:
         """Prepare input file for processing"""
+
+
+
         try:
             if isinstance(input_content, bytes):
                 # Save bytes to temporary file
@@ -767,6 +791,9 @@ class FormatProcessor:
         output_format: OutputFormat
     ) -> callable:
         """Get appropriate conversion method"""
+
+
+
         try:
             # Image conversions
             if (input_format in [InputFormat.JPEG, InputFormat.PNG, InputFormat.GIF, InputFormat.WEBP] and
@@ -801,6 +828,9 @@ class FormatProcessor:
         output_path: Optional[str] = None
     ) -> str:
         """Convert image format"""
+
+
+
         try:
             if not IMAGE_CONVERSION_AVAILABLE:
                 raise Exception("Image conversion libraries not available")
@@ -864,6 +894,9 @@ class FormatProcessor:
         output_path: Optional[str] = None
     ) -> str:
         """Convert video format"""
+
+
+
         try:
             if not VIDEO_CONVERSION_AVAILABLE:
                 raise Exception("Video conversion libraries not available")
@@ -926,6 +959,9 @@ class FormatProcessor:
         output_path: Optional[str] = None
     ) -> str:
         """Convert audio format"""
+
+
+
         try:
             if not AUDIO_CONVERSION_AVAILABLE:
                 raise Exception("Audio conversion libraries not available")
@@ -967,6 +1003,9 @@ class FormatProcessor:
         output_path: Optional[str] = None
     ) -> str:
         """Convert document format"""
+
+
+
         try:
             if not DOCUMENT_CONVERSION_AVAILABLE:
                 raise Exception("Document conversion libraries not available")
@@ -993,6 +1032,9 @@ class FormatProcessor:
     
     async def _detect_input_format(self, input_content: Union[str, bytes, Path]) -> InputFormat:
         """Detect input format from content"""
+
+
+
         try:
             if isinstance(input_content, (str, Path)):
                 file_path = Path(input_content)
@@ -1033,6 +1075,9 @@ class FormatProcessor:
         input_format: InputFormat
     ) -> OutputFormat:
         """Determine optimal output format for platform"""
+
+
+
         try:
             platform_formats = {
                 "instagram": {
@@ -1069,6 +1114,9 @@ class FormatProcessor:
         output_path: str
     ):
         """Calculate conversion metrics"""
+
+
+
         try:
             # File sizes
             input_size = os.path.getsize(input_path)
@@ -1088,6 +1136,9 @@ class FormatProcessor:
     
     def _update_conversion_stats(self, job: ConversionJob):
         """Update conversion statistics"""
+
+
+
         try:
             self._stats["total_conversions"] += 1
             
@@ -1113,6 +1164,9 @@ class FormatProcessor:
     
     async def _load_format_capabilities(self):
         """Load format capabilities information"""
+
+
+
         try:
             # Image format capabilities
             self._format_capabilities["jpeg"] = FormatCapabilities(
@@ -1164,6 +1218,9 @@ class FormatProcessor:
     
     async def get_job_status(self, job_id: str) -> Dict[str, Any]:
         """Get status of a conversion job"""
+
+
+
         try:
             job = self._active_jobs.get(job_id)
             if not job:
@@ -1196,6 +1253,9 @@ class FormatProcessor:
     
     async def get_conversion_stats(self) -> Dict[str, Any]:
         """Get conversion statistics"""
+
+
+
         return {
             "success": True,
             "statistics": self._stats,
@@ -1225,6 +1285,9 @@ class FormatProcessor:
     
     async def shutdown(self):
         """Gracefully shutdown the format processor"""
+
+
+
         try:
             # Cancel active jobs
             for job in self._active_jobs.values():

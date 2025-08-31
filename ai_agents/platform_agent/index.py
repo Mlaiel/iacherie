@@ -206,6 +206,9 @@ print(f"Total engagement: {analytics['total_engagement']}")
 
 def get_module_info():
     """Get comprehensive module information"""
+
+
+
     return {
         'name': 'Platform Agent Module',
         'version': __version__,

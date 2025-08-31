@@ -8,7 +8,7 @@ and market intelligence across social media platforms.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
@@ -145,6 +145,9 @@ class TrendDetectionEngine:
         min_engagement_threshold: int = 1000
     ) -> List[TrendData]:
         """Detect emerging trends across platforms"""
+
+
+
         try:
             trends = []
             
@@ -271,6 +274,9 @@ class TrendDetectionEngine:
     
     async def _create_hashtag_trend(self, hashtag: str, data: Dict[str, Any], platform: str) -> Optional[TrendData]:
         """Create trend data for hashtag"""
+
+
+
         try:
             # Calculate momentum
             momentum = self._calculate_momentum(data['engagement'], data['timestamps'])
@@ -532,6 +538,9 @@ class ViralityPredictor:
     
     async def predict_virality(self, content_data: Dict[str, Any]) -> ViralityPrediction:
         """Predict virality potential for content"""
+
+
+
         try:
             # Extract features from content
             features = await self._extract_virality_features(content_data)

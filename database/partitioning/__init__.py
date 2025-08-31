@@ -25,7 +25,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 
-🚨 INTELLECTUAL PROPERTY WARNING 🚨
+ INTELLECTUAL PROPERTY WARNING 
 This code, concept, and architecture are the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de).
 Any use, copying, distribution, or exploitation without explicit written authorization is STRICTLY PROHIBITED
 and will be prosecuted to the full extent of the law. Legal action will be taken against violators.
@@ -240,7 +240,10 @@ MODULE_CONFIG = {
 }
 
 def get_module_info() -> dict:
-    """Get comprehensive module information"""    return MODULE_CONFIG
+    """Get comprehensive module information"""
+
+
+    return MODULE_CONFIG
 
 def initialize_partitioning_system(db_engine, config: dict = None):
     """    Initialize the complete partitioning system

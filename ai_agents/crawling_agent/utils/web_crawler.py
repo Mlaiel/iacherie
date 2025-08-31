@@ -7,7 +7,7 @@ and intelligent content extraction for the IA-Influencer-Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -241,6 +241,9 @@ class WebCrawler:
 
     async def initialize(self) -> None:
         """Initialize crawler components and connections"""
+
+
+
         try:
             # Setup HTTP session
             connector = aiohttp.TCPConnector(
@@ -330,6 +333,9 @@ class WebCrawler:
 
     def _get_default_headers(self) -> Dict[str, str]:
         """Generate default HTTP headers"""
+
+
+
         return {
             'User-Agent': self.user_agent_rotator.get_random_agent(),
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
@@ -1104,6 +1110,9 @@ class WebCrawler:
 
     def _is_valid_url(self, url: str) -> bool:
         """Validate URL format and domain"""
+
+
+
         try:
             parsed = urlparse(url)
             if not all([parsed.scheme, parsed.netloc]):
@@ -1196,6 +1205,9 @@ class WebCrawler:
 
     async def _post_process_result(self, result: CrawlResult) -> CrawlResult:
         """Post-process crawl result for quality and consistency"""
+
+
+
         try:
             # Validate content length constraints
             if len(result.cleaned_content) < self.config.min_content_length:
@@ -1240,6 +1252,9 @@ class WebCrawler:
 
     async def crawl_sitemap(self, sitemap_url: str, **kwargs) -> List[CrawlResult]:
         """Crawl URLs from sitemap"""
+
+
+
         try:
             # Fetch sitemap
             async with self.session.get(sitemap_url) as response:
@@ -1259,6 +1274,9 @@ class WebCrawler:
 
     def get_statistics(self) -> Dict[str, Any]:
         """Get crawler statistics"""
+
+
+
         return {
             **self.stats,
             'crawled_urls_count': len(self.crawled_urls),
@@ -1462,6 +1480,9 @@ class SiteMonitor:
     
     def get_monitoring_report(self) -> Dict:
         """Get comprehensive monitoring report"""
+
+
+
         return {
             'monitored_sites_count': len(self.monitored_sites),
             'total_checks': sum(site['check_count'] for site in self.monitored_sites.values()),

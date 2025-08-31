@@ -7,7 +7,7 @@ audience interaction, community management, and performance analytics.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and system architecture are the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization is STRICTLY PROHIBITED.
 Violations will result in immediate legal action under German and International IP law.
@@ -73,6 +73,9 @@ class EngagementAgentSystem:
         Returns:
             Dict: System initialization status and configuration
         """
+
+
+
         try:
             logger.info("Initializing Engagement Agent System...")
             
@@ -165,6 +168,9 @@ class EngagementAgentSystem:
         Returns:
             Dict: Comprehensive processing results
         """
+
+
+
         try:
             if not self.initialized:
                 raise SystemError("System not initialized")
@@ -221,6 +227,9 @@ class EngagementAgentSystem:
                                          creator_id: str,
                                          request_data: Dict[str, Any]) -> Dict[str, Any]:
         """Process comprehensive engagement analysis request"""
+
+
+
         try:
             # Get or create engagement agent
             agent = await self.agent_manager.get_agent(creator_id)
@@ -275,6 +284,9 @@ class EngagementAgentSystem:
                                            creator_id: str,
                                            request_data: Dict[str, Any]) -> Dict[str, Any]:
         """Process strategy optimization request"""
+
+
+
         try:
             # Get optimization parameters
             target_platforms = request_data.get('platforms', [])
@@ -322,6 +334,9 @@ class EngagementAgentSystem:
                                             creator_id: str,
                                             request_data: Dict[str, Any]) -> Dict[str, Any]:
         """Process comprehensive creator analysis request"""
+
+
+
         try:
             platforms = request_data.get('platforms', ['spotify', 'instagram'])
             analysis_depth = request_data.get('depth', 'deep')
@@ -368,6 +383,9 @@ class EngagementAgentSystem:
 
     async def get_system_status(self) -> Dict[str, Any]:
         """Get complete system status and health metrics"""
+
+
+
         try:
             uptime = (datetime.utcnow() - self.start_time).total_seconds()
             
@@ -426,6 +444,9 @@ class EngagementAgentSystem:
 
     async def shutdown_system(self) -> Dict[str, Any]:
         """Graceful system shutdown"""
+
+
+
         try:
             logger.info("Initiating Engagement Agent System shutdown...")
             
@@ -508,10 +529,13 @@ __all__ = [
         self.active_creators: Dict[str, Dict[str, Any]] = {}
         
         logger.info(f"Initializing {self.system_name} v{self.version}")
-        logger.warning("⚠️  PROPRIETARY SYSTEM - UNAUTHORIZED USE PROHIBITED")
+        logger.warning("  PROPRIETARY SYSTEM - UNAUTHORIZED USE PROHIBITED")
 
     async def initialize_system(self) -> bool:
         """Initialize complete engagement agent system"""
+
+
+
         try:
             logger.info("Initializing Engagement Agent System components...")
             
@@ -529,11 +553,11 @@ __all__ = [
                     result = await init_task
                     initialization_results.append((component_name, result))
                     if result:
-                        logger.info(f"✅ {component_name} initialized successfully")
+                        logger.info(f" {component_name} initialized successfully")
                     else:
-                        logger.error(f"❌ {component_name} initialization failed")
+                        logger.error(f" {component_name} initialization failed")
                 except Exception as e:
-                    logger.error(f"❌ {component_name} initialization error: {str(e)}")
+                    logger.error(f" {component_name} initialization error: {str(e)}")
                     initialization_results.append((component_name, False))
             
             # Check if all components initialized successfully
@@ -541,10 +565,10 @@ __all__ = [
             
             if all_initialized:
                 self.initialized = True
-                logger.info("🚀 Engagement Agent System fully initialized and ready")
+                logger.info(" Engagement Agent System fully initialized and ready")
                 return True
             else:
-                logger.error("⚠️ Some components failed to initialize")
+                logger.error(" Some components failed to initialize")
                 return False
                 
         except Exception as e:
@@ -561,6 +585,9 @@ __all__ = [
         Returns:
             Dict: Complete creator profile with system integration
         """
+
+
+
         try:
             creator_id = creator_config.get('creator_id')
             if not creator_id:
@@ -622,6 +649,9 @@ __all__ = [
 
     async def get_system_status(self) -> Dict[str, Any]:
         """Get comprehensive system status and health metrics"""
+
+
+
         try:
             # Get global engagement insights
             global_insights = await self.agent_manager.get_global_engagement_insights()
@@ -645,7 +675,7 @@ __all__ = [
                 'component_status': component_status,
                 'global_insights': global_insights,
                 'timestamp': datetime.utcnow(),
-                'legal_notice': '⚠️ PROPRIETARY SYSTEM - ALL RIGHTS RESERVED'
+                'legal_notice': ' PROPRIETARY SYSTEM - ALL RIGHTS RESERVED'
             }
             
         except Exception as e:
@@ -728,5 +758,5 @@ if __name__ != '__main__':
     logger.info("="*80)
     logger.info("ENGAGEMENT AGENT SYSTEM - PROPRIETARY SOFTWARE")
     logger.info(f"Author: {SYSTEM_CONFIG['author']} ({SYSTEM_CONFIG['contact']})")
-    logger.info("⚠️  ALL RIGHTS RESERVED - UNAUTHORIZED USE PROHIBITED")
+    logger.info("  ALL RIGHTS RESERVED - UNAUTHORIZED USE PROHIBITED")
     logger.info("="*80)

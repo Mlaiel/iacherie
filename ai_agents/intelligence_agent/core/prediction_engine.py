@@ -8,7 +8,7 @@ Author: Fahed Mlaiel
 Contact: mlaiel@live.de
 Copyright: 2025 - All rights reserved
 
-⚠️ IMPORTANT LEGAL NOTICE ⚠️
+ IMPORTANT LEGAL NOTICE 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
@@ -275,6 +275,9 @@ class PredictionEngine:
         Returns:
             PredictionResult: Comprehensive prediction results
         """
+
+
+
         try:
             prediction_id = f"pred_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{request.prediction_type.value}"
             
@@ -847,6 +850,9 @@ class PredictionEngine:
     
     def _calculate_trend_acceleration(self, data: pd.Series) -> float:
         """Calculate trend acceleration (second derivative)."""
+
+
+
         try:
             if len(data) < 3:
                 return 0.0

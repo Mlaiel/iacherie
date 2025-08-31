@@ -21,7 +21,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Email: mlaiel@live.de
 Project: IA Influencer Agent + Content Protection Platform
 
-⚠️  STRICT COPYRIGHT WARNING ⚠️
+  STRICT COPYRIGHT WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, modification, or distribution is strictly prohibited
 and will result in immediate legal action under German and international law.
@@ -169,6 +169,9 @@ class MatchResult:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for serialization"""
+
+
+
         return {
             'match_id': self.match_id,
             'query_fingerprint_id': self.query_fingerprint_id,
@@ -651,6 +654,9 @@ class PerceptualMatcher:
         feature2: np.ndarray
     ) -> float:
         """Calculate similarity between feature vectors"""
+
+
+
         try:
             # Ensure features are same length (truncate or pad)
             min_len = min(len(feature1), len(feature2))
@@ -921,6 +927,9 @@ class FingerprintMatchingEngine:
         user_id: Optional[str] = None
     ) -> List[MatchResult]:
         """Find exact hash matches for a fingerprint"""
+
+
+
         try:
             results = []
             
@@ -975,6 +984,9 @@ class FingerprintMatchingEngine:
         max_results: int = 50
     ) -> List[MatchResult]:
         """Find similar content using vector similarity"""
+
+
+
         try:
             results = []
             
@@ -1021,6 +1033,9 @@ class FingerprintMatchingEngine:
         batch_size: int = 10
     ) -> Dict[str, List[MatchResult]]:
         """Process multiple fingerprints in batches"""
+
+
+
         try:
             results = {}
             
@@ -1090,6 +1105,9 @@ class FingerprintMatchingEngine:
         user_id: Optional[str]
     ) -> List[MatchResult]:
         """Execute a specific matching algorithm"""
+
+
+
         try:
             if algorithm == MatchAlgorithm.HASH_EXACT:
                 return await self._execute_hash_exact_matching(
@@ -1366,6 +1384,9 @@ class FingerprintMatchingEngine:
     
     async def get_matching_statistics(self) -> Dict[str, Any]:
         """Get comprehensive matching statistics"""
+
+
+
         try:
             # This would typically involve querying match history
             # For now, return basic statistics

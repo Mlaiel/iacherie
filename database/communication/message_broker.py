@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -193,6 +193,9 @@ class MessageBroker:
         
     async def initialize(self):
         """Initialize message broker"""
+
+
+
         try:
             # Load queue configurations from database
             await self._load_queue_configs()
@@ -230,6 +233,9 @@ class MessageBroker:
         config: Optional[Dict[str, Any]] = None
     ) -> MessageQueue:
         """Create new message queue"""
+
+
+
         try:
             # Check if queue exists
             existing = self.db.query(MessageQueue).filter(
@@ -284,6 +290,9 @@ class MessageBroker:
         delay_seconds: Optional[int] = None
     ) -> str:
         """Publish message to queue"""
+
+
+
         try:
             # Validate queue exists
             if queue_name not in self.queues:
@@ -334,6 +343,9 @@ class MessageBroker:
         timeout: Optional[int] = None
     ) -> Optional[QueuedMessage]:
         """Consume message from queue"""
+
+
+
         try:
             # Get message from Redis
             message_id = await self._dequeue_message(queue_name, timeout)
@@ -363,6 +375,9 @@ class MessageBroker:
     
     async def acknowledge_message(self, message_id: str, success: bool = True):
         """Acknowledge message processing"""
+
+
+
         try:
             message = self.db.query(QueuedMessage).filter(
                 QueuedMessage.message_id == message_id
@@ -402,6 +417,9 @@ class MessageBroker:
     
     async def broadcast(self, channel: str, message: Dict[str, Any]):
         """Broadcast message to channel subscribers"""
+
+
+
         try:
             # Publish to Redis
             await self.redis.publish(f"channel:{channel}", json.dumps(message))
@@ -421,6 +439,9 @@ class MessageBroker:
     
     async def get_queue_stats(self, queue_name: str) -> Dict[str, Any]:
         """Get queue statistics"""
+
+
+
         try:
             # Get from database
             queue = self.db.query(MessageQueue).filter(

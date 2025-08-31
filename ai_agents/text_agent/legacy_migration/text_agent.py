@@ -7,7 +7,7 @@ Provides comprehensive text fingerprinting, sentiment analysis, language process
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -166,6 +166,9 @@ class TextAgent(BaseAgent):
     
     def _init_nlp_models(self):
         """Initialize NLP models and pipelines"""
+
+
+
         try:
             # Load spaCy models for different languages
             self.nlp_models = {}
@@ -485,6 +488,9 @@ class TextAgent(BaseAgent):
     
     async def _detect_language(self, text: str) -> Tuple[str, float]:
         """Detect text language with confidence score"""
+
+
+
         try:
             language = detect(text)
             # Simple confidence estimation based on text length and clarity
@@ -521,6 +527,9 @@ class TextAgent(BaseAgent):
     
     async def _analyze_sentiment(self, text: str) -> Tuple[float, str]:
         """Analyze text sentiment"""
+
+
+
         try:
             result = self.sentiment_analyzer(text[:512])  # Limit text length for model
             
@@ -547,6 +556,9 @@ class TextAgent(BaseAgent):
     
     async def _extract_entities(self, text: str, language: str) -> List[Dict[str, Any]]:
         """Extract named entities from text"""
+
+
+
         try:
             nlp = self.nlp_models.get(language, self.nlp_models['en'])
             doc = nlp(text[:1000000])  # Limit text length for processing
@@ -570,6 +582,9 @@ class TextAgent(BaseAgent):
     
     async def _extract_topics(self, text: str) -> List[Dict[str, Any]]:
         """Extract topics from text using TF-IDF"""
+
+
+
         try:
             # Simple topic extraction using TF-IDF
             tfidf_matrix = self.tfidf_vectorizer.fit_transform([text])
@@ -596,6 +611,9 @@ class TextAgent(BaseAgent):
     
     async def _extract_keywords(self, text: str) -> List[str]:
         """Extract keywords from text"""
+
+
+
         try:
             # Use TF-IDF to extract important terms
             tfidf_matrix = self.tfidf_vectorizer.fit_transform([text])
@@ -614,6 +632,9 @@ class TextAgent(BaseAgent):
     
     async def _assess_text_quality(self, text: str) -> Tuple[float, TextQuality]:
         """Assess overall text quality"""
+
+
+
         try:
             # Quality metrics
             word_count = len(text.split())
@@ -653,6 +674,9 @@ class TextAgent(BaseAgent):
     
     async def _calculate_readability(self, text: str) -> float:
         """Calculate text readability score"""
+
+
+
         try:
             return textstat.flesch_reading_ease(text)
         except:
@@ -681,6 +705,9 @@ class TextAgent(BaseAgent):
     
     async def _store_analysis_results(self, result: TextAnalysisResult, text: str):
         """Store analysis results in database"""
+
+
+
         try:
             async with get_db_session() as session:
                 # Create text content record

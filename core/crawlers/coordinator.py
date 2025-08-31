@@ -5,7 +5,7 @@ Crawler Coordination and Management System
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 Unauthorized use, copying or distribution prohibited.
 
 Master coordinator for managing multiple web crawlers simultaneously.
@@ -336,6 +336,9 @@ class CrawlerCoordinator:
     
     def _run_crawler_task(self, crawler, task: CrawlerTask) -> Dict[str, Any]:
         """Run crawler task in thread pool (synchronous)."""
+
+
+
         
         try:
             # Execute crawling
@@ -527,10 +530,16 @@ class CrawlerCoordinator:
     
     def get_platform_statistics(self) -> Dict[str, CrawlerStats]:
         """Get performance statistics for all platforms."""
+
+
+
         return self.crawler_stats.copy()
     
     def get_coordinator_status(self) -> Dict[str, Any]:
         """Get overall coordinator status and statistics."""
+
+
+
         
         return {
             'is_running': self.is_running,
@@ -548,6 +557,9 @@ class CrawlerCoordinator:
     
     def _task_to_dict(self, task: CrawlerTask) -> Dict[str, Any]:
         """Convert task object to dictionary."""
+
+
+
         return {
             'task_id': task.task_id,
             'platform': task.platform.value,
@@ -566,6 +578,9 @@ class CrawlerCoordinator:
     
     def _stats_to_dict(self, stats: CrawlerStats) -> Dict[str, Any]:
         """Convert stats object to dictionary."""
+
+
+
         return {
             'platform': stats.platform,
             'total_tasks': stats.total_tasks,
@@ -580,6 +595,9 @@ class CrawlerCoordinator:
     
     async def _store_task_state(self, task: CrawlerTask):
         """Store task state in Redis for persistence."""
+
+
+
         try:
             task_data = self._task_to_dict(task)
             self.redis_client.setex(
@@ -592,6 +610,9 @@ class CrawlerCoordinator:
     
     async def _store_statistics(self):
         """Store statistics in Redis."""
+
+
+
         try:
             stats_data = {
                 name: self._stats_to_dict(stats)

@@ -1034,6 +1034,9 @@ class TestAnomalyDetection:
     @pytest.fixture
     def anomaly_test_data(self):
         """Generate comprehensive anomaly test data."""
+
+
+
         return TestDataGenerator.generate_anomaly_scenarios()
     
     async def test_detector_initialization(self, anomaly_detector):

@@ -1,11 +1,11 @@
 """
-🗄️ Database Cluster Docker Configuration - IA-Influencer-Agent Platform
+ Database Cluster Docker Configuration - IA-Influencer-Agent Platform
 =========================================================================
 Expert: Database Administrator + Performance Tuning + Replication Expert
 Creator: Fahed Mlaiel <mlaiel@live.de>
 =========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL 
 Tout vol, copie ou utilisation non autorisée de ce code source,
 de ce concept ou de cette propriété intellectuelle sans
 l'autorisation écrite explicite de Fahed Mlaiel est strictement
@@ -100,6 +100,9 @@ class DatabaseClusterDockerConfig:
     
     def generate_master_dockerfile(self) -> str:
         """Generate Dockerfile for PostgreSQL master"""
+
+
+
         return f"""
 # IA-Influencer PostgreSQL Master - Production Docker Image
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -176,6 +179,9 @@ CMD ["postgres"]
 
     def generate_replica_dockerfile(self) -> str:
         """Generate Dockerfile for PostgreSQL replica"""
+
+
+
         return f"""
 # IA-Influencer PostgreSQL Replica - Production Docker Image
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -410,6 +416,9 @@ CMD ["postgres"]
 
     def generate_postgres_config(self) -> str:
         """Generate optimized PostgreSQL configuration"""
+
+
+
         return f"""
 # IA-Influencer PostgreSQL Configuration
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -496,6 +505,9 @@ track_functions = all
 
     def generate_init_script(self) -> str:
         """Generate database initialization script"""
+
+
+
         return f"""
 #!/bin/bash
 # IA-Influencer Database Initialization Script
@@ -615,5 +627,5 @@ echo "Database initialization completed successfully."
             yaml.dump(service_config, f, default_flow_style=False)
         files_created.append(str(compose_config_path))
         
-        logger.info(f"✅ Database Cluster configuration files saved: {files_created}")
+        logger.info(f" Database Cluster configuration files saved: {files_created}")
         return files_created

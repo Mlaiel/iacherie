@@ -884,6 +884,9 @@ class ContentGuidanceOrchestrator:
         error_message: str
     ) -> ContentGuidanceResponse:
         """Create an error response for a failed service."""
+
+
+
         
         return ContentGuidanceResponse(
             request_id=f"{request.creator_id}_{service_type.value}_error",

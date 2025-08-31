@@ -225,7 +225,7 @@ class ContentProtectionRequest(BaseModel):
 
 class ContentProtectionEngine:
     """
-    🛡️ ENTERPRISE CONTENT PROTECTION ENGINE
+     ENTERPRISE CONTENT PROTECTION ENGINE
     
     Advanced multi-modal AI-powered content protection system with:
     - Real-time fingerprinting across all content types
@@ -271,10 +271,13 @@ class ContentProtectionEngine:
             "models": 86400 * 365,      # 1 year
         }
         
-        logger.info("🛡️ ContentProtectionEngine initialized successfully")
+        logger.info(" ContentProtectionEngine initialized successfully")
         
     def _initialize_models(self):
         """Initialize AI models for content analysis"""
+
+
+
         try:
             # Text models
             self.text_model = SentenceTransformer('all-MiniLM-L6-v2')
@@ -309,7 +312,7 @@ class ContentProtectionEngine:
         request: Union[ContentProtectionRequest, Dict[str, Any]]
     ) -> Dict[str, Any]:
         """
-        🎯 Protect content with comprehensive fingerprinting
+         Protect content with comprehensive fingerprinting
         
         Args:
             request: Content protection request
@@ -317,6 +320,9 @@ class ContentProtectionEngine:
         Returns:
             Protection result with fingerprints and monitoring setup
         """
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -402,7 +408,7 @@ class ContentProtectionEngine:
         similarity_threshold: float = 0.7
     ) -> List[SimilarityMatch]:
         """
-        🔍 Scan for content matches across platforms
+         Scan for content matches across platforms
         
         Args:
             content_id: Content to scan for
@@ -412,6 +418,9 @@ class ContentProtectionEngine:
         Returns:
             List of detected matches
         """
+
+
+
         try:
             # Get content fingerprints
             fingerprints = await self._get_content_fingerprints(content_id)
@@ -466,7 +475,7 @@ class ContentProtectionEngine:
         template_type: str = "dmca"
     ) -> Dict[str, Any]:
         """
-        📄 Generate automated takedown request
+         Generate automated takedown request
         
         Args:
             match: Similarity match to take down
@@ -475,6 +484,9 @@ class ContentProtectionEngine:
         Returns:
             Generated takedown request details
         """
+
+
+
         try:
             # Get original content details
             content_details = await self._get_content_details(match.original_content_id)
@@ -510,7 +522,7 @@ class ContentProtectionEngine:
         revenue_percentage: float = 100.0
     ) -> Dict[str, Any]:
         """
-        💰 Claim revenue from matched content
+         Claim revenue from matched content
         
         Args:
             match: Similarity match to claim revenue from
@@ -519,6 +531,9 @@ class ContentProtectionEngine:
         Returns:
             Revenue claim result
         """
+
+
+
         try:
             # Validate claim eligibility
             await self._validate_revenue_claim(match)
@@ -561,7 +576,7 @@ class ContentProtectionEngine:
         end_date: datetime
     ) -> Dict[str, Any]:
         """
-        📊 Get content protection analytics
+         Get content protection analytics
         
         Args:
             owner_id: Content owner ID
@@ -571,6 +586,9 @@ class ContentProtectionEngine:
         Returns:
             Comprehensive protection analytics
         """
+
+
+
         try:
             # Get protection data
             analytics = await self._calculate_protection_analytics(
@@ -995,6 +1013,9 @@ __all__ = [
 
     def _init_models(self):
         """Initialize AI models for fingerprinting"""
+
+
+
         try:
             # CLIP model for image/video embeddings
             self.clip_model = SentenceTransformer('clip-ViT-B-32')
@@ -1081,6 +1102,9 @@ __all__ = [
 
     async def _fingerprint_audio(self, audio_path: str, content_id: str) -> FingerprintResult:
         """Generate audio fingerprint using multiple methods"""
+
+
+
         try:
             # Load audio file
             y, sr = librosa.load(audio_path, sr=22050)
@@ -1126,6 +1150,9 @@ __all__ = [
 
     async def _fingerprint_video(self, video_path: str, content_id: str) -> FingerprintResult:
         """Generate video fingerprint using frame analysis"""
+
+
+
         try:
             # Load video
             cap = cv2.VideoCapture(video_path)
@@ -1186,6 +1213,9 @@ __all__ = [
 
     async def _fingerprint_image(self, image_path: str, content_id: str) -> FingerprintResult:
         """Generate image fingerprint using perceptual hashing and CLIP"""
+
+
+
         try:
             # Load image
             image = Image.open(image_path).convert('RGB')
@@ -1231,6 +1261,9 @@ __all__ = [
 
     async def _fingerprint_text(self, text_path: str, content_id: str) -> FingerprintResult:
         """Generate text fingerprint using BERT embeddings and MinHash"""
+
+
+
         try:
             # Read text content
             async with aiofiles.open(text_path, 'r', encoding='utf-8') as f:
@@ -1341,6 +1374,9 @@ __all__ = [
         threshold: float
     ) -> List[SimilarityMatch]:
         """Perform vector similarity search using cosine similarity"""
+
+
+
         try:
             # Get stored vectors from database/cache
             stored_vectors = await self._get_stored_vectors(content_type)
@@ -1383,6 +1419,9 @@ __all__ = [
         content_type: ContentType
     ) -> List[SimilarityMatch]:
         """Perform hash-based exact matching"""
+
+
+
         try:
             # Search for exact hash matches in database
             exact_matches = await self._get_exact_hash_matches(query_hash, content_type)
@@ -1422,6 +1461,9 @@ __all__ = [
 
     async def _get_cached_fingerprint(self, content_id: str) -> Optional[FingerprintResult]:
         """Retrieve cached fingerprint result"""
+
+
+
         try:
             cache_key = f"fingerprint:{content_id}"
             cached_data = await self.redis_manager.get(cache_key)
@@ -1438,6 +1480,9 @@ __all__ = [
 
     async def _cache_fingerprint(self, result: FingerprintResult):
         """Cache fingerprint result"""
+
+
+
         try:
             cache_key = f"fingerprint:{result.content_id}"
             
@@ -1469,6 +1514,9 @@ __all__ = [
         metadata: Dict[str, Any] = None
     ):
         """Store fingerprint in database"""
+
+
+
         try:
             # This would interact with your database layer
             fingerprint_data = {
@@ -1520,6 +1568,9 @@ __all__ = [
         Returns:
             Alert ID
         """
+
+
+
         try:
             alert_id = hashlib.sha256(
                 f"{match.original_content_id}_{detection_url}_{datetime.now().isoformat()}".encode()
@@ -1556,6 +1607,9 @@ __all__ = [
 
     async def get_protection_status(self, content_id: str) -> Dict[str, Any]:
         """Get comprehensive protection status for content"""
+
+
+
         try:
             # Get fingerprint info
             fingerprint_info = await self._get_fingerprint_info(content_id)
@@ -1595,6 +1649,9 @@ __all__ = [
 
     def get_supported_formats(self) -> Dict[ContentType, List[str]]:
         """Get supported file formats by content type"""
+
+
+
         return {
             ContentType.AUDIO: ['.mp3', '.wav', '.flac', '.m4a', '.ogg'],
             ContentType.VIDEO: ['.mp4', '.avi', '.mov', '.mkv', '.webm'],
@@ -1609,6 +1666,9 @@ __all__ = [
         user_id: str
     ) -> List[FingerprintResult]:
         """Process multiple content files in batch"""
+
+
+
         try:
             tasks = []
             for content_info in content_list:
@@ -1641,6 +1701,9 @@ __all__ = [
 
     async def cleanup_expired_fingerprints(self, days_old: int = 365):
         """Clean up old fingerprints and associated data"""
+
+
+
         try:
             cutoff_date = datetime.now() - timedelta(days=days_old)
             

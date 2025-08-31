@@ -7,7 +7,7 @@ settings, model configurations, and performance optimization parameters.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
@@ -79,6 +79,9 @@ class EntityExtractionConfig:
     @classmethod
     def from_env(cls) -> 'EntityExtractionConfig':
         """Create configuration from environment variables"""
+
+
+
         return cls(
             MODEL_CACHE_DIR=os.getenv('ENTITY_MODEL_CACHE_DIR', '/tmp/entity_models'),
             PRIMARY_NER_MODEL=os.getenv('PRIMARY_NER_MODEL', 'bert-base-multilingual-cased'),
@@ -128,6 +131,9 @@ class EntityExtractionConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert configuration to dictionary"""
+
+
+
         return {
             'model_config': {
                 'cache_dir': self.MODEL_CACHE_DIR,
@@ -186,6 +192,9 @@ class EntityExtractionConfig:
     
     def validate(self) -> bool:
         """Validate configuration settings"""
+
+
+
         try:
             # Validate paths
             Path(self.MODEL_CACHE_DIR).mkdir(parents=True, exist_ok=True)

@@ -613,14 +613,23 @@ _validator = CompoundValidator()
 
 def get_validator() -> CompoundValidator:
     """Get global validator instance."""
+
+
+
     return _validator
 
 
 def validate_content_upload(data: Dict[str, Any]) -> List[ValidationResult]:
     """Validate content upload data using global validator."""
+
+
+
     return _validator.validate_content_upload(data)
 
 
 def validate_user_registration(data: Dict[str, Any]) -> List[ValidationResult]:
     """Validate user registration data using global validator."""
+
+
+
     return _validator.validate_user_registration(data)

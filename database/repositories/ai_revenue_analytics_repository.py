@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -85,6 +85,9 @@ class AIRevenueAnalyticsRepository(BaseRepository[AIRevenueAnalytics]):
         Returns:
             Created AIRevenueAnalytics instance
         """
+
+
+
         try:
             analytics_data = {
                 "user_id": user_id,
@@ -142,6 +145,9 @@ class AIRevenueAnalyticsRepository(BaseRepository[AIRevenueAnalytics]):
         Returns:
             Updated AIRevenueAnalytics instance
         """
+
+
+
         try:
             analytics_record = await self.get_by_id(analytics_id)
             if not analytics_record:
@@ -188,6 +194,9 @@ class AIRevenueAnalyticsRepository(BaseRepository[AIRevenueAnalytics]):
         Returns:
             Dictionary containing model performance metrics
         """
+
+
+
         try:
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=days_back)
             
@@ -304,6 +313,9 @@ class AIRevenueAnalyticsRepository(BaseRepository[AIRevenueAnalytics]):
         Returns:
             Created OptimizationExperiment instance
         """
+
+
+
         try:
             experiment_data = {
                 "user_id": user_id,
@@ -348,6 +360,9 @@ class AIRevenueAnalyticsRepository(BaseRepository[AIRevenueAnalytics]):
         Returns:
             Updated OptimizationExperiment instance
         """
+
+
+
         try:
             experiment = self.db_session.query(OptimizationExperiment).filter(
                 OptimizationExperiment.id == experiment_id
@@ -392,6 +407,9 @@ class AIRevenueAnalyticsRepository(BaseRepository[AIRevenueAnalytics]):
         Returns:
             Created PredictionValidation instance
         """
+
+
+
         try:
             validation_data = {
                 "ai_revenue_analytics_id": analytics_id,
@@ -442,6 +460,9 @@ class AIRevenueAnalyticsRepository(BaseRepository[AIRevenueAnalytics]):
         Returns:
             Dictionary containing revenue insights
         """
+
+
+
         try:
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=timeframe_days)
             
@@ -562,6 +583,9 @@ class AIRevenueAnalyticsRepository(BaseRepository[AIRevenueAnalytics]):
         Returns:
             List of trending optimization strategies
         """
+
+
+
         try:
             # Get successful experiments from last 60 days
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=60)

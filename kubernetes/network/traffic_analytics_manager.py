@@ -7,7 +7,7 @@ Copyright: All rights reserved - Unauthorized use prohibited
 Project: IA Influencer Agent Platform - Content Protection & Monetization
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  AVERTISSEMENT SÉVÈRE ⚠️
+  AVERTISSEMENT SÉVÈRE 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
@@ -163,6 +163,9 @@ class TrafficAnalyticsManager:
     
     async def initialize(self) -> bool:
         """Initialize traffic analytics manager"""
+
+
+
         try:
             logger.info("Initializing Traffic Analytics Manager...")
             
@@ -198,6 +201,9 @@ class TrafficAnalyticsManager:
     
     async def record_traffic(self, traffic_data: TrafficData) -> None:
         """Record traffic data for analysis"""
+
+
+
         try:
             # Enrich traffic data
             enriched_data = await self._enrich_traffic_data(traffic_data)
@@ -239,6 +245,9 @@ class TrafficAnalyticsManager:
         filters: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Get comprehensive traffic analytics"""
+
+
+
         try:
             analytics_result = {
                 'time_range': {
@@ -273,6 +282,9 @@ class TrafficAnalyticsManager:
         time_range: timedelta = timedelta(days=7)
     ) -> Optional[ContentAnalytics]:
         """Get detailed content performance analytics"""
+
+
+
         try:
             end_time = datetime.now()
             start_time = end_time - time_range
@@ -326,6 +338,9 @@ class TrafficAnalyticsManager:
         time_range: timedelta = timedelta(days=30)
     ) -> Optional[UserBehaviorMetrics]:
         """Get detailed user behavior analysis"""
+
+
+
         try:
             end_time = datetime.now()
             start_time = end_time - time_range
@@ -371,6 +386,9 @@ class TrafficAnalyticsManager:
         prediction_horizon: timedelta = timedelta(hours=24)
     ) -> Dict[str, Any]:
         """Predict traffic patterns using ML models"""
+
+
+
         try:
             if not self.traffic_prediction_model:
                 logger.warning("Traffic prediction model not loaded")
@@ -407,6 +425,9 @@ class TrafficAnalyticsManager:
         time_range: timedelta = timedelta(hours=1)
     ) -> List[Dict[str, Any]]:
         """Detect traffic anomalies in recent data"""
+
+
+
         try:
             end_time = datetime.now()
             start_time = end_time - time_range
@@ -447,6 +468,9 @@ class TrafficAnalyticsManager:
         content_analytics: List[ContentAnalytics]
     ) -> Dict[str, Any]:
         """Generate content delivery optimization recommendations"""
+
+
+
         try:
             optimization_recommendations = {
                 'caching_strategies': {},
@@ -515,6 +539,9 @@ class TrafficAnalyticsManager:
     
     async def get_real_time_dashboard_data(self) -> Dict[str, Any]:
         """Get real-time dashboard data"""
+
+
+
         try:
             dashboard_data = {
                 'current_traffic': {},
@@ -554,6 +581,9 @@ class TrafficAnalyticsManager:
     
     async def _enrich_traffic_data(self, traffic_data: TrafficData) -> TrafficData:
         """Enrich traffic data with additional information"""
+
+
+
         try:
             # Parse user agent
             if traffic_data.user_agent:
@@ -576,6 +606,9 @@ class TrafficAnalyticsManager:
     
     async def _initialize_geoip(self) -> None:
         """Initialize GeoIP database"""
+
+
+
         try:
             self.geoip_reader = geoip2.database.Reader(self.geoip_database_path)
             logger.info("GeoIP database initialized")
@@ -585,6 +618,9 @@ class TrafficAnalyticsManager:
     
     async def _flush_traffic_buffer(self) -> None:
         """Flush traffic buffer to database"""
+
+
+
         try:
             if not self.traffic_buffer:
                 return

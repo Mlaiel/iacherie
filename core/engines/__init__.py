@@ -70,7 +70,7 @@ try:
     from .seo_optimization_engine import SEOOptimizationEngine
     from .vector_similarity_engine import VectorSimilarityEngine
     
-    logger.info("🚀 All engines imported successfully")
+    logger.info(" All engines imported successfully")
     
 except ImportError as e:
     logger.warning(f"Some engine imports failed: {str(e)}")
@@ -103,7 +103,7 @@ class EngineConfig:
 
 
 class EngineRegistry:
-    """    🏭 ENTERPRISE ENGINE REGISTRY
+    """     ENTERPRISE ENGINE REGISTRY
     
     Central registry for managing all processing engines
     with dependency injection and configuration management
@@ -119,7 +119,7 @@ class EngineRegistry:
         else:
             self._config = config
             
-        logger.info(f"🔧 Engine registry configured with {len(vars(self._config))} parameters")
+        logger.info(f" Engine registry configured with {len(vars(self._config))} parameters")
     
     async def initialize_engines(
         self,
@@ -207,10 +207,10 @@ class EngineRegistry:
                 
                 self._engines[engine_name] = engine
                 initialization_results[engine_name] = True
-                logger.info(f"✅ {engine_name} initialized successfully")
+                logger.info(f" {engine_name} initialized successfully")
                 
             except Exception as e:
-                logger.error(f"❌ Failed to initialize {engine_name}: {str(e)}")
+                logger.error(f" Failed to initialize {engine_name}: {str(e)}")
                 initialization_results[engine_name] = False
         
         self._initialized = True
@@ -218,7 +218,7 @@ class EngineRegistry:
         success_count = sum(1 for result in initialization_results.values() if result)
         total_count = len(initialization_results)
         
-        logger.info(f"🏭 Engine registry initialization complete: {success_count}/{total_count} engines initialized")
+        logger.info(f" Engine registry initialization complete: {success_count}/{total_count} engines initialized")
         
         return initialization_results
     
@@ -232,10 +232,16 @@ class EngineRegistry:
         return self._engines[engine_name]
     
     def list_engines(self) -> List[str]:
-        """List all initialized engines"""        return list(self._engines.keys())
+        """List all initialized engines"""
+
+
+        return list(self._engines.keys())
     
     def is_initialized(self) -> bool:
-        """Check if registry is initialized"""        return self._initialized
+        """Check if registry is initialized"""
+
+
+        return self._initialized
     
     async def health_check(self) -> Dict[str, Any]:
         """Perform health check on all engines"""        health_status = {
@@ -297,15 +303,24 @@ async def initialize_engines(
 
 
 def get_engine(engine_name: str) -> Any:
-    """Get an initialized engine"""    return engine_registry.get_engine(engine_name)
+    """Get an initialized engine"""
+
+
+    return engine_registry.get_engine(engine_name)
 
 
 def list_engines() -> List[str]:
-    """List all initialized engines"""    return engine_registry.list_engines()
+    """List all initialized engines"""
+
+
+    return engine_registry.list_engines()
 
 
 async def health_check() -> Dict[str, Any]:
-    """Perform health check on all engines"""    return await engine_registry.health_check()
+    """Perform health check on all engines"""
+
+
+    return await engine_registry.health_check()
 
 
 # Export des classes et fonctions principales
@@ -405,10 +420,10 @@ ENGINES_INFO = {
 }
 
 
-logger.info(f"🎯 IA-Influencer-Agent Core Engines Module loaded - {len(__all__)} exports available")
-logger.info(f"📋 Engine categories: {list(ENGINES_INFO.keys())}")
-logger.info(f"🔧 Total engines available: {sum(len(engines) for engines in ENGINES_INFO.values())}")
-logger.info("💼 Ready for enterprise content creator platform operations")
+logger.info(f" IA-Influencer-Agent Core Engines Module loaded - {len(__all__)} exports available")
+logger.info(f" Engine categories: {list(ENGINES_INFO.keys())}")
+logger.info(f" Total engines available: {sum(len(engines) for engines in ENGINES_INFO.values())}")
+logger.info(" Ready for enterprise content creator platform operations")
 from .quality_analysis_engine import QualityAnalysisEngine
 from .recommendation_engine import RecommendationEngine
 from .remix_generation_engine import RemixGenerationEngine

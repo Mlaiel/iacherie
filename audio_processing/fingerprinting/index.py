@@ -101,6 +101,9 @@ class AudioFingerprintingService:
         Returns:
             True if initialization successful, False otherwise
         """
+
+
+
         try:
             logger.info("Initializing Audio Fingerprinting Service...")
             start_time = datetime.now()
@@ -261,6 +264,9 @@ class AudioFingerprintingService:
         Returns:
             FingerprintResult or None if failed
         """
+
+
+
         try:
             if not self.is_running:
                 logger.error("Service not running")
@@ -323,6 +329,9 @@ class AudioFingerprintingService:
         Returns:
             List of match results
         """
+
+
+
         try:
             if not self.is_running:
                 logger.error("Service not running")
@@ -377,6 +386,9 @@ class AudioFingerprintingService:
         Returns:
             List of FingerprintResult objects (None for failed files)
         """
+
+
+
         try:
             logger.info("Starting batch fingerprinting of %d files", len(file_paths))
             
@@ -404,6 +416,9 @@ class AudioFingerprintingService:
     
     async def get_service_stats(self) -> Dict[str, Any]:
         """Get comprehensive service statistics."""
+
+
+
         try:
             stats = {
                 'service_info': {
@@ -437,6 +452,9 @@ class AudioFingerprintingService:
     
     async def get_health_status(self) -> Dict[str, Any]:
         """Get system health status."""
+
+
+
         try:
             health = {
                 'healthy': True,
@@ -466,6 +484,9 @@ class AudioFingerprintingService:
     
     async def shutdown(self):
         """Gracefully shutdown the service."""
+
+
+
         try:
             logger.info("Shutting down Audio Fingerprinting Service...")
             self.is_running = False
@@ -601,6 +622,9 @@ def create_service(
     Returns:
         Configured AudioFingerprintingService instance
     """
+
+
+
     return AudioFingerprintingService(config_path=config_path, database_url=database_url)
 
 

@@ -19,7 +19,7 @@ Comprehensive Tests for Trend Analysis System
 Testing trend detection, analysis, and prediction algorithms
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
-⚠️  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
+  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
     code, or intellectual property without explicit written authorization 
     from Fahed Mlaiel is strictly prohibited and will result in legal action.
 

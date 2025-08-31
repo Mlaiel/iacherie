@@ -1,11 +1,11 @@
 """
-💭 Sentiment Analyzer - IA Influencer Agent
+ Sentiment Analyzer - IA Influencer Agent
 =========================================
 
 Advanced sentiment analysis system for understanding audience emotions,
 brand perception, and content reception across multiple platforms.
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE PROHIBITED
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE PROHIBITED
 ====================================================
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright © 2025 Fahed Mlaiel - All rights reserved
@@ -180,6 +180,9 @@ class SentimentAnalyzer:
     
     def _initialize_models(self):
         """Initialize sentiment analysis models"""
+
+
+
         try:
             # Ensure NLTK data is available
             try:
@@ -277,6 +280,9 @@ class SentimentAnalyzer:
         Returns:
             Comprehensive sentiment analysis result
         """
+
+
+
         try:
             content_id = content_data.get('content_id', 'unknown')
             platform = content_data.get('platform', 'unknown')
@@ -396,6 +402,9 @@ class SentimentAnalyzer:
     
     async def _analyze_text_sentiment(self, text: str) -> SentimentScore:
         """Analyze sentiment of text content"""
+
+
+
         try:
             if not text or len(text.strip()) < self.min_text_length:
                 return self._create_neutral_sentiment()
@@ -458,6 +467,9 @@ class SentimentAnalyzer:
     
     async def _analyze_comments_sentiment(self, comments: List[Dict[str, Any]]) -> SentimentScore:
         """Analyze sentiment of comments"""
+
+
+
         try:
             if not comments:
                 return self._create_neutral_sentiment()
@@ -518,6 +530,9 @@ class SentimentAnalyzer:
     
     async def _analyze_audience_sentiment(self, content_id: str, platform: str) -> SentimentScore:
         """Analyze general audience sentiment towards creator"""
+
+
+
         try:
             # Get audience engagement data
             audience_data = await self.audience_analytics.get_audience_sentiment_data(
@@ -571,6 +586,9 @@ class SentimentAnalyzer:
     
     async def _analyze_brand_sentiment(self, text: str) -> SentimentScore:
         """Analyze brand-specific sentiment"""
+
+
+
         try:
             # Extract brand mentions
             brand_mentions = self._extract_brand_mentions(text)
@@ -613,6 +631,9 @@ class SentimentAnalyzer:
     
     async def _analyze_text_emotions(self, text: str) -> Dict[EmotionType, float]:
         """Analyze emotions in text"""
+
+
+
         try:
             if len(text.strip()) < self.min_text_length:
                 return {emotion: 0.0 for emotion in EmotionType}
@@ -744,6 +765,9 @@ class SentimentAnalyzer:
     
     def _analyze_emoji_sentiment(self, text: str) -> Optional[Dict[str, float]]:
         """Analyze sentiment based on emojis"""
+
+
+
         try:
             # Extract emojis from text
             emojis = [char for char in text if char in emoji.EMOJI_DATA]
@@ -752,8 +776,8 @@ class SentimentAnalyzer:
                 return None
             
             # Simple emoji sentiment mapping
-            positive_emojis = ['😊', '😃', '😄', '😁', '😆', '😍', '🥰', '😘', '🤗', '👍', '👏', '🎉', '💖', '❤️', '💕', '🔥', '⭐']
-            negative_emojis = ['😢', '😭', '😔', '😞', '😟', '😰', '😨', '😠', '😡', '🤬', '👎', '💔', '😤', '😪']
+            positive_emojis = ['', '', '', '', '', '', '🥰', '', '🤗', '', '', '', '', '', '', '', '']
+            negative_emojis = ['', '', '', '', '', '', '', '', '', '🤬', '', '', '', '']
             
             positive_count = sum(1 for e in emojis if e in positive_emojis)
             negative_count = sum(1 for e in emojis if e in negative_emojis)
@@ -826,6 +850,9 @@ class SentimentAnalyzer:
     
     def _create_neutral_sentiment(self) -> SentimentScore:
         """Create neutral sentiment score"""
+
+
+
         return SentimentScore(
             polarity=SentimentPolarity.NEUTRAL,
             confidence=0.5,
@@ -901,6 +928,9 @@ class SentimentAnalyzer:
     
     def _create_fallback_analysis(self, content_data: Dict[str, Any]) -> SentimentAnalysis:
         """Create fallback analysis when main analysis fails"""
+
+
+
         return SentimentAnalysis(
             analysis_id=self._generate_id(),
             content_id=content_data.get('content_id', 'unknown'),
@@ -924,6 +954,9 @@ class SentimentAnalyzer:
     
     def _generate_id(self) -> str:
         """Generate unique ID"""
+
+
+
         return hashlib.md5(f"{datetime.now().isoformat()}{hash(self)}".encode()).hexdigest()[:12]
 
 
@@ -959,6 +992,9 @@ class AudienceInsightEngine:
         Returns:
             List of audience insights
         """
+
+
+
         try:
             self.logger.info(f"Generating audience insights for creator {creator_id}")
             
@@ -988,4 +1024,7 @@ class AudienceInsightEngine:
     
     def _generate_id(self) -> str:
         """Generate unique ID"""
+
+
+
         return hashlib.md5(f"{datetime.now().isoformat()}{hash(self)}".encode()).hexdigest()[:12]

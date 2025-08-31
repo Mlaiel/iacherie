@@ -49,6 +49,9 @@ class TestPatternClassifier:
     @pytest.fixture
     def classifier(self):
         """Create a PatternClassifier instance for testing"""
+
+
+
         return PatternClassifier()
     
     def test_get_supported_types(self, classifier):

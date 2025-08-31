@@ -97,6 +97,9 @@ class TextFingerprintEngine:
     
     def _init_models(self):
         """Initialize NLP models"""
+
+
+
         try:
             # BERT model for embeddings
             model_name = "sentence-transformers/all-MiniLM-L6-v2"
@@ -130,6 +133,9 @@ class TextFingerprintEngine:
         Returns:
             TextFingerprint: Complete fingerprint data
         """
+
+
+
         try:
             logger.info(f"Generating text fingerprint for {len(text_content)} characters")
             
@@ -201,6 +207,9 @@ class TextFingerprintEngine:
     
     async def _generate_bert_embedding(self, text: str) -> List[float]:
         """Generate BERT embedding for the entire text"""
+
+
+
         try:
             if self.sentence_model is None:
                 return []
@@ -215,6 +224,9 @@ class TextFingerprintEngine:
     
     async def _generate_sentence_embeddings(self, text: str) -> List[List[float]]:
         """Generate embeddings for individual sentences"""
+
+
+
         try:
             if self.sentence_model is None:
                 return []
@@ -240,6 +252,9 @@ class TextFingerprintEngine:
     
     async def _extract_semantic_features(self, text: str) -> Dict[str, Any]:
         """Extract semantic features using NLP analysis"""
+
+
+
         try:
             semantic_features = {}
             
@@ -281,6 +296,9 @@ class TextFingerprintEngine:
     
     async def _extract_linguistic_features(self, text: str) -> Dict[str, Any]:
         """Extract linguistic features"""
+
+
+
         try:
             linguistic_features = {}
             
@@ -334,6 +352,9 @@ class TextFingerprintEngine:
     
     async def _extract_stylometric_features(self, text: str) -> Dict[str, Any]:
         """Extract stylometric features (writing style indicators)"""
+
+
+
         try:
             stylometric_features = {}
             
@@ -383,6 +404,9 @@ class TextFingerprintEngine:
     
     async def _extract_statistical_features(self, text: str) -> Dict[str, Any]:
         """Extract statistical features"""
+
+
+
         try:
             statistical_features = {}
             
@@ -435,6 +459,9 @@ class TextFingerprintEngine:
     
     async def _extract_content_features(self, text: str) -> Dict[str, Any]:
         """Extract content-based features"""
+
+
+
         try:
             content_features = {}
             
@@ -475,6 +502,9 @@ class TextFingerprintEngine:
     
     async def _detect_content_type(self, text: str) -> str:
         """Detect the type of content (academic, news, social media, etc.)"""
+
+
+
         try:
             # Simple heuristic-based content type detection
             text_lower = text.lower()
@@ -510,6 +540,9 @@ class TextFingerprintEngine:
     
     async def _generate_similarity_hashes(self, text: str) -> Dict[str, str]:
         """Generate various hashes for similarity detection"""
+
+
+
         try:
             hashes = {}
             
@@ -543,6 +576,9 @@ class TextFingerprintEngine:
     
     async def _generate_shingles(self, text: str, k: int = 5) -> List[str]:
         """Generate k-shingles (k-grams of words) for similarity detection"""
+
+
+
         try:
             words = [word.lower() for word in word_tokenize(text) if word.isalpha()]
             shingles = []
@@ -559,6 +595,9 @@ class TextFingerprintEngine:
     
     async def _extract_language_features(self, text: str) -> Dict[str, Any]:
         """Extract language-specific features"""
+
+
+
         try:
             language_features = {}
             
@@ -590,6 +629,9 @@ class TextFingerprintEngine:
     
     async def _detect_language(self, text: str) -> str:
         """Simple language detection"""
+
+
+
         try:
             # Very simple heuristic-based language detection
             # In production, use proper language detection library like langdetect
@@ -628,6 +670,9 @@ class TextFingerprintEngine:
     
     async def _calculate_confidence_score(self, results: List[Any]) -> float:
         """Calculate overall confidence score"""
+
+
+
         try:
             confidence_factors = []
             
@@ -676,6 +721,9 @@ class TextFingerprintEngine:
         Returns:
             float: Similarity score between 0 and 1
         """
+
+
+
         try:
             similarities = []
             
@@ -711,6 +759,9 @@ class TextFingerprintEngine:
     
     async def _compare_embeddings(self, emb1: List[float], emb2: List[float]) -> float:
         """Compare embeddings using cosine similarity"""
+
+
+
         try:
             if not emb1 or not emb2:
                 return 0.0
@@ -729,6 +780,9 @@ class TextFingerprintEngine:
     
     async def _compare_sentence_embeddings(self, emb1: List[List[float]], emb2: List[List[float]]) -> float:
         """Compare sentence embeddings"""
+
+
+
         try:
             if not emb1 or not emb2:
                 return 0.0
@@ -750,6 +804,9 @@ class TextFingerprintEngine:
     
     async def _compare_similarity_hashes(self, hashes1: Dict[str, str], hashes2: Dict[str, str]) -> float:
         """Compare similarity hashes"""
+
+
+
         try:
             matches = 0
             total = 0
@@ -768,6 +825,9 @@ class TextFingerprintEngine:
     
     async def _compare_stylometric_features(self, style1: Dict[str, Any], style2: Dict[str, Any]) -> float:
         """Compare stylometric features"""
+
+
+
         try:
             similarities = []
             
@@ -789,6 +849,9 @@ class TextFingerprintEngine:
     
     async def _compare_numerical_features(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> float:
         """Compare numerical feature dictionaries"""
+
+
+
         try:
             similarities = []
             

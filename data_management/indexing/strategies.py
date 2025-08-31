@@ -8,7 +8,7 @@ similarity search, and ranking algorithms with enterprise optimization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent - Content Protection Platform
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
@@ -137,6 +137,9 @@ class ContentIndexingStrategy(BaseStrategy):
     
     async def optimize_index(self, content_id: str, record: Any) -> Dict[str, Any]:
         """Optimize indexing based on content characteristics"""
+
+
+
         try:
             start_time = datetime.now()
             
@@ -166,6 +169,9 @@ class ContentIndexingStrategy(BaseStrategy):
     
     async def _determine_processing_strategy(self, context: IndexingContext) -> IndexingStrategy:
         """Determine optimal processing strategy based on context"""
+
+
+
         try:
             # Priority-based decision
             if context.priority >= 8:
@@ -192,6 +198,9 @@ class ContentIndexingStrategy(BaseStrategy):
     async def _apply_optimization(self, context: IndexingContext, 
                                 strategy: IndexingStrategy) -> Dict[str, Any]:
         """Apply optimization based on strategy"""
+
+
+
         try:
             optimization_hints = {
                 "processing_strategy": strategy.value,
@@ -260,6 +269,9 @@ class ContentIndexingStrategy(BaseStrategy):
     def _estimate_processing_time(self, context: IndexingContext, 
                                 strategy: IndexingStrategy) -> float:
         """Estimate processing time based on context and strategy"""
+
+
+
         try:
             base_time = 1.0  # Base processing time in seconds
             
@@ -293,6 +305,9 @@ class ContentIndexingStrategy(BaseStrategy):
     
     async def batch_optimize(self, contents: List[Tuple[str, Any]]) -> Dict[str, Any]:
         """Optimize batch indexing operations"""
+
+
+
         try:
             if not contents:
                 return {"success": True, "optimized_batches": []}
@@ -345,6 +360,9 @@ class ContentIndexingStrategy(BaseStrategy):
     
     def _group_contents_for_batching(self, contents: List[Tuple[str, Any]]) -> Dict[str, List]:
         """Group contents for optimal batching"""
+
+
+
         try:
             batches = {}
             
@@ -369,6 +387,9 @@ class ContentIndexingStrategy(BaseStrategy):
     
     def _identify_parallel_batches(self, batches: List[Dict]) -> List[List[str]]:
         """Identify batches that can be processed in parallel"""
+
+
+
         try:
             parallel_groups = []
             
@@ -400,6 +421,9 @@ class VectorEmbeddingStrategy(BaseStrategy):
     async def optimize_embedding(self, content_type: str, text_data: str, 
                                context: Dict[str, Any] = None) -> Dict[str, Any]:
         """Optimize embedding generation based on content characteristics"""
+
+
+
         try:
             start_time = datetime.now()
             
@@ -435,6 +459,9 @@ class VectorEmbeddingStrategy(BaseStrategy):
     async def _determine_embedding_config(self, content_type: str, text_data: str, 
                                         context: Dict[str, Any]) -> Dict[str, Any]:
         """Determine optimal embedding configuration"""
+
+
+
         try:
             config = {
                 "model_name": "sentence-transformers/all-MiniLM-L6-v2",
@@ -482,6 +509,9 @@ class VectorEmbeddingStrategy(BaseStrategy):
     
     async def _optimize_text_preprocessing(self, text: str, config: Dict[str, Any]) -> str:
         """Optimize text preprocessing for embedding generation"""
+
+
+
         try:
             processed_text = text
             
@@ -510,6 +540,9 @@ class VectorEmbeddingStrategy(BaseStrategy):
     
     async def _determine_cache_strategy(self, text: str, content_type: str) -> Dict[str, Any]:
         """Determine optimal caching strategy for embeddings"""
+
+
+
         try:
             strategy = {
                 "use_cache": True,
@@ -541,6 +574,9 @@ class VectorEmbeddingStrategy(BaseStrategy):
     
     async def batch_embedding_optimization(self, batch_data: List[Tuple[str, str, str]]) -> Dict[str, Any]:
         """Optimize batch embedding generation"""
+
+
+
         try:
             if not batch_data:
                 return {"success": True, "optimized_batches": []}
@@ -599,6 +635,9 @@ class SimilaritySearchStrategy(BaseStrategy):
     async def optimize_search(self, query_vector: List[float], 
                             context: SimilarityContext) -> Dict[str, Any]:
         """Optimize similarity search based on context"""
+
+
+
         try:
             start_time = datetime.now()
             
@@ -632,6 +671,9 @@ class SimilaritySearchStrategy(BaseStrategy):
     async def _determine_optimal_algorithm(self, query_vector: List[float], 
                                          context: SimilarityContext) -> SimilarityAlgorithm:
         """Determine optimal similarity algorithm"""
+
+
+
         try:
             # Default to cosine similarity
             algorithm = SimilarityAlgorithm.COSINE
@@ -666,6 +708,9 @@ class SimilaritySearchStrategy(BaseStrategy):
                                         context: SimilarityContext,
                                         algorithm: SimilarityAlgorithm) -> Dict[str, Any]:
         """Optimize search parameters"""
+
+
+
         try:
             params = {
                 "threshold": context.threshold,
@@ -705,6 +750,9 @@ class SimilaritySearchStrategy(BaseStrategy):
     
     async def _determine_prefilter_strategy(self, context: SimilarityContext) -> Dict[str, Any]:
         """Determine optimal pre-filtering strategy"""
+
+
+
         try:
             strategy = {
                 "use_prefilter": False,
@@ -733,6 +781,9 @@ class SimilaritySearchStrategy(BaseStrategy):
     async def _determine_search_cache_strategy(self, query_vector: List[float], 
                                              context: SimilarityContext) -> Dict[str, Any]:
         """Determine search caching strategy"""
+
+
+
         try:
             strategy = {
                 "use_cache": True,
@@ -757,6 +808,9 @@ class SimilaritySearchStrategy(BaseStrategy):
     def _generate_cache_key(self, query_vector: List[float], 
                           context: SimilarityContext) -> str:
         """Generate cache key for search"""
+
+
+
         try:
             # Create a hash of the query vector and context
             vector_hash = hash(tuple(query_vector[:10]))  # Use first 10 elements
@@ -776,6 +830,9 @@ class SimilaritySearchStrategy(BaseStrategy):
     def calculate_similarity(self, vector1: List[float], vector2: List[float], 
                            algorithm: SimilarityAlgorithm) -> float:
         """Calculate similarity between two vectors using specified algorithm"""
+
+
+
         try:
             v1 = np.array(vector1)
             v2 = np.array(vector2)
@@ -838,6 +895,9 @@ class RankingStrategy(BaseStrategy):
     async def rank_results(self, results: List[Dict[str, Any]], 
                          search_request: Any) -> List[Dict[str, Any]]:
         """Rank search results based on multiple factors"""
+
+
+
         try:
             if not results:
                 return results
@@ -874,6 +934,9 @@ class RankingStrategy(BaseStrategy):
     
     def _determine_ranking_method(self, search_request: Any) -> RankingMethod:
         """Determine optimal ranking method based on search request"""
+
+
+
         try:
             # Check if sort preference is specified
             sort_by = getattr(search_request, 'sort_by', 'relevance')
@@ -897,6 +960,9 @@ class RankingStrategy(BaseStrategy):
                                        ranking_method: RankingMethod,
                                        search_request: Any) -> float:
         """Calculate composite score for a search result"""
+
+
+
         try:
             if ranking_method == RankingMethod.RELEVANCE:
                 return self._calculate_relevance_score(result, search_request)
@@ -919,6 +985,9 @@ class RankingStrategy(BaseStrategy):
     
     def _calculate_relevance_score(self, result: Dict[str, Any], search_request: Any) -> float:
         """Calculate relevance score"""
+
+
+
         try:
             # Base relevance from similarity or search score
             base_relevance = result.get("similarity_score", result.get("score", 0.5))
@@ -951,6 +1020,9 @@ class RankingStrategy(BaseStrategy):
     
     def _calculate_recency_score(self, result: Dict[str, Any]) -> float:
         """Calculate recency score"""
+
+
+
         try:
             created_at = result.get("created_at")
             if not created_at:
@@ -985,6 +1057,9 @@ class RankingStrategy(BaseStrategy):
     
     def _calculate_popularity_score(self, result: Dict[str, Any]) -> float:
         """Calculate popularity score"""
+
+
+
         try:
             # Use metadata to determine popularity
             metadata = result.get("metadata", {})
@@ -1017,6 +1092,9 @@ class RankingStrategy(BaseStrategy):
     
     def _calculate_creator_score(self, result: Dict[str, Any]) -> float:
         """Calculate creator score"""
+
+
+
         try:
             creator_id = result.get("creator_id", "")
             if not creator_id:
@@ -1046,6 +1124,9 @@ class RankingStrategy(BaseStrategy):
     
     def _calculate_hybrid_score(self, result: Dict[str, Any], search_request: Any) -> float:
         """Calculate hybrid score combining all factors"""
+
+
+
         try:
             relevance_score = self._calculate_relevance_score(result, search_request)
             recency_score = self._calculate_recency_score(result)
@@ -1072,6 +1153,9 @@ class RankingStrategy(BaseStrategy):
     
     def _calculate_quality_score(self, result: Dict[str, Any]) -> float:
         """Calculate content quality score"""
+
+
+
         try:
             metadata = result.get("metadata", {})
             
@@ -1115,6 +1199,9 @@ class RankingStrategy(BaseStrategy):
     
     def update_ranking_weights(self, weights: Dict[str, float]) -> None:
         """Update ranking weights"""
+
+
+
         try:
             # Validate weights sum to 1.0
             total_weight = sum(weights.values())

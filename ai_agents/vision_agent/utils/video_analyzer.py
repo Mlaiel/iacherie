@@ -9,7 +9,7 @@ for digital content creators and influencers.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -259,6 +259,9 @@ class VideoAnalyzer(BaseAgent):
 
     async def initialize(self) -> bool:
         """Initialize video analysis components with advanced ML models"""
+
+
+
         try:
             logger.info("Initializing Enterprise Video Analyzer...")
             
@@ -302,6 +305,9 @@ class VideoAnalyzer(BaseAgent):
     
     def _init_motion_detection(self):
         """Initialize motion detection algorithms"""
+
+
+
         try:
             # Background subtractor for motion detection
             self.bg_subtractors = {
@@ -330,6 +336,9 @@ class VideoAnalyzer(BaseAgent):
     
     def _init_scene_detection(self):
         """Initialize scene detection algorithms"""
+
+
+
         try:
             # Initialize histogram comparators
             self.histogram_comparators = [
@@ -350,6 +359,9 @@ class VideoAnalyzer(BaseAgent):
     
     def _init_audio_analysis(self):
         """Initialize audio analysis capabilities"""
+
+
+
         try:
             # Audio analysis parameters
             self.audio_params = {
@@ -371,6 +383,9 @@ class VideoAnalyzer(BaseAgent):
     
     def _init_object_tracking(self):
         """Initialize object tracking algorithms"""
+
+
+
         try:
             # Initialize various trackers for robust tracking
             self.tracker_types = {
@@ -392,6 +407,9 @@ class VideoAnalyzer(BaseAgent):
     
     async def _warm_up_models(self):
         """Warm up models with sample data"""
+
+
+
         try:
             # Create dummy video frame for warm-up
             dummy_frame = np.random.randint(0, 255, (480, 640, 3), dtype=np.uint8)
@@ -660,6 +678,9 @@ class VideoAnalyzer(BaseAgent):
 
     async def _extract_video_properties(self, video_capture: cv2.VideoCapture) -> Dict[str, Any]:
         """Extract comprehensive video properties"""
+
+
+
         try:
             properties = {
                 'frame_count': int(video_capture.get(cv2.CAP_PROP_FRAME_COUNT)),
@@ -732,6 +753,9 @@ class VideoAnalyzer(BaseAgent):
 
     async def _extract_video_info(self, video_path: str) -> Optional[Dict[str, Any]]:
         """Extract comprehensive video information using FFmpeg"""
+
+
+
         try:
             # Use ffprobe to get detailed video information
             probe_result = ffmpeg.probe(video_path)
@@ -919,6 +943,9 @@ class VideoAnalyzer(BaseAgent):
 
     async def _analyze_frame_quality(self, frame: np.ndarray) -> float:
         """Analyze quality of individual frame"""
+
+
+
         try:
             # Use image processor for detailed quality analysis
             metrics = await self.image_processor.assess_quality(frame)
@@ -942,6 +969,9 @@ class VideoAnalyzer(BaseAgent):
 
     async def _calculate_motion_score(self, frame: np.ndarray, bg_subtractor) -> float:
         """Calculate motion intensity in frame"""
+
+
+
         try:
             if bg_subtractor is None:
                 return 0.0
@@ -977,6 +1007,9 @@ class VideoAnalyzer(BaseAgent):
 
     async def _detect_faces_in_frame(self, frame: np.ndarray) -> List[Dict]:
         """Detect faces in frame"""
+
+
+
         try:
             if not hasattr(self, 'face_detector') or self.face_detector is None:
                 return []
@@ -1145,6 +1178,9 @@ class VideoAnalyzer(BaseAgent):
 
     def _extract_dominant_colors(self, frames: List[VideoFrame]) -> List[Tuple[int, int, int]]:
         """Extract dominant colors from segment frames"""
+
+
+
         try:
             if not frames:
                 return []
@@ -1364,6 +1400,9 @@ class VideoAnalyzer(BaseAgent):
     
     async def _analyze_audio_track(self, video_path: str) -> Optional[Dict[str, Any]]:
         """Analyze audio track of video"""
+
+
+
         try:
             # Extract audio using moviepy
             audio_clip = AudioFileClip(video_path)
@@ -1492,6 +1531,9 @@ class VideoAnalyzer(BaseAgent):
 
     def _calculate_color_variance(self, frames_data: List[VideoFrame]) -> float:
         """Calculate color variance across frames"""
+
+
+
         try:
             if not frames_data:
                 return 0.0
@@ -1668,6 +1710,9 @@ class VideoAnalyzer(BaseAgent):
         Returns:
             Dictionary containing video summary information
         """
+
+
+
         
         try:
             # Perform basic analysis
@@ -1723,6 +1768,9 @@ class VideoAnalyzer(BaseAgent):
 
     async def cleanup(self):
         """Cleanup resources and temporary files"""
+
+
+
         try:
             # Close thread pool
             if hasattr(self, 'thread_pool'):
@@ -1758,6 +1806,9 @@ class VideoAnalyzer(BaseAgent):
 
     async def get_statistics(self) -> Dict[str, Any]:
         """Get video analyzer statistics"""
+
+
+
         return {
             'status': self.status.value,
             'version': self.version,
@@ -2089,6 +2140,9 @@ class VideoAnalyzer(BaseAgent):
 
     async def _analyze_audio_track(self, video_path: str) -> Dict[str, Any]:
         """Analyze audio track of video (placeholder for audio analysis)"""
+
+
+
         try:
             # This would typically use librosa or similar audio processing library
             # For now, return placeholder data
@@ -2109,6 +2163,9 @@ class VideoAnalyzer(BaseAgent):
 
     async def _generate_video_fingerprint(self, video_capture: cv2.VideoCapture) -> str:
         """Generate unique fingerprint for video content"""
+
+
+
         try:
             fingerprint_data = []
             
@@ -2154,6 +2211,9 @@ class VideoAnalyzer(BaseAgent):
         max_frames: int = 100
     ) -> List[np.ndarray]:
         """Extract frames from video at specified intervals"""
+
+
+
         try:
             video_capture = await self._load_video(video_input)
             frames = []
@@ -2178,6 +2238,9 @@ class VideoAnalyzer(BaseAgent):
 
     async def get_video_duration(self, video_input: Union[str, bytes]) -> float:
         """Get video duration in seconds"""
+
+
+
         try:
             video_capture = await self._load_video(video_input)
             frame_count = video_capture.get(cv2.CAP_PROP_FRAME_COUNT)
@@ -2191,6 +2254,9 @@ class VideoAnalyzer(BaseAgent):
 
     async def cleanup(self) -> None:
         """Cleanup resources"""
+
+
+
         try:
             await self.performance_monitor.close()
             await self.content_validator.cleanup()
@@ -2200,8 +2266,14 @@ class VideoAnalyzer(BaseAgent):
 
     def get_supported_formats(self) -> List[str]:
         """Get list of supported video formats"""
+
+
+
         return self.supported_formats.copy()
 
     def get_analysis_capabilities(self) -> Dict[str, bool]:
         """Get available analysis capabilities"""
+
+
+
         return self.analysis_capabilities.copy()

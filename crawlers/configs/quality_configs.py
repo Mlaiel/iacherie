@@ -265,6 +265,9 @@ class QualityConfigManager:
     
     def _load_configurations(self) -> None:
         """Load quality configurations from files."""
+
+
+
         try:
             config_file = self.config_dir / "quality_config.json"
             if config_file.exists():
@@ -470,6 +473,9 @@ class QualityConfigManager:
     
     def _save_configurations(self) -> None:
         """Save configurations to file."""
+
+
+
         try:
             config_file = self.config_dir / "quality_config.json"
             config_data = {

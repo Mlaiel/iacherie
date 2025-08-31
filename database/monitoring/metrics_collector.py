@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-⚠️  AVERTISSEMENT STRICT ⚠️
+  AVERTISSEMENT STRICT 
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Propriété intellectuelle de Fahed Mlaiel (mlaiel@live.de).
 """
@@ -364,6 +364,9 @@ class MetricsCollector:
         metric_def: MetricDefinition
     ) -> Optional[MetricValue]:
         """Collect a single metric value"""
+
+
+
         try:
             timestamp = datetime.utcnow()
             
@@ -453,6 +456,9 @@ class MetricsCollector:
     
     async def _store_metric_value(self, metric_name: str, metric_value: MetricValue) -> None:
         """Store metric value"""
+
+
+
         try:
             # Add to in-memory cache
             self.collected_metrics.append(metric_value)
@@ -481,6 +487,9 @@ class MetricsCollector:
     
     async def _check_metric_alerts(self, metric_name: str, metric_value: MetricValue) -> None:
         """Check metric against alert thresholds"""
+
+
+
         try:
             metric_def = self.metric_definitions.get(metric_name)
             if not metric_def or not metric_def.alert_thresholds:
@@ -531,6 +540,9 @@ class MetricsCollector:
     
     async def get_metric_value(self, metric_name: str, latest: bool = True) -> Optional[Dict[str, Any]]:
         """Get metric value"""
+
+
+
         try:
             if latest:
                 # Get latest cached value
@@ -557,6 +569,9 @@ class MetricsCollector:
         aggregation: str = None
     ) -> List[Dict[str, Any]]:
         """Get metric history"""
+
+
+
         try:
             # Get from time series database
             values = await self.time_series.get_metric_range(
@@ -576,6 +591,9 @@ class MetricsCollector:
         end_time: datetime
     ) -> Optional[MetricSummary]:
         """Get metric summary statistics"""
+
+
+
         try:
             # Get values from time series
             values = await self.time_series.get_metric_range(metric_name, start_time, end_time)
@@ -632,6 +650,9 @@ class MetricsCollector:
     
     async def get_all_metrics(self, category: MetricCategory = None) -> Dict[str, Any]:
         """Get all current metric values"""
+
+
+
         try:
             metrics = {}
             
@@ -653,6 +674,9 @@ class MetricsCollector:
     
     async def get_metric_definitions(self) -> Dict[str, Dict[str, Any]]:
         """Get all metric definitions"""
+
+
+
         return {
             name: definition.to_dict()
             for name, definition in self.metric_definitions.items()
@@ -660,6 +684,9 @@ class MetricsCollector:
     
     async def get_alerts(self, limit: int = 50) -> List[Dict[str, Any]]:
         """Get recent metric alerts"""
+
+
+
         try:
             alerts_data = await self.cache.lrange("metrics:alerts", 0, limit - 1)
             return [json.loads(alert) for alert in alerts_data]
@@ -669,6 +696,9 @@ class MetricsCollector:
     
     async def collect_metric_now(self, metric_name: str) -> Optional[Dict[str, Any]]:
         """Collect a specific metric immediately"""
+
+
+
         try:
             metric_def = self.metric_definitions.get(metric_name)
             if not metric_def:
@@ -693,6 +723,9 @@ class MetricsCollector:
         format_type: str = "json"
     ) -> Dict[str, Any]:
         """Export metrics data"""
+
+
+
         try:
             exported_data = {
                 "export_info": {

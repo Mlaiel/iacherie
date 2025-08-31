@@ -1,5 +1,5 @@
 """
-🚀 Commission Engine - Ultra-Advanced Commission Management System
+ Commission Engine - Ultra-Advanced Commission Management System
 ================================================================
 
 Industrial-grade commission management system handling complex commission
@@ -12,7 +12,7 @@ Created by: Fahed Mlaiel <mlaiel@live.de>
 Team Specialists:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
+ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED 
 Contact mlaiel@live.de for licensing inquiries.
 
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Commission Management
@@ -100,6 +100,9 @@ class CommissionEngine:
         
     async def initialize(self):
         """Initialize commission engine"""
+
+
+
         try:
             # Load commission rules
             await self._load_commission_rules()
@@ -129,6 +132,9 @@ class CommissionEngine:
         Returns:
             Commission calculation details
         """
+
+
+
         try:
             # Get applicable commission rule
             rule = await self._get_applicable_commission_rule(
@@ -186,6 +192,9 @@ class CommissionEngine:
                                          creator_id: str,
                                          platform: str) -> Decimal:
         """Calculate commission amount based on rule type"""
+
+
+
         try:
             if rule.commission_type == CommissionType.FLAT_RATE:
                 return rule.rate
@@ -217,6 +226,9 @@ class CommissionEngine:
                                          rule: CommissionRule,
                                          revenue_amount: Decimal) -> Decimal:
         """Calculate tiered commission based on revenue brackets"""
+
+
+
         try:
             total_commission = Decimal('0')
             remaining_amount = revenue_amount
@@ -258,6 +270,9 @@ class CommissionEngine:
                                                     creator_id: str,
                                                     platform: str) -> Decimal:
         """Calculate performance-based commission"""
+
+
+
         try:
             # Get creator performance metrics
             performance_data = await self._get_creator_performance_metrics(
@@ -285,6 +300,9 @@ class CommissionEngine:
                                    creator_id: str,
                                    rule_config: Dict[str, Any]) -> str:
         """Create new commission rule for a creator"""
+
+
+
         try:
             # Validate rule configuration
             await self._validate_commission_rule_config(rule_config)
@@ -319,6 +337,9 @@ class CommissionEngine:
                                    creator_id: str,
                                    date_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
         """Get commission summary for a creator"""
+
+
+
         try:
             query = """
                 SELECT 
@@ -393,6 +414,9 @@ class CommissionEngine:
 
     async def cleanup(self):
         """Cleanup commission engine resources"""
+
+
+
         try:
             # Clear caches
             self._commission_rules.clear()

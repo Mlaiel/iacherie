@@ -1,5 +1,5 @@
 """
-🎯 Quality Monitor - Real-time Quality Monitoring System
+ Quality Monitor - Real-time Quality Monitoring System
 
 Professional audio quality monitoring system for continuous quality tracking,
 alerting, and performance analysis. Provides real-time monitoring, historical
@@ -9,7 +9,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Developer + DevOps + DBA + Security + Microservices
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ AVERTISSEMENT STRICT ⚠️
+ AVERTISSEMENT STRICT 
 Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou reproduction sans 
 autorisation écrite explicite de Fahed Mlaiel (mlaiel@live.de) est strictement 
@@ -101,7 +101,7 @@ class QualityTrend:
 
 class QualityMonitor:
     """
-    🎯 Professional Audio Quality Monitor
+     Professional Audio Quality Monitor
     
     Real-time quality monitoring system:
     - Continuous quality tracking
@@ -415,6 +415,9 @@ class QualityMonitor:
     
     async def get_active_alerts(self) -> List[QualityAlert]:
         """Get all active alerts"""
+
+
+
         return list(self.active_alerts.values())
     
     async def get_alert_history(self, hours: int = 24) -> List[QualityAlert]:
@@ -666,6 +669,9 @@ class QualityMonitor:
     
     async def health_check(self) -> bool:
         """Perform monitor health check"""
+
+
+
         try:
             # Check if monitoring is active
             if not self.is_monitoring:

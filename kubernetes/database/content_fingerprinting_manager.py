@@ -22,7 +22,7 @@ Contact: mlaiel@live.de
 - DevOps Engineer: Fahed Mlaiel
 - IA Prompt Engineer: Fahed Mlaiel
 
-⚠️ ATTENTION IMPORTANTE ⚠️
+ ATTENTION IMPORTANTE 
 Toute tentative de vol, copie, ou utilisation non autorisée de ce code, 
 concept ou idée sans autorisation écrite explicite de Fahed Mlaiel 
 sera poursuivie selon la loi allemande et internationale.
@@ -40,7 +40,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Duplicate detection avancée
 - Real-time indexing avec FAISS
 
-🎵 AUDIO FINGERPRINTING:
+ AUDIO FINGERPRINTING:
 - Chromaprint hash storage
 - Spectral features vectorization
 - Tempo et key detection metadata
@@ -48,7 +48,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Acoustic similarity clustering
 - Performance optimization pour matching
 
-🎬 VIDEO FINGERPRINTING:
+ VIDEO FINGERPRINTING:
 - Frame-by-frame hash sequences
 - Scene detection markers
 - Motion vector analysis
@@ -56,7 +56,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Temporal fingerprint segments
 - Object detection metadata
 
-🖼️ IMAGE FINGERPRINTING:
+ IMAGE FINGERPRINTING:
 - Perceptual hash computation
 - CLIP vector embeddings
 - Feature point descriptors
@@ -64,7 +64,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Edge detection patterns
 - Multi-scale representation
 
-📝 TEXT FINGERPRINTING:
+ TEXT FINGERPRINTING:
 - BERT/RoBERTa embeddings
 - TF-IDF vectorization
 - Semantic similarity vectors
@@ -72,7 +72,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Language detection metadata
 - Content classification tags
 
-⚡ PERFORMANCE OPTIMIZATION:
+ PERFORMANCE OPTIMIZATION:
 - Parallel fingerprint processing
 - Batch insertion optimization
 - Index strategy per content type
@@ -80,7 +80,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Cache-friendly data layout
 - Query performance tuning
 
-🔍 SIMILARITY SEARCH:
+ SIMILARITY SEARCH:
 - FAISS index integration
 - Approximate nearest neighbor
 - Multi-modal similarity scoring
@@ -88,7 +88,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Ranked result sets
 - Real-time search optimization
 
-📊 ANALYTICS ET REPORTING:
+ ANALYTICS ET REPORTING:
 - Fingerprint quality metrics
 - Search performance analytics
 - Storage utilization tracking
@@ -96,7 +96,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Content type distributions
 - Processing time optimization
 
-🛡️ SÉCURITÉ ET INTÉGRITÉ:
+ SÉCURITÉ ET INTÉGRITÉ:
 - Fingerprint integrity validation
 - Access control per content type
 - Audit trail pour modifications
@@ -246,8 +246,11 @@ class ContentFingerprintingManager:
     
     async def initialize(self) -> bool:
         """Initialize the fingerprinting manager"""
+
+
+
         try:
-            self.logger.info("🚀 Initializing Content Fingerprinting Manager...")
+            self.logger.info(" Initializing Content Fingerprinting Manager...")
             
             # Get database manager
             self._db_manager = get_postgresql_manager()
@@ -261,11 +264,11 @@ class ContentFingerprintingManager:
             # Load existing fingerprints into indices
             await self._load_existing_fingerprints()
             
-            self.logger.info("✅ Content Fingerprinting Manager initialized successfully")
+            self.logger.info(" Content Fingerprinting Manager initialized successfully")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize Content Fingerprinting Manager: {e}")
+            self.logger.error(f" Failed to initialize Content Fingerprinting Manager: {e}")
             return False
     
     async def _create_fingerprinting_schema(self):
@@ -476,7 +479,7 @@ class ContentFingerprintingManager:
             await session.execute(text(schema_sql))
             await session.commit()
         
-        self.logger.debug("✅ Fingerprinting schema created successfully")
+        self.logger.debug(" Fingerprinting schema created successfully")
     
     async def _initialize_faiss_indices(self):
         """Initialize FAISS indices for vector similarity search"""
@@ -502,10 +505,10 @@ class ContentFingerprintingManager:
                 self._faiss_indices[index_key] = index
                 self.logger.debug(f"Created FAISS index for {algorithm.value} (dimension: {dimension})")
             
-            self.logger.debug("✅ FAISS indices initialized successfully")
+            self.logger.debug(" FAISS indices initialized successfully")
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize FAISS indices: {e}")
+            self.logger.error(f" Failed to initialize FAISS indices: {e}")
             raise
     
     async def _load_existing_fingerprints(self):
@@ -576,13 +579,16 @@ class ContentFingerprintingManager:
                 except Exception as e:
                     self.logger.error(f"Failed to load fingerprints for {algorithm}: {e}")
             
-            self.logger.debug("✅ Existing fingerprints loaded successfully")
+            self.logger.debug(" Existing fingerprints loaded successfully")
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to load existing fingerprints: {e}")
+            self.logger.error(f" Failed to load existing fingerprints: {e}")
     
     async def _store_vector_mappings(self, fingerprint_ids: List[str], algorithm: str, index_key: str):
         """Store vector index mappings"""
+
+
+
         try:
             mappings = []
             for i, fp_id in enumerate(fingerprint_ids):
@@ -640,6 +646,9 @@ class ContentFingerprintingManager:
         Returns:
             Fingerprint ID
         """
+
+
+
         try:
             self.logger.debug(f"Storing fingerprint for content {content_id} using {algorithm.value}")
             
@@ -725,15 +734,18 @@ class ContentFingerprintingManager:
             # Update performance metrics
             await self._update_performance_metrics(algorithm, content_type, metadata)
             
-            self.logger.debug(f"✅ Fingerprint stored successfully: {fingerprint_id}")
+            self.logger.debug(f" Fingerprint stored successfully: {fingerprint_id}")
             return fingerprint_id
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to store fingerprint: {e}")
+            self.logger.error(f" Failed to store fingerprint: {e}")
             raise
     
     async def _add_to_faiss_index(self, fingerprint_id: str, algorithm: FingerprintAlgorithm, vector: np.ndarray):
         """Add vector to FAISS index"""
+
+
+
         try:
             dimension = len(vector)
             index_key = f"{algorithm.value}_{dimension}"
@@ -772,6 +784,9 @@ class ContentFingerprintingManager:
         metadata: Optional[FingerprintMetadata]
     ):
         """Update performance metrics"""
+
+
+
         try:
             if not metadata:
                 return
@@ -830,6 +845,9 @@ class ContentFingerprintingManager:
         Returns:
             List of similarity matches
         """
+
+
+
         try:
             self.logger.debug(f"Searching for similar content using {algorithm.value}")
             
@@ -894,11 +912,14 @@ class ContentFingerprintingManager:
             return matches[:max_results]
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to find similar content: {e}")
+            self.logger.error(f" Failed to find similar content: {e}")
             return []
     
     async def _store_similarity_matches(self, matches: List[SimilarityMatch]):
         """Store similarity matches in database"""
+
+
+
         try:
             match_data = []
             for match in matches:
@@ -936,6 +957,9 @@ class ContentFingerprintingManager:
     
     async def get_fingerprint_by_id(self, fingerprint_id: str) -> Optional[Dict[str, Any]]:
         """Get fingerprint by ID"""
+
+
+
         try:
             async with self._db_manager.get_session() as session:
                 result = await session.execute(
@@ -971,6 +995,9 @@ class ContentFingerprintingManager:
         offset: int = 0
     ) -> List[Dict[str, Any]]:
         """Get fingerprints for a user"""
+
+
+
         try:
             query = """
                 SELECT fingerprint_id, content_id, content_type, algorithm, 
@@ -1001,6 +1028,9 @@ class ContentFingerprintingManager:
     
     async def delete_fingerprint(self, fingerprint_id: str, user_id: str) -> bool:
         """Delete a fingerprint (soft delete)"""
+
+
+
         try:
             async with self._db_manager.get_session() as session:
                 # Verify ownership
@@ -1034,6 +1064,9 @@ class ContentFingerprintingManager:
     
     async def health_check(self) -> Dict[str, Any]:
         """Perform health check"""
+
+
+
         try:
             health = {
                 'status': 'healthy',
@@ -1075,6 +1108,9 @@ class ContentFingerprintingManager:
     
     async def get_performance_stats(self) -> Dict[str, Any]:
         """Get performance statistics"""
+
+
+
         try:
             async with self._db_manager.get_session() as session:
                 # Overall stats
@@ -1135,8 +1171,11 @@ class ContentFingerprintingManager:
     
     async def shutdown(self):
         """Shutdown the fingerprinting manager"""
+
+
+
         try:
-            self.logger.info("🚨 Shutting down Content Fingerprinting Manager...")
+            self.logger.info(" Shutting down Content Fingerprinting Manager...")
             
             # Clear caches
             self._fingerprint_cache.clear()
@@ -1151,10 +1190,10 @@ class ContentFingerprintingManager:
             
             self._faiss_indices.clear()
             
-            self.logger.info("✅ Content Fingerprinting Manager shutdown completed")
+            self.logger.info(" Content Fingerprinting Manager shutdown completed")
             
         except Exception as e:
-            self.logger.error(f"❌ Shutdown failed: {e}")
+            self.logger.error(f" Shutdown failed: {e}")
 
 
 # Factory function

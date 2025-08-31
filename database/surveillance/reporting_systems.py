@@ -112,6 +112,9 @@ class ComplianceReporter:
         
     async def initialize(self) -> bool:
         """Initialize compliance reporter."""
+
+
+
         try:
             # Create output directory
             self.output_dir.mkdir(parents=True, exist_ok=True)
@@ -172,6 +175,9 @@ class ComplianceReporter:
     
     async def generate_report(self, user_id: str, analytics_data: Dict[str, Any]) -> Dict[str, Any]:
         """Generate compliance report."""
+
+
+
         try:
             # Determine report type based on request
             report_type = analytics_data.get("compliance_type", "general")
@@ -191,6 +197,9 @@ class ComplianceReporter:
     
     async def _generate_gdpr_report(self, user_id: str, analytics_data: Dict[str, Any]) -> Dict[str, Any]:
         """Generate GDPR compliance report."""
+
+
+
         try:
             report_data = {
                 "report_type": "gdpr_compliance",
@@ -284,6 +293,9 @@ class ComplianceReporter:
     
     async def _generate_dmca_report(self, user_id: str, analytics_data: Dict[str, Any]) -> Dict[str, Any]:
         """Generate DMCA compliance report."""
+
+
+
         try:
             report_data = {
                 "report_type": "dmca_compliance",
@@ -344,6 +356,9 @@ class ComplianceReporter:
     
     async def _generate_sox_report(self, user_id: str, analytics_data: Dict[str, Any]) -> Dict[str, Any]:
         """Generate SOX compliance report."""
+
+
+
         try:
             report_data = {
                 "report_type": "sox_compliance",
@@ -401,6 +416,9 @@ class ComplianceReporter:
     
     async def _generate_general_compliance_report(self, user_id: str, analytics_data: Dict[str, Any]) -> Dict[str, Any]:
         """Generate general compliance report."""
+
+
+
         try:
             report_data = {
                 "report_type": "general_compliance",
@@ -559,9 +577,9 @@ class ComplianceReporter:
         """Format individual values for display."""
         if isinstance(value, bool):
             if value:
-                return "<span class='status-compliant'>✓ Yes</span>"
+                return "<span class='status-compliant'> Yes</span>"
             else:
-                return "<span class='status-error'>✗ No</span>"
+                return "<span class='status-error'> No</span>"
         elif isinstance(value, (int, float)):
             return str(value)
         elif isinstance(value, str):
@@ -592,6 +610,9 @@ class ViolationReporter:
         
     async def initialize(self) -> bool:
         """Initialize violation reporter."""
+
+
+
         try:
             # Create output directory
             self.output_dir.mkdir(parents=True, exist_ok=True)
@@ -605,6 +626,9 @@ class ViolationReporter:
     
     async def generate_report(self, user_id: str, analytics_data: Dict[str, Any]) -> Dict[str, Any]:
         """Generate violation report."""
+
+
+
         try:
             violations_data = analytics_data.get("violations", [])
             
@@ -880,7 +904,7 @@ class ViolationReporter:
             <tr><td><strong>Screenshots Collected</strong></td><td>{screenshots}</td></tr>
             <tr><td><strong>Metadata Extracted</strong></td><td>{metadata}</td></tr>
             <tr><td><strong>Legal Notices Sent</strong></td><td>{notices}</td></tr>
-            <tr><td><strong>Evidence Integrity</strong></td><td>✓ Verified</td></tr>
+            <tr><td><strong>Evidence Integrity</strong></td><td> Verified</td></tr>
         </table>
         """
     
@@ -910,6 +934,9 @@ class PerformanceReporter:
         
     async def initialize(self) -> bool:
         """Initialize performance reporter."""
+
+
+
         try:
             self.output_dir.mkdir(parents=True, exist_ok=True)
             logger.info("PerformanceReporter initialized successfully")
@@ -920,6 +947,9 @@ class PerformanceReporter:
     
     async def generate_report(self, analytics_data: Dict[str, Any]) -> Dict[str, Any]:
         """Generate performance report."""
+
+
+
         try:
             report_data = {
                 "report_type": "performance_summary",
@@ -957,6 +987,9 @@ class DashboardReporter:
         
     async def initialize(self) -> bool:
         """Initialize dashboard reporter."""
+
+
+
         try:
             logger.info("DashboardReporter initialized successfully")
             return True
@@ -966,6 +999,9 @@ class DashboardReporter:
     
     async def generate_report(self, analytics_data: Dict[str, Any]) -> Dict[str, Any]:
         """Generate dashboard data."""
+
+
+
         try:
             return {
                 "report_type": "dashboard_data",

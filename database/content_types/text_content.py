@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team: NLP Expert, Text Analysis Specialist, Content Protection Expert
 Copyright: Fahed Mlaiel - All rights reserved
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
@@ -200,6 +200,9 @@ class TextContentManager:
         
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default configuration for text processing"""
+
+
+
         return {
             "max_file_size_mb": 10,
             "max_text_length": 1000000,  # 1M characters
@@ -273,6 +276,9 @@ class TextContentManager:
         Returns:
             Dict containing processed text information
         """
+
+
+
         try:
             file_path = Path(file_path)
             self.logger.info(f"Processing text file: {file_path}")
@@ -328,6 +334,9 @@ class TextContentManager:
     
     async def _validate_text_file(self, file_path: Path) -> bool:
         """Validate text file format and accessibility"""
+
+
+
         try:
             # Check file existence and size
             if not file_path.exists():
@@ -373,6 +382,9 @@ class TextContentManager:
     
     async def _extract_text_content(self, file_path: Path) -> str:
         """Extract text content from various file formats"""
+
+
+
         try:
             file_ext = file_path.suffix.lower()
             
@@ -393,6 +405,9 @@ class TextContentManager:
     
     async def _extract_pdf_text(self, file_path: Path) -> str:
         """Extract text from PDF file"""
+
+
+
         try:
             text_content = ""
             with open(file_path, 'rb') as file:
@@ -406,6 +421,9 @@ class TextContentManager:
     
     async def _extract_docx_text(self, file_path: Path) -> str:
         """Extract text from DOCX file"""
+
+
+
         try:
             doc = docx.Document(file_path)
             text_content = ""
@@ -418,6 +436,9 @@ class TextContentManager:
     
     async def _extract_html_text(self, file_path: Path) -> str:
         """Extract text from HTML file"""
+
+
+
         try:
             with open(file_path, 'r', encoding='utf-8') as file:
                 html_content = file.read()
@@ -443,6 +464,9 @@ class TextContentManager:
     
     async def _extract_markdown_text(self, file_path: Path) -> str:
         """Extract text from Markdown file"""
+
+
+
         try:
             with open(file_path, 'r', encoding='utf-8') as file:
                 md_content = file.read()
@@ -459,6 +483,9 @@ class TextContentManager:
     
     async def _extract_plain_text(self, file_path: Path) -> str:
         """Extract text from plain text file"""
+
+
+
         try:
             # Try different encodings
             encodings = ['utf-8', 'utf-16', 'latin-1', 'cp1252']
@@ -480,6 +507,9 @@ class TextContentManager:
     
     async def _extract_text_metadata(self, file_path: Path, text_content: str) -> TextMetadata:
         """Extract comprehensive text metadata"""
+
+
+
         try:
             # Basic text statistics
             char_count = len(text_content)
@@ -562,6 +592,9 @@ class TextContentManager:
     
     async def _calculate_readability(self, text: str) -> float:
         """Calculate readability score using various metrics"""
+
+
+
         try:
             # Use textstat library for readability metrics
             scores = []
@@ -590,6 +623,9 @@ class TextContentManager:
     
     async def _extract_keywords(self, text: str) -> List[str]:
         """Extract keywords from text using frequency analysis"""
+
+
+
         try:
             if not self.lemmatizer:
                 # Simple word frequency if NLTK not available
@@ -619,6 +655,9 @@ class TextContentManager:
     
     async def _analyze_text_structure(self, text: str) -> Dict[str, Any]:
         """Analyze text structure (headings, links, etc.)"""
+
+
+
         try:
             structure = {
                 "headings": [],
@@ -656,6 +695,9 @@ class TextContentManager:
     
     async def _extract_entities(self, text: str) -> List[Dict[str, Any]]:
         """Extract named entities from text (simplified)"""
+
+
+
         try:
             entities = []
             
@@ -712,6 +754,9 @@ class TextContentManager:
     
     async def _generate_text_fingerprint(self, text_content: str, content_id: str) -> TextFingerprint:
         """Generate comprehensive text fingerprint for content protection"""
+
+
+
         try:
             # Primary hash (raw text)
             primary_hash = hashlib.sha256(text_content.encode('utf-8')).hexdigest()
@@ -778,6 +823,9 @@ class TextContentManager:
     
     def _normalize_text(self, text: str) -> str:
         """Normalize text for semantic comparison"""
+
+
+
         try:
             # Convert to lowercase
             text = text.lower()
@@ -800,6 +848,9 @@ class TextContentManager:
     
     async def _generate_structural_hash(self, text: str) -> str:
         """Generate hash based on text structure"""
+
+
+
         try:
             sentences = sent_tokenize(text) if self.lemmatizer else text.split('.')
             
@@ -831,6 +882,9 @@ class TextContentManager:
     
     async def _generate_stylistic_hash(self, text: str) -> str:
         """Generate hash based on writing style"""
+
+
+
         try:
             words = text.split()
             
@@ -858,6 +912,9 @@ class TextContentManager:
     
     async def _generate_ngram_hash(self, text: str) -> str:
         """Generate hash based on n-grams"""
+
+
+
         try:
             words = text.lower().split()
             ngram_features = []
@@ -879,6 +936,9 @@ class TextContentManager:
     
     async def _generate_sentence_hash(self, text: str) -> str:
         """Generate hash based on sentence patterns"""
+
+
+
         try:
             sentences = sent_tokenize(text) if self.lemmatizer else text.split('.')
             
@@ -909,6 +969,9 @@ class TextContentManager:
     
     async def _generate_word_frequency_hash(self, text: str) -> str:
         """Generate hash based on word frequency distribution"""
+
+
+
         try:
             words = text.lower().split()
             
@@ -933,6 +996,9 @@ class TextContentManager:
     
     async def _extract_linguistic_features(self, text: str) -> Optional[np.ndarray]:
         """Extract linguistic features for advanced analysis"""
+
+
+
         try:
             words = text.split()
             sentences = sent_tokenize(text) if self.lemmatizer else text.split('.')
@@ -983,6 +1049,9 @@ class TextContentManager:
     
     async def _perform_nlp_analysis(self, text: str) -> Dict[str, Any]:
         """Perform comprehensive NLP analysis"""
+
+
+
         try:
             nlp_results = {}
             
@@ -1026,6 +1095,9 @@ class TextContentManager:
     
     def _calculate_complexity(self, text: str) -> float:
         """Calculate text complexity score"""
+
+
+
         try:
             words = text.split()
             sentences = text.split('.')
@@ -1053,6 +1125,9 @@ class TextContentManager:
     
     def _calculate_formality(self, text: str) -> float:
         """Calculate text formality score"""
+
+
+
         try:
             # Simple heuristic based on word choice and structure
             formal_indicators = [
@@ -1084,6 +1159,9 @@ class TextContentManager:
     
     async def _analyze_text_quality(self, text: str) -> Dict[str, float]:
         """Analyze text quality metrics"""
+
+
+
         try:
             quality_metrics = {}
             
@@ -1148,6 +1226,9 @@ class TextContentManager:
         metadata: Optional[TextMetadata] = None
     ) -> TextContentType:
         """Classify text content type using linguistic and structural features"""
+
+
+
         try:
             text_lower = text.lower()
             
@@ -1206,6 +1287,9 @@ class TextContentManager:
     
     async def store_content(self, text_content: Dict[str, Any]) -> str:
         """Store processed text content in database"""
+
+
+
         try:
             # Generate unique content ID
             content_id = hashlib.sha256(
@@ -1224,6 +1308,9 @@ class TextContentManager:
     
     def get_supported_formats(self) -> List[str]:
         """Get list of supported text formats"""
+
+
+
         return [fmt.value["ext"] for fmt in TextFormat]
     
     def get_format_info(self, format_name: str) -> Optional[Dict[str, Any]]:

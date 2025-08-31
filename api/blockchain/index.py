@@ -78,6 +78,9 @@ def get_blockchain_service(encryption_manager, database_manager=None):
     Returns:
         BlockchainService: Configured blockchain service
     """
+
+
+
     return BlockchainService(encryption_manager, database_manager)
 
 

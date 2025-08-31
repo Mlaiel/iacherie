@@ -7,7 +7,7 @@ Handles content adaptation, posting schedules, engagement optimization, and cros
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
@@ -163,6 +163,9 @@ class SocialMediaManagerAgent(BaseAIAgent):
     
     async def _custom_initialize(self) -> None:
         """Initialize social media management components"""
+
+
+
         try:
             # Initialize platform integrations
             self.platform_manager = SocialPlatformManager()
@@ -501,6 +504,9 @@ class SocialMediaManagerAgent(BaseAIAgent):
     
     async def _create_campaign(self, campaign: CrossPlatformCampaign) -> Dict[str, Any]:
         """Create new cross-platform campaign"""
+
+
+
         try:
             # Generate platform-specific content variants
             for platform in campaign.platforms:

@@ -1,5 +1,5 @@
 """
-🚀 Pricing Tier Manager - Industrial-Grade Multi-Tier Pricing System
+ Pricing Tier Manager - Industrial-Grade Multi-Tier Pricing System
 ==================================================================
 
 Advanced tier management system for content creators with dynamic pricing models.
@@ -20,7 +20,7 @@ Project Team Specialists:
 Created by: Fahed Mlaiel <mlaiel@live.de>
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
+ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED 
 
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized copying, modification, distribution, or use of this code or its
@@ -194,6 +194,9 @@ class TierManager:
         
     def _initialize_tier_configurations(self) -> Dict[PricingTier, TierConfiguration]:
         """Initialize default tier configurations"""
+
+
+
         
         return {
             PricingTier.STARTER: TierConfiguration(
@@ -395,6 +398,9 @@ class TierManager:
         Returns:
             Recommended tier configuration
         """
+
+
+
         try:
             # Analyze usage patterns
             usage_analysis = await self._analyze_usage_patterns(usage_pattern)
@@ -447,6 +453,9 @@ class TierManager:
         current_usage: int
     ) -> Dict[str, Any]:
         """Check if creator is approaching or exceeding usage limits"""
+
+
+
         
         try:
             # Get creator's current tier
@@ -500,6 +509,9 @@ class TierManager:
         billing_cycle: str = 'monthly'
     ) -> Dict[str, Any]:
         """Calculate potential savings and benefits from tier upgrade"""
+
+
+
         
         try:
             current_tier = await self._get_creator_tier(creator_id)
@@ -553,6 +565,9 @@ class TierManager:
     # Utility methods
     async def _analyze_usage_patterns(self, usage_pattern: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze creator usage patterns for tier recommendation"""
+
+
+
         
         return {
             'avg_monthly_uploads': usage_pattern.get('avg_monthly_uploads', 10),

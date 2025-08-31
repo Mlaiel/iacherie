@@ -1,5 +1,5 @@
 """
-🔔 Intelligent Notification System - IA Influencer Agent Platform
+ Intelligent Notification System - IA Influencer Agent Platform
 ================================================================
 
 Ultra-advanced notification engine with AI-powered personalization, multi-channel
@@ -23,7 +23,7 @@ Expert Team Specialties:
 
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
+ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
 This code and concept are the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 Unauthorized access, copying, modification, distribution, reverse engineering,
@@ -255,6 +255,9 @@ class IntelligentNotificationEngine:
 
     async def initialize_notification_engine(self):
         """Initialize the notification engine with AI models and external services"""
+
+
+
         
         try:
             logger.info("Initializing intelligent notification engine")
@@ -290,6 +293,9 @@ class IntelligentNotificationEngine:
         Returns:
             IntelligentNotification: Generated and scheduled notification
         """
+
+
+
         try:
             logger.info(f"Generating intelligent notification for user {context.user_id}")
             
@@ -376,6 +382,9 @@ class IntelligentNotificationEngine:
 
     async def _analyze_user_behavior(self, user_id: str, notification_type: NotificationType) -> Dict[str, Any]:
         """Analyze user behavior patterns for notification optimization"""
+
+
+
         
         try:
             # Get recent engagement data
@@ -475,6 +484,9 @@ class IntelligentNotificationEngine:
                                            preferences: NotificationPreferences,
                                            channels: List[NotificationChannel]) -> Dict[str, Any]:
         """Generate personalized notification content using AI"""
+
+
+
         
         try:
             # Get user profile for personalization
@@ -547,6 +559,9 @@ class IntelligentNotificationEngine:
                                       preferences: NotificationPreferences,
                                       behavioral_analysis: Dict[str, Any]) -> datetime:
         """Calculate optimal notification timing using AI"""
+
+
+
         
         try:
             # Use ML model for timing optimization
@@ -590,6 +605,9 @@ class IntelligentNotificationEngine:
                                 timing: datetime,
                                 channels: List[NotificationChannel]) -> float:
         """Predict notification engagement probability using AI"""
+
+
+
         
         try:
             if self.engagement_predictor:
@@ -633,6 +651,9 @@ class IntelligentNotificationEngine:
 
     async def _send_notification_immediately(self, notification: IntelligentNotification):
         """Send notification immediately through all channels"""
+
+
+
         
         try:
             notification.status = DeliveryStatus.SENT
@@ -736,6 +757,9 @@ class IntelligentNotificationEngine:
                                             user_id: str,
                                             preferences: Dict[str, Any]) -> NotificationPreferences:
         """Update user notification preferences"""
+
+
+
         
         try:
             # Validate preferences
@@ -775,6 +799,9 @@ class IntelligentNotificationEngine:
     
     def _get_default_behavioral_profile(self) -> Dict[str, Any]:
         """Get default behavioral profile for new users"""
+
+
+
         return {
             'engagement_score': 0.5,
             'open_rate': 0.4,
@@ -794,14 +821,23 @@ class IntelligentNotificationEngine:
 
     def _prepare_channel_features(self, context, preferences, behavioral_analysis, channel) -> List[float]:
         """Prepare features for channel effectiveness prediction"""
+
+
+
         return [1.0, 0.5, 0.8]  # Simplified features
 
     def _prepare_timing_features(self, context, preferences, behavioral_analysis) -> List[float]:
         """Prepare features for timing optimization"""
+
+
+
         return [1.0, 0.5, 0.8]  # Simplified features
 
     def _prepare_engagement_features(self, context, content, timing, channels) -> List[float]:
         """Prepare features for engagement prediction"""
+
+
+
         return [1.0, 0.5, 0.8]  # Simplified features
 
 

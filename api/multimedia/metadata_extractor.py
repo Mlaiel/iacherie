@@ -327,6 +327,9 @@ class AudioMetadataExtractor(MetadataExtractor):
     
     async def _extract_audio_tags(self, metadata: AudioMetadata, file_path: Path):
         """Extract ID3 and other audio tags"""
+
+
+
         try:
             audio_file = mutagen.File(str(file_path))
             if audio_file is None:
@@ -380,6 +383,9 @@ class AudioMetadataExtractor(MetadataExtractor):
     async def _analyze_audio_technical_properties(self, metadata: AudioMetadata, 
                                                 audio_data: np.ndarray, sample_rate: int):
         """Analyze technical audio properties"""
+
+
+
         try:
             # Tempo and beat tracking
             tempo, beats = librosa.beat.beat_track(y=audio_data, sr=sample_rate)
@@ -412,6 +418,9 @@ class AudioMetadataExtractor(MetadataExtractor):
     async def _assess_audio_quality(self, metadata: AudioMetadata, 
                                   audio_data: np.ndarray, sample_rate: int):
         """Assess audio quality"""
+
+
+
         try:
             # Clipping detection
             clipping_threshold = 0.95
@@ -454,6 +463,9 @@ class AudioMetadataExtractor(MetadataExtractor):
     async def _extract_audio_features(self, metadata: AudioMetadata, 
                                     audio_data: np.ndarray, sample_rate: int):
         """Extract advanced audio features"""
+
+
+
         try:
             # MFCC coefficients
             mfcc = librosa.feature.mfcc(y=audio_data, sr=sample_rate, n_mfcc=13)
@@ -524,6 +536,9 @@ class VideoMetadataExtractor(MetadataExtractor):
     
     async def _extract_with_ffprobe(self, metadata: VideoMetadata, file_path: Path):
         """Extract metadata using ffprobe"""
+
+
+
         try:
             probe = ffmpeg.probe(str(file_path))
             
@@ -583,6 +598,9 @@ class VideoMetadataExtractor(MetadataExtractor):
     
     async def _extract_with_moviepy(self, metadata: VideoMetadata, file_path: Path):
         """Extract additional metadata using MoviePy"""
+
+
+
         try:
             video_clip = VideoFileClip(str(file_path))
             
@@ -605,6 +623,9 @@ class VideoMetadataExtractor(MetadataExtractor):
     
     async def _analyze_video_content(self, metadata: VideoMetadata, file_path: Path):
         """Analyze video visual content"""
+
+
+
         try:
             video_clip = VideoFileClip(str(file_path))
             
@@ -640,6 +661,9 @@ class VideoMetadataExtractor(MetadataExtractor):
     
     async def _analyze_video_colors(self, metadata: VideoMetadata, frames: List[np.ndarray]):
         """Analyze color composition in video frames"""
+
+
+
         try:
             all_pixels = []
             brightness_values = []
@@ -680,6 +704,9 @@ class VideoMetadataExtractor(MetadataExtractor):
     
     async def _analyze_video_motion(self, metadata: VideoMetadata, frames: List[np.ndarray]):
         """Analyze motion between video frames"""
+
+
+
         try:
             motion_vectors = []
             scene_changes = []
@@ -717,6 +744,9 @@ class VideoMetadataExtractor(MetadataExtractor):
     
     async def _analyze_scene_complexity(self, metadata: VideoMetadata, frames: List[np.ndarray]):
         """Analyze visual complexity of scenes"""
+
+
+
         try:
             complexity_scores = []
             
@@ -744,6 +774,9 @@ class VideoMetadataExtractor(MetadataExtractor):
     
     async def _assess_video_quality(self, metadata: VideoMetadata):
         """Assess overall video quality"""
+
+
+
         try:
             quality_factors = []
             
@@ -840,6 +873,9 @@ class ImageMetadataExtractor(MetadataExtractor):
     
     async def _extract_exif_data(self, metadata: ImageMetadata, image: Image.Image):
         """Extract EXIF metadata from image"""
+
+
+
         try:
             exif = image.getexif()
             if not exif:
@@ -899,6 +935,9 @@ class ImageMetadataExtractor(MetadataExtractor):
     
     async def _extract_gps_data(self, metadata: ImageMetadata, gps_info):
         """Extract GPS coordinates from EXIF"""
+
+
+
         try:
             def convert_to_degrees(value):
                 """Convert GPS coordinates to decimal degrees"""
@@ -935,6 +974,9 @@ class ImageMetadataExtractor(MetadataExtractor):
     
     async def _analyze_image_content(self, metadata: ImageMetadata, image: Image.Image):
         """Analyze image visual content"""
+
+
+
         try:
             # Convert to RGB for analysis
             rgb_image = image.convert('RGB')
@@ -959,6 +1001,9 @@ class ImageMetadataExtractor(MetadataExtractor):
     
     async def _analyze_image_colors(self, metadata: ImageMetadata, img_array: np.ndarray):
         """Analyze color composition"""
+
+
+
         try:
             # Reshape for color analysis
             pixels = img_array.reshape(-1, 3)
@@ -995,6 +1040,9 @@ class ImageMetadataExtractor(MetadataExtractor):
     
     async def _estimate_color_temperature(self, img_array: np.ndarray) -> Optional[int]:
         """Estimate color temperature in Kelvin"""
+
+
+
         try:
             # Simple color temperature estimation based on R/B ratio
             avg_r = np.mean(img_array[:, :, 0])
@@ -1026,6 +1074,9 @@ class ImageMetadataExtractor(MetadataExtractor):
     
     async def _assess_image_quality(self, metadata: ImageMetadata, image: Image.Image):
         """Assess overall image quality"""
+
+
+
         try:
             img_array = np.array(image.convert('RGB'))
             
@@ -1065,6 +1116,9 @@ class ImageMetadataExtractor(MetadataExtractor):
     
     async def _detect_image_features(self, metadata: ImageMetadata, image: Image.Image):
         """Detect faces, objects, and text in image"""
+
+
+
         try:
             img_array = np.array(image.convert('RGB'))
             
@@ -1162,6 +1216,9 @@ class UniversalMetadataExtractor:
     
     def get_supported_formats(self) -> Dict[ContentFormat, List[str]]:
         """Get all supported formats by content type"""
+
+
+
         return {
             ContentFormat.AUDIO: [fmt.value for fmt in AudioFormat],
             ContentFormat.VIDEO: [fmt.value for fmt in VideoFormat],
@@ -1232,6 +1289,9 @@ class UniversalMetadataExtractor:
     
     async def _analyze_cross_modal_coherence(self, metadata: MultimediaMetadata):
         """Analyze coherence between different modalities"""
+
+
+
         try:
             coherence_factors = []
             

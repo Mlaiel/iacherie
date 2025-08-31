@@ -8,7 +8,7 @@ Specialized for creative industry metadata and content identification.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
@@ -152,6 +152,9 @@ class MetadataEntityParser(BaseService):
     
     async def initialize(self):
         """Initialize metadata parsing resources"""
+
+
+
         try:
             self.logger.info("Initializing MetadataEntityParser...")
             
@@ -263,6 +266,9 @@ class MetadataEntityParser(BaseService):
     
     async def _initialize_ml_metadata_models(self):
         """Initialize machine learning models for intelligent metadata analysis"""
+
+
+
         try:
             # Audio classification model for genre/mood detection
             self.audio_classifier = pipeline(
@@ -406,6 +412,9 @@ class MetadataEntityParser(BaseService):
     
     async def _load_fallback_models(self):
         """Load simplified fallback models if advanced models fail"""
+
+
+
         try:
             # Basic text classifier
             self.text_analyzer = pipeline(
@@ -725,6 +734,9 @@ class MetadataEntityParser(BaseService):
     
     async def _extract_from_file(self, file_path: str, metadata_format: MetadataFormat) -> Dict[str, Any]:
         """Extract metadata from file"""
+
+
+
         try:
             if metadata_format in [MetadataFormat.AUDIO_ID3, MetadataFormat.AUDIO_MP4, 
                                  MetadataFormat.AUDIO_FLAC, MetadataFormat.AUDIO_VORBIS]:
@@ -743,6 +755,9 @@ class MetadataEntityParser(BaseService):
     
     async def _extract_audio_metadata(self, file_path: str) -> Dict[str, Any]:
         """Extract audio metadata using mutagen"""
+
+
+
         try:
             audio_file = MutagenFile(file_path)
             if audio_file is None:
@@ -777,6 +792,9 @@ class MetadataEntityParser(BaseService):
     
     async def _extract_image_metadata(self, file_path: str) -> Dict[str, Any]:
         """Extract image metadata using PIL"""
+
+
+
         try:
             with Image.open(file_path) as image:
                 metadata = {}
@@ -806,6 +824,9 @@ class MetadataEntityParser(BaseService):
     
     async def _extract_video_metadata(self, file_path: str) -> Dict[str, Any]:
         """Extract video metadata using OpenCV"""
+
+
+
         try:
             cap = cv2.VideoCapture(file_path)
             
@@ -1342,6 +1363,9 @@ class MetadataEntityParser(BaseService):
         metadata_format: MetadataFormat
     ) -> Dict[str, bool]:
         """Check compatibility with various platforms"""
+
+
+
         return technical_profile.get('platform_suitability', {})
     
     async def _extract_rights_information(self, raw_metadata: Dict[str, Any]) -> Dict[str, Any]:
@@ -1471,46 +1495,79 @@ class MetadataEntityParser(BaseService):
     # Additional parsing methods for specific formats
     async def _parse_mp3_metadata(self, file_path: str) -> Dict[str, Any]:
         """Parse MP3 metadata specifically"""
+
+
+
         return await self._extract_audio_metadata(file_path)
     
     async def _parse_mp4_metadata(self, file_path: str) -> Dict[str, Any]:
         """Parse MP4 metadata specifically"""
+
+
+
         return await self._extract_audio_metadata(file_path)
     
     async def _parse_flac_metadata(self, file_path: str) -> Dict[str, Any]:
         """Parse FLAC metadata specifically"""
+
+
+
         return await self._extract_audio_metadata(file_path)
     
     async def _parse_ogg_metadata(self, file_path: str) -> Dict[str, Any]:
         """Parse OGG metadata specifically"""
+
+
+
         return await self._extract_audio_metadata(file_path)
     
     async def _parse_wav_metadata(self, file_path: str) -> Dict[str, Any]:
         """Parse WAV metadata specifically"""
+
+
+
         return await self._extract_audio_metadata(file_path)
     
     async def _parse_jpg_metadata(self, file_path: str) -> Dict[str, Any]:
         """Parse JPEG metadata specifically"""
+
+
+
         return await self._extract_image_metadata(file_path)
     
     async def _parse_png_metadata(self, file_path: str) -> Dict[str, Any]:
         """Parse PNG metadata specifically"""
+
+
+
         return await self._extract_image_metadata(file_path)
     
     async def _parse_tiff_metadata(self, file_path: str) -> Dict[str, Any]:
         """Parse TIFF metadata specifically"""
+
+
+
         return await self._extract_image_metadata(file_path)
     
     async def _parse_mp4_video_metadata(self, file_path: str) -> Dict[str, Any]:
         """Parse MP4 video metadata specifically"""
+
+
+
         return await self._extract_video_metadata(file_path)
     
     async def _parse_avi_metadata(self, file_path: str) -> Dict[str, Any]:
         """Parse AVI metadata specifically"""
+
+
+
         return await self._extract_video_metadata(file_path)
     
     async def _parse_mov_metadata(self, file_path: str) -> Dict[str, Any]:
         """Parse MOV metadata specifically"""
+
+
+
         return await self._extract_video_metadata(file_path)
     
     # Quality analyzer implementations
@@ -1649,6 +1706,9 @@ class MetadataEntityParser(BaseService):
     
     async def health_check(self) -> Dict[str, Any]:
         """Health check for metadata entity parser"""
+
+
+
         return {
             'status': 'healthy',
             'total_files_processed': self.parsing_stats['total_files_processed'],

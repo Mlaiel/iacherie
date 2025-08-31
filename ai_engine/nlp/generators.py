@@ -7,7 +7,7 @@ captions, descriptions, and multi-format content for influencers and creators.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
 
@@ -234,22 +234,22 @@ class SocialPostGenerator(ContentGenerator):
                 "Follow for more professional insights."
             ],
             ToneType.CASUAL: [
-                "What do you think? Drop a comment! 💭",
-                "Tag your bestie who needs this! 👥",
-                "Double tap if you agree! ❤️",
-                "Save this for later! 📌"
+                "What do you think? Drop a comment! ",
+                "Tag your bestie who needs this! ",
+                "Double tap if you agree! ",
+                "Save this for later! "
             ],
             ToneType.ENTHUSIASTIC: [
-                "Let me know what you think in the comments! 🔥",
-                "Tag someone who NEEDS to see this! 👇",
-                "Smash that like button if you agree! ❤️",
-                "Share this with your squad! 🙌"
+                "Let me know what you think in the comments! ",
+                "Tag someone who NEEDS to see this! ",
+                "Smash that like button if you agree! ",
+                "Share this with your squad! "
             ],
             ToneType.EDUCATIONAL: [
-                "Save this post for future reference! 📚",
-                "Share this with someone who's learning! 🎓",
+                "Save this post for future reference! ",
+                "Share this with someone who's learning! ",
                 "What questions do you have? Ask below! 🤔",
-                "Follow for more educational content! 📖"
+                "Follow for more educational content! "
             ]
         }
         
@@ -369,6 +369,9 @@ class SocialPostGenerator(ContentGenerator):
     
     def _load_platform_configs(self) -> Dict[str, Dict[str, Any]]:
         """Load platform-specific configurations"""
+
+
+
         return {
             'instagram': {
                 'max_length': 2200,
@@ -430,6 +433,9 @@ class SocialPostGenerator(ContentGenerator):
     
     def _load_engagement_patterns(self) -> Dict[str, List[str]]:
         """Load engagement-driving patterns"""
+
+
+
         return {
             'hooks': [
                 "Did you know that...",
@@ -460,6 +466,9 @@ class SocialPostGenerator(ContentGenerator):
     
     def _load_hashtag_database(self) -> Dict[str, List[str]]:
         """Load hashtag database by topic/niche"""
+
+
+
         return {
             'lifestyle': [
                 'lifestyle', 'dailylife', 'goodvibes', 'positivity',
@@ -527,17 +536,17 @@ class SocialPostGenerator(ContentGenerator):
                 ContentTemplate(
                     "casual_share",
                     [
-                        "Hey everyone! 👋",
+                        "Hey everyone! ",
                         "Just wanted to share something cool about {topic}...",
                         "{main_content}",
-                        "Anyone else into this? Let me know! 😊"
+                        "Anyone else into this? Let me know! "
                     ],
                     ["topic", "main_content"]
                 ),
                 ContentTemplate(
                     "casual_story",
                     [
-                        "So, funny story about {topic}... 😄",
+                        "So, funny story about {topic}... ",
                         "{story_content}",
                         "Have you ever had something like this happen? 🤔"
                     ],
@@ -550,11 +559,11 @@ class SocialPostGenerator(ContentGenerator):
                 ContentTemplate(
                     "motivational_quote",
                     [
-                        "✨ {quote} ✨",
+                        " {quote} ",
                         "",
                         "This really resonates with me when it comes to {topic}.",
                         "{personal_reflection}",
-                        "What motivates you today? 💪"
+                        "What motivates you today? "
                     ],
                     ["quote", "topic", "personal_reflection"]
                 ),
@@ -565,7 +574,7 @@ class SocialPostGenerator(ContentGenerator):
                         "Today, I {current_situation}.",
                         "",
                         "The journey wasn't easy, but {lesson_learned}.",
-                        "What's one thing you're working on transforming? 🌟"
+                        "What's one thing you're working on transforming? "
                     ],
                     ["past_situation", "current_situation", "lesson_learned"]
                 )
@@ -638,10 +647,10 @@ class SocialPostGenerator(ContentGenerator):
         """Generate fallback content when templates fail"""
         fallback_patterns = {
             ToneType.PROFESSIONAL: f"Today I want to share some thoughts on {request.topic}. In my experience, this is an area that requires careful consideration and strategic thinking.",
-            ToneType.CASUAL: f"Hey everyone! 👋 Let's talk about {request.topic} for a minute. I've been thinking about this lately and wanted to get your thoughts!",
-            ToneType.ENTHUSIASTIC: f"I'm SO excited to talk about {request.topic} today! 🔥 This is something I'm really passionate about and I know you're going to love it too!",
-            ToneType.INSPIRATIONAL: f"✨ Sometimes the most powerful transformations come from understanding {request.topic} differently. Let me share what I've learned on this journey.",
-            ToneType.EDUCATIONAL: f"Let's dive into {request.topic} today! 📚 I'll break down the key concepts you need to know and share some practical insights."
+            ToneType.CASUAL: f"Hey everyone!  Let's talk about {request.topic} for a minute. I've been thinking about this lately and wanted to get your thoughts!",
+            ToneType.ENTHUSIASTIC: f"I'm SO excited to talk about {request.topic} today!  This is something I'm really passionate about and I know you're going to love it too!",
+            ToneType.INSPIRATIONAL: f" Sometimes the most powerful transformations come from understanding {request.topic} differently. Let me share what I've learned on this journey.",
+            ToneType.EDUCATIONAL: f"Let's dive into {request.topic} today!  I'll break down the key concepts you need to know and share some practical insights."
         }
         
         return fallback_patterns.get(request.tone, f"Let's explore {request.topic} together!")
@@ -740,8 +749,8 @@ class SocialPostGenerator(ContentGenerator):
         if tone == ToneType.ENTHUSIASTIC:
             # Add more exclamation marks and emojis
             content = re.sub(r'\.', '!', content, count=2)
-            if '🔥' not in content and '✨' not in content:
-                content += " 🔥"
+            if '' not in content and '' not in content:
+                content += " "
         
         elif tone == ToneType.PROFESSIONAL:
             # Remove excessive punctuation and casual language
@@ -750,8 +759,8 @@ class SocialPostGenerator(ContentGenerator):
         
         elif tone == ToneType.CASUAL:
             # Add casual connectors and friendly language
-            if not any(emoji in content for emoji in ['😊', '👋', '🤔']):
-                content += " 😊"
+            if not any(emoji in content for emoji in ['', '', '🤔']):
+                content += " "
         
         return content
     
@@ -766,9 +775,9 @@ class SocialPostGenerator(ContentGenerator):
         # Platform-specific adjustments
         if platform_config.get('professional_tone_preferred'):
             # Remove excessive emojis for professional platforms
-            emoji_count = len(re.findall(r'[😀-🿿]', content))
+            emoji_count = len(re.findall(r'[-🿿]', content))
             if emoji_count > 3:
-                content = re.sub(r'[😀-🿿]', '', content, count=emoji_count-2)
+                content = re.sub(r'[-🿿]', '', content, count=emoji_count-2)
         
         return content
     
@@ -788,6 +797,9 @@ class SocialPostGenerator(ContentGenerator):
     
     def _get_niche_hashtags(self, niche: str) -> List[str]:
         """Get niche-specific hashtags"""
+
+
+
         return self.hashtag_database.get(niche.lower(), [])
     
     def _get_trending_hashtags(self, platform: str) -> List[str]:
@@ -1052,4 +1064,7 @@ class ContentGenerationPipeline:
     
     def get_generation_stats(self) -> Dict[str, Any]:
         """Get generation statistics"""
+
+
+
         return self.generation_stats.copy()

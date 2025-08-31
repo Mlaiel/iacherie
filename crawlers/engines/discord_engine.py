@@ -8,12 +8,12 @@ Handles servers, channels, messages, and voice data extraction.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
 
-🏗️ Architecture Enterprise - Équipe Projet Spécialisée :
+ Architecture Enterprise - Équipe Projet Spécialisée :
 • Lead Developer IA : Fahed Mlaiel (mlaiel@live.de)
 • Backend Senior Engineer : Architecture microservices & APIs
 • ML/AI Engineer : Intelligence artificielle & algorithmes avancés
@@ -231,6 +231,9 @@ class DiscordCrawlerEngine(BaseCrawlerEngine):
 
     async def authenticate(self) -> bool:
         """Authenticate with Discord API"""
+
+
+
         try:
             if self.use_bot and self.bot_token:
                 self.bot = commands.Bot(
@@ -594,6 +597,9 @@ class DiscordCrawlerEngine(BaseCrawlerEngine):
 
     async def _process_message_data(self, message) -> Optional[DiscordMessageData]:
         """Process Discord message into DiscordMessageData object"""
+
+
+
         try:
             return DiscordMessageData(
                 message_id=str(message.id),
@@ -660,6 +666,9 @@ class DiscordCrawlerEngine(BaseCrawlerEngine):
 
     def __del__(self):
         """Cleanup resources"""
+
+
+
         try:
             if self.bot or self.client:
                 asyncio.create_task(self.close())

@@ -251,6 +251,9 @@ class PaymentProcessor:
         Returns:
             Refund result
         """
+
+
+
         try:
             # Determine provider from transaction ID format
             provider = self._detect_provider_from_transaction_id(transaction_id)
@@ -432,6 +435,9 @@ class PaymentProcessor:
     
     def _initialize_payment_clients(self):
         """Initialize payment provider clients."""
+
+
+
         try:
             # Initialize Stripe
             if self.stripe_config["api_key"]:
@@ -458,6 +464,9 @@ class PaymentProcessor:
         payment_data: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Add Stripe payment method."""
+
+
+
         try:
             # Create payment method in Stripe
             payment_method = self.stripe_client.PaymentMethod.create(
@@ -521,6 +530,9 @@ class PaymentProcessor:
         metadata: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
         """Charge Stripe payment method."""
+
+
+
         try:
             # Convert amount to cents for Stripe
             amount_cents = int(amount * 100)
@@ -592,6 +604,9 @@ class PaymentProcessor:
         metadata: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
         """Process Stripe refund."""
+
+
+
         try:
             # Convert amount to cents
             amount_cents = int(refund_amount * 100)
@@ -667,6 +682,9 @@ class PaymentProcessor:
         signature: str
     ) -> bool:
         """Verify Stripe webhook signature."""
+
+
+
         try:
             self.stripe_client.Webhook.construct_event(
                 json.dumps(webhook_data),
@@ -758,6 +776,9 @@ class PaymentProcessor:
     
     async def _delete_stripe_payment_method(self, payment_method_id: str) -> None:
         """Delete Stripe payment method."""
+
+
+
         try:
             self.stripe_client.PaymentMethod.detach(payment_method_id)
         except Exception as e:

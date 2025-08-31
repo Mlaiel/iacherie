@@ -164,6 +164,9 @@ class AIInsightsAnalytics:
         Returns:
             ContentIntelligence with detailed analysis
         """
+
+
+
         try:
             # Cache check
             cache_key = f"{self.insights_cache_key}:content_intelligence:{content_id}"
@@ -247,6 +250,9 @@ class AIInsightsAnalytics:
         Returns:
             List of AI-generated insights
         """
+
+
+
         try:
             if insight_types is None:
                 insight_types = list(InsightType)
@@ -281,6 +287,9 @@ class AIInsightsAnalytics:
         Returns:
             List of audience personas
         """
+
+
+
         try:
             # Get user engagement data
             engagement_data = await self._get_user_engagement_data(user_id)
@@ -322,6 +331,9 @@ class AIInsightsAnalytics:
         Returns:
             Performance pattern analysis
         """
+
+
+
         try:
             # Get content performance data
             performance_data = await self._get_content_performance_data(user_id, timeframe_days)
@@ -357,6 +369,9 @@ class AIInsightsAnalytics:
         Returns:
             Success prediction scores
         """
+
+
+
         try:
             # Extract features
             features = await self._extract_prediction_features(content_metadata, user_id)
@@ -392,6 +407,9 @@ class AIInsightsAnalytics:
         Returns:
             Anomaly detection results
         """
+
+
+
         try:
             # Get metrics data
             metrics_data = await self._get_metrics_data(user_id, metric_type)
@@ -440,6 +458,9 @@ class AIInsightsAnalytics:
         Returns:
             Growth recommendations
         """
+
+
+
         try:
             # Analyze current performance
             current_performance = await self._analyze_current_performance(user_id)
@@ -476,6 +497,9 @@ class AIInsightsAnalytics:
     
     async def _get_content_data(self, content_id: str) -> Optional[Dict[str, Any]]:
         """Get content data from database"""
+
+
+
         try:
             stmt = select(ContentModel).where(ContentModel.id == content_id)
             result = await self.db_session.execute(stmt)
@@ -500,6 +524,9 @@ class AIInsightsAnalytics:
     
     async def _analyze_content_quality(self, content_data: Dict[str, Any]) -> float:
         """Analyze content quality using AI"""
+
+
+
         try:
             quality_factors = {
                 "metadata_completeness": self._check_metadata_completeness(content_data),
@@ -561,6 +588,9 @@ class AIInsightsAnalytics:
     
     async def _analyze_sentiment_score(self, text: str) -> float:
         """Analyze text sentiment"""
+
+
+
         try:
             result = self.text_analyzer(text)[0]
             # Convert to positive score (higher is better)
@@ -610,6 +640,9 @@ class AIInsightsAnalytics:
     
     async def _get_cached_result(self, cache_key: str) -> Optional[Dict[str, Any]]:
         """Get cached result from Redis"""
+
+
+
         try:
             cached_data = self.redis_client.get(cache_key)
             if cached_data:
@@ -621,6 +654,9 @@ class AIInsightsAnalytics:
     
     async def _cache_result(self, cache_key: str, data: Dict[str, Any]) -> None:
         """Cache result in Redis"""
+
+
+
         try:
             serialized_data = json.dumps(data, default=str)
             self.redis_client.setex(cache_key, self.cache_ttl, serialized_data)

@@ -1,11 +1,11 @@
 """
-🌐 API Gateway Docker Configuration - IA-Influencer-Agent Platform
+ API Gateway Docker Configuration - IA-Influencer-Agent Platform
 ===================================================================
 Expert: DevOps Engineer + API Gateway Specialist + Load Balancer Expert
 Creator: Fahed Mlaiel <mlaiel@live.de>
 ===================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL 
 Tout vol, copie ou utilisation non autorisée de ce code source,
 de ce concept ou de cette propriété intellectuelle sans
 l'autorisation écrite explicite de Fahed Mlaiel est strictement
@@ -81,6 +81,9 @@ class APIGatewayDockerConfig:
     
     def generate_dockerfile(self) -> str:
         """Generate production Dockerfile for API Gateway"""
+
+
+
         return f"""
 # IA-Influencer API Gateway - Production Docker Image
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -157,6 +160,9 @@ CMD ["node", "server.js"]
 
     def generate_docker_compose_service(self) -> Dict[str, Any]:
         """Generate docker-compose service configuration"""
+
+
+
         return {
             "image": f"{self.image_name}:{self.image_tag}",
             "container_name": self.container_name,
@@ -226,6 +232,9 @@ CMD ["node", "server.js"]
     
     def generate_nginx_config(self) -> str:
         """Generate Nginx configuration for API Gateway"""
+
+
+
         return f"""
 # IA-Influencer API Gateway - Nginx Configuration
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -432,5 +441,5 @@ http {{
             yaml.dump(service_config, f, default_flow_style=False)
         files_created.append(str(compose_config_path))
         
-        logger.info(f"✅ API Gateway configuration files saved: {files_created}")
+        logger.info(f" API Gateway configuration files saved: {files_created}")
         return files_created

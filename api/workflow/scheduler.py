@@ -218,6 +218,9 @@ class TaskHandler:
     
     async def _execute_one_time_task(self, context: TaskExecutionContext) -> Dict[str, Any]:
         """Execute one-time task"""
+
+
+
         return {
             "execution_type": "one_time",
             "task_completed": True,
@@ -296,6 +299,9 @@ class TaskHandler:
     
     async def _execute_generic_task(self, context: TaskExecutionContext) -> Dict[str, Any]:
         """Execute generic task when no specific handler exists"""
+
+
+
         return {
             "execution_type": "generic",
             "task_completed": True,
@@ -305,6 +311,9 @@ class TaskHandler:
     
     async def _evaluate_task_conditions(self, context: TaskExecutionContext) -> bool:
         """Evaluate conditions for conditional tasks"""
+
+
+
         try:
             # Basic condition evaluation - could be enhanced with complex logic
             conditions = getattr(context.task, 'conditions', [])

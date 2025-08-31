@@ -1,5 +1,5 @@
 """
-📊 Vector Database Analytics Engine
+ Vector Database Analytics Engine
 ===================================
 
 Advanced analytics and insights for vector database performance and content patterns.
@@ -8,7 +8,7 @@ Provides detailed metrics, trend analysis, and optimization recommendations.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL IMPORTANT ⚠️
+  AVERTISSEMENT LÉGAL IMPORTANT 
 =====================================
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
@@ -162,6 +162,9 @@ class MetricsCollector:
         metadata: Optional[Dict[str, Any]] = None
     ):
         """Record a new metric value"""
+
+
+
         try:
             metric = PerformanceMetric(
                 metric_name=metric_name,
@@ -203,6 +206,9 @@ class MetricsCollector:
     
     async def get_metric_summary(self, metric_name: str, hours: int = 24) -> Dict[str, Any]:
         """Get aggregated metric summary for time period"""
+
+
+
         try:
             end_time = time.time()
             start_time = end_time - (hours * 3600)
@@ -252,6 +258,9 @@ class MetricsCollector:
     
     async def _aggregate_metrics(self):
         """Aggregate collected metrics"""
+
+
+
         try:
             current_time = time.time()
             cutoff_time = current_time - self.aggregation_interval
@@ -331,6 +340,9 @@ class PatternDetector:
     
     async def analyze_content_patterns(self, embeddings: List[np.ndarray], metadata_list: List[Dict[str, Any]]) -> List[ContentPattern]:
         """Analyze patterns in content embeddings"""
+
+
+
         try:
             if not embeddings or not self.enable_clustering:
                 return []
@@ -402,6 +414,9 @@ class PatternDetector:
     
     async def detect_duplicate_patterns(self, similarity_matrix: np.ndarray, threshold: float = 0.95) -> List[ContentPattern]:
         """Detect potential duplicate content patterns"""
+
+
+
         try:
             patterns = []
             
@@ -444,6 +459,9 @@ class PatternDetector:
     
     def get_pattern_summary(self, hours: int = 24) -> Dict[str, Any]:
         """Get summary of detected patterns"""
+
+
+
         try:
             end_time = time.time()
             start_time = end_time - (hours * 3600)
@@ -525,6 +543,9 @@ class AnalyticsEngine:
     
     async def generate_analytics_report(self, level: AnalyticsLevel = AnalyticsLevel.DETAILED, hours: int = 24) -> AnalyticsReport:
         """Generate comprehensive analytics report"""
+
+
+
         try:
             report_id = f"report_{int(time.time())}"
             end_time = time.time()
@@ -746,6 +767,9 @@ class AnalyticsEngine:
     
     def export_report(self, report_id: str, format: str = 'json') -> Optional[str]:
         """Export report in specified format"""
+
+
+
         try:
             if report_id not in self.reports:
                 return None

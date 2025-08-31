@@ -48,6 +48,9 @@ class UserService:
         Returns:
             Created user instance
         """
+
+
+
         try:
             if not db:
                 db = next(get_db())
@@ -105,6 +108,9 @@ class UserService:
         Returns:
             Authenticated user or None
         """
+
+
+
         try:
             if not db:
                 db = next(get_db())
@@ -129,10 +135,16 @@ class UserService:
     
     def verify_password(self, plain_password: str, hashed_password: str) -> bool:
         """Verify password against hash"""
+
+
+
         return self.pwd_context.verify(plain_password, hashed_password)
     
     async def get_user_by_email(self, email: str, db: Session = None) -> Optional[User]:
         """Get user by email address"""
+
+
+
         try:
             if not db:
                 db = next(get_db())
@@ -145,6 +157,9 @@ class UserService:
     
     async def get_user_by_id(self, user_id: str, db: Session = None) -> Optional[User]:
         """Get user by ID"""
+
+
+
         try:
             if not db:
                 db = next(get_db())
@@ -159,6 +174,9 @@ class UserService:
         """
         Update user profile with role-specific validation.
         """
+
+
+
         try:
             if not db:
                 db = next(get_db())
@@ -200,6 +218,9 @@ class UserService:
     
     async def verify_user_email(self, email: str, db: Session = None) -> Optional[User]:
         """Verify user email address"""
+
+
+
         try:
             if not db:
                 db = next(get_db())
@@ -224,6 +245,9 @@ class UserService:
     
     async def reset_user_password(self, email: str, new_password: str, db: Session = None) -> Optional[User]:
         """Reset user password"""
+
+
+
         try:
             if not db:
                 db = next(get_db())
@@ -250,6 +274,9 @@ class UserService:
     
     async def update_user_password(self, user_id: str, new_password: str, db: Session = None) -> bool:
         """Update user password"""
+
+
+
         try:
             if not db:
                 db = next(get_db())
@@ -274,6 +301,9 @@ class UserService:
     
     async def update_last_login(self, user_id: str, db: Session = None) -> None:
         """Update user's last login timestamp"""
+
+
+
         try:
             if not db:
                 db = next(get_db())
@@ -288,6 +318,9 @@ class UserService:
     
     async def get_users(self, skip: int = 0, limit: int = 100, db: Session = None) -> List[User]:
         """Get list of users with pagination"""
+
+
+
         try:
             if not db:
                 db = next(get_db())
@@ -300,6 +333,9 @@ class UserService:
     
     async def send_verification_email(self, email: str, token: str) -> bool:
         """Send email verification link"""
+
+
+
         try:
             verification_url = f"{settings.frontend_url}/verify-email?token={token}"
             
@@ -317,6 +353,9 @@ class UserService:
     
     async def send_password_reset_email(self, email: str, token: str) -> bool:
         """Send password reset link"""
+
+
+
         try:
             reset_url = f"{settings.frontend_url}/reset-password?token={token}"
             
@@ -334,6 +373,9 @@ class UserService:
     
     async def get_user_statistics(self, user_id: str, db: Session = None) -> Dict[str, Any]:
         """Get user statistics and metrics"""
+
+
+
         try:
             if not db:
                 db = next(get_db())
@@ -373,6 +415,9 @@ class UserService:
     
     async def _initialize_role_specific_data(self, user: User, user_data: UserCreate) -> None:
         """Initialize role-specific user data and preferences"""
+
+
+
         try:
             role_config = {
                 "musician": {

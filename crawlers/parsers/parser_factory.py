@@ -8,7 +8,7 @@ Provides centralized access to all parser types with configuration management.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
@@ -153,6 +153,9 @@ class ParserFactory:
     
     def _build_parser_registry(self) -> Dict[ParserType, Type]:
         """Build registry of parser types to classes"""
+
+
+
         return {
             # Platform parsers
             ParserType.PLATFORM_YOUTUBE: YouTubeParser,
@@ -222,6 +225,9 @@ class ParserFactory:
     
     def _build_category_mapping(self) -> Dict[ParserCategory, List[ParserType]]:
         """Build mapping of categories to parser types"""
+
+
+
         return {
             ParserCategory.PLATFORM: [
                 ParserType.PLATFORM_YOUTUBE, ParserType.PLATFORM_INSTAGRAM,
@@ -269,6 +275,9 @@ class ParserFactory:
     
     def create_parser(self, parser_type: Union[ParserType, str], use_cache: bool = True) -> Any:
         """Create a parser instance"""
+
+
+
         try:
             # Convert string to ParserType if necessary
             if isinstance(parser_type, str):
@@ -312,6 +321,9 @@ class ParserFactory:
     
     def create_parsers_by_category(self, category: Union[ParserCategory, str], use_cache: bool = True) -> Dict[ParserType, Any]:
         """Create all parsers in a category"""
+
+
+
         try:
             # Convert string to ParserCategory if necessary
             if isinstance(category, str):
@@ -349,6 +361,9 @@ class ParserFactory:
     
     def get_available_parser_types(self) -> List[ParserType]:
         """Get list of available parser types"""
+
+
+
         return list(self._parser_registry.keys())
     
     def get_parser_types_by_category(self, category: Union[ParserCategory, str]) -> List[ParserType]:
@@ -363,6 +378,9 @@ class ParserFactory:
     
     def get_categories(self) -> List[ParserCategory]:
         """Get list of available parser categories"""
+
+
+
         return list(self._category_mapping.keys())
     
     def is_parser_type_supported(self, parser_type: Union[ParserType, str]) -> bool:
@@ -381,6 +399,9 @@ class ParserFactory:
     
     def get_cache_info(self) -> Dict[str, Any]:
         """Get information about cached parsers"""
+
+
+
         return {
             'cached_parsers': len(self._parser_cache),
             'cached_types': [parser_type.value for parser_type in self._parser_cache.keys()],
@@ -389,6 +410,9 @@ class ParserFactory:
     
     def auto_detect_parser_type(self, content_info: Dict[str, Any]) -> Optional[ParserType]:
         """Auto-detect parser type based on content information"""
+
+
+
         try:
             # Check for URL patterns (platform detection)
             if 'url' in content_info:
@@ -472,6 +496,9 @@ class ParserFactory:
     
     def create_parser_pipeline(self, parser_types: List[Union[ParserType, str]], use_cache: bool = True) -> List[Any]:
         """Create a pipeline of parsers"""
+
+
+
         try:
             pipeline = []
             
@@ -489,6 +516,9 @@ class ParserFactory:
     
     def get_parser_info(self, parser_type: Union[ParserType, str]) -> Dict[str, Any]:
         """Get information about a parser type"""
+
+
+
         try:
             if isinstance(parser_type, str):
                 parser_type = ParserType(parser_type)

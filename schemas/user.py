@@ -5,7 +5,7 @@ Professional user authentication, profile, and session management schemas
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
+ INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 """
 
@@ -89,6 +89,9 @@ class UserOut(UUIDSchema, TimestampSchema):
     @property
     def display_name(self) -> str:
         """Get user display name."""
+
+
+
         return f"{self.first_name} {self.last_name}"
 
 
@@ -179,11 +182,17 @@ class UserVerification(UUIDSchema, TimestampSchema):
     @property
     def is_expired(self) -> bool:
         """Check if verification is expired."""
+
+
+
         return self.expires_at and datetime.utcnow() > self.expires_at
     
     @property
     def attempts_remaining(self) -> int:
         """Get remaining verification attempts."""
+
+
+
         return max(0, self.max_attempts - self.attempts_count)
 
 
@@ -211,11 +220,17 @@ class UserSession(UUIDSchema, TimestampSchema):
     @property
     def is_expired(self) -> bool:
         """Check if session is expired."""
+
+
+
         return datetime.utcnow() > self.expires_at
     
     @property
     def time_since_last_activity(self) -> int:
         """Get seconds since last activity."""
+
+
+
         return int((datetime.utcnow() - self.last_activity).total_seconds())
 
 

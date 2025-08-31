@@ -304,6 +304,9 @@ class KickCrawler(BaseCrawler):
         Returns:
             bool: Authentication success status
         """
+
+
+
         try:
             # Get CSRF token first
             async with self.session.get(f"{self.base_url}/login") as response:
@@ -368,6 +371,9 @@ class KickCrawler(BaseCrawler):
 
     async def _get_user_info(self) -> Optional[Dict[str, Any]]:
         """Get authenticated user information"""
+
+
+
         try:
             async with self.session.get(f"{self.api_base}/user") as response:
                 if response.status == 200:
@@ -472,6 +478,9 @@ class KickCrawler(BaseCrawler):
         limit: int
     ) -> List[KickStream]:
         """Search for Kick streams"""
+
+
+
         try:
             params = {
                 "limit": limit,
@@ -519,6 +528,9 @@ class KickCrawler(BaseCrawler):
         limit: int
     ) -> List[KickClip]:
         """Search for Kick clips"""
+
+
+
         try:
             params = {
                 "limit": limit,
@@ -556,6 +568,9 @@ class KickCrawler(BaseCrawler):
 
     async def _search_users(self, query: str, limit: int) -> List[KickUser]:
         """Search for Kick users"""
+
+
+
         try:
             params = {
                 "search": query,
@@ -720,6 +735,9 @@ class KickCrawler(BaseCrawler):
 
     async def _monitor_stream_chat(self, stream: KickStream):
         """Monitor chat for a specific stream"""
+
+
+
         try:
             if not self.enable_chat_monitoring:
                 return
@@ -838,6 +856,9 @@ class KickCrawler(BaseCrawler):
         features2: Dict[str, Any]
     ) -> float:
         """Calculate similarity between stream features"""
+
+
+
         try:
             scores = []
             
@@ -887,6 +908,9 @@ class KickCrawler(BaseCrawler):
         Returns:
             KickAnalytics: Comprehensive analytics data
         """
+
+
+
         try:
             start_time, end_time = analysis_period
             
@@ -1010,6 +1034,9 @@ class KickCrawler(BaseCrawler):
 
     async def _parse_stream_data(self, data: Dict[str, Any]) -> KickStream:
         """Parse stream data from API response"""
+
+
+
         try:
             # Parse user data
             user_data = data.get("user", {})
@@ -1055,6 +1082,9 @@ class KickCrawler(BaseCrawler):
 
     async def _parse_user_data(self, data: Dict[str, Any]) -> KickUser:
         """Parse user data from API response"""
+
+
+
         return KickUser(
             user_id=str(data.get("id", "")),
             username=data.get("username", ""),
@@ -1070,6 +1100,9 @@ class KickCrawler(BaseCrawler):
 
     async def _parse_clip_data(self, data: Dict[str, Any]) -> KickClip:
         """Parse clip data from API response"""
+
+
+
         try:
             # Parse creator data
             creator_data = data.get("creator", {})
@@ -1138,6 +1171,9 @@ class KickCrawler(BaseCrawler):
 
     async def _enrich_stream_data(self, stream: KickStream):
         """Enrich stream data with additional metrics"""
+
+
+
         try:
             # This would make additional API calls to get more detailed metrics
             pass
@@ -1165,6 +1201,9 @@ class KickCrawler(BaseCrawler):
 
     async def close(self):
         """Close crawler and cleanup resources"""
+
+
+
         try:
             # Close active chat connections
             for websocket in self.active_chat_sessions.values():

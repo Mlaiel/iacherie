@@ -7,7 +7,7 @@ using state-of-the-art AI/ML algorithms for precise content identification and s
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -179,6 +179,9 @@ class FingerprintingAgent(BaseAgent):
         
     async def initialize(self):
         """Initialize fingerprinting agent with all specialized components"""
+
+
+
         try:
             start_time = time.time()
             
@@ -479,6 +482,9 @@ class FingerprintingAgent(BaseAgent):
     
     async def _store_fingerprint(self, fingerprint: ContentFingerprint):
         """Store fingerprint in database and cache"""
+
+
+
         try:
             # Store in database
             async with get_db_session() as db:
@@ -573,6 +579,9 @@ class FingerprintingAgent(BaseAgent):
     
     async def cleanup(self):
         """Clean up resources"""
+
+
+
         try:
             # Save FAISS indexes
             for content_type, index in self.faiss_indexes.items():

@@ -331,6 +331,9 @@ subjectAltName = @alt_names
     
     def get_lets_encrypt_config(self, domains: List[str]) -> Dict[str, Any]:
         """Get Let's Encrypt configuration"""
+
+
+
         return {
             "client": "certbot",
             "email": "mlaiel@live.de",
@@ -520,6 +523,9 @@ upstream {upstream_name} {{
     
     def get_aws_alb_ssl_config(self) -> LoadBalancerSSLConfig:
         """Get AWS Application Load Balancer SSL configuration"""
+
+
+
         return LoadBalancerSSLConfig(
             ssl_policy="ELBSecurityPolicy-TLS-1-2-2019-07",
             certificate_arn=f"arn:aws:acm:eu-central-1:123456789012:certificate/{self.project_name}-{self.environment}",
@@ -531,6 +537,9 @@ upstream {upstream_name} {{
     
     def get_cloudflare_ssl_config(self) -> Dict[str, Any]:
         """Get Cloudflare SSL configuration"""
+
+
+
         return {
             "ssl_mode": "full_strict" if self.environment == "production" else "full",
             "min_tls_version": "1.2",
@@ -564,6 +573,9 @@ upstream {upstream_name} {{
     
     def check_certificate_expiry(self, domain: str, port: int = 443) -> Dict[str, Any]:
         """Check SSL certificate expiry"""
+
+
+
         try:
             context = ssl.create_default_context()
             with socket.create_connection((domain, port), timeout=10) as sock:
@@ -665,7 +677,7 @@ for domain in "${{DOMAINS[@]}}"; do
              -H "Content-Type: application/json" \
              -d "{{
                  \"channel\": \"#alerts\",
-                 \"text\": \"🚨 SSL Certificate Warning: $domain expires within 30 days\"
+                 \"text\": \" SSL Certificate Warning: $domain expires within 30 days\"
              }}" || true
     fi
 done

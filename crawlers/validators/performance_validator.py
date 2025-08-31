@@ -102,16 +102,25 @@ class PerformanceProfile:
     @property
     def critical_issues(self) -> List[str]:
         """Get critical performance issues"""
+
+
+
         return [issue for issue in self.bottlenecks if "critical" in issue.lower()]
     
     @property
     def passed_metrics_count(self) -> int:
         """Count of metrics that passed thresholds"""
+
+
+
         return sum(1 for m in self.measurements.values() if m.threshold_passed)
     
     @property
     def total_metrics_count(self) -> int:
         """Total number of metrics measured"""
+
+
+
         return len(self.measurements)
     
     @property

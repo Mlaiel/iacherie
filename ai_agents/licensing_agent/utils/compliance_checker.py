@@ -7,7 +7,7 @@ and automated compliance reporting for content licensing operations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -190,6 +190,9 @@ class ComplianceChecker:
         Returns:
             Detailed compliance assessment report
         """
+
+
+
         try:
             assessment_start = datetime.utcnow()
             
@@ -314,6 +317,9 @@ class ComplianceChecker:
         Returns:
             Summary of regulatory changes and impacts
         """
+
+
+
         try:
             monitoring_results = {
                 "new_regulations": [],
@@ -395,6 +401,9 @@ class ComplianceChecker:
         Returns:
             Detailed compliance validation report
         """
+
+
+
         try:
             validation_results = {
                 "overall_compliant": True,
@@ -483,6 +492,9 @@ class ComplianceChecker:
         Returns:
             Dashboard data with metrics and visualizations
         """
+
+
+
         try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=period_days)
@@ -567,6 +579,9 @@ class ComplianceChecker:
 
     async def _load_compliance_rules(self):
         """Load current compliance rules from regulation database"""
+
+
+
         try:
             # Load rules by jurisdiction and area
             all_rules = await self.regulation_db.get_active_rules()
@@ -615,6 +630,9 @@ class LegalValidator:
         target_markets: List[str]
     ) -> Dict[str, Any]:
         """Validate licensing strategy for legal soundness across multiple jurisdictions"""
+
+
+
         try:
             validation_id = str(uuid.uuid4())
             logger.info(f"Validating licensing strategy {validation_id} for {len(target_markets)} markets")
@@ -693,6 +711,9 @@ class LegalValidator:
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Generate comprehensive legal opinion on licensing matters using AI-powered legal analysis"""
+
+
+
         try:
             opinion_id = str(uuid.uuid4())
             logger.info(f"Generating legal opinion {opinion_id} for jurisdiction {jurisdiction}")

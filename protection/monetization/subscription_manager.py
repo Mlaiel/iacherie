@@ -80,6 +80,9 @@ class SubscriptionPlan:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert plan to dictionary."""
+
+
+
         return {
             "plan_id": self.plan_id,
             "name": self.name,
@@ -114,6 +117,9 @@ class Subscription:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert subscription to dictionary."""
+
+
+
         return {
             "subscription_id": self.subscription_id,
             "user_id": self.user_id,
@@ -132,10 +138,16 @@ class Subscription:
     
     def is_active(self) -> bool:
         """Check if subscription is currently active."""
+
+
+
         return self.status in [SubscriptionStatus.ACTIVE, SubscriptionStatus.TRIAL]
     
     def is_trial(self) -> bool:
         """Check if subscription is in trial period."""
+
+
+
         return (self.status == SubscriptionStatus.TRIAL and 
                 self.trial_end and 
                 datetime.utcnow() < self.trial_end)
@@ -192,6 +204,9 @@ class SubscriptionManager:
     
     async def initialize(self) -> bool:
         """Initialize subscription manager."""
+
+
+
         try:
             # Create default plans
             for plan in self.default_plans:
@@ -530,6 +545,9 @@ class SubscriptionManager:
     
     async def get_user_subscriptions(self, user_id: str) -> List[Subscription]:
         """Get all subscriptions for a user."""
+
+
+
         return [
             sub for sub in self.subscriptions.values() 
             if sub.user_id == user_id
@@ -576,10 +594,16 @@ class SubscriptionManager:
     
     def get_plan(self, plan_id: str) -> Optional[SubscriptionPlan]:
         """Get subscription plan by ID."""
+
+
+
         return self.plans.get(plan_id)
     
     def get_subscription(self, subscription_id: str) -> Optional[Subscription]:
         """Get subscription by ID."""
+
+
+
         return self.subscriptions.get(subscription_id)
     
     def list_plans(self, active_only: bool = True) -> List[SubscriptionPlan]:

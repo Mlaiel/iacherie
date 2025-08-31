@@ -8,7 +8,7 @@ Creator Upload → IA Processing → Protection → Monetization → Collaborati
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent - Content Protection Platform
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
@@ -753,6 +753,9 @@ class WorkflowManager:
     
     async def _execute_workflow(self, context: WorkflowContext):
         """Execute workflow asynchronously"""
+
+
+
         try:
             result = await self.orchestrator.execute_complete_workflow(context)
             

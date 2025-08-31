@@ -23,7 +23,7 @@ cross-promotion strategies, and network building agents.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -58,11 +58,17 @@ class TestCollaborationMatcherAgent:
     @pytest.fixture
     def agent(self):
         """Create CollaborationMatcherAgent instance"""
+
+
+
         return CollaborationMatcherAgent()
     
     @pytest.fixture
     def sample_creator_profile(self):
         """Sample creator profile for collaboration matching"""
+
+
+
         return {
             "creator_id": "creator_001",
             "name": "TechCreator",
@@ -90,6 +96,9 @@ class TestCollaborationMatcherAgent:
     @pytest.fixture
     def sample_collaboration_goals(self):
         """Sample collaboration goals"""
+
+
+
         return {
             "primary_objectives": ["audience_growth", "content_diversification"],
             "preferred_collaboration_types": ["joint_creation", "cross_promotion"],
@@ -222,11 +231,17 @@ class TestNetworkAnalysisAgent:
     @pytest.fixture
     def agent(self):
         """Create NetworkAnalysisAgent instance"""
+
+
+
         return NetworkAnalysisAgent()
     
     @pytest.fixture
     def sample_network_data(self):
         """Sample network data for analysis"""
+
+
+
         return {
             "creator_id": "creator_001",
             "direct_connections": [
@@ -322,11 +337,17 @@ class TestPartnershipAgent:
     @pytest.fixture
     def agent(self):
         """Create PartnershipAgent instance"""
+
+
+
         return PartnershipAgent()
     
     @pytest.fixture
     def sample_partnership_requirements(self):
         """Sample partnership requirements"""
+
+
+
         return {
             "partnership_type": "brand_collaboration",
             "creator_profile": {
@@ -415,11 +436,17 @@ class TestCrossPromotionAgent:
     @pytest.fixture
     def agent(self):
         """Create CrossPromotionAgent instance"""
+
+
+
         return CrossPromotionAgent()
     
     @pytest.fixture
     def sample_cross_promotion_setup(self):
         """Sample cross-promotion setup"""
+
+
+
         return {
             "primary_creator": {
                 "id": "creator_001",
@@ -510,6 +537,9 @@ class TestIntegrationScenarios:
     @pytest.fixture
     def agents(self):
         """Create all collaboration agents for integration testing"""
+
+
+
         return {
             "matcher": CollaborationMatcherAgent(),
             "network": NetworkAnalysisAgent(),
@@ -587,6 +617,9 @@ class TestErrorHandling:
     @pytest.fixture
     def agent(self):
         """Create CollaborationMatcherAgent for error testing"""
+
+
+
         return CollaborationMatcherAgent()
     
     @pytest.mark.asyncio
@@ -636,6 +669,9 @@ class TestPerformanceAndScaling:
     @pytest.fixture
     def agent(self):
         """Create CollaborationMatcherAgent for performance testing"""
+
+
+
         return CollaborationMatcherAgent()
     
     @pytest.mark.asyncio

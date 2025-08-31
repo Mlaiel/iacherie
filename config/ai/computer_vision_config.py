@@ -364,6 +364,9 @@ class ComputerVisionConfig(BaseSettings):
     
     def _get_default_vision_spec(self, task: VisionTask) -> VisionModelSpec:
         """Get default vision model specification."""
+
+
+
         return VisionModelSpec(
             task=task,
             model_name="default_vision",
@@ -374,6 +377,9 @@ class ComputerVisionConfig(BaseSettings):
     
     def get_image_processing_config(self) -> Dict[str, Any]:
         """Get image processing configuration."""
+
+
+
         return {
             "supported_formats": self.SUPPORTED_IMAGE_FORMATS,
             "max_size_mb": self.MAX_IMAGE_SIZE_MB,
@@ -396,6 +402,9 @@ class ComputerVisionConfig(BaseSettings):
     
     def get_video_processing_config(self) -> Dict[str, Any]:
         """Get video processing configuration."""
+
+
+
         return {
             "supported_formats": self.SUPPORTED_VIDEO_FORMATS,
             "max_size_mb": self.MAX_VIDEO_SIZE_MB,
@@ -414,6 +423,9 @@ class ComputerVisionConfig(BaseSettings):
     
     def get_fingerprinting_config(self) -> Dict[str, Any]:
         """Get image fingerprinting configuration."""
+
+
+
         return {
             "similarity_threshold": self.SIMILARITY_THRESHOLD,
             "duplicate_threshold": self.DUPLICATE_THRESHOLD,
@@ -437,6 +449,9 @@ class ComputerVisionConfig(BaseSettings):
     
     def get_content_moderation_config(self) -> Dict[str, Any]:
         """Get content moderation configuration."""
+
+
+
         return {
             "nsfw_detection": {
                 "enabled": True,
@@ -461,6 +476,9 @@ class ComputerVisionConfig(BaseSettings):
     
     def get_performance_config(self) -> Dict[str, Any]:
         """Get vision processing performance configuration."""
+
+
+
         return {
             "gpu_acceleration": self.GPU_ACCELERATION,
             "batch_processing": self.BATCH_PROCESSING,
@@ -475,6 +493,9 @@ class ComputerVisionConfig(BaseSettings):
     
     def get_supported_tasks(self) -> List[VisionTask]:
         """Get list of all supported vision tasks."""
+
+
+
         return [task for task in VisionTask]
     
     def get_models_by_gpu_requirement(self, gpu_available: bool) -> List[VisionModelSpec]:

@@ -1,5 +1,5 @@
 """
-🚀 Vector Database Usage Examples
+ Vector Database Usage Examples
 =================================
 
 Professional examples demonstrating the ultra-advanced vector database system
@@ -8,7 +8,7 @@ for content protection and similarity search in production environments.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL IMPORTANT ⚠️
+  AVERTISSEMENT LÉGAL IMPORTANT 
 =====================================
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
@@ -35,7 +35,7 @@ async def basic_content_protection_example():
     """
     Basic example: Store and search audio content for copyright protection
     """
-    print("🎵 Basic Content Protection Example")
+    print(" Basic Content Protection Example")
     print("=" * 50)
     
     # Initialize vector database with production configuration
@@ -78,7 +78,7 @@ async def basic_content_protection_example():
             }
         )
         
-        print(f"✅ Stored original content: {original_id}")
+        print(f" Stored original content: {original_id}")
         
         # Simulate potential infringing content (slightly modified)
         modified_fingerprint = audio_fingerprint.copy()
@@ -95,12 +95,12 @@ async def basic_content_protection_example():
             max_results=5
         )
         
-        print(f"🔍 Found {len(similar_content)} similar content matches")
+        print(f" Found {len(similar_content)} similar content matches")
         
         for match in similar_content:
             similarity = match['similarity_score']
             if similarity > 0.9:
-                print(f"⚠️  POTENTIAL INFRINGEMENT DETECTED!")
+                print(f"  POTENTIAL INFRINGEMENT DETECTED!")
                 print(f"   Similarity: {similarity:.3f}")
                 print(f"   Original: {match['metadata'].get('title', 'Unknown')}")
                 print(f"   Owner: {match['metadata'].get('copyright_owner', 'Unknown')}")
@@ -117,7 +117,7 @@ async def enterprise_analytics_example():
     """
     Enterprise example: Advanced analytics and performance monitoring
     """
-    print("\n📊 Enterprise Analytics Example")
+    print("\n Enterprise Analytics Example")
     print("=" * 50)
     
     # Use enterprise configuration
@@ -175,13 +175,13 @@ async def enterprise_analytics_example():
                 }
             )
         
-        print("✅ Stored 20 pieces of content across multiple types")
+        print(" Stored 20 pieces of content across multiple types")
         
         # Generate comprehensive analytics report
         analytics_report = await vector_db.get_analytics_report(AnalyticsLevel.COMPREHENSIVE)
         
         if analytics_report:
-            print(f"\n📈 Analytics Report Generated:")
+            print(f"\n Analytics Report Generated:")
             print(f"   Report ID: {analytics_report['report_id']}")
             print(f"   Period: {analytics_report['period_hours']:.1f} hours")
             
@@ -200,12 +200,12 @@ async def enterprise_analytics_example():
                     print(f"   Total Vectors: {int(usage['vectors_total']['mean'])}")
             
             # Insights
-            print(f"\n💡 Key Insights:")
+            print(f"\n Key Insights:")
             for insight in analytics_report['insights'][:3]:  # Show top 3
                 print(f"   • {insight}")
             
             # Recommendations
-            print(f"\n🎯 Recommendations:")
+            print(f"\n Recommendations:")
             for rec in analytics_report['recommendations'][:3]:  # Show top 3
                 print(f"   • {rec}")
         
@@ -216,7 +216,7 @@ async def enterprise_analytics_example():
         )
         
         if duplicate_clusters:
-            print(f"\n🔍 Duplicate Detection Results:")
+            print(f"\n Duplicate Detection Results:")
             for cluster in duplicate_clusters[:3]:  # Show top 3
                 print(f"   Cluster: {cluster['duplicate_count']} items, "
                       f"Confidence: {cluster['confidence']:.3f}")
@@ -229,7 +229,7 @@ async def optimization_example():
     """
     Example: Automatic performance optimization
     """
-    print("\n⚡ Performance Optimization Example")
+    print("\n Performance Optimization Example")
     print("=" * 50)
     
     config = get_config('production')
@@ -266,7 +266,7 @@ async def optimization_example():
             )
             test_queries.append(query_fingerprint)
         
-        print("✅ Generated performance data with searches")
+        print(" Generated performance data with searches")
         
         # Run performance optimization
         optimization_results = await vector_db.optimize_performance(
@@ -274,21 +274,21 @@ async def optimization_example():
         )
         
         if optimization_results:
-            print(f"\n🔧 Optimization Results:")
+            print(f"\n Optimization Results:")
             for result in optimization_results:
                 if result['success']:
-                    print(f"   ✅ {result['description']}")
+                    print(f"    {result['description']}")
                     print(f"      Expected: {result['expected_improvement']:.1f}% improvement")
                     if result['actual_improvement'] > 0:
                         print(f"      Actual: {result['actual_improvement']:.1f}% improvement")
                 else:
-                    print(f"   ❌ Failed: {result['description']}")
+                    print(f"    Failed: {result['description']}")
         else:
             print("   No optimizations needed at this time")
         
         # Get system status
         status = vector_db.get_system_status()
-        print(f"\n🖥️  System Status:")
+        print(f"\n  System Status:")
         print(f"   Total Operations: {status['performance_stats']['total_operations']}")
         print(f"   Average Search Time: {status['performance_stats']['average_search_time_ms']:.2f}ms")
         print(f"   Error Rate: {status['performance_stats']['error_rate']:.3%}")
@@ -301,7 +301,7 @@ async def multi_modal_search_example():
     """
     Advanced example: Cross-modal content search
     """
-    print("\n🔄 Multi-Modal Search Example")
+    print("\n Multi-Modal Search Example")
     print("=" * 50)
     
     config = create_custom_config('production', {
@@ -357,7 +357,7 @@ async def multi_modal_search_example():
             )
             stored_ids.append(content_id)
         
-        print(f"✅ Stored {len(stored_ids)} multi-modal content items")
+        print(f" Stored {len(stored_ids)} multi-modal content items")
         
         # Perform cross-modal search
         # Search for content similar to audio using text description
@@ -372,7 +372,7 @@ async def multi_modal_search_example():
             max_results=10
         )
         
-        print(f"\n🔍 Cross-Modal Search Results:")
+        print(f"\n Cross-Modal Search Results:")
         for result in cross_modal_results:
             print(f"   Content: {result['metadata'].get('title', 'Unknown')}")
             print(f"   Type: {result['metadata'].get('content_type', 'Unknown')}")
@@ -388,7 +388,7 @@ async def real_time_monitoring_example():
     """
     Example: Real-time system monitoring and alerts
     """
-    print("\n📺 Real-Time Monitoring Example")
+    print("\n Real-Time Monitoring Example")
     print("=" * 50)
     
     config = get_config('enterprise')
@@ -399,11 +399,11 @@ async def real_time_monitoring_example():
     await vector_db.initialize()
     
     try:
-        print("🚀 Starting real-time monitoring...")
+        print(" Starting real-time monitoring...")
         
         # Simulate continuous content processing
         for batch in range(3):  # 3 batches of processing
-            print(f"\n📦 Processing batch {batch + 1}...")
+            print(f"\n Processing batch {batch + 1}...")
             
             # Simulate processing multiple content items
             batch_start = time.time()
@@ -437,11 +437,11 @@ async def real_time_monitoring_example():
                     )
             
             batch_time = time.time() - batch_start
-            print(f"   ✅ Processed 10 items in {batch_time:.2f}s")
+            print(f"    Processed 10 items in {batch_time:.2f}s")
             
             # Get current system status
             status = vector_db.get_system_status()
-            print(f"   📊 Current stats:")
+            print(f"    Current stats:")
             print(f"      Total operations: {status['performance_stats']['total_operations']}")
             print(f"      Avg search time: {status['performance_stats']['average_search_time_ms']:.2f}ms")
             
@@ -452,7 +452,7 @@ async def real_time_monitoring_example():
         final_report = await vector_db.get_analytics_report(AnalyticsLevel.DETAILED)
         
         if final_report:
-            print(f"\n📋 Final Monitoring Report:")
+            print(f"\n Final Monitoring Report:")
             print(f"   Total processing time: {final_report['period_hours']:.2f} hours")
             print(f"   Key insights:")
             for insight in final_report['insights'][:2]:
@@ -466,9 +466,9 @@ async def main():
     """
     Run all examples to demonstrate the vector database capabilities
     """
-    print("🔍 ULTRA-ADVANCED VECTOR DATABASE SYSTEM")
-    print("🎯 Professional Examples for Content Protection")
-    print("👨‍💻 Created by: Fahed Mlaiel (mlaiel@live.de)")
+    print(" ULTRA-ADVANCED VECTOR DATABASE SYSTEM")
+    print(" Professional Examples for Content Protection")
+    print("‍ Created by: Fahed Mlaiel (mlaiel@live.de)")
     print("=" * 60)
     
     examples = [
@@ -482,17 +482,17 @@ async def main():
     for i, example in enumerate(examples, 1):
         try:
             await example()
-            print(f"\n✅ Example {i} completed successfully")
+            print(f"\n Example {i} completed successfully")
         except Exception as e:
-            print(f"\n❌ Example {i} failed: {e}")
+            print(f"\n Example {i} failed: {e}")
         
         if i < len(examples):
-            print("\n" + "⏱️ " * 20)
+            print("\n" + "⏱ " * 20)
             await asyncio.sleep(1)  # Brief pause between examples
     
-    print(f"\n🎉 All examples completed!")
-    print(f"💡 This demonstrates the complete ultra-advanced vector database system")
-    print(f"📧 Contact: mlaiel@live.de for enterprise licensing")
+    print(f"\n All examples completed!")
+    print(f" This demonstrates the complete ultra-advanced vector database system")
+    print(f" Contact: mlaiel@live.de for enterprise licensing")
 
 
 if __name__ == "__main__":

@@ -13,7 +13,7 @@ Project Team Specialties:
 - Microservices Architect & Audio Processing: Multi-format Support  
 - DevOps Engineer & IA Prompt Engineer: Production Deployment
 
-⚠️ STRONG WARNING ⚠️
+ STRONG WARNING 
 Any attempt to steal, copy, reproduce, or use this concept, idea, or code 
 without explicit written authorization from Fahed Mlaiel is strictly 
 prohibited and will result in legal action.
@@ -83,6 +83,9 @@ class TimestampProof:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for storage/transmission"""
+
+
+
         return {
             "content_hash": self.content_hash,
             "timestamp": self.timestamp.isoformat(),
@@ -185,6 +188,9 @@ class CryptographicTimestamping:
         Returns:
             ContentFingerprint object
         """
+
+
+
         try:
             file_path = Path(content_path)
             
@@ -269,6 +275,9 @@ class CryptographicTimestamping:
         Returns:
             TimestampProof object
         """
+
+
+
         try:
             proof_data = {}
             transaction_hash = None
@@ -396,6 +405,9 @@ class CryptographicTimestamping:
         Returns:
             True if proof is valid, False otherwise
         """
+
+
+
         try:
             # Verify signature
             if not self._verify_signature(proof):
@@ -430,6 +442,9 @@ class CryptographicTimestamping:
     
     def _verify_signature(self, proof: TimestampProof) -> bool:
         """Verify digital signature of proof"""
+
+
+
         try:
             if not proof.signature:
                 return False
@@ -477,6 +492,9 @@ class CryptographicTimestamping:
     
     async def get_proof_status(self, proof: TimestampProof) -> ProofStatus:
         """Get current status of timestamp proof"""
+
+
+
         try:
             if proof.service == TimestampingService.BLOCKCHAIN_PROOF:
                 # Check blockchain confirmation
@@ -513,6 +531,9 @@ class CryptographicTimestamping:
         Returns:
             Merkle tree structure with root hash
         """
+
+
+
         try:
             if not fingerprints:
                 raise ValueError("At least one fingerprint required")
@@ -573,6 +594,9 @@ class CryptographicTimestamping:
         Returns:
             List of TimestampProof objects
         """
+
+
+
         try:
             # Create fingerprints for all content
             fingerprints = []

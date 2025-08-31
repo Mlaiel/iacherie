@@ -1,5 +1,5 @@
 """
-💾 Backup Storage Manager - IA Influencer Agent Platform Enterprise
+ Backup Storage Manager - IA Influencer Agent Platform Enterprise
 ==================================================================
 Module: backend/data_management/storage/backup_storage.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Enterprise backup storage management with automated scheduling,
 incremental backups, verification, and multi-tier restoration.
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -182,6 +182,9 @@ class BackupStorageManager:
     
     def _initialize_backup_directories(self) -> None:
         """Initialize backup directory structure"""
+
+
+
         try:
             backup_root = Path(self.config.backup_root_path)
             backup_root.mkdir(parents=True, exist_ok=True)
@@ -201,6 +204,9 @@ class BackupStorageManager:
     
     async def create_backup_job(self, job_config: Dict[str, Any]) -> Dict[str, Any]:
         """Create a new backup job"""
+
+
+
         try:
             # Validate configuration
             required_fields = ['name', 'source_paths', 'destination_path', 'backup_type', 'schedule']
@@ -265,6 +271,9 @@ class BackupStorageManager:
     
     async def execute_backup(self, job_id: str, force: bool = False) -> Dict[str, Any]:
         """Execute a backup job"""
+
+
+
         try:
             if job_id not in self.backup_jobs:
                 return {
@@ -376,6 +385,9 @@ class BackupStorageManager:
         point_in_time: Optional[datetime] = None
     ) -> Dict[str, Any]:
         """Restore data from backup"""
+
+
+
         try:
             if backup_id not in self.backup_records:
                 return {
@@ -445,6 +457,9 @@ class BackupStorageManager:
         limit: int = 100
     ) -> List[Dict[str, Any]]:
         """List backup records with filtering"""
+
+
+
         try:
             filtered_records = []
             
@@ -492,6 +507,9 @@ class BackupStorageManager:
     
     async def cleanup_old_backups(self) -> Dict[str, Any]:
         """Clean up old backups based on retention policies"""
+
+
+
         try:
             cleanup_results = {
                 'total_checked': 0,
@@ -550,6 +568,9 @@ class BackupStorageManager:
     
     def get_backup_statistics(self) -> Dict[str, Any]:
         """Get comprehensive backup statistics"""
+
+
+
         try:
             # Calculate current statistics
             total_jobs = len(self.backup_jobs)
@@ -606,6 +627,9 @@ class BackupStorageManager:
         backup_record: BackupRecord
     ) -> Dict[str, Any]:
         """Execute full backup operation"""
+
+
+
         try:
             backup_record.status = BackupStatus.IN_PROGRESS
             
@@ -676,6 +700,9 @@ class BackupStorageManager:
         restore_path: str
     ) -> Dict[str, Any]:
         """Restore data from full backup"""
+
+
+
         try:
             backup_path = Path(backup_record.backup_path)
             
@@ -714,6 +741,9 @@ class BackupStorageManager:
     
     async def _should_include_file(self, file_path: Path, backup_job: BackupJob) -> bool:
         """Check if file should be included in backup"""
+
+
+
         try:
             # Check file size limit
             if file_path.stat().st_size > backup_job.max_file_size:
@@ -740,6 +770,9 @@ class BackupStorageManager:
     
     async def _calculate_file_checksum(self, file_path: Path) -> str:
         """Calculate SHA-256 checksum of file"""
+
+
+
         try:
             hash_sha256 = hashlib.sha256()
             
@@ -785,6 +818,9 @@ class BackupStorageManager:
     
     async def _save_job_configuration(self, backup_job: BackupJob) -> None:
         """Save backup job configuration to disk"""
+
+
+
         try:
             config_path = Path(self.config.backup_root_path) / "metadata" / f"{backup_job.job_id}.json"
             
@@ -815,6 +851,9 @@ class BackupStorageManager:
     
     async def _save_backup_record(self, backup_record: BackupRecord) -> None:
         """Save backup record to disk"""
+
+
+
         try:
             record_path = Path(self.config.backup_root_path) / "metadata" / f"{backup_record.backup_id}_record.json"
             
@@ -874,6 +913,9 @@ class BackupScheduler:
     
     def _schedule_next_execution(self, backup_job: BackupJob) -> None:
         """Schedule next execution of backup job"""
+
+
+
         try:
             cron = croniter.croniter(backup_job.schedule, datetime.now())
             next_run = cron.get_next(datetime)
@@ -919,6 +961,9 @@ class BackupVerifier:
     
     async def verify_backup(self, backup_record: BackupRecord) -> Dict[str, Any]:
         """Verify backup integrity"""
+
+
+
         try:
             backup_path = Path(backup_record.backup_path)
             
@@ -991,6 +1036,9 @@ class IncrementalBackupEngine:
         backup_record: BackupRecord
     ) -> Dict[str, Any]:
         """Execute incremental backup"""
+
+
+
         try:
             # Find last full backup
             last_full_backup = await self._find_last_full_backup(backup_job.job_id)
@@ -1065,6 +1113,9 @@ class IncrementalBackupEngine:
     
     async def _file_changed_since(self, file_path: Path, timestamp: datetime) -> bool:
         """Check if file changed since given timestamp"""
+
+
+
         try:
             file_stat = file_path.stat()
             file_mtime = datetime.fromtimestamp(file_stat.st_mtime)
@@ -1079,6 +1130,9 @@ class IncrementalBackupEngine:
         changed_files: List[str]
     ) -> Dict[str, Any]:
         """Create incremental backup archive"""
+
+
+
         try:
             # Create backup file path
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -1135,6 +1189,9 @@ class SnapshotManager:
         backup_record: BackupRecord
     ) -> Dict[str, Any]:
         """Create snapshot backup"""
+
+
+
         try:
             # For this implementation, snapshot is similar to full backup
             # In a real system, this might use filesystem snapshots (LVM, ZFS, etc.)

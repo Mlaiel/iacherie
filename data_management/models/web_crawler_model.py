@@ -1,5 +1,5 @@
 """
-🕷️ Web Crawler Models - IA Influencer Agent Platform Enterprise
+ Web Crawler Models - IA Influencer Agent Platform Enterprise
 ===============================================================
 Module: backend/data_management/models/web_crawler_model.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Web Crawler Data Models - Production-Ready
 Responsibility: Web surveillance and content protection data models
 ========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
@@ -163,6 +163,9 @@ class CrawlJobModel:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for serialization"""
+
+
+
         return {
             'job_id': self.job_id,
             'creator_id': self.creator_id,
@@ -221,11 +224,17 @@ class CrawlJobModel:
     
     def is_ready_to_run(self) -> bool:
         """Check if job is ready to run"""
+
+
+
         return (self.status == CrawlStatus.PENDING and 
                 self.scheduled_at <= datetime.now(timezone.utc))
     
     def can_retry(self) -> bool:
         """Check if job can be retried"""
+
+
+
         return self.status == CrawlStatus.FAILED
     
     def calculate_next_run(self):
@@ -321,6 +330,9 @@ class DetectedContentModel:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for serialization"""
+
+
+
         return {
             'detection_id': self.detection_id,
             'job_id': self.job_id,
@@ -381,12 +393,18 @@ class DetectedContentModel:
     
     def is_high_priority(self) -> bool:
         """Check if detection is high priority"""
+
+
+
         return (self.urgency_level >= 8 or 
                 self.similarity_score >= 0.95 or
                 (self.revenue_estimate and self.revenue_estimate > 1000))
     
     def requires_immediate_action(self) -> bool:
         """Check if detection requires immediate action"""
+
+
+
         return (self.urgency_level >= 9 or
                 self.violation_type in [ViolationType.COPYRIGHT_INFRINGEMENT, ViolationType.REVENUE_THEFT])
 
@@ -443,6 +461,9 @@ class EvidenceModel:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for serialization"""
+
+
+
         return {
             'evidence_id': self.evidence_id,
             'detection_id': self.detection_id,
@@ -550,6 +571,9 @@ class CrawlMetricsModel:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for serialization"""
+
+
+
         return {
             'metrics_id': self.metrics_id,
             'job_id': self.job_id,

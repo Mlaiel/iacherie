@@ -157,6 +157,9 @@ class FirebasePushProvider:
     
     def _init_firebase(self, credentials_path: str):
         """Initialiser Firebase"""
+
+
+
         try:
             cred = credentials.Certificate(credentials_path)
             self.app = initialize_app(cred, name=f"push_{self.project_id}")
@@ -167,6 +170,9 @@ class FirebasePushProvider:
     
     async def send_notification(self, notification: PushNotification, device: PushDevice) -> Dict[str, Any]:
         """Envoyer une notification via FCM"""
+
+
+
         try:
             # Construire le message FCM
             fcm_message = self._build_fcm_message(notification, device)
@@ -301,6 +307,9 @@ class WebPushProvider:
     
     async def send_notification(self, notification: PushNotification, device: PushDevice) -> Dict[str, Any]:
         """Envoyer une notification Web Push"""
+
+
+
         try:
             if not device.endpoint or not device.p256dh_key or not device.auth_key:
                 raise ValueError("Données Web Push incomplètes")
@@ -370,6 +379,9 @@ class WebPushProvider:
     
     def _encrypt_payload(self, payload: str, p256dh_key: str, auth_key: str) -> bytes:
         """Chiffrer le payload Web Push"""
+
+
+
         try:
             # Décoder les clés
             receiver_key = base64.urlsafe_b64decode(p256dh_key + "==")
@@ -432,6 +444,9 @@ class WebPushProvider:
     
     def _generate_vapid_headers(self, endpoint: str) -> Dict[str, str]:
         """Générer les en-têtes VAPID"""
+
+
+
         try:
             # Préparer les claims
             claims = {
@@ -485,6 +500,9 @@ class PushNotificationManager:
     
     async def register_device(self, device: PushDevice) -> str:
         """Enregistrer un appareil"""
+
+
+
         try:
             # Vérifier si l'appareil existe déjà
             existing = await self._find_device_by_token(device.token)
@@ -504,6 +522,9 @@ class PushNotificationManager:
     
     async def send_notification(self, notification: PushNotification) -> str:
         """Envoyer une notification"""
+
+
+
         try:
             # Sauvegarder la notification
             notification_id = await self._save_notification(notification)
@@ -529,6 +550,9 @@ class PushNotificationManager:
     
     async def send_bulk_notifications(self, notifications: List[PushNotification]) -> List[str]:
         """Envoyer des notifications en lot"""
+
+
+
         try:
             notification_ids = []
             
@@ -555,6 +579,9 @@ class PushNotificationManager:
     
     async def _send_to_devices(self, notification: PushNotification, devices: List[Dict[str, Any]]):
         """Envoyer à une liste d'appareils"""
+
+
+
         try:
             # Grouper par plateforme
             platform_groups = {}
@@ -573,6 +600,9 @@ class PushNotificationManager:
     
     async def _send_to_platform(self, notification: PushNotification, platform: PushPlatform, devices: List[Dict[str, Any]]):
         """Envoyer à une plateforme spécifique"""
+
+
+
         try:
             # Sélectionner le bon fournisseur
             provider = None
@@ -624,6 +654,9 @@ class PushNotificationManager:
     
     async def _schedule_notification(self, notification: PushNotification, devices: List[Dict[str, Any]]):
         """Programmer une notification"""
+
+
+
         try:
             # Ajouter à la queue Redis
             schedule_data = {
@@ -643,6 +676,9 @@ class PushNotificationManager:
     
     async def process_scheduled_notifications(self):
         """Traiter les notifications programmées"""
+
+
+
         try:
             now = datetime.utcnow().timestamp()
             

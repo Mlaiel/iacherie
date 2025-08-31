@@ -8,7 +8,7 @@ Responsibility: Advanced analytics and insights for queue performance optimizati
 Technologies: Analytics Engine, ML Insights, Performance Metrics, Reporting
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -116,7 +116,7 @@ class AnalyticsReport:
 
 class QueueAnalyticsEngine:
     """
-    📊 Advanced Queue Analytics Engine - IA-Influencer-Agent
+     Advanced Queue Analytics Engine - IA-Influencer-Agent
     
     Enterprise-grade analytics engine featuring:
     - Real-time performance monitoring
@@ -162,6 +162,9 @@ class QueueAnalyticsEngine:
     
     async def initialize(self) -> bool:
         """Initialize analytics engine"""
+
+
+
         try:
             self._is_running = True
             
@@ -177,11 +180,11 @@ class QueueAnalyticsEngine:
                 asyncio.create_task(self._cache_manager())
             ])
             
-            logger.info("✅ Queue Analytics Engine initialized")
+            logger.info(" Queue Analytics Engine initialized")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Analytics engine initialization failed: {e}")
+            logger.error(f" Analytics engine initialization failed: {e}")
             return False
     
     async def record_metric(
@@ -192,6 +195,9 @@ class QueueAnalyticsEngine:
         tags: Optional[List[str]] = None
     ):
         """Record a metric data point"""
+
+
+
         try:
             data_point = AnalyticsDataPoint(
                 timestamp=datetime.now(),
@@ -204,10 +210,13 @@ class QueueAnalyticsEngine:
             self.metrics_data[metric_type].append(data_point)
             
         except Exception as e:
-            logger.error(f"❌ Failed to record metric: {e}")
+            logger.error(f" Failed to record metric: {e}")
     
     async def get_real_time_metrics(self) -> Dict[str, Any]:
         """Get real-time performance metrics"""
+
+
+
         try:
             current_time = datetime.now()
             five_minutes_ago = current_time - timedelta(minutes=5)
@@ -248,7 +257,7 @@ class QueueAnalyticsEngine:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to get real-time metrics: {e}")
+            logger.error(f" Failed to get real-time metrics: {e}")
             return {"error": str(e)}
     
     async def generate_analytics_report(
@@ -258,6 +267,9 @@ class QueueAnalyticsEngine:
         include_charts: bool = True
     ) -> AnalyticsReport:
         """Generate comprehensive analytics report"""
+
+
+
         try:
             report_id = f"report_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
@@ -305,11 +317,11 @@ class QueueAnalyticsEngine:
             # Cache report
             self.reports_cache[report_id] = report
             
-            logger.info(f"📊 Analytics report generated: {report_id}")
+            logger.info(f" Analytics report generated: {report_id}")
             return report
             
         except Exception as e:
-            logger.error(f"❌ Failed to generate analytics report: {e}")
+            logger.error(f" Failed to generate analytics report: {e}")
             raise
     
     async def detect_performance_anomalies(
@@ -318,6 +330,9 @@ class QueueAnalyticsEngine:
         sensitivity: float = 2.0
     ) -> List[Dict[str, Any]]:
         """Detect performance anomalies using statistical analysis"""
+
+
+
         try:
             anomalies = []
             
@@ -358,7 +373,7 @@ class QueueAnalyticsEngine:
             return sorted(anomalies, key=lambda x: x["anomaly_score"], reverse=True)
             
         except Exception as e:
-            logger.error(f"❌ Anomaly detection failed: {e}")
+            logger.error(f" Anomaly detection failed: {e}")
             return []
     
     async def get_performance_insights(
@@ -366,6 +381,9 @@ class QueueAnalyticsEngine:
         timeframe: AnalyticsTimeframe = AnalyticsTimeframe.DAILY
     ) -> List[PerformanceInsight]:
         """Get performance insights for timeframe"""
+
+
+
         try:
             cache_key = f"insights_{timeframe.value}_{datetime.now().strftime('%Y%m%d_%H')}"
             
@@ -399,7 +417,7 @@ class QueueAnalyticsEngine:
             return insights
             
         except Exception as e:
-            logger.error(f"❌ Failed to get performance insights: {e}")
+            logger.error(f" Failed to get performance insights: {e}")
             return []
     
     async def predict_queue_performance(
@@ -407,6 +425,9 @@ class QueueAnalyticsEngine:
         forecast_hours: int = 24
     ) -> Dict[str, Any]:
         """Predict queue performance for next N hours"""
+
+
+
         try:
             predictions = {}
             
@@ -434,11 +455,14 @@ class QueueAnalyticsEngine:
             }
             
         except Exception as e:
-            logger.error(f"❌ Performance prediction failed: {e}")
+            logger.error(f" Performance prediction failed: {e}")
             return {"error": str(e)}
     
     async def get_optimization_recommendations(self) -> List[Dict[str, Any]]:
         """Get optimization recommendations based on current performance"""
+
+
+
         try:
             recommendations = []
             
@@ -463,7 +487,7 @@ class QueueAnalyticsEngine:
             return recommendations
             
         except Exception as e:
-            logger.error(f"❌ Failed to generate optimization recommendations: {e}")
+            logger.error(f" Failed to generate optimization recommendations: {e}")
             return []
     
     async def export_analytics_data(
@@ -472,6 +496,9 @@ class QueueAnalyticsEngine:
         format_type: str = "json"
     ) -> Dict[str, Any]:
         """Export analytics data in specified format"""
+
+
+
         try:
             end_time = datetime.now()
             start_time = await self._get_timeframe_start(timeframe, end_time)
@@ -518,11 +545,14 @@ class QueueAnalyticsEngine:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to export analytics data: {e}")
+            logger.error(f" Failed to export analytics data: {e}")
             return {"error": str(e)}
     
     async def shutdown(self):
         """Gracefully shutdown analytics engine"""
+
+
+
         try:
             self._is_running = False
             
@@ -534,10 +564,10 @@ class QueueAnalyticsEngine:
             self.insights_cache.clear()
             self.reports_cache.clear()
             
-            logger.info("🛑 Queue Analytics Engine shutdown completed")
+            logger.info(" Queue Analytics Engine shutdown completed")
             
         except Exception as e:
-            logger.error(f"❌ Analytics engine shutdown error: {e}")
+            logger.error(f" Analytics engine shutdown error: {e}")
     
     # Private helper methods
     
@@ -887,6 +917,9 @@ class QueueAnalyticsEngine:
         forecast_hours: int
     ) -> Dict[str, Any]:
         """Predict metric trend using linear regression"""
+
+
+
         try:
             # Convert timestamps to numerical values
             base_time = timestamps[0]
@@ -953,38 +986,65 @@ class QueueAnalyticsEngine:
     
     async def _generate_throughput_insights(self, timeframe_data) -> List[PerformanceInsight]:
         """Generate throughput-specific insights"""
+
+
+
         return []
     
     async def _generate_latency_insights(self, timeframe_data) -> List[PerformanceInsight]:
         """Generate latency-specific insights"""
+
+
+
         return []
     
     async def _generate_error_insights(self, timeframe_data) -> List[PerformanceInsight]:
         """Generate error-specific insights"""
+
+
+
         return []
     
     async def _generate_capacity_insights(self, timeframe_data) -> List[PerformanceInsight]:
         """Generate capacity-specific insights"""
+
+
+
         return []
     
     async def _generate_platform_insights(self, timeframe_data) -> List[PerformanceInsight]:
         """Generate platform-specific insights"""
+
+
+
         return []
     
     async def _generate_throughput_recommendations(self, current_metrics) -> List[Dict[str, Any]]:
         """Generate throughput optimization recommendations"""
+
+
+
         return []
     
     async def _generate_latency_recommendations(self, current_metrics) -> List[Dict[str, Any]]:
         """Generate latency optimization recommendations"""
+
+
+
         return []
     
     async def _generate_capacity_recommendations(self, current_metrics) -> List[Dict[str, Any]]:
         """Generate capacity optimization recommendations"""
+
+
+
         return []
     
     async def _generate_error_recommendations(self, current_metrics) -> List[Dict[str, Any]]:
         """Generate error reduction recommendations"""
+
+
+
         return []
     
     async def _calculate_recommendation_priority(self, recommendation) -> float:
@@ -996,4 +1056,7 @@ class QueueAnalyticsEngine:
 # Factory function
 def create_analytics_engine(retention_days: int = 90) -> QueueAnalyticsEngine:
     """Create and return configured analytics engine"""
+
+
+
     return QueueAnalyticsEngine(retention_days)

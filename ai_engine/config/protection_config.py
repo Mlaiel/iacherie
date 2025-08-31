@@ -419,6 +419,9 @@ class ProtectionConfig:
 
     def get_protection_summary(self) -> Dict[str, Any]:
         """Get summary of protection configuration"""
+
+
+
         return {
             "protection_level": self.protection_level.value,
             "enabled_content_types": [ct.value for ct in self.enabled_content_types],
@@ -471,6 +474,9 @@ class ProtectionConfig:
 
     def save_to_file(self, config_file: str):
         """Save configuration to JSON file"""
+
+
+
         try:
             data = asdict(self)
             # Convert enums to strings for JSON serialization
@@ -498,6 +504,9 @@ class ProtectionConfig:
     @classmethod
     def load_from_file(cls, config_file: str) -> 'ProtectionConfig':
         """Load configuration from JSON file"""
+
+
+
         try:
             with open(config_file, 'r') as f:
                 data = json.load(f)

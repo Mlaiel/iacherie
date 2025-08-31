@@ -1,5 +1,5 @@
 """
-📊 Data Models and Schemas for Content Fingerprinting
+ Data Models and Schemas for Content Fingerprinting
 =====================================================
 
 Comprehensive data models for multi-modal content fingerprinting system.

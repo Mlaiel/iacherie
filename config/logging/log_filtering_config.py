@@ -200,6 +200,9 @@ class LogFilteringConfig:
     
     def _initialize_encryption(self, key: str) -> None:
         """Initialize encryption for sensitive data"""
+
+
+
         try:
             if len(key) == 32:
                 # Assume it's already a proper key
@@ -850,10 +853,16 @@ class LogFilteringConfig:
     
     def enable_rule(self, rule_name: str) -> bool:
         """Enable a filtering rule"""
+
+
+
         return self.update_rule(rule_name, enabled=True)
     
     def disable_rule(self, rule_name: str) -> bool:
         """Disable a filtering rule"""
+
+
+
         return self.update_rule(rule_name, enabled=False)
     
     def get_filter_stats(self) -> Dict[str, Any]:
@@ -878,6 +887,9 @@ class LogFilteringConfig:
     
     def get_config_status(self) -> Dict[str, Any]:
         """Get current configuration status"""
+
+
+
         return {
             "enabled": self.enabled,
             "total_rules": len(self.rules),

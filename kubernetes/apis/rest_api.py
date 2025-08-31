@@ -1,5 +1,5 @@
 """
-🌐 Rest Api - IA-Influencer-Agent API Layer
+ Rest Api - IA-Influencer-Agent API Layer
 ==================================================================
 Expert: BACKEND_SENIOR + MICROSERVICES_ARCHITECT
 Architecture: RESTful API + GraphQL + WebSocket
@@ -47,6 +47,9 @@ class APIError(BaseModel):
 
 async def authentication_middleware(request: Request, credentials: HTTPAuthorizationCredentials = Depends(security)):
     """Middleware d'authentification"""
+
+
+
     try:
         # JWT validation implementation
         import jwt
@@ -141,6 +144,9 @@ class RestApiAPI:
         @self.app.get("/health")
         async def health_check():
             """Vérification de santé de l'API"""
+
+
+
             return APIResponse(
                 success=True,
                 data={"status": "healthy", "version": "1.0.0"},
@@ -153,6 +159,9 @@ class RestApiAPI:
             auth_data: dict = Depends(authentication_middleware)
         ):
             """Récupération des données"""
+
+
+
             try:
                 # Business logic implementation for REST API data retrieval
                 user_id = auth_data["user_id"]
@@ -194,6 +203,9 @@ class RestApiAPI:
             auth_data: dict = Depends(authentication_middleware)
         ):
             """Création de données"""
+
+
+
             try:
                 # REST API validation and creation logic implementation
                 from datetime import datetime
@@ -269,6 +281,9 @@ class WebSocketManager:
 
 def create_restapi_api(app: FastAPI) -> RestApiAPI:
     """Factory pour créer l'API Rest Api"""
+
+
+
     return RestApiAPI(app)
 
 __all__ = [

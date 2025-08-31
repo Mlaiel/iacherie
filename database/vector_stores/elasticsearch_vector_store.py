@@ -129,6 +129,9 @@ class ElasticsearchVectorStore:
     
     async def initialize(self) -> None:
         """Initialize Elasticsearch cluster and indices"""
+
+
+
         try:
             # Check cluster health
             health = await self.client.cluster.health()
@@ -168,6 +171,9 @@ class ElasticsearchVectorStore:
         Returns:
             Document ID in Elasticsearch
         """
+
+
+
         try:
             index_name = f"{self.index_prefix}_{content_type}"
             
@@ -232,6 +238,9 @@ class ElasticsearchVectorStore:
         Returns:
             List of search results
         """
+
+
+
         try:
             self.search_stats["vector_searches"] += 1
             start_time = datetime.now()
@@ -342,6 +351,9 @@ class ElasticsearchVectorStore:
         Returns:
             List of search results
         """
+
+
+
         try:
             self.search_stats["text_searches"] += 1
             start_time = datetime.now()
@@ -459,6 +471,9 @@ class ElasticsearchVectorStore:
         Returns:
             List of hybrid search results
         """
+
+
+
         try:
             self.search_stats["hybrid_searches"] += 1
             start_time = datetime.now()
@@ -594,6 +609,9 @@ class ElasticsearchVectorStore:
         Returns:
             True if deleted successfully
         """
+
+
+
         try:
             index_name = f"{self.index_prefix}_{content_type}"
             
@@ -628,6 +646,9 @@ class ElasticsearchVectorStore:
         Returns:
             Statistics about the bulk operation
         """
+
+
+
         try:
             index_name = f"{self.index_prefix}_{content_type}"
             
@@ -667,6 +688,9 @@ class ElasticsearchVectorStore:
     
     async def get_cluster_stats(self) -> ElasticsearchStats:
         """Get Elasticsearch cluster statistics"""
+
+
+
         try:
             # Get cluster health
             health = await self.client.cluster.health()
@@ -706,6 +730,9 @@ class ElasticsearchVectorStore:
     
     async def _create_index(self, content_type: str) -> None:
         """Create index for content type"""
+
+
+
         try:
             index_name = f"{self.index_prefix}_{content_type}"
             
@@ -750,6 +777,9 @@ class ElasticsearchVectorStore:
     
     def _get_default_mapping(self) -> Dict[str, Any]:
         """Get default mapping for content"""
+
+
+
         return {
             "properties": {
                 "content_id": {"type": "keyword"},
@@ -857,6 +887,9 @@ class ElasticsearchVectorStore:
     
     async def close(self) -> None:
         """Close Elasticsearch client"""
+
+
+
         try:
             await self.client.close()
             logger.info("Elasticsearch client closed successfully")

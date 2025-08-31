@@ -149,6 +149,9 @@ class ContentDiscoveryManager:
         
     async def initialize(self):
         """Initialize discovery manager resources."""
+
+
+
         try:
             # Initialize HTTP session
             connector = aiohttp.TCPConnector(
@@ -177,6 +180,9 @@ class ContentDiscoveryManager:
             
     async def _initialize_selenium_driver(self):
         """Initialize Selenium WebDriver for JavaScript-heavy sites."""
+
+
+
         try:
             chrome_options = Options()
             chrome_options.add_argument('--headless')
@@ -251,6 +257,9 @@ class ContentDiscoveryManager:
             
     async def _discover_target_content(self, target: DiscoveryTarget) -> List[DiscoveredContent]:
         """Discover content for a specific target."""
+
+
+
         try:
             # Get platform handler
             handler = self.platform_handlers.get(target.platform)
@@ -488,6 +497,9 @@ class ContentDiscoveryManager:
         
     def _parse_youtube_api_item(self, item: Dict) -> Optional[DiscoveredContent]:
         """Parse YouTube API response item."""
+
+
+
         try:
             snippet = item.get('snippet', {})
             video_id = item.get('id', {}).get('videoId')
@@ -520,6 +532,9 @@ class ContentDiscoveryManager:
             
     def _parse_youtube_element(self, element) -> Optional[DiscoveredContent]:
         """Parse YouTube web element."""
+
+
+
         try:
             # Extract data from YouTube web element
             title_element = element.find_element(By.CSS_SELECTOR, 'a#video-title')
@@ -562,6 +577,9 @@ class ContentDiscoveryManager:
             
     def _parse_tiktok_element(self, element) -> Optional[DiscoveredContent]:
         """Parse TikTok web element."""
+
+
+
         try:
             # Extract TikTok video data
             # Implementation would depend on TikTok's current DOM structure
@@ -622,6 +640,9 @@ class ContentDiscoveryManager:
         
     def _validate_discovered_content(self, content: DiscoveredContent, target: DiscoveryTarget) -> bool:
         """Validate discovered content against target criteria."""
+
+
+
         try:
             # Check content type
             if target.content_types and content.content_type not in target.content_types:
@@ -660,6 +681,9 @@ class ContentDiscoveryManager:
             
     def _apply_content_filter(self, content: DiscoveredContent, filter_key: str, filter_value: Any) -> bool:
         """Apply custom filter to content."""
+
+
+
         try:
             if filter_key == 'min_views' and content.view_count is not None:
                 return content.view_count >= filter_value
@@ -706,6 +730,9 @@ class ContentDiscoveryManager:
         
     def _parse_view_count(self, text: str) -> int:
         """Parse view count from text."""
+
+
+
         try:
             # Remove non-numeric characters except for K, M, B
             clean_text = ''.join(c for c in text if c.isdigit() or c in 'KMB.,')
@@ -733,6 +760,9 @@ class ContentDiscoveryManager:
         
     def _parse_relative_date(self, text: str) -> Optional[datetime]:
         """Parse relative date like '2 days ago'."""
+
+
+
         try:
             import re
             
@@ -773,10 +803,16 @@ class ContentDiscoveryManager:
             
     async def get_discovery_stats(self) -> Dict[str, Any]:
         """Get discovery statistics."""
+
+
+
         return self.discovery_stats.copy()
         
     async def save_discovered_content(self, content_items: List[DiscoveredContent]) -> bool:
         """Save discovered content to database."""
+
+
+
         try:
             async with get_database_session() as db:
                 for item in content_items:
@@ -814,6 +850,9 @@ class ContentDiscoveryManager:
             
     async def cleanup(self):
         """Cleanup resources."""
+
+
+
         try:
             if self.session:
                 await self.session.close()
@@ -830,6 +869,9 @@ class ContentDiscoveryManager:
 # Factory function for easy instantiation
 def create_content_discovery_manager(config: Optional[DiscoveryConfig] = None) -> ContentDiscoveryManager:
     """Create and return a content discovery manager instance."""
+
+
+
     return ContentDiscoveryManager(config)
 
 

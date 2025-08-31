@@ -155,18 +155,30 @@ class ContentProtectionStorageConfig:
     
     def get_storage_path_for_content_type(self, content_type: ProtectionContentType) -> str:
         """Get storage path for specific content type."""
+
+
+
         return self.fingerprint_storage_by_type[content_type]['storage_path']
     
     def get_engines_for_content_type(self, content_type: ProtectionContentType) -> List[FingerprintingEngine]:
         """Get fingerprinting engines for specific content type."""
+
+
+
         return self.fingerprint_storage_by_type[content_type]['engines']
     
     def get_vector_storage_config(self) -> Dict[str, Any]:
         """Get vector database configuration for similarity search."""
+
+
+
         return self.vector_storage_config
     
     def is_backup_enabled(self) -> bool:
         """Check if backup is enabled for protection data."""
+
+
+
         return self.protection_backup_config.get('enable_backup', False)
 
 @dataclass
@@ -232,6 +244,9 @@ monitoring_storage_config = MonitoringStorageConfig()
 # Configuration validation functions
 def validate_content_protection_storage_config() -> bool:
     """Validate content protection storage configuration."""
+
+
+
     try:
         # Validate required paths
         required_paths = [
@@ -260,6 +275,9 @@ def validate_content_protection_storage_config() -> bool:
 
 def validate_monitoring_storage_config() -> bool:
     """Validate monitoring storage configuration."""
+
+
+
     try:
         # Validate required paths
         required_paths = [

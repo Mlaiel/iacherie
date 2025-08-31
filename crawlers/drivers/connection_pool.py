@@ -8,7 +8,7 @@ Provides enterprise-grade connection reuse, monitoring, and optimization feature
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  LEGAL WARNING:
+  LEGAL WARNING:
 This code is proprietary and confidential. Any unauthorized copying, modification, 
 distribution, or use without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and may result in legal action.
@@ -157,6 +157,9 @@ class ConnectionPool:
     
     async def initialize(self) -> bool:
         """Initialize connection pool"""
+
+
+
         try:
             self.logger.info(f"Initializing connection pool: {self.pool_id}")
             
@@ -355,6 +358,9 @@ class ConnectionPool:
     
     def get_connection_info(self, connection_id: str) -> Optional[ConnectionInfo]:
         """Get information about a specific connection"""
+
+
+
         return self.connections.get(connection_id)
     
     def get_host_connections(self, host: str) -> List[ConnectionInfo]:
@@ -371,6 +377,9 @@ class ConnectionPool:
     
     async def health_check(self) -> bool:
         """Perform health check on connection pool"""
+
+
+
         try:
             # Check if we can create a test session
             test_session = await self._create_session("httpbin.org", 443, "https")
@@ -520,6 +529,9 @@ class ConnectionPoolManager:
     
     async def initialize(self) -> bool:
         """Initialize connection pool manager"""
+
+
+
         try:
             self.logger.info("Initializing connection pool manager...")
             
@@ -621,6 +633,9 @@ class ConnectionPoolManager:
     
     def get_all_metrics(self) -> Dict[str, PoolMetrics]:
         """Get metrics from all pools"""
+
+
+
         return {
             pool_id: pool.get_metrics()
             for pool_id, pool in self.pools.items()
@@ -647,6 +662,9 @@ def create_pool_configuration(
     strategy: PoolStrategy = PoolStrategy.LEAST_CONNECTIONS
 ) -> PoolConfiguration:
     """Create connection pool configuration"""
+
+
+
     return PoolConfiguration(
         max_connections_total=max_connections,
         max_connections_per_host=max_per_host,

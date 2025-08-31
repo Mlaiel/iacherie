@@ -13,7 +13,7 @@ Project Team Specialties:
 - Microservices Architect & Audio Processing: Multi-format Support  
 - DevOps Engineer & IA Prompt Engineer: Production Deployment
 
-⚠️ STRONG WARNING ⚠️
+ STRONG WARNING 
 Any attempt to steal, copy, reproduce, or use this concept, idea, or code 
 without explicit written authorization from Fahed Mlaiel is strictly 
 prohibited and will result in legal action.
@@ -280,6 +280,9 @@ class NFTMinter:
         royalty_percentage: Decimal = Decimal('10')
     ) -> NFTContract:
         """Deploy a new NFT contract"""
+
+
+
         try:
             # Get contract bytecode and ABI based on standard
             bytecode, abi = self._get_contract_artifacts(standard)
@@ -355,6 +358,9 @@ class NFTMinter:
         content_file: Optional[bytes] = None
     ) -> Tuple[str, int]:
         """Mint a new NFT"""
+
+
+
         try:
             contract = self.contracts.get(contract_address)
             if not contract:
@@ -421,6 +427,9 @@ class NFTMinter:
     
     async def _upload_to_ipfs(self, content: bytes, filename: str) -> str:
         """Upload content to IPFS via Pinata"""
+
+
+
         try:
             if not self.pinata_api_key or not self.pinata_secret:
                 raise Exception("Pinata credentials not configured")
@@ -462,6 +471,9 @@ class NFTMinter:
     
     async def _get_next_token_id(self, contract: Contract) -> int:
         """Get the next available token ID"""
+
+
+
         try:
             # Try different methods to get next token ID
             if hasattr(contract.functions, 'totalSupply'):
@@ -481,6 +493,9 @@ class NFTMinter:
         royalty_info: RoyaltyInfo
     ) -> str:
         """Set royalties for an NFT (ERC2981 standard)"""
+
+
+
         try:
             contract = self.contracts.get(contract_address)
             if not contract:
@@ -599,6 +614,9 @@ class MarketplaceIntegration:
         duration_days: int = 7
     ) -> bool:
         """List NFT for sale on marketplace"""
+
+
+
         try:
             if marketplace == NFTMarketplace.OPENSEA:
                 return await self._list_on_opensea(contract_address, token_id, price_eth, duration_days)

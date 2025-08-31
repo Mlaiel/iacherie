@@ -319,6 +319,9 @@ class DataSyncManager:
     
     def get_sync_job(self, job_id: str) -> Optional[Dict[str, Any]]:
         """Get synchronization job configuration."""
+
+
+
         return self.sync_jobs.get(job_id)
     
     def update_sync_status(self, job_id: str, status: SyncStatus):
@@ -357,6 +360,9 @@ class DataSyncManager:
     
     def get_sync_metrics(self, job_id: str) -> Optional[SyncMetrics]:
         """Get synchronization metrics for a job."""
+
+
+
         return self.metrics.get(job_id)
     
     def update_sync_metrics(
@@ -383,6 +389,9 @@ class DataSyncManager:
     
     def get_active_sync_jobs(self) -> List[Dict[str, Any]]:
         """Get all active synchronization jobs."""
+
+
+
         return [
             job for job in self.sync_jobs.values()
             if job.get("enabled") and job.get("status") != SyncStatus.CANCELLED

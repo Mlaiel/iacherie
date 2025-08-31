@@ -6,7 +6,7 @@ Provides market analysis, competitive intelligence, and business trend predictio
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel - All rights reserved
-⚠️  WARNING: This code and concept are proprietary to Fahed Mlaiel.
+  WARNING: This code and concept are proprietary to Fahed Mlaiel.
     Any unauthorized use, copying, or distribution without explicit written 
     permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 
@@ -100,6 +100,9 @@ class BusinessIntelligenceEvent(BaseEvent):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert BI event to dictionary"""
+
+
+
         return {
             **asdict(self),
             'business_segment': self.business_segment.value,
@@ -137,6 +140,9 @@ class BusinessIntelligenceEventHandler(BaseEventHandler):
         
     async def handle(self, event: BusinessIntelligenceEvent) -> Dict[str, Any]:
         """Process business intelligence event with comprehensive analysis"""
+
+
+
         try:
             # Validate event data
             await self._validate_event(event)

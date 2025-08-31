@@ -7,7 +7,7 @@ and serving multiple NLP models efficiently.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
 
@@ -187,6 +187,9 @@ class SentimentAnalysisModel(BaseNLPModel):
     
     def get_model_info(self) -> Dict[str, Any]:
         """Get sentiment model information"""
+
+
+
         return {
             'model_type': 'sentiment_analysis',
             'architecture': 'transformer_based',
@@ -318,6 +321,9 @@ class AdvancedModelManager:
     
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default configuration"""
+
+
+
         return {
             'models_directory': './models',
             'max_loaded_models': 10,
@@ -617,6 +623,9 @@ class AdvancedModelManager:
     
     async def get_performance_metrics(self, model_id: str = None) -> Dict[str, Any]:
         """Get performance metrics for models"""
+
+
+
         return await self.performance_monitor.get_metrics(model_id)
     
     async def _ensure_model_loaded(self, model_id: str) -> bool:
@@ -843,6 +852,9 @@ class ResourceManager:
     
     async def get_resource_usage(self) -> Dict[str, float]:
         """Get current resource usage"""
+
+
+
         return {
             'memory_usage_mb': self.memory_usage,
             'cpu_usage_percent': self.cpu_usage,

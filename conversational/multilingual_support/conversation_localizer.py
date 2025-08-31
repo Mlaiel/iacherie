@@ -8,7 +8,7 @@ for seamless multilingual content creator interactions.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE ⚠️
+  CRITICAL LEGAL NOTICE 
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -402,7 +402,7 @@ class MessageLocalizer:
             # Add culturally appropriate greetings
             if context.cultural_context.language == SupportedLanguage.JAPANESE:
                 if "hello" in message.lower():
-                    return message.replace("Hello", "こんにちは")
+                    return message.replace("Hello", "")
             elif context.cultural_context.language == SupportedLanguage.GERMAN:
                 if "hello" in message.lower():
                     return message.replace("Hello", "Guten Tag")
@@ -522,6 +522,9 @@ class ResponseLocalizer:
         variables: Optional[Dict[str, Any]] = None
     ) -> LocalizedMessage:
         """Localize system response with variable substitution"""
+
+
+
         try:
             # Substitute variables if provided
             if variables:
@@ -635,7 +638,7 @@ class ResponseLocalizer:
         if response_type == "success_confirmation":
             # Add positive reinforcement
             if context.cultural_context and context.cultural_context.indulgence > 0.7:
-                enhanced = f"✓ {enhanced}"
+                enhanced = f" {enhanced}"
         
         elif response_type == "error_message":
             # Add empathy for relationship-focused cultures
@@ -661,6 +664,9 @@ class TemplateLocalizer:
         cultural_context: Optional[CulturalContext] = None
     ) -> str:
         """Localize template with variables and cultural adaptation"""
+
+
+
         try:
             # Get localized template
             localized_template = await self._get_localized_template(
@@ -796,6 +802,9 @@ class LocalizedResponseGenerator:
         variables: Optional[Dict[str, Any]] = None
     ) -> LocalizedMessage:
         """Generate complete localized response"""
+
+
+
         try:
             # Use template if provided
             if response_template_id:
@@ -877,6 +886,9 @@ class ConversationLocalizer:
         **kwargs
     ) -> ConversationContext:
         """Create comprehensive conversation context"""
+
+
+
         try:
             # Get user language context
             user_context = await self.language_manager.get_user_language_context(user_id)
@@ -919,6 +931,9 @@ class ConversationLocalizer:
     
     async def _generate_fallback_template(self, template_id: str, target_language: SupportedLanguage) -> Optional[str]:
         """Generate fallback template when database lookup fails."""
+
+
+
         try:
             # Define common templates for content creators
             default_templates = {
@@ -961,6 +976,9 @@ class ConversationLocalizer:
         conversation_context: ConversationContext
     ) -> Tuple[LocalizedMessage, LocalizedMessage]:
         """Process a complete conversation turn"""
+
+
+
         try:
             # Localize user message (if needed)
             localized_user_message = await self.message_localizer.localize_message(
@@ -991,6 +1009,9 @@ class ConversationLocalizer:
     
     async def get_localization_statistics(self) -> Dict[str, Any]:
         """Get comprehensive localization statistics"""
+
+
+
         return {
             "message_localizer_stats": dict(self.message_localizer.localization_stats),
             "cultural_adaptor_stats": dict(self.cultural_adaptor.adaptation_stats),

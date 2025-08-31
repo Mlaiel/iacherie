@@ -108,6 +108,9 @@ class AudioFingerprintEngine:
         Returns:
             AudioFingerprint object with all computed features
         """
+
+
+
         try:
             # Load and preprocess audio
             y, sr = self._load_audio(audio_data)
@@ -167,6 +170,9 @@ class AudioFingerprintEngine:
         Returns:
             List of matching fingerprints with similarity scores
         """
+
+
+
         try:
             # Query database for potential matches
             candidates = self.repository.find_similar_audio_fingerprints(
@@ -200,6 +206,9 @@ class AudioFingerprintEngine:
     
     def _load_audio(self, audio_data: Union[str, bytes, Path]) -> Tuple[np.ndarray, int]:
         """Load audio from various sources."""
+
+
+
         try:
             if isinstance(audio_data, (str, Path)):
                 # Load from file
@@ -221,6 +230,9 @@ class AudioFingerprintEngine:
     
     def _generate_chromaprint(self, y: np.ndarray, sr: int) -> bytes:
         """Generate Chromaprint fingerprint."""
+
+
+
         try:
             # Convert to int16 for chromaprint
             audio_int16 = (y * 32767).astype(np.int16)
@@ -241,6 +253,9 @@ class AudioFingerprintEngine:
     
     def _extract_spectral_features(self, y: np.ndarray, sr: int) -> Dict:
         """Extract spectral features using Essentia."""
+
+
+
         try:
             # Convert to essentia format
             audio_essentia = es.MonoLoader(filename='', sampleRate=sr)(y.astype(np.float32))
@@ -277,6 +292,9 @@ class AudioFingerprintEngine:
     
     def _extract_mfcc_features(self, y: np.ndarray, sr: int) -> np.ndarray:
         """Extract MFCC features."""
+
+
+
         try:
             mfccs = librosa.feature.mfcc(
                 y=y, 
@@ -294,6 +312,9 @@ class AudioFingerprintEngine:
     
     def _detect_tempo(self, y: np.ndarray, sr: int) -> float:
         """Detect tempo using librosa."""
+
+
+
         try:
             tempo, _ = librosa.beat.beat_track(y=y, sr=sr)
             return float(tempo)
@@ -302,6 +323,9 @@ class AudioFingerprintEngine:
     
     def _detect_key(self, y: np.ndarray, sr: int) -> str:
         """Detect musical key."""
+
+
+
         try:
             # Simplified key detection using chroma features
             chroma = librosa.feature.chroma_stft(y=y, sr=sr)
@@ -317,6 +341,9 @@ class AudioFingerprintEngine:
     
     def _calculate_energy(self, y: np.ndarray) -> float:
         """Calculate audio energy."""
+
+
+
         return float(np.mean(y ** 2))
     
     def _generate_combined_hash(self, 
@@ -324,6 +351,9 @@ class AudioFingerprintEngine:
                                spectral_features: Dict,
                                mfcc_features: np.ndarray) -> str:
         """Generate combined hash from all features."""
+
+
+
         try:
             # Combine all features into a single byte string
             combined_data = chromaprint_data
@@ -339,6 +369,9 @@ class AudioFingerprintEngine:
     
     def _calculate_similarity(self, fp1: AudioFingerprint, fp2: Dict) -> float:
         """Calculate similarity between two audio fingerprints."""
+
+
+
         try:
             # Chromaprint similarity (primary)
             chromaprint_sim = self._chromaprint_similarity(
@@ -372,6 +405,9 @@ class AudioFingerprintEngine:
     
     def _chromaprint_similarity(self, data1: bytes, data2: bytes) -> float:
         """Calculate Chromaprint similarity."""
+
+
+
         try:
             if not data1 or not data2:
                 return 0.0
@@ -393,6 +429,9 @@ class AudioFingerprintEngine:
     
     def _spectral_similarity(self, features1: Dict, features2: Dict) -> float:
         """Calculate spectral features similarity."""
+
+
+
         try:
             if not features1 or not features2:
                 return 0.0
@@ -415,6 +454,9 @@ class AudioFingerprintEngine:
     
     def _mfcc_similarity(self, mfcc1: np.ndarray, mfcc2: np.ndarray) -> float:
         """Calculate MFCC similarity using cosine similarity."""
+
+
+
         try:
             if mfcc1.size == 0 or mfcc2.size == 0:
                 return 0.0
@@ -475,6 +517,9 @@ class AudioFingerprintEngine:
     
     def get_engine_stats(self) -> Dict:
         """Get engine statistics."""
+
+
+
         return {
             "version": "1.0.0",
             "sample_rate": self.sample_rate,

@@ -23,7 +23,7 @@ Tests model loading, inference caching, memory optimization, and multi-format AI
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  COPYRIGHT WARNING: This file is protected by copyright law. Unauthorized copying,
+  COPYRIGHT WARNING: This file is protected by copyright law. Unauthorized copying,
 distribution, modification, or use is strictly prohibited. Violations will result in
 legal action. Contact mlaiel@live.de for licensing inquiries.
 
@@ -1081,6 +1081,9 @@ class TestModelContext:
     
     def teardown_method(self):
         """Cleanup after context tests"""
+
+
+
         try:
             ai_engine.unregister_model("context-test")
         except:
@@ -1135,6 +1138,9 @@ class TestInferenceDecorator:
     
     def teardown_method(self):
         """Cleanup after decorator tests"""
+
+
+
         try:
             ai_engine.unregister_model("decorator-test")
         except:

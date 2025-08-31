@@ -1,5 +1,5 @@
 """
-📊 Financial Analytics - Industrial-Grade Revenue Intelligence & Forecasting
+ Financial Analytics - Industrial-Grade Revenue Intelligence & Forecasting
 ==================================================================
 
 Ultra-sophisticated financial analytics engine with AI-powered forecasting,
@@ -9,7 +9,7 @@ Real-time financial insights for multi-platform content monetization.
 Created by: Fahed Mlaiel <mlaiel@live.de>
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
+ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED 
 Contact mlaiel@live.de for licensing inquiries.
 
 Business Logic: Data Collection → AI Analysis → Predictive Modeling → Actionable Insights
@@ -231,6 +231,9 @@ class FinancialCalculator:
         time_period_days: int = 365
     ) -> Dict[str, float]:
         """Calculate comprehensive ROI metrics"""
+
+
+
         try:
             if investment <= 0:
                 return {'error': 'Investment must be positive'}
@@ -257,6 +260,9 @@ class FinancialCalculator:
         profit_margin: float = 0.2
     ) -> Dict[str, float]:
         """Calculate Customer Lifetime Value"""
+
+
+
         try:
             if churn_rate <= 0 or churn_rate >= 1:
                 return {'error': 'Churn rate must be between 0 and 1'}
@@ -281,6 +287,9 @@ class FinancialCalculator:
         periods: int = 1
     ) -> Dict[str, float]:
         """Calculate various growth rates"""
+
+
+
         try:
             if previous_value <= 0:
                 return {'error': 'Previous value must be positive'}
@@ -306,6 +315,9 @@ class FinancialCalculator:
         engagement_weights: Optional[Dict[str, float]] = None
     ) -> Dict[str, float]:
         """Calculate monetary value of engagement"""
+
+
+
         try:
             if not engagement_weights:
                 engagement_weights = {
@@ -355,6 +367,9 @@ class TrendAnalyzer:
         metric_type: MetricType
     ) -> TrendAnalysis:
         """Analyze trend in time series data"""
+
+
+
         try:
             if len(data_points) < 3:
                 return TrendAnalysis(
@@ -542,6 +557,9 @@ class ReportGenerator:
         period_end: datetime
     ) -> Dict[str, Any]:
         """Generate executive dashboard with KPIs"""
+
+
+
         try:
             # Fetch key metrics
             revenue_data = await self._fetch_revenue_metrics(user_id, period_start, period_end)
@@ -598,6 +616,9 @@ class ReportGenerator:
         period_type: AnalyticsPeriod = AnalyticsPeriod.MONTHLY
     ) -> FinancialForecast:
         """Generate AI-powered financial forecasts"""
+
+
+
         try:
             # Fetch historical data
             historical_data = await self._fetch_historical_metrics(
@@ -688,6 +709,9 @@ class ReportGenerator:
         period_end: datetime
     ) -> Dict[str, Any]:
         """Generate comprehensive ROI analysis report"""
+
+
+
         try:
             # Investment categories
             investment_categories = [
@@ -808,6 +832,9 @@ class ReportGenerator:
     
     async def _generate_market_intelligence(self, user_id: str) -> MarketIntelligence:
         """Generate market intelligence analysis"""
+
+
+
         return MarketIntelligence(
             industry_averages={'cpm': 2.5, 'engagement_rate': 0.045},
             competitor_analysis={'avg_revenue': 5000, 'top_platforms': ['youtube', 'instagram']},
@@ -857,6 +884,9 @@ class ReportGenerator:
         revenue_data: List[FinancialMetric]
     ) -> List[Dict[str, Any]]:
         """Identify priority actions for the user"""
+
+
+
         return [
             {
                 'action': 'Optimize top-performing content',
@@ -945,6 +975,9 @@ class ReportGenerator:
         period_end: datetime
     ) -> Dict[str, Any]:
         """Analyze ROI trends over time"""
+
+
+
         return {
             'direction': 'upward',
             'confidence': 0.8,
@@ -991,8 +1024,11 @@ class FinancialAnalytics:
     
     async def initialize(self) -> bool:
         """Initialize financial analytics system"""
+
+
+
         try:
-            self.logger.info("🚀 Initializing Financial Analytics System...")
+            self.logger.info(" Initializing Financial Analytics System...")
             
             # Initialize ML models
             await self._initialize_prediction_models()
@@ -1000,11 +1036,11 @@ class FinancialAnalytics:
             # Setup analytics database tables
             await self._setup_analytics_tables()
             
-            self.logger.info("✅ Financial Analytics System initialized successfully")
+            self.logger.info(" Financial Analytics System initialized successfully")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Financial Analytics initialization failed: {e}")
+            self.logger.error(f" Financial Analytics initialization failed: {e}")
             return False
     
     async def calculate_financial_metrics(
@@ -1015,6 +1051,9 @@ class FinancialAnalytics:
         metrics: List[MetricType]
     ) -> Dict[str, FinancialMetric]:
         """Calculate comprehensive financial metrics"""
+
+
+
         try:
             calculated_metrics = {}
             
@@ -1053,6 +1092,9 @@ class FinancialAnalytics:
         period_months: int = 6
     ) -> TrendAnalysis:
         """Analyze trends for specific metrics"""
+
+
+
         try:
             # Fetch historical data
             end_date = datetime.utcnow()
@@ -1085,6 +1127,9 @@ class FinancialAnalytics:
         **kwargs
     ) -> Dict[str, Any]:
         """Generate comprehensive financial reports"""
+
+
+
         try:
             if report_type == ReportType.EXECUTIVE_DASHBOARD:
                 return await self.report_generator.generate_executive_dashboard(
@@ -1116,6 +1161,9 @@ class FinancialAnalytics:
         user_id: str
     ) -> Dict[str, Any]:
         """Get real-time financial insights and alerts"""
+
+
+
         try:
             current_time = datetime.utcnow()
             today_start = current_time.replace(hour=0, minute=0, second=0, microsecond=0)
@@ -1181,6 +1229,9 @@ class FinancialAnalytics:
     
     async def _initialize_prediction_models(self):
         """Initialize ML models for predictions"""
+
+
+
         try:
             # This would initialize actual ML models
             pass
@@ -1189,6 +1240,9 @@ class FinancialAnalytics:
     
     async def _setup_analytics_tables(self):
         """Setup database tables for analytics"""
+
+
+
         try:
             # This would create database tables
             pass
@@ -1248,6 +1302,9 @@ class FinancialAnalytics:
     
     async def _generate_forecast_chart(self, forecast: FinancialForecast) -> str:
         """Generate forecast visualization chart"""
+
+
+
         try:
             # Create plot
             plt.figure(figsize=(12, 6))

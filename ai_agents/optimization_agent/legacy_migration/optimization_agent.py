@@ -7,7 +7,7 @@ Handles multi-format content optimization, system performance monitoring, and in
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and optimization algorithms are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -179,6 +179,9 @@ class OptimizationAgent(BaseAgent):
 
     async def initialize(self) -> bool:
         """Initialize optimization agent with baseline measurements"""
+
+
+
         try:
             self.status = AgentStatus.INITIALIZING
             
@@ -205,6 +208,9 @@ class OptimizationAgent(BaseAgent):
 
     async def process_request(self, request: AgentRequest) -> Dict[str, Any]:
         """Process optimization requests with intelligent routing"""
+
+
+
         try:
             start_time = time.time()
             action = request.action.lower()
@@ -421,6 +427,9 @@ class OptimizationAgent(BaseAgent):
 
     async def _analyze_bottlenecks(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Advanced bottleneck detection and analysis"""
+
+
+
         try:
             # System bottleneck analysis
             system_bottlenecks = await self._analyze_system_bottlenecks()
@@ -474,6 +483,9 @@ class OptimizationAgent(BaseAgent):
 
     async def _auto_optimize(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Intelligent auto-optimization with ML-driven decisions"""
+
+
+
         try:
             # Analyze current system state
             system_state = await self._get_comprehensive_system_state()
@@ -530,6 +542,9 @@ class OptimizationAgent(BaseAgent):
 
     async def _get_current_resource_profile(self) -> ResourceProfile:
         """Get current system resource utilization profile"""
+
+
+
         try:
             profile = ResourceProfile(
                 cpu_usage=psutil.cpu_percent(interval=1),
@@ -577,6 +592,9 @@ class OptimizationAgent(BaseAgent):
 
     async def shutdown(self):
         """Graceful shutdown of optimization agent"""
+
+
+
         try:
             self._monitoring_active = False
             self.status = AgentStatus.SHUTDOWN
@@ -624,8 +642,14 @@ class OptimizationAgentManager:
     
     async def get_optimal_agent(self, request: AgentRequest) -> OptimizationAgent:
         """Get the most suitable agent for the request"""
+
+
+
         return await self.load_balancer.get_optimal_agent(request)
     
     async def coordinate_optimization(self, requests: List[AgentRequest]) -> Dict[str, Any]:
         """Coordinate multiple optimization requests across agents"""
+
+
+
         return await self.coordination_engine.coordinate(requests, self.agents)

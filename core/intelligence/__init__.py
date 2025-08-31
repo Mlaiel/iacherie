@@ -5,11 +5,11 @@ This module provides the central AI intelligence capabilities for content analys
 protection, and monetization. It integrates multiple AI engines to deliver
 comprehensive content understanding and processing for creators.
 
-🎯 Business Logic Flow:
+ Business Logic Flow:
 User (musician/blogger/photographer/influencer/comedian) → Upload multi-format 
 → IA protection rights → SEO pro → Matching collaboration → Multi-platform distribution
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE PROHIBITED
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE PROHIBITED
 ====================================================
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright © 2025 Fahed Mlaiel - All rights reserved
@@ -17,7 +17,7 @@ WARNING: Any unauthorized copying, modification, distribution or use of this cod
 without explicit written permission from Fahed Mlaiel is strictly prohibited
 and may result in legal action under applicable copyright laws.
 
-🛡️ Team Expertise:
+ Team Expertise:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices 
 - Audio + DevOps + IA Prompt Engineer
 """

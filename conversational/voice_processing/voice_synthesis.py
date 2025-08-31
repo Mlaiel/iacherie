@@ -25,7 +25,7 @@ Email: mlaiel@live.de
 Project Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE - ZERO TOLERANCE FOR INTELLECTUAL PROPERTY THEFT ⚠️
+  CRITICAL LEGAL NOTICE - ZERO TOLERANCE FOR INTELLECTUAL PROPERTY THEFT 
 
 This revolutionary neural voice synthesis system, emotional TTS algorithms, and advanced 
 voice cloning architectures are the EXCLUSIVE intellectual property of Fahed Mlaiel 
@@ -165,6 +165,9 @@ class NeuralVoiceSynthesizer:
     
     def _initialize_engines(self) -> None:
         """Initialize all configured TTS engines."""
+
+
+
         try:
             # Initialize Coqui TTS
             if self.config.primary_engine == VoiceEngine.COQUI_TTS_XTTS and TTS_AVAILABLE:
@@ -190,6 +193,9 @@ class NeuralVoiceSynthesizer:
     
     def _initialize_coqui_tts(self) -> None:
         """Initialize Coqui TTS engine."""
+
+
+
         try:
             # Initialize Coqui TTS with XTTS model
             device = "cuda" if torch.cuda.is_available() and self.config.use_gpu_acceleration else "cpu"
@@ -216,6 +222,9 @@ class NeuralVoiceSynthesizer:
     
     def _initialize_openai_tts(self) -> None:
         """Initialize OpenAI TTS engine."""
+
+
+
         try:
             self.engines['openai_tts'] = {
                 'client': openai,
@@ -233,6 +242,9 @@ class NeuralVoiceSynthesizer:
     
     def _initialize_elevenlabs(self) -> None:
         """Initialize ElevenLabs TTS engine."""
+
+
+
         try:
             self.engines['elevenlabs'] = {
                 'type': 'api',
@@ -249,6 +261,9 @@ class NeuralVoiceSynthesizer:
     
     def _initialize_tacotron2(self) -> None:
         """Initialize Tacotron2 engine."""
+
+
+
         try:
             # Load Tacotron2 model (simplified for demo)
             device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -268,6 +283,9 @@ class NeuralVoiceSynthesizer:
     
     def _load_default_voices(self) -> None:
         """Load default voice profiles."""
+
+
+
         try:
             # Create default voice profiles
             default_voices = [
@@ -310,6 +328,9 @@ class NeuralVoiceSynthesizer:
     
     def _setup_quality_enhancement(self) -> None:
         """Setup audio quality enhancement."""
+
+
+
         try:
             # Initialize audio processing components
             self.quality_enhancer = {
@@ -428,6 +449,9 @@ class NeuralVoiceSynthesizer:
         Yields:
             Audio chunks as they are synthesized
         """
+
+
+
         try:
             # Select voice profile
             voice_profile = await self._select_voice_profile(synthesis_request)
@@ -492,6 +516,9 @@ class NeuralVoiceSynthesizer:
         Returns:
             Cloned voice profile
         """
+
+
+
         try:
             if not consent_verified:
                 raise PermissionError("Voice cloning requires explicit consent verification")
@@ -547,6 +574,9 @@ class NeuralVoiceSynthesizer:
     
     async def _preprocess_text(self, text: str, language: LanguageCode) -> str:
         """Preprocess text for synthesis."""
+
+
+
         try:
             # Remove extra whitespace
             text = re.sub(r'\s+', ' ', text.strip())
@@ -582,6 +612,9 @@ class NeuralVoiceSynthesizer:
     
     async def _select_voice_profile(self, request: VoiceSynthesisRequest) -> VoiceProfile:
         """Select appropriate voice profile for synthesis."""
+
+
+
         try:
             # Use specified voice if provided
             if request.target_voice_id and request.target_voice_id in self.voice_profiles:
@@ -619,6 +652,9 @@ class NeuralVoiceSynthesizer:
         self, emotion: EmotionCategory, intensity: float
     ) -> Dict[str, float]:
         """Process emotion parameters for synthesis."""
+
+
+
         try:
             # Map emotions to prosodic parameters
             emotion_mappings = {
@@ -652,6 +688,9 @@ class NeuralVoiceSynthesizer:
         self, text: str, speaking_rate: float, pitch_scale: float
     ) -> Dict[str, Any]:
         """Plan prosodic features for synthesis."""
+
+
+
         try:
             # Analyze text structure
             sentences = text.split('.')
@@ -700,6 +739,9 @@ class NeuralVoiceSynthesizer:
         request: VoiceSynthesisRequest
     ) -> np.ndarray:
         """Perform the actual voice synthesis."""
+
+
+
         try:
             # Try primary engine first
             if self.config.primary_engine == VoiceEngine.COQUI_TTS_XTTS and 'coqui_xtts' in self.engines:
@@ -740,6 +782,9 @@ class NeuralVoiceSynthesizer:
         request: VoiceSynthesisRequest
     ) -> np.ndarray:
         """Synthesize using Coqui TTS."""
+
+
+
         try:
             tts = self.engines['coqui_xtts']['model']
             
@@ -782,6 +827,9 @@ class NeuralVoiceSynthesizer:
         request: VoiceSynthesisRequest
     ) -> np.ndarray:
         """Synthesize using OpenAI TTS."""
+
+
+
         try:
             # Select voice based on profile
             voice_map = {
@@ -814,6 +862,9 @@ class NeuralVoiceSynthesizer:
         self, audio_data: np.ndarray, sample_rate: int
     ) -> np.ndarray:
         """Enhance audio quality with professional processing."""
+
+
+
         try:
             enhanced_audio = audio_data.copy()
             
@@ -845,6 +896,9 @@ class NeuralVoiceSynthesizer:
         self, audio_data: np.ndarray, request: VoiceSynthesisRequest
     ) -> float:
         """Assess the quality of synthesized audio."""
+
+
+
         try:
             # Calculate quality metrics
             rms_energy = np.sqrt(np.mean(audio_data ** 2))
@@ -888,6 +942,9 @@ class NeuralVoiceSynthesizer:
         self, audio: np.ndarray, emotion_params: Dict[str, float], prosody_params: Dict[str, Any]
     ) -> np.ndarray:
         """Apply prosodic modifications to audio."""
+
+
+
         try:
             modified_audio = audio.copy()
             

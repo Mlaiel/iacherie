@@ -21,7 +21,7 @@ Ultra-professional test suite for the Template Engine system
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️ COPYRIGHT WARNING ⚠️
+ COPYRIGHT WARNING 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
@@ -60,6 +60,9 @@ class TestTemplateEngine:
     @pytest.fixture
     def sample_template_variables(self):
         """Create sample template variables for testing"""
+
+
+
         return [
             TemplateVariable(
                 name="user_name",
@@ -102,6 +105,9 @@ class TestTemplateEngine:
     @pytest.fixture
     def sample_template_data(self):
         """Sample data for template processing"""
+
+
+
         return {
             "user_name": "Fahed Mlaiel",
             "age": 30,
@@ -754,12 +760,12 @@ class TestTemplateEngine:
         # Welcome to AI Music Platform, {{user_name}}!
         
         {% if is_premium %}
-        🌟 **Premium User Benefits:**
+         **Premium User Benefits:**
         {% for benefit in premium_benefits %}
         - {{benefit}}
         {% endfor %}
         {% else %}
-        📝 **Standard User Features:**
+         **Standard User Features:**
         {% for feature in standard_features %}
         - {{feature}}
         {% endfor %}
@@ -781,9 +787,9 @@ class TestTemplateEngine:
         **{{project.name}}** ({{project.status}})
         Created: {{project.created_date}}
         {% if project.is_public %}
-        🌍 Public Project
+         Public Project
         {% else %}
-        🔒 Private Project
+         Private Project
         {% endif %}
         {% endmacro %}
         
@@ -854,6 +860,6 @@ class TestTemplateEngine:
         assert "Average Rating: 4.7/5.0" in processed
         assert "1. 2025-01-15 10:30" in processed
         assert "Ambient AI Symphony" in processed
-        assert "🌍 Public Project" in processed
-        assert "🔒 Private Project" in processed
+        assert " Public Project" in processed
+        assert " Private Project" in processed
         assert "Generated at: 2025-01-15 12:00:00" in processed

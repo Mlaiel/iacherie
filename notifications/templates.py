@@ -72,11 +72,11 @@ EMAIL_HTML_TEMPLATES = {
             <div class="features">
                 <h3>Your Content Protection Suite Includes:</h3>
                 <div class="feature-item">
-                    <span class="feature-icon">🛡️</span>
+                    <span class="feature-icon"></span>
                     <span>AI-powered copyright protection for all your content</span>
                 </div>
                 <div class="feature-item">
-                    <span class="feature-icon">🎯</span>
+                    <span class="feature-icon"></span>
                     <span>Professional SEO optimization for maximum visibility</span>
                 </div>
                 <div class="feature-item">
@@ -84,7 +84,7 @@ EMAIL_HTML_TEMPLATES = {
                     <span>Smart collaboration matching with other creators</span>
                 </div>
                 <div class="feature-item">
-                    <span class="feature-icon">📈</span>
+                    <span class="feature-icon"></span>
                     <span>Multi-platform distribution and analytics</span>
                 </div>
             </div>
@@ -126,7 +126,7 @@ EMAIL_HTML_TEMPLATES = {
 <body>
     <div class="container">
         <div class="header">
-            <div class="shield-icon">🛡️</div>
+            <div class="shield-icon"></div>
             <h1>Content Protection Activated</h1>
         </div>
         <div class="content">
@@ -153,7 +153,7 @@ EMAIL_HTML_TEMPLATES = {
                 </div>
                 <div class="metric-row">
                     <span><strong>Status:</strong></span>
-                    <span style="color: #10b981; font-weight: 600;">✓ Protected & Live</span>
+                    <span style="color: #10b981; font-weight: 600;"> Protected & Live</span>
                 </div>
             </div>
             
@@ -267,7 +267,7 @@ EMAIL_HTML_TEMPLATES = {
 <body>
     <div class="container">
         <div class="header">
-            <h1>📊 Weekly Dashboard Report</h1>
+            <h1> Weekly Dashboard Report</h1>
             <p>Your content protection summary for {{ week_period }}</p>
         </div>
         <div class="content">
@@ -328,7 +328,7 @@ EMAIL_HTML_TEMPLATES = {
 <body>
     <div class="container">
         <div class="header">
-            <div class="success-icon">✅</div>
+            <div class="success-icon"></div>
             <h1>Content Successfully Protected!</h1>
         </div>
         <div class="content">
@@ -361,33 +361,33 @@ EMAIL_HTML_TEMPLATES = {
 
 # EMBEDDED SMS TEMPLATES
 SMS_TEMPLATES = {
-    "welcome_creator": "🎉 Welcome to IA Influencer Agent, {{ creator_name }}! Your AI-powered content protection is now active. Start uploading: {{ app_url }}",
+    "welcome_creator": " Welcome to IA Influencer Agent, {{ creator_name }}! Your AI-powered content protection is now active. Start uploading: {{ app_url }}",
     
-    "content_protected": "✅ {{ creator_name }}, your {{ content_type }} '{{ content_title }}' is now AI-protected and live! SEO: {{ seo_score }}/100. View analytics: {{ short_url }}",
+    "content_protected": " {{ creator_name }}, your {{ content_type }} '{{ content_title }}' is now AI-protected and live! SEO: {{ seo_score }}/100. View analytics: {{ short_url }}",
     
     "collaboration_match": "🤝 New collaboration match! {{ partner_name }} ({{ compatibility_score }}% match) wants to collaborate on {{ collaboration_type }}. Check it out: {{ short_url }}",
     
-    "content_violation": "🚨 {{ creator_name }}, unauthorized use of your content detected on {{ platform }}. Our AI is taking action. Details: {{ violation_url }}",
+    "content_violation": " {{ creator_name }}, unauthorized use of your content detected on {{ platform }}. Our AI is taking action. Details: {{ violation_url }}",
     
-    "monetization_opportunity": "💰 {{ creator_name }}, new monetization opportunity available! Estimated earning: ${{ estimated_earning }}. Act now: {{ opportunity_url }}",
+    "monetization_opportunity": " {{ creator_name }}, new monetization opportunity available! Estimated earning: ${{ estimated_earning }}. Act now: {{ opportunity_url }}",
     
-    "dashboard_weekly_report": "📊 Weekly report: {{ total_protected_content }} content protected, ${{ revenue_generated }} earned, {{ violations_detected }} violations handled. Dashboard: {{ short_url }}",
+    "dashboard_weekly_report": " Weekly report: {{ total_protected_content }} content protected, ${{ revenue_generated }} earned, {{ violations_detected }} violations handled. Dashboard: {{ short_url }}",
     
-    "content_upload_success": "✅ {{ creator_name }}, '{{ content_title }}' uploaded & protected! Fingerprint: {{ fingerprint_id }}. View analytics: {{ short_url }}",
+    "content_upload_success": " {{ creator_name }}, '{{ content_title }}' uploaded & protected! Fingerprint: {{ fingerprint_id }}. View analytics: {{ short_url }}",
     
-    "engagement_milestone": "🎯 Congrats {{ creator_name }}! Your content reached {{ milestone_value }} {{ milestone_type }}. Keep creating: {{ dashboard_url }}"
+    "engagement_milestone": " Congrats {{ creator_name }}! Your content reached {{ milestone_value }} {{ milestone_type }}. Keep creating: {{ dashboard_url }}"
 }
 
 # EMBEDDED PUSH NOTIFICATION TEMPLATES
 PUSH_TEMPLATES = {
     "welcome_creator": {
-        "title": "Welcome to IA Influencer Agent! 🚀",
+        "title": "Welcome to IA Influencer Agent! ",
         "body": "Your AI-powered content protection is ready. Upload your first content now!",
         "data": {"action": "open_upload", "priority": "high"}
     },
     
     "content_processed": {
-        "title": "Content Protected ✅",
+        "title": "Content Protected ",
         "body": "{{ content_title }} is now AI-protected and live with {{ seo_score }}/100 SEO score",
         "data": {"content_id": "{{ content_id }}", "action": "view_analytics"}
     },
@@ -399,13 +399,13 @@ PUSH_TEMPLATES = {
     },
     
     "content_violation": {
-        "title": "Content Violation Detected! 🚨",
+        "title": "Content Violation Detected! ",
         "body": "Unauthorized use found on {{ platform }}. AI protection activated.",
         "data": {"violation_id": "{{ violation_id }}", "action": "view_violation", "priority": "urgent"}
     },
     
     "engagement_spike": {
-        "title": "Viral Alert! 🔥",
+        "title": "Viral Alert! ",
         "body": "{{ content_title }} is trending! {{ engagement_count }} new interactions",
         "data": {"content_id": "{{ content_id }}", "action": "view_analytics", "priority": "high"}
     }
@@ -415,7 +415,7 @@ PUSH_TEMPLATES = {
 IN_APP_TEMPLATES = {
     "welcome_creator": {
         "type": "success",
-        "icon": "🎉",
+        "icon": "",
         "title": "Welcome to IA Influencer Agent!",
         "message": "Your AI-powered content protection suite is now active. Ready to upload your first content?",
         "actions": [
@@ -428,7 +428,7 @@ IN_APP_TEMPLATES = {
     
     "content_processing": {
         "type": "info",
-        "icon": "⚡",
+        "icon": "",
         "title": "AI Processing in Progress",
         "message": "{{ content_title }} is being analyzed and protected. Estimated completion: {{ estimated_time }}",
         "progress": "{{ progress_percentage }}",
@@ -441,7 +441,7 @@ IN_APP_TEMPLATES = {
     
     "protection_complete": {
         "type": "success",
-        "icon": "🛡️",
+        "icon": "",
         "title": "Content Protection Complete!",
         "message": "{{ content_title }} is now protected with {{ fingerprint_count }} AI fingerprints and {{ seo_score }}/100 SEO score.",
         "actions": [
@@ -468,7 +468,7 @@ IN_APP_TEMPLATES = {
     
     "monetization_alert": {
         "type": "earning",
-        "icon": "💰",
+        "icon": "",
         "title": "New Monetization Opportunity!",
         "message": "Potential earning: ${{ estimated_earning }} from {{ opportunity_type }}",
         "actions": [
@@ -1150,6 +1150,9 @@ class NotificationTemplateEngine:
 
     def _increment_version(self, current_version: str) -> str:
         """Increment template version."""
+
+
+
         try:
             parts = current_version.split(".")
             patch = int(parts[2]) + 1
@@ -1169,6 +1172,9 @@ class NotificationTemplateEngine:
 
     def _format_percentage(self, value: Union[int, float]) -> str:
         """Format percentage value."""
+
+
+
         return f"{value:.1f}%"
 
     def _format_number(self, value: int) -> str:
@@ -1182,6 +1188,9 @@ class NotificationTemplateEngine:
 
     def _format_datetime(self, dt: datetime, format_string: str = "%Y-%m-%d %H:%M UTC") -> str:
         """Format datetime."""
+
+
+
         return dt.strftime(format_string)
 
     def _format_duration(self, seconds: int) -> str:
@@ -1233,7 +1242,7 @@ class NotificationTemplateEngine:
                 id="welcome_creator_email",
                 name="Creator Welcome Email",
                 type=TemplateType.EMAIL_HTML,
-                subject="🚀 Welcome to IA Influencer Agent - Your AI Protection Suite is Ready!",
+                subject=" Welcome to IA Influencer Agent - Your AI Protection Suite is Ready!",
                 content=EMAIL_HTML_TEMPLATES["welcome_creator"],
                 business_triggers=["user_registered", "account_activated"],
                 target_creator_types=["musician", "blogger", "photographer", "influencer", "comedian"],
@@ -1250,7 +1259,7 @@ class NotificationTemplateEngine:
                 id="content_protected_email",
                 name="Content Protection Complete",
                 type=TemplateType.EMAIL_HTML,
-                subject="✅ {{ content_title }} is Now AI-Protected and Live!",
+                subject=" {{ content_title }} is Now AI-Protected and Live!",
                 content=EMAIL_HTML_TEMPLATES["content_protected"],
                 business_triggers=["content_protected", "ai_processing_complete"],
                 target_creator_types=["musician", "blogger", "photographer", "influencer", "comedian"],
@@ -1330,6 +1339,9 @@ async def render_notification_template(
     language: str = "en"
 ) -> Dict[str, str]:
     """Convenience function to render a notification template."""
+
+
+
     return await template_engine.render_template(
         template_id, context, personalization_context, language
     )
@@ -1358,6 +1370,9 @@ __all__ = [
 # Fix the indentation error
 def _return_test_id(test_id):
     """Helper function to return test ID"""
+
+
+
     return test_id
 
 class ABTestManager:
@@ -1482,26 +1497,26 @@ class ABTestManager:
                 "id": "content_upload_success",
                 "name": "Content Upload Success",
                 "type": TemplateType.EMAIL_HTML,
-                "subject": "🎉 Your {{content_type}} '{{content_title}}' is now protected!",
+                "subject": " Your {{content_type}} '{{content_title}}' is now protected!",
                 "content": """
-                <h2>Great job, {{creator_name}}! 🎯</h2>
+                <h2>Great job, {{creator_name}}! </h2>
                 <p>Your {{content_type}} <strong>"{{content_title}}"</strong> has been successfully uploaded and is now protected by our AI copyright system.</p>
                 
                 <div style="background: #f0f9ff; padding: 20px; border-radius: 8px; margin: 20px 0;">
-                    <h3>🛡️ Protection Status:</h3>
+                    <h3> Protection Status:</h3>
                     <ul>
-                        <li>✅ Content fingerprinted with 99.5% accuracy</li>
-                        <li>✅ Monitoring {{monitoring_platforms}} platforms</li>
-                        <li>✅ DMCA protection activated</li>
+                        <li> Content fingerprinted with 99.5% accuracy</li>
+                        <li> Monitoring {{monitoring_platforms}} platforms</li>
+                        <li> DMCA protection activated</li>
                         {% if revenue_potential %}
-                        <li>💰 Estimated revenue protection: ${{revenue_potential}}/month</li>
+                        <li> Estimated revenue protection: ${{revenue_potential}}/month</li>
                         {% endif %}
                     </ul>
                 </div>
                 
                 <p><a href="{{dashboard_link}}" style="background: #3b82f6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px;">View Dashboard</a></p>
                 
-                <p>Keep creating amazing {{creator_type}} content! 🚀</p>
+                <p>Keep creating amazing {{creator_type}} content! </p>
                 """,
                 "business_triggers": ["content.uploaded", "content.protected"],
                 "target_creator_types": ["musician", "blogger", "photographer", "influencer", "comedian"]
@@ -1512,7 +1527,7 @@ class ABTestManager:
                 "type": TemplateType.EMAIL_HTML,
                 "subject": "🤝 Perfect collaboration match found for {{creator_name}}!",
                 "content": """
-                <h2>Exciting collaboration opportunity! 🎉</h2>
+                <h2>Exciting collaboration opportunity! </h2>
                 <p>Hi {{creator_name}},</p>
                 
                 <p>Our AI matching system found a perfect collaboration partner for you:</p>
@@ -1543,9 +1558,9 @@ class ABTestManager:
                 "id": "revenue_milestone",
                 "name": "Revenue Milestone Reached",
                 "type": TemplateType.EMAIL_HTML,
-                "subject": "🎊 Congratulations! You've earned ${{revenue_amount}} this month!",
+                "subject": " Congratulations! You've earned ${{revenue_amount}} this month!",
                 "content": """
-                <h2>Amazing milestone reached! 🎯💰</h2>
+                <h2>Amazing milestone reached! </h2>
                 <p>Hi {{creator_name}},</p>
                 
                 <p>Congratulations! You've reached an incredible revenue milestone:</p>
@@ -1563,7 +1578,7 @@ class ABTestManager:
                 </ul>
                 
                 <div style="background: #f0f9ff; padding: 20px; border-radius: 8px; margin: 20px 0;">
-                    <h3>🚀 Growth Insights:</h3>
+                    <h3> Growth Insights:</h3>
                     <p><strong>Growth Rate:</strong> +{{growth_percentage}}% vs last period</p>
                     <p><strong>Top Performing Content:</strong> {{top_content_title}}</p>
                     <p><strong>Best Platform:</strong> {{best_platform}}</p>
@@ -1571,7 +1586,7 @@ class ABTestManager:
                 
                 <p><a href="{{earnings_dashboard}}" style="background: #3b82f6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px;">View Detailed Earnings</a></p>
                 
-                <p>Keep up the amazing work! 🎉</p>
+                <p>Keep up the amazing work! </p>
                 """,
                 "business_triggers": ["revenue.milestone_reached"],
                 "target_creator_types": ["musician", "blogger", "photographer", "influencer", "comedian"]
@@ -1598,6 +1613,9 @@ class ABTestManager:
 
     def _increment_version(self, current_version: str) -> str:
         """Increment semantic version."""
+
+
+
         try:
             parts = current_version.split(".")
             parts[-1] = str(int(parts[-1]) + 1)
@@ -1687,14 +1705,23 @@ class ABTestManager:
 
     def _format_percentage(self, value: float, decimals: int = 1) -> str:
         """Format percentage value."""
+
+
+
         return f"{value:.{decimals}f}%"
 
     def _format_number(self, value: Union[int, float], thousands_sep: str = ",") -> str:
         """Format number with thousands separator."""
+
+
+
         return f"{value:,}"
 
     def _format_datetime(self, dt: datetime, format_string: str = "%B %d, %Y") -> str:
         """Format datetime."""
+
+
+
         return dt.strftime(format_string)
 
     def _format_duration(self, seconds: int) -> str:
@@ -1722,6 +1749,9 @@ class ABTestManager:
 
     def _format_creator_type(self, creator_type: str) -> str:
         """Format creator type for display."""
+
+
+
         return creator_type.replace("_", " ").title()
 
     # Analytics methods (simplified implementations)

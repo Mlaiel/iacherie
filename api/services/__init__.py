@@ -7,7 +7,7 @@ Team Specialities:
 - Database Administrator + Security Expert + Microservices Architect
 - IA Prompt Engineer + MLOps Engineer
 
-⚠️  COPYRIGHT WARNING ⚠️
+  COPYRIGHT WARNING 
 This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
 Unauthorized copying, distribution, modification or use without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.

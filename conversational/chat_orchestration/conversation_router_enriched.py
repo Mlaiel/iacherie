@@ -1178,6 +1178,9 @@ class EnterpriseConversationRouter:
     
     def get_routing_analytics(self) -> RoutingAnalytics:
         """Get current routing analytics"""
+
+
+
         return self.analytics
     
     def get_destination_status(self) -> Dict[str, Dict[str, Any]]:

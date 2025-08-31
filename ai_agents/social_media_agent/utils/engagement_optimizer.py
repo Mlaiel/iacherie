@@ -8,7 +8,7 @@ media platforms with integrated content protection and monetization optimization
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL NOTICE:
+ CRITICAL LEGAL NOTICE:
 This engagement optimization system and AI algorithms are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, reverse engineering, or commercialization without 
 explicit written permission is strictly prohibited and will result in immediate legal action.
@@ -211,6 +211,9 @@ class ContentFeatureExtractor:
     
     def _initialize_nlp_models(self):
         """Initialize NLP models for content analysis"""
+
+
+
         try:
             # Download required NLTK data
             nltk.download('punkt', quiet=True)
@@ -384,6 +387,9 @@ class EngagementPredictor:
     def train_engagement_model(self, training_data: List[EngagementData], 
                              target_metric: EngagementMetric) -> bool:
         """Train ML model to predict engagement metrics"""
+
+
+
         try:
             if len(training_data) < 100:
                 logger.warning(f"Insufficient data for training {target_metric.value} model")

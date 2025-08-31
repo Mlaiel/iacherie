@@ -298,6 +298,9 @@ class ModelTrainingConfig(BaseSettings):
     
     def _get_default_training_spec(self, model_name: str, task_type: str) -> TrainingSpec:
         """Get default training specification."""
+
+
+
         return TrainingSpec(
             model_name=model_name,
             task_type=task_type,
@@ -335,6 +338,9 @@ class ModelTrainingConfig(BaseSettings):
     
     def get_data_config(self) -> Dict[str, Any]:
         """Get data processing configuration."""
+
+
+
         return {
             "data_dir": self.TRAINING_DATA_DIR,
             "splits": {
@@ -370,6 +376,9 @@ class ModelTrainingConfig(BaseSettings):
     
     def get_training_config(self) -> Dict[str, Any]:
         """Get complete training configuration."""
+
+
+
         return {
             "hardware": {
                 "gpu_enabled": self.GPU_TRAINING_ENABLED,
@@ -412,6 +421,9 @@ class ModelTrainingConfig(BaseSettings):
     
     def get_fine_tuning_config(self) -> Dict[str, Any]:
         """Get fine-tuning specific configuration."""
+
+
+
         return {
             "layers_to_unfreeze": self.FINE_TUNING_LAYERS,
             "fine_tuning_lr": self.FINE_TUNING_LEARNING_RATE,
@@ -450,6 +462,9 @@ class ModelTrainingConfig(BaseSettings):
     
     def get_evaluation_config(self) -> Dict[str, Any]:
         """Get model evaluation configuration."""
+
+
+
         return {
             "metrics_by_task": {
                 "classification": ["accuracy", "precision", "recall", "f1_score", "auc"],

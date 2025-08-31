@@ -1,4 +1,4 @@
-"""⚙️ Data Processors Module - IA Influencer Agent Platform Enterprise
+""" Data Processors Module - IA Influencer Agent Platform Enterprise
 ===================================================================
 Module: backend/data_management/processors/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -7,7 +7,7 @@ Type: Industrial Data Processors - Enterprise Production-Ready Ultra Advanced
 Responsibility: Traitement avancé des données multi-format pour créateurs, protection contenu et monétisation
 ========================================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Toute tentative de vol de ce concept, de cette idée ou de ce code sans autorisation personnelle claire 
 et écrite de Fahed Mlaiel est strictement interdite et sera poursuivie en justice selon la loi allemande.

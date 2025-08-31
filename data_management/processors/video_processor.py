@@ -1,11 +1,11 @@
 """
-🎬📸📝 Multi-Format Processors - IA Influencer Agent Platform Enterprise
+ Multi-Format Processors - IA Influencer Agent Platform Enterprise
 =========================================================================
 Module: backend/data_management/processors/[video/image/document]_processor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 =========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 """

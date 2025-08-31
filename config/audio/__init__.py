@@ -7,7 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA-Influencer Agent + Content Protection Platform
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This code and all associated concepts, algorithms, and implementations are the exclusive 
 intellectual property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, reproduction, 
 distribution, modification, or appropriation of this code, in whole or in part, without 

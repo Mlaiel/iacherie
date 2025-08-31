@@ -376,7 +376,7 @@ async def caching_example():
 
 async def main():
     """Run all examples."""
-    logger.info("🚀 Starting IA-Influencer-Agent Serialization System Examples")
+    logger.info(" Starting IA-Influencer-Agent Serialization System Examples")
     logger.info("=" * 70)
     
     try:
@@ -402,10 +402,10 @@ async def main():
         await caching_example()
         
         logger.info("=" * 70)
-        logger.info("✅ All examples completed successfully!")
+        logger.info(" All examples completed successfully!")
         
     except Exception as e:
-        logger.error(f"❌ Example execution failed: {e}")
+        logger.error(f" Example execution failed: {e}")
         raise
     
     finally:

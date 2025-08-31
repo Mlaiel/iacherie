@@ -505,21 +505,33 @@ HIGH_AVAILABILITY_CONFIG: Dict[str, Any] = {
 
 def get_config() -> RightsTrackingConfig:
     """Retourne l'instance de configuration globale"""
+
+
+
     return RightsTrackingConfig()
 
 
 def get_platform_config(platform: Platform) -> Optional[PlatformConfig]:
     """Retourne la configuration pour une plateforme spécifique"""
+
+
+
     return PLATFORM_CONFIGS.get(platform)
 
 
 def get_ai_model_config(model_name: str) -> Optional[AIModelConfig]:
     """Retourne la configuration pour un modèle d'IA spécifique"""
+
+
+
     return AI_MODEL_CONFIGS.get(model_name)
 
 
 def get_legal_clauses(jurisdiction: str) -> Dict[str, str]:
     """Retourne les clauses légales pour une juridiction"""
+
+
+
     return LEGAL_CLAUSE_TEMPLATES.get(jurisdiction, LEGAL_CLAUSE_TEMPLATES["US"])
 
 
@@ -531,6 +543,9 @@ def get_default_royalty_rate(license_type: LicenseType, usage_type: str) -> floa
 
 def validate_territory_code(territory: str) -> bool:
     """Valide un code de territoire"""
+
+
+
     try:
         TerritoryCode(territory)
         return True

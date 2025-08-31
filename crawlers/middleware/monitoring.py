@@ -260,6 +260,9 @@ class PerformanceMonitor:
     
     async def get_redis_metrics(self) -> Dict[str, Any]:
         """Get Redis performance metrics"""
+
+
+
         try:
             info = self.redis_client.info()
             
@@ -281,6 +284,9 @@ class PerformanceMonitor:
     
     async def get_cache_metrics(self) -> Dict[str, Any]:
         """Get cache performance metrics"""
+
+
+
         try:
             # Get cache statistics from Redis
             cache_hits = await self.redis_client.get("cache:hits") or 0
@@ -304,6 +310,9 @@ class PerformanceMonitor:
     
     async def get_request_metrics(self) -> Dict[str, Any]:
         """Get request processing metrics"""
+
+
+
         try:
             now = time.time()
             hour_window = int(now // 3600)
@@ -334,6 +343,9 @@ class PerformanceMonitor:
     
     async def get_error_metrics(self) -> Dict[str, Any]:
         """Get error and exception metrics"""
+
+
+
         try:
             now = time.time()
             hour_window = int(now // 3600)
@@ -535,6 +547,9 @@ class AlertManager:
     
     async def send_alert(self, alert: Dict[str, Any]):
         """Send alert notification"""
+
+
+
         try:
             # Log alert
             logger.warning(f"ALERT: {alert['title']} - {alert['message']}")
@@ -579,6 +594,9 @@ class MetricsCollector:
         
     async def record_metric(self, metric: MetricData):
         """Record a single metric"""
+
+
+
         try:
             # Create metric key
             metric_key = f"metrics:{metric.name}:{int(metric.timestamp.timestamp())}"
@@ -605,6 +623,9 @@ class MetricsCollector:
     
     async def record_event(self, event: MonitoringEvent):
         """Record a monitoring event"""
+
+
+
         try:
             # Store event
             event_key = f"events:{event.event_id}"
@@ -632,6 +653,9 @@ class MetricsCollector:
                                start_time: datetime, 
                                end_time: datetime) -> List[Dict[str, Any]]:
         """Get metric history for time range"""
+
+
+
         try:
             series_key = f"metric_series:{metric_name}"
             
@@ -706,6 +730,9 @@ class MonitoringMiddleware:
     
     async def collect_and_process_metrics(self):
         """Collect metrics and process alerts"""
+
+
+
         try:
             # Collect system metrics
             system_metrics = await self.performance_monitor.collect_system_metrics()
@@ -769,6 +796,9 @@ class MonitoringMiddleware:
     async def record_request_metric(self, endpoint: str, duration: float, 
                                   status: str, user_id: Optional[str] = None):
         """Record request processing metrics"""
+
+
+
         try:
             now = time.time()
             hour_window = int(now // 3600)
@@ -807,6 +837,9 @@ class MonitoringMiddleware:
     async def record_error_metric(self, error_type: str, error_message: str, 
                                 context: Dict[str, Any] = None):
         """Record error metrics"""
+
+
+
         try:
             now = time.time()
             hour_window = int(now // 3600)
@@ -836,6 +869,9 @@ class MonitoringMiddleware:
     
     async def get_monitoring_dashboard_data(self) -> Dict[str, Any]:
         """Get data for monitoring dashboard"""
+
+
+
         try:
             # Get current metrics
             system_metrics = await self.performance_monitor.collect_system_metrics()
@@ -873,6 +909,9 @@ class MonitoringMiddleware:
 # Factory function for dependency injection
 def get_monitoring_middleware() -> MonitoringMiddleware:
     """Get monitoring middleware instance"""
+
+
+
     return MonitoringMiddleware()
 
 

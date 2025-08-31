@@ -1,4 +1,4 @@
-"""🔐 Ultra-Industrial Digital Rights Management (DRM) Orchestration
+""" Ultra-Industrial Digital Rights Management (DRM) Orchestration
 =================================================================
 
 Enterprise-grade DRM ecosystem with advanced access control, blockchain integration,
@@ -33,7 +33,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + Legal Tech + DevOps + DBA
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  MAXIMUM DRM TECHNOLOGY IP PROTECTION ⚠️
+  MAXIMUM DRM TECHNOLOGY IP PROTECTION 
 ===========================================
 This DRM system contains the most advanced digital protection technologies:
 - Quantum-Resistant Encryption: Patent Pending NSA-Level Technology
@@ -163,7 +163,10 @@ class DRMService:
         logger.info("DRM Service initialized")
 
     async def initialize(self) -> bool:
-        """Initialize the DRM service."""        try:
+        """Initialize the DRM service."""
+
+
+        try:
             # Load existing licenses and policies
             await self._load_persistent_data()
             
@@ -379,7 +382,10 @@ class DRMService:
             
         Returns:
             bool: True if successful, False otherwise
-        """        try:
+        """
+
+
+        try:
             if license_id in self.active_licenses:
                 license_obj = self.active_licenses[license_id]
                 license_obj.is_active = False
@@ -466,7 +472,10 @@ class DRMService:
         content_id: str,
         policy: AccessPolicy
     ) -> bool:
-        """Set access policy for content."""        try:
+        """Set access policy for content."""
+
+
+        try:
             self.access_policies[content_id] = policy
             logger.info(f"Set access policy for content {content_id}")
             return True

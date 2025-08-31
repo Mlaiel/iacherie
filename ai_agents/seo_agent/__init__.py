@@ -6,7 +6,7 @@ intelligent optimization and comprehensive functionality.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -20,12 +20,12 @@ from .manager import (
 # Core System
 from .core.seo_engine import (
     SeoEngine,
-    SeoJob,
-    SeoResult
 )
 
 # Legacy compatibility (for smooth migration)
 from .manager import SeoManager as SeoAgent
+# Alternative naming for backward compatibility  
+SEOAgent = SeoAgent
 
 __all__ = [
     # Master Manager
@@ -34,9 +34,8 @@ __all__ = [
     
     # Core System
     'SeoEngine',
-    'SeoJob',
-    'SeoResult',
     
     # Legacy compatibility
-    'SeoAgent'
+    'SeoAgent',
+    'SEOAgent'
 ]

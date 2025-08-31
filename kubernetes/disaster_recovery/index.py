@@ -15,7 +15,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Content Protection
 License: Proprietary - All rights reserved
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code and all associated concepts are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, modification, or distribution without explicit written 
 permission from the author is strictly prohibited and will result in immediate legal action.
@@ -138,6 +138,9 @@ class DisasterRecoveryCoordinator:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             self.logger.info("Initializing IA Influencer Agent Disaster Recovery System")
             
@@ -347,6 +350,9 @@ class DisasterRecoveryCoordinator:
         Returns:
             bool: True if system is healthy
         """
+
+
+
         try:
             status_report = await self.get_system_status()
             self.system_status = status_report.overall_status

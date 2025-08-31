@@ -7,7 +7,7 @@ Provides intelligent enhancement suggestions and automated quality boosting capa
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -190,6 +190,9 @@ class QualityEnhancer:
         Returns:
             EnhancementPlan: Detailed enhancement execution plan
         """
+
+
+
         
         try:
             self.logger.info(f"Creating enhancement plan for {content_id}")
@@ -395,6 +398,9 @@ class QualityEnhancer:
         output_path: Optional[str] = None
     ) -> Dict[str, Any]:
         """Enhanced audio quality with advanced processing"""
+
+
+
         
         try:
             self.logger.info(f"Enhancing audio quality: {content_path}")
@@ -471,6 +477,9 @@ class QualityEnhancer:
         output_path: Optional[str] = None
     ) -> Dict[str, Any]:
         """Enhanced image quality with AI-driven improvements"""
+
+
+
         
         try:
             self.logger.info(f"Enhancing image quality: {content_path}")
@@ -549,6 +558,9 @@ class QualityEnhancer:
         output_path: Optional[str] = None
     ) -> Dict[str, Any]:
         """Enhanced text quality with AI-driven improvements"""
+
+
+
         
         try:
             self.logger.info(f"Enhancing text quality: {content_path}")
@@ -696,6 +708,9 @@ class QualityEnhancer:
         content_type: ContentType
     ) -> Dict[str, Any]:
         """Execute individual enhancement operation"""
+
+
+
         
         try:
             if operation.operation_type == "audio_enhancement":
@@ -720,6 +735,9 @@ class QualityEnhancer:
         strength: float
     ) -> np.ndarray:
         """Apply intelligent noise reduction"""
+
+
+
         
         try:
             # Spectral gating for noise reduction
@@ -751,6 +769,9 @@ class QualityEnhancer:
         strength: float
     ) -> np.ndarray:
         """Enhance dynamic range with intelligent compression"""
+
+
+
         
         try:
             # Calculate RMS for dynamic processing
@@ -783,6 +804,9 @@ class QualityEnhancer:
     # Text enhancement methods
     async def _correct_grammar_and_spelling(self, text: str) -> str:
         """Correct grammar and spelling errors"""
+
+
+
         
         try:
             # Implement grammar correction logic
@@ -811,6 +835,9 @@ class QualityEnhancer:
 
     async def _improve_readability(self, text: str, strength: float) -> str:
         """Improve text readability"""
+
+
+
         
         try:
             # Split into sentences
@@ -853,6 +880,9 @@ class QualityEnhancer:
         sr: int
     ) -> Dict[str, float]:
         """Calculate audio improvement metrics"""
+
+
+
         
         try:
             # Dynamic range comparison
@@ -889,6 +919,9 @@ class QualityEnhancer:
         enhanced: str
     ) -> Dict[str, float]:
         """Calculate text improvement metrics"""
+
+
+
         
         try:
             # Readability improvement
@@ -934,6 +967,9 @@ class QualityEnhancer:
         operations: List[EnhancementOperation]
     ) -> List[EnhancementOperation]:
         """Optimize the sequence of enhancement operations"""
+
+
+
         
         try:
             # Sort by priority (dependencies first, then by expected improvement)
@@ -995,6 +1031,9 @@ class ImprovementEngine:
         target_quality: QualityLevel = QualityLevel.EXCELLENT
     ) -> List[Dict[str, Any]]:
         """Generate intelligent improvement suggestions"""
+
+
+
         
         try:
             suggestions = []

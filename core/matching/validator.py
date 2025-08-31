@@ -34,7 +34,7 @@ Business Intelligence:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This validation system contains proprietary AI algorithms and business logic
 developed by Fahed Mlaiel. Unauthorized use, reverse engineering, or distribution
 is strictly prohibited and subject to legal prosecution.
@@ -317,6 +317,9 @@ class MatchValidator:
         Returns:
             Complete validation result
         """
+
+
+
         try:
             match_id = f"{creator_a.user_id}_{creator_b.user_id}_{int(datetime.utcnow().timestamp())}"
             
@@ -414,6 +417,9 @@ class MatchValidator:
         context: Optional[Dict[str, Any]]
     ) -> Tuple[List[ValidationIssue], bool]:
         """Validate specific category"""
+
+
+
         try:
             if category == ValidationCategory.SAFETY_COMPLIANCE:
                 return await self._validate_safety_compliance(match_result, creator_a, creator_b, context)
@@ -957,6 +963,9 @@ class MatchValidator:
     
     def _create_validation_error(self, category: ValidationCategory, error_msg: str) -> ValidationIssue:
         """Create validation error issue"""
+
+
+
         return ValidationIssue(
             issue_id=f"validation_error_{category.value}",
             category=category,

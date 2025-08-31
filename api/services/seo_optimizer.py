@@ -5,7 +5,7 @@ Advanced keyword research, content optimization, and multi-platform SEO strategi
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + SEO Expert + Content Strategist + ML Engineer
 
-⚠️  COPYRIGHT WARNING ⚠️
+  COPYRIGHT WARNING 
 This code and concept are proprietary to Fahed Mlaiel.
 Unauthorized copying, distribution, or use without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -195,6 +195,9 @@ class EnterpriseSEOOptimizerService:
         """
         Comprehensive SEO analysis of content using AI algorithms
         """
+
+
+
         try:
             tags = tags or []
             
@@ -501,12 +504,12 @@ class EnterpriseSEOOptimizerService:
         cta_words = ['subscribe', 'like', 'share', 'follow', 'watch', 'listen']
         if not any(word in optimized.lower() for word in cta_words):
             cta_suggestions = {
-                'audio': "🎵 Listen and share your thoughts!",
-                'video': "👍 Like and subscribe for more content!",
-                'image': "💖 Like and follow for more amazing visuals!",
-                'text': "📖 Read and share your thoughts in comments!"
+                'audio': " Listen and share your thoughts!",
+                'video': " Like and subscribe for more content!",
+                'image': " Like and follow for more amazing visuals!",
+                'text': " Read and share your thoughts in comments!"
             }
-            cta = cta_suggestions.get(content_type, "👍 Like and share!")
+            cta = cta_suggestions.get(content_type, " Like and share!")
             optimized = f"{optimized}\n\n{cta}"
         
         return optimized
@@ -608,6 +611,9 @@ class EnterpriseSEOOptimizerService:
         """
         Optimize content for specific platform requirements
         """
+
+
+
         try:
             platform_enum = Platform(platform.lower())
             config = self.PLATFORM_CONFIGS.get(platform_enum, {})
@@ -649,9 +655,9 @@ class EnterpriseSEOOptimizerService:
         
         # YouTube-specific description with timestamps, links, etc.
         yt_description = f"{seo_analysis.optimized_description}\n\n"
-        yt_description += "🔔 Subscribe for more content!\n"
-        yt_description += "👍 Like if you enjoyed this video\n"
-        yt_description += "💬 Comment your thoughts below\n\n"
+        yt_description += " Subscribe for more content!\n"
+        yt_description += " Like if you enjoyed this video\n"
+        yt_description += " Comment your thoughts below\n\n"
         yt_description += f"Tags: {', '.join(seo_analysis.target_keywords[:10])}"
         
         # YouTube hashtags (limit 15)
@@ -687,7 +693,7 @@ class EnterpriseSEOOptimizerService:
         
         # Instagram uses description as caption
         ig_caption = f"{seo_analysis.optimized_description}\n\n"
-        ig_caption += "✨ Follow for more amazing content!\n"
+        ig_caption += " Follow for more amazing content!\n"
         ig_caption += f"{' '.join(seo_analysis.hashtags[:config['optimal_hashtags']])}"
         
         # Instagram Stories optimization
@@ -789,6 +795,9 @@ class EnterpriseSEOOptimizerService:
         config: Dict[str, Any]
     ) -> PlatformOptimization:
         """Generic platform optimization"""
+
+
+
         
         return PlatformOptimization(
             platform=Platform.FACEBOOK,  # Default
@@ -816,6 +825,9 @@ class EnterpriseSEOOptimizerService:
         """
         Perform comprehensive keyword research using AI algorithms
         """
+
+
+
         try:
             # Expand seed keywords
             expanded_keywords = []
@@ -936,6 +948,9 @@ class EnterpriseSEOOptimizerService:
 
     async def _cache_seo_analysis(self, title: str, analysis: SEOAnalysis) -> None:
         """Cache SEO analysis results"""
+
+
+
         try:
             cache_key = f"seo_analysis:{hashlib.md5(title.encode()).hexdigest()}"
             self.redis_client.setex(

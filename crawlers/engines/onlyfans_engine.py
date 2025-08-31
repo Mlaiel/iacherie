@@ -204,6 +204,9 @@ class OnlyFansEngine(BaseCrawlerEngine):
             
     async def _process_content(self, raw_content: Dict[str, Any]) -> Optional[OnlyFansContent]:
         """Process and protect content with advanced AI analysis"""
+
+
+
         
         try:
             # Extract content metadata
@@ -552,6 +555,9 @@ class OnlyFansEngine(BaseCrawlerEngine):
         
     async def _get_authenticated_headers(self) -> Dict[str, str]:
         """Get authenticated headers for API requests"""
+
+
+
         
         return {
             'User-Agent': 'OnlyFans/1.0',

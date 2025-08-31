@@ -66,6 +66,9 @@ class BaseApplicationException(Exception):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert exception to dictionary for API responses."""
+
+
+
         return {
             "error": {
                 "code": self.error_code.value,
@@ -265,6 +268,9 @@ class FingerprintException(BaseApplicationException):
 
 def convert_to_http_exception(exc: BaseApplicationException) -> HTTPException:
     """Convert application exception to FastAPI HTTPException."""
+
+
+
     return HTTPException(
         status_code=exc.status_code,
         detail=exc.to_dict()

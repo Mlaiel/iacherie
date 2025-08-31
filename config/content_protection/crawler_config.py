@@ -9,7 +9,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA-Influencer Agent + Content Protection Platform
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps
 
-⚠️  COPYRIGHT WARNING:
+  COPYRIGHT WARNING:
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, modification, or distribution of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
@@ -327,6 +327,9 @@ class WebCrawlerConfig:
     
     def get_credentials(self, platform: Platform) -> Optional[PlatformCredentials]:
         """Get credentials for specific platform."""
+
+
+
         return self.credentials.get(platform)
     
     def set_credentials(self, platform: Platform, credentials: PlatformCredentials) -> None:
@@ -335,6 +338,9 @@ class WebCrawlerConfig:
     
     def is_platform_enabled(self, platform: Platform) -> bool:
         """Check if platform is enabled for crawling."""
+
+
+
         return self.platforms.get(platform, False)
     
     def enable_platform(self, platform: Platform) -> None:
@@ -347,6 +353,9 @@ class WebCrawlerConfig:
     
     def get_enabled_platforms(self) -> List[Platform]:
         """Get list of enabled platforms."""
+
+
+
         return [platform for platform, enabled in self.platforms.items() if enabled]
     
     def validate_configuration(self) -> List[str]:
@@ -390,6 +399,9 @@ class WebCrawlerConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert configuration to dictionary."""
+
+
+
         return {
             "crawler_type": self.crawler_type,
             "crawling_strategy": self.crawling_strategy,

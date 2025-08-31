@@ -8,7 +8,7 @@ Provides centralized configuration for all parsing operations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
@@ -254,6 +254,9 @@ class ParserConfig:
     
     def _get_platform_configs(self) -> Dict[PlatformType, PlatformConfig]:
         """Get default platform configurations"""
+
+
+
         return {
             PlatformType.YOUTUBE: PlatformConfig(
                 platform=PlatformType.YOUTUBE,
@@ -375,10 +378,16 @@ class ParserConfig:
     
     def get_platform_config(self, platform: PlatformType) -> PlatformConfig:
         """Get configuration for specific platform"""
+
+
+
         return self.platform.get(platform, PlatformConfig(platform=platform))
     
     def validate_config(self) -> bool:
         """Validate configuration settings"""
+
+
+
         try:
             # Validate platform configs
             for platform_type, config in self.platform.items():
@@ -404,6 +413,9 @@ class ParserConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert configuration to dictionary"""
+
+
+
         return {
             "platform": {k.value: v.__dict__ for k, v in self.platform.items()},
             "media": self.media.__dict__,

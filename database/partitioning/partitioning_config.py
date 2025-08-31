@@ -19,7 +19,7 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 
-🚨 INTELLECTUAL PROPERTY WARNING 🚨
+ INTELLECTUAL PROPERTY WARNING 
 This code, concept, and architecture are the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de).
 Any use, copying, distribution, or exploitation without explicit written authorization is STRICTLY PROHIBITED
 and will be prosecuted to the full extent of the law. Legal action will be taken against violators.

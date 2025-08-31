@@ -69,6 +69,9 @@ class TestGenerationConfig:
     @pytest.fixture
     def basic_config(self):
         """Create a basic generation configuration"""
+
+
+
         return GenerationConfig(
             model_name="gpt-4",
             temperature=0.7,
@@ -81,6 +84,9 @@ class TestGenerationConfig:
     @pytest.fixture
     def advanced_config(self):
         """Create an advanced generation configuration"""
+
+
+
         return GenerationConfig(
             model_name="claude-3-opus",
             temperature=0.8,
@@ -407,6 +413,9 @@ class TestConfigValidator:
     @pytest.fixture
     def validator(self):
         """Create a config validator instance"""
+
+
+
         return ConfigValidator()
     
     def test_validate_temperature(self, validator):
@@ -464,6 +473,9 @@ class TestConfigLoader:
     @pytest.fixture
     def loader(self):
         """Create a config loader instance"""
+
+
+
         return ConfigLoader()
     
     def test_load_from_file(self, loader, tmp_path):
@@ -536,6 +548,9 @@ class TestConfigManager:
     @pytest.fixture
     def manager(self):
         """Create a config manager instance"""
+
+
+
         return ConfigManager()
     
     def test_config_registration(self, manager):

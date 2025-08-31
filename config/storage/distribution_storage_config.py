@@ -242,6 +242,9 @@ class MultiPlatformDistributionConfig:
     
     def get_platform_config(self, platform: DistributionPlatform) -> Optional[PlatformDistributionConfig]:
         """Get configuration for specific platform."""
+
+
+
         return self.platform_configs.get(platform)
     
     def get_supported_platforms_for_format(self, content_format: ContentFormat) -> List[DistributionPlatform]:
@@ -254,6 +257,9 @@ class MultiPlatformDistributionConfig:
     
     def is_content_adaptation_enabled(self) -> bool:
         """Check if automatic content adaptation is enabled."""
+
+
+
         return self.content_adaptation_config.get('enable_auto_adaptation', False)
 
 @dataclass
@@ -331,6 +337,9 @@ distribution_analytics_config = DistributionAnalyticsConfig()
 # Configuration validation functions
 def validate_distribution_config() -> bool:
     """Validate multi-platform distribution configuration."""
+
+
+
     try:
         # Validate required paths
         required_paths = [
@@ -362,6 +371,9 @@ def validate_distribution_config() -> bool:
 
 def validate_content_syndication_config() -> bool:
     """Validate content syndication configuration."""
+
+
+
     try:
         # Validate syndication rules
         rules = content_syndication_config.syndication_rules

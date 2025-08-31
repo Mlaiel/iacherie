@@ -15,7 +15,7 @@ Business Logic Integration:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend + Security Experts
 
-⚠️ COPYRIGHT WARNING:
+ COPYRIGHT WARNING:
 This code is proprietary and belongs to Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit 
 written permission from Fahed Mlaiel is strictly prohibited.
@@ -481,6 +481,9 @@ rate_limiting_config = RateLimitingConfig()
 
 def get_rate_limiting_config() -> RateLimitingConfig:
     """Get the rate limiting configuration instance."""
+
+
+
     return rate_limiting_config
 
 

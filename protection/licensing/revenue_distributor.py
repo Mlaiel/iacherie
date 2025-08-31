@@ -1,5 +1,5 @@
 """
-💰 Revenue Distributor - Automated Revenue Distribution Engine
+ Revenue Distributor - Automated Revenue Distribution Engine
 ============================================================
 
 Professional revenue distribution system for licensing:
@@ -98,7 +98,7 @@ class PaymentTransaction:
 
 class RevenueDistributor:
     """
-    🚀 Professional revenue distribution engine
+     Professional revenue distribution engine
     
     Advanced system for automated revenue splitting and distribution
     with multi-party support and regulatory compliance.
@@ -134,6 +134,9 @@ class RevenueDistributor:
     
     def _initialize_payment_processors(self):
         """Initialize payment processing integrations."""
+
+
+
         try:
             # Stripe integration
             if self.config.get('stripe_enabled', False):
@@ -215,6 +218,9 @@ class RevenueDistributor:
         termination_date: datetime
     ) -> Dict[str, Any]:
         """Process final revenue distribution upon license termination."""
+
+
+
         try:
             self.logger.info(f"Processing final distribution for license: {license_id}")
             
@@ -262,7 +268,7 @@ class RevenueDistributor:
         is_final_distribution: bool = False
     ) -> Dict[str, Any]:
         """
-        💰 Distribute revenue among license participants
+         Distribute revenue among license participants
         
         Args:
             license_id: License identifier
@@ -487,6 +493,9 @@ class RevenueDistributor:
         currency: str
     ) -> PaymentTransaction:
         """Create a payment transaction record."""
+
+
+
         return PaymentTransaction(
             transaction_id=str(uuid.uuid4()),
             participant_id=participant.participant_id,
@@ -502,6 +511,9 @@ class RevenueDistributor:
     
     async def _process_payment_transaction(self, transaction: PaymentTransaction) -> Dict[str, Any]:
         """Process individual payment transaction."""
+
+
+
         try:
             self.logger.info(f"Processing payment transaction: {transaction.transaction_id}")
             
@@ -558,6 +570,9 @@ class RevenueDistributor:
     
     def get_distribution_status(self) -> Dict[str, Any]:
         """Get revenue distribution status and metrics."""
+
+
+
         return {
             **{k: float(v) if isinstance(v, Decimal) else v for k, v in self.metrics.items()},
             'active_distributions': len(self.active_distributions),

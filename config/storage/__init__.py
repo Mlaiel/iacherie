@@ -161,7 +161,10 @@ STORAGE_CONFIGS = {
 }
 
 def get_storage_config(storage_type: str):
-    """Get storage configuration by type."""    return STORAGE_CONFIGS.get(storage_type)
+    """Get storage configuration by type."""
+
+
+    return STORAGE_CONFIGS.get(storage_type)
 
 def validate_all_storage_configs() -> bool:
     """Validate all storage configurations."""    results = {}
@@ -185,7 +188,7 @@ def validate_all_storage_configs() -> bool:
     if not all_valid:
         print("Storage configuration validation results:")
         for name, valid in results.items():
-            status = "✅" if valid else "❌"
+            status = "" if valid else ""
             print(f"  {status} {name}: {'Valid' if valid else 'Invalid'}")
     
     return all_valid

@@ -1,5 +1,5 @@
 """
-📊 Tax Compliance Payment Processor
+ Tax Compliance Payment Processor
 ===================================
 
 Advanced tax compliance processor with automated tax calculations,
@@ -163,6 +163,9 @@ class TaxComplianceProcessor:
         transaction: TaxableTransaction
     ) -> TaxCalculation:
         """Calculate tax for a transaction"""
+
+
+
         try:
             applicable_rates = await self._get_applicable_rates(transaction)
             tax_breakdown = []
@@ -214,6 +217,9 @@ class TaxComplianceProcessor:
         id_type: str = "vat"
     ) -> Dict[str, Any]:
         """Validate tax identification number"""
+
+
+
         try:
             # Mock validation (in production, use real tax ID validation APIs)
             await asyncio.sleep(0.1)
@@ -251,6 +257,9 @@ class TaxComplianceProcessor:
         invoice_details: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Generate tax-compliant invoice"""
+
+
+
         try:
             invoice_id = f"inv_{uuid.uuid4().hex[:12]}"
             invoice_number = f"INV-{datetime.now().strftime('%Y%m%d')}-{uuid.uuid4().hex[:6].upper()}"
@@ -316,6 +325,9 @@ class TaxComplianceProcessor:
         period_end: datetime
     ) -> Dict[str, Any]:
         """File tax return for a jurisdiction and period"""
+
+
+
         try:
             # Aggregate transactions for the period
             period_data = await self._aggregate_period_data(
@@ -379,6 +391,9 @@ class TaxComplianceProcessor:
         annual_revenue: Decimal
     ) -> Dict[str, Any]:
         """Check if tax registration is required"""
+
+
+
         try:
             threshold = self.registration_thresholds.get(jurisdiction)
             
@@ -414,6 +429,9 @@ class TaxComplianceProcessor:
         jurisdictions: Optional[List[TaxJurisdiction]] = None
     ) -> Dict[str, Any]:
         """Generate comprehensive tax compliance report"""
+
+
+
         try:
             if not jurisdictions:
                 jurisdictions = list(TaxJurisdiction)
@@ -469,6 +487,9 @@ class TaxComplianceProcessor:
     
     def _initialize_tax_rates(self) -> Dict[str, List[TaxRate]]:
         """Initialize tax rates for different jurisdictions"""
+
+
+
         return {
             TaxJurisdiction.EU_VAT.value: [
                 TaxRate(TaxJurisdiction.EU_VAT, TaxType.VAT, Decimal("20.0")),  # Standard rate
@@ -710,6 +731,9 @@ class TaxComplianceProcessor:
         jurisdiction: TaxJurisdiction
     ) -> Dict[str, Any]:
         """Check compliance status for jurisdiction"""
+
+
+
         return {
             "status": "compliant",
             "last_filing": "2024-12-31",
@@ -723,6 +747,9 @@ class TaxComplianceProcessor:
         jurisdiction: TaxJurisdiction
     ) -> List[Dict[str, Any]]:
         """Get upcoming tax deadlines"""
+
+
+
         return [
             {
                 "jurisdiction": jurisdiction.value,
@@ -739,6 +766,9 @@ class TaxComplianceProcessor:
         period_end: datetime
     ) -> Dict[str, Any]:
         """Get data for specific tax type"""
+
+
+
         return {
             "total_collected": 5000.00,
             "transactions": 250,
@@ -751,6 +781,9 @@ class TaxComplianceProcessor:
         report_data: Dict[str, Any]
     ) -> List[str]:
         """Generate compliance recommendations"""
+
+
+
         return [
             "Consider voluntary registration in high-revenue jurisdictions",
             "Implement automated tax calculation for all transactions",

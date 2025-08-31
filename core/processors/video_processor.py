@@ -7,7 +7,7 @@ Handles video analysis, enhancement, conversion, and AI-powered features.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 This software is proprietary and confidential. Any unauthorized use, copying, 
 distribution, or commercialization without explicit written permission is 
 strictly prohibited and will result in legal action.
@@ -172,7 +172,7 @@ class VideoAnalysisResult:
 
 class VideoProcessor:
     """
-    🎬 ENTERPRISE VIDEO PROCESSOR
+     ENTERPRISE VIDEO PROCESSOR
     
     Industrial-grade video processing engine with advanced AI capabilities
     for content creators, filmmakers, and influencers.
@@ -202,6 +202,9 @@ class VideoProcessor:
     
     async def initialize(self) -> bool:
         """Initialize the video processor"""
+
+
+
         try:
             if AI_LIBS_AVAILABLE and self.config.enable_ai_analysis:
                 # Initialize object detection model
@@ -227,11 +230,11 @@ class VideoProcessor:
                         self.logger.warning(f"Could not load scene classifier: {e}")
             
             self._initialized = True
-            self.logger.info("✅ Video processor initialized successfully")
+            self.logger.info(" Video processor initialized successfully")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize video processor: {e}")
+            self.logger.error(f" Failed to initialize video processor: {e}")
             return False
     
     async def process(
@@ -365,6 +368,9 @@ class VideoProcessor:
     
     async def _prepare_video_file(self, content: Union[bytes, str, BinaryIO]) -> Optional[str]:
         """Prepare video file for processing"""
+
+
+
         try:
             if isinstance(content, str):
                 # File path
@@ -394,6 +400,9 @@ class VideoProcessor:
     
     async def _extract_metadata(self, video_path: str) -> VideoMetadata:
         """Extract comprehensive video metadata"""
+
+
+
         try:
             if not VIDEO_LIBS_AVAILABLE:
                 raise Exception("Video libraries not available")
@@ -501,6 +510,9 @@ class VideoProcessor:
     
     async def _enhance_video(self, video_path: str) -> str:
         """Enhance video quality through various techniques"""
+
+
+
         try:
             if not VIDEO_LIBS_AVAILABLE:
                 return video_path
@@ -539,6 +551,9 @@ class VideoProcessor:
     
     async def _extract_features(self, video_path: str) -> VideoFeatures:
         """Extract advanced video features using computer vision and AI"""
+
+
+
         try:
             features = VideoFeatures()
             
@@ -590,6 +605,9 @@ class VideoProcessor:
     
     async def _analyze_frame(self, frame: np.ndarray, features: VideoFeatures, frame_number: int):
         """Analyze individual frame for various features"""
+
+
+
         try:
             # Brightness analysis
             brightness = np.mean(cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY))
@@ -631,6 +649,9 @@ class VideoProcessor:
     
     async def _calculate_motion(self, prev_frame: np.ndarray, curr_frame: np.ndarray) -> float:
         """Calculate motion between consecutive frames"""
+
+
+
         try:
             # Convert to grayscale
             prev_gray = cv2.cvtColor(prev_frame, cv2.COLOR_BGR2GRAY)
@@ -655,6 +676,9 @@ class VideoProcessor:
     
     async def _extract_dominant_colors(self, frame: np.ndarray, k: int = 3) -> List[Tuple[int, int, int]]:
         """Extract dominant colors from frame using K-means clustering"""
+
+
+
         try:
             # Reshape frame to be a list of pixels
             pixels = frame.reshape(-1, 3)
@@ -675,6 +699,9 @@ class VideoProcessor:
     
     async def _detect_faces_in_frame(self, frame: np.ndarray) -> List[Dict[str, Any]]:
         """Detect faces in a frame"""
+
+
+
         try:
             # Use face_recognition library
             face_locations = face_recognition.face_locations(frame)
@@ -695,6 +722,9 @@ class VideoProcessor:
     
     async def _detect_objects_in_frame(self, frame: np.ndarray) -> List[Dict[str, Any]]:
         """Detect objects in a frame using AI model"""
+
+
+
         try:
             if not self._object_detector:
                 return []
@@ -722,6 +752,9 @@ class VideoProcessor:
     
     async def _generate_thumbnails(self, video_path: str) -> List[str]:
         """Generate thumbnail images from video"""
+
+
+
         try:
             if not VIDEO_LIBS_AVAILABLE:
                 return []
@@ -766,6 +799,9 @@ class VideoProcessor:
     
     async def _detect_scenes(self, video_path: str) -> List[float]:
         """Detect scene boundaries in video"""
+
+
+
         try:
             if not VIDEO_LIBS_AVAILABLE:
                 return []
@@ -812,6 +848,9 @@ class VideoProcessor:
     
     async def _assess_quality(self, video_path: str) -> Dict[str, float]:
         """Assess video quality metrics"""
+
+
+
         try:
             if not VIDEO_LIBS_AVAILABLE:
                 return {}
@@ -912,6 +951,9 @@ class VideoProcessor:
     
     async def _generate_fingerprint(self, video_path: str) -> str:
         """Generate video fingerprint for content identification"""
+
+
+
         try:
             if not VIDEO_LIBS_AVAILABLE:
                 return ""
@@ -1020,6 +1062,9 @@ class VideoProcessor:
         options: Dict[str, Any]
     ) -> bytes:
         """Convert video to target format"""
+
+
+
         try:
             if not VIDEO_LIBS_AVAILABLE:
                 return b""
@@ -1064,6 +1109,9 @@ class VideoProcessor:
     
     async def health_check(self) -> Dict[str, Any]:
         """Perform health check on the video processor"""
+
+
+
         return {
             "status": "healthy" if self._initialized else "not_initialized",
             "video_libs_available": VIDEO_LIBS_AVAILABLE,

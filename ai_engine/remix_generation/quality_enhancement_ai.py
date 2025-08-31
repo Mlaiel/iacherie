@@ -10,7 +10,7 @@ Created: 2025-08-30
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -169,8 +169,11 @@ class AudioQualityAnalyzer:
         Returns:
             Detailed quality analysis result
         """
+
+
+
         try:
-            self.logger.info(f"🔍 Analyzing audio quality: {audio_path}")
+            self.logger.info(f" Analyzing audio quality: {audio_path}")
             
             # Load audio
             audio, sr = librosa.load(audio_path, sr=self.sample_rate)
@@ -207,15 +210,18 @@ class AudioQualityAnalyzer:
                 processing_suggestions=await self._generate_processing_suggestions(all_metrics)
             )
             
-            self.logger.info(f"✅ Quality analysis completed: {overall_score:.3f}")
+            self.logger.info(f" Quality analysis completed: {overall_score:.3f}")
             return result
             
         except Exception as e:
-            self.logger.error(f"❌ Quality analysis failed: {e}")
+            self.logger.error(f" Quality analysis failed: {e}")
             raise
     
     async def _calculate_technical_metrics(self, audio: np.ndarray, sr: int) -> Dict[QualityMetric, float]:
         """Calculate technical audio quality metrics"""
+
+
+
         try:
             metrics = {}
             
@@ -258,11 +264,14 @@ class AudioQualityAnalyzer:
             return metrics
             
         except Exception as e:
-            self.logger.error(f"❌ Technical metrics calculation failed: {e}")
+            self.logger.error(f" Technical metrics calculation failed: {e}")
             return {}
     
     async def _calculate_perceptual_metrics(self, audio: np.ndarray, sr: int) -> Dict[QualityMetric, float]:
         """Calculate perceptual audio quality metrics"""
+
+
+
         try:
             metrics = {}
             
@@ -302,7 +311,7 @@ class AudioQualityAnalyzer:
             return metrics
             
         except Exception as e:
-            self.logger.error(f"❌ Perceptual metrics calculation failed: {e}")
+            self.logger.error(f" Perceptual metrics calculation failed: {e}")
             return {}
     
     async def _generate_recommendations(self, metrics: Dict[QualityMetric, float]) -> List[EnhancementType]:
@@ -345,11 +354,14 @@ class AudioQualityAnalyzer:
             return recommendations
             
         except Exception as e:
-            self.logger.error(f"❌ Recommendation generation failed: {e}")
+            self.logger.error(f" Recommendation generation failed: {e}")
             return []
     
     def _calculate_confidence(self, metrics: Dict[QualityMetric, float]) -> float:
         """Calculate confidence score for the analysis"""
+
+
+
         try:
             # Higher confidence when metrics are in normal ranges
             confidence_scores = []
@@ -369,6 +381,9 @@ class AudioQualityAnalyzer:
     
     async def _generate_processing_suggestions(self, metrics: Dict[QualityMetric, float]) -> Dict[str, Any]:
         """Generate specific processing parameter suggestions"""
+
+
+
         try:
             suggestions = {}
             
@@ -396,7 +411,7 @@ class AudioQualityAnalyzer:
             return suggestions
             
         except Exception as e:
-            self.logger.error(f"❌ Processing suggestions generation failed: {e}")
+            self.logger.error(f" Processing suggestions generation failed: {e}")
             return {}
 
 class QualityEnhancementEngine:
@@ -437,7 +452,7 @@ class QualityEnhancementEngine:
         start_time = datetime.utcnow()
         
         try:
-            self.logger.info(f"🎨 Starting audio enhancement for: {request.input_audio_path}")
+            self.logger.info(f" Starting audio enhancement for: {request.input_audio_path}")
             
             # Load audio
             audio, sr = librosa.load(request.input_audio_path, sr=self.sample_rate)
@@ -491,14 +506,14 @@ class QualityEnhancementEngine:
                 success=True
             )
             
-            self.logger.info(f"✅ Audio enhancement completed in {processing_time:.2f}s")
+            self.logger.info(f" Audio enhancement completed in {processing_time:.2f}s")
             self.logger.info(f"Quality improvement: {quality_improvement:.3f}")
             
             return result
             
         except Exception as e:
             processing_time = (datetime.utcnow() - start_time).total_seconds()
-            self.logger.error(f"❌ Audio enhancement failed: {e}")
+            self.logger.error(f" Audio enhancement failed: {e}")
             
             return EnhancementResult(
                 output_audio_path="",
@@ -514,6 +529,9 @@ class QualityEnhancementEngine:
     async def _apply_noise_reduction(self, audio: np.ndarray, sr: int, 
                                    intensity: float, params: Dict[str, Any]) -> np.ndarray:
         """Apply noise reduction enhancement"""
+
+
+
         try:
             # Spectral subtraction noise reduction
             stft = librosa.stft(audio)
@@ -536,12 +554,15 @@ class QualityEnhancementEngine:
             return enhanced_audio
             
         except Exception as e:
-            self.logger.error(f"❌ Noise reduction failed: {e}")
+            self.logger.error(f" Noise reduction failed: {e}")
             return audio
     
     async def _apply_dynamic_enhancement(self, audio: np.ndarray, sr: int,
                                        intensity: float, params: Dict[str, Any]) -> np.ndarray:
         """Apply dynamic range enhancement"""
+
+
+
         try:
             # Multi-band compression/expansion
             # Simplified implementation
@@ -551,12 +572,15 @@ class QualityEnhancementEngine:
             return enhanced_audio
             
         except Exception as e:
-            self.logger.error(f"❌ Dynamic enhancement failed: {e}")
+            self.logger.error(f" Dynamic enhancement failed: {e}")
             return audio
     
     async def _apply_frequency_enhancement(self, audio: np.ndarray, sr: int,
                                          intensity: float, params: Dict[str, Any]) -> np.ndarray:
         """Apply frequency response enhancement"""
+
+
+
         try:
             # Gentle EQ curve (smile curve)
             stft = librosa.stft(audio)
@@ -580,12 +604,15 @@ class QualityEnhancementEngine:
             return enhanced_audio
             
         except Exception as e:
-            self.logger.error(f"❌ Frequency enhancement failed: {e}")
+            self.logger.error(f" Frequency enhancement failed: {e}")
             return audio
     
     async def _apply_stereo_enhancement(self, audio: np.ndarray, sr: int,
                                       intensity: float, params: Dict[str, Any]) -> np.ndarray:
         """Apply stereo imaging enhancement"""
+
+
+
         try:
             # Stereo widening (simplified)
             if len(audio.shape) > 1:
@@ -606,12 +633,15 @@ class QualityEnhancementEngine:
             return enhanced_audio
             
         except Exception as e:
-            self.logger.error(f"❌ Stereo enhancement failed: {e}")
+            self.logger.error(f" Stereo enhancement failed: {e}")
             return audio
     
     async def _apply_clarity_enhancement(self, audio: np.ndarray, sr: int,
                                        intensity: float, params: Dict[str, Any]) -> np.ndarray:
         """Apply clarity enhancement"""
+
+
+
         try:
             # High-frequency exciter
             stft = librosa.stft(audio)
@@ -625,12 +655,15 @@ class QualityEnhancementEngine:
             return enhanced_audio
             
         except Exception as e:
-            self.logger.error(f"❌ Clarity enhancement failed: {e}")
+            self.logger.error(f" Clarity enhancement failed: {e}")
             return audio
     
     async def _apply_warmth_enhancement(self, audio: np.ndarray, sr: int,
                                       intensity: float, params: Dict[str, Any]) -> np.ndarray:
         """Apply warmth enhancement"""
+
+
+
         try:
             # Low-mid frequency enhancement
             stft = librosa.stft(audio)
@@ -644,12 +677,15 @@ class QualityEnhancementEngine:
             return enhanced_audio
             
         except Exception as e:
-            self.logger.error(f"❌ Warmth enhancement failed: {e}")
+            self.logger.error(f" Warmth enhancement failed: {e}")
             return audio
     
     async def _apply_presence_boost(self, audio: np.ndarray, sr: int,
                                   intensity: float, params: Dict[str, Any]) -> np.ndarray:
         """Apply presence boost"""
+
+
+
         try:
             # Mid-high frequency boost for presence
             stft = librosa.stft(audio)
@@ -663,12 +699,15 @@ class QualityEnhancementEngine:
             return enhanced_audio
             
         except Exception as e:
-            self.logger.error(f"❌ Presence boost failed: {e}")
+            self.logger.error(f" Presence boost failed: {e}")
             return audio
     
     async def _apply_depth_enhancement(self, audio: np.ndarray, sr: int,
                                      intensity: float, params: Dict[str, Any]) -> np.ndarray:
         """Apply depth enhancement"""
+
+
+
         try:
             # Add subtle reverb for depth
             # Simplified all-pass reverb
@@ -685,7 +724,7 @@ class QualityEnhancementEngine:
             return enhanced_audio
             
         except Exception as e:
-            self.logger.error(f"❌ Depth enhancement failed: {e}")
+            self.logger.error(f" Depth enhancement failed: {e}")
             return audio
 
 class QualityMetricsCalculator:
@@ -698,6 +737,9 @@ class QualityMetricsCalculator:
     
     async def calculate_all_metrics(self, audio: np.ndarray, sr: int) -> Dict[str, float]:
         """Calculate comprehensive quality metrics"""
+
+
+
         try:
             analyzer = AudioQualityAnalyzer()
             
@@ -715,7 +757,7 @@ class QualityMetricsCalculator:
             return all_metrics
             
         except Exception as e:
-            self.logger.error(f"❌ Metrics calculation failed: {e}")
+            self.logger.error(f" Metrics calculation failed: {e}")
             return {}
 
 class QualityOptimizer:
@@ -739,6 +781,9 @@ class QualityOptimizer:
         Returns:
             Optimal enhancement parameters
         """
+
+
+
         try:
             # This would implement optimization algorithm
             # For now, return default parameters
@@ -752,7 +797,7 @@ class QualityOptimizer:
             }
             
         except Exception as e:
-            self.logger.error(f"❌ Enhancement optimization failed: {e}")
+            self.logger.error(f" Enhancement optimization failed: {e}")
             return {}
 
 # Export main classes

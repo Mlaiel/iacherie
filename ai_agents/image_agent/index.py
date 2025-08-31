@@ -7,7 +7,7 @@ to all image processing, analysis, and generation capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -154,6 +154,9 @@ def get_supported_formats() -> Dict[str, list]:
     Returns:
         Dict containing supported formats for input, output, and processing
     """
+
+
+
     return {
         "input_formats": [
             "jpeg", "jpg", "png", "webp", "avif", "heic", "heif",
@@ -182,6 +185,9 @@ def validate_image_file(file_path: str, operation: str = "general") -> Dict[str,
     Returns:
         Validation result with status and details
     """
+
+
+
     try:
         from pathlib import Path
         from PIL import Image
@@ -250,6 +256,9 @@ def get_module_info() -> Dict[str, Any]:
     Returns:
         Dictionary with module metadata and capabilities
     """
+
+
+
     return {
         "module": "image_agent",
         "version": __version__,
@@ -287,6 +296,9 @@ async def initialize_image_agent(config: Optional[Dict[str, Any]] = None) -> Ima
     Returns:
         Configured ImageAgent instance
     """
+
+
+
     try:
         logger.info("Initializing Image Agent module...")
         

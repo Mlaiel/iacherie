@@ -7,7 +7,7 @@ Supports cross-platform compatibility and streaming-ready outputs.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -182,6 +182,9 @@ class MultimediaTranscoder:
     
     def _initialize_default_profiles(self) -> Dict[str, TranscodingProfile]:
         """Initialize default transcoding profiles"""
+
+
+
         return {
             'web_video_hd': TranscodingProfile(
                 name="Web Video HD",
@@ -433,6 +436,9 @@ class MultimediaTranscoder:
     
     async def _execute_ffmpeg_transcoding(self, job: TranscodingJob) -> bool:
         """Execute FFmpeg transcoding command"""
+
+
+
         try:
             # Build FFmpeg command
             cmd = await self._build_ffmpeg_command(job)
@@ -636,6 +642,9 @@ class MultimediaTranscoder:
     
     def get_supported_formats(self) -> Dict[str, List[str]]:
         """Get supported input and output formats"""
+
+
+
         return {
             'input': ['mp4', 'avi', 'mov', 'mkv', 'webm', 'flv', 'mp3', 'wav', 'flac', 'aac', 'jpg', 'png', 'gif'],
             'output': [fmt.value for fmt in OutputFormat]

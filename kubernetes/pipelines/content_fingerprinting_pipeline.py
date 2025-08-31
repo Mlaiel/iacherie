@@ -631,6 +631,9 @@ class ContentFingerprintingPipelineManager:
     async def _process_content(self, content_path: str, content_type: ContentType,
                              method: FingerprintingMethod, quality: ProcessingQuality) -> Optional[ContentFingerprint]:
         """Process content with specified method"""
+
+
+
         try:
             if content_type == ContentType.AUDIO:
                 if method == FingerprintingMethod.CHROMAPRINT:
@@ -734,6 +737,9 @@ class ContentFingerprintingPipelineManager:
             
     def get_system_capabilities(self) -> Dict[str, bool]:
         """Get system fingerprinting capabilities"""
+
+
+
         return {
             'audio_fingerprinting': AUDIO_FINGERPRINTING_AVAILABLE,
             'video_image_fingerprinting': VIDEO_IMAGE_FINGERPRINTING_AVAILABLE,
@@ -743,6 +749,9 @@ class ContentFingerprintingPipelineManager:
         
     def get_processing_statistics(self) -> Dict[str, Any]:
         """Get processing performance statistics"""
+
+
+
         return {
             **self.processing_stats,
             'active_jobs': len(self.active_jobs),
@@ -768,4 +777,7 @@ async def initialize_fingerprinting_system(config: Optional[Dict[str, Any]] = No
 
 def get_fingerprinting_pipeline_manager() -> ContentFingerprintingPipelineManager:
     """Get global fingerprinting pipeline manager instance"""
+
+
+
     return fingerprinting_pipeline_manager

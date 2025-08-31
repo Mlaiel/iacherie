@@ -6,7 +6,7 @@ Simplified access point for the Workflow Agent module with quick setup and commo
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 - All Rights Reserved
 
-⚠️ IMPORTANT LEGAL NOTICE ⚠️
+ IMPORTANT LEGAL NOTICE 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
@@ -55,6 +55,9 @@ class WorkflowAgentFactory:
         Returns:
             WorkflowAgent: Initialized agent instance
         """
+
+
+
         try:
             # Create agent with default or custom config
             agent = WorkflowAgent()
@@ -91,6 +94,9 @@ class WorkflowAgentFactory:
         Returns:
             WorkflowAgent: Configured agent instance
         """
+
+
+
         try:
             configs = {
                 'content_creator': {
@@ -129,6 +135,9 @@ class WorkflowTemplateLibrary:
     @staticmethod
     def get_template_recommendations(user_profile: Dict[str, Any]) -> List[str]:
         """Get template recommendations based on user profile."""
+
+
+
         try:
             user_type = user_profile.get('type', 'content_creator')
             interests = user_profile.get('interests', [])
@@ -225,6 +234,9 @@ class QuickWorkflowBuilder:
         content_type: str = "general"
     ) -> str:
         """Create a content publishing workflow for specified platforms."""
+
+
+
         try:
             workflow_definition = {
                 'id': f'content_publishing_{content_type}',
@@ -288,6 +300,9 @@ class QuickWorkflowBuilder:
         protection_enabled: bool = True
     ) -> str:
         """Create a complete music release workflow."""
+
+
+
         try:
             nodes = [
                 {
@@ -382,6 +397,9 @@ class WorkflowUtilities:
         workflow_configs: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
         """Execute multiple workflows in parallel."""
+
+
+
         try:
             tasks = []
             
@@ -411,6 +429,9 @@ class WorkflowUtilities:
         workflow_ids: List[str]
     ) -> Dict[str, Dict[str, Any]]:
         """Monitor health status for multiple workflows."""
+
+
+
         try:
             health_statuses = {}
             
@@ -429,6 +450,9 @@ class WorkflowUtilities:
         health_statuses: Dict[str, Dict[str, Any]]
     ) -> Dict[str, Any]:
         """Generate performance summary from health statuses."""
+
+
+
         try:
             total_workflows = len(health_statuses)
             if total_workflows == 0:
@@ -472,6 +496,9 @@ class WorkflowUtilities:
 # Quick access functions for common operations
 async def quick_setup(agent_type: str = "content_creator") -> WorkflowAgent:
     """Quick setup function for creating a pre-configured agent."""
+
+
+
     return await WorkflowAgentFactory.create_quick_setup(agent_type)
 
 
@@ -481,6 +508,9 @@ async def create_simple_workflow(
     tasks: List[Dict[str, Any]]
 ) -> str:
     """Create a simple sequential workflow from a list of tasks."""
+
+
+
     try:
         nodes = []
         edges = []

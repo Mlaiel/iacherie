@@ -8,7 +8,7 @@ Handles track metadata extraction, artist analysis, and playlist discovery.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
@@ -177,6 +177,9 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
     
     async def initialize(self) -> None:
         """Initialize the crawler engine"""
+
+
+
         try:
             await self._create_session()
             self._setup_selenium()
@@ -208,6 +211,9 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
     
     def _setup_selenium(self) -> None:
         """Setup Selenium WebDriver"""
+
+
+
         try:
             options = webdriver.ChromeOptions()
             options.add_argument('--headless')
@@ -223,6 +229,9 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
     
     async def _extract_client_id(self) -> None:
         """Extract client ID from SoundCloud website"""
+
+
+
         try:
             if not self.driver:
                 logger.warning("Cannot extract client ID without Selenium")
@@ -265,6 +274,9 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
         Returns:
             List of tracks matching the query
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -324,6 +336,9 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Track details or None if not found
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -369,6 +384,9 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
         Returns:
             User profile data or None if not found
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -423,6 +441,9 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
         Returns:
             List of user's tracks
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -469,6 +490,9 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
     
     def _parse_track_data(self, track_data: Dict[str, Any]) -> SoundCloudTrack:
         """Parse track data from API response"""
+
+
+
         try:
             user_data = track_data.get('user', {})
             
@@ -508,6 +532,9 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
     
     def _parse_user_data(self, user_data: Dict[str, Any]) -> SoundCloudUser:
         """Parse user data from API response"""
+
+
+
         try:
             return SoundCloudUser(
                 id=str(user_data.get('id', '')),
@@ -545,6 +572,9 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
         Returns:
             List of trending genres with metadata
         """
+
+
+
         try:
             # Search for popular tracks in different genres
             genres = [
@@ -601,6 +631,9 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Content protection monitoring results
         """
+
+
+
         try:
             protection_results = {
                 'track_title': track_title,
@@ -661,6 +694,9 @@ class SoundCloudCrawlerEngine(BaseCrawlerEngine):
     
     async def cleanup(self) -> None:
         """Clean up resources"""
+
+
+
         try:
             if self.session:
                 await self.session.close()

@@ -187,6 +187,9 @@ class ContentClassifier:
     
     def _initialize_models(self) -> None:
         """Initialize classification models."""
+
+
+
         try:
             # Text classification models
             self.text_tokenizer = AutoTokenizer.from_pretrained('distilbert-base-uncased')
@@ -620,6 +623,9 @@ class ContentClassifier:
     
     async def _classify_text_with_bert(self, content_data: Dict[str, Any]) -> Dict[ContentCategory, float]:
         """Classify text content using BERT model."""
+
+
+
         try:
             text = content_data.get('text', '')
             if not text and 'text_features' in content_data:
@@ -656,6 +662,9 @@ class ContentClassifier:
     
     async def _classify_image_with_clip(self, content_data: Dict[str, Any]) -> Dict[ContentCategory, float]:
         """Classify image content using CLIP model."""
+
+
+
         try:
             # Prepare category descriptions for CLIP
             category_descriptions = {
@@ -721,6 +730,9 @@ class ContentClassifier:
     
     async def _classify_audio_features(self, content_data: Dict[str, Any]) -> Dict[ContentCategory, float]:
         """Classify audio content based on extracted features."""
+
+
+
         try:
             audio_features = content_data.get('audio_features', {})
             if not audio_features:
@@ -839,6 +851,9 @@ class ContentClassifier:
         content_data: Dict[str, Any]
     ) -> None:
         """Assess content safety and flag inappropriate content."""
+
+
+
         try:
             text_content = content_data.get('text', '')
             
@@ -880,6 +895,9 @@ class ContentClassifier:
         content_data: Dict[str, Any]
     ) -> None:
         """Assess content quality and professionalism."""
+
+
+
         try:
             quality_factors = []
             

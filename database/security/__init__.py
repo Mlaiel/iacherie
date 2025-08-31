@@ -21,7 +21,7 @@ Team Specialists:
 - IA Prompt Engineer: AI security analysis prompts and automation
 
 Contact: mlaiel@live.de
-⚠️ LEGAL WARNING: Any unauthorized use, copying, distribution, or commercialization 
+ LEGAL WARNING: Any unauthorized use, copying, distribution, or commercialization 
 of this code without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will result in immediate legal action.
 """

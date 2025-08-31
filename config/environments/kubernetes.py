@@ -1,12 +1,12 @@
 """
-🔧 Kubernetes Environment Configuration - IA-Influencer-Agent
+ Kubernetes Environment Configuration - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps + Backend Senior + ML Engineer + Cloud Architect
 Date: 2025-08-15
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -138,6 +138,9 @@ class KubernetesConfigManager(BaseEnvironmentConfigManager):
         
     def validate_configuration(self) -> bool:
         """Valide la configuration Kubernetes"""
+
+
+
         try:
             # Vérifications critiques K8s
             assert self.database_config is not None, "Configuration base de données requise"
@@ -155,11 +158,14 @@ class KubernetesConfigManager(BaseEnvironmentConfigManager):
             return True
             
         except (AssertionError, AttributeError) as e:
-            print(f"❌ Erreur validation configuration Kubernetes: {e}")
+            print(f" Erreur validation configuration Kubernetes: {e}")
             return False
             
     def get_kubernetes_features(self) -> Dict[str, Any]:
         """Fonctionnalités spécifiques Kubernetes"""
+
+
+
         return {
             "cloud_native": True,
             "auto_scaling": True,
@@ -177,6 +183,9 @@ class KubernetesConfigManager(BaseEnvironmentConfigManager):
         
     def get_deployment_config(self) -> Dict[str, Any]:
         """Configuration Kubernetes Deployment"""
+
+
+
         return {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
@@ -224,6 +233,9 @@ class KubernetesConfigManager(BaseEnvironmentConfigManager):
         
     def get_service_config(self) -> Dict[str, Any]:
         """Configuration Kubernetes Service"""
+
+
+
         return {
             "apiVersion": "v1",
             "kind": "Service",
@@ -244,6 +256,9 @@ class KubernetesConfigManager(BaseEnvironmentConfigManager):
         
     def get_ingress_config(self) -> Dict[str, Any]:
         """Configuration Kubernetes Ingress"""
+
+
+
         return {
             "apiVersion": "networking.k8s.io/v1",
             "kind": "Ingress",
@@ -280,6 +295,9 @@ class KubernetesConfigManager(BaseEnvironmentConfigManager):
         
     def get_hpa_config(self) -> Dict[str, Any]:
         """Configuration Horizontal Pod Autoscaler"""
+
+
+
         return {
             "apiVersion": "autoscaling/v2",
             "kind": "HorizontalPodAutoscaler",
@@ -319,6 +337,9 @@ class KubernetesConfigManager(BaseEnvironmentConfigManager):
         
     def get_resource_limits(self) -> Dict[str, Any]:
         """Limites de ressources Kubernetes"""
+
+
+
         return {
             "requests": {
                 "memory": os.getenv("K8S_MEMORY_REQUEST", "512Mi"),
@@ -332,6 +353,9 @@ class KubernetesConfigManager(BaseEnvironmentConfigManager):
         
     def get_liveness_probe(self) -> Dict[str, Any]:
         """Configuration liveness probe"""
+
+
+
         return {
             "httpGet": {
                 "path": "/health",
@@ -345,6 +369,9 @@ class KubernetesConfigManager(BaseEnvironmentConfigManager):
         
     def get_readiness_probe(self) -> Dict[str, Any]:
         """Configuration readiness probe"""
+
+
+
         return {
             "httpGet": {
                 "path": "/ready",
@@ -358,6 +385,9 @@ class KubernetesConfigManager(BaseEnvironmentConfigManager):
         
     def get_volume_mounts(self) -> List[Dict[str, Any]]:
         """Configuration volume mounts"""
+
+
+
         return [
             {
                 "name": "model-cache",
@@ -375,6 +405,9 @@ class KubernetesConfigManager(BaseEnvironmentConfigManager):
         
     def get_volumes(self) -> List[Dict[str, Any]]:
         """Configuration volumes"""
+
+
+
         return [
             {
                 "name": "model-cache",
@@ -398,6 +431,9 @@ class KubernetesConfigManager(BaseEnvironmentConfigManager):
         
     def _get_kubernetes_env_vars(self) -> List[Dict[str, Any]]:
         """Variables d'environnement Kubernetes avec secrets"""
+
+
+
         return [
             {"name": "ENVIRONMENT", "value": self.environment.value},
             {"name": "LOG_LEVEL", "value": self.monitoring_config.log_level},

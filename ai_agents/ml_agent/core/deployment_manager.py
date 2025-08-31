@@ -8,14 +8,14 @@ for the IA-Influencer-Agent ML platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This deployment system and methodologies are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED and will result in legal action.
 
 ALL RIGHTS RESERVED - FAHED MLAIEL ©2025
 
-🎯 BUSINESS LOGIC INTEGRATION:
+ BUSINESS LOGIC INTEGRATION:
 Model Training → Validation → Staging → A/B Testing → Production Deployment
 → Performance Monitoring → Auto-scaling → Model Updates
 
@@ -198,6 +198,9 @@ class MLModelDeploymentManager:
     
     def _initialize_clients(self):
         """Initialize deployment clients"""
+
+
+
         try:
             # Initialize Docker client
             self.docker_client = docker.from_env()
@@ -221,6 +224,9 @@ class MLModelDeploymentManager:
     
     async def deploy_model(self, deployment_config: DeploymentConfig) -> str:
         """Deploy a model to the specified environment"""
+
+
+
         try:
             deployment_id = deployment_config.deployment_id
             
@@ -269,6 +275,9 @@ class MLModelDeploymentManager:
     
     async def _deploy_model_async(self, deployment: ModelDeployment):
         """Asynchronous model deployment process"""
+
+
+
         try:
             deployment.status = DeploymentStatus.BUILDING
             
@@ -367,6 +376,9 @@ class MLModelDeploymentManager:
     
     async def _deploy_custom_api(self, deployment: ModelDeployment):
         """Deploy model using custom API"""
+
+
+
         try:
             # Generate Flask API code
             api_code = self._generate_flask_api_code(deployment)
@@ -390,6 +402,9 @@ class MLModelDeploymentManager:
     
     def _generate_flask_api_code(self, deployment: ModelDeployment) -> str:
         """Generate Flask API code for model serving"""
+
+
+
         return f"""
 import os
 import pickle
@@ -444,6 +459,9 @@ if __name__ == '__main__':
     
     def _generate_dockerfile(self, deployment: ModelDeployment) -> str:
         """Generate Dockerfile for model serving"""
+
+
+
         return """
 FROM python:3.9-slim
 
@@ -666,6 +684,9 @@ CMD ["python", "app.py"]
     
     async def start_ab_test(self, ab_config: ABTestConfig) -> str:
         """Start A/B testing between two model versions"""
+
+
+
         try:
             # Validate A/B test configuration
             await self._validate_ab_test_config(ab_config)
@@ -763,6 +784,9 @@ CMD ["python", "app.py"]
     
     async def scale_deployment(self, deployment_id: str, replicas: int) -> bool:
         """Scale deployment to specified number of replicas"""
+
+
+
         try:
             if deployment_id not in self.deployments:
                 raise ValueError(f"Deployment not found: {deployment_id}")
@@ -802,6 +826,9 @@ CMD ["python", "app.py"]
     
     async def rollback_deployment(self, deployment_id: str, target_version: str) -> bool:
         """Rollback deployment to previous version"""
+
+
+
         try:
             if deployment_id not in self.deployments:
                 raise ValueError(f"Deployment not found: {deployment_id}")
@@ -850,6 +877,9 @@ CMD ["python", "app.py"]
     
     async def get_all_deployments(self) -> Dict[str, Any]:
         """Get status of all deployments"""
+
+
+
         return {
             deployment_id: await self.get_deployment_status(deployment_id)
             for deployment_id in self.deployments
@@ -857,6 +887,9 @@ CMD ["python", "app.py"]
     
     async def terminate_deployment(self, deployment_id: str) -> bool:
         """Terminate a deployment"""
+
+
+
         try:
             if deployment_id not in self.deployments:
                 raise ValueError(f"Deployment not found: {deployment_id}")

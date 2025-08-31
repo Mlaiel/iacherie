@@ -248,6 +248,9 @@ class BeRealEngine(BaseCrawlerEngine):
             
     async def _process_bereal_post(self, raw_post: Dict[str, Any]) -> Optional[BeRealPost]:
         """Process and analyze BeReal post with authenticity verification"""
+
+
+
         
         try:
             post_id = raw_post.get('id')
@@ -704,6 +707,9 @@ class BeRealEngine(BaseCrawlerEngine):
         
     async def _get_authenticated_headers(self) -> Dict[str, str]:
         """Get authenticated headers for API requests"""
+
+
+
         
         return {
             'User-Agent': 'BeReal/1.0',
@@ -833,6 +839,9 @@ class BeRealCrawlerEngine(BaseCrawlerEngine):
     
     async def initialize(self) -> None:
         """Initialize the crawler engine"""
+
+
+
         try:
             await self._create_session()
             self._setup_selenium()
@@ -862,6 +871,9 @@ class BeRealCrawlerEngine(BaseCrawlerEngine):
     
     def _setup_selenium(self) -> None:
         """Setup Selenium WebDriver for web content"""
+
+
+
         try:
             options = webdriver.ChromeOptions()
             options.add_argument('--headless')
@@ -885,6 +897,9 @@ class BeRealCrawlerEngine(BaseCrawlerEngine):
         Returns:
             User profile data or None if not found
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -936,6 +951,9 @@ class BeRealCrawlerEngine(BaseCrawlerEngine):
         Returns:
             List of user posts
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -987,6 +1005,9 @@ class BeRealCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Daily BeReal monitoring data
         """
+
+
+
         try:
             monitoring_data = {
                 'date': datetime.utcnow().date().isoformat(),
@@ -1028,6 +1049,9 @@ class BeRealCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Authenticity analysis results
         """
+
+
+
         try:
             # Get user posts
             posts = await self.get_user_posts(username, limit=50)
@@ -1080,6 +1104,9 @@ class BeRealCrawlerEngine(BaseCrawlerEngine):
     
     def _parse_user_profile(self) -> BeRealUser:
         """Parse user profile from current page"""
+
+
+
         try:
             username_elem = self.driver.find_element(By.CLASS_NAME, "username")
             username = username_elem.text if username_elem else ""
@@ -1126,6 +1153,9 @@ class BeRealCrawlerEngine(BaseCrawlerEngine):
     
     def _parse_post_element(self, post_element, username: str) -> Optional[BeRealPost]:
         """Parse a post element from the page"""
+
+
+
         try:
             # Extract post ID (would need to find unique identifier)
             post_id = hashlib.md5(f"{username}_{datetime.utcnow()}".encode()).hexdigest()
@@ -1216,6 +1246,9 @@ class BeRealCrawlerEngine(BaseCrawlerEngine):
         Returns:
             List of posts in the area
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -1246,6 +1279,9 @@ class BeRealCrawlerEngine(BaseCrawlerEngine):
         Returns:
             List of viral moments and trends
         """
+
+
+
         try:
             viral_moments = []
             
@@ -1261,6 +1297,9 @@ class BeRealCrawlerEngine(BaseCrawlerEngine):
     
     async def cleanup(self) -> None:
         """Clean up resources"""
+
+
+
         try:
             if self.session:
                 await self.session.close()

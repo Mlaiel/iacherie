@@ -8,7 +8,7 @@ Responsibility: Enterprise queue management with AI-powered task prioritization
 Technologies: Celery, Redis, RabbitMQ, Priority Queues, Dead Letter Queues
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -166,7 +166,7 @@ class TaskDefinition:
 
 class IntelligentQueueManager(ABC):
     """
-    🎯 Advanced Intelligent Queue Manager - IA-Influencer-Agent
+     Advanced Intelligent Queue Manager - IA-Influencer-Agent
     
     Enterprise-grade task queue management system featuring:
     - Multi-queue orchestration with intelligent routing
@@ -204,7 +204,7 @@ class IntelligentQueueManager(ABC):
         # Monitoring
         self._monitoring_tasks: Set[str] = set()
         
-        logger.info(f"🎯 Initializing {self.__class__.__name__} with intelligent queuing")
+        logger.info(f" Initializing {self.__class__.__name__} with intelligent queuing")
     
     @abstractmethod
     async def initialize_queue_system(self) -> bool:
@@ -280,6 +280,9 @@ class IntelligentQueueManager(ABC):
         Returns:
             Dict with optimization results
         """
+
+
+
         try:
             optimization_results = {
                 "performance_improvements": {},
@@ -306,11 +309,11 @@ class IntelligentQueueManager(ABC):
                 priority_optimization = await self._optimize_task_priorities()
                 optimization_results["priority_optimizations"] = priority_optimization
             
-            logger.info("⚡ Queue performance optimization completed")
+            logger.info(" Queue performance optimization completed")
             return optimization_results
             
         except Exception as e:
-            logger.error(f"❌ Queue optimization failed: {e}")
+            logger.error(f" Queue optimization failed: {e}")
             return {"error": str(e)}
     
     async def get_comprehensive_metrics(self) -> Dict[str, Any]:
@@ -320,6 +323,9 @@ class IntelligentQueueManager(ABC):
         Returns:
             Dict with detailed queue analytics
         """
+
+
+
         try:
             metrics = {
                 "overview": dict(self._metrics.__dict__),
@@ -334,7 +340,7 @@ class IntelligentQueueManager(ABC):
             return metrics
             
         except Exception as e:
-            logger.error(f"❌ Failed to get queue metrics: {e}")
+            logger.error(f" Failed to get queue metrics: {e}")
             return {"error": str(e)}
     
     async def schedule_recurring_task(
@@ -360,6 +366,9 @@ class IntelligentQueueManager(ABC):
         Returns:
             Scheduled task ID
         """
+
+
+
         try:
             scheduled_task_id = f"scheduled_{uuid.uuid4().hex}"
             
@@ -385,11 +394,11 @@ class IntelligentQueueManager(ABC):
                     }
                 }
             
-            logger.info(f"📅 Scheduled recurring task: {task_name}")
+            logger.info(f" Scheduled recurring task: {task_name}")
             return scheduled_task_id
             
         except Exception as e:
-            logger.error(f"❌ Failed to schedule recurring task: {e}")
+            logger.error(f" Failed to schedule recurring task: {e}")
             raise
     
     async def process_dead_letter_queue(self) -> Dict[str, Any]:
@@ -399,6 +408,9 @@ class IntelligentQueueManager(ABC):
         Returns:
             Dict with DLQ processing results
         """
+
+
+
         try:
             dlq_results = {
                 "processed_tasks": 0,
@@ -436,60 +448,96 @@ class IntelligentQueueManager(ABC):
                 dlq_results["error_patterns"]
             )
             
-            logger.info(f"💀 Processed DLQ: {dlq_results['recovered_tasks']} recovered, {dlq_results['permanently_failed']} failed")
+            logger.info(f" Processed DLQ: {dlq_results['recovered_tasks']} recovered, {dlq_results['permanently_failed']} failed")
             return dlq_results
             
         except Exception as e:
-            logger.error(f"❌ DLQ processing failed: {e}")
+            logger.error(f" DLQ processing failed: {e}")
             return {"error": str(e)}
     
     # Helper methods for implementation
     async def _analyze_queue_performance(self) -> Dict[str, Any]:
         """Analyze queue performance metrics"""
+
+
+
         return {}
     
     async def _optimize_worker_allocation(self) -> Dict[str, Any]:
         """Optimize worker allocation based on workload"""
+
+
+
         return {}
     
     async def _rebalance_queues(self) -> Dict[str, Any]:
         """Rebalance queues based on current load"""
+
+
+
         return {}
     
     async def _optimize_task_priorities(self) -> Dict[str, Any]:
         """AI-powered task priority optimization"""
+
+
+
         return {}
     
     async def _get_queue_status(self) -> Dict[str, Any]:
         """Get current status of all queues"""
+
+
+
         return {}
     
     async def _get_worker_performance(self) -> Dict[str, Any]:
         """Get worker performance metrics"""
+
+
+
         return {}
     
     async def _analyze_task_patterns(self) -> Dict[str, Any]:
         """Analyze task execution patterns"""
+
+
+
         return {}
     
     async def _analyze_errors(self) -> Dict[str, Any]:
         """Analyze error patterns and trends"""
+
+
+
         return {}
     
     async def _get_workload_predictions(self) -> Dict[str, Any]:
         """Get AI-powered workload predictions"""
+
+
+
         return {}
     
     async def _get_dlq_items(self) -> List[Dict[str, Any]]:
         """Get items from dead letter queue"""
+
+
+
         return []
     
     async def _attempt_task_recovery(self, task_id: str, error_info: Dict[str, Any]) -> bool:
         """Attempt to recover a failed task"""
+
+
+
         return False
     
     async def _generate_dlq_recommendations(self, error_patterns: Dict[str, int]) -> List[str]:
         """Generate recommendations based on DLQ analysis"""
+
+
+
         return []
 
 
@@ -499,6 +547,9 @@ class ProductionQueueManager(IntelligentQueueManager):
     
     async def initialize_queue_system(self) -> bool:
         """Initialize Celery and queue system"""
+
+
+
         try:
             # Initialize Celery app
             self._celery_app = Celery(
@@ -533,11 +584,11 @@ class ProductionQueueManager(IntelligentQueueManager):
             for queue_type in QueueType:
                 heapq.heapify(self._priority_queues[queue_type])
             
-            logger.info("✅ Queue system initialized successfully")
+            logger.info(" Queue system initialized successfully")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Queue system initialization failed: {e}")
+            logger.error(f" Queue system initialization failed: {e}")
             return False
     
     async def enqueue_task(
@@ -546,6 +597,9 @@ class ProductionQueueManager(IntelligentQueueManager):
         immediate: bool = False,
     ) -> str:
         """Enqueue task with intelligent routing"""
+
+
+
         try:
             # Calculate dynamic priority if enabled
             if self.config.dynamic_priority_adjustment:
@@ -596,15 +650,18 @@ class ProductionQueueManager(IntelligentQueueManager):
                 self._metrics.queue_lengths[task_definition.queue_type] = 0
             self._metrics.queue_lengths[task_definition.queue_type] += 1
             
-            logger.info(f"📋 Task enqueued: {task_definition.task_id} ({task_definition.priority.name})")
+            logger.info(f" Task enqueued: {task_definition.task_id} ({task_definition.priority.name})")
             return task_definition.task_id
             
         except Exception as e:
-            logger.error(f"❌ Failed to enqueue task: {e}")
+            logger.error(f" Failed to enqueue task: {e}")
             raise
     
     async def get_task_status(self, task_id: str) -> Dict[str, Any]:
         """Get comprehensive task status"""
+
+
+
         try:
             task_def = self._active_tasks.get(task_id)
             if not task_def:
@@ -642,11 +699,14 @@ class ProductionQueueManager(IntelligentQueueManager):
             return status_info
             
         except Exception as e:
-            logger.error(f"❌ Failed to get task status: {e}")
+            logger.error(f" Failed to get task status: {e}")
             return {"error": str(e), "task_id": task_id}
     
     async def cancel_task(self, task_id: str) -> bool:
         """Cancel a task"""
+
+
+
         try:
             if self._celery_app:
                 self._celery_app.control.revoke(task_id, terminate=True)
@@ -655,15 +715,18 @@ class ProductionQueueManager(IntelligentQueueManager):
             if task_id in self._active_tasks:
                 del self._active_tasks[task_id]
             
-            logger.info(f"🚫 Task cancelled: {task_id}")
+            logger.info(f" Task cancelled: {task_id}")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to cancel task {task_id}: {e}")
+            logger.error(f" Failed to cancel task {task_id}: {e}")
             return False
     
     async def retry_failed_task(self, task_id: str) -> str:
         """Retry a failed task"""
+
+
+
         try:
             original_task = self._active_tasks.get(task_id)
             if not original_task:
@@ -685,11 +748,11 @@ class ProductionQueueManager(IntelligentQueueManager):
             # Enqueue retry
             await self.enqueue_task(retry_task)
             
-            logger.info(f"🔄 Task retry enqueued: {retry_task_id} (original: {task_id})")
+            logger.info(f" Task retry enqueued: {retry_task_id} (original: {task_id})")
             return retry_task_id
             
         except Exception as e:
-            logger.error(f"❌ Failed to retry task {task_id}: {e}")
+            logger.error(f" Failed to retry task {task_id}: {e}")
             raise
     
     # Helper methods
@@ -724,7 +787,7 @@ def get_queue_manager() -> ProductionQueueManager:
 # Alias for backward compatibility
 QueueManager = IntelligentQueueManager
     """
-    🎯 Gestionnaire QueueManager - IA-Influencer-Agent
+     Gestionnaire QueueManager - IA-Influencer-Agent
     
     Responsabilité:
     Fonctionnalité spécialisée IA-Influencer-Agent
@@ -751,7 +814,7 @@ QueueManager = IntelligentQueueManager
             "failed_requests": 0,
             "average_response_time": 0.0
         }
-        logger.info(f"🎯 Initialisation {self.__class__.__name__}")
+        logger.info(f" Initialisation {self.__class__.__name__}")
     
     @abstractmethod
     async def initialize_pool(self) -> bool:

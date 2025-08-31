@@ -1042,10 +1042,16 @@ class EnvironmentProvisioner(BaseComponent):
 
     async def get_environment_status(self, environment_name: str) -> Optional[Dict[str, Any]]:
         """Get environment provisioning status"""
+
+
+
         return self.provisioned_environments.get(environment_name)
 
     async def list_environments(self) -> List[Dict[str, Any]]:
         """List all provisioned environments"""
+
+
+
         return [
             {
                 'name': name,

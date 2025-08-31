@@ -118,11 +118,17 @@ class TestReportGenerator:
     @pytest.fixture
     def report_generator(self):
         """Fixture pour le générateur de rapports."""
+
+
+
         return ReportGenerator()
     
     @pytest.fixture
     def comprehensive_report_config(self):
         """Configuration complète de rapport pour les tests."""
+
+
+
         return {
             'report_id': 'comprehensive_analysis_2025_08_03',
             'report_type': 'comprehensive_analysis',
@@ -342,6 +348,9 @@ class TestAnalyticsReporter:
     @pytest.fixture
     def analytics_reporter(self):
         """Fixture pour le reporter d'analytics."""
+
+
+
         return AnalyticsReporter()
     
     def test_content_analytics_report(self, analytics_reporter):
@@ -514,6 +523,9 @@ class TestPerformanceReporter:
     @pytest.fixture
     def performance_reporter(self):
         """Fixture pour le reporter de performance."""
+
+
+
         return PerformanceReporter()
     
     def test_system_performance_report(self, performance_reporter):
@@ -672,6 +684,9 @@ class TestBusinessReporter:
     @pytest.fixture
     def business_reporter(self):
         """Fixture pour le reporter business."""
+
+
+
         return BusinessReporter()
     
     def test_roi_analysis_report(self, business_reporter):
@@ -829,6 +844,9 @@ class TestReportExporter:
     @pytest.fixture
     def report_exporter(self):
         """Fixture pour l'exporteur de rapports."""
+
+
+
         return ReportExporter()
     
     def test_pdf_export(self, report_exporter):

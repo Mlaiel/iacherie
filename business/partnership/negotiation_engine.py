@@ -2,7 +2,7 @@
 Negotiation Engine for IA Influencer Agent
 AI-powered negotiation and deal optimization system
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
 All rights reserved. Unauthorized use, copying, or reproduction 
 of this code, concept, or intellectual property without explicit 
@@ -85,6 +85,9 @@ class NegotiationEngine:
         negotiation_strategy: Optional[NegotiationStrategy] = None
     ) -> NegotiationRecord:
         """Initiate negotiation process with AI-optimized strategy"""
+
+
+
         try:
             # Determine optimal negotiation strategy
             if not negotiation_strategy:
@@ -134,6 +137,9 @@ class NegotiationEngine:
         competitor_analysis: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Analyze current negotiation position and recommend strategy"""
+
+
+
         try:
             analysis = {
                 'position_strength': 0.0,
@@ -195,6 +201,9 @@ class NegotiationEngine:
         negotiation_analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Generate AI-optimized counter-proposal"""
+
+
+
         try:
             # Analyze partner proposal
             proposal_analysis = await self._analyze_partner_proposal(
@@ -269,6 +278,9 @@ class NegotiationEngine:
         market_benchmarks: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Evaluate deal attractiveness using AI analysis"""
+
+
+
         try:
             evaluation = {
                 'overall_score': 0.0,
@@ -362,6 +374,9 @@ class NegotiationEngine:
         timeline_constraints: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Optimize strategy for closing the deal"""
+
+
+
         try:
             closing_strategy = {
                 'primary_approach': '',
@@ -419,6 +434,9 @@ class NegotiationEngine:
 
     def _load_negotiation_strategies(self) -> Dict[str, Any]:
         """Load negotiation strategy configurations"""
+
+
+
         return {
             NegotiationStrategy.COLLABORATIVE: {
                 'focus': 'mutual_benefit',
@@ -439,6 +457,9 @@ class NegotiationEngine:
 
     def _load_market_benchmarks(self) -> Dict[str, Any]:
         """Load market benchmark data"""
+
+
+
         return {
             'commission_rates': {
                 'brand_ambassador': {'min': 0.10, 'avg': 0.15, 'max': 0.25},
@@ -532,6 +553,9 @@ class NegotiationEngine:
         competitor_analysis: Optional[Dict[str, Any]]
     ) -> List[str]:
         """Identify leverage factors in negotiation"""
+
+
+
         return [
             'Strong audience engagement metrics',
             'Exclusive content creation capabilities',
@@ -545,6 +569,9 @@ class NegotiationEngine:
         market_data: Dict[str, Any]
     ) -> List[str]:
         """Identify weakness factors"""
+
+
+
         return [
             'Limited negotiation experience',
             'Time pressure to secure partnership',
@@ -571,6 +598,9 @@ class NegotiationEngine:
         analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Analyze partner's proposal"""
+
+
+
         return {
             'favorable_terms': [
                 term for term, value in partner_proposal.items()
@@ -595,6 +625,9 @@ class NegotiationEngine:
 
     async def _identify_negotiation_gaps(self, proposal: Dict[str, Any]) -> List[str]:
         """Identify gaps between positions"""
+
+
+
         return [
             'Commission rate below market average',
             'Contract duration longer than preferred',
@@ -607,6 +640,9 @@ class NegotiationEngine:
         negotiation_analysis: Dict[str, Any]
     ) -> Dict[str, str]:
         """Generate counter-proposal strategy"""
+
+
+
         return {
             'primary_focus': 'improve_financial_terms',
             'secondary_focus': 'reduce_contract_duration',

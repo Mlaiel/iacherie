@@ -34,13 +34,13 @@ from pydantic import BaseModel
 # Test that we can import from config
 try:
     from config import settings
-    print("✓ Successfully imported config.py")
-    print(f"✓ Environment: {settings.app.environment}")
-    print(f"✓ Debug mode: {settings.app.debug}")
-    print(f"✓ Host: {settings.app.host}")
-    print(f"✓ Port: {settings.app.port}")
+    print(" Successfully imported config.py")
+    print(f" Environment: {settings.app.environment}")
+    print(f" Debug mode: {settings.app.debug}")
+    print(f" Host: {settings.app.host}")
+    print(f" Port: {settings.app.port}")
 except Exception as e:
-    print(f"❌ Failed to import config: {e}")
+    print(f" Failed to import config: {e}")
     # Create minimal fallback settings
     class MockSettings:
         class App:
@@ -50,15 +50,15 @@ except Exception as e:
             port = 8000
         app = App()
     settings = MockSettings()
-    print("⚠️  Using fallback settings")
+    print("  Using fallback settings")
 
 # Try to import the main app or create a minimal one
 try:
     from api.main import app
-    print("✓ Successfully imported main FastAPI app")
+    print(" Successfully imported main FastAPI app")
 except Exception as e:
-    print(f"⚠️  Could not import api.main app: {e}")
-    print("📦 Creating minimal FastAPI app for testing")
+    print(f"  Could not import api.main app: {e}")
+    print(" Creating minimal FastAPI app for testing")
     
     # Create minimal FastAPI app
     app = FastAPI(
@@ -90,40 +90,43 @@ except Exception as e:
 
 async def initialize_platform():
     """Initialize the platform on first run"""
+
+
+
     try:
-        print("📋 Initializing Ainflue platform...")
+        print(" Initializing Ainflue platform...")
         
         # Try to create database tables (simplified)
         try:
             from database.schema import create_tables
             await create_tables()
-            print("✓ Database tables created")
+            print(" Database tables created")
         except Exception as e:
-            print(f"⚠️  Database initialization skipped: {e}")
+            print(f"  Database initialization skipped: {e}")
         
-        print("✅ Platform initialization completed")
+        print(" Platform initialization completed")
         
     except Exception as e:
-        print(f"❌ Platform initialization failed: {str(e)}")
+        print(f" Platform initialization failed: {str(e)}")
         raise
 
 def main():
     """Main entry point"""
-    print("🚀 Starting Ainflue AI Platform")
-    print(f"📍 Environment: {settings.app.environment}")
-    print(f"🔧 Debug mode: {settings.app.debug}")
+    print(" Starting Ainflue AI Platform")
+    print(f" Environment: {settings.app.environment}")
+    print(f" Debug mode: {settings.app.debug}")
     
     try:
         # Initialize platform if needed
         if settings.app.environment in ["development", "staging"]:
-            print("🔄 Running platform initialization...")
+            print(" Running platform initialization...")
             try:
                 asyncio.run(initialize_platform())
             except Exception as e:
-                print(f"⚠️  Initialization failed but continuing: {e}")
+                print(f"  Initialization failed but continuing: {e}")
         
         # Start the server
-        print(f"🌐 Starting server on {settings.app.host}:{settings.app.port}")
+        print(f" Starting server on {settings.app.host}:{settings.app.port}")
         uvicorn.run(
             app,
             host=settings.app.host,
@@ -134,9 +137,9 @@ def main():
         )
         
     except KeyboardInterrupt:
-        print("🛑 Platform stopped by user")
+        print(" Platform stopped by user")
     except Exception as e:
-        print(f"💥 Platform startup failed: {str(e)}")
+        print(f" Platform startup failed: {str(e)}")
         sys.exit(1)
 
 if __name__ == "__main__":

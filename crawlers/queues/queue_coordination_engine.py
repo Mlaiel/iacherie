@@ -8,7 +8,7 @@ Responsibility: Advanced coordination between multiple queue systems and crawler
 Technologies: Multi-Queue Coordination, Cross-Platform Sync, Resource Sharing
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -441,6 +441,9 @@ class QueueCoordinationEngine:
         capabilities: List[str] = None
     ) -> bool:
         """Register a queue node for coordination"""
+
+
+
         
         try:
             # Collect node information
@@ -1140,6 +1143,9 @@ def create_queue_coordination_engine(
     resource_sharing_mode: ResourceSharingMode = ResourceSharingMode.DYNAMIC_SHARING
 ) -> QueueCoordinationEngine:
     """Create queue coordination engine instance"""
+
+
+
     
     return QueueCoordinationEngine(
         coordination_mode=coordination_mode,

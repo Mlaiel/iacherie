@@ -8,7 +8,7 @@ performance tracking, and strategic recommendations for content creators.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
+  PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 This software is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any attempt to copy, distribute, or reverse engineer this code without explicit
 written permission is strictly forbidden and will result in legal prosecution
@@ -282,6 +282,9 @@ class ArtistInsights:
         Returns:
             Complete insights report
         """
+
+
+
         try:
             # Define analysis period
             end_date = datetime.now()
@@ -361,6 +364,9 @@ class ArtistInsights:
         period_days: int = 30
     ) -> Dict[str, Dict[str, Any]]:
         """Get specific performance trend analysis"""
+
+
+
         try:
             end_date = datetime.now()
             start_date = end_date - timedelta(days=period_days)
@@ -395,6 +401,9 @@ class ArtistInsights:
         segmentation_type: str = "behavior"
     ) -> Dict[str, Any]:
         """Get detailed audience segmentation analysis"""
+
+
+
         try:
             # Get audience data
             audience_data = await self.audience_analyzer.get_audience_data(artist_id)
@@ -425,6 +434,9 @@ class ArtistInsights:
         competitor_ids: Optional[List[str]] = None
     ) -> Dict[str, Any]:
         """Generate competitive analysis report"""
+
+
+
         try:
             # Get or identify competitors
             if not competitor_ids:
@@ -474,6 +486,9 @@ class ArtistInsights:
         max_recommendations: int = 10
     ) -> List[Dict[str, Any]]:
         """Get AI-powered collaboration recommendations"""
+
+
+
         try:
             # Get artist profile
             artist_profile = await self._get_artist_profile(artist_id)
@@ -519,6 +534,9 @@ class ArtistInsights:
         track_metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Get release timing and strategy optimization"""
+
+
+
         try:
             # Get historical performance data
             historical_data = await self._get_historical_release_data(artist_id)
@@ -558,6 +576,9 @@ class ArtistInsights:
         analysis_period: Tuple[datetime, datetime]
     ) -> PerformanceMetrics:
         """Analyze artist performance metrics"""
+
+
+
         try:
             # Get streaming data from Spotify agent
             streaming_data = await self.spotify_agent.get_streaming_analytics(
@@ -601,6 +622,9 @@ class ArtistInsights:
         analysis_period: Tuple[datetime, datetime]
     ) -> AudienceInsights:
         """Analyze audience insights and behavior"""
+
+
+
         try:
             # Get audience data
             audience_data = await self.audience_analyzer.get_detailed_audience_analysis(
@@ -639,6 +663,9 @@ class ArtistInsights:
         analysis_period: Tuple[datetime, datetime]
     ) -> MarketPosition:
         """Analyze market position and competitive landscape"""
+
+
+
         try:
             # Get market data
             market_data = await self.market_analyzer.get_market_position(
@@ -672,6 +699,9 @@ class ArtistInsights:
         analysis_period: Tuple[datetime, datetime]
     ) -> CreativeAnalysis:
         """Analyze creative output and artistic development"""
+
+
+
         try:
             # Get creative data
             creative_data = await self._get_creative_analysis_data(
@@ -700,6 +730,9 @@ class ArtistInsights:
         analysis_period: Tuple[datetime, datetime]
     ) -> FinancialInsights:
         """Analyze financial performance and revenue streams"""
+
+
+
         try:
             # Get financial data (would integrate with payment/analytics systems)
             financial_data = await self._get_financial_data(artist_id, analysis_period)
@@ -1018,6 +1051,9 @@ class ArtistInsights:
 
     async def get_insights_summary(self, insights: ComprehensiveInsights) -> Dict[str, Any]:
         """Get concise summary of insights"""
+
+
+
         return {
             'artist_id': insights.artist_id,
             'analysis_period': f"{insights.analysis_period[0].date()} to {insights.analysis_period[1].date()}",

@@ -132,8 +132,11 @@ class CacheDeploymentIndex:
         Returns:
             True si l'initialisation réussit, False sinon
         """
+
+
+
         try:
-            self.logger.info("🚀 Initialisation du système de cache IA Influencer Agent")
+            self.logger.info(" Initialisation du système de cache IA Influencer Agent")
             self.status = CacheSystemStatus.STARTING
             
             # Chargement de la configuration
@@ -168,17 +171,20 @@ class CacheDeploymentIndex:
             await self._start_background_tasks()
             
             self.status = CacheSystemStatus.RUNNING
-            self.logger.info("✅ Système de cache initialisé avec succès")
+            self.logger.info(" Système de cache initialisé avec succès")
             
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur lors de l'initialisation: {e}")
+            self.logger.error(f" Erreur lors de l'initialisation: {e}")
             self.status = CacheSystemStatus.ERROR
             return False
     
     async def _load_configuration(self) -> bool:
         """Charge la configuration depuis les fichiers."""
+
+
+
         try:
             # Configuration de déploiement
             self.deployment_config = await DeploymentConfig.load_from_file(
@@ -195,15 +201,18 @@ class CacheDeploymentIndex:
                 encryption_enabled=True
             )
             
-            self.logger.info("📋 Configuration chargée avec succès")
+            self.logger.info(" Configuration chargée avec succès")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur de chargement configuration: {e}")
+            self.logger.error(f" Erreur de chargement configuration: {e}")
             return False
     
     async def _validate_configuration(self) -> bool:
         """Valide la configuration chargée."""
+
+
+
         try:
             # Validation avec l'utilitaire dédié
             validation_result = await validate_deployment_config(
@@ -211,18 +220,21 @@ class CacheDeploymentIndex:
             )
             
             if not validation_result.is_valid:
-                self.logger.error(f"❌ Configuration invalide: {validation_result.errors}")
+                self.logger.error(f" Configuration invalide: {validation_result.errors}")
                 return False
             
-            self.logger.info("✅ Configuration validée")
+            self.logger.info(" Configuration validée")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur de validation: {e}")
+            self.logger.error(f" Erreur de validation: {e}")
             return False
     
     async def _initialize_security(self) -> bool:
         """Initialise les composants de sécurité."""
+
+
+
         try:
             self.security_manager = SecurityManager(
                 level=SecurityLevel.ENTERPRISE,
@@ -233,16 +245,19 @@ class CacheDeploymentIndex:
             await self.security_manager.initialize()
             self._components_health["security"] = ComponentHealth.HEALTHY
             
-            self.logger.info("🔐 Gestionnaire de sécurité initialisé")
+            self.logger.info(" Gestionnaire de sécurité initialisé")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur initialisation sécurité: {e}")
+            self.logger.error(f" Erreur initialisation sécurité: {e}")
             self._components_health["security"] = ComponentHealth.UNHEALTHY
             return False
     
     async def _initialize_distributed_cluster(self) -> bool:
         """Initialise le cluster de cache distribué."""
+
+
+
         try:
             # Configuration des nœuds
             nodes = [
@@ -264,16 +279,19 @@ class CacheDeploymentIndex:
             await self.distributed_cluster.initialize()
             self._components_health["cluster"] = ComponentHealth.HEALTHY
             
-            self.logger.info(f"🌐 Cluster distribué initialisé ({len(nodes)} nœuds)")
+            self.logger.info(f" Cluster distribué initialisé ({len(nodes)} nœuds)")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur initialisation cluster: {e}")
+            self.logger.error(f" Erreur initialisation cluster: {e}")
             self._components_health["cluster"] = ComponentHealth.UNHEALTHY
             return False
     
     async def _initialize_core_managers(self) -> bool:
         """Initialise les gestionnaires principaux."""
+
+
+
         try:
             # Cache Manager
             self.cache_manager = CacheManager(
@@ -300,15 +318,18 @@ class CacheDeploymentIndex:
             self._components_health["cache_manager"] = ComponentHealth.HEALTHY
             self._components_health["content_manager"] = ComponentHealth.HEALTHY
             
-            self.logger.info("🔧 Gestionnaires principaux initialisés")
+            self.logger.info(" Gestionnaires principaux initialisés")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur initialisation gestionnaires: {e}")
+            self.logger.error(f" Erreur initialisation gestionnaires: {e}")
             return False
     
     async def _initialize_monitoring(self) -> bool:
         """Initialise le système de monitoring."""
+
+
+
         try:
             # Collecteur de métriques
             self.metrics_collector = MetricsCollector(
@@ -340,15 +361,18 @@ class CacheDeploymentIndex:
             
             self._components_health["monitoring"] = ComponentHealth.HEALTHY
             
-            self.logger.info("📊 Système de monitoring initialisé")
+            self.logger.info(" Système de monitoring initialisé")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur initialisation monitoring: {e}")
+            self.logger.error(f" Erreur initialisation monitoring: {e}")
             return False
     
     async def _initialize_optimization(self) -> bool:
         """Initialise les stratégies d'optimisation."""
+
+
+
         try:
             # Optimiseur de performances
             self.performance_optimizer = PerformanceOptimizer(
@@ -373,11 +397,11 @@ class CacheDeploymentIndex:
             
             self._components_health["optimization"] = ComponentHealth.HEALTHY
             
-            self.logger.info("⚡ Optimisation initialisée")
+            self.logger.info(" Optimisation initialisée")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur initialisation optimisation: {e}")
+            self.logger.error(f" Erreur initialisation optimisation: {e}")
             return False
     
     async def _start_background_tasks(self) -> None:
@@ -402,7 +426,7 @@ class CacheDeploymentIndex:
             asyncio.create_task(self._warming_loop())
         )
         
-        self.logger.info("🔄 Tâches de fond démarrées")
+        self.logger.info(" Tâches de fond démarrées")
     
     async def _metrics_collection_loop(self) -> None:
         """Boucle de collecte de métriques."""
@@ -418,7 +442,7 @@ class CacheDeploymentIndex:
                 await asyncio.sleep(30)  # Collecte toutes les 30 secondes
                 
             except Exception as e:
-                self.logger.error(f"❌ Erreur collecte métriques: {e}")
+                self.logger.error(f" Erreur collecte métriques: {e}")
                 await asyncio.sleep(60)
     
     async def _health_monitoring_loop(self) -> None:
@@ -437,7 +461,7 @@ class CacheDeploymentIndex:
                 await asyncio.sleep(60)  # Vérification toutes les minutes
                 
             except Exception as e:
-                self.logger.error(f"❌ Erreur monitoring santé: {e}")
+                self.logger.error(f" Erreur monitoring santé: {e}")
                 await asyncio.sleep(120)
     
     async def _optimization_loop(self) -> None:
@@ -450,7 +474,7 @@ class CacheDeploymentIndex:
                 await asyncio.sleep(300)  # Optimisation toutes les 5 minutes
                 
             except Exception as e:
-                self.logger.error(f"❌ Erreur optimisation: {e}")
+                self.logger.error(f" Erreur optimisation: {e}")
                 await asyncio.sleep(600)
     
     async def _warming_loop(self) -> None:
@@ -463,7 +487,7 @@ class CacheDeploymentIndex:
                 await asyncio.sleep(600)  # Réchauffement toutes les 10 minutes
                 
             except Exception as e:
-                self.logger.error(f"❌ Erreur réchauffement: {e}")
+                self.logger.error(f" Erreur réchauffement: {e}")
                 await asyncio.sleep(1200)
     
     async def _collect_global_metrics(self) -> CacheIndexMetrics:
@@ -485,14 +509,17 @@ class CacheDeploymentIndex:
     
     def _signal_handler(self, signum: int, frame) -> None:
         """Gestionnaire de signaux pour arrêt propre."""
-        self.logger.info(f"🛑 Signal {signum} reçu, arrêt en cours...")
+        self.logger.info(f" Signal {signum} reçu, arrêt en cours...")
         asyncio.create_task(self.shutdown())
     
     async def shutdown(self) -> None:
         """Arrêt propre du système de cache."""
+
+
+
         try:
             self.status = CacheSystemStatus.STOPPING
-            self.logger.info("🛑 Arrêt du système de cache en cours...")
+            self.logger.info(" Arrêt du système de cache en cours...")
             
             # Signal d'arrêt
             self._shutdown_event.set()
@@ -535,14 +562,17 @@ class CacheDeploymentIndex:
                 await self.security_manager.shutdown()
             
             self.status = CacheSystemStatus.STOPPED
-            self.logger.info("✅ Système de cache arrêté proprement")
+            self.logger.info(" Système de cache arrêté proprement")
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur lors de l'arrêt: {e}")
+            self.logger.error(f" Erreur lors de l'arrêt: {e}")
             self.status = CacheSystemStatus.ERROR
     
     def get_system_status(self) -> Dict[str, Any]:
         """Retourne le statut détaillé du système."""
+
+
+
         return {
             "status": self.status.value,
             "uptime_seconds": int((datetime.utcnow() - self.start_time).total_seconds()),
@@ -559,7 +589,7 @@ class CacheDeploymentIndex:
     
     async def handle_emergency_shutdown(self, reason: str) -> None:
         """Gestion d'arrêt d'urgence."""
-        self.logger.critical(f"🚨 ARRÊT D'URGENCE: {reason}")
+        self.logger.critical(f" ARRÊT D'URGENCE: {reason}")
         self.status = CacheSystemStatus.ERROR
         await self.shutdown()
 
@@ -572,15 +602,18 @@ async def main() -> None:
     """
     Point d'entrée principal de l'application cache.
     """
+
+
+
     try:
         # Initialisation du système
         success = await cache_deployment_index.initialize()
         
         if not success:
-            print("❌ Échec de l'initialisation du système de cache")
+            print(" Échec de l'initialisation du système de cache")
             sys.exit(1)
         
-        print("🚀 Système de cache IA Influencer Agent démarré avec succès")
+        print(" Système de cache IA Influencer Agent démarré avec succès")
         
         # Boucle principale
         while cache_deployment_index.status in [
@@ -589,12 +622,12 @@ async def main() -> None:
         ]:
             await asyncio.sleep(1)
         
-        print("🛑 Système de cache arrêté")
+        print(" Système de cache arrêté")
         
     except KeyboardInterrupt:
-        print("\n🛑 Arrêt demandé par l'utilisateur")
+        print("\n Arrêt demandé par l'utilisateur")
     except Exception as e:
-        print(f"❌ Erreur fatale: {e}")
+        print(f" Erreur fatale: {e}")
         sys.exit(1)
     finally:
         await cache_deployment_index.shutdown()

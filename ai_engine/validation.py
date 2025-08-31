@@ -7,7 +7,7 @@ Complete validation and health check system for all AI components.
 © 2025 Fahed Mlaiel. All Rights Reserved.
 Contact: mlaiel@live.de
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This validation system is proprietary and confidential.
 Unauthorized use is strictly prohibited.
 """
@@ -531,6 +531,9 @@ async def validate_ai_module() -> Dict[str, Any]:
     Returns:
         Dict containing complete validation results
     """
+
+
+
     return await ai_validator.run_complete_validation()
 
 # Export validator class and functions

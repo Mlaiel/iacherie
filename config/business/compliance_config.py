@@ -512,11 +512,17 @@ class ComplianceConfig:
     @classmethod
     def get_regional_requirements(cls, region: str) -> Dict[str, Any]:
         """Get compliance requirements for a specific region."""
+
+
+
         return cls.REGIONAL_COMPLIANCE.get(region, {})
 
     @classmethod
     def get_data_category_requirements(cls, category: DataCategory) -> Dict[str, Any]:
         """Get compliance requirements for a specific data category."""
+
+
+
         return cls.DATA_PROCESSING_COMPLIANCE.get(category, {})
 
     @classmethod
@@ -604,6 +610,9 @@ class ComplianceConfig:
     @classmethod
     def get_subject_rights_procedures(cls, right_type: str) -> Dict[str, Any]:
         """Get procedures for handling specific subject rights requests."""
+
+
+
         return cls.SUBJECT_RIGHTS.get(right_type, {})
 
     @classmethod

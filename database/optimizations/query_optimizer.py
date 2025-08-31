@@ -145,6 +145,9 @@ class OptimizationSuggestion:
     @property
     def impact_score(self) -> float:
         """Calculate potential impact score"""
+
+
+
         return self.priority * 10 + self.estimated_improvement
 
 
@@ -179,6 +182,9 @@ class QueryParser:
     
     def parse_query(self, query: str) -> QueryComponent:
         """Parse SQL query into components"""
+
+
+
         try:
             # Parse with sqlparse
             parsed = sqlparse.parse(query)[0]
@@ -434,6 +440,9 @@ class QueryOptimizer:
         
     async def analyze_query(self, query: str) -> QueryPlan:
         """Analyze query and create optimization plan"""
+
+
+
         try:
             # Generate query ID
             query_id = self._generate_query_id(query)
@@ -482,6 +491,9 @@ class QueryOptimizer:
     
     async def get_execution_plan(self, engine: AsyncEngine, query: str) -> Optional[ExecutionPlan]:
         """Get query execution plan from database"""
+
+
+
         try:
             async with engine.begin() as conn:
                 # Get execution plan (PostgreSQL)
@@ -769,6 +781,9 @@ class QueryOptimizer:
     
     def _generate_plan_id(self, query: str) -> str:
         """Generate unique plan ID"""
+
+
+
         return f"plan_{self._generate_query_id(query)}"
     
     def _normalize_query(self, query: str) -> str:
@@ -852,6 +867,9 @@ class QueryOptimizer:
     
     async def optimize_query(self, query: str) -> str:
         """Apply basic query optimizations and return optimized query"""
+
+
+
         try:
             # This is a simplified implementation
             # In a real system, you'd implement sophisticated query rewriting
@@ -878,6 +896,9 @@ class QueryOptimizer:
     
     async def get_stats(self) -> Dict[str, Any]:
         """Get optimizer statistics"""
+
+
+
         return {
             "cached_plans": len(self._query_cache),
             "optimization_rules": len(self._optimization_rules),

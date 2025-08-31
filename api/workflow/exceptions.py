@@ -76,6 +76,9 @@ class WorkflowException(Exception):
         
     def to_dict(self) -> Dict[str, Any]:
         """Convert exception to dictionary for logging/serialization."""
+
+
+
         return {
             "error_type": self.__class__.__name__,
             "message": self.message,

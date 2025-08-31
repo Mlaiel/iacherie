@@ -471,16 +471,25 @@ class NotificationConfig:
     @classmethod
     def get_notification_config(cls, notification_type: NotificationType) -> Dict[str, Any]:
         """Get configuration for specific notification type."""
+
+
+
         return cls.NOTIFICATION_CONFIGS.get(notification_type, {})
 
     @classmethod
     def get_channel_config(cls, channel: NotificationChannel) -> Dict[str, Any]:
         """Get configuration for specific notification channel."""
+
+
+
         return cls.CHANNEL_CONFIGS.get(channel, {})
 
     @classmethod
     def get_user_preferences(cls, user_role: str) -> Dict[str, Any]:
         """Get default notification preferences for user role."""
+
+
+
         return cls.USER_PREFERENCE_TEMPLATES.get(user_role, cls.USER_PREFERENCE_TEMPLATES["creator_standard"])
 
     @classmethod
@@ -511,6 +520,9 @@ class NotificationConfig:
     @classmethod
     def get_template(cls, template_key: str) -> Optional[NotificationTemplate]:
         """Get notification template by key."""
+
+
+
         return cls.TEMPLATES.get(template_key)
 
     @classmethod

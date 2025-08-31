@@ -53,7 +53,7 @@ class MonitoringConfigValidator:
             with open(self.prometheus_config_path, 'r') as f:
                 config = yaml.safe_load(f)
             
-            logger.info("✅ Prometheus YAML syntax is valid")
+            logger.info(" Prometheus YAML syntax is valid")
             
             # Validate required sections
             required_sections = ['global', 'scrape_configs']
@@ -69,7 +69,7 @@ class MonitoringConfigValidator:
                 if 'evaluation_interval' not in global_config:
                     issues.append("Missing evaluation_interval in global config")
                     
-                logger.info(f"✅ Global config: scrape_interval={global_config.get('scrape_interval', 'N/A')}")
+                logger.info(f" Global config: scrape_interval={global_config.get('scrape_interval', 'N/A')}")
             
             # Validate scrape configs
             if 'scrape_configs' in config:
@@ -81,18 +81,18 @@ class MonitoringConfigValidator:
                         if 'job_name' not in job:
                             issues.append(f"Job {i} missing job_name")
                         else:
-                            logger.info(f"✅ Found scrape job: {job['job_name']}")
+                            logger.info(f" Found scrape job: {job['job_name']}")
             
             # Check for alert rules
             alert_rules_path = self.prometheus_config_path.parent / "alert_rules.yml"
             if alert_rules_path.exists():
-                logger.info("✅ Alert rules file found")
+                logger.info(" Alert rules file found")
                 # Validate alert rules syntax
                 try:
                     with open(alert_rules_path, 'r') as f:
                         alert_rules = yaml.safe_load(f)
                         if 'groups' in alert_rules:
-                            logger.info(f"✅ Found {len(alert_rules['groups'])} alert groups")
+                            logger.info(f" Found {len(alert_rules['groups'])} alert groups")
                         else:
                             issues.append("Alert rules missing 'groups' section")
                 except Exception as e:
@@ -103,9 +103,9 @@ class MonitoringConfigValidator:
             # Check for recording rules
             recording_rules_path = self.prometheus_config_path.parent / "recording_rules.yml"
             if recording_rules_path.exists():
-                logger.info("✅ Recording rules file found")
+                logger.info(" Recording rules file found")
             else:
-                logger.info("ℹ️ Recording rules file not found (optional)")
+                logger.info("ℹ Recording rules file not found (optional)")
             
             return len(issues) == 0, issues
             
@@ -126,7 +126,7 @@ class MonitoringConfigValidator:
             if not datasources_path.exists():
                 issues.append(f"Grafana datasources directory not found: {datasources_path}")
             else:
-                logger.info("✅ Grafana datasources directory found")
+                logger.info(" Grafana datasources directory found")
                 
                 # Check for Prometheus datasource
                 prometheus_ds_path = datasources_path / "prometheus.yml"
@@ -139,7 +139,7 @@ class MonitoringConfigValidator:
                         for ds in datasources_config['datasources']:
                             if ds.get('type') == 'prometheus':
                                 prometheus_found = True
-                                logger.info(f"✅ Prometheus datasource found: {ds.get('name', 'Unknown')}")
+                                logger.info(f" Prometheus datasource found: {ds.get('name', 'Unknown')}")
                                 # Validate URL
                                 if not ds.get('url'):
                                     issues.append("Prometheus datasource missing URL")
@@ -155,14 +155,14 @@ class MonitoringConfigValidator:
             # Check dashboards configuration
             dashboards_path = self.grafana_config_path / "provisioning" / "dashboards"
             if dashboards_path.exists():
-                logger.info("✅ Grafana dashboards provisioning directory found")
+                logger.info(" Grafana dashboards provisioning directory found")
             else:
-                logger.info("ℹ️ Grafana dashboards provisioning directory not found")
+                logger.info("ℹ Grafana dashboards provisioning directory not found")
             
             # Check for dashboard files
             dashboard_files = list(self.grafana_config_path.glob("*.json"))
             if dashboard_files:
-                logger.info(f"✅ Found {len(dashboard_files)} dashboard files")
+                logger.info(f" Found {len(dashboard_files)} dashboard files")
                 
                 # Validate dashboard JSON files
                 for dashboard_file in dashboard_files:
@@ -179,7 +179,7 @@ class MonitoringConfigValidator:
                         if 'title' not in dashboard_data:
                             issues.append(f"Dashboard {dashboard_file.name} missing title")
                         else:
-                            logger.info(f"✅ Dashboard: {dashboard_data['title']}")
+                            logger.info(f" Dashboard: {dashboard_data['title']}")
                             
                         if 'panels' not in dashboard_data:
                             issues.append(f"Dashboard {dashboard_file.name} missing panels")
@@ -191,7 +191,7 @@ class MonitoringConfigValidator:
                     except Exception as e:
                         issues.append(f"Error validating dashboard {dashboard_file.name}: {str(e)}")
             else:
-                logger.info("ℹ️ No dashboard files found")
+                logger.info("ℹ No dashboard files found")
             
             return len(issues) == 0, issues
             
@@ -224,14 +224,14 @@ class MonitoringConfigValidator:
                         'response_time': response.elapsed.total_seconds(),
                         'url': url
                     }
-                    logger.info(f"✅ {service} is healthy at {url}")
+                    logger.info(f" {service} is healthy at {url}")
                 else:
                     results[service] = {
                         'status': 'unhealthy',
                         'status_code': response.status_code,
                         'url': url
                     }
-                    logger.warning(f"⚠️ {service} returned status {response.status_code}")
+                    logger.warning(f" {service} returned status {response.status_code}")
                     all_healthy = False
                     
             except requests.exceptions.ConnectionError:
@@ -240,7 +240,7 @@ class MonitoringConfigValidator:
                     'error': 'Connection refused',
                     'url': url
                 }
-                logger.info(f"ℹ️ {service} not running at {url} (this is OK for config validation)")
+                logger.info(f"ℹ {service} not running at {url} (this is OK for config validation)")
                 
             except requests.exceptions.Timeout:
                 results[service] = {
@@ -248,7 +248,7 @@ class MonitoringConfigValidator:
                     'error': 'Request timeout',
                     'url': url
                 }
-                logger.warning(f"⚠️ {service} timeout at {url}")
+                logger.warning(f" {service} timeout at {url}")
                 all_healthy = False
                 
             except Exception as e:
@@ -257,7 +257,7 @@ class MonitoringConfigValidator:
                     'error': str(e),
                     'url': url
                 }
-                logger.error(f"❌ Error checking {service}: {str(e)}")
+                logger.error(f" Error checking {service}: {str(e)}")
                 all_healthy = False
         
         return all_healthy, results
@@ -271,7 +271,7 @@ class MonitoringConfigValidator:
         if not monitoring_compose.exists():
             issues.append("Monitoring Docker Compose file not found")
         else:
-            logger.info("✅ Monitoring Docker Compose file found")
+            logger.info(" Monitoring Docker Compose file found")
         
         # Check if monitoring directory structure exists
         required_dirs = [
@@ -287,7 +287,7 @@ class MonitoringConfigValidator:
             if not full_path.exists():
                 issues.append(f"Required directory missing: {dir_path}")
             else:
-                logger.info(f"✅ Directory found: {dir_path}")
+                logger.info(f" Directory found: {dir_path}")
         
         return len(issues) == 0, issues
     
@@ -325,7 +325,7 @@ class MonitoringConfigValidator:
             with open(self.prometheus_config_path, 'w') as f:
                 yaml.dump(prometheus_config, f, default_flow_style=False)
             
-            logger.info(f"✅ Generated basic Prometheus config: {self.prometheus_config_path}")
+            logger.info(f" Generated basic Prometheus config: {self.prometheus_config_path}")
         
         # Create basic Grafana datasource config if missing
         grafana_ds_path = self.grafana_config_path / "provisioning" / "datasources" / "prometheus.yml"
@@ -348,7 +348,7 @@ class MonitoringConfigValidator:
             with open(grafana_ds_path, 'w') as f:
                 yaml.dump(datasource_config, f, default_flow_style=False)
             
-            logger.info(f"✅ Generated basic Grafana datasource config: {grafana_ds_path}")
+            logger.info(f" Generated basic Grafana datasource config: {grafana_ds_path}")
         
         # Create basic alert rules if missing
         alert_rules_path = self.prometheus_config_path.parent / "alert_rules.yml"
@@ -378,7 +378,7 @@ class MonitoringConfigValidator:
             with open(alert_rules_path, 'w') as f:
                 yaml.dump(alert_rules, f, default_flow_style=False)
             
-            logger.info(f"✅ Generated basic alert rules: {alert_rules_path}")
+            logger.info(f" Generated basic alert rules: {alert_rules_path}")
     
     def generate_monitoring_startup_script(self) -> str:
         """Generate a script to start monitoring services"""
@@ -386,17 +386,17 @@ class MonitoringConfigValidator:
 # Monitoring Services Startup Script
 set -e
 
-echo "🚀 Starting Ainflue Monitoring Stack..."
+echo " Starting Ainflue Monitoring Stack..."
 
 # Clean up any existing containers
 docker compose -f docker-compose.monitoring.yml down --remove-orphans || true
 
 # Pull latest images
-echo "📥 Pulling monitoring images..."
+echo " Pulling monitoring images..."
 docker compose -f docker-compose.monitoring.yml pull --ignore-pull-failures
 
 # Start monitoring services
-echo "🔧 Starting monitoring services..."
+echo " Starting monitoring services..."
 docker compose -f docker-compose.monitoring.yml up -d
 
 # Wait for services to be ready
@@ -406,24 +406,24 @@ sleep 60
 # Check Prometheus
 echo "🩺 Checking Prometheus..."
 if curl -f -s http://localhost:9090/-/healthy > /dev/null; then
-    echo "✅ Prometheus is healthy"
+    echo " Prometheus is healthy"
 else
-    echo "❌ Prometheus is not responding"
+    echo " Prometheus is not responding"
 fi
 
 # Check Grafana
 echo "🩺 Checking Grafana..."
 if curl -f -s http://localhost:3000/api/health > /dev/null; then
-    echo "✅ Grafana is healthy"
+    echo " Grafana is healthy"
 else
-    echo "❌ Grafana is not responding"
+    echo " Grafana is not responding"
 fi
 
-echo "📊 Monitoring services status:"
+echo " Monitoring services status:"
 docker compose -f docker-compose.monitoring.yml ps
 
-echo "🎉 Monitoring stack startup completed!"
-echo "📊 Access URLs:"
+echo " Monitoring stack startup completed!"
+echo " Access URLs:"
 echo "   Prometheus: http://localhost:9090"
 echo "   Grafana: http://localhost:3000 (admin/admin123)"
 echo "   AlertManager: http://localhost:9093"
@@ -432,14 +432,14 @@ echo "   AlertManager: http://localhost:9093"
     
     def run_validation(self) -> Dict[str, Any]:
         """Run complete monitoring configuration validation"""
-        logger.info("📊 Starting Monitoring Configuration Validation")
+        logger.info(" Starting Monitoring Configuration Validation")
         
         # Check dependencies
         deps_valid, dep_issues = self.check_monitoring_dependencies()
         
         # Generate missing configs if needed
         if not deps_valid:
-            logger.info("🔧 Generating missing monitoring configurations...")
+            logger.info(" Generating missing monitoring configurations...")
             self.generate_monitoring_test_config()
         
         # Validate Prometheus
@@ -468,7 +468,7 @@ echo "   AlertManager: http://localhost:9093"
         script_path = self.project_root / "start_monitoring_stack.sh"
         script_path.write_text(script_content)
         script_path.chmod(0o755)
-        logger.info(f"✅ Generated monitoring startup script: {script_path}")
+        logger.info(f" Generated monitoring startup script: {script_path}")
         
         # Compile results
         self.validation_results = {
@@ -508,7 +508,7 @@ Monitoring Configuration Validation Report
         
         # Dependencies
         deps = self.validation_results['dependencies']
-        report += f"📦 Dependencies: {'✅ VALID' if deps['valid'] else '❌ ISSUES'}\n"
+        report += f" Dependencies: {' VALID' if deps['valid'] else ' ISSUES'}\n"
         if deps['issues']:
             for issue in deps['issues']:
                 report += f"   • {issue}\n"
@@ -516,7 +516,7 @@ Monitoring Configuration Validation Report
         
         # Prometheus
         prom = self.validation_results['prometheus']
-        report += f"🔍 Prometheus: {'✅ VALID' if prom['valid'] else '❌ ISSUES'}\n"
+        report += f" Prometheus: {' VALID' if prom['valid'] else ' ISSUES'}\n"
         report += f"   Config: {prom['config_path']}\n"
         if prom['issues']:
             for issue in prom['issues']:
@@ -525,7 +525,7 @@ Monitoring Configuration Validation Report
         
         # Grafana
         graf = self.validation_results['grafana']
-        report += f"📊 Grafana: {'✅ VALID' if graf['valid'] else '❌ ISSUES'}\n"
+        report += f" Grafana: {' VALID' if graf['valid'] else ' ISSUES'}\n"
         report += f"   Config: {graf['config_path']}\n"
         if graf['issues']:
             for issue in graf['issues']:
@@ -534,34 +534,34 @@ Monitoring Configuration Validation Report
         
         # Endpoints
         endpoints = self.validation_results['endpoints']
-        report += f"🌐 Endpoints: {'✅ HEALTHY' if endpoints['healthy'] else '⚠️ NOT RUNNING'}\n"
+        report += f" Endpoints: {' HEALTHY' if endpoints['healthy'] else ' NOT RUNNING'}\n"
         for service, result in endpoints['results'].items():
             status_icon = {
-                'healthy': '✅',
-                'unhealthy': '❌',
-                'not_running': 'ℹ️',
-                'timeout': '⚠️',
-                'error': '❌'
-            }.get(result['status'], '❓')
+                'healthy': '',
+                'unhealthy': '',
+                'not_running': 'ℹ',
+                'timeout': '',
+                'error': ''
+            }.get(result['status'], '')
             report += f"   {status_icon} {service}: {result['status']} ({result['url']})\n"
         report += "\n"
         
         # Startup script
-        report += f"🚀 Startup Script: {self.validation_results['startup_script']}\n\n"
+        report += f" Startup Script: {self.validation_results['startup_script']}\n\n"
         
         # Summary
         all_configs_valid = (deps['valid'] and prom['valid'] and graf['valid'])
         report += "SUMMARY\n"
         report += "="*40 + "\n"
-        report += f"Configuration Status: {'✅ VALID' if all_configs_valid else '⚠️ NEEDS ATTENTION'}\n"
-        report += f"Services Running: {'✅ YES' if endpoints['healthy'] else 'ℹ️ NO (use startup script)'}\n"
+        report += f"Configuration Status: {' VALID' if all_configs_valid else ' NEEDS ATTENTION'}\n"
+        report += f"Services Running: {' YES' if endpoints['healthy'] else 'ℹ NO (use startup script)'}\n"
         
         if all_configs_valid:
-            report += "\n🎉 Monitoring configurations are valid and ready to use!\n"
+            report += "\n Monitoring configurations are valid and ready to use!\n"
             report += "\nTo start monitoring services:\n"
             report += f"   bash {self.validation_results['startup_script']}\n"
         else:
-            report += "\n⚠️ Some configurations need attention. Check issues above.\n"
+            report += "\n Some configurations need attention. Check issues above.\n"
         
         return report
 
@@ -571,7 +571,7 @@ def main():
     script_dir = Path(__file__).parent
     project_root = script_dir.parent
     
-    logger.info("📊 Monitoring Configuration Validation")
+    logger.info(" Monitoring Configuration Validation")
     logger.info(f"Project Root: {project_root}")
     
     validator = MonitoringConfigValidator(str(project_root))
@@ -583,7 +583,7 @@ def main():
     report_path.write_text(report)
     
     print(report)
-    logger.info(f"📄 Report saved to: {report_path}")
+    logger.info(f" Report saved to: {report_path}")
     
     # Return appropriate exit code
     all_valid = (
@@ -593,10 +593,10 @@ def main():
     )
     
     if all_valid:
-        logger.info("🎉 All monitoring configurations are valid!")
+        logger.info(" All monitoring configurations are valid!")
         return 0
     else:
-        logger.warning("⚠️ Some monitoring configurations need attention!")
+        logger.warning(" Some monitoring configurations need attention!")
         return 1
 
 

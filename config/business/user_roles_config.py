@@ -552,11 +552,17 @@ class UserRolesConfig:
     @classmethod
     def is_higher_role(cls, role1: UserRole, role2: UserRole) -> bool:
         """Check if role1 has higher privileges than role2."""
+
+
+
         return cls.get_role_level(role1) > cls.get_role_level(role2)
 
     @classmethod
     def get_role_features(cls, role: UserRole) -> Dict[str, bool]:
         """Get feature access for a role."""
+
+
+
         return cls.ROLE_FEATURES.get(role, {})
 
     @classmethod
@@ -584,9 +590,15 @@ class UserRolesConfig:
     @classmethod
     def get_permission_groups(cls) -> Dict[str, List[Permission]]:
         """Get all permission groups."""
+
+
+
         return cls.PERMISSION_GROUPS
 
     @classmethod
     def get_permissions_in_group(cls, group_name: str) -> List[Permission]:
         """Get permissions in a specific group."""
+
+
+
         return cls.PERMISSION_GROUPS.get(group_name, [])

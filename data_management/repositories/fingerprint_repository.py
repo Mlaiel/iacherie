@@ -1,5 +1,5 @@
 """
-🔍 Fingerprint Repository - IA Influencer Agent Platform Enterprise
+ Fingerprint Repository - IA Influencer Agent Platform Enterprise
 ================================================================
 Module: backend/data_management/repositories/fingerprint_repository.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Fingerprint Repository - Production-Ready
 Responsibility: AI-powered content identification and tracking
 ================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
@@ -183,6 +183,9 @@ class FingerprintRepository(BaseRepository):
                            content_data: bytes, content_type: str,
                            algorithms: List[FingerprintAlgorithm] = None) -> List[ContentFingerprint]:
         """Generate comprehensive fingerprints for content"""
+
+
+
         try:
             if not self.fingerprint_engine:
                 raise ValueError("Fingerprint engine not available")
@@ -275,6 +278,9 @@ class FingerprintRepository(BaseRepository):
                            similarity_threshold: float = None,
                            limit: int = 10) -> List[FingerprintMatch]:
         """Find similar content using fingerprint matching"""
+
+
+
         try:
             if not self.similarity_matcher:
                 return []
@@ -327,6 +333,9 @@ class FingerprintRepository(BaseRepository):
                          creator_id: str = None,
                          cross_creator: bool = True) -> DuplicateDetection:
         """Detect duplicate content across the platform"""
+
+
+
         try:
             # Get all fingerprints for the content
             content_fingerprints = self._get_fingerprints_by_content(content_id)
@@ -431,14 +440,23 @@ class FingerprintRepository(BaseRepository):
     # Data fetching methods (placeholders - would connect to actual data sources)
     def _get_fingerprints_by_content(self, content_id: str) -> List[ContentFingerprint]:
         """Get all fingerprints for a content"""
+
+
+
         return []
     
     def _get_fingerprint_creator(self, fingerprint_id: str) -> Optional[str]:
         """Get creator ID for a fingerprint"""
+
+
+
         return None
     
     def _get_content_id_by_fingerprint(self, fingerprint_id: str) -> Optional[str]:
         """Get content ID for a fingerprint"""
+
+
+
         return None
 
 

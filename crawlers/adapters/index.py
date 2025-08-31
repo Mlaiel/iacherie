@@ -92,6 +92,9 @@ class AdapterRegistry:
     
     def register_adapter(self, adapter_info: AdapterInfo, instance: Any = None) -> bool:
         """Register a new adapter with the registry."""
+
+
+
         try:
             adapter_name = adapter_info.name
             
@@ -118,6 +121,9 @@ class AdapterRegistry:
     
     def unregister_adapter(self, adapter_name: str) -> bool:
         """Unregister an adapter from the registry."""
+
+
+
         try:
             if adapter_name not in self._adapters:
                 logger.warning(f"Adapter '{adapter_name}' not found in registry")
@@ -143,10 +149,16 @@ class AdapterRegistry:
     
     def get_adapter(self, adapter_name: str) -> Optional[AdapterInfo]:
         """Get adapter information by name."""
+
+
+
         return self._adapters.get(adapter_name)
     
     def get_adapter_instance(self, adapter_name: str) -> Optional[Any]:
         """Get adapter instance by name."""
+
+
+
         return self._instances.get(adapter_name)
     
     def get_adapters_by_type(self, adapter_type: AdapterType) -> List[AdapterInfo]:
@@ -156,6 +168,9 @@ class AdapterRegistry:
     
     def get_active_adapters(self) -> List[AdapterInfo]:
         """Get all active adapters."""
+
+
+
         return [
             adapter for adapter in self._adapters.values()
             if adapter.status == AdapterStatus.ACTIVE
@@ -168,6 +183,9 @@ class AdapterRegistry:
     
     def find_adapters_by_capability(self, capability: str) -> List[AdapterInfo]:
         """Find adapters that support a specific capability."""
+
+
+
         return [
             adapter for adapter in self._adapters.values()
             if capability in adapter.capabilities
@@ -226,6 +244,9 @@ class AdapterRegistry:
     
     async def initialize_registry(self) -> bool:
         """Initialize the adapter registry."""
+
+
+
         try:
             logger.info("Initializing adapter registry...")
             self._register_builtin_adapters()
@@ -366,18 +387,30 @@ class AdapterIndex:
     
     def search_by_capability(self, capability: str) -> List[str]:
         """Search adapters by capability."""
+
+
+
         return self._capability_index.get(capability, [])
     
     def search_by_type(self, adapter_type: str) -> List[str]:
         """Search adapters by type."""
+
+
+
         return self._type_index.get(adapter_type, [])
     
     def search_by_status(self, status: str) -> List[str]:
         """Search adapters by status."""
+
+
+
         return self._status_index.get(status, [])
     
     def get_available_capabilities(self) -> List[str]:
         """Get all available capabilities."""
+
+
+
         return list(self._capability_index.keys())
     
     def refresh_indices(self):
@@ -392,6 +425,9 @@ adapter_index = AdapterIndex(adapter_registry)
 # Utility functions
 async def initialize_adapter_system():
     """Initialize the complete adapter system."""
+
+
+
     try:
         await adapter_registry.initialize_registry()
         adapter_index.refresh_indices()
@@ -404,6 +440,9 @@ async def initialize_adapter_system():
 
 def get_adapter_summary() -> Dict[str, Any]:
     """Get a summary of all registered adapters."""
+
+
+
     return {
         'registry_status': adapter_registry.get_registry_status(),
         'available_capabilities': adapter_index.get_available_capabilities(),
@@ -472,6 +511,9 @@ class AdapterFactory:
     
     async def create_adapter(self, config: AdapterConfig) -> Optional[Any]:
         """Create an adapter instance from configuration."""
+
+
+
         try:
             # Check if instance already exists
             instance_key = f"{config.adapter_name}_{hash(str(config.config_params))}"
@@ -498,7 +540,7 @@ class AdapterFactory:
             self._instances[instance_key] = instance
             self._configs[instance_key] = config
             
-            self.logger.info(f"✅ Created adapter instance: {config.adapter_name}")
+            self.logger.info(f" Created adapter instance: {config.adapter_name}")
             return instance
             
         except Exception as e:
@@ -566,6 +608,9 @@ class AdapterFactory:
     
     def list_instances(self) -> Dict[str, AdapterConfig]:
         """List all active adapter instances."""
+
+
+
         return {key: config for key, config in self._configs.items()}
     
     async def cleanup_instances(self):
@@ -581,7 +626,7 @@ class AdapterFactory:
         
         self._instances.clear()
         self._configs.clear()
-        self.logger.info("✅ All adapter instances cleaned up")
+        self.logger.info(" All adapter instances cleaned up")
 
 class AdapterRegistry:
     """Registry for adapter discovery and metadata."""
@@ -647,6 +692,9 @@ class AdapterRegistry:
     
     async def validate_adapter(self, adapter_name: str) -> Dict[str, Any]:
         """Validate adapter availability and functionality."""
+
+
+
         try:
             # Check if adapter exists
             adapter_class = get_adapter_by_name(adapter_name)
@@ -744,26 +792,44 @@ adapter_registry = AdapterRegistry()
 # Convenience functions
 async def create_content_adapter(content_type: str, **kwargs):
     """Create a content adapter."""
+
+
+
     return await adapter_factory.create_content_adapter(content_type, **kwargs)
 
 async def create_platform_adapter(platform: str, credentials: Dict[str, Any], **kwargs):
     """Create a platform adapter."""
+
+
+
     return await adapter_factory.create_platform_adapter(platform, credentials, **kwargs)
 
 async def create_storage_adapter(storage_type: str, connection_config: Dict[str, Any], **kwargs):
     """Create a storage adapter."""
+
+
+
     return await adapter_factory.create_storage_adapter(storage_type, connection_config, **kwargs)
 
 def discover_adapters():
     """Discover all available adapters."""
+
+
+
     return adapter_registry.discover_adapters()
 
 def search_adapters(**criteria):
     """Search adapters by criteria."""
+
+
+
     return adapter_registry.search_adapters(**criteria)
 
 async def validate_system():
     """Validate entire adapter system."""
+
+
+
     return await adapter_registry.health_check()
 
 # Export all public functions and classes

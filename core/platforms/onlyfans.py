@@ -43,6 +43,9 @@ class OnlyFansPlatform(PlatformBase):
     
     async def authenticate(self) -> bool:
         """Authenticate with OnlyFans"""
+
+
+
         try:
             # OnlyFans uses cookie-based authentication
             cookie = self.config.credentials.get('cookie')
@@ -83,10 +86,16 @@ class OnlyFansPlatform(PlatformBase):
     
     async def refresh_token(self) -> bool:
         """Refresh OnlyFans session"""
+
+
+
         return await self.authenticate()
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
         """Make authenticated request to OnlyFans API"""
+
+
+
         try:
             session = await self._get_session()
             
@@ -128,6 +137,9 @@ class OnlyFansPlatform(PlatformBase):
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
         """Upload content to OnlyFans"""
+
+
+
         try:
             media_ids = []
             
@@ -186,6 +198,9 @@ class OnlyFansPlatform(PlatformBase):
     
     async def _upload_media(self, file_path: str) -> Optional[str]:
         """Upload media file to OnlyFans"""
+
+
+
         try:
             session = await self._get_session()
             
@@ -227,6 +242,9 @@ class OnlyFansPlatform(PlatformBase):
     async def get_analytics(self, content_id: str, start_date: datetime, 
                            end_date: datetime) -> AnalyticsData:
         """Get OnlyFans post analytics"""
+
+
+
         try:
             result = await self._make_request('GET', f'/posts/{content_id}')
             
@@ -259,6 +277,9 @@ class OnlyFansPlatform(PlatformBase):
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
         """Search content on OnlyFans"""
+
+
+
         try:
             params = {
                 'query': query,
@@ -293,6 +314,9 @@ class OnlyFansPlatform(PlatformBase):
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
         """Get user's OnlyFans posts"""
+
+
+
         try:
             target_user_id = user_id or self.config.credentials.get('user_id')
             if not target_user_id:
@@ -331,6 +355,9 @@ class OnlyFansPlatform(PlatformBase):
     
     async def delete_content(self, content_id: str) -> bool:
         """Delete OnlyFans post"""
+
+
+
         try:
             result = await self._make_request('DELETE', f'/posts/{content_id}')
             return result is not None
@@ -341,6 +368,9 @@ class OnlyFansPlatform(PlatformBase):
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
         """Update OnlyFans post"""
+
+
+
         try:
             update_data = {
                 'text': metadata.description or metadata.title or '',
@@ -359,6 +389,9 @@ class OnlyFansPlatform(PlatformBase):
     
     async def get_earnings(self, start_date: datetime = None, end_date: datetime = None) -> Dict[str, Any]:
         """Get earnings data"""
+
+
+
         try:
             params = {}
             if start_date:
@@ -387,6 +420,9 @@ class OnlyFansPlatform(PlatformBase):
     
     async def get_subscribers(self, limit: int = 50) -> List[Dict[str, Any]]:
         """Get subscriber list"""
+
+
+
         try:
             params = {
                 'limit': limit,
@@ -420,6 +456,9 @@ class OnlyFansPlatform(PlatformBase):
     
     async def send_message(self, user_id: str, text: str, media_ids: List[str] = None) -> Optional[str]:
         """Send private message"""
+
+
+
         try:
             message_data = {
                 'text': text,
@@ -443,6 +482,9 @@ class OnlyFansPlatform(PlatformBase):
     
     async def get_messages(self, user_id: str, limit: int = 20) -> List[Dict[str, Any]]:
         """Get messages with user"""
+
+
+
         try:
             params = {
                 'limit': limit,

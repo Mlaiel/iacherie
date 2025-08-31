@@ -1,5 +1,5 @@
 """
-🔌 API Integrator - IA Influencer Agent Surveillance Module
+ API Integrator - IA Influencer Agent Surveillance Module
 =========================================================
 
 Advanced API integration system for connecting with platform APIs,
@@ -498,6 +498,9 @@ class APIIntegrator:
     
     async def initialize(self) -> None:
         """Initialize API integrator"""
+
+
+
         try:
             # Load credentials from config
             await self._load_credentials()
@@ -675,6 +678,9 @@ class APIIntegrator:
     
     async def _search_generic(self, provider: APIProvider, query: str, max_results: int) -> APIResponse:
         """Generic search for other platforms"""
+
+
+
         return await self.make_request(
             provider=provider,
             method=APIMethod.GET,

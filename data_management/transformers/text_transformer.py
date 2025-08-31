@@ -1,11 +1,11 @@
 """
-📝 Text Transformation Engine - IA Influencer Agent Platform Enterprise
+ Text Transformation Engine - IA Influencer Agent Platform Enterprise
 ======================================================================
 Module: backend/data_management/transformers/text_transformer.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ======================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -179,6 +179,9 @@ class TextAnalyzer:
     
     def analyze_text(self, text: str, content_type: ContentType = None) -> TextMetadata:
         """Analyse complète d'un texte"""
+
+
+
         try:
             # Détection de la langue
             try:
@@ -289,6 +292,9 @@ class TextAnalyzer:
     
     def _extract_keywords(self, text: str, language: str, top_k: int = 20) -> List[str]:
         """Extraction des mots-clés importants"""
+
+
+
         try:
             # Tokenization et nettoyage
             words = word_tokenize(text.lower())
@@ -322,6 +328,9 @@ class TextAnalyzer:
     
     def _extract_key_phrases(self, text: str, language: str, top_k: int = 10) -> List[str]:
         """Extraction des phrases clés"""
+
+
+
         try:
             sentences = sent_tokenize(text)
             
@@ -430,6 +439,9 @@ class TextAnalyzer:
     
     def _calculate_coherence(self, text: str) -> float:
         """Calcul de la cohérence du texte"""
+
+
+
         try:
             sentences = sent_tokenize(text)
             if len(sentences) < 2:
@@ -458,6 +470,9 @@ class TextAnalyzer:
     
     def _generate_semantic_hash(self, text: str) -> str:
         """Génère un hash sémantique pour détection de similarité"""
+
+
+
         try:
             if not self.sentence_model:
                 return hashlib.md5(text.encode()).hexdigest()

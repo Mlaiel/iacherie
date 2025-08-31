@@ -8,7 +8,7 @@ fraud prevention, and global compliance for licensing royalties and fees.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing and usage rights.
@@ -197,6 +197,9 @@ class PaymentProcessor:
         payment_schedule: str = "immediate"
     ) -> Dict[str, Any]:
         """Process royalty payments to multiple recipients"""
+
+
+
         try:
             # Get royalty calculation
             royalty_calculations, _ = await self.repository.get_royalty_calculations(
@@ -275,6 +278,9 @@ class PaymentProcessor:
         user_id: UUID = None
     ) -> PaymentResult:
         """Process individual payment with comprehensive validation"""
+
+
+
         try:
             # Validate payment instruction
             validated_instruction = await self._validate_single_payment_instruction(
@@ -340,6 +346,9 @@ class PaymentProcessor:
         batch_options: Dict[str, Any] = None
     ) -> Dict[str, Any]:
         """Process multiple payments in optimized batches"""
+
+
+
         try:
             batch_options = batch_options or {}
             batch_id = await self._generate_batch_id()
@@ -393,6 +402,9 @@ class PaymentProcessor:
         user_id: UUID = None
     ) -> Dict[str, Any]:
         """Get comprehensive payment status information"""
+
+
+
         try:
             # Find payment record
             payment_record = await self._find_payment_record(payment_id)
@@ -442,6 +454,9 @@ class PaymentProcessor:
         user_id: UUID = None
     ) -> PaymentResult:
         """Retry failed payment with enhanced error handling"""
+
+
+
         try:
             # Get original payment record
             payment_record = await self._find_payment_record(payment_id)
@@ -491,6 +506,9 @@ class PaymentProcessor:
         source_currency: str = None
     ) -> Dict[str, Any]:
         """Calculate comprehensive payment fees"""
+
+
+
         try:
             fee_calculation = {
                 "base_amount": amount,
@@ -541,6 +559,9 @@ class PaymentProcessor:
         amount: Decimal = None
     ) -> List[Dict[str, Any]]:
         """Get supported payment methods for specific criteria"""
+
+
+
         try:
             # Get base supported methods
             base_methods = self.regional_payment_methods.get(
@@ -665,6 +686,9 @@ class PaymentProcessor:
         method: PaymentMethod
     ) -> PaymentResult:
         """Execute payment through appropriate gateway"""
+
+
+
         try:
             if method == PaymentMethod.STRIPE:
                 return await self.gateway_manager.process_stripe_payment(instruction)
@@ -803,6 +827,9 @@ class PaymentProcessor:
         user_id: UUID = None
     ) -> PaymentRecord:
         """Process royalty payment to rights holder"""
+
+
+
         try:
             # Get royalty calculation
             royalty_calculations, _ = await self.repository.get_royalty_calculations(
@@ -895,6 +922,9 @@ class PaymentProcessor:
         user_id: UUID = None
     ) -> Dict[str, Any]:
         """Process multiple payments in batch"""
+
+
+
         try:
             results = {
                 "total_payments": len(payment_requests),
@@ -944,6 +974,9 @@ class PaymentProcessor:
         user_id: UUID = None
     ) -> Dict[str, Any]:
         """Execute automated revenue distribution"""
+
+
+
         try:
             # This would get revenue distribution from repository
             # For now, we'll simulate the structure
@@ -1032,6 +1065,9 @@ class PaymentProcessor:
         user_id: UUID = None
     ) -> Dict[str, Any]:
         """Get current payment status"""
+
+
+
         try:
             # This would get payment record from repository
             # For now, we'll return a simulated status
@@ -1059,6 +1095,9 @@ class PaymentProcessor:
         user_id: UUID = None
     ) -> Dict[str, Any]:
         """Retry a failed payment"""
+
+
+
         try:
             # Get payment record
             # This would come from repository
@@ -1251,6 +1290,9 @@ class PaymentProcessor:
         user_id: UUID = None
     ) -> Dict[str, Any]:
         """Process a single payment request"""
+
+
+
         try:
             # Extract payment details
             amount = Decimal(str(payment_request["amount"]))

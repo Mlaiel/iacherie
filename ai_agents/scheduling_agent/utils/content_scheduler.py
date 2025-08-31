@@ -10,7 +10,7 @@ template management, and comprehensive workflow orchestration.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -290,6 +290,9 @@ class ContentScheduler:
         Returns:
             Template ID
         """
+
+
+
         try:
             logger.info(f"Creating scheduling template for creator {creator_id}")
             
@@ -347,6 +350,9 @@ class ContentScheduler:
         Returns:
             Application result with created schedules
         """
+
+
+
         try:
             logger.info(f"Applying template {template_id} to {len(content_ids)} content items")
             
@@ -460,6 +466,9 @@ class ContentScheduler:
         Returns:
             Operation ID for tracking
         """
+
+
+
         try:
             logger.info(f"Starting bulk operation {request.operation_type.value} for {len(request.content_ids)} items")
             
@@ -498,6 +507,9 @@ class ContentScheduler:
         request: BulkScheduleRequest
     ):
         """Execute bulk operation in background"""
+
+
+
         try:
             results = []
             failed_items = []
@@ -572,6 +584,9 @@ class ContentScheduler:
     
     async def get_bulk_operation_status(self, operation_id: str) -> Dict[str, Any]:
         """Get status of bulk operation"""
+
+
+
         try:
             with get_db_session() as db:
                 operation = db.query(BulkOperation).filter(
@@ -605,6 +620,9 @@ class ContentScheduler:
         workflow: SchedulingWorkflow
     ) -> str:
         """Create a complex scheduling workflow"""
+
+
+
         try:
             logger.info(f"Creating scheduling workflow for creator {creator_id}")
             
@@ -765,6 +783,9 @@ class ContentScheduler:
         request: BulkScheduleRequest
     ) -> Dict[str, Any]:
         """Schedule a single item in bulk operation"""
+
+
+
         try:
             # Determine schedule time
             if request.schedule_times and len(request.schedule_times) > 0:
@@ -811,6 +832,9 @@ class ContentScheduler:
         request: BulkScheduleRequest
     ) -> Dict[str, Any]:
         """Reschedule a single item in bulk operation"""
+
+
+
         try:
             # Find existing schedules for this content
             existing_schedules = await self.scheduling_agent.get_creator_schedules(
@@ -865,6 +889,9 @@ class ContentScheduler:
         request: BulkScheduleRequest
     ) -> Dict[str, Any]:
         """Cancel schedules for a single item in bulk operation"""
+
+
+
         try:
             # Find existing schedules for this content
             existing_schedules = await self.scheduling_agent.get_creator_schedules(
@@ -913,6 +940,9 @@ class ContentScheduler:
         failed: int
     ):
         """Update bulk operation progress"""
+
+
+
         try:
             with get_db_session() as db:
                 operation = db.query(BulkOperation).filter(
@@ -1100,6 +1130,9 @@ class AutoScheduler:
         Returns:
             Rule ID
         """
+
+
+
         try:
             logger.info(f"Creating automation rule {rule_name} for creator {creator_id}")
             
@@ -1147,6 +1180,9 @@ class AutoScheduler:
             trigger_event: Event that occurred
             event_data: Data associated with the event
         """
+
+
+
         try:
             logger.info(f"Checking automation triggers for event {trigger_event}")
             
@@ -1183,6 +1219,9 @@ class AutoScheduler:
     
     async def get_creator_automation_rules(self, creator_id: str) -> List[Dict[str, Any]]:
         """Get automation rules for a creator"""
+
+
+
         try:
             with get_db_session() as db:
                 rules = db.query(AutomationRule_DB).filter(
@@ -1240,6 +1279,9 @@ class AutoScheduler:
     
     async def _load_automation_rule(self, rule_id: str):
         """Load automation rule into active rules"""
+
+
+
         try:
             with get_db_session() as db:
                 rule = db.query(AutomationRule_DB).filter(
@@ -1419,6 +1461,9 @@ class AutoScheduler:
     
     async def _update_rule_execution_stats(self, rule_id: str):
         """Update rule execution statistics"""
+
+
+
         try:
             with get_db_session() as db:
                 rule = db.query(AutomationRule_DB).filter(

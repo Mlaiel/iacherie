@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + DBA + DevOps
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
+ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION 
 ==================================================================
 This code and all associated intellectual property are the EXCLUSIVE property of Fahed Mlaiel.
 ANY unauthorized use, copying, modification, distribution, or commercialization without 
@@ -174,6 +174,9 @@ class ProtectionRulesRepository:
         Raises:
             ProtectionRulesRepositoryError: If creation fails
         """
+
+
+
         try:
             # Validate rule structure
             await self._validate_rule_structure(rule_conditions, rule_actions)
@@ -292,6 +295,9 @@ class ProtectionRulesRepository:
         Returns:
             AI-generated ProtectionRule record
         """
+
+
+
         try:
             if not self.ai_rule_generation_enabled:
                 raise ProtectionRulesRepositoryError("AI rule generation not enabled")
@@ -354,6 +360,9 @@ class ProtectionRulesRepository:
         Returns:
             Activated ProtectionRule record
         """
+
+
+
         try:
             rule = await self.db_session.query(ProtectionRule).filter(
                 ProtectionRule.rule_id == rule_id
@@ -424,6 +433,9 @@ class ProtectionRulesRepository:
         Returns:
             List of rule execution results
         """
+
+
+
         try:
             execution_start = datetime.now()
             
@@ -485,6 +497,9 @@ class ProtectionRulesRepository:
         Returns:
             List of active ProtectionRule records
         """
+
+
+
         try:
             # Check cache first
             cache_key = f"active_rules_{category}_{priority_filter}"
@@ -545,6 +560,9 @@ class ProtectionRulesRepository:
         Returns:
             Optimization results and recommendations
         """
+
+
+
         try:
             start_date = datetime.now(timezone.utc) - timedelta(days=analysis_period_days)
             
@@ -633,6 +651,9 @@ class ProtectionRulesRepository:
         Returns:
             Created ProtectionRule record
         """
+
+
+
         try:
             # Get template
             template = await self._get_rule_template(template_id)

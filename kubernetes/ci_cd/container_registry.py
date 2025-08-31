@@ -1,5 +1,5 @@
 """
-🔧 Container Registry Manager - IA-Influencer-Agent CI/CD
+ Container Registry Manager - IA-Influencer-Agent CI/CD
 ================================================================
 Expert: DEVOPS_ENGINEER + CONTAINER_SPECIALIST  
 Created: 2025-08-24
@@ -120,6 +120,9 @@ class ContainerRegistryManager:
     
     async def initialize(self) -> bool:
         """Initialize container registry manager"""
+
+
+
         try:
             # Initialize Docker client
             self.docker_client = docker.from_env()
@@ -134,11 +137,11 @@ class ContainerRegistryManager:
             await self._initialize_security_scanning()
             
             self.initialized = True
-            self.logger.info("✅ Container registry manager initialized")
+            self.logger.info(" Container registry manager initialized")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize container registry manager: {e}")
+            self.logger.error(f" Failed to initialize container registry manager: {e}")
             return False
     
     async def _load_registry_configurations(self) -> None:
@@ -317,6 +320,9 @@ class ContainerRegistryManager:
         no_cache: bool = False
     ) -> Tuple[bool, str]:
         """Build container image"""
+
+
+
         try:
             if config_name not in self.configurations:
                 raise ValueError(f"Configuration not found: {config_name}")
@@ -348,11 +354,11 @@ class ContainerRegistryManager:
                     f"Image size ({image_size_mb:.1f}MB) exceeds limit ({config.size_limit_mb}MB)"
                 )
             
-            self.logger.info(f"✅ Image built successfully: {image.id[:12]} ({image_size_mb:.1f}MB)")
+            self.logger.info(f" Image built successfully: {image.id[:12]} ({image_size_mb:.1f}MB)")
             return True, image.id
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to build image {config_name}: {e}")
+            self.logger.error(f" Failed to build image {config_name}: {e}")
             return False, str(e)
     
     async def push_image(
@@ -361,6 +367,9 @@ class ContainerRegistryManager:
         tag: Optional[str] = None
     ) -> bool:
         """Push image to registry"""
+
+
+
         try:
             if config_name not in self.configurations:
                 raise ValueError(f"Configuration not found: {config_name}")
@@ -389,11 +398,11 @@ class ContainerRegistryManager:
                 }
             )
             
-            self.logger.info(f"✅ Image pushed successfully: {full_image_name}")
+            self.logger.info(f" Image pushed successfully: {full_image_name}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to push image {config_name}: {e}")
+            self.logger.error(f" Failed to push image {config_name}: {e}")
             return False
     
     async def scan_image_security(
@@ -402,6 +411,9 @@ class ContainerRegistryManager:
         tag: Optional[str] = None
     ) -> SecurityScanResult:
         """Perform security scan on image"""
+
+
+
         try:
             if config_name not in self.configurations:
                 raise ValueError(f"Configuration not found: {config_name}")
@@ -439,12 +451,12 @@ class ContainerRegistryManager:
             self.scan_history.append(scan_result)
             
             self.logger.info(
-                f"✅ Security scan completed: {scan_result.total_vulnerabilities} vulnerabilities found"
+                f" Security scan completed: {scan_result.total_vulnerabilities} vulnerabilities found"
             )
             return scan_result
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to scan image {config_name}: {e}")
+            self.logger.error(f" Failed to scan image {config_name}: {e}")
             raise
     
     async def _simulate_security_scan(self, image_type: ImageType) -> Dict[SecurityLevel, int]:
@@ -487,10 +499,16 @@ class ContainerRegistryManager:
     
     def _generate_mock_cves(self, count: int) -> List[str]:
         """Generate mock CVE identifiers"""
+
+
+
         return [f"CVE-2024-{1000 + i}" for i in range(count)]
     
     async def _authenticate_registry(self, registry: RegistryCredentials) -> None:
         """Authenticate with container registry"""
+
+
+
         try:
             if registry.registry_type == RegistryType.AWS_ECR:
                 # Use AWS CLI to get login token
@@ -508,10 +526,10 @@ class ContainerRegistryManager:
                 registry=registry.registry_url
             )
             
-            self.logger.info(f"✅ Authenticated with registry: {registry.registry_type.value}")
+            self.logger.info(f" Authenticated with registry: {registry.registry_type.value}")
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to authenticate with registry: {e}")
+            self.logger.error(f" Failed to authenticate with registry: {e}")
             raise
     
     async def cleanup_images(
@@ -520,6 +538,9 @@ class ContainerRegistryManager:
         max_age_days: int = 30
     ) -> Dict[str, int]:
         """Cleanup old container images"""
+
+
+
         try:
             cleanup_stats = {"removed": 0, "size_freed_mb": 0}
             cutoff_date = datetime.now() - timedelta(days=max_age_days)
@@ -555,13 +576,13 @@ class ContainerRegistryManager:
                     self.logger.warning(f"Failed to cleanup images for {config_name}: {e}")
             
             self.logger.info(
-                f"✅ Cleanup completed: {cleanup_stats['removed']} images removed, "
+                f" Cleanup completed: {cleanup_stats['removed']} images removed, "
                 f"{cleanup_stats['size_freed_mb']:.1f}MB freed"
             )
             return cleanup_stats
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to cleanup images: {e}")
+            self.logger.error(f" Failed to cleanup images: {e}")
             return {"removed": 0, "size_freed_mb": 0}
     
     async def get_registry_status(self) -> Dict[RegistryType, Dict[str, Any]]:
@@ -591,6 +612,9 @@ class ContainerRegistryManager:
     
     async def _test_ecr_connectivity(self, registry: RegistryCredentials) -> Dict[str, Any]:
         """Test AWS ECR connectivity"""
+
+
+
         try:
             import boto3
             ecr_client = boto3.client('ecr', region_name=registry.region)
@@ -611,6 +635,9 @@ class ContainerRegistryManager:
     
     async def _test_dockerhub_connectivity(self, registry: RegistryCredentials) -> Dict[str, Any]:
         """Test Docker Hub connectivity"""
+
+
+
         try:
             response = requests.get(f"https://{registry.registry_url}/v2/", timeout=10)
             return {
@@ -627,6 +654,9 @@ class ContainerRegistryManager:
     
     async def _test_generic_registry_connectivity(self, registry: RegistryCredentials) -> Dict[str, Any]:
         """Test generic registry connectivity"""
+
+
+
         try:
             response = requests.get(f"https://{registry.registry_url}/v2/", timeout=10)
             return {

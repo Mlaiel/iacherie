@@ -7,7 +7,7 @@ Copyright: All rights reserved - Unauthorized use prohibited
 Project: IA Influencer Agent Platform - Content Protection & Monetization
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  AVERTISSEMENT SÉVÈRE ⚠️
+  AVERTISSEMENT SÉVÈRE 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
@@ -172,6 +172,9 @@ class GeographicDistributionManager:
     
     async def initialize(self) -> bool:
         """Initialize geographic distribution manager"""
+
+
+
         try:
             logger.info("Initializing Geographic Distribution Manager...")
             
@@ -218,6 +221,9 @@ class GeographicDistributionManager:
         request_type: str = "download"
     ) -> Optional[GeographicRegion]:
         """Determine optimal region for content delivery"""
+
+
+
         try:
             # Get client location
             client_location = await self._get_client_location(client_ip)
@@ -265,6 +271,9 @@ class GeographicDistributionManager:
         content_metadata: Dict[str, Any]
     ) -> ContentGeoDistribution:
         """Optimize content distribution based on analytics and performance"""
+
+
+
         try:
             # Analyze content performance by region
             regional_performance = await self._analyze_regional_performance(content_id)
@@ -341,6 +350,9 @@ class GeographicDistributionManager:
         time_range: timedelta = timedelta(hours=24)
     ) -> Dict[str, RegionMetrics]:
         """Get comprehensive regional performance metrics"""
+
+
+
         try:
             regions_to_analyze = [region] if region else list(GeographicRegion)
             regional_metrics = {}
@@ -386,6 +398,9 @@ class GeographicDistributionManager:
         target_region: GeographicRegion
     ) -> float:
         """Calculate latency between geographic regions"""
+
+
+
         try:
             # Check cache first
             cache_key = (source_region, target_region)
@@ -416,6 +431,9 @@ class GeographicDistributionManager:
         restrictions: Dict[str, List[str]]
     ) -> bool:
         """Apply legal restrictions to content distribution"""
+
+
+
         try:
             # Get current distribution
             distribution = self.content_distributions.get(content_id)
@@ -472,6 +490,9 @@ class GeographicDistributionManager:
         time_range: timedelta = timedelta(days=7)
     ) -> Dict[str, Any]:
         """Get comprehensive geographic analytics"""
+
+
+
         try:
             end_time = datetime.now()
             start_time = end_time - time_range
@@ -515,6 +536,9 @@ class GeographicDistributionManager:
         user_growth_predictions: Dict[str, float]
     ) -> List[GeographicRegion]:
         """Predict optimal regions for content expansion"""
+
+
+
         try:
             # Analyze current regional performance
             current_performance = await self.get_regional_metrics()
@@ -565,6 +589,9 @@ class GeographicDistributionManager:
     
     async def _initialize_geoip(self) -> None:
         """Initialize GeoIP database"""
+
+
+
         try:
             self.geoip_reader = geoip2.database.Reader(self.geoip_database_path)
             logger.info("GeoIP database initialized")
@@ -574,6 +601,9 @@ class GeographicDistributionManager:
     
     async def _get_client_location(self, client_ip: str) -> Optional[GeographicPoint]:
         """Get client geographic location from IP"""
+
+
+
         try:
             if not self.geoip_reader:
                 return None
@@ -598,6 +628,9 @@ class GeographicDistributionManager:
     
     async def _load_regional_configurations(self) -> None:
         """Load regional endpoint configurations"""
+
+
+
         try:
             # Default regional endpoints for content delivery
             default_endpoints = {

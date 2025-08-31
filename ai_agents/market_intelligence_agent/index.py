@@ -10,7 +10,7 @@ and engines for seamless integration with the IA-Influencer-Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -213,6 +213,9 @@ def get_market_intelligence_agent():
     Returns:
         MarketIntelligenceAgent: Configured market intelligence agent
     """
+
+
+
     return MarketIntelligenceAgent()
 
 def get_competitive_intelligence_engine():
@@ -222,6 +225,9 @@ def get_competitive_intelligence_engine():
     Returns:
         CompetitiveIntelligenceEngine: Configured competitive intelligence engine
     """
+
+
+
     return CompetitiveIntelligenceEngine()
 
 def get_trend_forecasting_engine():
@@ -231,6 +237,9 @@ def get_trend_forecasting_engine():
     Returns:
         TrendForecastingEngine: Configured trend forecasting engine
     """
+
+
+
     return TrendForecastingEngine()
 
 def get_market_surveillance_engine():
@@ -240,6 +249,9 @@ def get_market_surveillance_engine():
     Returns:
         MarketSurveillanceEngine: Configured market surveillance engine
     """
+
+
+
     return MarketSurveillanceEngine()
 
 def get_business_opportunity_engine():
@@ -249,6 +261,9 @@ def get_business_opportunity_engine():
     Returns:
         BusinessOpportunityEngine: Configured business opportunity engine
     """
+
+
+
     return BusinessOpportunityEngine()
 
 def get_consumer_insights_engine():
@@ -258,6 +273,9 @@ def get_consumer_insights_engine():
     Returns:
         ConsumerInsightsEngine: Configured consumer insights engine
     """
+
+
+
     return ConsumerInsightsEngine()
 
 def get_all_engines():
@@ -267,6 +285,9 @@ def get_all_engines():
     Returns:
         Dict[str, object]: Dictionary of all configured engines
     """
+
+
+
     return {
         'market_intelligence_agent': get_market_intelligence_agent(),
         'competitive_intelligence': get_competitive_intelligence_engine(),
@@ -283,6 +304,9 @@ def initialize_market_intelligence_system():
     Returns:
         Dict[str, Any]: System initialization status and configuration
     """
+
+
+
     try:
         engines = get_all_engines()
         
@@ -392,7 +416,7 @@ def health_check():
 def show_ip_notice():
     """Display intellectual property protection notice"""
     notice = """
-    ⚠️  INTELLECTUAL PROPERTY PROTECTION NOTICE ⚠️
+      INTELLECTUAL PROPERTY PROTECTION NOTICE 
     
     This Market Intelligence Agent system is the exclusive intellectual 
     property of Fahed Mlaiel (mlaiel@live.de).

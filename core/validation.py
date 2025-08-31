@@ -10,7 +10,7 @@ Created: 2025-08-20
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -65,6 +65,9 @@ class CoreSystemValidator:
     
     def _get_system_info(self) -> Dict[str, Any]:
         """Obtient les informations système"""
+
+
+
         return {
             "python_version": sys.version,
             "platform": sys.platform,
@@ -139,7 +142,7 @@ class CoreSystemValidator:
     
     def validate_all_modules(self) -> Dict[str, Any]:
         """Valide tous les modules core"""
-        logger.info("🔍 Début validation complète des modules core...")
+        logger.info(" Début validation complète des modules core...")
         
         for module_name in self.core_modules:
             logger.info(f"   Validation module: {module_name}")
@@ -290,22 +293,22 @@ class CoreSystemValidator:
         Returns:
             Dict avec résultats complets de validation
         """
-        logger.info("🚀 Début validation complète IA-Influencer-Agent Core System")
+        logger.info(" Début validation complète IA-Influencer-Agent Core System")
         
         # 1. Validation modules
-        logger.info("📋 Validation des modules...")
+        logger.info(" Validation des modules...")
         self.validate_all_modules()
         
         # 2. Validation dépendances
-        logger.info("📦 Validation des dépendances...")
+        logger.info(" Validation des dépendances...")
         self.validate_core_dependencies()
         
         # 3. Validation performance
-        logger.info("⚡ Validation des performances...")
+        logger.info(" Validation des performances...")
         await self.validate_core_performance()
         
         # 4. Validation sécurité
-        logger.info("🔒 Validation de la sécurité...")
+        logger.info(" Validation de la sécurité...")
         self.validate_security_modules()
         
         # 5. Rapport final
@@ -314,11 +317,11 @@ class CoreSystemValidator:
         warning_modules = self.validation_results["summary"]["warning_modules"]
         failed_modules = self.validation_results["summary"]["failed_modules"]
         
-        logger.info("📊 Résultats validation:")
-        logger.info(f"   ✅ Modules valides: {valid_modules}/{total_modules}")
-        logger.info(f"   ⚠️  Avertissements: {warning_modules}")
-        logger.info(f"   ❌ Échecs: {failed_modules}")
-        logger.info(f"   🎯 Statut global: {self.validation_results['summary']['overall_status']}")
+        logger.info(" Résultats validation:")
+        logger.info(f"    Modules valides: {valid_modules}/{total_modules}")
+        logger.info(f"     Avertissements: {warning_modules}")
+        logger.info(f"    Échecs: {failed_modules}")
+        logger.info(f"    Statut global: {self.validation_results['summary']['overall_status']}")
         
         return self.validation_results
     
@@ -326,37 +329,37 @@ class CoreSystemValidator:
         """Génère un rapport de validation lisible"""
         report_lines = [
             "=" * 80,
-            "🏭 RAPPORT VALIDATION IA-INFLUENCER-AGENT CORE SYSTEM",
+            " RAPPORT VALIDATION IA-INFLUENCER-AGENT CORE SYSTEM",
             "=" * 80,
-            f"📅 Date: {self.validation_results['timestamp']}",
-            f"👨‍💻 Auteur: Fahed Mlaiel (mlaiel@live.de)",
-            f"🎯 Statut global: {self.validation_results['summary']['overall_status'].upper()}",
+            f" Date: {self.validation_results['timestamp']}",
+            f"‍ Auteur: Fahed Mlaiel (mlaiel@live.de)",
+            f" Statut global: {self.validation_results['summary']['overall_status'].upper()}",
             "",
-            "📊 RÉSUMÉ:",
+            " RÉSUMÉ:",
             f"   Total modules: {self.validation_results['summary']['total_modules']}",
-            f"   ✅ Valides: {self.validation_results['summary']['valid_modules']}",
-            f"   ⚠️  Avertissements: {self.validation_results['summary']['warning_modules']}",
-            f"   ❌ Échecs: {self.validation_results['summary']['failed_modules']}",
+            f"    Valides: {self.validation_results['summary']['valid_modules']}",
+            f"     Avertissements: {self.validation_results['summary']['warning_modules']}",
+            f"    Échecs: {self.validation_results['summary']['failed_modules']}",
             "",
         ]
         
         # Détail des modules
         if self.validation_results.get("modules"):
             report_lines.extend([
-                "📋 DÉTAIL MODULES:",
+                " DÉTAIL MODULES:",
                 ""
             ])
             
             for module_name, module_info in self.validation_results["modules"].items():
-                status_icon = "✅" if module_info["status"] == "valid" else "⚠️" if module_info["status"] == "warning" else "❌"
+                status_icon = "" if module_info["status"] == "valid" else "" if module_info["status"] == "warning" else ""
                 report_lines.append(f"   {status_icon} {module_name}: {module_info['status']}")
                 
                 if module_info.get("warnings"):
                     for warning in module_info["warnings"]:
-                        report_lines.append(f"      ⚠️ {warning}")
+                        report_lines.append(f"       {warning}")
                 
                 if module_info.get("error"):
-                    report_lines.append(f"      ❌ {module_info['error']}")
+                    report_lines.append(f"       {module_info['error']}")
             
             report_lines.append("")
         
@@ -364,7 +367,7 @@ class CoreSystemValidator:
         if self.validation_results.get("performance"):
             perf = self.validation_results["performance"]
             report_lines.extend([
-                "⚡ PERFORMANCES:",
+                " PERFORMANCES:",
                 f"   Import time: {perf.get('import_time', 'N/A')}s",
                 f"   Init time: {perf.get('initialization_time', 'N/A')}s",
                 f"   Status: {perf.get('status', 'unknown')}",
@@ -397,6 +400,9 @@ def quick_validate_core() -> bool:
     Returns:
         bool: True si système valide
     """
+
+
+
     try:
         # Test importation modules critiques
         from . import index, algorithms, managers, security

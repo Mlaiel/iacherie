@@ -8,7 +8,7 @@ Author: Fahed Mlaiel
 Contact: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  WARNING: Unauthorized use, reproduction, or distribution of this code is strictly prohibited.
+  WARNING: Unauthorized use, reproduction, or distribution of this code is strictly prohibited.
     This system is proprietary and protected by international copyright laws.
     Violations will be prosecuted to the full extent of the law.
 """
@@ -175,6 +175,9 @@ class CopyrightProtectionEngine:
         Returns:
             Dict: Registration result with protection details
         """
+
+
+
         try:
             # Generate content fingerprints
             fingerprints = await self._generate_content_fingerprints(metadata)
@@ -232,6 +235,9 @@ class CopyrightProtectionEngine:
         Returns:
             InfringementReport: Infringement details if detected
         """
+
+
+
         try:
             # Generate fingerprint for suspicious content
             suspect_fingerprint = await self.fingerprint_engine.generate_fingerprint(
@@ -313,6 +319,9 @@ class CopyrightProtectionEngine:
         Returns:
             LicenseVerification: License verification result
         """
+
+
+
         try:
             # Get content protection details
             protected_content = await self._get_protected_content(content_id)
@@ -403,6 +412,9 @@ class CopyrightProtectionEngine:
         Returns:
             Dict: License creation result
         """
+
+
+
         try:
             # Validate content ownership
             content_owner = await self._get_content_owner(content_id)
@@ -474,6 +486,9 @@ class CopyrightProtectionEngine:
         Returns:
             List[InfringementReport]: Detected infringements
         """
+
+
+
         try:
             infringement_reports = []
             
@@ -524,6 +539,9 @@ class CopyrightProtectionEngine:
         Returns:
             Dict: Comprehensive copyright report
         """
+
+
+
         try:
             start_date = datetime.now() - timedelta(days=period_days)
             
@@ -646,6 +664,9 @@ class CopyrightProtectionEngine:
                                       metadata: CopyrightMetadata, 
                                       fingerprints: Dict[str, str]) -> str:
         """Create database record for protected content"""
+
+
+
         try:
             protection_id = str(uuid.uuid4())
             
@@ -678,6 +699,9 @@ class CopyrightProtectionEngine:
     
     async def get_protection_status(self, content_id: str) -> Dict[str, Any]:
         """Get comprehensive protection status for content"""
+
+
+
         try:
             # Check if content is in active registry
             if content_id in self.protected_content:

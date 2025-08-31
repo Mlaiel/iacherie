@@ -221,6 +221,9 @@ class ContentSerializer:
         Returns:
             Serialized content dictionary
         """
+
+
+
         try:
             # Convert to dictionary
             data = content_data.dict()
@@ -293,6 +296,9 @@ class ContentSerializer:
         Returns:
             Deserialized ContentData object
         """
+
+
+
         try:
             # Handle binary data deserialization
             if decode_binary:
@@ -344,6 +350,9 @@ class ContentSerializer:
         include_binary: bool = False
     ) -> List[Dict[str, Any]]:
         """Serialize multiple content objects efficiently."""
+
+
+
         try:
             serialized_list = []
             
@@ -368,6 +377,9 @@ class ContentSerializer:
         decode_binary: bool = False
     ) -> List[ContentData]:
         """Deserialize multiple content objects efficiently."""
+
+
+
         try:
             content_list = []
             
@@ -387,6 +399,9 @@ class ContentSerializer:
     
     def _encode_binary_data(self, binary_data: bytes, compress: bool = True) -> str:
         """Encode binary data to base64 string with optional compression."""
+
+
+
         try:
             if compress and len(binary_data) > 1024:  # Compress if > 1KB
                 import gzip
@@ -403,6 +418,9 @@ class ContentSerializer:
     
     def _decode_binary_data(self, encoded_data: str) -> bytes:
         """Decode binary data from base64 string with decompression."""
+
+
+
         try:
             if encoded_data.startswith('gzip:'):
                 import gzip
@@ -422,6 +440,9 @@ class ContentSerializer:
     
     def _serialize_audio_metadata(self, metadata: AudioMetadata) -> Dict[str, Any]:
         """Serialize audio metadata."""
+
+
+
         return {
             'duration': metadata.duration,
             'sample_rate': metadata.sample_rate,
@@ -438,10 +459,16 @@ class ContentSerializer:
     
     def _deserialize_audio_metadata(self, data: Dict[str, Any]) -> AudioMetadata:
         """Deserialize audio metadata."""
+
+
+
         return AudioMetadata(**data)
     
     def _serialize_video_metadata(self, metadata: VideoMetadata) -> Dict[str, Any]:
         """Serialize video metadata."""
+
+
+
         return {
             'duration': metadata.duration,
             'width': metadata.width,
@@ -455,6 +482,9 @@ class ContentSerializer:
     
     def _deserialize_video_metadata(self, data: Dict[str, Any]) -> VideoMetadata:
         """Deserialize video metadata."""
+
+
+
         return VideoMetadata(**data)
     
     def _serialize_image_metadata(self, metadata: ImageMetadata) -> Dict[str, Any]:
@@ -483,6 +513,9 @@ class ContentSerializer:
     
     def _serialize_text_metadata(self, metadata: TextMetadata) -> Dict[str, Any]:
         """Serialize text metadata."""
+
+
+
         return {
             'word_count': metadata.word_count,
             'character_count': metadata.character_count,
@@ -494,10 +527,16 @@ class ContentSerializer:
     
     def _deserialize_text_metadata(self, data: Dict[str, Any]) -> TextMetadata:
         """Deserialize text metadata."""
+
+
+
         return TextMetadata(**data)
     
     def calculate_content_fingerprint(self, content_data: ContentData) -> str:
         """Calculate unique fingerprint for content."""
+
+
+
         try:
             # Create hash from key content properties
             hash_input = f"{content_data.content_id}_{content_data.file_size}_{content_data.mime_type}"
@@ -517,6 +556,9 @@ class ContentSerializer:
     
     def validate_content_format(self, content_data: ContentData) -> bool:
         """Validate content format compatibility."""
+
+
+
         try:
             content_type = content_data.content_type
             format_ext = content_data.format.lower()
@@ -535,6 +577,9 @@ class ContentSerializer:
     
     def get_content_summary(self, content_data: ContentData) -> Dict[str, Any]:
         """Get content summary information."""
+
+
+
         try:
             summary = {
                 'content_id': content_data.content_id,

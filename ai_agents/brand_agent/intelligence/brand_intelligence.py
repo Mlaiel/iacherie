@@ -7,7 +7,7 @@ competitive intelligence, trend prediction, and strategic recommendations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -181,6 +181,9 @@ class BrandIntelligenceEngine:
 
     def _initialize_intelligence_models(self) -> None:
         """Initialize ML models for intelligence analysis"""
+
+
+
         try:
             # Sentiment analysis pipeline
             self.sentiment_analyzer = pipeline(
@@ -219,6 +222,9 @@ class BrandIntelligenceEngine:
 
     async def generate_competitive_intelligence(self, brand_id: str, competitors: List[str]) -> Dict[str, Any]:
         """Generate comprehensive competitive intelligence report"""
+
+
+
         try:
             intelligence_data = {
                 "brand_id": brand_id,
@@ -266,6 +272,9 @@ class BrandIntelligenceEngine:
 
     async def _analyze_competitor(self, competitor_name: str, reference_brand_id: str) -> CompetitorProfile:
         """Comprehensive competitor analysis"""
+
+
+
         try:
             competitor_id = f"comp_{competitor_name.lower().replace(' ', '_')}"
             
@@ -319,6 +328,9 @@ class BrandIntelligenceEngine:
 
     async def _gather_competitor_social_data(self, competitor_name: str) -> Dict[str, Any]:
         """Gather social media data for competitor"""
+
+
+
         try:
             social_data = {
                 "followers": {},
@@ -367,6 +379,9 @@ class BrandIntelligenceEngine:
 
     async def _analyze_competitor_web_presence(self, competitor_name: str) -> Dict[str, Any]:
         """Analyze competitor's web presence and digital footprint"""
+
+
+
         try:
             web_data = {
                 "domain_authority": 0.0,
@@ -401,6 +416,9 @@ class BrandIntelligenceEngine:
 
     async def _gather_competitor_market_data(self, competitor_name: str) -> Dict[str, Any]:
         """Gather market and financial data for competitor"""
+
+
+
         try:
             market_data = {
                 "estimated_revenue": 0.0,
@@ -437,6 +455,9 @@ class BrandIntelligenceEngine:
 
     async def predict_market_trends(self, industry: str, time_horizon: int = 12) -> List[MarketTrend]:
         """Predict market trends using advanced ML algorithms"""
+
+
+
         try:
             trends = []
             
@@ -476,6 +497,9 @@ class BrandIntelligenceEngine:
 
     def _competitor_to_dict(self, competitor: CompetitorProfile) -> Dict[str, Any]:
         """Convert competitor profile to dictionary"""
+
+
+
         return {
             "competitor_id": competitor.competitor_id,
             "brand_name": competitor.brand_name,
@@ -511,6 +535,9 @@ class BrandValueCalculator:
         
     async def calculate_comprehensive_brand_value(self, brand_data: Dict[str, Any]) -> Dict[str, Any]:
         """Calculate brand value using multiple methodologies"""
+
+
+
         try:
             valuations = {}
             
@@ -545,6 +572,9 @@ class BrandValueCalculator:
             
     async def _calculate_by_methodology(self, brand_data: Dict[str, Any], methodology: str) -> float:
         """Calculate brand value using specific methodology"""
+
+
+
         try:
             if methodology == "cost_based":
                 return await self._cost_based_valuation(brand_data)

@@ -8,7 +8,7 @@ content creators across platforms with advanced session-based workflows.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copy, modification, or distribution without 
 explicit written permission is strictly prohibited.
@@ -243,6 +243,9 @@ class ContentProtectionSessionHandler:
         protection_level: ProtectionLevel = ProtectionLevel.STANDARD
     ) -> bool:
         """Protect content with fingerprinting and registration"""
+
+
+
         
         try:
             content_info.processing_state = ContentState.PROTECTING
@@ -321,6 +324,9 @@ class ContentProtectionSessionHandler:
     
     async def _register_content_protection(self, content_info: SessionContentInfo):
         """Register content protection in database"""
+
+
+
         
         try:
             async with get_async_session() as session:
@@ -392,6 +398,9 @@ class ContentProtectionSessionHandler:
     
     async def get_protection_status(self, content_id: str) -> Dict[str, Any]:
         """Get content protection status"""
+
+
+
         
         try:
             # Get from cache first
@@ -447,6 +456,9 @@ class MediaSessionStateManager:
     
     async def initialize_media_session(self, session_id: str) -> MediaSessionState:
         """Initialize media session state"""
+
+
+
         
         try:
             media_state = MediaSessionState(session_id=session_id)
@@ -468,6 +480,9 @@ class MediaSessionStateManager:
         content_info: SessionContentInfo
     ) -> bool:
         """Add content to media session"""
+
+
+
         
         try:
             media_state = await self._get_media_state(session_id)
@@ -510,6 +525,9 @@ class MediaSessionStateManager:
         recording_config: Dict[str, Any]
     ) -> str:
         """Start recording in session"""
+
+
+
         
         try:
             media_state = await self._get_media_state(session_id)
@@ -550,6 +568,9 @@ class MediaSessionStateManager:
     
     async def stop_recording(self, session_id: str) -> Optional[str]:
         """Stop recording in session"""
+
+
+
         
         try:
             media_state = await self._get_media_state(session_id)
@@ -591,6 +612,9 @@ class MediaSessionStateManager:
         playback_data: Dict[str, Any]
     ) -> bool:
         """Update playback state for content"""
+
+
+
         
         try:
             media_state = await self._get_media_state(session_id)
@@ -619,6 +643,9 @@ class MediaSessionStateManager:
         content_id: str
     ) -> bool:
         """Add content to processing queue"""
+
+
+
         
         try:
             media_state = await self._get_media_state(session_id)
@@ -646,6 +673,9 @@ class MediaSessionStateManager:
         content_id: str
     ) -> bool:
         """Remove content from processing queue"""
+
+
+
         
         try:
             media_state = await self._get_media_state(session_id)
@@ -697,6 +727,9 @@ class MediaSessionStateManager:
     
     async def _cache_media_state(self, media_state: MediaSessionState):
         """Cache media session state"""
+
+
+
         
         try:
             cache_key = f"media_session:{media_state.session_id}"
@@ -711,6 +744,9 @@ class MediaSessionStateManager:
     
     async def get_session_content_summary(self, session_id: str) -> Dict[str, Any]:
         """Get summary of session content"""
+
+
+
         
         try:
             media_state = await self._get_media_state(session_id)
@@ -814,6 +850,9 @@ class SessionContentAnalyzer:
     
     async def _analyze_audio_content(self, content_info: SessionContentInfo) -> Dict[str, Any]:
         """Analyze audio content"""
+
+
+
         
         try:
             # Load audio file
@@ -850,6 +889,9 @@ class SessionContentAnalyzer:
     
     async def _analyze_video_content(self, content_info: SessionContentInfo) -> Dict[str, Any]:
         """Analyze video content"""
+
+
+
         
         try:
             video_path = content_info.storage_location
@@ -904,6 +946,9 @@ class SessionContentAnalyzer:
     
     async def _analyze_image_content(self, content_info: SessionContentInfo) -> Dict[str, Any]:
         """Analyze image content"""
+
+
+
         
         try:
             image_path = content_info.storage_location
@@ -962,6 +1007,9 @@ class SessionContentAnalyzer:
     
     async def _analyze_text_content(self, content_info: SessionContentInfo) -> Dict[str, Any]:
         """Analyze text content"""
+
+
+
         
         try:
             text_path = content_info.storage_location
@@ -1004,6 +1052,9 @@ class SessionContentAnalyzer:
     
     def _calculate_image_sharpness(self, img_array: np.ndarray) -> float:
         """Calculate image sharpness using Laplacian variance"""
+
+
+
         
         try:
             if len(img_array.shape) == 3:
@@ -1082,6 +1133,9 @@ class SessionContentManager:
     
     def _initialize_storage(self):
         """Initialize storage backend"""
+
+
+
         
         try:
             if self.config.storage_backend == "s3":
@@ -1102,6 +1156,9 @@ class SessionContentManager:
         content_type: Optional[str] = None
     ) -> Optional[SessionContentInfo]:
         """Upload and process content for session"""
+
+
+
         
         try:
             # Validate file
@@ -1167,6 +1224,9 @@ class SessionContentManager:
     
     async def _process_content_async(self, content_info: SessionContentInfo):
         """Background content processing"""
+
+
+
         
         try:
             # Analyze content
@@ -1223,6 +1283,9 @@ class SessionContentManager:
     
     def _detect_content_type(self, filename: str, file_data: bytes) -> ContentType:
         """Detect content type from filename and data"""
+
+
+
         
         try:
             # Use python-magic for MIME type detection
@@ -1260,6 +1323,9 @@ class SessionContentManager:
     
     def _detect_content_format(self, filename: str) -> ContentFormat:
         """Detect content format from filename"""
+
+
+
         
         try:
             extension = Path(filename).suffix.lower().replace('.', '')
@@ -1284,6 +1350,9 @@ class SessionContentManager:
     
     async def _store_file(self, content_info: SessionContentInfo, file_data: bytes) -> str:
         """Store file in configured storage backend"""
+
+
+
         
         try:
             if self.config.storage_backend == "s3" and self.storage_client:
@@ -1318,6 +1387,9 @@ class SessionContentManager:
     
     async def get_session_content(self, session_id: str) -> List[SessionContentInfo]:
         """Get all content for session"""
+
+
+
         
         try:
             content_ids = self.session_content.get(session_id, [])
@@ -1337,6 +1409,9 @@ class SessionContentManager:
     
     async def _get_content_info(self, content_id: str) -> Optional[SessionContentInfo]:
         """Get content information"""
+
+
+
         
         try:
             # Try cache first
@@ -1385,6 +1460,9 @@ class SessionContentManager:
     
     async def delete_content(self, content_id: str, session_id: str) -> bool:
         """Delete content from session"""
+
+
+
         
         try:
             # Remove from session tracking
@@ -1409,6 +1487,9 @@ class SessionContentManager:
     
     async def get_content_manager_statistics(self) -> Dict[str, Any]:
         """Get comprehensive content manager statistics"""
+
+
+
         
         try:
             total_sessions = len(self.session_content)

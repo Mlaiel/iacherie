@@ -1,5 +1,5 @@
 """
-🔍 Quality Assurance & Validation System for Content Fingerprinting
+ Quality Assurance & Validation System for Content Fingerprinting
 ===================================================================
 
 Comprehensive quality control system with validation, testing, and 
@@ -256,11 +256,11 @@ class FingerprintValidator:
         
         # Generate message
         if status == ValidationStatus.PASSED:
-            message = f"✓ {rule.name} passed with score {score:.3f}"
+            message = f" {rule.name} passed with score {score:.3f}"
         elif status == ValidationStatus.WARNING:
-            message = f"⚠ {rule.name} below optimal with score {score:.3f}"
+            message = f" {rule.name} below optimal with score {score:.3f}"
         else:
-            message = f"✗ {rule.name} failed with score {score:.3f}"
+            message = f" {rule.name} failed with score {score:.3f}"
         
         return ValidationResult(
             rule_id=rule.rule_id,
@@ -688,6 +688,9 @@ class BenchmarkingSystem:
 - **Failed Tests**: {len(failed_tests)}
 - **Success Rate**: {len(successful_tests) / len(results['test_results']) * 100:.1f}%
 """
+
+
+
         
         return report
 

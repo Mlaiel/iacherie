@@ -4,7 +4,7 @@ Enterprise metrics collection and monitoring deployment
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 
-⚠️  AVERTISSEMENT LÉGAL STRICT ⚠️
+  AVERTISSEMENT LÉGAL STRICT 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et fera l'objet de poursuites 

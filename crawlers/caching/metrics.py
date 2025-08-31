@@ -121,6 +121,9 @@ class CacheMetrics:
     
     def _max_samples(self) -> int:
         """Calculate maximum samples to keep."""
+
+
+
         return int(self.retention_hours * 3600 / self.collection_interval)
     
     async def start_collection(self) -> None:
@@ -146,6 +149,9 @@ class CacheMetrics:
     
     async def _collection_loop(self) -> None:
         """Main metrics collection loop."""
+
+
+
         try:
             while self._running:
                 await self._collect_metrics()
@@ -158,6 +164,9 @@ class CacheMetrics:
     
     async def _collect_metrics(self) -> None:
         """Collect current metrics snapshot."""
+
+
+
         try:
             timestamp = datetime.now()
             
@@ -325,6 +334,9 @@ class CacheMetrics:
     
     async def get_performance_snapshot(self) -> CachePerformanceSnapshot:
         """Get current performance snapshot."""
+
+
+
         return CachePerformanceSnapshot(
             timestamp=datetime.now(),
             hit_rate=self._calculate_hit_rate(),
@@ -339,6 +351,9 @@ class CacheMetrics:
     
     async def add_alert(self, alert: MetricAlert) -> bool:
         """Add metric alert."""
+
+
+
         try:
             self.alerts[alert.alert_id] = alert
             self.logger.info(f"Added alert: {alert.alert_id}")
@@ -349,6 +364,9 @@ class CacheMetrics:
     
     async def remove_alert(self, alert_id: str) -> bool:
         """Remove metric alert."""
+
+
+
         try:
             if alert_id in self.alerts:
                 del self.alerts[alert_id]
@@ -437,6 +455,9 @@ class CacheMetrics:
     
     async def get_alert_history(self, limit: int = 100) -> List[Dict[str, Any]]:
         """Get recent alert history."""
+
+
+
         return self.alert_history[-limit:]
     
     async def get_statistics(self) -> Dict[str, Any]:

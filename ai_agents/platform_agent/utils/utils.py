@@ -7,7 +7,7 @@ advanced features for content processing, security, and optimization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -218,6 +218,9 @@ class SecurityUtils:
     @staticmethod
     def verify_jwt_token(token: str, secret_key: str) -> Optional[Dict[str, Any]]:
         """Verify and decode JWT token"""
+
+
+
         try:
             payload = jwt.decode(token, secret_key, algorithms=['HS256'])
             return payload
@@ -272,6 +275,9 @@ class FileUtils:
     @staticmethod
     def get_file_size(file_path: str) -> int:
         """Get file size in bytes"""
+
+
+
         return os.path.getsize(file_path)
     
     @staticmethod
@@ -435,6 +441,9 @@ class URLUtils:
     @staticmethod
     def is_valid_url(url: str) -> bool:
         """Check if URL is valid"""
+
+
+
         try:
             result = urlparse(url)
             return all([result.scheme, result.netloc])
@@ -444,6 +453,9 @@ class URLUtils:
     @staticmethod
     def extract_domain(url: str) -> Optional[str]:
         """Extract domain from URL"""
+
+
+
         try:
             return urlparse(url).netloc
         except Exception:
@@ -497,6 +509,9 @@ class AsyncUtils:
     @staticmethod
     async def run_with_timeout(coro, timeout: float):
         """Run coroutine with timeout"""
+
+
+
         try:
             return await asyncio.wait_for(coro, timeout=timeout)
         except asyncio.TimeoutError:
@@ -517,6 +532,9 @@ class AsyncUtils:
     @asynccontextmanager
     async def async_lock_with_timeout(lock: asyncio.Lock, timeout: float = 30.0):
         """Acquire lock with timeout"""
+
+
+
         try:
             await asyncio.wait_for(lock.acquire(), timeout=timeout)
             yield
@@ -573,6 +591,9 @@ class CacheUtils:
     @lru_cache(maxsize=128)
     def cached_platform_limits(platform: str) -> Dict[str, Any]:
         """Get cached platform limits"""
+
+
+
         return PLATFORM_LIMITS.get(platform.lower(), {})
     
     @staticmethod
@@ -635,6 +656,9 @@ class DateTimeUtils:
     @staticmethod
     def utc_now() -> datetime:
         """Get current UTC datetime"""
+
+
+
         return datetime.now(timezone.utc)
     
     @staticmethod
@@ -647,6 +671,9 @@ class DateTimeUtils:
     @staticmethod
     def parse_datetime(date_str: str, format_str: str = '%Y-%m-%d %H:%M:%S') -> datetime:
         """Parse datetime from string"""
+
+
+
         return datetime.strptime(date_str, format_str).replace(tzinfo=timezone.utc)
     
     @staticmethod

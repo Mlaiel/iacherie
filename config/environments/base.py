@@ -1,12 +1,12 @@
 """
-🔧 Base Environment Configuration - IA-Influencer-Agent
+ Base Environment Configuration - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps + Backend Senior + Infrastructure Architect
 Date: 2025-08-15
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -51,6 +51,9 @@ class DatabaseConfig:
     @property
     def url(self) -> str:
         """URL de connexion PostgreSQL"""
+
+
+
         return f"postgresql://{self.username}:{self.password}@{self.host}:{self.port}/{self.name}"
 
 
@@ -242,6 +245,9 @@ class BaseEnvironmentConfigManager(BaseSettings, ABC):
         
     def export_to_dict(self) -> Dict[str, Any]:
         """Exporte la configuration en dictionnaire"""
+
+
+
         return {
             "environment": self.environment.value,
             "app_name": self.app_name,
@@ -257,19 +263,31 @@ class BaseEnvironmentConfigManager(BaseSettings, ABC):
         
     def export_to_json(self) -> str:
         """Exporte la configuration en JSON"""
+
+
+
         return json.dumps(self.export_to_dict(), indent=2)
         
     @classmethod
     def from_env_file(cls, env_file_path: str):
         """Charge la configuration depuis un fichier .env"""
+
+
+
         return cls(_env_file=env_file_path)
         
     def __str__(self) -> str:
         """Représentation string de la configuration"""
+
+
+
         return f"{self.__class__.__name__}(environment={self.environment}, debug={self.debug})"
         
     def __repr__(self) -> str:
         """Représentation détaillée de la configuration"""
+
+
+
         return self.__str__()
 
 
@@ -295,6 +313,9 @@ class EnvironmentConfigFactory:
     @classmethod
     def get_available_environments(cls) -> List[EnvironmentType]:
         """Retourne la liste des environnements disponibles"""
+
+
+
         return list(cls._config_managers.keys())
 
 
@@ -320,6 +341,9 @@ def load_config_for_environment(env_type: Optional[EnvironmentType] = None) -> B
 # Auto-enregistrement des gestionnaires d'environnement
 def _register_default_managers():
     """Enregistre automatiquement les gestionnaires par défaut"""
+
+
+
     try:
         # Import conditionnel pour éviter les imports circulaires
         from .development import DevelopmentConfigManager

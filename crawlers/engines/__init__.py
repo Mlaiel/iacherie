@@ -5,16 +5,16 @@ Advanced crawling engines for comprehensive content discovery and surveillance.
 Implements specialized engines for different platforms with intelligent data extraction,
 content protection monitoring, and theft detection capabilities.
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
 
-🏗️ Architecture Enterprise
+ Architecture Enterprise
 ==========================
 Cette implémentation fait partie du système IA-Influencer-Agent développé par une équipe d'experts :
 
-👥 **Équipe Projet Spécialisée** :
+ **Équipe Projet Spécialisée** :
 • **Lead Developer IA** : Fahed Mlaiel (mlaiel@live.de)
 • **Backend Senior Engineer** : Architecture microservices & APIs
 • **ML/AI Engineer** : Intelligence artificielle & algorithmes avancés  
@@ -23,17 +23,17 @@ Cette implémentation fait partie du système IA-Influencer-Agent développé pa
 • **DevOps Engineer** : Infrastructure cloud & déploiement
 • **Audio/Video Specialist** : Traitement multimédia avancé
 
-🎯 **Fonctionnalités Industrielles** :
-✅ Crawling multi-plateforme (YouTube, Instagram, TikTok, Twitter, Spotify)
-✅ Détection intelligente de vol de contenu
-✅ Surveillance en temps réel des plateformes
-✅ Extraction métadonnées avancées
-✅ Rate limiting et gestion de proxies
-✅ Cache distribué et optimisation performance
-✅ Conformité robots.txt et respect légal
-✅ Anti-détection et stealth crawling
+ **Fonctionnalités Industrielles** :
+ Crawling multi-plateforme (YouTube, Instagram, TikTok, Twitter, Spotify)
+ Détection intelligente de vol de contenu
+ Surveillance en temps réel des plateformes
+ Extraction métadonnées avancées
+ Rate limiting et gestion de proxies
+ Cache distribué et optimisation performance
+ Conformité robots.txt et respect légal
+ Anti-détection et stealth crawling
 
-📞 **Contact Propriétaire** :
+ **Contact Propriétaire** :
 Nom: Fahed Mlaiel
 Email: mlaiel@live.de
 Localisation: Allemagne
@@ -767,7 +767,10 @@ class CrawlerEngineFactory:
 
     @staticmethod
     def get_available_platforms():
-        """Get list of available platforms"""        return [
+        """Get list of available platforms"""
+
+
+        return [
             'youtube', 'instagram', 'tiktok', 'twitter', 'spotify',
             'facebook', 'linkedin', 'discord', 'reddit', 'twitch',
             'soundcloud', 'pinterest', 'snapchat', 'telegram', 'vimeo',
@@ -870,7 +873,10 @@ __all__ = [
 
 
 def get_engine_info():
-    """Get comprehensive information about all available engines"""    return {
+    """Get comprehensive information about all available engines"""
+
+
+    return {
         'total_engines': len(__engines__),
         'categories': {
             'social': len(__social_engines__),
@@ -952,7 +958,10 @@ class EngineOrchestrator:
         """Deactivate an engine"""        self.active_engines.discard(platform)
         
     def get_active_engines(self):
-        """Get list of active engines"""        return list(self.active_engines)
+        """Get list of active engines"""
+
+
+        return list(self.active_engines)
         
     async def crawl_all_active(self, query: str):
         """Crawl using all active engines"""        results = {}
@@ -1053,7 +1062,10 @@ def get_engine_class(platform: str):
         
     Returns:
         Engine class or None if not found
-    """    return ENGINE_REGISTRY.get(platform.lower())
+    """
+
+
+    return ENGINE_REGISTRY.get(platform.lower())
 
 def get_data_model(model_name: str):
     """    Get data model class for a specific type
@@ -1063,21 +1075,30 @@ def get_data_model(model_name: str):
         
     Returns:
         Data model class or None if not found
-    """    return DATA_MODELS.get(model_name.lower())
+    """
+
+
+    return DATA_MODELS.get(model_name.lower())
 
 def list_available_engines():
     """    List all available crawler engines
     
     Returns:
         List of available engine names
-    """    return list(ENGINE_REGISTRY.keys())
+    """
+
+
+    return list(ENGINE_REGISTRY.keys())
 
 def list_available_models():
     """    List all available data models
     
     Returns:
         List of available model names
-    """    return list(DATA_MODELS.keys())
+    """
+
+
+    return list(DATA_MODELS.keys())
 
 # Export all main classes and functions
 __all__ = [

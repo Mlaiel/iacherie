@@ -8,7 +8,7 @@ defaults for the IA Influencer platform notification ecosystem.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE - INTELLECTUAL PROPERTY PROTECTION:
+  CRITICAL LEGAL NOTICE - INTELLECTUAL PROPERTY PROTECTION:
 This code, concept, and intellectual property are the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 
 STRICTLY PROHIBITED WITHOUT EXPLICIT WRITTEN AUTHORIZATION:
@@ -182,18 +182,30 @@ class NotificationConfigurationManager:
     
     def get_business_rules(self) -> BusinessRuleConfiguration:
         """Get business rules configuration"""
+
+
+
         return self.get_config().business_rules
     
     def get_performance_config(self) -> PerformanceConfiguration:
         """Get performance configuration"""
+
+
+
         return self.get_config().performance
     
     def get_security_config(self) -> SecurityConfiguration:
         """Get security configuration"""
+
+
+
         return self.get_config().security
     
     def get_integration_config(self) -> IntegrationConfiguration:
         """Get integration configuration"""
+
+
+
         return self.get_config().integrations
     
     def update_configuration(
@@ -211,6 +223,9 @@ class NotificationConfigurationManager:
         Returns:
             True if update successful
         """
+
+
+
         try:
             current_config = self.get_config()
             
@@ -239,6 +254,9 @@ class NotificationConfigurationManager:
     
     def reload_configuration(self) -> bool:
         """Reload configuration from file"""
+
+
+
         try:
             self._load_configuration()
             self._notify_config_watchers()
@@ -259,6 +277,9 @@ class NotificationConfigurationManager:
     
     def export_configuration(self, export_path: str) -> bool:
         """Export current configuration to file"""
+
+
+
         try:
             config_dict = asdict(self.get_config())
             
@@ -277,6 +298,9 @@ class NotificationConfigurationManager:
     
     def import_configuration(self, import_path: str, merge: bool = True) -> bool:
         """Import configuration from file"""
+
+
+
         try:
             with open(import_path, 'r') as f:
                 imported_config = json.load(f)
@@ -307,6 +331,9 @@ class NotificationConfigurationManager:
     
     def _load_configuration(self):
         """Load configuration from file or create defaults"""
+
+
+
         try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r') as f:
@@ -325,6 +352,9 @@ class NotificationConfigurationManager:
     
     def _save_configuration(self):
         """Save current configuration to file"""
+
+
+
         try:
             # Ensure directory exists
             os.makedirs(os.path.dirname(self.config_path), exist_ok=True)
@@ -484,6 +514,9 @@ class NotificationConfigurationManager:
     
     def _get_default_feature_flags(self) -> Dict[FeatureFlag, bool]:
         """Get default feature flag settings"""
+
+
+
         return {
             FeatureFlag.AI_OPTIMIZATION: True,
             FeatureFlag.PREDICTIVE_ANALYTICS: True,
@@ -497,6 +530,9 @@ class NotificationConfigurationManager:
     
     def _get_default_channel_config(self) -> ChannelConfiguration:
         """Get default channel configuration"""
+
+
+
         return ChannelConfiguration()
     
     def _get_default_config_path(self) -> str:
@@ -506,6 +542,9 @@ class NotificationConfigurationManager:
     
     def _validate_configuration(self, config: NotificationSystemConfiguration) -> bool:
         """Validate configuration for correctness"""
+
+
+
         try:
             # Validate required fields
             if not config.channels:
@@ -600,16 +639,28 @@ config_manager = NotificationConfigurationManager()
 # Convenience functions for common configuration access
 def get_channel_config(channel_name: str) -> ChannelConfiguration:
     """Get channel configuration"""
+
+
+
     return config_manager.get_channel_config(channel_name)
 
 def is_feature_enabled(feature: FeatureFlag) -> bool:
     """Check if feature is enabled"""
+
+
+
     return config_manager.is_feature_enabled(feature)
 
 def get_business_rules() -> BusinessRuleConfiguration:
     """Get business rules configuration"""
+
+
+
     return config_manager.get_business_rules()
 
 def get_performance_config() -> PerformanceConfiguration:
     """Get performance configuration"""
+
+
+
     return config_manager.get_performance_config()

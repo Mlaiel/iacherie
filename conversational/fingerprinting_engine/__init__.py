@@ -16,7 +16,7 @@ and tracking across all major platforms and content formats.
 - Advanced Anti-Tampering and Security Features
 - High-Performance Processing with GPU Acceleration
 
-🏗️ ENTERPRISE ARCHITECTURE:
+ ENTERPRISE ARCHITECTURE:
 - Multi-Modal AI Models (CLIP, BERT, Chromaprint, OpenCV)
 - Vector Database Integration (FAISS, Pinecone, Weaviate)
 - Real-Time Processing Pipeline with GPU Acceleration
@@ -30,7 +30,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING - ZERO TOLERANCE POLICY ⚠️
+  CRITICAL LEGAL WARNING - ZERO TOLERANCE POLICY 
 This revolutionary fingerprinting platform is the EXCLUSIVE intellectual property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution
 under German and International Law. Contact: mlaiel@live.de for legal authorization.

@@ -8,7 +8,7 @@ automated distribution, and comprehensive analytics for content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Enterprise Content Protection Platform - Royalty Calculation Core
 
-⚠️  COPYRIGHT NOTICE ⚠️
+  COPYRIGHT NOTICE 
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
@@ -220,6 +220,9 @@ class RoyaltyCalculationEngine:
         Returns:
             Detailed royalty calculation result
         """
+
+
+
         try:
             # Validate content ownership/access
             content_record = await self._get_content_record(
@@ -353,6 +356,9 @@ class RoyaltyCalculationEngine:
         Returns:
             Comprehensive revenue trend analysis
         """
+
+
+
         try:
             # Validate access
             if user_id and not await self._validate_analytics_access(content_id, user_id):
@@ -441,6 +447,9 @@ class RoyaltyCalculationEngine:
         Returns:
             Configuration setup result
         """
+
+
+
         try:
             # Validate content ownership
             content_record = await self._get_content_record(content_id)
@@ -511,6 +520,9 @@ class RoyaltyCalculationEngine:
         Returns:
             Payment processing result
         """
+
+
+
         try:
             payment_batch_id = str(uuid4())
             
@@ -565,6 +577,9 @@ class RoyaltyCalculationEngine:
     
     async def _validate_calculation_access(self, content: Any, user_id: str) -> bool:
         """Validate user access for royalty calculation."""
+
+
+
         return content.owner_id == user_id or user_id in [c["collaborator_id"] for c in content.collaborators or []]
     
     async def _get_royalty_configuration(self, content_id: str) -> RoyaltyConfiguration:

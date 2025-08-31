@@ -149,6 +149,9 @@ class MonetizationAnalytics:
         session: AsyncSession
     ) -> AnalyticsReport:
         """Generate comprehensive revenue analytics report"""
+
+
+
         try:
             # Validate query
             if not query.validate():
@@ -234,6 +237,9 @@ class MonetizationAnalytics:
         session: AsyncSession
     ) -> Dict[str, Any]:
         """Calculate ROI metrics for monetization efforts"""
+
+
+
         try:
             start_date, end_date = self._calculate_date_range(
                 AnalyticsQuery(user_id=user_id, timeframe=timeframe)
@@ -280,6 +286,9 @@ class MonetizationAnalytics:
         session: AsyncSession
     ) -> List[Dict[str, Any]]:
         """Get AI-powered revenue optimization suggestions"""
+
+
+
         try:
             # Analyze recent performance
             end_date = datetime.now()
@@ -379,6 +388,9 @@ class MonetizationAnalytics:
         session: AsyncSession
     ) -> Dict[str, Any]:
         """Compare performance between two time periods"""
+
+
+
         try:
             # Get current period data
             current_revenue = await self._get_total_revenue(
@@ -728,6 +740,9 @@ class MonetizationAnalytics:
         session: AsyncSession
     ) -> Dict[str, Any]:
         """Generate revenue predictions using ML"""
+
+
+
         try:
             # Prepare data for prediction model
             historical_data = [
@@ -842,6 +857,9 @@ class MonetizationAnalytics:
         session: AsyncSession
     ) -> Optional[float]:
         """Calculate payback period in months"""
+
+
+
         try:
             # Get monthly revenue trend
             monthly_revenues = []
@@ -871,6 +889,9 @@ class MonetizationAnalytics:
         session: AsyncSession
     ) -> Decimal:
         """Calculate lifetime value projection"""
+
+
+
         try:
             # Simple LTV calculation: average monthly revenue * 24 months
             end_date = datetime.now()
@@ -902,6 +923,9 @@ class RevenueAnalyzer:
         session: AsyncSession
     ) -> Dict[str, Any]:
         """Get comprehensive dashboard data"""
+
+
+
         try:
             # Current month data
             current_query = AnalyticsQuery(

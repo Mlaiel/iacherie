@@ -8,7 +8,7 @@ Responsibility: Advanced task scheduling and worker coordination
 Technologies: Priority Scheduling, Resource Allocation, Dependency Management
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -179,8 +179,11 @@ class WorkerScheduler:
 
     async def initialize(self) -> None:
         """Initialize the scheduler"""
+
+
+
         try:
-            logger.info("🚀 Initializing worker scheduler")
+            logger.info(" Initializing worker scheduler")
             
             # Initialize prediction engine
             await self.prediction_engine.initialize()
@@ -188,16 +191,19 @@ class WorkerScheduler:
             # Start background tasks
             await self._start_background_tasks()
             
-            logger.info("✅ Worker scheduler initialized")
+            logger.info(" Worker scheduler initialized")
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize scheduler: {e}")
+            logger.error(f" Failed to initialize scheduler: {e}")
             raise
 
     async def shutdown(self) -> None:
         """Gracefully shutdown the scheduler"""
+
+
+
         try:
-            logger.info("🛑 Shutting down worker scheduler")
+            logger.info(" Shutting down worker scheduler")
             
             self.shutdown_event.set()
             
@@ -209,10 +215,10 @@ class WorkerScheduler:
             if self.background_tasks:
                 await asyncio.gather(*self.background_tasks, return_exceptions=True)
             
-            logger.info("✅ Worker scheduler shutdown complete")
+            logger.info(" Worker scheduler shutdown complete")
             
         except Exception as e:
-            logger.error(f"❌ Error during scheduler shutdown: {e}")
+            logger.error(f" Error during scheduler shutdown: {e}")
 
     async def schedule_task(
         self, 
@@ -222,6 +228,9 @@ class WorkerScheduler:
         resource_requirements: Optional[ResourceRequirement] = None
     ) -> bool:
         """Schedule a task for execution"""
+
+
+
         try:
             # Estimate resource requirements if not provided
             if resource_requirements is None:
@@ -267,16 +276,19 @@ class WorkerScheduler:
             self.scheduled_tasks[task.task_id] = scheduled_task
             self.scheduling_stats['total_scheduled'] += 1
             
-            logger.info(f"📅 Task scheduled: {task.task_id} for {scheduled_time.isoformat()}")
+            logger.info(f" Task scheduled: {task.task_id} for {scheduled_time.isoformat()}")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to schedule task {task.task_id}: {e}")
+            logger.error(f" Failed to schedule task {task.task_id}: {e}")
             self.scheduling_stats['failed_schedules'] += 1
             return False
 
     async def update_worker_capacity(self, worker_id: str, capacity: WorkerCapacity) -> None:
         """Update worker capacity information"""
+
+
+
         try:
             self.worker_capacities[worker_id] = capacity
             
@@ -294,10 +306,13 @@ class WorkerScheduler:
                     metric_list.pop(0)
             
         except Exception as e:
-            logger.error(f"❌ Failed to update worker capacity {worker_id}: {e}")
+            logger.error(f" Failed to update worker capacity {worker_id}: {e}")
 
     async def get_next_scheduled_task(self, worker_id: str) -> Optional[ScheduledTask]:
         """Get the next task scheduled for a specific worker"""
+
+
+
         try:
             # Check if worker has capacity
             capacity = self.worker_capacities.get(worker_id)
@@ -339,17 +354,20 @@ class WorkerScheduler:
                 # Update worker capacity
                 await self._allocate_resources(worker_id, selected_task)
                 
-                logger.info(f"✅ Task {selected_task.task.task_id} assigned to worker {worker_id}")
+                logger.info(f" Task {selected_task.task.task_id} assigned to worker {worker_id}")
                 return selected_task
             
             return None
             
         except Exception as e:
-            logger.error(f"❌ Failed to get next scheduled task for worker {worker_id}: {e}")
+            logger.error(f" Failed to get next scheduled task for worker {worker_id}: {e}")
             return None
 
     async def mark_task_completed(self, task_id: str, success: bool = True) -> None:
         """Mark a task as completed"""
+
+
+
         try:
             self.completed_tasks.add(task_id)
             
@@ -371,13 +389,16 @@ class WorkerScheduler:
             # Clean up
             self.scheduled_tasks.pop(task_id, None)
             
-            logger.info(f"✅ Task marked as completed: {task_id}")
+            logger.info(f" Task marked as completed: {task_id}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to mark task completed {task_id}: {e}")
+            logger.error(f" Failed to mark task completed {task_id}: {e}")
 
     async def get_scheduling_status(self) -> Dict[str, Any]:
         """Get comprehensive scheduling status"""
+
+
+
         try:
             # Calculate metrics
             total_workers = len(self.worker_capacities)
@@ -418,11 +439,14 @@ class WorkerScheduler:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to get scheduling status: {e}")
+            logger.error(f" Failed to get scheduling status: {e}")
             return {'error': str(e)}
 
     async def _start_background_tasks(self) -> None:
         """Start background scheduler tasks"""
+
+
+
         try:
             # Dependency resolver
             dependency_resolver = asyncio.create_task(self._dependency_resolver())
@@ -440,10 +464,10 @@ class WorkerScheduler:
             stats_updater = asyncio.create_task(self._statistics_updater())
             self.background_tasks.add(stats_updater)
             
-            logger.info("✅ Scheduler background tasks started")
+            logger.info(" Scheduler background tasks started")
             
         except Exception as e:
-            logger.error(f"❌ Failed to start background tasks: {e}")
+            logger.error(f" Failed to start background tasks: {e}")
             raise
 
     async def _dependency_resolver(self) -> None:
@@ -463,7 +487,7 @@ class WorkerScheduler:
                 await asyncio.sleep(5)  # Check every 5 seconds
                 
             except Exception as e:
-                logger.error(f"❌ Dependency resolver error: {e}")
+                logger.error(f" Dependency resolver error: {e}")
                 await asyncio.sleep(30)
 
     async def _performance_analyzer(self) -> None:
@@ -484,12 +508,12 @@ class WorkerScheduler:
                             
                             # Log performance insights
                             if recent_avg < overall_avg * 0.8:
-                                logger.warning(f"⚠️ Worker {worker_id} performance declining")
+                                logger.warning(f" Worker {worker_id} performance declining")
                 
                 await asyncio.sleep(60)  # Analyze every minute
                 
             except Exception as e:
-                logger.error(f"❌ Performance analyzer error: {e}")
+                logger.error(f" Performance analyzer error: {e}")
                 await asyncio.sleep(120)
 
     async def _resource_optimizer(self) -> None:
@@ -515,11 +539,14 @@ class WorkerScheduler:
                 await asyncio.sleep(120)  # Optimize every 2 minutes
                 
             except Exception as e:
-                logger.error(f"❌ Resource optimizer error: {e}")
+                logger.error(f" Resource optimizer error: {e}")
                 await asyncio.sleep(180)
 
     async def _identify_optimization_opportunities(self) -> None:
         """Identify opportunities for resource optimization"""
+
+
+
         try:
             # Find overloaded and underutilized workers
             overloaded_workers = []
@@ -539,13 +566,13 @@ class WorkerScheduler:
             
             # Log optimization opportunities
             if overloaded_workers:
-                logger.info(f"📊 Overloaded workers detected: {overloaded_workers}")
+                logger.info(f" Overloaded workers detected: {overloaded_workers}")
             
             if underutilized_workers:
-                logger.info(f"📊 Underutilized workers detected: {underutilized_workers}")
+                logger.info(f" Underutilized workers detected: {underutilized_workers}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to identify optimization opportunities: {e}")
+            logger.error(f" Failed to identify optimization opportunities: {e}")
 
     async def _statistics_updater(self) -> None:
         """Update scheduling statistics"""
@@ -575,11 +602,14 @@ class WorkerScheduler:
                 await asyncio.sleep(30)  # Update every 30 seconds
                 
             except Exception as e:
-                logger.error(f"❌ Statistics updater error: {e}")
+                logger.error(f" Statistics updater error: {e}")
                 await asyncio.sleep(60)
 
     async def _estimate_resource_requirements(self, task: CrawlerTask) -> ResourceRequirement:
         """Estimate resource requirements for a task"""
+
+
+
         try:
             # Base requirements
             base_cpu = 1.0
@@ -627,7 +657,7 @@ class WorkerScheduler:
             )
             
         except Exception as e:
-            logger.error(f"❌ Failed to estimate resource requirements: {e}")
+            logger.error(f" Failed to estimate resource requirements: {e}")
             return ResourceRequirement()
 
     async def _calculate_optimal_schedule_time(
@@ -637,6 +667,9 @@ class WorkerScheduler:
         constraints: List[SchedulingConstraint]
     ) -> datetime:
         """Calculate optimal scheduling time"""
+
+
+
         try:
             # Start with current time
             schedule_time = datetime.utcnow()
@@ -661,11 +694,14 @@ class WorkerScheduler:
             return schedule_time
             
         except Exception as e:
-            logger.error(f"❌ Failed to calculate optimal schedule time: {e}")
+            logger.error(f" Failed to calculate optimal schedule time: {e}")
             return datetime.utcnow()
 
     async def _find_earliest_resource_availability(self, resource_req: ResourceRequirement) -> datetime:
         """Find earliest time when resources will be available"""
+
+
+
         try:
             earliest_time = datetime.utcnow()
             
@@ -694,11 +730,14 @@ class WorkerScheduler:
             return earliest_time
             
         except Exception as e:
-            logger.error(f"❌ Failed to find earliest resource availability: {e}")
+            logger.error(f" Failed to find earliest resource availability: {e}")
             return datetime.utcnow()
 
     def _calculate_scheduling_priority(self, scheduled_task: ScheduledTask) -> int:
         """Calculate priority value for scheduling queue"""
+
+
+
         try:
             # Base priority from task
             base_priority = {
@@ -727,11 +766,14 @@ class WorkerScheduler:
             return max(1, base_priority + priority_adjustment)
             
         except Exception as e:
-            logger.error(f"❌ Failed to calculate scheduling priority: {e}")
+            logger.error(f" Failed to calculate scheduling priority: {e}")
             return 3
 
     async def _is_task_ready(self, scheduled_task: ScheduledTask) -> bool:
         """Check if task is ready for execution"""
+
+
+
         try:
             # Check if scheduled time has arrived
             if scheduled_task.scheduled_time > datetime.utcnow():
@@ -750,11 +792,14 @@ class WorkerScheduler:
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to check if task is ready: {e}")
+            logger.error(f" Failed to check if task is ready: {e}")
             return False
 
     async def _can_worker_handle_task(self, worker_id: str, scheduled_task: ScheduledTask) -> bool:
         """Check if worker can handle the task"""
+
+
+
         try:
             capacity = self.worker_capacities.get(worker_id)
             if not capacity:
@@ -779,11 +824,14 @@ class WorkerScheduler:
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to check if worker can handle task: {e}")
+            logger.error(f" Failed to check if worker can handle task: {e}")
             return False
 
     async def _allocate_resources(self, worker_id: str, scheduled_task: ScheduledTask) -> None:
         """Allocate resources to worker for task"""
+
+
+
         try:
             capacity = self.worker_capacities.get(worker_id)
             resource_req = scheduled_task.resource_allocation
@@ -798,10 +846,13 @@ class WorkerScheduler:
             self.worker_schedules[worker_id].append(scheduled_task)
             
         except Exception as e:
-            logger.error(f"❌ Failed to allocate resources: {e}")
+            logger.error(f" Failed to allocate resources: {e}")
 
     async def _deallocate_resources(self, worker_id: str, scheduled_task: ScheduledTask) -> None:
         """Deallocate resources from worker"""
+
+
+
         try:
             capacity = self.worker_capacities.get(worker_id)
             resource_req = scheduled_task.resource_allocation
@@ -820,10 +871,13 @@ class WorkerScheduler:
                 ]
             
         except Exception as e:
-            logger.error(f"❌ Failed to deallocate resources: {e}")
+            logger.error(f" Failed to deallocate resources: {e}")
 
     async def _check_constraint_satisfaction(self, constraint: SchedulingConstraint) -> bool:
         """Check if constraint is satisfied"""
+
+
+
         try:
             constraint_type = constraint.constraint_type
             constraint_data = constraint.constraint_data
@@ -851,11 +905,14 @@ class WorkerScheduler:
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to check constraint satisfaction: {e}")
+            logger.error(f" Failed to check constraint satisfaction: {e}")
             return True  # Default to satisfied for safety
 
     async def _get_current_resource_usage(self, resource_type: str) -> float:
         """Get current resource usage across all workers"""
+
+
+
         try:
             total_usage = 0.0
             
@@ -870,11 +927,14 @@ class WorkerScheduler:
             return total_usage
             
         except Exception as e:
-            logger.error(f"❌ Failed to get current resource usage: {e}")
+            logger.error(f" Failed to get current resource usage: {e}")
             return 0.0
 
     async def _estimate_task_duration(self, task: CrawlerTask) -> float:
         """Estimate task duration using historical data"""
+
+
+
         try:
             # Use prediction engine
             predicted_duration = await self.prediction_engine.predict_task_duration(
@@ -886,5 +946,5 @@ class WorkerScheduler:
             return predicted_duration or 300.0  # Default 5 minutes
             
         except Exception as e:
-            logger.error(f"❌ Failed to estimate task duration: {e}")
+            logger.error(f" Failed to estimate task duration: {e}")
             return 300.0

@@ -64,6 +64,9 @@ class TestSpotifyCrawler:
     @pytest.fixture
     def sample_track_query(self):
         """Sample track search query"""
+
+
+
         return {
             'title': 'Test Song',
             'artist': 'Test Artist',
@@ -75,6 +78,9 @@ class TestSpotifyCrawler:
     @pytest.fixture
     def mock_spotify_api_response(self):
         """Mock Spotify API response"""
+
+
+
         return {
             'tracks': {
                 'items': [
@@ -232,6 +238,9 @@ class TestYouTubeCrawler:
     @pytest.fixture
     def sample_video_query(self):
         """Sample video search query"""
+
+
+
         return {
             'title': 'Test Music Video',
             'channel': 'Test Channel',
@@ -243,6 +252,9 @@ class TestYouTubeCrawler:
     @pytest.fixture
     def mock_youtube_api_response(self):
         """Mock YouTube API response"""
+
+
+
         return {
             'items': [
                 {
@@ -399,6 +411,9 @@ class TestPlatformIntegrationEngine:
     @pytest.fixture
     def sample_platforms_config(self):
         """Sample platform configuration"""
+
+
+
         return {
             'platforms': [
                 {
@@ -580,9 +595,9 @@ if __name__ == "__main__":
         """Run basic tests without pytest for development"""
         print("Running Critical Crawlers Tests...")
         
-        print("✓ Spotify Crawler test structure created")
-        print("✓ YouTube Crawler test structure created")
-        print("✓ Platform Integration Engine test structure created")
+        print(" Spotify Crawler test structure created")
+        print(" YouTube Crawler test structure created")
+        print(" Platform Integration Engine test structure created")
         print("All Critical Crawler tests passed basic validation!")
     
     asyncio.run(run_simple_tests())

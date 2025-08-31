@@ -48,42 +48,45 @@ class RightsTrackingOrchestrator:
     
     async def initialize(self) -> bool:
         """Initialise tous les services du module"""
+
+
+
         try:
-            logger.info("🚀 Initialisation du module Rights Tracking...")
+            logger.info(" Initialisation du module Rights Tracking...")
             self.startup_timestamp = datetime.utcnow()
             
             # 1. Initialisation de la base de données
-            logger.info("📊 Initialisation de la base de données...")
+            logger.info(" Initialisation de la base de données...")
             self.services['database_manager'] = DatabaseManager(self.config.database)
             await self.services['database_manager'].initialize()
             
             # 2. Chargement des configurations
-            logger.info("⚙️ Chargement des configurations...")
+            logger.info(" Chargement des configurations...")
             await self._load_configurations()
             
             # 3. Initialisation des services principaux
-            logger.info("🔧 Initialisation des services principaux...")
+            logger.info(" Initialisation des services principaux...")
             await self._initialize_core_services()
             
             # 4. Démarrage des tâches de surveillance
-            logger.info("👁️ Démarrage des tâches de surveillance...")
+            logger.info(" Démarrage des tâches de surveillance...")
             await self._start_monitoring_tasks()
             
             # 5. Vérification de l'état des services
-            logger.info("✅ Vérification de l'état des services...")
+            logger.info(" Vérification de l'état des services...")
             health_check = await self.health_check()
             
             if health_check['overall_status'] == 'healthy':
                 self.running = True
-                logger.info("🎉 Module Rights Tracking initialisé avec succès!")
+                logger.info(" Module Rights Tracking initialisé avec succès!")
                 await self._log_startup_summary()
                 return True
             else:
-                logger.error("❌ Échec de l'initialisation du module")
+                logger.error(" Échec de l'initialisation du module")
                 return False
                 
         except Exception as e:
-            logger.error(f"💥 Erreur critique lors de l'initialisation: {e}")
+            logger.error(f" Erreur critique lors de l'initialisation: {e}")
             await self.shutdown()
             return False
     
@@ -99,7 +102,7 @@ class RightsTrackingOrchestrator:
         
         for service_name in initialization_order:
             try:
-                logger.info(f"🔄 Initialisation de {service_name}...")
+                logger.info(f" Initialisation de {service_name}...")
                 
                 service_class = self.service_registry[service_name]
                 service_config = getattr(self.config, service_name, {})
@@ -110,15 +113,18 @@ class RightsTrackingOrchestrator:
                 self.services[service_name] = service_instance
                 self.health_status[service_name] = 'healthy'
                 
-                logger.info(f"✅ {service_name} initialisé")
+                logger.info(f" {service_name} initialisé")
                 
             except Exception as e:
-                logger.error(f"❌ Erreur initialisation {service_name}: {e}")
+                logger.error(f" Erreur initialisation {service_name}: {e}")
                 self.health_status[service_name] = 'error'
                 raise
     
     async def _start_monitoring_tasks(self):
         """Démarre les tâches de surveillance en arrière-plan"""
+
+
+
         try:
             # Tâche de monitoring de santé général
             asyncio.create_task(self._health_monitoring_loop())
@@ -132,7 +138,7 @@ class RightsTrackingOrchestrator:
             # Tâche de mise à jour des statistiques
             asyncio.create_task(self._statistics_update_task())
             
-            logger.info("📈 Tâches de surveillance démarrées")
+            logger.info(" Tâches de surveillance démarrées")
             
         except Exception as e:
             logger.error(f"Erreur démarrage tâches surveillance: {e}")
@@ -140,6 +146,9 @@ class RightsTrackingOrchestrator:
     
     async def _load_configurations(self):
         """Charge les configurations spécialisées"""
+
+
+
         try:
             # Chargement des templates de licence
             if hasattr(self.config, 'license_templates_path'):
@@ -153,7 +162,7 @@ class RightsTrackingOrchestrator:
             if hasattr(self.config, 'territory_config_path'):
                 await self._load_territory_configurations()
             
-            logger.info("📋 Configurations chargées")
+            logger.info(" Configurations chargées")
             
         except Exception as e:
             logger.error(f"Erreur chargement configurations: {e}")
@@ -161,51 +170,63 @@ class RightsTrackingOrchestrator:
     
     async def _load_license_templates(self):
         """Charge les templates de licence depuis fichier"""
+
+
+
         try:
             templates_path = Path(self.config.license_templates_path)
             if templates_path.exists():
                 with open(templates_path, 'r', encoding='utf-8') as f:
                     templates_data = json.load(f)
                 
-                logger.info(f"📄 {len(templates_data)} templates de licence chargés")
+                logger.info(f" {len(templates_data)} templates de licence chargés")
             else:
-                logger.warning("⚠️ Fichier templates de licence non trouvé, utilisation des defaults")
+                logger.warning(" Fichier templates de licence non trouvé, utilisation des defaults")
                 
         except Exception as e:
             logger.error(f"Erreur chargement templates: {e}")
     
     async def _load_pricing_rules(self):
         """Charge les règles de tarification"""
+
+
+
         try:
             rules_path = Path(self.config.pricing_rules_path)
             if rules_path.exists():
                 with open(rules_path, 'r', encoding='utf-8') as f:
                     rules_data = json.load(f)
                 
-                logger.info(f"💰 {len(rules_data)} règles de tarification chargées")
+                logger.info(f" {len(rules_data)} règles de tarification chargées")
             else:
-                logger.warning("⚠️ Fichier règles de tarification non trouvé")
+                logger.warning(" Fichier règles de tarification non trouvé")
                 
         except Exception as e:
             logger.error(f"Erreur chargement règles tarification: {e}")
     
     async def _load_territory_configurations(self):
         """Charge les configurations territoriales"""
+
+
+
         try:
             territory_path = Path(self.config.territory_config_path)
             if territory_path.exists():
                 with open(territory_path, 'r', encoding='utf-8') as f:
                     territory_data = json.load(f)
                 
-                logger.info(f"🌍 {len(territory_data)} configurations territoriales chargées")
+                logger.info(f" {len(territory_data)} configurations territoriales chargées")
             else:
-                logger.warning("⚠️ Fichier configurations territoriales non trouvé")
+                logger.warning(" Fichier configurations territoriales non trouvé")
                 
         except Exception as e:
             logger.error(f"Erreur chargement configurations territoriales: {e}")
     
     async def health_check(self) -> Dict[str, Any]:
         """Vérifie l'état de santé de tous les services"""
+
+
+
         try:
             health_report = {
                 'timestamp': datetime.utcnow().isoformat(),
@@ -265,6 +286,9 @@ class RightsTrackingOrchestrator:
     
     async def get_service_statistics(self) -> Dict[str, Any]:
         """Récupère les statistiques de tous les services"""
+
+
+
         try:
             stats = {
                 'timestamp': datetime.utcnow().isoformat(),
@@ -305,6 +329,9 @@ class RightsTrackingOrchestrator:
     
     async def _calculate_global_metrics(self) -> Dict[str, Any]:
         """Calcule les métriques globales du module"""
+
+
+
         try:
             metrics = {
                 'total_rights_records': 0,
@@ -350,10 +377,10 @@ class RightsTrackingOrchestrator:
                 health_report = await self.health_check()
                 
                 if health_report['overall_status'] == 'unhealthy':
-                    logger.warning("⚠️ Module Rights Tracking en état dégradé")
+                    logger.warning(" Module Rights Tracking en état dégradé")
                     await self._handle_unhealthy_state(health_report)
                 elif health_report['overall_status'] == 'degraded':
-                    logger.info("🔶 Certains services du module sont dégradés")
+                    logger.info(" Certains services du module sont dégradés")
                     await self._handle_degraded_state(health_report)
                 
             except Exception as e:
@@ -372,7 +399,7 @@ class RightsTrackingOrchestrator:
                     if hasattr(service_instance, 'cleanup_expired_data'):
                         await service_instance.cleanup_expired_data()
                 
-                logger.info("✅ Nettoyage automatique terminé")
+                logger.info(" Nettoyage automatique terminé")
                 
             except Exception as e:
                 logger.error(f"Erreur nettoyage automatique: {e}")
@@ -384,7 +411,7 @@ class RightsTrackingOrchestrator:
                 backup_interval = getattr(self.config, 'backup_interval_hours', 24) * 3600
                 await asyncio.sleep(backup_interval)
                 
-                logger.info("💾 Début de la sauvegarde automatique...")
+                logger.info(" Début de la sauvegarde automatique...")
                 
                 backup_results = {}
                 for service_name, service_instance in self.services.items():
@@ -401,7 +428,7 @@ class RightsTrackingOrchestrator:
                                 'error': str(e)
                             }
                 
-                logger.info(f"✅ Sauvegarde automatique terminée: {backup_results}")
+                logger.info(f" Sauvegarde automatique terminée: {backup_results}")
                 
             except Exception as e:
                 logger.error(f"Erreur sauvegarde automatique: {e}")
@@ -424,21 +451,21 @@ class RightsTrackingOrchestrator:
     
     async def _handle_unhealthy_state(self, health_report: Dict[str, Any]):
         """Gère l'état de santé dégradé"""
-        logger.error("🚨 Module en état critique - Actions correctives requises")
+        logger.error(" Module en état critique - Actions correctives requises")
         
         # Tentative de redémarrage des services défaillants
         for service_name, service_health in health_report['services'].items():
             if service_health.get('status') != 'healthy':
-                logger.warning(f"⚠️ Tentative de redémarrage de {service_name}")
+                logger.warning(f" Tentative de redémarrage de {service_name}")
                 try:
                     if service_name in self.services:
                         await self._restart_service(service_name)
                 except Exception as e:
-                    logger.error(f"❌ Échec redémarrage {service_name}: {e}")
+                    logger.error(f" Échec redémarrage {service_name}: {e}")
     
     async def _handle_degraded_state(self, health_report: Dict[str, Any]):
         """Gère l'état dégradé"""
-        logger.warning("🔶 Module en état dégradé - Surveillance renforcée")
+        logger.warning(" Module en état dégradé - Surveillance renforcée")
         
         # Augmentation de la fréquence de surveillance
         # Notifications aux administrateurs
@@ -446,6 +473,9 @@ class RightsTrackingOrchestrator:
     
     async def _restart_service(self, service_name: str):
         """Redémarre un service spécifique"""
+
+
+
         try:
             if service_name in self.services:
                 # Arrêt propre du service
@@ -465,7 +495,7 @@ class RightsTrackingOrchestrator:
                 
                 self.services[service_name] = new_instance
                 
-                logger.info(f"✅ Service {service_name} redémarré avec succès")
+                logger.info(f" Service {service_name} redémarré avec succès")
                 
         except Exception as e:
             logger.error(f"Erreur redémarrage service {service_name}: {e}")
@@ -473,6 +503,9 @@ class RightsTrackingOrchestrator:
     
     async def _save_statistics_snapshot(self, stats: Dict[str, Any]):
         """Sauvegarde un snapshot des statistiques"""
+
+
+
         try:
             timestamp = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
             stats_file = f"rights_tracking_stats_{timestamp}.json"
@@ -485,27 +518,30 @@ class RightsTrackingOrchestrator:
             with open(stats_path, 'w', encoding='utf-8') as f:
                 json.dump(stats, f, indent=2, ensure_ascii=False)
             
-            logger.debug(f"📊 Statistiques sauvegardées: {stats_path}")
+            logger.debug(f" Statistiques sauvegardées: {stats_path}")
             
         except Exception as e:
             logger.error(f"Erreur sauvegarde statistiques: {e}")
     
     async def _log_startup_summary(self):
         """Log le résumé de démarrage"""
+
+
+
         try:
             uptime = (datetime.utcnow() - self.startup_timestamp).total_seconds()
             
             summary = f"""
-╔══════════════════════════════════════════════════════════╗
-║             RIGHTS TRACKING MODULE - DÉMARRÉ             ║
-╠══════════════════════════════════════════════════════════╣
-║ 🕐 Temps de démarrage: {uptime:.2f} secondes                      ║
-║ 🔧 Services initialisés: {len(self.services)}                               ║
-║ 💾 Base de données: ✅ Connectée                         ║
-║ 🌐 Configurations: ✅ Chargées                          ║
-║ 📊 Surveillance: ✅ Active                              ║
-║ 🚀 Statut: OPÉRATIONNEL                                ║
-╚══════════════════════════════════════════════════════════╝
+
+             RIGHTS TRACKING MODULE - DÉMARRÉ             
+
+  Temps de démarrage: {uptime:.2f} secondes                      
+  Services initialisés: {len(self.services)}                               
+  Base de données:  Connectée                         
+  Configurations:  Chargées                          
+  Surveillance:  Active                              
+  Statut: OPÉRATIONNEL                                
+
 """
             
             logger.info(summary)
@@ -515,8 +551,11 @@ class RightsTrackingOrchestrator:
     
     async def shutdown(self):
         """Arrêt propre du module"""
+
+
+
         try:
-            logger.info("🛑 Arrêt du module Rights Tracking...")
+            logger.info(" Arrêt du module Rights Tracking...")
             self.running = False
             
             # Arrêt des services dans l'ordre inverse
@@ -524,22 +563,22 @@ class RightsTrackingOrchestrator:
             
             for service_name in shutdown_order:
                 try:
-                    logger.info(f"🔄 Arrêt de {service_name}...")
+                    logger.info(f" Arrêt de {service_name}...")
                     service_instance = self.services[service_name]
                     
                     if hasattr(service_instance, 'shutdown'):
                         await service_instance.shutdown()
                     
-                    logger.info(f"✅ {service_name} arrêté")
+                    logger.info(f" {service_name} arrêté")
                     
                 except Exception as e:
-                    logger.error(f"❌ Erreur arrêt {service_name}: {e}")
+                    logger.error(f" Erreur arrêt {service_name}: {e}")
             
             # Nettoyage final
             self.services.clear()
             self.health_status.clear()
             
-            logger.info("✅ Module Rights Tracking arrêté proprement")
+            logger.info(" Module Rights Tracking arrêté proprement")
             
         except Exception as e:
             logger.error(f"Erreur arrêt module: {e}")
@@ -640,7 +679,7 @@ async def main():
                 print(f"Statut: {health['overall_status']}")
                 print(f"Services sains: {health.get('healthy_services', 0)}/{health.get('total_services', 0)}")
             else:
-                print("❌ Échec de l'initialisation")
+                print(" Échec de l'initialisation")
                 sys.exit(1)
         
         elif args.stats:
@@ -650,39 +689,39 @@ async def main():
                 stats = await get_module_statistics()
                 print(json.dumps(stats, indent=2, ensure_ascii=False))
             else:
-                print("❌ Échec de l'initialisation")
+                print(" Échec de l'initialisation")
                 sys.exit(1)
         
         elif args.daemon:
             # Mode daemon
             success = await initialize_rights_tracking_module(args.config)
             if success:
-                logger.info("🚀 Module démarré en mode daemon")
+                logger.info(" Module démarré en mode daemon")
                 try:
                     while True:
                         await asyncio.sleep(60)
                 except KeyboardInterrupt:
-                    logger.info("⌨️ Interruption clavier reçue")
+                    logger.info("⌨ Interruption clavier reçue")
             else:
-                logger.error("❌ Échec de l'initialisation")
+                logger.error(" Échec de l'initialisation")
                 sys.exit(1)
         
         else:
             # Test rapide
             success = await initialize_rights_tracking_module(args.config)
             if success:
-                print("✅ Module Rights Tracking initialisé avec succès")
+                print(" Module Rights Tracking initialisé avec succès")
                 
                 # Test basique
                 rights_service = await get_rights_tracking_service()
-                print(f"✅ Service principal accessible: {type(rights_service).__name__}")
+                print(f" Service principal accessible: {type(rights_service).__name__}")
                 
             else:
-                print("❌ Échec de l'initialisation")
+                print(" Échec de l'initialisation")
                 sys.exit(1)
         
     except Exception as e:
-        logger.error(f"💥 Erreur exécution CLI: {e}")
+        logger.error(f" Erreur exécution CLI: {e}")
         sys.exit(1)
     
     finally:

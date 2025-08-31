@@ -7,7 +7,7 @@ of system resources across distributed content processing workflows.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -229,6 +229,9 @@ class ResourceManager:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             # Validate pool configuration
             if not await self._validate_resource_pool(pool):
@@ -266,6 +269,9 @@ class ResourceManager:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             # Validate node configuration
             if not await self._validate_resource_node(node):
@@ -302,6 +308,9 @@ class ResourceManager:
         Returns:
             Optional[str]: Allocation ID if successful
         """
+
+
+
         try:
             # Validate request
             if not await self._validate_resource_request(request):
@@ -619,6 +628,9 @@ class ResourceManager:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             if allocation_id not in self.active_allocations:
                 return False
@@ -734,6 +746,9 @@ class ResourceManager:
     
     async def _execute_scaling_decision(self, decision: ScalingDecision) -> bool:
         """Execute scaling decision."""
+
+
+
         try:
             await self.event_dispatcher.emit('scaling_decision', {
                 'pool_id': decision.pool_id,
@@ -754,6 +769,9 @@ class ResourceManager:
     
     async def _validate_resource_pool(self, pool: ResourcePool) -> bool:
         """Validate resource pool configuration."""
+
+
+
         try:
             if not pool.pool_id or not pool.name:
                 return False
@@ -768,6 +786,9 @@ class ResourceManager:
     
     async def _validate_resource_node(self, node: ResourceNode) -> bool:
         """Validate resource node configuration."""
+
+
+
         try:
             if not node.node_id or not node.name:
                 return False
@@ -782,6 +803,9 @@ class ResourceManager:
     
     async def _validate_resource_request(self, request: ResourceRequest) -> bool:
         """Validate resource request."""
+
+
+
         try:
             if not request.request_id or not request.requester_id:
                 return False
@@ -896,18 +920,30 @@ class ResourceManager:
     
     async def get_resource_status(self, node_id: str) -> Optional[ResourceNode]:
         """Get current resource node status."""
+
+
+
         return self.resource_nodes.get(node_id)
     
     async def get_pool_status(self, pool_id: str) -> Optional[ResourcePool]:
         """Get current resource pool status."""
+
+
+
         return self.resource_pools.get(pool_id)
     
     async def get_allocation_status(self, allocation_id: str) -> Optional[ResourceAllocation]:
         """Get current allocation status."""
+
+
+
         return self.active_allocations.get(allocation_id)
     
     async def get_management_stats(self) -> Dict[str, Any]:
         """Get resource management statistics."""
+
+
+
         return {
             **self.management_stats,
             'active_allocations': len(self.active_allocations),

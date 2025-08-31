@@ -81,6 +81,9 @@ class TriggerCondition:
     
     def evaluate(self, context: Dict[str, Any]) -> tuple[bool, float]:
         """Evaluate condition and return (matches, confidence_score)."""
+
+
+
         try:
             # Get field value using dot notation
             field_value = self._get_field_value(context, self.field_path)
@@ -357,6 +360,9 @@ class NotificationActionHandler(AutomationActionHandler):
     
     def _template_message(self, message: str, context: Dict) -> str:
         """Template message with context variables."""
+
+
+
         try:
             return message.format(**context)
         except (KeyError, ValueError):
@@ -972,6 +978,9 @@ class EnterpriseWorkflowAutomation:
     
     def get_automation_rule(self, rule_id: str) -> Optional[AutomationRule]:
         """Get automation rule by ID."""
+
+
+
         return self.automation_rules.get(rule_id)
     
     def list_automation_rules(
@@ -1147,6 +1156,9 @@ class EnterpriseWorkflowAutomation:
 
     async def _execute_rule(self, rule: AutomationRule, context: Dict):
         """Execute an automation rule."""
+
+
+
         try:
             rule.execution_count += 1
             rule.last_executed = datetime.utcnow()

@@ -8,7 +8,7 @@ and digital rights surveillance across platforms.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
@@ -112,6 +112,9 @@ class ContentFingerprintGenerator:
     
     async def generate_audio_fingerprint(self, audio_path: str) -> Dict[str, Any]:
         """Generate audio fingerprint using multiple algorithms"""
+
+
+
         try:
             # This would integrate with audio fingerprinting libraries
             # like Chromaprint, pyAudioAnalysis, or custom implementations
@@ -145,6 +148,9 @@ class ContentFingerprintGenerator:
     
     async def generate_video_fingerprint(self, video_path: str) -> Dict[str, Any]:
         """Generate video fingerprint using computer vision"""
+
+
+
         try:
             # Open video file
             cap = cv2.VideoCapture(video_path)
@@ -201,6 +207,9 @@ class ContentFingerprintGenerator:
     
     async def generate_image_fingerprint(self, image_path: str) -> Dict[str, Any]:
         """Generate image fingerprint using multiple hashing algorithms"""
+
+
+
         try:
             # Load image
             image = Image.open(image_path)
@@ -279,6 +288,9 @@ class YouTubeSurveillanceParser:
     
     async def _perform_youtube_search(self, search_term: str) -> List[Dict[str, Any]]:
         """Perform YouTube API search"""
+
+
+
         try:
             # In real implementation, this would use YouTube Data API v3
             # Placeholder data structure
@@ -306,6 +318,9 @@ class YouTubeSurveillanceParser:
         original_fingerprint: Dict[str, Any]
     ) -> Optional[ContentMatch]:
         """Analyze if a video result is a potential match"""
+
+
+
         try:
             # Download and analyze thumbnail
             thumbnail_similarity = await self._compare_thumbnails(
@@ -359,6 +374,9 @@ class YouTubeSurveillanceParser:
     
     async def _compare_thumbnails(self, thumbnail_url: str, original_hash: str) -> float:
         """Compare thumbnail images for similarity"""
+
+
+
         try:
             # Download thumbnail
             async with aiohttp.ClientSession() as session:
@@ -389,6 +407,9 @@ class YouTubeSurveillanceParser:
         original_metadata: Dict[str, Any]
     ) -> float:
         """Compare text content for similarity"""
+
+
+
         try:
             # Compare titles
             original_title = original_metadata.get('title', '').lower()
@@ -514,6 +535,9 @@ class ContentProtectionSurveillanceEngine:
         platforms: List[str] = None
     ) -> SurveillanceResult:
         """Perform comprehensive content surveillance across platforms"""
+
+
+
         try:
             if platforms is None:
                 platforms = ['youtube', 'instagram', 'tiktok', 'twitter']
@@ -595,6 +619,9 @@ class ContentProtectionSurveillanceEngine:
         original_content: Dict[str, Any]
     ) -> List[ContentMatch]:
         """Search specific platform for matches"""
+
+
+
         try:
             if platform == 'youtube':
                 return await self.youtube_parser.search_for_matches(search_terms, original_content)

@@ -1,4 +1,4 @@
-"""⚖️ Ultra-Industrial DMCA Automation & Legal Enforcement Orchestration
+""" Ultra-Industrial DMCA Automation & Legal Enforcement Orchestration
 ====================================================================
 
 Enterprise-grade automated legal enforcement system for comprehensive digital
@@ -33,7 +33,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + Legal Tech + DevOps + DBA
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  MAXIMUM LEGAL PROTECTION - CRIMINAL IP THEFT WARNING ⚠️
+  MAXIMUM LEGAL PROTECTION - CRIMINAL IP THEFT WARNING 
 ===========================================================
 This legal automation system represents proprietary legal technology:
 - AI Legal Framework: Patent Pending in Multiple Jurisdictions

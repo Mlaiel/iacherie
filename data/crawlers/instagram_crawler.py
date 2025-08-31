@@ -126,6 +126,9 @@ class InstagramCrawler(PlatformCrawler):
         Returns:
             List of found content items
         """
+
+
+
         try:
             all_results = []
             
@@ -164,6 +167,9 @@ class InstagramCrawler(PlatformCrawler):
         Returns:
             Detailed content metadata
         """
+
+
+
         try:
             # Extract post shortcode from URL
             shortcode = self._extract_post_shortcode(content_url)
@@ -195,6 +201,9 @@ class InstagramCrawler(PlatformCrawler):
         Returns:
             Content sample data or None
         """
+
+
+
         try:
             # Extract media URLs from post
             metadata = await self.extract_content_metadata(content_url)
@@ -235,6 +244,9 @@ class InstagramCrawler(PlatformCrawler):
         Returns:
             List of posts with the hashtag
         """
+
+
+
         try:
             await self.initialize_selenium()
             
@@ -307,6 +319,9 @@ class InstagramCrawler(PlatformCrawler):
         Returns:
             List of user's posts
         """
+
+
+
         try:
             await self.initialize_selenium()
             
@@ -374,6 +389,9 @@ class InstagramCrawler(PlatformCrawler):
         Returns:
             List of post comments
         """
+
+
+
         try:
             await self.initialize_selenium()
             
@@ -415,6 +433,9 @@ class InstagramCrawler(PlatformCrawler):
     
     async def _search_via_api(self, search_terms: List[str], max_results: int) -> List[Dict[str, Any]]:
         """Search using Instagram Graph API"""
+
+
+
         try:
             if not self.access_token:
                 return []
@@ -461,6 +482,9 @@ class InstagramCrawler(PlatformCrawler):
     
     async def _search_via_web_scraping(self, search_terms: List[str], max_results: int) -> List[Dict[str, Any]]:
         """Search using web scraping"""
+
+
+
         try:
             results = []
             
@@ -482,6 +506,9 @@ class InstagramCrawler(PlatformCrawler):
     
     async def _extract_metadata_via_api(self, shortcode: str) -> Dict[str, Any]:
         """Extract metadata using Graph API"""
+
+
+
         try:
             # This would require the post ID, which is different from shortcode
             # In practice, this would need proper Graph API setup
@@ -493,6 +520,9 @@ class InstagramCrawler(PlatformCrawler):
     
     async def _extract_metadata_via_scraping(self, post_url: str) -> Dict[str, Any]:
         """Extract metadata using web scraping"""
+
+
+
         try:
             await self.initialize_selenium()
             
@@ -564,6 +594,9 @@ class InstagramCrawler(PlatformCrawler):
     
     def get_rate_limit_status(self) -> Dict[str, Any]:
         """Get current rate limiting status"""
+
+
+
         return {
             'platform': 'instagram',
             'scraping_delay': self.scraping_delay,

@@ -15,7 +15,7 @@ Business Logic Integration:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend + Security Experts
 
-⚠️ COPYRIGHT WARNING:
+ COPYRIGHT WARNING:
 This code is proprietary and belongs to Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit 
 written permission from Fahed Mlaiel is strictly prohibited.
@@ -504,6 +504,9 @@ content_validation_config = ContentValidationConfig()
 
 def get_content_validation_config() -> ContentValidationConfig:
     """Get the content validation configuration instance."""
+
+
+
     return content_validation_config
 
 

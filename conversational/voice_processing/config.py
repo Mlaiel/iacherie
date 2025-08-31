@@ -26,7 +26,7 @@ Email: mlaiel@live.de
 Project Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE - ZERO TOLERANCE FOR INTELLECTUAL PROPERTY THEFT ⚠️
+  CRITICAL LEGAL NOTICE - ZERO TOLERANCE FOR INTELLECTUAL PROPERTY THEFT 
 
 This revolutionary voice processing configuration system, neural audio algorithms, and advanced 
 conversational architectures are the EXCLUSIVE intellectual property of Fahed Mlaiel representing 
@@ -575,6 +575,9 @@ class VoiceProcessingConfig:
     @classmethod
     def from_file(cls, config_path: str) -> 'VoiceProcessingConfig':
         """Load configuration from YAML or JSON file."""
+
+
+
         try:
             config_path = Path(config_path)
             
@@ -599,6 +602,9 @@ class VoiceProcessingConfig:
     
     def to_file(self, config_path: str, format: str = "yaml") -> None:
         """Save configuration to YAML or JSON file."""
+
+
+
         try:
             config_path = Path(config_path)
             config_path.parent.mkdir(parents=True, exist_ok=True)
@@ -657,6 +663,9 @@ class VoiceProcessingConfig:
     
     def validate_audio_file(self, file_path: str) -> Tuple[bool, str]:
         """Validate if an audio file meets configuration requirements."""
+
+
+
         try:
             file_size_mb = os.path.getsize(file_path) / (1024 * 1024)
             

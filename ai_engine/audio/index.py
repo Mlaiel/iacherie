@@ -131,22 +131,37 @@ from .distribution import (
 # Quick access factory functions
 def create_audio_processor(config=None):
     """Create a complete audio processing system"""
+
+
+
     return AudioManager(config)
 
 def create_content_protector(config=None):
     """Create a content protection system"""
+
+
+
     return ContentProtector(config)
 
 def create_monetization_engine(config=None):
     """Create a monetization engine"""
+
+
+
     return MonetizationEngine(config)
 
 def create_collaboration_matcher(config=None):
     """Create a collaboration matching system"""
+
+
+
     return CollaborationMatcher(config)
 
 def create_multi_platform_distributor(config=None):
     """Create a multi-platform distribution system"""
+
+
+
     return MultiPlatformDistributor(config)
 
 # Complete system factory
@@ -157,6 +172,9 @@ def create_complete_audio_system(config=None):
     Returns:
         dict: Dictionary containing all system components
     """
+
+
+
     return {
         'audio_manager': AudioManager(config),
         'enhancer': AudioEnhancer(),
@@ -202,17 +220,20 @@ SYSTEM_INFO = {
 
 def get_system_info():
     """Get information about the audio processing system"""
+
+
+
     return SYSTEM_INFO
 
 def print_system_info():
     """Print system information"""
     info = get_system_info()
-    print(f"\n🎵 {info['name']} v{info['version']}")
-    print(f"👨‍💻 Author: {info['author']} ({info['email']})")
-    print("\n🔧 Components:")
+    print(f"\n {info['name']} v{info['version']}")
+    print(f"‍ Author: {info['author']} ({info['email']})")
+    print("\n Components:")
     for component in info['components']:
         print(f"  • {component}")
-    print("\n🚀 Capabilities:")
+    print("\n Capabilities:")
     for capability in info['capabilities']:
         print(f"  • {capability}")
     print("\n© 2025 Fahed Mlaiel. All rights reserved.")

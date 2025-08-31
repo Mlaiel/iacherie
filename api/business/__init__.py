@@ -98,8 +98,14 @@ async def shutdown_business_services():
 
 # Health check helper
 def get_business_services_health():
-    """Get health status of all business services."""    return service_registry.get_service_health()
+    """Get health status of all business services."""
+
+
+    return service_registry.get_service_health()
 
 # Metrics helper
 def get_business_services_metrics():
-    """Get performance metrics for all business services."""    return service_registry.get_service_metrics()
+    """Get performance metrics for all business services."""
+
+
+    return service_registry.get_service_metrics()

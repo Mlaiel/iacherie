@@ -1,11 +1,11 @@
 """
-🖼️ Image Transformation Engine - IA Influencer Agent Platform Enterprise
+ Image Transformation Engine - IA Influencer Agent Platform Enterprise
 ======================================================================
 Module: backend/data_management/transformers/image_transformer.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ======================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -120,6 +120,9 @@ class ImageAnalyzer:
     
     def analyze_image_file(self, image_path: str) -> ImageMetadata:
         """Analyse complète d'un fichier image"""
+
+
+
         try:
             # Ouverture avec PIL
             with Image.open(image_path) as img:
@@ -272,6 +275,9 @@ class ImageAnalyzer:
     
     def _extract_dominant_colors(self, img_array: np.ndarray, k: int = 5) -> List[List[int]]:
         """Extrait les couleurs dominantes par k-means"""
+
+
+
         
         try:
             # Reshape pour k-means
@@ -297,6 +303,9 @@ class ImageAnalyzer:
     
     def _extract_color_palette(self, img_array: np.ndarray, n_colors: int = 8) -> List[List[int]]:
         """Extrait une palette de couleurs représentative"""
+
+
+
         
         try:
             # Quantification des couleurs
@@ -683,6 +692,9 @@ class ImageEnhancer:
         intensity: float = 0.5
     ) -> np.ndarray:
         """Améliore la qualité d'image avec IA"""
+
+
+
         
         try:
             if enhancement_type == "sharpen":

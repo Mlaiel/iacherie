@@ -13,7 +13,7 @@ Project Team Specialties:
 - Microservices Architect & Audio Processing: Multi-format Support  
 - DevOps Engineer & IA Prompt Engineer: Production Deployment
 
-⚠️ STRONG WARNING ⚠️
+ STRONG WARNING 
 Any attempt to steal, copy, reproduce, or use this concept, idea, or code 
 without explicit written authorization from Fahed Mlaiel is strictly 
 prohibited and will result in legal action.
@@ -94,6 +94,9 @@ class BlockchainError(Exception):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert exception to dictionary for logging/API responses"""
+
+
+
         return {
             "error_type": self.__class__.__name__,
             "message": self.message,
@@ -421,6 +424,9 @@ class BlockchainError(Exception):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert exception to dictionary for API responses"""
+
+
+
         return {
             'error': self.__class__.__name__,
             'message': self.message,

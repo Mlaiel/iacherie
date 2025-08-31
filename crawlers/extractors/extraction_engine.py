@@ -12,7 +12,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 
-⚠️ STRICT COPYRIGHT PROTECTION ⚠️
+ STRICT COPYRIGHT PROTECTION 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 """
@@ -122,6 +122,9 @@ class ExtractionResult:
     
     def is_successful(self) -> bool:
         """Check if extraction was successful"""
+
+
+
         return self.status == ExtractionStatus.COMPLETED and bool(self.extracted_data)
 
 
@@ -150,6 +153,9 @@ class BaseExtractor(ABC):
     
     async def validate_request(self, request: ExtractionRequest) -> bool:
         """Validate extraction request"""
+
+
+
         try:
             if not request.request_id:
                 return False
@@ -497,6 +503,9 @@ class ExtractionEngine:
     
     def _get_resource_utilization(self) -> Dict[str, float]:
         """Get current resource utilization metrics"""
+
+
+
         return {
             'cpu_usage': self._get_cpu_usage(),
             'memory_usage': self._get_memory_usage(),
@@ -506,6 +515,9 @@ class ExtractionEngine:
     
     def _get_cpu_usage(self) -> float:
         """Get current CPU usage percentage"""
+
+
+
         try:
             import psutil
             return psutil.cpu_percent(interval=1)
@@ -514,6 +526,9 @@ class ExtractionEngine:
     
     def _get_memory_usage(self) -> float:
         """Get current memory usage percentage"""
+
+
+
         try:
             import psutil
             return psutil.virtual_memory().percent
@@ -800,6 +815,9 @@ class ExtractionEngine:
 
     def __del__(self):
         """Cleanup on object destruction"""
+
+
+
         try:
             # Cancel any running tasks
             for task in self._active_extractions.values():

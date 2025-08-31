@@ -10,7 +10,7 @@ Project: IA-Influencer Agent + Content Protection Platform
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps
 
 Copyright Notice:
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This code and all associated concepts, algorithms, and implementations are the exclusive 
 intellectual property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, reproduction, 
 distribution, modification, or appropriation of this code, in whole or in part, without 
@@ -170,6 +170,9 @@ class AudioQualityConfig:
     
     def _initialize_standard_configs(self) -> Dict[QualityStandard, Dict[str, Any]]:
         """Initialize quality standard configurations"""
+
+
+
         return {
             QualityStandard.BROADCAST: {
                 "name": "Broadcast Standard (EBU R128)",
@@ -317,6 +320,9 @@ class AudioQualityConfig:
     
     def _initialize_quality_profiles(self) -> Dict[str, Dict[str, Any]]:
         """Initialize quality assessment profiles"""
+
+
+
         return {
             "music_production": {
                 "description": "Music production quality assessment",
@@ -403,6 +409,9 @@ class AudioQualityConfig:
     
     def _initialize_metric_weights(self) -> Dict[QualityMetric, float]:
         """Initialize metric weights for overall quality scoring"""
+
+
+
         return {
             QualityMetric.SNR: 0.15,
             QualityMetric.THD: 0.10,
@@ -428,6 +437,9 @@ class AudioQualityConfig:
         Returns:
             Standard configuration
         """
+
+
+
         return self._standard_configs.get(standard, {})
     
     def get_quality_profile(self, profile_name: str) -> Dict[str, Any]:
@@ -440,6 +452,9 @@ class AudioQualityConfig:
         Returns:
             Quality profile configuration
         """
+
+
+
         return self._quality_profiles.get(profile_name, {})
     
     def apply_quality_profile(self, profile_name: str) -> bool:
@@ -452,6 +467,9 @@ class AudioQualityConfig:
         Returns:
             Success status
         """
+
+
+
         try:
             profile = self.get_quality_profile(profile_name)
             if not profile:
@@ -508,6 +526,9 @@ class AudioQualityConfig:
         Returns:
             Quality score and analysis
         """
+
+
+
         try:
             weighted_scores = []
             metric_scores = {}
@@ -567,6 +588,9 @@ class AudioQualityConfig:
     
     def _normalize_metric_value(self, metric: QualityMetric, value: float) -> float:
         """Normalize metric value to 0-100 scale"""
+
+
+
         try:
             if metric == QualityMetric.SNR:
                 # SNR: higher is better, normalize around 20-60dB range
@@ -743,6 +767,9 @@ class AudioQualityConfig:
         Returns:
             Complete quality configuration
         """
+
+
+
         try:
             # Apply appropriate profile based on use case
             if use_case in self._quality_profiles:
@@ -861,6 +888,9 @@ class AudioQualityConfig:
     
     def export_config(self) -> Dict[str, Any]:
         """Export complete audio quality configuration"""
+
+
+
         try:
             return {
                 "quality_standard": self._quality_standard.value,

@@ -312,6 +312,9 @@ class BackupManager:
         Returns:
             Success status
         """
+
+
+
         try:
             self.logger.info(f"Starting backup restoration: {backup_id}")
             
@@ -359,6 +362,9 @@ class BackupManager:
         Returns:
             Schedule ID
         """
+
+
+
         return await self.scheduler.add_schedule(schedule_config, self.create_full_backup)
 
     async def get_backup_status(self, backup_id: str) -> Optional[Dict[str, Any]]:
@@ -433,6 +439,9 @@ class BackupManager:
         Returns:
             Success status
         """
+
+
+
         try:
             # Remove from storage
             await self.storage.delete_backup(backup_id)
@@ -460,6 +469,9 @@ class BackupManager:
         Returns:
             Integrity status
         """
+
+
+
         return await self.validator.verify_backup(backup_id)
 
     async def cleanup_old_backups(

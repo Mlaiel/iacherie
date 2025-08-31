@@ -6,7 +6,7 @@ violation detection monitoring, and AI-powered copyright enforcement analytics.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel - All rights reserved
-⚠️  WARNING: This code and concept are proprietary to Fahed Mlaiel.
+  WARNING: This code and concept are proprietary to Fahed Mlaiel.
     Any unauthorized use, copying, or distribution without explicit written 
     permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 
@@ -114,6 +114,9 @@ class ProtectionAnalyticsEvent(BaseEvent):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert protection event to dictionary"""
+
+
+
         return {
             **asdict(self),
             'content_type': self.content_type.value,
@@ -174,6 +177,9 @@ class ProtectionAnalyticsEventHandler(BaseEventHandler):
         
     async def handle(self, event: ProtectionAnalyticsEvent) -> Dict[str, Any]:
         """Process protection analytics event with comprehensive analysis"""
+
+
+
         try:
             # Validate event data
             await self._validate_event(event)

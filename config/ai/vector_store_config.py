@@ -304,6 +304,9 @@ class VectorStoreConfig(BaseSettings):
     
     def _get_default_collection(self, name: str) -> VectorCollection:
         """Get default vector collection configuration."""
+
+
+
         return VectorCollection(
             name=name,
             dimension=self.VECTOR_DIMENSION,
@@ -378,6 +381,9 @@ class VectorStoreConfig(BaseSettings):
     
     def get_search_config(self) -> Dict[str, Any]:
         """Get vector search configuration."""
+
+
+
         return {
             "default_top_k": self.DEFAULT_TOP_K,
             "max_top_k": self.MAX_TOP_K,
@@ -403,6 +409,9 @@ class VectorStoreConfig(BaseSettings):
     
     def get_indexing_config(self) -> Dict[str, Any]:
         """Get vector indexing configuration."""
+
+
+
         return {
             "batch_size": self.BATCH_SIZE,
             "build_timeout": self.INDEX_BUILD_TIMEOUT,
@@ -434,6 +443,9 @@ class VectorStoreConfig(BaseSettings):
     
     def get_storage_config(self) -> Dict[str, Any]:
         """Get vector storage configuration."""
+
+
+
         return {
             "storage_path": self.VECTOR_STORAGE_PATH,
             "index_path": self.INDEX_STORAGE_PATH,
@@ -457,6 +469,9 @@ class VectorStoreConfig(BaseSettings):
     
     def get_backup_config(self) -> Dict[str, Any]:
         """Get backup and recovery configuration."""
+
+
+
         return {
             "auto_backup": self.AUTO_BACKUP_ENABLED,
             "backup_interval_hours": self.BACKUP_INTERVAL_HOURS,
@@ -475,6 +490,9 @@ class VectorStoreConfig(BaseSettings):
     
     def get_performance_config(self) -> Dict[str, Any]:
         """Get performance optimization configuration."""
+
+
+
         return {
             "connection_pooling": {
                 "pool_size": self.CONNECTION_POOL_SIZE,
@@ -501,6 +519,9 @@ class VectorStoreConfig(BaseSettings):
     
     def get_monitoring_config(self) -> Dict[str, Any]:
         """Get monitoring and observability configuration."""
+
+
+
         return {
             "metrics": {
                 "enabled": self.METRICS_ENABLED,

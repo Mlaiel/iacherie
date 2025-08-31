@@ -110,6 +110,9 @@ class KeyManager:
         
     def _get_or_create_master_key(self) -> bytes:
         """Get or create master encryption key"""
+
+
+
         try:
             # Try to get from environment first
             master_key_b64 = os.getenv("MASTER_ENCRYPTION_KEY")
@@ -135,6 +138,9 @@ class KeyManager:
         key_size: Optional[int] = None
     ) -> EncryptionKey:
         """Generate new encryption key"""
+
+
+
         try:
             key_id = secrets.token_hex(16)
             
@@ -181,6 +187,9 @@ class KeyManager:
     
     async def get_key(self, key_id: str) -> Optional[bytes]:
         """Retrieve and decrypt key"""
+
+
+
         try:
             # Check cache first
             cache_key = f"encryption_key:{key_id}"
@@ -211,6 +220,9 @@ class KeyManager:
     
     async def rotate_key(self, old_key_id: str) -> Optional[EncryptionKey]:
         """Rotate encryption key"""
+
+
+
         try:
             # Get old key metadata
             old_key_metadata = await self._get_key_metadata(old_key_id)
@@ -245,6 +257,9 @@ class KeyManager:
     
     async def _store_key(self, key_id: str, encrypted_key: bytes, metadata: EncryptionKey):
         """Store encrypted key in database"""
+
+
+
         try:
             # Store in cache for immediate access
             cache_key = f"encryption_key_data:{key_id}"
@@ -282,6 +297,9 @@ class KeyManager:
     
     async def _retrieve_key(self, key_id: str) -> Optional[bytes]:
         """Retrieve encrypted key from database"""
+
+
+
         try:
             # Try cache first
             cache_key = f"encryption_key_data:{key_id}"
@@ -312,6 +330,9 @@ class KeyManager:
     
     async def _get_key_metadata(self, key_id: str) -> Optional[EncryptionKey]:
         """Get key metadata"""
+
+
+
         try:
             # Try cache first
             cache_key = f"encryption_key_data:{key_id}"
@@ -349,6 +370,9 @@ class KeyManager:
     
     async def _deactivate_key(self, key_id: str):
         """Deactivate key"""
+
+
+
         try:
             # Get current metadata
             key_metadata = await self._get_key_metadata(key_id)
@@ -387,6 +411,9 @@ class CryptoService:
         associated_data: Optional[bytes] = None
     ) -> EncryptedData:
         """Encrypt data using AES-256-GCM"""
+
+
+
         try:
             # Get encryption key
             key = await self.key_manager.get_key(key_id)
@@ -429,6 +456,9 @@ class CryptoService:
         associated_data: Optional[bytes] = None
     ) -> bytes:
         """Decrypt AES-256-GCM encrypted data"""
+
+
+
         try:
             # Get decryption key
             key = await self.key_manager.get_key(encrypted_data.key_id)
@@ -458,6 +488,9 @@ class CryptoService:
     
     async def encrypt_fernet(self, data: bytes, key_id: str) -> EncryptedData:
         """Encrypt data using Fernet (symmetric encryption)"""
+
+
+
         try:
             # Get encryption key
             key = await self.key_manager.get_key(key_id)
@@ -482,6 +515,9 @@ class CryptoService:
     
     async def decrypt_fernet(self, encrypted_data: EncryptedData) -> bytes:
         """Decrypt Fernet encrypted data"""
+
+
+
         try:
             # Get decryption key
             key = await self.key_manager.get_key(encrypted_data.key_id)
@@ -502,6 +538,9 @@ class CryptoService:
     
     async def encrypt_rsa(self, data: bytes, key_id: str) -> EncryptedData:
         """Encrypt data using RSA-OAEP"""
+
+
+
         try:
             # Get private key (to derive public key)
             private_key_pem = await self.key_manager.get_key(key_id)
@@ -540,6 +579,9 @@ class CryptoService:
     
     async def decrypt_rsa(self, encrypted_data: EncryptedData) -> bytes:
         """Decrypt RSA-OAEP encrypted data"""
+
+
+
         try:
             # Get private key
             private_key_pem = await self.key_manager.get_key(encrypted_data.key_id)
@@ -571,6 +613,9 @@ class CryptoService:
     
     def generate_hash(self, data: bytes, algorithm: str = "sha256") -> str:
         """Generate cryptographic hash"""
+
+
+
         try:
             if algorithm == "sha256":
                 hash_obj = hashlib.sha256(data)
@@ -589,6 +634,9 @@ class CryptoService:
     
     def generate_hmac(self, data: bytes, key: bytes, algorithm: str = "sha256") -> str:
         """Generate HMAC"""
+
+
+
         try:
             if algorithm == "sha256":
                 mac = hmac.new(key, data, hashlib.sha256)
@@ -605,6 +653,9 @@ class CryptoService:
     
     def verify_hmac(self, data: bytes, key: bytes, expected_mac: str, algorithm: str = "sha256") -> bool:
         """Verify HMAC"""
+
+
+
         try:
             computed_mac = self.generate_hmac(data, key, algorithm)
             return hmac.compare_digest(computed_mac, expected_mac)
@@ -628,6 +679,9 @@ class ContentEncryption:
         owner_id: str
     ) -> Tuple[EncryptedData, str]:
         """Encrypt content file with metadata"""
+
+
+
         try:
             # Generate content-specific key
             key = await self.crypto_service.key_manager.generate_key(
@@ -662,6 +716,9 @@ class ContentEncryption:
     
     async def decrypt_content_file(self, encrypted_data: EncryptedData) -> bytes:
         """Decrypt content file"""
+
+
+
         try:
             # Prepare associated data from metadata
             if encrypted_data.metadata:
@@ -688,6 +745,9 @@ class ContentEncryption:
         key_id: str
     ) -> str:
         """Generate cryptographic signature for content"""
+
+
+
         try:
             # Get signing key
             key = await self.crypto_service.key_manager.get_key(key_id)
@@ -711,6 +771,9 @@ class ContentEncryption:
         key_id: str
     ) -> bool:
         """Verify content signature"""
+
+
+
         try:
             # Get signing key
             key = await self.crypto_service.key_manager.get_key(key_id)
@@ -741,6 +804,9 @@ class DatabaseEncryption:
     
     async def _initialize_db_key(self):
         """Initialize database encryption key"""
+
+
+
         try:
             # Try to get existing key
             # In production, store key ID in secure configuration
@@ -763,6 +829,9 @@ class DatabaseEncryption:
     
     async def encrypt_field(self, value: str) -> str:
         """Encrypt database field value"""
+
+
+
         try:
             if not value:
                 return value
@@ -779,6 +848,9 @@ class DatabaseEncryption:
     
     async def decrypt_field(self, encrypted_value: str) -> str:
         """Decrypt database field value"""
+
+
+
         try:
             if not encrypted_value:
                 return encrypted_value
@@ -817,6 +889,9 @@ class EncryptionManager:
         key_type: KeyType = KeyType.SYMMETRIC
     ) -> Tuple[EncryptedData, str]:
         """Encrypt sensitive data with appropriate algorithm"""
+
+
+
         try:
             # Convert string to bytes if needed
             if isinstance(data, str):
@@ -845,6 +920,9 @@ class EncryptionManager:
     
     async def decrypt_sensitive_data(self, encrypted_data: EncryptedData) -> bytes:
         """Decrypt sensitive data"""
+
+
+
         try:
             if encrypted_data.algorithm == EncryptionAlgorithm.AES_256_GCM:
                 return await self.crypto_service.decrypt_aes_gcm(encrypted_data)
@@ -861,6 +939,9 @@ class EncryptionManager:
     
     async def hash_password(self, password: str) -> str:
         """Hash password using Argon2"""
+
+
+
         try:
             ph = argon2.PasswordHasher()
             return ph.hash(password)
@@ -871,6 +952,9 @@ class EncryptionManager:
     
     async def verify_password(self, password: str, hashed: str) -> bool:
         """Verify password against hash"""
+
+
+
         try:
             ph = argon2.PasswordHasher()
             ph.verify(hashed, password)
@@ -888,6 +972,9 @@ class EncryptionManager:
         salt: Optional[bytes] = None
     ) -> Tuple[bytes, bytes]:
         """Derive encryption key from password using PBKDF2"""
+
+
+
         try:
             if not salt:
                 salt = secrets.token_bytes(16)

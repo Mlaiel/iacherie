@@ -4,7 +4,7 @@ Crawler Processor Module - IA-Influencer-Agent Platform
 Enterprise-grade web surveillance and content monitoring system for multi-platform protection.
 AI-powered crawling, content detection, and automated surveillance across social platforms.
 
-✨ EXPERT TEAM SPECIALTIES:
+ EXPERT TEAM SPECIALTIES:
 - Lead Dev IA: AI-powered content detection and machine learning surveillance
 - Backend Senior: Scalable crawling architecture and distributed monitoring systems
 - ML Engineer: Content similarity algorithms and automated detection models
@@ -17,7 +17,7 @@ AI-powered crawling, content detection, and automated surveillance across social
 Author: Fahed Mlaiel <mlaiel@live.de>
 Email: mlaiel@live.de
 
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 This software is proprietary and confidential. Any unauthorized use, copying, 
 distribution, or commercialization without explicit written permission from 
 Fahed Mlaiel is strictly prohibited and will result in legal action.
@@ -262,6 +262,9 @@ class YouTubeCrawler:
         target: CrawlTarget
     ) -> List[CrawlResult]:
         """Crawl YouTube for matching content"""
+
+
+
         try:
             results = []
             
@@ -283,6 +286,9 @@ class YouTubeCrawler:
     
     async def _api_search(self, target: CrawlTarget) -> List[CrawlResult]:
         """Search using YouTube Data API"""
+
+
+
         try:
             results = []
             
@@ -337,6 +343,9 @@ class YouTubeCrawler:
     
     async def _selenium_search(self, target: CrawlTarget) -> List[CrawlResult]:
         """Search using Selenium web scraping"""
+
+
+
         try:
             results = []
             
@@ -431,6 +440,9 @@ class YouTubeCrawler:
         target: CrawlTarget
     ) -> float:
         """Analyze video similarity with target content"""
+
+
+
         try:
             # Get video details
             video_response = self.youtube.videos().list(
@@ -469,6 +481,9 @@ class YouTubeCrawler:
         target: CrawlTarget
     ) -> float:
         """Analyze scraped content similarity"""
+
+
+
         try:
             title = element.get_attribute('title') or ''
             
@@ -507,6 +522,9 @@ class InstagramCrawler:
     
     async def crawl_for_content(self, target: CrawlTarget) -> List[CrawlResult]:
         """Crawl Instagram for matching content"""
+
+
+
         try:
             results = []
             
@@ -523,6 +541,9 @@ class InstagramCrawler:
     
     async def _selenium_search(self, target: CrawlTarget) -> List[CrawlResult]:
         """Search Instagram using Selenium"""
+
+
+
         try:
             results = []
             
@@ -620,6 +641,9 @@ class InstagramCrawler:
     
     async def _analyze_instagram_post(self, element, target: CrawlTarget) -> float:
         """Analyze Instagram post for similarity"""
+
+
+
         try:
             # For Instagram, we'd need to analyze images and captions
             # This is a simplified implementation
@@ -657,6 +681,9 @@ class TikTokCrawler:
     
     async def crawl_for_content(self, target: CrawlTarget) -> List[CrawlResult]:
         """Crawl TikTok for matching content"""
+
+
+
         try:
             results = []
             
@@ -673,6 +700,9 @@ class TikTokCrawler:
     
     async def _selenium_search(self, target: CrawlTarget) -> List[CrawlResult]:
         """Search TikTok using Selenium"""
+
+
+
         try:
             results = []
             
@@ -763,6 +793,9 @@ class TikTokCrawler:
     
     async def _analyze_tiktok_video(self, element, target: CrawlTarget) -> float:
         """Analyze TikTok video for similarity"""
+
+
+
         try:
             # For TikTok, we'd need to analyze video frames and audio
             # This is a simplified implementation
@@ -801,6 +834,9 @@ class GenericWebCrawler:
         max_pages: int = 50
     ) -> List[CrawlResult]:
         """Crawl a website for matching content"""
+
+
+
         try:
             results = []
             visited_urls = set()
@@ -887,6 +923,9 @@ class GenericWebCrawler:
     
     async def _check_robots_txt(self, url: str) -> bool:
         """Check if URL is allowed by robots.txt"""
+
+
+
         try:
             # Simplified robots.txt check
             return True  # In production, implement proper robots.txt parsing
@@ -895,6 +934,9 @@ class GenericWebCrawler:
     
     async def _analyze_page_content(self, soup, target: CrawlTarget) -> float:
         """Analyze page content for similarity"""
+
+
+
         try:
             # Extract text content
             text_content = soup.get_text().lower()
@@ -918,6 +960,9 @@ class GenericWebCrawler:
     
     def _should_crawl_url(self, url: str, base_url: str) -> bool:
         """Check if URL should be crawled"""
+
+
+
         try:
             # Only crawl URLs from same domain
             base_domain = urlparse(base_url).netloc
@@ -944,7 +989,7 @@ class GenericWebCrawler:
 
 class CrawlerProcessor:
     """
-    🕷️ ENTERPRISE CRAWLER PROCESSOR
+     ENTERPRISE CRAWLER PROCESSOR
     
     Industrial-grade web surveillance system with multi-platform crawling,
     content detection, and automated monitoring capabilities.
@@ -989,6 +1034,9 @@ class CrawlerProcessor:
         target: CrawlTarget
     ) -> CrawlSession:
         """Start monitoring a target across platforms"""
+
+
+
         try:
             session = CrawlSession(
                 session_id=str(uuid.uuid4()),
@@ -1043,6 +1091,9 @@ class CrawlerProcessor:
         targets: List[CrawlTarget]
     ) -> List[CrawlSession]:
         """Perform batch crawling of multiple targets"""
+
+
+
         try:
             sessions = []
             
@@ -1079,6 +1130,9 @@ class CrawlerProcessor:
         duration_hours: int = 24
     ):
         """Run continuous monitoring for specified duration"""
+
+
+
         try:
             end_time = datetime.utcnow() + timedelta(hours=duration_hours)
             
@@ -1119,6 +1173,9 @@ class CrawlerProcessor:
     
     async def _store_crawl_target(self, target: CrawlTarget):
         """Store crawl target in database and cache"""
+
+
+
         try:
             target_data = {
                 "target_id": target.target_id,
@@ -1156,6 +1213,9 @@ class CrawlerProcessor:
     
     async def _store_crawl_result(self, result: CrawlResult):
         """Store crawl result in database and cache"""
+
+
+
         try:
             result_data = {
                 "result_id": result.result_id,
@@ -1206,6 +1266,9 @@ class CrawlerProcessor:
         limit: int = 100
     ) -> List[CrawlResult]:
         """Get crawl results for a target"""
+
+
+
         try:
             results = []
             
@@ -1247,6 +1310,9 @@ class CrawlerProcessor:
     
     async def health_check(self) -> Dict[str, Any]:
         """Perform health check on crawler system"""
+
+
+
         try:
             health_status = {
                 "status": "healthy",
@@ -1295,6 +1361,9 @@ class CrawlerProcessor:
     
     async def _test_redis_connection(self) -> bool:
         """Test Redis connection"""
+
+
+
         try:
             await self.redis_client.ping()
             return True
@@ -1303,6 +1372,9 @@ class CrawlerProcessor:
     
     async def _test_database_connection(self) -> bool:
         """Test database connection"""
+
+
+
         try:
             # Would test actual database connection
             return True
@@ -1332,7 +1404,7 @@ async def create_crawler_processor(
     
     processor = CrawlerProcessor(db_session, redis_client, config)
     
-    logger.info("🕷️ Crawler processor created successfully")
+    logger.info(" Crawler processor created successfully")
     return processor
 
 
@@ -1356,7 +1428,7 @@ __all__ = [
 ]
 
 
-logger.info("🕷️ Crawler Processor Module loaded - Enterprise web surveillance ready")
-logger.info("🌐 Available crawlers: YouTube, Instagram, TikTok, Generic Web")
-logger.info("🔍 Detection methods: API, Selenium, Requests, Mobile Emulation")
-logger.info("⚡ Ready for industrial-grade content monitoring operations")
+logger.info(" Crawler Processor Module loaded - Enterprise web surveillance ready")
+logger.info(" Available crawlers: YouTube, Instagram, TikTok, Generic Web")
+logger.info(" Detection methods: API, Selenium, Requests, Mobile Emulation")
+logger.info(" Ready for industrial-grade content monitoring operations")

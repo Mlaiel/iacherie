@@ -273,6 +273,9 @@ class ComplianceChecker:
         Returns:
             ComplianceAssessment with results
         """
+
+
+
         try:
             assessment_id = str(uuid.uuid4())
             target_frameworks = [framework] if framework else self.frameworks
@@ -339,6 +342,9 @@ class ComplianceChecker:
                          resource_id: str, 
                          data_context: Dict[str, Any]) -> Optional[ComplianceViolation]:
         """Check a specific compliance rule"""
+
+
+
         try:
             # Rule-specific checks
             if rule.rule_id == "GDPR_001":
@@ -555,6 +561,9 @@ class ComplianceChecker:
                                        framework: Optional[ComplianceFramework] = None,
                                        format_type: str = "json") -> Dict[str, Any]:
         """Generate comprehensive compliance report"""
+
+
+
         try:
             target_frameworks = [framework] if framework else self.frameworks
             
@@ -665,6 +674,9 @@ class ComplianceChecker:
     
     def get_compliance_metrics(self) -> Dict[str, Any]:
         """Get current compliance system metrics"""
+
+
+
         return {
             "checks_performed": self.checks_performed,
             "violations_detected": self.violations_detected,

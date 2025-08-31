@@ -12,7 +12,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL WARNING ⚠️
+  CRITICAL WARNING 
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
 Any unauthorized use, reproduction, distribution, or reverse engineering 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -304,6 +304,9 @@ class SurveillanceIntegrationManager:
     
     async def _send_heartbeat(self, connection: SurveillanceConnection):
         """Send heartbeat to maintain connection"""
+
+
+
         try:
             if not connection.endpoint_url:
                 return
@@ -334,6 +337,9 @@ class SurveillanceIntegrationManager:
         target_channel: Optional[SurveillanceChannel] = None
     ) -> bool:
         """Send message to surveillance system"""
+
+
+
         try:
             if target_channel:
                 message.target_channel = target_channel
@@ -364,6 +370,9 @@ class SurveillanceIntegrationManager:
         connection: SurveillanceConnection
     ) -> bool:
         """Send message to specific connection"""
+
+
+
         try:
             if not connection.endpoint_url:
                 return False
@@ -425,6 +434,9 @@ class SurveillanceIntegrationManager:
     
     async def handle_incoming_message(self, message_data: Dict[str, Any]):
         """Handle incoming surveillance message"""
+
+
+
         try:
             message = SurveillanceMessage(
                 message_id=message_data.get('message_id', str(uuid.uuid4())),
@@ -617,6 +629,9 @@ class SurveillanceIntegrationManager:
     
     def get_monitoring_statistics(self) -> Dict[str, Any]:
         """Get monitoring statistics"""
+
+
+
         return {
             'active_monitors': len(self.active_monitors),
             'total_handlers': sum(len(handlers) for handlers in self.message_handlers.values()),

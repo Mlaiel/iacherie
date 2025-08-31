@@ -7,7 +7,7 @@ with practical examples for content creators and developers.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software and all associated concepts, algorithms, and implementations are the exclusive 
 intellectual property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, reproduction, 
 distribution, modification, or appropriation of this code, in whole or in part, without 
@@ -557,10 +557,10 @@ async def main():
     
     Runs comprehensive examples of Quality Assessment Module functionality.
     """
-    logger.info("🚀 Quality Assessment Module - Demo & Examples")
+    logger.info(" Quality Assessment Module - Demo & Examples")
     logger.info("=" * 60)
     logger.info("Created by: Fahed Mlaiel (mlaiel@live.de)")
-    logger.info("⚠️  PROPRIETARY SOFTWARE - FOR DEMONSTRATION ONLY ⚠️")
+    logger.info("  PROPRIETARY SOFTWARE - FOR DEMONSTRATION ONLY ")
     logger.info("=" * 60)
     
     try:
@@ -571,7 +571,7 @@ async def main():
         await demo.demo_comprehensive_quality_assessment()
         
         logger.info("\n" + "=" * 60)
-        logger.info("✅ Demo completed successfully!")
+        logger.info(" Demo completed successfully!")
         logger.info("For production use, integrate with your content processing pipeline.")
         logger.info("Contact: mlaiel@live.de for licensing and support.")
         logger.info("=" * 60)

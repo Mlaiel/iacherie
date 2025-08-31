@@ -28,7 +28,7 @@ Team Expertise:
 - Audio Processing Specialist
 - Quality Assurance Engineer
 
-⚠️ AVERTISSEMENT FORT ET CLAIR ⚠️
+ AVERTISSEMENT FORT ET CLAIR 
 Ce code est protégé par le droit d'auteur.
 Toute reproduction, distribution ou utilisation commerciale
 sans autorisation expresse est strictement interdite.

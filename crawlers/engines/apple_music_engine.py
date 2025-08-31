@@ -8,7 +8,7 @@ Handles track metadata extraction, artist analysis, and Apple Music API integrat
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
@@ -149,6 +149,9 @@ class AppleMusicCrawlerEngine(BaseCrawlerEngine):
     
     async def initialize(self) -> None:
         """Initialize the crawler engine"""
+
+
+
         try:
             await self._generate_jwt_token()
             await self._create_session()
@@ -159,6 +162,9 @@ class AppleMusicCrawlerEngine(BaseCrawlerEngine):
     
     async def _generate_jwt_token(self) -> None:
         """Generate JWT token for Apple Music API authentication"""
+
+
+
         try:
             if not all([self.team_id, self.key_id, self.private_key_path]):
                 raise AuthenticationError("Missing Apple Music API credentials")
@@ -226,6 +232,9 @@ class AppleMusicCrawlerEngine(BaseCrawlerEngine):
         Returns:
             List of track data
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -281,6 +290,9 @@ class AppleMusicCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Track details or None if not found
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -326,6 +338,9 @@ class AppleMusicCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Artist information or None if not found
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -371,6 +386,9 @@ class AppleMusicCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Playlist information or None if not found
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -481,6 +499,9 @@ class AppleMusicCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Protection monitoring results
         """
+
+
+
         try:
             # Search for potential unauthorized use
             search_queries = [
@@ -533,6 +554,9 @@ class AppleMusicCrawlerEngine(BaseCrawlerEngine):
     
     async def cleanup(self) -> None:
         """Clean up resources"""
+
+
+
         try:
             if self.session:
                 await self.session.close()

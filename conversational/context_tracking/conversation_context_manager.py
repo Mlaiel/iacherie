@@ -7,7 +7,7 @@ intelligence components for multi-format content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited. Contact: mlaiel@live.de
 """
@@ -65,10 +65,16 @@ class ContextItem:
     
     def is_expired(self) -> bool:
         """Check if context item has expired"""
+
+
+
         return self.expires_at and datetime.utcnow() > self.expires_at
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary representation"""
+
+
+
         return {
             "key": self.key,
             "value": self.value,
@@ -147,6 +153,9 @@ class ConversationContextManager:
     
     async def start(self):
         """Start the context manager and background tasks"""
+
+
+
         try:
             # Start background cleanup
             self.cleanup_task = asyncio.create_task(self._background_cleanup())
@@ -162,6 +171,9 @@ class ConversationContextManager:
     
     async def stop(self):
         """Stop the context manager and cleanup resources"""
+
+
+
         try:
             # Cancel background tasks
             if self.cleanup_task:
@@ -217,6 +229,9 @@ class ConversationContextManager:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             validate_required_fields({"key": key, "value": value, "scope": scope})
             
@@ -288,6 +303,9 @@ class ConversationContextManager:
         Returns:
             Context value or default
         """
+
+
+
         try:
             # Search in scope hierarchy (most specific to least specific)
             context_item = await self._find_context_item(
@@ -345,6 +363,9 @@ class ConversationContextManager:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             removed = False
             
@@ -393,6 +414,9 @@ class ConversationContextManager:
         Returns:
             ConversationState: New conversation state
         """
+
+
+
         try:
             # Create conversation state
             state = ConversationState(
@@ -446,6 +470,9 @@ class ConversationContextManager:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             if conversation_id not in self.conversation_states:
                 return False
@@ -480,6 +507,9 @@ class ConversationContextManager:
         conversation_id: str
     ) -> Optional[ConversationState]:
         """Get current conversation state"""
+
+
+
         return self.conversation_states.get(conversation_id)
     
     async def update_conversation_state(
@@ -497,6 +527,9 @@ class ConversationContextManager:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             if conversation_id not in self.conversation_states:
                 return False
@@ -532,6 +565,9 @@ class ConversationContextManager:
         Returns:
             Dict containing context summary
         """
+
+
+
         try:
             scopes = include_scopes or list(ContextScope)
             summary = {
@@ -564,6 +600,9 @@ class ConversationContextManager:
         session_id: Optional[str]
     ) -> bool:
         """Store context item in appropriate scope storage"""
+
+
+
         try:
             if item.scope == ContextScope.GLOBAL:
                 self.global_context[item.key] = item
@@ -632,6 +671,9 @@ class ConversationContextManager:
         session_id: Optional[str]
     ) -> bool:
         """Remove context item from specific scope"""
+
+
+
         try:
             if scope == ContextScope.GLOBAL:
                 return self.global_context.pop(key, None) is not None
@@ -736,6 +778,9 @@ class ConversationContextManager:
     
     async def _load_global_context(self):
         """Load persistent global context from storage"""
+
+
+
         try:
             # Load from cache or database
             global_data = await self.cache_manager.get("global_context")
@@ -748,6 +793,9 @@ class ConversationContextManager:
     
     async def _save_global_context(self):
         """Save persistent global context to storage"""
+
+
+
         try:
             global_data = {
                 key: item.to_dict()
@@ -766,6 +814,9 @@ class ConversationContextManager:
     
     async def _load_user_context(self, user_id: str, session_id: str):
         """Load user-specific context for new session"""
+
+
+
         try:
             # Load user preferences, settings, historical context
             user_data = await self.cache_manager.get(f"user_context:{user_id}")
@@ -789,6 +840,9 @@ class ConversationContextManager:
         state: ConversationState
     ):
         """Save conversation summary for analytics and learning"""
+
+
+
         try:
             summary = {
                 "conversation_id": conversation_id,

@@ -223,6 +223,9 @@ class PlatformIntelligenceEngine:
     
     async def _collect_platform_data(self):
         """Collect data from all platform sources"""
+
+
+
         try:
             # Collect metrics from Redis
             if self.redis_client:
@@ -237,6 +240,9 @@ class PlatformIntelligenceEngine:
     
     async def _collect_redis_metrics(self):
         """Collect metrics from Redis"""
+
+
+
         try:
             # Content protection metrics
             protection_data = await self.redis_client.hgetall("metrics:content_protection")
@@ -267,6 +273,9 @@ class PlatformIntelligenceEngine:
     
     async def _collect_database_metrics(self):
         """Collect metrics from database"""
+
+
+
         try:
             async with self.db_engine.begin() as conn:
                 # User engagement metrics
@@ -306,6 +315,9 @@ class PlatformIntelligenceEngine:
     
     async def _generate_business_insights(self):
         """Generate business insights from collected data"""
+
+
+
         try:
             # Content protection insights
             protection_insights = await self._content_analyzer.analyze(
@@ -354,6 +366,9 @@ class PlatformIntelligenceEngine:
     
     async def _update_trend_analysis(self):
         """Update trend analysis for key metrics"""
+
+
+
         try:
             current_time = datetime.utcnow()
             
@@ -403,6 +418,9 @@ class PlatformIntelligenceEngine:
     
     async def _cleanup_expired_insights(self):
         """Clean up expired insights"""
+
+
+
         try:
             current_time = datetime.utcnow()
             expired_insights = []
@@ -427,6 +445,9 @@ class PlatformIntelligenceEngine:
     
     async def get_platform_intelligence_overview(self) -> Dict[str, Any]:
         """Get comprehensive platform intelligence overview"""
+
+
+
         try:
             current_time = datetime.utcnow()
             
@@ -742,6 +763,9 @@ class PlatformIntelligenceEngine:
     
     async def get_insights_by_category(self, category: IntelligenceCategory) -> List[BusinessInsight]:
         """Get insights filtered by category"""
+
+
+
         return [
             insight for insight in self._insights_cache.values() 
             if insight.category == category
@@ -749,6 +773,9 @@ class PlatformIntelligenceEngine:
     
     async def get_high_priority_insights(self) -> List[BusinessInsight]:
         """Get high priority insights requiring attention"""
+
+
+
         return [
             insight for insight in self._insights_cache.values()
             if insight.priority in [InsightPriority.HIGH, InsightPriority.CRITICAL, InsightPriority.URGENT]

@@ -341,6 +341,9 @@ class MonetizationConfig:
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'MonetizationConfig':
         """Create configuration from dictionary."""
+
+
+
         try:
             # Convert nested dictionaries to dataclass instances
             if 'database' in data:
@@ -376,6 +379,9 @@ class MonetizationConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert configuration to dictionary."""
+
+
+
         return asdict(self)
     
     def to_json(self) -> str:
@@ -447,6 +453,9 @@ class MonetizationConfig:
     
     def is_valid(self) -> bool:
         """Check if configuration is valid."""
+
+
+
         return len(self.validate()) == 0
 
 
@@ -527,12 +536,18 @@ def get_config_manager() -> ConfigurationManager:
 
 def get_config() -> MonetizationConfig:
     """Get the current configuration."""
+
+
+
     return get_config_manager().get_config()
 
 
 def load_config(config_file: Optional[Union[str, Path]] = None, 
                from_env: bool = True) -> MonetizationConfig:
     """Load configuration."""
+
+
+
     return get_config_manager().load_config(config_file, from_env)
 
 

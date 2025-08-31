@@ -298,6 +298,9 @@ class FingerprintAIConfig(BaseSettings):
     
     def _get_default_spec(self, fingerprint_type: FingerprintType) -> FingerprintSpec:
         """Get default specification for unknown fingerprint types."""
+
+
+
         return FingerprintSpec(
             fingerprint_type=fingerprint_type,
             algorithm="default",
@@ -358,6 +361,9 @@ class FingerprintAIConfig(BaseSettings):
     
     def get_similarity_config(self) -> Dict[str, Any]:
         """Get similarity matching configuration."""
+
+
+
         return {
             "thresholds": self.MATCH_CONFIDENCE_LEVELS,
             "global_threshold": self.SIMILARITY_THRESHOLD_GLOBAL,

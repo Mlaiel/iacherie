@@ -1,15 +1,15 @@
 """
-🚀 Message Queue System - IA Influencer Agent Platform Enterprise
+ Message Queue System - IA Influencer Agent Platform Enterprise
 ===============================================================
 Module: backend/platform_core/communication/message_queue.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ===============================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 SYSTÈME DE FILES D'ATTENTE ASYNCHRONE
+ SYSTÈME DE FILES D'ATTENTE ASYNCHRONE
 Message queue enterprise avec traitement distribué
 - Redis Streams pour haute performance
 - Dead Letter Queue pour gestion d'erreurs
@@ -338,6 +338,9 @@ class MessageQueue:
         
     async def _ack_message(self, stream_key: str, group_name: str, message_id: str):
         """Acknowledge un message dans Redis Stream"""
+
+
+
         try:
             await self.redis_client.xack(stream_key, group_name, message_id)
         except Exception as e:

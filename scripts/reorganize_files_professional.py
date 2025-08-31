@@ -261,7 +261,7 @@ from .manager import SomeModuleManager
         if not module_dir.is_dir():
             return {'success': False, 'error': 'Module not found'}
         
-        logger.info(f"🔧 Reorganizing {module_name}...")
+        logger.info(f" Reorganizing {module_name}...")
         
         try:
             # Analyze existing files
@@ -284,16 +284,16 @@ from .manager import SomeModuleManager
                 'directories_created': list(directories.keys())
             }
             
-            logger.info(f"✅ {module_name}: {len(moves_performed)} files reorganized")
+            logger.info(f" {module_name}: {len(moves_performed)} files reorganized")
             return result
             
         except Exception as e:
-            logger.error(f"❌ Failed to reorganize {module_name}: {e}")
+            logger.error(f" Failed to reorganize {module_name}: {e}")
             return {'success': False, 'error': str(e)}
     
     def reorganize_all_modules(self):
         """Reorganize all modules"""
-        logger.info("🚀 Starting Professional File Reorganization...")
+        logger.info(" Starting Professional File Reorganization...")
         
         results = []
         total_moves = 0
@@ -315,10 +315,10 @@ from .manager import SomeModuleManager
         successful = len([r for r in results if r['success']])
         failed = len([r for r in results if not r['success']])
         
-        logger.info(f"🎉 Reorganization Complete!")
-        logger.info(f"   ✅ Successful: {successful} modules")
-        logger.info(f"   ❌ Failed: {failed} modules") 
-        logger.info(f"   📁 Total files moved: {total_moves}")
+        logger.info(f" Reorganization Complete!")
+        logger.info(f"    Successful: {successful} modules")
+        logger.info(f"    Failed: {failed} modules") 
+        logger.info(f"    Total files moved: {total_moves}")
         
         return results
 

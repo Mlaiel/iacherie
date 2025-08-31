@@ -1,5 +1,5 @@
 """
-🔄 Base Migration System - Enterprise Database Evolution Foundation
+ Base Migration System - Enterprise Database Evolution Foundation
 ==================================================================
 
 Ultra-advanced database migration framework for IA Influencer Agent platform:
@@ -13,7 +13,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+ UNAUTHORIZED USE STRICTLY PROHIBITED 
 This migration framework is protected intellectual property.
 Contact mlaiel@live.de for licensing inquiries.
 """
@@ -278,6 +278,9 @@ class BaseMigration(ABC):
         
     async def _get_session(self) -> Session:
         """Get database session"""
+
+
+
         return self.session_maker()
         
     async def _get_transaction_session(self) -> Session:
@@ -326,6 +329,9 @@ class BaseMigration(ABC):
                 
     def calculate_checksum(self, data: str) -> str:
         """Calculate data checksum for integrity validation"""
+
+
+
         return hashlib.sha256(data.encode()).hexdigest()
         
     def log_operation(self, operation: str, details: Dict[str, Any]) -> None:
@@ -385,6 +391,9 @@ class MigrationRegistry:
         
     def get_migration(self, migration_id: str) -> Optional[BaseMigration]:
         """Get migration by ID"""
+
+
+
         return self.migrations.get(migration_id)
         
     def list_pending_migrations(self, executed_migrations: Set[str]) -> List[str]:

@@ -195,6 +195,9 @@ class CacheMonitor:
                           labels: Optional[Dict[str, str]] = None,
                           metadata: Optional[Dict[str, Any]] = None) -> None:
         """Record metric data point."""
+
+
+
         try:
             metric = MetricData(
                 metric_type=metric_type,
@@ -223,6 +226,9 @@ class CacheMonitor:
     
     async def _check_thresholds(self, metric: MetricData) -> None:
         """Check metric against thresholds."""
+
+
+
         try:
             for threshold in self.thresholds:
                 if not threshold.enabled or threshold.metric_type != metric.metric_type:
@@ -256,6 +262,9 @@ class CacheMonitor:
     
     async def _check_duration_violation(self, threshold: Threshold) -> bool:
         """Check if threshold violation persists for required duration."""
+
+
+
         try:
             cutoff_time = datetime.now() - timedelta(seconds=threshold.duration_seconds)
             
@@ -293,6 +302,9 @@ class CacheMonitor:
     
     async def _create_alert(self, threshold: Threshold, metric: MetricData) -> None:
         """Create alert for threshold violation."""
+
+
+
         try:
             alert_key = f"{threshold.metric_type.value}_{threshold.operator}_{threshold.value}"
             
@@ -334,6 +346,9 @@ class CacheMonitor:
     
     async def acknowledge_alert(self, alert_id: str) -> bool:
         """Acknowledge alert."""
+
+
+
         try:
             with self.alert_lock:
                 for alert in self.alerts:
@@ -350,6 +365,9 @@ class CacheMonitor:
     
     async def resolve_alert(self, alert_id: str) -> bool:
         """Resolve alert."""
+
+
+
         try:
             with self.alert_lock:
                 for alert in self.alerts:
@@ -446,6 +464,9 @@ class CacheMonitor:
     
     async def _collect_metrics(self) -> None:
         """Collect all metrics."""
+
+
+
         try:
             # Collect standard metrics
             for metric_type, collector in self.metric_collectors.items():
@@ -478,6 +499,9 @@ class CacheMonitor:
     
     async def _update_health_status(self) -> None:
         """Update overall health status."""
+
+
+
         try:
             # Simple health check based on active alerts
             critical_alerts = [
@@ -533,6 +557,9 @@ class CacheMonitor:
     
     async def _auto_resolve_alerts(self) -> None:
         """Auto-resolve alerts that are no longer active."""
+
+
+
         try:
             current_time = datetime.now()
             
@@ -584,6 +611,9 @@ class CacheMonitor:
     
     async def _cleanup_old_alerts(self) -> None:
         """Clean up old resolved alerts."""
+
+
+
         try:
             cutoff_time = datetime.now() - timedelta(hours=self.retention_hours)
             
@@ -604,6 +634,9 @@ class CacheMonitor:
     async def get_metrics_summary(self, metric_type: Optional[MetricType] = None,
                                 time_range_hours: int = 1) -> Dict[str, Any]:
         """Get metrics summary."""
+
+
+
         try:
             cutoff_time = datetime.now() - timedelta(hours=time_range_hours)
             summary = {}
@@ -641,6 +674,9 @@ class CacheMonitor:
     
     async def get_active_alerts(self) -> List[Dict[str, Any]]:
         """Get active alerts."""
+
+
+
         try:
             with self.alert_lock:
                 return [
@@ -664,6 +700,9 @@ class CacheMonitor:
     
     async def get_monitoring_status(self) -> Dict[str, Any]:
         """Get monitoring system status."""
+
+
+
         try:
             with self.metrics_lock:
                 total_metrics = sum(len(metrics) for metrics in self.metrics.values())
@@ -705,6 +744,9 @@ class AlertManager:
     
     async def handle_alert(self, alert: Alert) -> None:
         """Handle alert notification."""
+
+
+
         try:
             for channel in self.notification_channels:
                 try:
@@ -733,6 +775,9 @@ class MetricsExporter:
     
     async def export_metrics(self, time_range_hours: int = 1) -> None:
         """Export metrics to external systems."""
+
+
+
         try:
             summary = await self.monitor.get_metrics_summary(time_range_hours=time_range_hours)
             

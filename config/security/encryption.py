@@ -15,7 +15,7 @@ Business Logic Integration:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend + Security Experts
 
-⚠️ COPYRIGHT WARNING:
+ COPYRIGHT WARNING:
 This code is proprietary and belongs to Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit 
 written permission from Fahed Mlaiel is strictly prohibited.
@@ -417,6 +417,9 @@ encryption_config = EncryptionConfig()
 
 def get_encryption_config() -> EncryptionConfig:
     """Get the encryption configuration instance."""
+
+
+
     return encryption_config
 
 

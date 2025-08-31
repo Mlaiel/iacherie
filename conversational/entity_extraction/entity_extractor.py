@@ -9,7 +9,7 @@ bloggers, and content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
@@ -100,10 +100,16 @@ class ExtractionResult:
     
     def get_high_confidence_entities(self) -> List[ExtractedEntity]:
         """Get entities with high confidence scores"""
+
+
+
         return [e for e in self.entities if e.confidence >= EntityConfidence.HIGH.value]
     
     def get_entities_by_type(self, entity_type: EntityCategory) -> List[ExtractedEntity]:
         """Get entities filtered by type"""
+
+
+
         return [e for e in self.entities if e.entity_type == entity_type]
 
 
@@ -147,6 +153,9 @@ class EntityExtractor(BaseService):
         
     async def initialize(self):
         """Initialize models and resources"""
+
+
+
         try:
             self.logger.info("Initializing EntityExtractor models...")
             
@@ -193,6 +202,9 @@ class EntityExtractor(BaseService):
     
     async def _load_spacy_models(self):
         """Load spaCy models for additional entity recognition"""
+
+
+
         try:
             # Try to load English model
             self.nlp_en = spacy.load("en_core_web_sm")
@@ -215,6 +227,9 @@ class EntityExtractor(BaseService):
     
     async def _load_transformer_models(self):
         """Load transformer models for advanced entity recognition"""
+
+
+
         try:
             # Load BERT for creative content understanding
             self.creative_classifier = pipeline(
@@ -266,6 +281,9 @@ class EntityExtractor(BaseService):
     
     def _load_creative_patterns(self) -> Dict[str, List[str]]:
         """Load regex patterns for creative industry entities"""
+
+
+
         return {
             'social_handles': [
                 r'@[\w\d_]+',
@@ -776,6 +794,9 @@ class EntityExtractor(BaseService):
     
     async def get_extraction_statistics(self) -> Dict[str, Any]:
         """Get extraction statistics"""
+
+
+
         return {
             **self.extraction_stats,
             'cache_stats': cache_manager.get_stats(),
@@ -788,6 +809,9 @@ class EntityExtractor(BaseService):
     
     async def health_check(self) -> Dict[str, Any]:
         """Health check for entity extraction service"""
+
+
+
         return {
             'status': 'healthy',
             'models_loaded': len(self.models),

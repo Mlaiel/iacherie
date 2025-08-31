@@ -177,6 +177,9 @@ class PromptManager:
     
     async def initialize(self) -> bool:
         """Initialize the prompt manager"""
+
+
+
         try:
             self.logger.info("Initializing Prompt Manager...")
             
@@ -211,6 +214,9 @@ class PromptManager:
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
         """Create a new prompt template"""
+
+
+
         try:
             self.logger.info(f"Creating prompt template: {name}")
             
@@ -265,6 +271,9 @@ class PromptManager:
         context: Optional[Dict[str, Any]] = None
     ) -> str:
         """Generate a prompt from a template"""
+
+
+
         try:
             # Get active template
             if template_name not in self.active_templates:
@@ -370,6 +379,9 @@ class PromptManager:
         optimization_strategy: str = "performance"
     ) -> Dict[str, Any]:
         """Optimize a template based on performance data"""
+
+
+
         try:
             self.logger.info(f"Optimizing template: {template_name}")
             
@@ -430,6 +442,9 @@ class PromptManager:
         time_range_days: int = 30
     ) -> Dict[str, Any]:
         """Get analytics for a template"""
+
+
+
         try:
             if template_name not in self.active_templates:
                 raise ValueError(f"Template {template_name} not found")
@@ -484,6 +499,9 @@ class PromptManager:
         status: Optional[PromptStatus] = None
     ) -> List[Dict[str, Any]]:
         """List all templates with optional filtering"""
+
+
+
         try:
             templates = []
             
@@ -518,6 +536,9 @@ class PromptManager:
     
     async def get_manager_status(self) -> Dict[str, Any]:
         """Get prompt manager status"""
+
+
+
         try:
             # Calculate category distribution
             category_counts = {}
@@ -687,6 +708,9 @@ class PromptManager:
     
     async def _get_template_performance(self, template_id: str) -> List[PromptExecution]:
         """Get performance data for a template"""
+
+
+
         return [e for e in self.execution_history if e.template_id == template_id]
     
     async def _optimize_for_performance(
@@ -776,6 +800,9 @@ class PromptManager:
     
     def _increment_version(self, version: str) -> str:
         """Increment version number"""
+
+
+
         try:
             parts = version.split('.')
             parts[-1] = str(int(parts[-1]) + 1)
@@ -849,6 +876,9 @@ class PromptManager:
     
     async def _get_performance_summary(self) -> Dict[str, Any]:
         """Get performance summary"""
+
+
+
         return {
             'total_executions': len(self.execution_history),
             'recent_performance': 'Good',

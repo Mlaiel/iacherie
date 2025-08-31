@@ -54,6 +54,9 @@ class TechnicalDocumentationGenerator:
     
     def generate_architecture_overview(self) -> str:
         """Generate architecture overview documentation"""
+
+
+
         return f"""
 # IA-Influencer Agent Platform - Technical Architecture
 
@@ -251,6 +254,9 @@ Payment Processing → Creator Payouts → Tax Reporting
     
     def generate_api_documentation(self) -> str:
         """Generate API documentation"""
+
+
+
         return f"""
 # API Documentation - IA-Influencer Agent Platform
 
@@ -460,6 +466,9 @@ Get event system health status.
     
     def generate_deployment_guide(self) -> str:
         """Generate deployment documentation"""
+
+
+
         return f"""
 # Deployment Guide - IA-Influencer Agent Platform
 

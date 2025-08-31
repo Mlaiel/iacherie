@@ -171,6 +171,9 @@ class IntelligentLoadBalancer:
     
     def _least_connections_select(self, replicas: List[str]) -> str:
         """Select replica with least connections"""
+
+
+
         return min(replicas, key=lambda r: self.connection_counts.get(r, 0))
     
     def _response_time_select(self, replicas: List[str]) -> str:
@@ -340,6 +343,9 @@ class ReadReplicaMonitor:
     
     async def _check_replica_health(self, replica_id: str):
         """Check health of a specific replica"""
+
+
+
         try:
             engine = self.replica_engines.get(replica_id)
             if not engine:
@@ -398,14 +404,23 @@ class ReadReplicaMonitor:
     
     def get_replica_metrics(self, replica_id: str) -> Optional[ReplicaMetrics]:
         """Get metrics for specific replica"""
+
+
+
         return self.replica_metrics.get(replica_id)
     
     def get_all_metrics(self) -> Dict[str, ReplicaMetrics]:
         """Get metrics for all replicas"""
+
+
+
         return self.replica_metrics.copy()
     
     async def test_replica_connectivity(self, replica_id: str) -> bool:
         """Test connectivity to specific replica"""
+
+
+
         try:
             engine = self.replica_engines.get(replica_id)
             if not engine:
@@ -446,6 +461,9 @@ class ReadReplicaManager:
     
     async def initialize(self) -> bool:
         """Initialize read replica manager"""
+
+
+
         try:
             logger.info("Initializing read replica manager")
             
@@ -501,6 +519,9 @@ class ReadReplicaManager:
     
     async def _test_replica(self, replica_id: str) -> bool:
         """Test replica connectivity"""
+
+
+
         try:
             engine = self.replica_engines.get(replica_id)
             if not engine:
@@ -535,6 +556,9 @@ class ReadReplicaManager:
                                 query_type: str = "read",
                                 timeout: Optional[float] = None) -> Any:
         """Execute read query on optimal replica"""
+
+
+
         try:
             # Get available replicas
             available_replicas = [
@@ -615,6 +639,9 @@ class ReadReplicaManager:
     
     async def _handle_replica_error(self, replica_id: str, error: Exception):
         """Handle replica error"""
+
+
+
         try:
             # Update replica status based on error
             if "connection" in str(error).lower():
@@ -638,6 +665,9 @@ class ReadReplicaManager:
     
     async def _attempt_replica_recovery(self, replica_id: str):
         """Attempt to recover failed replica"""
+
+
+
         try:
             logger.info(f"Attempting recovery for replica {replica_id}")
             
@@ -663,6 +693,9 @@ class ReadReplicaManager:
     
     async def get_replica_stats(self) -> Dict[str, Any]:
         """Get comprehensive replica statistics"""
+
+
+
         try:
             stats = {
                 'total_replicas': len(self.replica_configs),
@@ -708,6 +741,9 @@ class ReadReplicaManager:
     
     async def shutdown(self):
         """Shutdown read replica manager"""
+
+
+
         try:
             # Stop monitoring
             await self.monitor.stop_monitoring()

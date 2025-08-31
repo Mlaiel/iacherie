@@ -139,6 +139,9 @@ class RollbackManager:
     
     async def initialize(self) -> None:
         """Initialize rollback manager"""
+
+
+
         try:
             self.logger.info("Initializing rollback manager")
             
@@ -168,6 +171,9 @@ class RollbackManager:
     async def create_rollback_plan(self, trigger: RollbackTrigger, targets: List[RollbackTarget],
                                  strategy: RollbackStrategy = RollbackStrategy.IMMEDIATE) -> RollbackPlan:
         """Create a rollback execution plan"""
+
+
+
         try:
             # Generate rollback ID
             rollback_id = self._generate_rollback_id(targets)
@@ -218,6 +224,9 @@ class RollbackManager:
     
     async def execute_rollback(self, plan: RollbackPlan) -> RollbackExecution:
         """Execute rollback according to plan"""
+
+
+
         try:
             # Create execution tracking
             execution = RollbackExecution(
@@ -303,6 +312,9 @@ class RollbackManager:
     async def trigger_automatic_rollback(self, service_name: str, reason: str,
                                        target_version: Optional[str] = None) -> RollbackExecution:
         """Trigger automatic rollback for a service"""
+
+
+
         try:
             self.logger.warning(f"Triggering automatic rollback for {service_name}: {reason}")
             
@@ -344,6 +356,9 @@ class RollbackManager:
     
     async def cancel_rollback(self, rollback_id: str) -> bool:
         """Cancel an active rollback"""
+
+
+
         try:
             if rollback_id not in self.active_rollbacks:
                 raise ValidationError(f"Active rollback {rollback_id} not found")
@@ -556,10 +571,16 @@ class RollbackManager:
     
     async def _get_pre_rollback_checks(self, targets: List[RollbackTarget]) -> List[str]:
         """Get pre-rollback checks for targets"""
+
+
+
         return ['health_check', 'dependency_check', 'backup_verification']
     
     async def _get_post_rollback_checks(self, targets: List[RollbackTarget]) -> List[str]:
         """Get post-rollback checks for targets"""
+
+
+
         return ['health_check', 'functionality_test', 'performance_check']
     
     async def _validate_rollback_plan(self, plan: RollbackPlan) -> None:

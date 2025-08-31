@@ -1,5 +1,5 @@
 """
-🔍 Vector Query Engine
+ Vector Query Engine
 ======================
 
 Advanced query processing and optimization engine for vector database operations.
@@ -8,7 +8,7 @@ Supports complex multi-criteria queries with intelligent optimization and cachin
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL IMPORTANT ⚠️
+  AVERTISSEMENT LÉGAL IMPORTANT 
 =====================================
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
@@ -128,6 +128,9 @@ class QueryOptimizer:
     
     async def optimize_query(self, request: QueryRequest) -> QueryRequest:
         """Optimize query based on performance statistics and index characteristics"""
+
+
+
         try:
             optimized_request = request
             
@@ -178,6 +181,9 @@ class QueryOptimizer:
     
     async def record_performance(self, query_id: str, execution_time_ms: float, result_count: int):
         """Record query performance for optimization learning"""
+
+
+
         try:
             # Store performance data
             perf_data = {
@@ -221,6 +227,9 @@ class QueryCache:
     
     async def get(self, cache_key: str) -> Optional[QueryResult]:
         """Retrieve cached query result"""
+
+
+
         try:
             if cache_key not in self.cache:
                 self.miss_count += 1
@@ -250,6 +259,9 @@ class QueryCache:
     
     async def put(self, cache_key: str, result: QueryResult, ttl: Optional[float] = None):
         """Store query result in cache"""
+
+
+
         try:
             # Check cache size limit
             if len(self.cache) >= self.max_size:
@@ -270,6 +282,9 @@ class QueryCache:
     
     async def invalidate_pattern(self, pattern: str):
         """Invalidate cache entries matching pattern"""
+
+
+
         try:
             keys_to_remove = [key for key in self.cache.keys() if pattern in key]
             for key in keys_to_remove:
@@ -302,6 +317,9 @@ class QueryCache:
     
     def _estimate_size(self, result: QueryResult) -> int:
         """Estimate memory size of cached result"""
+
+
+
         try:
             # Simple estimation based on number of matches
             base_size = 1024  # Base overhead

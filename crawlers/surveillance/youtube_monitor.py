@@ -2,7 +2,7 @@
 YouTube Monitor - Surveillance YouTube Automatique
 =================================================
 
-⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
+ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
 © 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
@@ -118,6 +118,9 @@ class YouTubeMonitor:
     
     async def initialize(self) -> None:
         """Initialize the YouTube monitor."""
+
+
+
         try:
             self._logger.info("Initializing YouTube monitor...")
             
@@ -136,6 +139,9 @@ class YouTubeMonitor:
     
     async def _initialize_youtube_client(self) -> None:
         """Initialize YouTube API client."""
+
+
+
         try:
             # This would initialize the actual YouTube API client
             # For now, we'll implement a placeholder
@@ -147,6 +153,9 @@ class YouTubeMonitor:
     
     async def start_monitoring(self) -> None:
         """Start YouTube monitoring operations."""
+
+
+
         try:
             if self._monitoring_active:
                 self._logger.warning("YouTube monitoring is already active")
@@ -166,6 +175,9 @@ class YouTubeMonitor:
     
     async def stop_monitoring(self) -> None:
         """Stop YouTube monitoring operations."""
+
+
+
         try:
             if not self._monitoring_active:
                 self._logger.warning("YouTube monitoring is not active")
@@ -195,6 +207,9 @@ class YouTubeMonitor:
         check_interval_minutes: int = None
     ) -> str:
         """Add channel monitoring target."""
+
+
+
         try:
             target_id = f"channel_{channel_id}_{datetime.now().timestamp()}"
             
@@ -226,6 +241,9 @@ class YouTubeMonitor:
         check_interval_minutes: int = None
     ) -> str:
         """Add video monitoring target."""
+
+
+
         try:
             target_id = f"video_{video_id}_{datetime.now().timestamp()}"
             
@@ -257,6 +275,9 @@ class YouTubeMonitor:
         check_interval_minutes: int = None
     ) -> str:
         """Add keyword monitoring target."""
+
+
+
         try:
             target_id = f"keyword_{keyword.replace(' ', '_')}_{datetime.now().timestamp()}"
             
@@ -283,6 +304,9 @@ class YouTubeMonitor:
     
     async def remove_monitoring_target(self, target_id: str) -> bool:
         """Remove monitoring target."""
+
+
+
         try:
             if target_id in self.targets:
                 target = self.targets[target_id]
@@ -362,6 +386,9 @@ class YouTubeMonitor:
     
     async def _check_target(self, target: YouTubeMonitorTarget) -> None:
         """Check a monitoring target for violations."""
+
+
+
         try:
             self._logger.debug(f"Checking target: {target.target_id} ({target.target_type})")
             
@@ -393,6 +420,9 @@ class YouTubeMonitor:
     
     async def _check_channel(self, target: YouTubeMonitorTarget) -> None:
         """Check channel for violations."""
+
+
+
         try:
             channel_id = target.identifier
             
@@ -421,6 +451,9 @@ class YouTubeMonitor:
     
     async def _check_video(self, target: YouTubeMonitorTarget) -> None:
         """Check specific video for violations."""
+
+
+
         try:
             video_id = target.identifier
             
@@ -448,6 +481,9 @@ class YouTubeMonitor:
     
     async def _check_keyword(self, target: YouTubeMonitorTarget) -> None:
         """Check keyword search for violations."""
+
+
+
         try:
             keyword = target.identifier
             
@@ -480,6 +516,9 @@ class YouTubeMonitor:
         max_results: int = 50
     ) -> List[Dict[str, Any]]:
         """Get recent videos from a channel."""
+
+
+
         try:
             # This would use the YouTube API to get channel videos
             # For now, return placeholder data
@@ -498,6 +537,9 @@ class YouTubeMonitor:
     
     async def _get_video_details(self, video_id: str) -> Optional[Dict[str, Any]]:
         """Get video details."""
+
+
+
         try:
             # This would use the YouTube API to get video details
             # For now, return placeholder data
@@ -520,6 +562,9 @@ class YouTubeMonitor:
         max_results: int = 50
     ) -> List[Dict[str, Any]]:
         """Search for videos by keyword."""
+
+
+
         try:
             # This would use the YouTube API to search videos
             # For now, return placeholder data
@@ -594,6 +639,9 @@ class YouTubeMonitor:
     
     def get_monitoring_status(self) -> Dict[str, Any]:
         """Get current monitoring status."""
+
+
+
         return {
             'monitoring_active': self._monitoring_active,
             'targets_count': len(self.targets),
@@ -639,6 +687,9 @@ class YouTubeMonitor:
     
     async def shutdown(self) -> None:
         """Shutdown the YouTube monitor."""
+
+
+
         try:
             self._logger.info("Shutting down YouTube monitor...")
             

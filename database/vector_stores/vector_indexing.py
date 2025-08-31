@@ -208,6 +208,9 @@ class VectorIndexManager:
     
     async def initialize(self) -> None:
         """Initialize index manager and load existing indices"""
+
+
+
         try:
             # Load existing indices from storage
             await self._load_existing_indices()
@@ -243,6 +246,9 @@ class VectorIndexManager:
         Returns:
             Index ID
         """
+
+
+
         try:
             if index_id in self.indices:
                 raise VectorStoreError(f"Index {index_id} already exists")
@@ -328,6 +334,9 @@ class VectorIndexManager:
         Returns:
             List of internal FAISS IDs
         """
+
+
+
         try:
             if index_id not in self.indices:
                 raise VectorStoreError(f"Index {index_id} not found")
@@ -411,6 +420,9 @@ class VectorIndexManager:
         Returns:
             List of (content_id, similarity_score) tuples
         """
+
+
+
         try:
             start_time = datetime.now()
             
@@ -470,6 +482,9 @@ class VectorIndexManager:
         Returns:
             Number of vectors marked for removal
         """
+
+
+
         try:
             if index_id not in self.indices:
                 raise VectorStoreError(f"Index {index_id} not found")
@@ -521,6 +536,9 @@ class VectorIndexManager:
         Returns:
             True if optimization was performed
         """
+
+
+
         try:
             if index_id not in self.indices:
                 raise VectorStoreError(f"Index {index_id} not found")
@@ -570,6 +588,9 @@ class VectorIndexManager:
     
     async def get_index_info(self, index_id: str) -> Optional[IndexStatistics]:
         """Get comprehensive index information"""
+
+
+
         try:
             if index_id not in self.indices:
                 return None
@@ -585,6 +606,9 @@ class VectorIndexManager:
     
     async def list_indices(self) -> List[IndexStatistics]:
         """List all indices with their statistics"""
+
+
+
         try:
             indices_info = []
             
@@ -612,6 +636,9 @@ class VectorIndexManager:
         Returns:
             Backup file path
         """
+
+
+
         try:
             if index_id not in self.indices:
                 raise VectorStoreError(f"Index {index_id} not found")
@@ -662,6 +689,9 @@ class VectorIndexManager:
         Returns:
             Restored index ID
         """
+
+
+
         try:
             # Load backup metadata
             with open(backup_path + ".meta", "r") as f:
@@ -715,6 +745,9 @@ class VectorIndexManager:
         Returns:
             True if deleted successfully
         """
+
+
+
         try:
             if not confirm:
                 raise VectorStoreError("Index deletion requires confirmation")
@@ -747,6 +780,9 @@ class VectorIndexManager:
     
     async def _create_faiss_index(self, config: IndexConfiguration) -> faiss.Index:
         """Create FAISS index based on configuration"""
+
+
+
         try:
             if config.index_type == IndexType.FLAT:
                 if config.metric == "cosine":
@@ -791,6 +827,9 @@ class VectorIndexManager:
     
     async def _load_existing_indices(self) -> None:
         """Load existing indices from storage"""
+
+
+
         try:
             index_files = await self.storage_manager.list_index_files()
             
@@ -807,6 +846,9 @@ class VectorIndexManager:
     
     async def _load_index(self, index_id: str) -> None:
         """Load a specific index from storage"""
+
+
+
         try:
             # Load index data from storage
             index_data = await self.storage_manager.load_index(index_id)
@@ -826,6 +868,9 @@ class VectorIndexManager:
     
     async def _save_index(self, index_id: str) -> None:
         """Save index to storage"""
+
+
+
         try:
             index_data = {
                 "index_data": self.indices[index_id],
@@ -841,6 +886,9 @@ class VectorIndexManager:
     
     async def _needs_optimization(self, index_id: str) -> bool:
         """Check if index needs optimization"""
+
+
+
         try:
             stats = self.index_stats[index_id]
             
@@ -865,6 +913,9 @@ class VectorIndexManager:
     
     async def _optimize_ivf_index(self, index_id: str) -> None:
         """Optimize IVF index"""
+
+
+
         try:
             index_data = self.indices[index_id]
             index = index_data["index"]
@@ -883,6 +934,9 @@ class VectorIndexManager:
     
     async def _optimize_hnsw_index(self, index_id: str) -> None:
         """Optimize HNSW index"""
+
+
+
         try:
             index_data = self.indices[index_id]
             index = index_data["index"]
@@ -901,6 +955,9 @@ class VectorIndexManager:
     
     async def _initialize_partitioning(self, index_id: str) -> None:
         """Initialize partitioning for an index"""
+
+
+
         try:
             partition = IndexPartition(
                 partition_id=f"{index_id}_p0",
@@ -921,6 +978,9 @@ class VectorIndexManager:
     
     async def _calculate_fragmentation(self, index_id: str) -> None:
         """Calculate index fragmentation ratio"""
+
+
+
         try:
             index_data = self.indices[index_id]
             total_slots = len(index_data["vector_map"])
@@ -935,6 +995,9 @@ class VectorIndexManager:
     
     async def _schedule_optimization_if_needed(self, index_id: str) -> None:
         """Schedule optimization if needed"""
+
+
+
         try:
             if await self._needs_optimization(index_id):
                 await self._schedule_maintenance(
@@ -947,6 +1010,9 @@ class VectorIndexManager:
         self, index_id: str, task_type: MaintenanceType, priority: int
     ) -> None:
         """Schedule a maintenance task"""
+
+
+
         try:
             task = MaintenanceTask(
                 task_id=f"{index_id}_{task_type.value}_{datetime.now().timestamp()}",
@@ -995,6 +1061,9 @@ class VectorIndexManager:
     
     async def _execute_maintenance_task(self, task: MaintenanceTask) -> None:
         """Execute a maintenance task"""
+
+
+
         try:
             task.status = "running"
             start_time = datetime.now()
@@ -1034,6 +1103,9 @@ class VectorIndexManager:
     
     async def _update_current_stats(self, index_id: str) -> None:
         """Update current statistics for an index"""
+
+
+
         try:
             if index_id not in self.indices:
                 return
@@ -1055,6 +1127,9 @@ class VectorIndexManager:
     
     def _update_index_stats(self, index_id: str, vectors_added: int) -> None:
         """Update index statistics after adding vectors"""
+
+
+
         try:
             stats = self.index_stats[index_id]
             stats.total_vectors += vectors_added
@@ -1068,6 +1143,9 @@ class VectorIndexManager:
     
     def _update_search_stats(self, index_id: str, search_time_ms: float) -> None:
         """Update search performance statistics"""
+
+
+
         try:
             stats = self.index_stats[index_id]
             
@@ -1090,6 +1168,9 @@ class VectorIndexManager:
     
     async def close(self) -> None:
         """Close index manager and cleanup resources"""
+
+
+
         try:
             # Stop background tasks
             if self._maintenance_task:

@@ -52,6 +52,9 @@ class AudioProcessor:
     
     async def process_audio(self, file_data: bytes, filename: str) -> Dict[str, Any]:
         """Process audio file and extract features"""
+
+
+
         try:
             # Load audio data
             audio_io = io.BytesIO(file_data)
@@ -169,6 +172,9 @@ class VideoProcessor:
     
     async def process_video(self, file_data: bytes, filename: str) -> Dict[str, Any]:
         """Process video file and extract features"""
+
+
+
         try:
             # Save temporary file for processing
             temp_path = f"/tmp/{hashlib.md5(file_data).hexdigest()}.mp4"
@@ -335,6 +341,9 @@ class ImageProcessor:
     
     async def process_image(self, file_data: bytes, filename: str) -> Dict[str, Any]:
         """Process image file and extract features"""
+
+
+
         try:
             # Load image
             image = Image.open(io.BytesIO(file_data))
@@ -468,6 +477,9 @@ class TextProcessor:
     
     async def process_text(self, file_data: bytes, filename: str) -> Dict[str, Any]:
         """Process text file and extract features"""
+
+
+
         try:
             # Extract text content
             text_content = await self._extract_text_content(file_data, filename)
@@ -597,6 +609,9 @@ class ContentProcessor:
     async def process_content(self, file_data: bytes, filename: str, 
                             content_type: Optional[str] = None) -> Dict[str, Any]:
         """Process content based on file type"""
+
+
+
         try:
             # Determine content type
             if not content_type:
@@ -651,6 +666,9 @@ class ContentProcessor:
     
     def get_supported_formats(self) -> Dict[str, List[str]]:
         """Get all supported file formats"""
+
+
+
         return {
             "audio": settings.ai.supported_audio_formats,
             "video": settings.ai.supported_video_formats,

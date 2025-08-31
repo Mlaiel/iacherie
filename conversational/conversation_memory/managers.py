@@ -7,7 +7,7 @@ history management, and intelligent indexing for content creator conversations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING: Unauthorized use strictly prohibited ⚠️
+  LEGAL WARNING: Unauthorized use strictly prohibited 
 Contact: mlaiel@live.de
 """
 
@@ -97,6 +97,9 @@ class ConversationMemoryManager:
     
     async def initialize(self):
         """Initialize async components"""
+
+
+
         try:
             self.redis_client = aioredis.from_url(
                 settings.REDIS_URL,
@@ -132,6 +135,9 @@ class ConversationMemoryManager:
         Returns:
             Success status
         """
+
+
+
         try:
             # Create conversation record
             record = ConversationRecord(
@@ -179,6 +185,9 @@ class ConversationMemoryManager:
         Returns:
             Conversation record or None
         """
+
+
+
         try:
             # Try short-term memory first (faster)
             record = await self.short_term_memory.get(conversation_id)
@@ -224,6 +233,9 @@ class ConversationMemoryManager:
         Returns:
             Ranked conversation results
         """
+
+
+
         try:
             results = []
             
@@ -280,6 +292,9 @@ class ConversationMemoryManager:
         Returns:
             Conversation insights and analytics
         """
+
+
+
         try:
             # Get conversation statistics
             stats = await self._calculate_conversation_stats(user_id, time_range)
@@ -317,6 +332,9 @@ class ConversationMemoryManager:
     
     async def cleanup_expired_conversations(self):
         """Clean up expired conversations based on retention policy"""
+
+
+
         try:
             cutoff_date = datetime.now(timezone.utc) - timedelta(
                 days=self.config.retention_days
@@ -683,6 +701,9 @@ class ConversationHistoryManager:
         Returns:
             List of conversation records
         """
+
+
+
         try:
             cache_key = f"history:{user_id}:{limit}:{offset}:{content_type_filter}"
             
@@ -737,6 +758,9 @@ class ConversationHistoryManager:
         Returns:
             Conversation timeline with events and evolution
         """
+
+
+
         try:
             # Get main conversation
             conversation = await self.memory_manager.retrieve_conversation(
@@ -832,6 +856,9 @@ class MemoryIndexer:
         Returns:
             Success status
         """
+
+
+
         try:
             # Extract indexable content
             text_content = self._extract_conversation_text(conversation.conversation_data or {})
@@ -870,6 +897,9 @@ class MemoryIndexer:
         Returns:
             Number of conversations reindexed
         """
+
+
+
         try:
             indexed_count = 0
             offset = 0

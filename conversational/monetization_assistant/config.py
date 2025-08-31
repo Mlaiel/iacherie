@@ -853,4 +853,7 @@ SECURITY_CONFIGS = {
 
 def get_monetization_config() -> MonetizationConfig:
     """Get monetization configuration instance."""
+
+
+
     return MonetizationConfig()

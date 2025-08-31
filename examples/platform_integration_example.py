@@ -19,7 +19,7 @@ async def main():
     # Initialize the platform coordinator
     async with PlatformCoordinator() as coordinator:
         
-        print("🚀 Platform APIs Integration Example")
+        print(" Platform APIs Integration Example")
         print("=" * 50)
         
         # 1. Configure OAuth for platforms
@@ -41,7 +41,7 @@ async def main():
             redirect_uri="http://localhost:8000/auth/instagram/callback"
         )
         
-        print("✅ OAuth configured for YouTube and Instagram")
+        print(" OAuth configured for YouTube and Instagram")
         
         # 2. Generate authentication URLs
         print("\n2. Generating authentication URLs...")
@@ -51,8 +51,8 @@ async def main():
         youtube_auth_url = await coordinator.initiate_platform_auth("youtube", user_id)
         instagram_auth_url = await coordinator.initiate_platform_auth("instagram", user_id)
         
-        print(f"📱 YouTube Auth URL: {youtube_auth_url[:80]}...")
-        print(f"📱 Instagram Auth URL: {instagram_auth_url[:80]}...")
+        print(f" YouTube Auth URL: {youtube_auth_url[:80]}...")
+        print(f" Instagram Auth URL: {instagram_auth_url[:80]}...")
         
         # 3. Check platform health status
         print("\n3. Checking platform health status...")
@@ -60,7 +60,7 @@ async def main():
         status_dict = await coordinator.get_all_platform_status(user_id)
         
         for platform, status in status_dict.items():
-            emoji = "✅" if status.is_connected else "❌"
+            emoji = "" if status.is_connected else ""
             print(f"{emoji} {platform.capitalize()}: {'Connected' if status.is_connected else 'Disconnected'}")
             if status.error_message:
                 print(f"   Error: {status.error_message}")
@@ -69,10 +69,10 @@ async def main():
         print("\n4. Testing rate limiting...")
         
         rate_status = await coordinator.rate_limiter.check_rate_limit("youtube", "search")
-        print(f"📊 YouTube search rate limit: {rate_status.remaining_requests} requests remaining")
+        print(f" YouTube search rate limit: {rate_status.remaining_requests} requests remaining")
         
         rate_status = await coordinator.rate_limiter.check_rate_limit("instagram", "media")
-        print(f"📊 Instagram media rate limit: {rate_status.remaining_requests} requests remaining")
+        print(f" Instagram media rate limit: {rate_status.remaining_requests} requests remaining")
         
         # 5. Demonstrate content protection monitoring
         print("\n5. Setting up content protection...")
@@ -84,9 +84,9 @@ async def main():
                 content_type="audio",
                 keywords=["my original song", "artist name", "album name"]
             )
-            print(f"🛡️ Content protection monitor created: {monitor_id}")
+            print(f" Content protection monitor created: {monitor_id}")
         except Exception as e:
-            print(f"⚠️ Content protection setup failed: {e}")
+            print(f" Content protection setup failed: {e}")
         
         # 6. Show supported platforms and their capabilities
         print("\n6. Supported platforms and capabilities...")
@@ -104,7 +104,7 @@ async def main():
         
         for platform in supported_platforms:
             capabilities = platform_capabilities.get(platform, ["Basic API access"])
-            print(f"🔌 {platform.capitalize()}:")
+            print(f" {platform.capitalize()}:")
             for capability in capabilities:
                 print(f"   • {capability}")
         
@@ -123,21 +123,21 @@ async def main():
                 platforms=["youtube", "instagram", "tiktok"]
             )
             
-            print(f"📈 Total views: {analytics.total_views}")
-            print(f"📈 Total engagement: {analytics.total_engagement}")
-            print(f"📈 Total followers: {analytics.total_followers}")
-            print(f"💰 Total revenue: ${analytics.total_revenue:.2f}")
+            print(f" Total views: {analytics.total_views}")
+            print(f" Total engagement: {analytics.total_engagement}")
+            print(f" Total followers: {analytics.total_followers}")
+            print(f" Total revenue: ${analytics.total_revenue:.2f}")
             
         except Exception as e:
-            print(f"⚠️ Analytics demonstration failed (expected without real tokens): {e}")
-            print("📊 Sample analytics structure:")
+            print(f" Analytics demonstration failed (expected without real tokens): {e}")
+            print(" Sample analytics structure:")
             print("   • Total views: 1,250,000")
             print("   • Total engagement: 85,000")
             print("   • Total followers: 45,000")
             print("   • Total revenue: $2,450.00")
         
         print("\n" + "=" * 50)
-        print("🎉 Platform APIs Integration example completed!")
+        print(" Platform APIs Integration example completed!")
         print("\nNext steps:")
         print("1. Set up OAuth credentials for each platform")
         print("2. Implement the OAuth callback endpoints in your web app")

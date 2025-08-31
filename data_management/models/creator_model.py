@@ -1,5 +1,5 @@
 """
-👤 Creator Model - IA Influencer Agent Platform Enterprise
+ Creator Model - IA Influencer Agent Platform Enterprise
 =========================================================
 Module: backend/data_management/models/creator_model.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Creator Data Model - Ultra Production-Ready
 Responsibility: Advanced data models for multi-format creator profiles with AI-powered analytics
 ==========================================================================================================
 
-⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
+  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -237,6 +237,9 @@ class CreatorProfile:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for API responses"""
+
+
+
         return {
             "display_name": self.display_name,
             "bio": self.bio,
@@ -392,6 +395,9 @@ class CreatorSettings:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for storage"""
+
+
+
         return {
             "default_content_visibility": self.default_content_visibility,
             "auto_fingerprinting": self.auto_fingerprinting,

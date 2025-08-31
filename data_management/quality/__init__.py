@@ -8,7 +8,7 @@ for creators across music, video, image, and text content types.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-🔒 ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 🔒
+ ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 
 This code, architecture, and all associated concepts are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, modification, reverse engineering, or distribution without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED and will be prosecuted to the full 

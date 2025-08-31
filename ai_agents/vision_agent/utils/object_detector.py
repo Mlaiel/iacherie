@@ -8,7 +8,7 @@ including YOLO, SSD, and custom trained models for precise object recognition.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -114,6 +114,9 @@ class ObjectDetector(BaseAgent):
 
     async def initialize(self) -> bool:
         """Initialize object detection models"""
+
+
+
         try:
             logger.info("Initializing Object Detector...")
             
@@ -146,6 +149,9 @@ class ObjectDetector(BaseAgent):
 
     async def _load_detection_model(self, model_type: str) -> bool:
         """Load specific detection model"""
+
+
+
         try:
             if model_type == DetectionModel.YOLO_V8:
                 # In production, load actual YOLOv8 model
@@ -170,6 +176,9 @@ class ObjectDetector(BaseAgent):
 
     def _create_yolo_placeholder(self) -> Dict[str, Any]:
         """Create YOLO model placeholder"""
+
+
+
         return {
             'type': 'yolo_v8',
             'input_size': (640, 640),
@@ -180,6 +189,9 @@ class ObjectDetector(BaseAgent):
 
     def _create_ssd_placeholder(self) -> Dict[str, Any]:
         """Create SSD model placeholder"""
+
+
+
         return {
             'type': 'ssd_mobilenet',
             'input_size': (300, 300),
@@ -272,6 +284,9 @@ class ObjectDetector(BaseAgent):
 
     async def _preprocess_image(self, image: np.ndarray) -> np.ndarray:
         """Preprocess image for detection"""
+
+
+
         try:
             # Ensure image is in BGR format
             if len(image.shape) == 3 and image.shape[2] == 3:
@@ -430,6 +445,9 @@ class ObjectDetector(BaseAgent):
 
     def _calculate_bbox_overlap(self, bbox1: Dict, bbox2: Dict) -> float:
         """Calculate overlap ratio between two bounding boxes"""
+
+
+
         try:
             # Calculate intersection
             x1 = max(bbox1['x'], bbox2['x'])
@@ -455,6 +473,9 @@ class ObjectDetector(BaseAgent):
         detections: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
         """Post-process detection results"""
+
+
+
         try:
             # Remove duplicates and apply NMS
             filtered_detections = self._apply_non_maximum_suppression(detections)
@@ -595,10 +616,16 @@ class ObjectDetector(BaseAgent):
 
     def get_supported_classes(self, category: str = 'general') -> List[str]:
         """Get list of supported object classes"""
+
+
+
         return self.object_classes.get(category, self.object_classes['general']).copy()
 
     async def cleanup(self) -> None:
         """Cleanup resources"""
+
+
+
         try:
             await self.performance_monitor.close()
             

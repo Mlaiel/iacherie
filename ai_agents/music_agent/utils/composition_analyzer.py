@@ -8,7 +8,7 @@ into musical structure, harmony, rhythm, and creative patterns for content creat
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
+  PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 This software is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any attempt to copy, distribute, or reverse engineer this code without explicit
 written permission is strictly forbidden and will result in legal prosecution
@@ -246,6 +246,9 @@ class CompositionAnalyzer:
         base_analysis: MusicAnalysisResult
     ) -> HarmonyAnalysis:
         """Analyze harmonic content and progressions"""
+
+
+
         try:
             # Use harmony analyzer from ML module
             harmony_result = await self.harmony_analyzer.analyze_harmony(audio_path)
@@ -299,6 +302,9 @@ class CompositionAnalyzer:
         base_analysis: MusicAnalysisResult
     ) -> RhythmAnalysis:
         """Analyze rhythmic patterns and characteristics"""
+
+
+
         try:
             # Use beat detector from ML module
             beat_result = await self.beat_detector.analyze_beat(audio_path)
@@ -348,6 +354,9 @@ class CompositionAnalyzer:
         base_analysis: MusicAnalysisResult
     ) -> MelodyAnalysis:
         """Analyze melodic content and patterns"""
+
+
+
         try:
             melody_analysis = MelodyAnalysis()
             
@@ -393,6 +402,9 @@ class CompositionAnalyzer:
         base_analysis: MusicAnalysisResult
     ) -> StructuralAnalysis:
         """Analyze musical structure and form"""
+
+
+
         try:
             structural_analysis = StructuralAnalysis()
             
@@ -434,6 +446,9 @@ class CompositionAnalyzer:
         base_analysis: MusicAnalysisResult
     ) -> CompositionAnalysisResult:
         """Calculate overall composition metrics"""
+
+
+
         try:
             # Overall complexity
             complexity_scores = [
@@ -475,6 +490,9 @@ class CompositionAnalyzer:
         base_analysis: MusicAnalysisResult
     ) -> CompositionAnalysisResult:
         """Generate professional insights and recommendations"""
+
+
+
         try:
             # Analyze strengths
             result.strengths = self._identify_composition_strengths(result, base_analysis)
@@ -585,6 +603,9 @@ class CompositionAnalyzer:
 
     async def _extract_melodic_contours(self, audio_path: str) -> List[List[float]]:
         """Extract melodic contours using pitch tracking"""
+
+
+
         try:
             import librosa
             
@@ -736,6 +757,9 @@ class CompositionAnalyzer:
 
     async def _segment_audio_structure(self, audio_path: str) -> List[Dict[str, Any]]:
         """Segment audio into structural sections"""
+
+
+
         try:
             import librosa
             
@@ -1209,6 +1233,9 @@ class CompositionAnalyzer:
 
     def get_analysis_summary(self, result: CompositionAnalysisResult) -> Dict[str, Any]:
         """Get a concise summary of the analysis"""
+
+
+
         return {
             'composition_id': result.composition_id,
             'overall_complexity': result.overall_complexity.value,

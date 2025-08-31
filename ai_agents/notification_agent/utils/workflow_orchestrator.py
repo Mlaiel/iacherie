@@ -8,7 +8,7 @@ content creator journey management for the IA Influencer platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE - INTELLECTUAL PROPERTY PROTECTION:
+  CRITICAL LEGAL NOTICE - INTELLECTUAL PROPERTY PROTECTION:
 This code, concept, and intellectual property are the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 
 STRICTLY PROHIBITED WITHOUT EXPLICIT WRITTEN AUTHORIZATION:
@@ -226,6 +226,9 @@ class NotificationWorkflowOrchestrator:
         Returns:
             True if successfully registered
         """
+
+
+
         try:
             # Validate workflow definition
             if not await self._validate_workflow_definition(workflow):
@@ -262,6 +265,9 @@ class NotificationWorkflowOrchestrator:
         Returns:
             Execution ID for tracking
         """
+
+
+
         try:
             if workflow_id not in self._workflow_definitions:
                 raise ValueError(f"Workflow not found: {workflow_id}")
@@ -372,6 +378,9 @@ class NotificationWorkflowOrchestrator:
     
     async def _execute_workflow(self, context: WorkflowExecutionContext):
         """Execute a complete workflow"""
+
+
+
         try:
             context.execution_state['status'] = WorkflowStatus.RUNNING.value
             context.execution_state['steps_completed'] = 0
@@ -437,6 +446,9 @@ class NotificationWorkflowOrchestrator:
         step_def: WorkflowStepDefinition
     ) -> Dict[str, Any]:
         """Execute individual workflow step"""
+
+
+
         try:
             # Check step conditions
             if not await self._check_step_conditions(context, step_def):
@@ -468,6 +480,9 @@ class NotificationWorkflowOrchestrator:
         step_def: WorkflowStepDefinition
     ) -> Dict[str, Any]:
         """Execute notification step"""
+
+
+
         try:
             # Extract notification parameters
             notification_action = next(
@@ -512,6 +527,9 @@ class NotificationWorkflowOrchestrator:
         step_def: WorkflowStepDefinition
     ) -> Dict[str, Any]:
         """Execute delay step"""
+
+
+
         try:
             delay_action = next(
                 (action for action in step_def.actions if action.action_type == 'delay'),
@@ -810,4 +828,7 @@ class NotificationWorkflowOrchestrator:
     
     async def get_workflow_metrics(self) -> Dict[str, Any]:
         """Get comprehensive workflow performance metrics"""
+
+
+
         return self._workflow_metrics.copy()

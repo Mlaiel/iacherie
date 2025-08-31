@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -94,6 +94,9 @@ class UserContentRepository(BaseRepository[UserContent]):
         Returns:
             Created UserContent instance
         """
+
+
+
         try:
             # Generate content ID and hash
             content_id = str(uuid.uuid4())
@@ -149,6 +152,9 @@ class UserContentRepository(BaseRepository[UserContent]):
         Returns:
             SHA-256 hash string
         """
+
+
+
         try:
             # In production, this would read the actual file
             # For now, create a hash based on the path
@@ -168,6 +174,9 @@ class UserContentRepository(BaseRepository[UserContent]):
         Returns:
             UserContent instance or None
         """
+
+
+
         try:
             return self.db_session.query(UserContent).filter(
                 UserContent.file_hash == file_hash
@@ -202,6 +211,9 @@ class UserContentRepository(BaseRepository[UserContent]):
         Returns:
             List of UserContent instances
         """
+
+
+
         try:
             query = self.db_session.query(UserContent).filter(
                 UserContent.user_id == user_id
@@ -261,6 +273,9 @@ class UserContentRepository(BaseRepository[UserContent]):
         Returns:
             List of matching UserContent instances
         """
+
+
+
         try:
             # Create search conditions
             search_pattern = f"%{search_query.lower()}%"
@@ -313,6 +328,9 @@ class UserContentRepository(BaseRepository[UserContent]):
         Returns:
             Updated UserContent instance
         """
+
+
+
         try:
             content = self.get_by_id(content_id)
             if not content:
@@ -369,6 +387,9 @@ class UserContentRepository(BaseRepository[UserContent]):
         Returns:
             Dictionary containing content analytics
         """
+
+
+
         try:
             query = self.db_session.query(UserContent).filter(
                 UserContent.user_id == user_id
@@ -494,6 +515,9 @@ class UserContentRepository(BaseRepository[UserContent]):
         Returns:
             List of content dictionaries with fingerprint data
         """
+
+
+
         try:
             # Join with ContentFingerprint to get protection status
             query = self.db_session.query(
@@ -573,6 +597,9 @@ class UserContentRepository(BaseRepository[UserContent]):
         Returns:
             Number of updated content items
         """
+
+
+
         try:
             updated_count = self.db_session.query(UserContent).filter(
                 and_(
@@ -610,6 +637,9 @@ class UserContentRepository(BaseRepository[UserContent]):
         Returns:
             Number of cleaned up content items
         """
+
+
+
         try:
             cutoff_date = datetime.utcnow() - timedelta(days=days_old)
             

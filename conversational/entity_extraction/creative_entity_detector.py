@@ -8,7 +8,7 @@ references, and creative professional roles and relationships.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
@@ -147,6 +147,9 @@ class CreativeEntityDetector(BaseService):
     
     async def initialize(self):
         """Initialize creative entity detection resources"""
+
+
+
         try:
             self.logger.info("Initializing CreativeEntityDetector...")
             
@@ -173,6 +176,9 @@ class CreativeEntityDetector(BaseService):
     
     async def _load_creative_models(self):
         """Load machine learning models for creative analysis"""
+
+
+
         try:
             # Creative content classifier
             self.creative_classifier = pipeline(
@@ -1269,6 +1275,9 @@ class CreativeEntityDetector(BaseService):
     
     async def get_detection_statistics(self) -> Dict[str, Any]:
         """Get creative detection statistics"""
+
+
+
         return {
             **self.detection_stats,
             'supported_creative_types': [ct.value for ct in CreativeEntityType],
@@ -1280,6 +1289,9 @@ class CreativeEntityDetector(BaseService):
     
     async def health_check(self) -> Dict[str, Any]:
         """Health check for creative entity detector"""
+
+
+
         return {
             'status': 'healthy',
             'creative_classifier_available': self.creative_classifier is not None,

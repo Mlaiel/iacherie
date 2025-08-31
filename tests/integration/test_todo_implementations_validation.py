@@ -46,7 +46,7 @@ class TODOImplementationValidator:
         
     async def validate_implementations(self) -> bool:
         """Run comprehensive validation of TODO implementations"""
-        logger.info("🎯 Starting TODO Implementation Validation")
+        logger.info(" Starting TODO Implementation Validation")
         logger.info("=" * 60)
         
         # Track all validation results
@@ -63,38 +63,41 @@ class TODOImplementationValidator:
         
         for validation_name, validation_func in validations:
             try:
-                logger.info(f"🔍 Validating {validation_name}...")
+                logger.info(f" Validating {validation_name}...")
                 result = await validation_func()
                 self.validation_results[validation_name] = result
                 
                 if result:
-                    logger.info(f"✅ {validation_name} validation passed")
+                    logger.info(f" {validation_name} validation passed")
                     passed_validations += 1
                 else:
-                    logger.warning(f"⚠️ {validation_name} validation failed")
+                    logger.warning(f" {validation_name} validation failed")
                     
             except Exception as e:
-                logger.error(f"❌ {validation_name} validation error: {e}")
+                logger.error(f" {validation_name} validation error: {e}")
                 self.validation_results[validation_name] = False
         
         # Calculate success rate
         success_rate = (passed_validations / total_validations) * 100
-        logger.info(f"📊 Validation Success Rate: {success_rate:.1f}% ({passed_validations}/{total_validations})")
+        logger.info(f" Validation Success Rate: {success_rate:.1f}% ({passed_validations}/{total_validations})")
         
         # Overall success if >80% pass
         overall_success = success_rate >= 80.0
         
         if overall_success:
-            logger.info("🎉 ALL TESTS PASSED!")
-            logger.info("✅ TODO implementations are working correctly")
-            logger.info("🚀 Ready for production deployment")
+            logger.info(" ALL TESTS PASSED!")
+            logger.info(" TODO implementations are working correctly")
+            logger.info(" Ready for production deployment")
         else:
-            logger.warning("⚠️ Some validations failed, but system is functional")
+            logger.warning(" Some validations failed, but system is functional")
             
         return overall_success
     
     async def _validate_core_engines(self) -> bool:
         """Validate core engine implementations"""
+
+
+
         try:
             # Check that core engines can be imported and initialized
             engine_files = [
@@ -124,6 +127,9 @@ class TODOImplementationValidator:
     
     async def _validate_business_logic(self) -> bool:
         """Validate business logic implementations"""
+
+
+
         try:
             # Run existing business logic test if available
             test_files = [
@@ -175,6 +181,9 @@ class TODOImplementationValidator:
     
     async def _validate_monetization(self) -> bool:
         """Validate monetization implementations"""
+
+
+
         try:
             monetization_files = [
                 "monetization/revenue_calculator.py",
@@ -204,6 +213,9 @@ class TODOImplementationValidator:
     
     async def _validate_ai_agents(self) -> bool:
         """Validate AI agents implementations"""
+
+
+
         try:
             # Check for AI agents directory and core files
             ai_agents_dir = self.project_root / "ai_agents"
@@ -226,6 +238,9 @@ class TODOImplementationValidator:
     
     async def _validate_api_functionality(self) -> bool:
         """Validate API functionality"""
+
+
+
         try:
             # Check for API files
             api_files = [
@@ -257,24 +272,24 @@ async def main():
         
         # Print summary
         logger.info("=" * 60)
-        logger.info("📊 VALIDATION SUMMARY")
+        logger.info(" VALIDATION SUMMARY")
         logger.info("=" * 60)
         
         for validation_name, result in validator.validation_results.items():
-            status = "✅ PASSED" if result else "❌ FAILED"
+            status = " PASSED" if result else " FAILED"
             logger.info(f"{validation_name}: {status}")
         
         if success:
-            logger.info("🎉 OVERALL VALIDATION: ✅ SUCCESS")
-            logger.info("✅ TODO implementations are working correctly")
-            logger.info("🚀 Ready for production deployment")
+            logger.info(" OVERALL VALIDATION:  SUCCESS")
+            logger.info(" TODO implementations are working correctly")
+            logger.info(" Ready for production deployment")
             return 0
         else:
-            logger.warning("⚠️ OVERALL VALIDATION: ⚠️ PARTIAL SUCCESS")
+            logger.warning(" OVERALL VALIDATION:  PARTIAL SUCCESS")
             return 0  # Return 0 to not fail the parent validation
             
     except Exception as e:
-        logger.error(f"❌ Validation failed with error: {e}")
+        logger.error(f" Validation failed with error: {e}")
         return 1
 
 

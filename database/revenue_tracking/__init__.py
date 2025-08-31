@@ -7,7 +7,7 @@ Architecture: Multi-platform revenue analytics with AI-driven insights
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe Projet: Lead AI Developer + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  AVERTISSEMENT DE PROPRIÉTÉ INTELLECTUELLE ⚠️
+  AVERTISSEMENT DE PROPRIÉTÉ INTELLECTUELLE 
 Ce code et concept sont la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Violation = Poursuites judiciaires selon le droit allemand et international.
@@ -150,7 +150,10 @@ class EnterpriseRevenueTrackingSystem:
         content_id: Optional[str] = None
     ) -> Dict[str, Any]:
         """        Traite une transaction de revenus complète avec tous les modules
-        """        try:
+        """
+
+
+        try:
             # 1. Création de l'enregistrement de revenus
             revenue_record = await self.revenue_manager.create_revenue_record(
                 user_id=user_id,
@@ -504,7 +507,10 @@ class RevenueTrackingManager:
             
         Returns:
             Dict résultat du traitement
-        """        try:
+        """
+
+
+        try:
             # Record transaction
             transaction = await self.revenue_records.create_transaction(
                 transaction_data
@@ -549,7 +555,10 @@ class RevenueTrackingManager:
             
         Returns:
             Dict rapport complet
-        """        return await self.reporting_engine.generate_comprehensive_report(
+        """
+
+
+        return await self.reporting_engine.generate_comprehensive_report(
             user_id=user_id,
             date_range=date_range,
             platforms=platforms,
@@ -563,7 +572,10 @@ def get_module_info() -> Dict[str, Any]:
     
     Returns:
         Dict[str, Any]: Informations du module
-    """    return {
+    """
+
+
+    return {
         "name": "Enterprise Revenue Tracking Database",
         "version": __version__,
         "author": "Fahed Mlaiel",

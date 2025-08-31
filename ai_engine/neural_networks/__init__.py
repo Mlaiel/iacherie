@@ -6,7 +6,7 @@ Supports multi-modal content understanding and creator assistance.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING / AVERTISSEMENT LÉGAL ⚠️
+  LEGAL WARNING / AVERTISSEMENT LÉGAL 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.

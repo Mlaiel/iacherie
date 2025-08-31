@@ -7,7 +7,7 @@ Ensures adherence to industry standards, regulations, and best practices.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -681,6 +681,9 @@ class StandardsChecker:
     # Helper methods
     async def _calculate_color_contrast(self, content_path: str) -> float:
         """Calculate color contrast ratio for images"""
+
+
+
         try:
             import cv2
             import numpy as np
@@ -706,6 +709,9 @@ class StandardsChecker:
 
     async def _detect_personal_data(self, content_path: str, content_type: ContentType) -> bool:
         """Detect potential personal data in content"""
+
+
+
         try:
             if content_type in [ContentType.TEXT, ContentType.BLOG]:
                 with open(content_path, 'r', encoding='utf-8') as f:
@@ -1097,6 +1103,9 @@ class ComplianceValidator:
         framework: StandardsFramework
     ) -> Dict[str, Any]:
         """Perform quick compliance validation"""
+
+
+
         
         try:
             validation_result = {

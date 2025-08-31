@@ -7,7 +7,7 @@ and machine learning-based recommendation engine for enhanced music discovery.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 """
@@ -113,6 +113,9 @@ class PlaylistManager:
                             public: bool = True, collaborative: bool = False,
                             access_token: str) -> Dict[str, Any]:
         """Create a new Spotify playlist"""
+
+
+
         try:
             # Get current user profile
             user_profile = await self.api_client.get_current_user_profile(access_token)
@@ -501,6 +504,9 @@ class PlaylistManager:
     
     def _calculate_energy_scores(self, track_features: List[TrackFeatures]) -> List[float]:
         """Calculate energy progression scores"""
+
+
+
         return [tf.audio_features.get("energy", 0.5) for tf in track_features]
     
     def _calculate_diversity_scores(self, track_features: List[TrackFeatures]) -> List[float]:
@@ -535,6 +541,9 @@ class PlaylistManager:
     async def add_tracks_to_playlist(self, playlist_id: str, track_uris: List[str],
                                    access_token: str) -> Dict[str, Any]:
         """Add tracks to existing playlist"""
+
+
+
         return await self.api_client.add_tracks_to_playlist(
             playlist_id, track_uris, access_token=access_token
         )

@@ -1,15 +1,15 @@
 """
-🚀 Tenant Management System - IA Influencer Agent Platform Enterprise
+ Tenant Management System - IA Influencer Agent Platform Enterprise
 ====================================================================
 Module: backend/platform_core/tenant_management/tenant_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ====================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 SYSTÈME DE GESTION MULTI-TENANT ENTERPRISE
+ SYSTÈME DE GESTION MULTI-TENANT ENTERPRISE
 Isolation de données et routage intelligent pour architecture multi-tenant
 - Isolation complète des données par tenant
 - Routage dynamique et load balancing
@@ -88,7 +88,7 @@ class TenantManager:
         self.db_connections: Dict[str, Any] = {}
         self.encryption_keys: Dict[str, str] = {}
         
-        logger.info("✅ TenantManager initialized")
+        logger.info(" TenantManager initialized")
     
     async def create_tenant(
         self,
@@ -99,6 +99,9 @@ class TenantManager:
         **kwargs
     ) -> TenantConfig:
         """Créer un nouveau tenant"""
+
+
+
         try:
             tenant_id = self._generate_tenant_id()
             
@@ -141,15 +144,18 @@ class TenantManager:
             
             self.tenants[tenant_id] = tenant_config
             
-            logger.info(f"✅ Tenant created: {tenant_id} - {name}")
+            logger.info(f" Tenant created: {tenant_id} - {name}")
             return tenant_config
             
         except Exception as e:
-            logger.error(f"❌ Failed to create tenant: {e}")
+            logger.error(f" Failed to create tenant: {e}")
             raise
     
     async def get_tenant(self, tenant_id: str) -> Optional[TenantConfig]:
         """Récupérer la configuration d'un tenant"""
+
+
+
         return self.tenants.get(tenant_id)
     
     async def get_tenant_by_domain(self, domain: str) -> Optional[TenantConfig]:
@@ -161,18 +167,24 @@ class TenantManager:
     
     async def update_tenant_status(self, tenant_id: str, status: TenantStatus) -> bool:
         """Mettre à jour le statut d'un tenant"""
+
+
+
         try:
             if tenant_id in self.tenants:
                 self.tenants[tenant_id].status = status
-                logger.info(f"✅ Tenant {tenant_id} status updated to {status.value}")
+                logger.info(f" Tenant {tenant_id} status updated to {status.value}")
                 return True
             return False
         except Exception as e:
-            logger.error(f"❌ Failed to update tenant status: {e}")
+            logger.error(f" Failed to update tenant status: {e}")
             return False
     
     async def upgrade_tenant_tier(self, tenant_id: str, new_tier: TenantTier) -> bool:
         """Mettre à niveau un tenant"""
+
+
+
         try:
             tenant = self.tenants.get(tenant_id)
             if not tenant:
@@ -187,15 +199,18 @@ class TenantManager:
             tenant.max_api_calls_per_hour = tier_config.get("max_api_calls_per_hour", tenant.max_api_calls_per_hour)
             tenant.custom_branding = tier_config.get("custom_branding", tenant.custom_branding)
             
-            logger.info(f"✅ Tenant {tenant_id} upgraded to {new_tier.value}")
+            logger.info(f" Tenant {tenant_id} upgraded to {new_tier.value}")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to upgrade tenant: {e}")
+            logger.error(f" Failed to upgrade tenant: {e}")
             return False
     
     async def check_tenant_limits(self, tenant_id: str) -> Dict[str, Any]:
         """Vérifier les limites d'utilisation d'un tenant"""
+
+
+
         try:
             tenant = self.tenants.get(tenant_id)
             usage = self.usage_tracker.get(tenant_id)
@@ -228,11 +243,14 @@ class TenantManager:
             return limits_status
             
         except Exception as e:
-            logger.error(f"❌ Failed to check tenant limits: {e}")
+            logger.error(f" Failed to check tenant limits: {e}")
             return {"error": str(e)}
     
     async def get_tenant_database_connection(self, tenant_id: str) -> Optional[Any]:
         """Obtenir la connexion base de données pour un tenant"""
+
+
+
         try:
             # Retourner la connexion existante ou en créer une nouvelle
             if tenant_id in self.db_connections:
@@ -249,11 +267,14 @@ class TenantManager:
             return connection
             
         except Exception as e:
-            logger.error(f"❌ Failed to get tenant database connection: {e}")
+            logger.error(f" Failed to get tenant database connection: {e}")
             return None
     
     def route_request(self, domain: str, path: str) -> Dict[str, Any]:
         """Router une requête vers le bon tenant"""
+
+
+
         try:
             # Trouver le tenant par domaine
             tenant = None
@@ -288,11 +309,14 @@ class TenantManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Request routing failed: {e}")
+            logger.error(f" Request routing failed: {e}")
             return {"status": "error", "message": "Routing failed"}
     
     def _generate_tenant_id(self) -> str:
         """Générer un ID unique pour le tenant"""
+
+
+
         return f"tenant_{uuid.uuid4().hex[:12]}"
     
     def _generate_encryption_key(self, tenant_id: str) -> str:
@@ -332,20 +356,26 @@ class TenantManager:
     
     async def _setup_tenant_database(self, tenant_config: TenantConfig) -> None:
         """Configurer la base de données pour le tenant"""
+
+
+
         try:
             # Créer le schéma de base de données isolé
             schema_name = f"tenant_{tenant_config.tenant_id}"
             
             # Placeholder pour la création de schéma
             # En production, ceci ferait une vraie création de schéma
-            logger.info(f"✅ Database schema created: {schema_name}")
+            logger.info(f" Database schema created: {schema_name}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to setup tenant database: {e}")
+            logger.error(f" Failed to setup tenant database: {e}")
             raise
     
     async def _create_tenant_connection(self, tenant: TenantConfig) -> Any:
         """Créer une connexion base de données pour le tenant"""
+
+
+
         try:
             # Placeholder pour création de connexion réelle
             # En production, ceci retournerait une vraie connexion DB
@@ -355,11 +385,11 @@ class TenantManager:
                 "encryption_key": tenant.encryption_key
             }
             
-            logger.info(f"✅ Database connection created for tenant: {tenant.tenant_id}")
+            logger.info(f" Database connection created for tenant: {tenant.tenant_id}")
             return connection_info
             
         except Exception as e:
-            logger.error(f"❌ Failed to create tenant connection: {e}")
+            logger.error(f" Failed to create tenant connection: {e}")
             raise
 
 
@@ -371,6 +401,9 @@ class TenantDataIsolator:
         
     async def isolate_query(self, tenant_id: str, query: str, params: Dict[str, Any]) -> str:
         """Isoler une requête pour un tenant spécifique"""
+
+
+
         try:
             tenant = await self.tenant_manager.get_tenant(tenant_id)
             if not tenant:
@@ -386,11 +419,14 @@ class TenantDataIsolator:
             return isolated_query
             
         except Exception as e:
-            logger.error(f"❌ Failed to isolate query: {e}")
+            logger.error(f" Failed to isolate query: {e}")
             raise
     
     async def encrypt_tenant_data(self, tenant_id: str, data: Any) -> str:
         """Chiffrer les données d'un tenant"""
+
+
+
         try:
             tenant = await self.tenant_manager.get_tenant(tenant_id)
             if not tenant or not tenant.encryption_key:
@@ -401,15 +437,18 @@ class TenantDataIsolator:
             data_str = json.dumps(data) if not isinstance(data, str) else data
             encrypted_data = base64.b64encode(data_str.encode()).decode()
             
-            logger.debug(f"✅ Data encrypted for tenant: {tenant_id}")
+            logger.debug(f" Data encrypted for tenant: {tenant_id}")
             return encrypted_data
             
         except Exception as e:
-            logger.error(f"❌ Failed to encrypt tenant data: {e}")
+            logger.error(f" Failed to encrypt tenant data: {e}")
             raise
     
     async def decrypt_tenant_data(self, tenant_id: str, encrypted_data: str) -> Any:
         """Déchiffrer les données d'un tenant"""
+
+
+
         try:
             tenant = await self.tenant_manager.get_tenant(tenant_id)
             if not tenant or not tenant.encryption_key:
@@ -424,7 +463,7 @@ class TenantDataIsolator:
                 return decrypted_data
                 
         except Exception as e:
-            logger.error(f"❌ Failed to decrypt tenant data: {e}")
+            logger.error(f" Failed to decrypt tenant data: {e}")
             raise
 
 

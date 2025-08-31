@@ -213,6 +213,9 @@ class DatabaseAdapter(StorageAdapter):
     
     async def connect(self) -> bool:
         """Connect to database."""
+
+
+
         try:
             if self.db_type == 'postgresql':
                 self.pool = await asyncpg.create_pool(
@@ -282,6 +285,9 @@ class DatabaseAdapter(StorageAdapter):
     
     async def disconnect(self):
         """Disconnect from database."""
+
+
+
         try:
             if self.pool:
                 self.pool.close()
@@ -297,6 +303,9 @@ class DatabaseAdapter(StorageAdapter):
     
     async def store(self, item: StorageItem) -> bool:
         """Store item in database."""
+
+
+
         try:
             if self.db_type == 'postgresql':
                 async with self.pool.acquire() as conn:
@@ -374,6 +383,9 @@ class DatabaseAdapter(StorageAdapter):
     
     async def retrieve(self, key: str) -> Optional[StorageItem]:
         """Retrieve item from database."""
+
+
+
         try:
             if self.db_type == 'postgresql':
                 async with self.pool.acquire() as conn:
@@ -438,6 +450,9 @@ class DatabaseAdapter(StorageAdapter):
     
     async def delete(self, key: str) -> bool:
         """Delete item from database."""
+
+
+
         try:
             if self.db_type == 'postgresql':
                 async with self.pool.acquire() as conn:
@@ -469,6 +484,9 @@ class DatabaseAdapter(StorageAdapter):
     
     async def exists(self, key: str) -> bool:
         """Check if item exists in database."""
+
+
+
         try:
             if self.db_type == 'postgresql':
                 async with self.pool.acquire() as conn:
@@ -500,6 +518,9 @@ class DatabaseAdapter(StorageAdapter):
     
     async def list_keys(self, prefix: Optional[str] = None, limit: Optional[int] = None) -> List[str]:
         """List keys from database."""
+
+
+
         try:
             keys = []
             
@@ -566,6 +587,9 @@ class FileSystemAdapter(StorageAdapter):
     
     async def connect(self) -> bool:
         """Create base directory."""
+
+
+
         try:
             self.base_path.mkdir(parents=True, exist_ok=True)
             self.is_connected = True
@@ -588,10 +612,16 @@ class FileSystemAdapter(StorageAdapter):
     
     def _get_metadata_path(self, key: str) -> Path:
         """Get metadata file path for key."""
+
+
+
         return Path(str(self._get_file_path(key)) + self.metadata_suffix)
     
     async def store(self, item: StorageItem) -> bool:
         """Store item to filesystem."""
+
+
+
         try:
             file_path = self._get_file_path(item.key)
             metadata_path = self._get_metadata_path(item.key)
@@ -631,6 +661,9 @@ class FileSystemAdapter(StorageAdapter):
     
     async def retrieve(self, key: str) -> Optional[StorageItem]:
         """Retrieve item from filesystem."""
+
+
+
         try:
             file_path = self._get_file_path(key)
             metadata_path = self._get_metadata_path(key)
@@ -678,6 +711,9 @@ class FileSystemAdapter(StorageAdapter):
     
     async def delete(self, key: str) -> bool:
         """Delete item from filesystem."""
+
+
+
         try:
             file_path = self._get_file_path(key)
             metadata_path = self._get_metadata_path(key)
@@ -699,6 +735,9 @@ class FileSystemAdapter(StorageAdapter):
     
     async def exists(self, key: str) -> bool:
         """Check if item exists in filesystem."""
+
+
+
         try:
             file_path = self._get_file_path(key)
             return file_path.exists()
@@ -709,6 +748,9 @@ class FileSystemAdapter(StorageAdapter):
     
     async def list_keys(self, prefix: Optional[str] = None, limit: Optional[int] = None) -> List[str]:
         """List keys from filesystem."""
+
+
+
         try:
             keys = []
             
@@ -743,6 +785,9 @@ class CloudStorageAdapter(StorageAdapter):
     
     async def connect(self) -> bool:
         """Initialize S3 client."""
+
+
+
         try:
             self.s3_client = boto3.client(
                 's3',
@@ -768,6 +813,9 @@ class CloudStorageAdapter(StorageAdapter):
     
     async def store(self, item: StorageItem) -> bool:
         """Store item to S3."""
+
+
+
         try:
             # Prepare data
             if isinstance(item.data, (str, bytes)):
@@ -800,6 +848,9 @@ class CloudStorageAdapter(StorageAdapter):
     
     async def retrieve(self, key: str) -> Optional[StorageItem]:
         """Retrieve item from S3."""
+
+
+
         try:
             response = self.s3_client.get_object(Bucket=self.bucket, Key=key)
             
@@ -837,6 +888,9 @@ class CloudStorageAdapter(StorageAdapter):
     
     async def delete(self, key: str) -> bool:
         """Delete item from S3."""
+
+
+
         try:
             self.s3_client.delete_object(Bucket=self.bucket, Key=key)
             return True
@@ -847,6 +901,9 @@ class CloudStorageAdapter(StorageAdapter):
     
     async def exists(self, key: str) -> bool:
         """Check if item exists in S3."""
+
+
+
         try:
             self.s3_client.head_object(Bucket=self.bucket, Key=key)
             return True
@@ -861,6 +918,9 @@ class CloudStorageAdapter(StorageAdapter):
     
     async def list_keys(self, prefix: Optional[str] = None, limit: Optional[int] = None) -> List[str]:
         """List keys from S3."""
+
+
+
         try:
             kwargs = {'Bucket': self.bucket}
             if prefix:
@@ -887,6 +947,9 @@ class CacheAdapter(StorageAdapter):
     
     async def connect(self) -> bool:
         """Connect to Redis."""
+
+
+
         try:
             if self.config.connection_string:
                 self.redis = await aioredis.from_url(self.config.connection_string)
@@ -917,6 +980,9 @@ class CacheAdapter(StorageAdapter):
     
     async def store(self, item: StorageItem) -> bool:
         """Store item in Redis."""
+
+
+
         try:
             # Serialize data and metadata
             serialized_item = {
@@ -949,6 +1015,9 @@ class CacheAdapter(StorageAdapter):
     
     async def retrieve(self, key: str) -> Optional[StorageItem]:
         """Retrieve item from Redis."""
+
+
+
         try:
             data = await self.redis.hgetall(key)
             
@@ -975,6 +1044,9 @@ class CacheAdapter(StorageAdapter):
     
     async def delete(self, key: str) -> bool:
         """Delete item from Redis."""
+
+
+
         try:
             result = await self.redis.delete(key)
             return result > 0
@@ -985,6 +1057,9 @@ class CacheAdapter(StorageAdapter):
     
     async def exists(self, key: str) -> bool:
         """Check if item exists in Redis."""
+
+
+
         try:
             result = await self.redis.exists(key)
             return result > 0
@@ -995,6 +1070,9 @@ class CacheAdapter(StorageAdapter):
     
     async def list_keys(self, prefix: Optional[str] = None, limit: Optional[int] = None) -> List[str]:
         """List keys from Redis."""
+
+
+
         try:
             pattern = f"{prefix}*" if prefix else "*"
             keys = await self.redis.keys(pattern)
@@ -1032,6 +1110,9 @@ class VectorStoreAdapter(StorageAdapter):
     
     async def connect(self) -> bool:
         """Initialize FAISS index."""
+
+
+
         try:
             # Create directory
             self.index_path.parent.mkdir(parents=True, exist_ok=True)
@@ -1063,6 +1144,9 @@ class VectorStoreAdapter(StorageAdapter):
     
     async def disconnect(self):
         """Save index and metadata."""
+
+
+
         try:
             if self.index:
                 faiss.write_index(self.index, str(self.index_path))
@@ -1086,6 +1170,9 @@ class VectorStoreAdapter(StorageAdapter):
     
     async def store(self, item: StorageItem) -> bool:
         """Store vector in FAISS index."""
+
+
+
         try:
             # Data should be a vector (numpy array or list)
             if isinstance(item.data, list):
@@ -1131,6 +1218,9 @@ class VectorStoreAdapter(StorageAdapter):
     
     async def retrieve(self, key: str) -> Optional[StorageItem]:
         """Retrieve vector by key."""
+
+
+
         try:
             if key not in self.key_to_id:
                 return None
@@ -1160,6 +1250,9 @@ class VectorStoreAdapter(StorageAdapter):
     
     async def delete(self, key: str) -> bool:
         """Delete vector (mark as deleted, FAISS doesn't support true deletion)."""
+
+
+
         try:
             if key not in self.key_to_id:
                 return False
@@ -1179,10 +1272,16 @@ class VectorStoreAdapter(StorageAdapter):
     
     async def exists(self, key: str) -> bool:
         """Check if vector exists."""
+
+
+
         return key in self.key_to_id
     
     async def list_keys(self, prefix: Optional[str] = None, limit: Optional[int] = None) -> List[str]:
         """List vector keys."""
+
+
+
         try:
             keys = list(self.key_to_id.keys())
             
@@ -1205,6 +1304,9 @@ class VectorStoreAdapter(StorageAdapter):
         threshold: float = 0.5
     ) -> List[tuple]:
         """Search for similar vectors."""
+
+
+
         try:
             # Prepare query vector
             if isinstance(query_vector, list):

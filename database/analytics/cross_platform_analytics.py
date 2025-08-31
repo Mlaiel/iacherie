@@ -7,7 +7,7 @@ Tracks performance across YouTube, TikTok, Instagram, Spotify, SoundCloud, etc.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Development Team: Lead AI Developer, Senior Backend Engineer, ML Engineer, DBA, Security Expert
 
-⚠️ INTELLECTUAL PROPERTY WARNING ⚠️
+ INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 """
@@ -176,6 +176,9 @@ class CrossPlatformAnalyticsEngine:
         
     def _load_platform_configurations(self) -> Dict[str, Dict]:
         """Load platform-specific configuration and API settings"""
+
+
+
         return {
             PlatformType.YOUTUBE.value: {
                 "api_endpoint": "youtube.googleapis.com/youtube/v3",
@@ -224,6 +227,9 @@ class CrossPlatformAnalyticsEngine:
     
     async def collect_platform_metrics(self, user_id: str, content_id: str, platform: PlatformType) -> PlatformMetrics:
         """Collect real-time metrics from specific platform"""
+
+
+
         try:
             platform_config = self.platform_configs.get(platform.value)
             if not platform_config:

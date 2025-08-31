@@ -7,7 +7,7 @@ Supports multi-format content processing for the IA Influencer Agent Platform.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 This software is proprietary and confidential. Contact: mlaiel@live.de
 
 Team Specialties:

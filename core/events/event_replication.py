@@ -5,7 +5,7 @@ Architecture: Event Replication and Cross-Tenant Synchronization System
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 INTERDIT : Copie, reproduction, modification, ou usage sans autorisation écrite explicite.
 Toute violation sera poursuivie selon la loi allemande et française.
@@ -193,6 +193,9 @@ class DatabaseReplicationConnector(ReplicationConnector):
     
     async def connect(self) -> bool:
         """Établit la connexion à la base de données"""
+
+
+
         try:
             config = self.target.connection_config
             self.connection_pool = await asyncpg.create_pool(
@@ -326,6 +329,9 @@ class APIReplicationConnector(ReplicationConnector):
     
     async def connect(self) -> bool:
         """Établit la session HTTP"""
+
+
+
         try:
             timeout = aiohttp.ClientTimeout(total=30)
             self.session = aiohttp.ClientSession(
@@ -419,6 +425,9 @@ class WebSocketReplicationConnector(ReplicationConnector):
     
     async def connect(self) -> bool:
         """Établit la connexion WebSocket"""
+
+
+
         try:
             headers = {}
             if self.auth_token:
@@ -472,6 +481,9 @@ class WebSocketReplicationConnector(ReplicationConnector):
     
     async def health_check(self) -> bool:
         """Vérifie la santé de la connexion WebSocket"""
+
+
+
         return self._connected and self.websocket and not self.websocket.closed
     
     async def get_last_event_timestamp(self) -> Optional[datetime]:
@@ -490,6 +502,9 @@ class RedisReplicationConnector(ReplicationConnector):
     
     async def connect(self) -> bool:
         """Établit la connexion Redis"""
+
+
+
         try:
             config = self.target.connection_config
             self.redis_client = redis.Redis(
@@ -651,6 +666,9 @@ class EventReplicationManager:
     
     def add_target(self, target: ReplicationTarget) -> bool:
         """Ajoute une cible de réplication"""
+
+
+
         try:
             # Création du connecteur approprié
             connector = self._create_connector(target)
@@ -764,6 +782,9 @@ class EventReplicationManager:
     
     async def _queue_event_for_target(self, event: Event, target_id: str, target: ReplicationTarget):
         """Met en queue un événement pour une cible"""
+
+
+
         try:
             if target.replication_strategy == ReplicationStrategy.SYNCHRONOUS:
                 # Réplication synchrone immédiate
@@ -1110,6 +1131,9 @@ class EventReplicationManager:
     
     def get_replication_status(self) -> Dict[str, Any]:
         """Retourne le statut de réplication"""
+
+
+
         return {
             "replicating": self._replicating,
             "targets": len(self.targets),

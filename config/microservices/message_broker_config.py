@@ -238,6 +238,9 @@ class MessageBrokerConfig(BaseSettings):
     
     def get_broker_config(self) -> Dict[str, Any]:
         """Get complete broker configuration."""
+
+
+
         return {
             "broker_type": self.broker_type,
             "connection_url": self.get_connection_url(),

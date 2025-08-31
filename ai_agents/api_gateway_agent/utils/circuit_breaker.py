@@ -7,7 +7,7 @@ recovery mechanisms, and service health monitoring for microservices resilience.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -304,6 +304,9 @@ class CircuitBreaker:
     
     def get_state(self) -> CircuitState:
         """Get current circuit state"""
+
+
+
         return self.state
     
     def get_failure_rate(self) -> float:
@@ -446,6 +449,9 @@ class CircuitBreakerRegistry:
     
     def get_all_metrics(self) -> Dict[str, Dict[str, Any]]:
         """Get metrics for all circuit breakers"""
+
+
+
         return {
             name: breaker.get_metrics() 
             for name, breaker in self.circuit_breakers.items()

@@ -68,6 +68,9 @@ class ContentAnalysisMetrics:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert metrics to dictionary format"""
+
+
+
         return {
             'processing_time': self.processing_time,
             'quality_score': self.quality_score,
@@ -92,6 +95,9 @@ class ContentAnalysisResult:
     
     def get_business_insights(self) -> Dict[str, Any]:
         """Extract business insights from analysis results"""
+
+
+
         return {
             'monetization_potential': self._calculate_monetization_potential(),
             'collaboration_opportunities': self._identify_collaboration_opportunities(),
@@ -187,6 +193,9 @@ class ContentAnalysisHandler(BaseEventHandler):
     
     def _initialize_ai_models(self):
         """Initialize AI models for content analysis"""
+
+
+
         try:
             # Text analysis models
             self.sentiment_analyzer = pipeline(
@@ -383,6 +392,9 @@ class ContentAnalysisHandler(BaseEventHandler):
     
     async def _validate_audio_content(self, content_path: str) -> Dict[str, Any]:
         """Validate audio content using librosa and AI analysis"""
+
+
+
         try:
             # Load audio file
             audio_data, sample_rate = librosa.load(content_path, sr=None)
@@ -426,6 +438,9 @@ class ContentAnalysisHandler(BaseEventHandler):
     
     async def _validate_video_content(self, content_path: str) -> Dict[str, Any]:
         """Validate video content using OpenCV and AI analysis"""
+
+
+
         try:
             # Open video file
             cap = cv2.VideoCapture(content_path)
@@ -475,6 +490,9 @@ class ContentAnalysisHandler(BaseEventHandler):
     
     async def _validate_image_content(self, content_path: str) -> Dict[str, Any]:
         """Validate image content using PIL and AI analysis"""
+
+
+
         try:
             # Open and analyze image
             with Image.open(content_path) as img:
@@ -519,6 +537,9 @@ class ContentAnalysisHandler(BaseEventHandler):
     
     async def _validate_text_content(self, content_path: str) -> Dict[str, Any]:
         """Validate text content using NLP analysis"""
+
+
+
         try:
             # Read text content
             with open(content_path, 'r', encoding='utf-8') as file:
@@ -604,22 +625,37 @@ class ContentAnalysisHandler(BaseEventHandler):
     
     async def _extract_basic_metadata(self, content_path: str, content_type: ContentType) -> Dict[str, Any]:
         """Extract basic metadata from content file"""
+
+
+
         return await self.metadata_extractor.extract_metadata(content_path, content_type.value)
     
     async def _extract_comprehensive_metadata(self, content_path: str, content_type: ContentType) -> Dict[str, Any]:
         """Extract comprehensive metadata with AI enhancement"""
+
+
+
         return await self.metadata_extractor.extract_comprehensive_metadata(content_path, content_type.value)
     
     async def _enhance_metadata_with_ai(self, metadata: Dict[str, Any], content_type: ContentType) -> Dict[str, Any]:
         """Enhance metadata using AI analysis"""
+
+
+
         return await self.metadata_extractor.enhance_with_ai(metadata, content_type.value)
     
     async def _extract_content_features(self, content_path: str, content_type: ContentType) -> Dict[str, Any]:
         """Extract detailed content features for business intelligence"""
+
+
+
         return await self.content_processor.extract_features(content_path, content_type.value)
     
     async def _assess_content_quality(self, content_path: str, content_type: ContentType) -> Dict[str, Any]:
         """Perform comprehensive content quality assessment"""
+
+
+
         return await self.quality_analyzer.assess_quality(content_path, content_type.value)
     
     def _generate_metadata_recommendations(self, metadata: Dict[str, Any]) -> List[str]:
@@ -656,6 +692,9 @@ class ContentAnalysisHandler(BaseEventHandler):
     
     def _calculate_business_metrics(self, quality_analysis: Dict[str, Any]) -> Dict[str, Any]:
         """Calculate business-relevant metrics from quality analysis"""
+
+
+
         return {
             'monetization_potential': quality_analysis.get('monetization_score', 0.5),
             'viral_potential': quality_analysis.get('viral_score', 0.5),

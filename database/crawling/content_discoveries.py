@@ -104,6 +104,9 @@ class ContentDiscoveryManager(DatabaseManager):
             ContentDiscoveryError: If storage fails
             ValidationError: If content data invalid
         """
+
+
+
         try:
             # Generate unique discovery ID
             discovery_id = str(uuid4())
@@ -201,6 +204,9 @@ class ContentDiscoveryManager(DatabaseManager):
         Returns:
             Dict containing extracted metadata
         """
+
+
+
         try:
             metadata = {}
             
@@ -272,6 +278,9 @@ class ContentDiscoveryManager(DatabaseManager):
     
     def _safe_int(self, value: Any) -> int:
         """Safely convert value to integer."""
+
+
+
         try:
             if isinstance(value, str):
                 # Handle values like "1.2K", "3.5M"
@@ -294,6 +303,9 @@ class ContentDiscoveryManager(DatabaseManager):
         Returns:
             Content hash string
         """
+
+
+
         try:
             # Create normalized content for hashing
             hash_content = {
@@ -332,6 +344,9 @@ class ContentDiscoveryManager(DatabaseManager):
         Returns:
             Existing discovery data or None
         """
+
+
+
         try:
             result = await self.db.execute(
                 text("""
@@ -385,6 +400,9 @@ class ContentDiscoveryManager(DatabaseManager):
         Returns:
             Updated discovery information
         """
+
+
+
         try:
             discovery_id = existing_discovery['discovery_id']
             
@@ -438,6 +456,9 @@ class ContentDiscoveryManager(DatabaseManager):
         Returns:
             Dict containing analysis results
         """
+
+
+
         try:
             analysis = {
                 'category': DiscoveryCategory.ORIGINAL_CONTENT.value,
@@ -525,6 +546,9 @@ class ContentDiscoveryManager(DatabaseManager):
         Returns:
             Confidence score (0.0 - 100.0)
         """
+
+
+
         try:
             base_score = 50.0  # Start with medium confidence
             
@@ -603,6 +627,9 @@ class ContentDiscoveryManager(DatabaseManager):
         Returns:
             List of extracted keywords
         """
+
+
+
         try:
             import re
             
@@ -645,6 +672,9 @@ class ContentDiscoveryManager(DatabaseManager):
         Returns:
             Language code (e.g., 'en', 'fr', 'de')
         """
+
+
+
         try:
             # Simple language detection based on common words
             # In production, use a proper language detection library
@@ -691,6 +721,9 @@ class ContentDiscoveryManager(DatabaseManager):
             discovery_id: Discovery identifier
             metadata: Content metadata
         """
+
+
+
         try:
             # In production, this would index to Elasticsearch or similar
             # For now, we'll create a simple search index record
@@ -725,6 +758,9 @@ class ContentDiscoveryManager(DatabaseManager):
             session_id: Session that found duplicate
             job_id: Job that found duplicate
         """
+
+
+
         try:
             # Log duplicate discovery for analytics
             duplicate_log = {
@@ -762,6 +798,9 @@ class ContentDiscoveryManager(DatabaseManager):
         Returns:
             List of discovery dictionaries
         """
+
+
+
         try:
             # Build query conditions
             conditions = ["cs.user_id = :user_id"]
@@ -831,6 +870,9 @@ class ContentDiscoveryManager(DatabaseManager):
         Returns:
             Number of discoveries archived
         """
+
+
+
         try:
             result = await self.db.execute(
                 text("""
@@ -861,6 +903,9 @@ class ContentDiscoveryManager(DatabaseManager):
         Returns:
             Dict containing health status
         """
+
+
+
         try:
             # Check recent discoveries
             recent_discoveries = await self.db.query(func.count(ContentDiscovery.discovery_id)).filter(

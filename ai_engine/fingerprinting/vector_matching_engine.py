@@ -106,6 +106,9 @@ class VectorMatchingEngine:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             with self.lock:
                 dim = dimension or self.config.dimension
@@ -129,6 +132,9 @@ class VectorMatchingEngine:
     
     async def _create_faiss_index(self, dimension: int):
         """Create FAISS index based on configuration"""
+
+
+
         try:
             index_type = self.config.index_type.upper()
             
@@ -200,6 +206,9 @@ class VectorMatchingEngine:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             if content_type not in self.indices:
                 await self.create_index(content_type, vectors.shape[1])
@@ -270,6 +279,9 @@ class VectorMatchingEngine:
         Returns:
             List[VectorMatch]: Similar vectors with scores
         """
+
+
+
         try:
             index = self.indices.get(content_type)
             if index is None or index.ntotal == 0:
@@ -349,6 +361,9 @@ class VectorMatchingEngine:
         Returns:
             List[List[VectorMatch]]: Results for each query
         """
+
+
+
         try:
             index = self.indices.get(content_type)
             if index is None or index.ntotal == 0:
@@ -411,6 +426,9 @@ class VectorMatchingEngine:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             index = self.indices.get(content_type)
             if index is None:
@@ -464,6 +482,9 @@ class VectorMatchingEngine:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             index = self.indices.get(content_type)
             if index is None:
@@ -505,6 +526,9 @@ class VectorMatchingEngine:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             if filepath is None:
                 filepath = os.path.join(self.index_dir, f"{content_type}_index.faiss")
@@ -544,6 +568,9 @@ class VectorMatchingEngine:
         Returns:
             Dict[str, Any]: Index statistics
         """
+
+
+
         try:
             if content_type:
                 return {
@@ -577,6 +604,9 @@ class VectorMatchingEngine:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             index = self.indices.get(content_type)
             if index is None:
@@ -618,6 +648,9 @@ class VectorMatchingEngine:
         Returns:
             Dict[str, List[VectorMatch]]: Results per content type
         """
+
+
+
         try:
             results = {}
             
@@ -644,6 +677,9 @@ class VectorMatchingEngine:
     
     def __del__(self):
         """Cleanup resources"""
+
+
+
         try:
             if hasattr(self, 'executor'):
                 self.executor.shutdown(wait=False)

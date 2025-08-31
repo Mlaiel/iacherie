@@ -44,6 +44,9 @@ class SpotifyPlatform(PlatformBase):
     
     async def authenticate(self) -> bool:
         """Authenticate with Spotify using Client Credentials flow"""
+
+
+
         try:
             session = await self._get_session()
             
@@ -294,6 +297,9 @@ class SpotifyPlatform(PlatformBase):
     
     async def delete_content(self, content_id: str) -> bool:
         """Delete content from Spotify (limited to playlists you own)"""
+
+
+
         try:
             # Can only unfollow playlists, not delete tracks
             result = await self._make_request('DELETE', f'playlists/{content_id}/followers')
@@ -304,6 +310,9 @@ class SpotifyPlatform(PlatformBase):
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
         """Update content metadata on Spotify (limited to playlists you own)"""
+
+
+
         try:
             data = {
                 'name': metadata.title,
@@ -323,10 +332,16 @@ class SpotifyPlatform(PlatformBase):
     
     async def get_track_features(self, track_id: str) -> Optional[Dict[str, Any]]:
         """Get audio features for a track"""
+
+
+
         return await self._make_request('GET', f'audio-features/{track_id}')
     
     async def get_track_analysis(self, track_id: str) -> Optional[Dict[str, Any]]:
         """Get audio analysis for a track"""
+
+
+
         return await self._make_request('GET', f'audio-analysis/{track_id}')
     
     async def get_recommendations(self, 

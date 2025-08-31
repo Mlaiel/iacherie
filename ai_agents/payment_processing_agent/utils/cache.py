@@ -7,7 +7,7 @@ strategies, and advanced performance optimization for payment operations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -186,6 +186,9 @@ class MemoryCache(Generic[T]):
     
     async def delete(self, key: str) -> bool:
         """Delete value from memory cache"""
+
+
+
         try:
             if key in self._cache:
                 del self._cache[key]
@@ -255,6 +258,9 @@ class RedisCache:
     
     async def connect(self):
         """Connect to Redis"""
+
+
+
         try:
             self.redis_client = await aioredis.from_url(
                 self.redis_url,
@@ -411,6 +417,9 @@ class RedisCache:
     
     def _serialize(self, value: Any) -> bytes:
         """Serialize value for storage"""
+
+
+
         try:
             if self.serializer == "json":
                 # Handle Decimal serialization
@@ -428,6 +437,9 @@ class RedisCache:
     
     def _deserialize(self, raw_value: bytes) -> Any:
         """Deserialize value from storage"""
+
+
+
         try:
             if self.serializer == "json":
                 json_str = raw_value.decode('utf-8')
@@ -657,6 +669,9 @@ class PerformanceCache:
     
     async def warm_cache(self, key: str, fetch_func: Callable, ttl: Optional[int] = None):
         """Add cache warming request to queue"""
+
+
+
         try:
             await self.warming_queue.put({
                 "key": key,
@@ -761,14 +776,23 @@ def generate_cache_key(prefix: str, *args: Any, **kwargs: Any) -> str:
 
 def cache_key_for_transaction(transaction_id: str) -> str:
     """Generate cache key for transaction data"""
+
+
+
     return generate_cache_key("transaction", transaction_id)
 
 
 def cache_key_for_user_payments(user_id: str, limit: int = 10) -> str:
     """Generate cache key for user payment history"""
+
+
+
     return generate_cache_key("user_payments", user_id, limit=limit)
 
 
 def cache_key_for_revenue_stats(creator_id: str, period: str) -> str:
     """Generate cache key for revenue statistics"""
+
+
+
     return generate_cache_key("revenue_stats", creator_id, period)

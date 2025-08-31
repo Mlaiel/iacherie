@@ -124,6 +124,9 @@ class StorageManager:
     
     async def _initialize_providers(self):
         """Initialize storage provider clients"""
+
+
+
         try:
             for provider, config in self.configs.items():
                 if provider == StorageProvider.AWS_S3:
@@ -157,6 +160,9 @@ class StorageManager:
         Returns:
             Storage result with operation details
         """
+
+
+
         try:
             # Select optimal provider
             target_provider = provider or await self._select_optimal_provider(
@@ -246,6 +252,9 @@ class StorageManager:
         Returns:
             File content bytes or None if not found
         """
+
+
+
         try:
             # Determine provider if not specified
             if not provider:
@@ -297,6 +306,9 @@ class StorageManager:
         Returns:
             Success status
         """
+
+
+
         try:
             # Determine provider if not specified
             if not provider:
@@ -345,6 +357,9 @@ class StorageManager:
         Returns:
             List of file information dictionaries
         """
+
+
+
         try:
             target_provider = provider or self.primary_provider
             
@@ -370,6 +385,9 @@ class StorageManager:
         Returns:
             File information dictionary or None
         """
+
+
+
         try:
             target_provider = provider or await self._detect_file_provider(file_path)
             
@@ -397,6 +415,9 @@ class StorageManager:
         Returns:
             Presigned URL or None
         """
+
+
+
         try:
             target_provider = provider or await self._detect_file_provider(file_path)
             
@@ -420,6 +441,9 @@ class StorageManager:
         Returns:
             Storage statistics
         """
+
+
+
         try:
             total_files = 0
             total_size = 0
@@ -468,6 +492,9 @@ class StorageManager:
     
     async def _initialize_s3_client(self, config: StorageConfig):
         """Initialize AWS S3 client"""
+
+
+
         try:
             session = boto3.Session(
                 aws_access_key_id=config.access_key,
@@ -489,6 +516,9 @@ class StorageManager:
     
     async def _initialize_gcs_client(self, config: StorageConfig):
         """Initialize Google Cloud Storage client"""
+
+
+
         try:
             # Implementation for GCS client initialization
             # Placeholder for now
@@ -501,6 +531,9 @@ class StorageManager:
     
     async def _initialize_azure_client(self, config: StorageConfig):
         """Initialize Azure Blob Storage client"""
+
+
+
         try:
             # Implementation for Azure client initialization
             # Placeholder for now
@@ -513,6 +546,9 @@ class StorageManager:
     
     async def _initialize_minio_client(self, config: StorageConfig):
         """Initialize MinIO client"""
+
+
+
         try:
             # Implementation for MinIO client initialization
             # Would use similar approach to S3 with custom endpoint
@@ -525,6 +561,9 @@ class StorageManager:
     
     async def _initialize_local_storage(self, config: StorageConfig):
         """Initialize local storage"""
+
+
+
         try:
             storage_path = Path(config.bucket_name)
             storage_path.mkdir(parents=True, exist_ok=True)
@@ -553,6 +592,9 @@ class StorageManager:
     async def _store_to_provider(self, provider: StorageProvider, file_content: bytes,
                                file_path: str, metadata: Dict[str, Any]) -> StorageResult:
         """Store file to specific provider"""
+
+
+
         try:
             config = self.configs[provider]
             client = self.clients[provider]
@@ -579,6 +621,9 @@ class StorageManager:
     async def _store_to_s3(self, client, config: StorageConfig, file_content: bytes,
                           file_path: str, metadata: Dict[str, Any]) -> StorageResult:
         """Store file to AWS S3"""
+
+
+
         try:
             # Prepare metadata
             s3_metadata = {
@@ -635,6 +680,9 @@ class StorageManager:
     async def _store_to_local(self, client, config: StorageConfig, file_content: bytes,
                             file_path: str, metadata: Dict[str, Any]) -> StorageResult:
         """Store file to local storage"""
+
+
+
         try:
             full_path = client['path'] / file_path
             full_path.parent.mkdir(parents=True, exist_ok=True)
@@ -674,6 +722,9 @@ class StorageManager:
     async def _store_to_gcs(self, client, config: StorageConfig, file_content: bytes,
                            file_path: str, metadata: Dict[str, Any]) -> StorageResult:
         """Store file to Google Cloud Storage"""
+
+
+
         try:
             self.logger.info(f"Storing to GCS: {file_path}")
             # Basic implementation - logs operation and returns success
@@ -699,6 +750,9 @@ class StorageManager:
     async def _store_to_azure(self, client, config: StorageConfig, file_content: bytes,
                             file_path: str, metadata: Dict[str, Any]) -> StorageResult:
         """Store file to Azure Blob Storage"""
+
+
+
         try:
             self.logger.info(f"Storing to Azure: {file_path}")
             # Basic implementation - logs operation and returns success
@@ -724,6 +778,9 @@ class StorageManager:
     async def _store_to_minio(self, client, config: StorageConfig, file_content: bytes,
                             file_path: str, metadata: Dict[str, Any]) -> StorageResult:
         """Store file to MinIO"""
+
+
+
         try:
             self.logger.info(f"Storing to MinIO: {file_path}")
             # Basic implementation - logs operation and returns success
@@ -749,6 +806,9 @@ class StorageManager:
     async def _store_fallback(self, config: StorageConfig, file_content: bytes,
                              file_path: str, metadata: Dict[str, Any]) -> StorageResult:
         """Fallback storage implementation for unsupported providers"""
+
+
+
         try:
             self.logger.warning(f"Using fallback storage for: {file_path}")
             # Basic fallback - logs operation and returns mock success

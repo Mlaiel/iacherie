@@ -1,12 +1,12 @@
 """
-🔍 DISCOVERY SERVICE - Creator Discovery & Search System
+ DISCOVERY SERVICE - Creator Discovery & Search System
 =====================================================
 
 Developed by: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved - Unauthorized use is strictly prohibited
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive property of Fahed Mlaiel.
 Any attempt to steal, copy, or reproduce this concept, idea, or code
 without explicit written authorization from Fahed Mlaiel is strictly forbidden
@@ -232,6 +232,9 @@ class DiscoveryService:
         sort_by: SortBy = SortBy.RELEVANCE
     ) -> SearchResults:
         """Advanced creator discovery with AI-powered search"""
+
+
+
         try:
             start_time = datetime.utcnow()
             logger.info(f"Discovering creators with query: '{search_query}'")
@@ -317,6 +320,9 @@ class DiscoveryService:
         limit: int = 50
     ) -> List[Dict[str, Any]]:
         """Find trending creators based on growth metrics"""
+
+
+
         try:
             logger.info(f"Finding trending creators in category: {category}")
             
@@ -386,6 +392,9 @@ class DiscoveryService:
         limit: int = 20
     ) -> List[Dict[str, Any]]:
         """Get personalized discovery recommendations"""
+
+
+
         try:
             logger.info(f"Getting discovery recommendations for user {user_id}")
             
@@ -431,6 +440,9 @@ class DiscoveryService:
         limit: int = 20
     ) -> SearchResults:
         """Search creators by image similarity"""
+
+
+
         try:
             logger.info("Performing image-based creator search")
             
@@ -476,6 +488,9 @@ class DiscoveryService:
         language: str = "en-US"
     ) -> SearchResults:
         """Search creators using voice input"""
+
+
+
         try:
             logger.info("Performing voice-based creator search")
             
@@ -583,6 +598,9 @@ class DiscoveryService:
         sort_by: SortBy
     ) -> List[Dict[str, Any]]:
         """Visual search using image analysis"""
+
+
+
         return await self.search_by_image(image_query, filters, limit=per_page)
         
     async def _voice_search(
@@ -624,106 +642,184 @@ class DiscoveryService:
     # Helper methods (placeholder implementations)
     async def _generate_cache_key(self, query: str, filters: DiscoveryFilters, mode: SearchMode, page: int, per_page: int, sort_by: SortBy) -> str:
         """Generate cache key for search results"""
+
+
+
         return hashlib.md5(f"{query}_{mode.value}_{page}_{per_page}_{sort_by.value}".encode()).hexdigest()
         
     async def _personalize_results(self, results: List[Dict[str, Any]], user_id: str, context: DiscoveryContext) -> List[Dict[str, Any]]:
         """Personalize search results for user"""
+
+
+
         return results  # Placeholder
         
     async def _enhance_search_results(self, results: List[Dict[str, Any]], query: str, filters: DiscoveryFilters) -> List[Dict[str, Any]]:
         """Enhance search results with additional data"""
+
+
+
         return results  # Placeholder
         
     async def _generate_search_insights(self, results: List[Dict[str, Any]], query: str, filters: DiscoveryFilters, context: DiscoveryContext) -> Dict[str, Any]:
         """Generate AI insights about search results"""
+
+
+
         return {}  # Placeholder
         
     async def _generate_search_suggestions(self, query: str, filters: DiscoveryFilters) -> List[str]:
         """Generate search suggestions"""
+
+
+
         return []  # Placeholder
         
     async def _get_related_searches(self, query: str, user_id: Optional[str]) -> List[str]:
         """Get related search queries"""
+
+
+
         return []  # Placeholder
         
     async def _get_trending_searches(self) -> List[str]:
         """Get trending search queries"""
+
+
+
         return []  # Placeholder
         
     async def _generate_search_facets(self, results: List[Dict[str, Any]]) -> Dict[str, List[Dict[str, Any]]]:
         """Generate search facets for filtering"""
+
+
+
         return {}  # Placeholder
         
     async def _calculate_trending_metrics(self, creator_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
         """Calculate trending metrics for creator"""
+
+
+
         return {'trending_score': 0.8}  # Placeholder
         
     async def _get_user_profile(self, user_id: str) -> Dict[str, Any]:
         """Get user profile for personalization"""
+
+
+
         return {}  # Placeholder
         
     async def _get_user_search_history(self, user_id: str) -> List[Dict[str, Any]]:
         """Get user search history"""
+
+
+
         return []  # Placeholder
         
     async def _get_collaborative_recommendations(self, user_id: str, limit: int) -> List[Dict[str, Any]]:
         """Get collaborative filtering recommendations"""
+
+
+
         return []  # Placeholder
         
     async def _get_content_based_recommendations(self, user_profile: Dict[str, Any], limit: int) -> List[Dict[str, Any]]:
         """Get content-based recommendations"""
+
+
+
         return []  # Placeholder
         
     async def _get_trending_recommendations(self, user_profile: Dict[str, Any], limit: int) -> List[Dict[str, Any]]:
         """Get trending-based recommendations"""
+
+
+
         return []  # Placeholder
         
     async def _deduplicate_and_rank_recommendations(self, recommendations: List[Dict[str, Any]], user_profile: Dict[str, Any], context: DiscoveryContext) -> List[Dict[str, Any]]:
         """Remove duplicates and rank recommendations"""
+
+
+
         return recommendations  # Placeholder
         
     async def _enhance_recommendations(self, recommendations: List[Dict[str, Any]], user_id: str) -> List[Dict[str, Any]]:
         """Enhance recommendations with additional data"""
+
+
+
         return recommendations  # Placeholder
         
     async def _extract_image_features(self, image_data: Any) -> np.ndarray:
         """Extract features from image"""
+
+
+
         return np.random.rand(512)  # Placeholder
         
     async def _apply_filters_to_results(self, results: List[Dict[str, Any]], filters: DiscoveryFilters) -> List[Dict[str, Any]]:
         """Apply filters to search results"""
+
+
+
         return results  # Placeholder
         
     async def _enhance_image_search_results(self, results: List[Dict[str, Any]], image_features: np.ndarray) -> List[Dict[str, Any]]:
         """Enhance image search results"""
+
+
+
         return results  # Placeholder
         
     async def _voice_to_text(self, audio_data: Any, language: str) -> str:
         """Convert voice to text"""
+
+
+
         return "example search query"  # Placeholder
         
     async def _merge_search_results(self, result_sets: List[List[Dict[str, Any]]], weights: List[float]) -> List[Dict[str, Any]]:
         """Merge multiple search result sets"""
+
+
+
         return result_sets[0] if result_sets else []  # Placeholder
         
     async def _generate_text_embedding(self, text: str) -> np.ndarray:
         """Generate text embedding"""
+
+
+
         return np.random.rand(384)  # Placeholder
         
     async def _build_elasticsearch_query(self, query: str, filters: DiscoveryFilters, sort_by: SortBy) -> Dict[str, Any]:
         """Build Elasticsearch query"""
+
+
+
         return {"query": {"match_all": {}}}  # Placeholder
         
     async def _analyze_search_intent(self, query: str, user_id: Optional[str]) -> Dict[str, Any]:
         """Analyze search intent using AI"""
+
+
+
         return {'intent': 'collaboration_search'}  # Placeholder
         
     async def _enhance_query_with_ai(self, query: str, intent: Dict[str, Any], filters: DiscoveryFilters) -> str:
         """Enhance query using AI"""
+
+
+
         return query  # Placeholder
         
     async def _apply_ml_ranking(self, results: List[Dict[str, Any]], query: str, user_id: Optional[str]) -> List[Dict[str, Any]]:
         """Apply ML-based ranking to results"""
+
+
+
         return results  # Placeholder
 
 class SortOrder(Enum):
@@ -802,6 +898,9 @@ class DiscoveryService:
         user_id: Optional[str] = None
     ) -> SearchResults:
         """Search for creators with advanced filtering and ranking"""
+
+
+
         try:
             start_time = datetime.utcnow()
             logger.info(f"Searching creators with query: '{query}'")
@@ -871,6 +970,9 @@ class DiscoveryService:
         limit: int = 20
     ) -> List[Dict[str, Any]]:
         """Discover trending creators based on various signals"""
+
+
+
         try:
             logger.info(f"Discovering trending creators for {time_window}")
             
@@ -917,6 +1019,9 @@ class DiscoveryService:
         limit: int = 20
     ) -> List[Dict[str, Any]]:
         """Discover creators within geographic radius"""
+
+
+
         try:
             logger.info(f"Discovering creators near {latitude}, {longitude} within {radius_km}km")
             
@@ -964,6 +1069,9 @@ class DiscoveryService:
         limit: int = 20
     ) -> List[Dict[str, Any]]:
         """Search for creators based on semantic content similarity"""
+
+
+
         try:
             logger.info(f"Semantic search for: '{content_description}'")
             
@@ -1008,6 +1116,9 @@ class DiscoveryService:
         time_period: str = "month"
     ) -> Dict[str, Any]:
         """Get discovery and search analytics for user"""
+
+
+
         try:
             # Get search history
             search_history = await self._get_user_search_history(user_id, time_period)
@@ -1091,6 +1202,9 @@ class DiscoveryService:
         page_size: int
     ) -> List[Dict[str, Any]]:
         """Execute search using Elasticsearch"""
+
+
+
         try:
             # Build Elasticsearch query
             es_query = {
@@ -1170,6 +1284,9 @@ class DiscoveryService:
         page_size: int
     ) -> List[Dict[str, Any]]:
         """Execute search using database queries"""
+
+
+
         try:
             # Build SQL query
             conditions = ["c.is_active = true"]
@@ -1223,6 +1340,9 @@ class DiscoveryService:
     # Advanced ML ranking and suggestion methods
     async def _apply_ml_ranking(self, results: List[Dict[str, Any]], query: Optional[str], user_id: str) -> List[Dict[str, Any]]:
         """Apply ML-based ranking to search results using collaborative filtering and content-based approaches"""
+
+
+
         try:
             if not results or not query:
                 return results
@@ -1270,6 +1390,9 @@ class DiscoveryService:
         
     async def _calculate_search_facets(self, search_query: Dict[str, Any], filters: Optional[DiscoveryFilters]) -> Dict[str, Any]:
         """Calculate comprehensive search facets for advanced filtering"""
+
+
+
         try:
             facets = {}
             
@@ -1357,6 +1480,9 @@ class DiscoveryService:
         
     async def _generate_search_suggestions(self, query: Optional[str], results: List[Dict[str, Any]]) -> List[str]:
         """Generate intelligent search suggestions using NLP and query analysis"""
+
+
+
         try:
             suggestions = []
             
@@ -1394,6 +1520,9 @@ class DiscoveryService:
         
     async def _get_related_searches(self, query: Optional[str], user_id: Optional[str]) -> List[str]:
         """Get related searches using semantic similarity and user behavior analysis"""
+
+
+
         try:
             related_searches = []
             
@@ -1423,6 +1552,9 @@ class DiscoveryService:
         
     async def _track_search_analytics(self, query: Optional[str], filters: Optional[DiscoveryFilters], results: SearchResults, user_id: Optional[str]) -> None:
         """Track comprehensive search analytics for optimization and insights"""
+
+
+
         try:
             analytics_data = {
                 'event_type': 'creator_search',
@@ -1465,6 +1597,9 @@ class DiscoveryService:
         
     async def _calculate_trending_scores(self, time_window: str, category: Optional[str], location: Optional[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Calculate comprehensive trending scores using multiple factors and ML algorithms"""
+
+
+
         try:
             # Define time window
             if time_window == "24h":
@@ -1590,6 +1725,9 @@ class DiscoveryService:
         
     async def _filter_by_location(self, creators: List[Dict[str, Any]], location: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Advanced location-based filtering with geographic calculations"""
+
+
+
         try:
             if not location or not creators:
                 return creators
@@ -1633,6 +1771,9 @@ class DiscoveryService:
         
     async def _enhance_creator_data(self, creator: Dict[str, Any]) -> Dict[str, Any]:
         """Enhance creator data with additional computed information and insights"""
+
+
+
         try:
             enhanced_creator = creator.copy()
             
@@ -1684,23 +1825,38 @@ class DiscoveryService:
         
     async def _find_nearby_creators(self, latitude: float, longitude: float, radius_km: float, creator_types: Optional[List[str]]) -> List[Dict[str, Any]]:
         """Find creators within geographic radius"""
+
+
+
         return []
         
     async def _generate_content_embedding(self, content: str) -> np.ndarray:
         """Generate content embedding for semantic search"""
+
+
+
         return np.random.rand(128)  # Placeholder
         
     async def _get_creator_content_embeddings(self, content_type: Optional[str]) -> Dict[str, np.ndarray]:
         """Get content embeddings for all creators"""
+
+
+
         return {}
         
     async def _get_creator_details(self, creator_id: str) -> Optional[Dict[str, Any]]:
         """Get detailed creator information"""
+
+
+
         return {}
         
     # Advanced Analytics and Insights Methods
     async def _get_user_search_history(self, user_id: str, time_period: str) -> List[Dict[str, Any]]:
         """Get comprehensive user search history with detailed analytics"""
+
+
+
         try:
             # Calculate time range
             if time_period == "7_days":
@@ -1750,6 +1906,9 @@ class DiscoveryService:
         
     async def _get_discovery_interactions(self, user_id: str, time_period: str) -> List[Dict[str, Any]]:
         """Get user's discovery and interaction patterns"""
+
+
+
         try:
             # Calculate time range
             if time_period == "7_days":
@@ -1794,6 +1953,9 @@ class DiscoveryService:
         
     async def _analyze_filter_usage(self, search_history: List[Dict[str, Any]]) -> Dict[str, int]:
         """Analyze which filters users apply most frequently"""
+
+
+
         try:
             filter_usage = {}
             
@@ -1818,6 +1980,9 @@ class DiscoveryService:
         
     async def _analyze_discovery_methods(self, interactions: List[Dict[str, Any]]) -> Dict[str, int]:
         """Analyze which discovery methods lead to successful interactions"""
+
+
+
         try:
             discovery_methods = {}
             
@@ -1840,6 +2005,9 @@ class DiscoveryService:
         
     async def _calculate_interaction_rates(self, interactions: List[Dict[str, Any]]) -> Dict[str, float]:
         """Calculate various interaction rate metrics"""
+
+
+
         try:
             if not interactions:
                 return {}
@@ -1866,6 +2034,9 @@ class DiscoveryService:
         
     async def _calculate_conversion_rates(self, interactions: List[Dict[str, Any]]) -> Dict[str, float]:
         """Calculate conversion rates from discovery to collaboration"""
+
+
+
         try:
             if not interactions:
                 return {}
@@ -1899,6 +2070,9 @@ class DiscoveryService:
         
     async def _analyze_creator_type_preferences(self, interactions: List[Dict[str, Any]]) -> Dict[str, int]:
         """Analyze user preferences for different creator types"""
+
+
+
         try:
             creator_type_preferences = {}
             
@@ -1925,6 +2099,9 @@ class DiscoveryService:
         
     async def _analyze_geographic_preferences(self, interactions: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Analyze user's geographic preferences and patterns"""
+
+
+
         try:
             geographic_data = {
                 'countries': {},
@@ -1984,6 +2161,9 @@ class DiscoveryService:
         
     async def _analyze_skill_interests(self, interactions: List[Dict[str, Any]]) -> Dict[str, int]:
         """Analyze user interests in different skills and capabilities"""
+
+
+
         try:
             skill_interests = {}
             
@@ -2009,6 +2189,9 @@ class DiscoveryService:
         
     async def _generate_discovery_recommendations(self, user_id: str, analytics: Dict[str, Any]) -> List[str]:
         """Generate personalized discovery recommendations based on analytics"""
+
+
+
         try:
             recommendations = []
             
@@ -2063,6 +2246,9 @@ class DiscoveryService:
     # Helper methods for analytics
     async def _calculate_interaction_value(self, interaction: Dict[str, Any]) -> float:
         """Calculate the value score of an interaction"""
+
+
+
         try:
             base_score = 1.0
             interaction_type = interaction.get('interaction_type', '')

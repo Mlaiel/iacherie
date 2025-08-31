@@ -6,7 +6,7 @@ Developed by: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Senior Backend + ML Engineer + DBA + Security Expert + 
                Microservices Architect + Audio Engineer + DevOps + AI Prompt Engineer
 
-⚠️ INTELLECTUAL PROPERTY WARNING:
+ INTELLECTUAL PROPERTY WARNING:
 This watermark quality assessment system, concept, and all associated code are the exclusive 
 intellectual property of Fahed Mlaiel. Any unauthorized use, copying, modification, or 
 distribution without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is 
@@ -127,6 +127,9 @@ class QualityAssessmentResult:
     
     def get_failed_metrics(self) -> List[QualityScore]:
         """Get metrics that failed validation"""
+
+
+
         return [score for score in self.individual_scores if score.status == ValidationStatus.FAILED]
 
 
@@ -209,6 +212,9 @@ class AudioQualityAssessor:
     
     async def _calculate_snr(self, original: np.ndarray, watermarked: np.ndarray) -> QualityScore:
         """Calculate Signal-to-Noise Ratio"""
+
+
+
         try:
             noise = watermarked - original
             signal_power = np.mean(original ** 2)
@@ -254,6 +260,9 @@ class AudioQualityAssessor:
     
     async def _calculate_thd(self, original: np.ndarray, watermarked: np.ndarray) -> QualityScore:
         """Calculate Total Harmonic Distortion"""
+
+
+
         try:
             # Simplified THD calculation
             noise = watermarked - original
@@ -300,6 +309,9 @@ class AudioQualityAssessor:
     
     async def _calculate_spectral_distortion(self, original: np.ndarray, watermarked: np.ndarray) -> QualityScore:
         """Calculate spectral distortion"""
+
+
+
         try:
             # FFT analysis
             original_fft = np.abs(fft(original))
@@ -355,6 +367,9 @@ class AudioQualityAssessor:
     
     async def _calculate_perceptual_quality(self, original: np.ndarray, watermarked: np.ndarray) -> QualityScore:
         """Calculate perceptual audio quality"""
+
+
+
         try:
             # Simplified perceptual model based on psychoacoustics
             
@@ -420,6 +435,9 @@ class AudioQualityAssessor:
     
     async def _calculate_dynamic_range_preservation(self, original: np.ndarray, watermarked: np.ndarray) -> QualityScore:
         """Calculate dynamic range preservation"""
+
+
+
         try:
             # Calculate RMS in overlapping windows
             window_size = int(0.1 * self.sample_rate)  # 100ms windows
@@ -592,6 +610,9 @@ class ImageQualityAssessor:
     
     async def _calculate_psnr(self, original: np.ndarray, watermarked: np.ndarray) -> QualityScore:
         """Calculate Peak Signal-to-Noise Ratio"""
+
+
+
         try:
             mse = np.mean((original.astype(float) - watermarked.astype(float)) ** 2)
             
@@ -636,6 +657,9 @@ class ImageQualityAssessor:
     
     async def _calculate_ssim(self, original: np.ndarray, watermarked: np.ndarray) -> QualityScore:
         """Calculate Structural Similarity Index"""
+
+
+
         try:
             # Convert to grayscale if needed
             if len(original.shape) == 3:
@@ -685,6 +709,9 @@ class ImageQualityAssessor:
     
     async def _calculate_mse(self, original: np.ndarray, watermarked: np.ndarray) -> QualityScore:
         """Calculate Mean Squared Error"""
+
+
+
         try:
             mse_value = np.mean((original.astype(float) - watermarked.astype(float)) ** 2)
             
@@ -723,6 +750,9 @@ class ImageQualityAssessor:
     
     async def _calculate_visual_quality(self, original: np.ndarray, watermarked: np.ndarray) -> QualityScore:
         """Calculate visual quality score"""
+
+
+
         try:
             # Edge preservation assessment
             original_edges = cv2.Canny(cv2.cvtColor(original, cv2.COLOR_RGB2GRAY), 50, 150)
@@ -772,6 +802,9 @@ class ImageQualityAssessor:
     
     async def _calculate_color_fidelity(self, original: np.ndarray, watermarked: np.ndarray) -> QualityScore:
         """Calculate color fidelity preservation"""
+
+
+
         try:
             # Color histogram comparison
             color_diff = 0.0
@@ -886,6 +919,9 @@ class WatermarkValidationSystem:
         Returns:
             QualityAssessmentResult with comprehensive metrics
         """
+
+
+
         try:
             # Load content if file paths provided
             if isinstance(original_content, str):
@@ -927,6 +963,9 @@ class WatermarkValidationSystem:
     
     async def _load_content(self, file_path: str, content_type: str) -> np.ndarray:
         """Load content from file"""
+
+
+
         try:
             file_path = Path(file_path)
             
@@ -945,6 +984,9 @@ class WatermarkValidationSystem:
     
     async def _validate_video_quality(self, original: np.ndarray, watermarked: np.ndarray) -> QualityAssessmentResult:
         """Validate video quality with comprehensive assessment"""
+
+
+
         try:
             start_time = asyncio.get_event_loop().time()
             individual_scores = []
@@ -1022,6 +1064,9 @@ class WatermarkValidationSystem:
     
     async def _validate_text_quality(self, original: str, watermarked: str) -> QualityAssessmentResult:
         """Validate text quality with readability and coherence analysis"""
+
+
+
         try:
             start_time = asyncio.get_event_loop().time()
             individual_scores = []
@@ -1143,6 +1188,9 @@ class WatermarkValidationSystem:
         Returns:
             List of QualityAssessmentResult
         """
+
+
+
         try:
             results = []
             
@@ -1174,6 +1222,9 @@ class WatermarkValidationSystem:
     
     def get_validation_statistics(self) -> Dict[str, Any]:
         """Get validation statistics from history"""
+
+
+
         try:
             if not self.validation_history:
                 return {"message": "No validation history available"}
@@ -1218,6 +1269,9 @@ class WatermarkValidationSystem:
                                output_path: Optional[str] = None,
                                format: str = 'json') -> bool:
         """Export comprehensive validation report"""
+
+
+
         try:
             if not self.validation_history:
                 logger.warning("No validation history to export")
@@ -1257,6 +1311,9 @@ class WatermarkValidationSystem:
 # Factory function
 def create_validation_system() -> WatermarkValidationSystem:
     """Create validation system with standard configuration"""
+
+
+
     return WatermarkValidationSystem()
 
 

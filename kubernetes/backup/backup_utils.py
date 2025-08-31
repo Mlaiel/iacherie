@@ -193,6 +193,9 @@ class BackupUtils:
         Returns:
             Decompressed data
         """
+
+
+
         try:
             if algorithm == CompressionAlgorithm.GZIP:
                 return gzip.decompress(compressed_data)
@@ -354,6 +357,9 @@ class BackupUtils:
         Returns:
             System resource information
         """
+
+
+
         try:
             # CPU usage
             cpu_percent = psutil.cpu_percent(interval=1)
@@ -664,6 +670,9 @@ class BackupUtils:
 # Utility functions for common operations
 def format_backup_size(size_bytes: int) -> str:
     """Format backup size in human-readable format."""
+
+
+
     return format_bytes(size_bytes)
 
 
@@ -675,6 +684,9 @@ def generate_backup_id(operation_type: str = "backup") -> str:
 
 def parse_backup_id(backup_id: str) -> Dict[str, Any]:
     """Parse backup ID to extract information."""
+
+
+
     try:
         parts = backup_id.split("_")
         if len(parts) >= 3:

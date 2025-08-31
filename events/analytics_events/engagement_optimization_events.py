@@ -6,7 +6,7 @@ Provides ML-driven engagement strategies, personalization engines, and optimizat
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel - All rights reserved
-⚠️  WARNING: This code and concept are proprietary to Fahed Mlaiel.
+  WARNING: This code and concept are proprietary to Fahed Mlaiel.
     Any unauthorized use, copying, or distribution without explicit written 
     permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 
@@ -108,6 +108,9 @@ class EngagementOptimizationEvent(BaseEvent):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert engagement optimization event to dictionary"""
+
+
+
         return {
             **asdict(self),
             'optimization_goals': [g.value for g in self.optimization_goals],
@@ -162,6 +165,9 @@ class EngagementOptimizationEventHandler(BaseEventHandler):
         
     async def handle(self, event: EngagementOptimizationEvent) -> Dict[str, Any]:
         """Process engagement optimization event with comprehensive analysis"""
+
+
+
         try:
             # Validate event data
             await self._validate_event(event)

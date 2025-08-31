@@ -121,6 +121,9 @@ class CertificateManager:
         Returns:
             Generated private key
         """
+
+
+
         try:
             if key_type.lower() == "rsa":
                 if key_size < 2048:
@@ -177,6 +180,9 @@ class CertificateManager:
         Returns:
             Certificate signing request
         """
+
+
+
         try:
             # Build subject name
             subject = x509.Name([
@@ -262,6 +268,9 @@ class CertificateManager:
         Returns:
             Signed certificate
         """
+
+
+
         try:
             # Determine if self-signed or CA-signed
             is_self_signed = ca_private_key is None or ca_certificate is None
@@ -337,6 +346,9 @@ class CertificateManager:
         Returns:
             Tuple of (certificate_path, private_key_path)
         """
+
+
+
         try:
             cert_path = self.cert_dir / f"{name}.crt"
             key_path = self.key_dir / f"{name}.key"
@@ -372,6 +384,9 @@ class CertificateManager:
     
     def load_certificate(self, cert_path: str) -> x509.Certificate:
         """Load certificate from file"""
+
+
+
         try:
             with open(cert_path, "rb") as cert_file:
                 certificate = x509.load_pem_x509_certificate(cert_file.read())
@@ -390,6 +405,9 @@ class CertificateManager:
         Returns:
             Certificate information
         """
+
+
+
         try:
             # Extract subject common name
             common_name = None
@@ -456,6 +474,9 @@ class CertificateManager:
         Returns:
             True if certificate needs renewal
         """
+
+
+
         try:
             certificate = self.load_certificate(cert_path)
             cert_info = self.get_certificate_info(certificate)
@@ -531,6 +552,9 @@ class CertificateManager:
         Returns:
             True if certificate chain is valid
         """
+
+
+
         try:
             # Load certificate
             certificate = self.load_certificate(cert_path)
@@ -702,6 +726,9 @@ server {{
         Returns:
             Configured SSL context
         """
+
+
+
         try:
             # Create SSL context
             context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)

@@ -7,7 +7,7 @@ through conversation context, user profile, and environmental factors.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
@@ -171,6 +171,9 @@ class ContextualEnhancer:
     
     def _initialize_context_weights(self) -> Dict[ContextType, float]:
         """Initialize context type weights"""
+
+
+
         return {
             ContextType.CONVERSATION: 0.9,
             ContextType.USER_PROFILE: 0.8,
@@ -182,6 +185,9 @@ class ContextualEnhancer:
     
     def _load_enhancement_rules(self) -> Dict[str, List[Dict[str, Any]]]:
         """Load context-based enhancement rules"""
+
+
+
         return {
             "music_creation": [
                 {
@@ -213,6 +219,9 @@ class ContextualEnhancer:
     
     def _initialize_pattern_matchers(self) -> Dict[str, re.Pattern]:
         """Initialize pattern matching rules"""
+
+
+
         return {
             "urgency_indicators": re.compile(r'\b(urgent|asap|quickly|now|immediately|deadline)\b', re.IGNORECASE),
             "creative_workflow": re.compile(r'\b(create|upload|edit|mix|master|publish|share)\b', re.IGNORECASE),
@@ -246,6 +255,9 @@ class ContextualEnhancer:
         Returns:
             ContextualEnhancement: Enhanced intent with context analysis
         """
+
+
+
         try:
             enhancement_factors = {}
             reasoning = []
@@ -729,6 +741,9 @@ class ContextualIntentProcessor:
         Returns:
             ContextualEnhancement: Enhanced intent with context analysis
         """
+
+
+
         try:
             # Gather context information
             conversation_context = self._gather_conversation_context(session_id)
@@ -824,6 +839,9 @@ class ContextualIntentProcessor:
     
     def get_context_summary(self, session_id: str) -> Dict[str, Any]:
         """Get summary of current session context"""
+
+
+
         return self.session_contexts.get(session_id, {})
     
     def clear_session_context(self, session_id: str):

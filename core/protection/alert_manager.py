@@ -154,6 +154,9 @@ class EmailNotifier:
     
     async def send_email_alert(self, alert: Alert, recipients: List[str]) -> bool:
         """Send email alert"""
+
+
+
         try:
             # Load template
             template = self.template_env.get_template("violation_alert_email.html")
@@ -218,6 +221,9 @@ class WebhookNotifier:
     
     async def send_webhook_alert(self, alert: Alert, webhook_urls: List[str]) -> bool:
         """Send webhook alert"""
+
+
+
         try:
             # Prepare payload
             payload = {
@@ -279,6 +285,9 @@ class SlackNotifier:
     
     async def send_slack_alert(self, alert: Alert) -> bool:
         """Send Slack alert"""
+
+
+
         try:
             if not self.webhook_url:
                 logger.warning("Slack webhook URL not configured")
@@ -290,7 +299,7 @@ class SlackNotifier:
                     "type": "header",
                     "text": {
                         "type": "plain_text",
-                        "text": f"🚨 {alert.title}"
+                        "text": f" {alert.title}"
                     }
                 },
                 {
@@ -392,6 +401,9 @@ class SMSNotifier:
     
     async def send_sms_alert(self, alert: Alert, phone_numbers: List[str]) -> bool:
         """Send SMS alert"""
+
+
+
         try:
             if not self.api_key or not self.api_url:
                 logger.warning("SMS API not configured")
@@ -515,6 +527,9 @@ class AlertManager:
     
     async def send_violation_alert(self, violation_evidence: ViolationEvidence, evidence_data: Dict[str, Any] = None):
         """Send alert for violation detection"""
+
+
+
         try:
             # Determine alert configuration
             config = self._get_alert_config_for_violation(violation_evidence)
@@ -541,6 +556,9 @@ class AlertManager:
     
     async def send_realtime_alert(self, content_id: str, detected_url: str, similarity_score: float):
         """Send real-time alert for high-confidence violations"""
+
+
+
         try:
             alert_id = f"realtime_{content_id}_{int(datetime.utcnow().timestamp())}"
             
@@ -550,7 +568,7 @@ class AlertManager:
                 alert_type="realtime_violation",
                 priority=AlertPriority.HIGH,
                 channels=[AlertChannel.WEBHOOK, AlertChannel.IN_APP],
-                title=f"🚨 Real-time Violation Detected",
+                title=f" Real-time Violation Detected",
                 message=f"High-confidence violation detected for content {content_id}",
                 details={
                     'content_id': content_id,
@@ -661,6 +679,9 @@ Similarity Scores:
     
     async def _send_alert(self, alert: Alert):
         """Send alert through configured channels"""
+
+
+
         try:
             alert.status = AlertStatus.PENDING
             alert.delivery_attempts += 1
@@ -760,6 +781,9 @@ Similarity Scores:
     
     async def _escalate_alert(self, alert: Alert):
         """Escalate unacknowledged alert"""
+
+
+
         try:
             # Create escalation alert
             escalation_alert = Alert(
@@ -803,6 +827,9 @@ Similarity Scores:
     
     async def acknowledge_alert(self, alert_id: str, user_id: str) -> bool:
         """Acknowledge an alert"""
+
+
+
         try:
             if alert_id not in self.alerts:
                 return False
@@ -820,6 +847,9 @@ Similarity Scores:
     
     async def resolve_alert(self, alert_id: str, user_id: str, resolution_notes: str = "") -> bool:
         """Resolve an alert"""
+
+
+
         try:
             if alert_id not in self.alerts:
                 return False

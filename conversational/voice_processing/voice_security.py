@@ -48,6 +48,9 @@ class VoiceProtectionManager:
                                  fingerprint_type: FingerprintType = FingerprintType.PERCEPTUAL,
                                  security_level: str = "standard") -> VoiceFingerprint:
         """Generate voice fingerprint for content protection"""
+
+
+
         try:
             # Extract fingerprint features
             spectral_features = self._extract_spectral_features(audio_data, sample_rate)
@@ -95,6 +98,9 @@ class VoiceProtectionManager:
     
     def _extract_temporal_features(self, audio: np.ndarray, sample_rate: int) -> Dict[str, float]:
         """Extract temporal features for fingerprinting"""
+
+
+
         return {
             "duration": len(audio) / sample_rate,
             "energy": float(np.sum(audio ** 2)),
@@ -103,6 +109,9 @@ class VoiceProtectionManager:
     
     def _extract_prosodic_features(self, audio: np.ndarray, sample_rate: int) -> Dict[str, float]:
         """Extract prosodic features for fingerprinting"""
+
+
+
         return {
             "rms_energy": float(np.sqrt(np.mean(audio ** 2))),
             "peak_energy": float(np.max(np.abs(audio))),

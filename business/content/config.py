@@ -333,18 +333,30 @@ class ContentModuleConfig(BaseConfig):
     
     def get_platform_config(self, platform: str) -> Optional[Dict[str, Any]]:
         """Get configuration for specific platform."""
+
+
+
         return self.distribution.platforms.get(platform)
     
     def is_feature_enabled(self, feature: str) -> bool:
         """Check if a feature is enabled."""
+
+
+
         return self.features.get(feature, False)
     
     def get_quality_threshold(self, level: str, metric: str) -> float:
         """Get quality threshold for specific level and metric."""
+
+
+
         return self.quality_assurance.quality_thresholds.get(level, {}).get(metric, 0.5)
     
     def get_commission_rate(self, strategy: str) -> Decimal:
         """Get commission rate for monetization strategy."""
+
+
+
         return self.monetization.commission_rates.get(strategy, Decimal('0.10'))
     
     def validate_config(self) -> List[str]:
@@ -393,6 +405,9 @@ class ContentModuleConfig(BaseConfig):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert configuration to dictionary."""
+
+
+
         return {
             "processing": self.processing.__dict__,
             "distribution": self.distribution.__dict__,

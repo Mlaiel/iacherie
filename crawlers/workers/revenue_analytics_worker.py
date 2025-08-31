@@ -8,7 +8,7 @@ Responsibility: Revenue tracking, prediction, and optimization across multiple p
 Technologies: ML Revenue Models, Multi-Platform APIs, Real-time Analytics, Predictive AI
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -204,10 +204,13 @@ class RevenueAnalyticsWorker:
         self.revenue_cache = {}
         self.cache_ttl = timedelta(minutes=15)
         
-        logger.info(f"💰 RevenueAnalyticsWorker {self.worker_id} initialized")
+        logger.info(f" RevenueAnalyticsWorker {self.worker_id} initialized")
     
     def _initialize_platform_apis(self):
         """Initialize platform API clients"""
+
+
+
         try:
             api_configs = self.config.get("platform_apis", {})
             
@@ -225,15 +228,18 @@ class RevenueAnalyticsWorker:
                 "paypal": PayPalAPI(payment_configs.get("paypal", {}))
             }
             
-            logger.info("✅ Platform APIs initialized successfully")
+            logger.info(" Platform APIs initialized successfully")
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize platform APIs: {e}")
+            logger.error(f" Failed to initialize platform APIs: {e}")
             self.platform_apis = {}
             self.payment_apis = {}
     
     async def start(self) -> bool:
         """Start the revenue analytics worker"""
+
+
+
         try:
             if self.is_running:
                 logger.warning("RevenueAnalyticsWorker is already running")
@@ -248,16 +254,19 @@ class RevenueAnalyticsWorker:
             asyncio.create_task(self._monitoring_loop())
             asyncio.create_task(self._cache_cleanup_loop())
             
-            logger.info(f"🚀 RevenueAnalyticsWorker {self.worker_id} started")
+            logger.info(f" RevenueAnalyticsWorker {self.worker_id} started")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to start RevenueAnalyticsWorker: {e}")
+            logger.error(f" Failed to start RevenueAnalyticsWorker: {e}")
             self.is_running = False
             return False
     
     async def stop(self) -> bool:
         """Stop the revenue analytics worker"""
+
+
+
         try:
             self.is_running = False
             
@@ -268,15 +277,18 @@ class RevenueAnalyticsWorker:
             while self.active_tasks and (time.time() - start_time) < timeout:
                 await asyncio.sleep(0.5)
             
-            logger.info(f"🛑 RevenueAnalyticsWorker {self.worker_id} stopped")
+            logger.info(f" RevenueAnalyticsWorker {self.worker_id} stopped")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to stop RevenueAnalyticsWorker: {e}")
+            logger.error(f" Failed to stop RevenueAnalyticsWorker: {e}")
             return False
     
     async def submit_analytics_task(self, task: RevenueAnalyticsTask) -> bool:
         """Submit a revenue analytics task"""
+
+
+
         try:
             if not self.is_running:
                 logger.error("RevenueAnalyticsWorker is not running")
@@ -291,11 +303,11 @@ class RevenueAnalyticsWorker:
             await self.analytics_queue.put(task)
             self.active_tasks[task.task_id] = task
             
-            logger.info(f"📊 Analytics task submitted: {task.task_id}")
+            logger.info(f" Analytics task submitted: {task.task_id}")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to submit analytics task: {e}")
+            logger.error(f" Failed to submit analytics task: {e}")
             return False
     
     async def _analytics_processing_loop(self):
@@ -318,7 +330,7 @@ class RevenueAnalyticsWorker:
                 self.analytics_queue.task_done()
                 
             except Exception as e:
-                logger.error(f"❌ Error in analytics processing loop: {e}")
+                logger.error(f" Error in analytics processing loop: {e}")
                 await asyncio.sleep(1)
     
     async def _process_analytics_task(self, task: RevenueAnalyticsTask):
@@ -326,7 +338,7 @@ class RevenueAnalyticsWorker:
         start_time = time.time()
         
         try:
-            logger.info(f"🔄 Processing analytics task: {task.task_id}")
+            logger.info(f" Processing analytics task: {task.task_id}")
             
             # Step 1: Collect revenue data from platforms
             revenue_data = await self._collect_revenue_data(task)
@@ -354,10 +366,10 @@ class RevenueAnalyticsWorker:
             processing_time = time.time() - start_time
             self._update_processing_stats(processing_time, success=True, revenue_tracked=report.total_revenue)
             
-            logger.info(f"✅ Analytics task completed: {task.task_id} ({processing_time:.2f}s)")
+            logger.info(f" Analytics task completed: {task.task_id} ({processing_time:.2f}s)")
             
         except Exception as e:
-            logger.error(f"❌ Failed to process analytics task {task.task_id}: {e}")
+            logger.error(f" Failed to process analytics task {task.task_id}: {e}")
             processing_time = time.time() - start_time
             self._update_processing_stats(processing_time, success=False)
         
@@ -381,13 +393,16 @@ class RevenueAnalyticsWorker:
                 self.processing_stats["platform_api_calls"][platform.value] += 1
                 
             except Exception as e:
-                logger.error(f"❌ Failed to collect revenue data from {platform.value}: {e}")
+                logger.error(f" Failed to collect revenue data from {platform.value}: {e}")
                 revenue_data[platform] = []
         
         return revenue_data
     
     async def _collect_platform_revenue(self, platform: Platform, creator_id: str, date_range: Tuple[date, date]) -> List[RevenueEntry]:
         """Collect revenue data from a specific platform"""
+
+
+
         try:
             if platform not in self.platform_apis:
                 logger.warning(f"Platform API not configured: {platform.value}")
@@ -410,11 +425,14 @@ class RevenueAnalyticsWorker:
                 return []
             
         except Exception as e:
-            logger.error(f"❌ Failed to collect {platform.value} revenue: {e}")
+            logger.error(f" Failed to collect {platform.value} revenue: {e}")
             return []
     
     async def _collect_spotify_revenue(self, api: SpotifyAPI, creator_id: str, start_date: date, end_date: date) -> List[RevenueEntry]:
         """Collect Spotify streaming revenue"""
+
+
+
         try:
             revenue_entries = []
             
@@ -452,11 +470,14 @@ class RevenueAnalyticsWorker:
             return revenue_entries
             
         except Exception as e:
-            logger.error(f"❌ Failed to collect Spotify revenue: {e}")
+            logger.error(f" Failed to collect Spotify revenue: {e}")
             return []
     
     async def _collect_youtube_revenue(self, api: YouTubeAPI, creator_id: str, start_date: date, end_date: date) -> List[RevenueEntry]:
         """Collect YouTube ad revenue"""
+
+
+
         try:
             revenue_entries = []
             
@@ -516,11 +537,14 @@ class RevenueAnalyticsWorker:
             return revenue_entries
             
         except Exception as e:
-            logger.error(f"❌ Failed to collect YouTube revenue: {e}")
+            logger.error(f" Failed to collect YouTube revenue: {e}")
             return []
     
     async def _collect_instagram_revenue(self, api: InstagramAPI, creator_id: str, start_date: date, end_date: date) -> List[RevenueEntry]:
         """Collect Instagram creator revenue"""
+
+
+
         try:
             revenue_entries = []
             
@@ -582,11 +606,14 @@ class RevenueAnalyticsWorker:
             return revenue_entries
             
         except Exception as e:
-            logger.error(f"❌ Failed to collect Instagram revenue: {e}")
+            logger.error(f" Failed to collect Instagram revenue: {e}")
             return []
     
     async def _collect_tiktok_revenue(self, api: TikTokAPI, creator_id: str, start_date: date, end_date: date) -> List[RevenueEntry]:
         """Collect TikTok creator revenue"""
+
+
+
         try:
             revenue_entries = []
             
@@ -638,11 +665,14 @@ class RevenueAnalyticsWorker:
             return revenue_entries
             
         except Exception as e:
-            logger.error(f"❌ Failed to collect TikTok revenue: {e}")
+            logger.error(f" Failed to collect TikTok revenue: {e}")
             return []
     
     def _estimate_instagram_sponsorship_revenue(self, followers: int, engagement_rate: float) -> Decimal:
         """Estimate Instagram sponsorship revenue based on metrics"""
+
+
+
         try:
             # Industry standard: $1-3 per 1000 followers for sponsored posts
             if followers < 1000:
@@ -656,11 +686,14 @@ class RevenueAnalyticsWorker:
             return estimated_revenue.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
             
         except Exception as e:
-            logger.error(f"❌ Failed to estimate Instagram sponsorship revenue: {e}")
+            logger.error(f" Failed to estimate Instagram sponsorship revenue: {e}")
             return Decimal("0.00")
     
     async def _generate_analytics_report(self, task: RevenueAnalyticsTask, revenue_data: Dict[Platform, List[RevenueEntry]]) -> RevenueReport:
         """Generate comprehensive analytics report"""
+
+
+
         try:
             # Calculate total revenue
             total_revenue = Decimal("0.00")
@@ -704,11 +737,14 @@ class RevenueAnalyticsWorker:
             return report
             
         except Exception as e:
-            logger.error(f"❌ Failed to generate analytics report: {e}")
+            logger.error(f" Failed to generate analytics report: {e}")
             raise
     
     async def _generate_platform_metrics(self, platform: Platform, entries: List[RevenueEntry], task: RevenueAnalyticsTask) -> PlatformMetrics:
         """Generate detailed metrics for a specific platform"""
+
+
+
         try:
             if not entries:
                 return PlatformMetrics(
@@ -785,11 +821,14 @@ class RevenueAnalyticsWorker:
             )
             
         except Exception as e:
-            logger.error(f"❌ Failed to generate platform metrics: {e}")
+            logger.error(f" Failed to generate platform metrics: {e}")
             raise
     
     async def _generate_predictions(self, task: RevenueAnalyticsTask, revenue_data: Dict[Platform, List[RevenueEntry]]) -> Dict[str, Any]:
         """Generate revenue predictions using ML models"""
+
+
+
         try:
             # Prepare historical data for prediction
             historical_data = await self._prepare_historical_data(task.creator_id, task.platforms)
@@ -819,11 +858,14 @@ class RevenueAnalyticsWorker:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to generate predictions: {e}")
+            logger.error(f" Failed to generate predictions: {e}")
             return {}
     
     async def _generate_optimization_recommendations(self, task: RevenueAnalyticsTask, revenue_data: Dict[Platform, List[RevenueEntry]], report: RevenueReport) -> List[Dict[str, Any]]:
         """Generate optimization recommendations using ML analysis"""
+
+
+
         try:
             recommendations = []
             
@@ -855,21 +897,27 @@ class RevenueAnalyticsWorker:
             return recommendations
             
         except Exception as e:
-            logger.error(f"❌ Failed to generate optimization recommendations: {e}")
+            logger.error(f" Failed to generate optimization recommendations: {e}")
             return []
     
     async def _store_analytics_report(self, report: RevenueReport):
         """Store the analytics report"""
+
+
+
         try:
             await self.revenue_storage.store_revenue_report(report)
-            logger.info(f"✅ Stored analytics report: {report.report_id}")
+            logger.info(f" Stored analytics report: {report.report_id}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to store analytics report: {e}")
+            logger.error(f" Failed to store analytics report: {e}")
             raise
     
     async def _update_revenue_cache(self, creator_id: str, report: RevenueReport):
         """Update revenue cache for real-time access"""
+
+
+
         try:
             cache_key = f"revenue_summary_{creator_id}"
             cache_data = {
@@ -887,7 +935,7 @@ class RevenueAnalyticsWorker:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to update revenue cache: {e}")
+            logger.error(f" Failed to update revenue cache: {e}")
     
     async def _data_collection_loop(self):
         """Periodic data collection loop"""
@@ -900,7 +948,7 @@ class RevenueAnalyticsWorker:
                 await asyncio.sleep(3600)
                 
             except Exception as e:
-                logger.error(f"❌ Error in data collection loop: {e}")
+                logger.error(f" Error in data collection loop: {e}")
                 await asyncio.sleep(300)  # 5 minutes on error
     
     async def _monitoring_loop(self):
@@ -921,7 +969,7 @@ class RevenueAnalyticsWorker:
                 await asyncio.sleep(30)  # 30 seconds
                 
             except Exception as e:
-                logger.error(f"❌ Error in monitoring loop: {e}")
+                logger.error(f" Error in monitoring loop: {e}")
                 await asyncio.sleep(5)
     
     async def _cache_cleanup_loop(self):
@@ -941,21 +989,27 @@ class RevenueAnalyticsWorker:
                 await asyncio.sleep(300)
                 
             except Exception as e:
-                logger.error(f"❌ Error in cache cleanup loop: {e}")
+                logger.error(f" Error in cache cleanup loop: {e}")
                 await asyncio.sleep(60)
     
     async def _periodic_data_collection(self):
         """Perform periodic data collection for all active creators"""
+
+
+
         try:
             # This would typically get active creators from database
             # For now, this is a placeholder
-            logger.info("🔄 Performing periodic data collection...")
+            logger.info(" Performing periodic data collection...")
             
         except Exception as e:
-            logger.error(f"❌ Failed periodic data collection: {e}")
+            logger.error(f" Failed periodic data collection: {e}")
     
     def _validate_analytics_task(self, task: RevenueAnalyticsTask) -> bool:
         """Validate analytics task parameters"""
+
+
+
         try:
             # Check required fields
             if not task.task_id or not task.creator_id:
@@ -977,11 +1031,14 @@ class RevenueAnalyticsWorker:
             return True
             
         except Exception as e:
-            logger.error(f"❌ Error validating analytics task: {e}")
+            logger.error(f" Error validating analytics task: {e}")
             return False
     
     def _update_processing_stats(self, processing_time: float, success: bool, revenue_tracked: Decimal = None):
         """Update processing statistics"""
+
+
+
         try:
             self.processing_stats["total_tasks_processed"] += 1
             
@@ -1005,7 +1062,7 @@ class RevenueAnalyticsWorker:
             self.processing_stats["last_update"] = datetime.utcnow()
             
         except Exception as e:
-            logger.error(f"❌ Error updating processing stats: {e}")
+            logger.error(f" Error updating processing stats: {e}")
     
     def _estimate_engagement_rate(self, platform: Platform, entries: List[RevenueEntry]) -> float:
         """Estimate engagement rate based on revenue data"""
@@ -1036,6 +1093,9 @@ class RevenueAnalyticsWorker:
     
     async def _get_previous_period_revenue(self, creator_id: str, platform: Platform, current_period: Tuple[date, date]) -> Decimal:
         """Get revenue from previous comparable period"""
+
+
+
         try:
             start_date, end_date = current_period
             period_length = (end_date - start_date).days
@@ -1052,11 +1112,14 @@ class RevenueAnalyticsWorker:
             return previous_revenue or Decimal("0.00")
             
         except Exception as e:
-            logger.error(f"❌ Failed to get previous period revenue: {e}")
+            logger.error(f" Failed to get previous period revenue: {e}")
             return Decimal("0.00")
     
     async def _prepare_historical_data(self, creator_id: str, platforms: List[Platform]) -> Dict[Platform, List[Dict[str, Any]]]:
         """Prepare historical data for ML predictions"""
+
+
+
         try:
             historical_data = {}
             
@@ -1070,11 +1133,14 @@ class RevenueAnalyticsWorker:
             return historical_data
             
         except Exception as e:
-            logger.error(f"❌ Failed to prepare historical data: {e}")
+            logger.error(f" Failed to prepare historical data: {e}")
             return {}
     
     async def get_worker_status(self) -> Dict[str, Any]:
         """Get current worker status"""
+
+
+
         return {
             "worker_id": self.worker_id,
             "is_running": self.is_running,
@@ -1094,6 +1160,9 @@ _revenue_analytics_worker: Optional[RevenueAnalyticsWorker] = None
 
 async def get_revenue_analytics_worker() -> Optional[RevenueAnalyticsWorker]:
     """Get the global revenue analytics worker instance"""
+
+
+
     return _revenue_analytics_worker
 
 
@@ -1110,15 +1179,15 @@ async def initialize_revenue_analytics_worker(config: Dict[str, Any] = None) -> 
         success = await _revenue_analytics_worker.start()
         
         if success:
-            logger.info("✅ RevenueAnalyticsWorker initialized successfully")
+            logger.info(" RevenueAnalyticsWorker initialized successfully")
         else:
-            logger.error("❌ Failed to initialize RevenueAnalyticsWorker")
+            logger.error(" Failed to initialize RevenueAnalyticsWorker")
             _revenue_analytics_worker = None
         
         return success
         
     except Exception as e:
-        logger.error(f"❌ Failed to initialize RevenueAnalyticsWorker: {e}")
+        logger.error(f" Failed to initialize RevenueAnalyticsWorker: {e}")
         _revenue_analytics_worker = None
         return False
 
@@ -1136,14 +1205,14 @@ async def shutdown_revenue_analytics_worker() -> bool:
         _revenue_analytics_worker = None
         
         if success:
-            logger.info("✅ RevenueAnalyticsWorker shutdown successfully")
+            logger.info(" RevenueAnalyticsWorker shutdown successfully")
         else:
-            logger.error("❌ Failed to shutdown RevenueAnalyticsWorker")
+            logger.error(" Failed to shutdown RevenueAnalyticsWorker")
         
         return success
         
     except Exception as e:
-        logger.error(f"❌ Failed to shutdown RevenueAnalyticsWorker: {e}")
+        logger.error(f" Failed to shutdown RevenueAnalyticsWorker: {e}")
         return False
 
 

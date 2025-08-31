@@ -260,6 +260,9 @@ class APIEndpoints:
     @classmethod
     def get_endpoints(cls, provider: APIProvider) -> Dict[str, str]:
         """Get API endpoints for a specific provider."""
+
+
+
         return cls.ENDPOINTS.get(provider, {})
 
 
@@ -310,6 +313,9 @@ class APIClientManager:
     
     def get_timeout_config(self) -> TimeoutConfig:
         """Get timeout configuration for API clients."""
+
+
+
         return TimeoutConfig(
             connect_timeout=self.config.default_timeout,
             read_timeout=self.config.default_timeout * 2,

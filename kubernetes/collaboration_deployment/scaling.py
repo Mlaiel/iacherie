@@ -22,7 +22,7 @@ Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  STRICT INTELLECTUAL PROPERTY WARNING ⚠️
+  STRICT INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any reproduction, modification, distribution or use without explicit 
 written authorization is STRICTLY PROHIBITED and will be subject to 
@@ -492,6 +492,9 @@ class CollaborationScalingManager:
         model_config: PredictiveModel
     ) -> bool:
         """Configure predictive scaling for a service."""
+
+
+
         try:
             self.predictive_models[service_name] = model_config
             
@@ -1115,6 +1118,9 @@ class CollaborationScalingManager:
     
     async def _create_vpa_config(self, policy: ScalingPolicy) -> Dict[str, Any]:
         """Create VPA configuration for a scaling policy."""
+
+
+
         return {
             "apiVersion": "autoscaling.k8s.io/v1",
             "kind": "VerticalPodAutoscaler",
@@ -1152,6 +1158,9 @@ class CollaborationScalingManager:
     
     async def _create_custom_metrics_config(self, policy: ScalingPolicy) -> Dict[str, Any]:
         """Create custom metrics configuration."""
+
+
+
         return {
             "name": policy.custom_metrics.get("metric_name"),
             "query": f'avg_over_time({policy.custom_metrics.get("metric_name")}[{policy.custom_metrics.get("window", "5m")}])',

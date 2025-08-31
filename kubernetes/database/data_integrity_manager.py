@@ -22,7 +22,7 @@ Contact: mlaiel@live.de
 - DevOps Engineer: Fahed Mlaiel
 - IA Prompt Engineer: Fahed Mlaiel
 
-⚠️ ATTENTION IMPORTANTE ⚠️
+ ATTENTION IMPORTANTE 
 Toute tentative de vol, copie, ou utilisation non autorisée de ce code, 
 concept ou idée sans autorisation écrite explicite de Fahed Mlaiel 
 sera poursuivie selon la loi allemande et internationale.
@@ -32,7 +32,7 @@ Contact autorisé: mlaiel@live.de
 FONCTIONNALITÉS ENTERPRISE:
 =========================
 
-🔍 DATA VALIDATION AVANCÉE:
+ DATA VALIDATION AVANCÉE:
 - Schema validation automatique
 - Data type consistency checks
 - Constraint validation en temps réel
@@ -40,7 +40,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Null value policy enforcement
 - Data format standardization
 
-🛡️ INTEGRITY MONITORING:
+ INTEGRITY MONITORING:
 - Real-time consistency checks
 - Orphaned record detection
 - Duplicate prevention algorithms
@@ -48,7 +48,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Data corruption detection
 - Audit trail verification
 
-📊 DATA QUALITY METRICS:
+ DATA QUALITY METRICS:
 - Quality score calculation
 - Completeness metrics tracking
 - Accuracy assessment automation
@@ -56,7 +56,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Timeliness validation
 - Uniqueness verification
 
-🔧 AUTOMATED REPAIR:
+ AUTOMATED REPAIR:
 - Self-healing data mechanisms
 - Orphaned record cleanup
 - Duplicate resolution automation
@@ -64,7 +64,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Data standardization automation
 - Backup-based recovery
 
-⚡ PERFORMANCE OPTIMIZATION:
+ PERFORMANCE OPTIMIZATION:
 - Intelligent indexing strategies
 - Query optimization recommendations
 - Storage efficiency analysis
@@ -72,7 +72,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Cache invalidation intelligence
 - Batch processing optimization
 
-🎯 COMPLIANCE ASSURANCE:
+ COMPLIANCE ASSURANCE:
 - GDPR compliance validation
 - Data retention policy enforcement
 - Privacy protection verification
@@ -80,7 +80,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Regulatory reporting support
 - Legal compliance automation
 
-📈 ANALYTICS ET REPORTING:
+ ANALYTICS ET REPORTING:
 - Data quality dashboards
 - Integrity violation reports
 - Performance trend analysis
@@ -88,7 +88,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Risk assessment automation
 - Predictive quality analytics
 
-🔒 SÉCURITÉ ET ACCESS CONTROL:
+ SÉCURITÉ ET ACCESS CONTROL:
 - Data access validation
 - Permission verification
 - Audit logging complet
@@ -213,8 +213,11 @@ class DataIntegrityManager:
     
     async def initialize(self) -> bool:
         """Initialize the data integrity manager"""
+
+
+
         try:
-            self.logger.info("🚀 Initializing Data Integrity Manager...")
+            self.logger.info(" Initializing Data Integrity Manager...")
             
             # Get database manager
             self._db_manager = get_postgresql_manager()
@@ -228,11 +231,11 @@ class DataIntegrityManager:
             # Run initial validation
             await self._run_comprehensive_validation()
             
-            self.logger.info("✅ Data Integrity Manager initialized successfully")
+            self.logger.info(" Data Integrity Manager initialized successfully")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize Data Integrity Manager: {e}")
+            self.logger.error(f" Failed to initialize Data Integrity Manager: {e}")
             return False
     
     async def _create_integrity_schema(self):
@@ -492,10 +495,13 @@ class DataIntegrityManager:
             await session.execute(text(schema_sql))
             await session.commit()
         
-        self.logger.debug("✅ Data integrity schema created successfully")
+        self.logger.debug(" Data integrity schema created successfully")
     
     async def _load_validation_rules(self):
         """Load validation rules from database"""
+
+
+
         try:
             async with self._db_manager.get_session() as session:
                 result = await session.execute(
@@ -534,8 +540,11 @@ class DataIntegrityManager:
     
     async def _run_comprehensive_validation(self):
         """Run comprehensive data validation"""
+
+
+
         try:
-            self.logger.info("🔍 Running comprehensive data validation...")
+            self.logger.info(" Running comprehensive data validation...")
             
             validation_start = datetime.utcnow()
             issues_found = []
@@ -586,10 +595,10 @@ class DataIntegrityManager:
             self._last_validation_run = datetime.utcnow()
             self._current_issues = issues_found
             
-            self.logger.info(f"✅ Validation completed - {len(issues_found)} issues found across {tables_validated} tables")
+            self.logger.info(f" Validation completed - {len(issues_found)} issues found across {tables_validated} tables")
             
         except Exception as e:
-            self.logger.error(f"❌ Comprehensive validation failed: {e}")
+            self.logger.error(f" Comprehensive validation failed: {e}")
     
     async def _validate_table(self, table_name: str) -> List[ValidationIssue]:
         """Validate a specific table"""
@@ -833,6 +842,9 @@ class DataIntegrityManager:
     
     async def _get_table_columns(self, table_name: str) -> List[str]:
         """Get column names for a table"""
+
+
+
         try:
             async with self._db_manager.get_session() as session:
                 result = await session.execute(
@@ -884,6 +896,9 @@ class DataIntegrityManager:
     
     async def _calculate_quality_metrics(self, table_name: str):
         """Calculate data quality metrics for a table"""
+
+
+
         try:
             async with self._db_manager.get_session() as session:
                 # Get total record count
@@ -964,6 +979,9 @@ class DataIntegrityManager:
     
     async def _store_validation_issues(self, issues: List[ValidationIssue]):
         """Store validation issues in database"""
+
+
+
         try:
             if not issues:
                 return
@@ -1000,6 +1018,9 @@ class DataIntegrityManager:
     
     async def _generate_integrity_report(self, report_type: str, report_data: Dict[str, Any]):
         """Generate data integrity report"""
+
+
+
         try:
             # Calculate overall integrity score
             total_issues = report_data.get('total_issues', 0)
@@ -1036,6 +1057,9 @@ class DataIntegrityManager:
     
     async def get_data_quality_summary(self) -> Dict[str, Any]:
         """Get data quality summary"""
+
+
+
         try:
             async with self._db_manager.get_session() as session:
                 # Get latest quality metrics
@@ -1099,6 +1123,9 @@ class DataIntegrityManager:
     
     async def health_check(self) -> Dict[str, Any]:
         """Perform health check"""
+
+
+
         try:
             health = {
                 'status': 'healthy',
@@ -1143,17 +1170,20 @@ class DataIntegrityManager:
     
     async def shutdown(self):
         """Shutdown the data integrity manager"""
+
+
+
         try:
-            self.logger.info("🚨 Shutting down Data Integrity Manager...")
+            self.logger.info(" Shutting down Data Integrity Manager...")
             
             # Clear validation rules and issues
             self._validation_rules.clear()
             self._current_issues.clear()
             
-            self.logger.info("✅ Data Integrity Manager shutdown completed")
+            self.logger.info(" Data Integrity Manager shutdown completed")
             
         except Exception as e:
-            self.logger.error(f"❌ Shutdown failed: {e}")
+            self.logger.error(f" Shutdown failed: {e}")
 
 
 # Factory function

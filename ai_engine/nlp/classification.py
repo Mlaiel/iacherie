@@ -7,7 +7,7 @@ influencer content across multiple dimensions and platforms.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
 
@@ -124,6 +124,9 @@ class AdvancedContentClassifier:
         
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default configuration"""
+
+
+
         return {
             'enable_topic_modeling': True,
             'enable_style_analysis': True,
@@ -139,6 +142,9 @@ class AdvancedContentClassifier:
     
     def _load_category_definitions(self) -> Dict[str, Dict[str, Any]]:
         """Load content category definitions"""
+
+
+
         return {
             # Lifestyle categories
             'lifestyle': {
@@ -207,6 +213,9 @@ class AdvancedContentClassifier:
     
     def _initialize_topic_models(self) -> Dict[str, Any]:
         """Initialize topic modeling components"""
+
+
+
         return {
             'lda_model': 'latent_dirichlet_allocation',  # Would use actual LDA
             'bert_topic': 'bert_topic_model',  # Would use BERTopic
@@ -217,6 +226,9 @@ class AdvancedContentClassifier:
     
     def _build_topic_keyword_database(self) -> Dict[str, List[str]]:
         """Build comprehensive topic keyword database"""
+
+
+
         return {
             # Lifestyle topics
             'fashion': ['outfit', 'style', 'fashion', 'clothes', 'ootd', 'trend', 'designer', 'shopping'],
@@ -254,6 +266,9 @@ class AdvancedContentClassifier:
     
     def _load_style_patterns(self) -> Dict[str, Dict[str, Any]]:
         """Load content style patterns"""
+
+
+
         return {
             'educational': {
                 'indicators': ['learn', 'tutorial', 'guide', 'how to', 'step by step', 'tips'],
@@ -264,7 +279,7 @@ class AdvancedContentClassifier:
             'entertaining': {
                 'indicators': ['funny', 'hilarious', 'lol', 'meme', 'joke', 'fun', 'entertaining'],
                 'patterns': [r'\b(funny|hilarious|lol|meme|joke|fun|entertaining)\b'],
-                'structure_markers': ['😂', '🤣', '😆', 'haha', 'lmao'],
+                'structure_markers': ['', '🤣', '', 'haha', 'lmao'],
                 'tone_indicators': ['humorous', 'playful', 'light-hearted', 'witty']
             },
             'promotional': {
@@ -295,6 +310,9 @@ class AdvancedContentClassifier:
     
     def _load_audience_profiles(self) -> Dict[str, Dict[str, Any]]:
         """Load audience profile definitions"""
+
+
+
         return {
             'gen_z': {
                 'age_range': (18, 26),
@@ -332,6 +350,9 @@ class AdvancedContentClassifier:
     
     def _load_intent_patterns(self) -> Dict[str, Dict[str, Any]]:
         """Load content intent patterns"""
+
+
+
         return {
             'inform': {
                 'indicators': ['learn', 'know', 'information', 'fact', 'research', 'study', 'explain'],
@@ -373,6 +394,9 @@ class AdvancedContentClassifier:
     
     def _load_platform_characteristics(self) -> Dict[str, Dict[str, Any]]:
         """Load platform-specific characteristics"""
+
+
+
         return {
             'instagram': {
                 'optimal_content_types': ['lifestyle', 'fashion', 'food', 'travel', 'fitness'],
@@ -423,6 +447,9 @@ class AdvancedContentClassifier:
     
     def _initialize_keyword_extractors(self) -> Dict[str, Any]:
         """Initialize keyword extraction components"""
+
+
+
         return {
             'tfidf_extractor': 'tfidf_vectorizer',  # Would use actual TF-IDF
             'keybert_extractor': 'keybert_model',  # Would use KeyBERT
@@ -728,9 +755,9 @@ class AdvancedContentClassifier:
         tone_indicators = {
             'formal': ['furthermore', 'consequently', 'therefore', 'moreover', 'however'],
             'casual': ['hey', 'yeah', 'okay', 'cool', 'awesome', 'gonna', 'wanna'],
-            'humorous': ['funny', 'hilarious', 'lol', 'haha', 'joke', 'laugh', '😂', '🤣'],
+            'humorous': ['funny', 'hilarious', 'lol', 'haha', 'joke', 'laugh', '', '🤣'],
             'serious': ['important', 'critical', 'serious', 'significant', 'matter', 'concern'],
-            'enthusiastic': ['amazing', 'incredible', 'fantastic', 'awesome', 'excited', '!', '🔥'],
+            'enthusiastic': ['amazing', 'incredible', 'fantastic', 'awesome', 'excited', '!', ''],
             'professional': ['professional', 'industry', 'business', 'corporate', 'expertise']
         }
         

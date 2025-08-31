@@ -54,6 +54,9 @@ class ImageEngine:
 
     async def start(self) -> None:
         """Start the image processing engine"""
+
+
+
         try:
             self.is_running = True
             logger.info("ImageEngine started successfully")
@@ -63,6 +66,9 @@ class ImageEngine:
 
     async def process(self, data: Dict[str, Any]) -> ImageResult:
         """Process image operation"""
+
+
+
         try:
             job_id = data.get('job_id', 'auto-generated')
             

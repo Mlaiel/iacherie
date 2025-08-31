@@ -8,7 +8,7 @@ Handles stream metadata extraction, streamer analysis, and chat monitoring.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
@@ -173,6 +173,9 @@ class KickCrawlerEngine(BaseCrawlerEngine):
     
     async def initialize(self) -> None:
         """Initialize the crawler engine"""
+
+
+
         try:
             await self._create_session()
             self._setup_selenium()
@@ -202,6 +205,9 @@ class KickCrawlerEngine(BaseCrawlerEngine):
     
     def _setup_selenium(self) -> None:
         """Setup Selenium WebDriver"""
+
+
+
         try:
             options = webdriver.ChromeOptions()
             options.add_argument('--headless')
@@ -232,6 +238,9 @@ class KickCrawlerEngine(BaseCrawlerEngine):
         Returns:
             List of live streams
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -286,6 +295,9 @@ class KickCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Channel information or None if not found
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -331,6 +343,9 @@ class KickCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Stream details or None if not live
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -381,6 +396,9 @@ class KickCrawlerEngine(BaseCrawlerEngine):
         Returns:
             List of channel clips
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -434,6 +452,9 @@ class KickCrawlerEngine(BaseCrawlerEngine):
         Returns:
             List of matching channels
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -488,6 +509,9 @@ class KickCrawlerEngine(BaseCrawlerEngine):
         Yields:
             Chat messages as they arrive
         """
+
+
+
         try:
             # Get channel info to get chatroom ID
             channel = await self.get_channel_info(channel_username)
@@ -508,6 +532,9 @@ class KickCrawlerEngine(BaseCrawlerEngine):
     
     def _parse_stream_data(self, stream_data: Dict[str, Any]) -> KickStream:
         """Parse stream data from API response"""
+
+
+
         try:
             return KickStream(
                 id=str(stream_data.get('id', '')),
@@ -535,6 +562,9 @@ class KickCrawlerEngine(BaseCrawlerEngine):
     
     def _parse_channel_data(self, channel_data: Dict[str, Any]) -> KickChannel:
         """Parse channel data from API response"""
+
+
+
         try:
             user_data = channel_data.get('user', {})
             
@@ -563,6 +593,9 @@ class KickCrawlerEngine(BaseCrawlerEngine):
     
     def _parse_clip_data(self, clip_data: Dict[str, Any]) -> KickClip:
         """Parse clip data from API response"""
+
+
+
         try:
             return KickClip(
                 id=str(clip_data.get('id', '')),
@@ -598,6 +631,9 @@ class KickCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Performance analytics data
         """
+
+
+
         try:
             # Get channel info
             channel = await self.get_channel_info(channel_username)
@@ -668,6 +704,9 @@ class KickCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Content violation monitoring results
         """
+
+
+
         try:
             violations = {
                 'keywords': content_keywords,
@@ -703,6 +742,9 @@ class KickCrawlerEngine(BaseCrawlerEngine):
     
     async def cleanup(self) -> None:
         """Clean up resources"""
+
+
+
         try:
             if self.session:
                 await self.session.close()

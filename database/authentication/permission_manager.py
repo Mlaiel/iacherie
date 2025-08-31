@@ -1,5 +1,5 @@
 """
-🔐 Permission Manager - Enterprise Role-Based Access Control System
+ Permission Manager - Enterprise Role-Based Access Control System
 ===================================================================
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -7,7 +7,7 @@ Project: IA Influencer Agent + Content Protection Platform
 Type: Production-Ready RBAC Permission Management
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ INTELLECTUAL PROPERTY WARNING: Unauthorized use strictly prohibited.
+ INTELLECTUAL PROPERTY WARNING: Unauthorized use strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 
 Business Logic: Role Definition → Permission Assignment → Access Control → 
@@ -88,6 +88,9 @@ class Permission:
     
     def to_string(self) -> str:
         """Convert permission to string format"""
+
+
+
         return f"{self.resource.value}:{self.action.value}:{self.scope.value}"
 
 @dataclass
@@ -359,6 +362,9 @@ class PermissionManager:
     
     async def initialize_system_permissions(self):
         """Initialize system permissions and roles"""
+
+
+
         try:
             # Create system permissions
             for perm in self.system_permissions:
@@ -383,6 +389,9 @@ class PermissionManager:
         context: Optional[AccessContext] = None
     ) -> bool:
         """Check if user has specific permission"""
+
+
+
         try:
             context = context or AccessContext(user_id=user_id)
             
@@ -423,6 +432,9 @@ class PermissionManager:
         expires_at: Optional[datetime] = None
     ) -> str:
         """Assign role to user"""
+
+
+
         try:
             # Verify role exists
             role = await self._get_role(role_id)
@@ -468,6 +480,9 @@ class PermissionManager:
         conditions: Optional[Dict[str, Any]] = None
     ) -> str:
         """Grant specific permission to user"""
+
+
+
         try:
             # Convert string permission to Permission object
             if isinstance(permission, str):
@@ -509,6 +524,9 @@ class PermissionManager:
         project_id: Optional[str] = None
     ) -> bool:
         """Revoke role from user"""
+
+
+
         try:
             assignment = await self._get_user_role_assignment(user_id, role_id, tenant_id, project_id)
             if not assignment or not assignment.is_active:
@@ -527,6 +545,9 @@ class PermissionManager:
     
     async def get_user_permissions(self, user_id: str, tenant_id: Optional[str] = None) -> List[Dict[str, Any]]:
         """Get all permissions for a user"""
+
+
+
         try:
             permissions = set()
             
@@ -556,6 +577,9 @@ class PermissionManager:
     
     async def get_user_roles(self, user_id: str, tenant_id: Optional[str] = None) -> List[Dict[str, Any]]:
         """Get all roles for a user"""
+
+
+
         try:
             query = select(UserRoles, Roles).join(
                 Roles, UserRoles.role_id == Roles.role_id
@@ -604,6 +628,9 @@ class PermissionManager:
         created_by: str
     ) -> str:
         """Create custom role"""
+
+
+
         try:
             role_id = str(uuid4())
             
@@ -655,6 +682,9 @@ class PermissionManager:
         context: AccessContext
     ) -> bool:
         """Check direct user permissions"""
+
+
+
         try:
             query = select(UserPermissions, Permissions).join(
                 Permissions, UserPermissions.permission_id == Permissions.permission_id
@@ -701,6 +731,9 @@ class PermissionManager:
         context: AccessContext
     ) -> bool:
         """Check role-based permissions"""
+
+
+
         try:
             # Get user roles
             user_roles_query = select(UserRoles).where(
@@ -762,6 +795,9 @@ class PermissionManager:
         context: AccessContext
     ) -> bool:
         """Check if user owns the resource"""
+
+
+
         try:
             # For personal scope, check if user is the resource owner
             if (permission.scope == PermissionScope.PERSONAL and 
@@ -776,6 +812,9 @@ class PermissionManager:
     
     def _evaluate_conditions(self, conditions: Dict[str, Any], context: AccessContext) -> bool:
         """Evaluate permission conditions"""
+
+
+
         try:
             for condition_type, condition_value in conditions.items():
                 if condition_type == 'time_range':
@@ -807,6 +846,9 @@ class PermissionManager:
     
     def _parse_permission_string(self, permission_str: str) -> Permission:
         """Parse permission string to Permission object"""
+
+
+
         try:
             parts = permission_str.split(':')
             if len(parts) != 3:
@@ -838,6 +880,9 @@ class PermissionManager:
     
     async def _get_or_create_permission(self, permission: Permission) -> Permissions:
         """Get or create permission record"""
+
+
+
         try:
             permission_name = permission.to_string()
             
@@ -876,6 +921,9 @@ class PermissionManager:
     
     async def _create_role_if_not_exists(self, role_type: RoleType, role_config: Dict[str, Any]):
         """Create role if it doesn't exist"""
+
+
+
         try:
             # Check if role exists
             stmt = select(Roles).where(Roles.role_name == role_type.value)
@@ -998,6 +1046,9 @@ class PermissionManager:
         context: AccessContext
     ):
         """Log permission check for audit purposes"""
+
+
+
         try:
             audit_log = PermissionAuditLog(
                 audit_id=str(uuid4()),

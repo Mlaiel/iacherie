@@ -220,6 +220,9 @@ class PostgreSQLConnectionPool(IConnectionPool):
     
     async def initialize(self, read_replicas: Optional[List[DatabaseConnectionInfo]] = None) -> bool:
         """Initialize connection pools"""
+
+
+
         try:
             # Primary connection pool
             dsn = self._build_dsn(self.connection_info)
@@ -252,11 +255,11 @@ class PostgreSQLConnectionPool(IConnectionPool):
             if self.config.enable_monitoring:
                 self._health_check_task = asyncio.create_task(self._health_monitor())
             
-            logger.info(f"✅ PostgreSQL pool initialized - Primary: {self.pool.get_size()}, Replicas: {len(self.read_pools)}")
+            logger.info(f" PostgreSQL pool initialized - Primary: {self.pool.get_size()}, Replicas: {len(self.read_pools)}")
             return True
             
         except Exception as e:
-            logger.error(f"❌ PostgreSQL pool initialization failed: {e}")
+            logger.error(f" PostgreSQL pool initialization failed: {e}")
             self.state = ConnectionState.FAILED
             return False
     
@@ -316,6 +319,9 @@ class PostgreSQLConnectionPool(IConnectionPool):
     
     async def release(self, connection: asyncpg.Connection) -> None:
         """Release connection back to pool"""
+
+
+
         try:
             # Determine which pool the connection belongs to
             pool_to_release = self.pool
@@ -357,6 +363,9 @@ class PostgreSQLConnectionPool(IConnectionPool):
     
     async def health_check(self) -> bool:
         """Check pool health"""
+
+
+
         try:
             connection = await self.acquire(timeout=5.0)
             result = await connection.fetchval("SELECT 1")
@@ -399,6 +408,9 @@ class PostgreSQLConnectionPool(IConnectionPool):
     
     async def close(self) -> None:
         """Close all pools"""
+
+
+
         try:
             self.state = ConnectionState.CLOSED
             
@@ -418,13 +430,16 @@ class PostgreSQLConnectionPool(IConnectionPool):
             if self.pool:
                 await self.pool.close()
             
-            logger.info("✅ PostgreSQL pools closed")
+            logger.info(" PostgreSQL pools closed")
             
         except Exception as e:
             logger.error(f"Error closing PostgreSQL pools: {e}")
     
     async def resize_pool(self, new_min_size: int, new_max_size: int) -> bool:
         """Dynamically resize PostgreSQL pool"""
+
+
+
         try:
             if self.pool:
                 # Close existing pool
@@ -443,15 +458,18 @@ class PostgreSQLConnectionPool(IConnectionPool):
                     command_timeout=self.config.connection_timeout
                 )
                 
-                logger.info(f"✅ PostgreSQL pool resized - Min: {new_min_size}, Max: {new_max_size}")
+                logger.info(f" PostgreSQL pool resized - Min: {new_min_size}, Max: {new_max_size}")
                 return True
                 
         except Exception as e:
-            logger.error(f"❌ Failed to resize PostgreSQL pool: {e}")
+            logger.error(f" Failed to resize PostgreSQL pool: {e}")
             return False
     
     async def execute_maintenance(self) -> bool:
         """Execute PostgreSQL pool maintenance"""
+
+
+
         try:
             # Clear connection statistics
             expired_connections = 0
@@ -469,11 +487,11 @@ class PostgreSQLConnectionPool(IConnectionPool):
             # Update maintenance timestamp
             self.stats["last_maintenance"] = datetime.utcnow()
             
-            logger.info(f"✅ PostgreSQL pool maintenance completed - Cleaned {expired_connections} connections")
+            logger.info(f" PostgreSQL pool maintenance completed - Cleaned {expired_connections} connections")
             return True
             
         except Exception as e:
-            logger.error(f"❌ PostgreSQL pool maintenance failed: {e}")
+            logger.error(f" PostgreSQL pool maintenance failed: {e}")
             return False
 
 class RedisConnectionPool(IConnectionPool):
@@ -498,6 +516,9 @@ class RedisConnectionPool(IConnectionPool):
     
     async def initialize(self) -> bool:
         """Initialize Redis connection pool"""
+
+
+
         try:
             # Connection pool configuration
             pool_config = {
@@ -519,11 +540,11 @@ class RedisConnectionPool(IConnectionPool):
             await self.redis_client.ping()
             self.state = ConnectionState.ACTIVE
             
-            logger.info(f"✅ Redis pool initialized - Max connections: {self.config.max_size}")
+            logger.info(f" Redis pool initialized - Max connections: {self.config.max_size}")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Redis pool initialization failed: {e}")
+            logger.error(f" Redis pool initialization failed: {e}")
             self.state = ConnectionState.FAILED
             return False
     
@@ -541,6 +562,9 @@ class RedisConnectionPool(IConnectionPool):
     
     async def health_check(self) -> bool:
         """Check Redis health"""
+
+
+
         try:
             client = await self.acquire()
             result = await client.ping()
@@ -566,6 +590,9 @@ class RedisConnectionPool(IConnectionPool):
     
     async def close(self) -> None:
         """Close Redis pool"""
+
+
+
         try:
             self.state = ConnectionState.CLOSED
             
@@ -575,13 +602,16 @@ class RedisConnectionPool(IConnectionPool):
             if self.pool:
                 await self.pool.disconnect()
             
-            logger.info("✅ Redis pool closed")
+            logger.info(" Redis pool closed")
             
         except Exception as e:
             logger.error(f"Error closing Redis pool: {e}")
     
     async def resize_pool(self, new_min_size: int, new_max_size: int) -> bool:
         """Dynamically resize Redis pool"""
+
+
+
         try:
             # Close existing connections
             if self.redis_client:
@@ -607,15 +637,18 @@ class RedisConnectionPool(IConnectionPool):
             self.pool = aioredis.ConnectionPool(**pool_config)
             self.redis_client = aioredis.Redis(connection_pool=self.pool)
             
-            logger.info(f"✅ Redis pool resized - Max connections: {new_max_size}")
+            logger.info(f" Redis pool resized - Max connections: {new_max_size}")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to resize Redis pool: {e}")
+            logger.error(f" Failed to resize Redis pool: {e}")
             return False
     
     async def execute_maintenance(self) -> bool:
         """Execute Redis pool maintenance"""
+
+
+
         try:
             # Clear expired keys and optimize memory
             if self.redis_client:
@@ -628,11 +661,11 @@ class RedisConnectionPool(IConnectionPool):
                 # Update statistics
                 self.stats["last_maintenance"] = datetime.utcnow()
                 
-            logger.info("✅ Redis pool maintenance completed")
+            logger.info(" Redis pool maintenance completed")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Redis pool maintenance failed: {e}")
+            logger.error(f" Redis pool maintenance failed: {e}")
             return False
 
 # =============== POOL MANAGER ===============
@@ -658,13 +691,13 @@ class DatabasePoolManager:
     def register_pool_config(self, db_type: DatabaseType, config: PoolConfig) -> None:
         """Register pool configuration for database type"""
         self.pool_configs[db_type] = config
-        logger.info(f"✅ Pool config registered for {db_type.value}")
+        logger.info(f" Pool config registered for {db_type.value}")
     
     def register_connection_info(self, pool_id: str, connection_info: DatabaseConnectionInfo) -> None:
         """Register connection information"""
         self.connection_infos[pool_id] = connection_info
         self._pool_locks[pool_id] = asyncio.Lock()
-        logger.info(f"✅ Connection info registered for {pool_id}")
+        logger.info(f" Connection info registered for {pool_id}")
     
     async def create_pool(self, pool_id: str, db_type: DatabaseType, 
                          read_replicas: Optional[List[DatabaseConnectionInfo]] = None) -> bool:
@@ -714,10 +747,10 @@ class DatabasePoolManager:
                 
                 if success:
                     self.pools[pool_id] = pool
-                    logger.info(f"✅ Pool {pool_id} created successfully")
+                    logger.info(f" Pool {pool_id} created successfully")
                     return True
                 else:
-                    logger.error(f"❌ Pool {pool_id} creation failed")
+                    logger.error(f" Pool {pool_id} creation failed")
                     return False
                 
             except Exception as e:
@@ -726,6 +759,9 @@ class DatabasePoolManager:
     
     async def get_pool(self, pool_id: str) -> Optional[IConnectionPool]:
         """Get pool by ID"""
+
+
+
         return self.pools.get(pool_id)
     
     async def acquire_connection(self, pool_id: str, **kwargs) -> Any:
@@ -757,6 +793,9 @@ class DatabasePoolManager:
     
     def get_all_stats(self) -> Dict[str, Dict[str, Any]]:
         """Get statistics for all pools"""
+
+
+
         return {
             pool_id: pool.get_stats() 
             for pool_id, pool in self.pools.items()
@@ -769,7 +808,7 @@ class DatabasePoolManager:
         
         self.is_running = True
         self.monitoring_task = asyncio.create_task(self._monitor_pools())
-        logger.info("✅ Pool monitoring started")
+        logger.info(" Pool monitoring started")
     
     async def _monitor_pools(self) -> None:
         """Background monitoring task"""
@@ -795,6 +834,9 @@ class DatabasePoolManager:
     
     async def close_all_pools(self) -> None:
         """Close all database pools"""
+
+
+
         try:
             self.is_running = False
             
@@ -810,12 +852,12 @@ class DatabasePoolManager:
             for pool_id, pool in self.pools.items():
                 try:
                     await pool.close()
-                    logger.info(f"✅ Pool {pool_id} closed")
+                    logger.info(f" Pool {pool_id} closed")
                 except Exception as e:
                     logger.error(f"Error closing pool {pool_id}: {e}")
             
             self.pools.clear()
-            logger.info("✅ All pools closed")
+            logger.info(" All pools closed")
             
         except Exception as e:
             logger.error(f"Error closing pools: {e}")
@@ -858,11 +900,11 @@ async def initialize_pools(config_dict: Dict[str, Any]) -> bool:
         # Start monitoring
         await manager.start_monitoring()
         
-        logger.info("✅ All database pools initialized successfully")
+        logger.info(" All database pools initialized successfully")
         return True
         
     except Exception as e:
-        logger.error(f"❌ Pool initialization failed: {e}")
+        logger.error(f" Pool initialization failed: {e}")
         return False
 
 # =============== EXPORTS ===============

@@ -1,5 +1,5 @@
 """
-📝 Text Fingerprinting Engine - IA Influencer Agent Platform Enterprise
+ Text Fingerprinting Engine - IA Influencer Agent Platform Enterprise
 =======================================================================
 Module: backend/data_management/fingerprinting/text_fingerprint.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Text Fingerprinting - Ultra Enterprise Production-Ready
 Responsibility: Advanced text fingerprinting with BERT, RoBERTa, and semantic analysis
 ===================================================================================
 
-⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
+  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -20,14 +20,14 @@ RoBERTa Features → N-gram Analysis → Vector Generation → FAISS Indexing �
 Plagiarism Detection → Copyright Protection → Revenue Recovery
 
 TEXT FINGERPRINTING TECHNOLOGIES:
-├── 🧠 BERT (Bidirectional Encoder Representations)
-├── 🤖 RoBERTa (Robustly Optimized BERT)
-├── 📊 TF-IDF (Term Frequency-Inverse Document Frequency)
-├── 🔤 Word2Vec (Word Embeddings)
-├── 📝 N-gram Analysis (Character + Word Level)
-├── 🌐 Language Detection (Multi-language Support)
-├── 🔍 Semantic Similarity (Cosine + Euclidean)
-└── 🛡️ Plagiarism Protection (Real-time Monitoring)
+ 🧠 BERT (Bidirectional Encoder Representations)
+ 🤖 RoBERTa (Robustly Optimized BERT)
+  TF-IDF (Term Frequency-Inverse Document Frequency)
+  Word2Vec (Word Embeddings)
+  N-gram Analysis (Character + Word Level)
+  Language Detection (Multi-language Support)
+  Semantic Similarity (Cosine + Euclidean)
+  Plagiarism Protection (Real-time Monitoring)
 """
 
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -168,6 +168,9 @@ class BaseTextProcessor(ABC):
     @abstractmethod
     def get_name(self) -> str:
         """Get processor name"""
+
+
+
         return f"default_{self.__class__.__name__.lower()}"
     
     def _clean_text(self, text: str) -> str:
@@ -269,6 +272,9 @@ class BERTProcessor(BaseTextProcessor):
     
     def get_name(self) -> str:
         """Get processor name"""
+
+
+
         return "bert"
 
 class RoBERTaProcessor(BaseTextProcessor):
@@ -344,6 +350,9 @@ class RoBERTaProcessor(BaseTextProcessor):
     
     def get_name(self) -> str:
         """Get processor name"""
+
+
+
         return "roberta"
 
 class TFIDFProcessor(BaseTextProcessor):
@@ -404,6 +413,9 @@ class TFIDFProcessor(BaseTextProcessor):
     
     def get_name(self) -> str:
         """Get processor name"""
+
+
+
         return "tfidf"
 
 class Word2VecProcessor(BaseTextProcessor):
@@ -475,6 +487,9 @@ class Word2VecProcessor(BaseTextProcessor):
     
     def get_name(self) -> str:
         """Get processor name"""
+
+
+
         return "word2vec"
 
 class NGramProcessor(BaseTextProcessor):
@@ -482,6 +497,9 @@ class NGramProcessor(BaseTextProcessor):
     
     async def process(self, text: str) -> Dict[str, Any]:
         """Traite le texte avec analyse N-gram"""
+
+
+
         try:
             # N-grams de mots
             word_ngrams = self._extract_word_ngrams(text)
@@ -537,6 +555,9 @@ class NGramProcessor(BaseTextProcessor):
     
     def get_name(self) -> str:
         """Get processor name"""
+
+
+
         return "ngram"
 
 class TextFingerprintEngine:
@@ -742,6 +763,9 @@ class TextFingerprintEngine:
     
     async def compare_texts(self, text1_path: str, text2_path: str) -> Dict[str, Any]:
         """Compare deux textes et calcule leur similarité"""
+
+
+
         try:
             # Génération des empreintes
             fp1 = await self.generate_fingerprint(text1_path)

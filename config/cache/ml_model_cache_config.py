@@ -332,6 +332,9 @@ class MLModelCacheManager:
     
     def _count_gpu_models(self) -> int:
         """Count models that require GPU"""
+
+
+
         return sum(1 for settings in self.config.get_all_models().values() 
                   if settings.gpu_required)
 

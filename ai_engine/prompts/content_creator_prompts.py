@@ -5,7 +5,7 @@ Professional prompts for multi-format content creators (musicians, bloggers, pho
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️ COPYRIGHT WARNING ⚠️
+ COPYRIGHT WARNING 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
@@ -312,6 +312,9 @@ class ContentCreatorPrompts:
     
     def generate_prompt(self, context: PromptContext, custom_params: Optional[Dict] = None) -> Dict[str, Any]:
         """Generate a personalized prompt based on context"""
+
+
+
         try:
             # Get base prompt template
             base_prompts = self.base_prompts.get(context.creator_type, {})
@@ -369,6 +372,9 @@ class ContentCreatorPrompts:
     
     def _generate_fallback_prompt(self, context: PromptContext) -> Dict[str, Any]:
         """Generate fallback prompt when no specific prompt is available"""
+
+
+
         return {
             "id": "fallback_generic",
             "template": f"""
@@ -495,6 +501,9 @@ CONTENT_CREATOR_PROMPTS_REGISTRY = {
 
 def get_content_creator_prompts() -> ContentCreatorPrompts:
     """Get the main content creator prompts instance"""
+
+
+
     return ContentCreatorPrompts()
 
 def create_prompt_context(
@@ -506,6 +515,9 @@ def create_prompt_context(
     market_trends: Optional[Dict] = None
 ) -> PromptContext:
     """Create a prompt context for content generation"""
+
+
+
     return PromptContext(
         creator_type=ContentCreatorType(creator_type),
         content_format=ContentFormat(content_format),

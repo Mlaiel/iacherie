@@ -43,6 +43,9 @@ class TelegramPlatform(PlatformBase):
     
     async def authenticate(self) -> bool:
         """Authenticate with Telegram Bot Token"""
+
+
+
         try:
             if not self.bot_token:
                 logger.error("Telegram requires bot_token")
@@ -77,10 +80,16 @@ class TelegramPlatform(PlatformBase):
     
     async def refresh_token(self) -> bool:
         """Refresh Telegram token (not applicable for bot tokens)"""
+
+
+
         return await self.authenticate()
     
     async def _make_request(self, method: str, **kwargs) -> Optional[Dict[str, Any]]:
         """Make request to Telegram Bot API"""
+
+
+
         try:
             session = await self._get_session()
             
@@ -116,6 +125,9 @@ class TelegramPlatform(PlatformBase):
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
         """Send message/media to Telegram chat"""
+
+
+
         try:
             chat_id = metadata.tags[0] if metadata.tags else None
             if not chat_id:
@@ -236,6 +248,9 @@ class TelegramPlatform(PlatformBase):
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
         """Get Telegram message analytics (limited)"""
+
+
+
         try:
             # Telegram doesn't provide built-in analytics for messages
             # We can only get basic message info
@@ -260,6 +275,9 @@ class TelegramPlatform(PlatformBase):
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
         """Search content in Telegram (not available via Bot API)"""
+
+
+
         try:
             # Telegram Bot API doesn't provide search functionality
             logger.warning("Telegram Bot API doesn't support content search")
@@ -271,6 +289,9 @@ class TelegramPlatform(PlatformBase):
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
         """Get user's messages from Telegram (limited by Bot API)"""
+
+
+
         try:
             # Telegram Bot API doesn't provide access to user's message history
             logger.warning("Telegram Bot API doesn't provide access to user message history")
@@ -282,6 +303,9 @@ class TelegramPlatform(PlatformBase):
     
     async def delete_content(self, content_id: str, chat_id: str = None) -> bool:
         """Delete Telegram message"""
+
+
+
         try:
             if not chat_id:
                 logger.error("Telegram message deletion requires chat_id")
@@ -307,6 +331,9 @@ class TelegramPlatform(PlatformBase):
     
     async def update_content(self, content_id: str, metadata: ContentMetadata, chat_id: str = None) -> bool:
         """Update Telegram message"""
+
+
+
         try:
             if not chat_id:
                 logger.error("Telegram message update requires chat_id")
@@ -337,6 +364,9 @@ class TelegramPlatform(PlatformBase):
     
     async def get_chat_info(self, chat_id: str) -> Optional[Dict[str, Any]]:
         """Get Telegram chat information"""
+
+
+
         try:
             data = {'chat_id': chat_id}
             result = await self._make_request('getChat', json=data)
@@ -362,6 +392,9 @@ class TelegramPlatform(PlatformBase):
     
     async def _get_chat_member_count(self, chat_id: str) -> int:
         """Get chat member count"""
+
+
+
         try:
             data = {'chat_id': chat_id}
             result = await self._make_request('getChatMemberCount', json=data)
@@ -377,6 +410,9 @@ class TelegramPlatform(PlatformBase):
     
     async def get_updates(self, offset: int = None) -> List[Dict[str, Any]]:
         """Get bot updates"""
+
+
+
         try:
             data = {}
             if offset:
@@ -396,6 +432,9 @@ class TelegramPlatform(PlatformBase):
     async def send_poll(self, chat_id: str, question: str, options: List[str], 
                        is_anonymous: bool = True) -> Optional[str]:
         """Send poll to Telegram chat"""
+
+
+
         try:
             data = {
                 'chat_id': chat_id,
@@ -420,6 +459,9 @@ class TelegramPlatform(PlatformBase):
     
     async def forward_message(self, from_chat_id: str, to_chat_id: str, message_id: int) -> Optional[str]:
         """Forward message between chats"""
+
+
+
         try:
             data = {
                 'chat_id': to_chat_id,
@@ -443,6 +485,9 @@ class TelegramPlatform(PlatformBase):
     
     async def set_webhook(self, webhook_url: str) -> bool:
         """Set webhook for bot updates"""
+
+
+
         try:
             data = {'url': webhook_url}
             result = await self._make_request('setWebhook', json=data)
@@ -460,6 +505,9 @@ class TelegramPlatform(PlatformBase):
     
     async def delete_webhook(self) -> bool:
         """Delete webhook"""
+
+
+
         try:
             result = await self._make_request('deleteWebhook')
             
@@ -476,6 +524,9 @@ class TelegramPlatform(PlatformBase):
     
     async def get_bot_commands(self) -> List[Dict[str, Any]]:
         """Get bot commands"""
+
+
+
         try:
             result = await self._make_request('getMyCommands')
             
@@ -490,6 +541,9 @@ class TelegramPlatform(PlatformBase):
     
     async def set_bot_commands(self, commands: List[Dict[str, str]]) -> bool:
         """Set bot commands"""
+
+
+
         try:
             data = {'commands': json.dumps(commands)}
             result = await self._make_request('setMyCommands', json=data)

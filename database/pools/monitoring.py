@@ -140,6 +140,9 @@ class MetricSeries:
     
     def get_latest(self) -> Optional[MetricPoint]:
         """Get the latest metric point"""
+
+
+
         return self.points[-1] if self.points else None
     
     def get_average(self, duration: timedelta = timedelta(minutes=5)) -> Optional[float]:
@@ -238,20 +241,20 @@ class PoolMetricsCollector:
         """Register a pool for metrics collection"""
         with self._lock:
             self.pools[pool_id] = pool_instance
-            logger.info(f"✅ Pool registered for metrics: {pool_id}")
+            logger.info(f" Pool registered for metrics: {pool_id}")
     
     def unregister_pool(self, pool_id: str) -> None:
         """Unregister pool from metrics collection"""
         with self._lock:
             if pool_id in self.pools:
                 del self.pools[pool_id]
-                logger.info(f"✅ Pool unregistered from metrics: {pool_id}")
+                logger.info(f" Pool unregistered from metrics: {pool_id}")
     
     async def start_collection(self) -> None:
         """Start metrics collection"""
         if self._collection_task is None or self._collection_task.done():
             self._collection_task = asyncio.create_task(self._collection_loop())
-            logger.info("✅ Metrics collection started")
+            logger.info(" Metrics collection started")
     
     async def stop_collection(self) -> None:
         """Stop metrics collection"""
@@ -261,7 +264,7 @@ class PoolMetricsCollector:
                 await self._collection_task
             except asyncio.CancelledError:
                 pass
-            logger.info("✅ Metrics collection stopped")
+            logger.info(" Metrics collection stopped")
     
     async def _collection_loop(self) -> None:
         """Main metrics collection loop"""
@@ -286,6 +289,9 @@ class PoolMetricsCollector:
     
     async def _collect_single_pool_metrics(self, pool_id: str, pool_instance: Any) -> None:
         """Collect metrics from a single pool"""
+
+
+
         try:
             # Get pool statistics
             stats = getattr(pool_instance, 'get_pool_statistics', lambda: {})()
@@ -326,10 +332,16 @@ class PoolMetricsCollector:
     
     def get_metric(self, metric_name: str) -> Optional[MetricSeries]:
         """Get metric series by name"""
+
+
+
         return self.metrics.get(metric_name)
     
     def get_all_metrics(self) -> Dict[str, MetricSeries]:
         """Get all collected metrics"""
+
+
+
         return self.metrics.copy()
 
 # =============== HEALTH MONITOR ===============
@@ -352,7 +364,7 @@ class HealthMonitor:
             if health_check.enabled:
                 self._start_health_check_task(health_check)
                 
-            logger.info(f"✅ Health check registered: {health_check.check_id}")
+            logger.info(f" Health check registered: {health_check.check_id}")
     
     def unregister_health_check(self, check_id: str) -> None:
         """Unregister a health check"""
@@ -365,7 +377,7 @@ class HealthMonitor:
                     self._monitoring_tasks[check_id].cancel()
                     del self._monitoring_tasks[check_id]
                 
-                logger.info(f"✅ Health check unregistered: {check_id}")
+                logger.info(f" Health check unregistered: {check_id}")
     
     def _start_health_check_task(self, health_check: HealthCheck) -> None:
         """Start monitoring task for health check"""
@@ -507,25 +519,25 @@ class AlertManager:
         """Register an alert rule"""
         with self._lock:
             self.alert_rules[alert_rule.rule_id] = alert_rule
-            logger.info(f"✅ Alert rule registered: {alert_rule.rule_id}")
+            logger.info(f" Alert rule registered: {alert_rule.rule_id}")
     
     def unregister_alert_rule(self, rule_id: str) -> None:
         """Unregister an alert rule"""
         with self._lock:
             if rule_id in self.alert_rules:
                 del self.alert_rules[rule_id]
-                logger.info(f"✅ Alert rule unregistered: {rule_id}")
+                logger.info(f" Alert rule unregistered: {rule_id}")
     
     def register_notification_handler(self, channel: NotificationChannel, handler: Callable) -> None:
         """Register notification handler for a channel"""
         self._notification_handlers[channel] = handler
-        logger.info(f"✅ Notification handler registered: {channel.value}")
+        logger.info(f" Notification handler registered: {channel.value}")
     
     async def start_evaluation(self) -> None:
         """Start alert rule evaluation"""
         if self._evaluation_task is None or self._evaluation_task.done():
             self._evaluation_task = asyncio.create_task(self._evaluation_loop())
-            logger.info("✅ Alert evaluation started")
+            logger.info(" Alert evaluation started")
     
     async def stop_evaluation(self) -> None:
         """Stop alert rule evaluation"""
@@ -535,7 +547,7 @@ class AlertManager:
                 await self._evaluation_task
             except asyncio.CancelledError:
                 pass
-            logger.info("✅ Alert evaluation stopped")
+            logger.info(" Alert evaluation stopped")
     
     async def _evaluation_loop(self) -> None:
         """Main alert evaluation loop"""
@@ -561,6 +573,9 @@ class AlertManager:
     
     async def _evaluate_single_rule(self, alert_rule: AlertRule) -> None:
         """Evaluate a single alert rule"""
+
+
+
         try:
             # Get metric series
             metric_series = self.metrics_collector.get_metric(alert_rule.metric_name)
@@ -586,6 +601,9 @@ class AlertManager:
     
     def _evaluate_condition(self, value: Union[int, float], condition: str) -> bool:
         """Evaluate alert condition"""
+
+
+
         try:
             # Simple condition evaluation (can be enhanced with expression parser)
             if condition.startswith(">"):
@@ -640,7 +658,7 @@ class AlertManager:
         # Send notifications
         await self._send_alert_notifications(alert, alert_rule)
         
-        logger.warning(f"🚨 Alert triggered: {alert_rule.rule_name}")
+        logger.warning(f" Alert triggered: {alert_rule.rule_name}")
     
     async def _handle_alert_resolution(self, alert_rule: AlertRule) -> None:
         """Handle alert resolution"""
@@ -654,7 +672,7 @@ class AlertManager:
                 self.alert_history.append(alert)
                 del self.active_alerts[alert.alert_id]
                 
-                logger.info(f"✅ Alert resolved: {alert_rule.rule_name}")
+                logger.info(f" Alert resolved: {alert_rule.rule_name}")
     
     def _is_in_cooldown(self, alert_rule: AlertRule) -> bool:
         """Check if alert rule is in cooldown period"""
@@ -685,7 +703,7 @@ class AlertManager:
             if alert and alert.acknowledged_at is None:
                 alert.acknowledged_at = datetime.utcnow()
                 alert.acknowledged_by = acknowledged_by
-                logger.info(f"✅ Alert acknowledged: {alert_id} by {acknowledged_by}")
+                logger.info(f" Alert acknowledged: {alert_id} by {acknowledged_by}")
                 return True
         return False
     
@@ -708,6 +726,9 @@ class PerformanceAnalyzer:
     
     async def create_performance_snapshot(self, component: MonitoringComponent) -> PerformanceSnapshot:
         """Create a performance snapshot for analysis"""
+
+
+
         try:
             snapshot_metrics = {}
             resource_usage = {}
@@ -800,6 +821,9 @@ class PerformanceAnalyzer:
     def get_performance_trends(self, component: MonitoringComponent, 
                              duration: timedelta = timedelta(hours=1)) -> Dict[str, Any]:
         """Get performance trends over time"""
+
+
+
         try:
             cutoff_time = datetime.utcnow() - duration
             relevant_snapshots = [
@@ -867,6 +891,9 @@ class PoolMonitoringManager:
     
     async def initialize(self) -> bool:
         """Initialize monitoring system"""
+
+
+
         try:
             # Start components
             await self.metrics_collector.start_collection()
@@ -882,11 +909,11 @@ class PoolMonitoringManager:
             await self._register_default_notification_handlers()
             
             self._initialized = True
-            logger.info("✅ Pool monitoring system initialized")
+            logger.info(" Pool monitoring system initialized")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Monitoring system initialization failed: {e}")
+            logger.error(f" Monitoring system initialization failed: {e}")
             return False
     
     async def _register_default_health_checks(self) -> None:
@@ -943,7 +970,7 @@ class PoolMonitoringManager:
         """Register default notification handlers"""
         # Dashboard notification handler
         async def dashboard_handler(alert: Alert, alert_rule: AlertRule):
-            logger.warning(f"🚨 DASHBOARD ALERT: {alert.message}")
+            logger.warning(f" DASHBOARD ALERT: {alert.message}")
         
         self.alert_manager.register_notification_handler(NotificationChannel.DASHBOARD, dashboard_handler)
     
@@ -957,6 +984,9 @@ class PoolMonitoringManager:
     
     def get_monitoring_dashboard(self) -> Dict[str, Any]:
         """Get monitoring dashboard data"""
+
+
+
         try:
             dashboard = {
                 "timestamp": datetime.utcnow(),
@@ -989,6 +1019,9 @@ class PoolMonitoringManager:
     
     async def create_performance_report(self, component: MonitoringComponent) -> Dict[str, Any]:
         """Create comprehensive performance report"""
+
+
+
         try:
             # Create performance snapshot
             snapshot = await self.performance_analyzer.create_performance_snapshot(component)
@@ -1020,6 +1053,9 @@ class PoolMonitoringManager:
     
     async def close(self) -> None:
         """Close monitoring system"""
+
+
+
         try:
             await self.metrics_collector.stop_collection()
             await self.alert_manager.stop_evaluation()
@@ -1033,7 +1069,7 @@ class PoolMonitoringManager:
                     except asyncio.CancelledError:
                         pass
             
-            logger.info("✅ Pool monitoring system closed")
+            logger.info(" Pool monitoring system closed")
         except Exception as e:
             logger.error(f"Error closing monitoring system: {e}")
 

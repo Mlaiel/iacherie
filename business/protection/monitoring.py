@@ -1,11 +1,11 @@
 """
-📊 Monitoring Service - IA-Influencer-Agent  
+ Monitoring Service - IA-Influencer-Agent  
 ==================================================================
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 ==================================================================
 
-⚠️  COPYRIGHT NOTICE & LEGAL WARNING ⚠️
+  COPYRIGHT NOTICE & LEGAL WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copy, distribution, or modification of this code
 without explicit written permission is strictly prohibited and will be
@@ -202,6 +202,9 @@ class AlertManager:
         
     async def process_alert(self, alert: Alert) -> bool:
         """Process and route alert to appropriate channels"""
+
+
+
         try:
             # Store alert
             self.active_alerts[alert.alert_id] = alert
@@ -231,6 +234,9 @@ class AlertManager:
     
     async def _send_notification(self, alert: Alert, channel: NotificationChannel) -> bool:
         """Send notification through specific channel"""
+
+
+
         try:
             if channel == NotificationChannel.EMAIL:
                 return await self._send_email_alert(alert)
@@ -250,6 +256,9 @@ class AlertManager:
     
     async def _send_email_alert(self, alert: Alert) -> bool:
         """Send email alert"""
+
+
+
         try:
             if not self.config.email_enabled or not self.config.smtp_username:
                 return False
@@ -278,6 +287,9 @@ class AlertManager:
     
     async def _send_webhook_alert(self, alert: Alert) -> bool:
         """Send webhook alert"""
+
+
+
         try:
             if not self.config.webhook_enabled or not self.config.webhook_urls:
                 return False
@@ -313,6 +325,9 @@ class AlertManager:
     
     async def _send_slack_alert(self, alert: Alert) -> bool:
         """Send Slack alert (placeholder)"""
+
+
+
         try:
             # Slack integration would go here
             return True
@@ -323,6 +338,9 @@ class AlertManager:
     
     async def _send_discord_alert(self, alert: Alert) -> bool:
         """Send Discord alert (placeholder)"""
+
+
+
         try:
             # Discord integration would go here
             return True
@@ -470,6 +488,9 @@ class MetricsCollector:
     
     async def _collect_performance_metrics(self, metrics: MonitoringMetrics) -> MonitoringMetrics:
         """Collect performance-related metrics"""
+
+
+
         try:
             # These would be populated from actual system data
             metrics.total_scans_today = self._get_daily_scan_count()
@@ -484,6 +505,9 @@ class MetricsCollector:
     
     async def _collect_detection_metrics(self, metrics: MonitoringMetrics) -> MonitoringMetrics:
         """Collect detection-related metrics"""
+
+
+
         try:
             metrics.total_violations_detected = self._get_total_violations()
             metrics.high_severity_violations = self._get_high_severity_violations()
@@ -497,6 +521,9 @@ class MetricsCollector:
     
     async def _collect_platform_metrics(self, metrics: MonitoringMetrics) -> MonitoringMetrics:
         """Collect platform-specific metrics"""
+
+
+
         try:
             platforms = ['youtube', 'instagram', 'tiktok', 'spotify']
             
@@ -515,6 +542,9 @@ class MetricsCollector:
     
     async def _collect_resource_metrics(self, metrics: MonitoringMetrics) -> MonitoringMetrics:
         """Collect system resource metrics"""
+
+
+
         try:
             import psutil
             
@@ -540,6 +570,9 @@ class MetricsCollector:
     
     async def _check_platform_availability(self, platform: str) -> float:
         """Check platform availability"""
+
+
+
         try:
             platform_urls = {
                 'youtube': 'https://www.youtube.com',
@@ -561,6 +594,9 @@ class MetricsCollector:
     
     async def _check_platform_response_time(self, platform: str) -> float:
         """Check platform response time"""
+
+
+
         try:
             platform_urls = {
                 'youtube': 'https://www.youtube.com',
@@ -583,34 +619,58 @@ class MetricsCollector:
     
     def _get_daily_scan_count(self) -> int:
         """Get daily scan count (placeholder)"""
+
+
+
         return 150  # Mock data
     
     def _get_successful_scan_count(self) -> int:
         """Get successful scan count (placeholder)"""
+
+
+
         return 142  # Mock data
     
     def _get_failed_scan_count(self) -> int:
         """Get failed scan count (placeholder)"""
+
+
+
         return 8  # Mock data
     
     def _calculate_average_scan_time(self) -> float:
         """Calculate average scan time (placeholder)"""
+
+
+
         return 2500.0  # Mock data in milliseconds
     
     def _get_total_violations(self) -> int:
         """Get total violations detected (placeholder)"""
+
+
+
         return 23  # Mock data
     
     def _get_high_severity_violations(self) -> int:
         """Get high severity violations (placeholder)"""
+
+
+
         return 5  # Mock data
     
     def _get_new_violations_today(self) -> int:
         """Get new violations today (placeholder)"""
+
+
+
         return 7  # Mock data
     
     def _get_resolved_violations_today(self) -> int:
         """Get resolved violations today (placeholder)"""
+
+
+
         return 12  # Mock data
     
     def _cleanup_old_metrics(self) -> None:
@@ -638,23 +698,29 @@ class MonitoringService(IMonitoringService):
         
     async def initialize(self) -> bool:
         """Initialize monitoring service"""
+
+
+
         try:
-            self.logger.info("🚀 Initializing Monitoring Service")
+            self.logger.info(" Initializing Monitoring Service")
             
             # Start background monitoring tasks
             await self._start_monitoring_tasks()
             
             self.status = MonitoringStatus.ACTIVE
-            self.logger.info("✅ Monitoring Service initialized successfully")
+            self.logger.info(" Monitoring Service initialized successfully")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Monitoring Service initialization failed: {e}")
+            self.logger.error(f" Monitoring Service initialization failed: {e}")
             self.status = MonitoringStatus.ERROR
             return False
     
     async def send_alert(self, alert: Alert) -> bool:
         """Send alert through configured channels"""
+
+
+
         try:
             self.status = MonitoringStatus.ALERTING
             
@@ -670,6 +736,9 @@ class MonitoringService(IMonitoringService):
     
     async def collect_metrics(self) -> MonitoringMetrics:
         """Collect current system metrics"""
+
+
+
         try:
             metrics = await self.metrics_collector.collect_system_metrics()
             return metrics
@@ -819,6 +888,9 @@ class MonitoringService(IMonitoringService):
     
     async def _check_alert_conditions(self, metrics: MonitoringMetrics) -> None:
         """Check metrics for alert conditions"""
+
+
+
         try:
             # Check system resource alerts
             if metrics.cpu_usage_percent > 90:
@@ -889,6 +961,9 @@ class MonitoringServiceFactory:
         **kwargs
     ) -> MonitoringConfig:
         """Create monitoring configuration"""
+
+
+
         return MonitoringConfig(
             check_interval_seconds=check_interval_seconds,
             email_enabled=email_enabled,
@@ -898,6 +973,9 @@ class MonitoringServiceFactory:
 
 def format_alert_for_display(alert: Alert) -> str:
     """Format alert for display purposes"""
+
+
+
     return f"[{alert.severity.name}] {alert.title} - {alert.message}"
 
 

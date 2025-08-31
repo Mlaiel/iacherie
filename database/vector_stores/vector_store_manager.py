@@ -149,6 +149,9 @@ class VectorStoreManager:
     
     async def initialize(self) -> None:
         """Initialize all vector stores and start health monitoring"""
+
+
+
         try:
             # Initialize FAISS store
             if VectorStoreType.FAISS in [self.primary_store, self.secondary_store, self.fallback_store]:
@@ -208,6 +211,9 @@ class VectorStoreManager:
         Returns:
             Storage operation results
         """
+
+
+
         try:
             results = {}
             errors = []
@@ -304,6 +310,9 @@ class VectorStoreManager:
         Returns:
             Unified search results
         """
+
+
+
         try:
             start_time = datetime.now()
             
@@ -364,6 +373,9 @@ class VectorStoreManager:
         Returns:
             Removal operation results
         """
+
+
+
         try:
             results = {}
             errors = []
@@ -410,6 +422,9 @@ class VectorStoreManager:
     
     async def get_health_status(self) -> Dict[str, VectorStoreHealth]:
         """Get health status of all vector stores"""
+
+
+
         try:
             health_status = {}
             
@@ -468,10 +483,16 @@ class VectorStoreManager:
     
     async def get_performance_metrics(self) -> Dict[str, SearchPerformanceMetrics]:
         """Get performance metrics for all content types"""
+
+
+
         return self.search_metrics.copy()
     
     async def optimize_stores(self) -> Dict[str, bool]:
         """Optimize all vector stores"""
+
+
+
         try:
             optimization_results = {}
             
@@ -687,6 +708,9 @@ class VectorStoreManager:
     
     def _convert_faiss_result(self, result: VectorSearchResult) -> UnifiedSearchResult:
         """Convert FAISS result to unified format"""
+
+
+
         return UnifiedSearchResult(
             content_id=result.content_id,
             fingerprint_id=result.fingerprint_id,
@@ -700,6 +724,9 @@ class VectorStoreManager:
     
     def _convert_elasticsearch_result(self, result: HybridSearchResult) -> UnifiedSearchResult:
         """Convert Elasticsearch result to unified format"""
+
+
+
         return UnifiedSearchResult(
             content_id=result.content_id,
             fingerprint_id=result.fingerprint_id,
@@ -713,6 +740,9 @@ class VectorStoreManager:
     
     def _convert_pinecone_result(self, result: PineconeSearchResult) -> UnifiedSearchResult:
         """Convert Pinecone result to unified format"""
+
+
+
         return UnifiedSearchResult(
             content_id=result.content_id,
             fingerprint_id=result.fingerprint_id,
@@ -762,6 +792,9 @@ class VectorStoreManager:
     
     def _initialize_routing_rules(self) -> Dict[str, Dict[str, Any]]:
         """Initialize content type routing rules"""
+
+
+
         return {
             "audio": {
                 "primary": VectorStoreType.FAISS,
@@ -831,6 +864,9 @@ class VectorStoreManager:
     
     async def close(self) -> None:
         """Close all vector stores and cleanup"""
+
+
+
         try:
             # Stop health monitoring
             if self._health_check_task:

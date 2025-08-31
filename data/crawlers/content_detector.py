@@ -12,7 +12,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL WARNING ⚠️
+  CRITICAL WARNING 
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
 Any unauthorized use, reproduction, distribution, or reverse engineering 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -156,6 +156,9 @@ class ContentDetector:
     
     async def _initialize_ai_models(self):
         """Initialize AI models for content detection"""
+
+
+
         try:
             # Initialize CLIP model for cross-modal similarity
             self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
@@ -180,6 +183,9 @@ class ContentDetector:
         Returns:
             ContentFingerprint object
         """
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -237,6 +243,9 @@ class ContentDetector:
         Returns:
             List of detection results
         """
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -287,6 +296,9 @@ class ContentDetector:
         Returns:
             Accuracy metrics
         """
+
+
+
         try:
             true_positives = 0
             false_positives = 0
@@ -339,6 +351,9 @@ class ContentDetector:
         Returns:
             Filtered detection results
         """
+
+
+
         try:
             filtered_detections = []
             
@@ -371,6 +386,9 @@ class ContentDetector:
         Returns:
             List of detection results for each content item
         """
+
+
+
         try:
             batch_results = []
             
@@ -406,6 +424,9 @@ class ContentDetector:
     
     async def _generate_audio_fingerprint(self, audio_data: bytes) -> Dict[str, Any]:
         """Generate audio fingerprint"""
+
+
+
         try:
             return await self.audio_fingerprinter.generate_fingerprint(audio_data)
         except Exception as e:
@@ -414,6 +435,9 @@ class ContentDetector:
     
     async def _generate_video_fingerprint(self, video_data: bytes) -> Dict[str, Any]:
         """Generate video fingerprint"""
+
+
+
         try:
             return await self.video_fingerprinter.generate_fingerprint(video_data)
         except Exception as e:
@@ -422,6 +446,9 @@ class ContentDetector:
     
     async def _generate_image_fingerprint(self, image_data: bytes) -> Dict[str, Any]:
         """Generate image fingerprint"""
+
+
+
         try:
             return await self.image_fingerprinter.generate_fingerprint(image_data)
         except Exception as e:
@@ -430,6 +457,9 @@ class ContentDetector:
     
     async def _generate_text_fingerprint(self, text_content: str) -> Dict[str, Any]:
         """Generate text fingerprint"""
+
+
+
         try:
             return await self.text_fingerprinter.generate_fingerprint(text_content)
         except Exception as e:
@@ -439,6 +469,9 @@ class ContentDetector:
     async def _generate_clip_embedding(self, content_data: bytes, 
                                      content_type: ContentType) -> Optional[List[float]]:
         """Generate CLIP embedding for cross-modal similarity"""
+
+
+
         try:
             if not self.clip_model or not self.clip_processor:
                 return None
@@ -473,6 +506,9 @@ class ContentDetector:
     
     async def _extract_audio_from_video(self, video_data: bytes) -> Optional[bytes]:
         """Extract audio track from video data"""
+
+
+
         try:
             # This would use ffmpeg or similar to extract audio
             # Placeholder implementation
@@ -486,6 +522,9 @@ class ContentDetector:
                                   reference: ContentFingerprint,
                                   platform: str) -> Optional[DetectionResult]:
         """Compare two fingerprints and generate detection result"""
+
+
+
         try:
             detection_id = f"det_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{target.content_id[:8]}"
             
@@ -603,6 +642,9 @@ class ContentDetector:
     async def _calculate_audio_similarity(self, target: Dict[str, Any],
                                         reference: Dict[str, Any]) -> float:
         """Calculate audio similarity score"""
+
+
+
         try:
             # Use audio fingerprinting engine
             return await self.audio_fingerprinter.calculate_similarity(target, reference)
@@ -613,6 +655,9 @@ class ContentDetector:
     async def _calculate_video_similarity(self, target: Dict[str, Any],
                                         reference: Dict[str, Any]) -> float:
         """Calculate video similarity score"""
+
+
+
         try:
             # Use video fingerprinting engine
             return await self.video_fingerprinter.calculate_similarity(target, reference)
@@ -623,6 +668,9 @@ class ContentDetector:
     async def _calculate_image_similarity(self, target: Dict[str, Any],
                                         reference: Dict[str, Any]) -> float:
         """Calculate image similarity score"""
+
+
+
         try:
             # Use image fingerprinting engine
             return await self.image_fingerprinter.calculate_similarity(target, reference)
@@ -633,6 +681,9 @@ class ContentDetector:
     async def _calculate_text_similarity(self, target: Dict[str, Any],
                                        reference: Dict[str, Any]) -> float:
         """Calculate text similarity score"""
+
+
+
         try:
             # Use text fingerprinting engine
             return await self.text_fingerprinter.calculate_similarity(target, reference)
@@ -642,6 +693,9 @@ class ContentDetector:
     
     async def _calculate_weighted_similarity(self, similarity_scores: Dict[str, float]) -> float:
         """Calculate weighted overall similarity score"""
+
+
+
         try:
             # Weights for different modalities
             weights = {
@@ -677,6 +731,9 @@ class ContentDetector:
     async def _calculate_confidence_score(self, similarity_scores: Dict[str, float],
                                         fingerprint_matches: List[Dict[str, Any]]) -> float:
         """Calculate confidence score for detection"""
+
+
+
         try:
             # Base confidence on number of matching modalities
             modality_count = len([s for s in similarity_scores.values() if s > 0.5])
@@ -699,6 +756,9 @@ class ContentDetector:
     async def _is_likely_true_positive(self, detection: DetectionResult,
                                      confidence_threshold: float) -> bool:
         """Determine if detection is likely a true positive"""
+
+
+
         try:
             # Multiple criteria for false positive filtering
             criteria_passed = 0
@@ -729,6 +789,9 @@ class ContentDetector:
     
     async def _check_metadata_consistency(self, detection: DetectionResult) -> bool:
         """Check if metadata is consistent between target and reference"""
+
+
+
         try:
             target_meta = detection.metadata.get('target_metadata', {})
             reference_meta = detection.metadata.get('reference_metadata', {})
@@ -756,6 +819,9 @@ class ContentDetector:
     
     def get_detection_statistics(self) -> Dict[str, Any]:
         """Get current detection statistics"""
+
+
+
         try:
             stats = self.detection_stats.copy()
             

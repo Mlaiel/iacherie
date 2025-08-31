@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -312,6 +312,9 @@ class UserPermissions(Base):
         **kwargs
     ) -> 'UserPermissions':
         """Grant a permission to a user"""
+
+
+
         return cls(
             user_id=user_id,
             permission_type=permission_type,
@@ -334,6 +337,9 @@ class UserPermissions(Base):
         **kwargs
     ) -> 'UserPermissions':
         """Grant a role to a user"""
+
+
+
         return cls(
             user_id=user_id,
             role_type=role_type,
@@ -355,6 +361,9 @@ class UserPermissions(Base):
     
     def is_active(self) -> bool:
         """Check if permission is currently active"""
+
+
+
         return (
             self.status == PermissionStatus.ACTIVE and
             not self.is_expired() and
@@ -540,6 +549,9 @@ class UserPermissions(Base):
     
     def get_permission_summary(self) -> Dict[str, Any]:
         """Get comprehensive permission summary"""
+
+
+
         return {
             'permission_info': {
                 'id': str(self.id),

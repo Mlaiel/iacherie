@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 CRITICAL LEGAL WARNING:
+ CRITICAL LEGAL WARNING:
 This code and all associated intellectual property belong exclusively to Fahed Mlaiel.
 Any unauthorized use, copying, modification, distribution, or commercialization 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -134,6 +134,9 @@ class PlatformAPIIntegrator:
         Synchronize data from a platform connection with comprehensive
         error handling and intelligent retry logic
         """
+
+
+
         try:
             # Get platform connection
             connection = await self._get_platform_connection(session, connection_id)
@@ -586,6 +589,9 @@ class PlatformAPIIntegrator:
         headers: Dict[str, str] = None
     ) -> APIResponse:
         """Make API request with rate limiting and error handling"""
+
+
+
         
         try:
             # Implement rate limiting
@@ -879,6 +885,9 @@ async def refresh_platform_token(
     connection_id: str
 ) -> bool:
     """Refresh expired platform authentication token"""
+
+
+
     
     try:
         connection = await session.get(PlatformConnection, uuid.UUID(connection_id))
@@ -905,6 +914,9 @@ async def validate_platform_credentials(
     credentials: Dict[str, str]
 ) -> bool:
     """Validate platform API credentials"""
+
+
+
     
     try:
         # Platform-specific credential validation

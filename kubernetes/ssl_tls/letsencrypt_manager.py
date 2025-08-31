@@ -125,6 +125,9 @@ class LetsEncryptManager:
     
     def _init_directories(self) -> None:
         """Initialize Let's Encrypt directories"""
+
+
+
         try:
             for directory in [self.account_path, self.cert_path, self.work_path]:
                 directory.mkdir(parents=True, exist_ok=True)
@@ -146,6 +149,9 @@ class LetsEncryptManager:
     
     def _init_acme_client(self) -> None:
         """Initialize ACME client with account key"""
+
+
+
         try:
             # Load or generate account key
             account_key_path = self.account_path / "account.key"
@@ -204,6 +210,9 @@ class LetsEncryptManager:
     
     def _register_account(self) -> None:
         """Register account with Let's Encrypt"""
+
+
+
         try:
             # Check if account already exists
             account_file = self.account_path / "account.json"
@@ -249,6 +258,9 @@ class LetsEncryptManager:
         Returns:
             Tuple of (certificate_pem, private_key_pem, chain_pem)
         """
+
+
+
         try:
             self.logger.info(f"Requesting certificate for domains: {cert_request.domains}")
             
@@ -341,6 +353,9 @@ class LetsEncryptManager:
     
     def _complete_http_challenge(self, challenge: messages.ChallengeBody, domain: str) -> None:
         """Complete HTTP-01 challenge"""
+
+
+
         try:
             # Get challenge response
             response, validation = challenge.chall.response_and_validation(self.account_key)
@@ -375,6 +390,9 @@ class LetsEncryptManager:
     
     def _complete_dns_challenge(self, challenge: messages.ChallengeBody, domain: str) -> None:
         """Complete DNS-01 challenge"""
+
+
+
         try:
             # Get challenge response
             response, validation = challenge.chall.response_and_validation(self.account_key)
@@ -417,6 +435,9 @@ class LetsEncryptManager:
     
     def _create_cloudflare_dns_record(self, name: str, value: str, domain: str) -> None:
         """Create DNS record using Cloudflare API"""
+
+
+
         try:
             api_token = self.config.dns_credentials.get('api_token')
             zone_id = self.config.dns_credentials.get('zone_id')
@@ -454,6 +475,9 @@ class LetsEncryptManager:
     
     def _create_route53_dns_record(self, name: str, value: str, domain: str) -> None:
         """Create DNS record using AWS Route53"""
+
+
+
         try:
             import boto3
             
@@ -562,6 +586,9 @@ class LetsEncryptManager:
         chain_pem: str
     ) -> None:
         """Save certificate files to disk"""
+
+
+
         try:
             # Create domain directory
             domain_path = self.cert_path / domain
@@ -602,6 +629,9 @@ class LetsEncryptManager:
         Returns:
             True if renewal successful
         """
+
+
+
         try:
             domain_path = self.cert_path / domain
             cert_file = domain_path / "cert.pem"
@@ -695,6 +725,9 @@ class LetsEncryptManager:
     
     def cleanup_challenge_files(self, domain: str) -> None:
         """Clean up challenge files after validation"""
+
+
+
         try:
             if self.config.challenge_type == ChallengeType.HTTP_01:
                 challenge_dir = Path(self.config.webroot_path) / ".well-known" / "acme-challenge"
@@ -721,4 +754,7 @@ def create_letsencrypt_manager(config: LetsEncryptConfig) -> LetsEncryptManager:
     Returns:
         Configured Let's Encrypt manager
     """
+
+
+
     return LetsEncryptManager(config)

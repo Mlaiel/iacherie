@@ -15,7 +15,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team Specialization: Lead Dev IA + Backend Senior + ML Engineer + DBA + 
                     Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  WARNING: PROPRIETARY CODE
+  WARNING: PROPRIETARY CODE
 All code, concepts, and implementations in this module are proprietary 
 intellectual property of Fahed Mlaiel. Any unauthorized use, copying, 
 distribution, or commercial exploitation without explicit written 

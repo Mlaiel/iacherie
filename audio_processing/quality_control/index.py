@@ -1,5 +1,5 @@
 """
-🎯 Quality Control Index - Entry Point & System Orchestration
+ Quality Control Index - Entry Point & System Orchestration
 
 Main entry point for the Quality Control System providing unified access
 to all quality management components with intelligent routing and coordination.
@@ -8,7 +8,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Developer + DevOps + DBA + Security + Microservices
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ AVERTISSEMENT STRICT ⚠️
+ AVERTISSEMENT STRICT 
 Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou reproduction sans 
 autorisation écrite explicite de Fahed Mlaiel (mlaiel@live.de) est strictement 
@@ -90,7 +90,7 @@ class ProcessingResult:
 
 class QualityControlSystem:
     """
-    🎯 Quality Control System - Master Orchestrator
+     Quality Control System - Master Orchestrator
     
     Complete audio quality management system providing:
     - Unified quality assessment and optimization

@@ -133,6 +133,9 @@ class CachePersistence:
     
     def _load_index(self) -> Dict[str, Dict[str, Any]]:
         """Load persistence index."""
+
+
+
         try:
             if self.index_file.exists():
                 with open(self.index_file, 'r') as f:
@@ -143,6 +146,9 @@ class CachePersistence:
     
     def _save_index(self) -> None:
         """Save persistence index."""
+
+
+
         try:
             with open(self.index_file, 'w') as f:
                 json.dump(self.index, f, indent=2, default=str)
@@ -216,6 +222,9 @@ class CachePersistence:
         Returns:
             True if successful
         """
+
+
+
         try:
             entry = PersistentEntry(
                 key=key,
@@ -264,6 +273,9 @@ class CachePersistence:
         Returns:
             Persistent entry or None if not found
         """
+
+
+
         try:
             if key not in self.index:
                 return None
@@ -297,6 +309,9 @@ class CachePersistence:
     
     async def delete_entry(self, key: str) -> bool:
         """Delete persistent entry."""
+
+
+
         try:
             if key not in self.index:
                 return False
@@ -320,6 +335,9 @@ class CachePersistence:
     
     async def list_entries(self, pattern: Optional[str] = None) -> List[str]:
         """List all persistent entries."""
+
+
+
         try:
             keys = list(self.index.keys())
             
@@ -345,6 +363,9 @@ class CachePersistence:
         Returns:
             Backup ID if successful
         """
+
+
+
         try:
             backup_id = generate_uuid()
             backup_format = format or self.format
@@ -434,6 +455,9 @@ class CachePersistence:
         Returns:
             True if successful
         """
+
+
+
         try:
             if backup_id not in self.backup_info:
                 self.logger.error(f"Backup {backup_id} not found")
@@ -532,6 +556,9 @@ class CachePersistence:
     
     async def cleanup_old_backups(self, keep_count: int = 10) -> int:
         """Clean up old backup files."""
+
+
+
         try:
             # Sort backups by creation time
             sorted_backups = sorted(
@@ -557,6 +584,9 @@ class CachePersistence:
     
     async def get_stats(self) -> Dict[str, Any]:
         """Get persistence statistics."""
+
+
+
         try:
             total_entries = len(self.index)
             total_size = sum(info['size'] for info in self.index.values())
@@ -600,6 +630,9 @@ class BackupManager:
                           interval_seconds: int,
                           enabled: bool = True) -> bool:
         """Add backup schedule."""
+
+
+
         try:
             schedule = {
                 'strategy': strategy,

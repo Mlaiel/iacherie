@@ -272,6 +272,9 @@ class PostgreSQLMetricsCollector(MetricsCollector):
     
     async def _get_connection_stats(self, session: AsyncSession) -> Dict[str, Any]:
         """Get connection statistics"""
+
+
+
         try:
             query = text("""
                 SELECT 
@@ -310,6 +313,9 @@ class PostgreSQLMetricsCollector(MetricsCollector):
     
     async def _get_query_stats(self, session: AsyncSession) -> Dict[str, Any]:
         """Get query performance statistics"""
+
+
+
         try:
             # Check if pg_stat_statements extension is available
             ext_check = await session.execute(text("""
@@ -347,6 +353,9 @@ class PostgreSQLMetricsCollector(MetricsCollector):
     
     async def _get_database_stats(self, session: AsyncSession) -> Dict[str, Any]:
         """Get database-level statistics"""
+
+
+
         try:
             query = text("""
                 SELECT 
@@ -375,6 +384,9 @@ class PostgreSQLMetricsCollector(MetricsCollector):
     
     async def _get_index_stats(self, session: AsyncSession) -> Dict[str, Any]:
         """Get index usage statistics"""
+
+
+
         try:
             query = text("""
                 SELECT 
@@ -402,6 +414,9 @@ class PostgreSQLMetricsCollector(MetricsCollector):
     
     async def _get_lock_stats(self, session: AsyncSession) -> Dict[str, Any]:
         """Get lock statistics"""
+
+
+
         try:
             query = text("""
                 SELECT 
@@ -424,6 +439,9 @@ class PostgreSQLMetricsCollector(MetricsCollector):
     
     async def _get_replication_stats(self, session: AsyncSession) -> Dict[str, Any]:
         """Get replication statistics"""
+
+
+
         try:
             # Check if this is a master with replicas
             query = text("""
@@ -459,6 +477,9 @@ class PostgreSQLMetricsCollector(MetricsCollector):
     
     def _get_system_stats(self) -> Dict[str, Any]:
         """Get system resource statistics"""
+
+
+
         try:
             # CPU usage
             cpu_percent = psutil.cpu_percent(interval=1)
@@ -497,6 +518,9 @@ class RedisMetricsCollector(MetricsCollector):
     
     async def collect_metrics(self) -> Dict[str, Any]:
         """Collect Redis metrics"""
+
+
+
         try:
             info = await self.redis.info()
             
@@ -588,6 +612,9 @@ class DatabaseMonitor:
     
     async def initialize(self):
         """Initialize monitoring system"""
+
+
+
         try:
             # Get database connection
             db_connection = await DatabaseConnection.get_instance()
@@ -842,6 +869,9 @@ class DatabaseMonitor:
     
     def _extract_metric_value(self, metrics: Dict[str, Any], metric_path: str) -> Optional[float]:
         """Extract metric value using dot notation path"""
+
+
+
         try:
             parts = metric_path.split('.')
             value = metrics
@@ -958,6 +988,9 @@ class DatabaseMonitor:
     
     async def get_active_alerts(self) -> List[Dict[str, Any]]:
         """Get active alerts"""
+
+
+
         return [asdict(alert) for alert in self.active_alerts.values()]
 
 

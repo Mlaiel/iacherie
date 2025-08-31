@@ -5,7 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 Version: 3.0.0
 
-⚠️ LEGAL WARNING: Unauthorized use prohibited. See __init__.py for full notice.
+ LEGAL WARNING: Unauthorized use prohibited. See __init__.py for full notice.
 """
 from typing import Dict, Any, List, Optional, Callable, AsyncGenerator
 from datetime import datetime, timezone
@@ -91,7 +91,10 @@ class StreamProducer:
         logger.info("Stream producer stopped")
     
     async def send(self, stream_name: str, message: StreamMessage) -> str:
-        """Send a message to a stream"""        try:
+        """Send a message to a stream"""
+
+
+        try:
             await self._buffer.put({"stream_name": stream_name, "message": message})
             self.metrics.increment_counter("stream_messages_sent")
             return message.message_id
@@ -137,7 +140,10 @@ class StreamProducer:
             await self._flush_batch(batch)
     
     async def _flush_batch(self, batch: List[Dict[str, Any]]):
-        """Flush a batch of messages to Redis streams"""        try:
+        """Flush a batch of messages to Redis streams"""
+
+
+        try:
             # Group messages by stream
             stream_batches = {}
             for item in batch:
@@ -159,7 +165,10 @@ class StreamProducer:
     
     async def _send_batch_to_stream(self, stream_name: str, 
                                   messages: List[StreamMessage]):
-        """Send a batch of messages to a specific stream"""        try:
+        """Send a batch of messages to a specific stream"""
+
+
+        try:
             pipeline = self.redis.pipeline()
             
             for message in messages:
@@ -249,7 +258,10 @@ class StreamConsumer:
                 await sleep(5)
     
     async def _process_messages(self, raw_messages: List):
-        """Process received messages"""        try:
+        """Process received messages"""
+
+
+        try:
             for stream_name, stream_messages in raw_messages:
                 for message_id, fields in stream_messages:
                     message = self._parse_message(
@@ -277,7 +289,10 @@ class StreamConsumer:
     
     def _parse_message(self, stream_name: str, message_id: str, 
                       fields: Dict) -> StreamMessage:
-        """Parse raw Redis message into StreamMessage"""        try:
+        """Parse raw Redis message into StreamMessage"""
+
+
+        try:
             # Decode fields
             decoded_fields = {
                 k.decode(): v.decode() for k, v in fields.items()
@@ -300,7 +315,10 @@ class StreamConsumer:
             raise EventStreamingError(f"Failed to parse message: {str(e)}")
     
     async def _handle_message(self, message: StreamMessage):
-        """Handle a parsed message"""        try:
+        """Handle a parsed message"""
+
+
+        try:
             handler = self._message_handlers.get(message.event_type)
             if handler:
                 await handler(message)
@@ -315,7 +333,10 @@ class StreamConsumer:
             raise
     
     async def _send_to_dead_letter_queue(self, message: StreamMessage, error: str):
-        """Send failed message to dead letter queue"""        try:
+        """Send failed message to dead letter queue"""
+
+
+        try:
             dlq_stream = f"{message.stream_name}:dlq"
             
             # Add error information to message
@@ -403,7 +424,10 @@ class EventStream:
         return consumer
     
     async def get_stream_info(self) -> Dict[str, Any]:
-        """Get stream information"""        try:
+        """Get stream information"""
+
+
+        try:
             info = await self.redis.xinfo_stream(self.stream_name)
             return {
                 "length": info[b"length"],

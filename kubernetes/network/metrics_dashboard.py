@@ -7,7 +7,7 @@ Copyright: All rights reserved - Unauthorized use prohibited
 Project: IA Influencer Agent Platform - Content Protection & Monetization
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  AVERTISSEMENT SÉVÈRE ⚠️
+  AVERTISSEMENT SÉVÈRE 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
@@ -153,6 +153,9 @@ class NetworkMetricsDashboard:
     
     async def initialize(self) -> bool:
         """Initialize metrics dashboard"""
+
+
+
         try:
             logger.info("Initializing Network Metrics Dashboard...")
             
@@ -187,6 +190,9 @@ class NetworkMetricsDashboard:
         processing_time: float
     ):
         """Record content fingerprinting metrics"""
+
+
+
         try:
             # Update fingerprint counter
             self.metrics['content_fingerprints_total'].labels(
@@ -216,6 +222,9 @@ class NetworkMetricsDashboard:
         content_metadata: Dict[str, Any]
     ):
         """Record content violation detection"""
+
+
+
         try:
             # Update violation counter
             self.metrics['content_violations_detected'].labels(
@@ -250,6 +259,9 @@ class NetworkMetricsDashboard:
         revenue_amount: float
     ):
         """Update monetization revenue metrics"""
+
+
+
         try:
             # Update revenue gauge
             self.metrics['monetization_revenue'].labels(
@@ -282,6 +294,9 @@ class NetworkMetricsDashboard:
         bandwidth_bytes: int
     ):
         """Record network performance metrics"""
+
+
+
         try:
             # Record latency
             self.metrics['network_latency'].labels(
@@ -307,6 +322,9 @@ class NetworkMetricsDashboard:
         hit_ratio: float
     ):
         """Update CDN cache efficiency metrics"""
+
+
+
         try:
             self.metrics['cdn_cache_efficiency'].labels(
                 region=region,
@@ -323,6 +341,9 @@ class NetworkMetricsDashboard:
         engagement_score: float
     ):
         """Record user engagement metrics"""
+
+
+
         try:
             self.metrics['user_engagement_score'].labels(
                 content_id=content_id,
@@ -340,6 +361,9 @@ class NetworkMetricsDashboard:
         popularity_score: float
     ):
         """Update content popularity metrics"""
+
+
+
         try:
             self.metrics['content_popularity'].labels(
                 content_id=content_id,
@@ -358,6 +382,9 @@ class NetworkMetricsDashboard:
         source_details: Dict[str, Any]
     ):
         """Record security event metrics"""
+
+
+
         try:
             # Update security counter
             self.metrics['security_threats_blocked'].labels(
@@ -389,6 +416,9 @@ class NetworkMetricsDashboard:
     
     async def get_dashboard_data(self) -> Dict[str, Any]:
         """Get comprehensive dashboard data"""
+
+
+
         try:
             dashboard_data = {
                 'overview': await self._get_overview_metrics(),
@@ -412,6 +442,9 @@ class NetworkMetricsDashboard:
         time_range: timedelta = timedelta(days=7)
     ) -> Dict[str, Any]:
         """Generate comprehensive performance report"""
+
+
+
         try:
             end_time = datetime.now()
             start_time = end_time - time_range
@@ -457,6 +490,9 @@ class NetworkMetricsDashboard:
     
     async def _setup_prometheus_server(self):
         """Setup Prometheus metrics server"""
+
+
+
         try:
             # Start Prometheus metrics server on port 8000
             prometheus_client.start_http_server(8000, registry=self.registry)
@@ -466,6 +502,9 @@ class NetworkMetricsDashboard:
     
     async def _create_grafana_dashboards(self):
         """Create Grafana dashboards for IA platform"""
+
+
+
         try:
             # Dashboard configurations
             dashboards_config = {
@@ -507,6 +546,9 @@ class NetworkMetricsDashboard:
     
     async def _setup_alerting_rules(self):
         """Setup alerting rules for critical metrics"""
+
+
+
         try:
             alerting_rules = {
                 'high_content_violation_rate': {
@@ -566,7 +608,7 @@ class NetworkMetricsDashboard:
 async def demo_metrics_dashboard():
     """Demonstrate metrics dashboard functionality"""
     
-    print("🚀 IA Influencer Agent - Network Metrics Dashboard Demo")
+    print(" IA Influencer Agent - Network Metrics Dashboard Demo")
     print("=" * 60)
     
     # Initialize dashboard
@@ -574,13 +616,13 @@ async def demo_metrics_dashboard():
     success = await dashboard.initialize()
     
     if not success:
-        print("❌ Failed to initialize metrics dashboard")
+        print(" Failed to initialize metrics dashboard")
         return
     
-    print("✅ Metrics Dashboard Initialized")
+    print(" Metrics Dashboard Initialized")
     
     # Simulate some metrics
-    print("\n📊 Recording Sample Metrics...")
+    print("\n Recording Sample Metrics...")
     
     # Content protection metrics
     await dashboard.record_content_fingerprint(
@@ -619,34 +661,34 @@ async def demo_metrics_dashboard():
         source_details={'ip': '192.168.1.100', 'country': 'unknown'}
     )
     
-    print("✅ Sample Metrics Recorded")
+    print(" Sample Metrics Recorded")
     
     # Generate dashboard data
-    print("\n📈 Generating Dashboard Data...")
+    print("\n Generating Dashboard Data...")
     dashboard_data = await dashboard.get_dashboard_data()
     
     if dashboard_data:
-        print("✅ Dashboard Data Generated")
-        print(f"   📊 Overview metrics: Available")
-        print(f"   🛡️ Content protection: Available")
-        print(f"   🌐 Network performance: Available")
-        print(f"   💰 Monetization: Available")
-        print(f"   🔒 Security: Available")
+        print(" Dashboard Data Generated")
+        print(f"    Overview metrics: Available")
+        print(f"    Content protection: Available")
+        print(f"    Network performance: Available")
+        print(f"    Monetization: Available")
+        print(f"    Security: Available")
     
     # Generate performance report
-    print("\n📋 Generating Performance Report...")
+    print("\n Generating Performance Report...")
     report = await dashboard.generate_performance_report(timedelta(hours=1))
     
     if report:
-        print("✅ Performance Report Generated")
-        print(f"   📅 Report Period: {report.get('report_period', {}).get('start', 'N/A')}")
-        print(f"   📊 Summary Stats: Available")
-        print(f"   🎯 Recommendations: {len(report.get('recommendations', []))}")
+        print(" Performance Report Generated")
+        print(f"    Report Period: {report.get('report_period', {}).get('start', 'N/A')}")
+        print(f"    Summary Stats: Available")
+        print(f"    Recommendations: {len(report.get('recommendations', []))}")
     
-    print("\n🎯 Metrics Dashboard Demo Completed!")
-    print("📊 All metrics are being collected and displayed in real-time")
-    print("🚨 Alerting rules are active for critical thresholds")
-    print("📈 Grafana dashboards available for visualization")
+    print("\n Metrics Dashboard Demo Completed!")
+    print(" All metrics are being collected and displayed in real-time")
+    print(" Alerting rules are active for critical thresholds")
+    print(" Grafana dashboards available for visualization")
 
 
 if __name__ == "__main__":

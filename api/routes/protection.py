@@ -54,6 +54,9 @@ async def enable_protection(
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
     """Enable protection monitoring for content"""
+
+
+
     try:
         user_id = current_user["user_id"]
         
@@ -123,6 +126,9 @@ async def get_protection_status(
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
     """Get protection monitoring status for user"""
+
+
+
     try:
         user_id = current_user["user_id"]
         
@@ -146,6 +152,9 @@ async def get_violations(
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
     """Get content violations for user"""
+
+
+
     try:
         user_id = current_user["user_id"]
         
@@ -191,6 +200,9 @@ async def disable_protection(
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
     """Disable protection monitoring for content"""
+
+
+
     try:
         user_id = current_user["user_id"]
         

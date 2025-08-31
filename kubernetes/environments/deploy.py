@@ -7,7 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project Team: Multi-format Creator Platform with AI Protection & Monetization
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -138,6 +138,9 @@ class DeploymentOrchestrator:
         
     async def deploy(self, config: DeploymentConfig) -> DeploymentResult:
         """Execute deployment with specified configuration"""
+
+
+
         try:
             deployment_id = self._generate_deployment_id()
             
@@ -202,6 +205,9 @@ class DeploymentOrchestrator:
     async def _execute_preparation_phase(self, config: DeploymentConfig, 
                                        result: DeploymentResult):
         """Execute preparation phase"""
+
+
+
         try:
             logger.info("Executing preparation phase...")
             result.current_phase = DeploymentPhase.PREPARATION
@@ -235,6 +241,9 @@ class DeploymentOrchestrator:
     async def _execute_pre_deployment_phase(self, config: DeploymentConfig,
                                           result: DeploymentResult):
         """Execute pre-deployment phase"""
+
+
+
         try:
             logger.info("Executing pre-deployment phase...")
             result.current_phase = DeploymentPhase.PRE_DEPLOYMENT
@@ -261,6 +270,9 @@ class DeploymentOrchestrator:
     async def _execute_deployment_phase(self, config: DeploymentConfig,
                                       result: DeploymentResult):
         """Execute deployment phase based on strategy"""
+
+
+
         try:
             logger.info(f"Executing deployment phase with {config.strategy.value} strategy...")
             result.current_phase = DeploymentPhase.DEPLOYMENT
@@ -288,6 +300,9 @@ class DeploymentOrchestrator:
     async def _execute_post_deployment_phase(self, config: DeploymentConfig,
                                            result: DeploymentResult):
         """Execute post-deployment phase"""
+
+
+
         try:
             logger.info("Executing post-deployment phase...")
             result.current_phase = DeploymentPhase.POST_DEPLOYMENT
@@ -314,6 +329,9 @@ class DeploymentOrchestrator:
     async def _execute_validation_phase(self, config: DeploymentConfig,
                                       result: DeploymentResult):
         """Execute validation phase"""
+
+
+
         try:
             logger.info("Executing validation phase...")
             result.current_phase = DeploymentPhase.VALIDATION
@@ -345,6 +363,9 @@ class DeploymentOrchestrator:
     async def _execute_cleanup_phase(self, config: DeploymentConfig,
                                    result: DeploymentResult):
         """Execute cleanup phase"""
+
+
+
         try:
             logger.info("Executing cleanup phase...")
             result.current_phase = DeploymentPhase.CLEANUP
@@ -374,6 +395,9 @@ class DeploymentOrchestrator:
     async def _execute_rollback(self, config: DeploymentConfig,
                               result: DeploymentResult):
         """Execute rollback procedure"""
+
+
+
         try:
             logger.info("Executing rollback...")
             result.current_phase = DeploymentPhase.ROLLBACK
@@ -782,10 +806,16 @@ class DeploymentOrchestrator:
     
     def get_deployment_status(self, deployment_id: str) -> Optional[DeploymentResult]:
         """Get deployment status"""
+
+
+
         return self.active_deployments.get(deployment_id)
     
     def list_active_deployments(self) -> List[DeploymentResult]:
         """List active deployments"""
+
+
+
         return list(self.active_deployments.values())
 
 

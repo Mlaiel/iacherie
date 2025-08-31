@@ -7,7 +7,7 @@ and comprehensive business logic for the IA Influencer Agent ecosystem.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE - INTELLECTUAL PROPERTY PROTECTION:
+  CRITICAL LEGAL NOTICE - INTELLECTUAL PROPERTY PROTECTION:
 This software and all related code are the EXCLUSIVE INTELLECTUAL PROPERTY 
 of Fahed Mlaiel (mlaiel@live.de). Unauthorized use, copying, or distribution 
 without written authorization is STRICTLY PROHIBITED and will result in 
@@ -176,6 +176,9 @@ class YouTubeAdapter(BaseAgent):
     
     async def initialize(self) -> bool:
         """Initialize YouTube adapter with authentication and validation"""
+
+
+
         try:
             # Initialize HTTP session
             connector = aiohttp.TCPConnector(
@@ -286,6 +289,9 @@ class YouTubeAdapter(BaseAgent):
         updates: Dict[str, Any]
     ) -> bool:
         """Update existing YouTube video with new metadata or settings"""
+
+
+
         try:
             # Validate update permissions
             if not await self._validate_video_ownership(platform_id):
@@ -314,6 +320,9 @@ class YouTubeAdapter(BaseAgent):
     
     async def delete_content(self, platform_id: str) -> bool:
         """Delete YouTube video with proper cleanup"""
+
+
+
         try:
             # Validate deletion permissions
             if not await self._validate_video_ownership(platform_id):
@@ -344,6 +353,9 @@ class YouTubeAdapter(BaseAgent):
         end_date: datetime
     ) -> YouTubeAnalytics:
         """Retrieve comprehensive YouTube analytics"""
+
+
+
         try:
             # Get video analytics
             analytics_data = await self._fetch_video_analytics(
@@ -383,6 +395,9 @@ class YouTubeAdapter(BaseAgent):
     
     async def _validate_credentials(self) -> bool:
         """Validate YouTube API credentials"""
+
+
+
         try:
             response = await self._make_api_request(
                 "GET",
@@ -399,6 +414,9 @@ class YouTubeAdapter(BaseAgent):
     
     async def _verify_channel_access(self) -> bool:
         """Verify access to YouTube channel"""
+
+
+
         try:
             if self.channel_id:
                 response = await self._make_api_request(
@@ -466,6 +484,9 @@ class YouTubeAdapter(BaseAgent):
         metadata: YouTubeMetadata
     ) -> str:
         """Upload video to YouTube with resumable upload"""
+
+
+
         try:
             # Prepare video metadata
             video_metadata = {

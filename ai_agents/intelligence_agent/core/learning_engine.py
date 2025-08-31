@@ -8,7 +8,7 @@ Author: Fahed Mlaiel
 Contact: mlaiel@live.de
 Copyright: 2025 - All rights reserved
 
-⚠️ IMPORTANT LEGAL NOTICE ⚠️
+ IMPORTANT LEGAL NOTICE 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
@@ -370,6 +370,9 @@ class LearningEngine:
         Returns:
             TrainingResult: Comprehensive training results
         """
+
+
+
         try:
             if task_id not in self.learning_tasks:
                 raise ValueError(f"Unknown learning task: {task_id}")
@@ -874,6 +877,9 @@ class LearningEngine:
     
     async def _calculate_model_size(self, model: Any) -> float:
         """Calculate model size in MB."""
+
+
+
         try:
             if isinstance(model, nn.Module):
                 # PyTorch model
@@ -889,6 +895,9 @@ class LearningEngine:
     
     async def _measure_inference_time(self, model: Any, sample_data: np.ndarray) -> float:
         """Measure average inference time in milliseconds."""
+
+
+
         try:
             import time
             
@@ -912,6 +921,9 @@ class LearningEngine:
     
     async def _save_model(self, task_id: str, model: Any, preprocessors: Dict[str, Any]):
         """Save trained model and preprocessors."""
+
+
+
         try:
             if isinstance(model, nn.Module):
                 # Save PyTorch model

@@ -8,7 +8,7 @@ Showcases enterprise-grade capabilities and integration examples.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️ STRICT COPYRIGHT PROTECTION ⚠️
+ STRICT COPYRIGHT PROTECTION 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 """
@@ -45,7 +45,7 @@ class FilterSystemDemo:
     
     async def run_comprehensive_demo(self):
         """Run comprehensive demonstration of all filter capabilities."""
-        self.logger.info("🚀 Starting IA Influencer Agent Filters Demo")
+        self.logger.info(" Starting IA Influencer Agent Filters Demo")
         self.logger.info("=" * 60)
         
         # Show available filters
@@ -61,11 +61,11 @@ class FilterSystemDemo:
         # Show system statistics
         await self._show_system_stats()
         
-        self.logger.info("✅ Demo completed successfully!")
+        self.logger.info(" Demo completed successfully!")
     
     async def _show_available_filters(self):
         """Display all available filter types."""
-        self.logger.info("\n📋 Available Filter Types:")
+        self.logger.info("\n Available Filter Types:")
         filter_types = get_available_filter_types()
         
         for filter_type in filter_types:
@@ -73,7 +73,7 @@ class FilterSystemDemo:
     
     async def _demo_text_filtering(self):
         """Demonstrate text content filtering."""
-        self.logger.info("\n📝 TEXT FILTERING DEMO")
+        self.logger.info("\n TEXT FILTERING DEMO")
         self.logger.info("-" * 30)
         
         # Create sample text content
@@ -102,7 +102,7 @@ class FilterSystemDemo:
     
     async def _demo_security_filtering(self):
         """Demonstrate security filtering capabilities."""
-        self.logger.info("\n🔒 SECURITY FILTERING DEMO")
+        self.logger.info("\n SECURITY FILTERING DEMO")
         self.logger.info("-" * 30)
         
         # Create sample content for security testing
@@ -134,7 +134,7 @@ class FilterSystemDemo:
     
     async def _demo_performance_monitoring(self):
         """Demonstrate performance monitoring."""
-        self.logger.info("\n⚡ PERFORMANCE MONITORING DEMO")
+        self.logger.info("\n PERFORMANCE MONITORING DEMO")
         self.logger.info("-" * 35)
         
         start_time = time.time()
@@ -166,7 +166,7 @@ class FilterSystemDemo:
     
     async def _demo_quality_assessment(self):
         """Demonstrate quality assessment capabilities."""
-        self.logger.info("\n⭐ QUALITY ASSESSMENT DEMO")
+        self.logger.info("\n QUALITY ASSESSMENT DEMO")
         self.logger.info("-" * 30)
         
         quality_samples = [
@@ -193,7 +193,7 @@ class FilterSystemDemo:
     
     async def _demo_duplicate_detection(self):
         """Demonstrate duplicate content detection."""
-        self.logger.info("\n🔍 DUPLICATE DETECTION DEMO")
+        self.logger.info("\n DUPLICATE DETECTION DEMO")
         self.logger.info("-" * 30)
         
         # Test with identical content
@@ -219,7 +219,7 @@ class FilterSystemDemo:
     
     async def _show_system_stats(self):
         """Display system statistics."""
-        self.logger.info("\n📊 SYSTEM STATISTICS")
+        self.logger.info("\n SYSTEM STATISTICS")
         self.logger.info("-" * 25)
         
         stats = self.engine.get_statistics()

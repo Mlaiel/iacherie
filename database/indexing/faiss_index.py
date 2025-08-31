@@ -4,21 +4,21 @@ FAISS Vector Index Manager for IA-Influencer-Agent Platform
 Advanced FAISS (Facebook AI Similarity Search) integration for ultra-fast
 vector similarity search across multi-modal content embeddings.
 
-🚀 Enterprise Team Project Specialties:
-✅ Lead Dev + Architecte Développeur IA
-✅ Développeur Backend Senior (Python/FastAPI/Django)  
-✅ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face)
-✅ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
-✅ Spécialiste Sécurité Backend
-✅ Architecte Microservices
-✅ Développeur Audio
-✅ DevOps Engineer
-✅ IA Prompt Engineer
+ Enterprise Team Project Specialties:
+ Lead Dev + Architecte Développeur IA
+ Développeur Backend Senior (Python/FastAPI/Django)  
+ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face)
+ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
+ Spécialiste Sécurité Backend
+ Architecte Microservices
+ Développeur Audio
+ DevOps Engineer
+ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. 
 Unauthorized use, modification, or distribution by any individual or entity 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
@@ -142,6 +142,9 @@ class FAISSIndexManager:
     
     async def initialize(self) -> bool:
         """Initialize FAISS index manager and load existing indexes"""
+
+
+
         try:
             # Initialize supporting services
             await self.redis_manager.initialize()
@@ -166,6 +169,9 @@ class FAISSIndexManager:
     
     async def _load_existing_indexes(self) -> bool:
         """Load existing FAISS indexes from persistent storage"""
+
+
+
         try:
             index_files = list(self.index_storage_path.glob("*.faiss"))
             
@@ -198,6 +204,9 @@ class FAISSIndexManager:
     
     async def _initialize_default_indexes(self) -> bool:
         """Initialize default indexes for each vector type"""
+
+
+
         try:
             for vector_type, config in self.index_configs.items():
                 index_name = f"{vector_type}_default"
@@ -225,6 +234,9 @@ class FAISSIndexManager:
         Returns:
             bool: Success status of index creation
         """
+
+
+
         try:
             # Validate security permissions
             if not await self.security_manager.validate_index_creation(index_name):
@@ -270,6 +282,9 @@ class FAISSIndexManager:
     async def _create_faiss_index(self, index_type: str, dimension: int, 
                                 config: Dict[str, Any]) -> Optional[faiss.Index]:
         """Create specific FAISS index type with configuration"""
+
+
+
         try:
             if index_type == FAISSIndexType.FLAT_L2:
                 return faiss.IndexFlatL2(dimension)
@@ -333,6 +348,9 @@ class FAISSIndexManager:
         Returns:
             bool: Success status of vector addition
         """
+
+
+
         try:
             if index_name not in self.indexes:
                 logger.error(f"Index not found: {index_name}")
@@ -414,6 +432,9 @@ class FAISSIndexManager:
     
     async def _train_index(self, index_name: str, training_vectors: np.ndarray) -> bool:
         """Train FAISS index with provided vectors"""
+
+
+
         try:
             index = self.indexes[index_name]
             
@@ -432,6 +453,9 @@ class FAISSIndexManager:
     async def _store_vector_metadata(self, index_name: str, vector_ids: List[str], 
                                    metadata: List[Dict[str, Any]]) -> bool:
         """Store vector metadata in Redis for fast retrieval"""
+
+
+
         try:
             redis_client = await self.redis_manager.get_client()
             
@@ -467,6 +491,9 @@ class FAISSIndexManager:
         Returns:
             List of similar vectors with scores and metadata
         """
+
+
+
         try:
             if index_name not in self.indexes:
                 logger.error(f"Index not found: {index_name}")
@@ -541,6 +568,9 @@ class FAISSIndexManager:
     
     async def _get_vector_metadata(self, index_name: str, vector_id: str) -> Optional[Dict[str, Any]]:
         """Retrieve vector metadata from Redis"""
+
+
+
         try:
             redis_client = await self.redis_manager.get_client()
             key = f"vector_metadata:{index_name}:{vector_id}"
@@ -573,6 +603,9 @@ class FAISSIndexManager:
         Returns:
             Ranked multimodal search results
         """
+
+
+
         try:
             if weights is None:
                 weights = {'audio': 0.4, 'visual': 0.4, 'text': 0.2}
@@ -647,6 +680,9 @@ class FAISSIndexManager:
         Returns:
             List of potential collaboration partners with compatibility scores
         """
+
+
+
         try:
             collaboration_index = f"{VectorType.COLLABORATION}_default"
             
@@ -689,6 +725,9 @@ class FAISSIndexManager:
     def _calculate_collaboration_compatibility(self, user_prefs: Dict[str, Any], 
                                              match_profile: Dict[str, Any]) -> float:
         """Calculate collaboration compatibility score between two profiles"""
+
+
+
         try:
             compatibility_factors = []
             
@@ -728,6 +767,9 @@ class FAISSIndexManager:
     
     async def _save_index(self, index_name: str) -> bool:
         """Save FAISS index and metadata to persistent storage"""
+
+
+
         try:
             index = self.indexes[index_name]
             
@@ -753,6 +795,9 @@ class FAISSIndexManager:
     
     async def _setup_index_monitoring(self) -> bool:
         """Setup monitoring for FAISS indexes"""
+
+
+
         try:
             # Setup periodic index statistics collection
             monitoring_config = {
@@ -774,6 +819,9 @@ class FAISSIndexManager:
     
     async def optimize_indexes(self) -> Dict[str, Any]:
         """Optimize all FAISS indexes for better performance"""
+
+
+
         try:
             optimization_results = {
                 'optimized_indexes': [],
@@ -804,6 +852,9 @@ class FAISSIndexManager:
     
     async def _rebuild_index_optimized(self, index_name: str) -> bool:
         """Rebuild index with optimized parameters"""
+
+
+
         try:
             # This would involve extracting all vectors, recreating the index
             # with optimal parameters, and re-adding all vectors
@@ -818,6 +869,9 @@ class FAISSIndexManager:
     
     async def get_index_statistics(self) -> Dict[str, Any]:
         """Get comprehensive statistics for all FAISS indexes"""
+
+
+
         try:
             statistics = {
                 'total_indexes': len(self.indexes),
@@ -862,6 +916,9 @@ class FAISSIndexManager:
     
     def _estimate_index_memory_usage(self, index: faiss.Index) -> float:
         """Estimate memory usage of a FAISS index in MB"""
+
+
+
         try:
             # Basic estimation based on index type and size
             base_memory = index.ntotal * index.d * 4 / (1024 * 1024)  # 4 bytes per float32
@@ -890,6 +947,9 @@ class FAISSIndexManager:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             if index_name not in self.indexes:
                 logger.error(f"Index not found: {index_name}")
@@ -932,6 +992,9 @@ class FAISSIndexManager:
     
     async def cleanup(self):
         """Cleanup FAISS resources and connections"""
+
+
+
         try:
             # Save all indexes
             for index_name in self.indexes.keys():
@@ -1079,6 +1142,9 @@ class FAISSIndexManager:
     
     def _check_gpu_availability(self) -> bool:
         """Check if GPU is available for FAISS operations"""
+
+
+
         try:
             import faiss.contrib.torch_utils
             return faiss.get_num_gpus() > 0
@@ -1087,6 +1153,9 @@ class FAISSIndexManager:
     
     async def initialize(self) -> bool:
         """Initialize FAISS index manager"""
+
+
+
         try:
             # Initialize Redis connection
             if not await self.redis_manager.initialize():
@@ -1113,6 +1182,9 @@ class FAISSIndexManager:
     
     async def create_index(self, index_name: str, config: Dict[str, Any]) -> bool:
         """Create a new FAISS index with specified configuration"""
+
+
+
         try:
             embedding_type = config.get('embedding_type', ContentEmbeddingType.COMPOSITE)
             dimension = config.get('dimension')
@@ -1247,6 +1319,9 @@ class FAISSIndexManager:
     async def add_vectors(self, index_name: str, vectors: np.ndarray, 
                          content_ids: List[str]) -> bool:
         """Add vectors to FAISS index with content ID mapping"""
+
+
+
         try:
             if index_name not in self.indexes:
                 raise ValueError(f"Index {index_name} not found")
@@ -1312,6 +1387,9 @@ class FAISSIndexManager:
     async def search_similar(self, index_name: str, query_vector: np.ndarray,
                            k: int = 10, similarity_threshold: Optional[float] = None) -> List[Dict[str, Any]]:
         """Search for similar vectors in FAISS index"""
+
+
+
         try:
             if index_name not in self.indexes:
                 raise ValueError(f"Index {index_name} not found")
@@ -1394,6 +1472,9 @@ class FAISSIndexManager:
     
     async def _cache_vectors(self, index_name: str, content_ids: List[str], vectors: np.ndarray):
         """Cache vectors in Redis for fast retrieval"""
+
+
+
         try:
             redis_conn = await self.redis_manager.get_connection()
             
@@ -1411,6 +1492,9 @@ class FAISSIndexManager:
     
     async def _save_index_to_disk(self, index_name: str):
         """Save FAISS index to disk for persistence"""
+
+
+
         try:
             index_path = self.storage_path / f"{index_name}.faiss"
             metadata_path = self.storage_path / f"{index_name}_metadata.json"
@@ -1442,6 +1526,9 @@ class FAISSIndexManager:
     
     async def _load_existing_indexes(self):
         """Load existing FAISS indexes from disk"""
+
+
+
         try:
             if not self.storage_path.exists():
                 return
@@ -1496,6 +1583,9 @@ class FAISSIndexManager:
     
     async def _move_index_to_gpu(self, faiss_index):
         """Move FAISS index to GPU for acceleration"""
+
+
+
         try:
             def _move():
                 res = faiss.StandardGpuResources()
@@ -1520,6 +1610,9 @@ class FAISSIndexManager:
     
     async def _cache_index_metadata(self, index_name: str):
         """Cache index metadata in Redis"""
+
+
+
         try:
             redis_conn = await self.redis_manager.get_connection()
             cache_key = f"faiss_metadata:{index_name}"
@@ -1575,6 +1668,9 @@ class FAISSIndexManager:
     
     async def cleanup(self):
         """Cleanup resources and save indexes"""
+
+
+
         try:
             # Save all indexes to disk
             save_tasks = [self._save_index_to_disk(name) for name in self.indexes]

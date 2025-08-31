@@ -19,7 +19,7 @@ Expert Team Specialties:
 - DevOps & Infrastructure Engineer
 - AI Prompt Engineering Expert
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 © 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 This software, concept and intellectual property are protected by international copyright laws.
@@ -100,6 +100,9 @@ class SemanticMatcher:
         creator2_id: str
     ) -> Dict[str, float]:
         """Calculate semantic similarity between creators"""
+
+
+
         try:
             # Get creator content and profiles
             creator1_data = await self._get_creator_semantic_data(creator1_id)
@@ -151,6 +154,9 @@ class SemanticMatcher:
     
     async def _get_creator_semantic_data(self, creator_id: str) -> Dict[str, Any]:
         """Get comprehensive semantic data for a creator"""
+
+
+
         try:
             query = """
                 SELECT 
@@ -203,6 +209,9 @@ class SemanticMatcher:
         creator2_data: Dict[str, Any]
     ) -> float:
         """Calculate semantic similarity of content using embeddings"""
+
+
+
         try:
             text1 = creator1_data['combined_text']
             text2 = creator2_data['combined_text']
@@ -243,6 +252,9 @@ class BehavioralMatcher:
         creator2_id: str
     ) -> Dict[str, float]:
         """Analyze behavioral compatibility between creators"""
+
+
+
         try:
             # Get behavioral patterns
             creator1_patterns = await self._extract_behavioral_patterns(creator1_id)
@@ -308,6 +320,9 @@ class ContentStyleMatcher:
         creator2_id: str
     ) -> Dict[str, float]:
         """Analyze content style compatibility between creators"""
+
+
+
         try:
             # Get content style profiles
             creator1_style = await self._extract_content_style_profile(creator1_id)
@@ -372,6 +387,9 @@ class AudienceMatcher:
         creator2_id: str
     ) -> Dict[str, Any]:
         """Analyze audience compatibility and synergy potential"""
+
+
+
         try:
             # Get audience profiles
             creator1_audience = await self._get_audience_profile(creator1_id)
@@ -445,6 +463,9 @@ class RevenueCompatibilityMatcher:
         creator2_id: str
     ) -> Dict[str, Any]:
         """Analyze revenue model compatibility and collaboration potential"""
+
+
+
         try:
             # Get revenue profiles
             creator1_revenue = await self._get_creator_revenue_profile(creator1_id)
@@ -504,6 +525,9 @@ class RevenueCompatibilityMatcher:
     
     async def _get_creator_revenue_profile(self, creator_id: str) -> Dict[str, Any]:
         """Get comprehensive revenue profile for a creator"""
+
+
+
         try:
             query = """
                 SELECT 
@@ -544,6 +568,9 @@ class RevenueCompatibilityMatcher:
         creator2_revenue: Dict[str, Any]
     ) -> float:
         """Analyze compatibility of revenue models"""
+
+
+
         try:
             # Get primary revenue models
             model1 = creator1_revenue.get('primary_revenue_model', '')

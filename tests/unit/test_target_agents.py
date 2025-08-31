@@ -110,39 +110,39 @@ def main():
     print("=" * 60)
     
     # Test imports
-    print("\n📦 Testing Imports:")
+    print("\n Testing Imports:")
     import_results = test_agent_imports()
     for agent, result in import_results.items():
-        status = "✅ PASS" if result['import'] else "❌ FAIL"
+        status = " PASS" if result['import'] else " FAIL"
         print(f"  {status} {agent}")
         if not result['import']:
             print(f"      Error: {result['error']}")
     
     # Test instantiation
-    print("\n🏗️  Testing Instantiation:")
+    print("\n  Testing Instantiation:")
     instance_results = test_agent_instantiation()
     for agent, result in instance_results.items():
         if 'instantiate' in result:
-            status = "✅ PASS" if result['instantiate'] else "❌ FAIL"
+            status = " PASS" if result['instantiate'] else " FAIL"
             print(f"  {status} {agent}")
             if not result['instantiate']:
                 print(f"      Error: {result['error']}")
         else:
-            print(f"  ⚠️  SKIP {agent} (import failed)")
+            print(f"    SKIP {agent} (import failed)")
     
     # Summary
     import_count = sum(1 for r in import_results.values() if r['import'])
     instance_count = sum(1 for r in instance_results.values() if r.get('instantiate', False))
     
-    print(f"\n📊 Summary:")
+    print(f"\n Summary:")
     print(f"  Imports Successful: {import_count}/5")
     print(f"  Instantiation Successful: {instance_count}/5")
     
     if import_count == 5 and instance_count == 5:
-        print("  🎉 ALL TARGET AGENTS VERIFIED!")
+        print("   ALL TARGET AGENTS VERIFIED!")
         return True
     else:
-        print("  ⚠️  Some agents have issues")
+        print("    Some agents have issues")
         return False
 
 if __name__ == "__main__":

@@ -9,7 +9,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA-Influencer Agent + Content Protection Platform
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps
 
-⚠️  COPYRIGHT WARNING:
+  COPYRIGHT WARNING:
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, modification, or distribution of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
@@ -511,6 +511,9 @@ class SimilarityMatchingConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert configuration to dictionary."""
+
+
+
         return {
             "enable_fuzzy_matching": self.enable_fuzzy_matching,
             "enable_approximate_matching": self.enable_approximate_matching,

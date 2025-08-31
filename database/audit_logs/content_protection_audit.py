@@ -8,7 +8,7 @@ licensing audits, and royalty tracking for multi-format creators.
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer & Content Protection Specialist
 
-⚠️ ULTRA-STRONG INTELLECTUAL PROPERTY WARNING ⚠️
+ ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 
 This revolutionary content protection audit system is the EXCLUSIVE property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or reverse engineering is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
@@ -246,6 +246,9 @@ class FingerprintingEventLogger:
         Returns:
             str: Log entry ID
         """
+
+
+
         try:
             log_entry = ContentProtectionLog(
                 event_type=ProtectionEventType.CONTENT_FINGERPRINTED.value,
@@ -304,6 +307,9 @@ class FingerprintingEventLogger:
         Returns:
             str: Log entry ID
         """
+
+
+
         try:
             # Determine severity based on similarity score
             if similarity_score >= 0.95:
@@ -374,6 +380,9 @@ class FingerprintingEventLogger:
         Returns:
             str: Log entry ID
         """
+
+
+
         try:
             log_entry = ContentProtectionLog(
                 event_type=ProtectionEventType.FINGERPRINT_FAILED.value,
@@ -441,6 +450,9 @@ class CopyrightViolationTracker:
         Returns:
             str: Violation tracking ID
         """
+
+
+
         try:
             violation_id = str(uuid.uuid4())
             
@@ -508,6 +520,9 @@ class CopyrightViolationTracker:
         Returns:
             str: DMCA notice ID
         """
+
+
+
         try:
             dmca_notice_id = f"DMCA-{uuid.uuid4().hex[:8].upper()}"
             
@@ -574,6 +589,9 @@ class CopyrightViolationTracker:
         Returns:
             str: Log entry ID
         """
+
+
+
         try:
             if response_type == "complied":
                 event_type = ProtectionEventType.TAKEDOWN_REQUEST.value
@@ -653,6 +671,9 @@ class LicensingAuditor:
         Returns:
             str: License audit ID
         """
+
+
+
         try:
             license_id = f"LIC-{uuid.uuid4().hex[:8].upper()}"
             
@@ -722,6 +743,9 @@ class LicensingAuditor:
         Returns:
             str: Violation audit ID
         """
+
+
+
         try:
             log_entry = ContentProtectionLog(
                 event_type=ProtectionEventType.VIOLATION_DETECTED.value,
@@ -791,6 +815,9 @@ class RoyaltyTracker:
         Returns:
             str: Calculation tracking ID
         """
+
+
+
         try:
             calculation_id = f"ROY-{uuid.uuid4().hex[:8].upper()}"
             
@@ -864,6 +891,9 @@ class RoyaltyTracker:
         Returns:
             str: Payment tracking ID
         """
+
+
+
         try:
             payment_id = f"PAY-{uuid.uuid4().hex[:8].upper()}"
             

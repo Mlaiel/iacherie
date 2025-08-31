@@ -7,7 +7,7 @@ Responsibility: Complete queue management ecosystem for distributed crawler oper
 Technologies: Multi-Queue Systems, Priority Management, Worker Orchestration, Analytics
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de

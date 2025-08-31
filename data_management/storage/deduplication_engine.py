@@ -1,5 +1,5 @@
 """
-♻️ Deduplication Engine - IA Influencer Agent Platform Enterprise
+ Deduplication Engine - IA Influencer Agent Platform Enterprise
 ================================================================
 Module: backend/data_management/storage/deduplication_engine.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Intelligent deduplication engine for content optimization
 with advanced fingerprinting and similarity detection.
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -116,6 +116,9 @@ class AudioFingerprinter:
     @staticmethod
     def extract_audio_features(audio_data: bytes) -> Optional[List[float]]:
         """Extract audio features for similarity comparison"""
+
+
+
         try:
             # Simplified audio feature extraction
             # In production, use librosa or similar for proper audio analysis
@@ -154,6 +157,9 @@ class AudioFingerprinter:
     @staticmethod
     def calculate_audio_similarity(features1: List[float], features2: List[float]) -> float:
         """Calculate similarity between audio feature vectors"""
+
+
+
         try:
             if len(features1) != len(features2):
                 return 0.0
@@ -171,6 +177,9 @@ class ImageFingerprinter:
     @staticmethod
     def extract_perceptual_hash(image_data: bytes) -> Optional[str]:
         """Extract perceptual hash for image similarity"""
+
+
+
         try:
             image = Image.open(io.BytesIO(image_data))
             
@@ -190,6 +199,9 @@ class ImageFingerprinter:
     @staticmethod
     def calculate_image_similarity(hash1: str, hash2: str) -> float:
         """Calculate similarity between image perceptual hashes"""
+
+
+
         try:
             hashes1 = hash1.split('_')
             hashes2 = hash2.split('_')
@@ -222,6 +234,9 @@ class TextSimilarityAnalyzer:
     @staticmethod
     def calculate_text_similarity(text1: str, text2: str) -> float:
         """Calculate similarity between text content"""
+
+
+
         try:
             # Normalize texts
             normalized1 = TextSimilarityAnalyzer._normalize_text(text1)
@@ -683,6 +698,9 @@ class DeduplicationEngine:
     
     def _fingerprints_to_dict(self, fingerprints: ContentFingerprints) -> Dict[str, str]:
         """Convert fingerprints object to dictionary"""
+
+
+
         return {
             'sha256': fingerprints.sha256_hash,
             'md5': fingerprints.md5_hash,

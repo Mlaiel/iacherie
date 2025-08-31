@@ -124,6 +124,9 @@ class SystemResourceMonitor:
         
     def get_cpu_metrics(self) -> Dict[str, float]:
         """Get CPU usage metrics"""
+
+
+
         return {
             'cpu_percent': psutil.cpu_percent(interval=1),
             'cpu_count_logical': psutil.cpu_count(logical=True),
@@ -237,10 +240,16 @@ class PerformanceTimer:
     
     def get_duration_ms(self) -> float:
         """Get duration in milliseconds"""
+
+
+
         return self.duration_ms or 0.0
     
     def get_duration_seconds(self) -> float:
         """Get duration in seconds"""
+
+
+
         return (self.duration_ms or 0.0) / 1000.0
 
 
@@ -365,6 +374,9 @@ class PerformanceMonitor:
         
     def _initialize_thresholds(self) -> Dict[str, PerformanceThresholds]:
         """Initialize performance thresholds"""
+
+
+
         return {
             'response_time_ms': PerformanceThresholds(
                 excellent=100.0, good=300.0, fair=800.0, poor=2000.0

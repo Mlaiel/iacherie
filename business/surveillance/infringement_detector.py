@@ -1,5 +1,5 @@
 """
-🚨 Infringement Detection Engine - IA Influencer Agent Surveillance Module
+ Infringement Detection Engine - IA Influencer Agent Surveillance Module
 ==========================================================================
 
 Advanced AI-powered infringement detection system for multi-format content
@@ -184,6 +184,9 @@ class AudioFingerprintMatcher:
     
     def _compare_spectral_features(self, features1: List[float], features2: List[float]) -> float:
         """Compare spectral features using cosine similarity"""
+
+
+
         try:
             # Convert to numpy arrays
             f1 = np.array(features1)
@@ -272,6 +275,9 @@ class VideoFingerprintMatcher:
     
     def _compare_video_hashes(self, hash1: str, hash2: str) -> float:
         """Compare video hashes"""
+
+
+
         return self._hamming_similarity(hash1, hash2)
     
     def _compare_frame_sequences(self, frames1: List[str], frames2: List[str]) -> float:
@@ -397,10 +403,16 @@ class ImageFingerprintMatcher:
     
     def _compare_perceptual_hashes(self, hash1: str, hash2: str) -> float:
         """Compare perceptual hashes"""
+
+
+
         return self._hamming_similarity(hash1, hash2)
     
     def _compare_color_histograms(self, hist1: List[float], hist2: List[float]) -> float:
         """Compare color histograms using correlation"""
+
+
+
         try:
             h1 = np.array(hist1)
             h2 = np.array(hist2)
@@ -420,6 +432,9 @@ class ImageFingerprintMatcher:
     
     def _compare_visual_features(self, features1: List[float], features2: List[float]) -> float:
         """Compare visual features using cosine similarity"""
+
+
+
         try:
             f1 = np.array(features1)
             f2 = np.array(features2)
@@ -501,6 +516,9 @@ class TextFingerprintMatcher:
     
     def _compare_semantic_vectors(self, vectors1: List[float], vectors2: List[float]) -> float:
         """Compare semantic vectors using cosine similarity"""
+
+
+
         try:
             v1 = np.array(vectors1)
             v2 = np.array(vectors2)
@@ -575,6 +593,9 @@ class InfringementDetectionEngine:
     
     async def initialize(self) -> None:
         """Initialize the infringement detection engine"""
+
+
+
         try:
             # Initialize AI models and resources
             # In production, this would load ML models for feature extraction
@@ -1023,6 +1044,9 @@ class InfringementDetectionEngine:
     
     async def health_check(self) -> Dict[str, Any]:
         """Perform health check on detection engine"""
+
+
+
         return {
             "engine": "healthy" if self.initialized else "unhealthy",
             "matchers": {

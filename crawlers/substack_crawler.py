@@ -197,6 +197,9 @@ class SubstackCrawler:
         Returns:
             List of Substack publication objects
         """
+
+
+
         try:
             await self.rate_limiter.wait_if_needed()
             
@@ -229,6 +232,9 @@ class SubstackCrawler:
     
     async def _search_publications(self, query: str, max_results: int) -> List[SubstackPublication]:
         """Search for publications using Substack search."""
+
+
+
         try:
             search_url = f"{self.base_url}/discover/search"
             params = {
@@ -265,6 +271,9 @@ class SubstackCrawler:
     
     async def _get_trending_publications(self, max_results: int) -> List[SubstackPublication]:
         """Get trending/featured publications."""
+
+
+
         try:
             trending_url = f"{self.base_url}/discover"
             
@@ -302,6 +311,9 @@ class SubstackCrawler:
     
     async def _parse_publication_element(self, element) -> Optional[SubstackPublication]:
         """Parse publication data from HTML element."""
+
+
+
         try:
             # Extract basic information
             name_elem = element.find('h3') or element.find('h2') or element.find('.publication-name')
@@ -368,6 +380,9 @@ class SubstackCrawler:
     
     def _parse_count_text(self, count_text: str) -> int:
         """Parse subscriber count text like '1.2K' or '5M'."""
+
+
+
         try:
             count_text = count_text.lower().replace(',', '').strip()
             
@@ -400,6 +415,9 @@ class SubstackCrawler:
         Returns:
             List of Substack post objects
         """
+
+
+
         try:
             await self.rate_limiter.wait_if_needed()
             
@@ -431,6 +449,9 @@ class SubstackCrawler:
     
     async def _get_posts_from_rss(self, subdomain: str, max_posts: int) -> List[SubstackPost]:
         """Get posts from RSS feed."""
+
+
+
         try:
             rss_url = f"https://{subdomain}.substack.com/feed"
             
@@ -460,6 +481,9 @@ class SubstackCrawler:
     
     async def _parse_rss_entry(self, entry, subdomain: str) -> Optional[SubstackPost]:
         """Parse RSS entry into SubstackPost object."""
+
+
+
         try:
             # Extract basic information
             title = entry.get('title', '')
@@ -532,6 +556,9 @@ class SubstackCrawler:
         include_paid: bool
     ) -> List[SubstackPost]:
         """Scrape publication posts using Selenium."""
+
+
+
         try:
             driver = webdriver.Chrome(options=self.selenium_options)
             publication_url = f"https://{subdomain}.substack.com"
@@ -575,6 +602,9 @@ class SubstackCrawler:
     
     async def _extract_post_from_element(self, element, subdomain: str) -> Optional[SubstackPost]:
         """Extract post data from DOM element."""
+
+
+
         try:
             # Extract title
             title_elem = element.find_element(By.CSS_SELECTOR, "h2, h3, .post-title")
@@ -637,6 +667,9 @@ class SubstackCrawler:
     
     def _parse_date_text(self, date_text: str) -> datetime:
         """Parse date text into datetime object."""
+
+
+
         try:
             # Handle common Substack date formats
             if 'ago' in date_text.lower():
@@ -725,6 +758,9 @@ class SubstackCrawler:
         Returns:
             List of matching posts
         """
+
+
+
         try:
             search_results = []
             
@@ -779,6 +815,9 @@ class SubstackCrawler:
     
     async def _search_via_google_site_search(self, query: str, max_results: int) -> List[SubstackPost]:
         """Search using Google site:substack.com search."""
+
+
+
         try:
             # This would require Google Search API or web scraping
             # Placeholder implementation
@@ -791,6 +830,9 @@ class SubstackCrawler:
     
     async def _search_via_substack_discover(self, query: str, max_results: int) -> List[SubstackPost]:
         """Search using Substack's discover page."""
+
+
+
         try:
             search_url = f"{self.base_url}/discover/search"
             params = {
@@ -831,6 +873,9 @@ class SubstackCrawler:
     
     async def _search_via_rss_aggregation(self, query: str, max_results: int) -> List[SubstackPost]:
         """Search by aggregating RSS feeds."""
+
+
+
         try:
             # This would involve maintaining a list of known publications
             # and searching their RSS feeds
@@ -856,6 +901,9 @@ class SubstackCrawler:
         Returns:
             List of similar posts with similarity scores
         """
+
+
+
         try:
             similar_posts = []
             
@@ -895,6 +943,9 @@ class SubstackCrawler:
     
     def _extract_content_keywords(self, content: str) -> List[List[str]]:
         """Extract important keywords from content."""
+
+
+
         try:
             # Simple keyword extraction (could be enhanced with NLP)
             words = re.findall(r'\b[a-zA-Z]{4,}\b', content.lower())
@@ -925,6 +976,9 @@ class SubstackCrawler:
     
     def _calculate_content_similarity(self, post1: SubstackPost, post2: SubstackPost) -> float:
         """Calculate similarity score between two posts."""
+
+
+
         try:
             # Title similarity
             title1_words = set(post1.title.lower().split())
@@ -1020,6 +1074,9 @@ class SubstackCrawler:
         Returns:
             Analytics dictionary
         """
+
+
+
         try:
             # Get recent posts for analysis
             posts = await self.get_publication_posts(subdomain, max_posts=100)
@@ -1076,6 +1133,9 @@ class SubstackCrawler:
         Returns:
             List of trending topics with metadata
         """
+
+
+
         try:
             trending_url = f"{self.base_url}/discover"
             

@@ -43,7 +43,7 @@ Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
 
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE - INTELLECTUAL PROPERTY PROTECTION:
+  CRITICAL LEGAL NOTICE - INTELLECTUAL PROPERTY PROTECTION:
 This content protection system, AI fingerprinting algorithms, infringement detection methods, 
 and legal automation workflows are the exclusive intellectual property of Fahed Mlaiel. 
 Any unauthorized use, copying, modification, distribution, reverse engineering, or 
@@ -213,6 +213,9 @@ class ProtectionDialogueHandler:
         
     def _initialize_protection_flows(self) -> Dict[str, Dict[str, Any]]:
         """Initialize protection conversation flows"""
+
+
+
         return {
             "protection_assessment_flow": {
                 "name": "Content Protection Assessment",
@@ -461,6 +464,9 @@ class ProtectionDialogueHandler:
         flow_id: Optional[str] = None
     ) -> Dict[str, Any]:
         """Handle protection-focused conversation"""
+
+
+
         try:
             # Determine conversation flow if not specified
             if not flow_id:
@@ -825,4 +831,7 @@ class ProtectionDialogueHandler:
         creator_profile: CreatorProfile
     ) -> List[Dict[str, Any]]:
         """Get protection improvement recommendations"""
+
+
+
         return await self.ai_service.generate_protection_improvements(creator_profile)

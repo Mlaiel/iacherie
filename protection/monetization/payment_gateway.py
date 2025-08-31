@@ -79,6 +79,9 @@ class PaymentRequest:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert request to dictionary."""
+
+
+
         return {
             "request_id": self.request_id,
             "user_id": self.user_id,
@@ -113,6 +116,9 @@ class PaymentResponse:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert response to dictionary."""
+
+
+
         return {
             "response_id": self.response_id,
             "request_id": self.request_id,
@@ -164,6 +170,9 @@ class StripeGateway(PaymentGateway):
     
     async def process_payment(self, request: PaymentRequest) -> PaymentResponse:
         """Process payment through Stripe."""
+
+
+
         try:
             # Simulate Stripe API call
             fees = (request.amount * self.fee_rate) + self.fixed_fee
@@ -229,6 +238,9 @@ class StripeGateway(PaymentGateway):
     
     async def validate_webhook(self, payload: str, signature: str) -> bool:
         """Validate Stripe webhook signature."""
+
+
+
         try:
             expected_signature = hmac.new(
                 self.webhook_secret.encode(),
@@ -256,6 +268,9 @@ class PayPalGateway(PaymentGateway):
     
     async def process_payment(self, request: PaymentRequest) -> PaymentResponse:
         """Process payment through PayPal."""
+
+
+
         try:
             fees = (request.amount * self.fee_rate) + self.fixed_fee
             net_amount = request.amount - fees
@@ -297,6 +312,9 @@ class PayPalGateway(PaymentGateway):
     
     async def verify_payment(self, transaction_id: str) -> PaymentResponse:
         """Verify PayPal payment status."""
+
+
+
         return PaymentResponse(
             response_id=f"verify_{transaction_id}",
             request_id=transaction_id,
@@ -306,6 +324,9 @@ class PayPalGateway(PaymentGateway):
     
     async def refund_payment(self, transaction_id: str, amount: Optional[Decimal] = None) -> PaymentResponse:
         """Process PayPal refund."""
+
+
+
         return PaymentResponse(
             response_id=f"refund_{transaction_id}",
             request_id=transaction_id,
@@ -338,6 +359,9 @@ class PaymentGatewayManager:
     
     async def initialize(self, gateway_configs: Dict[GatewayType, Dict[str, str]]) -> bool:
         """Initialize payment gateways."""
+
+
+
         try:
             for gateway_type, config in gateway_configs.items():
                 if gateway_type == GatewayType.STRIPE:

@@ -8,7 +8,7 @@ execution for content creator business processes.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -1094,6 +1094,9 @@ class FlowController:
 
     async def _process_action_node(self, execution: FlowExecution, node: FlowNode) -> Dict[str, Any]:
         """Process action node"""
+
+
+
         
         try:
             # Execute entry actions
@@ -1168,6 +1171,9 @@ class FlowController:
 
     async def _execute_node_action(self, execution: FlowExecution, action: str, node: FlowNode):
         """Execute individual node action"""
+
+
+
         
         try:
             if action == "log_workflow_start":
@@ -1382,6 +1388,9 @@ class FlowController:
 
     async def _persist_flow_execution(self, execution: FlowExecution):
         """Persist flow execution to Redis"""
+
+
+
         
         try:
             execution_data = {
@@ -1418,6 +1427,9 @@ class FlowController:
 
     async def _persist_flow_interruption(self, interruption: FlowInterruption):
         """Persist flow interruption to Redis"""
+
+
+
         
         try:
             interruption_data = {
@@ -1519,6 +1531,9 @@ class FlowController:
 
     def get_flow_metrics(self) -> Dict[str, Any]:
         """Get flow controller metrics"""
+
+
+
         
         return {
             "global_metrics": self.metrics,

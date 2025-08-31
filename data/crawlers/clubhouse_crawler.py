@@ -12,7 +12,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL WARNING ⚠️
+  CRITICAL WARNING 
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
 Any unauthorized use, reproduction, distribution, or reverse engineering 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -259,6 +259,9 @@ class ClubhouseCrawler(PlatformCrawler):
         Returns:
             List of crawler results
         """
+
+
+
         try:
             await self._check_rate_limit()
             
@@ -278,6 +281,9 @@ class ClubhouseCrawler(PlatformCrawler):
     
     async def _crawl_rooms(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Clubhouse rooms"""
+
+
+
         try:
             results = []
             
@@ -324,6 +330,9 @@ class ClubhouseCrawler(PlatformCrawler):
     
     async def _crawl_users(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Clubhouse users"""
+
+
+
         try:
             results = []
             
@@ -369,6 +378,9 @@ class ClubhouseCrawler(PlatformCrawler):
     
     async def _crawl_clubs(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Clubhouse clubs"""
+
+
+
         try:
             results = []
             
@@ -413,6 +425,9 @@ class ClubhouseCrawler(PlatformCrawler):
     
     async def _crawl_events(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Clubhouse events"""
+
+
+
         try:
             results = []
             
@@ -459,6 +474,9 @@ class ClubhouseCrawler(PlatformCrawler):
     
     async def _crawl_notifications(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Clubhouse notifications"""
+
+
+
         try:
             results = []
             
@@ -498,6 +516,9 @@ class ClubhouseCrawler(PlatformCrawler):
     
     async def _crawl_live_rooms(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl live Clubhouse rooms"""
+
+
+
         try:
             results = []
             
@@ -535,6 +556,9 @@ class ClubhouseCrawler(PlatformCrawler):
     
     async def _crawl_trending(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl trending Clubhouse content"""
+
+
+
         try:
             results = []
             
@@ -567,6 +591,9 @@ class ClubhouseCrawler(PlatformCrawler):
     
     async def _crawl_search(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """General Clubhouse search"""
+
+
+
         try:
             results = []
             
@@ -756,6 +783,9 @@ class ClubhouseCrawler(PlatformCrawler):
     
     async def _parse_room_data(self, room_data: Dict[str, Any]) -> Optional[ClubhouseRoom]:
         """Parse room data"""
+
+
+
         try:
             creation_time = datetime.fromisoformat(room_data.get('creation_time', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
@@ -797,6 +827,9 @@ class ClubhouseCrawler(PlatformCrawler):
     
     async def _parse_user_data(self, user_data: Dict[str, Any]) -> Optional[ClubhouseUser]:
         """Parse user data"""
+
+
+
         try:
             joined_date = datetime.fromisoformat(user_data.get('joined_date', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
@@ -837,6 +870,9 @@ class ClubhouseCrawler(PlatformCrawler):
     
     async def _parse_club_data(self, club_data: Dict[str, Any]) -> Optional[ClubhouseClub]:
         """Parse club data"""
+
+
+
         try:
             created_at = datetime.fromisoformat(club_data.get('created_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
@@ -879,6 +915,9 @@ class ClubhouseCrawler(PlatformCrawler):
     
     async def _parse_event_data(self, event_data: Dict[str, Any]) -> Optional[ClubhouseEvent]:
         """Parse event data"""
+
+
+
         try:
             scheduled_time = datetime.fromisoformat(event_data.get('scheduled_time', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
@@ -920,6 +959,9 @@ class ClubhouseCrawler(PlatformCrawler):
     
     async def _parse_notification_data(self, notification_data: Dict[str, Any]) -> Optional[ClubhouseNotification]:
         """Parse notification data"""
+
+
+
         try:
             created_at = datetime.fromisoformat(notification_data.get('created_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
@@ -946,6 +988,9 @@ class ClubhouseCrawler(PlatformCrawler):
     
     async def _check_rate_limit(self):
         """Check and enforce rate limiting"""
+
+
+
         try:
             current_time = time.time()
             time_since_last = current_time - self.last_request_time
@@ -963,6 +1008,9 @@ class ClubhouseCrawler(PlatformCrawler):
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
         """Extract metadata from Clubhouse content"""
+
+
+
         try:
             # Parse Clubhouse URL
             parsed_url = urlparse(url)
@@ -1002,6 +1050,9 @@ class ClubhouseCrawler(PlatformCrawler):
     
     def get_platform_info(self) -> Dict[str, Any]:
         """Get Clubhouse platform information"""
+
+
+
         return {
             'platform_name': 'Clubhouse',
             'base_url': self.base_url,

@@ -210,11 +210,11 @@ class FingerprintSeedsManager:
                 'details': results
             }
             
-            logger.info(f"✅ Fingerprint seeds initialized successfully in {duration:.2f}s")
+            logger.info(f" Fingerprint seeds initialized successfully in {duration:.2f}s")
             return summary
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize fingerprint seeds: {str(e)}")
+            logger.error(f" Failed to initialize fingerprint seeds: {str(e)}")
             raise
     
     async def _initialize_fingerprint_algorithms(self) -> Dict[str, Any]:

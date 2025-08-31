@@ -138,6 +138,9 @@ class FAISSConfig:
 
     def _setup_directories(self) -> None:
         """Setup FAISS storage directories"""
+
+
+
         try:
             base_path = Path(self.storage_config.base_path)
             base_path.mkdir(parents=True, exist_ok=True)
@@ -163,6 +166,9 @@ class FAISSConfig:
 
     def _configure_faiss(self) -> None:
         """Configure FAISS global settings"""
+
+
+
         try:
             # Set OpenMP threads if enabled
             if self.performance_config.use_omp_threads:
@@ -356,6 +362,9 @@ class FAISSConfig:
 
     def _move_to_gpu(self, index: faiss.Index, gpu_ids: List[int]) -> faiss.Index:
         """Move index to GPU(s)"""
+
+
+
         try:
             if len(gpu_ids) == 1:
                 # Single GPU
@@ -759,6 +768,9 @@ class FAISSConfig:
 
     def __del__(self):
         """Cleanup on object destruction"""
+
+
+
         try:
             self.close_all_indexes()
         except:

@@ -7,7 +7,7 @@ influencer marketing, and audience engagement optimization.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
 
@@ -93,6 +93,9 @@ class AdvancedSentimentAnalyzer:
         
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default configuration"""
+
+
+
         return {
             'enable_emotion_analysis': True,
             'enable_engagement_prediction': True,
@@ -106,42 +109,45 @@ class AdvancedSentimentAnalyzer:
     
     def _load_emotion_lexicon(self) -> Dict[str, Dict[str, float]]:
         """Load comprehensive emotion lexicon"""
+
+
+
         return {
             # Basic emotions with intensity scores
             'joy': {
                 'happy': 0.8, 'excited': 0.9, 'thrilled': 0.95, 'elated': 0.9,
                 'cheerful': 0.7, 'delighted': 0.85, 'ecstatic': 0.95, 'joyful': 0.8,
                 'euphoric': 1.0, 'blissful': 0.9, 'content': 0.6, 'pleased': 0.7,
-                '😊': 0.8, '😁': 0.9, '🤩': 0.95, '🥳': 0.9, '❤️': 0.8
+                '': 0.8, '': 0.9, '🤩': 0.95, '🥳': 0.9, '': 0.8
             },
             'sadness': {
                 'sad': 0.8, 'depressed': 0.9, 'miserable': 0.95, 'devastated': 1.0,
                 'heartbroken': 0.95, 'disappointed': 0.7, 'melancholy': 0.8,
                 'despondent': 0.9, 'grief': 0.95, 'sorrow': 0.85, 'gloom': 0.8,
-                '😢': 0.8, '😭': 0.9, '💔': 0.9, '😞': 0.7
+                '': 0.8, '': 0.9, '': 0.9, '': 0.7
             },
             'anger': {
                 'angry': 0.8, 'furious': 0.95, 'rage': 1.0, 'mad': 0.8,
                 'irritated': 0.6, 'annoyed': 0.5, 'outraged': 0.95, 'livid': 0.9,
                 'enraged': 0.95, 'irate': 0.85, 'aggravated': 0.7, 'frustrated': 0.7,
-                '😠': 0.8, '😡': 0.9, '🤬': 0.95
+                '': 0.8, '': 0.9, '🤬': 0.95
             },
             'fear': {
                 'afraid': 0.8, 'scared': 0.8, 'terrified': 0.95, 'anxious': 0.7,
                 'worried': 0.6, 'nervous': 0.6, 'panicked': 0.9, 'frightened': 0.85,
                 'alarmed': 0.8, 'concerned': 0.5, 'apprehensive': 0.7,
-                '😨': 0.8, '😰': 0.7, '😱': 0.9
+                '': 0.8, '': 0.7, '': 0.9
             },
             'surprise': {
                 'surprised': 0.7, 'amazed': 0.8, 'astonished': 0.9, 'shocked': 0.8,
                 'stunned': 0.85, 'bewildered': 0.7, 'dumbfounded': 0.8,
                 'flabbergasted': 0.9, 'astounded': 0.85,
-                '😲': 0.8, '😮': 0.7, '🤯': 0.9
+                '': 0.8, '': 0.7, '🤯': 0.9
             },
             'disgust': {
                 'disgusted': 0.8, 'revolted': 0.9, 'repulsed': 0.85, 'sickened': 0.8,
                 'nauseated': 0.8, 'appalled': 0.85, 'horrified': 0.9,
-                '🤢': 0.8, '🤮': 0.9, '😷': 0.7
+                '🤢': 0.8, '🤮': 0.9, '': 0.7
             },
             'trust': {
                 'trust': 0.8, 'confident': 0.8, 'secure': 0.7, 'certain': 0.7,
@@ -157,6 +163,9 @@ class AdvancedSentimentAnalyzer:
     
     def _initialize_sentiment_models(self) -> Dict[str, Any]:
         """Initialize sentiment analysis models"""
+
+
+
         return {
             'base_model': 'bert-sentiment',  # Would use actual BERT model
             'social_media_model': 'roberta-sentiment-social',  # Specialized for social media
@@ -168,16 +177,19 @@ class AdvancedSentimentAnalyzer:
     
     def _load_platform_patterns(self) -> Dict[str, Dict[str, Any]]:
         """Load platform-specific sentiment patterns"""
+
+
+
         return {
             'instagram': {
-                'positive_indicators': ['✨', '💫', '🌟', '💖', '🔥', 'goals', 'vibes', 'mood'],
+                'positive_indicators': ['', '', '', '', '', 'goals', 'vibes', 'mood'],
                 'engagement_boosters': ['story time', 'swipe up', 'link in bio', 'dm me'],
                 'authenticity_markers': ['real talk', 'no filter', 'behind the scenes', 'honest'],
                 'typical_sentiment_range': (0.3, 0.8),  # Generally positive platform
                 'optimal_emotion_mix': {'joy': 0.4, 'excitement': 0.3, 'trust': 0.3}
             },
             'twitter': {
-                'positive_indicators': ['👏', '🙌', '💯', '🔥', 'thread', 'this'],
+                'positive_indicators': ['', '', '', '', 'thread', 'this'],
                 'engagement_boosters': ['retweet', 'rt', 'thread', 'your thoughts?'],
                 'controversy_markers': ['unpopular opinion', 'hot take', 'controversial'],
                 'typical_sentiment_range': (-0.2, 0.6),  # More varied sentiment
@@ -191,7 +203,7 @@ class AdvancedSentimentAnalyzer:
                 'optimal_emotion_mix': {'trust': 0.5, 'anticipation': 0.3, 'joy': 0.2}
             },
             'tiktok': {
-                'positive_indicators': ['💀', '😭', 'not me', 'pov', 'viral', 'trend'],
+                'positive_indicators': ['', '', 'not me', 'pov', 'viral', 'trend'],
                 'engagement_boosters': ['duet this', 'stitch', 'comment', 'part 2'],
                 'trend_markers': ['trend', 'viral', 'for you page', 'fyp'],
                 'typical_sentiment_range': (-0.1, 0.9),  # High energy, varied
@@ -208,6 +220,9 @@ class AdvancedSentimentAnalyzer:
     
     def _load_audience_profiles(self) -> Dict[str, Dict[str, Any]]:
         """Load audience sentiment preferences"""
+
+
+
         return {
             'gen_z': {
                 'preferred_emotions': ['excitement', 'surprise', 'humor'],
@@ -237,6 +252,9 @@ class AdvancedSentimentAnalyzer:
     
     def _load_brand_safety_rules(self) -> Dict[str, Any]:
         """Load brand safety rules and thresholds"""
+
+
+
         return {
             'safe_sentiment_range': (0.2, 0.8),  # Safe sentiment range
             'max_controversy_level': 0.3,  # Maximum acceptable controversy
@@ -418,7 +436,7 @@ class AdvancedSentimentAnalyzer:
         positive_patterns = [
             r'\b(love|amazing|awesome|fantastic|incredible|perfect|excellent)\b',
             r'[!]{2,}',  # Multiple exclamation marks
-            r'😊|😁|🤩|🥳|❤️|💖|✨|🔥|💯',  # Positive emojis
+            r'||🤩|🥳|||||',  # Positive emojis
             r'\b(yes|absolutely|definitely|totally)\b'
         ]
         
@@ -426,7 +444,7 @@ class AdvancedSentimentAnalyzer:
         negative_patterns = [
             r'\b(hate|terrible|awful|horrible|disgusting|worst)\b',
             r'\b(no|never|nothing|nobody|nowhere)\b',
-            r'😢|😭|😠|😡|💔|😞|🤬',  # Negative emojis
+            r'||||||🤬',  # Negative emojis
             r'\b(disappointed|frustrated|angry|sad)\b'
         ]
         
@@ -858,11 +876,11 @@ class AdvancedSentimentAnalyzer:
         
         # Platform-specific emoji recommendations
         if platform == 'instagram':
-            optimization['emoji_recommendations'] = ['✨', '💫', '🌟', '💖', '🔥']
+            optimization['emoji_recommendations'] = ['', '', '', '', '']
         elif platform == 'twitter':
-            optimization['emoji_recommendations'] = ['👏', '🙌', '💯', '🔥']
+            optimization['emoji_recommendations'] = ['', '', '', '']
         elif platform == 'linkedin':
-            optimization['emoji_recommendations'] = ['💼', '📈', '🎯', '💡']
+            optimization['emoji_recommendations'] = ['', '', '', '']
         
         return optimization
     

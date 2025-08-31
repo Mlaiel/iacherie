@@ -4,7 +4,7 @@ Module: backend/core/events/event_dispatcher.py
 Architecture: Event Handler Orchestration and Routing
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 
 Description:
@@ -536,6 +536,9 @@ class EventDispatcher:
     
     def get_stats(self) -> Dict[str, Any]:
         """Retourne les statistiques du dispatcher"""
+
+
+
         return {
             "name": self.name,
             "stats": self._stats.copy(),

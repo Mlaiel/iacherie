@@ -290,6 +290,9 @@ class TikTokCrawler:
         Returns:
             List of TikTok video objects
         """
+
+
+
         try:
             # Rate limiting check
             await self.rate_limiter.wait_if_needed()
@@ -305,6 +308,9 @@ class TikTokCrawler:
     
     async def _check_api_access(self) -> bool:
         """Check if TikTok API access is available."""
+
+
+
         try:
             # Test API endpoint
             url = f"{self.api_base_url}/v2/research/video/query/"
@@ -322,6 +328,9 @@ class TikTokCrawler:
         end_date: Optional[datetime]
     ) -> List[TikTokVideo]:
         """Search videos using TikTok Research API."""
+
+
+
         try:
             url = f"{self.api_base_url}/v2/research/video/query/"
             
@@ -415,6 +424,9 @@ class TikTokCrawler:
     
     def _parse_api_video_data(self, video_data: dict) -> Optional[TikTokVideo]:
         """Parse TikTok API video data."""
+
+
+
         try:
             # Extract basic info
             video_id = video_data.get("id", "")
@@ -484,6 +496,9 @@ class TikTokCrawler:
     
     async def _search_videos_scraping(self, query: str, max_results: int, region: str) -> List[TikTokVideo]:
         """Search videos using web scraping as fallback."""
+
+
+
         try:
             driver = webdriver.Chrome(options=self.selenium_options)
             driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
@@ -538,6 +553,9 @@ class TikTokCrawler:
     
     async def _extract_video_from_element(self, driver, element) -> Optional[TikTokVideo]:
         """Extract video data from DOM element."""
+
+
+
         try:
             # Extract video link
             video_link = element.find_element(By.CSS_SELECTOR, "a").get_attribute("href")
@@ -587,6 +605,9 @@ class TikTokCrawler:
     
     async def get_trending_hashtags(self, region: str = 'US', count: int = 50) -> List[TikTokHashtag]:
         """Get trending hashtags for specific region."""
+
+
+
         try:
             await self.rate_limiter.wait_if_needed()
             
@@ -601,6 +622,9 @@ class TikTokCrawler:
     
     async def _get_trending_hashtags_api(self, region: str, count: int) -> List[TikTokHashtag]:
         """Get trending hashtags using API."""
+
+
+
         try:
             url = f"{self.api_base_url}/v2/research/trending/hashtag/"
             
@@ -636,6 +660,9 @@ class TikTokCrawler:
     
     async def _get_trending_hashtags_scraping(self, region: str, count: int) -> List[TikTokHashtag]:
         """Get trending hashtags using scraping."""
+
+
+
         try:
             driver = webdriver.Chrome(options=self.selenium_options)
             driver.get(f"{self.web_base_url}/trending")
@@ -671,6 +698,9 @@ class TikTokCrawler:
     
     async def get_user_profile(self, username: str) -> Optional[TikTokUser]:
         """Get user profile information."""
+
+
+
         try:
             await self.rate_limiter.wait_if_needed()
             
@@ -685,6 +715,9 @@ class TikTokCrawler:
     
     async def _get_user_profile_scraping(self, username: str) -> Optional[TikTokUser]:
         """Get user profile using web scraping."""
+
+
+
         try:
             driver = webdriver.Chrome(options=self.selenium_options)
             driver.get(f"{self.web_base_url}/@{username}")
@@ -744,6 +777,9 @@ class TikTokCrawler:
     
     def _parse_count(self, count_text: str) -> int:
         """Parse count string (e.g., '1.2M', '500K') to integer."""
+
+
+
         try:
             count_text = count_text.upper().replace(',', '')
             
@@ -793,6 +829,9 @@ class TikTokCrawler:
     
     async def analyze_video_performance(self, video: TikTokVideo) -> Dict:
         """Analyze video performance metrics."""
+
+
+
         try:
             total_engagement = video.like_count + video.comment_count + video.share_count
             
@@ -839,6 +878,9 @@ class TikTokCrawler:
         similarity_threshold: float = 0.7
     ) -> List[Dict]:
         """Detect videos similar to reference video."""
+
+
+
         try:
             similar_videos = []
             

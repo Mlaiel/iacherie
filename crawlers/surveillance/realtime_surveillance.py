@@ -4,7 +4,7 @@
 """
 Real-time Surveillance Intelligence System - IA Influencer Agent
 
-⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
+ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
 © 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
@@ -13,7 +13,7 @@ distribution, or reverse engineering is strictly prohibited by law.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-🚨 STRICT COPYRIGHT WARNING:
+ STRICT COPYRIGHT WARNING:
 This software and its concepts are the exclusive intellectual property of Fahed Mlaiel.
 ANY UNAUTHORIZED COPYING, DISTRIBUTION, REVERSE ENGINEERING, OR THEFT OF IDEAS, CONCEPTS, 
 OR CODE WITHOUT EXPLICIT WRITTEN AUTHORIZATION from Fahed Mlaiel will result in immediate 
@@ -211,6 +211,9 @@ class EventBuffer:
     
     def get_size(self) -> int:
         """Get current buffer size."""
+
+
+
         return len(self.buffer)
 
 
@@ -360,6 +363,9 @@ class StreamingProcessor:
     
     async def initialize(self) -> None:
         """Initialize streaming processor."""
+
+
+
         try:
             # Connect to Redis for pub/sub
             self.redis = aioredis.from_url(self.redis_url)
@@ -423,6 +429,9 @@ class StreamingProcessor:
     
     async def _publish_event(self, event: RealTimeEvent) -> None:
         """Publish event to Redis channels."""
+
+
+
         try:
             # Global channel
             await self.redis.publish('surveillance:events:all', json.dumps({
@@ -597,6 +606,9 @@ class RealTimeSurveillanceEngine:
     
     async def initialize(self) -> None:
         """Initialize real-time surveillance engine."""
+
+
+
         try:
             self._logger.info("Initializing Real-Time Surveillance Engine...")
             
@@ -631,6 +643,9 @@ class RealTimeSurveillanceEngine:
         content_id: Optional[str] = None
     ) -> str:
         """Ingest a real-time event for processing."""
+
+
+
         try:
             event = RealTimeEvent(
                 event_id=f"evt_{uuid.uuid4().hex[:8]}",
@@ -670,6 +685,9 @@ class RealTimeSurveillanceEngine:
         filters: Optional[Dict[str, Any]] = None
     ) -> str:
         """Subscribe to real-time events."""
+
+
+
         try:
             subscription_id = f"sub_{uuid.uuid4().hex[:8]}"
             
@@ -834,6 +852,9 @@ class RealTimeSurveillanceEngine:
     
     async def _handle_correlation(self, correlation: Dict[str, Any], trigger_event: RealTimeEvent) -> None:
         """Handle event correlation."""
+
+
+
         try:
             # Create correlation event
             correlation_event = RealTimeEvent(

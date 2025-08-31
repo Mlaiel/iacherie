@@ -42,6 +42,9 @@ class SystemSnapshot:
     
     def to_dict(self) -> Dict:
         """Convert to dictionary."""
+
+
+
         return {
             'timestamp': self.timestamp.isoformat(),
             'cpu_percent': self.cpu_percent,
@@ -461,6 +464,9 @@ class PerformanceMonitor:
     
     def get_overall_performance_summary(self) -> Dict:
         """Get overall application performance summary."""
+
+
+
         return {
             "content_processing": self.get_content_performance_metrics(),
             "ai_inference": self.get_ai_performance_metrics(),

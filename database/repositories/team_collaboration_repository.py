@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -85,6 +85,9 @@ class AdvancedTeamCollaborationRepository(BaseRepository[CreatorCollaboration]):
         Returns:
             Created CreatorCollaboration instance
         """
+
+
+
         try:
             collaboration_data = {
                 "initiator_user_id": initiator_user_id,
@@ -145,6 +148,9 @@ class AdvancedTeamCollaborationRepository(BaseRepository[CreatorCollaboration]):
         Returns:
             Created CollaborationTeamMember instance
         """
+
+
+
         try:
             # Check if collaboration exists and has space
             collaboration = await self.get_by_id(collaboration_id)
@@ -216,6 +222,9 @@ class AdvancedTeamCollaborationRepository(BaseRepository[CreatorCollaboration]):
         Returns:
             Updated CollaborationTeamMember instance
         """
+
+
+
         try:
             team_member = self.db_session.query(CollaborationTeamMember).filter(
                 CollaborationTeamMember.id == member_id
@@ -285,6 +294,9 @@ class AdvancedTeamCollaborationRepository(BaseRepository[CreatorCollaboration]):
         Returns:
             Created AICollaborationMatch instance
         """
+
+
+
         try:
             # Calculate overall match score
             weights = kwargs.get('score_weights', {
@@ -346,6 +358,9 @@ class AdvancedTeamCollaborationRepository(BaseRepository[CreatorCollaboration]):
         Returns:
             List of collaboration matches with details
         """
+
+
+
         try:
             query = self.db_session.query(
                 AICollaborationMatch,
@@ -436,6 +451,9 @@ class AdvancedTeamCollaborationRepository(BaseRepository[CreatorCollaboration]):
         Returns:
             Updated CreatorCollaboration instance
         """
+
+
+
         try:
             collaboration = await self.get_by_id(collaboration_id)
             if not collaboration:
@@ -493,6 +511,9 @@ class AdvancedTeamCollaborationRepository(BaseRepository[CreatorCollaboration]):
         Returns:
             Dictionary containing revenue distribution details
         """
+
+
+
         try:
             collaboration = await self.get_by_id(collaboration_id)
             if not collaboration:
@@ -613,6 +634,9 @@ class AdvancedTeamCollaborationRepository(BaseRepository[CreatorCollaboration]):
         Returns:
             Dictionary containing collaboration history and statistics
         """
+
+
+
         try:
             # Get user's team memberships
             query = self.db_session.query(
@@ -734,6 +758,9 @@ class AdvancedTeamCollaborationRepository(BaseRepository[CreatorCollaboration]):
         Returns:
             List of trending collaboration opportunities
         """
+
+
+
         try:
             # Get recent open collaborations with activity metrics
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=30)

@@ -1,5 +1,5 @@
 """
-🔧 Vector Database Optimization Engine
+ Vector Database Optimization Engine
 ======================================
 
 Advanced optimization engine for vector database performance tuning.
@@ -8,7 +8,7 @@ Automatically optimizes indexes, parameters, and configurations for optimal perf
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL IMPORTANT ⚠️
+  AVERTISSEMENT LÉGAL IMPORTANT 
 =====================================
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
@@ -111,6 +111,9 @@ class IndexAnalyzer:
     
     async def analyze_index_efficiency(self, index, metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze current index efficiency and characteristics"""
+
+
+
         try:
             analysis_key = f"{metadata.get('index_type', 'unknown')}_{metadata.get('total_vectors', 0)}"
             
@@ -256,6 +259,9 @@ class ParameterOptimizer:
         optimization_level: OptimizationLevel = OptimizationLevel.MODERATE
     ) -> List[OptimizationRecommendation]:
         """Optimize search parameters through benchmarking"""
+
+
+
         try:
             recommendations = []
             
@@ -292,6 +298,9 @@ class ParameterOptimizer:
         recommendations: List[OptimizationRecommendation]
     ):
         """Optimize IVF-specific parameters"""
+
+
+
         try:
             current_nprobe = current_params.get('nprobe', 1)
             total_vectors = current_params.get('total_vectors', 0)
@@ -353,6 +362,9 @@ class ParameterOptimizer:
         recommendations: List[OptimizationRecommendation]
     ):
         """Optimize HNSW-specific parameters"""
+
+
+
         try:
             current_ef_search = current_params.get('ef_search', 50)
             
@@ -412,6 +424,9 @@ class ParameterOptimizer:
         recommendations: List[OptimizationRecommendation]
     ):
         """Optimize general search parameters"""
+
+
+
         try:
             # Batch size optimization
             current_batch_size = current_params.get('batch_size', 1)
@@ -461,6 +476,9 @@ class BenchmarkRunner:
         benchmark_name: str = "default"
     ) -> PerformanceBenchmark:
         """Run comprehensive performance benchmark"""
+
+
+
         try:
             benchmark_id = f"{benchmark_name}_{int(time.time())}"
             
@@ -538,6 +556,9 @@ class BenchmarkRunner:
     
     def compare_benchmarks(self, benchmark1: PerformanceBenchmark, benchmark2: PerformanceBenchmark) -> Dict[str, float]:
         """Compare two benchmarks and calculate improvement percentages"""
+
+
+
         try:
             comparison = {}
             
@@ -622,6 +643,9 @@ class OptimizationEngine:
         optimization_level: OptimizationLevel = OptimizationLevel.MODERATE
     ) -> List[OptimizationRecommendation]:
         """Perform comprehensive analysis and generate optimization recommendations"""
+
+
+
         try:
             # Get current index metadata
             if hasattr(self.vector_store, 'get_stats'):
@@ -692,6 +716,9 @@ class OptimizationEngine:
     
     async def implement_optimization(self, recommendation: OptimizationRecommendation) -> OptimizationResult:
         """Implement a specific optimization recommendation"""
+
+
+
         try:
             # Record before metrics
             before_benchmark = None
@@ -768,6 +795,9 @@ class OptimizationEngine:
     
     async def _implement_parameter_optimization(self, recommendation: OptimizationRecommendation) -> bool:
         """Implement parameter optimization"""
+
+
+
         try:
             parameter = recommendation.metadata.get('parameter')
             new_value = recommendation.recommended_value
@@ -796,6 +826,9 @@ class OptimizationEngine:
     
     async def _implement_index_optimization(self, recommendation: OptimizationRecommendation) -> bool:
         """Implement index structure optimization"""
+
+
+
         try:
             # Index structure changes require rebuilding, which is complex
             # For now, log the recommendation for manual implementation
@@ -808,6 +841,9 @@ class OptimizationEngine:
     
     async def _implement_cache_optimization(self, recommendation: OptimizationRecommendation) -> bool:
         """Implement cache optimization"""
+
+
+
         try:
             # Implement cache-related optimizations
             self.logger.info(f"Cache optimization recommended: {recommendation.description}")
@@ -845,6 +881,9 @@ class OptimizationEngine:
     
     def get_optimization_summary(self) -> Dict[str, Any]:
         """Get summary of optimization activities"""
+
+
+
         try:
             successful_optimizations = [
                 opt for opt in self.optimization_history 

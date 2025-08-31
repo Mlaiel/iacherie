@@ -85,6 +85,9 @@ class NotificationTemplate:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'template_id': self.template_id,
             'name': self.name,
@@ -123,6 +126,9 @@ class NotificationMessage:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'message_id': self.message_id,
             'recipient': self.recipient,
@@ -182,6 +188,9 @@ class TemplateEngine:
     def render_template(self, template_content: str, 
                        template_data: Dict[str, Any]) -> str:
         """Render template with provided data"""
+
+
+
         try:
             template = Template(template_content, environment=self.jinja_env)
             return template.render(**template_data)
@@ -191,6 +200,9 @@ class TemplateEngine:
     
     def validate_template(self, template_content: str) -> Dict[str, Any]:
         """Validate template syntax and extract variables"""
+
+
+
         try:
             template = Template(template_content, environment=self.jinja_env)
             
@@ -222,6 +234,9 @@ class TemplateEngine:
     def _currency_filter(self, value: Union[int, float], 
                         currency: str = "USD") -> str:
         """Format currency values"""
+
+
+
         return f"{value:.2f} {currency}"
     
     def _truncate_filter(self, value: str, length: int = 100, 
@@ -233,6 +248,9 @@ class TemplateEngine:
     
     def _markdown_filter(self, value: str) -> str:
         """Convert markdown to HTML"""
+
+
+
         return markdown.markdown(value)
     
     def _format_number(self, value: Union[int, float], 
@@ -504,7 +522,7 @@ class TelegramChannel:
             
             # Add priority indicator
             if message.priority in [NotificationPriority.HIGH, NotificationPriority.URGENT, NotificationPriority.CRITICAL]:
-                text = f"🚨 *{message.priority.value.upper()} PRIORITY*\n\n{text}"
+                text = f" *{message.priority.value.upper()} PRIORITY*\n\n{text}"
             
             payload = {
                 'chat_id': message.recipient,
@@ -634,6 +652,9 @@ class NotificationStorage:
     
     def save_template(self, template: NotificationTemplate) -> bool:
         """Save notification template"""
+
+
+
         try:
             with self._lock:
                 with sqlite3.connect(self.database_path) as conn:
@@ -661,6 +682,9 @@ class NotificationStorage:
     
     def get_template(self, template_id: str) -> Optional[NotificationTemplate]:
         """Get notification template by ID"""
+
+
+
         try:
             with sqlite3.connect(self.database_path) as conn:
                 conn.row_factory = sqlite3.Row
@@ -690,6 +714,9 @@ class NotificationStorage:
     
     def save_message(self, message: NotificationMessage) -> bool:
         """Save notification message"""
+
+
+
         try:
             with self._lock:
                 with sqlite3.connect(self.database_path) as conn:
@@ -769,6 +796,9 @@ class NotificationStorage:
     
     def save_delivery_result(self, result: DeliveryResult) -> bool:
         """Save delivery result"""
+
+
+
         try:
             with self._lock:
                 with sqlite3.connect(self.database_path) as conn:
@@ -1080,6 +1110,9 @@ class NotificationManager:
     
     def get_delivery_stats(self, hours: int = 24) -> Dict[str, Any]:
         """Get delivery statistics for the specified time period"""
+
+
+
         try:
             since_time = (datetime.utcnow() - timedelta(hours=hours)).isoformat()
             
@@ -1137,7 +1170,7 @@ class NotificationManager:
 PLATFORM_TEMPLATES = {
     'content_protection_alert': {
         'name': 'Content Protection Alert',
-        'subject': '🛡️ Content Protection Alert for "{{ content_title }}"',
+        'subject': ' Content Protection Alert for "{{ content_title }}"',
         'body': '''
         <h2>Content Protection Alert</h2>
         <p>Hello {{ influencer_name }},</p>
@@ -1168,7 +1201,7 @@ PLATFORM_TEMPLATES = {
     
     'collaboration_match': {
         'name': 'New Collaboration Match',
-        'subject': '🎯 New Collaboration Opportunity with {{ brand_name }}',
+        'subject': ' New Collaboration Opportunity with {{ brand_name }}',
         'body': '''
         <h2>New Collaboration Match Found!</h2>
         <p>Hello {{ influencer_name }},</p>
@@ -1201,7 +1234,7 @@ PLATFORM_TEMPLATES = {
     
     'revenue_report': {
         'name': 'Monthly Revenue Report',
-        'subject': '📈 Your Monthly Revenue Report - {{ current_month }}',
+        'subject': ' Your Monthly Revenue Report - {{ current_month }}',
         'body': '''
         <h2>Monthly Revenue Report</h2>
         <p>Hello {{ influencer_name }},</p>

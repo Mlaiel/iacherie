@@ -103,6 +103,9 @@ class CommissionResult(BaseModel):
     
     def get_summary(self) -> Dict[str, Any]:
         """Get calculation summary"""
+
+
+
         return {
             "gross_revenue": float(self.gross_revenue),
             "commission_amount": float(self.commission_amount),
@@ -193,6 +196,9 @@ class CommissionCalculator:
         session: Optional[AsyncSession] = None
     ) -> CommissionResult:
         """Calculate commission based on structure and request parameters"""
+
+
+
         try:
             # Get commission structure
             structure = self.commission_structures.get(structure_id)
@@ -279,6 +285,9 @@ class CommissionCalculator:
         structure: CommissionStructure
     ) -> Decimal:
         """Calculate simple percentage-based commission"""
+
+
+
         return request.revenue_amount * (structure.base_percentage / 100)
     
     async def _calculate_tiered_commission(
@@ -429,6 +438,9 @@ class CommissionCalculator:
         session: AsyncSession
     ) -> Dict[str, Any]:
         """Calculate comprehensive monthly commission summary"""
+
+
+
         try:
             from ...database.models import RevenueRecord
             from sqlalchemy import select, func
@@ -515,6 +527,9 @@ class CommissionCalculator:
     
     def get_available_structures(self) -> List[Dict[str, Any]]:
         """Get list of available commission structures"""
+
+
+
         return [
             {
                 "structure_id": structure.structure_id,

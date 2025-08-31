@@ -93,10 +93,16 @@ class MockAIPerformanceMonitor:
     
     async def get_configuration(self) -> Dict[str, Any]:
         """Get monitor configuration."""
+
+
+
         return self.config.copy()
     
     async def get_all_metrics(self) -> Dict[str, Any]:
         """Get all stored metrics."""
+
+
+
         return {
             "metrics_count": len(self.metrics),
             "metrics": self.metrics,
@@ -150,11 +156,17 @@ class TestMonitoringCore:
     @pytest_asyncio.fixture
     async def performance_monitor(self):
         """Create performance monitor fixture."""
+
+
+
         return MockAIPerformanceMonitor()
     
     @pytest_asyncio.fixture
     async def high_performance_monitor(self):
-        """Create high-performance monitor fixture for load testing.""" 
+        """Create high-performance monitor fixture for load testing."""
+
+
+ 
         return MockAIPerformanceMonitor(enable_caching=True)
     
     async def test_performance_monitor_initialization(self, performance_monitor):

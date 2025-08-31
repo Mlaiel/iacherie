@@ -72,6 +72,9 @@ class BillingAnalyticsEngine:
         
     async def initialize(self) -> None:
         """Initialize billing analytics engine"""
+
+
+
         try:
             await self._setup_database_tables()
             await self._setup_analytics_cache()
@@ -127,6 +130,9 @@ class BillingAnalyticsEngine:
 
     async def _setup_analytics_cache(self) -> None:
         """Setup analytics cache settings"""
+
+
+
         try:
             # Cache expiry settings (in seconds)
             cache_settings = {
@@ -146,6 +152,9 @@ class BillingAnalyticsEngine:
     async def generate_revenue_analytics(self, start_date: datetime, end_date: datetime,
                                        time_frame: TimeFrame = TimeFrame.DAILY) -> Dict[str, Any]:
         """Generate comprehensive revenue analytics"""
+
+
+
         try:
             # Check cache first
             cache_key = f"revenue_{time_frame.value}_{start_date.date()}_{end_date.date()}"
@@ -332,6 +341,9 @@ class BillingAnalyticsEngine:
 
     async def generate_payment_trends_analytics(self, days: int = 30) -> Dict[str, Any]:
         """Generate payment trends analytics"""
+
+
+
         try:
             end_date = datetime.now()
             start_date = end_date - timedelta(days=days)
@@ -452,6 +464,9 @@ class BillingAnalyticsEngine:
 
     async def generate_subscription_metrics(self) -> Dict[str, Any]:
         """Generate subscription-specific metrics"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 # Active subscriptions
@@ -520,6 +535,9 @@ class BillingAnalyticsEngine:
 
     async def _get_cached_analytics(self, cache_key: str) -> Optional[Dict[str, Any]]:
         """Get analytics data from cache"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 cached = await conn.fetchrow("""
@@ -536,6 +554,9 @@ class BillingAnalyticsEngine:
     async def _cache_analytics(self, cache_key: str, data: Dict[str, Any], 
                              analytics_type: AnalyticsType, expiry_hours: int = 1) -> None:
         """Cache analytics data"""
+
+
+
         try:
             expires_at = datetime.now() + timedelta(hours=expiry_hours)
             
@@ -560,6 +581,9 @@ class BillingAnalyticsEngine:
 
     async def create_analytics_dashboard(self) -> Dict[str, Any]:
         """Create comprehensive analytics dashboard"""
+
+
+
         try:
             # Get recent revenue analytics
             end_date = datetime.now()

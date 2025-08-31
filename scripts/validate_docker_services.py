@@ -44,19 +44,22 @@ class DockerServicesValidator:
         
     def validate_compose_file_syntax(self, compose_file: str) -> Tuple[bool, str]:
         """Validate Docker Compose file syntax"""
+
+
+
         try:
             cmd = ['docker', 'compose', '-f', compose_file, 'config']
             result = subprocess.run(cmd, capture_output=True, text=True, cwd=self.project_root)
             
             if result.returncode == 0:
-                logger.info(f"✅ {compose_file} syntax is valid")
+                logger.info(f" {compose_file} syntax is valid")
                 return True, "Valid syntax"
             else:
-                logger.error(f"❌ {compose_file} syntax error: {result.stderr}")
+                logger.error(f" {compose_file} syntax error: {result.stderr}")
                 return False, result.stderr
                 
         except Exception as e:
-            logger.error(f"❌ Error validating {compose_file}: {str(e)}")
+            logger.error(f" Error validating {compose_file}: {str(e)}")
             return False, str(e)
     
     def check_required_files(self, compose_file: str) -> Tuple[bool, List[str]]:
@@ -86,9 +89,9 @@ class DockerServicesValidator:
         
         success = len(missing_files) == 0
         if success:
-            logger.info(f"✅ All required files exist for {compose_file}")
+            logger.info(f" All required files exist for {compose_file}")
         else:
-            logger.warning(f"⚠️ Missing files for {compose_file}: {missing_files}")
+            logger.warning(f" Missing files for {compose_file}: {missing_files}")
             
         return success, missing_files
     
@@ -133,7 +136,7 @@ http {
 }
 """
         path.write_text(nginx_config.strip())
-        logger.info(f"✅ Created basic nginx.conf at {path}")
+        logger.info(f" Created basic nginx.conf at {path}")
     
     def create_basic_prometheus_config(self, path: Path) -> None:
         """Create a basic prometheus configuration"""
@@ -148,31 +151,34 @@ scrape_configs:
 """
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(prometheus_config.strip())
-        logger.info(f"✅ Created basic prometheus.yml at {path}")
+        logger.info(f" Created basic prometheus.yml at {path}")
     
     def test_compose_services_dry_run(self, compose_file: str) -> Tuple[bool, str]:
         """Test if services can be started (dry run)"""
+
+
+
         try:
             # First try to pull images without starting
             cmd = ['docker', 'compose', '-f', compose_file, 'pull', '--ignore-pull-failures']
             result = subprocess.run(cmd, capture_output=True, text=True, cwd=self.project_root)
             
             if result.returncode != 0:
-                logger.warning(f"⚠️ Some images couldn't be pulled for {compose_file}: {result.stderr}")
+                logger.warning(f" Some images couldn't be pulled for {compose_file}: {result.stderr}")
             
             # Test configuration without starting
             cmd = ['docker', 'compose', '-f', compose_file, 'config']
             result = subprocess.run(cmd, capture_output=True, text=True, cwd=self.project_root)
             
             if result.returncode == 0:
-                logger.info(f"✅ {compose_file} services configuration test passed")
+                logger.info(f" {compose_file} services configuration test passed")
                 return True, "Configuration valid"
             else:
-                logger.error(f"❌ {compose_file} configuration test failed: {result.stderr}")
+                logger.error(f" {compose_file} configuration test failed: {result.stderr}")
                 return False, result.stderr
                 
         except Exception as e:
-            logger.error(f"❌ Error testing {compose_file}: {str(e)}")
+            logger.error(f" Error testing {compose_file}: {str(e)}")
             return False, str(e)
     
     def get_service_health_endpoints(self, compose_file: str) -> Dict[str, str]:
@@ -217,12 +223,12 @@ scrape_configs:
             
             # Check for common dependency issues
             if 'depends_on' in config_output:
-                logger.info(f"✅ {compose_file} has dependency configurations")
+                logger.info(f" {compose_file} has dependency configurations")
             else:
-                logger.warning(f"⚠️ {compose_file} may be missing dependency configurations")
+                logger.warning(f" {compose_file} may be missing dependency configurations")
                 
             if 'networks' in config_output:
-                logger.info(f"✅ {compose_file} has network configurations")
+                logger.info(f" {compose_file} has network configurations")
             else:
                 issues.append("Missing network configurations")
                 
@@ -239,17 +245,17 @@ scrape_configs:
 
 set -e
 
-echo "🚀 Testing {compose_file} service startup..."
+echo " Testing {compose_file} service startup..."
 
 # Clean up any existing containers
 docker compose -f {compose_file} down --remove-orphans || true
 
 # Pull latest images
-echo "📥 Pulling images..."
+echo " Pulling images..."
 docker compose -f {compose_file} pull --ignore-pull-failures
 
 # Start services
-echo "🔧 Starting services..."
+echo " Starting services..."
 docker compose -f {compose_file} up -d
 
 # Wait for services to be ready
@@ -266,24 +272,24 @@ echo "🩺 Checking service health..."
                 script_content += f"""
 # Check {service}
 if curl -f -s {endpoint} > /dev/null; then
-    echo "✅ {service} is healthy"
+    echo " {service} is healthy"
 else
-    echo "❌ {service} is not responding"
+    echo " {service} is not responding"
 fi
 """
         
         script_content += """
-echo "📊 Service status:"
+echo " Service status:"
 docker compose -f """ + compose_file + """ ps
 
-echo "🎉 Startup test completed!"
+echo " Startup test completed!"
 """
         
         return script_content
     
     def run_validation(self) -> Dict[str, Dict]:
         """Run complete validation for all compose files"""
-        logger.info("🚀 Starting Docker Compose services validation")
+        logger.info(" Starting Docker Compose services validation")
         
         for env_name, compose_file in self.compose_files.items():
             logger.info(f"\n{'='*60}")
@@ -292,7 +298,7 @@ echo "🎉 Startup test completed!"
             
             file_path = self.project_root / compose_file
             if not file_path.exists():
-                logger.error(f"❌ {compose_file} not found")
+                logger.error(f" {compose_file} not found")
                 self.validation_results[env_name] = {
                     'file_exists': False,
                     'error': f"{compose_file} not found"
@@ -323,9 +329,9 @@ echo "🎉 Startup test completed!"
                 # Try to create basic configs
                 try:
                     self.create_missing_config_files(missing_files)
-                    logger.info("✅ Created missing configuration files")
+                    logger.info(" Created missing configuration files")
                 except Exception as e:
-                    logger.error(f"❌ Could not create missing files: {e}")
+                    logger.error(f" Could not create missing files: {e}")
             
             # 3. Validate dependencies
             deps_valid, dep_issues = self.validate_service_dependencies(compose_file)
@@ -348,15 +354,15 @@ echo "🎉 Startup test completed!"
             script_path.write_text(script_content)
             script_path.chmod(0o755)
             result['test_script'] = str(script_path)
-            logger.info(f"✅ Generated test script: {script_path}")
+            logger.info(f" Generated test script: {script_path}")
             
             self.validation_results[env_name] = result
             
             # Summary for this environment
             if result['syntax_valid'] and result['dry_run_success']:
-                logger.info(f"✅ {env_name} validation: PASSED")
+                logger.info(f" {env_name} validation: PASSED")
             else:
-                logger.warning(f"⚠️ {env_name} validation: ISSUES FOUND")
+                logger.warning(f" {env_name} validation: ISSUES FOUND")
         
         return self.validation_results
     
@@ -373,17 +379,17 @@ Docker Compose Services Validation Report
             report += f"{'='*40}\n"
             
             if not result.get('file_exists', False):
-                report += f"❌ File not found: {self.compose_files[env_name]}\n"
+                report += f" File not found: {self.compose_files[env_name]}\n"
                 continue
             
-            report += f"📁 File: {self.compose_files[env_name]}\n"
-            report += f"✅ Syntax Valid: {result['syntax_valid']}\n"
-            report += f"✅ Required Files: {result['required_files_exist']}\n"
-            report += f"✅ Dependencies: {result['dependencies_valid']}\n"
-            report += f"✅ Dry Run: {result['dry_run_success']}\n"
+            report += f" File: {self.compose_files[env_name]}\n"
+            report += f" Syntax Valid: {result['syntax_valid']}\n"
+            report += f" Required Files: {result['required_files_exist']}\n"
+            report += f" Dependencies: {result['dependencies_valid']}\n"
+            report += f" Dry Run: {result['dry_run_success']}\n"
             
             if result['issues']:
-                report += f"\n⚠️ Issues Found:\n"
+                report += f"\n Issues Found:\n"
                 for issue in result['issues']:
                     report += f"   • {issue}\n"
             
@@ -407,9 +413,9 @@ Docker Compose Services Validation Report
         report += f"Success Rate: {(passing_envs/total_envs)*100:.1f}%\n"
         
         if passing_envs == total_envs:
-            report += f"\n🎉 All Docker Compose configurations are valid!\n"
+            report += f"\n All Docker Compose configurations are valid!\n"
         else:
-            report += f"\n⚠️ Some configurations need attention.\n"
+            report += f"\n Some configurations need attention.\n"
             
         return report
 
@@ -419,7 +425,7 @@ def main():
     script_dir = Path(__file__).parent
     project_root = script_dir.parent
     
-    logger.info("🐳 Docker Compose Services Validation")
+    logger.info(" Docker Compose Services Validation")
     logger.info(f"Project Root: {project_root}")
     
     validator = DockerServicesValidator(str(project_root))
@@ -431,7 +437,7 @@ def main():
     report_path.write_text(report)
     
     print(report)
-    logger.info(f"📄 Report saved to: {report_path}")
+    logger.info(f" Report saved to: {report_path}")
     
     # Return appropriate exit code
     all_passed = all(
@@ -440,10 +446,10 @@ def main():
     )
     
     if all_passed:
-        logger.info("🎉 All validations passed!")
+        logger.info(" All validations passed!")
         return 0
     else:
-        logger.warning("⚠️ Some validations failed!")
+        logger.warning(" Some validations failed!")
         return 1
 
 

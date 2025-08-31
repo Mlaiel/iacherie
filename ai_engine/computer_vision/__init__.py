@@ -14,14 +14,14 @@
 #
 # Created by: Fahed Mlaiel (mlaiel@live.de)
 # 
-# ⚠️  STRICT COPYRIGHT WARNING ⚠️ 
+#   STRICT COPYRIGHT WARNING  
 # This code, concept, and intellectual property belongs exclusively to Fahed Mlaiel.
 # ANY unauthorized use, reproduction, distribution, or theft of this code/concept 
 # without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is 
 # STRICTLY PROHIBITED and will result in immediate legal action.
 # All rights reserved. Patent pending.
 
-"""👁️ AI Computer Vision Module
+""" AI Computer Vision Module
 
 Advanced computer vision intelligence engine for the IA Influencer Agent platform.
 Provides enterprise-grade visual content analysis, processing, and AI-powered insights

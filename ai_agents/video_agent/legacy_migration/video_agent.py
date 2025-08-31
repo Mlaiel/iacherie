@@ -7,7 +7,7 @@ Provides comprehensive video handling, analysis, enhancement, and protection cap
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -152,6 +152,9 @@ class VideoAgent(BaseAgent):
     
     def _initialize_ai_models(self):
         """Initialize AI models for video processing and analysis"""
+
+
+
         try:
             # Video analysis models
             self.scene_detector = pipeline("zero-shot-image-classification", 
@@ -568,6 +571,9 @@ class VideoAgent(BaseAgent):
     
     async def cleanup(self):
         """Cleanup temporary files and resources"""
+
+
+
         try:
             # Remove temporary directory
             if self.temp_dir.exists():

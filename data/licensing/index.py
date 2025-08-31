@@ -8,7 +8,7 @@ contract management, royalty calculations, payment processing, and compliance.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing and usage rights.
@@ -226,6 +226,9 @@ class LicensingDataManager:
         auto_setup_tracking: bool = True
     ) -> Dict[str, Any]:
         """Create comprehensive license with contract generation and tracking setup"""
+
+
+
         try:
             # Create license agreement
             license_agreement = await self.repository.create_license_agreement(
@@ -292,6 +295,9 @@ class LicensingDataManager:
         auto_process_payments: bool = False
     ) -> Dict[str, Any]:
         """Calculate royalties and optionally process automatic payments"""
+
+
+
         try:
             # Calculate royalties
             calculation_result = await self.calculator.calculate_comprehensive_royalties(
@@ -348,6 +354,9 @@ class LicensingDataManager:
         filters: Dict[str, Any] = None
     ) -> Dict[str, Any]:
         """Get comprehensive dashboard data for all licensing activities"""
+
+
+
         try:
             # Get basic statistics
             stats = await self._get_licensing_statistics(user_id, filters)
@@ -402,6 +411,9 @@ class LicensingDataManager:
         max_concurrency: int = 10
     ) -> List[LicensingOperationResult]:
         """Execute multiple licensing operations in batch"""
+
+
+
         try:
             if not concurrent:
                 # Sequential processing
@@ -449,6 +461,9 @@ class LicensingDataManager:
         format: str = "json"
     ) -> Dict[str, Any]:
         """Generate comprehensive licensing reports"""
+
+
+
         try:
             if report_type == "royalty_summary":
                 report_data = await self._generate_royalty_summary_report(parameters, user_id)
@@ -618,6 +633,9 @@ class LicensingDataManager:
         user_id: UUID
     ) -> LicenseAgreement:
         """Create new license agreement"""
+
+
+
         return await self.repository.create_license_agreement(agreement_data, user_id)
     
     async def get_license_agreement(
@@ -627,6 +645,9 @@ class LicensingDataManager:
         include_relations: bool = False
     ) -> Optional[LicenseAgreement]:
         """Get license agreement by ID"""
+
+
+
         return await self.repository.get_license_agreement(
             agreement_id, user_id, include_relations
         )
@@ -638,6 +659,9 @@ class LicensingDataManager:
         user_id: UUID
     ) -> LicenseAgreement:
         """Update license agreement"""
+
+
+
         return await self.repository.update_license_agreement(
             agreement_id, update_data, user_id
         )
@@ -651,6 +675,9 @@ class LicensingDataManager:
         offset: int = 0
     ) -> tuple[List[LicenseAgreement], int]:
         """Get user's license agreements"""
+
+
+
         return await self.repository.get_user_license_agreements(
             user_id, role, status, limit, offset
         )
@@ -665,6 +692,9 @@ class LicensingDataManager:
         calculation_method: str = "percentage"
     ) -> RoyaltyCalculation:
         """Calculate royalties for license agreement"""
+
+
+
         return await self.royalty_calculator.calculate_license_royalties(
             license_agreement_id, usage_data, reporting_period, calculation_method
         )
@@ -680,6 +710,9 @@ class LicensingDataManager:
         offset: int = 0
     ) -> tuple[List[RoyaltyCalculation], int]:
         """Get royalty calculations with filtering"""
+
+
+
         return await self.repository.get_royalty_calculations(
             license_agreement_id, user_id, period_start, period_end, 
             status, limit, offset
@@ -691,6 +724,9 @@ class LicensingDataManager:
         license_agreement: LicenseAgreement
     ) -> Dict[str, Any]:
         """Validate royalty calculation"""
+
+
+
         return await self.royalty_calculator.validate_royalty_calculation(
             calculation, license_agreement
         )
@@ -705,6 +741,9 @@ class LicensingDataManager:
         source: str = "direct_api"
     ) -> Dict[str, Any]:
         """Track individual usage event"""
+
+
+
         return await self.usage_tracker.track_usage_event(
             license_agreement_id, event_type, event_data, source
         )
@@ -715,6 +754,9 @@ class LicensingDataManager:
         source: str = "batch_import"
     ) -> Dict[str, Any]:
         """Track multiple usage events in batch"""
+
+
+
         return await self.usage_tracker.track_batch_usage(usage_events, source)
     
     async def get_usage_analytics(
@@ -727,6 +769,9 @@ class LicensingDataManager:
         user_id: UUID = None
     ) -> Dict[str, Any]:
         """Get comprehensive usage analytics"""
+
+
+
         return await self.usage_tracker.get_usage_analytics(
             license_agreement_id, start_date, end_date, 
             granularity, metrics, user_id
@@ -738,6 +783,9 @@ class LicensingDataManager:
         user_id: UUID = None
     ) -> Dict[str, Any]:
         """Get real-time usage metrics"""
+
+
+
         return await self.usage_tracker.get_real_time_metrics(
             license_agreement_id, user_id
         )
@@ -750,6 +798,9 @@ class LicensingDataManager:
         user_id: UUID = None
     ) -> Dict[str, Any]:
         """Validate license compliance"""
+
+
+
         return await self.compliance_engine.validate_license_compliance(
             license_agreement_id, user_id
         )
@@ -760,6 +811,9 @@ class LicensingDataManager:
         usage_event: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Monitor real-time compliance"""
+
+
+
         return await self.compliance_engine.monitor_real_time_compliance(
             license_agreement_id, usage_event
         )
@@ -771,6 +825,9 @@ class LicensingDataManager:
         user_id: UUID
     ) -> Any:
         """Generate compliance report"""
+
+
+
         return await self.compliance_engine.generate_compliance_report(
             license_agreement_id, reporting_period, user_id
         )
@@ -781,6 +838,9 @@ class LicensingDataManager:
         user_id: UUID = None
     ) -> Dict[str, Any]:
         """Assess compliance risk"""
+
+
+
         return await self.compliance_engine.assess_compliance_risk(
             license_agreement_id, user_id
         )
@@ -796,6 +856,9 @@ class LicensingDataManager:
         user_id: UUID = None
     ) -> Dict[str, Any]:
         """Generate license contract"""
+
+
+
         return await self.contract_generator.generate_license_contract(
             license_agreement, template_type, language, custom_clauses, user_id
         )
@@ -807,6 +870,9 @@ class LicensingDataManager:
         language: str = "en"
     ) -> Dict[str, Any]:
         """Generate contract from template"""
+
+
+
         return await self.contract_generator.generate_contract_from_template(
             template_name, contract_data, language
         )
@@ -818,6 +884,9 @@ class LicensingDataManager:
         language: str = "en"
     ) -> Dict[str, Any]:
         """Customize contract clauses"""
+
+
+
         return await self.contract_generator.customize_contract_clauses(
             base_contract, customizations, language
         )
@@ -832,6 +901,9 @@ class LicensingDataManager:
         user_id: UUID = None
     ) -> Any:
         """Process royalty payment"""
+
+
+
         return await self.payment_processor.process_royalty_payment(
             royalty_calculation_id, payment_method, recipient_info, user_id
         )
@@ -842,6 +914,9 @@ class LicensingDataManager:
         user_id: UUID = None
     ) -> Dict[str, Any]:
         """Process batch payments"""
+
+
+
         return await self.payment_processor.process_batch_payments(
             payment_requests, user_id
         )
@@ -852,6 +927,9 @@ class LicensingDataManager:
         user_id: UUID = None
     ) -> Dict[str, Any]:
         """Distribute revenue to stakeholders"""
+
+
+
         return await self.payment_processor.distribute_revenue(
             revenue_distribution_id, user_id
         )
@@ -862,6 +940,9 @@ class LicensingDataManager:
         user_id: UUID = None
     ) -> Dict[str, Any]:
         """Get payment status"""
+
+
+
         return await self.payment_processor.get_payment_status(payment_id, user_id)
     
     # Comprehensive Operations
@@ -873,6 +954,9 @@ class LicensingDataManager:
         user_id: UUID
     ) -> Dict[str, Any]:
         """Create complete licensing workflow"""
+
+
+
         try:
             # Create license agreement
             license_agreement = await self.create_license_agreement(license_data, user_id)
@@ -931,6 +1015,9 @@ class LicensingDataManager:
         time_period: str = "30_days"
     ) -> Dict[str, Any]:
         """Get comprehensive dashboard data for user's licenses"""
+
+
+
         try:
             # Get user's license agreements
             agreements, total_count = await self.get_user_license_agreements(
@@ -1077,6 +1164,9 @@ class LicensingDataManager:
         agreements: List[LicenseAgreement]
     ) -> Dict[str, Any]:
         """Get compliance overview for agreements"""
+
+
+
         return {
             "total_compliant": len([a for a in agreements if a.status == "active"]),
             "warnings": 0,
@@ -1091,6 +1181,9 @@ class LicensingDataManager:
         time_period: str
     ) -> Dict[str, Any]:
         """Get revenue summary for agreements"""
+
+
+
         return {
             "total_revenue": "50000.00",
             "pending_payments": "5000.00",

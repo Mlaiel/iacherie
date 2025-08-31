@@ -7,7 +7,7 @@ and optimization recommendations for customer support operations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -131,6 +131,9 @@ class SupportAnalytics:
     
     async def record_metric(self, metric: PerformanceMetric):
         """Record a new performance metric"""
+
+
+
         try:
             # Add to real-time storage
             self.real_time_metrics[metric.metric_type].append(metric)
@@ -175,6 +178,9 @@ class SupportAnalytics:
         include_visualizations: bool = True
     ) -> AnalyticsReport:
         """Generate comprehensive performance report"""
+
+
+
         try:
             report_id = f"perf_report_{int(datetime.now().timestamp())}"
             
@@ -240,6 +246,9 @@ class SupportAnalytics:
         time_period: timedelta = timedelta(days=30)
     ) -> Dict[str, Any]:
         """Get detailed performance analysis for specific agent"""
+
+
+
         try:
             end_time = datetime.now(timezone.utc)
             start_time = end_time - time_period
@@ -337,6 +346,9 @@ class SupportAnalytics:
     
     async def get_knowledge_base_analytics(self) -> Dict[str, Any]:
         """Get analytics on knowledge base effectiveness"""
+
+
+
         try:
             # Get knowledge base metrics from last 30 days
             end_time = datetime.now(timezone.utc)
@@ -434,6 +446,9 @@ class SupportAnalytics:
         time_period: timedelta = timedelta(days=7)
     ) -> Dict[str, Any]:
         """Get customer satisfaction insights and trends"""
+
+
+
         try:
             end_time = datetime.now(timezone.utc)
             start_time = end_time - time_period
@@ -935,6 +950,9 @@ class SupportAnalytics:
     
     async def _store_metric_in_redis(self, metric: PerformanceMetric):
         """Store metric in Redis for persistence"""
+
+
+
         try:
             metric_data = {
                 "metric_type": metric.metric_type.value,
@@ -1016,6 +1034,9 @@ class SupportAnalytics:
     
     async def _update_aggregated_stats(self, metric: PerformanceMetric):
         """Update aggregated statistics with new metric"""
+
+
+
         try:
             metric_type = metric.metric_type.value
             
@@ -1045,6 +1066,9 @@ class SupportAnalytics:
     
     async def _cache_report(self, report: AnalyticsReport):
         """Cache the generated report"""
+
+
+
         try:
             report_data = {
                 "report_id": report.report_id,

@@ -7,7 +7,7 @@ environment-specific settings, model parameters, and performance tuning.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
@@ -392,6 +392,9 @@ class IntentRecognitionConfig(BaseConfig):
     
     def _load_from_file(self, config_file: str) -> None:
         """Load configuration from JSON/YAML file"""
+
+
+
         try:
             config_path = Path(config_file)
             
@@ -530,6 +533,9 @@ class IntentRecognitionConfig(BaseConfig):
     
     def get_model_config(self) -> Dict[str, Any]:
         """Get model configuration as dictionary"""
+
+
+
         return {
             'transformer_model_name': self.model.transformer_model_name,
             'custom_model_path': self.model.custom_model_path,
@@ -542,6 +548,9 @@ class IntentRecognitionConfig(BaseConfig):
     
     def get_performance_config(self) -> Dict[str, Any]:
         """Get performance configuration as dictionary"""
+
+
+
         return {
             'processor_threads': self.performance.processor_threads,
             'max_queue_size': self.performance.max_queue_size,
@@ -553,6 +562,9 @@ class IntentRecognitionConfig(BaseConfig):
     
     def get_security_config(self) -> Dict[str, Any]:
         """Get security configuration as dictionary"""
+
+
+
         return {
             'max_text_length': self.security.max_text_length,
             'min_text_length': self.security.min_text_length,
@@ -564,6 +576,9 @@ class IntentRecognitionConfig(BaseConfig):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert entire configuration to dictionary"""
+
+
+
         return {
             'environment': self.environment,
             'model': self.get_model_config(),
@@ -579,6 +594,9 @@ class IntentRecognitionConfig(BaseConfig):
     
     def save_to_file(self, file_path: str) -> None:
         """Save current configuration to file"""
+
+
+
         try:
             config_dict = self.to_dict()
             
@@ -602,19 +620,31 @@ class IntentRecognitionConfig(BaseConfig):
     @classmethod
     def load_from_file(cls, file_path: str, environment: str = "development") -> 'IntentRecognitionConfig':
         """Create configuration instance from file"""
+
+
+
         return cls(environment=environment, config_file=file_path)
     
     @classmethod
     def create_default(cls, environment: str = "development") -> 'IntentRecognitionConfig':
         """Create default configuration for specified environment"""
+
+
+
         return cls(environment=environment)
     
     def __str__(self) -> str:
         """String representation of configuration"""
+
+
+
         return f"IntentRecognitionConfig(environment={self.environment}, model={self.model.transformer_model_name})"
     
     def __repr__(self) -> str:
         """Detailed string representation"""
+
+
+
         return (
             f"IntentRecognitionConfig("
             f"environment={self.environment}, "
@@ -629,16 +659,25 @@ class IntentRecognitionConfig(BaseConfig):
 
 def get_development_config() -> IntentRecognitionConfig:
     """Get development configuration"""
+
+
+
     return IntentRecognitionConfig.create_default("development")
 
 
 def get_production_config() -> IntentRecognitionConfig:
     """Get production configuration"""
+
+
+
     return IntentRecognitionConfig.create_default("production")
 
 
 def get_testing_config() -> IntentRecognitionConfig:
     """Get testing configuration"""
+
+
+
     return IntentRecognitionConfig.create_default("testing")
 
 

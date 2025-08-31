@@ -142,6 +142,9 @@ class SocialMediaTracker:
         """
         Initialise les APIs des plateformes
         """
+
+
+
         try:
             # Twitter API
             if self.config.get('twitter_api_key'):
@@ -332,6 +335,9 @@ class SocialMediaTracker:
         Returns:
             Optional[SocialContent]: Contenu extrait
         """
+
+
+
         try:
             return SocialContent(
                 platform=SocialPlatform.YOUTUBE,
@@ -470,6 +476,9 @@ class SocialMediaTracker:
         Returns:
             Optional[SocialContent]: Contenu extrait
         """
+
+
+
         try:
             return SocialContent(
                 platform=SocialPlatform.INSTAGRAM,
@@ -545,6 +554,9 @@ class SocialMediaTracker:
         Returns:
             Optional[SocialContent]: Contenu extrait
         """
+
+
+
         try:
             metrics = tweet.public_metrics
             
@@ -620,6 +632,9 @@ class SocialMediaTracker:
         Returns:
             Optional[SocialContent]: Contenu extrait
         """
+
+
+
         try:
             # Extraction basique des informations visibles
             text_elements = post_element.find_elements(By.CSS_SELECTOR, '[data-ad-preview="message"]')
@@ -665,6 +680,9 @@ class SocialMediaTracker:
         Returns:
             Optional[ViolationDetection]: Violation détectée
         """
+
+
+
         try:
             # Comparaison de contenu basée sur le type
             similarity_score = 0.0
@@ -726,18 +744,30 @@ class SocialMediaTracker:
 
     async def _compare_videos(self, url1: str, url2: str) -> float:
         """Compare deux vidéos"""
+
+
+
         return await self.content_analyzer.compare_video_content(url1, url2)
 
     async def _compare_images(self, url1: str, url2: str) -> float:
         """Compare deux images"""
+
+
+
         return await self.content_analyzer.compare_image_content(url1, url2)
 
     async def _compare_audio(self, url1: str, url2: str) -> float:
         """Compare deux audios"""
+
+
+
         return await self.content_analyzer.compare_audio_content(url1, url2)
 
     async def _compare_text(self, text1: str, text2: str) -> float:
         """Compare deux textes"""
+
+
+
         return await self.content_analyzer.compare_text_similarity(text1, text2)
 
     def _compare_metadata(self, content1: SocialContent, content2: SocialContent) -> float:
@@ -841,6 +871,9 @@ class SocialMediaTracker:
 
     def _get_tiktok_headers(self) -> Dict[str, str]:
         """Génère des headers pour TikTok"""
+
+
+
         return {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -952,6 +985,9 @@ class SocialMediaTracker:
 
     async def _collect_violation_evidence(self, violation: ViolationDetection) -> None:
         """Collecte les preuves de violation"""
+
+
+
         try:
             # Capture d'écran/enregistrement
             evidence_path = await self._capture_violation_evidence(violation.violating_content)
@@ -988,6 +1024,9 @@ class SocialMediaTracker:
 
     async def _initiate_takedown_request(self, violation: ViolationDetection) -> None:
         """Initie une demande de retrait"""
+
+
+
         try:
             platform = violation.violating_content.platform
             
@@ -1062,6 +1101,9 @@ class SocialMediaTracker:
 
     def __del__(self):
         """Nettoyage lors de la destruction"""
+
+
+
         try:
             if hasattr(self, 'selenium_driver'):
                 self.selenium_driver.quit()

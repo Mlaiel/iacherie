@@ -162,6 +162,9 @@ class VirusTotalClient:
         Returns:
             VirusTotal IP report
         """
+
+
+
         try:
             url = f"{self.base_url}/ip-address/report"
             params = {
@@ -191,6 +194,9 @@ class VirusTotalClient:
         Returns:
             VirusTotal domain report
         """
+
+
+
         try:
             url = f"{self.base_url}/domain/report"
             params = {
@@ -220,6 +226,9 @@ class VirusTotalClient:
         Returns:
             VirusTotal URL report
         """
+
+
+
         try:
             api_url = f"{self.base_url}/url/report"
             params = {
@@ -249,6 +258,9 @@ class VirusTotalClient:
         Returns:
             VirusTotal file report
         """
+
+
+
         try:
             url = f"{self.base_url}/file/report"
             params = {
@@ -291,6 +303,9 @@ class AlienVaultOTXClient:
     
     async def lookup_ip(self, ip_address: str) -> Dict[str, Any]:
         """Lookup IP in OTX"""
+
+
+
         try:
             url = f"{self.base_url}/indicators/IPv4/{ip_address}/general"
             
@@ -307,6 +322,9 @@ class AlienVaultOTXClient:
     
     async def lookup_domain(self, domain: str) -> Dict[str, Any]:
         """Lookup domain in OTX"""
+
+
+
         try:
             url = f"{self.base_url}/indicators/domain/{domain}/general"
             
@@ -323,6 +341,9 @@ class AlienVaultOTXClient:
     
     async def get_pulses(self, modified_since: Optional[datetime] = None) -> List[Dict[str, Any]]:
         """Get recent threat intelligence pulses"""
+
+
+
         try:
             url = f"{self.base_url}/pulses/subscribed"
             params = {}
@@ -367,6 +388,9 @@ class ThreatIntelligenceDatabase:
     
     async def initialize_redis(self):
         """Initialize Redis connection"""
+
+
+
         try:
             self.redis_pool = aioredis.ConnectionPool.from_url(self.redis_url)
             logger.info("Redis initialized for threat intelligence")
@@ -381,6 +405,9 @@ class ThreatIntelligenceDatabase:
         Args:
             indicator: Threat indicator to store
         """
+
+
+
         try:
             # Store in memory cache
             self.indicators_cache[indicator.indicator_id] = indicator
@@ -442,6 +469,9 @@ class ThreatIntelligenceDatabase:
         Returns:
             Threat indicator if found
         """
+
+
+
         try:
             # Check memory cache first
             for indicator in self.indicators_cache.values():
@@ -497,6 +527,9 @@ class ThreatIntelligenceDatabase:
     
     async def get_indicators_by_type(self, indicator_type: IndicatorType) -> List[ThreatIndicator]:
         """Get all indicators of specific type"""
+
+
+
         try:
             indicators = []
             
@@ -513,6 +546,9 @@ class ThreatIntelligenceDatabase:
     
     async def update_indicator_last_seen(self, indicator_id: str):
         """Update indicator last seen timestamp"""
+
+
+
         try:
             if indicator_id in self.indicators_cache:
                 self.indicators_cache[indicator_id].last_seen = datetime.utcnow()
@@ -541,6 +577,9 @@ class ThreatIntelligenceDatabase:
     
     async def cleanup_expired_indicators(self):
         """Cleanup expired indicators from cache"""
+
+
+
         try:
             current_time = datetime.utcnow()
             expired_ids = []
@@ -605,6 +644,9 @@ class ThreatIntelligenceCollector:
         Args:
             collection_interval: Collection interval in seconds
         """
+
+
+
         try:
             self.collection_active = True
             
@@ -647,6 +689,9 @@ class ThreatIntelligenceCollector:
     
     async def _collect_from_virustotal(self):
         """Collect threat intelligence from VirusTotal"""
+
+
+
         try:
             async with VirusTotalClient(self.virustotal_api_key) as vt_client:
                 # Get recent malicious IPs (this is a simplified example)
@@ -681,6 +726,9 @@ class ThreatIntelligenceCollector:
     
     async def _create_indicator_from_vt_ip(self, ip: str, vt_data: Dict[str, Any]) -> Optional[ThreatIndicator]:
         """Create threat indicator from VirusTotal IP data"""
+
+
+
         try:
             detected_urls = vt_data.get('detected_urls', [])
             detected_samples = vt_data.get('detected_communicating_samples', [])
@@ -732,6 +780,9 @@ class ThreatIntelligenceCollector:
     
     async def _collect_from_otx(self):
         """Collect threat intelligence from AlienVault OTX"""
+
+
+
         try:
             async with AlienVaultOTXClient(self.otx_api_key) as otx_client:
                 # Get recent pulses
@@ -764,6 +815,9 @@ class ThreatIntelligenceCollector:
         indicator_data: Dict[str, Any]
     ) -> Optional[ThreatIndicator]:
         """Create threat indicator from OTX pulse data"""
+
+
+
         try:
             indicator_type_map = {
                 'IPv4': IndicatorType.IP_ADDRESS,
@@ -824,6 +878,9 @@ class ThreatIntelligenceCollector:
     
     async def _collect_from_osint(self):
         """Collect threat intelligence from OSINT sources"""
+
+
+
         try:
             # Collect from public blacklists and threat feeds
             # This is a simplified example - in production you would have more sources
@@ -859,6 +916,9 @@ class ThreatIntelligenceCollector:
         source: Dict[str, str]
     ):
         """Collect from individual OSINT source"""
+
+
+
         try:
             async with session.get(source['url'], timeout=30) as response:
                 if response.status == 200:
@@ -874,6 +934,9 @@ class ThreatIntelligenceCollector:
     
     async def _process_ip_list(self, content: str, source_name: str):
         """Process IP list from OSINT source"""
+
+
+
         try:
             lines = content.strip().split('\n')
             
@@ -916,6 +979,9 @@ class ThreatIntelligenceCollector:
     
     async def _process_domain_list(self, content: str, source_name: str):
         """Process domain list from OSINT source"""
+
+
+
         try:
             lines = content.strip().split('\n')
             
@@ -965,6 +1031,9 @@ class ThreatIntelligenceCollector:
     
     def get_collection_statistics(self) -> Dict[str, Any]:
         """Get threat intelligence collection statistics"""
+
+
+
         return {
             'collection_active': self.collection_active,
             'last_collection_time': self.last_collection_time.isoformat() if self.last_collection_time else None,
@@ -1005,6 +1074,9 @@ class ThreatIntelligenceEngine:
         Args:
             collection_interval: Collection interval in seconds
         """
+
+
+
         try:
             await self.database.initialize_redis()
             
@@ -1026,6 +1098,9 @@ class ThreatIntelligenceEngine:
     
     async def stop_engine(self):
         """Stop threat intelligence engine"""
+
+
+
         try:
             self.engine_active = False
             
@@ -1073,6 +1148,9 @@ class ThreatIntelligenceEngine:
         Returns:
             Threat indicator if found
         """
+
+
+
         try:
             indicator = await self.database.lookup_indicator(indicator_value)
             
@@ -1098,6 +1176,9 @@ class ThreatIntelligenceEngine:
         Returns:
             Dictionary mapping indicators to threat intelligence
         """
+
+
+
         try:
             enriched_data = {}
             
@@ -1137,6 +1218,9 @@ class ThreatIntelligenceEngine:
         Returns:
             Created threat indicator
         """
+
+
+
         try:
             indicator_id = f"custom_{hashlib.md5(f"{indicator_value}_{int(time.time())}".encode()).hexdigest()}"
             
@@ -1165,6 +1249,9 @@ class ThreatIntelligenceEngine:
     
     def get_engine_status(self) -> Dict[str, Any]:
         """Get threat intelligence engine status"""
+
+
+
         try:
             cache_stats = self.database.get_cache_statistics()
             collection_stats = self.collector.get_collection_statistics()

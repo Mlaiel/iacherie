@@ -84,6 +84,9 @@ class MockSocialClient:
     
     def get_user_info(self, user_id: str) -> Dict[str, Any]:
         """Mock user info retrieval"""
+
+
+
         return {
             "id": user_id,
             "username": f"user_{user_id}",
@@ -111,6 +114,9 @@ class MockSocialClient:
     
     def search_content(self, query: str, count: int = 20) -> List[Dict[str, Any]]:
         """Mock content search"""
+
+
+
         return [{
             "id": f"search_result_{i}",
             "content": f"Search result for '{query}' - {i}",
@@ -345,6 +351,9 @@ class SocialMediaMonitoringValidator:
     
     def _initialize_analytics_components(self) -> None:
         """Initialize analytics and ML components"""
+
+
+
         try:
             if HAS_ANALYTICS_DEPENDENCIES:
                 # Text analysis
@@ -443,6 +452,9 @@ class SocialMediaMonitoringValidator:
     
     def _initialize_monitoring_rules(self) -> Dict[str, Any]:
         """Initialize monitoring rules and thresholds"""
+
+
+
         return {
             "engagement_thresholds": {
                 SocialPlatform.YOUTUBE: {"min_rate": 0.02, "excellent_rate": 0.06},
@@ -1526,31 +1538,34 @@ class SocialMediaMonitoringValidator:
         # Engagement alerts
         if result.engagement_validation:
             if result.engagement_validation.trend_direction == "declining":
-                alerts.append("⚠️ Engagement declining - immediate attention required")
+                alerts.append(" Engagement declining - immediate attention required")
             
             for anomaly in result.engagement_validation.anomalies_detected:
-                alerts.append(f"🚨 Anomaly detected: {anomaly}")
+                alerts.append(f" Anomaly detected: {anomaly}")
         
         # Trend alerts
         viral_trends = [t for t in result.trend_opportunities if t.trend_strength == TrendStrength.VIRAL]
         if viral_trends:
-            alerts.append(f"🔥 Viral trend opportunity: {viral_trends[0].trend_topic}")
+            alerts.append(f" Viral trend opportunity: {viral_trends[0].trend_topic}")
         
         # Sentiment alerts
         if result.sentiment_analysis:
             overall_sentiment = result.sentiment_analysis.get("overall_sentiment", 0)
             if overall_sentiment < -0.5:
-                alerts.append("⚠️ Negative audience sentiment detected")
+                alerts.append(" Negative audience sentiment detected")
         
         # Competitor alerts
         high_threat_competitors = [c for c in result.competitor_insights if c.threat_level == "high"]
         if high_threat_competitors:
-            alerts.append(f"⚠️ High-threat competitor activity: {high_threat_competitors[0].competitor_id}")
+            alerts.append(f" High-threat competitor activity: {high_threat_competitors[0].competitor_id}")
         
         return alerts
     
     def get_monitoring_metrics(self) -> Dict[str, Any]:
         """Get monitoring performance metrics"""
+
+
+
         return {
             "total_posts_monitored": self.monitoring_metrics["total_posts_monitored"],
             "trends_detected": self.monitoring_metrics["trends_detected"],
@@ -1566,6 +1581,9 @@ class SocialMediaMonitoringValidator:
     
     def _fetch_recent_posts_via_api(self, creator_id: str, platform: SocialPlatform, time_range_hours: int) -> List[SocialMediaPost]:
         """Fetch recent posts using professional API integration"""
+
+
+
         try:
             posts = []
             client = self.api_clients.get(platform)
@@ -1603,6 +1621,9 @@ class SocialMediaMonitoringValidator:
     
     def _fetch_posts_with_api_client(self, creator_id: str, platform: SocialPlatform, time_range_hours: int) -> List[SocialMediaPost]:
         """Fetch posts using API client with comprehensive error handling"""
+
+
+
         try:
             client = self.api_clients.get(platform)
             
@@ -1645,6 +1666,9 @@ class SocialMediaMonitoringValidator:
     
     def _comprehensive_engagement_analysis(self, posts: List[SocialMediaPost], platform: SocialPlatform) -> float:
         """Comprehensive engagement analysis using ML algorithms"""
+
+
+
         try:
             if not posts:
                 return 0.0
@@ -1814,6 +1838,9 @@ def create_social_media_monitoring_validator(
     supported_platforms: Optional[List[SocialPlatform]] = None
 ) -> SocialMediaMonitoringValidator:
     """Create configured social media monitoring validator"""
+
+
+
     return SocialMediaMonitoringValidator(
         monitoring_interval_hours=monitoring_interval_hours,
         enable_real_time_monitoring=True,

@@ -7,7 +7,7 @@ piracy detection, rights management, and automated enforcement for music content
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -153,6 +153,9 @@ class ContentProtectionSystem:
     async def create_content_fingerprint(self, content_data: bytes, content_type: ContentType,
                                        content_id: str, protection_level: ProtectionLevel = ProtectionLevel.STANDARD) -> ContentFingerprint:
         """Create comprehensive digital fingerprint for content"""
+
+
+
         try:
             fingerprint_id = self._generate_fingerprint_id(content_id, content_type)
             
@@ -193,6 +196,9 @@ class ContentProtectionSystem:
     async def detect_violations(self, candidate_content: bytes, content_type: ContentType,
                               threshold: float = 0.85) -> List[ViolationDetection]:
         """Detect potential copyright violations using advanced ML algorithms"""
+
+
+
         try:
             violations = []
             
@@ -232,6 +238,9 @@ class ContentProtectionSystem:
     async def register_content_rights(self, content_id: str, owner_id: str, 
                                     ownership_details: Dict[str, Any]) -> RightsOwnership:
         """Register digital rights ownership for content"""
+
+
+
         try:
             rights = RightsOwnership(
                 content_id=content_id,
@@ -263,6 +272,9 @@ class ContentProtectionSystem:
 
     async def enforce_copyright_protection(self, violation: ViolationDetection) -> Dict[str, Any]:
         """Automatically enforce copyright protection measures"""
+
+
+
         try:
             enforcement_results = []
             
@@ -300,6 +312,9 @@ class ContentProtectionSystem:
 
     async def monitor_content_usage(self, content_id: str, monitoring_period_days: int = 30) -> Dict[str, Any]:
         """Monitor content usage across platforms and detect unauthorized use"""
+
+
+
         try:
             # Start monitoring process
             monitoring_data = {
@@ -337,6 +352,9 @@ class ContentProtectionSystem:
 
     async def _generate_hash_signatures(self, content_data: bytes) -> Dict[str, str]:
         """Generate multiple hash signatures for content"""
+
+
+
         return {
             "md5": hashlib.md5(content_data).hexdigest(),
             "sha256": hashlib.sha256(content_data).hexdigest(),
@@ -346,6 +364,9 @@ class ContentProtectionSystem:
 
     async def _extract_audio_fingerprint(self, audio_data: bytes) -> Dict[str, Any]:
         """Extract advanced audio fingerprint using librosa"""
+
+
+
         try:
             # This would use librosa to extract audio features
             # For now, return mock audio fingerprint
@@ -364,6 +385,9 @@ class ContentProtectionSystem:
 
     async def _extract_video_fingerprint(self, video_data: bytes) -> Dict[str, Any]:
         """Extract video fingerprint using OpenCV"""
+
+
+
         try:
             # This would use OpenCV for video analysis
             # For now, return mock video fingerprint
@@ -380,6 +404,9 @@ class ContentProtectionSystem:
 
     async def _extract_image_fingerprint(self, image_data: bytes) -> Dict[str, Any]:
         """Extract image fingerprint using perceptual hashing"""
+
+
+
         try:
             # This would use PIL and imagehash libraries
             # For now, return mock image fingerprint
@@ -403,6 +430,9 @@ class ContentProtectionSystem:
 
     async def _generate_advanced_fingerprint(self, content_data: bytes, content_type: ContentType) -> Dict[str, Any]:
         """Generate advanced ML-based fingerprint"""
+
+
+
         try:
             # This would implement advanced ML fingerprinting
             return {
@@ -474,10 +504,16 @@ class ContentProtectionSystem:
 
     def _generate_fingerprint_id(self, content_id: str, content_type: ContentType) -> str:
         """Generate unique fingerprint ID"""
+
+
+
         return f"fp_{content_type.value}_{content_id}_{int(datetime.now(timezone.utc).timestamp())}"
 
     def _generate_violation_id(self) -> str:
         """Generate unique violation ID"""
+
+
+
         return f"viol_{int(datetime.now(timezone.utc).timestamp())}_{np.random.randint(1000, 9999)}"
 
     async def _verify_ownership_authenticity(self, rights: RightsOwnership, details: Dict[str, Any]) -> Dict[str, Any]:
@@ -509,6 +545,9 @@ class ContentProtectionSystem:
 
     async def _send_warning_notice(self, violation: ViolationDetection) -> Dict[str, Any]:
         """Send warning notice for violation"""
+
+
+
         return {
             "action": "warning_sent",
             "status": "success",
@@ -518,6 +557,9 @@ class ContentProtectionSystem:
 
     async def _send_takedown_request(self, violation: ViolationDetection) -> Dict[str, Any]:
         """Send takedown request"""
+
+
+
         return {
             "action": "takedown_request_sent",
             "status": "success",
@@ -527,6 +569,9 @@ class ContentProtectionSystem:
 
     async def _report_to_platforms(self, violation: ViolationDetection) -> Dict[str, Any]:
         """Report violation to platforms"""
+
+
+
         return {
             "action": "platform_report_sent",
             "status": "success",
@@ -537,6 +582,9 @@ class ContentProtectionSystem:
 
     async def _generate_legal_notice(self, violation: ViolationDetection) -> Dict[str, Any]:
         """Generate legal notice"""
+
+
+
         return {
             "action": "legal_notice_generated",
             "status": "success",
@@ -546,6 +594,9 @@ class ContentProtectionSystem:
 
     async def _generate_next_steps(self, violation: ViolationDetection) -> List[str]:
         """Generate next steps for violation handling"""
+
+
+
         return [
             "Monitor response to enforcement actions",
             "Escalate if no response within 7 days",
@@ -578,6 +629,9 @@ class ContentProtectionSystem:
 
     async def _generate_monitoring_report(self, monitoring_data: Dict[str, Any]) -> Dict[str, Any]:
         """Generate comprehensive monitoring report"""
+
+
+
         return {
             "summary": {
                 "total_platforms": len(monitoring_data["platforms_monitored"]),

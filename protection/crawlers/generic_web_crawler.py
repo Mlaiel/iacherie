@@ -1,5 +1,5 @@
 """
-🕷️ Generic Web Crawler
+ Generic Web Crawler
 ======================
 
 Professional generic web crawling system using Scrapy framework.
@@ -8,7 +8,7 @@ Advanced content discovery for any website with intelligent parsing.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
+ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
 """
@@ -261,6 +261,9 @@ class ContentAnalyzer:
     @staticmethod
     def detect_content_type(soup: BeautifulSoup, url: str) -> str:
         """Detect content type based on page structure and content."""
+
+
+
         try:
             # Check for video platforms
             if any(domain in url for domain in ['youtube.com', 'vimeo.com', 'dailymotion.com']):
@@ -330,6 +333,9 @@ class GenericSpider(scrapy.Spider):
     
     def parse(self, response: Response):
         """Parse web page response."""
+
+
+
         try:
             # Update statistics
             self.pages_crawled += 1
@@ -405,6 +411,9 @@ class GenericSpider(scrapy.Spider):
     
     def _extract_text_content(self, soup: BeautifulSoup) -> str:
         """Extract clean text content from HTML."""
+
+
+
         try:
             # Remove script and style elements
             for script in soup(["script", "style"]):
@@ -447,6 +456,9 @@ class GenericSpider(scrapy.Spider):
     
     def _is_valid_link(self, url: str) -> bool:
         """Check if link is valid for crawling."""
+
+
+
         try:
             parsed_url = urlparse(url)
             
@@ -477,6 +489,9 @@ class RobotsTxtChecker:
     
     def can_fetch(self, url: str, user_agent: str = '*') -> bool:
         """Check if URL can be fetched according to robots.txt."""
+
+
+
         try:
             parsed_url = urlparse(url)
             robots_url = f"{parsed_url.scheme}://{parsed_url.netloc}/robots.txt"
@@ -554,6 +569,9 @@ class GenericWebCrawler(BasePlatformCrawler):
     
     def _get_scrapy_settings(self) -> Dict[str, Any]:
         """Get Scrapy settings for crawling."""
+
+
+
         return {
             'USER_AGENT': self.user_agent,
             'ROBOTSTXT_OBEY': self.respect_robots_txt,
@@ -755,6 +773,9 @@ class GenericWebCrawler(BasePlatformCrawler):
     
     async def crawl_sitemap(self, sitemap_url: str) -> List[CrawlResult]:
         """Crawl URLs from a sitemap."""
+
+
+
         try:
             # Fetch sitemap
             response = requests.get(sitemap_url, timeout=30)
@@ -794,6 +815,9 @@ class GenericWebCrawler(BasePlatformCrawler):
     
     async def get_crawler_stats(self) -> Dict[str, Any]:
         """Get crawler statistics."""
+
+
+
         return {
             "platform": "web",
             "crawled_urls": len(self.crawled_urls),

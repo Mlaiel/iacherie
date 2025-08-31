@@ -1,5 +1,5 @@
 """
-🎯 Content Repository - IA Influencer Agent Platform Enterprise
+ Content Repository - IA Influencer Agent Platform Enterprise
 ===============================================================
 Module: backend/data_management/repositories/content_repository.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Content Repository - Production-Ready
 Responsibility: Advanced content management with AI processing and protection
 ========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
@@ -121,6 +121,9 @@ class ContentRepository(BaseRepository[ContentModel]):
     
     def _detect_content_format(self, file_path: str) -> ContentFormat:
         """Detect content format from file extension and MIME type"""
+
+
+
         try:
             mime_type, _ = mimetypes.guess_type(file_path)
             file_ext = Path(file_path).suffix.lower()
@@ -163,6 +166,9 @@ class ContentRepository(BaseRepository[ContentModel]):
     
     def _extract_metadata(self, file_path: str, content_format: ContentFormat) -> ContentMetadata:
         """Extract comprehensive metadata from content file"""
+
+
+
         try:
             file_stats = Path(file_path).stat()
             
@@ -201,6 +207,9 @@ class ContentRepository(BaseRepository[ContentModel]):
     
     def _extract_audio_metadata(self, file_path: str, metadata: ContentMetadata) -> ContentMetadata:
         """Extract audio-specific metadata"""
+
+
+
         try:
             # Use librosa or similar for audio analysis
             # This is a placeholder for actual audio processing
@@ -221,6 +230,9 @@ class ContentRepository(BaseRepository[ContentModel]):
     
     def _extract_video_metadata(self, file_path: str, metadata: ContentMetadata) -> ContentMetadata:
         """Extract video-specific metadata"""
+
+
+
         try:
             # Use OpenCV or FFmpeg for video analysis
             metadata.duration = 300.0  # Example: 5 minutes
@@ -240,6 +252,9 @@ class ContentRepository(BaseRepository[ContentModel]):
     
     def _extract_image_metadata(self, file_path: str, metadata: ContentMetadata) -> ContentMetadata:
         """Extract image-specific metadata"""
+
+
+
         try:
             # Use PIL or OpenCV for image analysis
             metadata.resolution = "1920x1080"
@@ -258,6 +273,9 @@ class ContentRepository(BaseRepository[ContentModel]):
     
     def _extract_text_metadata(self, file_path: str, metadata: ContentMetadata) -> ContentMetadata:
         """Extract text-specific metadata"""
+
+
+
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
@@ -284,6 +302,9 @@ class ContentRepository(BaseRepository[ContentModel]):
     
     def _generate_fingerprint(self, file_path: str, content_format: ContentFormat) -> str:
         """Generate AI-powered fingerprint for content protection"""
+
+
+
         try:
             if not self.fingerprint_service:
                 # Fallback to basic file hash
@@ -307,6 +328,9 @@ class ContentRepository(BaseRepository[ContentModel]):
     
     def _optimize_for_seo(self, metadata: ContentMetadata) -> ContentMetadata:
         """Optimize content metadata for SEO"""
+
+
+
         try:
             # Title optimization
             if metadata.title:
@@ -359,6 +383,9 @@ class ContentRepository(BaseRepository[ContentModel]):
     # Base Repository Implementation
     def create(self, content: ContentModel, **kwargs) -> ContentModel:
         """Create new content with full processing pipeline"""
+
+
+
         try:
             # Validate content
             self._validate_content(content)
@@ -419,6 +446,9 @@ class ContentRepository(BaseRepository[ContentModel]):
     
     def get_by_id(self, entity_id: str, use_cache: bool = True) -> Optional[ContentModel]:
         """Get content by ID with cache support"""
+
+
+
         try:
             # Check cache first
             if use_cache and self._cache_enabled and self.cache:
@@ -447,6 +477,9 @@ class ContentRepository(BaseRepository[ContentModel]):
     
     def update(self, content: ContentModel, **kwargs) -> ContentModel:
         """Update content with validation and reprocessing if needed"""
+
+
+
         try:
             # Validate content
             self._validate_content(content)
@@ -507,6 +540,9 @@ class ContentRepository(BaseRepository[ContentModel]):
     
     def delete(self, entity_id: str, soft_delete: bool = False) -> bool:
         """Delete content with protection cleanup"""
+
+
+
         try:
             # Get content for audit
             content = self.get_by_id(entity_id)
@@ -554,6 +590,9 @@ class ContentRepository(BaseRepository[ContentModel]):
     def list(self, filters: Dict[str, Any] = None, limit: int = 100, 
              offset: int = 0, order_by: str = None) -> List[ContentModel]:
         """List contents with advanced filtering"""
+
+
+
         try:
             # Build query
             query_filters = filters or {}
@@ -583,6 +622,9 @@ class ContentRepository(BaseRepository[ContentModel]):
     
     def search(self, query: str, fields: List[str] = None, limit: int = 100) -> List[ContentModel]:
         """Advanced content search with vector similarity"""
+
+
+
         try:
             if self.vector_db and self.ai_processor:
                 # Vector-based semantic search
@@ -632,6 +674,9 @@ class ContentRepository(BaseRepository[ContentModel]):
     
     def get_trending(self, time_period: str = '24h', limit: int = 50) -> List[ContentModel]:
         """Get trending content based on engagement metrics"""
+
+
+
         try:
             # Calculate trending based on views, likes, shares, comments
             # This would involve complex analytics queries
@@ -650,6 +695,9 @@ class ContentRepository(BaseRepository[ContentModel]):
     def get_recommendations(self, creator_id: str, content_id: str = None, 
                           limit: int = 20) -> List[ContentModel]:
         """Get personalized content recommendations"""
+
+
+
         try:
             if self.ai_processor and self.vector_db:
                 # AI-powered recommendations
@@ -704,6 +752,9 @@ class ContentRepository(BaseRepository[ContentModel]):
     
     def _index_content_vectors(self, content: ContentModel):
         """Index content in vector database for semantic search"""
+
+
+
         try:
             if not self.vector_db or not self.ai_processor:
                 return
@@ -754,6 +805,9 @@ class AsyncContentRepository(AsyncBaseRepository[ContentModel]):
     
     async def create(self, content: ContentModel, **kwargs) -> ContentModel:
         """Create content asynchronously with full processing pipeline"""
+
+
+
         try:
             # Validate content
             await self._validate_content(content)
@@ -808,6 +862,9 @@ class AsyncContentRepository(AsyncBaseRepository[ContentModel]):
     
     async def get_by_id(self, entity_id: str, use_cache: bool = True) -> Optional[ContentModel]:
         """Get content by ID asynchronously with cache support"""
+
+
+
         try:
             # Check cache first
             if use_cache and self._cache_enabled and self.cache:
@@ -836,6 +893,9 @@ class AsyncContentRepository(AsyncBaseRepository[ContentModel]):
     
     async def update(self, content: ContentModel, **kwargs) -> ContentModel:
         """Update content asynchronously"""
+
+
+
         try:
             # Implementation similar to sync version but with async operations
             await self._validate_content(content)
@@ -887,6 +947,9 @@ class AsyncContentRepository(AsyncBaseRepository[ContentModel]):
     
     async def delete(self, entity_id: str, soft_delete: bool = False) -> bool:
         """Delete content asynchronously"""
+
+
+
         try:
             content = await self.get_by_id(entity_id)
             if not content:
@@ -931,6 +994,9 @@ class AsyncContentRepository(AsyncBaseRepository[ContentModel]):
     async def list(self, filters: Dict[str, Any] = None, limit: int = 100, 
                   offset: int = 0, order_by: str = None) -> List[ContentModel]:
         """List contents asynchronously with advanced filtering"""
+
+
+
         try:
             query_filters = filters or {}
             
@@ -961,6 +1027,9 @@ class AsyncContentRepository(AsyncBaseRepository[ContentModel]):
     
     async def _register_protection_async(self, content: ContentModel, fingerprint: str) -> bool:
         """Register content protection asynchronously"""
+
+
+
         try:
             if not self.protection_service:
                 return False
@@ -983,6 +1052,9 @@ class AsyncContentRepository(AsyncBaseRepository[ContentModel]):
     
     async def _index_content_vectors_async(self, content: ContentModel):
         """Index content in vector database asynchronously"""
+
+
+
         try:
             if not self.vector_db or not self.ai_processor:
                 return
@@ -1015,6 +1087,9 @@ class AsyncContentRepository(AsyncBaseRepository[ContentModel]):
     
     def _register_protection(self, content: ContentModel, fingerprint: str) -> bool:
         """Register content for protection monitoring"""
+
+
+
         try:
             if not self.protection_service:
                 return False
@@ -1040,6 +1115,9 @@ class AsyncContentRepository(AsyncBaseRepository[ContentModel]):
                              title: str = None, description: str = None,
                              tags: List[str] = None) -> ContentProcessingResult:
         """Complete content processing pipeline"""
+
+
+
         try:
             # Step 1: Detect format
             content_format = self._detect_content_format(file_path)
@@ -1145,6 +1223,9 @@ class AsyncContentRepository(AsyncBaseRepository[ContentModel]):
     
     def get_by_id(self, content_id: str) -> Optional[ContentModel]:
         """Récupère un contenu par ID avec cache"""
+
+
+
         try:
             # Vérification cache
             if self.cache:
@@ -1170,6 +1251,9 @@ class AsyncContentRepository(AsyncBaseRepository[ContentModel]):
     
     def update(self, content: ContentModel) -> ContentModel:
         """Met à jour un contenu"""
+
+
+
         try:
             content.updated_at = datetime.now(timezone.utc)
             content_dict = content.to_dict()
@@ -1195,6 +1279,9 @@ class AsyncContentRepository(AsyncBaseRepository[ContentModel]):
     
     def delete(self, content_id: str) -> bool:
         """Supprime un contenu"""
+
+
+
         try:
             # Suppression base
             # result = self.db.delete(self.table_name, {"content_id": content_id})
@@ -1217,6 +1304,9 @@ class AsyncContentRepository(AsyncBaseRepository[ContentModel]):
     
     def list(self, filters: Dict[str, Any] = None, limit: int = 100, offset: int = 0) -> List[ContentModel]:
         """Liste les contenus avec filtres avancés"""
+
+
+
         try:
             filters = filters or {}
             
@@ -1233,18 +1323,30 @@ class AsyncContentRepository(AsyncBaseRepository[ContentModel]):
     
     def get_by_creator(self, creator_id: str, limit: int = 100) -> List[ContentModel]:
         """Récupère le contenu d'un créateur"""
+
+
+
         return self.list(filters={"creator_id": creator_id}, limit=limit)
     
     def get_by_type(self, content_type: ContentType, limit: int = 100) -> List[ContentModel]:
         """Récupère le contenu par type"""
+
+
+
         return self.list(filters={"content_type": content_type.value}, limit=limit)
     
     def get_by_status(self, status: ContentStatus, limit: int = 100) -> List[ContentModel]:
         """Récupère le contenu par statut"""
+
+
+
         return self.list(filters={"status": status.value}, limit=limit)
     
     def search_similar(self, fingerprint_embedding: List[float], threshold: float = 0.8, limit: int = 10) -> List[ContentModel]:
         """Recherche de contenu similaire par embedding"""
+
+
+
         try:
             if not self.vector_db:
                 return []
@@ -1267,10 +1369,16 @@ class AsyncContentRepository(AsyncBaseRepository[ContentModel]):
     
     def get_featured(self, limit: int = 10) -> List[ContentModel]:
         """Récupère le contenu en vedette"""
+
+
+
         return self.list(filters={"is_featured": True}, limit=limit)
     
     def update_metrics(self, content_id: str, metrics: Dict[str, Any]) -> bool:
         """Met à jour les métriques de contenu"""
+
+
+
         try:
             content = self.get_by_id(content_id)
             if not content:
@@ -1352,6 +1460,9 @@ class AsyncContentRepository(AsyncBaseRepository[ContentModel]):
     
     async def create(self, content: ContentModel) -> ContentModel:
         """Crée un nouveau contenu de manière asynchrone"""
+
+
+
         try:
             content.created_at = datetime.now(timezone.utc)
             content.updated_at = content.created_at
@@ -1378,6 +1489,9 @@ class AsyncContentRepository(AsyncBaseRepository[ContentModel]):
     
     async def get_by_id(self, content_id: str) -> Optional[ContentModel]:
         """Récupère un contenu par ID de manière asynchrone"""
+
+
+
         try:
             # Cache check
             if self.cache:
@@ -1402,6 +1516,9 @@ class AsyncContentRepository(AsyncBaseRepository[ContentModel]):
     
     async def update(self, content: ContentModel) -> ContentModel:
         """Met à jour un contenu de manière asynchrone"""
+
+
+
         try:
             content.updated_at = datetime.now(timezone.utc)
             content_dict = content.to_dict()
@@ -1421,6 +1538,9 @@ class AsyncContentRepository(AsyncBaseRepository[ContentModel]):
     
     async def delete(self, content_id: str) -> bool:
         """Supprime un contenu de manière asynchrone"""
+
+
+
         try:
             # await self.db.delete_async(self.table_name, {"content_id": content_id})
             
@@ -1440,6 +1560,9 @@ class AsyncContentRepository(AsyncBaseRepository[ContentModel]):
     
     async def list(self, filters: Dict[str, Any] = None, limit: int = 100, offset: int = 0) -> List[ContentModel]:
         """Liste les contenus de manière asynchrone"""
+
+
+
         try:
             filters = filters or {}
             # query = self._build_query(filters, limit, offset)

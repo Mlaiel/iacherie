@@ -239,6 +239,9 @@ class CrawlerUtilsManager:
     
     def get_rate_limiter(self, platform: str) -> Optional[RateLimiter]:
         """Get rate limiter for specific platform."""
+
+
+
         return self.rate_limiters.get(platform.lower(), self.rate_limiters.get('generic'))
     
     async def create_crawler_session(
@@ -490,6 +493,9 @@ class CrawlerUtilsManager:
 # Factory functions for easy setup
 def create_crawler_manager(config: Optional[CrawlerConfig] = None) -> CrawlerUtilsManager:
     """Create crawler utilities manager with configuration."""
+
+
+
     return CrawlerUtilsManager(config)
 
 def create_basic_crawler_config(
@@ -498,6 +504,9 @@ def create_basic_crawler_config(
     redis_url: Optional[str] = None
 ) -> CrawlerConfig:
     """Create basic crawler configuration."""
+
+
+
     return CrawlerConfig(
         enable_proxy_rotation=enable_proxy,
         enable_captcha_solving=enable_captcha,
@@ -510,6 +519,9 @@ def create_advanced_crawler_config(
     captcha_api_keys: Optional[Dict[str, str]] = None
 ) -> CrawlerConfig:
     """Create advanced crawler configuration."""
+
+
+
     return CrawlerConfig(
         enable_rate_limiting=True,
         rate_limit_strategy="adaptive",

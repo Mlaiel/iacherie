@@ -8,7 +8,7 @@ with encryption, access control, audit logging, and threat detection.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent - Content Protection Platform
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
@@ -155,6 +155,9 @@ class EncryptionManager:
         
     async def initialize(self):
         """Initialize encryption manager"""
+
+
+
         try:
             # Generate or load master key
             self.master_key = self._generate_master_key()
@@ -171,6 +174,9 @@ class EncryptionManager:
     
     def _generate_master_key(self) -> bytes:
         """Generate or retrieve master encryption key"""
+
+
+
         try:
             # In production, this would be retrieved from a secure key management service
             password = self.config.jwt_secret_key.encode()
@@ -192,6 +198,9 @@ class EncryptionManager:
     
     async def _generate_field_keys(self):
         """Generate encryption keys for specific data fields"""
+
+
+
         try:
             sensitive_fields = [
                 "user_credentials", "personal_data", "financial_data",
@@ -212,6 +221,9 @@ class EncryptionManager:
         field_type: str = "general"
     ) -> str:
         """Encrypt data with field-specific encryption"""
+
+
+
         try:
             # Serialize data
             if isinstance(data, (dict, list)):
@@ -239,6 +251,9 @@ class EncryptionManager:
         field_type: str = "general"
     ) -> Union[str, Dict, List]:
         """Decrypt data with field-specific decryption"""
+
+
+
         try:
             # Decode base64
             encrypted_bytes = base64.urlsafe_b64decode(encrypted_data.encode())
@@ -265,6 +280,9 @@ class EncryptionManager:
     
     async def generate_content_hash(self, content: bytes) -> str:
         """Generate secure hash for content integrity"""
+
+
+
         try:
             sha256_hash = hashlib.sha256()
             sha256_hash.update(content)
@@ -276,6 +294,9 @@ class EncryptionManager:
     
     async def verify_content_integrity(self, content: bytes, expected_hash: str) -> bool:
         """Verify content integrity using hash"""
+
+
+
         try:
             computed_hash = await self.generate_content_hash(content)
             return hmac.compare_digest(computed_hash, expected_hash)
@@ -322,6 +343,9 @@ class AccessControlManager:
         email: str = None
     ) -> str:
         """Create new user with secure password hashing"""
+
+
+
         try:
             # Generate user ID
             user_id = secrets.token_urlsafe(16)
@@ -358,6 +382,9 @@ class AccessControlManager:
     
     def _hash_password(self, password: str, salt: str) -> str:
         """Hash password with salt using PBKDF2"""
+
+
+
         try:
             password_bytes = password.encode('utf-8')
             salt_bytes = salt.encode('utf-8')
@@ -392,6 +419,9 @@ class AccessControlManager:
         mfa_token: str = None
     ) -> Optional[str]:
         """Authenticate user and return access token"""
+
+
+
         try:
             # Find user by username
             user_creds = None
@@ -451,6 +481,9 @@ class AccessControlManager:
     
     def _verify_mfa_token(self, secret: str, token: str) -> bool:
         """Verify MFA token (TOTP)"""
+
+
+
         try:
             import pyotp
             totp = pyotp.TOTP(secret)
@@ -460,6 +493,9 @@ class AccessControlManager:
     
     async def _generate_access_token(self, user_creds: UserCredentials) -> str:
         """Generate JWT access token"""
+
+
+
         try:
             token_id = secrets.token_urlsafe(16)
             expires_at = datetime.now(timezone.utc) + timedelta(hours=self.config.jwt_expiration_hours)
@@ -501,6 +537,9 @@ class AccessControlManager:
     
     async def verify_access_token(self, token: str) -> Optional[Dict[str, Any]]:
         """Verify and decode access token"""
+
+
+
         try:
             payload = jwt.decode(
                 token, 
@@ -537,6 +576,9 @@ class AccessControlManager:
         access_type: AccessType
     ) -> bool:
         """Check if user has permission for specific resource access"""
+
+
+
         try:
             if user_id not in self.user_credentials:
                 return False
@@ -560,6 +602,9 @@ class AccessControlManager:
     
     async def _update_user_credentials(self, credentials: UserCredentials):
         """Update user credentials in storage"""
+
+
+
         try:
             self.user_credentials[credentials.user_id] = credentials
             await self.redis_client.hset(
@@ -591,6 +636,9 @@ class AuditLogger:
         security_level: SecurityLevel = SecurityLevel.INTERNAL
     ):
         """Log user action for audit trail"""
+
+
+
         try:
             log_entry = AuditLogEntry(
                 log_id=secrets.token_urlsafe(16),
@@ -635,6 +683,9 @@ class AuditLogger:
         limit: int = 100
     ) -> List[AuditLogEntry]:
         """Retrieve audit logs with filters"""
+
+
+
         try:
             # Get logs from Redis
             if time_range:
@@ -719,6 +770,9 @@ class ThreatDetector:
         request_data: Dict[str, Any] = None
     ) -> Optional[SecurityThreat]:
         """Analyze incoming request for threats"""
+
+
+
         try:
             # Check rate limiting
             threat = await self._check_rate_limit(ip_address, user_id)
@@ -749,6 +803,9 @@ class ThreatDetector:
     
     async def _check_rate_limit(self, ip_address: str, user_id: str = None) -> Optional[SecurityThreat]:
         """Check rate limiting violations"""
+
+
+
         try:
             current_time = time.time()
             rate_key = f"{ip_address}:{user_id}" if user_id else ip_address
@@ -783,6 +840,9 @@ class ThreatDetector:
     
     async def _check_ip_reputation(self, ip_address: str) -> Optional[SecurityThreat]:
         """Check IP address reputation"""
+
+
+
         try:
             # Check if IP is in known malicious list
             malicious_ips = await self.redis_client.sismember("malicious_ips", ip_address)
@@ -825,6 +885,9 @@ class ThreatDetector:
         request_data: Dict[str, Any]
     ) -> Optional[SecurityThreat]:
         """Check for SQL injection patterns"""
+
+
+
         try:
             sql_pattern = re.compile(
                 r"(union|select|insert|delete|drop|alter|exec|script|--|;|'|\"|%27|%22)",
@@ -858,6 +921,9 @@ class ThreatDetector:
         request_data: Dict[str, Any] = None
     ) -> Optional[SecurityThreat]:
         """Check for other suspicious patterns"""
+
+
+
         try:
             # Check for unusual access patterns
             if user_id:
@@ -891,6 +957,9 @@ class ThreatDetector:
     
     async def mitigate_threat(self, threat: SecurityThreat) -> Dict[str, Any]:
         """Implement threat mitigation measures"""
+
+
+
         try:
             mitigation_actions = []
             

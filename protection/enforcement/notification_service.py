@@ -168,6 +168,9 @@ class EmailProvider:
     
     async def send_email(self, message: NotificationMessage) -> bool:
         """Send email notification"""
+
+
+
         try:
             # Create email message
             msg = MIMEMultipart('alternative')
@@ -229,6 +232,9 @@ class WebhookProvider:
     
     async def send_webhook(self, message: NotificationMessage) -> bool:
         """Send webhook notification"""
+
+
+
         try:
             webhook_url = message.recipient.webhook_url
             if not webhook_url:
@@ -312,6 +318,9 @@ class SlackProvider:
     
     async def send_slack_message(self, message: NotificationMessage) -> bool:
         """Send Slack notification"""
+
+
+
         try:
             if not self.webhook_url and not self.bot_token:
                 logger.error("No Slack configuration found")
@@ -506,7 +515,7 @@ This is an automated notification from IA Influencer Agent Content Protection Sy
                 id="deadline_warning_email",
                 notification_type=NotificationType.DEADLINE_WARNING,
                 channel=NotificationChannel.EMAIL,
-                subject_template="⚠️ Case Deadline Approaching - {{case_id}}",
+                subject_template=" Case Deadline Approaching - {{case_id}}",
                 body_template="""WARNING: A case deadline is approaching and requires immediate attention.
 
 Case ID: {{case_id}}
@@ -550,7 +559,7 @@ This is an automated notification from IA Influencer Agent Content Protection Sy
                 id="alert_critical_slack",
                 notification_type=NotificationType.ALERT_CRITICAL,
                 channel=NotificationChannel.SLACK,
-                subject_template="🚨 CRITICAL ALERT: {{alert_title}}",
+                subject_template=" CRITICAL ALERT: {{alert_title}}",
                 body_template="""*CRITICAL ALERT*
 
 {{alert_description}}
@@ -584,6 +593,9 @@ Immediate attention required!
         case_id: Optional[str] = None
     ) -> List[str]:
         """Send notification to recipient"""
+
+
+
         try:
             recipient = self.recipients.get(recipient_id)
             if not recipient:
@@ -646,6 +658,9 @@ Immediate attention required!
         case_id: Optional[str] = None
     ) -> Optional[NotificationMessage]:
         """Create notification message from template"""
+
+
+
         try:
             # Find appropriate template
             template_id = f"{notification_type.value}_{channel.value}"
@@ -697,6 +712,9 @@ Immediate attention required!
     
     async def _queue_message(self, message: NotificationMessage):
         """Add message to processing queue"""
+
+
+
         try:
             # Check queue size limit
             if len(self.message_queue) >= self.max_queue_size:
@@ -767,6 +785,9 @@ Immediate attention required!
     
     async def _send_message(self, message: NotificationMessage):
         """Send individual message"""
+
+
+
         try:
             # Check rate limiting
             if self.enable_rate_limiting and not self._check_rate_limit(message):
@@ -821,6 +842,9 @@ Immediate attention required!
     
     def _check_rate_limit(self, message: NotificationMessage) -> bool:
         """Check if message can be sent within rate limits"""
+
+
+
         try:
             channel = message.channel
             recipient_id = message.recipient.id
@@ -855,6 +879,9 @@ Immediate attention required!
     
     async def get_message_status(self, message_id: str) -> Optional[Dict[str, Any]]:
         """Get status of sent message"""
+
+
+
         try:
             message = self.sent_messages.get(message_id)
             if not message:
@@ -896,6 +923,9 @@ Immediate attention required!
     
     async def get_notification_statistics(self) -> Dict[str, Any]:
         """Get notification service statistics"""
+
+
+
         try:
             stats = {
                 'queue_size': len(self.message_queue),
@@ -931,6 +961,9 @@ Immediate attention required!
     
     async def cleanup_old_messages(self):
         """Clean up old messages"""
+
+
+
         try:
             cutoff_date = datetime.utcnow() - timedelta(days=self.message_retention_days)
             
@@ -961,6 +994,9 @@ Immediate attention required!
     
     async def shutdown(self):
         """Shutdown notification service"""
+
+
+
         try:
             await self.stop_processing()
             
@@ -982,6 +1018,9 @@ notification_service = NotificationService()
 
 async def get_notification_service() -> NotificationService:
     """Get the global notification service instance"""
+
+
+
     return notification_service
 
 

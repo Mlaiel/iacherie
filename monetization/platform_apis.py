@@ -67,6 +67,9 @@ class PlatformAPIManager:
         authorization_code: str
     ) -> PlatformCredentials:
         """Authenticate with YouTube API"""
+
+
+
         try:
             token_url = "https://oauth2.googleapis.com/token"
             
@@ -108,6 +111,9 @@ class PlatformAPIManager:
         end_date: datetime
     ) -> Optional[PlatformAnalytics]:
         """Get YouTube analytics data"""
+
+
+
         try:
             if not await self._check_rate_limit("youtube"):
                 logger.warning("YouTube rate limit exceeded")
@@ -174,6 +180,9 @@ class PlatformAPIManager:
         access_token: str
     ) -> PlatformCredentials:
         """Authenticate with Instagram Basic Display API"""
+
+
+
         try:
             # Validate token
             validate_url = f"https://graph.instagram.com/me?fields=id,username&access_token={access_token}"
@@ -201,6 +210,9 @@ class PlatformAPIManager:
         user_id: str
     ) -> Optional[PlatformAnalytics]:
         """Get Instagram insights data"""
+
+
+
         try:
             if not await self._check_rate_limit("instagram"):
                 logger.warning("Instagram rate limit exceeded")
@@ -271,6 +283,9 @@ class PlatformAPIManager:
         authorization_code: str
     ) -> PlatformCredentials:
         """Authenticate with TikTok API"""
+
+
+
         try:
             token_url = "https://open-api.tiktok.com/oauth/access_token/"
             
@@ -310,6 +325,9 @@ class PlatformAPIManager:
         authorization_code: str
     ) -> PlatformCredentials:
         """Authenticate with Spotify Web API"""
+
+
+
         try:
             token_url = "https://accounts.spotify.com/api/token"
             
@@ -354,6 +372,9 @@ class PlatformAPIManager:
         artist_id: str
     ) -> Optional[PlatformAnalytics]:
         """Get Spotify analytics data"""
+
+
+
         try:
             if not await self._check_rate_limit("spotify"):
                 logger.warning("Spotify rate limit exceeded")
@@ -430,6 +451,9 @@ class PlatformAPIManager:
     
     async def _refresh_youtube_token(self, credentials: PlatformCredentials) -> PlatformCredentials:
         """Refresh YouTube access token"""
+
+
+
         try:
             token_url = "https://oauth2.googleapis.com/token"
             
@@ -462,6 +486,9 @@ class PlatformAPIManager:
         content_mappings: Dict[str, str]  # platform -> content_id
     ) -> Dict[str, PlatformAnalytics]:
         """Get analytics from all connected platforms"""
+
+
+
         try:
             results = {}
             tasks = []

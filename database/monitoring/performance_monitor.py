@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-⚠️  AVERTISSEMENT STRICT ⚠️
+  AVERTISSEMENT STRICT 
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Propriété intellectuelle de Fahed Mlaiel (mlaiel@live.de).
 """
@@ -159,6 +159,9 @@ class DatabasePerformanceMonitor:
     
     async def _collect_performance_snapshot(self) -> PerformanceSnapshot:
         """Collect current performance metrics"""
+
+
+
         try:
             # System metrics
             cpu_usage = psutil.cpu_percent(interval=1)
@@ -383,6 +386,9 @@ class DatabasePerformanceMonitor:
     
     async def _send_alert(self, alert: PerformanceAlert) -> None:
         """Send performance alert"""
+
+
+
         try:
             # Store alert
             await self.cache.lpush(
@@ -404,6 +410,9 @@ class DatabasePerformanceMonitor:
     
     async def _run_ai_analysis(self) -> None:
         """Run AI analysis on performance data"""
+
+
+
         try:
             # Get recent performance data
             recent_data = list(self.performance_history)[-60:]  # Last hour
@@ -428,6 +437,9 @@ class DatabasePerformanceMonitor:
         hours: int = 24
     ) -> Dict[str, Any]:
         """Get performance summary for specified hours"""
+
+
+
         try:
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             recent_snapshots = [
@@ -483,6 +495,9 @@ class DatabasePerformanceMonitor:
     
     async def get_recent_alerts(self, limit: int = 50) -> List[Dict[str, Any]]:
         """Get recent performance alerts"""
+
+
+
         try:
             alerts_data = await self.cache.lrange("performance:alerts", 0, limit - 1)
             return [json.loads(alert) for alert in alerts_data]
@@ -492,6 +507,9 @@ class DatabasePerformanceMonitor:
     
     async def get_ai_recommendations(self) -> Dict[str, Any]:
         """Get latest AI performance recommendations"""
+
+
+
         try:
             recommendations_data = await self.cache.get("performance:ai_recommendations")
             if recommendations_data:

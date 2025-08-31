@@ -211,6 +211,9 @@ class DistributionAnalytics:
         Returns:
             PlatformMetrics: Platform-specific performance data
         """
+
+
+
         try:
             cache_key = self.platform_cache_key.format(f"{content_id}_{platform.value}")
             cached_data = await self._get_from_cache(cache_key)
@@ -242,6 +245,9 @@ class DistributionAnalytics:
         Returns:
             CrossPlatformAnalysis: Cross-platform performance analysis
         """
+
+
+
         try:
             cache_key = self.distribution_cache_key.format(f"cross_platform_{content_id}")
             cached_data = await self._get_from_cache(cache_key)
@@ -310,6 +316,9 @@ class DistributionAnalytics:
         Returns:
             DistributionOptimization: Optimization recommendations
         """
+
+
+
         try:
             # Analyze current performance
             current_analysis = await self.analyze_cross_platform_performance(content_id)
@@ -384,6 +393,9 @@ class DistributionAnalytics:
         Returns:
             DistributionReport: Comprehensive distribution report
         """
+
+
+
         try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=period_days)
@@ -463,6 +475,9 @@ class DistributionAnalytics:
         Returns:
             Dict[str, float]: Predicted performance metrics
         """
+
+
+
         try:
             # Get historical data for similar content
             similar_content = await self._find_similar_content(content_data)
@@ -486,6 +501,9 @@ class DistributionAnalytics:
     async def _fetch_platform_metrics(self, content_id: str, 
                                      platform: DistributionPlatform) -> PlatformMetrics:
         """Fetch platform-specific metrics from database"""
+
+
+
         try:
             query = select(AnalyticsModel).where(
                 AnalyticsModel.entity_id == content_id,
@@ -570,6 +588,9 @@ class DistributionAnalytics:
     
     async def _fetch_content_data(self, content_id: str) -> Dict:
         """Fetch content data from database"""
+
+
+
         try:
             query = select(ContentModel).where(ContentModel.id == content_id)
             result = await self.db_session.execute(query)
@@ -649,6 +670,9 @@ class DistributionAnalytics:
     async def _get_user_content_in_period(self, user_id: str, start_date: datetime, 
                                         end_date: datetime) -> List[str]:
         """Get user content IDs in specified period"""
+
+
+
         try:
             query = select(ContentModel.id).where(
                 ContentModel.user_id == user_id,
@@ -705,6 +729,9 @@ class DistributionAnalytics:
     
     async def _get_from_cache(self, key: str) -> Optional[Dict]:
         """Get data from Redis cache"""
+
+
+
         try:
             data = self.redis.get(key)
             return json.loads(data) if data else None
@@ -713,6 +740,9 @@ class DistributionAnalytics:
     
     async def _cache_data(self, key: str, data: Any, ttl: int):
         """Cache data in Redis"""
+
+
+
         try:
             self.redis.setex(key, ttl, json.dumps(data, default=str))
         except Exception as e:

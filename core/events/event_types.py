@@ -4,7 +4,7 @@ Module: backend/core/events/event_types.py
 Architecture: Event Type System for Business Logic
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 
 Description:
@@ -103,6 +103,9 @@ class ContentEvent(Event):
         **kwargs
     ) -> "ContentEvent":
         """Crée un événement de contenu uploadé"""
+
+
+
         return cls(
             type=EventType.CONTENT_UPLOADED.value,
             content_id=content_id,
@@ -132,6 +135,9 @@ class ContentEvent(Event):
         tenant_id: str
     ) -> "ContentEvent":
         """Crée un événement de contenu fingerprinté"""
+
+
+
         return cls(
             type=EventType.CONTENT_FINGERPRINTED.value,
             content_id=content_id,
@@ -176,6 +182,9 @@ class ProtectionEvent(Event):
         tenant_id: str
     ) -> "ProtectionEvent":
         """Crée un événement de violation détectée"""
+
+
+
         return cls(
             type=EventType.PROTECTION_VIOLATION_DETECTED.value,
             content_id=content_id,
@@ -206,6 +215,9 @@ class ProtectionEvent(Event):
         tenant_id: str
     ) -> "ProtectionEvent":
         """Crée un événement de demande de takedown"""
+
+
+
         return cls(
             type=EventType.PROTECTION_TAKEDOWN_REQUESTED.value,
             content_id=content_id,
@@ -254,6 +266,9 @@ class MonetizationEvent(Event):
         tenant_id: str
     ) -> "MonetizationEvent":
         """Crée un événement de revenus détectés"""
+
+
+
         return cls(
             type=EventType.MONETIZATION_REVENUE_DETECTED.value,
             content_id=content_id,
@@ -284,6 +299,9 @@ class MonetizationEvent(Event):
         tenant_id: str
     ) -> "MonetizationEvent":
         """Crée un événement de paiement traité"""
+
+
+
         return cls(
             type=EventType.MONETIZATION_PAYMENT_PROCESSED.value,
             content_id=content_id,
@@ -331,6 +349,9 @@ class CollaborationEvent(Event):
         tenant_id: str
     ) -> "CollaborationEvent":
         """Crée un événement d'invitation envoyée"""
+
+
+
         return cls(
             type=EventType.COLLABORATION_INVITE_SENT.value,
             project_id=project_id,
@@ -358,6 +379,9 @@ class CollaborationEvent(Event):
         tenant_id: str
     ) -> "CollaborationEvent":
         """Crée un événement de matching trouvé"""
+
+
+
         return cls(
             type=EventType.COLLABORATION_MATCHING_FOUND.value,
             project_id=project_id,
@@ -400,6 +424,9 @@ class SystemEvent(Event):
         plan: str = "free"
     ) -> "SystemEvent":
         """Crée un événement d'utilisateur enregistré"""
+
+
+
         return cls(
             type=EventType.SYSTEM_USER_REGISTERED.value,
             user_id=user_id,
@@ -426,6 +453,9 @@ class SystemEvent(Event):
         tenant_id: Optional[str] = None
     ) -> "SystemEvent":
         """Crée un événement d'erreur système"""
+
+
+
         return cls(
             type=EventType.SYSTEM_ERROR_OCCURRED.value,
             user_id=user_id,
@@ -447,24 +477,39 @@ class SystemEvent(Event):
 # Helper functions pour création rapide d'événements
 def create_content_event(event_type: str, content_id: str, **kwargs) -> ContentEvent:
     """Fonction helper pour créer des événements de contenu"""
+
+
+
     return ContentEvent(type=event_type, content_id=content_id, **kwargs)
 
 
 def create_protection_event(event_type: str, content_id: str, **kwargs) -> ProtectionEvent:
     """Fonction helper pour créer des événements de protection"""
+
+
+
     return ProtectionEvent(type=event_type, content_id=content_id, **kwargs)
 
 
 def create_monetization_event(event_type: str, content_id: str, **kwargs) -> MonetizationEvent:
     """Fonction helper pour créer des événements de monétisation"""
+
+
+
     return MonetizationEvent(type=event_type, content_id=content_id, **kwargs)
 
 
 def create_collaboration_event(event_type: str, project_id: str, **kwargs) -> CollaborationEvent:
     """Fonction helper pour créer des événements de collaboration"""
+
+
+
     return CollaborationEvent(type=event_type, project_id=project_id, **kwargs)
 
 
 def create_system_event(event_type: str, component: str, **kwargs) -> SystemEvent:
     """Fonction helper pour créer des événements système"""
+
+
+
     return SystemEvent(type=event_type, component=component, **kwargs)

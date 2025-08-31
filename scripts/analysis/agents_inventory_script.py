@@ -47,7 +47,7 @@ class AgentInventoryAnalyzer:
         
     def analyze_all_agents(self) -> Dict[str, Any]:
         """Perform comprehensive analysis of all agents"""
-        print("🔍 Starting comprehensive AI agents inventory...")
+        print(" Starting comprehensive AI agents inventory...")
         
         # Scan both agent directories
         self._scan_directory(self.repo_path / "ai_engine" / "ai_agents")
@@ -68,10 +68,10 @@ class AgentInventoryAnalyzer:
     def _scan_directory(self, directory: Path):
         """Scan a directory for agent implementations"""
         if not directory.exists():
-            print(f"⚠️  Directory not found: {directory}")
+            print(f"  Directory not found: {directory}")
             return
             
-        print(f"📂 Scanning directory: {directory}")
+        print(f" Scanning directory: {directory}")
         
         for py_file in directory.rglob("*.py"):
             if "__pycache__" in str(py_file) or "test_" in py_file.name:
@@ -80,10 +80,13 @@ class AgentInventoryAnalyzer:
             try:
                 self._analyze_python_file(py_file)
             except Exception as e:
-                print(f"❌ Error analyzing {py_file}: {e}")
+                print(f" Error analyzing {py_file}: {e}")
                 
     def _analyze_python_file(self, file_path: Path):
         """Analyze a Python file for agent classes"""
+
+
+
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
@@ -99,7 +102,7 @@ class AgentInventoryAnalyzer:
                         self.agents[agent_info.name] = agent_info
                         
         except Exception as e:
-            print(f"⚠️  Could not parse {file_path}: {e}")
+            print(f"  Could not parse {file_path}: {e}")
             
     def _extract_agent_info(self, class_node: ast.ClassDef, file_path: Path, content: str) -> AgentInfo:
         """Extract detailed information about an agent class"""
@@ -302,22 +305,22 @@ def main():
     
     summary = results["summary"]
     if "error" not in summary:
-        print(f"📊 Total Agents Found: {summary['total_agents']}")
-        print(f"✅ Complete Implementations: {summary['complete_implementations']}")
-        print(f"🔄 Partial Implementations: {summary['partial_implementations']}")
-        print(f"💀 Skeleton Implementations: {summary['skeleton_implementations']}")
-        print(f"⚡ Agents with Async Methods: {summary['agents_with_async']}")
-        print(f"📏 Average Lines per Agent: {summary['average_lines_per_agent']}")
-        print(f"📈 Completion Rate: {summary['completion_rate']}")
+        print(f" Total Agents Found: {summary['total_agents']}")
+        print(f" Complete Implementations: {summary['complete_implementations']}")
+        print(f" Partial Implementations: {summary['partial_implementations']}")
+        print(f" Skeleton Implementations: {summary['skeleton_implementations']}")
+        print(f" Agents with Async Methods: {summary['agents_with_async']}")
+        print(f" Average Lines per Agent: {summary['average_lines_per_agent']}")
+        print(f" Completion Rate: {summary['completion_rate']}")
     
-    print("\n🎯 TARGET AGENTS STATUS:")
+    print("\n TARGET AGENTS STATUS:")
     for agent_name, status in results["target_agents_status"].items():
         if status["found"]:
-            print(f"✅ {agent_name}: {status['implementation_quality'].upper()} ({status['line_count']} lines)")
+            print(f" {agent_name}: {status['implementation_quality'].upper()} ({status['line_count']} lines)")
         else:
-            print(f"❌ {agent_name}: NOT FOUND")
+            print(f" {agent_name}: NOT FOUND")
             
-    print(f"\n📄 Detailed report saved to: {output_file}")
+    print(f"\n Detailed report saved to: {output_file}")
     
     return results
 

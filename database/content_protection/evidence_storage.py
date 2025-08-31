@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + DBA + DevOps + Legal Tech
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
+ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION 
 ==================================================================
 This code and all associated intellectual property are the EXCLUSIVE property of Fahed Mlaiel.
 ANY unauthorized use, copying, modification, distribution, or commercialization without 
@@ -176,6 +176,9 @@ class EvidenceStorageManager:
         Raises:
             EvidenceStorageManagerError: If storage fails
         """
+
+
+
         try:
             # Validate file and evidence type
             await self._validate_evidence_file(file_data, file_name, evidence_type)
@@ -278,6 +281,9 @@ class EvidenceStorageManager:
         Returns:
             List of created EvidenceRecord objects
         """
+
+
+
         try:
             stored_evidence = []
             collection_start_time = datetime.now()
@@ -343,6 +349,9 @@ class EvidenceStorageManager:
         Returns:
             Verification success status
         """
+
+
+
         try:
             evidence = await self.db_session.get(EvidenceRecord, evidence_id)
             
@@ -438,6 +447,9 @@ class EvidenceStorageManager:
         Returns:
             Created BlockchainVerification record
         """
+
+
+
         try:
             evidence = await self.db_session.get(EvidenceRecord, evidence_id)
             
@@ -520,6 +532,9 @@ class EvidenceStorageManager:
         Returns:
             Created ForensicAnalysis record
         """
+
+
+
         try:
             evidence = await self.db_session.get(EvidenceRecord, evidence_id)
             
@@ -622,6 +637,9 @@ class EvidenceStorageManager:
         Returns:
             Evidence file data
         """
+
+
+
         try:
             evidence = await self.db_session.get(EvidenceRecord, evidence_id)
             
@@ -679,6 +697,9 @@ class EvidenceStorageManager:
         Returns:
             Export package information and download details
         """
+
+
+
         try:
             # Get all evidence for violation
             evidence_records = await self.db_session.query(EvidenceRecord).filter(
@@ -838,6 +859,9 @@ class EvidenceStorageManager:
     
     async def _verify_file_format(self, file_data: bytes, file_name: str) -> bool:
         """Verify file format matches expected type"""
+
+
+
         try:
             # Basic magic number validation
             magic_signatures = {
@@ -860,6 +884,9 @@ class EvidenceStorageManager:
     
     async def _verify_metadata_consistency(self, evidence: EvidenceRecord) -> bool:
         """Verify metadata consistency"""
+
+
+
         try:
             # Check timestamp consistency
             if evidence.collection_timestamp > datetime.now(timezone.utc):
@@ -926,22 +953,37 @@ class EvidenceStorageManager:
     
     async def _extract_image_metadata(self, file_data: bytes) -> Dict[str, Any]:
         """Extract image-specific metadata"""
+
+
+
         return {"image_metadata": "extracted"}
     
     async def _extract_video_metadata(self, file_data: bytes) -> Dict[str, Any]:
         """Extract video-specific metadata"""
+
+
+
         return {"video_metadata": "extracted"}
     
     async def _extract_audio_metadata(self, file_data: bytes) -> Dict[str, Any]:
         """Extract audio-specific metadata"""
+
+
+
         return {"audio_metadata": "extracted"}
     
     async def _get_location_data(self) -> Dict[str, Any]:
         """Get current location data for custody tracking"""
+
+
+
         return {"location": "secure_datacenter", "jurisdiction": "legal_compliant"}
     
     async def _get_system_metadata(self) -> Dict[str, Any]:
         """Get system metadata for custody tracking"""
+
+
+
         return {
             "system_id": "evidence_storage_system",
             "software_version": "2.0.0",

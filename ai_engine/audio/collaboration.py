@@ -230,6 +230,9 @@ class CollaborationMatcher:
         profile_data: Dict[str, Any]
     ) -> ArtistProfile:
         """Register artist profile for collaboration matching"""
+
+
+
         try:
             # Parse genres from strings to enums
             genres = []
@@ -306,6 +309,9 @@ class CollaborationMatcher:
         Returns:
             List of potential collaboration matches
         """
+
+
+
         try:
             requester_profile = self.artist_profiles.get(user_id)
             if not requester_profile:
@@ -661,6 +667,9 @@ class CollaborationMatcher:
         criteria: MatchingCriteria
     ) -> Dict[str, float]:
         """Analyze specific matching factors"""
+
+
+
         return {
             'genre_compatibility': self._calculate_genre_compatibility(requester, candidate),
             'skill_complementarity': self._calculate_skill_complementarity(requester, candidate),
@@ -897,6 +906,9 @@ class CollaborationMatcher:
         message: str = ""
     ) -> bool:
         """Respond to collaboration invitation"""
+
+
+
         try:
             invite = self.collaboration_invites.get(invite_id)
             if not invite:
@@ -934,6 +946,9 @@ class CollaborationMatcher:
     
     def get_user_matches(self, user_id: str) -> List[CollaborationMatch]:
         """Get collaboration matches for user"""
+
+
+
         return self.collaboration_matches.get(user_id, [])
     
     def get_user_projects(
@@ -957,6 +972,9 @@ class CollaborationMatcher:
     
     def get_pending_invites(self, user_id: str) -> List[CollaborationInvite]:
         """Get pending invitations for user"""
+
+
+
         return [
             invite for invite in self.collaboration_invites.values()
             if invite.recipient_id == user_id and invite.status == "pending"
@@ -969,6 +987,9 @@ class CollaborationMatcher:
         progress_data: Dict[str, Any]
     ) -> bool:
         """Update project progress"""
+
+
+
         try:
             project = self.active_projects.get(project_id)
             if not project:

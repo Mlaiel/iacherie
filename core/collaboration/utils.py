@@ -1,12 +1,12 @@
 """
-🛠️ COLLABORATION UTILS - Utility Functions & Helpers
+ COLLABORATION UTILS - Utility Functions & Helpers
 ==================================================
 
 Developed by: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved - Unauthorized use is strictly prohibited
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive property of Fahed Mlaiel.
 Any attempt to steal, copy, or reproduce this concept, idea, or code
 without explicit written authorization from Fahed Mlaiel is strictly forbidden
@@ -152,6 +152,9 @@ class DataValidator:
     @staticmethod
     def validate_email(email: str) -> bool:
         """Validate email address"""
+
+
+
         try:
             validation = validate_email(email)
             return True
@@ -161,6 +164,9 @@ class DataValidator:
     @staticmethod
     def validate_phone(phone: str, region: str = "US") -> bool:
         """Validate phone number"""
+
+
+
         try:
             parsed = phonenumbers.parse(phone, region)
             return phonenumbers.is_valid_number(parsed)
@@ -170,6 +176,9 @@ class DataValidator:
     @staticmethod
     def validate_url(url: str) -> bool:
         """Validate URL format"""
+
+
+
         try:
             result = urlparse(url)
             return all([result.scheme, result.netloc])
@@ -179,6 +188,9 @@ class DataValidator:
     @staticmethod
     def validate_uuid(uuid_string: str) -> bool:
         """Validate UUID format"""
+
+
+
         try:
             uuid.UUID(uuid_string)
             return True
@@ -188,6 +200,9 @@ class DataValidator:
     @staticmethod
     def validate_json(json_string: str) -> bool:
         """Validate JSON format"""
+
+
+
         try:
             json.loads(json_string)
             return True
@@ -259,6 +274,9 @@ class DateTimeUtils:
     @staticmethod
     def now_utc() -> datetime:
         """Get current UTC datetime"""
+
+
+
         return datetime.now(timezone.utc)
     
     @staticmethod
@@ -287,6 +305,9 @@ class DateTimeUtils:
     @staticmethod
     def parse_iso_datetime(iso_string: str) -> datetime:
         """Parse ISO format datetime string"""
+
+
+
         return datetime.fromisoformat(iso_string.replace('Z', '+00:00'))
     
     @staticmethod
@@ -344,11 +365,17 @@ class SecurityUtils:
     @staticmethod
     def verify_password(password: str, hashed: str) -> bool:
         """Verify password against hash"""
+
+
+
         return bcrypt.checkpw(password.encode('utf-8'), hashed.encode('utf-8'))
     
     @staticmethod
     def generate_token(length: int = 32) -> str:
         """Generate secure random token"""
+
+
+
         return base64.urlsafe_b64encode(uuid.uuid4().bytes + uuid.uuid4().bytes)[:length].decode()
     
     @staticmethod
@@ -361,6 +388,9 @@ class SecurityUtils:
     @staticmethod
     def verify_jwt(token: str, secret: str) -> Optional[Dict[str, Any]]:
         """Verify and decode JWT token"""
+
+
+
         try:
             return jwt.decode(token, secret, algorithms=['HS256'])
         except jwt.InvalidTokenError:
@@ -391,11 +421,17 @@ class TextUtils:
     @staticmethod
     def extract_hashtags(text: str) -> List[str]:
         """Extract hashtags from text"""
+
+
+
         return re.findall(r'#(\w+)', text)
     
     @staticmethod
     def extract_mentions(text: str) -> List[str]:
         """Extract mentions from text"""
+
+
+
         return re.findall(r'@(\w+)', text)
     
     @staticmethod
@@ -426,6 +462,9 @@ class TextUtils:
     
     async def analyze_sentiment(self, text: str) -> Dict[str, Any]:
         """Analyze text sentiment"""
+
+
+
         try:
             result = self.sentiment_analyzer(text)[0]
             return {
@@ -453,6 +492,9 @@ class MediaUtils:
         quality: int = 85
     ) -> Dict[str, Any]:
         """Process and optimize image"""
+
+
+
         try:
             with Image.open(image_path) as img:
                 # Get original dimensions
@@ -490,6 +532,9 @@ class MediaUtils:
     @staticmethod
     def extract_video_thumbnail(video_path: str, output_path: str, timestamp: float = 1.0) -> bool:
         """Extract thumbnail from video"""
+
+
+
         try:
             cap = cv2.VideoCapture(video_path)
             
@@ -515,6 +560,9 @@ class MediaUtils:
     @staticmethod
     def analyze_audio(audio_path: str) -> Dict[str, Any]:
         """Analyze audio file"""
+
+
+
         try:
             # Load audio
             y, sr = librosa.load(audio_path)
@@ -558,10 +606,16 @@ class GeoUtils:
     @staticmethod
     def calculate_distance(point1: Tuple[float, float], point2: Tuple[float, float]) -> float:
         """Calculate distance between two geographic points in kilometers"""
+
+
+
         return geodesic(point1, point2).kilometers
     
     async def geocode_address(self, address: str) -> Optional[Dict[str, Any]]:
         """Geocode address to coordinates"""
+
+
+
         try:
             location = self.geolocator.geocode(address, timeout=10)
             if location:
@@ -578,6 +632,9 @@ class GeoUtils:
     
     async def reverse_geocode(self, latitude: float, longitude: float) -> Optional[Dict[str, Any]]:
         """Reverse geocode coordinates to address"""
+
+
+
         try:
             location = self.geolocator.reverse((latitude, longitude), timeout=10)
             if location:
@@ -638,6 +695,9 @@ class FormatUtils:
     @staticmethod
     def format_percentage(value: float, precision: int = 1) -> str:
         """Format percentage"""
+
+
+
         return f"{value * 100:.{precision}f}%"
     
     @staticmethod
@@ -655,11 +715,17 @@ class FormatUtils:
     @staticmethod
     def serialize_datetime(dt: datetime) -> str:
         """Serialize datetime to ISO format"""
+
+
+
         return dt.isoformat()
     
     @staticmethod
     def deserialize_datetime(iso_string: str) -> datetime:
         """Deserialize ISO format datetime"""
+
+
+
         return datetime.fromisoformat(iso_string.replace('Z', '+00:00'))
     
     @staticmethod
@@ -671,6 +737,9 @@ class FormatUtils:
     @staticmethod
     def to_snake_case(camel_str: str) -> str:
         """Convert camelCase to snake_case"""
+
+
+
         return re.sub('([a-z0-9])([A-Z])', r'\1_\2', camel_str).lower()
 
 # ==============================================================================
@@ -734,6 +803,9 @@ class PaginationUtils:
         meta: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Create standardized pagination response"""
+
+
+
         return {
             'data': data,
             'pagination': asdict(pagination),
@@ -757,6 +829,9 @@ class CacheUtils:
         ttl: int = 3600
     ) -> Any:
         """Get from cache or set using factory function"""
+
+
+
         try:
             # Try to get from cache
             cached_value = await self.redis.get(key)
@@ -778,6 +853,9 @@ class CacheUtils:
     
     async def invalidate_pattern(self, pattern: str) -> int:
         """Invalidate all keys matching pattern"""
+
+
+
         try:
             keys = await self.redis.keys(pattern)
             if keys:

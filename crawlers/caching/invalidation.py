@@ -67,6 +67,9 @@ class InvalidationRule:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary."""
+
+
+
         return {
             "rule_id": self.rule_id,
             "name": self.name,
@@ -167,6 +170,9 @@ class CacheInvalidator:
         Returns:
             True if successful
         """
+
+
+
         try:
             cache_manager = await self._get_cache_manager()
             success = await cache_manager.delete(key)
@@ -203,6 +209,9 @@ class CacheInvalidator:
         Returns:
             Number of keys successfully invalidated
         """
+
+
+
         try:
             invalidated_count = 0
             successful_keys = []
@@ -248,6 +257,9 @@ class CacheInvalidator:
         Returns:
             Number of keys invalidated
         """
+
+
+
         try:
             cache_manager = await self._get_cache_manager()
             invalidated_count = await cache_manager.invalidate_pattern(pattern)
@@ -283,6 +295,9 @@ class CacheInvalidator:
         Returns:
             Number of keys invalidated
         """
+
+
+
         try:
             cache_manager = await self._get_cache_manager()
             invalidated_count = 0
@@ -329,6 +344,9 @@ class CacheInvalidator:
         Returns:
             Number of dependent keys invalidated
         """
+
+
+
         try:
             cache_manager = await self._get_cache_manager()
             dependency_key = f"{self.dependency_prefix}{key}"
@@ -376,6 +394,9 @@ class CacheInvalidator:
         Returns:
             True if successful
         """
+
+
+
         try:
             cache_manager = await self._get_cache_manager()
             dependency_key = f"{self.dependency_prefix}{source_key}"
@@ -402,6 +423,9 @@ class CacheInvalidator:
         Returns:
             True if successful
         """
+
+
+
         try:
             cache_manager = await self._get_cache_manager()
             
@@ -429,6 +453,9 @@ class CacheInvalidator:
     
     async def get_events(self, limit: int = 100) -> List[InvalidationEvent]:
         """Get recent invalidation events."""
+
+
+
         return self.invalidation_events[-limit:]
     
     async def get_stats(self) -> Dict[str, Any]:
@@ -490,6 +517,9 @@ class SmartInvalidator(CacheInvalidator):
         Returns:
             True if successful
         """
+
+
+
         try:
             cache_manager = await self._get_cache_manager()
             
@@ -508,6 +538,9 @@ class SmartInvalidator(CacheInvalidator):
     
     async def remove_rule(self, rule_id: str) -> bool:
         """Remove invalidation rule."""
+
+
+
         try:
             cache_manager = await self._get_cache_manager()
             
@@ -536,6 +569,9 @@ class SmartInvalidator(CacheInvalidator):
         Returns:
             Number of rules executed
         """
+
+
+
         try:
             executed_count = 0
             context = context or {}
@@ -586,6 +622,9 @@ class SmartInvalidator(CacheInvalidator):
     async def _execute_rule(self, rule: InvalidationRule, 
                           context: Dict[str, Any]) -> bool:
         """Execute invalidation rule."""
+
+
+
         try:
             if rule.invalidation_type == InvalidationType.PATTERN_BASED and rule.pattern:
                 await self.invalidate_pattern(rule.pattern, rule.trigger, context)
@@ -606,6 +645,9 @@ class SmartInvalidator(CacheInvalidator):
     async def _evaluate_condition(self, condition: str, 
                                 context: Dict[str, Any]) -> bool:
         """Evaluate rule condition."""
+
+
+
         try:
             self.conditions_evaluated += 1
             
@@ -630,6 +672,9 @@ class SmartInvalidator(CacheInvalidator):
     
     async def _process_delayed_queue(self) -> None:
         """Process delayed invalidation queue."""
+
+
+
         try:
             while True:
                 await asyncio.sleep(10)  # Check every 10 seconds
@@ -664,6 +709,9 @@ class SmartInvalidator(CacheInvalidator):
     
     async def load_rules(self) -> int:
         """Load rules from cache."""
+
+
+
         try:
             cache_manager = await self._get_cache_manager()
             loaded_count = 0
@@ -679,6 +727,9 @@ class SmartInvalidator(CacheInvalidator):
     
     async def get_rule_stats(self) -> Dict[str, Any]:
         """Get rule statistics."""
+
+
+
         return {
             "total_rules": len(self.rules),
             "enabled_rules": sum(1 for rule in self.rules.values() if rule.enabled),

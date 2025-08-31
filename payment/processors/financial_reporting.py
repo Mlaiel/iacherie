@@ -1,5 +1,5 @@
 """
-📊 Financial Reporting Payment Processor
+ Financial Reporting Payment Processor
 ========================================
 
 Comprehensive financial reporting system for payment analytics, compliance
@@ -168,6 +168,9 @@ class FinancialReportingProcessor:
         format: ReportFormat = ReportFormat.JSON
     ) -> FinancialReport:
         """Generate a financial report"""
+
+
+
         try:
             report_id = f"report_{uuid.uuid4().hex[:12]}"
             
@@ -216,6 +219,9 @@ class FinancialReportingProcessor:
         filters: Optional[ReportFilter] = None
     ) -> Dict[str, Any]:
         """Generate transaction summary report"""
+
+
+
         try:
             # Mock transaction data (in production, query actual database)
             total_transactions = 15750
@@ -298,6 +304,9 @@ class FinancialReportingProcessor:
         filters: Optional[ReportFilter] = None
     ) -> Dict[str, Any]:
         """Generate revenue analysis report"""
+
+
+
         try:
             # Mock revenue data
             gross_revenue = Decimal("1875000.50")
@@ -373,6 +382,9 @@ class FinancialReportingProcessor:
         jurisdiction: Optional[str] = None
     ) -> Dict[str, Any]:
         """Generate compliance report for regulatory requirements"""
+
+
+
         try:
             # Transaction volume by jurisdiction
             jurisdiction_data = {
@@ -461,6 +473,9 @@ class FinancialReportingProcessor:
         filters: Optional[ReportFilter] = None
     ) -> ReportSchedule:
         """Create an automated report schedule"""
+
+
+
         try:
             schedule_id = f"schedule_{uuid.uuid4().hex[:12]}"
             
@@ -493,6 +508,9 @@ class FinancialReportingProcessor:
         metric_types: List[MetricType]
     ) -> List[FinancialMetric]:
         """Calculate specific financial metrics"""
+
+
+
         try:
             metrics = []
             
@@ -521,6 +539,9 @@ class FinancialReportingProcessor:
         dashboard_type: str = "executive"
     ) -> Dict[str, Any]:
         """Generate real-time dashboard data"""
+
+
+
         try:
             # Key performance indicators
             kpis = {
@@ -598,6 +619,9 @@ class FinancialReportingProcessor:
     
     def _initialize_report_templates(self) -> Dict[ReportType, Dict[str, Any]]:
         """Initialize report templates"""
+
+
+
         return {
             ReportType.TRANSACTION_SUMMARY: {
                 "sections": ["summary", "method_breakdown", "daily_breakdown"],

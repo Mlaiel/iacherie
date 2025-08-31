@@ -156,6 +156,9 @@ class AuditLogger:
         
     async def log_security_event(self, event: SecurityEvent):
         """Log security event with full context"""
+
+
+
         try:
             # Enhance event with additional context
             enhanced_event = await self._enhance_event(event)
@@ -180,6 +183,9 @@ class AuditLogger:
     
     async def _enhance_event(self, event: SecurityEvent) -> SecurityEvent:
         """Enhance event with additional context"""
+
+
+
         try:
             # Add geolocation data
             if event.source_ip and not event.location:
@@ -198,6 +204,9 @@ class AuditLogger:
     
     async def _get_ip_geolocation(self, ip_address: str) -> Optional[Dict[str, str]]:
         """Get geolocation for IP address"""
+
+
+
         try:
             # Check cache first
             cache_key = f"geoip:{ip_address}"
@@ -230,6 +239,9 @@ class AuditLogger:
     
     async def _check_threat_intelligence(self, ip_address: str) -> Optional[Dict[str, Any]]:
         """Check IP against threat intelligence feeds"""
+
+
+
         try:
             # Check cache for known threats
             cache_key = f"threat_intel:{ip_address}"
@@ -256,6 +268,9 @@ class AuditLogger:
     
     async def _update_security_metrics(self, event: SecurityEvent):
         """Update real-time security metrics"""
+
+
+
         try:
             # Update event counters
             date_key = event.timestamp.strftime("%Y-%m-%d")
@@ -283,6 +298,9 @@ class AuditLogger:
     
     async def _trigger_security_alert(self, event: SecurityEvent):
         """Trigger security alert for high-severity events"""
+
+
+
         try:
             alert_data = {
                 "event_id": event.event_id,
@@ -328,6 +346,9 @@ class ThreatDetector:
     
     def _initialize_detection_rules(self) -> Dict[str, Callable]:
         """Initialize threat detection rules"""
+
+
+
         return {
             "brute_force_detection": self._detect_brute_force,
             "unusual_location": self._detect_unusual_location,
@@ -676,6 +697,9 @@ class SecurityMetrics:
     
     async def get_security_dashboard_data(self) -> Dict[str, Any]:
         """Get comprehensive security dashboard data"""
+
+
+
         try:
             current_date = datetime.utcnow().strftime("%Y-%m-%d")
             current_hour = datetime.utcnow().strftime("%Y-%m-%d:%H")
@@ -791,6 +815,9 @@ class IntrusionDetection:
     
     def _load_attack_signatures(self) -> Dict[str, List[str]]:
         """Load attack signatures for detection"""
+
+
+
         return {
             "sql_injection": [
                 "union select", "drop table", "delete from", "insert into",
@@ -911,6 +938,9 @@ class SecurityMonitor:
         user_id: Optional[str] = None
     ):
         """Monitor incoming request for security threats"""
+
+
+
         try:
             # Run threat detection
             threat_events = await self.threat_detector.analyze_request(request, user_id)
@@ -936,6 +966,9 @@ class SecurityMonitor:
         response: Response
     ):
         """Handle high-severity threats"""
+
+
+
         try:
             # Log additional context
             self.logger.warning(f"High threat detected: {event.description}")
@@ -957,6 +990,9 @@ class SecurityMonitor:
         response: Response
     ):
         """Handle critical threats"""
+
+
+
         try:
             # Log critical alert
             self.logger.critical(f"Critical threat detected: {event.description}")
@@ -990,6 +1026,9 @@ class SecurityMonitor:
     
     async def get_security_status(self) -> Dict[str, Any]:
         """Get current security status"""
+
+
+
         try:
             dashboard_data = await self.security_metrics.get_security_dashboard_data()
             

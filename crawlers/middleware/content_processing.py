@@ -100,6 +100,9 @@ class AudioProcessor:
         
     async def process(self, content_data: bytes, metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Process audio content"""
+
+
+
         try:
             # Load audio data
             audio_array, sample_rate = await self.load_audio(content_data)
@@ -251,6 +254,9 @@ class VideoProcessor:
         
     async def process(self, content_data: bytes, metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Process video content"""
+
+
+
         try:
             # Load video
             frames, fps, duration = await self.load_video(content_data)
@@ -484,6 +490,9 @@ class ImageProcessor:
         
     async def process(self, content_data: bytes, metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Process image content"""
+
+
+
         try:
             # Load image
             image = await self.load_image(content_data)
@@ -651,6 +660,9 @@ class TextProcessor:
         
     async def process(self, content_data: Union[str, bytes], metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Process text content"""
+
+
+
         try:
             # Convert to string if bytes
             if isinstance(content_data, bytes):
@@ -708,6 +720,9 @@ class TextProcessor:
     
     async def detect_language(self, text: str) -> str:
         """Detect text language"""
+
+
+
         try:
             from langdetect import detect
             return detect(text)
@@ -716,6 +731,9 @@ class TextProcessor:
     
     async def analyze_sentiment(self, text: str) -> Dict[str, Any]:
         """Analyze text sentiment"""
+
+
+
         try:
             # Truncate text for efficiency
             truncated_text = text[:512]
@@ -726,6 +744,9 @@ class TextProcessor:
     
     async def extract_keywords(self, text: str) -> List[str]:
         """Extract keywords from text"""
+
+
+
         try:
             from sklearn.feature_extraction.text import TfidfVectorizer
             from sklearn.feature_extraction.text import ENGLISH_STOP_WORDS
@@ -1054,6 +1075,9 @@ class ContentProcessingMiddleware:
 # Factory function for dependency injection
 def get_content_processing_middleware() -> ContentProcessingMiddleware:
     """Get content processing middleware instance"""
+
+
+
     return ContentProcessingMiddleware()
 
 

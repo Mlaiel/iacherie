@@ -226,6 +226,9 @@ class CreatorAccount(Base):
 
     def to_dict(self) -> Dict[str, Any]:
         """Convertir en dictionnaire pour API."""
+
+
+
         return {
             'id': self.id,
             'creator_uuid': self.creator_uuid,
@@ -386,6 +389,9 @@ class CreatorAccountRepository:
             ValueError: Si les données sont invalides
             Exception: En cas d'erreur de création
         """
+
+
+
         try:
             # Validation des données obligatoires
             required_fields = ['creator_type', 'stage_name', 'display_name']
@@ -423,12 +429,18 @@ class CreatorAccountRepository:
     
     def get_creator_by_id(self, creator_id: str) -> Optional[CreatorAccount]:
         """Récupère un créateur par son ID."""
+
+
+
         return self.session.query(CreatorAccount).filter(
             CreatorAccount.id == creator_id
         ).first()
     
     def get_creator_by_user_id(self, user_id: str) -> Optional[CreatorAccount]:
         """Récupère un créateur par l'ID utilisateur."""
+
+
+
         return self.session.query(CreatorAccount).filter(
             CreatorAccount.user_id == user_id
         ).first()
@@ -444,6 +456,9 @@ class CreatorAccountRepository:
         Returns:
             bool: True si mis à jour avec succès
         """
+
+
+
         try:
             creator = self.get_creator_by_id(creator_id)
             if not creator:
@@ -467,6 +482,9 @@ class CreatorAccountRepository:
     
     def update_verification_level(self, creator_id: str, level: VerificationLevel) -> bool:
         """Met à jour le niveau de vérification d'un créateur."""
+
+
+
         try:
             creator = self.get_creator_by_id(creator_id)
             if not creator:
@@ -489,6 +507,9 @@ class CreatorAccountRepository:
     
     def update_creator_metrics(self, creator_id: str, metrics_data: Dict[str, Any]) -> bool:
         """Met à jour les métriques d'un créateur."""
+
+
+
         try:
             creator = self.get_creator_by_id(creator_id)
             if not creator:
@@ -527,6 +548,9 @@ class CreatorAccountRepository:
     
     def get_creators_by_type(self, creator_type: CreatorType, limit: int = 50) -> List[CreatorAccount]:
         """Récupère les créateurs par type."""
+
+
+
         try:
             return self.session.query(CreatorAccount).filter(
                 CreatorAccount.creator_type == creator_type,
@@ -553,6 +577,9 @@ class CreatorAccountRepository:
         Returns:
             List[CreatorAccount]: Liste des créateurs trouvés
         """
+
+
+
         try:
             query = self.session.query(CreatorAccount).filter(
                 CreatorAccount.status == CreatorStatus.ACTIVE
@@ -598,6 +625,9 @@ class CreatorAccountRepository:
         Returns:
             Dict[str, Any]: Analytics détaillées
         """
+
+
+
         try:
             creator = self.get_creator_by_id(creator_id)
             if not creator:
@@ -656,6 +686,9 @@ class CreatorAccountRepository:
         Returns:
             List[Dict[str, Any]]: Liste des candidats avec scores de compatibilité
         """
+
+
+
         try:
             creator = self.get_creator_by_id(creator_id)
             if not creator or not creator.collaboration_enabled:
@@ -812,6 +845,9 @@ class CreatorAccountRepository:
         Returns:
             bool: True si mis à jour avec succès
         """
+
+
+
         try:
             creator = self.get_creator_by_id(creator_id)
             if not creator:

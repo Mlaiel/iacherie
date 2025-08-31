@@ -1,5 +1,5 @@
 """
-🔄 Business Workflow Configuration Manager - IA-Influencer-Agent
+ Business Workflow Configuration Manager - IA-Influencer-Agent
 ================================================================
 Project Creator & Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
@@ -7,7 +7,7 @@ Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert +
 Date: 2025-08-24
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -485,6 +485,9 @@ class BusinessWorkflowConfigManager:
     
     def _load_configuration(self) -> bool:
         """Load configuration from file"""
+
+
+
         try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r', encoding='utf-8') as f:
@@ -577,6 +580,9 @@ class BusinessWorkflowConfigManager:
     
     def enable_stage(self, stage: WorkflowStage) -> bool:
         """Enable specific workflow stage"""
+
+
+
         try:
             stage_config_map = {
                 WorkflowStage.UPLOAD: self._config.upload_config,
@@ -602,6 +608,9 @@ class BusinessWorkflowConfigManager:
     
     def disable_stage(self, stage: WorkflowStage) -> bool:
         """Disable specific workflow stage"""
+
+
+
         try:
             stage_config_map = {
                 WorkflowStage.UPLOAD: self._config.upload_config,
@@ -627,6 +636,9 @@ class BusinessWorkflowConfigManager:
     
     def get_workflow_status(self) -> Dict[str, Any]:
         """Get workflow configuration status"""
+
+
+
         return {
             "workflow_enabled": self._config.workflow_enabled,
             "stages_enabled": {
@@ -651,6 +663,9 @@ class BusinessWorkflowConfigManager:
     
     def get_configuration_status(self) -> Dict[str, Any]:
         """Get configuration status and metadata"""
+
+
+
         return self.get_workflow_status()
 
 # Global instance

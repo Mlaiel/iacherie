@@ -1,5 +1,5 @@
 """
-⚖️ Compliance Manager - Legal Compliance Engine
+ Compliance Manager - Legal Compliance Engine
 ==============================================
 
 Professional legal compliance management system:
@@ -88,7 +88,7 @@ class ComplianceReport:
 
 class ComplianceManager:
     """
-    🚀 Professional legal compliance management system
+     Professional legal compliance management system
     
     Advanced system for ensuring legal compliance across multiple
     jurisdictions with automated validation and risk assessment.
@@ -285,7 +285,7 @@ class ComplianceManager:
         compliance_level: ComplianceLevel = ComplianceLevel.STANDARD
     ) -> ComplianceReport:
         """
-        ⚖️ Validate license compliance across all applicable rules
+         Validate license compliance across all applicable rules
         
         Args:
             license_data: License document to validate
@@ -388,6 +388,9 @@ class ComplianceManager:
         rule: ComplianceRule
     ) -> ComplianceResult:
         """Validate license against a single compliance rule."""
+
+
+
         try:
             # Convert license to searchable text
             license_text = self._extract_license_text(license_data)
@@ -670,6 +673,9 @@ class ComplianceManager:
         modifications: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Validate proposed license modifications for compliance."""
+
+
+
         try:
             # Create modified license for validation
             modified_license = license_info.copy()
@@ -701,6 +707,9 @@ class ComplianceManager:
         new_owner: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Validate license transfer for legal compliance."""
+
+
+
         try:
             # Check if license allows transfers
             clauses = license_info.get('clauses', {})
@@ -734,6 +743,9 @@ class ComplianceManager:
     
     def get_compliance_status(self) -> Dict[str, Any]:
         """Get overall compliance manager status and metrics."""
+
+
+
         return {
             **self.metrics,
             'available_rules': len(self.compliance_rules),

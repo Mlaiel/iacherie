@@ -145,6 +145,9 @@ class CopyrightGuardian:
 
     def _load_dmca_template(self) -> str:
         """Charge le template DMCA"""
+
+
+
         return """
 DIGITAL MILLENNIUM COPYRIGHT ACT TAKEDOWN NOTICE
 
@@ -180,6 +183,9 @@ SIGNATURE:
 
     def _load_cease_desist_template(self) -> str:
         """Charge le template de cessation"""
+
+
+
         return """
 CEASE AND DESIST NOTICE
 
@@ -216,6 +222,9 @@ Sincerely,
 
     def _load_settlement_template(self) -> str:
         """Charge le template de règlement"""
+
+
+
         return """
 SETTLEMENT OFFER
 
@@ -249,6 +258,9 @@ Regards,
 
     def _load_court_filing_template(self) -> str:
         """Charge le template de dépôt judiciaire"""
+
+
+
         return """
 COMPLAINT FOR COPYRIGHT INFRINGEMENT
 
@@ -291,6 +303,9 @@ PRAYER FOR RELIEF:
         Returns:
             CopyrightRegistration: Enregistrement créé
         """
+
+
+
         try:
             # Génération d'empreinte avancée
             fingerprint = await self.fingerprint_engine.generate_comprehensive_fingerprint(
@@ -343,6 +358,9 @@ PRAYER FOR RELIEF:
 
     async def _submit_official_registration(self, registration: CopyrightRegistration) -> None:
         """Soumet l'enregistrement aux organismes officiels"""
+
+
+
         try:
             jurisdiction = registration.jurisdiction
             
@@ -519,6 +537,9 @@ PRAYER FOR RELIEF:
 
     def _get_search_headers(self) -> Dict[str, str]:
         """Génère des headers pour les recherches"""
+
+
+
         return {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -567,6 +588,9 @@ PRAYER FOR RELIEF:
         suspect_content: Dict[str, Any]
     ) -> Optional[CopyrightViolation]:
         """Analyse une violation potentielle"""
+
+
+
         try:
             # Analyse du contenu suspect
             suspect_analysis = await self._analyze_suspect_content(suspect_content['url'])
@@ -617,6 +641,9 @@ PRAYER FOR RELIEF:
 
     async def _analyze_suspect_content(self, url: str) -> Optional[Dict[str, Any]]:
         """Analyse approfondie d'un contenu suspect"""
+
+
+
         try:
             # Utilise l'analyseur de contenu
             return await self.content_analyzer.analyze_comprehensive_content(url)
@@ -631,6 +658,9 @@ PRAYER FOR RELIEF:
         suspect_analysis: Dict[str, Any]
     ) -> float:
         """Calcule la similarité pour violation de copyright"""
+
+
+
         try:
             # Comparaison d'empreintes
             fingerprint_similarity = await self.fingerprint_engine.compare_fingerprints(
@@ -776,6 +806,9 @@ PRAYER FOR RELIEF:
 
     async def _handle_severe_violation(self, violation: CopyrightViolation) -> None:
         """Traite une violation sévère"""
+
+
+
         try:
             self.logger.warning(
                 f"Violation sévère détectée: {violation.infringing_url} "
@@ -797,6 +830,9 @@ PRAYER FOR RELIEF:
 
     async def _send_dmca_takedown(self, violation: CopyrightViolation) -> None:
         """Envoie un takedown DMCA"""
+
+
+
         try:
             registration = self.copyright_registrations[violation.original_content_id]
             
@@ -819,6 +855,9 @@ PRAYER FOR RELIEF:
 
     async def _send_cease_desist(self, violation: CopyrightViolation) -> None:
         """Envoie un cease & desist"""
+
+
+
         try:
             registration = self.copyright_registrations[violation.original_content_id]
             
@@ -940,6 +979,9 @@ PRAYER FOR RELIEF:
         violation: CopyrightViolation
     ) -> Dict[str, Any]:
         """Prépare le dossier légal"""
+
+
+
         return {
             'plaintiff_info': {
                 'name': registration.owner_id,
@@ -993,6 +1035,9 @@ PRAYER FOR RELIEF:
 
     def _generate_injunction_motion(self, legal_case: Dict[str, Any]) -> str:
         """Génère la motion d'injonction"""
+
+
+
         return f"""
 MOTION FOR PRELIMINARY INJUNCTION
 

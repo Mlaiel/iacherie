@@ -96,6 +96,9 @@ class CacheMetadata:
         
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'key': self.key,
             'size': self.size,
@@ -146,6 +149,9 @@ class CacheManager(Generic[T]):
     
     def _init_redis(self):
         """Initialize Redis backend"""
+
+
+
         try:
             self._backends['redis'] = redis.Redis(
                 host=self.config.host,
@@ -162,6 +168,9 @@ class CacheManager(Generic[T]):
     
     def _init_redis_cluster(self):
         """Initialize Redis Cluster backend"""
+
+
+
         try:
             startup_nodes = [
                 {"host": node["host"], "port": node["port"]}
@@ -351,6 +360,9 @@ class CacheManager(Generic[T]):
         """
         Clear cache for tenant or all data
         """
+
+
+
         try:
             if tenant_id and self.config.tenant_isolation:
                 # Clear tenant-specific data
@@ -453,6 +465,9 @@ class CacheManager(Generic[T]):
     
     async def close(self):
         """Close cache connections"""
+
+
+
         try:
             if 'redis' in self._backends:
                 await self._backends['redis'].close()

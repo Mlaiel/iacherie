@@ -5,7 +5,7 @@ Advanced AI/ML model monitoring and optimization metrics
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 
-⚠️  AVERTISSEMENT LÉGAL STRICT ⚠️
+  AVERTISSEMENT LÉGAL STRICT 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et fera l'objet de poursuites 
@@ -335,6 +335,9 @@ class AIModelMetricsCollector:
         time_range: str = "24h"
     ) -> ModelMetrics:
         """Calculate comprehensive model performance metrics"""
+
+
+
         
         try:
             # Parse time range
@@ -496,6 +499,9 @@ class AIModelMetricsCollector:
         limit: int = 10
     ) -> Dict[str, Any]:
         """Get training performance insights for model optimization"""
+
+
+
         
         try:
             async with get_database_session() as session:
@@ -584,6 +590,9 @@ class AIModelMetricsCollector:
         tenant_id: Optional[str] = None
     ) -> Dict[str, Any]:
         """Get real-time inference performance dashboard"""
+
+
+
         
         try:
             # Get recent inference data from Redis
@@ -814,6 +823,9 @@ class AIModelMetricsCollector:
     
     async def _store_inference_record(self, record: InferenceRecord) -> None:
         """Store inference record in database"""
+
+
+
         try:
             async with get_database_session() as session:
                 await session.execute(
@@ -848,6 +860,9 @@ class AIModelMetricsCollector:
     
     async def _store_training_metrics(self, metrics: ModelTrainingMetrics) -> None:
         """Store training metrics in database"""
+
+
+
         try:
             async with get_database_session() as session:
                 await session.execute(
@@ -887,6 +902,9 @@ class AIModelMetricsCollector:
     
     async def _update_realtime_inference_metrics(self, record: InferenceRecord) -> None:
         """Update real-time inference metrics in Redis"""
+
+
+
         try:
             # Store individual inference record
             await self.redis_manager.list_push(
@@ -934,6 +952,9 @@ class AIModelMetricsCollector:
     
     async def _process_inference_analytics(self) -> None:
         """Process inference analytics for insights"""
+
+
+
         try:
             # Group inferences by model for analysis
             model_groups = defaultdict(list)
@@ -956,6 +977,9 @@ class AIModelMetricsCollector:
     
     async def _update_model_performance_cache(self) -> None:
         """Update cached model performance metrics"""
+
+
+
         try:
             # Get list of active models
             async with get_database_session() as session:

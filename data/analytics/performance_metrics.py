@@ -133,6 +133,9 @@ class PerformanceMetrics:
         Returns:
             Dictionary containing engagement metrics
         """
+
+
+
         try:
             cache_key = f"engagement_metrics:{content_id}:{platform.value}:{time_period.days}"
             cached_result = await self._get_cached_result(cache_key)
@@ -209,6 +212,9 @@ class PerformanceMetrics:
         Returns:
             Dictionary containing reach metrics
         """
+
+
+
         try:
             cache_key = f"reach_metrics:{user_id}:{platform.value}:{time_period.days}"
             cached_result = await self._get_cached_result(cache_key)
@@ -302,6 +308,9 @@ class PerformanceMetrics:
         Returns:
             Dictionary containing conversion metrics
         """
+
+
+
         try:
             cache_key = f"conversion_metrics:{user_id}:{platform.value}:{time_period.days}"
             cached_result = await self._get_cached_result(cache_key)
@@ -381,6 +390,9 @@ class PerformanceMetrics:
         Returns:
             Performance benchmark data
         """
+
+
+
         try:
             cache_key = f"benchmarks:{category.value}:{platform.value}"
             cached_result = await self._get_cached_result(cache_key)
@@ -448,6 +460,9 @@ class PerformanceMetrics:
         Returns:
             Comprehensive performance report
         """
+
+
+
         try:
             report = {
                 "user_id": user_id,
@@ -495,6 +510,9 @@ class PerformanceMetrics:
     async def _calculate_growth_metrics(self, user_id: str, platform: PlatformType,
                                       time_period: timedelta) -> Dict[str, float]:
         """Calculate growth metrics for reach analysis."""
+
+
+
         try:
             # Split time period into two halves for comparison
             mid_point = datetime.utcnow() - time_period / 2
@@ -566,6 +584,9 @@ class PerformanceMetrics:
     
     async def _calculate_overall_performance(self, platforms: Dict) -> Dict[str, float]:
         """Calculate overall performance metrics across all platforms."""
+
+
+
         try:
             if not platforms:
                 return {}
@@ -604,6 +625,9 @@ class PerformanceMetrics:
     
     async def _generate_performance_recommendations(self, user_id: str, report: Dict) -> List[Dict]:
         """Generate actionable performance recommendations."""
+
+
+
         try:
             recommendations = []
             
@@ -654,6 +678,9 @@ class PerformanceMetrics:
     
     async def _get_cached_result(self, cache_key: str) -> Optional[Dict]:
         """Get cached result from Redis."""
+
+
+
         try:
             cached_data = self.redis_client.get(cache_key)
             if cached_data:
@@ -665,6 +692,9 @@ class PerformanceMetrics:
     
     async def _cache_result(self, cache_key: str, data: Dict, ttl: int = None) -> None:
         """Cache result in Redis."""
+
+
+
         try:
             cache_ttl = ttl or self.cache_ttl
             self.redis_client.setex(

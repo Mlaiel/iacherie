@@ -8,7 +8,7 @@ Responsibility: Advanced legal compliance management with GDPR, DMCA, and global
 Technologies: Python, Legal Automation, GDPR Compliance, Data Protection, Audit Trails
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -360,7 +360,7 @@ class PrivacyRightsRequest:
 
 class ComplianceManager(ABC):
     """
-    ⚖️ Advanced Compliance Manager - IA-Influencer-Agent
+     Advanced Compliance Manager - IA-Influencer-Agent
     
     Responsabilité:
     Gestionnaire industriel pour conformité légale et protection des données
@@ -437,7 +437,7 @@ class ComplianceManager(ABC):
             "data_retention_compliance": 100.0
         }
         
-        logger.info(f"⚖️ Compliance Manager initialized - {len(ComplianceRegulation)} regulations supported")
+        logger.info(f" Compliance Manager initialized - {len(ComplianceRegulation)} regulations supported")
     
     @abstractmethod
     async def initialize_compliance_framework(self) -> bool:
@@ -524,6 +524,9 @@ class ComplianceManager(ABC):
         Returns:
             Tuple[bool, Optional[ConsentRecord]]: Validation result and consent record
         """
+
+
+
         try:
             with self._lock:
                 # Find relevant consent records
@@ -553,7 +556,7 @@ class ComplianceManager(ABC):
                 return False, None
                 
         except Exception as e:
-            logger.error(f"❌ Consent validation failed: {e}")
+            logger.error(f" Consent validation failed: {e}")
             return False, None
     
     async def withdraw_consent(
@@ -573,6 +576,9 @@ class ComplianceManager(ABC):
         Returns:
             bool: True if withdrawal successful
         """
+
+
+
         try:
             evidence = withdrawal_evidence or {}
             withdrawal_time = datetime.utcnow()
@@ -638,11 +644,11 @@ class ComplianceManager(ABC):
                 if withdrawn_count > 0:
                     await self._schedule_data_processing_review(user_id)
                 
-                logger.info(f"⚖️ Consent withdrawn: {withdrawn_count} consents for user {user_id}")
+                logger.info(f" Consent withdrawn: {withdrawn_count} consents for user {user_id}")
                 return withdrawn_count > 0
             
         except Exception as e:
-            logger.error(f"❌ Consent withdrawal failed: {e}")
+            logger.error(f" Consent withdrawal failed: {e}")
             return False
     
     async def generate_compliance_report(
@@ -664,6 +670,9 @@ class ComplianceManager(ABC):
         Returns:
             ComplianceReport: Generated compliance report
         """
+
+
+
         try:
             report = ComplianceReport(
                 id=str(uuid.uuid4()),
@@ -748,11 +757,11 @@ class ComplianceManager(ABC):
                 # Store report
                 self._compliance_reports[report.id] = report
             
-            logger.info(f"⚖️ Compliance report generated: {regulation.value} - Score: {report.compliance_score:.1f}%")
+            logger.info(f" Compliance report generated: {regulation.value} - Score: {report.compliance_score:.1f}%")
             return report
             
         except Exception as e:
-            logger.error(f"❌ Compliance report generation failed: {e}")
+            logger.error(f" Compliance report generation failed: {e}")
             raise
     
     async def check_data_retention_compliance(
@@ -768,6 +777,9 @@ class ComplianceManager(ABC):
         Returns:
             Dict: Retention compliance status and actions
         """
+
+
+
         try:
             current_time = datetime.utcnow()
             actions_taken = {
@@ -856,7 +868,7 @@ class ComplianceManager(ABC):
                 }
             
         except Exception as e:
-            logger.error(f"❌ Data retention check failed: {e}")
+            logger.error(f" Data retention check failed: {e}")
             raise
     
     async def handle_data_breach(
@@ -874,6 +886,9 @@ class ComplianceManager(ABC):
         Returns:
             Dict: Breach handling results and next steps
         """
+
+
+
         try:
             breach_id = str(uuid.uuid4())
             breach_time = datetime.utcnow()
@@ -940,11 +955,11 @@ class ComplianceManager(ABC):
                 await self._schedule_breach_notifications(breach_incident)
                 response["notifications_scheduled"] = True
             
-            logger.warning(f"⚠️ Data breach handled: {breach_id} - Severity: {breach_details.get('severity')}")
+            logger.warning(f" Data breach handled: {breach_id} - Severity: {breach_details.get('severity')}")
             return response
             
         except Exception as e:
-            logger.error(f"❌ Data breach handling failed: {e}")
+            logger.error(f" Data breach handling failed: {e}")
             raise
     
     async def _queue_audit_event(self, audit_event: AuditEvent) -> None:
@@ -1041,13 +1056,16 @@ class ComplianceManager(ABC):
         """Context manager for compliance operations"""
         session_id = str(uuid.uuid4())
         try:
-            logger.info(f"⚖️ Compliance session started: {session_id} for user {user_id}")
+            logger.info(f" Compliance session started: {session_id} for user {user_id}")
             yield session_id
         finally:
-            logger.info(f"⚖️ Compliance session ended: {session_id}")
+            logger.info(f" Compliance session ended: {session_id}")
     
     async def cleanup(self) -> bool:
         """Cleanup compliance resources"""
+
+
+
         try:
             # Stop monitoring
             self._monitoring_active = False
@@ -1092,7 +1110,7 @@ class ComplianceManager(ABC):
             return True
             
         except Exception as e:
-            logger.error(f"❌ Compliance cleanup failed: {e}")
+            logger.error(f" Compliance cleanup failed: {e}")
             return False
     
     def get_stats(self) -> Dict[str, Any]:

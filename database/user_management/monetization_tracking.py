@@ -347,6 +347,9 @@ class MonetizationRepository:
 
     def record_transaction(self, transaction_data: Dict[str, Any]) -> RevenueTransaction:
         """Enregistrer une nouvelle transaction de revenu."""
+
+
+
         try:
             transaction = RevenueTransaction(**transaction_data)
             
@@ -370,6 +373,9 @@ class MonetizationRepository:
 
     def get_revenue_summary(self, creator_id: str, days: int = 30) -> Dict[str, Any]:
         """Obtenir un résumé des revenus pour une période."""
+
+
+
         try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=days)
@@ -432,6 +438,9 @@ class MonetizationRepository:
 
     def create_revenue_projection(self, creator_id: str, projection_data: Dict[str, Any]) -> RevenueProjection:
         """Créer une projection de revenus."""
+
+
+
         try:
             # Analyser les données historiques pour la projection
             historical_data = self._get_historical_revenue_data(creator_id, 
@@ -461,6 +470,9 @@ class MonetizationRepository:
 
     def generate_revenue_analytics(self, creator_id: str, period: str = "monthly") -> RevenueAnalytics:
         """Générer des analytics de revenus avec insights IA."""
+
+
+
         try:
             # Déterminer la période d'analyse
             end_date = datetime.utcnow()
@@ -521,6 +533,9 @@ class MonetizationRepository:
 
     def request_payout(self, creator_id: str, payout_data: Dict[str, Any]) -> PayoutRequest:
         """Créer une demande de paiement."""
+
+
+
         try:
             # Vérifier le solde disponible
             available_balance = self._calculate_available_balance(creator_id)
@@ -554,6 +569,9 @@ class MonetizationRepository:
 
     def get_monetization_opportunities(self, creator_id: str) -> Dict[str, Any]:
         """Identifier des opportunités de monétisation via IA."""
+
+
+
         try:
             # Analyser l'historique de revenus
             revenue_data = self._get_historical_revenue_data(creator_id, 6)
@@ -591,6 +609,9 @@ class MonetizationRepository:
 
     def _get_historical_revenue_data(self, creator_id: str, months: int) -> List[Dict[str, Any]]:
         """Récupérer les données historiques de revenus."""
+
+
+
         try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=months * 30)
@@ -676,6 +697,9 @@ class MonetizationRepository:
 
     def _calculate_available_balance(self, creator_id: str) -> PyDecimal:
         """Calculer le solde disponible pour paiement."""
+
+
+
         try:
             # Revenus complétés non encore payés
             completed_revenue = self.db.query(RevenueTransaction).filter(

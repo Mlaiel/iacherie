@@ -117,6 +117,9 @@ class DataGovernanceManager(BaseManager):
         Returns:
             GovernanceResult with complete governance analysis
         """
+
+
+
         try:
             self.logger.info(f"Applying governance to content {content_id}")
             
@@ -226,6 +229,9 @@ class DataGovernanceManager(BaseManager):
     
     async def check_compliance(self, content_id: str) -> Dict[str, Any]:
         """Check current compliance status of content"""
+
+
+
         try:
             return await self.compliance_manager.get_compliance_status(content_id)
         except Exception as e:
@@ -237,6 +243,9 @@ class DataGovernanceManager(BaseManager):
         new_policies: List[str]
     ) -> GovernanceResult:
         """Update governance policies for existing content"""
+
+
+
         try:
             # Get existing content metadata
             metadata = await self.metadata_manager.get_metadata(content_id)
@@ -257,6 +266,9 @@ class DataGovernanceManager(BaseManager):
     
     async def get_governance_status(self, content_id: str) -> Optional[GovernanceResult]:
         """Get current governance status for content"""
+
+
+
         try:
             metadata = await self.metadata_manager.get_metadata(content_id)
             if not metadata:
@@ -279,6 +291,9 @@ class DataGovernanceManager(BaseManager):
     
     async def get_governance_metrics(self) -> Dict[str, Any]:
         """Get current governance metrics"""
+
+
+
         return {
             **self.metrics,
             "compliance_details": await self.compliance_manager.get_metrics(),
@@ -338,6 +353,9 @@ class DataGovernanceManager(BaseManager):
     
     async def cleanup_expired_content(self) -> Dict[str, int]:
         """Clean up expired content based on retention policies"""
+
+
+
         return await self.lifecycle_manager.cleanup_expired_content()
     
     async def export_governance_data(
@@ -346,6 +364,9 @@ class DataGovernanceManager(BaseManager):
         format_type: str = "json"
     ) -> Dict[str, Any]:
         """Export governance data for auditing or reporting"""
+
+
+
         try:
             return await self.metadata_manager.export_data(content_ids, format_type)
         except Exception as e:

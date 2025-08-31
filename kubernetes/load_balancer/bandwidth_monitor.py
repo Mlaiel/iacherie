@@ -7,7 +7,7 @@ of content protection, fingerprinting, and monetization services.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ WARNING: This code is proprietary and confidential.
+ WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
@@ -125,6 +125,9 @@ class BandwidthMonitor:
     
     async def initialize(self) -> None:
         """Initialize bandwidth monitoring"""
+
+
+
         try:
             logger.info("Initializing Bandwidth Monitor...")
             
@@ -148,6 +151,9 @@ class BandwidthMonitor:
     
     async def _discover_network_interfaces(self) -> None:
         """Discover available network interfaces"""
+
+
+
         try:
             interfaces = psutil.net_if_stats()
             self.network_interfaces = [
@@ -244,6 +250,9 @@ class BandwidthMonitor:
     
     async def _setup_traffic_shaping(self) -> None:
         """Setup traffic shaping using tc (Traffic Control)"""
+
+
+
         try:
             if not self.main_interface:
                 logger.warning("No main interface found, skipping traffic shaping")
@@ -352,6 +361,9 @@ class BandwidthMonitor:
     
     async def _collect_network_stats(self) -> None:
         """Collect network interface statistics"""
+
+
+
         try:
             current_time = datetime.now()
             
@@ -397,6 +409,9 @@ class BandwidthMonitor:
     
     async def _update_service_stats(self) -> None:
         """Update statistics for each service"""
+
+
+
         try:
             current_time = datetime.now()
             
@@ -439,6 +454,9 @@ class BandwidthMonitor:
     
     async def _check_bandwidth_alerts(self) -> None:
         """Check for bandwidth usage alerts"""
+
+
+
         try:
             for limit_name, limit in self.bandwidth_limits.items():
                 if not limit.enabled:
@@ -487,6 +505,9 @@ class BandwidthMonitor:
     
     async def _adjust_traffic_shaping(self) -> None:
         """Adjust traffic shaping rules based on current usage"""
+
+
+
         try:
             # This would implement dynamic adjustment of tc rules
             # based on current traffic patterns and service priorities
@@ -504,6 +525,9 @@ class BandwidthMonitor:
     
     async def get_bandwidth_statistics(self) -> Dict[str, Any]:
         """Get comprehensive bandwidth statistics"""
+
+
+
         try:
             with self._lock:
                 # Calculate total usage
@@ -571,6 +595,9 @@ class BandwidthMonitor:
                                 max_bandwidth_mbps: float, burst_bandwidth_mbps: float,
                                 priority: int = 5) -> bool:
         """Set or update bandwidth limit for a service"""
+
+
+
         try:
             limit_name = f"{service_name}_{traffic_type.value}"
             
@@ -595,6 +622,9 @@ class BandwidthMonitor:
     
     async def shutdown(self) -> None:
         """Shutdown bandwidth monitor"""
+
+
+
         try:
             logger.info("Shutting down Bandwidth Monitor...")
             

@@ -159,6 +159,9 @@ class FingerprintRepository:
         Returns:
             Fingerprint ID
         """
+
+
+
         try:
             # Store fingerprint
             fingerprint_id = await self.storage_manager.store_fingerprint(
@@ -198,6 +201,9 @@ class FingerprintRepository:
         Returns:
             ContentFingerprint object or None
         """
+
+
+
         try:
             fingerprint = await self.storage_manager.retrieve_fingerprint(
                 fingerprint_id, include_vectors
@@ -231,6 +237,9 @@ class FingerprintRepository:
         Returns:
             Paginated response with matching fingerprints
         """
+
+
+
         try:
             # Build query conditions
             conditions = self._build_query_conditions(query)
@@ -307,6 +316,9 @@ class FingerprintRepository:
         Returns:
             List of (fingerprint, similarity_score) tuples
         """
+
+
+
         try:
             # Find matches using the matching engine
             match_results = await self.matching_engine.find_matches(
@@ -351,6 +363,9 @@ class FingerprintRepository:
         Returns:
             True if updated successfully
         """
+
+
+
         try:
             # Validate updates
             allowed_fields = {
@@ -395,6 +410,9 @@ class FingerprintRepository:
         Returns:
             True if deleted successfully
         """
+
+
+
         try:
             if soft_delete:
                 # Soft delete - mark as deleted
@@ -441,6 +459,9 @@ class FingerprintRepository:
         Returns:
             List of created fingerprint IDs
         """
+
+
+
         try:
             created_ids = []
             
@@ -491,6 +512,9 @@ class FingerprintRepository:
         Returns:
             List of match results
         """
+
+
+
         try:
             async with self.db_manager.get_session() as session:
                 query = select(FingerprintMatchModel).where(
@@ -540,6 +564,9 @@ class FingerprintRepository:
         Returns:
             FingerprintStatistics object
         """
+
+
+
         try:
             async with self.db_manager.get_session() as session:
                 # Base query conditions
@@ -639,6 +666,9 @@ class FingerprintRepository:
         Returns:
             MatchStatistics object
         """
+
+
+
         try:
             async with self.db_manager.get_session() as session:
                 # Build base conditions
@@ -719,6 +749,9 @@ class FingerprintRepository:
         Returns:
             Number of fingerprints cleaned up
         """
+
+
+
         try:
             cleaned_count = await self.storage_manager.cleanup_expired_fingerprints()
             self.logger.info(f"Cleaned up {cleaned_count} expired fingerprints")
@@ -740,6 +773,9 @@ class FingerprintRepository:
             content_type: Optional content type filter
             batch_size: Batch size for processing
         """
+
+
+
         try:
             await self.index_manager.rebuild_indexes(content_type, batch_size)
             self.logger.info(f"Rebuilt indexes for content_type: {content_type or 'all'}")
@@ -765,6 +801,9 @@ class FingerprintRepository:
         Returns:
             Export data
         """
+
+
+
         try:
             # Remove pagination for export
             query.pagination = None
@@ -913,6 +952,9 @@ class FingerprintRepository:
         Returns:
             Health status information
         """
+
+
+
         try:
             health_status = {
                 "status": "healthy",

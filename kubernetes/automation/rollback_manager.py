@@ -133,6 +133,9 @@ class RollbackManager(BaseComponent):
 
     def _build_service_dependency_graph(self) -> Dict[str, List[str]]:
         """Build service dependency graph for rollback ordering"""
+
+
+
         return {
             'api_gateway': [],  # No dependencies, can rollback first
             'ai_agent': ['database', 'cache'],
@@ -909,6 +912,9 @@ class RollbackManager(BaseComponent):
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Check database health after rollback"""
+
+
+
         
         try:
             # Simple connection test
@@ -960,6 +966,9 @@ class RollbackManager(BaseComponent):
         rollback_execution: RollbackExecution
     ) -> Dict[str, Any]:
         """Format rollback execution result"""
+
+
+
         
         return {
             'execution_id': rollback_execution.execution_id,

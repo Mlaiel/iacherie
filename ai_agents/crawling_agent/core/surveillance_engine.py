@@ -7,7 +7,7 @@ and real-time alerting for content protection and intellectual property enforcem
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -239,6 +239,9 @@ class SurveillanceEngine:
 
     async def initialize(self) -> None:
         """Initialize surveillance engine components"""
+
+
+
         try:
             # Initialize content detection components
             await self.content_detector.initialize()
@@ -276,6 +279,9 @@ class SurveillanceEngine:
 
     async def create_surveillance_target(self, config: SurveillanceConfig) -> str:
         """Create new surveillance target"""
+
+
+
         try:
             # Validate configuration
             await self._validate_surveillance_config(config)
@@ -481,6 +487,9 @@ class SurveillanceEngine:
     async def _analyze_content_for_threat(self, target_id: str, content: PlatformContent,
                                         config: SurveillanceConfig) -> Optional[ThreatDetection]:
         """Analyze content for potential threats"""
+
+
+
         try:
             # Create content signature
             content_signature = await self.content_detector.create_content_signature(
@@ -619,6 +628,9 @@ class SurveillanceEngine:
 
     async def _process_threat_detection(self, threat: ThreatDetection) -> None:
         """Process detected threat and trigger appropriate actions"""
+
+
+
         try:
             # Store threat detection
             self.threat_detections[threat.threat_id] = threat
@@ -650,6 +662,9 @@ class SurveillanceEngine:
 
     async def _trigger_threat_alert(self, threat: ThreatDetection, config: SurveillanceConfig) -> None:
         """Trigger alert notifications for threat detection"""
+
+
+
         try:
             for alert_type in config.alert_types:
                 alert = AlertNotification(
@@ -670,6 +685,9 @@ class SurveillanceEngine:
 
     def _generate_alert_message(self, threat: ThreatDetection) -> str:
         """Generate alert message for threat detection"""
+
+
+
         return f"""
 CONTENT THREAT ALERT
 
@@ -784,6 +802,9 @@ False Positive Probability: {threat.false_positive_probability:.2%}
 
     async def _send_alert(self, alert: AlertNotification) -> bool:
         """Send alert notification"""
+
+
+
         try:
             if alert.alert_type == AlertType.EMAIL:
                 return await self._send_email_alert(alert)
@@ -803,6 +824,9 @@ False Positive Probability: {threat.false_positive_probability:.2%}
 
     async def _send_email_alert(self, alert: AlertNotification) -> bool:
         """Send email alert"""
+
+
+
         try:
             smtp_server = settings.SMTP_SERVER
             smtp_port = settings.SMTP_PORT
@@ -831,6 +855,9 @@ False Positive Probability: {threat.false_positive_probability:.2%}
 
     async def _send_sms_alert(self, alert: AlertNotification) -> bool:
         """Send SMS alert using Twilio"""
+
+
+
         try:
             client = TwilioClient(settings.TWILIO_ACCOUNT_SID, settings.TWILIO_AUTH_TOKEN)
             
@@ -848,6 +875,9 @@ False Positive Probability: {threat.false_positive_probability:.2%}
 
     async def _send_webhook_alert(self, alert: AlertNotification) -> bool:
         """Send webhook alert"""
+
+
+
         try:
             webhook_payload = {
                 'alert_id': alert.alert_id,
@@ -874,6 +904,9 @@ False Positive Probability: {threat.false_positive_probability:.2%}
 
     async def _send_slack_alert(self, alert: AlertNotification) -> bool:
         """Send Slack alert"""
+
+
+
         try:
             slack_webhook_url = alert.recipient
             
@@ -986,6 +1019,9 @@ False Positive Probability: {threat.false_positive_probability:.2%}
 
     async def _load_surveillance_targets(self) -> None:
         """Load surveillance targets from database"""
+
+
+
         try:
             # This would load from database
             # Placeholder implementation
@@ -996,6 +1032,9 @@ False Positive Probability: {threat.false_positive_probability:.2%}
 
     async def _save_surveillance_target(self, config: SurveillanceConfig) -> None:
         """Save surveillance target to database"""
+
+
+
         try:
             # This would save to database
             # Placeholder implementation
@@ -1006,6 +1045,9 @@ False Positive Probability: {threat.false_positive_probability:.2%}
 
     async def _save_threat_detection(self, threat: ThreatDetection) -> None:
         """Save threat detection to database"""
+
+
+
         try:
             # This would save to database
             # Placeholder implementation
@@ -1016,6 +1058,9 @@ False Positive Probability: {threat.false_positive_probability:.2%}
 
     async def _save_statistics_to_redis(self) -> None:
         """Save statistics to Redis"""
+
+
+
         try:
             if self.redis_client:
                 stats_key = "surveillance_engine:stats"
@@ -1027,6 +1072,9 @@ False Positive Probability: {threat.false_positive_probability:.2%}
 
     async def stop_surveillance_target(self, target_id: str) -> bool:
         """Stop surveillance for specific target"""
+
+
+
         try:
             if target_id in self.surveillance_targets:
                 self.surveillance_targets[target_id].active = False
@@ -1046,6 +1094,9 @@ False Positive Probability: {threat.false_positive_probability:.2%}
 
     async def pause_surveillance_target(self, target_id: str, duration_minutes: int = 60) -> bool:
         """Temporarily pause surveillance for target"""
+
+
+
         try:
             if target_id in self.active_monitors:
                 # Store resume time
@@ -1076,6 +1127,9 @@ False Positive Probability: {threat.false_positive_probability:.2%}
 
     def get_surveillance_statistics(self) -> Dict[str, Any]:
         """Get comprehensive surveillance statistics"""
+
+
+
         return {
             **self.surveillance_stats,
             'targets_configured': len(self.surveillance_targets),
@@ -1149,6 +1203,9 @@ class AlertSystem:
     
     async def send_alert(self, alert_data: Dict[str, Any]) -> bool:
         """Send alert through configured channels"""
+
+
+
         try:
             alert = AlertNotification(
                 alert_id=str(uuid.uuid4()),

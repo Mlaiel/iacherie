@@ -159,6 +159,9 @@ class IntelligentLoadBalancer(BaseAgent):
 
     async def start(self):
         """Start load balancer operations"""
+
+
+
         try:
             # Start health checking
             await self._start_health_checking()
@@ -177,6 +180,9 @@ class IntelligentLoadBalancer(BaseAgent):
 
     async def stop(self):
         """Stop load balancer operations"""
+
+
+
         try:
             if self.health_check_task:
                 self.health_check_task.cancel()
@@ -241,6 +247,9 @@ class IntelligentLoadBalancer(BaseAgent):
                               endpoints: List[ServiceEndpoint], 
                               algorithm: LoadBalancingAlgorithm) -> ServiceEndpoint:
         """Select endpoint using specified algorithm"""
+
+
+
         try:
             # Check session affinity first
             if request.session_id and request.session_id in self.session_affinity:
@@ -314,10 +323,16 @@ class IntelligentLoadBalancer(BaseAgent):
 
     def _least_connections_selection(self, endpoints: List[ServiceEndpoint]) -> ServiceEndpoint:
         """Least connections endpoint selection"""
+
+
+
         return min(endpoints, key=lambda ep: ep.current_connections)
 
     def _least_response_time_selection(self, endpoints: List[ServiceEndpoint]) -> ServiceEndpoint:
         """Least response time endpoint selection"""
+
+
+
         return min(endpoints, key=lambda ep: ep.response_time_ms)
 
     def _weighted_least_connections_selection(self, endpoints: List[ServiceEndpoint]) -> ServiceEndpoint:
@@ -343,6 +358,9 @@ class IntelligentLoadBalancer(BaseAgent):
     async def _adaptive_intelligent_selection(self, request: LoadBalancingRequest, 
                                             endpoints: List[ServiceEndpoint]) -> ServiceEndpoint:
         """AI-powered adaptive endpoint selection"""
+
+
+
         try:
             # Calculate score for each endpoint
             endpoint_scores = []
@@ -366,6 +384,9 @@ class IntelligentLoadBalancer(BaseAgent):
 
     async def _calculate_endpoint_score(self, endpoint: ServiceEndpoint, request: LoadBalancingRequest) -> float:
         """Calculate intelligent score for endpoint selection"""
+
+
+
         try:
             score = 0.0
             
@@ -410,6 +431,9 @@ class IntelligentLoadBalancer(BaseAgent):
 
     async def _track_request(self, request: LoadBalancingRequest, decision: RoutingDecision):
         """Track request for analytics and optimization"""
+
+
+
         try:
             request_record = {
                 "timestamp": request.timestamp.isoformat(),
@@ -443,6 +467,9 @@ class IntelligentLoadBalancer(BaseAgent):
 
     def _calculate_confidence_score(self, endpoint: ServiceEndpoint) -> float:
         """Calculate confidence score for routing decision"""
+
+
+
         try:
             confidence = 0.0
             
@@ -499,6 +526,9 @@ class IntelligentLoadBalancer(BaseAgent):
 
     async def _check_endpoint_health(self, endpoint: ServiceEndpoint):
         """Check health of a single endpoint"""
+
+
+
         try:
             # Simulate health check (in production, this would make HTTP requests)
             start_time = time.time()
@@ -545,6 +575,9 @@ class IntelligentLoadBalancer(BaseAgent):
 
     async def add_endpoint(self, service_name: str, endpoint: ServiceEndpoint):
         """Add new endpoint to service"""
+
+
+
         try:
             with self.routing_lock:
                 self.service_endpoints[service_name].append(endpoint)
@@ -556,6 +589,9 @@ class IntelligentLoadBalancer(BaseAgent):
 
     async def remove_endpoint(self, service_name: str, endpoint_id: str):
         """Remove endpoint from service"""
+
+
+
         try:
             with self.routing_lock:
                 endpoints = self.service_endpoints.get(service_name, [])
@@ -575,6 +611,9 @@ class IntelligentLoadBalancer(BaseAgent):
 
     async def _load_configuration(self):
         """Load load balancer configuration"""
+
+
+
         try:
             # Load algorithm configurations for each service
             default_algorithms = {
@@ -592,6 +631,9 @@ class IntelligentLoadBalancer(BaseAgent):
 
     async def _initialize_default_endpoints(self):
         """Initialize default endpoints for services"""
+
+
+
         try:
             default_endpoints = {
                 "content_agent": [
@@ -616,6 +658,9 @@ class IntelligentLoadBalancer(BaseAgent):
 
     async def get_load_balancer_status(self) -> Dict[str, Any]:
         """Get comprehensive load balancer status"""
+
+
+
         try:
             status = {
                 "services": len(self.service_endpoints),
@@ -658,6 +703,9 @@ class IntelligentLoadBalancer(BaseAgent):
 
     async def health_check(self) -> Dict[str, Any]:
         """Health check for load balancer"""
+
+
+
         try:
             healthy_services = 0
             total_services = len(self.service_endpoints)

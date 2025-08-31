@@ -8,7 +8,7 @@ Handles various website structures, content extraction, and monitoring.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
@@ -201,6 +201,9 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
     
     def _setup_selenium_driver(self) -> None:
         """Setup Selenium WebDriver for JavaScript-heavy sites"""
+
+
+
         try:
             chrome_options = webdriver.ChromeOptions()
             chrome_options.add_argument('--headless')
@@ -228,6 +231,9 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
     
     def _setup_scrapy_runner(self) -> None:
         """Setup Scrapy crawler runner"""
+
+
+
         try:
             scrapy_settings = get_project_settings()
             scrapy_settings.setdict({
@@ -524,6 +530,9 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
     
     async def _crawl_with_requests(self, url: str) -> Optional[WebPageData]:
         """Crawl URL using requests library"""
+
+
+
         try:
             response = self.session.get(url, timeout=30)
             response.raise_for_status()
@@ -677,6 +686,9 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
     
     async def _check_robots_txt(self, url: str) -> bool:
         """Check if URL is allowed by robots.txt"""
+
+
+
         try:
             parsed_url = urlparse(url)
             base_url = f"{parsed_url.scheme}://{parsed_url.netloc}"
@@ -699,6 +711,9 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
     
     async def _determine_best_method(self, url: str) -> str:
         """Determine the best crawling method for a URL"""
+
+
+
         try:
             # Quick HEAD request to check content type
             response = self.session.head(url, timeout=10)
@@ -735,6 +750,9 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
     
     async def _calculate_content_similarity(self, content1: str, content2: str) -> float:
         """Calculate similarity between two pieces of content"""
+
+
+
         try:
             # Simple word-based similarity
             words1 = set(content1.lower().split())
@@ -799,6 +817,9 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
     
     async def cleanup(self) -> None:
         """Cleanup resources"""
+
+
+
         try:
             if hasattr(self, 'driver') and self.driver:
                 self.driver.quit()
@@ -811,6 +832,9 @@ class GenericWebCrawlerEngine(BaseCrawlerEngine):
     
     def __del__(self):
         """Destructor to ensure cleanup"""
+
+
+
         try:
             if hasattr(self, 'driver') and self.driver:
                 self.driver.quit()

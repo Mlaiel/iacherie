@@ -7,7 +7,7 @@ and enhancing creator motivation through dynamic reward algorithms.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This reward optimization AI and algorithms are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED and will result in legal action.
@@ -138,6 +138,9 @@ class RewardOptimizer:
         Returns:
             Optimized reward recommendations
         """
+
+
+
         try:
             # Get or create user reward profile
             user_profile = await self._get_or_create_reward_profile(user_id)
@@ -274,6 +277,9 @@ class RewardOptimizer:
         user_profile: Dict[str, Any]
     ) -> Optional[OptimizedReward]:
         """Optimize a specific reward for the user"""
+
+
+
         try:
             # Get base reward amount
             base_amount = self._get_base_reward_amount(reward_type, activity_analysis)
@@ -603,6 +609,9 @@ class RewardOptimizer:
     
     def _serialize_reward(self, reward: OptimizedReward) -> Dict[str, Any]:
         """Serialize reward for JSON response"""
+
+
+
         return {
             'reward_id': reward.reward_id,
             'reward_type': reward.reward_type.value,

@@ -152,6 +152,9 @@ class RevenueAnalytics:
         Returns:
             Comprehensive revenue breakdown
         """
+
+
+
         try:
             cache_key = f"revenue_total:{user_id}:{time_period.days}:{currency}"
             cached_result = await self._get_cached_result(cache_key)
@@ -283,6 +286,9 @@ class RevenueAnalytics:
         Returns:
             Revenue forecast with confidence intervals
         """
+
+
+
         try:
             cache_key = f"revenue_forecast:{user_id}:{forecast_days}:{currency}"
             cached_result = await self._get_cached_result(cache_key)
@@ -461,6 +467,9 @@ class RevenueAnalytics:
         Returns:
             Revenue optimization insights and recommendations
         """
+
+
+
         try:
             cache_key = f"revenue_optimization:{user_id}:{time_period.days}"
             cached_result = await self._get_cached_result(cache_key)
@@ -516,6 +525,9 @@ class RevenueAnalytics:
         Returns:
             Payment status information
         """
+
+
+
         try:
             query_conditions = "WHERE rm.user_id = :user_id"
             query_params = {"user_id": user_id}
@@ -602,6 +614,9 @@ class RevenueAnalytics:
     
     async def _calculate_revenue_growth(self, user_id: str, time_period: timedelta, currency: str) -> Dict[str, float]:
         """Calculate revenue growth metrics."""
+
+
+
         try:
             # Get current period revenue
             current_end = datetime.utcnow()
@@ -670,6 +685,9 @@ class RevenueAnalytics:
     
     async def _identify_revenue_drivers(self, user_id: str) -> List[str]:
         """Identify key revenue drivers for forecasting."""
+
+
+
         try:
             # Analyze revenue by stream and platform to identify top drivers
             query = text("""
@@ -703,6 +721,9 @@ class RevenueAnalytics:
     
     async def _identify_risk_factors(self, user_id: str, df: pd.DataFrame) -> List[str]:
         """Identify revenue risk factors."""
+
+
+
         try:
             risk_factors = []
             
@@ -743,6 +764,9 @@ class RevenueAnalytics:
     
     async def _generate_revenue_recommendations(self, user_id: str, predictions: np.ndarray, df: pd.DataFrame) -> List[str]:
         """Generate revenue optimization recommendations."""
+
+
+
         try:
             recommendations = []
             
@@ -772,6 +796,9 @@ class RevenueAnalytics:
     
     async def _calculate_revenue_efficiency(self, user_id: str, time_period: timedelta) -> float:
         """Calculate revenue efficiency score."""
+
+
+
         try:
             # This is a simplified efficiency calculation
             # In practice, this would consider costs, time investment, etc.
@@ -797,6 +824,9 @@ class RevenueAnalytics:
     
     async def _calculate_optimization_potential(self, user_id: str, time_period: timedelta) -> Decimal:
         """Calculate potential revenue optimization amount."""
+
+
+
         try:
             current_revenue = await self.calculate_total_revenue(user_id, time_period)
             current_efficiency = await self._calculate_revenue_efficiency(user_id, time_period)
@@ -815,6 +845,9 @@ class RevenueAnalytics:
     
     async def _identify_priority_actions(self, user_id: str, current_metrics: RevenueBreakdown) -> List[Dict]:
         """Identify priority actions for revenue optimization."""
+
+
+
         try:
             actions = []
             
@@ -854,6 +887,9 @@ class RevenueAnalytics:
     
     async def _get_cached_result(self, cache_key: str) -> Optional[Dict]:
         """Get cached result from Redis."""
+
+
+
         try:
             cached_data = self.redis_client.get(cache_key)
             if cached_data:
@@ -865,6 +901,9 @@ class RevenueAnalytics:
     
     async def _cache_result(self, cache_key: str, data: Dict, ttl: int = None) -> None:
         """Cache result in Redis."""
+
+
+
         try:
             cache_ttl = ttl or self.cache_ttl
             self.redis_client.setex(

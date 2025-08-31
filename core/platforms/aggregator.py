@@ -579,6 +579,9 @@ class PlatformAggregator:
     
     def get_aggregation_stats(self) -> Dict[str, Any]:
         """Get aggregation statistics"""
+
+
+
         return {
             'content_mappings': len(self.content_mappings),
             'metric_definitions': len(self.metric_definitions),

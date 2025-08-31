@@ -8,7 +8,7 @@ Responsibility: Advanced multilingual support with speech recognition and real-t
 Technologies: Python, NLP, Speech Recognition, Translation APIs, Language Detection
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -323,7 +323,7 @@ class CulturalAdaptation:
 
 class MultilingualManager(ABC):
     """
-    🌍 Advanced Multilingual Manager - IA-Influencer-Agent
+     Advanced Multilingual Manager - IA-Influencer-Agent
     
     Responsabilité:
     Gestionnaire industriel pour support multilingue universel avec IA avancée
@@ -395,7 +395,7 @@ class MultilingualManager(ABC):
             "translation_quality_average": 0.0
         }
         
-        logger.info(f"🌍 Multilingual Manager initialized - {len(self._languages)} languages supported")
+        logger.info(f" Multilingual Manager initialized - {len(self._languages)} languages supported")
     
     @abstractmethod
     async def initialize_language_support(self) -> bool:
@@ -540,6 +540,9 @@ class MultilingualManager(ABC):
         Returns:
             Dict[str, TranslationRequest]: Translation results by target language
         """
+
+
+
         try:
             # Create translation tasks
             translation_tasks = []
@@ -562,7 +565,7 @@ class MultilingualManager(ABC):
                     translation_result = await task
                     results[target_lang] = translation_result
                 except Exception as e:
-                    logger.error(f"❌ Translation failed for {target_lang}: {e}")
+                    logger.error(f" Translation failed for {target_lang}: {e}")
                     # Create failed request
                     failed_request = TranslationRequest(
                         id=str(uuid.uuid4()),
@@ -576,11 +579,11 @@ class MultilingualManager(ABC):
                     )
                     results[target_lang] = failed_request
             
-            logger.info(f"🌍 Multi-target translation completed: {len(results)} languages")
+            logger.info(f" Multi-target translation completed: {len(results)} languages")
             return results
             
         except Exception as e:
-            logger.error(f"❌ Multi-target translation failed: {e}")
+            logger.error(f" Multi-target translation failed: {e}")
             raise
     
     async def adapt_content_culturally(
@@ -600,6 +603,9 @@ class MultilingualManager(ABC):
         Returns:
             Dict: Culturally adapted content
         """
+
+
+
         try:
             # Get cultural adaptation rules
             adaptation_key = f"{source_culture}_{target_culture}"
@@ -640,11 +646,11 @@ class MultilingualManager(ABC):
             if adaptation.color_preferences:
                 adapted_content = await self._adapt_colors(adapted_content, adaptation.color_preferences)
             
-            logger.info(f"🌍 Cultural adaptation completed: {source_culture} → {target_culture}")
+            logger.info(f" Cultural adaptation completed: {source_culture} → {target_culture}")
             return adapted_content
             
         except Exception as e:
-            logger.error(f"❌ Cultural adaptation failed: {e}")
+            logger.error(f" Cultural adaptation failed: {e}")
             return content
     
     async def get_language_analytics(
@@ -763,6 +769,9 @@ class MultilingualManager(ABC):
         Returns:
             Dict: Optimization results
         """
+
+
+
         try:
             optimization_results = {
                 "cache_optimized": 0,
@@ -813,11 +822,11 @@ class MultilingualManager(ABC):
                 # Update metrics
                 self._metrics["most_requested_languages"] = popular_languages[:10]
             
-            logger.info(f"🌍 Language resources optimized: {optimization_results}")
+            logger.info(f" Language resources optimized: {optimization_results}")
             return optimization_results
             
         except Exception as e:
-            logger.error(f"❌ Language optimization failed: {e}")
+            logger.error(f" Language optimization failed: {e}")
             return {"error": str(e)}
     
     async def _create_cultural_adaptation(
@@ -896,22 +905,28 @@ class MultilingualManager(ABC):
     
     async def _preload_language_models(self, language_code: str) -> bool:
         """Preload language models for faster processing"""
+
+
+
         try:
             # This would preload actual language models
-            logger.info(f"🌍 Preloaded models for language: {language_code}")
+            logger.info(f" Preloaded models for language: {language_code}")
             return True
         except Exception as e:
-            logger.error(f"❌ Failed to preload models for {language_code}: {e}")
+            logger.error(f" Failed to preload models for {language_code}: {e}")
             return False
     
     async def _unload_language_resources(self, language_code: str) -> bool:
         """Unload unused language resources"""
+
+
+
         try:
             # This would unload actual language resources
-            logger.info(f"🌍 Unloaded resources for language: {language_code}")
+            logger.info(f" Unloaded resources for language: {language_code}")
             return True
         except Exception as e:
-            logger.error(f"❌ Failed to unload resources for {language_code}: {e}")
+            logger.error(f" Failed to unload resources for {language_code}: {e}")
             return False
     
     @asynccontextmanager
@@ -919,13 +934,16 @@ class MultilingualManager(ABC):
         """Context manager for translation operations"""
         session_id = str(uuid.uuid4())
         try:
-            logger.info(f"🌍 Translation session started: {session_id} for user {user_id}")
+            logger.info(f" Translation session started: {session_id} for user {user_id}")
             yield session_id
         finally:
-            logger.info(f"🌍 Translation session ended: {session_id}")
+            logger.info(f" Translation session ended: {session_id}")
     
     async def cleanup(self) -> bool:
         """Cleanup multilingual resources"""
+
+
+
         try:
             # Stop monitoring
             self._monitoring_active = False
@@ -972,7 +990,7 @@ class MultilingualManager(ABC):
             return True
             
         except Exception as e:
-            logger.error(f"❌ Multilingual cleanup failed: {e}")
+            logger.error(f" Multilingual cleanup failed: {e}")
             return False
     
     def get_stats(self) -> Dict[str, Any]:

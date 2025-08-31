@@ -7,7 +7,7 @@ providing dynamic configuration updates, validation, and template management.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ WARNING: This code is proprietary and confidential.
+ WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
@@ -103,6 +103,9 @@ class ConfigurationManager:
     
     async def initialize(self) -> None:
         """Initialize configuration manager"""
+
+
+
         try:
             logger.info("Initializing Configuration Manager...")
             
@@ -172,6 +175,9 @@ class ConfigurationManager:
     
     def _get_nginx_template(self) -> str:
         """Get Nginx configuration template"""
+
+
+
         return """
 # Nginx Configuration for IA Influencer Agent Platform
 # Generated at {{ generated_at }}
@@ -308,6 +314,9 @@ http {
     
     def _get_haproxy_template(self) -> str:
         """Get HAProxy configuration template"""
+
+
+
         return """
 # HAProxy Configuration for IA Influencer Agent Platform
 # Generated at {{ generated_at }}
@@ -406,6 +415,9 @@ backend api_backend
     
     def _get_envoy_template(self) -> str:
         """Get Envoy configuration template"""
+
+
+
         return """
 # Envoy Configuration for IA Influencer Agent Platform
 # Generated at {{ generated_at }}
@@ -492,6 +504,9 @@ static_resources:
     
     def _get_ssl_template(self) -> str:
         """Get SSL configuration template"""
+
+
+
         return """
 # SSL Configuration for IA Influencer Agent Platform
 # Generated at {{ generated_at }}
@@ -818,6 +833,9 @@ HSTS_INCLUDE_SUBDOMAINS={{ ssl_config.hsts_include_subdomains | default(true) | 
     
     async def save_configuration(self, config: LoadBalancerConfiguration) -> bool:
         """Save configuration to file"""
+
+
+
         try:
             # Create backup of current configuration
             await self._backup_configuration()
@@ -1010,6 +1028,9 @@ HSTS_INCLUDE_SUBDOMAINS={{ ssl_config.hsts_include_subdomains | default(true) | 
     
     async def get_configuration(self) -> Optional[LoadBalancerConfiguration]:
         """Get current configuration"""
+
+
+
         return self.current_config
     
     async def get_service_configuration(self, service_name: str) -> Optional[ServiceConfiguration]:
@@ -1029,6 +1050,9 @@ HSTS_INCLUDE_SUBDOMAINS={{ ssl_config.hsts_include_subdomains | default(true) | 
     
     async def shutdown(self) -> None:
         """Shutdown configuration manager"""
+
+
+
         try:
             logger.info("Shutting down Configuration Manager...")
             

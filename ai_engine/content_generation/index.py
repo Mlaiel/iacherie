@@ -9,21 +9,21 @@ content optimization for musicians, bloggers, photographers, influencers, and co
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 
 Team Specialties:
-✅ Lead Dev IA + AI Architect Developer
-✅ Senior Backend Developer (Python/FastAPI/Django)
-✅ Machine Learning Engineer (TensorFlow/PyTorch/Hugging Face)
-✅ Content Generation Specialist (GPT-4, DALL-E, Midjourney)
-✅ Computer Vision Engineer (Image/Video Generation)
-✅ Audio Developer (Music & Voice Synthesis)
-✅ NLP Engineer (Advanced Text Generation)
-✅ SEO & Content Optimization Specialist
-✅ IA Prompt Engineer
+ Lead Dev IA + AI Architect Developer
+ Senior Backend Developer (Python/FastAPI/Django)
+ Machine Learning Engineer (TensorFlow/PyTorch/Hugging Face)
+ Content Generation Specialist (GPT-4, DALL-E, Midjourney)
+ Computer Vision Engineer (Image/Video Generation)
+ Audio Developer (Music & Voice Synthesis)
+ NLP Engineer (Advanced Text Generation)
+ SEO & Content Optimization Specialist
+ IA Prompt Engineer
 
 Business Logic Coverage:
 Content Request → AI Model Selection → Creative Generation → Quality Enhancement
@@ -499,10 +499,16 @@ class ContentGenerationFramework:
     
     def get_supported_content_types(self) -> List[str]:
         """Get list of all supported content types."""
+
+
+
         return [ct.value for ct in ContentType]
     
     def get_available_platforms(self) -> List[str]:
         """Get list of all available platforms."""
+
+
+
         return [platform.value for platform in Platform]
     
     def get_generation_capabilities(self) -> Dict[str, Any]:

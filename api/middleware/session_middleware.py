@@ -306,6 +306,9 @@ class SessionManagerMiddleware(BaseHTTPMiddleware):
     
     def get_session_stats(self) -> Dict[str, Any]:
         """Get session management statistics"""
+
+
+
         
         return {
             "active_sessions": self.active_sessions,
@@ -382,6 +385,9 @@ async def create_session(request: Request, user_data: Dict[str, Any]):
 
 async def get_session_data(request: Request) -> Dict[str, Any]:
     """Helper to get session data"""
+
+
+
     return getattr(request.state, 'session_data', {})
 
 

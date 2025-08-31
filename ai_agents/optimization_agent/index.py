@@ -11,7 +11,7 @@ and content processing enhancement.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This optimization index and all associated systems are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -234,6 +234,9 @@ async def validate_rate_limit(request_info: Dict[str, Any]) -> None:
 @app.get("/")
 async def root():
     """Root endpoint with service information"""
+
+
+
     return {
         "service": "Optimization Agent API",
         "version": "2.0.0",
@@ -246,6 +249,9 @@ async def root():
 @app.get("/health")
 async def health_check():
     """Health check endpoint"""
+
+
+
     try:
         system = await get_optimization_system()
         health_status = await system.health_check()
@@ -269,6 +275,9 @@ async def health_check():
 @app.get("/info")
 async def get_module_info():
     """Get comprehensive module information"""
+
+
+
     return get_optimization_module_info()
 
 @app.get("/metrics", response_model=SystemMetricsModel)
@@ -540,6 +549,9 @@ async def cancel_optimization(
 # Background tasks
 async def monitor_optimization_progress(optimization_id: str, user_id: str):
     """Monitor optimization progress and send notifications"""
+
+
+
     try:
         system = await get_optimization_system()
         
@@ -870,14 +882,23 @@ optimization_index = OptimizationModuleIndex()
 # Export convenience functions
 def get_optimizer(name: str):
     """Get an optimizer component by name"""
+
+
+
     return optimization_index.get_component(name)
 
 def list_optimizers():
     """List all available optimization components"""
+
+
+
     return optimization_index.list_components()
 
 def validate_optimization_module():
     """Validate optimization module integrity"""
+
+
+
     return optimization_index.validate_module_integrity()
 
 # Module metadata

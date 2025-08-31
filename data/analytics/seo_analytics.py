@@ -213,6 +213,9 @@ class SEOAnalytics:
         Returns:
             List[KeywordMetrics]: Keyword performance data
         """
+
+
+
         try:
             cache_key = self.keyword_cache_key.format(f"{user_id}_{hash(str(keywords))}")
             cached_data = await self._get_from_cache(cache_key)
@@ -251,6 +254,9 @@ class SEOAnalytics:
         Returns:
             ContentSEOMetrics: Content SEO performance data
         """
+
+
+
         try:
             cache_key = self.seo_cache_key.format(f"content_{content_id}")
             cached_data = await self._get_from_cache(cache_key)
@@ -286,6 +292,9 @@ class SEOAnalytics:
         Returns:
             List[SEOOpportunity]: Ranked SEO opportunities
         """
+
+
+
         try:
             # Get user content if not specified
             if not content_ids:
@@ -332,6 +341,9 @@ class SEOAnalytics:
         Returns:
             List[CompetitorAnalysis]: Competitor analysis data
         """
+
+
+
         try:
             # Identify competitors if not specified
             if not competitor_ids:
@@ -361,6 +373,9 @@ class SEOAnalytics:
         Returns:
             SEOAnalyticsReport: Comprehensive SEO report
         """
+
+
+
         try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=period_days)
@@ -417,6 +432,9 @@ class SEOAnalytics:
         Returns:
             Dict[str, Any]: Optimization recommendations
         """
+
+
+
         try:
             # Analyze current content
             content_data = await self._fetch_content_data(content_id)
@@ -455,6 +473,9 @@ class SEOAnalytics:
     
     async def _get_user_tracked_keywords(self, user_id: str) -> List[str]:
         """Get user's tracked keywords"""
+
+
+
         try:
             query = select(AnalyticsModel).where(
                 AnalyticsModel.user_id == user_id,
@@ -494,6 +515,9 @@ class SEOAnalytics:
     
     async def _fetch_content_data(self, content_id: str) -> Optional[Dict]:
         """Fetch content data from database"""
+
+
+
         try:
             query = select(ContentModel).where(ContentModel.id == content_id)
             result = await self.db_session.execute(query)
@@ -534,6 +558,9 @@ class SEOAnalytics:
     
     async def _get_user_content_ids(self, user_id: str) -> List[str]:
         """Get all content IDs for user"""
+
+
+
         try:
             query = select(ContentModel.id).where(ContentModel.user_id == user_id)
             result = await self.db_session.execute(query)
@@ -655,6 +682,9 @@ class SEOAnalytics:
     
     async def _get_from_cache(self, key: str) -> Optional[Dict]:
         """Get data from Redis cache"""
+
+
+
         try:
             data = self.redis.get(key)
             return json.loads(data) if data else None
@@ -663,6 +693,9 @@ class SEOAnalytics:
     
     async def _cache_data(self, key: str, data: Any, ttl: int):
         """Cache data in Redis"""
+
+
+
         try:
             self.redis.setex(key, ttl, json.dumps(data, default=str))
         except Exception as e:

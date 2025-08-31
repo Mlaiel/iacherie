@@ -4,7 +4,7 @@ Module: backend/core/events/event_middleware.py
 Architecture: Event Processing Middleware Chain
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 
 Description:
@@ -134,6 +134,9 @@ class AuthenticationMiddleware(EventMiddleware):
     
     async def process(self, event: Event, context: Dict[str, Any]) -> MiddlewareResult:
         """Authentifie l'événement"""
+
+
+
         try:
             # Vérification token JWT dans metadata
             token = event.metadata.get("auth_token")
@@ -197,6 +200,9 @@ class ValidationMiddleware(EventMiddleware):
     
     async def process(self, event: Event, context: Dict[str, Any]) -> MiddlewareResult:
         """Valide l'événement"""
+
+
+
         try:
             # Validation de base
             validation_errors = []
@@ -280,6 +286,9 @@ class LoggingMiddleware(EventMiddleware):
     
     async def process(self, event: Event, context: Dict[str, Any]) -> MiddlewareResult:
         """Logge l'événement"""
+
+
+
         try:
             # Construction du message de log
             log_data = {
@@ -335,6 +344,9 @@ class MetricsMiddleware(EventMiddleware):
     
     async def process(self, event: Event, context: Dict[str, Any]) -> MiddlewareResult:
         """Collecte les métriques"""
+
+
+
         try:
             # Compteurs globaux
             self.counters["total_events"] += 1
@@ -374,6 +386,9 @@ class MetricsMiddleware(EventMiddleware):
     
     def get_metrics(self) -> Dict[str, Any]:
         """Retourne les métriques collectées"""
+
+
+
         return {
             "counters": self.counters.copy(),
             "last_reset": self.last_reset.isoformat(),
@@ -415,6 +430,9 @@ class RateLimitingMiddleware(EventMiddleware):
     
     async def process(self, event: Event, context: Dict[str, Any]) -> MiddlewareResult:
         """Vérifie les limites de débit"""
+
+
+
         try:
             current_time = datetime.now(timezone.utc)
             
@@ -483,6 +501,9 @@ class TransformationMiddleware(EventMiddleware):
     
     async def process(self, event: Event, context: Dict[str, Any]) -> MiddlewareResult:
         """Transforme l'événement"""
+
+
+
         try:
             # Transformations standard
             transformed_event = await self._apply_standard_transforms(event)
@@ -616,6 +637,9 @@ class MiddlewareChain:
     
     def get_middlewares(self) -> List[Dict[str, Any]]:
         """Retourne la liste des middlewares"""
+
+
+
         return [
             {
                 "middleware_id": m.middleware_id,

@@ -165,6 +165,9 @@ class MultiFormatExtractor:
     
     async def _extract_file_metadata(self, file_path: str) -> Dict[str, Any]:
         """Extract basic file metadata."""
+
+
+
         try:
             file_stat = Path(file_path).stat()
             
@@ -185,6 +188,9 @@ class MultiFormatExtractor:
     
     def _calculate_file_hash(self, file_path: str) -> str:
         """Calculate SHA-256 hash of file."""
+
+
+
         try:
             hash_sha256 = hashlib.sha256()
             with open(file_path, "rb") as f:
@@ -653,6 +659,9 @@ class MultiFormatExtractor:
     
     def _extract_keywords(self, text: str) -> List[str]:
         """Extract keywords from text using TF-IDF."""
+
+
+
         try:
             # Simple keyword extraction using word frequency
             words = text.lower().split()
@@ -681,6 +690,9 @@ class MultiFormatExtractor:
     
     def _calculate_flesch_score(self, text: str) -> float:
         """Calculate Flesch Reading Ease score."""
+
+
+
         try:
             sentences = [s.strip() for s in text.split('.') if s.strip()]
             words = text.split()
@@ -728,6 +740,9 @@ class AudioFeatureExtractor:
     
     async def extract_technical_metadata(self, file_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
         """Extract technical audio metadata."""
+
+
+
         try:
             # Load audio file
             y, sr = librosa.load(file_path)
@@ -762,6 +777,9 @@ class AudioFeatureExtractor:
     
     async def extract_content_features(self, file_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
         """Extract advanced audio content features."""
+
+
+
         try:
             y, sr = librosa.load(file_path)
             
@@ -861,6 +879,9 @@ class AudioFeatureExtractor:
     
     async def assess_quality(self, file_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
         """Assess audio quality metrics."""
+
+
+
         try:
             y, sr = librosa.load(file_path)
             
@@ -926,6 +947,9 @@ class AudioFeatureExtractor:
     
     def _calculate_harmonic_ratio(self, y: np.ndarray, sr: int) -> float:
         """Calculate harmonic to percussive ratio."""
+
+
+
         try:
             # Separate harmonic and percussive components
             y_harmonic, y_percussive = librosa.effects.hpss(y)
@@ -978,6 +1002,9 @@ class AudioFeatureExtractor:
     
     def _estimate_snr(self, y: np.ndarray) -> float:
         """Estimate signal-to-noise ratio."""
+
+
+
         try:
             # Simple SNR estimation using spectral analysis
             stft = librosa.stft(y)
@@ -1065,6 +1092,9 @@ class VideoFeatureExtractor:
     
     async def extract_technical_metadata(self, file_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
         """Extract technical video metadata."""
+
+
+
         try:
             cap = cv2.VideoCapture(file_path)
             
@@ -1107,6 +1137,9 @@ class VideoFeatureExtractor:
     
     async def extract_content_features(self, file_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
         """Extract video content features using computer vision."""
+
+
+
         try:
             cap = cv2.VideoCapture(file_path)
             
@@ -1166,6 +1199,9 @@ class VideoFeatureExtractor:
     
     async def assess_quality(self, file_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
         """Assess video quality metrics."""
+
+
+
         try:
             cap = cv2.VideoCapture(file_path)
             
@@ -1505,6 +1541,9 @@ class ImageFeatureExtractor:
     
     async def extract_technical_metadata(self, file_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
         """Extract technical image metadata."""
+
+
+
         try:
             with Image.open(file_path) as img:
                 # Basic image properties
@@ -1547,6 +1586,9 @@ class ImageFeatureExtractor:
     
     async def extract_content_features(self, file_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
         """Extract image content features using computer vision."""
+
+
+
         try:
             # Load image with OpenCV for analysis
             image = cv2.imread(file_path)
@@ -1577,6 +1619,9 @@ class ImageFeatureExtractor:
     
     async def assess_quality(self, file_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
         """Assess image quality metrics."""
+
+
+
         try:
             image = cv2.imread(file_path)
             if image is None:
@@ -1742,6 +1787,9 @@ class TextFeatureExtractor:
     
     def _initialize_nlp_tools(self):
         """Initialize NLP processing tools."""
+
+
+
         try:
             import spacy
             # Try to load a language model
@@ -1757,6 +1805,9 @@ class TextFeatureExtractor:
     
     async def extract_technical_metadata(self, file_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
         """Extract technical text metadata."""
+
+
+
         try:
             # Read text file
             with open(file_path, 'r', encoding='utf-8') as f:
@@ -1801,6 +1852,9 @@ class TextFeatureExtractor:
     
     async def extract_content_features(self, file_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
         """Extract text content features using NLP."""
+
+
+
         try:
             # Read text file
             with open(file_path, 'r', encoding='utf-8') as f:
@@ -1830,6 +1884,9 @@ class TextFeatureExtractor:
     
     async def assess_quality(self, file_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
         """Assess text quality metrics."""
+
+
+
         try:
             # Read text file
             with open(file_path, 'r', encoding='utf-8') as f:
@@ -1878,6 +1935,9 @@ class TextFeatureExtractor:
     
     async def _detect_language(self, text_sample: str) -> Dict[str, Any]:
         """Detect text language."""
+
+
+
         try:
             from langdetect import detect, detect_langs
             
@@ -2054,6 +2114,9 @@ class TextFeatureExtractor:
     
     async def _extract_topic_keywords(self, text: str) -> List[str]:
         """Extract topic keywords from text."""
+
+
+
         try:
             from sklearn.feature_extraction.text import TfidfVectorizer
             
@@ -2091,6 +2154,9 @@ class TextFeatureExtractor:
     
     async def _analyze_sentiment(self, text: str) -> Dict[str, Any]:
         """Analyze sentiment of text."""
+
+
+
         try:
             from textblob import TextBlob
             
@@ -2180,6 +2246,9 @@ class TextFeatureExtractor:
     
     async def _assess_grammar_quality(self, text: str) -> Dict[str, Any]:
         """Assess grammar quality of text."""
+
+
+
         try:
             import language_tool_python
             
@@ -2465,6 +2534,9 @@ class MultiFormatExtractor:
     
     def _build_format_mappings(self) -> Dict[str, str]:
         """Build mapping from file extensions to content types."""
+
+
+
         return {
             # Audio formats
             '.mp3': 'audio', '.wav': 'audio', '.flac': 'audio', '.aac': 'audio',
@@ -2812,6 +2884,9 @@ class MetadataExtractor:
     
     def _extract_dominant_colors(self, img_array: np.ndarray, k: int = 5) -> List[List[int]]:
         """Extract dominant colors from image using K-means clustering."""
+
+
+
         
         try:
             from sklearn.cluster import KMeans
@@ -2871,6 +2946,9 @@ class MetadataExtractor:
     
     def _detect_language(self, text: str) -> str:
         """Detect language of text content."""
+
+
+
         
         try:
             from langdetect import detect
@@ -2926,6 +3004,9 @@ class MetadataExtractor:
     
     def _extract_semantic_tags(self, text: str) -> List[str]:
         """Extract semantic tags from text using NLP."""
+
+
+
         
         try:
             # Use spaCy for named entity recognition
@@ -2944,6 +3025,9 @@ class MetadataExtractor:
     
     async def _analyze_image_semantics(self, file_path: Path) -> Dict[str, Any]:
         """Analyze image content for semantic meaning."""
+
+
+
         
         try:
             # Image classification

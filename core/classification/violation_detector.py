@@ -144,6 +144,9 @@ class ViolationDetector:
         Returns:
             List of detected violations with evidence
         """
+
+
+
         try:
             platforms = search_platforms or self.monitored_platforms
             detected_violations = []
@@ -179,6 +182,9 @@ class ViolationDetector:
     
     def _create_content_fingerprint(self, content_path: str, content_type: str) -> Dict[str, Any]:
         """Create comprehensive fingerprint for content matching."""
+
+
+
         try:
             fingerprint = {
                 'content_type': content_type,
@@ -203,6 +209,9 @@ class ViolationDetector:
     
     def _create_audio_fingerprint(self, audio_path: str) -> Dict[str, Any]:
         """Create audio-specific fingerprint."""
+
+
+
         try:
             import librosa
             import chromaprint
@@ -231,6 +240,9 @@ class ViolationDetector:
     
     def _create_image_fingerprint(self, image_path: str) -> Dict[str, Any]:
         """Create image-specific fingerprint."""
+
+
+
         try:
             # Load image
             image = cv2.imread(image_path)
@@ -263,6 +275,9 @@ class ViolationDetector:
     
     def _create_video_fingerprint(self, video_path: str) -> Dict[str, Any]:
         """Create video-specific fingerprint."""
+
+
+
         try:
             cap = cv2.VideoCapture(video_path)
             
@@ -301,6 +316,9 @@ class ViolationDetector:
     
     def _create_text_fingerprint(self, text_path: str) -> Dict[str, Any]:
         """Create text-specific fingerprint."""
+
+
+
         try:
             with open(text_path, 'r', encoding='utf-8') as f:
                 text_content = f.read()
@@ -336,6 +354,9 @@ class ViolationDetector:
         owner_id: str
     ) -> List[Dict[str, Any]]:
         """Search specific platform for content violations."""
+
+
+
         try:
             violations = []
             
@@ -376,6 +397,9 @@ class ViolationDetector:
         owner_id: str
     ) -> Optional[Dict[str, Any]]:
         """Analyze search result for potential violation."""
+
+
+
         try:
             # Download and analyze found content
             found_content_path = self.web_crawler.download_content(
@@ -443,6 +467,9 @@ class ViolationDetector:
         content_type: str
     ) -> float:
         """Calculate similarity between two content fingerprints."""
+
+
+
         try:
             if content_type == 'audio':
                 return self._calculate_audio_similarity(fingerprint1, fingerprint2)
@@ -461,6 +488,9 @@ class ViolationDetector:
     
     def _calculate_audio_similarity(self, fp1: Dict, fp2: Dict) -> float:
         """Calculate audio fingerprint similarity."""
+
+
+
         try:
             # Compare chromaprint fingerprints
             if 'chromaprint' in fp1 and 'chromaprint' in fp2:
@@ -482,6 +512,9 @@ class ViolationDetector:
     
     def _calculate_image_similarity(self, fp1: Dict, fp2: Dict) -> float:
         """Calculate image fingerprint similarity."""
+
+
+
         try:
             # Compare perceptual hashes
             if 'perceptual_hash' in fp1 and 'perceptual_hash' in fp2:
@@ -508,6 +541,9 @@ class ViolationDetector:
     
     def _calculate_video_similarity(self, fp1: Dict, fp2: Dict) -> float:
         """Calculate video fingerprint similarity."""
+
+
+
         try:
             # Compare keyframe hashes
             if 'keyframe_hashes' in fp1 and 'keyframe_hashes' in fp2:
@@ -531,6 +567,9 @@ class ViolationDetector:
     
     def _calculate_text_similarity(self, fp1: Dict, fp2: Dict) -> float:
         """Calculate text fingerprint similarity."""
+
+
+
         try:
             # Compare text hashes
             if 'text_hash' in fp1 and 'text_hash' in fp2:
@@ -605,6 +644,9 @@ class ViolationDetector:
         platform: str
     ) -> ViolationEvidence:
         """Collect comprehensive evidence for the violation."""
+
+
+
         try:
             # Take screenshot of the infringing page
             screenshot_path = self.web_crawler.take_screenshot(search_result['url'])
@@ -642,6 +684,9 @@ class ViolationDetector:
     
     def _prioritize_violations(self, violations: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Prioritize violations based on severity and business impact."""
+
+
+
         try:
             # Sort by severity and similarity score
             severity_order = {
@@ -666,6 +711,9 @@ class ViolationDetector:
     
     def _store_violations(self, violations: List[Dict[str, Any]], content_id: str, owner_id: str) -> None:
         """Store detected violations in database."""
+
+
+
         try:
             for violation in violations:
                 # Create violation model instance
@@ -704,6 +752,9 @@ class ViolationDetector:
     
     def _calculate_file_hash(self, file_path: str) -> str:
         """Calculate SHA-256 hash of file."""
+
+
+
         try:
             with open(file_path, 'rb') as f:
                 file_hash = hashlib.sha256(f.read()).hexdigest()
@@ -714,6 +765,9 @@ class ViolationDetector:
     
     def generate_dmca_notice(self, violation_id: str) -> str:
         """Generate DMCA takedown notice for violation."""
+
+
+
         try:
             # This would generate a proper DMCA notice
             # Implementation would include legal templates
@@ -725,6 +779,9 @@ class ViolationDetector:
     
     def get_violation_stats(self, owner_id: str) -> Dict[str, Any]:
         """Get violation statistics for content owner."""
+
+
+
         try:
             # This would query database for violation statistics
             return {

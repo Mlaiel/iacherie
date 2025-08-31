@@ -8,7 +8,7 @@ across platforms with GDPR compliance and zero-trust architecture.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 Unauthorized use prohibited. Contact: mlaiel@live.de
 """
 
@@ -150,6 +150,9 @@ class SessionAuthenticationHandler:
         fingerprint: SessionFingerprint
     ) -> Tuple[bool, Optional[SecureSessionToken]]:
         """Authenticate session with comprehensive validation"""
+
+
+
         
         try:
             user_id = user_credentials.get("user_id")
@@ -218,6 +221,9 @@ class SessionAuthenticationHandler:
     
     async def _validate_user_credentials(self, credentials: Dict[str, Any]) -> bool:
         """Validate user credentials against database"""
+
+
+
         
         try:
             user_id = credentials.get("user_id")
@@ -250,6 +256,9 @@ class SessionAuthenticationHandler:
         fingerprint: SessionFingerprint
     ) -> bool:
         """Validate session fingerprint against stored fingerprint"""
+
+
+
         
         try:
             # Get stored fingerprint
@@ -290,6 +299,9 @@ class SessionAuthenticationHandler:
     
     async def _calculate_ip_similarity(self, ip1: str, ip2: str) -> float:
         """Calculate IP address similarity (for mobile networks)"""
+
+
+
         
         try:
             # Simple subnet comparison for IPv4
@@ -356,6 +368,9 @@ class SessionAuthenticationHandler:
     
     async def _is_suspicious_ip(self, ip_address: str) -> bool:
         """Check if IP address is suspicious"""
+
+
+
         
         try:
             # Check against threat intelligence feeds
@@ -379,6 +394,9 @@ class SessionAuthenticationHandler:
     
     async def _is_unusual_access_time(self, user_id: str) -> bool:
         """Check if access time is unusual for user"""
+
+
+
         
         try:
             # Get user's typical access patterns
@@ -443,6 +461,9 @@ class SessionAuthenticationHandler:
         security_level: SecurityLevel
     ) -> List[str]:
         """Get user permissions based on security level"""
+
+
+
         
         try:
             async with get_async_session() as session:
@@ -483,6 +504,9 @@ class SessionAuthenticationHandler:
     
     async def _record_failed_attempt(self, user_id: str):
         """Record failed authentication attempt"""
+
+
+
         
         try:
             failed_attempts_key = f"failed_attempts:{user_id}"
@@ -509,6 +533,9 @@ class SessionAuthenticationHandler:
     
     async def _lockout_user(self, user_id: str):
         """Lock out user after too many failed attempts"""
+
+
+
         
         try:
             lockout_until = datetime.utcnow() + timedelta(minutes=self.config.lockout_duration_minutes)
@@ -552,6 +579,9 @@ class SessionAuthenticationHandler:
         metadata: Dict[str, Any]
     ):
         """Log security event for audit purposes"""
+
+
+
         
         try:
             event_data = {
@@ -598,11 +628,17 @@ class SessionEncryptionManager:
     
     def _generate_encryption_key(self) -> bytes:
         """Generate new encryption key"""
+
+
+
         
         return Fernet.generate_key()
     
     async def encrypt_session_data(self, data: Dict[str, Any]) -> bytes:
         """Encrypt session data with current key"""
+
+
+
         
         try:
             # Serialize data
@@ -624,6 +660,9 @@ class SessionEncryptionManager:
     
     async def decrypt_session_data(self, encrypted_data: bytes) -> Dict[str, Any]:
         """Decrypt session data with appropriate key"""
+
+
+
         
         try:
             # Extract key version
@@ -650,6 +689,9 @@ class SessionEncryptionManager:
     
     async def rotate_encryption_keys(self):
         """Rotate encryption keys for enhanced security"""
+
+
+
         
         try:
             # Move current key to previous keys
@@ -672,6 +714,9 @@ class SessionEncryptionManager:
     
     async def _re_encrypt_active_sessions(self):
         """Re-encrypt active sessions with new key"""
+
+
+
         
         try:
             # Get active sessions
@@ -710,6 +755,9 @@ class SecureSessionTokenGenerator:
     
     def _generate_rsa_keys(self):
         """Generate RSA key pair for JWT signing"""
+
+
+
         
         return rsa.generate_private_key(
             public_exponent=65537,
@@ -721,6 +769,9 @@ class SecureSessionTokenGenerator:
         token_data: SecureSessionToken
     ) -> str:
         """Generate JWT token from session token data"""
+
+
+
         
         try:
             payload = {
@@ -756,6 +807,9 @@ class SecureSessionTokenGenerator:
     
     async def verify_jwt_token(self, jwt_token: str) -> Optional[Dict[str, Any]]:
         """Verify and decode JWT token"""
+
+
+
         
         try:
             # Get public key for verification
@@ -785,6 +839,9 @@ class SecureSessionTokenGenerator:
     
     async def generate_secure_random_token(self, length: int = 32) -> str:
         """Generate cryptographically secure random token"""
+
+
+
         
         return secrets.token_urlsafe(length)
     
@@ -794,6 +851,9 @@ class SecureSessionTokenGenerator:
         user_id: str
     ) -> str:
         """Generate secure refresh token"""
+
+
+
         
         try:
             # Create token data
@@ -842,6 +902,9 @@ class SessionSecurityManager:
         request_fingerprint: Dict[str, Any]
     ) -> Tuple[bool, Optional[str]]:
         """Complete session authentication and security setup"""
+
+
+
         
         try:
             # Create session fingerprint
@@ -884,6 +947,9 @@ class SessionSecurityManager:
         request_fingerprint: Dict[str, Any]
     ) -> bool:
         """Validate session security and token"""
+
+
+
         
         try:
             # Verify JWT token
@@ -977,6 +1043,9 @@ class SessionSecurityManager:
     
     async def _update_token_usage(self, session_id: str):
         """Update token last used timestamp"""
+
+
+
         
         try:
             security_context = await self._get_security_context(session_id)
@@ -996,6 +1065,9 @@ class SessionSecurityManager:
     
     async def revoke_session_token(self, session_id: str, reason: str = "user_request") -> bool:
         """Revoke session token and clean up security context"""
+
+
+
         
         try:
             # Get security context
@@ -1027,16 +1099,25 @@ class SessionSecurityManager:
     
     async def encrypt_session_data(self, data: Dict[str, Any]) -> bytes:
         """Encrypt session data"""
+
+
+
         
         return await self.encryption_manager.encrypt_session_data(data)
     
     async def decrypt_session_data(self, encrypted_data: bytes) -> Dict[str, Any]:
         """Decrypt session data"""
+
+
+
         
         return await self.encryption_manager.decrypt_session_data(encrypted_data)
     
     async def get_security_metrics(self) -> Dict[str, Any]:
         """Get comprehensive security metrics"""
+
+
+
         
         try:
             # Get authentication metrics
@@ -1068,6 +1149,9 @@ class SessionSecurityManager:
     
     async def _get_security_level_distribution(self) -> Dict[str, int]:
         """Get distribution of security levels for active sessions"""
+
+
+
         
         try:
             distribution = {level.value: 0 for level in SecurityLevel}
@@ -1087,6 +1171,9 @@ class SessionSecurityManager:
     
     async def _get_recent_security_events(self) -> List[Dict[str, Any]]:
         """Get recent security events for monitoring"""
+
+
+
         
         try:
             # This would typically query the security events database

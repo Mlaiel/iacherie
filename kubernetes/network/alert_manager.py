@@ -7,7 +7,7 @@ Copyright: All rights reserved - Unauthorized use prohibited
 Project: IA Influencer Agent Platform - Content Protection & Monetization
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  AVERTISSEMENT SÉVÈRE ⚠️
+  AVERTISSEMENT SÉVÈRE 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
@@ -264,6 +264,9 @@ class NetworkAlertManager:
     
     async def initialize(self) -> bool:
         """Initialize alert manager"""
+
+
+
         try:
             logger.info("Initializing Network Alert Manager...")
             
@@ -296,6 +299,9 @@ class NetworkAlertManager:
         metadata: Dict[str, Any] = None
     ) -> Optional[str]:
         """Trigger an alert based on rule"""
+
+
+
         try:
             # Check if rule exists
             if rule_name not in self.alert_rules:
@@ -345,6 +351,9 @@ class NetworkAlertManager:
     
     async def resolve_alert(self, alert_id: str, resolution_note: str = None) -> bool:
         """Resolve an active alert"""
+
+
+
         try:
             if alert_id not in self.active_alerts:
                 logger.error(f"Alert not found: {alert_id}")
@@ -378,6 +387,9 @@ class NetworkAlertManager:
     
     async def get_active_alerts(self, severity: AlertSeverity = None) -> List[Alert]:
         """Get list of active alerts"""
+
+
+
         try:
             alerts = list(self.active_alerts.values())
             
@@ -401,6 +413,9 @@ class NetworkAlertManager:
     
     async def get_alert_statistics(self, time_range: timedelta = timedelta(days=7)) -> Dict[str, Any]:
         """Get alert statistics for time range"""
+
+
+
         try:
             end_time = datetime.now()
             start_time = end_time - time_range
@@ -461,6 +476,9 @@ class NetworkAlertManager:
     
     async def create_custom_rule(self, rule: AlertRule) -> bool:
         """Create a custom alert rule"""
+
+
+
         try:
             # Validate rule
             if not rule.name or not rule.condition:
@@ -480,6 +498,9 @@ class NetworkAlertManager:
     
     async def update_rule_status(self, rule_name: str, enabled: bool) -> bool:
         """Enable or disable an alert rule"""
+
+
+
         try:
             if rule_name not in self.alert_rules:
                 logger.error(f"Alert rule not found: {rule_name}")
@@ -499,6 +520,9 @@ class NetworkAlertManager:
     
     async def _setup_notification_channels(self):
         """Setup notification channels"""
+
+
+
         try:
             # Email channel
             if self.email_config:
@@ -517,6 +541,9 @@ class NetworkAlertManager:
     
     async def _send_notifications(self, alert: Alert, rule: AlertRule):
         """Send alert notifications through configured channels"""
+
+
+
         try:
             if not rule.channels:
                 return
@@ -530,6 +557,9 @@ class NetworkAlertManager:
     
     async def _send_channel_notification(self, alert: Alert, channel: AlertChannel):
         """Send notification through specific channel"""
+
+
+
         try:
             if channel == AlertChannel.EMAIL:
                 await self._send_email_notification(alert)
@@ -558,7 +588,7 @@ class NetworkAlertManager:
 async def demo_alert_manager():
     """Demonstrate alert manager functionality"""
     
-    print("🚨 IA Influencer Agent - Network Alert Manager Demo")
+    print(" IA Influencer Agent - Network Alert Manager Demo")
     print("=" * 60)
     
     # Initialize alert manager
@@ -566,14 +596,14 @@ async def demo_alert_manager():
     success = await alert_manager.initialize()
     
     if not success:
-        print("❌ Failed to initialize alert manager")
+        print(" Failed to initialize alert manager")
         return
     
-    print("✅ Alert Manager Initialized")
-    print(f"📋 Default Rules: {len(alert_manager.alert_rules)}")
+    print(" Alert Manager Initialized")
+    print(f" Default Rules: {len(alert_manager.alert_rules)}")
     
     # Trigger some test alerts
-    print("\n🚨 Triggering Test Alerts...")
+    print("\n Triggering Test Alerts...")
     
     # High content violation rate
     await alert_manager.trigger_alert(
@@ -599,29 +629,29 @@ async def demo_alert_manager():
         metadata={'attack_type': 'volumetric', 'source_ips': 247}
     )
     
-    print("✅ Test Alerts Triggered")
+    print(" Test Alerts Triggered")
     
     # Get active alerts
-    print("\n📊 Active Alerts Summary:")
+    print("\n Active Alerts Summary:")
     active_alerts = await alert_manager.get_active_alerts()
     
     for alert in active_alerts:
-        print(f"   🚨 {alert.severity.value.upper()}: {alert.title}")
+        print(f"    {alert.severity.value.upper()}: {alert.title}")
         print(f"      Rule: {alert.rule_name}")
         print(f"      Time: {alert.timestamp.strftime('%Y-%m-%d %H:%M:%S')}")
     
     # Get alert statistics
-    print("\n📈 Alert Statistics:")
+    print("\n Alert Statistics:")
     stats = await alert_manager.get_alert_statistics()
     
     if stats:
-        print(f"   📊 Total Alerts: {stats['total_alerts']}")
-        print(f"   🔴 Active Alerts: {stats['active_alerts']}")
-        print(f"   ✅ Resolved Alerts: {stats['resolved_alerts']}")
-        print(f"   📋 By Severity: {stats['alerts_by_severity']}")
+        print(f"    Total Alerts: {stats['total_alerts']}")
+        print(f"    Active Alerts: {stats['active_alerts']}")
+        print(f"    Resolved Alerts: {stats['resolved_alerts']}")
+        print(f"    By Severity: {stats['alerts_by_severity']}")
     
     # Create custom rule
-    print("\n🔧 Creating Custom Alert Rule...")
+    print("\n Creating Custom Alert Rule...")
     
     custom_rule = AlertRule(
         name="custom_creator_engagement_drop",
@@ -633,14 +663,14 @@ async def demo_alert_manager():
     
     success = await alert_manager.create_custom_rule(custom_rule)
     if success:
-        print("✅ Custom Alert Rule Created")
+        print(" Custom Alert Rule Created")
     
-    print(f"\n📋 Total Rules: {len(alert_manager.alert_rules)}")
+    print(f"\n Total Rules: {len(alert_manager.alert_rules)}")
     
-    print("\n🎯 Alert Manager Demo Completed!")
-    print("🚨 Real-time alerting active for all IA platform components")
-    print("📧 Notifications configured for critical events")
-    print("📊 Alert analytics and trending available")
+    print("\n Alert Manager Demo Completed!")
+    print(" Real-time alerting active for all IA platform components")
+    print(" Notifications configured for critical events")
+    print(" Alert analytics and trending available")
 
 
 if __name__ == "__main__":

@@ -43,6 +43,9 @@ class TestLicensingManager:
     
     def test_licensing_manager_import(self):
         """Test that LicensingManager can be imported successfully"""
+
+
+
         try:
             from monetization import LicensingManager
             assert LicensingManager is not None

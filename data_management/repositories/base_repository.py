@@ -1,5 +1,5 @@
 """
-🏗️ Base Repository - IA Influencer Agent Platform Enterprise
+ Base Repository - IA Influencer Agent Platform Enterprise
 =============================================================
 Module: backend/data_management/repositories/base_repository.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Base Repository Pattern - Production-Ready
 Responsibility: Advanced repository pattern with enterprise features
 ===========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
@@ -160,10 +160,16 @@ class BaseRepository(Generic[T], ABC):
     
     def _apply_filters(self, query, filters: Dict[str, Any]) -> Any:
         """Apply filters to query - to be implemented by subclasses"""
+
+
+
         return query
     
     def _paginate_query(self, query, limit: int, offset: int) -> Any:
         """Apply pagination to query - to be implemented by subclasses"""
+
+
+
         return query
     
     def with_cache(self, enabled: bool = True, ttl: int = 3600) -> 'BaseRepository':

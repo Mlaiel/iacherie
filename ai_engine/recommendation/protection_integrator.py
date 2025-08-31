@@ -3,7 +3,7 @@ Content Protection Integration for AI Recommendation System
 Advanced intellectual property protection and rights management
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
-⚠️  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
+  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
     code, or intellectual property without explicit written authorization 
     from Fahed Mlaiel is strictly prohibited and will result in legal action.
 
@@ -226,6 +226,9 @@ class ProtectionIntegrator:
     
     async def initialize(self) -> bool:
         """Initialize protection system"""
+
+
+
         try:
             self.logger.info("Initializing content protection system...")
             
@@ -276,6 +279,9 @@ class ProtectionIntegrator:
         Returns:
             Protected recommendations with rights verification
         """
+
+
+
         try:
             start_time = datetime.now()
             self.protection_metrics["total_protections"] += 1
@@ -342,6 +348,9 @@ class ProtectionIntegrator:
         Returns:
             Rights-verified collaboration matches
         """
+
+
+
         try:
             self.logger.info(f"Verifying rights for {len(collaboration_matches)} collaboration matches")
             
@@ -398,6 +407,9 @@ class ProtectionIntegrator:
         Returns:
             List of violation alerts
         """
+
+
+
         try:
             self.logger.info(f"Monitoring content violations for creator {creator_profile.creator_id}")
             
@@ -458,6 +470,9 @@ class ProtectionIntegrator:
         Returns:
             DMCA takedown notice and submission details
         """
+
+
+
         try:
             self.logger.info(f"Generating DMCA takedown for violation {violation_alert.alert_id}")
             
@@ -692,7 +707,7 @@ class ProtectionIntegrator:
             notes.append("Content may qualify for fair use - consider educational/commentary purpose")
         
         if recommendation.content_source == ContentSource.UNKNOWN:
-            notes.append("⚠️ Content source verification required before publication")
+            notes.append(" Content source verification required before publication")
         
         notes.append("Regular monitoring recommended to detect unauthorized use")
         

@@ -8,7 +8,7 @@ Responsibility: Comprehensive internationalization with 644+ languages support
 Technologies: Python, NLP, Translation APIs, Cultural Adaptation, RTL Support
 ================================================================================
 
-⚠️  PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
+  PROPRIETARY SOFTWARE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de

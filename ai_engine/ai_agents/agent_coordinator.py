@@ -7,7 +7,7 @@ optimisé pour l'architecture regroupée par fonctionnalité métier.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -102,6 +102,9 @@ class AgentCoordinator:
     
     async def initialize(self):
         """Initialise le coordinateur et tous les agents"""
+
+
+
         try:
             # Initialisation de l'orchestrateur
             await self.orchestrator.initialize()
@@ -406,6 +409,9 @@ class AgentCoordinator:
         agent_name: str
     ) -> Any:
         """Exécute une tâche sur un agent spécifique"""
+
+
+
         try:
             return await agent.execute_task(task)
         except Exception as e:
@@ -427,6 +433,9 @@ class AgentCoordinator:
     
     async def get_coordination_status(self, coordination_id: str) -> Optional[CoordinationResult]:
         """Récupère le statut d'une coordination"""
+
+
+
         return self.coordinations.get(coordination_id)
     
     async def get_agent_health(self, agent_name: str) -> Dict[str, Any]:

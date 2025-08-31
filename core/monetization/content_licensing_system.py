@@ -117,10 +117,16 @@ class LicenseOffer:
     
     def is_expired(self) -> bool:
         """Check if offer has expired"""
+
+
+
         return datetime.now() > self.expiry_date
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             "offer_id": self.offer_id,
             "licensee_name": self.licensee_name,
@@ -218,6 +224,9 @@ class PricingEngine:
         historical_data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Calculate AI-suggested licensing price"""
+
+
+
         try:
             base_price = await self._get_base_price(content_type, usage_rights)
             
@@ -449,6 +458,9 @@ class LicensingEngine:
         session: AsyncSession
     ) -> Dict[str, Any]:
         """Evaluate license offer using AI pricing"""
+
+
+
         
         try:
             # Get suggested pricing
@@ -539,6 +551,9 @@ class LicensingEngine:
         session: AsyncSession
     ) -> LicenseAgreement:
         """Generate executable license agreement"""
+
+
+
         
         try:
             # Use custom terms if provided, otherwise use offer terms
@@ -624,6 +639,9 @@ class LicensingEngine:
         session: AsyncSession
     ) -> bool:
         """Execute and activate license agreement"""
+
+
+
         
         try:
             # Verify digital signature
@@ -671,6 +689,9 @@ class LicensingEngine:
         session: AsyncSession
     ) -> List[LicenseAgreement]:
         """Get all active licenses for a licensor"""
+
+
+
         
         try:
             result = await session.execute(
@@ -718,6 +739,9 @@ class LicensingEngine:
         session: AsyncSession
     ) -> Dict[str, Any]:
         """Calculate total licensing revenue for period"""
+
+
+
         
         try:
             result = await session.execute(
@@ -765,6 +789,9 @@ class LicenseMonitor:
     
     async def monitor_license_compliance(self, session: AsyncSession):
         """Monitor all licenses for compliance issues"""
+
+
+
         
         try:
             # Get all active licenses

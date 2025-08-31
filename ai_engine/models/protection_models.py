@@ -3,7 +3,7 @@ Protection AI Models for IA Influencer Agent Platform
 Enterprise-grade content protection, copyright detection, and fingerprinting models
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
-⚠️  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
+  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
     code, or intellectual property without explicit written authorization 
     from Fahed Mlaiel is strictly prohibited and will result in legal action.
 
@@ -137,6 +137,9 @@ class UniversalFingerprintEngine(BaseAIModel):
         
     async def process(self, content_data: Any, content_type: ContentType, **kwargs) -> ProcessingResult:
         """Generate comprehensive fingerprint for any content type"""
+
+
+
         try:
             start_time = datetime.now()
             
@@ -644,6 +647,9 @@ class UniversalFingerprintEngine(BaseAIModel):
     
     async def validate_connection(self) -> bool:
         """Validate fingerprinting capabilities"""
+
+
+
         try:
             test_text = "Test content for fingerprinting"
             result = await self.process(test_text, ContentType.TEXT)
@@ -668,6 +674,9 @@ class CopyrightDetector(BaseAIModel):
         
     async def process(self, fingerprint: ContentFingerprint, **kwargs) -> ProcessingResult:
         """Detect copyright matches for content"""
+
+
+
         try:
             start_time = datetime.now()
             
@@ -997,6 +1006,9 @@ class CopyrightDetector(BaseAIModel):
     
     async def validate_connection(self) -> bool:
         """Validate copyright detection capabilities"""
+
+
+
         try:
             # Create test fingerprint
             test_fingerprint = ContentFingerprint(

@@ -1,5 +1,5 @@
 """
-⚙️ Backup Engine - Core Backup Processing System
+ Backup Engine - Core Backup Processing System
 =============================================
 Module: backend/data_management/backups/backup_engine.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Backup Engine - Enterprise Production-Ready
 Responsibility: Moteurs de sauvegarde haute performance pour contenus multi-format
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -87,6 +87,9 @@ class BackupEngine:
     
     def _initialize_content_processors(self) -> Dict[str, Any]:
         """Initialise les processeurs spécialisés par type de contenu"""
+
+
+
         return {
             "audio": self._process_audio_content,
             "video": self._process_video_content,
@@ -99,6 +102,9 @@ class BackupEngine:
     
     def _initialize_metadata_extractors(self) -> Dict[str, Any]:
         """Initialise les extracteurs de métadonnées par type"""
+
+
+
         return {
             "audio": self._extract_audio_metadata,
             "video": self._extract_video_metadata,
@@ -125,6 +131,9 @@ class BackupEngine:
         Returns:
             BackupMetadata: Métadonnées de la sauvegarde créée
         """
+
+
+
         try:
             start_time = datetime.now()
             self.progress.start_time = start_time
@@ -207,6 +216,9 @@ class BackupEngine:
         Returns:
             Dict[str, Any]: Informations sur le fichier
         """
+
+
+
         try:
             stat = file_path.stat()
             content_type = self._detect_content_type(file_path)
@@ -242,6 +254,9 @@ class BackupEngine:
         Yields:
             Dict[str, Any]: Informations sur chaque fichier
         """
+
+
+
         try:
             for item in dir_path.rglob("*"):
                 if item.is_file():
@@ -302,6 +317,9 @@ class BackupEngine:
         Returns:
             str: Hash hexadécimal
         """
+
+
+
         try:
             hash_obj = hashlib.new(algorithm)
             
@@ -396,6 +414,9 @@ class BackupEngine:
             manifest: Manifeste de sauvegarde
             options: Options de traitement
         """
+
+
+
         try:
             source_path = file_info["path"]
             content_type = file_info["content_type"]
@@ -637,6 +658,9 @@ class BackupEngine:
     
     async def _extract_audio_metadata(self, file_path: Path) -> Dict[str, Any]:
         """Extrait les métadonnées audio"""
+
+
+
         try:
             # Métadonnées de base
             metadata = {
@@ -665,6 +689,9 @@ class BackupEngine:
     
     async def _extract_video_metadata(self, file_path: Path) -> Dict[str, Any]:
         """Extrait les métadonnées vidéo"""
+
+
+
         try:
             metadata = {
                 "format": file_path.suffix.lower(),
@@ -681,6 +708,9 @@ class BackupEngine:
     
     async def _extract_image_metadata(self, file_path: Path) -> Dict[str, Any]:
         """Extrait les métadonnées image"""
+
+
+
         try:
             metadata = {
                 "format": file_path.suffix.lower(),
@@ -707,6 +737,9 @@ class BackupEngine:
     
     async def _extract_text_metadata(self, file_path: Path) -> Dict[str, Any]:
         """Extrait les métadonnées texte"""
+
+
+
         try:
             metadata = {
                 "format": file_path.suffix.lower(),
@@ -733,6 +766,9 @@ class BackupEngine:
     
     async def _extract_document_metadata(self, file_path: Path) -> Dict[str, Any]:
         """Extrait les métadonnées document"""
+
+
+
         try:
             metadata = {
                 "format": file_path.suffix.lower(),
@@ -749,6 +785,9 @@ class BackupEngine:
     
     async def _extract_generic_metadata(self, file_path: Path) -> Dict[str, Any]:
         """Extrait les métadonnées génériques"""
+
+
+
         try:
             stat = file_path.stat()
             return {

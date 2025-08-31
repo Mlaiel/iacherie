@@ -8,7 +8,7 @@ text extraction, and intelligent document analysis for content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -84,6 +84,9 @@ class OpticalCharacterReader(BaseAgent):
 
     async def initialize(self) -> bool:
         """Initialize OCR components"""
+
+
+
         try:
             logger.info("Initializing Optical Character Reader...")
             
@@ -206,6 +209,9 @@ class OpticalCharacterReader(BaseAgent):
 
     async def _preprocess_image(self, image: np.ndarray) -> np.ndarray:
         """Preprocess image for better OCR results"""
+
+
+
         try:
             # Convert to grayscale if needed
             if len(image.shape) == 3:
@@ -252,6 +258,9 @@ class OpticalCharacterReader(BaseAgent):
         include_confidence: bool
     ) -> Dict[str, Any]:
         """Perform OCR extraction with confidence scores"""
+
+
+
         try:
             # Configure Tesseract
             config = f'--oem 3 --psm 6 -l {language}'
@@ -284,6 +293,9 @@ class OpticalCharacterReader(BaseAgent):
 
     async def _process_confidence_data(self, tesseract_data: Dict) -> Dict[str, Any]:
         """Process Tesseract confidence data"""
+
+
+
         try:
             confidences = [conf for conf in tesseract_data['conf'] if int(conf) > 0]
             
@@ -323,6 +335,9 @@ class OpticalCharacterReader(BaseAgent):
 
     async def _extract_word_boxes(self, tesseract_data: Dict) -> List[Dict[str, Any]]:
         """Extract word-level bounding boxes"""
+
+
+
         try:
             word_boxes = []
             
@@ -354,6 +369,9 @@ class OpticalCharacterReader(BaseAgent):
 
     async def _post_process_text(self, raw_text: str) -> str:
         """Post-process extracted text"""
+
+
+
         try:
             if not raw_text:
                 return ""
@@ -392,6 +410,9 @@ class OpticalCharacterReader(BaseAgent):
 
     async def _analyze_document_structure(self, ocr_results: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze document structure from OCR results"""
+
+
+
         try:
             analysis = {
                 'document_type': 'unknown',
@@ -431,6 +452,9 @@ class OpticalCharacterReader(BaseAgent):
 
     async def _group_text_regions(self, word_boxes: List[Dict]) -> List[Dict[str, Any]]:
         """Group words into text regions"""
+
+
+
         try:
             # Group by line number first
             lines = {}
@@ -478,6 +502,9 @@ class OpticalCharacterReader(BaseAgent):
 
     async def _analyze_layout(self, regions: List[Dict]) -> Dict[str, Any]:
         """Analyze document layout"""
+
+
+
         try:
             if not regions:
                 return {}
@@ -514,6 +541,9 @@ class OpticalCharacterReader(BaseAgent):
 
     async def _extract_structured_data(self, text: str) -> Dict[str, Any]:
         """Extract structured data from text using regex patterns"""
+
+
+
         try:
             structured_data = {}
             
@@ -543,6 +573,9 @@ class OpticalCharacterReader(BaseAgent):
 
     async def _detect_language_hints(self, text: str) -> Dict[str, Any]:
         """Detect language hints from text"""
+
+
+
         try:
             # Simple language detection based on common words
             language_indicators = {
@@ -579,6 +612,9 @@ class OpticalCharacterReader(BaseAgent):
 
     async def _calculate_ocr_quality(self, ocr_results: Dict[str, Any]) -> Dict[str, Any]:
         """Calculate OCR quality metrics"""
+
+
+
         try:
             quality_metrics = {
                 'overall_score': 0.5,
@@ -663,6 +699,9 @@ class OpticalCharacterReader(BaseAgent):
 
     def get_supported_languages(self) -> List[str]:
         """Get list of supported OCR languages"""
+
+
+
         return self.supported_languages.copy()
 
     def set_confidence_threshold(self, threshold: int) -> None:
@@ -673,6 +712,9 @@ class OpticalCharacterReader(BaseAgent):
 
     async def cleanup(self) -> None:
         """Cleanup resources"""
+
+
+
         try:
             await self.performance_monitor.close()
             await self.text_processor.cleanup()
@@ -682,6 +724,9 @@ class OpticalCharacterReader(BaseAgent):
 
     def get_processing_capabilities(self) -> Dict[str, Any]:
         """Get OCR processing capabilities"""
+
+
+
         return {
             'supported_languages': self.supported_languages,
             'confidence_threshold': self.confidence_threshold,

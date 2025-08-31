@@ -83,6 +83,9 @@ class BusinessRuleResult:
     @property
     def has_critical_violations(self) -> bool:
         """Check if there are critical or blocking violations"""
+
+
+
         return any(v.severity in [RuleSeverity.CRITICAL, RuleSeverity.BLOCKING] 
                   for v in self.violations)
     
@@ -300,6 +303,9 @@ class BusinessRuleValidator:
     
     def validate_creator_profile(self, profile_data: Dict[str, Any]) -> BusinessRuleResult:
         """Validate creator profile data"""
+
+
+
         return self.validate(
             profile_data,
             rule_categories=[RuleCategory.CREATOR_PROFILE]
@@ -307,6 +313,9 @@ class BusinessRuleValidator:
     
     def validate_content_licensing(self, content_data: Dict[str, Any]) -> BusinessRuleResult:
         """Validate content licensing data"""
+
+
+
         return self.validate(
             content_data,
             rule_categories=[RuleCategory.CONTENT_LICENSING]
@@ -314,6 +323,9 @@ class BusinessRuleValidator:
     
     def validate_monetization(self, monetization_data: Dict[str, Any]) -> BusinessRuleResult:
         """Validate monetization data"""
+
+
+
         return self.validate(
             monetization_data,
             rule_categories=[RuleCategory.MONETIZATION]

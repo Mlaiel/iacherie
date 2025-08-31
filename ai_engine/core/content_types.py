@@ -540,11 +540,17 @@ class ContentTypeUtils:
     @staticmethod
     def is_media_content(content_type: ContentType) -> bool:
         """Check if content type is media (image, video, audio)"""
+
+
+
         return content_type in {ContentType.IMAGE, ContentType.VIDEO, ContentType.AUDIO, ContentType.MUSIC}
     
     @staticmethod
     def is_text_content(content_type: ContentType) -> bool:
         """Check if content type is text-based"""
+
+
+
         return content_type in {
             ContentType.TEXT, ContentType.BLOG_POST, ContentType.ARTICLE,
             ContentType.CAPTION, ContentType.DESCRIPTION, ContentType.SOCIAL_POST,

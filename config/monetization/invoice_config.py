@@ -557,10 +557,16 @@ class InvoiceConfig:
     
     def get_tax_configuration(self, jurisdiction: str) -> List[TaxConfiguration]:
         """Get tax configuration for a specific jurisdiction."""
+
+
+
         return self.TAX_CONFIGURATIONS.get(jurisdiction.upper(), [])
     
     def get_invoice_template(self, template_id: str) -> Optional[InvoiceTemplate]:
         """Get invoice template by ID."""
+
+
+
         return self.INVOICE_TEMPLATES.get(template_id)
     
     def calculate_tax(self, amount: Decimal, jurisdiction: str, 
@@ -1043,10 +1049,16 @@ class InvoiceConfig:
     
     def get_tax_config(self, country_code: str) -> List[TaxConfiguration]:
         """Get tax configuration for a specific country."""
+
+
+
         return self.TAX_CONFIGURATIONS.get(country_code.upper(), [])
     
     def get_template(self, template_id: str) -> Optional[InvoiceTemplate]:
         """Get invoice template configuration."""
+
+
+
         return self.INVOICE_TEMPLATES.get(template_id)
     
     def calculate_tax_amount(

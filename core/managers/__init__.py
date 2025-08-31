@@ -7,7 +7,7 @@ Created: 2025-08-19
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -73,14 +73,20 @@ _MANAGER_REGISTRY: Dict[str, Any] = {}
 def register_manager(name: str, manager: Any) -> None:
     """Register a manager in the global registry"""
     _MANAGER_REGISTRY[name] = manager
-    logger.info(f"🎯 Manager registered: {name}")
+    logger.info(f" Manager registered: {name}")
 
 def get_manager(name: str) -> Optional[Any]:
     """Get a manager from the global registry"""
+
+
+
     return _MANAGER_REGISTRY.get(name)
 
 def get_all_managers() -> Dict[str, Any]:
     """Get all registered managers"""
+
+
+
     return _MANAGER_REGISTRY.copy()
 
 # Initialize all managers for enterprise deployment
@@ -90,6 +96,9 @@ async def initialize_all_managers() -> bool:
     Returns:
         bool: True if all managers initialized successfully
     """
+
+
+
     try:
         managers = [
             ("analytics", get_analytics_manager()),
@@ -134,14 +143,14 @@ async def initialize_all_managers() -> bool:
             if result is True:
                 register_manager(name, manager)
             else:
-                logger.error(f"❌ Failed to initialize {name}: {result}")
+                logger.error(f" Failed to initialize {name}: {result}")
                 return False
         
-        logger.info("🚀 All IA-Influencer-Agent managers initialized successfully")
+        logger.info(" All IA-Influencer-Agent managers initialized successfully")
         return True
         
     except Exception as e:
-        logger.error(f"❌ Failed to initialize managers: {e}")
+        logger.error(f" Failed to initialize managers: {e}")
         return False
 
 # Cleanup all managers
@@ -151,6 +160,9 @@ async def cleanup_all_managers() -> bool:
     Returns:
         bool: True if all managers cleaned up successfully
     """
+
+
+
     try:
         managers = list(_MANAGER_REGISTRY.values())
         
@@ -167,7 +179,7 @@ async def cleanup_all_managers() -> bool:
         return success
         
     except Exception as e:
-        logger.error(f"❌ Failed to cleanup managers: {e}")
+        logger.error(f" Failed to cleanup managers: {e}")
         return False
 
 # Export all managers and utilities

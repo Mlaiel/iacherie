@@ -79,6 +79,9 @@ class MongoDBConnectionHandler:
     
     async def initialize(self) -> None:
         """Initialize MongoDB connection"""
+
+
+
         try:
             self.logger.info("Initializing MongoDB connection...")
             
@@ -145,6 +148,9 @@ class MongoDBConnectionHandler:
     
     async def _create_indexes(self) -> None:
         """Create necessary indexes for collections"""
+
+
+
         try:
             # Content fingerprints collection indexes
             fingerprints = self.database.content_fingerprints
@@ -234,6 +240,9 @@ class MongoDBConnectionHandler:
     
     async def _create_indexes_for_database(self, database: AsyncIOMotorDatabase) -> None:
         """Create indexes for a specific database"""
+
+
+
         try:
             # Content fingerprints
             fingerprints = database.content_fingerprints
@@ -269,6 +278,9 @@ class MongoDBConnectionHandler:
                         document: Dict[str, Any],
                         tenant_id: Optional[str] = None) -> str:
         """Insert single document"""
+
+
+
         try:
             collection = await self.get_collection(collection_name, tenant_id)
             
@@ -291,6 +303,9 @@ class MongoDBConnectionHandler:
                          documents: List[Dict[str, Any]],
                          tenant_id: Optional[str] = None) -> List[str]:
         """Insert multiple documents"""
+
+
+
         try:
             collection = await self.get_collection(collection_name, tenant_id)
             
@@ -315,6 +330,9 @@ class MongoDBConnectionHandler:
                       projection: Optional[Dict[str, Any]] = None,
                       tenant_id: Optional[str] = None) -> Optional[Dict[str, Any]]:
         """Find single document"""
+
+
+
         try:
             collection = await self.get_collection(collection_name, tenant_id)
             result = await collection.find_one(filter_dict, projection)
@@ -336,6 +354,9 @@ class MongoDBConnectionHandler:
                   skip: Optional[int] = None,
                   tenant_id: Optional[str] = None) -> List[Dict[str, Any]]:
         """Find multiple documents"""
+
+
+
         try:
             collection = await self.get_collection(collection_name, tenant_id)
             
@@ -367,6 +388,9 @@ class MongoDBConnectionHandler:
                         upsert: bool = False,
                         tenant_id: Optional[str] = None) -> Dict[str, Any]:
         """Update single document"""
+
+
+
         try:
             collection = await self.get_collection(collection_name, tenant_id)
             
@@ -395,6 +419,9 @@ class MongoDBConnectionHandler:
                          update_dict: Dict[str, Any],
                          tenant_id: Optional[str] = None) -> Dict[str, Any]:
         """Update multiple documents"""
+
+
+
         try:
             collection = await self.get_collection(collection_name, tenant_id)
             
@@ -421,6 +448,9 @@ class MongoDBConnectionHandler:
                         filter_dict: Dict[str, Any],
                         tenant_id: Optional[str] = None) -> int:
         """Delete single document"""
+
+
+
         try:
             collection = await self.get_collection(collection_name, tenant_id)
             result = await collection.delete_one(filter_dict)
@@ -438,6 +468,9 @@ class MongoDBConnectionHandler:
                          filter_dict: Dict[str, Any],
                          tenant_id: Optional[str] = None) -> int:
         """Delete multiple documents"""
+
+
+
         try:
             collection = await self.get_collection(collection_name, tenant_id)
             result = await collection.delete_many(filter_dict)
@@ -455,6 +488,9 @@ class MongoDBConnectionHandler:
                             filter_dict: Dict[str, Any],
                             tenant_id: Optional[str] = None) -> int:
         """Count documents in collection"""
+
+
+
         try:
             collection = await self.get_collection(collection_name, tenant_id)
             result = await collection.count_documents(filter_dict)
@@ -472,6 +508,9 @@ class MongoDBConnectionHandler:
                        pipeline: List[Dict[str, Any]],
                        tenant_id: Optional[str] = None) -> List[Dict[str, Any]]:
         """Execute aggregation pipeline"""
+
+
+
         try:
             collection = await self.get_collection(collection_name, tenant_id)
             cursor = collection.aggregate(pipeline)
@@ -487,6 +526,9 @@ class MongoDBConnectionHandler:
     
     async def health_check(self) -> Dict[str, Any]:
         """Check MongoDB connection health"""
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -537,6 +579,9 @@ class MongoDBConnectionHandler:
     
     async def get_metrics(self) -> Dict[str, Any]:
         """Get detailed MongoDB metrics"""
+
+
+
         try:
             if not self.client:
                 return {"status": "not_initialized"}

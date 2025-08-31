@@ -245,6 +245,9 @@ class AdvancedPipelineManager:
                 
     def _get_pipeline_id(self, config: PipelineConfig) -> str:
         """Generate unique pipeline identifier"""
+
+
+
         return f"{config.name}_{config.environment.value}_{config.pipeline_type.value}"
         
     def register_pipeline(self, config: PipelineConfig) -> str:
@@ -501,6 +504,9 @@ class AdvancedPipelineManager:
         
     def list_active_pipelines(self) -> List[str]:
         """List all currently active pipeline executions"""
+
+
+
         return list(self.active_executions.keys())
         
     def get_execution_details(self, execution_id: str) -> Optional[Dict[str, Any]]:

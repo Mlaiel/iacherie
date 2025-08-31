@@ -863,6 +863,9 @@ class CopyrightManagementService:
     
     async def _create_content_fingerprint(self, content_path: str, content_type: str) -> Dict[str, Any]:
         """Create content fingerprint based on type"""
+
+
+
         try:
             if content_type.startswith('audio'):
                 return await self.audio_fingerprinter.create_fingerprint(content_path)
@@ -904,6 +907,9 @@ class CopyrightManagementService:
     
     async def _record_on_blockchain(self, registration: CopyrightRegistration):
         """Record copyright on blockchain for immutable proof"""
+
+
+
         try:
             blockchain_data = {
                 'registration_number': registration.registration_number,
@@ -1124,6 +1130,9 @@ __all__ = [
 
     def generate_content_hash(self, content_data: bytes) -> str:
         """Génère un hash unique du contenu"""
+
+
+
         return hashlib.sha512(content_data).hexdigest()
 
     def add_co_owner(self, user_id: int, ownership_percentage: float, role: str = "co_author"):
@@ -1142,6 +1151,9 @@ __all__ = [
 
     def is_valid_registration(self) -> bool:
         """Vérifie si l'enregistrement est valide"""
+
+
+
         return (
             self.status in [CopyrightStatus.REGISTERED.value, CopyrightStatus.VERIFIED.value] and
             (self.expiration_date is None or self.expiration_date > datetime.utcnow()) and
@@ -1167,6 +1179,9 @@ __all__ = [
 
     def to_dict(self) -> Dict[str, Any]:
         """Convertit l'enregistrement en dictionnaire"""
+
+
+
         return {
             "id": self.id,
             "registration_id": self.registration_id,
@@ -1236,6 +1251,9 @@ class CopyrightViolation(BaseModel):
 
     def to_dict(self) -> Dict[str, Any]:
         """Convertit la violation en dictionnaire"""
+
+
+
         return {
             "id": self.id,
             "violation_id": self.violation_id,
@@ -1273,6 +1291,9 @@ class CopyrightManager:
         proof_documents: Optional[List[str]] = None
     ) -> CopyrightRegistration:
         """Enregistre un nouveau droit d'auteur"""
+
+
+
         
         try:
             # Génération du hash du contenu
@@ -1362,6 +1383,9 @@ class CopyrightManager:
         evidence_data: Optional[Dict] = None
     ) -> CopyrightViolation:
         """Signale une violation de droits d'auteur"""
+
+
+
         
         try:
             registration = self.db.query(CopyrightRegistration).filter(
@@ -1405,6 +1429,9 @@ class CopyrightManager:
         custom_message: Optional[str] = None
     ) -> bool:
         """Envoie une demande de retrait DMCA"""
+
+
+
         
         try:
             violation = self.db.query(CopyrightViolation).filter(
@@ -1447,6 +1474,9 @@ class CopyrightManager:
         transfer_type: str = "full_transfer"
     ) -> bool:
         """Transfère des droits d'auteur"""
+
+
+
         
         try:
             registration = self.db.query(CopyrightRegistration).filter(
@@ -1595,6 +1625,9 @@ class CopyrightManager:
 
     def _find_similar_content(self, content_data: bytes) -> List[Tuple[CopyrightRegistration, float]]:
         """Trouve du contenu similaire en utilisant l'IA"""
+
+
+
         
         try:
             # Generate content hash for quick comparison
@@ -1636,6 +1669,9 @@ class CopyrightManager:
 
     def _analyze_violation(self, violation: CopyrightViolation):
         """Analyse automatique d'une violation"""
+
+
+
         
         try:
             # AI-powered violation analysis implementation
@@ -1765,6 +1801,9 @@ Date: {datetime.utcnow().strftime('%Y-%m-%d')}
 
 This notice is sent in good faith and with the reasonable belief that use of the described material is not authorized by the copyright owner, its agent, or the law.
 """
+
+
+
         
         return dmca_template
 
@@ -1775,6 +1814,9 @@ This notice is sent in good faith and with the reasonable belief that use of the
         violation: CopyrightViolation
     ) -> bool:
         """Envoie l'avis à la plateforme appropriée"""
+
+
+
         
         try:
             # Real platform API implementation for DMCA takedown notices
@@ -1845,6 +1887,9 @@ This notice is sent in good faith and with the reasonable belief that use of the
 
     async def _check_user_verification_status(self, user_id: str) -> Dict[str, Any]:
         """Check user verification status"""
+
+
+
         try:
             # Simulate user verification check
             # In real implementation, this would query user database
@@ -1860,6 +1905,9 @@ This notice is sent in good faith and with the reasonable belief that use of the
     
     def _calculate_content_similarity(self, hash1: str, hash2: str) -> float:
         """Calculate similarity between two content hashes"""
+
+
+
         try:
             if hash1 == hash2:
                 return 1.0
@@ -1874,6 +1922,9 @@ This notice is sent in good faith and with the reasonable belief that use of the
     
     def _analyze_metadata_similarity(self, metadata: Dict[str, Any]) -> float:
         """Analyze metadata similarity"""
+
+
+
         try:
             # Mock metadata analysis
             # In real implementation, this would perform deep metadata comparison
@@ -1884,6 +1935,9 @@ This notice is sent in good faith and with the reasonable belief that use of the
     
     def _calculate_text_similarity(self, text1: str, text2: str) -> float:
         """Calculate text similarity"""
+
+
+
         try:
             # Simple text similarity using character overlap
             if not text1 or not text2:
@@ -1904,6 +1958,9 @@ This notice is sent in good faith and with the reasonable belief that use of the
     
     async def _send_platform_request(self, config: Dict[str, Any], payload: Dict[str, Any]) -> Dict[str, Any]:
         """Send request to platform API"""
+
+
+
         try:
             # Mock API response for testing
             # In real implementation, this would make actual HTTP requests
@@ -1918,6 +1975,9 @@ This notice is sent in good faith and with the reasonable belief that use of the
 
     def _generate_legal_statement(self, registration: CopyrightRegistration) -> str:
         """Génère la déclaration légale pour le certificat"""
+
+
+
         
         return f"""
 This certificate confirms that the work '{registration.title}' has been registered 

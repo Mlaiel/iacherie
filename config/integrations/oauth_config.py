@@ -190,6 +190,9 @@ class OAuthEndpoints:
     @classmethod
     def get_endpoints(cls, provider: OAuthProvider) -> Dict[str, str]:
         """Get OAuth endpoints for a specific provider."""
+
+
+
         return cls.ENDPOINTS.get(provider, {})
 
 
@@ -231,6 +234,9 @@ class OAuthManager:
     
     def get_provider_config(self, provider: OAuthProvider) -> Dict[str, Any]:
         """Get complete configuration for a specific provider."""
+
+
+
         return {
             "client_id": getattr(self.config, f"{provider}_client_id"),
             "client_secret": getattr(self.config, f"{provider}_client_secret"),
@@ -241,6 +247,9 @@ class OAuthManager:
     
     def validate_provider_config(self, provider: OAuthProvider) -> bool:
         """Validate that all required configuration is present for a provider."""
+
+
+
         try:
             config = self.get_provider_config(provider)
             required_fields = ["client_id", "client_secret", "redirect_uri"]

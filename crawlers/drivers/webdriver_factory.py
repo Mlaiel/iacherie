@@ -16,7 +16,7 @@ Key Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  LEGAL WARNING:
+  LEGAL WARNING:
 This code is proprietary and confidential. Any unauthorized copying, modification, 
 distribution, or use without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and may result in legal action.
@@ -119,6 +119,9 @@ class WebDriverFactory:
     def create_driver(self, config: BrowserConfiguration, 
                      profile: Optional[DriverProfile] = None) -> webdriver.Remote:
         """Create optimized WebDriver instance"""
+
+
+
         try:
             # Apply preset if specified
             if profile:

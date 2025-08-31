@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -291,6 +291,9 @@ class AIAnalysis(Base):
     @classmethod
     def create_sentiment_analysis(cls, content_id: str, user_id: str, sentiment_data: Dict[str, Any]) -> 'AIAnalysis':
         """Create sentiment analysis record"""
+
+
+
         return cls(
             content_id=content_id,
             user_id=user_id,
@@ -306,6 +309,9 @@ class AIAnalysis(Base):
     @classmethod
     def create_trend_analysis(cls, content_id: str, user_id: str, trend_data: Dict[str, Any]) -> 'AIAnalysis':
         """Create trend analysis record"""
+
+
+
         return cls(
             content_id=content_id,
             user_id=user_id,
@@ -365,6 +371,9 @@ class AIAnalysis(Base):
     
     def is_high_confidence(self) -> bool:
         """Check if analysis has high confidence"""
+
+
+
         return (
             self.confidence_level in [ConfidenceLevel.HIGH, ConfidenceLevel.VERY_HIGH, ConfidenceLevel.EXPERT] and
             self.confidence_score >= 0.8
@@ -372,6 +381,9 @@ class AIAnalysis(Base):
     
     def get_recommendations_summary(self) -> Dict[str, Any]:
         """Get summary of all recommendations"""
+
+
+
         return {
             'optimization_suggestions': self.optimization_suggestions or {},
             'keyword_recommendations': self.keyword_recommendations or [],

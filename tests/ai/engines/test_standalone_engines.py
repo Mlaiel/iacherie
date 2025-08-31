@@ -23,7 +23,7 @@ Tests the structure and functionality without circular dependencies.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. 
 Unauthorized use, modification, or distribution by any individual or entity 
 without explicit written consent from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.

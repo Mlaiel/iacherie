@@ -7,7 +7,7 @@ and intelligent resource allocation for complex multi-step content processing wo
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -172,6 +172,9 @@ class WorkflowEngine:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             # Validate workflow definition
             if not await self._validate_workflow_definition(workflow_def):
@@ -207,6 +210,9 @@ class WorkflowEngine:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             if not asyncio.iscoroutinefunction(handler_func):
                 raise ValueError("Handler must be an async function")
@@ -502,6 +508,9 @@ class WorkflowEngine:
     
     async def _validate_workflow_definition(self, workflow_def: WorkflowDefinition) -> bool:
         """Validate workflow definition structure."""
+
+
+
         try:
             # Check basic structure
             if not workflow_def.workflow_id or not workflow_def.name:
@@ -598,10 +607,16 @@ class WorkflowEngine:
     
     async def get_workflow_status(self, execution_id: str) -> Optional[WorkflowExecution]:
         """Get current workflow execution status."""
+
+
+
         return self.active_executions.get(execution_id)
     
     async def cancel_workflow(self, execution_id: str) -> bool:
         """Cancel running workflow execution."""
+
+
+
         try:
             if execution_id in self.active_executions:
                 execution = self.active_executions[execution_id]
@@ -624,6 +639,9 @@ class WorkflowEngine:
     
     async def get_performance_stats(self) -> Dict[str, Any]:
         """Get engine performance statistics."""
+
+
+
         return {
             **self.execution_stats,
             'active_workflows': len(self.active_executions),

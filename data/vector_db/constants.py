@@ -8,7 +8,7 @@ This module defines all fixed values, thresholds, and system-wide configurations
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️ COPYRIGHT WARNING ⚠️
+ COPYRIGHT WARNING 
 This code is protected by copyright law. Any unauthorized reproduction, distribution, 
 modification, or use of this code without explicit written permission from 
 Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in legal action.
@@ -507,7 +507,7 @@ SCALING_PARAMS: Final[Dict[str, Any]] = {
 # ================================
 
 COPYRIGHT_NOTICE: Final[str] = """
-⚠️ COPYRIGHT WARNING ⚠️
+ COPYRIGHT WARNING 
 
 This Vector Database System is the intellectual property of Fahed Mlaiel.
 
@@ -615,16 +615,25 @@ def get_default_config_for_content_type(content_type: ContentType) -> Dict[str, 
 
 def validate_feature_flag(flag_name: str) -> bool:
     """Validate if a feature flag is enabled."""
+
+
+
     return DEFAULT_FEATURE_FLAGS.get(flag_name, False)
 
 
 def get_performance_threshold(metric_name: str) -> float:
     """Get performance threshold for a specific metric."""
+
+
+
     return PERFORMANCE_THRESHOLDS.get(metric_name, 0.0)
 
 
 def get_error_message(error_code: int) -> str:
     """Get error message for an error code."""
+
+
+
     return ERROR_MESSAGES.get(error_code, "Unknown error")
 
 

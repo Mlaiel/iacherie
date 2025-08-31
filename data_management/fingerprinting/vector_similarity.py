@@ -1,5 +1,5 @@
 """
-🔍 Vector Similarity Engine - IA Influencer Agent Platform Enterprise
+ Vector Similarity Engine - IA Influencer Agent Platform Enterprise
 ====================================================================
 Module: backend/data_management/fingerprinting/vector_similarity.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Vector Similarity Engine - Ultra Enterprise Production-Ready
 Responsibility: Advanced vector indexing, similarity search with FAISS and Elasticsearch
 ==================================================================================
 
-⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
+  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -19,14 +19,14 @@ Threshold Matching → Violation Detection → Alert Generation → Evidence Col
 Automated Takedown → Revenue Recovery
 
 VECTOR SIMILARITY TECHNOLOGIES:
-├── 🔍 FAISS (Facebook AI Similarity Search)
-├── 🔎 Elasticsearch (Full-text + Vector Search)
-├── 📊 Cosine Similarity (Angular Distance)
-├── 📐 Euclidean Distance (L2 Norm)
-├── 🎯 Manhattan Distance (L1 Norm)
-├── ⚡ GPU Acceleration (CUDA Support)
-├── 🚀 Distributed Search (Multi-node)
-└── 🛡️ Real-time Monitoring (Instant Detection)
+  FAISS (Facebook AI Similarity Search)
+  Elasticsearch (Full-text + Vector Search)
+  Cosine Similarity (Angular Distance)
+  Euclidean Distance (L2 Norm)
+  Manhattan Distance (L1 Norm)
+  GPU Acceleration (CUDA Support)
+  Distributed Search (Multi-node)
+  Real-time Monitoring (Instant Detection)
 """
 
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -529,6 +529,9 @@ class ElasticsearchManager:
     
     def _initialize_client(self):
         """Initialise le client Elasticsearch"""
+
+
+
         try:
             self.client = Elasticsearch(
                 [{'host': self.config.elasticsearch_host, 'port': self.config.elasticsearch_port}],

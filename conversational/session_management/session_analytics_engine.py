@@ -8,7 +8,7 @@ content creators with advanced metrics and business intelligence.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 Unauthorized use prohibited. Contact: mlaiel@live.de
 """
 
@@ -135,6 +135,9 @@ class SessionBehaviorTracker:
         event_data: Dict[str, Any]
     ):
         """Track individual session event"""
+
+
+
         
         try:
             event = {
@@ -168,6 +171,9 @@ class SessionBehaviorTracker:
     
     async def _update_realtime_metrics(self, session_id: str, event: Dict[str, Any]):
         """Update real-time session metrics"""
+
+
+
         
         try:
             metrics_key = f"session_metrics:{session_id}"
@@ -212,6 +218,9 @@ class SessionBehaviorTracker:
     
     async def _detect_behavior_patterns(self, session_id: str, event: Dict[str, Any]):
         """Detect user behavior patterns from events"""
+
+
+
         
         try:
             # Get recent events for pattern detection
@@ -263,6 +272,9 @@ class SessionBehaviorTracker:
     
     async def calculate_engagement_score(self, session_id: str) -> float:
         """Calculate session engagement score"""
+
+
+
         
         try:
             events = await self.cache_manager.get(f"session_events:{session_id}") or []
@@ -317,6 +329,9 @@ class SessionBehaviorTracker:
     
     async def get_session_summary(self, session_id: str) -> Dict[str, Any]:
         """Get comprehensive session behavior summary"""
+
+
+
         
         try:
             events = await self.cache_manager.get(f"session_events:{session_id}") or []
@@ -351,6 +366,9 @@ class ConversationInsightsGenerator:
     
     async def analyze_conversation(self, session_id: str) -> ConversationInsight:
         """Generate comprehensive conversation insights"""
+
+
+
         
         try:
             # Get conversation history
@@ -400,6 +418,9 @@ class ConversationInsightsGenerator:
     
     async def _get_conversation_data(self, session_id: str) -> Optional[Dict[str, Any]]:
         """Get conversation data for analysis"""
+
+
+
         
         try:
             # Get from session store
@@ -422,6 +443,9 @@ class ConversationInsightsGenerator:
     
     async def _extract_conversation_features(self, conversation_data: Dict[str, Any]) -> Dict[str, Any]:
         """Extract features from conversation for analysis"""
+
+
+
         
         try:
             messages = conversation_data.get("messages", [])
@@ -474,6 +498,9 @@ class ConversationInsightsGenerator:
     
     async def _analyze_conversation_flow(self, conversation_data: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze conversation flow and phases"""
+
+
+
         
         try:
             messages = conversation_data.get("messages", [])
@@ -537,6 +564,9 @@ class ConversationInsightsGenerator:
     
     async def _detect_conversation_bottlenecks(self, conversation_data: Dict[str, Any]) -> List[str]:
         """Detect conversation bottlenecks and issues"""
+
+
+
         
         try:
             messages = conversation_data.get("messages", [])
@@ -653,6 +683,9 @@ class ConversationInsightsGenerator:
         features: Dict[str, Any]
     ) -> float:
         """Calculate business value score for conversation"""
+
+
+
         
         try:
             score = 0.0
@@ -689,6 +722,9 @@ class ConversationInsightsGenerator:
     
     def _empty_insight(self, session_id: str) -> ConversationInsight:
         """Return empty insight object"""
+
+
+
         
         return ConversationInsight(
             session_id=session_id,
@@ -724,6 +760,9 @@ class SessionPerformanceMonitor:
     
     async def monitor_session_performance(self, session_id: str) -> Dict[str, Any]:
         """Monitor real-time session performance"""
+
+
+
         
         try:
             # Get current session metrics
@@ -820,6 +859,9 @@ class SessionPerformanceMonitor:
     
     async def _get_current_engagement_score(self, session_id: str) -> float:
         """Get current engagement score"""
+
+
+
         
         try:
             # This would typically call the behavior tracker
@@ -843,6 +885,9 @@ class SessionPerformanceMonitor:
     
     async def _calculate_message_rate(self, events: List[Dict]) -> float:
         """Calculate messages per minute"""
+
+
+
         
         try:
             message_events = [e for e in events if e.get("event_type") == "message_sent"]
@@ -889,6 +934,9 @@ class SessionAnalyticsEngine:
     
     async def generate_session_analytics(self, session_id: str) -> Dict[str, Any]:
         """Generate comprehensive session analytics"""
+
+
+
         
         try:
             # Get behavior summary
@@ -942,6 +990,9 @@ class SessionAnalyticsEngine:
         performance_report: Dict[str, Any]
     ) -> float:
         """Calculate overall session score"""
+
+
+
         
         try:
             # Weighted scoring
@@ -1024,6 +1075,9 @@ class SessionAnalyticsEngine:
     
     async def get_analytics_dashboard(self, user_id: str) -> Dict[str, Any]:
         """Get analytics dashboard for user"""
+
+
+
         
         try:
             # Get user's recent sessions
@@ -1086,6 +1140,9 @@ class SessionAnalyticsEngine:
     
     async def _get_user_recent_sessions(self, user_id: str, days: int = 30) -> List[str]:
         """Get user's recent session IDs"""
+
+
+
         
         try:
             # This would typically query the database

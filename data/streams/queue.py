@@ -80,6 +80,9 @@ class QueueMessage:
     
     def __lt__(self, other):
         """Priority comparison for heap operations"""
+
+
+
         return self.priority.value > other.priority.value
 
 
@@ -124,6 +127,9 @@ class MessageProcessor:
         
     async def process(self, message: QueueMessage) -> bool:
         """Process a single message"""
+
+
+
         try:
             self.current_message = message
             message.processing_started_at = datetime.now(timezone.utc)
@@ -194,6 +200,9 @@ class DistributedQueue:
         Returns:
             Message ID or None if failed
         """
+
+
+
         try:
             # Check queue size limit
             if len(self.pending_queue) >= self.config.max_size:
@@ -261,6 +270,9 @@ class DistributedQueue:
         Returns:
             Next message or None
         """
+
+
+
         try:
             current_time = datetime.now(timezone.utc)
             
@@ -322,6 +334,9 @@ class DistributedQueue:
         Returns:
             Success status
         """
+
+
+
         try:
             if message_id not in self.processing_messages:
                 return False
@@ -365,6 +380,9 @@ class DistributedQueue:
         Returns:
             Success status
         """
+
+
+
         try:
             if message_id not in self.processing_messages:
                 return False
@@ -410,6 +428,9 @@ class DistributedQueue:
             
     async def get_queue_size(self) -> int:
         """Get current queue size"""
+
+
+
         return len(self.pending_queue)
         
     async def get_metrics(self) -> QueueMetrics:
@@ -422,6 +443,9 @@ class DistributedQueue:
         
     async def purge(self) -> bool:
         """Clear all messages from queue"""
+
+
+
         try:
             self.pending_queue.clear()
             self.processing_messages.clear()
@@ -442,6 +466,9 @@ class DistributedQueue:
             
     async def _persist_message(self, message: QueueMessage) -> None:
         """Persist message to Redis"""
+
+
+
         try:
             key = f"queue:{self.config.name}:message:{message.message_id}"
             data = {
@@ -466,6 +493,9 @@ class DistributedQueue:
             
     async def _delete_message(self, message: QueueMessage) -> None:
         """Delete persisted message"""
+
+
+
         try:
             key = f"queue:{self.config.name}:message:{message.message_id}"
             await self.redis.delete(key)
@@ -502,6 +532,9 @@ class StreamQueue:
         
     async def initialize(self) -> None:
         """Initialize queue system"""
+
+
+
         try:
             # Initialize Redis connection
             redis_url = settings.redis_url or "redis://localhost:6379"
@@ -529,6 +562,9 @@ class StreamQueue:
         Returns:
             Success status
         """
+
+
+
         try:
             if config.name in self.queues:
                 logger.warning(f"Queue {config.name} already exists")
@@ -554,6 +590,9 @@ class StreamQueue:
         Returns:
             Success status
         """
+
+
+
         try:
             if queue_name not in self.queues:
                 return False
@@ -645,6 +684,9 @@ class StreamQueue:
         Returns:
             Success status
         """
+
+
+
         try:
             if queue_name not in self.queues:
                 logger.error(f"Queue {queue_name} not found")
@@ -665,6 +707,9 @@ class StreamQueue:
             
     async def unregister_processor(self, processor_id: str) -> bool:
         """Unregister processor"""
+
+
+
         try:
             if processor_id in self.processors:
                 self.processors[processor_id].active = False
@@ -749,6 +794,9 @@ class StreamQueue:
                 
     async def shutdown(self) -> None:
         """Gracefully shutdown queue system"""
+
+
+
         try:
             self._shutdown_event.set()
             

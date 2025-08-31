@@ -1,4 +1,4 @@
-"""🚀 IA-Influencer-Agent - Web Surveillance & Content Monitoring Module
+""" IA-Influencer-Agent - Web Surveillance & Content Monitoring Module
 ===================================================================
 
 Ultra-advanced web surveillance system for multi-format content creators providing
@@ -12,7 +12,7 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Micro
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
+ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
 This code and concept are the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 Unauthorized access, copying, modification, distribution, reverse engineering,
@@ -149,7 +149,10 @@ class ComprehensiveSurveillanceSystem:
         logger.info("ComprehensiveSurveillanceSystem created")
     
     async def initialize(self):
-        """Initialize all surveillance components"""        try:
+        """Initialize all surveillance components"""
+
+
+        try:
             logger.info("Initializing comprehensive surveillance system...")
             
             # Initialize orchestrator
@@ -170,7 +173,10 @@ class ComprehensiveSurveillanceSystem:
             raise
     
     async def start(self):
-        """Start the surveillance system"""        try:
+        """Start the surveillance system"""
+
+
+        try:
             if not self.is_initialized:
                 await self.initialize()
             
@@ -200,7 +206,10 @@ class ComprehensiveSurveillanceSystem:
         content_metadata: Dict[str, Any],
         protection_options: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Register content for comprehensive protection"""        try:
+        """Register content for comprehensive protection"""
+
+
+        try:
             if not self.orchestrator:
                 raise RuntimeError("Surveillance system not initialized")
             
@@ -223,7 +232,10 @@ class ComprehensiveSurveillanceSystem:
         threat_detection: ThreatDetection,
         response_options: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Handle detected threat with automated response"""        try:
+        """Handle detected threat with automated response"""
+
+
+        try:
             if not self.orchestrator:
                 raise RuntimeError("Surveillance system not initialized")
             
@@ -246,7 +258,10 @@ class ComprehensiveSurveillanceSystem:
         time_period: str = "monthly",
         report_options: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Generate comprehensive surveillance report"""        try:
+        """Generate comprehensive surveillance report"""
+
+
+        try:
             if not self.orchestrator:
                 raise RuntimeError("Surveillance system not initialized")
             
@@ -265,7 +280,10 @@ class ComprehensiveSurveillanceSystem:
             raise
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status"""        try:
+        """Get comprehensive system status"""
+
+
+        try:
             status = {
                 'system_initialized': self.is_initialized,
                 'system_running': self.is_running,
@@ -283,7 +301,10 @@ class ComprehensiveSurveillanceSystem:
             return {'error': str(e)}
     
     async def get_workflow_status(self, workflow_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of specific workflow"""        try:
+        """Get status of specific workflow"""
+
+
+        try:
             if not self.orchestrator:
                 return None
             
@@ -294,7 +315,10 @@ class ComprehensiveSurveillanceSystem:
             return None
     
     async def shutdown(self):
-        """Gracefully shutdown surveillance system"""        try:
+        """Gracefully shutdown surveillance system"""
+
+
+        try:
             logger.info("Shutting down comprehensive surveillance system...")
             
             self.is_running = False
@@ -499,7 +523,10 @@ class WebSurveillanceOrchestrator:
         logger.info("Web Surveillance Orchestrator initialized")
     
     async def initialize(self) -> bool:
-        """Initialize all surveillance services"""        try:
+        """Initialize all surveillance services"""
+
+
+        try:
             # Initialize core services
             self.services["web_crawler"] = WebCrawlerEngine(self.config)
             self.services["platform_monitor"] = PlatformMonitoringService(self.config)
@@ -954,4 +981,4 @@ __all__ = [
 # Module initialization
 logger.info(f"IA Influencer Agent Surveillance Module v{__version__} loaded")
 logger.info(f"Created by: {__author__} ({__email__})")
-logger.info("⚠️ Protected by copyright - Unauthorized use prohibited")
+logger.info(" Protected by copyright - Unauthorized use prohibited")

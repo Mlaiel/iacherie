@@ -23,7 +23,7 @@ Tests complete workflow: User Upload → AI Protection → SEO → Collaboration
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  COPYRIGHT WARNING: This file is protected by copyright law. Unauthorized copying,
+  COPYRIGHT WARNING: This file is protected by copyright law. Unauthorized copying,
 distribution, modification, or use is strictly prohibited. Violations will result in
 legal action. Contact mlaiel@live.de for licensing inquiries.
 

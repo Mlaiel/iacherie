@@ -276,6 +276,9 @@ class TelegramCrawler:
         Returns:
             List of channels matching criteria
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -309,6 +312,9 @@ class TelegramCrawler:
         Returns:
             Monitoring configuration and status
         """
+
+
+
         try:
             # Get chat entity
             chat = await self.client.get_entity(chat_identifier)
@@ -355,6 +361,9 @@ class TelegramCrawler:
         Returns:
             List of messages
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -395,6 +404,9 @@ class TelegramCrawler:
         Returns:
             List of potential violations
         """
+
+
+
         try:
             violations = []
             
@@ -452,6 +464,9 @@ class TelegramCrawler:
         Returns:
             Chat analytics data
         """
+
+
+
         try:
             chat = await self.client.get_entity(chat_identifier)
             
@@ -516,6 +531,9 @@ class TelegramCrawler:
     
     async def _process_message(self, message):
         """Process incoming message for analysis."""
+
+
+
         try:
             # Parse message data
             message_data = await self._parse_message_data(message)
@@ -562,6 +580,9 @@ class TelegramCrawler:
     
     async def _parse_chat_data(self, chat) -> TelegramChat:
         """Parse Telegram chat into structured data."""
+
+
+
         return TelegramChat(
             chat_id=chat.id,
             title=getattr(chat, 'title', ''),
@@ -640,10 +661,16 @@ class TelegramCrawler:
     
     async def _calculate_content_similarity(self, fingerprint1: str, fingerprint2: str) -> float:
         """Calculate similarity between content fingerprints."""
+
+
+
         return await self.text_fingerprinter.calculate_similarity(fingerprint1, fingerprint2)
     
     def get_crawler_stats(self) -> Dict[str, any]:
         """Get crawler statistics and status."""
+
+
+
         return {
             'platform': 'telegram',
             'client_connected': self.client.is_connected(),
@@ -887,6 +914,9 @@ class TelegramCrawler(BaseCrawler):
         Returns:
             Authentication success status
         """
+
+
+
         try:
             self.api_id = api_id
             self.api_hash = api_hash
@@ -1249,6 +1279,9 @@ class TelegramCrawler(BaseCrawler):
         Returns:
             Comprehensive user behavior analysis
         """
+
+
+
         try:
             user = await self.get_user_details(user_identifier)
             if not user:
@@ -1330,6 +1363,9 @@ class TelegramCrawler(BaseCrawler):
         Returns:
             Virality analysis and metrics
         """
+
+
+
         try:
             # This would require complex message tracking across channels
             # Implementation would depend on specific tracking requirements
@@ -1367,6 +1403,9 @@ class TelegramCrawler(BaseCrawler):
     # Model creation methods
     async def _create_message_model(self, message) -> Optional[TelegramMessage]:
         """Create TelegramMessage model from Telegram API message"""
+
+
+
         try:
             if not message:
                 return None
@@ -1492,6 +1531,9 @@ class TelegramCrawler(BaseCrawler):
     
     async def _create_chat_model(self, chat) -> Optional[TelegramChat]:
         """Create TelegramChat model from Telegram API chat"""
+
+
+
         try:
             if not chat:
                 return None
@@ -1536,6 +1578,9 @@ class TelegramCrawler(BaseCrawler):
     
     async def _create_user_model(self, user) -> Optional[TelegramUser]:
         """Create TelegramUser model from Telegram API user"""
+
+
+
         try:
             if not user:
                 return None
@@ -1567,6 +1612,9 @@ class TelegramCrawler(BaseCrawler):
     # Event handlers
     async def _process_new_message(self, event):
         """Process new message event"""
+
+
+
         try:
             message = await self._create_message_model(event.message)
             if message:
@@ -1578,6 +1626,9 @@ class TelegramCrawler(BaseCrawler):
     
     async def _process_edited_message(self, event):
         """Process edited message event"""
+
+
+
         try:
             message = await self._create_message_model(event.message)
             if message:
@@ -1779,6 +1830,9 @@ class TelegramCrawler(BaseCrawler):
     
     def _analyze_user_active_hours(self, messages: List[TelegramMessage]) -> Dict:
         """Analyze user's active hours"""
+
+
+
         return self._analyze_posting_hours(messages)
     
     def _analyze_user_message_types(self, messages: List[TelegramMessage]) -> Dict:

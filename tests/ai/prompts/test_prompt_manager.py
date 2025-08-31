@@ -21,7 +21,7 @@ Ultra-professional test suite for the PromptManager system
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️ COPYRIGHT WARNING ⚠️
+ COPYRIGHT WARNING 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
@@ -60,6 +60,9 @@ class TestPromptManager:
     @pytest.fixture
     def sample_prompt_template(self):
         """Create a sample prompt template for testing"""
+
+
+
         return PromptTemplate(
             template_id=str(uuid.uuid4()),
             name="Test Content Creation Prompt",
@@ -106,6 +109,9 @@ class TestPromptManager:
     @pytest.fixture
     def sample_variables(self):
         """Sample variables for prompt template testing"""
+
+
+
         return {
             "content_type": "blog_post",
             "topic": "Artificial Intelligence in Music Production",

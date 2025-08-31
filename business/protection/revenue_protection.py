@@ -1,11 +1,11 @@
 """
-💰 Revenue Protection Service - IA-Influencer-Agent  
+ Revenue Protection Service - IA-Influencer-Agent  
 ==================================================================
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 ==================================================================
 
-⚠️  COPYRIGHT NOTICE & LEGAL WARNING ⚠️
+  COPYRIGHT NOTICE & LEGAL WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copy, distribution, or modification of this code
 without explicit written permission is strictly prohibited and will be
@@ -229,6 +229,9 @@ class RevenueCalculationEngine:
         
     async def calculate_estimated_loss(self, violation: RevenueViolation) -> Decimal:
         """Calculate estimated revenue loss from violation"""
+
+
+
         try:
             platform = violation.violator_platform.lower()
             
@@ -245,6 +248,9 @@ class RevenueCalculationEngine:
     
     async def _calculate_video_platform_loss(self, violation: RevenueViolation) -> Decimal:
         """Calculate loss for video platforms (YouTube, Instagram, TikTok)"""
+
+
+
         try:
             platform = violation.violator_platform.lower()
             platform_config = self.platform_rates.get(platform, {})
@@ -277,6 +283,9 @@ class RevenueCalculationEngine:
     
     async def _calculate_audio_platform_loss(self, violation: RevenueViolation) -> Decimal:
         """Calculate loss for audio platforms (Spotify, Apple Music)"""
+
+
+
         try:
             platform_config = self.platform_rates.get('spotify', {})
             
@@ -301,6 +310,9 @@ class RevenueCalculationEngine:
     
     async def _calculate_generic_platform_loss(self, violation: RevenueViolation) -> Decimal:
         """Calculate loss for generic platforms"""
+
+
+
         try:
             # Use conservative estimation
             view_count = violation.view_count or 500
@@ -319,6 +331,9 @@ class RevenueCalculationEngine:
     
     def _calculate_engagement_score(self, engagement_metrics: Dict[str, float]) -> Decimal:
         """Calculate engagement score multiplier"""
+
+
+
         try:
             if not engagement_metrics:
                 return Decimal('1.0')
@@ -346,6 +361,9 @@ class RevenueCalculationEngine:
     
     def _calculate_time_degradation_factor(self, violation: RevenueViolation) -> Decimal:
         """Calculate time-based revenue degradation"""
+
+
+
         try:
             if not violation.loss_period_start or not violation.loss_period_end:
                 return Decimal('1.0')
@@ -381,6 +399,9 @@ class RevenueClaimManager:
         
     async def submit_claim_to_platform(self, claim: RevenueClaim) -> bool:
         """Submit revenue claim to specific platform"""
+
+
+
         try:
             platform = claim.target_platform.lower()
             
@@ -401,6 +422,9 @@ class RevenueClaimManager:
     
     async def _submit_youtube_claim(self, claim: RevenueClaim) -> bool:
         """Submit claim to YouTube Content ID system"""
+
+
+
         try:
             # YouTube Content ID API integration
             api_endpoint = "https://www.googleapis.com/youtube/v3/claimSearch"
@@ -441,6 +465,9 @@ class RevenueClaimManager:
     
     async def _submit_instagram_claim(self, claim: RevenueClaim) -> bool:
         """Submit claim to Instagram"""
+
+
+
         try:
             # Instagram copyright reporting
             # Note: Instagram uses Facebook's Rights Manager
@@ -479,6 +506,9 @@ class RevenueClaimManager:
     
     async def _submit_tiktok_claim(self, claim: RevenueClaim) -> bool:
         """Submit claim to TikTok"""
+
+
+
         try:
             # TikTok copyright claim process (simplified)
             # Note: TikTok's copyright system is more manual
@@ -496,6 +526,9 @@ class RevenueClaimManager:
     
     async def _submit_spotify_claim(self, claim: RevenueClaim) -> bool:
         """Submit claim to Spotify"""
+
+
+
         try:
             # Spotify copyright claim process
             api_endpoint = "https://api.spotify.com/v1/copyright/claims"
@@ -534,6 +567,9 @@ class RevenueClaimManager:
     
     async def _submit_generic_claim(self, claim: RevenueClaim) -> bool:
         """Submit generic copyright claim"""
+
+
+
         try:
             # Generic claim submission (email/form based)
             claim.status = ClaimStatus.SUBMITTED
@@ -572,6 +608,9 @@ class RevenueClaimManager:
     
     def _load_claim_templates(self) -> Dict[str, str]:
         """Load claim submission templates"""
+
+
+
         return {
             'youtube': """
             Copyright Claim - Revenue Recovery
@@ -656,8 +695,11 @@ class RevenueProtectionService(IRevenueProtectionService):
         
     async def initialize(self) -> bool:
         """Initialize revenue protection service"""
+
+
+
         try:
-            self.logger.info("🚀 Initializing Revenue Protection Service")
+            self.logger.info(" Initializing Revenue Protection Service")
             
             # Setup payment processors
             await self._setup_payment_processors()
@@ -666,16 +708,19 @@ class RevenueProtectionService(IRevenueProtectionService):
             await self._load_platform_configurations()
             
             self.status = RevenueProtectionStatus.ACTIVE
-            self.logger.info("✅ Revenue Protection Service initialized successfully")
+            self.logger.info(" Revenue Protection Service initialized successfully")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Revenue Protection Service initialization failed: {e}")
+            self.logger.error(f" Revenue Protection Service initialization failed: {e}")
             self.status = RevenueProtectionStatus.ERROR
             return False
     
     async def calculate_revenue_loss(self, violation: RevenueViolation) -> Decimal:
         """Calculate estimated revenue loss from violation"""
+
+
+
         try:
             self.status = RevenueProtectionStatus.CALCULATING
             
@@ -697,6 +742,9 @@ class RevenueProtectionService(IRevenueProtectionService):
     
     async def submit_revenue_claim(self, claim: RevenueClaim) -> bool:
         """Submit revenue claim to platform"""
+
+
+
         try:
             self.status = RevenueProtectionStatus.CLAIMING
             
@@ -748,6 +796,9 @@ class RevenueProtectionService(IRevenueProtectionService):
     
     async def _setup_payment_processors(self) -> None:
         """Setup payment processor integrations"""
+
+
+
         try:
             # Stripe setup
             stripe_config = self.config.payment_processors.get('stripe', {})
@@ -786,6 +837,9 @@ class RevenueProtectionService(IRevenueProtectionService):
     
     async def _validate_claim(self, claim: RevenueClaim) -> bool:
         """Validate revenue claim before submission"""
+
+
+
         try:
             # Check required fields
             if not claim.violation_id or not claim.claimant_id:
@@ -832,6 +886,9 @@ class RevenueProtectionServiceFactory:
         **kwargs
     ) -> RevenueProtectionConfig:
         """Create revenue protection configuration"""
+
+
+
         return RevenueProtectionConfig(
             auto_claim_enabled=auto_claim_enabled,
             claim_threshold_amount=claim_threshold_amount,

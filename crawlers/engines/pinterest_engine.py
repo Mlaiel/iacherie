@@ -282,6 +282,9 @@ class PinterestEngine(BaseCrawlerEngine):
         board_info: Dict[str, Any]
     ) -> Optional[PinterestPin]:
         """Process and analyze pin with advanced metrics"""
+
+
+
         
         try:
             pin_id = raw_pin.get('id')
@@ -763,6 +766,9 @@ class PinterestEngine(BaseCrawlerEngine):
         
     async def _get_authenticated_headers(self) -> Dict[str, str]:
         """Get authenticated headers for API requests"""
+
+
+
         
         return {
             'User-Agent': 'Pinterest/1.0',

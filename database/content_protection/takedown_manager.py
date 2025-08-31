@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + DBA + DevOps + Legal Tech
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
+ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION 
 ==================================================================
 This code and all associated intellectual property are the EXCLUSIVE property of Fahed Mlaiel.
 ANY unauthorized use, copying, modification, distribution, or commercialization without 
@@ -161,6 +161,9 @@ class TakedownManagerRepository:
         Raises:
             TakedownManagerError: If creation fails
         """
+
+
+
         try:
             # Validate takedown data
             await self._validate_takedown_data(infringing_content, copyright_owner)
@@ -254,6 +257,9 @@ class TakedownManagerRepository:
         Returns:
             Updated TakedownRequest record
         """
+
+
+
         try:
             takedown = await self.db_session.query(TakedownRequest).filter(
                 TakedownRequest.takedown_id == takedown_id
@@ -327,6 +333,9 @@ class TakedownManagerRepository:
         Returns:
             Updated TakedownRequest record
         """
+
+
+
         try:
             takedown = await self.db_session.query(TakedownRequest).filter(
                 TakedownRequest.takedown_id == takedown_id
@@ -417,6 +426,9 @@ class TakedownManagerRepository:
         Returns:
             Created TakedownResponse record
         """
+
+
+
         try:
             takedown = await self.db_session.query(TakedownRequest).filter(
                 TakedownRequest.takedown_id == takedown_id
@@ -486,6 +498,9 @@ class TakedownManagerRepository:
         Returns:
             Created LegalAction record
         """
+
+
+
         try:
             takedown = await self.db_session.query(TakedownRequest).filter(
                 TakedownRequest.takedown_id == takedown_id
@@ -559,6 +574,9 @@ class TakedownManagerRepository:
         Returns:
             Comprehensive analytics data
         """
+
+
+
         try:
             start_date = datetime.now(timezone.utc) - timedelta(days=analysis_period_days)
             
@@ -808,6 +826,9 @@ class TakedownManagerRepository:
     
     async def _prepare_submission_data(self, takedown: TakedownRequest) -> Dict[str, Any]:
         """Prepare data for takedown submission"""
+
+
+
         return {
             "takedown_id": takedown.takedown_id,
             "legal_document": takedown.legal_document,
@@ -836,6 +857,9 @@ class TakedownManagerRepository:
     
     async def _send_submission_notifications(self, takedown: TakedownRequest) -> None:
         """Send notifications for takedown submission"""
+
+
+
         try:
             notification_data = {
                 "takedown_id": takedown.takedown_id,
@@ -860,6 +884,9 @@ class TakedownManagerRepository:
         new_status: str
     ) -> None:
         """Send notifications for status updates"""
+
+
+
         try:
             notification_data = {
                 "takedown_id": takedown.takedown_id,
@@ -950,6 +977,9 @@ class TakedownManagerRepository:
     
     async def _validate_escalation_eligibility(self, takedown: TakedownRequest) -> bool:
         """Validate if takedown is eligible for legal escalation"""
+
+
+
         return takedown.status in [TakedownStatus.REJECTED.value, TakedownStatus.EXPIRED.value]
     
     async def _generate_case_number(self, takedown: TakedownRequest) -> str:
@@ -963,6 +993,9 @@ class TakedownManagerRepository:
         escalation_reason: str
     ) -> Dict[str, Any]:
         """Prepare legal documentation for escalation"""
+
+
+
         return {
             "original_takedown": takedown.takedown_id,
             "escalation_reason": escalation_reason,
@@ -991,6 +1024,9 @@ class TakedownManagerRepository:
         legal_action: LegalAction
     ) -> None:
         """Send legal escalation notifications"""
+
+
+
         try:
             notification_data = {
                 "takedown_id": takedown.takedown_id,

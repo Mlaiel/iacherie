@@ -226,6 +226,9 @@ class PlatformEarningsManager:
         Returns:
             PlatformEarnings: Revenus calculés
         """
+
+
+
         try:
             # Vérification cache
             cache_key = f"platform_earnings:{user_id}:{platform_name}:{interval.value}:{period_start.date()}:{period_end.date()}"
@@ -357,6 +360,9 @@ class PlatformEarningsManager:
         Returns:
             List[Dict]: Classement des plateformes
         """
+
+
+
         try:
             async with self.db.get_session() as session:
                 earnings = await session.query(PlatformEarnings).filter(
@@ -403,6 +409,9 @@ class PlatformEarningsManager:
         Returns:
             PlatformComparisonMetrics: Rapport de comparaison
         """
+
+
+
         try:
             # Récupération des données par plateforme
             platform_data = {}
@@ -531,6 +540,9 @@ class PlatformEarningsManager:
 
     async def _calculate_conversion_metrics(self, transactions: List) -> Dict[str, Any]:
         """Calcule les métriques de conversion"""
+
+
+
         return {
             "total_conversions": len(transactions),
             "conversion_value": sum(float(t.amount_gross) for t in transactions),
@@ -546,6 +558,9 @@ class PlatformEarningsManager:
         current_revenue: Decimal
     ) -> Optional[Decimal]:
         """Calcule le taux de croissance par rapport à la période précédente"""
+
+
+
         try:
             # Période précédente de même durée
             period_duration = period_end - period_start

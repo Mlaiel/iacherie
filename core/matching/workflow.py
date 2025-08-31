@@ -34,7 +34,7 @@ Business Intelligence:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This workflow system contains proprietary algorithms and business logic
 developed by Fahed Mlaiel. Unauthorized use, reverse engineering, or distribution
 is strictly prohibited and subject to legal prosecution.
@@ -831,10 +831,16 @@ class WorkflowManager:
     
     async def get_workflow_status(self, execution_id: str) -> Optional[WorkflowExecution]:
         """Get current status of a workflow execution"""
+
+
+
         return self.active_workflows.get(execution_id)
     
     async def get_active_workflows(self) -> List[WorkflowExecution]:
         """Get all currently active workflows"""
+
+
+
         return list(self.active_workflows.values())
     
     async def cancel_workflow(self, execution_id: str) -> bool:

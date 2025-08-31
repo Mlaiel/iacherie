@@ -120,6 +120,9 @@ class ContentAnalytics:
         Returns:
             Success status
         """
+
+
+
         try:
             # Validate content exists
             content = await self._get_content_by_id(content_id)
@@ -166,6 +169,9 @@ class ContentAnalytics:
         Returns:
             Content metrics or None if not found
         """
+
+
+
         try:
             # Check cache first
             cache_key = f"content_metrics:{content_id}:{period_days}"
@@ -233,6 +239,9 @@ class ContentAnalytics:
         Returns:
             Analytics report or None
         """
+
+
+
         try:
             # Check cache
             cache_key = f"analytics_report:{user_id}:{period_days}"
@@ -304,6 +313,9 @@ class ContentAnalytics:
         Returns:
             Real-time metrics dictionary
         """
+
+
+
         try:
             # Get from real-time cache
             rt_cache_key = f"realtime_metrics:{content_id}"
@@ -331,6 +343,9 @@ class ContentAnalytics:
         Returns:
             List of similar content with similarity scores
         """
+
+
+
         try:
             # Get content metrics vector
             content_vector = await self._get_content_vector(content_id)
@@ -373,6 +388,9 @@ class ContentAnalytics:
         Returns:
             Performance predictions
         """
+
+
+
         try:
             # Extract features from metadata
             features = await self._extract_prediction_features(content_metadata)
@@ -423,6 +441,9 @@ class ContentAnalytics:
     
     async def _get_from_cache(self, key: str) -> Optional[Dict]:
         """Get data from cache"""
+
+
+
         try:
             cached_data = await self.redis.get(key)
             return json.loads(cached_data) if cached_data else None
@@ -431,6 +452,9 @@ class ContentAnalytics:
     
     async def _save_to_cache(self, key: str, data: Dict, ttl: int = None):
         """Save data to cache"""
+
+
+
         try:
             ttl = ttl or self.cache_ttl
             await self.redis.setex(key, ttl, json.dumps(data, default=str))

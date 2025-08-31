@@ -1,5 +1,5 @@
 """
-🎵 Real-time Audio Synthesis Engine - Low-Latency Audio Generation
+ Real-time Audio Synthesis Engine - Low-Latency Audio Generation
 
 This module provides real-time audio synthesis capabilities with optimized
 performance for streaming and interactive applications.
@@ -7,7 +7,7 @@ performance for streaming and interactive applications.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ LEGAL WARNING: Unauthorized use prohibited. Contact mlaiel@live.de for licensing.
+ LEGAL WARNING: Unauthorized use prohibited. Contact mlaiel@live.de for licensing.
 """
 
 import torch
@@ -141,6 +141,9 @@ class AudioBuffer:
         
     def get_fill_level(self) -> float:
         """Get buffer fill level as fraction."""
+
+
+
         return self.available_samples / self.size
         
     def clear(self) -> None:
@@ -274,6 +277,9 @@ class RealtimeSynthesisEngine:
                 
     def read_output(self, num_samples: int) -> np.ndarray:
         """Read synthesized audio output."""
+
+
+
         return self.output_buffer.read(num_samples)
         
     def _processing_loop(self) -> None:
@@ -355,6 +361,9 @@ class RealtimeSynthesisEngine:
         
     def get_status(self) -> Dict[str, Any]:
         """Get engine status information."""
+
+
+
         return {
             'is_running': self.is_running,
             'input_buffer_fill': self.input_buffer.get_fill_level(),
@@ -516,6 +525,9 @@ class BufferedSynthesisManager:
         
     def queue_synthesis(self, synthesis_request: Dict[str, Any]) -> None:
         """Queue synthesis request for background processing."""
+
+
+
         try:
             self.synthesis_queue.put_nowait(synthesis_request)
         except queue.Full:
@@ -632,10 +644,16 @@ class AdaptiveSynthesisController:
             
     def get_current_quality(self) -> str:
         """Get current quality level."""
+
+
+
         return self.quality_levels[self.current_quality_idx]
         
     def get_adaptation_params(self) -> Dict[str, Any]:
         """Get current adaptation parameters."""
+
+
+
         return {
             'quality_level': self.get_current_quality(),
             'target_latency': self.target_latency,
@@ -692,6 +710,9 @@ class QualityOptimizer:
                 
     def get_quality_params(self) -> Dict[str, Any]:
         """Get current quality parameters."""
+
+
+
         return self.quality_profiles[self.current_quality]
 
 
@@ -729,6 +750,9 @@ class LatencyMonitor:
             
     def get_current_latency(self) -> float:
         """Get current latency."""
+
+
+
         return self.latencies[-1] if self.latencies else 0.0
         
     def get_latency_stats(self) -> Dict[str, float]:
@@ -786,14 +810,23 @@ class ResourceManager:
             
     def get_cpu_usage(self) -> float:
         """Get current CPU usage."""
+
+
+
         return self.cpu_usage[-1] if self.cpu_usage else 0.0
         
     def get_memory_usage(self) -> float:
         """Get current memory usage."""
+
+
+
         return self.memory_usage[-1] if self.memory_usage else 0.0
         
     def get_gpu_memory_usage(self) -> float:
         """Get current GPU memory usage."""
+
+
+
         return self.gpu_memory_usage[-1] if self.gpu_memory_usage else 0.0
         
     def _resource_loop(self) -> None:

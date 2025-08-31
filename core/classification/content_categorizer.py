@@ -12,7 +12,7 @@ Copyright © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, modification, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing and collaboration.
 
-⚠️ STRONG WARNING: This code and concept are the exclusive property of Fahed Mlaiel.
+ STRONG WARNING: This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted
 to the full extent of the law.
@@ -174,6 +174,9 @@ class ContentCategorizer:
         Returns:
             Comprehensive categorization results
         """
+
+
+
         try:
             if not classification_results:
                 raise ClassificationError("No classification results provided")
@@ -246,6 +249,9 @@ class ContentCategorizer:
 
     def _categorize_genre(self, classifications: Dict[str, Any], content_type: str) -> Optional[Dict[str, Any]]:
         """Categorize content genre."""
+
+
+
         try:
             # Extract genre information from classifications
             genre_data = classifications.get('genre_detection', {})
@@ -298,6 +304,9 @@ class ContentCategorizer:
         content_type: str
     ) -> Optional[Dict[str, Any]]:
         """Categorize content theme."""
+
+
+
         try:
             # Extract theme-related information
             theme_scores = {}
@@ -368,6 +377,9 @@ class ContentCategorizer:
         content_type: str
     ) -> Optional[Dict[str, Any]]:
         """Categorize content style."""
+
+
+
         try:
             style_info = None
             confidence = 0
@@ -437,6 +449,9 @@ class ContentCategorizer:
 
     def _categorize_purpose(self, classifications: Dict[str, Any], features: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         """Categorize content purpose."""
+
+
+
         try:
             purpose_scores = {}
             
@@ -663,6 +678,9 @@ class ContentCategorizer:
         classifications: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Validate and refine categories using cross-validation."""
+
+
+
         try:
             primary_categories = categorization['primary_categories']
             
@@ -861,6 +879,9 @@ class ContentCategorizer:
         category_data: Dict[str, Any]
     ) -> bool:
         """Add a custom category to the system."""
+
+
+
         try:
             if category_type == 'music_genres':
                 self.music_genres[category_name] = category_data
@@ -886,6 +907,9 @@ class ContentCategorizer:
 
     def get_categorization_summary(self, categorization: Dict[str, Any]) -> str:
         """Generate a human-readable summary of categorization results."""
+
+
+
         try:
             summary_parts = []
             

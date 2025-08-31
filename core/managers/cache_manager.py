@@ -8,7 +8,7 @@ Responsibility: Enterprise distributed caching with AI-powered optimization
 Technologies: Redis Cluster, Memcached, CDN, Edge Caching, ML Prediction
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -31,15 +31,50 @@ import uuid
 from enum import Enum
 import time
 import hashlib
-import redis.asyncio as redis
 import pickle
 import gzip
-import lz4.frame
-import zstd
 from collections import OrderedDict, defaultdict
-import numpy as np
+
+# Optional dependencies with fallbacks
+try:
+    import redis.asyncio as redis
+    REDIS_AVAILABLE = True
+except ImportError:
+    redis = None
+    REDIS_AVAILABLE = False
+
+try:
+    import lz4.frame
+    LZ4_AVAILABLE = True
+except ImportError:
+    lz4 = None
+    LZ4_AVAILABLE = False
+
+try:
+    import zstd
+    ZSTD_AVAILABLE = True
+except ImportError:
+    zstd = None
+    ZSTD_AVAILABLE = False
+
+try:
+    import numpy as np
+    NUMPY_AVAILABLE = True
+except ImportError:
+    np = None
+    NUMPY_AVAILABLE = False
 
 logger = logging.getLogger(__name__)
+
+
+@dataclass
+class CacheManagerConfig:
+    """Configuration for cache manager"""
+    max_memory_size: int = 1024 * 1024 * 100  # 100MB
+    redis_url: str = "redis://localhost:6379"
+    default_ttl: int = 3600  # 1 hour
+    compression_enabled: bool = True
+    encryption_enabled: bool = False
 
 
 class CacheLevel(Enum):
@@ -183,7 +218,7 @@ class CacheEntry:
 
 class IntelligentCacheManager(ABC):
     """
-    🎯 Advanced Intelligent Cache Manager - IA-Influencer-Agent
+     Advanced Intelligent Cache Manager - IA-Influencer-Agent
     
     Enterprise-grade multi-tier intelligent caching system featuring:
     - Hierarchical caching (L1 memory → L2 Redis → L4 CDN → L5 global)
@@ -217,7 +252,7 @@ class IntelligentCacheManager(ABC):
         self._operation_semaphore = asyncio.Semaphore(self.config.max_concurrent_operations)
         self._lock = asyncio.Lock()
         
-        logger.info(f"🎯 Initializing {self.__class__.__name__} with intelligent caching")
+        logger.info(f" Initializing {self.__class__.__name__} with intelligent caching")
     
     @abstractmethod
     async def initialize_cache_system(self) -> bool:
@@ -355,7 +390,7 @@ class IntelligentCacheManager(ABC):
                 return computed_value
                 
             except Exception as e:
-                logger.error(f"❌ Failed to get or compute {key}: {e}")
+                logger.error(f" Failed to get or compute {key}: {e}")
                 raise
     
     async def preload_predicted_data(self) -> Dict[str, Any]:
@@ -365,6 +400,9 @@ class IntelligentCacheManager(ABC):
         Returns:
             Dict with preloading results
         """
+
+
+
         try:
             if not self.config.ai_optimization_enabled or not self._prediction_model:
                 return {"preloaded": 0, "message": "AI optimization disabled"}
@@ -395,11 +433,11 @@ class IntelligentCacheManager(ABC):
             # Update metrics
             self._metrics.preload_success_rate = result["success_rate"]
             
-            logger.info(f"🔮 Preloaded {preloaded_count} predicted cache entries")
+            logger.info(f" Preloaded {preloaded_count} predicted cache entries")
             return result
             
         except Exception as e:
-            logger.error(f"❌ Cache preloading failed: {e}")
+            logger.error(f" Cache preloading failed: {e}")
             return {"error": str(e)}
     
     async def optimize_cache_distribution(self) -> Dict[str, Any]:
@@ -409,6 +447,9 @@ class IntelligentCacheManager(ABC):
         Returns:
             Dict with optimization results
         """
+
+
+
         try:
             optimization_results = {
                 "redistributed_entries": 0,
@@ -438,11 +479,11 @@ class IntelligentCacheManager(ABC):
             new_hit_ratio = await self._calculate_projected_hit_ratio()
             optimization_results["cache_efficiency_improvement"] = new_hit_ratio - self._metrics.hit_ratio
             
-            logger.info(f"⚡ Cache optimization completed: {optimization_results['redistributed_entries']} entries redistributed")
+            logger.info(f" Cache optimization completed: {optimization_results['redistributed_entries']} entries redistributed")
             return optimization_results
             
         except Exception as e:
-            logger.error(f"❌ Cache optimization failed: {e}")
+            logger.error(f" Cache optimization failed: {e}")
             return {"error": str(e)}
     
     async def get_comprehensive_analytics(self) -> Dict[str, Any]:
@@ -452,6 +493,9 @@ class IntelligentCacheManager(ABC):
         Returns:
             Dict with detailed analytics
         """
+
+
+
         try:
             analytics = {
                 "performance_metrics": dict(self._metrics.__dict__),
@@ -467,7 +511,7 @@ class IntelligentCacheManager(ABC):
             return analytics
             
         except Exception as e:
-            logger.error(f"❌ Failed to generate cache analytics: {e}")
+            logger.error(f" Failed to generate cache analytics: {e}")
             return {"error": str(e)}
     
     # Helper methods for implementation
@@ -523,46 +567,79 @@ class IntelligentCacheManager(ABC):
     
     async def _analyze_cache_distribution(self) -> Dict[str, Any]:
         """Analyze current cache distribution"""
+
+
+
         return {}
     
     async def _promote_hot_data(self) -> int:
         """Promote hot data to faster cache levels"""
+
+
+
         return 0
     
     async def _demote_cold_data(self) -> int:
         """Demote cold data to cheaper cache levels"""
+
+
+
         return 0
     
     async def _optimize_compression_settings(self) -> List[str]:
         """Optimize compression settings"""
+
+
+
         return []
     
     async def _calculate_projected_hit_ratio(self) -> float:
         """Calculate projected hit ratio after optimization"""
+
+
+
         return self._metrics.hit_ratio + 0.05  # Placeholder improvement
     
     async def _get_cache_level_distribution(self) -> Dict[str, Any]:
         """Get distribution of data across cache levels"""
+
+
+
         return {}
     
     async def _get_top_cached_keys(self) -> List[Dict[str, Any]]:
         """Get top cached keys by access frequency"""
+
+
+
         return []
     
     async def _analyze_access_patterns(self) -> Dict[str, Any]:
         """Analyze access patterns"""
+
+
+
         return {}
     
     async def _calculate_cache_costs(self) -> Dict[str, float]:
         """Calculate cache costs"""
+
+
+
         return {}
     
     async def _generate_optimization_recommendations(self) -> List[str]:
         """Generate optimization recommendations"""
+
+
+
         return []
     
     async def _get_ai_model_performance(self) -> Dict[str, float]:
         """Get AI model performance metrics"""
+
+
+
         return {}
 
 
@@ -572,6 +649,9 @@ class ProductionCacheManager(IntelligentCacheManager):
     
     async def initialize_cache_system(self) -> bool:
         """Initialize cache system"""
+
+
+
         try:
             # Initialize Redis connections
             if CacheLevel.L2_REDIS in self.config.enabled_levels:
@@ -585,11 +665,11 @@ class ProductionCacheManager(IntelligentCacheManager):
             if self.config.ai_optimization_enabled:
                 await self._initialize_ai_models()
             
-            logger.info("✅ Cache system initialized successfully")
+            logger.info(" Cache system initialized successfully")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize cache system: {e}")
+            logger.error(f" Failed to initialize cache system: {e}")
             return False
     
     async def get(
@@ -599,6 +679,9 @@ class ProductionCacheManager(IntelligentCacheManager):
         cache_levels: Optional[Set[CacheLevel]] = None,
     ) -> Any:
         """Get from cache with level hierarchy"""
+
+
+
         try:
             search_levels = cache_levels or self.config.enabled_levels
             
@@ -639,7 +722,7 @@ class ProductionCacheManager(IntelligentCacheManager):
             return default
             
         except Exception as e:
-            logger.error(f"❌ Cache get failed for {key}: {e}")
+            logger.error(f" Cache get failed for {key}: {e}")
             return default
     
     async def set(
@@ -651,6 +734,9 @@ class ProductionCacheManager(IntelligentCacheManager):
         compression: Optional[CompressionType] = None,
     ) -> bool:
         """Set to cache with intelligent distribution"""
+
+
+
         try:
             target_levels = cache_levels or self.config.enabled_levels
             ttl = ttl_seconds or self.config.redis_default_ttl
@@ -675,7 +761,7 @@ class ProductionCacheManager(IntelligentCacheManager):
             return success_count > 0
             
         except Exception as e:
-            logger.error(f"❌ Cache set failed for {key}: {e}")
+            logger.error(f" Cache set failed for {key}: {e}")
             return False
     
     async def delete(
@@ -684,6 +770,9 @@ class ProductionCacheManager(IntelligentCacheManager):
         cache_levels: Optional[Set[CacheLevel]] = None,
     ) -> bool:
         """Delete from cache levels"""
+
+
+
         try:
             target_levels = cache_levels or self.config.enabled_levels
             success_count = 0
@@ -703,7 +792,7 @@ class ProductionCacheManager(IntelligentCacheManager):
             return success_count > 0
             
         except Exception as e:
-            logger.error(f"❌ Cache delete failed for {key}: {e}")
+            logger.error(f" Cache delete failed for {key}: {e}")
             return False
     
     async def invalidate_pattern(
@@ -712,6 +801,9 @@ class ProductionCacheManager(IntelligentCacheManager):
         cache_levels: Optional[Set[CacheLevel]] = None,
     ) -> int:
         """Invalidate cache entries matching pattern"""
+
+
+
         try:
             target_levels = cache_levels or self.config.enabled_levels
             total_invalidated = 0
@@ -728,7 +820,7 @@ class ProductionCacheManager(IntelligentCacheManager):
             return total_invalidated
             
         except Exception as e:
-            logger.error(f"❌ Cache pattern invalidation failed for {pattern}: {e}")
+            logger.error(f" Cache pattern invalidation failed for {pattern}: {e}")
             return 0
     
     # Helper methods for cache level operations
@@ -770,6 +862,9 @@ class ProductionCacheManager(IntelligentCacheManager):
     
     async def _set_to_l1(self, key: str, value: Any, ttl_seconds: int = None) -> bool:
         """Set to L1 memory cache"""
+
+
+
         try:
             ttl = ttl_seconds or self.config.l1_ttl_seconds
             
@@ -790,11 +885,14 @@ class ProductionCacheManager(IntelligentCacheManager):
             return True
             
         except Exception as e:
-            logger.error(f"❌ L1 cache set failed: {e}")
+            logger.error(f" L1 cache set failed: {e}")
             return False
     
     async def _get_from_redis(self, key: str) -> Any:
         """Get from Redis cache"""
+
+
+
         try:
             for redis_client in self._redis_pools.values():
                 result = await redis_client.get(f"{self.config.redis_key_prefix}{key}")
@@ -802,13 +900,16 @@ class ProductionCacheManager(IntelligentCacheManager):
                     return pickle.loads(result)
             return None
         except Exception as e:
-            logger.error(f"❌ Redis get failed: {e}")
+            logger.error(f" Redis get failed: {e}")
             return None
     
     async def _set_to_redis(
         self, key: str, value: Any, ttl_seconds: int, compression: Optional[CompressionType] = None
     ) -> bool:
         """Set to Redis cache"""
+
+
+
         try:
             serialized_value = pickle.dumps(value)
             
@@ -824,7 +925,7 @@ class ProductionCacheManager(IntelligentCacheManager):
                 )
             return True
         except Exception as e:
-            logger.error(f"❌ Redis set failed: {e}")
+            logger.error(f" Redis set failed: {e}")
             return False
     
     async def _get_from_cdn(self, key: str) -> Any:
@@ -839,10 +940,16 @@ class ProductionCacheManager(IntelligentCacheManager):
     
     async def _delete_from_l1(self, key: str) -> bool:
         """Delete from L1 cache"""
+
+
+
         return self._l1_cache.pop(key, None) is not None
     
     async def _delete_from_redis(self, key: str) -> bool:
         """Delete from Redis cache"""
+
+
+
         try:
             deleted_count = 0
             for redis_client in self._redis_pools.values():
@@ -850,7 +957,7 @@ class ProductionCacheManager(IntelligentCacheManager):
                 deleted_count += result
             return deleted_count > 0
         except Exception as e:
-            logger.error(f"❌ Redis delete failed: {e}")
+            logger.error(f" Redis delete failed: {e}")
             return False
     
     async def _delete_from_cdn(self, key: str) -> bool:
@@ -868,6 +975,9 @@ class ProductionCacheManager(IntelligentCacheManager):
     
     async def _invalidate_redis_pattern(self, pattern: str) -> int:
         """Invalidate Redis cache entries matching pattern"""
+
+
+
         try:
             total_deleted = 0
             for redis_client in self._redis_pools.values():
@@ -877,7 +987,7 @@ class ProductionCacheManager(IntelligentCacheManager):
                     total_deleted += deleted
             return total_deleted
         except Exception as e:
-            logger.error(f"❌ Redis pattern invalidation failed: {e}")
+            logger.error(f" Redis pattern invalidation failed: {e}")
             return 0
     
     async def _invalidate_cdn_pattern(self, pattern: str) -> int:
@@ -890,9 +1000,17 @@ class ProductionCacheManager(IntelligentCacheManager):
         if compression_type == CompressionType.GZIP:
             return gzip.compress(data)
         elif compression_type == CompressionType.LZ4:
-            return lz4.frame.compress(data)
+            if LZ4_AVAILABLE:
+                return lz4.frame.compress(data)
+            else:
+                # Fallback to gzip if lz4 not available
+                return gzip.compress(data)
         elif compression_type == CompressionType.ZSTD:
-            return zstd.compress(data)
+            if ZSTD_AVAILABLE:
+                return zstd.compress(data)
+            else:
+                # Fallback to gzip if zstd not available
+                return gzip.compress(data)
         return data
 
 
@@ -919,7 +1037,7 @@ CacheManager = IntelligentCacheManager
 
 class CacheManagerDocumentation:
     """
-    🎯 Gestionnaire CacheManager - IA-Influencer-Agent
+     Gestionnaire CacheManager - IA-Influencer-Agent
     
     Responsabilité:
     Gestion du cache Redis distribué
@@ -946,7 +1064,7 @@ class CacheManagerDocumentation:
             "failed_requests": 0,
             "average_response_time": 0.0
         }
-        logger.info(f"🎯 Initialisation {self.__class__.__name__}")
+        logger.info(f" Initialisation {self.__class__.__name__}")
     
     @abstractmethod
     async def initialize_pool(self) -> bool:

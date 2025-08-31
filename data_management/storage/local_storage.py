@@ -1,5 +1,5 @@
 """
-💾 Local Storage Provider - IA Influencer Agent Platform Enterprise
+ Local Storage Provider - IA Influencer Agent Platform Enterprise
 ==================================================================
 Module: backend/data_management/storage/local_storage.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 High-performance local storage provider with advanced file management,
 intelligent organization, and seamless integration with cloud backends.
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -117,6 +117,9 @@ class LocalStorageManager:
     
     def _initialize_storage(self) -> None:
         """Initialize storage directory structure"""
+
+
+
         try:
             # Create base directory
             self.base_path.mkdir(parents=True, exist_ok=True)
@@ -314,6 +317,9 @@ class LocalStorageManager:
     
     async def delete_file(self, file_id: str) -> Dict[str, Any]:
         """Delete file from storage"""
+
+
+
         try:
             # Look up file in index
             file_metadata = await self._get_file_metadata(file_id)
@@ -361,6 +367,9 @@ class LocalStorageManager:
         offset: int = 0
     ) -> List[Dict[str, Any]]:
         """List files with optional filtering"""
+
+
+
         try:
             files = []
             
@@ -391,6 +400,9 @@ class LocalStorageManager:
         limit: int = 50
     ) -> List[Dict[str, Any]]:
         """Search files by filename or metadata"""
+
+
+
         try:
             results = []
             query_lower = query.lower()
@@ -426,6 +438,9 @@ class LocalStorageManager:
     
     async def get_storage_statistics(self) -> Dict[str, Any]:
         """Get comprehensive storage statistics"""
+
+
+
         try:
             # Calculate tier usage
             tier_usage = {}
@@ -468,6 +483,9 @@ class LocalStorageManager:
     
     async def cleanup_storage(self, max_age_days: Optional[int] = None) -> Dict[str, Any]:
         """Clean up old and unused files"""
+
+
+
         try:
             max_age = max_age_days or self.config.cleanup_threshold_days
             cutoff_date = datetime.now() - timedelta(days=max_age)

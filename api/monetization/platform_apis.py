@@ -163,6 +163,9 @@ class PlatformAPIManager:
     
     async def _initialize_session(self):
         """Initialize aiohttp session with proper configuration."""
+
+
+
         try:
             connector = aiohttp.TCPConnector(
                 limit=100,
@@ -189,6 +192,9 @@ class PlatformAPIManager:
     
     def _initialize_platform_configs(self) -> Dict[PlatformType, Dict[str, Any]]:
         """Initialize platform-specific configurations."""
+
+
+
         return {
             PlatformType.SPOTIFY: {
                 "base_url": "https://api.spotify.com/v1",
@@ -261,6 +267,9 @@ class PlatformAPIManager:
         Returns:
             Success status of credential registration
         """
+
+
+
         try:
             self.logger.info(f"Registering {credentials.platform.value} credentials for creator: {creator_id}")
             
@@ -292,6 +301,9 @@ class PlatformAPIManager:
     
     async def _validate_credentials(self, credentials: PlatformCredentials) -> bool:
         """Validate platform credentials by making test API call."""
+
+
+
         try:
             platform_config = self.platform_configs.get(credentials.platform)
             if not platform_config:
@@ -357,6 +369,9 @@ class PlatformAPIManager:
     
     async def _store_credentials(self, creator_id: str, credentials: PlatformCredentials):
         """Store encrypted credentials in database."""
+
+
+
         try:
             query = """
             INSERT INTO platform_credentials (
@@ -430,6 +445,9 @@ class PlatformAPIManager:
         Returns:
             Dictionary of platform data organized by platform
         """
+
+
+
         try:
             self.logger.info(f"Collecting data for creator: {creator_id} from {len(platforms)} platforms")
             
@@ -475,6 +493,9 @@ class PlatformAPIManager:
         date_range: Optional[Tuple[datetime, datetime]]
     ) -> List[PlatformData]:
         """Collect data from a single platform with retry logic."""
+
+
+
         try:
             # Get credentials
             credentials = await self._get_credentials(creator_id, platform)
@@ -601,6 +622,9 @@ class PlatformAPIManager:
     
     async def _refresh_access_token(self, credentials: PlatformCredentials):
         """Refresh OAuth2 access token."""
+
+
+
         try:
             platform_config = self.platform_configs.get(credentials.platform)
             if not platform_config or not platform_config.get("auth_url"):
@@ -668,6 +692,9 @@ class PlatformAPIManager:
         date_range: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
         """Collect Spotify revenue data."""
+
+
+
         try:
             headers = await self._build_auth_headers(credentials)
             base_url = credentials.base_url or self.platform_configs[PlatformType.SPOTIFY]["base_url"]
@@ -704,6 +731,9 @@ class PlatformAPIManager:
         date_range: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
         """Collect Spotify analytics data."""
+
+
+
         try:
             headers = await self._build_auth_headers(credentials)
             base_url = credentials.base_url or self.platform_configs[PlatformType.SPOTIFY]["base_url"]
@@ -740,6 +770,9 @@ class PlatformAPIManager:
         date_range: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
         """Collect YouTube revenue data."""
+
+
+
         try:
             headers = await self._build_auth_headers(credentials)
             base_url = credentials.base_url or self.platform_configs[PlatformType.YOUTUBE]["base_url"]
@@ -778,6 +811,9 @@ class PlatformAPIManager:
         date_range: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
         """Collect YouTube analytics data."""
+
+
+
         try:
             headers = await self._build_auth_headers(credentials)
             base_url = credentials.base_url or self.platform_configs[PlatformType.YOUTUBE]["base_url"]
@@ -823,6 +859,9 @@ class PlatformAPIManager:
         date_range: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
         """Collect Instagram engagement data."""
+
+
+
         try:
             headers = await self._build_auth_headers(credentials)
             base_url = credentials.base_url or self.platform_configs[PlatformType.INSTAGRAM]["base_url"]
@@ -856,6 +895,9 @@ class PlatformAPIManager:
         date_range: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
         """Collect TikTok analytics data."""
+
+
+
         try:
             headers = await self._build_auth_headers(credentials)
             base_url = credentials.base_url or self.platform_configs[PlatformType.TIKTOK]["base_url"]
@@ -888,6 +930,9 @@ class PlatformAPIManager:
         date_range: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
         """Collect Twitch revenue data."""
+
+
+
         try:
             headers = await self._build_auth_headers(credentials)
             base_url = credentials.base_url or self.platform_configs[PlatformType.TWITCH]["base_url"]
@@ -919,6 +964,9 @@ class PlatformAPIManager:
         date_range: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
         """Collect Patreon revenue data."""
+
+
+
         try:
             headers = await self._build_auth_headers(credentials)
             base_url = credentials.base_url or self.platform_configs[PlatformType.PATREON]["base_url"]
@@ -947,6 +995,9 @@ class PlatformAPIManager:
         date_range: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
         """Collect SoundCloud analytics data."""
+
+
+
         try:
             headers = await self._build_auth_headers(credentials)
             base_url = credentials.base_url or self.platform_configs[PlatformType.SOUNDCLOUD]["base_url"]
@@ -980,6 +1031,9 @@ class PlatformAPIManager:
         raw_data: Dict[str, Any]
     ) -> List[PlatformData]:
         """Process and standardize raw platform data."""
+
+
+
         try:
             processed_data_list = []
             
@@ -1289,6 +1343,9 @@ class PlatformAPIManager:
         platform_data: Dict[PlatformType, List[PlatformData]]
     ):
         """Store collected platform data in database."""
+
+
+
         try:
             for platform, data_list in platform_data.items():
                 for data in data_list:
@@ -1331,6 +1388,9 @@ class PlatformAPIManager:
         Returns:
             Dictionary of platform summaries with key metrics
         """
+
+
+
         try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=days)
@@ -1382,6 +1442,9 @@ class PlatformAPIManager:
     
     async def close(self):
         """Close HTTP session and cleanup resources."""
+
+
+
         try:
             if self.session:
                 await self.session.close()
@@ -1399,4 +1462,7 @@ class PlatformAPIManager:
 # Factory function for easy instantiation
 def create_platform_api_manager(config: Optional[Dict[str, Any]] = None) -> PlatformAPIManager:
     """Create and return configured platform API manager instance."""
+
+
+
     return PlatformAPIManager(config)

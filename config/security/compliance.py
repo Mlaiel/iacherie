@@ -15,7 +15,7 @@ Business Logic Integration:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend + Security Experts
 
-⚠️ COPYRIGHT WARNING:
+ COPYRIGHT WARNING:
 This code is proprietary and belongs to Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit 
 written permission from Fahed Mlaiel is strictly prohibited.
@@ -558,6 +558,9 @@ compliance_config = ComplianceConfig()
 
 def get_compliance_config() -> ComplianceConfig:
     """Get the compliance configuration instance."""
+
+
+
     return compliance_config
 
 

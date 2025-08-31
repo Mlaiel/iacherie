@@ -8,7 +8,7 @@ Project: IA Influencer Agent + Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL WARNING:
+ CRITICAL LEGAL WARNING:
 This code, concept, and intellectual property are exclusively owned by Fahed Mlaiel.
 Any unauthorized use, copying, distribution, reverse engineering, or commercialization 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
@@ -196,6 +196,9 @@ class NotificationRenderer:
     
     async def _render_email(self, notification: Notification, creator_data: Dict[str, Any]) -> Dict[str, Any]:
         """Render email notification"""
+
+
+
         return {
             'channel': 'email',
             'to': creator_data.get('email'),
@@ -223,6 +226,9 @@ class NotificationRenderer:
     
     async def _render_push(self, notification: Notification, creator_data: Dict[str, Any]) -> Dict[str, Any]:
         """Render push notification"""
+
+
+
         return {
             'channel': 'push',
             'device_tokens': creator_data.get('device_tokens', []),
@@ -233,6 +239,9 @@ class NotificationRenderer:
     
     async def _render_in_app(self, notification: Notification, creator_data: Dict[str, Any]) -> Dict[str, Any]:
         """Render in-app notification"""
+
+
+
         return {
             'channel': 'in_app',
             'notification_id': notification.notification_id,
@@ -246,6 +255,9 @@ class NotificationRenderer:
     
     async def _render_webhook(self, notification: Notification, creator_data: Dict[str, Any]) -> Dict[str, Any]:
         """Render webhook notification"""
+
+
+
         return {
             'channel': 'webhook',
             'url': creator_data.get('webhook_url'),
@@ -271,6 +283,9 @@ class NotificationDelivery:
     
     async def deliver_notification(self, notification: Notification, channel: NotificationChannel, rendered_content: Dict[str, Any]) -> Dict[str, Any]:
         """Deliver notification via specific channel"""
+
+
+
         try:
             if channel == NotificationChannel.EMAIL:
                 result = await self._deliver_email(rendered_content)
@@ -358,6 +373,9 @@ class NotificationManager:
         Returns:
             Notification sending results
         """
+
+
+
         try:
             creator_id = notification_data['creator_id']
             

@@ -87,6 +87,9 @@ class TestGenerationManager:
     @pytest.fixture
     def sample_request(self):
         """Create a sample generation request"""
+
+
+
         return GenerationRequest(
             request_id=str(uuid.uuid4()),
             content_type="blog_post",
@@ -99,6 +102,9 @@ class TestGenerationManager:
     @pytest.fixture
     def high_priority_request(self):
         """Create a high priority request"""
+
+
+
         return GenerationRequest(
             request_id=str(uuid.uuid4()),
             content_type="urgent_announcement",
@@ -497,11 +503,17 @@ class TestQueueManager:
     @pytest.fixture
     def queue_manager(self):
         """Create a queue manager instance"""
+
+
+
         return QueueManager(max_size=10)
     
     @pytest.fixture
     def sample_task(self):
         """Create a sample task"""
+
+
+
         return GenerationTask(
             task_id=str(uuid.uuid4()),
             request=GenerationRequest(
@@ -631,6 +643,9 @@ class TestResourceMonitor:
     @pytest.fixture
     def resource_monitor(self):
         """Create a resource monitor instance"""
+
+
+
         return ResourceMonitor()
     
     def test_resource_monitor_initialization(self, resource_monitor):

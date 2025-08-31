@@ -54,11 +54,17 @@ class TestQualityMetrics:
     @pytest.fixture
     def quality_metrics(self):
         """Create a quality metrics instance"""
+
+
+
         return QualityMetrics()
     
     @pytest.fixture
     def sample_content(self):
         """Create sample content for quality analysis"""
+
+
+
         return {
             "title": "The Ultimate Guide to AI Content Creation: 10 Tools That Will Transform Your Workflow",
             "content": """
@@ -117,6 +123,9 @@ The future of content creation lies in the synergy between human creativity and 
     @pytest.fixture
     def low_quality_content(self):
         """Create low quality content for testing"""
+
+
+
         return {
             "title": "ai tools",
             "content": """
@@ -643,6 +652,9 @@ class TestContentQualityAnalyzer:
     @pytest.fixture
     def content_analyzer(self):
         """Create a content quality analyzer instance"""
+
+
+
         return ContentQualityAnalyzer()
     
     def test_content_analyzer_initialization(self, content_analyzer):

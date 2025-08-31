@@ -18,7 +18,7 @@ Key Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED 
 """
 
 import asyncio
@@ -197,6 +197,9 @@ class ContentCrawlerOrchestrator:
     
     def _init_kubernetes_client(self):
         """Initialize Kubernetes client"""
+
+
+
         try:
             config.load_incluster_config()
         except:
@@ -235,6 +238,9 @@ class ContentCrawlerOrchestrator:
         Returns:
             bool: True if deployment successful
         """
+
+
+
         try:
             self.logger.info("Deploying crawler cluster")
             
@@ -436,6 +442,9 @@ class ContentCrawlerOrchestrator:
         Returns:
             bool: True if monitoring setup successful
         """
+
+
+
         try:
             for platform in platforms:
                 # Create monitoring target
@@ -485,6 +494,9 @@ class ContentCrawlerOrchestrator:
     
     def _create_crawler_deployment_manifest(self, platform: str, config: Dict[str, Any]) -> Dict[str, Any]:
         """Create Kubernetes deployment manifest for platform crawler"""
+
+
+
         return {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
@@ -558,6 +570,9 @@ class ContentCrawlerOrchestrator:
     
     def _create_crawler_service_manifest(self, platform: str) -> Dict[str, Any]:
         """Create Kubernetes service manifest for platform crawler"""
+
+
+
         return {
             "apiVersion": "v1",
             "kind": "Service",
@@ -770,6 +785,9 @@ class ContentCrawlerOrchestrator:
     
     def _is_valid_url(self, url: str) -> bool:
         """Validate URL format"""
+
+
+
         try:
             parsed = urllib.parse.urlparse(url)
             return all([parsed.scheme, parsed.netloc])
@@ -862,6 +880,9 @@ class ContentCrawlerOrchestrator:
     
     async def _store_crawl_results(self, results: List[CrawlResult]):
         """Store crawl results in database"""
+
+
+
         try:
             # Store in PostgreSQL for permanent storage
             # This would use asyncpg to store results
@@ -892,6 +913,9 @@ class ContentCrawlerOrchestrator:
     
     async def _trigger_dmca_enforcement(self, result: CrawlResult):
         """Trigger DMCA enforcement for potential violation"""
+
+
+
         try:
             # Add to DMCA processing queue
             dmca_task = {
@@ -2440,19 +2464,31 @@ class PlatformCrawlerManager:
     
     async def _crawl_tiktok_selenium(self, target: CrawlTarget, driver) -> List[CrawlResult]:
         """TikTok Selenium crawling implementation"""
+
+
+
         return []
     
     async def _crawl_instagram_selenium(self, target: CrawlTarget, driver) -> List[CrawlResult]:
         """Instagram Selenium crawling implementation"""
+
+
+
         return []
     
     async def _crawl_generic_selenium(self, target: CrawlTarget, driver) -> List[CrawlResult]:
         """Generic Selenium crawling implementation"""
+
+
+
         return []
     
     # Helper methods for API implementations
     async def _get_youtube_video_details(self, video_id: str, api_key: str, session) -> Dict[str, Any]:
         """Get detailed YouTube video information"""
+
+
+
         try:
             details_url = "https://www.googleapis.com/youtube/v3/videos"
             params = {
@@ -2484,6 +2520,9 @@ class PlatformCrawlerManager:
     
     async def _get_spotify_access_token(self, client_id: str, client_secret: str) -> Optional[str]:
         """Get Spotify access token using Client Credentials Flow"""
+
+
+
         try:
             import aiohttp
             import base64
@@ -2514,6 +2553,9 @@ class PlatformCrawlerManager:
     
     async def _get_spotify_audio_features(self, track_id: str, access_token: str, session) -> Optional[Dict[str, Any]]:
         """Get Spotify audio features for a track"""
+
+
+
         try:
             features_url = f"https://api.spotify.com/v1/audio-features/{track_id}"
             headers = {
@@ -2537,6 +2579,9 @@ class PlatformCrawlerManager:
     
     async def _check_rate_limit(self, platform: PlatformType) -> bool:
         """Check if platform API rate limit allows request"""
+
+
+
         try:
             current_time = datetime.now()
             
@@ -2575,6 +2620,9 @@ class PlatformCrawlerManager:
     
     async def _record_api_request(self, platform: PlatformType):
         """Record an API request for rate limiting"""
+
+
+
         try:
             current_time = datetime.now()
             
@@ -2628,6 +2676,9 @@ class PlatformCrawlerManager:
     
     def _create_tiktok_result_from_data(self, video_data: Dict[str, Any], task_id: str) -> Optional[CrawlResult]:
         """Create CrawlResult from TikTok video data"""
+
+
+
         try:
             video_id = video_data.get('id', '')
             if not video_id:
@@ -2680,6 +2731,9 @@ class PlatformCrawlerManager:
     
     def _extract_tiktok_video_from_element(self, element, task_id: str) -> Optional[CrawlResult]:
         """Extract TikTok video data from HTML element"""
+
+
+
         try:
             # This is a fallback method for when JSON parsing fails
             # Extract what we can from HTML structure
@@ -2792,6 +2846,9 @@ class PlatformCrawlerManager:
     
     def _create_instagram_result_from_node(self, node: Dict[str, Any], task_id: str, username: str) -> Optional[CrawlResult]:
         """Create CrawlResult from Instagram node data"""
+
+
+
         try:
             shortcode = node.get('shortcode', '')
             if not shortcode:
@@ -2848,6 +2905,9 @@ class PlatformCrawlerManager:
     
     def _extract_instagram_caption(self, node: Dict[str, Any]) -> str:
         """Extract caption text from Instagram node"""
+
+
+
         try:
             edge_media_to_caption = node.get('edge_media_to_caption', {})
             edges = edge_media_to_caption.get('edges', [])
@@ -2865,6 +2925,9 @@ class PlatformCrawlerManager:
 # Utility functions
 def create_crawler_deployment_config() -> Dict[str, Any]:
     """Create default crawler deployment configuration"""
+
+
+
     return {
         'platforms': {
             'youtube': {

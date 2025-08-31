@@ -411,6 +411,9 @@ class SubscriptionValidators:
         result: Dict[str, Any]
     ) -> None:
         """Validate plan pricing."""
+
+
+
         try:
             # Monthly price validation
             if plan_config.monthly_price < self.min_plan_price:

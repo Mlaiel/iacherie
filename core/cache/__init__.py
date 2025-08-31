@@ -8,7 +8,7 @@ Contact: mlaiel@live.de
 Project Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
               Microservices Architect + Audio Processing Expert + DevOps Engineer + IA Prompt Engineer
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE PROHIBITED ⚠️
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE PROHIBITED 
 Copyright (C) 2024 Fahed Mlaiel. All rights reserved.
 This software is protected by copyright law and international treaties.
 Unauthorized reproduction, distribution, or use is strictly prohibited.

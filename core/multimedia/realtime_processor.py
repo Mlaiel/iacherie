@@ -7,7 +7,7 @@ Provides low-latency processing, streaming optimization, and real-time analytics
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -188,6 +188,9 @@ class MultimediaProcessor:
         
     async def initialize(self):
         """Initialize the processor"""
+
+
+
         try:
             # Initialize performance monitoring
             if PSUTIL_AVAILABLE:
@@ -211,6 +214,9 @@ class MultimediaProcessor:
         processing_pipeline: Optional[Callable] = None
     ) -> str:
         """Create a new processing stream"""
+
+
+
         try:
             stream_id = stream_config.stream_id
             
@@ -243,6 +249,9 @@ class MultimediaProcessor:
             
     async def start_stream(self, stream_id: str) -> bool:
         """Start processing for a stream"""
+
+
+
         try:
             if stream_id not in self.active_streams:
                 raise ValueError(f"Stream not found: {stream_id}")
@@ -273,6 +282,9 @@ class MultimediaProcessor:
             
     async def stop_stream(self, stream_id: str) -> bool:
         """Stop processing for a stream"""
+
+
+
         try:
             if stream_id not in self.active_streams:
                 return True
@@ -310,6 +322,9 @@ class MultimediaProcessor:
         metadata: Optional[Dict[str, Any]] = None
     ) -> Optional[str]:
         """Submit a frame for processing"""
+
+
+
         try:
             if stream_id not in self.active_streams:
                 raise ValueError(f"Stream not found: {stream_id}")
@@ -351,6 +366,9 @@ class MultimediaProcessor:
             
     async def get_result(self, stream_id: str, timeout: float = 1.0) -> Optional[ProcessingResult]:
         """Get processing result"""
+
+
+
         try:
             if stream_id not in self.result_queues:
                 return None
@@ -388,14 +406,23 @@ class MultimediaProcessor:
             
     async def get_stream_metrics(self, stream_id: str) -> Optional[PerformanceMetrics]:
         """Get performance metrics for a stream"""
+
+
+
         return self.metrics.get(stream_id)
         
     async def get_all_metrics(self) -> Dict[str, PerformanceMetrics]:
         """Get metrics for all streams"""
+
+
+
         return self.metrics.copy()
         
     async def optimize_performance(self, stream_id: str) -> bool:
         """Optimize performance for a stream"""
+
+
+
         try:
             if stream_id not in self.active_streams:
                 return False
@@ -434,6 +461,9 @@ class MultimediaProcessor:
         
     async def health_check(self) -> Dict[str, Any]:
         """Processor health check"""
+
+
+
         try:
             # System metrics
             system_metrics = {}
@@ -480,6 +510,9 @@ class MultimediaProcessor:
     
     def _process_stream(self, stream_id: str):
         """Main processing loop for a stream"""
+
+
+
         try:
             config = self.active_streams[stream_id]
             metrics = self.metrics[stream_id]
@@ -593,6 +626,9 @@ class MultimediaProcessor:
         
     async def _initialize_gpu_acceleration(self):
         """Initialize GPU acceleration"""
+
+
+
         try:
             # Check if CUDA is available
             if hasattr(cv2, 'cuda') and cv2.cuda.getCudaEnabledDeviceCount() > 0:
@@ -627,6 +663,9 @@ class MultimediaProcessor:
         
     async def _call_callback(self, callback: Callable, data: Any):
         """Call callback function safely"""
+
+
+
         try:
             if asyncio.iscoroutinefunction(callback):
                 await callback(data)

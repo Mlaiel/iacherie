@@ -109,7 +109,7 @@ class NotificationTemplate:
         """Create default notification templates"""
         templates = {
             'pipeline_started.html': '''
-            <h2>🚀 Pipeline Started</h2>
+            <h2> Pipeline Started</h2>
             <p><strong>Pipeline:</strong> {{ pipeline_name }}</p>
             <p><strong>Environment:</strong> {{ environment }}</p>
             <p><strong>Type:</strong> {{ pipeline_type }}</p>
@@ -118,7 +118,7 @@ class NotificationTemplate:
             ''',
             
             'pipeline_completed.html': '''
-            <h2>✅ Pipeline Completed Successfully</h2>
+            <h2> Pipeline Completed Successfully</h2>
             <p><strong>Pipeline:</strong> {{ pipeline_name }}</p>
             <p><strong>Environment:</strong> {{ environment }}</p>
             <p><strong>Duration:</strong> {{ duration }}</p>
@@ -134,7 +134,7 @@ class NotificationTemplate:
             ''',
             
             'pipeline_failed.html': '''
-            <h2>❌ Pipeline Failed</h2>
+            <h2> Pipeline Failed</h2>
             <p><strong>Pipeline:</strong> {{ pipeline_name }}</p>
             <p><strong>Environment:</strong> {{ environment }}</p>
             <p><strong>Failed at:</strong> {{ end_time }}</p>
@@ -200,6 +200,9 @@ class NotificationTemplate:
                     
     def render_template(self, template_name: str, **kwargs) -> str:
         """Render notification template with provided data"""
+
+
+
         try:
             template = self.jinja_env.get_template(template_name)
             return template.render(**kwargs)
@@ -222,6 +225,9 @@ class EmailNotificationHandler:
     async def send_notification(self, config: NotificationConfig, 
                               message: NotificationMessage) -> bool:
         """Send email notification"""
+
+
+
         try:
             # Create message
             msg = MIMEMultipart('alternative')
@@ -476,11 +482,11 @@ class NotificationManager:
         
         # Generate title
         title_map = {
-            NotificationEvent.PIPELINE_STARTED: f"🚀 Pipeline Started: {execution.config.name}",
-            NotificationEvent.PIPELINE_COMPLETED: f"✅ Pipeline Completed: {execution.config.name}",
-            NotificationEvent.PIPELINE_FAILED: f"❌ Pipeline Failed: {execution.config.name}",
-            NotificationEvent.DEPLOYMENT_SUCCESSFUL: f"🎉 Deployment Successful: {execution.config.name}",
-            NotificationEvent.DEPLOYMENT_FAILED: f"💥 Deployment Failed: {execution.config.name}"
+            NotificationEvent.PIPELINE_STARTED: f" Pipeline Started: {execution.config.name}",
+            NotificationEvent.PIPELINE_COMPLETED: f" Pipeline Completed: {execution.config.name}",
+            NotificationEvent.PIPELINE_FAILED: f" Pipeline Failed: {execution.config.name}",
+            NotificationEvent.DEPLOYMENT_SUCCESSFUL: f" Deployment Successful: {execution.config.name}",
+            NotificationEvent.DEPLOYMENT_FAILED: f" Deployment Failed: {execution.config.name}"
         }
         
         title = title_map.get(event, f"Pipeline Event: {execution.config.name}")

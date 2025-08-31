@@ -257,6 +257,9 @@ class ThreadsEngine(BaseCrawlerEngine):
             
     async def _process_thread(self, raw_thread: Dict[str, Any]) -> Optional[ThreadsPost]:
         """Process and analyze thread with conversation context"""
+
+
+
         
         try:
             post_id = raw_thread.get('id')
@@ -471,6 +474,9 @@ class ThreadsEngine(BaseCrawlerEngine):
         
     def _is_recent_activity(self, timestamp: str) -> bool:
         """Check if activity is recent (within last hour)"""
+
+
+
         
         try:
             activity_time = datetime.fromisoformat(timestamp.replace('Z', '+00:00'))
@@ -481,6 +487,9 @@ class ThreadsEngine(BaseCrawlerEngine):
             
     def _calculate_conversation_timespan(self, conversation_data: Dict[str, Any]) -> float:
         """Calculate conversation timespan in hours"""
+
+
+
         
         try:
             start_time = datetime.fromisoformat(
@@ -707,6 +716,9 @@ class ThreadsEngine(BaseCrawlerEngine):
         
     async def _get_authenticated_headers(self) -> Dict[str, str]:
         """Get authenticated headers for API requests"""
+
+
+
         
         return {
             'User-Agent': 'Threads/1.0',

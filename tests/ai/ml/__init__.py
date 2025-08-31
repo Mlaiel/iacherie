@@ -4,20 +4,20 @@ Comprehensive test suite for the IA Influencer Agent ML package,
 covering all models, training, inference, data processing, and business logic.
 
 Team Specialties:
-✅ Lead Dev + Architecte Développeur IA
-✅ Développeur Backend Senior (Python/FastAPI/Django)
-✅ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face)
-✅ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
-✅ Spécialiste Sécurité Backend
-✅ Architecte Microservices
-✅ Développeur Audio
-✅ DevOps Engineer
-✅ IA Prompt Engineer
+ Lead Dev + Architecte Développeur IA
+ Développeur Backend Senior (Python/FastAPI/Django)
+ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face)
+ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
+ Spécialiste Sécurité Backend
+ Architecte Microservices
+ Développeur Audio
+ DevOps Engineer
+ IA Prompt Engineer
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  STRICT LEGAL WARNING ⚠️
+  STRICT LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, modification, or distribution is STRICTLY PROHIBITED
 and will result in IMMEDIATE legal action and SUBSTANTIAL damages claims.

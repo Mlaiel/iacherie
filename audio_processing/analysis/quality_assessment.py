@@ -1,5 +1,5 @@
 """
-✅ Audio Quality Assessment - Professional Audio Quality Analysis System
+ Audio Quality Assessment - Professional Audio Quality Analysis System
 
 Advanced audio quality assessment engine providing comprehensive quality metrics,
 distortion analysis, dynamic range measurement, and professional standards compliance.
@@ -82,7 +82,7 @@ class QualityAssessmentResult:
 
 class AudioQualityAssessment:
     """
-    ✅ Professional Audio Quality Assessment Engine
+     Professional Audio Quality Assessment Engine
     
     Comprehensive quality analysis with professional standards compliance,
     distortion detection, dynamic range analysis, and mastering recommendations.
@@ -168,6 +168,9 @@ class AudioQualityAssessment:
         Returns:
             Complete quality assessment results
         """
+
+
+
         try:
             self.logger.info("Starting quality assessment...")
             
@@ -325,6 +328,9 @@ class AudioQualityAssessment:
     
     def _compute_thd(self, audio_data: np.ndarray) -> Tuple[float, np.ndarray]:
         """Compute total harmonic distortion"""
+
+
+
         try:
             # FFT analysis
             fft_data = np.fft.fft(audio_data)
@@ -489,6 +495,9 @@ class AudioQualityAssessment:
                         loudness_metrics: Dict[str, float],
                         freq_metrics: Dict[str, float]) -> QualityMetrics:
         """Combine all metrics into QualityMetrics object"""
+
+
+
         return QualityMetrics(
             snr=basic_metrics.get('snr', 0.0),
             thd=0.0,  # Will be filled from distortion analysis
@@ -689,6 +698,9 @@ class AudioQualityAssessment:
         Real-time quality assessment for single frame
         Optimized for low-latency processing
         """
+
+
+
         try:
             # Basic quality metrics for current frame
             peak_level = 20 * np.log10(np.max(np.abs(frame)) + 1e-10)

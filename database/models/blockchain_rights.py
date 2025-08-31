@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -184,6 +184,9 @@ class BlockchainRights(Base):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert model to dictionary for API responses"""
+
+
+
         return {
             "id": str(self.id),
             "content_fingerprint_id": str(self.content_fingerprint_id),

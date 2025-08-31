@@ -8,7 +8,7 @@ health checking, and advanced traffic management.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ WARNING: This code is proprietary and confidential.
+ WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
@@ -266,6 +266,9 @@ class HAProxyManager:
     
     def add_frontend(self, frontend: HAProxyFrontend) -> bool:
         """Add frontend configuration"""
+
+
+
         try:
             # Check if frontend already exists
             existing = next((f for f in self.frontends if f.name == frontend.name), None)
@@ -282,6 +285,9 @@ class HAProxyManager:
     
     def add_backend(self, backend: HAProxyBackend) -> bool:
         """Add backend configuration"""
+
+
+
         try:
             # Check if backend already exists
             existing = next((b for b in self.backends if b.name == backend.name), None)
@@ -298,6 +304,9 @@ class HAProxyManager:
     
     def configure_platform_services(self) -> bool:
         """Configure HAProxy for platform services"""
+
+
+
         try:
             # Configure backends for different services
             backends = [
@@ -412,6 +421,9 @@ class HAProxyManager:
     
     def generate_configuration(self) -> str:
         """Generate complete HAProxy configuration"""
+
+
+
         try:
             config_sections = []
             
@@ -445,6 +457,9 @@ class HAProxyManager:
     
     def write_configuration(self) -> bool:
         """Write configuration to file"""
+
+
+
         try:
             config_content = self.generate_configuration()
             if not config_content:
@@ -470,6 +485,9 @@ class HAProxyManager:
     
     def test_configuration(self) -> bool:
         """Test HAProxy configuration validity"""
+
+
+
         try:
             result = subprocess.run(
                 ['haproxy', '-c', '-f', str(self.config_file)],
@@ -490,6 +508,9 @@ class HAProxyManager:
     
     def reload_configuration(self) -> bool:
         """Reload HAProxy configuration"""
+
+
+
         try:
             if not self.test_configuration():
                 logger.error("Configuration test failed, not reloading")
@@ -519,6 +540,9 @@ class HAProxyManager:
     
     def get_stats(self) -> Dict[str, Any]:
         """Get HAProxy statistics via stats socket"""
+
+
+
         try:
             # Connect to stats socket
             sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
@@ -577,6 +601,9 @@ class HAProxyManager:
     
     def get_status(self) -> Dict[str, Any]:
         """Get HAProxy status and health"""
+
+
+
         try:
             # Check if HAProxy is running
             ps_result = subprocess.run(['pgrep', 'haproxy'], capture_output=True, text=True)

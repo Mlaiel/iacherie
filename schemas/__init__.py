@@ -4,26 +4,26 @@ Professional-grade Pydantic schemas for complete business logic coverage
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
+ INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 
 This module provides industrial-grade schemas following the complete business logic flow:
 Creator → Upload → AI Processing → Protection → Collaboration → Distribution → Monetization
 
 Architecture Overview:
-├── Base Schemas (foundation)
-├── User & Creator Management
-├── Content & Media Processing  
-├── AI Protection & Fingerprinting
-├── Collaboration & Partnerships
-├── Revenue & Monetization
-├── Distribution & Platforms
-├── SEO & Marketing Optimization
-├── Analytics & Business Intelligence
-├── Monitoring & Surveillance
-├── AI & Machine Learning
-├── Blockchain & NFT Integration
-└── Admin & System Management
+ Base Schemas (foundation)
+ User & Creator Management
+ Content & Media Processing  
+ AI Protection & Fingerprinting
+ Collaboration & Partnerships
+ Revenue & Monetization
+ Distribution & Platforms
+ SEO & Marketing Optimization
+ Analytics & Business Intelligence
+ Monitoring & Surveillance
+ AI & Machine Learning
+ Blockchain & NFT Integration
+ Admin & System Management
 """
 # Foundation schemas
 from .base import (

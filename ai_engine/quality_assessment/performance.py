@@ -7,7 +7,7 @@ Provides real-time monitoring, performance analytics, and resource optimization.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software and all associated concepts, algorithms, and implementations are the exclusive 
 intellectual property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, reproduction, 
 distribution, modification, or appropriation of this code, in whole or in part, without 
@@ -66,6 +66,9 @@ class PerformanceMetric:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert metric to dictionary"""
+
+
+
         return {
             'name': self.name,
             'value': self.value,
@@ -89,6 +92,9 @@ class PerformanceAlert:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert alert to dictionary"""
+
+
+
         return {
             'message': self.message,
             'severity': self.severity.value,
@@ -114,6 +120,9 @@ class SystemResourceInfo:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'cpu_percent': self.cpu_percent,
             'memory_percent': self.memory_percent,
@@ -601,6 +610,9 @@ def monitor_performance(
 # Utility functions
 def get_performance_summary() -> Dict[str, Any]:
     """Get current performance summary"""
+
+
+
     return performance_tracker.get_performance_summary()
 
 

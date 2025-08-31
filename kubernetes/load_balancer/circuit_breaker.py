@@ -8,7 +8,7 @@ capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ WARNING: This code is proprietary and confidential.
+ WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
@@ -414,6 +414,9 @@ class CircuitBreaker:
     
     def create_circuit_breaker(self, config: CircuitBreakerConfig) -> bool:
         """Create a new circuit breaker"""
+
+
+
         try:
             if not config.enabled:
                 logger.info(f"Circuit breaker {config.name} is disabled")
@@ -437,6 +440,9 @@ class CircuitBreaker:
     
     def remove_circuit_breaker(self, name: str) -> bool:
         """Remove circuit breaker"""
+
+
+
         try:
             with self.lock:
                 if name in self.circuit_breakers:
@@ -501,6 +507,9 @@ class CircuitBreaker:
     
     def configure_platform_circuit_breakers(self) -> bool:
         """Configure circuit breakers for platform services"""
+
+
+
         try:
             circuit_breaker_configs = [
                 # Fingerprinting service circuit breakers

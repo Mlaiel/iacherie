@@ -12,7 +12,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL WARNING ⚠️
+  CRITICAL WARNING 
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
 Any unauthorized use, reproduction, distribution, or reverse engineering 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -207,6 +207,9 @@ class YouTubeContentAnalyzer:
     @performance_timer
     async def analyze_video_content(self, video_url: str) -> Dict[str, Any]:
         """Comprehensive video content analysis"""
+
+
+
         try:
             analysis_result = {
                 "video_fingerprint": None,
@@ -286,6 +289,9 @@ class YouTubeContentAnalyzer:
     
     async def _extract_video_fingerprint(self, video_path: str) -> Optional[str]:
         """Extract video fingerprint using computer vision"""
+
+
+
         try:
             fingerprint = await asyncio.get_event_loop().run_in_executor(
                 None, self.video_fingerprinter.generate_fingerprint, video_path
@@ -298,6 +304,9 @@ class YouTubeContentAnalyzer:
     
     async def _extract_audio_fingerprint(self, video_path: str) -> Optional[str]:
         """Extract audio fingerprint from video"""
+
+
+
         try:
             fingerprint = await asyncio.get_event_loop().run_in_executor(
                 None, self.audio_fingerprinter.generate_fingerprint, video_path
@@ -310,6 +319,9 @@ class YouTubeContentAnalyzer:
     
     async def _classify_content(self, video_path: str) -> Dict[str, Any]:
         """Classify video content using AI models"""
+
+
+
         try:
             classification = {
                 "content_type": "unknown",
@@ -357,6 +369,9 @@ class YouTubeContentAnalyzer:
     
     async def _assess_content_risk(self, analysis_result: Dict[str, Any]) -> Dict[str, Any]:
         """Assess content risk for IP protection"""
+
+
+
         try:
             risk_assessment = {
                 "overall_risk": "low",
@@ -459,6 +474,9 @@ class YouTubeCrawler(PlatformCrawler):
     @performance_timer
     async def crawl(self) -> CrawlerResult:
         """Main crawling method with comprehensive monitoring"""
+
+
+
         try:
             self.status = CrawlerStatus.RUNNING
             start_time = datetime.now()
@@ -516,6 +534,9 @@ class YouTubeCrawler(PlatformCrawler):
     # Continue with remaining methods from the previous implementation...
     def _extract_video_id(self, url: str) -> Optional[str]:
         """Extract video ID from YouTube URL"""
+
+
+
         try:
             parsed_url = urlparse(url)
             

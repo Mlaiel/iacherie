@@ -1,11 +1,11 @@
 """
-🐳 Docker Configuration Manager - IA-Influencer-Agent Infrastructure
+ Docker Configuration Manager - IA-Influencer-Agent Infrastructure
 ====================================================================
 Expert: DevOps Engineer + Cloud Architect + Container Security
 Creator: Fahed Mlaiel <mlaiel@live.de>
 ====================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL 
 Tout vol, copie ou utilisation non autorisée de ce code source,
 de ce concept ou de cette propriété intellectuelle sans
 l'autorisation écrite explicite de Fahed Mlaiel est strictement
@@ -102,6 +102,9 @@ class DockerConfig:
     updated_at: datetime = field(default_factory=datetime.now)
     def to_dict(self) -> Dict[str, Any]:
         """Convert config to dictionary."""
+
+
+
         return asdict(self)
     
     def generate_dockerfile(self) -> str:
@@ -221,6 +224,9 @@ class DockerConfigManager:
         
     async def initialize(self) -> bool:
         """Initialize Docker configuration manager with enterprise features"""
+
+
+
         try:
             # Initialize Docker client with enhanced error handling
             try:
@@ -228,7 +234,7 @@ class DockerConfigManager:
                 # Test Docker daemon connectivity
                 self.client.ping()
             except docker.errors.DockerException as e:
-                self.logger.error(f"❌ Docker daemon not accessible: {e}")
+                self.logger.error(f" Docker daemon not accessible: {e}")
                 return False
             
             # Create config directory structure
@@ -250,15 +256,18 @@ class DockerConfigManager:
             await self._validate_docker_environment()
             
             self.initialized = True
-            self.logger.info("✅ DockerConfigManager initialized successfully")
+            self.logger.info(" DockerConfigManager initialized successfully")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error initializing DockerConfigManager: {e}")
+            self.logger.error(f" Error initializing DockerConfigManager: {e}")
             return False
     
     async def _load_configurations(self) -> None:
         """Load existing Docker configurations from filesystem"""
+
+
+
         try:
             config_dir = self.config_path / "services"
             if not config_dir.exists():
@@ -275,15 +284,18 @@ class DockerConfigManager:
                     try:
                         docker_config = DockerConfig(**config_data)
                         self.configs[service_name] = docker_config
-                        self.logger.debug(f"✅ Loaded config for {service_name}")
+                        self.logger.debug(f" Loaded config for {service_name}")
                     except TypeError as e:
-                        self.logger.warning(f"⚠️ Invalid config format for {service_name}: {e}")
+                        self.logger.warning(f" Invalid config format for {service_name}: {e}")
                     
         except Exception as e:
-            self.logger.warning(f"⚠️ Error loading configurations: {e}")
+            self.logger.warning(f" Error loading configurations: {e}")
     
     async def _load_registry_credentials(self) -> None:
         """Load Docker registry credentials securely"""
+
+
+
         try:
             credentials_file = self.config_path / "secrets" / "registry_credentials.yml"
             if credentials_file.exists():
@@ -295,10 +307,13 @@ class DockerConfigManager:
                         self.registry_credentials[registry_name] = DockerRegistryCredentials(**creds)
                         
         except Exception as e:
-            self.logger.warning(f"⚠️ Error loading registry credentials: {e}")
+            self.logger.warning(f" Error loading registry credentials: {e}")
     
     async def _generate_ia_influencer_configs(self) -> None:
         """Generate Docker configurations for all IA-Influencer-Agent services"""
+
+
+
         try:
             # Define service configurations based on cahier des charges
             service_definitions = {
@@ -410,18 +425,21 @@ class DockerConfigManager:
                     # Save configuration to file
                     await self._save_config(service_name, config)
             
-            self.logger.info("✅ IA-Influencer service configurations generated")
+            self.logger.info(" IA-Influencer service configurations generated")
             
         except Exception as e:
-            self.logger.error(f"❌ Error generating IA-Influencer configs: {e}")
+            self.logger.error(f" Error generating IA-Influencer configs: {e}")
             raise
     
     async def _validate_docker_environment(self) -> None:
         """Validate Docker environment for IA-Influencer-Agent requirements"""
+
+
+
         try:
             # Check Docker version
             docker_version = self.client.version()
-            self.logger.info(f"🐳 Docker version: {docker_version['Version']}")
+            self.logger.info(f" Docker version: {docker_version['Version']}")
             
             # Check available resources
             system_info = self.client.info()
@@ -429,25 +447,28 @@ class DockerConfigManager:
             # Memory check (minimum 8GB recommended)
             total_memory = system_info.get('MemTotal', 0) / (1024**3)  # Convert to GB
             if total_memory < 8:
-                self.logger.warning(f"⚠️ Low memory: {total_memory:.1f}GB (recommended: 8GB+)")
+                self.logger.warning(f" Low memory: {total_memory:.1f}GB (recommended: 8GB+)")
             
             # CPU check
             cpu_count = system_info.get('NCPU', 0)
             if cpu_count < 4:
-                self.logger.warning(f"⚠️ Low CPU count: {cpu_count} (recommended: 4+)")
+                self.logger.warning(f" Low CPU count: {cpu_count} (recommended: 4+)")
             
             # Storage check
             containers_running = len(self.client.containers.list())
             images_count = len(self.client.images.list())
             
-            self.logger.info(f"📊 System: {cpu_count} CPUs, {total_memory:.1f}GB RAM")
-            self.logger.info(f"📊 Docker: {containers_running} containers, {images_count} images")
+            self.logger.info(f" System: {cpu_count} CPUs, {total_memory:.1f}GB RAM")
+            self.logger.info(f" Docker: {containers_running} containers, {images_count} images")
             
         except Exception as e:
-            self.logger.warning(f"⚠️ Error validating Docker environment: {e}")
+            self.logger.warning(f" Error validating Docker environment: {e}")
     
     async def _save_config(self, service_name: str, config: DockerConfig) -> None:
         """Save Docker configuration to filesystem"""
+
+
+
         try:
             config_file = self.config_path / "services" / f"{service_name}.yml"
             config_data = config.to_dict()
@@ -456,25 +477,34 @@ class DockerConfigManager:
                 await f.write(yaml.dump(config_data, default_flow_style=False))
                 
         except Exception as e:
-            self.logger.error(f"❌ Error saving config for {service_name}: {e}")
+            self.logger.error(f" Error saving config for {service_name}: {e}")
     
     async def get_config(self, service_name: str) -> Optional[DockerConfig]:
         """Get Docker configuration for a service"""
+
+
+
         return self.configs.get(service_name)
     
     async def create_config(self, service_name: str, config: DockerConfig) -> bool:
         """Create new Docker configuration"""
+
+
+
         try:
             self.configs[service_name] = config
             await self._save_config(service_name, config)
-            self.logger.info(f"✅ Created config for {service_name}")
+            self.logger.info(f" Created config for {service_name}")
             return True
         except Exception as e:
-            self.logger.error(f"❌ Error creating config for {service_name}: {e}")
+            self.logger.error(f" Error creating config for {service_name}: {e}")
             return False
     
     async def update_config(self, service_name: str, config: DockerConfig) -> bool:
         """Update existing Docker configuration"""
+
+
+
         try:
             if service_name not in self.configs:
                 return False
@@ -482,14 +512,17 @@ class DockerConfigManager:
             config.updated_at = datetime.now()
             self.configs[service_name] = config
             await self._save_config(service_name, config)
-            self.logger.info(f"✅ Updated config for {service_name}")
+            self.logger.info(f" Updated config for {service_name}")
             return True
         except Exception as e:
-            self.logger.error(f"❌ Error updating config for {service_name}: {e}")
+            self.logger.error(f" Error updating config for {service_name}: {e}")
             return False
     
     async def delete_config(self, service_name: str) -> bool:
         """Delete Docker configuration"""
+
+
+
         try:
             if service_name in self.configs:
                 del self.configs[service_name]
@@ -498,15 +531,18 @@ class DockerConfigManager:
                 if config_file.exists():
                     config_file.unlink()
                 
-                self.logger.info(f"✅ Deleted config for {service_name}")
+                self.logger.info(f" Deleted config for {service_name}")
                 return True
             return False
         except Exception as e:
-            self.logger.error(f"❌ Error deleting config for {service_name}: {e}")
+            self.logger.error(f" Error deleting config for {service_name}: {e}")
             return False
     
     async def generate_dockerfile(self, service_name: str) -> Optional[str]:
         """Generate Dockerfile for a service"""
+
+
+
         try:
             config = self.configs.get(service_name)
             if not config:
@@ -521,11 +557,14 @@ class DockerConfigManager:
             
             return dockerfile_content
         except Exception as e:
-            self.logger.error(f"❌ Error generating Dockerfile for {service_name}: {e}")
+            self.logger.error(f" Error generating Dockerfile for {service_name}: {e}")
             return None
     
     async def generate_docker_compose(self, services: List[str] = None) -> Optional[str]:
         """Generate docker-compose.yml for specified services"""
+
+
+
         try:
             if services is None:
                 services = list(self.configs.keys())
@@ -594,11 +633,14 @@ class DockerConfigManager:
             return compose_yaml
             
         except Exception as e:
-            self.logger.error(f"❌ Error generating docker-compose: {e}")
+            self.logger.error(f" Error generating docker-compose: {e}")
             return None
     
     async def list_configs(self) -> Dict[str, DockerConfig]:
         """List all Docker configurations"""
+
+
+
         return self.configs.copy()
 
 
@@ -626,7 +668,7 @@ class DockerImageBuilder:
         errors = []
         
         try:
-            self.logger.info(f"🔨 Building image: {config.image}:{config.tag}")
+            self.logger.info(f" Building image: {config.image}:{config.tag}")
             
             # Prepare build arguments
             effective_build_args = {**config.build_args}
@@ -690,8 +732,8 @@ class DockerImageBuilder:
                 cache_key = f"{config.image}:{config.tag}"
                 self.build_cache[cache_key] = build_result
                 
-                self.logger.info(f"✅ Image built successfully: {config.image}:{config.tag}")
-                self.logger.info(f"📊 Build time: {build_time:.2f}s, Size: {image_size / 1024 / 1024:.1f}MB")
+                self.logger.info(f" Image built successfully: {config.image}:{config.tag}")
+                self.logger.info(f" Build time: {build_time:.2f}s, Size: {image_size / 1024 / 1024:.1f}MB")
                 
                 return build_result
                 
@@ -701,7 +743,7 @@ class DockerImageBuilder:
                     dockerfile_path.unlink()
                     
         except docker.errors.BuildError as e:
-            self.logger.error(f"❌ Build failed for {config.image}:{config.tag}")
+            self.logger.error(f" Build failed for {config.image}:{config.tag}")
             for log_entry in e.build_log:
                 if 'stream' in log_entry:
                     error_line = log_entry['stream'].strip()
@@ -721,7 +763,7 @@ class DockerImageBuilder:
             )
             
         except Exception as e:
-            self.logger.error(f"❌ Unexpected build error: {e}")
+            self.logger.error(f" Unexpected build error: {e}")
             build_time = (datetime.now() - start_time).total_seconds()
             
             return DockerBuildResult(
@@ -792,26 +834,35 @@ class DockerRegistryManager:
     
     async def initialize(self, docker_client) -> bool:
         """Initialize registry manager"""
+
+
+
         try:
             self.client = docker_client
             await self._load_credentials()
-            self.logger.info("✅ DockerRegistryManager initialized")
+            self.logger.info(" DockerRegistryManager initialized")
             return True
         except Exception as e:
-            self.logger.error(f"❌ Error initializing registry manager: {e}")
+            self.logger.error(f" Error initializing registry manager: {e}")
             return False
     
     async def _load_credentials(self) -> None:
         """Load registry credentials"""
+
+
+
         try:
             # Load from environment or config file
             # Implementation depends on security requirements
             pass
         except Exception as e:
-            self.logger.warning(f"⚠️ Error loading credentials: {e}")
+            self.logger.warning(f" Error loading credentials: {e}")
     
     async def login(self, registry_url: str, credentials: DockerRegistryCredentials) -> bool:
         """Login to Docker registry"""
+
+
+
         try:
             self.client.login(
                 username=credentials.username,
@@ -821,15 +872,18 @@ class DockerRegistryManager:
             )
             
             self.credentials[registry_url] = credentials
-            self.logger.info(f"✅ Logged in to registry: {registry_url}")
+            self.logger.info(f" Logged in to registry: {registry_url}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Registry login failed for {registry_url}: {e}")
+            self.logger.error(f" Registry login failed for {registry_url}: {e}")
             return False
     
     async def push_image(self, image_name: str, tag: str, registry: str = None) -> bool:
         """Push image to registry"""
+
+
+
         try:
             target_registry = registry or self.default_registry
             full_image_name = f"{target_registry}/{image_name}:{tag}"
@@ -847,15 +901,18 @@ class DockerRegistryManager:
                 elif 'status' in log_entry:
                     self.logger.debug(f"Push status: {log_entry['status']}")
             
-            self.logger.info(f"✅ Image pushed: {full_image_name}")
+            self.logger.info(f" Image pushed: {full_image_name}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Image push failed: {e}")
+            self.logger.error(f" Image push failed: {e}")
             return False
     
     async def pull_image(self, image_name: str, tag: str, registry: str = None) -> bool:
         """Pull image from registry"""
+
+
+
         try:
             target_registry = registry or self.default_registry
             full_image_name = f"{target_registry}/{image_name}:{tag}"
@@ -863,32 +920,38 @@ class DockerRegistryManager:
             # Pull the image
             self.client.images.pull(full_image_name)
             
-            self.logger.info(f"✅ Image pulled: {full_image_name}")
+            self.logger.info(f" Image pulled: {full_image_name}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Image pull failed: {e}")
+            self.logger.error(f" Image pull failed: {e}")
             return False
     
     async def list_tags(self, image_name: str, registry: str = None) -> List[str]:
         """List available tags for an image"""
+
+
+
         try:
             # Implementation depends on registry API
             # This is a placeholder for the actual implementation
             return []
         except Exception as e:
-            self.logger.error(f"❌ Error listing tags: {e}")
+            self.logger.error(f" Error listing tags: {e}")
             return []
     
     async def delete_image(self, image_name: str, tag: str, registry: str = None) -> bool:
         """Delete image from registry"""
+
+
+
         try:
             # Implementation depends on registry API
             # This is a placeholder for the actual implementation
-            self.logger.info(f"✅ Image deleted: {image_name}:{tag}")
+            self.logger.info(f" Image deleted: {image_name}:{tag}")
             return True
         except Exception as e:
-            self.logger.error(f"❌ Error deleting image: {e}")
+            self.logger.error(f" Error deleting image: {e}")
             return False
     
     async def _generate_default_configs(self) -> None:
@@ -1066,16 +1129,22 @@ class DockerRegistryManager:
     
     async def _save_config(self, name: str, config: DockerConfig) -> None:
         """Save Docker configuration to file"""
+
+
+
         try:
             config_file = self.config_path / f"{name}.yml"
             with open(config_file, 'w') as f:
                 yaml.dump(asdict(config), f, default_flow_style=False)
                 
         except Exception as e:
-            self.logger.error(f"❌ Error saving config {name}: {e}")
+            self.logger.error(f" Error saving config {name}: {e}")
     
     async def generate_docker_compose(self, services: List[str] = None) -> str:
         """Generate docker-compose.yml file"""
+
+
+
         try:
             if services is None:
                 services = list(self.configs.keys())
@@ -1144,27 +1213,33 @@ class DockerRegistryManager:
             with open(compose_file, 'w') as f:
                 yaml.dump(compose_data, f, default_flow_style=False)
             
-            self.logger.info(f"✅ Generated docker-compose.yml for {len(services)} services")
+            self.logger.info(f" Generated docker-compose.yml for {len(services)} services")
             return str(compose_file)
             
         except Exception as e:
-            self.logger.error(f"❌ Error generating docker-compose: {e}")
+            self.logger.error(f" Error generating docker-compose: {e}")
             return ""
     
     async def get_service_config(self, service_name: str) -> Optional[DockerConfig]:
         """Get configuration for specific service"""
+
+
+
         return self.configs.get(service_name)
     
     async def update_service_config(self, service_name: str, config: DockerConfig) -> bool:
         """Update configuration for specific service"""
+
+
+
         try:
             self.configs[service_name] = config
             await self._save_config(service_name, config)
-            self.logger.info(f"✅ Updated config for service: {service_name}")
+            self.logger.info(f" Updated config for service: {service_name}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error updating service config: {e}")
+            self.logger.error(f" Error updating service config: {e}")
             return False
 
 class DockerImageBuilder:
@@ -1178,13 +1253,16 @@ class DockerImageBuilder:
     
     async def initialize(self) -> bool:
         """Initialize Docker image builder"""
+
+
+
         try:
             self.client = docker.from_env()
-            self.logger.info("✅ DockerImageBuilder initialized")
+            self.logger.info(" DockerImageBuilder initialized")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error initializing DockerImageBuilder: {e}")
+            self.logger.error(f" Error initializing DockerImageBuilder: {e}")
             return False
     
     async def build_image(
@@ -1196,11 +1274,14 @@ class DockerImageBuilder:
         platform: str = "linux/amd64"
     ) -> bool:
         """Build Docker image"""
+
+
+
         try:
             build_args = build_args or {}
             full_image_name = f"{image_name}:{tag}"
             
-            self.logger.info(f"🔨 Building image: {full_image_name}")
+            self.logger.info(f" Building image: {full_image_name}")
             
             # Build image
             image, logs = self.client.images.build(
@@ -1225,18 +1306,21 @@ class DockerImageBuilder:
                 'size': image.attrs.get('Size', 0)
             }
             
-            self.logger.info(f"✅ Successfully built image: {full_image_name}")
+            self.logger.info(f" Successfully built image: {full_image_name}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error building image {image_name}: {e}")
+            self.logger.error(f" Error building image {image_name}: {e}")
             return False
     
     async def push_image(self, image_name: str, tag: str = "latest") -> bool:
         """Push image to registry"""
+
+
+
         try:
             if not self.registry_url:
-                self.logger.warning("⚠️ No registry URL configured")
+                self.logger.warning(" No registry URL configured")
                 return False
             
             full_image_name = f"{image_name}:{tag}"
@@ -1247,18 +1331,18 @@ class DockerImageBuilder:
             image.tag(registry_image_name)
             
             # Push to registry
-            self.logger.info(f"📤 Pushing image: {registry_image_name}")
+            self.logger.info(f" Pushing image: {registry_image_name}")
             push_logs = self.client.images.push(registry_image_name, stream=True)
             
             for log in push_logs:
                 if 'status' in log:
                     self.logger.debug(log['status'])
             
-            self.logger.info(f"✅ Successfully pushed image: {registry_image_name}")
+            self.logger.info(f" Successfully pushed image: {registry_image_name}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error pushing image {image_name}: {e}")
+            self.logger.error(f" Error pushing image {image_name}: {e}")
             return False
 
 class DockerRegistryManager:
@@ -1272,6 +1356,9 @@ class DockerRegistryManager:
     
     async def initialize(self) -> bool:
         """Initialize Docker registry manager"""
+
+
+
         try:
             self.client = docker.from_env()
             
@@ -1279,15 +1366,18 @@ class DockerRegistryManager:
             if 'username' in self.registry_config and 'password' in self.registry_config:
                 await self._authenticate()
             
-            self.logger.info("✅ DockerRegistryManager initialized")
+            self.logger.info(" DockerRegistryManager initialized")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error initializing DockerRegistryManager: {e}")
+            self.logger.error(f" Error initializing DockerRegistryManager: {e}")
             return False
     
     async def _authenticate(self) -> bool:
         """Authenticate with Docker registry"""
+
+
+
         try:
             self.client.login(
                 username=self.registry_config['username'],
@@ -1296,15 +1386,18 @@ class DockerRegistryManager:
             )
             
             self.authenticated = True
-            self.logger.info("✅ Successfully authenticated with Docker registry")
+            self.logger.info(" Successfully authenticated with Docker registry")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error authenticating with registry: {e}")
+            self.logger.error(f" Error authenticating with registry: {e}")
             return False
     
     async def list_images(self, repository: str = None) -> List[Dict[str, Any]]:
         """List images in registry"""
+
+
+
         try:
             images = []
             
@@ -1332,35 +1425,41 @@ class DockerRegistryManager:
             return images
             
         except Exception as e:
-            self.logger.error(f"❌ Error listing images: {e}")
+            self.logger.error(f" Error listing images: {e}")
             return []
     
     async def pull_image(self, image_name: str, tag: str = "latest") -> bool:
         """Pull image from registry"""
+
+
+
         try:
             full_image_name = f"{image_name}:{tag}"
-            self.logger.info(f"📥 Pulling image: {full_image_name}")
+            self.logger.info(f" Pulling image: {full_image_name}")
             
             self.client.images.pull(image_name, tag=tag)
             
-            self.logger.info(f"✅ Successfully pulled image: {full_image_name}")
+            self.logger.info(f" Successfully pulled image: {full_image_name}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error pulling image {image_name}: {e}")
+            self.logger.error(f" Error pulling image {image_name}: {e}")
             return False
     
     async def delete_image(self, image_name: str, tag: str = "latest") -> bool:
         """Delete image from local registry"""
+
+
+
         try:
             full_image_name = f"{image_name}:{tag}"
             self.client.images.remove(full_image_name, force=True)
             
-            self.logger.info(f"✅ Successfully deleted image: {full_image_name}")
+            self.logger.info(f" Successfully deleted image: {full_image_name}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error deleting image {image_name}: {e}")
+            self.logger.error(f" Error deleting image {image_name}: {e}")
             return False
 
 
@@ -1368,13 +1467,16 @@ class DockerRegistryManager:
 
 async def create_ia_influencer_network() -> bool:
     """Create Docker network for IA-Influencer services"""
+
+
+
     try:
         client = docker.from_env()
         
         # Check if network already exists
         try:
             network = client.networks.get("ia-influencer-network")
-            logger.info("✅ IA-Influencer network already exists")
+            logger.info(" IA-Influencer network already exists")
             return True
         except docker.errors.NotFound:
             pass
@@ -1394,16 +1496,19 @@ async def create_ia_influencer_network() -> bool:
             }
         )
         
-        logger.info("✅ IA-Influencer network created successfully")
+        logger.info(" IA-Influencer network created successfully")
         return True
         
     except Exception as e:
-        logger.error(f"❌ Error creating IA-Influencer network: {e}")
+        logger.error(f" Error creating IA-Influencer network: {e}")
         return False
 
 
 async def cleanup_unused_resources() -> Dict[str, int]:
     """Clean up unused Docker resources"""
+
+
+
     try:
         client = docker.from_env()
         cleanup_stats = {
@@ -1442,16 +1547,19 @@ async def cleanup_unused_resources() -> Dict[str, int]:
             except docker.errors.APIError:
                 pass
         
-        logger.info(f"✅ Cleanup completed: {cleanup_stats}")
+        logger.info(f" Cleanup completed: {cleanup_stats}")
         return cleanup_stats
         
     except Exception as e:
-        logger.error(f"❌ Error during cleanup: {e}")
+        logger.error(f" Error during cleanup: {e}")
         return {}
 
 
 async def validate_ia_influencer_requirements() -> Dict[str, bool]:
     """Validate system requirements for IA-Influencer-Agent"""
+
+
+
     try:
         client = docker.from_env()
         requirements = {
@@ -1498,17 +1606,20 @@ async def validate_ia_influencer_requirements() -> Dict[str, bool]:
                 requirements["gpu_available"] = False
                 
         except Exception as e:
-            logger.warning(f"⚠️ Error checking system requirements: {e}")
+            logger.warning(f" Error checking system requirements: {e}")
         
         return requirements
         
     except Exception as e:
-        logger.error(f"❌ Error validating requirements: {e}")
+        logger.error(f" Error validating requirements: {e}")
         return {}
 
 
 async def get_ia_influencer_status() -> Dict[str, Any]:
     """Get status of all IA-Influencer-Agent containers"""
+
+
+
     try:
         client = docker.from_env()
         status = {
@@ -1570,12 +1681,15 @@ async def get_ia_influencer_status() -> Dict[str, Any]:
         return status
         
     except Exception as e:
-        logger.error(f"❌ Error getting IA-Influencer status: {e}")
+        logger.error(f" Error getting IA-Influencer status: {e}")
         return {}
 
 
 def calculate_cpu_percentage(stats: Dict[str, Any]) -> float:
     """Calculate CPU usage percentage from Docker stats"""
+
+
+
     try:
         cpu_delta = stats["cpu_stats"]["cpu_usage"]["total_usage"] - \
                    stats["precpu_stats"]["cpu_usage"]["total_usage"]

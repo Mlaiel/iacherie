@@ -1,15 +1,15 @@
-"""🔍 Fingerprinting Module Enterprise - IA-Influencer-Agent Platform
+""" Fingerprinting Module Enterprise - IA-Influencer-Agent Platform
 ================================================================
 
 Système de fingerprinting IA avancé pour protection contenu créateurs multi-format.
 Implémente algorithmes état-de-l'art pour fingerprinting audio, vidéo, image et texte.
 
 CRÉATEURS SUPPORTÉS:
-- 🎵 Musiciens: Spotify, SoundCloud, Apple Music, Bandcamp
-- 📱 Influenceurs: Instagram, TikTok, YouTube, Twitter
-- 📸 Photographes: Instagram, portfolios web, Flickr
-- ✍️ Blogueurs: Medium, blogs personnels, Substack
-- 🎭 Comédiens: YouTube, TikTok, Twitch, Stand-up
+-  Musiciens: Spotify, SoundCloud, Apple Music, Bandcamp
+-  Influenceurs: Instagram, TikTok, YouTube, Twitter
+-  Photographes: Instagram, portfolios web, Flickr
+-  Blogueurs: Medium, blogs personnels, Substack
+-  Comédiens: YouTube, TikTok, Twitch, Stand-up
 
 PERFORMANCES ENTERPRISE:
 - Audio: >95% précision (Chromaprint + Essentia)
@@ -20,7 +20,7 @@ PERFORMANCES ENTERPRISE:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
+ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
 """
 # === MOTEUR FINGERPRINTING ENTERPRISE PRINCIPAL ===
 from .multimodal_fingerprint_engine import (

@@ -1,14 +1,14 @@
-"""🚀 Validation System - IA Influencer Agent Platform Enterprise
+""" Validation System - IA Influencer Agent Platform Enterprise
 ============================================================
 Module: backend/data_management/validation/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ============================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 MODULE VALIDATION DONNÉES COMPLÈTE
+ MODULE VALIDATION DONNÉES COMPLÈTE
 Système de validation enterprise multi-format et multi-créateur
 - Validation contenu audio/vidéo/image/texte
 - Règles business par type de créateur

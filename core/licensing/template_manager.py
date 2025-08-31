@@ -8,7 +8,7 @@ Fournit des templates personnalisables pour tous les formats supportés.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2024-2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LEGAL STRICT ⚠️
+  AVERTISSEMENT LEGAL STRICT 
 Ce code et tous les concepts associés sont la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants s'exposent à des poursuites judiciaires.
@@ -89,6 +89,9 @@ class LicenseTemplateManager:
     
     async def initialize(self):
         """Initialise les templates par défaut."""
+
+
+
         try:
             await self._load_default_templates()
             await self._load_custom_templates()
@@ -306,6 +309,9 @@ class LicenseTemplateManager:
         Returns:
             bool: True si création réussie
         """
+
+
+
         try:
             # Validation du template
             if not await self._validate_template(template_data):

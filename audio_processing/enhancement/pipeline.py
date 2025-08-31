@@ -600,6 +600,9 @@ class AudioEnhancementPipeline:
     
     def _process_batch_task(self, task: ProcessingTask) -> PipelineResult:
         """Process individual batch task"""
+
+
+
         return self.process_audio(
             task.audio,
             task.sample_rate,
@@ -721,6 +724,9 @@ class AudioEnhancementPipeline:
     
     def __enter__(self):
         """Context manager entry"""
+
+
+
         return self
     
     def __exit__(self, exc_type, exc_val, exc_tb):

@@ -7,7 +7,7 @@ and comprehensive business logic for the IA Influencer Agent ecosystem.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE - INTELLECTUAL PROPERTY PROTECTION:
+  CRITICAL LEGAL NOTICE - INTELLECTUAL PROPERTY PROTECTION:
 This software and all related code are the EXCLUSIVE INTELLECTUAL PROPERTY 
 of Fahed Mlaiel (mlaiel@live.de). Unauthorized use, copying, or distribution 
 without written authorization is STRICTLY PROHIBITED and will result in 
@@ -203,6 +203,9 @@ class TikTokAdapter(BaseAgent):
     
     async def initialize(self) -> bool:
         """Initialize TikTok adapter with authentication and validation"""
+
+
+
         try:
             # Initialize HTTP session
             connector = aiohttp.TCPConnector(limit=self.concurrent_uploads)
@@ -312,6 +315,9 @@ class TikTokAdapter(BaseAgent):
         updates: Dict[str, Any]
     ) -> bool:
         """Update existing TikTok video metadata"""
+
+
+
         try:
             # TikTok has limited update capabilities
             # Only caption and privacy settings can be updated
@@ -352,6 +358,9 @@ class TikTokAdapter(BaseAgent):
     
     async def delete_content(self, platform_id: str) -> bool:
         """Delete TikTok video"""
+
+
+
         try:
             # Execute deletion
             response = await self._make_api_request(
@@ -377,6 +386,9 @@ class TikTokAdapter(BaseAgent):
         end_date: datetime
     ) -> TikTokAnalytics:
         """Retrieve comprehensive TikTok analytics"""
+
+
+
         try:
             # Get video analytics
             video_analytics = await self._fetch_video_analytics(platform_id, start_date, end_date)
@@ -434,6 +446,9 @@ class TikTokAdapter(BaseAgent):
     
     async def research_trending_content(self, category: str = None) -> Dict[str, Any]:
         """Research trending content and hashtags"""
+
+
+
         try:
             params = {}
             if category:
@@ -458,6 +473,9 @@ class TikTokAdapter(BaseAgent):
     
     async def _validate_credentials(self) -> bool:
         """Validate TikTok API credentials"""
+
+
+
         try:
             response = await self._make_api_request(
                 "POST",
@@ -486,6 +504,9 @@ class TikTokAdapter(BaseAgent):
     
     async def _initialize_music_library(self) -> None:
         """Initialize TikTok music library"""
+
+
+
         try:
             response = await self._make_api_request(
                 "POST",
@@ -540,6 +561,9 @@ class TikTokAdapter(BaseAgent):
     
     async def _optimize_video(self, content: ContentItem, metadata: TikTokMetadata) -> ContentItem:
         """Optimize video for TikTok platform"""
+
+
+
         try:
             # Load video
             cap = cv2.VideoCapture(content.file_path)
@@ -605,6 +629,9 @@ class TikTokAdapter(BaseAgent):
     
     async def _initialize_upload(self, metadata: TikTokMetadata) -> Dict[str, Any]:
         """Initialize video upload session"""
+
+
+
         try:
             post_info = {
                 "title": metadata.title,
@@ -632,6 +659,9 @@ class TikTokAdapter(BaseAgent):
     
     async def _upload_video_chunks(self, content: ContentItem, upload_session: Dict[str, Any]) -> None:
         """Upload video file in chunks"""
+
+
+
         try:
             upload_url = upload_session["upload_url"]
             
@@ -651,6 +681,9 @@ class TikTokAdapter(BaseAgent):
     
     async def _publish_video(self, upload_session: Dict[str, Any], metadata: TikTokMetadata) -> str:
         """Publish uploaded video"""
+
+
+
         try:
             publish_data = {
                 "publish_id": upload_session["publish_id"]

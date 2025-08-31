@@ -153,6 +153,9 @@ class GDPRComplianceManager:
         explicit_consent: bool = False
     ) -> ConsentRecord:
         """Record user consent with full audit trail"""
+
+
+
         try:
             async with get_db_session() as session:
                 consent_record = ConsentRecord(
@@ -202,6 +205,9 @@ class GDPRComplianceManager:
         ip_address: str
     ) -> bool:
         """Withdraw user consent and trigger data processing restrictions"""
+
+
+
         try:
             async with get_db_session() as session:
                 # Update existing consent record
@@ -255,6 +261,9 @@ class GDPRComplianceManager:
         requester_ip: str
     ) -> str:
         """Process GDPR data subject requests"""
+
+
+
         try:
             async with get_db_session() as session:
                 # Create GDPR request record
@@ -327,6 +336,9 @@ class GDPRComplianceManager:
     
     async def generate_compliance_report(self, user_id: int) -> GDPRComplianceReport:
         """Generate comprehensive GDPR compliance report for user"""
+
+
+
         try:
             async with get_db_session() as session:
                 # Get user data
@@ -406,6 +418,9 @@ class GDPRComplianceManager:
     
     async def automated_data_retention_cleanup(self) -> Dict[str, int]:
         """Automated data retention cleanup based on GDPR requirements"""
+
+
+
         try:
             cleanup_stats = {
                 "users_processed": 0,
@@ -457,6 +472,9 @@ class GDPRComplianceManager:
     
     async def _process_access_request(self, user_id: int, request_id: str) -> None:
         """Process data access request - provide copy of personal data"""
+
+
+
         try:
             # Collect all personal data for user
             personal_data = await self._collect_personal_data(user_id)
@@ -477,6 +495,9 @@ class GDPRComplianceManager:
     
     async def _process_portability_request(self, user_id: int, request_id: str) -> None:
         """Process data portability request - provide structured data export"""
+
+
+
         try:
             # Export data in structured, machine-readable format
             portable_data = await self._export_portable_data(user_id)
@@ -497,6 +518,9 @@ class GDPRComplianceManager:
     
     async def _process_erasure_request(self, user_id: int, request_id: str) -> None:
         """Process right to erasure request - delete personal data"""
+
+
+
         try:
             # Check if erasure is legally permissible
             can_erase = await self._check_erasure_eligibility(user_id)
@@ -529,6 +553,9 @@ class GDPRComplianceManager:
         processing_details: Dict[str, Any]
     ) -> None:
         """Log data processing activity for GDPR audit trail"""
+
+
+
         try:
             async with get_db_session() as session:
                 log_entry = DataProcessingLog(

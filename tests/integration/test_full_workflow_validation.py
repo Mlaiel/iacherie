@@ -348,11 +348,17 @@ class TestFullWorkflowIntegration:
     @pytest.fixture
     def workflow_engine(self):
         """Create workflow engine fixture"""
+
+
+
         return MockContentProtectionWorkflow()
     
     @pytest.fixture
     def sample_creator_data(self):
         """Sample creator registration data"""
+
+
+
         return {
             "name": "Test Creator",
             "email": "creator@example.com",
@@ -362,6 +368,9 @@ class TestFullWorkflowIntegration:
     @pytest.fixture
     def sample_content_data(self):
         """Sample content upload data"""
+
+
+
         return {
             "title": "My Original Song",
             "content_type": "audio/mp3",

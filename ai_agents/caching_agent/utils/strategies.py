@@ -132,6 +132,9 @@ class LRUStrategy(CacheStrategy):
     
     async def should_cache(self, key: str, value: Any, metadata: Dict[str, Any]) -> bool:
         """Always cache with LRU - relies on eviction for space management"""
+
+
+
         return True
     
     async def select_eviction_candidates(

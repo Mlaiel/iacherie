@@ -8,7 +8,7 @@ Gère les notifications multi-canal avec personnalisation et tracking.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2024-2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LEGAL STRICT ⚠️
+  AVERTISSEMENT LEGAL STRICT 
 Ce code et tous les concepts associés sont la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants s'exposent à des poursuites judiciaires.
@@ -103,6 +103,9 @@ class LicenseNotificationManager:
     
     async def initialize(self):
         """Initialise le gestionnaire de notifications."""
+
+
+
         try:
             await self._load_notification_templates()
             await self._setup_channel_providers()
@@ -395,13 +398,13 @@ class LicenseNotificationManager:
             
             NotificationType.REVENUE_MILESTONE: {
                 "subject": {
-                    "en": "🎉 Revenue Milestone Achieved!",
-                    "fr": "🎉 Objectif de Revenus Atteint!",
-                    "de": "🎉 Umsatzmeilenstein Erreicht!"
+                    "en": " Revenue Milestone Achieved!",
+                    "fr": " Objectif de Revenus Atteint!",
+                    "de": " Umsatzmeilenstein Erreicht!"
                 },
                 "body": {
                     "en": """
-                    Congratulations {creator_name}! 🎉
+                    Congratulations {creator_name}! 
                     
                     You've reached a significant revenue milestone with your content!
                     
@@ -419,7 +422,7 @@ class LicenseNotificationManager:
                     IA Influencer Agent Team
                     """,
                     "fr": """
-                    Félicitations {creator_name}! 🎉
+                    Félicitations {creator_name}! 
                     
                     Vous avez atteint un objectif significatif de revenus avec votre contenu!
                     
@@ -437,7 +440,7 @@ class LicenseNotificationManager:
                     Équipe IA Influencer Agent
                     """,
                     "de": """
-                    Herzlichen Glückwunsch {creator_name}! 🎉
+                    Herzlichen Glückwunsch {creator_name}! 
                     
                     Sie haben einen bedeutenden Umsatzmeilenstein mit Ihrem Content erreicht!
                     
@@ -802,6 +805,9 @@ class LicenseNotificationManager:
         Returns:
             bool: True si envoi réussi
         """
+
+
+
         try:
             provider_config = self.channel_providers.get(channel)
             if not provider_config or not provider_config.get("enabled", False):
@@ -918,6 +924,9 @@ class LicenseNotificationManager:
         Returns:
             Dict contenant le statut ou None
         """
+
+
+
         return self.sent_notifications.get(notification_id)
     
     async def update_user_preferences(self, user_id: str, 
@@ -932,6 +941,9 @@ class LicenseNotificationManager:
         Returns:
             bool: True si mise à jour réussie
         """
+
+
+
         try:
             current_prefs = await self._get_user_preferences(user_id)
             current_prefs.update(preferences)

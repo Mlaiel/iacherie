@@ -122,6 +122,9 @@ class MultiFormatHandler:
         Returns:
             Processing results with file info and optimization data
         """
+
+
+
         try:
             # Validate input format
             await self._validate_input_format(file_path, content_type)
@@ -207,6 +210,9 @@ class MultiFormatHandler:
     
     async def _analyze_audio_format(self, file_path: Path) -> Dict[str, Any]:
         """Analyze audio format details."""
+
+
+
         try:
             # Load audio info using librosa
             y, sr = librosa.load(str(file_path), sr=None)
@@ -230,6 +236,9 @@ class MultiFormatHandler:
     
     async def _analyze_video_format(self, file_path: Path) -> Dict[str, Any]:
         """Analyze video format details."""
+
+
+
         try:
             # Use ffprobe to get detailed video info
             probe = ffmpeg.probe(str(file_path))
@@ -260,6 +269,9 @@ class MultiFormatHandler:
     
     async def _analyze_image_format(self, file_path: Path) -> Dict[str, Any]:
         """Analyze image format details."""
+
+
+
         try:
             with Image.open(file_path) as img:
                 return {
@@ -277,6 +289,9 @@ class MultiFormatHandler:
     
     async def _analyze_text_format(self, file_path: Path) -> Dict[str, Any]:
         """Analyze text format details."""
+
+
+
         try:
             # Try different encodings
             encoding = 'utf-8'
@@ -395,6 +410,9 @@ class MultiFormatHandler:
         quality_preset: str
     ) -> List[Dict[str, Any]]:
         """Convert audio to target format."""
+
+
+
         try:
             quality_settings = self.supported_conversions['audio']['quality_presets'][quality_preset]
             output_path = file_path.with_suffix(target_format)
@@ -440,6 +458,9 @@ class MultiFormatHandler:
         quality_preset: str
     ) -> List[Dict[str, Any]]:
         """Convert video to target format."""
+
+
+
         try:
             quality_settings = self.supported_conversions['video']['quality_presets'][quality_preset]
             output_path = file_path.with_suffix(target_format)
@@ -479,6 +500,9 @@ class MultiFormatHandler:
         quality_preset: str
     ) -> List[Dict[str, Any]]:
         """Convert image to target format."""
+
+
+
         try:
             quality_settings = self.supported_conversions['image']['quality_presets'][quality_preset]
             output_path = file_path.with_suffix(target_format)
@@ -528,6 +552,9 @@ class MultiFormatHandler:
         target_format: str
     ) -> List[Dict[str, Any]]:
         """Convert text to target format."""
+
+
+
         try:
             output_path = file_path.with_suffix(target_format)
             
@@ -786,6 +813,9 @@ class MultiFormatHandler:
         quality_preset: str
     ) -> Optional[Dict[str, Any]]:
         """Create video variant with specific aspect ratio."""
+
+
+
         try:
             aspect_ratio_str = f"{width_ratio}_{height_ratio}"
             output_path = file_path.with_name(f"{file_path.stem}_{platform}_{aspect_ratio_str}{file_path.suffix}")
@@ -848,6 +878,9 @@ class MultiFormatHandler:
         height_ratio: int
     ) -> Optional[Dict[str, Any]]:
         """Create image variant with specific aspect ratio."""
+
+
+
         try:
             aspect_ratio_str = f"{width_ratio}_{height_ratio}"
             output_path = file_path.with_name(f"{file_path.stem}_{platform}_{aspect_ratio_str}{file_path.suffix}")
@@ -1001,6 +1034,9 @@ class MultiFormatHandler:
     
     async def get_supported_formats(self, content_type: str) -> Dict[str, List[str]]:
         """Get supported input and output formats for content type."""
+
+
+
         return self.supported_conversions.get(content_type, {
             'input_formats': [],
             'output_formats': []
@@ -1008,6 +1044,9 @@ class MultiFormatHandler:
     
     async def get_platform_requirements(self, platform: str) -> Dict[str, Any]:
         """Get platform-specific requirements."""
+
+
+
         return self.platform_specs.get(platform, {})
     
     async def batch_convert(

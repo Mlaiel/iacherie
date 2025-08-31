@@ -5,7 +5,7 @@ Expert: ML Engineer + AI Specialist + Model Deployment Expert
 Creator: Fahed Mlaiel <mlaiel@live.de>
 ==================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL 
 Tout vol, copie ou utilisation non autorisée de ce code source,
 de ce concept ou de cette propriété intellectuelle sans
 l'autorisation écrite explicite de Fahed Mlaiel est strictement
@@ -270,6 +270,9 @@ RUN apt-get update && apt-get install -y \\
 
     def _generate_cuda_env(self) -> str:
         """Generate CUDA environment variables"""
+
+
+
         return f"""
 # CUDA environment
 ENV NVIDIA_VISIBLE_DEVICES=all
@@ -486,6 +489,9 @@ onnxruntime-gpu==1.16.3
 
     def generate_model_download_script(self) -> str:
         """Generate script to download AI models"""
+
+
+
         return """
 #!/usr/bin/env python3
 \"\"\"
@@ -545,16 +551,16 @@ def download_models(cache_dir: str):
                     model_name, 
                     cache_dir=cache_dir
                 )
-                logger.info(f"✅ Downloaded tokenizer for {model_name}")
+                logger.info(f" Downloaded tokenizer for {model_name}")
             except:
                 try:
                     processor = AutoProcessor.from_pretrained(
                         model_name,
                         cache_dir=cache_dir
                     )
-                    logger.info(f"✅ Downloaded processor for {model_name}")
+                    logger.info(f" Downloaded processor for {model_name}")
                 except:
-                    logger.warning(f"⚠️ No tokenizer/processor for {model_name}")
+                    logger.warning(f" No tokenizer/processor for {model_name}")
             
             # Download model
             model = AutoModel.from_pretrained(
@@ -562,7 +568,7 @@ def download_models(cache_dir: str):
                 cache_dir=cache_dir,
                 torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32
             )
-            logger.info(f"✅ Downloaded model {model_name}")
+            logger.info(f" Downloaded model {model_name}")
             
             # Clear memory
             del model
@@ -570,7 +576,7 @@ def download_models(cache_dir: str):
                 torch.cuda.empty_cache()
                 
         except Exception as e:
-            logger.error(f"❌ Failed to download {model_name}: {e}")
+            logger.error(f" Failed to download {model_name}: {e}")
     
     # Download sentence transformers models
     sentence_models = [
@@ -583,10 +589,10 @@ def download_models(cache_dir: str):
         try:
             logger.info(f"Downloading sentence transformer {model_name}...")
             model = SentenceTransformer(model_name, cache_folder=cache_dir)
-            logger.info(f"✅ Downloaded sentence transformer {model_name}")
+            logger.info(f" Downloaded sentence transformer {model_name}")
             del model
         except Exception as e:
-            logger.error(f"❌ Failed to download sentence transformer {model_name}: {e}")
+            logger.error(f" Failed to download sentence transformer {model_name}: {e}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Download AI models")
@@ -594,7 +600,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     download_models(args.cache_dir)
-    logger.info("✅ Model download completed")
+    logger.info(" Model download completed")
 """
 
     def save_config_files(self, output_dir: str) -> List[str]:
@@ -637,5 +643,5 @@ if __name__ == "__main__":
             yaml.dump(service_config, f, default_flow_style=False)
         files_created.append(str(compose_config_path))
         
-        logger.info(f"✅ AI Engines configuration files saved: {files_created}")
+        logger.info(f" AI Engines configuration files saved: {files_created}")
         return files_created

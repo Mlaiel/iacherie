@@ -328,6 +328,9 @@ class MonitoringManager:
     
     def get_health_status(self, service_name: str) -> HealthStatus:
         """Get health status for a service."""
+
+
+
         return self.service_status.get(service_name, HealthStatus.UNKNOWN)
     
     def update_health_status(self, service_name: str, status: HealthStatus):
@@ -336,6 +339,9 @@ class MonitoringManager:
     
     def get_all_health_status(self) -> Dict[str, HealthStatus]:
         """Get health status for all monitored services."""
+
+
+
         return self.service_status.copy()
     
     def get_service_config(self, service_name: str) -> Dict[str, Any]:
@@ -386,6 +392,9 @@ class MonitoringManager:
     
     def get_alert_configuration(self) -> Dict[str, Any]:
         """Get alerting configuration."""
+
+
+
         return {
             "enabled": self.config.alerting_enabled,
             "cooldown_period": self.config.alert_cooldown_period,

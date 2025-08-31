@@ -8,7 +8,7 @@ Provides advanced text analysis, sentiment detection, and content understanding.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This code is proprietary and confidential. Unauthorized use, modification, 
 distribution, or copying is strictly prohibited without explicit written 
 permission from the author Fahed Mlaiel (mlaiel@live.de).
@@ -115,6 +115,9 @@ class AdvancedNLPEngine:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             logger.info("Initializing Advanced NLP Engine...")
             
@@ -202,10 +205,16 @@ class AdvancedNLPEngine:
     
     def get_stats(self) -> Dict[str, Any]:
         """Get engine statistics."""
+
+
+
         return self.stats.copy()
     
     def supports_task_type(self, task_type: NLPTaskType) -> bool:
         """Check if a task type is supported."""
+
+
+
         return task_type in self.processors
 
 

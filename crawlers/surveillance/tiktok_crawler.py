@@ -2,7 +2,7 @@
 TikTok Crawler - Crawling TikTok Intelligent
 ===========================================
 
-⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
+ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
 © 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
@@ -170,6 +170,9 @@ class TikTokCrawler:
     
     async def initialize(self) -> None:
         """Initialize the TikTok crawler."""
+
+
+
         try:
             self._logger.info("Initializing TikTok crawler...")
             
@@ -188,6 +191,9 @@ class TikTokCrawler:
     
     async def _initialize_session(self) -> None:
         """Initialize HTTP session."""
+
+
+
         try:
             # This would initialize aiohttp session with proper headers
             # For now, implement placeholder
@@ -200,6 +206,9 @@ class TikTokCrawler:
     
     async def _initialize_browser(self) -> None:
         """Initialize Selenium browser."""
+
+
+
         try:
             # This would initialize Selenium WebDriver
             # For now, implement placeholder
@@ -216,6 +225,9 @@ class TikTokCrawler:
         max_videos: int = 100
     ) -> Optional[TikTokUser]:
         """Crawl TikTok user profile."""
+
+
+
         try:
             self._logger.info(f"Crawling user profile: {username}")
             
@@ -285,6 +297,9 @@ class TikTokCrawler:
         max_videos: int = 100
     ) -> List[TikTokVideo]:
         """Crawl videos by hashtag."""
+
+
+
         try:
             self._logger.info(f"Crawling hashtag: #{hashtag}")
             
@@ -342,6 +357,9 @@ class TikTokCrawler:
         region: str = "US"
     ) -> List[TikTokVideo]:
         """Crawl trending videos."""
+
+
+
         try:
             self._logger.info(f"Crawling trending videos (region: {region})")
             
@@ -385,6 +403,9 @@ class TikTokCrawler:
         max_videos: int = 100
     ) -> List[TikTokVideo]:
         """Search videos by query."""
+
+
+
         try:
             self._logger.info(f"Searching videos: {query}")
             
@@ -428,6 +449,9 @@ class TikTokCrawler:
         max_comments: int = 100
     ) -> List[TikTokComment]:
         """Crawl comments for a video."""
+
+
+
         try:
             self._logger.info(f"Crawling comments for video: {video_id}")
             
@@ -497,6 +521,9 @@ class TikTokCrawler:
     
     async def _fetch_user_profile(self, username: str) -> Optional[Dict[str, Any]]:
         """Fetch user profile data."""
+
+
+
         try:
             # Simulate API call
             await asyncio.sleep(0.2)
@@ -529,6 +556,9 @@ class TikTokCrawler:
         max_videos: int
     ) -> List[TikTokVideo]:
         """Fetch user videos."""
+
+
+
         try:
             # Simulate API call
             await asyncio.sleep(0.3)
@@ -569,6 +599,9 @@ class TikTokCrawler:
     
     async def _fetch_hashtag_data(self, hashtag: str) -> Optional[Dict[str, Any]]:
         """Fetch hashtag data."""
+
+
+
         try:
             # Simulate API call
             await asyncio.sleep(0.2)
@@ -592,6 +625,9 @@ class TikTokCrawler:
         max_videos: int
     ) -> List[TikTokVideo]:
         """Fetch videos for hashtag."""
+
+
+
         try:
             # Simulate API call
             await asyncio.sleep(0.4)
@@ -636,6 +672,9 @@ class TikTokCrawler:
         region: str
     ) -> List[TikTokVideo]:
         """Fetch trending videos."""
+
+
+
         try:
             # Simulate API call
             await asyncio.sleep(0.5)
@@ -680,6 +719,9 @@ class TikTokCrawler:
         max_videos: int
     ) -> List[TikTokVideo]:
         """Search videos by query."""
+
+
+
         try:
             # Simulate API call
             await asyncio.sleep(0.4)
@@ -724,6 +766,9 @@ class TikTokCrawler:
         max_comments: int
     ) -> List[TikTokComment]:
         """Fetch comments for video."""
+
+
+
         try:
             # Simulate API call
             await asyncio.sleep(0.3)
@@ -765,6 +810,9 @@ class TikTokCrawler:
     
     def get_crawler_stats(self) -> Dict[str, Any]:
         """Get crawler statistics."""
+
+
+
         return {
             'users_collected': len(self.users),
             'videos_collected': len(self.videos),
@@ -803,6 +851,9 @@ class TikTokCrawler:
     
     async def shutdown(self) -> None:
         """Shutdown the TikTok crawler."""
+
+
+
         try:
             self._logger.info("Shutting down TikTok crawler...")
             

@@ -8,7 +8,7 @@ Responsibility: Advanced content fingerprinting, piracy detection, and protectio
 Technologies: Deep Learning, Computer Vision, NLP, Blockchain Timestamping, DMCA Automation
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -174,10 +174,13 @@ class ContentProtectionWorker:
         self.active_tasks: Dict[str, ProtectionTask] = {}
         self.processing_queue = asyncio.Queue()
         
-        logger.info(f"🛡️ ContentProtectionWorker {self.worker_id} initialized")
+        logger.info(f" ContentProtectionWorker {self.worker_id} initialized")
     
     def _initialize_ai_models(self):
         """Initialize AI models for content analysis"""
+
+
+
         try:
             # Initialize CLIP model for visual/text analysis
             self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-large-patch14")
@@ -192,15 +195,18 @@ class ContentProtectionWorker:
             self.clip_model.to(self.device)
             self.text_model.to(self.device)
             
-            logger.info(f"✅ AI models initialized on device: {self.device}")
+            logger.info(f" AI models initialized on device: {self.device}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize AI models: {e}")
+            logger.error(f" Failed to initialize AI models: {e}")
             # Fallback to CPU-only processing
             self.device = torch.device("cpu")
     
     async def start(self) -> bool:
         """Start the content protection worker"""
+
+
+
         try:
             if self.is_running:
                 logger.warning("ContentProtectionWorker is already running")
@@ -214,16 +220,19 @@ class ContentProtectionWorker:
             # Start monitoring loop
             asyncio.create_task(self._monitoring_loop())
             
-            logger.info(f"🚀 ContentProtectionWorker {self.worker_id} started")
+            logger.info(f" ContentProtectionWorker {self.worker_id} started")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to start ContentProtectionWorker: {e}")
+            logger.error(f" Failed to start ContentProtectionWorker: {e}")
             self.is_running = False
             return False
     
     async def stop(self) -> bool:
         """Stop the content protection worker"""
+
+
+
         try:
             self.is_running = False
             
@@ -234,15 +243,18 @@ class ContentProtectionWorker:
             while self.active_tasks and (time.time() - start_time) < timeout:
                 await asyncio.sleep(0.1)
             
-            logger.info(f"🛑 ContentProtectionWorker {self.worker_id} stopped")
+            logger.info(f" ContentProtectionWorker {self.worker_id} stopped")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to stop ContentProtectionWorker: {e}")
+            logger.error(f" Failed to stop ContentProtectionWorker: {e}")
             return False
     
     async def submit_protection_task(self, task: ProtectionTask) -> bool:
         """Submit a content protection task"""
+
+
+
         try:
             if not self.is_running:
                 logger.error("ContentProtectionWorker is not running")
@@ -257,11 +269,11 @@ class ContentProtectionWorker:
             await self.processing_queue.put(task)
             self.active_tasks[task.task_id] = task
             
-            logger.info(f"📝 Protection task submitted: {task.task_id}")
+            logger.info(f" Protection task submitted: {task.task_id}")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to submit protection task: {e}")
+            logger.error(f" Failed to submit protection task: {e}")
             return False
     
     async def _processing_loop(self):
@@ -284,7 +296,7 @@ class ContentProtectionWorker:
                 self.processing_queue.task_done()
                 
             except Exception as e:
-                logger.error(f"❌ Error in processing loop: {e}")
+                logger.error(f" Error in processing loop: {e}")
                 await asyncio.sleep(1)
     
     async def _process_protection_task(self, task: ProtectionTask):
@@ -292,7 +304,7 @@ class ContentProtectionWorker:
         start_time = time.time()
         
         try:
-            logger.info(f"🔄 Processing protection task: {task.task_id}")
+            logger.info(f" Processing protection task: {task.task_id}")
             
             # Step 1: Validate and parse content
             content_data = await self._parse_content(task)
@@ -319,10 +331,10 @@ class ContentProtectionWorker:
             processing_time = time.time() - start_time
             self._update_processing_stats(processing_time, success=True)
             
-            logger.info(f"✅ Protection task completed: {task.task_id} ({processing_time:.2f}s)")
+            logger.info(f" Protection task completed: {task.task_id} ({processing_time:.2f}s)")
             
         except Exception as e:
-            logger.error(f"❌ Failed to process protection task {task.task_id}: {e}")
+            logger.error(f" Failed to process protection task {task.task_id}: {e}")
             processing_time = time.time() - start_time
             self._update_processing_stats(processing_time, success=False)
         
@@ -333,6 +345,9 @@ class ContentProtectionWorker:
     
     async def _parse_content(self, task: ProtectionTask) -> Optional[Dict[str, Any]]:
         """Parse and validate content"""
+
+
+
         try:
             content_path = Path(task.content_path)
             
@@ -361,11 +376,14 @@ class ContentProtectionWorker:
                 return await self._parse_generic_content(content_path)
             
         except Exception as e:
-            logger.error(f"❌ Failed to parse content: {e}")
+            logger.error(f" Failed to parse content: {e}")
             return None
     
     async def _parse_audio_content(self, content_path: Path) -> Dict[str, Any]:
         """Parse audio content"""
+
+
+
         try:
             # Load audio using librosa
             audio_data, sample_rate = librosa.load(str(content_path))
@@ -393,11 +411,14 @@ class ContentProtectionWorker:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to parse audio content: {e}")
+            logger.error(f" Failed to parse audio content: {e}")
             raise
     
     async def _parse_video_content(self, content_path: Path) -> Dict[str, Any]:
         """Parse video content"""
+
+
+
         try:
             # Open video using OpenCV
             cap = cv2.VideoCapture(str(content_path))
@@ -441,11 +462,14 @@ class ContentProtectionWorker:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to parse video content: {e}")
+            logger.error(f" Failed to parse video content: {e}")
             raise
     
     async def _parse_image_content(self, content_path: Path) -> Dict[str, Any]:
         """Parse image content"""
+
+
+
         try:
             # Load image using PIL
             image = Image.open(content_path)
@@ -474,11 +498,14 @@ class ContentProtectionWorker:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to parse image content: {e}")
+            logger.error(f" Failed to parse image content: {e}")
             raise
     
     async def _parse_text_content(self, content_path: Path) -> Dict[str, Any]:
         """Parse text content"""
+
+
+
         try:
             # Read text file
             async with aiofiles.open(content_path, 'r', encoding='utf-8') as f:
@@ -506,11 +533,14 @@ class ContentProtectionWorker:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to parse text content: {e}")
+            logger.error(f" Failed to parse text content: {e}")
             raise
     
     async def _parse_generic_content(self, content_path: Path) -> Dict[str, Any]:
         """Parse generic content"""
+
+
+
         try:
             # Basic file information
             file_stat = content_path.stat()
@@ -533,11 +563,14 @@ class ContentProtectionWorker:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to parse generic content: {e}")
+            logger.error(f" Failed to parse generic content: {e}")
             raise
     
     async def _generate_fingerprints(self, task: ProtectionTask, content_data: Dict[str, Any]) -> List[ContentFingerprint]:
         """Generate multiple fingerprints for content"""
+
+
+
         try:
             fingerprints = []
             content_id = str(uuid.uuid4())
@@ -560,11 +593,11 @@ class ContentProtectionWorker:
                     content_id, task, content_data
                 ))
             
-            logger.info(f"✅ Generated {len(fingerprints)} fingerprints for content {content_id}")
+            logger.info(f" Generated {len(fingerprints)} fingerprints for content {content_id}")
             return fingerprints
             
         except Exception as e:
-            logger.error(f"❌ Failed to generate fingerprints: {e}")
+            logger.error(f" Failed to generate fingerprints: {e}")
             return []
     
     async def _generate_audio_fingerprints(self, content_id: str, task: ProtectionTask, content_data: Dict[str, Any]) -> List[ContentFingerprint]:
@@ -615,7 +648,7 @@ class ContentProtectionWorker:
             ))
             
         except Exception as e:
-            logger.error(f"❌ Failed to generate audio fingerprints: {e}")
+            logger.error(f" Failed to generate audio fingerprints: {e}")
         
         return fingerprints
     
@@ -681,7 +714,7 @@ class ContentProtectionWorker:
                 ))
             
         except Exception as e:
-            logger.error(f"❌ Failed to generate video fingerprints: {e}")
+            logger.error(f" Failed to generate video fingerprints: {e}")
         
         return fingerprints
     
@@ -736,7 +769,7 @@ class ContentProtectionWorker:
             ))
             
         except Exception as e:
-            logger.error(f"❌ Failed to generate image fingerprints: {e}")
+            logger.error(f" Failed to generate image fingerprints: {e}")
         
         return fingerprints
     
@@ -798,12 +831,15 @@ class ContentProtectionWorker:
             ))
             
         except Exception as e:
-            logger.error(f"❌ Failed to generate text fingerprints: {e}")
+            logger.error(f" Failed to generate text fingerprints: {e}")
         
         return fingerprints
     
     async def _store_fingerprints(self, fingerprints: List[ContentFingerprint]):
         """Store fingerprints in vector database"""
+
+
+
         try:
             for fingerprint in fingerprints:
                 # Store in vector database
@@ -822,14 +858,17 @@ class ContentProtectionWorker:
                         }
                     )
             
-            logger.info(f"✅ Stored {len(fingerprints)} fingerprints in vector database")
+            logger.info(f" Stored {len(fingerprints)} fingerprints in vector database")
             
         except Exception as e:
-            logger.error(f"❌ Failed to store fingerprints: {e}")
+            logger.error(f" Failed to store fingerprints: {e}")
             raise
     
     async def _enable_content_monitoring(self, fingerprints: List[ContentFingerprint]):
         """Enable ongoing monitoring for content"""
+
+
+
         try:
             for fingerprint in fingerprints:
                 # Register with piracy detector
@@ -840,13 +879,16 @@ class ContentProtectionWorker:
                     fingerprint.metadata
                 )
             
-            logger.info(f"✅ Enabled monitoring for {len(fingerprints)} fingerprints")
+            logger.info(f" Enabled monitoring for {len(fingerprints)} fingerprints")
             
         except Exception as e:
-            logger.error(f"❌ Failed to enable content monitoring: {e}")
+            logger.error(f" Failed to enable content monitoring: {e}")
     
     async def _blockchain_timestamp(self, fingerprints: List[ContentFingerprint]):
         """Create blockchain timestamp for content"""
+
+
+
         try:
             for fingerprint in fingerprints:
                 # Create blockchain timestamp
@@ -862,13 +904,16 @@ class ContentProtectionWorker:
                 
                 fingerprint.blockchain_timestamp = timestamp_id
             
-            logger.info(f"✅ Created blockchain timestamps for {len(fingerprints)} fingerprints")
+            logger.info(f" Created blockchain timestamps for {len(fingerprints)} fingerprints")
             
         except Exception as e:
-            logger.error(f"❌ Failed to create blockchain timestamps: {e}")
+            logger.error(f" Failed to create blockchain timestamps: {e}")
     
     def _validate_protection_task(self, task: ProtectionTask) -> bool:
         """Validate protection task parameters"""
+
+
+
         try:
             # Check required fields
             if not task.task_id or not task.content_path or not task.creator_id:
@@ -889,11 +934,14 @@ class ContentProtectionWorker:
             return True
             
         except Exception as e:
-            logger.error(f"❌ Error validating protection task: {e}")
+            logger.error(f" Error validating protection task: {e}")
             return False
     
     def _update_processing_stats(self, processing_time: float, success: bool):
         """Update processing statistics"""
+
+
+
         try:
             self.processing_stats["total_processed"] += 1
             
@@ -913,7 +961,7 @@ class ContentProtectionWorker:
             )
             
         except Exception as e:
-            logger.error(f"❌ Error updating processing stats: {e}")
+            logger.error(f" Error updating processing stats: {e}")
     
     async def _monitoring_loop(self):
         """Monitoring loop for worker health"""
@@ -933,11 +981,14 @@ class ContentProtectionWorker:
                 await asyncio.sleep(30)  # 30 seconds
                 
             except Exception as e:
-                logger.error(f"❌ Error in monitoring loop: {e}")
+                logger.error(f" Error in monitoring loop: {e}")
                 await asyncio.sleep(5)
     
     async def get_worker_status(self) -> Dict[str, Any]:
         """Get current worker status"""
+
+
+
         return {
             "worker_id": self.worker_id,
             "is_running": self.is_running,
@@ -955,6 +1006,9 @@ _content_protection_worker: Optional[ContentProtectionWorker] = None
 
 async def get_content_protection_worker() -> Optional[ContentProtectionWorker]:
     """Get the global content protection worker instance"""
+
+
+
     return _content_protection_worker
 
 
@@ -971,15 +1025,15 @@ async def initialize_content_protection_worker(config: Dict[str, Any] = None) ->
         success = await _content_protection_worker.start()
         
         if success:
-            logger.info("✅ ContentProtectionWorker initialized successfully")
+            logger.info(" ContentProtectionWorker initialized successfully")
         else:
-            logger.error("❌ Failed to initialize ContentProtectionWorker")
+            logger.error(" Failed to initialize ContentProtectionWorker")
             _content_protection_worker = None
         
         return success
         
     except Exception as e:
-        logger.error(f"❌ Failed to initialize ContentProtectionWorker: {e}")
+        logger.error(f" Failed to initialize ContentProtectionWorker: {e}")
         _content_protection_worker = None
         return False
 
@@ -997,14 +1051,14 @@ async def shutdown_content_protection_worker() -> bool:
         _content_protection_worker = None
         
         if success:
-            logger.info("✅ ContentProtectionWorker shutdown successfully")
+            logger.info(" ContentProtectionWorker shutdown successfully")
         else:
-            logger.error("❌ Failed to shutdown ContentProtectionWorker")
+            logger.error(" Failed to shutdown ContentProtectionWorker")
         
         return success
         
     except Exception as e:
-        logger.error(f"❌ Failed to shutdown ContentProtectionWorker: {e}")
+        logger.error(f" Failed to shutdown ContentProtectionWorker: {e}")
         return False
 
 

@@ -439,6 +439,9 @@ class PlatformIntegrationConfig(BaseSettings):
     
     def get_webhook_config(self, platform: PlatformType) -> Dict[str, Any]:
         """Get webhook configuration for platform."""
+
+
+
         
         return {
             "base_url": self.WEBHOOK_BASE_URL,

@@ -12,7 +12,7 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Micro
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
+ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
 This code and concept are the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 Unauthorized access, copying, modification, distribution, reverse engineering,
@@ -274,6 +274,9 @@ class EngagementAnalytics:
         metadata: Optional[Dict[str, Any]] = None
     ) -> EngagementEvent:
         """Track an engagement event."""
+
+
+
         try:
             event = EngagementEvent(
                 user_id=user_id,
@@ -426,6 +429,9 @@ class EngagementAnalytics:
     
     async def _generate_real_time_insights(self, event: EngagementEvent) -> None:
         """Generate real-time insights based on event patterns."""
+
+
+
         try:
             user_id = event.user_id
             
@@ -514,7 +520,7 @@ class EngagementAnalytics:
                 insight = EngagementInsight(
                     user_id=user_id,
                     insight_type="momentum_boost",
-                    title="You're on Fire! 🔥",
+                    title="You're on Fire! ",
                     description="Your engagement is trending upward. Keep the momentum going!",
                     priority="high",
                     confidence=0.9,
@@ -589,6 +595,9 @@ class EngagementAnalytics:
         end_date: Optional[datetime] = None
     ) -> EngagementMetrics:
         """Calculate comprehensive engagement metrics for a user."""
+
+
+
         try:
             # Determine time period
             if not start_date:
@@ -692,6 +701,9 @@ class EngagementAnalytics:
     
     async def _calculate_momentum_score(self, user_id: str, end_date: datetime) -> float:
         """Calculate engagement momentum score."""
+
+
+
         try:
             # Get events from last 14 days, split into two 7-day periods
             two_weeks_ago = end_date - timedelta(days=14)
@@ -723,6 +735,9 @@ class EngagementAnalytics:
     
     async def _calculate_consistency_score(self, user_id: str, start_date: datetime, end_date: datetime) -> float:
         """Calculate engagement consistency score."""
+
+
+
         try:
             # Get daily activity counts
             daily_activity = {}
@@ -760,6 +775,9 @@ class EngagementAnalytics:
     
     async def _calculate_depth_score(self, events: List[EngagementEvent]) -> float:
         """Calculate engagement depth score based on event diversity and value."""
+
+
+
         try:
             if not events:
                 return 0.0
@@ -783,6 +801,9 @@ class EngagementAnalytics:
     
     async def _calculate_churn_risk(self, user_id: str) -> float:
         """Calculate churn risk score for a user."""
+
+
+
         try:
             now = datetime.utcnow()
             
@@ -837,6 +858,9 @@ class EngagementAnalytics:
     
     async def _predict_lifetime_value(self, user_id: str, metrics: EngagementMetrics) -> float:
         """Predict user lifetime value based on engagement patterns."""
+
+
+
         try:
             # Simple LTV prediction based on engagement metrics
             base_value = 100  # Base LTV
@@ -883,6 +907,9 @@ class EngagementAnalytics:
         priority_filter: Optional[str] = None
     ) -> List[EngagementInsight]:
         """Get actionable insights for a user."""
+
+
+
         try:
             user_insights = self._insights.get(user_id, [])
             
@@ -917,6 +944,9 @@ class EngagementAnalytics:
         end_date: Optional[datetime] = None
     ) -> Dict[str, Any]:
         """Get platform-wide engagement analytics."""
+
+
+
         try:
             # Determine time period
             if not start_date:

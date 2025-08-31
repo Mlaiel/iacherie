@@ -8,7 +8,7 @@ Author: Fahed Mlaiel
 Contact: mlaiel@live.de
 Copyright: 2025 - All rights reserved
 
-⚠️ IMPORTANT LEGAL NOTICE ⚠️
+ IMPORTANT LEGAL NOTICE 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
@@ -408,6 +408,9 @@ class SystemOptimizer:
     
     def _calculate_memory_fragmentation(self) -> float:
         """Calculate memory fragmentation score."""
+
+
+
         try:
             # Simplified fragmentation calculation
             memory = psutil.virtual_memory()
@@ -532,6 +535,9 @@ class SystemOptimizer:
         current_metrics: Dict[str, Dict[str, float]]
     ) -> bool:
         """Evaluate if an optimization rule should be triggered."""
+
+
+
         try:
             # Check cooldown period
             if rule.last_applied:
@@ -561,6 +567,9 @@ class SystemOptimizer:
         metrics: Dict[str, Dict[str, float]]
     ) -> bool:
         """Evaluate a rule condition against current metrics."""
+
+
+
         try:
             # Create evaluation context
             context = {}
@@ -725,6 +734,9 @@ class SystemOptimizer:
         rule: OptimizationRule
     ) -> bool:
         """Execute specific optimization action."""
+
+
+
         try:
             if action == OptimizationAction.SCALE_UP:
                 return await self._scale_up_resources(rule.resource_types)

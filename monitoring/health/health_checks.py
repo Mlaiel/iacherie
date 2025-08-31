@@ -1,5 +1,5 @@
 """
-📊 Health Checks - IA-Influencer-Agent Monitoring
+ Health Checks - IA-Influencer-Agent Monitoring
 ==================================================================
 Expert: DEVOPS_ENGINEER + SRE_SPECIALIST
 Technologies: Prometheus + Grafana + ELK Stack + APM
@@ -53,6 +53,9 @@ class SystemMetrics:
     
     def get_system_stats(self) -> Dict[str, Any]:
         """Statistiques système en temps réel"""
+
+
+
         return {
             "timestamp": datetime.now().isoformat(),
             "uptime_seconds": time.time() - self.start_time,
@@ -99,10 +102,13 @@ class HealthChecker:
     def register_check(self, name: str, check_func: Callable) -> None:
         """Enregistrer une vérification de santé"""
         self.checks[name] = check_func
-        logger.info(f"✅ Health check enregistré: {name}")
+        logger.info(f" Health check enregistré: {name}")
     
     async def run_health_check(self, name: str) -> Dict[str, Any]:
         """Exécuter une vérification de santé"""
+
+
+
         try:
             start_time = time.time()
             
@@ -170,12 +176,12 @@ def track_performance(metric_name: str = None):
                 execution_time = (time.time() - start_time) * 1000
                 
                 # Log performance
-                logger.info(f"📊 {metric_name or func.__name__}: {execution_time:.2f}ms")
+                logger.info(f" {metric_name or func.__name__}: {execution_time:.2f}ms")
                 
                 return result
             except Exception as e:
                 execution_time = (time.time() - start_time) * 1000
-                logger.error(f"❌ {metric_name or func.__name__}: {execution_time:.2f}ms - Erreur: {e}")
+                logger.error(f" {metric_name or func.__name__}: {execution_time:.2f}ms - Erreur: {e}")
                 raise
         
         @wraps(func)
@@ -185,12 +191,12 @@ def track_performance(metric_name: str = None):
                 result = func(*args, **kwargs)
                 execution_time = (time.time() - start_time) * 1000
                 
-                logger.info(f"📊 {metric_name or func.__name__}: {execution_time:.2f}ms")
+                logger.info(f" {metric_name or func.__name__}: {execution_time:.2f}ms")
                 
                 return result
             except Exception as e:
                 execution_time = (time.time() - start_time) * 1000
-                logger.error(f"❌ {metric_name or func.__name__}: {execution_time:.2f}ms - Erreur: {e}")
+                logger.error(f" {metric_name or func.__name__}: {execution_time:.2f}ms - Erreur: {e}")
                 raise
         
         return async_wrapper if asyncio.iscoroutinefunction(func) else sync_wrapper
@@ -210,6 +216,9 @@ class HealthChecksManager:
     
     async def start(self) -> bool:
         """Démarrage du monitoring"""
+
+
+
         try:
             self.running = True
             
@@ -220,15 +229,18 @@ class HealthChecksManager:
             # Démarrer le monitoring en arrière-plan
             self.monitoring_task = asyncio.create_task(self._monitoring_loop())
             
-            logger.info("🚀 Monitoring démarré")
+            logger.info(" Monitoring démarré")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Erreur démarrage monitoring: {e}")
+            logger.error(f" Erreur démarrage monitoring: {e}")
             return False
     
     async def stop(self) -> bool:
         """Arrêt du monitoring"""
+
+
+
         try:
             self.running = False
             
@@ -239,11 +251,11 @@ class HealthChecksManager:
                 except asyncio.CancelledError:
                     pass
             
-            logger.info("⏹️ Monitoring arrêté")
+            logger.info("⏹ Monitoring arrêté")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Erreur arrêt monitoring: {e}")
+            logger.error(f" Erreur arrêt monitoring: {e}")
             return False
     
     async def _monitoring_loop(self):
@@ -263,7 +275,7 @@ class HealthChecksManager:
             except asyncio.CancelledError:
                 break
             except Exception as e:
-                logger.error(f"❌ Erreur boucle monitoring: {e}")
+                logger.error(f" Erreur boucle monitoring: {e}")
                 await asyncio.sleep(5)
     
     async def _system_health_check(self) -> bool:
@@ -287,7 +299,7 @@ class HealthChecksManager:
             alerts.append(f"Mémoire élevée: {stats['memory']['percent']}%")
         
         if alerts:
-            logger.warning(f"🚨 ALERTES: {', '.join(alerts)}")
+            logger.warning(f" ALERTES: {', '.join(alerts)}")
 
 # =============== EXPORT MODULE ===============
 

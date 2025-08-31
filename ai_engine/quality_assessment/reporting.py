@@ -7,7 +7,7 @@ Provides comprehensive reports, dashboards, and data visualization capabilities.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software and all associated concepts, algorithms, and implementations are the exclusive 
 intellectual property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, reproduction, 
 distribution, modification, or appropriation of this code, in whole or in part, without 
@@ -96,7 +96,7 @@ class ReportMetric:
     
     # Visual properties
     color: str = field(default="#3498db")
-    icon: str = field(default="📊")
+    icon: str = field(default="")
     priority: int = field(default=1)  # 1-5 scale
     
     # Metadata
@@ -593,6 +593,9 @@ class ReportGenerator(BaseAIModel):
     
     def _generate_report_title(self, config: ReportConfiguration, analysis_data: Dict[str, Any]) -> str:
         """Generate appropriate report title"""
+
+
+
         try:
             base_titles = {
                 ReportType.EXECUTIVE_SUMMARY: "Executive Performance Summary",
@@ -626,6 +629,9 @@ class ReportGenerator(BaseAIModel):
     
     def _generate_report_subtitle(self, config: ReportConfiguration, analysis_data: Dict[str, Any]) -> str:
         """Generate appropriate report subtitle"""
+
+
+
         try:
             # Extract key information
             platform_info = analysis_data.get('platform_info', {})
@@ -651,6 +657,9 @@ class ReportGenerator(BaseAIModel):
     
     async def _generate_executive_summary(self, analysis_data: Dict[str, Any], report: ComprehensiveReport):
         """Generate executive summary"""
+
+
+
         try:
             summary = report.executive_summary
             
@@ -767,6 +776,9 @@ class ReportGenerator(BaseAIModel):
     
     async def _generate_report_sections(self, analysis_data: Dict[str, Any], config: ReportConfiguration, report: ComprehensiveReport, custom_sections: Optional[List[Dict[str, Any]]]):
         """Generate report sections"""
+
+
+
         try:
             template = self.report_templates.get(config.report_type, {})
             sections_to_create = template.get('sections', [])
@@ -801,6 +813,9 @@ class ReportGenerator(BaseAIModel):
     
     async def _create_report_section(self, section_name: str, analysis_data: Dict[str, Any], order: int) -> Optional[ReportSection]:
         """Create individual report section"""
+
+
+
         try:
             section = ReportSection(title=section_name, content="", order=order)
             
@@ -833,6 +848,9 @@ class ReportGenerator(BaseAIModel):
     
     async def _create_performance_overview_section(self, section: ReportSection, analysis_data: Dict[str, Any]):
         """Create performance overview section"""
+
+
+
         try:
             # Overall performance metrics
             quality_data = analysis_data.get('quality_assessment', {})
@@ -849,7 +867,7 @@ class ReportGenerator(BaseAIModel):
                 description="Composite quality assessment score",
                 trend="up" if overall_score > 75 else "stable",
                 priority=1,
-                icon="🎯"
+                icon=""
             ))
             
             section.metrics.append(ReportMetric(
@@ -859,7 +877,7 @@ class ReportGenerator(BaseAIModel):
                 description="Performance ranking within industry",
                 trend="up" if percentile_rank > 50 else "down",
                 priority=1,
-                icon="📈"
+                icon=""
             ))
             
             # Content summary
@@ -890,6 +908,9 @@ class ReportGenerator(BaseAIModel):
     
     async def _create_quality_assessment_section(self, section: ReportSection, analysis_data: Dict[str, Any]):
         """Create quality assessment section"""
+
+
+
         try:
             quality_data = analysis_data.get('quality_assessment', {})
             
@@ -943,6 +964,9 @@ class ReportGenerator(BaseAIModel):
     
     async def _create_enhancement_opportunities_section(self, section: ReportSection, analysis_data: Dict[str, Any]):
         """Create enhancement opportunities section"""
+
+
+
         try:
             enhancement_data = analysis_data.get('enhancement', {})
             suggestions = enhancement_data.get('suggestions', {})
@@ -973,7 +997,7 @@ class ReportGenerator(BaseAIModel):
                 description="Estimated total improvement potential",
                 trend="up",
                 priority=1,
-                icon="🚀"
+                icon=""
             ))
             
             # Recommendations
@@ -1019,6 +1043,9 @@ class ReportGenerator(BaseAIModel):
     
     async def _generate_visualizations(self, analysis_data: Dict[str, Any], report: ComprehensiveReport):
         """Generate report visualizations"""
+
+
+
         try:
             # Performance overview gauge
             quality_data = analysis_data.get('quality_assessment', {})
@@ -1106,6 +1133,9 @@ class ReportGenerator(BaseAIModel):
     
     async def _calculate_report_metrics(self, report: ComprehensiveReport):
         """Calculate report-level metrics"""
+
+
+
         try:
             # Count metrics and visualizations
             total_metrics = sum(len(section.metrics) for section in report.sections)
@@ -1140,6 +1170,9 @@ class ReportGenerator(BaseAIModel):
     
     async def _apply_report_styling(self, report: ComprehensiveReport, config: ReportConfiguration):
         """Apply styling and formatting to report"""
+
+
+
         try:
             # Apply branding if specified
             if config.branding:
@@ -1160,6 +1193,9 @@ class ReportGenerator(BaseAIModel):
     
     async def _export_report(self, report: ComprehensiveReport, config: ReportConfiguration) -> Dict[str, Any]:
         """Export report in requested format"""
+
+
+
         try:
             export_content = {}
             
@@ -1182,6 +1218,9 @@ class ReportGenerator(BaseAIModel):
     
     def _export_json(self, report: ComprehensiveReport) -> str:
         """Export report as JSON"""
+
+
+
         try:
             # Convert report to dictionary
             report_dict = asdict(report)
@@ -1200,6 +1239,9 @@ class ReportGenerator(BaseAIModel):
     
     def _export_html(self, report: ComprehensiveReport, config: ReportConfiguration) -> str:
         """Export report as HTML"""
+
+
+
         try:
             html_content = f"""
             <!DOCTYPE html>
@@ -1264,6 +1306,9 @@ class ReportGenerator(BaseAIModel):
             </body>
             </html>
             """
+
+
+
             
             return html_content
             
@@ -1273,6 +1318,9 @@ class ReportGenerator(BaseAIModel):
     
     def _export_markdown(self, report: ComprehensiveReport) -> str:
         """Export report as Markdown"""
+
+
+
         try:
             markdown_content = f"""# {report.title}
 
@@ -1313,6 +1361,9 @@ class ReportGenerator(BaseAIModel):
 ---
 
 """
+
+
+
             
             return markdown_content
             
@@ -1322,6 +1373,9 @@ class ReportGenerator(BaseAIModel):
     
     async def _calculate_reporting_metrics(self, analysis_data: Dict[str, Any], report: ComprehensiveReport, metrics: ReportAnalyticsMetrics):
         """Calculate reporting analytics metrics"""
+
+
+
         try:
             # Simulated processing times
             metrics.data_processing_time = np.random.uniform(0.5, 2.0)
@@ -1387,6 +1441,9 @@ async def generate_comprehensive_report(
     Returns:
         Dict containing comprehensive report
     """
+
+
+
     try:
         config = ReportConfiguration(
             report_type=report_type,

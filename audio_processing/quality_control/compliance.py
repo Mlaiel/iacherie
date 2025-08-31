@@ -1,5 +1,5 @@
 """
-📋 Quality Compliance Engine - Platform Compliance System
+ Quality Compliance Engine - Platform Compliance System
 
 Advanced compliance checking system for audio content across multiple
 platforms and standards, ensuring content meets platform-specific requirements.
@@ -8,7 +8,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Developer + DevOps + DBA + Security + Microservices
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ AVERTISSEMENT STRICT ⚠️
+ AVERTISSEMENT STRICT 
 Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou reproduction sans 
 autorisation écrite explicite de Fahed Mlaiel (mlaiel@live.de) est strictement 
@@ -103,17 +103,23 @@ class ComplianceReport:
     @property
     def critical_violations(self) -> List[ComplianceViolation]:
         """Get critical violations"""
+
+
+
         return [v for v in self.violations if v.rule.level == ComplianceLevel.CRITICAL]
 
     @property
     def has_critical_violations(self) -> bool:
         """Check if has critical violations"""
+
+
+
         return len(self.critical_violations) > 0
 
 
 class ComplianceRuleEngine:
     """
-    📋 Compliance Rule Engine
+     Compliance Rule Engine
     
     Executes compliance checks and generates violation reports
     """
@@ -455,7 +461,7 @@ class ComplianceRuleEngine:
 
 class PlatformComplianceManager:
     """
-    📋 Platform Compliance Manager
+     Platform Compliance Manager
     
     Manages compliance rules and standards for different platforms
     """
@@ -883,6 +889,9 @@ class PlatformComplianceManager:
 
     def get_supported_platforms(self) -> List[str]:
         """Get list of supported platforms"""
+
+
+
         return list(self.platform_rules.keys())
 
     def export_compliance_report(self, report: ComplianceReport, format: str = "json") -> str:

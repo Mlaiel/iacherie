@@ -16,7 +16,7 @@ Email: mlaiel@live.de
 Équipe: Lead AI Developer, Backend Senior, DevOps Engineer, Security Specialist, 
         Database Architect, Platform Integration Specialist
 
-⚠️  AVERTISSEMENT LEGAL ⚠️
+  AVERTISSEMENT LEGAL 
 Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et fera l'objet de poursuites 
@@ -170,7 +170,10 @@ def get_module_info() -> Dict[str, Any]:
     
     Returns:
         Dict[str, Any]: Informations détaillées du module
-    """    return {
+    """
+
+
+    return {
         "name": "Platform Integrations Database",
         "version": __version__,
         "author": "Fahed Mlaiel",
@@ -212,7 +215,10 @@ def get_module_statistics() -> Dict[str, Any]:
     
     Returns:
         Dict[str, Any]: Statistiques du module
-    """    return {
+    """
+
+
+    return {
         "total_models": 19,
         "connection_models": 4,
         "credential_models": 4, 

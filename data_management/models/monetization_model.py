@@ -1,5 +1,5 @@
 """
-💰 Monetization Models - IA Influencer Agent Platform Enterprise
+ Monetization Models - IA Influencer Agent Platform Enterprise
 ===============================================================
 Module: backend/data_management/models/monetization_model.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Advanced Monetization Data Models - Ultra Production-Ready
 Responsibility: Advanced revenue tracking, optimization, and multi-platform monetization models
 ==========================================================================================================
 
-⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
+  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -175,6 +175,9 @@ class RevenueTrackingModel:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for storage and API"""
+
+
+
         return {
             "revenue_id": self.revenue_id,
             "creator_id": self.creator_id,
@@ -281,6 +284,9 @@ class PaymentModel:
     
     def can_retry(self) -> bool:
         """Check if payment can be retried"""
+
+
+
         return self.retry_count < self.max_retries and self.payment_status == PaymentStatus.FAILED
     
     def to_dict(self, include_sensitive: bool = False) -> Dict[str, Any]:
@@ -370,10 +376,16 @@ class MonetizationModel:
     
     def calculate_creator_share(self, gross_amount: Decimal) -> Decimal:
         """Calculate creator's share of revenue"""
+
+
+
         return gross_amount * self.creator_percentage
     
     def calculate_platform_share(self, gross_amount: Decimal) -> Decimal:
         """Calculate platform's share of revenue"""
+
+
+
         return gross_amount * self.platform_commission
     
     def update_settings(self, new_settings: Dict[str, Any]) -> None:
@@ -385,6 +397,9 @@ class MonetizationModel:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for storage"""
+
+
+
         return {
             "monetization_id": self.monetization_id,
             "creator_id": self.creator_id,

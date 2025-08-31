@@ -67,6 +67,9 @@ async def upload_content(
     - Videos (MP4, MOV, AVI) for actors/influencers
     - Text content for bloggers
     """
+
+
+
     try:
         # Validate user role and content types
         allowed_types = ROLE_CONTENT_MAPPING.get(current_user.role.lower(), [])
@@ -165,6 +168,9 @@ async def get_my_content(
     """
     Get current user's content with filtering and pagination.
     """
+
+
+
     try:
         contents = await content_service.get_user_content(
             user_id=current_user.id,
@@ -222,6 +228,9 @@ async def get_content_details(
     """
     Get detailed content information with access control.
     """
+
+
+
     try:
         content = await content_service.get_content_by_id(content_id)
         if not content:
@@ -289,6 +298,9 @@ async def update_content(
     """
     Update content metadata and settings.
     """
+
+
+
     try:
         content = await content_service.get_content_by_id(content_id)
         if not content:
@@ -333,6 +345,9 @@ async def delete_content(
     """
     Delete content and associated files.
     """
+
+
+
     try:
         content = await content_service.get_content_by_id(content_id)
         if not content:
@@ -376,6 +391,9 @@ async def download_content(
     """
     Download content file with access control.
     """
+
+
+
     try:
         content = await content_service.get_content_by_id(content_id)
         if not content:
@@ -432,6 +450,9 @@ async def get_content_thumbnail(
     """
     Get content thumbnail/preview.
     """
+
+
+
     try:
         content = await content_service.get_content_by_id(content_id)
         if not content:
@@ -485,6 +506,9 @@ async def like_content(
     """
     Like/unlike content.
     """
+
+
+
     try:
         result = await content_service.toggle_like(content_id, current_user.id)
         
@@ -515,6 +539,9 @@ async def search_content(
     """
     Search public content with filters.
     """
+
+
+
     try:
         search_results = await content_service.search_content(
             query=q,
@@ -556,6 +583,9 @@ async def get_trending_content(
     """
     Get trending content based on views, likes, and engagement.
     """
+
+
+
     try:
         trending = await content_service.get_trending_content(
             timeframe=timeframe,

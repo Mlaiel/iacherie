@@ -66,6 +66,9 @@ class PayoutDestination:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             "method": self.method.value,
             "account_id": self.account_id,
@@ -103,6 +106,9 @@ class PayoutRequest:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             "request_id": self.request_id,
             "user_id": self.user_id,
@@ -310,6 +316,9 @@ class PayoutEngine:
         session: AsyncSession
     ) -> PayoutRequest:
         """Create a new payout request"""
+
+
+
         
         try:
             # Validate destination
@@ -403,6 +412,9 @@ class PayoutEngine:
         session: AsyncSession
     ) -> PayoutRequest:
         """Process a single payout request"""
+
+
+
         
         try:
             # Update status to processing
@@ -618,6 +630,9 @@ class PayoutEngine:
         session: AsyncSession
     ) -> List[PayoutRequest]:
         """Get user's payout history"""
+
+
+
         
         try:
             result = await session.execute(

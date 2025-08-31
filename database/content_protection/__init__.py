@@ -8,7 +8,7 @@ Team Expertise: Lead AI Developer + ML Engineer + Security Architect + DBA + Dev
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
+ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION 
 ==================================================================
 This code and all associated intellectual property are the EXCLUSIVE property of Fahed Mlaiel.
 ANY unauthorized use, copying, modification, distribution, or commercialization without 

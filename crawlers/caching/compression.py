@@ -10,7 +10,7 @@ and real-time performance optimization for cache efficiency.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️ PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
+ PROPRIETARY SOFTWARE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -72,6 +72,9 @@ class CompressionStats:
     @property
     def space_savings_percent(self) -> float:
         """Calculate space savings percentage."""
+
+
+
         return (1 - self.compression_ratio) * 100
     
     @property
@@ -85,7 +88,7 @@ class CompressionStats:
 
 class IndustrialCacheCompressor:
     """
-    🎯 Industrial-Grade Cache Compression Engine
+     Industrial-Grade Cache Compression Engine
     
     Advanced compression system featuring:
     - Multiple compression algorithms (gzip, LZ4, Zstandard, Brotli)
@@ -117,10 +120,13 @@ class IndustrialCacheCompressor:
         self._learning_enabled = True
         self._min_samples_for_learning = 100
         
-        self.logger.info("🚀 Industrial Cache Compressor initialized")
+        self.logger.info(" Industrial Cache Compressor initialized")
     
     async def initialize(self) -> bool:
         """Initialize compression engine."""
+
+
+
         try:
             # Test all compression algorithms
             test_data = b"test data for compression algorithms" * 100
@@ -134,18 +140,18 @@ class IndustrialCacheCompressor:
                     decompressed = await self.decompress(compressed, algorithm)
                     
                     if decompressed == test_data:
-                        self.logger.debug(f"✅ {algorithm.value} compression verified")
+                        self.logger.debug(f" {algorithm.value} compression verified")
                     else:
-                        self.logger.warning(f"❌ {algorithm.value} compression failed verification")
+                        self.logger.warning(f" {algorithm.value} compression failed verification")
                         
                 except Exception as e:
-                    self.logger.warning(f"❌ {algorithm.value} not available: {e}")
+                    self.logger.warning(f" {algorithm.value} not available: {e}")
             
-            self.logger.info("✅ Cache Compressor successfully initialized")
+            self.logger.info(" Cache Compressor successfully initialized")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Cache Compressor initialization failed: {e}")
+            self.logger.error(f" Cache Compressor initialization failed: {e}")
             return False
     
     async def compress(
@@ -213,7 +219,7 @@ class IndustrialCacheCompressor:
                 return data, stats
                 
         except Exception as e:
-            self.logger.error(f"❌ Compression failed with {algorithm.value}: {e}")
+            self.logger.error(f" Compression failed with {algorithm.value}: {e}")
             # Return original data on compression failure
             stats = CompressionStats(
                 algorithm=CompressionAlgorithm.NONE,
@@ -260,7 +266,7 @@ class IndustrialCacheCompressor:
             return decompressed_data
             
         except Exception as e:
-            self.logger.error(f"❌ Decompression failed with {algorithm.value}: {e}")
+            self.logger.error(f" Decompression failed with {algorithm.value}: {e}")
             raise
     
     async def _compress_with_algorithm(
@@ -529,6 +535,9 @@ class CompressionSettings:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary."""
+
+
+
         return {
             "algorithm": self.algorithm.value,
             "level": self.level.value,
@@ -801,6 +810,9 @@ class CacheCompressor:
         Returns:
             Original decompressed data
         """
+
+
+
         try:
             # Check if data has metadata header
             if len(compressed_data) < 4:
@@ -844,6 +856,9 @@ class CacheCompressor:
     
     def _deserialize_data(self, data: bytes) -> Any:
         """Deserialize bytes to original data type."""
+
+
+
         try:
             # Try JSON first
             try:

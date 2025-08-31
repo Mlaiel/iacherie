@@ -1,5 +1,5 @@
 """
-📡 Real-time Violation Monitor
+ Real-time Violation Monitor
 =============================
 
 Advanced real-time monitoring system for content violation detection and alerting.
@@ -7,7 +7,7 @@ Advanced real-time monitoring system for content violation detection and alertin
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
+ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
 and will result in immediate legal action under German and international copyright law.
 
@@ -252,10 +252,10 @@ class NotificationService:
                 template_id='critical_alert_slack',
                 channel=NotificationChannel.SLACK,
                 severity=AlertSeverity.CRITICAL,
-                subject_template='🚨 CRITICAL: Content Violation Detected',
+                subject_template=' CRITICAL: Content Violation Detected',
                 body_template='''
                 {
-                    "text": "🚨 CRITICAL VIOLATION DETECTED",
+                    "text": " CRITICAL VIOLATION DETECTED",
                     "attachments": [
                         {
                             "color": "danger",
@@ -280,6 +280,9 @@ class NotificationService:
                               variables: Dict[str, Any],
                               recipient: str) -> bool:
         """Send notification through specified channel."""
+
+
+
         try:
             template = self.templates.get(template_id)
             if not template or template.channel != channel:
@@ -313,6 +316,9 @@ class NotificationService:
     
     async def _send_slack_message(self, webhook_url: str, message: str) -> bool:
         """Send Slack notification."""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 if message.startswith('{'):
@@ -332,6 +338,9 @@ class NotificationService:
     
     async def _send_webhook(self, url: str, payload: Dict[str, Any]) -> bool:
         """Send webhook notification."""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.post(url, json=payload) as response:
@@ -617,6 +626,9 @@ class RealtimeViolationMonitor:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             # Initialize Redis connection
             redis_config = self.config.get('redis', {})
@@ -678,6 +690,9 @@ class RealtimeViolationMonitor:
         Returns:
             Processing ID
         """
+
+
+
         try:
             processing_id = f"proc_{int(datetime.now().timestamp())}"
             violation_data['processing_id'] = processing_id
@@ -719,6 +734,9 @@ class RealtimeViolationMonitor:
     
     async def _handle_websocket_message(self, websocket: WebSocketServerProtocol, message: str):
         """Handle incoming WebSocket message."""
+
+
+
         try:
             data = json.loads(message)
             message_type = data.get('type')
@@ -786,6 +804,9 @@ class RealtimeViolationMonitor:
     
     async def _store_violation_in_redis(self, violation_data: Dict[str, Any], alerts: List[ViolationAlert]):
         """Store violation and alerts in Redis."""
+
+
+
         try:
             # Store violation data
             violation_key = f"violation:{violation_data['processing_id']}"
@@ -823,6 +844,9 @@ class RealtimeViolationMonitor:
     
     async def shutdown(self):
         """Gracefully shutdown monitoring system."""
+
+
+
         try:
             self.status = MonitoringStatus.MAINTENANCE
             
@@ -846,6 +870,9 @@ class RealtimeViolationMonitor:
     
     def get_monitoring_statistics(self) -> Dict[str, Any]:
         """Get monitoring statistics."""
+
+
+
         return {
             **self.monitor_stats,
             'status': self.status.value,

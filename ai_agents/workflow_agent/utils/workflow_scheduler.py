@@ -15,7 +15,7 @@ Key Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 - All Rights Reserved
 
-⚠️ IMPORTANT LEGAL NOTICE ⚠️
+ IMPORTANT LEGAL NOTICE 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
@@ -200,6 +200,9 @@ class WorkflowScheduler(BaseAgent):
         Returns:
             str: Schedule ID
         """
+
+
+
         try:
             schedule_id = str(uuid.uuid4())
             
@@ -264,6 +267,9 @@ class WorkflowScheduler(BaseAgent):
 
     async def start_scheduler(self):
         """Start the workflow scheduler."""
+
+
+
         try:
             if self.scheduler_running:
                 self.logger.warning("Scheduler is already running")
@@ -280,6 +286,9 @@ class WorkflowScheduler(BaseAgent):
 
     async def stop_scheduler(self):
         """Stop the workflow scheduler."""
+
+
+
         try:
             if not self.scheduler_running:
                 self.logger.warning("Scheduler is not running")
@@ -301,6 +310,9 @@ class WorkflowScheduler(BaseAgent):
 
     async def _scheduler_loop(self):
         """Main scheduler loop."""
+
+
+
         try:
             while self.scheduler_running:
                 try:
@@ -332,6 +344,9 @@ class WorkflowScheduler(BaseAgent):
 
     async def _process_due_executions(self):
         """Process workflows that are due for execution."""
+
+
+
         try:
             current_time = datetime.now(timezone.utc)
             due_schedules = []
@@ -352,6 +367,9 @@ class WorkflowScheduler(BaseAgent):
 
     async def _execute_scheduled_workflow(self, schedule_id: str):
         """Execute a scheduled workflow."""
+
+
+
         try:
             schedule = self.schedules.get(schedule_id)
             if not schedule or schedule.status != ScheduleStatus.ACTIVE:
@@ -401,6 +419,9 @@ class WorkflowScheduler(BaseAgent):
 
     async def _run_workflow_execution(self, execution: ScheduleExecution, schedule: WorkflowSchedule):
         """Run a workflow execution."""
+
+
+
         try:
             start_time = datetime.now(timezone.utc)
             
@@ -460,6 +481,9 @@ class WorkflowScheduler(BaseAgent):
 
     async def _calculate_next_execution(self, schedule: WorkflowSchedule) -> Optional[datetime]:
         """Calculate next execution time for a schedule."""
+
+
+
         try:
             current_time = datetime.now(pytz.timezone(schedule.timezone))
             
@@ -505,6 +529,9 @@ class WorkflowScheduler(BaseAgent):
 
     async def _calculate_adaptive_next_execution(self, schedule: WorkflowSchedule) -> Optional[datetime]:
         """Calculate next execution time using adaptive scheduling."""
+
+
+
         try:
             # Analyze execution history
             executions = self.execution_history.get(schedule.id, [])
@@ -547,6 +574,9 @@ class WorkflowScheduler(BaseAgent):
 
     async def _check_resource_constraints(self, schedule: WorkflowSchedule) -> bool:
         """Check if resource constraints are satisfied."""
+
+
+
         try:
             for constraint in schedule.resource_constraints:
                 current_usage = self.current_resource_usage.get(constraint.resource_type, 0.0)
@@ -567,6 +597,9 @@ class WorkflowScheduler(BaseAgent):
 
     async def _acquire_execution_resources(self, schedule: WorkflowSchedule) -> Dict[str, float]:
         """Acquire resources for execution."""
+
+
+
         try:
             acquired_resources = {}
             
@@ -588,6 +621,9 @@ class WorkflowScheduler(BaseAgent):
 
     async def _release_execution_resources(self, acquired_resources: Dict[str, float]):
         """Release execution resources."""
+
+
+
         try:
             for resource_type, amount in acquired_resources.items():
                 async with self.resource_locks[resource_type]:
@@ -605,6 +641,9 @@ class WorkflowScheduler(BaseAgent):
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Execute a workflow instance (placeholder)."""
+
+
+
         try:
             # Placeholder implementation - would integrate with workflow engine
             await asyncio.sleep(1)  # Simulate execution
@@ -626,6 +665,9 @@ class WorkflowScheduler(BaseAgent):
 
     async def _update_schedule_metrics(self, schedule: WorkflowSchedule, execution: ScheduleExecution):
         """Update schedule performance metrics."""
+
+
+
         try:
             # Update success rate
             recent_executions = self.execution_history[schedule.id][-10:]
@@ -650,6 +692,9 @@ class WorkflowScheduler(BaseAgent):
 
     async def _optimize_schedules(self):
         """Optimize schedules based on performance data."""
+
+
+
         try:
             # Run optimization every 10 minutes
             if hasattr(self, '_last_optimization'):
@@ -668,6 +713,9 @@ class WorkflowScheduler(BaseAgent):
 
     async def _optimize_adaptive_schedule(self, schedule: WorkflowSchedule):
         """Optimize an adaptive schedule based on performance."""
+
+
+
         try:
             executions = self.execution_history.get(schedule.id, [])
             if len(executions) < 5:  # Need sufficient data
@@ -699,6 +747,9 @@ class WorkflowScheduler(BaseAgent):
 
     async def _cleanup_executions(self):
         """Clean up old execution records."""
+
+
+
         try:
             # Clean up every hour
             if hasattr(self, '_last_cleanup'):
@@ -717,6 +768,9 @@ class WorkflowScheduler(BaseAgent):
 
     async def _update_scheduler_stats(self):
         """Update scheduler statistics."""
+
+
+
         try:
             # Update every 5 minutes
             if hasattr(self, '_last_stats_update'):
@@ -746,6 +800,9 @@ class WorkflowScheduler(BaseAgent):
 
     async def _calculate_resource_availability_factor(self) -> float:
         """Calculate resource availability factor for adaptive scheduling."""
+
+
+
         try:
             # Calculate average resource usage
             if not self.current_resource_usage:
@@ -769,6 +826,9 @@ class WorkflowScheduler(BaseAgent):
 
     async def get_schedule(self, schedule_id: str) -> Optional[Dict[str, Any]]:
         """Get schedule by ID."""
+
+
+
         try:
             schedule = self.schedules.get(schedule_id)
             if not schedule:
@@ -815,6 +875,9 @@ class WorkflowScheduler(BaseAgent):
         created_by: Optional[str] = None
     ) -> List[Dict[str, Any]]:
         """List schedules with optional filtering."""
+
+
+
         try:
             schedules = []
             
@@ -846,6 +909,9 @@ class WorkflowScheduler(BaseAgent):
         updates: Dict[str, Any]
     ) -> bool:
         """Update a schedule."""
+
+
+
         try:
             schedule = self.schedules.get(schedule_id)
             if not schedule:
@@ -880,6 +946,9 @@ class WorkflowScheduler(BaseAgent):
 
     async def delete_schedule(self, schedule_id: str) -> bool:
         """Delete a schedule."""
+
+
+
         try:
             if schedule_id not in self.schedules:
                 return False
@@ -905,6 +974,9 @@ class WorkflowScheduler(BaseAgent):
 
     async def get_scheduler_stats(self) -> Dict[str, Any]:
         """Get scheduler statistics."""
+
+
+
         return {
             'stats': self.scheduler_stats.copy(),
             'active_executions': len(self.active_executions),

@@ -1,5 +1,5 @@
 """
-📈 Detection Metrics and Analytics
+ Detection Metrics and Analytics
 ==================================
 
 Advanced metrics collection and analytics for piracy detection system.
@@ -118,6 +118,9 @@ class DetectionMetrics:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             logger.info("Initializing Detection Metrics system...")
             
@@ -947,6 +950,9 @@ class DetectionMetrics:
     
     async def get_metrics_stats(self) -> Dict[str, Any]:
         """Get metrics system statistics."""
+
+
+
         return {
             'total_raw_metrics': len(self.raw_metrics),
             'total_aggregated_metrics': sum(len(metrics) for metrics in self.aggregated_metrics.values()),

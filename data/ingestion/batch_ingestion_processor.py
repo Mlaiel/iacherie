@@ -9,7 +9,7 @@ resume capabilities, and comprehensive monitoring for IA Influencer Agent platfo
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code is proprietary and confidential. Any unauthorized copying, distribution,
 or use without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is
 strictly prohibited and will result in legal action.
@@ -217,6 +217,9 @@ class BatchIngestionProcessor:
         Returns:
             Batch ID for tracking
         """
+
+
+
         try:
             batch_id = config.batch_id or str(uuid.uuid4())
             config.batch_id = batch_id
@@ -277,6 +280,9 @@ class BatchIngestionProcessor:
         Returns:
             Success status
         """
+
+
+
         try:
             self.logger.info(f"Starting batch processing: {batch_id}")
             
@@ -331,6 +337,9 @@ class BatchIngestionProcessor:
         Returns:
             Success status
         """
+
+
+
         try:
             self.logger.info(f"Pausing batch: {batch_id}")
             
@@ -365,6 +374,9 @@ class BatchIngestionProcessor:
         Returns:
             Success status
         """
+
+
+
         try:
             self.logger.info(f"Resuming batch: {batch_id}")
             
@@ -404,6 +416,9 @@ class BatchIngestionProcessor:
         Returns:
             Success status
         """
+
+
+
         try:
             self.logger.info(f"Cancelling batch: {batch_id}")
             
@@ -443,6 +458,9 @@ class BatchIngestionProcessor:
         Returns:
             Batch result with current status
         """
+
+
+
         try:
             return await self._get_batch_result(batch_id)
             
@@ -460,6 +478,9 @@ class BatchIngestionProcessor:
         Returns:
             Comprehensive metrics dictionary
         """
+
+
+
         try:
             batch_result = await self._get_batch_result(batch_id)
             if not batch_result:
@@ -527,6 +548,9 @@ class BatchIngestionProcessor:
         Returns:
             List of active batch summaries
         """
+
+
+
         try:
             active_batches = []
             
@@ -562,6 +586,9 @@ class BatchIngestionProcessor:
         Returns:
             Number of batches cleaned up
         """
+
+
+
         try:
             cutoff_time = datetime.utcnow() - timedelta(hours=older_than_hours)
             cleaned_count = 0
@@ -593,6 +620,9 @@ class BatchIngestionProcessor:
     async def _process_sequential(self, batch_id: str, config: BatchConfiguration, 
                                 batch_result: BatchResult):
         """Process batch items sequentially"""
+
+
+
         try:
             self.logger.info(f"Starting sequential processing: {batch_id}")
             
@@ -620,6 +650,9 @@ class BatchIngestionProcessor:
     async def _process_parallel(self, batch_id: str, config: BatchConfiguration, 
                               batch_result: BatchResult):
         """Process batch items in parallel"""
+
+
+
         try:
             self.logger.info(f"Starting parallel processing: {batch_id}")
             
@@ -662,6 +695,9 @@ class BatchIngestionProcessor:
     async def _process_distributed(self, batch_id: str, config: BatchConfiguration, 
                                  batch_result: BatchResult):
         """Process batch items using Celery distributed processing"""
+
+
+
         try:
             if not self.celery:
                 raise BatchProcessingError("Celery not configured for distributed processing")
@@ -697,6 +733,9 @@ class BatchIngestionProcessor:
     async def _process_adaptive(self, batch_id: str, config: BatchConfiguration, 
                               batch_result: BatchResult):
         """Process batch with adaptive strategy based on performance"""
+
+
+
         try:
             self.logger.info(f"Starting adaptive processing: {batch_id}")
             
@@ -724,6 +763,9 @@ class BatchIngestionProcessor:
     async def _process_single_item(self, batch_id: str, item: BatchItem, 
                                  config: BatchConfiguration) -> bool:
         """Process a single batch item"""
+
+
+
         try:
             item.processing_start_time = datetime.utcnow()
             item.status = "processing"
@@ -798,6 +840,9 @@ class BatchIngestionProcessor:
     async def _store_batch_data(self, batch_id: str, config: BatchConfiguration, 
                               batch_result: BatchResult):
         """Store batch configuration and initial result"""
+
+
+
         try:
             # Store configuration
             config_key = f"{self.batch_key_prefix}:config:{batch_id}"
@@ -816,6 +861,9 @@ class BatchIngestionProcessor:
     
     async def _store_batch_result(self, batch_id: str, batch_result: BatchResult):
         """Store batch result in Redis"""
+
+
+
         try:
             result_key = f"{self.batch_key_prefix}:result:{batch_id}"
             await self.redis.setex(
@@ -829,6 +877,9 @@ class BatchIngestionProcessor:
     
     async def _get_batch_config(self, batch_id: str) -> Optional[BatchConfiguration]:
         """Get batch configuration from Redis"""
+
+
+
         try:
             config_key = f"{self.batch_key_prefix}:config:{batch_id}"
             config_data = await self.redis.get(config_key)
@@ -843,6 +894,9 @@ class BatchIngestionProcessor:
     
     async def _get_batch_result(self, batch_id: str) -> Optional[BatchResult]:
         """Get batch result from Redis"""
+
+
+
         try:
             result_key = f"{self.batch_key_prefix}:result:{batch_id}"
             result_data = await self.redis.get(result_key)
@@ -857,6 +911,9 @@ class BatchIngestionProcessor:
     
     async def _update_batch_status(self, batch_id: str, status: BatchStatus):
         """Update batch status"""
+
+
+
         try:
             batch_result = await self._get_batch_result(batch_id)
             if batch_result:
@@ -869,6 +926,9 @@ class BatchIngestionProcessor:
     
     async def _update_progress(self, batch_id: str, progress: BatchProgress):
         """Update batch progress"""
+
+
+
         try:
             # Calculate metrics
             if progress.processed_items > 0:
@@ -894,6 +954,9 @@ class BatchIngestionProcessor:
     
     async def _get_batch_items(self, batch_id: str) -> List[BatchItem]:
         """Get batch items"""
+
+
+
         try:
             batch_result = await self._get_batch_result(batch_id)
             return batch_result.items if batch_result else []
@@ -903,6 +966,9 @@ class BatchIngestionProcessor:
     
     async def _save_batch_checkpoint(self, batch_id: str):
         """Save batch processing checkpoint"""
+
+
+
         try:
             batch_result = await self._get_batch_result(batch_id)
             if batch_result:
@@ -923,6 +989,9 @@ class BatchIngestionProcessor:
     
     async def _load_batch_checkpoint(self, batch_id: str) -> Optional[Dict[str, Any]]:
         """Load batch processing checkpoint"""
+
+
+
         try:
             checkpoint_key = f"{self.checkpoint_key_prefix}:{batch_id}"
             checkpoint_data = await self.redis.get(checkpoint_key)
@@ -937,6 +1006,9 @@ class BatchIngestionProcessor:
     
     async def _finalize_batch(self, batch_id: str, batch_result: BatchResult):
         """Finalize batch processing"""
+
+
+
         try:
             # Update final status
             successful_items = sum(1 for item in batch_result.items if item.status == "completed")
@@ -983,6 +1055,9 @@ class BatchIngestionProcessor:
     
     async def _handle_batch_error(self, batch_id: str, error_message: str):
         """Handle batch processing error"""
+
+
+
         try:
             await self._update_batch_status(batch_id, BatchStatus.FAILED)
             
@@ -1002,6 +1077,9 @@ class BatchIngestionProcessor:
     
     async def _log_batch_event(self, batch_id: str, event_type: str, data: Dict[str, Any]):
         """Log batch processing event"""
+
+
+
         try:
             event_data = {
                 'batch_id': batch_id,
@@ -1019,6 +1097,9 @@ class BatchIngestionProcessor:
     
     async def _update_item_metrics(self, batch_id: str, item: BatchItem):
         """Update metrics for processed item"""
+
+
+
         try:
             # Update batch-level metrics
             metrics_key = f"batch_metrics:{batch_id}"
@@ -1043,6 +1124,9 @@ class BatchIngestionProcessor:
     
     async def _get_resource_metrics(self, batch_id: str) -> Dict[str, Any]:
         """Get resource usage metrics for batch"""
+
+
+
         try:
             # This would integrate with system monitoring
             # For now, return basic metrics
@@ -1058,6 +1142,9 @@ class BatchIngestionProcessor:
     
     async def _cleanup_batch_resources(self, batch_id: str):
         """Cleanup batch-related resources"""
+
+
+
         try:
             # Remove batch data from Redis
             keys_to_delete = [
@@ -1079,6 +1166,9 @@ class BatchIngestionProcessor:
     
     def __del__(self):
         """Cleanup on destructor"""
+
+
+
         try:
             if hasattr(self, 'thread_pool'):
                 self.thread_pool.shutdown(wait=False)

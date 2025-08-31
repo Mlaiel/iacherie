@@ -23,7 +23,7 @@ business rule validation, and integrity checking.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
@@ -65,6 +65,9 @@ class TestDataValidator:
     @pytest.fixture
     def data_validator(self):
         """Create data validator for testing"""
+
+
+
         return DataValidator()
     
     def test_basic_type_validation(self, data_validator):
@@ -267,6 +270,9 @@ class TestSchemaValidator:
     @pytest.fixture
     def schema_validator(self):
         """Create schema validator for testing"""
+
+
+
         return SchemaValidator()
     
     def test_json_schema_validation(self, schema_validator):
@@ -543,6 +549,9 @@ class TestBusinessRuleValidator:
     @pytest.fixture
     def business_validator(self):
         """Create business rule validator for testing"""
+
+
+
         return BusinessRuleValidator()
     
     def test_simple_business_rules(self, business_validator):
@@ -816,6 +825,9 @@ class TestIntegrityValidator:
     @pytest.fixture
     def integrity_validator(self):
         """Create integrity validator for testing"""
+
+
+
         return IntegrityValidator()
     
     def test_referential_integrity(self, integrity_validator):

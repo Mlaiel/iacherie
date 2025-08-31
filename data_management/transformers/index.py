@@ -1,11 +1,11 @@
 """
-🔄 Transformers Index - IA Influencer Agent Platform Enterprise
+ Transformers Index - IA Influencer Agent Platform Enterprise
 ============================================================
 Module: backend/data_management/transformers/index.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ============================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -59,10 +59,10 @@ try:
     from .pipeline_transformer import PipelineExecutor, PipelineConfig, DataExtractionStage
     from .ai_transformer import AITransformer, AIModelManager, TextAITransformer, VisionAITransformer, AudioAITransformer
     
-    logger.info("✅ Tous les modules transformers ont été importés avec succès")
+    logger.info(" Tous les modules transformers ont été importés avec succès")
     
 except ImportError as e:
-    logger.error(f"❌ Erreur lors de l'importation des modules transformers: {e}")
+    logger.error(f" Erreur lors de l'importation des modules transformers: {e}")
     # Fallback gracieux - définir des classes vides
     class AudioTransformer: pass
     class VideoTransformer: pass
@@ -122,6 +122,9 @@ class TransformationResult:
     
     def to_dict(self) -> Dict[str, Any]:
         """Conversion en dictionnaire pour sérialisation"""
+
+
+
         return {
             'success': self.success,
             'transformation_type': self.transformation_type.value,
@@ -444,16 +447,25 @@ class TransformersRegistry:
     
     def get_transformer_capabilities(self, transformer_name: str) -> Dict[str, Any]:
         """Retourne les capacités d'un transformateur"""
+
+
+
         
         return self.transformers_catalog.get(transformer_name, {})
     
     def list_all_transformers(self) -> Dict[str, Dict[str, Any]]:
         """Liste tous les transformateurs disponibles"""
+
+
+
         
         return self.transformers_catalog
     
     def get_transformation_route(self, transformation_type: TransformationType) -> Optional[str]:
         """Retourne le transformateur approprié pour une transformation"""
+
+
+
         
         return self.transformation_routes.get(transformation_type)
 
@@ -621,6 +633,9 @@ class TransformersManager:
         custom_config: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Traite un contenu avec le workflow approprié"""
+
+
+
         
         try:
             # Création du pipeline approprié
@@ -738,6 +753,9 @@ class TransformersManager:
     
     def get_statistics(self) -> Dict[str, Any]:
         """Retourne les statistiques d'utilisation"""
+
+
+
         
         return {
             'usage_stats': self.usage_stats,
@@ -817,6 +835,9 @@ class TransformationManager:
     
     async def transform_data(self, data: Any, transformation_type: str) -> Any:
         """Transform data using specified transformation type"""
+
+
+
         try:
             if transformation_type not in self.transformers:
                 raise TransformationError(f"Unknown transformation type: {transformation_type}")
@@ -879,35 +900,35 @@ if __name__ == "__main__":
     """
     Tests et démonstrations du module de transformation
     """
-    print("🔄 Transformers Index - IA Influencer Agent Platform Enterprise")
+    print(" Transformers Index - IA Influencer Agent Platform Enterprise")
     print("=" * 70)
     
     # Test de santé du système
-    print("\n🏥 Health Check:")
+    print("\n Health Check:")
     health = transformers_manager.health_check()
     for transformer, status in health['transformers_status'].items():
-        status_icon = "✅" if status == 'healthy' else "⚠️" if status == 'warning' else "❌"
+        status_icon = "" if status == 'healthy' else "" if status == 'warning' else ""
         print(f"  {status_icon} {transformer}: {status.upper()}")
     
     # Affichage des transformers disponibles
-    print(f"\n🚀 Transformers disponibles: {len(transformers_registry.transformers_catalog)}")
+    print(f"\n Transformers disponibles: {len(transformers_registry.transformers_catalog)}")
     for name, info in transformers_registry.transformers_catalog.items():
         print(f"  • {name}: {info['class']} - {', '.join(info['capabilities'])}")
     
     # Affichage des types de créateurs supportés
-    print(f"\n👤 Types de créateurs: {list(transformers_registry.creator_workflows.keys())}")
+    print(f"\n Types de créateurs: {list(transformers_registry.creator_workflows.keys())}")
     
     # Affichage des workflows disponibles
-    print("\n🔄 Workflows disponibles:")
+    print("\n Workflows disponibles:")
     for creator, workflows in transformers_registry.creator_workflows.items():
         print(f"  • {creator}: {list(workflows.keys())}")
     
     # Statistiques
     stats = transformers_manager.get_statistics()
-    print(f"\n📊 Statistiques:")
+    print(f"\n Statistiques:")
     print(f"  • Transformateurs: {stats['available_transformers']}")
     print(f"  • Types de créateurs: {len(stats['supported_creator_types'])}")
     print(f"  • Types de transformations: {stats['total_transformation_types']}")
     
-    print("\n✨ Module Transformers Index prêt pour l'utilisation!")
-    print("🎯 Pipeline complet: Fingerprinting → Protection → Analytics → Streaming")
+    print("\n Module Transformers Index prêt pour l'utilisation!")
+    print(" Pipeline complet: Fingerprinting → Protection → Analytics → Streaming")

@@ -179,6 +179,9 @@ class TwitchCrawler:
     
     async def authenticate(self):
         """Authenticate with Twitch API using client credentials."""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 auth_data = {
@@ -455,6 +458,9 @@ class TwitchCrawler:
         Yields:
             Dict: Chat message data
         """
+
+
+
         try:
             import websockets
             
@@ -561,6 +567,9 @@ class TwitchCrawler:
     
     async def _get_user_id(self, username: str) -> Optional[str]:
         """Get Twitch user ID from username."""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 url = f"{self.base_api_url}/users"
@@ -581,6 +590,9 @@ class TwitchCrawler:
     
     async def _get_game_id(self, game_name: str) -> Optional[str]:
         """Get Twitch game ID from game name."""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 url = f"{self.base_api_url}/games"
@@ -601,6 +613,9 @@ class TwitchCrawler:
     
     def _parse_stream_data(self, stream_data: Dict) -> Optional[TwitchStream]:
         """Parse Twitch stream data from API response."""
+
+
+
         try:
             return TwitchStream(
                 stream_id=stream_data["id"],
@@ -626,6 +641,9 @@ class TwitchCrawler:
     
     def _parse_clip_data(self, clip_data: Dict) -> Optional[TwitchClip]:
         """Parse Twitch clip data from API response."""
+
+
+
         try:
             return TwitchClip(
                 clip_id=clip_data["id"],
@@ -652,6 +670,9 @@ class TwitchCrawler:
     
     def _parse_video_data(self, video_data: Dict) -> Optional[TwitchVideo]:
         """Parse Twitch video data from API response."""
+
+
+
         try:
             return TwitchVideo(
                 video_id=video_data["id"],
@@ -679,6 +700,9 @@ class TwitchCrawler:
     
     def _parse_irc_message(self, message: str) -> Optional[Dict]:
         """Parse IRC message from Twitch chat."""
+
+
+
         try:
             if "PRIVMSG" not in message:
                 return None
@@ -728,6 +752,9 @@ class TwitchCrawler:
     
     def _extract_stream_from_element(self, element) -> Optional[TwitchStream]:
         """Extract stream data from Selenium web element."""
+
+
+
         try:
             # This would be implemented based on Twitch's current HTML structure
             title_element = element.find_element(By.CSS_SELECTOR, "[data-a-target='preview-card-title-link']")

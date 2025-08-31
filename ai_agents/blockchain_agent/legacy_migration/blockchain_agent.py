@@ -12,7 +12,7 @@ Enterprise blockchain integration for content creators providing:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 - All Rights Reserved
 
-⚠️ IMPORTANT LEGAL NOTICE ⚠️
+ IMPORTANT LEGAL NOTICE 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
@@ -256,6 +256,9 @@ class BlockchainAgent(BaseAgent):
         Returns:
             str: Transaction ID for copyright registration
         """
+
+
+
         try:
             if network not in self.web3_connections:
                 raise ValueError(f"Network {network.value} not available")
@@ -326,6 +329,9 @@ class BlockchainAgent(BaseAgent):
         Returns:
             Tuple[str, str]: (Transaction ID, Token ID)
         """
+
+
+
         try:
             if network not in self.web3_connections:
                 raise ValueError(f"Network {network.value} not available")
@@ -401,6 +407,9 @@ class BlockchainAgent(BaseAgent):
         Returns:
             str: Contract deployment transaction ID
         """
+
+
+
         try:
             if network not in self.web3_connections:
                 raise ValueError(f"Network {network.value} not available")
@@ -472,6 +481,9 @@ class BlockchainAgent(BaseAgent):
         Returns:
             str: Payment transaction ID
         """
+
+
+
         try:
             if network not in self.web3_connections:
                 raise ValueError(f"Network {network.value} not available")
@@ -529,6 +541,9 @@ class BlockchainAgent(BaseAgent):
         Returns:
             str: Royalty contract deployment transaction ID
         """
+
+
+
         try:
             # Validate beneficiaries total to 100%
             total_percentage = sum(b.get('percentage', 0) for b in beneficiaries)
@@ -576,6 +591,9 @@ class BlockchainAgent(BaseAgent):
     
     async def _upload_to_ipfs(self, data: Dict[str, Any]) -> str:
         """Upload data to IPFS and return the URI."""
+
+
+
         try:
             if not self.ipfs_client and ipfshttpclient:
                 self.ipfs_client = ipfshttpclient.connect('/dns/ipfs.io/tcp/5001/http')

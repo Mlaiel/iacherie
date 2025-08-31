@@ -116,6 +116,9 @@ class WebContentMonitor:
         Returns:
             bool: Succès de l'ajout
         """
+
+
+
         try:
             # Génération de l'empreinte du contenu original
             fingerprint = await self._generate_content_fingerprint(target.url)
@@ -194,6 +197,9 @@ class WebContentMonitor:
         Args:
             target: Cible à surveiller
         """
+
+
+
         try:
             # Recherche de contenus similaires
             search_queries = self._generate_search_queries(target)
@@ -318,6 +324,9 @@ class WebContentMonitor:
         Returns:
             bool: True si pertinente
         """
+
+
+
         try:
             parsed = urlparse(url)
             domain = parsed.netloc.lower()
@@ -343,6 +352,9 @@ class WebContentMonitor:
         Returns:
             bool: True si violation potentielle
         """
+
+
+
         try:
             # Vérification rapide par métadonnées
             if suspect_url == target.url:
@@ -376,6 +388,9 @@ class WebContentMonitor:
             target: Cible originale
             suspect_url: URL suspecte
         """
+
+
+
         try:
             # Génération de l'empreinte du contenu suspect
             suspect_fingerprint = await self._generate_content_fingerprint(suspect_url)
@@ -407,6 +422,9 @@ class WebContentMonitor:
         Returns:
             Optional[str]: Empreinte générée
         """
+
+
+
         try:
             # Détection du type de contenu
             content_type = await self._detect_content_type(url)
@@ -436,6 +454,9 @@ class WebContentMonitor:
         Returns:
             str: Type de contenu détecté
         """
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.head(url, timeout=aiohttp.ClientTimeout(total=10)) as response:
@@ -471,6 +492,9 @@ class WebContentMonitor:
         Returns:
             Optional[str]: Empreinte vidéo
         """
+
+
+
         return await self.fingerprint_engine.generate_video_fingerprint(url)
 
     async def _generate_audio_fingerprint(self, url: str) -> Optional[str]:
@@ -483,6 +507,9 @@ class WebContentMonitor:
         Returns:
             Optional[str]: Empreinte audio
         """
+
+
+
         return await self.fingerprint_engine.generate_audio_fingerprint(url)
 
     async def _generate_image_fingerprint(self, url: str) -> Optional[str]:
@@ -495,6 +522,9 @@ class WebContentMonitor:
         Returns:
             Optional[str]: Empreinte image
         """
+
+
+
         return await self.fingerprint_engine.generate_image_fingerprint(url)
 
     async def _generate_text_fingerprint(self, url: str) -> Optional[str]:
@@ -507,6 +537,9 @@ class WebContentMonitor:
         Returns:
             Optional[str]: Empreinte texte
         """
+
+
+
         return await self.fingerprint_engine.generate_text_fingerprint(url)
 
     async def _compare_fingerprints(self, original: str, suspect: str) -> float:
@@ -520,6 +553,9 @@ class WebContentMonitor:
         Returns:
             float: Score de similarité (0-1)
         """
+
+
+
         return await self.fingerprint_engine.compare_fingerprints(original, suspect)
 
     async def _get_content_metadata(self, url: str) -> Optional[Dict[str, Any]]:
@@ -532,6 +568,9 @@ class WebContentMonitor:
         Returns:
             Optional[Dict]: Métadonnées extraites
         """
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 proxy = await self.proxy_manager.get_proxy()
@@ -604,6 +643,9 @@ class WebContentMonitor:
         Returns:
             float: Score de similarité
         """
+
+
+
         return await self.content_analyzer.calculate_metadata_similarity(
             target, content_info
         )
@@ -622,6 +664,9 @@ class WebContentMonitor:
             violation_url: URL de la violation
             similarity_score: Score de similarité
         """
+
+
+
         try:
             # Collecte des preuves
             evidence_path = await self._collect_evidence(target.url, violation_url)
@@ -745,6 +790,9 @@ class WebContentMonitor:
         """
         Surveillance proactive par recherche automatique
         """
+
+
+
         try:
             # Recherche de contenus similaires basée sur les empreintes existantes
             for target in self.monitoring_targets:
@@ -801,6 +849,9 @@ class WebContentMonitor:
         """
         Nettoie les anciennes données de surveillance
         """
+
+
+
         try:
             # Suppression des alertes anciennes
             cutoff_date = datetime.now() - timedelta(
@@ -846,6 +897,9 @@ class WebContentMonitor:
         Returns:
             Dict[str, Any]: Statut détaillé
         """
+
+
+
         return {
             'targets_count': len(self.monitoring_targets),
             'violations_detected': len(self.violation_alerts),

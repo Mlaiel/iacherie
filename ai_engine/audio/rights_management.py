@@ -643,10 +643,16 @@ class RightsManager:
     
     def get_rights_registration(self, registration_id: str) -> Optional[RightsRegistration]:
         """Get rights registration by ID"""
+
+
+
         return self.rights_registrations.get(registration_id)
     
     def get_user_registrations(self, user_id: str) -> List[RightsRegistration]:
         """Get all rights registrations for user"""
+
+
+
         return [
             reg for reg in self.rights_registrations.values()
             if any(holder.holder_id == user_id for holder in reg.rights_holders)
@@ -678,6 +684,9 @@ class RightsManager:
         registration_id: str
     ) -> List[LicenseTerms]:
         """Get all license agreements for registration"""
+
+
+
         return [
             license_terms for license_terms in self.license_agreements.values()
             if license_terms.custom_terms.get('registration_id') == registration_id

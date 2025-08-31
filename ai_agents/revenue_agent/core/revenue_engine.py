@@ -54,6 +54,9 @@ class RevenueEngine:
 
     async def start(self) -> None:
         """Start the revenue processing engine"""
+
+
+
         try:
             self.is_running = True
             logger.info("RevenueEngine started successfully")
@@ -63,6 +66,9 @@ class RevenueEngine:
 
     async def process(self, data: Dict[str, Any]) -> RevenueResult:
         """Process revenue operation"""
+
+
+
         try:
             job_id = data.get('job_id', 'auto-generated')
             

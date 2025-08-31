@@ -27,7 +27,7 @@ Behavioral Adaptation → Success Maximization
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL INTELLECTUAL PROPERTY WARNING ⚠️
+ CRITICAL INTELLECTUAL PROPERTY WARNING 
 This advanced behavioral intelligence AI system is the EXCLUSIVE property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR REVERSE ENGINEERING is strictly prohibited
 and will result in immediate legal prosecution under international copyright laws.
@@ -183,6 +183,9 @@ class BehavioralIntelligenceEngine:
         """
         Analyze comprehensive user behavior patterns
         """
+
+
+
         try:
             user_id = user_data.get('user_id')
             behavior_data = user_data.get('behavior_data', {})
@@ -404,6 +407,9 @@ class UserBehaviorAnalyzer:
         """
         Analyze user personality using psychometric AI
         """
+
+
+
         try:
             user_id = user_data.get('user_id')
             interaction_data = user_data.get('interactions', [])
@@ -609,6 +615,9 @@ class ConversationPatternDetector:
         """
         Detect patterns in conversation data
         """
+
+
+
         try:
             patterns = []
             
@@ -794,6 +803,9 @@ class BehavioralPredictionEngine:
         """
         Predict user behavior using advanced ML models
         """
+
+
+
         try:
             user_id = user_data.get('user_id')
             historical_data = user_data.get('historical_behavior', {})
@@ -1039,6 +1051,9 @@ class CreatorPersonalityAnalyzer:
         """
         Analyze personality specific to creator type
         """
+
+
+
         try:
             creator_type = creator_data.get('creator_type', 'general')
             

@@ -8,7 +8,7 @@ Responsibility: Multi-dialect detection, processing and regional variant support
 Technologies: Python, NLP, Linguistic Models, Regional Dialect Analysis
 ================================================================================
 
-⚠️  PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
+  PROPRIETARY SOFTWARE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -391,19 +391,19 @@ class DialectProcessor:
         berber_markers = {
             "tzm": [
                 DialectMarker(
-                    pattern=r"\b(ⴰⵔⴳⴰⵣ|argaz)\b",
+                    pattern=r"\b(|argaz)\b",
                     feature_type=LinguisticFeature.LEXICAL,
                     confidence_weight=0.9,
                     regions=["MA"],
-                    examples=["ⴰⵔⴳⴰⵣ ⴰⵎⵇⵔⴰⵏ"],
+                    examples=[" "],
                     context="man (Tamazight)"
                 ),
                 DialectMarker(
-                    pattern=r"\b(ⵜⴰⵎⵟⵟⵓⵜ|tamttut)\b",
+                    pattern=r"\b(|tamttut)\b",
                     feature_type=LinguisticFeature.LEXICAL,
                     confidence_weight=0.9,
                     regions=["MA"],
-                    examples=["ⵜⴰⵎⵟⵟⵓⵜ ⵜⴰⵎⵇⵔⴰⵏⵜ"],
+                    examples=[" "],
                     context="woman (Tamazight)"
                 )
             ],
@@ -509,6 +509,9 @@ class DialectProcessor:
     
     def _compile_linguistic_patterns(self):
         """Compile linguistic patterns for efficient matching"""
+
+
+
         try:
             # Compile regex patterns for all markers
             for dialect_code, markers in self.dialect_markers.items():
@@ -534,6 +537,9 @@ class DialectProcessor:
         region_hint: str = None
     ) -> DialectDetection:
         """Detect dialect from text input"""
+
+
+
         try:
             # Check cache first
             cache_key = f"{text[:100]}_{base_language}_{region_hint}"
@@ -645,7 +651,7 @@ class DialectProcessor:
             
             # Check for regional variant indicators
             if variant.regional_variant == RegionalVariant.MOUNTAIN:
-                mountain_words = ["mountain", "hill", "peak", "جبل", "ⴰⴷⵔⴰⵔ"]
+                mountain_words = ["mountain", "hill", "peak", "جبل", ""]
                 if any(word in text.lower() for word in mountain_words):
                     indicators.append("mountain_reference")
             
@@ -744,6 +750,9 @@ class DialectProcessor:
     
     async def get_dialect_info(self, dialect_code: str) -> Optional[DialectVariant]:
         """Get detailed information about a dialect"""
+
+
+
         return self.dialect_variants.get(dialect_code)
     
     async def list_supported_dialects(
@@ -768,6 +777,9 @@ class DialectProcessor:
         expected_languages: List[str] = None
     ) -> Dict[str, Any]:
         """Process text that may contain multiple dialects"""
+
+
+
         try:
             # Split text into segments (simple sentence-based splitting)
             sentences = re.split(r'[.!?]+', text)
@@ -813,6 +825,9 @@ class DialectProcessor:
     
     async def health_check(self) -> bool:
         """Health check for dialect processor"""
+
+
+
         try:
             # Check if dialect variants are loaded
             if not self.dialect_variants:

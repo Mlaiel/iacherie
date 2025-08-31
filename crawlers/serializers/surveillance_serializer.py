@@ -8,7 +8,7 @@ Optimized for real-time surveillance, alerts, and violation detection.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️ LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION:
+ LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION:
 This code, concept, and intellectual property belong exclusively to Fahed Mlaiel (mlaiel@live.de). 
 Any unauthorized copying, distribution, modification, or commercial use is STRICTLY PROHIBITED 
 and will result in immediate legal action under German and International Copyright Law.
@@ -261,6 +261,9 @@ class SurveillanceSerializer:
         Returns:
             Serialized surveillance dictionary
         """
+
+
+
         try:
             # Convert to dictionary
             data = surveillance.dict()
@@ -342,6 +345,9 @@ class SurveillanceSerializer:
         Returns:
             Deserialized SurveillanceData object
         """
+
+
+
         try:
             # Handle datetime conversions
             if isinstance(data.get('first_detected'), str):
@@ -395,6 +401,9 @@ class SurveillanceSerializer:
         compact_mode: bool = True
     ) -> List[Dict[str, Any]]:
         """Serialize multiple surveillance records efficiently."""
+
+
+
         try:
             serialized_list = []
             
@@ -419,6 +428,9 @@ class SurveillanceSerializer:
         data_list: List[Dict[str, Any]]
     ) -> List[SurveillanceData]:
         """Deserialize multiple surveillance records efficiently."""
+
+
+
         try:
             surveillance_list = []
             
@@ -439,6 +451,9 @@ class SurveillanceSerializer:
         compress: bool = True
     ) -> Dict[str, Any]:
         """Serialize detection evidence."""
+
+
+
         try:
             data = {
                 'evidence_id': evidence.evidence_id,
@@ -473,6 +488,9 @@ class SurveillanceSerializer:
         data: Dict[str, Any]
     ) -> DetectionEvidence:
         """Deserialize detection evidence."""
+
+
+
         try:
             # Handle datetime conversion
             if isinstance(data.get('captured_at'), str):
@@ -498,6 +516,9 @@ class SurveillanceSerializer:
         action: EnforcementAction
     ) -> Dict[str, Any]:
         """Serialize enforcement action."""
+
+
+
         try:
             data = {
                 'action_id': action.action_id,
@@ -525,6 +546,9 @@ class SurveillanceSerializer:
         data: Dict[str, Any]
     ) -> EnforcementAction:
         """Deserialize enforcement action."""
+
+
+
         try:
             # Handle datetime conversions
             if isinstance(data.get('initiated_at'), str):
@@ -545,6 +569,9 @@ class SurveillanceSerializer:
     
     def _encode_binary_data(self, binary_data: bytes, compress: bool = True) -> str:
         """Encode binary data to base64 string with optional compression."""
+
+
+
         try:
             import base64
             
@@ -563,6 +590,9 @@ class SurveillanceSerializer:
     
     def _decode_binary_data(self, encoded_data: str) -> bytes:
         """Decode binary data from base64 string with decompression."""
+
+
+
         try:
             import base64
             
@@ -584,6 +614,9 @@ class SurveillanceSerializer:
     
     def _compress_text_data(self, text_data: str) -> str:
         """Compress text data using gzip."""
+
+
+
         try:
             import gzip
             
@@ -597,6 +630,9 @@ class SurveillanceSerializer:
     
     def _decompress_text_data(self, compressed_data: str) -> str:
         """Decompress text data from gzip."""
+
+
+
         try:
             import gzip
             
@@ -616,6 +652,9 @@ class SurveillanceSerializer:
         surveillance: SurveillanceData
     ) -> Dict[str, Any]:
         """Create summary of surveillance data."""
+
+
+
         try:
             return {
                 'surveillance_id': surveillance.surveillance_id,
@@ -646,6 +685,9 @@ class SurveillanceSerializer:
         surveillance: SurveillanceData
     ) -> Dict[str, Any]:
         """Validate surveillance data integrity."""
+
+
+
         try:
             validation_result = {
                 'valid': True,
@@ -915,6 +957,9 @@ class SurveillanceSerializer:
         Returns:
             Serialized surveillance dictionary
         """
+
+
+
         try:
             # Convert to dictionary
             data = surveillance_data.dict()
@@ -976,6 +1021,9 @@ class SurveillanceSerializer:
         Returns:
             Deserialized SurveillanceData object
         """
+
+
+
         try:
             # Handle datetime conversions
             if isinstance(data.get('started_at'), str):
@@ -1026,6 +1074,9 @@ class SurveillanceSerializer:
         compact_mode: bool = True
     ) -> List[Dict[str, Any]]:
         """Serialize multiple surveillance operations efficiently."""
+
+
+
         try:
             serialized_list = []
             
@@ -1049,6 +1100,9 @@ class SurveillanceSerializer:
         data_list: List[Dict[str, Any]]
     ) -> List[SurveillanceData]:
         """Deserialize multiple surveillance operations efficiently."""
+
+
+
         try:
             surveillance_list = []
             
@@ -1142,6 +1196,9 @@ class SurveillanceSerializer:
     
     def _serialize_metrics(self, metrics: SurveillanceMetrics) -> Dict[str, Any]:
         """Serialize surveillance metrics."""
+
+
+
         return {
             'total_targets': metrics.total_targets,
             'active_targets': metrics.active_targets,
@@ -1166,6 +1223,9 @@ class SurveillanceSerializer:
         surveillance_data: SurveillanceData
     ) -> Dict[str, Any]:
         """Create compact summary of surveillance operation."""
+
+
+
         try:
             summary = {
                 'operation_id': surveillance_data.operation_id,
@@ -1211,6 +1271,9 @@ class SurveillanceSerializer:
         min_threat_level: ThreatLevel
     ) -> List[SurveillanceResult]:
         """Filter surveillance results by minimum threat level."""
+
+
+
         try:
             threat_levels = {
                 ThreatLevel.LOW: 1,
@@ -1242,6 +1305,9 @@ class SurveillanceSerializer:
         surveillance_list: List[SurveillanceData]
     ) -> Dict[str, Any]:
         """Aggregate metrics across multiple surveillance operations."""
+
+
+
         try:
             total_targets = 0
             total_violations = 0

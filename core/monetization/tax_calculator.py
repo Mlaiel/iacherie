@@ -126,6 +126,9 @@ class TaxCalculationResult(BaseModel):
     
     def get_summary(self) -> Dict[str, Any]:
         """Get calculation summary"""
+
+
+
         return {
             "gross_amount": float(self.gross_amount),
             "total_tax": float(self.total_tax),
@@ -288,6 +291,9 @@ class TaxCalculator:
         session: AsyncSession
     ) -> TaxCalculationResult:
         """Calculate comprehensive tax liability"""
+
+
+
         try:
             # Get user tax configuration
             tax_config = await self._get_tax_configuration(request.user_id, session)
@@ -513,6 +519,9 @@ class TaxCalculator:
         session: AsyncSession
     ) -> Dict[str, Any]:
         """Estimate quarterly tax payments"""
+
+
+
         try:
             # Calculate annual tax
             annual_request = TaxCalculationRequest(
@@ -562,6 +571,9 @@ class TaxCalculator:
         session: AsyncSession
     ) -> Dict[str, Any]:
         """Generate comprehensive annual tax report"""
+
+
+
         try:
             from ...database.models import RevenueRecord
             from sqlalchemy import select, func, extract
@@ -618,6 +630,9 @@ class TaxCalculator:
     
     def get_supported_jurisdictions(self) -> List[Dict[str, Any]]:
         """Get list of supported tax jurisdictions"""
+
+
+
         return [
             {
                 "jurisdiction": jurisdiction.value,

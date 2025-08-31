@@ -22,7 +22,7 @@ Contact: mlaiel@live.de
 - DevOps Engineer: Fahed Mlaiel
 - IA Prompt Engineer: Fahed Mlaiel
 
-⚠️ ATTENTION IMPORTANTE ⚠️
+ ATTENTION IMPORTANTE 
 Toute tentative de vol, copie, ou utilisation non autorisée de ce code, 
 concept ou idée sans autorisation écrite explicite de Fahed Mlaiel 
 sera poursuivie selon la loi allemande et internationale.
@@ -32,7 +32,7 @@ Contact autorisé: mlaiel@live.de
 FONCTIONNALITÉS ENTERPRISE:
 =========================
 
-🔐 CHIFFREMENT AVANCÉ:
+ CHIFFREMENT AVANCÉ:
 - Chiffrement AES-256-GCM pour données sensibles
 - Key management avec rotation automatique
 - Perfect Forward Secrecy (PFS)
@@ -40,7 +40,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Chiffrement transparent des données (TDE)
 - Key derivation avec PBKDF2/Scrypt
 
-🛡️ SÉCURITÉ MULTI-NIVEAU:
+ SÉCURITÉ MULTI-NIVEAU:
 - Chiffrement au niveau colonne
 - Masquage dynamique des données
 - Anonymisation avancée
@@ -48,7 +48,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - SSL/TLS enforcement
 - Certificate management
 
-🔑 GESTION DES CLÉS:
+ GESTION DES CLÉS:
 - Vault integration (HashiCorp Vault)
 - Automatic key rotation
 - Key escrow et recovery
@@ -56,7 +56,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Key versioning et rollback
 - Secure key distribution
 
-📊 AUDIT ET COMPLIANCE:
+ AUDIT ET COMPLIANCE:
 - Audit trail chiffré
 - GDPR compliance tools
 - Data classification automatique
@@ -64,7 +64,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Data lineage tracking
 - Compliance reporting
 
-⚡ PERFORMANCE OPTIMISÉE:
+ PERFORMANCE OPTIMISÉE:
 - Chiffrement streaming pour gros volumes
 - Hardware acceleration (AES-NI)
 - Compression avant chiffrement
@@ -150,8 +150,11 @@ class DatabaseEncryptionManager:
     
     def _initialize_encryption_system(self):
         """Initialise le système de chiffrement"""
+
+
+
         try:
-            self.logger.info("🔐 Initializing enterprise encryption system...")
+            self.logger.info(" Initializing enterprise encryption system...")
             
             # Vérification des clés maîtres
             self._ensure_master_keys()
@@ -162,14 +165,17 @@ class DatabaseEncryptionManager:
             # Test des fonctionnalités
             self._run_encryption_tests()
             
-            self.logger.info("✅ Encryption system initialized successfully")
+            self.logger.info(" Encryption system initialized successfully")
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize encryption system: {e}")
+            self.logger.error(f" Failed to initialize encryption system: {e}")
             raise
     
     def _ensure_master_keys(self):
         """S'assure que les clés maîtres existent"""
+
+
+
         try:
             # Vérification clé maître principale
             master_key = self._get_or_create_master_key()
@@ -186,6 +192,9 @@ class DatabaseEncryptionManager:
     
     def _get_or_create_master_key(self) -> bytes:
         """Récupère ou crée la clé maître principale"""
+
+
+
         try:
             # Tentative de récupération depuis Vault
             master_key = self.vault_client.get_secret("database/master_key")
@@ -205,10 +214,10 @@ class DatabaseEncryptionManager:
                     }
                 )
                 
-                self.logger.info("🔑 New master key generated and stored")
+                self.logger.info(" New master key generated and stored")
             else:
                 master_key = base64.b64decode(master_key)
-                self.logger.info("🔑 Master key retrieved from vault")
+                self.logger.info(" Master key retrieved from vault")
             
             return master_key
             
@@ -222,6 +231,9 @@ class DatabaseEncryptionManager:
     
     def _get_or_create_derived_key(self, key_purpose: str) -> bytes:
         """Génère ou récupère une clé dérivée pour un usage spécifique"""
+
+
+
         try:
             cache_key = f"derived_key_{key_purpose}"
             
@@ -275,6 +287,9 @@ class DatabaseEncryptionManager:
         Returns:
             Dict contenant les données chiffrées et métadonnées
         """
+
+
+
         try:
             if encryption_type is None:
                 encryption_type = self._get_encryption_for_classification(classification)
@@ -327,6 +342,9 @@ class DatabaseEncryptionManager:
         Returns:
             Données déchiffrées
         """
+
+
+
         try:
             if not encrypted_payload.get('is_encrypted', False):
                 raise ValueError("Payload is not encrypted")
@@ -364,6 +382,9 @@ class DatabaseEncryptionManager:
     
     def _encrypt_aes_gcm(self, data: bytes, classification: DataClassification) -> str:
         """Chiffrement AES-256-GCM"""
+
+
+
         try:
             # Clé dérivée pour la classification
             key = self._get_or_create_derived_key(f"aes_gcm_{classification.value}")
@@ -393,6 +414,9 @@ class DatabaseEncryptionManager:
     
     def _decrypt_aes_gcm(self, encrypted_data: str, classification: DataClassification) -> bytes:
         """Déchiffrement AES-256-GCM"""
+
+
+
         try:
             # Décodage
             encrypted_bytes = base64.b64decode(encrypted_data)
@@ -421,6 +445,9 @@ class DatabaseEncryptionManager:
     
     def _encrypt_fernet(self, data: bytes, classification: DataClassification) -> str:
         """Chiffrement Fernet (AES-128 + HMAC)"""
+
+
+
         try:
             # Clé dérivée pour Fernet
             derived_key = self._get_or_create_derived_key(f"fernet_{classification.value}")
@@ -437,6 +464,9 @@ class DatabaseEncryptionManager:
     
     def _decrypt_fernet(self, encrypted_data: str, classification: DataClassification) -> bytes:
         """Déchiffrement Fernet"""
+
+
+
         try:
             # Clé dérivée
             derived_key = self._get_or_create_derived_key(f"fernet_{classification.value}")
@@ -453,6 +483,9 @@ class DatabaseEncryptionManager:
     
     def _encrypt_chacha20(self, data: bytes, classification: DataClassification) -> str:
         """Chiffrement ChaCha20-Poly1305"""
+
+
+
         try:
             # Clé dérivée
             key = self._get_or_create_derived_key(f"chacha20_{classification.value}")
@@ -481,6 +514,9 @@ class DatabaseEncryptionManager:
     
     def _decrypt_chacha20(self, encrypted_data: str, classification: DataClassification) -> bytes:
         """Déchiffrement ChaCha20-Poly1305"""
+
+
+
         try:
             # Décodage
             encrypted_bytes = base64.b64decode(encrypted_data)
@@ -520,6 +556,9 @@ class DatabaseEncryptionManager:
     
     def _get_current_key_version(self) -> str:
         """Récupère la version actuelle de la clé"""
+
+
+
         try:
             # Récupération depuis Vault
             metadata = self.vault_client.get_secret_metadata("database/master_key")
@@ -529,6 +568,9 @@ class DatabaseEncryptionManager:
     
     def _setup_audit_logging(self):
         """Configure l'audit des opérations de chiffrement"""
+
+
+
         try:
             self.audit_logger = logging.getLogger('encryption_audit')
             
@@ -547,6 +589,9 @@ class DatabaseEncryptionManager:
     
     def _audit_encryption_event(self, operation: str, classification: DataClassification, data_size: int):
         """Enregistre un événement de chiffrement dans l'audit"""
+
+
+
         try:
             audit_entry = {
                 'timestamp': datetime.utcnow().isoformat(),
@@ -565,8 +610,11 @@ class DatabaseEncryptionManager:
     
     def _run_encryption_tests(self):
         """Exécute des tests de validation du système de chiffrement"""
+
+
+
         try:
-            test_data = "Test encryption data - 🔐 IA Influencer Agent"
+            test_data = "Test encryption data -  IA Influencer Agent"
             
             # Test de chaque type de chiffrement
             for encryption_type in [EncryptionType.AES_256_GCM, EncryptionType.FERNET]:
@@ -581,10 +629,10 @@ class DatabaseEncryptionManager:
                 if decrypted.decode('utf-8') != test_data:
                     raise ValueError(f"Encryption test failed for {encryption_type}")
             
-            self.logger.info("✅ Encryption system validation passed")
+            self.logger.info(" Encryption system validation passed")
             
         except Exception as e:
-            self.logger.error(f"❌ Encryption validation failed: {e}")
+            self.logger.error(f" Encryption validation failed: {e}")
             raise
     
     async def rotate_encryption_keys(self, force: bool = False) -> Dict[str, Any]:
@@ -597,8 +645,11 @@ class DatabaseEncryptionManager:
         Returns:
             Rapport de rotation
         """
+
+
+
         try:
-            self.logger.info("🔄 Starting encryption key rotation...")
+            self.logger.info(" Starting encryption key rotation...")
             
             rotation_report = {
                 'started_at': datetime.utcnow().isoformat(),
@@ -662,17 +713,20 @@ class DatabaseEncryptionManager:
             
             rotation_report['completed_at'] = datetime.utcnow().isoformat()
             
-            self.logger.info(f"✅ Key rotation completed - {rotation_report['success_count']} keys rotated")
+            self.logger.info(f" Key rotation completed - {rotation_report['success_count']} keys rotated")
             
             return rotation_report
             
         except Exception as e:
-            self.logger.error(f"❌ Key rotation failed: {e}")
+            self.logger.error(f" Key rotation failed: {e}")
             rotation_report['error'] = str(e)
             return rotation_report
     
     def get_encryption_status(self) -> Dict[str, Any]:
         """Récupère le statut du système de chiffrement"""
+
+
+
         try:
             status = {
                 'system_status': 'operational',
@@ -713,6 +767,9 @@ class DatabaseEncryptionManager:
     
     async def health_check(self) -> Dict[str, Any]:
         """Vérification de santé du système de chiffrement"""
+
+
+
         try:
             health_status = {
                 'status': 'healthy',
@@ -776,8 +833,11 @@ class DatabaseEncryptionManager:
     
     async def shutdown(self):
         """Arrêt propre du système de chiffrement"""
+
+
+
         try:
-            self.logger.info("🔒 Shutting down encryption system...")
+            self.logger.info(" Shutting down encryption system...")
             
             # Purge du cache des clés
             self.key_cache.clear()
@@ -786,10 +846,10 @@ class DatabaseEncryptionManager:
             if self.vault_client:
                 await self.vault_client.close()
             
-            self.logger.info("✅ Encryption system shutdown completed")
+            self.logger.info(" Encryption system shutdown completed")
             
         except Exception as e:
-            self.logger.error(f"❌ Encryption system shutdown failed: {e}")
+            self.logger.error(f" Encryption system shutdown failed: {e}")
 
 
 # Factory function

@@ -1,5 +1,5 @@
 """
-🔒 Content Protection Configuration Manager - IA-Influencer-Agent
+ Content Protection Configuration Manager - IA-Influencer-Agent
 ==================================================================
 Project Creator & Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
@@ -7,7 +7,7 @@ Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert +
 Date: 2025-08-24
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -386,6 +386,9 @@ class ContentProtectionConfigManager:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             self.logger.info("Initializing content protection config manager...")
             
@@ -615,6 +618,9 @@ class ContentProtectionConfigManager:
         Returns:
             ContentProtectionConfiguration: Created configuration
         """
+
+
+
         try:
             self.logger.info(f"Creating content protection configuration: {name}")
             
@@ -699,6 +705,9 @@ class ContentProtectionConfigManager:
         Returns:
             bool: True if update successful
         """
+
+
+
         try:
             if config_name not in self.configurations:
                 raise ValueError(f"Configuration {config_name} not found")
@@ -750,6 +759,9 @@ class ContentProtectionConfigManager:
         Returns:
             bool: True if configuration successful
         """
+
+
+
         try:
             if config_name not in self.configurations:
                 raise ValueError(f"Configuration {config_name} not found")
@@ -796,6 +808,9 @@ class ContentProtectionConfigManager:
         Returns:
             bool: True if setup successful
         """
+
+
+
         try:
             if config_name not in self.configurations:
                 raise ValueError(f"Configuration {config_name} not found")
@@ -852,6 +867,9 @@ class ContentProtectionConfigManager:
         Returns:
             Dict containing protection metrics
         """
+
+
+
         try:
             if config_name not in self.configurations:
                 raise ValueError(f"Configuration {config_name} not found")
@@ -992,6 +1010,9 @@ class ContentProtectionConfigManager:
         config: ContentProtectionConfiguration
     ) -> None:
         """Save protection configuration to storage"""
+
+
+
         try:
             config_file = Path(self.config_path) / "configurations" / f"{config.name}.json"
             config_data = self._config_to_dict(config)
@@ -1017,6 +1038,9 @@ class ContentProtectionConfigManager:
     
     async def get_status(self) -> Dict[str, Any]:
         """Get content protection config manager status"""
+
+
+
         return {
             "initialized": self.initialized,
             "configurations_count": len(self.configurations),

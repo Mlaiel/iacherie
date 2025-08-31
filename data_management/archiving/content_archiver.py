@@ -8,7 +8,7 @@ for different content types (audio, video, image, text, fingerprints).
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -721,6 +721,9 @@ class ContentArchiver:
     
     async def _process_json_content(self, content_data: bytes, extract_metadata_only: bool = False) -> Dict[str, Any]:
         """Process JSON content"""
+
+
+
         try:
             json_data = json.loads(content_data.decode('utf-8'))
             metadata = {
@@ -740,6 +743,9 @@ class ContentArchiver:
     
     async def _extract_audio_metadata(self, content_data: bytes, content_type: str) -> Dict[str, Any]:
         """Extract audio-specific metadata"""
+
+
+
         return {
             "duration_seconds": 180,  # Placeholder
             "sample_rate": 44100,
@@ -749,6 +755,9 @@ class ContentArchiver:
     
     async def _extract_video_metadata(self, content_data: bytes, content_type: str) -> Dict[str, Any]:
         """Extract video-specific metadata"""
+
+
+
         return {
             "duration_seconds": 300,  # Placeholder
             "resolution": "1920x1080",
@@ -759,6 +768,9 @@ class ContentArchiver:
     
     async def _extract_image_metadata(self, content_data: bytes, content_type: str) -> Dict[str, Any]:
         """Extract image-specific metadata"""
+
+
+
         return {
             "width": 1920,  # Placeholder
             "height": 1080,
@@ -778,6 +790,9 @@ class ContentArchiver:
     
     async def _extract_document_metadata(self, content_data: bytes, content_type: str) -> Dict[str, Any]:
         """Extract document-specific metadata"""
+
+
+
         return {
             "page_count": 1,  # Placeholder
             "has_text": True,
@@ -787,6 +802,9 @@ class ContentArchiver:
     
     async def _extract_fingerprint_metadata(self, content_data: bytes, content_type: str) -> Dict[str, Any]:
         """Extract fingerprint-specific metadata"""
+
+
+
         return {
             "fingerprint_type": "content_protection",
             "algorithm_version": "1.0",
@@ -796,6 +814,9 @@ class ContentArchiver:
     
     async def _extract_composite_metadata(self, content_data: bytes, content_type: str) -> Dict[str, Any]:
         """Extract composite content metadata"""
+
+
+
         return {
             "component_count": 1,  # Placeholder
             "content_types": ["mixed"],
@@ -869,6 +890,9 @@ class ContentArchiver:
     
     async def get_job_status(self, job_id: str) -> Optional[ContentArchiveRecord]:
         """Get status of archival job"""
+
+
+
         return self.active_jobs.get(job_id)
     
     async def cancel_job(self, job_id: str) -> bool:
@@ -883,6 +907,9 @@ class ContentArchiver:
     
     async def get_processing_statistics(self) -> Dict[str, Any]:
         """Get comprehensive processing statistics"""
+
+
+
         return {
             "metrics": self.metrics,
             "active_jobs": len(self.active_jobs),

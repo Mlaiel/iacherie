@@ -8,7 +8,7 @@ Responsibility: Production-grade S3 storage deployment and lifecycle management
 Technologies: Python, AWS S3, CloudFormation, IAM, Boto3, Multi-Region
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -131,7 +131,7 @@ class S3DeploymentMetrics:
 
 class S3Manager:
     """
-    🎯 Industrial S3 Storage Manager - IA-Influencer-Agent
+     Industrial S3 Storage Manager - IA-Influencer-Agent
     
     Production-grade AWS S3 storage deployment and management with:
     - Multi-region bucket orchestration and replication
@@ -155,10 +155,13 @@ class S3Manager:
         # Initialize clients for all regions
         self._initialize_clients()
         
-        logger.info(f"🚀 S3Manager initialized for bucket: {config.bucket_name}")
+        logger.info(f" S3Manager initialized for bucket: {config.bucket_name}")
     
     def _initialize_clients(self):
         """Initialize S3 and CloudFormation clients for all regions"""
+
+
+
         try:
             regions = [self.config.region] + self.config.backup_regions
             
@@ -181,16 +184,19 @@ class S3Manager:
                     region_name=region_name
                 )
             
-            logger.info(f"✅ Initialized clients for {len(regions)} regions")
+            logger.info(f" Initialized clients for {len(regions)} regions")
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize S3 clients: {e}")
+            logger.error(f" Failed to initialize S3 clients: {e}")
             raise
     
     async def deploy_s3_infrastructure(self) -> Dict[str, Any]:
         """Deploy complete S3 infrastructure with CloudFormation"""
+
+
+
         try:
-            logger.info(f"🚀 Starting S3 infrastructure deployment...")
+            logger.info(f" Starting S3 infrastructure deployment...")
             
             # Generate CloudFormation template
             template = self._generate_cloudformation_template()
@@ -228,11 +234,11 @@ class S3Manager:
                 "total_buckets": 1 + len(self.config.backup_regions)
             }
             
-            logger.info(f"✅ S3 infrastructure deployment completed successfully")
+            logger.info(f" S3 infrastructure deployment completed successfully")
             return deployment_result
             
         except Exception as e:
-            logger.error(f"❌ S3 infrastructure deployment failed: {e}")
+            logger.error(f" S3 infrastructure deployment failed: {e}")
             return {"success": False, "error": str(e)}
     
     def _generate_cloudformation_template(self) -> Dict[str, Any]:
@@ -449,6 +455,9 @@ class S3Manager:
     
     async def _deploy_to_region(self, region: str, template: Dict[str, Any], is_primary: bool = False) -> Dict[str, Any]:
         """Deploy CloudFormation stack to specific region"""
+
+
+
         try:
             cf_client = self._cloudformation_clients[region]
             stack_name = f"ia-influencer-s3-{self.config.bucket_name}-{region}"
@@ -507,15 +516,18 @@ class S3Manager:
                 "outputs": {output['OutputKey']: output['OutputValue'] for output in outputs}
             }
             
-            logger.info(f"✅ Stack {operation} completed in {region}")
+            logger.info(f" Stack {operation} completed in {region}")
             return result
             
         except Exception as e:
-            logger.error(f"❌ Failed to deploy to {region}: {e}")
+            logger.error(f" Failed to deploy to {region}: {e}")
             return {"success": False, "region": region, "error": str(e)}
     
     async def _setup_cross_region_replication(self) -> Dict[str, Any]:
         """Setup cross-region replication between buckets"""
+
+
+
         try:
             primary_client = self._s3_clients[self.config.region.value]
             
@@ -543,7 +555,7 @@ class S3Manager:
                 ReplicationConfiguration=replication_config
             )
             
-            logger.info(f"✅ Cross-region replication configured for {len(self.config.backup_regions)} regions")
+            logger.info(f" Cross-region replication configured for {len(self.config.backup_regions)} regions")
             return {
                 "success": True,
                 "replication_targets": len(self.config.backup_regions),
@@ -551,11 +563,14 @@ class S3Manager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to setup cross-region replication: {e}")
+            logger.error(f" Failed to setup cross-region replication: {e}")
             return {"success": False, "error": str(e)}
     
     async def _setup_monitoring(self) -> Dict[str, Any]:
         """Setup CloudWatch monitoring and alerting"""
+
+
+
         try:
             # This would typically involve setting up CloudWatch alarms
             # and metrics for S3 bucket monitoring
@@ -571,15 +586,18 @@ class S3Manager:
                 "notification_targets": ["sns", "email"]
             }
             
-            logger.info("✅ Monitoring and alerting configured")
+            logger.info(" Monitoring and alerting configured")
             return {"success": True, "configuration": monitoring_config}
             
         except Exception as e:
-            logger.error(f"❌ Failed to setup monitoring: {e}")
+            logger.error(f" Failed to setup monitoring: {e}")
             return {"success": False, "error": str(e)}
     
     def _get_account_id(self) -> str:
         """Get AWS account ID"""
+
+
+
         try:
             sts_client = self._session.client('sts')
             return sts_client.get_caller_identity()['Account']
@@ -588,6 +606,9 @@ class S3Manager:
     
     async def get_bucket_metrics(self) -> Dict[str, Any]:
         """Get comprehensive S3 bucket metrics"""
+
+
+
         try:
             primary_client = self._s3_clients[self.config.region.value]
             
@@ -651,17 +672,20 @@ class S3Manager:
                 "last_updated": datetime.now().isoformat()
             }
             
-            logger.info(f"📊 Retrieved metrics for bucket {self.config.bucket_name}")
+            logger.info(f" Retrieved metrics for bucket {self.config.bucket_name}")
             return metrics_result
             
         except Exception as e:
-            logger.error(f"❌ Failed to get bucket metrics: {e}")
+            logger.error(f" Failed to get bucket metrics: {e}")
             return {"error": str(e)}
     
     async def optimize_storage_costs(self) -> Dict[str, Any]:
         """Analyze and optimize S3 storage costs"""
+
+
+
         try:
-            logger.info("💰 Starting S3 cost optimization analysis...")
+            logger.info(" Starting S3 cost optimization analysis...")
             
             primary_client = self._s3_clients[self.config.region.value]
             
@@ -747,17 +771,20 @@ class S3Manager:
                 }
             }
             
-            logger.info(f"💰 Cost optimization analysis completed: ${total_savings:.2f} potential monthly savings")
+            logger.info(f" Cost optimization analysis completed: ${total_savings:.2f} potential monthly savings")
             return optimization_result
             
         except Exception as e:
-            logger.error(f"❌ Cost optimization analysis failed: {e}")
+            logger.error(f" Cost optimization analysis failed: {e}")
             return {"success": False, "error": str(e)}
     
     async def cleanup_resources(self) -> Dict[str, Any]:
         """Cleanup and delete S3 resources"""
+
+
+
         try:
-            logger.info(f"🗑️ Starting cleanup of S3 resources...")
+            logger.info(f" Starting cleanup of S3 resources...")
             
             cleanup_results = []
             
@@ -787,7 +814,7 @@ class S3Manager:
                         "bucket_name": bucket_name
                     })
                     
-                    logger.info(f"✅ Cleaned up resources in {region_name}")
+                    logger.info(f" Cleaned up resources in {region_name}")
                     
                 except Exception as e:
                     cleanup_results.append({
@@ -795,7 +822,7 @@ class S3Manager:
                         "status": "failed",
                         "error": str(e)
                     })
-                    logger.error(f"❌ Failed to cleanup {region_name}: {e}")
+                    logger.error(f" Failed to cleanup {region_name}: {e}")
             
             return {
                 "success": True,
@@ -805,11 +832,14 @@ class S3Manager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Cleanup failed: {e}")
+            logger.error(f" Cleanup failed: {e}")
             return {"success": False, "error": str(e)}
     
     async def _empty_bucket(self, bucket_name: str, region: str):
         """Empty S3 bucket before deletion"""
+
+
+
         try:
             s3_client = self._s3_clients[region]
             
@@ -845,10 +875,10 @@ class S3Manager:
                         Delete={'Objects': versions}
                     )
             
-            logger.info(f"✅ Emptied bucket {bucket_name}")
+            logger.info(f" Emptied bucket {bucket_name}")
             
         except Exception as e:
-            logger.warning(f"⚠️ Failed to empty bucket {bucket_name}: {e}")
+            logger.warning(f" Failed to empty bucket {bucket_name}: {e}")
 
 
 # Industrial Configuration Manager
@@ -858,6 +888,9 @@ class S3ConfigurationManager:
     @staticmethod
     def load_config_from_file(config_path: Path) -> S3BucketConfig:
         """Load S3 configuration from YAML file"""
+
+
+
         try:
             with open(config_path, 'r') as file:
                 config_data = yaml.safe_load(file)
@@ -874,12 +907,15 @@ class S3ConfigurationManager:
             )
             
         except Exception as e:
-            logger.error(f"❌ Failed to load config from {config_path}: {e}")
+            logger.error(f" Failed to load config from {config_path}: {e}")
             raise
     
     @staticmethod
     def save_config_to_file(config: S3BucketConfig, config_path: Path):
         """Save S3 configuration to YAML file"""
+
+
+
         try:
             config_data = {
                 'bucket_name': config.bucket_name,
@@ -896,10 +932,10 @@ class S3ConfigurationManager:
             with open(config_path, 'w') as file:
                 yaml.dump(config_data, file, default_flow_style=False)
             
-            logger.info(f"✅ Configuration saved to {config_path}")
+            logger.info(f" Configuration saved to {config_path}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to save config to {config_path}: {e}")
+            logger.error(f" Failed to save config to {config_path}: {e}")
             raise
 
 
@@ -928,6 +964,9 @@ def create_s3_manager(
 # Usage Example
 async def main():
     """Example usage of S3Manager"""
+
+
+
     try:
         # Create S3 manager
         s3_manager = create_s3_manager(
@@ -949,7 +988,7 @@ async def main():
         print(f"Optimization: {optimization}")
         
     except Exception as e:
-        logger.error(f"❌ Example failed: {e}")
+        logger.error(f" Example failed: {e}")
 
 
 if __name__ == "__main__":

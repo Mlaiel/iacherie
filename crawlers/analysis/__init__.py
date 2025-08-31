@@ -157,7 +157,10 @@ class ContentAnalyzer:
         self.false_positive_count = 0
     
     def _load_copyright_patterns(self) -> List[str]:
-        """Load copyright violation patterns."""        return [
+        """Load copyright violation patterns."""
+
+
+        return [
             r'©\s*\d{4}',  # Copyright symbol with year
             r'copyright\s+\d{4}',
             r'all\s+rights\s+reserved',
@@ -168,7 +171,10 @@ class ContentAnalyzer:
         ]
     
     def _load_trademark_patterns(self) -> List[str]:
-        """Load trademark violation patterns."""        return [
+        """Load trademark violation patterns."""
+
+
+        return [
             r'™',  # Trademark symbol
             r'®',  # Registered trademark
             r'trademark\s+of',
@@ -178,7 +184,10 @@ class ContentAnalyzer:
         ]
     
     def _load_sensitive_keywords(self) -> List[str]:
-        """Load sensitive keywords for detection."""        return [
+        """Load sensitive keywords for detection."""
+
+
+        return [
             'unauthorized', 'stolen', 'copied', 'plagiarized',
             'infringement', 'violation', 'pirated', 'bootleg',
             'counterfeit', 'fake', 'replica', 'imitation'
@@ -813,7 +822,10 @@ class ContentAnalyzer:
         return valid_results
     
     def get_analysis_statistics(self) -> Dict[str, Any]:
-        """Get analysis statistics."""        return {
+        """Get analysis statistics."""
+
+
+        return {
             'total_analyses': self.analysis_count,
             'violations_detected': self.violation_count,
             'false_positives': self.false_positive_count,

@@ -585,10 +585,16 @@ class RevenueAnalyticsConfig:
     
     def get_metric_config(self, metric_type: MetricType) -> Optional[MetricConfiguration]:
         """Get configuration for a specific metric."""
+
+
+
         return self.METRICS.get(metric_type)
     
     def get_enabled_metrics(self) -> List[MetricType]:
         """Get list of enabled metrics."""
+
+
+
         return [
             metric_type for metric_type, config in self.METRICS.items()
             if config.enabled
@@ -1165,26 +1171,44 @@ class RevenueAnalyticsConfig:
     
     def get_metric_config(self, metric: AnalyticsMetric) -> Optional[MetricConfiguration]:
         """Get configuration for a specific metric."""
+
+
+
         return self.METRICS_CONFIG.get(metric)
     
     def get_report_config(self, report_type: ReportType) -> Optional[ReportConfiguration]:
         """Get configuration for a specific report type."""
+
+
+
         return self.REPORT_CONFIGS.get(report_type)
     
     def get_dashboard_config(self, dashboard_id: str) -> Optional[DashboardConfiguration]:
         """Get configuration for a specific dashboard."""
+
+
+
         return self.DASHBOARD_CONFIGS.get(dashboard_id)
     
     def get_available_metrics(self) -> List[AnalyticsMetric]:
         """Get list of available metrics."""
+
+
+
         return list(self.METRICS_CONFIG.keys())
     
     def get_available_reports(self) -> List[ReportType]:
         """Get list of available report types."""
+
+
+
         return list(self.REPORT_CONFIGS.keys())
     
     def get_available_dashboards(self) -> List[str]:
         """Get list of available dashboard IDs."""
+
+
+
         return list(self.DASHBOARD_CONFIGS.keys())
 
 

@@ -295,6 +295,9 @@ class ElasticsearchConnectionPool(IConnectionPool):
     
     async def initialize(self) -> bool:
         """Initialize Elasticsearch connection"""
+
+
+
         try:
             # Build client configuration
             client_config = {
@@ -338,7 +341,7 @@ class ElasticsearchConnectionPool(IConnectionPool):
             
             # Test connection and get cluster info
             cluster_info = await self.client.info()
-            logger.info(f"✅ Connected to Elasticsearch cluster: {cluster_info['cluster_name']}")
+            logger.info(f" Connected to Elasticsearch cluster: {cluster_info['cluster_name']}")
             
             # Initialize indices
             await self._initialize_indices()
@@ -355,11 +358,11 @@ class ElasticsearchConnectionPool(IConnectionPool):
             # Start bulk processor
             self._bulk_processor_task = asyncio.create_task(self._bulk_processor())
             
-            logger.info("✅ Elasticsearch pool initialized successfully")
+            logger.info(" Elasticsearch pool initialized successfully")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Elasticsearch pool initialization failed: {e}")
+            logger.error(f" Elasticsearch pool initialization failed: {e}")
             self.state = ConnectionState.FAILED
             return False
     
@@ -376,14 +379,14 @@ class ElasticsearchConnectionPool(IConnectionPool):
                         index=full_index_name,
                         body=index_config
                     )
-                    logger.info(f"✅ Created index: {full_index_name}")
+                    logger.info(f" Created index: {full_index_name}")
                 else:
                     # Update mapping if needed
                     await self.client.indices.put_mapping(
                         index=full_index_name,
                         body=index_config["mappings"]
                     )
-                    logger.info(f"✅ Updated mapping for index: {full_index_name}")
+                    logger.info(f" Updated mapping for index: {full_index_name}")
                 
             except Exception as e:
                 logger.error(f"Failed to initialize index {index_name}: {e}")
@@ -433,7 +436,7 @@ class ElasticsearchConnectionPool(IConnectionPool):
                 name="analytics_policy",
                 body=analytics_policy
             )
-            logger.info("✅ Analytics lifecycle policy created")
+            logger.info(" Analytics lifecycle policy created")
         except Exception as e:
             logger.error(f"Failed to create lifecycle policy: {e}")
     
@@ -521,6 +524,9 @@ class ElasticsearchConnectionPool(IConnectionPool):
     async def bulk_index_documents(self, documents: List[Dict[str, Any]], 
                                  index_name: str, refresh: str = "false") -> Dict[str, Any]:
         """Bulk index documents with optimized performance"""
+
+
+
         try:
             client = await self.acquire()
             full_index_name = f"{self.config.index_prefix}_{index_name}"
@@ -555,6 +561,9 @@ class ElasticsearchConnectionPool(IConnectionPool):
     
     async def queue_bulk_document(self, document: Dict[str, Any], index_name: str) -> None:
         """Queue document for bulk processing"""
+
+
+
         try:
             await self._bulk_queue.put({
                 "document": document,
@@ -646,6 +655,9 @@ class ElasticsearchConnectionPool(IConnectionPool):
     async def aggregate_analytics(self, aggregation_query: Dict[str, Any], 
                                 index_name: str = "analytics_events") -> Dict[str, Any]:
         """Execute analytics aggregation query"""
+
+
+
         try:
             client = await self.acquire()
             full_index_name = f"{self.config.index_prefix}_{index_name}"
@@ -691,6 +703,9 @@ class ElasticsearchConnectionPool(IConnectionPool):
     
     async def health_check(self) -> bool:
         """Check Elasticsearch cluster health"""
+
+
+
         try:
             client = await self.acquire()
             
@@ -744,6 +759,9 @@ class ElasticsearchConnectionPool(IConnectionPool):
     
     async def close(self) -> None:
         """Close Elasticsearch pool"""
+
+
+
         try:
             self.state = ConnectionState.CLOSED
             
@@ -767,7 +785,7 @@ class ElasticsearchConnectionPool(IConnectionPool):
             if self.client:
                 await self.client.close()
             
-            logger.info("✅ Elasticsearch pool closed")
+            logger.info(" Elasticsearch pool closed")
             
         except Exception as e:
             logger.error(f"Error closing Elasticsearch pool: {e}")

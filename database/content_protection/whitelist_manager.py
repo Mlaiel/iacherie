@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + DBA + DevOps
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
+ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION 
 ==================================================================
 This code and all associated intellectual property are the EXCLUSIVE property of Fahed Mlaiel.
 ANY unauthorized use, copying, modification, distribution, or commercialization without 
@@ -195,6 +195,9 @@ class WhitelistManager:
         Raises:
             WhitelistManagerError: If addition fails
         """
+
+
+
         try:
             # Validate entity identifier
             await self._validate_entity_identifier(entity_type, entity_identifier)
@@ -310,6 +313,9 @@ class WhitelistManager:
         Returns:
             Approved WhitelistEntry record
         """
+
+
+
         try:
             # Get pending entry
             entry = await self.db_session.query(WhitelistEntry).filter(
@@ -391,6 +397,9 @@ class WhitelistManager:
         Returns:
             Detailed whitelist status information
         """
+
+
+
         try:
             # Check cache first
             cache_key = f"whitelist_status_{entity_type.value}_{entity_identifier}"
@@ -491,6 +500,9 @@ class WhitelistManager:
         Returns:
             Bulk operation results
         """
+
+
+
         try:
             operation_id = uuid4()
             operation_start = datetime.now(timezone.utc)
@@ -564,6 +576,9 @@ class WhitelistManager:
         Returns:
             Optimization results and recommendations
         """
+
+
+
         try:
             optimization_start = datetime.now(timezone.utc)
             
@@ -674,6 +689,9 @@ class WhitelistManager:
         Returns:
             Comprehensive analytics report
         """
+
+
+
         try:
             analysis_start = datetime.now(timezone.utc)
             period_start = analysis_start - timedelta(days=analytics_period_days)
@@ -791,6 +809,9 @@ class WhitelistManager:
         entity_identifier: str
     ) -> Optional[WhitelistEntry]:
         """Get existing whitelist entry if it exists"""
+
+
+
         return await self.db_session.query(WhitelistEntry).filter(
             and_(
                 WhitelistEntry.entity_type == entity_type.value,
@@ -805,6 +826,9 @@ class WhitelistManager:
         entity_metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Perform comprehensive AI-powered risk assessment"""
+
+
+
         try:
             if not self.ai_risk_assessment_enabled:
                 return {
@@ -849,6 +873,9 @@ class WhitelistManager:
         risk_assessment: Dict[str, Any]
     ) -> float:
         """Calculate comprehensive trust score"""
+
+
+
         try:
             # Get trust factors from risk assessment
             trust_factors = risk_assessment.get("trust_factors", {})
@@ -953,6 +980,9 @@ class WhitelistManager:
         entry: WhitelistEntry
     ) -> Dict[str, Any]:
         """Perform final risk check before approval"""
+
+
+
         try:
             # Get latest risk data
             entity_metadata = json.loads(
@@ -1018,6 +1048,9 @@ class WhitelistManager:
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Perform real-time risk check with current context"""
+
+
+
         try:
             # Combine entry data with current context
             entity_metadata = json.loads(
@@ -1123,6 +1156,9 @@ class WhitelistManager:
     
     async def _calculate_average_approval_time(self) -> float:
         """Calculate average approval time in hours"""
+
+
+
         try:
             # Get recent approvals
             recent_approvals = await self.db_session.query(WhitelistEntry).filter(
@@ -1152,6 +1188,9 @@ class WhitelistManager:
         entries: List[WhitelistEntry]
     ) -> List[Dict[str, Any]]:
         """Generate AI-powered optimization recommendations"""
+
+
+
         try:
             # Prepare data for AI analysis
             analysis_data = []
@@ -1192,6 +1231,9 @@ class WhitelistManager:
         period_days: int
     ) -> Dict[str, Any]:
         """Calculate whitelist trends over time"""
+
+
+
         try:
             # Group entries by day
             daily_stats = {}
@@ -1234,6 +1276,9 @@ class WhitelistManager:
         entries: List[WhitelistEntry]
     ) -> Dict[str, Any]:
         """Generate ML predictions for whitelist management"""
+
+
+
         try:
             # Prepare prediction data
             prediction_data = {

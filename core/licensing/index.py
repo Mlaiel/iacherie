@@ -8,7 +8,7 @@ Fournit un point d'entrée unifié pour tous les composants du système de licen
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2024-2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LEGAL STRICT ⚠️
+  AVERTISSEMENT LEGAL STRICT 
 Ce code et tous les concepts associés sont la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants s'exposent à des poursuites judiciaires.
@@ -100,6 +100,9 @@ class LicensingSystemIndex:
         Returns:
             bool: True si l'initialisation est réussie
         """
+
+
+
         try:
             logger.info("Initializing Licensing System components...")
             
@@ -393,28 +396,49 @@ licensing_system = LicensingSystemIndex()
 async def create_license(content_id: str, creator_id: str, 
                         license_type: str, terms: Dict[str, Any]) -> Dict[str, Any]:
     """API simplifiée pour créer une licence."""
+
+
+
     return await licensing_system.create_license(content_id, creator_id, license_type, terms)
 
 async def process_usage(license_id: str, usage_data: Dict[str, Any]) -> Dict[str, Any]:
     """API simplifiée pour traiter l'utilisation d'une licence."""
+
+
+
     return await licensing_system.process_usage(license_id, usage_data)
 
 async def find_collaborations(creator_id: str, content_type: str) -> List[Dict[str, Any]]:
     """API simplifiée pour trouver des collaborations."""
+
+
+
     return await licensing_system.find_collaboration_opportunities(creator_id, content_type)
 
 async def get_analytics(creator_id: str, period: str = 'month') -> Dict[str, Any]:
     """API simplifiée pour récupérer les analyses."""
+
+
+
     return await licensing_system.get_licensing_analytics(creator_id, period)
 
 async def forecast_revenue(creator_id: str, forecast_period: int = 12) -> Dict[str, Any]:
     """API simplifiée pour les prévisions de revenus."""
+
+
+
     return await licensing_system.forecast_revenue(creator_id, forecast_period)
 
 async def sync_platforms(creator_id: str) -> Dict[str, Any]:
     """API simplifiée pour synchroniser les plateformes."""
+
+
+
     return await licensing_system.sync_cross_platform(creator_id)
 
 async def get_health() -> Dict[str, Any]:
     """API simplifiée pour l'état de santé du système."""
+
+
+
     return await licensing_system.get_system_health()

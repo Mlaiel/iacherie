@@ -78,6 +78,9 @@ class RedisConnectionHandler:
     
     async def initialize(self) -> None:
         """Initialize Redis connection"""
+
+
+
         try:
             self.logger.info("Initializing Redis connection...")
             
@@ -178,6 +181,9 @@ class RedisConnectionHandler:
     # Core Redis operations
     async def get(self, key: str, tenant_id: Optional[str] = None) -> Optional[str]:
         """Get value by key"""
+
+
+
         try:
             client = await self.get_tenant_connection(tenant_id) if tenant_id else await self.get_connection()
             result = await client.get(key)
@@ -198,6 +204,9 @@ class RedisConnectionHandler:
                  xx: bool = False,
                  tenant_id: Optional[str] = None) -> bool:
         """Set value with optional expiration"""
+
+
+
         try:
             client = await self.get_tenant_connection(tenant_id) if tenant_id else await self.get_connection()
             result = await client.set(key, value, ex=ex, px=px, nx=nx, xx=xx)
@@ -211,6 +220,9 @@ class RedisConnectionHandler:
     
     async def delete(self, *keys: str, tenant_id: Optional[str] = None) -> int:
         """Delete keys"""
+
+
+
         try:
             client = await self.get_tenant_connection(tenant_id) if tenant_id else await self.get_connection()
             result = await client.delete(*keys)
@@ -224,6 +236,9 @@ class RedisConnectionHandler:
     
     async def exists(self, *keys: str, tenant_id: Optional[str] = None) -> int:
         """Check if keys exist"""
+
+
+
         try:
             client = await self.get_tenant_connection(tenant_id) if tenant_id else await self.get_connection()
             result = await client.exists(*keys)
@@ -237,6 +252,9 @@ class RedisConnectionHandler:
     
     async def expire(self, key: str, seconds: int, tenant_id: Optional[str] = None) -> bool:
         """Set expiration on key"""
+
+
+
         try:
             client = await self.get_tenant_connection(tenant_id) if tenant_id else await self.get_connection()
             result = await client.expire(key, seconds)
@@ -274,6 +292,9 @@ class RedisConnectionHandler:
                   mapping: Dict[str, Any], 
                   tenant_id: Optional[str] = None) -> int:
         """Set hash field(s)"""
+
+
+
         try:
             client = await self.get_tenant_connection(tenant_id) if tenant_id else await self.get_connection()
             result = await client.hset(name, mapping=mapping)
@@ -287,6 +308,9 @@ class RedisConnectionHandler:
     
     async def hget(self, name: str, key: str, tenant_id: Optional[str] = None) -> Optional[str]:
         """Get hash field value"""
+
+
+
         try:
             client = await self.get_tenant_connection(tenant_id) if tenant_id else await self.get_connection()
             result = await client.hget(name, key)
@@ -300,6 +324,9 @@ class RedisConnectionHandler:
     
     async def hgetall(self, name: str, tenant_id: Optional[str] = None) -> Dict[str, str]:
         """Get all hash fields"""
+
+
+
         try:
             client = await self.get_tenant_connection(tenant_id) if tenant_id else await self.get_connection()
             result = await client.hgetall(name)
@@ -314,6 +341,9 @@ class RedisConnectionHandler:
     # List operations
     async def lpush(self, name: str, *values, tenant_id: Optional[str] = None) -> int:
         """Push values to left of list"""
+
+
+
         try:
             client = await self.get_tenant_connection(tenant_id) if tenant_id else await self.get_connection()
             result = await client.lpush(name, *values)
@@ -327,6 +357,9 @@ class RedisConnectionHandler:
     
     async def rpop(self, name: str, tenant_id: Optional[str] = None) -> Optional[str]:
         """Pop value from right of list"""
+
+
+
         try:
             client = await self.get_tenant_connection(tenant_id) if tenant_id else await self.get_connection()
             result = await client.rpop(name)
@@ -340,6 +373,9 @@ class RedisConnectionHandler:
     
     async def llen(self, name: str, tenant_id: Optional[str] = None) -> int:
         """Get list length"""
+
+
+
         try:
             client = await self.get_tenant_connection(tenant_id) if tenant_id else await self.get_connection()
             result = await client.llen(name)
@@ -354,6 +390,9 @@ class RedisConnectionHandler:
     # Set operations
     async def sadd(self, name: str, *values, tenant_id: Optional[str] = None) -> int:
         """Add values to set"""
+
+
+
         try:
             client = await self.get_tenant_connection(tenant_id) if tenant_id else await self.get_connection()
             result = await client.sadd(name, *values)
@@ -367,6 +406,9 @@ class RedisConnectionHandler:
     
     async def smembers(self, name: str, tenant_id: Optional[str] = None) -> Set[str]:
         """Get all set members"""
+
+
+
         try:
             client = await self.get_tenant_connection(tenant_id) if tenant_id else await self.get_connection()
             result = await client.smembers(name)
@@ -381,6 +423,9 @@ class RedisConnectionHandler:
     # Pub/Sub operations
     async def publish(self, channel: str, message: str, tenant_id: Optional[str] = None) -> int:
         """Publish message to channel"""
+
+
+
         try:
             client = await self.get_tenant_connection(tenant_id) if tenant_id else await self.get_connection()
             result = await client.publish(channel, message)
@@ -394,6 +439,9 @@ class RedisConnectionHandler:
     
     async def health_check(self) -> Dict[str, Any]:
         """Check Redis connection health"""
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -435,6 +483,9 @@ class RedisConnectionHandler:
     
     async def get_metrics(self) -> Dict[str, Any]:
         """Get detailed Redis metrics"""
+
+
+
         try:
             client = await self.get_connection()
             info = await client.info()

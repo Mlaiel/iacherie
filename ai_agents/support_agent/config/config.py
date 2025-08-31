@@ -7,7 +7,7 @@ security configurations, and performance tuning parameters.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -220,6 +220,9 @@ class SupportAgentConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert configuration to dictionary"""
+
+
+
         return {
             "environment": self.environment.value,
             "ai_models": {

@@ -172,6 +172,9 @@ class BackupConfig(BaseConfig):
 
     def _get_default_config_path(self) -> str:
         """Get default configuration file path."""
+
+
+
         return os.path.join(
             os.path.dirname(__file__),
             "..",
@@ -182,6 +185,9 @@ class BackupConfig(BaseConfig):
 
     def _load_configuration(self) -> None:
         """Load configuration from file."""
+
+
+
         try:
             if Path(self.config_path).exists():
                 with open(self.config_path, 'r') as f:
@@ -304,6 +310,9 @@ class BackupConfig(BaseConfig):
 
     def _create_default_configuration(self) -> None:
         """Create default configuration file."""
+
+
+
         try:
             default_config = self.get_default_configuration()
             
@@ -326,6 +335,9 @@ class BackupConfig(BaseConfig):
 
     def get_default_configuration(self) -> Dict[str, Any]:
         """Get default configuration dictionary."""
+
+
+
         return {
             "storage": asdict(self.storage),
             "encryption": asdict(self.encryption),
@@ -509,6 +521,9 @@ class BackupConfig(BaseConfig):
 
     def get_configuration_summary(self) -> Dict[str, Any]:
         """Get configuration summary for monitoring."""
+
+
+
         return {
             "storage_backend": self.storage.backend.value,
             "encryption_enabled": self.encryption.enabled,
@@ -529,6 +544,9 @@ backup_config = BackupConfig()
 
 def get_backup_config() -> BackupConfig:
     """Get global backup configuration instance."""
+
+
+
     return backup_config
 
 

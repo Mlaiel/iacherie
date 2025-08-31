@@ -15,7 +15,7 @@ Project Team Specializations:
 - Security Engineer + Anti-Detection Systems
 - ML Engineer + Content Recognition
 
-⚠️ STRONG WARNING FOR UNAUTHORIZED USE:
+ STRONG WARNING FOR UNAUTHORIZED USE:
 This code contains proprietary web crawling algorithms and trade secrets of Fahed Mlaiel.
 Any unauthorized copying, modification, distribution, or use of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is
@@ -279,6 +279,9 @@ class WebCrawlersDeploymentManager:
     
     def _init_kubernetes_client(self):
         """Initialize Kubernetes client"""
+
+
+
         try:
             config.load_incluster_config()
         except:
@@ -298,6 +301,9 @@ class WebCrawlersDeploymentManager:
     
     def _init_docker_client(self):
         """Initialize Docker client"""
+
+
+
         try:
             self.docker_client = docker.from_env()
             logger.info("Docker client initialized")
@@ -307,6 +313,9 @@ class WebCrawlersDeploymentManager:
     
     def _init_redis_client(self):
         """Initialize Redis client for caching and coordination"""
+
+
+
         try:
             redis_host = os.getenv('REDIS_HOST', 'localhost')
             redis_port = int(os.getenv('REDIS_PORT', '6379'))
@@ -326,6 +335,9 @@ class WebCrawlersDeploymentManager:
     
     def _init_database_client(self):
         """Initialize database client"""
+
+
+
         try:
             db_url = os.getenv('DATABASE_URL', 'postgresql://user:pass@localhost:5432/ia_influencer')
             self.db_url = db_url
@@ -1049,6 +1061,9 @@ class WebCrawlersDeploymentManager:
     
     def _create_namespace(self, namespace: str):
         """Create Kubernetes namespace if it doesn't exist"""
+
+
+
         try:
             self.core_v1.read_namespace(name=namespace)
         except ApiException as e:
@@ -1063,6 +1078,9 @@ class WebCrawlersDeploymentManager:
     
     def _create_or_update_configmap(self, configmap_manifest: Dict[str, Any]):
         """Create or update ConfigMap"""
+
+
+
         try:
             self.core_v1.read_namespaced_config_map(
                 name=configmap_manifest['metadata']['name'],
@@ -1084,6 +1102,9 @@ class WebCrawlersDeploymentManager:
     
     def start_crawler(self, crawler_id: str) -> bool:
         """Start specific crawler"""
+
+
+
         try:
             if crawler_id not in self.crawler_configs:
                 logger.error(f"Crawler configuration not found: {crawler_id}")
@@ -1112,6 +1133,9 @@ class WebCrawlersDeploymentManager:
     
     def stop_crawler(self, crawler_id: str) -> bool:
         """Stop specific crawler"""
+
+
+
         try:
             # Scale down deployment
             deployment = self.apps_v1.read_namespaced_deployment(
@@ -1257,21 +1281,21 @@ def main():
     
     # Deploy crawler system
     if manager.deploy_crawler_system(deployment_config):
-        print("✅ Web crawler system deployed successfully")
+        print(" Web crawler system deployed successfully")
     
     # Start crawler
     if manager.start_crawler(youtube_crawler_config.crawler_id):
-        print("✅ YouTube crawler started successfully")
+        print(" YouTube crawler started successfully")
     
     # Get status
     status = manager.get_crawler_status()
-    print(f"✅ Crawler system status: {status['system_health']}")
+    print(f" Crawler system status: {status['system_health']}")
     
     # Health check
     health = manager.health_check()
-    print(f"✅ Health check completed: {health['overall_status']}")
+    print(f" Health check completed: {health['overall_status']}")
     
-    print("\n🎯 Web Crawlers Deployment Manager test completed")
+    print("\n Web Crawlers Deployment Manager test completed")
 
 
 if __name__ == "__main__":

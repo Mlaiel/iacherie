@@ -76,6 +76,9 @@ class RevenueCalculator:
         country: str = "US"
     ) -> float:
         """Calculate YouTube revenue based on views and engagement"""
+
+
+
         try:
             if subscriber_count < self.PLATFORM_RATES["youtube"]["monetization_threshold"]:
                 return 0.0
@@ -109,6 +112,9 @@ class RevenueCalculator:
         follower_count: int
     ) -> float:
         """Calculate Instagram revenue from impressions and engagement"""
+
+
+
         try:
             if follower_count < self.PLATFORM_RATES["instagram"]["monetization_threshold"]:
                 return 0.0
@@ -140,6 +146,9 @@ class RevenueCalculator:
         in_creator_fund: bool = True
     ) -> float:
         """Calculate TikTok revenue from Creator Fund and engagement"""
+
+
+
         try:
             if follower_count < self.PLATFORM_RATES["tiktok"]["monetization_threshold"]:
                 return 0.0
@@ -171,6 +180,9 @@ class RevenueCalculator:
         country_distribution: Dict[str, int]
     ) -> float:
         """Calculate Spotify revenue from streams"""
+
+
+
         try:
             base_rate = self.PLATFORM_RATES["spotify"]["per_stream"]
             
@@ -198,6 +210,9 @@ class RevenueCalculator:
         forecast_days: int = 30
     ) -> List[float]:
         """ML-based revenue prediction (simplified implementation)"""
+
+
+
         try:
             if not historical_data:
                 return [0.0] * forecast_days
@@ -239,6 +254,9 @@ class RevenueCalculator:
         platform_data: Dict[str, Dict]
     ) -> Dict[str, float]:
         """Calculate total revenue across all platforms"""
+
+
+
         try:
             revenues = {}
             
@@ -306,6 +324,9 @@ class RevenueCalculator:
     
     async def get_real_time_revenue(self, content_id: str) -> Dict[str, float]:
         """Get real-time revenue estimates"""
+
+
+
         try:
             # This would integrate with platform APIs for real-time data
             # For now, return cached/estimated values

@@ -7,7 +7,7 @@ and comprehensive digital rights management across multiple content formats and 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -291,6 +291,9 @@ class LicensingAgent(BaseAgent):
         Returns:
             AgentResponse with license agreement or approval workflow
         """
+
+
+
         try:
             start_time = time.time()
             
@@ -398,6 +401,9 @@ class LicensingAgent(BaseAgent):
         Returns:
             AgentResponse with detailed royalty calculations
         """
+
+
+
         try:
             # Get active licenses for content
             active_licenses = await self._get_active_licenses(content_id, period_start, period_end)
@@ -473,6 +479,9 @@ class LicensingAgent(BaseAgent):
         Returns:
             AgentResponse with action result
         """
+
+
+
         try:
             license_data = await self._get_license_by_id(license_id)
             if not license_data:
@@ -542,6 +551,9 @@ class LicensingAgent(BaseAgent):
         Returns:
             AgentResponse with detailed compliance report
         """
+
+
+
         try:
             # Collect compliance data
             licenses_data = await self._get_licenses_in_period(
@@ -625,6 +637,9 @@ class LicensingAgent(BaseAgent):
 
     async def _verify_content_rights(self, content_id: str) -> Dict[str, Any]:
         """Verify content ownership and licensing rights with blockchain verification"""
+
+
+
         try:
             # Fetch content from database
             content = await self._get_content_by_id(content_id)
@@ -787,6 +802,9 @@ class LicensingAgent(BaseAgent):
 
     def _load_license_templates(self) -> Dict[str, Dict[str, Any]]:
         """Load license templates configuration"""
+
+
+
         return {
             "personal": {
                 "usage_type": "personal_only",
@@ -813,6 +831,9 @@ class LicensingAgent(BaseAgent):
 
     def _load_pricing_rules(self) -> Dict[str, Dict[str, Any]]:
         """Load pricing rules configuration"""
+
+
+
         return {
             "personal": {"base_price": 50.00, "royalty_rate": 0.05},
             "commercial": {"base_price": 200.00, "royalty_rate": 0.10},
@@ -822,6 +843,9 @@ class LicensingAgent(BaseAgent):
 
     def _load_territory_rules(self) -> Dict[str, Dict[str, Any]]:
         """Load territory-specific licensing rules"""
+
+
+
         return {
             "EU": {"multiplier": 1.0, "compliance_requirements": ["GDPR"]},
             "US": {"multiplier": 1.2, "compliance_requirements": ["DMCA"]},
@@ -830,6 +854,9 @@ class LicensingAgent(BaseAgent):
 
     async def get_agent_status(self) -> Dict[str, Any]:
         """Get current agent status and metrics"""
+
+
+
         return {
             "agent_type": self.agent_type,
             "version": self.version,

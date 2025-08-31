@@ -7,7 +7,7 @@ serialization for all vector operations and data structures.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Any attempt to steal the concept, idea, or code without explicit written authorization
@@ -89,6 +89,9 @@ class VectorDocument:
     @property
     def vector_dimension(self) -> int:
         """Get vector dimension"""
+
+
+
         return self.vector_data.shape[-1] if self.vector_data is not None else 0
     
     @property
@@ -100,6 +103,9 @@ class VectorDocument:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary (excluding numpy array)"""
+
+
+
         return {
             "document_id": self.document_id,
             "content_type": self.content_type,
@@ -148,10 +154,16 @@ class VectorSearchRequest:
     @property
     def vector_dimension(self) -> int:
         """Get query vector dimension"""
+
+
+
         return len(self.query_vector) if self.query_vector is not None else 0
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             "query_id": self.query_id,
             "content_type": self.content_type,
@@ -201,6 +213,9 @@ class VectorSearchResult:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             "document_id": self.document_id,
             "similarity_score": self.similarity_score,
@@ -226,6 +241,9 @@ class SimilarityMatch:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             "document_id": self.document_id,
             "similarity_score": self.similarity_score,
@@ -248,6 +266,9 @@ class VectorIndexConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             "index_name": self.index_name,
             "index_type": self.index_type.value,
@@ -271,6 +292,9 @@ class IndexingResult:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             "success": self.success,
             "document_id": self.document_id,
@@ -296,10 +320,16 @@ class BatchProcessingResult:
     @property
     def success_rate(self) -> float:
         """Calculate success rate"""
+
+
+
         return self.successful / self.total_processed if self.total_processed > 0 else 0.0
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             "batch_id": self.batch_id,
             "total_processed": self.total_processed,
@@ -365,6 +395,9 @@ class VectorMetrics:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             "storage_metrics": {
                 "vectors_stored": self.vectors_stored,
@@ -422,10 +455,16 @@ class VectorProcessingTask:
     @property
     def age_seconds(self) -> float:
         """Get task age in seconds"""
+
+
+
         return (datetime.now(timezone.utc) - self.created_at).total_seconds()
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             "task_id": self.task_id,
             "task_type": self.task_type,
@@ -465,6 +504,9 @@ class CrossModalSearchRequest:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             "query_id": self.query_id,
             "content_types": self.content_types,
@@ -498,6 +540,9 @@ class VectorStatistics:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             "total_documents": self.total_documents,
             "total_vectors": self.total_vectors,

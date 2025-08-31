@@ -7,7 +7,7 @@ compliance, and financial analytics in the IA Influencer payment ecosystem.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -140,6 +140,9 @@ class PaymentTransaction(Base):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert transaction to dictionary."""
+
+
+
         return {
             "id": self.id,
             "external_id": self.external_id,
@@ -225,6 +228,9 @@ class PayoutSchedule(Base):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert payout to dictionary."""
+
+
+
         return {
             "id": self.id,
             "creator_id": self.creator_id,
@@ -294,6 +300,9 @@ class PaymentMethod(Base):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert payment method to dictionary (safe data only)."""
+
+
+
         return {
             "id": self.id,
             "method_id": self.method_id,
@@ -456,6 +465,9 @@ class PaymentProvider(Base):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert provider to dictionary."""
+
+
+
         return {
             "id": self.id,
             "provider_name": self.provider_name,

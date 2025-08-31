@@ -245,6 +245,9 @@ class PerformanceLoggingConfig:
     
     def _create_default_profiles(self) -> List[ComponentProfile]:
         """Create default component profiles"""
+
+
+
         return [
             ComponentProfile(
                 name="api_gateway",
@@ -310,6 +313,9 @@ class PerformanceLoggingConfig:
     
     def _create_default_thresholds(self) -> List[MetricThreshold]:
         """Create default performance thresholds"""
+
+
+
         return [
             # Response time thresholds
             MetricThreshold(
@@ -386,6 +392,9 @@ class PerformanceLoggingConfig:
     
     def _check_gpu_availability(self) -> bool:
         """Check if GPU monitoring is available"""
+
+
+
         try:
             import GPUtil
             return len(GPUtil.getGPUs()) > 0
@@ -1027,6 +1036,9 @@ class PerformanceLoggingConfig:
     
     def get_config_status(self) -> Dict[str, Any]:
         """Get current configuration status"""
+
+
+
         return {
             "enabled": self.enabled,
             "sampling_interval": self.sampling_interval,

@@ -8,7 +8,7 @@ and error recovery.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
@@ -95,11 +95,17 @@ class WorkflowStep:
     @property
     def is_completed(self) -> bool:
         """Check if step is completed"""
+
+
+
         return self.status in [StepStatus.COMPLETED, StepStatus.SKIPPED]
     
     @property
     def is_failed(self) -> bool:
         """Check if step failed"""
+
+
+
         return self.status == StepStatus.FAILED
 
 
@@ -136,6 +142,9 @@ class WorkflowDefinition:
     
     def get_dependent_steps(self, step_id: str) -> List[WorkflowStep]:
         """Get steps that depend on the given step"""
+
+
+
         return [step for step in self.steps if step_id in step.dependencies]
 
 
@@ -188,6 +197,9 @@ class WorkflowExecution:
     @property
     def is_completed(self) -> bool:
         """Check if workflow is completed"""
+
+
+
         return self.status in [WorkflowStatus.COMPLETED, WorkflowStatus.FAILED, WorkflowStatus.CANCELLED]
 
 
@@ -237,6 +249,9 @@ class WorkflowEngine:
     
     async def initialize(self) -> None:
         """Initialize the workflow engine"""
+
+
+
         try:
             # Start background tasks
             self._background_tasks.extend([
@@ -253,6 +268,9 @@ class WorkflowEngine:
     
     async def register_workflow(self, workflow: WorkflowDefinition) -> bool:
         """Register a workflow definition"""
+
+
+
         try:
             # Validate workflow
             if not self._validate_workflow(workflow):
@@ -280,6 +298,9 @@ class WorkflowEngine:
     async def execute_workflow(self, workflow_id: str, context: Dict[str, Any] = None, 
                               triggered_by: str = None) -> str:
         """Execute a workflow"""
+
+
+
         try:
             # Get workflow definition
             workflow_def = self.workflow_definitions.get(workflow_id)
@@ -329,6 +350,9 @@ class WorkflowEngine:
     
     async def _execute_workflow_async(self, execution: WorkflowExecution) -> None:
         """Asynchronous workflow execution"""
+
+
+
         try:
             workflow_def = execution.workflow_definition
             
@@ -424,6 +448,9 @@ class WorkflowEngine:
     
     async def _execute_step(self, execution: WorkflowExecution, step: WorkflowStep) -> None:
         """Execute a single workflow step"""
+
+
+
         try:
             step.status = StepStatus.RUNNING
             step.started_at = datetime.utcnow()

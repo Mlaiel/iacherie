@@ -219,6 +219,9 @@ class ProtectionAgentIndex:
         Returns:
             Dict: Protection results for single file
         """
+
+
+
         try:
             # Step 1: Content Analysis and Fingerprinting
             fingerprint_result = await self.protection_agent.content_analyzer.create_comprehensive_fingerprint(
@@ -301,6 +304,9 @@ class ProtectionAgentIndex:
         Returns:
             Dict: Complete protection status
         """
+
+
+
         try:
             # Get status from all services
             copyright_status = await self.protection_agent.copyright_manager.get_protection_status(content_id)
@@ -397,6 +403,9 @@ class ProtectionAgentIndex:
     
     def get_performance_metrics(self) -> Dict:
         """Get current performance and usage metrics"""
+
+
+
         
         return {
             'timestamp': datetime.utcnow().isoformat(),

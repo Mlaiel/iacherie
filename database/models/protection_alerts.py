@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -247,6 +247,9 @@ class ProtectionAlert(Base):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert model to dictionary for API responses"""
+
+
+
         return {
             "id": str(self.id),
             "fingerprint_id": str(self.fingerprint_id),
@@ -367,6 +370,9 @@ class ProtectionAlert(Base):
     @classmethod
     def create_from_detection(cls, detection_data: Dict[str, Any], fingerprint_id: str, user_id: str) -> 'ProtectionAlert':
         """Create ProtectionAlert from detection engine output"""
+
+
+
         return cls(
             fingerprint_id=fingerprint_id,
             user_id=user_id,

@@ -1,5 +1,5 @@
 """
-💰 Monetization Repository - IA Influencer Agent Platform Enterprise
+ Monetization Repository - IA Influencer Agent Platform Enterprise
 ================================================================
 Module: backend/data_management/repositories/monetization_repository.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Monetization Repository - Production-Ready
 Responsibility: Revenue tracking, optimization, and subscription management
 ================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
@@ -190,6 +190,9 @@ class MonetizationRepository(BaseRepository):
                       platform: str = "platform",
                       metadata: Dict[str, Any] = None) -> RevenueRecord:
         """Record a new revenue transaction"""
+
+
+
         try:
             # Generate unique revenue ID
             revenue_id = self._generate_unique_id("rev", creator_id)
@@ -265,6 +268,9 @@ class MonetizationRepository(BaseRepository):
     def calculate_commission(self, creator_id: str, gross_amount: Decimal,
                            creator_tier: SubscriptionTier) -> CommissionInfo:
         """Calculate commission and creator payout"""
+
+
+
         try:
             transaction_id = self._generate_unique_id("txn", creator_id)
             
@@ -304,6 +310,9 @@ class MonetizationRepository(BaseRepository):
                                   start_date: datetime,
                                   end_date: datetime) -> RevenueAnalytics:
         """Calculate comprehensive revenue analytics"""
+
+
+
         try:
             # Get revenue data for period
             revenue_data = self._get_revenue_data(creator_id, start_date, end_date)
@@ -357,10 +366,16 @@ class MonetizationRepository(BaseRepository):
     # Data fetching methods (placeholders - would connect to actual data sources)
     def _get_revenue_data(self, creator_id: str, start_date: datetime, end_date: datetime) -> List[RevenueRecord]:
         """Get revenue data for period"""
+
+
+
         return []
     
     def _get_previous_period_revenue(self, creator_id: str, start_date: datetime, end_date: datetime) -> List[RevenueRecord]:
         """Get revenue data for previous period"""
+
+
+
         return []
 
 

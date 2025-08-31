@@ -60,6 +60,9 @@ class TestFullWorkflowIntegration:
     @pytest.fixture
     def sample_content_workflow_input(self):
         """Sample input for content workflow"""
+
+
+
         return {
             'workflow_id': 'workflow_123456789',
             'workflow_type': 'content_protection_and_distribution',
@@ -546,8 +549,8 @@ if __name__ == "__main__":
         """Run basic integration tests for development"""
         print("Running Integration Workflow Tests...")
         
-        print("✓ Full Workflow Integration test structure created")
-        print("✓ Error Handling and Recovery test structure created")
+        print(" Full Workflow Integration test structure created")
+        print(" Error Handling and Recovery test structure created")
         print("All Integration Workflow tests passed basic validation!")
     
     asyncio.run(run_simple_tests())

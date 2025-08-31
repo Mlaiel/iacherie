@@ -7,7 +7,7 @@ Handles GDPR, DMCA, platform policies, data protection, and international compli
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -210,6 +210,9 @@ class ComplianceAgent(BaseAgent):
     
     async def initialize_compliance_rules(self):
         """Initialize comprehensive compliance rules for all frameworks"""
+
+
+
         try:
             # GDPR Rules
             gdpr_rules = [
@@ -478,6 +481,9 @@ class ComplianceAgent(BaseAgent):
     async def _execute_compliance_rule(self, rule: ComplianceRule, entity_type: str, 
                                      entity_id: str, entity_data: Optional[Dict[str, Any]]) -> Tuple[bool, Dict[str, Any]]:
         """Execute a specific compliance rule validation"""
+
+
+
         try:
             if rule.automated and rule.validator_function:
                 # Execute automated validation
@@ -498,6 +504,9 @@ class ComplianceAgent(BaseAgent):
     async def validate_gdpr_consent(self, entity_type: str, entity_id: str, 
                                   entity_data: Optional[Dict[str, Any]]) -> Tuple[bool, Dict[str, Any]]:
         """Validate GDPR consent compliance"""
+
+
+
         try:
             if entity_type != 'user':
                 return True, {}
@@ -533,6 +542,9 @@ class ComplianceAgent(BaseAgent):
     async def validate_data_minimization(self, entity_type: str, entity_id: str,
                                        entity_data: Optional[Dict[str, Any]]) -> Tuple[bool, Dict[str, Any]]:
         """Validate GDPR data minimization compliance"""
+
+
+
         try:
             if not entity_data:
                 return True, {}
@@ -570,6 +582,9 @@ class ComplianceAgent(BaseAgent):
     async def validate_dmca_process(self, entity_type: str, entity_id: str,
                                   entity_data: Optional[Dict[str, Any]]) -> Tuple[bool, Dict[str, Any]]:
         """Validate DMCA takedown process compliance"""
+
+
+
         try:
             if entity_type != 'content':
                 return True, {}
@@ -598,6 +613,9 @@ class ComplianceAgent(BaseAgent):
     async def validate_youtube_policy(self, entity_type: str, entity_id: str,
                                     entity_data: Optional[Dict[str, Any]]) -> Tuple[bool, Dict[str, Any]]:
         """Validate YouTube content policy compliance"""
+
+
+
         try:
             if entity_type != 'content' or not entity_data:
                 return True, {}
@@ -631,6 +649,9 @@ class ComplianceAgent(BaseAgent):
     async def validate_spotify_policy(self, entity_type: str, entity_id: str,
                                     entity_data: Optional[Dict[str, Any]]) -> Tuple[bool, Dict[str, Any]]:
         """Validate Spotify content policy compliance"""
+
+
+
         try:
             if entity_type != 'audio_content' or not entity_data:
                 return True, {}
@@ -668,6 +689,9 @@ class ComplianceAgent(BaseAgent):
     
     async def _handle_violation(self, violation: ComplianceViolation):
         """Handle detected compliance violation"""
+
+
+
         try:
             handler = self.violation_handlers.get(violation.severity)
             if handler:
@@ -784,7 +808,7 @@ class ComplianceAgent(BaseAgent):
         recommendations = []
         
         if not violations:
-            recommendations.append("✅ All compliance checks passed - maintain current standards")
+            recommendations.append(" All compliance checks passed - maintain current standards")
             return recommendations
         
         # Analyze violation patterns
@@ -798,20 +822,20 @@ class ComplianceAgent(BaseAgent):
         
         # Priority recommendations based on severity
         if ComplianceLevel.EMERGENCY in severity_counts:
-            recommendations.append("🚨 EMERGENCY: Immediate legal review and system lockdown required")
+            recommendations.append(" EMERGENCY: Immediate legal review and system lockdown required")
         
         if ComplianceLevel.CRITICAL in severity_counts:
-            recommendations.append("🔥 CRITICAL: Escalate to legal team and implement emergency remediation")
+            recommendations.append(" CRITICAL: Escalate to legal team and implement emergency remediation")
         
         if ComplianceLevel.HIGH in severity_counts:
-            recommendations.append("⚠️ HIGH PRIORITY: Immediate remediation required within 24 hours")
+            recommendations.append(" HIGH PRIORITY: Immediate remediation required within 24 hours")
         
         # Framework-specific recommendations
         if RegulatoryFramework.GDPR in framework_violations:
-            recommendations.append("📋 GDPR: Review data processing activities and update consent mechanisms")
+            recommendations.append(" GDPR: Review data processing activities and update consent mechanisms")
         
         if RegulatoryFramework.DMCA in framework_violations:
-            recommendations.append("⚖️ DMCA: Accelerate takedown response procedures and legal review")
+            recommendations.append(" DMCA: Accelerate takedown response procedures and legal review")
         
         # Automation recommendations
         automated_violations = [v for v in violations if self.compliance_rules[v.rule_id].automated]
@@ -820,13 +844,16 @@ class ComplianceAgent(BaseAgent):
         
         # Training recommendations
         if len(violations) > 5:
-            recommendations.append("📚 TRAINING: Schedule compliance training for relevant teams")
+            recommendations.append(" TRAINING: Schedule compliance training for relevant teams")
         
         return recommendations
     
     async def generate_compliance_report(self, period_start: datetime, period_end: datetime,
                                        framework: Optional[RegulatoryFramework] = None) -> ComplianceReport:
         """Generate comprehensive compliance report for specified period"""
+
+
+
         try:
             report_id = str(uuid.uuid4())
             
@@ -893,6 +920,9 @@ class ComplianceAgent(BaseAgent):
     
     def _violation_to_dict(self, violation: ComplianceViolation) -> Dict[str, Any]:
         """Convert violation to dictionary format"""
+
+
+
         return {
             'id': violation.id,
             'rule_id': violation.rule_id,
@@ -1076,6 +1106,9 @@ class ComplianceAgentManager:
     
     async def get_agent(self, agent_id: str) -> Optional[ComplianceAgent]:
         """Get compliance agent by ID"""
+
+
+
         return self.agents.get(agent_id)
     
     async def check_multi_framework_compliance(self, entity_type: str, entity_id: str,

@@ -8,7 +8,7 @@ Provides unified entry point for all parsing operations and services.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
@@ -50,6 +50,9 @@ class ParsersIndex:
     
     def _load_config(self, config_path: Optional[str] = None) -> ParserConfig:
         """Load parser configuration"""
+
+
+
         try:
             if config_path:
                 return ParserConfig.from_file(config_path)
@@ -66,6 +69,9 @@ class ParsersIndex:
     
     async def initialize(self) -> None:
         """Initialize all parser components"""
+
+
+
         try:
             self.logger.info("Initializing parsers module...")
             
@@ -98,6 +104,9 @@ class ParsersIndex:
     
     async def shutdown(self) -> None:
         """Shutdown parsers module"""
+
+
+
         try:
             self.logger.info("Shutting down parsers module...")
             
@@ -124,6 +133,9 @@ class ParsersIndex:
     
     def get_config(self) -> ParserConfig:
         """Get parser configuration"""
+
+
+
         return self.config
     
     async def health_check(self) -> Dict[str, Any]:
@@ -168,6 +180,9 @@ async def get_parsers_index(config_path: Optional[str] = None) -> ParsersIndex:
 
 async def initialize_parsers(config_path: Optional[str] = None) -> ParsersIndex:
     """Initialize parsers module"""
+
+
+
     return await get_parsers_index(config_path)
 
 

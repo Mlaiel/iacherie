@@ -7,7 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project Team: Multi-format Creator Platform with AI Protection & Monetization
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -103,6 +103,9 @@ class EnvironmentHealthChecker:
                                            environments: Optional[List[str]] = None,
                                            quick_check: bool = False) -> Dict[str, Any]:
         """Run comprehensive health check across environments"""
+
+
+
         try:
             logger.info("Starting comprehensive health check...")
             
@@ -179,6 +182,9 @@ class EnvironmentHealthChecker:
     
     async def _check_environment_health(self, env_name: str, quick_check: bool) -> Dict[str, Any]:
         """Check health of specific environment"""
+
+
+
         try:
             env_type = EnvironmentType(env_name)
             manager = EnvironmentManagerFactory.create_manager(env_type)
@@ -231,6 +237,9 @@ class EnvironmentHealthChecker:
     
     async def _run_global_checks(self, quick_check: bool) -> Dict[str, Any]:
         """Run global system checks"""
+
+
+
         try:
             global_checks = {
                 'system_resources': {},
@@ -269,6 +278,9 @@ class EnvironmentHealthChecker:
     
     async def _check_configuration_health(self, manager) -> Dict[str, Any]:
         """Check configuration health"""
+
+
+
         try:
             start_time = time.time()
             
@@ -316,6 +328,9 @@ class EnvironmentHealthChecker:
     
     async def _check_connectivity(self, env_name: str) -> Dict[str, Any]:
         """Check environment connectivity"""
+
+
+
         try:
             connectivity_check = {
                 'status': HealthStatus.HEALTHY.value,
@@ -370,6 +385,9 @@ class EnvironmentHealthChecker:
     
     async def _check_resource_utilization(self, env_name: str) -> Dict[str, Any]:
         """Check resource utilization"""
+
+
+
         try:
             resource_check = {
                 'status': HealthStatus.HEALTHY.value,
@@ -422,6 +440,9 @@ class EnvironmentHealthChecker:
     
     async def _check_performance_metrics(self, env_name: str) -> Dict[str, Any]:
         """Check performance metrics"""
+
+
+
         try:
             performance_check = {
                 'status': HealthStatus.HEALTHY.value,
@@ -475,6 +496,9 @@ class EnvironmentHealthChecker:
     
     async def _check_security_posture(self, env_name: str) -> Dict[str, Any]:
         """Check security posture"""
+
+
+
         try:
             security_check = {
                 'status': HealthStatus.HEALTHY.value,
@@ -511,6 +535,9 @@ class EnvironmentHealthChecker:
     
     async def _check_compliance_status(self, env_name: str) -> Dict[str, Any]:
         """Check compliance status"""
+
+
+
         try:
             compliance_check = {
                 'status': HealthStatus.HEALTHY.value,
@@ -551,6 +578,9 @@ class EnvironmentHealthChecker:
     
     async def _check_cross_environment_health(self) -> Dict[str, Any]:
         """Check cross-environment health"""
+
+
+
         try:
             cross_env_check = {
                 'status': HealthStatus.HEALTHY.value,
@@ -582,6 +612,9 @@ class EnvironmentHealthChecker:
     # System check helper methods
     async def _check_system_resources(self) -> Dict[str, Any]:
         """Check system resources"""
+
+
+
         return {
             'status': HealthStatus.HEALTHY.value,
             'cpu_available': True,
@@ -591,6 +624,9 @@ class EnvironmentHealthChecker:
     
     async def _check_network_health(self) -> Dict[str, Any]:
         """Check network health"""
+
+
+
         return {
             'status': HealthStatus.HEALTHY.value,
             'connectivity': True,
@@ -600,6 +636,9 @@ class EnvironmentHealthChecker:
     
     async def _check_external_dependencies(self) -> Dict[str, Any]:
         """Check external dependencies"""
+
+
+
         return {
             'status': HealthStatus.HEALTHY.value,
             'apis_reachable': True,
@@ -608,6 +647,9 @@ class EnvironmentHealthChecker:
     
     async def _check_database_health(self) -> Dict[str, Any]:
         """Check database health"""
+
+
+
         return {
             'status': HealthStatus.HEALTHY.value,
             'connection_pool_healthy': True,
@@ -617,6 +659,9 @@ class EnvironmentHealthChecker:
     
     async def _check_cache_health(self) -> Dict[str, Any]:
         """Check cache health"""
+
+
+
         return {
             'status': HealthStatus.HEALTHY.value,
             'redis_healthy': True,
@@ -636,6 +681,9 @@ class EnvironmentHealthChecker:
     
     def _get_cpu_usage(self) -> float:
         """Get CPU usage percentage"""
+
+
+
         try:
             import psutil
             return psutil.cpu_percent(interval=1)
@@ -644,6 +692,9 @@ class EnvironmentHealthChecker:
     
     def _get_memory_usage(self) -> float:
         """Get memory usage percentage"""
+
+
+
         try:
             import psutil
             return psutil.virtual_memory().percent
@@ -652,6 +703,9 @@ class EnvironmentHealthChecker:
     
     def _get_disk_usage(self) -> float:
         """Get disk usage percentage"""
+
+
+
         try:
             import psutil
             return psutil.disk_usage('/').percent

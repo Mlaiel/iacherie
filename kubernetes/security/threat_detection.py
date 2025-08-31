@@ -133,6 +133,9 @@ class GeoLocationAnalyzer:
         
     def _initialize_geoip(self):
         """Initialize GeoIP database reader"""
+
+
+
         try:
             if os.path.exists(self.geoip_db_path):
                 self.reader = geoip2.database.Reader(self.geoip_db_path)
@@ -152,6 +155,9 @@ class GeoLocationAnalyzer:
         Returns:
             Location information dictionary
         """
+
+
+
         try:
             if not self.reader:
                 return None
@@ -185,6 +191,9 @@ class GeoLocationAnalyzer:
         Returns:
             Distance in kilometers
         """
+
+
+
         try:
             lat1, lng1 = location1.get("latitude", 0), location1.get("longitude", 0)
             lat2, lng2 = location2.get("latitude", 0), location2.get("longitude", 0)
@@ -290,6 +299,9 @@ class AnomalyDetector:
         Args:
             training_events: Events for training (normal behavior)
         """
+
+
+
         try:
             if len(training_events) < 100:
                 logger.warning("Insufficient training data for anomaly detection")
@@ -320,6 +332,9 @@ class AnomalyDetector:
         Returns:
             List of (event, anomaly_score) tuples
         """
+
+
+
         try:
             if not self.is_trained:
                 logger.warning("Anomaly detector not trained")
@@ -371,6 +386,9 @@ class BehaviorAnalyzer:
         Returns:
             User behavior profile
         """
+
+
+
         try:
             # Filter events for this user
             user_events = [e for e in historical_events if e.user_id == user_id]
@@ -475,6 +493,9 @@ class BehaviorAnalyzer:
         Returns:
             Anomaly analysis results
         """
+
+
+
         try:
             if not event.user_id or event.user_id not in self.behavior_profiles:
                 return {"is_anomalous": False, "reason": "No behavior profile available"}
@@ -564,6 +585,9 @@ class ThreatDetector:
     
     async def initialize_redis(self):
         """Initialize Redis connection"""
+
+
+
         try:
             self.redis_pool = aioredis.ConnectionPool.from_url(self.redis_url)
             logger.info("Redis connection initialized for threat detection")
@@ -573,6 +597,9 @@ class ThreatDetector:
     
     def _load_attack_patterns(self) -> Dict[str, Dict[str, Any]]:
         """Load known attack patterns"""
+
+
+
         return {
             "sql_injection": {
                 "patterns": [
@@ -618,6 +645,9 @@ class ThreatDetector:
         Returns:
             List of detected threat indicators
         """
+
+
+
         try:
             detected_threats = []
             
@@ -869,6 +899,9 @@ class ThreatDetector:
         Returns:
             Threat summary statistics
         """
+
+
+
         try:
             current_time = datetime.utcnow()
             start_time = current_time - timedelta(hours=time_range_hours)
@@ -925,6 +958,9 @@ class IncidentResponse:
     
     def _setup_response_actions(self) -> Dict[ThreatType, List[str]]:
         """Setup automated response actions for different threat types"""
+
+
+
         return {
             ThreatType.BRUTE_FORCE: [
                 "block_ip_temporarily",
@@ -974,6 +1010,9 @@ class IncidentResponse:
         Returns:
             Response execution results
         """
+
+
+
         try:
             response_actions = self.response_actions.get(threat.threat_type, [])
             executed_actions = []
@@ -1011,6 +1050,9 @@ class IncidentResponse:
     
     async def _execute_action(self, action: str, threat: ThreatIndicator) -> str:
         """Execute specific response action"""
+
+
+
         try:
             if action == "block_ip_temporarily":
                 # Add IP to temporary block list
@@ -1124,6 +1166,9 @@ class DeploymentThreatDetection:
     
     async def start_monitoring(self):
         """Start threat monitoring background tasks"""
+
+
+
         try:
             await self.threat_detector.initialize_redis()
             
@@ -1139,6 +1184,9 @@ class DeploymentThreatDetection:
     
     async def stop_monitoring(self):
         """Stop threat monitoring background tasks"""
+
+
+
         try:
             if self._monitoring_task:
                 self._monitoring_task.cancel()
@@ -1201,6 +1249,9 @@ class DeploymentThreatDetection:
         Returns:
             List of detected threats
         """
+
+
+
         try:
             threats = await self.threat_detector.analyze_event(event)
             
@@ -1218,6 +1269,9 @@ class DeploymentThreatDetection:
     
     def get_threat_dashboard_data(self) -> Dict[str, Any]:
         """Get data for threat detection dashboard"""
+
+
+
         try:
             # Get recent threat summary
             # This would be implemented with async call in production

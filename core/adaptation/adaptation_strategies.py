@@ -559,6 +559,9 @@ class AdaptationStrategies:
     
     def _load_strategy_rules(self) -> Dict[str, List[StrategyRule]]:
         """Load strategy rule sets"""
+
+
+
         return {
             'platform_specific': [
                 StrategyRule(
@@ -589,6 +592,9 @@ class AdaptationStrategies:
     
     def _initialize_performance_models(self) -> Dict[str, Any]:
         """Initialize performance prediction models"""
+
+
+
         return {
             'engagement_model': {
                 'factors': ['content_quality', 'platform_fit', 'audience_match', 'timing'],

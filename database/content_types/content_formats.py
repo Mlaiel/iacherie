@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Multimedia Expert, Format Specialist, Technical Architect
 Copyright: Fahed Mlaiel - All rights reserved
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
@@ -541,6 +541,9 @@ class FormatDetector:
     
     def detect_format(self, file_path: Path) -> Optional[FormatSpecification]:
         """Detect content format from file"""
+
+
+
         try:
             # First try magic number detection
             mime_type = self.magic_detector.from_file(str(file_path))
@@ -566,6 +569,9 @@ class FormatDetector:
     
     def is_supported_format(self, file_path: Path) -> bool:
         """Check if format is supported"""
+
+
+
         return self.detect_format(file_path) is not None
     
     def get_supported_extensions(self, category: MediaCategory = None) -> Set[str]:

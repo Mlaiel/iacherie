@@ -1,4 +1,4 @@
-"""💾 Data Backups Management Module - IA Influencer Agent Platform Enterprise
+""" Data Backups Management Module - IA Influencer Agent Platform Enterprise
 =========================================================================
 Module: backend/data_management/backups/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -7,7 +7,7 @@ Type: Industrial Backup System - Enterprise Production-Ready
 Responsibility: Sauvegarde intelligente multi-format avec protection et récupération avancée
 ====================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -18,12 +18,12 @@ Stockage Multi-niveau → Versionning Intelligent → Compression Optimisée →
 Vérification Intégrité → Récupération Instant → Monitoring Proactif
 
 BACKUP STRATEGY:
-🔄 Real-time: Backup immédiat post-upload (créateurs actifs)
-📅 Scheduled: Backups programmés quotidiens/hebdomadaires  
-🗂️ Incremental: Sauvegarde différentielle optimisée
-🔐 Encrypted: Chiffrement bout-en-bout AES-256
-☁️ Multi-cloud: AWS S3 + Azure + Google Cloud redundancy
-🎯 Point-in-time: Récupération à n'importe quel moment
+ Real-time: Backup immédiat post-upload (créateurs actifs)
+ Scheduled: Backups programmés quotidiens/hebdomadaires  
+ Incremental: Sauvegarde différentielle optimisée
+ Encrypted: Chiffrement bout-en-bout AES-256
+ Multi-cloud: AWS S3 + Azure + Google Cloud redundancy
+ Point-in-time: Récupération à n'importe quel moment
 """
 __version__ = "3.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
@@ -170,10 +170,16 @@ __all__ = [
 ]
 
 def get_backup_manager() -> BackupManager:
-    """Factory function pour obtenir le gestionnaire de sauvegarde principal"""    return BackupManager()
+    """Factory function pour obtenir le gestionnaire de sauvegarde principal"""
+
+
+    return BackupManager()
 
 def get_recovery_engine() -> RecoveryEngine:
-    """Factory function pour obtenir le moteur de récupération"""    return RecoveryEngine()
+    """Factory function pour obtenir le moteur de récupération"""
+
+
+    return RecoveryEngine()
 
 def initialize_backup_system() -> None:
     """Initialise le système de sauvegarde avec la configuration par défaut"""    logger.info("Initializing backup system for IA Influencer Agent Platform")

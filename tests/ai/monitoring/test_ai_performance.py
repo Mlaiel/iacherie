@@ -97,6 +97,9 @@ class TestAIPerformanceMonitorCore:
     @pytest.fixture
     def real_model_data(self, ai_performance_data):
         """Generate realistic AI model performance data."""
+
+
+
         return ai_performance_data["production_scenarios"]
     
     async def test_monitor_initialization_complete(self, performance_monitor):

@@ -7,7 +7,7 @@ and platform-specific content adaptation for maximum reach and engagement.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+ UNAUTHORIZED USE STRICTLY PROHIBITED 
 This revolutionary multi-platform AI system is proprietary intellectual property.
 Any unauthorized access, copying, or distribution will result in severe legal consequences.
 
@@ -533,6 +533,9 @@ class PlatformSpecsManager:
     
     def get_platform_specs(self, platform: Platform) -> Optional[PlatformSpecs]:
         """Get specifications for a platform"""
+
+
+
         return self.platform_specs.get(platform)
     
     def is_content_compliant(self, 
@@ -585,6 +588,9 @@ class ContentAdaptationEngine:
                                        target_platform: Platform,
                                        optimization_strategy: OptimizationStrategy = OptimizationStrategy.ENGAGEMENT_FOCUSED) -> AdaptedContent:
         """Adapt content for a specific platform"""
+
+
+
         try:
             # Get platform specifications
             specs = self.specs_manager.get_platform_specs(target_platform)
@@ -854,6 +860,9 @@ class ContentAdaptationEngine:
                    platform: Platform,
                    strategy: OptimizationStrategy) -> str:
         """Adapt title for platform"""
+
+
+
         try:
             # Platform-specific title optimization
             if platform == Platform.YOUTUBE:
@@ -864,7 +873,7 @@ class ContentAdaptationEngine:
                 # Add strategy-specific elements
                 if strategy == OptimizationStrategy.VIRAL_MAXIMIZATION:
                     if not any(word in title.upper() for word in ["VIRAL", "TRENDING", "HOT", "AMAZING"]):
-                        title = f"🔥 {title}"
+                        title = f" {title}"
             
             elif platform == Platform.TIKTOK:
                 # TikTok prefers short, catchy titles
@@ -873,7 +882,7 @@ class ContentAdaptationEngine:
                 
                 # Add emojis for engagement
                 if not any(char for char in title if ord(char) > 127):  # No emojis present
-                    title = f"✨ {title}"
+                    title = f" {title}"
             
             elif platform == Platform.LINKEDIN:
                 # LinkedIn prefers professional, value-focused titles
@@ -893,6 +902,9 @@ class ContentAdaptationEngine:
                          platform: Platform,
                          strategy: OptimizationStrategy) -> str:
         """Adapt description for platform"""
+
+
+
         try:
             max_length = specs.max_text_length or len(description)
             
@@ -916,7 +928,7 @@ class ContentAdaptationEngine:
                 # Instagram users prefer engaging, personal content
                 if strategy == OptimizationStrategy.ENGAGEMENT_FOCUSED:
                     if not description.strip().endswith(("?", "!", ".")):
-                        description += "\n\nWhat do you think? Let me know in the comments! 💭"
+                        description += "\n\nWhat do you think? Let me know in the comments! "
             
             elif platform == Platform.LINKEDIN:
                 # LinkedIn prefers professional tone
@@ -936,6 +948,9 @@ class ContentAdaptationEngine:
                       specs: PlatformSpecs,
                       platform: Platform) -> str:
         """Adapt captions for platform"""
+
+
+
         try:
             # Platform-specific caption formatting
             if platform == Platform.INSTAGRAM:
@@ -968,6 +983,9 @@ class ContentAdaptationEngine:
                       platform: Platform,
                       strategy: OptimizationStrategy) -> List[str]:
         """Adapt hashtags for platform"""
+
+
+
         try:
             if not specs.supports_hashtags:
                 return []
@@ -1026,6 +1044,9 @@ class ContentAdaptationEngine:
                                 specs: PlatformSpecs,
                                 platform: Platform) -> Optional[str]:
         """Generate platform-optimized thumbnail"""
+
+
+
         try:
             if not MEDIA_PROCESSING_AVAILABLE:
                 return None
@@ -1055,22 +1076,22 @@ class ContentAdaptationEngine:
                 OptimizationStrategy.VIRAL_MAXIMIZATION: "Share this with someone who needs to see it!"
             },
             Platform.INSTAGRAM: {
-                OptimizationStrategy.ENGAGEMENT_FOCUSED: "Double tap if you agree! 💖",
-                OptimizationStrategy.CONVERSION_OPTIMIZED: "Link in bio for more info! 🔗",
-                OptimizationStrategy.COMMUNITY_BUILDING: "Tag a friend who would love this! 👥",
-                OptimizationStrategy.VIRAL_MAXIMIZATION: "Save this post and share it to your story! ✨"
+                OptimizationStrategy.ENGAGEMENT_FOCUSED: "Double tap if you agree! ",
+                OptimizationStrategy.CONVERSION_OPTIMIZED: "Link in bio for more info! ",
+                OptimizationStrategy.COMMUNITY_BUILDING: "Tag a friend who would love this! ",
+                OptimizationStrategy.VIRAL_MAXIMIZATION: "Save this post and share it to your story! "
             },
             Platform.TIKTOK: {
-                OptimizationStrategy.ENGAGEMENT_FOCUSED: "Like if you can relate! ❤️",
-                OptimizationStrategy.CONVERSION_OPTIMIZED: "Follow for more tips! 🔥",
-                OptimizationStrategy.COMMUNITY_BUILDING: "Duet this with your version! 🎵",
-                OptimizationStrategy.VIRAL_MAXIMIZATION: "Share this before it's too late! ⚡"
+                OptimizationStrategy.ENGAGEMENT_FOCUSED: "Like if you can relate! ",
+                OptimizationStrategy.CONVERSION_OPTIMIZED: "Follow for more tips! ",
+                OptimizationStrategy.COMMUNITY_BUILDING: "Duet this with your version! ",
+                OptimizationStrategy.VIRAL_MAXIMIZATION: "Share this before it's too late! "
             },
             Platform.TWITTER: {
-                OptimizationStrategy.ENGAGEMENT_FOCUSED: "What are your thoughts? Reply below! 💭",
+                OptimizationStrategy.ENGAGEMENT_FOCUSED: "What are your thoughts? Reply below! ",
                 OptimizationStrategy.CONVERSION_OPTIMIZED: "Thread continues below 🧵",
-                OptimizationStrategy.COMMUNITY_BUILDING: "RT if you agree! Let's start a conversation 🗣️",
-                OptimizationStrategy.VIRAL_MAXIMIZATION: "This is going viral - jump on the trend! 🚀"
+                OptimizationStrategy.COMMUNITY_BUILDING: "RT if you agree! Let's start a conversation ",
+                OptimizationStrategy.VIRAL_MAXIMIZATION: "This is going viral - jump on the trend! "
             },
             Platform.LINKEDIN: {
                 OptimizationStrategy.ENGAGEMENT_FOCUSED: "What's your experience with this? Share in the comments.",
@@ -1090,6 +1111,9 @@ class ContentAdaptationEngine:
                                adapted: AdaptedContent,
                                adaptations: List[ContentAdaptationType]) -> float:
         """Calculate quality score for adapted content"""
+
+
+
         try:
             base_score = 0.8
             
@@ -1117,6 +1141,9 @@ class ContentAdaptationEngine:
                                   adapted: AdaptedContent,
                                   specs: PlatformSpecs) -> float:
         """Calculate compliance score with platform specifications"""
+
+
+
         try:
             # Check if adapted content would be compliant
             # This is a simplified check - real implementation would be more thorough
@@ -1146,6 +1173,9 @@ class ContentAdaptationEngine:
                                     platform: Platform,
                                     strategy: OptimizationStrategy) -> float:
         """Calculate optimization score based on strategy and platform"""
+
+
+
         try:
             base_score = 0.7
             
@@ -1179,6 +1209,9 @@ class ContentAdaptationEngine:
     
     def _text_similarity(self, text1: str, text2: str) -> float:
         """Calculate simple text similarity"""
+
+
+
         try:
             # Simple word-based similarity
             words1 = set(text1.lower().split())
@@ -1210,6 +1243,9 @@ class MultiPlatformDistributionEngine:
                                      strategy: OptimizationStrategy = OptimizationStrategy.ENGAGEMENT_FOCUSED,
                                      staggered_release: bool = False) -> DistributionPlan:
         """Create comprehensive distribution plan"""
+
+
+
         try:
             # Create base distribution plan
             plan = DistributionPlan(
@@ -1260,6 +1296,9 @@ class MultiPlatformDistributionEngine:
                      platform: Platform,
                      adapted: AdaptedContent) -> int:
         """Predict potential reach for platform"""
+
+
+
         try:
             # Base reach estimation based on platform
             base_reach = {
@@ -1298,6 +1337,9 @@ class MultiPlatformDistributionEngine:
                           platform: Platform,
                           adapted: AdaptedContent) -> float:
         """Predict engagement rate for platform"""
+
+
+
         try:
             # Base engagement rates by platform
             base_engagement = {
@@ -1329,6 +1371,9 @@ class MultiPlatformDistributionEngine:
                                platform: Platform,
                                adapted: AdaptedContent) -> float:
         """Predict viral potential for platform"""
+
+
+
         try:
             # Base viral probability by platform
             base_viral = {

@@ -538,6 +538,9 @@ class RoyaltyConfig:
     
     def get_split_template(self, template_name: str) -> List[RoyaltySplit]:
         """Get predefined split template."""
+
+
+
         return self.SPLIT_TEMPLATES.get(template_name, [])
     
     def validate_splits(self, splits: List[RoyaltySplit]) -> Dict[str, Any]:
@@ -1015,10 +1018,16 @@ class RoyaltyConfig:
     
     def get_platform_config(self, platform_id: str) -> Optional[PlatformRoyaltyConfig]:
         """Get platform-specific royalty configuration."""
+
+
+
         return self.PLATFORM_CONFIGS.get(platform_id.lower())
     
     def get_territory_config(self, territory_code: str) -> Optional[TerritoryRoyaltyConfig]:
         """Get territory-specific royalty configuration."""
+
+
+
         return self.TERRITORY_CONFIGS.get(territory_code.upper())
     
     def get_royalty_rate(

@@ -46,6 +46,9 @@ class InstagramPlatform(PlatformBase):
     
     async def authenticate(self) -> bool:
         """Authenticate with Instagram using OAuth2"""
+
+
+
         try:
             # If we have a long-lived token, validate it
             if self.config.credentials.access_token:
@@ -103,6 +106,9 @@ class InstagramPlatform(PlatformBase):
     
     async def _validate_token(self) -> bool:
         """Validate Instagram access token"""
+
+
+
         try:
             params = {
                 'fields': 'id,username',
@@ -163,6 +169,9 @@ class InstagramPlatform(PlatformBase):
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
         """Upload content to Instagram"""
+
+
+
         try:
             if not os.path.exists(content_path):
                 return UploadResult(
@@ -202,6 +211,9 @@ class InstagramPlatform(PlatformBase):
     
     async def upload_from_url(self, media_url: str, metadata: ContentMetadata) -> UploadResult:
         """Upload content to Instagram from a public URL"""
+
+
+
         try:
             # Determine if it's a video or image
             mime_type = mimetypes.guess_type(media_url)[0]
@@ -273,6 +285,9 @@ class InstagramPlatform(PlatformBase):
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
         """Get Instagram analytics for a media"""
+
+
+
         try:
             # Get media insights
             insights_params = {
@@ -353,6 +368,9 @@ class InstagramPlatform(PlatformBase):
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
         """Get user's media from Instagram"""
+
+
+
         try:
             params = {
                 'fields': 'id,media_type,media_url,permalink,thumbnail_url,timestamp,caption,like_count,comments_count'
@@ -386,6 +404,9 @@ class InstagramPlatform(PlatformBase):
     
     async def delete_content(self, content_id: str) -> bool:
         """Delete media from Instagram"""
+
+
+
         try:
             result = await self._make_request('DELETE', content_id)
             return result is not None
@@ -402,6 +423,9 @@ class InstagramPlatform(PlatformBase):
     
     async def get_user_info(self, user_id: str = None) -> Optional[Dict[str, Any]]:
         """Get user information"""
+
+
+
         try:
             params = {
                 'fields': 'id,username,account_type,media_count'
@@ -416,6 +440,9 @@ class InstagramPlatform(PlatformBase):
     
     async def get_media_comments(self, media_id: str) -> List[Dict[str, Any]]:
         """Get comments for a media"""
+
+
+
         try:
             params = {
                 'fields': 'id,text,timestamp,username'
@@ -444,6 +471,9 @@ class InstagramPlatform(PlatformBase):
     
     async def get_account_insights(self, period: str = "day") -> Dict[str, Any]:
         """Get account insights"""
+
+
+
         try:
             params = {
                 'metric': 'impressions,reach,profile_views,website_clicks',

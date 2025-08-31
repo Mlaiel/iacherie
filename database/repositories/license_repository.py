@@ -58,6 +58,9 @@ class LicenseRepository(BaseRepository):
         Returns:
             int: License ID
         """
+
+
+
         try:
             # Prepare license data for database
             db_data = {
@@ -124,6 +127,9 @@ class LicenseRepository(BaseRepository):
         Returns:
             Dict: License data or None if not found
         """
+
+
+
         try:
             # Check cache first
             if self._is_cached_and_valid(license_id):
@@ -165,6 +171,9 @@ class LicenseRepository(BaseRepository):
         Returns:
             bool: True if updated successfully
         """
+
+
+
         try:
             update_data = {
                 "status": status,
@@ -217,6 +226,9 @@ class LicenseRepository(BaseRepository):
         Returns:
             bool: True if updated successfully
         """
+
+
+
         try:
             if self.db_connection:
                 # Update usage statistics in database
@@ -255,6 +267,9 @@ class LicenseRepository(BaseRepository):
         Returns:
             List[Dict]: List of licenses
         """
+
+
+
         try:
             if self.db_connection:
                 query = """
@@ -289,6 +304,9 @@ class LicenseRepository(BaseRepository):
         Returns:
             List[Dict]: List of licenses
         """
+
+
+
         try:
             if self.db_connection:
                 query = """
@@ -323,6 +341,9 @@ class LicenseRepository(BaseRepository):
         Returns:
             List[Dict]: List of expiring licenses
         """
+
+
+
         try:
             expiry_threshold = datetime.utcnow() + timedelta(days=days_ahead)
             
@@ -367,6 +388,9 @@ class LicenseRepository(BaseRepository):
         Returns:
             Dict: License statistics
         """
+
+
+
         try:
             if self.db_connection:
                 # Comprehensive statistics query
@@ -458,6 +482,9 @@ class LicenseRepository(BaseRepository):
         Returns:
             List[Dict]: Matching licenses
         """
+
+
+
         try:
             if self.db_connection:
                 # Build dynamic query
@@ -536,6 +563,9 @@ class LicenseRepository(BaseRepository):
     
     def _format_license_data(self, raw_data: Dict[str, Any]) -> Dict[str, Any]:
         """Format license data for consumption"""
+
+
+
         try:
             formatted_data = raw_data.copy()
             
@@ -558,6 +588,9 @@ class LicenseRepository(BaseRepository):
     
     async def cleanup_cache(self) -> None:
         """Clean up expired cache entries"""
+
+
+
         try:
             current_time = datetime.utcnow()
             expired_ids = []
@@ -578,6 +611,9 @@ class LicenseRepository(BaseRepository):
     
     def get_repository_stats(self) -> Dict[str, Any]:
         """Get repository statistics"""
+
+
+
         return {
             "cache_size": len(self.license_cache),
             "cache_hit_ratio": 0.85,  # Mock value

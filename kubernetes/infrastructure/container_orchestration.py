@@ -7,7 +7,7 @@ for the IA Influencer Agent platform with advanced deployment strategies.
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED 
 """
 
 import asyncio
@@ -82,6 +82,9 @@ class ContainerOrchestrator:
         
     def _init_clients(self):
         """Initialize orchestration clients"""
+
+
+
         try:
             if self.platform == OrchestrationPlatform.KUBERNETES:
                 config.load_incluster_config()
@@ -150,6 +153,9 @@ class ContainerOrchestrator:
     
     async def _deploy_k8s_service(self, service_spec: ServiceSpec, namespace: str) -> Dict[str, Any]:
         """Deploy service to Kubernetes"""
+
+
+
         try:
             # Create deployment
             deployment = self._create_k8s_deployment(service_spec, namespace)
@@ -342,6 +348,9 @@ class ContainerOrchestrator:
     
     async def _deploy_docker_compose_service(self, service_spec: ServiceSpec) -> Dict[str, Any]:
         """Deploy service using Docker Compose"""
+
+
+
         try:
             compose_config = self._generate_docker_compose(service_spec)
             

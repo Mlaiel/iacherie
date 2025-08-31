@@ -296,6 +296,9 @@ class TestMultiArmedBandit(IsolatedAsyncioTestCase):
 
     def _simulate_reward(self, arm: int) -> float:
         """Simulate reward for pulling an arm"""
+
+
+
         return np.random.normal(self.true_rewards[arm], 0.1)
 
     async def test_bandit_initialization(self):
@@ -387,6 +390,9 @@ class TestContextualBandit(IsolatedAsyncioTestCase):
 
     def _generate_context(self) -> np.ndarray:
         """Generate random context vector"""
+
+
+
         return np.random.randn(self.context_dim)
 
     def _simulate_contextual_reward(self, arm: int, context: np.ndarray) -> float:
@@ -525,6 +531,9 @@ class TestQLearningAgent(IsolatedAsyncioTestCase):
 
     def _get_reward(self, state: int) -> float:
         """Get reward for being in a state"""
+
+
+
         return self.reward_map[state]
 
     async def test_q_learning_initialization(self):
@@ -946,6 +955,9 @@ class TestBayesianOptimization(IsolatedAsyncioTestCase):
 
     def _objective_function(self, x: float, y: float) -> float:
         """Test objective function to optimize"""
+
+
+
         return -(x**2 + y**2) + 0.1 * np.sin(10 * x) * np.cos(10 * y)
 
     async def test_bayesian_optimization_initialization(self):

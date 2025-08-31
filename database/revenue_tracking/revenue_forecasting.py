@@ -8,7 +8,7 @@ Architecture: AI-powered revenue forecasting with predictive analytics and ML mo
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe Projet: Lead AI Developer + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  AVERTISSEMENT DE PROPRIÉTÉ INTELLECTUELLE ⚠️
+  AVERTISSEMENT DE PROPRIÉTÉ INTELLECTUELLE 
 Ce code et concept sont la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Violation = Poursuites judiciaires selon le droit allemand et international.
@@ -274,6 +274,9 @@ class RevenueForecastingEngine:
         """
         Génère une prévision de revenus complète
         """
+
+
+
         try:
             # Préparation des données
             training_data = await self._prepare_training_data(user_id, content_id)

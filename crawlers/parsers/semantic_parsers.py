@@ -8,7 +8,7 @@ entity extraction, sentiment analysis, and semantic fingerprinting.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
@@ -92,6 +92,9 @@ class SemanticModelManager:
     
     async def initialize(self) -> None:
         """Initialize all AI models"""
+
+
+
         try:
             # Load SpaCy models
             await self._load_spacy_models()
@@ -141,6 +144,9 @@ class SemanticModelManager:
     
     async def _load_specialized_models(self) -> None:
         """Load specialized AI models"""
+
+
+
         try:
             # Sentiment analysis
             self.models['sentiment_pipeline'] = pipeline(
@@ -210,6 +216,9 @@ class SemanticContentParser:
         """
         Perform comprehensive semantic analysis of text content
         """
+
+
+
         try:
             # Detect language if auto
             if language == "auto":
@@ -288,6 +297,9 @@ class SemanticContentParser:
     
     async def _analyze_sentiment(self, text: str) -> Dict[str, Any]:
         """Analyze sentiment with multiple models"""
+
+
+
         try:
             if 'sentiment_pipeline' in self.model_manager.models:
                 result = self.model_manager.models['sentiment_pipeline'](text)[0]
@@ -313,6 +325,9 @@ class SemanticContentParser:
     
     async def _detect_emotions(self, text: str) -> Dict[str, float]:
         """Detect emotions in text"""
+
+
+
         try:
             if 'emotion_pipeline' in self.model_manager.models:
                 results = self.model_manager.models['emotion_pipeline'](text)
@@ -331,6 +346,9 @@ class SemanticContentParser:
     
     async def _extract_topics(self, text: str) -> List[Dict[str, Any]]:
         """Extract topics using advanced NLP"""
+
+
+
         try:
             # Use TF-IDF for basic topic extraction
             vectorizer = TfidfVectorizer(
@@ -391,6 +409,9 @@ class SemanticContentParser:
     
     async def _extract_keywords(self, text: str) -> List[Dict[str, float]]:
         """Extract keywords with importance scores"""
+
+
+
         try:
             # Use TF-IDF for keyword extraction
             vectorizer = TfidfVectorizer(
@@ -419,6 +440,9 @@ class SemanticContentParser:
     
     async def _generate_semantic_fingerprint(self, text: str) -> str:
         """Generate unique semantic fingerprint"""
+
+
+
         try:
             # Create a hash based on semantic features
             normalized_text = re.sub(r'\W+', ' ', text.lower()).strip()
@@ -444,6 +468,9 @@ class SemanticContentParser:
     
     async def _create_vector_embedding(self, text: str) -> np.ndarray:
         """Create vector embedding for semantic similarity"""
+
+
+
         try:
             model_key = 'sentence_transformer_all_MiniLM_L6_v2'
             if model_key in self.model_manager.models:
@@ -459,6 +486,9 @@ class SemanticContentParser:
     
     async def _detect_language(self, text: str) -> str:
         """Detect text language"""
+
+
+
         try:
             # Simple language detection based on common words
             english_words = set(['the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for'])
@@ -483,6 +513,9 @@ class SemanticContentParser:
     
     async def _generate_summary(self, text: str) -> str:
         """Generate content summary"""
+
+
+
         try:
             if 'summarization_pipeline' in self.model_manager.models and len(text) > 100:
                 # Limit text length for summarization
@@ -508,6 +541,9 @@ class SemanticContentParser:
     
     async def _extract_key_phrases(self, text: str) -> List[str]:
         """Extract key phrases using advanced NLP"""
+
+
+
         try:
             # Extract noun phrases and important keywords
             key_phrases = []
@@ -528,6 +564,9 @@ class SemanticContentParser:
     
     async def _classify_content_category(self, text: str) -> str:
         """Classify content into categories"""
+
+
+
         try:
             # Simple rule-based classification
             text_lower = text.lower()
@@ -552,6 +591,9 @@ class SemanticContentParser:
     
     async def _analyze_intent(self, text: str) -> str:
         """Analyze user intent"""
+
+
+
         try:
             text_lower = text.lower()
             
@@ -573,6 +615,9 @@ class SemanticContentParser:
     
     async def _calculate_quality_score(self, text: str) -> float:
         """Calculate content quality score"""
+
+
+
         try:
             score = 0.0
             
@@ -610,6 +655,9 @@ class SemanticContentParser:
     
     async def _calculate_originality_score(self, text: str) -> float:
         """Calculate content originality score"""
+
+
+
         try:
             # Simple originality heuristics
             score = 0.5  # Base score
@@ -639,6 +687,9 @@ class SemanticContentParser:
     
     async def _predict_engagement(self, text: str) -> float:
         """Predict content engagement potential"""
+
+
+
         try:
             score = 0.0
             
@@ -670,6 +721,9 @@ class SemanticContentParser:
     
     async def _calculate_readability(self, text: str) -> float:
         """Calculate readability score (simplified)"""
+
+
+
         try:
             words = text.split()
             sentences = text.split('.')
@@ -710,6 +764,9 @@ class SemanticContentParser:
     
     async def _detect_toxicity(self, text: str) -> float:
         """Detect content toxicity"""
+
+
+
         try:
             if 'toxicity_pipeline' in self.model_manager.models:
                 result = self.model_manager.models['toxicity_pipeline'](text)[0]

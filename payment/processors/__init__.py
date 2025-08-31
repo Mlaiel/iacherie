@@ -1,5 +1,5 @@
 """
-💳 Payment Processors Module
+ Payment Processors Module
 ============================
 
 Comprehensive payment processing suite with specialized processors for
@@ -174,6 +174,9 @@ def list_processors():
     Returns:
         List of available processor names
     """
+
+
+
     return list(PAYMENT_PROCESSORS.keys())
 
 

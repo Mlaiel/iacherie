@@ -87,6 +87,9 @@ class PaymentGatewayEngine:
         
     async def initialize(self) -> None:
         """Initialize payment gateway engine"""
+
+
+
         try:
             await self._setup_database_tables()
             await self._initialize_gateways()
@@ -166,6 +169,9 @@ class PaymentGatewayEngine:
 
     async def _load_gateway_configurations(self) -> None:
         """Load gateway configurations from database"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 # Load default configurations if not exists
@@ -238,6 +244,9 @@ class PaymentGatewayEngine:
 
     async def process_payment(self, payment_request: PaymentRequest) -> PaymentResult:
         """Process payment through optimal gateway"""
+
+
+
         try:
             # Generate transaction ID
             transaction_id = self._generate_transaction_id()
@@ -267,6 +276,9 @@ class PaymentGatewayEngine:
 
     async def _select_optimal_gateway(self, payment_request: PaymentRequest) -> Optional[GatewayProvider]:
         """Select optimal gateway based on routing rules and availability"""
+
+
+
         try:
             # Check preferred gateway first
             if payment_request.preferred_gateway:
@@ -297,6 +309,9 @@ class PaymentGatewayEngine:
 
     async def _apply_routing_rules(self, payment_request: PaymentRequest) -> Optional[GatewayProvider]:
         """Apply routing rules to select gateway"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 rules = await conn.fetch("""
@@ -320,6 +335,9 @@ class PaymentGatewayEngine:
     def _evaluate_routing_conditions(self, conditions: Dict[str, Any], 
                                    payment_request: PaymentRequest) -> bool:
         """Evaluate routing rule conditions"""
+
+
+
         try:
             # Amount-based routing
             if 'min_amount' in conditions:
@@ -349,6 +367,9 @@ class PaymentGatewayEngine:
     async def _is_gateway_available(self, provider: GatewayProvider, 
                                   payment_request: PaymentRequest) -> bool:
         """Check if gateway is available for processing"""
+
+
+
         try:
             if provider not in self.gateways:
                 return False
@@ -374,6 +395,9 @@ class PaymentGatewayEngine:
                                      payment_request: PaymentRequest,
                                      transaction_id: str) -> PaymentResult:
         """Process payment through specific gateway"""
+
+
+
         try:
             gateway = self.gateways[provider]
             
@@ -409,6 +433,9 @@ class PaymentGatewayEngine:
 
     async def _calculate_processing_fee(self, provider: GatewayProvider, amount: Decimal) -> Decimal:
         """Calculate processing fee for gateway"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 fees = await conn.fetchval("""
@@ -430,6 +457,9 @@ class PaymentGatewayEngine:
     async def _process_with_fallback(self, payment_request: PaymentRequest, 
                                    original_error: str) -> PaymentResult:
         """Process payment with fallback gateway"""
+
+
+
         try:
             # Get fallback gateways
             async with self.db_pool.acquire() as conn:
@@ -476,6 +506,9 @@ class PaymentGatewayEngine:
 
     async def _store_transaction(self, result: PaymentResult, request: PaymentRequest) -> None:
         """Store transaction record in database"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 await conn.execute("""
@@ -504,6 +537,9 @@ class PaymentGatewayEngine:
 
     async def refund_payment(self, transaction_id: str, amount: Optional[Decimal] = None) -> PaymentResult:
         """Process payment refund"""
+
+
+
         try:
             # Get original transaction
             async with self.db_pool.acquire() as conn:
@@ -572,6 +608,9 @@ class PaymentGatewayEngine:
 
     async def get_transaction_status(self, transaction_id: str) -> Dict[str, Any]:
         """Get transaction status"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 transaction = await conn.fetchrow("""
@@ -614,6 +653,9 @@ class StripeGatewayAdapter:
     
     async def process_payment(self, payment_data: Dict[str, Any]) -> Dict[str, Any]:
         """Process payment through Stripe"""
+
+
+
         try:
             # Create payment intent
             intent = stripe.PaymentIntent.create(
@@ -638,6 +680,9 @@ class StripeGatewayAdapter:
     
     async def process_refund(self, transaction_id: str, amount: Decimal) -> Dict[str, Any]:
         """Process refund through Stripe"""
+
+
+
         try:
             refund = stripe.Refund.create(
                 payment_intent=transaction_id,
@@ -674,6 +719,9 @@ class PayPalGatewayAdapter:
     
     async def process_payment(self, payment_data: Dict[str, Any]) -> Dict[str, Any]:
         """Process payment through PayPal"""
+
+
+
         try:
             # Mock PayPal payment processing
             transaction_id = f"paypal_{int(datetime.now().timestamp())}"
@@ -692,6 +740,9 @@ class PayPalGatewayAdapter:
     
     async def process_refund(self, transaction_id: str, amount: Decimal) -> Dict[str, Any]:
         """Process refund through PayPal"""
+
+
+
         try:
             refund_id = f"paypal_refund_{int(datetime.now().timestamp())}"
             
@@ -723,6 +774,9 @@ class WiseGatewayAdapter:
     
     async def process_payment(self, payment_data: Dict[str, Any]) -> Dict[str, Any]:
         """Process payment through Wise"""
+
+
+
         try:
             transaction_id = f"wise_{int(datetime.now().timestamp())}"
             
@@ -740,6 +794,9 @@ class WiseGatewayAdapter:
     
     async def process_refund(self, transaction_id: str, amount: Decimal) -> Dict[str, Any]:
         """Process refund through Wise"""
+
+
+
         try:
             refund_id = f"wise_refund_{int(datetime.now().timestamp())}"
             
@@ -771,6 +828,9 @@ class SquareGatewayAdapter:
     
     async def process_payment(self, payment_data: Dict[str, Any]) -> Dict[str, Any]:
         """Process payment through Square"""
+
+
+
         try:
             transaction_id = f"square_{int(datetime.now().timestamp())}"
             
@@ -788,6 +848,9 @@ class SquareGatewayAdapter:
     
     async def process_refund(self, transaction_id: str, amount: Decimal) -> Dict[str, Any]:
         """Process refund through Square"""
+
+
+
         try:
             refund_id = f"square_refund_{int(datetime.now().timestamp())}"
             

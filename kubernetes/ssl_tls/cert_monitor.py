@@ -172,6 +172,9 @@ class CertificateMonitor:
         Args:
             config_path: Path to configuration file
         """
+
+
+
         try:
             with open(config_path, 'r') as f:
                 config_data = json.load(f)
@@ -203,6 +206,9 @@ class CertificateMonitor:
         Args:
             config_path: Path to save configuration
         """
+
+
+
         try:
             config_data = {
                 'endpoints': [asdict(endpoint) for endpoint in self.endpoints],
@@ -441,6 +447,9 @@ class CertificateMonitor:
     
     def _verify_hostname_match(self, cert: x509.Certificate, hostname: str) -> bool:
         """Verify certificate matches hostname"""
+
+
+
         try:
             # Check common name
             subject = cert.subject
@@ -562,6 +571,9 @@ class CertificateMonitor:
     
     def _scheduled_check(self, endpoint: CertificateEndpoint) -> None:
         """Perform scheduled certificate check"""
+
+
+
         try:
             cert_status = self.check_certificate(endpoint)
             self.certificate_statuses[endpoint.name] = cert_status
@@ -575,6 +587,9 @@ class CertificateMonitor:
     
     def _send_alert(self, cert_status: CertificateStatus) -> None:
         """Send certificate alert"""
+
+
+
         try:
             # Check alert rate limiting
             alert_key = f"{cert_status.endpoint}:{cert_status.alert_level.value}"
@@ -642,6 +657,9 @@ class CertificateMonitor:
     
     def _send_email_alert(self, cert_status: CertificateStatus, message: str) -> None:
         """Send email alert"""
+
+
+
         try:
             if not self.alert_config.email_recipients:
                 return
@@ -670,6 +688,9 @@ class CertificateMonitor:
     
     def _send_webhook_alert(self, cert_status: CertificateStatus, message: str) -> None:
         """Send webhook alert"""
+
+
+
         try:
             if not self.alert_config.webhook_url:
                 return
@@ -706,6 +727,9 @@ class CertificateMonitor:
     
     def _send_slack_alert(self, cert_status: CertificateStatus, message: str) -> None:
         """Send Slack alert"""
+
+
+
         try:
             if not self.alert_config.slack_webhook_url:
                 return
@@ -757,6 +781,9 @@ class CertificateMonitor:
     
     def _send_pagerduty_alert(self, cert_status: CertificateStatus, message: str) -> None:
         """Send PagerDuty alert"""
+
+
+
         try:
             if not self.alert_config.pagerduty_integration_key:
                 return
@@ -826,6 +853,9 @@ class CertificateMonitor:
     
     def get_detailed_status(self) -> List[Dict[str, Any]]:
         """Get detailed status for all endpoints"""
+
+
+
         return [asdict(status) for status in self.certificate_statuses.values()]
     
     def generate_report(self, output_path: Path, format_type: str = "json") -> None:
@@ -836,6 +866,9 @@ class CertificateMonitor:
             output_path: Report output path
             format_type: Report format (json/html/csv)
         """
+
+
+
         try:
             report_data = {
                 'summary': self.get_status_summary(),
@@ -964,4 +997,7 @@ def create_certificate_monitor(config_path: Optional[Path] = None) -> Certificat
     Returns:
         Configured certificate monitor
     """
+
+
+
     return CertificateMonitor(config_path)

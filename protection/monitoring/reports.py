@@ -1,5 +1,5 @@
 """
-📋 Monitoring Reports Generator
+ Monitoring Reports Generator
 =============================
 
 Advanced automated reporting system for content protection monitoring.
@@ -16,7 +16,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
-⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
+ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
@@ -183,6 +183,9 @@ class ReportGenerator:
 
     async def initialize(self) -> bool:
         """Initialize the report generator."""
+
+
+
         try:
             logger.info("Initializing Report Generator...")
             
@@ -208,6 +211,9 @@ class ReportGenerator:
         user_id: int
     ) -> ReportTemplate:
         """Create a new report template."""
+
+
+
         try:
             template = ReportTemplate(
                 template_id=f"template_{user_id}_{int(datetime.utcnow().timestamp())}",
@@ -336,6 +342,9 @@ class ReportGenerator:
         user_id: int
     ) -> ReportConfiguration:
         """Schedule automated report generation."""
+
+
+
         try:
             config = ReportConfiguration(
                 config_id=f"config_{user_id}_{int(datetime.utcnow().timestamp())}",
@@ -946,6 +955,9 @@ class ReportGenerator:
 
     async def _scheduler_loop(self) -> None:
         """Main scheduler loop for automated reports."""
+
+
+
         try:
             while self._scheduler_running:
                 current_time = datetime.utcnow()
@@ -977,6 +989,9 @@ class ReportGenerator:
 
     async def _load_default_templates(self) -> None:
         """Load default report templates."""
+
+
+
         try:
             # Executive Summary template
             executive_template = ReportTemplate(
@@ -1058,6 +1073,9 @@ class ReportGenerator:
 
     async def _load_report_configurations(self) -> None:
         """Load existing report configurations."""
+
+
+
         try:
             # This would load from database in real implementation
             logger.debug("Loaded report configurations")
@@ -1066,6 +1084,9 @@ class ReportGenerator:
 
     async def _save_report_template(self, template: ReportTemplate) -> None:
         """Save report template to storage."""
+
+
+
         try:
             # This would save to database in real implementation
             logger.debug(f"Saved report template: {template.template_id}")
@@ -1074,6 +1095,9 @@ class ReportGenerator:
 
     async def _save_report_configuration(self, config: ReportConfiguration) -> None:
         """Save report configuration to storage."""
+
+
+
         try:
             # This would save to database in real implementation
             logger.debug(f"Saved report configuration: {config.config_id}")
@@ -1289,6 +1313,9 @@ class ReportGenerator:
     
     async def get_available_templates(self, user_id: Optional[int] = None) -> List[Dict[str, Any]]:
         """Get list of available report templates."""
+
+
+
         try:
             templates = []
             for template in self._report_templates.values():
@@ -1315,6 +1342,9 @@ class ReportGenerator:
         limit: int = 50
     ) -> List[Dict[str, Any]]:
         """Get history of generated reports."""
+
+
+
         try:
             reports = []
             for report in self._generated_reports.values():
@@ -1346,6 +1376,9 @@ class ReportGenerator:
 
     async def delete_report_template(self, template_id: str, user_id: int) -> bool:
         """Delete a report template."""
+
+
+
         try:
             if template_id not in self._report_templates:
                 return False
@@ -1382,6 +1415,9 @@ class ReportGenerator:
         user_id: int
     ) -> bool:
         """Update a report configuration."""
+
+
+
         try:
             if config_id not in self._report_configurations:
                 return False
@@ -1421,6 +1457,9 @@ class ReportGenerator:
 
     async def download_report(self, report_id: str, format_type: str) -> Optional[Path]:
         """Get download path for a generated report."""
+
+
+
         try:
             if report_id not in self._generated_reports:
                 return None
@@ -1444,6 +1483,9 @@ class ReportGenerator:
 
     async def get_report_statistics(self) -> Dict[str, Any]:
         """Get statistics about report generation."""
+
+
+
         try:
             total_reports = len(self._generated_reports)
             successful_reports = len([r for r in self._generated_reports.values() if r.status == "completed"])
@@ -1486,6 +1528,9 @@ class ReportGenerator:
 
     async def cleanup_old_reports(self, days_to_keep: int = 30) -> int:
         """Clean up old report files."""
+
+
+
         try:
             cutoff_date = datetime.utcnow() - timedelta(days=days_to_keep)
             files_deleted = 0

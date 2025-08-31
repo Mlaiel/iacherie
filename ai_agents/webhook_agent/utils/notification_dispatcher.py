@@ -7,7 +7,7 @@ and multi-channel communication across platform integrations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission from Fahed Mlaiel <mlaiel@live.de> is strictly prohibited.
@@ -186,6 +186,9 @@ class NotificationDispatcher:
 
     async def initialize(self) -> None:
         """Initialize notification dispatcher with required services"""
+
+
+
         try:
             # Initialize Redis connection
             self._redis_client = await aioredis.from_url(
@@ -223,6 +226,9 @@ class NotificationDispatcher:
         Returns:
             Dispatch result with notification details
         """
+
+
+
         try:
             # Determine notifications to send
             notifications = await self._determine_event_notifications(
@@ -274,6 +280,9 @@ class NotificationDispatcher:
         Returns:
             Send result with notification details
         """
+
+
+
         try:
             # Get recipient configuration
             recipient = await self._get_recipient_config(recipient_id)
@@ -325,6 +334,9 @@ class NotificationDispatcher:
         preferences: Dict[str, Any] = None
     ) -> Dict[str, Any]:
         """Add notification recipient configuration"""
+
+
+
         try:
             recipient_id = str(uuid.uuid4())
             
@@ -370,6 +382,9 @@ class NotificationDispatcher:
         variables: List[str] = None
     ) -> Dict[str, Any]:
         """Add notification template"""
+
+
+
         try:
             template_id = str(uuid.uuid4())
             
@@ -431,6 +446,9 @@ class NotificationDispatcher:
         time_range: str = "24h"
     ) -> Dict[str, Any]:
         """Get notification dispatch metrics and analytics"""
+
+
+
         try:
             metrics_data = {
                 'time_range': time_range,
@@ -455,6 +473,9 @@ class NotificationDispatcher:
 
     async def health_check(self) -> Dict[str, Any]:
         """Comprehensive health check for notification dispatcher"""
+
+
+
         return {
             'status': 'healthy',
             'redis_connected': self._redis_client is not None,
@@ -468,6 +489,9 @@ class NotificationDispatcher:
 
     async def shutdown(self) -> None:
         """Graceful shutdown of notification dispatcher"""
+
+
+
         try:
             logger.info("Shutting down NotificationDispatcher")
             
@@ -543,6 +567,9 @@ class NotificationDispatcher:
 
     async def _queue_notification(self, notification: NotificationMessage) -> Dict[str, Any]:
         """Queue notification for dispatch"""
+
+
+
         try:
             await self._notification_queue.put(notification)
             
@@ -663,6 +690,9 @@ class NotificationDispatcher:
     
     async def _send_email_notification(self, notification: NotificationMessage) -> Dict[str, Any]:
         """Send email notification"""
+
+
+
         try:
             if not notification.recipient.email:
                 return {
@@ -712,6 +742,9 @@ class NotificationDispatcher:
 
     async def _send_sms_notification(self, notification: NotificationMessage) -> Dict[str, Any]:
         """Send SMS notification"""
+
+
+
         try:
             if not notification.recipient.phone:
                 return {
@@ -748,6 +781,9 @@ class NotificationDispatcher:
 
     async def _send_webhook_notification(self, notification: NotificationMessage) -> Dict[str, Any]:
         """Send webhook notification"""
+
+
+
         try:
             if not notification.recipient.webhook_url:
                 return {
@@ -785,6 +821,9 @@ class NotificationDispatcher:
 
     async def _send_websocket_notification(self, notification: NotificationMessage) -> Dict[str, Any]:
         """Send WebSocket notification"""
+
+
+
         try:
             # Find WebSocket connections for recipient
             target_connections = []
@@ -869,6 +908,9 @@ class NotificationDispatcher:
 
     async def _get_notification_template(self, template_id: str) -> Optional[NotificationTemplate]:
         """Get notification template"""
+
+
+
         return self._templates.get(template_id)
 
     async def _create_notification_message(
@@ -912,6 +954,9 @@ class NotificationDispatcher:
 
     async def _get_user_recipients(self, user_id: str) -> List[NotificationRecipient]:
         """Get all recipients for a user"""
+
+
+
         return [r for r in self._recipients.values() if r.user_id == user_id]
 
     def _should_send_notification(

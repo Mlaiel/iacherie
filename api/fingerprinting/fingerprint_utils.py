@@ -35,6 +35,9 @@ class FingerprintUtils:
     @staticmethod
     def generate_file_hash(file_path: Path) -> str:
         """Generate SHA-256 hash of file content"""
+
+
+
         try:
             hash_sha256 = hashlib.sha256()
             with open(file_path, "rb") as f:
@@ -48,6 +51,9 @@ class FingerprintUtils:
     @staticmethod
     def generate_content_hash(content: Union[str, bytes, np.ndarray]) -> str:
         """Generate SHA-256 hash of content"""
+
+
+
         try:
             if isinstance(content, str):
                 content_bytes = content.encode('utf-8')
@@ -108,6 +114,9 @@ class FingerprintUtils:
     @staticmethod
     def normalize_array(array: np.ndarray) -> np.ndarray:
         """Normalize array to [0, 1] range"""
+
+
+
         try:
             if array.size == 0:
                 return array
@@ -126,6 +135,9 @@ class FingerprintUtils:
     @staticmethod
     def cosine_similarity(vec1: np.ndarray, vec2: np.ndarray) -> float:
         """Calculate cosine similarity between two vectors"""
+
+
+
         try:
             if len(vec1) != len(vec2):
                 return 0.0
@@ -146,6 +158,9 @@ class FingerprintUtils:
     @staticmethod
     def euclidean_distance(vec1: np.ndarray, vec2: np.ndarray) -> float:
         """Calculate Euclidean distance between two vectors"""
+
+
+
         try:
             if len(vec1) != len(vec2):
                 return float('inf')
@@ -158,6 +173,9 @@ class FingerprintUtils:
     @staticmethod
     def manhattan_distance(vec1: np.ndarray, vec2: np.ndarray) -> float:
         """Calculate Manhattan distance between two vectors"""
+
+
+
         try:
             if len(vec1) != len(vec2):
                 return float('inf')
@@ -170,6 +188,9 @@ class FingerprintUtils:
     @staticmethod
     def jaccard_similarity(set1: set, set2: set) -> float:
         """Calculate Jaccard similarity between two sets"""
+
+
+
         try:
             intersection = len(set1.intersection(set2))
             union = len(set1.union(set2))
@@ -185,6 +206,9 @@ class FingerprintUtils:
     @staticmethod
     def hamming_distance(str1: str, str2: str) -> int:
         """Calculate Hamming distance between two strings"""
+
+
+
         try:
             if len(str1) != len(str2):
                 return max(len(str1), len(str2))
@@ -197,6 +221,9 @@ class FingerprintUtils:
     @staticmethod
     def safe_divide(numerator: float, denominator: float, default: float = 0.0) -> float:
         """Safely divide two numbers, returning default if division by zero"""
+
+
+
         try:
             if denominator == 0:
                 return default
@@ -207,6 +234,9 @@ class FingerprintUtils:
     @staticmethod
     def format_file_size(size_bytes: int) -> str:
         """Format file size in human-readable format"""
+
+
+
         try:
             if size_bytes == 0:
                 return "0 B"
@@ -226,6 +256,9 @@ class FingerprintUtils:
     @staticmethod
     def format_duration(seconds: float) -> str:
         """Format duration in human-readable format"""
+
+
+
         try:
             if seconds < 60:
                 return f"{seconds:.1f}s"
@@ -244,6 +277,9 @@ class FingerprintUtils:
     @staticmethod
     def serialize_numpy_array(array: np.ndarray) -> str:
         """Serialize numpy array to base64 string"""
+
+
+
         try:
             array_bytes = array.tobytes()
             return base64.b64encode(array_bytes).decode('utf-8')
@@ -254,6 +290,9 @@ class FingerprintUtils:
     @staticmethod
     def deserialize_numpy_array(data: str, dtype=np.float64, shape=None) -> Optional[np.ndarray]:
         """Deserialize base64 string to numpy array"""
+
+
+
         try:
             array_bytes = base64.b64decode(data.encode('utf-8'))
             array = np.frombuffer(array_bytes, dtype=dtype)
@@ -275,11 +314,17 @@ class FingerprintUtils:
     @staticmethod
     def validate_threshold(threshold: float) -> bool:
         """Validate threshold value is between 0 and 1"""
+
+
+
         return 0.0 <= threshold <= 1.0
     
     @staticmethod
     def clamp(value: float, min_value: float, max_value: float) -> float:
         """Clamp value between min and max"""
+
+
+
         return max(min_value, min(value, max_value))
 
 def timer_decorator(func):
@@ -369,26 +414,41 @@ class FileTypeDetector:
     @classmethod
     def is_audio_file(cls, file_path: Path) -> bool:
         """Check if file is audio format"""
+
+
+
         return file_path.suffix.lower() in cls.AUDIO_EXTENSIONS
     
     @classmethod
     def is_video_file(cls, file_path: Path) -> bool:
         """Check if file is video format"""
+
+
+
         return file_path.suffix.lower() in cls.VIDEO_EXTENSIONS
     
     @classmethod
     def is_image_file(cls, file_path: Path) -> bool:
         """Check if file is image format"""
+
+
+
         return file_path.suffix.lower() in cls.IMAGE_EXTENSIONS
     
     @classmethod
     def is_text_file(cls, file_path: Path) -> bool:
         """Check if file is text format"""
+
+
+
         return file_path.suffix.lower() in cls.TEXT_EXTENSIONS
     
     @classmethod
     def get_all_supported_extensions(cls) -> set:
         """Get all supported file extensions"""
+
+
+
         return cls.AUDIO_EXTENSIONS | cls.VIDEO_EXTENSIONS | cls.IMAGE_EXTENSIONS | cls.TEXT_EXTENSIONS
 
 class DataValidator:
@@ -397,11 +457,17 @@ class DataValidator:
     @staticmethod
     def validate_similarity_score(score: float) -> bool:
         """Validate similarity score is between 0 and 1"""
+
+
+
         return isinstance(score, (int, float)) and 0.0 <= score <= 1.0
     
     @staticmethod
     def validate_file_path(file_path: Path) -> bool:
         """Validate file path exists and is a file"""
+
+
+
         try:
             return file_path.exists() and file_path.is_file()
         except Exception:
@@ -410,6 +476,9 @@ class DataValidator:
     @staticmethod
     def validate_directory_path(dir_path: Path) -> bool:
         """Validate directory path exists and is a directory"""
+
+
+
         try:
             return dir_path.exists() and dir_path.is_dir()
         except Exception:
@@ -418,6 +487,9 @@ class DataValidator:
     @staticmethod
     def validate_numpy_array(array: np.ndarray, min_size: int = 1) -> bool:
         """Validate numpy array is not empty and has minimum size"""
+
+
+
         try:
             return isinstance(array, np.ndarray) and array.size >= min_size
         except Exception:
@@ -426,6 +498,9 @@ class DataValidator:
     @staticmethod
     def validate_config_dict(config: Dict[str, Any], required_keys: List[str]) -> bool:
         """Validate configuration dictionary has required keys"""
+
+
+
         try:
             return all(key in config for key in required_keys)
         except Exception:
@@ -439,10 +514,16 @@ validator = DataValidator()
 # Convenience functions
 def hash_content(content: Union[str, bytes, np.ndarray]) -> str:
     """Generate hash of content"""
+
+
+
     return utils.generate_content_hash(content)
 
 def get_file_type(file_path: Path) -> Optional[str]:
     """Get file type from path"""
+
+
+
     return utils.get_file_type(file_path)
 
 def calculate_similarity(vec1: np.ndarray, vec2: np.ndarray, method: str = 'cosine') -> float:
@@ -462,6 +543,9 @@ def calculate_similarity(vec1: np.ndarray, vec2: np.ndarray, method: str = 'cosi
 
 def format_results(results: List[Dict[str, Any]]) -> str:
     """Format processing results for display"""
+
+
+
     try:
         total = len(results)
         successful = sum(1 for r in results if 'error' not in r)
@@ -476,6 +560,9 @@ Failed: {total - successful}
 Duplicates found: {duplicates}
 Unique content: {successful - duplicates}
         """
+
+
+
         
         return summary.strip()
     except Exception as e:

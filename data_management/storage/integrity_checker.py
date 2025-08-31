@@ -1,5 +1,5 @@
 """
-🔍 Integrity Checker - IA Influencer Agent Platform Enterprise
+ Integrity Checker - IA Influencer Agent Platform Enterprise
 =============================================================
 Module: backend/data_management/storage/integrity_checker.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Enterprise data integrity checker with corruption detection,
 verification, and automatic repair capabilities.
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -213,6 +213,9 @@ class IntegrityChecker:
     
     def _initialize_integrity_directories(self) -> None:
         """Initialize integrity checking directories"""
+
+
+
         try:
             directories = [
                 self.config.storage_root_path,
@@ -245,6 +248,9 @@ class IntegrityChecker:
         integrity_level: Optional[IntegrityLevel] = None
     ) -> Dict[str, Any]:
         """Create integrity checkpoint for file"""
+
+
+
         try:
             file_path_obj = Path(file_path)
             
@@ -324,6 +330,9 @@ class IntegrityChecker:
         create_if_missing: bool = True
     ) -> Dict[str, Any]:
         """Verify file integrity"""
+
+
+
         try:
             file_path_obj = Path(file_path)
             
@@ -450,6 +459,9 @@ class IntegrityChecker:
         integrity_level: Optional[IntegrityLevel] = None
     ) -> Dict[str, Any]:
         """Scan directory for integrity verification"""
+
+
+
         try:
             directory_path_obj = Path(directory_path)
             
@@ -555,6 +567,9 @@ class IntegrityChecker:
         repair_strategy: Optional[RepairStrategy] = None
     ) -> Dict[str, Any]:
         """Repair detected corruption"""
+
+
+
         try:
             if report_id not in self.corruption_reports:
                 return {
@@ -641,6 +656,9 @@ class IntegrityChecker:
     
     async def get_integrity_report(self) -> Dict[str, Any]:
         """Get comprehensive integrity report"""
+
+
+
         try:
             # Calculate statistics
             total_checkpoints = len(self.checkpoints)
@@ -723,6 +741,9 @@ class IntegrityChecker:
         integrity_level: IntegrityLevel
     ) -> Dict[str, Any]:
         """Calculate file checksums based on integrity level"""
+
+
+
         try:
             checksums = {}
             
@@ -765,6 +786,9 @@ class IntegrityChecker:
     
     async def _calculate_blake2b(self, file_path: Path) -> str:
         """Calculate BLAKE2b hash"""
+
+
+
         try:
             blake2b_hash = hashlib.blake2b()
             
@@ -779,6 +803,9 @@ class IntegrityChecker:
     
     async def _calculate_sha3_256(self, file_path: Path) -> str:
         """Calculate SHA3-256 hash"""
+
+
+
         try:
             sha3_hash = hashlib.sha3_256()
             
@@ -793,6 +820,9 @@ class IntegrityChecker:
     
     async def _analyze_file_structure(self, file_path: Path) -> Dict[str, Any]:
         """Analyze file structure for corruption patterns"""
+
+
+
         try:
             structure_info = {
                 'file_type': file_path.suffix.lower(),
@@ -830,6 +860,9 @@ class IntegrityChecker:
     
     async def _get_extended_attributes(self, file_path: Path) -> Dict[str, Any]:
         """Get extended file attributes"""
+
+
+
         try:
             attributes = {}
             
@@ -895,6 +928,9 @@ class IntegrityChecker:
     
     async def _assess_repairability(self, corruption_report: CorruptionReport) -> bool:
         """Assess if corruption is repairable"""
+
+
+
         try:
             # Basic repairability heuristics
             if corruption_report.severity == CorruptionSeverity.CATASTROPHIC:
@@ -913,6 +949,9 @@ class IntegrityChecker:
     
     async def _recommend_repair_strategy(self, corruption_report: CorruptionReport) -> RepairStrategy:
         """Recommend repair strategy based on corruption analysis"""
+
+
+
         try:
             if corruption_report.severity == CorruptionSeverity.CRITICAL:
                 return RepairStrategy.BACKUP_RESTORE
@@ -930,6 +969,9 @@ class IntegrityChecker:
     
     async def _start_monitoring(self) -> None:
         """Start background monitoring"""
+
+
+
         try:
             # Start scheduler
             await self.scheduler.start()
@@ -967,6 +1009,9 @@ class IntegrityChecker:
     
     async def _save_checkpoint(self, checkpoint: IntegrityCheckpoint) -> None:
         """Save checkpoint to disk"""
+
+
+
         try:
             checkpoint_path = Path(self.config.checkpoints_directory) / "active" / f"{checkpoint.checkpoint_id}.json"
             
@@ -997,6 +1042,9 @@ class IntegrityChecker:
     
     async def _save_corruption_report(self, corruption_report: CorruptionReport) -> None:
         """Save corruption report to disk"""
+
+
+
         try:
             report_path = Path(self.config.reports_directory) / "corruption" / f"{corruption_report.report_id}.json"
             
@@ -1036,6 +1084,9 @@ class VerificationEngine:
     
     async def verify_checkpoint(self, checkpoint: IntegrityCheckpoint) -> Dict[str, Any]:
         """Verify checkpoint integrity"""
+
+
+
         try:
             start_time = datetime.now()
             file_path = Path(checkpoint.file_path)
@@ -1140,6 +1191,9 @@ class RepairEngine:
         corruption_report: CorruptionReport
     ) -> Dict[str, Any]:
         """Attempt automatic repair"""
+
+
+
         try:
             if not corruption_report.is_repairable:
                 return {
@@ -1172,6 +1226,9 @@ class RepairEngine:
         strategy: RepairStrategy
     ) -> Dict[str, Any]:
         """Repair using specific strategy"""
+
+
+
         try:
             if strategy == RepairStrategy.AUTO_REPAIR:
                 return await self._auto_repair(checkpoint, corruption_report)
@@ -1221,6 +1278,9 @@ class RepairEngine:
     
     async def _quarantine_file(self, checkpoint: IntegrityCheckpoint, corruption_report: CorruptionReport) -> Dict[str, Any]:
         """Quarantine corrupted file"""
+
+
+
         try:
             file_path = Path(checkpoint.file_path)
             quarantine_dir = Path(self.integrity_checker.config.storage_root_path) / "quarantine"
@@ -1300,6 +1360,9 @@ class IntegrityScheduler:
     
     async def _cleanup_old_records(self) -> None:
         """Clean up old checkpoints and reports"""
+
+
+
         try:
             current_time = datetime.now()
             

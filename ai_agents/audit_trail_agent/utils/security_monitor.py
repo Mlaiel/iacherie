@@ -7,7 +7,7 @@ security incident response, and advanced threat analytics.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, distribution, or commercialization is strictly prohibited.
 """
@@ -286,6 +286,9 @@ class SecurityAuditMonitor:
         Returns:
             Brute force detection results
         """
+
+
+
         try:
             current_time = datetime.now(timezone.utc)
             window_start = current_time - time_window
@@ -368,6 +371,9 @@ class SecurityAuditMonitor:
         Returns:
             API abuse analysis results
         """
+
+
+
         try:
             current_time = datetime.now(timezone.utc)
             
@@ -442,6 +448,9 @@ class SecurityAuditMonitor:
         Returns:
             Insider threat analysis results
         """
+
+
+
         try:
             # Analyze user behavior patterns
             behavior_baseline = await self.behavior_analyzer.get_user_baseline(user_id)
@@ -509,6 +518,9 @@ class SecurityAuditMonitor:
         Returns:
             Security dashboard data with real-time metrics
         """
+
+
+
         try:
             current_time = datetime.now(timezone.utc)
             last_24h = current_time - timedelta(hours=24)

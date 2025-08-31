@@ -12,7 +12,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 
-⚠️ STRICT COPYRIGHT PROTECTION ⚠️
+ STRICT COPYRIGHT PROTECTION 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 
@@ -148,6 +148,9 @@ class MarketAnalyzer:
     
     async def analyze_market_potential(self, content_item: ContentItem) -> Dict[str, Any]:
         """Analyze market potential for content."""
+
+
+
         try:
             market_analysis = {
                 "genre_appeal": await self._analyze_genre_appeal(content_item),
@@ -176,6 +179,9 @@ class MarketAnalyzer:
     
     async def _analyze_genre_appeal(self, content_item: ContentItem) -> float:
         """Analyze genre market appeal."""
+
+
+
         try:
             base_score = 0.6
             
@@ -195,6 +201,9 @@ class MarketAnalyzer:
     
     async def _analyze_demographic_reach(self, content_item: ContentItem) -> float:
         """Analyze demographic reach potential."""
+
+
+
         try:
             # Base demographic score
             score = 0.6
@@ -224,6 +233,9 @@ class MarketAnalyzer:
     
     async def _analyze_seasonal_trends(self, content_item: ContentItem) -> Dict[str, float]:
         """Analyze seasonal monetization trends."""
+
+
+
         try:
             # Default seasonal distribution
             seasonal_scores = {
@@ -255,6 +267,9 @@ class MarketAnalyzer:
     
     async def _analyze_competition_level(self, content_item: ContentItem) -> float:
         """Analyze competition level in the market."""
+
+
+
         try:
             # Base competition level (higher = more competition)
             competition_score = 0.7
@@ -283,6 +298,9 @@ class MarketAnalyzer:
     
     async def _analyze_viral_potential(self, content_item: ContentItem) -> float:
         """Analyze viral potential of content."""
+
+
+
         try:
             viral_score = 0.5
             
@@ -312,6 +330,9 @@ class MarketAnalyzer:
     
     async def _analyze_content_longevity(self, content_item: ContentItem) -> float:
         """Analyze content longevity for sustained revenue."""
+
+
+
         try:
             longevity_score = 0.6
             
@@ -342,6 +363,9 @@ class MarketAnalyzer:
     
     async def _analyze_cross_platform_appeal(self, content_item: ContentItem) -> float:
         """Analyze cross-platform monetization appeal."""
+
+
+
         try:
             cross_platform_score = 0.5
             
@@ -396,6 +420,9 @@ class RevenueEstimator:
     async def estimate_revenue_potential(self, content_item: ContentItem, 
                                        market_analysis: Dict[str, Any]) -> Dict[str, Decimal]:
         """Estimate revenue potential across different models."""
+
+
+
         try:
             revenue_estimates = {}
             
@@ -546,6 +573,9 @@ class MonetizationEngine:
     
     async def assess_monetization_potential(self, content_item: ContentItem) -> MonetizationMetrics:
         """Assess comprehensive monetization potential."""
+
+
+
         try:
             start_time = time.time()
             

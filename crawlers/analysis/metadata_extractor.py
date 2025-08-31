@@ -307,6 +307,9 @@ class MetadataExtractor:
     
     async def _detect_content_format(self, content_source: Union[str, bytes, Path]) -> ContentFormat:
         """Detect content format from source."""
+
+
+
         try:
             if isinstance(content_source, str) and content_source.startswith(('http://', 'https://')):
                 # Web URL
@@ -367,6 +370,9 @@ class MetadataExtractor:
         content_source: Union[str, bytes, Path]
     ) -> None:
         """Extract basic metadata common to all content types."""
+
+
+
         try:
             if isinstance(content_source, (str, Path)) and Path(content_source).exists():
                 path = Path(content_source)
@@ -434,6 +440,9 @@ class MetadataExtractor:
         content_source: Union[str, bytes, Path]
     ) -> None:
         """Extract image-specific metadata."""
+
+
+
         try:
             # Load image
             if isinstance(content_source, (str, Path)):
@@ -524,6 +533,9 @@ class MetadataExtractor:
         content_source: Union[str, bytes, Path]
     ) -> None:
         """Extract audio-specific metadata."""
+
+
+
         try:
             audio_metadata = {}
             
@@ -596,6 +608,9 @@ class MetadataExtractor:
         content_source: Union[str, bytes, Path]
     ) -> None:
         """Extract video-specific metadata."""
+
+
+
         try:
             video_metadata = {}
             
@@ -724,6 +739,9 @@ class MetadataExtractor:
         content_source: Union[str, bytes, Path]
     ) -> None:
         """Extract document-specific metadata."""
+
+
+
         try:
             document_metadata = {}
             
@@ -790,6 +808,9 @@ class MetadataExtractor:
         content_source: str
     ) -> None:
         """Extract web page metadata."""
+
+
+
         try:
             web_metadata = {}
             
@@ -868,6 +889,9 @@ class MetadataExtractor:
         content_source: str
     ) -> None:
         """Extract social media post metadata."""
+
+
+
         try:
             social_metadata = {}
             parsed_url = urlparse(content_source)
@@ -966,6 +990,9 @@ class MetadataExtractor:
         strategy: ExtractionStrategy
     ) -> None:
         """Enhance metadata with additional information and external APIs."""
+
+
+
         try:
             if strategy == ExtractionStrategy.DEEP_ANALYSIS and self.enable_external_apis:
                 # Placeholder for external API enhancements
@@ -993,6 +1020,9 @@ class MetadataExtractor:
     
     async def _validate_metadata(self, metadata: ContentMetadata) -> None:
         """Validate extracted metadata for consistency and completeness."""
+
+
+
         try:
             validation_errors = []
             
@@ -1039,6 +1069,9 @@ class MetadataExtractor:
     
     async def _assess_metadata_quality(self, metadata: ContentMetadata) -> None:
         """Assess the quality and completeness of extracted metadata."""
+
+
+
         try:
             # Count non-empty fields
             total_fields = 0
@@ -1153,6 +1186,9 @@ class MetadataExtractor:
     
     def _parse_gps_coordinates(self, gps_info: Dict) -> Tuple[Optional[float], Optional[float]]:
         """Parse GPS coordinates from EXIF data."""
+
+
+
         try:
             lat_ref = gps_info.get(1)  # GPSLatitudeRef
             lat = gps_info.get(2)      # GPSLatitude

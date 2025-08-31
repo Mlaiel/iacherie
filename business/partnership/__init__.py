@@ -1,7 +1,7 @@
 """Partnership Business Module for IA Influencer Agent
 Strategic partnership management and business relationship system
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
 All rights reserved. Unauthorized use, copying, or reproduction 
 of this code, concept, or intellectual property without explicit 

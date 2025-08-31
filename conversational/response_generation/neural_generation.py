@@ -7,7 +7,7 @@ large language models, and advanced NLG techniques for content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de
@@ -177,6 +177,9 @@ class NeuralResponseGenerator:
     
     def _initialize_neural_models(self):
         """Initialize neural models for different generation tasks"""
+
+
+
         try:
             # Load base transformer models
             self._load_transformer_models()
@@ -195,6 +198,9 @@ class NeuralResponseGenerator:
     
     def _load_transformer_models(self):
         """Load core transformer models"""
+
+
+
         try:
             # GPT-2 for autoregressive generation
             self.models[ModelType.GPT_FAMILY] = {
@@ -227,6 +233,9 @@ class NeuralResponseGenerator:
     
     def _load_domain_specific_models(self):
         """Load domain-specific fine-tuned models"""
+
+
+
         try:
             # Music domain model
             # self.models[CreatorDomain.MUSIC_DOMAIN] = self._load_music_model()
@@ -250,6 +259,9 @@ class NeuralResponseGenerator:
     
     def _initialize_generation_strategies(self) -> Dict[GenerationStrategy, Dict[str, Any]]:
         """Initialize generation strategy configurations"""
+
+
+
         return {
             GenerationStrategy.GREEDY_SEARCH: {
                 "do_sample": False,
@@ -290,6 +302,9 @@ class NeuralResponseGenerator:
     
     def _initialize_domain_configurations(self) -> Dict[CreatorDomain, Dict[str, Any]]:
         """Initialize domain-specific generation configurations"""
+
+
+
         return {
             CreatorDomain.MUSIC_DOMAIN: {
                 "preferred_models": [ModelType.GPT_FAMILY, ModelType.CUSTOM_FINETUNED],
@@ -395,6 +410,9 @@ class NeuralResponseGenerator:
     
     async def _optimize_prompt(self, request: NeuralRequest) -> str:
         """Optimize prompt for better generation"""
+
+
+
         try:
             # Build contextual prompt
             contextual_prompt = await self.prompt_optimizer.build_contextual_prompt(
@@ -425,6 +443,9 @@ class NeuralResponseGenerator:
     
     async def _select_optimal_model(self, request: NeuralRequest) -> Dict[str, Any]:
         """Select optimal model and strategy for the request"""
+
+
+
         try:
             domain = request.context.domain_context
             domain_config = self.domain_configs.get(domain, {})
@@ -461,6 +482,9 @@ class NeuralResponseGenerator:
     
     async def _generate_context_embeddings(self, request: NeuralRequest) -> Optional[np.ndarray]:
         """Generate contextual embeddings for enhanced generation"""
+
+
+
         try:
             # Combine all contextual information
             context_text = self._build_context_text(request.context)
@@ -508,6 +532,9 @@ class NeuralResponseGenerator:
         context_embeddings: Optional[np.ndarray] = None
     ) -> str:
         """Perform the actual neural generation"""
+
+
+
         try:
             model_type = model_selection["model_type"]
             strategy = model_selection["strategy"]
@@ -586,6 +613,9 @@ class NeuralResponseGenerator:
     
     async def _post_process_generation(self, generated_text: str, request: NeuralRequest) -> str:
         """Post-process generated text for quality and requirements"""
+
+
+
         try:
             processed_text = generated_text
             
@@ -619,6 +649,9 @@ class NeuralResponseGenerator:
         request: NeuralRequest
     ) -> Dict[str, float]:
         """Calculate comprehensive quality metrics for generated text"""
+
+
+
         try:
             metrics = {}
             
@@ -715,6 +748,9 @@ class TransformerResponseEngine:
         model_preferences: List[ModelType] = None
     ) -> NeuralResponse:
         """Generate response using transformer models with ensemble approach"""
+
+
+
         try:
             # Create neural request
             neural_context = NeuralContext(
@@ -758,6 +794,9 @@ class LanguageModelIntegration:
     
     def _initialize_openai_client(self):
         """Initialize OpenAI client if API key available"""
+
+
+
         try:
             # Set API key from environment or config
             # openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -768,6 +807,9 @@ class LanguageModelIntegration:
     
     def _initialize_langchain_models(self):
         """Initialize LangChain model integrations"""
+
+
+
         try:
             models = {}
             # Add LangChain model initializations here
@@ -783,6 +825,9 @@ class LanguageModelIntegration:
         model_name: str = "gpt-3.5-turbo"
     ) -> str:
         """Generate response using external LLM"""
+
+
+
         try:
             if not self.openai_client:
                 raise NeuralGenerationError("External LLM not available")
@@ -815,6 +860,9 @@ class SemanticResponseGenerator:
         semantic_context: Dict[str, Any]
     ) -> NeuralResponse:
         """Generate semantically-aware response"""
+
+
+
         try:
             # Generate semantic embeddings
             semantic_embeddings = await self.semantic_processor.generate_semantic_embeddings(
@@ -863,6 +911,9 @@ class AdvancedNLGEngine:
         Returns:
             NeuralResponse: Generated response
         """
+
+
+
         try:
             if generation_method == "auto":
                 generation_method = self._select_optimal_generation_method(request)

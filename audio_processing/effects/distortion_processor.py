@@ -1,5 +1,5 @@
 """
-🎸 Distortion Processor - Professional Distortion & Overdrive Engine
+ Distortion Processor - Professional Distortion & Overdrive Engine
 
 Advanced distortion effects with multiple algorithms, tube modeling,
 waveshaping, harmonic generation, and professional gain staging.
@@ -75,16 +75,25 @@ class WaveShapers:
     @staticmethod
     def hard_clip(x: np.ndarray, threshold: float = 1.0) -> np.ndarray:
         """Hard clipping waveshaper"""
+
+
+
         return np.clip(x, -threshold, threshold)
     
     @staticmethod
     def soft_clip(x: np.ndarray, threshold: float = 1.0) -> np.ndarray:
         """Soft clipping using tanh"""
+
+
+
         return np.tanh(x / threshold) * threshold
     
     @staticmethod
     def overdrive(x: np.ndarray, gain: float = 2.0) -> np.ndarray:
         """Overdrive waveshaper"""
+
+
+
         return x / (1.0 + abs(x * gain))
     
     @staticmethod
@@ -124,11 +133,17 @@ class WaveShapers:
     @staticmethod
     def waveshaper_cubic(x: np.ndarray, amount: float = 0.5) -> np.ndarray:
         """Cubic waveshaper"""
+
+
+
         return x - (amount / 3.0) * (x ** 3)
     
     @staticmethod
     def exponential(x: np.ndarray, factor: float = 2.0) -> np.ndarray:
         """Exponential waveshaper"""
+
+
+
         return np.sign(x) * (1 - np.exp(-abs(x) * factor))
 
 
@@ -264,6 +279,9 @@ class DistortionProcessor:
         
     def _init_components(self):
         """Initialize processing components"""
+
+
+
         try:
             self.wave_shapers = WaveShapers()
             self.harmonic_generator = HarmonicGenerator(self.sample_rate)
@@ -293,6 +311,9 @@ class DistortionProcessor:
     
     def process_sample(self, sample: float) -> float:
         """Process single audio sample"""
+
+
+
         try:
             # Store dry signal
             dry_sample = sample
@@ -539,6 +560,9 @@ class DistortionProcessor:
     
     def get_processor_info(self) -> Dict[str, Any]:
         """Get current processor information"""
+
+
+
         return {
             'distortion_type': self.params.distortion_type.value,
             'drive': self.params.drive,
@@ -701,6 +725,9 @@ class DistortionProcessor:
     
     def process(self, audio_data: np.ndarray) -> np.ndarray:
         """Apply distortion processing"""
+
+
+
         try:
             # Apply input gain
             boosted_audio = audio_data * self.drive
@@ -755,10 +782,16 @@ class DistortionProcessor:
     
     def _overdrive(self, audio_data: np.ndarray) -> np.ndarray:
         """Smooth overdrive distortion"""
+
+
+
         return np.tanh(audio_data)
     
     def _hard_clip(self, audio_data: np.ndarray) -> np.ndarray:
         """Hard clipping distortion"""
+
+
+
         return np.clip(audio_data, -1.0, 1.0)
     
     def _soft_clip(self, audio_data: np.ndarray) -> np.ndarray:

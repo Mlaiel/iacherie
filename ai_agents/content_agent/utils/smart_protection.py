@@ -9,7 +9,7 @@ Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This code, concept, and intellectual property are exclusively owned by Fahed Mlaiel.
 Any unauthorized use, copying, distribution, reverse engineering, or commercialization 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
@@ -184,6 +184,9 @@ class SmartContentProtector:
     
     async def initialize(self):
         """Initialize content protection system"""
+
+
+
         try:
             logger.info("Initializing Smart Content Protection System...")
             
@@ -226,6 +229,9 @@ class SmartContentProtector:
         Returns:
             ContentFingerprint: Generated fingerprint and protection data
         """
+
+
+
         try:
             config = protection_config or self.config
             content_id = str(uuid.uuid4())
@@ -283,6 +289,9 @@ class SmartContentProtector:
         Returns:
             List of potential violations with similarity scores
         """
+
+
+
         try:
             # Generate fingerprint for query content
             query_fingerprint = await self._generate_query_fingerprint(query_content)
@@ -330,6 +339,9 @@ class SmartContentProtector:
         Returns:
             Takedown process status
         """
+
+
+
         try:
             violation_id = str(uuid.uuid4())
             
@@ -390,6 +402,9 @@ class SmartContentProtector:
         Returns:
             Ownership verification result
         """
+
+
+
         try:
             # Generate fingerprint for verification
             verification_fingerprint = await self._generate_query_fingerprint(content_path)
@@ -450,6 +465,9 @@ class SmartContentProtector:
                                           creator_id: str, content_type: str, 
                                           config: ProtectionConfig) -> ContentFingerprint:
         """Generate comprehensive content fingerprint"""
+
+
+
         try:
             # Basic file information
             file_path = Path(content_path)
@@ -514,6 +532,9 @@ class SmartContentProtector:
     
     async def _initialize_fingerprinting_models(self):
         """Initialize AI models for content fingerprinting"""
+
+
+
         try:
             # Initialize vision model for image/video fingerprinting
             from torchvision.models import resnet50

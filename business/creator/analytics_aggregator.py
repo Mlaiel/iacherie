@@ -8,7 +8,7 @@ Project: IA Influencer Agent + Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL WARNING:
+ CRITICAL LEGAL WARNING:
 This code, concept, and intellectual property are exclusively owned by Fahed Mlaiel.
 Any unauthorized use, copying, distribution, reverse engineering, or commercialization 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
@@ -145,6 +145,9 @@ class DataAggregator:
     
     async def aggregate_cross_platform_metrics(self, creator_id: str, timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
         """Aggregate metrics across all platforms"""
+
+
+
         try:
             # Get connected platforms for creator
             connected_platforms = await self._get_connected_platforms(creator_id)
@@ -367,6 +370,9 @@ class AnalyticsAggregator:
         Returns:
             Complete analytics dashboard data
         """
+
+
+
         try:
             # Get creator profile
             profile = await self.profile_manager.get_creator_profile(creator_id)
@@ -410,6 +416,9 @@ class AnalyticsAggregator:
     
     async def _get_trending_metrics(self, creator_id: str) -> Dict[str, Any]:
         """Get trending metrics and comparisons"""
+
+
+
         return {
             'engagement_trend': {
                 'direction': 'up',
@@ -439,6 +448,9 @@ class AnalyticsAggregator:
     
     async def export_analytics_data(self, creator_id: str, format_type: str = "json") -> Dict[str, Any]:
         """Export analytics data in specified format"""
+
+
+
         try:
             # Get comprehensive analytics
             analytics_data = await self.get_comprehensive_analytics(creator_id)

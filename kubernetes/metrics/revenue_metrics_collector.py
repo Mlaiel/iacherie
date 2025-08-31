@@ -5,7 +5,7 @@ Advanced revenue tracking and monetization analytics for multi-platform creators
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 
-⚠️  AVERTISSEMENT LÉGAL STRICT ⚠️
+  AVERTISSEMENT LÉGAL STRICT 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et fera l'objet de poursuites 
@@ -295,6 +295,9 @@ class RevenueMetricsCollector:
         payout_date: Optional[datetime] = None
     ) -> None:
         """Update payment status for a transaction"""
+
+
+
         
         try:
             async with get_database_session() as session:
@@ -328,6 +331,9 @@ class RevenueMetricsCollector:
         currency: Currency = Currency.USD
     ) -> Dict[str, Any]:
         """Get comprehensive revenue analytics"""
+
+
+
         
         try:
             # Parse time range
@@ -490,6 +496,9 @@ class RevenueMetricsCollector:
         time_range: str = "30d"
     ) -> Dict[str, Any]:
         """Get licensing deal analytics"""
+
+
+
         
         try:
             # Parse time range
@@ -601,6 +610,9 @@ class RevenueMetricsCollector:
         time_range: str = "90d"
     ) -> Dict[str, Any]:
         """Calculate comprehensive creator performance score"""
+
+
+
         
         try:
             # Get revenue analytics
@@ -695,6 +707,9 @@ class RevenueMetricsCollector:
     
     async def _store_revenue_transaction(self, transaction: RevenueTransaction) -> None:
         """Store revenue transaction in database"""
+
+
+
         try:
             async with get_database_session() as session:
                 await session.execute(
@@ -731,6 +746,9 @@ class RevenueMetricsCollector:
     
     async def _store_licensing_deal(self, deal: LicensingDeal) -> None:
         """Store licensing deal in database"""
+
+
+
         try:
             async with get_database_session() as session:
                 await session.execute(
@@ -766,6 +784,9 @@ class RevenueMetricsCollector:
     
     async def _update_realtime_revenue_metrics(self, transaction: RevenueTransaction) -> None:
         """Update real-time revenue metrics in Redis"""
+
+
+
         try:
             # Update daily totals
             today = datetime.now(timezone.utc).date().isoformat()
@@ -812,6 +833,9 @@ class RevenueMetricsCollector:
     
     async def _process_revenue_analytics(self) -> None:
         """Process revenue analytics for performance optimization"""
+
+
+
         try:
             # Process recent transactions for insights
             # This could include ML predictions, trend analysis, etc.
@@ -821,6 +845,9 @@ class RevenueMetricsCollector:
     
     async def _update_exchange_rates(self) -> None:
         """Update currency exchange rates"""
+
+
+
         try:
             # In production, integrate with real exchange rate API
             # For now, using mock rates

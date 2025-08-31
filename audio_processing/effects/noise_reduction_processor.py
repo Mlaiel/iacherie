@@ -1,5 +1,5 @@
 """
-🔇 Noise Reduction Processor - Professional Noise Suppression Engine
+ Noise Reduction Processor - Professional Noise Suppression Engine
 
 Professional-grade noise reduction with spectral gating, Wiener filtering,
 adaptive algorithms, multi-band processing, and AI-assisted noise profiling.
@@ -54,6 +54,9 @@ class NoiseProfile:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for serialization"""
+
+
+
         return {
             'frequency_response': self.frequency_response.tolist(),
             'magnitude_profile': self.magnitude_profile.tolist(),
@@ -325,6 +328,9 @@ class NoiseReductionProcessor:
         
     def _init_processors(self):
         """Initialize processing components"""
+
+
+
         try:
             self.spectral_gate = SpectralGate(self.frame_size, self.sample_rate)
             self.wiener_filter = WienerFilter(self.frame_size, self.sample_rate)
@@ -342,6 +348,9 @@ class NoiseReductionProcessor:
                            noise_start: float = 0.0, 
                            noise_duration: float = 1.0) -> NoiseProfile:
         """Learn noise profile from audio segment"""
+
+
+
         try:
             # Extract noise segment
             start_sample = int(noise_start * self.sample_rate)
@@ -584,6 +593,9 @@ class NoiseReductionProcessor:
     
     def load_noise_profile(self, filepath: str):
         """Load noise profile from file"""
+
+
+
         try:
             import json
             with open(filepath, 'r') as f:
@@ -645,6 +657,9 @@ class NoiseReductionProcessor:
     
     def learn_noise_profile(self, noise_sample: np.ndarray) -> bool:
         """Learn noise profile from noise-only audio sample"""
+
+
+
         try:
             if len(noise_sample) < self.frame_size:
                 self.logger.warning("Noise sample too short for reliable profiling")
@@ -685,6 +700,9 @@ class NoiseReductionProcessor:
     
     def process(self, audio_data: np.ndarray) -> np.ndarray:
         """Apply noise reduction processing"""
+
+
+
         try:
             if not self.noise_profile_learned:
                 self.logger.warning("No noise profile available, using adaptive mode")

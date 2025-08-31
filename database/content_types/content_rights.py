@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Legal Rights Expert, Intellectual Property Specialist, Compliance Officer
 Copyright: Fahed Mlaiel - All rights reserved
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
@@ -353,6 +353,9 @@ class RightsManager:
     
     def _initialize_compliance_rules(self) -> Dict[str, Any]:
         """Initialize compliance rules for different jurisdictions"""
+
+
+
         return {
             "EU": {
                 "copyright_duration": 70,  # years after death
@@ -385,6 +388,9 @@ class RightsManager:
         intended_uses: List[str]
     ) -> RightsAnalysisResult:
         """Comprehensive rights analysis for content"""
+
+
+
         try:
             # Get existing rights information
             existing_rights = await self._get_content_rights(content_id)
@@ -452,6 +458,9 @@ class RightsManager:
         usage_terms: Dict[str, Any]
     ) -> str:
         """Obtain rights clearance for content"""
+
+
+
         try:
             clearance_id = str(uuid.uuid4())
             
@@ -506,6 +515,9 @@ class RightsManager:
         license_terms: Dict[str, Any]
     ) -> str:
         """Create comprehensive license agreement"""
+
+
+
         try:
             license_id = str(uuid.uuid4())
             
@@ -553,6 +565,9 @@ class RightsManager:
         monitoring_period: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
         """Monitor compliance with rights and licensing terms"""
+
+
+
         try:
             # Get content rights and licenses
             content_rights = await self._get_content_rights(content_id)
@@ -611,6 +626,9 @@ class RightsManager:
         territories: List[str]
     ) -> Dict[str, Any]:
         """Analyze copyright status in specified territories"""
+
+
+
         try:
             copyright_status = {}
             

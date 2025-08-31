@@ -1,5 +1,5 @@
 """
-🚀 Revenue Engine - Industrial-Grade Multi-Platform Revenue Management
+ Revenue Engine - Industrial-Grade Multi-Platform Revenue Management
 ==================================================================
 
 Ultra-advanced revenue optimization system for content creators with multi-format support.
@@ -9,7 +9,7 @@ all major platforms (Spotify, YouTube, Instagram, TikTok, OnlyFans, Patreon, etc
 Created by: Fahed Mlaiel <mlaiel@live.de>
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
+ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED 
 Contact mlaiel@live.de for licensing inquiries.
 
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Revenue Optimization
@@ -143,6 +143,9 @@ class RevenueCalculator:
         stream_type: RevenueStream
     ) -> Tuple[Decimal, Decimal]:
         """Calculate net revenue after platform fees"""
+
+
+
         try:
             # Platform-specific fee rates
             fee_rates = {
@@ -174,6 +177,9 @@ class RevenueCalculator:
         to_currency: RevenueCurrency
     ) -> Decimal:
         """Convert between currencies using real-time rates"""
+
+
+
         try:
             if from_currency == to_currency:
                 return amount
@@ -202,6 +208,9 @@ class RevenueOptimizer:
         target_growth: float = 0.20
     ) -> Dict[str, Any]:
         """Generate platform-specific optimization strategies"""
+
+
+
         try:
             optimization_plan = {
                 'recommended_platforms': [],
@@ -320,6 +329,9 @@ class RevenueOptimizer:
         platform_performance: Dict[PlatformType, Dict[str, Any]]
     ) -> Dict[str, Any]:
         """Generate AI-powered content strategies"""
+
+
+
         try:
             # This would integrate with AI content analysis
             strategies = {
@@ -342,6 +354,9 @@ class RevenueOptimizer:
         target_growth: float
     ) -> float:
         """Calculate projected revenue increase"""
+
+
+
         try:
             if not revenue_history:
                 return 0.0
@@ -378,8 +393,11 @@ class RevenueEngine:
     
     async def initialize(self) -> bool:
         """Initialize revenue engine with all dependencies"""
+
+
+
         try:
-            self.logger.info("🚀 Initializing Revenue Engine...")
+            self.logger.info(" Initializing Revenue Engine...")
             
             # Initialize payment processors
             await self._initialize_payment_processors()
@@ -390,11 +408,11 @@ class RevenueEngine:
             # Load currency exchange rates
             await self._load_currency_rates()
             
-            self.logger.info("✅ Revenue Engine initialized successfully")
+            self.logger.info(" Revenue Engine initialized successfully")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Revenue Engine initialization failed: {e}")
+            self.logger.error(f" Revenue Engine initialization failed: {e}")
             return False
     
     async def track_revenue(
@@ -403,6 +421,9 @@ class RevenueEngine:
         platform_revenues: List[PlatformRevenue]
     ) -> Dict[str, Any]:
         """Track and process revenue from multiple platforms"""
+
+
+
         try:
             revenue_id = str(uuid.uuid4())
             processed_revenues = []
@@ -456,6 +477,9 @@ class RevenueEngine:
         platforms: Optional[List[PlatformType]] = None
     ) -> RevenueMetrics:
         """Get comprehensive revenue analytics for user"""
+
+
+
         try:
             # Fetch revenue data from database
             revenue_data = await self._fetch_revenue_data(
@@ -491,6 +515,9 @@ class RevenueEngine:
         forecast_horizon: int = 90  # days
     ) -> Dict[str, Any]:
         """Generate AI-powered revenue forecasts"""
+
+
+
         try:
             # Get historical revenue data
             historical_data = await self._fetch_historical_revenue(user_id)
@@ -524,6 +551,9 @@ class RevenueEngine:
         target_increase: float = 0.25  # 25% increase target
     ) -> Dict[str, Any]:
         """Generate comprehensive revenue stream optimization plan"""
+
+
+
         try:
             # Get current revenue performance
             current_metrics = await self.get_revenue_analytics(
@@ -570,6 +600,9 @@ class RevenueEngine:
     
     async def _initialize_payment_processors(self):
         """Initialize payment processing integrations"""
+
+
+
         try:
             # Initialize Stripe
             if 'stripe' not in self.payment_processors:
@@ -588,6 +621,9 @@ class RevenueEngine:
     
     async def _setup_database_tables(self):
         """Setup required database tables for revenue tracking"""
+
+
+
         try:
             # This would create the necessary database schema
             # Implementation depends on database system used
@@ -597,6 +633,9 @@ class RevenueEngine:
     
     async def _load_currency_rates(self):
         """Load real-time currency exchange rates"""
+
+
+
         try:
             # This would fetch from external currency API
             # For now, using placeholder rates
@@ -612,6 +651,9 @@ class RevenueEngine:
     
     async def _validate_revenue_data(self, revenue: PlatformRevenue) -> bool:
         """Validate revenue data integrity and security"""
+
+
+
         try:
             # Validate required fields
             if not all([
@@ -644,6 +686,9 @@ class RevenueEngine:
         revenue: PlatformRevenue
     ):
         """Store platform revenue data in database"""
+
+
+
         try:
             # This would store in the database
             # Implementation depends on database system
@@ -657,6 +702,9 @@ class RevenueEngine:
         revenues: List[PlatformRevenue]
     ) -> Dict[str, Any]:
         """Generate comprehensive revenue metrics"""
+
+
+
         try:
             total_gross = sum(r.gross_revenue for r in revenues)
             total_net = sum(r.net_revenue for r in revenues)
@@ -698,6 +746,9 @@ class RevenueEngine:
         platform_breakdown: Dict[PlatformType, Decimal]
     ) -> float:
         """Calculate revenue diversification score (0-1, higher is better)"""
+
+
+
         try:
             if not platform_breakdown:
                 return 0.0
@@ -729,6 +780,9 @@ class RevenueEngine:
         platforms: Optional[List[PlatformType]] = None
     ) -> List[PlatformRevenue]:
         """Fetch revenue data from database"""
+
+
+
         try:
             # This would fetch from the database
             # Return placeholder data for now
@@ -742,6 +796,9 @@ class RevenueEngine:
         revenue_data: List[PlatformRevenue]
     ) -> RevenueMetrics:
         """Calculate comprehensive revenue metrics"""
+
+
+
         try:
             # This would perform complex analytics calculations
             # Return placeholder metrics for now
@@ -765,6 +822,9 @@ class RevenueEngine:
     
     async def _fetch_historical_revenue(self, user_id: str) -> List[Dict[str, Any]]:
         """Fetch historical revenue data for forecasting"""
+
+
+
         try:
             # This would fetch historical data from database
             return []
@@ -778,6 +838,9 @@ class RevenueEngine:
         forecast_horizon: int
     ) -> Dict[str, Any]:
         """Generate revenue forecasts using ML models"""
+
+
+
         try:
             # This would use ML models for forecasting
             # Return placeholder forecasts for now
@@ -796,6 +859,9 @@ class RevenueEngine:
         forecasts: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Calculate confidence intervals for forecasts"""
+
+
+
         try:
             return {
                 'lower_bound': [],
@@ -811,6 +877,9 @@ class RevenueEngine:
         forecasts: Dict[str, Any]
     ) -> List[str]:
         """Generate actionable insights from forecasts"""
+
+
+
         try:
             return [
                 "Revenue trend shows positive growth trajectory",
@@ -829,6 +898,9 @@ class RevenueEngine:
         target_increase: float
     ) -> Dict[str, Any]:
         """Analyze optimization opportunity for revenue stream"""
+
+
+
         try:
             return {
                 'stream': stream.value,
@@ -852,6 +924,9 @@ class RevenueEngine:
         target_increase: float
     ) -> List[Dict[str, Any]]:
         """Generate specific action items for revenue optimization"""
+
+
+
         try:
             return [
                 {

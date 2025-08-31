@@ -1,5 +1,5 @@
 """
-🏛️ Licensing Repository - IA Influencer Agent Platform Enterprise
+ Licensing Repository - IA Influencer Agent Platform Enterprise
 ==================================================================
 Module: backend/data_management/repositories/licensing_repository.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Licensing Repository - Production-Ready
 Responsibility: Advanced licensing management with rights tracking and revenue distribution
 =========================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
@@ -89,6 +89,9 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         revenue_share: Optional[Dict[str, Any]] = None
     ) -> LicensingModel:
         """Create comprehensive license agreement with AI-powered terms generation"""
+
+
+
         try:
             # Generate unique license ID
             license_id = self._generate_license_id(content_id, license_type)
@@ -148,6 +151,9 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         usage_details: Dict[str, Any]
     ) -> LicenseTerms:
         """Track license usage with AI-powered analytics"""
+
+
+
         try:
             # Validate license exists and is active
             license_agreement = await self.get_by_id(license_id)
@@ -202,6 +208,9 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         period_end: datetime
     ) -> Dict[str, Any]:
         """Calculate comprehensive license revenue with AI analytics"""
+
+
+
         try:
             license_agreement = await self.get_by_id(license_id)
             if not license_agreement:
@@ -262,6 +271,9 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         renewal_terms: Optional[Dict[str, Any]] = None
     ) -> LicensingModel:
         """Manage license renewal with AI-optimized terms"""
+
+
+
         try:
             current_license = await self.get_by_id(license_id)
             if not current_license:
@@ -334,6 +346,9 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         creator_id: Optional[str] = None
     ) -> Dict[str, Any]:
         """Comprehensive license compliance audit"""
+
+
+
         try:
             # Determine audit scope
             if license_id:
@@ -721,6 +736,9 @@ class LicensingRepository(BaseRepository[LicensingModel]):
 
     async def _audit_revenue_distribution(self, license_id: str) -> Dict[str, Any]:
         """Audit revenue distribution accuracy"""
+
+
+
         return {
             'distribution_accuracy': 99.8,
             'payment_delays': 0,
@@ -730,6 +748,9 @@ class LicensingRepository(BaseRepository[LicensingModel]):
 
     async def _audit_territory_compliance(self, license_id: str) -> Dict[str, Any]:
         """Audit territory compliance"""
+
+
+
         return {
             'territory_violations': 0,
             'authorized_territories': ['US', 'CA', 'EU'],
@@ -816,6 +837,9 @@ class AsyncLicensingRepository(AsyncBaseRepository[LicensingModel]):
         license_requests: List[Dict[str, Any]]
     ) -> List[LicensingModel]:
         """Create multiple license agreements in batch"""
+
+
+
         try:
             tasks = []
             for request in license_requests:
@@ -844,6 +868,9 @@ class AsyncLicensingRepository(AsyncBaseRepository[LicensingModel]):
         period_end: datetime
     ) -> Dict[str, Dict[str, Any]]:
         """Calculate revenue for multiple licenses in parallel"""
+
+
+
         try:
             tasks = []
             for license_id in license_ids:
@@ -875,6 +902,9 @@ class AsyncLicensingRepository(AsyncBaseRepository[LicensingModel]):
         callback: callable
     ):
         """Stream real-time license analytics"""
+
+
+
         try:
             while True:
                 # Fetch latest analytics

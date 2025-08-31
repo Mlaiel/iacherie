@@ -9,7 +9,7 @@ and real-time AI analysis pipeline.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code is proprietary and confidential. Any unauthorized copying, distribution,
 or use without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is
 strictly prohibited and will result in legal action.
@@ -207,6 +207,9 @@ class RealTimeIngestionEngine:
         
     async def start_websocket_server(self):
         """Start WebSocket server for real-time ingestion"""
+
+
+
         try:
             self.logger.info(f"Starting WebSocket server on {self.websocket_host}:{self.websocket_port}")
             
@@ -278,6 +281,9 @@ class RealTimeIngestionEngine:
     
     async def _authenticate_websocket(self, websocket: WebSocketServerProtocol) -> Dict[str, Any]:
         """Authenticate WebSocket connection"""
+
+
+
         try:
             # Wait for authentication message
             auth_message = await asyncio.wait_for(websocket.recv(), timeout=10.0)
@@ -323,6 +329,9 @@ class RealTimeIngestionEngine:
     async def _initialize_streaming_session(self, websocket: WebSocketServerProtocol, 
                                           user_id: str, path: str) -> Optional[str]:
         """Initialize new streaming session"""
+
+
+
         try:
             # Check concurrent session limits
             user_sessions = [s for s in self.active_sessions.values() if s.user_id == user_id]
@@ -474,6 +483,9 @@ class RealTimeIngestionEngine:
     
     async def _handle_content_chunk(self, session: StreamingSession, chunk_data: bytes):
         """Handle binary content chunk"""
+
+
+
         try:
             # Create chunk object
             chunk = StreamingChunk(
@@ -704,18 +716,30 @@ class RealTimeIngestionEngine:
     
     async def _analyze_chunk_quality(self, session: StreamingSession, chunk: StreamingChunk, chunk_path: str) -> Dict[str, Any]:
         """Analyze chunk quality in real-time"""
+
+
+
         return {'quality_score': 0.8}
     
     async def _perform_streaming_analysis(self, session: StreamingSession, chunk: StreamingChunk) -> Dict[str, Any]:
         """Perform real-time streaming analysis"""
+
+
+
         return {'analysis': 'placeholder'}
     
     async def _transcribe_audio_chunk(self, session: StreamingSession, chunk: StreamingChunk) -> Dict[str, Any]:
         """Transcribe audio chunk in real-time"""
+
+
+
         return {'text': 'placeholder', 'confidence': 0.9}
     
     async def _perform_realtime_processing(self, session: StreamingSession, chunk: StreamingChunk) -> Dict[str, Any]:
         """Perform comprehensive real-time processing"""
+
+
+
         return {'processing_result': 'placeholder'}
     
     async def _session_cleanup_loop(self):
@@ -779,6 +803,9 @@ class RealTimeIngestionEngine:
     
     async def shutdown(self):
         """Shutdown streaming engine gracefully"""
+
+
+
         try:
             self.logger.info("Shutting down real-time ingestion engine")
             

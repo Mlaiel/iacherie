@@ -219,6 +219,9 @@ class CollaborationMatchingManager:
         Returns:
             Résultat du traitement
         """
+
+
+
         try:
             event_type = notification_data.event_type
             
@@ -317,7 +320,7 @@ class CollaborationMatchingManager:
         elif data.event_type == MatchingEventType.COLLABORATION_PROPOSED:
             return {
                 **base_data,
-                "title": f"📋 Nouvelle proposition de collaboration",
+                "title": f" Nouvelle proposition de collaboration",
                 "message": f"Vous avez reçu une proposition pour un projet {data.collaboration_type.value.replace('_', ' ')}.",
                 "priority": "high",
                 "category": "collaboration_proposal",
@@ -341,7 +344,7 @@ class CollaborationMatchingManager:
         elif data.event_type == MatchingEventType.PROPOSAL_ACCEPTED:
             return {
                 **base_data,
-                "title": f"🎉 Proposition acceptée!",
+                "title": f" Proposition acceptée!",
                 "message": f"Votre proposition de collaboration a été acceptée! Le projet peut commencer.",
                 "priority": "high",
                 "category": "proposal_success",
@@ -364,7 +367,7 @@ class CollaborationMatchingManager:
         elif data.event_type == MatchingEventType.PROPOSAL_DECLINED:
             return {
                 **base_data,
-                "title": f"📝 Proposition déclinée",
+                "title": f" Proposition déclinée",
                 "message": f"Votre proposition a été déclinée, mais d'autres opportunités vous attendent!",
                 "priority": "medium",
                 "category": "proposal_declined",
@@ -381,7 +384,7 @@ class CollaborationMatchingManager:
         elif data.event_type == MatchingEventType.PROJECT_STARTED:
             return {
                 **base_data,
-                "title": f"🚀 Projet démarré!",
+                "title": f" Projet démarré!",
                 "message": f"Votre projet collaboratif a officiellement commencé. Bonne collaboration!",
                 "priority": "medium",
                 "category": "project_lifecycle",
@@ -406,7 +409,7 @@ class CollaborationMatchingManager:
             
             return {
                 **base_data,
-                "title": f"🎯 Étape atteinte: {milestone_name}",
+                "title": f" Étape atteinte: {milestone_name}",
                 "message": f"Félicitations! Vous avez atteint l'étape '{milestone_name}' ({completion_percentage}% du projet).",
                 "priority": "medium",
                 "category": "project_progress",
@@ -427,7 +430,7 @@ class CollaborationMatchingManager:
         elif data.event_type == MatchingEventType.PROJECT_COMPLETED:
             return {
                 **base_data,
-                "title": f"🏆 Projet terminé avec succès!",
+                "title": f" Projet terminé avec succès!",
                 "message": f"Félicitations! Votre projet collaboratif est maintenant terminé.",
                 "priority": "high",
                 "category": "project_success",
@@ -451,7 +454,7 @@ class CollaborationMatchingManager:
             skill_match = data.metadata.get("detected_skill", "compétence spécialisée")
             return {
                 **base_data,
-                "title": f"💡 Compétence complémentaire détectée",
+                "title": f" Compétence complémentaire détectée",
                 "message": f"Nous avons détecté que votre {skill_match} pourrait parfaitement compléter un projet en cours.",
                 "priority": "medium",
                 "category": "skill_opportunity",
@@ -473,7 +476,7 @@ class CollaborationMatchingManager:
             recommendation_type = data.metadata.get("recommendation_type", "collaboration")
             return {
                 **base_data,
-                "title": f"⭐ Nouvelle recommandation personnalisée",
+                "title": f" Nouvelle recommandation personnalisée",
                 "message": f"Nous avons une recommandation {recommendation_type} spécialement pour vous!",
                 "priority": "normal",
                 "category": "personalized_recommendation",
@@ -490,7 +493,7 @@ class CollaborationMatchingManager:
         else:
             return {
                 **base_data,
-                "title": f"📢 Événement de collaboration: {data.event_type.value}",
+                "title": f" Événement de collaboration: {data.event_type.value}",
                 "message": f"Un événement de collaboration s'est produit.",
                 "priority": "normal",
                 "category": "general_collaboration",
@@ -542,6 +545,9 @@ class CollaborationMatchingManager:
         data: CollaborationNotificationData
     ):
         """Traitement spécialisé selon le type d'événement"""
+
+
+
         
         try:
             event_type = data.event_type
@@ -606,6 +612,9 @@ class CollaborationMatchingManager:
         Returns:
             Liste des profils matchés avec leur score
         """
+
+
+
         try:
             # Récupérer le profil de l'initiateur
             initiator_profile = await self._get_user_profile(user_id)
@@ -733,38 +742,65 @@ class CollaborationMatchingManager:
         exclude_user_id: str
     ) -> List[CollaboratorProfile]:
         """Récupère les collaborateurs potentiels pour une opportunité"""
+
+
+
         return []
 
     async def _calculate_compatibility_score(self, data: CollaborationNotificationData) -> float:
         """Calcule le score de compatibilité"""
+
+
+
         return data.match_score * 0.9
 
     async def _find_shared_genres(self, data: CollaborationNotificationData) -> List[str]:
         """Trouve les genres musicaux partagés"""
+
+
+
         return ["Pop", "Electronic"]
 
     async def _compare_experience_levels(self, data: CollaborationNotificationData) -> str:
         """Compare les niveaux d'expérience"""
+
+
+
         return "compatible"
 
     async def _get_project_milestones(self, project_id: str) -> List[Dict[str, Any]]:
         """Récupère les jalons d'un projet"""
+
+
+
         return [{"name": "Phase 1", "due_date": "2025-02-01"}]
 
     async def _get_alternative_matches(self, user_id: str, collab_type: CollaborationType) -> List[Dict[str, Any]]:
         """Trouve des matches alternatifs"""
+
+
+
         return []
 
     async def _get_project_team(self, project_id: str) -> List[Dict[str, str]]:
         """Récupère l'équipe d'un projet"""
+
+
+
         return []
 
     async def _get_personalized_recommendations(self, user_id: str) -> List[Dict[str, Any]]:
         """Génère des recommandations personnalisées"""
+
+
+
         return []
 
     def _calculate_completion_rate(self) -> float:
         """Calcule le taux de completion des projets"""
+
+
+
         return 0.85
 
     # Méthodes de traitement spécialisé (stubs)

@@ -1,15 +1,15 @@
 """
-🚀 Compliance Checker - IA Influencer Agent Platform Enterprise
+ Compliance Checker - IA Influencer Agent Platform Enterprise
 ===============================================================
 Module: backend/data_management/validation/compliance_checker.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ===============================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 VÉRIFICATION CONFORMITÉ LÉGALE & PLATEFORME
+ VÉRIFICATION CONFORMITÉ LÉGALE & PLATEFORME
 Vérification automatisée des conformités multi-juridictionnelles
 - RGPD/GDPR compliance complète
 - CCPA/Privacy Act américain
@@ -642,6 +642,9 @@ class CopyrightComplianceChecker:
         Returns:
             Match result if found, None otherwise
         """
+
+
+
         try:
             # In production, this would query a real copyright database
             # For now, simulate with known bad hashes
@@ -1106,6 +1109,9 @@ class ComplianceChecker:
     
     def _create_error_result(self, error: str) -> ComplianceResult:
         """Crée un résultat d'erreur"""
+
+
+
         return ComplianceResult(
             overall_compliance=ComplianceLevel.CRITICAL,
             issues=[ComplianceIssue(

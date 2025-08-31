@@ -9,7 +9,7 @@ detection, and automated incident response with digital forensics capabilities.
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Team: Multi-Expert Lead AI Developer & Cybersecurity Specialist
 
-⚠️ ULTRA-STRONG INTELLECTUAL PROPERTY WARNING ⚠️
+ ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 
 This revolutionary security event logging technology is the EXCLUSIVE property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
@@ -398,6 +398,9 @@ class SecurityEventLogger:
         Returns:
             str: Generated event ID
         """
+
+
+
         try:
             event_id = f"sec_{uuid.uuid4().hex[:16]}"
             
@@ -504,6 +507,9 @@ class SecurityEventLogger:
         user_agent: Optional[str] = None
     ) -> str:
         """Log brute force attack detection."""
+
+
+
         return self.log_security_event(
             event_type=SecurityEventType.BRUTE_FORCE_ATTACK,
             event_name="Brute Force Attack Detected",
@@ -563,6 +569,9 @@ class SecurityEventLogger:
         attack_type: str = "volumetric"
     ) -> str:
         """Log DDoS attack detection."""
+
+
+
         return self.log_security_event(
             event_type=SecurityEventType.DDOS_ATTACK,
             event_name="DDoS Attack Detected",
@@ -675,6 +684,9 @@ class SecurityEventLogger:
         Returns:
             bool: True if successfully updated
         """
+
+
+
         try:
             event = self.db_session.query(SecurityEventLog).filter_by(event_id=event_id).first()
             
@@ -733,6 +745,9 @@ class SecurityEventLogger:
         Returns:
             List[Dict[str, Any]]: List of active threats
         """
+
+
+
         try:
             start_time = datetime.now(timezone.utc) - timedelta(hours=hours)
             
@@ -765,6 +780,9 @@ class SecurityEventLogger:
         Returns:
             Dict[str, Any]: Threat summary
         """
+
+
+
         try:
             start_time = datetime.now(timezone.utc) - timedelta(hours=hours)
             
@@ -846,6 +864,9 @@ def create_security_event_logger(db_session, service_name: str = "ia_influencer_
     Returns:
         SecurityEventLogger: Configured security event logger
     """
+
+
+
     return SecurityEventLogger(db_session, service_name)
 
 

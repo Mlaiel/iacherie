@@ -195,6 +195,9 @@ class BaseMusicAnalyzer(ABC):
         
     def load_audio(self, file_path: str) -> Tuple[np.ndarray, int]:
         """Load audio file for music analysis"""
+
+
+
         try:
             if LIBROSA_AVAILABLE:
                 audio, sr = librosa.load(file_path, sr=self.sample_rate)
@@ -228,6 +231,9 @@ class MusicStyleAnalyzer(BaseMusicAnalyzer):
         
     def load_model(self) -> bool:
         """Load music style analysis model"""
+
+
+
         try:
             # Create style analysis model
             self.model = self._create_style_model()
@@ -505,6 +511,9 @@ class BeatDetector(BaseMusicAnalyzer):
         
     def load_model(self) -> bool:
         """Load beat detection model"""
+
+
+
         try:
             # Create beat detection model
             self.model = self._create_beat_model()
@@ -628,6 +637,9 @@ class BeatDetector(BaseMusicAnalyzer):
     
     def _detect_tempo(self, audio: np.ndarray, sample_rate: int) -> float:
         """Detect tempo using multiple methods"""
+
+
+
         try:
             if LIBROSA_AVAILABLE:
                 tempo, _ = librosa.beat.beat_track(y=audio, sr=sample_rate)
@@ -678,6 +690,9 @@ class BeatDetector(BaseMusicAnalyzer):
     
     def _detect_beat_positions(self, audio: np.ndarray, sample_rate: int, tempo: float) -> np.ndarray:
         """Detect beat positions in the audio"""
+
+
+
         try:
             if LIBROSA_AVAILABLE:
                 tempo_est, beats = librosa.beat.beat_track(y=audio, sr=sample_rate, bpm=tempo)
@@ -695,6 +710,9 @@ class BeatDetector(BaseMusicAnalyzer):
     
     def _detect_downbeats(self, audio: np.ndarray, sample_rate: int, beats: np.ndarray) -> np.ndarray:
         """Detect downbeat positions"""
+
+
+
         try:
             # Simple downbeat detection - assume 4/4 time for now
             # In real implementation, this would be more sophisticated
@@ -705,6 +723,9 @@ class BeatDetector(BaseMusicAnalyzer):
     
     def _analyze_time_signature(self, beats: np.ndarray, downbeats: np.ndarray) -> TimeSignature:
         """Analyze time signature from beat pattern"""
+
+
+
         try:
             if len(downbeats) > 1 and len(beats) > 4:
                 # Calculate average beats per measure
@@ -736,6 +757,9 @@ class BeatDetector(BaseMusicAnalyzer):
     
     def _extract_rhythm_pattern(self, beats: np.ndarray, audio: np.ndarray, sample_rate: int) -> List[float]:
         """Extract rhythm pattern from beats"""
+
+
+
         try:
             pattern = []
             
@@ -765,6 +789,9 @@ class BeatDetector(BaseMusicAnalyzer):
     
     def _calculate_beat_confidence(self, beats: np.ndarray, audio: np.ndarray, sample_rate: int) -> float:
         """Calculate confidence in beat detection"""
+
+
+
         try:
             if len(beats) < 2:
                 return 0.0
@@ -821,6 +848,9 @@ class HarmonyAnalyzer(BaseMusicAnalyzer):
         
     def load_model(self) -> bool:
         """Load harmony analysis model"""
+
+
+
         try:
             # Create harmony analysis models
             self.key_model = self._create_key_detection_model()
@@ -948,6 +978,9 @@ class HarmonyAnalyzer(BaseMusicAnalyzer):
     
     def _extract_chroma_features(self, audio: np.ndarray, sample_rate: int) -> np.ndarray:
         """Extract chroma features for harmony analysis"""
+
+
+
         try:
             if LIBROSA_AVAILABLE:
                 chroma = librosa.feature.chroma_cqt(y=audio, sr=sample_rate)
@@ -984,6 +1017,9 @@ class HarmonyAnalyzer(BaseMusicAnalyzer):
     
     def _detect_key(self, chroma_features: np.ndarray) -> Tuple[MusicKey, float]:
         """Detect musical key from chroma features"""
+
+
+
         try:
             with torch.no_grad():
                 input_tensor = torch.FloatTensor(chroma_features).unsqueeze(0).to(self.device)
@@ -1040,6 +1076,9 @@ class HarmonyAnalyzer(BaseMusicAnalyzer):
     
     def _analyze_chord_progression(self, audio: np.ndarray, sample_rate: int) -> List[Dict[str, Any]]:
         """Analyze chord progression in the audio"""
+
+
+
         try:
             # Segment audio for chord analysis
             segment_duration = 2.0  # 2 seconds per chord
@@ -1083,6 +1122,9 @@ class HarmonyAnalyzer(BaseMusicAnalyzer):
     
     def _recognize_chord(self, features: np.ndarray) -> Dict[str, Any]:
         """Recognize chord from features"""
+
+
+
         try:
             with torch.no_grad():
                 input_tensor = torch.FloatTensor(features).unsqueeze(0).to(self.device)
@@ -1123,6 +1165,9 @@ class HarmonyAnalyzer(BaseMusicAnalyzer):
     def _calculate_harmonic_complexity(self, chord_progression: List[Dict[str, Any]], 
                                      chroma_features: np.ndarray) -> float:
         """Calculate harmonic complexity score"""
+
+
+
         try:
             if not chord_progression:
                 return 0.5
@@ -1158,6 +1203,9 @@ class HarmonyAnalyzer(BaseMusicAnalyzer):
     def _detect_modulations(self, audio: np.ndarray, sample_rate: int, 
                            primary_key: MusicKey) -> List[Dict[str, Any]]:
         """Detect key modulations in the music"""
+
+
+
         try:
             modulations = []
             

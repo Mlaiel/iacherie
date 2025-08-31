@@ -1,15 +1,15 @@
 """
-🚀 Event Bus System - IA Influencer Agent Platform Enterprise
+ Event Bus System - IA Influencer Agent Platform Enterprise
 ===========================================================
 Module: backend/platform_core/communication/event_bus.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ===========================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 BUS D'ÉVÉNEMENTS DISTRIBUÉ
+ BUS D'ÉVÉNEMENTS DISTRIBUÉ
 Système de communication événementielle enterprise
 - Publish/Subscribe pattern avec persistence
 - Event sourcing et replay automatique
@@ -166,6 +166,9 @@ class EventHandler:
         
     async def handle(self, event: Event) -> bool:
         """Exécute le handler pour un événement"""
+
+
+
         try:
             if self.is_async:
                 result = await self.handler_func(event)
@@ -356,6 +359,9 @@ class EventBus:
                 
     async def _process_event_message(self, stream_name: str, message_id: str, fields: Dict):
         """Traite un message d'événement"""
+
+
+
         try:
             event_data = json.loads(fields[b"event"])
             event = Event.from_dict(event_data)
@@ -438,6 +444,9 @@ class EventBus:
         
     async def _ack_message(self, message_id: str):
         """Acknowledge un message traité"""
+
+
+
         try:
             await self.redis_client.xack(
                 self.events_stream, 

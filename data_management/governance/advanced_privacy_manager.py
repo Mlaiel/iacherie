@@ -144,6 +144,9 @@ class PIIDetector:
         
     def _initialize_patterns(self) -> Dict[PIIType, List[str]]:
         """Initialize regex patterns for PII detection"""
+
+
+
         return {
             PIIType.EMAIL: [
                 r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
@@ -397,6 +400,9 @@ class DataAnonymizer:
     
     def _generate_encryption_key(self) -> bytes:
         """Generate encryption key for pseudonymization"""
+
+
+
         return secrets.token_bytes(32)
     
     async def anonymize_data(

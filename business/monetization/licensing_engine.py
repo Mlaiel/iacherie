@@ -1,5 +1,5 @@
 """
-⚖️ Licensing Engine - Industrial-Grade Rights & Licensing Management
+ Licensing Engine - Industrial-Grade Rights & Licensing Management
 ==================================================================
 
 Ultra-advanced licensing and rights management system with smart contract generation,
@@ -9,7 +9,7 @@ Handles all types of content licensing for creators.
 Created by: Fahed Mlaiel <mlaiel@live.de>
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
+ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED 
 Contact mlaiel@live.de for licensing inquiries.
 
 Business Logic: Content Registration → Rights Verification → License Generation → Royalty Tracking
@@ -170,6 +170,9 @@ class RoyaltyCalculator:
         period_end: datetime
     ) -> RoyaltyCalculation:
         """Calculate royalty payment for license agreement"""
+
+
+
         try:
             calculation_id = str(uuid.uuid4())
             
@@ -232,6 +235,9 @@ class RoyaltyCalculator:
         license_agreement: LicenseAgreement
     ) -> Decimal:
         """Calculate tiered percentage royalty"""
+
+
+
         try:
             # Define default tiers - could be configurable
             tiers = [
@@ -269,6 +275,9 @@ class RoyaltyCalculator:
         license_agreement: LicenseAgreement
     ) -> Decimal:
         """Calculate usage-based royalty"""
+
+
+
         try:
             # Example usage metrics
             plays = usage_data.get('plays', 0)
@@ -301,6 +310,9 @@ class RoyaltyCalculator:
         usage_data: Dict[str, Any]
     ) -> Dict[str, Decimal]:
         """Calculate applicable deductions"""
+
+
+
         try:
             deductions = {}
             
@@ -347,6 +359,9 @@ class RightsManager:
         registration_documents: List[str] = None
     ) -> Dict[str, Any]:
         """Register content rights with verification"""
+
+
+
         try:
             # Validate ownership percentage
             if ownership_percentage <= 0 or ownership_percentage > 100:
@@ -407,6 +422,9 @@ class RightsManager:
         license_type: LicenseType
     ) -> Dict[str, Any]:
         """Verify that licensor has rights to license content"""
+
+
+
         try:
             # Get content rights
             rights = await self._get_content_rights(content_id)
@@ -473,6 +491,9 @@ class RightsManager:
     
     async def _get_content_rights(self, content_id: str) -> List[ContentRights]:
         """Fetch content rights from database"""
+
+
+
         try:
             # This would query the database
             return []  # Placeholder
@@ -482,6 +503,9 @@ class RightsManager:
     
     async def _store_content_rights(self, rights: ContentRights):
         """Store content rights in database"""
+
+
+
         try:
             # This would store in the database
             pass
@@ -491,6 +515,9 @@ class RightsManager:
     
     async def _update_content_rights(self, rights: ContentRights):
         """Update content rights in database"""
+
+
+
         try:
             # This would update in the database
             pass
@@ -499,6 +526,9 @@ class RightsManager:
     
     async def _blockchain_verify_rights(self, rights: ContentRights) -> Optional[str]:
         """Verify rights on blockchain"""
+
+
+
         try:
             # This would interact with blockchain
             # Return placeholder hash for now
@@ -526,6 +556,9 @@ class ContractManager:
         template_type: str = "standard"
     ) -> Dict[str, Any]:
         """Generate legal license contract from agreement"""
+
+
+
         try:
             # Prepare contract data
             contract_data = {
@@ -567,6 +600,9 @@ class ContractManager:
         license_agreement: LicenseAgreement
     ) -> Dict[str, Any]:
         """Generate human-readable contract terms summary"""
+
+
+
         try:
             summary = {
                 'license_type': license_agreement.license_type.value,
@@ -640,6 +676,9 @@ class ContractManager:
         contract_hash: str
     ):
         """Store generated contract"""
+
+
+
         try:
             # This would store in the database with encryption
             pass
@@ -662,6 +701,9 @@ class LicensingAnalytics:
         period_end: datetime
     ) -> Dict[str, Any]:
         """Generate comprehensive licensing report"""
+
+
+
         try:
             # Fetch licensing data
             licenses = await self._fetch_user_licenses(user_id, period_start, period_end)
@@ -722,6 +764,9 @@ class LicensingAnalytics:
         period_end: datetime
     ) -> List[LicenseAgreement]:
         """Fetch user's license agreements"""
+
+
+
         try:
             # This would query the database
             return []  # Placeholder
@@ -736,6 +781,9 @@ class LicensingAnalytics:
         period_end: datetime
     ) -> List[RoyaltyCalculation]:
         """Fetch royalty calculation data"""
+
+
+
         try:
             # This would query the database
             return []  # Placeholder
@@ -749,6 +797,9 @@ class LicensingAnalytics:
         royalty_data: List[RoyaltyCalculation]
     ) -> Dict[str, Any]:
         """Analyze performance by territory"""
+
+
+
         try:
             territory_performance = {}
             
@@ -785,6 +836,9 @@ class LicensingAnalytics:
         period_end: datetime
     ) -> Dict[str, Any]:
         """Calculate licensing growth metrics"""
+
+
+
         try:
             # This would calculate actual growth metrics
             return {
@@ -803,6 +857,9 @@ class LicensingAnalytics:
         royalty_data: List[RoyaltyCalculation]
     ) -> List[str]:
         """Generate licensing optimization recommendations"""
+
+
+
         try:
             recommendations = []
             
@@ -851,18 +908,21 @@ class LicensingEngine:
     
     async def initialize(self) -> bool:
         """Initialize licensing engine"""
+
+
+
         try:
-            self.logger.info("🚀 Initializing Licensing Engine...")
+            self.logger.info(" Initializing Licensing Engine...")
             
             # Initialize components
             if self.blockchain_manager:
                 await self.blockchain_manager.initialize()
             
-            self.logger.info("✅ Licensing Engine initialized successfully")
+            self.logger.info(" Licensing Engine initialized successfully")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Licensing Engine initialization failed: {e}")
+            self.logger.error(f" Licensing Engine initialization failed: {e}")
             return False
     
     async def create_license_agreement(
@@ -874,6 +934,9 @@ class LicensingEngine:
         terms: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Create new license agreement"""
+
+
+
         try:
             # Verify licensing rights
             rights_verification = await self.rights_manager.verify_licensing_rights(
@@ -939,6 +1002,9 @@ class LicensingEngine:
         period_end: datetime
     ) -> Dict[str, Any]:
         """Calculate royalty payment for license"""
+
+
+
         try:
             # Fetch license agreement
             license_agreement = await self._fetch_license_agreement(license_id)
@@ -979,6 +1045,9 @@ class LicensingEngine:
         period_end: datetime
     ) -> Dict[str, Any]:
         """Get licensing analytics for user"""
+
+
+
         return await self.analytics.generate_licensing_report(
             user_id, period_start, period_end
         )
@@ -987,6 +1056,9 @@ class LicensingEngine:
     
     async def _store_license_agreement(self, agreement: LicenseAgreement):
         """Store license agreement in database"""
+
+
+
         try:
             # This would store in the database
             pass
@@ -999,6 +1071,9 @@ class LicensingEngine:
         license_id: str
     ) -> Optional[LicenseAgreement]:
         """Fetch license agreement from database"""
+
+
+
         try:
             # This would query the database
             return None  # Placeholder
@@ -1008,6 +1083,9 @@ class LicensingEngine:
     
     async def _store_royalty_calculation(self, calculation: RoyaltyCalculation):
         """Store royalty calculation in database"""
+
+
+
         try:
             # This would store in the database
             pass

@@ -4,7 +4,7 @@ Advanced commission management and fee calculation system
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 © 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 This software, concept and intellectual property are protected by international copyright laws.
@@ -20,7 +20,7 @@ CONSEQUENCES OF UNAUTHORIZED USE:
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 
-🎯 PROJECT TEAM SPECIALTIES:
+ PROJECT TEAM SPECIALTIES:
 - Lead Dev IA + Backend Senior: Advanced AI/ML systems and enterprise backend architecture
 - ML Engineer: Machine learning models for commission optimization and fraud detection
 - Database Administrator: High-performance data management and financial transaction optimization

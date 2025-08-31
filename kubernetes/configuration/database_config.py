@@ -1,12 +1,12 @@
 """
-🗄️ Database Configuration Manager - IA-Influencer-Agent
+ Database Configuration Manager - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Database Architect + DBA Senior + Backend + DevOps
 Date: 2025-08-24
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -278,6 +278,9 @@ class DatabaseConfigManager:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             # Load default database configurations
             await self._load_default_configurations()
@@ -491,6 +494,9 @@ class DatabaseConfigManager:
     
     async def _check_database_health(self, db_name: str, config: DatabaseInstanceConfig) -> None:
         """Check health of a specific database"""
+
+
+
         try:
             # Simulate health check
             health_status = {
@@ -559,6 +565,9 @@ class DatabaseConfigManager:
     
     async def _execute_backup(self, db_name: str, config: DatabaseInstanceConfig) -> bool:
         """Execute database backup"""
+
+
+
         try:
             backup_config = config.backup_config
             
@@ -609,6 +618,9 @@ class DatabaseConfigManager:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             # Create database configuration based on type
             if db_type == DatabaseType.POSTGRESQL:
@@ -668,6 +680,9 @@ class DatabaseConfigManager:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             if name not in self.database_configs:
                 raise ValueError(f"Database not found: {name}")
@@ -709,6 +724,9 @@ class DatabaseConfigManager:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             if db_name not in self.database_configs:
                 raise ValueError(f"Database not found: {db_name}")
@@ -761,6 +779,9 @@ class DatabaseConfigManager:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             if db_name not in self.database_configs:
                 raise ValueError(f"Database not found: {db_name}")
@@ -798,6 +819,9 @@ class DatabaseConfigManager:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             if db_name not in self.database_configs:
                 raise ValueError(f"Database not found: {db_name}")
@@ -826,6 +850,9 @@ class DatabaseConfigManager:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             if db_name not in self.database_configs:
                 raise ValueError(f"Database not found: {db_name}")
@@ -845,6 +872,9 @@ class DatabaseConfigManager:
     
     async def get_cluster_status(self) -> Dict[str, Any]:
         """Get comprehensive cluster status"""
+
+
+
         return {
             "databases": {
                 name: {
@@ -876,6 +906,9 @@ class DatabaseConfigManager:
     
     async def get_performance_report(self) -> Dict[str, Any]:
         """Get database performance report"""
+
+
+
         return {
             "timestamp": datetime.now(),
             "databases": self.performance_metrics,
@@ -894,4 +927,7 @@ class DatabaseConfigManager:
     
     async def get_status(self) -> Dict[str, Any]:
         """Get database manager status"""
+
+
+
         return await self.get_cluster_status()

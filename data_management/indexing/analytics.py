@@ -8,7 +8,7 @@ trend analysis, usage patterns, and business intelligence.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent - Content Protection Platform
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
@@ -97,6 +97,9 @@ class ContentAnalyticsEngine:
         
     async def initialize(self):
         """Initialize analytics engine"""
+
+
+
         try:
             self.redis_client = Redis.from_url(self.redis_url)
             await self.redis_client.ping()
@@ -110,6 +113,9 @@ class ContentAnalyticsEngine:
         self, time_range: Dict[str, datetime] = None
     ) -> ContentAnalytics:
         """Generate comprehensive content analytics"""
+
+
+
         try:
             if not time_range:
                 end_date = datetime.now(timezone.utc)
@@ -175,6 +181,9 @@ class ContentAnalyticsEngine:
         self, time_range: Dict[str, datetime]
     ) -> List[Dict[str, Any]]:
         """Fetch content data from Redis for the specified time range"""
+
+
+
         try:
             # Get content IDs within time range
             start_timestamp = time_range["start"].timestamp()
@@ -210,6 +219,9 @@ class ContentAnalyticsEngine:
         self, content_data: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
         """Analyze content clusters using machine learning"""
+
+
+
         try:
             if len(content_data) < 10:
                 return {"status": "insufficient_data"}
@@ -286,6 +298,9 @@ class ContentAnalyticsEngine:
         self, features: np.ndarray, labels: np.ndarray
     ) -> float:
         """Calculate silhouette score for clustering quality"""
+
+
+
         try:
             from sklearn.metrics import silhouette_score
             return float(silhouette_score(features, labels))
@@ -296,6 +311,9 @@ class ContentAnalyticsEngine:
         self, days_back: int = 30
     ) -> Dict[str, Any]:
         """Generate trend analysis for content indexing"""
+
+
+
         try:
             end_date = datetime.now(timezone.utc)
             start_date = end_date - timedelta(days=days_back)
@@ -402,6 +420,9 @@ class SearchAnalyticsEngine:
         
     async def initialize(self):
         """Initialize search analytics engine"""
+
+
+
         try:
             self.redis_client = Redis.from_url(self.redis_url)
             await self.redis_client.ping()
@@ -415,6 +436,9 @@ class SearchAnalyticsEngine:
         self, time_range: Dict[str, datetime] = None
     ) -> SearchAnalytics:
         """Generate comprehensive search analytics"""
+
+
+
         try:
             if not time_range:
                 end_date = datetime.now(timezone.utc)
@@ -495,6 +519,9 @@ class SearchAnalyticsEngine:
         self, time_range: Dict[str, datetime]
     ) -> List[Dict[str, Any]]:
         """Fetch search data from Redis"""
+
+
+
         try:
             start_timestamp = time_range["start"].timestamp()
             end_timestamp = time_range["end"].timestamp()
@@ -525,6 +552,9 @@ class SearchAnalyticsEngine:
         self, search_data: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
         """Analyze search patterns"""
+
+
+
         try:
             # Hourly distribution
             hourly_distribution = defaultdict(int)
@@ -567,6 +597,9 @@ class SearchAnalyticsEngine:
         self, search_data: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
         """Analyze user search behavior"""
+
+
+
         try:
             # User session analysis
             user_sessions = defaultdict(list)
@@ -625,6 +658,9 @@ class VisualizationEngine:
         self, content_analytics: ContentAnalytics
     ) -> str:
         """Create content distribution pie chart"""
+
+
+
         try:
             fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 6))
             
@@ -662,6 +698,9 @@ class VisualizationEngine:
         self, trend_data: Dict[str, Any]
     ) -> str:
         """Create trend analysis line chart"""
+
+
+
         try:
             trends = trend_data.get("trends", {})
             

@@ -373,7 +373,10 @@ def get_schema(schema_name: str):
         
     Returns:
         Schema class if found, None otherwise
-    """    return SCHEMA_REGISTRY.get(schema_name)
+    """
+
+
+    return SCHEMA_REGISTRY.get(schema_name)
 
 
 def list_schemas():
@@ -381,7 +384,10 @@ def list_schemas():
     
     Returns:
         List of schema names
-    """    return list(SCHEMA_REGISTRY.keys())
+    """
+
+
+    return list(SCHEMA_REGISTRY.keys())
 
 
 def get_schema_info(schema_name: str):

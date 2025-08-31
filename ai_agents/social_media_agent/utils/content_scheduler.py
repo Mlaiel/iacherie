@@ -8,7 +8,7 @@ and revenue generation across all supported social media platforms.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL NOTICE:
+ CRITICAL LEGAL NOTICE:
 This intelligent scheduling system and AI algorithms are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, reverse engineering, or commercialization without 
 explicit written permission is strictly prohibited and will result in immediate legal action.
@@ -180,6 +180,9 @@ class AudienceAnalyzer:
     
     def _is_holiday(self, date: datetime) -> bool:
         """Check if date is a holiday"""
+
+
+
         try:
             us_holidays = holidays.UnitedStates()
             return date.date() in us_holidays
@@ -319,6 +322,9 @@ class TimezoneManager:
     
     def convert_to_timezone(self, dt: datetime, target_timezone: str) -> datetime:
         """Convert datetime to target timezone"""
+
+
+
         try:
             if dt.tzinfo is None:
                 dt = dt.replace(tzinfo=timezone.utc)

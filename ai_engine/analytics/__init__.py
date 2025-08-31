@@ -2,7 +2,7 @@
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED 
 This software is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, reproduction, distribution, or modification is strictly 
 prohibited and will result in severe legal consequences.
@@ -298,7 +298,10 @@ class AnalyticsManager:
         self.logger.info("AnalyticsManager initialized successfully with all engines")
     
     def get_system_info(self) -> Dict[str, Any]:
-        """Get comprehensive system information"""        return {
+        """Get comprehensive system information"""
+
+
+        return {
             "package_info": {
                 "version": __version__,
                 "author": __author__,
@@ -320,30 +323,39 @@ class AnalyticsManager:
         }
     
     def get_capabilities(self) -> List[str]:
-        """Get list of all analytics capabilities"""        return self.config["analytics_capabilities"]
+        """Get list of all analytics capabilities"""
+
+
+        return self.config["analytics_capabilities"]
     
     def get_supported_platforms(self) -> List[str]:
-        """Get list of supported platforms"""        return self.config["supported_platforms"]
+        """Get list of supported platforms"""
+
+
+        return self.config["supported_platforms"]
     
     def get_performance_specs(self) -> Dict[str, str]:
-        """Get system performance specifications"""        return self.config["performance_specs"]
+        """Get system performance specifications"""
+
+
+        return self.config["performance_specs"]
 
 # Initialize the analytics manager instance
 analytics_manager = AnalyticsManager()
 
 # Initialization logging
 logger.info("=" * 80)
-logger.info("🚀 IA INFLUENCER AGENT - ANALYTICS PACKAGE INITIALIZED 🚀")
+logger.info(" IA INFLUENCER AGENT - ANALYTICS PACKAGE INITIALIZED ")
 logger.info("=" * 80)
-logger.info(f"📦 Package Version: {__version__}")
-logger.info(f"👨‍💻 Author: {__author__}")
-logger.info(f"⚡ Analytics Engines: {analytics_manager.system_stats['engines_count']}")
-logger.info(f"🎯 Capabilities: {analytics_manager.system_stats['total_capabilities']}")
-logger.info(f"🌐 Supported Platforms: {analytics_manager.system_stats['supported_platforms']}")
-logger.info(f"📊 Content Types: {analytics_manager.system_stats['supported_content_types']}")
+logger.info(f" Package Version: {__version__}")
+logger.info(f"‍ Author: {__author__}")
+logger.info(f" Analytics Engines: {analytics_manager.system_stats['engines_count']}")
+logger.info(f" Capabilities: {analytics_manager.system_stats['total_capabilities']}")
+logger.info(f" Supported Platforms: {analytics_manager.system_stats['supported_platforms']}")
+logger.info(f" Content Types: {analytics_manager.system_stats['supported_content_types']}")
 logger.info("=" * 80)
-logger.info("⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED")
-logger.info("📧 Contact: mlaiel@live.de for licensing and support")
+logger.info("  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED")
+logger.info(" Contact: mlaiel@live.de for licensing and support")
 logger.info("=" * 80)
 
 # Export the analytics manager instance

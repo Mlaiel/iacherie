@@ -338,14 +338,23 @@ class PlatformIntegrationManager:
     
     def get_platform_config(self, platform_name: str) -> Optional[PlatformIntegrationConfig]:
         """Get configuration for a specific platform."""
+
+
+
         return self.platforms.get(platform_name.lower())
     
     def get_enabled_platforms(self) -> List[PlatformIntegrationConfig]:
         """Get all enabled platform configurations."""
+
+
+
         return [config for config in self.platforms.values() if config.enabled]
     
     def get_platforms_by_type(self, platform_type: PlatformType) -> List[PlatformIntegrationConfig]:
         """Get all platforms of a specific type."""
+
+
+
         return [
             config for config in self.platforms.values() 
             if config.platform_type == platform_type and config.enabled
@@ -353,6 +362,9 @@ class PlatformIntegrationManager:
     
     def get_real_time_platforms(self) -> List[PlatformIntegrationConfig]:
         """Get platforms that support real-time revenue tracking."""
+
+
+
         return [
             config for config in self.platforms.values()
             if config.supports_real_time_revenue and config.enabled

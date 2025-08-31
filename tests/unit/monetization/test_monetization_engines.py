@@ -63,6 +63,9 @@ class TestPaymentProcessor:
     @pytest.fixture
     def sample_payment_data(self):
         """Sample payment data for testing."""
+
+
+
         return {
             'amount': Decimal('99.99'),
             'currency': 'USD',
@@ -196,6 +199,9 @@ class TestRevenueCalculator:
     @pytest.fixture
     def sample_revenue_streams(self):
         """Sample revenue streams for testing."""
+
+
+
         return [
             RevenueStream(
                 stream_type='subscription',
@@ -320,6 +326,9 @@ class TestLicensingManager:
     @pytest.fixture
     def sample_license_data(self):
         """Sample license data for testing."""
+
+
+
         return {
             'content_id': 'content_abc123',
             'licensee_id': 'user_xyz789',
@@ -437,6 +446,9 @@ class TestRoyaltyEngine:
     @pytest.fixture
     def sample_royalty_data(self):
         """Sample royalty data for testing."""
+
+
+
         return {
             'content_id': 'track_123',
             'total_revenue': Decimal('1000.00'),

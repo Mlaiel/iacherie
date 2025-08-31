@@ -49,6 +49,9 @@ class MockAPIClient:
         
     async def __aenter__(self):
         """Async context manager entry."""
+
+
+
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
@@ -76,18 +79,30 @@ class MockAPIClient:
     
     async def post(self, endpoint: str, data: Any = None):
         """Mock POST request."""
+
+
+
         return self._handle_mock_request("POST", endpoint, data=data)
     
     async def get(self, endpoint: str):
         """Mock GET request."""
+
+
+
         return self._handle_mock_request("GET", endpoint)
     
     async def put(self, endpoint: str, data: Any = None):
         """Mock PUT request."""
+
+
+
         return self._handle_mock_request("PUT", endpoint, data=data)
     
     async def delete(self, endpoint: str):
         """Mock DELETE request."""
+
+
+
         return self._handle_mock_request("DELETE", endpoint)
     
     def _handle_mock_request(self, method: str, endpoint: str, data: Any = None):

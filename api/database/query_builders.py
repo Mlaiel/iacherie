@@ -210,11 +210,17 @@ class QueryBuilder:
     def where_in(self, field: str, values: List[Any], 
                  table_alias: Optional[str] = None) -> 'QueryBuilder':
         """Add WHERE IN condition"""
+
+
+
         return self.where(field, FilterOperator.IN, values, table_alias)
     
     def where_between(self, field: str, start: Any, end: Any,
                       table_alias: Optional[str] = None) -> 'QueryBuilder':
         """Add WHERE BETWEEN condition"""
+
+
+
         return self.where(field, FilterOperator.BETWEEN, [start, end], table_alias)
     
     def where_like(self, field: str, pattern: str, case_sensitive: bool = True,
@@ -244,11 +250,17 @@ class QueryBuilder:
     def left_join(self, table: Union[str, Type[T]], on_condition: Optional[str] = None,
                   alias: Optional[str] = None) -> 'QueryBuilder':
         """Add LEFT JOIN clause"""
+
+
+
         return self.join(table, JoinType.LEFT, on_condition, alias)
     
     def inner_join(self, table: Union[str, Type[T]], on_condition: Optional[str] = None,
                    alias: Optional[str] = None) -> 'QueryBuilder':
         """Add INNER JOIN clause"""
+
+
+
         return self.join(table, JoinType.INNER, on_condition, alias)
     
     def order_by(self, field: str, direction: SortDirection = SortDirection.ASC,
@@ -265,6 +277,9 @@ class QueryBuilder:
     
     def order_by_desc(self, field: str, table_alias: Optional[str] = None) -> 'QueryBuilder':
         """Add ORDER BY DESC clause"""
+
+
+
         return self.order_by(field, SortDirection.DESC, table_alias)
     
     def group_by(self, *fields: str) -> 'QueryBuilder':
@@ -601,17 +616,26 @@ class AdvancedQueryBuilder(QueryBuilder):
     def where_json_contains(self, field: str, value: Dict[str, Any],
                            table_alias: Optional[str] = None) -> 'AdvancedQueryBuilder':
         """Add JSON contains condition"""
+
+
+
         return self.where(field, FilterOperator.CONTAINS, json.dumps(value), table_alias)
     
     def where_json_has_key(self, field: str, key: str,
                           table_alias: Optional[str] = None) -> 'AdvancedQueryBuilder':
         """Add JSON has key condition"""
+
+
+
         return self.where(field, FilterOperator.HAS_KEY, key, table_alias)
     
     def where_full_text_search(self, field: str, search_terms: str,
                               language: str = 'english',
                               table_alias: Optional[str] = None) -> 'AdvancedQueryBuilder':
         """Add full-text search condition"""
+
+
+
         return self.where(field, FilterOperator.FULL_TEXT, f"{language}::{search_terms}", table_alias)
     
     def where_regex(self, field: str, pattern: str, case_sensitive: bool = True,
@@ -867,10 +891,16 @@ class JoinQueryBuilder(QueryBuilder):
     
     def cross_join(self, table: Union[str, Type[T]], alias: Optional[str] = None) -> 'JoinQueryBuilder':
         """Add CROSS JOIN"""
+
+
+
         return self.join(table, JoinType.CROSS, alias=alias)
     
     def self_join(self, alias: str, on_condition: str) -> 'JoinQueryBuilder':
         """Add self join"""
+
+
+
         return self.join(self.model, JoinType.INNER, on_condition, alias)
     
     def lateral_join(self, subquery: Select, alias: str) -> 'JoinQueryBuilder':
@@ -916,6 +946,9 @@ class SubQueryBuilder(QueryBuilder):
     
     def where_not_exists(self, subquery: Select) -> 'SubQueryBuilder':
         """Add NOT EXISTS condition"""
+
+
+
         return self.where_exists(subquery, negated=True)
     
     def where_in_subquery(self, field: str, subquery: Select,
@@ -940,8 +973,14 @@ class SubQueryBuilder(QueryBuilder):
     
     def as_scalar_subquery(self) -> Select:
         """Return query as scalar subquery"""
+
+
+
         return self.build_select().scalar_subquery()
     
     def as_cte(self, name: str) -> Select:
         """Return query as CTE"""
+
+
+
         return self.build_select().cte(name)

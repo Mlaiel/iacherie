@@ -9,7 +9,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA-Influencer Agent + Content Protection Platform
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  COPYRIGHT WARNING:
+  COPYRIGHT WARNING:
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, modification, or distribution of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
@@ -485,6 +485,9 @@ class AnalyticsReportingConfig:
     
     def validate_config(self) -> bool:
         """Validate the analytics and reporting configuration."""
+
+
+
         try:
             if not self.enabled_metrics:
                 raise ValueError("At least one metric must be enabled")

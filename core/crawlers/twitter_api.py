@@ -9,7 +9,7 @@ for comprehensive content surveillance and rights protection.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, modification, or distribution is strictly prohibited.
 Violators will face immediate legal action under German and international law.
@@ -357,6 +357,9 @@ class TwitterWebScraper:
     
     async def scrape_tweet_data(self, tweet_url: str) -> Optional[TwitterTweetData]:
         """Scrape comprehensive tweet data from Twitter page."""
+
+
+
         try:
             self.driver.get(tweet_url)
             
@@ -383,6 +386,9 @@ class TwitterWebScraper:
     
     def _extract_tweet_from_dom(self, tweet_id: str, tweet_url: str) -> Optional[TwitterTweetData]:
         """Extract tweet data from DOM elements."""
+
+
+
         try:
             # Find main tweet element
             tweet_element = self.driver.find_element(By.CSS_SELECTOR, "[data-testid='tweet']")
@@ -476,6 +482,9 @@ class TwitterWebScraper:
     
     def _parse_count(self, count_text: str) -> int:
         """Parse engagement count strings."""
+
+
+
         try:
             count_text = re.sub(r'[^\d.KM]', '', count_text.upper())
             if 'M' in count_text:
@@ -489,6 +498,9 @@ class TwitterWebScraper:
     
     async def search_hashtag_tweets(self, hashtag: str, limit: int = 50) -> List[str]:
         """Search tweets by hashtag and return tweet URLs."""
+
+
+
         try:
             search_url = f"https://twitter.com/search?q=%23{hashtag.replace('#', '')}&src=typed_query&f=live"
             self.driver.get(search_url)
@@ -557,6 +569,9 @@ class TwitterCrawler(BaseCrawler):
     
     async def crawl_tweet(self, tweet_url: str) -> Optional[CrawlResult]:
         """Crawl comprehensive data for a specific tweet."""
+
+
+
         try:
             tweet_data = None
             
@@ -628,6 +643,9 @@ class TwitterCrawler(BaseCrawler):
         time_range: Optional[timedelta] = None
     ) -> List[CrawlResult]:
         """Search for potentially infringing content on Twitter."""
+
+
+
         try:
             results = []
             
@@ -673,6 +691,9 @@ class TwitterCrawler(BaseCrawler):
         check_period: timedelta = timedelta(hours=24)
     ) -> List[CrawlResult]:
         """Monitor a specific user for new tweets."""
+
+
+
         try:
             results = []
             

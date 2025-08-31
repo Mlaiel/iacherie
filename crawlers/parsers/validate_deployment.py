@@ -7,7 +7,7 @@ Comprehensive deployment validation and health check script for the parsers modu
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
@@ -30,7 +30,7 @@ logger = logging.getLogger(__name__)
 
 async def validate_module_imports() -> bool:
     """Validate all module imports"""
-    logger.info("🔍 Validating module imports...")
+    logger.info(" Validating module imports...")
     
     try:
         # Core imports
@@ -38,54 +38,54 @@ async def validate_module_imports() -> bool:
             ParserFactory, ParserManager, ParserConfig,
             initialize_parsers, shutdown_parsers
         )
-        logger.info("✅ Core modules imported successfully")
+        logger.info(" Core modules imported successfully")
         
         # Platform parsers
         from .platform_parsers import (
             YouTubeParser, InstagramParser, TikTokParser
         )
-        logger.info("✅ Platform parsers imported successfully")
+        logger.info(" Platform parsers imported successfully")
         
         # Semantic parsers
         from .semantic_parsers import (
             SemanticContentParser, SemanticAnalysis
         )
-        logger.info("✅ Semantic parsers imported successfully")
+        logger.info(" Semantic parsers imported successfully")
         
         # Economic parsers
         from .economic_parsers import (
             EconomicIntelligenceEngine, RevenueRecord
         )
-        logger.info("✅ Economic parsers imported successfully")
+        logger.info(" Economic parsers imported successfully")
         
         # Surveillance parsers
         from .surveillance_parsers import (
             ContentProtectionSurveillanceEngine, ContentMatch
         )
-        logger.info("✅ Surveillance parsers imported successfully")
+        logger.info(" Surveillance parsers imported successfully")
         
         # Collaboration parsers
         from .collaboration_parsers import (
             CollaborationMatchingEngine, CreatorProfile
         )
-        logger.info("✅ Collaboration parsers imported successfully")
+        logger.info(" Collaboration parsers imported successfully")
         
         # Trend parsers
         from .trend_parsers import (
             TrendDetectionEngine, ViralityPredictor
         )
-        logger.info("✅ Trend parsers imported successfully")
+        logger.info(" Trend parsers imported successfully")
         
         return True
         
     except Exception as e:
-        logger.error(f"❌ Import validation failed: {e}")
+        logger.error(f" Import validation failed: {e}")
         return False
 
 
 async def validate_module_structure() -> bool:
     """Validate module file structure"""
-    logger.info("🏗️ Validating module structure...")
+    logger.info(" Validating module structure...")
     
     required_files = [
         '__init__.py',
@@ -121,46 +121,46 @@ async def validate_module_structure() -> bool:
         if not file_path.exists():
             missing_files.append(file_name)
         else:
-            logger.info(f"✅ Found: {file_name}")
+            logger.info(f" Found: {file_name}")
     
     if missing_files:
-        logger.error(f"❌ Missing files: {missing_files}")
+        logger.error(f" Missing files: {missing_files}")
         return False
     
-    logger.info("✅ All required files present")
+    logger.info(" All required files present")
     return True
 
 
 async def test_parser_initialization() -> bool:
     """Test parser system initialization"""
-    logger.info("🚀 Testing parser initialization...")
+    logger.info(" Testing parser initialization...")
     
     try:
         # Test basic initialization
         from .index import initialize_parsers, shutdown_parsers
         
         parsers = await initialize_parsers()
-        logger.info("✅ Parsers system initialized")
+        logger.info(" Parsers system initialized")
         
         # Test manager access
         manager = parsers.get_manager()
         factory = parsers.get_factory()
         config = parsers.get_config()
         
-        logger.info("✅ Core components accessible")
+        logger.info(" Core components accessible")
         
         # Test health check
         health = await parsers.health_check()
-        logger.info(f"✅ Health check: {health['status']}")
+        logger.info(f" Health check: {health['status']}")
         
         # Cleanup
         await shutdown_parsers()
-        logger.info("✅ Parsers system shutdown successfully")
+        logger.info(" Parsers system shutdown successfully")
         
         return True
         
     except Exception as e:
-        logger.error(f"❌ Initialization test failed: {e}")
+        logger.error(f" Initialization test failed: {e}")
         return False
 
 
@@ -180,18 +180,18 @@ async def test_semantic_parser() -> bool:
         
         # Note: In production, would initialize AI models
         # For validation, we test the structure
-        logger.info("✅ Semantic parser structure validated")
+        logger.info(" Semantic parser structure validated")
         
         return True
         
     except Exception as e:
-        logger.error(f"❌ Semantic parser test failed: {e}")
+        logger.error(f" Semantic parser test failed: {e}")
         return False
 
 
 async def test_economic_parser() -> bool:
     """Test economic intelligence parser"""
-    logger.info("💰 Testing economic parser...")
+    logger.info(" Testing economic parser...")
     
     try:
         from .economic_parsers import EconomicIntelligenceEngine, RevenueRecord, RevenueSource, Currency
@@ -221,13 +221,13 @@ async def test_economic_parser() -> bool:
         # Test economic intelligence generation
         intelligence = await engine.generate_economic_intelligence(test_records)
         
-        logger.info("✅ Economic intelligence generated")
-        logger.info(f"✅ Total revenue: {intelligence.financial_metrics.total_revenue}")
+        logger.info(" Economic intelligence generated")
+        logger.info(f" Total revenue: {intelligence.financial_metrics.total_revenue}")
         
         return True
         
     except Exception as e:
-        logger.error(f"❌ Economic parser test failed: {e}")
+        logger.error(f" Economic parser test failed: {e}")
         return False
 
 
@@ -272,18 +272,18 @@ async def test_collaboration_parser() -> bool:
             candidate_creators=[creator2]
         )
         
-        logger.info(f"✅ Found {len(matches)} collaboration matches")
+        logger.info(f" Found {len(matches)} collaboration matches")
         
         return True
         
     except Exception as e:
-        logger.error(f"❌ Collaboration parser test failed: {e}")
+        logger.error(f" Collaboration parser test failed: {e}")
         return False
 
 
 async def test_trend_parser() -> bool:
     """Test trend analysis parser"""
-    logger.info("📈 Testing trend parser...")
+    logger.info(" Testing trend parser...")
     
     try:
         from .trend_parsers import (
@@ -297,7 +297,7 @@ async def test_trend_parser() -> bool:
         virality_predictor = ViralityPredictor(config)
         
         # Test trend detection structure
-        logger.info("✅ Trend detection engine initialized")
+        logger.info(" Trend detection engine initialized")
         
         # Test virality prediction structure
         test_content = {
@@ -314,19 +314,19 @@ async def test_trend_parser() -> bool:
         
         prediction = await virality_predictor.predict_virality(test_content)
         
-        logger.info(f"✅ Virality prediction: {prediction.virality_score:.2f}")
-        logger.info(f"✅ Confidence: {prediction.confidence_level:.2f}")
+        logger.info(f" Virality prediction: {prediction.virality_score:.2f}")
+        logger.info(f" Confidence: {prediction.confidence_level:.2f}")
         
         return True
         
     except Exception as e:
-        logger.error(f"❌ Trend parser test failed: {e}")
+        logger.error(f" Trend parser test failed: {e}")
         return False
 
 
 async def run_comprehensive_validation() -> Dict[str, bool]:
     """Run comprehensive validation suite"""
-    logger.info("🔬 Starting comprehensive parsers module validation...")
+    logger.info(" Starting comprehensive parsers module validation...")
     
     validation_results = {}
     
@@ -353,7 +353,7 @@ async def main():
     start_time = time.time()
     
     logger.info("=" * 60)
-    logger.info("🚀 IA INFLUENCER AGENT - PARSERS MODULE VALIDATION")
+    logger.info(" IA INFLUENCER AGENT - PARSERS MODULE VALIDATION")
     logger.info("=" * 60)
     logger.info("Author: Fahed Mlaiel <mlaiel@live.de>")
     logger.info("Copyright: © 2025 Fahed Mlaiel. All rights reserved.")
@@ -364,14 +364,14 @@ async def main():
         
         # Summary
         logger.info("\n" + "=" * 60)
-        logger.info("📊 VALIDATION SUMMARY")
+        logger.info(" VALIDATION SUMMARY")
         logger.info("=" * 60)
         
         passed = 0
         total = len(results)
         
         for test_name, result in results.items():
-            status = "✅ PASSED" if result else "❌ FAILED"
+            status = " PASSED" if result else " FAILED"
             logger.info(f"{test_name.upper()}: {status}")
             if result:
                 passed += 1
@@ -380,18 +380,18 @@ async def main():
         elapsed_time = time.time() - start_time
         
         logger.info("=" * 60)
-        logger.info(f"🎯 SUCCESS RATE: {passed}/{total} ({success_rate:.1f}%)")
-        logger.info(f"⏱️ EXECUTION TIME: {elapsed_time:.2f} seconds")
+        logger.info(f" SUCCESS RATE: {passed}/{total} ({success_rate:.1f}%)")
+        logger.info(f"⏱ EXECUTION TIME: {elapsed_time:.2f} seconds")
         
         if success_rate == 100:
-            logger.info("🎉 ALL VALIDATIONS PASSED - MODULE READY FOR PRODUCTION")
+            logger.info(" ALL VALIDATIONS PASSED - MODULE READY FOR PRODUCTION")
             return 0
         else:
-            logger.error("⚠️ SOME VALIDATIONS FAILED - REVIEW REQUIRED")
+            logger.error(" SOME VALIDATIONS FAILED - REVIEW REQUIRED")
             return 1
             
     except Exception as e:
-        logger.error(f"💥 Validation suite failed with error: {e}")
+        logger.error(f" Validation suite failed with error: {e}")
         return 1
 
 

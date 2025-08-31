@@ -1,5 +1,5 @@
 """
-📊 Subscription Engine - Industrial-Grade Subscription Management System
+ Subscription Engine - Industrial-Grade Subscription Management System
 ==================================================================
 
 Ultra-advanced subscription management with intelligent tier optimization,
@@ -9,7 +9,7 @@ dynamic pricing, and AI-powered retention strategies.
 Created by: Fahed Mlaiel <mlaiel@live.de>
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
+ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED 
 Contact mlaiel@live.de for licensing inquiries.
 
 Business Logic: User Registration → Subscription Selection → Content Access → Retention Optimization
@@ -152,6 +152,9 @@ class ChurnPredictor:
     
     async def train_model(self, training_data: List[Dict[str, Any]]):
         """Train churn prediction model with historical data"""
+
+
+
         try:
             if not training_data:
                 self.logger.warning("No training data provided for churn prediction")
@@ -176,7 +179,7 @@ class ChurnPredictor:
             self.model.fit(X_scaled, y)
             self.is_trained = True
             
-            self.logger.info("✅ Churn prediction model trained successfully")
+            self.logger.info(" Churn prediction model trained successfully")
             return True
             
         except Exception as e:
@@ -188,6 +191,9 @@ class ChurnPredictor:
         subscription: UserSubscription
     ) -> Dict[str, Any]:
         """Predict churn probability for a subscription"""
+
+
+
         try:
             if not self.is_trained:
                 return {
@@ -342,6 +348,9 @@ class SubscriptionAnalytics:
         tier_filter: Optional[List[str]] = None
     ) -> SubscriptionMetrics:
         """Generate comprehensive subscription metrics"""
+
+
+
         try:
             # Fetch subscription data
             subscriptions = await self._fetch_subscriptions(
@@ -413,6 +422,9 @@ class SubscriptionAnalytics:
         subscription_id: str
     ) -> Dict[str, Any]:
         """Analyze individual subscription health"""
+
+
+
         try:
             subscription = await self._fetch_subscription(subscription_id)
             if not subscription:
@@ -446,6 +458,9 @@ class SubscriptionAnalytics:
         tier_filter: Optional[List[str]] = None
     ) -> List[UserSubscription]:
         """Fetch subscriptions from database"""
+
+
+
         try:
             # This would query the database
             return []  # Placeholder
@@ -460,6 +475,9 @@ class SubscriptionAnalytics:
         period_end: datetime
     ) -> float:
         """Calculate churn rate for the period"""
+
+
+
         try:
             # Implementation would calculate actual churn rate
             return 0.05  # 5% placeholder churn rate
@@ -472,6 +490,9 @@ class SubscriptionAnalytics:
         subscriptions: List[UserSubscription]
     ) -> Decimal:
         """Calculate monthly recurring revenue"""
+
+
+
         try:
             mrr = Decimal('0')
             for subscription in subscriptions:
@@ -505,6 +526,9 @@ class SubscriptionAnalytics:
         subscriptions: List[UserSubscription]
     ) -> Decimal:
         """Calculate customer lifetime value"""
+
+
+
         try:
             # Implementation would use cohort analysis
             return Decimal('500')  # Placeholder LTV
@@ -517,6 +541,9 @@ class SubscriptionAnalytics:
         subscriptions: List[UserSubscription]
     ) -> float:
         """Calculate trial to paid conversion rate"""
+
+
+
         try:
             trial_subs = [s for s in subscriptions if s.trial_end is not None]
             if not trial_subs:
@@ -545,6 +572,9 @@ class SubscriptionAnalytics:
         subscriptions: List[UserSubscription]
     ) -> Dict[str, float]:
         """Calculate retention rates for different periods"""
+
+
+
         try:
             # Implementation would calculate cohort retention rates
             return {
@@ -564,6 +594,9 @@ class SubscriptionAnalytics:
         period_end: datetime
     ) -> Dict[str, float]:
         """Calculate growth metrics"""
+
+
+
         try:
             # Implementation would calculate actual growth metrics
             return {
@@ -577,6 +610,9 @@ class SubscriptionAnalytics:
     
     async def _fetch_subscription(self, subscription_id: str) -> Optional[UserSubscription]:
         """Fetch individual subscription"""
+
+
+
         try:
             # This would query the database
             return None  # Placeholder
@@ -586,6 +622,9 @@ class SubscriptionAnalytics:
     
     async def _calculate_health_score(self, subscription: UserSubscription) -> float:
         """Calculate subscription health score (0-100)"""
+
+
+
         try:
             score = 100.0
             
@@ -606,6 +645,9 @@ class SubscriptionAnalytics:
         subscription: UserSubscription
     ) -> Dict[str, Any]:
         """Analyze usage patterns for subscription"""
+
+
+
         try:
             return {
                 'login_frequency': subscription.usage_statistics.get('login_frequency', 0),
@@ -622,6 +664,9 @@ class SubscriptionAnalytics:
         subscription: UserSubscription
     ) -> Dict[str, Any]:
         """Analyze payment history for subscription"""
+
+
+
         try:
             return {
                 'payment_success_rate': 0.95,
@@ -675,6 +720,9 @@ class SubscriptionManager:
         trial_days: int = 0
     ) -> Dict[str, Any]:
         """Create new subscription for user"""
+
+
+
         try:
             # Fetch subscription tier
             tier = await self._fetch_tier(tier_id)
@@ -720,7 +768,7 @@ class SubscriptionManager:
             if trial_days == 0:
                 await self._setup_billing(subscription)
             
-            self.logger.info(f"✅ Subscription created: {subscription_id}")
+            self.logger.info(f" Subscription created: {subscription_id}")
             return {
                 'success': True,
                 'subscription_id': subscription_id,
@@ -739,6 +787,9 @@ class SubscriptionManager:
         immediate: bool = False
     ) -> Dict[str, Any]:
         """Cancel subscription"""
+
+
+
         try:
             subscription = await self._fetch_subscription(subscription_id)
             if not subscription:
@@ -769,6 +820,9 @@ class SubscriptionManager:
         new_tier_id: str
     ) -> Dict[str, Any]:
         """Upgrade subscription to higher tier"""
+
+
+
         try:
             subscription = await self._fetch_subscription(subscription_id)
             if not subscription:
@@ -810,6 +864,9 @@ class SubscriptionManager:
     
     async def process_billing_cycle(self, subscription_id: str) -> Dict[str, Any]:
         """Process billing for subscription"""
+
+
+
         try:
             subscription = await self._fetch_subscription(subscription_id)
             if not subscription:
@@ -861,6 +918,9 @@ class SubscriptionManager:
     
     async def predict_churn_risk(self, subscription_id: str) -> Dict[str, Any]:
         """Predict churn risk for subscription"""
+
+
+
         try:
             subscription = await self._fetch_subscription(subscription_id)
             if not subscription:
@@ -897,6 +957,9 @@ class SubscriptionManager:
     
     async def _fetch_tier(self, tier_id: str) -> Optional[SubscriptionTier]:
         """Fetch subscription tier from database"""
+
+
+
         try:
             # This would query the database
             # Return placeholder tier for now
@@ -917,6 +980,9 @@ class SubscriptionManager:
     
     async def _store_subscription(self, subscription: UserSubscription):
         """Store subscription in database"""
+
+
+
         try:
             # This would store in the database
             pass
@@ -929,6 +995,9 @@ class SubscriptionManager:
         subscription_id: str
     ) -> Optional[UserSubscription]:
         """Fetch subscription from database"""
+
+
+
         try:
             # This would query the database
             return None  # Placeholder
@@ -938,6 +1007,9 @@ class SubscriptionManager:
     
     async def _update_subscription(self, subscription: UserSubscription):
         """Update subscription in database"""
+
+
+
         try:
             subscription.updated_at = datetime.utcnow()
             # This would update in the database
@@ -947,6 +1019,9 @@ class SubscriptionManager:
     
     async def _setup_billing(self, subscription: UserSubscription):
         """Setup billing for subscription"""
+
+
+
         try:
             # This would setup billing with payment processor
             pass
@@ -959,6 +1034,9 @@ class SubscriptionManager:
         new_tier: SubscriptionTier
     ) -> Decimal:
         """Calculate prorated charge for tier upgrade"""
+
+
+
         try:
             # Calculate remaining days in current period
             now = datetime.utcnow()
@@ -987,6 +1065,9 @@ class SubscriptionManager:
         amount: Decimal
     ) -> Dict[str, Any]:
         """Process payment for subscription upgrade"""
+
+
+
         try:
             # This would process payment through payment processor
             return {'success': True, 'amount_charged': float(amount)}
@@ -999,6 +1080,9 @@ class SubscriptionManager:
         subscription: UserSubscription
     ) -> Dict[str, Any]:
         """Process regular subscription payment"""
+
+
+
         try:
             # This would process payment through payment processor
             return {
@@ -1029,17 +1113,20 @@ class SubscriptionEngine:
     
     async def initialize(self) -> bool:
         """Initialize subscription engine"""
+
+
+
         try:
-            self.logger.info("🚀 Initializing Subscription Engine...")
+            self.logger.info(" Initializing Subscription Engine...")
             
             # Initialize churn prediction model
             await self._initialize_churn_model()
             
-            self.logger.info("✅ Subscription Engine initialized successfully")
+            self.logger.info(" Subscription Engine initialized successfully")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Subscription Engine initialization failed: {e}")
+            self.logger.error(f" Subscription Engine initialization failed: {e}")
             return False
     
     async def create_subscription(
@@ -1050,6 +1137,9 @@ class SubscriptionEngine:
         trial_days: int = 0
     ) -> Dict[str, Any]:
         """Create new subscription"""
+
+
+
         return await self.subscription_manager.create_subscription(
             user_id, tier_id, payment_method_id, trial_days
         )
@@ -1061,16 +1151,25 @@ class SubscriptionEngine:
         tier_filter: Optional[List[str]] = None
     ) -> SubscriptionMetrics:
         """Get subscription analytics"""
+
+
+
         return await self.analytics.generate_subscription_metrics(
             period_start, period_end, tier_filter
         )
     
     async def predict_churn(self, subscription_id: str) -> Dict[str, Any]:
         """Predict churn for subscription"""
+
+
+
         return await self.subscription_manager.predict_churn_risk(subscription_id)
     
     async def process_billing_cycles(self) -> Dict[str, Any]:
         """Process billing for all due subscriptions"""
+
+
+
         try:
             # This would fetch all subscriptions due for billing
             # and process them in batch
@@ -1086,6 +1185,9 @@ class SubscriptionEngine:
     
     async def _initialize_churn_model(self):
         """Initialize churn prediction model with training data"""
+
+
+
         try:
             # This would fetch historical data and train the model
             training_data = []  # Fetch from database

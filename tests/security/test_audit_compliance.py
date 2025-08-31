@@ -54,6 +54,9 @@ class TestSecurityAuditTrail:
     @pytest.fixture
     async def audit_trail(self):
         """Create audit trail instance for testing"""
+
+
+
         return SecurityAuditTrail()
     
     @pytest.mark.asyncio
@@ -205,6 +208,9 @@ class TestSecurityMonitoring:
     @pytest.fixture
     async def monitoring_dashboard(self):
         """Create monitoring dashboard instance for testing"""
+
+
+
         return SecurityMonitoringDashboard()
     
     @pytest.mark.asyncio
@@ -361,6 +367,9 @@ class TestSecurityPolicies:
     @pytest.fixture
     async def policy_manager(self):
         """Create policy manager instance for testing"""
+
+
+
         return SecurityPolicyManager()
     
     @pytest.mark.asyncio

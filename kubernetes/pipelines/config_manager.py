@@ -412,10 +412,16 @@ class PipelineConfigManager:
         
     def list_templates(self) -> List[str]:
         """List all available pipeline templates"""
+
+
+
         return list(self.pipeline_templates.keys())
         
     def list_environments(self) -> List[str]:
         """List all configured environments"""
+
+
+
         return list(self.environment_configs.keys())
         
     def get_template_info(self, template_name: str) -> Optional[Dict[str, Any]]:

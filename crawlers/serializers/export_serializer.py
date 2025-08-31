@@ -8,7 +8,7 @@ Optimized for CSV, Excel, PDF, and various report generation formats.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️ LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION:
+ LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION:
 This code, concept, and intellectual property belong exclusively to Fahed Mlaiel (mlaiel@live.de). 
 Any unauthorized copying, distribution, modification, or commercial use is STRICTLY PROHIBITED 
 and will result in immediate legal action under German and International Copyright Law.
@@ -240,6 +240,9 @@ class ExportSerializer:
         Returns:
             Serialized export dictionary
         """
+
+
+
         try:
             # Convert to dictionary
             data = export_data.dict(exclude={'data_rows'} if not include_raw_data else {})
@@ -300,6 +303,9 @@ class ExportSerializer:
         Returns:
             Deserialized ExportData object
         """
+
+
+
         try:
             # Handle datetime conversions
             datetime_fields = [
@@ -353,6 +359,9 @@ class ExportSerializer:
         Returns:
             Exported data as string or bytes
         """
+
+
+
         try:
             # Update metrics
             export_data.started_at = datetime.now()
@@ -623,6 +632,9 @@ class ExportSerializer:
     
     def _export_to_excel(self, export_data: ExportData) -> bytes:
         """Export data to Excel format."""
+
+
+
         try:
             import pandas as pd
             
@@ -659,6 +671,9 @@ class ExportSerializer:
     
     def _export_to_pdf(self, export_data: ExportData) -> bytes:
         """Export data to PDF format."""
+
+
+
         try:
             from reportlab.lib.pagesizes import letter, A4
             from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer
@@ -729,6 +744,9 @@ class ExportSerializer:
     
     def _export_to_parquet(self, export_data: ExportData) -> bytes:
         """Export data to Parquet format."""
+
+
+
         try:
             import pandas as pd
             
@@ -753,6 +771,9 @@ class ExportSerializer:
     
     def _serialize_export_configuration(self, config: ExportConfiguration) -> Dict[str, Any]:
         """Serialize export configuration."""
+
+
+
         return {
             'format': config.format.value,
             'include_headers': config.include_headers,
@@ -779,6 +800,9 @@ class ExportSerializer:
     
     def _serialize_export_metrics(self, metrics: ExportMetrics) -> Dict[str, Any]:
         """Serialize export metrics."""
+
+
+
         return {
             'total_records': metrics.total_records,
             'exported_records': metrics.exported_records,
@@ -793,6 +817,9 @@ class ExportSerializer:
     
     def _deserialize_export_metrics(self, data: Dict[str, Any]) -> ExportMetrics:
         """Deserialize export metrics."""
+
+
+
         return ExportMetrics(**data)
     
     def _format_row_values(self, row: List[Any], config: ExportConfiguration) -> List[str]:
@@ -837,6 +864,9 @@ class ExportSerializer:
     
     def _escape_xml_value(self, value: str) -> str:
         """Escape XML value."""
+
+
+
         return (value.replace('&', '&amp;')
                     .replace('<', '&lt;')
                     .replace('>', '&gt;')
@@ -845,6 +875,9 @@ class ExportSerializer:
     
     def _escape_html(self, value: str) -> str:
         """Escape HTML value."""
+
+
+
         return (value.replace('&', '&amp;')
                     .replace('<', '&lt;')
                     .replace('>', '&gt;')
@@ -857,6 +890,9 @@ class ExportSerializer:
         export_format: ExportFormat
     ):
         """Save export content to file."""
+
+
+
         try:
             if isinstance(content, bytes):
                 with open(file_path, 'wb') as f:
@@ -874,6 +910,9 @@ class ExportSerializer:
     # Template processors
     def _process_standard_template(self, export_data: ExportData) -> ExportData:
         """Process standard report template."""
+
+
+
         return export_data  # No special processing for standard template
     
     def _process_executive_template(self, export_data: ExportData) -> ExportData:

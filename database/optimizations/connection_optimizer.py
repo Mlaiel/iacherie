@@ -147,16 +147,25 @@ class ConnectionInfo:
     @property
     def avg_query_time(self) -> float:
         """Calculate average query time"""
+
+
+
         return self.total_time / self.query_count if self.query_count > 0 else 0.0
     
     @property
     def age(self) -> timedelta:
         """Get connection age"""
+
+
+
         return datetime.now() - self.created_at
     
     @property
     def idle_time(self) -> timedelta:
         """Get idle time"""
+
+
+
         return datetime.now() - self.last_used
 
 
@@ -170,6 +179,9 @@ class HealthChecker:
         
     async def check_connection(self, engine: AsyncEngine) -> bool:
         """Check if connection is healthy"""
+
+
+
         try:
             async with engine.begin() as conn:
                 result = await conn.execute(text("SELECT 1"))
@@ -181,6 +193,9 @@ class HealthChecker:
     
     async def ping_connection(self, connection) -> bool:
         """Ping a specific connection"""
+
+
+
         try:
             if hasattr(connection, 'ping'):
                 return await connection.ping()
@@ -194,6 +209,9 @@ class HealthChecker:
     
     def should_check(self) -> bool:
         """Check if health check is due"""
+
+
+
         return (datetime.now() - self._last_check).total_seconds() >= self.config.health_check_interval
     
     def mark_checked(self, healthy: bool) -> None:
@@ -204,6 +222,9 @@ class HealthChecker:
     @property
     def is_healthy(self) -> bool:
         """Get current health status"""
+
+
+
         return self._healthy
 
 
@@ -231,6 +252,9 @@ class ConnectionOptimizer:
         
     async def initialize(self, database_url: Optional[str] = None) -> None:
         """Initialize connection optimizer"""
+
+
+
         try:
             url = database_url or self.config.database_url or settings.DATABASE_URL
             
@@ -412,6 +436,9 @@ class ConnectionOptimizer:
     
     async def optimize_pool(self) -> None:
         """Optimize connection pool based on metrics and performance"""
+
+
+
         try:
             current_time = datetime.now()
             if (current_time - self._last_optimization).total_seconds() < 300:  # 5 minutes
@@ -650,6 +677,9 @@ class ConnectionOptimizer:
     
     async def get_stats(self) -> Dict[str, Any]:
         """Get comprehensive connection statistics"""
+
+
+
         return {
             "total_connections": self.metrics.total_connections,
             "active_connections": self.metrics.active_connections,
@@ -733,12 +763,18 @@ class ContentProtectionConnectionManager:
     
     async def get_fingerprint_connection(self) -> AsyncSession:
         """Get optimized connection for fingerprint operations"""
+
+
+
         return await self.base_optimizer.get_connection(
             pool_config=self.fingerprint_pool_config
         )
     
     async def get_vector_search_connection(self) -> AsyncSession:
         """Get optimized connection for vector similarity search"""
+
+
+
         return await self.base_optimizer.get_connection(
             pool_config=self.vector_pool_config
         )
@@ -777,12 +813,18 @@ class MonetizationConnectionManager:
     
     async def get_analytics_connection(self) -> AsyncSession:
         """Get optimized connection for analytics operations"""
+
+
+
         return await self.base_optimizer.get_connection(
             pool_config=self.analytics_pool_config
         )
     
     async def get_revenue_connection(self) -> AsyncSession:
         """Get optimized connection for revenue tracking"""
+
+
+
         return await self.base_optimizer.get_connection(
             pool_config=self.revenue_pool_config
         )
@@ -829,18 +871,27 @@ class MultimediaConnectionManager:
     
     async def get_audio_connection(self) -> AsyncSession:
         """Get optimized connection for audio content operations"""
+
+
+
         return await self.base_optimizer.get_connection(
             pool_config=self.audio_pool_config
         )
     
     async def get_video_connection(self) -> AsyncSession:
         """Get optimized connection for video content operations"""
+
+
+
         return await self.base_optimizer.get_connection(
             pool_config=self.video_pool_config
         )
     
     async def get_image_connection(self) -> AsyncSession:
         """Get optimized connection for image content operations"""
+
+
+
         return await self.base_optimizer.get_connection(
             pool_config=self.image_pool_config
         )
@@ -879,12 +930,18 @@ class AIProcessingConnectionManager:
     
     async def get_ml_connection(self) -> AsyncSession:
         """Get optimized connection for ML training operations"""
+
+
+
         return await self.base_optimizer.get_connection(
             pool_config=self.ml_pool_config
         )
     
     async def get_inference_connection(self) -> AsyncSession:
         """Get optimized connection for AI inference operations"""
+
+
+
         return await self.base_optimizer.get_connection(
             pool_config=self.inference_pool_config
         )

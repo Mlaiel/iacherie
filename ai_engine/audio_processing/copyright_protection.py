@@ -5,7 +5,7 @@ Professional-grade content protection and intellectual property management.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  STRICT COPYRIGHT WARNING ⚠️ 
+  STRICT COPYRIGHT WARNING  
 This code, concept, and intellectual property belongs exclusively to Fahed Mlaiel.
 ANY unauthorized use, reproduction, distribution, or theft of this code/concept 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is 
@@ -182,6 +182,9 @@ class AdvancedFingerprintEngine:
     
     def _initialize_extractors(self) -> Dict[str, Any]:
         """Initialize feature extraction models"""
+
+
+
         return {
             'spectral': self._create_spectral_extractor(),
             'temporal': self._create_temporal_extractor(),
@@ -256,6 +259,9 @@ class AdvancedFingerprintEngine:
                                audio_path: Path,
                                additional_metadata: Optional[Dict[str, Any]] = None) -> ContentFingerprint:
         """Create comprehensive audio fingerprint"""
+
+
+
         try:
             import librosa
             import soundfile as sf
@@ -380,6 +386,9 @@ class BlockchainCopyrightLedger:
                                fingerprint: ContentFingerprint,
                                ownership_records: List[OwnershipRecord]) -> str:
         """Register copyright on blockchain"""
+
+
+
         try:
             # Create copyright record
             copyright_record = {
@@ -432,6 +441,9 @@ class BlockchainCopyrightLedger:
                              content_id: str, 
                              blockchain_hash: str) -> bool:
         """Verify copyright record on blockchain"""
+
+
+
         try:
             # In real implementation, this would query the blockchain
             # For demo, we'll simulate verification
@@ -458,6 +470,9 @@ class LicenseManagementSystem:
                            content_id: str,
                            license_agreement: LicenseAgreement) -> str:
         """Create new license agreement"""
+
+
+
         try:
             # Validate license terms
             validation_result = await self._validate_license_terms(license_agreement)
@@ -533,6 +548,9 @@ class LicenseManagementSystem:
                                requested_usage: UsageRight,
                                user_id: str) -> bool:
         """Check if user has rights for specific usage"""
+
+
+
         try:
             # Query user's licenses for this content
             user_licenses = await self._get_user_licenses(content_id, user_id)
@@ -585,6 +603,9 @@ class CopyrightViolationDetector:
                               suspected_content_path: Path,
                               metadata: Dict[str, Any]) -> List[ViolationReport]:
         """Detect copyright violations in uploaded content"""
+
+
+
         try:
             # Create fingerprint for suspected content
             suspected_fingerprint = await self.fingerprint_engine.create_fingerprint(
@@ -699,6 +720,9 @@ class CopyrightViolationDetector:
     
     async def _store_violation_report(self, violation: ViolationReport):
         """Store violation report in database"""
+
+
+
         try:
             violation_record = ViolationDatabase(
                 id=violation.violation_id,
@@ -751,6 +775,9 @@ class ComprehensiveCopyrightManager:
                              protection_level: ProtectionLevel = ProtectionLevel.STANDARD,
                              metadata: Optional[Dict[str, Any]] = None) -> str:
         """Register content for copyright protection"""
+
+
+
         try:
             # Generate unique content ID
             content_id = str(uuid.uuid4())
@@ -812,6 +839,9 @@ class ComprehensiveCopyrightManager:
                                      suspected_content_path: Path,
                                      uploader_info: Dict[str, Any]) -> Dict[str, Any]:
         """Check if uploaded content violates copyright"""
+
+
+
         try:
             # Detect violations
             violations = await self.violation_detector.detect_violations(
@@ -867,6 +897,9 @@ class ComprehensiveCopyrightManager:
                            content_id: str,
                            license_agreement: LicenseAgreement) -> str:
         """Create license for protected content"""
+
+
+
         return await self.license_manager.create_license(content_id, license_agreement)
     
     async def verify_usage_rights(self,
@@ -874,12 +907,18 @@ class ComprehensiveCopyrightManager:
                                 user_id: str,
                                 requested_usage: UsageRight) -> bool:
         """Verify user's usage rights for content"""
+
+
+
         return await self.license_manager.check_usage_rights(
             content_id, requested_usage, user_id
         )
     
     async def get_protection_analytics(self) -> Dict[str, Any]:
         """Get copyright protection analytics"""
+
+
+
         try:
             # Query database for analytics
             total_protected = self.session.query(ContentProtectionDatabase).filter(

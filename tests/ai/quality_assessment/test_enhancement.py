@@ -117,11 +117,17 @@ class TestContentEnhancer:
     @pytest.fixture
     def content_enhancer(self):
         """Fixture pour l'améliorateur de contenu."""
+
+
+
         return ContentEnhancer()
     
     @pytest.fixture
     def sample_enhancement_request(self):
         """Génère une demande d'amélioration de test."""
+
+
+
         return {
             'content_id': 'enhancement_test_001',
             'content_type': 'image',
@@ -247,6 +253,9 @@ class TestImageOptimizer:
     @pytest.fixture
     def image_optimizer(self):
         """Fixture pour l'optimiseur d'images."""
+
+
+
         return ImageOptimizer()
     
     def test_image_quality_enhancement(self, image_optimizer):
@@ -367,6 +376,9 @@ class TestVideoOptimizer:
     @pytest.fixture
     def video_optimizer(self):
         """Fixture pour l'optimiseur de vidéos."""
+
+
+
         return VideoOptimizer()
     
     def test_video_quality_enhancement(self, video_optimizer):
@@ -472,6 +484,9 @@ class TestAudioOptimizer:
     @pytest.fixture
     def audio_optimizer(self):
         """Fixture pour l'optimiseur audio."""
+
+
+
         return AudioOptimizer()
     
     def test_audio_quality_enhancement(self, audio_optimizer):
@@ -553,6 +568,9 @@ class TestTextOptimizer:
     @pytest.fixture
     def text_optimizer(self):
         """Fixture pour l'optimiseur de texte."""
+
+
+
         return TextOptimizer()
     
     def test_text_quality_improvement(self, text_optimizer):
@@ -680,6 +698,9 @@ class TestAIEnhancementEngine:
     @pytest.fixture
     def ai_enhancement_engine(self):
         """Fixture pour le moteur d'amélioration IA."""
+
+
+
         return AIEnhancementEngine()
     
     @pytest.mark.asyncio

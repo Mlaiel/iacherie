@@ -55,11 +55,17 @@ class TestSocialMediaTemplates:
     @pytest.fixture
     def templates(self):
         """Create a social media templates instance"""
+
+
+
         return SocialMediaTemplates()
     
     @pytest.fixture
     def sample_variables(self):
         """Create sample template variables"""
+
+
+
         return {
             "title": "The Future of AI Technology",
             "description": "Exploring how artificial intelligence will transform our world",
@@ -74,6 +80,9 @@ class TestSocialMediaTemplates:
     @pytest.fixture
     def instagram_data(self):
         """Create Instagram-specific data"""
+
+
+
         return {
             "image_url": "https://example.com/ai-image.jpg",
             "story_highlights": ["Tech", "AI", "Innovation"],
@@ -106,21 +115,21 @@ class TestSocialMediaTemplates:
         with patch.object(templates, '_generate_from_template') as mock_generate:
             mock_generate.return_value = {
                 "success": True,
-                "content": """🚀 The Future of AI Technology
+                "content": """ The Future of AI Technology
 
-Exploring how artificial intelligence will transform our world ✨
+Exploring how artificial intelligence will transform our world 
 
 Key insights:
 • Revolutionary changes ahead
 • Impact on daily life
 • Opportunities for innovation
 
-Learn more in our latest blog post 👆
+Learn more in our latest blog post 
 
 #AI #Technology #Innovation #FutureOfWork #ArtificialIntelligence
 
-📍 San Francisco, CA
-📸 @techexpert @ainews""",
+ San Francisco, CA
+ @techexpert @ainews""",
                 "template_used": "instagram_standard_post",
                 "character_count": 365,
                 "hashtag_count": 5,
@@ -148,19 +157,19 @@ Learn more in our latest blog post 👆
                 "stories": [
                     {
                         "slide": 1,
-                        "content": "🚀 The Future of AI\n\nSwipe for key insights →",
+                        "content": " The Future of AI\n\nSwipe for key insights →",
                         "background": "gradient_tech",
                         "text_position": "center"
                     },
                     {
                         "slide": 2,
-                        "content": "💡 AI will transform:\n\n• How we work\n• How we learn\n• How we live",
+                        "content": " AI will transform:\n\n• How we work\n• How we learn\n• How we live",
                         "background": "solid_dark",
                         "text_position": "bottom"
                     },
                     {
                         "slide": 3,
-                        "content": "Learn more 👆\nLink in bio",
+                        "content": "Learn more \nLink in bio",
                         "background": "brand_colors",
                         "text_position": "center"
                     }
@@ -187,11 +196,11 @@ Learn more in our latest blog post 👆
             mock_generate.return_value = {
                 "success": True,
                 "thread": [
-                    "🧵 Thread: The Future of AI Technology\n\nAI is about to transform our world in ways we can barely imagine. Here's what you need to know 👇\n\n1/5",
-                    "💡 Key Areas of Transformation:\n\n• Workplace automation\n• Healthcare innovation\n• Educational personalization\n• Creative industries\n\nEach will see revolutionary changes in the next 5 years.\n\n2/5",
-                    "🔮 What This Means for You:\n\n→ New job opportunities\n→ Enhanced productivity tools\n→ Personalized experiences\n→ Faster problem-solving\n\nAdaptation is key to thriving.\n\n3/5",
-                    "🚀 Getting Prepared:\n\n1. Stay informed about AI trends\n2. Develop AI-adjacent skills\n3. Experiment with AI tools\n4. Network with AI professionals\n\nThe future belongs to the prepared.\n\n4/5",
-                    "That's a wrap! 🎬\n\nRT the first tweet if this was helpful!\n\nFor more AI insights, follow @TechInnovate\n\n#AI #Technology #Innovation\n\n5/5"
+                    "🧵 Thread: The Future of AI Technology\n\nAI is about to transform our world in ways we can barely imagine. Here's what you need to know \n\n1/5",
+                    " Key Areas of Transformation:\n\n• Workplace automation\n• Healthcare innovation\n• Educational personalization\n• Creative industries\n\nEach will see revolutionary changes in the next 5 years.\n\n2/5",
+                    " What This Means for You:\n\n→ New job opportunities\n→ Enhanced productivity tools\n→ Personalized experiences\n→ Faster problem-solving\n\nAdaptation is key to thriving.\n\n3/5",
+                    " Getting Prepared:\n\n1. Stay informed about AI trends\n2. Develop AI-adjacent skills\n3. Experiment with AI tools\n4. Network with AI professionals\n\nThe future belongs to the prepared.\n\n4/5",
+                    "That's a wrap! \n\nRT the first tweet if this was helpful!\n\nFor more AI insights, follow @TechInnovate\n\n#AI #Technology #Innovation\n\n5/5"
                 ],
                 "template_used": "twitter_educational_thread",
                 "tweet_count": 5,
@@ -214,25 +223,25 @@ Learn more in our latest blog post 👆
         with patch.object(templates, '_generate_from_template') as mock_generate:
             mock_generate.return_value = {
                 "success": True,
-                "content": """🎯 The Future of AI Technology: What Every Professional Should Know
+                "content": """ The Future of AI Technology: What Every Professional Should Know
 
 Artificial intelligence isn't just coming—it's here, and it's reshaping how we work, innovate, and solve complex problems.
 
-📊 Key Transformation Areas:
+ Key Transformation Areas:
 
 → Automated Decision Making: AI systems processing data faster than ever
 → Predictive Analytics: Forecasting trends with unprecedented accuracy  
 → Personalized Experiences: Tailoring solutions to individual needs
 → Enhanced Productivity: Streamlining workflows and eliminating repetitive tasks
 
-💡 Strategic Implications for Leaders:
+ Strategic Implications for Leaders:
 
 • Invest in AI literacy across your organization
 • Identify high-impact use cases for your industry
 • Develop ethical AI governance frameworks
 • Foster a culture of continuous learning and adaptation
 
-🚀 The organizations that embrace AI thoughtfully today will lead their industries tomorrow.
+ The organizations that embrace AI thoughtfully today will lead their industries tomorrow.
 
 What's your organization's AI strategy? Share your thoughts in the comments—I'd love to hear about your experiences and challenges.
 
@@ -294,7 +303,7 @@ What's your organization's AI strategy? Share your thoughts in the comments—I'
             "name": "custom_tech_post",
             "platform": Platform.INSTAGRAM,
             "structure": [
-                "🚀 {title}",
+                " {title}",
                 "",
                 "{description}",
                 "",
@@ -320,7 +329,7 @@ What's your organization's AI strategy? Share your thoughts in the comments—I'
                 "success": True,
                 "template_id": "custom_tech_post_001",
                 "template_saved": True,
-                "preview": "🚀 The Future of AI Technology\n\nExploring how artificial intelligence...",
+                "preview": " The Future of AI Technology\n\nExploring how artificial intelligence...",
                 "validation_score": 95.5
             }
             
@@ -381,7 +390,7 @@ What's your organization's AI strategy? Share your thoughts in the comments—I'
                 "success": True,
                 "platform_content": {
                     Platform.INSTAGRAM.value: {
-                        "content": "🚀 Instagram optimized content...",
+                        "content": " Instagram optimized content...",
                         "character_count": 445,
                         "engagement_score": 8.7
                     },
@@ -454,11 +463,11 @@ What's your organization's AI strategy? Share your thoughts in the comments—I'
         with patch.object(templates, '_adapt_for_season') as mock_seasonal:
             mock_seasonal.return_value = {
                 "success": True,
-                "adapted_content": """🎊 New Year, New AI Possibilities!
+                "adapted_content": """ New Year, New AI Possibilities!
 
 As we kick off 2025, artificial intelligence is set to transform our world in unprecedented ways.
 
-🌟 What's coming this year:
+ What's coming this year:
 • Advanced AI assistants
 • Smarter automation
 • Personalized experiences
@@ -526,6 +535,9 @@ class TestTemplateEngine:
     @pytest.fixture
     def engine(self):
         """Create a template engine instance"""
+
+
+
         return TemplateEngine()
     
     def test_engine_initialization(self, engine):
@@ -555,7 +567,7 @@ class TestTemplateEngine:
         """Test conditional logic in templates"""
         template = """
         {%if has_image%}
-        📸 Check out this amazing visual!
+         Check out this amazing visual!
         {%endif%}
         
         {title}
@@ -572,7 +584,7 @@ class TestTemplateEngine:
         }
         
         with patch.object(engine, 'process_conditionals') as mock_conditionals:
-            mock_conditionals.return_value = """📸 Check out this amazing visual!
+            mock_conditionals.return_value = """ Check out this amazing visual!
 
 AI Technology Guide
 
@@ -580,7 +592,7 @@ By: Fahed Mlaiel"""
             
             result = await engine.process_template(template, variables)
             
-            assert "📸 Check out this amazing visual!" in result
+            assert " Check out this amazing visual!" in result
             assert "By: Fahed Mlaiel" in result
 
 

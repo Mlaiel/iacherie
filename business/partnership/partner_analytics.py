@@ -2,7 +2,7 @@
 Partner Analytics Service for IA Influencer Agent
 Advanced analytics and intelligence for partnership performance
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
 All rights reserved. Unauthorized use, copying, or reproduction 
 of this code, concept, or intellectual property without explicit 
@@ -80,6 +80,9 @@ class PartnerAnalyticsService:
         include_predictions: bool = True
     ) -> Dict[str, Any]:
         """Generate comprehensive partnership analytics dashboard"""
+
+
+
         try:
             dashboard = {
                 'partnership_id': partnership_id,
@@ -157,6 +160,9 @@ class PartnerAnalyticsService:
         calculation_method: str = "comprehensive"
     ) -> Dict[str, Any]:
         """Calculate comprehensive ROI analysis for partnership"""
+
+
+
         try:
             roi_analysis = {
                 'partnership_id': partnership_id,
@@ -228,6 +234,9 @@ class PartnerAnalyticsService:
         comparison_period: Optional[str] = None
     ) -> Dict[str, Any]:
         """Comprehensive partnership performance analysis"""
+
+
+
         try:
             performance_analysis = {
                 'partnership_id': partnership_id,
@@ -288,6 +297,9 @@ class PartnerAnalyticsService:
         analysis_depth: str = "comprehensive"
     ) -> Dict[str, Any]:
         """Generate competitive intelligence for partnership strategy"""
+
+
+
         try:
             intelligence = {
                 'partnership_id': partnership_id,
@@ -351,6 +363,9 @@ class PartnerAnalyticsService:
         period_end: datetime
     ) -> Dict[str, Any]:
         """Calculate comprehensive partnership revenue for analytics"""
+
+
+
         try:
             revenue_calculation = {
                 'partnership_id': partnership_id,
@@ -413,6 +428,9 @@ class PartnerAnalyticsService:
         confidence_level: float = 0.8
     ) -> Dict[str, Any]:
         """Generate AI-powered predictive insights for partnership"""
+
+
+
         try:
             predictions = {
                 'partnership_id': partnership_id,
@@ -471,6 +489,9 @@ class PartnerAnalyticsService:
 
     def _load_benchmark_data(self) -> Dict[str, Any]:
         """Load industry benchmark data for comparisons"""
+
+
+
         return {
             'industry_averages': {
                 'roi': 0.25,
@@ -616,6 +637,9 @@ class PartnerAnalyticsService:
         dashboard: Dict[str, Any]
     ) -> List[str]:
         """Generate AI-powered insights"""
+
+
+
         return [
             "Revenue growth is accelerating with 18% month-over-month increase",
             "Engagement rates consistently outperform industry average by 15%",
@@ -630,6 +654,9 @@ class PartnerAnalyticsService:
         dashboard: Dict[str, Any]
     ) -> List[str]:
         """Generate strategic recommendations"""
+
+
+
         return [
             "Focus more resources on sponsorship content due to higher ROI",
             "Increase content frequency during peak engagement periods",
@@ -644,6 +671,9 @@ class PartnerAnalyticsService:
         dashboard: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
         """Generate performance alerts"""
+
+
+
         return [
             {
                 'type': 'opportunity',
@@ -665,6 +695,9 @@ class PartnerAnalyticsService:
         method: str
     ) -> Dict[str, float]:
         """Calculate detailed ROI breakdown"""
+
+
+
         return {
             'financial_roi': 0.28,
             'strategic_roi': 0.35,
@@ -717,6 +750,9 @@ class PartnerAnalyticsService:
         analysis: Dict[str, Any]
     ) -> Dict[str, List[str]]:
         """Perform SWOT analysis"""
+
+
+
         return {
             'strengths': [
                 'High engagement rates',

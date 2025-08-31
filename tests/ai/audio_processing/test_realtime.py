@@ -15,7 +15,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 """
-⚡ Real-time Tests - Industrial-Grade Real-time Audio Processing Testing Suite
+ Real-time Tests - Industrial-Grade Real-time Audio Processing Testing Suite
 
 Comprehensive testing for real-time audio processing including:
 - RealtimeProcessor validation

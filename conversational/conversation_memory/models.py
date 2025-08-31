@@ -8,7 +8,7 @@ for content creator interactions.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING: Unauthorized use strictly prohibited ⚠️
+  LEGAL WARNING: Unauthorized use strictly prohibited 
 Contact: mlaiel@live.de
 """
 
@@ -87,6 +87,9 @@ class ConversationMetadata:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for storage"""
+
+
+
         return {
             "platform": self.platform,
             "language": self.language,
@@ -103,6 +106,9 @@ class ConversationMetadata:
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'ConversationMetadata':
         """Create from dictionary"""
+
+
+
         return cls(
             platform=data.get("platform"),
             language=data.get("language"),
@@ -203,6 +209,9 @@ class ConversationRecord(Base):
     
     def encrypt_content(self, encryption_manager: EncryptionManager) -> bool:
         """Encrypt conversation content"""
+
+
+
         try:
             if self.conversation_data and not self.is_encrypted:
                 encrypted_data, key_id = encryption_manager.encrypt_data(
@@ -218,6 +227,9 @@ class ConversationRecord(Base):
     
     def decrypt_content(self, encryption_manager: EncryptionManager) -> bool:
         """Decrypt conversation content"""
+
+
+
         try:
             if self.is_encrypted and self.conversation_data:
                 encrypted_data = self.conversation_data.get("encrypted")
@@ -234,6 +246,9 @@ class ConversationRecord(Base):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for API responses"""
+
+
+
         return {
             "id": str(self.id),
             "conversation_id": self.conversation_id,
@@ -312,6 +327,9 @@ class MemoryEntry:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for storage"""
+
+
+
         return {
             "entry_id": self.entry_id,
             "conversation_id": self.conversation_id,
@@ -371,6 +389,9 @@ class ConversationContext:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             "context_id": self.context_id,
             "type": self.context_type.value,

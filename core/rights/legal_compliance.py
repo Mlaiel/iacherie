@@ -8,7 +8,7 @@ copyright enforcement, and international legal compliance management.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Enterprise Content Protection Platform - Legal Compliance Core
 
-⚠️  COPYRIGHT NOTICE ⚠️
+  COPYRIGHT NOTICE 
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
@@ -154,6 +154,9 @@ class DMCATemplateManager:
     
     def _create_dmca_takedown_template(self) -> str:
         """Create DMCA takedown notice template."""
+
+
+
         return """
 Subject: DMCA Takedown Notice - Copyright Infringement
 
@@ -195,6 +198,9 @@ Sincerely,
     
     def _create_cease_desist_template(self) -> str:
         """Create cease and desist letter template."""
+
+
+
         return """
 Subject: Cease and Desist - Copyright Infringement
 
@@ -226,6 +232,9 @@ Date: {{ date }}
     
     def _create_counter_notice_template(self) -> str:
         """Create DMCA counter-notice template."""
+
+
+
         return """
 Subject: DMCA Counter-Notice
 
@@ -289,6 +298,9 @@ class PlatformDMCAHandler:
     
     def _get_smtp_settings(self) -> Dict[str, Any]:
         """Get SMTP settings for sending emails."""
+
+
+
         return {
             'host': settings.SMTP_HOST,
             'port': settings.SMTP_PORT,
@@ -299,6 +311,9 @@ class PlatformDMCAHandler:
     
     async def send_dmca_notice(self, notice_data: DMCANoticeData) -> bool:
         """Send DMCA takedown notice to platform."""
+
+
+
         try:
             template_manager = DMCATemplateManager()
             
@@ -343,6 +358,9 @@ class PlatformDMCAHandler:
         notice_data: DMCANoticeData
     ) -> bool:
         """Send email via SMTP."""
+
+
+
         try:
             # Create email message
             msg = MIMEMultipart()
@@ -498,6 +516,9 @@ class LegalComplianceEngine:
     
     async def _verify_content_removal(self, url: str) -> bool:
         """Verify if infringing content has been removed."""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:

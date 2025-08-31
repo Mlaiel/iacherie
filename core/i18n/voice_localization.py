@@ -8,7 +8,7 @@ Responsibility: Multi-language voice synthesis, accent adaptation, and audio loc
 Technologies: Python, TTS, Voice Cloning, Accent Processing, Audio Analysis
 ================================================================================
 
-⚠️  PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
+  PROPRIETARY SOFTWARE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -433,6 +433,9 @@ class VoiceLocalization:
         style: SpeechStyle = None
     ) -> Optional[VoiceProfile]:
         """Select best voice profile based on criteria"""
+
+
+
         try:
             # Get available voices for language
             available_voices = self.language_voices.get(language_code, [])
@@ -492,6 +495,9 @@ class VoiceLocalization:
         cultural_context: Dict[str, Any] = None
     ) -> AudioLocalization:
         """Create audio localization configuration"""
+
+
+
         try:
             # Use provided profile or select one
             if not voice_profile:
@@ -594,6 +600,9 @@ class VoiceLocalization:
         output_format: str = "wav"
     ) -> VoiceSynthesisResult:
         """Synthesize speech with localization"""
+
+
+
         try:
             request_id = f"tts_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{hash(text) % 10000}"
             
@@ -776,6 +785,9 @@ class VoiceLocalization:
         voice_profile: VoiceProfile
     ) -> VoiceProfile:
         """Adapt voice profile for different accent"""
+
+
+
         try:
             # Check if accent mapping exists
             if language_code not in self.accent_mappings:
@@ -827,6 +839,9 @@ class VoiceLocalization:
     
     async def get_voice_statistics(self) -> Dict[str, Any]:
         """Get voice localization statistics"""
+
+
+
         return {
             "total_voice_profiles": len(self.voice_profiles),
             "supported_languages": list(self.language_voices.keys()),
@@ -873,6 +888,9 @@ class VoiceLocalization:
     
     async def health_check(self) -> bool:
         """Health check for voice localization service"""
+
+
+
         try:
             # Check if voice profiles are loaded
             if not self.voice_profiles:

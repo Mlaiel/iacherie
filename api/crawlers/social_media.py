@@ -198,6 +198,9 @@ class SocialMediaCrawler(WebCrawler):
     
     def _initialize_platform_clients(self):
         """Initialize API clients for social media platforms."""
+
+
+
         try:
             # Instagram client
             if "instagram" in self.api_credentials:
@@ -249,6 +252,9 @@ class SocialMediaCrawler(WebCrawler):
         Performs intelligent hashtag-based content discovery with
         similarity analysis for potential copyright infringement detection.
         """
+
+
+
         try:
             self.logger.info(f"Starting hashtag discovery: #{hashtag} across {len(platforms)} platforms")
             
@@ -812,6 +818,9 @@ class SocialMediaCrawler(WebCrawler):
         self, posts: List[SocialMediaPost]
     ) -> List[SocialMediaPost]:
         """Analyze content similarities for copyright infringement detection."""
+
+
+
         try:
             self.logger.info(f"Analyzing content similarities for {len(posts)} posts")
             
@@ -840,6 +849,9 @@ class SocialMediaCrawler(WebCrawler):
     
     async def _analyze_text_similarities(self, posts: List[SocialMediaPost]):
         """Analyze text content similarities using NLP techniques."""
+
+
+
         try:
             # Simple text similarity using character-level comparison
             # In production, would use BERT/RoBERTa embeddings
@@ -873,6 +885,9 @@ class SocialMediaCrawler(WebCrawler):
     
     async def _analyze_image_similarities(self, posts: List[SocialMediaPost]):
         """Analyze image content similarities using perceptual hashing."""
+
+
+
         try:
             # Download and analyze images
             image_hashes = {}
@@ -905,6 +920,9 @@ class SocialMediaCrawler(WebCrawler):
     
     async def _calculate_image_hash(self, image_url: str) -> Optional[imagehash.ImageHash]:
         """Calculate perceptual hash for image."""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(image_url) as response:
@@ -933,6 +951,9 @@ class SocialMediaCrawler(WebCrawler):
         Provides comprehensive competitor content monitoring across platforms
         for strategic insights and trend analysis.
         """
+
+
+
         try:
             self.logger.info(f"Starting competitor monitoring for {len(competitor_usernames)} accounts")
             
@@ -1023,6 +1044,9 @@ class SocialMediaCrawler(WebCrawler):
         self, posts: List[SocialMediaPost]
     ) -> List[SocialMediaPost]:
         """Analyze competitor content for strategic insights."""
+
+
+
         try:
             # Analyze posting patterns
             posting_patterns = self._analyze_posting_patterns(posts)
@@ -1129,6 +1153,9 @@ class SocialMediaCrawler(WebCrawler):
     
     async def _get_browser_instance(self):
         """Get browser instance from pool or create new one."""
+
+
+
         try:
             if self.browser_pool:
                 return self.browser_pool.pop()
@@ -1153,6 +1180,9 @@ class SocialMediaCrawler(WebCrawler):
     
     async def _return_browser_instance(self, driver):
         """Return browser instance to pool or close if pool is full."""
+
+
+
         try:
             if len(self.browser_pool) < self.max_browsers:
                 # Clear cookies and reset state
@@ -1171,6 +1201,9 @@ class SocialMediaCrawler(WebCrawler):
     
     async def cleanup_social_media_crawler(self):
         """Clean up social media crawler resources."""
+
+
+
         try:
             # Close all browser instances
             for driver in self.browser_pool:

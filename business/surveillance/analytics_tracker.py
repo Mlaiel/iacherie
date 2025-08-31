@@ -1,5 +1,5 @@
 """
-📊 Analytics Tracker - IA Influencer Agent Surveillance Module
+ Analytics Tracker - IA Influencer Agent Surveillance Module
 ==============================================================
 
 Advanced analytics tracking system for surveillance operations providing
@@ -12,7 +12,7 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Micro
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
+ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
 This code and concept are the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 Unauthorized access, copying, modification, distribution, reverse engineering,
@@ -173,6 +173,9 @@ class SurveillanceAnalytics:
     
     def _initialize_database(self):
         """Initialize database connection"""
+
+
+
         try:
             if self.database_url:
                 self.engine = create_engine(self.database_url)
@@ -266,6 +269,9 @@ class SurveillanceAnalytics:
         metrics_data: Dict[str, Any]
     ) -> str:
         """Record surveillance operation metrics"""
+
+
+
         try:
             metrics = SurveillanceMetrics(
                 timestamp=datetime.now(timezone.utc),
@@ -308,6 +314,9 @@ class SurveillanceAnalytics:
     
     async def _store_metrics_redis(self, metrics_id: str, metrics: SurveillanceMetrics):
         """Store metrics in Redis"""
+
+
+
         try:
             metrics_data = asdict(metrics)
             metrics_data['timestamp'] = metrics.timestamp.isoformat()
@@ -373,6 +382,9 @@ class SurveillanceAnalytics:
     
     async def _update_kpis_from_metrics(self, metrics: SurveillanceMetrics):
         """Update KPIs based on new metrics"""
+
+
+
         try:
             # Calculate detection rate
             total_scans = metrics.detection_count + metrics.false_positive_count
@@ -403,6 +415,9 @@ class SurveillanceAnalytics:
     
     async def _update_kpi(self, kpi_name: str, current_value: float):
         """Update specific KPI value"""
+
+
+
         try:
             # Get previous value
             previous_value = 0.0
@@ -456,6 +471,9 @@ class SurveillanceAnalytics:
     
     async def _store_kpi_redis(self, kpi: PerformanceKPI):
         """Store KPI in Redis"""
+
+
+
         try:
             kpi_data = asdict(kpi)
             kpi_data['last_updated'] = kpi.last_updated.isoformat()
@@ -505,6 +523,9 @@ class SurveillanceAnalytics:
         include_visualizations: bool = True
     ) -> AnalyticsReport:
         """Generate comprehensive analytics report"""
+
+
+
         try:
             report_id = f"analytics_{int(datetime.now().timestamp())}"
             
@@ -737,6 +758,9 @@ class SurveillanceAnalytics:
     
     def _calculate_efficiency_score(self, df: pd.DataFrame) -> float:
         """Calculate efficiency score based on processing time and throughput"""
+
+
+
         try:
             avg_processing_time = df['processing_time'].mean()
             throughput = len(df) / max(1, df['processing_time'].sum())
@@ -751,6 +775,9 @@ class SurveillanceAnalytics:
     
     def _calculate_accuracy_score(self, df: pd.DataFrame) -> float:
         """Calculate accuracy score based on detection rates"""
+
+
+
         try:
             total_detections = df['detection_count'].sum()
             total_false_positives = df['false_positive_count'].sum()
@@ -765,6 +792,9 @@ class SurveillanceAnalytics:
     
     def _calculate_coverage_score(self, df: pd.DataFrame) -> float:
         """Calculate coverage score based on platform and content type diversity"""
+
+
+
         try:
             platform_count = df['platform'].nunique()
             content_type_count = df['content_type'].nunique()
@@ -779,6 +809,9 @@ class SurveillanceAnalytics:
     
     def _calculate_impact_score(self, df: pd.DataFrame) -> float:
         """Calculate impact score based on revenue recovered and infringements stopped"""
+
+
+
         try:
             total_revenue = df['revenue_recovered'].sum()
             total_infringements = df['infringement_count'].sum()
@@ -793,6 +826,9 @@ class SurveillanceAnalytics:
     
     def _calculate_quality_score(self, df: pd.DataFrame) -> float:
         """Calculate overall quality score"""
+
+
+
         try:
             success_rate = df['successful_takedowns'].sum() / max(1, df['takedown_requests'].sum())
             detection_rate = df['detection_count'].sum() / max(1, df['detection_count'].sum() + df['false_positive_count'].sum())
@@ -916,6 +952,9 @@ class SurveillanceAnalytics:
     
     async def _store_report(self, report: AnalyticsReport):
         """Store analytics report"""
+
+
+
         try:
             # Store in cache
             self.reports_cache[report.report_id] = report
@@ -965,6 +1004,9 @@ class SurveillanceAnalytics:
     
     async def get_kpi_dashboard(self) -> Dict[str, PerformanceKPI]:
         """Get current KPI dashboard"""
+
+
+
         try:
             # Refresh KPIs from cache and database
             kpis = {}
@@ -1001,6 +1043,9 @@ class SurveillanceAnalytics:
     
     async def get_real_time_metrics(self, user_id: Optional[str] = None) -> Dict[str, Any]:
         """Get real-time surveillance metrics"""
+
+
+
         try:
             # Get recent metrics from Redis
             pattern = f"{self.redis_keys['metrics']}:*"
@@ -1041,6 +1086,9 @@ class SurveillanceAnalytics:
     
     async def cleanup_old_data(self, retention_days: Optional[int] = None):
         """Cleanup old analytics data"""
+
+
+
         try:
             retention_days = retention_days or self.retention_days
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=retention_days)

@@ -1,5 +1,5 @@
 """
-🗜️ Compression Engine - IA Influencer Agent Platform Enterprise
+ Compression Engine - IA Influencer Agent Platform Enterprise
 ===============================================================
 Module: backend/data_management/storage/compression_engine.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Enterprise compression engine for multi-format content optimization
 with intelligent algorithm selection and performance monitoring.
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -249,6 +249,9 @@ class CompressionEngine:
     
     def _check_ffmpeg(self) -> bool:
         """Check if FFmpeg is available"""
+
+
+
         try:
             subprocess.run(['ffmpeg', '-version'], 
                          capture_output=True, check=True)
@@ -258,6 +261,9 @@ class CompressionEngine:
     
     def _check_imagemagick(self) -> bool:
         """Check if ImageMagick is available"""
+
+
+
         try:
             subprocess.run(['convert', '-version'], 
                          capture_output=True, check=True)
@@ -323,6 +329,9 @@ class CompressionEngine:
         original_filename: Optional[str] = None
     ) -> Tuple[bool, bytes, str]:
         """Decompress content back to original format"""
+
+
+
         try:
             if algorithm == CompressionAlgorithm.GZIP:
                 decompressed = gzip.decompress(compressed_data)
@@ -490,6 +499,9 @@ class CompressionEngine:
     
     async def _compress_jpeg(self, data: bytes, filename: str, config: Optional[CompressionConfig]) -> bytes:
         """JPEG optimization"""
+
+
+
         try:
             image = Image.open(io.BytesIO(data))
             
@@ -521,6 +533,9 @@ class CompressionEngine:
     
     async def _compress_png(self, data: bytes, config: Optional[CompressionConfig]) -> bytes:
         """PNG optimization"""
+
+
+
         try:
             image = Image.open(io.BytesIO(data))
             
@@ -540,6 +555,9 @@ class CompressionEngine:
     
     async def _compress_webp(self, data: bytes, config: Optional[CompressionConfig]) -> bytes:
         """WebP compression"""
+
+
+
         try:
             image = Image.open(io.BytesIO(data))
             

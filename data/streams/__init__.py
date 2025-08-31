@@ -17,7 +17,7 @@ User Upload → Stream Processing → AI Analysis → Protection → Monetizatio
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 Unauthorized use, copying, modification, or distribution of this code
 without explicit written permission from Fahed Mlaiel is strictly prohibited.
 Violations will be prosecuted under German and international copyright law.

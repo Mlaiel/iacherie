@@ -1,15 +1,15 @@
 """
-🚀 Load Balancer & Health Checker - IA Influencer Agent Platform Enterprise
+ Load Balancer & Health Checker - IA Influencer Agent Platform Enterprise
 ========================================================================
 Module: backend/platform_core/communication/load_balancer.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 LOAD BALANCER INTELLIGENT
+ LOAD BALANCER INTELLIGENT
 Répartition de charge avancée avec détection de pannes
 - Algorithmes multiples (Round Robin, Weighted, Least Connections)
 - Health checking proactif et réactif
@@ -367,10 +367,16 @@ class LoadBalancer:
         
     def _least_connections(self, servers: List[Server]) -> Server:
         """Algorithme Least Connections"""
+
+
+
         return min(servers, key=lambda s: s.metrics.active_connections)
         
     def _least_response_time(self, servers: List[Server]) -> Server:
         """Algorithme basé sur le temps de réponse"""
+
+
+
         return min(servers, key=lambda s: s.metrics.average_response_time)
         
     def _ip_hash(self, servers: List[Server], client_ip: Optional[str]) -> Server:
@@ -384,6 +390,9 @@ class LoadBalancer:
         
     def _random(self, servers: List[Server]) -> Server:
         """Sélection aléatoire"""
+
+
+
         return random.choice(servers)
         
     def _weighted_random(self, servers: List[Server]) -> Server:

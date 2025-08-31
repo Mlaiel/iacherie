@@ -8,7 +8,7 @@ Detects unauthorized usage, copyright infringement, and content theft across pla
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  AVERTISSEMENT STRICT - PROPRIÉTÉ INTELLECTUELLE ⚠️
+  AVERTISSEMENT STRICT - PROPRIÉTÉ INTELLECTUELLE 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, modification ou distribution sans autorisation 
 écrite explicite de l'auteur est strictement interdite et constitue une violation 
@@ -195,6 +195,9 @@ class ViolationDetector:
         Returns:
             Configuration success status
         """
+
+
+
         try:
             # Validate configuration
             if not await self._validate_detection_config(config):
@@ -231,6 +234,9 @@ class ViolationDetector:
         Returns:
             List of detected violations
         """
+
+
+
         try:
             # Get detection configuration
             config = await self._get_detection_config(content_id)
@@ -301,6 +307,9 @@ class ViolationDetector:
         Returns:
             Analysis results with similarity score
         """
+
+
+
         try:
             # Extract audio features using librosa
             y, sr = librosa.load(audio_data, sr=22050)
@@ -353,6 +362,9 @@ class ViolationDetector:
         Returns:
             Analysis results with similarity score
         """
+
+
+
         try:
             # Open video capture
             cap = cv2.VideoCapture(video_path)
@@ -415,6 +427,9 @@ class ViolationDetector:
         Returns:
             Analysis results with similarity score
         """
+
+
+
         try:
             # Load image
             image = Image.open(image_data)
@@ -468,6 +483,9 @@ class ViolationDetector:
         Returns:
             List of collected evidence
         """
+
+
+
         try:
             evidence_list = []
             
@@ -514,6 +532,9 @@ class ViolationDetector:
         Returns:
             Detection report
         """
+
+
+
         try:
             # Calculate date range
             end_date = datetime.utcnow()
@@ -760,6 +781,9 @@ class ViolationDetector:
     
     async def _collect_webpage_metadata(self, url: str) -> Optional[ViolationEvidence]:
         """Collect webpage metadata as evidence"""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:

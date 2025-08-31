@@ -53,11 +53,17 @@ class TestFormatOptimizer:
     @pytest.fixture
     def optimizer(self):
         """Create a format optimizer instance"""
+
+
+
         return FormatOptimizer()
     
     @pytest.fixture
     def sample_content(self):
         """Create sample content for formatting"""
+
+
+
         return """
         # The Future of AI Technology
         
@@ -86,6 +92,9 @@ class TestFormatOptimizer:
     @pytest.fixture
     def blog_content(self):
         """Create blog content for formatting"""
+
+
+
         return """
         # Complete Guide to AI in Business
         
@@ -146,22 +155,22 @@ class TestFormatOptimizer:
         with patch.object(optimizer, '_format_for_platform') as mock_format:
             mock_format.return_value = {
                 "success": True,
-                "formatted_content": """🚀 The Future of AI Technology
+                "formatted_content": """ The Future of AI Technology
                 
-✨ AI is revolutionizing our world! Key points:
+ AI is revolutionizing our world! Key points:
 
 🤖 Machine Learning advancements
-💬 Natural Language Processing improvements  
-👁️ Computer Vision breakthroughs
+ Natural Language Processing improvements  
+ Computer Vision breakthroughs
 🦾 Robotics integration
 
-💡 Benefits of AI:
+ Benefits of AI:
 • Increased efficiency
 • Better decision making
 • Cost reduction  
 • Enhanced user experience
 
-🔗 Link in bio for full guide
+ Link in bio for full guide
 
 #AI #Technology #Innovation #MachineLearning #FutureOfWork #ArtificialIntelligence""",
                 "optimizations_applied": [
@@ -190,11 +199,11 @@ class TestFormatOptimizer:
         with patch.object(optimizer, '_format_for_platform') as mock_format:
             mock_format.return_value = {
                 "success": True,
-                "formatted_content": """🎯 Complete Guide to AI in Business
+                "formatted_content": """ Complete Guide to AI in Business
 
 Artificial Intelligence is transforming the business landscape. Here's how organizations can leverage AI for growth:
 
-📊 What is Business AI?
+ What is Business AI?
 
 Business AI encompasses:
 → Machine Learning: Algorithms that learn from data
@@ -202,23 +211,23 @@ Business AI encompasses:
 → Computer Vision: Analyzing visual content
 → Predictive Analytics: Forecasting future trends
 
-🚀 Implementation Strategies
+ Implementation Strategies
 
-1️⃣ Assessment Phase
+1⃣ Assessment Phase
 • Data infrastructure evaluation
 • Technical expertise review
 • Budget analysis
 • Business objectives alignment
 
-2️⃣ Pilot Projects
+2⃣ Pilot Projects
 • Identify use cases
 • Select appropriate technologies
 • Measure success metrics
 • Scale successful implementations
 
-💡 Key Takeaway: AI implementation requires careful planning. Start small, measure results, and scale gradually for optimal outcomes.
+ Key Takeaway: AI implementation requires careful planning. Start small, measure results, and scale gradually for optimal outcomes.
 
-What's your experience with AI in business? Share your thoughts below! 👇
+What's your experience with AI in business? Share your thoughts below! 
 
 #ArtificialIntelligence #BusinessStrategy #DigitalTransformation #Innovation #Technology""",
                 "optimizations_applied": [
@@ -248,13 +257,13 @@ What's your experience with AI in business? Share your thoughts below! 👇
             mock_thread.return_value = {
                 "success": True,
                 "thread_tweets": [
-                    "🧵 Thread: Complete Guide to AI in Business\n\nAI is transforming business. Here's how to leverage it for growth 👇\n\n1/7",
-                    "📊 What is Business AI?\n\n→ Machine Learning: Algorithms that learn\n→ NLP: Understanding language\n→ Computer Vision: Analyzing visuals\n→ Predictive Analytics: Forecasting\n\n2/7",
-                    "🚀 Implementation Strategy #1: Assessment\n\n• Data infrastructure\n• Technical expertise\n• Budget constraints\n• Business objectives\n\nStart here before diving into AI solutions.\n\n3/7",
-                    "🎯 Implementation Strategy #2: Pilot Projects\n\n1. Identify use cases\n2. Select technologies\n3. Measure metrics\n4. Scale successes\n\nSmall steps lead to big wins!\n\n4/7",
-                    "💡 Key Takeaway:\n\nAI implementation = careful planning + execution\n\nFormula for success:\n→ Start small\n→ Measure results\n→ Scale gradually\n\n5/7",
+                    "🧵 Thread: Complete Guide to AI in Business\n\nAI is transforming business. Here's how to leverage it for growth \n\n1/7",
+                    " What is Business AI?\n\n→ Machine Learning: Algorithms that learn\n→ NLP: Understanding language\n→ Computer Vision: Analyzing visuals\n→ Predictive Analytics: Forecasting\n\n2/7",
+                    " Implementation Strategy #1: Assessment\n\n• Data infrastructure\n• Technical expertise\n• Budget constraints\n• Business objectives\n\nStart here before diving into AI solutions.\n\n3/7",
+                    " Implementation Strategy #2: Pilot Projects\n\n1. Identify use cases\n2. Select technologies\n3. Measure metrics\n4. Scale successes\n\nSmall steps lead to big wins!\n\n4/7",
+                    " Key Takeaway:\n\nAI implementation = careful planning + execution\n\nFormula for success:\n→ Start small\n→ Measure results\n→ Scale gradually\n\n5/7",
                     "🤔 What's your experience with AI in business?\n\nDrop your thoughts below! I'd love to hear your success stories and challenges.\n\n6/7",
-                    "That's a wrap! 🎬\n\nRT the first tweet if this was helpful!\n\nFor more AI insights, follow @YourHandle\n\n#AI #Business #Innovation\n\n7/7"
+                    "That's a wrap! \n\nRT the first tweet if this was helpful!\n\nFor more AI insights, follow @YourHandle\n\n#AI #Business #Innovation\n\n7/7"
                 ],
                 "tweet_count": 7,
                 "total_characters": 1456,
@@ -282,19 +291,19 @@ What's your experience with AI in business? Share your thoughts below! 👇
 Here's what's happening RIGHT NOW:
 
 🧠 Machine Learning = computers that learn
-💬 NLP = computers that understand us  
-👀 Computer Vision = computers that see
+ NLP = computers that understand us  
+ Computer Vision = computers that see
 🤖 Robotics = computers that move
 
 WHY THIS MATTERS:
-✅ Work gets easier
-✅ Decisions get smarter  
-✅ Costs go down
-✅ Life gets better
+ Work gets easier
+ Decisions get smarter  
+ Costs go down
+ Life gets better
 
-The future is HERE! 🚀
+The future is HERE! 
 
-What AI tool do you use? Tell me! ⬇️
+What AI tool do you use? Tell me! 
 
 #AI #Tech #Future #Innovation #MachineLearning #TechTok #FYP""",
                 "optimizations_applied": [
@@ -323,11 +332,11 @@ What AI tool do you use? Tell me! ⬇️
         with patch.object(optimizer, '_format_for_platform') as mock_format:
             mock_format.return_value = {
                 "success": True,
-                "formatted_content": """🎯 Complete Guide to AI in Business | Everything You Need to Know
+                "formatted_content": """ Complete Guide to AI in Business | Everything You Need to Know
 
 In this comprehensive video, we dive deep into how Artificial Intelligence is transforming the business landscape and how your organization can leverage AI technologies for growth and innovation.
 
-📋 WHAT YOU'LL LEARN:
+ WHAT YOU'LL LEARN:
 • What is Business AI and why it matters
 • Key AI technologies: ML, NLP, Computer Vision, Predictive Analytics
 • Step-by-step implementation strategies
@@ -345,21 +354,21 @@ In this comprehensive video, we dive deep into how Artificial Intelligence is tr
 18:30 Scaling Your Success
 21:00 Conclusion & Next Steps
 
-🔗 USEFUL LINKS:
+ USEFUL LINKS:
 • AI Implementation Checklist: https://example.com/checklist
 • Free AI Assessment Tool: https://example.com/assessment
 • Join our AI Community: https://example.com/community
 
-💡 RELATED VIDEOS:
+ RELATED VIDEOS:
 • Machine Learning Basics: [Link]
 • AI Tools for Small Business: [Link]
 • Future of Work with AI: [Link]
 
-👍 If this video helped you, please LIKE and SUBSCRIBE for more AI business content!
+ If this video helped you, please LIKE and SUBSCRIBE for more AI business content!
 
-🔔 Ring the bell to get notified when we post new videos!
+ Ring the bell to get notified when we post new videos!
 
-💬 QUESTIONS? Drop them in the comments below - I read and respond to every one!
+ QUESTIONS? Drop them in the comments below - I read and respond to every one!
 
 #ArtificialIntelligence #BusinessAI #MachineLearning #DigitalTransformation #Innovation #Technology #Business #Entrepreneurship""",
                 "optimizations_applied": [
@@ -389,7 +398,7 @@ In this comprehensive video, we dive deep into how Artificial Intelligence is tr
         with patch.object(optimizer, '_format_for_platform') as mock_format:
             mock_format.return_value = {
                 "success": True,
-                "formatted_content": """Subject: 🚀 Your Complete Guide to AI in Business (7-minute read)
+                "formatted_content": """Subject:  Your Complete Guide to AI in Business (7-minute read)
 
 Hi [First Name],
 
@@ -397,9 +406,9 @@ Hope you're having a great week!
 
 I've been getting lots of questions about implementing AI in business, so I put together this comprehensive guide for you.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-📊 WHAT IS BUSINESS AI?
+
+ WHAT IS BUSINESS AI?
 
 Business AI is the application of artificial intelligence in business operations. It includes:
 
@@ -408,9 +417,9 @@ Business AI is the application of artificial intelligence in business operations
 → Computer Vision: Analyzing visual content  
 → Predictive Analytics: Forecasting future trends
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-🎯 IMPLEMENTATION STRATEGIES
+
+ IMPLEMENTATION STRATEGIES
 
 **Phase 1: Assessment**
 • Evaluate your data infrastructure
@@ -424,9 +433,9 @@ Business AI is the application of artificial intelligence in business operations
 3. Define success metrics
 4. Scale successful implementations
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-💡 KEY TAKEAWAY
+
+ KEY TAKEAWAY
 
 AI implementation requires careful planning and execution. The winning formula:
 
@@ -434,9 +443,9 @@ Start small → Measure results → Scale gradually
 
 This approach minimizes risk while maximizing your chances of success.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-📚 WHAT'S NEXT?
+
+ WHAT'S NEXT?
 
 Want to dive deeper? Here are your next steps:
 
@@ -444,7 +453,7 @@ Want to dive deeper? Here are your next steps:
 2. **Join our free AI Masterclass** → [Link]  
 3. **Book a strategy call** → [Link]
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 
 That's all for today! Reply and let me know - what's your biggest AI challenge right now?
 
@@ -453,11 +462,11 @@ Best regards,
 
 P.S. Forward this email to anyone who could benefit from implementing AI in their business!
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-📞 Need help? Just reply to this email
-🌐 Visit our website: [Link]
-📱 Follow us: [Social Links]
+
+ Need help? Just reply to this email
+ Visit our website: [Link]
+ Follow us: [Social Links]
 
 Unsubscribe | Update Preferences""",
                 "optimizations_applied": [

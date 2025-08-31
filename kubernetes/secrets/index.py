@@ -15,15 +15,15 @@ Team Specialties:
 - Compliance + Audit Specialist: Regulatory compliance and audit trails
 - IA Prompt Engineering: AI-powered security automation
 
-⚠️ LEGAL WARNING & COPYRIGHT NOTICE ⚠️
+ LEGAL WARNING & COPYRIGHT NOTICE 
 This code, concept, and intellectual property are exclusively owned by:
-👤 Owner: Fahed Mlaiel | 📧 Contact: mlaiel@live.de | 🏢 Platform: IA-Influencer Agent
+ Owner: Fahed Mlaiel |  Contact: mlaiel@live.de |  Platform: IA-Influencer Agent
 
 PROHIBITED ACTIONS:
-❌ Copying, reproducing, or using code without explicit written permission
-❌ Distribution, modification, or creation of derivative works
-❌ Commercial or personal use without authorization
-❌ Reverse engineering, decompilation, or concept extraction
+ Copying, reproducing, or using code without explicit written permission
+ Distribution, modification, or creation of derivative works
+ Commercial or personal use without authorization
+ Reverse engineering, decompilation, or concept extraction
 
 Any violation will result in immediate legal action under International Copyright Law.
 """
@@ -187,6 +187,9 @@ class InfluencerSecretsManager:
         Returns:
             dict: Setup results
         """
+
+
+
         try:
             setup_results = {
                 'timestamp': datetime.utcnow().isoformat(),
@@ -306,6 +309,9 @@ class InfluencerSecretsManager:
         Returns:
             dict: Platform credentials or None if not found/invalid
         """
+
+
+
         try:
             # Validate platform
             if not self.platform_utils.validate_platform_credentials(platform, {}):
@@ -370,6 +376,9 @@ class InfluencerSecretsManager:
         Returns:
             dict: Encrypted content data
         """
+
+
+
         try:
             return self.encryption_manager.encrypt_content_data(
                 content_data, content_type, user_id, content_id
@@ -393,6 +402,9 @@ class InfluencerSecretsManager:
         Returns:
             dict: Emergency rotation results
         """
+
+
+
         try:
             emergency_rotator = InfluencerEmergencyRotator(
                 vault_manager=self.vault_manager,
@@ -425,6 +437,9 @@ class InfluencerSecretsManager:
         Returns:
             dict: Compliance report
         """
+
+
+
         try:
             return self.compliance_auditor.generate_influencer_compliance_report(
                 include_platforms=include_platforms,
@@ -436,6 +451,9 @@ class InfluencerSecretsManager:
     
     def shutdown(self) -> None:
         """Gracefully shutdown the secrets manager."""
+
+
+
         try:
             logger.info("Shutting down InfluencerSecretsManager...")
             
@@ -527,6 +545,9 @@ def initialize_platform_secrets(
     Returns:
         dict: Initialization results
     """
+
+
+
     try:
         secrets_manager = create_influencer_secrets_manager(environment=environment)
         
@@ -552,6 +573,9 @@ def get_module_info() -> Dict[str, Any]:
     Returns:
         dict: Module information
     """
+
+
+
     return {
         'name': 'IA Influencer Agent - Secrets Management',
         'version': __version__,
@@ -702,17 +726,17 @@ if __name__ == "__main__":
     validation = validate_environment()
     
     if validation['errors']:
-        print("❌ Errors:")
+        print(" Errors:")
         for error in validation['errors']:
             print(f"  - {error}")
     
     if validation['warnings']:
-        print("⚠️  Warnings:")
+        print("  Warnings:")
         for warning in validation['warnings']:
             print(f"  - {warning}")
     
     if not validation['errors']:
-        print("✅ Environment validation passed")
+        print(" Environment validation passed")
     
     print()
     print("To use this module:")

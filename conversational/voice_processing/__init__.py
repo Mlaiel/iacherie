@@ -24,7 +24,7 @@ Email: mlaiel@live.de
 Project Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE - ZERO TOLERANCE FOR INTELLECTUAL PROPERTY THEFT ⚠️
+  CRITICAL LEGAL NOTICE - ZERO TOLERANCE FOR INTELLECTUAL PROPERTY THEFT 
 
 This revolutionary voice processing code, innovative AI algorithms, and advanced conversational 
 architectures are the EXCLUSIVE intellectual property of Fahed Mlaiel representing thousands 
@@ -298,7 +298,10 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 def get_voice_processing_info() -> Dict[str, Any]:
-    """Get comprehensive voice processing module information"""    return {
+    """Get comprehensive voice processing module information"""
+
+
+    return {
         "module": "Voice Processing",
         "version": __version__,
         "author": __author__,
@@ -309,7 +312,10 @@ def get_voice_processing_info() -> Dict[str, Any]:
     }
 
 async def initialize_voice_processing() -> bool:
-    """Initialize voice processing module with all components"""    try:
+    """Initialize voice processing module with all components"""
+
+
+    try:
         logger.info("Initializing IA-Influencer Voice Processing Module...")
         
         # Initialize core components

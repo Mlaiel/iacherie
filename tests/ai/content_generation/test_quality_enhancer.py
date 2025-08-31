@@ -53,11 +53,17 @@ class TestQualityEnhancer:
     @pytest.fixture
     def enhancer(self):
         """Create a quality enhancer instance"""
+
+
+
         return QualityEnhancer()
     
     @pytest.fixture
     def sample_content(self):
         """Create sample content for quality analysis"""
+
+
+
         return """
         The artficial inteligence revoluton is here. It's transforming how we work, live, and interact with technology.
         
@@ -71,6 +77,9 @@ class TestQualityEnhancer:
     @pytest.fixture
     def high_quality_content(self):
         """Create high-quality content for comparison"""
+
+
+
         return """
         The artificial intelligence revolution is here. It's transforming how we work, live, and interact with technology.
         

@@ -181,6 +181,9 @@ class DMCATemplateGenerator:
     
     def _get_dmca_template(self) -> str:
         """DMCA takedown notice template"""
+
+
+
         return """
 DMCA TAKEDOWN NOTICE
 
@@ -269,6 +272,9 @@ Generation Date: {{ generation_timestamp.strftime('%Y-%m-%d %H:%M:%S UTC') }}
     
     async def generate(self, context: DocumentContext) -> GeneratedDocument:
         """Generate DMCA takedown notice"""
+
+
+
         try:
             template = Template(self.template_content)
             
@@ -317,6 +323,9 @@ class CeaseDesistGenerator:
     
     def _get_cease_desist_template(self) -> str:
         """Cease and desist letter template"""
+
+
+
         return """
 CEASE AND DESIST LETTER
 
@@ -445,6 +454,9 @@ Generated: {{ generation_timestamp.strftime('%Y-%m-%d %H:%M:%S UTC') }}
     
     async def generate(self, context: DocumentContext) -> GeneratedDocument:
         """Generate cease and desist letter"""
+
+
+
         try:
             template = Template(self.template_content)
             
@@ -496,6 +508,9 @@ class LegalNoticeGenerator:
     
     def _get_legal_notice_template(self) -> str:
         """Legal notice template"""
+
+
+
         return """
 LEGAL NOTICE OF COPYRIGHT INFRINGEMENT
 
@@ -615,6 +630,9 @@ Timestamp: {{ generation_timestamp.strftime('%Y-%m-%d %H:%M:%S UTC') }}
     
     async def generate(self, context: DocumentContext) -> GeneratedDocument:
         """Generate legal notice"""
+
+
+
         try:
             template = Template(self.template_content)
             
@@ -688,6 +706,9 @@ class LegalDocumentGenerator:
         context: DocumentContext
     ) -> GeneratedDocument:
         """Generate legal document based on type and context"""
+
+
+
         try:
             logger.info(f"Generating {document_type.value} document for case {context.case_id}")
             
@@ -758,6 +779,9 @@ class LegalDocumentGenerator:
     
     async def _save_document(self, document: GeneratedDocument):
         """Save document to persistent storage"""
+
+
+
         try:
             case_dir = self.storage_path / document.case_id
             case_dir.mkdir(exist_ok=True)
@@ -804,6 +828,9 @@ class LegalDocumentGenerator:
     
     async def get_document(self, document_id: str) -> Optional[GeneratedDocument]:
         """Retrieve generated document"""
+
+
+
         try:
             # Check cache first
             if document_id in self.generated_documents:
@@ -866,6 +893,9 @@ class LegalDocumentGenerator:
         notes: Optional[str] = None
     ) -> bool:
         """Update document status"""
+
+
+
         try:
             document = await self.get_document(document_id)
             if not document:
@@ -899,6 +929,9 @@ class LegalDocumentGenerator:
         tracking_id: Optional[str] = None
     ) -> bool:
         """Mark document as sent"""
+
+
+
         try:
             document = await self.get_document(document_id)
             if not document:
@@ -921,6 +954,9 @@ class LegalDocumentGenerator:
     
     async def get_documents_by_case(self, case_id: str) -> List[GeneratedDocument]:
         """Get all documents for a specific case"""
+
+
+
         try:
             documents = []
             
@@ -943,6 +979,9 @@ class LegalDocumentGenerator:
     
     async def check_document_validity(self, document_id: str) -> Dict[str, Any]:
         """Check if document is still valid"""
+
+
+
         try:
             document = await self.get_document(document_id)
             if not document:
@@ -971,6 +1010,9 @@ class LegalDocumentGenerator:
     
     async def cleanup_expired_documents(self):
         """Clean up expired documents"""
+
+
+
         try:
             cleaned_count = 0
             cutoff_date = datetime.utcnow() - timedelta(days=365)  # Keep for 1 year
@@ -1016,6 +1058,9 @@ class LegalDocumentGenerator:
     
     async def get_generation_statistics(self) -> Dict[str, Any]:
         """Get document generation statistics"""
+
+
+
         try:
             stats = {
                 'total_documents': len(self.generated_documents),
@@ -1046,6 +1091,9 @@ class LegalDocumentGenerator:
     
     async def shutdown(self):
         """Shutdown document generator"""
+
+
+
         try:
             # Save all cached documents
             for document in self.generated_documents.values():
@@ -1065,6 +1113,9 @@ document_generator = LegalDocumentGenerator()
 
 async def get_document_generator() -> LegalDocumentGenerator:
     """Get the global legal document generator instance"""
+
+
+
     return document_generator
 
 

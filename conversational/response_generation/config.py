@@ -8,7 +8,7 @@ platform integrations, and advanced system tuning for multi-format creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de
@@ -416,6 +416,9 @@ class ResponseGenerationConfig(BaseSettings):
     
     def is_production(self) -> bool:
         """Check if running in production environment"""
+
+
+
         return self.environment == Environment.PRODUCTION
     
     def get_model_config(self, model_name: Optional[str] = None) -> ModelConfiguration:
@@ -587,6 +590,9 @@ class ResponseGenerationConfig:
     
     def _get_default_config_path(self) -> str:
         """Get default configuration file path"""
+
+
+
         return os.path.join(
             os.path.dirname(__file__), 
             "config", 
@@ -664,6 +670,9 @@ class ResponseGenerationConfig:
     
     def get_feature_flags(self) -> Dict[str, bool]:
         """Get all feature flags"""
+
+
+
         return {
             "revenue_intelligence": self.settings.enable_revenue_intelligence,
             "protection_responses": self.settings.enable_protection_responses,
@@ -678,6 +687,9 @@ class ResponseGenerationConfig:
     
     def get_performance_config(self) -> Dict[str, Any]:
         """Get performance configuration"""
+
+
+
         return {
             "max_concurrent_responses": self.settings.max_concurrent_responses,
             "response_timeout": self.settings.response_timeout,
@@ -688,6 +700,9 @@ class ResponseGenerationConfig:
     
     def get_security_config(self) -> Dict[str, Any]:
         """Get security configuration"""
+
+
+
         return {
             "content_filtering": self.settings.enable_content_filtering,
             "privacy_protection": self.settings.enable_privacy_protection,

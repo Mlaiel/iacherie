@@ -8,7 +8,7 @@ Handles likes, comments, shares, reactions, and interaction analysis.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
@@ -110,6 +110,9 @@ class YouTubeEngagementParser(BaseEngagementParser):
     
     async def parse_engagement(self, video_id: str, **kwargs) -> Dict[str, Any]:
         """Parse YouTube video engagement"""
+
+
+
         try:
             video_data = await self._get_video_data(video_id)
             comments_data = await self._get_comments_data(video_id)
@@ -263,6 +266,9 @@ class InstagramEngagementParser(BaseEngagementParser):
     
     async def parse_engagement(self, media_id: str, **kwargs) -> Dict[str, Any]:
         """Parse Instagram media engagement"""
+
+
+
         try:
             media_data = await self._get_media_data(media_id)
             comments_data = await self._get_media_comments(media_id)
@@ -380,6 +386,9 @@ class FacebookEngagementParser(BaseEngagementParser):
     
     async def parse_engagement(self, post_id: str, **kwargs) -> Dict[str, Any]:
         """Parse Facebook post engagement"""
+
+
+
         try:
             post_data = await self._get_post_data(post_id)
             comments_data = await self._get_post_comments(post_id)
@@ -512,6 +521,9 @@ class TwitterEngagementParser(BaseEngagementParser):
     
     async def parse_engagement(self, tweet_id: str, **kwargs) -> Dict[str, Any]:
         """Parse Twitter tweet engagement"""
+
+
+
         try:
             tweet_data = await self._get_tweet_data(tweet_id)
             parsed_engagement = await self._parse_twitter_engagement(tweet_data)
@@ -620,6 +632,9 @@ class TikTokEngagementParser(BaseEngagementParser):
     
     async def parse_engagement(self, video_id: str, **kwargs) -> Dict[str, Any]:
         """Parse TikTok video engagement"""
+
+
+
         try:
             # TikTok API access is limited, this would require business API
             video_data = await self._get_tiktok_video_data(video_id)
@@ -648,6 +663,9 @@ class TikTokEngagementParser(BaseEngagementParser):
     
     async def _parse_tiktok_engagement(self, video_data: Dict[str, Any]) -> Dict[str, Any]:
         """Parse TikTok engagement metrics"""
+
+
+
         return {
             'overview': {
                 'views': 0,
@@ -670,6 +688,9 @@ class LinkedInEngagementParser(BaseEngagementParser):
     
     async def parse_engagement(self, post_id: str, **kwargs) -> Dict[str, Any]:
         """Parse LinkedIn post engagement"""
+
+
+
         try:
             post_data = await self._get_linkedin_post_data(post_id)
             parsed_engagement = await self._parse_linkedin_engagement(post_data)
@@ -697,6 +718,9 @@ class LinkedInEngagementParser(BaseEngagementParser):
     
     async def _parse_linkedin_engagement(self, post_data: Dict[str, Any]) -> Dict[str, Any]:
         """Parse LinkedIn engagement metrics"""
+
+
+
         return {
             'overview': {
                 'impressions': 0,

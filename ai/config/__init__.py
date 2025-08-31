@@ -17,7 +17,10 @@ class TestConfig:
 
 # Fonctions utilitaires de base
 def get_default_config():
-    """Retourne une configuration par défaut"""    return TestConfig()
+    """Retourne une configuration par défaut"""
+
+
+    return TestConfig()
 
 def initialize():
     """Initialise le module"""    pass

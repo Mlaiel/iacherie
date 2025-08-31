@@ -8,7 +8,7 @@ Multi-format support with intelligent adaptation for all platforms.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 
-⚠️  COPYRIGHT WARNING ⚠️
+  COPYRIGHT WARNING 
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or theft of this code or concept without explicit 
 written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and 
@@ -124,6 +124,9 @@ class FormatProcessor:
     
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default format processing configuration"""
+
+
+
         return {
             'conversion_quality': 'high',  # 'low', 'medium', 'high', 'lossless'
             'preserve_metadata': True,
@@ -172,6 +175,9 @@ class FormatProcessor:
     
     def _initialize_format_specs(self):
         """Initialize format specifications"""
+
+
+
         try:
             # Image format specifications
             self.image_formats = {
@@ -286,6 +292,9 @@ class FormatProcessor:
     
     def _initialize_platform_profiles(self):
         """Initialize platform-specific format profiles"""
+
+
+
         try:
             self.platform_profiles = {
                 'instagram': PlatformProfile(
@@ -413,6 +422,9 @@ class FormatProcessor:
     
     def _initialize_converters(self):
         """Initialize format converters"""
+
+
+
         try:
             # Converter mapping
             self.converters = {
@@ -457,6 +469,9 @@ class FormatProcessor:
         Returns:
             Dict containing conversion results
         """
+
+
+
         try:
             start_time = datetime.now()
             
@@ -528,6 +543,9 @@ class FormatProcessor:
     
     async def _prepare_content(self, content_data: Union[bytes, str]) -> Tuple[str, bool]:
         """Prepare content for conversion"""
+
+
+
         try:
             if isinstance(content_data, str):
                 # Already a file path
@@ -550,6 +568,9 @@ class FormatProcessor:
     
     async def _detect_content_type(self, file_path: str) -> str:
         """Auto-detect content type from file"""
+
+
+
         try:
             # Use mimetypes for initial detection
             mime_type, _ = mimetypes.guess_type(file_path)
@@ -585,6 +606,9 @@ class FormatProcessor:
     
     async def _validate_target_format(self, target_format: str, content_type: str) -> bool:
         """Validate target format compatibility"""
+
+
+
         try:
             format_map = {
                 'image': self.image_formats,
@@ -609,6 +633,9 @@ class FormatProcessor:
         config: Dict[str, Any]
     ) -> ConversionResult:
         """Perform the actual format conversion"""
+
+
+
         try:
             # Get the appropriate converter
             converter = self.converters.get(content_type)
@@ -645,6 +672,9 @@ class FormatProcessor:
         config: Dict[str, Any]
     ) -> str:
         """Create output file path"""
+
+
+
         try:
             input_file = Path(input_path)
             output_dir = config.get('output_directory', 'converted')
@@ -681,6 +711,9 @@ class FormatProcessor:
         config: Dict[str, Any]
     ) -> ConversionResult:
         """Convert image format"""
+
+
+
         try:
             if not PIL_AVAILABLE:
                 raise RuntimeError("PIL not available for image conversion")
@@ -766,6 +799,9 @@ class FormatProcessor:
         config: Dict[str, Any]
     ) -> ConversionResult:
         """Convert video format"""
+
+
+
         try:
             if not FFMPEG_AVAILABLE:
                 raise RuntimeError("FFmpeg not available for video conversion")
@@ -862,6 +898,9 @@ class FormatProcessor:
         config: Dict[str, Any]
     ) -> ConversionResult:
         """Convert audio format"""
+
+
+
         try:
             if not AUDIO_LIBS_AVAILABLE:
                 raise RuntimeError("Audio libraries not available for conversion")
@@ -954,6 +993,9 @@ class FormatProcessor:
         config: Dict[str, Any]
     ) -> ConversionResult:
         """Convert text format"""
+
+
+
         try:
             start_time = datetime.now()
             
@@ -1047,6 +1089,9 @@ class FormatProcessor:
         image_specs: FormatSpec
     ) -> Image.Image:
         """Apply platform-specific image constraints"""
+
+
+
         try:
             # Resize if necessary
             if image_specs.max_width and image_specs.max_height:
@@ -1065,6 +1110,9 @@ class FormatProcessor:
     # Format detection methods (simplified implementations)
     async def _detect_image_format(self, file_path: str) -> str:
         """Detect image format"""
+
+
+
         try:
             with Image.open(file_path) as img:
                 return img.format.lower() if img.format else 'unknown'
@@ -1073,6 +1121,9 @@ class FormatProcessor:
     
     async def _detect_video_format(self, file_path: str) -> str:
         """Detect video format"""
+
+
+
         try:
             probe = ffmpeg.probe(file_path)
             return probe.get('format', {}).get('format_name', 'unknown').split(',')[0]
@@ -1081,6 +1132,9 @@ class FormatProcessor:
     
     async def _detect_audio_format(self, file_path: str) -> str:
         """Detect audio format"""
+
+
+
         try:
             # Use file extension as approximation
             return Path(file_path).suffix.lower().lstrip('.')
@@ -1089,6 +1143,9 @@ class FormatProcessor:
     
     async def _detect_text_format(self, file_path: str) -> str:
         """Detect text format"""
+
+
+
         try:
             return Path(file_path).suffix.lower().lstrip('.')
         except:
@@ -1142,6 +1199,9 @@ class FormatProcessor:
         config: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Optimize content for specific platform"""
+
+
+
         try:
             # Get platform profile
             platform_profile = self.platform_profiles.get(platform.lower())
@@ -1252,6 +1312,9 @@ class FormatProcessor:
         
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default format processing configuration"""
+
+
+
         return {
             'temp_dir': '/tmp/format_processor',
             'supported_conversions': {
@@ -1303,6 +1366,9 @@ class FormatProcessor:
     
     def _initialize_processors(self):
         """Initialize format processing components"""
+
+
+
         try:
             # Ensure temp directory exists
             os.makedirs(self.config['temp_dir'], exist_ok=True)
@@ -1340,6 +1406,9 @@ class FormatProcessor:
         Returns:
             Dict containing converted content and conversion info
         """
+
+
+
         try:
             # Merge configuration
             processing_config = self.config.copy()
@@ -1420,6 +1489,9 @@ class FormatProcessor:
         content_type: str
     ) -> Dict[str, Any]:
         """Validate if conversion is supported"""
+
+
+
         try:
             supported_conversions = self.config['supported_conversions'].get(content_type, {})
             
@@ -1463,6 +1535,9 @@ class FormatProcessor:
         output_format: str
     ) -> Dict[str, Any]:
         """Calculate conversion quality and efficiency metrics"""
+
+
+
         try:
             metrics = {
                 'conversion_time': conversion_result.get('processing_time', 0),
@@ -1551,6 +1626,9 @@ class FormatProcessor:
         config: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Optimize content format for specific platform"""
+
+
+
         try:
             platform_profiles = self.config['conversion_profiles'].get(platform, {})
             content_profile = platform_profiles.get(content_type, {})
@@ -1595,6 +1673,9 @@ class FormatProcessor:
     
     def get_supported_formats(self, content_type: str) -> Dict[str, List[str]]:
         """Get supported input and output formats for content type"""
+
+
+
         return self.config['supported_conversions'].get(content_type, {
             'input_formats': [],
             'output_formats': []
@@ -1602,6 +1683,9 @@ class FormatProcessor:
     
     def get_conversion_profiles(self) -> Dict[str, Any]:
         """Get available conversion profiles"""
+
+
+
         return self.config['conversion_profiles']
 
 # Format-specific converter classes
@@ -1620,6 +1704,9 @@ class AudioFormatConverter:
         config: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Convert audio format"""
+
+
+
         try:
             start_time = asyncio.get_event_loop().time()
             
@@ -1692,6 +1779,9 @@ class VideoFormatConverter:
         config: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Convert video format"""
+
+
+
         try:
             start_time = asyncio.get_event_loop().time()
             
@@ -1731,6 +1821,9 @@ class ImageFormatConverter:
         config: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Convert image format"""
+
+
+
         try:
             start_time = asyncio.get_event_loop().time()
             
@@ -1800,6 +1893,9 @@ class TextFormatConverter:
         config: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Convert text format"""
+
+
+
         try:
             start_time = asyncio.get_event_loop().time()
             

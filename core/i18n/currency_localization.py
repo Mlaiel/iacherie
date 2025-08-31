@@ -8,7 +8,7 @@ Responsibility: Multi-currency formatting, regional compliance, and financial lo
 Technologies: Python, Currency APIs, Regional Standards, Financial Formatting
 ================================================================================
 
-⚠️  PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
+  PROPRIETARY SOFTWARE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -88,7 +88,7 @@ class NumberingSystem(Enum):
     ARABIC_INDIC = "arabic"  # ٠١٢٣٤٥٦٧٨٩
     PERSIAN = "persian"      # ۰۱۲۳۴۵۶۷۸۹
     DEVANAGARI = "devanagari"  # ०१२३४५६७८९
-    CHINESE = "chinese"      # 〇一二三四五六七八九
+    CHINESE = "chinese"      # 
     HEBREW = "hebrew"        # Hebrew numerals
 
 
@@ -236,7 +236,7 @@ class CurrencyLocalization:
             code=CurrencyCode.JPY,
             symbol="¥",
             name="Japanese Yen",
-            native_name="円",
+            native_name="",
             decimal_places=0,
             position=CurrencyPosition.BEFORE,
             grouping_separator=GroupingSeparator.COMMA,
@@ -270,7 +270,7 @@ class CurrencyLocalization:
             code=CurrencyCode.CNY,
             symbol="¥",
             name="Chinese Yuan",
-            native_name="人民币",
+            native_name="",
             decimal_places=2,
             position=CurrencyPosition.BEFORE,
             grouping_separator=GroupingSeparator.COMMA,
@@ -523,6 +523,9 @@ class CurrencyLocalization:
         custom_format: CurrencyFormat = None
     ) -> str:
         """Format currency amount according to locale and cultural standards"""
+
+
+
         try:
             # Convert amount to Decimal for precision
             if not isinstance(amount, Decimal):
@@ -670,6 +673,9 @@ class CurrencyLocalization:
         use_cached_rate: bool = True
     ) -> CurrencyConversion:
         """Convert currency amount with exchange rate"""
+
+
+
         try:
             # Convert to Decimal for precision
             if not isinstance(amount, Decimal):
@@ -780,6 +786,9 @@ class CurrencyLocalization:
     
     async def get_regional_currency_info(self, region_code: str) -> Optional[RegionalCurrency]:
         """Get regional currency information"""
+
+
+
         return self.regional_currencies.get(region_code.upper())
     
     async def validate_currency_amount(
@@ -789,6 +798,9 @@ class CurrencyLocalization:
         region_code: str = None
     ) -> Dict[str, Any]:
         """Validate currency amount according to regional rules"""
+
+
+
         try:
             if not isinstance(amount, Decimal):
                 amount = Decimal(str(amount))
@@ -842,6 +854,9 @@ class CurrencyLocalization:
     
     async def get_currency_statistics(self) -> Dict[str, Any]:
         """Get currency localization statistics"""
+
+
+
         return {
             "supported_currencies": len(self.currency_formats),
             "regional_configurations": len(self.regional_currencies),
@@ -881,6 +896,9 @@ class CurrencyLocalization:
     
     async def health_check(self) -> bool:
         """Health check for currency localization service"""
+
+
+
         try:
             # Check if currency formats are loaded
             if not self.currency_formats:

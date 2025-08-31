@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -363,6 +363,9 @@ class ContentDistribution(Base):
         config: Dict[str, Any]
     ) -> 'ContentDistribution':
         """Create scheduled distribution"""
+
+
+
         return cls(
             content_id=content_id,
             user_id=user_id,
@@ -385,6 +388,9 @@ class ContentDistribution(Base):
         config: Dict[str, Any]
     ) -> 'ContentDistribution':
         """Create immediate distribution"""
+
+
+
         return cls(
             content_id=content_id,
             user_id=user_id,
@@ -432,6 +438,9 @@ class ContentDistribution(Base):
     
     def can_retry(self) -> bool:
         """Check if distribution can be retried"""
+
+
+
         return (
             self.status == DistributionStatus.FAILED and
             self.retry_count < self.max_retries
@@ -439,6 +448,9 @@ class ContentDistribution(Base):
     
     def get_performance_summary(self) -> Dict[str, Any]:
         """Get performance summary"""
+
+
+
         return {
             'engagement_metrics': {
                 'views': self.views_count,

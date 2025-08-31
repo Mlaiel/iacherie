@@ -169,6 +169,9 @@ class ComplianceReportGenerator(BaseReportGenerator):
         data_sources: Dict[str, Any]
     ) -> Tuple[bytes, ReportMetadata]:
         """Generate compliance report"""
+
+
+
         try:
             compliance_manager = data_sources.get("compliance_manager")
             if not compliance_manager:
@@ -431,6 +434,9 @@ class PolicyViolationReportGenerator(BaseReportGenerator):
         data_sources: Dict[str, Any]
     ) -> Tuple[bytes, ReportMetadata]:
         """Generate policy violation report"""
+
+
+
         try:
             policy_manager = data_sources.get("policy_manager")
             if not policy_manager:
@@ -596,6 +602,9 @@ class ExecutiveSummaryGenerator(BaseReportGenerator):
         data_sources: Dict[str, Any]
     ) -> Tuple[bytes, ReportMetadata]:
         """Generate executive summary report"""
+
+
+
         try:
             # Collect data from all sources
             summary_data = await self._collect_summary_data(data_sources, request.time_range)
@@ -946,6 +955,9 @@ class GovernanceReportManager(BaseManager):
     
     async def initialize(self) -> None:
         """Initialize the report manager"""
+
+
+
         try:
             self.logger.info("Governance report manager initialized successfully")
             
@@ -989,6 +1001,9 @@ class GovernanceReportManager(BaseManager):
         Returns:
             Tuple of report data and metadata
         """
+
+
+
         try:
             # Create report request
             request = ReportRequest(
@@ -1036,6 +1051,9 @@ class GovernanceReportManager(BaseManager):
     
     async def get_available_reports(self) -> List[ReportType]:
         """Get list of available report types"""
+
+
+
         return list(self.generators.keys())
     
     async def get_supported_formats(self, report_type: ReportType) -> List[ReportFormat]:
@@ -1066,6 +1084,9 @@ class GovernanceReportManager(BaseManager):
         time_range: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
         """Get aggregated governance metrics for time period"""
+
+
+
         try:
             summary = {}
             

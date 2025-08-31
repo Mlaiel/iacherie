@@ -68,6 +68,9 @@ class AudioContentClassifier:
         
     def _initialize_models(self, model_path: Optional[str] = None) -> None:
         """Load pre-trained classification models."""
+
+
+
         try:
             base_path = Path(model_path) if model_path else Path(self.settings.MODEL_PATH) / 'audio'
             
@@ -101,6 +104,9 @@ class AudioContentClassifier:
     
     def _load_default_models(self) -> None:
         """Load default pre-trained models if custom models unavailable."""
+
+
+
         try:
             # Use Hugging Face models as fallback
             from transformers import pipeline
@@ -124,6 +130,9 @@ class AudioContentClassifier:
     
     def _setup_feature_extractors(self) -> None:
         """Initialize Essentia feature extractors."""
+
+
+
         try:
             # MFCC extractor for timbral features
             self.mfcc_extractor = es.MFCC(
@@ -165,6 +174,9 @@ class AudioContentClassifier:
         Returns:
             Dictionary containing classification results
         """
+
+
+
         try:
             # Load and preprocess audio
             audio_data = await self.audio_processor.load_audio(audio_path)
@@ -206,6 +218,9 @@ class AudioContentClassifier:
     
     async def _extract_features(self, audio_data: Dict[str, Any]) -> Dict[str, np.ndarray]:
         """Extract comprehensive audio features for classification."""
+
+
+
         try:
             y = audio_data['signal']
             sr = audio_data['sample_rate']
@@ -248,6 +263,9 @@ class AudioContentClassifier:
     
     async def _classify_genre(self, features: Dict[str, np.ndarray]) -> Dict[str, Any]:
         """Classify music genre using extracted features."""
+
+
+
         try:
             # Prepare feature vector
             feature_vector = self._prepare_feature_vector(features, 'genre')
@@ -287,6 +305,9 @@ class AudioContentClassifier:
     
     async def _analyze_mood(self, features: Dict[str, np.ndarray]) -> Dict[str, Any]:
         """Analyze mood and emotional content of audio."""
+
+
+
         try:
             # Prepare feature vector for mood analysis
             feature_vector = self._prepare_feature_vector(features, 'mood')
@@ -325,6 +346,9 @@ class AudioContentClassifier:
     
     async def _assess_quality(self, features: Dict[str, np.ndarray]) -> Dict[str, Any]:
         """Assess audio quality and technical characteristics."""
+
+
+
         try:
             quality_metrics = {}
             
@@ -358,6 +382,9 @@ class AudioContentClassifier:
     
     async def _compute_similarity_hash(self, features: Dict[str, np.ndarray]) -> Dict[str, Any]:
         """Compute perceptual hash for similarity matching."""
+
+
+
         try:
             # Create compact feature representation
             similarity_features = self._create_similarity_features(features)
@@ -667,6 +694,9 @@ class AudioContentClassifier:
         audio_file2: str
     ) -> Dict[str, Any]:
         """Compare similarity between two audio files."""
+
+
+
         try:
             # Classify both files
             result1 = await self.classify_audio(audio_file1, 'similarity')
@@ -724,10 +754,16 @@ class AudioContentClassifier:
     
     def get_supported_formats(self) -> List[str]:
         """Get list of supported audio formats."""
+
+
+
         return ['mp3', 'wav', 'flac', 'aac', 'm4a', 'ogg', 'wma']
     
     def get_classification_categories(self) -> Dict[str, List[str]]:
         """Get available classification categories."""
+
+
+
         return {
             'genres': ['rock', 'pop', 'jazz', 'classical', 'electronic', 'hip-hop', 'folk', 'blues', 'country', 'reggae'],
             'moods': ['happy', 'sad', 'energetic', 'calm', 'aggressive', 'romantic', 'melancholic', 'uplifting'],

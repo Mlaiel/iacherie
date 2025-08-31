@@ -19,7 +19,7 @@ Comprehensive Tests for Utility Functions and Helper Components
 Testing utility functions, helpers, validators, and common operations
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
-⚠️  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
+  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
     code, or intellectual property without explicit written authorization 
     from Fahed Mlaiel is strictly prohibited and will result in legal action.
 
@@ -27,15 +27,15 @@ Lead Developer: Fahed Mlaiel
 Email: mlaiel@live.de
 
 Team Specialties:
-✅ Lead Dev + Architecte Développeur IA
-✅ Développeur Backend Senior (Python/FastAPI/Django)
-✅ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face)
-✅ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
-✅ Spécialiste Sécurité Backend
-✅ Architecte Microservices
-✅ Développeur Audio
-✅ DevOps Engineer
-✅ IA Prompt Engineer
+ Lead Dev + Architecte Développeur IA
+ Développeur Backend Senior (Python/FastAPI/Django)
+ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face)
+ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
+ Spécialiste Sécurité Backend
+ Architecte Microservices
+ Développeur Audio
+ DevOps Engineer
+ IA Prompt Engineer
 """
 
 import pytest
@@ -227,7 +227,7 @@ class TestContentNormalizer:
     
     def test_normalize_text_content(self, content_normalizer):
         """Test text content normalization"""
-        raw_text = "  This is a TEST text with MIXED case and   extra spaces!!! 🎵  "
+        raw_text = "  This is a TEST text with MIXED case and   extra spaces!!!   "
         
         normalized = content_normalizer.normalize_text_content(
             raw_text,

@@ -14,7 +14,7 @@
 #
 # Created by: Fahed Mlaiel (mlaiel@live.de)
 # 
-# ⚠️  STRICT COPYRIGHT WARNING ⚠️ 
+#   STRICT COPYRIGHT WARNING  
 # This code, concept, and intellectual property belongs exclusively to Fahed Mlaiel.
 # ANY unauthorized use, reproduction, distribution, or theft of this code/concept 
 # without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is 
@@ -141,6 +141,9 @@ class VisualEmbeddingModel:
     
     def _init_extractors(self) -> Dict[str, Any]:
         """Initialize embedding extractors"""
+
+
+
         return {
             'deep_features': DeepFeatureExtractor(self.device),
             'perceptual_hash': PerceptualHashExtractor(),
@@ -281,6 +284,9 @@ class SimilarityMatcher:
         
     def _init_similarity_functions(self) -> Dict[SimilarityMetric, callable]:
         """Initialize similarity computation functions"""
+
+
+
         return {
             SimilarityMetric.COSINE: self._cosine_similarity,
             SimilarityMetric.EUCLIDEAN: self._euclidean_distance,
@@ -369,10 +375,16 @@ class SimilarityMatcher:
     
     def _euclidean_distance(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
         """Compute Euclidean distance"""
+
+
+
         return np.linalg.norm(vec1.flatten() - vec2.flatten())
     
     def _manhattan_distance(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
         """Compute Manhattan distance"""
+
+
+
         return np.sum(np.abs(vec1.flatten() - vec2.flatten()))
     
     def _hamming_distance(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
@@ -410,6 +422,9 @@ class SimilarityMatcher:
     
     def _ssim_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
         """Compute SSIM-inspired similarity for image embeddings"""
+
+
+
         try:
             # Normalize vectors
             vec1_norm = (vec1 - np.mean(vec1)) / (np.std(vec1) + 1e-8)
@@ -440,6 +455,9 @@ class SimilarityMatcher:
     
     def _lpips_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
         """Compute LPIPS-inspired perceptual similarity for embeddings"""
+
+
+
         try:
             # LPIPS-inspired multi-scale feature comparison
             # Split vectors into different "scale" segments for comparison
@@ -747,6 +765,9 @@ class EmbeddingGenerator:
     
     def _init_generators(self) -> Dict[str, Any]:
         """Initialize embedding generators"""
+
+
+
         return {
             'deep': DeepFeatureExtractor(self.device),
             'perceptual': PerceptualHashExtractor(),
@@ -791,6 +812,9 @@ class DeepFeatureExtractor(BaseFeatureExtractor):
     
     def load_model(self):
         """Load pre-trained model"""
+
+
+
         try:
             import torchvision.models as models
             self.model = models.resnet50(pretrained=True)
@@ -1010,6 +1034,9 @@ class SemanticFeatureExtractor(BaseFeatureExtractor):
     
     def load_model(self):
         """Load semantic model"""
+
+
+
         try:
             # Would load a semantic segmentation or object detection model
             # For now, use ResNet features as semantic features

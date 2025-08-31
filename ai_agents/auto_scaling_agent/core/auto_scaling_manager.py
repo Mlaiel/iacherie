@@ -141,6 +141,9 @@ class AutoScalingManager(BaseAgent):
 
     async def start_monitoring(self):
         """Start auto-scaling monitoring"""
+
+
+
         try:
             if self.is_monitoring:
                 self.logger.warning("Auto-scaling monitoring already active")
@@ -161,6 +164,9 @@ class AutoScalingManager(BaseAgent):
 
     async def stop_monitoring(self):
         """Stop auto-scaling monitoring"""
+
+
+
         try:
             self.is_monitoring = False
             
@@ -230,6 +236,9 @@ class AutoScalingManager(BaseAgent):
 
     async def _evaluate_scaling_decision(self, service_name: str, metrics: ScalingMetrics):
         """Evaluate scaling decision for a service"""
+
+
+
         try:
             threshold = self.scaling_thresholds.get(service_name)
             if not threshold:
@@ -257,6 +266,9 @@ class AutoScalingManager(BaseAgent):
 
     def _determine_scaling_action(self, metrics: ScalingMetrics, threshold: ScalingThreshold) -> ScalingAction:
         """Determine appropriate scaling action based on metrics"""
+
+
+
         try:
             # Multi-metric scaling decision
             scale_up_signals = 0
@@ -306,6 +318,9 @@ class AutoScalingManager(BaseAgent):
 
     async def _execute_scaling_action(self, service_name: str, action: ScalingAction, metrics: ScalingMetrics):
         """Execute the determined scaling action"""
+
+
+
         try:
             with self.scaling_lock:
                 instance = self.scaling_instances.get(service_name)
@@ -355,6 +370,9 @@ class AutoScalingManager(BaseAgent):
 
     async def _scale_service(self, service_name: str, target_instances: int):
         """Scale a specific service to target instance count"""
+
+
+
         try:
             # This would integrate with orchestration platform (Kubernetes, Docker Swarm, etc.)
             # Implementation depends on deployment environment
@@ -380,6 +398,9 @@ class AutoScalingManager(BaseAgent):
 
     async def _record_scaling_event(self, service_name: str, action: ScalingAction, instance: ScalingInstance):
         """Record scaling event for audit and analysis"""
+
+
+
         try:
             event = {
                 "timestamp": datetime.now().isoformat(),
@@ -434,6 +455,9 @@ class AutoScalingManager(BaseAgent):
 
     async def _create_default_threshold(self, service_name: str) -> ScalingThreshold:
         """Create default threshold for new service"""
+
+
+
         return ScalingThreshold(
             resource_type=ResourceType.CPU,
             scale_up_threshold=75.0,
@@ -447,6 +471,9 @@ class AutoScalingManager(BaseAgent):
     # Metric collection methods (would integrate with monitoring systems)
     async def _get_monitored_services(self) -> List[str]:
         """Get list of services to monitor"""
+
+
+
         return list(self.scaling_thresholds.keys())
 
     async def _get_cpu_utilization(self, service_name: str) -> float:
@@ -456,34 +483,58 @@ class AutoScalingManager(BaseAgent):
 
     async def _get_memory_utilization(self, service_name: str) -> float:
         """Get memory utilization for service"""
+
+
+
         return 45.0  # Placeholder
 
     async def _get_request_rate(self, service_name: str) -> float:
         """Get request rate for service"""
+
+
+
         return 100.0  # Placeholder
 
     async def _get_response_time(self, service_name: str) -> float:
         """Get average response time for service"""
+
+
+
         return 250.0  # Placeholder
 
     async def _get_error_rate(self, service_name: str) -> float:
         """Get error rate for service"""
+
+
+
         return 0.01  # Placeholder
 
     async def _get_queue_length(self, service_name: str) -> int:
         """Get queue length for service"""
+
+
+
         return 25  # Placeholder
 
     async def _get_active_connections(self, service_name: str) -> int:
         """Get active connections for service"""
+
+
+
         return 150  # Placeholder
 
     async def _get_current_instance_count(self, service_name: str) -> int:
         """Get current instance count for service"""
+
+
+
         return 2  # Placeholder
 
     async def _update_monitoring_metrics(self):
         """Update monitoring metrics"""
+
+
+
         try:
             if self.metrics_client:
                 total_services = len(self.scaling_instances)
@@ -499,6 +550,9 @@ class AutoScalingManager(BaseAgent):
 
     async def get_scaling_status(self) -> Dict[str, Any]:
         """Get current scaling status"""
+
+
+
         try:
             status = {
                 "monitoring_active": self.is_monitoring,
@@ -532,6 +586,9 @@ class AutoScalingManager(BaseAgent):
 
     async def update_threshold(self, service_name: str, threshold: ScalingThreshold):
         """Update scaling threshold for a service"""
+
+
+
         try:
             self.scaling_thresholds[service_name] = threshold
             self.logger.info(f"Updated scaling threshold for {service_name}")
@@ -559,6 +616,9 @@ class AutoScalingManager(BaseAgent):
     async def get_scaling_history(self, service_name: Optional[str] = None, 
                                  limit: int = 100) -> List[Dict[str, Any]]:
         """Get scaling history"""
+
+
+
         try:
             if service_name:
                 history = [event for event in self.scaling_history 
@@ -574,6 +634,9 @@ class AutoScalingManager(BaseAgent):
 
     async def health_check(self) -> Dict[str, Any]:
         """Health check for auto-scaling manager"""
+
+
+
         try:
             return {
                 "status": "healthy" if self.is_monitoring else "stopped",

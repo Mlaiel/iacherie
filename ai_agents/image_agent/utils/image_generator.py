@@ -7,7 +7,7 @@ system for visual content creators and digital artists.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -500,6 +500,9 @@ class AIImageGenerator:
 
     async def _load_model(self, model_type: GenerationModel) -> Any:
         """Load and cache AI generation model"""
+
+
+
         try:
             model_key = model_type.value
             
@@ -553,6 +556,9 @@ class AIImageGenerator:
 
     async def _load_img2img_model(self, model_type: GenerationModel) -> Any:
         """Load image-to-image generation model"""
+
+
+
         try:
             model_key = f"{model_type.value}_img2img"
             
@@ -600,6 +606,9 @@ class AIImageGenerator:
 
     async def _enhance_prompt(self, prompt: str) -> str:
         """Enhance prompt for better generation results"""
+
+
+
         try:
             # Basic prompt enhancement rules
             enhanced = prompt.strip()
@@ -652,6 +661,9 @@ class AIImageGenerator:
 
     def _tensor_to_pil(self, tensor: torch.Tensor) -> Image.Image:
         """Convert PyTorch tensor to PIL Image"""
+
+
+
         try:
             # Denormalize tensor (assuming range [-1, 1])
             tensor = (tensor + 1.0) / 2.0
@@ -680,6 +692,9 @@ class AIImageGenerator:
         source_image: Optional[Image.Image] = None
     ) -> float:
         """Assess quality of generated image"""
+
+
+
         try:
             quality_score = 0.0
             
@@ -740,6 +755,9 @@ class AIImageGenerator:
         generation_id: str
     ) -> None:
         """Save generated images to specified path"""
+
+
+
         try:
             base_path = Path(base_path)
             base_path.parent.mkdir(parents=True, exist_ok=True)
@@ -801,6 +819,9 @@ class AIImageGenerator:
 
     async def get_generation_stats(self) -> Dict[str, Any]:
         """Get comprehensive generation statistics"""
+
+
+
         try:
             stats = self.generation_stats.copy()
             
@@ -826,6 +847,9 @@ class AIImageGenerator:
 
     async def clear_model_cache(self) -> None:
         """Clear all cached models to free memory"""
+
+
+
         try:
             self.loaded_models.clear()
             if torch.cuda.is_available():
@@ -945,6 +969,9 @@ class ImageSynthesizer:
         params: StyleTransferParams
     ) -> Image.Image:
         """Perform high-quality neural style transfer (slower but better quality)"""
+
+
+
         try:
             # This is a simplified implementation
             # In practice, this would use VGG19 or similar pre-trained networks
@@ -1030,6 +1057,9 @@ class ImageSynthesizer:
         creativity_level: float = 0.7
     ) -> List[Image.Image]:
         """Create artistic variations of source image"""
+
+
+
         try:
             # Load source image
             if isinstance(source_image, (str, Path)):

@@ -145,6 +145,9 @@ class SpotifyAdapter(BasePlatformAdapter):
     
     async def authenticate(self) -> bool:
         """Authenticate with Spotify API using OAuth2."""
+
+
+
         try:
             # If we have a refresh token, try to refresh the access token
             if self.credentials.refresh_token and self.credentials.is_token_expired():
@@ -170,6 +173,9 @@ class SpotifyAdapter(BasePlatformAdapter):
     
     async def refresh_token(self) -> bool:
         """Refresh Spotify access token."""
+
+
+
         try:
             if not self.credentials.refresh_token:
                 return False
@@ -219,6 +225,9 @@ class SpotifyAdapter(BasePlatformAdapter):
         Upload track to Spotify (Note: Direct upload requires Spotify for Artists).
         This method prepares metadata for distribution partners.
         """
+
+
+
         try:
             # Spotify doesn't allow direct uploads via API
             # This method prepares the track data for distribution services
@@ -260,6 +269,9 @@ class SpotifyAdapter(BasePlatformAdapter):
                                   start_date: Optional[datetime] = None,
                                   end_date: Optional[datetime] = None) -> MusicAnalytics:
         """Get Spotify artist analytics and streaming data."""
+
+
+
         try:
             # Note: This requires Spotify for Artists API access
             # Regular Web API has limited analytics capabilities
@@ -314,6 +326,9 @@ class SpotifyAdapter(BasePlatformAdapter):
     
     async def search_tracks(self, query: str, limit: int = 20) -> List[Dict[str, Any]]:
         """Search for tracks on Spotify."""
+
+
+
         try:
             response = await self.make_request(
                 method="GET",
@@ -349,6 +364,9 @@ class SpotifyAdapter(BasePlatformAdapter):
     
     async def create_playlist(self, name: str, description: str = "", public: bool = True) -> Dict[str, Any]:
         """Create a new Spotify playlist."""
+
+
+
         try:
             # Get current user ID
             user_response = await self.make_request(
@@ -388,6 +406,9 @@ class SpotifyAdapter(BasePlatformAdapter):
     
     async def health_check(self) -> bool:
         """Perform Spotify API health check."""
+
+
+
         try:
             response = await self.make_request(
                 method="GET",
@@ -431,6 +452,9 @@ class SoundCloudAdapter(BasePlatformAdapter):
     
     async def authenticate(self) -> bool:
         """Authenticate with SoundCloud API."""
+
+
+
         try:
             response = await self.make_request(
                 method="GET",
@@ -450,6 +474,9 @@ class SoundCloudAdapter(BasePlatformAdapter):
     
     async def upload_track(self, track: AudioTrack) -> Dict[str, Any]:
         """Upload track to SoundCloud."""
+
+
+
         try:
             # Prepare track data for upload
             track_data = {
@@ -486,6 +513,9 @@ class SoundCloudAdapter(BasePlatformAdapter):
     
     async def get_track_analytics(self, track_id: str) -> MusicAnalytics:
         """Get SoundCloud track analytics."""
+
+
+
         try:
             # Get track details
             track_response = await self.make_request(
@@ -515,6 +545,9 @@ class SoundCloudAdapter(BasePlatformAdapter):
     
     async def health_check(self) -> bool:
         """Perform SoundCloud API health check."""
+
+
+
         try:
             response = await self.make_request(
                 method="GET",
@@ -558,6 +591,9 @@ class AppleMusicAdapter(BasePlatformAdapter):
     
     async def authenticate(self) -> bool:
         """Authenticate with Apple Music API using JWT token."""
+
+
+
         try:
             # Apple Music uses JWT tokens for authentication
             response = await self.make_request(
@@ -579,6 +615,9 @@ class AppleMusicAdapter(BasePlatformAdapter):
     
     async def search_tracks(self, query: str, limit: int = 20) -> List[Dict[str, Any]]:
         """Search for tracks on Apple Music."""
+
+
+
         try:
             response = await self.make_request(
                 method="GET",
@@ -615,6 +654,9 @@ class AppleMusicAdapter(BasePlatformAdapter):
     
     async def health_check(self) -> bool:
         """Perform Apple Music API health check."""
+
+
+
         try:
             response = await self.make_request(
                 method="GET",
@@ -648,6 +690,9 @@ class MusicAdapterFactory:
     @classmethod
     def get_supported_platforms(cls) -> List[MusicPlatform]:
         """Get list of supported music platforms."""
+
+
+
         return list(cls._adapters.keys())
 
 # Export all classes

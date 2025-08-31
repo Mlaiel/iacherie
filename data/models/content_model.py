@@ -202,6 +202,9 @@ class ContentModel(Base):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert model to dictionary representation"""
+
+
+
         return {
             'id': self.id,
             'user_id': self.user_id,
@@ -251,36 +254,57 @@ class ContentModel(Base):
     @property
     def is_audio(self) -> bool:
         """Check if content is audio type"""
+
+
+
         return self.content_type == ContentType.AUDIO.value
     
     @property
     def is_video(self) -> bool:
         """Check if content is video type"""
+
+
+
         return self.content_type == ContentType.VIDEO.value
     
     @property
     def is_image(self) -> bool:
         """Check if content is image type"""
+
+
+
         return self.content_type == ContentType.IMAGE.value
     
     @property
     def is_text(self) -> bool:
         """Check if content is text type"""
+
+
+
         return self.content_type == ContentType.TEXT.value
     
     @property
     def is_published(self) -> bool:
         """Check if content is published"""
+
+
+
         return self.status == ContentStatus.ACTIVE.value and self.published_at is not None
     
     @property
     def is_protected(self) -> bool:
         """Check if content has protection enabled"""
+
+
+
         return self.protection_enabled and not self.is_deleted
     
     @property
     def is_monetizable(self) -> bool:
         """Check if content can be monetized"""
+
+
+
         return (self.monetization_enabled and 
                 self.status == ContentStatus.ACTIVE.value and 
                 not self.is_deleted)

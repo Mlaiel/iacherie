@@ -24,7 +24,7 @@ logger = logging.getLogger(__name__)
 class AIContentGeneratorTests(unittest.TestCase):
     """Ultra-Advanced AI Content Generator Test Suite"""    
     def setUp(self):
-        logger.info("🔧 Setting up AI Content Generator Tests")
+        logger.info(" Setting up AI Content Generator Tests")
     
     def test_content_generation(self):
         logger.info("🧪 Testing content generation")
@@ -33,7 +33,7 @@ class AIContentGeneratorTests(unittest.TestCase):
 class CreativeAssistantTests(unittest.TestCase):
     """Ultra-Advanced Creative Assistant Test Suite"""    
     def setUp(self):
-        logger.info("🔧 Setting up Creative Assistant Tests")
+        logger.info(" Setting up Creative Assistant Tests")
     
     def test_creative_assistance(self):
         logger.info("🧪 Testing creative assistance")
@@ -42,7 +42,7 @@ class CreativeAssistantTests(unittest.TestCase):
 class ContentOptimizationTests(unittest.TestCase):
     """Ultra-Advanced Content Optimization Test Suite"""    
     def setUp(self):
-        logger.info("🔧 Setting up Content Optimization Tests")
+        logger.info(" Setting up Content Optimization Tests")
     
     def test_content_optimization(self):
         logger.info("🧪 Testing content optimization")
@@ -51,7 +51,7 @@ class ContentOptimizationTests(unittest.TestCase):
 class TemplateGenerationTests(unittest.TestCase):
     """Ultra-Advanced Template Generation Test Suite"""    
     def setUp(self):
-        logger.info("🔧 Setting up Template Generation Tests")
+        logger.info(" Setting up Template Generation Tests")
     
     def test_template_generation(self):
         logger.info("🧪 Testing template generation")
@@ -60,7 +60,7 @@ class TemplateGenerationTests(unittest.TestCase):
 class PersonalizationTests(unittest.TestCase):
     """Ultra-Advanced Personalization Test Suite"""    
     def setUp(self):
-        logger.info("🔧 Setting up Personalization Tests")
+        logger.info(" Setting up Personalization Tests")
     
     def test_personalization(self):
         logger.info("🧪 Testing personalization")

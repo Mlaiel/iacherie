@@ -510,15 +510,15 @@ class ConfigurationIndex:
             validation_results = self.validate_all_configurations()
             
             if validation_results["summary"]["total_errors"] > 0:
-                recommendations.append("🚨 CRITICAL: Fix configuration errors before production deployment")
+                recommendations.append(" CRITICAL: Fix configuration errors before production deployment")
             
             if validation_results["summary"]["total_warnings"] > 5:
-                recommendations.append("⚠️ Review and address configuration warnings")
+                recommendations.append(" Review and address configuration warnings")
             
             # Security recommendations
             security_assessment = self._get_security_assessment()
             if security_assessment["overall_score"] < 75:
-                recommendations.append("🔒 Improve security configuration (current score: {:.1f}/100)".format(security_assessment["overall_score"]))
+                recommendations.append(" Improve security configuration (current score: {:.1f}/100)".format(security_assessment["overall_score"]))
             
             # Module-specific recommendations
             ai_manager = self.managers["ai"]
@@ -527,14 +527,14 @@ class ConfigurationIndex:
             
             notification_manager = self.managers["notification"]
             if len(notification_manager.get_enabled_channels()) == 0:
-                recommendations.append("📧 Setup notification channels for alerts")
+                recommendations.append(" Setup notification channels for alerts")
             
             # Performance recommendations
             if len(recommendations) == 0:
-                recommendations.append("✅ Configuration is optimal - no immediate actions required")
+                recommendations.append(" Configuration is optimal - no immediate actions required")
             
         except Exception as e:
-            recommendations.append(f"❌ Error generating recommendations: {str(e)}")
+            recommendations.append(f" Error generating recommendations: {str(e)}")
             logger.error(f"Recommendations error: {e}")
         
         return recommendations
@@ -611,22 +611,37 @@ configuration_index = ConfigurationIndex()
 # Convenience functions for quick access
 def get_system_status() -> Dict[str, Any]:
     """Get quick system status overview."""
+
+
+
     return configuration_index.get_system_overview()
 
 def validate_configurations() -> Dict[str, Any]:
     """Validate all configurations."""
+
+
+
     return configuration_index.validate_all_configurations()
 
 def get_health_status() -> Dict[str, Any]:
     """Get configuration health status."""
+
+
+
     return configuration_index.get_configuration_health()
 
 def generate_report() -> Dict[str, Any]:
     """Generate comprehensive configuration report."""
+
+
+
     return configuration_index.generate_comprehensive_report()
 
 def export_report(filepath: Optional[str] = None) -> str:
     """Export configuration report to file."""
+
+
+
     return configuration_index.export_configuration_report(filepath)
 
 # Module initialization
@@ -666,7 +681,7 @@ if __name__ == "__main__":
     else:
         # Show basic overview
         overview = get_system_status()
-        print("\n🔧 Crawler Configuration System Overview")
+        print("\n Crawler Configuration System Overview")
         print("="*50)
         print(f"Version: {overview['metadata']['version']}")
         print(f"Modules: {overview['metadata']['total_managers']}")
@@ -675,7 +690,7 @@ if __name__ == "__main__":
         print(f"Enabled Configurations: {overview['statistics']['enabled_configurations']}")
         
         if overview['health']['issues']:
-            print(f"\n⚠️  Issues Found: {len(overview['health']['issues'])}")
+            print(f"\n  Issues Found: {len(overview['health']['issues'])}")
             for issue in overview['health']['issues'][:3]:  # Show first 3 issues
                 print(f"  - {issue}")
         
@@ -965,6 +980,9 @@ def health_check() -> dict:
 
 def export_configuration_summary() -> dict:
     """Export comprehensive configuration summary."""
+
+
+
     return {
         "system_info": {
             "name": "IA Influencer Agent - Content Protection Platform",

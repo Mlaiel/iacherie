@@ -86,6 +86,9 @@ class AudioFingerprintDeployment:
     
     def _initialize_clients(self) -> None:
         """Initialize Kubernetes, Docker, and Redis clients"""
+
+
+
         try:
             # Kubernetes client
             config.load_incluster_config()
@@ -170,6 +173,9 @@ class AudioFingerprintDeployment:
     
     async def _ensure_namespace(self) -> None:
         """Ensure Kubernetes namespace exists"""
+
+
+
         try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
@@ -486,6 +492,9 @@ class AudioFingerprintDeployment:
     
     async def _validate_deployment(self) -> bool:
         """Validate that deployment is healthy and functional"""
+
+
+
         try:
             # Check deployment status
             deployment = self.k8s_apps_v1.read_namespaced_deployment(
@@ -520,6 +529,9 @@ class AudioFingerprintDeployment:
     
     async def _cleanup_failed_deployment(self) -> None:
         """Clean up resources from failed deployment"""
+
+
+
         try:
             # Delete deployment
             self.k8s_apps_v1.delete_namespaced_deployment(
@@ -548,6 +560,9 @@ class AudioFingerprintDeployment:
         Returns:
             Scaling operation result
         """
+
+
+
         try:
             self.status = DeploymentStatus.SCALING
             
@@ -583,6 +598,9 @@ class AudioFingerprintDeployment:
         Returns:
             Current metrics and performance indicators
         """
+
+
+
         try:
             # Get deployment status
             deployment = self.k8s_apps_v1.read_namespaced_deployment(
@@ -632,6 +650,9 @@ class AudioFingerprintDeployment:
         Returns:
             Update operation result
         """
+
+
+
         try:
             logger.info(f"Updating models: {model_versions}")
             
@@ -679,6 +700,9 @@ class AudioFingerprintDeployment:
     
     async def cleanup(self) -> None:
         """Clean up all deployment resources"""
+
+
+
         try:
             # Delete HPA
             self.k8s_autoscaling_v1.delete_namespaced_horizontal_pod_autoscaler(

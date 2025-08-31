@@ -15,7 +15,7 @@ Business Logic Integration:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend + Security Experts
 
-⚠️ COPYRIGHT WARNING:
+ COPYRIGHT WARNING:
 This code is proprietary and belongs to Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit 
 written permission from Fahed Mlaiel is strictly prohibited.
@@ -555,6 +555,9 @@ threat_detection_config = ThreatDetectionConfig()
 
 def get_threat_detection_config() -> ThreatDetectionConfig:
     """Get the threat detection configuration instance."""
+
+
+
     return threat_detection_config
 
 

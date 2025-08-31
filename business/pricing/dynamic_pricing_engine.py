@@ -1,5 +1,5 @@
 """
-💰 Dynamic Pricing Engine - IA Influencer Agent Platform
+ Dynamic Pricing Engine - IA Influencer Agent Platform
 =======================================================
 
 Ultra-advanced dynamic pricing engine with AI-powered pricing strategies,
@@ -23,7 +23,7 @@ Expert Team Specialties:
 
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
+ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
 This code and concept are the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 Unauthorized access, copying, modification, distribution, reverse engineering,
@@ -218,6 +218,9 @@ class DynamicPricingEngine:
 
     async def initialize_ml_models(self):
         """Initialize and train ML models for pricing optimization"""
+
+
+
         
         try:
             logger.info("Initializing ML models for dynamic pricing")
@@ -292,6 +295,9 @@ class DynamicPricingEngine:
         Returns:
             PriceRecommendation: Comprehensive price recommendation
         """
+
+
+
         try:
             logger.info(f"Generating price recommendation for creator {creator_id}, service {service_type}")
             
@@ -465,6 +471,9 @@ class DynamicPricingEngine:
                                         competitor_data: Dict[str, Any],
                                         demand_analysis: Dict[str, Any]) -> Decimal:
         """Calculate optimal price using ML models"""
+
+
+
         
         try:
             # Prepare features for ML model
@@ -755,6 +764,9 @@ class DynamicPricingEngine:
 
     def _prepare_demand_features(self, price: Decimal, market_data: Dict[str, Any]) -> List[float]:
         """Prepare features for demand prediction"""
+
+
+
         return [float(price), 1.0, 0.5]  # Simplified features
 
     def _prepare_pricing_features(self, 
@@ -763,6 +775,9 @@ class DynamicPricingEngine:
                                 competitor_data: Dict[str, Any],
                                 demand_analysis: Dict[str, Any]) -> List[float]:
         """Prepare features for ML pricing model"""
+
+
+
         return [1.0, 0.5, 0.8, 100.0]  # Simplified features
 
     async def _get_creator_profile(self, creator_id: str) -> Dict[str, Any]:

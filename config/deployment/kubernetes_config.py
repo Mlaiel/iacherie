@@ -108,6 +108,9 @@ class KubernetesConfig:
     
     def generate_namespace(self) -> Dict[str, Any]:
         """Generate namespace configuration"""
+
+
+
         return {
             "apiVersion": "v1",
             "kind": "Namespace",
@@ -843,6 +846,9 @@ class KubernetesConfig:
     
     def generate_ingress(self) -> Dict[str, Any]:
         """Generate ingress configuration"""
+
+
+
         return {
             "apiVersion": "networking.k8s.io/v1",
             "kind": "Ingress",
@@ -1095,6 +1101,9 @@ class KubernetesConfig:
     
     def get_deployment_script(self) -> str:
         """Generate Kubernetes deployment script"""
+
+
+
         return f'''#!/bin/bash
 # Kubernetes deployment script for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -1105,25 +1114,25 @@ NAMESPACE="{self.namespace}"
 ENVIRONMENT="{self.environment}"
 MANIFEST_DIR="./k8s-manifests"
 
-echo "🚀 Deploying IA-Influencer Agent to Kubernetes..."
+echo " Deploying IA-Influencer Agent to Kubernetes..."
 echo "Environment: $ENVIRONMENT"
 echo "Namespace: $NAMESPACE"
 echo "Cluster: {self.cluster_name}"
 
 # Check prerequisites
 if ! command -v kubectl &> /dev/null; then
-    echo "❌ kubectl is not installed"
+    echo " kubectl is not installed"
     exit 1
 fi
 
 # Check cluster connectivity
 if ! kubectl cluster-info &> /dev/null; then
-    echo "❌ Cannot connect to Kubernetes cluster"
+    echo " Cannot connect to Kubernetes cluster"
     exit 1
 fi
 
 # Apply manifests in order
-echo "📝 Applying Kubernetes manifests..."
+echo " Applying Kubernetes manifests..."
 
 for manifest in $MANIFEST_DIR/*.yaml; do
     if [ -f "$manifest" ]; then
@@ -1133,26 +1142,29 @@ for manifest in $MANIFEST_DIR/*.yaml; do
 done
 
 # Wait for deployments to be ready
-echo "⏱️ Waiting for deployments to be ready..."
+echo "⏱ Waiting for deployments to be ready..."
 kubectl wait --for=condition=available --timeout=300s deployment -n $NAMESPACE --all
 
 # Check service status
-echo "📊 Checking service status..."
+echo " Checking service status..."
 kubectl get all -n $NAMESPACE
 
 # Get external IP (if LoadBalancer)
 if [ "$ENVIRONMENT" = "production" ]; then
-    echo "🌐 Getting external IP..."
+    echo " Getting external IP..."
     kubectl get service ia-influencer-api-service -n $NAMESPACE -o jsonpath='{{.status.loadBalancer.ingress[0].ip}}'
 fi
 
-echo "✅ IA-Influencer Agent deployed successfully to Kubernetes!"
-echo "🔍 Monitor with: kubectl get pods -n $NAMESPACE -w"
-echo "📊 Logs: kubectl logs -f deployment/ia-influencer-api -n $NAMESPACE"
+echo " IA-Influencer Agent deployed successfully to Kubernetes!"
+echo " Monitor with: kubectl get pods -n $NAMESPACE -w"
+echo " Logs: kubectl logs -f deployment/ia-influencer-api -n $NAMESPACE"
 '''
     
     def get_monitoring_setup(self) -> str:
         """Generate monitoring and observability setup"""
+
+
+
         return '''# Monitoring setup for IA-Influencer Agent Platform
 apiVersion: v1
 kind: ConfigMap

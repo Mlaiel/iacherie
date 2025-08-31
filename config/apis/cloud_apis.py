@@ -358,26 +358,44 @@ CLOUD_CONFIGS: Dict[str, CloudAPIConfig] = {
 
 def get_cloud_config(service: str) -> Optional[CloudAPIConfig]:
     """Get cloud service configuration by name"""
+
+
+
     return CLOUD_CONFIGS.get(service.lower())
 
 def get_services_by_type(service_type: CloudServiceType) -> List[CloudAPIConfig]:
     """Get all cloud services of specific type"""
+
+
+
     return [config for config in CLOUD_CONFIGS.values() 
             if config.service_type == service_type]
 
 def get_services_by_provider(provider: str) -> List[CloudAPIConfig]:
     """Get all services from specific cloud provider"""
+
+
+
     return [config for config in CLOUD_CONFIGS.values() 
             if config.provider.lower() == provider.lower()]
 
 def get_storage_services() -> List[CloudAPIConfig]:
     """Get all object storage services"""
+
+
+
     return get_services_by_type(CloudServiceType.OBJECT_STORAGE)
 
 def get_cdn_services() -> List[CloudAPIConfig]:
     """Get all CDN services"""
+
+
+
     return get_services_by_type(CloudServiceType.CDN)
 
 def get_monitoring_services() -> List[CloudAPIConfig]:
     """Get all monitoring services"""
+
+
+
     return get_services_by_type(CloudServiceType.MONITORING)

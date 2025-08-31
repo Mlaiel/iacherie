@@ -49,6 +49,9 @@ class SubstackPlatform(PlatformBase):
     
     async def authenticate(self) -> bool:
         """Authenticate with Substack"""
+
+
+
         try:
             # Substack uses email/password or API key authentication
             api_key = self.config.credentials.get('api_key')
@@ -99,6 +102,9 @@ class SubstackPlatform(PlatformBase):
     
     async def _login_with_credentials(self, email: str, password: str) -> bool:
         """Login with email and password"""
+
+
+
         try:
             session = await self._get_session()
             
@@ -124,10 +130,16 @@ class SubstackPlatform(PlatformBase):
     
     async def refresh_token(self) -> bool:
         """Refresh Substack token"""
+
+
+
         return await self.authenticate()
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
         """Make authenticated request to Substack API"""
+
+
+
         try:
             session = await self._get_session()
             
@@ -174,6 +186,9 @@ class SubstackPlatform(PlatformBase):
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
         """Publish article on Substack"""
+
+
+
         try:
             # Read content if file provided
             content_body = ""
@@ -268,6 +283,9 @@ class SubstackPlatform(PlatformBase):
     
     async def _publish_post(self, post_id: str) -> Optional[Dict[str, Any]]:
         """Publish a draft post"""
+
+
+
         try:
             publish_data = {
                 'email_sent_at': datetime.utcnow().isoformat() + 'Z',
@@ -284,6 +302,9 @@ class SubstackPlatform(PlatformBase):
     async def get_analytics(self, content_id: str, start_date: datetime, 
                            end_date: datetime) -> AnalyticsData:
         """Get Substack post analytics"""
+
+
+
         try:
             result = await self._make_request('GET', f'/posts/{content_id}')
             
@@ -293,7 +314,7 @@ class SubstackPlatform(PlatformBase):
                     platform_id=self.platform_id,
                     content_id=content_id,
                     views=result.get('view_count', 0),
-                    likes=reactions.get('❤️', 0),
+                    likes=reactions.get('', 0),
                     shares=result.get('share_count', 0),
                     comments=result.get('comment_count', 0),
                     metadata={
@@ -319,6 +340,9 @@ class SubstackPlatform(PlatformBase):
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
         """Search content on Substack"""
+
+
+
         try:
             params = {
                 'q': query,
@@ -353,6 +377,9 @@ class SubstackPlatform(PlatformBase):
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
         """Get user's Substack posts"""
+
+
+
         try:
             params = {
                 'limit': 50,
@@ -391,6 +418,9 @@ class SubstackPlatform(PlatformBase):
     
     async def delete_content(self, content_id: str) -> bool:
         """Delete Substack post"""
+
+
+
         try:
             result = await self._make_request('DELETE', f'/posts/{content_id}')
             return result is not None
@@ -401,6 +431,9 @@ class SubstackPlatform(PlatformBase):
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
         """Update Substack post"""
+
+
+
         try:
             update_data = {
                 'title': metadata.title,
@@ -417,6 +450,9 @@ class SubstackPlatform(PlatformBase):
     
     async def get_subscribers(self, limit: int = 100) -> List[Dict[str, Any]]:
         """Get publication subscribers"""
+
+
+
         try:
             params = {
                 'limit': limit,
@@ -449,6 +485,9 @@ class SubstackPlatform(PlatformBase):
     
     async def get_publication_stats(self) -> Optional[Dict[str, Any]]:
         """Get publication statistics"""
+
+
+
         try:
             result = await self._make_request('GET', '/pub')
             
@@ -482,6 +521,9 @@ class SubstackPlatform(PlatformBase):
     
     async def send_newsletter(self, post_id: str, audience: str = 'everyone') -> bool:
         """Send newsletter to subscribers"""
+
+
+
         try:
             send_data = {
                 'audience': audience,  # everyone, only_paid, only_founding
@@ -497,6 +539,9 @@ class SubstackPlatform(PlatformBase):
     
     async def get_email_stats(self, post_id: str) -> Optional[Dict[str, Any]]:
         """Get email statistics for a post"""
+
+
+
         try:
             result = await self._make_request('GET', f'/posts/{post_id}/email_stats')
             

@@ -7,7 +7,7 @@ model management, and production deployment support.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING / AVERTISSEMENT LÉGAL ⚠️
+  LEGAL WARNING / AVERTISSEMENT LÉGAL 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
@@ -136,6 +136,9 @@ class DataPreprocessor:
         duration: Optional[float] = None
     ) -> Dict[str, np.ndarray]:
         """Preprocess audio file for neural network input"""
+
+
+
         
         try:
             # Load audio
@@ -164,6 +167,9 @@ class DataPreprocessor:
         target_size: Tuple[int, int] = (224, 224)
     ) -> Dict[str, np.ndarray]:
         """Preprocess image for neural network input"""
+
+
+
         
         try:
             # Load and resize image
@@ -196,6 +202,9 @@ class DataPreprocessor:
         frame_size: Tuple[int, int] = (224, 224)
     ) -> Dict[str, np.ndarray]:
         """Preprocess video for neural network input"""
+
+
+
         
         try:
             cap = cv2.VideoCapture(video_path)
@@ -243,6 +252,9 @@ class DataPreprocessor:
         max_length: int = 512
     ) -> Dict[str, Union[List[int], torch.Tensor]]:
         """Preprocess text for neural network input"""
+
+
+
         
         try:
             # Tokenize text
@@ -377,10 +389,16 @@ class PerformanceProfiler:
     
     def _get_memory_usage(self) -> float:
         """Get current memory usage in MB"""
+
+
+
         return psutil.Process().memory_info().rss / (1024 * 1024)
     
     def _get_gpu_usage(self) -> float:
         """Get current GPU utilization percentage"""
+
+
+
         try:
             gpus = GPUtil.getGPUs()
             if gpus:

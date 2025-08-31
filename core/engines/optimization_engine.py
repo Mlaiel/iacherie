@@ -38,7 +38,7 @@ class OptimizationEngineConfig:
 
 class OptimizationEngine(ABC):
     """
-    🚀 Moteur OptimizationEngine - IA-Influencer-Agent
+     Moteur OptimizationEngine - IA-Influencer-Agent
     
     Responsabilité:
     Fonctionnalité spécialisée IA-Influencer-Agent
@@ -58,7 +58,7 @@ class OptimizationEngine(ABC):
         self.config = config or OptimizationEngineConfig()
         self.status = OptimizationEngineStatus.IDLE
         self._performance_metrics = {}
-        logger.info(f"🚀 Initialisation {self.__class__.__name__}")
+        logger.info(f" Initialisation {self.__class__.__name__}")
     
     @abstractmethod
     async def initialize(self) -> bool:
@@ -100,6 +100,9 @@ class OptimizationEngine(ABC):
         Returns:
             Dict: Métriques de santé
         """
+
+
+
         return {
             "status": self.status.value,
             "config": self.config.__dict__,
@@ -114,6 +117,9 @@ class OptimizationEngine(ABC):
         Returns:
             Dict: Métriques actuelles
         """
+
+
+
         return self._performance_metrics.copy()
 
 

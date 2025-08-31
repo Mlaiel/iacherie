@@ -140,6 +140,9 @@ class WithdrawalManager:
         session: AsyncSession
     ) -> WithdrawalResponse:
         """Submit new withdrawal request"""
+
+
+
         try:
             # Validate request
             validation = await self._validate_withdrawal_request(request, session)
@@ -484,6 +487,9 @@ class WithdrawalManager:
         session: AsyncSession
     ) -> WithdrawalResponse:
         """Process approved withdrawal request"""
+
+
+
         try:
             # Get withdrawal request
             withdrawal = await session.get(DBWithdrawalRequest, request_id)
@@ -582,6 +588,9 @@ class WithdrawalManager:
         session: AsyncSession
     ) -> Optional[Dict[str, Any]]:
         """Get withdrawal request status and details"""
+
+
+
         try:
             withdrawal = await session.get(DBWithdrawalRequest, request_id)
             if not withdrawal:
@@ -615,6 +624,9 @@ class WithdrawalManager:
         session: AsyncSession
     ) -> bool:
         """Cancel pending withdrawal request"""
+
+
+
         try:
             withdrawal = await session.get(DBWithdrawalRequest, request_id)
             if not withdrawal or withdrawal.user_id != user_id:
@@ -642,6 +654,9 @@ class WithdrawalManager:
         limit: int = 50
     ) -> List[Dict[str, Any]]:
         """Get user's withdrawal history"""
+
+
+
         try:
             result = await session.execute(
                 select(DBWithdrawalRequest).where(
@@ -675,6 +690,9 @@ class WithdrawalManager:
         session: AsyncSession
     ) -> Dict[str, Any]:
         """Get user's withdrawal statistics"""
+
+
+
         try:
             # Total statistics
             total_result = await session.execute(

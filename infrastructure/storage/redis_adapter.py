@@ -1,5 +1,5 @@
 """
-🗄️ Redis Adapter - IA-Influencer-Agent Storage Layer
+ Redis Adapter - IA-Influencer-Agent Storage Layer
 ==================================================================
 Expert: DBA_ENGINEER + DATA_SPECIALIST
 Technologies: PostgreSQL + Redis + MongoDB + File Storage
@@ -89,6 +89,9 @@ class PostgreSQLAdapter(IStorageAdapter):
     
     async def connect(self) -> bool:
         """Connexion PostgreSQL avec pool"""
+
+
+
         try:
             # Pool de connexions asyncpg
             self.pool = await asyncpg.create_pool(
@@ -106,28 +109,34 @@ class PostgreSQLAdapter(IStorageAdapter):
             self.engine = create_async_engine(database_url, echo=False, pool_size=20)
             self.session_factory = sessionmaker(self.engine, class_=AsyncSession)
             
-            logger.info("✅ PostgreSQL connecté")
+            logger.info(" PostgreSQL connecté")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Erreur connexion PostgreSQL: {e}")
+            logger.error(f" Erreur connexion PostgreSQL: {e}")
             return False
     
     async def disconnect(self) -> bool:
         """Déconnexion PostgreSQL"""
+
+
+
         try:
             if self.pool:
                 await self.pool.close()
             if self.engine:
                 await self.engine.dispose()
-            logger.info("🔌 PostgreSQL déconnecté")
+            logger.info(" PostgreSQL déconnecté")
             return True
         except Exception as e:
-            logger.error(f"❌ Erreur déconnexion PostgreSQL: {e}")
+            logger.error(f" Erreur déconnexion PostgreSQL: {e}")
             return False
     
     async def health_check(self) -> bool:
         """Vérification PostgreSQL"""
+
+
+
         try:
             async with self.pool.acquire() as connection:
                 result = await connection.fetchval("SELECT 1")
@@ -159,6 +168,9 @@ class RedisAdapter(IStorageAdapter):
     
     async def connect(self) -> bool:
         """Connexion Redis"""
+
+
+
         try:
             self.redis = aioredis.Redis(
                 host=self.config.redis_host,
@@ -169,25 +181,31 @@ class RedisAdapter(IStorageAdapter):
                 max_connections=self.config.max_connections
             )
             await self.redis.ping()
-            logger.info("✅ Redis connecté")
+            logger.info(" Redis connecté")
             return True
         except Exception as e:
-            logger.error(f"❌ Erreur connexion Redis: {e}")
+            logger.error(f" Erreur connexion Redis: {e}")
             return False
     
     async def disconnect(self) -> bool:
         """Déconnexion Redis"""
+
+
+
         try:
             if self.redis:
                 await self.redis.close()
-            logger.info("🔌 Redis déconnecté")
+            logger.info(" Redis déconnecté")
             return True
         except Exception as e:
-            logger.error(f"❌ Erreur déconnexion Redis: {e}")
+            logger.error(f" Erreur déconnexion Redis: {e}")
             return False
     
     async def health_check(self) -> bool:
         """Vérification Redis"""
+
+
+
         try:
             await self.redis.ping()
             return True
@@ -196,20 +214,26 @@ class RedisAdapter(IStorageAdapter):
     
     async def set_cache(self, key: str, value: Any, expire: int = 3600) -> bool:
         """Cache avec expiration"""
+
+
+
         try:
             await self.redis.setex(key, expire, json.dumps(value))
             return True
         except Exception as e:
-            logger.error(f"❌ Erreur cache set: {e}")
+            logger.error(f" Erreur cache set: {e}")
             return False
     
     async def get_cache(self, key: str) -> Optional[Any]:
         """Récupération cache"""
+
+
+
         try:
             value = await self.redis.get(key)
             return json.loads(value) if value else None
         except Exception as e:
-            logger.error(f"❌ Erreur cache get: {e}")
+            logger.error(f" Erreur cache get: {e}")
             return None
 
 # =============== GESTIONNAIRE STORAGE PRINCIPAL ===============
@@ -225,6 +249,9 @@ class RedisAdapterManager:
     
     async def initialize(self) -> bool:
         """Initialisation complète du stockage"""
+
+
+
         try:
             # Connexions parallèles
             postgres_ok, redis_ok = await asyncio.gather(
@@ -236,28 +263,31 @@ class RedisAdapterManager:
             self.connected = postgres_ok and redis_ok
             
             if self.connected:
-                logger.info("🚀 Storage Manager initialisé")
+                logger.info(" Storage Manager initialisé")
             else:
-                logger.error("❌ Échec initialisation Storage")
+                logger.error(" Échec initialisation Storage")
             
             return self.connected
             
         except Exception as e:
-            logger.error(f"❌ Erreur initialisation storage: {e}")
+            logger.error(f" Erreur initialisation storage: {e}")
             return False
     
     async def shutdown(self) -> bool:
         """Arrêt propre du stockage"""
+
+
+
         try:
             await asyncio.gather(
                 self.postgres.disconnect(),
                 self.redis.disconnect(),
                 return_exceptions=True
             )
-            logger.info("⏹️ Storage Manager arrêté")
+            logger.info("⏹ Storage Manager arrêté")
             return True
         except Exception as e:
-            logger.error(f"❌ Erreur arrêt storage: {e}")
+            logger.error(f" Erreur arrêt storage: {e}")
             return False
 
 # =============== EXPORT MODULE ===============

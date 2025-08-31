@@ -60,6 +60,9 @@ class SSLCLIManager:
     
     def _setup_components(self):
         """Initialize all SSL/TLS components"""
+
+
+
         try:
             self.cert_manager = create_certificate_manager()
             self.tls_config_manager = create_tls_config_manager()
@@ -102,7 +105,7 @@ def create(ctx, config_file):
         )
         
         ssl_manager.tls_config_manager.save_config(tls_config, str(config_path))
-        console.print(f"[green]✓ TLS configuration created: {config_path.absolute()}[/green]")
+        console.print(f"[green] TLS configuration created: {config_path.absolute()}[/green]")
     
     except Exception as e:
         console.print(f"[red]Error creating TLS configuration: {e}[/red]")
@@ -211,12 +214,12 @@ def issue(ctx, domain, provider, challenge, email, staging):
                 result = ssl_manager.letsencrypt_manager.issue_certificate(cert_request)
                 
                 if result.success:
-                    console.print(f"[green]✓ Certificate issued successfully for {domain}[/green]")
+                    console.print(f"[green] Certificate issued successfully for {domain}[/green]")
                     console.print(f"Certificate path: {result.certificate_path}")
                     console.print(f"Private key path: {result.private_key_path}")
                     console.print(f"Expiry date: {result.expiry_date}")
                 else:
-                    console.print(f"[red]✗ Failed to issue certificate: {result.error}[/red]")
+                    console.print(f"[red] Failed to issue certificate: {result.error}[/red]")
                     sys.exit(1)
             
 
@@ -239,7 +242,7 @@ def renew(ctx, domain, days):
             result = ssl_manager.cert_manager.renew_certificate(domain, days_before_expiry=days)
             
             if result.success:
-                console.print(f"[green]✓ Certificate renewed successfully for {domain}[/green]")
+                console.print(f"[green] Certificate renewed successfully for {domain}[/green]")
                 console.print(f"New expiry date: {result.new_expiry_date}")
             else:
                 console.print(f"[yellow]Certificate for {domain} does not need renewal yet[/yellow]")
@@ -263,9 +266,9 @@ def revoke(ctx, domain):
         result = ssl_manager.cert_manager.revoke_certificate(domain)
         
         if result.success:
-            console.print(f"[green]✓ Certificate revoked successfully for {domain}[/green]")
+            console.print(f"[green] Certificate revoked successfully for {domain}[/green]")
         else:
-            console.print(f"[red]✗ Failed to revoke certificate: {result.error}[/red]")
+            console.print(f"[red] Failed to revoke certificate: {result.error}[/red]")
             sys.exit(1)
     
     except Exception as e:
@@ -355,7 +358,7 @@ def self_signed(ctx, domain, key_size, validity_days, country, state, city, orga
             with open(key_path, 'wb') as f:
                 f.write(key_data)
             
-            console.print(f"[green]✓ Self-signed certificate created for {domain}[/green]")
+            console.print(f"[green] Self-signed certificate created for {domain}[/green]")
             console.print(f"Certificate: {cert_path.absolute()}")
             console.print(f"Private key: {key_path.absolute()}")
             console.print(f"Valid for: {validity_days} days")
@@ -392,7 +395,7 @@ def host(ctx, host, port, timeout):
             
             # Connection info
             table.add_row("Connection", "Success" if scan_result.is_connected else "Failed", 
-                         "✓" if scan_result.is_connected else "✗")
+                         "" if scan_result.is_connected else "")
             
             if scan_result.is_connected:
                 table.add_row("TLS Version", scan_result.tls_version or "Unknown", "")
@@ -408,14 +411,14 @@ def host(ctx, host, port, timeout):
                     # Check expiry
                     if cert_info.get('days_until_expiry'):
                         days_left = cert_info['days_until_expiry']
-                        status = "✗" if days_left < 0 else "⚠" if days_left < 30 else "✓"
+                        status = "" if days_left < 0 else "" if days_left < 30 else ""
                         table.add_row("Days Until Expiry", str(days_left), status)
                 
                 # Security assessment
                 if scan_result.security_issues:
-                    table.add_row("Security Issues", str(len(scan_result.security_issues)), "⚠")
+                    table.add_row("Security Issues", str(len(scan_result.security_issues)), "")
                 else:
-                    table.add_row("Security Issues", "None", "✓")
+                    table.add_row("Security Issues", "None", "")
             
             console.print(table)
             
@@ -423,13 +426,13 @@ def host(ctx, host, port, timeout):
             if scan_result.security_issues:
                 console.print("\n[bold red]Security Issues Found:[/bold red]")
                 for issue in scan_result.security_issues:
-                    console.print(f"  ✗ {issue}")
+                    console.print(f"   {issue}")
             
             # Show recommendations
             if scan_result.recommendations:
                 console.print("\n[bold yellow]Recommendations:[/bold yellow]")
                 for rec in scan_result.recommendations:
-                    console.print(f"  ➤ {rec}")
+                    console.print(f"   {rec}")
         
         except Exception as e:
             console.print(f"[red]Error scanning host: {e}[/red]")
@@ -545,14 +548,14 @@ def bulk(ctx, config_file):
         table.add_column("Status", style="green")
         
         table.add_row("Valid", str(validation_result.is_valid), 
-                     "✓" if validation_result.is_valid else "✗")
+                     "" if validation_result.is_valid else "")
         table.add_row("Subject", validation_result.subject or "N/A", "")
         table.add_row("Issuer", validation_result.issuer or "N/A", "")
         table.add_row("Serial Number", validation_result.serial_number or "N/A", "")
         table.add_row("Not Before", str(validation_result.not_before) if validation_result.not_before else "N/A", "")
         table.add_row("Not After", str(validation_result.not_after) if validation_result.not_after else "N/A", "")
         table.add_row("Expired", str(validation_result.is_expired), 
-                     "✗" if validation_result.is_expired else "✓")
+                     "" if validation_result.is_expired else "")
         table.add_row("Self-Signed", str(validation_result.is_self_signed), "")
         table.add_row("Key Algorithm", validation_result.key_algorithm or "N/A", "")
         table.add_row("Key Size", str(validation_result.key_size) if validation_result.key_size else "N/A", "")
@@ -568,12 +571,12 @@ def bulk(ctx, config_file):
         if validation_result.errors:
             console.print("\n[bold red]Validation Errors:[/bold red]")
             for error in validation_result.errors:
-                console.print(f"  ✗ {error}")
+                console.print(f"   {error}")
         
         if validation_result.warnings:
             console.print("\n[bold yellow]Warnings:[/bold yellow]")
             for warning in validation_result.warnings:
-                console.print(f"  ⚠ {warning}")
+                console.print(f"   {warning}")
     
     except Exception as e:
         console.print(f"[red]Error validating certificate: {e}[/red]")
@@ -585,14 +588,14 @@ def bulk(ctx, config_file):
         print(json.dumps(result, indent=2, default=str))
     else:
         if result['valid']:
-            print("✅ Certificate is valid")
+            print(" Certificate is valid")
             print(f"   Common Name: {result.get('common_name', 'N/A')}")
             print(f"   Subject: {result.get('subject', 'N/A')}")
             print(f"   Issuer: {result.get('issuer', 'N/A')}")
             print(f"   Valid Until: {result.get('not_after', 'N/A')}")
             print(f"   Days Until Expiry: {result.get('days_until_expiry', 'N/A')}")
         else:
-            print(f"❌ Certificate validation failed: {result['error']}")
+            print(f" Certificate validation failed: {result['error']}")
             sys.exit(1)
 
 
@@ -608,17 +611,17 @@ def cmd_validate_config(args) -> None:
         print(json.dumps(result, indent=2, default=str))
     else:
         if result['overall_valid']:
-            print("✅ SSL configuration is valid")
+            print(" SSL configuration is valid")
             print("   Certificate: Valid")
             print("   Private Key: Valid")
-            print("   Key Match: ✅" if result['key_match'] else "❌")
+            print("   Key Match: " if result['key_match'] else "")
         else:
-            print("❌ SSL configuration has issues:")
+            print(" SSL configuration has issues:")
             for issue in result['issues']:
                 print(f"   - {issue}")
         
         if result['recommendations']:
-            print("\n💡 Recommendations:")
+            print("\n Recommendations:")
             for rec in result['recommendations']:
                 print(f"   - {rec}")
 
@@ -632,11 +635,11 @@ def cmd_scan_host(args) -> None:
         print(json.dumps(result, indent=2, default=str))
     else:
         if result['success']:
-            print(f"✅ SSL scan successful for {args.hostname}:{args.port}")
+            print(f" SSL scan successful for {args.hostname}:{args.port}")
             
             cert = result.get('certificate', {})
             if 'error' not in cert:
-                print(f"\n📜 Certificate Information:")
+                print(f"\n Certificate Information:")
                 print(f"   Common Name: {cert.get('common_name', 'N/A')}")
                 print(f"   Issuer: {cert.get('issuer', 'N/A')}")
                 print(f"   Expires: {cert.get('not_after', 'N/A')}")
@@ -644,14 +647,14 @@ def cmd_scan_host(args) -> None:
                 print(f"   Key Size: {cert.get('key_size', 'N/A')} bits")
             
             protocols = result.get('protocols', {})
-            print(f"\n🔒 Protocol Support:")
+            print(f"\n Protocol Support:")
             for protocol, supported in protocols.items():
-                status = "✅" if supported else "❌"
+                status = "" if supported else ""
                 print(f"   {protocol}: {status}")
             
             security = result.get('security_analysis', {})
             if security:
-                print(f"\n🛡️ Security Analysis:")
+                print(f"\n Security Analysis:")
                 print(f"   Grade: {security.get('security_grade', 'N/A')}")
                 print(f"   Score: {security.get('security_score', 'N/A')}/100")
                 
@@ -660,7 +663,7 @@ def cmd_scan_host(args) -> None:
                     for issue in security['issues']:
                         print(f"     - {issue}")
         else:
-            print(f"❌ SSL scan failed: {result.get('error', 'Unknown error')}")
+            print(f" SSL scan failed: {result.get('error', 'Unknown error')}")
             sys.exit(1)
 
 
@@ -706,7 +709,7 @@ def cmd_generate_csr(args) -> None:
     with open(csr_path, 'wb') as f:
         f.write(csr_pem)
     
-    print(f"✅ CSR generated successfully")
+    print(f" CSR generated successfully")
     print(f"   Private Key: {key_path}")
     print(f"   CSR: {csr_path}")
 
@@ -735,11 +738,11 @@ def cmd_request_letsencrypt(args) -> None:
     
     try:
         cert_pem, key_pem, chain_pem = manager.request_certificate(cert_request)
-        print("✅ Let's Encrypt certificate issued successfully")
+        print(" Let's Encrypt certificate issued successfully")
         print(f"   Domains: {args.domains}")
         print(f"   Certificate files saved to: /etc/letsencrypt/live/{args.domains.split(',')[0]}/")
     except Exception as e:
-        print(f"❌ Certificate request failed: {e}")
+        print(f" Certificate request failed: {e}")
         sys.exit(1)
 
 
@@ -763,20 +766,20 @@ def cmd_monitor_certificates(args) -> None:
         if config_path:
             monitor.save_config(config_path)
         
-        print(f"✅ Added endpoint: {args.endpoint_name}")
+        print(f" Added endpoint: {args.endpoint_name}")
     
     elif args.check_now:
         # Perform immediate check
         if not monitor.endpoints:
-            print("❌ No endpoints configured")
+            print(" No endpoints configured")
             sys.exit(1)
         
-        print("🔍 Checking certificates...")
+        print(" Checking certificates...")
         for endpoint in monitor.endpoints:
             if endpoint.enabled:
                 try:
                     status = monitor.check_certificate(endpoint)
-                    print(f"\n📋 {endpoint.name} ({endpoint.hostname}:{endpoint.port})")
+                    print(f"\n {endpoint.name} ({endpoint.hostname}:{endpoint.port})")
                     print(f"   Status: {status.status.value}")
                     print(f"   Alert Level: {status.alert_level.value}")
                     print(f"   Days Until Expiry: {status.days_until_expiry}")
@@ -787,16 +790,16 @@ def cmd_monitor_certificates(args) -> None:
                             print(f"     - {issue}")
                 
                 except Exception as e:
-                    print(f"❌ Check failed for {endpoint.name}: {e}")
+                    print(f" Check failed for {endpoint.name}: {e}")
     
     elif args.start_monitoring:
         # Start continuous monitoring
-        print("🚀 Starting certificate monitoring...")
+        print(" Starting certificate monitoring...")
         import asyncio
         try:
             asyncio.run(monitor.start_monitoring())
         except KeyboardInterrupt:
-            print("\n⏹️ Monitoring stopped by user")
+            print("\n⏹ Monitoring stopped by user")
             monitor.stop_monitoring()
 
 
@@ -843,7 +846,7 @@ def cmd_generate_config(args) -> None:
         config_content = tls_config_manager.generate_apache_config(tls_config, apache_config)
     
     else:
-        print(f"❌ Unsupported server type: {args.server_type}")
+        print(f" Unsupported server type: {args.server_type}")
         sys.exit(1)
     
     # Save configuration
@@ -851,7 +854,7 @@ def cmd_generate_config(args) -> None:
     with open(output_path, 'w') as f:
         f.write(config_content)
     
-    print(f"✅ {args.server_type.title()} configuration generated: {output_path}")
+    print(f" {args.server_type.title()} configuration generated: {output_path}")
 
 
 def main():
@@ -975,14 +978,14 @@ def main():
             sys.exit(1)
     
     except KeyboardInterrupt:
-        print("\n⏹️ Operation cancelled by user")
+        print("\n⏹ Operation cancelled by user")
         sys.exit(1)
     except Exception as e:
         logging.error(f"Command failed: {e}")
         if args.log_level == 'DEBUG':
             raise
         else:
-            print(f"❌ Error: {e}")
+            print(f" Error: {e}")
             sys.exit(1)
 
 

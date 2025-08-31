@@ -12,7 +12,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 
-⚠️ STRICT COPYRIGHT PROTECTION ⚠️
+ STRICT COPYRIGHT PROTECTION 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 
@@ -408,6 +408,9 @@ class ExtractionOrchestrator:
     
     async def get_extraction_result(self, plan_id: str) -> Optional[ExtractionResult]:
         """Get extraction result"""
+
+
+
         return self.completed_extractions.get(plan_id)
     
     async def get_extraction_status(self, plan_id: str) -> Optional[ExtractionStatus]:
@@ -724,6 +727,9 @@ class ExtractionOrchestrator:
     
     async def _execute_multi_extractor(self, plan: ExtractionPlan) -> ExtractionResult:
         """Execute multiple extractors with default strategy"""
+
+
+
         return await self._execute_collaborative(plan)
     
     async def _is_better_result(self, result1: ExtractionResult, result2: ExtractionResult) -> bool:
@@ -839,10 +845,16 @@ class ExtractionOrchestrator:
     
     def get_metrics(self) -> ExtractionMetrics:
         """Get current metrics"""
+
+
+
         return self.metrics
     
     def get_active_extractions(self) -> Dict[str, ExtractionPlan]:
         """Get currently active extractions"""
+
+
+
         return self.active_extractions.copy()
 
 

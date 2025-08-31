@@ -9,7 +9,7 @@ Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This code, concept, and intellectual property are exclusively owned by Fahed Mlaiel.
 Any unauthorized use, copying, distribution, reverse engineering, or commercialization 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
@@ -276,6 +276,9 @@ class EnterpriseContentPipeline:
     
     async def initialize(self, config: Optional[Dict[str, Any]] = None):
         """Initialize the complete enterprise pipeline"""
+
+
+
         try:
             logger.info("Initializing Enterprise Content Pipeline...")
             
@@ -530,6 +533,9 @@ class ContentProcessingPipeline:
         
     async def initialize(self) -> None:
         """Initialize the complete processing pipeline"""
+
+
+
         try:
             # Create all components
             self.agent = await ContentAgentFactory.create_content_agent(self.config)
@@ -641,6 +647,9 @@ def get_supported_formats() -> Dict[str, List[str]]:
     Returns:
         Dictionary of content types and their supported formats
     """
+
+
+
     return {
         'audio': ['.mp3', '.wav', '.flac', '.aac', '.ogg', '.m4a'],
         'video': ['.mp4', '.avi', '.mov', '.mkv', '.webm', '.flv'],
@@ -656,6 +665,9 @@ def get_module_info() -> Dict[str, Any]:
     Returns:
         Module information including version, author, and capabilities
     """
+
+
+
     return {
         'name': 'Content Agent Module',
         'version': __version__,

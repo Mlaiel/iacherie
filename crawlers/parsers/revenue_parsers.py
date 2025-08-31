@@ -8,7 +8,7 @@ Handles YouTube Partner Program, Spotify royalties, Patreon, merchandise sales, 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
@@ -117,6 +117,9 @@ class YouTubeRevenueParser(BaseRevenueParser):
     
     async def parse_revenue(self, channel_id: str, **kwargs) -> Dict[str, Any]:
         """Parse YouTube revenue data"""
+
+
+
         try:
             start_date, end_date = self._calculate_date_range(kwargs.get('days'))
             
@@ -280,6 +283,9 @@ class SpotifyRoyaltiesParser(BaseRevenueParser):
     
     async def parse_revenue(self, artist_id: str, **kwargs) -> Dict[str, Any]:
         """Parse Spotify royalties data"""
+
+
+
         try:
             start_date, end_date = self._calculate_date_range(kwargs.get('days'))
             
@@ -359,6 +365,9 @@ class PatreonRevenueParser(BaseRevenueParser):
     
     async def parse_revenue(self, campaign_id: str, **kwargs) -> Dict[str, Any]:
         """Parse Patreon revenue data"""
+
+
+
         try:
             campaign_data = await self._get_patreon_campaign_data(campaign_id)
             pledges_data = await self._get_patreon_pledges_data(campaign_id)
@@ -454,6 +463,9 @@ class TwitchRevenueParser(BaseRevenueParser):
     
     async def parse_revenue(self, channel_id: str, **kwargs) -> Dict[str, Any]:
         """Parse Twitch revenue data"""
+
+
+
         try:
             start_date, end_date = self._calculate_date_range(kwargs.get('days'))
             
@@ -543,6 +555,9 @@ class PayPalRevenueParser(BaseRevenueParser):
     
     async def parse_revenue(self, **kwargs) -> Dict[str, Any]:
         """Parse PayPal revenue data"""
+
+
+
         try:
             start_date, end_date = self._calculate_date_range(kwargs.get('days'))
             
@@ -638,6 +653,9 @@ class StripeRevenueParser(BaseRevenueParser):
     
     async def parse_revenue(self, **kwargs) -> Dict[str, Any]:
         """Parse Stripe revenue data"""
+
+
+
         try:
             start_date, end_date = self._calculate_date_range(kwargs.get('days'))
             

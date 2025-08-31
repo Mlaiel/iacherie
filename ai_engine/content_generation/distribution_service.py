@@ -221,6 +221,9 @@ class DistributionService:
         Returns:
             Dictionary of platform -> task_id mappings
         """
+
+
+
         try:
             task_ids = {}
             
@@ -301,6 +304,9 @@ class DistributionService:
         Returns:
             Dictionary of platform -> publication result
         """
+
+
+
         try:
             results = {}
             
@@ -340,6 +346,9 @@ class DistributionService:
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Publish content to a specific platform"""
+
+
+
         try:
             # Optimize content for platform
             if auto_optimize:
@@ -576,6 +585,9 @@ class DistributionService:
         self, content_id: str, platform: Platform, result: Dict[str, Any]
     ) -> None:
         """Track successful publication for analytics"""
+
+
+
         try:
             # Store publication metrics
             metrics = PerformanceMetrics(
@@ -625,6 +637,9 @@ class DistributionService:
     
     async def _execute_scheduled_task(self, task: PublishingTask) -> None:
         """Execute a scheduled publishing task"""
+
+
+
         try:
             result = await self._publish_to_platform(
                 task.content_id,
@@ -736,6 +751,9 @@ class DistributionService:
         auto_schedule: bool = True
     ) -> Dict[str, Any]:
         """Publish multiple content items across platforms"""
+
+
+
         try:
             batch_id = f"batch_{int(datetime.now().timestamp())}"
             results = {"batch_id": batch_id, "results": []}
@@ -774,6 +792,9 @@ class DistributionService:
     
     def get_queue_status(self) -> Dict[str, Any]:
         """Get current queue status"""
+
+
+
         return {
             "scheduled_tasks": len(self.publishing_queue),
             "active_tasks": len(self.active_tasks),

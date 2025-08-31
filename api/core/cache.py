@@ -76,6 +76,9 @@ class CacheEntry:
     @property
     def age_seconds(self) -> float:
         """Get age of cache entry in seconds."""
+
+
+
         return (datetime.now(timezone.utc) - self.created_at).total_seconds()
     
     def touch(self):
@@ -476,6 +479,9 @@ def content_cache_key(content_id: str, operation: str, *args) -> str:
 
 def fingerprint_cache_key(content_type: str, hash_value: str) -> str:
     """Generate fingerprint cache key."""
+
+
+
     return f"fingerprint:{content_type}:{hash_value}"
 
 
@@ -494,14 +500,23 @@ _cache_manager.register_key_generator("fingerprint", fingerprint_cache_key)
 
 def get_cache_manager() -> CacheManager:
     """Get global cache manager instance."""
+
+
+
     return _cache_manager
 
 
 def get_memory_cache() -> InMemoryCache:
     """Get global memory cache instance."""
+
+
+
     return _memory_cache
 
 
 def get_multi_level_cache() -> MultiLevelCache:
     """Get global multi-level cache instance."""
+
+
+
     return _multi_level_cache

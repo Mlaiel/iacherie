@@ -47,6 +47,9 @@ class BeRealPlatform(PlatformBase):
     
     async def authenticate(self) -> bool:
         """Authenticate with BeReal"""
+
+
+
         try:
             # Note: BeReal has no official public API
             # This is a placeholder implementation for when/if they provide one
@@ -84,6 +87,9 @@ class BeRealPlatform(PlatformBase):
     
     async def _refresh_with_token(self, refresh_token: str) -> bool:
         """Refresh BeReal token"""
+
+
+
         try:
             session = await self._get_session()
             
@@ -120,6 +126,9 @@ class BeRealPlatform(PlatformBase):
     
     async def _authenticate_with_phone(self, phone_number: str, verification_code: str) -> bool:
         """Authenticate with phone number"""
+
+
+
         try:
             # Step 1: Request verification code
             await self._send_verification_code(phone_number)
@@ -157,6 +166,9 @@ class BeRealPlatform(PlatformBase):
     
     async def _send_verification_code(self, phone_number: str) -> bool:
         """Send verification code to phone"""
+
+
+
         try:
             session = await self._get_session()
             
@@ -186,6 +198,9 @@ class BeRealPlatform(PlatformBase):
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
         """Make authenticated request to BeReal API"""
+
+
+
         try:
             session = await self._get_session()
             
@@ -230,6 +245,9 @@ class BeRealPlatform(PlatformBase):
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
         """Upload BeReal post"""
+
+
+
         try:
             # BeReal requires both front and back camera photos
             # For now, we'll use a placeholder implementation
@@ -308,6 +326,9 @@ class BeRealPlatform(PlatformBase):
     
     async def _upload_media(self, file_path: str, description: str = None) -> Optional[Dict[str, Any]]:
         """Upload media to BeReal"""
+
+
+
         try:
             # Get upload URL
             session = await self._get_session()
@@ -345,6 +366,9 @@ class BeRealPlatform(PlatformBase):
     async def get_analytics(self, content_id: str, start_date: datetime, 
                            end_date: datetime) -> AnalyticsData:
         """Get BeReal post analytics"""
+
+
+
         try:
             result = await self._make_request('GET', f'/content/posts/{content_id}')
             
@@ -378,6 +402,9 @@ class BeRealPlatform(PlatformBase):
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
         """Search content on BeReal (limited API)"""
+
+
+
         try:
             # BeReal doesn't have a traditional search API
             logger.warning("BeReal doesn't support content search")
@@ -389,6 +416,9 @@ class BeRealPlatform(PlatformBase):
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
         """Get user's BeReal posts"""
+
+
+
         try:
             target_user_id = user_id or self.config.credentials.get('user_id')
             if not target_user_id:
@@ -422,6 +452,9 @@ class BeRealPlatform(PlatformBase):
     
     async def delete_content(self, content_id: str) -> bool:
         """Delete BeReal post"""
+
+
+
         try:
             result = await self._make_request('DELETE', f'/content/posts/{content_id}')
             return result is not None
@@ -432,6 +465,9 @@ class BeRealPlatform(PlatformBase):
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
         """Update BeReal post (limited editing)"""
+
+
+
         try:
             # BeReal typically doesn't allow editing posts
             logger.warning("BeReal doesn't support post editing")
@@ -443,6 +479,9 @@ class BeRealPlatform(PlatformBase):
     
     async def get_friends_feed(self, limit: int = 20) -> List[Dict[str, Any]]:
         """Get friends' BeReal feed"""
+
+
+
         try:
             result = await self._make_request('GET', '/feeds/friends')
             
@@ -476,6 +515,9 @@ class BeRealPlatform(PlatformBase):
     
     async def add_real_moji(self, post_id: str, emoji: str) -> bool:
         """Add RealMoji reaction to a post"""
+
+
+
         try:
             data = {
                 'emoji': emoji,
@@ -491,6 +533,9 @@ class BeRealPlatform(PlatformBase):
     
     async def get_discovery_feed(self, limit: int = 20) -> List[Dict[str, Any]]:
         """Get discovery feed"""
+
+
+
         try:
             result = await self._make_request('GET', '/feeds/discovery')
             

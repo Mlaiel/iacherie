@@ -18,7 +18,7 @@ Project Team Specializations:
 - Security Engineer + Proxy Management
 - Platform Integration Specialist
 
-⚠️ STRONG WARNING FOR UNAUTHORIZED USE:
+ STRONG WARNING FOR UNAUTHORIZED USE:
 This code contains proprietary crawler algorithms and trade secrets of Fahed Mlaiel.
 Any unauthorized copying, modification, distribution, or use of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is
@@ -248,6 +248,9 @@ class ContentCrawlerDeploymentManager:
 
     def _initialize_kubernetes(self) -> client.ApiClient:
         """Initialize Kubernetes client."""
+
+
+
         try:
             config.load_incluster_config()
         except:
@@ -261,6 +264,9 @@ class ContentCrawlerDeploymentManager:
 
     def _initialize_redis(self) -> redis.Redis:
         """Initialize Redis client for caching and queuing."""
+
+
+
         try:
             return redis.Redis(
                 host=self.config['storage'].get('redis_host', 'localhost'),
@@ -976,6 +982,9 @@ class ContentCrawlerDeploymentManager:
 
     async def _cleanup_failed_crawler_deployment(self, deployment_id: str) -> None:
         """Cleanup failed crawler deployment."""
+
+
+
         try:
             if self.k8s_client:
                 apps_v1 = client.AppsV1Api(self.k8s_client)
@@ -1030,6 +1039,9 @@ class ContentCrawlerDeploymentManager:
 
     async def start_crawling(self, deployment_id: str) -> bool:
         """Start crawling process for a deployment."""
+
+
+
         try:
             if deployment_id not in self.active_crawlers:
                 raise ValueError(f"Crawler deployment not found: {deployment_id}")
@@ -1049,6 +1061,9 @@ class ContentCrawlerDeploymentManager:
 
     async def stop_crawling(self, deployment_id: str) -> bool:
         """Stop crawling process for a deployment."""
+
+
+
         try:
             if deployment_id not in self.active_crawlers:
                 raise ValueError(f"Crawler deployment not found: {deployment_id}")
@@ -1082,10 +1097,16 @@ class ContentCrawlerDeploymentManager:
 
     def list_active_crawlers(self) -> List[Dict[str, Any]]:
         """List all active crawler deployments."""
+
+
+
         return list(self.active_crawlers.values())
 
     async def scale_crawler(self, deployment_id: str, replicas: int) -> bool:
         """Scale crawler deployment."""
+
+
+
         try:
             if deployment_id not in self.active_crawlers:
                 raise ValueError(f"Crawler deployment not found: {deployment_id}")
@@ -1108,6 +1129,9 @@ class ContentCrawlerDeploymentManager:
 # Factory functions for common crawler configurations
 def create_youtube_crawler_config() -> CrawlerConfig:
     """Create YouTube crawler configuration."""
+
+
+
     return CrawlerConfig(
         crawler_name="youtube-content-crawler",
         crawler_type=CrawlerType.YOUTUBE_CRAWLER,
@@ -1127,6 +1151,9 @@ def create_youtube_crawler_config() -> CrawlerConfig:
 
 def create_instagram_crawler_config() -> CrawlerConfig:
     """Create Instagram crawler configuration."""
+
+
+
     return CrawlerConfig(
         crawler_name="instagram-content-crawler",
         crawler_type=CrawlerType.INSTAGRAM_CRAWLER,
@@ -1147,6 +1174,9 @@ def create_instagram_crawler_config() -> CrawlerConfig:
 
 def create_tiktok_crawler_config() -> CrawlerConfig:
     """Create TikTok crawler configuration."""
+
+
+
     return CrawlerConfig(
         crawler_name="tiktok-content-crawler",
         crawler_type=CrawlerType.TIKTOK_CRAWLER,
@@ -1163,6 +1193,9 @@ def create_tiktok_crawler_config() -> CrawlerConfig:
 
 def create_generic_web_crawler_config() -> CrawlerConfig:
     """Create generic web crawler configuration."""
+
+
+
     return CrawlerConfig(
         crawler_name="generic-web-crawler",
         crawler_type=CrawlerType.GENERIC_WEB_CRAWLER,

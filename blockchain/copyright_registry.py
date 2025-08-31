@@ -118,6 +118,9 @@ class CopyrightRegistryManager:
         Raises:
             CopyrightError: If registration fails
         """
+
+
+
         try:
             # Generate unique asset ID
             asset_id = self._generate_asset_id(creator_id, content_data)
@@ -197,6 +200,9 @@ class CopyrightRegistryManager:
         Raises:
             CopyrightError: If verification fails
         """
+
+
+
         try:
             # Get asset from registry
             asset = await self.get_copyright_asset(asset_id)
@@ -254,6 +260,9 @@ class CopyrightRegistryManager:
         Returns:
             Optional[CopyrightAsset]: Copyright asset if found
         """
+
+
+
         try:
             # Check cache first
             if asset_id in self._registry_cache:
@@ -284,6 +293,9 @@ class CopyrightRegistryManager:
         Returns:
             List[CopyrightAsset]: List of creator's copyright assets
         """
+
+
+
         try:
             asset_ids = await self.smart_contract_manager.get_creator_assets(creator_id)
             assets = []
@@ -313,6 +325,9 @@ class CopyrightRegistryManager:
         Returns:
             bool: True if transfer successful
         """
+
+
+
         try:
             # Verify ownership
             asset = await self.get_copyright_asset(asset_id)
@@ -359,6 +374,9 @@ class CopyrightRegistryManager:
         Returns:
             Optional[str]: License transaction ID if successful
         """
+
+
+
         try:
             # Verify asset exists
             asset = await self.get_copyright_asset(asset_id)
@@ -396,6 +414,9 @@ class CopyrightRegistryManager:
     
     def _generate_content_hash(self, content_data: bytes) -> str:
         """Generate secure content hash"""
+
+
+
         return hashlib.sha3_256(content_data).hexdigest()
     
     def _generate_metadata_hash(self, metadata: Dict[str, Any]) -> str:
@@ -410,6 +431,9 @@ class CopyrightRegistryManager:
     
     async def _create_copyright_nft(self, asset: CopyrightAsset) -> str:
         """Create NFT for copyright protection"""
+
+
+
         try:
             nft_metadata = {
                 'name': f"Copyright NFT - {asset.title}",
@@ -434,6 +458,9 @@ class CopyrightRegistryManager:
     
     def _reconstruct_asset_from_blockchain(self, blockchain_data: Dict[str, Any]) -> CopyrightAsset:
         """Reconstruct asset object from blockchain data"""
+
+
+
         return CopyrightAsset(
             asset_id=blockchain_data['asset_id'],
             creator_id=blockchain_data['creator_id'],
@@ -462,6 +489,9 @@ class CopyrightAnalytics:
     
     async def get_copyright_statistics(self, creator_id: Optional[str] = None) -> Dict[str, Any]:
         """Get comprehensive copyright statistics"""
+
+
+
         try:
             stats = {
                 'total_assets': 0,

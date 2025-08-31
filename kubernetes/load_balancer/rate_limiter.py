@@ -8,7 +8,7 @@ traffic shaping capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ WARNING: This code is proprietary and confidential.
+ WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
@@ -205,6 +205,9 @@ class DistributedRateLimiter:
     
     def check_limit(self, key: str, limit: int, window_seconds: int) -> Tuple[bool, Dict[str, Any]]:
         """Check rate limit using Redis sliding window"""
+
+
+
         try:
             now = time.time()
             pipeline = self.redis.pipeline()
@@ -326,6 +329,9 @@ class RateLimiter:
     
     def add_rate_limit(self, rate_limit: RateLimit) -> bool:
         """Add rate limit configuration"""
+
+
+
         try:
             with self.lock:
                 self.rate_limits[rate_limit.name] = rate_limit
@@ -339,6 +345,9 @@ class RateLimiter:
     
     def remove_rate_limit(self, name: str) -> bool:
         """Remove rate limit configuration"""
+
+
+
         try:
             with self.lock:
                 if name in self.rate_limits:
@@ -410,6 +419,9 @@ class RateLimiter:
     
     def check_rate_limits(self, request: RateLimitRequest) -> Tuple[bool, List[LimitStatus], Optional[str]]:
         """Check all applicable rate limits for request"""
+
+
+
         try:
             limit_statuses = []
             blocked_by = None
@@ -536,6 +548,9 @@ class RateLimiter:
     
     def configure_platform_rate_limits(self) -> bool:
         """Configure rate limits for platform services"""
+
+
+
         try:
             rate_limits = [
                 # Global API limits

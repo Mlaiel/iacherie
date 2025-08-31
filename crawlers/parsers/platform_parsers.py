@@ -8,7 +8,7 @@ Provides specialized parsing capabilities for each platform's unique data struct
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
@@ -252,6 +252,9 @@ class YouTubeParser(BasePlatformParser):
     
     async def parse_post(self, post_id: str, **kwargs) -> Dict[str, Any]:
         """Parse individual YouTube video"""
+
+
+
         return await self.parse_content(f"https://www.youtube.com/watch?v={post_id}")
 
 
@@ -312,6 +315,9 @@ class InstagramParser(BasePlatformParser):
     
     def _parse_from_json(self, json_data: Dict[str, Any], url: str) -> Dict[str, Any]:
         """Parse Instagram data from JSON"""
+
+
+
         try:
             entry_data = json_data.get('entry_data', {})
             post_page = entry_data.get('PostPage', [{}])[0]
@@ -336,6 +342,9 @@ class InstagramParser(BasePlatformParser):
     
     def _parse_from_html(self, soup: BeautifulSoup, url: str) -> Dict[str, Any]:
         """Parse Instagram data from HTML meta tags"""
+
+
+
         return {
             'platform': 'instagram',
             'url': url,
@@ -516,6 +525,9 @@ class TwitterParser(BasePlatformParser):
     
     async def parse_post(self, post_id: str, **kwargs) -> Dict[str, Any]:
         """Parse individual tweet"""
+
+
+
         return await self.parse_content(f"https://twitter.com/i/status/{post_id}")
 
 
@@ -569,6 +581,9 @@ class SpotifyParser(BasePlatformParser):
     
     def _parse_track_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Parse Spotify track data"""
+
+
+
         return {
             'platform': 'spotify',
             'type': 'track',
@@ -588,6 +603,9 @@ class SpotifyParser(BasePlatformParser):
     
     def _parse_album_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Parse Spotify album data"""
+
+
+
         return {
             'platform': 'spotify',
             'type': 'album',
@@ -605,6 +623,9 @@ class SpotifyParser(BasePlatformParser):
     
     def _parse_playlist_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Parse Spotify playlist data"""
+
+
+
         return {
             'platform': 'spotify',
             'type': 'playlist',
@@ -622,6 +643,9 @@ class SpotifyParser(BasePlatformParser):
     
     def _parse_artist_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Parse Spotify artist data"""
+
+
+
         return {
             'platform': 'spotify',
             'type': 'artist',
@@ -651,6 +675,9 @@ class SpotifyParser(BasePlatformParser):
     
     async def parse_post(self, post_id: str, **kwargs) -> Dict[str, Any]:
         """Parse individual Spotify track"""
+
+
+
         return await self._parse_via_api('track', post_id)
 
 

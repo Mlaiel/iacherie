@@ -7,7 +7,7 @@ for batch processing, real-time inference, and distributed serving.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Contact: mlaiel@live.de
@@ -157,6 +157,9 @@ class InferenceResult:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert result to dictionary"""
+
+
+
         return {
             'predictions': self.predictions.tolist() if isinstance(self.predictions, np.ndarray) else self.predictions,
             'confidence': self.confidence,
@@ -328,10 +331,16 @@ class TransformersBackend(ModelBackend):
     
     def predict(self, model: pipeline, inputs: str) -> Dict[str, Any]:
         """Run single prediction"""
+
+
+
         return model(inputs)
     
     def predict_batch(self, model: pipeline, inputs: List[str]) -> List[Dict[str, Any]]:
         """Run batch prediction"""
+
+
+
         return model(inputs)
 
 
@@ -518,6 +527,9 @@ class InferenceEngine:
     
     def _load_model(self):
         """Load model with specified backend"""
+
+
+
         try:
             backend_map = {
                 InferenceBackend.PYTORCH: PyTorchBackend(),

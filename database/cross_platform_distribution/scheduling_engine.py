@@ -8,7 +8,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Development Team: Lead AI Developer, Senior Backend Engineer, ML Engineer, DBA, Security Expert
 Architecture: Enterprise-grade, microservices-ready, production-optimized
 
-⚠️ INTELLECTUAL PROPERTY WARNING ⚠️
+ INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 Violations will be prosecuted under international copyright law.
@@ -197,6 +197,9 @@ class SchedulingEngine:
         Returns:
             SchedulingResult: Optimized scheduling recommendations
         """
+
+
+
         try:
             self.logger.info(f"Starting schedule optimization for content {request.content_id}")
             

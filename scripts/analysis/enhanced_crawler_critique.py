@@ -25,6 +25,9 @@ class CrawlerCritique:
         
     def analyze_implementation_quality(self, file_path: Path) -> Dict[str, Any]:
         """Analyze the quality and completeness of a crawler implementation."""
+
+
+
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
@@ -272,58 +275,58 @@ class CrawlerCritique:
         
         for platform, analysis in results.items():
             if analysis.get("classification") == "missing":
-                recommendations.append(f"🔴 {platform.upper()}: Locate missing crawler file")
+                recommendations.append(f" {platform.upper()}: Locate missing crawler file")
             elif analysis.get("classification") == "stub":
-                recommendations.append(f"🔴 {platform.upper()}: Replace stub with real implementation")
+                recommendations.append(f" {platform.upper()}: Replace stub with real implementation")
             elif analysis.get("implementation_score", 0) < 60:
                 recommendations.append(f"🟡 {platform.upper()}: Enhance implementation quality")
             elif not analysis.get("functionality_verified", False):
                 recommendations.append(f"🟡 {platform.upper()}: Add comprehensive functionality testing")
             else:
-                recommendations.append(f"✅ {platform.upper()}: Implementation verified and functional")
+                recommendations.append(f" {platform.upper()}: Implementation verified and functional")
         
         return recommendations
     
     def print_critique_summary(self, report: Dict[str, Any]):
         """Print human-readable critique summary."""
-        print("\n🔍 CRAWLER CRITIQUE - IMPLEMENTATION VS STUB VERIFICATION")
+        print("\n CRAWLER CRITIQUE - IMPLEMENTATION VS STUB VERIFICATION")
         print("=" * 65)
         print(f"Requirement: {report['requirement']}")
         print(f"Status: {report['overall_status']}")
         print()
         
         summary = report["summary"]
-        print("📊 SUMMARY:")
+        print(" SUMMARY:")
         print(f"   Priority Crawlers Analyzed: {summary['total_priority_crawlers']}")
-        print(f"   ✅ Functionality Verified: {summary['verified_functional']}")
-        print(f"   🏗️  Real Implementations: {summary['real_implementations']}")
-        print(f"   📈 Average Quality Score: {summary['average_score']}/100")
-        print(f"   🎯 Verification Success: {'YES' if summary['verification_success'] else 'NO'}")
+        print(f"    Functionality Verified: {summary['verified_functional']}")
+        print(f"     Real Implementations: {summary['real_implementations']}")
+        print(f"    Average Quality Score: {summary['average_score']}/100")
+        print(f"    Verification Success: {'YES' if summary['verification_success'] else 'NO'}")
         print()
         
-        print("🎯 PRIORITY CRAWLER ANALYSIS:")
+        print(" PRIORITY CRAWLER ANALYSIS:")
         for platform, analysis in report["priority_crawler_analysis"].items():
             score = analysis.get("implementation_score", 0)
             classification = analysis.get("classification", "unknown")
-            verified = "✅" if analysis.get("functionality_verified", False) else "⚠️"
+            verified = "" if analysis.get("functionality_verified", False) else ""
             
             print(f"   {verified} {platform.upper()}: {classification.upper()} (Score: {score}/100)")
             
             if "error" in analysis:
-                print(f"      ❌ Error: {analysis['error']}")
+                print(f"       Error: {analysis['error']}")
             else:
-                print(f"      📁 File: {Path(analysis.get('file_path', '')).name}")
-                print(f"      📏 Lines: {analysis.get('line_count', 0)}")
-                print(f"      🔧 Methods: {analysis.get('methods_count', 0)}")
+                print(f"       File: {Path(analysis.get('file_path', '')).name}")
+                print(f"       Lines: {analysis.get('line_count', 0)}")
+                print(f"       Methods: {analysis.get('methods_count', 0)}")
         print()
         
-        print("💡 RECOMMENDATIONS:")
+        print(" RECOMMENDATIONS:")
         for rec in report["recommendations"]:
             print(f"   {rec}")
 
 def main():
     """Main execution function."""
-    print("🔍 ENHANCED CRAWLER VERIFICATION - IMPLEMENTATION vs STUB")
+    print(" ENHANCED CRAWLER VERIFICATION - IMPLEMENTATION vs STUB")
     print("=" * 60)
     
     critique = CrawlerCritique()
@@ -336,14 +339,14 @@ def main():
     with open('crawler_critique_report.json', 'w') as f:
         json.dump(report, f, indent=2)
     
-    print(f"\n📄 Detailed report saved to: crawler_critique_report.json")
+    print(f"\n Detailed report saved to: crawler_critique_report.json")
     
     # Return appropriate exit code
     if report["summary"]["verification_success"]:
-        print("\n🎉 CRITIQUE SUCCESSFUL: All priority crawlers verified as real implementations!")
+        print("\n CRITIQUE SUCCESSFUL: All priority crawlers verified as real implementations!")
         return 0
     else:
-        print("\n⚠️  CRITIQUE INCOMPLETE: Some priority crawlers need attention.")
+        print("\n  CRITIQUE INCOMPLETE: Some priority crawlers need attention.")
         return 1
 
 if __name__ == "__main__":

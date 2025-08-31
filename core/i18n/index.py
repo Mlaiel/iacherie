@@ -8,7 +8,7 @@ Responsibility: Central registry and coordination of all i18n components
 Technologies: Python, Registry Pattern, Component Discovery
 ================================================================================
 
-⚠️  PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
+  PROPRIETARY SOFTWARE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -88,6 +88,9 @@ class InternationalizationIndex:
         version: str = "1.0.0"
     ) -> bool:
         """Register a component in the index"""
+
+
+
         try:
             if name in self.components:
                 logger.warning(f"Component {name} already registered, updating...")
@@ -113,10 +116,16 @@ class InternationalizationIndex:
     
     def get_component(self, name: str) -> Optional[Any]:
         """Get component instance by name"""
+
+
+
         return self.component_instances.get(name)
     
     def get_component_info(self, name: str) -> Optional[ComponentInfo]:
         """Get component information"""
+
+
+
         return self.components.get(name)
     
     def list_components(
@@ -137,6 +146,9 @@ class InternationalizationIndex:
     
     def resolve_dependencies(self) -> List[str]:
         """Resolve component dependencies and return initialization order"""
+
+
+
         try:
             # Topological sort for dependency resolution
             visited = set()
@@ -174,6 +186,9 @@ class InternationalizationIndex:
     
     async def initialize_component(self, name: str, **kwargs) -> bool:
         """Initialize a specific component"""
+
+
+
         try:
             if name not in self.components:
                 logger.error(f"Component {name} not registered")
@@ -233,6 +248,9 @@ class InternationalizationIndex:
     
     async def initialize_all_components(self, **kwargs) -> bool:
         """Initialize all components in dependency order"""
+
+
+
         try:
             order = self.resolve_dependencies()
             
@@ -313,6 +331,9 @@ class InternationalizationIndex:
     
     def shutdown_component(self, name: str) -> bool:
         """Shutdown a specific component"""
+
+
+
         try:
             if name in self.component_instances:
                 instance = self.component_instances[name]
@@ -338,6 +359,9 @@ class InternationalizationIndex:
     
     def shutdown_all_components(self) -> bool:
         """Shutdown all components in reverse dependency order"""
+
+
+
         try:
             # Shutdown in reverse order
             shutdown_order = list(reversed(self.initialization_order))
@@ -374,6 +398,9 @@ def register_i18n_component(
     version: str = "1.0.0"
 ) -> bool:
     """Convenience function to register a component"""
+
+
+
     return get_i18n_index().register_component(
         name, component_class, component_type, dependencies, capabilities, version
     )
@@ -382,6 +409,9 @@ def register_i18n_component(
 # Auto-register core components when module is imported
 def _auto_register_components():
     """Auto-register core i18n components"""
+
+
+
     try:
         index = get_i18n_index()
         

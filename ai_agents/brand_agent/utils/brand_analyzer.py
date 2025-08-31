@@ -7,7 +7,7 @@ competitive analysis, and market positioning for content creators and brands.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -190,6 +190,9 @@ class BrandAnalyzer:
 
     async def analyze_brand_performance(self, timeframe: AnalysisTimeframe = AnalysisTimeframe.MONTHLY) -> BrandMetrics:
         """Comprehensive brand performance analysis"""
+
+
+
         try:
             logger.info(f"Starting brand performance analysis for timeframe: {timeframe.value}")
             
@@ -253,6 +256,9 @@ class BrandAnalyzer:
 
     async def _collect_brand_data(self, timeframe: AnalysisTimeframe) -> Dict[str, Any]:
         """Collect comprehensive brand data from all sources"""
+
+
+
         try:
             data = {}
             
@@ -290,6 +296,9 @@ class BrandAnalyzer:
 
     async def _calculate_awareness_score(self, brand_data: Dict[str, Any]) -> float:
         """Calculate brand awareness score (0-100)"""
+
+
+
         try:
             awareness_components = []
             
@@ -324,6 +333,9 @@ class BrandAnalyzer:
 
     async def _calculate_engagement_rate(self, brand_data: Dict[str, Any]) -> float:
         """Calculate overall brand engagement rate"""
+
+
+
         try:
             social_data = brand_data.get("social_media", {})
             
@@ -345,6 +357,9 @@ class BrandAnalyzer:
 
     async def _calculate_sentiment_score(self, brand_data: Dict[str, Any]) -> float:
         """Calculate overall brand sentiment score (-1 to 1)"""
+
+
+
         try:
             social_data = brand_data.get("social_media", {})
             sentiment_data = brand_data.get("consumer_sentiment", {})
@@ -371,6 +386,9 @@ class BrandAnalyzer:
 
     async def _calculate_reach_metrics(self, brand_data: Dict[str, Any]) -> Dict[str, int]:
         """Calculate reach metrics breakdown"""
+
+
+
         try:
             social_data = brand_data.get("social_media", {})
             
@@ -390,6 +408,9 @@ class BrandAnalyzer:
 
     async def _calculate_conversion_rate(self, brand_data: Dict[str, Any]) -> float:
         """Calculate brand conversion rate"""
+
+
+
         try:
             financial_data = brand_data.get("financial_data", {})
             social_data = brand_data.get("social_media", {})
@@ -409,6 +430,9 @@ class BrandAnalyzer:
 
     async def _calculate_loyalty_index(self, brand_data: Dict[str, Any]) -> float:
         """Calculate customer loyalty index (0-100)"""
+
+
+
         try:
             social_data = brand_data.get("social_media", {})
             financial_data = brand_data.get("financial_data", {})
@@ -437,6 +461,9 @@ class BrandAnalyzer:
 
     async def _calculate_advocacy_score(self, brand_data: Dict[str, Any]) -> float:
         """Calculate brand advocacy score (0-100)"""
+
+
+
         try:
             social_data = brand_data.get("social_media", {})
             
@@ -472,6 +499,9 @@ class BrandAnalyzer:
 
     async def _estimate_brand_value(self, brand_data: Dict[str, Any]) -> float:
         """Estimate brand value using multiple valuation methods"""
+
+
+
         try:
             # Revenue-based approach
             revenue_value = await self._calculate_revenue_based_value(brand_data)
@@ -501,6 +531,9 @@ class BrandAnalyzer:
 
     async def _calculate_revenue_based_value(self, brand_data: Dict[str, Any]) -> float:
         """Calculate brand value based on revenue metrics"""
+
+
+
         try:
             financial_data = brand_data.get("financial_data", {})
             
@@ -525,6 +558,9 @@ class BrandAnalyzer:
 
     async def _calculate_market_based_value(self, brand_data: Dict[str, Any]) -> float:
         """Calculate brand value based on market comparables"""
+
+
+
         try:
             competitor_data = brand_data.get("competitor_data", {})
             market_data = brand_data.get("market_data", {})
@@ -556,6 +592,9 @@ class BrandAnalyzer:
 
     async def _calculate_cost_based_value(self, brand_data: Dict[str, Any]) -> float:
         """Calculate brand value based on development costs"""
+
+
+
         try:
             financial_data = brand_data.get("financial_data", {})
             
@@ -583,6 +622,9 @@ class BrandAnalyzer:
 
     async def _calculate_income_based_value(self, brand_data: Dict[str, Any]) -> float:
         """Calculate brand value based on future income potential"""
+
+
+
         try:
             financial_data = brand_data.get("financial_data", {})
             
@@ -609,6 +651,9 @@ class BrandAnalyzer:
 
     async def _calculate_market_share(self, brand_data: Dict[str, Any]) -> float:
         """Calculate brand market share"""
+
+
+
         try:
             market_data = brand_data.get("market_data", {})
             competitor_data = brand_data.get("competitor_data", {})
@@ -645,6 +690,9 @@ class BrandAnalyzer:
 
     async def _calculate_competitive_position(self, brand_data: Dict[str, Any]) -> int:
         """Calculate brand competitive position ranking"""
+
+
+
         try:
             competitor_data = brand_data.get("competitor_data", {})
             
@@ -672,6 +720,9 @@ class BrandAnalyzer:
 
     async def _calculate_growth_rate(self, brand_data: Dict[str, Any]) -> float:
         """Calculate brand growth rate"""
+
+
+
         try:
             # Get historical metrics for growth calculation
             if len(self.metrics_history) < 2:
@@ -700,6 +751,9 @@ class BrandAnalyzer:
 
     async def _calculate_risk_score(self, brand_data: Dict[str, Any]) -> float:
         """Calculate brand risk score (0-1, higher is riskier)"""
+
+
+
         try:
             risk_factors = []
             
@@ -737,6 +791,9 @@ class BrandAnalyzer:
 
     async def perform_competitive_analysis(self) -> CompetitiveAnalysis:
         """Perform comprehensive competitive landscape analysis"""
+
+
+
         try:
             logger.info("Starting competitive analysis")
             
@@ -782,6 +839,9 @@ class BrandAnalyzer:
 
     async def assess_brand_value(self) -> BrandValueAssessment:
         """Perform comprehensive brand value assessment"""
+
+
+
         try:
             logger.info("Starting brand value assessment")
             
@@ -827,6 +887,9 @@ class BrandAnalyzer:
     async def generate_performance_report(self, 
                                          timeframe: AnalysisTimeframe = AnalysisTimeframe.QUARTERLY) -> BrandPerformanceReport:
         """Generate comprehensive brand performance report"""
+
+
+
         try:
             report_id = f"brand_report_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
             
@@ -875,6 +938,9 @@ class BrandAnalyzer:
                                           competitive: CompetitiveAnalysis,
                                           value: BrandValueAssessment) -> Dict[str, Any]:
         """Generate executive summary of brand performance"""
+
+
+
         try:
             # Determine brand health status
             health_score = (
@@ -1062,6 +1128,9 @@ class ValueCalculator:
 
     async def calculate_comprehensive_value(self, brand_data: Dict[str, Any]) -> Dict[str, Any]:
         """Calculate brand value using multiple methods"""
+
+
+
         try:
             valuations = {}
             
@@ -1098,6 +1167,9 @@ class ValueCalculator:
 
     async def _relief_from_royalty_method(self, brand_data: Dict[str, Any]) -> float:
         """Relief from royalty valuation method"""
+
+
+
         try:
             financial_data = brand_data.get("financial_data", {})
             
@@ -1124,6 +1196,9 @@ class ValueCalculator:
 
     def _calculate_confidence_score(self, valuations: Dict[str, float]) -> float:
         """Calculate confidence score based on valuation consistency"""
+
+
+
         try:
             values = [v for v in valuations.values() if v > 0]
             

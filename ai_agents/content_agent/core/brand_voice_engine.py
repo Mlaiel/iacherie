@@ -7,7 +7,7 @@ for maintaining authentic brand identity across all content creation.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -203,6 +203,9 @@ class BrandVoiceEngine:
     
     def _initialize_nlp_models(self):
         """Initialize NLP models for voice analysis"""
+
+
+
         try:
             # Language model for embeddings
             self.tokenizer = AutoTokenizer.from_pretrained('sentence-transformers/all-MiniLM-L6-v2')
@@ -377,6 +380,9 @@ class BrandVoiceEngine:
         db: AsyncSession
     ) -> List[Content]:
         """Retrieve user's recent content for analysis"""
+
+
+
         
         try:
             # Query recent content with text
@@ -407,6 +413,9 @@ class BrandVoiceEngine:
     
     def _extract_text_content(self, content: Content) -> str:
         """Extract text content from content object"""
+
+
+
         try:
             # Extract text based on content structure
             if hasattr(content, 'content_data') and content.content_data:
@@ -430,6 +439,9 @@ class BrandVoiceEngine:
     
     async def _analyze_voice_metrics(self, text_samples: List[str]) -> VoiceMetrics:
         """Perform comprehensive voice metrics analysis"""
+
+
+
         
         try:
             # Combine all text samples
@@ -499,6 +511,9 @@ class BrandVoiceEngine:
     
     async def _analyze_emotions(self, text_samples: List[str]) -> Dict[str, float]:
         """Analyze emotional distribution in text samples"""
+
+
+
         
         try:
             emotion_counts = defaultdict(int)
@@ -527,6 +542,9 @@ class BrandVoiceEngine:
     
     def _calculate_formality_score(self, text: str) -> float:
         """Calculate formality score of text"""
+
+
+
         
         try:
             # Formality indicators
@@ -567,6 +585,9 @@ class BrandVoiceEngine:
     
     def _calculate_complexity_score(self, text: str) -> float:
         """Calculate complexity score of text"""
+
+
+
         
         try:
             # Multiple complexity indicators
@@ -597,6 +618,9 @@ class BrandVoiceEngine:
     
     def _calculate_engagement_score(self, text: str) -> float:
         """Calculate engagement potential score"""
+
+
+
         
         try:
             # Engagement indicators
@@ -631,6 +655,9 @@ class BrandVoiceEngine:
     
     def _extract_common_phrases(self, text: str) -> List[Tuple[str, int]]:
         """Extract common phrases from text"""
+
+
+
         
         try:
             # Use n-grams to find common phrases
@@ -654,6 +681,9 @@ class BrandVoiceEngine:
     
     def _analyze_pos_distribution(self, text: str) -> Dict[str, float]:
         """Analyze part-of-speech distribution"""
+
+
+
         
         try:
             words = word_tokenize(text)
@@ -676,6 +706,9 @@ class BrandVoiceEngine:
     
     async def _analyze_personality_traits(self, text: str) -> Dict[str, float]:
         """Analyze personality traits from text"""
+
+
+
         
         try:
             # Use LLM for personality analysis
@@ -715,6 +748,9 @@ class BrandVoiceEngine:
     
     def _basic_personality_analysis(self, text: str) -> Dict[str, float]:
         """Basic personality trait analysis fallback"""
+
+
+
         
         try:
             words = word_tokenize(text.lower())
@@ -743,6 +779,9 @@ class BrandVoiceEngine:
     
     def _analyze_communication_style(self, text: str) -> Dict[str, float]:
         """Analyze communication style patterns"""
+
+
+
         
         try:
             # Communication style indicators
@@ -773,6 +812,9 @@ class BrandVoiceEngine:
         voice_metrics: VoiceMetrics
     ) -> List[VoiceCharacteristic]:
         """Identify dominant voice characteristics"""
+
+
+
         
         try:
             characteristics = []
@@ -810,6 +852,9 @@ class BrandVoiceEngine:
     
     def _determine_dominant_tone(self, voice_metrics: VoiceMetrics) -> VoiceTone:
         """Determine dominant tone from voice metrics"""
+
+
+
         
         try:
             sentiment = voice_metrics.sentiment_scores
@@ -827,6 +872,9 @@ class BrandVoiceEngine:
     
     def _determine_writing_style(self, voice_metrics: VoiceMetrics) -> WritingStyle:
         """Determine writing style from voice metrics"""
+
+
+
         
         try:
             if voice_metrics.formality_score > 0.8:
@@ -846,6 +894,9 @@ class BrandVoiceEngine:
     
     async def _calculate_consistency_score(self, text_samples: List[str]) -> float:
         """Calculate voice consistency across text samples"""
+
+
+
         
         try:
             if len(text_samples) < 2:
@@ -885,6 +936,9 @@ class BrandVoiceEngine:
     
     async def _store_voice_profile(self, profile: BrandVoiceProfile, db: AsyncSession):
         """Store brand voice profile in database"""
+
+
+
         
         try:
             # Create voice profile record
@@ -915,6 +969,9 @@ class BrandVoiceEngine:
     
     def _serialize_voice_metrics(self, metrics: VoiceMetrics) -> Dict[str, Any]:
         """Serialize voice metrics for storage"""
+
+
+
         
         return {
             'avg_sentence_length': metrics.avg_sentence_length,
@@ -935,6 +992,9 @@ class BrandVoiceEngine:
     
     def _serialize_voice_profile(self, profile: BrandVoiceProfile) -> Dict[str, Any]:
         """Serialize voice profile for API response"""
+
+
+
         
         return {
             'user_id': profile.user_id,
@@ -950,6 +1010,9 @@ class BrandVoiceEngine:
     
     async def _get_voice_profile(self, user_id: str, db: AsyncSession) -> Optional[Dict[str, Any]]:
         """Retrieve voice profile from cache or database"""
+
+
+
         
         try:
             # Check cache first
@@ -1019,6 +1082,9 @@ class BrandVoiceEngine:
         content_metrics: VoiceMetrics
     ) -> float:
         """Calculate how well content matches brand voice"""
+
+
+
         
         try:
             # Compare characteristics
@@ -1048,6 +1114,9 @@ class BrandVoiceEngine:
         content_characteristics: List[VoiceCharacteristic]
     ) -> float:
         """Calculate alignment score between brand and content characteristics"""
+
+
+
         
         try:
             content_char_values = [vc.value for vc in content_characteristics]
@@ -1167,6 +1236,9 @@ class BrandVoiceEngine:
         suggestions: List[str]
     ) -> str:
         """Adjust content to match brand voice"""
+
+
+
         
         try:
             # Use LLM to adjust content based on voice profile
@@ -1199,6 +1271,9 @@ class BrandVoiceEngine:
     
     async def health_check(self) -> Dict[str, Any]:
         """Health check for brand voice engine"""
+
+
+
         return {
             "status": "healthy",
             "models_loaded": bool(self.model and self.tokenizer),
@@ -1262,6 +1337,9 @@ class VoiceConsistencyManager:
     
     async def _get_content_by_ids(self, content_ids: List[str], db: AsyncSession) -> List[Content]:
         """Retrieve content by IDs"""
+
+
+
         try:
             query = select(Content).where(Content.id.in_(content_ids))
             result = await db.execute(query)
@@ -1277,6 +1355,9 @@ class VoiceConsistencyManager:
         user_id: str
     ) -> Dict[str, Any]:
         """Generate detailed consistency report"""
+
+
+
         
         try:
             # Analyze individual pieces

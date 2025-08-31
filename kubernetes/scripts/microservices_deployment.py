@@ -15,7 +15,7 @@ Project Team Specializations:
 - Security Engineer + Service Authentication
 - Platform Engineer + Service Discovery
 
-⚠️ STRONG WARNING FOR UNAUTHORIZED USE:
+ STRONG WARNING FOR UNAUTHORIZED USE:
 This code contains proprietary microservices patterns and trade secrets of Fahed Mlaiel.
 Any unauthorized copying, modification, distribution, or use of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is
@@ -339,6 +339,9 @@ class MicroservicesDeploymentManager:
     
     def _init_kubernetes_client(self):
         """Initialize Kubernetes client"""
+
+
+
         try:
             config.load_incluster_config()
         except:
@@ -359,6 +362,9 @@ class MicroservicesDeploymentManager:
     
     def _init_docker_client(self):
         """Initialize Docker client"""
+
+
+
         try:
             self.docker_client = docker.from_env()
             logger.info("Docker client initialized")
@@ -368,6 +374,9 @@ class MicroservicesDeploymentManager:
     
     def _init_service_discovery_client(self):
         """Initialize service discovery client"""
+
+
+
         try:
             consul_host = os.getenv('CONSUL_HOST', 'localhost')
             consul_port = int(os.getenv('CONSUL_PORT', '8500'))
@@ -388,6 +397,9 @@ class MicroservicesDeploymentManager:
     
     def _init_service_mesh_client(self):
         """Initialize service mesh clients"""
+
+
+
         try:
             # Istio client initialization
             self.istio_client = None  # Placeholder for Istio client
@@ -398,6 +410,9 @@ class MicroservicesDeploymentManager:
     
     def _init_database_client(self):
         """Initialize database client"""
+
+
+
         try:
             db_url = os.getenv('DATABASE_URL', 'postgresql://user:pass@localhost:5432/ia_influencer')
             self.db_engine = create_engine(db_url)
@@ -408,6 +423,9 @@ class MicroservicesDeploymentManager:
     
     def _init_redis_client(self):
         """Initialize Redis client for caching and service coordination"""
+
+
+
         try:
             redis_host = os.getenv('REDIS_HOST', 'localhost')
             redis_port = int(os.getenv('REDIS_PORT', '6379'))
@@ -1334,6 +1352,9 @@ class MicroservicesDeploymentManager:
     
     def _create_namespace(self, namespace: str):
         """Create Kubernetes namespace if it doesn't exist"""
+
+
+
         try:
             self.core_v1.read_namespace(name=namespace)
         except ApiException as e:
@@ -1474,23 +1495,23 @@ def main():
     
     # Deploy microservices infrastructure
     if manager.deploy_microservices_infrastructure():
-        print("✅ Microservices infrastructure deployed successfully")
+        print(" Microservices infrastructure deployed successfully")
     
     # Example: Scale a service
     if manager.scale_microservice("content-protection", 5):
-        print("✅ Content protection service scaled to 5 replicas")
+        print(" Content protection service scaled to 5 replicas")
     
     # Check health of a specific service
     health = manager.get_service_health("api-gateway")
-    print(f"✅ API Gateway health: {health.get('ready_replicas', 0)}/{health.get('desired_replicas', 0)} replicas ready")
+    print(f" API Gateway health: {health.get('ready_replicas', 0)}/{health.get('desired_replicas', 0)} replicas ready")
     
     # Overall health check
     overall_health = manager.health_check()
-    print(f"✅ Overall microservices health: {overall_health['overall_status']}")
+    print(f" Overall microservices health: {overall_health['overall_status']}")
     print(f"   - Services deployed: {len(overall_health['services'])}")
     print(f"   - Service mesh enabled: {overall_health['service_mesh']['enabled']}")
     
-    print("\n🎯 Microservices Deployment Manager test completed")
+    print("\n Microservices Deployment Manager test completed")
 
 
 if __name__ == "__main__":

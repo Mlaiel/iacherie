@@ -8,7 +8,7 @@ performance monitoring, and alerting capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ WARNING: This code is proprietary and confidential.
+ WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
@@ -238,6 +238,9 @@ class PrometheusExporter:
     
     def get_metrics_text(self) -> str:
         """Get metrics in Prometheus text format"""
+
+
+
         try:
             return generate_latest(self.registry).decode('utf-8')
         except Exception as e:
@@ -259,6 +262,9 @@ class InfluxDBExporter:
     
     def write_metrics(self, metrics: List[MetricData]) -> None:
         """Write metrics to InfluxDB"""
+
+
+
         try:
             points = []
             for metric in metrics:
@@ -298,6 +304,9 @@ class SystemMetricsCollector:
     
     def collect_system_metrics(self) -> Dict[str, float]:
         """Collect system metrics"""
+
+
+
         try:
             current_time = time.time()
             metrics = {}
@@ -498,6 +507,9 @@ class MetricsCollector:
     
     def register_metric(self, definition: MetricDefinition) -> bool:
         """Register metric definition"""
+
+
+
         try:
             with self.lock:
                 self.metric_definitions[definition.name] = definition
@@ -515,6 +527,9 @@ class MetricsCollector:
     
     def record_metric(self, name: str, value: Union[int, float], labels: Dict[str, str] = None) -> None:
         """Record metric value"""
+
+
+
         try:
             labels = labels or {}
             metric_data = MetricData(
@@ -540,6 +555,9 @@ class MetricsCollector:
                       client_ip: str = "",
                       user_id: str = "") -> None:
         """Record HTTP request metrics"""
+
+
+
         try:
             # Basic labels
             labels = {
@@ -586,6 +604,9 @@ class MetricsCollector:
     
     def record_connection_event(self, service: str, event_type: str, client_ip: str = "") -> None:
         """Record connection events (open/close)"""
+
+
+
         try:
             labels = {
                 'service': service,
@@ -616,6 +637,9 @@ class MetricsCollector:
                                    error_count: int,
                                    active_connections: int) -> None:
         """Record load balancer specific metrics"""
+
+
+
         try:
             labels = {'server_id': server_id}
             
@@ -710,6 +734,9 @@ class MetricsCollector:
     
     def configure_platform_metrics(self) -> bool:
         """Configure metrics for platform services"""
+
+
+
         try:
             metric_definitions = [
                 # HTTP request metrics
@@ -937,6 +964,9 @@ class MetricsCollector:
     
     def cleanup(self) -> None:
         """Cleanup resources"""
+
+
+
         try:
             if self.influxdb_exporter:
                 self.influxdb_exporter.close()

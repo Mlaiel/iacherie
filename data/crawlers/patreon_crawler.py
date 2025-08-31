@@ -12,7 +12,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL WARNING ⚠️
+  CRITICAL WARNING 
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
 Any unauthorized use, reproduction, distribution, or reverse engineering 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -319,6 +319,9 @@ class PatreonCrawler(PlatformCrawler):
         Returns:
             List of crawler results
         """
+
+
+
         try:
             await self._check_rate_limit()
             
@@ -338,6 +341,9 @@ class PatreonCrawler(PlatformCrawler):
     
     async def _crawl_creators(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Patreon creators"""
+
+
+
         try:
             results = []
             
@@ -387,6 +393,9 @@ class PatreonCrawler(PlatformCrawler):
     
     async def _crawl_campaigns(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Patreon campaigns"""
+
+
+
         try:
             results = []
             
@@ -435,6 +444,9 @@ class PatreonCrawler(PlatformCrawler):
     
     async def _crawl_posts(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Patreon posts"""
+
+
+
         try:
             results = []
             
@@ -482,6 +494,9 @@ class PatreonCrawler(PlatformCrawler):
     
     async def _crawl_rewards(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Patreon rewards"""
+
+
+
         try:
             results = []
             
@@ -529,6 +544,9 @@ class PatreonCrawler(PlatformCrawler):
     
     async def _crawl_pledges(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Patreon pledges (requires authentication)"""
+
+
+
         try:
             results = []
             
@@ -572,6 +590,9 @@ class PatreonCrawler(PlatformCrawler):
     
     async def _crawl_goals(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Patreon goals"""
+
+
+
         try:
             results = []
             
@@ -611,6 +632,9 @@ class PatreonCrawler(PlatformCrawler):
     
     async def _crawl_trending(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl trending Patreon content"""
+
+
+
         try:
             results = []
             
@@ -643,6 +667,9 @@ class PatreonCrawler(PlatformCrawler):
     
     async def _crawl_featured(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl featured Patreon content"""
+
+
+
         try:
             results = []
             
@@ -675,6 +702,9 @@ class PatreonCrawler(PlatformCrawler):
     
     async def _crawl_search(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """General Patreon search"""
+
+
+
         try:
             results = []
             
@@ -917,6 +947,9 @@ class PatreonCrawler(PlatformCrawler):
     
     async def _parse_creator_data(self, creator_data: Dict[str, Any]) -> Optional[PatreonCreator]:
         """Parse creator data"""
+
+
+
         try:
             published_at = datetime.fromisoformat(creator_data.get('published_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             created_at = datetime.fromisoformat(creator_data.get('created_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
@@ -978,6 +1011,9 @@ class PatreonCrawler(PlatformCrawler):
     
     async def _parse_campaign_data(self, campaign_data: Dict[str, Any]) -> Optional[PatreonCampaign]:
         """Parse campaign data"""
+
+
+
         try:
             published_at = datetime.fromisoformat(campaign_data.get('published_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             created_at = datetime.fromisoformat(campaign_data.get('created_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
@@ -1031,6 +1067,9 @@ class PatreonCrawler(PlatformCrawler):
     
     async def _parse_post_data(self, post_data: Dict[str, Any]) -> Optional[PatreonPost]:
         """Parse post data"""
+
+
+
         try:
             published_at = datetime.fromisoformat(post_data.get('published_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             charge_date = None
@@ -1086,6 +1125,9 @@ class PatreonCrawler(PlatformCrawler):
     
     async def _parse_reward_data(self, reward_data: Dict[str, Any]) -> Optional[PatreonReward]:
         """Parse reward data"""
+
+
+
         try:
             created_at = datetime.fromisoformat(reward_data.get('created_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             published_at = None
@@ -1130,6 +1172,9 @@ class PatreonCrawler(PlatformCrawler):
     
     async def _parse_pledge_data(self, pledge_data: Dict[str, Any]) -> Optional[PatreonPledge]:
         """Parse pledge data"""
+
+
+
         try:
             created_at = datetime.fromisoformat(pledge_data.get('created_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
@@ -1165,6 +1210,9 @@ class PatreonCrawler(PlatformCrawler):
     
     async def _parse_goal_data(self, goal_data: Dict[str, Any]) -> Optional[PatreonGoal]:
         """Parse goal data"""
+
+
+
         try:
             created_at = datetime.fromisoformat(goal_data.get('created_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             reached_at = None
@@ -1191,6 +1239,9 @@ class PatreonCrawler(PlatformCrawler):
     
     async def _check_rate_limit(self):
         """Check and enforce rate limiting"""
+
+
+
         try:
             current_time = time.time()
             time_since_last = current_time - self.last_request_time
@@ -1208,6 +1259,9 @@ class PatreonCrawler(PlatformCrawler):
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
         """Extract metadata from Patreon content"""
+
+
+
         try:
             # Parse Patreon URL
             parsed_url = urlparse(url)
@@ -1262,6 +1316,9 @@ class PatreonCrawler(PlatformCrawler):
     
     def get_platform_info(self) -> Dict[str, Any]:
         """Get Patreon platform information"""
+
+
+
         return {
             'platform_name': 'Patreon',
             'base_url': self.base_url,

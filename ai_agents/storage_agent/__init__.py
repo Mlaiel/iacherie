@@ -7,7 +7,7 @@ with automatic file processing, compression, and content optimization.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This storage agent technology is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, reverse engineering, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -97,7 +97,10 @@ def create_storage_agent(config=None):
         
     Returns:
         StorageOrchestrator: Configured storage orchestrator instance
-    """    return StorageOrchestrator(config)
+    """
+
+
+    return StorageOrchestrator(config)
 
 def create_backend_manager(config=None):
     """    Factory function to create backend manager
@@ -107,7 +110,10 @@ def create_backend_manager(config=None):
         
     Returns:
         BackendManager: Configured backend manager instance
-    """    return BackendManager(config or {})
+    """
+
+
+    return BackendManager(config or {})
 
 def create_file_processor(config=None):
     """    Factory function to create file processor
@@ -117,7 +123,10 @@ def create_file_processor(config=None):
         
     Returns:
         FileProcessor: Configured file processor instance
-    """    return FileProcessor(config)
+    """
+
+
+    return FileProcessor(config)
 
 def create_content_optimizer(config=None):
     """    Factory function to create content optimizer
@@ -127,7 +136,10 @@ def create_content_optimizer(config=None):
         
     Returns:
         ContentOptimizer: Configured content optimizer instance
-    """    return ContentOptimizer(config)
+    """
+
+
+    return ContentOptimizer(config)
 
 def create_backup_manager(config=None):
     """    Factory function to create backup manager
@@ -137,7 +149,10 @@ def create_backup_manager(config=None):
         
     Returns:
         BackupManager: Configured backup manager instance
-    """    return BackupManager(config)
+    """
+
+
+    return BackupManager(config)
 
 # Version information
 __version__ = "1.0.0"

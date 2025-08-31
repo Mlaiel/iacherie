@@ -1,5 +1,5 @@
 """
-📊 Analytics Model - IA Influencer Agent Platform Enterprise
+ Analytics Model - IA Influencer Agent Platform Enterprise
 ===========================================================
 Module: backend/data_management/models/analytics_model.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Analytics Data Model - Production-Ready
 Responsibility: Modèles de données pour analytics et métriques avancées
 ========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de

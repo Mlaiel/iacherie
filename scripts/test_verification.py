@@ -35,7 +35,7 @@ def test_simple_execution():
     failing_tests = []
     
     # Tester la collecte pytest simple
-    print("\n📋 Test de collecte pytest...")
+    print("\n Test de collecte pytest...")
     try:
         result = subprocess.run([
             sys.executable, "-m", "pytest", 
@@ -43,15 +43,15 @@ def test_simple_execution():
         ], cwd=PROJECT_ROOT, capture_output=True, text=True, timeout=30)
         
         if result.returncode == 0:
-            print("✅ Collecte pytest réussie")
+            print(" Collecte pytest réussie")
             test_count = result.stdout.count("<Function")
-            print(f"📊 {test_count} fonctions de test trouvées")
+            print(f" {test_count} fonctions de test trouvées")
         else:
-            print("❌ Erreur de collecte pytest")
+            print(" Erreur de collecte pytest")
             print(f"STDERR: {result.stderr[:200]}...")
             
     except Exception as e:
-        print(f"❌ Erreur lors de la collecte : {e}")
+        print(f" Erreur lors de la collecte : {e}")
     
     # Tester les modules de base un par un
     basic_modules = [
@@ -61,7 +61,7 @@ def test_simple_execution():
         "tests/ai/config/__init__.py",
     ]
     
-    print("\n🔍 Test des modules de base...")
+    print("\n Test des modules de base...")
     for module in basic_modules:
         module_path = PROJECT_ROOT / module
         if module_path.exists():
@@ -80,37 +80,37 @@ def test_simple_execution():
                     ], env=test_env, cwd=PROJECT_ROOT, capture_output=True, text=True)
                     
                     if result.returncode == 0:
-                        print(f"✅ {module} - Import réussi")
+                        print(f" {module} - Import réussi")
                         working_tests.append(module)
                     else:
-                        print(f"❌ {module} - Erreur: {result.stderr[:100]}")
+                        print(f" {module} - Erreur: {result.stderr[:100]}")
                         failing_tests.append(module)
                 else:
-                    print(f"📁 {module} - Répertoire existant")
+                    print(f" {module} - Répertoire existant")
                     
             except Exception as e:
-                print(f"❌ {module} - Exception: {e}")
+                print(f" {module} - Exception: {e}")
                 failing_tests.append(module)
         else:
-            print(f"❓ {module} - Fichier non trouvé")
+            print(f" {module} - Fichier non trouvé")
     
     # Générer un rapport simple
-    print(f"\n📊 Résultats :")
-    print(f"✅ Modules fonctionnels : {len(working_tests)}")
-    print(f"❌ Modules en erreur : {len(failing_tests)}")
+    print(f"\n Résultats :")
+    print(f" Modules fonctionnels : {len(working_tests)}")
+    print(f" Modules en erreur : {len(failing_tests)}")
     
     if working_tests:
-        print(f"\n🎉 Modules fonctionnels :")
+        print(f"\n Modules fonctionnels :")
         for test in working_tests:
             print(f"  - {test}")
     
     if failing_tests:
-        print(f"\n❌ Modules en erreur :")
+        print(f"\n Modules en erreur :")
         for test in failing_tests[:5]:  # Afficher seulement les 5 premiers
             print(f"  - {test}")
     
     # Recommandations
-    print(f"\n💡 Recommandations :")
+    print(f"\n Recommandations :")
     if len(working_tests) > 0:
         print(f"1. Les tests de base fonctionnent ! Continuez avec ceux-ci")
         print(f"2. Exécutez : pytest {working_tests[0] if working_tests else 'tests/'} -v")
@@ -176,7 +176,7 @@ if __name__ == "__main__":
     with open(simple_test_path, 'w', encoding='utf-8') as f:
         f.write(simple_test)
     
-    print(f"✅ Test d'exemple créé : {simple_test_path}")
+    print(f" Test d'exemple créé : {simple_test_path}")
     
     # Tester l'exécution
     try:
@@ -186,21 +186,21 @@ if __name__ == "__main__":
         ], cwd=PROJECT_ROOT, capture_output=True, text=True)
         
         if result.returncode == 0:
-            print("🎉 Test d'exemple exécuté avec succès !")
+            print(" Test d'exemple exécuté avec succès !")
             print(f"Sortie:\n{result.stdout}")
         else:
-            print("❌ Erreur lors de l'exécution du test d'exemple")
+            print(" Erreur lors de l'exécution du test d'exemple")
             print(f"Erreur:\n{result.stderr}")
             
     except Exception as e:
-        print(f"❌ Exception lors de l'exécution : {e}")
+        print(f" Exception lors de l'exécution : {e}")
 
 def main():
     """Fonction principale"""
     create_simple_test_example()
     test_simple_execution()
     
-    print(f"\n🚀 Prochaines étapes recommandées :")
+    print(f"\n Prochaines étapes recommandées :")
     print(f"1. pytest tests/test_simple_verification.py -v")
     print(f"2. Adapter les modules importés progressivement")
     print(f"3. Créer les implémentations manquantes")

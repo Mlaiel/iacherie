@@ -150,6 +150,9 @@ class UserPreferences(Base):
     
     def get_preference(self, key: str, default: Any = None) -> Any:
         """Récupère une préférence spécifique."""
+
+
+
         return getattr(self, key, default)
     
     def update_preference(self, key: str, value: Any) -> bool:
@@ -358,6 +361,9 @@ class UserPreferencesRepository:
         Returns:
             UserPreferences: Préférences créées
         """
+
+
+
         try:
             # Préférences principales
             preferences = UserPreferences(user_id=user_id)
@@ -392,6 +398,9 @@ class UserPreferencesRepository:
     
     def get_user_preferences(self, user_id: str) -> Optional[UserPreferences]:
         """Récupère les préférences complètes d'un utilisateur."""
+
+
+
         return self.session.query(UserPreferences).filter(
             UserPreferences.user_id == user_id
         ).first()
@@ -408,6 +417,9 @@ class UserPreferencesRepository:
         Returns:
             bool: True si mis à jour avec succès
         """
+
+
+
         try:
             preferences = self.get_user_preferences(user_id)
             if not preferences:
@@ -436,6 +448,9 @@ class UserPreferencesRepository:
         Returns:
             bool: True si mis à jour avec succès
         """
+
+
+
         try:
             preferences = self.get_user_preferences(user_id)
             if not preferences or not preferences.notification_settings:
@@ -469,6 +484,9 @@ class UserPreferencesRepository:
         Returns:
             bool: True si mis à jour avec succès
         """
+
+
+
         try:
             preferences = self.get_user_preferences(user_id)
             if not preferences or not preferences.privacy_settings:
@@ -538,6 +556,9 @@ class UserPreferencesRepository:
         Returns:
             bool: True si mis à jour avec succès
         """
+
+
+
         try:
             ai_profile = self.session.query(AIPersonalizationProfile).filter(
                 AIPersonalizationProfile.user_id == user_id

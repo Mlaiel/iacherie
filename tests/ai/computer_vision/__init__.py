@@ -14,7 +14,7 @@
 #
 # Created by: Fahed Mlaiel (mlaiel@live.de)
 # 
-# ⚠️  STRICT COPYRIGHT WARNING ⚠️ 
+#   STRICT COPYRIGHT WARNING  
 # This code, concept, and intellectual property belongs exclusively to Fahed Mlaiel.
 # ANY unauthorized use, reproduction, distribution, or theft of this code/concept 
 # without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is 

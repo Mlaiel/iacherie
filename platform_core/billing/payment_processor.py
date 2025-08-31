@@ -1,15 +1,15 @@
 """
-🚀 Payment Processor - IA Influencer Agent Platform Enterprise
+ Payment Processor - IA Influencer Agent Platform Enterprise
 ============================================================
 Module: backend/platform_core/billing/payment_processor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ============================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 PROCESSEUR DE PAIEMENTS MULTI-GATEWAY
+ PROCESSEUR DE PAIEMENTS MULTI-GATEWAY
 Gestion unifiée des paiements via multiple providers
 - Stripe, PayPal, Wise, et autres gateways
 - Failover automatique et load balancing
@@ -116,6 +116,9 @@ class PaymentResponse:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit la réponse en dictionnaire"""
+
+
+
         return {
             "payment_id": self.payment_id,
             "status": self.status.value,
@@ -141,6 +144,9 @@ class PaymentProcessor:
         
     async def process_payment(self, request: PaymentRequest) -> PaymentResponse:
         """Traite un paiement - implémentation de base"""
+
+
+
         try:
             # Validation de base
             if not self.validate_request(request):
@@ -186,6 +192,9 @@ class PaymentProcessor:
         
     async def capture_payment(self, payment_id: str, amount: Optional[float] = None) -> PaymentResponse:
         """Capture un paiement autorisé - implémentation de base"""
+
+
+
         try:
             logger.info(f"Capturing payment {payment_id} with amount {amount}")
             
@@ -217,6 +226,9 @@ class PaymentProcessor:
         
     async def refund_payment(self, payment_id: str, amount: Optional[float] = None, reason: Optional[str] = None) -> PaymentResponse:
         """Rembourse un paiement - implémentation de base"""
+
+
+
         try:
             logger.info(f"Refunding payment {payment_id} with amount {amount}, reason: {reason}")
             
@@ -249,6 +261,9 @@ class PaymentProcessor:
         
     async def get_payment_status(self, payment_id: str) -> PaymentResponse:
         """Récupère le statut d'un paiement - implémentation de base"""
+
+
+
         try:
             logger.info(f"Getting payment status for {payment_id}")
             
@@ -281,6 +296,9 @@ class PaymentProcessor:
         
     async def handle_webhook(self, payload: bytes, signature: str) -> Dict[str, Any]:
         """Traite un webhook du provider - implémentation de base"""
+
+
+
         try:
             logger.info(f"Handling webhook from {self.name} with signature: {signature[:20]}...")
             
@@ -358,6 +376,9 @@ class StripeProcessor(PaymentProcessor):
         
     async def process_payment(self, request: PaymentRequest) -> PaymentResponse:
         """Traite un paiement via Stripe"""
+
+
+
         try:
             # Créer l'intent de paiement
             intent_data = {
@@ -405,6 +426,9 @@ class StripeProcessor(PaymentProcessor):
             
     async def capture_payment(self, payment_id: str, amount: Optional[float] = None) -> PaymentResponse:
         """Capture un paiement Stripe autorisé"""
+
+
+
         try:
             # Récupérer l'intent de paiement
             intents = stripe.PaymentIntent.list(
@@ -436,6 +460,9 @@ class StripeProcessor(PaymentProcessor):
             
     async def refund_payment(self, payment_id: str, amount: Optional[float] = None, reason: Optional[str] = None) -> PaymentResponse:
         """Rembourse un paiement Stripe"""
+
+
+
         try:
             # Récupérer l'intent de paiement
             intents = stripe.PaymentIntent.list(
@@ -483,6 +510,9 @@ class StripeProcessor(PaymentProcessor):
             
     async def get_payment_status(self, payment_id: str) -> PaymentResponse:
         """Récupère le statut d'un paiement Stripe"""
+
+
+
         try:
             intents = stripe.PaymentIntent.list(
                 limit=1,
@@ -505,6 +535,9 @@ class StripeProcessor(PaymentProcessor):
             
     async def handle_webhook(self, payload: bytes, signature: str) -> Dict[str, Any]:
         """Traite un webhook Stripe"""
+
+
+
         try:
             event = stripe.Webhook.construct_event(
                 payload, signature, self.webhook_secret
@@ -631,6 +664,9 @@ class PayPalProcessor(PaymentProcessor):
                     
     async def process_payment(self, request: PaymentRequest) -> PaymentResponse:
         """Traite un paiement via PayPal"""
+
+
+
         try:
             token = await self._get_access_token()
             
@@ -692,6 +728,9 @@ class PayPalProcessor(PaymentProcessor):
             
     async def capture_payment(self, payment_id: str, amount: Optional[float] = None) -> PaymentResponse:
         """Capture un paiement PayPal autorisé"""
+
+
+
         try:
             token = await self._get_access_token()
             
@@ -750,6 +789,9 @@ class PayPalProcessor(PaymentProcessor):
         
     async def get_payment_status(self, payment_id: str) -> PaymentResponse:
         """Récupère le statut d'un paiement PayPal"""
+
+
+
         try:
             token = await self._get_access_token()
             
@@ -794,6 +836,9 @@ class PayPalProcessor(PaymentProcessor):
             
     async def handle_webhook(self, payload: bytes, signature: str) -> Dict[str, Any]:
         """Traite un webhook PayPal"""
+
+
+
         try:
             # Vérification de signature PayPal (simplifiée)
             event_data = json.loads(payload.decode())

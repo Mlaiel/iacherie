@@ -134,6 +134,9 @@ class AzureBlobConfig:
     
     def get_blob_service_client(self) -> BlobServiceClient:
         """Create and configure Azure Blob Service client."""
+
+
+
         try:
             if self.connection_string:
                 return BlobServiceClient.from_connection_string(
@@ -154,6 +157,9 @@ class AzureBlobConfig:
     
     def validate_configuration(self) -> bool:
         """Validate Azure Blob Storage configuration and connectivity."""
+
+
+
         try:
             client = self.get_blob_service_client()
             # Test connectivity by listing containers
@@ -173,6 +179,9 @@ class AzureBlobConfig:
     
     def get_content_types(self) -> List[str]:
         """Get list of supported content types."""
+
+
+
         return [key.replace('-files', '') for key in self.containers.keys() 
                 if key.endswith('-files')]
     
@@ -185,6 +194,9 @@ class AzureBlobConfig:
     
     def get_sas_url_config(self) -> Dict[str, Any]:
         """Get configuration for SAS URL generation."""
+
+
+
         return {
             'account_name': self.account_name,
             'account_key': self.account_key,
@@ -193,6 +205,9 @@ class AzureBlobConfig:
     
     def get_lifecycle_management_policy(self) -> Dict[str, Any]:
         """Get lifecycle management policy for blob storage optimization."""
+
+
+
         return {
             'rules': [
                 {

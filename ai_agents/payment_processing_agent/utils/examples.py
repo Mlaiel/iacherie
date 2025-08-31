@@ -7,7 +7,7 @@ fraud detection, compliance, analytics, and currency conversion.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -54,7 +54,7 @@ async def example_basic_payment_processing():
         }
     )
     
-    print(f"✅ Payment processed: {transaction.id}")
+    print(f" Payment processed: {transaction.id}")
     print(f"   Amount: ${transaction.amount} {transaction.currency}")
     print(f"   Status: {transaction.status}")
     print(f"   Fee: ${transaction.fee_amount}")
@@ -83,7 +83,7 @@ async def example_revenue_allocation():
     )
     
     for allocation in allocations:
-        print(f"📊 Revenue source: {allocation.source}")
+        print(f" Revenue source: {allocation.source}")
         print(f"   Gross: ${allocation.gross_amount}")
         print(f"   Net: ${allocation.net_amount}")
         print(f"   Platform fee: ${allocation.platform_fee}")
@@ -112,7 +112,7 @@ async def example_fraud_detection():
         }
     )
     
-    print(f"🔍 Fraud Analysis Results:")
+    print(f" Fraud Analysis Results:")
     print(f"   Risk Level: {fraud_analysis['risk_classification']}")
     print(f"   Risk Score: {fraud_analysis['risk_level']:.2f}")
     print(f"   Recommendation: {fraud_analysis['recommendation']}")
@@ -137,7 +137,7 @@ async def example_currency_conversion():
         payment_method="stripe"
     )
     
-    print(f"💱 Currency Conversion:")
+    print(f" Currency Conversion:")
     print(f"   Original: €{converted_payment.amount} EUR")
     print(f"   Converted: ${converted_payment.converted_amount} USD")
     print(f"   Exchange Rate: {converted_payment.exchange_rate}")
@@ -165,13 +165,13 @@ async def example_compliance_check():
         }
     )
     
-    print(f"⚖️  Compliance Check:")
+    print(f"  Compliance Check:")
     print(f"   Status: {compliance_result['status']}")
     print(f"   KYC Level: {compliance_result['kyc_level']}")
     print(f"   Required Actions: {compliance_result['required_actions']}")
     
     if compliance_result['violations']:
-        print(f"   ⚠️  Violations: {compliance_result['violations']}")
+        print(f"     Violations: {compliance_result['violations']}")
     
     return compliance_result
 
@@ -193,7 +193,7 @@ async def example_payout_scheduling():
         auto_tax_calculation=True
     )
     
-    print(f"📅 Payout Schedule Created:")
+    print(f" Payout Schedule Created:")
     print(f"   Schedule ID: {payout_schedule.id}")
     print(f"   Frequency: {payout_schedule.frequency}")
     print(f"   Next Payout: {payout_schedule.next_execution}")
@@ -216,7 +216,7 @@ async def example_analytics_dashboard():
         granularity="daily"
     )
     
-    print(f"📈 Revenue Analytics:")
+    print(f" Revenue Analytics:")
     print(f"   Total Revenue: ${analytics['total_revenue']}")
     print(f"   Revenue Growth: {analytics['revenue_growth']:.1f}%")
     print(f"   Top Source: {analytics['top_revenue_source']}")
@@ -226,7 +226,7 @@ async def example_analytics_dashboard():
     # Revenue forecast
     forecast = analytics.get('revenue_forecast', {})
     if forecast:
-        print(f"   📊 Next Month Forecast: ${forecast['predicted_amount']}")
+        print(f"    Next Month Forecast: ${forecast['predicted_amount']}")
         print(f"   Confidence: {forecast['confidence']:.1f}%")
     
     return analytics
@@ -264,7 +264,7 @@ async def example_webhook_handling():
         signature="stripe_signature_hash"
     )
     
-    print(f"🔗 Webhook Processed:")
+    print(f" Webhook Processed:")
     print(f"   Event ID: {result['event_id']}")
     print(f"   Status: {result['status']}")
     print(f"   Action Taken: {result['action']}")
@@ -305,7 +305,7 @@ async def example_multi_provider_processing():
                 "amount": f"{amount} {currency}"
             })
             
-            print(f"✅ {provider.upper()}: {amount} {currency} - Success")
+            print(f" {provider.upper()}: {amount} {currency} - Success")
             
         except Exception as e:
             results.append({
@@ -315,7 +315,7 @@ async def example_multi_provider_processing():
                 "amount": f"{amount} {currency}"
             })
             
-            print(f"❌ {provider.upper()}: {amount} {currency} - Failed: {str(e)}")
+            print(f" {provider.upper()}: {amount} {currency} - Failed: {str(e)}")
     
     return results
 
@@ -331,13 +331,13 @@ async def example_performance_monitoring():
     # Get comprehensive health check
     health = await service.health_check()
     
-    print(f"🏥 System Health:")
+    print(f" System Health:")
     print(f"   Service Status: {health['service']['status']}")
     print(f"   Components: {len(health['components'])} active")
     
     # Check individual components
     for component, status in health['components'].items():
-        print(f"   📊 {component}: {status['status']}")
+        print(f"    {component}: {status['status']}")
         
         if 'metrics' in status:
             metrics = status['metrics']
@@ -352,7 +352,7 @@ async def example_performance_monitoring():
 
 async def run_all_examples():
     """Run all payment processing examples"""
-    print("🚀 Payment Processing Agent - Industrial Examples")
+    print(" Payment Processing Agent - Industrial Examples")
     print("=" * 60)
     
     try:
@@ -378,10 +378,10 @@ async def run_all_examples():
             await example_multi_provider_processing()
             await example_performance_monitoring()
             
-            print("\n🎉 All examples completed successfully!")
+            print("\n All examples completed successfully!")
             
     except Exception as e:
-        print(f"\n❌ Example execution failed: {str(e)}")
+        print(f"\n Example execution failed: {str(e)}")
         logger.error(f"Example execution error: {str(e)}", exc_info=True)
 
 

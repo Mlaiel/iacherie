@@ -273,6 +273,9 @@ class AdvancedProtectionConfig:
     @classmethod
     def from_file(cls, config_file: str) -> 'AdvancedProtectionConfig':
         """Load configuration from JSON file"""
+
+
+
         try:
             with open(config_file, 'r') as f:
                 data = json.load(f)
@@ -306,6 +309,9 @@ class AdvancedProtectionConfig:
     
     def save_to_file(self, config_file: str):
         """Save configuration to JSON file"""
+
+
+
         try:
             with open(config_file, 'w') as f:
                 json.dump(self.to_dict(), f, indent=2, default=str)

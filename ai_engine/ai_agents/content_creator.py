@@ -7,7 +7,7 @@ and image generation. Handles creative workflows and content optimization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
@@ -114,6 +114,9 @@ class ContentCreatorAgent(BaseAIAgent):
     
     async def _custom_initialize(self) -> None:
         """Initialize content creation engines"""
+
+
+
         try:
             # Initialize content generation engines
             self.content_generator = ContentGenerator()
@@ -524,6 +527,9 @@ class ContentCreatorAgent(BaseAIAgent):
     
     async def _generate_seo_metadata(self, result: ContentCreationResult, request: ContentCreationRequest) -> Dict[str, Any]:
         """Generate SEO metadata for content"""
+
+
+
         return {
             "title": await self._generate_seo_title(result, request),
             "description": await self._generate_seo_description(result, request),

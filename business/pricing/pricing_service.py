@@ -1,5 +1,5 @@
 """
-🚀 Pricing Service - Industrial-Grade Pricing Management API
+ Pricing Service - Industrial-Grade Pricing Management API
 ==========================================================
 
 High-level pricing service orchestrating all pricing operations.
@@ -20,7 +20,7 @@ Project Team Specialists:
 Created by: Fahed Mlaiel <mlaiel@live.de>
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
+ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED 
 
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized copying, modification, distribution, or use of this code or its
@@ -176,6 +176,9 @@ class PricingService:
         Returns:
             PricingResponse with optimization results
         """
+
+
+
         try:
             # Validate creator permissions
             await self._validate_creator_access(creator_id, request.content_id)
@@ -268,6 +271,9 @@ class PricingService:
         Returns:
             TierRecommendationResponse with recommendation
         """
+
+
+
         try:
             # Get current tier
             current_tier_config = await self._get_current_tier(creator_id)
@@ -345,6 +351,9 @@ class PricingService:
         Returns:
             Bulk pricing results
         """
+
+
+
         try:
             # Validate bulk request size
             if len(request.pricing_requests) > 100:
@@ -415,6 +424,9 @@ class PricingService:
         days: int = 30
     ) -> Dict[str, Any]:
         """Get pricing calculation history"""
+
+
+
         
         try:
             async with self.db_manager.get_session() as session:
@@ -466,6 +478,9 @@ class PricingService:
         metric: Optional[str] = None
     ) -> Dict[str, Any]:
         """Get usage analytics for tier management"""
+
+
+
         
         try:
             async with self.db_manager.get_session() as session:
@@ -561,6 +576,9 @@ class PricingService:
         metrics: PricingMetrics
     ) -> uuid.UUID:
         """Store pricing calculation in database"""
+
+
+
         
         try:
             async with self.db_manager.get_session() as session:
@@ -721,6 +739,9 @@ class PricingService:
         cost_analysis: Dict[str, Any]
     ):
         """Store tier recommendation in database"""
+
+
+
         
         try:
             async with self.db_manager.get_session() as session:
@@ -760,6 +781,9 @@ class PricingService:
         data: Dict[str, Any]
     ):
         """Log pricing audit trail"""
+
+
+
         
         try:
             async with self.db_manager.get_session() as session:
@@ -780,6 +804,9 @@ class PricingService:
     
     def _extract_pricing_factors(self, metrics: PricingMetrics) -> Dict[str, Any]:
         """Extract pricing factors for response"""
+
+
+
         
         return {
             'market_demand_score': metrics.market_demand_score,

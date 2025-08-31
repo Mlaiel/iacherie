@@ -8,7 +8,7 @@ coordinating all components: engines, processors, security, monitoring, etc.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent - Content Protection Platform
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
@@ -103,9 +103,12 @@ class IndexingOrchestrator:
         
     async def initialize(self) -> Dict[str, Any]:
         """Initialize the complete indexing system"""
+
+
+
         try:
             self.start_time = datetime.now(timezone.utc)
-            logger.info("🚀 Starting IA Influencer Agent Indexing System initialization...")
+            logger.info(" Starting IA Influencer Agent Indexing System initialization...")
             
             # Initialize Redis connection
             await self._initialize_redis()
@@ -138,7 +141,7 @@ class IndexingOrchestrator:
             
             initialization_time = (datetime.now(timezone.utc) - self.start_time).total_seconds()
             
-            logger.info(f"✅ IA Influencer Agent Indexing System initialized successfully in {initialization_time:.2f}s")
+            logger.info(f" IA Influencer Agent Indexing System initialized successfully in {initialization_time:.2f}s")
             
             return {
                 "status": "initialized",
@@ -149,23 +152,29 @@ class IndexingOrchestrator:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize IndexingOrchestrator: {e}")
+            logger.error(f" Failed to initialize IndexingOrchestrator: {e}")
             raise
     
     async def _initialize_redis(self):
         """Initialize Redis connection"""
+
+
+
         try:
             self.redis_client = Redis.from_url(self.config.redis_url)
             await self.redis_client.ping()
             self.component_status["redis"] = "initialized"
-            logger.info("✅ Redis connection established")
+            logger.info(" Redis connection established")
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize Redis: {e}")
+            logger.error(f" Failed to initialize Redis: {e}")
             raise
     
     async def _initialize_core_engines(self):
         """Initialize core indexing engines"""
+
+
+
         try:
             # Default indexing config if not provided
             indexing_config = self.config.indexing_config or IndexingConfig(
@@ -188,14 +197,17 @@ class IndexingOrchestrator:
             await self.engines["metadata_index"].initialize()
             
             self.component_status["engines"] = "initialized"
-            logger.info("✅ Core indexing engines initialized")
+            logger.info(" Core indexing engines initialized")
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize core engines: {e}")
+            logger.error(f" Failed to initialize core engines: {e}")
             raise
     
     async def _initialize_processors(self):
         """Initialize content processors"""
+
+
+
         try:
             processing_config = self.config.processing_config or ProcessingConfig(
                 enable_gpu=self.config.enable_gpu
@@ -205,14 +217,17 @@ class IndexingOrchestrator:
             await self.processors.initialize()
             
             self.component_status["processors"] = "initialized"
-            logger.info("✅ Content processors initialized")
+            logger.info(" Content processors initialized")
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize processors: {e}")
+            logger.error(f" Failed to initialize processors: {e}")
             raise
     
     async def _initialize_services(self):
         """Initialize business services"""
+
+
+
         try:
             # Initialize main services
             self.services["indexing"] = IndexingService(
@@ -238,14 +253,17 @@ class IndexingOrchestrator:
                 await self.services["realtime"].initialize()
             
             self.component_status["services"] = "initialized"
-            logger.info("✅ Business services initialized")
+            logger.info(" Business services initialized")
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize services: {e}")
+            logger.error(f" Failed to initialize services: {e}")
             raise
     
     async def _initialize_monitoring(self):
         """Initialize monitoring system"""
+
+
+
         try:
             # Metrics collector
             self.monitoring_system["metrics"] = MetricsCollector(
@@ -269,14 +287,17 @@ class IndexingOrchestrator:
             await self._setup_default_alert_rules()
             
             self.component_status["monitoring"] = "initialized"
-            logger.info("✅ Monitoring system initialized")
+            logger.info(" Monitoring system initialized")
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize monitoring: {e}")
+            logger.error(f" Failed to initialize monitoring: {e}")
             raise
     
     async def _initialize_analytics(self):
         """Initialize analytics system"""
+
+
+
         try:
             self.analytics_system["content"] = ContentAnalyticsEngine(
                 self.config.redis_url
@@ -291,14 +312,17 @@ class IndexingOrchestrator:
             self.analytics_system["visualization"] = VisualizationEngine()
             
             self.component_status["analytics"] = "initialized"
-            logger.info("✅ Analytics system initialized")
+            logger.info(" Analytics system initialized")
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize analytics: {e}")
+            logger.error(f" Failed to initialize analytics: {e}")
             raise
     
     async def _initialize_optimization(self):
         """Initialize optimization system"""
+
+
+
         try:
             optimization_config = self.config.optimization_config or OptimizationConfig(
                 strategy=OptimizationStrategy.BALANCED,
@@ -312,14 +336,17 @@ class IndexingOrchestrator:
             await self.optimization_system.initialize()
             
             self.component_status["optimization"] = "initialized"
-            logger.info("✅ Optimization system initialized")
+            logger.info(" Optimization system initialized")
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize optimization: {e}")
+            logger.error(f" Failed to initialize optimization: {e}")
             raise
     
     async def _initialize_security(self):
         """Initialize security system"""
+
+
+
         try:
             security_config = self.config.security_config or SecurityConfig()
             
@@ -346,14 +373,17 @@ class IndexingOrchestrator:
             await self._create_default_admin_user()
             
             self.component_status["security"] = "initialized"
-            logger.info("✅ Security system initialized")
+            logger.info(" Security system initialized")
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize security: {e}")
+            logger.error(f" Failed to initialize security: {e}")
             raise
     
     async def _setup_default_configurations(self):
         """Setup default system configurations"""
+
+
+
         try:
             # Store system configuration
             await self.redis_client.set(
@@ -380,10 +410,10 @@ class IndexingOrchestrator:
                 json.dumps(init_metadata)
             )
             
-            logger.info("✅ Default configurations set up")
+            logger.info(" Default configurations set up")
             
         except Exception as e:
-            logger.error(f"❌ Failed to setup default configurations: {e}")
+            logger.error(f" Failed to setup default configurations: {e}")
             raise
     
     async def _setup_default_alert_rules(self):
@@ -438,10 +468,10 @@ class IndexingOrchestrator:
                 notification_channels=["email", "slack"]
             ))
             
-            logger.info("✅ Default alert rules configured")
+            logger.info(" Default alert rules configured")
             
         except Exception as e:
-            logger.error(f"❌ Failed to setup alert rules: {e}")
+            logger.error(f" Failed to setup alert rules: {e}")
     
     async def _create_default_admin_user(self):
         """Create default admin user for system access"""
@@ -459,13 +489,16 @@ class IndexingOrchestrator:
                 email="mlaiel@live.de"
             )
             
-            logger.info(f"✅ Default admin user created: {admin_user_id}")
+            logger.info(f" Default admin user created: {admin_user_id}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to create admin user: {e}")
+            logger.error(f" Failed to create admin user: {e}")
     
     async def health_check(self) -> Dict[str, Any]:
         """Comprehensive system health check"""
+
+
+
         try:
             health_status = {
                 "overall_status": "healthy",
@@ -513,7 +546,7 @@ class IndexingOrchestrator:
             return health_status
             
         except Exception as e:
-            logger.error(f"❌ Health check failed: {e}")
+            logger.error(f" Health check failed: {e}")
             return {
                 "overall_status": "unhealthy",
                 "error": str(e),
@@ -522,6 +555,9 @@ class IndexingOrchestrator:
     
     async def index_content(self, request: IndexingRequest) -> Dict[str, Any]:
         """Main entry point for content indexing"""
+
+
+
         try:
             if not self.initialized:
                 raise RuntimeError("System not initialized")
@@ -561,7 +597,7 @@ class IndexingOrchestrator:
             return asdict(result)
             
         except Exception as e:
-            logger.error(f"❌ Content indexing failed: {e}")
+            logger.error(f" Content indexing failed: {e}")
             
             # Record failure metrics
             if self.config.enable_monitoring and "metrics" in self.monitoring_system:
@@ -577,6 +613,9 @@ class IndexingOrchestrator:
     
     async def search_content(self, request: SearchRequest) -> Dict[str, Any]:
         """Main entry point for content search"""
+
+
+
         try:
             if not self.initialized:
                 raise RuntimeError("System not initialized")
@@ -605,11 +644,14 @@ class IndexingOrchestrator:
             }
             
         except Exception as e:
-            logger.error(f"❌ Content search failed: {e}")
+            logger.error(f" Content search failed: {e}")
             raise
     
     async def get_system_status(self) -> Dict[str, Any]:
         """Get comprehensive system status"""
+
+
+
         try:
             status = {
                 "system_info": {
@@ -637,13 +679,16 @@ class IndexingOrchestrator:
             return status
             
         except Exception as e:
-            logger.error(f"❌ Failed to get system status: {e}")
+            logger.error(f" Failed to get system status: {e}")
             return {"error": str(e)}
     
     async def shutdown(self):
         """Graceful system shutdown"""
+
+
+
         try:
-            logger.info("🛑 Shutting down IA Influencer Agent Indexing System...")
+            logger.info(" Shutting down IA Influencer Agent Indexing System...")
             
             # Close Redis connection
             if self.redis_client:
@@ -654,10 +699,10 @@ class IndexingOrchestrator:
                 if hasattr(self.optimization_system.workload_balancer, 'worker_pool'):
                     self.optimization_system.workload_balancer.worker_pool.shutdown(wait=True)
             
-            logger.info("✅ System shutdown completed")
+            logger.info(" System shutdown completed")
             
         except Exception as e:
-            logger.error(f"❌ Error during shutdown: {e}")
+            logger.error(f" Error during shutdown: {e}")
 
 
 # Factory function for easy initialization
@@ -746,6 +791,9 @@ class IndexingModuleFactory:
     
     def create_indexing_config(self) -> IndexingConfig:
         """Create indexing engine configuration"""
+
+
+
         return IndexingConfig(
             vector_dimension=self.config.vector_dimension,
             similarity_threshold=self.config.similarity_threshold,
@@ -758,6 +806,9 @@ class IndexingModuleFactory:
     
     def create_processing_config(self) -> ProcessingConfig:
         """Create content processing configuration"""
+
+
+
         return ProcessingConfig(
             max_file_size=self.config.max_file_size,
             temp_directory=self.config.temp_directory,
@@ -766,6 +817,9 @@ class IndexingModuleFactory:
     
     async def create_repositories(self) -> Dict[str, Any]:
         """Create repository instances"""
+
+
+
         try:
             # This would typically initialize database connections
             # For now, we'll return mock repositories
@@ -786,6 +840,9 @@ class IndexingModuleFactory:
     
     async def create_services(self, repositories: Dict[str, Any]) -> Dict[str, Any]:
         """Create service instances"""
+
+
+
         try:
             indexing_config = self.create_indexing_config()
             processing_config = self.create_processing_config()
@@ -847,6 +904,9 @@ class IndexingModule:
     
     async def initialize(self) -> None:
         """Initialize the indexing module"""
+
+
+
         try:
             if self._initialized:
                 self.logger.warning("IndexingModule already initialized")
@@ -880,6 +940,9 @@ class IndexingModule:
     
     async def shutdown(self) -> None:
         """Shutdown the indexing module"""
+
+
+
         try:
             if not self._initialized:
                 return
@@ -904,6 +967,9 @@ class IndexingModule:
     
     async def index_content(self, request: IndexingRequest) -> Dict[str, Any]:
         """Index content with comprehensive processing"""
+
+
+
         try:
             if not self._initialized:
                 await self.initialize()
@@ -934,6 +1000,9 @@ class IndexingModule:
     
     async def search_content(self, request: SearchRequest) -> Dict[str, Any]:
         """Search indexed content"""
+
+
+
         try:
             if not self._initialized:
                 await self.initialize()
@@ -964,6 +1033,9 @@ class IndexingModule:
     
     async def find_similar_content(self, content_id: str, limit: int = 10) -> Dict[str, Any]:
         """Find content similar to the given content"""
+
+
+
         try:
             if not self._initialized:
                 await self.initialize()
@@ -991,6 +1063,9 @@ class IndexingModule:
     
     async def get_content_recommendations(self, content_id: str, limit: int = 10) -> Dict[str, Any]:
         """Get content recommendations"""
+
+
+
         try:
             if not self._initialized:
                 await self.initialize()
@@ -1018,6 +1093,9 @@ class IndexingModule:
     
     async def create_text_embedding(self, content_id: str, text: str) -> Dict[str, Any]:
         """Create text embedding for content"""
+
+
+
         try:
             if not self._initialized:
                 await self.initialize()
@@ -1043,6 +1121,9 @@ class IndexingModule:
     
     async def similarity_search_by_text(self, query_text: str, top_k: int = 10) -> Dict[str, Any]:
         """Perform similarity search using text query"""
+
+
+
         try:
             if not self._initialized:
                 await self.initialize()
@@ -1070,6 +1151,9 @@ class IndexingModule:
     
     async def update_content_index(self, content_id: str, updates: Dict[str, Any]) -> Dict[str, Any]:
         """Update existing content index"""
+
+
+
         try:
             if not self._initialized:
                 await self.initialize()
@@ -1095,6 +1179,9 @@ class IndexingModule:
     
     async def delete_content_index(self, content_id: str) -> Dict[str, Any]:
         """Delete content from all indexes"""
+
+
+
         try:
             if not self._initialized:
                 await self.initialize()
@@ -1119,6 +1206,9 @@ class IndexingModule:
     
     async def get_indexing_stats(self, creator_id: Optional[str] = None) -> Dict[str, Any]:
         """Get indexing statistics"""
+
+
+
         try:
             if not self._initialized:
                 await self.initialize()
@@ -1144,6 +1234,9 @@ class IndexingModule:
     
     async def queue_realtime_indexing(self, request: IndexingRequest) -> Dict[str, Any]:
         """Queue content for real-time indexing"""
+
+
+
         try:
             if not self._initialized:
                 await self.initialize()
@@ -1170,6 +1263,9 @@ class IndexingModule:
     
     async def get_realtime_queue_status(self) -> Dict[str, Any]:
         """Get real-time queue status"""
+
+
+
         try:
             if not self._initialized:
                 await self.initialize()
@@ -1200,6 +1296,9 @@ class IndexingModule:
     
     def get_supported_file_formats(self) -> Dict[str, List[str]]:
         """Get supported file formats for processing"""
+
+
+
         return {
             "audio": [".mp3", ".wav", ".flac", ".aac", ".ogg", ".m4a", ".wma"],
             "video": [".mp4", ".avi", ".mov", ".mkv", ".wmv", ".flv", ".webm", ".m4v"],
@@ -1209,6 +1308,9 @@ class IndexingModule:
     
     def get_module_info(self) -> Dict[str, Any]:
         """Get module information"""
+
+
+
         return {
             "name": "IA Influencer Agent - Indexing Module",
             "version": "2.0.0",
@@ -1240,6 +1342,9 @@ async def quick_index_file(file_path: str, creator_id: str,
                           title: str = "", description: str = "",
                           tags: List[str] = None) -> Dict[str, Any]:
     """Quick utility function to index a single file"""
+
+
+
     try:
         module = await create_indexing_module()
         
@@ -1269,6 +1374,9 @@ async def quick_index_file(file_path: str, creator_id: str,
 async def quick_search_content(query_text: str, content_types: List[str] = None,
                              limit: int = 10) -> Dict[str, Any]:
     """Quick utility function to search content"""
+
+
+
     try:
         module = await create_indexing_module()
         

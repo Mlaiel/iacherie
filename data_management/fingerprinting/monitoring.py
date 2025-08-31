@@ -1,5 +1,5 @@
 """
-🚨 Real-time Monitoring Engine - IA Influencer Agent Platform Enterprise
+ Real-time Monitoring Engine - IA Influencer Agent Platform Enterprise
 =======================================================================
 Module: backend/data_management/fingerprinting/monitoring.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Real-time Monitoring - Ultra Enterprise Production-Ready
 Responsibility: Advanced real-time content monitoring, web crawling, and violation detection
 ===================================================================================
 
-⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
+  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -19,14 +19,14 @@ Web Crawling → Platform API Monitoring → Similarity Detection →
 Violation Alert → Evidence Collection → Automated Takedown → Revenue Recovery
 
 MONITORING TECHNOLOGIES:
-├── 🕷️ Web Crawlers (Scrapy + Selenium + BeautifulSoup)
-├── 🔗 Platform APIs (YouTube, Instagram, TikTok, Spotify)
-├── ⚡ Real-time Processing (WebSocket + Server-Sent Events)
-├── 🚨 Alert System (Email + SMS + Webhook + Slack)
-├── 📊 Performance Monitoring (Prometheus + Grafana)
-├── 🔍 Image Recognition (OpenCV + YOLO + OCR)
-├── 🎵 Audio Detection (Chromaprint + Spectral Analysis)
-└── 🛡️ Violation Evidence (Screenshots + Metadata + Legal)
+  Web Crawlers (Scrapy + Selenium + BeautifulSoup)
+  Platform APIs (YouTube, Instagram, TikTok, Spotify)
+  Real-time Processing (WebSocket + Server-Sent Events)
+  Alert System (Email + SMS + Webhook + Slack)
+  Performance Monitoring (Prometheus + Grafana)
+  Image Recognition (OpenCV + YOLO + OCR)
+  Audio Detection (Chromaprint + Spectral Analysis)
+  Violation Evidence (Screenshots + Metadata + Legal)
 """
 
 from typing import Dict, List, Optional, Any, Union, Tuple, Set, Callable
@@ -265,6 +265,9 @@ class BaseMonitor(ABC):
     
     def get_metrics(self) -> Dict[str, Any]:
         """Retourne les métriques du monitor"""
+
+
+
         return self.metrics.copy()
 
 class WebCrawlerMonitor(BaseMonitor):
@@ -571,6 +574,9 @@ class WebCrawlerMonitor(BaseMonitor):
     
     async def _analyze_search_result(self, result: Dict[str, Any], job: MonitoringJob) -> Optional[ViolationAlert]:
         """Analyse un résultat de recherche pour détecter une violation"""
+
+
+
         try:
             # Analyse basique basée sur le titre et l'URL
             title_similarity = self._calculate_text_similarity(
@@ -696,6 +702,9 @@ class WebCrawlerMonitor(BaseMonitor):
     
     async def _take_screenshot(self, url: str, evidence_dir: Path) -> Optional[str]:
         """Prend un screenshot d'une page web"""
+
+
+
         try:
             self.driver.get(url)
             await asyncio.sleep(3)  # Attente du chargement
@@ -933,6 +942,9 @@ class ViolationDetector:
         
     async def analyze_content(self, content_url: str, original_fingerprint: Dict[str, Any]) -> Optional[ViolationAlert]:
         """Analyse un contenu détecté pour confirmer une violation"""
+
+
+
         try:
             # Téléchargement et analyse du contenu
             content_data = await self._download_content(content_url)
@@ -972,6 +984,9 @@ class ViolationDetector:
     
     async def _download_content(self, url: str) -> Optional[bytes]:
         """Télécharge le contenu pour analyse"""
+
+
+
         try:
             if not REQUESTS_AVAILABLE:
                 return None
@@ -1006,6 +1021,9 @@ class ViolationDetector:
     
     async def _compare_fingerprints(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
         """Compare deux fingerprints et retourne un score de similarité"""
+
+
+
         try:
             # Comparaison simplifiée basée sur le hash
             hash1 = fp1.get("content_hash", "")
@@ -1098,7 +1116,7 @@ class AlertManager:
             recipient = "creator@example.com"  # À récupérer depuis les métadonnées du créateur
             
             # Construction du message
-            subject = f"🚨 Content Violation Detected - {violation.severity.value.title()}"
+            subject = f" Content Violation Detected - {violation.severity.value.title()}"
             
             body = f"""
             Content Violation Alert
@@ -1138,6 +1156,9 @@ class AlertManager:
     
     async def _send_webhook_alert(self, violation: ViolationAlert) -> bool:
         """Envoie une alerte via webhook"""
+
+
+
         try:
             webhook_url = "https://api.example.com/alerts"  # À configurer
             
@@ -1165,13 +1186,16 @@ class AlertManager:
     
     async def _send_slack_alert(self, violation: ViolationAlert) -> bool:
         """Envoie une alerte Slack"""
+
+
+
         try:
             # Slack webhook URL (à configurer)
             slack_webhook = "https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK"
             
             # Formatage du message Slack
             slack_message = {
-                "text": f"🚨 Content Violation Detected",
+                "text": f" Content Violation Detected",
                 "attachments": [
                     {
                         "color": "danger" if violation.severity in [AlertSeverity.CRITICAL, AlertSeverity.HIGH] else "warning",
@@ -1194,11 +1218,14 @@ class AlertManager:
     
     async def _send_sms_alert(self, violation: ViolationAlert) -> bool:
         """Envoie une alerte SMS"""
+
+
+
         try:
             # Service SMS (Twilio, AWS SNS, etc.)
             phone_number = "+1234567890"  # À configurer
             
-            message = f"🚨 IA Influencer Alert: {violation.severity.value.title()} violation detected on {violation.platform.value}. Similarity: {violation.similarity_score:.0%}. Check dashboard for details."
+            message = f" IA Influencer Alert: {violation.severity.value.title()} violation detected on {violation.platform.value}. Similarity: {violation.similarity_score:.0%}. Check dashboard for details."
             
             # Simulation d'envoi SMS
             logger.info(f"SMS alert sent for violation {violation.alert_id}")
@@ -1246,6 +1273,9 @@ class RealTimeMonitor:
     
     async def start_monitoring(self):
         """Démarre le système de monitoring en temps réel"""
+
+
+
         try:
             self.is_running = True
             start_time = time.time()
@@ -1280,6 +1310,9 @@ class RealTimeMonitor:
     
     async def add_monitoring_job(self, job: MonitoringJob):
         """Ajoute un job de monitoring"""
+
+
+
         try:
             self.job_queue.put(job)
             logger.info(f"Monitoring job added: {job.job_id}")
@@ -1301,6 +1334,9 @@ class RealTimeMonitor:
     
     async def _start_job(self, job: MonitoringJob):
         """Démarre un job de monitoring"""
+
+
+
         try:
             job.status = "running"
             job.last_check = datetime.now().isoformat()
@@ -1358,6 +1394,9 @@ class RealTimeMonitor:
     
     async def _handle_violation(self, violation: ViolationAlert, job: MonitoringJob):
         """Traite une violation détectée"""
+
+
+
         try:
             # Envoi de l'alerte
             alert_sent = await self.alert_manager.send_alert(violation)
@@ -1376,6 +1415,9 @@ class RealTimeMonitor:
     
     async def _save_violation(self, violation: ViolationAlert):
         """Sauvegarde une violation dans le système"""
+
+
+
         try:
             # En production, sauvegarder dans PostgreSQL/MongoDB
             violation_data = {
@@ -1403,6 +1445,9 @@ class RealTimeMonitor:
     
     async def stop_monitoring(self):
         """Arrête le système de monitoring"""
+
+
+
         try:
             self.is_running = False
             
@@ -1417,6 +1462,9 @@ class RealTimeMonitor:
     
     def get_comprehensive_metrics(self) -> Dict[str, Any]:
         """Retourne des métriques complètes du système"""
+
+
+
         return {
             "global_metrics": self.metrics,
             "web_crawler_metrics": self.web_crawler.get_metrics(),

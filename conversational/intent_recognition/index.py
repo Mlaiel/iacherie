@@ -7,7 +7,7 @@ to all core components and functionality.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
@@ -125,6 +125,9 @@ class IntentRecognitionSystem:
     
     def _initialize_components(self) -> None:
         """Initialize all system components"""
+
+
+
         try:
             # Core processors
             self.confidence_scorer = IntentConfidenceScorer(self.config)
@@ -162,6 +165,9 @@ class IntentRecognitionSystem:
         Returns:
             Dict containing all analysis results
         """
+
+
+
         try:
             # Initialize contexts
             user_profile = user_profile or {}
@@ -327,6 +333,9 @@ class IntentRecognitionSystem:
         Returns:
             System status information
         """
+
+
+
         return {
             "system_version": __version__,
             "author": __author__,
@@ -355,6 +364,9 @@ def create_intent_system(config: Optional[IntentRecognitionConfig] = None) -> In
     Returns:
         Initialized IntentRecognitionSystem
     """
+
+
+
     return IntentRecognitionSystem(config)
 
 
@@ -434,4 +446,4 @@ __all__ = [
 # System initialization message
 logger.info(f"Intent Recognition System v{__version__} loaded successfully")
 logger.info(f"Author: {__author__} <{__email__}>")
-logger.info("⚠️  This software is protected by copyright. Unauthorized use is prohibited.")
+logger.info("  This software is protected by copyright. Unauthorized use is prohibited.")

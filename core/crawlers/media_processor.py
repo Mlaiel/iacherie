@@ -403,6 +403,9 @@ class AdvancedMediaProcessor(BaseCrawler):
         Returns:
             str: Job ID for tracking
         """
+
+
+
         try:
             job_id = hashlib.md5(f"{processing_request.request_id}_{datetime.utcnow()}".encode()).hexdigest()
             
@@ -442,6 +445,9 @@ class AdvancedMediaProcessor(BaseCrawler):
         Returns:
             ProcessingJob: Completed processing job
         """
+
+
+
         try:
             job_id = await self.submit_processing_job(processing_request)
             
@@ -493,6 +499,9 @@ class AdvancedMediaProcessor(BaseCrawler):
         Returns:
             MediaAnalysis: Comprehensive analysis result
         """
+
+
+
         try:
             await self.rate_limiters['ai_analysis'].acquire()
             
@@ -601,6 +610,9 @@ class AdvancedMediaProcessor(BaseCrawler):
         Returns:
             ProcessingResult: Conversion result
         """
+
+
+
         try:
             # Determine processing type
             if target_format.lower() in [f.value for f in ImageFormat]:
@@ -664,6 +676,9 @@ class AdvancedMediaProcessor(BaseCrawler):
         Returns:
             List[ProcessingResult]: List of thumbnail generation results
         """
+
+
+
         try:
             thumbnail_sizes = thumbnail_sizes or [(150, 150), (300, 300), (600, 600)]
             results = []
@@ -714,6 +729,9 @@ class AdvancedMediaProcessor(BaseCrawler):
     
     async def _processing_worker(self, priority: ProcessingPriority, worker_id: int):
         """Background processing worker"""
+
+
+
         try:
             while self.workers_active:
                 try:
@@ -745,6 +763,9 @@ class AdvancedMediaProcessor(BaseCrawler):
 
     async def _process_job(self, job: ProcessingJob) -> ProcessingJob:
         """Process a complete job with all operations"""
+
+
+
         try:
             job.status = "processing"
             job.start_timestamp = datetime.utcnow()
@@ -847,6 +868,9 @@ class AdvancedMediaProcessor(BaseCrawler):
 
     async def _download_media(self, media_url: str) -> bytes:
         """Download media from URL"""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(media_url) as response:
@@ -909,6 +933,9 @@ class AdvancedMediaProcessor(BaseCrawler):
 
     async def _analyze_media_simple(self, media_data: bytes, media_type: MediaType) -> MediaAnalysis:
         """Simple media analysis for job processing"""
+
+
+
         return MediaAnalysis(
             analysis_id=hashlib.md5(media_data).hexdigest(),
             media_type=media_type,
@@ -1039,6 +1066,9 @@ class AdvancedMediaProcessor(BaseCrawler):
 
     async def _send_completion_callback(self, job: ProcessingJob):
         """Send completion callback"""
+
+
+
         try:
             callback_data = {
                 'job_id': job.job_id,
@@ -1066,6 +1096,9 @@ class AdvancedMediaProcessor(BaseCrawler):
 
     async def cleanup_old_files(self, max_age_hours: int = 24):
         """Cleanup old temporary and output files"""
+
+
+
         try:
             cutoff_time = datetime.utcnow() - timedelta(hours=max_age_hours)
             
@@ -1083,6 +1116,9 @@ class AdvancedMediaProcessor(BaseCrawler):
 
     async def close(self):
         """Close processor and cleanup resources"""
+
+
+
         try:
             await self.stop_processing_workers()
             await self.cache_manager.close()

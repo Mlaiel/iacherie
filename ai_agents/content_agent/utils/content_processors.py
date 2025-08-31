@@ -7,7 +7,7 @@ Handles format conversion, quality enhancement, and metadata extraction.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -114,6 +114,9 @@ class BaseProcessor(ABC):
         
     def _calculate_checksum(self, data: bytes) -> str:
         """Calculate SHA-256 checksum of content"""
+
+
+
         return hashlib.sha256(data).hexdigest()
         
     def _get_mime_type(self, file_path: str) -> str:
@@ -223,6 +226,9 @@ class AudioProcessor(BaseProcessor):
     
     async def _analyze_audio_quality(self, y: np.ndarray, sr: int) -> Dict[str, float]:
         """Analyze audio quality metrics"""
+
+
+
         try:
             # RMS Energy
             rms_energy = float(np.sqrt(np.mean(y**2)))
@@ -344,6 +350,9 @@ class AudioProcessor(BaseProcessor):
     
     def get_supported_formats(self) -> List[str]:
         """Get supported audio formats"""
+
+
+
         return self.supported_formats
 
 
@@ -453,6 +462,9 @@ class VideoProcessor(BaseProcessor):
     
     async def _analyze_video_quality(self, cap: cv2.VideoCapture) -> Dict[str, float]:
         """Analyze video quality metrics"""
+
+
+
         try:
             # Sample frames for quality analysis
             frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -509,6 +521,9 @@ class VideoProcessor(BaseProcessor):
     async def _apply_video_processing(self, video_path: str, 
                                     options: Dict[str, Any]) -> bytes:
         """Apply video processing and optimization"""
+
+
+
         try:
             # Load video with moviepy for processing
             clip = mp.VideoFileClip(video_path)
@@ -569,6 +584,9 @@ class VideoProcessor(BaseProcessor):
     
     def get_supported_formats(self) -> List[str]:
         """Get supported video formats"""
+
+
+
         return self.supported_formats
 
 
@@ -681,6 +699,9 @@ class ImageProcessor(BaseProcessor):
     
     async def _analyze_image_quality(self, image: Image.Image) -> Dict[str, float]:
         """Analyze image quality metrics"""
+
+
+
         try:
             # Convert to numpy array for analysis
             img_array = np.array(image)
@@ -818,6 +839,9 @@ class ImageProcessor(BaseProcessor):
     
     def get_supported_formats(self) -> List[str]:
         """Get supported image formats"""
+
+
+
         return self.supported_formats
 
 
@@ -957,6 +981,9 @@ class TextProcessor(BaseProcessor):
     
     async def _analyze_text_quality(self, text_data: str) -> Dict[str, float]:
         """Analyze text quality and characteristics"""
+
+
+
         try:
             # Basic metrics
             word_count = len(text_data.split())
@@ -1062,6 +1089,9 @@ class TextProcessor(BaseProcessor):
     
     def _extract_keywords(self, text: str, max_keywords: int = 20) -> List[str]:
         """Extract key terms from text"""
+
+
+
         try:
             if not TEXT_AVAILABLE:
                 # Simple fallback: most frequent words
@@ -1098,6 +1128,9 @@ class TextProcessor(BaseProcessor):
     
     def _generate_summary(self, text: str, num_sentences: int = 3) -> str:
         """Generate text summary (extractive)"""
+
+
+
         try:
             sentences = [s.strip() for s in text.split('.') if s.strip()]
             if len(sentences) <= num_sentences:
@@ -1162,6 +1195,9 @@ class TextProcessor(BaseProcessor):
     
     def get_supported_formats(self) -> List[str]:
         """Get supported text formats"""
+
+
+
         return self.supported_formats
 
 
@@ -1174,6 +1210,9 @@ class MetadataExtractor:
     async def extract_universal_metadata(self, content: Union[bytes, str, BinaryIO], 
                                        content_type: str) -> Dict[str, Any]:
         """Extract metadata for any content type"""
+
+
+
         try:
             # Determine appropriate processor
             processor = self._get_processor_for_type(content_type)
@@ -1212,6 +1251,9 @@ class MetadataExtractor:
     
     async def _extract_generic_metadata(self, content: Union[bytes, str, BinaryIO]) -> Dict[str, Any]:
         """Extract generic metadata for unknown content types"""
+
+
+
         try:
             if isinstance(content, str):
                 if Path(content).exists():

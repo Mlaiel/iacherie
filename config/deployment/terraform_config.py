@@ -130,6 +130,9 @@ class TerraformConfig:
     
     def get_terraform_configuration(self) -> Dict[str, Any]:
         """Generate main Terraform configuration"""
+
+
+
         return {
             "terraform": {
                 "required_version": self.terraform_version,
@@ -341,6 +344,9 @@ class TerraformConfig:
     
     def _get_aws_modules(self) -> Dict[str, Any]:
         """Get AWS-specific modules"""
+
+
+
         return {
             "vpc": {
                 "source": "terraform-aws-modules/vpc/aws",
@@ -489,6 +495,9 @@ class TerraformConfig:
     
     def _get_azure_modules(self) -> Dict[str, Any]:
         """Get Azure-specific modules"""
+
+
+
         return {
             "resource_group": {
                 "source": "Azure/resourcegroup/azurerm",
@@ -561,6 +570,9 @@ class TerraformConfig:
     
     def _get_gcp_modules(self) -> Dict[str, Any]:
         """Get GCP-specific modules"""
+
+
+
         return {
             "vpc": {
                 "source": "terraform-google-modules/network/google",
@@ -677,6 +689,9 @@ class TerraformConfig:
     
     def get_random_resources(self) -> Dict[str, Any]:
         """Generate random resources for unique naming"""
+
+
+
         return {
             "resource": {
                 "random_id": {
@@ -873,6 +888,9 @@ class TerraformConfig:
     
     def get_deployment_scripts(self) -> Dict[str, str]:
         """Generate deployment scripts"""
+
+
+
         return {
             "deploy.sh": self._get_deployment_script(),
             "destroy.sh": self._get_destroy_script(),
@@ -882,6 +900,9 @@ class TerraformConfig:
     
     def _get_deployment_script(self) -> str:
         """Generate deployment script"""
+
+
+
         return f'''#!/bin/bash
 # Terraform deployment script for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -891,38 +912,38 @@ set -e
 ENVIRONMENT="{self.environment}"
 CLOUD_PROVIDER="{self.cloud_provider.upper()}"
 
-echo "🚀 Deploying IA-Influencer Agent infrastructure..."
+echo " Deploying IA-Influencer Agent infrastructure..."
 echo "Environment: $ENVIRONMENT"
 echo "Cloud Provider: $CLOUD_PROVIDER"
 
 # Check prerequisites
 if ! command -v terraform &> /dev/null; then
-    echo "❌ Terraform is not installed"
+    echo " Terraform is not installed"
     exit 1
 fi
 
 # Initialize Terraform
-echo "📦 Initializing Terraform..."
+echo " Initializing Terraform..."
 terraform init
 
 # Validate configuration
-echo "✅ Validating Terraform configuration..."
+echo " Validating Terraform configuration..."
 terraform validate
 
 # Plan deployment
-echo "📋 Planning deployment..."
+echo " Planning deployment..."
 terraform plan -var-file="terraform.tfvars" -out="tfplan"
 
 # Apply deployment
-echo "🚀 Applying deployment..."
+echo " Applying deployment..."
 terraform apply "tfplan"
 
 # Show outputs
-echo "📊 Deployment outputs:"
+echo " Deployment outputs:"
 terraform output
 
-echo "✅ Infrastructure deployed successfully!"
-echo "🎯 Next steps:"
+echo " Infrastructure deployed successfully!"
+echo " Next steps:"
 echo "1. Configure kubectl/az/gcloud CLI"
 echo "2. Deploy Kubernetes manifests"
 echo "3. Setup monitoring and alerting"
@@ -931,6 +952,9 @@ echo "4. Configure CI/CD pipelines"
     
     def _get_destroy_script(self) -> str:
         """Generate destroy script"""
+
+
+
         return f'''#!/bin/bash
 # Terraform destroy script for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -939,17 +963,17 @@ set -e
 
 ENVIRONMENT="{self.environment}"
 
-echo "⚠️  WARNING: This will destroy ALL infrastructure!"
+echo "  WARNING: This will destroy ALL infrastructure!"
 echo "Environment: $ENVIRONMENT"
 echo ""
 read -p "Are you sure you want to proceed? (yes/no): " confirm
 
 if [ "$confirm" != "yes" ]; then
-    echo "❌ Deployment destruction cancelled"
+    echo " Deployment destruction cancelled"
     exit 0
 fi
 
-echo "💥 Destroying infrastructure..."
+echo " Destroying infrastructure..."
 
 # Plan destroy
 terraform plan -destroy -var-file="terraform.tfvars" -out="destroy-plan"
@@ -957,11 +981,14 @@ terraform plan -destroy -var-file="terraform.tfvars" -out="destroy-plan"
 # Apply destroy
 terraform apply "destroy-plan"
 
-echo "✅ Infrastructure destroyed successfully"
+echo " Infrastructure destroyed successfully"
 '''
     
     def _get_plan_script(self) -> str:
         """Generate plan script"""
+
+
+
         return f'''#!/bin/bash
 # Terraform plan script for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -970,12 +997,12 @@ set -e
 
 ENVIRONMENT="{self.environment}"
 
-echo "📋 Planning Terraform deployment..."
+echo " Planning Terraform deployment..."
 echo "Environment: $ENVIRONMENT"
 
 # Initialize if needed
 if [ ! -d ".terraform" ]; then
-    echo "📦 Initializing Terraform..."
+    echo " Initializing Terraform..."
     terraform init
 fi
 
@@ -985,11 +1012,14 @@ terraform validate
 # Plan deployment
 terraform plan -var-file="terraform.tfvars"
 
-echo "✅ Plan completed successfully"
+echo " Plan completed successfully"
 '''
     
     def _get_init_script(self) -> str:
         """Generate init script"""
+
+
+
         return f'''#!/bin/bash
 # Terraform initialization script for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -999,7 +1029,7 @@ set -e
 ENVIRONMENT="{self.environment}"
 CLOUD_PROVIDER="{self.cloud_provider.upper()}"
 
-echo "🔧 Initializing Terraform for IA-Influencer Agent..."
+echo " Initializing Terraform for IA-Influencer Agent..."
 echo "Environment: $ENVIRONMENT"
 echo "Cloud Provider: $CLOUD_PROVIDER"
 
@@ -1036,7 +1066,7 @@ esac
 # Initialize Terraform
 terraform init
 
-echo "✅ Terraform initialized successfully"
+echo " Terraform initialized successfully"
 '''
     
     def generate_all_files(self, output_dir: str = "./terraform") -> None:

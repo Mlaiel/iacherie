@@ -327,10 +327,16 @@ class CircuitBreaker:
     
     def _should_close_circuit(self) -> bool:
         """Check if circuit should be closed (from half-open state)."""
+
+
+
         return self.metrics.successful_requests >= self.rule.success_threshold
     
     def _should_attempt_reset(self) -> bool:
         """Check if we should attempt to reset circuit (from open to half-open)."""
+
+
+
         return (time.time() - self.last_state_change) >= self.rule.recovery_timeout
     
     def _transition_to_open(self):
@@ -413,6 +419,9 @@ class CircuitBreaker:
     
     def get_metrics(self) -> CircuitBreakerMetrics:
         """Get current metrics."""
+
+
+
         return self.metrics
     
     def reset(self):
@@ -443,6 +452,9 @@ class CircuitBreakerRegistry:
     
     def get(self, name: str) -> Optional[CircuitBreaker]:
         """Get circuit breaker by name."""
+
+
+
         return self.circuit_breakers.get(name)
     
     def remove(self, name: str):
@@ -453,6 +465,9 @@ class CircuitBreakerRegistry:
     
     def list_all(self) -> Dict[str, CircuitBreaker]:
         """List all circuit breakers."""
+
+
+
         return self.circuit_breakers.copy()
     
     def get_metrics_summary(self) -> Dict[str, Dict]:

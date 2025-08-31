@@ -1,5 +1,5 @@
 """
-🔍 Content Analyzer - IA Influencer Agent Platform Enterprise
+ Content Analyzer - IA Influencer Agent Platform Enterprise
 ============================================================
 Module: backend/data_management/storage/content_analyzer.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Advanced content analysis with AI-powered insights
 for influencer content optimization and protection.
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -186,6 +186,9 @@ class ImageAnalyzer:
     
     async def analyze_image(self, file_path: str, analysis_level: AnalysisLevel = AnalysisLevel.STANDARD) -> ContentFeatures:
         """Analyze image content and extract features"""
+
+
+
         try:
             # Load image
             image = cv2.imread(file_path)
@@ -243,6 +246,9 @@ class ImageAnalyzer:
     
     def _extract_dominant_colors(self, image: np.ndarray, k: int = 5) -> List[Tuple[int, int, int]]:
         """Extract dominant colors using K-means clustering"""
+
+
+
         try:
             # Reshape image data
             data = image.reshape((-1, 3))
@@ -273,6 +279,9 @@ class ImageAnalyzer:
     
     def _calculate_texture_complexity(self, image: np.ndarray) -> float:
         """Calculate texture complexity using Local Binary Pattern"""
+
+
+
         try:
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             
@@ -294,6 +303,9 @@ class ImageAnalyzer:
     
     def _analyze_composition(self, image: np.ndarray) -> float:
         """Analyze image composition using rule of thirds and other principles"""
+
+
+
         try:
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             h, w = gray.shape
@@ -342,6 +354,9 @@ class AudioAnalyzer:
     
     async def analyze_audio(self, file_path: str, analysis_level: AnalysisLevel = AnalysisLevel.STANDARD) -> AudioFeatures:
         """Analyze audio content and extract features"""
+
+
+
         try:
             features = AudioFeatures()
             
@@ -395,6 +410,9 @@ class AudioAnalyzer:
     
     def _calculate_dynamic_range(self, y: np.ndarray) -> float:
         """Calculate dynamic range"""
+
+
+
         return float(np.max(y) - np.min(y))
     
     def _calculate_silence_ratio(self, y: np.ndarray, threshold: float = 0.01) -> float:
@@ -431,6 +449,9 @@ class TextAnalyzer:
     
     async def analyze_text(self, text: str, analysis_level: AnalysisLevel = AnalysisLevel.STANDARD) -> TextFeatures:
         """Analyze text content and extract features"""
+
+
+
         try:
             features = TextFeatures()
             
@@ -738,6 +759,9 @@ class ContentAnalyzer:
     
     async def _analyze_file_basics(self, analysis: ContentAnalysis):
         """Analyze basic file properties"""
+
+
+
         try:
             file_path = Path(analysis.file_path)
             stat = file_path.stat()
@@ -761,6 +785,9 @@ class ContentAnalyzer:
     
     async def _assess_quality(self, analysis: ContentAnalysis):
         """Assess content quality"""
+
+
+
         try:
             quality_scores = {}
             
@@ -1007,6 +1034,9 @@ class ContentAnalyzer:
     
     async def _assess_risk(self, analysis: ContentAnalysis):
         """Assess content risk factors"""
+
+
+
         try:
             risk_scores = {}
             
@@ -1196,6 +1226,9 @@ class ContentAnalyzer:
     
     async def _calculate_business_metrics(self, analysis: ContentAnalysis):
         """Calculate business-relevant metrics"""
+
+
+
         try:
             # Engagement potential (already calculated in quality assessment)
             engagement_score = await self._assess_engagement_potential(analysis)
@@ -1284,6 +1317,9 @@ class ContentAnalyzer:
     
     async def _generate_similarity_hash(self, file_path: str, content_type: ContentType) -> str:
         """Generate similarity hash for content deduplication"""
+
+
+
         try:
             if content_type == ContentType.IMAGE:
                 # Use perceptual hashing for images
@@ -1332,6 +1368,9 @@ class ContentAnalyzer:
     
     async def _ai_enhanced_analysis(self, analysis: ContentAnalysis):
         """Perform AI-enhanced analysis (placeholder for future AI integration)"""
+
+
+
         try:
             # Placeholder for AI-powered analysis
             # In production, this would integrate with ML models for:

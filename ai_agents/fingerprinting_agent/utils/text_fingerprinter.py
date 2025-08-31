@@ -7,7 +7,7 @@ and deep learning for precise text content identification and similarity matchin
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -55,7 +55,7 @@ and deep learning for precise text content identification and similarity matchin
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -211,6 +211,9 @@ class TextFingerprinter:
     
     async def initialize(self):
         """Initialize all NLP models and processors"""
+
+
+
         try:
             start_time = time.time()
             
@@ -371,6 +374,9 @@ class TextFingerprinter:
     
     async def _preprocess_text(self, text_data: Union[str, List[str]]) -> Tuple[str, str]:
         """Preprocess text data for analysis"""
+
+
+
         try:
             # Handle different input types
             if isinstance(text_data, list):
@@ -406,6 +412,9 @@ class TextFingerprinter:
     
     def _create_text_hash(self, text: str) -> str:
         """Create fast hash of text for quick lookups"""
+
+
+
         try:
             # Create hash from text content and basic statistics
             text_stats = [
@@ -440,6 +449,9 @@ class TextFingerprinter:
     
     async def _extract_ngram_features(self, text: str) -> Dict[str, Dict[str, float]]:
         """Extract n-gram features from text"""
+
+
+
         try:
             ngram_features = {}
             
@@ -584,6 +596,9 @@ class TextFingerprinter:
     
     async def cleanup(self):
         """Clean up resources"""
+
+
+
         try:
             # Clean up models
             if hasattr(self, 'bert_model') and self.bert_model is not None:
@@ -609,6 +624,9 @@ class TextFingerprinter:
     
     def get_supported_languages(self) -> List[str]:
         """Get list of supported languages"""
+
+
+
         return ['en', 'de', 'fr', 'es', 'it', 'pt', 'nl', 'ru', 'zh', 'ja']
 import sentence_transformers
 from sentence_transformers import SentenceTransformer
@@ -702,6 +720,9 @@ class TextFingerprinter:
         
     async def initialize(self):
         """Initialize text fingerprinting system"""
+
+
+
         try:
             # Initialize deep learning models
             await self._initialize_deep_models()
@@ -847,6 +868,9 @@ class TextFingerprinter:
     
     async def _generate_text_hashes(self, text: str) -> Dict[str, str]:
         """Generate multiple text hashes"""
+
+
+
         try:
             hashes = {}
             
@@ -884,6 +908,9 @@ class TextFingerprinter:
     
     async def _extract_ngram_features(self, text: str) -> np.ndarray:
         """Extract n-gram based features"""
+
+
+
         try:
             # TF-IDF features
             try:
@@ -926,6 +953,9 @@ class TextFingerprinter:
     
     async def _extract_linguistic_features(self, text: str) -> np.ndarray:
         """Extract linguistic and grammatical features"""
+
+
+
         try:
             features = []
             
@@ -991,6 +1021,9 @@ class TextFingerprinter:
     
     async def _extract_style_features(self, text: str) -> np.ndarray:
         """Extract writing style features"""
+
+
+
         try:
             features = []
             
@@ -1048,6 +1081,9 @@ class TextFingerprinter:
     
     async def _generate_semantic_embedding(self, text: str) -> np.ndarray:
         """Generate semantic embedding using deep learning"""
+
+
+
         try:
             embeddings = []
             
@@ -1079,6 +1115,9 @@ class TextFingerprinter:
     
     async def _get_bert_embedding(self, text: str) -> np.ndarray:
         """Get BERT embedding for text"""
+
+
+
         try:
             # Tokenize and encode
             inputs = self.bert_tokenizer(text, return_tensors='pt', 
@@ -1155,6 +1194,9 @@ class TextFingerprinter:
     
     async def _detect_language(self, text: str) -> str:
         """Detect text language (simplified implementation)"""
+
+
+
         try:
             # Simple language detection based on common words
             english_words = {'the', 'and', 'a', 'to', 'of', 'in', 'is', 'it', 'you', 'that'}
@@ -1180,6 +1222,9 @@ class TextFingerprinter:
     
     async def _clean_text(self, text: str) -> str:
         """Clean and normalize text"""
+
+
+
         try:
             # Remove extra whitespace
             text = re.sub(r'\s+', ' ', text)
@@ -1204,6 +1249,9 @@ class TextFingerprinter:
     
     def _download_nltk_data(self):
         """Download required NLTK data"""
+
+
+
         try:
             nltk.download('punkt', quiet=True)
             nltk.download('stopwords', quiet=True)
@@ -1214,6 +1262,9 @@ class TextFingerprinter:
     
     async def _initialize_deep_models(self):
         """Initialize deep learning models"""
+
+
+
         try:
             # Load Sentence-BERT
             self.sentence_transformer = SentenceTransformer('all-MiniLM-L6-v2')
@@ -1231,6 +1282,9 @@ class TextFingerprinter:
     
     async def _initialize_nlp_components(self):
         """Initialize NLP components"""
+
+
+
         try:
             # Load spaCy model
             self.spacy_model = spacy.load("en_core_web_sm")

@@ -16,7 +16,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Specialist + DevOps Expert
 Copyright: Fahed Mlaiel - All Rights Reserved
 
-⚠️  STRICT LEGAL WARNING: 
+  STRICT LEGAL WARNING: 
     This proprietary code is protected by international copyright law.
     Unauthorized use, copying, distribution, modification, or reverse engineering 
     is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -161,6 +161,9 @@ class SemanticProcessor:
         
     def _initialize_models(self):
         """Initialize semantic processing models"""
+
+
+
         try:
             # Load spaCy model
             self.nlp = spacy.load("en_core_web_lg")
@@ -203,6 +206,9 @@ class SemanticProcessor:
         Returns:
             SemanticAnalysisResult with detailed semantic information
         """
+
+
+
         try:
             # Cache key for performance
             cache_key = f"semantic_{hashlib.md5(text.encode()).hexdigest()}"
@@ -268,6 +274,9 @@ class SemanticProcessor:
             
     async def _extract_concepts(self, text: str) -> List[Concept]:
         """Extract concepts from text using NLP"""
+
+
+
         try:
             if not self.nlp:
                 return []
@@ -353,6 +362,9 @@ class SemanticProcessor:
         
     async def _get_concept_embedding(self, concept_text: str) -> Optional[np.ndarray]:
         """Generate embedding for concept"""
+
+
+
         try:
             if self.sentence_transformer:
                 embedding = self.sentence_transformer.encode([concept_text])
@@ -364,6 +376,9 @@ class SemanticProcessor:
             
     async def _extract_relationships(self, text: str, concepts: List[Concept]) -> List[SemanticRelationship]:
         """Extract semantic relationships between concepts"""
+
+
+
         try:
             relationships = []
             
@@ -434,6 +449,9 @@ class SemanticProcessor:
         
     async def _calculate_cooccurrence_strength(self, concept1: str, concept2: str, text: str) -> float:
         """Calculate strength of concept co-occurrence"""
+
+
+
         try:
             sentences = re.split(r'[.!?]+', text)
             total_sentences = len(sentences)
@@ -452,6 +470,9 @@ class SemanticProcessor:
             
     async def _extract_topics(self, text: str) -> List[Tuple[str, float]]:
         """Extract topics using topic modeling"""
+
+
+
         try:
             # Simple topic extraction using TF-IDF and clustering
             sentences = re.split(r'[.!?]+', text)
@@ -493,6 +514,9 @@ class SemanticProcessor:
             
     async def _analyze_intent(self, text: str, context: Optional[Dict]) -> Tuple[IntentCategory, float]:
         """Analyze content intent"""
+
+
+
         try:
             # Intent classification based on text patterns
             text_lower = text.lower()
@@ -545,6 +569,9 @@ class SemanticProcessor:
             
     async def _calculate_semantic_density(self, text: str, concepts: List[Concept]) -> float:
         """Calculate semantic density of the text"""
+
+
+
         try:
             if not concepts:
                 return 0.0
@@ -564,6 +591,9 @@ class SemanticProcessor:
         relationships: List[SemanticRelationship]
     ) -> float:
         """Calculate coherence between concepts"""
+
+
+
         try:
             if len(concepts) < 2:
                 return 1.0
@@ -592,6 +622,9 @@ class SemanticProcessor:
             
     async def _determine_abstraction_level(self, concepts: List[Concept]) -> str:
         """Determine abstraction level of concepts"""
+
+
+
         try:
             if not concepts:
                 return "medium"
@@ -619,6 +652,9 @@ class SemanticProcessor:
             
     async def _identify_domain_context(self, concepts: List[Concept], topics: List[Tuple[str, float]]) -> str:
         """Identify domain context from concepts and topics"""
+
+
+
         try:
             # Domain keywords mapping
             domain_keywords = {
@@ -655,6 +691,9 @@ class SemanticProcessor:
             
     async def _extract_key_themes(self, topics: List[Tuple[str, float]], concepts: List[Concept]) -> List[str]:
         """Extract key themes from topics and concepts"""
+
+
+
         try:
             themes = []
             
@@ -678,6 +717,9 @@ class SemanticProcessor:
             
     async def _analyze_content_structure(self, text: str) -> Dict[str, Any]:
         """Analyze structural elements of content"""
+
+
+
         try:
             structure = {
                 'has_introduction': False,
@@ -724,6 +766,9 @@ class ConceptExtractor:
         
     async def extract_concept_graph(self, text: str) -> ConceptGraph:
         """Extract concept graph from text"""
+
+
+
         try:
             # Get semantic analysis
             semantic_result = await self.semantic_processor.analyze_semantics(text)
@@ -777,6 +822,9 @@ class ConceptExtractor:
             
     async def _cluster_concepts(self, concepts: List[Concept]) -> List[List[str]]:
         """Cluster related concepts"""
+
+
+
         try:
             if len(concepts) < 3:
                 return [[concept.text for concept in concepts]]

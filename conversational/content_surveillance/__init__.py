@@ -14,7 +14,7 @@ content creators across all major platforms and the broader internet.
 - Revenue Protection and Loss Prevention
 - Legal Evidence Collection and Documentation
 
-🏗️ ENTERPRISE ARCHITECTURE:
+ ENTERPRISE ARCHITECTURE:
 - Distributed Surveillance Network
 - AI-Powered Content Analysis (CLIP, BERT, Computer Vision)
 - Real-Time Processing with Event Streaming
@@ -28,7 +28,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING - ZERO TOLERANCE POLICY ⚠️
+  CRITICAL LEGAL WARNING - ZERO TOLERANCE POLICY 
 This revolutionary content surveillance platform is the EXCLUSIVE intellectual property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution
 under German and International Law. Contact: mlaiel@live.de for legal authorization.

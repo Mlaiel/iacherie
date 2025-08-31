@@ -121,6 +121,9 @@ class BaseRepository(ABC, Generic[T, CreateSchemaType, UpdateSchemaType]):
                     user_id: Optional[str] = None,
                     commit: bool = True) -> RepositoryResult:
         """Create a new record"""
+
+
+
         try:
             async with self.session_manager.get_async_session() as session:
                 # Convert schema to model
@@ -169,6 +172,9 @@ class BaseRepository(ABC, Generic[T, CreateSchemaType, UpdateSchemaType]):
                        include_deleted: bool = False,
                        use_cache: bool = True) -> RepositoryResult:
         """Get record by ID with caching support"""
+
+
+
         try:
             # Check cache first
             cache_key = f"{self.model_name}:{record_id}"
@@ -212,6 +218,9 @@ class BaseRepository(ABC, Generic[T, CreateSchemaType, UpdateSchemaType]):
                     user_id: Optional[str] = None,
                     commit: bool = True) -> RepositoryResult:
         """Update record with audit logging"""
+
+
+
         try:
             async with self.session_manager.get_async_session() as session:
                 # Get existing record
@@ -266,6 +275,9 @@ class BaseRepository(ABC, Generic[T, CreateSchemaType, UpdateSchemaType]):
                     soft_delete: bool = True,
                     commit: bool = True) -> RepositoryResult:
         """Delete record (soft or hard)"""
+
+
+
         try:
             async with self.session_manager.get_async_session() as session:
                 # Get existing record
@@ -317,6 +329,9 @@ class BaseRepository(ABC, Generic[T, CreateSchemaType, UpdateSchemaType]):
                        include_deleted: bool = False,
                        include_count: bool = False) -> RepositoryResult:
         """Advanced query with filters, sorting, and pagination"""
+
+
+
         try:
             async with self.session_manager.get_async_session() as session:
                 # Build base query
@@ -375,6 +390,9 @@ class BaseRepository(ABC, Generic[T, CreateSchemaType, UpdateSchemaType]):
                       filters: List[QueryFilter],
                       include_deleted: bool = False) -> RepositoryResult:
         """Find single record by filters"""
+
+
+
         try:
             async with self.session_manager.get_async_session() as session:
                 query = select(self.model)
@@ -411,6 +429,9 @@ class BaseRepository(ABC, Generic[T, CreateSchemaType, UpdateSchemaType]):
                          user_id: Optional[str] = None,
                          batch_size: int = 1000) -> RepositoryResult:
         """Bulk create records with batching"""
+
+
+
         try:
             created_records = []
             total_batches = (len(data_list) + batch_size - 1) // batch_size
@@ -474,6 +495,9 @@ class BaseRepository(ABC, Generic[T, CreateSchemaType, UpdateSchemaType]):
                          user_id: Optional[str] = None,
                          batch_size: int = 1000) -> RepositoryResult:
         """Bulk update records"""
+
+
+
         try:
             updated_count = 0
             total_batches = (len(updates) + batch_size - 1) // batch_size
@@ -532,6 +556,9 @@ class BaseRepository(ABC, Generic[T, CreateSchemaType, UpdateSchemaType]):
                          user_id: Optional[str] = None,
                          soft_delete: bool = True) -> RepositoryResult:
         """Bulk delete records"""
+
+
+
         try:
             async with self.transaction_manager.transaction() as session:
                 if soft_delete and hasattr(self.model, 'deleted_at'):
@@ -756,6 +783,9 @@ class MediaRepository(BaseRepository[Media, MediaCreate, MediaUpdate]):
     
     async def get_total_storage_size(self) -> RepositoryResult:
         """Get total storage size across all media"""
+
+
+
         try:
             async with self.session_manager.get_async_session() as session:
                 query = select(func.sum(Media.file_size))
@@ -847,6 +877,9 @@ class RevenueRepository(BaseRepository[Revenue, Dict[str, Any], Dict[str, Any]])
     
     async def get_total_revenue_by_creator(self, creator_id: str, start_date: Optional[datetime] = None) -> RepositoryResult:
         """Get total revenue for a creator"""
+
+
+
         try:
             async with self.session_manager.get_async_session() as session:
                 query = select(func.sum(Revenue.amount)).where(Revenue.creator_id == creator_id)

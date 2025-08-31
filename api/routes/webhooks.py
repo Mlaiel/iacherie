@@ -162,6 +162,9 @@ async def create_webhook_endpoint(
     user: dict = Depends(get_current_user)
 ):
     """Create a new webhook endpoint"""
+
+
+
     try:
         # Validate URL accessibility
         url_validation = await _validate_webhook_url(webhook.url)
@@ -219,6 +222,9 @@ async def get_webhook_endpoints(
     user: dict = Depends(get_current_user)
 ):
     """Get user's webhook endpoints"""
+
+
+
     try:
         query = """
             SELECT webhook_id, url, platform, events, is_active, retry_policy,
@@ -280,6 +286,9 @@ async def receive_platform_webhook(
     x_hub_signature: Optional[str] = Header(None)
 ):
     """Receive webhook from external platform"""
+
+
+
     try:
         # Get raw body
         raw_body = await request.body()
@@ -349,6 +358,9 @@ async def send_webhook(
     user: dict = Depends(get_current_user)
 ):
     """Send webhook to registered endpoints"""
+
+
+
     try:
         # Get matching webhook endpoints
         async with database_manager.get_postgres_session() as session:
@@ -418,6 +430,9 @@ async def get_webhook_deliveries(
     user: dict = Depends(get_current_user)
 ):
     """Get webhook delivery history"""
+
+
+
     try:
         start_date = datetime.utcnow() - timedelta(days=days)
         
@@ -483,6 +498,9 @@ async def test_webhook(
     user: dict = Depends(get_current_user)
 ):
     """Test a webhook endpoint"""
+
+
+
     try:
         # Get webhook details
         async with database_manager.get_postgres_session() as session:
@@ -556,6 +574,9 @@ async def get_webhook_statistics(
     user: dict = Depends(get_current_user)
 ):
     """Get webhook statistics"""
+
+
+
     try:
         # Verify webhook ownership
         async with database_manager.get_postgres_session() as session:
@@ -623,6 +644,9 @@ async def update_webhook_endpoint(
     user: dict = Depends(get_current_user)
 ):
     """Update webhook endpoint"""
+
+
+
     try:
         # Verify ownership
         async with database_manager.get_postgres_session() as session:
@@ -672,6 +696,9 @@ async def delete_webhook_endpoint(
     user: dict = Depends(get_current_user)
 ):
     """Delete webhook endpoint"""
+
+
+
     try:
         async with database_manager.get_postgres_session() as session:
             # Verify ownership
@@ -714,6 +741,9 @@ async def delete_webhook_endpoint(
 # Helper functions
 async def _validate_webhook_url(url: str) -> Dict[str, Any]:
     """Validate webhook URL accessibility"""
+
+
+
     try:
         async with aiohttp.ClientSession() as session:
             async with session.head(url, timeout=aiohttp.ClientTimeout(total=10)) as response:
@@ -773,6 +803,9 @@ async def _verify_platform_signature(platform: PlatformType, body: bytes, signat
 
 async def _get_webhook_stats(webhook_id: str) -> Dict[str, Any]:
     """Get basic webhook statistics"""
+
+
+
     try:
         async with database_manager.get_postgres_session() as session:
             result = await session.execute("""
@@ -799,6 +832,9 @@ async def _get_webhook_stats(webhook_id: str) -> Dict[str, Any]:
 # Background task functions
 async def _process_incoming_webhook(webhook_id: str, incoming_webhook: IncomingWebhook):
     """Process incoming webhook from external platform"""
+
+
+
     try:
         # Determine event type and extract relevant data
         event_handlers = {
@@ -832,6 +868,9 @@ async def _deliver_webhook(delivery_id: str, url: str, event_type: str, payload:
                           secret_hash: str, custom_headers: Optional[Dict[str, str]],
                           retry_policy: Dict[str, int]):
     """Deliver webhook to endpoint"""
+
+
+
     try:
         start_time = datetime.utcnow()
         
@@ -899,6 +938,9 @@ async def _update_delivery_status(delivery_id: str, status: WebhookStatus,
                                  attempts: Optional[int] = None,
                                  error_message: Optional[str] = None):
     """Update webhook delivery status"""
+
+
+
     try:
         async with database_manager.get_postgres_session() as session:
             update_fields = ["status = %s", "last_attempt_at = %s"]

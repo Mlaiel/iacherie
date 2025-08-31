@@ -7,7 +7,7 @@ context management, and multi-turn conversation understanding.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
@@ -69,6 +69,9 @@ class ConversationContext:
     
     def get_context_summary(self) -> Dict[str, Any]:
         """Get condensed context summary"""
+
+
+
         return {
             'session_id': self.session_id,
             'user_id': self.user_id,
@@ -199,6 +202,9 @@ class IntentSessionManager:
     
     async def _persist_session_data(self, context: ConversationContext) -> None:
         """Persist session data for analytics"""
+
+
+
         try:
             # In production, save to database for analytics
             session_data = {
@@ -219,10 +225,16 @@ class IntentSessionManager:
     
     def get_active_session_count(self) -> int:
         """Get number of active sessions"""
+
+
+
         return len(self.active_sessions)
     
     def get_user_sessions(self, user_id: str) -> List[ConversationContext]:
         """Get all active sessions for a user"""
+
+
+
         return [
             context for context in self.active_sessions.values()
             if context.user_id == user_id
@@ -257,6 +269,9 @@ class ConversationIntentTracker(BaseService):
     
     def _load_intent_flow_patterns(self) -> Dict[str, Any]:
         """Load common intent flow patterns"""
+
+
+
         return {
             'content_creation_flow': [
                 IntentCategory.CONTENT_UPLOAD,
@@ -303,6 +318,9 @@ class ConversationIntentTracker(BaseService):
         Returns:
             Updated conversation context
         """
+
+
+
         try:
             # Get or create session
             if session_id:
@@ -349,6 +367,9 @@ class ConversationIntentTracker(BaseService):
         current_intent: ClassificationResult
     ) -> None:
         """Analyze conversation flow patterns"""
+
+
+
         try:
             recent_intents = context.get_recent_intents(5)
             
@@ -394,6 +415,9 @@ class ConversationIntentTracker(BaseService):
         intent_result: ClassificationResult
     ) -> None:
         """Update conversation stage based on current intent"""
+
+
+
         try:
             current_intent = intent_result.primary_intent
             
@@ -424,6 +448,9 @@ class ConversationIntentTracker(BaseService):
         intent_result: ClassificationResult
     ) -> None:
         """Extract relevant context variables from user input and intent"""
+
+
+
         try:
             # Extract entities from intent parameters
             if intent_result.intent_parameters:
@@ -480,6 +507,9 @@ class ConversationIntentTracker(BaseService):
         intent_result: ClassificationResult
     ) -> None:
         """Update user preferences based on conversation patterns"""
+
+
+
         try:
             intent = intent_result.primary_intent
             
@@ -506,6 +536,9 @@ class ConversationIntentTracker(BaseService):
     
     async def get_conversation_context(self, session_id: str) -> Optional[ConversationContext]:
         """Get current conversation context"""
+
+
+
         return await self.session_manager.get_session(session_id)
     
     async def get_enhanced_context_for_intent(
@@ -523,6 +556,9 @@ class ConversationIntentTracker(BaseService):
         Returns:
             Enhanced context dictionary
         """
+
+
+
         try:
             context = await self.get_conversation_context(session_id)
             
@@ -555,6 +591,9 @@ class ConversationIntentTracker(BaseService):
     
     def _determine_user_type(self, context: ConversationContext) -> str:
         """Determine user type based on conversation patterns"""
+
+
+
         try:
             intent_freq = context.user_preferences.get('intent_frequency', {})
             
@@ -615,6 +654,9 @@ class ConversationIntentTracker(BaseService):
         Returns:
             Tuple of (predicted_intent, confidence) or None
         """
+
+
+
         try:
             context = await self.get_conversation_context(session_id)
             if not context or context.conversation_length == 0:
@@ -653,6 +695,9 @@ class ConversationIntentTracker(BaseService):
     
     async def get_conversation_summary(self, session_id: str) -> Dict[str, Any]:
         """Get comprehensive conversation summary"""
+
+
+
         try:
             context = await self.get_conversation_context(session_id)
             if not context:

@@ -8,7 +8,7 @@ Optimized for multi-platform content distribution and monitoring.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️ LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION:
+ LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION:
 This code, concept, and intellectual property belong exclusively to Fahed Mlaiel (mlaiel@live.de). 
 Any unauthorized copying, distribution, modification, or commercial use is STRICTLY PROHIBITED 
 and will result in immediate legal action under German and International Copyright Law.
@@ -284,6 +284,9 @@ class PlatformSerializer:
         Returns:
             Serialized platform dictionary
         """
+
+
+
         try:
             # Convert to dictionary
             data = platform.dict()
@@ -361,6 +364,9 @@ class PlatformSerializer:
         Returns:
             Deserialized PlatformData object
         """
+
+
+
         try:
             # Handle datetime conversions
             datetime_fields = ['discovered_at', 'last_checked', 'published_at', 'updated_at', 'last_sync', 'next_check']
@@ -392,6 +398,9 @@ class PlatformSerializer:
         compact_mode: bool = True
     ) -> List[Dict[str, Any]]:
         """Serialize multiple platform records efficiently."""
+
+
+
         try:
             serialized_list = []
             
@@ -416,6 +425,9 @@ class PlatformSerializer:
         data_list: List[Dict[str, Any]]
     ) -> List[PlatformData]:
         """Deserialize multiple platform records efficiently."""
+
+
+
         try:
             platforms = []
             
@@ -435,6 +447,9 @@ class PlatformSerializer:
         config: PlatformConfig
     ) -> Dict[str, Any]:
         """Serialize platform configuration."""
+
+
+
         try:
             data = {
                 'api_base_url': config.api_base_url,
@@ -470,6 +485,9 @@ class PlatformSerializer:
         data: Dict[str, Any]
     ) -> PlatformConfig:
         """Deserialize platform configuration."""
+
+
+
         try:
             # Deserialize rate limits
             rate_limits_data = data.get('rate_limits', {})
@@ -501,6 +519,9 @@ class PlatformSerializer:
     
     def _compact_metadata(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Compact metadata by removing large or unnecessary fields."""
+
+
+
         try:
             compacted = {}
             max_value_size = 10000  # 10KB limit for individual values
@@ -528,6 +549,9 @@ class PlatformSerializer:
         platform_name: PlatformName
     ) -> Optional[str]:
         """Extract platform-specific content ID from URL."""
+
+
+
         try:
             pattern = self.platform_url_patterns.get(platform_name)
             if not pattern:
@@ -549,6 +573,9 @@ class PlatformSerializer:
         platform_name: PlatformName
     ) -> str:
         """Normalize platform URL to standard format."""
+
+
+
         try:
             parsed = urlparse(url)
             
@@ -585,6 +612,9 @@ class PlatformSerializer:
     
     def detect_platform_from_url(self, url: str) -> Optional[PlatformName]:
         """Detect platform from URL."""
+
+
+
         try:
             parsed = urlparse(url.lower())
             domain = parsed.netloc.replace('www.', '')
@@ -618,6 +648,9 @@ class PlatformSerializer:
         platform: PlatformData
     ) -> Dict[str, Any]:
         """Validate platform data integrity."""
+
+
+
         try:
             validation_result = {
                 'valid': True,
@@ -685,6 +718,9 @@ class PlatformSerializer:
         platform: PlatformData
     ) -> Dict[str, Any]:
         """Create summary of platform data."""
+
+
+
         try:
             return {
                 'platform_id': platform.platform_id,
@@ -934,6 +970,9 @@ class PlatformSerializer:
     
     def _load_platform_configs(self) -> Dict[str, Dict[str, Any]]:
         """Load platform-specific configurations."""
+
+
+
         return {
             'youtube': {
                 'api_endpoint': 'https://www.googleapis.com/youtube/v3',
@@ -1006,6 +1045,9 @@ class PlatformSerializer:
     
     def _init_content_normalizers(self) -> Dict[str, callable]:
         """Initialize content normalization functions."""
+
+
+
         return {
             'title': self._normalize_title,
             'description': self._normalize_description,
@@ -1030,6 +1072,9 @@ class PlatformSerializer:
         Returns:
             Serialized platform dictionary
         """
+
+
+
         try:
             # Convert to dictionary
             data = platform_data.dict()
@@ -1093,6 +1138,9 @@ class PlatformSerializer:
         Returns:
             Deserialized PlatformData object
         """
+
+
+
         try:
             # Handle datetime conversions
             if isinstance(data.get('created_at'), str):
@@ -1155,6 +1203,9 @@ class PlatformSerializer:
         Returns:
             Normalized content dictionary
         """
+
+
+
         try:
             normalized = {}
             
@@ -1397,6 +1448,9 @@ class PlatformSerializer:
     
     def _serialize_platform_limits(self, limits: PlatformLimits) -> Dict[str, Any]:
         """Serialize platform limits."""
+
+
+
         return {
             'max_title_length': limits.max_title_length,
             'max_description_length': limits.max_description_length,
@@ -1410,10 +1464,16 @@ class PlatformSerializer:
     
     def _deserialize_platform_limits(self, data: Dict[str, Any]) -> PlatformLimits:
         """Deserialize platform limits."""
+
+
+
         return PlatformLimits(**data)
     
     def _serialize_platform_algorithm(self, algorithm: PlatformAlgorithm) -> Dict[str, Any]:
         """Serialize platform algorithm info."""
+
+
+
         return {
             'prefers_engagement': algorithm.prefers_engagement,
             'prefers_retention': algorithm.prefers_retention,
@@ -1425,6 +1485,9 @@ class PlatformSerializer:
     
     def _deserialize_platform_algorithm(self, data: Dict[str, Any]) -> PlatformAlgorithm:
         """Deserialize platform algorithm info."""
+
+
+
         return PlatformAlgorithm(**data)
 
 

@@ -8,7 +8,7 @@ Provides convenient imports and factory functions for common use cases.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  LEGAL WARNING:
+  LEGAL WARNING:
 This code is proprietary and confidential. Any unauthorized copying, modification, 
 distribution, or use without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and may result in legal action.
@@ -23,6 +23,9 @@ def create_enterprise_automation_suite():
     Create a complete enterprise automation suite with all components
     configured for production use.
     """
+
+
+
     return {
         'automation_controller': create_automation_controller(),
         'browser_manager': create_browser_manager(max_sessions=20),

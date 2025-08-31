@@ -147,6 +147,9 @@ class DatabaseConnectionPool:
 
     def _initialize_core_connections(self) -> None:
         """Initialize core database connections eagerly"""
+
+
+
         try:
             # Create core connections that are commonly used
             core_connections = [
@@ -290,6 +293,9 @@ class DatabaseConnectionPool:
 
     def _is_connection_healthy(self, connection: Any, database_type: DatabaseType) -> bool:
         """Quick health check for database connection"""
+
+
+
         try:
             if database_type == DatabaseType.POSTGRESQL:
                 # SQLAlchemy engine health check
@@ -467,6 +473,9 @@ class DatabaseConnectionPool:
 
     def _check_connection_health(self, connection_id: str, connection: Any, conn_info: DatabaseConnectionInfo) -> None:
         """Check health of individual connection"""
+
+
+
         try:
             is_healthy = self._is_connection_healthy(connection, conn_info.database_type)
             
@@ -674,6 +683,9 @@ class DatabaseConnectionPool:
 
     def __del__(self):
         """Cleanup on object destruction"""
+
+
+
         try:
             self.close_all_connections()
         except:

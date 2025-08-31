@@ -238,11 +238,11 @@ class AIModelsSeedsManager:
                 'details': results
             }
             
-            logger.info(f"✅ AI models seeds initialized successfully in {duration:.2f}s")
+            logger.info(f" AI models seeds initialized successfully in {duration:.2f}s")
             return summary
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize AI models seeds: {str(e)}")
+            logger.error(f" Failed to initialize AI models seeds: {str(e)}")
             raise
     
     async def _initialize_model_configurations(self) -> Dict[str, Any]:

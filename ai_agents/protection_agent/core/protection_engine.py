@@ -54,6 +54,9 @@ class ProtectionEngine:
 
     async def start(self) -> None:
         """Start the protection processing engine"""
+
+
+
         try:
             self.is_running = True
             logger.info("ProtectionEngine started successfully")
@@ -63,6 +66,9 @@ class ProtectionEngine:
 
     async def process(self, data: Dict[str, Any]) -> ProtectionResult:
         """Process protection operation"""
+
+
+
         try:
             job_id = data.get('job_id', 'auto-generated')
             

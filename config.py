@@ -42,11 +42,17 @@ settings = Settings()
 
 def get_settings() -> Settings:
     """Get application settings"""
+
+
+
     return settings
 
 
 def get_config() -> Dict[str, Any]:
     """Get configuration as dictionary"""
+
+
+
     return {
         'environment': settings.environment,
         'debug': settings.debug,
@@ -87,7 +93,7 @@ async def initialize_configuration() -> bool:
             print(f"Warning: Complex configuration failed, using simple config: {e}")
     
     # Simple configuration always succeeds
-    print("✓ Simple configuration initialized")
+    print(" Simple configuration initialized")
     return True
 
 

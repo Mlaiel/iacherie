@@ -22,7 +22,7 @@ Contact: mlaiel@live.de
 - DevOps Engineer: Fahed Mlaiel
 - IA Prompt Engineer: Fahed Mlaiel
 
-⚠️ ATTENTION IMPORTANTE ⚠️
+ ATTENTION IMPORTANTE 
 Toute tentative de vol, copie, ou utilisation non autorisée de ce code, 
 concept ou idée sans autorisation écrite explicite de Fahed Mlaiel 
 sera poursuivie selon la loi allemande et internationale.
@@ -187,6 +187,9 @@ class DatabasePerformanceMonitor:
     
     def _initialize_thresholds(self) -> Dict[str, Dict[str, float]]:
         """Initialize performance monitoring thresholds"""
+
+
+
         return {
             'cpu_usage': {'warning': 70.0, 'critical': 90.0},
             'memory_usage': {'warning': 80.0, 'critical': 95.0},
@@ -202,6 +205,9 @@ class DatabasePerformanceMonitor:
     
     def _initialize_monitoring(self) -> None:
         """Initialize monitoring components"""
+
+
+
         try:
             # Enable pg_stat_statements extension
             self._enable_pg_stat_statements()
@@ -216,6 +222,9 @@ class DatabasePerformanceMonitor:
     
     def _enable_pg_stat_statements(self) -> None:
         """Enable pg_stat_statements extension for query tracking"""
+
+
+
         try:
             # Check if extension exists
             check_query = """
@@ -240,6 +249,9 @@ class DatabasePerformanceMonitor:
     
     def _establish_performance_baselines(self) -> None:
         """Establish performance baselines for comparison"""
+
+
+
         try:
             baseline_metrics = [
                 'cpu_usage', 'memory_usage', 'cache_hit_ratio',
@@ -258,6 +270,9 @@ class DatabasePerformanceMonitor:
     
     def start_monitoring(self) -> None:
         """Start continuous performance monitoring"""
+
+
+
         try:
             if self.is_monitoring:
                 self.logger.warning("Performance monitoring already active")
@@ -278,6 +293,9 @@ class DatabasePerformanceMonitor:
     
     def stop_monitoring(self) -> None:
         """Stop performance monitoring"""
+
+
+
         try:
             self.is_monitoring = False
             
@@ -320,6 +338,9 @@ class DatabasePerformanceMonitor:
     
     def _collect_all_metrics(self) -> None:
         """Collect all performance metrics"""
+
+
+
         try:
             current_time = datetime.now()
             
@@ -349,6 +370,9 @@ class DatabasePerformanceMonitor:
     
     def _collect_system_metrics(self, timestamp: datetime) -> None:
         """Collect system-level metrics"""
+
+
+
         try:
             # CPU usage
             cpu_usage = psutil.cpu_percent(interval=1)
@@ -374,6 +398,9 @@ class DatabasePerformanceMonitor:
     
     def _collect_connection_metrics(self, timestamp: datetime) -> None:
         """Collect database connection metrics"""
+
+
+
         try:
             # Active connections
             connections_query = """
@@ -408,6 +435,9 @@ class DatabasePerformanceMonitor:
     
     def _collect_activity_metrics(self, timestamp: datetime) -> None:
         """Collect database activity metrics"""
+
+
+
         try:
             # Transaction statistics
             activity_query = """
@@ -458,6 +488,9 @@ class DatabasePerformanceMonitor:
     
     def _collect_cache_metrics(self, timestamp: datetime) -> None:
         """Collect cache and buffer metrics"""
+
+
+
         try:
             # Buffer hit ratio
             cache_query = """
@@ -497,6 +530,9 @@ class DatabasePerformanceMonitor:
     
     def _collect_lock_metrics(self, timestamp: datetime) -> None:
         """Collect lock and blocking metrics"""
+
+
+
         try:
             # Current locks
             locks_query = """
@@ -550,6 +586,9 @@ class DatabasePerformanceMonitor:
     
     def _collect_index_metrics(self, timestamp: datetime) -> None:
         """Collect index usage metrics"""
+
+
+
         try:
             # Index usage statistics
             index_query = """
@@ -588,6 +627,9 @@ class DatabasePerformanceMonitor:
     
     def _collect_replication_metrics(self, timestamp: datetime) -> None:
         """Collect replication metrics if applicable"""
+
+
+
         try:
             # Check if replication is active
             replication_query = """
@@ -615,6 +657,9 @@ class DatabasePerformanceMonitor:
     
     def _analyze_query_performance(self) -> None:
         """Analyze query performance using pg_stat_statements"""
+
+
+
         try:
             # Get query statistics
             query_stats_query = """
@@ -673,6 +718,9 @@ class DatabasePerformanceMonitor:
     
     def _record_metric(self, name: str, value: float, unit: str, timestamp: datetime) -> None:
         """Record a performance metric"""
+
+
+
         try:
             metric = PerformanceMetric(
                 metric_type=self._get_metric_type(name),
@@ -718,6 +766,9 @@ class DatabasePerformanceMonitor:
     
     def _check_performance_alerts(self) -> None:
         """Check for performance alerts"""
+
+
+
         try:
             current_time = datetime.now()
             
@@ -779,6 +830,9 @@ class DatabasePerformanceMonitor:
         timestamp: datetime
     ) -> None:
         """Create performance alert"""
+
+
+
         try:
             alert_id = f"{metric_name}_{timestamp.strftime('%Y%m%d_%H%M%S')}"
             
@@ -841,6 +895,9 @@ class DatabasePerformanceMonitor:
     
     def _check_alert_resolution(self, metric_name: str, current_value: float) -> None:
         """Check if alerts should be resolved"""
+
+
+
         try:
             alerts_to_resolve = []
             
@@ -872,6 +929,9 @@ class DatabasePerformanceMonitor:
     
     def _collect_single_metric(self, metric_name: str) -> Optional[float]:
         """Collect a single metric value"""
+
+
+
         try:
             if metric_name == 'cpu_usage':
                 return psutil.cpu_percent(interval=1)
@@ -903,6 +963,9 @@ class DatabasePerformanceMonitor:
     
     def _update_optimization_suggestions(self) -> None:
         """Update query optimization suggestions"""
+
+
+
         try:
             suggestions = []
             
@@ -964,6 +1027,9 @@ class DatabasePerformanceMonitor:
     
     def get_performance_summary(self) -> Dict[str, Any]:
         """Get comprehensive performance summary"""
+
+
+
         try:
             current_time = datetime.now()
             
@@ -1016,6 +1082,9 @@ class DatabasePerformanceMonitor:
     
     def _calculate_overall_status(self) -> str:
         """Calculate overall performance status"""
+
+
+
         try:
             critical_alerts = [a for a in self.active_alerts.values() 
                              if not a.resolved and a.severity == AlertSeverity.CRITICAL]
@@ -1043,6 +1112,9 @@ class DatabasePerformanceMonitor:
     
     def _calculate_trends(self) -> Dict[str, Any]:
         """Calculate performance trends"""
+
+
+
         try:
             trends = {}
             
@@ -1076,6 +1148,9 @@ class DatabasePerformanceMonitor:
     
     def get_detailed_lock_info(self) -> List[LockInfo]:
         """Get detailed information about current locks"""
+
+
+
         try:
             lock_query = """
                 SELECT 
@@ -1126,6 +1201,9 @@ class DatabasePerformanceMonitor:
     
     def generate_performance_report(self, hours: int = 24) -> Dict[str, Any]:
         """Generate comprehensive performance report"""
+
+
+
         try:
             end_time = datetime.now()
             start_time = end_time - timedelta(hours=hours)
@@ -1151,6 +1229,9 @@ class DatabasePerformanceMonitor:
     
     def _get_alerts_summary(self, start_time: datetime, end_time: datetime) -> Dict[str, Any]:
         """Get alerts summary for time period"""
+
+
+
         try:
             period_alerts = [
                 alert for alert in self.active_alerts.values()
@@ -1183,6 +1264,9 @@ class DatabasePerformanceMonitor:
     
     def _get_query_analysis_report(self) -> Dict[str, Any]:
         """Get query analysis report"""
+
+
+
         try:
             if not self.query_performance_cache:
                 return {'total_queries': 0}
@@ -1232,6 +1316,9 @@ class DatabasePerformanceMonitor:
     
     def _get_resource_utilization_report(self) -> Dict[str, Any]:
         """Get resource utilization report"""
+
+
+
         try:
             resource_metrics = ['cpu_usage', 'memory_usage', 'disk_usage', 'connection_usage']
             
@@ -1366,6 +1453,9 @@ class DatabasePerformanceMonitor:
     
     def _initialize_monitoring(self) -> None:
         """Initialize performance monitoring"""
+
+
+
         try:
             # Enable pg_stat_statements if available
             self._enable_pg_stat_statements()
@@ -1380,6 +1470,9 @@ class DatabasePerformanceMonitor:
     
     def _enable_pg_stat_statements(self) -> None:
         """Enable pg_stat_statements extension for query tracking"""
+
+
+
         try:
             # Check if extension exists
             check_query = """
@@ -1402,6 +1495,9 @@ class DatabasePerformanceMonitor:
     
     def _collect_baseline_metrics(self) -> None:
         """Collect baseline performance metrics"""
+
+
+
         try:
             baseline = {
                 'timestamp': datetime.now(),
@@ -1467,6 +1563,9 @@ class DatabasePerformanceMonitor:
     
     def _collect_current_metrics(self) -> Dict[str, Any]:
         """Collect current performance metrics"""
+
+
+
         try:
             metrics = {
                 'timestamp': datetime.now(),
@@ -1486,6 +1585,9 @@ class DatabasePerformanceMonitor:
     
     def _get_connection_metrics(self) -> ConnectionMetrics:
         """Get database connection metrics"""
+
+
+
         try:
             query = """
                 SELECT 
@@ -1526,6 +1628,9 @@ class DatabasePerformanceMonitor:
     
     def _get_query_performance(self) -> Dict[str, Any]:
         """Get query performance statistics"""
+
+
+
         try:
             # Try to use pg_stat_statements if available
             query = """
@@ -1542,6 +1647,9 @@ class DatabasePerformanceMonitor:
                 ORDER BY total_exec_time DESC 
                 LIMIT 10
             """
+
+
+
             
             try:
                 result = self.db_manager.execute_query(query)
@@ -1600,6 +1708,9 @@ class DatabasePerformanceMonitor:
     
     def _get_lock_status(self) -> Dict[str, Any]:
         """Get database lock information"""
+
+
+
         try:
             query = """
                 SELECT 
@@ -1674,6 +1785,9 @@ class DatabasePerformanceMonitor:
     
     def _get_resource_usage(self) -> Dict[str, Any]:
         """Get system resource usage"""
+
+
+
         try:
             # CPU usage
             cpu_percent = psutil.cpu_percent(interval=1)
@@ -1715,6 +1829,9 @@ class DatabasePerformanceMonitor:
     
     def _get_cache_performance(self) -> Dict[str, Any]:
         """Get database cache performance metrics"""
+
+
+
         try:
             query = """
                 SELECT 
@@ -1752,6 +1869,9 @@ class DatabasePerformanceMonitor:
     
     def _get_wal_status(self) -> Dict[str, Any]:
         """Get WAL (Write-Ahead Log) status"""
+
+
+
         try:
             query = """
                 SELECT 
@@ -1775,6 +1895,9 @@ class DatabasePerformanceMonitor:
     
     def _get_database_size(self) -> Dict[str, Any]:
         """Get database size information"""
+
+
+
         try:
             query = """
                 SELECT 
@@ -1805,6 +1928,9 @@ class DatabasePerformanceMonitor:
     
     def _get_index_usage_stats(self) -> Dict[str, Any]:
         """Get index usage statistics"""
+
+
+
         try:
             query = """
                 SELECT 
@@ -1841,6 +1967,9 @@ class DatabasePerformanceMonitor:
     
     def _get_table_statistics(self) -> Dict[str, Any]:
         """Get table usage statistics"""
+
+
+
         try:
             query = """
                 SELECT 
@@ -1887,6 +2016,9 @@ class DatabasePerformanceMonitor:
     
     def _analyze_performance(self, metrics: Dict[str, Any]) -> None:
         """Analyze performance metrics and identify issues"""
+
+
+
         try:
             # Analyze connection utilization
             connections = metrics.get('connections')
@@ -1920,6 +2052,9 @@ class DatabasePerformanceMonitor:
     
     def _check_performance_alerts(self, metrics: Dict[str, Any]) -> None:
         """Check for performance alerts"""
+
+
+
         try:
             current_time = datetime.now()
             
@@ -1977,6 +2112,9 @@ class DatabasePerformanceMonitor:
     
     def _trigger_alert(self, alert: PerformanceAlert) -> None:
         """Trigger performance alert"""
+
+
+
         try:
             # Log alert
             self.logger.critical(f"PERFORMANCE ALERT: {alert.message}")
@@ -1995,6 +2133,9 @@ class DatabasePerformanceMonitor:
     
     def _update_query_metrics(self) -> None:
         """Update query performance metrics"""
+
+
+
         try:
             # This would be implemented with pg_stat_statements
             # or custom query tracking
@@ -2005,6 +2146,9 @@ class DatabasePerformanceMonitor:
     
     def get_performance_summary(self) -> Dict[str, Any]:
         """Get comprehensive performance summary"""
+
+
+
         try:
             if not self.performance_history:
                 return {'error': 'No performance data available'}
@@ -2073,6 +2217,9 @@ class DatabasePerformanceMonitor:
     
     def get_historical_trends(self, hours: int = 24) -> Dict[str, Any]:
         """Get historical performance trends"""
+
+
+
         try:
             cutoff_time = datetime.now() - timedelta(hours=hours)
             
@@ -2102,6 +2249,9 @@ class DatabasePerformanceMonitor:
     
     def _calculate_trend(self, data: List[Dict], metric_path: str) -> Dict[str, Any]:
         """Calculate trend for a specific metric"""
+
+
+
         try:
             values = []
             

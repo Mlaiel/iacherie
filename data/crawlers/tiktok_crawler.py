@@ -94,6 +94,9 @@ class TikTokCrawler(PlatformCrawler):
     
     async def initialize_selenium(self, mobile_mode: bool = False):
         """Initialize Selenium WebDriver with anti-detection measures"""
+
+
+
         try:
             chrome_options = Options()
             
@@ -169,6 +172,9 @@ class TikTokCrawler(PlatformCrawler):
         Returns:
             List of found video items
         """
+
+
+
         try:
             all_results = []
             
@@ -210,6 +216,9 @@ class TikTokCrawler(PlatformCrawler):
         Returns:
             Detailed video metadata
         """
+
+
+
         try:
             # Initialize driver if needed
             if not self.selenium_driver:
@@ -258,6 +267,9 @@ class TikTokCrawler(PlatformCrawler):
         Returns:
             Video sample data or None
         """
+
+
+
         try:
             # Extract metadata first to get video URL
             metadata = await self.extract_content_metadata(content_url)
@@ -309,6 +321,9 @@ class TikTokCrawler(PlatformCrawler):
         Returns:
             List of videos with the hashtag
         """
+
+
+
         try:
             if not self.selenium_driver:
                 await self.initialize_selenium()
@@ -371,6 +386,9 @@ class TikTokCrawler(PlatformCrawler):
         Returns:
             List of user's videos
         """
+
+
+
         try:
             if not self.selenium_driver:
                 await self.initialize_selenium()
@@ -472,6 +490,9 @@ class TikTokCrawler(PlatformCrawler):
     
     async def _search_discover_page(self, search_terms: List[str], max_results: int) -> List[Dict[str, Any]]:
         """Search using TikTok's discover/trending page"""
+
+
+
         try:
             if not self.selenium_driver:
                 await self.initialize_selenium()
@@ -503,6 +524,9 @@ class TikTokCrawler(PlatformCrawler):
     
     async def _extract_video_data_from_container(self, container) -> Optional[Dict[str, Any]]:
         """Extract video data from container element"""
+
+
+
         try:
             video_data = {}
             
@@ -610,6 +634,9 @@ class TikTokCrawler(PlatformCrawler):
     
     async def _extract_video_download_url(self, video_url: str) -> Optional[str]:
         """Attempt to extract video download URL"""
+
+
+
         try:
             # This is complex as TikTok protects video URLs
             # In practice, would need to use specialized tools or APIs
@@ -639,6 +666,9 @@ class TikTokCrawler(PlatformCrawler):
     
     async def _download_thumbnail(self, thumbnail_url: str) -> Optional[bytes]:
         """Download video thumbnail"""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 headers = {
@@ -673,6 +703,9 @@ class TikTokCrawler(PlatformCrawler):
     
     def _parse_count(self, count_text: str) -> int:
         """Parse engagement count from text (e.g., '1.2K' -> 1200)"""
+
+
+
         try:
             count_text = count_text.strip().upper()
             
@@ -695,6 +728,9 @@ class TikTokCrawler(PlatformCrawler):
     
     def get_anti_detection_status(self) -> Dict[str, Any]:
         """Get anti-detection measures status"""
+
+
+
         return {
             'platform': 'tiktok',
             'user_agents_count': len(self.user_agents),

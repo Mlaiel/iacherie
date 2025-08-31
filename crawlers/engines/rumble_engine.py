@@ -319,6 +319,9 @@ class RumbleEngine(BaseCrawlerEngine):
         channel_info: Dict[str, Any]
     ) -> Optional[RumbleVideo]:
         """Process and analyze video with advanced metrics"""
+
+
+
         
         try:
             video_id = raw_video.get('id')
@@ -811,6 +814,9 @@ class RumbleEngine(BaseCrawlerEngine):
         
     async def _get_authenticated_headers(self) -> Dict[str, str]:
         """Get authenticated headers for API requests"""
+
+
+
         
         return {
             'User-Agent': 'Rumble/1.0',

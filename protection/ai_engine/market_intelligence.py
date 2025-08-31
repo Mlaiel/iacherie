@@ -1,5 +1,5 @@
 """
-📊 Market Intelligence Engine - Ultra-Advanced Enterprise Business Intelligence System
+ Market Intelligence Engine - Ultra-Advanced Enterprise Business Intelligence System
 ====================================================================================
 
 State-of-the-art market intelligence and competitive analysis engine providing:
@@ -14,7 +14,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Team Specialties: Lead Dev IA + Backend Senior + Market Intelligence + Competitive Analysis + Strategic Planning + Data Science Expert
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL WARNING ⚠️
+ CRITICAL LEGAL WARNING 
 This proprietary market intelligence system contains advanced algorithms, competitive analysis techniques,
 and strategic methodologies belonging exclusively to Fahed Mlaiel (mlaiel@live.de).
 
@@ -216,6 +216,9 @@ class MarketIntelligenceEngine:
     
     def _init_database(self):
         """Initialize database for market intelligence data"""
+
+
+
         try:
             db_url = self.config.get('database_url', 'sqlite:///market_intelligence.db')
             self.engine = create_engine(db_url)
@@ -228,6 +231,9 @@ class MarketIntelligenceEngine:
     
     def _init_redis(self):
         """Initialize Redis for caching market data"""
+
+
+
         try:
             redis_config = self.config.get('redis', {})
             self.redis_client = redis.Redis(
@@ -244,6 +250,9 @@ class MarketIntelligenceEngine:
     
     def _init_ml_models(self):
         """Initialize machine learning models for market analysis"""
+
+
+
         try:
             # Clustering models for market segmentation
             self.market_clusterer = KMeans(n_clusters=8, random_state=42)
@@ -264,6 +273,9 @@ class MarketIntelligenceEngine:
     
     def _init_nlp_models(self):
         """Initialize NLP models for content and sentiment analysis"""
+
+
+
         try:
             # Load spaCy model for text processing
             try:
@@ -298,6 +310,9 @@ class MarketIntelligenceEngine:
         """
         Comprehensive market landscape analysis
         """
+
+
+
         try:
             # Determine market segment if not provided
             if not market_segment:
@@ -362,6 +377,9 @@ class MarketIntelligenceEngine:
         """
         Comprehensive competitor analysis
         """
+
+
+
         try:
             # Identify competitors
             competitors = await self._identify_competitors(creator_id, competitor_limit)
@@ -395,6 +413,9 @@ class MarketIntelligenceEngine:
         """
         Track and analyze market trends
         """
+
+
+
         try:
             # Get trending topics from various sources
             trending_data = await self._collect_trending_data(market_segment)
@@ -427,6 +448,9 @@ class MarketIntelligenceEngine:
         """
         Generate personalized market opportunities
         """
+
+
+
         try:
             # Get creator profile and market position
             creator_profile = await self._get_creator_market_profile(creator_id)
@@ -479,6 +503,9 @@ class MarketIntelligenceEngine:
         """
         Analyze creator's market positioning and strategic recommendations
         """
+
+
+
         try:
             # Get comprehensive market data
             market_analysis = await self.analyze_market_landscape(creator_id)
@@ -525,6 +552,9 @@ class MarketIntelligenceEngine:
         """
         Continuous competitive intelligence monitoring
         """
+
+
+
         try:
             # Get competitor list
             competitors = await self._get_tracked_competitors(creator_id)
@@ -584,6 +614,9 @@ class MarketIntelligenceEngine:
     
     async def _collect_market_data(self, market_segment: str) -> Dict[str, Any]:
         """Collect comprehensive market data from multiple sources"""
+
+
+
         try:
             market_data = {
                 'social_media_data': await self._collect_social_media_data(market_segment),
@@ -601,6 +634,9 @@ class MarketIntelligenceEngine:
     
     async def _collect_social_media_data(self, market_segment: str) -> Dict[str, Any]:
         """Collect social media data for market analysis"""
+
+
+
         try:
             # Simulated social media data collection
             # In production, this would connect to actual APIs
@@ -632,6 +668,9 @@ class MarketIntelligenceEngine:
     
     async def _collect_search_trends_data(self, market_segment: str) -> Dict[str, Any]:
         """Collect search trends data"""
+
+
+
         try:
             # Simulated search trends data
             search_data = {
@@ -658,6 +697,9 @@ class MarketIntelligenceEngine:
     
     async def _collect_news_sentiment_data(self, market_segment: str) -> Dict[str, Any]:
         """Collect news and sentiment data"""
+
+
+
         try:
             # Simulated news sentiment analysis
             news_data = {
@@ -682,6 +724,9 @@ class MarketIntelligenceEngine:
     
     async def _collect_platform_analytics_data(self, market_segment: str) -> Dict[str, Any]:
         """Collect platform analytics data"""
+
+
+
         try:
             # Simulated platform analytics
             platform_data = {
@@ -714,6 +759,9 @@ class MarketIntelligenceEngine:
     
     async def _collect_industry_reports_data(self, market_segment: str) -> Dict[str, Any]:
         """Collect industry reports and research data"""
+
+
+
         try:
             # Simulated industry reports data
             industry_data = {
@@ -742,6 +790,9 @@ class MarketIntelligenceEngine:
     
     async def _infer_creator_market_segment(self, creator_id: str) -> str:
         """Infer creator's primary market segment"""
+
+
+
         try:
             # Get creator data and content analysis
             creator_data = await self._get_creator_data(creator_id)
@@ -763,6 +814,9 @@ class MarketIntelligenceEngine:
     
     async def _analyze_market_size(self, market_segment: str, market_data: Dict[str, Any]) -> Dict[str, float]:
         """Analyze market size metrics"""
+
+
+
         try:
             industry_data = market_data.get('industry_reports_data', {})
             
@@ -792,6 +846,9 @@ class MarketIntelligenceEngine:
     
     async def _calculate_market_growth_rate(self, market_segment: str, market_data: Dict[str, Any]) -> float:
         """Calculate market growth rate"""
+
+
+
         try:
             industry_data = market_data.get('industry_reports_data', {})
             cagr = industry_data.get('market_size', {}).get('cagr', 0)
@@ -815,6 +872,9 @@ class MarketIntelligenceEngine:
     
     async def _identify_key_market_trends(self, market_segment: str, market_data: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Identify key market trends"""
+
+
+
         try:
             trends = []
             
@@ -872,6 +932,9 @@ class MarketIntelligenceEngine:
     
     def _create_empty_market_analysis(self) -> MarketAnalysis:
         """Create empty market analysis for error cases"""
+
+
+
         return MarketAnalysis(
             market_size={},
             growth_rate=0.0,
@@ -885,6 +948,9 @@ class MarketIntelligenceEngine:
     
     async def _cache_market_analysis(self, creator_id: str, market_segment: str, analysis: MarketAnalysis):
         """Cache market analysis results"""
+
+
+
         try:
             if self.redis_client:
                 cache_key = f"market_analysis:{creator_id}:{market_segment}"
@@ -897,10 +963,16 @@ class MarketIntelligenceEngine:
     
     async def _analyze_competitive_landscape(self, creator_id: str, market_segment: str, market_data: Dict[str, Any]):
         """Analyze competitive landscape"""
+
+
+
         return {'competitor_count': 15, 'market_concentration': 'moderate', 'entry_barriers': 'medium'}
     
     async def _identify_market_opportunities(self, creator_id: str, market_segment: str, market_data: Dict[str, Any], trends: List[Dict[str, Any]]):
         """Identify market opportunities"""
+
+
+
         return [
             {'opportunity': 'AI content tools', 'potential': 'high', 'timeline': '6-12 months'},
             {'opportunity': 'Cross-platform strategy', 'potential': 'medium', 'timeline': '3-6 months'}
@@ -908,22 +980,37 @@ class MarketIntelligenceEngine:
     
     async def _analyze_market_threats(self, creator_id: str, market_segment: str, competitive_landscape: Dict[str, Any]):
         """Analyze market threats"""
+
+
+
         return {'threat_level': 'moderate', 'key_threats': ['platform_changes', 'increased_competition']}
     
     async def _analyze_target_audience(self, creator_id: str, market_segment: str, market_data: Dict[str, Any]):
         """Analyze target audience insights"""
+
+
+
         return {'primary_demographic': '18-34', 'engagement_preferences': ['video', 'interactive'], 'growth_segments': ['Gen Z']}
     
     async def _generate_market_forecasts(self, market_segment: str, market_data: Dict[str, Any], trends: List[Dict[str, Any]]):
         """Generate market forecasts"""
+
+
+
         return {'6_month_outlook': 'positive', '12_month_outlook': 'strong_growth', 'key_drivers': ['technology', 'audience_expansion']}
     
     async def _get_creator_data(self, creator_id: str):
         """Get creator data"""
+
+
+
         return {'id': creator_id, 'type': 'content_creator'}
     
     async def _analyze_creator_content_patterns(self, creator_id: str):
         """Analyze creator content patterns"""
+
+
+
         return {'primary_content_type': 'video', 'posting_frequency': 3.5}
 
 # Export classes

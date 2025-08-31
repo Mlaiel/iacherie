@@ -7,7 +7,7 @@ industrial-grade vector indexing, similarity search, and optimization capabiliti
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Any attempt to steal the concept, idea, or code without explicit written authorization
@@ -52,6 +52,9 @@ class FAISSIndexManager:
     
     def _create_index(self):
         """Create FAISS index based on type and dimension"""
+
+
+
         try:
             if self.index_type == "flat":
                 # Flat index for exact search (L2 distance)
@@ -256,6 +259,9 @@ class FAISSIndexManager:
     
     def _estimate_memory_usage(self) -> int:
         """Estimate memory usage in bytes"""
+
+
+
         try:
             # Basic estimation: vectors * dimension * 4 bytes (float32)
             vector_memory = self.index.ntotal * self.dimension * 4
@@ -294,6 +300,9 @@ class FAISSManager:
     
     async def initialize(self) -> None:
         """Initialize FAISS manager and load existing indices"""
+
+
+
         try:
             # Load existing indices from disk
             await self._load_existing_indices()
@@ -309,6 +318,9 @@ class FAISSManager:
     
     async def _load_existing_indices(self):
         """Load existing indices from persistence directory"""
+
+
+
         try:
             index_files = [f for f in os.listdir(self.persistence_dir) if f.endswith('.faiss')]
             
@@ -349,6 +361,9 @@ class FAISSManager:
     async def add_vector(self, content_id: str, vector_data: np.ndarray, 
                         content_type: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Add single vector to appropriate index"""
+
+
+
         try:
             # Get or create index for content type
             index_manager = await self._get_or_create_index(content_type, vector_data.shape[0])
@@ -378,6 +393,9 @@ class FAISSManager:
     async def add_batch_vectors(self, content_ids: List[str], vectors: np.ndarray,
                                content_type: str, metadata_list: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Add batch of vectors to appropriate index"""
+
+
+
         try:
             # Get or create index for content type
             index_manager = await self._get_or_create_index(content_type, vectors.shape[1])
@@ -407,6 +425,9 @@ class FAISSManager:
     async def search_similar(self, query_vector: np.ndarray, content_type: str,
                            max_results: int = 10, similarity_threshold: float = 0.75) -> List[Dict[str, Any]]:
         """Search for similar vectors in specific content type"""
+
+
+
         try:
             if content_type not in self.indices:
                 return []
@@ -438,6 +459,9 @@ class FAISSManager:
     async def search_by_type(self, query_vector: np.ndarray, content_type: str,
                             max_results: int = 10, similarity_threshold: float = 0.75) -> List[Dict[str, Any]]:
         """Search vectors by specific content type"""
+
+
+
         return await self.search_similar(query_vector, content_type, max_results, similarity_threshold)
     
     async def cross_modal_search(self, query_vector: np.ndarray, content_types: List[str],
@@ -510,10 +534,16 @@ class FAISSManager:
     
     async def optimize_all_indices(self) -> Dict[str, Any]:
         """Optimize all indices"""
+
+
+
         return await self.optimize_indices(list(self.indices.keys()))
     
     async def auto_optimize(self):
         """Automatic optimization based on usage patterns"""
+
+
+
         try:
             # Get statistics for all indices
             stats = await self.get_statistics()
@@ -576,6 +606,9 @@ class FAISSManager:
     
     async def _save_index(self, content_type: str):
         """Save specific index to disk"""
+
+
+
         try:
             if content_type in self.indices:
                 filepath = os.path.join(self.persistence_dir, content_type)
@@ -631,10 +664,16 @@ class FAISSManager:
     
     async def get_metrics(self) -> VectorMetrics:
         """Get current metrics"""
+
+
+
         return self.metrics
     
     async def shutdown(self):
         """Graceful shutdown with persistence"""
+
+
+
         try:
             # Save all indices
             await self.save_all_indices()

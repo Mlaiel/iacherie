@@ -165,6 +165,9 @@ class BasePersonalizationModel(ABC):
     
     async def evaluate(self, test_data: Dict[str, Any]) -> ModelMetrics:
         """Evaluate model performance"""
+
+
+
         try:
             if self.status != TrainingStatus.TRAINED:
                 raise ModelNotLoadedError("evaluate", self.config.model_type.value)
@@ -239,6 +242,9 @@ class CollaborativeFilteringModel(BasePersonalizationModel):
     
     async def train(self, training_data: Dict[str, Any]) -> ModelMetrics:
         """Train collaborative filtering model"""
+
+
+
         try:
             self.status = TrainingStatus.TRAINING
             start_time = datetime.utcnow()
@@ -429,6 +435,9 @@ class CollaborativeFilteringModel(BasePersonalizationModel):
     
     def save_model(self, filepath: str) -> bool:
         """Save collaborative filtering model"""
+
+
+
         try:
             model_data = {
                 'config': self.config.__dict__,
@@ -454,6 +463,9 @@ class CollaborativeFilteringModel(BasePersonalizationModel):
     
     def load_model(self, filepath: str) -> bool:
         """Load collaborative filtering model"""
+
+
+
         try:
             if not os.path.exists(filepath):
                 return False
@@ -500,6 +512,9 @@ class ContentBasedModel(BasePersonalizationModel):
     
     async def train(self, training_data: Dict[str, Any]) -> ModelMetrics:
         """Train content-based model"""
+
+
+
         try:
             self.status = TrainingStatus.TRAINING
             start_time = datetime.utcnow()
@@ -710,6 +725,9 @@ class ContentBasedModel(BasePersonalizationModel):
     
     def save_model(self, filepath: str) -> bool:
         """Save content-based model"""
+
+
+
         try:
             # Save main model data
             model_data = {
@@ -747,6 +765,9 @@ class ContentBasedModel(BasePersonalizationModel):
     
     def load_model(self, filepath: str) -> bool:
         """Load content-based model"""
+
+
+
         try:
             if not os.path.exists(filepath):
                 return False
@@ -801,6 +822,9 @@ class HybridRecommenderModel(BasePersonalizationModel):
     
     async def train(self, training_data: Dict[str, Any]) -> ModelMetrics:
         """Train hybrid model"""
+
+
+
         try:
             self.status = TrainingStatus.TRAINING
             start_time = datetime.utcnow()
@@ -905,6 +929,9 @@ class HybridRecommenderModel(BasePersonalizationModel):
     
     def save_model(self, filepath: str) -> bool:
         """Save hybrid model"""
+
+
+
         try:
             # Save component models
             cf_saved = self.collaborative_model.save_model(f"{filepath}_cf.json")
@@ -936,6 +963,9 @@ class HybridRecommenderModel(BasePersonalizationModel):
     
     def load_model(self, filepath: str) -> bool:
         """Load hybrid model"""
+
+
+
         try:
             # Load component models
             cf_loaded = self.collaborative_model.load_model(f"{filepath}_cf.json")
@@ -1211,10 +1241,16 @@ class UserEmbeddingModel(BasePersonalizationModel):
     
     async def get_user_embedding(self, user_id: str) -> Optional[np.ndarray]:
         """Get embedding for specific user"""
+
+
+
         return self.user_embeddings.get(user_id)
     
     async def get_content_embedding(self, content_id: str) -> Optional[np.ndarray]:
         """Get embedding for specific content"""
+
+
+
         return self.content_embeddings.get(content_id)
     
     async def update(self, new_data: Dict[str, Any]) -> ModelMetrics:

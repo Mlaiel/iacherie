@@ -390,6 +390,9 @@ class NetworkConfigManager:
     
     def _load_default_config(self) -> NetworkConfig:
         """Load default network configuration."""
+
+
+
         return NetworkConfig(
             proxy_rotation=ProxyRotationConfig(
                 enabled=True,
@@ -451,6 +454,9 @@ class NetworkConfigManager:
     
     def get_active_proxies(self) -> List[ProxyServerConfig]:
         """Get list of active proxy servers."""
+
+
+
         return [proxy for proxy in self.config.proxy_servers if proxy.enabled]
     
     def update_proxy_stats(self, host: str, port: int, success: bool, response_time_ms: float) -> None:
@@ -480,6 +486,9 @@ class NetworkConfigManager:
     
     def get_config(self) -> NetworkConfig:
         """Get current network configuration."""
+
+
+
         return self.config
     
     def update_config(self, config: NetworkConfig) -> None:

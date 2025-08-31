@@ -87,6 +87,9 @@ class FileValidator:
     
     def _default_config(self) -> Dict:
         """Default validation configuration."""
+
+
+
         return {
             'max_file_size_mb': 100.0,
             'min_file_size_bytes': 1024,  # 1KB minimum
@@ -287,6 +290,9 @@ class DataSerializer:
         Returns:
             Base64-encoded string representation
         """
+
+
+
         try:
             # Convert to bytes
             features_bytes = features.tobytes()
@@ -330,6 +336,9 @@ class DataSerializer:
         Returns:
             Reconstructed numpy array
         """
+
+
+
         try:
             # Decode from base64
             json_data = base64.b64decode(serialized_data.encode('ascii'))
@@ -495,6 +504,9 @@ class TemporaryFileManager:
         Returns:
             Path to the temporary file
         """
+
+
+
         try:
             # Create temporary file
             fd, temp_path = tempfile.mkstemp(
@@ -524,6 +536,9 @@ class TemporaryFileManager:
         Returns:
             Path to the temporary directory
         """
+
+
+
         try:
             temp_dir = tempfile.mkdtemp(prefix=prefix, dir=self.temp_dir)
             self.temp_files.append(temp_dir)
@@ -552,6 +567,9 @@ class TemporaryFileManager:
     
     def __enter__(self):
         """Context manager entry."""
+
+
+
         return self
     
     def __exit__(self, exc_type, exc_val, exc_tb):

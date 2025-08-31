@@ -105,6 +105,9 @@ class ContentDiscovery:
         Returns:
             Discovery results with metadata
         """
+
+
+
         try:
             discovery_key = f"discovery:{hash(str(query))}:{user_id or 'anon'}"
             
@@ -161,6 +164,9 @@ class ContentDiscovery:
         Returns:
             List of recommended content
         """
+
+
+
         try:
             cache_key = f"recommendations:content:{user_id}:{content_id or 'general'}"
             
@@ -209,6 +215,9 @@ class ContentDiscovery:
         Returns:
             Trend analysis results
         """
+
+
+
         try:
             cache_key = f"trends:{params.period.value}:{params.category or 'all'}"
             
@@ -600,6 +609,9 @@ class CreatorDiscovery:
         Returns:
             Creator discovery results
         """
+
+
+
         try:
             cache_key = f"creator_discovery:{hash(query)}:{hash(str(filters))}"
             
@@ -655,6 +667,9 @@ class CreatorDiscovery:
         Returns:
             List of collaboration matches
         """
+
+
+
         try:
             cache_key = f"collab_matches:{creator_id}:{hash(str(project_requirements))}"
             
@@ -705,6 +720,9 @@ class CreatorDiscovery:
         Returns:
             List of trending creators
         """
+
+
+
         try:
             cache_key = f"trending_creators:{category or 'all'}:{int(time_window.total_seconds())}"
             
@@ -753,6 +771,9 @@ class CreatorDiscovery:
         limit: int
     ) -> List[Dict[str, Any]]:
         """Search for trending creators."""
+
+
+
         return await self.get_trending_creators(
             category=filters.get('category'),
             limit=limit
@@ -898,6 +919,9 @@ class TrendDiscovery:
         Returns:
             Comprehensive trend analysis results
         """
+
+
+
         try:
             cache_key = f"trends:{category or 'all'}:{int(time_window.total_seconds())}:{geographic_scope or 'global'}"
             
@@ -955,6 +979,9 @@ class TrendDiscovery:
         Returns:
             Viral potential prediction with confidence score
         """
+
+
+
         try:
             cache_key = f"viral_prediction:{content_id}"
             
@@ -998,6 +1025,9 @@ class TrendDiscovery:
         Returns:
             List of market opportunities
         """
+
+
+
         try:
             cache_key = f"opportunities:{hash(str(creator_profile))}:{int(time_horizon.total_seconds())}"
             

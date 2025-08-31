@@ -8,7 +8,7 @@ Optimized for musicians, influencers, content creators, and creative professiona
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
@@ -138,6 +138,9 @@ class NamedEntityRecognizer(BaseService):
         
     async def initialize(self):
         """Initialize all NER models and resources"""
+
+
+
         try:
             self.logger.info("Initializing NamedEntityRecognizer...")
             
@@ -149,6 +152,9 @@ class NamedEntityRecognizer(BaseService):
             
     async def _initialize_ensemble(self):
         """Initialize ensemble of NER models for maximum accuracy"""
+
+
+
         try:
             self.ensemble_models = {}
             self.model_weights = {}
@@ -181,6 +187,9 @@ class NamedEntityRecognizer(BaseService):
     
     async def _load_bert_creative_model(self):
         """Load fine-tuned BERT model for creative industry entities"""
+
+
+
         try:
             model_name = "bert-base-multilingual-cased"
             
@@ -227,6 +236,9 @@ class NamedEntityRecognizer(BaseService):
     
     async def _load_spacy_custom_model(self):
         """Load custom spaCy model trained on creative content"""
+
+
+
         try:
             # Load base spaCy model
             try:
@@ -269,6 +281,9 @@ class NamedEntityRecognizer(BaseService):
     
     async def _load_transformer_ensemble(self):
         """Load ensemble of transformer models for enhanced accuracy"""
+
+
+
         try:
             self.transformer_models = []
             
@@ -322,6 +337,9 @@ class NamedEntityRecognizer(BaseService):
     
     async def _load_hybrid_model(self):
         """Load hybrid model combining rule-based and ML approaches"""
+
+
+
         try:
             # Initialize rule-based patterns for creative entities
             self.creative_patterns = self._create_creative_patterns()
@@ -348,6 +366,9 @@ class NamedEntityRecognizer(BaseService):
     
     def _create_creative_patterns(self) -> Dict[str, List[Dict]]:
         """Create rule-based patterns for creative entity recognition"""
+
+
+
         return {
             'music_patterns': [
                 {'pattern': [{'LOWER': 'ft'}, {'LOWER': '.'}, {'ENT_TYPE': 'PERSON'}], 'label': 'ARTIST'},
@@ -471,6 +492,9 @@ class NamedEntityRecognizer(BaseService):
     
     def _initialize_creative_labels(self) -> Dict[str, List[str]]:
         """Initialize entity labels specific to creative industries"""
+
+
+
         return {
             'music': [
                 'B-ARTIST', 'I-ARTIST',          # Musical artists
@@ -589,6 +613,9 @@ class NamedEntityRecognizer(BaseService):
     
     async def _initialize_ensemble(self):
         """Initialize ensemble model combining multiple NER models"""
+
+
+
         try:
             # Create ensemble pipeline that combines predictions from multiple models
             ensemble_models = [
@@ -644,6 +671,9 @@ class NamedEntityRecognizer(BaseService):
     
     async def _load_prediction_cache(self):
         """Load cached predictions for faster inference"""
+
+
+
         try:
             cache_path = '/cache/ner_predictions.pkl'
             if await self.model_manager.model_exists(cache_path):
@@ -726,6 +756,9 @@ class NamedEntityRecognizer(BaseService):
     
     async def _detect_language(self, text: str) -> LanguageSupport:
         """Detect language of input text"""
+
+
+
         try:
             # Simple language detection based on character patterns
             # In production, use a proper language detection library
@@ -1037,6 +1070,9 @@ class NamedEntityRecognizer(BaseService):
         Returns:
             Training metrics and performance
         """
+
+
+
         try:
             self.logger.info(f"Starting training of custom model: {model_name}")
             start_time = datetime.now()
@@ -1165,6 +1201,9 @@ class NamedEntityRecognizer(BaseService):
     
     async def get_model_performance(self, model_name: str) -> Optional[NERModelMetrics]:
         """Get performance metrics for a specific model"""
+
+
+
         return self.model_metrics.get(model_name)
     
     async def list_available_models(self) -> Dict[str, Dict[str, Any]]:
@@ -1182,6 +1221,9 @@ class NamedEntityRecognizer(BaseService):
     
     async def save_prediction_cache(self):
         """Save prediction cache to disk"""
+
+
+
         try:
             cache_path = '/cache/ner_predictions.pkl'
             with open(cache_path, 'wb') as f:
@@ -1193,6 +1235,9 @@ class NamedEntityRecognizer(BaseService):
     
     async def health_check(self) -> Dict[str, Any]:
         """Health check for NER service"""
+
+
+
         return {
             'status': 'healthy',
             'loaded_models': len(self.models),

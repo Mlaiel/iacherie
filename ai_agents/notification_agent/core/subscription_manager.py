@@ -8,7 +8,7 @@ notification control for multi-format content creators on the IA Influencer plat
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE - INTELLECTUAL PROPERTY PROTECTION:
+  CRITICAL LEGAL NOTICE - INTELLECTUAL PROPERTY PROTECTION:
 This code, concept, and intellectual property are the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 
 STRICTLY PROHIBITED WITHOUT EXPLICIT WRITTEN AUTHORIZATION:
@@ -201,6 +201,9 @@ class NotificationSubscriptionManager:
         """
         Update subscription settings with intelligent validation and optimization
         """
+
+
+
         try:
             profile = await self.get_user_profile(user_id)
             
@@ -245,6 +248,9 @@ class NotificationSubscriptionManager:
         """
         Update channel preferences with intelligent conflict resolution
         """
+
+
+
         try:
             profile = await self.get_user_profile(user_id)
             
@@ -288,6 +294,9 @@ class NotificationSubscriptionManager:
         """
         Check if user is eligible to receive notification based on comprehensive criteria
         """
+
+
+
         try:
             profile = await self.get_user_profile(user_id)
             
@@ -344,6 +353,9 @@ class NotificationSubscriptionManager:
         """
         Get preferred channels for user and event type with intelligent ranking
         """
+
+
+
         try:
             profile = await self.get_user_profile(user_id)
             subscription_type = self._map_event_to_subscription(event_type)
@@ -388,6 +400,9 @@ class NotificationSubscriptionManager:
         """
         Update user engagement metrics for AI optimization
         """
+
+
+
         try:
             profile = await self.get_user_profile(user_id)
             
@@ -424,6 +439,9 @@ class NotificationSubscriptionManager:
         """
         Get comprehensive subscription analytics for user
         """
+
+
+
         try:
             profile = await self.get_user_profile(user_id)
             

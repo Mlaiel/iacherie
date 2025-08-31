@@ -8,7 +8,7 @@ Handles media extraction, engagement analytics, and monetization tracking.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
@@ -177,6 +177,9 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
     
     def _setup_selenium_driver(self) -> None:
         """Setup Selenium WebDriver with stealth configuration"""
+
+
+
         try:
             chrome_options = webdriver.ChromeOptions()
             chrome_options.add_argument('--headless')
@@ -209,6 +212,9 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
     
     def _setup_instaloader(self) -> None:
         """Setup Instaloader for API-based extraction"""
+
+
+
         try:
             self.loader = instaloader.Instaloader(
                 download_pictures=False,
@@ -437,6 +443,9 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
     
     async def _get_profile_instaloader(self, username: str) -> Optional[InstagramProfileData]:
         """Get profile data using Instaloader"""
+
+
+
         try:
             profile = instaloader.Profile.from_username(self.loader.context, username)
             
@@ -465,6 +474,9 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
     
     async def _get_profile_selenium(self, username: str) -> Optional[InstagramProfileData]:
         """Get profile data using Selenium scraping"""
+
+
+
         try:
             url = f"https://www.instagram.com/{username}/"
             self.driver.get(url)
@@ -609,6 +621,9 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
     
     def _parse_count(self, count_str: str) -> int:
         """Parse Instagram count strings (e.g., '1.2K', '5M')"""
+
+
+
         try:
             count_str = count_str.replace(',', '').replace(' ', '')
             if 'K' in count_str:
@@ -622,6 +637,9 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
     
     async def _calculate_engagement_rate(self, profile) -> float:
         """Calculate engagement rate for a profile"""
+
+
+
         try:
             total_engagement = 0
             post_count = 0
@@ -648,6 +666,9 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
         candidate: Dict
     ) -> float:
         """Calculate similarity between original and candidate content"""
+
+
+
         try:
             # Caption similarity
             original_caption = original.get('caption', '').lower()
@@ -688,6 +709,9 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
     
     async def _classify_theft_type(self, original: Dict, candidate: InstagramPostData) -> str:
         """Classify the type of potential content theft"""
+
+
+
         try:
             # Exact repost
             if original.get('caption', '').strip() == candidate.caption.strip():
@@ -715,6 +739,9 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
     
     async def cleanup(self) -> None:
         """Cleanup resources"""
+
+
+
         try:
             if hasattr(self, 'driver') and self.driver:
                 self.driver.quit()
@@ -727,6 +754,9 @@ class InstagramCrawlerEngine(BaseCrawlerEngine):
     
     def __del__(self):
         """Destructor to ensure cleanup"""
+
+
+
         try:
             if hasattr(self, 'driver') and self.driver:
                 self.driver.quit()

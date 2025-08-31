@@ -7,7 +7,7 @@ integration with comprehensive monitoring and analytics capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission from Fahed Mlaiel <mlaiel@live.de> is strictly prohibited.
@@ -149,6 +149,9 @@ class WebhookManager:
 
     async def initialize(self) -> None:
         """Initialize webhook manager with required services"""
+
+
+
         try:
             # Initialize Redis connection
             self._redis_client = await aioredis.from_url(
@@ -197,6 +200,9 @@ class WebhookManager:
         Returns:
             Registration result with configuration details
         """
+
+
+
         try:
             # Validate endpoint URL
             validation_result = await self._validate_endpoint_url(endpoint_url)
@@ -254,6 +260,9 @@ class WebhookManager:
         updates: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Update existing webhook endpoint configuration"""
+
+
+
         try:
             # Get existing configuration
             config = await self.get_webhook_configuration(config_id)
@@ -292,6 +301,9 @@ class WebhookManager:
 
     async def get_webhook_configuration(self, config_id: str) -> Optional[WebhookConfiguration]:
         """Get webhook configuration by ID"""
+
+
+
         try:
             # Check cache first
             if config_id in self._endpoint_cache:
@@ -322,6 +334,9 @@ class WebhookManager:
         active_only: bool = True
     ) -> List[WebhookConfiguration]:
         """Get all webhook configurations for a user"""
+
+
+
         try:
             configurations = []
             
@@ -353,6 +368,9 @@ class WebhookManager:
 
     async def delete_webhook_endpoint(self, config_id: str) -> Dict[str, Any]:
         """Delete webhook endpoint configuration"""
+
+
+
         try:
             # Get configuration
             config = await self.get_webhook_configuration(config_id)
@@ -385,6 +403,9 @@ class WebhookManager:
 
     async def test_webhook_endpoint(self, config_id: str) -> Dict[str, Any]:
         """Test webhook endpoint connectivity and response"""
+
+
+
         try:
             config = await self.get_webhook_configuration(config_id)
             if not config:
@@ -430,6 +451,9 @@ class WebhookManager:
         user_id: str = None
     ) -> Dict[str, Any]:
         """Get health status for webhook endpoints"""
+
+
+
         try:
             if config_id:
                 # Get specific endpoint health
@@ -482,6 +506,9 @@ class WebhookManager:
         time_range: str = "24h"
     ) -> Dict[str, Any]:
         """Get webhook performance metrics"""
+
+
+
         try:
             metrics = {
                 'time_range': time_range,
@@ -526,6 +553,9 @@ class WebhookManager:
 
     async def health_check(self) -> Dict[str, Any]:
         """Comprehensive health check for webhook manager"""
+
+
+
         return {
             'status': 'healthy',
             'redis_connected': self._redis_client is not None,
@@ -536,6 +566,9 @@ class WebhookManager:
 
     async def shutdown(self) -> None:
         """Graceful shutdown of webhook manager"""
+
+
+
         try:
             logger.info("Shutting down WebhookManager")
             
@@ -556,6 +589,9 @@ class WebhookManager:
     
     async def _validate_endpoint_url(self, url: str) -> Dict[str, Any]:
         """Validate webhook endpoint URL"""
+
+
+
         try:
             if not url.startswith(('http://', 'https://')):
                 return {
@@ -600,6 +636,9 @@ class WebhookManager:
 
     async def _test_endpoint_with_payload(self, config: WebhookConfiguration) -> Dict[str, Any]:
         """Test endpoint with sample payload"""
+
+
+
         try:
             test_payload = {
                 'event_type': 'test',
@@ -634,6 +673,9 @@ class WebhookManager:
 
     async def _store_configuration_in_db(self, config: WebhookConfiguration) -> None:
         """Store configuration in database"""
+
+
+
         try:
             # Encrypt secret if provided
             secret_encrypted = None
@@ -667,6 +709,9 @@ class WebhookManager:
 
     async def _update_configuration_in_db(self, config: WebhookConfiguration) -> None:
         """Update configuration in database"""
+
+
+
         try:
             db_config = self.db_session.query(WebhookConfigurationModel).filter(
                 WebhookConfigurationModel.config_id == config.config_id
@@ -700,6 +745,9 @@ class WebhookManager:
 
     async def _load_configuration_from_db(self, config_id: str) -> Optional[WebhookConfiguration]:
         """Load configuration from database"""
+
+
+
         try:
             db_config = self.db_session.query(WebhookConfigurationModel).filter(
                 WebhookConfigurationModel.config_id == config_id
@@ -716,6 +764,9 @@ class WebhookManager:
 
     async def _load_configurations_from_db(self) -> None:
         """Load all active configurations from database"""
+
+
+
         try:
             db_configs = self.db_session.query(WebhookConfigurationModel).filter(
                 WebhookConfigurationModel.active == True
@@ -758,6 +809,9 @@ class WebhookManager:
 
     async def _deactivate_configuration_in_db(self, config_id: str) -> None:
         """Deactivate configuration in database"""
+
+
+
         try:
             db_config = self.db_session.query(WebhookConfigurationModel).filter(
                 WebhookConfigurationModel.config_id == config_id
@@ -775,6 +829,9 @@ class WebhookManager:
 
     async def _cache_configuration_in_redis(self, config: WebhookConfiguration) -> None:
         """Cache configuration in Redis"""
+
+
+
         try:
             if self._redis_client:
                 config_data = {
@@ -805,6 +862,9 @@ class WebhookManager:
 
     async def _get_configuration_from_redis(self, config_id: str) -> Optional[WebhookConfiguration]:
         """Get configuration from Redis cache"""
+
+
+
         try:
             if self._redis_client:
                 cache_key = f"webhook_config:{config_id}"
@@ -841,6 +901,9 @@ class WebhookManager:
 
     async def _remove_configuration_from_redis(self, config_id: str) -> None:
         """Remove configuration from Redis cache"""
+
+
+
         try:
             if self._redis_client:
                 cache_key = f"webhook_config:{config_id}"
@@ -867,6 +930,9 @@ class WebhookManager:
 
     async def _check_all_endpoints_health(self) -> None:
         """Check health of all registered endpoints"""
+
+
+
         try:
             # Create tasks for concurrent health checks
             check_tasks = []
@@ -889,6 +955,9 @@ class WebhookManager:
 
     async def _check_endpoint_health(self, config: WebhookConfiguration) -> None:
         """Check health of specific endpoint"""
+
+
+
         try:
             connectivity_result = await self._test_endpoint_connectivity(config)
             

@@ -9,7 +9,7 @@ configurations for enterprise-grade deployment.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL INTELLECTUAL PROPERTY WARNING ⚠️
+ CRITICAL INTELLECTUAL PROPERTY WARNING 
 This configuration system is the EXCLUSIVE property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR REVERSE ENGINEERING is strictly prohibited
 and will result in immediate legal prosecution under international copyright laws.
@@ -277,6 +277,9 @@ class IntelligenceAlgorithmsConfig:
     
     def get_algorithm_config(self, algorithm_name: str) -> Dict[str, Any]:
         """Get configuration for a specific algorithm"""
+
+
+
         return self.algorithm_settings.get(algorithm_name, {})
     
     def update_algorithm_config(self, algorithm_name: str, config: Dict[str, Any]):
@@ -298,6 +301,9 @@ class IntelligenceAlgorithmsConfig:
     
     def to_json(self) -> str:
         """Convert configuration to JSON string"""
+
+
+
         return json.dumps(self.to_dict(), indent=2, default=str)
     
     @classmethod
@@ -333,6 +339,9 @@ config = IntelligenceAlgorithmsConfig()
 # Configuration factory functions
 def get_config() -> IntelligenceAlgorithmsConfig:
     """Get the global configuration instance"""
+
+
+
     return config
 
 def create_config(environment: str = None, **kwargs) -> IntelligenceAlgorithmsConfig:
@@ -343,10 +352,16 @@ def create_config(environment: str = None, **kwargs) -> IntelligenceAlgorithmsCo
 
 def load_config_from_environment() -> IntelligenceAlgorithmsConfig:
     """Load configuration from environment variables"""
+
+
+
     return IntelligenceAlgorithmsConfig()
 
 def load_config_from_file(file_path: str) -> IntelligenceAlgorithmsConfig:
     """Load configuration from file"""
+
+
+
     return IntelligenceAlgorithmsConfig.from_file(file_path)
 
 # Export configuration components

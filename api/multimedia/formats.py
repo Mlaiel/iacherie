@@ -446,6 +446,9 @@ class SupportedFormats:
     @classmethod
     def get_professional_formats(cls) -> Dict[ContentFormat, List]:
         """Get professional-grade formats by category"""
+
+
+
         return {
             ContentFormat.AUDIO: [
                 fmt for fmt, spec in cls.AUDIO_FORMATS.items() 

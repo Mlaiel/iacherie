@@ -1,15 +1,15 @@
 """
-🚀 Business Rules Validation System - IA Influencer Agent Platform Enterprise
+ Business Rules Validation System - IA Influencer Agent Platform Enterprise
 ==========================================================================
 Module: backend/data_management/validation/business_validator.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ==========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 SYSTÈME DE VALIDATION MÉTIER MULTI-CRÉATEURS
+ SYSTÈME DE VALIDATION MÉTIER MULTI-CRÉATEURS
 Validation des règles business pour musiciens, influenceurs, photographes, blogueurs, comédiens
 - Respect quotas et limites par type d'utilisateur
 - Validation cohérence contenu/profil créateur
@@ -678,6 +678,9 @@ class ContentQualityAnalyzer:
     
     def _estimate_jpeg_quality(self, img: Image.Image) -> int:
         """Estime la qualité JPEG basée sur les tables de quantification"""
+
+
+
         try:
             # Méthode approximative basée sur la taille et la résolution
             file_size = len(img.tobytes())
@@ -704,6 +707,9 @@ class ContentQualityAnalyzer:
     
     def _analyze_image_composition(self, img_array: np.ndarray) -> float:
         """Analyse la composition d'une image"""
+
+
+
         try:
             # Conversion en niveaux de gris pour l'analyse
             if len(img_array.shape) == 3:
@@ -817,6 +823,9 @@ class BusinessValidator:
     
     def validate_business_rules(self, file_path: str, creator_type: str, content_type: str, user_data: Optional[Dict] = None) -> BusinessValidationResult:
         """Valide les règles métier pour un fichier"""
+
+
+
         
         try:
             # Conversion du type de créateur

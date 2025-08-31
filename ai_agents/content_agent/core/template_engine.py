@@ -7,7 +7,7 @@ dynamic templating, and multi-platform optimization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -202,6 +202,9 @@ class TemplateEngine:
         @self.jinja_env.filter('title_case')
         def title_case(text: str) -> str:
             """Convert text to title case"""
+
+
+
             return text.title()
         
         @self.jinja_env.filter('hashtags')
@@ -254,25 +257,40 @@ class TemplateEngine:
         @self.jinja_env.global_function
         def current_date(format: str = '%Y-%m-%d') -> str:
             """Get current date in specified format"""
+
+
+
             return datetime.now().strftime(format)
         
         @self.jinja_env.global_function
         def word_count(text: str) -> int:
             """Count words in text"""
+
+
+
             return len(text.split())
         
         @self.jinja_env.global_function
         def reading_time(text: str, wpm: int = 200) -> int:
             """Estimate reading time in minutes"""
+
+
+
             return max(1, len(text.split()) // wpm)
         
         @self.jinja_env.global_function
         def generate_id(prefix: str = 'item') -> str:
             """Generate unique ID"""
+
+
+
             return f"{prefix}_{uuid.uuid4().hex[:8]}"
 
     def _load_platform_configs(self) -> Dict[Platform, Dict[str, Any]]:
         """Load platform-specific configurations"""
+
+
+
         return {
             Platform.INSTAGRAM: {
                 'max_caption_length': 2200,
@@ -518,6 +536,9 @@ class TemplateEngine:
 
     async def render_template(self, template_id: str, context: TemplateRenderContext) -> str:
         """Render template with given context"""
+
+
+
         try:
             # Get template
             template = await self._get_template(template_id)
@@ -722,6 +743,9 @@ class TemplateEngine:
 
     def _convert_to_json(self, content: str, context: TemplateRenderContext) -> str:
         """Convert content to JSON format"""
+
+
+
         return json.dumps({
             'content': content,
             'metadata': {
@@ -784,6 +808,9 @@ class TemplateEngine:
 
     async def _update_template_usage(self, template_id: str):
         """Update template usage statistics"""
+
+
+
         try:
             if template_id in self.templates:
                 self.templates[template_id].usage_count += 1
@@ -798,6 +825,9 @@ class TemplateEngine:
 
     async def create_template(self, template: ContentTemplate, user_id: str) -> str:
         """Create a new content template"""
+
+
+
         try:
             # Validate template
             self._validate_new_template(template)
@@ -839,6 +869,9 @@ class TemplateEngine:
 
     async def _store_template_in_database(self, template: ContentTemplate):
         """Store template in database"""
+
+
+
         try:
             async with get_async_session() as session:
                 # Store template (would implement proper database model)
@@ -852,6 +885,9 @@ class TemplateEngine:
                            template_type: Optional[TemplateType] = None,
                            public_only: bool = False) -> List[ContentTemplate]:
         """List available templates with filters"""
+
+
+
         try:
             templates = list(self.templates.values())
             
@@ -879,6 +915,9 @@ class TemplateEngine:
     async def duplicate_template(self, template_id: str, user_id: str, 
                                new_name: Optional[str] = None) -> str:
         """Duplicate an existing template"""
+
+
+
         try:
             original_template = await self._get_template(template_id)
             if not original_template:
@@ -910,6 +949,9 @@ class TemplateEngine:
     async def get_template_preview(self, template_id: str, 
                                  sample_data: Optional[Dict[str, Any]] = None) -> Dict[str, str]:
         """Generate template preview with sample data"""
+
+
+
         try:
             template = await self._get_template(template_id)
             if not template:
@@ -994,6 +1036,9 @@ class FormatAdapter:
 
     def _initialize_format_processors(self) -> Dict[str, Any]:
         """Initialize format-specific processors"""
+
+
+
         return {
             'html_processor': self._create_html_processor(),
             'markdown_processor': self._create_markdown_processor(),
@@ -1149,6 +1194,9 @@ class FormatAdapter:
                           target_format: OutputFormat, platform: Optional[Platform] = None,
                           options: Optional[Dict[str, Any]] = None) -> str:
         """Adapt content from one format to another"""
+
+
+
         try:
             adapted_content = content
             

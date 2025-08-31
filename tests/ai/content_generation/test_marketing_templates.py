@@ -55,11 +55,17 @@ class TestMarketingTemplates:
     @pytest.fixture
     def marketing_templates(self):
         """Create a marketing templates instance"""
+
+
+
         return MarketingTemplates()
     
     @pytest.fixture
     def campaign_data(self):
         """Create sample campaign data"""
+
+
+
         return {
             "campaign_name": "AI Content Creation Course Launch",
             "product_name": "Master AI Content Creation",
@@ -97,8 +103,11 @@ class TestMarketingTemplates:
     @pytest.fixture
     def email_campaign_data(self):
         """Create sample email campaign data"""
+
+
+
         return {
-            "subject_line": "🚀 Transform Your Content Creation with AI",
+            "subject_line": " Transform Your Content Creation with AI",
             "preview_text": "Learn the tools and strategies that 10x productivity",
             "sender_name": "Fahed Mlaiel",
             "sender_email": "fahed@example.com",
@@ -129,7 +138,7 @@ class TestMarketingTemplates:
                     {
                         "email_number": 1,
                         "type": "announcement",
-                        "subject": "🚀 Something BIG is coming for content creators...",
+                        "subject": " Something BIG is coming for content creators...",
                         "preview": "The AI revolution in content creation starts now",
                         "content": {
                             "header": "Dear {{first_name}},",
@@ -138,16 +147,16 @@ class TestMarketingTemplates:
 After helping thousands of content creators automate their workflows, I've packaged everything into a comprehensive course.
 
 **What you'll learn:**
-✅ Master 15+ AI tools for content creation
-✅ Build automated content pipelines  
-✅ Create week's worth of content in hours
-✅ Scale your content without burning out
+ Master 15+ AI tools for content creation
+ Build automated content pipelines  
+ Create week's worth of content in hours
+ Scale your content without burning out
 
 **Limited Time Offer:**
 Early bird pricing ends in 72 hours
 Save 40% - normally $497, now just $297
 """,
-                            "cta": "🎯 Secure Your Spot Now",
+                            "cta": " Secure Your Spot Now",
                             "cta_url": "https://example.com/enroll",
                             "footer": "Best regards,\nFahed Mlaiel\nAI Content Expert"
                         },
@@ -173,7 +182,7 @@ Save 40% - normally $497, now just $297
 **Maria R., Agency Owner:**
 "We can now handle 3x more clients without hiring additional writers. ROI was immediate."
 
-🎯 **These aren't isolated cases.**
+ **These aren't isolated cases.**
 
 Our students average a 300% increase in content production while improving quality.
 
@@ -187,7 +196,7 @@ Our students average a 300% increase in content production while improving quali
 **⏰ Early Bird Ends Tomorrow**
 Save $200 - Price goes up to $497 after 24 hours
 """,
-                            "cta": "🚀 Join 10,000+ Successful Students",
+                            "cta": " Join 10,000+ Successful Students",
                             "cta_url": "https://example.com/enroll"
                         },
                         "send_delay": 24,
@@ -209,10 +218,10 @@ That's $200 you'll save by enrolling today.
 
 **Here's what happens when you join:**
 
-✅ **Immediate Access** to all 40+ lessons
-✅ **Bonus Templates** worth $197 (included free)
-✅ **Private Community** for ongoing support
-✅ **Lifetime Updates** as AI tools evolve
+ **Immediate Access** to all 40+ lessons
+ **Bonus Templates** worth $197 (included free)
+ **Private Community** for ongoing support
+ **Lifetime Updates** as AI tools evolve
 
 **The Reality:**
 Content creation is becoming more competitive every day. Those using AI are pulling ahead fast.
@@ -223,7 +232,7 @@ Struggle with manual content creation, or join the AI revolution tonight.
 **The Savings:**
 $200 off, but only for the next 12 hours.
 """,
-                            "cta": "🎯 Secure Early Bird Pricing",
+                            "cta": " Secure Early Bird Pricing",
                             "cta_url": "https://example.com/enroll",
                             "ps": "P.S. After tonight, this price is gone forever. Don't let this opportunity slip away."
                         },
@@ -371,17 +380,17 @@ $200 off, but only for the next 12 hours.
                         "title": "The AI-Powered Solution",
                         "benefits": [
                             {
-                                "icon": "⚡",
+                                "icon": "",
                                 "title": "10x Faster Creation",
                                 "description": "Generate weeks of content in hours using AI automation"
                             },
                             {
-                                "icon": "🎯",
+                                "icon": "",
                                 "title": "Consistent Quality",
                                 "description": "Maintain your brand voice across all AI-generated content"
                             },
                             {
-                                "icon": "🚀",
+                                "icon": "",
                                 "title": "Scale Without Burnout",
                                 "description": "Increase output while reducing time and stress"
                             }
@@ -552,7 +561,7 @@ $200 off, but only for the next 12 hours.
                 "success": True,
                 "test_variations": {
                     "email_subject_lines": {
-                        "variant_a": "🚀 Transform Your Content Creation with AI",
+                        "variant_a": " Transform Your Content Creation with AI",
                         "variant_b": "How to Create 10x More Content in Half the Time",
                         "variant_c": "Stop Struggling with Content Creation (AI Solution Inside)",
                         "test_element": "subject_line",

@@ -884,6 +884,9 @@ class UptimeMonitor:
                     
     async def _execute_tcp_check(self, check: UptimeCheck, start_time: float) -> CheckResult:
         """Execute TCP port check"""
+
+
+
         try:
             # Parse target (host:port)
             if ':' in check.target:
@@ -922,6 +925,9 @@ class UptimeMonitor:
             
     async def _execute_database_check(self, check: UptimeCheck, start_time: float) -> CheckResult:
         """Execute database connectivity check"""
+
+
+
         try:
             # This is a simplified implementation
             # In production, use proper database drivers
@@ -956,6 +962,9 @@ class UptimeMonitor:
             
     async def _execute_redis_check(self, check: UptimeCheck, start_time: float) -> CheckResult:
         """Execute Redis connectivity check"""
+
+
+
         try:
             # Parse Redis URL
             parsed = urlparse(check.target)
@@ -1375,6 +1384,9 @@ class UptimeMonitor:
         
     def get_all_checks_status(self) -> Dict[str, Dict[str, Any]]:
         """Get status of all checks"""
+
+
+
         return {
             check_id: self.get_check_status(check_id)
             for check_id in self.checks.keys()
@@ -1382,6 +1394,9 @@ class UptimeMonitor:
         
     def get_active_incidents(self) -> List[Dict[str, Any]]:
         """Get active downtime incidents"""
+
+
+
         return [
             {
                 "id": incident.id,

@@ -8,7 +8,7 @@ Utilizes state-of-the-art AI algorithms for precise content identification and s
 Author: Fahed Mlaiel <mlaiel@live.de>
 Enterprise Content Protection Platform - Digital Fingerprinting Core
 
-⚠️  COPYRIGHT NOTICE ⚠️
+  COPYRIGHT NOTICE 
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
@@ -102,6 +102,9 @@ class AudioFingerprintEngine(BaseFingerprintEngine):
         Returns:
             FingerprintResult with acoustic fingerprint and spectral features
         """
+
+
+
         try:
             # Convert bytes to audio array
             audio_array = np.frombuffer(audio_data, dtype=np.float32)
@@ -173,6 +176,9 @@ class AudioFingerprintEngine(BaseFingerprintEngine):
         self, fingerprint1: FingerprintResult, fingerprint2: FingerprintResult
     ) -> float:
         """Compare two audio fingerprints using multiple similarity metrics."""
+
+
+
         try:
             # Compare Chromaprint hashes
             chromaprint_similarity = await self._compare_chromaprint(
@@ -274,6 +280,9 @@ class VideoFingerprintEngine(BaseFingerprintEngine):
         Returns:
             FingerprintResult with visual descriptors and motion features
         """
+
+
+
         try:
             # Save video data to temporary file for OpenCV
             temp_path = f"/tmp/temp_video_{datetime.utcnow().timestamp()}.mp4"
@@ -397,6 +406,9 @@ class VideoFingerprintEngine(BaseFingerprintEngine):
         self, fingerprint1: FingerprintResult, fingerprint2: FingerprintResult
     ) -> float:
         """Compare two video fingerprints."""
+
+
+
         try:
             # Compare feature vectors
             vector_similarity = cosine_similarity(
@@ -516,6 +528,9 @@ class ImageFingerprintEngine(BaseFingerprintEngine):
         Returns:
             FingerprintResult with visual embeddings and perceptual hash
         """
+
+
+
         try:
             # Load image
             image = Image.open(BytesIO(image_data))
@@ -596,6 +611,9 @@ class ImageFingerprintEngine(BaseFingerprintEngine):
         self, fingerprint1: FingerprintResult, fingerprint2: FingerprintResult
     ) -> float:
         """Compare two image fingerprints."""
+
+
+
         try:
             # Compare CLIP embeddings (first part of feature vector)
             clip_dim = 512  # CLIP embedding dimension
@@ -672,6 +690,9 @@ class TextFingerprintEngine(BaseFingerprintEngine):
         Returns:
             FingerprintResult with semantic embeddings and structural features
         """
+
+
+
         try:
             # Decode text
             text = text_data.decode('utf-8', errors='ignore')
@@ -744,6 +765,9 @@ class TextFingerprintEngine(BaseFingerprintEngine):
         self, fingerprint1: FingerprintResult, fingerprint2: FingerprintResult
     ) -> float:
         """Compare two text fingerprints."""
+
+
+
         try:
             # Compare BERT embeddings
             embedding_dim = 384  # MiniLM embedding dimension
@@ -982,6 +1006,9 @@ class DigitalFingerprintEngine:
     
     def get_engine_info(self) -> Dict[str, Dict[str, Any]]:
         """Get information about all available engines."""
+
+
+
         return {
             content_type: {
                 "algorithm_version": engine.algorithm_version,

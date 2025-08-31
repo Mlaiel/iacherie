@@ -138,6 +138,9 @@ class PlatformContentSurveillance:
         Returns:
             Dictionary with extracted content information
         """
+
+
+
         try:
             # Determine platform from URL
             platform = self._detect_platform_from_url(url)
@@ -186,6 +189,9 @@ class PlatformContentSurveillance:
         Returns:
             Path to screenshot file or None if failed
         """
+
+
+
         try:
             # Generate unique filename
             url_hash = hashlib.md5(url.encode()).hexdigest()

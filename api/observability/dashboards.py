@@ -649,6 +649,9 @@ class DashboardManager:
     
     def list_dashboards(self) -> List[Dict]:
         """List all available dashboards."""
+
+
+
         return [
             {
                 "id": info["dashboard"].id,

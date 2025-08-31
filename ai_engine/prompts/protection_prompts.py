@@ -5,7 +5,7 @@ Professional prompts for multi-format content protection (audio, video, image, t
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️ COPYRIGHT WARNING ⚠️
+ COPYRIGHT WARNING 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
@@ -445,6 +445,9 @@ class AIProtectionPrompts:
     
     def generate_protection_prompt(self, context: ProtectionContext, custom_params: Optional[Dict] = None) -> Dict[str, Any]:
         """Generate a protection prompt based on context"""
+
+
+
         try:
             # Get protection template
             content_templates = self.protection_templates.get(context.content_type, {})
@@ -552,6 +555,9 @@ class AIProtectionPrompts:
     
     def _generate_fallback_protection_prompt(self, context: ProtectionContext) -> Dict[str, Any]:
         """Generate fallback protection prompt"""
+
+
+
         return {
             "id": "fallback_protection",
             "template": f"""
@@ -661,6 +667,9 @@ PROTECTION_PROMPTS_REGISTRY = {
 
 def get_protection_prompts() -> AIProtectionPrompts:
     """Get the main protection prompts instance"""
+
+
+
     return AIProtectionPrompts()
 
 def create_protection_context(
@@ -672,6 +681,9 @@ def create_protection_context(
     technical_specs: Optional[Dict] = None
 ) -> ProtectionContext:
     """Create a protection context for content protection"""
+
+
+
     return ProtectionContext(
         content_type=ContentType(content_type),
         protection_level=ProtectionLevel(protection_level),

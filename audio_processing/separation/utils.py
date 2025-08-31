@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel - Unauthorized use strictly prohibited
 License: Proprietary - Contact for licensing
 
-⚠️ WARNING: This code is the intellectual property of Fahed Mlaiel.
+ WARNING: This code is the intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or modification is strictly
 prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -267,6 +267,9 @@ class AudioValidator:
     
     async def _extract_metadata(self, file_path: Path) -> AudioMetadata:
         """Extract comprehensive metadata from audio file."""
+
+
+
         try:
             metadata = AudioMetadata()
             
@@ -344,6 +347,9 @@ class AudioValidator:
     
     async def _generate_fingerprint(self, file_path: Path) -> str:
         """Generate audio fingerprint for duplicate detection."""
+
+
+
         try:
             # Load audio for fingerprinting
             audio, sr = librosa.load(str(file_path), sr=22050, duration=30)  # First 30 seconds
@@ -408,6 +414,9 @@ class FormatConverter:
         
     def _setup_conversion_profiles(self) -> Dict[str, Dict[str, Any]]:
         """Setup conversion profiles for different output formats."""
+
+
+
         return {
             OutputFormat.WAV.value: {
                 'format': 'WAV',
@@ -436,6 +445,9 @@ class FormatConverter:
                           output_path: Optional[Path] = None,
                           quality: SeparationQuality = SeparationQuality.HIGH) -> Union[bytes, Path]:
         """Convert audio to specified format."""
+
+
+
         try:
             # Validate input
             validator = AudioValidator()
@@ -533,6 +545,9 @@ class FormatConverter:
     async def _write_audio_file(self, audio: np.ndarray, sample_rate: int,
                                output_path: Path, profile: Dict[str, Any]) -> None:
         """Write audio to file with specified profile."""
+
+
+
         try:
             # Ensure directory exists
             output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -554,6 +569,9 @@ class FormatConverter:
     async def _convert_to_bytes(self, audio: np.ndarray, sample_rate: int,
                                profile: Dict[str, Any]) -> bytes:
         """Convert audio to bytes in specified format."""
+
+
+
         try:
             import io
             
@@ -680,6 +698,9 @@ class MetadataExtractor:
     
     async def _extract_technical_metadata(self, file_path: Path) -> Dict[str, Any]:
         """Extract technical audio analysis metadata."""
+
+
+
         try:
             # Load audio for analysis
             audio, sr = librosa.load(str(file_path), sr=None, duration=60)  # First minute
@@ -762,6 +783,9 @@ class MetadataExtractor:
     
     async def _extract_musical_metadata(self, file_path: Path) -> Dict[str, Any]:
         """Extract musical analysis metadata."""
+
+
+
         try:
             # Load audio
             audio, sr = librosa.load(str(file_path), sr=22050, duration=120)  # First 2 minutes
@@ -834,6 +858,9 @@ class MetadataExtractor:
     
     async def _extract_fingerprint_data(self, file_path: Path) -> Dict[str, Any]:
         """Extract audio fingerprint and identification data."""
+
+
+
         try:
             # Load audio for fingerprinting
             audio, sr = librosa.load(str(file_path), sr=22050, duration=30)
@@ -966,6 +993,9 @@ async def validate_and_convert_audio(input_path: Union[str, Path],
 def calculate_audio_similarity(audio1: np.ndarray, audio2: np.ndarray, 
                              method: str = 'spectral') -> float:
     """Calculate similarity between two audio signals."""
+
+
+
     try:
         # Ensure same length
         min_len = min(len(audio1), len(audio2))

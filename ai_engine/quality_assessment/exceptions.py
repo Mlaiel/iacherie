@@ -7,7 +7,7 @@ Provides comprehensive error classification and debugging information.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software and all associated concepts, algorithms, and implementations are the exclusive 
 intellectual property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, reproduction, 
 distribution, modification, or appropriation of this code, in whole or in part, without 
@@ -87,6 +87,9 @@ class QualityAssessmentBaseException(Exception):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert exception to dictionary format"""
+
+
+
         return {
             'error_type': self.__class__.__name__,
             'message': self.message,
@@ -102,6 +105,9 @@ class QualityAssessmentBaseException(Exception):
     
     def __str__(self) -> str:
         """String representation of the exception"""
+
+
+
         return f"[{self.error_code}] {self.message} (Severity: {self.severity.value})"
 
 
@@ -603,6 +609,9 @@ def get_exception_class(error_code: str) -> type:
     Returns:
         Exception class for the error code
     """
+
+
+
     return ERROR_CODES.get(error_code, QualityAssessmentBaseException)
 
 

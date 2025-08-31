@@ -138,6 +138,9 @@ class GenerationManager:
     
     def _initialize_components(self) -> None:
         """Initialize all manager components"""
+
+
+
         try:
             # Initialize pipeline with configuration
             pipeline_config = PipelineConfiguration(
@@ -191,6 +194,9 @@ class GenerationManager:
         Returns:
             Request ID for tracking
         """
+
+
+
         try:
             # Validate request
             await self._validate_generation_request(request)
@@ -275,6 +281,9 @@ class GenerationManager:
         Returns:
             True if cancellation was successful
         """
+
+
+
         try:
             # Cancel active request
             if request_id in self.active_requests:
@@ -304,6 +313,9 @@ class GenerationManager:
     
     async def _process_generation_request(self, request: GenerationRequest) -> None:
         """Process a generation request through the pipeline"""
+
+
+
         try:
             # Add to active requests
             self.active_requests[request.request_id] = request
@@ -536,6 +548,9 @@ class GenerationManager:
     
     def get_manager_statistics(self) -> Dict[str, Any]:
         """Get comprehensive manager statistics"""
+
+
+
         return {
             **self.manager_stats,
             'resource_usage': self.current_resource_usage,
@@ -551,6 +566,9 @@ class GenerationManager:
     
     async def shutdown(self) -> None:
         """Shutdown the generation manager gracefully"""
+
+
+
         try:
             self.logger.info("Shutting down generation manager...")
             
@@ -588,10 +606,16 @@ class QueueManager:
     
     def dequeue(self) -> Optional[Any]:
         """Remove item from queue"""
+
+
+
         return self.queue.pop(0) if self.queue else None
     
     def size(self) -> int:
         """Get queue size"""
+
+
+
         return len(self.queue)
 
 
@@ -604,14 +628,23 @@ class ResourceMonitor:
     
     def get_cpu_usage(self) -> float:
         """Get current CPU usage"""
+
+
+
         return 50.0  # Mock implementation
     
     def get_memory_usage(self) -> float:
         """Get current memory usage"""
+
+
+
         return 60.0  # Mock implementation
     
     def is_resource_available(self) -> bool:
         """Check if resources are available"""
+
+
+
         return (self.get_cpu_usage() < self.cpu_threshold and 
                 self.get_memory_usage() < self.memory_threshold)
     
@@ -647,6 +680,9 @@ class QueueManager:
     
     def size(self) -> int:
         """Get queue size"""
+
+
+
         return len(self.queue)
 
 
@@ -662,6 +698,9 @@ class ResourceMonitor:
     
     def _update_metrics(self):
         """Update system metrics"""
+
+
+
         try:
             import psutil
             self.cpu_usage = psutil.cpu_percent(interval=0.1)
@@ -684,6 +723,9 @@ class ResourceMonitor:
     
     def is_resource_available(self) -> bool:
         """Check if resources are available"""
+
+
+
         return self.cpu_usage < 80.0 and self.memory_usage < 80.0
     
     def configure_thresholds(self, cpu_threshold: float, memory_threshold: float) -> None:
@@ -701,7 +743,7 @@ class ResourceMonitor:
             'cpu_usage': self.cpu_usage,
             'memory_usage': self.memory_usage
         }
-        logger.warning(f"🚨 Resource Alert: {message} - CPU: {self.cpu_usage}% Memory: {self.memory_usage}%")
+        logger.warning(f" Resource Alert: {message} - CPU: {self.cpu_usage}% Memory: {self.memory_usage}%")
         # In production, this would integrate with alerting systems like PagerDuty/Slack
         return alert_data
 
@@ -768,6 +810,9 @@ class GenerationCache:
     
     def stats(self) -> Dict[str, Any]:
         """Get cache statistics"""
+
+
+
         return {
             'size': len(self.cache),
             'max_size': self.max_size,
@@ -813,10 +858,16 @@ class GenerationQueue:
     
     def size(self) -> int:
         """Get total queue size"""
+
+
+
         return self.total_size
     
     def size_by_priority(self) -> Dict[str, int]:
         """Get queue size by priority"""
+
+
+
         return {
             priority.value: len(queue) 
             for priority, queue in self.queues.items()

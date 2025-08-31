@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🎯 Générateur de priorités business actionables
+ Générateur de priorités business actionables
 Author: Fahed Mlaiel <mlaiel@live.de>
 
 Extrait les insights business critiques de l'analyse TODO et génère
@@ -14,6 +14,9 @@ from datetime import datetime
 
 def load_analysis_data() -> Dict:
     """Charger les données d'analyse"""
+
+
+
     try:
         with open("todo_business_impact_analysis.json", 'r', encoding='utf-8') as f:
             return json.load(f)
@@ -331,12 +334,12 @@ def _calculate_roi_impact(data: Dict) -> Dict:
 
 def main():
     """Générer le rapport d'actions business"""
-    print("🎯 Génération des priorités business actionables...")
+    print(" Génération des priorités business actionables...")
     
     # Charger les données
     data = load_analysis_data()
     if not data:
-        print("❌ Données d'analyse non trouvées")
+        print(" Données d'analyse non trouvées")
         return
     
     # Extraire les actions business
@@ -347,12 +350,12 @@ def main():
     with open(output_file, 'w', encoding='utf-8') as f:
         json.dump(actions, f, indent=2, ensure_ascii=False)
     
-    print(f"✅ Rapport d'actions sauvegardé: {output_file}")
+    print(f" Rapport d'actions sauvegardé: {output_file}")
     
     # Afficher le résumé
     if 'sprint_1_critical' in actions:
         critical = actions['sprint_1_critical']
-        print(f"🔴 Actions critiques: {critical['total_files']} fichiers, {critical['estimated_total_effort_days']} jours")
+        print(f" Actions critiques: {critical['total_files']} fichiers, {critical['estimated_total_effort_days']} jours")
     
     if 'sprint_2_high_impact' in actions:
         high = actions['sprint_2_high_impact']
@@ -360,7 +363,7 @@ def main():
     
     if 'roi_impact_analysis' in actions:
         roi = actions['roi_impact_analysis']
-        print(f"📊 Effort total estimé: {roi['remaining_implementation_effort_days']} jours ({roi['estimated_weeks_to_completion']} semaines)")
+        print(f" Effort total estimé: {roi['remaining_implementation_effort_days']} jours ({roi['estimated_weeks_to_completion']} semaines)")
 
 if __name__ == "__main__":
     main()

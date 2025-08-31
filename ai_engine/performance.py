@@ -7,7 +7,7 @@ Advanced performance monitoring, benchmarking, and optimization system.
 © 2025 Fahed Mlaiel. All Rights Reserved.
 Contact: mlaiel@live.de
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This performance system contains proprietary optimization algorithms.
 Unauthorized use is strictly prohibited.
 """
@@ -106,7 +106,7 @@ class AIPerformanceMonitor:
             Dict containing detailed benchmark results
         """
         start_time = time.time()
-        logger.info("🚀 Starting Comprehensive AI Performance Benchmarks")
+        logger.info(" Starting Comprehensive AI Performance Benchmarks")
         
         benchmark_tasks = [
             self._benchmark_content_processing(),
@@ -148,7 +148,7 @@ class AIPerformanceMonitor:
             'alerts_and_warnings': await self._check_performance_alerts()
         }
         
-        logger.info(f"✅ Benchmarks completed in {total_time:.2f}s")
+        logger.info(f" Benchmarks completed in {total_time:.2f}s")
         
         return performance_summary
     
@@ -620,6 +620,9 @@ class AIPerformanceMonitor:
     
     def _create_error_metrics(self, test_name: str, benchmark_type: BenchmarkType, start_time: float, error: str) -> PerformanceMetrics:
         """Create error metrics for failed benchmarks"""
+
+
+
         return PerformanceMetrics(
             test_name=test_name,
             benchmark_type=benchmark_type,
@@ -638,6 +641,9 @@ class AIPerformanceMonitor:
     
     async def _get_system_info(self) -> Dict[str, Any]:
         """Get system information"""
+
+
+
         return {
             'cpu_count': psutil.cpu_count(),
             'cpu_freq': psutil.cpu_freq()._asdict() if psutil.cpu_freq() else None,
@@ -691,6 +697,9 @@ class AIPerformanceMonitor:
     
     async def _generate_optimization_recommendations(self) -> List[str]:
         """Generate performance optimization recommendations"""
+
+
+
         return [
             "Consider implementing caching for frequently accessed data",
             "Optimize database queries for better performance",
@@ -765,6 +774,9 @@ ai_performance_monitor = AIPerformanceMonitor()
 # Export main performance functions
 async def run_performance_benchmarks() -> Dict[str, Any]:
     """Global performance benchmark function"""
+
+
+
     return await ai_performance_monitor.run_comprehensive_benchmarks()
 
 async def start_performance_monitoring():
@@ -791,32 +803,32 @@ __all__ = [
 if __name__ == "__main__":
     # Run performance benchmarks when script is executed directly
     async def main():
-        print("🚀 Starting IA-Influencer-Agent Performance Benchmarks...")
+        print(" Starting IA-Influencer-Agent Performance Benchmarks...")
         print("=" * 70)
         
         results = await run_performance_benchmarks()
         
-        print(f"\n✅ Performance Benchmark Results:")
+        print(f"\n Performance Benchmark Results:")
         print(f"Author: {results['author']}")
         print(f"Overall Score: {results['performance_score']['score']:.2f}")
         print(f"Performance Rating: {results['performance_score']['rating'].upper()}")
         print(f"Execution Time: {results['execution_time']:.2f}s")
         
-        print(f"\n📊 Benchmark Results:")
+        print(f"\n Benchmark Results:")
         for benchmark_name, benchmark_data in results['benchmark_results'].items():
             if benchmark_data and isinstance(benchmark_data, dict):
                 print(f"- {benchmark_name.replace('_', ' ').title()}: {benchmark_data.get('performance_level', 'N/A')}")
         
-        print(f"\n💡 Optimization Recommendations:")
+        print(f"\n Optimization Recommendations:")
         for i, rec in enumerate(results['optimization_recommendations'][:5], 1):
             print(f"{i}. {rec}")
         
         if results['alerts_and_warnings']:
-            print(f"\n⚠️ Performance Alerts:")
+            print(f"\n Performance Alerts:")
             for alert in results['alerts_and_warnings']:
                 print(f"- {alert['type']}: {alert['message']}")
         
-        print(f"\n⚖️ Copyright Notice:")
+        print(f"\n Copyright Notice:")
         print(f"{results['copyright']}")
         print("Contact: mlaiel@live.de for authorization")
         

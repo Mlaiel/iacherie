@@ -25,10 +25,10 @@ def test_business_monitoring():
         )
         
         # Test enums
-        print(f"   ✅ Content Types: {[e.value for e in ContentType]}")
-        print(f"   ✅ Creator Types: {[e.value for e in CreatorType]}")
-        print(f"   ✅ Process Stages: {[e.value for e in ProcessStage]}")
-        print(f"   ✅ Distribution Platforms: {[e.value for e in DistributionPlatform]}")
+        print(f"    Content Types: {[e.value for e in ContentType]}")
+        print(f"    Creator Types: {[e.value for e in CreatorType]}")
+        print(f"    Process Stages: {[e.value for e in ProcessStage]}")
+        print(f"    Distribution Platforms: {[e.value for e in DistributionPlatform]}")
         
         # Test monitors
         content_monitor = ContentProcessingMonitor()
@@ -36,11 +36,11 @@ def test_business_monitoring():
         monetization_monitor = MonetizationMonitor()
         orchestrator = BusinessProcessOrchestrator()
         
-        print("   ✅ All monitors created successfully")
+        print("    All monitors created successfully")
         return True
         
     except Exception as e:
-        print(f"   ❌ Business monitoring test failed: {e}")
+        print(f"    Business monitoring test failed: {e}")
         return False
 
 def test_analytics():
@@ -58,13 +58,13 @@ def test_analytics():
         historical = HistoricalAnalytics()
         predictive = PredictiveAnalytics()
         
-        print(f"   ✅ Analytics Timeframes: {[e.value for e in AnalyticsTimeframe]}")
-        print(f"   ✅ Metric Types: {[e.value for e in AnalyticsMetricType]}")
-        print("   ✅ All analytics components created successfully")
+        print(f"    Analytics Timeframes: {[e.value for e in AnalyticsTimeframe]}")
+        print(f"    Metric Types: {[e.value for e in AnalyticsMetricType]}")
+        print("    All analytics components created successfully")
         return True
         
     except Exception as e:
-        print(f"   ❌ Analytics test failed: {e}")
+        print(f"    Analytics test failed: {e}")
         return False
 
 def test_intelligent_monitoring():
@@ -82,13 +82,13 @@ def test_intelligent_monitoring():
         anomaly_detector = AnomalyDetector()
         predictive_engine = PredictiveEngine()
         
-        print(f"   ✅ Alert Severities: {[e.value for e in AlertSeverity]}")
-        print(f"   ✅ Monitoring Scopes: {[e.value for e in MonitoringScope]}")
-        print("   ✅ All monitoring components created successfully")
+        print(f"    Alert Severities: {[e.value for e in AlertSeverity]}")
+        print(f"    Monitoring Scopes: {[e.value for e in MonitoringScope]}")
+        print("    All monitoring components created successfully")
         return True
         
     except Exception as e:
-        print(f"   ❌ Intelligent monitoring test failed: {e}")
+        print(f"    Intelligent monitoring test failed: {e}")
         return False
 
 def test_configuration():
@@ -104,12 +104,12 @@ def test_configuration():
         # Test config creation
         config = ObservabilityConfig()
         
-        print(f"   ✅ Environments: {[e.value for e in Environment]}")
-        print("   ✅ Configuration created successfully")
+        print(f"    Environments: {[e.value for e in Environment]}")
+        print("    Configuration created successfully")
         return True
         
     except Exception as e:
-        print(f"   ❌ Configuration test failed: {e}")
+        print(f"    Configuration test failed: {e}")
         return False
 
 async def test_business_workflow():
@@ -164,25 +164,25 @@ async def test_business_workflow():
         collab_analytics = await collaboration_monitor.get_collaboration_analytics()
         monetization_report = await monetization_monitor.get_monetization_report()
         
-        print("   ✅ Content processing workflow completed")
-        print("   ✅ Collaboration tracking completed")
-        print("   ✅ Monetization tracking completed")
-        print(f"   ✅ Pipeline report generated: {len(pipeline_report)} keys")
-        print(f"   ✅ Collaboration analytics: {len(collab_analytics)} keys")
-        print(f"   ✅ Monetization report: {len(monetization_report)} keys")
+        print("    Content processing workflow completed")
+        print("    Collaboration tracking completed")
+        print("    Monetization tracking completed")
+        print(f"    Pipeline report generated: {len(pipeline_report)} keys")
+        print(f"    Collaboration analytics: {len(collab_analytics)} keys")
+        print(f"    Monetization report: {len(monetization_report)} keys")
         
         return True
         
     except Exception as e:
-        print(f"   ❌ Business workflow test failed: {e}")
+        print(f"    Business workflow test failed: {e}")
         return False
 
 async def main():
     """Main test runner"""
-    print("🎯 IA INFLUENCER AGENT - OBSERVABILITY MODULE QUICK TEST")
+    print(" IA INFLUENCER AGENT - OBSERVABILITY MODULE QUICK TEST")
     print("=" * 70)
-    print("👨‍💼 Author: Fahed Mlaiel <mlaiel@live.de>")
-    print("🔍 Testing Core Functionality")
+    print("‍ Author: Fahed Mlaiel <mlaiel@live.de>")
+    print(" Testing Core Functionality")
     print("=" * 70)
     
     tests = [
@@ -196,7 +196,7 @@ async def main():
     results = {}
     
     for test_name, test_func in tests:
-        print(f"\n📋 {test_name.upper()}:")
+        print(f"\n {test_name.upper()}:")
         try:
             if asyncio.iscoroutinefunction(test_func):
                 success = await test_func()
@@ -206,35 +206,35 @@ async def main():
             results[test_name] = success
             
             if success:
-                print(f"✅ {test_name}: PASSED")
+                print(f" {test_name}: PASSED")
             else:
-                print(f"❌ {test_name}: FAILED")
+                print(f" {test_name}: FAILED")
                 
         except Exception as e:
-            print(f"💥 {test_name}: EXCEPTION - {str(e)}")
+            print(f" {test_name}: EXCEPTION - {str(e)}")
             results[test_name] = False
     
     # Summary
     print("\n" + "=" * 70)
-    print("🏆 TEST SUMMARY:")
+    print(" TEST SUMMARY:")
     print("=" * 70)
     
     passed_tests = sum(1 for success in results.values() if success)
     total_tests = len(tests)
     success_rate = (passed_tests / total_tests) * 100
     
-    print(f"📊 Tests Passed: {passed_tests}/{total_tests} ({success_rate:.1f}%)")
+    print(f" Tests Passed: {passed_tests}/{total_tests} ({success_rate:.1f}%)")
     
     for test_name, success in results.items():
-        status = "✅ PASSED" if success else "❌ FAILED"
+        status = " PASSED" if success else " FAILED"
         print(f"   {test_name}: {status}")
     
     if success_rate == 100:
-        print("\n🎉 ALL TESTS PASSED - MODULE IS FULLY FUNCTIONAL!")
-        print("✅ IA Influencer Observability Module is ready for production")
+        print("\n ALL TESTS PASSED - MODULE IS FULLY FUNCTIONAL!")
+        print(" IA Influencer Observability Module is ready for production")
         return 0
     else:
-        print(f"\n⚠️ {total_tests - passed_tests} TESTS FAILED - SEE DETAILS ABOVE")
+        print(f"\n {total_tests - passed_tests} TESTS FAILED - SEE DETAILS ABOVE")
         return 1
 
 if __name__ == "__main__":
@@ -242,8 +242,8 @@ if __name__ == "__main__":
         exit_code = asyncio.run(main())
         sys.exit(exit_code)
     except KeyboardInterrupt:
-        print("\n👋 Tests interrupted by user")
+        print("\n Tests interrupted by user")
         sys.exit(1)
     except Exception as e:
-        print(f"💥 Fatal test error: {str(e)}")
+        print(f" Fatal test error: {str(e)}")
         sys.exit(1)

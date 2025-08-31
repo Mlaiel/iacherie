@@ -125,6 +125,9 @@ class CrawlerModuleIndex:
     
     def get_module_info(self) -> Dict[str, Any]:
         """Get complete module information."""
+
+
+
         return {
             **MODULE_INFO,
             "supported_platforms": SUPPORTED_PLATFORMS,
@@ -169,6 +172,9 @@ class CrawlerModuleIndex:
     
     def validate_configuration(self, component: str, config: Dict[str, Any]) -> bool:
         """Validate configuration for a component."""
+
+
+
         try:
             # Basic validation - can be extended per component
             required_fields = {
@@ -199,6 +205,9 @@ class CrawlerModuleIndex:
         config: Dict[str, Any] = None
     ) -> Any:
         """Create an instance of a crawler class with configuration."""
+
+
+
         try:
             crawler_class = self.load_crawler_class(class_name)
             
@@ -219,6 +228,9 @@ class CrawlerModuleIndex:
     
     def get_crawler_documentation(self, class_name: str) -> Dict[str, Any]:
         """Get documentation for a crawler class."""
+
+
+
         try:
             crawler_class = self.load_crawler_class(class_name)
             
@@ -246,22 +258,37 @@ crawler_index = CrawlerModuleIndex()
 # Convenience functions
 def list_crawlers() -> List[str]:
     """List all available crawler classes."""
+
+
+
     return list(CRAWLER_CLASSES.keys())
 
 def get_crawler(class_name: str, config: Dict[str, Any] = None):
     """Get a crawler instance by name."""
+
+
+
     return crawler_index.create_crawler_instance(class_name, config)
 
 def get_platforms(category: str = None) -> List[str]:
     """Get supported platforms."""
+
+
+
     return crawler_index.get_supported_platforms(category)
 
 def get_features(component: str = None) -> Dict[str, Any]:
     """Get feature capabilities."""
+
+
+
     return crawler_index.get_feature_capabilities(component)
 
 def module_info() -> Dict[str, Any]:
     """Get complete module information."""
+
+
+
     return crawler_index.get_module_info()
 
 

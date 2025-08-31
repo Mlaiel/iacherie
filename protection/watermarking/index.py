@@ -6,7 +6,7 @@ Developed by: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Senior Backend + ML Engineer + DBA + Security Expert + 
                Microservices Architect + Audio Engineer + DevOps + AI Prompt Engineer
 
-⚠️ INTELLECTUAL PROPERTY WARNING:
+ INTELLECTUAL PROPERTY WARNING:
 This watermarking system and all associated code are the exclusive intellectual property 
 of Fahed Mlaiel. Unauthorized use is strictly prohibited.
 """

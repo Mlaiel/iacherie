@@ -73,6 +73,9 @@ class PostgreSQLConnectionHandler:
     
     async def initialize(self) -> None:
         """Initialize PostgreSQL connection pool"""
+
+
+
         try:
             self.logger.info("Initializing PostgreSQL connection pool...")
             
@@ -100,6 +103,9 @@ class PostgreSQLConnectionHandler:
     
     def _build_dsn(self) -> str:
         """Build PostgreSQL connection string"""
+
+
+
         return (
             f"postgresql://{self.config.username}:"
             f"{self.config.password}@{self.config.host}:"
@@ -159,6 +165,9 @@ class PostgreSQLConnectionHandler:
                      *args, 
                      connection: Optional[PoolConnectionProxy] = None) -> Any:
         """Execute a query"""
+
+
+
         try:
             if connection:
                 result = await connection.execute(query, *args)
@@ -179,6 +188,9 @@ class PostgreSQLConnectionHandler:
                    *args, 
                    connection: Optional[PoolConnectionProxy] = None) -> List[Dict]:
         """Fetch query results"""
+
+
+
         try:
             if connection:
                 result = await connection.fetch(query, *args)
@@ -199,6 +211,9 @@ class PostgreSQLConnectionHandler:
                       *args, 
                       connection: Optional[PoolConnectionProxy] = None) -> Optional[Dict]:
         """Fetch single row"""
+
+
+
         try:
             if connection:
                 result = await connection.fetchrow(query, *args)
@@ -219,6 +234,9 @@ class PostgreSQLConnectionHandler:
                       *args, 
                       connection: Optional[PoolConnectionProxy] = None) -> Any:
         """Fetch single value"""
+
+
+
         try:
             if connection:
                 result = await connection.fetchval(query, *args)
@@ -275,6 +293,9 @@ class PostgreSQLConnectionHandler:
     
     async def health_check(self) -> Dict[str, Any]:
         """Check PostgreSQL connection health"""
+
+
+
         try:
             start_time = datetime.utcnow()
             

@@ -7,7 +7,7 @@ Ultra-Advanced AI Models Configuration Module
 PROPRIETARY SOFTWARE - ALL RIGHTS RESERVED
 Copyright © 2025 Fahed Mlaiel (mlaiel@live.de)
 
-⚠️  STRICT COPYRIGHT WARNING ⚠️
+  STRICT COPYRIGHT WARNING 
 This software and its source code are the exclusive property of Fahed Mlaiel.
 Any unauthorized copying, distribution, modification, or use of this code
 without explicit written permission from Fahed Mlaiel is strictly prohibited
@@ -417,6 +417,9 @@ class ModelConfig:
     
     def get_cost_estimate(self, token_count: int) -> float:
         """Estimate cost for given token count"""
+
+
+
         return (token_count * self.cost_per_token) + self.cost_per_request
     
     def update_metrics(self, new_metrics: Dict[str, Any]) -> None:
@@ -485,6 +488,9 @@ class ModelConfig:
 
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return asdict(self)
 
     @classmethod
@@ -779,6 +785,9 @@ class AIModelsConfig:
 
     def _load_from_file(self, config_file: str):
         """Load configuration from JSON file"""
+
+
+
         try:
             with open(config_file, 'r') as f:
                 data = json.load(f)
@@ -798,6 +807,9 @@ class AIModelsConfig:
 
     def save_to_file(self, config_file: str):
         """Save configuration to JSON file"""
+
+
+
         try:
             data = asdict(self)
             # Convert enums to strings

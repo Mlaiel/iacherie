@@ -7,7 +7,7 @@ model compression, and deployment optimization for the IA-Influencer-Agent ML pl
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This optimization system and methodologies are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 is strictly PROHIBITED and will result in legal action.
@@ -303,6 +303,9 @@ class ModelOptimizer:
         
     async def initialize(self) -> bool:
         """Initialize model optimizer"""
+
+
+
         try:
             # Start background optimization processor
             task = asyncio.create_task(self._process_optimization_queue())
@@ -411,6 +414,9 @@ class ModelOptimizer:
         """
         Comprehensive model benchmarking and performance analysis
         """
+
+
+
         try:
             logger.info(f"Starting model benchmarking ({model_format})")
             
@@ -463,6 +469,9 @@ class ModelOptimizer:
         """
         Automated model optimization with intelligent technique selection
         """
+
+
+
         try:
             logger.info(f"Starting auto-optimization for {model_name}")
             
@@ -503,6 +512,9 @@ class ModelOptimizer:
         """
         Advanced model compression with multiple techniques
         """
+
+
+
         try:
             logger.info(f"Starting model compression: {model_name}")
             
@@ -535,6 +547,9 @@ class ModelOptimizer:
         """
         Deployment-specific model optimization
         """
+
+
+
         try:
             logger.info(f"Optimizing for deployment: {deployment_target}")
             
@@ -769,6 +784,9 @@ class ModelOptimizer:
 
     def _initialize_optimization_techniques(self) -> Dict[str, Dict[str, Any]]:
         """Initialize optimization techniques registry"""
+
+
+
         return {
             "quantization": {
                 "supported_frameworks": ["tensorflow", "pytorch", "onnx"],
@@ -845,6 +863,9 @@ class ModelOptimizer:
 
     async def _optimize_tensorflow_model(self, model: Any, config: OptimizationConfig) -> Any:
         """TensorFlow-specific optimization"""
+
+
+
         try:
             # Graph optimization
             if config.graph_optimization:
@@ -869,6 +890,9 @@ class ModelOptimizer:
 
     async def _optimize_pytorch_model(self, model: Any, config: OptimizationConfig) -> Any:
         """PyTorch-specific optimization"""
+
+
+
         try:
             if hasattr(model, 'eval'):
                 model.eval()
@@ -891,6 +915,9 @@ class ModelOptimizer:
 
     async def _optimize_sklearn_model(self, model: Any, config: OptimizationConfig) -> Any:
         """scikit-learn specific optimization"""
+
+
+
         try:
             # Model-specific optimizations can be added here
             return model
@@ -901,6 +928,9 @@ class ModelOptimizer:
 
     async def _optimize_onnx_model(self, model: Any, config: OptimizationConfig) -> Any:
         """ONNX-specific optimization"""
+
+
+
         try:
             if ONNX_AVAILABLE:
                 # ONNX Runtime optimization
@@ -927,6 +957,9 @@ class ModelOptimizer:
 
     async def _apply_quantization(self, model: Any, model_format: str, config: OptimizationConfig) -> Any:
         """Apply model quantization"""
+
+
+
         try:
             if model_format == "pytorch":
                 # PyTorch quantization
@@ -964,6 +997,9 @@ class ModelOptimizer:
 
     async def _apply_pruning(self, model: Any, model_format: str, config: OptimizationConfig) -> Any:
         """Apply model pruning"""
+
+
+
         try:
             if model_format == "pytorch":
                 import torch.nn.utils.prune as prune
@@ -998,6 +1034,9 @@ class ModelOptimizer:
 
     async def _apply_distillation(self, student_model: Any, teacher_model: Any, model_format: str, config: OptimizationConfig) -> Any:
         """Apply knowledge distillation"""
+
+
+
         try:
             # Knowledge distillation implementation would go here
             # This is a placeholder for the actual distillation process
@@ -1100,6 +1139,9 @@ class PerformanceTuner:
                                   model_format: str,
                                   performance_targets: Dict[str, Any]) -> OptimizationResult:
         """Automatically tune model performance to meet targets"""
+
+
+
         try:
             logger.info(f"Starting auto-tuning for {model_name}")
             

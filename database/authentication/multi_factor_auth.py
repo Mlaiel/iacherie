@@ -1,5 +1,5 @@
 """
-🔐 Multi-Factor Authentication Database - Enterprise 2FA/MFA System
+ Multi-Factor Authentication Database - Enterprise 2FA/MFA System
 ==================================================================
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -7,7 +7,7 @@ Project: IA Influencer Agent + Content Protection Platform
 Type: Production-Ready MFA Database Management
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ INTELLECTUAL PROPERTY WARNING: Unauthorized use strictly prohibited.
+ INTELLECTUAL PROPERTY WARNING: Unauthorized use strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 
 Business Logic: MFA Setup → Device Registration → Authentication Challenge → 
@@ -214,6 +214,9 @@ class MultiFactorAuthRepository:
     
     async def setup_totp(self, user_id: str, device_name: str, account_name: str) -> Dict[str, Any]:
         """Setup TOTP for a user device"""
+
+
+
         try:
             # Generate secret key
             secret = pyotp.random_base32()
@@ -277,6 +280,9 @@ class MultiFactorAuthRepository:
     
     async def verify_totp_setup(self, user_id: str, device_id: str, verification_code: str) -> bool:
         """Verify TOTP setup with initial code"""
+
+
+
         try:
             # Get device
             stmt = select(MFADevices).where(
@@ -329,6 +335,9 @@ class MultiFactorAuthRepository:
         device_id: Optional[str] = None
     ) -> MFAChallenge:
         """Generate MFA challenge for authentication"""
+
+
+
         try:
             challenge_id = str(uuid4())
             expires_at = datetime.now(timezone.utc) + timedelta(minutes=5)
@@ -388,6 +397,9 @@ class MultiFactorAuthRepository:
         device_fingerprint: Optional[str] = None
     ) -> Dict[str, Any]:
         """Verify MFA challenge response"""
+
+
+
         try:
             # Get challenge
             stmt = select(MFAChallenges).where(
@@ -468,6 +480,9 @@ class MultiFactorAuthRepository:
     
     async def generate_backup_codes(self, user_id: str, count: int = 10) -> List[str]:
         """Generate backup recovery codes"""
+
+
+
         try:
             # Deactivate existing backup codes
             stmt = select(MFABackupCodes).where(
@@ -516,6 +531,9 @@ class MultiFactorAuthRepository:
     
     async def get_user_mfa_devices(self, user_id: str) -> List[Dict[str, Any]]:
         """Get all MFA devices for a user"""
+
+
+
         try:
             stmt = select(MFADevices).where(
                 MFADevices.user_id == user_id,
@@ -547,6 +565,9 @@ class MultiFactorAuthRepository:
     
     async def disable_mfa_device(self, user_id: str, device_id: str, reason: str = "User requested") -> bool:
         """Disable an MFA device"""
+
+
+
         try:
             stmt = select(MFADevices).where(
                 MFADevices.device_id == device_id,
@@ -577,6 +598,9 @@ class MultiFactorAuthRepository:
     
     async def is_device_trusted(self, user_id: str, device_fingerprint: str) -> bool:
         """Check if device is trusted"""
+
+
+
         try:
             stmt = select(TrustedDevices).where(
                 TrustedDevices.user_id == user_id,
@@ -603,6 +627,9 @@ class MultiFactorAuthRepository:
     
     async def _verify_totp_code(self, user_id: str, code: str, device_id: Optional[str] = None) -> bool:
         """Verify TOTP code against user's devices"""
+
+
+
         try:
             query = select(MFADevices).where(
                 MFADevices.user_id == user_id,
@@ -636,6 +663,9 @@ class MultiFactorAuthRepository:
     
     async def _verify_backup_code(self, user_id: str, code: str) -> bool:
         """Verify backup recovery code"""
+
+
+
         try:
             stmt = select(MFABackupCodes).where(
                 MFABackupCodes.user_id == user_id,

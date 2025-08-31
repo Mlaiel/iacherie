@@ -87,6 +87,9 @@ class VectorStoreConnectionHandler:
     
     async def initialize(self) -> None:
         """Initialize vector store connections"""
+
+
+
         try:
             self.logger.info(f"Initializing {self.config.provider} vector store...")
             
@@ -149,6 +152,9 @@ class VectorStoreConnectionHandler:
                          dimension: int,
                          tenant_id: Optional[str] = None) -> bool:
         """Create a new vector index"""
+
+
+
         try:
             full_index_name = self._get_full_index_name(index_name, tenant_id)
             
@@ -233,6 +239,9 @@ class VectorStoreConnectionHandler:
                          metadata: Optional[List[Dict[str, Any]]] = None,
                          tenant_id: Optional[str] = None) -> bool:
         """Add vectors to index"""
+
+
+
         try:
             full_index_name = self._get_full_index_name(index_name, tenant_id)
             
@@ -345,6 +354,9 @@ class VectorStoreConnectionHandler:
                            k: int = 10,
                            tenant_id: Optional[str] = None) -> List[Tuple[str, float]]:
         """Search for similar vectors"""
+
+
+
         try:
             full_index_name = self._get_full_index_name(index_name, tenant_id)
             
@@ -445,6 +457,9 @@ class VectorStoreConnectionHandler:
                            vector_ids: List[str],
                            tenant_id: Optional[str] = None) -> bool:
         """Delete vectors from index"""
+
+
+
         try:
             full_index_name = self._get_full_index_name(index_name, tenant_id)
             
@@ -483,6 +498,9 @@ class VectorStoreConnectionHandler:
     
     async def health_check(self) -> Dict[str, Any]:
         """Check vector store health"""
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -537,6 +555,9 @@ class VectorStoreConnectionHandler:
     
     async def get_metrics(self) -> Dict[str, Any]:
         """Get detailed vector store metrics"""
+
+
+
         try:
             metrics = {
                 "provider": self.config.provider,

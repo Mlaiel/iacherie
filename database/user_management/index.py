@@ -188,6 +188,9 @@ class UserManagementEngine:
         Args:
             drop_existing: Si True, supprime les tables existantes
         """
+
+
+
         try:
             if drop_existing:
                 logger.warning("Suppression des tables existantes...")
@@ -588,12 +591,12 @@ if __name__ == "__main__":
         print(f"Version: {health['system_version']}")
         
         if health['status'] == 'healthy':
-            print("✅ Module User Management opérationnel")
+            print(" Module User Management opérationnel")
         else:
-            print("❌ Problème détecté:", health.get('error', 'Inconnu'))
+            print(" Problème détecté:", health.get('error', 'Inconnu'))
             
     except Exception as e:
-        print(f"❌ Erreur lors du test: {str(e)}")
+        print(f" Erreur lors du test: {str(e)}")
         logger.error(f"Erreur test module: {str(e)}")
         
     print("\n=== FIN TEST USER MANAGEMENT ===") 
@@ -725,6 +728,9 @@ class UserManagementDatabase:
     
     def create_all_tables(self):
         """Crée toutes les tables de la base de données."""
+
+
+
         try:
             Base.metadata.create_all(bind=self.engine)
             logger.info("Toutes les tables User Management créées avec succès")
@@ -734,6 +740,9 @@ class UserManagementDatabase:
     
     def get_session(self):
         """Retourne une nouvelle session de base de données."""
+
+
+
         return self.SessionLocal()
     
     def get_user_repository(self) -> UserRepository:
@@ -765,6 +774,9 @@ class UserManagementDatabase:
         """
         Initialise les données par défaut (plans d'abonnement, etc.).
         """
+
+
+
         try:
             session = self.get_session()
             
@@ -859,6 +871,9 @@ class UserManagementDatabase:
         Returns:
             Dict[str, Any]: Statistiques globales
         """
+
+
+
         try:
             session = self.get_session()
             
@@ -909,6 +924,9 @@ class UserManagementDatabase:
         Returns:
             Dict[str, Any]: Résultats du contrôle de santé
         """
+
+
+
         try:
             session = self.get_session()
             

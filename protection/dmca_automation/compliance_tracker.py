@@ -10,7 +10,7 @@ Email: mlaiel@live.de
 Project: IA Influencer Agent Platform
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️ COPYRIGHT & LICENSE WARNING ⚠️
+ COPYRIGHT & LICENSE WARNING 
 This code is proprietary and confidential. Any unauthorized copying, modification,
 distribution, or use without explicit written permission from Fahed Mlaiel is strictly
 prohibited and will result in legal action.
@@ -229,6 +229,9 @@ class ComplianceTracker:
         Returns:
             Tracking initialization result
         """
+
+
+
         try:
             self.logger.info(f"Starting compliance tracking for notice: {notice_id}")
             
@@ -292,6 +295,9 @@ class ComplianceTracker:
         Returns:
             Current compliance status and details
         """
+
+
+
         try:
             # Retrieve tracking record
             tracking = await self._get_tracking_record(tracking_id)
@@ -345,6 +351,9 @@ class ComplianceTracker:
         Returns:
             Processing result
         """
+
+
+
         try:
             self.logger.info(f"Processing platform response for tracking: {tracking_id}")
             
@@ -420,6 +429,9 @@ class ComplianceTracker:
         Returns:
             Escalation result
         """
+
+
+
         try:
             self.logger.info(f"Escalating non-compliance for tracking: {tracking_id}")
             
@@ -493,6 +505,9 @@ class ComplianceTracker:
         Returns:
             Detailed compliance report
         """
+
+
+
         try:
             self.logger.info("Generating compliance report")
             
@@ -604,6 +619,9 @@ class ComplianceTracker:
     
     async def _get_notice_details(self, notice_id: str) -> Optional[TakedownNotice]:
         """Retrieve notice details from database"""
+
+
+
         try:
             query = "SELECT * FROM dmca_notices WHERE notice_id = %s"
             result = await self.db.fetch_one(query, [notice_id])
@@ -630,6 +648,9 @@ class ComplianceTracker:
     
     async def _extract_platform_from_url(self, url: str) -> str:
         """Extract platform name from URL"""
+
+
+
         try:
             from urllib.parse import urlparse
             parsed = urlparse(url)
@@ -639,6 +660,9 @@ class ComplianceTracker:
     
     async def _store_tracking_record(self, tracking: ComplianceTracking) -> None:
         """Store tracking record in database"""
+
+
+
         try:
             query = """
                 INSERT INTO dmca_compliance_tracking (
@@ -669,6 +693,9 @@ class ComplianceTracker:
     
     async def _check_content_accessibility(self, tracking: ComplianceTracking) -> bool:
         """Check if infringing content is still accessible"""
+
+
+
         try:
             # Simulate accessibility check (would use actual HTTP requests)
             # This would check if the content is still available at the infringing URL
@@ -693,6 +720,9 @@ class ComplianceTracker:
     
     async def _get_tracking_record(self, tracking_id: str) -> Optional[ComplianceTracking]:
         """Retrieve tracking record from database"""
+
+
+
         try:
             query = "SELECT * FROM dmca_compliance_tracking WHERE tracking_id = %s"
             result = await self.db.fetch_one(query, [tracking_id])
@@ -717,6 +747,9 @@ class ComplianceTracker:
     
     async def _update_tracking_status(self, tracking_id: str, status: ComplianceStatus) -> None:
         """Update tracking status in database"""
+
+
+
         try:
             query = """
                 UPDATE dmca_compliance_tracking 
@@ -802,6 +835,9 @@ class ComplianceTracker:
     
     async def _query_compliance_data(self, filters: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Query compliance data from database"""
+
+
+
         try:
             query = """
                 SELECT t.*, n.copyright_owner, n.platform as notice_platform

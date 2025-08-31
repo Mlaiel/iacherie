@@ -91,18 +91,18 @@ class KubernetesDeployer:
         try:
             result = subprocess.run(['kubectl', 'version', '--client'], 
                                   capture_output=True, text=True, check=True)
-            logger.info("✓ kubectl is available")
+            logger.info(" kubectl is available")
         except (subprocess.CalledProcessError, FileNotFoundError):
-            logger.error("✗ kubectl is not available or not configured")
+            logger.error(" kubectl is not available or not configured")
             return False
         
         # Check cluster connectivity
         try:
             result = subprocess.run(['kubectl', 'cluster-info'], 
                                   capture_output=True, text=True, check=True)
-            logger.info("✓ Kubernetes cluster is accessible")
+            logger.info(" Kubernetes cluster is accessible")
         except subprocess.CalledProcessError:
-            logger.error("✗ Cannot connect to Kubernetes cluster")
+            logger.error(" Cannot connect to Kubernetes cluster")
             return False
         
         # Check if all manifest files exist
@@ -113,11 +113,11 @@ class KubernetesDeployer:
                 missing_files.append(filename)
         
         if missing_files:
-            logger.error(f"✗ Missing manifest files: {', '.join(missing_files)}")
+            logger.error(f" Missing manifest files: {', '.join(missing_files)}")
             return False
         
-        logger.info("✓ All manifest files found")
-        logger.info("✓ All prerequisites validated successfully")
+        logger.info(" All manifest files found")
+        logger.info(" All prerequisites validated successfully")
         return True
     
     def apply_manifest(self, manifest_name: str, dry_run: bool = False) -> bool:
@@ -137,13 +137,13 @@ class KubernetesDeployer:
         try:
             result = subprocess.run(cmd, capture_output=True, text=True, check=True)
             if dry_run:
-                logger.info(f"✓ Dry-run successful for {manifest_name}")
+                logger.info(f" Dry-run successful for {manifest_name}")
             else:
-                logger.info(f"✓ Applied {manifest_name} successfully")
+                logger.info(f" Applied {manifest_name} successfully")
                 logger.debug(result.stdout)
             return True
         except subprocess.CalledProcessError as e:
-            logger.error(f"✗ Failed to apply {manifest_name}: {e}")
+            logger.error(f" Failed to apply {manifest_name}: {e}")
             logger.error(f"Error output: {e.stderr}")
             return False
     
@@ -173,7 +173,7 @@ class KubernetesDeployer:
                 return False
         
         logger.info("=" * 70)
-        logger.info(f"✓ Successfully deployed {success_count}/{total_count} manifests")
+        logger.info(f" Successfully deployed {success_count}/{total_count} manifests")
         
         if not dry_run:
             self.show_deployment_status()
@@ -228,7 +228,7 @@ class KubernetesDeployer:
                     ['kubectl', 'delete', '-f', str(manifest_file), '--ignore-not-found=true'],
                     capture_output=True, text=True, check=True
                 )
-                logger.info(f"✓ Deleted {manifest_name}")
+                logger.info(f" Deleted {manifest_name}")
             except subprocess.CalledProcessError as e:
                 logger.warning(f"Could not delete {manifest_name}: {e}")
         
@@ -266,7 +266,7 @@ class KubernetesDeployer:
                  f'--replicas={replicas}', '-n', 'ia-influencer-prod'],
                 capture_output=True, text=True, check=True
             )
-            logger.info(f"✓ Scaled {component} to {replicas} replicas")
+            logger.info(f" Scaled {component} to {replicas} replicas")
             return True
         except subprocess.CalledProcessError as e:
             logger.error(f"Failed to scale {component}: {e}")
@@ -314,16 +314,16 @@ class KubernetesDeployer:
                 # Add other services...
                 
                 result = subprocess.run(cmd, capture_output=True, text=True, check=True)
-                logger.info(f"✓ Successfully backed up {service}")
+                logger.info(f" Successfully backed up {service}")
                 
             except subprocess.CalledProcessError as e:
-                logger.error(f"✗ Failed to backup {service}: {e}")
+                logger.error(f" Failed to backup {service}: {e}")
                 backup_success = False
         
         if backup_success:
-            logger.info("✓ All stateful data backed up successfully")
+            logger.info(" All stateful data backed up successfully")
         else:
-            logger.warning("⚠ Some backups failed - check logs for details")
+            logger.warning(" Some backups failed - check logs for details")
         
         return backup_success
     
@@ -337,7 +337,7 @@ class KubernetesDeployer:
         
         logger.warning("Starting restore of stateful data...")
         # Implementation for restore logic
-        logger.info("✓ Restore completed")
+        logger.info(" Restore completed")
         return True
     
     def health_check(self) -> Dict[str, bool]:
@@ -366,13 +366,13 @@ class KubernetesDeployer:
                 health_status[deployment] = ready_replicas > 0
                 
                 if health_status[deployment]:
-                    logger.info(f"✓ {deployment}: Healthy ({ready_replicas} replicas)")
+                    logger.info(f" {deployment}: Healthy ({ready_replicas} replicas)")
                 else:
-                    logger.error(f"✗ {deployment}: Unhealthy (0 replicas)")
+                    logger.error(f" {deployment}: Unhealthy (0 replicas)")
                     
             except (subprocess.CalledProcessError, ValueError):
                 health_status[deployment] = False
-                logger.error(f"✗ {deployment}: Failed to check status")
+                logger.error(f" {deployment}: Failed to check status")
         
         # Check stateful services
         stateful_services = ['postgresql', 'redis', 'mongodb', 'elasticsearch', 'faiss']
@@ -388,13 +388,13 @@ class KubernetesDeployer:
                 health_status[service] = ready_replicas > 0
                 
                 if health_status[service]:
-                    logger.info(f"✓ {service}: Healthy ({ready_replicas} replicas)")
+                    logger.info(f" {service}: Healthy ({ready_replicas} replicas)")
                 else:
-                    logger.error(f"✗ {service}: Unhealthy (0 replicas)")
+                    logger.error(f" {service}: Unhealthy (0 replicas)")
                     
             except (subprocess.CalledProcessError, ValueError):
                 health_status[service] = False
-                logger.error(f"✗ {service}: Failed to check status")
+                logger.error(f" {service}: Failed to check status")
         
         healthy_count = sum(health_status.values())
         total_count = len(health_status)
@@ -403,9 +403,9 @@ class KubernetesDeployer:
         logger.info(f"Health Check Summary: {healthy_count}/{total_count} services healthy")
         
         if healthy_count == total_count:
-            logger.info("✓ All services are healthy")
+            logger.info(" All services are healthy")
         else:
-            logger.warning(f"⚠ {total_count - healthy_count} services need attention")
+            logger.warning(f" {total_count - healthy_count} services need attention")
         
         return health_status
     
@@ -499,7 +499,7 @@ class KubernetesDeployer:
                     capture_output=True, text=True, check=True
                 )
                 
-                logger.info(f"✓ Successfully updated {component}")
+                logger.info(f" Successfully updated {component}")
                 return True
                 
             except subprocess.CalledProcessError as e:
@@ -523,7 +523,7 @@ class KubernetesDeployer:
         health_status = self.health_check()
         report.append("\n--- HEALTH STATUS ---")
         for service, status in health_status.items():
-            status_str = "✓ Healthy" if status else "✗ Unhealthy"
+            status_str = " Healthy" if status else " Unhealthy"
             report.append(f"{service}: {status_str}")
         
         # Resource usage
@@ -577,7 +577,7 @@ class KubernetesDeployer:
         logger.info("Testing service auto-scaling...")
         logger.info("Testing backup/restore procedures...")
         
-        logger.info("✓ Disaster recovery test completed")
+        logger.info(" Disaster recovery test completed")
         return True
     
     def security_scan(self) -> Dict[str, List[str]]:
@@ -606,7 +606,7 @@ class KubernetesDeployer:
                 capture_output=True, text=True, check=True
             )
             
-            logger.info("✓ Security scan completed")
+            logger.info(" Security scan completed")
             
         except subprocess.CalledProcessError as e:
             logger.error(f"Security scan failed: {e}")
@@ -616,6 +616,9 @@ class KubernetesDeployer:
     
     def get_logs(self, component: str, lines: int = 100) -> bool:
         """Get logs from a specific component."""
+
+
+
         try:
             result = subprocess.run(
                 ['kubectl', 'logs', '-l', f'app.kubernetes.io/component={component}',

@@ -86,14 +86,23 @@ class ServiceRegistry:
     
     def get_service(self, name: str) -> Optional[Any]:
         """Get a registered service."""
+
+
+
         return self._services.get(name)
     
     def list_services(self) -> List[str]:
         """List all registered services."""
+
+
+
         return list(self._services.keys())
     
     def get_service_health(self, name: str) -> Optional[Dict[str, Any]]:
         """Get service health information."""
+
+
+
         return self._service_health.get(name)
     
     def update_service_health(self, name: str, status: str, error: Optional[str] = None):
@@ -118,6 +127,9 @@ class ConfigurationManager:
     
     def _load_configurations(self):
         """Load configuration files."""
+
+
+
         try:
             # Load base configuration
             base_config_file = self.config_path / "base.json"
@@ -172,6 +184,9 @@ class ConfigurationManager:
     
     def get_notification_config(self) -> NotificationConfig:
         """Get notification configuration object."""
+
+
+
         try:
             config_data = {
                 "redis_url": self.get_config("redis.url", "redis://localhost:6379/0"),
@@ -217,6 +232,9 @@ class HealthMonitor:
     
     async def check_service_health(self, service_name: str) -> Dict[str, Any]:
         """Check health of a specific service."""
+
+
+
         try:
             if service_name not in self._health_checks:
                 return {
@@ -253,6 +271,9 @@ class HealthMonitor:
     
     async def check_all_services_health(self) -> Dict[str, Any]:
         """Check health of all registered services."""
+
+
+
         try:
             health_results = {}
             
@@ -358,6 +379,9 @@ class MetricsCollector:
     
     def get_metrics(self) -> Dict[str, Any]:
         """Get all collected metrics."""
+
+
+
         return {
             "counters": self._counters.copy(),
             "gauges": self._gauges.copy(),
@@ -451,6 +475,9 @@ class NotificationModule:
     
     async def _initialize_core_services(self, config: NotificationConfig):
         """Initialize core notification services."""
+
+
+
         try:
             # Initialize channel manager
             channel_manager = ChannelManager(config)
@@ -489,6 +516,9 @@ class NotificationModule:
     
     async def _initialize_processors(self, config: NotificationConfig):
         """Initialize business notification processors."""
+
+
+
         try:
             # Import and initialize processors
             from .processors import (
@@ -519,6 +549,9 @@ class NotificationModule:
     
     async def _initialize_advanced_features(self, config: NotificationConfig):
         """Initialize advanced notification features."""
+
+
+
         try:
             # Initialize notification service
             processors = {
@@ -559,6 +592,9 @@ class NotificationModule:
     
     async def _register_health_checks(self):
         """Register health checks for all services."""
+
+
+
         try:
             # Register health checks for each service
             for service_name in self.service_registry.list_services():
@@ -581,6 +617,9 @@ class NotificationModule:
     
     def _initialize_metrics(self):
         """Initialize metrics collection."""
+
+
+
         try:
             # Set initial metrics
             self.metrics_collector.set_gauge("module.services.total", len(self.service_registry.list_services()))
@@ -624,10 +663,16 @@ class NotificationModule:
     
     def get_metrics(self) -> Dict[str, Any]:
         """Get performance metrics."""
+
+
+
         return self.metrics_collector.get_metrics()
     
     def is_initialized(self) -> bool:
         """Check if module is initialized."""
+
+
+
         return self._initialized
     
     def is_healthy(self) -> bool:
@@ -708,6 +753,9 @@ async def initialize_notification_module(config_path: Optional[Path] = None) -> 
 
 def get_notification_module() -> Optional[NotificationModule]:
     """Get global notification module instance."""
+
+
+
     return _notification_module
 
 

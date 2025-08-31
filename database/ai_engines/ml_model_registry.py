@@ -173,6 +173,9 @@ class AIModelRegistry:
         Returns:
             Dict[str, Any]: Initialization status
         """
+
+
+
         try:
             if not self.db_connection:
                 # Database connection would be injected in production
@@ -213,6 +216,9 @@ class AIModelRegistry:
         Returns:
             Dict[str, Any]: Registration result
         """
+
+
+
         try:
             # Generate unique model ID
             model_id = self._generate_model_id(model_request.name, model_request.version)
@@ -282,6 +288,9 @@ class AIModelRegistry:
         Returns:
             Optional[ModelMetadata]: Model metadata if found
         """
+
+
+
         try:
             # Check cache first
             if model_id in self.models_cache:
@@ -321,6 +330,9 @@ class AIModelRegistry:
         Returns:
             Dict[str, Any]: List of models with metadata
         """
+
+
+
         try:
             # Apply filters
             filtered_models = []
@@ -374,6 +386,9 @@ class AIModelRegistry:
         Returns:
             Dict[str, Any]: Update result
         """
+
+
+
         try:
             # Validate model exists
             metadata = await self.get_model(model_id)
@@ -421,6 +436,9 @@ class AIModelRegistry:
         Returns:
             Dict[str, Any]: Deletion result
         """
+
+
+
         try:
             # Validate model exists
             metadata = await self.get_model(model_id)
@@ -461,6 +479,9 @@ class AIModelRegistry:
     
     async def get_total_models_count(self) -> int:
         """Get total number of registered models."""
+
+
+
         return len([m for m in self.models_cache.values() 
                    if m.status != ModelStatus.ARCHIVED])
     
@@ -471,6 +492,9 @@ class AIModelRegistry:
         Returns:
             Dict[str, Any]: Health status
         """
+
+
+
         try:
             if not self.initialized:
                 return {
@@ -515,6 +539,9 @@ class AIModelRegistry:
     
     async def _calculate_artifact_info(self, artifact_path: str) -> Tuple[str, int]:
         """Calculate checksum and file size for artifact."""
+
+
+
         try:
             path = Path(artifact_path)
             if not path.exists():
@@ -595,6 +622,9 @@ class ModelVersionManager:
         Returns:
             Dict[str, Any]: Version creation result
         """
+
+
+
         try:
             # Validate model exists
             model = await self.model_registry.get_model(model_id)
@@ -646,6 +676,9 @@ class ModelVersionManager:
         Returns:
             List[Dict[str, Any]]: Version history
         """
+
+
+
         try:
             versions = []
             for key, version_record in self.version_cache.items():
@@ -663,6 +696,9 @@ class ModelVersionManager:
     
     async def mark_version_stable(self, model_id: str, version: str) -> Dict[str, Any]:
         """Mark a version as stable."""
+
+
+
         try:
             version_key = f"{model_id}_{version}"
             if version_key in self.version_cache:
@@ -699,6 +735,9 @@ class ModelMetadataStore:
         Returns:
             Dict[str, Any]: Storage result
         """
+
+
+
         try:
             # Store metadata
             self.metadata_index[model_id] = {
@@ -736,6 +775,9 @@ class ModelMetadataStore:
         Returns:
             List[str]: List of matching model IDs
         """
+
+
+
         try:
             matching_models = []
             query_lower = query.lower()
@@ -805,6 +847,9 @@ class ModelArtifactManager:
         Returns:
             Dict[str, Any]: Storage result
         """
+
+
+
         try:
             # Generate artifact path
             artifact_path = self._generate_artifact_path(model_id, version, artifact_type)
@@ -855,6 +900,9 @@ class ModelArtifactManager:
         Returns:
             Optional[bytes]: Artifact data if found
         """
+
+
+
         try:
             artifact_key = f"{model_id}_{version}_{artifact_type}"
             if artifact_key in self.artifacts_cache:
@@ -870,4 +918,7 @@ class ModelArtifactManager:
     
     def _generate_artifact_path(self, model_id: str, version: str, artifact_type: str) -> str:
         """Generate artifact storage path."""
+
+
+
         return f"models/{model_id}/{version}/{artifact_type}.bin"

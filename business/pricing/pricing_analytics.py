@@ -1,5 +1,5 @@
 """
-🚀 Pricing Analytics - Advanced Analytics Engine for Pricing Performance
+ Pricing Analytics - Advanced Analytics Engine for Pricing Performance
 =======================================================================
 
 Comprehensive analytics system for pricing performance monitoring, trend analysis,
@@ -20,7 +20,7 @@ Project Team Specialists:
 Created by: Fahed Mlaiel <mlaiel@live.de>
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
+ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED 
 
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized copying, modification, distribution, or use of this code or its
@@ -122,6 +122,9 @@ class PricingAnalytics:
         platform: Optional[str] = None
     ) -> PricingPerformanceMetrics:
         """Get comprehensive pricing performance metrics"""
+
+
+
         
         try:
             # Calculate date range
@@ -195,6 +198,9 @@ class PricingAnalytics:
         creator_id: Optional[str] = None
     ) -> RevenueAnalytics:
         """Get comprehensive revenue analytics"""
+
+
+
         
         try:
             end_date = datetime.utcnow()
@@ -264,6 +270,9 @@ class PricingAnalytics:
         timeframe: AnalyticsTimeframe = AnalyticsTimeframe.MONTH
     ) -> Dict[str, Any]:
         """Get tier usage and performance analytics"""
+
+
+
         
         try:
             end_date = datetime.utcnow()
@@ -333,6 +342,9 @@ class PricingAnalytics:
         timeframe: AnalyticsTimeframe = AnalyticsTimeframe.MONTH
     ) -> Dict[str, Any]:
         """Generate actionable pricing insights for a creator"""
+
+
+
         
         try:
             # Get creator's pricing performance

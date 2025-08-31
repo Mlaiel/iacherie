@@ -6,7 +6,7 @@ Developed by: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Senior Backend + ML Engineer + DBA + Security Expert + 
                Microservices Architect + Audio Engineer + DevOps + AI Prompt Engineer
 
-⚠️ INTELLECTUAL PROPERTY WARNING:
+ INTELLECTUAL PROPERTY WARNING:
 This watermark metadata system, concept, and all associated code are the exclusive intellectual 
 property of Fahed Mlaiel. Any unauthorized use, copying, modification, or distribution 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly 
@@ -110,6 +110,9 @@ class ContentIdentification:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return asdict(self)
     
     @classmethod
@@ -133,11 +136,17 @@ class OwnershipInfo:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return asdict(self)
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'OwnershipInfo':
         """Create from dictionary"""
+
+
+
         return cls(**data)
 
 
@@ -283,6 +292,9 @@ class WatermarkMetadata:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert complete metadata to dictionary"""
+
+
+
         return {
             'metadata_id': self.metadata_id,
             'version': self.version,
@@ -374,6 +386,9 @@ class WatermarkMetadata:
     
     def get_summary(self) -> Dict[str, Any]:
         """Get metadata summary"""
+
+
+
         return {
             'metadata_id': self.metadata_id,
             'content_title': self.content_info.title,
@@ -433,6 +448,9 @@ class MetadataEncryption:
     
     def get_key(self) -> bytes:
         """Get encryption key"""
+
+
+
         return self.key if self.encryption_enabled else b''
 
 
@@ -460,6 +478,9 @@ class WatermarkMetadataManager:
     
     def _load_index(self):
         """Load metadata index"""
+
+
+
         try:
             if self.index_file.exists():
                 with open(self.index_file, 'r', encoding='utf-8') as f:
@@ -472,6 +493,9 @@ class WatermarkMetadataManager:
     
     def _save_index(self):
         """Save metadata index"""
+
+
+
         try:
             with open(self.index_file, 'w', encoding='utf-8') as f:
                 json.dump(self.index, f, indent=2, ensure_ascii=False)
@@ -487,6 +511,9 @@ class WatermarkMetadataManager:
                             tags: Optional[List[str]] = None,
                             notes: Optional[str] = None) -> WatermarkMetadata:
         """Create new watermark metadata"""
+
+
+
         try:
             # Generate unique ID
             metadata_id = str(uuid.uuid4())
@@ -527,6 +554,9 @@ class WatermarkMetadataManager:
     
     async def save_metadata(self, metadata: WatermarkMetadata) -> bool:
         """Save metadata to storage"""
+
+
+
         try:
             # Update timestamp
             metadata.updated_at = datetime.now(timezone.utc)
@@ -572,6 +602,9 @@ class WatermarkMetadataManager:
     
     async def load_metadata(self, metadata_id: str) -> Optional[WatermarkMetadata]:
         """Load metadata from storage"""
+
+
+
         try:
             # Check cache first
             if metadata_id in self.metadata_cache:
@@ -614,6 +647,9 @@ class WatermarkMetadataManager:
     
     async def update_metadata(self, metadata_id: str, updates: Dict[str, Any]) -> bool:
         """Update existing metadata"""
+
+
+
         try:
             metadata = await self.load_metadata(metadata_id)
             if not metadata:
@@ -636,6 +672,9 @@ class WatermarkMetadataManager:
     
     async def delete_metadata(self, metadata_id: str) -> bool:
         """Delete metadata"""
+
+
+
         try:
             # Check if exists
             if metadata_id not in self.index:
@@ -672,6 +711,9 @@ class WatermarkMetadataManager:
                             date_from: Optional[datetime] = None,
                             date_to: Optional[datetime] = None) -> List[WatermarkMetadata]:
         """Search metadata with various filters"""
+
+
+
         try:
             results = []
             
@@ -728,6 +770,9 @@ class WatermarkMetadataManager:
     
     async def get_metadata_summary(self) -> Dict[str, Any]:
         """Get overall metadata statistics"""
+
+
+
         try:
             total_records = len(self.index)
             status_counts = {}
@@ -767,6 +812,9 @@ class WatermarkMetadataManager:
                             export_format: str = 'json',
                             include_sensitive: bool = False) -> Optional[bytes]:
         """Export metadata to various formats"""
+
+
+
         try:
             # Determine which metadata to export
             if metadata_ids:
@@ -816,6 +864,9 @@ class WatermarkMetadataManager:
     
     async def backup_metadata(self, backup_path: Optional[str] = None) -> bool:
         """Create backup of all metadata"""
+
+
+
         try:
             if not backup_path:
                 backup_path = self.storage_path.parent / f"watermark_metadata_backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
@@ -890,6 +941,9 @@ def create_basic_ownership_info(owner_name: str,
                               owner_email: str,
                               organization: Optional[str] = None) -> OwnershipInfo:
     """Create basic ownership information"""
+
+
+
     return OwnershipInfo(
         owner_id=str(uuid.uuid4()),
         owner_name=owner_name,
@@ -901,6 +955,9 @@ def create_basic_ownership_info(owner_name: str,
 
 def create_standard_licensing_info(license_type: LicenseType = LicenseType.ALL_RIGHTS_RESERVED) -> LicensingInfo:
     """Create standard licensing information"""
+
+
+
     return LicensingInfo(
         license_type=license_type,
         commercial_use_allowed=(license_type != LicenseType.ALL_RIGHTS_RESERVED),
@@ -914,6 +971,9 @@ def create_standard_licensing_info(license_type: LicenseType = LicenseType.ALL_R
 def create_metadata_manager(storage_path: Optional[str] = None,
                           encryption_enabled: bool = True) -> WatermarkMetadataManager:
     """Create metadata manager with standard configuration"""
+
+
+
     return WatermarkMetadataManager(
         storage_path=storage_path,
         encryption_enabled=encryption_enabled

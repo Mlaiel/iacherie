@@ -178,6 +178,9 @@ class TextGenerator(BaseNLPProcessor):
         
     def load_model(self) -> bool:
         """Load text generation model"""
+
+
+
         try:
             if TRANSFORMERS_AVAILABLE:
                 # Use Hugging Face transformers
@@ -305,6 +308,9 @@ class LanguageDetector(BaseNLPProcessor):
         
     def _load_language_patterns(self) -> Dict[Language, List[str]]:
         """Load language detection patterns"""
+
+
+
         return {
             Language.ENGLISH: ['the', 'and', 'is', 'in', 'to', 'of', 'a', 'that', 'it', 'with'],
             Language.FRENCH: ['le', 'de', 'et', 'est', 'un', 'il', 'être', 'et', 'en', 'avoir'],
@@ -318,6 +324,9 @@ class LanguageDetector(BaseNLPProcessor):
     
     def load_model(self) -> bool:
         """Load language detection model"""
+
+
+
         try:
             if TRANSFORMERS_AVAILABLE:
                 # Could load a dedicated language detection model
@@ -333,6 +342,9 @@ class LanguageDetector(BaseNLPProcessor):
     
     def detect_language(self, text: str) -> LanguageDetectionResult:
         """Detect the language of input text"""
+
+
+
         try:
             if not self.is_loaded:
                 if not self.load_model():
@@ -394,6 +406,9 @@ class TextSummarizer(BaseNLPProcessor):
         
     def load_model(self) -> bool:
         """Load text summarization model"""
+
+
+
         try:
             if TRANSFORMERS_AVAILABLE:
                 # Could load BART or T5 for summarization
@@ -410,6 +425,9 @@ class TextSummarizer(BaseNLPProcessor):
     def summarize_text(self, text: str, max_length: Optional[int] = None,
                       compression_ratio: Optional[float] = None) -> SummaryResult:
         """Summarize input text"""
+
+
+
         try:
             if not self.is_loaded:
                 if not self.load_model():
@@ -529,6 +547,9 @@ class KeywordExtractor(BaseNLPProcessor):
     
     def load_model(self) -> bool:
         """Load keyword extraction model"""
+
+
+
         try:
             self.is_loaded = True
             logger.info(f"Keyword extractor {self.processor_name} loaded successfully")
@@ -540,6 +561,9 @@ class KeywordExtractor(BaseNLPProcessor):
     
     def extract_keywords(self, text: str, num_keywords: int = 10) -> KeywordResult:
         """Extract keywords from text"""
+
+
+
         try:
             if not self.is_loaded:
                 if not self.load_model():

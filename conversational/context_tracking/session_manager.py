@@ -7,7 +7,7 @@ intelligent session tracking, state persistence, and cross-platform continuity.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited. Contact: mlaiel@live.de
 """
@@ -77,6 +77,9 @@ class SessionActivity:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary representation"""
+
+
+
         return {
             "activity_id": self.activity_id,
             "session_id": self.session_id,
@@ -111,6 +114,9 @@ class SessionMetrics:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary representation"""
+
+
+
         return {
             "total_activities": self.total_activities,
             "successful_activities": self.successful_activities,
@@ -158,6 +164,9 @@ class UserSession:
     
     def is_active(self) -> bool:
         """Check if session is currently active"""
+
+
+
         return (
             self.status == SessionStatus.ACTIVE and
             datetime.utcnow() < self.expires_at
@@ -165,6 +174,9 @@ class UserSession:
     
     def is_expired(self) -> bool:
         """Check if session has expired"""
+
+
+
         return datetime.utcnow() >= self.expires_at
     
     def update_activity(self):
@@ -196,6 +208,9 @@ class UserSession:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary representation"""
+
+
+
         return {
             "session_id": self.session_id,
             "user_id": self.user_id,
@@ -262,6 +277,9 @@ class SessionManager:
     
     async def start(self):
         """Start the session manager"""
+
+
+
         try:
             # Load existing sessions
             await self._load_sessions()
@@ -277,6 +295,9 @@ class SessionManager:
     
     async def stop(self):
         """Stop the session manager"""
+
+
+
         try:
             # Cancel background tasks
             if self.cleanup_task:
@@ -319,6 +340,9 @@ class SessionManager:
         Returns:
             UserSession: Created session
         """
+
+
+
         try:
             validate_required_fields({"user_id": user_id, "session_type": session_type})
             
@@ -394,6 +418,9 @@ class SessionManager:
         Returns:
             UserSession or None if not found
         """
+
+
+
         try:
             # Check in-memory storage first
             session = self.active_sessions.get(session_id)
@@ -449,6 +476,9 @@ class SessionManager:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             session = await self.get_session(session_id)
             if not session:
@@ -509,6 +539,9 @@ class SessionManager:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             session = await self.get_session(session_id)
             if not session:
@@ -547,6 +580,9 @@ class SessionManager:
         Returns:
             State value or default
         """
+
+
+
         try:
             session = await self.get_session(session_id)
             if not session:
@@ -578,6 +614,9 @@ class SessionManager:
         Returns:
             List of user sessions
         """
+
+
+
         try:
             session_ids = self.user_sessions.get(user_id, set())
             sessions = []
@@ -608,6 +647,9 @@ class SessionManager:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             session = self.active_sessions.get(session_id)
             if not session:
@@ -659,6 +701,9 @@ class SessionManager:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             session = await self.get_session(session_id)
             if not session:
@@ -702,6 +747,9 @@ class SessionManager:
         Returns:
             Dict containing analytics data
         """
+
+
+
         try:
             sessions_to_analyze = []
             
@@ -806,6 +854,9 @@ class SessionManager:
     
     async def _update_session_cache(self, session: UserSession):
         """Update session in cache"""
+
+
+
         try:
             remaining_ttl = int((session.expires_at - datetime.utcnow()).total_seconds())
             if remaining_ttl > 0:
@@ -819,6 +870,9 @@ class SessionManager:
     
     async def _expire_session(self, session_id: str):
         """Mark session as expired"""
+
+
+
         try:
             session = self.active_sessions.get(session_id)
             if session:
@@ -847,6 +901,9 @@ class SessionManager:
     
     async def _archive_session(self, session: UserSession):
         """Archive session for historical analysis"""
+
+
+
         try:
             archive_key = f"session_archive:{session.user_id}:{session.session_id}"
             await self.cache_manager.set(
@@ -892,6 +949,9 @@ class SessionManager:
     
     async def _load_sessions(self):
         """Load sessions from persistent storage"""
+
+
+
         try:
             # Load from cache
             session_data = await self.cache_manager.get("active_sessions")
@@ -907,6 +967,9 @@ class SessionManager:
     
     async def _save_sessions(self):
         """Save sessions to persistent storage"""
+
+
+
         try:
             # Save only important active sessions
             sessions_to_save = {}

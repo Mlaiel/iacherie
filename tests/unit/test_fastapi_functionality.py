@@ -80,19 +80,19 @@ if __name__ == "__main__":
     # Run tests manually for immediate feedback
     try:
         test_root_endpoint()
-        print("✓ Root endpoint test passed")
+        print(" Root endpoint test passed")
         
         test_health_endpoint()
-        print("✓ Health endpoint test passed")
+        print(" Health endpoint test passed")
         
         test_docs_endpoint()
-        print("✓ Docs endpoint test passed")
+        print(" Docs endpoint test passed")
         
         test_openapi_endpoint()
-        print("✓ OpenAPI endpoint test passed")
+        print(" OpenAPI endpoint test passed")
         
-        print("✅ All FastAPI tests passed!")
+        print(" All FastAPI tests passed!")
         
     except Exception as e:
-        print(f"❌ Test failed: {e}")
+        print(f" Test failed: {e}")
         sys.exit(1)

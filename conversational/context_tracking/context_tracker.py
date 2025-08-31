@@ -7,7 +7,7 @@ management with behavioral pattern analysis and personalization capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited. Contact: mlaiel@live.de
 """
@@ -73,6 +73,9 @@ class ContextSignal:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary representation"""
+
+
+
         return {
             "signal_type": self.signal_type.value,
             "value": self.value,
@@ -187,6 +190,9 @@ class ContextTracker:
     
     async def start(self):
         """Start the context tracker and background analysis"""
+
+
+
         try:
             # Load existing user profiles
             await self._load_user_profiles()
@@ -205,6 +211,9 @@ class ContextTracker:
     
     async def stop(self):
         """Stop the context tracker and save state"""
+
+
+
         try:
             # Cancel background tasks
             if self.analysis_task:
@@ -247,6 +256,9 @@ class ContextTracker:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             # Create context signal
             signal = ContextSignal(
@@ -307,6 +319,9 @@ class ContextTracker:
         Returns:
             Dict containing current context analysis
         """
+
+
+
         try:
             if user_id not in self.context_signals:
                 return {"user_id": user_id, "context": {}, "patterns": {}}
@@ -394,6 +409,9 @@ class ContextTracker:
         Returns:
             Dict containing predictions
         """
+
+
+
         try:
             horizon = time_horizon_hours or self.prediction_horizon_hours
             
@@ -496,6 +514,9 @@ class ContextTracker:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             profile = await self.get_user_profile(user_id)
             if not profile:
@@ -540,6 +561,9 @@ class ContextTracker:
         Returns:
             Dict containing similarity scores
         """
+
+
+
         try:
             types_to_compare = context_types or list(ContextType)
             similarities = {}
@@ -737,6 +761,9 @@ class ContextTracker:
         texts2: List[str]
     ) -> float:
         """Calculate text similarity between two sets of texts"""
+
+
+
         try:
             if not texts1 or not texts2:
                 return 0.0
@@ -763,6 +790,9 @@ class ContextTracker:
         values2: List[str]
     ) -> float:
         """Calculate frequency-based similarity between two value sets"""
+
+
+
         try:
             if not values1 or not values2:
                 return 0.0
@@ -843,6 +873,9 @@ class ContextTracker:
     
     async def _load_user_profiles(self):
         """Load user profiles from persistent storage"""
+
+
+
         try:
             # Load from cache or database
             profiles_data = await self.cache_manager.get("user_context_profiles")
@@ -856,6 +889,9 @@ class ContextTracker:
     
     async def _save_user_profiles(self):
         """Save user profiles to persistent storage"""
+
+
+
         try:
             profiles_data = {}
             for user_id, profile in self.user_profiles.items():
@@ -872,6 +908,9 @@ class ContextTracker:
     
     async def _load_user_profile(self, user_id: str):
         """Load specific user profile"""
+
+
+
         try:
             profile_data = await self.cache_manager.get(f"user_profile:{user_id}")
             if profile_data:
@@ -882,6 +921,9 @@ class ContextTracker:
     
     async def _save_user_profile(self, user_id: str):
         """Save specific user profile"""
+
+
+
         try:
             if user_id in self.user_profiles:
                 profile_data = self._profile_to_dict(self.user_profiles[user_id])
@@ -896,6 +938,9 @@ class ContextTracker:
     
     def _profile_to_dict(self, profile: UserContextProfile) -> Dict[str, Any]:
         """Convert profile to dictionary for serialization"""
+
+
+
         return {
             "user_id": profile.user_id,
             "created_at": profile.created_at.isoformat(),
@@ -915,6 +960,9 @@ class ContextTracker:
     
     def _profile_from_dict(self, data: Dict[str, Any]) -> UserContextProfile:
         """Reconstruct profile from dictionary"""
+
+
+
         return UserContextProfile(
             user_id=data["user_id"],
             created_at=datetime.fromisoformat(data["created_at"]),

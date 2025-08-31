@@ -1,11 +1,11 @@
 """
-⚓ Helm Chart Manager - IA-Influencer-Agent Infrastructure
+ Helm Chart Manager - IA-Influencer-Agent Infrastructure
 ===========================================================
 Expert: DevOps Engineer + Kubernetes Specialist + Helm Expert
 Creator: Fahed Mlaiel <mlaiel@live.de>
 ===========================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL 
 Tout vol, copie ou utilisation non autorisée de ce code source,
 de ce concept ou de cette propriété intellectuelle sans
 l'autorisation écrite explicite de Fahed Mlaiel est strictement
@@ -122,10 +122,13 @@ class HelmChartManager:
         
     async def initialize(self) -> bool:
         """Initialize Helm chart manager"""
+
+
+
         try:
             # Check Helm installation
             if not await self._check_helm_installation():
-                self.logger.error("❌ Helm is not installed or not accessible")
+                self.logger.error(" Helm is not installed or not accessible")
                 return False
             
             # Create directories
@@ -148,15 +151,18 @@ class HelmChartManager:
             await self._load_releases()
             
             self.initialized = True
-            self.logger.info("✅ HelmChartManager initialized successfully")
+            self.logger.info(" HelmChartManager initialized successfully")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error initializing HelmChartManager: {e}")
+            self.logger.error(f" Error initializing HelmChartManager: {e}")
             return False
     
     async def _check_helm_installation(self) -> bool:
         """Check if Helm is installed"""
+
+
+
         try:
             result = subprocess.run(
                 ["helm", "version", "--short"],
@@ -167,17 +173,20 @@ class HelmChartManager:
             
             if result.returncode == 0:
                 version = result.stdout.strip()
-                self.logger.info(f"✅ Helm found: {version}")
+                self.logger.info(f" Helm found: {version}")
                 return True
             else:
                 return False
                 
         except Exception as e:
-            self.logger.error(f"❌ Error checking Helm installation: {e}")
+            self.logger.error(f" Error checking Helm installation: {e}")
             return False
     
     async def _load_repositories(self) -> None:
         """Load existing Helm repositories"""
+
+
+
         try:
             repo_file = self.config_path / "repositories.yml"
             if repo_file.exists():
@@ -189,10 +198,13 @@ class HelmChartManager:
                     self.repositories[repo.name] = repo
                     
         except Exception as e:
-            self.logger.warning(f"⚠️ Error loading repositories: {e}")
+            self.logger.warning(f" Error loading repositories: {e}")
     
     async def _setup_default_repositories(self) -> None:
         """Setup default Helm repositories"""
+
+
+
         try:
             default_repos = [
                 HelmRepository(
@@ -236,10 +248,13 @@ class HelmChartManager:
             await self._save_repositories()
             
         except Exception as e:
-            self.logger.error(f"❌ Error setting up default repositories: {e}")
+            self.logger.error(f" Error setting up default repositories: {e}")
     
     async def _save_repositories(self) -> None:
         """Save repositories configuration"""
+
+
+
         try:
             repo_file = self.config_path / "repositories.yml"
             repos_data = {
@@ -250,10 +265,13 @@ class HelmChartManager:
                 yaml.dump(repos_data, f, default_flow_style=False)
                 
         except Exception as e:
-            self.logger.error(f"❌ Error saving repositories: {e}")
+            self.logger.error(f" Error saving repositories: {e}")
     
     async def _load_charts(self) -> None:
         """Load existing charts"""
+
+
+
         try:
             chart_dirs = [d for d in self.charts_path.iterdir() if d.is_dir()]
             
@@ -283,10 +301,13 @@ class HelmChartManager:
                     self.charts[chart.name] = chart
                     
         except Exception as e:
-            self.logger.warning(f"⚠️ Error loading charts: {e}")
+            self.logger.warning(f" Error loading charts: {e}")
     
     async def _create_default_charts(self) -> None:
         """Create default charts for IA-Influencer platform"""
+
+
+
         try:
             # Web API Chart
             web_api_chart = await self._create_web_api_chart()
@@ -309,10 +330,13 @@ class HelmChartManager:
                 self.charts["ia-influencer-platform"] = platform_chart
                 
         except Exception as e:
-            self.logger.error(f"❌ Error creating default charts: {e}")
+            self.logger.error(f" Error creating default charts: {e}")
     
     async def _create_web_api_chart(self) -> Optional[HelmChart]:
         """Create Web API Helm chart"""
+
+
+
         try:
             chart_name = "ia-influencer-web-api"
             chart_path = self.charts_path / chart_name
@@ -484,15 +508,18 @@ class HelmChartManager:
                 chart_path=str(chart_path)
             )
             
-            self.logger.info(f"✅ Created Web API chart: {chart_name}")
+            self.logger.info(f" Created Web API chart: {chart_name}")
             return chart
             
         except Exception as e:
-            self.logger.error(f"❌ Error creating Web API chart: {e}")
+            self.logger.error(f" Error creating Web API chart: {e}")
             return None
     
     async def _create_ai_engine_chart(self) -> Optional[HelmChart]:
         """Create AI Engine Helm chart"""
+
+
+
         try:
             chart_name = "ia-influencer-ai-engine"
             chart_path = self.charts_path / chart_name
@@ -578,15 +605,18 @@ class HelmChartManager:
                 chart_path=str(chart_path)
             )
             
-            self.logger.info(f"✅ Created AI Engine chart: {chart_name}")
+            self.logger.info(f" Created AI Engine chart: {chart_name}")
             return chart
             
         except Exception as e:
-            self.logger.error(f"❌ Error creating AI Engine chart: {e}")
+            self.logger.error(f" Error creating AI Engine chart: {e}")
             return None
     
     async def _create_database_chart(self) -> Optional[HelmChart]:
         """Create Database Helm chart"""
+
+
+
         try:
             chart_name = "ia-influencer-database"
             chart_path = self.charts_path / chart_name
@@ -677,15 +707,18 @@ class HelmChartManager:
                 chart_path=str(chart_path)
             )
             
-            self.logger.info(f"✅ Created Database chart: {chart_name}")
+            self.logger.info(f" Created Database chart: {chart_name}")
             return chart
             
         except Exception as e:
-            self.logger.error(f"❌ Error creating Database chart: {e}")
+            self.logger.error(f" Error creating Database chart: {e}")
             return None
     
     async def _create_platform_chart(self) -> Optional[HelmChart]:
         """Create umbrella platform chart"""
+
+
+
         try:
             chart_name = "ia-influencer-platform"
             chart_path = self.charts_path / chart_name
@@ -763,15 +796,18 @@ class HelmChartManager:
                 chart_path=str(chart_path)
             )
             
-            self.logger.info(f"✅ Created Platform chart: {chart_name}")
+            self.logger.info(f" Created Platform chart: {chart_name}")
             return chart
             
         except Exception as e:
-            self.logger.error(f"❌ Error creating Platform chart: {e}")
+            self.logger.error(f" Error creating Platform chart: {e}")
             return None
     
     async def _create_deployment_template(self, templates_path: Path, chart_name: str, app_type: str) -> None:
         """Create deployment template"""
+
+
+
         try:
             deployment_template = f"""apiVersion: apps/v1
 kind: Deployment
@@ -860,10 +896,13 @@ spec:
                 f.write(deployment_template)
                 
         except Exception as e:
-            self.logger.error(f"❌ Error creating deployment template: {e}")
+            self.logger.error(f" Error creating deployment template: {e}")
     
     async def _create_service_template(self, templates_path: Path, chart_name: str) -> None:
         """Create service template"""
+
+
+
         try:
             service_template = f"""apiVersion: v1
 kind: Service
@@ -886,10 +925,13 @@ spec:
                 f.write(service_template)
                 
         except Exception as e:
-            self.logger.error(f"❌ Error creating service template: {e}")
+            self.logger.error(f" Error creating service template: {e}")
     
     async def _create_ingress_template(self, templates_path: Path, chart_name: str) -> None:
         """Create ingress template"""
+
+
+
         try:
             ingress_template = f"""{{{{- if .Values.ingress.enabled -}}}}
 apiVersion: networking.k8s.io/v1
@@ -945,10 +987,13 @@ spec:
                 f.write(ingress_template)
                 
         except Exception as e:
-            self.logger.error(f"❌ Error creating ingress template: {e}")
+            self.logger.error(f" Error creating ingress template: {e}")
     
     async def _create_hpa_template(self, templates_path: Path, chart_name: str) -> None:
         """Create HPA template"""
+
+
+
         try:
             hpa_template = f"""{{{{- if .Values.autoscaling.enabled }}}}
 apiVersion: autoscaling/v2
@@ -988,10 +1033,13 @@ spec:
                 f.write(hpa_template)
                 
         except Exception as e:
-            self.logger.error(f"❌ Error creating HPA template: {e}")
+            self.logger.error(f" Error creating HPA template: {e}")
     
     async def _create_configmap_template(self, templates_path: Path, chart_name: str) -> None:
         """Create ConfigMap template"""
+
+
+
         try:
             configmap_template = f"""{{{{- if .Values.configMap.create }}}}
 apiVersion: v1
@@ -1012,10 +1060,13 @@ data:
                 f.write(configmap_template)
                 
         except Exception as e:
-            self.logger.error(f"❌ Error creating ConfigMap template: {e}")
+            self.logger.error(f" Error creating ConfigMap template: {e}")
     
     async def _create_secret_template(self, templates_path: Path, chart_name: str) -> None:
         """Create Secret template"""
+
+
+
         try:
             secret_template = f"""{{{{- if .Values.secrets.create }}}}
 apiVersion: v1
@@ -1036,10 +1087,13 @@ data:
                 f.write(secret_template)
                 
         except Exception as e:
-            self.logger.error(f"❌ Error creating Secret template: {e}")
+            self.logger.error(f" Error creating Secret template: {e}")
     
     async def _create_serviceaccount_template(self, templates_path: Path, chart_name: str) -> None:
         """Create ServiceAccount template"""
+
+
+
         try:
             serviceaccount_template = f"""{{{{- if .Values.serviceAccount.create -}}}}
 apiVersion: v1
@@ -1059,10 +1113,13 @@ metadata:
                 f.write(serviceaccount_template)
                 
         except Exception as e:
-            self.logger.error(f"❌ Error creating ServiceAccount template: {e}")
+            self.logger.error(f" Error creating ServiceAccount template: {e}")
     
     async def _create_pvc_template(self, templates_path: Path, chart_name: str) -> None:
         """Create PVC template"""
+
+
+
         try:
             pvc_template = f"""{{{{- if .Values.persistence.enabled }}}}
 apiVersion: v1
@@ -1087,10 +1144,13 @@ spec:
                 f.write(pvc_template)
                 
         except Exception as e:
-            self.logger.error(f"❌ Error creating PVC template: {e}")
+            self.logger.error(f" Error creating PVC template: {e}")
     
     async def _load_releases(self) -> None:
         """Load existing Helm releases"""
+
+
+
         try:
             result = subprocess.run(
                 ["helm", "list", "--all-namespaces", "--output", "json"],
@@ -1117,10 +1177,13 @@ spec:
                     self.releases[f"{release.namespace}/{release.name}"] = release
                     
         except Exception as e:
-            self.logger.warning(f"⚠️ Error loading releases: {e}")
+            self.logger.warning(f" Error loading releases: {e}")
     
     async def add_repository(self, repository: HelmRepository) -> bool:
         """Add Helm repository"""
+
+
+
         try:
             cmd = ["helm", "repo", "add", repository.name, repository.url]
             
@@ -1148,18 +1211,21 @@ spec:
                 # Update repository
                 await self.update_repository(repository.name)
                 
-                self.logger.info(f"✅ Added repository: {repository.name}")
+                self.logger.info(f" Added repository: {repository.name}")
                 return True
             else:
-                self.logger.error(f"❌ Failed to add repository {repository.name}: {result.stderr}")
+                self.logger.error(f" Failed to add repository {repository.name}: {result.stderr}")
                 return False
                 
         except Exception as e:
-            self.logger.error(f"❌ Error adding repository: {e}")
+            self.logger.error(f" Error adding repository: {e}")
             return False
     
     async def update_repository(self, repo_name: str = None) -> bool:
         """Update Helm repositories"""
+
+
+
         try:
             if repo_name:
                 cmd = ["helm", "repo", "update", repo_name]
@@ -1169,18 +1235,21 @@ spec:
             result = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
             
             if result.returncode == 0:
-                self.logger.info(f"✅ Updated repository: {repo_name or 'all'}")
+                self.logger.info(f" Updated repository: {repo_name or 'all'}")
                 return True
             else:
-                self.logger.error(f"❌ Failed to update repository: {result.stderr}")
+                self.logger.error(f" Failed to update repository: {result.stderr}")
                 return False
                 
         except Exception as e:
-            self.logger.error(f"❌ Error updating repository: {e}")
+            self.logger.error(f" Error updating repository: {e}")
             return False
     
     async def install_release(self, config: DeploymentConfig) -> bool:
         """Install Helm release"""
+
+
+
         try:
             cmd = [
                 "helm", "install", config.release_name, config.chart_path,
@@ -1216,19 +1285,22 @@ spec:
             result = subprocess.run(cmd, capture_output=True, text=True, timeout=config.timeout + 60)
             
             if result.returncode == 0:
-                self.logger.info(f"✅ Installed release: {config.release_name}")
+                self.logger.info(f" Installed release: {config.release_name}")
                 await self._load_releases()  # Refresh releases
                 return True
             else:
-                self.logger.error(f"❌ Failed to install release {config.release_name}: {result.stderr}")
+                self.logger.error(f" Failed to install release {config.release_name}: {result.stderr}")
                 return False
                 
         except Exception as e:
-            self.logger.error(f"❌ Error installing release: {e}")
+            self.logger.error(f" Error installing release: {e}")
             return False
     
     async def upgrade_release(self, config: DeploymentConfig) -> bool:
         """Upgrade Helm release"""
+
+
+
         try:
             cmd = [
                 "helm", "upgrade", config.release_name, config.chart_path,
@@ -1261,19 +1333,22 @@ spec:
             result = subprocess.run(cmd, capture_output=True, text=True, timeout=config.timeout + 60)
             
             if result.returncode == 0:
-                self.logger.info(f"✅ Upgraded release: {config.release_name}")
+                self.logger.info(f" Upgraded release: {config.release_name}")
                 await self._load_releases()  # Refresh releases
                 return True
             else:
-                self.logger.error(f"❌ Failed to upgrade release {config.release_name}: {result.stderr}")
+                self.logger.error(f" Failed to upgrade release {config.release_name}: {result.stderr}")
                 return False
                 
         except Exception as e:
-            self.logger.error(f"❌ Error upgrading release: {e}")
+            self.logger.error(f" Error upgrading release: {e}")
             return False
     
     async def uninstall_release(self, release_name: str, namespace: str, keep_history: bool = False) -> bool:
         """Uninstall Helm release"""
+
+
+
         try:
             cmd = ["helm", "uninstall", release_name, "--namespace", namespace]
             
@@ -1283,7 +1358,7 @@ spec:
             result = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
             
             if result.returncode == 0:
-                self.logger.info(f"✅ Uninstalled release: {release_name}")
+                self.logger.info(f" Uninstalled release: {release_name}")
                 
                 # Remove from releases
                 release_key = f"{namespace}/{release_name}"
@@ -1292,15 +1367,18 @@ spec:
                 
                 return True
             else:
-                self.logger.error(f"❌ Failed to uninstall release {release_name}: {result.stderr}")
+                self.logger.error(f" Failed to uninstall release {release_name}: {result.stderr}")
                 return False
                 
         except Exception as e:
-            self.logger.error(f"❌ Error uninstalling release: {e}")
+            self.logger.error(f" Error uninstalling release: {e}")
             return False
     
     async def rollback_release(self, release_name: str, namespace: str, revision: int = None) -> bool:
         """Rollback Helm release"""
+
+
+
         try:
             cmd = ["helm", "rollback", release_name, "--namespace", namespace]
             
@@ -1310,19 +1388,22 @@ spec:
             result = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
             
             if result.returncode == 0:
-                self.logger.info(f"✅ Rolled back release: {release_name}")
+                self.logger.info(f" Rolled back release: {release_name}")
                 await self._load_releases()  # Refresh releases
                 return True
             else:
-                self.logger.error(f"❌ Failed to rollback release {release_name}: {result.stderr}")
+                self.logger.error(f" Failed to rollback release {release_name}: {result.stderr}")
                 return False
                 
         except Exception as e:
-            self.logger.error(f"❌ Error rolling back release: {e}")
+            self.logger.error(f" Error rolling back release: {e}")
             return False
     
     async def get_release_values(self, release_name: str, namespace: str) -> Dict[str, Any]:
         """Get release values"""
+
+
+
         try:
             result = subprocess.run([
                 "helm", "get", "values", release_name,
@@ -1333,15 +1414,18 @@ spec:
             if result.returncode == 0:
                 return json.loads(result.stdout)
             else:
-                self.logger.error(f"❌ Failed to get values for release {release_name}: {result.stderr}")
+                self.logger.error(f" Failed to get values for release {release_name}: {result.stderr}")
                 return {}
                 
         except Exception as e:
-            self.logger.error(f"❌ Error getting release values: {e}")
+            self.logger.error(f" Error getting release values: {e}")
             return {}
     
     async def get_release_manifest(self, release_name: str, namespace: str) -> str:
         """Get release manifest"""
+
+
+
         try:
             result = subprocess.run([
                 "helm", "get", "manifest", release_name,
@@ -1351,15 +1435,18 @@ spec:
             if result.returncode == 0:
                 return result.stdout
             else:
-                self.logger.error(f"❌ Failed to get manifest for release {release_name}: {result.stderr}")
+                self.logger.error(f" Failed to get manifest for release {release_name}: {result.stderr}")
                 return ""
                 
         except Exception as e:
-            self.logger.error(f"❌ Error getting release manifest: {e}")
+            self.logger.error(f" Error getting release manifest: {e}")
             return ""
     
     async def template_chart(self, chart_path: str, values: Dict[str, Any] = None) -> str:
         """Template chart without installing"""
+
+
+
         try:
             cmd = ["helm", "template", chart_path]
             
@@ -1374,15 +1461,18 @@ spec:
             if result.returncode == 0:
                 return result.stdout
             else:
-                self.logger.error(f"❌ Failed to template chart {chart_path}: {result.stderr}")
+                self.logger.error(f" Failed to template chart {chart_path}: {result.stderr}")
                 return ""
                 
         except Exception as e:
-            self.logger.error(f"❌ Error templating chart: {e}")
+            self.logger.error(f" Error templating chart: {e}")
             return ""
     
     async def validate_chart(self, chart_path: str) -> Tuple[bool, List[str]]:
         """Validate Helm chart"""
+
+
+
         try:
             errors = []
             
@@ -1402,11 +1492,14 @@ spec:
             return len(errors) == 0, errors
             
         except Exception as e:
-            self.logger.error(f"❌ Error validating chart: {e}")
+            self.logger.error(f" Error validating chart: {e}")
             return False, [str(e)]
     
     async def package_chart(self, chart_path: str, destination: str = None) -> str:
         """Package Helm chart"""
+
+
+
         try:
             cmd = ["helm", "package", chart_path]
             
@@ -1420,18 +1513,21 @@ spec:
                 output_lines = result.stdout.strip().split('\n')
                 package_path = output_lines[-1].split(': ')[-1]
                 
-                self.logger.info(f"✅ Packaged chart: {package_path}")
+                self.logger.info(f" Packaged chart: {package_path}")
                 return package_path
             else:
-                self.logger.error(f"❌ Failed to package chart {chart_path}: {result.stderr}")
+                self.logger.error(f" Failed to package chart {chart_path}: {result.stderr}")
                 return ""
                 
         except Exception as e:
-            self.logger.error(f"❌ Error packaging chart: {e}")
+            self.logger.error(f" Error packaging chart: {e}")
             return ""
     
     async def search_charts(self, keyword: str, repository: str = None) -> List[Dict[str, Any]]:
         """Search for charts"""
+
+
+
         try:
             cmd = ["helm", "search", "repo", keyword, "--output", "json"]
             
@@ -1443,15 +1539,18 @@ spec:
             if result.returncode == 0:
                 return json.loads(result.stdout)
             else:
-                self.logger.error(f"❌ Failed to search charts: {result.stderr}")
+                self.logger.error(f" Failed to search charts: {result.stderr}")
                 return []
                 
         except Exception as e:
-            self.logger.error(f"❌ Error searching charts: {e}")
+            self.logger.error(f" Error searching charts: {e}")
             return []
     
     async def get_chart_history(self, release_name: str, namespace: str) -> List[Dict[str, Any]]:
         """Get release history"""
+
+
+
         try:
             result = subprocess.run([
                 "helm", "history", release_name,
@@ -1462,11 +1561,11 @@ spec:
             if result.returncode == 0:
                 return json.loads(result.stdout)
             else:
-                self.logger.error(f"❌ Failed to get history for release {release_name}: {result.stderr}")
+                self.logger.error(f" Failed to get history for release {release_name}: {result.stderr}")
                 return []
                 
         except Exception as e:
-            self.logger.error(f"❌ Error getting chart history: {e}")
+            self.logger.error(f" Error getting chart history: {e}")
             return []
 
 __all__ = [

@@ -8,7 +8,7 @@ Provides business logic validation, data integrity checks, and custom validators
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  STRICT WARNING FOR UNAUTHORIZED USE:
+  STRICT WARNING FOR UNAUTHORIZED USE:
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use without explicit written 
 permission is strictly prohibited and will result in legal action.
@@ -72,10 +72,16 @@ class ValidationResult:
     
     def get_error_messages(self) -> List[str]:
         """Get all error messages"""
+
+
+
         return [f"{error['field']}: {error['message']}" for error in self.errors]
     
     def get_warning_messages(self) -> List[str]:
         """Get all warning messages"""
+
+
+
         return [f"{warning['field']}: {warning['message']}" for warning in self.warnings]
 
 
@@ -117,6 +123,9 @@ class BaseValidator:
     @staticmethod
     def validate_email(value: str, field_name: str) -> bool:
         """Validate email address"""
+
+
+
         try:
             valid = validate_email(value)
             return True
@@ -126,6 +135,9 @@ class BaseValidator:
     @staticmethod
     def validate_phone(value: str, field_name: str, region: str = None) -> bool:
         """Validate phone number"""
+
+
+
         try:
             parsed = phonenumbers.parse(value, region)
             if not phonenumbers.is_valid_number(parsed):
@@ -144,6 +156,9 @@ class BaseValidator:
     @staticmethod
     def validate_uuid(value: str, field_name: str) -> bool:
         """Validate UUID format"""
+
+
+
         try:
             uuid.UUID(value)
             return True
@@ -155,6 +170,9 @@ class BaseValidator:
                         min_value: Decimal = None, max_value: Decimal = None,
                         decimal_places: int = None) -> bool:
         """Validate decimal value"""
+
+
+
         try:
             decimal_value = Decimal(str(value))
         except (InvalidOperation, ValueError):
@@ -536,18 +554,30 @@ class ModelDataValidator:
 # Convenience functions
 def validate_user(data: Dict[str, Any]) -> ValidationResult:
     """Quick user validation"""
+
+
+
     return UserValidator().validate_user_data(data)
 
 def validate_content(data: Dict[str, Any]) -> ValidationResult:
     """Quick content validation"""
+
+
+
     return ContentValidator().validate_content_data(data)
 
 def validate_revenue(data: Dict[str, Any]) -> ValidationResult:
     """Quick revenue validation"""
+
+
+
     return RevenueValidator().validate_revenue_data(data)
 
 def validate_analytics(data: Dict[str, Any]) -> ValidationResult:
     """Quick analytics validation"""
+
+
+
     return AnalyticsValidator().validate_analytics_data(data)
 
 

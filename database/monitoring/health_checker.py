@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-⚠️  AVERTISSEMENT STRICT ⚠️
+  AVERTISSEMENT STRICT 
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Propriété intellectuelle de Fahed Mlaiel (mlaiel@live.de).
 """
@@ -479,6 +479,9 @@ class DatabaseHealthChecker:
     
     async def _execute_sql_check(self, check: HealthCheck) -> Tuple[Optional[float], Optional[str]]:
         """Execute SQL-based health check"""
+
+
+
         try:
             async with get_database_session() as session:
                 # Set query timeout
@@ -499,6 +502,9 @@ class DatabaseHealthChecker:
     
     async def _execute_function_check(self, check: HealthCheck) -> Tuple[Optional[float], Optional[str]]:
         """Execute function-based health check"""
+
+
+
         try:
             if check.check_function == "check_disk_usage":
                 return await self._check_disk_usage()
@@ -512,6 +518,9 @@ class DatabaseHealthChecker:
     
     async def _check_disk_usage(self) -> Tuple[Optional[float], Optional[str]]:
         """Check disk usage percentage"""
+
+
+
         try:
             # Get disk usage for database data directory
             data_dir = getattr(self.settings, 'database_data_dir', '/var/lib/postgresql/data')
@@ -523,6 +532,9 @@ class DatabaseHealthChecker:
     
     async def _check_memory_usage(self) -> Tuple[Optional[float], Optional[str]]:
         """Check memory usage percentage"""
+
+
+
         try:
             memory = psutil.virtual_memory()
             return memory.percent, None
@@ -583,11 +595,11 @@ class DatabaseHealthChecker:
             return f"{check.name}: No data available"
         
         status_emoji = {
-            HealthStatus.HEALTHY: "✅",
-            HealthStatus.WARNING: "⚠️",
-            HealthStatus.CRITICAL: "❌",
-            HealthStatus.EMERGENCY: "🚨",
-            HealthStatus.UNKNOWN: "❓"
+            HealthStatus.HEALTHY: "",
+            HealthStatus.WARNING: "",
+            HealthStatus.CRITICAL: "",
+            HealthStatus.EMERGENCY: "",
+            HealthStatus.UNKNOWN: ""
         }
         
         emoji = status_emoji.get(status, "")
@@ -616,6 +628,9 @@ class DatabaseHealthChecker:
     
     async def _store_check_result(self, check_id: str, result: HealthCheckResult) -> None:
         """Store health check result"""
+
+
+
         try:
             # Cache latest result
             await self.cache.set(
@@ -660,6 +675,9 @@ class DatabaseHealthChecker:
     
     async def generate_health_report(self) -> Optional[HealthReport]:
         """Generate comprehensive health report"""
+
+
+
         try:
             # Collect all latest check results
             check_results = []
@@ -838,6 +856,9 @@ class DatabaseHealthChecker:
     
     async def run_health_check_now(self, check_id: str) -> Optional[Dict[str, Any]]:
         """Run specific health check immediately"""
+
+
+
         try:
             check = self.health_checks.get(check_id)
             if not check:
@@ -857,6 +878,9 @@ class DatabaseHealthChecker:
     
     async def get_health_summary(self) -> Dict[str, Any]:
         """Get current health summary"""
+
+
+
         try:
             if self.last_health_report:
                 return {
@@ -882,10 +906,16 @@ class DatabaseHealthChecker:
     
     async def get_health_check_definitions(self) -> List[Dict[str, Any]]:
         """Get all health check definitions"""
+
+
+
         return [check.to_dict() for check in self.health_checks.values()]
     
     async def get_health_history(self, hours: int = 24) -> List[Dict[str, Any]]:
         """Get health report history"""
+
+
+
         try:
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             

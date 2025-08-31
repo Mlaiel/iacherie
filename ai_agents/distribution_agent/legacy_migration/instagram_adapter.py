@@ -7,7 +7,7 @@ Reels distribution, and comprehensive business logic for the IA Influencer Agent
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE - INTELLECTUAL PROPERTY PROTECTION:
+  CRITICAL LEGAL NOTICE - INTELLECTUAL PROPERTY PROTECTION:
 This software and all related code are the EXCLUSIVE INTELLECTUAL PROPERTY 
 of Fahed Mlaiel (mlaiel@live.de). Unauthorized use, copying, or distribution 
 without written authorization is STRICTLY PROHIBITED and will result in 
@@ -187,6 +187,9 @@ class InstagramAdapter(BaseAgent):
     
     async def initialize(self) -> bool:
         """Initialize Instagram adapter with authentication and validation"""
+
+
+
         try:
             # Initialize HTTP session
             connector = aiohttp.TCPConnector(limit=self.concurrent_uploads)
@@ -291,6 +294,9 @@ class InstagramAdapter(BaseAgent):
         updates: Dict[str, Any]
     ) -> bool:
         """Update existing Instagram post with new metadata"""
+
+
+
         try:
             # Instagram has limited update capabilities
             # Only caption and user tags can be updated
@@ -325,6 +331,9 @@ class InstagramAdapter(BaseAgent):
     
     async def delete_content(self, platform_id: str) -> bool:
         """Delete Instagram content with proper cleanup"""
+
+
+
         try:
             # Execute deletion
             response = await self._make_api_request(
@@ -349,6 +358,9 @@ class InstagramAdapter(BaseAgent):
         end_date: datetime
     ) -> InstagramAnalytics:
         """Retrieve comprehensive Instagram analytics"""
+
+
+
         try:
             # Get basic insights
             insights = await self._fetch_media_insights(platform_id)
@@ -399,6 +411,9 @@ class InstagramAdapter(BaseAgent):
     
     async def _validate_credentials(self) -> bool:
         """Validate Instagram API credentials"""
+
+
+
         try:
             response = await self._make_api_request(
                 "GET",
@@ -412,6 +427,9 @@ class InstagramAdapter(BaseAgent):
     
     async def _verify_business_account(self) -> bool:
         """Verify access to Instagram business account"""
+
+
+
         try:
             response = await self._make_api_request(
                 "GET",
@@ -500,6 +518,9 @@ class InstagramAdapter(BaseAgent):
         metadata: InstagramMetadata
     ) -> ContentItem:
         """Optimize content for Instagram distribution"""
+
+
+
         try:
             if metadata.content_type == InstagramContentType.PHOTO:
                 return await self._optimize_image(content, metadata)
@@ -574,6 +595,9 @@ class InstagramAdapter(BaseAgent):
         metadata: InstagramMetadata
     ) -> str:
         """Upload media to Instagram"""
+
+
+
         try:
             upload_data = {
                 "image_url" if metadata.content_type == InstagramContentType.PHOTO else "video_url": content.file_path,
@@ -601,6 +625,9 @@ class InstagramAdapter(BaseAgent):
     
     async def _publish_media(self, media_id: str, metadata: InstagramMetadata) -> str:
         """Publish uploaded media"""
+
+
+
         try:
             publish_data = {
                 "creation_id": media_id,

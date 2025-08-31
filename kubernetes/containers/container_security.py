@@ -1,11 +1,11 @@
 """
-🔒 Container Security Manager - IA-Influencer-Agent Infrastructure
+ Container Security Manager - IA-Influencer-Agent Infrastructure
 ================================================================
 Expert: Security Engineer + DevOps + Compliance Specialist
 Creator: Fahed Mlaiel <mlaiel@live.de>
 ================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL 
 Tout vol, copie ou utilisation non autorisée de ce code source,
 de ce concept ou de cette propriété intellectuelle sans
 l'autorisation écrite explicite de Fahed Mlaiel est strictement
@@ -137,6 +137,9 @@ class ContainerSecurityManager:
         
     async def initialize(self) -> bool:
         """Initialize container security manager"""
+
+
+
         try:
             # Initialize Docker client
             self.docker_client = docker.from_env()
@@ -165,28 +168,31 @@ class ContainerSecurityManager:
             await self._initialize_vulnerability_db()
             
             self.initialized = True
-            self.logger.info("✅ ContainerSecurityManager initialized successfully")
+            self.logger.info(" ContainerSecurityManager initialized successfully")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error initializing ContainerSecurityManager: {e}")
+            self.logger.error(f" Error initializing ContainerSecurityManager: {e}")
             return False
     
     async def _initialize_security_tools(self) -> None:
         """Initialize security scanning tools"""
+
+
+
         try:
             # Check Trivy availability
             try:
                 result = subprocess.run(["trivy", "--version"], capture_output=True, text=True)
                 if result.returncode == 0:
                     self.security_tools["trivy"]["available"] = True
-                    self.logger.info("🔍 Trivy scanner available")
+                    self.logger.info(" Trivy scanner available")
                 else:
                     self.security_tools["trivy"]["available"] = False
-                    self.logger.warning("⚠️ Trivy scanner not available")
+                    self.logger.warning(" Trivy scanner not available")
             except FileNotFoundError:
                 self.security_tools["trivy"]["available"] = False
-                self.logger.warning("⚠️ Trivy scanner not installed")
+                self.logger.warning(" Trivy scanner not installed")
             
             # Check Clair availability
             try:
@@ -194,18 +200,21 @@ class ContainerSecurityManager:
                     async with session.get(f"{self.security_tools['clair']['api_url']}/health") as response:
                         if response.status == 200:
                             self.security_tools["clair"]["available"] = True
-                            self.logger.info("🔍 Clair scanner available")
+                            self.logger.info(" Clair scanner available")
                         else:
                             self.security_tools["clair"]["available"] = False
             except:
                 self.security_tools["clair"]["available"] = False
-                self.logger.warning("⚠️ Clair scanner not available")
+                self.logger.warning(" Clair scanner not available")
                 
         except Exception as e:
-            self.logger.error(f"❌ Error initializing security tools: {e}")
+            self.logger.error(f" Error initializing security tools: {e}")
     
     async def _load_security_policies(self) -> None:
         """Load existing security policies"""
+
+
+
         try:
             policy_files = self.config_path.glob("policy_*.yml")
             for policy_file in policy_files:
@@ -215,7 +224,7 @@ class ContainerSecurityManager:
                     self.security_policies[policy.name] = policy
                     
         except Exception as e:
-            self.logger.warning(f"⚠️ Error loading security policies: {e}")
+            self.logger.warning(f" Error loading security policies: {e}")
     
     async def _setup_default_security_policies(self) -> None:
         """Setup default security policies for IA-Influencer platform"""
@@ -357,29 +366,35 @@ class ContainerSecurityManager:
     
     async def _save_policy(self, name: str, policy: SecurityPolicy) -> None:
         """Save security policy to file"""
+
+
+
         try:
             policy_file = self.config_path / f"policy_{name}.yml"
             with open(policy_file, 'w') as f:
                 yaml.dump(asdict(policy), f, default_flow_style=False)
                 
         except Exception as e:
-            self.logger.error(f"❌ Error saving policy {name}: {e}")
+            self.logger.error(f" Error saving policy {name}: {e}")
     
     async def _initialize_vulnerability_db(self) -> None:
         """Initialize vulnerability database"""
+
+
+
         try:
             # Update Trivy database
             if self.security_tools["trivy"].get("available"):
-                self.logger.info("📊 Updating Trivy vulnerability database...")
+                self.logger.info(" Updating Trivy vulnerability database...")
                 result = subprocess.run(
                     ["trivy", "image", "--download-db-only"],
                     capture_output=True,
                     text=True
                 )
                 if result.returncode == 0:
-                    self.logger.info("✅ Trivy database updated successfully")
+                    self.logger.info(" Trivy database updated successfully")
                 else:
-                    self.logger.warning(f"⚠️ Trivy database update failed: {result.stderr}")
+                    self.logger.warning(f" Trivy database update failed: {result.stderr}")
             
             # Load vulnerability patterns
             self.vulnerability_db = {
@@ -407,7 +422,7 @@ class ContainerSecurityManager:
             }
             
         except Exception as e:
-            self.logger.error(f"❌ Error initializing vulnerability database: {e}")
+            self.logger.error(f" Error initializing vulnerability database: {e}")
     
     async def scan_image(
         self, 
@@ -415,6 +430,9 @@ class ContainerSecurityManager:
         scan_types: List[SecurityScanType] = None
     ) -> SecurityScanResult:
         """Scan container image for security vulnerabilities"""
+
+
+
         try:
             if scan_types is None:
                 scan_types = [SecurityScanType.VULNERABILITY, SecurityScanType.SECRET_DETECTION]
@@ -422,7 +440,7 @@ class ContainerSecurityManager:
             scan_id = hashlib.md5(f"{image_name}_{datetime.now()}".encode()).hexdigest()
             start_time = datetime.now()
             
-            self.logger.info(f"🔍 Starting security scan for image: {image_name}")
+            self.logger.info(f" Starting security scan for image: {image_name}")
             
             vulnerabilities = []
             secrets_detected = []
@@ -474,7 +492,7 @@ class ContainerSecurityManager:
             
             # Log summary
             self.logger.info(
-                f"🔍 Scan completed for {image_name}: "
+                f" Scan completed for {image_name}: "
                 f"{total_issues} total issues "
                 f"(Critical: {critical_count}, High: {high_count}, "
                 f"Medium: {medium_count}, Low: {low_count})"
@@ -483,7 +501,7 @@ class ContainerSecurityManager:
             return scan_result
             
         except Exception as e:
-            self.logger.error(f"❌ Error scanning image {image_name}: {e}")
+            self.logger.error(f" Error scanning image {image_name}: {e}")
             return SecurityScanResult(
                 scan_id="error",
                 scan_type=SecurityScanType.VULNERABILITY,
@@ -503,6 +521,9 @@ class ContainerSecurityManager:
     
     async def _scan_vulnerabilities(self, image_name: str) -> List[SecurityVulnerability]:
         """Scan for vulnerabilities using available tools"""
+
+
+
         try:
             vulnerabilities = []
             
@@ -519,13 +540,16 @@ class ContainerSecurityManager:
             return vulnerabilities
             
         except Exception as e:
-            self.logger.error(f"❌ Error scanning vulnerabilities: {e}")
+            self.logger.error(f" Error scanning vulnerabilities: {e}")
             return []
     
     async def _scan_with_trivy(self, image_name: str) -> List[SecurityVulnerability]:
         """Scan vulnerabilities with Trivy"""
+
+
+
         try:
-            self.logger.info(f"🔍 Scanning {image_name} with Trivy...")
+            self.logger.info(f" Scanning {image_name} with Trivy...")
             
             result = subprocess.run([
                 "trivy", "image", 
@@ -535,7 +559,7 @@ class ContainerSecurityManager:
             ], capture_output=True, text=True)
             
             if result.returncode != 0:
-                self.logger.error(f"❌ Trivy scan failed: {result.stderr}")
+                self.logger.error(f" Trivy scan failed: {result.stderr}")
                 return []
             
             trivy_data = json.loads(result.stdout)
@@ -566,17 +590,20 @@ class ContainerSecurityManager:
                     
                     vulnerabilities.append(vulnerability)
             
-            self.logger.info(f"✅ Trivy found {len(vulnerabilities)} vulnerabilities")
+            self.logger.info(f" Trivy found {len(vulnerabilities)} vulnerabilities")
             return vulnerabilities
             
         except Exception as e:
-            self.logger.error(f"❌ Error scanning with Trivy: {e}")
+            self.logger.error(f" Error scanning with Trivy: {e}")
             return []
     
     async def _scan_with_clair(self, image_name: str) -> List[SecurityVulnerability]:
         """Scan vulnerabilities with Clair"""
+
+
+
         try:
-            self.logger.info(f"🔍 Scanning {image_name} with Clair...")
+            self.logger.info(f" Scanning {image_name} with Clair...")
             
             # Simplified Clair scanning (would need full integration)
             async with aiohttp.ClientSession() as session:
@@ -589,11 +616,14 @@ class ContainerSecurityManager:
             return []
             
         except Exception as e:
-            self.logger.error(f"❌ Error scanning with Clair: {e}")
+            self.logger.error(f" Error scanning with Clair: {e}")
             return []
     
     async def _scan_secrets(self, image_name: str) -> List[Dict[str, Any]]:
         """Scan for secrets in container image"""
+
+
+
         try:
             secrets = []
             
@@ -618,16 +648,19 @@ class ContainerSecurityManager:
                     })
                 
             except Exception as e:
-                self.logger.warning(f"⚠️ Error extracting image for secret scan: {e}")
+                self.logger.warning(f" Error extracting image for secret scan: {e}")
             
             return secrets
             
         except Exception as e:
-            self.logger.error(f"❌ Error scanning secrets: {e}")
+            self.logger.error(f" Error scanning secrets: {e}")
             return []
     
     async def _scan_compliance(self, image_name: str) -> List[Dict[str, Any]]:
         """Scan for compliance issues"""
+
+
+
         try:
             compliance_issues = []
             
@@ -663,12 +696,12 @@ class ContainerSecurityManager:
                         })
                 
             except Exception as e:
-                self.logger.warning(f"⚠️ Error checking compliance: {e}")
+                self.logger.warning(f" Error checking compliance: {e}")
             
             return compliance_issues
             
         except Exception as e:
-            self.logger.error(f"❌ Error scanning compliance: {e}")
+            self.logger.error(f" Error scanning compliance: {e}")
             return []
     
     async def validate_policy_compliance(
@@ -677,6 +710,9 @@ class ContainerSecurityManager:
         policy_name: str
     ) -> Tuple[bool, List[str]]:
         """Validate image against security policy"""
+
+
+
         try:
             if policy_name not in self.security_policies:
                 return False, [f"Policy {policy_name} not found"]
@@ -733,20 +769,23 @@ class ContainerSecurityManager:
             is_compliant = len(violations) == 0
             
             if is_compliant:
-                self.logger.info(f"✅ Image {image_name} compliant with policy {policy_name}")
+                self.logger.info(f" Image {image_name} compliant with policy {policy_name}")
             else:
                 self.logger.warning(
-                    f"⚠️ Image {image_name} has {len(violations)} policy violations"
+                    f" Image {image_name} has {len(violations)} policy violations"
                 )
             
             return is_compliant, violations
             
         except Exception as e:
-            self.logger.error(f"❌ Error validating policy compliance: {e}")
+            self.logger.error(f" Error validating policy compliance: {e}")
             return False, [f"Policy validation error: {str(e)}"]
     
     async def get_scan_report(self, scan_id: str) -> Optional[Dict[str, Any]]:
         """Get detailed scan report"""
+
+
+
         try:
             if scan_id not in self.scan_results:
                 return None
@@ -788,13 +827,16 @@ class ContainerSecurityManager:
             return report
             
         except Exception as e:
-            self.logger.error(f"❌ Error generating scan report: {e}")
+            self.logger.error(f" Error generating scan report: {e}")
             return None
     
     async def continuous_monitoring(self) -> None:
         """Start continuous security monitoring"""
+
+
+
         try:
-            self.logger.info("🔄 Starting continuous security monitoring...")
+            self.logger.info(" Starting continuous security monitoring...")
             
             while True:
                 # Monitor running containers
@@ -810,10 +852,13 @@ class ContainerSecurityManager:
                 await asyncio.sleep(3600)  # 1 hour
                 
         except Exception as e:
-            self.logger.error(f"❌ Error in continuous monitoring: {e}")
+            self.logger.error(f" Error in continuous monitoring: {e}")
     
     async def _monitor_running_containers(self) -> None:
         """Monitor running containers for security issues"""
+
+
+
         try:
             containers = self.docker_client.containers.list()
             
@@ -843,31 +888,37 @@ class ContainerSecurityManager:
                 
                 if security_issues:
                     self.logger.warning(
-                        f"⚠️ Security issues in container {container.name}: {security_issues}"
+                        f" Security issues in container {container.name}: {security_issues}"
                     )
                 
         except Exception as e:
-            self.logger.error(f"❌ Error monitoring containers: {e}")
+            self.logger.error(f" Error monitoring containers: {e}")
     
     async def _check_vulnerability_updates(self) -> None:
         """Check for new vulnerability updates"""
+
+
+
         try:
             # Update vulnerability database
             if self.security_tools["trivy"].get("available"):
-                self.logger.info("📊 Updating vulnerability database...")
+                self.logger.info(" Updating vulnerability database...")
                 result = subprocess.run(
                     ["trivy", "image", "--download-db-only"],
                     capture_output=True,
                     text=True
                 )
                 if result.returncode == 0:
-                    self.logger.info("✅ Vulnerability database updated")
+                    self.logger.info(" Vulnerability database updated")
                 
         except Exception as e:
-            self.logger.error(f"❌ Error updating vulnerability database: {e}")
+            self.logger.error(f" Error updating vulnerability database: {e}")
     
     async def _validate_runtime_compliance(self) -> None:
         """Validate runtime compliance"""
+
+
+
         try:
             # Check Kubernetes pods if available
             if self.k8s_client:
@@ -875,7 +926,7 @@ class ContainerSecurityManager:
                 pass
             
         except Exception as e:
-            self.logger.error(f"❌ Error validating runtime compliance: {e}")
+            self.logger.error(f" Error validating runtime compliance: {e}")
 
 class VulnerabilityScanner:
     """Specialized vulnerability scanner"""
@@ -888,15 +939,18 @@ class VulnerabilityScanner:
     
     async def initialize(self) -> bool:
         """Initialize vulnerability scanner"""
+
+
+
         try:
             # Start scan worker
             asyncio.create_task(self._scan_worker())
             
-            self.logger.info("✅ VulnerabilityScanner initialized")
+            self.logger.info(" VulnerabilityScanner initialized")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error initializing VulnerabilityScanner: {e}")
+            self.logger.error(f" Error initializing VulnerabilityScanner: {e}")
             return False
     
     async def queue_scan(
@@ -906,6 +960,9 @@ class VulnerabilityScanner:
         priority: int = 5
     ) -> str:
         """Queue image for vulnerability scanning"""
+
+
+
         try:
             scan_id = hashlib.md5(f"{image_name}_{datetime.now()}".encode()).hexdigest()
             
@@ -918,12 +975,12 @@ class VulnerabilityScanner:
             }
             
             await self.scan_queue.put(scan_request)
-            self.logger.info(f"📋 Queued scan for {image_name} (ID: {scan_id})")
+            self.logger.info(f" Queued scan for {image_name} (ID: {scan_id})")
             
             return scan_id
             
         except Exception as e:
-            self.logger.error(f"❌ Error queuing scan: {e}")
+            self.logger.error(f" Error queuing scan: {e}")
             return ""
     
     async def _scan_worker(self) -> None:
@@ -956,11 +1013,14 @@ class VulnerabilityScanner:
                 self.scan_queue.task_done()
                 
             except Exception as e:
-                self.logger.error(f"❌ Error in scan worker: {e}")
+                self.logger.error(f" Error in scan worker: {e}")
                 await asyncio.sleep(10)
     
     async def get_scan_status(self, scan_id: str) -> Dict[str, Any]:
         """Get status of queued scan"""
+
+
+
         try:
             if scan_id in self.active_scans:
                 return self.active_scans[scan_id]
@@ -968,7 +1028,7 @@ class VulnerabilityScanner:
                 return {"status": "not_found"}
                 
         except Exception as e:
-            self.logger.error(f"❌ Error getting scan status: {e}")
+            self.logger.error(f" Error getting scan status: {e}")
             return {"status": "error", "error": str(e)}
 
 class ComplianceValidator:
@@ -982,19 +1042,25 @@ class ComplianceValidator:
     
     async def initialize(self) -> bool:
         """Initialize compliance validator"""
+
+
+
         try:
             # Load compliance standards
             await self._load_compliance_standards()
             
-            self.logger.info("✅ ComplianceValidator initialized")
+            self.logger.info(" ComplianceValidator initialized")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error initializing ComplianceValidator: {e}")
+            self.logger.error(f" Error initializing ComplianceValidator: {e}")
             return False
     
     async def _load_compliance_standards(self) -> None:
         """Load compliance standards definitions"""
+
+
+
         try:
             # CIS Docker Benchmark
             self.compliance_standards[ComplianceStandard.CIS_DOCKER] = {
@@ -1041,7 +1107,7 @@ class ComplianceValidator:
             }
             
         except Exception as e:
-            self.logger.error(f"❌ Error loading compliance standards: {e}")
+            self.logger.error(f" Error loading compliance standards: {e}")
     
     async def validate_compliance(
         self, 
@@ -1049,6 +1115,9 @@ class ComplianceValidator:
         standard: ComplianceStandard
     ) -> Dict[str, Any]:
         """Validate target against compliance standard"""
+
+
+
         try:
             if standard not in self.compliance_standards:
                 return {"error": f"Compliance standard {standard.value} not supported"}
@@ -1080,11 +1149,14 @@ class ComplianceValidator:
             return compliance_result
             
         except Exception as e:
-            self.logger.error(f"❌ Error validating compliance: {e}")
+            self.logger.error(f" Error validating compliance: {e}")
             return {"error": str(e)}
     
     async def _validate_control(self, target: str, control: Dict[str, Any]) -> Dict[str, Any]:
         """Validate specific compliance control"""
+
+
+
         try:
             control_id = control["id"]
             
@@ -1117,6 +1189,9 @@ class ComplianceValidator:
     
     async def _check_non_root_user(self, target: str) -> Dict[str, str]:
         """Check if container runs as non-root user"""
+
+
+
         try:
             # This would check the actual container/image configuration
             # Simplified implementation
@@ -1127,6 +1202,9 @@ class ComplianceValidator:
     
     async def _check_not_privileged(self, target: str) -> Dict[str, str]:
         """Check if container is not privileged"""
+
+
+
         try:
             # Check container configuration for privileged mode
             return {"status": "PASS", "message": "Container is not privileged"}
@@ -1136,6 +1214,9 @@ class ComplianceValidator:
     
     async def _check_memory_limits(self, target: str) -> Dict[str, str]:
         """Check if memory limits are set"""
+
+
+
         try:
             # Check container memory limits
             return {"status": "PASS", "message": "Memory limits are configured"}

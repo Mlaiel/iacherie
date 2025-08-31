@@ -28,7 +28,7 @@ Team Specialties:
 - Collaboration Analytics - Creator matching and partnership performance tracking
 - Real-time Business Intelligence - Live KPI tracking and predictive insights
 
-⚠️ COPYRIGHT WARNING - Fahed Mlaiel 2025 - ALL RIGHTS RESERVED
+ COPYRIGHT WARNING - Fahed Mlaiel 2025 - ALL RIGHTS RESERVED
 This monitoring system contains proprietary AI algorithms and business logic.
 Unauthorized use, reproduction, reverse engineering, or distribution is strictly 
 prohibited and subject to immediate legal action under German and International law.
@@ -253,4 +253,7 @@ def initialize_monitoring_system(config: Dict[str, Any] = None) -> MonitoringOrc
         
     Returns:
         MonitoringOrchestrator: Configured monitoring orchestrator
-    """    return MonitoringOrchestrator(config or {})
+    """
+
+
+    return MonitoringOrchestrator(config or {})

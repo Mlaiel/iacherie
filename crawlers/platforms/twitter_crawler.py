@@ -189,6 +189,9 @@ class TwitterCrawler:
         Returns:
             List of Twitter tweet objects
         """
+
+
+
         try:
             # Rate limiting check
             await self.rate_limiter.wait_if_needed()
@@ -217,6 +220,9 @@ class TwitterCrawler:
         expansions: List[str]
     ) -> List[TwitterTweet]:
         """Search tweets using Twitter API v2."""
+
+
+
         try:
             # Default fields
             if not tweet_fields:
@@ -284,6 +290,9 @@ class TwitterCrawler:
     
     def _parse_api_tweet_data(self, tweet, includes: Dict = None) -> Optional[TwitterTweet]:
         """Parse Twitter API tweet data."""
+
+
+
         try:
             # Get author information from includes
             author_username = ""
@@ -319,6 +328,9 @@ class TwitterCrawler:
     
     async def _search_tweets_scraping(self, query: str, max_results: int) -> List[TwitterTweet]:
         """Search tweets using web scraping as fallback."""
+
+
+
         try:
             driver = webdriver.Chrome(options=self.selenium_options)
             
@@ -364,6 +376,9 @@ class TwitterCrawler:
     
     async def _extract_tweet_from_element(self, element) -> Optional[TwitterTweet]:
         """Extract tweet data from DOM element."""
+
+
+
         try:
             # Extract text
             text_elem = element.find_element(By.CSS_SELECTOR, "[data-testid='tweetText']")
@@ -410,6 +425,9 @@ class TwitterCrawler:
     
     async def get_user_profile(self, username: str) -> Optional[TwitterUser]:
         """Get user profile information."""
+
+
+
         try:
             await self.rate_limiter.wait_if_needed()
             
@@ -424,6 +442,9 @@ class TwitterCrawler:
     
     async def _get_user_profile_api(self, username: str) -> Optional[TwitterUser]:
         """Get user profile using Twitter API."""
+
+
+
         try:
             user_fields = [
                 'id', 'username', 'name', 'description', 'profile_image_url',
@@ -464,6 +485,9 @@ class TwitterCrawler:
     
     async def get_trending_topics(self, woeid: int = 1) -> List[Dict]:
         """Get trending topics for specific location."""
+
+
+
         try:
             await self.rate_limiter.wait_if_needed()
             
@@ -481,6 +505,9 @@ class TwitterCrawler:
     
     async def _get_trending_topics_scraping(self) -> List[Dict]:
         """Get trending topics using web scraping."""
+
+
+
         try:
             driver = webdriver.Chrome(options=self.selenium_options)
             driver.get(f"{self.web_base_url}/explore/tabs/trending")
@@ -550,6 +577,9 @@ class TwitterCrawler:
     
     async def get_user_tweets(self, username: str, max_results: int = 20) -> List[TwitterTweet]:
         """Get recent tweets from user."""
+
+
+
         try:
             await self.rate_limiter.wait_if_needed()
             
@@ -590,6 +620,9 @@ class TwitterCrawler:
     
     async def _scrape_user_timeline(self, username: str, max_results: int) -> List[TwitterTweet]:
         """Scrape user timeline as fallback."""
+
+
+
         try:
             driver = webdriver.Chrome(options=self.selenium_options)
             driver.get(f"{self.web_base_url}/{username}")
@@ -629,6 +662,9 @@ class TwitterCrawler:
     
     async def analyze_tweet_engagement(self, tweet: TwitterTweet) -> Dict:
         """Analyze tweet engagement metrics."""
+
+
+
         try:
             metrics = tweet.public_metrics
             
@@ -679,6 +715,9 @@ class TwitterCrawler:
         similarity_threshold: float = 0.7
     ) -> List[Dict]:
         """Detect tweets similar to reference tweet."""
+
+
+
         try:
             similar_tweets = []
             

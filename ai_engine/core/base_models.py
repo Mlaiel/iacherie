@@ -3,7 +3,7 @@ Base Models and Core Components for AI Models
 Foundational classes and interfaces for all AI model implementations
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
-⚠️  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
+  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
     code, or intellectual property without explicit written authorization 
     from Fahed Mlaiel is strictly prohibited and will result in legal action.
 
@@ -151,11 +151,17 @@ class BaseAIModel(ABC):
     @property
     def is_connected(self) -> bool:
         """Check if model is connected and ready"""
+
+
+
         return self._is_connected
     
     @property
     def model_name(self) -> str:
         """Get model name"""
+
+
+
         return self.config.name
     
     @abstractmethod
@@ -179,6 +185,9 @@ class BaseAIModel(ABC):
     
     async def health_check(self) -> Dict[str, Any]:
         """Perform health check on the model"""
+
+
+
         try:
             # Basic health check
             health_status = {
@@ -226,6 +235,9 @@ class BaseAIModel(ABC):
     
     async def get_metrics(self) -> ModelMetrics:
         """Get current model metrics"""
+
+
+
         return self.metrics
     
     async def reset_metrics(self) -> None:
@@ -296,31 +308,49 @@ class BusinessIntelligenceModel(BaseAIModel):
 # Factory functions for creating models
 def create_audio_model(config: ModelConfig) -> AudioModel:
     """Factory function to create audio models"""
+
+
+
     return AudioModel(config)
 
 
 def create_video_model(config: ModelConfig) -> VideoModel:
     """Factory function to create video models"""
+
+
+
     return VideoModel(config)
 
 
 def create_image_model(config: ModelConfig) -> ImageModel:
     """Factory function to create image models"""
+
+
+
     return ImageModel(config)
 
 
 def create_text_model(config: ModelConfig) -> TextModel:
     """Factory function to create text models"""
+
+
+
     return TextModel(config)
 
 
 def create_protection_model(config: ModelConfig) -> ProtectionModel:
     """Factory function to create protection models"""
+
+
+
     return ProtectionModel(config)
 
 
 def create_business_intelligence_model(config: ModelConfig) -> BusinessIntelligenceModel:
     """Factory function to create business intelligence models"""
+
+
+
     return BusinessIntelligenceModel(config)
 
 

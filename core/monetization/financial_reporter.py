@@ -88,6 +88,9 @@ class FinancialMetrics:
     
     def to_dict(self) -> Dict[str, float]:
         """Convert to dictionary"""
+
+
+
         return {
             "total_revenue": float(self.total_revenue),
             "total_expenses": float(self.total_expenses),
@@ -118,6 +121,9 @@ class FinancialReport:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert report to dictionary"""
+
+
+
         return {
             "report_id": self.report_id,
             "user_id": self.user_id,
@@ -154,6 +160,9 @@ class FinancialReporter:
         session: AsyncSession
     ) -> FinancialReport:
         """Generate comprehensive financial report"""
+
+
+
         try:
             # Validate configuration
             if not config.validate():
@@ -664,14 +673,23 @@ class FinancialReporter:
     
     async def _get_payment_processing_fees(self, user_id: int, start_date: datetime, end_date: datetime, session: AsyncSession) -> Decimal:
         """Get payment processing fees"""
+
+
+
         return Decimal("0")  # Placeholder
     
     async def _get_marketing_expenses(self, user_id: int, start_date: datetime, end_date: datetime, session: AsyncSession) -> Decimal:
         """Get marketing expenses"""
+
+
+
         return Decimal("0")  # Placeholder
     
     async def _get_net_income(self, user_id: int, start_date: datetime, end_date: datetime, session: AsyncSession) -> Decimal:
         """Get net income"""
+
+
+
         return await self._get_total_revenue(user_id, start_date, end_date, session)  # Simplified
     
     async def _get_total_withdrawals(self, user_id: int, start_date: datetime, end_date: datetime, session: AsyncSession) -> Decimal:
@@ -689,18 +707,30 @@ class FinancialReporter:
     
     async def _get_cash_balance_at_date(self, user_id: int, date: datetime, session: AsyncSession) -> Decimal:
         """Get cash balance at specific date"""
+
+
+
         return Decimal("1000.00")  # Placeholder
     
     async def _get_quarterly_comparison(self, user_id: int, start_date: datetime, end_date: datetime, session: AsyncSession) -> Dict[str, Any]:
         """Get quarterly comparison data"""
+
+
+
         return {}  # Placeholder
     
     async def _calculate_quarterly_kpis(self, user_id: int, start_date: datetime, end_date: datetime, session: AsyncSession) -> Dict[str, Any]:
         """Calculate quarterly KPIs"""
+
+
+
         return {}  # Placeholder
     
     async def _generate_executive_summary(self, user_id: int, start_date: datetime, end_date: datetime, session: AsyncSession) -> Dict[str, Any]:
         """Generate executive summary"""
+
+
+
         return {}  # Placeholder
     
     async def _generate_tax_summary_report(self, user_id: int, period_start: datetime, period_end: datetime, config: ReportConfiguration, session: AsyncSession) -> FinancialReport:
@@ -736,6 +766,9 @@ class FinancialReporter:
     
     async def _generate_comprehensive_report(self, user_id: int, period_start: datetime, period_end: datetime, config: ReportConfiguration, session: AsyncSession) -> FinancialReport:
         """Generate comprehensive report"""
+
+
+
         return await self._generate_revenue_summary(user_id, period_start, period_end, config, session)
 
 

@@ -7,7 +7,7 @@ with standardized interfaces, error handling, and monitoring.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -205,6 +205,9 @@ class BasePlatformAdapter(ABC):
 
     def _get_default_headers(self) -> Dict[str, str]:
         """Get default HTTP headers for requests"""
+
+
+
         return {
             'User-Agent': f'Ainflue-DistributionAgent/1.0 ({self.platform.value})',
             'Accept': 'application/json',
@@ -213,6 +216,9 @@ class BasePlatformAdapter(ABC):
 
     async def _validate_platform_connection(self) -> None:
         """Validate connection to platform API"""
+
+
+
         try:
             health_endpoint = self._get_health_check_endpoint()
             if health_endpoint:
@@ -243,6 +249,9 @@ class BasePlatformAdapter(ABC):
         Returns:
             True if authentication successful
         """
+
+
+
         try:
             # Validate credentials format
             if not await self._validate_credentials(credentials):
@@ -419,6 +428,9 @@ class BasePlatformAdapter(ABC):
         Returns:
             Analytics data response
         """
+
+
+
         try:
             # Check cache first
             cache_key = f"analytics:{self.platform.value}:{request.content_id}:{request.date_range[0].date()}:{request.date_range[1].date()}"
@@ -661,6 +673,9 @@ class BasePlatformAdapter(ABC):
 
     async def get_status(self) -> Dict[str, Any]:
         """Get adapter status and health information"""
+
+
+
         return {
             'platform': self.platform.value,
             'status': self.status.value,
@@ -675,6 +690,9 @@ class BasePlatformAdapter(ABC):
 
     async def get_performance_metrics(self) -> Dict[str, Any]:
         """Get detailed performance metrics"""
+
+
+
         return self.performance_metrics.copy()
 
     async def reset_quota(self) -> None:

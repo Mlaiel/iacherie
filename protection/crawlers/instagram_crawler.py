@@ -1,5 +1,5 @@
 """
-📸 Instagram Content Crawler
+ Instagram Content Crawler
 ============================
 
 Professional Instagram content discovery and monitoring system.
@@ -8,7 +8,7 @@ Integrates Instagram Graph API with web scraping for comprehensive coverage.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
+ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
 """
@@ -175,6 +175,9 @@ class InstagramAPIClient:
     
     def _parse_media_item(self, item: Dict[str, Any]) -> Optional[InstagramPostInfo]:
         """Parse media item from API response."""
+
+
+
         try:
             # Extract hashtags and mentions from caption
             caption = item.get('caption', '')
@@ -358,6 +361,9 @@ class InstagramSeleniumCrawler:
     
     async def _extract_basic_post_info(self, link_element, post_url: str) -> Optional[InstagramPostInfo]:
         """Extract basic post information from grid element."""
+
+
+
         try:
             # Extract shortcode from URL
             shortcode = self._extract_shortcode(post_url)
@@ -645,6 +651,9 @@ class InstagramCrawler(BasePlatformCrawler):
         interval_minutes: int = 60
     ) -> bool:
         """Monitor hashtag for new content."""
+
+
+
         try:
             monitoring_key = f"hashtag_{hashtag}"
             

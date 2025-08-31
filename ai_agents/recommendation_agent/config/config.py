@@ -7,7 +7,7 @@ deployment scenarios of the IA Influencer Recommendation Agent.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ LEGAL NOTICE: Configuration parameters are proprietary intellectual property.
+ LEGAL NOTICE: Configuration parameters are proprietary intellectual property.
 Unauthorized modification or redistribution is prohibited.
 """
 
@@ -22,7 +22,7 @@ deployment scenarios of the IA Influencer Recommendation Agent.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ LEGAL NOTICE: Configuration parameters are proprietary intellectual property.
+ LEGAL NOTICE: Configuration parameters are proprietary intellectual property.
 Unauthorized modification or redistribution is prohibited.
 """
 

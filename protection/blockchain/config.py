@@ -13,7 +13,7 @@ Project Team Specialties:
 - Microservices Architect & Audio Processing: Multi-format Support  
 - DevOps Engineer & IA Prompt Engineer: Production Deployment
 
-⚠️ STRONG WARNING ⚠️
+ STRONG WARNING 
 Any attempt to steal, copy, reproduce, or use this concept, idea, or code 
 without explicit written authorization from Fahed Mlaiel is strictly 
 prohibited and will result in legal action.
@@ -158,6 +158,9 @@ class BlockchainConfig:
     
     def _get_default_ipfs_config(self) -> Dict[str, Any]:
         """Default IPFS configuration"""
+
+
+
         return {
             'api_url': '/ip4/127.0.0.1/tcp/5001',
             'gateway_url': 'https://ipfs.io/ipfs/',
@@ -172,6 +175,9 @@ class BlockchainConfig:
     
     def _get_default_arweave_config(self) -> Dict[str, Any]:
         """Default Arweave configuration"""
+
+
+
         return {
             'host': 'arweave.net',
             'port': 443,
@@ -250,6 +256,9 @@ def get_production_config() -> BlockchainConfig:
 
 def get_development_config() -> BlockchainConfig:
     """Get development configuration"""
+
+
+
     return BlockchainConfig(
         environment=Environment.DEVELOPMENT,
         debug_mode=True,
@@ -261,6 +270,9 @@ def get_development_config() -> BlockchainConfig:
 
 def get_testing_config() -> BlockchainConfig:
     """Get testing configuration"""
+
+
+
     return BlockchainConfig(
         environment=Environment.TESTING,
         debug_mode=True,

@@ -139,6 +139,9 @@ class CollaborationRequest(BaseModel):
     
     def can_accept_participant(self) -> bool:
         """Check if more participants can be accepted"""
+
+
+
         return len(self.current_participants) < self.max_participants
     
     def calculate_compatibility_score(self, other_profile: Dict[str, Any]) -> float:
@@ -207,6 +210,9 @@ class CollaborationMatch:
     
     def is_high_quality_match(self) -> bool:
         """Determine if this is a high-quality match"""
+
+
+
         return (
             self.compatibility_score >= 0.7 and
             self.reputation_score >= 0.6 and
@@ -254,10 +260,16 @@ class CollaborationContract(BaseModel):
     
     def is_fully_signed(self) -> bool:
         """Check if all participants have signed"""
+
+
+
         return len(self.signatures) == len(self.participants)
     
     def get_participant_share(self, participant_id: str) -> float:
         """Get revenue share percentage for participant"""
+
+
+
         return self.revenue_sharing.get(participant_id, 0.0)
     
     def calculate_estimated_completion_date(self) -> datetime:

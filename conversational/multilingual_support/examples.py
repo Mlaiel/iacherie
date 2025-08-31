@@ -7,7 +7,7 @@ for global content creators and influencers.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE ⚠️
+  CRITICAL LEGAL NOTICE 
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -42,7 +42,7 @@ logger = logging.getLogger(__name__)
 
 async def example_quick_translation():
     """Example 1: Quick translation for simple use cases"""
-    print("🚀 Example 1: Quick Translation")
+    print(" Example 1: Quick Translation")
     print("=" * 50)
     
     # Quick translations to various languages
@@ -50,10 +50,10 @@ async def example_quick_translation():
         ("Hello, how are you today?", SupportedLanguage.SPANISH),
         ("Bonjour, comment allez-vous?", SupportedLanguage.ENGLISH),
         ("Guten Tag, wie geht es Ihnen?", SupportedLanguage.FRENCH),
-        ("こんにちは、元気ですか？", SupportedLanguage.ENGLISH),
+        ("", SupportedLanguage.ENGLISH),
         ("مرحبا، كيف حالك؟", SupportedLanguage.ENGLISH),
         ("Привет, как дела?", SupportedLanguage.ENGLISH),
-        ("你好，你好吗？", SupportedLanguage.ENGLISH),
+        ("", SupportedLanguage.ENGLISH),
         ("Hola, ¿cómo estás?", SupportedLanguage.HINDI),
     ]
     
@@ -85,7 +85,7 @@ async def example_quick_translation():
 
 async def example_global_content_creator():
     """Example 2: Global content creator managing international audience"""
-    print("🌍 Example 2: Global Content Creator Scenario")
+    print(" Example 2: Global Content Creator Scenario")
     print("=" * 50)
     
     # Create enterprise multilingual system
@@ -120,21 +120,21 @@ async def example_global_content_creator():
         domain="social_media"
     )
     
-    print(f"✅ Created session: {session.session_id}")
-    print(f"📱 Active languages: {len(session.active_languages)}")
+    print(f" Created session: {session.session_id}")
+    print(f" Active languages: {len(session.active_languages)}")
     
     # Content creator messages for different audiences
     content_messages = [
-        ("🎉 Big announcement coming tomorrow! Can't wait to share this exciting news with all of you! #excited #announcement", SupportedLanguage.SPANISH),
-        ("Thank you so much for 1 million followers! This journey has been incredible and I couldn't have done it without your amazing support! ❤️", SupportedLanguage.FRENCH),
-        ("New product launch next week! This is something I've been working on for months. Who's excited? 🚀", SupportedLanguage.GERMAN),
-        ("Behind the scenes of today's photoshoot! The team was amazing and the results are stunning! 📸✨", SupportedLanguage.ITALIAN),
-        ("Travel day! Heading to Tokyo for an incredible collaboration. Can't wait to explore the city! ✈️🗾", SupportedLanguage.JAPANESE),
+        (" Big announcement coming tomorrow! Can't wait to share this exciting news with all of you! #excited #announcement", SupportedLanguage.SPANISH),
+        ("Thank you so much for 1 million followers! This journey has been incredible and I couldn't have done it without your amazing support! ", SupportedLanguage.FRENCH),
+        ("New product launch next week! This is something I've been working on for months. Who's excited? ", SupportedLanguage.GERMAN),
+        ("Behind the scenes of today's photoshoot! The team was amazing and the results are stunning! ", SupportedLanguage.ITALIAN),
+        ("Travel day! Heading to Tokyo for an incredible collaboration. Can't wait to explore the city! ", SupportedLanguage.JAPANESE),
         ("Collaboration announcement! Working with an amazing brand that aligns perfectly with my values 🤝", SupportedLanguage.KOREAN),
-        ("Morning routine video is live! Start your day with positivity and good energy ☀️💪", SupportedLanguage.CHINESE_SIMPLIFIED),
-        ("Giving back to the community! Partnering with a charity close to my heart 💝", SupportedLanguage.ARABIC),
-        ("Fitness motivation Monday! Remember, every small step counts towards your goals 🏃‍♀️💪", SupportedLanguage.HINDI),
-        ("Sunday reflection: Grateful for all the opportunities and amazing people in my life 🙏✨", SupportedLanguage.RUSSIAN)
+        ("Morning routine video is live! Start your day with positivity and good energy ", SupportedLanguage.CHINESE_SIMPLIFIED),
+        ("Giving back to the community! Partnering with a charity close to my heart ", SupportedLanguage.ARABIC),
+        ("Fitness motivation Monday! Remember, every small step counts towards your goals ‍", SupportedLanguage.HINDI),
+        ("Sunday reflection: Grateful for all the opportunities and amazing people in my life ", SupportedLanguage.RUSSIAN)
     ]
     
     for message, target_lang in content_messages:
@@ -148,22 +148,22 @@ async def example_global_content_creator():
                 cross_language_strategy=CrossLanguageStrategy.AUTO_TRANSLATE
             )
             
-            print(f"\n📝 Original: {message}")
-            print(f"🌐 {target_lang.value.upper()}: {response.processed_message.localized_text}")
-            print(f"📊 Confidence: {response.processed_message.confidence_score:.2f}")
+            print(f"\n Original: {message}")
+            print(f" {target_lang.value.upper()}: {response.processed_message.localized_text}")
+            print(f" Confidence: {response.processed_message.confidence_score:.2f}")
             
             if response.cultural_adaptation:
-                print(f"🎭 Cultural adaptation applied: {len(response.cultural_adaptation.adaptations)} changes")
+                print(f" Cultural adaptation applied: {len(response.cultural_adaptation.adaptations)} changes")
             
         except Exception as e:
-            print(f"❌ Failed to process message for {target_lang.value}: {e}")
+            print(f" Failed to process message for {target_lang.value}: {e}")
     
     print("\n")
 
 
 async def example_business_international_meeting():
     """Example 3: International business meeting with multiple languages"""
-    print("💼 Example 3: International Business Meeting")
+    print(" Example 3: International Business Meeting")
     print("=" * 50)
     
     # Create business-focused system
@@ -176,11 +176,11 @@ async def example_business_international_meeting():
     participants = [
         ("CEO_USA", SupportedLanguage.ENGLISH_US, "Welcome everyone to our quarterly review meeting. Let's discuss our global expansion strategy."),
         ("Director_Germany", SupportedLanguage.GERMAN_DE, "Vielen Dank für die Einladung. Unsere Zahlen in Europa sind sehr ermutigend."),
-        ("Manager_Japan", SupportedLanguage.JAPANESE, "アジア太平洋地域での売上が20%増加しました。新しい市場機会があります。"),
+        ("Manager_Japan", SupportedLanguage.JAPANESE, "20%"),
         ("VP_France", SupportedLanguage.FRENCH_FR, "L'équipe française a dépassé tous les objectifs du trimestre. Nous proposons d'étendre nos opérations."),
         ("Director_Brazil", SupportedLanguage.PORTUGUESE_BR, "O mercado brasileiro está muito promissor. Precisamos investir mais em marketing digital."),
         ("Manager_India", SupportedLanguage.HINDI_IN, "भारतीय बाजार में हमारी स्थिति मजबूत हो रही है। नई तकनीक का इस्तेमाल करना चाहिए।"),
-        ("CEO_China", SupportedLanguage.CHINESE_SIMPLIFIED, "中国市场的潜力巨大，我们需要本地化我们的产品和服务。"),
+        ("CEO_China", SupportedLanguage.CHINESE_SIMPLIFIED, ""),
         ("Director_Russia", SupportedLanguage.RUSSIAN_RU, "Российский рынок показывает стабильный рост. Рекомендую увеличить инвестиции."),
         ("Manager_Spain", SupportedLanguage.SPANISH_ES, "El equipo español ha desarrollado nuevas estrategias innovadoras para el mercado europeo."),
         ("VP_Netherlands", SupportedLanguage.DUTCH_NL, "De Nederlandse tak wil graag de leidende rol nemen in duurzaamheidsinitiatieven.")
@@ -194,8 +194,8 @@ async def example_business_international_meeting():
         domain="business_meeting"
     )
     
-    print(f"🏢 Meeting started with {len(participants)} participants")
-    print(f"🌐 Languages: {[p[1].value for p in participants]}")
+    print(f" Meeting started with {len(participants)} participants")
+    print(f" Languages: {[p[1].value for p in participants]}")
     
     # Process each participant's message and translate to English for everyone
     for participant_id, source_lang, message in participants:
@@ -209,20 +209,20 @@ async def example_business_international_meeting():
                 cross_language_strategy=CrossLanguageStrategy.AUTO_TRANSLATE
             )
             
-            print(f"\n👤 {participant_id} ({source_lang.value}):")
+            print(f"\n {participant_id} ({source_lang.value}):")
             print(f"   Original: {message}")
             print(f"   English: {response.processed_message.localized_text}")
             print(f"   Confidence: {response.processed_message.confidence_score:.2f}")
             
         except Exception as e:
-            print(f"❌ Translation failed for {participant_id}: {e}")
+            print(f" Translation failed for {participant_id}: {e}")
     
     print("\n")
 
 
 async def example_cultural_adaptation():
     """Example 4: Cultural adaptation for different regions"""
-    print("🎭 Example 4: Cultural Adaptation Examples")
+    print(" Example 4: Cultural Adaptation Examples")
     print("=" * 50)
     
     orchestrator = await create_multilingual_system(
@@ -262,21 +262,21 @@ async def example_cultural_adaptation():
                 message_type=MessageType.BUSINESS_MESSAGE
             )
             
-            print(f"\n🌍 {target_lang.value.upper()} ({cultural_note}):")
+            print(f"\n {target_lang.value.upper()} ({cultural_note}):")
             print(f"   {response.processed_message.localized_text}")
             
             if response.cultural_adaptation:
-                print(f"   🎭 Cultural adaptations: {len(response.cultural_adaptation.adaptations)}")
+                print(f"    Cultural adaptations: {len(response.cultural_adaptation.adaptations)}")
             
         except Exception as e:
-            print(f"❌ Cultural adaptation failed for {target_lang.value}: {e}")
+            print(f" Cultural adaptation failed for {target_lang.value}: {e}")
     
     print("\n")
 
 
 async def example_content_localization():
     """Example 5: Advanced content localization (dates, numbers, currency)"""
-    print("📅 Example 5: Content Localization Examples")
+    print(" Example 5: Content Localization Examples")
     print("=" * 50)
     
     orchestrator = await create_multilingual_system(
@@ -298,7 +298,7 @@ async def example_content_localization():
     localization_targets = [
         SupportedLanguage.GERMAN_DE,      # DD.MM.YYYY, 14:30, €, German address format
         SupportedLanguage.FRENCH_FR,      # DD/MM/YYYY, 14h30, €, French formatting
-        SupportedLanguage.JAPANESE,       # YYYY年MM月DD日, Japanese Yen, Japanese address
+        SupportedLanguage.JAPANESE,       # YYYYMMDD, Japanese Yen, Japanese address
         SupportedLanguage.ARABIC_SA,      # Arabic numerals, Saudi Riyal, RTL format
         SupportedLanguage.HINDI_IN,       # Indian numbering system, Rupees, Indian format
         SupportedLanguage.CHINESE_SIMPLIFIED,  # Chinese date format, Yuan, Chinese addressing
@@ -309,7 +309,7 @@ async def example_content_localization():
     ]
     
     for content in content_examples[:3]:  # Process first 3 examples
-        print(f"\n📝 Original content: {content}")
+        print(f"\n Original content: {content}")
         
         for target_lang in localization_targets[:5]:  # Test with 5 languages
             try:
@@ -327,10 +327,10 @@ async def example_content_localization():
                     message_type=MessageType.INFORMATIONAL
                 )
                 
-                print(f"   🌐 {target_lang.value}: {response.processed_message.localized_text}")
+                print(f"    {target_lang.value}: {response.processed_message.localized_text}")
                 
             except Exception as e:
-                print(f"   ❌ {target_lang.value}: Localization failed - {e}")
+                print(f"    {target_lang.value}: Localization failed - {e}")
     
     print("\n")
 
@@ -365,7 +365,7 @@ async def example_sign_language_support():
 
 async def example_historical_languages():
     """Example 7: Historical language preservation"""
-    print("🏛️ Example 7: Historical Language Preservation")
+    print(" Example 7: Historical Language Preservation")
     print("=" * 50)
     
     historical_languages = [
@@ -382,7 +382,7 @@ async def example_historical_languages():
         script = SupportedLanguage.get_language_script(hist_lang)
         complexity = SupportedLanguage.get_linguistic_complexity(hist_lang)
         
-        print(f"🏛️ {hist_lang.value}")
+        print(f" {hist_lang.value}")
         print(f"   Family: {family}")
         print(f"   Script: {script}")
         print(f"   Complexity: {complexity}")
@@ -393,7 +393,7 @@ async def example_historical_languages():
 
 async def example_tonal_language_recognition():
     """Example 8: Tonal language recognition"""
-    print("🎵 Example 8: Tonal Language Recognition")
+    print(" Example 8: Tonal Language Recognition")
     print("=" * 50)
     
     languages_to_test = [
@@ -412,7 +412,7 @@ async def example_tonal_language_recognition():
         family = SupportedLanguage.get_language_family(lang)
         complexity = SupportedLanguage.get_linguistic_complexity(lang)
         
-        tonal_indicator = "🎵" if is_tonal else "🔤"
+        tonal_indicator = "" if is_tonal else ""
         
         print(f"{tonal_indicator} {lang.value}")
         print(f"   Tonal: {'Yes' if is_tonal else 'No'}")
@@ -424,9 +424,9 @@ async def example_tonal_language_recognition():
 
 async def run_all_examples():
     """Run all multilingual examples"""
-    print("🌍 MULTILINGUAL SUPPORT SYSTEM - COMPREHENSIVE EXAMPLES")
+    print(" MULTILINGUAL SUPPORT SYSTEM - COMPREHENSIVE EXAMPLES")
     print("=" * 70)
-    print("Supporting 300+ languages and dialects worldwide! 🚀")
+    print("Supporting 300+ languages and dialects worldwide! ")
     print("=" * 70)
     
     examples = [
@@ -443,22 +443,22 @@ async def run_all_examples():
     for i, example_func in enumerate(examples, 1):
         try:
             await example_func()
-            print(f"✅ Example {i} completed successfully!")
+            print(f" Example {i} completed successfully!")
         except Exception as e:
-            print(f"❌ Example {i} failed: {e}")
+            print(f" Example {i} failed: {e}")
         
         if i < len(examples):
             print("\n" + "="*50 + "\n")
     
-    print("\n🎉 All examples completed! The multilingual system supports:")
-    print(f"   📊 {len(SupportedLanguage)} languages and dialects")
-    print(f"   🌍 195+ countries and regions")
-    print(f"   📝 20+ writing systems")
-    print(f"   🎭 50+ cultural contexts")
-    print(f"   💼 25+ business cultures")
+    print("\n All examples completed! The multilingual system supports:")
+    print(f"    {len(SupportedLanguage)} languages and dialects")
+    print(f"    195+ countries and regions")
+    print(f"    20+ writing systems")
+    print(f"    50+ cultural contexts")
+    print(f"    25+ business cultures")
     print(f"   🤟 Sign language support")
-    print(f"   🏛️ Historical language preservation")
-    print(f"   🎵 Tonal language recognition")
+    print(f"    Historical language preservation")
+    print(f"    Tonal language recognition")
 
 
 if __name__ == "__main__":

@@ -8,7 +8,7 @@ with enterprise-grade settings, optimization, and monitoring capabilities.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️ COPYRIGHT WARNING ⚠️
+ COPYRIGHT WARNING 
 This code is protected by copyright law. Any unauthorized reproduction, distribution, 
 modification, or use of this code without explicit written permission from 
 Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in legal action.
@@ -248,6 +248,9 @@ class VectorBackendConfig:
     
     def _validate_configuration(self):
         """Validate configuration settings."""
+
+
+
         try:
             # Validate backend type
             if not isinstance(self.backend_type, BackendType):
@@ -314,6 +317,9 @@ class VectorBackendConfig:
     
     def _setup_directories(self):
         """Setup required directories."""
+
+
+
         try:
             # Create main data directory
             Path(self.data_directory).mkdir(parents=True, exist_ok=True)
@@ -350,6 +356,9 @@ class VectorBackendConfigManager:
     
     def _load_config(self) -> VectorBackendConfig:
         """Load configuration from file or environment."""
+
+
+
         try:
             with self._lock:
                 if os.path.exists(self.config_path):
@@ -368,6 +377,9 @@ class VectorBackendConfigManager:
     
     def _load_from_file(self) -> VectorBackendConfig:
         """Load configuration from YAML file."""
+
+
+
         try:
             with open(self.config_path, 'r') as f:
                 if self.config_path.endswith('.yaml') or self.config_path.endswith('.yml'):
@@ -427,6 +439,9 @@ class VectorBackendConfigManager:
     
     def _dict_to_config(self, config_dict: Dict[str, Any]) -> VectorBackendConfig:
         """Convert dictionary to configuration object."""
+
+
+
         try:
             # Handle backend type
             if 'backend_type' in config_dict:
@@ -462,6 +477,9 @@ class VectorBackendConfigManager:
     
     def save_config(self, config: Optional[VectorBackendConfig] = None) -> bool:
         """Save configuration to file."""
+
+
+
         try:
             with self._lock:
                 config_to_save = config or self.config
@@ -492,6 +510,9 @@ class VectorBackendConfigManager:
     
     def _config_to_dict(self, config: VectorBackendConfig) -> Dict[str, Any]:
         """Convert configuration object to dictionary."""
+
+
+
         try:
             config_dict = asdict(config)
             
@@ -540,6 +561,9 @@ class VectorBackendConfigManager:
     
     def update_config(self, updates: Dict[str, Any]) -> bool:
         """Update configuration with new values."""
+
+
+
         try:
             with self._lock:
                 if not self.config:
@@ -564,6 +588,9 @@ class VectorBackendConfigManager:
     
     def get_system_recommendations(self) -> Dict[str, Any]:
         """Get system-specific configuration recommendations."""
+
+
+
         try:
             recommendations = {}
             
@@ -610,6 +637,9 @@ class VectorBackendConfigManager:
     
     def validate_system_compatibility(self) -> Dict[str, Any]:
         """Validate system compatibility with current configuration."""
+
+
+
         try:
             compatibility_report = {
                 'compatible': True,
@@ -781,6 +811,9 @@ def load_preset(preset_name: str) -> VectorBackendConfig:
 
 def auto_detect_optimal_config() -> VectorBackendConfig:
     """Auto-detect optimal configuration based on system resources."""
+
+
+
     try:
         # Get system info
         memory_gb = psutil.virtual_memory().total / (1024**3)

@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 CRITICAL LEGAL WARNING:
+ CRITICAL LEGAL WARNING:
 This code and all associated intellectual property belong exclusively to Fahed Mlaiel.
 Any unauthorized use, copying, modification, distribution, or commercialization 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -324,6 +324,9 @@ class MonetizationConfig:
     
     def get_payment_gateway_config(self, gateway: PaymentGateway) -> Optional[PaymentGatewayConfig]:
         """Get configuration for specific payment gateway"""
+
+
+
         return self.payment_gateways.get(gateway)
     
     def is_gateway_enabled(self, gateway: PaymentGateway) -> bool:
@@ -372,6 +375,9 @@ monetization_config = MonetizationConfig()
 
 def get_config() -> MonetizationConfig:
     """Get global monetization configuration"""
+
+
+
     return monetization_config
 
 def reload_config() -> MonetizationConfig:

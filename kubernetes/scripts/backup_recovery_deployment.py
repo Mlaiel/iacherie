@@ -15,7 +15,7 @@ Project Team Specializations:
 - DBA + Database Backup Strategies
 - Security Engineer + Encryption Specialist
 
-⚠️ STRONG WARNING FOR UNAUTHORIZED USE:
+ STRONG WARNING FOR UNAUTHORIZED USE:
 This code contains proprietary backup algorithms and trade secrets of Fahed Mlaiel.
 Any unauthorized copying, modification, distribution, or use of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is
@@ -276,6 +276,9 @@ class BackupRecoveryDeploymentManager:
     
     def _init_kubernetes_client(self):
         """Initialize Kubernetes client"""
+
+
+
         try:
             config.load_incluster_config()
         except:
@@ -294,6 +297,9 @@ class BackupRecoveryDeploymentManager:
     
     def _init_docker_client(self):
         """Initialize Docker client"""
+
+
+
         try:
             self.docker_client = docker.from_env()
             logger.info("Docker client initialized")
@@ -350,6 +356,9 @@ class BackupRecoveryDeploymentManager:
     
     def _init_redis_client(self):
         """Initialize Redis client"""
+
+
+
         try:
             redis_host = os.getenv('REDIS_HOST', 'localhost')
             redis_port = int(os.getenv('REDIS_PORT', '6379'))
@@ -523,6 +532,9 @@ class BackupRecoveryDeploymentManager:
     
     def _create_backup_deployment(self, deployment_config: DeploymentConfig) -> Dict[str, Any]:
         """Create deployment manifest for backup service"""
+
+
+
         return {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
@@ -676,6 +688,9 @@ class BackupRecoveryDeploymentManager:
     
     def _create_backup_service(self) -> Dict[str, Any]:
         """Create service manifest for backup system"""
+
+
+
         return {
             "apiVersion": "v1",
             "kind": "Service",
@@ -781,6 +796,9 @@ class BackupRecoveryDeploymentManager:
     
     def _backup_database(self, backup_config: BackupConfig, backup_path: str) -> bool:
         """Perform database backup"""
+
+
+
         try:
             if self.postgres_engine:
                 # PostgreSQL backup
@@ -834,6 +852,9 @@ class BackupRecoveryDeploymentManager:
     
     def _backup_filesystem(self, backup_config: BackupConfig, backup_path: str) -> bool:
         """Perform filesystem backup"""
+
+
+
         try:
             if backup_config.compression == CompressionType.TAR_GZ:
                 with tarfile.open(backup_path, 'w:gz') as tar:
@@ -858,6 +879,9 @@ class BackupRecoveryDeploymentManager:
     
     def _backup_application(self, backup_config: BackupConfig, backup_path: str) -> bool:
         """Perform application-specific backup"""
+
+
+
         try:
             # This would include application state, configurations, etc.
             # Implementation depends on the specific application
@@ -871,6 +895,9 @@ class BackupRecoveryDeploymentManager:
     
     def _backup_generic(self, backup_config: BackupConfig, backup_path: str) -> bool:
         """Perform generic backup"""
+
+
+
         try:
             # Create tar archive with compression
             with tarfile.open(backup_path, 'w:gz') as tar:
@@ -896,6 +923,9 @@ class BackupRecoveryDeploymentManager:
     
     def _verify_backup(self, backup_path: str, backup_config: BackupConfig) -> bool:
         """Verify backup integrity"""
+
+
+
         try:
             if backup_config.compression == CompressionType.TAR_GZ:
                 with tarfile.open(backup_path, 'r:gz') as tar:
@@ -929,6 +959,9 @@ class BackupRecoveryDeploymentManager:
     
     def _upload_to_cloud_storage(self, backup_path: str, backup_config: BackupConfig):
         """Upload backup to cloud storage"""
+
+
+
         try:
             if backup_config.storage_tier in [StorageTier.COLD_STORAGE, StorageTier.GLACIER_STORAGE]:
                 # Upload to AWS S3 or similar
@@ -957,6 +990,9 @@ class BackupRecoveryDeploymentManager:
     
     def _cleanup_old_backups(self, backup_config: BackupConfig):
         """Clean up old backups based on retention policy"""
+
+
+
         try:
             cutoff_date = datetime.now() - timedelta(days=backup_config.retention_days)
             backup_dir = backup_config.destination_path
@@ -975,6 +1011,9 @@ class BackupRecoveryDeploymentManager:
     
     def _store_backup_metadata(self, metadata: BackupMetadata):
         """Store backup metadata"""
+
+
+
         try:
             if self.redis_client:
                 self.redis_client.hset(
@@ -1032,6 +1071,9 @@ class BackupRecoveryDeploymentManager:
     
     def _perform_full_recovery(self, backup_path: str, recovery_config: RecoveryConfig) -> bool:
         """Perform full recovery"""
+
+
+
         try:
             # Extract backup to target path
             if backup_path.endswith('.tar.gz'):
@@ -1052,6 +1094,9 @@ class BackupRecoveryDeploymentManager:
     
     def _perform_partial_recovery(self, backup_path: str, recovery_config: RecoveryConfig) -> bool:
         """Perform partial recovery based on patterns"""
+
+
+
         try:
             if backup_path.endswith('.tar.gz'):
                 with tarfile.open(backup_path, 'r:gz') as tar:
@@ -1071,6 +1116,9 @@ class BackupRecoveryDeploymentManager:
     
     def _verify_recovery(self, recovery_config: RecoveryConfig) -> bool:
         """Verify recovery operation"""
+
+
+
         try:
             # Check if target path exists and has content
             if os.path.exists(recovery_config.target_path):
@@ -1086,6 +1134,9 @@ class BackupRecoveryDeploymentManager:
     
     def _download_from_cloud_storage(self, backup_id: str) -> Optional[str]:
         """Download backup from cloud storage"""
+
+
+
         try:
             if self.s3_client:
                 bucket_name = os.getenv('BACKUP_S3_BUCKET', 'ia-influencer-backups')
@@ -1114,6 +1165,9 @@ class BackupRecoveryDeploymentManager:
     
     def _create_namespace(self, namespace: str):
         """Create Kubernetes namespace if it doesn't exist"""
+
+
+
         try:
             self.core_v1.read_namespace(name=namespace)
         except ApiException as e:
@@ -1128,6 +1182,9 @@ class BackupRecoveryDeploymentManager:
     
     def _create_or_update_configmap(self, configmap_manifest: Dict[str, Any]):
         """Create or update ConfigMap"""
+
+
+
         try:
             self.core_v1.read_namespaced_config_map(
                 name=configmap_manifest['metadata']['name'],
@@ -1208,7 +1265,7 @@ def main():
     
     # Deploy backup system
     if manager.deploy_backup_system(deployment_config):
-        print("✅ Backup system deployed successfully")
+        print(" Backup system deployed successfully")
     
     # Example backup configuration
     backup_config = BackupConfig(
@@ -1228,7 +1285,7 @@ def main():
     
     # Perform backup
     metadata = manager.perform_backup(backup_config.backup_id)
-    print(f"✅ Backup completed: {metadata.status.value}")
+    print(f" Backup completed: {metadata.status.value}")
     
     # Example recovery configuration
     recovery_config = RecoveryConfig(
@@ -1240,17 +1297,17 @@ def main():
     
     # Perform recovery
     if manager.perform_recovery(recovery_config):
-        print("✅ Recovery completed successfully")
+        print(" Recovery completed successfully")
     
     # List backups
     backups = manager.list_backups()
-    print(f"✅ Found {len(backups)} backups")
+    print(f" Found {len(backups)} backups")
     
     # Health check
     health = manager.health_check()
-    print(f"✅ Health check completed: {health['overall_status']}")
+    print(f" Health check completed: {health['overall_status']}")
     
-    print("\n🎯 Backup and Recovery Deployment Manager test completed")
+    print("\n Backup and Recovery Deployment Manager test completed")
 
 
 if __name__ == "__main__":

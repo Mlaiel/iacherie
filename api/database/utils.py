@@ -123,6 +123,9 @@ class DatabaseUtils:
     
     async def get_database_version(self) -> Dict[str, Any]:
         """Get database version information"""
+
+
+
         try:
             async with self.session_manager.get_async_session() as session:
                 version_query = text("SELECT version()")
@@ -145,6 +148,9 @@ class DatabaseUtils:
     
     async def get_database_size(self) -> Dict[str, Any]:
         """Get total database size"""
+
+
+
         try:
             async with self.session_manager.get_async_session() as session:
                 size_query = text("""
@@ -167,6 +173,9 @@ class DatabaseUtils:
     
     async def list_all_tables(self, include_system: bool = False) -> List[str]:
         """List all tables in the database"""
+
+
+
         try:
             async with self.session_manager.get_async_session() as session:
                 if include_system:
@@ -193,6 +202,9 @@ class DatabaseUtils:
     
     async def get_table_info(self, table_name: str) -> Optional[TableInfo]:
         """Get comprehensive table information"""
+
+
+
         try:
             async with self.session_manager.get_async_session() as session:
                 # Get basic table stats
@@ -281,6 +293,9 @@ class DatabaseUtils:
     
     async def _get_table_indexes(self, session: AsyncSession, table_name: str) -> List[Dict[str, Any]]:
         """Get index information for a table"""
+
+
+
         try:
             indexes_query = text("""
                 SELECT 
@@ -320,6 +335,9 @@ class DatabaseUtils:
     
     async def _get_table_constraints(self, session: AsyncSession, table_name: str) -> List[Dict[str, Any]]:
         """Get constraint information for a table"""
+
+
+
         try:
             constraints_query = text("""
                 SELECT 
@@ -354,6 +372,9 @@ class DatabaseUtils:
     
     async def check_table_exists(self, table_name: str) -> bool:
         """Check if table exists"""
+
+
+
         try:
             async with self.session_manager.get_async_session() as session:
                 query = text("""
@@ -369,6 +390,9 @@ class DatabaseUtils:
     
     async def vacuum_table(self, table_name: str, full: bool = False, analyze: bool = True) -> Dict[str, Any]:
         """Run VACUUM on a specific table"""
+
+
+
         try:
             # VACUUM cannot be run in a transaction, so use autocommit
             engine = self.db_connection.get_postgresql_engine(async_mode=False)
@@ -400,6 +424,9 @@ class DatabaseUtils:
     
     async def analyze_table(self, table_name: str) -> Dict[str, Any]:
         """Run ANALYZE on a specific table"""
+
+
+
         try:
             engine = self.db_connection.get_postgresql_engine(async_mode=False)
             
@@ -439,6 +466,9 @@ class TableUtils:
                                 columns: Optional[List[str]] = None,
                                 limit: int = 100) -> Dict[str, Any]:
         """Find duplicate rows in a table"""
+
+
+
         try:
             async with self.db_utils.session_manager.get_async_session() as session:
                 if columns:
@@ -494,6 +524,9 @@ class TableUtils:
     
     async def check_referential_integrity(self, table_name: str) -> Dict[str, Any]:
         """Check referential integrity for foreign keys"""
+
+
+
         try:
             async with self.db_utils.session_manager.get_async_session() as session:
                 # Get foreign key constraints
@@ -555,6 +588,9 @@ class TableUtils:
     
     async def get_table_statistics(self, table_name: str) -> Dict[str, Any]:
         """Get comprehensive table statistics"""
+
+
+
         try:
             async with self.db_utils.session_manager.get_async_session() as session:
                 # Basic statistics
@@ -638,6 +674,9 @@ class TableUtils:
     
     async def optimize_table(self, table_name: str) -> Dict[str, Any]:
         """Optimize table performance"""
+
+
+
         try:
             results = []
             
@@ -677,6 +716,9 @@ class IndexUtils:
     
     async def get_index_usage_stats(self, table_name: Optional[str] = None) -> List[Dict[str, Any]]:
         """Get index usage statistics"""
+
+
+
         try:
             async with self.db_utils.session_manager.get_async_session() as session:
                 if table_name:
@@ -717,6 +759,9 @@ class IndexUtils:
     
     async def find_unused_indexes(self, min_size_mb: int = 10) -> List[Dict[str, Any]]:
         """Find unused indexes that are consuming space"""
+
+
+
         try:
             async with self.db_utils.session_manager.get_async_session() as session:
                 query = text("""
@@ -745,6 +790,9 @@ class IndexUtils:
     
     async def find_duplicate_indexes(self) -> List[Dict[str, Any]]:
         """Find duplicate or redundant indexes"""
+
+
+
         try:
             async with self.db_utils.session_manager.get_async_session() as session:
                 query = text("""
@@ -774,6 +822,9 @@ class IndexUtils:
     
     async def analyze_index_recommendations(self, table_name: str) -> Dict[str, Any]:
         """Analyze and recommend indexes for a table"""
+
+
+
         try:
             recommendations = []
             
@@ -855,6 +906,9 @@ class IndexUtils:
                           unique: bool = False,
                           where_condition: Optional[str] = None) -> Dict[str, Any]:
         """Create an index on specified columns"""
+
+
+
         try:
             if not index_name:
                 index_name = f"idx_{table_name}_{'_'.join(columns)}"
@@ -902,6 +956,9 @@ class IndexUtils:
     
     async def drop_index(self, index_name: str, cascade: bool = False) -> Dict[str, Any]:
         """Drop an index"""
+
+
+
         try:
             drop_sql = f"DROP INDEX {index_name}"
             if cascade:
@@ -946,6 +1003,9 @@ class ConstraintUtils:
     
     async def validate_all_constraints(self, table_name: Optional[str] = None) -> Dict[str, Any]:
         """Validate all constraints in database or specific table"""
+
+
+
         try:
             async with self.db_utils.session_manager.get_async_session() as session:
                 if table_name:
@@ -1098,6 +1158,9 @@ class PerformanceAnalyzer:
     
     async def get_slow_queries(self, limit: int = 50, min_duration_ms: int = 1000) -> List[Dict[str, Any]]:
         """Get slow queries from pg_stat_statements"""
+
+
+
         try:
             async with self.db_utils.session_manager.get_async_session() as session:
                 # Check if pg_stat_statements extension is available
@@ -1139,6 +1202,9 @@ class PerformanceAnalyzer:
     
     async def analyze_table_performance(self, table_name: str) -> Dict[str, Any]:
         """Analyze performance metrics for a specific table"""
+
+
+
         try:
             async with self.db_utils.session_manager.get_async_session() as session:
                 # Get table access patterns
@@ -1237,6 +1303,9 @@ class PerformanceAnalyzer:
     
     async def get_database_performance_overview(self) -> Dict[str, Any]:
         """Get overall database performance overview"""
+
+
+
         try:
             async with self.db_utils.session_manager.get_async_session() as session:
                 # Database-wide statistics

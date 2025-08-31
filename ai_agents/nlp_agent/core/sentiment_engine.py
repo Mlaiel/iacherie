@@ -305,6 +305,9 @@ class SentimentEngine:
         model_key: str
     ):
         """Perform sentiment analysis using transformer models"""
+
+
+
         try:
             pipeline_obj = self.pipelines.get(model_key, self.pipelines["sentiment"])
             
@@ -388,6 +391,9 @@ class SentimentEngine:
     
     async def _analyze_emotions(self, text: str, result: SentimentResult):
         """Analyze emotions in text"""
+
+
+
         try:
             emotion_pipeline = self.pipelines["emotion"]
             
@@ -591,6 +597,9 @@ class SentimentEngine:
     
     def get_model_info(self) -> Dict[str, Any]:
         """Get information about loaded models"""
+
+
+
         return {
             "models_loaded": list(self.pipelines.keys()),
             "transformers_available": TRANSFORMERS_AVAILABLE,

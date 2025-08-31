@@ -7,7 +7,7 @@ processing for comprehensive legal decision support.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -133,6 +133,9 @@ class LegalAnalyzer:
     
     def _initialize_nlp_models(self):
         """Initialize NLP models for legal text analysis"""
+
+
+
         try:
             # Load spaCy model for legal text processing
             try:
@@ -185,6 +188,9 @@ class LegalAnalyzer:
     
     def _load_legal_patterns(self) -> Dict[str, List[str]]:
         """Load legal text patterns for analysis"""
+
+
+
         return {
             "contract_clauses": [
                 r"force majeure", r"indemnif(y|ication)", r"liquidated damages",
@@ -206,6 +212,9 @@ class LegalAnalyzer:
     
     def _load_jurisdiction_rules(self) -> Dict[str, Dict[str, Any]]:
         """Load jurisdiction-specific legal rules and requirements"""
+
+
+
         return {
             "us_federal": {
                 "copyright_term": 95,  # years
@@ -246,6 +255,9 @@ class LegalAnalyzer:
         Returns:
             Detailed analysis results with findings and recommendations
         """
+
+
+
         try:
             start_time = datetime.now(timezone.utc)
             
@@ -296,6 +308,9 @@ class LegalAnalyzer:
     
     async def _analyze_contract_terms(self, context: AnalysisContext) -> AnalysisResult:
         """Analyze contract terms and clauses"""
+
+
+
         try:
             content = context.text_content
             findings = []
@@ -347,6 +362,9 @@ class LegalAnalyzer:
     
     async def _analyze_case_law(self, context: AnalysisContext) -> AnalysisResult:
         """Analyze case law and legal precedents"""
+
+
+
         try:
             query = context.text_content
             jurisdiction = context.jurisdiction
@@ -395,6 +413,9 @@ class LegalAnalyzer:
     
     async def _analyze_statutes(self, context: AnalysisContext) -> AnalysisResult:
         """Analyze statutory law and regulations"""
+
+
+
         try:
             content = context.text_content
             jurisdiction = context.jurisdiction
@@ -444,6 +465,9 @@ class LegalAnalyzer:
     
     async def _analyze_precedents(self, context: AnalysisContext) -> AnalysisResult:
         """Analyze legal precedents for case matching"""
+
+
+
         try:
             case_facts = context.text_content
             jurisdiction = context.jurisdiction
@@ -493,6 +517,9 @@ class LegalAnalyzer:
     
     async def _analyze_legal_risks(self, context: AnalysisContext) -> AnalysisResult:
         """Analyze legal risks and exposure"""
+
+
+
         try:
             content = context.text_content
             risk_factors = context.metadata.get('risk_factors', [])
@@ -542,6 +569,9 @@ class LegalAnalyzer:
     
     async def _analyze_compliance(self, context: AnalysisContext) -> AnalysisResult:
         """Analyze regulatory compliance status"""
+
+
+
         try:
             content = context.text_content
             regulations = context.metadata.get('applicable_regulations', [])
@@ -583,6 +613,9 @@ class LegalAnalyzer:
     
     async def _analyze_ip_landscape(self, context: AnalysisContext) -> AnalysisResult:
         """Analyze intellectual property landscape"""
+
+
+
         try:
             content = context.text_content
             ip_type = context.metadata.get('ip_type', 'general')
@@ -632,6 +665,9 @@ class LegalAnalyzer:
     # Helper methods for legal analysis
     async def _extract_legal_entities(self, text: str, entity_type: str) -> List[Dict[str, Any]]:
         """Extract legal entities from text using NLP"""
+
+
+
         try:
             entities = []
             
@@ -687,6 +723,9 @@ class LegalAnalyzer:
     
     async def _log_analysis_operation(self, context: AnalysisContext, result: AnalysisResult):
         """Log analysis operation for audit trail"""
+
+
+
         try:
             log_entry = {
                 'analysis_type': context.analysis_type.value,
@@ -729,6 +768,9 @@ class ComplianceScanner:
     
     def _initialize_compliance_systems(self):
         """Initialize compliance scanning systems"""
+
+
+
         try:
             # Load regulatory frameworks
             self.regulatory_database = self._load_regulatory_frameworks()
@@ -743,6 +785,9 @@ class ComplianceScanner:
     
     def _load_regulatory_frameworks(self) -> Dict[str, Any]:
         """Load regulatory frameworks for different jurisdictions"""
+
+
+
         return {
             "us_federal": {
                 "dmca": {"active": True, "requirements": []},
@@ -764,6 +809,9 @@ class ComplianceScanner:
     
     def _load_compliance_rules(self) -> Dict[str, Any]:
         """Load compliance rules and checks"""
+
+
+
         return {
             "content_protection": [
                 "copyright_notice_present",
@@ -797,6 +845,9 @@ class ComplianceScanner:
         Returns:
             Detailed compliance scan results
         """
+
+
+
         try:
             scan_results = {
                 "jurisdiction": jurisdiction,
@@ -1064,6 +1115,9 @@ class LegalAnalyzer:
         Returns:
             Extracted contract terms and analysis
         """
+
+
+
         try:
             # Parse contract structure
             contract_structure = await self._parse_contract_structure(contract_content)
@@ -1121,6 +1175,9 @@ class LegalAnalyzer:
         Returns:
             Relevant case law and precedent information
         """
+
+
+
         try:
             # Query legal databases
             database_results = await self.legal_db.search_cases(
@@ -1180,6 +1237,9 @@ class LegalAnalyzer:
         Returns:
             Compliance assessment results
         """
+
+
+
         try:
             compliance_results = {}
             overall_compliance_score = 0.0
@@ -1286,6 +1346,9 @@ class LegalAnalyzer:
 
     def _initialize_contract_patterns(self) -> Dict[str, re.Pattern]:
         """Initialize contract term patterns"""
+
+
+
         return {
             'payment_terms': re.compile(r'pay[ment]*\s+(?:within|by|due)\s+\d+\s+days?', re.IGNORECASE),
             'termination': re.compile(r'terminat[e|ion]*\s+(?:clause|provision)', re.IGNORECASE),
@@ -1296,6 +1359,9 @@ class LegalAnalyzer:
 
     def _initialize_citation_patterns(self) -> List[re.Pattern]:
         """Initialize legal citation patterns"""
+
+
+
         return [
             re.compile(r'\d+\s+[A-Z][a-z]+\s+\d+'),  # Case citations
             re.compile(r'\d+\s+U\.S\.C\.\s+§?\s*\d+'),  # USC citations
@@ -1332,6 +1398,9 @@ class ComplianceScanner:
         compliance_frameworks: List[str]
     ) -> Dict[str, Any]:
         """Scan content for compliance across multiple frameworks"""
+
+
+
         
         try:
             scan_results = {}

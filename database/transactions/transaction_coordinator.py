@@ -9,7 +9,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -115,6 +115,9 @@ class ResourceManager:
     
     def get_resource(self, resource_id: str) -> Optional[Any]:
         """Get registered resource"""
+
+
+
         return self.resources.get(resource_id)
 
 
@@ -376,6 +379,9 @@ class TransactionCoordinator:
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
         """Get coordinator performance metrics"""
+
+
+
         return {
             **self.performance_metrics,
             "active_transactions": len(self.active_transactions),
@@ -384,6 +390,9 @@ class TransactionCoordinator:
     
     async def _prepare_participant(self, participant_id: str, context: TransactionContext) -> bool:
         """Prepare individual participant"""
+
+
+
         try:
             # In a real implementation, this would call the participant's prepare method
             # For now, simulate preparation
@@ -395,6 +404,9 @@ class TransactionCoordinator:
     
     async def _commit_participant(self, participant_id: str, context: TransactionContext) -> bool:
         """Commit individual participant"""
+
+
+
         try:
             # In a real implementation, this would call the participant's commit method
             await asyncio.sleep(0.001)  # Simulate network delay
@@ -405,6 +417,9 @@ class TransactionCoordinator:
     
     async def _abort_transaction(self, context: TransactionContext, state: TransactionState) -> bool:
         """Abort transaction and execute rollback handlers"""
+
+
+
         
         try:
             context.state = TransactionState.ABORTING

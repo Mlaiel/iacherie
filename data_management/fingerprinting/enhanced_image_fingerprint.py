@@ -1,5 +1,5 @@
 """
-📸 Image Fingerprinting Engine - IA Influencer Agent Platform Enterprise
+ Image Fingerprinting Engine - IA Influencer Agent Platform Enterprise
 ========================================================================
 Module: backend/data_management/fingerprinting/enhanced_image_fingerprint.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Image Fingerprinting - Ultra Enterprise Production-Ready
 Responsibility: Advanced image fingerprinting with CLIP, ImageHash, CNN features, and perceptual analysis
 ===============================================================================================
 
-⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
+  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -20,15 +20,15 @@ Object Detection → Scene Analysis → Color Analysis → Texture Features →
 Vector Embedding → FAISS Indexing → Real-time Monitoring → Violation Detection
 
 IMAGE FINGERPRINTING TECHNOLOGIES:
-├── 🧠 CLIP (Vision-Language Model)
-├── 🔍 Perceptual Hashing (pHash + dHash + aHash + wHash)
-├── 🤖 CNN Features (ResNet + EfficientNet + Vision Transformer)
-├── 👁️ Object Detection (YOLO + DETR)
-├── 🎨 Color Analysis (Histogram + Dominant Colors)
-├── 🧵 Texture Features (LBP + GLCM + Gabor)
-├── 📐 Geometric Features (SIFT + ORB + SURF)
-├── 🔬 Quality Assessment (BRISQUE + NIQE)
-└── 🛡️ Protection Pipeline (Multi-modal Matching)
+ 🧠 CLIP (Vision-Language Model)
+  Perceptual Hashing (pHash + dHash + aHash + wHash)
+ 🤖 CNN Features (ResNet + EfficientNet + Vision Transformer)
+  Object Detection (YOLO + DETR)
+  Color Analysis (Histogram + Dominant Colors)
+ 🧵 Texture Features (LBP + GLCM + Gabor)
+  Geometric Features (SIFT + ORB + SURF)
+  Quality Assessment (BRISQUE + NIQE)
+  Protection Pipeline (Multi-modal Matching)
 """
 
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -422,6 +422,9 @@ class ImageFingerprintEngine:
                                  fingerprint1: ImageFingerprint,
                                  fingerprint2: ImageFingerprint) -> Dict[str, float]:
         """Compare deux empreintes d'images"""
+
+
+
         try:
             similarity_scores = {}
             
@@ -942,6 +945,9 @@ class CLIPProcessor:
     
     def _load_model(self):
         """Charge le modèle CLIP"""
+
+
+
         try:
             self.model, self.preprocess = clip.load(self.config.clip_model, device=self.device)
             self.model.eval()
@@ -992,6 +998,9 @@ class CNNFeaturesProcessor:
     
     def _load_models(self):
         """Charge les modèles CNN"""
+
+
+
         try:
             for model_name in self.config.cnn_models:
                 if model_name == "resnet50":
@@ -1181,6 +1190,9 @@ class ColorAnalyzer:
     
     async def _extract_dominant_colors(self, image_data: np.ndarray) -> List[Tuple[int, int, int]]:
         """Extrait les couleurs dominantes"""
+
+
+
         try:
             # Reshape for k-means
             data = image_data.reshape((-1, 3))

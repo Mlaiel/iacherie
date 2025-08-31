@@ -90,6 +90,9 @@ class MessageEncryption:
         Returns:
             Encrypted message
         """
+
+
+
         try:
             if key:
                 fernet = Fernet(key)
@@ -114,6 +117,9 @@ class MessageEncryption:
         Returns:
             Decrypted message
         """
+
+
+
         try:
             if key:
                 fernet = Fernet(key)
@@ -138,6 +144,9 @@ class MessageEncryption:
         Returns:
             Encrypted message bytes
         """
+
+
+
         try:
             key = public_key or self._public_key
             
@@ -167,6 +176,9 @@ class MessageEncryption:
         Returns:
             Decrypted message
         """
+
+
+
         try:
             key = private_key or self._private_key
             
@@ -196,6 +208,9 @@ class MessageEncryption:
         Returns:
             Digital signature
         """
+
+
+
         try:
             key = private_key or self._private_key
             
@@ -231,6 +246,9 @@ class MessageEncryption:
         Returns:
             True if signature is valid
         """
+
+
+
         try:
             key = public_key or self._public_key
             
@@ -260,6 +278,9 @@ class MessageEncryption:
         Returns:
             HMAC signature
         """
+
+
+
         try:
             signature = hmac.new(
                 secret_key,
@@ -285,6 +306,9 @@ class MessageEncryption:
         Returns:
             True if signature is valid
         """
+
+
+
         try:
             expected_signature = hmac.new(
                 secret_key,
@@ -455,6 +479,9 @@ class ProtocolValidator:
         Returns:
             True if protocol is secure
         """
+
+
+
         try:
             protocol = url.split('://')[0].lower()
             is_secure = protocol in self.ALLOWED_PROTOCOLS
@@ -498,6 +525,9 @@ class SecureChannelManager:
     
     async def initialize_redis_pool(self):
         """Initialize Redis connection pool"""
+
+
+
         try:
             self._redis_pool = aioredis.ConnectionPool.from_url(self.redis_url)
             logger.info("Redis connection pool initialized")
@@ -526,6 +556,9 @@ class SecureChannelManager:
         Returns:
             Channel configuration
         """
+
+
+
         try:
             # Generate channel keys
             encryption_key = Fernet.generate_key()
@@ -569,6 +602,9 @@ class SecureChannelManager:
         Returns:
             Message ID
         """
+
+
+
         try:
             if channel_id not in self.channels:
                 raise ValueError(f"Channel not found: {channel_id}")
@@ -655,6 +691,9 @@ class SecureChannelManager:
         Returns:
             Decrypted message or None
         """
+
+
+
         try:
             if channel_id not in self.channels:
                 raise ValueError(f"Channel not found: {channel_id}")
@@ -723,9 +762,15 @@ class SecureChannelManager:
             port: Server port
             ssl_context: SSL context for secure connections
         """
+
+
+
         try:
             async def handle_websocket(websocket, path):
                 """Handle WebSocket connection"""
+
+
+
                 try:
                     # Authenticate connection
                     auth_message = await websocket.recv()
@@ -778,6 +823,9 @@ class SecureChannelManager:
     
     async def _handle_websocket_message(self, client_id: str, message: str):
         """Handle incoming WebSocket message"""
+
+
+
         try:
             data = json.loads(message)
             message_type = data.get('type')
@@ -798,6 +846,9 @@ class SecureChannelManager:
     
     async def cleanup_expired_messages(self):
         """Cleanup expired messages from Redis"""
+
+
+
         try:
             if self._redis_pool is None:
                 await self.initialize_redis_pool()
@@ -831,6 +882,9 @@ class SecureChannelManager:
         Returns:
             Channel statistics
         """
+
+
+
         try:
             if channel_id not in self.channels:
                 raise ValueError(f"Channel not found: {channel_id}")

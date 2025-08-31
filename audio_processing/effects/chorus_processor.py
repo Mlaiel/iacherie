@@ -1,5 +1,5 @@
 """
-🎵 Chorus Processor - Professional Modulation & Chorus Effects Engine
+ Chorus Processor - Professional Modulation & Chorus Effects Engine
 
 Advanced chorus, flanger, and modulation effects with multi-voice processing,
 sophisticated LFO control, interpolation algorithms, and stereo width control.
@@ -281,6 +281,9 @@ class FilterBank:
     
     def _update_filters(self, high_cut_hz: float, low_cut_hz: float):
         """Update filter coefficients"""
+
+
+
         try:
             # High cut (low pass)
             if high_cut_hz < self.sample_rate / 2:
@@ -324,6 +327,9 @@ class ChorusProcessor:
         
     def _init_processors(self):
         """Initialize processing components"""
+
+
+
         try:
             # Maximum delay calculation (50ms should cover all use cases)
             max_delay_ms = 50.0
@@ -390,6 +396,9 @@ class ChorusProcessor:
     
     def process_sample(self, left: float, right: float) -> Tuple[float, float]:
         """Process single stereo sample"""
+
+
+
         try:
             # Store dry signal
             dry_left, dry_right = left, right
@@ -592,6 +601,9 @@ class ChorusProcessor:
     
     def get_processor_info(self) -> Dict[str, Any]:
         """Get current processor information"""
+
+
+
         return {
             'mode': self.params.mode.value,
             'num_voices': len(self.params.voices),
@@ -671,6 +683,9 @@ class ChorusProcessor:
     
     def process(self, audio_data: np.ndarray) -> np.ndarray:
         """Apply chorus processing"""
+
+
+
         try:
             processed_audio = np.zeros_like(audio_data)
             
@@ -804,6 +819,9 @@ class FlangerProcessor:
     
     def process(self, audio_data: np.ndarray) -> np.ndarray:
         """Apply flanger processing"""
+
+
+
         try:
             processed_audio = np.zeros_like(audio_data)
             

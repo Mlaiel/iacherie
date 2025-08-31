@@ -296,9 +296,9 @@ class HealthAlertingSystem:
         # Email templates
         self._notification_templates[AlertChannel.EMAIL] = {
             AlertSeverity.CRITICAL: NotificationTemplate(
-                subject_template="🚨 CRITICAL ALERT: {{alert.title}} - IA Influencer Agent",
+                subject_template=" CRITICAL ALERT: {{alert.title}} - IA Influencer Agent",
                 body_template="""
-                <h2 style="color: #dc3545;">🚨 CRITICAL ALERT</h2>
+                <h2 style="color: #dc3545;"> CRITICAL ALERT</h2>
                 <p><strong>Service:</strong> {{alert.service}}</p>
                 <p><strong>Title:</strong> {{alert.title}}</p>
                 <p><strong>Description:</strong> {{alert.description}}</p>
@@ -322,9 +322,9 @@ class HealthAlertingSystem:
                 format_type="html"
             ),
             AlertSeverity.HIGH: NotificationTemplate(
-                subject_template="⚠️ HIGH PRIORITY: {{alert.title}} - IA Influencer Agent",
+                subject_template=" HIGH PRIORITY: {{alert.title}} - IA Influencer Agent",
                 body_template="""
-                <h2 style="color: #fd7e14;">⚠️ HIGH PRIORITY ALERT</h2>
+                <h2 style="color: #fd7e14;"> HIGH PRIORITY ALERT</h2>
                 <p><strong>Service:</strong> {{alert.service}}</p>
                 <p><strong>Title:</strong> {{alert.title}}</p>
                 <p><strong>Description:</strong> {{alert.description}}</p>
@@ -346,9 +346,9 @@ class HealthAlertingSystem:
                 format_type="html"
             ),
             AlertSeverity.MEDIUM: NotificationTemplate(
-                subject_template="📊 MONITORING: {{alert.title}} - IA Influencer Agent",
+                subject_template=" MONITORING: {{alert.title}} - IA Influencer Agent",
                 body_template="""
-                <h2 style="color: #ffc107;">📊 MONITORING ALERT</h2>
+                <h2 style="color: #ffc107;"> MONITORING ALERT</h2>
                 <p><strong>Service:</strong> {{alert.service}}</p>
                 <p><strong>Title:</strong> {{alert.title}}</p>
                 <p><strong>Description:</strong> {{alert.description}}</p>
@@ -369,7 +369,7 @@ class HealthAlertingSystem:
                 subject_template="",
                 body_template="""
                 {
-                    "text": "🚨 CRITICAL ALERT: {{alert.title}}",
+                    "text": " CRITICAL ALERT: {{alert.title}}",
                     "attachments": [
                         {
                             "color": "danger",
@@ -390,7 +390,7 @@ class HealthAlertingSystem:
                 subject_template="",
                 body_template="""
                 {
-                    "text": "⚠️ HIGH PRIORITY: {{alert.title}}",
+                    "text": " HIGH PRIORITY: {{alert.title}}",
                     "attachments": [
                         {
                             "color": "warning",
@@ -483,6 +483,9 @@ class HealthAlertingSystem:
 
     def _evaluate_conditions(self, result: HealthCheckResult, conditions: Dict[str, Any]) -> bool:
         """Evaluate additional alert conditions"""
+
+
+
         try:
             # Response time threshold
             if "max_response_time_ms" in conditions:
@@ -663,6 +666,9 @@ class HealthAlertingSystem:
 
     async def _send_channel_notification(self, alert: Alert, channel: AlertChannel):
         """Send notification through specific channel"""
+
+
+
         
         try:
             if channel == AlertChannel.EMAIL:
@@ -955,10 +961,16 @@ class HealthAlertingSystem:
 
     async def get_active_alerts(self) -> List[Dict[str, Any]]:
         """Get all active alerts"""
+
+
+
         return [asdict(alert) for alert in self._active_alerts.values()]
 
     async def get_alert_metrics(self) -> Dict[str, Any]:
         """Get alert system metrics"""
+
+
+
         return self._alert_metrics.copy()
 
     async def get_alert_history(self, hours: int = 24) -> List[Dict[str, Any]]:
@@ -974,6 +986,9 @@ class HealthAlertingSystem:
 
     async def cleanup_resources(self):
         """Clean up alerting system resources"""
+
+
+
         try:
             # Close any open connections
             if hasattr(self, '_smtp_connections'):
@@ -1006,6 +1021,9 @@ class HealthAlertingSystem:
 
     def get_configured_rules(self) -> List[Dict[str, Any]]:
         """Get all configured alert rules"""
+
+
+
         return [asdict(rule) for rule in self._alert_rules]
 
 """

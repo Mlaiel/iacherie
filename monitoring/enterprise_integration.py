@@ -102,6 +102,9 @@ class BaseEnterpriseIntegration:
     
     async def get_metrics(self) -> Dict[str, Any]:
         """Get metrics from enterprise system"""
+
+
+
         return {
             "integration_type": "base",
             "connection_status": False,
@@ -121,6 +124,9 @@ class SlackIntegration(BaseEnterpriseIntegration):
     
     async def send_alert(self, alert: EnterpriseAlert) -> bool:
         """Send alert to Slack"""
+
+
+
         try:
             webhook_url = self.config.endpoints.get("webhook_url")
             if not webhook_url:
@@ -140,7 +146,7 @@ class SlackIntegration(BaseEnterpriseIntegration):
                 "attachments": [
                     {
                         "color": color_map.get(alert.severity, "#808080"),
-                        "title": f"🚨 {alert.title}",
+                        "title": f" {alert.title}",
                         "text": alert.description,
                         "fields": [
                             {
@@ -174,6 +180,9 @@ class SlackIntegration(BaseEnterpriseIntegration):
     
     async def test_connection(self) -> bool:
         """Test Slack connection"""
+
+
+
         try:
             webhook_url = self.config.endpoints.get("webhook_url")
             if not webhook_url:
@@ -192,6 +201,9 @@ class SlackIntegration(BaseEnterpriseIntegration):
     
     async def get_metrics(self) -> Dict[str, Any]:
         """Get Slack integration metrics"""
+
+
+
         return {
             "integration_type": "slack",
             "last_alert_sent": getattr(self, "_last_alert_sent", None),
@@ -205,6 +217,9 @@ class DatadogIntegration(BaseEnterpriseIntegration):
     
     async def send_alert(self, alert: EnterpriseAlert) -> bool:
         """Send alert to Datadog as event"""
+
+
+
         try:
             api_key = self.config.credentials.get("api_key")
             if not api_key:
@@ -247,6 +262,9 @@ class DatadogIntegration(BaseEnterpriseIntegration):
     
     async def send_metrics(self, metrics: Dict[str, Any]) -> bool:
         """Send custom metrics to Datadog"""
+
+
+
         try:
             api_key = self.config.credentials.get("api_key")
             if not api_key:
@@ -283,6 +301,9 @@ class DatadogIntegration(BaseEnterpriseIntegration):
     
     async def test_connection(self) -> bool:
         """Test Datadog connection"""
+
+
+
         try:
             api_key = self.config.credentials.get("api_key")
             if not api_key:
@@ -301,6 +322,9 @@ class DatadogIntegration(BaseEnterpriseIntegration):
     
     async def get_metrics(self) -> Dict[str, Any]:
         """Get Datadog integration metrics"""
+
+
+
         return {
             "integration_type": "datadog",
             "connection_status": await self.test_connection(),
@@ -314,6 +338,9 @@ class PagerDutyIntegration(BaseEnterpriseIntegration):
     
     async def send_alert(self, alert: EnterpriseAlert) -> bool:
         """Send alert to PagerDuty as incident"""
+
+
+
         try:
             integration_key = self.config.credentials.get("integration_key")
             if not integration_key:
@@ -351,6 +378,9 @@ class PagerDutyIntegration(BaseEnterpriseIntegration):
     
     async def resolve_alert(self, alert_id: str) -> bool:
         """Resolve alert in PagerDuty"""
+
+
+
         try:
             integration_key = self.config.credentials.get("integration_key")
             if not integration_key:
@@ -373,6 +403,9 @@ class PagerDutyIntegration(BaseEnterpriseIntegration):
     
     async def test_connection(self) -> bool:
         """Test PagerDuty connection"""
+
+
+
         try:
             integration_key = self.config.credentials.get("integration_key")
             if not integration_key:
@@ -412,6 +445,9 @@ class PagerDutyIntegration(BaseEnterpriseIntegration):
     
     async def get_metrics(self) -> Dict[str, Any]:
         """Get PagerDuty integration metrics"""
+
+
+
         return {
             "integration_type": "pagerduty",
             "connection_status": await self.test_connection(),
@@ -430,6 +466,9 @@ class AWSCloudWatchIntegration(BaseEnterpriseIntegration):
     
     def _initialize_aws_client(self):
         """Initialize AWS CloudWatch client"""
+
+
+
         try:
             aws_access_key = self.config.credentials.get("aws_access_key_id")
             aws_secret_key = self.config.credentials.get("aws_secret_access_key")
@@ -451,6 +490,9 @@ class AWSCloudWatchIntegration(BaseEnterpriseIntegration):
     
     async def send_metrics(self, metrics: Dict[str, Any]) -> bool:
         """Send custom metrics to CloudWatch"""
+
+
+
         try:
             if not self.cloudwatch_client:
                 return False
@@ -491,6 +533,9 @@ class AWSCloudWatchIntegration(BaseEnterpriseIntegration):
     
     async def create_alarm(self, alarm_config: Dict[str, Any]) -> bool:
         """Create CloudWatch alarm"""
+
+
+
         try:
             if not self.cloudwatch_client:
                 return False
@@ -504,6 +549,9 @@ class AWSCloudWatchIntegration(BaseEnterpriseIntegration):
     
     async def test_connection(self) -> bool:
         """Test AWS CloudWatch connection"""
+
+
+
         try:
             if not self.cloudwatch_client:
                 return False
@@ -526,6 +574,9 @@ class AWSCloudWatchIntegration(BaseEnterpriseIntegration):
     
     async def get_metrics(self) -> Dict[str, Any]:
         """Get CloudWatch integration metrics"""
+
+
+
         return {
             "integration_type": "aws_cloudwatch",
             "connection_status": await self.test_connection(),
@@ -560,6 +611,9 @@ class EnterpriseIntegrationManager:
     
     async def add_integration(self, integration_config: IntegrationConfig) -> bool:
         """Add enterprise integration"""
+
+
+
         try:
             integration_class_map = {
                 IntegrationType.SLACK: SlackIntegration,

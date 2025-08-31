@@ -224,7 +224,10 @@ class AIEnginesManager:
         
         Returns:
             Dict[str, Any]: Initialization status for each component
-        """        try:
+        """
+
+
+        try:
             initialization_status = {}
             
             # Initialize model registry
@@ -268,7 +271,10 @@ class AIEnginesManager:
         
         Returns:
             Dict[str, Any]: Health status for each component
-        """        try:
+        """
+
+
+        try:
             health_status = {}
             
             # Check model registry health
@@ -346,7 +352,10 @@ def get_module_info() -> Dict[str, Any]:
     
     Returns:
         Dict[str, Any]: Module information including version, components, and capabilities
-    """    return {
+    """
+
+
+    return {
         "name": "AI Engines Database Module",
         "version": __version__,
         "author": __author__,
@@ -390,7 +399,10 @@ async def get_system_status() -> Dict[str, Any]:
     
     Returns:
         Dict[str, Any]: Detailed system status information
-    """    try:
+    """
+
+
+    try:
         manager = get_ai_engines_manager()
         
         # Get basic health check
@@ -422,35 +434,50 @@ async def get_system_status() -> Dict[str, Any]:
 
 # Helper functions for system status
 async def _get_total_models() -> int:
-    """Get total number of registered models."""    try:
+    """Get total number of registered models."""
+
+
+    try:
         manager = get_ai_engines_manager()
         return await manager.model_registry.get_total_models_count()
     except:
         return 0
 
 async def _get_active_endpoints() -> int:
-    """Get number of active inference endpoints."""    try:
+    """Get number of active inference endpoints."""
+
+
+    try:
         manager = get_ai_engines_manager()
         return await manager.inference_manager.get_active_endpoints_count()
     except:
         return 0
 
 async def _get_running_jobs() -> int:
-    """Get number of running training jobs."""    try:
+    """Get number of running training jobs."""
+
+
+    try:
         manager = get_ai_engines_manager()
         return await manager.training_orchestrator.get_running_jobs_count()
     except:
         return 0
 
 async def _get_vector_store_size() -> int:
-    """Get vector store size."""    try:
+    """Get vector store size."""
+
+
+    try:
         manager = get_ai_engines_manager()
         return await manager.vector_manager.get_total_vectors_count()
     except:
         return 0
 
 async def _get_resource_utilization() -> Dict[str, Any]:
-    """Get resource utilization metrics."""    try:
+    """Get resource utilization metrics."""
+
+
+    try:
         manager = get_ai_engines_manager()
         return await manager.performance_tracker.get_resource_utilization()
     except:

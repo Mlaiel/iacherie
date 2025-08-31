@@ -100,6 +100,9 @@ class ImageRecognitionEngine:
     
     def _initialize_models(self) -> None:
         """Initialize AI models for image analysis"""
+
+
+
         try:
             # CLIP model for general image understanding
             self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-large-patch14")
@@ -121,6 +124,9 @@ class ImageRecognitionEngine:
     
     def _initialize_opencv(self) -> None:
         """Initialize OpenCV components"""
+
+
+
         try:
             # Feature detectors
             self.sift_detector = cv2.SIFT_create()
@@ -141,6 +147,9 @@ class ImageRecognitionEngine:
     
     def _initialize_feature_extractors(self) -> None:
         """Initialize feature extraction components"""
+
+
+
         try:
             # Color space converters
             self.color_spaces = ['RGB', 'HSV', 'LAB', 'YUV']
@@ -161,6 +170,9 @@ class ImageRecognitionEngine:
     
     def _load_detection_models(self) -> None:
         """Load pre-trained object detection models"""
+
+
+
         try:
             # YOLOv5 for object detection
             self.yolo_model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
@@ -187,6 +199,9 @@ class ImageRecognitionEngine:
         Returns:
             Complete image analysis results
         """
+
+
+
         try:
             # Load and preprocess image
             image = self._load_image(image_data)
@@ -239,6 +254,9 @@ class ImageRecognitionEngine:
     
     def _load_image(self, image_data: Union[str, np.ndarray, Image.Image]) -> Optional[np.ndarray]:
         """Load image from various input formats"""
+
+
+
         try:
             if isinstance(image_data, str):
                 # Load from file path
@@ -266,6 +284,9 @@ class ImageRecognitionEngine:
     def _extract_image_features(self, image: np.ndarray, 
                                config: Dict[str, Any]) -> ImageFeatures:
         """Extract comprehensive image features"""
+
+
+
         try:
             # Visual features
             visual_features = self._extract_visual_features(image)
@@ -519,6 +540,9 @@ class ImageRecognitionEngine:
     
     def _extract_haralick_features(self, gray_image: np.ndarray) -> np.ndarray:
         """Extract Haralick texture features"""
+
+
+
         try:
             from skimage.feature import greycomatrix, greycoprops
             
@@ -545,6 +569,9 @@ class ImageRecognitionEngine:
     
     def _extract_wavelet_features(self, gray_image: np.ndarray) -> np.ndarray:
         """Extract wavelet transform features"""
+
+
+
         try:
             import pywt
             
@@ -615,6 +642,9 @@ class ImageRecognitionEngine:
     
     def _extract_clip_embedding(self, image: np.ndarray) -> np.ndarray:
         """Extract CLIP embedding for image"""
+
+
+
         try:
             pil_image = Image.fromarray(image)
             inputs = self.clip_processor(images=pil_image, return_tensors="pt")
@@ -631,6 +661,9 @@ class ImageRecognitionEngine:
     
     def _classify_scene(self, image: np.ndarray) -> Dict[str, float]:
         """Classify image scene using CLIP"""
+
+
+
         try:
             pil_image = Image.fromarray(image)
             
@@ -660,6 +693,9 @@ class ImageRecognitionEngine:
     
     def _classify_content(self, image: np.ndarray) -> Dict[str, float]:
         """Classify image content type"""
+
+
+
         try:
             pil_image = Image.fromarray(image)
             
@@ -690,6 +726,9 @@ class ImageRecognitionEngine:
     
     def _detect_objects(self, image: np.ndarray, config: Dict[str, Any]) -> List[ObjectDetection]:
         """Detect objects in image using YOLO"""
+
+
+
         try:
             # Run YOLO detection
             results = self.yolo_model(image)
@@ -711,6 +750,9 @@ class ImageRecognitionEngine:
     
     def _detect_faces(self, image: np.ndarray, config: Dict[str, Any]) -> List[FaceDetection]:
         """Detect faces in image"""
+
+
+
         try:
             faces = []
             
@@ -734,6 +776,9 @@ class ImageRecognitionEngine:
     
     def _generate_description(self, image: np.ndarray, config: Dict[str, Any]) -> str:
         """Generate natural language description of image"""
+
+
+
         try:
             if not config.get('generate_description', True):
                 return ""
@@ -970,6 +1015,9 @@ class ImageRecognitionEngine:
     
     def _extract_text(self, image: np.ndarray, config: Dict[str, Any]) -> Dict[str, Any]:
         """Extract text from image using OCR"""
+
+
+
         try:
             if not config.get('extract_text', True):
                 return {'text': '', 'confidence': 0.0}
@@ -1049,6 +1097,9 @@ class ImageRecognitionEngine:
     
     def _classify_artistic_movement(self, image: np.ndarray) -> Dict[str, float]:
         """Classify artistic movement/style using CLIP"""
+
+
+
         try:
             pil_image = Image.fromarray(image)
             
@@ -1198,6 +1249,9 @@ class ImageRecognitionEngine:
                            fingerprint2: Union[str, np.ndarray], 
                            method: str = 'hamming') -> float:
         """Calculate similarity between two image fingerprints"""
+
+
+
         try:
             if isinstance(fingerprint1, str) and isinstance(fingerprint2, str):
                 # Hash-based similarity

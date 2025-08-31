@@ -8,7 +8,7 @@ Handles article metadata extraction, author analysis, and content engagement tra
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
@@ -182,6 +182,9 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
     
     async def initialize(self) -> None:
         """Initialize the crawler engine"""
+
+
+
         try:
             await self._create_session()
             self._setup_selenium()
@@ -211,6 +214,9 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
     
     def _setup_selenium(self) -> None:
         """Setup Selenium WebDriver for dynamic content"""
+
+
+
         try:
             options = webdriver.ChromeOptions()
             options.add_argument('--headless')
@@ -239,6 +245,9 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
         Returns:
             List of articles matching the query
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -294,6 +303,9 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Article details or None if not found
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -339,6 +351,9 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Author profile data or None if not found
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -393,6 +408,9 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
         Returns:
             List of author's articles
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -456,6 +474,9 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Publication information or None if not found
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -494,6 +515,9 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
     
     def _parse_article_element(self, article_element) -> Optional[MediumArticle]:
         """Parse article element from page"""
+
+
+
         try:
             # Extract title
             title_elem = article_element.find_element(By.CSS_SELECTOR, 'h2, h3')
@@ -579,6 +603,9 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
         Returns:
             List of trending topics with metadata
         """
+
+
+
         try:
             trending_data = []
             
@@ -635,6 +662,9 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Plagiarism monitoring results
         """
+
+
+
         try:
             plagiarism_results = {
                 'original_author': author_name,
@@ -687,6 +717,9 @@ class MediumCrawlerEngine(BaseCrawlerEngine):
     
     async def cleanup(self) -> None:
         """Clean up resources"""
+
+
+
         try:
             if self.session:
                 await self.session.close()

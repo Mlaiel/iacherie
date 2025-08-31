@@ -149,6 +149,9 @@ class RevenueTracker:
     async def collect_platform_revenue(self, user_id: str, platform: RevenuePlatform, 
                                      start_date: date, end_date: date) -> Optional[PlatformRevenueData]:
         """Collect revenue data from specific platform"""
+
+
+
         try:
             if platform == RevenuePlatform.YOUTUBE:
                 return await self._collect_youtube_revenue(user_id, start_date, end_date)
@@ -168,6 +171,9 @@ class RevenueTracker:
     
     async def _collect_youtube_revenue(self, user_id: str, start_date: date, end_date: date) -> Optional[PlatformRevenueData]:
         """Collect revenue from YouTube Creator API"""
+
+
+
         try:
             if not self._youtube_client:
                 self._youtube_client = await self._initialize_youtube_client(user_id)
@@ -206,6 +212,9 @@ class RevenueTracker:
     
     async def _collect_instagram_revenue(self, user_id: str, start_date: date, end_date: date) -> Optional[PlatformRevenueData]:
         """Collect revenue from Instagram Creator API"""
+
+
+
         try:
             # Instagram Graph API for creator insights
             access_token = await self._get_instagram_token(user_id)
@@ -242,6 +251,9 @@ class RevenueTracker:
     
     async def _collect_spotify_revenue(self, user_id: str, start_date: date, end_date: date) -> Optional[PlatformRevenueData]:
         """Collect revenue from Spotify for Artists API"""
+
+
+
         try:
             # Spotify Web API for artist analytics
             access_token = await self._get_spotify_token(user_id)
@@ -312,6 +324,9 @@ class RevenueTracker:
     
     async def process_automated_payout(self, user_id: str, amount: Decimal) -> bool:
         """Process automated payout to user"""
+
+
+
         try:
             if not self.config.auto_payout_enabled:
                 logger.info("Automated payouts disabled")
@@ -356,6 +371,9 @@ class RevenueTracker:
     
     async def generate_revenue_report(self, user_id: str, start_date: date, end_date: date) -> Dict[str, Any]:
         """Generate comprehensive revenue report"""
+
+
+
         try:
             report = {
                 'user_id': user_id,

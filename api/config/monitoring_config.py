@@ -62,6 +62,9 @@ class PrometheusConfig:
     @property
     def url(self) -> str:
         """Get Prometheus URL"""
+
+
+
         return f"http://{self.host}:{self.port}"
 
 
@@ -97,6 +100,9 @@ class GrafanaConfig:
     @property
     def url(self) -> str:
         """Get Grafana URL"""
+
+
+
         return f"http://{self.host}:{self.port}"
 
 
@@ -128,6 +134,9 @@ class JaegerConfig:
     @property
     def agent_endpoint(self) -> str:
         """Get Jaeger agent endpoint"""
+
+
+
         return f"{self.agent_host}:{self.agent_port}"
 
 
@@ -373,6 +382,9 @@ class MonitoringConfig:
     
     def get_prometheus_config(self) -> Dict[str, Any]:
         """Get Prometheus configuration dictionary"""
+
+
+
         return {
             "global": {
                 "scrape_interval": self.prometheus.scrape_interval,
@@ -420,6 +432,9 @@ class MonitoringConfig:
     
     def get_jaeger_config(self) -> Dict[str, Any]:
         """Get Jaeger tracer configuration"""
+
+
+
         return {
             "service_name": self.jaeger.service_name,
             "config": {
@@ -437,6 +452,9 @@ class MonitoringConfig:
     
     def get_alert_rules(self) -> List[Dict[str, Any]]:
         """Get Prometheus alert rules"""
+
+
+
         return [
             {
                 "alert": "HighCPUUsage",
@@ -492,4 +510,7 @@ class MonitoringConfig:
     
     def is_metric_enabled(self, metric_name: str) -> bool:
         """Check if a specific metric is enabled"""
+
+
+
         return metric_name in self.custom_metrics and self.enabled

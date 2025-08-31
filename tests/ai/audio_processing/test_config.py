@@ -15,7 +15,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 """
-⚙️ Config Tests - Industrial-Grade Configuration Management Testing Suite
+ Config Tests - Industrial-Grade Configuration Management Testing Suite
 
 Comprehensive testing for configuration management including:
 - ConfigManager validation

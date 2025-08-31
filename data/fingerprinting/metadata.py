@@ -12,7 +12,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL WARNING ⚠️
+  CRITICAL WARNING 
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
 Any unauthorized use, reproduction, distribution, or reverse engineering 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -317,6 +317,9 @@ class MetadataExtractor:
                         file_path: Union[str, Path], 
                         content_data: Optional[bytes] = None) -> ContentMetadata:
         """Extract comprehensive metadata from content"""
+
+
+
         try:
             file_path = Path(file_path)
             
@@ -349,6 +352,9 @@ class MetadataExtractor:
     
     def _generate_content_id(self, file_path: Path, content_data: Optional[bytes] = None) -> str:
         """Generate unique content identifier"""
+
+
+
         try:
             if content_data:
                 content_hash = hashlib.sha256(content_data).hexdigest()
@@ -365,6 +371,9 @@ class MetadataExtractor:
     
     def _detect_content_type(self, file_path: Path) -> ContentType:
         """Detect content type from file extension and MIME type"""
+
+
+
         try:
             mime_type, _ = mimetypes.guess_type(str(file_path))
             
@@ -404,6 +413,9 @@ class MetadataExtractor:
                                    file_path: Path, 
                                    content_data: Optional[bytes] = None) -> TechnicalMetadata:
         """Extract technical file metadata"""
+
+
+
         try:
             metadata = TechnicalMetadata()
             
@@ -622,6 +634,9 @@ class MetadataExtractor:
                               file_path: Path, 
                               content_data: Optional[bytes] = None) -> Optional[TextMetadata]:
         """Extract text-specific metadata"""
+
+
+
         try:
             metadata = TextMetadata()
             
@@ -688,6 +703,9 @@ class MetadataManager:
                        content_data: Optional[bytes] = None,
                        save_metadata: bool = True) -> ContentMetadata:
         """Process content and extract comprehensive metadata"""
+
+
+
         try:
             file_path = Path(file_path)
             
@@ -707,6 +725,9 @@ class MetadataManager:
     
     def save_metadata(self, metadata: ContentMetadata) -> bool:
         """Save metadata to storage"""
+
+
+
         try:
             metadata_file = self.storage_path / f"{metadata.content_id}_metadata.json"
             
@@ -725,6 +746,9 @@ class MetadataManager:
     
     def load_metadata(self, content_id: str) -> Optional[ContentMetadata]:
         """Load metadata from storage"""
+
+
+
         try:
             metadata_file = self.storage_path / f"{content_id}_metadata.json"
             
@@ -745,6 +769,9 @@ class MetadataManager:
                        date_range: Optional[Tuple[datetime, datetime]] = None,
                        quality_level: Optional[QualityLevel] = None) -> List[ContentMetadata]:
         """Search metadata with filters"""
+
+
+
         try:
             results = []
             
@@ -808,4 +835,7 @@ metadata_manager = MetadataManager()
 def extract_content_metadata(file_path: Union[str, Path], 
                            content_data: Optional[bytes] = None) -> ContentMetadata:
     """Extract metadata from content (convenience function)"""
+
+
+
     return metadata_manager.process_content(file_path, content_data)

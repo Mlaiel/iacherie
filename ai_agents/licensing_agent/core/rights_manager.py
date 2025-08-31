@@ -7,7 +7,7 @@ for multi-format content across all digital platforms and territories.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -184,6 +184,9 @@ class RightsManager:
         Returns:
             Registration result with blockchain verification
         """
+
+
+
         try:
             # Validate ownership percentages
             total_percentage = sum(owner.ownership_percentage for owner in owners)
@@ -256,6 +259,9 @@ class RightsManager:
         Returns:
             Ownership verification result
         """
+
+
+
         try:
             # Get all rights records for content
             rights_records = await self._get_content_rights(content_id)
@@ -325,6 +331,9 @@ class RightsManager:
         Returns:
             Transfer execution result
         """
+
+
+
         try:
             # Validate transfer
             validation_result = await self._validate_rights_transfer(rights_transfer)
@@ -417,6 +426,9 @@ class RightsManager:
         Returns:
             Dispute resolution result
         """
+
+
+
         try:
             # Get dispute details
             dispute = await self._get_dispute_by_id(dispute_id)
@@ -595,6 +607,9 @@ class RightsManager:
 
     async def get_metrics(self) -> Dict[str, Any]:
         """Get rights management metrics"""
+
+
+
         return {
             **self.metrics,
             "timestamp": datetime.utcnow(),
@@ -626,6 +641,9 @@ class CopyrightProtector:
         Returns:
             Infringement analysis result
         """
+
+
+
         try:
             # Verify original rights
             rights_verification = await self.rights_manager.verify_ownership(
@@ -675,6 +693,9 @@ class CopyrightProtector:
         suspected_content: Dict[str, Any]
     ) -> float:
         """Calculate comprehensive content similarity score using advanced AI algorithms"""
+
+
+
         try:
             # Get original content fingerprint and metadata
             original_fingerprint = await self._get_content_fingerprint(original_content_id)
@@ -758,6 +779,9 @@ class CopyrightProtector:
 
     async def _analyze_usage_context(self, suspected_infringement: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze the context of suspected infringing usage"""
+
+
+
         return {
             "commercial_use": suspected_infringement.get("is_commercial", False),
             "attribution_provided": suspected_infringement.get("has_attribution", False),
@@ -887,6 +911,9 @@ class RightsManager:
         Returns:
             Complete rights registration result
         """
+
+
+
         try:
             # Validate content and ownership data
             validation_result = await self._validate_rights_data(content_metadata, initial_ownership)
@@ -963,6 +990,9 @@ class RightsManager:
         Returns:
             Transfer completion result
         """
+
+
+
         try:
             # Get existing rights record
             rights_record = self.rights_registry.get(rights_id)
@@ -1042,6 +1072,9 @@ class RightsManager:
         Returns:
             Verification result with ownership details
         """
+
+
+
         try:
             # Get rights record
             rights_id = self.ownership_chain.get(content_id)
@@ -1105,6 +1138,9 @@ class RightsManager:
         Returns:
             Generated certificate data
         """
+
+
+
         try:
             rights_record = self.rights_registry.get(rights_id)
             if not rights_record:
@@ -1166,6 +1202,9 @@ class RightsManager:
         Returns:
             Usage tracking result
         """
+
+
+
         try:
             # Get rights record
             rights_id = self.ownership_chain.get(content_id)
@@ -1365,6 +1404,9 @@ class CopyrightProtector:
         monitoring_platforms: List[str]
     ) -> Dict[str, Any]:
         """Detect copyright violations across platforms using AI-powered detection"""
+
+
+
         try:
             violations_found = []
             platform_results = {}
@@ -1423,6 +1465,9 @@ class CopyrightProtector:
         violation_details: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Generate comprehensive DMCA takedown notice with legal compliance"""
+
+
+
         try:
             # Validate violation details
             required_fields = ["content_id", "violation_url", "platform", "infringer_info"]

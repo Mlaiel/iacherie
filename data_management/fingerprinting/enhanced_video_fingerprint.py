@@ -1,5 +1,5 @@
 """
-🎬 Video Fingerprinting Engine - IA Influencer Agent Platform Enterprise
+ Video Fingerprinting Engine - IA Influencer Agent Platform Enterprise
 ========================================================================
 Module: backend/data_management/fingerprinting/enhanced_video_fingerprint.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Video Fingerprinting - Ultra Enterprise Production-Ready
 Responsibility: Advanced video fingerprinting with OpenCV, pHash, YOLO, and motion analysis
 ==============================================================================================
 
-⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
+  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -20,15 +20,15 @@ Scene Detection → Audio Extraction → Multi-modal Features → Vector Embeddi
 FAISS Indexing → Real-time Monitoring → Content Protection → Revenue Recovery
 
 VIDEO FINGERPRINTING TECHNOLOGIES:
-├── 🎬 OpenCV (Computer Vision)
-├── 🔍 Perceptual Hashing (pHash + dHash)
-├── 🤖 YOLO Object Detection (Real-time)
-├── 📊 Motion Vector Analysis (Optical Flow)
-├── 🎭 Scene Detection (Cut Detection)
-├── 🧠 Deep Video Features (CNN + 3D CNN)
-├── 🎵 Audio-Visual Fusion (Multi-modal)
-├── ⚡ GPU Acceleration (CUDA + OpenCL)
-└── 🛡️ Protection Pipeline (Automated)
+  OpenCV (Computer Vision)
+  Perceptual Hashing (pHash + dHash)
+ 🤖 YOLO Object Detection (Real-time)
+  Motion Vector Analysis (Optical Flow)
+  Scene Detection (Cut Detection)
+ 🧠 Deep Video Features (CNN + 3D CNN)
+  Audio-Visual Fusion (Multi-modal)
+  GPU Acceleration (CUDA + OpenCL)
+  Protection Pipeline (Automated)
 """
 
 from typing import Dict, List, Optional, Any, Union, Tuple, Generator
@@ -325,6 +325,9 @@ class VideoFingerprintEngine:
                                  fingerprint1: VideoFingerprint,
                                  fingerprint2: VideoFingerprint) -> Dict[str, float]:
         """Compare deux empreintes vidéo"""
+
+
+
         try:
             similarity_scores = {}
             
@@ -1031,6 +1034,9 @@ class DeepFeaturesProcessor:
     
     def _load_model(self):
         """Charge le modèle CNN pré-entraîné"""
+
+
+
         try:
             import torchvision.models as models
             

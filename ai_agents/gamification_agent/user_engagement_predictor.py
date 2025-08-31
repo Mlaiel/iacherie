@@ -7,7 +7,7 @@ analyzing engagement trends, and providing personalized engagement optimization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This engagement prediction AI and machine learning models are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED and will result in legal action.
@@ -137,6 +137,9 @@ class EngagementPredictor:
         Returns:
             Comprehensive engagement prediction and recommendations
         """
+
+
+
         try:
             # Check cache first
             cached_prediction = self._get_cached_prediction(user_id)
@@ -634,6 +637,9 @@ class EngagementPredictor:
     
     def _get_cached_prediction(self, user_id: str) -> Optional[EngagementPrediction]:
         """Get cached prediction if available"""
+
+
+
         return self.prediction_cache.get(user_id)
     
     def _is_prediction_valid(self, prediction: EngagementPrediction) -> bool:
@@ -668,6 +674,9 @@ class EngagementPredictor:
     
     def _serialize_prediction(self, prediction: EngagementPrediction) -> Dict[str, Any]:
         """Serialize prediction for JSON response"""
+
+
+
         return {
             'prediction_id': prediction.prediction_id,
             'current_level': prediction.current_level.value,

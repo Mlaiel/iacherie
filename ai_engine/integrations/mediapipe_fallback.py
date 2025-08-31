@@ -33,6 +33,9 @@ class MediaPipeFallback:
         
     def _load_cascades(self):
         """Load OpenCV Haar cascades for basic detection."""
+
+
+
         try:
             # Load pre-trained classifiers
             self.face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
@@ -50,6 +53,9 @@ class MediaPipeFallback:
         Returns:
             List of face detection results
         """
+
+
+
         try:
             # Convert image to OpenCV format
             cv_image = self._convert_to_opencv(image)
@@ -87,6 +93,9 @@ class MediaPipeFallback:
         Returns:
             List of pose detection results
         """
+
+
+
         try:
             cv_image = self._convert_to_opencv(image)
             if cv_image is None:
@@ -123,6 +132,9 @@ class MediaPipeFallback:
         Returns:
             List of hand detection results (basic estimation)
         """
+
+
+
         try:
             # Basic skin color detection as fallback
             cv_image = self._convert_to_opencv(image)
@@ -158,6 +170,9 @@ class MediaPipeFallback:
             
     def _convert_to_opencv(self, image: Union[np.ndarray, str, bytes]) -> Optional[np.ndarray]:
         """Convert various image formats to OpenCV format."""
+
+
+
         try:
             if isinstance(image, np.ndarray):
                 return image
@@ -207,6 +222,9 @@ def get_mediapipe_processor():
     Returns:
         MediaPipe processor or fallback implementation
     """
+
+
+
     try:
         import mediapipe as mp
         logger.info("MediaPipe available, using full functionality")

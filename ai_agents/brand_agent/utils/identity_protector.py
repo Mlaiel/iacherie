@@ -7,7 +7,7 @@ and anti-counterfeiting measures for content creators and brands.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -273,6 +273,9 @@ class IdentityProtector:
 
     async def configure_protection(self, config: Dict[str, Any]) -> None:
         """Configure identity protection parameters"""
+
+
+
         try:
             self.protection_level = ProtectionLevel(config.get("protection_level", "standard"))
             
@@ -294,6 +297,9 @@ class IdentityProtector:
 
     async def _register_trademark_protection(self, config: Dict[str, Any]) -> TrademarkProtection:
         """Register trademark for protection"""
+
+
+
         try:
             protection_id = f"tm_{hashlib.md5(f'{self.brand_id}_{config.get(\"name\")}_{datetime.utcnow().isoformat()}'.encode()).hexdigest()[:12]}"
             
@@ -324,6 +330,9 @@ class IdentityProtector:
 
     async def _register_domain_protection(self, config: Dict[str, Any]) -> DomainProtection:
         """Register domain for protection"""
+
+
+
         try:
             domain_name = config.get("domain")
             protection_id = f"dom_{hashlib.md5(f'{self.brand_id}_{domain_name}_{datetime.utcnow().isoformat()}'.encode()).hexdigest()[:12]}"
@@ -360,6 +369,9 @@ class IdentityProtector:
 
     async def _get_domain_info(self, domain_name: str) -> Dict[str, Any]:
         """Get comprehensive domain information"""
+
+
+
         try:
             # Use whois to get domain information
             domain_info = await self.whois_checker.get_domain_info(domain_name)
@@ -370,6 +382,9 @@ class IdentityProtector:
 
     async def start_monitoring(self) -> None:
         """Start comprehensive identity monitoring"""
+
+
+
         try:
             if self.monitoring_active:
                 logger.warning("Identity monitoring already active")
@@ -406,6 +421,9 @@ class IdentityProtector:
 
     async def stop_monitoring(self) -> None:
         """Stop identity monitoring"""
+
+
+
         try:
             self.monitoring_active = False
             
@@ -421,6 +439,9 @@ class IdentityProtector:
 
     async def _comprehensive_trademark_monitoring(self) -> None:
         """Comprehensive trademark monitoring across multiple databases"""
+
+
+
         try:
             while self.monitoring_active:
                 try:
@@ -440,6 +461,9 @@ class IdentityProtector:
 
     async def _monitor_trademark_violations(self, protection: TrademarkProtection) -> None:
         """Monitor for specific trademark violations"""
+
+
+
         try:
             trademark_name = protection.trademark_name
             
@@ -635,6 +659,9 @@ class IdentityProtector:
 
     def _is_trademark_conflict(self, protected_mark: str, search_result: Dict[str, Any]) -> bool:
         """Determine if search result represents a trademark conflict"""
+
+
+
         try:
             result_mark = search_result.get("mark", "")
             
@@ -649,6 +676,9 @@ class IdentityProtector:
 
     def _calculate_trademark_similarity(self, mark1: str, mark2: str) -> float:
         """Calculate similarity between two trademarks"""
+
+
+
         try:
             if not mark1 or not mark2:
                 return 0.0
@@ -684,6 +714,9 @@ class IdentityProtector:
 
     async def _analyze_trademark_usage(self, result: Dict[str, Any], trademark: str) -> float:
         """Analyze potential trademark usage for threat level"""
+
+
+
         try:
             threat_score = 0.0
             
@@ -722,6 +755,9 @@ class IdentityProtector:
 
     async def _analyze_usage_context(self, result: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze the context of trademark usage"""
+
+
+
         try:
             context = {
                 "usage_type": "unknown",
@@ -777,6 +813,9 @@ class IdentityProtector:
 
     async def _analyze_counterfeit_risk(self, product: Dict[str, Any], trademark: str) -> float:
         """Analyze product for counterfeit risk"""
+
+
+
         try:
             risk_score = 0.0
             
@@ -841,6 +880,9 @@ class IdentityProtector:
 
     async def _analyze_impersonation_risk(self, account: Dict[str, Any], trademark: str) -> float:
         """Analyze account for impersonation risk"""
+
+
+
         try:
             risk_score = 0.0
             
@@ -893,6 +935,9 @@ class IdentityProtector:
 
     async def _process_identity_threat(self, threat: IdentityThreat) -> None:
         """Process detected identity threat"""
+
+
+
         try:
             # Store threat
             self.detected_threats.append(threat)
@@ -918,6 +963,9 @@ class IdentityProtector:
 
     async def _calculate_legal_risk(self, threat: IdentityThreat) -> float:
         """Calculate legal risk score for threat"""
+
+
+
         try:
             base_risk = threat.confidence * 0.6
             
@@ -1011,6 +1059,9 @@ class IdentityProtector:
 
     async def _send_threat_alert(self, threat: IdentityThreat) -> None:
         """Send alert for detected threat"""
+
+
+
         try:
             await self.notification_service.send_alert(
                 alert_level=threat.severity,
@@ -1025,6 +1076,9 @@ class IdentityProtector:
 
     async def _auto_respond_to_threat(self, threat: IdentityThreat) -> None:
         """Automatically respond to critical threats"""
+
+
+
         try:
             if threat.threat_type == ThreatType.SOCIAL_MEDIA_IMPERSONATION:
                 await self._auto_report_social_impersonation(threat)
@@ -1041,6 +1095,9 @@ class IdentityProtector:
 
     async def _comprehensive_domain_monitoring(self) -> None:
         """Comprehensive domain monitoring for protection"""
+
+
+
         try:
             while self.monitoring_active:
                 try:
@@ -1060,6 +1117,9 @@ class IdentityProtector:
 
     async def _monitor_domain_threats(self, protection: DomainProtection) -> None:
         """Monitor for domain-related threats"""
+
+
+
         try:
             domain_name = protection.domain_name
             
@@ -1168,6 +1228,9 @@ class IdentityProtector:
 
     async def _visual_identity_monitoring(self) -> None:
         """Monitor for visual identity theft (logos, designs)"""
+
+
+
         try:
             while self.monitoring_active:
                 try:
@@ -1190,6 +1253,9 @@ class IdentityProtector:
 
     async def generate_protection_report(self, time_period: str = "30d") -> ProtectionReport:
         """Generate comprehensive identity protection report"""
+
+
+
         try:
             report_id = f"protection_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
             
@@ -1302,6 +1368,9 @@ class TrademarkGuardian:
 
     async def initiate_legal_action(self, threat: IdentityThreat, action_type: str) -> Dict[str, Any]:
         """Initiate legal action for identity threat"""
+
+
+
         try:
             action_id = f"legal_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{threat.threat_id[:8]}"
             
@@ -1335,6 +1404,9 @@ class TrademarkGuardian:
 
     async def _generate_cease_desist_letter(self, threat: IdentityThreat, action_id: str) -> Dict[str, Any]:
         """Generate cease and desist letter"""
+
+
+
         try:
             letter_content = await self.legal_generator.generate_cease_desist(
                 brand_id=self.brand_id,
@@ -1364,6 +1436,9 @@ class TrademarkGuardian:
 
     async def _generate_takedown_notice(self, threat: IdentityThreat, action_id: str) -> Dict[str, Any]:
         """Generate DMCA/platform takedown notice"""
+
+
+
         try:
             notice_content = await self.legal_generator.generate_takedown_notice(
                 brand_id=self.brand_id,
@@ -1393,6 +1468,9 @@ class TrademarkGuardian:
 
     async def track_legal_action_status(self, action_id: str, status_update: str) -> None:
         """Track status of legal action"""
+
+
+
         try:
             if action_id in self.pending_actions:
                 self.pending_actions[action_id]["status"] = status_update
@@ -1405,4 +1483,7 @@ class TrademarkGuardian:
 
     def get_pending_actions(self) -> Dict[str, Dict[str, Any]]:
         """Get all pending legal actions"""
+
+
+
         return self.pending_actions.copy()

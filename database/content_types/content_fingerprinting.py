@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team: ML Engineer, Content Protection Specialist, AI Security Expert
 Copyright: Fahed Mlaiel - All rights reserved
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
@@ -94,6 +94,9 @@ class FingerprintVector:
     
     def to_bytes(self) -> bytes:
         """Convert vector to bytes for storage"""
+
+
+
         return self.vector.tobytes()
     
     @classmethod
@@ -217,6 +220,9 @@ class FingerprintProcessor:
         Returns:
             List of fingerprint vectors
         """
+
+
+
         try:
             if algorithms is None:
                 algorithms = self._get_default_algorithms(content_type)
@@ -239,6 +245,9 @@ class FingerprintProcessor:
                                          content_type: ContentType,
                                          algorithm: FingerprintAlgorithm) -> Optional[FingerprintVector]:
         """Generate fingerprint using specific algorithm"""
+
+
+
         try:
             if content_type == ContentType.AUDIO:
                 return await self._generate_audio_fingerprint(content_path, algorithm)
@@ -259,6 +268,9 @@ class FingerprintProcessor:
     async def _generate_audio_fingerprint(self, content_path: Path,
                                         algorithm: FingerprintAlgorithm) -> Optional[FingerprintVector]:
         """Generate audio fingerprint using specified algorithm"""
+
+
+
         try:
             import librosa
             
@@ -299,6 +311,9 @@ class FingerprintProcessor:
     async def _generate_video_fingerprint(self, content_path: Path,
                                         algorithm: FingerprintAlgorithm) -> Optional[FingerprintVector]:
         """Generate video fingerprint using specified algorithm"""
+
+
+
         try:
             import cv2
             
@@ -345,6 +360,9 @@ class FingerprintProcessor:
     async def _generate_image_fingerprint(self, content_path: Path,
                                         algorithm: FingerprintAlgorithm) -> Optional[FingerprintVector]:
         """Generate image fingerprint using specified algorithm"""
+
+
+
         try:
             from PIL import Image
             import imagehash
@@ -377,6 +395,9 @@ class FingerprintProcessor:
     async def _generate_text_fingerprint(self, content_path: Path,
                                        algorithm: FingerprintAlgorithm) -> Optional[FingerprintVector]:
         """Generate text fingerprint using specified algorithm"""
+
+
+
         try:
             with open(content_path, 'r', encoding='utf-8') as f:
                 text = f.read()
@@ -428,6 +449,9 @@ class FingerprintProcessor:
     async def compare_fingerprints(self, fp1: FingerprintVector, fp2: FingerprintVector,
                                  metric: SimilarityMetric = SimilarityMetric.COSINE_SIMILARITY) -> SimilarityResult:
         """Compare two fingerprint vectors using specified metric"""
+
+
+
         try:
             if fp1.algorithm != fp2.algorithm:
                 raise ValueError("Cannot compare fingerprints from different algorithms")
@@ -489,6 +513,9 @@ class FingerprintManager:
     async def create_content_fingerprint(self, content_path: Path, content_id: str,
                                        user_id: str, content_type: ContentType) -> ContentFingerprint:
         """Create complete fingerprint record for content"""
+
+
+
         try:
             # Generate fingerprints
             fingerprints = await self.processor.generate_fingerprint(

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🔴 CRITIQUE - AGENTS IA
+ CRITIQUE - AGENTS IA
 Vérification implémentation réelle des agents trouvés
 
 Script pour inventorier TOUS les agents réellement implémentés
@@ -142,24 +142,27 @@ class AgentsInventory:
     
     def test_import(self, file_path: str, class_name: str) -> str:
         """Test if agent class can be imported"""
+
+
+
         try:
             # Convert file path to module path
             module_path = file_path.replace('/', '.').replace('.py', '')
             module = importlib.import_module(module_path)
             
             if hasattr(module, class_name):
-                return "✅ SUCCESS"
+                return " SUCCESS"
             else:
-                return "❌ CLASS_NOT_FOUND"
+                return " CLASS_NOT_FOUND"
                 
         except ImportError as e:
-            return f"❌ IMPORT_ERROR: {str(e)[:50]}..."
+            return f" IMPORT_ERROR: {str(e)[:50]}..."
         except Exception as e:
-            return f"❌ ERROR: {str(e)[:50]}..."
+            return f" ERROR: {str(e)[:50]}..."
     
     def run_inventory(self) -> Dict[str, Any]:
         """Run complete inventory of all agents"""
-        print("🔍 Scanning for AI agents...")
+        print(" Scanning for AI agents...")
         
         # Find all agent files
         self.agent_files = self.find_agent_files()
@@ -168,7 +171,7 @@ class AgentsInventory:
         # Analyze each file
         all_agents = []
         for file_path in self.agent_files:
-            print(f"📄 Analyzing: {file_path}")
+            print(f" Analyzing: {file_path}")
             agents = self.analyze_file(file_path)
             all_agents.extend(agents)
         
@@ -197,14 +200,14 @@ class AgentsInventory:
     def generate_report(self, summary: Dict[str, Any]) -> str:
         """Generate detailed verification report"""
         report = []
-        report.append("# 🔴 CRITIQUE - AGENTS IA")
+        report.append("#  CRITIQUE - AGENTS IA")
         report.append("## Vérification implémentation réelle des agents trouvés")
         report.append("")
         report.append(f"**Date de vérification**: {summary['scan_timestamp']}")
         report.append("")
         
         # Target agents analysis
-        report.append("## 🎯 AGENTS CRITIQUES DEMANDÉS")
+        report.append("##  AGENTS CRITIQUES DEMANDÉS")
         report.append("")
         report.append("| Agent | Statut | Fichier | Lignes | Méthodes | Import |")
         report.append("|-------|--------|---------|--------|----------|--------|")
@@ -212,7 +215,7 @@ class AgentsInventory:
         for agent_name in self.target_agents:
             if agent_name in summary["target_agents"]:
                 agent = summary["target_agents"][agent_name]
-                status = "✅ TROUVÉ"
+                status = " TROUVÉ"
                 file_name = Path(agent.file_path).name
                 lines = agent.line_count
                 methods = agent.method_count
@@ -220,14 +223,14 @@ class AgentsInventory:
                 
                 report.append(f"| **{agent_name}** | {status} | `{file_name}` | {lines} | {methods} | {import_status} |")
             else:
-                report.append(f"| **{agent_name}** | ❌ NON TROUVÉ | - | - | - | - |")
+                report.append(f"| **{agent_name}** |  NON TROUVÉ | - | - | - | - |")
         
         report.append("")
         report.append(f"**TAUX DE RÉUSSITE**: {summary['target_success_rate']:.1f}% ({summary['target_found']}/{len(self.target_agents)})")
         report.append("")
         
         # Complete inventory
-        report.append("## 📊 INVENTAIRE COMPLET DES AGENTS")
+        report.append("##  INVENTAIRE COMPLET DES AGENTS")
         report.append("")
         report.append(f"**Total d'agents trouvés**: {summary['total_agents']}")
         report.append("")
@@ -237,13 +240,13 @@ class AgentsInventory:
         
         report.append("### Autres agents implémentés:")
         for i, agent in enumerate(other_agents, 1):
-            status = "✅" if agent.is_complete else "⚠️"
+            status = "" if agent.is_complete else ""
             report.append(f"{i}. **{agent.name}** {status} ({agent.line_count} lignes, {agent.method_count} méthodes)")
         
         report.append("")
         
         # Detailed analysis of target agents
-        report.append("## 🔍 ANALYSE DÉTAILLÉE DES AGENTS CRITIQUES")
+        report.append("##  ANALYSE DÉTAILLÉE DES AGENTS CRITIQUES")
         report.append("")
         
         for agent_name in self.target_agents:
@@ -256,7 +259,7 @@ class AgentsInventory:
                 report.append(f"- **Lignes de code**: {agent.line_count}")
                 report.append(f"- **Nombre de méthodes**: {agent.method_count}")
                 report.append(f"- **Statut d'import**: {agent.import_status}")
-                report.append(f"- **Implémentation**: {'✅ Complète' if agent.is_complete else '⚠️ Partielle'}")
+                report.append(f"- **Implémentation**: {' Complète' if agent.is_complete else ' Partielle'}")
                 report.append("")
                 report.append("**Méthodes principales**:")
                 for method in agent.methods[:10]:  # Show first 10 methods
@@ -318,21 +321,21 @@ def main():
         json.dump(json_summary, f, indent=2, ensure_ascii=False)
     
     print("\n" + "=" * 50)
-    print("📋 RÉSULTATS DE LA VÉRIFICATION")
+    print(" RÉSULTATS DE LA VÉRIFICATION")
     print("=" * 50)
-    print(f"✅ Agents critiques trouvés: {summary['target_found']}/{len(inventory.target_agents)}")
-    print(f"📊 Total d'agents: {summary['total_agents']}")
-    print(f"📄 Rapport sauvé: AGENTS_VERIFICATION_FINAL_REPORT.md")
-    print(f"💾 Données JSON: agents_verification_summary.json")
+    print(f" Agents critiques trouvés: {summary['target_found']}/{len(inventory.target_agents)}")
+    print(f" Total d'agents: {summary['total_agents']}")
+    print(f" Rapport sauvé: AGENTS_VERIFICATION_FINAL_REPORT.md")
+    print(f" Données JSON: agents_verification_summary.json")
     
     # Print target agents status
-    print("\n🎯 STATUT DES AGENTS CRITIQUES:")
+    print("\n STATUT DES AGENTS CRITIQUES:")
     for agent_name in inventory.target_agents:
         if agent_name in summary["target_agents"]:
             agent = summary["target_agents"][agent_name]
-            print(f"   ✅ {agent_name}: {agent.method_count} méthodes, {agent.line_count} lignes")
+            print(f"    {agent_name}: {agent.method_count} méthodes, {agent.line_count} lignes")
         else:
-            print(f"   ❌ {agent_name}: NON TROUVÉ")
+            print(f"    {agent_name}: NON TROUVÉ")
 
 
 if __name__ == "__main__":

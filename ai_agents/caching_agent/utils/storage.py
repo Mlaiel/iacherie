@@ -183,6 +183,9 @@ class MemoryStorage(CacheStorage):
     
     async def set(self, key: str, value: Any, ttl: Optional[int] = None) -> bool:
         """Store value in memory with automatic compression and eviction"""
+
+
+
         try:
             serialized = pickle.dumps(value)
             size_bytes = len(serialized)
@@ -256,6 +259,9 @@ class MemoryStorage(CacheStorage):
     
     async def get_size(self) -> int:
         """Get current memory usage"""
+
+
+
         return self._current_size
     
     async def clear(self) -> bool:
@@ -328,6 +334,9 @@ class RedisStorage(CacheStorage):
     
     async def initialize(self) -> bool:
         """Initialize Redis connection with retry logic"""
+
+
+
         try:
             self._connection_pool = aioredis.ConnectionPool.from_url(
                 self.config.redis_url,
@@ -513,6 +522,9 @@ class DatabaseStorage(CacheStorage):
     
     async def initialize(self) -> bool:
         """Initialize database connection and create table if needed"""
+
+
+
         try:
             self._engine = create_engine(
                 self.config.database_url,
@@ -604,6 +616,9 @@ class DatabaseStorage(CacheStorage):
     
     async def set(self, key: str, value: Any, ttl: Optional[int] = None) -> bool:
         """Store value in database"""
+
+
+
         try:
             serialized = pickle.dumps(value)
             size_bytes = len(serialized)
@@ -647,6 +662,9 @@ class DatabaseStorage(CacheStorage):
     
     async def delete(self, key: str) -> bool:
         """Delete value from database"""
+
+
+
         try:
             with self._session_factory() as session:
                 result = session.execute(
@@ -662,6 +680,9 @@ class DatabaseStorage(CacheStorage):
     
     async def exists(self, key: str) -> bool:
         """Check if key exists in database"""
+
+
+
         try:
             with self._session_factory() as session:
                 result = session.execute(
@@ -681,6 +702,9 @@ class DatabaseStorage(CacheStorage):
     
     async def get_size(self) -> int:
         """Get total database storage size"""
+
+
+
         try:
             with self._session_factory() as session:
                 result = session.execute(
@@ -695,6 +719,9 @@ class DatabaseStorage(CacheStorage):
     
     async def clear(self) -> bool:
         """Clear all database cache entries"""
+
+
+
         try:
             with self._session_factory() as session:
                 session.execute(text(f"DELETE FROM {self.config.database_table}"))
@@ -726,6 +753,9 @@ class HybridStorage(CacheStorage):
     
     async def initialize(self) -> bool:
         """Initialize all storage layers"""
+
+
+
         try:
             # Initialize Memory (L1)
             self.storage_layers[StorageLevel.L1_MEMORY] = MemoryStorage(self.config)

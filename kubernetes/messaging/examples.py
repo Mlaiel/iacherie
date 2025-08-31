@@ -48,9 +48,9 @@ async def example_basic_deployment():
         
         # Check deployment status
         status = await orchestrator.get_infrastructure_status()
-        print(f"✅ Deployment Status: {status['overall_status']}")
-        print(f"📊 Uptime: {status['uptime']:.2f} seconds")
-        print(f"🔧 Components: {list(status['components'].keys())}")
+        print(f" Deployment Status: {status['overall_status']}")
+        print(f" Uptime: {status['uptime']:.2f} seconds")
+        print(f" Components: {list(status['components'].keys())}")
         
         # Test message sending
         success = await orchestrator.send_message(
@@ -65,11 +65,11 @@ async def example_basic_deployment():
             priority=MessagePriority.HIGH
         )
         
-        print(f"📨 Message sent successfully: {success}")
+        print(f" Message sent successfully: {success}")
         
         # Get performance metrics
         metrics = await orchestrator.get_performance_metrics()
-        print(f"📈 Message throughput: {metrics.get('message_throughput', 0)} msg/s")
+        print(f" Message throughput: {metrics.get('message_throughput', 0)} msg/s")
         
         return orchestrator
         
@@ -99,7 +99,7 @@ async def example_custom_configuration():
         
         # Verify configuration applied
         status = await orchestrator.get_infrastructure_status()
-        print(f"✅ Custom deployment status: {status['overall_status']}")
+        print(f" Custom deployment status: {status['overall_status']}")
         
         # Test high-throughput message sending
         messages_sent = 0
@@ -123,8 +123,8 @@ async def example_custom_configuration():
         duration = time.time() - start_time
         throughput = messages_sent / duration
         
-        print(f"📊 Sent {messages_sent} messages in {duration:.2f}s")
-        print(f"⚡ Throughput: {throughput:.2f} msg/s")
+        print(f" Sent {messages_sent} messages in {duration:.2f}s")
+        print(f" Throughput: {throughput:.2f} msg/s")
         
         return orchestrator
         
@@ -214,10 +214,10 @@ async def example_advanced_kafka_setup():
         status = await orchestrator.get_infrastructure_status()
         kafka_status = status["components"]["kafka"]
         
-        print(f"✅ Kafka cluster status: {kafka_status['cluster_status']}")
-        print(f"🔧 Kafka brokers: {kafka_status['kafka_brokers']}")
-        print(f"🔧 Zookeeper nodes: {kafka_status['zookeeper_nodes']}")
-        print(f"🔒 SSL enabled: {kafka_status['ssl_enabled']}")
+        print(f" Kafka cluster status: {kafka_status['cluster_status']}")
+        print(f" Kafka brokers: {kafka_status['kafka_brokers']}")
+        print(f" Zookeeper nodes: {kafka_status['zookeeper_nodes']}")
+        print(f" SSL enabled: {kafka_status['ssl_enabled']}")
         
         # Test high-volume content processing
         content_types = ["audio", "video", "image", "text"]
@@ -237,7 +237,7 @@ async def example_advanced_kafka_setup():
                     priority=MessagePriority.HIGH if i % 3 == 0 else MessagePriority.MEDIUM
                 )
         
-        print(f"📨 Sent {len(content_types) * 25} content processing messages")
+        print(f" Sent {len(content_types) * 25} content processing messages")
         
         return orchestrator
         
@@ -320,10 +320,10 @@ async def example_rabbitmq_high_availability():
         status = await orchestrator.get_infrastructure_status()
         rabbitmq_status = status["components"]["rabbitmq"]
         
-        print(f"✅ RabbitMQ cluster status: {rabbitmq_status['cluster_status']}")
-        print(f"🔧 RabbitMQ nodes: {rabbitmq_status['total_nodes']}")
-        print(f"🔒 SSL enabled: {rabbitmq_status['ssl_enabled']}")
-        print(f"🔄 High availability: {rabbitmq_status['high_availability']}")
+        print(f" RabbitMQ cluster status: {rabbitmq_status['cluster_status']}")
+        print(f" RabbitMQ nodes: {rabbitmq_status['total_nodes']}")
+        print(f" SSL enabled: {rabbitmq_status['ssl_enabled']}")
+        print(f" High availability: {rabbitmq_status['high_availability']}")
         
         # Test alert and notification processing
         alert_types = ["violation_detected", "payment_received", "crawling_completed", "analysis_finished"]
@@ -346,7 +346,7 @@ async def example_rabbitmq_high_availability():
                     priority=priority
                 )
         
-        print(f"🚨 Sent {len(alert_types) * 4} alert messages with varying priorities")
+        print(f" Sent {len(alert_types) * 4} alert messages with varying priorities")
         
         return orchestrator
         
@@ -499,10 +499,10 @@ async def example_celery_workers_specialization():
         status = await orchestrator.get_infrastructure_status()
         celery_status = status["components"]["celery"]
         
-        print(f"✅ Celery cluster status: {celery_status['cluster_status']}")
-        print(f"🔧 Total workers: {celery_status['total_workers']}")
-        print(f"🏃 Running workers: {celery_status['running_workers']}")
-        print(f"📈 Auto-scaling enabled: {celery_status['auto_scaling_enabled']}")
+        print(f" Celery cluster status: {celery_status['cluster_status']}")
+        print(f" Total workers: {celery_status['total_workers']}")
+        print(f" Running workers: {celery_status['running_workers']}")
+        print(f" Auto-scaling enabled: {celery_status['auto_scaling_enabled']}")
         
         # Test specialized task processing
         tasks = [
@@ -530,7 +530,7 @@ async def example_celery_workers_specialization():
                     priority=MessagePriority.MEDIUM
                 )
         
-        print(f"⚙️  Sent {len(tasks) * 10} specialized processing tasks")
+        print(f"  Sent {len(tasks) * 10} specialized processing tasks")
         
         return orchestrator
         
@@ -584,7 +584,7 @@ async def example_content_protection_workflow():
             }
         ]
         
-        print("🔄 Starting content protection workflow...")
+        print(" Starting content protection workflow...")
         
         for content in content_items:
             # Step 1: Content Upload
@@ -594,7 +594,7 @@ async def example_content_protection_workflow():
                 payload=content,
                 priority=MessagePriority.HIGH
             )
-            print(f"📤 Upload initiated for {content['content_id']}: {upload_success}")
+            print(f" Upload initiated for {content['content_id']}: {upload_success}")
             
             # Step 2: Fingerprint Generation
             fingerprint_success = await orchestrator.send_message(
@@ -608,7 +608,7 @@ async def example_content_protection_workflow():
                 },
                 priority=MessagePriority.HIGH
             )
-            print(f"🔍 Fingerprinting started for {content['content_id']}: {fingerprint_success}")
+            print(f" Fingerprinting started for {content['content_id']}: {fingerprint_success}")
             
             # Step 3: AI Analysis
             analysis_success = await orchestrator.send_message(
@@ -635,11 +635,11 @@ async def example_content_protection_workflow():
                 },
                 priority=MessagePriority.MEDIUM
             )
-            print(f"🕷️  Monitoring started for {content['content_id']}: {crawling_success}")
+            print(f"  Monitoring started for {content['content_id']}: {crawling_success}")
             
         # Simulate violations detection
         print("
-🚨 Simulating content violations...")
+ Simulating content violations...")
         
         violations = [
             {
@@ -665,7 +665,7 @@ async def example_content_protection_workflow():
                 payload=violation,
                 priority=MessagePriority.CRITICAL
             )
-            print(f"🚨 Violation alert sent for {violation['content_id']}: {alert_success}")
+            print(f" Violation alert sent for {violation['content_id']}: {alert_success}")
             
             # Send notification
             notification_success = await orchestrator.send_message(
@@ -680,11 +680,11 @@ async def example_content_protection_workflow():
                 },
                 priority=MessagePriority.HIGH
             )
-            print(f"📧 Notification sent for violation: {notification_success}")
+            print(f" Notification sent for violation: {notification_success}")
         
         # Simulate revenue tracking
         print("
-💰 Simulating revenue tracking...")
+ Simulating revenue tracking...")
         
         revenue_events = [
             {
@@ -712,18 +712,18 @@ async def example_content_protection_workflow():
                 payload=revenue,
                 priority=MessagePriority.MEDIUM
             )
-            print(f"💰 Revenue update sent for {revenue['content_id']}: {revenue_success}")
+            print(f" Revenue update sent for {revenue['content_id']}: {revenue_success}")
         
         # Check final statistics
         print("
-📊 Workflow Statistics:")
+ Workflow Statistics:")
         routing_stats = await orchestrator.message_router.get_routing_stats()
-        print(f"📨 Total messages routed: {routing_stats['total_routed']}")
-        print(f"❌ Failed messages: {routing_stats['total_failed']}")
-        print(f"✅ Success rate: {routing_stats['success_rate']:.2f}%")
+        print(f" Total messages routed: {routing_stats['total_routed']}")
+        print(f" Failed messages: {routing_stats['total_failed']}")
+        print(f" Success rate: {routing_stats['success_rate']:.2f}%")
         
         performance_metrics = await orchestrator.get_performance_metrics()
-        print(f"⚡ Message throughput: {performance_metrics.get('message_throughput', 0)} msg/s")
+        print(f" Message throughput: {performance_metrics.get('message_throughput', 0)} msg/s")
         
         return orchestrator
         
@@ -749,16 +749,16 @@ async def example_monitoring_and_scaling():
         orchestrator = await deploy_messaging_infrastructure(config)
         
         # Monitor for a period
-        print("🔍 Monitoring infrastructure for 30 seconds...")
+        print(" Monitoring infrastructure for 30 seconds...")
         
         for i in range(6):  # Monitor for 30 seconds (6 x 5 seconds)
             # Get health status
             health = await orchestrator.health_check()
-            print(f"🏥 Health check {i+1}/6: {health['overall_status']}")
+            print(f" Health check {i+1}/6: {health['overall_status']}")
             
             # Get performance metrics
             metrics = await orchestrator.get_performance_metrics()
-            print(f"📊 Throughput: {metrics.get('message_throughput', 0):.2f} msg/s")
+            print(f" Throughput: {metrics.get('message_throughput', 0):.2f} msg/s")
             
             # Send some load to test monitoring
             for j in range(20):
@@ -778,11 +778,11 @@ async def example_monitoring_and_scaling():
         
         # Test scaling
         print("
-📈 Testing infrastructure scaling...")
+ Testing infrastructure scaling...")
         
         # Scale up Celery workers
         scale_result = await orchestrator.scale_infrastructure("celery", 1.5)
-        print(f"⬆️  Scale up result: {scale_result['status']}")
+        print(f"  Scale up result: {scale_result['status']}")
         
         # Wait for scaling to take effect
         await asyncio.sleep(10)
@@ -790,10 +790,10 @@ async def example_monitoring_and_scaling():
         # Check status after scaling
         status = await orchestrator.get_infrastructure_status()
         celery_status = status["components"]["celery"]
-        print(f"🔧 Workers after scaling: {celery_status['total_workers']}")
+        print(f" Workers after scaling: {celery_status['total_workers']}")
         
         # Test with higher load
-        print("🚀 Testing with higher load...")
+        print(" Testing with higher load...")
         
         start_time = time.time()
         messages_sent = 0
@@ -816,16 +816,16 @@ async def example_monitoring_and_scaling():
         duration = time.time() - start_time
         throughput = messages_sent / duration
         
-        print(f"📊 High load test: {messages_sent} messages in {duration:.2f}s")
-        print(f"⚡ Final throughput: {throughput:.2f} msg/s")
+        print(f" High load test: {messages_sent} messages in {duration:.2f}s")
+        print(f" Final throughput: {throughput:.2f} msg/s")
         
         # Scale down
         scale_down_result = await orchestrator.scale_infrastructure("celery", 0.7)
-        print(f"⬇️  Scale down result: {scale_down_result['status']}")
+        print(f"  Scale down result: {scale_down_result['status']}")
         
         # Final status
         final_status = await orchestrator.get_infrastructure_status()
-        print(f"✅ Final infrastructure status: {final_status['overall_status']}")
+        print(f" Final infrastructure status: {final_status['overall_status']}")
         
         return orchestrator
         
@@ -851,7 +851,7 @@ async def example_backup_and_recovery():
         orchestrator = await deploy_messaging_infrastructure(config)
         
         # Send some messages to create state
-        print("📨 Creating some initial state...")
+        print(" Creating some initial state...")
         
         for i in range(50):
             await orchestrator.send_message(
@@ -866,35 +866,35 @@ async def example_backup_and_recovery():
             )
         
         # Create backup
-        print("💾 Creating backup...")
+        print(" Creating backup...")
         backup_result = await orchestrator.create_backup()
         
         if backup_result["status"] == "success":
-            print(f"✅ Backup created: {backup_result['backup_file']}")
-            print(f"🕐 Backup timestamp: {backup_result['backup_timestamp']}")
+            print(f" Backup created: {backup_result['backup_file']}")
+            print(f" Backup timestamp: {backup_result['backup_timestamp']}")
             
             # Get current status for comparison
             original_status = await orchestrator.get_infrastructure_status()
-            print(f"📊 Original status: {original_status['overall_status']}")
+            print(f" Original status: {original_status['overall_status']}")
             
             # Simulate disaster by shutting down infrastructure
-            print("💥 Simulating disaster (shutting down infrastructure)...")
+            print(" Simulating disaster (shutting down infrastructure)...")
             shutdown_result = await orchestrator.shutdown_infrastructure()
-            print(f"🔴 Shutdown result: {shutdown_result['status']}")
+            print(f" Shutdown result: {shutdown_result['status']}")
             
             # Wait a moment
             await asyncio.sleep(5)
             
             # Restore from backup
-            print("🔄 Restoring from backup...")
+            print(" Restoring from backup...")
             restore_result = await orchestrator.restore_from_backup(backup_result['backup_file'])
             
             if restore_result["status"] == "success":
-                print("✅ Infrastructure restored successfully")
+                print(" Infrastructure restored successfully")
                 
                 # Verify restoration
                 restored_status = await orchestrator.get_infrastructure_status()
-                print(f"📊 Restored status: {restored_status['overall_status']}")
+                print(f" Restored status: {restored_status['overall_status']}")
                 
                 # Test functionality after restoration
                 print("🧪 Testing functionality after restoration...")
@@ -910,13 +910,13 @@ async def example_backup_and_recovery():
                     priority=MessagePriority.HIGH
                 )
                 
-                print(f"✅ Post-recovery test: {test_success}")
+                print(f" Post-recovery test: {test_success}")
                 
             else:
-                print(f"❌ Restoration failed: {restore_result.get('error', 'Unknown error')}")
+                print(f" Restoration failed: {restore_result.get('error', 'Unknown error')}")
                 
         else:
-            print(f"❌ Backup failed: {backup_result.get('error', 'Unknown error')}")
+            print(f" Backup failed: {backup_result.get('error', 'Unknown error')}")
         
         return orchestrator
         
@@ -927,7 +927,7 @@ async def example_backup_and_recovery():
 
 async def run_all_examples():
     """Run all examples in sequence"""
-    print("🚀 Running all IA Influencer Agent Messaging Examples")
+    print(" Running all IA Influencer Agent Messaging Examples")
     print("=" * 70)
     
     examples = [
@@ -946,7 +946,7 @@ async def run_all_examples():
     for name, example_func in examples:
         try:
             print(f"
-🏃 Running: {name}")
+ Running: {name}")
             start_time = time.time()
             
             orchestrator = await example_func()
@@ -958,7 +958,7 @@ async def run_all_examples():
                 "orchestrator": orchestrator
             }
             
-            print(f"✅ {name} completed in {duration:.2f}s")
+            print(f" {name} completed in {duration:.2f}s")
             
             # Cleanup
             await orchestrator.shutdown_infrastructure()
@@ -971,26 +971,26 @@ async def run_all_examples():
                 "error": str(e)
             }
             
-            print(f"❌ {name} failed after {duration:.2f}s: {e}")
+            print(f" {name} failed after {duration:.2f}s: {e}")
     
     # Summary
     print("
 " + "=" * 70)
-    print("📊 EXAMPLES SUMMARY")
+    print(" EXAMPLES SUMMARY")
     print("=" * 70)
     
     successful = len([r for r in results.values() if r["status"] == "success"])
     total = len(results)
     
-    print(f"✅ Successful: {successful}/{total}")
-    print(f"❌ Failed: {total - successful}/{total}")
-    print(f"📈 Success Rate: {(successful/total)*100:.1f}%")
+    print(f" Successful: {successful}/{total}")
+    print(f" Failed: {total - successful}/{total}")
+    print(f" Success Rate: {(successful/total)*100:.1f}%")
     
     total_duration = sum(r["duration"] for r in results.values())
-    print(f"⏱️  Total Duration: {total_duration:.2f}s")
+    print(f"⏱  Total Duration: {total_duration:.2f}s")
     
     for name, result in results.items():
-        status_icon = "✅" if result["status"] == "success" else "❌"
+        status_icon = "" if result["status"] == "success" else ""
         print(f"{status_icon} {name}: {result['duration']:.2f}s")
         
         if result["status"] == "failed":
@@ -1017,7 +1017,7 @@ if __name__ == "__main__":
         if example_name in example_functions:
             asyncio.run(example_functions[example_name]())
         else:
-            print(f"❌ Unknown example: {example_name}")
+            print(f" Unknown example: {example_name}")
             print(f"Available examples: {list(example_functions.keys())}")
     else:
         asyncio.run(run_all_examples())
@@ -1053,11 +1053,11 @@ async def example_real_time_communication():
         
         # Start WebSocket server
         await rtc_manager.start_websocket_server("localhost", 8765)
-        print("✅ WebSocket server started on ws://localhost:8765")
+        print(" WebSocket server started on ws://localhost:8765")
         
         # Start Socket.IO server  
         await rtc_manager.start_socketio_server("localhost", 8766)
-        print("✅ Socket.IO server started on http://localhost:8766")
+        print(" Socket.IO server started on http://localhost:8766")
         
         # Test real-time notifications
         notification_data = {
@@ -1070,7 +1070,7 @@ async def example_real_time_communication():
         
         # Send to all connected clients
         await rtc_manager.broadcast_notification(notification_data)
-        print("📨 Broadcast notification sent to all clients")
+        print(" Broadcast notification sent to all clients")
         
         # Send to specific user
         await rtc_manager.send_user_notification("user_123", {
@@ -1079,7 +1079,7 @@ async def example_real_time_communication():
             "currency": "EUR",
             "platform": "spotify"
         })
-        print("💰 Revenue update sent to specific user")
+        print(" Revenue update sent to specific user")
         
         # Test real-time messaging
         await rtc_manager.send_real_time_message("user_456", {
@@ -1128,7 +1128,7 @@ async def example_notification_system():
         # Create notification templates
         violation_template = NotificationTemplate(
             name="content_violation",
-            subject="🚨 Content Violation Detected - {{content_title}}",
+            subject=" Content Violation Detected - {{content_title}}",
             html_body="""
             <h2>Content Violation Alert</h2>
             <p>Your content "{{content_title}}" has been detected on {{platform}} without authorization.</p>
@@ -1141,7 +1141,7 @@ async def example_notification_system():
         
         revenue_template = NotificationTemplate(
             name="revenue_update",
-            subject="💰 Revenue Update - {{period}}",
+            subject=" Revenue Update - {{period}}",
             html_body="""
             <h2>Monthly Revenue Report</h2>
             <p>Your earnings for {{period}}:</p>
@@ -1170,14 +1170,14 @@ async def example_notification_system():
                 "infringing_url": "https://youtube.com/watch?v=fake123"
             }
         )
-        print("📧 Violation email notification sent")
+        print(" Violation email notification sent")
         
         # Send SMS alert for critical violations
         await sms_manager.send_sms(
             to_number="+9876543210",
-            message="🚨 CRITICAL: Your content 'My Amazing Song' detected on YouTube with 95% similarity. Check email for details."
+            message=" CRITICAL: Your content 'My Amazing Song' detected on YouTube with 95% similarity. Check email for details."
         )
-        print("📱 SMS alert sent")
+        print(" SMS alert sent")
         
         # Send push notification
         await push_manager.send_push_notification(
@@ -1190,7 +1190,7 @@ async def example_notification_system():
                 "action_required": True
             }
         )
-        print("📲 Push notification sent")
+        print(" Push notification sent")
         
         # Send revenue update email
         await email_manager.send_templated_email(
@@ -1204,7 +1204,7 @@ async def example_notification_system():
                 "top_platform": "Spotify"
             }
         )
-        print("💰 Revenue update email sent")
+        print(" Revenue update email sent")
         
         return {
             "email_manager": email_manager,
@@ -1280,7 +1280,7 @@ async def example_queue_management():
         # Create all queues
         for queue_config in queues:
             await queue_manager.create_queue(queue_config)
-            print(f"✅ Created queue: {queue_config.name}")
+            print(f" Created queue: {queue_config.name}")
         
         # Test queue operations
         tasks = [
@@ -1295,15 +1295,15 @@ async def example_queue_management():
         # Enqueue tasks
         for queue_name, task_data in tasks:
             task_id = await queue_manager.enqueue_task(queue_name, task_data)
-            print(f"📤 Enqueued task {task_id} to {queue_name}")
+            print(f" Enqueued task {task_id} to {queue_name}")
         
         # Monitor queue status
         for queue_config in queues:
             status = await queue_manager.get_queue_status(queue_config.name)
-            print(f"📊 {queue_config.name}: {status['pending_tasks']} pending, {status['active_workers']} workers")
+            print(f" {queue_config.name}: {status['pending_tasks']} pending, {status['active_workers']} workers")
         
         # Test auto-scaling
-        print("\n🔄 Testing auto-scaling...")
+        print("\n Testing auto-scaling...")
         
         # Add load to trigger scaling
         for i in range(50):
@@ -1315,12 +1315,12 @@ async def example_queue_management():
         # Check scaling response
         await asyncio.sleep(5)
         status = await queue_manager.get_queue_status("audio_fingerprinting")
-        print(f"⚡ After load test - Workers: {status['active_workers']}, Pending: {status['pending_tasks']}")
+        print(f" After load test - Workers: {status['active_workers']}, Pending: {status['pending_tasks']}")
         
         # Get performance metrics
         metrics = await queue_manager.get_performance_metrics()
-        print(f"📈 Throughput: {metrics['total_throughput']} tasks/min")
-        print(f"📊 Success rate: {metrics['success_rate']:.2f}%")
+        print(f" Throughput: {metrics['total_throughput']} tasks/min")
+        print(f" Success rate: {metrics['success_rate']:.2f}%")
         
         return queue_manager
         
@@ -1339,10 +1339,10 @@ async def example_performance_monitoring():
         
         # Start monitoring
         await perf_monitor.start_monitoring()
-        print("✅ Performance monitoring started")
+        print(" Performance monitoring started")
         
         # Simulate message processing load
-        print("🔄 Generating load for monitoring...")
+        print(" Generating load for monitoring...")
         
         for i in range(100):
             # Record message processing
@@ -1360,33 +1360,33 @@ async def example_performance_monitoring():
         
         # Get real-time metrics
         metrics = await perf_monitor.get_real_time_metrics()
-        print(f"📊 Current throughput: {metrics['throughput_per_second']:.2f} msg/s")
-        print(f"📈 Average latency: {metrics['average_latency']:.2f}ms")
-        print(f"🎯 Success rate: {metrics['success_rate']:.2f}%")
-        print(f"💾 Memory usage: {metrics['memory_usage_mb']:.1f}MB")
-        print(f"⚡ CPU usage: {metrics['cpu_usage_percent']:.1f}%")
+        print(f" Current throughput: {metrics['throughput_per_second']:.2f} msg/s")
+        print(f" Average latency: {metrics['average_latency']:.2f}ms")
+        print(f" Success rate: {metrics['success_rate']:.2f}%")
+        print(f" Memory usage: {metrics['memory_usage_mb']:.1f}MB")
+        print(f" CPU usage: {metrics['cpu_usage_percent']:.1f}%")
         
         # Check for performance issues
         issues = await perf_monitor.detect_performance_issues()
         if issues:
-            print("\n⚠️  Performance Issues Detected:")
+            print("\n  Performance Issues Detected:")
             for issue in issues:
                 print(f"  - {issue['type']}: {issue['description']}")
                 print(f"    Severity: {issue['severity']}")
                 print(f"    Recommendation: {issue['recommendation']}")
         else:
-            print("✅ No performance issues detected")
+            print(" No performance issues detected")
         
         # Get historical analysis
         analysis = await perf_monitor.get_performance_analysis(hours=1)
-        print(f"\n📈 Performance Trends (last hour):")
+        print(f"\n Performance Trends (last hour):")
         print(f"  Peak throughput: {analysis['peak_throughput']:.2f} msg/s")
         print(f"  Average latency: {analysis['average_latency']:.2f}ms")
         print(f"  Error rate: {analysis['error_rate']:.2f}%")
         print(f"  Busiest period: {analysis['busiest_period']}")
         
         # Test alerting
-        print("\n🚨 Testing performance alerting...")
+        print("\n Testing performance alerting...")
         
         # Simulate high latency
         await perf_monitor.record_message_processed(
@@ -1406,7 +1406,7 @@ async def example_performance_monitoring():
         # Check alerts
         alerts = await perf_monitor.get_active_alerts()
         if alerts:
-            print("🚨 Active Performance Alerts:")
+            print(" Active Performance Alerts:")
             for alert in alerts:
                 print(f"  - {alert['metric']}: {alert['message']}")
         
@@ -1427,7 +1427,7 @@ async def example_message_security():
         
         # Generate encryption keys
         await security_manager.generate_encryption_keys()
-        print("🔐 Encryption keys generated")
+        print(" Encryption keys generated")
         
         # Test message encryption
         sensitive_data = {
@@ -1446,16 +1446,16 @@ async def example_message_security():
         
         # Encrypt message
         encrypted_message = await security_manager.encrypt_message(sensitive_data)
-        print("🔒 Message encrypted successfully")
-        print(f"📏 Encrypted size: {len(encrypted_message['encrypted_data'])} bytes")
+        print(" Message encrypted successfully")
+        print(f" Encrypted size: {len(encrypted_message['encrypted_data'])} bytes")
         
         # Decrypt message
         decrypted_data = await security_manager.decrypt_message(
             encrypted_message['encrypted_data'],
             encrypted_message['encryption_key_id']
         )
-        print("🔓 Message decrypted successfully")
-        print(f"✅ Data integrity verified: {decrypted_data == sensitive_data}")
+        print(" Message decrypted successfully")
+        print(f" Data integrity verified: {decrypted_data == sensitive_data}")
         
         # Test message signing
         message_content = {
@@ -1467,42 +1467,42 @@ async def example_message_security():
         
         # Sign message
         signature = await security_manager.sign_message(message_content)
-        print("✍️  Message signed successfully")
+        print("  Message signed successfully")
         
         # Verify signature
         is_valid = await security_manager.verify_signature(message_content, signature)
-        print(f"✅ Signature verification: {is_valid}")
+        print(f" Signature verification: {is_valid}")
         
         # Test tamper detection
         tampered_message = message_content.copy()
         tampered_message["amount"] = 9999.99  # Tamper with amount
         
         is_tampered = await security_manager.verify_signature(tampered_message, signature)
-        print(f"🚨 Tamper detection: {'Detected' if not is_tampered else 'Failed'}")
+        print(f" Tamper detection: {'Detected' if not is_tampered else 'Failed'}")
         
         # Security audit
         audit_results = await security_manager.security_audit()
-        print(f"\n🔍 Security Audit Results:")
+        print(f"\n Security Audit Results:")
         print(f"  Encryption status: {audit_results['encryption_status']}")
         print(f"  Key rotation needed: {audit_results['key_rotation_needed']}")
         print(f"  Security score: {audit_results['security_score']}/100")
         
         if audit_results['recommendations']:
-            print("📋 Security Recommendations:")
+            print(" Security Recommendations:")
             for rec in audit_results['recommendations']:
                 print(f"  - {rec}")
         
         # Test key rotation
-        print("\n🔄 Testing key rotation...")
+        print("\n Testing key rotation...")
         old_key_id = security_manager.current_key_id
         await security_manager.rotate_encryption_keys()
         new_key_id = security_manager.current_key_id
         
-        print(f"🔑 Key rotated: {old_key_id} → {new_key_id}")
+        print(f" Key rotated: {old_key_id} → {new_key_id}")
         
         # Test encryption with new key
         new_encrypted = await security_manager.encrypt_message({"test": "new_key_data"})
-        print("✅ Encryption with new key successful")
+        print(" Encryption with new key successful")
         
         return security_manager
         
@@ -1524,7 +1524,7 @@ async def example_integrated_workflow():
         perf_monitor = await example_performance_monitoring()
         security_manager = await example_message_security()
         
-        print("\n🎯 Running integrated content protection workflow...")
+        print("\n Running integrated content protection workflow...")
         
         # Simulate complete workflow
         content_data = {
@@ -1550,7 +1550,7 @@ async def example_integrated_workflow():
             payload=encrypted_content,
             priority=MessagePriority.HIGH
         )
-        print(f"📤 Secure content upload: {'✅' if upload_success else '❌'}")
+        print(f" Secure content upload: {'' if upload_success else ''}")
         
         # Step 2: Queue fingerprinting task
         fingerprint_task = {
@@ -1560,7 +1560,7 @@ async def example_integrated_workflow():
         }
         
         task_id = await queue_manager.enqueue_task("audio_fingerprinting", fingerprint_task)
-        print(f"🔍 Fingerprinting queued: {task_id}")
+        print(f" Fingerprinting queued: {task_id}")
         
         # Step 3: Real-time notification to user
         await rtc_manager.send_user_notification(content_data["user_id"], {
@@ -1569,7 +1569,7 @@ async def example_integrated_workflow():
             "status": "processing",
             "message": "Your content is being processed"
         })
-        print("📲 Real-time notification sent to user")
+        print(" Real-time notification sent to user")
         
         # Step 4: Send email confirmation
         await notification_managers["email_manager"].send_email(
@@ -1582,7 +1582,7 @@ async def example_integrated_workflow():
             <p>You will receive updates as processing completes.</p>
             """
         )
-        print("📧 Email confirmation sent")
+        print(" Email confirmation sent")
         
         # Step 5: Monitor performance
         await perf_monitor.record_message_processed(
@@ -1605,7 +1605,7 @@ async def example_integrated_workflow():
         
         # Real-time notification
         await rtc_manager.send_user_notification(content_data["user_id"], completion_data)
-        print("📲 Processing completion notification sent")
+        print(" Processing completion notification sent")
         
         # Email with detailed results
         await notification_managers["email_manager"].send_email(
@@ -1619,7 +1619,7 @@ async def example_integrated_workflow():
             <p>We'll alert you immediately if any unauthorized use is detected.</p>
             """
         )
-        print("📧 Processing completion email sent")
+        print(" Processing completion email sent")
         
         # Step 8: Start monitoring workflow
         monitoring_task = {
@@ -1630,18 +1630,18 @@ async def example_integrated_workflow():
         }
         
         monitor_task_id = await queue_manager.enqueue_task("social_media_crawling", monitoring_task)
-        print(f"🕷️  Monitoring task queued: {monitor_task_id}")
+        print(f"  Monitoring task queued: {monitor_task_id}")
         
         # Step 9: Get workflow metrics
         workflow_metrics = await perf_monitor.get_real_time_metrics()
-        print(f"\n📊 Workflow Performance:")
+        print(f"\n Workflow Performance:")
         print(f"  Total processing time: ~3 seconds")
         print(f"  Messages sent: 4")
         print(f"  Success rate: 100%")
         print(f"  Security: All data encrypted")
         
-        print("\n✅ Integrated workflow completed successfully!")
-        print("🔗 All messaging components working together seamlessly")
+        print("\n Integrated workflow completed successfully!")
+        print(" All messaging components working together seamlessly")
         
         return {
             "orchestrator": orchestrator,
@@ -1661,6 +1661,9 @@ async def example_integrated_workflow():
 
 def get_production_kafka_config():
     """Production Kafka cluster configuration"""
+
+
+
     return KafkaClusterConfig(
         cluster_name="ia-influencer-kafka-prod",
         brokers=[
@@ -1693,6 +1696,9 @@ def get_production_kafka_config():
 
 def get_production_rabbitmq_config():
     """Production RabbitMQ cluster configuration"""
+
+
+
     return RabbitMQClusterConfig(
         cluster_name="ia-influencer-rabbitmq-prod",
         nodes=[
@@ -1721,6 +1727,9 @@ def get_production_rabbitmq_config():
 
 def get_production_celery_config():
     """Production Celery cluster configuration"""
+
+
+
     return CeleryClusterConfig(
         broker_url="redis://redis-cluster.prod.ia-influencer.com:6379/0",
         result_backend="redis://redis-cluster.prod.ia-influencer.com:6379/1",
@@ -1786,6 +1795,9 @@ def get_production_celery_config():
 
 def get_development_kafka_config():
     """Development Kafka configuration (single node)"""
+
+
+
     return KafkaClusterConfig(
         cluster_name="ia-influencer-kafka-dev",
         brokers=[
@@ -1808,6 +1820,9 @@ def get_development_kafka_config():
 
 def get_development_rabbitmq_config():
     """Development RabbitMQ configuration (single node)"""
+
+
+
     return RabbitMQClusterConfig(
         cluster_name="ia-influencer-rabbitmq-dev",
         nodes=[
@@ -1828,6 +1843,9 @@ def get_development_rabbitmq_config():
 
 def get_development_celery_config():
     """Development Celery configuration"""
+
+
+
     return CeleryClusterConfig(
         broker_url="redis://localhost:6379/0",
         result_backend="redis://localhost:6379/1",
@@ -1850,8 +1868,11 @@ def get_development_celery_config():
 
 async def deploy_production_environment():
     """Deploy complete production messaging environment"""
+
+
+
     try:
-        print("🚀 Deploying production messaging infrastructure...")
+        print(" Deploying production messaging infrastructure...")
         
         # Get production configurations
         kafka_config = get_production_kafka_config()
@@ -1865,7 +1886,7 @@ async def deploy_production_environment():
             celery_config=celery_config
         )
         
-        print("✅ Production infrastructure deployed successfully!")
+        print(" Production infrastructure deployed successfully!")
         
         # Test message routing
         await test_message_routing(orchestrator)
@@ -1873,14 +1894,17 @@ async def deploy_production_environment():
         return orchestrator
         
     except Exception as e:
-        print(f"❌ Production deployment failed: {e}")
+        print(f" Production deployment failed: {e}")
         raise
 
 
 async def deploy_development_environment():
     """Deploy development messaging environment"""
+
+
+
     try:
-        print("🚀 Deploying development messaging infrastructure...")
+        print(" Deploying development messaging infrastructure...")
         
         # Get development configurations
         kafka_config = get_development_kafka_config()
@@ -1894,7 +1918,7 @@ async def deploy_development_environment():
             celery_config=celery_config
         )
         
-        print("✅ Development infrastructure deployed successfully!")
+        print(" Development infrastructure deployed successfully!")
         
         # Test basic functionality
         await test_basic_functionality(orchestrator)
@@ -1902,12 +1926,15 @@ async def deploy_development_environment():
         return orchestrator
         
     except Exception as e:
-        print(f"❌ Development deployment failed: {e}")
+        print(f" Development deployment failed: {e}")
         raise
 
 
 async def test_message_routing(orchestrator):
     """Test message routing across different protocols"""
+
+
+
     try:
         print("🧪 Testing message routing...")
         
@@ -1925,7 +1952,7 @@ async def test_message_routing(orchestrator):
             },
             priority=MessagePriority.HIGH
         )
-        print(f"📤 Content upload message: {'✅' if success else '❌'}")
+        print(f" Content upload message: {'' if success else ''}")
         
         # Test AI analysis message
         success = await orchestrator.send_message(
@@ -1939,7 +1966,7 @@ async def test_message_routing(orchestrator):
             },
             priority=MessagePriority.CRITICAL
         )
-        print(f"🤖 AI analysis message: {'✅' if success else '❌'}")
+        print(f"🤖 AI analysis message: {'' if success else ''}")
         
         # Test protection alert message
         success = await orchestrator.send_message(
@@ -1954,7 +1981,7 @@ async def test_message_routing(orchestrator):
             },
             priority=MessagePriority.CRITICAL
         )
-        print(f"🛡️ Protection alert message: {'✅' if success else '❌'}")
+        print(f" Protection alert message: {'' if success else ''}")
         
         # Test revenue update message
         success = await orchestrator.send_message(
@@ -1970,22 +1997,25 @@ async def test_message_routing(orchestrator):
             },
             priority=MessagePriority.MEDIUM
         )
-        print(f"💰 Revenue update message: {'✅' if success else '❌'}")
+        print(f" Revenue update message: {'' if success else ''}")
         
-        print("✅ All message routing tests completed!")
+        print(" All message routing tests completed!")
         
     except Exception as e:
-        print(f"❌ Message routing test failed: {e}")
+        print(f" Message routing test failed: {e}")
 
 
 async def test_basic_functionality(orchestrator):
     """Test basic messaging functionality"""
+
+
+
     try:
         print("🧪 Testing basic functionality...")
         
         # Check infrastructure status
         status = await orchestrator.get_infrastructure_status()
-        print(f"📊 Infrastructure status: {status['overall_status']}")
+        print(f" Infrastructure status: {status['overall_status']}")
         
         # Send simple test message
         success = await orchestrator.send_message(
@@ -1994,20 +2024,23 @@ async def test_basic_functionality(orchestrator):
             payload={"event": "system_startup", "timestamp": "2025-01-01T00:00:00Z"},
             priority=MessagePriority.LOW
         )
-        print(f"📤 Test message sent: {'✅' if success else '❌'}")
+        print(f" Test message sent: {'' if success else ''}")
         
-        print("✅ Basic functionality tests completed!")
+        print(" Basic functionality tests completed!")
         
     except Exception as e:
-        print(f"❌ Basic functionality test failed: {e}")
+        print(f" Basic functionality test failed: {e}")
 
 
 # ===== MONITORING AND MAINTENANCE EXAMPLES =====
 
 async def monitor_infrastructure_health(orchestrator):
     """Monitor infrastructure health and performance"""
+
+
+
     try:
-        print("📊 Monitoring infrastructure health...")
+        print(" Monitoring infrastructure health...")
         
         # Get comprehensive status
         status = await orchestrator.get_infrastructure_status()
@@ -2027,16 +2060,19 @@ async def monitor_infrastructure_health(orchestrator):
                     print(f"    - Messages/sec: {stats.get('message_rate', 'N/A')}")
                     print(f"    - Memory usage: {stats.get('memory_usage', 'N/A')}")
                     
-        print("✅ Health monitoring completed!")
+        print(" Health monitoring completed!")
         
     except Exception as e:
-        print(f"❌ Health monitoring failed: {e}")
+        print(f" Health monitoring failed: {e}")
 
 
 async def performance_optimization_example(orchestrator):
     """Example of performance monitoring and optimization"""
+
+
+
     try:
-        print("⚡ Performing optimization analysis...")
+        print(" Performing optimization analysis...")
         
         # This would integrate with actual monitoring systems
         # For demonstration purposes, showing the concept
@@ -2049,14 +2085,14 @@ async def performance_optimization_example(orchestrator):
             "Setup dedicated queues for time-sensitive operations"
         ]
         
-        print("📈 Optimization Recommendations:")
+        print(" Optimization Recommendations:")
         for i, recommendation in enumerate(optimization_recommendations, 1):
             print(f"  {i}. {recommendation}")
             
-        print("✅ Optimization analysis completed!")
+        print(" Optimization analysis completed!")
         
     except Exception as e:
-        print(f"❌ Optimization analysis failed: {e}")
+        print(f" Optimization analysis failed: {e}")
 
 
 # ===== MAIN EXAMPLES =====
@@ -2066,8 +2102,11 @@ if __name__ == "__main__":
     
     async def main():
         """Main example demonstrating messaging deployment"""
+
+
+
         try:
-            print("🎯 IA Influencer Agent - Messaging Deployment Examples")
+            print(" IA Influencer Agent - Messaging Deployment Examples")
             print("=" * 60)
             
             # Choose deployment type based on environment
@@ -2085,11 +2124,11 @@ if __name__ == "__main__":
             # Performance analysis
             await performance_optimization_example(orchestrator)
             
-            print("\n🎉 All examples completed successfully!")
-            print("📧 Contact: mlaiel@live.de for production deployment support")
+            print("\n All examples completed successfully!")
+            print(" Contact: mlaiel@live.de for production deployment support")
             
         except Exception as e:
-            print(f"❌ Example execution failed: {e}")
+            print(f" Example execution failed: {e}")
     
     # Run examples
     asyncio.run(main())

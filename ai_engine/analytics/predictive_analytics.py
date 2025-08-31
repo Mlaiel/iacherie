@@ -3,7 +3,7 @@ Predictive Analytics - Advanced Machine Learning Predictions and Forecasting
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED 
 This software is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, reproduction, distribution, or modification is strictly 
 prohibited and will result in severe legal consequences.
@@ -197,6 +197,9 @@ class PredictiveAnalyticsEngine:
     
     def _initialize_models(self):
         """Initialize ML models for different prediction types"""
+
+
+
         try:
             # Engagement prediction models
             self.models[f"{PredictionType.ENGAGEMENT_RATE.value}_rf"] = RandomForestRegressor(
@@ -235,6 +238,9 @@ class PredictiveAnalyticsEngine:
         time_horizon: TimeHorizon = TimeHorizon.SHORT_TERM
     ) -> PredictionResult:
         """Predict content engagement rate"""
+
+
+
         try:
             self.logger.info(f"Predicting engagement rate for creator: {prediction_input.creator_id}")
             
@@ -327,6 +333,9 @@ class PredictiveAnalyticsEngine:
         time_horizon: TimeHorizon = TimeHorizon.MEDIUM_TERM
     ) -> PredictionResult:
         """Predict revenue for a creator"""
+
+
+
         try:
             self.logger.info(f"Predicting revenue for creator: {prediction_input.creator_id}")
             
@@ -404,6 +413,9 @@ class PredictiveAnalyticsEngine:
         prediction_input: PredictionInput
     ) -> PredictionResult:
         """Predict virality potential of content"""
+
+
+
         try:
             self.logger.info(f"Predicting virality for content: {prediction_input.content_id}")
             
@@ -468,6 +480,9 @@ class PredictiveAnalyticsEngine:
         prediction_input: PredictionInput
     ) -> PredictionResult:
         """Predict optimal posting times for maximum engagement"""
+
+
+
         try:
             self.logger.info(f"Predicting optimal posting time for: {prediction_input.creator_id}")
             
@@ -542,6 +557,9 @@ class PredictiveAnalyticsEngine:
         timeframe: Optional[timedelta] = None
     ) -> ForecastingReport:
         """Generate comprehensive forecasting report"""
+
+
+
         try:
             if not timeframe:
                 timeframe = timedelta(days=90)  # 3-month forecast
@@ -619,6 +637,9 @@ class PredictiveAnalyticsEngine:
         model_type: ModelType = ModelType.RANDOM_FOREST
     ) -> ModelPerformance:
         """Train a prediction model with historical data"""
+
+
+
         try:
             self.logger.info(f"Training {prediction_type.value} model with {len(training_data)} samples")
             
@@ -880,6 +901,9 @@ class PredictiveAnalyticsEngine:
         prediction_type: PredictionType
     ) -> float:
         """Calculate confidence score for a prediction"""
+
+
+
         try:
             # Base confidence on model performance
             model_key = f"{prediction_type.value}_rf"  # Assuming random forest
@@ -924,6 +948,9 @@ class PredictiveAnalyticsEngine:
         fallback_value: Union[float, str]
     ) -> PredictionResult:
         """Create a fallback prediction when models fail"""
+
+
+
         return PredictionResult(
             prediction_id=f"fallback_{prediction_type.value}_{prediction_input.creator_id}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}",
             creator_id=prediction_input.creator_id,
@@ -1036,6 +1063,9 @@ class PredictiveAnalyticsEngine:
     
     async def predict_audience_growth(self, prediction_input: PredictionInput) -> PredictionResult:
         """Predict audience growth for a creator"""
+
+
+
         try:
             # Extract growth-related features
             features = await self._extract_growth_features(prediction_input)
@@ -1259,6 +1289,9 @@ class PredictiveAnalyticsEngine:
         predictions: List[PredictionResult]
     ) -> Dict[str, float]:
         """Assess risks associated with predictions"""
+
+
+
         return {
             'data_quality_risk': 0.3,    # Risk from poor data quality
             'model_uncertainty': 0.2,    # Risk from model limitations
@@ -1268,6 +1301,9 @@ class PredictiveAnalyticsEngine:
     
     async def _generate_scenario_analysis(self, creator_id: str) -> Dict[str, Dict[str, Any]]:
         """Generate scenario planning analysis"""
+
+
+
         return {
             'optimistic': {
                 'description': 'Best-case scenario with optimal execution',
@@ -1291,6 +1327,9 @@ class PredictiveAnalyticsEngine:
     
     async def _assess_data_quality(self, prediction_input: PredictionInput) -> Dict[str, float]:
         """Assess quality of data used for predictions"""
+
+
+
         return {
             'completeness': 0.8,      # How complete is the data
             'accuracy': 0.85,         # How accurate is the data

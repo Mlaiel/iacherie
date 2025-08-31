@@ -1,11 +1,11 @@
 """
-� Video Transformation Engine - IA Influencer Agent Platform Enterprise
+ Video Transformation Engine - IA Influencer Agent Platform Enterprise
 ======================================================================
 Module: backend/data_management/transformers/video_transformer.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ======================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -128,6 +128,9 @@ class VideoAnalyzer:
     
     def analyze_video_file(self, video_path: str) -> VideoMetadata:
         """Analyse complète d'un fichier vidéo"""
+
+
+
         try:
             # Ouverture avec OpenCV pour analyse basique
             cap = cv2.VideoCapture(video_path)
@@ -353,6 +356,9 @@ class VideoAnalyzer:
     
     def _analyze_video_audio(self, video_path: str) -> Dict[str, Any]:
         """Analyse la piste audio de la vidéo"""
+
+
+
         try:
             # Utilisation de ffprobe pour info audio
             probe = ffmpeg.probe(video_path)
@@ -379,6 +385,9 @@ class VideoAnalyzer:
     
     def _detect_codec(self, video_path: str) -> str:
         """Détecte le codec vidéo"""
+
+
+
         try:
             probe = ffmpeg.probe(video_path)
             video_streams = [
@@ -493,6 +502,9 @@ class VideoEnhancer:
         intensity: float = 0.5
     ) -> str:
         """Améliore la qualité vidéo avec traitement IA"""
+
+
+
         
         try:
             temp_output = tempfile.mktemp(suffix='.mp4')
@@ -514,6 +526,9 @@ class VideoEnhancer:
     
     def _upscale_video(self, input_path: str, output_path: str, intensity: float) -> str:
         """Upscale la vidéo avec algorithmes IA"""
+
+
+
         
         try:
             # Utilisation de ffmpeg avec filtres d'upscaling
@@ -534,6 +549,9 @@ class VideoEnhancer:
     
     def _stabilize_video(self, input_path: str, output_path: str, intensity: float) -> str:
         """Stabilise la vidéo"""
+
+
+
         
         try:
             # Stabilisation avec vidstab de ffmpeg
@@ -555,6 +573,9 @@ class VideoEnhancer:
     
     def _stabilize_with_moviepy(self, input_path: str, output_path: str) -> str:
         """Stabilisation basique avec MoviePy"""
+
+
+
         try:
             clip = VideoFileClip(input_path)
             # MoviePy n'a pas de stabilisation native, retour du fichier original
@@ -566,6 +587,9 @@ class VideoEnhancer:
     
     def _color_correct_video(self, input_path: str, output_path: str, intensity: float) -> str:
         """Correction colorimétrique"""
+
+
+
         
         try:
             # Correction avec filtres ffmpeg
@@ -589,6 +613,9 @@ class VideoEnhancer:
     
     def _denoise_video(self, input_path: str, output_path: str, intensity: float) -> str:
         """Réduction de bruit vidéo"""
+
+
+
         
         try:
             # Débruitage avec filtre hqdn3d
@@ -609,6 +636,9 @@ class VideoEnhancer:
     
     def _balanced_enhancement(self, input_path: str, output_path: str, intensity: float) -> str:
         """Amélioration équilibrée"""
+
+
+
         
         try:
             # Combinaison de plusieurs filtres
@@ -908,6 +938,9 @@ class VideoTransformer:
     
     def _two_pass_encode(self, input_path: str, output_path: str, bitrate: str) -> str:
         """Encodage vidéo en 2 passes"""
+
+
+
         
         try:
             # Première passe

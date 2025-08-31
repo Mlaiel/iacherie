@@ -1,11 +1,11 @@
 """
-🔐 Content Fingerprint Transformer - IA Influencer Agent Platform Enterprise
+ Content Fingerprint Transformer - IA Influencer Agent Platform Enterprise
 =========================================================================
 Module: backend/data_management/transformers/content_fingerprint_transformer.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 =========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -128,6 +128,9 @@ class AudioFingerprintTransformer:
     
     def _init_audio_models(self):
         """Initialise les modèles pour l'analyse audio"""
+
+
+
         try:
             # Essentia algorithms
             self.onset_detector = es.OnsetDetection(method='hfc')
@@ -324,6 +327,9 @@ class VideoFingerprintTransformer:
     
     def _init_video_models(self):
         """Initialise les modèles pour l'analyse vidéo"""
+
+
+
         try:
             # Détecteur de caractéristiques
             self.feature_detector = cv2.SIFT_create()
@@ -457,6 +463,9 @@ class ImageFingerprintTransformer:
     
     def _init_image_models(self):
         """Initialise les modèles pour l'analyse d'images"""
+
+
+
         try:
             # Détecteur de visages
             self.face_cascade = cv2.CascadeClassifier(
@@ -545,6 +554,9 @@ class ImageFingerprintTransformer:
     
     def _extract_face_encodings(self, image_path: str) -> List[np.ndarray]:
         """Extrait les encodages de visages"""
+
+
+
         
         try:
             # Chargement de l'image pour face_recognition
@@ -606,6 +618,9 @@ class TextFingerprintTransformer:
     
     def _init_text_models(self):
         """Initialise les modèles pour l'analyse de texte"""
+
+
+
         try:
             # Modèle de sentence embeddings
             self.sentence_model = SentenceTransformer('all-MiniLM-L6-v2')
@@ -758,6 +773,9 @@ class ContentFingerprintTransformer:
     
     def _init_vector_search(self):
         """Initialise l'index FAISS pour la recherche vectorielle"""
+
+
+
         try:
             # Index FAISS pour la similarité cosinus
             dimension = 512  # Dimension par défaut
@@ -775,6 +793,9 @@ class ContentFingerprintTransformer:
         creator_type: Optional[str] = None
     ) -> ContentFingerprintResult:
         """Génère une empreinte pour tout type de contenu"""
+
+
+
         
         try:
             # Validation du fichier

@@ -128,6 +128,9 @@ class GasOptimizer:
     
     async def _fetch_current_gas_data(self) -> Dict:
         """Fetch current gas market data."""
+
+
+
         try:
             if await self._supports_eip1559():
                 # Fetch EIP-1559 data
@@ -168,6 +171,9 @@ class GasOptimizer:
     
     async def _estimate_gas_limit(self, transaction: Dict) -> int:
         """Estimate gas limit for transaction with safety margin."""
+
+
+
         try:
             # Estimate base gas usage
             estimated_gas = self.web3.eth.estimate_gas(transaction)
@@ -306,6 +312,9 @@ class GasOptimizer:
     
     async def _calculate_usd_cost(self, cost_wei: int) -> Optional[float]:
         """Calculate USD cost of transaction."""
+
+
+
         try:
             # This would typically fetch from a price oracle
             # For now, return None - implement price oracle integration
@@ -333,6 +342,9 @@ class GasOptimizer:
     
     async def _fallback_gas_estimate(self, transaction: Dict) -> GasEstimate:
         """Provide fallback gas estimate when optimization fails."""
+
+
+
         try:
             gas_limit = await self._estimate_gas_limit(transaction)
             gas_price = self.web3.eth.gas_price
@@ -361,6 +373,9 @@ class GasOptimizer:
         max_batch_size: int = 10
     ) -> List[TransactionBatch]:
         """Optimize a batch of transactions for cost efficiency."""
+
+
+
         try:
             if len(transactions) < self.batch_threshold:
                 # Not worth batching
@@ -437,6 +452,9 @@ class GasOptimizer:
     
     def get_optimization_stats(self) -> Dict:
         """Get gas optimization performance statistics."""
+
+
+
         return {
             "cache_size": len(self.optimization_cache),
             "network": self.network,

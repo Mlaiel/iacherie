@@ -7,7 +7,7 @@ API integrations, and automated submission workflows.
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 
-⚠️ COPYRIGHT WARNING ⚠️
+ COPYRIGHT WARNING 
 Unauthorized copying or distribution prohibited. All rights reserved © 2025 Fahed Mlaiel
 """
 
@@ -162,6 +162,9 @@ class PlatformIntegrator:
         Returns:
             SubmissionResult with submission details
         """
+
+
+
         try:
             self.logger.info(f"Submitting notice {notice_id} to platform {platform_id}")
             
@@ -295,6 +298,9 @@ class PlatformIntegrator:
         Returns:
             Platform response tracking information
         """
+
+
+
         try:
             # Retrieve submission record
             submission_record = await self._get_submission_record(submission_id)
@@ -341,6 +347,9 @@ class PlatformIntegrator:
         Returns:
             Platform analytics data
         """
+
+
+
         try:
             # Set defaults
             if not platform_ids:
@@ -607,6 +616,9 @@ class PlatformIntegrator:
     
     async def _get_notice_content(self, notice_id: str) -> Optional[TakedownNotice]:
         """Retrieve notice content from database"""
+
+
+
         try:
             query = "SELECT * FROM dmca_notices WHERE notice_id = %s"
             result = await self.db.fetch_one(query, [notice_id])
@@ -752,6 +764,9 @@ Date: {datetime.now(timezone.utc).strftime('%Y-%m-%d')}
                                          request: SubmissionRequest,
                                          platform_config: PlatformConfig) -> SubmissionResult:
         """Execute the actual platform submission"""
+
+
+
         try:
             if request.submission_method == SubmissionMethod.WEB_FORM:
                 return await self._submit_via_web_form(request, platform_config)
@@ -778,6 +793,9 @@ Date: {datetime.now(timezone.utc).strftime('%Y-%m-%d')}
                                  request: SubmissionRequest,
                                  platform_config: PlatformConfig) -> SubmissionResult:
         """Submit via web form automation"""
+
+
+
         try:
             web_form_config = platform_config.web_form_config
             
@@ -825,6 +843,9 @@ Date: {datetime.now(timezone.utc).strftime('%Y-%m-%d')}
                             request: SubmissionRequest,
                             platform_config: PlatformConfig) -> SubmissionResult:
         """Submit via API endpoint"""
+
+
+
         try:
             api_config = platform_config.api_endpoints
             auth_config = platform_config.authentication_config

@@ -7,7 +7,7 @@ management with semantic understanding and retrieval capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited. Contact: mlaiel@live.de
 """
@@ -97,6 +97,9 @@ class MemoryNode:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary representation"""
+
+
+
         return {
             "memory_id": self.memory_id,
             "content": self.content,
@@ -199,6 +202,9 @@ class ContextualMemory:
     
     async def start(self):
         """Start the contextual memory system"""
+
+
+
         try:
             # Load existing memories
             await self._load_memories()
@@ -217,6 +223,9 @@ class ContextualMemory:
     
     async def stop(self):
         """Stop the contextual memory system"""
+
+
+
         try:
             # Cancel background tasks
             if self.maintenance_task:
@@ -261,6 +270,9 @@ class ContextualMemory:
         Returns:
             str: Memory ID
         """
+
+
+
         try:
             # Generate memory ID
             memory_id = hashlib.md5(
@@ -346,6 +358,9 @@ class ContextualMemory:
         Returns:
             MemoryNode or None if not found
         """
+
+
+
         try:
             memory = self.user_memories.get(user_id, {}).get(memory_id)
             
@@ -386,6 +401,9 @@ class ContextualMemory:
         Returns:
             List of memory search results
         """
+
+
+
         try:
             # Generate query embedding
             query_embedding = await self.embedding_generator.generate_embedding(query)
@@ -476,6 +494,9 @@ class ContextualMemory:
         Returns:
             List of (memory, relationship_strength) tuples
         """
+
+
+
         try:
             if user_id not in self.memory_relationships:
                 return []
@@ -517,6 +538,9 @@ class ContextualMemory:
         Returns:
             Dict containing memory summary
         """
+
+
+
         try:
             user_memories = self.user_memories.get(user_id, {})
             
@@ -626,6 +650,9 @@ class ContextualMemory:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             # Remove from user memories
             if user_id in self.user_memories and memory_id in self.user_memories[user_id]:
@@ -670,6 +697,9 @@ class ContextualMemory:
         Args:
             user_id: Specific user ID or None for all users
         """
+
+
+
         try:
             users_to_clean = [user_id] if user_id else list(self.user_memories.keys())
             total_cleaned = 0
@@ -937,6 +967,9 @@ class ContextualMemory:
     
     async def _load_memories(self):
         """Load memories from persistent storage"""
+
+
+
         try:
             # Load from cache or database
             memories_data = await self.cache_manager.get("user_memories")
@@ -959,6 +992,9 @@ class ContextualMemory:
     
     async def _save_memories(self):
         """Save memories to persistent storage"""
+
+
+
         try:
             memories_data = {}
             for user_id, user_memories in self.user_memories.items():

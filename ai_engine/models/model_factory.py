@@ -3,7 +3,7 @@ Model Factory and Registry for IA Influencer Agent Platform
 Centralized model management and orchestration system
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
-⚠️  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
+  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
     code, or intellectual property without explicit written authorization 
     from Fahed Mlaiel is strictly prohibited and will result in legal action.
 
@@ -400,10 +400,16 @@ class ModelOrchestrator:
     
     def get_registered_models(self) -> Dict[str, ModelRegistry]:
         """Get all registered models"""
+
+
+
         return self.registered_models
     
     def get_models_by_category(self, category: ModelCategory) -> Dict[str, ModelRegistry]:
         """Get models by category"""
+
+
+
         return {
             model_id: registry
             for model_id, registry in self.registered_models.items()
@@ -412,6 +418,9 @@ class ModelOrchestrator:
     
     def get_models_by_capability(self, capability: str) -> Dict[str, ModelRegistry]:
         """Get models by capability"""
+
+
+
         return {
             model_id: registry
             for model_id, registry in self.registered_models.items()

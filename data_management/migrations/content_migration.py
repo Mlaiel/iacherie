@@ -1,5 +1,5 @@
 """
-🎵 Content Migration System - Ultra-Industrial Media Content Evolution Engine
+ Content Migration System - Ultra-Industrial Media Content Evolution Engine
 =============================================================================
 
 Enterprise-grade content migration system for IA Influencer Agent platform:
@@ -20,7 +20,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-🔒 ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 🔒
+ ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 
 ==================================================
 This content migration system, architecture, and all associated concepts are the exclusive 
 intellectual property of Fahed Mlaiel. Any unauthorized use, copying, modification, reverse 
@@ -197,6 +197,9 @@ class ContentAnalyzer:
     
     async def analyze_content(self, file_path: Path) -> ContentMetadata:
         """Analyze content and extract comprehensive metadata"""
+
+
+
         try:
             # Basic file information
             file_stats = file_path.stat()
@@ -233,6 +236,9 @@ class ContentAnalyzer:
     
     async def _analyze_audio(self, file_path: Path, metadata: ContentMetadata):
         """Analyze audio content and extract metadata"""
+
+
+
         try:
             # Use mutagen for audio metadata
             audio_file = mutagen.File(str(file_path))
@@ -269,6 +275,9 @@ class ContentAnalyzer:
     
     async def _analyze_video(self, file_path: Path, metadata: ContentMetadata):
         """Analyze video content and extract metadata"""
+
+
+
         try:
             probe = ffmpeg.probe(str(file_path))
             
@@ -300,6 +309,9 @@ class ContentAnalyzer:
     
     async def _analyze_image(self, file_path: Path, metadata: ContentMetadata):
         """Analyze image content and extract metadata"""
+
+
+
         try:
             with Image.open(file_path) as img:
                 metadata.width, metadata.height = img.size
@@ -395,6 +407,9 @@ class ContentTransformer:
     
     async def _transform_audio(self, source_path: Path, target_path: Path, metadata: ContentMetadata, result: ContentMigrationResult):
         """Transform audio content with format conversion and quality optimization"""
+
+
+
         try:
             # Build ffmpeg command based on target format
             input_stream = ffmpeg.input(str(source_path))
@@ -437,6 +452,9 @@ class ContentTransformer:
     
     async def _transform_video(self, source_path: Path, target_path: Path, metadata: ContentMetadata, result: ContentMigrationResult):
         """Transform video content with codec optimization and quality settings"""
+
+
+
         try:
             input_stream = ffmpeg.input(str(source_path))
             
@@ -474,6 +492,9 @@ class ContentTransformer:
     
     async def _transform_image(self, source_path: Path, target_path: Path, metadata: ContentMetadata, result: ContentMigrationResult):
         """Transform image content with optimization and format conversion"""
+
+
+
         try:
             with Image.open(source_path) as img:
                 # Convert color mode if necessary
@@ -510,6 +531,9 @@ class ContentTransformer:
     
     async def _preserve_audio_metadata(self, target_path: Path, tags: Dict[str, Any]):
         """Preserve audio metadata in transformed file"""
+
+
+
         try:
             audio_file = mutagen.File(str(target_path), easy=True)
             
@@ -541,6 +565,9 @@ class ProtectionMigration(BaseMigration):
     
     async def execute_migration(self, session: Session) -> MigrationResult:
         """Execute content protection migration"""
+
+
+
         try:
             # Create protection tables
             await self._create_protection_tables(session)
@@ -635,6 +662,9 @@ class ContentMigration(BaseMigration):
     
     async def execute_migration(self, session: Session) -> MigrationResult:
         """Execute comprehensive content migration"""
+
+
+
         try:
             # Update content schema
             await self._update_content_schema(session)
@@ -778,6 +808,9 @@ class ContentMigration(BaseMigration):
     
     async def rollback_migration(self, session: Session) -> MigrationResult:
         """Rollback content migration changes"""
+
+
+
         try:
             # Remove added columns
             rollback_sql = """

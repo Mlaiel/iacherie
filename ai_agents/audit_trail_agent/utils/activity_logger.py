@@ -7,7 +7,7 @@ user behavior tracking, and system event recording with high-performance capabil
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, distribution, or commercialization is strictly prohibited.
 """
@@ -176,6 +176,9 @@ class ActivityLogger:
 
     async def initialize(self) -> bool:
         """Initialize activity logging system with background services"""
+
+
+
         try:
             # Initialize database connections and indexes
             await self._initialize_activity_storage()
@@ -337,6 +340,9 @@ class ActivityLogger:
         Returns:
             Query results with metadata
         """
+
+
+
         try:
             query_start_time = time.time()
             
@@ -418,6 +424,9 @@ class ActivityLogger:
         Returns:
             Detailed user activity summary
         """
+
+
+
         try:
             end_time = datetime.now(timezone.utc)
             start_time = end_time - time_period
@@ -513,6 +522,9 @@ class ActivityLogger:
         Returns:
             Detailed activity analytics
         """
+
+
+
         try:
             start_time, end_time = time_range
             metrics = metrics or ["activity_count", "user_count", "session_count", "error_rate"]
@@ -612,6 +624,9 @@ class ActivityLogger:
 
     async def _log_activity_real_time(self, activity_record: Dict[str, Any]) -> None:
         """Log activity in real-time for critical events"""
+
+
+
         try:
             async with get_db_session() as session:
                 activity_log = ActivityLog(
@@ -723,6 +738,9 @@ class ActivityLogger:
 
     def _generate_correlation_id(self) -> str:
         """Generate correlation ID for request tracing"""
+
+
+
         return str(uuid.uuid4())
 
     async def _gather_client_info(self) -> Dict[str, Any]:
@@ -737,6 +755,9 @@ class ActivityLogger:
 
     async def _gather_performance_context(self) -> Dict[str, Any]:
         """Gather performance context for activity"""
+
+
+
         return {
             "memory_usage_mb": 0,  # Placeholder
             "cpu_usage_percent": 0,  # Placeholder

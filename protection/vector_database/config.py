@@ -1,5 +1,5 @@
 """
-⚙️ Vector Database Configuration
+ Vector Database Configuration
 ================================
 
 Default configuration templates for the ultra-advanced vector database system.
@@ -8,7 +8,7 @@ Provides optimized settings for different deployment scenarios.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL IMPORTANT ⚠️
+  AVERTISSEMENT LÉGAL IMPORTANT 
 =====================================
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 

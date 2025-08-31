@@ -1,5 +1,5 @@
 """
-🚀 Performance Optimization Engine for Content Fingerprinting
+ Performance Optimization Engine for Content Fingerprinting
 =============================================================
 
 Advanced performance optimization system with GPU acceleration, 
@@ -113,6 +113,9 @@ class GPUAccelerator:
     
     def _initialize_gpu(self):
         """Initialize GPU environment for optimal performance."""
+
+
+
         try:
             # Set memory fraction
             torch.cuda.set_per_process_memory_fraction(0.8)
@@ -238,6 +241,9 @@ class IntelligentCache:
     
     def _generate_key(self, key: str) -> str:
         """Generate cache key with hash for consistency."""
+
+
+
         return hashlib.md5(key.encode()).hexdigest()
     
     def get(self, key: str) -> Optional[Any]:

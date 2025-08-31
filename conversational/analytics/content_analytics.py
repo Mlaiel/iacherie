@@ -7,7 +7,7 @@ providing deep content insights, performance tracking, and optimization recommen
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will result in legal action.
@@ -179,6 +179,9 @@ class ContentAnalytics:
         Returns:
             ContentMetrics: Comprehensive content analysis
         """
+
+
+
         try:
             cache_key = f"content_metrics:{content_id}:{deep_analysis}"
             cached_result = await self.cache_manager.get(cache_key)
@@ -263,6 +266,9 @@ class ContentAnalytics:
         Returns:
             Dict containing portfolio analysis
         """
+
+
+
         try:
             async with get_db_session() as session:
                 # Get user's content portfolio
@@ -330,6 +336,9 @@ class ContentAnalytics:
         Returns:
             List of content optimization recommendations
         """
+
+
+
         try:
             # Analyze current portfolio
             portfolio_analysis = await self.analyze_content_portfolio(user_id)
@@ -376,6 +385,9 @@ class ContentAnalytics:
         Returns:
             Dict containing success predictions
         """
+
+
+
         try:
             # Prepare features for prediction
             features = await self._prepare_prediction_features(
@@ -433,6 +445,9 @@ class ContentAnalytics:
         Returns:
             Dict containing trending content analysis
         """
+
+
+
         try:
             async with get_db_session() as session:
                 # Get trending content data
@@ -485,6 +500,9 @@ class ContentAnalytics:
         Returns:
             List of content insights
         """
+
+
+
         try:
             insights = []
             
@@ -566,6 +584,9 @@ class ContentAnalyticsFactory:
     @staticmethod
     def create_analytics_engine() -> ContentAnalytics:
         """Create a new content analytics engine"""
+
+
+
         return ContentAnalytics()
     
     @staticmethod

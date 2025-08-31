@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use prohibited.
 
-⚠️ COPYRIGHT WARNING ⚠️
+ COPYRIGHT WARNING 
 ALL RIGHTS RESERVED - This code, concept, and implementation are the exclusive 
 intellectual property of Fahed Mlaiel (mlaiel@live.de). Unauthorized use, copying, 
 modification, or distribution is strictly prohibited and will result in immediate 

@@ -16,7 +16,7 @@ Project Team Specializations:
 - ML Engineer + AI Model Deployment
 - Frontend Engineer + Dashboard Integration
 
-⚠️ STRONG WARNING FOR UNAUTHORIZED USE:
+ STRONG WARNING FOR UNAUTHORIZED USE:
 This code contains proprietary deployment orchestration algorithms and trade secrets of Fahed Mlaiel.
 Any unauthorized copying, modification, distribution, or use of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is
@@ -142,6 +142,9 @@ class DeploymentOrchestrator:
     
     def _initialize_deployment_managers(self):
         """Initialize all deployment managers"""
+
+
+
         try:
             # Core Infrastructure Managers
             self.deployment_managers['application'] = ApplicationDeployment()
@@ -589,7 +592,7 @@ def main():
     if args.mode == 'status':
         # Get deployment status
         status = orchestrator.get_deployment_status()
-        print("\n🎯 IA Influencer Agent Deployment Status:")
+        print("\n IA Influencer Agent Deployment Status:")
         print(f"Overall Health: {status['overall_health']}")
         print(f"Total Managers: {len(status['managers'])}")
         
@@ -612,27 +615,27 @@ def main():
         if args.phases:
             config.phases_to_execute = [DeploymentPhase(phase) for phase in args.phases]
         
-        print(f"\n🚀 Starting full deployment: {config.deployment_name}")
+        print(f"\n Starting full deployment: {config.deployment_name}")
         success = orchestrator.execute_full_deployment(config)
         
         if success:
-            print("✅ Deployment completed successfully!")
+            print(" Deployment completed successfully!")
         else:
-            print("❌ Deployment failed!")
+            print(" Deployment failed!")
             sys.exit(1)
     
     elif args.mode == 'rollback':
         # Execute rollback
-        print("\n🔄 Executing deployment rollback...")
+        print("\n Executing deployment rollback...")
         success = orchestrator._execute_rollback()
         
         if success:
-            print("✅ Rollback completed successfully!")
+            print(" Rollback completed successfully!")
         else:
-            print("❌ Rollback failed!")
+            print(" Rollback failed!")
             sys.exit(1)
     
-    print("\n🎯 IA Influencer Agent Deployment Orchestrator completed")
+    print("\n IA Influencer Agent Deployment Orchestrator completed")
 
 
 if __name__ == "__main__":

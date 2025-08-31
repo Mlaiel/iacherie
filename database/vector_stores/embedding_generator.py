@@ -210,6 +210,9 @@ class EmbeddingGenerator:
     
     async def initialize(self) -> None:
         """Initialize embedding models and processors"""
+
+
+
         try:
             # Load default models for each content type
             await self._load_default_models()
@@ -243,6 +246,9 @@ class EmbeddingGenerator:
         Returns:
             Embedding result with metadata
         """
+
+
+
         try:
             start_time = datetime.now()
             
@@ -352,6 +358,9 @@ class EmbeddingGenerator:
         Returns:
             List of embedding results
         """
+
+
+
         try:
             start_time = datetime.now()
             results = []
@@ -415,6 +424,9 @@ class EmbeddingGenerator:
         Returns:
             Fine-tuning results and metrics
         """
+
+
+
         try:
             if not self.enable_fine_tuning:
                 raise EmbeddingError("Fine-tuning is disabled")
@@ -528,6 +540,9 @@ class EmbeddingGenerator:
         Returns:
             Comparison results for each model
         """
+
+
+
         try:
             comparison_results = {}
             
@@ -573,6 +588,9 @@ class EmbeddingGenerator:
     
     async def get_model_performance(self) -> Dict[str, ModelPerformance]:
         """Get performance metrics for all models"""
+
+
+
         return self.model_performance.copy()
     
     async def get_generation_statistics(self) -> Dict[str, Any]:
@@ -590,6 +608,9 @@ class EmbeddingGenerator:
     
     async def _load_default_models(self) -> None:
         """Load default models for each content type"""
+
+
+
         try:
             # Text models
             await self._load_model(EmbeddingModel.SENTENCE_TRANSFORMER, ContentType.TEXT)
@@ -608,6 +629,9 @@ class EmbeddingGenerator:
     
     async def _load_model(self, model_name: EmbeddingModel, content_type: ContentType) -> None:
         """Load a specific model and its components"""
+
+
+
         try:
             model_key = f"{model_name.value}_{content_type.value}"
             
@@ -665,6 +689,9 @@ class EmbeddingGenerator:
         self, content: Any, content_type: ContentType, config: EmbeddingConfig
     ) -> Any:
         """Preprocess content based on type and configuration"""
+
+
+
         try:
             if content_type == ContentType.TEXT:
                 if isinstance(content, str):
@@ -730,6 +757,9 @@ class EmbeddingGenerator:
         self, content: Any, content_type: ContentType, config: EmbeddingConfig
     ) -> np.ndarray:
         """Generate embedding using a single model"""
+
+
+
         try:
             model_key = f"{config.model_name.value}_{content_type.value}"
             
@@ -796,6 +826,9 @@ class EmbeddingGenerator:
         self, content: Any, content_type: ContentType, config: EmbeddingConfig
     ) -> np.ndarray:
         """Generate embedding using ensemble of models"""
+
+
+
         try:
             # Get available models for content type
             available_models = self._get_available_models(content_type)
@@ -834,6 +867,9 @@ class EmbeddingGenerator:
         self, content: Any, content_type: ContentType, config: EmbeddingConfig
     ) -> np.ndarray:
         """Generate hierarchical embedding with multiple levels"""
+
+
+
         try:
             # Generate embeddings at different levels/scales
             embeddings = []
@@ -889,6 +925,9 @@ class EmbeddingGenerator:
         self, content: Any, content_type: ContentType, config: EmbeddingConfig
     ) -> np.ndarray:
         """Generate embedding using adaptive model selection"""
+
+
+
         try:
             # Select best model based on content characteristics and performance
             best_model = await self._select_adaptive_model(content, content_type)
@@ -908,6 +947,9 @@ class EmbeddingGenerator:
     
     async def _postprocess_embedding(self, embedding: np.ndarray, config: EmbeddingConfig) -> np.ndarray:
         """Post-process embedding (normalization, scaling, etc.)"""
+
+
+
         try:
             processed_embedding = embedding.copy()
             
@@ -954,6 +996,9 @@ class EmbeddingGenerator:
         self, embedding: np.ndarray, content_type: ContentType
     ) -> Dict[str, float]:
         """Calculate quality metrics for embedding"""
+
+
+
         try:
             metrics = {}
             
@@ -987,6 +1032,9 @@ class EmbeddingGenerator:
         self, embedding: np.ndarray, content_type: ContentType, quality_metrics: Dict[str, float]
     ) -> float:
         """Calculate confidence score for embedding"""
+
+
+
         try:
             # Base confidence from quality metrics
             base_confidence = quality_metrics.get("overall_quality", 0.5)
@@ -1015,6 +1063,9 @@ class EmbeddingGenerator:
     
     def _calculate_entropy(self, embedding: np.ndarray) -> float:
         """Calculate entropy of embedding values"""
+
+
+
         try:
             # Discretize values for entropy calculation
             hist, _ = np.histogram(embedding, bins=50, density=True)
@@ -1025,6 +1076,9 @@ class EmbeddingGenerator:
     
     def _calculate_kurtosis(self, embedding: np.ndarray) -> float:
         """Calculate kurtosis of embedding values"""
+
+
+
         try:
             mean = np.mean(embedding)
             std = np.std(embedding)
@@ -1037,6 +1091,9 @@ class EmbeddingGenerator:
     
     def _calculate_skewness(self, embedding: np.ndarray) -> float:
         """Calculate skewness of embedding values"""
+
+
+
         try:
             mean = np.mean(embedding)
             std = np.std(embedding)
@@ -1051,6 +1108,9 @@ class EmbeddingGenerator:
         self, content: Any, content_type: ContentType
     ) -> EmbeddingModel:
         """Select best model adaptively based on content and performance"""
+
+
+
         try:
             available_models = self._get_available_models(content_type)
             
@@ -1113,6 +1173,9 @@ class EmbeddingGenerator:
     
     def _initialize_content_configs(self) -> Dict[ContentType, EmbeddingConfig]:
         """Initialize default configurations for each content type"""
+
+
+
         return {
             ContentType.TEXT: EmbeddingConfig(
                 model_name=EmbeddingModel.SENTENCE_TRANSFORMER,
@@ -1146,6 +1209,9 @@ class EmbeddingGenerator:
     
     async def _initialize_scalers(self) -> None:
         """Initialize scalers for embedding normalization"""
+
+
+
         try:
             # Initialize standard and minmax scalers for each model/content type combination
             for content_type in ContentType:
@@ -1165,6 +1231,9 @@ class EmbeddingGenerator:
         config: EmbeddingConfig
     ) -> List[EmbeddingResult]:
         """Process a batch of content for embedding generation"""
+
+
+
         try:
             results = []
             
@@ -1269,6 +1338,9 @@ class EmbeddingGenerator:
         self, base_model: nn.Module, content_type: ContentType, target_dim: int
     ) -> nn.Module:
         """Create a fine-tuning adapter for base model"""
+
+
+
         try:
             # Simple adapter architecture
             class EmbeddingAdapter(nn.Module):
@@ -1315,6 +1387,9 @@ class EmbeddingGenerator:
     
     def _create_data_loader(self, data: List[Tuple[Any, np.ndarray]], batch_size: int):
         """Create data loader for fine-tuning"""
+
+
+
         try:
             from torch.utils.data import DataLoader, TensorDataset
             
@@ -1359,6 +1434,9 @@ class EmbeddingGenerator:
     
     async def close(self) -> None:
         """Close embedding generator and cleanup resources"""
+
+
+
         try:
             # Clear models from GPU memory
             for model_key, model in self.models.items():

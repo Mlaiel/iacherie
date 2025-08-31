@@ -198,6 +198,9 @@ class CrossPlatformAnalytics:
         Returns:
             CrossPlatformReport with unified analytics
         """
+
+
+
         try:
             if platforms is None:
                 platforms = await self._get_user_active_platforms(user_id)
@@ -292,6 +295,9 @@ class CrossPlatformAnalytics:
         Returns:
             Real-time tracking session data
         """
+
+
+
         try:
             session_id = hashlib.md5(f"{user_id}_{datetime.now()}".encode()).hexdigest()
             
@@ -341,6 +347,9 @@ class CrossPlatformAnalytics:
         Returns:
             PlatformBenchmark with industry data
         """
+
+
+
         try:
             # Cache check
             cache_key = f"platform_benchmark:{platform.value}:{content_type}:{industry}"
@@ -404,6 +413,9 @@ class CrossPlatformAnalytics:
         Returns:
             Comprehensive optimization strategy
         """
+
+
+
         try:
             # Analyze current cross-platform performance
             current_performance = await self._analyze_current_cross_platform_performance(user_id)
@@ -467,6 +479,9 @@ class CrossPlatformAnalytics:
         Returns:
             Audience migration analysis
         """
+
+
+
         try:
             # Get source platform audience data
             source_audience = await self._get_platform_audience_data(
@@ -523,6 +538,9 @@ class CrossPlatformAnalytics:
     
     def _initialize_platform_configs(self) -> Dict[PlatformType, Dict[str, Any]]:
         """Initialize platform-specific configurations"""
+
+
+
         return {
             PlatformType.SPOTIFY: {
                 "api_base": "https://api.spotify.com/v1",
@@ -554,6 +572,9 @@ class CrossPlatformAnalytics:
     async def _collect_platform_metrics(self, platform: PlatformType, user_id: str,
                                        content_id: str, timeframe_days: int) -> Optional[PlatformMetrics]:
         """Collect metrics from specific platform"""
+
+
+
         try:
             # Check if user has connected this platform
             if not await self._is_platform_connected(user_id, platform):
@@ -577,6 +598,9 @@ class CrossPlatformAnalytics:
     async def _fetch_platform_data(self, platform: PlatformType, user_id: str,
                                  content_id: str, timeframe_days: int) -> Optional[Dict[str, Any]]:
         """Fetch data from platform API"""
+
+
+
         try:
             config = self.platform_configs.get(platform)
             if not config:
@@ -671,6 +695,9 @@ class CrossPlatformAnalytics:
     
     async def _get_cached_result(self, cache_key: str) -> Optional[Dict[str, Any]]:
         """Get cached result from Redis"""
+
+
+
         try:
             cached_data = self.redis_client.get(cache_key)
             if cached_data:
@@ -683,6 +710,9 @@ class CrossPlatformAnalytics:
     async def _cache_result(self, cache_key: str, data: Dict[str, Any], 
                           ttl: int = None) -> None:
         """Cache result in Redis"""
+
+
+
         try:
             if ttl is None:
                 ttl = self.cache_ttl

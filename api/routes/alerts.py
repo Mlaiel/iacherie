@@ -168,6 +168,9 @@ async def create_alert_rule(
     user: dict = Depends(get_current_user)
 ):
     """Create a new alert rule"""
+
+
+
     try:
         # Validate conditions based on alert type
         if not _validate_alert_conditions(rule.alert_type, rule.conditions):
@@ -217,6 +220,9 @@ async def get_alert_rules(
     user: dict = Depends(get_current_user)
 ):
     """Get user's alert rules"""
+
+
+
     try:
         query = """
             SELECT rule_id, name, description, alert_type, severity, conditions,
@@ -276,6 +282,9 @@ async def update_alert_rule(
     user: dict = Depends(get_current_user)
 ):
     """Update an alert rule"""
+
+
+
     try:
         # Verify rule ownership
         async with database_manager.get_postgres_session() as session:
@@ -331,6 +340,9 @@ async def send_manual_alert(
     user: dict = Depends(get_current_user)
 ):
     """Send a manual alert"""
+
+
+
     try:
         alert_id = str(uuid.uuid4())
         
@@ -399,6 +411,9 @@ async def get_alerts(
     user: dict = Depends(get_current_user)
 ):
     """Get user's alerts"""
+
+
+
     try:
         query = """
             SELECT alert_id, user_id, alert_type, severity, title, message, metadata,
@@ -461,6 +476,9 @@ async def update_notification_preferences(
     user: dict = Depends(get_current_user)
 ):
     """Update user notification preferences"""
+
+
+
     try:
         # Validate phone number format if SMS enabled
         if preferences.sms_enabled and preferences.phone_number:
@@ -527,6 +545,9 @@ async def mark_alert_as_read(
     user: dict = Depends(get_current_user)
 ):
     """Mark an alert as read"""
+
+
+
     try:
         async with database_manager.get_postgres_session() as session:
             result = await session.execute("""
@@ -564,6 +585,9 @@ async def dismiss_alert(
     user: dict = Depends(get_current_user)
 ):
     """Dismiss an alert"""
+
+
+
     try:
         async with database_manager.get_postgres_session() as session:
             result = await session.execute("""
@@ -601,6 +625,9 @@ async def get_alert_statistics(
     user: dict = Depends(get_current_user)
 ):
     """Get alert statistics for user"""
+
+
+
     try:
         start_date = datetime.utcnow() - timedelta(days=days)
         
@@ -685,6 +712,9 @@ async def delete_alert_rule(
     user: dict = Depends(get_current_user)
 ):
     """Delete an alert rule"""
+
+
+
     try:
         async with database_manager.get_postgres_session() as session:
             result = await session.execute("""
@@ -751,6 +781,9 @@ def _validate_email(email: str) -> bool:
 # Background task functions
 async def _send_alert_immediately(alert_id: str, alert: ManualAlert, target_users: List[str]):
     """Send alert immediately to target users"""
+
+
+
     try:
         for user_id in target_users:
             # Get user notification preferences
@@ -775,6 +808,9 @@ async def _send_alert_immediately(alert_id: str, alert: ManualAlert, target_user
 
 async def _schedule_alert_delivery(alert_id: str, alert: ManualAlert, target_users: List[str]):
     """Schedule alert delivery for later"""
+
+
+
     try:
         # Calculate delay
         delay = (alert.schedule_at - datetime.utcnow()).total_seconds()
@@ -792,6 +828,9 @@ async def _schedule_alert_delivery(alert_id: str, alert: ManualAlert, target_use
 
 async def _get_user_notification_preferences(user_id: str) -> Dict[str, Any]:
     """Get user notification preferences"""
+
+
+
     try:
         async with database_manager.get_postgres_session() as session:
             result = await session.execute("""
@@ -849,6 +888,9 @@ def _should_send_via_channel(channel: NotificationChannel, preferences: Dict[str
 async def _send_via_channel(channel: NotificationChannel, user_id: str, 
                            alert: ManualAlert, preferences: Dict[str, Any]):
     """Send alert via specific channel"""
+
+
+
     try:
         if channel == NotificationChannel.EMAIL:
             await sendgrid_integration.send_alert_email(
@@ -880,6 +922,9 @@ async def _send_via_channel(channel: NotificationChannel, user_id: str,
 async def _update_alert_status(alert_id: str, status: AlertStatus, target_users: List[str], 
                               error_message: Optional[str] = None):
     """Update alert status in database"""
+
+
+
     try:
         async with database_manager.get_postgres_session() as session:
             for user_id in target_users:

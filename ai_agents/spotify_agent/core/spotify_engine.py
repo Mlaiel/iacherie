@@ -54,6 +54,9 @@ class SpotifyEngine:
 
     async def start(self) -> None:
         """Start the spotify processing engine"""
+
+
+
         try:
             self.is_running = True
             logger.info("SpotifyEngine started successfully")
@@ -63,6 +66,9 @@ class SpotifyEngine:
 
     async def process(self, data: Dict[str, Any]) -> SpotifyResult:
         """Process spotify operation"""
+
+
+
         try:
             job_id = data.get('job_id', 'auto-generated')
             

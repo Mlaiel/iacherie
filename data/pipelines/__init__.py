@@ -18,7 +18,7 @@ Team Specialties:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️ STRICT WARNING ⚠️
+ STRICT WARNING 
 This code, concept, and intellectual property belong exclusively to Fahed Mlaiel.
 Any unauthorized use, theft, copying, or reproduction without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will

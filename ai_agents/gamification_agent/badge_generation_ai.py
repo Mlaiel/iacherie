@@ -7,7 +7,7 @@ and creating dynamic recognition systems for content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This badge generation AI and achievement algorithms are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED and will result in legal action.
@@ -247,6 +247,9 @@ class BadgeGenerator:
         Returns:
             Generated badges and achievement updates
         """
+
+
+
         try:
             # Analyze user achievements
             achievement_analysis = await self._analyze_user_achievements(user_id, activity_data)
@@ -817,6 +820,9 @@ class BadgeGenerator:
     
     def _serialize_badge(self, badge: GeneratedBadge) -> Dict[str, Any]:
         """Serialize badge for JSON response"""
+
+
+
         return {
             'badge_id': badge.badge_id,
             'title': badge.title,

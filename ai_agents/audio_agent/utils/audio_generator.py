@@ -7,7 +7,7 @@ procedural generation, and professional audio creation capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -234,6 +234,9 @@ class ProceduralAudioGenerator:
     
     def _build_scale_library(self) -> Dict[str, List[int]]:
         """Build library of musical scales (semitone intervals)"""
+
+
+
         return {
             "major": [0, 2, 4, 5, 7, 9, 11],
             "minor": [0, 2, 3, 5, 7, 8, 10],
@@ -247,6 +250,9 @@ class ProceduralAudioGenerator:
     
     def _build_chord_progression_library(self) -> Dict[str, List[str]]:
         """Build library of common chord progressions"""
+
+
+
         return {
             "pop_basic": ["I", "V", "vi", "IV"],
             "jazz_ii_v": ["ii", "V", "I"],
@@ -636,6 +642,9 @@ class AIAudioGenerator:
     
     async def _generate_neural_audio(self, request: AudioGenerationRequest) -> np.ndarray:
         """Generate audio using neural network"""
+
+
+
         try:
             # Process text prompt to get embeddings
             text_embedding = await self._process_text_prompt(
@@ -692,6 +701,9 @@ class AIAudioGenerator:
     
     async def _generate_procedural_audio(self, request: AudioGenerationRequest) -> np.ndarray:
         """Generate audio using procedural synthesis"""
+
+
+
         try:
             # Determine generation approach based on request
             if request.genre in ["classical", "orchestral", "ambient"]:
@@ -768,6 +780,9 @@ class AIAudioGenerator:
     
     async def _generate_hybrid_audio(self, request: AudioGenerationRequest) -> np.ndarray:
         """Generate audio using hybrid neural + procedural approach"""
+
+
+
         try:
             # Generate base using procedural
             procedural_audio = await self._generate_procedural_audio(request)
@@ -795,6 +810,9 @@ class AIAudioGenerator:
     
     async def _process_text_prompt(self, text: str) -> torch.Tensor:
         """Process text prompt into embeddings"""
+
+
+
         try:
             if self.text_processor:
                 # Use actual text processing
@@ -891,6 +909,9 @@ class AIAudioGenerator:
     
     async def _apply_mastering(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
         """Apply professional mastering chain"""
+
+
+
         try:
             mastered = audio_data.copy()
             
@@ -949,6 +970,9 @@ class AIAudioGenerator:
                              output_format: str,
                              request: AudioGenerationRequest) -> str:
         """Save audio to file with metadata"""
+
+
+
         try:
             # Generate filename
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -980,6 +1004,9 @@ class AIAudioGenerator:
     
     async def _add_audio_metadata(self, file_path: str, request: AudioGenerationRequest):
         """Add metadata to audio file"""
+
+
+
         try:
             # Create metadata dictionary
             metadata = {
@@ -1003,6 +1030,9 @@ class AIAudioGenerator:
                                      audio_data: np.ndarray,
                                      sample_rate: int) -> Dict[str, Any]:
         """Analyze generated audio for response data"""
+
+
+
         try:
             analysis = {}
             
@@ -1098,6 +1128,9 @@ class AudioSynthesizer:
     
     def _initialize_oscillators(self) -> Dict[str, callable]:
         """Initialize oscillator functions"""
+
+
+
         return {
             "sine": lambda t, f: np.sin(2 * np.pi * f * t),
             "saw": lambda t, f: 2 * (t * f - np.floor(t * f + 0.5)),

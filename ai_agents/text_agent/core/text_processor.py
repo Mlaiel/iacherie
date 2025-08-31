@@ -7,7 +7,7 @@ for content creators with enterprise performance and security.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -285,6 +285,9 @@ class TextProcessor:
     
     async def _fix_encoding(self, text: str) -> str:
         """Fix common encoding issues"""
+
+
+
         try:
             # Use ftfy to fix encoding issues
             text = ftfy.fix_text(text)
@@ -302,6 +305,9 @@ class TextProcessor:
     
     async def _remove_html(self, text: str) -> Tuple[str, int]:
         """Remove HTML tags and decode HTML entities"""
+
+
+
         try:
             # Count HTML tags before removal
             html_tags = self.patterns['html_tags'].findall(text)
@@ -342,6 +348,9 @@ class TextProcessor:
     
     async def _expand_contractions(self, text: str) -> str:
         """Expand English contractions"""
+
+
+
         try:
             return contractions.fix(text)
         except Exception as e:
@@ -385,6 +394,9 @@ class TextProcessor:
     
     async def _remove_stopwords(self, text: str, languages: List[str]) -> Tuple[str, int]:
         """Remove stopwords for specified languages"""
+
+
+
         try:
             # Get stopwords for all specified languages
             all_stopwords = set()
@@ -408,6 +420,9 @@ class TextProcessor:
     
     async def _apply_stemming(self, text: str, language: str) -> str:
         """Apply stemming to reduce words to their root forms"""
+
+
+
         try:
             lang_code = self._get_nltk_language_code(language)
             if lang_code not in self.stemmers:
@@ -425,6 +440,9 @@ class TextProcessor:
     
     async def _apply_lemmatization(self, text: str) -> str:
         """Apply lemmatization to reduce words to their base forms"""
+
+
+
         try:
             words = word_tokenize(text)
             pos_tags = pos_tag(words)
@@ -507,6 +525,9 @@ class TextAnalyzer:
     
     async def analyze_text_complexity(self, text: str) -> Dict[str, Any]:
         """Analyze text complexity and readability"""
+
+
+
         try:
             # Basic statistics
             words = text.split()
@@ -545,6 +566,9 @@ class TextAnalyzer:
     
     async def extract_linguistic_features(self, text: str) -> Dict[str, Any]:
         """Extract comprehensive linguistic features"""
+
+
+
         try:
             # Tokenize text
             words = word_tokenize(text)

@@ -9,7 +9,7 @@ Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use, distribution, or modification
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 ALL RIGHTS RESERVED. UNAUTHORIZED USE PROHIBITED.
 This code belongs exclusively to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use will result in immediate legal action.

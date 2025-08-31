@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 """
-🚀 ENTERPRISE CRAWLER SERVICE - MAIN LAUNCHER
+ ENTERPRISE CRAWLER SERVICE - MAIN LAUNCHER
 =============================================
 
 Simple launcher and CLI interface for the Enterprise Multi-Platform Crawler Service.
 Provides easy access to all crawler functionalities with command-line interface.
 
-📧 Contact: mlaiel@live.de
-👨‍💻 Developer: Fahed Mlaiel
-🏢 Company: Independent Software Developer
+ Contact: mlaiel@live.de
+‍ Developer: Fahed Mlaiel
+ Company: Independent Software Developer
 
-⚠️ CRITICAL COPYRIGHT WARNING ⚠️
+ CRITICAL COPYRIGHT WARNING 
 ==================================
 UNAUTHORIZED USE ABSOLUTELY PROHIBITED - LEGAL CONSEQUENCES WILL FOLLOW
 
@@ -18,11 +18,11 @@ This entire codebase, algorithms, concepts, architecture, and implementation
 methodologies are the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 
 STRICT PROHIBITIONS:
-❌ NO COPYING of code, concepts, or architecture without written authorization
-❌ NO DISTRIBUTION or sharing of any part of this system  
-❌ NO REVERSE ENGINEERING or attempting to recreate similar systems
-❌ NO COMMERCIAL USE without explicit licensing agreement
-❌ NO ACADEMIC USE without proper attribution and permission
+ NO COPYING of code, concepts, or architecture without written authorization
+ NO DISTRIBUTION or sharing of any part of this system  
+ NO REVERSE ENGINEERING or attempting to recreate similar systems
+ NO COMMERCIAL USE without explicit licensing agreement
+ NO ACADEMIC USE without proper attribution and permission
 
 Any violation will result in IMMEDIATE LEGAL ACTION under:
 - German Copyright Law (Urheberrechtsgesetz)
@@ -54,7 +54,7 @@ from .index import (
 
 class CrawlerCLI:
     """
-    🖥️ COMMAND LINE INTERFACE
+     COMMAND LINE INTERFACE
     =========================
     
     Easy-to-use command line interface for the crawler service.
@@ -79,40 +79,49 @@ class CrawlerCLI:
     
     async def start_service(self, config_path: Optional[str] = None) -> bool:
         """Start the crawler service."""
+
+
+
         try:
-            self.logger.info("🚀 Starting Enterprise Crawler Service...")
+            self.logger.info(" Starting Enterprise Crawler Service...")
             self.api = await create_crawler_service(config_path)
-            self.logger.info("✅ Service started successfully")
+            self.logger.info(" Service started successfully")
             return True
         except Exception as e:
-            self.logger.error(f"❌ Failed to start service: {e}")
+            self.logger.error(f" Failed to start service: {e}")
             return False
     
     async def stop_service(self) -> bool:
         """Stop the crawler service."""
+
+
+
         try:
             if self.api:
                 await self.api.stop()
-                self.logger.info("✅ Service stopped successfully")
+                self.logger.info(" Service stopped successfully")
                 return True
             return False
         except Exception as e:
-            self.logger.error(f"❌ Failed to stop service: {e}")
+            self.logger.error(f" Failed to stop service: {e}")
             return False
     
     async def search_youtube(self, query: str, max_results: int = 10) -> List[Dict[str, Any]]:
         """Search YouTube content."""
+
+
+
         try:
             if not self.api:
                 raise ValueError("Service not started")
             
-            self.logger.info(f"🔍 Searching YouTube for: {query}")
+            self.logger.info(f" Searching YouTube for: {query}")
             results = await self.api.crawl_youtube(query, max_results)
-            self.logger.info(f"✅ Found {len(results)} results")
+            self.logger.info(f" Found {len(results)} results")
             return results
             
         except Exception as e:
-            self.logger.error(f"❌ YouTube search failed: {e}")
+            self.logger.error(f" YouTube search failed: {e}")
             return []
     
     async def monitor_revenue(
@@ -122,17 +131,20 @@ class CrawlerCLI:
         days: int = 30
     ) -> Dict[str, Any]:
         """Monitor creator revenue."""
+
+
+
         try:
             if not self.api:
                 raise ValueError("Service not started")
             
-            self.logger.info(f"💰 Monitoring revenue for creator: {creator_id}")
+            self.logger.info(f" Monitoring revenue for creator: {creator_id}")
             revenue_data = await self.api.monitor_revenue(creator_id, platforms, days)
-            self.logger.info(f"✅ Revenue data collected for {len(platforms)} platforms")
+            self.logger.info(f" Revenue data collected for {len(platforms)} platforms")
             return revenue_data
             
         except Exception as e:
-            self.logger.error(f"❌ Revenue monitoring failed: {e}")
+            self.logger.error(f" Revenue monitoring failed: {e}")
             return {}
     
     async def check_violations(
@@ -141,17 +153,20 @@ class CrawlerCLI:
         platforms: Optional[List[str]] = None
     ) -> List[Dict[str, Any]]:
         """Check for content violations."""
+
+
+
         try:
             if not self.api:
                 raise ValueError("Service not started")
             
-            self.logger.info(f"⚖️ Checking violations for {len(fingerprints)} fingerprints")
+            self.logger.info(f" Checking violations for {len(fingerprints)} fingerprints")
             violations = await self.api.check_violations(fingerprints, platforms)
-            self.logger.info(f"✅ Found {len(violations)} violations")
+            self.logger.info(f" Found {len(violations)} violations")
             return violations
             
         except Exception as e:
-            self.logger.error(f"❌ Violation check failed: {e}")
+            self.logger.error(f" Violation check failed: {e}")
             return []
     
     async def find_collaborators(
@@ -160,6 +175,9 @@ class CrawlerCLI:
         collaboration_types: List[str]
     ) -> List[Dict[str, Any]]:
         """Find collaboration opportunities."""
+
+
+
         try:
             if not self.api:
                 raise ValueError("Service not started")
@@ -168,11 +186,11 @@ class CrawlerCLI:
             opportunities = await self.api.find_collaborators(
                 creator_data, collaboration_types
             )
-            self.logger.info(f"✅ Found {len(opportunities)} collaboration opportunities")
+            self.logger.info(f" Found {len(opportunities)} collaboration opportunities")
             return opportunities
             
         except Exception as e:
-            self.logger.error(f"❌ Collaboration discovery failed: {e}")
+            self.logger.error(f" Collaboration discovery failed: {e}")
             return []
     
     async def analyze_trends(
@@ -182,21 +200,27 @@ class CrawlerCLI:
         days: int = 7
     ) -> List[Dict[str, Any]]:
         """Analyze market trends."""
+
+
+
         try:
             if not self.api:
                 raise ValueError("Service not started")
             
-            self.logger.info(f"📊 Analyzing trends for {len(categories)} categories")
+            self.logger.info(f" Analyzing trends for {len(categories)} categories")
             trends = await self.api.analyze_trends(categories, platforms, days)
-            self.logger.info(f"✅ Analyzed {len(trends)} trends")
+            self.logger.info(f" Analyzed {len(trends)} trends")
             return trends
             
         except Exception as e:
-            self.logger.error(f"❌ Trend analysis failed: {e}")
+            self.logger.error(f" Trend analysis failed: {e}")
             return []
     
     async def get_status(self) -> Dict[str, Any]:
         """Get service status."""
+
+
+
         try:
             if not self.api:
                 return {"error": "Service not started"}
@@ -205,13 +229,13 @@ class CrawlerCLI:
             return status
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to get status: {e}")
+            self.logger.error(f" Failed to get status: {e}")
             return {"error": str(e)}
     
     def print_results(self, results: Any, title: str = "Results"):
         """Pretty print results."""
         print(f"\n{'='*50}")
-        print(f"📋 {title}")
+        print(f" {title}")
         print(f"{'='*50}")
         
         if isinstance(results, list):
@@ -227,14 +251,14 @@ class CrawlerCLI:
 
 async def main():
     """
-    🎯 MAIN CLI ENTRY POINT
+     MAIN CLI ENTRY POINT
     =======================
     
     Command line interface for the Enterprise Crawler Service.
     Supports various commands for different crawler operations.
     """
     parser = argparse.ArgumentParser(
-        description="🕷️ Enterprise Multi-Platform Crawler Service CLI",
+        description=" Enterprise Multi-Platform Crawler Service CLI",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -321,30 +345,30 @@ Examples:
             if args.start:
                 success = await cli.start_service(args.config)
                 if success:
-                    print("✅ Service started successfully")
+                    print(" Service started successfully")
                     # Keep service running
-                    print("🔄 Service is running. Press Ctrl+C to stop...")
+                    print(" Service is running. Press Ctrl+C to stop...")
                     try:
                         while True:
                             await asyncio.sleep(1)
                     except KeyboardInterrupt:
                         await cli.stop_service()
                 else:
-                    print("❌ Failed to start service")
+                    print(" Failed to start service")
                     sys.exit(1)
             elif args.stop:
                 success = await cli.stop_service()
-                print("✅ Service stopped" if success else "❌ Failed to stop service")
+                print(" Service stopped" if success else " Failed to stop service")
             elif args.restart:
                 await cli.stop_service()
                 success = await cli.start_service(args.config)
-                print("✅ Service restarted" if success else "❌ Failed to restart service")
+                print(" Service restarted" if success else " Failed to restart service")
             return
         
         # For other commands, start service temporarily
         success = await cli.start_service(args.config)
         if not success:
-            print("❌ Failed to start service")
+            print(" Failed to start service")
             sys.exit(1)
         
         try:
@@ -388,10 +412,10 @@ Examples:
             await cli.stop_service()
             
     except KeyboardInterrupt:
-        print("\n🛑 Operation interrupted by user")
+        print("\n Operation interrupted by user")
         await cli.stop_service()
     except Exception as e:
-        print(f"❌ Command failed: {e}")
+        print(f" Command failed: {e}")
         await cli.stop_service()
         sys.exit(1)
 
@@ -426,18 +450,18 @@ __all__ = [
 
 if __name__ == "__main__":
     """
-    🎯 DIRECT EXECUTION ENTRY POINT
+     DIRECT EXECUTION ENTRY POINT
     ===============================
     
     Run the CLI directly when script is executed.
     """
     print("""
-🕷️ Enterprise Multi-Platform Crawler Service
+ Enterprise Multi-Platform Crawler Service
 ===========================================
-📧 Contact: mlaiel@live.de
-👨‍💻 Developer: Fahed Mlaiel
+ Contact: mlaiel@live.de
+‍ Developer: Fahed Mlaiel
 
-⚠️  Copyright Protected - Unauthorized Use Prohibited
+  Copyright Protected - Unauthorized Use Prohibited
     """)
     
     asyncio.run(main())

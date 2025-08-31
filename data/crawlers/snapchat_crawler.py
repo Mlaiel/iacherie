@@ -12,7 +12,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL WARNING ⚠️
+  CRITICAL WARNING 
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
 Any unauthorized use, reproduction, distribution, or reverse engineering 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -234,6 +234,9 @@ class SnapchatCrawler(PlatformCrawler):
         Returns:
             List of crawler results
         """
+
+
+
         try:
             await self._check_rate_limit()
             
@@ -253,6 +256,9 @@ class SnapchatCrawler(PlatformCrawler):
     
     async def _crawl_stories(self, query: str, max_results: int, location: Dict[str, float] = None) -> List[CrawlerResult]:
         """Crawl Snapchat stories"""
+
+
+
         try:
             results = []
             
@@ -316,6 +322,9 @@ class SnapchatCrawler(PlatformCrawler):
     
     async def _crawl_discover(self, query: str, max_results: int, location: Dict[str, float] = None) -> List[CrawlerResult]:
         """Crawl Snapchat Discover content"""
+
+
+
         try:
             results = []
             
@@ -370,6 +379,9 @@ class SnapchatCrawler(PlatformCrawler):
     
     async def _crawl_snapmap(self, query: str, max_results: int, location: Dict[str, float] = None) -> List[CrawlerResult]:
         """Crawl Snapchat Snap Map content"""
+
+
+
         try:
             results = []
             
@@ -428,6 +440,9 @@ class SnapchatCrawler(PlatformCrawler):
     
     async def _crawl_users(self, query: str, max_results: int, location: Dict[str, float] = None) -> List[CrawlerResult]:
         """Crawl Snapchat users"""
+
+
+
         try:
             results = []
             
@@ -475,6 +490,9 @@ class SnapchatCrawler(PlatformCrawler):
     
     async def _crawl_search(self, query: str, max_results: int, location: Dict[str, float] = None) -> List[CrawlerResult]:
         """General Snapchat search"""
+
+
+
         try:
             results = []
             
@@ -495,6 +513,9 @@ class SnapchatCrawler(PlatformCrawler):
     
     async def _crawl_trending(self, query: str, max_results: int, location: Dict[str, float] = None) -> List[CrawlerResult]:
         """Crawl trending content"""
+
+
+
         try:
             results = []
             
@@ -532,6 +553,9 @@ class SnapchatCrawler(PlatformCrawler):
     
     async def _crawl_publishers(self, query: str, max_results: int, location: Dict[str, float] = None) -> List[CrawlerResult]:
         """Crawl Snapchat publishers"""
+
+
+
         try:
             results = []
             
@@ -565,6 +589,9 @@ class SnapchatCrawler(PlatformCrawler):
     
     async def _crawl_events(self, query: str, max_results: int, location: Dict[str, float] = None) -> List[CrawlerResult]:
         """Crawl Snapchat events"""
+
+
+
         try:
             results = []
             
@@ -690,6 +717,9 @@ class SnapchatCrawler(PlatformCrawler):
     
     async def _get_trending_discover(self, max_results: int) -> List[Dict[str, Any]]:
         """Get trending Discover content"""
+
+
+
         return await self._get_mock_discover('trending', max_results)
     
     async def _get_mock_publishers(self, query: str, max_results: int) -> List[Dict[str, Any]]:
@@ -738,6 +768,9 @@ class SnapchatCrawler(PlatformCrawler):
     
     async def _parse_story_data(self, story_data: Dict[str, Any]) -> Optional[SnapchatStory]:
         """Parse story data"""
+
+
+
         try:
             timestamp = story_data.get('timestamp')
             if isinstance(timestamp, str):
@@ -784,6 +817,9 @@ class SnapchatCrawler(PlatformCrawler):
     
     async def _parse_discover_data(self, discover_data: Dict[str, Any]) -> Optional[SnapchatDiscover]:
         """Parse Discover data"""
+
+
+
         try:
             published_at = discover_data.get('published_at')
             if isinstance(published_at, str):
@@ -827,6 +863,9 @@ class SnapchatCrawler(PlatformCrawler):
     
     async def _parse_snapmap_data(self, snap_data: Dict[str, Any]) -> Optional[SnapchatSnapMap]:
         """Parse Snap Map data"""
+
+
+
         try:
             timestamp = snap_data.get('timestamp')
             if isinstance(timestamp, str):
@@ -865,6 +904,9 @@ class SnapchatCrawler(PlatformCrawler):
     
     async def _parse_user_data(self, user_data: Dict[str, Any]) -> Optional[SnapchatUser]:
         """Parse user data"""
+
+
+
         try:
             created_at = user_data.get('created_at')
             if isinstance(created_at, str):
@@ -926,6 +968,9 @@ class SnapchatCrawler(PlatformCrawler):
     
     async def _check_rate_limit(self):
         """Check and enforce rate limiting"""
+
+
+
         try:
             current_time = time.time()
             time_since_last = current_time - self.last_request_time
@@ -943,6 +988,9 @@ class SnapchatCrawler(PlatformCrawler):
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
         """Extract metadata from Snapchat content"""
+
+
+
         try:
             # Parse Snapchat URL
             parsed_url = urlparse(url)
@@ -991,6 +1039,9 @@ class SnapchatCrawler(PlatformCrawler):
     
     def get_platform_info(self) -> Dict[str, Any]:
         """Get Snapchat platform information"""
+
+
+
         return {
             'platform_name': 'Snapchat',
             'base_url': self.base_url,

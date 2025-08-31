@@ -95,6 +95,9 @@ class ResponseGenerator:
         Returns:
             Dict containing response content and metadata
         """
+
+
+
         try:
             # Extract response generation parameters
             strategy = routing_decision.strategy
@@ -212,6 +215,9 @@ class ResponseGenerator:
         response_params: Dict[str, Any]
     ) -> str:
         """Generate the main response content"""
+
+
+
         try:
             # Select appropriate content generator based on strategy
             content_generators = {
@@ -259,6 +265,9 @@ class ResponseGenerator:
         response_params: Dict[str, Any]
     ) -> str:
         """Generate general conversational content"""
+
+
+
         try:
             user_message = processed_message.processed_content
             creator_type = session.creator_type.value if hasattr(session.creator_type, 'value') else str(session.creator_type)
@@ -300,6 +309,9 @@ class ResponseGenerator:
         response_params: Dict[str, Any]
     ) -> str:
         """Generate content analysis response"""
+
+
+
         try:
             creator_type = session.creator_type.value if hasattr(session.creator_type, 'value') else str(session.creator_type)
             has_attachments = len(processed_message.attachments) > 0
@@ -338,6 +350,9 @@ class ResponseGenerator:
 - Video files (MP4, MOV) for influencers and comedians
 
 Simply attach your files and I'll provide detailed analysis including quality assessment, optimization suggestions, and content protection setup."""
+
+
+
             
             return content
             
@@ -353,6 +368,9 @@ Simply attach your files and I'll provide detailed analysis including quality as
         response_params: Dict[str, Any]
     ) -> str:
         """Generate monetization advice content"""
+
+
+
         try:
             creator_type = session.creator_type.value if hasattr(session.creator_type, 'value') else str(session.creator_type)
             
@@ -420,6 +438,9 @@ Simply attach your files and I'll provide detailed analysis including quality as
         response_params: Dict[str, Any]
     ) -> str:
         """Generate content protection guidance"""
+
+
+
         try:
             creator_type = session.creator_type.value if hasattr(session.creator_type, 'value') else str(session.creator_type)
             
@@ -452,14 +473,17 @@ Simply attach your files and I'll provide detailed analysis including quality as
             content += """
 
 **Current Protection Status:**
-✅ Content fingerprinting active
-✅ Monitoring systems deployed
-✅ Legal framework in place
+ Content fingerprinting active
+ Monitoring systems deployed
+ Legal framework in place
 
 **Recommended Actions:**
 1. Enable automatic monitoring for all new content
 2. Set up alert notifications for potential infringement
 3. Review and update copyright notices regularly"""
+
+
+
             
             return content
             
@@ -475,6 +499,9 @@ Simply attach your files and I'll provide detailed analysis including quality as
         session_context: Dict[str, Any]
     ) -> List[str]:
         """Generate contextual suggestions"""
+
+
+
         try:
             suggestions = []
             strategy_value = strategy.value if hasattr(strategy, 'value') else str(strategy)
@@ -541,6 +568,9 @@ Simply attach your files and I'll provide detailed analysis including quality as
         context_analysis: Dict[str, Any]
     ) -> List[str]:
         """Generate monetization insights"""
+
+
+
         try:
             insights = []
             creator_value = creator_type.value if hasattr(creator_type, 'value') else str(creator_type)
@@ -578,6 +608,9 @@ Simply attach your files and I'll provide detailed analysis including quality as
         context_analysis: Dict[str, Any]
     ) -> List[str]:
         """Generate content protection recommendations"""
+
+
+
         try:
             recommendations = []
             
@@ -607,6 +640,9 @@ Simply attach your files and I'll provide detailed analysis including quality as
         context_analysis: Dict[str, Any]
     ) -> List[str]:
         """Generate relevant follow-up questions"""
+
+
+
         try:
             questions = []
             strategy_value = strategy.value if hasattr(strategy, 'value') else str(strategy)
@@ -646,6 +682,9 @@ Simply attach your files and I'll provide detailed analysis including quality as
         context_analysis: Dict[str, Any]
     ) -> List[Dict[str, str]]:
         """Generate relevant resources and links"""
+
+
+
         try:
             resources = []
             creator_value = creator_type.value if hasattr(creator_type, 'value') else str(creator_type)
@@ -691,6 +730,9 @@ Simply attach your files and I'll provide detailed analysis including quality as
         creator_type: Any
     ) -> Dict[str, Any]:
         """Assemble all components into final response"""
+
+
+
         try:
             response = {
                 "content": components.main_content,
@@ -723,6 +765,9 @@ Simply attach your files and I'll provide detailed analysis including quality as
         session: Any
     ) -> Dict[str, Any]:
         """Generate fallback response when main generation fails"""
+
+
+
         return {
             "content": "I'm here to help you with your creative projects. Could you please rephrase your question or provide more details about what you'd like assistance with?",
             "suggestions": [
@@ -806,6 +851,9 @@ Simply attach your files and I'll provide detailed analysis including quality as
         response_params: Dict[str, Any]
     ) -> str:
         """Apply creator-specific enhancements to response"""
+
+
+
         try:
             creator_value = creator_type.value if hasattr(creator_type, 'value') else str(creator_type)
             specialization = self.creator_specializations.get(creator_value, {})
@@ -832,6 +880,9 @@ Simply attach your files and I'll provide detailed analysis including quality as
         components: ResponseComponents
     ) -> Dict[str, float]:
         """Calculate confidence indicators for different response aspects"""
+
+
+
         try:
             indicators = {
                 "routing_confidence": routing_decision.confidence,

@@ -7,7 +7,7 @@ query optimization, and result enhancement for vector similarity operations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Any attempt to steal the concept, idea, or code without explicit written authorization
@@ -204,6 +204,9 @@ class QueryOptimizer:
     
     def _initialize_optimization_rules(self) -> Dict[str, Any]:
         """Initialize optimization rules based on content types and patterns"""
+
+
+
         return {
             "similarity_threshold_adjustment": {
                 "audio": {"min": 0.65, "max": 0.95, "optimal": 0.80},
@@ -335,6 +338,9 @@ class QueryOptimizer:
     
     def _generate_query_hash(self, request: VectorSearchRequest) -> str:
         """Generate hash for query tracking"""
+
+
+
         return hashlib.md5(f"{request.content_type}_{request.similarity_threshold}_{request.max_results}".encode()).hexdigest()[:16]
     
     def _get_historical_performance(self, content_type: str, days: int = 7) -> List[QueryPerformanceMetric]:
@@ -366,6 +372,9 @@ class ResultEnhancer:
     def enhance_results(self, results: List[VectorSearchResult], 
                        request: VectorSearchRequest) -> List[VectorSearchResult]:
         """Enhance search results with additional processing"""
+
+
+
         try:
             enhanced_results = []
             
@@ -512,6 +521,9 @@ class SearchOptimizer:
     
     async def initialize(self) -> None:
         """Initialize search optimizer"""
+
+
+
         try:
             # Initialize optimization components
             logger.info("Search Optimizer initialized successfully")
@@ -523,6 +535,9 @@ class SearchOptimizer:
     async def optimize_results(self, results: List[VectorSearchResult], 
                              request: VectorSearchRequest) -> List[VectorSearchResult]:
         """Optimize search results with caching and enhancement"""
+
+
+
         try:
             start_time = time.time()
             
@@ -557,6 +572,9 @@ class SearchOptimizer:
     
     async def optimize_search_request(self, request: VectorSearchRequest) -> VectorSearchRequest:
         """Optimize search request parameters"""
+
+
+
         try:
             optimized_request = self.query_optimizer.optimize_search_request(request)
             return optimized_request
@@ -568,6 +586,9 @@ class SearchOptimizer:
     async def record_query_performance(self, request: VectorSearchRequest, 
                                      execution_time: float, result_count: int) -> None:
         """Record query performance for optimization learning"""
+
+
+
         try:
             self.query_optimizer.record_performance(request, execution_time, result_count)
             
@@ -580,6 +601,9 @@ class SearchOptimizer:
     
     async def get_cache_stats(self) -> Dict[str, Any]:
         """Get cache performance statistics"""
+
+
+
         return self.query_cache.get_statistics()
     
     async def clear_cache(self) -> None:
@@ -589,6 +613,9 @@ class SearchOptimizer:
     
     async def get_optimization_recommendations(self, content_type: str) -> Dict[str, Any]:
         """Get optimization recommendations for content type"""
+
+
+
         try:
             # Get historical performance
             historical_performance = self.query_optimizer._get_historical_performance(content_type)
@@ -633,6 +660,9 @@ class SearchOptimizer:
     def _record_optimization_performance(self, request: VectorSearchRequest, 
                                        optimization_time: float, cache_hit: bool) -> None:
         """Record optimization performance metrics"""
+
+
+
         try:
             # Update cache usage statistics
             total_queries = self.optimization_stats["queries_optimized"] + 1
@@ -657,6 +687,9 @@ class SearchOptimizer:
     
     async def get_statistics(self) -> Dict[str, Any]:
         """Get comprehensive optimization statistics"""
+
+
+
         try:
             cache_stats = await self.get_cache_stats()
             
@@ -672,6 +705,9 @@ class SearchOptimizer:
     
     async def shutdown(self) -> None:
         """Graceful shutdown of search optimizer"""
+
+
+
         try:
             # Clear cache to free memory
             await self.clear_cache()

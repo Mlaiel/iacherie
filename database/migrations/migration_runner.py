@@ -1,5 +1,5 @@
 """
-🚀 Production Migration Runner - Ultra-Industrial Execution Engine
+ Production Migration Runner - Ultra-Industrial Execution Engine
 ================================================================
 Module: backend/database/migrations/migration_runner.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Migration Executor - Ultra Enterprise Production-Ready
 Responsibility: High-performance migration execution with zero-downtime capabilities
 ===============================================================================
 
-⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
+  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -149,10 +149,13 @@ class ProductionMigrationRunner:
         signal.signal(signal.SIGTERM, self._signal_handler)
         signal.signal(signal.SIGINT, self._signal_handler)
         
-        logger.info("✅ Production Migration Runner initialized")
+        logger.info(" Production Migration Runner initialized")
     
     async def initialize(self) -> bool:
         """Initialize migration runner with all monitoring systems"""
+
+
+
         try:
             # Start resource monitoring
             await self._start_resource_monitoring()
@@ -163,11 +166,11 @@ class ProductionMigrationRunner:
             # Setup execution tracking tables
             await self._ensure_execution_tables()
             
-            logger.info("🚀 Migration Runner fully initialized")
+            logger.info(" Migration Runner fully initialized")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize Migration Runner: {e}")
+            logger.error(f" Failed to initialize Migration Runner: {e}")
             return False
     
     async def execute_migration(
@@ -180,7 +183,7 @@ class ProductionMigrationRunner:
         execution_id = str(uuid.uuid4())
         config = custom_config or self.config
         
-        logger.info(f"🚀 Starting migration execution: {migration_id} [execution_id: {execution_id}]")
+        logger.info(f" Starting migration execution: {migration_id} [execution_id: {execution_id}]")
         
         # Create execution context
         context = ExecutionContext(
@@ -197,7 +200,7 @@ class ProductionMigrationRunner:
             await self._execute_with_monitoring(context, execution_mode, config)
             
         except Exception as e:
-            logger.error(f"❌ Migration execution failed: {e}")
+            logger.error(f" Migration execution failed: {e}")
             context.current_phase = ExecutionPhase.ROLLBACK
             if config.auto_rollback_on_failure:
                 await self._execute_rollback(context)
@@ -217,7 +220,7 @@ class ProductionMigrationRunner:
         max_concurrent: int = 3
     ) -> List[str]:
         """Execute multiple migrations with dependency resolution"""
-        logger.info(f"🔄 Starting batch migration execution: {len(migration_ids)} migrations")
+        logger.info(f" Starting batch migration execution: {len(migration_ids)} migrations")
         
         # Resolve dependencies and create execution plan
         execution_plan = await self._create_execution_plan(migration_ids)
@@ -241,9 +244,9 @@ class ProductionMigrationRunner:
                 if isinstance(result, str):
                     execution_ids.append(result)
                 else:
-                    logger.error(f"❌ Batch migration failed: {result}")
+                    logger.error(f" Batch migration failed: {result}")
         
-        logger.info(f"✅ Batch migration completed: {len(execution_ids)} successful executions")
+        logger.info(f" Batch migration completed: {len(execution_ids)} successful executions")
         return execution_ids
     
     async def get_execution_status(self, execution_id: str) -> Dict[str, Any]:
@@ -261,6 +264,9 @@ class ProductionMigrationRunner:
     
     async def get_all_executions_status(self) -> Dict[str, Any]:
         """Get status of all active and recent executions"""
+
+
+
         return {
             "active_executions": [
                 await self._build_status_response(context, active=True)
@@ -278,7 +284,7 @@ class ProductionMigrationRunner:
         if execution_id not in self.active_executions:
             return False
         
-        logger.info(f"🛑 Cancelling migration execution: {execution_id}")
+        logger.info(f" Cancelling migration execution: {execution_id}")
         
         try:
             context = self.active_executions[execution_id]
@@ -287,11 +293,11 @@ class ProductionMigrationRunner:
             # Trigger rollback
             await self._execute_rollback(context)
             
-            logger.info(f"✅ Migration execution cancelled: {execution_id}")
+            logger.info(f" Migration execution cancelled: {execution_id}")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to cancel execution: {e}")
+            logger.error(f" Failed to cancel execution: {e}")
             return False
     
     # Private implementation methods
@@ -303,6 +309,9 @@ class ProductionMigrationRunner:
         config: ExecutionConfiguration
     ):
         """Execute migration with comprehensive monitoring"""
+
+
+
         
         try:
             # Phase 1: Preparation
@@ -334,15 +343,15 @@ class ProductionMigrationRunner:
             context.current_phase = ExecutionPhase.COMPLETION
             context.progress_percentage = 100.0
             
-            logger.info(f"✅ Migration completed successfully: {context.migration_id}")
+            logger.info(f" Migration completed successfully: {context.migration_id}")
             
         except Exception as e:
-            logger.error(f"❌ Migration execution failed in phase {context.current_phase.value}: {e}")
+            logger.error(f" Migration execution failed in phase {context.current_phase.value}: {e}")
             raise
     
     async def _execute_preparation_phase(self, context: ExecutionContext, config: ExecutionConfiguration):
         """Execute preparation phase with resource allocation"""
-        logger.info(f"🔧 Preparation phase: {context.migration_id}")
+        logger.info(f" Preparation phase: {context.migration_id}")
         
         # Allocate resources
         await self._allocate_resources(context, config)
@@ -357,7 +366,7 @@ class ProductionMigrationRunner:
     
     async def _execute_validation_phase(self, context: ExecutionContext, config: ExecutionConfiguration):
         """Execute validation phase with comprehensive checks"""
-        logger.info(f"🔍 Validation phase: {context.migration_id}")
+        logger.info(f" Validation phase: {context.migration_id}")
         
         # Validate schema compatibility
         await self._validate_schema_compatibility(context)
@@ -372,7 +381,7 @@ class ProductionMigrationRunner:
     
     async def _execute_backup_phase(self, context: ExecutionContext, config: ExecutionConfiguration):
         """Execute backup creation phase"""
-        logger.info(f"💾 Backup phase: {context.migration_id}")
+        logger.info(f" Backup phase: {context.migration_id}")
         
         # Create database backup
         backup_location = await self._create_database_backup(context)
@@ -385,7 +394,7 @@ class ProductionMigrationRunner:
     
     async def _execute_main_phase(self, context: ExecutionContext, config: ExecutionConfiguration):
         """Execute main migration phase with progress tracking"""
-        logger.info(f"⚡ Execution phase: {context.migration_id}")
+        logger.info(f" Execution phase: {context.migration_id}")
         
         # Start performance monitoring
         monitoring_task = asyncio.create_task(
@@ -414,7 +423,7 @@ class ProductionMigrationRunner:
     
     async def _execute_verification_phase(self, context: ExecutionContext, config: ExecutionConfiguration):
         """Execute verification phase with data integrity checks"""
-        logger.info(f"✅ Verification phase: {context.migration_id}")
+        logger.info(f" Verification phase: {context.migration_id}")
         
         # Verify schema changes
         await self._verify_schema_changes(context)
@@ -444,7 +453,7 @@ class ProductionMigrationRunner:
     
     async def _execute_rollback(self, context: ExecutionContext):
         """Execute rollback with data preservation"""
-        logger.info(f"🔄 Executing rollback: {context.migration_id}")
+        logger.info(f" Executing rollback: {context.migration_id}")
         
         try:
             # Restore from backup if available
@@ -455,10 +464,10 @@ class ProductionMigrationRunner:
             # Execute reverse migration
             await self._execute_reverse_migration(context)
             
-            logger.info(f"✅ Rollback completed: {context.migration_id}")
+            logger.info(f" Rollback completed: {context.migration_id}")
             
         except Exception as e:
-            logger.error(f"❌ Rollback failed: {e}")
+            logger.error(f" Rollback failed: {e}")
             raise
     
     async def _monitor_execution_performance(
@@ -486,7 +495,7 @@ class ProductionMigrationRunner:
             except asyncio.CancelledError:
                 break
             except Exception as e:
-                logger.warning(f"⚠️ Performance monitoring error: {e}")
+                logger.warning(f" Performance monitoring error: {e}")
                 await asyncio.sleep(1)
     
     async def _create_execution_plan(self, migration_ids: List[str]) -> List[List[str]]:
@@ -496,6 +505,9 @@ class ProductionMigrationRunner:
     
     async def _build_status_response(self, context: ExecutionContext, active: bool) -> Dict[str, Any]:
         """Build comprehensive status response"""
+
+
+
         return {
             "execution_id": context.execution_id,
             "migration_id": context.migration_id,
@@ -520,6 +532,9 @@ class ProductionMigrationRunner:
     
     async def _get_system_status(self) -> Dict[str, Any]:
         """Get overall system status"""
+
+
+
         return {
             "active_executions": len(self.active_executions),
             "system_resources": {
@@ -559,6 +574,9 @@ class ProductionMigrationRunner:
     
     async def _create_database_backup(self, context: ExecutionContext) -> str:
         """Create comprehensive database backup"""
+
+
+
         return f"backup_{context.execution_id}_{datetime.utcnow().isoformat()}"
     
     async def _verify_backup_integrity(self, context: ExecutionContext, backup_location: str):
@@ -611,6 +629,9 @@ class ProductionMigrationRunner:
     
     async def _get_current_resource_usage(self) -> ResourceUsage:
         """Get current system resource usage"""
+
+
+
         return ResourceUsage(
             cpu_percent=psutil.cpu_percent(),
             memory_mb=psutil.virtual_memory().used // (1024 * 1024),
@@ -620,6 +641,9 @@ class ProductionMigrationRunner:
     
     async def _get_performance_metrics(self) -> PerformanceMetrics:
         """Get current performance metrics"""
+
+
+
         return PerformanceMetrics(
             operations_per_second=100.0,
             average_response_time_ms=50.0,
@@ -650,7 +674,7 @@ class ProductionMigrationRunner:
     
     def _signal_handler(self, signum, frame):
         """Handle shutdown signals gracefully"""
-        logger.info(f"🛑 Received signal {signum}, initiating graceful shutdown")
+        logger.info(f" Received signal {signum}, initiating graceful shutdown")
         self._shutdown_event.set()
 
 

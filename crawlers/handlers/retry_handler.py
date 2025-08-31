@@ -157,11 +157,17 @@ class CircuitBreaker:
     @property
     def state(self) -> CircuitBreakerState:
         """Get current circuit breaker state."""
+
+
+
         return self._state
     
     @property
     def failure_count(self) -> int:
         """Get current failure count."""
+
+
+
         return self._failure_count
     
     async def __aenter__(self):
@@ -284,6 +290,9 @@ class RetryPolicyManager:
     
     def _load_default_policies(self) -> Dict[str, RetryConfig]:
         """Load default retry policies."""
+
+
+
         return {
             'api_request': RetryConfig(
                 max_attempts=3,
@@ -338,6 +347,9 @@ class RetryPolicyManager:
     
     def get_policy(self, operation_type: str) -> RetryConfig:
         """Get retry policy for operation type."""
+
+
+
         return self.policies.get(operation_type, self.policies['api_request'])
     
     def register_policy(self, operation_type: str, config: RetryConfig):
@@ -359,6 +371,9 @@ class AdaptiveRetryManager:
         base_config: RetryConfig
     ) -> RetryConfig:
         """Get adaptive retry configuration based on recent failures."""
+
+
+
         try:
             stats_key = f"{self.stats_key_prefix}{operation_type}"
             stats_data = await self.redis.hgetall(stats_key)
@@ -407,6 +422,9 @@ class AdaptiveRetryManager:
     
     async def record_retry_result(self, operation_type: str, result: RetryResult):
         """Record retry result for adaptive learning."""
+
+
+
         try:
             stats_key = f"{self.stats_key_prefix}{operation_type}"
             
@@ -433,6 +451,9 @@ class AdaptiveRetryManager:
     
     async def _update_derived_metrics(self, stats_key: str):
         """Update derived metrics like success rate and average attempts."""
+
+
+
         try:
             stats_data = await self.redis.hgetall(stats_key)
             
@@ -802,6 +823,9 @@ class RetryHandler:
     
     async def get_retry_statistics(self) -> Dict[str, Any]:
         """Get retry statistics for monitoring."""
+
+
+
         try:
             stats = {}
             
@@ -847,6 +871,9 @@ def create_retry_config(
     **kwargs
 ) -> RetryConfig:
     """Create retry configuration with specified parameters."""
+
+
+
     return RetryConfig(
         max_attempts=max_attempts,
         strategy=strategy,

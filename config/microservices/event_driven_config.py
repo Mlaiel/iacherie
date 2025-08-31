@@ -415,6 +415,9 @@ class EventPublisher:
     
     async def initialize(self) -> bool:
         """Initialize publisher connection"""
+
+
+
         try:
             if self.config.broker_type == "kafka":
                 await self._initialize_kafka()
@@ -444,6 +447,9 @@ class EventPublisher:
         headers: Optional[Dict[str, str]] = None
     ) -> bool:
         """Publish event to appropriate stream"""
+
+
+
         try:
             # Get event schema
             if event_type not in ALL_EVENT_SCHEMAS:
@@ -544,6 +550,9 @@ class EventConsumer:
     
     async def initialize(self) -> bool:
         """Initialize consumer connection"""
+
+
+
         try:
             if self.config.broker_type == "kafka":
                 await self._initialize_kafka_consumer()
@@ -597,6 +606,9 @@ class EventDrivenOrchestrator:
     
     async def initialize_event_system(self) -> bool:
         """Initialize event-driven system"""
+
+
+
         try:
             self.logger.info("Initializing event-driven architecture...")
             
@@ -640,10 +652,16 @@ class EventDrivenOrchestrator:
     
     async def publish_event(self, event_type: EventType, payload: Dict[str, Any]) -> bool:
         """Publish event through orchestrator"""
+
+
+
         return await self.publisher.publish_event(event_type, payload)
     
     async def get_event_system_health(self) -> Dict[str, Any]:
         """Get event system health status"""
+
+
+
         return {
             "publisher_status": "active",
             "streams": {
@@ -663,6 +681,9 @@ class EventDrivenOrchestrator:
     
     def get_configuration_summary(self) -> Dict[str, Any]:
         """Get event system configuration summary"""
+
+
+
         return {
             "service_info": {
                 "name": self.config.service_name,
@@ -701,21 +722,33 @@ event_orchestrator = EventDrivenOrchestrator()
 # Convenience functions
 async def initialize_event_system() -> bool:
     """Initialize event-driven system"""
+
+
+
     return await event_orchestrator.initialize_event_system()
 
 
 async def publish_event(event_type: EventType, payload: Dict[str, Any]) -> bool:
     """Publish event to system"""
+
+
+
     return await event_orchestrator.publish_event(event_type, payload)
 
 
 async def get_event_system_health() -> Dict[str, Any]:
     """Get event system health"""
+
+
+
     return await event_orchestrator.get_event_system_health()
 
 
 def get_event_system_summary() -> Dict[str, Any]:
     """Get event system configuration summary"""
+
+
+
     return event_orchestrator.get_configuration_summary()
 
 

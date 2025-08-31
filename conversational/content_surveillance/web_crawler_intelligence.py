@@ -17,7 +17,7 @@ content detection, and automated protection enforcement for multi-format content
 - Revenue Loss Detection and Recovery
 - Legal Evidence Collection and Documentation
 
-🏗️ ENTERPRISE ARCHITECTURE:
+ ENTERPRISE ARCHITECTURE:
 - Distributed Crawler Network with Load Balancing
 - AI-Powered Content Recognition (CLIP, BERT, Computer Vision)
 - Real-Time Processing with Kafka and Redis Streams
@@ -31,7 +31,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING - ZERO TOLERANCE POLICY ⚠️
+  CRITICAL LEGAL WARNING - ZERO TOLERANCE POLICY 
 This revolutionary web surveillance platform is the EXCLUSIVE intellectual property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution
 under German and International Law. Contact: mlaiel@live.de for legal authorization.
@@ -215,6 +215,9 @@ class WebCrawlerIntelligence:
     
     def _initialize_ai_models(self):
         """Initialize AI models for content analysis"""
+
+
+
         try:
             # CLIP Model for image/video analysis
             self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
@@ -231,6 +234,9 @@ class WebCrawlerIntelligence:
     
     def _get_user_agents(self) -> List[str]:
         """Get list of user agents for rotation"""
+
+
+
         return [
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
@@ -249,6 +255,9 @@ class WebCrawlerIntelligence:
         Returns:
             str: Surveillance session ID
         """
+
+
+
         try:
             session_id = str(uuid.uuid4())
             
@@ -293,6 +302,9 @@ class WebCrawlerIntelligence:
     
     async def _execute_surveillance(self, session_id: str, request: CrawlRequest):
         """Execute comprehensive surveillance process"""
+
+
+
         try:
             report = SurveillanceReport(
                 user_id=request.user_id,
@@ -482,6 +494,9 @@ class WebCrawlerIntelligence:
     
     async def _analyze_youtube_video(self, video_url: str, video_data: Dict) -> Optional[ContentMatch]:
         """Analyze YouTube video for content matches"""
+
+
+
         try:
             # Extract video metadata
             title = video_data['snippet']['title']
@@ -518,6 +533,9 @@ class WebCrawlerIntelligence:
     
     async def _analyze_image_similarity(self, image_url: str) -> float:
         """Analyze image similarity using CLIP"""
+
+
+
         try:
             # Download image
             async with aiohttp.ClientSession() as session:
@@ -548,6 +566,9 @@ class WebCrawlerIntelligence:
     
     async def _analyze_text_similarity(self, text: str) -> float:
         """Analyze text similarity using BERT"""
+
+
+
         try:
             # Tokenize and encode
             inputs = self.bert_tokenizer(text, return_tensors='pt', truncation=True, padding=True)
@@ -571,6 +592,9 @@ class WebCrawlerIntelligence:
     
     async def _calculate_similarity(self, fingerprints: List[str], detected_url: str) -> float:
         """Calculate overall similarity score"""
+
+
+
         try:
             # This would implement comprehensive similarity calculation
             # combining multiple AI models and techniques
@@ -602,6 +626,9 @@ class WebCrawlerIntelligence:
     
     async def _generate_surveillance_analytics(self, report: SurveillanceReport):
         """Generate comprehensive analytics for surveillance report"""
+
+
+
         try:
             # Count high confidence matches
             report.high_confidence_matches = sum(
@@ -634,6 +661,9 @@ class WebCrawlerIntelligence:
     
     async def _estimate_revenue_impact(self, matches: List[ContentMatch]) -> float:
         """Estimate potential revenue impact from detected violations"""
+
+
+
         try:
             total_impact = 0.0
             
@@ -692,6 +722,9 @@ class WebCrawlerIntelligence:
     
     async def _store_surveillance_report(self, session_id: str, report: SurveillanceReport):
         """Store surveillance report in database"""
+
+
+
         try:
             async with get_db_session() as db:
                 # Store report in database
@@ -709,6 +742,9 @@ class WebCrawlerIntelligence:
     
     async def _trigger_automated_actions(self, report: SurveillanceReport):
         """Trigger automated actions based on surveillance results"""
+
+
+
         try:
             for match in report.matches:
                 if match.confidence == MatchConfidence.EXACT_MATCH:
@@ -732,6 +768,9 @@ class WebCrawlerIntelligence:
     
     async def get_surveillance_status(self, session_id: str) -> Dict[str, Any]:
         """Get surveillance session status"""
+
+
+
         try:
             # Get from cache
             session_data = await self.cache_manager.get(f"surveillance_session:{session_id}")
@@ -755,6 +794,9 @@ class WebCrawlerIntelligence:
     
     async def stop_surveillance(self, session_id: str, user_id: int) -> bool:
         """Stop active surveillance session"""
+
+
+
         try:
             # Validate ownership
             session_data = await self.cache_manager.get(f"surveillance_session:{session_id}")

@@ -59,6 +59,9 @@ class DomainEvent:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert event to dictionary for serialization."""
+
+
+
         return {
             "event_id": self.event_id,
             "event_type": self.event_type,

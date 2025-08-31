@@ -274,6 +274,9 @@ class VectorDatabaseManager:
         ids: Optional[List[int]] = None
     ) -> bool:
         """Add vectors to specified index"""
+
+
+
         try:
             if index_name not in self.indexes:
                 raise ValueError(f"Index {index_name} not found")
@@ -322,6 +325,9 @@ class VectorDatabaseManager:
         threshold: Optional[float] = None
     ) -> Tuple[np.ndarray, np.ndarray]:
         """Search for similar vectors"""
+
+
+
         try:
             if index_name not in self.indexes:
                 raise ValueError(f"Index {index_name} not found")
@@ -472,6 +478,9 @@ class VectorDatabaseManager:
         
     async def cleanup_old_backups(self, keep_days: int = 7) -> int:
         """Clean up old backup files"""
+
+
+
         try:
             cutoff_time = time.time() - (keep_days * 24 * 3600)
             removed_count = 0

@@ -169,6 +169,9 @@ class InstagramCrawler:
         Returns:
             List of Instagram post objects
         """
+
+
+
         try:
             # Rate limiting check
             await self.rate_limiter.wait_if_needed()
@@ -187,6 +190,9 @@ class InstagramCrawler:
     
     async def _search_hashtag_api(self, hashtag: str, max_results: int) -> List[InstagramPost]:
         """Search hashtag using Instagram API."""
+
+
+
         try:
             url = f"{self.api_base_url}/ig_hashtag_search"
             params = {
@@ -212,6 +218,9 @@ class InstagramCrawler:
     
     async def _get_hashtag_media(self, hashtag_id: str, max_results: int) -> List[InstagramPost]:
         """Get media from hashtag ID."""
+
+
+
         try:
             url = f"{self.api_base_url}/{hashtag_id}/recent_media"
             params = {
@@ -260,6 +269,9 @@ class InstagramCrawler:
         recent_only: bool
     ) -> List[InstagramPost]:
         """Search hashtag using web scraping."""
+
+
+
         try:
             driver = webdriver.Chrome(options=self.selenium_options)
             driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
@@ -310,6 +322,9 @@ class InstagramCrawler:
     
     async def _scrape_post_details(self, driver, post_url: str, shortcode: str) -> Optional[InstagramPost]:
         """Scrape detailed post information."""
+
+
+
         try:
             # Open post in new tab
             driver.execute_script(f"window.open('{post_url}');")
@@ -359,6 +374,9 @@ class InstagramCrawler:
     
     def _extract_post_from_shared_data(self, shared_data: dict, shortcode: str) -> Optional[InstagramPost]:
         """Extract post data from Instagram's shared data."""
+
+
+
         try:
             # Navigate through Instagram's data structure
             entry_data = shared_data.get('entry_data', {})
@@ -436,6 +454,9 @@ class InstagramCrawler:
     
     async def _scrape_post_from_dom(self, driver, shortcode: str) -> Optional[InstagramPost]:
         """Fallback DOM scraping for post data."""
+
+
+
         try:
             # Extract basic elements
             username_elem = driver.find_element(By.CSS_SELECTOR, "header a")
@@ -494,6 +515,9 @@ class InstagramCrawler:
     
     def _parse_api_post_data(self, item: dict) -> Optional[InstagramPost]:
         """Parse Instagram API post data."""
+
+
+
         try:
             post_id = item.get('id', '')
             media_type = item.get('media_type', '')
@@ -534,6 +558,9 @@ class InstagramCrawler:
     
     async def get_user_profile(self, username: str) -> Optional[InstagramUser]:
         """Get user profile information."""
+
+
+
         try:
             await self.rate_limiter.wait_if_needed()
             
@@ -548,6 +575,9 @@ class InstagramCrawler:
     
     async def _get_user_profile_scraping(self, username: str) -> Optional[InstagramUser]:
         """Get user profile using web scraping."""
+
+
+
         try:
             driver = webdriver.Chrome(options=self.selenium_options)
             driver.get(f"{self.web_base_url}/{username}/")
@@ -583,6 +613,9 @@ class InstagramCrawler:
     
     def _extract_user_from_shared_data(self, shared_data: dict, username: str) -> Optional[InstagramUser]:
         """Extract user data from Instagram's shared data."""
+
+
+
         try:
             entry_data = shared_data.get('entry_data', {})
             profile_page = entry_data.get('ProfilePage', [])
@@ -617,6 +650,9 @@ class InstagramCrawler:
     
     async def search_location(self, location_name: str, max_results: int = 20) -> List[InstagramPost]:
         """Search posts by location."""
+
+
+
         try:
             # This would require location ID lookup and then location media fetch
             # Implementation depends on available APIs and scraping capabilities
@@ -661,6 +697,9 @@ class InstagramCrawler:
     
     async def get_user_recent_posts(self, username: str, max_results: int = 12) -> List[InstagramPost]:
         """Get recent posts from user profile."""
+
+
+
         try:
             # This would involve scraping the user's profile page
             # and extracting recent posts
@@ -673,6 +712,9 @@ class InstagramCrawler:
     
     async def analyze_engagement(self, post: InstagramPost) -> Dict:
         """Analyze post engagement metrics."""
+
+
+
         try:
             total_engagement = post.like_count + post.comment_count
             
@@ -705,6 +747,9 @@ class InstagramCrawler:
         search_hashtags: List[str] = None
     ) -> List[Dict]:
         """Detect content similar to reference post."""
+
+
+
         try:
             similar_posts = []
             

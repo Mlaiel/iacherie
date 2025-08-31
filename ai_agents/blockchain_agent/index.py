@@ -7,7 +7,7 @@ Provides simplified interfaces and unified access to all blockchain services.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 - All Rights Reserved
 
-⚠️ IMPORTANT LEGAL NOTICE ⚠️
+ IMPORTANT LEGAL NOTICE 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
@@ -75,6 +75,9 @@ class BlockchainAgentIndex:
     
     async def get_comprehensive_analytics(self) -> Dict[str, Any]:
         """Get comprehensive analytics from all blockchain services."""
+
+
+
         try:
             analytics = {
                 'blockchain': await self.blockchain_agent.get_blockchain_analytics(),
@@ -133,6 +136,9 @@ class BlockchainAgentIndex:
         Returns:
             Dict containing all created service IDs
         """
+
+
+
         try:
             from .nft_creator import ContentMetadata
             from decimal import Decimal
@@ -226,6 +232,9 @@ class BlockchainAgentIndex:
         Returns:
             Dict containing monetization setup results
         """
+
+
+
         try:
             from .defi_integration import RiskLevel
             from decimal import Decimal
@@ -311,6 +320,9 @@ class BlockchainAgentIndex:
     
     async def _get_system_status(self) -> Dict[str, Any]:
         """Get overall system status."""
+
+
+
         return {
             'blockchain_connections': len(self.blockchain_agent.web3_connections),
             'supported_networks': len(self.blockchain_agent.networks),
@@ -321,6 +333,9 @@ class BlockchainAgentIndex:
     
     def get_service_info(self) -> Dict[str, Any]:
         """Get information about all available services."""
+
+
+
         return {
             'blockchain_agent': {
                 'description': 'Core blockchain integration and transaction management',

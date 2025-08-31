@@ -1,5 +1,5 @@
 """
-🔐 Encryption Manager - Advanced Backup Encryption System
+ Encryption Manager - Advanced Backup Encryption System
 ======================================================
 Module: backend/data_management/backups/encryption_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Encryption System - Enterprise Production-Ready
 Responsibility: Chiffrement bout-en-bout pour sauvegardes avec gestion clés avancée
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -60,6 +60,9 @@ class EncryptionKey:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit en dictionnaire pour stockage"""
+
+
+
         return {
             "key_id": self.key_id,
             "algorithm": self.algorithm,
@@ -87,6 +90,9 @@ class EncryptionConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit en dictionnaire"""
+
+
+
         return {
             "algorithm": self.algorithm,
             "key_derivation": self.key_derivation,
@@ -147,6 +153,9 @@ class EncryptionManager:
         Returns:
             EncryptionKey: Clé générée
         """
+
+
+
         try:
             key_config = config or {}
             algorithm = key_config.get("algorithm", self.config.algorithm)
@@ -248,6 +257,9 @@ class EncryptionManager:
         Returns:
             Path: Chemin du fichier chiffré
         """
+
+
+
         try:
             if not input_path.exists():
                 raise EncryptionException(f"Input file not found: {input_path}")
@@ -441,6 +453,9 @@ class EncryptionManager:
         Returns:
             bool: True si déchiffrement réussi
         """
+
+
+
         try:
             if not input_path.exists():
                 logger.error(f"Encrypted file not found: {input_path}")
@@ -496,6 +511,9 @@ class EncryptionManager:
         Returns:
             Optional[Dict[str, Any]]: Métadonnées du header
         """
+
+
+
         try:
             import struct
             
@@ -537,6 +555,9 @@ class EncryptionManager:
         Returns:
             bool: True si déchiffrement réussi
         """
+
+
+
         try:
             iv = base64.b64decode(header_data["iv"])
             
@@ -595,6 +616,9 @@ class EncryptionManager:
         Returns:
             bool: True si déchiffrement réussi
         """
+
+
+
         try:
             from cryptography.hazmat.primitives import padding as sym_padding
             
@@ -660,6 +684,9 @@ class EncryptionManager:
         Returns:
             EncryptionKey: Nouvelle clé générée
         """
+
+
+
         try:
             if old_key_id not in self.key_store:
                 raise KeyManagementException(f"Key {old_key_id} not found for rotation")
@@ -696,6 +723,9 @@ class EncryptionManager:
         Args:
             encryption_key: Clé à sauvegarder
         """
+
+
+
         try:
             # En production, sauvegarder dans HSM ou vault sécurisé
             # Ici, simulation avec chiffrement par clé maître
@@ -760,6 +790,9 @@ class EncryptionManager:
         Returns:
             bool: True si chiffrement valide
         """
+
+
+
         try:
             import tempfile
             
@@ -904,6 +937,9 @@ class AESEncryption:
         Returns:
             bool: True si réussi
         """
+
+
+
         try:
             file_size = input_path.stat().st_size
             
@@ -1031,6 +1067,9 @@ class RSAEncryption:
         Returns:
             Dict[str, bytes]: Clés publique et privée
         """
+
+
+
         try:
             # Génération clé privée
             private_key = rsa.generate_private_key(
@@ -1084,6 +1123,9 @@ class RSAEncryption:
         Returns:
             bytes: Données chiffrées
         """
+
+
+
         try:
             if public_key_identifier not in self.key_pairs:
                 raise KeyManagementException(f"Public key not found: {public_key_identifier}")
@@ -1117,6 +1159,9 @@ class RSAEncryption:
         Returns:
             bytes: Données déchiffrées
         """
+
+
+
         try:
             if private_key_identifier not in self.key_pairs:
                 raise KeyManagementException(f"Private key not found: {private_key_identifier}")

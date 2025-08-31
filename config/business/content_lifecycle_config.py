@@ -539,6 +539,9 @@ class ContentLifecycleConfig:
     @classmethod
     def get_valid_transitions(cls, current_status: ContentStatus) -> List[StateTransition]:
         """Get valid state transitions from current status."""
+
+
+
         return [t for t in cls.STATE_TRANSITIONS if t.from_state == current_status]
 
     @classmethod
@@ -565,11 +568,17 @@ class ContentLifecycleConfig:
     @classmethod
     def get_status_config(cls, status: ContentStatus) -> Dict:
         """Get configuration for a specific content status."""
+
+
+
         return cls.STATUS_CONFIGS.get(status, {})
 
     @classmethod
     def get_category_rules(cls, category: ContentCategory) -> Dict:
         """Get business rules for a specific content category."""
+
+
+
         return cls.CATEGORY_RULES.get(category, {})
 
     @classmethod
@@ -590,6 +599,9 @@ class ContentLifecycleConfig:
     @classmethod
     def get_auto_transitions(cls) -> List[StateTransition]:
         """Get all automatic state transitions."""
+
+
+
         return [t for t in cls.STATE_TRANSITIONS if t.auto_transition]
 
     @classmethod

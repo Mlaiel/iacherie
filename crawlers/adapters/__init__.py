@@ -160,7 +160,7 @@ class AdapterManager:
         self._register_format_adapters()
         
         self._initialized = True
-        logger.info(f"✅ Adapter system initialized with {len(self._adapters)} adapters")
+        logger.info(f" Adapter system initialized with {len(self._adapters)} adapters")
     
     def _register_content_adapters(self):
         """Register content processing adapters."""        content_adapters = [
@@ -464,10 +464,16 @@ def get_available_adapters() -> List[str]:
     return list(adapter_manager.list_all_adapters().keys())
 
 def get_adapter_by_name(name: str) -> Optional[Type]:
-    """Get adapter class by name."""    return adapter_manager.get_adapter(name)
+    """Get adapter class by name."""
+
+
+    return adapter_manager.get_adapter(name)
 
 def get_adapters_by_type(adapter_type: AdapterType) -> List[str]:
-    """Get adapters of specific type."""    return adapter_manager.get_adapters_by_type(adapter_type)
+    """Get adapters of specific type."""
+
+
+    return adapter_manager.get_adapters_by_type(adapter_type)
 
 # Export main components
 __all__ = [
@@ -869,7 +875,10 @@ adapter_manager = AdapterManager()
 
 # Utility functions for adapter discovery and management
 def get_available_adapters() -> Dict[str, List[str]]:
-    """Get list of all available adapters by category."""    return {
+    """Get list of all available adapters by category."""
+
+
+    return {
         'content': ['audio', 'video', 'image', 'text', 'document'],
         'platform': ['youtube', 'spotify', 'instagram', 'tiktok', 'twitter', 'facebook', 'linkedin'],
         'api': ['rest', 'graphql', 'websocket', 'webhook', 'streaming'],
@@ -1143,28 +1152,52 @@ class AdapterRegistry:
         })
     
     def get_content_adapter(self, content_type: str) -> Optional[Type]:
-        """Get content adapter by type."""        return self._content_adapters.get(content_type.lower())
+        """Get content adapter by type."""
+
+
+        return self._content_adapters.get(content_type.lower())
     
     def get_platform_adapter(self, platform: str) -> Optional[Type]:
-        """Get platform adapter by name."""        return self._platform_adapters.get(platform.lower())
+        """Get platform adapter by name."""
+
+
+        return self._platform_adapters.get(platform.lower())
     
     def get_api_adapter(self, api_type: str) -> Optional[Type]:
-        """Get API adapter by type."""        return self._api_adapters.get(api_type.lower())
+        """Get API adapter by type."""
+
+
+        return self._api_adapters.get(api_type.lower())
     
     def get_storage_adapter(self, storage_type: str) -> Optional[Type]:
-        """Get storage adapter by type."""        return self._storage_adapters.get(storage_type.lower())
+        """Get storage adapter by type."""
+
+
+        return self._storage_adapters.get(storage_type.lower())
     
     def get_data_adapter(self, data_format: str) -> Optional[Type]:
-        """Get data adapter by format."""        return self._data_adapters.get(data_format.lower())
+        """Get data adapter by format."""
+
+
+        return self._data_adapters.get(data_format.lower())
     
     def get_protocol_adapter(self, protocol: str) -> Optional[Type]:
-        """Get protocol adapter by name."""        return self._protocol_adapters.get(protocol.lower())
+        """Get protocol adapter by name."""
+
+
+        return self._protocol_adapters.get(protocol.lower())
     
     def get_auth_adapter(self, auth_type: str) -> Optional[Type]:
-        """Get authentication adapter by type."""        return self._auth_adapters.get(auth_type.lower())
+        """Get authentication adapter by type."""
+
+
+        return self._auth_adapters.get(auth_type.lower())
     
     def get_format_adapter(self, format_type: str) -> Optional[Type]:
-        """Get format adapter by type."""        return self._format_adapters.get(format_type.lower())
+        """Get format adapter by type."""
+
+
+        return self._format_adapters.get(format_type.lower())
     
     def register_adapter(
         self,
@@ -1172,7 +1205,10 @@ class AdapterRegistry:
         name: str,
         adapter_class: Type
     ) -> bool:
-        """Register custom adapter."""        try:
+        """Register custom adapter."""
+
+
+        try:
             registry = getattr(self, f"_{category}_adapters", None)
             if registry is None:
                 logger.error(f"Unknown adapter category: {category}")
@@ -1239,7 +1275,10 @@ class AdapterManager:
         config: Optional[Dict[str, Any]] = None,
         instance_id: Optional[str] = None
     ) -> Optional[Any]:
-        """Create and configure adapter instance."""        try:
+        """Create and configure adapter instance."""
+
+
+        try:
             # Get adapter class from registry
             adapter_class = None
             
@@ -1287,10 +1326,16 @@ class AdapterManager:
             return None
     
     async def get_adapter(self, instance_id: str) -> Optional[Any]:
-        """Get active adapter by instance ID."""        return self._active_adapters.get(instance_id)
+        """Get active adapter by instance ID."""
+
+
+        return self._active_adapters.get(instance_id)
     
     async def destroy_adapter(self, instance_id: str) -> bool:
-        """Destroy adapter instance."""        try:
+        """Destroy adapter instance."""
+
+
+        try:
             adapter = self._active_adapters.get(instance_id)
             if not adapter:
                 logger.warning(f"Adapter not found: {instance_id}")
@@ -1360,10 +1405,16 @@ class AdapterManager:
         self._metrics['failed_requests'] += 1
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Get adapter system metrics."""        return self._metrics.copy()
+        """Get adapter system metrics."""
+
+
+        return self._metrics.copy()
     
     def get_active_adapters(self) -> List[str]:
-        """Get list of active adapter instance IDs."""        return list(self._active_adapters.keys())
+        """Get list of active adapter instance IDs."""
+
+
+        return list(self._active_adapters.keys())
     
     async def shutdown(self):
         """Shutdown adapter manager and cleanup resources."""        logger.info("Shutting down adapter manager...")

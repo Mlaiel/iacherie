@@ -67,6 +67,9 @@ class ROICalculatorEngine:
         
     async def initialize(self) -> None:
         """Initialize ROI calculator engine"""
+
+
+
         try:
             await self._setup_database_tables()
             logger.info("ROI Calculator Engine initialized successfully")
@@ -101,6 +104,9 @@ class ROICalculatorEngine:
 
     async def calculate_comprehensive_roi(self, creator_id: str, timeframe: ROITimeframe) -> List[ROIData]:
         """Calculate comprehensive ROI across all categories"""
+
+
+
         try:
             roi_results = []
             
@@ -121,6 +127,9 @@ class ROICalculatorEngine:
 
     async def _calculate_category_roi(self, creator_id: str, category: ROICategory, timeframe: ROITimeframe) -> Optional[ROIData]:
         """Calculate ROI for specific category and timeframe"""
+
+
+
         try:
             # Get timeframe dates
             end_date = datetime.now().date()
@@ -187,6 +196,9 @@ class ROICalculatorEngine:
 
     async def _get_investment_amount(self, creator_id: str, category: ROICategory, start_date: datetime.date, end_date: datetime.date) -> float:
         """Get investment amount for specific category and timeframe"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 if category == ROICategory.CONTENT_CREATION:
@@ -254,6 +266,9 @@ class ROICalculatorEngine:
 
     async def _get_revenue_generated(self, creator_id: str, category: ROICategory, start_date: datetime.date, end_date: datetime.date) -> float:
         """Get revenue generated for specific category and timeframe"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 # Get total revenue for the timeframe
@@ -306,6 +321,9 @@ class ROICalculatorEngine:
 
     async def _get_total_engagements(self, creator_id: str, start_date: datetime.date, end_date: datetime.date) -> int:
         """Get total engagements for timeframe"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 result = await conn.fetchrow("""
@@ -323,6 +341,9 @@ class ROICalculatorEngine:
 
     async def _get_total_conversions(self, creator_id: str, start_date: datetime.date, end_date: datetime.date) -> int:
         """Get total conversions for timeframe"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 result = await conn.fetchrow("""
@@ -340,6 +361,9 @@ class ROICalculatorEngine:
 
     def _calculate_efficiency_score(self, roi_percentage: float, cost_per_engagement: float, cost_per_conversion: float) -> float:
         """Calculate overall efficiency score"""
+
+
+
         try:
             # Normalize ROI percentage to 0-1 scale
             roi_score = min(max((roi_percentage + 100) / 200, 0), 1)  # -100% to 100% -> 0 to 1
@@ -413,6 +437,9 @@ class ROICalculatorEngine:
 
     async def _store_roi_calculation(self, roi_data: ROIData) -> None:
         """Store ROI calculation in database"""
+
+
+
         try:
             # Calculate period dates
             end_date = datetime.now().date()
@@ -446,6 +473,9 @@ class ROICalculatorEngine:
 
     async def get_roi_dashboard_data(self, creator_id: str) -> Dict[str, Any]:
         """Get comprehensive ROI dashboard data"""
+
+
+
         try:
             # Calculate current month ROI
             monthly_roi = await self.calculate_comprehensive_roi(creator_id, ROITimeframe.MONTHLY)
@@ -504,6 +534,9 @@ class ROICalculatorEngine:
 
     async def _get_historical_roi_trends(self, creator_id: str) -> Dict[str, List[Dict[str, Any]]]:
         """Get historical ROI trends for the past 6 months"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 # Get monthly ROI trends for past 6 months

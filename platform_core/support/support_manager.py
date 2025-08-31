@@ -1,15 +1,15 @@
 """
-🚀 Support System - IA Influencer Agent Platform Enterprise
+ Support System - IA Influencer Agent Platform Enterprise
 ==========================================================
 Module: backend/platform_core/support/support_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ==========================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 SYSTÈME DE SUPPORT CLIENT ENTERPRISE
+ SYSTÈME DE SUPPORT CLIENT ENTERPRISE
 Support intelligent avec IA et automatisation avancée
 - Ticketing system avec routing intelligent
 - Live chat avec agents IA et humains
@@ -147,7 +147,7 @@ class SupportManager:
         self._setup_ai_agents()
         self._setup_routing_rules()
         
-        logger.info("✅ SupportManager initialized")
+        logger.info(" SupportManager initialized")
     
     def _setup_ai_agents(self) -> None:
         """Configurer les agents IA"""
@@ -206,6 +206,9 @@ class SupportManager:
         priority: Optional[TicketPriority] = None
     ) -> SupportTicket:
         """Créer un nouveau ticket"""
+
+
+
         try:
             ticket_id = f"TK_{uuid.uuid4().hex[:12].upper()}"
             
@@ -244,15 +247,18 @@ class SupportManager:
             )
             self.messages[ticket_id].append(initial_message)
             
-            logger.info(f"✅ Ticket created: {ticket_id} - {subject}")
+            logger.info(f" Ticket created: {ticket_id} - {subject}")
             return ticket
             
         except Exception as e:
-            logger.error(f"❌ Failed to create ticket: {e}")
+            logger.error(f" Failed to create ticket: {e}")
             raise
     
     async def _auto_assign_ticket(self, ticket: SupportTicket) -> Optional[str]:
         """Assigner automatiquement un ticket"""
+
+
+
         try:
             # Logique d'assignment basée sur la catégorie et la charge
             routing_rule = self.routing_rules.get(ticket.category)
@@ -274,7 +280,7 @@ class SupportManager:
             return None
             
         except Exception as e:
-            logger.error(f"❌ Auto-assignment failed: {e}")
+            logger.error(f" Auto-assignment failed: {e}")
             return None
     
     async def add_message_to_ticket(
@@ -286,6 +292,9 @@ class SupportManager:
         is_internal: bool = False
     ) -> TicketMessage:
         """Ajouter un message à un ticket"""
+
+
+
         try:
             if ticket_id not in self.tickets:
                 raise ValueError(f"Ticket not found: {ticket_id}")
@@ -309,15 +318,18 @@ class SupportManager:
             if sender_type != AgentType.AI_BOT:
                 await self._trigger_ai_response(ticket_id, message)
             
-            logger.info(f"✅ Message added to ticket {ticket_id}")
+            logger.info(f" Message added to ticket {ticket_id}")
             return message
             
         except Exception as e:
-            logger.error(f"❌ Failed to add message: {e}")
+            logger.error(f" Failed to add message: {e}")
             raise
     
     async def _trigger_ai_response(self, ticket_id: str, user_message: TicketMessage) -> None:
         """Déclencher une réponse IA si approprié"""
+
+
+
         try:
             ticket = self.tickets[ticket_id]
             
@@ -342,7 +354,7 @@ class SupportManager:
                 )
                 
         except Exception as e:
-            logger.error(f"❌ Failed to trigger AI response: {e}")
+            logger.error(f" Failed to trigger AI response: {e}")
     
     def _find_suitable_ai_bot(self, category: TicketCategory) -> Optional[str]:
         """Trouver le bot IA approprié pour une catégorie"""
@@ -353,6 +365,9 @@ class SupportManager:
     
     async def _generate_ai_response(self, ticket: SupportTicket, user_message: str) -> Optional[str]:
         """Générer une réponse IA (placeholder)"""
+
+
+
         try:
             # Placeholder pour intégration IA réelle
             responses = {
@@ -365,11 +380,14 @@ class SupportManager:
             return responses.get(ticket.category, responses[TicketCategory.GENERAL])
             
         except Exception as e:
-            logger.error(f"❌ Failed to generate AI response: {e}")
+            logger.error(f" Failed to generate AI response: {e}")
             return None
     
     async def start_chat_session(self, user_id: str) -> ChatSession:
         """Démarrer une session de chat live"""
+
+
+
         try:
             session_id = f"CHAT_{uuid.uuid4().hex[:12]}"
             
@@ -396,11 +414,11 @@ class SupportManager:
             }
             session.messages.append(welcome_message)
             
-            logger.info(f"✅ Chat session started: {session_id}")
+            logger.info(f" Chat session started: {session_id}")
             return session
             
         except Exception as e:
-            logger.error(f"❌ Failed to start chat session: {e}")
+            logger.error(f" Failed to start chat session: {e}")
             raise
     
     def _find_available_ai_agent(self) -> str:
@@ -421,6 +439,9 @@ class SupportManager:
     
     async def search_knowledge_base(self, query: str, category: Optional[TicketCategory] = None) -> List[KnowledgeBaseArticle]:
         """Rechercher dans la base de connaissances"""
+
+
+
         try:
             results = []
             query_lower = query.lower()
@@ -445,11 +466,14 @@ class SupportManager:
             return results[:10]  # Limiter à 10 résultats
             
         except Exception as e:
-            logger.error(f"❌ Knowledge base search failed: {e}")
+            logger.error(f" Knowledge base search failed: {e}")
             return []
     
     async def get_support_analytics(self, days: int = 30) -> Dict[str, Any]:
         """Obtenir les analytics du support"""
+
+
+
         try:
             cutoff_date = datetime.utcnow() - timedelta(days=days)
             
@@ -492,7 +516,7 @@ class SupportManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to get support analytics: {e}")
+            logger.error(f" Failed to get support analytics: {e}")
             return {"error": str(e)}
 
 

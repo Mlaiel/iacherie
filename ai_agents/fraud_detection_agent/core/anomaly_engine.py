@@ -139,6 +139,9 @@ class AnomalyDetectionEngine:
         Returns:
             Comprehensive anomaly detection results
         """
+
+
+
         try:
             # Extract feature vectors
             current_features = await self._extract_feature_vector(current_session)
@@ -281,6 +284,9 @@ class AnomalyDetectionEngine:
         historical_baseline: Dict[str, Any]
     ) -> np.ndarray:
         """Get baseline feature vector for user"""
+
+
+
         try:
             # Try to get from cache first
             cache_key = f"baseline_features:{user_id}"
@@ -323,6 +329,9 @@ class AnomalyDetectionEngine:
         baseline_features: np.ndarray
     ) -> Optional[AnomalyResult]:
         """Detect statistical outliers using various methods"""
+
+
+
         try:
             # Z-score based outlier detection
             z_scores = np.abs((current_features - baseline_features) / (np.std(baseline_features) + 1e-6))
@@ -380,6 +389,9 @@ class AnomalyDetectionEngine:
         baseline_features: np.ndarray
     ) -> Optional[AnomalyResult]:
         """Detect gradual behavioral drift"""
+
+
+
         try:
             # Calculate euclidean distance between current and baseline
             euclidean_distance = np.linalg.norm(current_features - baseline_features)
@@ -439,6 +451,9 @@ class AnomalyDetectionEngine:
         historical_baseline: Dict[str, Any]
     ) -> Optional[AnomalyResult]:
         """Detect unusual volume patterns"""
+
+
+
         try:
             # Current session metrics
             actions_count = len(current_session.get('actions', []))
@@ -504,6 +519,9 @@ class AnomalyDetectionEngine:
         historical_baseline: Dict[str, Any]
     ) -> Optional[AnomalyResult]:
         """Detect temporal pattern anomalies"""
+
+
+
         try:
             # Extract timestamps from session actions
             actions = current_session.get('actions', [])
@@ -582,6 +600,9 @@ class AnomalyDetectionEngine:
         user_id: str
     ) -> Optional[AnomalyResult]:
         """Detect deviations from user's typical behavior cluster"""
+
+
+
         try:
             # Get historical feature vectors for clustering
             cluster_features = await self._get_cluster_features(user_id)
@@ -644,6 +665,9 @@ class AnomalyDetectionEngine:
         current_session: Dict[str, Any]
     ) -> Optional[AnomalyResult]:
         """Detect anomalous action sequences"""
+
+
+
         try:
             actions = current_session.get('actions', [])
             
@@ -710,6 +734,9 @@ class AnomalyDetectionEngine:
         historical_baseline: Dict[str, Any]
     ) -> Optional[AnomalyResult]:
         """Detect contextual anomalies based on external factors"""
+
+
+
         try:
             contextual_anomalies = []
             
@@ -791,6 +818,9 @@ class AnomalyDetectionEngine:
 
     async def _get_cluster_features(self, user_id: str) -> np.ndarray:
         """Get historical feature vectors for clustering"""
+
+
+
         try:
             cache_key = f"cluster_features:{user_id}"
             cached_features = await self.redis_client.get(cache_key)
@@ -948,6 +978,9 @@ class AnomalyDetectionEngine:
         anomaly_score: float
     ):
         """Update user's anomaly detection history"""
+
+
+
         try:
             history_key = f"anomaly_history:{user_id}"
             
@@ -970,6 +1003,9 @@ class AnomalyDetectionEngine:
 
     async def get_anomaly_trends(self, user_id: str, days: int = 7) -> Dict[str, Any]:
         """Get anomaly trends for a user over time"""
+
+
+
         try:
             history_key = f"anomaly_history:{user_id}"
             history_records = await self.redis_client.lrange(history_key, 0, -1)

@@ -97,6 +97,9 @@ class BlockchainConnection:
         
     async def initialize_connection(self) -> bool:
         """Initialize blockchain connection with retry logic."""
+
+
+
         try:
             network_config = self.NETWORKS.get(self.network)
             if not network_config:
@@ -136,6 +139,9 @@ class BlockchainConnection:
     
     async def _test_connection(self) -> bool:
         """Test blockchain connection health."""
+
+
+
         try:
             if not self.web3:
                 return False
@@ -189,6 +195,9 @@ class BlockchainConnection:
     
     async def get_balance(self, address: str) -> Dict[str, Union[int, str]]:
         """Get wallet balance for address."""
+
+
+
         try:
             if not self.web3:
                 raise ValueError("Blockchain connection not initialized")
@@ -214,6 +223,9 @@ class BlockchainConnection:
     
     async def estimate_gas_price(self) -> Dict[str, int]:
         """Estimate current gas prices."""
+
+
+
         try:
             if not self.web3:
                 raise ValueError("Blockchain connection not initialized")
@@ -267,6 +279,9 @@ class BlockchainConnection:
     
     def create_account(self, private_key: Optional[str] = None) -> Dict[str, str]:
         """Create or load blockchain account."""
+
+
+
         try:
             if private_key:
                 account = Account.from_key(private_key)
@@ -287,6 +302,9 @@ class BlockchainConnection:
     
     async def close_connection(self) -> None:
         """Close blockchain connection and cleanup resources."""
+
+
+
         try:
             if self.web3:
                 # Cleanup any pending transactions or connections
@@ -306,6 +324,9 @@ class MultiNetworkManager:
     
     async def add_network(self, network: str, api_key: Optional[str] = None) -> bool:
         """Add and initialize a new network connection."""
+
+
+
         try:
             if network in self.connections:
                 return True

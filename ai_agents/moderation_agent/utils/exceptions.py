@@ -7,7 +7,7 @@ Provides detailed error information and proper error categorization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -40,6 +40,9 @@ class ModerationAgentException(Exception):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert exception to dictionary for API responses"""
+
+
+
         return {
             'error': True,
             'error_code': self.error_code,
@@ -494,18 +497,27 @@ class ModerationExceptionFactory:
     def create_content_error(content_type: str, stage: str, reason: str,
                            content_id: str = None, context: Dict[str, Any] = None) -> ContentProcessingError:
         """Create content processing exception"""
+
+
+
         return ContentProcessingError(content_type, stage, reason, content_id, context)
     
     @staticmethod
     def create_configuration_error(config_key: str, issue: str,
                                  context: Dict[str, Any] = None) -> ConfigurationError:
         """Create configuration exception"""
+
+
+
         return ConfigurationError(config_key, issue, context=context)
     
     @staticmethod
     def create_resource_error(resource: str, requirement: str, 
                             availability: str = None, context: Dict[str, Any] = None) -> InsufficientResourcesError:
         """Create resource limitation exception"""
+
+
+
         return InsufficientResourcesError(resource, requirement, availability, context)
 
 # Error handler for graceful exception handling

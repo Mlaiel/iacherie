@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -319,14 +319,23 @@ class ConnectionPool:
     
     def get_connection(self, connection_id: str) -> Optional[WebSocketServerProtocol]:
         """Get WebSocket connection by ID"""
+
+
+
         return self.connections.get(connection_id)
     
     def get_user_connections(self, user_id: str) -> List[str]:
         """Get all connection IDs for a user"""
+
+
+
         return list(self.user_connections.get(user_id, set()))
     
     def get_room_connections(self, room_id: str) -> List[str]:
         """Get all connection IDs in a room"""
+
+
+
         return list(self.room_connections.get(room_id, set()))
     
     async def join_room(self, connection_id: str, room_id: str):
@@ -355,6 +364,9 @@ class ConnectionPool:
     
     def get_connection_count(self) -> int:
         """Get total number of active connections"""
+
+
+
         return len(self.connections)
     
     def get_stats(self) -> Dict[str, Any]:
@@ -828,6 +840,9 @@ class WebSocketManager:
         raw_message: str
     ):
         """Process incoming WebSocket message"""
+
+
+
         try:
             message_data = json.loads(raw_message)
             message_type = MessageType(message_data.get('type'))

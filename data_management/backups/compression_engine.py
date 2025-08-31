@@ -1,5 +1,5 @@
 """
-🗜️ Compression Engine - Intelligent Content Compression System
+ Compression Engine - Intelligent Content Compression System
 ============================================================
 Module: backend/data_management/backups/compression_engine.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Compression System - Enterprise Production-Ready
 Responsibility: Compression avancée multi-format avec optimisation intelligente
 ===============================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -53,6 +53,9 @@ class CompressionResult:
     @property
     def space_saved_bytes(self) -> int:
         """Espace économisé en bytes"""
+
+
+
         return self.original_size - self.compressed_size
     
     @property
@@ -79,6 +82,9 @@ class CompressionConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit en dictionnaire"""
+
+
+
         return {
             "algorithm": self.algorithm,
             "level": self.level,
@@ -166,6 +172,9 @@ class ZstandardAlgorithm(CompressionAlgorithm):
         Returns:
             CompressionResult: Résultats de la compression
         """
+
+
+
         try:
             start_time = datetime.now()
             
@@ -259,6 +268,9 @@ class ZstandardAlgorithm(CompressionAlgorithm):
         Returns:
             bool: True si décompression réussie
         """
+
+
+
         try:
             if not input_path.exists():
                 logger.error(f"Compressed file not found: {input_path}")
@@ -377,6 +389,9 @@ class GzipAlgorithm(CompressionAlgorithm):
         **kwargs
     ) -> CompressionResult:
         """Compresse un fichier avec Gzip"""
+
+
+
         try:
             start_time = datetime.now()
             
@@ -420,6 +435,9 @@ class GzipAlgorithm(CompressionAlgorithm):
     
     async def decompress(self, input_path: Path, output_path: Path, **kwargs) -> bool:
         """Décompresse un fichier Gzip"""
+
+
+
         try:
             output_path.parent.mkdir(parents=True, exist_ok=True)
             
@@ -435,6 +453,9 @@ class GzipAlgorithm(CompressionAlgorithm):
     
     def get_optimal_level(self, content_type: str, file_size: int) -> int:
         """Retourne le niveau optimal pour Gzip"""
+
+
+
         return self.optimal_levels.get(content_type, 6)
     
     async def _calculate_checksum(self, file_path: Path) -> str:
@@ -447,6 +468,9 @@ class GzipAlgorithm(CompressionAlgorithm):
     
     def _detect_content_type(self, file_path: Path) -> str:
         """Détecte le type de contenu"""
+
+
+
         return ZstandardAlgorithm()._detect_content_type(file_path)
 
 
@@ -483,6 +507,9 @@ class Bzip2Algorithm(CompressionAlgorithm):
         **kwargs
     ) -> CompressionResult:
         """Compresse un fichier avec Bzip2"""
+
+
+
         try:
             start_time = datetime.now()
             
@@ -526,6 +553,9 @@ class Bzip2Algorithm(CompressionAlgorithm):
     
     async def decompress(self, input_path: Path, output_path: Path, **kwargs) -> bool:
         """Décompresse un fichier Bzip2"""
+
+
+
         try:
             output_path.parent.mkdir(parents=True, exist_ok=True)
             
@@ -541,6 +571,9 @@ class Bzip2Algorithm(CompressionAlgorithm):
     
     def get_optimal_level(self, content_type: str, file_size: int) -> int:
         """Retourne le niveau optimal pour Bzip2"""
+
+
+
         return self.optimal_levels.get(content_type, 6)
     
     async def _calculate_checksum(self, file_path: Path) -> str:
@@ -553,6 +586,9 @@ class Bzip2Algorithm(CompressionAlgorithm):
     
     def _detect_content_type(self, file_path: Path) -> str:
         """Détecte le type de contenu"""
+
+
+
         return ZstandardAlgorithm()._detect_content_type(file_path)
 
 
@@ -656,6 +692,9 @@ class CompressionEngine:
         Returns:
             CompressionResult: Résultat de la compression
         """
+
+
+
         try:
             # Sélection algorithme optimal
             algorithm_name = config.algorithm
@@ -862,6 +901,9 @@ class CompressionEngine:
         Returns:
             bool: True si intégrité vérifiée
         """
+
+
+
         try:
             # Décompression dans fichier temporaire
             with tempfile.NamedTemporaryFile(delete=False) as temp_file:
@@ -1211,6 +1253,9 @@ class ContentAwareCompression(CompressionEngine):
     
     def _initialize_content_analyzers(self) -> Dict[str, Any]:
         """Initialise les analyseurs de contenu spécialisés"""
+
+
+
         return {
             "text": self._analyze_text_content,
             "image": self._analyze_image_content,
@@ -1221,6 +1266,9 @@ class ContentAwareCompression(CompressionEngine):
     
     async def _analyze_text_content(self, file_path: Path) -> Dict[str, Any]:
         """Analyse approfondie du contenu textuel"""
+
+
+
         try:
             with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
                 sample = f.read(10000)  # Échantillon 10KB

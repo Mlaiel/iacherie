@@ -6,7 +6,7 @@ Provides comprehensive system health, performance monitoring, and anomaly detect
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel - All rights reserved
-⚠️  WARNING: This code and concept are proprietary to Fahed Mlaiel.
+  WARNING: This code and concept are proprietary to Fahed Mlaiel.
     Any unauthorized use, copying, or distribution without explicit written 
     permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 
@@ -77,6 +77,9 @@ class MonitoringEvent:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'event_id': self.event_id,
             'event_type': self.event_type.value,
@@ -126,6 +129,9 @@ class SystemMonitor:
     
     async def check_system_health(self) -> Dict[str, Any]:
         """Perform comprehensive system health check"""
+
+
+
         try:
             start_time = time.time()
             
@@ -292,6 +298,9 @@ class AlertManager:
     
     async def process_alert(self, alert: Dict[str, Any]) -> None:
         """Process and route alerts"""
+
+
+
         try:
             alert_id = f"{alert['type']}_{alert.get('source', 'unknown')}"
             
@@ -516,6 +525,9 @@ class MonitoringEventHandler:
     
     async def get_monitoring_dashboard(self) -> Dict[str, Any]:
         """Get comprehensive monitoring dashboard data"""
+
+
+
         try:
             # Get latest health data
             health_data = await self.system_monitor.check_system_health()
@@ -573,6 +585,9 @@ async def stop_monitoring_system() -> None:
 
 async def get_monitoring_status() -> Dict[str, Any]:
     """Get current monitoring system status"""
+
+
+
     return await global_monitoring_handler.get_monitoring_dashboard()
 
 

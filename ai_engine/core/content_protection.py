@@ -7,7 +7,7 @@ copyright detection, and automated rights enforcement.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+ UNAUTHORIZED USE STRICTLY PROHIBITED 
 This cutting-edge content protection system is protected intellectual property.
 Any unauthorized copying, distribution, or use will result in immediate legal action.
 
@@ -232,6 +232,9 @@ class AudioFingerprintGenerator:
                                        audio_data: Union[str, np.ndarray, BinaryIO],
                                        method: str = "chromaprint") -> ContentFingerprint:
         """Generate audio fingerprint"""
+
+
+
         try:
             # Load audio data
             if isinstance(audio_data, str):
@@ -277,6 +280,9 @@ class AudioFingerprintGenerator:
     
     async def _generate_chromaprint(self, y: np.ndarray, sr: int) -> str:
         """Generate Chromaprint-style fingerprint"""
+
+
+
         try:
             # Extract chroma features
             chroma = librosa.feature.chroma_stft(y=y, sr=sr, 
@@ -299,6 +305,9 @@ class AudioFingerprintGenerator:
     
     async def _generate_spectral_fingerprint(self, y: np.ndarray, sr: int) -> str:
         """Generate spectral fingerprint"""
+
+
+
         try:
             # Compute spectral features
             spectral_centroids = librosa.feature.spectral_centroid(y=y, sr=sr)[0]
@@ -324,6 +333,9 @@ class AudioFingerprintGenerator:
     
     async def _generate_mfcc_fingerprint(self, y: np.ndarray, sr: int) -> str:
         """Generate MFCC-based fingerprint"""
+
+
+
         try:
             # Extract MFCC features
             mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)
@@ -357,6 +369,9 @@ class ImageFingerprintGenerator:
     
     def _initialize_models(self):
         """Initialize pre-trained models for feature extraction"""
+
+
+
         try:
             # Load pre-trained ResNet for feature extraction
             self.feature_extractor = models.resnet50(pretrained=True)
@@ -380,6 +395,9 @@ class ImageFingerprintGenerator:
                                        image_data: Union[str, np.ndarray, Image.Image, BinaryIO],
                                        method: str = "perceptual") -> ContentFingerprint:
         """Generate image fingerprint"""
+
+
+
         try:
             # Load and preprocess image
             if isinstance(image_data, str):
@@ -426,6 +444,9 @@ class ImageFingerprintGenerator:
     
     async def _generate_perceptual_hash(self, image: Image.Image) -> str:
         """Generate perceptual hash using multiple algorithms"""
+
+
+
         try:
             # Multiple perceptual hashes for robustness
             dhash = imagehash.dhash(image)
@@ -447,6 +468,9 @@ class ImageFingerprintGenerator:
     
     async def _generate_deep_features_hash(self, image: Image.Image) -> str:
         """Generate deep features hash using pre-trained CNN"""
+
+
+
         try:
             if not TORCH_AVAILABLE or not hasattr(self, 'feature_extractor'):
                 # Fallback to perceptual hash
@@ -475,6 +499,9 @@ class ImageFingerprintGenerator:
     
     async def _generate_structural_hash(self, image: Image.Image) -> str:
         """Generate structural signature based on image structure"""
+
+
+
         try:
             # Convert to numpy array
             img_array = np.array(image)
@@ -523,6 +550,9 @@ class TextFingerprintGenerator:
                                       text: str,
                                       method: str = "semantic") -> ContentFingerprint:
         """Generate text fingerprint"""
+
+
+
         try:
             if method == "semantic":
                 fingerprint_data = await self._generate_semantic_fingerprint(text)
@@ -559,6 +589,9 @@ class TextFingerprintGenerator:
     
     async def _generate_semantic_fingerprint(self, text: str) -> str:
         """Generate semantic fingerprint using text analysis"""
+
+
+
         try:
             # Text preprocessing
             words = text.lower().split()
@@ -586,6 +619,9 @@ class TextFingerprintGenerator:
     
     async def _generate_structural_fingerprint(self, text: str) -> str:
         """Generate structural fingerprint based on text structure"""
+
+
+
         try:
             # Analyze text structure
             sentences = text.split('.')
@@ -621,6 +657,9 @@ class TextFingerprintGenerator:
     
     async def _generate_hash_fingerprint(self, text: str) -> str:
         """Generate hash-based fingerprint"""
+
+
+
         try:
             # Multiple hash algorithms for robustness
             md5_hash = hashlib.md5(text.encode()).hexdigest()
@@ -661,6 +700,9 @@ class ContentProtectionEngine:
                             copyright_info: Dict[str, Any] = None,
                             custom_settings: Dict[str, Any] = None) -> ProtectionRecord:
         """Protect content with comprehensive fingerprinting"""
+
+
+
         try:
             copyright_info = copyright_info or {}
             custom_settings = custom_settings or {}
@@ -787,6 +829,9 @@ class ContentProtectionEngine:
     
     def _generate_metadata_fingerprint(self, content_id: str, content_type: ContentType) -> ContentFingerprint:
         """Generate metadata-based fingerprint"""
+
+
+
         try:
             # Create metadata signature
             metadata = {
@@ -819,6 +864,9 @@ class ContentProtectionEngine:
                               content_id: str,
                               copyright_info: Dict[str, Any]) -> Dict[str, Any]:
         """Create cryptographic ownership proof"""
+
+
+
         try:
             ownership_data = {
                 "owner_id": owner_id,
@@ -941,6 +989,9 @@ class ContentProtectionEngine:
     
     async def _initialize_content_monitoring(self, protection_record: ProtectionRecord):
         """Initialize automated content monitoring"""
+
+
+
         try:
             # Set up monitoring task (simplified)
             logger.info(f"Initialized monitoring for content: {protection_record.content_id}")
@@ -959,6 +1010,9 @@ class ContentProtectionEngine:
                               suspicious_url: str,
                               platform: str) -> List[ViolationReport]:
         """Detect content violations using fingerprint matching"""
+
+
+
         try:
             violations = []
             
@@ -989,6 +1043,9 @@ class ContentProtectionEngine:
                                           suspicious_content: Any,
                                           protection_record: ProtectionRecord) -> List[Dict[str, Any]]:
         """Compare suspicious content against protected fingerprints"""
+
+
+
         try:
             results = []
             
@@ -1021,6 +1078,9 @@ class ContentProtectionEngine:
                                         fingerprint1: ContentFingerprint,
                                         fingerprint2: ContentFingerprint) -> float:
         """Calculate similarity between two fingerprints"""
+
+
+
         try:
             # Decode fingerprints
             data1 = base64.b64decode(fingerprint1.fingerprint_data.encode()).decode()
@@ -1051,6 +1111,9 @@ class ContentProtectionEngine:
                                      platform: str,
                                      match_data: Dict[str, Any]) -> ViolationReport:
         """Create violation report"""
+
+
+
         try:
             # Assess violation severity
             similarity = match_data["similarity"]
@@ -1102,6 +1165,9 @@ class ContentProtectionEngine:
                                  similarity: float,
                                  platform: str) -> float:
         """Estimate financial impact of violation"""
+
+
+
         try:
             # Base impact factors
             base_impacts = {
@@ -1138,6 +1204,9 @@ class ContentProtectionEngine:
                                          violation_report: ViolationReport,
                                          protection_record: ProtectionRecord):
         """Trigger appropriate enforcement actions"""
+
+
+
         try:
             enforcement_settings = protection_record.protection_settings
             actions = []
@@ -1171,6 +1240,9 @@ class ContentProtectionEngine:
                                         violation_report: ViolationReport,
                                         protection_record: ProtectionRecord):
         """Execute specific enforcement action"""
+
+
+
         try:
             logger.info(f"Executing enforcement action: {action.value} for violation: {violation_report.violation_id}")
             

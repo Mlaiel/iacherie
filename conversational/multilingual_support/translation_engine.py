@@ -7,7 +7,7 @@ and cultural adaptation for global content creator communications.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE ⚠️
+  CRITICAL LEGAL NOTICE 
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@li        try:
@@ -162,6 +162,9 @@ class TranslationCache:
         request: TranslationRequest
     ) -> Optional[TranslationResult]:
         """Get cached translation if available"""
+
+
+
         try:
             cache_key = self._generate_cache_key(request)
             cached_data = await self.redis_client.get(cache_key)
@@ -188,6 +191,9 @@ class TranslationCache:
         ttl: Optional[int] = None
     ):
         """Cache translation result with quality-based TTL"""
+
+
+
         try:
             cache_key = self._generate_cache_key(request)
             
@@ -233,6 +239,9 @@ class TranslationCache:
     
     def _serialize_translation_result(self, result: TranslationResult) -> Dict[str, Any]:
         """Serialize translation result for caching"""
+
+
+
         return {
             "original_text": result.original_text,
             "translated_text": result.translated_text,
@@ -253,6 +262,9 @@ class TranslationCache:
     
     def _deserialize_translation_result(self, data: Dict[str, Any]) -> TranslationResult:
         """Deserialize cached translation result"""
+
+
+
         return TranslationResult(
             original_text=data["original_text"],
             translated_text=data["translated_text"],
@@ -293,6 +305,9 @@ class TranslationQualityAssessor:
         context: Optional[str] = None
     ) -> Tuple[float, TranslationQuality, Dict[str, float]]:
         """Comprehensive translation quality assessment"""
+
+
+
         try:
             metrics = {}
             
@@ -342,6 +357,9 @@ class TranslationQualityAssessor:
     
     async def _assess_fluency(self, text: str, language: SupportedLanguage) -> float:
         """Assess translation fluency using language models"""
+
+
+
         try:
             # Simple fluency checks
             score = 1.0
@@ -451,7 +469,7 @@ class TranslationQualityAssessor:
         # Language-specific cultural checks
         if target_lang == SupportedLanguage.JAPANESE:
             # Japanese requires more formal language in most contexts
-            if not any(honorific in translation for honorific in ['です', 'ます', 'ございます']):
+            if not any(honorific in translation for honorific in ['', '', '']):
                 score -= 0.1
         
         elif target_lang == SupportedLanguage.GERMAN:
@@ -485,6 +503,9 @@ class TranslationService:
         
     def _initialize_client(self):
         """Initialize translation service client"""
+
+
+
         try:
             if self.provider == TranslationProvider.GOOGLE_TRANSLATE:
                 self.client = GoogleTranslator()
@@ -552,6 +573,9 @@ class TranslationService:
     
     async def _translate_google(self, request: TranslationRequest) -> TranslationResult:
         """Translate using Google Translate"""
+
+
+
         try:
             if not self.client:
                 raise Exception("Google Translate client not initialized")
@@ -578,6 +602,9 @@ class TranslationService:
     
     async def _translate_openai(self, request: TranslationRequest) -> TranslationResult:
         """Translate using OpenAI GPT"""
+
+
+
         try:
             if not self.client:
                 raise Exception("OpenAI client not available")
@@ -614,6 +641,9 @@ class TranslationService:
     
     async def _translate_marian(self, request: TranslationRequest) -> TranslationResult:
         """Translate using MarianMT models"""
+
+
+
         try:
             model_name = self._get_marian_model_name(
                 request.source_language, 
@@ -717,6 +747,9 @@ class TranslationEngine:
         """
         Perform translation with quality assessment and provider fallback
         """
+
+
+
         try:
             # Check cache first
             if use_cache:

@@ -1,6 +1,6 @@
 """Legal Compliance Database Module - IA Influencer Agent + Content Protection Platform
 
-🚨 INTELLECTUAL PROPERTY WARNING
+ INTELLECTUAL PROPERTY WARNING
 © 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 Email: mlaiel@live.de
 
@@ -199,7 +199,10 @@ def get_module_info() -> Dict[str, Any]:
     
     Returns:
         Dict[str, Any]: Module information including capabilities and compliance features
-    """    return {
+    """
+
+
+    return {
         "name": "Legal Compliance Database",
         "version": __version__,
         "author": "Fahed Mlaiel",

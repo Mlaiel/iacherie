@@ -7,7 +7,7 @@ pipelines with AI-powered optimization and dynamic workflow generation.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -287,6 +287,9 @@ class PipelineBuilder:
         Returns:
             WorkflowDefinition: Complete workflow definition
         """
+
+
+
         try:
             if template_id not in self.templates:
                 raise ValueError(f"Template '{template_id}' not found")
@@ -373,6 +376,9 @@ class PipelineBuilder:
 
     def _optimize_workflow(self, workflow: WorkflowDefinition) -> WorkflowDefinition:
         """Apply optimization rules to workflow definition."""
+
+
+
         try:
             for rule_name, rule_func in self.optimization_rules.items():
                 workflow = rule_func(workflow)
@@ -473,10 +479,16 @@ class PipelineBuilder:
 
     def get_template(self, template_id: str) -> Optional[PipelineTemplate]:
         """Retrieve a pipeline template by ID."""
+
+
+
         return self.templates.get(template_id)
 
     def list_templates(self) -> List[str]:
         """List all available pipeline template IDs."""
+
+
+
         return list(self.templates.keys())
 
     def validate_pipeline(self, workflow: WorkflowDefinition) -> Dict[str, List[str]]:
@@ -564,6 +576,9 @@ class PipelineBuilder:
         Returns:
             WorkflowDefinition: Dynamically generated workflow
         """
+
+
+
         try:
             # Select appropriate base template
             base_template = self._select_base_template(content_type, requirements)
@@ -773,6 +788,9 @@ class PipelineBuilder:
 
     def export_pipeline(self, workflow: WorkflowDefinition) -> Dict[str, Any]:
         """Export pipeline definition to JSON-serializable format."""
+
+
+
         return {
             "workflow_id": workflow.workflow_id,
             "name": workflow.name,

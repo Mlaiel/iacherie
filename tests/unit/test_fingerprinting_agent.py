@@ -195,21 +195,33 @@ class TestFingerprintingAgent:
     @pytest.fixture
     def fingerprinting_engine(self):
         """Create fingerprinting engine fixture"""
+
+
+
         return MockFingerprintingEngine()
     
     @pytest.fixture
     def sample_audio_data(self):
         """Sample audio data for testing"""
+
+
+
         return b"fake_audio_data_for_testing" * 1000
     
     @pytest.fixture
     def sample_video_data(self):
         """Sample video data for testing"""
+
+
+
         return b"fake_video_data_for_testing" * 2000
     
     @pytest.fixture
     def audio_metadata(self):
         """Sample audio metadata"""
+
+
+
         return {
             "duration": 180.5,
             "sample_rate": 44100,
@@ -221,6 +233,9 @@ class TestFingerprintingAgent:
     @pytest.fixture
     def video_metadata(self):
         """Sample video metadata"""
+
+
+
         return {
             "duration": 300.0,
             "resolution": "1920x1080",

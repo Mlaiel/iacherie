@@ -198,6 +198,9 @@ class UserSubscription(Base):
     @property
     def is_active(self) -> bool:
         """Vérifie si l'abonnement est actif."""
+
+
+
         return self.status in [SubscriptionStatus.ACTIVE, SubscriptionStatus.TRIAL]
     
     @property
@@ -354,6 +357,9 @@ class SubscriptionRepository:
         Returns:
             UserSubscription: Abonnement créé
         """
+
+
+
         try:
             plan = self.session.query(SubscriptionPlan).filter(
                 SubscriptionPlan.id == plan_id
@@ -408,6 +414,9 @@ class SubscriptionRepository:
     
     def get_user_active_subscription(self, user_id: str) -> Optional[UserSubscription]:
         """Récupère l'abonnement actif d'un utilisateur."""
+
+
+
         return self.session.query(UserSubscription).filter(
             UserSubscription.user_id == user_id,
             UserSubscription.status.in_([SubscriptionStatus.ACTIVE, SubscriptionStatus.TRIAL])
@@ -424,6 +433,9 @@ class SubscriptionRepository:
         Returns:
             bool: True si annulé avec succès
         """
+
+
+
         try:
             subscription = self.session.query(UserSubscription).filter(
                 UserSubscription.id == subscription_id
@@ -464,6 +476,9 @@ class SubscriptionRepository:
         Returns:
             bool: True si mis à niveau avec succès
         """
+
+
+
         try:
             subscription = self.session.query(UserSubscription).filter(
                 UserSubscription.id == subscription_id
@@ -542,6 +557,9 @@ class SubscriptionRepository:
         Returns:
             List[str]: Liste des IDs d'abonnements traités
         """
+
+
+
         try:
             # Abonnements arrivant à échéance dans les prochaines 24h
             cutoff_date = datetime.utcnow() + timedelta(hours=24)

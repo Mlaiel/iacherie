@@ -1,5 +1,5 @@
 """
-� IA-Influencer-Agent - Ultra-Advanced Web Crawler Engine
+ IA-Influencer-Agent - Ultra-Advanced Web Crawler Engine
 ==========================================================
 
 Ultra-sophisticated web crawling system for comprehensive content monitoring
@@ -13,7 +13,7 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Micro
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
+ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
 This code and concept are the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 Unauthorized access, copying, modification, distribution, reverse engineering,
@@ -438,6 +438,9 @@ class PlatformCrawler:
     
     async def _platform_specific_extraction(self, soup: BeautifulSoup, target: CrawlerTarget) -> Dict[str, Any]:
         """Platform-specific data extraction - override in subclasses"""
+
+
+
         return {}
     
     async def _extract_media_urls(self, content: str, base_url: str) -> List[str]:
@@ -487,6 +490,9 @@ class PlatformCrawler:
     
     async def _check_robots_allowed(self, url: str) -> bool:
         """Check if URL is allowed by robots.txt"""
+
+
+
         try:
             parsed = urlparse(url)
             robots_url = f"{parsed.scheme}://{parsed.netloc}/robots.txt"
@@ -617,6 +623,9 @@ class WebCrawlerEngine:
     
     async def _initialize_async_components(self):
         """Initialize async components"""
+
+
+
         try:
             # Initialize database
             if self.config.database_url:
@@ -711,6 +720,9 @@ class WebCrawlerEngine:
     
     async def crawl_target(self, target: CrawlerTarget) -> CrawlerResult:
         """Crawl single target"""
+
+
+
         try:
             # Get appropriate crawler
             crawler = self._get_crawler_for_target(target)
@@ -767,6 +779,9 @@ class WebCrawlerEngine:
     
     async def _analyze_content(self, result: CrawlerResult) -> CrawlerResult:
         """Analyze crawled content with AI"""
+
+
+
         try:
             if not result.content:
                 return result
@@ -1557,6 +1572,9 @@ class WebCrawlerEngine:
     
     async def initialize(self) -> None:
         """Initialize all platform crawlers"""
+
+
+
         try:
             # Initialize platform-specific crawlers
             self.crawlers["youtube"] = YouTubeCrawler(self.config)

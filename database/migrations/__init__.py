@@ -1,4 +1,4 @@
-"""🔄 Database Migrations Module - Ultra-Industrial Enterprise Migration Suite
+""" Database Migrations Module - Ultra-Industrial Enterprise Migration Suite
 ==========================================================================
 Module: backend/database/migrations/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -7,7 +7,7 @@ Type: Industrial Database Migration Engine - Ultra Enterprise Production-Ready
 Responsibility: Complete database schema evolution for multi-format content protection and AI monetization
 ==================================================================================================
 
-⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
+  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de

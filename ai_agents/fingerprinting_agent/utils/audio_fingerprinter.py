@@ -7,7 +7,7 @@ Chromaprint, spectral analysis, and deep learning embeddings for precise audio i
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -156,6 +156,9 @@ class AudioFingerprinter:
     
     async def initialize(self):
         """Initialize all audio processing models and algorithms"""
+
+
+
         try:
             start_time = time.time()
             
@@ -294,6 +297,9 @@ class AudioFingerprinter:
     
     async def _load_and_preprocess_audio(self, audio_data: Union[str, np.ndarray, bytes]) -> Tuple[np.ndarray, int]:
         """Load and preprocess audio data"""
+
+
+
         try:
             if isinstance(audio_data, str):
                 # Load from file path
@@ -349,6 +355,9 @@ class AudioFingerprinter:
     
     async def _extract_chromaprint(self, audio_array: np.ndarray, sample_rate: int) -> str:
         """Extract Chromaprint acoustic fingerprint"""
+
+
+
         try:
             # Convert to format expected by chromaprint
             if audio_array.dtype != np.int16:
@@ -508,6 +517,9 @@ class AudioFingerprinter:
     
     async def _extract_wav2vec2_embedding(self, audio_array: np.ndarray, sample_rate: int) -> np.ndarray:
         """Extract Wav2Vec2 deep learning embedding"""
+
+
+
         try:
             if self.wav2vec2_model is None or self.wav2vec2_processor is None:
                 return np.array([])
@@ -541,6 +553,9 @@ class AudioFingerprinter:
     
     async def _extract_clap_embedding(self, audio_array: np.ndarray, sample_rate: int) -> np.ndarray:
         """Extract CLAP (Contrastive Language-Audio Pre-training) embedding"""
+
+
+
         try:
             if self.clap_model is None:
                 return np.array([])
@@ -558,6 +573,9 @@ class AudioFingerprinter:
     
     async def _extract_audio_metadata(self, audio_array: np.ndarray, sample_rate: int) -> Dict[str, Any]:
         """Extract comprehensive audio metadata"""
+
+
+
         try:
             duration = len(audio_array) / sample_rate
             
@@ -620,6 +638,9 @@ class AudioFingerprinter:
         deep_embeddings: Dict[str, np.ndarray]
     ) -> Dict[str, float]:
         """Calculate fingerprint quality metrics"""
+
+
+
         try:
             quality_metrics = {}
             
@@ -648,6 +669,9 @@ class AudioFingerprinter:
     
     def _assess_signal_quality(self, audio_array: np.ndarray) -> Dict[str, float]:
         """Assess audio signal quality"""
+
+
+
         try:
             # Signal-to-noise ratio estimation
             signal_power = np.mean(audio_array**2)
@@ -676,6 +700,9 @@ class AudioFingerprinter:
     
     def _assess_feature_quality(self, feature_vectors: List[AudioFeatureVector]) -> Dict[str, float]:
         """Assess quality of extracted features"""
+
+
+
         try:
             if not feature_vectors:
                 return {'feature_quality': 0.0}
@@ -710,6 +737,9 @@ class AudioFingerprinter:
     
     def _assess_embedding_quality(self, deep_embeddings: Dict[str, np.ndarray]) -> Dict[str, float]:
         """Assess quality of deep learning embeddings"""
+
+
+
         try:
             if not deep_embeddings:
                 return {'embedding_quality': 0.0}
@@ -744,6 +774,9 @@ class AudioFingerprinter:
     
     async def _create_unified_embedding(self, fingerprint: AudioFingerprint) -> np.ndarray:
         """Create unified embedding vector for similarity search"""
+
+
+
         try:
             embedding_components = []
             
@@ -825,6 +858,9 @@ class AudioFingerprinter:
     
     async def _initialize_wav2vec2(self):
         """Initialize Wav2Vec2 model for deep embeddings"""
+
+
+
         try:
             model_name = self.config.get('wav2vec2_model', 'facebook/wav2vec2-base-960h')
             
@@ -841,6 +877,9 @@ class AudioFingerprinter:
     
     async def _initialize_clap_model(self):
         """Initialize CLAP model for semantic audio understanding"""
+
+
+
         try:
             # CLAP model initialization would go here
             # This is a placeholder for actual CLAP implementation
@@ -853,6 +892,9 @@ class AudioFingerprinter:
     
     async def _initialize_essentia(self):
         """Initialize Essentia algorithms"""
+
+
+
         try:
             # Initialize commonly used Essentia algorithms
             self.essentia_algos['rhythm'] = es.RhythmExtractor2013()
@@ -867,6 +909,9 @@ class AudioFingerprinter:
     
     async def _precompile_feature_extractors(self):
         """Pre-compile feature extraction functions for performance"""
+
+
+
         try:
             # Pre-compile librosa functions with JIT where possible
             # This is a placeholder for actual JIT compilation
@@ -877,6 +922,9 @@ class AudioFingerprinter:
     
     async def _apply_noise_reduction(self, audio_array: np.ndarray, sample_rate: int) -> np.ndarray:
         """Apply noise reduction to audio"""
+
+
+
         try:
             # Simple noise reduction using spectral subtraction
             stft = librosa.stft(audio_array)
@@ -918,6 +966,9 @@ class AudioFingerprinter:
     
     async def cleanup(self):
         """Clean up resources"""
+
+
+
         try:
             # Clean up models
             if hasattr(self, 'wav2vec2_model') and self.wav2vec2_model is not None:
@@ -942,6 +993,9 @@ class AudioFingerprinter:
     
     def get_supported_formats(self) -> List[str]:
         """Get list of supported audio formats"""
+
+
+
         return [
             '.mp3', '.wav', '.flac', '.ogg', '.m4a', '.aac', '.wma',
             '.mp4', '.avi', '.mov', '.webm'  # Video formats with audio
@@ -949,6 +1003,9 @@ class AudioFingerprinter:
     
     async def validate_audio_input(self, audio_data: Union[str, np.ndarray, bytes]) -> bool:
         """Validate audio input before processing"""
+
+
+
         try:
             if isinstance(audio_data, str):
                 # Check file exists and format
@@ -1000,6 +1057,9 @@ class AudioFingerprinter:
         
     async def initialize(self):
         """Initialize audio fingerprinting system"""
+
+
+
         try:
             # Initialize deep learning models
             await self._initialize_deep_models()
@@ -1143,6 +1203,9 @@ class AudioFingerprinter:
     
     async def _generate_chromaprint(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
         """Generate Chromaprint acoustic fingerprint"""
+
+
+
         try:
             # Convert to int16 for Chromaprint
             audio_int16 = (audio * 32767).astype(np.int16)
@@ -1218,6 +1281,9 @@ class AudioFingerprinter:
     
     async def _extract_essentia_features(self, audio: np.ndarray, sr: int) -> Dict[str, np.ndarray]:
         """Extract advanced features using Essentia"""
+
+
+
         try:
             # Ensure we have Essentia algorithms initialized
             if not self.essentia_algorithms:
@@ -1300,6 +1366,9 @@ class AudioFingerprinter:
     
     async def _generate_deep_embedding(self, audio: np.ndarray, sr: int) -> np.ndarray:
         """Generate deep learning audio embedding"""
+
+
+
         try:
             if self.wav2vec2_model is None:
                 logger.warning("Wav2Vec2 model not loaded, using fallback embedding")
@@ -1376,6 +1445,9 @@ class AudioFingerprinter:
     
     async def _initialize_deep_models(self):
         """Initialize deep learning models for audio processing"""
+
+
+
         try:
             # Load Wav2Vec2 for audio embeddings
             model_name = "facebook/wav2vec2-base-960h"
@@ -1393,6 +1465,9 @@ class AudioFingerprinter:
     
     async def _initialize_essentia(self):
         """Initialize Essentia algorithms"""
+
+
+
         try:
             self.essentia_algorithms = {
                 'rhythm_extractor': es.RhythmExtractor2013(),

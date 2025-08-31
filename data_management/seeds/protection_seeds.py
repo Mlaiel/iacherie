@@ -213,11 +213,11 @@ class ProtectionSeedsManager:
                 'details': results
             }
             
-            logger.info(f"✅ Protection seeds initialized successfully in {duration:.2f}s")
+            logger.info(f" Protection seeds initialized successfully in {duration:.2f}s")
             return summary
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize protection seeds: {str(e)}")
+            logger.error(f" Failed to initialize protection seeds: {str(e)}")
             raise
     
     async def _initialize_protection_levels(self) -> Dict[str, Any]:

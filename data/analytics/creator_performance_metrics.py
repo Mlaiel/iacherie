@@ -1,5 +1,5 @@
 """
-🚀 Creator Performance Metrics - IA-Influencer-Agent Enterprise
+ Creator Performance Metrics - IA-Influencer-Agent Enterprise
 ===============================================================
 
 Métriques de performance avancées pour créateurs multi-format avec analytics
@@ -11,7 +11,7 @@ Recommandations Croissance → Matching Collaboration → Monétisation Optimis�
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
+ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
 """
 
 from typing import Dict, List, Any, Optional, Union
@@ -30,11 +30,11 @@ logger = logging.getLogger(__name__)
 
 class CreatorType(Enum):
     """Types de créateurs supportés dans IA-Influencer-Agent."""
-    MUSICIAN = "musician"           # 🎵 Musicien (Spotify, SoundCloud)
-    INFLUENCER = "influencer"       # 📱 Influenceur (Instagram, TikTok, YouTube)
-    PHOTOGRAPHER = "photographer"   # 📸 Photographe (Instagram, portfolios)
-    BLOGGER = "blogger"            # ✍️ Blogueur (Medium, blogs personnels)
-    COMEDIAN = "comedian"          # 🎭 Comédien (YouTube, TikTok, Twitch)
+    MUSICIAN = "musician"           #  Musicien (Spotify, SoundCloud)
+    INFLUENCER = "influencer"       #  Influenceur (Instagram, TikTok, YouTube)
+    PHOTOGRAPHER = "photographer"   #  Photographe (Instagram, portfolios)
+    BLOGGER = "blogger"            #  Blogueur (Medium, blogs personnels)
+    COMEDIAN = "comedian"          #  Comédien (YouTube, TikTok, Twitch)
 
 
 class PlatformType(Enum):
@@ -176,7 +176,7 @@ class GrowthPrediction:
 
 class CreatorPerformanceMetrics:
     """
-    🚀 Système Enterprise de Métriques Performance Créateurs
+     Système Enterprise de Métriques Performance Créateurs
     ========================================================
     
     Analytics avancés et prédictions IA pour créateurs multi-format :
@@ -220,7 +220,7 @@ class CreatorPerformanceMetrics:
         # Cache performance
         self.performance_cache_ttl = 3600  # 1 heure
         
-        self.logger.info("🚀 CreatorPerformanceMetrics initialisé")
+        self.logger.info(" CreatorPerformanceMetrics initialisé")
     
     async def analyze_creator_performance(
         self,
@@ -241,10 +241,13 @@ class CreatorPerformanceMetrics:
         Returns:
             Rapport performance complet
         """
+
+
+
         try:
             analysis_start = datetime.now() - timedelta(days=analysis_period_days)
             
-            self.logger.info(f"🔍 Analyse performance créateur {creator_profile.creator_type.value}: {creator_profile.name}")
+            self.logger.info(f" Analyse performance créateur {creator_profile.creator_type.value}: {creator_profile.name}")
             
             results = {
                 'creator_profile': creator_profile,
@@ -337,12 +340,12 @@ class CreatorPerformanceMetrics:
             # Cache des résultats
             await self._cache_performance_results(creator_profile.creator_id, results)
             
-            self.logger.info(f"✅ Analyse performance terminée - Score: {results['performance_score']:.2f}/100")
+            self.logger.info(f" Analyse performance terminée - Score: {results['performance_score']:.2f}/100")
             
             return results
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur analyse performance créateur: {str(e)}")
+            self.logger.error(f" Erreur analyse performance créateur: {str(e)}")
             return {'error': str(e), 'creator_id': creator_profile.creator_id}
     
     async def _analyze_platform_performance(
@@ -352,6 +355,9 @@ class CreatorPerformanceMetrics:
         analysis_start: datetime
     ) -> PlatformPerformance:
         """Analyse performance sur une plateforme spécifique."""
+
+
+
         try:
             # Récupération données plateforme (mock - à remplacer par API réelles)
             platform_data = await self._fetch_platform_data(creator_id, platform, analysis_start)
@@ -403,7 +409,7 @@ class CreatorPerformanceMetrics:
             )
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur analyse plateforme {platform.value}: {str(e)}")
+            self.logger.error(f" Erreur analyse plateforme {platform.value}: {str(e)}")
             return PlatformPerformance(
                 platform=platform,
                 creator_id=creator_id,
@@ -654,6 +660,9 @@ class CreatorPerformanceMetrics:
         analysis_start: datetime
     ) -> Dict[str, Any]:
         """Analyse performance contenu."""
+
+
+
         return {
             'best_performing_formats': ['video', 'carousel', 'reels'],
             'optimal_content_length': {
@@ -677,6 +686,9 @@ class CreatorPerformanceMetrics:
         platform_performances: Dict[str, PlatformPerformance]
     ) -> Dict[str, Any]:
         """Analyse insights audience cross-platform."""
+
+
+
         return {
             'audience_overlap_platforms': 65.0,  # % audience commune
             'audience_loyalty_score': 73.2,
@@ -696,6 +708,9 @@ class CreatorPerformanceMetrics:
         analysis_start: datetime
     ) -> Dict[str, Any]:
         """Analyse performance monétisation."""
+
+
+
         return {
             'revenue_streams': {
                 'brand_partnerships': 4500.0,
@@ -851,46 +866,49 @@ class CreatorPerformanceMetrics:
         # Recommandations basées sur performance tier
         if performance_tier == 'beginner':
             recommendations.extend([
-                "🎯 Focus sur consistance: publier 3-5 fois/semaine minimum",
-                "📱 Optimiser profil: bio claire, photo pro, liens actifs",
-                "🔥 Utiliser trending hashtags pour visibilité"
+                " Focus sur consistance: publier 3-5 fois/semaine minimum",
+                " Optimiser profil: bio claire, photo pro, liens actifs",
+                " Utiliser trending hashtags pour visibilité"
             ])
         elif performance_tier == 'emerging':
             recommendations.extend([
                 "🤝 Initier premières collaborations avec créateurs similaires",
-                "📊 Analyser audiences pour contenu plus ciblé",
-                "💡 Tester nouveaux formats (Reels, Stories interactives)"
+                " Analyser audiences pour contenu plus ciblé",
+                " Tester nouveaux formats (Reels, Stories interactives)"
             ])
         elif performance_tier == 'professional':
             recommendations.extend([
-                "💰 Diversifier sources revenus (cours, consulting, produits)",
-                "🌟 Développer signature visuelle/audio unique",
-                "📈 Lancer campagnes payantes pour croissance accélérée"
+                " Diversifier sources revenus (cours, consulting, produits)",
+                " Développer signature visuelle/audio unique",
+                " Lancer campagnes payantes pour croissance accélérée"
             ])
         
         # Recommandations basées sur analytics
         avg_engagement = overall_metrics.get('average_engagement_rate', 0)
         if avg_engagement < 2.0:
-            recommendations.append("⚡ Améliorer engagement: poser questions, créer sondages, répondre rapidement")
+            recommendations.append(" Améliorer engagement: poser questions, créer sondages, répondre rapidement")
         
         # Recommandations par type créateur
         if creator_profile.creator_type == CreatorType.MUSICIAN:
             recommendations.extend([
-                "🎵 Partager processus création (behind-scenes studio)",
-                "🎼 Collaborer avec autres musiciens pour remix/duets",
-                "📻 Utiliser trending sounds sur TikTok/Reels"
+                " Partager processus création (behind-scenes studio)",
+                " Collaborer avec autres musiciens pour remix/duets",
+                " Utiliser trending sounds sur TikTok/Reels"
             ])
         elif creator_profile.creator_type == CreatorType.INFLUENCER:
             recommendations.extend([
-                "📱 Diversifier contenu: lifestyle + niche expertise",
-                "🛍️ Développer partenariats marques alignées audience",
-                "🎥 Créer contenu éducatif pour établir autorité"
+                " Diversifier contenu: lifestyle + niche expertise",
+                " Développer partenariats marques alignées audience",
+                " Créer contenu éducatif pour établir autorité"
             ])
         
         return recommendations[:10]  # Limite à 10 recommandations prioritaires
     
     def _calculate_performance_score(self, analysis_results: Dict[str, Any]) -> float:
         """Calcule score performance global 0-100."""
+
+
+
         try:
             overall_metrics = analysis_results.get('overall_metrics', {})
             
@@ -927,7 +945,7 @@ class CreatorPerformanceMetrics:
             return round(final_score, 1)
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur calcul score performance: {str(e)}")
+            self.logger.error(f" Erreur calcul score performance: {str(e)}")
             return 0.0
     
     async def _cache_performance_results(
@@ -936,6 +954,9 @@ class CreatorPerformanceMetrics:
         results: Dict[str, Any]
     ) -> None:
         """Cache les résultats d'analyse performance."""
+
+
+
         try:
             cache_key = f"creator_performance:{creator_id}"
             
@@ -948,10 +969,10 @@ class CreatorPerformanceMetrics:
                 str(serializable_results)
             )
             
-            self.logger.debug(f"💾 Résultats performance mis en cache: {creator_id}")
+            self.logger.debug(f" Résultats performance mis en cache: {creator_id}")
             
         except Exception as e:
-            self.logger.warning(f"⚠️ Erreur cache performance: {str(e)}")
+            self.logger.warning(f" Erreur cache performance: {str(e)}")
     
     def _serialize_for_cache(self, data: Any) -> Dict[str, Any]:
         """Sérialise données pour cache Redis."""

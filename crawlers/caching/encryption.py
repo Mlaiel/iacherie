@@ -144,6 +144,9 @@ class CacheEncryption:
     
     def _generate_master_key(self) -> str:
         """Generate secure master key."""
+
+
+
         return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode()
     
     def _derive_key(self, algorithm: EncryptionAlgorithm, 
@@ -160,6 +163,9 @@ class CacheEncryption:
     
     async def _initialize_current_key(self) -> None:
         """Initialize current encryption key."""
+
+
+
         try:
             current_key = await self._generate_key(self.algorithm)
             self.current_key_id = current_key.key_id
@@ -206,6 +212,9 @@ class CacheEncryption:
         Returns:
             Encryption result with metadata
         """
+
+
+
         try:
             # Serialize data
             if isinstance(data, bytes):
@@ -260,6 +269,9 @@ class CacheEncryption:
         Returns:
             Original decrypted data
         """
+
+
+
         try:
             if encrypted_result.algorithm == EncryptionAlgorithm.NONE:
                 return self._deserialize_data(encrypted_result.encrypted_data)
@@ -429,6 +441,9 @@ class CacheEncryption:
     
     async def _rotate_key(self) -> None:
         """Rotate encryption key."""
+
+
+
         try:
             new_key = await self._generate_key(self.algorithm)
             old_key_id = self.current_key_id
@@ -442,6 +457,9 @@ class CacheEncryption:
     
     def _deserialize_data(self, data: bytes) -> Any:
         """Deserialize decrypted data."""
+
+
+
         try:
             # Try JSON first
             try:
@@ -528,6 +546,9 @@ class SecureCacheManager:
     async def set(self, key: str, value: Any, ttl: Optional[int] = None,
                  encrypt: Optional[bool] = None) -> bool:
         """Set value with optional encryption."""
+
+
+
         try:
             should_encrypt = encrypt if encrypt is not None else self._should_encrypt(key, value)
             
@@ -560,6 +581,9 @@ class SecureCacheManager:
     
     async def get(self, key: str) -> Any:
         """Get value with automatic decryption."""
+
+
+
         try:
             # Check if data is encrypted
             metadata_key = f"_meta:{key}"
@@ -592,6 +616,9 @@ class SecureCacheManager:
     
     async def delete(self, key: str) -> bool:
         """Delete value and its metadata."""
+
+
+
         try:
             metadata_key = f"_meta:{key}"
             

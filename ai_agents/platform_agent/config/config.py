@@ -7,7 +7,7 @@ with environment-specific settings and security best practices.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -273,10 +273,16 @@ class ConfigManager:
     @property
     def config(self) -> PlatformAgentGlobalConfig:
         """Get current configuration"""
+
+
+
         return self._config
     
     def get_platform_credentials(self, platform: PlatformType) -> Optional[PlatformCredentials]:
         """Get credentials for specific platform"""
+
+
+
         return self._config.platform_credentials.get(platform.value)
     
     def save_config(self, path: Optional[str] = None):
@@ -414,6 +420,9 @@ class ConfigManager:
     
     def get_environment_template(self) -> str:
         """Generate environment variable template"""
+
+
+
         return """
 # Platform Agent Environment Configuration Template
 # Copy this file to .env and update values
@@ -482,16 +491,28 @@ config = config_manager.config
 # Helper functions for easy access
 def get_config() -> PlatformAgentGlobalConfig:
     """Get global configuration"""
+
+
+
     return config
 
 def get_platform_credentials(platform: PlatformType) -> Optional[PlatformCredentials]:
     """Get platform credentials"""
+
+
+
     return config_manager.get_platform_credentials(platform)
 
 def is_production() -> bool:
     """Check if running in production environment"""
+
+
+
     return config.environment == Environment.PRODUCTION
 
 def is_development() -> bool:
     """Check if running in development environment"""
+
+
+
     return config.environment == Environment.DEVELOPMENT

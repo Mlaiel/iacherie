@@ -160,6 +160,9 @@ class CacheConfigurationBundle:
     
     def get_summary(self) -> Dict[str, Any]:
         """Get configuration bundle summary"""
+
+
+
         return {
             "environment": self.environment,
             "cache_type": self.cache_type,
@@ -321,6 +324,9 @@ class CacheConfigurationManager:
     
     def get_bundle(self, name: str) -> Optional[CacheConfigurationBundle]:
         """Get registered configuration bundle"""
+
+
+
         return self._bundles.get(name)
     
     def set_active_bundle(self, name: str):
@@ -332,6 +338,9 @@ class CacheConfigurationManager:
     
     def get_active_bundle(self) -> Optional[CacheConfigurationBundle]:
         """Get active configuration bundle"""
+
+
+
         return self._active_bundle
     
     def auto_configure(self, cache_type: CacheType = None) -> CacheConfigurationBundle:
@@ -354,6 +363,9 @@ class CacheConfigurationManager:
     
     def get_configuration_summary(self) -> Dict[str, Any]:
         """Get complete configuration summary"""
+
+
+
         return {
             "detected_environment": self._environment,
             "registered_bundles": list(self._bundles.keys()),
@@ -363,6 +375,9 @@ class CacheConfigurationManager:
     
     def validate_all_bundles(self) -> Dict[str, bool]:
         """Validate all registered bundles"""
+
+
+
         return {name: bundle.validate() for name, bundle in self._bundles.items()}
 
 

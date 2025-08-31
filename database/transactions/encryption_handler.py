@@ -9,7 +9,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -157,6 +157,9 @@ class EncryptionKey:
     @property
     def is_valid(self) -> bool:
         """Check if key is valid for use"""
+
+
+
         return not self.is_expired and not self.is_usage_exceeded
 
 
@@ -174,6 +177,9 @@ class EncryptedData:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for serialization"""
+
+
+
         return {
             'ciphertext': base64.b64encode(self.ciphertext).decode('utf-8'),
             'algorithm': self.algorithm.value,
@@ -188,6 +194,9 @@ class EncryptedData:
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'EncryptedData':
         """Create from dictionary"""
+
+
+
         return cls(
             ciphertext=base64.b64decode(data['ciphertext']),
             algorithm=EncryptionAlgorithm(data['algorithm']),
@@ -1124,6 +1133,9 @@ def encrypt_creator_data(
     security_level: SecurityLevel = SecurityLevel.HIGH
 ) -> EncryptedData:
     """Encrypt creator-specific data"""
+
+
+
     
     return encryption_handler.encrypt_transaction_data(
         data=data,
@@ -1138,6 +1150,9 @@ def encrypt_revenue_data(
     security_level: SecurityLevel = SecurityLevel.MILITARY
 ) -> EncryptedData:
     """Encrypt revenue-related data with high security"""
+
+
+
     
     return encryption_handler.encrypt_transaction_data(
         data=revenue_data,
@@ -1151,6 +1166,9 @@ def encrypt_content_fingerprint(
     creator_id: str
 ) -> EncryptedData:
     """Encrypt content fingerprint data"""
+
+
+
     
     return encryption_handler.encrypt_transaction_data(
         data=fingerprint,

@@ -7,7 +7,7 @@ Copyright: All rights reserved - Unauthorized use prohibited
 Project: IA Influencer Agent Platform - Content Protection & Monetization
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  AVERTISSEMENT SÉVÈRE ⚠️
+  AVERTISSEMENT SÉVÈRE 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
@@ -149,6 +149,9 @@ class NetworkPerformanceMonitor:
     
     async def initialize(self) -> bool:
         """Initialize network performance monitor"""
+
+
+
         try:
             logger.info("Initializing Network Performance Monitor...")
             
@@ -192,6 +195,9 @@ class NetworkPerformanceMonitor:
         target_endpoints: Optional[List[str]] = None
     ) -> NetworkPerformanceData:
         """Measure comprehensive network performance"""
+
+
+
         try:
             start_time = datetime.now()
             endpoints = target_endpoints or self.monitored_endpoints
@@ -289,6 +295,9 @@ class NetworkPerformanceMonitor:
         time_range: timedelta = timedelta(days=7)
     ) -> Dict[str, Any]:
         """Analyze network performance trends"""
+
+
+
         try:
             end_time = datetime.now()
             start_time = end_time - time_range
@@ -322,6 +331,9 @@ class NetworkPerformanceMonitor:
         current_performance: Optional[NetworkPerformanceData] = None
     ) -> List[OptimizationRecommendation]:
         """Generate network optimization recommendations"""
+
+
+
         try:
             if not current_performance:
                 current_performance = await self.measure_network_performance()
@@ -404,6 +416,9 @@ class NetworkPerformanceMonitor:
     
     async def get_performance_dashboard_data(self) -> Dict[str, Any]:
         """Get real-time performance dashboard data"""
+
+
+
         try:
             # Get current performance
             current_performance = await self.measure_network_performance()
@@ -445,6 +460,9 @@ class NetworkPerformanceMonitor:
         optimization_strategies: List[OptimizationStrategy]
     ) -> Dict[str, bool]:
         """Apply network optimization configurations"""
+
+
+
         try:
             optimization_results = {}
             
@@ -482,6 +500,9 @@ class NetworkPerformanceMonitor:
     
     async def _measure_throughput(self) -> Tuple[float, float]:
         """Measure network throughput using speedtest"""
+
+
+
         try:
             if not self.speedtest_client:
                 return 0.0, 0.0
@@ -498,6 +519,9 @@ class NetworkPerformanceMonitor:
     
     async def _estimate_packet_loss(self, endpoints: List[str]) -> float:
         """Estimate packet loss percentage"""
+
+
+
         try:
             successful_pings = 0
             total_pings = 0
@@ -530,6 +554,9 @@ class NetworkPerformanceMonitor:
         jitter: float
     ) -> float:
         """Calculate overall network quality score (0-100)"""
+
+
+
         try:
             # Normalize metrics to 0-1 scale
             latency_score = max(0, min(1, (200 - latency) / 200))  # Good latency < 200ms

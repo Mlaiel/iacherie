@@ -3,7 +3,7 @@
 #
 # Created by: Fahed Mlaiel (mlaiel@live.de)
 # 
-# ⚠️  STRICT COPYRIGHT WARNING ⚠️ 
+#   STRICT COPYRIGHT WARNING  
 # This code, concept, and intellectual property belongs exclusively to Fahed Mlaiel.
 # ANY unauthorized use, reproduction, distribution, or theft of this code/concept 
 # without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is 
@@ -164,6 +164,9 @@ class ObjectDetector(BaseDetector):
     
     def _init_detector(self):
         """Initialize object detection model"""
+
+
+
         try:
             if self.model_type == "yolov8":
                 model_names = {
@@ -249,6 +252,9 @@ class ObjectDetector(BaseDetector):
                 
             def _build_csp_darknet(self):
                 """Build CSPDarkNet53 backbone"""
+
+
+
                 return nn.Sequential(
                     # Stem
                     nn.Conv2d(3, 32, 6, 2, 2, bias=False),
@@ -288,12 +294,18 @@ class ObjectDetector(BaseDetector):
                 
             def _make_csp_layer(self, in_channels, out_channels, num_blocks):
                 """Create CSP (Cross Stage Partial) layer"""
+
+
+
                 return nn.Sequential(
                     *[self._bottleneck_block(out_channels, out_channels) for _ in range(num_blocks)]
                 )
                 
             def _bottleneck_block(self, in_channels, out_channels):
                 """Bottleneck block with residual connection"""
+
+
+
                 return nn.Sequential(
                     nn.Conv2d(in_channels, out_channels//2, 1, bias=False),
                     nn.BatchNorm2d(out_channels//2),
@@ -305,6 +317,9 @@ class ObjectDetector(BaseDetector):
                 
             def _build_panet(self):
                 """Build PANet neck for feature fusion"""
+
+
+
                 return nn.ModuleList([
                     nn.Conv2d(1024, 512, 1, 1, 0, bias=False),
                     nn.Conv2d(512, 256, 1, 1, 0, bias=False),
@@ -313,6 +328,9 @@ class ObjectDetector(BaseDetector):
                 
             def _build_yolo_head(self):
                 """Build YOLO detection head"""
+
+
+
                 return nn.ModuleList([
                     nn.Conv2d(128, 3 * (self.num_classes + 5), 1),  # Small objects
                     nn.Conv2d(256, 3 * (self.num_classes + 5), 1),  # Medium objects  
@@ -417,6 +435,9 @@ class ObjectDetector(BaseDetector):
                 
             def _nms(self, boxes, scores, iou_threshold):
                 """Non-Maximum Suppression"""
+
+
+
                 return torch.ops.torchvision.nms(boxes, scores, iou_threshold)
         
         # Initialize and return model
@@ -646,6 +667,9 @@ class FaceDetector(BaseDetector):
     
     def _init_detector(self):
         """Initialize face detection components"""
+
+
+
         try:
             # Initialize face detection
             if self.detection_method == "opencv":
@@ -913,6 +937,9 @@ class FaceDetector(BaseDetector):
     
     def _get_face_encoding(self, face_rgb: np.ndarray) -> Optional[np.ndarray]:
         """Get face encoding for recognition"""
+
+
+
         try:
             # In production, use face_recognition library
             # face_encodings = face_recognition.face_encodings(face_rgb)
@@ -966,6 +993,9 @@ class TextDetector(BaseDetector):
     
     def _init_detector(self):
         """Initialize text detection components"""
+
+
+
         try:
             if self.ocr_engine == "tesseract":
                 # Configure Tesseract
@@ -1151,6 +1181,9 @@ class TextDetector(BaseDetector):
     
     def _tesseract_ocr(self, text_roi: np.ndarray) -> Dict[str, Any]:
         """Perform Tesseract OCR"""
+
+
+
         try:
             # Preprocess image for better OCR
             preprocessed = self._preprocess_for_ocr(text_roi)
@@ -1253,6 +1286,9 @@ class HandGestureDetector(BaseDetector):
     
     def _init_detector(self):
         """Initialize gesture detection components"""
+
+
+
         try:
             if not MEDIAPIPE_AVAILABLE:
                 logger.warning("MediaPipe not available. HandGestureDetector will have limited functionality.")
@@ -1514,6 +1550,9 @@ class SceneClassifier(BaseDetector):
     
     def _init_detector(self):
         """Initialize scene classification model"""
+
+
+
         try:
             if self.model_type == "resnet":
                 self.model = self._create_resnet_classifier()

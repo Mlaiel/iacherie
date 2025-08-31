@@ -1,15 +1,15 @@
 """
-🚀 ML Deployment Module - IA Influencer Agent Platform Enterprise
+ ML Deployment Module - IA Influencer Agent Platform Enterprise
 ================================================================
 Module: backend/ml/deployment/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 MODULE DE DÉPLOIEMENT ML
+ MODULE DE DÉPLOIEMENT ML
 Système complet de déploiement de modèles ML
 - Docker et Kubernetes deployment
 - Strategies avancées (Blue-Green, Canary)

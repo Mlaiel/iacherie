@@ -8,7 +8,7 @@ Provides specialized parsing capabilities for content fingerprinting and analysi
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
@@ -80,6 +80,9 @@ class BaseMediaParser(ABC):
     
     def _validate_file_size(self, file_path: Union[str, Path, BinaryIO]) -> bool:
         """Validate file size against configuration limits"""
+
+
+
         try:
             if isinstance(file_path, (str, Path)):
                 file_size = Path(file_path).stat().st_size
@@ -184,6 +187,9 @@ class AudioParser(BaseMediaParser):
     
     async def _extract_audio_metadata(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
         """Extract audio metadata using mutagen"""
+
+
+
         try:
             if isinstance(file_path, (str, Path)):
                 audio_file = MutagenFile(str(file_path))
@@ -229,6 +235,9 @@ class AudioParser(BaseMediaParser):
     
     async def _analyze_audio_content(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
         """Analyze audio content using librosa"""
+
+
+
         try:
             # Load audio file
             if isinstance(file_path, (str, Path)):
@@ -277,6 +286,9 @@ class AudioParser(BaseMediaParser):
     
     async def _generate_audio_fingerprint(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
         """Generate audio fingerprint for content identification"""
+
+
+
         try:
             # Load audio for fingerprinting
             if isinstance(file_path, (str, Path)):
@@ -349,6 +361,9 @@ class VideoParser(BaseMediaParser):
     
     async def _extract_video_metadata(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
         """Extract video metadata using OpenCV"""
+
+
+
         try:
             if isinstance(file_path, (str, Path)):
                 cap = cv2.VideoCapture(str(file_path))
@@ -390,6 +405,9 @@ class VideoParser(BaseMediaParser):
     
     async def _analyze_video_frames(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
         """Analyze video frames for content insights"""
+
+
+
         try:
             if isinstance(file_path, (str, Path)):
                 cap = cv2.VideoCapture(str(file_path))
@@ -451,6 +469,9 @@ class VideoParser(BaseMediaParser):
     
     async def _generate_video_fingerprint(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
         """Generate video fingerprint for content identification"""
+
+
+
         try:
             if isinstance(file_path, (str, Path)):
                 cap = cv2.VideoCapture(str(file_path))
@@ -540,6 +561,9 @@ class ImageParser(BaseMediaParser):
     
     async def _extract_image_metadata(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
         """Extract image metadata including EXIF data"""
+
+
+
         try:
             if isinstance(file_path, (str, Path)):
                 image = Image.open(file_path)
@@ -570,6 +594,9 @@ class ImageParser(BaseMediaParser):
     
     async def _analyze_image_content(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
         """Analyze image content for visual properties"""
+
+
+
         try:
             if isinstance(file_path, (str, Path)):
                 image = Image.open(file_path)
@@ -615,6 +642,9 @@ class ImageParser(BaseMediaParser):
     
     async def _generate_image_fingerprint(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
         """Generate image fingerprint for content identification"""
+
+
+
         try:
             if isinstance(file_path, (str, Path)):
                 image = Image.open(file_path)
@@ -659,6 +689,9 @@ class TextParser(BaseMediaParser):
     
     async def parse(self, file_path: Union[str, Path, BinaryIO], **kwargs) -> Dict[str, Any]:
         """Parse text file and extract content"""
+
+
+
         try:
             metadata = self._extract_basic_metadata(file_path)
             
@@ -747,6 +780,9 @@ class DocumentParser(BaseMediaParser):
     
     async def _parse_pdf(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
         """Parse PDF document"""
+
+
+
         try:
             if isinstance(file_path, (str, Path)):
                 with open(file_path, 'rb') as f:
@@ -777,6 +813,9 @@ class DocumentParser(BaseMediaParser):
     
     async def _parse_docx(self, file_path: Union[str, Path, BinaryIO]) -> Dict[str, Any]:
         """Parse DOCX document"""
+
+
+
         try:
             if isinstance(file_path, (str, Path)):
                 doc = python_docx.Document(file_path)

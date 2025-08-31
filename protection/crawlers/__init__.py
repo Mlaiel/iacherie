@@ -1,4 +1,4 @@
-"""🕷️ Ultra-Industrial Multi-Platform Content Crawler Ecosystem
+""" Ultra-Industrial Multi-Platform Content Crawler Ecosystem
 ============================================================
 
 Enterprise-grade content discovery and monitoring infrastructure for comprehensive
@@ -33,7 +33,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + Legal Tech + DevOps + DBA
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL INTELLECTUAL PROPERTY PROTECTION ⚠️
+  CRITICAL INTELLECTUAL PROPERTY PROTECTION 
 =================================================
 This software and all crawling methodologies are protected intellectual property:
 - Advanced Anti-Detection Algorithms: Patent Pending
@@ -134,7 +134,7 @@ class PlatformStatus(str, Enum):
     ERROR = "error"
     MAINTENANCE = "maintenance"
 class EnterpriseCrawlerOrchestrator:
-    """    🚀 Enterprise Multi-Platform Content Crawler Orchestrator
+    """     Enterprise Multi-Platform Content Crawler Orchestrator
     ========================================================
     
     Advanced enterprise-grade orchestration system for comprehensive 
@@ -476,7 +476,10 @@ class EnterpriseCrawlerOrchestrator:
         return hashlib.md5(hash_data.encode()).hexdigest()
     
     def _serialize_crawl_result(self, result: CrawlResult) -> Dict[str, Any]:
-        """Serialize crawl result for JSON transmission."""        return {
+        """Serialize crawl result for JSON transmission."""
+
+
+        return {
             'platform': result.platform,
             'url': result.url,
             'title': result.title,
@@ -595,7 +598,10 @@ class EnterpriseCrawlerOrchestrator:
         await self._trigger_webhooks('performance_alert', alert_data)
     
     async def _send_webhook_notification(self, url: str, event_type: str, data: Dict[str, Any]):
-        """Send webhook notification to external endpoint."""        try:
+        """Send webhook notification to external endpoint."""
+
+
+        try:
             async with aiohttp.ClientSession() as session:
                 async with session.post(url, json=data) as response:
                     if response.status == 200:
@@ -606,7 +612,10 @@ class EnterpriseCrawlerOrchestrator:
             logger.error(f"Webhook notification error: {e}")
     
     def get_comprehensive_status(self) -> Dict[str, Any]:
-        """Get comprehensive orchestrator status."""        return {
+        """Get comprehensive orchestrator status."""
+
+
+        return {
             'initialized': self._initialized,
             'active_crawlers': len(self.crawlers),
             'active_monitoring_sessions': len(self.monitoring_tasks),
@@ -662,7 +671,10 @@ MultiPlatformCrawlerService = EnterpriseCrawlerOrchestrator
         logger.info("Multi-Platform Crawler Service initialized")
 
     async def initialize(self) -> bool:
-        """Initialize the crawler service."""        try:
+        """Initialize the crawler service."""
+
+
+        try:
             # Initialize API manager
             if 'platform_apis' in self.config:
                 self.api_manager = PlatformAPIManager(self.config['platform_apis'])
@@ -831,7 +843,10 @@ MultiPlatformCrawlerService = EnterpriseCrawlerOrchestrator
         callback_func: callable = None,
         interval_minutes: int = 30
     ) -> bool:
-        """Start continuous monitoring for specific content across platforms."""        try:
+        """Start continuous monitoring for specific content across platforms."""
+
+
+        try:
             if monitor_id in self.crawler_tasks:
                 logger.warning(f"Monitoring already active for {monitor_id}")
                 return False
@@ -924,7 +939,10 @@ MultiPlatformCrawlerService = EnterpriseCrawlerOrchestrator
                 logger.error(f"Error processing monitoring result {result.url}: {e}")
 
     async def stop_monitoring(self, monitor_id: str) -> bool:
-        """Stop continuous monitoring for specific content."""        try:
+        """Stop continuous monitoring for specific content."""
+
+
+        try:
             if monitor_id in self.crawler_tasks:
                 self.crawler_tasks[monitor_id].cancel()
                 del self.crawler_tasks[monitor_id]

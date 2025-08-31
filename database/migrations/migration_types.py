@@ -1,5 +1,5 @@
 """
-🏷️ Migration Types and Enumerations - Ultra-Industrial Type System
+ Migration Types and Enumerations - Ultra-Industrial Type System
 =================================================================
 Module: backend/database/migrations/migration_types.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Type Definitions - Ultra Enterprise Production-Ready
 Responsibility: Comprehensive type system for content protection and monetization migrations
 ==========================================================================================
 
-⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
+  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -484,6 +484,9 @@ def get_migration_type_by_category(category: str) -> List[MigrationType]:
 
 def get_priority_weight(priority: MigrationPriority) -> int:
     """Get numeric weight for priority comparison"""
+
+
+
     return priority.value
 
 

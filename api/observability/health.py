@@ -92,6 +92,9 @@ class HealthChecker:
 
     def get_system_health(self) -> Dict:
         """Get basic system health metrics."""
+
+
+
         try:
             cpu_percent = psutil.cpu_percent(interval=1)
             memory = psutil.virtual_memory()
@@ -122,6 +125,9 @@ class HealthChecker:
 
     async def check_database_health(self) -> Dict:
         """Check database connectivity and performance."""
+
+
+
         try:
             # Mock database check - in reality would use actual DB connection
             start_time = time.time()
@@ -146,6 +152,9 @@ class HealthChecker:
 
     async def check_redis_health(self) -> Dict:
         """Check Redis connectivity and performance."""
+
+
+
         try:
             # Mock Redis check
             start_time = time.time()
@@ -168,6 +177,9 @@ class HealthChecker:
 
     async def check_storage_health(self) -> Dict:
         """Check file storage health."""
+
+
+
         try:
             import os
             storage_path = "/data/storage"

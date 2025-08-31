@@ -1,5 +1,5 @@
 """
-🔬 Violation Analysis Engine
+ Violation Analysis Engine
 ===========================
 
 Advanced AI-powered analysis of detected piracy violations.
@@ -115,6 +115,9 @@ class ViolationAnalyzer:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             logger.info("Initializing Violation Analyzer components...")
             
@@ -278,6 +281,9 @@ class ViolationAnalyzer:
         Returns:
             Similarity breakdown by type
         """
+
+
+
         try:
             # Base similarity scores from detection
             base_similarity = violation_data.get('similarity_score', 0.0)
@@ -622,6 +628,9 @@ class ViolationAnalyzer:
     
     def _get_compliance_requirements(self, jurisdiction: str) -> List[str]:
         """Get compliance requirements for jurisdiction."""
+
+
+
         return ['proper_attribution', 'evidence_preservation', 'notification_procedures']
     
     async def _generate_recommendations(self, risk_assessment: Dict[str, Any],
@@ -692,6 +701,9 @@ class ViolationAnalyzer:
     
     async def get_analysis_stats(self) -> Dict[str, Any]:
         """Get analysis performance statistics."""
+
+
+
         return self.analysis_stats.copy()
     
     async def shutdown(self) -> None:

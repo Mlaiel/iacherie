@@ -7,7 +7,7 @@ and advanced linguistic analysis for professional content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -164,6 +164,9 @@ class StyleOptimizer:
     
     async def _initialize_components(self):
         """Initialize style optimization components"""
+
+
+
         try:
             # Load sentiment analyzer
             self._sentiment_analyzer = SentimentIntensityAnalyzer()
@@ -202,6 +205,9 @@ class StyleOptimizer:
     
     async def _initialize_fallback_components(self):
         """Initialize fallback components if main models fail"""
+
+
+
         try:
             # Simple rule-based fallbacks
             self._style_patterns = {
@@ -477,6 +483,9 @@ class StyleOptimizer:
     
     async def _analyze_clarity(self, content: str) -> float:
         """Analyze clarity of content"""
+
+
+
         try:
             # Readability as clarity indicator
             readability = flesch_reading_ease(content) / 100.0

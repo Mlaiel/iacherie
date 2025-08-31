@@ -129,6 +129,9 @@ class CDNConfig:
     
     def get_cache_rules(self) -> List[CacheRule]:
         """Get CDN cache rules for different content types"""
+
+
+
         return [
             # Static assets - long cache
             CacheRule(
@@ -282,6 +285,9 @@ class CDNConfig:
     
     def get_origin_configs(self) -> Dict[str, OriginConfig]:
         """Get origin server configurations"""
+
+
+
         return {
             # Main API origin
             "api": OriginConfig(
@@ -633,6 +639,9 @@ class CDNConfig:
     
     def get_azure_cdn_config(self) -> Dict[str, Any]:
         """Get Azure CDN configuration"""
+
+
+
         return {
             "profile": {
                 "name": f"{self.project_name}-{self.environment}-cdn-profile",
@@ -681,6 +690,9 @@ class CDNConfig:
     
     def get_google_cdn_config(self) -> Dict[str, Any]:
         """Get Google Cloud CDN configuration"""
+
+
+
         return {
             "backend_service": {
                 "name": f"{self.project_name}-{self.environment}-backend",
@@ -775,6 +787,9 @@ class CDNConfig:
     
     def _get_project_id(self) -> str:
         """Get Google Cloud project ID"""
+
+
+
         return f"{self.project_name}-{self.environment}"
     
     def _get_timestamp(self) -> str:

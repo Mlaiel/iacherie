@@ -670,6 +670,9 @@ class FormatConverter:
     
     async def get_supported_formats(self) -> Dict[str, List[str]]:
         """Get list of supported input and output formats"""
+
+
+
         return {
             'audio': {
                 'input': ['mp3', 'wav', 'flac', 'aac', 'ogg', 'm4a', 'wma'],
@@ -691,6 +694,9 @@ class FormatConverter:
         converted_path: str
     ) -> float:
         """Analyze audio quality preservation"""
+
+
+
         try:
             # Load both audio files
             original = AudioSegment.from_file(original_path)
@@ -719,6 +725,9 @@ class FormatConverter:
         converted_path: str
     ) -> float:
         """Analyze video quality preservation"""
+
+
+
         try:
             # Get video info
             original_probe = ffmpeg.probe(original_path)
@@ -749,6 +758,9 @@ class FormatConverter:
         converted_path: str
     ) -> float:
         """Analyze image quality preservation using structural similarity"""
+
+
+
         try:
             # Load images
             original = cv2.imread(original_path)
@@ -785,6 +797,9 @@ class FormatConverter:
     
     def __del__(self):
         """Cleanup temporary directory"""
+
+
+
         try:
             import shutil
             if hasattr(self, 'temp_dir') and os.path.exists(self.temp_dir):

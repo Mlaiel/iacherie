@@ -1,10 +1,10 @@
-"""🐳 Docker Infrastructure Module - IA-Influencer-Agent Production Platform
+""" Docker Infrastructure Module - IA-Influencer-Agent Production Platform
 ===========================================================================
 Expert: Lead Dev IA + Backend Senior + DevOps Engineer + Docker Specialist  
 Creator: Fahed Mlaiel <mlaiel@live.de>
 ===========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL 
 Tout vol, copie ou utilisation non autorisée de ce code source,
 de ce concept ou de cette propriété intellectuelle sans
 l'autorisation écrite explicite de Fahed Mlaiel est strictement

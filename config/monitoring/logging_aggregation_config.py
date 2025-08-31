@@ -102,6 +102,9 @@ class LoggingAggregationConfig:
     
     def get_formatters(self) -> Dict[str, FormatterConfig]:
         """Get log formatter configurations"""
+
+
+
         return {
             "json": FormatterConfig(
                 name="json",
@@ -266,6 +269,9 @@ class LoggingAggregationConfig:
     
     def get_loggers(self) -> Dict[str, LoggerConfig]:
         """Get logger configurations"""
+
+
+
         return {
             "root": LoggerConfig(
                 name="root",
@@ -334,6 +340,9 @@ class LoggingAggregationConfig:
     
     def get_log_filters(self) -> Dict[str, Dict[str, Any]]:
         """Get log filtering configuration"""
+
+
+
         return {
             "security_filter": {
                 "type": "SecurityLogFilter",
@@ -373,6 +382,9 @@ class LoggingAggregationConfig:
     
     def get_structured_logging_config(self) -> Dict[str, Any]:
         """Get structured logging configuration"""
+
+
+
         return {
             "default_fields": {
                 "service": self.service_name,
@@ -404,6 +416,9 @@ class LoggingAggregationConfig:
     
     def get_log_sampling_config(self) -> Dict[str, Any]:
         """Get log sampling configuration for high-volume scenarios"""
+
+
+
         return {
             "enabled": True,
             "default_sample_rate": 1.0,
@@ -431,6 +446,9 @@ class LoggingAggregationConfig:
     
     def get_elasticsearch_mapping(self) -> Dict[str, Any]:
         """Get Elasticsearch index mapping for logs"""
+
+
+
         return {
             "mappings": {
                 "properties": {
@@ -490,6 +508,9 @@ class LoggingAggregationConfig:
     
     def get_log_retention_policy(self) -> Dict[str, Any]:
         """Get log retention and archival policy"""
+
+
+
         return {
             "retention_periods": {
                 "debug_logs": "7d",
@@ -528,6 +549,9 @@ class LoggingAggregationConfig:
     
     def get_complete_logging_config(self) -> Dict[str, Any]:
         """Get complete logging configuration"""
+
+
+
         return {
             "version": 1,
             "disable_existing_loggers": False,

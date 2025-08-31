@@ -113,6 +113,9 @@ class StreamBuffer:
         
     async def initialize(self) -> None:
         """Initialize stream buffer"""
+
+
+
         try:
             # Load persisted data if enabled
             if self.config.enable_persistence and self.config.persistence_path:
@@ -150,6 +153,9 @@ class StreamBuffer:
         Returns:
             Success status
         """
+
+
+
         try:
             with self._lock:
                 # Check if we need to evict items
@@ -203,6 +209,9 @@ class StreamBuffer:
         Returns:
             Stored data or None if not found
         """
+
+
+
         try:
             with self._lock:
                 if key not in self.items:
@@ -244,6 +253,9 @@ class StreamBuffer:
             
     async def delete(self, key: str) -> bool:
         """Delete item from buffer"""
+
+
+
         try:
             with self._lock:
                 if key in self.items:
@@ -257,6 +269,9 @@ class StreamBuffer:
             
     async def clear(self) -> None:
         """Clear all items from buffer"""
+
+
+
         try:
             with self._lock:
                 self.items.clear()
@@ -273,6 +288,9 @@ class StreamBuffer:
             
     async def keys(self, pattern: Optional[str] = None) -> List[str]:
         """Get all keys in buffer, optionally filtered by pattern"""
+
+
+
         try:
             with self._lock:
                 all_keys = list(self.items.keys())
@@ -290,6 +308,9 @@ class StreamBuffer:
             
     async def flush(self) -> bool:
         """Flush buffer to persistent storage"""
+
+
+
         try:
             if not self.config.enable_persistence or not self.config.persistence_path:
                 return False
@@ -317,6 +338,9 @@ class StreamBuffer:
             
     async def optimize(self) -> None:
         """Optimize buffer performance"""
+
+
+
         try:
             with self._lock:
                 # Compress uncompressed items if beneficial
@@ -365,6 +389,9 @@ class StreamBuffer:
             
     async def _evict_item(self) -> None:
         """Evict item based on configured policy"""
+
+
+
         try:
             if not self.items:
                 return
@@ -597,6 +624,9 @@ class StreamBuffer:
                 
     async def shutdown(self) -> None:
         """Gracefully shutdown buffer"""
+
+
+
         try:
             self._shutdown_event.set()
             

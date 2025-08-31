@@ -7,7 +7,7 @@ style transfer, and content-aware video creation for professional creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -119,6 +119,9 @@ class AIVideoGenerator:
     
     def _initialize_models(self):
         """Initialize AI models for video generation"""
+
+
+
         try:
             # Text-to-image model for frame generation
             if self.gpu_available:
@@ -661,6 +664,9 @@ class AIVideoGenerator:
     
     async def _add_text_overlay(self, frame: np.ndarray, title: str, subtitle: str) -> np.ndarray:
         """Add text overlay to frame"""
+
+
+
         try:
             # Convert to PIL for text rendering
             pil_frame = Image.fromarray(frame)
@@ -714,6 +720,9 @@ class AIVideoGenerator:
     
     async def _copy_audio(self, source_video: str, target_video: str):
         """Copy audio from source video to target video"""
+
+
+
         try:
             temp_output = str(self.temp_dir / f"temp_with_audio_{uuid.uuid4()}.mp4")
             
@@ -808,6 +817,9 @@ class AIVideoGenerator:
     
     async def cleanup(self):
         """Cleanup temporary files and GPU memory"""
+
+
+
         try:
             # Clear GPU memory
             if self.gpu_available:
@@ -935,6 +947,9 @@ class VideoSynthesizer:
     
     async def cleanup(self):
         """Cleanup temporary files"""
+
+
+
         try:
             if self.temp_dir.exists():
                 import shutil

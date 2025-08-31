@@ -63,6 +63,9 @@ class PlatformCrawler:
     
     def _setup_selenium(self):
         """Setup headless Chrome driver"""
+
+
+
         try:
             chrome_options = Options()
             chrome_options.add_argument("--headless")
@@ -136,6 +139,9 @@ class PlatformCrawler:
     
     async def _web_search(self, query: str, content_type: str) -> List[Dict[str, Any]]:
         """Web scraping search implementation"""
+
+
+
         try:
             if not self.driver:
                 return []
@@ -290,6 +296,9 @@ class PlatformCrawler:
     
     async def _extract_platform_specific_data(self, url: str) -> Dict[str, Any]:
         """Extract platform-specific data - to be overridden by subclasses"""
+
+
+
         return {}
 
 
@@ -389,6 +398,9 @@ class YouTubeCrawler(PlatformCrawler):
     
     async def extract_content_data(self, url: str) -> Optional[Dict[str, Any]]:
         """Extract detailed content data from YouTube URL"""
+
+
+
         try:
             # Extract video ID from URL
             if 'watch?v=' in url:
@@ -565,6 +577,9 @@ class ProtectionMonitor:
     
     async def initialize(self):
         """Initialize monitoring system"""
+
+
+
         try:
             # Initialize all crawlers
             for crawler in self.crawlers.values():
@@ -584,6 +599,9 @@ class ProtectionMonitor:
                                    platforms: List[str], monitoring_frequency: int = 24,
                                    alert_threshold: float = 0.85) -> bool:
         """Add content to monitoring system"""
+
+
+
         try:
             target = MonitoringTarget(
                 user_id=user_id,
@@ -732,6 +750,9 @@ class ProtectionMonitor:
                                       search_result: Dict[str, Any], 
                                       platform: str) -> float:
         """Check similarity between original content and search result"""
+
+
+
         try:
             # For demonstration, we'll use a simplified similarity check
             # In production, this would involve downloading/analyzing the found content
@@ -764,6 +785,9 @@ class ProtectionMonitor:
                                        violation_data: Dict[str, Any], 
                                        similarity_score: float):
         """Handle detected violation"""
+
+
+
         try:
             # Create violation record
             violation_record = {
@@ -803,6 +827,9 @@ class ProtectionMonitor:
     
     async def _load_monitoring_targets(self):
         """Load existing monitoring targets from database"""
+
+
+
         try:
             async with database_manager.get_postgres_session() as session:
                 result = await session.execute(
@@ -837,6 +864,9 @@ class ProtectionMonitor:
     
     async def _update_last_checked(self, content_id: str, last_checked: datetime):
         """Update last checked timestamp in database"""
+
+
+
         try:
             async with database_manager.get_postgres_session() as session:
                 await session.execute(
@@ -848,6 +878,9 @@ class ProtectionMonitor:
     
     async def remove_content_monitoring(self, content_id: str) -> bool:
         """Remove content from monitoring"""
+
+
+
         try:
             # Remove from active monitors
             if content_id in self.active_monitors:
@@ -868,6 +901,9 @@ class ProtectionMonitor:
     
     async def get_monitoring_status(self, user_id: str) -> Dict[str, Any]:
         """Get monitoring status for user"""
+
+
+
         try:
             user_targets = [t for t in self.active_monitors.values() if t.user_id == user_id]
             

@@ -438,6 +438,9 @@ class MetricsRegistry:
     
     def get_metrics_export(self) -> str:
         """Export metrics in Prometheus format"""
+
+
+
         return generate_latest(self.registry).decode('utf-8')
 
 
@@ -453,6 +456,9 @@ class MetricsConfig:
     
     def get_metric_definitions(self) -> List[MetricDefinition]:
         """Get all metric definitions"""
+
+
+
         return [
             # System metrics
             MetricDefinition(
@@ -582,6 +588,9 @@ class MetricsConfig:
     
     def get_configuration_dict(self) -> Dict[str, Any]:
         """Get metrics configuration as dictionary"""
+
+
+
         return {
             "metrics_port": self.metrics_port,
             "metrics_path": self.metrics_path,

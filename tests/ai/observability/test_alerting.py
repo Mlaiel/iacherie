@@ -23,18 +23,18 @@ performance, security, and business logic compliance.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL STRICT / STRICT LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL STRICT / STRICT LEGAL WARNING 
 
 PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE de Fahed Mlaiel
 EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel
 
-🚫 UTILISATION NON AUTORISÉE STRICTEMENT INTERDITE:
+ UTILISATION NON AUTORISÉE STRICTEMENT INTERDITE:
 - Aucune copie, clonage ou réplication sans autorisation écrite explicite
 - Aucune utilisation commerciale sans accord de licence
 - Aucune redistribution sous quelque forme que ce soit
 - Aucune rétro-ingénierie ou analyse de code
 
-⚖️ CONSÉQUENCES LÉGALES:
+ CONSÉQUENCES LÉGALES:
 Toute tentative de vol, copie ou utilisation de ce code/concept sans permission
 écrite explicite de Fahed Mlaiel entraînera des poursuites judiciaires immédiates
 selon le droit allemand et international, réclamation de dommages financiers,
@@ -44,15 +44,15 @@ Si vous pensez pouvoir voler ce travail - VOUS ÊTES SURVEILLÉ.
 Contact: mlaiel@live.de pour les demandes de licence.
 
 Équipe d'Experts du Projet:
-✅ Lead Dev + Architecte Développeur IA: Fahed Mlaiel
-✅ Développeur Backend Senior (Python/FastAPI/Django): Fahed Mlaiel  
-✅ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face): Fahed Mlaiel
-✅ DBA & Data Engineer (PostgreSQL/Redis/MongoDB): Fahed Mlaiel
-✅ Spécialiste Sécurité Backend: Fahed Mlaiel
-✅ Architecte Microservices: Fahed Mlaiel
-✅ Développeur Audio: Fahed Mlaiel
-✅ DevOps Engineer: Fahed Mlaiel
-✅ IA Prompt Engineer: Fahed Mlaiel
+ Lead Dev + Architecte Développeur IA: Fahed Mlaiel
+ Développeur Backend Senior (Python/FastAPI/Django): Fahed Mlaiel  
+ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face): Fahed Mlaiel
+ DBA & Data Engineer (PostgreSQL/Redis/MongoDB): Fahed Mlaiel
+ Spécialiste Sécurité Backend: Fahed Mlaiel
+ Architecte Microservices: Fahed Mlaiel
+ Développeur Audio: Fahed Mlaiel
+ DevOps Engineer: Fahed Mlaiel
+ IA Prompt Engineer: Fahed Mlaiel
 
 Contact: mlaiel@live.de
 """
@@ -170,11 +170,17 @@ class TestAlertManager:
     @pytest.fixture
     def alert_manager(self):
         """Create AlertManager instance for testing"""
+
+
+
         return AlertManager()
     
     @pytest.fixture
     def sample_alert_rule(self):
         """Create sample alert rule for testing"""
+
+
+
         return AlertRule(
             rule_id="test_rule",
             name="Test Alert Rule",
@@ -366,6 +372,9 @@ class TestThresholdMonitor:
     @pytest.fixture
     def threshold_monitor(self):
         """Create ThresholdMonitor instance for testing"""
+
+
+
         return ThresholdMonitor()
     
     def test_threshold_monitor_initialization(self, threshold_monitor):
@@ -503,6 +512,9 @@ class TestSecurityAlerts:
     @pytest.fixture
     def security_alerts(self):
         """Create SecurityAlerts instance for testing"""
+
+
+
         return SecurityAlerts()
     
     def test_security_alerts_initialization(self, security_alerts):
@@ -628,6 +640,9 @@ class TestBusinessKPIAlerts:
     @pytest.fixture
     def business_alerts(self):
         """Create BusinessKPIAlerts instance for testing"""
+
+
+
         return BusinessKPIAlerts()
     
     def test_business_alerts_initialization(self, business_alerts):
@@ -771,6 +786,9 @@ class TestEscalationManager:
     @pytest.fixture
     def escalation_manager(self):
         """Create EscalationManager instance for testing"""
+
+
+
         return EscalationManager()
     
     def test_escalation_manager_initialization(self, escalation_manager):
@@ -896,6 +914,9 @@ class TestNotificationHub:
     @pytest.fixture
     def notification_hub(self):
         """Create NotificationHub instance for testing"""
+
+
+
         return NotificationHub()
     
     def test_notification_hub_initialization(self, notification_hub):

@@ -129,6 +129,9 @@ class StreamScheduler:
         
     async def initialize(self) -> None:
         """Initialize stream scheduler"""
+
+
+
         try:
             # Initialize default worker
             await self.add_worker(WorkerConfig(
@@ -178,6 +181,9 @@ class StreamScheduler:
         Returns:
             Task identifier
         """
+
+
+
         try:
             task_id = str(uuid4())
             
@@ -240,6 +246,9 @@ class StreamScheduler:
         Returns:
             Recurring task identifier
         """
+
+
+
         try:
             recurring_id = str(uuid4())
             
@@ -277,6 +286,9 @@ class StreamScheduler:
             
     async def cancel_task(self, task_id: str) -> bool:
         """Cancel scheduled or running task"""
+
+
+
         try:
             # Check active tasks
             if task_id in self.active_tasks:
@@ -347,6 +359,9 @@ class StreamScheduler:
         
     async def add_worker(self, config: WorkerConfig) -> bool:
         """Add worker to scheduler"""
+
+
+
         try:
             self.workers[config.worker_id] = config
             self.worker_tasks[config.worker_id] = set()
@@ -360,6 +375,9 @@ class StreamScheduler:
             
     async def remove_worker(self, worker_id: str) -> bool:
         """Remove worker from scheduler"""
+
+
+
         try:
             if worker_id in self.workers:
                 del self.workers[worker_id]
@@ -475,6 +493,9 @@ class StreamScheduler:
         
     async def _execute_task(self, task: ScheduledTask, worker_id: str) -> None:
         """Execute task on worker"""
+
+
+
         try:
             # Update task status
             task.status = TaskStatus.RUNNING
@@ -500,6 +521,9 @@ class StreamScheduler:
             
     async def _run_task(self, task: ScheduledTask, worker_id: str) -> None:
         """Run task function with timeout and error handling"""
+
+
+
         try:
             # Execute with timeout if specified
             if task.timeout_seconds:
@@ -532,6 +556,9 @@ class StreamScheduler:
         result: Any
     ) -> None:
         """Handle successful task completion"""
+
+
+
         try:
             # Update task
             task.status = TaskStatus.COMPLETED
@@ -575,6 +602,9 @@ class StreamScheduler:
         error_message: str
     ) -> None:
         """Handle task failure with retry logic"""
+
+
+
         try:
             task.error_message = error_message
             task.retry_count += 1
@@ -681,6 +711,9 @@ class StreamScheduler:
                 
     async def shutdown(self) -> None:
         """Gracefully shutdown scheduler"""
+
+
+
         try:
             self._shutdown_event.set()
             

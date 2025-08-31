@@ -8,7 +8,7 @@ Provides centralized control for complex automation workflows and orchestration.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  LEGAL WARNING:
+  LEGAL WARNING:
 This code is proprietary and confidential. Any unauthorized copying, modification, 
 distribution, or use without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and may result in legal action.
@@ -156,6 +156,9 @@ class AutomationController:
         
     async def initialize(self) -> bool:
         """Initialize automation controller and all managers"""
+
+
+
         try:
             self.status = AutomationStatus.INITIALIZING
             self.logger.info("Initializing automation controller...")
@@ -384,6 +387,9 @@ class AutomationController:
     
     async def _perform_health_checks(self):
         """Perform health checks on all managers"""
+
+
+
         try:
             # Check browser manager health
             if not await self.browser_manager.health_check():

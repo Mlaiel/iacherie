@@ -8,13 +8,13 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team: SEO Expert, Content Marketing Specialist, AI Optimization Expert
 Copyright: Fahed Mlaiel - All rights reserved
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
 
-🎯 LOGIQUE MÉTIER SEO :
+ LOGIQUE MÉTIER SEO :
 User Upload → IA Analysis → SEO Auto-Optimization → Multi-Platform Distribution → Performance Tracking
 """
 
@@ -121,6 +121,9 @@ class SEORecommendation:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for storage"""
+
+
+
         return {
             'category': self.category,
             'priority': self.priority.value,
@@ -272,6 +275,9 @@ class KeywordResearcher:
     async def analyze_content_keywords(self, content: str, content_type: ContentType,
                                      language: str = 'en') -> KeywordAnalysis:
         """Analyze content to extract relevant keywords"""
+
+
+
         try:
             # Clean and preprocess content
             cleaned_content = self._clean_content(content)
@@ -325,6 +331,9 @@ class KeywordResearcher:
     
     async def _extract_primary_keywords(self, content: str, language: str) -> List[str]:
         """Extract primary keywords from content"""
+
+
+
         try:
             # Simple keyword extraction (in production, would use NLP libraries)
             words = content.split()
@@ -356,6 +365,9 @@ class KeywordResearcher:
     
     async def _extract_secondary_keywords(self, content: str, language: str) -> List[str]:
         """Extract secondary keywords from content"""
+
+
+
         try:
             # Extract 2-3 word phrases
             words = content.split()
@@ -387,6 +399,9 @@ class KeywordResearcher:
     
     async def _extract_long_tail_keywords(self, content: str, language: str) -> List[str]:
         """Extract long-tail keywords (4+ words)"""
+
+
+
         try:
             # Extract longer phrases
             sentences = re.split(r'[.!?]+', content)
@@ -486,6 +501,9 @@ class SEOOptimizer:
     async def optimize_content(self, content_id: str, content_data: Dict[str, Any],
                              target_platforms: List[PlatformType] = None) -> ContentSEO:
         """Perform comprehensive SEO optimization"""
+
+
+
         try:
             target_platforms = target_platforms or [PlatformType.GOOGLE, PlatformType.YOUTUBE]
             

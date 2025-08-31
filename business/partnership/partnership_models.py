@@ -2,7 +2,7 @@
 Partnership Models for IA Influencer Agent
 Core data models for partnership management and business relationships
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
 All rights reserved. Unauthorized use, copying, or reproduction 
 of this code, concept, or intellectual property without explicit 

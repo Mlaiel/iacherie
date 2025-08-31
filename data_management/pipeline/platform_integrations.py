@@ -9,7 +9,7 @@ Specialized platform integrations for creators supporting the complete monetizat
 - Flickr, Shutterstock, Getty Images (Photographers)
 - Comedy Central, Netflix, Amazon Prime (Comedians)
 
-⚠️ COPYRIGHT NOTICE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+ COPYRIGHT NOTICE - UNAUTHORIZED USE STRICTLY PROHIBITED 
 This code and all associated concepts are the EXCLUSIVE PROPERTY of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use will result in immediate legal action.
 """
@@ -450,6 +450,9 @@ class SpotifyIntegration(BasePlatformIntegration):
     
     async def authenticate(self, credentials: Dict[str, Any]) -> bool:
         """Authenticate with Spotify."""
+
+
+
         try:
             sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
                 client_id=credentials['client_id'],
@@ -521,6 +524,9 @@ class InstagramIntegration(BasePlatformIntegration):
     
     async def authenticate(self, credentials: Dict[str, Any]) -> bool:
         """Authenticate with Instagram."""
+
+
+
         try:
             # Initialize Instagram session
             self.session = instaloader.Instaloader()
@@ -567,6 +573,9 @@ class InstagramIntegration(BasePlatformIntegration):
     
     async def get_analytics(self, content_id: str) -> Dict[str, Any]:
         """Get Instagram analytics."""
+
+
+
         return {
             'platform': 'instagram',
             'content_id': content_id,
@@ -619,12 +628,12 @@ class InstagramIntegration(BasePlatformIntegration):
     async def _optimize_caption(self, description: str) -> str:
         """Optimize caption for Instagram engagement."""
         # Add engagement hooks and calls-to-action
-        hooks = ["💫 ", "🔥 ", "✨ ", "🚀 "]
+        hooks = [" ", " ", " ", " "]
         hook = hooks[hash(description) % len(hooks)]
         
         optimized_caption = f"{hook}{description}\n\n"
-        optimized_caption += "What do you think? Let me know in the comments! 👇\n"
-        optimized_caption += "Follow for more content like this! 🙏"
+        optimized_caption += "What do you think? Let me know in the comments! \n"
+        optimized_caption += "Follow for more content like this! "
         
         return optimized_caption[:2200]  # Instagram caption limit
     
@@ -667,6 +676,9 @@ class YouTubeIntegration(BasePlatformIntegration):
     
     async def upload_content(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
         """Upload video content to YouTube."""
+
+
+
         return {
             'platform': 'youtube',
             'video_id': f"yt_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}",
@@ -679,6 +691,9 @@ class YouTubeIntegration(BasePlatformIntegration):
     
     async def get_analytics(self, content_id: str) -> Dict[str, Any]:
         """Get YouTube analytics."""
+
+
+
         return {
             'platform': 'youtube',
             'content_id': content_id,
@@ -738,14 +753,14 @@ class YouTubeIntegration(BasePlatformIntegration):
     async def _optimize_description(self, description: str) -> str:
         """Optimize YouTube description for SEO and engagement."""
         optimized_desc = f"{description}\n\n"
-        optimized_desc += "🔔 Subscribe for more content like this!\n"
-        optimized_desc += "👍 Like this video if you enjoyed it!\n"
-        optimized_desc += "💬 Leave a comment with your thoughts!\n"
-        optimized_desc += "🔗 Share this video with your friends!\n\n"
+        optimized_desc += " Subscribe for more content like this!\n"
+        optimized_desc += " Like this video if you enjoyed it!\n"
+        optimized_desc += " Leave a comment with your thoughts!\n"
+        optimized_desc += " Share this video with your friends!\n\n"
         optimized_desc += "Follow me on social media:\n"
-        optimized_desc += "📷 Instagram: @username\n"
-        optimized_desc += "🐦 Twitter: @username\n"
-        optimized_desc += "📧 Business inquiries: email@example.com\n\n"
+        optimized_desc += " Instagram: @username\n"
+        optimized_desc += " Twitter: @username\n"
+        optimized_desc += " Business inquiries: email@example.com\n\n"
         optimized_desc += "#hashtag #related #content"
         
         return optimized_desc

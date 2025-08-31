@@ -7,7 +7,7 @@ control, monitoring, and optimization capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -87,6 +87,9 @@ class ComplianceManager(BaseAgent):
 
     async def get_system_status(self) -> ComplianceSystemStatus:
         """Get comprehensive system status"""
+
+
+
         try:
             return ComplianceSystemStatus(
                 is_healthy=self.is_running,
@@ -107,6 +110,9 @@ class ComplianceManager(BaseAgent):
 
     async def process(self, data: Dict[str, Any]) -> AgentResponse:
         """Base agent interface implementation"""
+
+
+
         try:
             # Implementation specific to compliance operations
             result = await self.engine.process(data)

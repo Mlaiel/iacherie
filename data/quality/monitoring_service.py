@@ -218,6 +218,9 @@ class QualityMonitoringService:
     
     async def record_assessment(self, assessment: Dict[str, Any]):
         """Record a quality assessment for monitoring"""
+
+
+
         
         try:
             # Store the assessment

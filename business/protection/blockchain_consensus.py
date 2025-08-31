@@ -1,11 +1,11 @@
 """
-⛓️ Blockchain Consensus - IA-Influencer-Agent
+ Blockchain Consensus - IA-Influencer-Agent
 ==================================================================
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 ==================================================================
 
-⚠️  COPYRIGHT NOTICE & LEGAL WARNING ⚠️
+  COPYRIGHT NOTICE & LEGAL WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copy, distribution, or modification of this code
 without explicit written permission is strictly prohibited and will be
@@ -180,6 +180,9 @@ class BlockchainBlock:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert block to dictionary"""
+
+
+
         return {
             'block_number': self.block_number,
             'previous_hash': self.previous_hash,
@@ -282,6 +285,9 @@ class CryptographicManager:
         
     def generate_key_pair(self) -> Tuple[str, str]:
         """Generate RSA key pair for digital signatures"""
+
+
+
         try:
             private_key = rsa.generate_private_key(
                 public_exponent=65537,
@@ -308,6 +314,9 @@ class CryptographicManager:
     
     def sign_content(self, content_hash: str, private_key_pem: str) -> str:
         """Create digital signature for content"""
+
+
+
         try:
             private_key = serialization.load_pem_private_key(
                 private_key_pem.encode('utf-8'),
@@ -331,6 +340,9 @@ class CryptographicManager:
     
     def verify_signature(self, content_hash: str, signature: str, public_key_pem: str) -> bool:
         """Verify digital signature"""
+
+
+
         try:
             public_key = serialization.load_pem_public_key(
                 public_key_pem.encode('utf-8')
@@ -356,6 +368,9 @@ class CryptographicManager:
     
     def calculate_merkle_root(self, transactions: List[str]) -> str:
         """Calculate Merkle root for block transactions"""
+
+
+
         try:
             if not transactions:
                 return ""
@@ -401,6 +416,9 @@ class BlockchainEngine:
         
     async def create_genesis_block(self) -> BlockchainRecord:
         """Create the genesis block"""
+
+
+
         try:
             genesis_record = BlockchainRecord(
                 block_number=0,
@@ -433,6 +451,9 @@ class BlockchainEngine:
     
     async def add_content_record(self, content_data: Dict[str, Any]) -> BlockchainRecord:
         """Add new content ownership record to blockchain"""
+
+
+
         try:
             # Calculate content hash
             content_json = json.dumps(content_data, sort_keys=True)
@@ -502,6 +523,9 @@ class BlockchainEngine:
     
     async def _validate_record(self, record: BlockchainRecord) -> bool:
         """Validate blockchain record integrity"""
+
+
+
         try:
             # Validate block hash
             calculated_hash = self._calculate_block_hash(record)
@@ -535,6 +559,9 @@ class BlockchainEngine:
     
     def _calculate_block_hash(self, record: BlockchainRecord) -> str:
         """Calculate hash for blockchain record"""
+
+
+
         try:
             hash_data = {
                 'block_number': record.block_number,
@@ -576,6 +603,9 @@ class ConsensusEngine:
         
     async def initiate_consensus(self, record: BlockchainRecord) -> ConsensusResult:
         """Initiate consensus validation for record"""
+
+
+
         try:
             consensus_result = ConsensusResult(
                 record_id=record.record_id,
@@ -600,6 +630,9 @@ class ConsensusEngine:
     
     async def _proof_of_authority_consensus(self, record: BlockchainRecord, result: ConsensusResult):
         """Proof of Authority consensus validation"""
+
+
+
         try:
             # Get authorized validators
             authorized_validators = self._get_authorized_validators()
@@ -650,6 +683,9 @@ class ConsensusEngine:
     
     async def _proof_of_stake_consensus(self, record: BlockchainRecord, result: ConsensusResult):
         """Proof of Stake consensus validation"""
+
+
+
         try:
             # Get staking validators
             staking_validators = self._get_staking_validators()
@@ -682,6 +718,9 @@ class ConsensusEngine:
     
     async def _proof_of_work_consensus(self, record: BlockchainRecord, result: ConsensusResult):
         """Proof of Work consensus validation"""
+
+
+
         try:
             # Simplified PoW - find nonce that creates hash with required difficulty
             difficulty_target = "0" * self.config.difficulty_target
@@ -713,6 +752,9 @@ class ConsensusEngine:
     
     async def _get_validator_vote(self, validator_id: str, record: BlockchainRecord) -> bool:
         """Get vote from specific validator"""
+
+
+
         try:
             # Simulate validator logic - in reality, this would query actual validators
             # For now, we'll use a deterministic but realistic validation
@@ -744,6 +786,9 @@ class ConsensusEngine:
     
     def _get_authorized_validators(self) -> List[str]:
         """Get list of authorized validators for PoA"""
+
+
+
         return [
             "validator_001",
             "validator_002", 
@@ -754,6 +799,9 @@ class ConsensusEngine:
     
     def _get_staking_validators(self) -> Dict[str, Dict[str, Any]]:
         """Get staking validators for PoS"""
+
+
+
         return {
             "staker_001": {"stake": 5000.0, "reputation": 0.95},
             "staker_002": {"stake": 3000.0, "reputation": 0.92},
@@ -781,8 +829,11 @@ class BlockchainConsensusService(IBlockchainConsensusService):
         
     async def initialize(self) -> bool:
         """Initialize blockchain consensus service"""
+
+
+
         try:
-            self.logger.info("🚀 Initializing Blockchain Consensus Service")
+            self.logger.info(" Initializing Blockchain Consensus Service")
             
             # Create genesis block if blockchain is empty
             if not self.blockchain_engine.blockchain:
@@ -792,16 +843,19 @@ class BlockchainConsensusService(IBlockchainConsensusService):
             await self._initialize_validator_network()
             
             self.status = BlockchainConsensusStatus.ACTIVE
-            self.logger.info("✅ Blockchain Consensus Service initialized successfully")
+            self.logger.info(" Blockchain Consensus Service initialized successfully")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Blockchain Consensus initialization failed: {e}")
+            self.logger.error(f" Blockchain Consensus initialization failed: {e}")
             self.status = BlockchainConsensusStatus.ERROR
             return False
     
     async def register_content_ownership(self, content_data: Dict[str, Any]) -> BlockchainRecord:
         """Register content ownership on blockchain"""
+
+
+
         try:
             self.status = BlockchainConsensusStatus.MINING
             
@@ -830,6 +884,9 @@ class BlockchainConsensusService(IBlockchainConsensusService):
     
     async def validate_ownership_claim(self, record_id: str) -> ConsensusResult:
         """Validate ownership claim through consensus"""
+
+
+
         try:
             self.status = BlockchainConsensusStatus.VALIDATING
             
@@ -863,6 +920,9 @@ class BlockchainConsensusService(IBlockchainConsensusService):
     
     async def verify_content_authenticity(self, content_hash: str) -> bool:
         """Verify content authenticity against blockchain"""
+
+
+
         try:
             # Search blockchain for content hash
             for record in self.blockchain_engine.blockchain:
@@ -883,6 +943,9 @@ class BlockchainConsensusService(IBlockchainConsensusService):
     
     async def _initialize_validator_network(self) -> None:
         """Initialize validator network"""
+
+
+
         try:
             # Register authorized validators
             authorized_validators = [
@@ -922,6 +985,9 @@ class BlockchainConsensusServiceFactory:
         **kwargs
     ) -> BlockchainConsensusConfig:
         """Create blockchain consensus configuration"""
+
+
+
         return BlockchainConsensusConfig(
             consensus_algorithm=consensus_algorithm,
             block_time_seconds=block_time_seconds,
@@ -938,6 +1004,9 @@ def calculate_block_reward(block_number: int, base_reward: float = 10.0) -> floa
 
 def format_blockchain_record(record: BlockchainRecord) -> str:
     """Format blockchain record for display"""
+
+
+
     return f"Block #{record.block_number} - {record.content_id} - {record.timestamp.strftime('%Y-%m-%d %H:%M:%S')}"
 
 
@@ -977,19 +1046,22 @@ class BlockchainConsensusManager:
         
     async def start(self) -> bool:
         """Démarrage du gestionnaire"""
+
+
+
         try:
             self.status = BlockchainConsensusStatus.ACTIVE
-            self.logger.info(f"🚀 Blockchain Consensus Manager démarré")
+            self.logger.info(f" Blockchain Consensus Manager démarré")
             return True
         except Exception as e:
-            self.logger.error(f"❌ Erreur démarrage: {e}")
+            self.logger.error(f" Erreur démarrage: {e}")
             self.status = BlockchainConsensusStatus.ERROR
             return False
     
     async def stop(self) -> bool:
         """Arrêt du gestionnaire"""
         self.status = BlockchainConsensusStatus.INACTIVE
-        self.logger.info(f"⏹️ Blockchain Consensus Manager arrêté")
+        self.logger.info(f"⏹ Blockchain Consensus Manager arrêté")
         return True
 
 class BlockchainConsensusService(IBlockchainConsensusService):
@@ -1001,17 +1073,23 @@ class BlockchainConsensusService(IBlockchainConsensusService):
     
     async def initialize(self) -> bool:
         """Initialisation du service"""
+
+
+
         try:
-            self.logger.info(f"🔧 Initialisation Blockchain Consensus Service")
+            self.logger.info(f" Initialisation Blockchain Consensus Service")
             return True
         except Exception as e:
-            self.logger.error(f"❌ Erreur initialisation: {e}")
+            self.logger.error(f" Erreur initialisation: {e}")
             return False
     
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Traitement principal des données"""
+
+
+
         try:
-            self.logger.info(f"⚡ Traitement Blockchain Consensus")
+            self.logger.info(f" Traitement Blockchain Consensus")
             
             # Validation des données
             if not await self.validate(data):
@@ -1027,7 +1105,7 @@ class BlockchainConsensusService(IBlockchainConsensusService):
             }
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur traitement: {e}")
+            self.logger.error(f" Erreur traitement: {e}")
             return {
                 "status": "error", 
                 "error": str(e),
@@ -1044,6 +1122,9 @@ class BlockchainConsensusService(IBlockchainConsensusService):
     
     async def _execute_business_logic(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Exécution de la logique métier consolidée pour le consensus blockchain"""
+
+
+
         try:
             operation_type = data.get('operation_type', 'validate')
             content_hash = data.get('content_hash')
@@ -1110,6 +1191,9 @@ class BlockchainConsensusService(IBlockchainConsensusService):
     
     async def _validate_content_integrity(self, content_hash: str, data: Dict[str, Any]) -> bool:
         """Valide l'intégrité du contenu via la blockchain"""
+
+
+
         try:
             # Vérifier si le hash existe dans la blockchain
             blockchain_record = await self._query_blockchain_for_hash(content_hash)
@@ -1127,6 +1211,9 @@ class BlockchainConsensusService(IBlockchainConsensusService):
     
     async def _register_content_ownership(self, data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         """Enregistre la propriété du contenu sur la blockchain"""
+
+
+
         try:
             content_data = {
                 'content_hash': data.get('content_hash'),
@@ -1159,6 +1246,9 @@ class BlockchainConsensusService(IBlockchainConsensusService):
     
     async def _verify_content_ownership(self, content_hash: str, owner_id: str) -> bool:
         """Vérifie la propriété du contenu"""
+
+
+
         try:
             blockchain_record = await self._query_blockchain_for_hash(content_hash)
             
@@ -1173,6 +1263,9 @@ class BlockchainConsensusService(IBlockchainConsensusService):
     
     async def _check_network_consensus(self, content_hash: str) -> Dict[str, Any]:
         """Vérifie le consensus réseau pour un contenu"""
+
+
+
         try:
             # Simuler une vérification de consensus réseau
             # En production, cela interrogerait les nœuds du réseau blockchain
@@ -1211,6 +1304,9 @@ class BlockchainConsensusService(IBlockchainConsensusService):
     
     async def _create_blockchain_transaction(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
         """Crée une transaction blockchain"""
+
+
+
         return {
             'id': str(uuid.uuid4()),
             'type': 'content_registration',

@@ -8,7 +8,7 @@ Responsibility: Unified orchestration of all crawler queue operations
 Technologies: Async Orchestration, Multi-Queue Coordination, Load Balancing
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -113,7 +113,7 @@ class OrchestrationConfig:
 
 class CrawlerQueueOrchestrator:
     """
-    🎼 Advanced Crawler Queue Orchestrator - IA-Influencer-Agent
+     Advanced Crawler Queue Orchestrator - IA-Influencer-Agent
     
     Enterprise-grade queue orchestration system featuring:
     - Multi-queue coordination and management
@@ -164,8 +164,11 @@ class CrawlerQueueOrchestrator:
         core_queue_manager: Optional[IntelligentQueueManager] = None
     ) -> bool:
         """Initialize orchestrator and all components"""
+
+
+
         try:
-            logger.info("🎼 Initializing Crawler Queue Orchestrator...")
+            logger.info(" Initializing Crawler Queue Orchestrator...")
             
             # Store core queue manager reference
             self.core_queue_manager = core_queue_manager
@@ -201,7 +204,7 @@ class CrawlerQueueOrchestrator:
             ])
             
             self.status = OrchestrationStatus.ACTIVE
-            logger.info("✅ Crawler Queue Orchestrator initialized successfully")
+            logger.info(" Crawler Queue Orchestrator initialized successfully")
             
             # Notify status callbacks
             await self._notify_status_change(OrchestrationStatus.ACTIVE)
@@ -209,7 +212,7 @@ class CrawlerQueueOrchestrator:
             return True
             
         except Exception as e:
-            logger.error(f"❌ Orchestrator initialization failed: {e}")
+            logger.error(f" Orchestrator initialization failed: {e}")
             self.status = OrchestrationStatus.ERROR
             return False
     
@@ -220,6 +223,9 @@ class CrawlerQueueOrchestrator:
         callback_url: Optional[str] = None
     ) -> Dict[str, Any]:
         """Submit crawler request for orchestrated processing"""
+
+
+
         try:
             request_id = f"req_{uuid.uuid4().hex}"
             start_time = time.time()
@@ -288,11 +294,11 @@ class CrawlerQueueOrchestrator:
                 "processing_time_ms": processing_time_ms
             }
             
-            logger.info(f"📨 Crawler request submitted: {request_id}")
+            logger.info(f" Crawler request submitted: {request_id}")
             return response
             
         except Exception as e:
-            logger.error(f"❌ Failed to submit crawler request: {e}")
+            logger.error(f" Failed to submit crawler request: {e}")
             await self._update_submission_metrics(0, False)
             
             return {
@@ -303,6 +309,9 @@ class CrawlerQueueOrchestrator:
     
     async def get_request_status(self, request_id: str) -> Dict[str, Any]:
         """Get comprehensive status of submitted request"""
+
+
+
         try:
             request_info = self.active_requests.get(request_id)
             if not request_info:
@@ -349,7 +358,7 @@ class CrawlerQueueOrchestrator:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to get request status: {e}")
+            logger.error(f" Failed to get request status: {e}")
             return {
                 "status": "error",
                 "request_id": request_id,
@@ -358,6 +367,9 @@ class CrawlerQueueOrchestrator:
     
     async def cancel_request(self, request_id: str) -> bool:
         """Cancel active crawler request"""
+
+
+
         try:
             request_info = self.active_requests.get(request_id)
             if not request_info:
@@ -377,17 +389,20 @@ class CrawlerQueueOrchestrator:
             # Remove from active requests
             if queue_cancelled:
                 self.active_requests.pop(request_id, None)
-                logger.info(f"🚫 Request cancelled: {request_id}")
+                logger.info(f" Request cancelled: {request_id}")
                 return True
             
             return False
             
         except Exception as e:
-            logger.error(f"❌ Failed to cancel request: {e}")
+            logger.error(f" Failed to cancel request: {e}")
             return False
     
     async def get_orchestration_status(self) -> Dict[str, Any]:
         """Get comprehensive orchestration status"""
+
+
+
         try:
             # Update current metrics
             await self._update_current_metrics()
@@ -431,11 +446,14 @@ class CrawlerQueueOrchestrator:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to get orchestration status: {e}")
+            logger.error(f" Failed to get orchestration status: {e}")
             return {"error": str(e)}
     
     async def optimize_performance(self) -> Dict[str, Any]:
         """Trigger performance optimization"""
+
+
+
         try:
             optimization_results = {
                 "timestamp": datetime.now().isoformat(),
@@ -465,11 +483,11 @@ class CrawlerQueueOrchestrator:
             optimization_results["worker_optimization"] = worker_optimization
             optimization_results["optimizations_applied"].append("worker_allocation")
             
-            logger.info("⚡ Orchestration performance optimization completed")
+            logger.info(" Orchestration performance optimization completed")
             return optimization_results
             
         except Exception as e:
-            logger.error(f"❌ Performance optimization failed: {e}")
+            logger.error(f" Performance optimization failed: {e}")
             return {"error": str(e)}
     
     async def register_status_callback(self, callback: Callable):
@@ -486,8 +504,11 @@ class CrawlerQueueOrchestrator:
     
     async def shutdown(self):
         """Gracefully shutdown orchestrator"""
+
+
+
         try:
-            logger.info("🛑 Starting Crawler Queue Orchestrator shutdown...")
+            logger.info(" Starting Crawler Queue Orchestrator shutdown...")
             
             self.status = OrchestrationStatus.SHUTDOWN
             self._is_running = False
@@ -509,10 +530,10 @@ class CrawlerQueueOrchestrator:
             # Notify callbacks
             await self._notify_status_change(OrchestrationStatus.SHUTDOWN)
             
-            logger.info("✅ Crawler Queue Orchestrator shutdown completed")
+            logger.info(" Crawler Queue Orchestrator shutdown completed")
             
         except Exception as e:
-            logger.error(f"❌ Orchestrator shutdown error: {e}")
+            logger.error(f" Orchestrator shutdown error: {e}")
     
     # Private helper methods
     
@@ -588,6 +609,9 @@ class CrawlerQueueOrchestrator:
     
     async def _update_current_metrics(self):
         """Update current performance metrics"""
+
+
+
         try:
             # Update queue sizes
             if self.queue_manager:
@@ -743,14 +767,23 @@ class CrawlerQueueOrchestrator:
     
     async def _optimize_load_balancing(self) -> Dict[str, Any]:
         """Optimize load balancing algorithms"""
+
+
+
         return {"optimized": True}
     
     async def _optimize_worker_allocation(self) -> Dict[str, Any]:
         """Optimize worker allocation strategies"""
+
+
+
         return {"optimized": True}
 
 
 # Factory function
 def create_queue_orchestrator(config: OrchestrationConfig = None) -> CrawlerQueueOrchestrator:
     """Create and return configured queue orchestrator"""
+
+
+
     return CrawlerQueueOrchestrator(config)

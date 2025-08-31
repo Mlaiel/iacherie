@@ -1,5 +1,5 @@
 """
-🔍 Evidence Collector
+ Evidence Collector
 ===================
 
 Automated evidence collection system for content protection violations.
@@ -146,6 +146,9 @@ class ScreenshotCollector:
         evidence_path: str
     ) -> CollectionResult:
         """Collect screenshot evidence from URL."""
+
+
+
         try:
             driver = await self.driver_manager.get_driver()
             
@@ -333,6 +336,9 @@ class VideoCollector:
         evidence_path: str
     ) -> CollectionResult:
         """Collect video evidence from URL."""
+
+
+
         try:
             # For now, implement as series of screenshots
             # In production, would use screen recording tools
@@ -432,6 +438,9 @@ class MetadataCollector:
         evidence_path: str
     ) -> CollectionResult:
         """Collect comprehensive metadata."""
+
+
+
         try:
             metadata = {}
             
@@ -475,6 +484,9 @@ class MetadataCollector:
     
     async def _collect_http_headers(self, url: str) -> Dict[str, Any]:
         """Collect HTTP headers."""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.head(url) as response:
@@ -485,6 +497,9 @@ class MetadataCollector:
     
     async def _collect_dns_info(self, url: str) -> Dict[str, Any]:
         """Collect DNS information."""
+
+
+
         try:
             import socket
             parsed_url = urlparse(url)
@@ -503,6 +518,9 @@ class MetadataCollector:
     
     async def _collect_whois_info(self, url: str) -> Dict[str, Any]:
         """Collect WHOIS information."""
+
+
+
         try:
             # Would implement WHOIS lookup
             # For now, return placeholder
@@ -516,6 +534,9 @@ class MetadataCollector:
     
     async def _collect_ssl_info(self, url: str) -> Dict[str, Any]:
         """Collect SSL certificate information."""
+
+
+
         try:
             import ssl
             import socket
@@ -546,6 +567,9 @@ class MetadataCollector:
     
     async def _collect_social_metadata(self, url: str) -> Dict[str, Any]:
         """Collect social media metadata."""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
@@ -666,6 +690,9 @@ class EvidenceCollector:
         Returns:
             Dictionary of collection results by evidence type
         """
+
+
+
         try:
             collection_id = str(uuid4())
             evidence_path = f"evidence/{alert.user_id}/{alert.id}/{collection_id}"
@@ -729,6 +756,9 @@ class EvidenceCollector:
 
     async def get_evidence_summary(self, alert_id: str) -> Dict[str, Any]:
         """Get evidence collection summary for an alert."""
+
+
+
         try:
             async with get_async_session() as session:
                 result = await session.execute(
@@ -821,6 +851,9 @@ class EvidenceCollector:
         evidence_path: str
     ) -> CollectionResult:
         """Collect specific type of evidence."""
+
+
+
         try:
             # Get violation URL from alert metadata
             violation_url = alert.metadata.get("violation_url") or alert.metadata.get("url")
@@ -871,6 +904,9 @@ class EvidenceCollector:
         evidence_path: str
     ) -> CollectionResult:
         """Collect digital fingerprint evidence."""
+
+
+
         try:
             # Create fingerprint data
             fingerprint_data = {
@@ -917,6 +953,9 @@ class EvidenceCollector:
         results: Dict[str, CollectionResult]
     ) -> None:
         """Store evidence records in database."""
+
+
+
         try:
             async with get_async_session() as session:
                 for evidence_type, result in results.items():
@@ -953,6 +992,9 @@ class EvidenceCollector:
 
     async def _process_collection_task(self, task: Dict[str, Any]) -> None:
         """Process evidence collection task."""
+
+
+
         try:
             task_type = task.get("type")
             

@@ -99,25 +99,28 @@ globals().update({
 @pytest.fixture(scope="session")
 def sample_texts():
     """Sample texts for basic NLP testing"""
+
+
+
     return {
         "english": [
             "This is a great product! I love it so much.",
             "The service was terrible and the staff was rude.",
-            "Amazing experience! Highly recommend to everyone 💪 #fitness #transformation #goals",
-            "Behind the scenes of today's photoshoot ✨ The lighting was absolutely perfect! Can't wait to share the results.",
-            "Coffee and creativity fuel my morning routine ☕ What's your secret to productivity? #productivity #morning",
+            "Amazing experience! Highly recommend to everyone  #fitness #transformation #goals",
+            "Behind the scenes of today's photoshoot  The lighting was absolutely perfect! Can't wait to share the results.",
+            "Coffee and creativity fuel my morning routine  What's your secret to productivity? #productivity #morning",
             "Just launched my new fitness routine! Ready to transform my life this year. Who's joining me?",
-            "Exploring the beautiful streets of Paris 🇫🇷 Every corner tells a story. Travel really opens your mind to new perspectives.",
-            "Cooking experiment gone right! 🍝 This homemade pasta recipe is a game-changer. Recipe in my bio! #cooking #foodie",
+            "Exploring the beautiful streets of Paris  Every corner tells a story. Travel really opens your mind to new perspectives.",
+            "Cooking experiment gone right!  This homemade pasta recipe is a game-changer. Recipe in my bio! #cooking #foodie",
             "Neutral comment about the weather today.",
             "Could be better, but not too bad overall."
         ],
         "german": [
-            "Gerade meine neue Fitnessroutine gestartet! 💪 Bereit, mein Leben dieses Jahr zu verändern. Wer macht mit?",
-            "Hinter den Kulissen des heutigen Fotoshootings ✨ Das Licht war absolut perfekt!",
-            "Kaffee und Kreativität beflügeln meine Morgenroutine ☕ Was ist euer Geheimnis für Produktivität?",
-            "Die wunderschönen Straßen von Berlin erkunden 🇩🇪 Jede Ecke erzählt eine Geschichte.",
-            "Kochexperiment gelungen! 🍝 Dieses hausgemachte Pasta-Rezept ist ein Wendepunkt.",
+            "Gerade meine neue Fitnessroutine gestartet!  Bereit, mein Leben dieses Jahr zu verändern. Wer macht mit?",
+            "Hinter den Kulissen des heutigen Fotoshootings  Das Licht war absolut perfekt!",
+            "Kaffee und Kreativität beflügeln meine Morgenroutine  Was ist euer Geheimnis für Produktivität?",
+            "Die wunderschönen Straßen von Berlin erkunden  Jede Ecke erzählt eine Geschichte.",
+            "Kochexperiment gelungen!  Dieses hausgemachte Pasta-Rezept ist ein Wendepunkt.",
             "Das ist ein großartiges Produkt! Ich liebe es so sehr.",
             "Der Service war schrecklich und das Personal war unhöflich.",
             "Erstaunliche Erfahrung! Empfehle es jedem weiter.",
@@ -125,11 +128,11 @@ def sample_texts():
             "Enttäuschende Ergebnisse, erwartete viel mehr."
         ],
         "french": [
-            "Je viens de lancer ma nouvelle routine de fitness! 💪 Prêt à transformer ma vie cette année. Qui me rejoint?",
-            "Dans les coulisses du shooting photo d'aujourd'hui ✨ L'éclairage était absolument parfait!",
-            "Le café et la créativité alimentent ma routine matinale ☕ Quel est votre secret pour la productivité?",
-            "Explorer les belles rues de Paris 🇫🇷 Chaque coin raconte une histoire.",
-            "Expérience culinaire réussie! 🍝 Cette recette de pâtes maison change la donne.",
+            "Je viens de lancer ma nouvelle routine de fitness!  Prêt à transformer ma vie cette année. Qui me rejoint?",
+            "Dans les coulisses du shooting photo d'aujourd'hui  L'éclairage était absolument parfait!",
+            "Le café et la créativité alimentent ma routine matinale  Quel est votre secret pour la productivité?",
+            "Explorer les belles rues de Paris  Chaque coin raconte une histoire.",
+            "Expérience culinaire réussie!  Cette recette de pâtes maison change la donne.",
             "C'est un excellent produit! Je l'adore tellement.",
             "Le service était terrible et le personnel était impoli.",
             "Expérience incroyable! Je le recommande vivement à tous.",
@@ -137,11 +140,11 @@ def sample_texts():
             "Résultats décevants, j'attendais beaucoup plus."
         ],
         "spanish": [
-            "¡Acabo de lanzar mi nueva rutina de fitness! 💪 Listo para transformar mi vida este año. ¿Quién se une?",
-            "Detrás de escena de la sesión de fotos de hoy ✨ ¡La iluminación estaba absolutamente perfecta!",
-            "El café y la creatividad alimentan mi rutina matutina ☕ ¿Cuál es tu secreto para la productividad?",
-            "Explorando las hermosas calles de Madrid 🇪🇸 Cada rincón cuenta una historia.",
-            "¡Experimento culinario exitoso! 🍝 Esta receta de pasta casera es un cambio total.",
+            "¡Acabo de lanzar mi nueva rutina de fitness!  Listo para transformar mi vida este año. ¿Quién se une?",
+            "Detrás de escena de la sesión de fotos de hoy  ¡La iluminación estaba absolutamente perfecta!",
+            "El café y la creatividad alimentan mi rutina matutina  ¿Cuál es tu secreto para la productividad?",
+            "Explorando las hermosas calles de Madrid  Cada rincón cuenta una historia.",
+            "¡Experimento culinario exitoso!  Esta receta de pasta casera es un cambio total.",
             "¡Este es un gran producto! Me encanta muchísimo.",
             "El servicio fue terrible y el personal fue grosero.",
             "¡Experiencia increíble! Lo recomiendo mucho a todos.",
@@ -154,6 +157,9 @@ def sample_texts():
 @pytest.fixture(scope="session")
 def performance_test_data():
     """Performance testing datasets with varying sizes and complexities"""
+
+
+
     return {
         "small": {
             "texts": [
@@ -167,27 +173,27 @@ def performance_test_data():
             "Quick test for batch processing.",
             "Another short text for batch performance testing.",
             "Small dataset entry number three for batch analysis.",
-            "Fourth batch entry with emoji support 🚀",
+            "Fourth batch entry with emoji support ",
             "Final batch entry with hashtags #test #performance"
         ],
         "medium_batch": [
             "This is a medium-length text for batch performance testing. " * 5,
             "Another medium text with various punctuation marks for batch analysis! " * 4,
             "Performance testing requires realistic data sets for batch processing. " * 6,
-            "Medium complexity content with emojis 🎯 and hashtags #performance #testing",
+            "Medium complexity content with emojis  and hashtags #performance #testing",
             "Batch processing should handle diverse content types efficiently and accurately"
         ],
         "medium_batch": [
             "This is a medium-length text for performance testing designed to evaluate batch processing capabilities with realistic content lengths and complexity patterns.",
             "Another medium-sized content entry that includes various elements like punctuation marks! How well does it perform during batch analysis? Let's see the results...",
             "Performance testing requires realistic data sets that represent actual usage patterns found in social media content with hashtags #performance #testing #nlp",
-            "Content analysis must handle diverse text structures including emojis 😊, mentions @username, and complex punctuation patterns efficiently during batch processing.",
+            "Content analysis must handle diverse text structures including emojis , mentions @username, and complex punctuation patterns efficiently during batch processing.",
             "Batch processing evaluation content with varied sentence structures: short ones, medium-length sentences with multiple clauses, and comprehensive descriptions.",
-            "Social media content often contains trending hashtags #viral #content, user mentions @influencer, and emoji combinations 🔥💯 that need proper analysis.",
+            "Social media content often contains trending hashtags #viral #content, user mentions @influencer, and emoji combinations  that need proper analysis.",
             "Performance benchmarking requires testing with realistic content that mirrors actual user-generated content including typos, informal language, and platform-specific formatting.",
             "Advanced NLP systems must handle multilingual content, code-switching, and platform-specific features like Instagram stories, TikTok hashtags, and YouTube descriptions.",
             "Batch analysis performance depends on efficient processing of varied content types from quick posts to detailed descriptions while maintaining accuracy standards.",
-            "Final medium batch entry combining all testing elements: emojis 🚀, hashtags #finaltesting, mentions @testuser, and comprehensive content analysis requirements."
+            "Final medium batch entry combining all testing elements: emojis , hashtags #finaltesting, mentions @testuser, and comprehensive content analysis requirements."
         ],
         "medium": {
             "texts": [
@@ -211,25 +217,28 @@ def performance_test_data():
 @pytest.fixture(scope="session")
 def sample_social_content():
     """Realistic social media content for testing"""
+
+
+
     return {
         "posts": [
             {
                 "platform": "instagram",
-                "content": "Just launched my new fitness routine! 💪 Ready to transform my life this year. Who's joining me? #fitness #transformation #goals",
+                "content": "Just launched my new fitness routine!  Ready to transform my life this year. Who's joining me? #fitness #transformation #goals",
                 "hashtags": ["#fitness", "#transformation", "#goals"],
                 "sentiment": "positive",
                 "engagement_potential": "high"
             },
             {
                 "platform": "twitter",
-                "content": "Behind the scenes of today's photoshoot ✨ The lighting was absolutely perfect! Can't wait to share the results.",
+                "content": "Behind the scenes of today's photoshoot  The lighting was absolutely perfect! Can't wait to share the results.",
                 "hashtags": [],
                 "sentiment": "positive",
                 "engagement_potential": "medium"
             },
             {
                 "platform": "linkedin",
-                "content": "Coffee and creativity fuel my morning routine ☕ What's your secret to productivity? #productivity #morning",
+                "content": "Coffee and creativity fuel my morning routine  What's your secret to productivity? #productivity #morning",
                 "hashtags": ["#productivity", "#morning"],
                 "sentiment": "neutral",
                 "engagement_potential": "high"
@@ -238,27 +247,27 @@ def sample_social_content():
         "stories": [
             {
                 "platform": "instagram",
-                "content": "Exploring the beautiful streets of Paris 🇫🇷 Every corner tells a story.",
+                "content": "Exploring the beautiful streets of Paris  Every corner tells a story.",
                 "duration": 15,
                 "sentiment": "positive"
             },
             {
                 "platform": "snapchat",
-                "content": "Cooking experiment gone right! 🍝 This homemade pasta recipe is a game-changer.",
+                "content": "Cooking experiment gone right!  This homemade pasta recipe is a game-changer.",
                 "duration": 10,
                 "sentiment": "positive"
             }
         ],
         "tiktok": {
             "trending_video": {
-                "content": "Dance challenge with the latest trending song! 💃 Join the movement and show your moves! #dance #trending #viral #challenge",
+                "content": "Dance challenge with the latest trending song!  Join the movement and show your moves! #dance #trending #viral #challenge",
                 "hashtags": ["#dance", "#trending", "#viral", "#challenge"],
                 "duration": 30,
                 "sentiment": "positive",
                 "virality_score": 0.9
             },
             "lifestyle_content": {
-                "content": "My morning routine that changed my life! ☀️ 5 AM workout, meditation, healthy breakfast. What's your routine? #morningroutine #lifestyle",
+                "content": "My morning routine that changed my life!  5 AM workout, meditation, healthy breakfast. What's your routine? #morningroutine #lifestyle",
                 "hashtags": ["#morningroutine", "#lifestyle"],
                 "duration": 60,
                 "sentiment": "positive",
@@ -318,6 +327,9 @@ class NLPResponse:
     @classmethod
     def from_nlp_result(cls, result: 'ai.nlp.core.NLPResult') -> 'NLPResponse':
         """Create from actual NLPResult"""
+
+
+
         return cls(
             request_id=result.task_id,
             results=result.results,
@@ -330,6 +342,9 @@ class NLPResponse:
 @pytest.fixture(scope="session")
 def test_config():
     """Test configuration for all NLP modules"""
+
+
+
     return {
         "performance_thresholds": {
             "max_processing_time": 1.0,
@@ -351,34 +366,37 @@ def test_config():
 @pytest.fixture(scope="session")
 def real_content_samples():
     """Real content samples for authentic testing - NO MOCKS"""
+
+
+
     return {
         "english_posts": [
-            "Just launched my new fitness routine! 💪 Ready to transform my life this year. Who's joining me? #fitness #transformation #2025goals",
-            "Behind the scenes of today's photoshoot ✨ The lighting was absolutely perfect! Can't wait to share the final results with you all.",
-            "Coffee and creativity fuel my morning routine ☕ What's your secret to staying productive? Drop your tips below! #productivity",
-            "Exploring the beautiful streets of Paris 🇫🇷 Every corner tells a story. Travel really opens your mind to new perspectives.",
-            "Cooking experiment gone right! 🍝 This homemade pasta recipe is a game-changer. Recipe in my bio! #cooking #foodie"
+            "Just launched my new fitness routine!  Ready to transform my life this year. Who's joining me? #fitness #transformation #2025goals",
+            "Behind the scenes of today's photoshoot  The lighting was absolutely perfect! Can't wait to share the final results with you all.",
+            "Coffee and creativity fuel my morning routine  What's your secret to staying productive? Drop your tips below! #productivity",
+            "Exploring the beautiful streets of Paris  Every corner tells a story. Travel really opens your mind to new perspectives.",
+            "Cooking experiment gone right!  This homemade pasta recipe is a game-changer. Recipe in my bio! #cooking #foodie"
         ],
         "german_posts": [
-            "Gerade meine neue Fitnessroutine gestartet! 💪 Bereit, mein Leben dieses Jahr zu verändern. Wer macht mit? #fitness #transformation",
-            "Hinter den Kulissen des heutigen Fotoshootings ✨ Das Licht war absolut perfekt! Kann es kaum erwarten, die Ergebnisse zu teilen.",
-            "Kaffee und Kreativität beflügeln meine Morgenroutine ☕ Was ist euer Geheimnis für Produktivität? #produktivität #morgen",
-            "Die wunderschönen Straßen von Berlin erkunden 🇩🇪 Jede Ecke erzählt eine Geschichte. Reisen erweitert wirklich den Horizont.",
-            "Kochexperiment gelungen! 🍝 Dieses hausgemachte Pasta-Rezept ist ein Wendepunkt. Rezept in meiner Bio! #kochen #foodie"
+            "Gerade meine neue Fitnessroutine gestartet!  Bereit, mein Leben dieses Jahr zu verändern. Wer macht mit? #fitness #transformation",
+            "Hinter den Kulissen des heutigen Fotoshootings  Das Licht war absolut perfekt! Kann es kaum erwarten, die Ergebnisse zu teilen.",
+            "Kaffee und Kreativität beflügeln meine Morgenroutine  Was ist euer Geheimnis für Produktivität? #produktivität #morgen",
+            "Die wunderschönen Straßen von Berlin erkunden  Jede Ecke erzählt eine Geschichte. Reisen erweitert wirklich den Horizont.",
+            "Kochexperiment gelungen!  Dieses hausgemachte Pasta-Rezept ist ein Wendepunkt. Rezept in meiner Bio! #kochen #foodie"
         ],
         "french_posts": [
-            "Je viens de lancer ma nouvelle routine fitness ! 💪 Prêt à transformer ma vie cette année. Qui me rejoint ? #fitness #transformation",
-            "Dans les coulisses de la séance photo d'aujourd'hui ✨ L'éclairage était absolument parfait ! J'ai hâte de partager les résultats.",
-            "Café et créativité alimentent ma routine matinale ☕ Quel est votre secret pour rester productif ? #productivité #matin",
-            "Explorer les belles rues de Paris 🇫🇷 Chaque coin raconte une histoire. Voyager ouvre vraiment l'esprit à de nouvelles perspectives.",
-            "Expérience culinaire réussie ! 🍝 Cette recette de pâtes maison change tout. Recette dans ma bio ! #cuisine #foodie"
+            "Je viens de lancer ma nouvelle routine fitness !  Prêt à transformer ma vie cette année. Qui me rejoint ? #fitness #transformation",
+            "Dans les coulisses de la séance photo d'aujourd'hui  L'éclairage était absolument parfait ! J'ai hâte de partager les résultats.",
+            "Café et créativité alimentent ma routine matinale  Quel est votre secret pour rester productif ? #productivité #matin",
+            "Explorer les belles rues de Paris  Chaque coin raconte une histoire. Voyager ouvre vraiment l'esprit à de nouvelles perspectives.",
+            "Expérience culinaire réussie !  Cette recette de pâtes maison change tout. Recette dans ma bio ! #cuisine #foodie"
         ],
         "spanish_posts": [
-            "¡Acabo de lanzar mi nueva rutina de fitness! 💪 Listo para transformar mi vida este año. ¿Quién se une? #fitness #transformacion",
-            "Detrás de escenas de la sesión de fotos de hoy ✨ ¡La iluminación fue absolutamente perfecta! No puedo esperar a compartir los resultados.",
-            "Café y creatividad alimentan mi rutina matutina ☕ ¿Cuál es tu secreto para mantenerte productivo? #productividad #mañana",
-            "Explorando las hermosas calles de Barcelona 🇪🇸 Cada esquina cuenta una historia. Viajar realmente abre la mente a nuevas perspectivas.",
-            "¡Experimento culinario exitoso! 🍝 Esta receta de pasta casera es revolucionaria. ¡Receta en mi bio! #cocina #foodie"
+            "¡Acabo de lanzar mi nueva rutina de fitness!  Listo para transformar mi vida este año. ¿Quién se une? #fitness #transformacion",
+            "Detrás de escenas de la sesión de fotos de hoy  ¡La iluminación fue absolutamente perfecta! No puedo esperar a compartir los resultados.",
+            "Café y creatividad alimentan mi rutina matutina  ¿Cuál es tu secreto para mantenerte productivo? #productividad #mañana",
+            "Explorando las hermosas calles de Barcelona  Cada esquina cuenta una historia. Viajar realmente abre la mente a nuevas perspectivas.",
+            "¡Experimento culinario exitoso!  Esta receta de pasta casera es revolucionaria. ¡Receta en mi bio! #cocina #foodie"
         ],
         "technical_content": [
             "Understanding the impact of AI on content creation workflow optimization and creator productivity metrics analysis.",
@@ -397,20 +415,23 @@ def real_content_samples():
 @pytest.fixture(scope="session")
 def sample_platform_content():
     """Sample platform-specific content for testing"""
+
+
+
     return {
         "instagram": {
-            "post": "Beautiful sunset today! 🌅 #nature #photography #sunset",
+            "post": "Beautiful sunset today!  #nature #photography #sunset",
             "story": "Quick morning routine ⏰",
-            "reel": "New workout routine starting tomorrow 💪 #fitness #health",
-            "long_caption": "Just launched my new fitness routine! 💪 Ready to transform my life this year. Who's joining me? This comprehensive workout plan includes strength training, cardio, and flexibility exercises designed for all fitness levels. I've been working with my trainer to create something truly special that will help you achieve your health and wellness goals. The program focuses on sustainable habits and gradual progress rather than quick fixes. Remember, consistency is key to long-term success! #fitness #transformation #goals #wellness #health #motivation #workout #lifestyle #2025goals"
+            "reel": "New workout routine starting tomorrow  #fitness #health",
+            "long_caption": "Just launched my new fitness routine!  Ready to transform my life this year. Who's joining me? This comprehensive workout plan includes strength training, cardio, and flexibility exercises designed for all fitness levels. I've been working with my trainer to create something truly special that will help you achieve your health and wellness goals. The program focuses on sustainable habits and gradual progress rather than quick fixes. Remember, consistency is key to long-term success! #fitness #transformation #goals #wellness #health #motivation #workout #lifestyle #2025goals"
         },
         "tiktok": {
             "post": "Quick morning routine that changed my life ⏰",
-            "video": "DIY home decoration tips that actually work 🏠"
+            "video": "DIY home decoration tips that actually work "
         },
         "twitter": {
             "post": "Just finished reading an amazing book about AI! Thoughts in thread 🧵",
-            "tweet": "Coffee shop recommendation: Best latte in town ☕"
+            "tweet": "Coffee shop recommendation: Best latte in town "
         },
         "youtube": {
             "post": "Weekly vlog: My productivity routine",
@@ -427,6 +448,9 @@ def sample_platform_content():
 @pytest.fixture(scope="session") 
 def platform_specific_data():
     """Platform-specific test data for authentic testing"""
+
+
+
     return {
         "instagram": {
             "max_caption_length": 2200,
@@ -470,6 +494,9 @@ def platform_specific_data():
 @pytest.fixture(scope="session")
 def performance_benchmarks():
     """Performance benchmarks for industrial testing"""
+
+
+
     return {
         "processing_time": {
             "sentiment_analysis": 0.5,
@@ -503,6 +530,9 @@ async def nlp_engine():
 @pytest.fixture(scope="function")
 def content_processors():
     """Real content processors for testing"""
+
+
+
     return {
         "text_normalizer": nlp_processors.TextNormalizer(),
         "social_media_processor": getattr(nlp_processors, 'SocialMediaProcessor', nlp_processors.TextNormalizer)(),
@@ -513,6 +543,9 @@ def content_processors():
 @pytest.fixture(scope="function")
 def content_analyzers():
     """Real content analyzers for testing"""
+
+
+
     return {
         "sentiment_analyzer": getattr(nlp_analyzers, 'SentimentAnalyzer', None),
         "topic_analyzer": getattr(nlp_analyzers, 'TopicAnalyzer', None),
@@ -523,6 +556,9 @@ def content_analyzers():
 @pytest.fixture(scope="function")
 def content_generators():
     """Real content generators for testing"""
+
+
+
     return {
         "post_generator": getattr(nlp_generators, 'PostGenerator', None),
         "caption_generator": getattr(nlp_generators, 'CaptionGenerator', None),
@@ -602,6 +638,9 @@ def model_manager():
 @pytest.fixture(scope="session")
 def benchmark_config():
     """Benchmark configuration for performance testing"""
+
+
+
     return {
         "max_processing_time": 2.0,
         "throughput_threshold": 15.0,
@@ -624,6 +663,9 @@ def benchmark_config():
 @pytest.fixture(scope="session")
 def test_data_batches():
     """Test data organized in batches for performance testing"""
+
+
+
     return {
         "small_batch": [
             "Great product! Highly recommend.",

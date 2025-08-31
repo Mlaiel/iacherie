@@ -250,6 +250,9 @@ class ManagedSession:
         
     async def _authenticate_form_login(self, auth_config: SessionCredentials) -> bool:
         """Authenticate using form login."""
+
+
+
         try:
             # Perform form login
             if not auth_config.form_data:
@@ -326,6 +329,9 @@ class ManagedSession:
         
     def is_expired(self) -> bool:
         """Check if session is expired."""
+
+
+
         return datetime.utcnow() > self.expires_at
         
     def is_auth_expired(self) -> bool:
@@ -342,6 +348,9 @@ class ManagedSession:
             
     async def close(self):
         """Close the session."""
+
+
+
         try:
             if self.http_session:
                 await self.http_session.close()
@@ -399,6 +408,9 @@ class SessionManager:
             
     def _initialize_persistence(self):
         """Initialize session persistence storage."""
+
+
+
         try:
             self.persistence_db = self.config.PERSISTENCE_PATH
             Path(self.persistence_db).parent.mkdir(parents=True, exist_ok=True)
@@ -436,6 +448,9 @@ class SessionManager:
             
     async def start(self):
         """Start session manager."""
+
+
+
         try:
             # Load persisted sessions
             if self.config.ENABLE_PERSISTENCE:
@@ -452,6 +467,9 @@ class SessionManager:
             
     async def _load_persisted_sessions(self):
         """Load sessions from persistence storage."""
+
+
+
         try:
             with sqlite3.connect(self.persistence_db) as conn:
                 cursor = conn.execute("""
@@ -492,6 +510,9 @@ class SessionManager:
         Returns:
             ManagedSession instance
         """
+
+
+
         try:
             # Check for existing active session
             existing_session = await self._get_existing_session(domain)
@@ -534,6 +555,9 @@ class SessionManager:
         
     async def _create_session(self, domain: str, config: Optional[SessionConfiguration] = None) -> ManagedSession:
         """Create new managed session."""
+
+
+
         try:
             # Use provided config or get default
             if config:
@@ -562,6 +586,9 @@ class SessionManager:
             
     def _create_default_config(self, domain: str) -> SessionConfiguration:
         """Create default session configuration for domain."""
+
+
+
         return SessionConfiguration(
             domain=domain,
             max_connections=self.config.DEFAULT_MAX_CONNECTIONS,
@@ -581,6 +608,9 @@ class SessionManager:
         
     async def _persist_session(self, session: ManagedSession):
         """Persist session to storage."""
+
+
+
         try:
             if not self.persistence_db:
                 return
@@ -626,6 +656,9 @@ class SessionManager:
         
     async def authenticate_domain(self, domain: str, credentials: SessionCredentials) -> bool:
         """Authenticate sessions for a domain."""
+
+
+
         try:
             # Update domain configuration
             if domain in self.session_configs:
@@ -654,6 +687,9 @@ class SessionManager:
             
     async def close_session(self, session_id: str) -> bool:
         """Close a specific session."""
+
+
+
         try:
             if session_id not in self.active_sessions:
                 return False
@@ -774,6 +810,9 @@ class SessionManager:
                 
     async def shutdown(self):
         """Shutdown session manager."""
+
+
+
         try:
             # Cancel cleanup task
             if self.cleanup_task:
@@ -795,6 +834,9 @@ class SessionManager:
             
     async def _save_final_state(self):
         """Save final state before shutdown."""
+
+
+
         try:
             # Save final metrics
             if self.persistence_db:
@@ -826,6 +868,9 @@ class SessionManager:
 # Factory function
 def create_session_manager(config: Optional[SessionConfig] = None) -> SessionManager:
     """Create and return a session manager instance."""
+
+
+
     return SessionManager(config)
 
 

@@ -416,6 +416,9 @@ class AudioAnalysisConfig(BaseSettings):
     
     def _get_default_audio_spec(self, task: AudioTask) -> AudioModelSpec:
         """Get default audio model specification."""
+
+
+
         return AudioModelSpec(
             task=task,
             model_name="default_audio",
@@ -428,6 +431,9 @@ class AudioAnalysisConfig(BaseSettings):
     
     def get_audio_processing_config(self) -> Dict[str, Any]:
         """Get audio processing configuration."""
+
+
+
         return {
             "supported_formats": self.SUPPORTED_AUDIO_FORMATS,
             "max_size_mb": self.MAX_AUDIO_SIZE_MB,
@@ -447,6 +453,9 @@ class AudioAnalysisConfig(BaseSettings):
     
     def get_fingerprinting_config(self) -> Dict[str, Any]:
         """Get audio fingerprinting configuration."""
+
+
+
         return {
             "algorithms": {
                 "chromaprint": {
@@ -473,6 +482,9 @@ class AudioAnalysisConfig(BaseSettings):
     
     def get_music_analysis_config(self) -> Dict[str, Any]:
         """Get music analysis configuration."""
+
+
+
         return {
             "genre_detection": {
                 "model": self.GENRE_CLASSIFIER_MODEL,
@@ -503,6 +515,9 @@ class AudioAnalysisConfig(BaseSettings):
     
     def get_speech_analysis_config(self) -> Dict[str, Any]:
         """Get speech analysis configuration."""
+
+
+
         return {
             "voice_detection": {
                 "model": self.VOICE_DETECTOR,
@@ -524,6 +539,9 @@ class AudioAnalysisConfig(BaseSettings):
     
     def get_performance_config(self) -> Dict[str, Any]:
         """Get audio processing performance configuration."""
+
+
+
         return {
             "gpu_acceleration": self.GPU_ACCELERATION,
             "batch_processing": self.BATCH_PROCESSING,
@@ -537,6 +555,9 @@ class AudioAnalysisConfig(BaseSettings):
     
     def get_supported_tasks(self) -> List[AudioTask]:
         """Get list of all supported audio tasks."""
+
+
+
         return [task for task in AudioTask]
     
     def estimate_processing_time(self, task: AudioTask, audio_duration_seconds: float) -> float:

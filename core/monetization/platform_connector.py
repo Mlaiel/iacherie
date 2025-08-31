@@ -101,6 +101,9 @@ class PlatformConnector:
         
     async def connect(self) -> bool:
         """Establish connection to platform API"""
+
+
+
         try:
             if self.credentials.is_expired():
                 await self.refresh_credentials()
@@ -140,6 +143,9 @@ class PlatformConnector:
     
     async def refresh_credentials(self) -> bool:
         """Refresh expired credentials"""
+
+
+
         try:
             if not self.credentials.refresh_token:
                 raise PlatformConnectionError("No refresh token available")
@@ -164,6 +170,9 @@ class PlatformConnector:
     
     async def fetch_user_metrics(self, user_id: int) -> Optional[PlatformMetrics]:
         """Fetch user metrics from platform"""
+
+
+
         try:
             if self.status != PlatformStatus.CONNECTED:
                 await self.connect()
@@ -328,6 +337,9 @@ class PlatformManager:
         credentials: PlatformCredentials
     ) -> bool:
         """Add platform connection for user"""
+
+
+
         try:
             # Store credentials securely
             await self.api_key_manager.store_credentials(
@@ -352,6 +364,9 @@ class PlatformManager:
     
     async def remove_platform(self, user_id: int, platform: str) -> bool:
         """Remove platform connection for user"""
+
+
+
         try:
             connector_key = f"{user_id}_{platform}"
             

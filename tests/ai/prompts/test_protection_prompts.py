@@ -21,7 +21,7 @@ Ultra-professional test suite for AI Protection Prompts system
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️ COPYRIGHT WARNING ⚠️
+ COPYRIGHT WARNING 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
@@ -61,6 +61,9 @@ class TestProtectionPrompts:
     @pytest.fixture
     def sample_audio_protection_context(self):
         """Create sample audio protection context for testing"""
+
+
+
         return ProtectionContext(
             content_type=ContentType.AUDIO,
             protection_level=ProtectionLevel.ENTERPRISE,
@@ -95,6 +98,9 @@ class TestProtectionPrompts:
     @pytest.fixture
     def sample_video_protection_context(self):
         """Create sample video protection context for testing"""
+
+
+
         return ProtectionContext(
             content_type=ContentType.VIDEO,
             protection_level=ProtectionLevel.BLOCKCHAIN,
@@ -128,6 +134,9 @@ class TestProtectionPrompts:
     @pytest.fixture
     def sample_image_protection_context(self):
         """Create sample image protection context for testing"""
+
+
+
         return ProtectionContext(
             content_type=ContentType.IMAGE,
             protection_level=ProtectionLevel.ADVANCED,

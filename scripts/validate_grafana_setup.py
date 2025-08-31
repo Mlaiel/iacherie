@@ -280,14 +280,14 @@ class GrafanaSetupValidator:
         print("CHECK RESULTS:")
         print("-" * 30)
         for check_name, check_result in results["checks"].items():
-            status_icon = "✅" if check_result["status"] else "❌"
+            status_icon = "" if check_result["status"] else ""
             print(f"{status_icon} {check_name.replace('_', ' ').title()}: {check_result['message']}")
         print()
         
         print("DASHBOARDS:")
         print("-" * 30)
         for name, info in results["dashboards"].items():
-            print(f"📊 {info.title} ({info.panels_count} panels)")
+            print(f" {info.title} ({info.panels_count} panels)")
             print(f"   File: {Path(info.file_path).name}")
             if info.tags:
                 print(f"   Tags: {', '.join(info.tags)}")
@@ -312,7 +312,7 @@ def main():
     if results["overall_status"] == "FAIL":
         sys.exit(1)
     else:
-        print("✅ Grafana setup validation completed successfully!")
+        print(" Grafana setup validation completed successfully!")
         sys.exit(0)
 
 if __name__ == "__main__":

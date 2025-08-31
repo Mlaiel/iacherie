@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -91,6 +91,9 @@ class LicensingAgreementRepository(BaseRepository[LicensingAgreement]):
         Returns:
             Created LicensingAgreement instance
         """
+
+
+
         try:
             # Validate revenue share percentage
             if not (0 <= revenue_share_percentage <= 100):
@@ -165,6 +168,9 @@ class LicensingAgreementRepository(BaseRepository[LicensingAgreement]):
         Returns:
             Conflicting agreement if found, None otherwise
         """
+
+
+
         try:
             # Build date overlap condition
             if end_date:
@@ -286,6 +292,9 @@ class LicensingAgreementRepository(BaseRepository[LicensingAgreement]):
         Returns:
             List of LicensingAgreement instances
         """
+
+
+
         try:
             query = self.db_session.query(LicensingAgreement)
             
@@ -344,6 +353,9 @@ class LicensingAgreementRepository(BaseRepository[LicensingAgreement]):
         Returns:
             List of LicensingAgreement instances
         """
+
+
+
         try:
             agreements = self.db_session.query(LicensingAgreement).filter(
                 LicensingAgreement.content_id == content_id
@@ -372,6 +384,9 @@ class LicensingAgreementRepository(BaseRepository[LicensingAgreement]):
         Returns:
             Updated LicensingAgreement instance
         """
+
+
+
         try:
             agreement = self.get_by_id(agreement_id)
             if not agreement:
@@ -421,6 +436,9 @@ class LicensingAgreementRepository(BaseRepository[LicensingAgreement]):
         Returns:
             List of expiring agreements
         """
+
+
+
         try:
             expiry_threshold = datetime.utcnow() + timedelta(days=days_ahead)
             
@@ -456,6 +474,9 @@ class LicensingAgreementRepository(BaseRepository[LicensingAgreement]):
         Returns:
             Revenue distribution breakdown
         """
+
+
+
         try:
             agreement = self.get_by_id(agreement_id)
             if not agreement:
@@ -518,6 +539,9 @@ class LicensingAgreementRepository(BaseRepository[LicensingAgreement]):
         Returns:
             Dictionary containing agreement statistics
         """
+
+
+
         try:
             base_query = self.db_session.query(LicensingAgreement)
             
@@ -602,6 +626,9 @@ class LicensingAgreementRepository(BaseRepository[LicensingAgreement]):
         Returns:
             List of renewal processing results
         """
+
+
+
         try:
             # Find agreements eligible for automatic renewal
             renewal_candidates = self.db_session.query(LicensingAgreement).filter(

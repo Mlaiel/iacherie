@@ -95,6 +95,9 @@ class TestHealthChecksCore:
     @pytest.fixture
     def service_configs(self, service_configurations):
         """Get service configuration for testing."""
+
+
+
         return service_configurations["production_services"]
                 "max_connections": 100
             },

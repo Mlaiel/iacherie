@@ -1,5 +1,5 @@
 """
-🔧 Monitoring Integration - IA-Influencer-Agent CI/CD
+ Monitoring Integration - IA-Influencer-Agent CI/CD
 ================================================================
 Expert: DEVOPS_ENGINEER + MONITORING_SPECIALIST
 Created: 2025-08-24
@@ -186,6 +186,9 @@ class MonitoringIntegration:
     
     async def initialize(self, backends_config: Dict[str, Dict[str, Any]]) -> bool:
         """Initialize monitoring backends"""
+
+
+
         try:
             # Initialize monitoring backends
             for backend_name, config in backends_config.items():
@@ -198,11 +201,11 @@ class MonitoringIntegration:
             await self._setup_default_dashboards()
             
             self.initialized = True
-            self.logger.info("✅ Monitoring integration initialized")
+            self.logger.info(" Monitoring integration initialized")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize monitoring: {e}")
+            self.logger.error(f" Failed to initialize monitoring: {e}")
             return False
     
     async def _initialize_backend(self, backend_name: str, config: Dict[str, Any]) -> None:
@@ -222,6 +225,9 @@ class MonitoringIntegration:
     
     async def _init_prometheus(self, config: Dict[str, Any]) -> Dict[str, Any]:
         """Initialize Prometheus backend"""
+
+
+
         return {
             "type": "prometheus",
             "endpoint": config.get("endpoint", "http://localhost:9090"),
@@ -274,6 +280,9 @@ class MonitoringIntegration:
     
     def register_metric(self, metric_def: MetricDefinition) -> bool:
         """Register new metric"""
+
+
+
         try:
             metric_key = f"{metric_def.namespace}_{metric_def.name}"
             
@@ -324,6 +333,9 @@ class MonitoringIntegration:
         timestamp: Optional[datetime] = None
     ) -> bool:
         """Record metric value"""
+
+
+
         try:
             if metric_name not in self.metrics_registry:
                 self.logger.warning(f"Metric not registered: {metric_name}")
@@ -449,6 +461,9 @@ class MonitoringIntegration:
     
     async def add_alert_rule(self, alert_rule: AlertRule) -> bool:
         """Add new alert rule"""
+
+
+
         try:
             self.alert_rules[alert_rule.name] = alert_rule
             
@@ -507,6 +522,9 @@ class MonitoringIntegration:
         threshold: float
     ) -> bool:
         """Evaluate alert condition"""
+
+
+
         try:
             if condition.startswith(">"):
                 return current_value > threshold
@@ -527,6 +545,9 @@ class MonitoringIntegration:
     
     async def send_alert_notification(self, alert: Dict[str, Any]) -> bool:
         """Send alert notification"""
+
+
+
         try:
             # Implementation would send notifications via configured channels
             self.logger.warning(
@@ -542,6 +563,9 @@ class MonitoringIntegration:
     
     async def create_dashboard(self, dashboard_config: DashboardConfig) -> bool:
         """Create monitoring dashboard"""
+
+
+
         try:
             self.dashboards[dashboard_config.name] = dashboard_config
             

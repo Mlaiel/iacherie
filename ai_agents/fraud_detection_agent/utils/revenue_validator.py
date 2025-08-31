@@ -147,6 +147,9 @@ class RevenueValidator:
         Returns:
             Revenue validation results
         """
+
+
+
         try:
             # Extract revenue metrics
             current_metrics = await self._extract_revenue_metrics(transaction_data)
@@ -285,6 +288,9 @@ class RevenueValidator:
         platform: str
     ) -> Dict[str, Any]:
         """Get user's historical revenue baselines"""
+
+
+
         try:
             cache_key = f"revenue_baseline:{user_id}:{platform}"
             cached_baseline = await self.redis_client.get(cache_key)
@@ -380,6 +386,9 @@ class RevenueValidator:
         historical_baselines: Dict[str, Any]
     ) -> Optional[Dict[str, Any]]:
         """Detect amount manipulation anomalies"""
+
+
+
         try:
             baseline_avg = historical_baselines.get('avg_transaction_amount', 0)
             current_avg = float(current_metrics.average_amount)
@@ -416,6 +425,9 @@ class RevenueValidator:
         historical_baselines: Dict[str, Any]
     ) -> Optional[Dict[str, Any]]:
         """Detect frequency abuse anomalies"""
+
+
+
         try:
             baseline_frequency = historical_baselines.get('avg_transactions_per_day', 0) / 24
             current_frequency = current_metrics.frequency_per_hour
@@ -452,6 +464,9 @@ class RevenueValidator:
         transaction_data: Dict[str, Any]
     ) -> Optional[Dict[str, Any]]:
         """Detect source spoofing anomalies"""
+
+
+
         try:
             typical_sources = set(historical_baselines.get('typical_sources', []))
             transactions = transaction_data.get('transactions', [])
@@ -487,6 +502,9 @@ class RevenueValidator:
         transaction_data: Dict[str, Any]
     ) -> Optional[Dict[str, Any]]:
         """Detect currency arbitrage anomalies"""
+
+
+
         try:
             if current_metrics.unique_currencies > self.validation_thresholds['max_currency_switches']:
                 transactions = transaction_data.get('transactions', [])
@@ -521,6 +539,9 @@ class RevenueValidator:
         historical_baselines: Dict[str, Any]
     ) -> Optional[Dict[str, Any]]:
         """Detect refund fraud patterns"""
+
+
+
         try:
             typical_refund_rate = historical_baselines.get('typical_refund_rate', 0.02)
             current_refund_rate = current_metrics.refund_rate
@@ -553,6 +574,9 @@ class RevenueValidator:
         transaction_data: Dict[str, Any]
     ) -> Optional[Dict[str, Any]]:
         """Detect duplicate transaction patterns"""
+
+
+
         try:
             transactions = transaction_data.get('transactions', [])
             
@@ -595,6 +619,9 @@ class RevenueValidator:
         transaction_data: Dict[str, Any]
     ) -> Optional[Dict[str, Any]]:
         """Detect velocity fraud patterns"""
+
+
+
         try:
             transactions = transaction_data.get('transactions', [])
             
@@ -635,6 +662,9 @@ class RevenueValidator:
         platform: str
     ) -> Dict[str, Any]:
         """Validate revenue against external sources"""
+
+
+
         try:
             validation_result = {
                 'platform_api_verified': False,
@@ -670,6 +700,9 @@ class RevenueValidator:
         platform: str
     ) -> Dict[str, Any]:
         """Validate revenue against platform APIs"""
+
+
+
         try:
             # This would integrate with actual platform APIs
             # For now, return simulated validation
@@ -685,6 +718,9 @@ class RevenueValidator:
 
     async def _validate_payment_processors(self, transaction_data: Dict[str, Any]) -> Dict[str, Any]:
         """Validate against payment processor records"""
+
+
+
         try:
             # This would integrate with payment processors (Stripe, PayPal, etc.)
             # For now, return simulated validation
@@ -854,6 +890,9 @@ class RevenueValidator:
         platform: str
     ):
         """Update user's revenue history for baseline calculations"""
+
+
+
         try:
             history_key = f"revenue_history:{user_id}:{platform}"
             
@@ -878,6 +917,9 @@ class RevenueValidator:
 
     async def _cache_validation_result(self, user_id: str, result: RevenueValidationResult):
         """Cache validation result for quick access"""
+
+
+
         try:
             cache_key = f"revenue_validation:{user_id}"
             
@@ -901,6 +943,9 @@ class RevenueValidator:
         days: int = 30
     ) -> Dict[str, Any]:
         """Get comprehensive revenue analytics for a user"""
+
+
+
         try:
             history_key = f"revenue_history:{user_id}:{platform}"
             history_records = await self.redis_client.lrange(history_key, 0, -1)

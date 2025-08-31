@@ -517,6 +517,9 @@ class PlatformDistributor:
     
     def _create_failed_result(self, task_id: str, errors: List[str], start_time: datetime) -> DistributionResult:
         """Create failed distribution result"""
+
+
+
         return DistributionResult(
             task_id=task_id,
             success_count=0,

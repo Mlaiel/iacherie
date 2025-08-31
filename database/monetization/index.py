@@ -9,7 +9,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 CRITICAL LEGAL WARNING:
+ CRITICAL LEGAL WARNING:
 This code and all associated intellectual property belong exclusively to Fahed Mlaiel.
 Any unauthorized use, copying, modification, distribution, or commercialization 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -38,14 +38,14 @@ sys.path.insert(0, str(Path(__file__).parent))
 def main():
     """Main entry point for monetization module"""
     
-    print("🚀 IA Influencer Agent + Content Protection Platform")
-    print("💰 Ultra-Advanced Monetization Database Module")
+    print(" IA Influencer Agent + Content Protection Platform")
+    print(" Ultra-Advanced Monetization Database Module")
     print("=" * 60)
-    print(f"📧 Author: Fahed Mlaiel <mlaiel@live.de>")
-    print(f"🏢 Expert Team Lead: Fahed Mlaiel")
+    print(f" Author: Fahed Mlaiel <mlaiel@live.de>")
+    print(f" Expert Team Lead: Fahed Mlaiel")
     print("=" * 60)
     
-    print("\n📋 Available Modules:")
+    print("\n Available Modules:")
     
     modules = {
         "revenue_models": "Revenue tracking & analytics models",
@@ -75,13 +75,13 @@ def main():
         print(f"{i:2d}. {module:<25} - {description}")
     
     print("\n" + "=" * 60)
-    print("🎯 Business Logic Flow:")
+    print(" Business Logic Flow:")
     print("User → Upload Content → IA Protection → SEO → Collaboration →")
     print("Distribution → Analytics → Optimization → Tax Management →")
     print("Financial Reporting → Automated Payouts")
     print("=" * 60)
     
-    print("\n⚠️  CRITICAL LEGAL WARNING:")
+    print("\n  CRITICAL LEGAL WARNING:")
     print("This code belongs exclusively to Fahed Mlaiel.")
     print("Unauthorized use is STRICTLY PROHIBITED.")
     print("Contact: mlaiel@live.de for licensing inquiries.")
@@ -91,7 +91,7 @@ def main():
 def test_imports():
     """Test all module imports"""
     
-    print("\n🔍 Testing module imports...")
+    print("\n Testing module imports...")
     
     try:
         # Core modules
@@ -117,14 +117,14 @@ def test_imports():
         from . import regulatory_compliance
         from . import audit_trails
         
-        print("✅ All modules imported successfully!")
+        print(" All modules imported successfully!")
         return True
         
     except ImportError as e:
-        print(f"❌ Import error: {e}")
+        print(f" Import error: {e}")
         return False
     except Exception as e:
-        print(f"❌ Unexpected error: {e}")
+        print(f" Unexpected error: {e}")
         return False
 
 def show_module_info(module_name: str):
@@ -175,12 +175,12 @@ def show_module_info(module_name: str):
     
     if module_name in module_descriptions:
         info = module_descriptions[module_name]
-        print(f"\n📦 Module: {module_name}")
-        print(f"📄 Description: {info['description']}")
-        print(f"🔑 Key Classes: {', '.join(info['key_classes'])}")
-        print(f"⭐ Features: {', '.join(info['features'])}")
+        print(f"\n Module: {module_name}")
+        print(f" Description: {info['description']}")
+        print(f" Key Classes: {', '.join(info['key_classes'])}")
+        print(f" Features: {', '.join(info['features'])}")
     else:
-        print(f"\n❌ Module '{module_name}' information not available")
+        print(f"\n Module '{module_name}' information not available")
 
 if __name__ == "__main__":
     exit_code = main()

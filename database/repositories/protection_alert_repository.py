@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -83,6 +83,9 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
         Returns:
             Created ProtectionAlert instance
         """
+
+
+
         try:
             # Auto-assess severity based on similarity score and threat level
             severity = self._assess_alert_severity(similarity_score, threat_level, platform)
@@ -139,6 +142,9 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
         Returns:
             Assessed AlertSeverity
         """
+
+
+
         try:
             # High-impact platforms get higher severity
             high_impact_platforms = ['youtube', 'instagram', 'tiktok', 'spotify']
@@ -178,6 +184,9 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
         Args:
             alert: ProtectionAlert instance
         """
+
+
+
         try:
             automated_actions = []
             
@@ -231,6 +240,9 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
         Returns:
             List of ProtectionAlert instances
         """
+
+
+
         try:
             query = self.db_session.query(ProtectionAlert).filter(
                 ProtectionAlert.fingerprint_id == fingerprint_id
@@ -280,6 +292,9 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
         Returns:
             List of alert dictionaries with fingerprint details
         """
+
+
+
         try:
             # Join with ContentFingerprint to get user's alerts
             query = self.db_session.query(
@@ -351,6 +366,9 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
         Returns:
             List of pending ProtectionAlert instances
         """
+
+
+
         try:
             query = self.db_session.query(ProtectionAlert).filter(
                 ProtectionAlert.status == AlertStatus.PENDING
@@ -398,6 +416,9 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
         Returns:
             Updated ProtectionAlert instance
         """
+
+
+
         try:
             alert = self.get_by_id(alert_id)
             if not alert:
@@ -455,6 +476,9 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
         Returns:
             Dictionary containing alert statistics
         """
+
+
+
         try:
             cutoff_date = datetime.utcnow() - timedelta(days=days_back)
             
@@ -538,6 +562,9 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
         Returns:
             Number of updated alerts
         """
+
+
+
         try:
             # Add timestamp
             updates['updated_at'] = datetime.utcnow()
@@ -568,6 +595,9 @@ class ProtectionAlertRepository(BaseRepository[ProtectionAlert]):
         Returns:
             Threat assessment report
         """
+
+
+
         try:
             cutoff_date = datetime.utcnow() - timedelta(days=days_back)
             

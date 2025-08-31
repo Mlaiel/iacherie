@@ -1,5 +1,5 @@
 """
-🌐 Websocket Api - IA-Influencer-Agent API Layer
+ Websocket Api - IA-Influencer-Agent API Layer
 ==================================================================
 Expert: BACKEND_SENIOR + MICROSERVICES_ARCHITECT
 Architecture: RESTful API + GraphQL + WebSocket
@@ -48,6 +48,9 @@ class APIError(BaseModel):
 
 async def authentication_middleware(request: Request, credentials: HTTPAuthorizationCredentials = Depends(security)):
     """Middleware d'authentification"""
+
+
+
     try:
         # JWT validation implementation
         import jwt
@@ -142,6 +145,9 @@ class WebsocketApiAPI:
         @self.app.get("/health")
         async def health_check():
             """Vérification de santé de l'API"""
+
+
+
             return APIResponse(
                 success=True,
                 data={"status": "healthy", "version": "1.0.0"},
@@ -154,6 +160,9 @@ class WebsocketApiAPI:
             auth_data: dict = Depends(authentication_middleware)
         ):
             """Récupération des données"""
+
+
+
             try:
                 # Implement business logic for WebSocket data retrieval
                 logger.info(f"WebSocket API data request from user: {auth_data['user_id']}")
@@ -189,6 +198,9 @@ class WebsocketApiAPI:
             auth_data: dict = Depends(authentication_middleware)
         ):
             """Création de données"""
+
+
+
             try:
                 # Validation and creation of WebSocket configuration/channel
                 logger.info(f"WebSocket API data creation request from user: {auth_data['user_id']}")
@@ -254,6 +266,9 @@ class WebSocketManager:
 
 def create_websocketapi_api(app: FastAPI) -> WebsocketApiAPI:
     """Factory pour créer l'API Websocket Api"""
+
+
+
     return WebsocketApiAPI(app)
 
 __all__ = [

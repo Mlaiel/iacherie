@@ -35,7 +35,7 @@ Business Intelligence:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This criteria management system contains proprietary algorithms and business logic
 developed by Fahed Mlaiel. Unauthorized use, reverse engineering, or distribution
 is strictly prohibited and subject to legal prosecution.
@@ -223,6 +223,9 @@ class MatchingCriteriaManager:
         Returns:
             Created criterion or None if failed
         """
+
+
+
         try:
             # Validate criterion data
             validation_result = self._validate_criterion_data(criterion_data)
@@ -292,6 +295,9 @@ class MatchingCriteriaManager:
         Returns:
             Created criteria set or None if failed
         """
+
+
+
         try:
             # Validate set data
             validation_result = self._validate_criteria_set_data(set_data)
@@ -353,6 +359,9 @@ class MatchingCriteriaManager:
         Returns:
             Evaluation results
         """
+
+
+
         try:
             # Get criteria set
             criteria_set = await self.get_criteria_set(criteria_set_id)
@@ -425,6 +434,9 @@ class MatchingCriteriaManager:
         context: Optional[Dict[str, Any]]
     ) -> CriteriaEvaluation:
         """Evaluate a single criterion"""
+
+
+
         try:
             # Extract actual value from creator data using field path
             actual_value = self._extract_field_value(creator_data, criterion.field_path)
@@ -535,6 +547,9 @@ class MatchingCriteriaManager:
     
     async def get_criteria_for_user_type(self, user_type: str) -> List[CriteriaSet]:
         """Get criteria sets applicable to a specific user type"""
+
+
+
         try:
             # This would query database for criteria sets targeting the user type
             criteria_sets = await self._fetch_criteria_sets_for_user_type(user_type)
@@ -551,6 +566,9 @@ class MatchingCriteriaManager:
         updated_by: int
     ) -> bool:
         """Update existing criterion"""
+
+
+
         try:
             criterion = await self.get_criterion(criterion_id)
             if not criterion:
@@ -581,6 +599,9 @@ class MatchingCriteriaManager:
     
     async def delete_criterion(self, criterion_id: str) -> bool:
         """Delete criterion"""
+
+
+
         try:
             success = await self._delete_criterion_from_db(criterion_id)
             
@@ -713,6 +734,9 @@ class MatchingCriteriaManager:
     
     def _extract_field_value(self, data: Dict[str, Any], field_path: str) -> Any:
         """Extract field value using JSONPath-like syntax"""
+
+
+
         try:
             # Simple implementation for nested field access
             # In production, would use a proper JSONPath library
@@ -763,6 +787,9 @@ class MatchingCriteriaManager:
         actual_value: Any
     ) -> float:
         """Calculate partial score for numeric criteria"""
+
+
+
         try:
             if criterion.operator in [OperatorType.GREATER_THAN, OperatorType.GREATER_EQUAL]:
                 if isinstance(actual_value, (int, float)) and isinstance(criterion.value, (int, float)):
@@ -831,6 +858,9 @@ class MatchingCriteriaManager:
     
     def _regex_match(self, actual: str, pattern: str) -> bool:
         """Regular expression matching"""
+
+
+
         try:
             return bool(re.match(pattern, str(actual)))
         except Exception:
@@ -838,6 +868,9 @@ class MatchingCriteriaManager:
     
     def _similarity_threshold(self, actual: float, threshold: float) -> bool:
         """Similarity threshold check"""
+
+
+
         try:
             return actual >= threshold
         except Exception:
@@ -884,6 +917,9 @@ class MatchingCriteriaManager:
     
     def _serialize_criterion(self, criterion: MatchingCriterion) -> str:
         """Serialize criterion for caching"""
+
+
+
         return json.dumps(asdict(criterion), default=str)
     
     def _deserialize_criterion(self, data: str) -> MatchingCriterion:
@@ -893,6 +929,9 @@ class MatchingCriteriaManager:
     
     def _serialize_criteria_set(self, criteria_set: CriteriaSet) -> str:
         """Serialize criteria set for caching"""
+
+
+
         return json.dumps(asdict(criteria_set), default=str)
     
     def _deserialize_criteria_set(self, data: str) -> CriteriaSet:

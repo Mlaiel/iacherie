@@ -12,15 +12,15 @@ from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted
 extent of the law.
 
 Team Specialties:
-- ✅ Lead Dev + Architecte Développeur IA
-- ✅ Développeur Backend Senior (Python/FastAPI/Django)
-- ✅ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face)
-- ✅ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
-- ✅ Spécialiste Sécurité Backend
-- ✅ Architecte Microservices
-- ✅ Développeur Audio
-- ✅ DevOps Engineer
-- ✅ IA Prompt Engineer
+-  Lead Dev + Architecte Développeur IA
+-  Développeur Backend Senior (Python/FastAPI/Django)
+-  Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face)
+-  DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
+-  Spécialiste Sécurité Backend
+-  Architecte Microservices
+-  Développeur Audio
+-  DevOps Engineer
+-  IA Prompt Engineer
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """

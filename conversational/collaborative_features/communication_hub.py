@@ -7,7 +7,7 @@ enabling real-time messaging, video conferencing, file sharing, and notification
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will result in legal action.
@@ -115,6 +115,9 @@ class Message:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert message to dictionary representation"""
+
+
+
         return {
             "message_id": self.message_id,
             "channel_id": self.channel_id,
@@ -162,6 +165,9 @@ class CommunicationChannel:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert channel to dictionary representation"""
+
+
+
         return {
             "channel_id": self.channel_id,
             "channel_name": self.channel_name,
@@ -202,6 +208,9 @@ class CollaborativeCommunicationManager:
         settings: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Create new communication channel for team collaboration"""
+
+
+
         try:
             channel_id = str(uuid.uuid4())
             
@@ -257,6 +266,9 @@ class CollaborativeCommunicationManager:
         scheduled_time: Optional[datetime] = None
     ) -> Dict[str, Any]:
         """Send message to communication channel"""
+
+
+
         try:
             # Validate channel and permissions
             channel_data = await self.cache.get(f"channel:{channel_id}")
@@ -347,6 +359,9 @@ class CollaborativeCommunicationManager:
         after_message_id: Optional[str] = None
     ) -> Dict[str, Any]:
         """Retrieve channel messages with pagination"""
+
+
+
         try:
             # Validate user access to channel
             channel_data = await self.cache.get(f"channel:{channel_id}")
@@ -424,6 +439,9 @@ class CollaborativeCommunicationManager:
         reaction: str
     ) -> Dict[str, Any]:
         """Add reaction to message"""
+
+
+
         try:
             message_data = await self.cache.get(f"message:{message_id}")
             if not message_data:
@@ -460,6 +478,9 @@ class CollaborativeCommunicationManager:
         new_content: str
     ) -> Dict[str, Any]:
         """Edit existing message"""
+
+
+
         try:
             message_data = await self.cache.get(f"message:{message_id}")
             if not message_data:
@@ -502,6 +523,9 @@ class CollaborativeCommunicationManager:
         delete_for_everyone: bool = False
     ) -> Dict[str, Any]:
         """Delete message with options"""
+
+
+
         try:
             message_data = await self.cache.get(f"message:{message_id}")
             if not message_data:
@@ -729,6 +753,9 @@ class RealTimeMessageHandler:
         user_id: str
     ):
         """Handle WebSocket connection for real-time messaging"""
+
+
+
         try:
             # Register connection
             self.comm_manager.active_connections[user_id] = websocket
@@ -773,6 +800,9 @@ class RealTimeMessageHandler:
         user_id: str
     ):
         """Process incoming WebSocket message"""
+
+
+
         try:
             data = json.loads(message)
             message_type = data.get("type")
@@ -793,6 +823,9 @@ class RealTimeMessageHandler:
     
     async def _handle_send_message_request(self, data: Dict[str, Any], user_id: str):
         """Handle send message request via WebSocket"""
+
+
+
         try:
             await self.comm_manager.send_message(
                 channel_id=data.get("channel_id"),
@@ -863,6 +896,9 @@ class VideoConferenceIntegrator:
         meeting_type: str = "video_call"
     ) -> Dict[str, Any]:
         """Create video conference meeting"""
+
+
+
         try:
             meeting_id = str(uuid.uuid4())
             
@@ -909,6 +945,9 @@ class VideoConferenceIntegrator:
         connection_info: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Join video conference meeting"""
+
+
+
         try:
             meeting_data = await self.cache.get(f"meeting:{meeting_id}")
             if not meeting_data:
@@ -975,6 +1014,9 @@ class FileShareCoordinator:
         access_permissions: Dict[str, List[str]] = None
     ) -> Dict[str, Any]:
         """Share file in communication channel"""
+
+
+
         try:
             # Validate file
             validation_result = await self.file_manager.validate_file(
@@ -1036,6 +1078,9 @@ class FileShareCoordinator:
         limit: int = 20
     ) -> List[Dict[str, Any]]:
         """Get shared files in channel"""
+
+
+
         try:
             channel_files = await self.cache.get(f"channel_files:{channel_id}")
             if not channel_files:
@@ -1103,6 +1148,9 @@ class NotificationDispatcher:
         priority: MessagePriority = MessagePriority.NORMAL
     ) -> Dict[str, Any]:
         """Dispatch notification to multiple users with preferences"""
+
+
+
         try:
             dispatched_count = 0
             failed_count = 0

@@ -12,7 +12,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 
-⚠️ STRICT COPYRIGHT PROTECTION ⚠️
+ STRICT COPYRIGHT PROTECTION 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 
@@ -61,6 +61,9 @@ class VideoQualityAnalyzer:
     
     def analyze_frame_quality(self, frame: np.ndarray) -> Dict[str, float]:
         """Analyze quality metrics for a single frame."""
+
+
+
         try:
             quality_metrics = {}
             
@@ -103,6 +106,9 @@ class VideoQualityAnalyzer:
     
     def calculate_motion_metrics(self, frames: List[np.ndarray]) -> Dict[str, float]:
         """Calculate motion-related quality metrics."""
+
+
+
         try:
             if len(frames) < 2:
                 return {'motion_score': 0.0, 'stability_score': 1.0}
@@ -150,6 +156,9 @@ class VideoSceneDetector:
     
     def detect_scenes(self, frames: List[np.ndarray], threshold: float = 0.3) -> List[Dict[str, Any]]:
         """Detect scene changes in video frames."""
+
+
+
         try:
             if len(frames) < 2:
                 return [{'start_frame': 0, 'end_frame': len(frames)-1, 'scene_type': 'single'}]
@@ -196,6 +205,9 @@ class VideoSceneDetector:
     
     def _classify_scene_type(self, scene_frames: List[np.ndarray]) -> str:
         """Classify the type of scene based on visual characteristics."""
+
+
+
         try:
             if not scene_frames:
                 return 'unknown'
@@ -251,6 +263,9 @@ class VideoObjectDetector:
     
     def detect_objects_in_frame(self, frame: np.ndarray) -> Dict[str, Any]:
         """Detect objects in a single frame."""
+
+
+
         try:
             detection_results = {
                 'faces': [],
@@ -299,6 +314,9 @@ class VideoObjectDetector:
     
     def detect_objects_in_video(self, frames: List[np.ndarray], sample_rate: int = 5) -> Dict[str, Any]:
         """Detect objects across video frames with sampling."""
+
+
+
         try:
             all_detections = {
                 'faces_detected': 0,
@@ -370,6 +388,9 @@ class VideoContentFilter:
         strict_mode: bool = False
     ) -> FilterResponse:
         """Asynchronously filter video content."""
+
+
+
         return await asyncio.get_event_loop().run_in_executor(
             None, self.filter, content, ai_validation, strict_mode
         )
@@ -453,6 +474,9 @@ class VideoContentFilter:
     
     def _load_video_content(self, content: ContentItem) -> Tuple[Optional[List[np.ndarray]], Dict[str, Any]]:
         """Load and validate video content."""
+
+
+
         try:
             metadata = {}
             frames = []
@@ -575,6 +599,9 @@ class VideoContentFilter:
     
     def _analyze_video_quality(self, frames: List[np.ndarray]) -> Dict[str, Any]:
         """Analyze video quality metrics."""
+
+
+
         try:
             if not frames:
                 return {'error': 'No frames to analyze', 'overall_score': 0.0}
@@ -616,6 +643,9 @@ class VideoContentFilter:
     
     def _analyze_scenes(self, frames: List[np.ndarray]) -> Dict[str, Any]:
         """Analyze video scenes and transitions."""
+
+
+
         try:
             scenes = self.scene_detector.detect_scenes(frames)
             
@@ -632,6 +662,9 @@ class VideoContentFilter:
     
     def _analyze_objects(self, frames: List[np.ndarray]) -> Dict[str, Any]:
         """Analyze objects in video."""
+
+
+
         try:
             object_analysis = self.object_detector.detect_objects_in_video(frames)
             return object_analysis
@@ -642,6 +675,9 @@ class VideoContentFilter:
     
     def _analyze_faces(self, frames: List[np.ndarray]) -> Dict[str, Any]:
         """Analyze faces in video."""
+
+
+
         try:
             # Use object detector for face analysis
             face_analysis = self.object_detector.detect_objects_in_video(frames)
@@ -659,6 +695,9 @@ class VideoContentFilter:
     
     def _classify_content(self, frames: List[np.ndarray]) -> Dict[str, Any]:
         """Classify video content type."""
+
+
+
         try:
             # Simplified content classification
             # In real implementation, use specialized models

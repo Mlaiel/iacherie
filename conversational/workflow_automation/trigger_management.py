@@ -166,6 +166,9 @@ class TriggerEngine:
         
     async def initialize(self):
         """Initialize trigger engine"""
+
+
+
         try:
             # Register default condition evaluators
             await self._register_condition_evaluators()
@@ -187,6 +190,9 @@ class TriggerEngine:
     
     async def register_trigger(self, trigger_definition: TriggerDefinition) -> bool:
         """Register a new trigger definition"""
+
+
+
         try:
             # Validate trigger definition
             if not await self._validate_trigger_definition(trigger_definition):
@@ -214,6 +220,9 @@ class TriggerEngine:
     
     async def fire_event(self, event_type: EventType, event_data: Dict[str, Any]) -> List[str]:
         """Fire an event and trigger any matching automation"""
+
+
+
         try:
             # Add to event queue
             event = {
@@ -452,6 +461,9 @@ class TriggerEngine:
         event_data: Dict[str, Any]
     ) -> bool:
         """Evaluate a single condition"""
+
+
+
         try:
             # Get condition evaluator
             evaluator = self.condition_evaluators.get(condition.condition_type)
@@ -662,6 +674,9 @@ class TriggerEngine:
     
     def _get_field_value(self, field_path: str, event_data: Dict[str, Any]) -> Any:
         """Get field value from event data using dot notation"""
+
+
+
         try:
             value = event_data
             for key in field_path.split("."):
@@ -1134,6 +1149,9 @@ class TriggerEngine:
     
     async def get_engine_metrics(self) -> Dict[str, Any]:
         """Get comprehensive trigger engine metrics"""
+
+
+
         return {
             "trigger_metrics": self.metrics.copy(),
             "active_triggers": len([t for t in self.triggers.values() if t.enabled]),

@@ -8,7 +8,7 @@ Responsibility: Worker lifecycle management and task execution for crawlers
 Technologies: AsyncIO, Worker Pools, Load Balancing, Health Monitoring
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -166,6 +166,9 @@ class CrawlerWorker:
     
     async def initialize(self) -> bool:
         """Initialize worker"""
+
+
+
         try:
             self.status = WorkerStatus.INITIALIZING
             self._is_running = True
@@ -179,16 +182,19 @@ class CrawlerWorker:
             self.status = WorkerStatus.IDLE
             self.metrics.created_at = datetime.now()
             
-            logger.info(f"✅ Worker {self.worker_id} initialized")
+            logger.info(f" Worker {self.worker_id} initialized")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Worker {self.worker_id} initialization failed: {e}")
+            logger.error(f" Worker {self.worker_id} initialization failed: {e}")
             self.status = WorkerStatus.ERROR
             return False
     
     async def execute_task(self, task: CrawlerTask) -> Dict[str, Any]:
         """Execute crawler task"""
+
+
+
         try:
             # Check worker capacity
             if not await self._can_accept_task(task):
@@ -236,11 +242,14 @@ class CrawlerWorker:
                     self.status = WorkerStatus.IDLE if not self.current_tasks else WorkerStatus.BUSY
             
         except Exception as e:
-            logger.error(f"❌ Worker {self.worker_id} task execution failed: {e}")
+            logger.error(f" Worker {self.worker_id} task execution failed: {e}")
             raise
     
     async def cancel_task(self, task_id: str) -> bool:
         """Cancel currently executing task"""
+
+
+
         try:
             task = self.current_tasks.get(task_id)
             if not task:
@@ -252,15 +261,18 @@ class CrawlerWorker:
             # Remove from current tasks
             self.current_tasks.pop(task_id, None)
             
-            logger.info(f"🚫 Task {task_id} cancelled on worker {self.worker_id}")
+            logger.info(f" Task {task_id} cancelled on worker {self.worker_id}")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to cancel task {task_id}: {e}")
+            logger.error(f" Failed to cancel task {task_id}: {e}")
             return False
     
     async def get_worker_status(self) -> Dict[str, Any]:
         """Get comprehensive worker status"""
+
+
+
         try:
             # Update system metrics
             await self._update_system_metrics()
@@ -291,11 +303,14 @@ class CrawlerWorker:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to get worker status: {e}")
+            logger.error(f" Failed to get worker status: {e}")
             return {"error": str(e)}
     
     async def shutdown(self):
         """Gracefully shutdown worker"""
+
+
+
         try:
             self.status = WorkerStatus.SHUTTING_DOWN
             self._is_running = False
@@ -319,10 +334,10 @@ class CrawlerWorker:
             self._executor.shutdown(wait=True)
             
             self.status = WorkerStatus.OFFLINE
-            logger.info(f"🛑 Worker {self.worker_id} shutdown completed")
+            logger.info(f" Worker {self.worker_id} shutdown completed")
             
         except Exception as e:
-            logger.error(f"❌ Worker {self.worker_id} shutdown error: {e}")
+            logger.error(f" Worker {self.worker_id} shutdown error: {e}")
     
     def set_completion_callback(self, callback: Callable):
         """Set task completion callback"""
@@ -358,6 +373,9 @@ class CrawlerWorker:
     
     async def _execute_task_by_platform(self, task: CrawlerTask) -> Dict[str, Any]:
         """Execute task based on platform type"""
+
+
+
         try:
             if task.platform == PlatformType.YOUTUBE:
                 return await self._execute_youtube_crawl(task)
@@ -488,6 +506,9 @@ class CrawlerWorker:
     
     async def _update_system_metrics(self):
         """Update system resource metrics"""
+
+
+
         try:
             # CPU usage
             self.metrics.cpu_usage_percent = psutil.cpu_percent(interval=0.1)
@@ -534,6 +555,9 @@ class CrawlerWorker:
     
     async def _get_health_status(self) -> Dict[str, Any]:
         """Get current health status"""
+
+
+
         try:
             health_score = 100.0
             issues = []
@@ -596,7 +620,7 @@ class CrawlerWorker:
 
 class QueueWorkersManager:
     """
-    👥 Queue Workers Manager - IA-Influencer-Agent
+     Queue Workers Manager - IA-Influencer-Agent
     
     Enterprise worker pool management featuring:
     - Dynamic worker scaling
@@ -632,6 +656,9 @@ class QueueWorkersManager:
     
     async def initialize(self) -> bool:
         """Initialize workers manager"""
+
+
+
         try:
             self._is_running = True
             
@@ -646,15 +673,18 @@ class QueueWorkersManager:
                 asyncio.create_task(self._performance_optimizer())
             ])
             
-            logger.info("✅ Queue Workers Manager initialized")
+            logger.info(" Queue Workers Manager initialized")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Workers manager initialization failed: {e}")
+            logger.error(f" Workers manager initialization failed: {e}")
             return False
     
     async def assign_task_to_worker(self, task: CrawlerTask) -> Optional[str]:
         """Assign task to best available worker"""
+
+
+
         try:
             # Find best worker for task
             worker_id = await self._find_best_worker(task)
@@ -670,17 +700,20 @@ class QueueWorkersManager:
                 self.worker_assignments[task.task_id] = worker_id
                 self.total_metrics["tasks_distributed"] += 1
                 
-                logger.info(f"📋 Task {task.task_id} assigned to worker {worker_id}")
+                logger.info(f" Task {task.task_id} assigned to worker {worker_id}")
                 return worker_id
             
             return None
             
         except Exception as e:
-            logger.error(f"❌ Failed to assign task to worker: {e}")
+            logger.error(f" Failed to assign task to worker: {e}")
             return None
     
     async def get_workers_status(self) -> Dict[str, Any]:
         """Get comprehensive workers status"""
+
+
+
         try:
             workers_status = {}
             
@@ -711,11 +744,14 @@ class QueueWorkersManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to get workers status: {e}")
+            logger.error(f" Failed to get workers status: {e}")
             return {"error": str(e)}
     
     async def shutdown(self):
         """Gracefully shutdown all workers"""
+
+
+
         try:
             self._is_running = False
             
@@ -730,10 +766,10 @@ class QueueWorkersManager:
             self.workers.clear()
             self.worker_assignments.clear()
             
-            logger.info("🛑 All workers shutdown completed")
+            logger.info(" All workers shutdown completed")
             
         except Exception as e:
-            logger.error(f"❌ Workers shutdown error: {e}")
+            logger.error(f" Workers shutdown error: {e}")
     
     async def _create_initial_workers(self):
         """Create initial worker pool"""
@@ -751,6 +787,9 @@ class QueueWorkersManager:
         platform_specialty: Optional[PlatformType] = None
     ) -> Optional[str]:
         """Create new worker"""
+
+
+
         try:
             if len(self.workers) >= self.max_workers:
                 return None
@@ -779,17 +818,20 @@ class QueueWorkersManager:
                     self.general_workers.add(worker_id)
                 
                 self.total_metrics["workers_created"] += 1
-                logger.info(f"✅ Created worker {worker_id}")
+                logger.info(f" Created worker {worker_id}")
                 return worker_id
             
             return None
             
         except Exception as e:
-            logger.error(f"❌ Failed to create worker: {e}")
+            logger.error(f" Failed to create worker: {e}")
             return None
     
     async def _find_best_worker(self, task: CrawlerTask) -> Optional[str]:
         """Find best available worker for task"""
+
+
+
         try:
             # Prefer platform-specialized workers
             if task.platform in self.platform_workers:
@@ -812,7 +854,7 @@ class QueueWorkersManager:
             return None
             
         except Exception as e:
-            logger.error(f"❌ Failed to find best worker: {e}")
+            logger.error(f" Failed to find best worker: {e}")
             return None
     
     async def _create_worker_for_task(self, task: CrawlerTask) -> Optional[str]:
@@ -884,6 +926,9 @@ class QueueWorkersManager:
     
     async def _restart_worker(self, worker_id: str):
         """Restart unhealthy worker"""
+
+
+
         try:
             worker = self.workers.get(worker_id)
             if not worker:
@@ -904,10 +949,10 @@ class QueueWorkersManager:
             # Create new worker
             await self._create_worker(config.worker_type, config.platform_specialty)
             
-            logger.info(f"🔄 Restarted worker {worker_id}")
+            logger.info(f" Restarted worker {worker_id}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to restart worker {worker_id}: {e}")
+            logger.error(f" Failed to restart worker {worker_id}: {e}")
     
     async def _balance_worker_load(self):
         """Balance load across workers"""
@@ -931,15 +976,18 @@ class QueueWorkersManager:
         
         # Log completion
         status = "completed" if success else "failed"
-        logger.info(f"📋 Task {task.task_id} {status} on worker {worker_id}")
+        logger.info(f" Task {task.task_id} {status} on worker {worker_id}")
     
     async def _on_health_status_change(self, worker_id: str, health_status: Dict[str, Any]):
         """Callback for worker health status changes"""
         if health_status["status"] == "unhealthy":
-            logger.warning(f"⚠️ Worker {worker_id} health degraded: {health_status['issues']}")
+            logger.warning(f" Worker {worker_id} health degraded: {health_status['issues']}")
 
 
 # Factory function
 def create_workers_manager(max_workers: int = 20) -> QueueWorkersManager:
     """Create and return configured workers manager"""
+
+
+
     return QueueWorkersManager(max_workers)

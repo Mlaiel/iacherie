@@ -31,7 +31,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  CRITICAL LEGAL WARNING ⚠️
+  CRITICAL LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel. Any unauthorized use,
 reproduction, distribution, reverse engineering, or commercialization without explicit 
 written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 

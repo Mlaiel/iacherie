@@ -96,6 +96,9 @@ class TestBusinessMetricsCollectorCore:
     @pytest.fixture
     def revenue_scenarios(self, revenue_test_data):
         """Generate realistic revenue scenarios."""
+
+
+
         return revenue_test_data["production_scenarios"]
     
     async def test_collector_initialization_comprehensive(self, metrics_collector):
@@ -1124,6 +1127,9 @@ class TestBusinessMetricsCollector:
     @pytest.fixture
     def business_test_data(self):
         """Generate comprehensive business test data."""
+
+
+
         return TestDataGenerator.generate_business_metrics_data(days=30)
     
     async def test_collector_initialization(self, metrics_collector):

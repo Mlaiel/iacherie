@@ -60,6 +60,9 @@ class ConversionUtils:
         Returns:
             Detected AudioFormat or None
         """
+
+
+
         try:
             # Method 1: Extension-based detection
             extension = file_path.suffix.lower().lstrip('.')
@@ -479,6 +482,9 @@ class FileUtils:
         Returns:
             Path to created temporary file
         """
+
+
+
         try:
             fd, temp_path = tempfile.mkstemp(suffix=suffix, prefix=prefix)
             os.close(fd)  # Close file descriptor immediately
@@ -507,6 +513,9 @@ class FileUtils:
         Returns:
             Success status
         """
+
+
+
         try:
             # Check if destination exists
             if destination.exists() and not overwrite:
@@ -543,6 +552,9 @@ class FileUtils:
         Returns:
             Success status
         """
+
+
+
         try:
             if not file_path.exists():
                 return True
@@ -580,6 +592,9 @@ class FileUtils:
         Returns:
             Hex digest of file hash
         """
+
+
+
         try:
             hash_obj = hashlib.new(algorithm)
             
@@ -608,6 +623,9 @@ class FileUtils:
         Returns:
             True if file integrity is verified
         """
+
+
+
         try:
             actual_hash = FileUtils.calculate_file_hash(file_path, algorithm)
             return actual_hash.lower() == expected_hash.lower()
@@ -627,6 +645,9 @@ class FileUtils:
         Returns:
             Available space in bytes
         """
+
+
+
         try:
             stat_result = shutil.disk_usage(str(directory))
             return stat_result.free
@@ -648,6 +669,9 @@ class FileUtils:
         Returns:
             True if sufficient space available
         """
+
+
+
         try:
             available = FileUtils.get_available_space(directory)
             required_with_margin = int(required_bytes * (1 + safety_margin))
@@ -674,6 +698,9 @@ class FileUtils:
         Returns:
             Path to backup file or None if failed
         """
+
+
+
         try:
             if not file_path.exists():
                 return None
@@ -897,6 +924,9 @@ class CompressionUtils:
         Returns:
             Estimated compression ratio (source_size / target_size)
         """
+
+
+
         try:
             # Get source file size or estimate
             source_size = source_specs.get('file_size')

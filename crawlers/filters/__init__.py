@@ -7,7 +7,7 @@ Centralized export point for all filter modules.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️ STRICT COPYRIGHT PROTECTION ⚠️
+ STRICT COPYRIGHT PROTECTION 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 
@@ -240,7 +240,10 @@ SECURITY_COMPONENTS = [
 
 # Helper function for module initialization
 def get_available_filters():
-    """Get list of available filter types."""    return [
+    """Get list of available filter types."""
+
+
+    return [
         'audio', 'video', 'image', 'text', 
         'security', 'performance', 'quality',
         'monetization', 'collaboration'

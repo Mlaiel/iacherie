@@ -206,6 +206,9 @@ class StorageProviderClient:
     
     async def _initialize_aws_s3(self) -> bool:
         """Initialize AWS S3 client"""
+
+
+
         try:
             self.session = get_session()
             config = {
@@ -219,14 +222,17 @@ class StorageProviderClient:
             async with self.client as s3:
                 await s3.head_bucket(Bucket=self.config.bucket_name)
             
-            logger.info(f"✅ AWS S3 client initialized - Bucket: {self.config.bucket_name}")
+            logger.info(f" AWS S3 client initialized - Bucket: {self.config.bucket_name}")
             return True
         except Exception as e:
-            logger.error(f"❌ AWS S3 initialization failed: {e}")
+            logger.error(f" AWS S3 initialization failed: {e}")
             return False
     
     async def _initialize_minio(self) -> bool:
         """Initialize MinIO client"""
+
+
+
         try:
             # MinIO uses S3-compatible API
             self.session = get_session()
@@ -242,30 +248,36 @@ class StorageProviderClient:
             async with self.client as s3:
                 await s3.head_bucket(Bucket=self.config.bucket_name)
             
-            logger.info(f"✅ MinIO client initialized - Bucket: {self.config.bucket_name}")
+            logger.info(f" MinIO client initialized - Bucket: {self.config.bucket_name}")
             return True
         except Exception as e:
-            logger.error(f"❌ MinIO initialization failed: {e}")
+            logger.error(f" MinIO initialization failed: {e}")
             return False
     
     async def _initialize_gcs(self) -> bool:
         """Initialize Google Cloud Storage client"""
+
+
+
         try:
             # GCS implementation would use google-cloud-storage
-            logger.info(f"✅ GCS client initialized - Bucket: {self.config.bucket_name}")
+            logger.info(f" GCS client initialized - Bucket: {self.config.bucket_name}")
             return True
         except Exception as e:
-            logger.error(f"❌ GCS initialization failed: {e}")
+            logger.error(f" GCS initialization failed: {e}")
             return False
     
     async def _initialize_azure(self) -> bool:
         """Initialize Azure Blob Storage client"""
+
+
+
         try:
             # Azure implementation would use azure-storage-blob
-            logger.info(f"✅ Azure Blob client initialized - Container: {self.config.bucket_name}")
+            logger.info(f" Azure Blob client initialized - Container: {self.config.bucket_name}")
             return True
         except Exception as e:
-            logger.error(f"❌ Azure Blob initialization failed: {e}")
+            logger.error(f" Azure Blob initialization failed: {e}")
             return False
     
     async def upload_file(self, file_path: Union[str, Path], storage_key: str, 
@@ -314,7 +326,7 @@ class StorageProviderClient:
                 )
                 
         except Exception as e:
-            logger.error(f"❌ File upload failed: {e}")
+            logger.error(f" File upload failed: {e}")
             return UploadResult(
                 success=False,
                 error_message=str(e),
@@ -372,6 +384,9 @@ class StorageProviderClient:
     
     async def download_file(self, storage_key: str, local_path: Optional[Union[str, Path]] = None) -> Union[bytes, str]:
         """Download file from storage"""
+
+
+
         try:
             if self.provider in [StorageProvider.AWS_S3, StorageProvider.MINIO]:
                 async with self.client as s3:
@@ -397,11 +412,14 @@ class StorageProviderClient:
                 return b"mock_file_data"
                 
         except Exception as e:
-            logger.error(f"❌ File download failed: {e}")
+            logger.error(f" File download failed: {e}")
             raise
     
     async def delete_file(self, storage_key: str) -> bool:
         """Delete file from storage"""
+
+
+
         try:
             if self.provider in [StorageProvider.AWS_S3, StorageProvider.MINIO]:
                 async with self.client as s3:
@@ -415,11 +433,14 @@ class StorageProviderClient:
                 return True
                 
         except Exception as e:
-            logger.error(f"❌ File deletion failed: {e}")
+            logger.error(f" File deletion failed: {e}")
             return False
     
     async def get_file_info(self, storage_key: str) -> Dict[str, Any]:
         """Get file metadata"""
+
+
+
         try:
             if self.provider in [StorageProvider.AWS_S3, StorageProvider.MINIO]:
                 async with self.client as s3:
@@ -448,11 +469,14 @@ class StorageProviderClient:
                 }
                 
         except Exception as e:
-            logger.error(f"❌ Failed to get file info: {e}")
+            logger.error(f" Failed to get file info: {e}")
             raise
     
     async def list_files(self, prefix: str = "", limit: int = 1000) -> List[Dict[str, Any]]:
         """List files with prefix"""
+
+
+
         try:
             if self.provider in [StorageProvider.AWS_S3, StorageProvider.MINIO]:
                 async with self.client as s3:
@@ -487,12 +511,15 @@ class StorageProviderClient:
                 return []
                 
         except Exception as e:
-            logger.error(f"❌ Failed to list files: {e}")
+            logger.error(f" Failed to list files: {e}")
             return []
     
     async def generate_presigned_url(self, storage_key: str, expiry_seconds: int = 3600, 
                                    method: str = "GET") -> str:
         """Generate presigned URL"""
+
+
+
         try:
             if self.provider in [StorageProvider.AWS_S3, StorageProvider.MINIO]:
                 async with self.client as s3:
@@ -510,26 +537,32 @@ class StorageProviderClient:
                 return f"https://{self.config.bucket_name}.s3.amazonaws.com/{storage_key}"
                 
         except Exception as e:
-            logger.error(f"❌ Failed to generate presigned URL: {e}")
+            logger.error(f" Failed to generate presigned URL: {e}")
             raise
     
     async def close(self) -> None:
         """Close client connections"""
+
+
+
         try:
             if self.client:
                 # For aiobotocore, the client is closed when exiting context
                 pass
             
-            logger.info("✅ Storage client closed")
+            logger.info(" Storage client closed")
             
         except Exception as e:
-            logger.error(f"❌ Error closing storage client: {e}")
+            logger.error(f" Error closing storage client: {e}")
 
 class AWSS3Client(StorageProviderClient):
     """AWS S3 storage client implementation"""
     
     async def initialize(self) -> bool:
         """Initialize AWS S3 client"""
+
+
+
         return await self._initialize_aws_s3()
 
 class MinIOClient(StorageProviderClient):
@@ -537,6 +570,9 @@ class MinIOClient(StorageProviderClient):
     
     async def initialize(self) -> bool:
         """Initialize MinIO client"""
+
+
+
         return await self._initialize_minio()
 
 class AWSS3Client(StorageProviderClient):
@@ -544,6 +580,9 @@ class AWSS3Client(StorageProviderClient):
     
     async def initialize(self) -> bool:
         """Initialize AWS S3 client"""
+
+
+
         try:
             # Create aiobotocore session
             self.session = get_session()
@@ -572,15 +611,15 @@ class AWSS3Client(StorageProviderClient):
                             )
                         else:
                             await s3.create_bucket(Bucket=self.config.bucket_name)
-                        logger.info(f"✅ Created S3 bucket: {self.config.bucket_name}")
+                        logger.info(f" Created S3 bucket: {self.config.bucket_name}")
                     else:
                         raise
             
-            logger.info(f"✅ AWS S3 client initialized - Bucket: {self.config.bucket_name}")
+            logger.info(f" AWS S3 client initialized - Bucket: {self.config.bucket_name}")
             return True
             
         except Exception as e:
-            logger.error(f"❌ AWS S3 client initialization failed: {e}")
+            logger.error(f" AWS S3 client initialization failed: {e}")
             return False
     
     async def upload_file(self, file_path: Union[str, Path], storage_key: str, 
@@ -685,6 +724,9 @@ class AWSS3Client(StorageProviderClient):
     
     async def download_file(self, storage_key: str, local_path: Optional[Union[str, Path]] = None) -> Union[bytes, str]:
         """Download file from S3"""
+
+
+
         try:
             async with self.client as s3:
                 response = await s3.get_object(Bucket=self.config.bucket_name, Key=storage_key)
@@ -712,6 +754,9 @@ class AWSS3Client(StorageProviderClient):
     
     async def delete_file(self, storage_key: str) -> bool:
         """Delete file from S3"""
+
+
+
         try:
             async with self.client as s3:
                 await s3.delete_object(Bucket=self.config.bucket_name, Key=storage_key)
@@ -723,6 +768,9 @@ class AWSS3Client(StorageProviderClient):
     
     async def get_file_info(self, storage_key: str) -> Dict[str, Any]:
         """Get S3 object metadata"""
+
+
+
         try:
             async with self.client as s3:
                 response = await s3.head_object(Bucket=self.config.bucket_name, Key=storage_key)
@@ -743,6 +791,9 @@ class AWSS3Client(StorageProviderClient):
     
     async def list_files(self, prefix: str = "", limit: int = 1000) -> List[Dict[str, Any]]:
         """List S3 objects"""
+
+
+
         try:
             files = []
             async with self.client as s3:
@@ -775,6 +826,9 @@ class AWSS3Client(StorageProviderClient):
     async def generate_presigned_url(self, storage_key: str, expiry_seconds: int = 3600, 
                                    method: str = "GET") -> str:
         """Generate S3 presigned URL"""
+
+
+
         try:
             async with self.client as s3:
                 url = await s3.generate_presigned_url(
@@ -790,6 +844,9 @@ class AWSS3Client(StorageProviderClient):
     
     async def close(self) -> None:
         """Close S3 client"""
+
+
+
         try:
             if self.client:
                 await self.client.__aexit__(None, None, None)
@@ -801,6 +858,9 @@ class MinIOClient(StorageProviderClient):
     
     async def initialize(self) -> bool:
         """Initialize MinIO client"""
+
+
+
         try:
             # MinIO uses S3-compatible API
             self.session = get_session()
@@ -822,15 +882,15 @@ class MinIOClient(StorageProviderClient):
                 except ClientError as e:
                     if e.response['Error']['Code'] == '404' and self.config.create_bucket_if_not_exists:
                         await s3.create_bucket(Bucket=self.config.bucket_name)
-                        logger.info(f"✅ Created MinIO bucket: {self.config.bucket_name}")
+                        logger.info(f" Created MinIO bucket: {self.config.bucket_name}")
                     else:
                         raise
             
-            logger.info(f"✅ MinIO client initialized - Endpoint: {self.connection_info.host}:{self.connection_info.port}")
+            logger.info(f" MinIO client initialized - Endpoint: {self.connection_info.host}:{self.connection_info.port}")
             return True
             
         except Exception as e:
-            logger.error(f"❌ MinIO client initialization failed: {e}")
+            logger.error(f" MinIO client initialization failed: {e}")
             return False
     
     # MinIO uses the same methods as S3 since it's S3-compatible
@@ -884,6 +944,9 @@ class MinIOClient(StorageProviderClient):
     
     async def close(self) -> None:
         """Close MinIO client"""
+
+
+
         try:
             if self.client:
                 await self.client.__aexit__(None, None, None)
@@ -928,6 +991,9 @@ class ObjectStorageConnectionPool(IConnectionPool):
     
     async def initialize(self) -> bool:
         """Initialize storage clients for all providers"""
+
+
+
         try:
             # Initialize primary provider
             primary_client = self._create_client(self.config.primary_provider)
@@ -947,9 +1013,9 @@ class ObjectStorageConnectionPool(IConnectionPool):
                 
                 if success:
                     self.storage_clients[provider] = backup_client
-                    logger.info(f"✅ Backup provider {provider} initialized")
+                    logger.info(f" Backup provider {provider} initialized")
                 else:
-                    logger.warning(f"❌ Failed to initialize backup provider: {provider}")
+                    logger.warning(f" Failed to initialize backup provider: {provider}")
             
             self.state = ConnectionState.ACTIVE
             
@@ -957,11 +1023,11 @@ class ObjectStorageConnectionPool(IConnectionPool):
             if self.config.enable_monitoring:
                 self._health_check_task = asyncio.create_task(self._health_monitor())
             
-            logger.info(f"✅ Object storage pool initialized with {len(self.storage_clients)} providers")
+            logger.info(f" Object storage pool initialized with {len(self.storage_clients)} providers")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Object storage pool initialization failed: {e}")
+            logger.error(f" Object storage pool initialization failed: {e}")
             self.state = ConnectionState.FAILED
             return False
     
@@ -1088,15 +1154,18 @@ class ObjectStorageConnectionPool(IConnectionPool):
     
     async def _replicate_to_backups(self, file_path: Path, storage_key: str, metadata: Dict) -> None:
         """Replicate content to backup providers"""
+
+
+
         try:
             for provider, client in self.storage_clients.items():
                 if provider != self.config.primary_provider:
                     try:
                         result = await client.upload_file(file_path, storage_key, metadata)
                         if result.success:
-                            logger.info(f"✅ Replicated {storage_key} to {provider}")
+                            logger.info(f" Replicated {storage_key} to {provider}")
                         else:
-                            logger.warning(f"❌ Failed to replicate {storage_key} to {provider}: {result.error}")
+                            logger.warning(f" Failed to replicate {storage_key} to {provider}: {result.error}")
                     except Exception as e:
                         logger.error(f"Replication error to {provider}: {e}")
                         
@@ -1105,21 +1174,27 @@ class ObjectStorageConnectionPool(IConnectionPool):
     
     async def resize_pool(self, new_min_size: int, new_max_size: int) -> bool:
         """Resize object storage pool"""
+
+
+
         try:
             # Update concurrency limits
             self.config.max_concurrency = new_max_size
             self._upload_semaphore = asyncio.Semaphore(new_max_size)
             self._download_semaphore = asyncio.Semaphore(new_max_size)
             
-            logger.info(f"✅ Object storage pool resized - Max concurrency: {new_max_size}")
+            logger.info(f" Object storage pool resized - Max concurrency: {new_max_size}")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to resize object storage pool: {e}")
+            logger.error(f" Failed to resize object storage pool: {e}")
             return False
     
     async def execute_maintenance(self) -> bool:
         """Execute object storage pool maintenance"""
+
+
+
         try:
             maintenance_tasks = []
             
@@ -1135,16 +1210,19 @@ class ObjectStorageConnectionPool(IConnectionPool):
             self.stats["last_maintenance"] = datetime.utcnow()
             
             success_count = sum(1 for r in results if r is True)
-            logger.info(f"✅ Object storage maintenance completed - {success_count}/{len(maintenance_tasks)} providers")
+            logger.info(f" Object storage maintenance completed - {success_count}/{len(maintenance_tasks)} providers")
             
             return success_count > 0
             
         except Exception as e:
-            logger.error(f"❌ Object storage maintenance failed: {e}")
+            logger.error(f" Object storage maintenance failed: {e}")
             return False
     
     async def _cleanup_provider_resources(self, client: StorageProviderClient) -> bool:
         """Cleanup resources for a specific provider"""
+
+
+
         try:
             # List old temporary files (older than 1 day)
             cutoff_time = datetime.utcnow() - timedelta(days=1)
@@ -1157,11 +1235,11 @@ class ObjectStorageConnectionPool(IConnectionPool):
                     if success:
                         cleanup_count += 1
             
-            logger.info(f"✅ Cleaned up {cleanup_count} temporary files")
+            logger.info(f" Cleaned up {cleanup_count} temporary files")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Cleanup failed: {e}")
+            logger.error(f" Cleanup failed: {e}")
             return False
     
     async def download_content(self, storage_key: str, local_path: Optional[Union[str, Path]] = None) -> Union[bytes, str]:
@@ -1195,7 +1273,7 @@ class ObjectStorageConnectionPool(IConnectionPool):
                         if provider != self.config.primary_provider:
                             try:
                                 result = await client.download_file(storage_key, local_path)
-                                logger.info(f"✅ Downloaded from backup provider: {provider}")
+                                logger.info(f" Downloaded from backup provider: {provider}")
                                 return result
                             except Exception as backup_error:
                                 logger.warning(f"Backup provider {provider} download failed: {backup_error}")
@@ -1210,6 +1288,9 @@ class ObjectStorageConnectionPool(IConnectionPool):
     
     async def delete_content(self, storage_key: str) -> bool:
         """Delete content from all providers"""
+
+
+
         try:
             success_count = 0
             total_providers = len(self.storage_clients)
@@ -1218,9 +1299,9 @@ class ObjectStorageConnectionPool(IConnectionPool):
                 try:
                     if await client.delete_file(storage_key):
                         success_count += 1
-                        logger.info(f"✅ Deleted {storage_key} from {provider}")
+                        logger.info(f" Deleted {storage_key} from {provider}")
                     else:
-                        logger.warning(f"❌ Failed to delete {storage_key} from {provider}")
+                        logger.warning(f" Failed to delete {storage_key} from {provider}")
                 except Exception as e:
                     logger.error(f"Delete error from {provider}: {e}")
             
@@ -1236,6 +1317,9 @@ class ObjectStorageConnectionPool(IConnectionPool):
     
     async def get_content_info(self, storage_key: str) -> Dict[str, Any]:
         """Get content metadata from primary provider"""
+
+
+
         try:
             return await self.primary_client.get_file_info(storage_key)
         except Exception as e:
@@ -1253,6 +1337,9 @@ class ObjectStorageConnectionPool(IConnectionPool):
     async def list_user_content(self, user_id: str, content_type: Optional[ContentType] = None, 
                               limit: int = 100) -> List[Dict[str, Any]]:
         """List content for specific user"""
+
+
+
         try:
             prefix = f"{content_type.value}/{user_id}/" if content_type else f"*/{user_id}/"
             return await self.primary_client.list_files(prefix, limit)
@@ -1263,6 +1350,9 @@ class ObjectStorageConnectionPool(IConnectionPool):
     async def generate_content_url(self, storage_key: str, expiry_seconds: int = 3600, 
                                  use_cdn: bool = True) -> str:
         """Generate content access URL"""
+
+
+
         try:
             # Use CDN if available and requested
             if use_cdn and self.config.enable_cdn and self.config.cdn_domain:
@@ -1277,6 +1367,9 @@ class ObjectStorageConnectionPool(IConnectionPool):
     
     async def health_check(self) -> bool:
         """Check object storage pool health"""
+
+
+
         try:
             healthy_providers = 0
             total_providers = len(self.storage_clients)
@@ -1340,6 +1433,9 @@ class ObjectStorageConnectionPool(IConnectionPool):
     
     async def close(self) -> None:
         """Close object storage pool"""
+
+
+
         try:
             self.state = ConnectionState.CLOSED
             
@@ -1355,11 +1451,11 @@ class ObjectStorageConnectionPool(IConnectionPool):
             for provider, client in self.storage_clients.items():
                 try:
                     await client.close()
-                    logger.info(f"✅ Storage client {provider} closed")
+                    logger.info(f" Storage client {provider} closed")
                 except Exception as e:
                     logger.error(f"Error closing storage client {provider}: {e}")
             
-            logger.info("✅ Object storage pool closed")
+            logger.info(" Object storage pool closed")
             
         except Exception as e:
             logger.error(f"Error closing object storage pool: {e}")
@@ -1371,15 +1467,21 @@ class GoogleCloudClient(StorageProviderClient):
     
     async def initialize(self) -> bool:
         """Initialize Google Cloud Storage client"""
+
+
+
         try:
-            logger.info(f"✅ Google Cloud Storage client initialized - Bucket: {self.config.bucket_name}")
+            logger.info(f" Google Cloud Storage client initialized - Bucket: {self.config.bucket_name}")
             return True
         except Exception as e:
-            logger.error(f"❌ Google Cloud Storage initialization failed: {e}")
+            logger.error(f" Google Cloud Storage initialization failed: {e}")
             return False
     
     async def upload_file(self, file_path: Path, storage_key: str, metadata: Dict) -> UploadResult:
         """Upload file to Google Cloud Storage (placeholder implementation)"""
+
+
+
         return UploadResult(
             success=False,
             storage_key=storage_key,
@@ -1392,6 +1494,9 @@ class GoogleCloudClient(StorageProviderClient):
     
     async def download_file(self, storage_key: str, local_path: Optional[Path] = None) -> Union[bytes, str]:
         """Download file from Google Cloud Storage"""
+
+
+
         try:
             logger.info(f"Downloading from Google Cloud Storage: {storage_key}")
             
@@ -1412,18 +1517,30 @@ class GoogleCloudClient(StorageProviderClient):
     
     async def delete_file(self, storage_key: str) -> bool:
         """Delete file from Google Cloud Storage (placeholder implementation)"""
+
+
+
         return False
     
     async def list_files(self, prefix: str = "", limit: int = 1000) -> List[Dict[str, Any]]:
         """List files in Google Cloud Storage (placeholder implementation)"""
+
+
+
         return []
     
     async def get_file_info(self, storage_key: str) -> Dict[str, Any]:
         """Get file info from Google Cloud Storage (placeholder implementation)"""
+
+
+
         return {}
     
     async def generate_presigned_url(self, storage_key: str, expiry_seconds: int) -> str:
         """Generate presigned URL for Google Cloud Storage (placeholder implementation)"""
+
+
+
         return ""
     
     async def close(self) -> None:
@@ -1436,15 +1553,21 @@ class AzureBlobClient(StorageProviderClient):
     
     async def initialize(self) -> bool:
         """Initialize Azure Blob Storage client"""
+
+
+
         try:
-            logger.info(f"✅ Azure Blob Storage client initialized - Container: {self.config.bucket_name}")
+            logger.info(f" Azure Blob Storage client initialized - Container: {self.config.bucket_name}")
             return True
         except Exception as e:
-            logger.error(f"❌ Azure Blob Storage initialization failed: {e}")
+            logger.error(f" Azure Blob Storage initialization failed: {e}")
             return False
     
     async def upload_file(self, file_path: Path, storage_key: str, metadata: Dict) -> UploadResult:
         """Upload file to Azure Blob Storage (placeholder implementation)"""
+
+
+
         return UploadResult(
             success=False,
             storage_key=storage_key,
@@ -1457,6 +1580,9 @@ class AzureBlobClient(StorageProviderClient):
     
     async def download_file(self, storage_key: str, local_path: Optional[Path] = None) -> Union[bytes, str]:
         """Download file from Azure Blob Storage"""
+
+
+
         try:
             logger.info(f"Downloading from Azure Blob Storage: {storage_key}")
             
@@ -1477,18 +1603,30 @@ class AzureBlobClient(StorageProviderClient):
     
     async def delete_file(self, storage_key: str) -> bool:
         """Delete file from Azure Blob Storage (placeholder implementation)"""
+
+
+
         return False
     
     async def list_files(self, prefix: str = "", limit: int = 1000) -> List[Dict[str, Any]]:
         """List files in Azure Blob Storage (placeholder implementation)"""
+
+
+
         return []
     
     async def get_file_info(self, storage_key: str) -> Dict[str, Any]:
         """Get file info from Azure Blob Storage (placeholder implementation)"""
+
+
+
         return {}
     
     async def generate_presigned_url(self, storage_key: str, expiry_seconds: int) -> str:
         """Generate presigned URL for Azure Blob Storage (placeholder implementation)"""
+
+
+
         return ""
     
     async def close(self) -> None:
@@ -1501,15 +1639,21 @@ class CloudflareR2Client(StorageProviderClient):
     
     async def initialize(self) -> bool:
         """Initialize Cloudflare R2 Storage client"""
+
+
+
         try:
-            logger.info(f"✅ Cloudflare R2 Storage client initialized - Bucket: {self.config.bucket_name}")
+            logger.info(f" Cloudflare R2 Storage client initialized - Bucket: {self.config.bucket_name}")
             return True
         except Exception as e:
-            logger.error(f"❌ Cloudflare R2 Storage initialization failed: {e}")
+            logger.error(f" Cloudflare R2 Storage initialization failed: {e}")
             return False
     
     async def upload_file(self, file_path: Path, storage_key: str, metadata: Dict) -> UploadResult:
         """Upload file to Cloudflare R2 Storage (placeholder implementation)"""
+
+
+
         return UploadResult(
             success=False,
             storage_key=storage_key,
@@ -1522,6 +1666,9 @@ class CloudflareR2Client(StorageProviderClient):
     
     async def download_file(self, storage_key: str, local_path: Optional[Path] = None) -> Union[bytes, str]:
         """Download file from Cloudflare R2 Storage"""
+
+
+
         try:
             logger.info(f"Downloading from Cloudflare R2 Storage: {storage_key}")
             
@@ -1542,18 +1689,30 @@ class CloudflareR2Client(StorageProviderClient):
     
     async def delete_file(self, storage_key: str) -> bool:
         """Delete file from Cloudflare R2 Storage (placeholder implementation)"""
+
+
+
         return False
     
     async def list_files(self, prefix: str = "", limit: int = 1000) -> List[Dict[str, Any]]:
         """List files in Cloudflare R2 Storage (placeholder implementation)"""
+
+
+
         return []
     
     async def get_file_info(self, storage_key: str) -> Dict[str, Any]:
         """Get file info from Cloudflare R2 Storage (placeholder implementation)"""
+
+
+
         return {}
     
     async def generate_presigned_url(self, storage_key: str, expiry_seconds: int) -> str:
         """Generate presigned URL for Cloudflare R2 Storage (placeholder implementation)"""
+
+
+
         return ""
     
     async def close(self) -> None:
@@ -1566,15 +1725,21 @@ class DigitalOceanClient(StorageProviderClient):
     
     async def initialize(self) -> bool:
         """Initialize DigitalOcean Spaces client"""
+
+
+
         try:
-            logger.info(f"✅ DigitalOcean Spaces client initialized - Space: {self.config.bucket_name}")
+            logger.info(f" DigitalOcean Spaces client initialized - Space: {self.config.bucket_name}")
             return True
         except Exception as e:
-            logger.error(f"❌ DigitalOcean Spaces initialization failed: {e}")
+            logger.error(f" DigitalOcean Spaces initialization failed: {e}")
             return False
     
     async def upload_file(self, file_path: Path, storage_key: str, metadata: Dict) -> UploadResult:
         """Upload file to DigitalOcean Spaces (placeholder implementation)"""
+
+
+
         return UploadResult(
             success=False,
             storage_key=storage_key,
@@ -1587,6 +1752,9 @@ class DigitalOceanClient(StorageProviderClient):
     
     async def download_file(self, storage_key: str, local_path: Optional[Path] = None) -> Union[bytes, str]:
         """Download file from DigitalOcean Spaces"""
+
+
+
         try:
             logger.info(f"Downloading from DigitalOcean Spaces: {storage_key}")
             
@@ -1607,18 +1775,30 @@ class DigitalOceanClient(StorageProviderClient):
     
     async def delete_file(self, storage_key: str) -> bool:
         """Delete file from DigitalOcean Spaces (placeholder implementation)"""
+
+
+
         return False
     
     async def list_files(self, prefix: str = "", limit: int = 1000) -> List[Dict[str, Any]]:
         """List files in DigitalOcean Spaces (placeholder implementation)"""
+
+
+
         return []
     
     async def get_file_info(self, storage_key: str) -> Dict[str, Any]:
         """Get file info from DigitalOcean Spaces (placeholder implementation)"""
+
+
+
         return {}
     
     async def generate_presigned_url(self, storage_key: str, expiry_seconds: int) -> str:
         """Generate presigned URL for DigitalOcean Spaces (placeholder implementation)"""
+
+
+
         return ""
     
     async def close(self) -> None:
@@ -1631,11 +1811,14 @@ class MinimalStorageClient(StorageProviderClient):
     
     async def initialize(self) -> bool:
         """Initialize minimal storage client"""
-        logger.warning(f"⚠️ Using minimal storage client for unsupported provider: {self.provider}")
+        logger.warning(f" Using minimal storage client for unsupported provider: {self.provider}")
         return True
     
     async def upload_file(self, file_path: Path, storage_key: str, metadata: Dict) -> UploadResult:
         """Minimal upload implementation"""
+
+
+
         return UploadResult(
             success=False,
             storage_key=storage_key,
@@ -1662,18 +1845,30 @@ class MinimalStorageClient(StorageProviderClient):
     
     async def delete_file(self, storage_key: str) -> bool:
         """Minimal delete implementation"""
+
+
+
         return False
     
     async def list_files(self, prefix: str = "", limit: int = 1000) -> List[Dict[str, Any]]:
         """Minimal list implementation"""
+
+
+
         return []
     
     async def get_file_info(self, storage_key: str) -> Dict[str, Any]:
         """Minimal file info implementation"""
+
+
+
         return {}
     
     async def generate_presigned_url(self, storage_key: str, expiry_seconds: int) -> str:
         """Minimal presigned URL implementation"""
+
+
+
         return ""
     
     async def close(self) -> None:

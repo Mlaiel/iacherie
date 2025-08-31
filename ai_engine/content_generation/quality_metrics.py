@@ -171,6 +171,9 @@ class QualityMetrics:
         Returns:
             Comprehensive quality score with detailed breakdown
         """
+
+
+
         try:
             # Initialize scores dictionary
             dimension_scores = {}
@@ -234,6 +237,9 @@ class QualityMetrics:
     
     async def _analyze_readability(self, content: str, target_audience: Optional[str]) -> float:
         """Analyze content readability"""
+
+
+
         try:
             # Calculate multiple readability scores
             flesch_score = self._flesch_reading_ease(content)
@@ -285,6 +291,9 @@ class QualityMetrics:
     
     async def _analyze_engagement_potential(self, content: str, content_type: str) -> float:
         """Analyze content engagement potential"""
+
+
+
         try:
             engagement_score = 0.0
             content_lower = content.lower()
@@ -347,6 +356,9 @@ class QualityMetrics:
     
     async def _analyze_seo_quality(self, content: str, keywords: Optional[List[str]]) -> float:
         """Analyze SEO quality"""
+
+
+
         try:
             seo_score = 0.0
             
@@ -405,6 +417,9 @@ class QualityMetrics:
     
     async def _analyze_originality(self, content: str) -> float:
         """Analyze content originality and uniqueness"""
+
+
+
         try:
             originality_score = 0.5  # Base score
             
@@ -453,6 +468,9 @@ class QualityMetrics:
     
     async def _analyze_technical_quality(self, content: str) -> float:
         """Analyze technical quality (grammar, spelling, formatting)"""
+
+
+
         try:
             technical_score = 0.8  # Start with high base score
             
@@ -506,6 +524,9 @@ class QualityMetrics:
     
     async def _analyze_brand_alignment(self, content: str, brand_voice: Optional[str]) -> float:
         """Analyze brand voice alignment"""
+
+
+
         try:
             if not brand_voice or brand_voice not in self.brand_voice_patterns:
                 return 0.7  # Neutral score when no brand voice specified
@@ -554,6 +575,9 @@ class QualityMetrics:
     
     async def _analyze_completeness(self, content: str, content_type: str) -> float:
         """Analyze content completeness and informativeness"""
+
+
+
         try:
             completeness_score = 0.0
             

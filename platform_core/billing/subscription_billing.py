@@ -1,15 +1,15 @@
 """
-🚀 Subscription Billing - IA Influencer Agent Platform Enterprise
+ Subscription Billing - IA Influencer Agent Platform Enterprise
 ===============================================================
 Module: backend/platform_core/billing/subscription_billing.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ===============================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 SYSTÈME D'ABONNEMENTS ET FACTURATION RÉCURRENTE
+ SYSTÈME D'ABONNEMENTS ET FACTURATION RÉCURRENTE
 Gestion complète des abonnements SaaS avec billing automatique
 - Plans tarifaires flexibles et modulaires
 - Prorata automatique et changements de plan
@@ -230,6 +230,9 @@ class Subscription:
     @property
     def is_active(self) -> bool:
         """Vérifie si l'abonnement est actif"""
+
+
+
         return self.status in [SubscriptionStatus.ACTIVE, SubscriptionStatus.TRIAL]
         
     @property
@@ -670,6 +673,9 @@ class SubscriptionBilling:
         
     async def _save_plan(self, plan: SubscriptionPlan):
         """Sauvegarde un plan en base"""
+
+
+
         try:
             # In a real system, this would save to database
             plan_data = {
@@ -691,6 +697,9 @@ class SubscriptionBilling:
         
     async def _load_plan(self, plan_id: str) -> Optional[SubscriptionPlan]:
         """Charge un plan depuis la base"""
+
+
+
         try:
             # In a real system, this would load from database
             # For now, return a default plan if the ID matches common patterns
@@ -723,6 +732,9 @@ class SubscriptionBilling:
         
     async def _save_subscription(self, subscription: Subscription):
         """Sauvegarde un abonnement en base"""
+
+
+
         try:
             # In a real system, this would save to database
             subscription_data = {
@@ -745,6 +757,9 @@ class SubscriptionBilling:
         
     async def _load_subscription(self, subscription_id: str) -> Optional[Subscription]:
         """Charge un abonnement depuis la base"""
+
+
+
         try:
             # In a real system, this would load from database
             # For now, simulate loading a subscription
@@ -760,6 +775,9 @@ class SubscriptionBilling:
         
     def get_billing_stats(self) -> Dict[str, Any]:
         """Retourne les statistiques de facturation"""
+
+
+
         return {
             "plans_cached": len(self.plans_cache),
             "subscriptions_cached": len(self.subscriptions_cache),

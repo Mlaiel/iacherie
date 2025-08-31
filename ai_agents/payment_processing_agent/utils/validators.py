@@ -7,7 +7,7 @@ compliance checks, and security verification.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -103,6 +103,9 @@ class PaymentValidator:
         Raises:
             ValidationError: If validation fails
         """
+
+
+
         try:
             validation_result = {
                 "valid": True,
@@ -175,6 +178,9 @@ class PaymentValidator:
         Raises:
             ValidationError: If validation fails
         """
+
+
+
         try:
             # Basic validation
             await self._validate_creator_id(creator_id)
@@ -219,6 +225,9 @@ class PaymentValidator:
         Raises:
             ValidationError: If validation fails
         """
+
+
+
         try:
             validation_result = {
                 "valid": True,
@@ -293,6 +302,9 @@ class PaymentValidator:
         Raises:
             ValidationError: If signature validation fails
         """
+
+
+
         try:
             if provider == "stripe":
                 return self._validate_stripe_signature(payload, signature, secret)
@@ -329,6 +341,9 @@ class PaymentValidator:
         Raises:
             ComplianceError: If compliance check fails
         """
+
+
+
         try:
             compliance_result = {
                 "compliant": True,
@@ -396,6 +411,9 @@ class PaymentValidator:
 
     async def _validate_amount(self, amount: Union[Decimal, float, str], currency: str) -> Decimal:
         """Validate and normalize amount"""
+
+
+
         try:
             if isinstance(amount, str):
                 amount = Decimal(amount)
@@ -510,6 +528,9 @@ class PaymentValidator:
 
     def _validate_stripe_signature(self, payload: str, signature: str, secret: str) -> bool:
         """Validate Stripe webhook signature"""
+
+
+
         try:
             elements = signature.split(',')
             timestamp = None
@@ -544,6 +565,9 @@ class PaymentValidator:
 
     def _validate_wise_signature(self, payload: str, signature: str, secret: str) -> bool:
         """Validate Wise webhook signature"""
+
+
+
         try:
             expected_signature = hmac.new(
                 secret.encode('utf-8'),
@@ -559,6 +583,9 @@ class PaymentValidator:
 
     def _validate_paypal_signature(self, payload: str, signature: str, secret: str) -> bool:
         """Validate PayPal webhook signature"""
+
+
+
         try:
             expected_signature = hmac.new(
                 secret.encode('utf-8'),
@@ -573,6 +600,9 @@ class PaymentValidator:
 
     def _validate_generic_signature(self, payload: str, signature: str, secret: str) -> bool:
         """Validate generic HMAC signature"""
+
+
+
         try:
             expected_signature = hmac.new(
                 secret.encode('utf-8'),
@@ -618,24 +648,42 @@ class PaymentValidator:
 
     async def _check_tax_reporting_status(self, creator_id: str) -> Dict[str, Any]:
         """Check tax reporting compliance"""
+
+
+
         return {"compliant": True}
 
     async def _get_daily_transaction_total(self, creator_id: str, currency: str) -> Decimal:
         """Get daily transaction total"""
+
+
+
         return Decimal("0.00")
 
     async def _get_monthly_transaction_total(self, creator_id: str, currency: str) -> Decimal:
         """Get monthly transaction total"""
+
+
+
         return Decimal("0.00")
 
     async def _get_recent_transaction_count(self, creator_id: str, hours: int) -> int:
         """Get recent transaction count"""
+
+
+
         return 0
 
     async def _get_average_transaction_amount(self, creator_id: str, currency: str) -> Decimal:
         """Get average transaction amount"""
+
+
+
         return Decimal("100.00")
 
     async def _get_account_age_days(self, creator_id: str) -> int:
         """Get account age in days"""
+
+
+
         return 365  # Mock value

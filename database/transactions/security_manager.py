@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -124,6 +124,9 @@ class SecurityPolicy:
     
     def is_ip_allowed(self, ip_address: str) -> bool:
         """Check if IP address is allowed"""
+
+
+
         try:
             ip = ipaddress.ip_address(ip_address)
             
@@ -237,6 +240,9 @@ class EncryptionManager:
     
     def encrypt_data(self, data: bytes) -> bytes:
         """Encrypt sensitive data"""
+
+
+
         try:
             return self.cipher_suite.encrypt(data)
         except Exception as e:
@@ -245,6 +251,9 @@ class EncryptionManager:
     
     def decrypt_data(self, encrypted_data: bytes) -> bytes:
         """Decrypt sensitive data"""
+
+
+
         try:
             return self.cipher_suite.decrypt(encrypted_data)
         except Exception as e:
@@ -276,6 +285,9 @@ class EncryptionManager:
     
     def should_rotate_keys(self) -> bool:
         """Check if keys should be rotated"""
+
+
+
         return (time.time() - self.last_key_rotation) > self.key_rotation_interval
     
     def rotate_keys(self) -> None:
@@ -435,6 +447,9 @@ class TransactionSecurityManager:
     
     def encrypt_transaction_data(self, transaction_id: str, data: Dict[str, Any]) -> str:
         """Encrypt sensitive transaction data"""
+
+
+
         try:
             return self.encryption_manager.encrypt_json(data)
         except Exception as e:
@@ -443,6 +458,9 @@ class TransactionSecurityManager:
     
     def decrypt_transaction_data(self, transaction_id: str, encrypted_data: str) -> Dict[str, Any]:
         """Decrypt transaction data"""
+
+
+
         try:
             return self.encryption_manager.decrypt_json(encrypted_data)
         except Exception as e:
@@ -648,6 +666,9 @@ class TransactionSecurityManager:
     
     def _generate_session_id(self) -> str:
         """Generate secure session ID"""
+
+
+
         return secrets.token_urlsafe(32)
     
     def _log_security_event(

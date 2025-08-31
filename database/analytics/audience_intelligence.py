@@ -8,7 +8,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Development Team: Lead AI Developer, Senior Backend Engineer, ML Engineer, DBA, Security Expert
 Architecture: Enterprise-grade, microservices-ready, production-optimized
 
-⚠️ INTELLECTUAL PROPERTY WARNING ⚠️
+ INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 Violations will be prosecuted under international copyright law.
@@ -286,6 +286,9 @@ class AudienceIntelligenceManager:
         Returns:
             AudienceIntelligence: Complete intelligence object
         """
+
+
+
         try:
             self.logger.info(f"Analyzing audience intelligence for user {user_id}")
             
@@ -592,6 +595,9 @@ class AudienceIntelligenceManager:
         """
         Get latest audience insights for a user
         """
+
+
+
         try:
             cutoff_date = datetime.utcnow() - timedelta(days=days_back)
             
@@ -614,6 +620,9 @@ class AudienceIntelligenceManager:
         """
         Get audience segments for a user
         """
+
+
+
         try:
             query = self.db_session.query(AudienceSegmentDetails).filter(
                 AudienceSegmentDetails.user_id == user_id

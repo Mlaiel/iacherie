@@ -139,6 +139,9 @@ class SmartContractManager:
         Returns:
             ContractMetadata object with deployment information
         """
+
+
+
         try:
             w3 = self.web3_instances.get(network)
             if not w3:
@@ -272,6 +275,9 @@ class SmartContractManager:
         Returns:
             Transaction result with receipt and logs
         """
+
+
+
         try:
             metadata = self.contracts.get(contract_key)
             if not metadata:
@@ -366,6 +372,9 @@ class SmartContractManager:
         Returns:
             Upgrade transaction result
         """
+
+
+
         try:
             metadata = self.contracts.get(contract_key)
             if not metadata:
@@ -443,10 +452,16 @@ class SmartContractManager:
 
     def get_contract_info(self, contract_key: str) -> Optional[ContractMetadata]:
         """Get metadata for a deployed contract."""
+
+
+
         return self.contracts.get(contract_key)
 
     def list_contracts(self) -> Dict[str, ContractMetadata]:
         """List all managed contracts."""
+
+
+
         return self.contracts.copy()
 
     def verify_contract_on_explorer(
@@ -464,6 +479,9 @@ class SmartContractManager:
         Returns:
             True if verification successful
         """
+
+
+
         try:
             metadata = self.contracts.get(contract_key)
             if not metadata:

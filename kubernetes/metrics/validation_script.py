@@ -5,7 +5,7 @@ Comprehensive validation of all metrics modules and dependencies
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 
-⚠️  AVERTISSEMENT LÉGAL STRICT ⚠️
+  AVERTISSEMENT LÉGAL STRICT 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et fera l'objet de poursuites 
@@ -65,7 +65,7 @@ class MetricsModuleValidator:
     async def validate_complete_module(self) -> Dict[str, Any]:
         """Run complete validation of metrics module"""
         
-        logger.info("🚀 Starting comprehensive metrics module validation...")
+        logger.info(" Starting comprehensive metrics module validation...")
         
         # Validation stages
         validation_stages = [
@@ -80,17 +80,17 @@ class MetricsModuleValidator:
         
         for stage_name, validation_func in validation_stages:
             try:
-                logger.info(f"📋 Validating: {stage_name}")
+                logger.info(f" Validating: {stage_name}")
                 result = await validation_func()
                 self.validation_results[stage_name] = result
                 
                 if result.get('status') == 'success':
-                    logger.info(f"✅ {stage_name}: PASSED")
+                    logger.info(f" {stage_name}: PASSED")
                 else:
-                    logger.warning(f"⚠️ {stage_name}: ISSUES FOUND")
+                    logger.warning(f" {stage_name}: ISSUES FOUND")
                     
             except Exception as e:
-                error_msg = f"❌ {stage_name}: FAILED - {str(e)}"
+                error_msg = f" {stage_name}: FAILED - {str(e)}"
                 logger.error(error_msg)
                 self.errors.append(error_msg)
                 self.validation_results[stage_name] = {
@@ -129,12 +129,12 @@ class MetricsModuleValidator:
                 module = __import__(module_path, fromlist=[class_name])
                 getattr(module, class_name)
                 results['imported_modules'].append(class_name)
-                logger.debug(f"✓ Successfully imported {class_name}")
+                logger.debug(f" Successfully imported {class_name}")
                 
             except ImportError as e:
                 error_msg = f"Failed to import {class_name}: {str(e)}"
                 results['failed_imports'].append(error_msg)
-                logger.error(f"✗ {error_msg}")
+                logger.error(f" {error_msg}")
                 
         if results['failed_imports']:
             results['status'] = 'partial'
@@ -173,12 +173,12 @@ class MetricsModuleValidator:
                         raise AttributeError(f"Missing required method: {method}")
                 
                 results['collectors_validated'].append(collector_name)
-                logger.debug(f"✓ Validated collector: {collector_name}")
+                logger.debug(f" Validated collector: {collector_name}")
                 
             except Exception as e:
                 error_msg = f"Collector {collector_name} validation failed: {str(e)}"
                 results['failed_validations'].append(error_msg)
-                logger.error(f"✗ {error_msg}")
+                logger.error(f" {error_msg}")
         
         if results['failed_validations']:
             results['status'] = 'partial'
@@ -547,11 +547,11 @@ class MetricsModuleValidator:
         # General recommendations
         if not recommendations:
             recommendations.append(
-                "✅ All validations passed! Module is ready for production deployment."
+                " All validations passed! Module is ready for production deployment."
             )
         else:
             recommendations.append(
-                "📋 Address the above issues before production deployment"
+                " Address the above issues before production deployment"
             )
         
         return recommendations
@@ -560,11 +560,11 @@ class MetricsModuleValidator:
 async def main():
     """Run complete metrics module validation"""
     
-    print("🔍 IA Influencer Agent - Metrics Module Validation")
+    print(" IA Influencer Agent - Metrics Module Validation")
     print("=" * 60)
-    print(f"📅 Started: {datetime.utcnow().isoformat()}")
-    print(f"👨‍💻 Validator: Fahed Mlaiel")
-    print(f"📧 Contact: mlaiel@live.de")
+    print(f" Started: {datetime.utcnow().isoformat()}")
+    print(f"‍ Validator: Fahed Mlaiel")
+    print(f" Contact: mlaiel@live.de")
     print("=" * 60)
     
     validator = MetricsModuleValidator()
@@ -573,7 +573,7 @@ async def main():
         report = await validator.validate_complete_module()
         
         # Display summary
-        print(f"\n📊 VALIDATION SUMMARY")
+        print(f"\n VALIDATION SUMMARY")
         print("=" * 40)
         print(f"Overall Status: {report['overall_status'].upper()}")
         print(f"Success Rate: {report['summary']['success_rate']:.1f}%")
@@ -581,26 +581,26 @@ async def main():
         print(f"Warnings: {report['summary']['warning_count']}")
         
         # Display recommendations
-        print(f"\n💡 RECOMMENDATIONS")
+        print(f"\n RECOMMENDATIONS")
         print("=" * 40)
         for i, rec in enumerate(report['recommendations'], 1):
             print(f"{i}. {rec}")
         
         # Display errors if any
         if report['errors']:
-            print(f"\n❌ ERRORS")
+            print(f"\n ERRORS")
             print("=" * 40)
             for error in report['errors']:
                 print(f"• {error}")
         
         # Display warnings if any
         if report['warnings']:
-            print(f"\n⚠️ WARNINGS")
+            print(f"\n WARNINGS")
             print("=" * 40)
             for warning in report['warnings']:
                 print(f"• {warning}")
         
-        print(f"\n🏁 Validation completed at: {datetime.utcnow().isoformat()}")
+        print(f"\n Validation completed at: {datetime.utcnow().isoformat()}")
         
         # Return appropriate exit code
         if report['overall_status'] == 'error':
@@ -611,7 +611,7 @@ async def main():
             return 0
             
     except Exception as e:
-        print(f"\n💥 VALIDATION FAILED")
+        print(f"\n VALIDATION FAILED")
         print("=" * 40)
         print(f"Error: {str(e)}")
         print(f"Traceback: {traceback.format_exc()}")

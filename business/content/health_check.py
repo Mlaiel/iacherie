@@ -12,7 +12,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 Expert Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️ LEGAL WARNING: This code and concept are protected by intellectual property laws.
+ LEGAL WARNING: This code and concept are protected by intellectual property laws.
 Any unauthorized copying, modification, or distribution without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.
@@ -66,7 +66,7 @@ class ContentModuleHealthCheck:
     
     async def run_comprehensive_health_check(self) -> Dict[str, Any]:
         """Execute comprehensive health check across all systems."""
-        logger.info("🔍 Starting Comprehensive Health Check...")
+        logger.info(" Starting Comprehensive Health Check...")
         
         # Phase 1: Module Integrity Check
         module_check = await self._check_module_integrity()
@@ -104,7 +104,7 @@ class ContentModuleHealthCheck:
     
     async def _check_module_integrity(self) -> Dict[str, Any]:
         """Check integrity of all module files and dependencies."""
-        logger.info("🔧 Checking Module Integrity...")
+        logger.info(" Checking Module Integrity...")
         
         results = {
             'status': 'passed',
@@ -166,7 +166,7 @@ class ContentModuleHealthCheck:
     
     async def _check_engine_functionality(self) -> Dict[str, Any]:
         """Check basic functionality of each engine."""
-        logger.info("⚙️ Checking Engine Functionality...")
+        logger.info(" Checking Engine Functionality...")
         
         results = {
             'status': 'passed',
@@ -224,7 +224,7 @@ class ContentModuleHealthCheck:
     
     async def _run_performance_benchmarks(self) -> Dict[str, Any]:
         """Run basic performance benchmarks."""
-        logger.info("⏱️ Running Performance Benchmarks...")
+        logger.info("⏱ Running Performance Benchmarks...")
         
         results = {
             'status': 'passed',
@@ -271,6 +271,9 @@ class ContentModuleHealthCheck:
     
     async def _benchmark_file_io(self) -> Dict[str, Any]:
         """Benchmark file I/O operations."""
+
+
+
         try:
             # Write test
             test_data = "x" * 10000  # 10KB test data
@@ -302,6 +305,9 @@ class ContentModuleHealthCheck:
     
     async def _benchmark_memory(self) -> Dict[str, Any]:
         """Benchmark memory allocation."""
+
+
+
         try:
             # Allocate memory
             start_memory = psutil.Process().memory_info().rss
@@ -329,6 +335,9 @@ class ContentModuleHealthCheck:
     
     async def _benchmark_json_processing(self) -> Dict[str, Any]:
         """Benchmark JSON processing."""
+
+
+
         try:
             # Create test data
             test_data = {
@@ -359,7 +368,7 @@ class ContentModuleHealthCheck:
     
     async def _run_integration_tests(self) -> Dict[str, Any]:
         """Run basic integration tests."""
-        logger.info("🔗 Running Integration Tests...")
+        logger.info(" Running Integration Tests...")
         
         results = {
             'status': 'passed',
@@ -425,7 +434,7 @@ class ContentModuleHealthCheck:
     
     async def _validate_security(self) -> Dict[str, Any]:
         """Validate security configurations."""
-        logger.info("🔒 Validating Security...")
+        logger.info(" Validating Security...")
         
         results = {
             'status': 'passed',
@@ -457,7 +466,7 @@ class ContentModuleHealthCheck:
     
     async def _assess_resource_usage(self) -> Dict[str, Any]:
         """Assess current resource usage."""
-        logger.info("📊 Assessing Resource Usage...")
+        logger.info(" Assessing Resource Usage...")
         
         process = psutil.Process()
         
@@ -473,7 +482,7 @@ class ContentModuleHealthCheck:
     
     async def _validate_configuration(self) -> Dict[str, Any]:
         """Validate system configuration."""
-        logger.info("⚙️ Validating Configuration...")
+        logger.info(" Validating Configuration...")
         
         results = {
             'status': 'passed',
@@ -515,7 +524,7 @@ class ContentModuleHealthCheck:
     
     async def _compile_health_report(self, check_results: Dict[str, Any]) -> Dict[str, Any]:
         """Compile final health report."""
-        logger.info("📋 Compiling Health Report...")
+        logger.info(" Compiling Health Report...")
         
         total_time = time.time() - self.start_time
         
@@ -555,36 +564,36 @@ class ContentModuleHealthCheck:
         recommendations = []
         
         if status == 'critical':
-            recommendations.append("❗ CRITICAL: Address all failed engine imports immediately")
-            recommendations.append("❗ CRITICAL: Check system logs for detailed error information")
+            recommendations.append(" CRITICAL: Address all failed engine imports immediately")
+            recommendations.append(" CRITICAL: Check system logs for detailed error information")
         
         if status in ['critical', 'warning']:
-            recommendations.append("⚠️  Run individual engine tests to isolate issues")
-            recommendations.append("⚠️  Verify all dependencies are installed correctly")
+            recommendations.append("  Run individual engine tests to isolate issues")
+            recommendations.append("  Verify all dependencies are installed correctly")
         
         # Performance recommendations
         perf_results = results.get('performance_benchmarks', {})
         if perf_results.get('memory_usage', {}).get('rss_mb', 0) > 1000:
-            recommendations.append("💡 Consider memory optimization - current usage is high")
+            recommendations.append(" Consider memory optimization - current usage is high")
         
         if perf_results.get('import_time', 0) > 5:
-            recommendations.append("💡 Import time is slow - consider module optimization")
+            recommendations.append(" Import time is slow - consider module optimization")
         
         # Security recommendations
         security_results = results.get('security_validation', {})
         if security_results.get('vulnerabilities'):
-            recommendations.append("🔒 Address security vulnerabilities immediately")
+            recommendations.append(" Address security vulnerabilities immediately")
         
         # Configuration recommendations
         config_results = results.get('configuration_validation', {})
         if config_results.get('config_issues'):
-            recommendations.append("⚙️  Complete configuration setup using setup_content_module.py")
+            recommendations.append("  Complete configuration setup using setup_content_module.py")
         
         if status == 'healthy':
             recommendations.extend([
-                "✅ System is healthy - ready for production use",
-                "✅ Consider running full integration tests",
-                "✅ Monitor system performance in production"
+                " System is healthy - ready for production use",
+                " Consider running full integration tests",
+                " Monitor system performance in production"
             ])
         
         return recommendations
@@ -602,7 +611,7 @@ class ContentModuleHealthCheck:
         with open(report_path, 'w') as f:
             json.dump(report, f, indent=2, default=str)
         
-        logger.info(f"✅ Health report saved: {report_path}")
+        logger.info(f" Health report saved: {report_path}")
         return report_path
     
     def print_health_summary(self, report: Dict[str, Any]):
@@ -611,55 +620,55 @@ class ContentModuleHealthCheck:
         
         # Status emoji mapping
         status_emoji = {
-            'healthy': '✅',
-            'warning': '⚠️',
-            'critical': '❌'
+            'healthy': '',
+            'warning': '',
+            'critical': ''
         }
         
         print(f"""
-╔══════════════════════════════════════════════════════════════════════════════╗
-║                        CONTENT MODULE HEALTH REPORT                         ║
-╠══════════════════════════════════════════════════════════════════════════════╣
-║                                                                              ║
-║  Overall Status: {status_emoji.get(summary['overall_status'], '❓')} {summary['overall_status'].upper()}                                              ║
-║                                                                              ║
-║  📊 System Metrics:                                                          ║
-║     • Engines Operational: {summary['engines_operational']}                                           ║
-║     • Execution Time: {summary['execution_time_seconds']}s                                           ║
-║     • Critical Issues: {summary['critical_issues_count']}                                                ║
-║     • Warnings: {summary['warnings_count']}                                                    ║
-║                                                                              ║
-║  🔍 Check Results:                                                           ║""")
+
+                        CONTENT MODULE HEALTH REPORT                         
+
+                                                                              
+  Overall Status: {status_emoji.get(summary['overall_status'], '')} {summary['overall_status'].upper()}                                              
+                                                                              
+   System Metrics:                                                          
+     • Engines Operational: {summary['engines_operational']}                                           
+     • Execution Time: {summary['execution_time_seconds']}s                                           
+     • Critical Issues: {summary['critical_issues_count']}                                                
+     • Warnings: {summary['warnings_count']}                                                    
+                                                                              
+   Check Results:                                                           """)
         
         # Print detailed results
         for check_name, result in report['detailed_results'].items():
-            status_icon = '✅' if result.get('status') == 'passed' else '⚠️' if result.get('status') in ['warning', 'partial'] else '❌'
+            status_icon = '' if result.get('status') == 'passed' else '' if result.get('status') in ['warning', 'partial'] else ''
             check_display = check_name.replace('_', ' ').title()
-            print(f"║     • {check_display}: {status_icon} {result.get('status', 'unknown').upper()}")
+            print(f"     • {check_display}: {status_icon} {result.get('status', 'unknown').upper()}")
         
-        print("║                                                                              ║")
+        print("                                                                              ")
         
         # Print recommendations
         if report.get('recommendations'):
-            print("║  💡 Recommendations:                                                         ║")
+            print("   Recommendations:                                                         ")
             for i, rec in enumerate(report['recommendations'][:5], 1):  # Show first 5
-                print(f"║     {i}. {rec[:68]}{'...' if len(rec) > 68 else '':70}║")
+                print(f"     {i}. {rec[:68]}{'...' if len(rec) > 68 else '':70}")
         
-        print("║                                                                              ║")
-        print(f"║  📧 Enterprise Support: mlaiel@live.de                                     ║")
-        print(f"║  📅 Report Generated: {summary['timestamp']}                    ║")
-        print("╚══════════════════════════════════════════════════════════════════════════════╝")
+        print("                                                                              ")
+        print(f"   Enterprise Support: mlaiel@live.de                                     ")
+        print(f"   Report Generated: {summary['timestamp']}                    ")
+        print("")
 
 
 async def main():
     """Main health check execution."""
     print("""
-╔══════════════════════════════════════════════════════════════════════════════╗
-║               IA Influencer Agent - Content Module Health Check             ║
-║                                                                              ║
-║  Author: Fahed Mlaiel <mlaiel@live.de>                                      ║
-║  Industrial-Grade System Verification                                       ║
-╚══════════════════════════════════════════════════════════════════════════════╝
+
+               IA Influencer Agent - Content Module Health Check             
+                                                                              
+  Author: Fahed Mlaiel <mlaiel@live.de>                                      
+  Industrial-Grade System Verification                                       
+
     """)
     
     health_checker = ContentModuleHealthCheck()
@@ -674,8 +683,8 @@ async def main():
         # Save detailed report
         report_path = health_checker.save_report(report)
         
-        print(f"\n📋 Detailed report saved to: {report_path}")
-        print(f"📧 For enterprise support, contact: mlaiel@live.de")
+        print(f"\n Detailed report saved to: {report_path}")
+        print(f" For enterprise support, contact: mlaiel@live.de")
         
         # Exit with appropriate code
         overall_status = report['health_check_summary']['overall_status']

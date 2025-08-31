@@ -86,6 +86,9 @@ class TestCrawlerError:
 
     def test_error_from_exception(self):
         """Test creating error from exception."""
+
+
+
         try:
             raise ValueError("Test exception")
         except Exception as e:

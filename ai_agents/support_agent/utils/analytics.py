@@ -7,7 +7,7 @@ Support Agent with real-time dashboards and predictive insights.
 Author: Fahed Mlaiel <mlaiel@live.de>  
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -116,10 +116,16 @@ class ConversationAnalytics:
     
     def get_average_sentiment(self) -> float:
         """Get average sentiment score"""
+
+
+
         return statistics.mean(self.sentiment_scores) if self.sentiment_scores else 0.0
     
     def get_average_intent_confidence(self) -> float:
         """Get average intent confidence"""
+
+
+
         return statistics.mean(self.intent_confidence) if self.intent_confidence else 0.0
 
 class PerformanceMonitor:
@@ -440,6 +446,9 @@ class AnalyticsEngine:
     
     def _get_system_metrics(self) -> Dict[str, float]:
         """Get current system performance metrics"""
+
+
+
         try:
             return {
                 'cpu_percent': psutil.cpu_percent(interval=1),

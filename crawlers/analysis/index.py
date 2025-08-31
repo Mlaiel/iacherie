@@ -273,6 +273,9 @@ class AnalysisModuleIndex:
         content_id: str
     ) -> Any:
         """Run single analyzer analysis."""
+
+
+
         try:
             # Route to appropriate analysis method based on analyzer type
             if analyzer_type == AnalyzerType.CONTENT:
@@ -372,6 +375,9 @@ class AnalysisModuleIndex:
         Returns:
             True if monitoring started successfully
         """
+
+
+
         try:
             violation_detector = self.get_analyzer(AnalyzerType.VIOLATION)
             
@@ -405,6 +411,9 @@ class AnalysisModuleIndex:
     
     def get_system_capabilities(self) -> AnalysisCapabilities:
         """Get system analysis capabilities."""
+
+
+
         return AnalysisCapabilities(
             supported_content_types=['audio', 'video', 'image', 'text', 'document'],
             supported_platforms=['youtube', 'instagram', 'tiktok', 'spotify', 'twitter'],
@@ -417,6 +426,9 @@ class AnalysisModuleIndex:
     
     def get_analysis_statistics(self) -> Dict[str, Any]:
         """Get analysis system statistics."""
+
+
+
         return {
             **self.analysis_stats,
             'available_analyzers': list(self.analyzer_classes.keys()),
@@ -427,6 +439,9 @@ class AnalysisModuleIndex:
     
     def _get_system_uptime(self) -> str:
         """Get system uptime (placeholder)."""
+
+
+
         return "Available on request"
     
     async def health_check(self) -> Dict[str, Any]:

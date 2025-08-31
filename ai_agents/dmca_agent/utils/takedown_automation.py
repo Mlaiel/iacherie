@@ -8,7 +8,7 @@ with intelligent escalation, response tracking, and legal compliance.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -246,6 +246,9 @@ class TakedownAutomation:
         Returns:
             TakedownResult with complete processing information
         """
+
+
+
         try:
             case_id = case_data.get('case_id', '')
             platform = case_data.get('platform', '').lower()
@@ -422,6 +425,9 @@ class TakedownAutomation:
         attempt: TakedownAttempt
     ) -> bool:
         """Send takedown via platform API"""
+
+
+
         try:
             if not platform_config.api_endpoint:
                 return False
@@ -465,6 +471,9 @@ class TakedownAutomation:
         attempt: TakedownAttempt
     ) -> bool:
         """Send takedown via email"""
+
+
+
         try:
             if not platform_config.email_address:
                 return False
@@ -498,6 +507,9 @@ class TakedownAutomation:
         attempt: TakedownAttempt
     ) -> bool:
         """Send takedown via web form"""
+
+
+
         try:
             if not platform_config.web_form_url:
                 return False
@@ -673,6 +685,9 @@ class TakedownAutomation:
         result: TakedownResult
     ) -> bool:
         """Check for platform response to takedown notice"""
+
+
+
         try:
             # Wait for expected response time
             await asyncio.sleep(min(300, platform_config.response_time_sla * 60))  # Max 5 min for test
@@ -713,6 +728,9 @@ class TakedownAutomation:
         result: TakedownResult
     ) -> bool:
         """Verify if platform complied with takedown notice"""
+
+
+
         try:
             # Check if infringing content is still accessible
             infringing_urls = case_data.get("infringing_urls", [])
@@ -823,6 +841,9 @@ class TakedownAutomation:
     
     async def _check_url_accessibility(self, url: str) -> bool:
         """Check if URL is still accessible"""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.head(url, timeout=aiohttp.ClientTimeout(total=10)) as response:

@@ -15,7 +15,7 @@ Business Logic Integration:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend + Security + ML Engineers
 
-⚠️ COPYRIGHT WARNING:
+ COPYRIGHT WARNING:
 This code is proprietary and belongs to Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit 
 written permission from Fahed Mlaiel is strictly prohibited.
@@ -399,6 +399,9 @@ content_protection_config = ContentProtectionConfig()
 
 def get_content_protection_config() -> ContentProtectionConfig:
     """Get the content protection configuration instance."""
+
+
+
     return content_protection_config
 
 

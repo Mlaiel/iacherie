@@ -117,6 +117,9 @@ class InferenceEngineDeployment:
     
     def _initialize_clients(self) -> None:
         """Initialize Kubernetes, Docker, and Redis clients"""
+
+
+
         try:
             # Kubernetes client
             config.load_incluster_config()
@@ -149,6 +152,9 @@ class InferenceEngineDeployment:
         Returns:
             Infrastructure deployment summary
         """
+
+
+
         try:
             self.status = "deploying_infrastructure"
             logger.info("Deploying inference infrastructure")
@@ -225,6 +231,9 @@ class InferenceEngineDeployment:
         Returns:
             Engine deployment result
         """
+
+
+
         try:
             engine_id = f"{config.engine_name}-{config.model_version}"
             logger.info(f"Deploying inference engine: {engine_id}")
@@ -298,6 +307,9 @@ class InferenceEngineDeployment:
     
     async def _ensure_inference_namespace(self) -> None:
         """Create inference namespace"""
+
+
+
         try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
@@ -808,6 +820,9 @@ class InferenceEngineDeployment:
     
     async def _validate_inference_infrastructure(self) -> bool:
         """Validate inference infrastructure deployment"""
+
+
+
         try:
             # Check essential services
             essential_services = [
@@ -1212,6 +1227,9 @@ class InferenceEngineDeployment:
     
     async def get_inference_metrics(self) -> Dict[str, Any]:
         """Get comprehensive inference metrics"""
+
+
+
         try:
             metrics = {
                 "infrastructure_status": self.status,
@@ -1245,6 +1263,9 @@ class InferenceEngineDeployment:
     
     async def _cleanup_failed_infrastructure(self) -> None:
         """Clean up failed inference infrastructure"""
+
+
+
         try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
@@ -1254,6 +1275,9 @@ class InferenceEngineDeployment:
     
     async def _cleanup_failed_engine_deployment(self, engine_name: str) -> None:
         """Clean up failed engine deployment"""
+
+
+
         try:
             # Delete deployment
             try:
@@ -1271,6 +1295,9 @@ class InferenceEngineDeployment:
     
     async def cleanup(self) -> None:
         """Clean up entire inference infrastructure"""
+
+
+
         try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)

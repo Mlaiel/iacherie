@@ -1,5 +1,5 @@
 """
-🕷️ Intelligent Platform Crawler System
+ Intelligent Platform Crawler System
 ======================================
 
 Advanced AI-powered web crawling for content piracy detection across platforms.
@@ -7,7 +7,7 @@ Advanced AI-powered web crawling for content piracy detection across platforms.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
+ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
 and will result in immediate legal action under German and international copyright law.
 
@@ -231,6 +231,9 @@ class ContentExtractor:
                                  url: str,
                                  platform_config: PlatformConfig) -> List[DetectedContent]:
         """Extract content information from HTML."""
+
+
+
         try:
             soup = BeautifulSoup(html_content, 'html.parser')
             detected_contents = []
@@ -274,6 +277,9 @@ class ContentExtractor:
     
     async def _extract_video_info(self, video_element, page_url: str, platform: str) -> Optional[DetectedContent]:
         """Extract video content information."""
+
+
+
         try:
             src = video_element.get('src')
             if not src:
@@ -317,6 +323,9 @@ class ContentExtractor:
     
     async def _extract_audio_info(self, audio_element, page_url: str, platform: str) -> Optional[DetectedContent]:
         """Extract audio content information."""
+
+
+
         try:
             src = audio_element.get('src')
             if not src:
@@ -356,6 +365,9 @@ class ContentExtractor:
     
     async def _extract_download_link_info(self, link_element, page_url: str, platform: str) -> Optional[DetectedContent]:
         """Extract download link information."""
+
+
+
         try:
             href = link_element.get('href')
             if not href:
@@ -407,6 +419,9 @@ class ContentExtractor:
     
     async def _extract_embed_info(self, embed_element, page_url: str, platform: str) -> Optional[DetectedContent]:
         """Extract embedded content information."""
+
+
+
         try:
             src = embed_element.get('src')
             if not src:
@@ -553,6 +568,9 @@ class IntelligentPlatformCrawler:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             # Initialize HTTP session
             timeout = aiohttp.ClientTimeout(total=self.default_timeout)
@@ -743,6 +761,9 @@ class IntelligentPlatformCrawler:
     
     async def _fetch_page_content(self, url: str, platform_config: PlatformConfig) -> Optional[str]:
         """Fetch page content with anti-detection measures."""
+
+
+
         try:
             headers = {
                 'User-Agent': self.user_agent_rotator.get_random_agent(),
@@ -781,6 +802,9 @@ class IntelligentPlatformCrawler:
     
     async def _fetch_with_selenium(self, url: str, headers: Dict[str, str]) -> Optional[str]:
         """Fetch page content using Selenium for JavaScript rendering."""
+
+
+
         try:
             if not self.selenium_driver:
                 await self._initialize_selenium_driver()
@@ -806,6 +830,9 @@ class IntelligentPlatformCrawler:
     
     async def _initialize_selenium_driver(self):
         """Initialize Selenium WebDriver with stealth options."""
+
+
+
         try:
             chrome_options = Options()
             chrome_options.add_argument('--headless')
@@ -908,6 +935,9 @@ class IntelligentPlatformCrawler:
     
     async def _extract_page_urls(self, html_content: str, base_url: str) -> List[str]:
         """Extract additional URLs from a page."""
+
+
+
         try:
             soup = BeautifulSoup(html_content, 'html.parser')
             urls = []
@@ -931,6 +961,9 @@ class IntelligentPlatformCrawler:
     
     async def cleanup(self):
         """Clean up crawler resources."""
+
+
+
         try:
             if self.session:
                 await self.session.close()
@@ -945,6 +978,9 @@ class IntelligentPlatformCrawler:
     
     def get_crawl_statistics(self) -> Dict[str, Any]:
         """Get crawling statistics."""
+
+
+
         return {
             **self.crawl_stats,
             'crawl_results_count': len(self.crawl_results),

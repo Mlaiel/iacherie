@@ -8,7 +8,7 @@ Responsibility: Enterprise-grade cloud storage with CDN distribution and optimiz
 Technologies: Python, AWS S3, MinIO, CloudFront, GCS, Azure Storage, Multi-CDN
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -141,7 +141,7 @@ class StorageMetrics:
 class CloudStorageManager(ABC):
 class CloudStorageManager(ABC):
     """
-    🎯 Advanced Cloud Storage Manager - IA-Influencer-Agent
+     Advanced Cloud Storage Manager - IA-Influencer-Agent
     
     Enterprise-grade multi-cloud storage management with intelligent distribution,
     CDN integration, automatic optimization, and comprehensive monitoring.
@@ -166,7 +166,7 @@ class CloudStorageManager(ABC):
         self._cache: Dict[str, Any] = {}
         self._lock = asyncio.Lock()
         
-        logger.info(f"🎯 Initializing {self.__class__.__name__} with multi-cloud support")
+        logger.info(f" Initializing {self.__class__.__name__} with multi-cloud support")
     
     @abstractmethod
     async def initialize_storage_pools(self) -> bool:
@@ -297,6 +297,9 @@ class CloudStorageManager(ABC):
         Returns:
             Dict with optimization recommendations and actions taken
         """
+
+
+
         try:
             analysis = {
                 "current_monthly_cost": 0.0,
@@ -323,11 +326,11 @@ class CloudStorageManager(ABC):
                     action.get("savings_usd", 0) for action in optimization_actions
                 )
             
-            logger.info(f"💰 Storage cost optimization completed: ${analysis['potential_savings']:.2f} potential monthly savings")
+            logger.info(f" Storage cost optimization completed: ${analysis['potential_savings']:.2f} potential monthly savings")
             return analysis
             
         except Exception as e:
-            logger.error(f"❌ Storage cost optimization failed: {e}")
+            logger.error(f" Storage cost optimization failed: {e}")
             return {"error": str(e)}
     
     async def get_global_performance_metrics(self) -> Dict[str, Any]:
@@ -337,6 +340,9 @@ class CloudStorageManager(ABC):
         Returns:
             Dict with detailed performance analytics
         """
+
+
+
         try:
             metrics = {
                 "global_metrics": dict(self._metrics.__dict__),
@@ -362,7 +368,7 @@ class CloudStorageManager(ABC):
             return metrics
             
         except Exception as e:
-            logger.error(f"❌ Failed to get performance metrics: {e}")
+            logger.error(f" Failed to get performance metrics: {e}")
             return {"error": str(e)}
     
     async def sync_across_providers(self, storage_key: str) -> bool:
@@ -375,10 +381,13 @@ class CloudStorageManager(ABC):
         Returns:
             bool: True if sync successful across all providers
         """
+
+
+
         try:
             primary_file = await self._download_from_primary(storage_key)
             if not primary_file:
-                logger.error(f"❌ Failed to download {storage_key} from primary provider")
+                logger.error(f" Failed to download {storage_key} from primary provider")
                 return False
             
             sync_tasks = []
@@ -392,11 +401,11 @@ class CloudStorageManager(ABC):
             results = await asyncio.gather(*sync_tasks, return_exceptions=True)
             success_count = sum(1 for result in results if result is True)
             
-            logger.info(f"📁 Synced {storage_key} to {success_count}/{len(sync_tasks)} backup providers")
+            logger.info(f" Synced {storage_key} to {success_count}/{len(sync_tasks)} backup providers")
             return success_count == len(sync_tasks)
             
         except Exception as e:
-            logger.error(f"❌ Failed to sync {storage_key}: {e}")
+            logger.error(f" Failed to sync {storage_key}: {e}")
             return False
     
     async def cleanup_old_versions(self, days_threshold: int = 30) -> int:
@@ -409,6 +418,9 @@ class CloudStorageManager(ABC):
         Returns:
             int: Number of versions cleaned up
         """
+
+
+
         try:
             cleanup_count = 0
             cutoff_date = datetime.now() - timedelta(days=days_threshold)
@@ -423,7 +435,7 @@ class CloudStorageManager(ABC):
             return cleanup_count
             
         except Exception as e:
-            logger.error(f"❌ Failed to cleanup old versions: {e}")
+            logger.error(f" Failed to cleanup old versions: {e}")
             return 0
     
     async def _analyze_provider_costs(self, provider: StorageProvider) -> Dict[str, Any]:
@@ -482,6 +494,9 @@ class EnterpriseStorageManager(CloudStorageManager):
     
     async def initialize_storage_pools(self) -> bool:
         """Initialize all storage provider connections"""
+
+
+
         try:
             # Initialize primary provider
             primary_client = await self._initialize_provider(self.config.primary_provider)
@@ -502,11 +517,11 @@ class EnterpriseStorageManager(CloudStorageManager):
                     if cdn_client:
                         self._cdn_clients[cdn_provider] = cdn_client
             
-            logger.info(f"✅ Initialized {len(self._storage_clients)} storage providers and {len(self._cdn_clients)} CDN providers")
+            logger.info(f" Initialized {len(self._storage_clients)} storage providers and {len(self._cdn_clients)} CDN providers")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize storage pools: {e}")
+            logger.error(f" Failed to initialize storage pools: {e}")
             return False
     
     async def upload_file(
@@ -563,11 +578,11 @@ class EnterpriseStorageManager(CloudStorageManager):
                 self._metrics.total_objects += 1
                 self._metrics.total_size_bytes += file_info["size"]
                 
-                logger.info(f"📁 Successfully uploaded {destination_key} ({file_info['size']} bytes)")
+                logger.info(f" Successfully uploaded {destination_key} ({file_info['size']} bytes)")
                 return result
                 
             except Exception as e:
-                logger.error(f"❌ Failed to upload {destination_key}: {e}")
+                logger.error(f" Failed to upload {destination_key}: {e}")
                 return {"success": False, "error": str(e)}
     
     async def download_file(
@@ -577,6 +592,9 @@ class EnterpriseStorageManager(CloudStorageManager):
         prefer_cdn: bool = True,
     ) -> Union[bytes, str]:
         """Download file with CDN optimization"""
+
+
+
         try:
             # Try CDN first if available and preferred
             if prefer_cdn and self._cdn_clients:
@@ -609,11 +627,14 @@ class EnterpriseStorageManager(CloudStorageManager):
             raise FileNotFoundError(f"File {storage_key} not found in any provider")
             
         except Exception as e:
-            logger.error(f"❌ Failed to download {storage_key}: {e}")
+            logger.error(f" Failed to download {storage_key}: {e}")
             raise
     
     async def delete_file(self, storage_key: str) -> bool:
         """Delete file from all providers"""
+
+
+
         try:
             deletion_tasks = []
             
@@ -635,15 +656,18 @@ class EnterpriseStorageManager(CloudStorageManager):
             if success_count > 0:
                 self._metrics.total_objects -= 1
             
-            logger.info(f"🗑️ Deleted {storage_key} from {success_count}/{len(deletion_tasks)} providers")
+            logger.info(f" Deleted {storage_key} from {success_count}/{len(deletion_tasks)} providers")
             return success_count > 0
             
         except Exception as e:
-            logger.error(f"❌ Failed to delete {storage_key}: {e}")
+            logger.error(f" Failed to delete {storage_key}: {e}")
             return False
     
     async def get_file_metadata(self, storage_key: str) -> Dict[str, Any]:
         """Get comprehensive file metadata"""
+
+
+
         try:
             # Get metadata from primary provider
             primary_metadata = await self._get_provider_metadata(
@@ -667,7 +691,7 @@ class EnterpriseStorageManager(CloudStorageManager):
             return metadata
             
         except Exception as e:
-            logger.error(f"❌ Failed to get metadata for {storage_key}: {e}")
+            logger.error(f" Failed to get metadata for {storage_key}: {e}")
             return {"error": str(e)}
     
     async def list_files(
@@ -677,6 +701,9 @@ class EnterpriseStorageManager(CloudStorageManager):
         include_metadata: bool = False,
     ) -> List[Dict[str, Any]]:
         """List files from primary provider"""
+
+
+
         try:
             files = await self._list_from_primary(prefix, limit)
             
@@ -691,7 +718,7 @@ class EnterpriseStorageManager(CloudStorageManager):
             return files
             
         except Exception as e:
-            logger.error(f"❌ Failed to list files: {e}")
+            logger.error(f" Failed to list files: {e}")
             return []
     
     async def generate_presigned_url(
@@ -701,6 +728,9 @@ class EnterpriseStorageManager(CloudStorageManager):
         operation: str = "get",
     ) -> str:
         """Generate presigned URL"""
+
+
+
         try:
             # Use primary provider for presigned URLs
             primary_client = self._storage_clients[self.config.primary_provider]
@@ -708,11 +738,11 @@ class EnterpriseStorageManager(CloudStorageManager):
                 self.config.primary_provider, storage_key, expiry_seconds, operation
             )
             
-            logger.info(f"🔗 Generated presigned URL for {storage_key} (expires in {expiry_seconds}s)")
+            logger.info(f" Generated presigned URL for {storage_key} (expires in {expiry_seconds}s)")
             return url
             
         except Exception as e:
-            logger.error(f"❌ Failed to generate presigned URL for {storage_key}: {e}")
+            logger.error(f" Failed to generate presigned URL for {storage_key}: {e}")
             raise
     
     # Helper methods for implementation

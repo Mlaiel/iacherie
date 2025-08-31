@@ -8,7 +8,7 @@ Designed for large-scale content discovery and monitoring.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️ CRITICAL LEGAL WARNING ⚠️
+ CRITICAL LEGAL WARNING 
 UNAUTHORIZED USE, COPYING, OR DISTRIBUTION IS STRICTLY PROHIBITED AND WILL RESULT IN IMMEDIATE LEGAL ACTION.
 This technology is EXCLUSIVE property of Fahed Mlaiel. Contact: mlaiel@live.de for licensing.
 """
@@ -281,6 +281,9 @@ class WebScraper:
         
     def parse_content(self, content: str, parser: str = 'html.parser') -> BeautifulSoup:
         """Parse HTML content with BeautifulSoup."""
+
+
+
         return BeautifulSoup(content, parser)
         
     def extract_links(self, soup: BeautifulSoup, base_url: str) -> List[str]:

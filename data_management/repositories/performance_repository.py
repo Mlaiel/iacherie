@@ -1,5 +1,5 @@
 """
-📊 Performance Repository - IA Influencer Agent Platform Enterprise
+ Performance Repository - IA Influencer Agent Platform Enterprise
 ===================================================================
 Module: backend/data_management/repositories/performance_repository.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Performance Repository - Production-Ready
 Responsibility: Advanced performance tracking and optimization analytics
 =============================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
@@ -107,6 +107,9 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         category: MetricCategory = MetricCategory.SYSTEM_PERFORMANCE
     ) -> List[PerformanceMetric]:
         """Collect and store comprehensive performance metrics"""
+
+
+
         try:
             collected_metrics = []
             timestamp = datetime.now(timezone.utc)
@@ -176,6 +179,9 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         granularity: str = "hourly"
     ) -> Dict[str, PerformanceTrend]:
         """Analyze comprehensive performance trends with AI insights"""
+
+
+
         try:
             end_time = datetime.now(timezone.utc)
             start_time = end_time - time_period
@@ -254,6 +260,9 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         severity_threshold: AlertSeverity = AlertSeverity.WARNING
     ) -> List[PerformanceAlert]:
         """Generate intelligent performance alerts based on thresholds and ML"""
+
+
+
         try:
             # Define search criteria
             search_criteria = {}
@@ -324,6 +333,9 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         benchmark_criteria: Dict[str, Any]
     ) -> BenchmarkComparison:
         """Create comprehensive performance benchmark comparison"""
+
+
+
         try:
             # Generate benchmark ID
             benchmark_id = self._generate_benchmark_id(benchmark_name)
@@ -389,6 +401,9 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         constraint_parameters: Optional[Dict[str, Any]] = None
     ) -> List[OptimizationRecommendation]:
         """Generate AI-powered performance optimization recommendations"""
+
+
+
         try:
             # Analyze current performance state
             current_state = await self._analyze_current_performance_state(source_id)
@@ -465,6 +480,9 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         time_period: timedelta = timedelta(days=30)
     ) -> PerformanceReport:
         """Generate comprehensive performance report with insights"""
+
+
+
         try:
             # Parse report configuration
             source_ids = report_config.get('source_ids', [])
@@ -574,6 +592,9 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         category: MetricCategory
     ) -> Dict[str, Any]:
         """Validate metric data"""
+
+
+
         try:
             # Check if value is numeric
             numeric_value = float(metric_value)
@@ -710,6 +731,9 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
         end_time: datetime
     ) -> List[PerformanceMetric]:
         """Fetch historical metrics for trend analysis"""
+
+
+
         return await self.find_by_criteria({
             'source_id': source_id,
             'metric_name': metric_type,
@@ -966,18 +990,30 @@ class PerformanceRepository(BaseRepository[PerformanceMetric]):
 
     async def _collect_benchmark_metrics(self, source_id: str, metric_types: List[str], criteria: Dict[str, Any]) -> Dict[str, Any]:
         """Collect metrics for benchmarking"""
+
+
+
         return {'cpu_usage': 75.5, 'memory_usage': 68.2, 'response_time': 120.5}
 
     async def _calculate_benchmark_statistics(self, data: Dict[str, Dict[str, Any]], metric_types: List[str]) -> Dict[str, Any]:
         """Calculate benchmark statistics"""
+
+
+
         return {'average_cpu': 70.2, 'median_response_time': 115.0, 'std_dev_memory': 12.3}
 
     async def _rank_performance(self, data: Dict[str, Dict[str, Any]], metric_types: List[str]) -> Dict[str, Any]:
         """Rank performance across sources"""
+
+
+
         return {'leaders': ['source1', 'source2'], 'laggards': ['source3'], 'rankings': {}}
 
     async def _generate_benchmark_recommendations(self, data: Dict[str, Dict[str, Any]], stats: Dict[str, Any]) -> List[str]:
         """Generate benchmark improvement recommendations"""
+
+
+
         return ["Optimize top performers' configurations", "Address performance gaps in laggards"]
 
     async def _store_benchmark_comparison(self, benchmark: BenchmarkComparison):
@@ -1003,6 +1039,9 @@ class AsyncPerformanceRepository(AsyncBaseRepository[PerformanceMetric]):
         metrics_batch: List[Dict[str, Any]]
     ) -> List[List[PerformanceMetric]]:
         """Collect multiple metric sets in parallel"""
+
+
+
         try:
             tasks = []
             for metrics_data in metrics_batch:
@@ -1031,6 +1070,9 @@ class AsyncPerformanceRepository(AsyncBaseRepository[PerformanceMetric]):
         interval_seconds: int = 10
     ):
         """Stream real-time performance metrics"""
+
+
+
         try:
             while True:
                 # Get current performance snapshot

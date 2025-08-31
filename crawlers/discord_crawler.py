@@ -288,6 +288,9 @@ class DiscordCrawler:
     @tasks.loop(hours=1)
     async def _guild_analysis_task(self):
         """Periodic guild analysis task."""
+
+
+
         try:
             for guild in self.bot.guilds:
                 if guild.id in self.monitored_guilds:
@@ -298,6 +301,9 @@ class DiscordCrawler:
     @tasks.loop(minutes=15)
     async def _content_scanning_task(self):
         """Periodic content scanning task."""
+
+
+
         try:
             for channel_id in self.monitored_channels:
                 channel = self.bot.get_channel(int(channel_id))
@@ -309,6 +315,9 @@ class DiscordCrawler:
     @tasks.loop(minutes=30)
     async def _violation_detection_task(self):
         """Periodic violation detection task."""
+
+
+
         try:
             await self._process_violation_queue()
         except Exception as e:
@@ -325,6 +334,9 @@ class DiscordCrawler:
         Returns:
             List of accessible guilds matching criteria
         """
+
+
+
         try:
             guilds = []
             
@@ -355,6 +367,9 @@ class DiscordCrawler:
         Returns:
             Monitoring configuration and status
         """
+
+
+
         try:
             guild = self.bot.get_guild(int(guild_id))
             if not guild:
@@ -408,6 +423,9 @@ class DiscordCrawler:
         Returns:
             List of matching messages
         """
+
+
+
         try:
             channel = self.bot.get_channel(int(channel_id))
             if not channel:
@@ -447,6 +465,9 @@ class DiscordCrawler:
         Returns:
             List of potential violations
         """
+
+
+
         try:
             violations = []
             
@@ -495,6 +516,9 @@ class DiscordCrawler:
     
     async def _process_message(self, message):
         """Process incoming message for analysis."""
+
+
+
         try:
             # Skip if not in monitored channels
             if str(message.channel.id) not in self.monitored_channels:
@@ -521,6 +545,9 @@ class DiscordCrawler:
     
     async def _parse_message_data(self, message) -> DiscordMessage:
         """Parse Discord message into structured data."""
+
+
+
         return DiscordMessage(
             message_id=str(message.id),
             content=message.content,
@@ -556,6 +583,9 @@ class DiscordCrawler:
     
     async def _parse_guild_data(self, guild) -> DiscordGuild:
         """Parse Discord guild into structured data."""
+
+
+
         return DiscordGuild(
             guild_id=str(guild.id),
             name=guild.name,
@@ -593,10 +623,16 @@ class DiscordCrawler:
     
     async def _calculate_content_similarity(self, fingerprint1: str, fingerprint2: str) -> float:
         """Calculate similarity between content fingerprints."""
+
+
+
         return await self.text_fingerprinter.calculate_similarity(fingerprint1, fingerprint2)
     
     def get_crawler_stats(self) -> Dict[str, any]:
         """Get crawler statistics and status."""
+
+
+
         return {
             'platform': 'discord',
             'bot_connected': self.bot.is_ready(),
@@ -836,6 +872,9 @@ class DiscordCrawler(BaseCrawler):
         
     async def authenticate(self, bot_token: str = None, user_token: str = None) -> bool:
         """Authenticate with Discord API using bot token or user token"""
+
+
+
         try:
             if bot_token:
                 # Initialize Discord bot client
@@ -1208,6 +1247,9 @@ class DiscordCrawler(BaseCrawler):
         Returns:
             Comprehensive guild activity analysis
         """
+
+
+
         try:
             guild = await self.get_guild_details(guild_id)
             if not guild:
@@ -1290,6 +1332,9 @@ class DiscordCrawler(BaseCrawler):
         Returns:
             Comprehensive user behavior analysis
         """
+
+
+
         try:
             user = await self.get_user_details(user_id)
             if not user:
@@ -1374,6 +1419,9 @@ class DiscordCrawler(BaseCrawler):
         Returns:
             Comprehensive community trend analysis
         """
+
+
+
         try:
             target_guilds = guild_ids or list(self.monitored_guilds)
             
@@ -1455,6 +1503,9 @@ class DiscordCrawler(BaseCrawler):
     # Model creation methods
     async def _create_message_model(self, message_data: Dict) -> Optional[DiscordMessage]:
         """Create DiscordMessage model from Discord API data"""
+
+
+
         try:
             author = message_data.get('author', {})
             
@@ -1494,6 +1545,9 @@ class DiscordCrawler(BaseCrawler):
     
     async def _create_user_model(self, user_data: Dict) -> Optional[DiscordUser]:
         """Create DiscordUser model from Discord API data"""
+
+
+
         try:
             # Calculate creation date from Discord snowflake ID
             user_id = int(user_data.get('id', '0'))
@@ -1526,6 +1580,9 @@ class DiscordCrawler(BaseCrawler):
     
     async def _create_guild_model(self, guild_data: Dict) -> Optional[DiscordGuild]:
         """Create DiscordGuild model from Discord API data"""
+
+
+
         try:
             # Calculate creation date from Discord snowflake ID
             guild_id = int(guild_data.get('id', '0'))
@@ -1563,6 +1620,9 @@ class DiscordCrawler(BaseCrawler):
     
     async def _create_channel_model(self, channel_data: Dict) -> Optional[DiscordChannel]:
         """Create DiscordChannel model from Discord API data"""
+
+
+
         try:
             channel = DiscordChannel(
                 channel_id=channel_data.get('id', ''),
@@ -1635,6 +1695,9 @@ class DiscordCrawler(BaseCrawler):
     # Placeholder methods for complex analysis (would need more implementation)
     async def _get_guild_channels(self, guild_id: str) -> List[DiscordChannel]:
         """Get all channels in a guild"""
+
+
+
         try:
             endpoint = f"{self.api_base}/guilds/{guild_id}/channels"
             
@@ -1659,6 +1722,9 @@ class DiscordCrawler(BaseCrawler):
     
     async def _process_message(self, message):
         """Process incoming message from bot event"""
+
+
+
         try:
             # Convert discord.py message to our format
             message_data = {
@@ -1771,20 +1837,35 @@ class DiscordCrawler(BaseCrawler):
     
     async def _analyze_new_user_engagement(self, guild_id: str) -> Dict:
         """Analyze new user engagement patterns"""
+
+
+
         return {'new_user_retention': 0.0, 'average_first_week_messages': 0}
     
     async def _analyze_retention_signals(self, guild_id: str) -> Dict:
         """Analyze user retention signals"""
+
+
+
         return {'retention_rate': 0.0, 'churn_indicators': []}
     
     async def _analyze_content_safety(self, guild_id: str) -> float:
         """Analyze content safety score"""
+
+
+
         return 0.8  # Placeholder
     
     async def _analyze_spam_patterns(self, guild_id: str) -> float:
         """Analyze spam detection score"""
+
+
+
         return 0.1  # Placeholder
     
     async def _analyze_toxicity_indicators(self, guild_id: str) -> float:
         """Analyze toxicity indicators"""
+
+
+
         return 0.2  # Placeholder

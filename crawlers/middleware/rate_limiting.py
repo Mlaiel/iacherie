@@ -205,6 +205,9 @@ class AdaptiveLimiter:
     
     async def get_system_load_factor(self) -> float:
         """Get system load factor for adaptive limiting"""
+
+
+
         try:
             # Get system metrics from Redis
             metrics_key = "system_metrics"
@@ -305,6 +308,9 @@ class RateLimitingMiddleware:
     
     async def check_rate_limit(self, request: RateLimitRequest) -> RateLimitResult:
         """Main rate limiting check"""
+
+
+
         try:
             start_time = time.time()
             
@@ -576,6 +582,9 @@ class RateLimitingMiddleware:
 # Factory function for dependency injection
 def get_rate_limiting_middleware() -> RateLimitingMiddleware:
     """Get rate limiting middleware instance"""
+
+
+
     return RateLimitingMiddleware()
 
 

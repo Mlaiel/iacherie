@@ -157,14 +157,23 @@ class ValidationResult:
     
     def get_issues_by_severity(self, severity: ValidationSeverity) -> List[ValidationIssue]:
         """Get issues filtered by severity"""
+
+
+
         return [issue for issue in self.issues if issue.severity == severity]
     
     def has_critical_issues(self) -> bool:
         """Check if there are critical issues"""
+
+
+
         return any(issue.severity == ValidationSeverity.CRITICAL for issue in self.issues)
     
     def has_blocking_issues(self) -> bool:
         """Check if there are blocking issues (critical or error)"""
+
+
+
         return any(
             issue.severity in [ValidationSeverity.CRITICAL, ValidationSeverity.ERROR]
             for issue in self.issues
@@ -443,6 +452,9 @@ class FieldValidator(BaseValidator):
     
     def get_rules(self) -> List[ValidationRule]:
         """Get all validation rules"""
+
+
+
         return list(self.rules.values())
 
 
@@ -583,6 +595,9 @@ class BusinessRuleValidator(BaseValidator):
     
     def get_rules(self) -> List[ValidationRule]:
         """Get business validation rules"""
+
+
+
         return list(self.rules.values())
 
 

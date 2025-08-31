@@ -72,44 +72,44 @@ class OrchestrationDemo:
         logger.info(f"Demo started at: {datetime.now().isoformat()}")
         logger.info("")
 
-        logger.info("🚀 Initializing IA Influencer Agent Orchestration Platform...")
+        logger.info(" Initializing IA Influencer Agent Orchestration Platform...")
         
         try:
             # Initialize platform
             init_success = await self.platform.initialize()
             
             if init_success:
-                logger.info("✅ Platform initialization successful!")
+                logger.info(" Platform initialization successful!")
                 
                 # Get platform status
                 status = await self.platform.get_platform_status()
-                logger.info(f"📊 Platform Status: {status['overall_status']}")
-                logger.info(f"🏥 Health Score: {status['health_score']:.1f}%")
-                logger.info(f"⏱️ Uptime: {status['uptime_seconds']:.0f} seconds")
+                logger.info(f" Platform Status: {status['overall_status']}")
+                logger.info(f" Health Score: {status['health_score']:.1f}%")
+                logger.info(f"⏱ Uptime: {status['uptime_seconds']:.0f} seconds")
                 
                 # Log component status
-                logger.info("\n📋 Component Status:")
+                logger.info("\n Component Status:")
                 for component, comp_status in status.get('components', {}).items():
-                    status_emoji = "✅" if comp_status.get('status') == 'healthy' else "❌"
+                    status_emoji = "" if comp_status.get('status') == 'healthy' else ""
                     logger.info(f"  {status_emoji} {component}: {comp_status.get('status', 'unknown')}")
                 
                 return True
             else:
-                logger.error("❌ Platform initialization failed!")
+                logger.error(" Platform initialization failed!")
                 return False
                 
         except Exception as e:
-            logger.error(f"💥 Platform initialization error: {e}")
+            logger.error(f" Platform initialization error: {e}")
             return False
 
     async def demo_staging_deployment(self):
         """Demonstrate staging environment deployment."""
         logger.info("\n" + "=" * 60)
-        logger.info("📦 STAGING DEPLOYMENT DEMONSTRATION")
+        logger.info(" STAGING DEPLOYMENT DEMONSTRATION")
         logger.info("=" * 60)
         
         try:
-            logger.info("🏗️ Deploying IA Influencer Agent platform to staging...")
+            logger.info(" Deploying IA Influencer Agent platform to staging...")
             
             # Deploy to staging
             deployment_success = await self.platform.deploy_ia_influencer_platform(
@@ -118,25 +118,25 @@ class OrchestrationDemo:
             )
             
             if deployment_success:
-                logger.info("✅ Staging deployment completed successfully!")
+                logger.info(" Staging deployment completed successfully!")
                 
                 # Get updated status
                 status = await self.platform.get_platform_status()
-                logger.info(f"📊 Post-deployment Health Score: {status['health_score']:.1f}%")
+                logger.info(f" Post-deployment Health Score: {status['health_score']:.1f}%")
                 
                 return True
             else:
-                logger.error("❌ Staging deployment failed!")
+                logger.error(" Staging deployment failed!")
                 return False
                 
         except Exception as e:
-            logger.error(f"💥 Staging deployment error: {e}")
+            logger.error(f" Staging deployment error: {e}")
             return False
 
     async def demo_custom_deployment(self):
         """Demonstrate custom deployment configuration."""
         logger.info("\n" + "=" * 60)
-        logger.info("⚙️ CUSTOM DEPLOYMENT CONFIGURATION")
+        logger.info(" CUSTOM DEPLOYMENT CONFIGURATION")
         logger.info("=" * 60)
         
         try:
@@ -194,10 +194,10 @@ class OrchestrationDemo:
                 }
             )
             
-            logger.info(f"🏗️ Cluster Config: {cluster_config.name}")
-            logger.info(f"   📍 Region: {cluster_config.region}")
-            logger.info(f"   🌐 Zones: {', '.join(cluster_config.zones)}")
-            logger.info(f"   🖥️ Nodes: {len(cluster_config.nodes)}")
+            logger.info(f" Cluster Config: {cluster_config.name}")
+            logger.info(f"    Region: {cluster_config.region}")
+            logger.info(f"    Zones: {', '.join(cluster_config.zones)}")
+            logger.info(f"    Nodes: {len(cluster_config.nodes)}")
             
             # Create service mesh configuration
             mesh_config = ServiceMeshConfig(
@@ -222,9 +222,9 @@ class OrchestrationDemo:
                 addons=["jaeger", "kiali", "prometheus", "grafana"]
             )
             
-            logger.info(f"🕸️ Service Mesh: {mesh_config.mesh_type.value}")
-            logger.info(f"   🔐 mTLS Mode: {mesh_config.mtls_mode.value}")
-            logger.info(f"   📊 Observability: {', '.join(mesh_config.addons)}")
+            logger.info(f" Service Mesh: {mesh_config.mesh_type.value}")
+            logger.info(f"    mTLS Mode: {mesh_config.mtls_mode.value}")
+            logger.info(f"    Observability: {', '.join(mesh_config.addons)}")
             
             # Create application deployments
             applications = {
@@ -293,7 +293,7 @@ class OrchestrationDemo:
                     }
                 )
                 app_deployments.append(deployment_config)
-                logger.info(f"📱 Application: {app_name} ({app_config['replicas']} replicas)")
+                logger.info(f" Application: {app_name} ({app_config['replicas']} replicas)")
             
             # Create Helm charts for infrastructure
             helm_charts = [
@@ -337,7 +337,7 @@ class OrchestrationDemo:
                 )
             ]
             
-            logger.info(f"📦 Helm Charts: {len(helm_charts)} infrastructure components")
+            logger.info(f" Helm Charts: {len(helm_charts)} infrastructure components")
             
             # Create orchestration configuration
             orchestration_config = OrchestrationConfig(
@@ -351,11 +351,11 @@ class OrchestrationDemo:
                 security_policies=[]
             )
             
-            logger.info(f"🎯 Orchestration Target: {orchestration_config.target.value}")
-            logger.info(f"🔧 Total Components: {len(app_deployments)} apps + {len(helm_charts)} charts")
+            logger.info(f" Orchestration Target: {orchestration_config.target.value}")
+            logger.info(f" Total Components: {len(app_deployments)} apps + {len(helm_charts)} charts")
             
             # In a real deployment, this would actually deploy
-            logger.info("⚠️ Note: This is a demonstration. In production, this would:")
+            logger.info(" Note: This is a demonstration. In production, this would:")
             logger.info("   1. Create the Kubernetes cluster")
             logger.info("   2. Install and configure Istio service mesh")
             logger.info("   3. Deploy all application services")
@@ -364,18 +364,18 @@ class OrchestrationDemo:
             logger.info("   6. Apply security policies")
             
             # Simulate deployment status
-            logger.info("✅ Custom deployment configuration validated successfully!")
+            logger.info(" Custom deployment configuration validated successfully!")
             
             return True
             
         except Exception as e:
-            logger.error(f"💥 Custom deployment configuration error: {e}")
+            logger.error(f" Custom deployment configuration error: {e}")
             return False
 
     async def demo_monitoring_setup(self):
         """Demonstrate monitoring and observability setup."""
         logger.info("\n" + "=" * 60)
-        logger.info("📊 MONITORING AND OBSERVABILITY SETUP")
+        logger.info(" MONITORING AND OBSERVABILITY SETUP")
         logger.info("=" * 60)
         
         try:
@@ -406,18 +406,18 @@ class OrchestrationDemo:
                 }
             }
             
-            logger.info("🔧 Monitoring Stack Configuration:")
+            logger.info(" Monitoring Stack Configuration:")
             for component, config in monitoring_components.items():
-                logger.info(f"\n📈 {component.upper()}:")
-                logger.info(f"   📝 {config['description']}")
-                logger.info(f"   🌐 Endpoints: {', '.join(config['endpoints'])}")
+                logger.info(f"\n {component.upper()}:")
+                logger.info(f"    {config['description']}")
+                logger.info(f"    Endpoints: {', '.join(config['endpoints'])}")
                 
                 if 'dashboards' in config:
-                    logger.info(f"   📊 Dashboards: {', '.join(config['dashboards'])}")
+                    logger.info(f"    Dashboards: {', '.join(config['dashboards'])}")
                 if 'alerts' in config:
-                    logger.info(f"   🚨 Alerts: {', '.join(config['alerts'])}")
+                    logger.info(f"    Alerts: {', '.join(config['alerts'])}")
                 if 'retention' in config:
-                    logger.info(f"   🗂️ Retention: {config['retention']}")
+                    logger.info(f"    Retention: {config['retention']}")
             
             # Simulate monitoring metrics
             sample_metrics = {
@@ -433,22 +433,22 @@ class OrchestrationDemo:
                 "uptime": "99.98%"
             }
             
-            logger.info("\n📊 Current Platform Metrics:")
+            logger.info("\n Current Platform Metrics:")
             for metric, value in sample_metrics.items():
-                emoji = "✅" if isinstance(value, (int, float)) and value < 80 else "⚠️" if isinstance(value, (int, float)) and value < 95 else "✅"
+                emoji = "" if isinstance(value, (int, float)) and value < 80 else "" if isinstance(value, (int, float)) and value < 95 else ""
                 logger.info(f"   {emoji} {metric.replace('_', ' ').title()}: {value}")
             
-            logger.info("✅ Monitoring and observability setup completed!")
+            logger.info(" Monitoring and observability setup completed!")
             return True
             
         except Exception as e:
-            logger.error(f"💥 Monitoring setup error: {e}")
+            logger.error(f" Monitoring setup error: {e}")
             return False
 
     async def demo_disaster_recovery(self):
         """Demonstrate disaster recovery capabilities."""
         logger.info("\n" + "=" * 60)
-        logger.info("🚨 DISASTER RECOVERY DEMONSTRATION")
+        logger.info(" DISASTER RECOVERY DEMONSTRATION")
         logger.info("=" * 60)
         
         try:
@@ -480,42 +480,42 @@ class OrchestrationDemo:
                 }
             }
             
-            logger.info("🛡️ Disaster Recovery Capabilities:")
+            logger.info(" Disaster Recovery Capabilities:")
             for capability, config in dr_capabilities.items():
-                logger.info(f"\n🔧 {capability.replace('_', ' ').upper()}:")
-                logger.info(f"   📝 {config['description']}")
+                logger.info(f"\n {capability.replace('_', ' ').upper()}:")
+                logger.info(f"    {config['description']}")
                 
                 for key, value in config.items():
                     if key != 'description':
                         if isinstance(value, list):
-                            logger.info(f"   📋 {key.replace('_', ' ').title()}: {', '.join(value)}")
+                            logger.info(f"    {key.replace('_', ' ').title()}: {', '.join(value)}")
                         else:
-                            logger.info(f"   ⚙️ {key.replace('_', ' ').title()}: {value}")
+                            logger.info(f"    {key.replace('_', ' ').title()}: {value}")
             
             # Simulate DR scenario
-            logger.info("\n🚨 SIMULATING DISASTER RECOVERY SCENARIO:")
-            logger.info("   💥 Scenario: Primary region (us-west-2) outage detected")
-            logger.info("   🔍 Triggering health checks...")
+            logger.info("\n SIMULATING DISASTER RECOVERY SCENARIO:")
+            logger.info("    Scenario: Primary region (us-west-2) outage detected")
+            logger.info("    Triggering health checks...")
             await asyncio.sleep(1)
-            logger.info("   ❌ Primary cluster health check failed (3/3)")
-            logger.info("   🔄 Initiating failover to dr region (us-east-1)...")
+            logger.info("    Primary cluster health check failed (3/3)")
+            logger.info("    Initiating failover to dr region (us-east-1)...")
             await asyncio.sleep(2)
-            logger.info("   📊 Verifying data consistency...")
+            logger.info("    Verifying data consistency...")
             await asyncio.sleep(1)
-            logger.info("   ✅ Data integrity verified - checksums match")
-            logger.info("   🌐 Updating DNS records...")
+            logger.info("    Data integrity verified - checksums match")
+            logger.info("    Updating DNS records...")
             await asyncio.sleep(1)
-            logger.info("   🚀 Failover completed in 14.2 seconds")
-            logger.info("   📈 Services restored - monitoring for stability")
+            logger.info("    Failover completed in 14.2 seconds")
+            logger.info("    Services restored - monitoring for stability")
             
-            logger.info("\n✅ Disaster recovery demonstration completed!")
-            logger.info("🎯 Recovery Time Objective (RTO): 14.2s (target: <15min)")
-            logger.info("📊 Recovery Point Objective (RPO): 0.3s (target: <1hour)")
+            logger.info("\n Disaster recovery demonstration completed!")
+            logger.info(" Recovery Time Objective (RTO): 14.2s (target: <15min)")
+            logger.info(" Recovery Point Objective (RPO): 0.3s (target: <1hour)")
             
             return True
             
         except Exception as e:
-            logger.error(f"💥 Disaster recovery demonstration error: {e}")
+            logger.error(f" Disaster recovery demonstration error: {e}")
             return False
 
     async def demo_cleanup(self):
@@ -530,23 +530,23 @@ class OrchestrationDemo:
             cleanup_success = await self.platform.cleanup()
             
             if cleanup_success:
-                logger.info("✅ Platform cleanup completed successfully!")
+                logger.info(" Platform cleanup completed successfully!")
             else:
-                logger.warning("⚠️ Platform cleanup completed with warnings")
+                logger.warning(" Platform cleanup completed with warnings")
             
             # Cleanup coordinator
             await self.coordinator.cleanup()
-            logger.info("✅ Coordinator cleanup completed")
+            logger.info(" Coordinator cleanup completed")
             
             return cleanup_success
             
         except Exception as e:
-            logger.error(f"💥 Platform cleanup error: {e}")
+            logger.error(f" Platform cleanup error: {e}")
             return False
 
     async def run_complete_demo(self):
         """Run the complete orchestration demonstration."""
-        logger.info("🎬 Starting IA Influencer Agent Orchestration Complete Demo")
+        logger.info(" Starting IA Influencer Agent Orchestration Complete Demo")
         logger.info(f"⏰ Demo timestamp: {datetime.now().isoformat()}")
         
         demo_results = {}
@@ -573,39 +573,39 @@ class OrchestrationDemo:
             
             # Summary
             logger.info("\n" + "=" * 80)
-            logger.info("📋 DEMO SUMMARY")
+            logger.info(" DEMO SUMMARY")
             logger.info("=" * 80)
             
             total_demos = len(demo_results)
             successful_demos = sum(1 for result in demo_results.values() if result)
             success_rate = (successful_demos / total_demos) * 100
             
-            logger.info(f"📊 Demo Results: {successful_demos}/{total_demos} successful ({success_rate:.1f}%)")
+            logger.info(f" Demo Results: {successful_demos}/{total_demos} successful ({success_rate:.1f}%)")
             
             for demo_name, success in demo_results.items():
-                status_emoji = "✅" if success else "❌"
+                status_emoji = "" if success else ""
                 logger.info(f"   {status_emoji} {demo_name.replace('_', ' ').title()}: {'SUCCESS' if success else 'FAILED'}")
             
             if success_rate >= 80:
-                logger.info("\n🎉 DEMO COMPLETED SUCCESSFULLY!")
-                logger.info("🚀 IA Influencer Agent Orchestration Platform is ready for production!")
+                logger.info("\n DEMO COMPLETED SUCCESSFULLY!")
+                logger.info(" IA Influencer Agent Orchestration Platform is ready for production!")
             else:
-                logger.warning("\n⚠️ DEMO COMPLETED WITH ISSUES")
-                logger.warning("🔍 Review failed components before production deployment")
+                logger.warning("\n DEMO COMPLETED WITH ISSUES")
+                logger.warning(" Review failed components before production deployment")
             
-            logger.info(f"\n📁 Demo logs saved to: orchestration_example.log")
-            logger.info("🎬 Demo completed at: " + datetime.now().isoformat())
+            logger.info(f"\n Demo logs saved to: orchestration_example.log")
+            logger.info(" Demo completed at: " + datetime.now().isoformat())
             
             return success_rate >= 80
             
         except Exception as e:
-            logger.error(f"💥 Demo execution error: {e}")
+            logger.error(f" Demo execution error: {e}")
             return False
 
 
 async def main():
     """Main demonstration entry point."""
-    print("🎭 IA Influencer Agent - Orchestration Platform Demo")
+    print(" IA Influencer Agent - Orchestration Platform Demo")
     print("=" * 60)
     print("Author: Fahed Mlaiel <mlaiel@live.de>")
     print("Platform: Enterprise Container Orchestration")
@@ -618,16 +618,16 @@ async def main():
         
         # Exit with appropriate code
         exit_code = 0 if success else 1
-        print(f"\n🏁 Demo finished with exit code: {exit_code}")
+        print(f"\n Demo finished with exit code: {exit_code}")
         
         return exit_code
         
     except KeyboardInterrupt:
-        print("\n⚠️ Demo interrupted by user")
+        print("\n Demo interrupted by user")
         return 130
         
     except Exception as e:
-        print(f"\n💥 Demo failed with error: {e}")
+        print(f"\n Demo failed with error: {e}")
         return 1
 
 

@@ -15,7 +15,7 @@ This module provides the main interfaces for:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 
-⚠️ LEGAL NOTICE: This code is the exclusive intellectual property of Fahed Mlaiel.
+ LEGAL NOTICE: This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited and will result
 in immediate legal action under German and international copyright laws.
 """
@@ -365,6 +365,9 @@ class AutomationOrchestrator:
 # Factory function for easy initialization
 def create_automation_orchestrator(config: Dict[str, Any]) -> AutomationOrchestrator:
     """Create and initialize the automation orchestrator"""
+
+
+
     return AutomationOrchestrator(config)
 
 

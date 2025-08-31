@@ -12,7 +12,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL WARNING ⚠️
+  CRITICAL WARNING 
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
 Any unauthorized use, reproduction, distribution, or reverse engineering 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -224,6 +224,9 @@ class VimeoCrawler(PlatformCrawler):
         Returns:
             List of crawler results
         """
+
+
+
         try:
             await self._check_rate_limit()
             
@@ -243,6 +246,9 @@ class VimeoCrawler(PlatformCrawler):
     
     async def _crawl_videos(self, query: str, max_results: int) -> List[CrawlerResult]:
         """Crawl Vimeo videos"""
+
+
+
         try:
             results = []
             
@@ -307,6 +313,9 @@ class VimeoCrawler(PlatformCrawler):
     
     async def _crawl_users(self, query: str, max_results: int) -> List[CrawlerResult]:
         """Crawl Vimeo users"""
+
+
+
         try:
             results = []
             
@@ -368,6 +377,9 @@ class VimeoCrawler(PlatformCrawler):
     
     async def _crawl_channels(self, query: str, max_results: int) -> List[CrawlerResult]:
         """Crawl Vimeo channels"""
+
+
+
         try:
             results = []
             
@@ -426,6 +438,9 @@ class VimeoCrawler(PlatformCrawler):
     
     async def _crawl_search(self, query: str, max_results: int) -> List[CrawlerResult]:
         """General Vimeo search"""
+
+
+
         try:
             results = []
             
@@ -446,6 +461,9 @@ class VimeoCrawler(PlatformCrawler):
     
     async def _crawl_featured(self, query: str, max_results: int) -> List[CrawlerResult]:
         """Crawl featured content"""
+
+
+
         try:
             results = []
             
@@ -499,6 +517,9 @@ class VimeoCrawler(PlatformCrawler):
     
     async def _crawl_staff_picks(self, query: str, max_results: int) -> List[CrawlerResult]:
         """Crawl staff picks"""
+
+
+
         try:
             results = []
             
@@ -550,6 +571,9 @@ class VimeoCrawler(PlatformCrawler):
     
     async def _crawl_categories(self, query: str, max_results: int) -> List[CrawlerResult]:
         """Crawl by categories"""
+
+
+
         try:
             results = []
             
@@ -618,6 +642,9 @@ class VimeoCrawler(PlatformCrawler):
     
     async def _crawl_live(self, query: str, max_results: int) -> List[CrawlerResult]:
         """Crawl live streams"""
+
+
+
         try:
             results = []
             
@@ -672,6 +699,9 @@ class VimeoCrawler(PlatformCrawler):
     
     async def _parse_video_data(self, video_data: Dict[str, Any]) -> Optional[VimeoVideo]:
         """Parse video data from API response"""
+
+
+
         try:
             created_time = datetime.fromisoformat(video_data.get('created_time', '').replace('Z', '+00:00'))
             modified_time = datetime.fromisoformat(video_data.get('modified_time', '').replace('Z', '+00:00'))
@@ -731,6 +761,9 @@ class VimeoCrawler(PlatformCrawler):
     
     async def _parse_user_data(self, user_data: Dict[str, Any]) -> Optional[VimeoUser]:
         """Parse user data from API response"""
+
+
+
         try:
             created_time = datetime.fromisoformat(user_data.get('created_time', '').replace('Z', '+00:00'))
             
@@ -777,6 +810,9 @@ class VimeoCrawler(PlatformCrawler):
     
     async def _parse_channel_data(self, channel_data: Dict[str, Any]) -> Optional[VimeoChannel]:
         """Parse channel data from API response"""
+
+
+
         try:
             created_time = datetime.fromisoformat(channel_data.get('created_time', '').replace('Z', '+00:00'))
             modified_time = datetime.fromisoformat(channel_data.get('modified_time', '').replace('Z', '+00:00'))
@@ -811,6 +847,9 @@ class VimeoCrawler(PlatformCrawler):
     
     async def _check_rate_limit(self):
         """Check and enforce rate limiting"""
+
+
+
         try:
             current_time = time.time()
             time_since_last = current_time - self.last_request_time
@@ -828,6 +867,9 @@ class VimeoCrawler(PlatformCrawler):
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
         """Extract metadata from Vimeo content"""
+
+
+
         try:
             # Parse Vimeo URL
             parsed_url = urlparse(url)
@@ -871,6 +913,9 @@ class VimeoCrawler(PlatformCrawler):
     
     def get_platform_info(self) -> Dict[str, Any]:
         """Get Vimeo platform information"""
+
+
+
         return {
             'platform_name': 'Vimeo',
             'base_url': self.base_url,

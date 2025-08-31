@@ -73,6 +73,9 @@ class PaymentIndexManager:
     
     def _define_payment_indexes(self) -> List[IndexDefinition]:
         """Define all payment processing indexes"""
+
+
+
         return [
             # Payment Transactions Indexes
             IndexDefinition(
@@ -423,6 +426,9 @@ class PaymentIndexManager:
         )
         ORDER BY idx_scan DESC
         """
+
+
+
         
         try:
             with self.engine.connect() as conn:
@@ -453,6 +459,9 @@ class PaymentIndexManager:
         )
         ORDER BY pg_relation_size(indexrelid) DESC
         """
+
+
+
         
         try:
             with self.engine.connect() as conn:
@@ -529,6 +538,9 @@ class PaymentIndexManager:
         ORDER BY mean_time DESC 
         LIMIT %(limit)s
         """
+
+
+
         
         try:
             with self.engine.connect() as conn:
@@ -575,6 +587,9 @@ class PaymentIndexManager:
     
     def create_index_from_definition(self, index: IndexDefinition) -> bool:
         """Create index from IndexDefinition object"""
+
+
+
         try:
             with self.engine.connect() as conn:
                 conn.execute(text(index.to_sql()))
@@ -590,6 +605,9 @@ class PaymentIndexManager:
 
 def create_payment_indexes(engine) -> PaymentIndexManager:
     """Create and return PaymentIndexManager"""
+
+
+
     return PaymentIndexManager(engine)
 
 

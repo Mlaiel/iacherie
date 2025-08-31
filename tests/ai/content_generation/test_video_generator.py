@@ -65,6 +65,9 @@ class TestVideoGenerator:
     @pytest.fixture
     def sample_script(self):
         """Create sample video script"""
+
+
+
         return {
             "title": "AI Technology Explained",
             "duration": 60,
@@ -96,6 +99,9 @@ class TestVideoGenerator:
     @pytest.fixture
     def video_config(self):
         """Create sample video configuration"""
+
+
+
         return VideoConfig(
             resolution="1920x1080",
             fps=30,

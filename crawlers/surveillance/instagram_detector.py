@@ -2,7 +2,7 @@
 Instagram Detector - Détection Instagram Avancée
 ===============================================
 
-⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
+ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
 © 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
@@ -211,6 +211,9 @@ class InstagramDetector:
     
     async def initialize(self) -> None:
         """Initialize the Instagram detector."""
+
+
+
         try:
             self._logger.info("Initializing Instagram detector...")
             
@@ -228,6 +231,9 @@ class InstagramDetector:
     
     async def _initialize_detection_models(self) -> None:
         """Initialize AI detection models."""
+
+
+
         try:
             # This would load actual ML models for content analysis
             # For now, implement placeholder
@@ -239,6 +245,9 @@ class InstagramDetector:
     
     async def _setup_analysis_pipelines(self) -> None:
         """Setup content analysis pipelines."""
+
+
+
         try:
             # This would setup actual analysis pipelines
             # For now, implement placeholder
@@ -250,6 +259,9 @@ class InstagramDetector:
     
     async def start_detection(self) -> None:
         """Start Instagram detection operations."""
+
+
+
         try:
             if self._detection_active:
                 self._logger.warning("Instagram detection is already active")
@@ -268,6 +280,9 @@ class InstagramDetector:
     
     async def stop_detection(self) -> None:
         """Stop Instagram detection operations."""
+
+
+
         try:
             if not self._detection_active:
                 self._logger.warning("Instagram detection is not active")
@@ -285,6 +300,9 @@ class InstagramDetector:
     
     async def analyze_post(self, post: InstagramPost) -> List[InstagramViolation]:
         """Analyze Instagram post for violations."""
+
+
+
         try:
             self._logger.debug(f"Analyzing post: {post.post_id}")
             analysis_start = datetime.now()
@@ -335,6 +353,9 @@ class InstagramDetector:
     
     async def analyze_story(self, story: InstagramStory) -> List[InstagramViolation]:
         """Analyze Instagram story for violations."""
+
+
+
         try:
             self._logger.debug(f"Analyzing story: {story.story_id}")
             analysis_start = datetime.now()
@@ -381,6 +402,9 @@ class InstagramDetector:
     
     async def analyze_reel(self, reel: InstagramReel) -> List[InstagramViolation]:
         """Analyze Instagram reel for violations."""
+
+
+
         try:
             self._logger.debug(f"Analyzing reel: {reel.reel_id}")
             analysis_start = datetime.now()
@@ -428,6 +452,9 @@ class InstagramDetector:
     
     async def analyze_user(self, user: InstagramUser) -> List[InstagramViolation]:
         """Analyze Instagram user for violations."""
+
+
+
         try:
             self._logger.debug(f"Analyzing user: {user.username}")
             analysis_start = datetime.now()
@@ -765,6 +792,9 @@ class InstagramDetector:
     
     def get_detection_status(self) -> Dict[str, Any]:
         """Get current detection status."""
+
+
+
         return {
             'detection_active': self._detection_active,
             'metrics': {
@@ -813,6 +843,9 @@ class InstagramDetector:
     
     async def shutdown(self) -> None:
         """Shutdown the Instagram detector."""
+
+
+
         try:
             self._logger.info("Shutting down Instagram detector...")
             

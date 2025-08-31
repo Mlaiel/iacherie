@@ -84,6 +84,9 @@ class InvoiceGeneratorEngine:
         
     async def initialize(self) -> None:
         """Initialize invoice generator engine"""
+
+
+
         try:
             await self._setup_database_tables()
             await self._load_tax_configurations()
@@ -136,6 +139,9 @@ class InvoiceGeneratorEngine:
 
     async def _load_tax_configurations(self) -> None:
         """Load tax configurations from database"""
+
+
+
         try:
             # Cache tax rates by country/region
             tax_rates = {
@@ -162,6 +168,9 @@ class InvoiceGeneratorEngine:
                              line_items: List[Dict[str, Any]], 
                              payment_terms: str = "Net 30") -> InvoiceData:
         """Generate new invoice with automatic calculations"""
+
+
+
         try:
             # Generate unique invoice number
             invoice_number = await self._generate_invoice_number(invoice_type)
@@ -220,6 +229,9 @@ class InvoiceGeneratorEngine:
 
     async def _generate_invoice_number(self, invoice_type: InvoiceType) -> str:
         """Generate unique invoice number"""
+
+
+
         try:
             # Get current year and month
             now = datetime.now()
@@ -245,6 +257,9 @@ class InvoiceGeneratorEngine:
 
     async def _get_customer_data(self, customer_id: str) -> Dict[str, Any]:
         """Get customer data for tax and billing purposes"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 customer = await conn.fetchrow("""
@@ -288,6 +303,9 @@ class InvoiceGeneratorEngine:
 
     async def _process_line_item(self, item_data: Dict[str, Any], tax_region: str) -> InvoiceLineItem:
         """Process individual line item with tax calculations"""
+
+
+
         try:
             quantity = Decimal(str(item_data['quantity']))
             unit_price = Decimal(str(item_data['unit_price']))
@@ -312,6 +330,9 @@ class InvoiceGeneratorEngine:
 
     async def _get_tax_rate(self, tax_region: str) -> float:
         """Get tax rate for specific region"""
+
+
+
         try:
             cached_rate = self.redis.get(f"tax_rate_{tax_region}")
             if cached_rate:
@@ -341,6 +362,9 @@ class InvoiceGeneratorEngine:
 
     async def _store_invoice(self, invoice_data: InvoiceData) -> None:
         """Store invoice and line items in database"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 # Insert main invoice record
@@ -390,6 +414,9 @@ class InvoiceGeneratorEngine:
 
     async def _generate_invoice_pdf(self, invoice_data: InvoiceData) -> str:
         """Generate PDF invoice document"""
+
+
+
         try:
             # This would integrate with a PDF generation service
             # For now, return placeholder path
@@ -410,6 +437,9 @@ class InvoiceGeneratorEngine:
 
     async def _send_invoice_notification(self, invoice_data: InvoiceData) -> None:
         """Send invoice notification to customer"""
+
+
+
         try:
             # This would integrate with notification service
             notification_data = {
@@ -428,6 +458,9 @@ class InvoiceGeneratorEngine:
 
     async def get_invoice_by_id(self, invoice_id: str) -> Optional[InvoiceData]:
         """Get invoice by ID"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 # Get main invoice data
@@ -482,6 +515,9 @@ class InvoiceGeneratorEngine:
 
     async def update_invoice_status(self, invoice_id: str, status: InvoiceStatus) -> bool:
         """Update invoice status"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 result = await conn.execute("""
@@ -506,6 +542,9 @@ class InvoiceGeneratorEngine:
 
     async def get_overdue_invoices(self) -> List[InvoiceData]:
         """Get all overdue invoices"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 overdue_rows = await conn.fetch("""
@@ -531,6 +570,9 @@ class InvoiceGeneratorEngine:
 
     async def get_billing_dashboard_data(self, customer_id: str) -> Dict[str, Any]:
         """Get comprehensive billing dashboard data"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 # Get invoice summary

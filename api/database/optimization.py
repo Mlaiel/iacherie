@@ -362,6 +362,9 @@ class IndexOptimizer:
     
     async def _load_existing_indexes(self):
         """Load existing database indexes"""
+
+
+
         try:
             async with self.session_manager.get_async_session() as session:
                 # Query PostgreSQL system catalogs for indexes
@@ -403,6 +406,9 @@ class IndexOptimizer:
     
     async def analyze_index_usage(self) -> Dict[str, Any]:
         """Analyze index usage statistics"""
+
+
+
         try:
             async with self.session_manager.get_async_session() as session:
                 # Get index usage statistics from PostgreSQL
@@ -817,6 +823,9 @@ class DatabaseOptimizer:
     
     async def _collect_performance_metrics(self) -> Dict[str, Any]:
         """Collect current performance metrics"""
+
+
+
         try:
             if self.db_monitor:
                 metrics = await self.db_monitor.get_current_metrics()
@@ -828,6 +837,9 @@ class DatabaseOptimizer:
     
     async def _collect_table_statistics(self) -> List[Dict[str, Any]]:
         """Collect table-level statistics"""
+
+
+
         try:
             async with self.session_manager.get_async_session() as session:
                 query = text("""

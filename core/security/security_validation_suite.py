@@ -564,7 +564,7 @@ class SecurityValidationSuite:
         logger.info("-"*60)
         
         for test_name, result in self.test_results.items():
-            status_icon = "✅" if result["status"] == "PASSED" else "❌"
+            status_icon = "" if result["status"] == "PASSED" else ""
             logger.info(f"{status_icon} {test_name.replace('_', ' ').title()}: {result['status']}")
             
             if result["status"] == "FAILED":
@@ -575,9 +575,9 @@ class SecurityValidationSuite:
         logger.info("="*60)
         
         if failed_tests == 0:
-            logger.info("🎉 ALL ENTERPRISE SECURITY FEATURES VALIDATED SUCCESSFULLY!")
+            logger.info(" ALL ENTERPRISE SECURITY FEATURES VALIDATED SUCCESSFULLY!")
         else:
-            logger.info(f"⚠️  {failed_tests} test(s) failed. Review implementation.")
+            logger.info(f"  {failed_tests} test(s) failed. Review implementation.")
 
 
 # Main execution

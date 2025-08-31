@@ -173,18 +173,30 @@ class MonetizationStorageConfig:
     
     def get_revenue_storage_path(self, platform: MonetizationPlatform) -> str:
         """Get revenue storage path for specific platform."""
+
+
+
         return self.platform_revenue_config[platform]['api_data_storage']
     
     def get_supported_revenue_types(self, platform: MonetizationPlatform) -> List[RevenueType]:
         """Get supported revenue types for specific platform."""
+
+
+
         return self.platform_revenue_config[platform]['revenue_types']
     
     def get_supported_currencies(self, platform: MonetizationPlatform) -> List[str]:
         """Get supported currencies for specific platform."""
+
+
+
         return self.platform_revenue_config[platform]['currency_support']
     
     def is_pci_compliant(self) -> bool:
         """Check if payment storage is PCI compliant."""
+
+
+
         return self.payment_storage_config.get('pci_compliance', False)
 
 @dataclass
@@ -305,6 +317,9 @@ licensing_storage_config = LicensingStorageConfig()
 # Configuration validation functions
 def validate_monetization_storage_config() -> bool:
     """Validate monetization storage configuration."""
+
+
+
     try:
         # Validate required paths
         required_paths = [
@@ -336,6 +351,9 @@ def validate_monetization_storage_config() -> bool:
 
 def validate_payment_processing_config() -> bool:
     """Validate payment processing configuration."""
+
+
+
     try:
         # Validate payment providers
         required_providers = [PaymentProvider.STRIPE, PaymentProvider.PAYPAL]

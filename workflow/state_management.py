@@ -79,6 +79,9 @@ class StateSnapshot:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary."""
+
+
+
         return asdict(self)
     
     @classmethod
@@ -104,6 +107,9 @@ class StateTransition:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary."""
+
+
+
         return {
             **asdict(self),
             "timestamp": self.timestamp.isoformat(),
@@ -756,6 +762,9 @@ class WorkflowStateManager:
     
     async def _save_snapshot(self, snapshot: StateSnapshot):
         """Save snapshot to persistence."""
+
+
+
         try:
             # Store snapshot in persistent storage
             snapshot_data = {
@@ -780,6 +789,9 @@ class WorkflowStateManager:
     
     async def _save_transition(self, transition: StateTransition):
         """Save state transition to persistence."""
+
+
+
         try:
             # Store transition in persistent storage
             transition_data = {
@@ -831,6 +843,9 @@ class WorkflowStateManager:
     
     async def _delete_persisted_state(self, workflow_id: str):
         """Delete persisted state data."""
+
+
+
         try:
             # Delete from persistent storage
             if hasattr(self, '_state_storage') and workflow_id in self._state_storage:

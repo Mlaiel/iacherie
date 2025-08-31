@@ -83,6 +83,9 @@ class AudioFingerprinter:
         
     async def generate_chromaprint(self, audio_path: Path) -> FingerprintResult:
         """Generate Chromaprint fingerprint for audio content"""
+
+
+
         try:
             # Load audio with librosa
             y, sr = librosa.load(str(audio_path), sr=self.sample_rate, duration=self.duration_limit)
@@ -129,6 +132,9 @@ class AudioFingerprinter:
     
     async def generate_spectral_fingerprint(self, audio_path: Path) -> FingerprintResult:
         """Generate spectral-based fingerprint using Essentia"""
+
+
+
         try:
             # Load audio with Essentia
             loader = MonoLoader(filename=str(audio_path), sampleRate=self.sample_rate)
@@ -192,6 +198,9 @@ class VideoFingerprinter:
         
     async def generate_perceptual_fingerprint(self, video_path: Path) -> FingerprintResult:
         """Generate perceptual hash fingerprint for video content"""
+
+
+
         try:
             cap = cv2.VideoCapture(str(video_path))
             fps = cap.get(cv2.CAP_PROP_FPS)
@@ -256,6 +265,9 @@ class VideoFingerprinter:
     
     async def generate_object_fingerprint(self, video_path: Path) -> FingerprintResult:
         """Generate object-based fingerprint using YOLO detection"""
+
+
+
         try:
             # Note: This would require YOLO model integration
             # For now, implementing a simplified object detection approach
@@ -335,6 +347,9 @@ class ImageFingerprinter:
     
     def _load_clip_model(self):
         """Load CLIP model for semantic image analysis"""
+
+
+
         try:
             self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
             self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -343,6 +358,9 @@ class ImageFingerprinter:
     
     async def generate_perceptual_fingerprint(self, image_path: Path) -> FingerprintResult:
         """Generate perceptual hash fingerprint for image content"""
+
+
+
         try:
             # Load image
             image = Image.open(image_path)
@@ -384,6 +402,9 @@ class ImageFingerprinter:
     
     async def generate_clip_fingerprint(self, image_path: Path) -> FingerprintResult:
         """Generate CLIP-based semantic fingerprint for image content"""
+
+
+
         try:
             if not self.clip_model:
                 raise ValueError("CLIP model not available")
@@ -434,6 +455,9 @@ class TextFingerprinter:
     
     def _load_bert_model(self):
         """Load BERT model for semantic text analysis"""
+
+
+
         try:
             model_name = "sentence-transformers/all-MiniLM-L6-v2"
             self.sentence_model = sentence_transformers.SentenceTransformer(model_name)
@@ -442,6 +466,9 @@ class TextFingerprinter:
     
     async def generate_semantic_fingerprint(self, text_content: str) -> FingerprintResult:
         """Generate semantic fingerprint for text content"""
+
+
+
         try:
             if not self.sentence_model:
                 raise ValueError("Sentence transformer model not available")
@@ -483,6 +510,9 @@ class TextFingerprinter:
     
     async def generate_syntactic_fingerprint(self, text_content: str) -> FingerprintResult:
         """Generate syntactic fingerprint based on text structure"""
+
+
+
         try:
             import re
             import string
@@ -558,6 +588,9 @@ class FingerprintEngine:
     
     def _initialize_vector_indexes(self):
         """Initialize FAISS indexes for different content types"""
+
+
+
         try:
             # Initialize indexes for different embedding dimensions
             dimensions = {
@@ -579,6 +612,9 @@ class FingerprintEngine:
                                  content_type: ContentType,
                                  text_content: Optional[str] = None) -> List[FingerprintResult]:
         """Generate comprehensive fingerprints for content"""
+
+
+
         try:
             results = []
             
@@ -621,6 +657,9 @@ class FingerprintEngine:
                                  fingerprint_result: FingerprintResult,
                                  threshold: float = 0.8) -> List[Tuple[str, float]]:
         """Find similar content using vector similarity search"""
+
+
+
         try:
             if fingerprint_result.vector_embedding is None:
                 return []
@@ -664,6 +703,9 @@ class FingerprintEngine:
     
     async def add_to_index(self, fingerprint_result: FingerprintResult, content_id: str):
         """Add fingerprint to vector index for future similarity searches"""
+
+
+
         try:
             if fingerprint_result.vector_embedding is None:
                 return
@@ -697,6 +739,9 @@ class FingerprintEngine:
     
     def get_statistics(self) -> Dict[str, Any]:
         """Get fingerprinting engine statistics"""
+
+
+
         return {
             'vector_indexes': {
                 content_type: {'count': index.ntotal, 'dimension': index.d}

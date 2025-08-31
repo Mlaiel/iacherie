@@ -3,7 +3,7 @@ Text AI Models for IA Influencer Agent Platform
 Enterprise-grade text processing, NLP, and content generation models
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
-⚠️  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
+  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
     code, or intellectual property without explicit written authorization 
     from Fahed Mlaiel is strictly prohibited and will result in legal action.
 
@@ -162,6 +162,9 @@ class TextAnalyzer(BaseAIModel):
     
     def _initialize_models(self):
         """Initialize NLP models"""
+
+
+
         try:
             # Load spaCy models for different languages
             self.nlp_models = {
@@ -193,6 +196,9 @@ class TextAnalyzer(BaseAIModel):
     
     def _load_spacy_model(self, model_name: str):
         """Load spaCy model with fallback"""
+
+
+
         try:
             return spacy.load(model_name)
         except OSError:
@@ -205,6 +211,9 @@ class TextAnalyzer(BaseAIModel):
     
     async def process(self, text: str, **kwargs) -> ProcessingResult:
         """Comprehensive text analysis"""
+
+
+
         try:
             start_time = datetime.now()
             
@@ -269,6 +278,9 @@ class TextAnalyzer(BaseAIModel):
     
     async def _detect_language(self, text: str) -> TextLanguage:
         """Detect text language"""
+
+
+
         try:
             if self.language_detector:
                 # Use first 512 characters for language detection
@@ -341,6 +353,9 @@ class TextAnalyzer(BaseAIModel):
     
     async def _extract_nlp_features(self, text: str, language: TextLanguage) -> Dict:
         """Extract NLP features using spaCy"""
+
+
+
         try:
             # Get appropriate NLP model
             nlp = self.nlp_models.get(language.value, self.nlp_models.get('en'))
@@ -421,6 +436,9 @@ class TextAnalyzer(BaseAIModel):
     
     def _calculate_reading_level(self, text: str, doc=None) -> str:
         """Calculate reading level using various metrics"""
+
+
+
         try:
             # Flesch Reading Ease calculation
             word_count = len(text.split())
@@ -479,6 +497,9 @@ class TextAnalyzer(BaseAIModel):
     
     async def _analyze_sentiment_emotion(self, text: str) -> Dict:
         """Analyze sentiment and emotions"""
+
+
+
         try:
             sentiment_result = {"sentiment": SentimentType.NEUTRAL, "sentiment_scores": {}, "emotion_scores": {}}
             
@@ -799,6 +820,9 @@ class TextAnalyzer(BaseAIModel):
     
     async def validate_connection(self) -> bool:
         """Validate text analysis capabilities"""
+
+
+
         try:
             test_text = "This is a test sentence for validation."
             result = await self.process(test_text)
@@ -819,6 +843,9 @@ class ContentGenerator(BaseAIModel):
     
     def _initialize_generators(self):
         """Initialize content generation models"""
+
+
+
         try:
             # Initialize text generation model
             self.text_generator = pipeline(
@@ -832,6 +859,9 @@ class ContentGenerator(BaseAIModel):
     
     async def process(self, request: ContentGenerationRequest, **kwargs) -> ProcessingResult:
         """Generate content based on request"""
+
+
+
         try:
             start_time = datetime.now()
             
@@ -881,6 +911,9 @@ class ContentGenerator(BaseAIModel):
     
     async def _generate_content(self, request: ContentGenerationRequest) -> str:
         """Generate base content"""
+
+
+
         try:
             # Create prompt based on request
             prompt = self._create_generation_prompt(request)
@@ -954,6 +987,9 @@ class ContentGenerator(BaseAIModel):
     
     def _generate_blog_post_template(self, request: ContentGenerationRequest) -> str:
         """Generate blog post template"""
+
+
+
         return f"""# {request.topic.title()}
 
 ## Introduction
@@ -987,16 +1023,16 @@ When working with {request.topic}, consider these essential steps:
         """Generate social media template"""
         hashtags = ' '.join([f"#{keyword.replace(' ', '')}" for keyword in request.keywords[:5]])
         
-        return f"""🚀 Exciting insights about {request.topic}!
+        return f""" Exciting insights about {request.topic}!
 
 Did you know that {request.topic} can transform your approach to {request.target_audience} success? 
 
 Here are 3 key takeaways:
-✅ Essential understanding builds strong foundations
-✅ Practical implementation drives real results  
-✅ Continuous learning ensures long-term success
+ Essential understanding builds strong foundations
+ Practical implementation drives real results  
+ Continuous learning ensures long-term success
 
-What's your experience with {request.topic}? Share in the comments! 👇
+What's your experience with {request.topic}? Share in the comments! 
 
 {hashtags}
 
@@ -1004,18 +1040,21 @@ What's your experience with {request.topic}? Share in the comments! 👇
     
     def _generate_product_description_template(self, request: ContentGenerationRequest) -> str:
         """Generate product description template"""
+
+
+
         return f"""**{request.topic}** - Premium Solution for {request.target_audience}
 
-🌟 **Key Features:**
+ **Key Features:**
 • Advanced functionality designed for modern needs
 • User-friendly interface with intuitive design
 • Professional-grade quality and reliability
 • Comprehensive support and documentation
 
-💡 **Perfect For:**
+ **Perfect For:**
 {request.target_audience} looking to enhance their capabilities and achieve better results.
 
-🎯 **Benefits:**
+ **Benefits:**
 - Streamlined workflow and improved efficiency
 - Professional results with minimal effort
 - Long-term value and reliability
@@ -1029,7 +1068,7 @@ What's your experience with {request.topic}? Share in the comments! 👇
         """Generate caption template"""
         hashtags = ' '.join([f"#{keyword.replace(' ', '')}" for keyword in request.keywords[:3]])
         
-        return f"""Exploring {request.topic} today! 📸
+        return f"""Exploring {request.topic} today! 
 
 Perfect moment for {request.target_audience} to discover new possibilities.
 
@@ -1037,6 +1076,9 @@ Perfect moment for {request.target_audience} to discover new possibilities.
     
     def _generate_generic_template(self, request: ContentGenerationRequest) -> str:
         """Generate generic content template"""
+
+
+
         return f"""# {request.topic}
 
 This content explores {request.topic} specifically designed for {request.target_audience}.
@@ -1115,7 +1157,7 @@ Consider these factors when working with {request.topic}:
         if request.content_type == TextContentType.BLOG_POST:
             return title_templates[0]
         elif request.content_type == TextContentType.SOCIAL_MEDIA:
-            return f"🚀 {primary_keyword} Tips for {request.target_audience}"
+            return f" {primary_keyword} Tips for {request.target_audience}"
         else:
             return title_templates[1]
     
@@ -1190,6 +1232,9 @@ Consider these factors when working with {request.topic}:
     
     async def validate_connection(self) -> bool:
         """Validate content generation capabilities"""
+
+
+
         try:
             test_request = ContentGenerationRequest(
                 content_type=TextContentType.CAPTION,

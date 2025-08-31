@@ -15,7 +15,7 @@ Business Logic Integration:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend + Security + FinTech Engineers
 
-⚠️ COPYRIGHT WARNING:
+ COPYRIGHT WARNING:
 This code is proprietary and belongs to Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit 
 written permission from Fahed Mlaiel is strictly prohibited.
@@ -433,6 +433,9 @@ revenue_security_config = RevenueSecurityConfig()
 
 def get_revenue_security_config() -> RevenueSecurityConfig:
     """Get the revenue security configuration instance."""
+
+
+
     return revenue_security_config
 
 

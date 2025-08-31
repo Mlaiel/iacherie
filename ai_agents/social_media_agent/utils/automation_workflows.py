@@ -8,7 +8,7 @@ optimization workflows for comprehensive social media management at enterprise s
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL NOTICE:
+ CRITICAL LEGAL NOTICE:
 This automation workflow engine and AI algorithms are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, reverse engineering, or commercialization without 
 explicit written permission is strictly prohibited and will result in immediate legal action.
@@ -325,6 +325,9 @@ class TimeBasedTrigger(WorkflowTrigger):
     
     async def get_trigger_data(self, context: Dict[str, Any]) -> Dict[str, Any]:
         """Get trigger data for time-based triggers"""
+
+
+
         return {
             'trigger_time': datetime.utcnow().isoformat(),
             'schedule_type': self.condition.parameters.get('schedule_type', 'once')
@@ -438,6 +441,9 @@ class WorkflowActionExecutor(ABC):
     
     def validate_parameters(self, action: WorkflowAction) -> bool:
         """Validate action parameters"""
+
+
+
         return True
 
 class PublishContentExecutor(WorkflowActionExecutor):
@@ -445,6 +451,9 @@ class PublishContentExecutor(WorkflowActionExecutor):
     
     async def execute(self, action: WorkflowAction, context: Dict[str, Any]) -> Dict[str, Any]:
         """Execute content publishing action"""
+
+
+
         try:
             content_data = action.parameters.get('content', {})
             platforms = action.parameters.get('platforms', ['instagram'])
@@ -484,6 +493,9 @@ class NotificationExecutor(WorkflowActionExecutor):
     
     async def execute(self, action: WorkflowAction, context: Dict[str, Any]) -> Dict[str, Any]:
         """Execute notification sending action"""
+
+
+
         try:
             message = action.parameters.get('message', 'Workflow notification')
             recipients = action.parameters.get('recipients', [])
@@ -543,6 +555,9 @@ class WebhookExecutor(WorkflowActionExecutor):
     
     async def execute(self, action: WorkflowAction, context: Dict[str, Any]) -> Dict[str, Any]:
         """Execute webhook call action"""
+
+
+
         try:
             url = action.parameters.get('url')
             method = action.parameters.get('method', 'POST')
@@ -814,6 +829,9 @@ class AutomationWorkflows:
     
     async def _execute_workflow(self, execution: WorkflowExecution, workflow: WorkflowDefinition):
         """Execute a workflow"""
+
+
+
         try:
             for action in workflow.actions:
                 if not action.active:
@@ -946,6 +964,9 @@ class AutomationWorkflows:
     
     def get_workflow(self, workflow_id: str) -> Optional[WorkflowDefinition]:
         """Get workflow by ID"""
+
+
+
         return self.workflows.get(workflow_id)
     
     def list_workflows(self, active_only: bool = False) -> List[WorkflowDefinition]:

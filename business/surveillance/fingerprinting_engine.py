@@ -1,5 +1,5 @@
 """
-🔬 Digital Fingerprinting Engine - IA Influencer Agent Surveillance Module
+ Digital Fingerprinting Engine - IA Influencer Agent Surveillance Module
 =========================================================================
 
 Ultra-advanced digital fingerprinting system for multi-modal content identification,
@@ -12,7 +12,7 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Micro
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
+ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
 This code and concept are the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 Unauthorized access, copying, modification, distribution, reverse engineering,
@@ -129,6 +129,9 @@ class ContentFingerprint:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for storage"""
+
+
+
         return {
             'fingerprint_id': self.fingerprint_id,
             'content_id': self.content_id,
@@ -195,6 +198,9 @@ class AudioFingerprintExtractor:
     
     def extract_chromaprint(self, audio_path: str) -> Optional[str]:
         """Extract Chromaprint fingerprint"""
+
+
+
         try:
             # Load audio
             y, sr = librosa.load(audio_path, sr=self.sample_rate)
@@ -209,6 +215,9 @@ class AudioFingerprintExtractor:
     
     def extract_mfcc_features(self, audio_path: str) -> Optional[np.ndarray]:
         """Extract MFCC features"""
+
+
+
         try:
             y, sr = librosa.load(audio_path, sr=self.sample_rate)
             
@@ -235,6 +244,9 @@ class AudioFingerprintExtractor:
     
     def extract_spectral_features(self, audio_path: str) -> Optional[np.ndarray]:
         """Extract spectral features"""
+
+
+
         try:
             y, sr = librosa.load(audio_path, sr=self.sample_rate)
             
@@ -272,6 +284,9 @@ class VideoFingerprintExtractor:
     
     def extract_perceptual_hash(self, video_path: str) -> Optional[List[str]]:
         """Extract perceptual hashes from video frames"""
+
+
+
         try:
             clip = VideoFileClip(video_path)
             frame_hashes = []
@@ -297,6 +312,9 @@ class VideoFingerprintExtractor:
     
     def extract_histogram_features(self, video_path: str) -> Optional[np.ndarray]:
         """Extract color histogram features"""
+
+
+
         try:
             clip = VideoFileClip(video_path)
             histograms = []
@@ -336,6 +354,9 @@ class VideoFingerprintExtractor:
     
     def extract_optical_flow_features(self, video_path: str) -> Optional[np.ndarray]:
         """Extract optical flow features"""
+
+
+
         try:
             cap = cv2.VideoCapture(video_path)
             
@@ -398,6 +419,9 @@ class ImageFingerprintExtractor:
     
     def extract_perceptual_hashes(self, image_path: str) -> Optional[Dict[str, str]]:
         """Extract multiple perceptual hashes"""
+
+
+
         try:
             image = Image.open(image_path)
             
@@ -418,6 +442,9 @@ class ImageFingerprintExtractor:
     
     def extract_deep_features(self, image_path: str) -> Optional[np.ndarray]:
         """Extract deep learning features"""
+
+
+
         try:
             # Load and preprocess image
             image = cv2.imread(image_path)
@@ -490,6 +517,9 @@ class TextFingerprintExtractor:
     
     def extract_tfidf_features(self, text: str) -> Optional[np.ndarray]:
         """Extract TF-IDF features"""
+
+
+
         try:
             # Fit and transform text
             tfidf_matrix = self.vectorizer.fit_transform([text])
@@ -501,6 +531,9 @@ class TextFingerprintExtractor:
     
     def extract_semantic_features(self, text: str) -> Optional[np.ndarray]:
         """Extract semantic embeddings"""
+
+
+
         try:
             if not self.tokenizer or not self.model:
                 return None
@@ -520,6 +553,9 @@ class TextFingerprintExtractor:
     
     def extract_syntactic_features(self, text: str) -> Optional[np.ndarray]:
         """Extract syntactic features"""
+
+
+
         try:
             if not self.nlp:
                 # Basic syntactic features without spacy
@@ -614,6 +650,9 @@ class FingerprintingEngine:
     
     def _initialize_database(self):
         """Initialize database connection and tables"""
+
+
+
         try:
             if self.database_url:
                 self.engine = create_engine(self.database_url)
@@ -665,6 +704,9 @@ class FingerprintingEngine:
     
     def _load_faiss_indices(self):
         """Load existing FAISS indices"""
+
+
+
         try:
             for index_file in self.faiss_index_path.glob("*.faiss"):
                 index_name = index_file.stem
@@ -684,6 +726,9 @@ class FingerprintingEngine:
         fingerprint_types: Optional[List[FingerprintType]] = None
     ) -> FingerprintingResult:
         """Generate comprehensive fingerprints for content"""
+
+
+
         try:
             start_time = datetime.now()
             fingerprints = []
@@ -748,6 +793,9 @@ class FingerprintingEngine:
     
     def _detect_content_type(self, content_path: str) -> str:
         """Detect content type from file"""
+
+
+
         try:
             # Use python-magic if available, otherwise use mimetypes
             try:
@@ -823,6 +871,9 @@ class FingerprintingEngine:
         fingerprint_type: FingerprintType
     ) -> Optional[ContentFingerprint]:
         """Generate a single fingerprint"""
+
+
+
         try:
             start_time = datetime.now()
             fingerprint_data = None
@@ -903,6 +954,9 @@ class FingerprintingEngine:
     
     def _calculate_file_hash(self, file_path: str) -> str:
         """Calculate SHA-256 hash of file"""
+
+
+
         try:
             hash_sha256 = hashlib.sha256()
             with open(file_path, "rb") as f:
@@ -915,6 +969,9 @@ class FingerprintingEngine:
     
     async def _store_fingerprint(self, fingerprint: ContentFingerprint):
         """Store fingerprint in database and cache"""
+
+
+
         try:
             # Store in cache
             self.fingerprint_cache[fingerprint.fingerprint_id] = fingerprint
@@ -968,6 +1025,9 @@ class FingerprintingEngine:
     
     async def _update_faiss_index(self, fingerprint: ContentFingerprint):
         """Update FAISS index with new vector"""
+
+
+
         try:
             index_name = f"{fingerprint.fingerprint_type.value}_vectors"
             
@@ -995,6 +1055,9 @@ class FingerprintingEngine:
         max_results: int = 10
     ) -> List[SimilarityMatch]:
         """Find similar content using fingerprint matching"""
+
+
+
         try:
             threshold = similarity_threshold or self.similarity_threshold
             matches = []
@@ -1029,6 +1092,9 @@ class FingerprintingEngine:
         max_results: int
     ) -> List[SimilarityMatch]:
         """Search for similar vectors using FAISS"""
+
+
+
         try:
             matches = []
             index_name = f"{query_fingerprint.fingerprint_type.value}_vectors"
@@ -1077,6 +1143,9 @@ class FingerprintingEngine:
         max_results: int
     ) -> List[SimilarityMatch]:
         """Search for similar hashes"""
+
+
+
         try:
             matches = []
             
@@ -1128,6 +1197,9 @@ class FingerprintingEngine:
     
     def _calculate_hash_similarity(self, hash1: str, hash2: str) -> float:
         """Calculate similarity between two hashes"""
+
+
+
         try:
             if not hash1 or not hash2:
                 return 0.0
@@ -1168,6 +1240,9 @@ class FingerprintingEngine:
         fingerprint_types: Optional[List[FingerprintType]] = None
     ) -> List[FingerprintingResult]:
         """Generate fingerprints for multiple content items"""
+
+
+
         try:
             results = []
             
@@ -1198,6 +1273,9 @@ class FingerprintingEngine:
     
     async def get_fingerprint_statistics(self) -> Dict[str, Any]:
         """Get fingerprint database statistics"""
+
+
+
         try:
             stats = {
                 'total_fingerprints': 0,
@@ -1250,6 +1328,9 @@ class FingerprintingEngine:
     
     async def cleanup_expired_fingerprints(self, retention_days: int = 90):
         """Clean up old fingerprints"""
+
+
+
         try:
             if not self.engine:
                 return

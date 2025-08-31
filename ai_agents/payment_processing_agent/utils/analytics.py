@@ -7,7 +7,7 @@ creator insights, and financial intelligence reporting.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -139,6 +139,9 @@ class PaymentAnalytics:
         Returns:
             RevenueAnalytics object with complete analytics data
         """
+
+
+
         try:
             # Set default date range (last 30 days)
             if not end_date:
@@ -216,6 +219,9 @@ class PaymentAnalytics:
         Returns:
             Dict with comprehensive platform analytics
         """
+
+
+
         try:
             # Set default date range (last 30 days)
             if not end_date:
@@ -272,6 +278,9 @@ class PaymentAnalytics:
         Returns:
             ForecastResult with predicted revenue
         """
+
+
+
         try:
             # Get historical data
             historical_data = await self._get_historical_revenue_data(
@@ -401,6 +410,9 @@ class PaymentAnalytics:
         Returns:
             List of revenue insights and anomalies
         """
+
+
+
         try:
             insights = []
             
@@ -514,6 +526,9 @@ class PaymentAnalytics:
         Returns:
             Dict with comparative analytics data
         """
+
+
+
         try:
             # Get creator's metrics
             end_date = datetime.utcnow()
@@ -731,6 +746,9 @@ class PaymentAnalytics:
 
     def _get_mock_revenue_metrics(self) -> Dict[str, Any]:
         """Get mock revenue metrics for testing"""
+
+
+
         return {
             "total_revenue": Decimal("2000.00"),
             "net_revenue": Decimal("1800.00"),

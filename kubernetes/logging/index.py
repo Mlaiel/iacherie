@@ -83,6 +83,9 @@ class IAInfluencerLoggingSystem:
         Initialize all logging components
         Returns True if successful, False otherwise
         """
+
+
+
         try:
             logger = logging.getLogger(__name__)
             logger.info("Initializing IA Influencer Agent Logging System...")
@@ -436,6 +439,9 @@ class IAInfluencerLoggingSystem:
     @property
     def is_running(self) -> bool:
         """Check if the logging system is running"""
+
+
+
         return self._is_running
 
 
@@ -503,11 +509,11 @@ def main():
         system = await get_logging_system()
         
         if args.command == "start":
-            print("✅ Logging system started successfully")
+            print(" Logging system started successfully")
         
         elif args.command == "stop":
             await shutdown_logging_system()
-            print("✅ Logging system stopped successfully")
+            print(" Logging system stopped successfully")
         
         elif args.command == "status":
             status = await system.health_check()
@@ -526,9 +532,9 @@ def main():
     try:
         asyncio.run(run_command())
     except KeyboardInterrupt:
-        print("\n👋 Goodbye!")
+        print("\n Goodbye!")
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f" Error: {e}")
         sys.exit(1)
 
 

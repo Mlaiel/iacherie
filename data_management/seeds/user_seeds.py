@@ -245,11 +245,11 @@ class UserSeedsManager:
                 'details': results
             }
             
-            logger.info(f"✅ User management seeds initialized successfully in {duration:.2f}s")
+            logger.info(f" User management seeds initialized successfully in {duration:.2f}s")
             return summary
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize user management seeds: {str(e)}")
+            logger.error(f" Failed to initialize user management seeds: {str(e)}")
             raise
     
     async def _initialize_user_roles(self) -> Dict[str, Any]:

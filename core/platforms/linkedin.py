@@ -43,6 +43,9 @@ class LinkedInPlatform(PlatformBase):
     
     async def authenticate(self) -> bool:
         """Authenticate with LinkedIn OAuth2"""
+
+
+
         try:
             # LinkedIn uses OAuth2 authorization code flow
             access_token = self.config.credentials.get('access_token')
@@ -80,6 +83,9 @@ class LinkedInPlatform(PlatformBase):
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
         """Make authenticated request to LinkedIn API"""
+
+
+
         try:
             session = await self._get_session()
             
@@ -121,6 +127,9 @@ class LinkedInPlatform(PlatformBase):
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
         """Share content on LinkedIn"""
+
+
+
         try:
             # Get user profile to get person URN
             profile = await self._make_request('GET', '/me')
@@ -200,6 +209,9 @@ class LinkedInPlatform(PlatformBase):
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
         """Get LinkedIn post analytics"""
+
+
+
         try:
             # LinkedIn analytics require specific permissions and endpoints
             # Using share statistics endpoint
@@ -245,6 +257,9 @@ class LinkedInPlatform(PlatformBase):
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
         """Search content on LinkedIn (limited API access)"""
+
+
+
         try:
             # LinkedIn search requires specific permissions
             # This is a basic implementation using people search
@@ -278,6 +293,9 @@ class LinkedInPlatform(PlatformBase):
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
         """Get user's posts from LinkedIn"""
+
+
+
         try:
             # Get current user's posts
             params = {
@@ -311,6 +329,9 @@ class LinkedInPlatform(PlatformBase):
     
     async def delete_content(self, content_id: str) -> bool:
         """Delete LinkedIn post"""
+
+
+
         try:
             result = await self._make_request('DELETE', f'/ugcPosts/{content_id}')
             
@@ -324,6 +345,9 @@ class LinkedInPlatform(PlatformBase):
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
         """Update LinkedIn post (limited editing capabilities)"""
+
+
+
         try:
             # LinkedIn doesn't support post editing after publication
             # This is a placeholder for potential future functionality
@@ -336,6 +360,9 @@ class LinkedInPlatform(PlatformBase):
     
     async def get_profile_info(self, user_id: str = None) -> Optional[Dict[str, Any]]:
         """Get LinkedIn profile information"""
+
+
+
         try:
             endpoint = '/me' if not user_id else f'/people/{user_id}'
             result = await self._make_request('GET', endpoint)
@@ -361,6 +388,9 @@ class LinkedInPlatform(PlatformBase):
     
     async def get_company_info(self, company_id: str) -> Optional[Dict[str, Any]]:
         """Get LinkedIn company information"""
+
+
+
         try:
             result = await self._make_request('GET', f'/companies/{company_id}')
             
@@ -386,6 +416,9 @@ class LinkedInPlatform(PlatformBase):
     
     async def get_connections(self) -> List[Dict[str, Any]]:
         """Get user's LinkedIn connections"""
+
+
+
         try:
             result = await self._make_request('GET', '/people/~/connections')
             
@@ -409,6 +442,9 @@ class LinkedInPlatform(PlatformBase):
     
     async def send_message(self, recipient_id: str, message_text: str) -> bool:
         """Send direct message on LinkedIn"""
+
+
+
         try:
             # LinkedIn messaging requires specific permissions
             message_data = {
@@ -432,6 +468,9 @@ class LinkedInPlatform(PlatformBase):
     
     async def get_industry_insights(self) -> Dict[str, Any]:
         """Get industry insights and trends"""
+
+
+
         try:
             # This would require LinkedIn Marketing API access
             # Placeholder for industry insights functionality
@@ -447,6 +486,9 @@ class LinkedInPlatform(PlatformBase):
     
     async def get_page_analytics(self, page_id: str) -> Dict[str, Any]:
         """Get LinkedIn company page analytics"""
+
+
+
         try:
             # Company page analytics require specific permissions
             params = {

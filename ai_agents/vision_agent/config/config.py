@@ -8,7 +8,7 @@ environment-aware settings, security controls, and performance tuning.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -302,6 +302,9 @@ class VisionAgentConfig:
     
     def _load_security_config(self) -> SecurityConfig:
         """Load security configuration"""
+
+
+
         return SecurityConfig(
             privacy_level=PrivacyLevel(os.getenv('VISION_PRIVACY_LEVEL', 'standard')),
             remove_exif=os.getenv('VISION_REMOVE_EXIF', 'true').lower() == 'true',
@@ -319,6 +322,9 @@ class VisionAgentConfig:
     
     def _load_quality_config(self) -> QualityConfig:
         """Load quality configuration"""
+
+
+
         return QualityConfig(
             min_resolution=(
                 int(os.getenv('VISION_MIN_WIDTH', '640')),
@@ -341,6 +347,9 @@ class VisionAgentConfig:
     
     def _load_processing_config(self) -> ProcessingOptions:
         """Load processing pipeline configuration"""
+
+
+
         return ProcessingOptions(
             enable_object_detection=os.getenv('VISION_ENABLE_OBJECT_DETECTION', 'true').lower() == 'true',
             enable_face_recognition=os.getenv('VISION_ENABLE_FACE_RECOGNITION', 'true').lower() == 'true',
@@ -358,6 +367,9 @@ class VisionAgentConfig:
     
     def _load_storage_config(self) -> StorageConfig:
         """Load storage configuration"""
+
+
+
         return StorageConfig(
             storage_backend=os.getenv('VISION_STORAGE_BACKEND', 'local'),
             base_path=os.getenv('VISION_BASE_PATH', '/tmp/vision_agent'),
@@ -374,6 +386,9 @@ class VisionAgentConfig:
     
     def _load_monitoring_config(self) -> MonitoringConfig:
         """Load monitoring configuration"""
+
+
+
         return MonitoringConfig(
             enable_metrics=os.getenv('VISION_ENABLE_METRICS', 'true').lower() == 'true',
             enable_tracing=os.getenv('VISION_ENABLE_TRACING', 'true').lower() == 'true',
@@ -431,6 +446,9 @@ class VisionAgentConfig:
     @lru_cache(maxsize=32)
     def get_model_config(self, model_name: str) -> Optional[ModelConfig]:
         """Get configuration for a specific model"""
+
+
+
         return self.models.get(model_name)
     
     def get_processing_mode_config(self, mode: ProcessingMode) -> Dict[str, Any]:
@@ -532,6 +550,9 @@ class VisionAgentConfig:
     
     def is_gpu_available(self) -> bool:
         """Check if GPU is available for processing"""
+
+
+
         try:
             return torch.cuda.is_available() and self.performance.gpu_memory_fraction > 0
         except ImportError:
@@ -758,6 +779,9 @@ def reset_vision_config():
 
     def _load_from_file(self, config_path: str):
         """Load configuration from JSON file"""
+
+
+
         try:
             with open(config_path, 'r') as f:
                 config_data = json.load(f)
@@ -773,6 +797,9 @@ def reset_vision_config():
 
     def _load_from_environment(self):
         """Load configuration from environment variables"""
+
+
+
         try:
             # Processing mode
             if 'VISION_PROCESSING_MODE' in os.environ:
@@ -820,6 +847,9 @@ def reset_vision_config():
 
     def _update_config_from_dict(self, config_data: Dict[str, Any]):
         """Update configuration from dictionary"""
+
+
+
         try:
             # Update performance config
             if 'performance' in config_data:
@@ -858,6 +888,9 @@ def reset_vision_config():
 
     def get_model_config(self, model_category: str, model_name: str) -> Optional[ModelConfig]:
         """Get configuration for specific model"""
+
+
+
         try:
             if model_category in self.models:
                 if model_name in self.models[model_category]:
@@ -872,10 +905,16 @@ def reset_vision_config():
 
     def get_pipeline_config(self, pipeline_name: str) -> Dict[str, Any]:
         """Get configuration for processing pipeline"""
+
+
+
         return self.pipelines.get(pipeline_name, {})
 
     def is_feature_enabled(self, feature_name: str) -> bool:
         """Check if a feature is enabled"""
+
+
+
         try:
             # Check in pipelines
             for pipeline_config in self.pipelines.values():
@@ -899,18 +938,30 @@ def reset_vision_config():
 
     def get_performance_settings(self) -> PerformanceConfig:
         """Get performance configuration"""
+
+
+
         return self.performance
 
     def get_security_settings(self) -> SecurityConfig:
-        """Get security configuration"""  
+        """Get security configuration"""
+
+
+  
         return self.security
 
     def get_quality_settings(self) -> QualityConfig:
         """Get quality configuration"""
+
+
+
         return self.quality
 
     def validate_configuration(self) -> bool:
         """Validate configuration settings"""
+
+
+
         try:
             errors = []
             
@@ -955,6 +1006,9 @@ def reset_vision_config():
 
     def create_directories(self) -> bool:
         """Create required directories"""
+
+
+
         try:
             dirs_to_create = [
                 self.storage['temp_dir'],
@@ -975,6 +1029,9 @@ def reset_vision_config():
 
     def save_to_file(self, output_path: str) -> bool:
         """Save current configuration to file"""
+
+
+
         try:
             config_dict = self.to_dict()
             
@@ -990,6 +1047,9 @@ def reset_vision_config():
 
     def to_dict(self) -> Dict[str, Any]:
         """Convert configuration to dictionary"""
+
+
+
         try:
             return {
                 'processing_mode': self.processing_mode.value,
@@ -1035,6 +1095,9 @@ def reset_vision_config():
 
     def get_environment_info(self) -> Dict[str, Any]:
         """Get environment information"""
+
+
+
         return {
             'environment': self.environment,
             'config_path': self.config_path,

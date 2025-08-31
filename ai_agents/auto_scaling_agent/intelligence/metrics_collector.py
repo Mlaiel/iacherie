@@ -161,6 +161,9 @@ class MetricsCollector(BaseAgent):
 
     async def start_collection(self):
         """Start metrics collection"""
+
+
+
         try:
             if self.is_collecting:
                 self.logger.warning("Metrics collection already active")
@@ -191,6 +194,9 @@ class MetricsCollector(BaseAgent):
 
     async def stop_collection(self):
         """Stop metrics collection"""
+
+
+
         try:
             self.is_collecting = False
             
@@ -314,6 +320,9 @@ class MetricsCollector(BaseAgent):
 
     async def _safe_collect(self, collector_func: Callable, source_name: str) -> List[MetricPoint]:
         """Safely execute a collector function"""
+
+
+
         try:
             if asyncio.iscoroutinefunction(collector_func):
                 result = await collector_func()
@@ -342,6 +351,9 @@ class MetricsCollector(BaseAgent):
 
     async def _store_raw_metrics(self, metrics: List[MetricPoint]):
         """Store raw metrics in memory"""
+
+
+
         try:
             with self.metrics_lock:
                 for metric in metrics:
@@ -364,6 +376,9 @@ class MetricsCollector(BaseAgent):
 
     async def _perform_aggregation(self, interval_seconds: int):
         """Perform aggregation for a specific time interval"""
+
+
+
         try:
             current_time = datetime.now()
             start_time = current_time - timedelta(seconds=interval_seconds)
@@ -402,6 +417,9 @@ class MetricsCollector(BaseAgent):
                                 start_time: datetime,
                                 end_time: datetime) -> List[AggregatedMetric]:
         """Aggregate a list of metric points"""
+
+
+
         try:
             if not points:
                 return []
@@ -464,6 +482,9 @@ class MetricsCollector(BaseAgent):
 
     async def _export_metrics(self):
         """Export metrics to configured destinations"""
+
+
+
         try:
             for format_name, handler in self.export_handlers.items():
                 try:
@@ -476,6 +497,9 @@ class MetricsCollector(BaseAgent):
 
     async def _export_to_format(self, format_name: str, handler: Callable):
         """Export metrics using specific format handler"""
+
+
+
         try:
             # Prepare export data
             export_data = await self._prepare_export_data()
@@ -491,6 +515,9 @@ class MetricsCollector(BaseAgent):
 
     async def _prepare_export_data(self) -> Dict[str, Any]:
         """Prepare data for export"""
+
+
+
         try:
             export_data = {
                 "timestamp": datetime.now().isoformat(),
@@ -551,6 +578,9 @@ class MetricsCollector(BaseAgent):
 
     async def _cleanup_old_metrics(self):
         """Clean up old metrics data"""
+
+
+
         try:
             current_time = datetime.now()
             
@@ -580,6 +610,9 @@ class MetricsCollector(BaseAgent):
 
     async def _initialize_default_metrics(self):
         """Initialize default metric definitions"""
+
+
+
         try:
             default_metrics = {
                 "cpu_utilization": MetricDefinition(
@@ -645,6 +678,9 @@ class MetricsCollector(BaseAgent):
 
     async def _initialize_data_sources(self):
         """Initialize default data sources"""
+
+
+
         try:
             # System metrics collector
             self.data_sources["system"] = self._collect_system_metrics
@@ -660,6 +696,9 @@ class MetricsCollector(BaseAgent):
 
     async def _collect_system_metrics(self) -> List[MetricPoint]:
         """Collect system-level metrics"""
+
+
+
         try:
             import psutil
             
@@ -714,6 +753,9 @@ class MetricsCollector(BaseAgent):
 
     async def _collect_application_metrics(self) -> List[MetricPoint]:
         """Collect application-level metrics"""
+
+
+
         try:
             metrics = []
             timestamp = datetime.now()
@@ -758,6 +800,9 @@ class MetricsCollector(BaseAgent):
 
     async def _collect_custom_metrics(self) -> List[MetricPoint]:
         """Collect custom metrics"""
+
+
+
         try:
             metrics = []
             timestamp = datetime.now()
@@ -781,6 +826,9 @@ class MetricsCollector(BaseAgent):
 
     async def add_metric_definition(self, definition: MetricDefinition):
         """Add a new metric definition"""
+
+
+
         try:
             self.metric_definitions[definition.name] = definition
             self.logger.info(f"Added metric definition: {definition.name}")
@@ -791,6 +839,9 @@ class MetricsCollector(BaseAgent):
 
     async def add_custom_collector(self, collector_func: Callable):
         """Add a custom metrics collector function"""
+
+
+
         try:
             self.custom_collectors.append(collector_func)
             self.logger.info(f"Added custom collector")
@@ -803,6 +854,9 @@ class MetricsCollector(BaseAgent):
                            metric_type: MetricType = MetricType.GAUGE,
                            tags: Optional[Dict[str, str]] = None):
         """Record a single metric point"""
+
+
+
         try:
             metric_point = MetricPoint(
                 name=name,
@@ -832,6 +886,9 @@ class MetricsCollector(BaseAgent):
     async def get_metric_data(self, metric_name: str, 
                              hours: int = 1) -> List[MetricPoint]:
         """Get raw metric data for a specific metric"""
+
+
+
         try:
             cutoff_time = datetime.now() - timedelta(hours=hours)
             
@@ -847,6 +904,9 @@ class MetricsCollector(BaseAgent):
                                  interval_seconds: int = 300,
                                  hours: int = 1) -> List[AggregatedMetric]:
         """Get aggregated metric data"""
+
+
+
         try:
             cutoff_time = datetime.now() - timedelta(hours=hours)
             
@@ -860,6 +920,9 @@ class MetricsCollector(BaseAgent):
 
     async def get_collector_status(self) -> Dict[str, Any]:
         """Get comprehensive collector status"""
+
+
+
         try:
             return {
                 "collecting": self.is_collecting,
@@ -881,6 +944,9 @@ class MetricsCollector(BaseAgent):
 
     async def health_check(self) -> Dict[str, Any]:
         """Health check for metrics collector"""
+
+
+
         try:
             active_tasks = len([task for task in self.collection_tasks if not task.done()])
             collection_health = self.is_collecting and active_tasks > 0

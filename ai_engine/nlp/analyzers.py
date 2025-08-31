@@ -7,7 +7,7 @@ engagement prediction, and content performance optimization for creators.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
 
@@ -288,13 +288,16 @@ class SentimentAnalyzer(ContentAnalyzer):
     
     def _load_emotion_patterns(self) -> Dict[str, List[str]]:
         """Load emotion detection patterns"""
+
+
+
         return {
-            'joy': [r'\b(happy|joy|excited|thrilled|delighted|cheerful)\b', r':\)|😊|😄|😃'],
-            'anger': [r'\b(angry|mad|furious|irritated|annoyed)\b', r'😠|😡|🤬'],
-            'fear': [r'\b(scared|afraid|worried|anxious|nervous)\b', r'😰|😱|😨'],
-            'sadness': [r'\b(sad|depressed|upset|disappointed|heartbroken)\b', r'😢|😭|😞'],
-            'surprise': [r'\b(surprised|shocked|amazed|astonished)\b', r'😲|😮|😯'],
-            'disgust': [r'\b(disgusted|revolted|sick|gross)\b', r'🤮|😷|🤢']
+            'joy': [r'\b(happy|joy|excited|thrilled|delighted|cheerful)\b', r':\)|||'],
+            'anger': [r'\b(angry|mad|furious|irritated|annoyed)\b', r'||🤬'],
+            'fear': [r'\b(scared|afraid|worried|anxious|nervous)\b', r'||'],
+            'sadness': [r'\b(sad|depressed|upset|disappointed|heartbroken)\b', r'||'],
+            'surprise': [r'\b(surprised|shocked|amazed|astonished)\b', r'||'],
+            'disgust': [r'\b(disgusted|revolted|sick|gross)\b', r'🤮||🤢']
         }
     
     def _predict_engagement_from_sentiment(self, sentiment: Dict[str, float], emotions: Dict[str, float]) -> Dict[str, float]:
@@ -507,6 +510,9 @@ class TopicAnalyzer(ContentAnalyzer):
     
     async def _extract_topics(self, content: str) -> Dict[str, Any]:
         """Extract topics using LDA"""
+
+
+
         try:
             # Prepare text
             documents = content.split('.')  # Split into sentences for better topic modeling
@@ -658,6 +664,9 @@ class TopicAnalyzer(ContentAnalyzer):
     
     def _load_influencer_categories(self) -> Dict[str, List[str]]:
         """Load influencer category keywords"""
+
+
+
         return {
             'lifestyle': ['lifestyle', 'daily', 'routine', 'life', 'living', 'home', 'family', 'personal'],
             'fashion': ['fashion', 'style', 'outfit', 'clothing', 'designer', 'brand', 'trendy', 'wardrobe'],

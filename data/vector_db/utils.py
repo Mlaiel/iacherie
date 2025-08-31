@@ -8,7 +8,7 @@ validation, optimization, data processing, and system maintenance helpers.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️ COPYRIGHT WARNING ⚠️
+ COPYRIGHT WARNING 
 This code is protected by copyright law. Any unauthorized reproduction, distribution, 
 modification, or use of this code without explicit written permission from 
 Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in legal action.
@@ -417,6 +417,9 @@ class PerformanceProfiler:
     
     def get_all_stats(self) -> Dict[str, Any]:
         """Get statistics for all operations."""
+
+
+
         return {
             operation_name: self.get_operation_stats(operation_name)
             for operation_name in self.operation_times.keys()
@@ -431,6 +434,9 @@ class FileSystemUtils:
     @staticmethod
     def ensure_directory(path: Union[str, Path]) -> bool:
         """Ensure a directory exists, creating it if necessary."""
+
+
+
         try:
             Path(path).mkdir(parents=True, exist_ok=True)
             return True
@@ -441,6 +447,9 @@ class FileSystemUtils:
     @staticmethod
     def safe_file_write(filepath: Union[str, Path], data: Union[str, bytes], backup: bool = True) -> bool:
         """Safely write data to a file with optional backup."""
+
+
+
         try:
             filepath = Path(filepath)
             
@@ -511,6 +520,9 @@ class DataSerialization:
     @staticmethod
     def serialize_with_compression(data: Any, compression_level: int = 6) -> bytes:
         """Serialize data with gzip compression."""
+
+
+
         try:
             # Pickle the data
             pickled_data = pickle.dumps(data)
@@ -527,6 +539,9 @@ class DataSerialization:
     @staticmethod
     def deserialize_with_compression(data: bytes) -> Any:
         """Deserialize compressed data."""
+
+
+
         try:
             # Decompress
             decompressed_data = gzip.decompress(data)

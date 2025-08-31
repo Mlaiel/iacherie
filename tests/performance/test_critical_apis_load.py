@@ -69,6 +69,9 @@ class CriticalAPILoadTester:
         
     def _define_critical_endpoints(self) -> List[CriticalAPIEndpoint]:
         """Define critical business API endpoints"""
+
+
+
         return [
             # Authentication & User Management
             CriticalAPIEndpoint(
@@ -297,7 +300,7 @@ class TestCriticalAPIsLoad:
             print(f"  Avg Response Time: {avg_response_time_ms:.1f}ms (SLA: {endpoint.expected_response_time_ms}ms)")
             print(f"  P95 Response Time: {p95_response_time_ms:.1f}ms")
             print(f"  Requests/sec: {requests_per_second:.1f}")
-            print(f"  SLA Compliance: {'✅' if results[endpoint.name]['sla_compliance']['meets_response_time_sla'] and results[endpoint.name]['sla_compliance']['meets_success_rate_sla'] else '❌'}")
+            print(f"  SLA Compliance: {'' if results[endpoint.name]['sla_compliance']['meets_response_time_sla'] and results[endpoint.name]['sla_compliance']['meets_success_rate_sla'] else ''}")
         
         # Generate overall report
         print("\\n" + "="*80)
@@ -317,7 +320,7 @@ class TestCriticalAPIsLoad:
                 if sla["meets_response_time_sla"] and sla["meets_success_rate_sla"]:
                     critical_endpoints_meeting_sla += 1
             
-            status = "✅ PASS" if (sla["meets_response_time_sla"] and sla["meets_success_rate_sla"]) else "❌ FAIL"
+            status = " PASS" if (sla["meets_response_time_sla"] and sla["meets_success_rate_sla"]) else " FAIL"
             print(f"{config['name']:25} | {config['business_impact']:8} | {metrics['avg_response_time_ms']:6.1f}ms | {metrics['success_rate_percent']:5.1f}% | {status}")
         
         sla_compliance_rate = (critical_endpoints_meeting_sla / total_critical_endpoints) * 100 if total_critical_endpoints > 0 else 0

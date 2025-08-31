@@ -7,7 +7,7 @@ with advanced preprocessing, feature extraction, and streaming capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
@@ -200,6 +200,9 @@ class RealTimeIntentProcessor:
     
     async def _process_realtime_request(self, request: DetectionRequest) -> DetectionResponse:
         """Process high-priority real-time request immediately"""
+
+
+
         try:
             # Use optimized fast-path classification
             result = await self.classifier.classify_intent(
@@ -279,6 +282,9 @@ class RealTimeIntentProcessor:
     
     def _get_cached_result(self, cache_key: str) -> Optional[ClassificationResult]:
         """Retrieve cached classification result"""
+
+
+
         try:
             cached_entry = self.response_cache.get(cache_key)
             if cached_entry:
@@ -304,6 +310,9 @@ class RealTimeIntentProcessor:
         ttl: int
     ) -> None:
         """Cache classification result"""
+
+
+
         try:
             # Prevent cache from growing too large
             if len(self.response_cache) >= self.config.max_cache_size:
@@ -340,6 +349,9 @@ class RealTimeIntentProcessor:
         timeout_ms: int
     ) -> Optional[DetectionResponse]:
         """Wait for background processing result"""
+
+
+
         try:
             start_time = time.time()
             timeout_seconds = timeout_ms / 1000.0
@@ -435,6 +447,9 @@ class RealTimeIntentProcessor:
     
     async def _update_performance_stats(self, response: DetectionResponse) -> None:
         """Update performance statistics"""
+
+
+
         try:
             stats = self.performance_stats
             stats['total_requests'] += 1
@@ -484,6 +499,9 @@ class IntentDetector(BaseService):
         
     async def initialize(self) -> None:
         """Initialize the intent detection service"""
+
+
+
         try:
             self.logger.info("Initializing Intent Detection Service...")
             
@@ -706,6 +724,9 @@ class IntentDetector(BaseService):
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
         """Get current performance metrics"""
+
+
+
         return {
             'service_initialized': self.is_initialized,
             'classifier_info': self.classifier.get_model_info(),
@@ -717,6 +738,9 @@ class IntentDetector(BaseService):
     
     async def health_check(self) -> Dict[str, Any]:
         """Perform service health check"""
+
+
+
         try:
             # Test basic classification
             test_response = await self.detect_intent(
@@ -748,6 +772,9 @@ class IntentDetector(BaseService):
     
     async def shutdown(self) -> None:
         """Gracefully shutdown the service"""
+
+
+
         try:
             self.logger.info("Shutting down Intent Detection Service...")
             

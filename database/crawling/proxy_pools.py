@@ -89,6 +89,9 @@ class ProxyPoolManager(DatabaseManager):
         Raises:
             ProxyPoolExhaustedError: If no suitable proxies available
         """
+
+
+
         try:
             # Find best available proxy
             proxy = await self._find_optimal_proxy(
@@ -141,6 +144,9 @@ class ProxyPoolManager(DatabaseManager):
         Returns:
             Dict containing proxy details or None if not found
         """
+
+
+
         try:
             # Build query for available proxies
             query_conditions = [
@@ -222,6 +228,9 @@ class ProxyPoolManager(DatabaseManager):
         Returns:
             Assignment identifier
         """
+
+
+
         try:
             assignment_id = str(uuid4())
             
@@ -258,6 +267,9 @@ class ProxyPoolManager(DatabaseManager):
         Args:
             proxy_id: Proxy identifier
         """
+
+
+
         try:
             await self.db.execute(
                 text("""
@@ -290,6 +302,9 @@ class ProxyPoolManager(DatabaseManager):
         Returns:
             bool indicating success
         """
+
+
+
         try:
             # Decrement current connections
             result = await self.db.execute(
@@ -354,6 +369,9 @@ class ProxyPoolManager(DatabaseManager):
         Returns:
             Proxy identifier
         """
+
+
+
         try:
             proxy_id = str(uuid4())
             
@@ -404,6 +422,9 @@ class ProxyPoolManager(DatabaseManager):
         Returns:
             Dict containing health check results
         """
+
+
+
         try:
             # Get proxy details
             proxy_data = await self.get_proxy_details(proxy_id)
@@ -512,6 +533,9 @@ class ProxyPoolManager(DatabaseManager):
             health_result: Health check results
             performance_score: Calculated performance score
         """
+
+
+
         try:
             # Determine new status based on health
             if health_result['status'] in [ProxyHealthStatus.EXCELLENT.value, ProxyHealthStatus.GOOD.value]:
@@ -556,6 +580,9 @@ class ProxyPoolManager(DatabaseManager):
             proxy_id: Proxy identifier
             error_message: Error description
         """
+
+
+
         try:
             await self.db.execute(
                 text("""
@@ -592,6 +619,9 @@ class ProxyPoolManager(DatabaseManager):
         Returns:
             Dict containing proxy details or None if not found
         """
+
+
+
         try:
             result = await self.db.execute(
                 text("""
@@ -635,6 +665,9 @@ class ProxyPoolManager(DatabaseManager):
         Returns:
             Dict containing pool statistics
         """
+
+
+
         try:
             # Get status breakdown
             status_stats = await self.db.execute(
@@ -709,6 +742,9 @@ class ProxyPoolManager(DatabaseManager):
         Returns:
             Dict containing maintenance results
         """
+
+
+
         try:
             maintenance_results = {
                 'health_checks_performed': 0,
@@ -755,6 +791,9 @@ class ProxyPoolManager(DatabaseManager):
     
     async def _cleanup_old_assignments(self) -> None:
         """Clean up old proxy assignments."""
+
+
+
         try:
             cutoff_time = datetime.utcnow() - timedelta(hours=24)
             
@@ -780,6 +819,9 @@ class ProxyPoolManager(DatabaseManager):
         Returns:
             Dict containing health status
         """
+
+
+
         try:
             # Get active proxy count
             active_proxies = await self.db.query(func.count(ProxyPool.proxy_id)).filter(

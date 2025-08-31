@@ -1,5 +1,5 @@
 """
-📊 Storage Analytics Engine - IA Influencer Agent Platform Enterprise
+ Storage Analytics Engine - IA Influencer Agent Platform Enterprise
 =====================================================================
 Module: backend/data_management/storage/analytics_engine.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Advanced analytics engine for storage insights, usage patterns,
 and performance optimization for content creators.
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -131,6 +131,9 @@ class StorageAnalyticsEngine:
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
         """Collect a storage metric"""
+
+
+
         
         try:
             metric = StorageMetric(
@@ -162,6 +165,9 @@ class StorageAnalyticsEngine:
         creator_type: Optional[str] = None
     ) -> AnalyticsReport:
         """Generate comprehensive usage analytics report"""
+
+
+
         
         try:
             report_id = f"usage_{time_window.value}_{int(time.time())}"
@@ -208,6 +214,9 @@ class StorageAnalyticsEngine:
         time_window: TimeWindow = TimeWindow.DAY
     ) -> AnalyticsReport:
         """Generate performance analytics report"""
+
+
+
         
         try:
             report_id = f"performance_{time_window.value}_{int(time.time())}"
@@ -254,6 +263,9 @@ class StorageAnalyticsEngine:
         time_window: TimeWindow = TimeWindow.MONTH
     ) -> AnalyticsReport:
         """Generate cost analytics report"""
+
+
+
         
         try:
             report_id = f"cost_{time_window.value}_{int(time.time())}"
@@ -300,6 +312,9 @@ class StorageAnalyticsEngine:
         content_type: Optional[str] = None
     ) -> Dict[str, Any]:
         """Analyze content lifecycle patterns"""
+
+
+
         
         try:
             if not self.storage_manager:
@@ -390,6 +405,9 @@ class StorageAnalyticsEngine:
         prediction_days: int = 30
     ) -> Dict[str, Any]:
         """Predict storage growth using trend analysis"""
+
+
+
         
         try:
             # Get historical usage data
@@ -460,6 +478,9 @@ class StorageAnalyticsEngine:
         time_window: TimeWindow = TimeWindow.MONTH
     ) -> Dict[str, Any]:
         """Analyze storage patterns for specific creator type"""
+
+
+
         
         try:
             if not self.storage_manager:
@@ -542,6 +563,9 @@ class StorageAnalyticsEngine:
     
     async def generate_optimization_insights(self) -> Dict[str, Any]:
         """Generate comprehensive optimization insights"""
+
+
+
         
         try:
             insights = {
@@ -613,6 +637,9 @@ class StorageAnalyticsEngine:
     
     async def get_real_time_dashboard(self) -> Dict[str, Any]:
         """Get real-time dashboard data"""
+
+
+
         
         try:
             dashboard = {
@@ -634,6 +661,9 @@ class StorageAnalyticsEngine:
     
     async def _update_real_time_stats(self, metric: StorageMetric) -> None:
         """Update real-time statistics from new metric"""
+
+
+
         
         try:
             if metric.metric_type == MetricType.USAGE:
@@ -658,6 +688,9 @@ class StorageAnalyticsEngine:
     
     async def _flush_metrics_buffer(self) -> None:
         """Flush metrics buffer to persistent storage"""
+
+
+
         
         try:
             # In a real implementation, this would write to a database
@@ -1228,6 +1261,9 @@ class StorageAnalyticsEngine:
     
     def _calculate_cost_optimization_potential(self) -> Dict[str, Any]:
         """Calculate potential cost optimizations"""
+
+
+
         
         return {
             'monthly_savings': 15.50,  # Example value
@@ -1237,10 +1273,16 @@ class StorageAnalyticsEngine:
     
     def _calculate_storage_utilization(self) -> float:
         """Calculate storage utilization efficiency"""
+
+
+
         return 0.78  # Example value
     
     def _calculate_overall_tier_efficiency(self) -> float:
         """Calculate overall tier distribution efficiency"""
+
+
+
         return 0.82  # Example value
     
     def _calculate_tier_efficiency_score(self, hot: int, warm: int, cold: int) -> float:
@@ -1263,6 +1305,9 @@ class StorageAnalyticsEngine:
     
     async def _analyze_security_metrics(self) -> Dict[str, Any]:
         """Analyze security-related metrics"""
+
+
+
         
         return {
             'encryption_coverage': 0.95,  # Example value
@@ -1310,6 +1355,9 @@ class StorageAnalyticsEngine:
     
     async def _get_performance_indicators(self) -> Dict[str, Any]:
         """Get key performance indicators"""
+
+
+
         
         return {
             'response_time_status': 'good' if self.real_time_stats['avg_response_time'] < 1.0 else 'warning',
@@ -1320,6 +1368,9 @@ class StorageAnalyticsEngine:
     
     async def _get_trend_indicators(self) -> Dict[str, Any]:
         """Get trend indicators"""
+
+
+
         
         return {
             'storage_trend': 'increasing',

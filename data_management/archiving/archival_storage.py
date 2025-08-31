@@ -8,7 +8,7 @@ cost and performance balance.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -119,6 +119,9 @@ class LocalArchivalStorage(ArchivalStorageBackend):
         metadata: Dict[str, Any]
     ) -> str:
         """Store archive in local filesystem"""
+
+
+
         
         try:
             tier_path = self.tier_paths[tier]
@@ -162,6 +165,9 @@ class LocalArchivalStorage(ArchivalStorageBackend):
     
     async def retrieve_archive(self, archive_id: str) -> Optional[bytes]:
         """Retrieve archive from local filesystem"""
+
+
+
         
         try:
             # Find archive across all tiers
@@ -207,6 +213,9 @@ class LocalArchivalStorage(ArchivalStorageBackend):
     
     async def delete_archive(self, archive_id: str) -> bool:
         """Delete archive from local filesystem"""
+
+
+
         
         try:
             deleted = False
@@ -240,6 +249,9 @@ class LocalArchivalStorage(ArchivalStorageBackend):
     
     async def migrate_archive(self, archive_id: str, target_tier: ArchivalTier) -> bool:
         """Migrate archive to different tier"""
+
+
+
         
         try:
             # Find current location
@@ -307,6 +319,9 @@ class LocalArchivalStorage(ArchivalStorageBackend):
     
     async def get_archive_metadata(self, archive_id: str) -> Optional[Dict[str, Any]]:
         """Get archive metadata"""
+
+
+
         
         try:
             metadata_file = self.metadata_path / f"{archive_id}.json"
@@ -324,6 +339,9 @@ class LocalArchivalStorage(ArchivalStorageBackend):
     
     async def get_storage_statistics(self) -> Dict[str, Any]:
         """Get storage usage statistics"""
+
+
+
         
         try:
             stats = {
@@ -464,6 +482,9 @@ class CloudArchivalStorage(ArchivalStorageBackend):
         metadata: Dict[str, Any]
     ) -> str:
         """Store archive in cloud storage"""
+
+
+
         
         try:
             storage_class = self.tier_mapping[tier]
@@ -517,6 +538,9 @@ class CloudArchivalStorage(ArchivalStorageBackend):
     
     async def retrieve_archive(self, archive_id: str) -> Optional[bytes]:
         """Retrieve archive from cloud storage"""
+
+
+
         
         try:
             # Try to find archive across all tiers
@@ -555,6 +579,9 @@ class CloudArchivalStorage(ArchivalStorageBackend):
     
     async def delete_archive(self, archive_id: str) -> bool:
         """Delete archive from cloud storage"""
+
+
+
         
         try:
             deleted = False
@@ -596,6 +623,9 @@ class CloudArchivalStorage(ArchivalStorageBackend):
     
     async def migrate_archive(self, archive_id: str, target_tier: ArchivalTier) -> bool:
         """Migrate archive to different cloud storage tier"""
+
+
+
         
         try:
             # Find current location
@@ -658,6 +688,9 @@ class CloudArchivalStorage(ArchivalStorageBackend):
     
     async def get_archive_metadata(self, archive_id: str) -> Optional[Dict[str, Any]]:
         """Get archive metadata from cloud storage"""
+
+
+
         
         try:
             metadata_key = f"metadata/{archive_id}.json"
@@ -677,6 +710,9 @@ class CloudArchivalStorage(ArchivalStorageBackend):
     
     async def get_storage_statistics(self) -> Dict[str, Any]:
         """Get cloud storage usage statistics"""
+
+
+
         
         try:
             stats = {

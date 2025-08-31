@@ -463,6 +463,9 @@ class TenantConnectionManager:
     
     async def _get_tenant_resource_usage(self, tenant_id: str) -> Dict[str, Any]:
         """Get detailed resource usage for tenant."""
+
+
+
         return {
             "cpu_usage": 0.0,
             "memory_usage": 0.0,
@@ -472,6 +475,9 @@ class TenantConnectionManager:
     
     async def _get_tenant_collaboration_count(self, tenant_id: str) -> int:
         """Get number of active collaborations for tenant."""
+
+
+
         return 0
     
     def _apply_config_overrides(
@@ -492,6 +498,9 @@ class TenantConnectionManager:
         permissions: Dict[str, List[str]]
     ) -> Dict[str, Any]:
         """Setup shared namespace for collaboration."""
+
+
+
         return {
             "collaboration_id": collaboration_id,
             "namespace": f"collab_{collaboration_id}",

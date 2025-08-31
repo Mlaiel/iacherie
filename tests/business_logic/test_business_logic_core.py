@@ -283,18 +283,18 @@ if __name__ == "__main__":
             )
             
             workflow_id = await orchestrator.process_content_upload(upload)
-            print(f"✅ Workflow initiated successfully: {workflow_id}")
+            print(f" Workflow initiated successfully: {workflow_id}")
             
             # Wait for processing
             await asyncio.sleep(2.0)
             
             status = await orchestrator.get_workflow_status(workflow_id)
             if status:
-                print(f"✅ Workflow status retrieved: {status['current_stage']}")
+                print(f" Workflow status retrieved: {status['current_stage']}")
             else:
-                print("✅ Workflow completed and cleaned up")
+                print(" Workflow completed and cleaned up")
             
-            print("✅ Business Logic Core Integration Test PASSED")
+            print(" Business Logic Core Integration Test PASSED")
             
         finally:
             if os.path.exists(temp_file):

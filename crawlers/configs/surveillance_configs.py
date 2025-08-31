@@ -324,6 +324,9 @@ class SurveillanceConfigManager:
     
     def _load_default_config(self) -> SurveillanceConfig:
         """Load default surveillance configuration."""
+
+
+
         return SurveillanceConfig(
             enabled=True,
             mode=SurveillanceMode.REAL_TIME,
@@ -382,6 +385,9 @@ class SurveillanceConfigManager:
     
     def get_config(self) -> SurveillanceConfig:
         """Get current surveillance configuration."""
+
+
+
         return self.config
     
     def update_config(self, config: SurveillanceConfig) -> None:
@@ -442,14 +448,23 @@ class SurveillanceConfigManager:
     
     def get_fingerprinting_config(self) -> FingerprintingConfig:
         """Get fingerprinting configuration."""
+
+
+
         return self.config.fingerprinting
     
     def get_alert_config(self) -> AlertConfig:
         """Get alert configuration."""
+
+
+
         return self.config.alerts
     
     def get_performance_config(self) -> PerformanceConfig:
         """Get performance configuration."""
+
+
+
         return self.config.performance
     
     def export_config(self, file_path: str) -> None:

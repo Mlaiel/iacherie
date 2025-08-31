@@ -1,5 +1,5 @@
 """
-📊 Alert Dashboard Service
+ Alert Dashboard Service
 ========================
 
 Real-time dashboard service for alert visualization, monitoring, and management.
@@ -195,6 +195,9 @@ class MetricsCalculator:
         time_range: timedelta = timedelta(hours=24)
     ) -> AlertMetrics:
         """Calculate alert metrics."""
+
+
+
         try:
             cache_key = f"alert_metrics:{user_id or 'all'}:{time_range.total_seconds()}"
             cached_metrics = await self.cache_manager.get(cache_key)
@@ -270,6 +273,9 @@ class MetricsCalculator:
         time_range: timedelta = timedelta(hours=24)
     ) -> List[PlatformMetrics]:
         """Calculate platform-specific metrics."""
+
+
+
         try:
             cache_key = f"platform_metrics:{user_id or 'all'}:{time_range.total_seconds()}"
             cached_metrics = await self.cache_manager.get(cache_key)
@@ -326,6 +332,9 @@ class MetricsCalculator:
         interval_minutes: int = 60
     ) -> TimeSeriesData:
         """Get timeline data for charts."""
+
+
+
         try:
             cache_key = f"timeline_data:{user_id or 'all'}:{time_range.total_seconds()}:{interval_minutes}"
             cached_data = await self.cache_manager.get(cache_key)
@@ -470,6 +479,9 @@ class DashboardService:
 
     async def notify_alert_update(self, alert: Alert, update_type: UpdateType) -> None:
         """Notify all relevant connections about alert updates."""
+
+
+
         try:
             message = {
                 "type": update_type.value,
@@ -497,6 +509,9 @@ class DashboardService:
 
     async def get_dashboard_layout(self, user_id: str) -> Optional[DashboardLayout]:
         """Get user's dashboard layout."""
+
+
+
         try:
             cache_key = f"dashboard_layout:{user_id}"
             cached_layout = await self.cache_manager.get(cache_key)
@@ -523,6 +538,9 @@ class DashboardService:
 
     async def save_dashboard_layout(self, user_id: str, layout: Dict[str, Any]) -> bool:
         """Save user's dashboard layout."""
+
+
+
         try:
             async with get_async_session() as session:
                 # Check if layout exists
@@ -561,6 +579,9 @@ class DashboardService:
 
     async def get_widget_data(self, widget_type: WidgetType, user_id: str, **kwargs) -> Dict[str, Any]:
         """Get data for specific widget type."""
+
+
+
         try:
             if widget_type == WidgetType.ALERT_COUNT:
                 metrics = await self.metrics_calculator.get_alert_metrics(user_id)
@@ -620,6 +641,9 @@ class DashboardService:
 
     async def _send_initial_dashboard_data(self, connection_id: str, user_id: str) -> None:
         """Send initial dashboard data to new connection."""
+
+
+
         try:
             # Get dashboard layout
             layout = await self.get_dashboard_layout(user_id)
@@ -641,6 +665,9 @@ class DashboardService:
 
     async def _handle_websocket_message(self, connection_id: str, message: Dict[str, Any]) -> None:
         """Handle incoming WebSocket message."""
+
+
+
         try:
             message_type = message.get("type")
             
@@ -735,6 +762,9 @@ class DashboardService:
 
     async def _process_alert_broadcast(self, alert_data: Dict[str, Any]) -> None:
         """Process alert broadcast message."""
+
+
+
         try:
             update_type = UpdateType(alert_data.get("type", "alert_update"))
             alert_info = alert_data.get("alert", {})
@@ -756,6 +786,9 @@ class DashboardService:
 
     async def _update_widgets_for_alert(self, alert: Alert, update_type: UpdateType) -> None:
         """Update widgets based on alert changes."""
+
+
+
         try:
             # Update alert count widget
             metrics = await self.metrics_calculator.get_alert_metrics(alert.user_id)
@@ -780,6 +813,9 @@ class DashboardService:
 
     async def _get_real_time_alerts(self, user_id: str) -> Dict[str, Any]:
         """Get recent alerts for real-time feed."""
+
+
+
         try:
             async with get_async_session() as session:
                 result = await session.execute(

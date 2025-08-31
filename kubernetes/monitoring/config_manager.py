@@ -306,6 +306,9 @@ class MonitoringConfigurationManager:
     
     def _load_from_file(self, config_file: Path) -> Dict[str, Any]:
         """Load configuration from YAML file"""
+
+
+
         try:
             with open(config_file, 'r') as f:
                 if config_file.suffix.lower() == '.yaml' or config_file.suffix.lower() == '.yml':
@@ -390,6 +393,9 @@ class MonitoringConfigurationManager:
     
     def _get_development_config(self) -> Dict[str, Any]:
         """Get development environment configuration"""
+
+
+
         return {
             "profile": MonitoringProfile.STANDARD.value,
             "redis": {
@@ -444,6 +450,9 @@ class MonitoringConfigurationManager:
     
     def _get_staging_config(self) -> Dict[str, Any]:
         """Get staging environment configuration"""
+
+
+
         return {
             "profile": MonitoringProfile.ADVANCED.value,
             "redis": {
@@ -501,6 +510,9 @@ class MonitoringConfigurationManager:
     
     def _get_production_config(self) -> Dict[str, Any]:
         """Get production environment configuration"""
+
+
+
         return {
             "profile": MonitoringProfile.ENTERPRISE.value,
             "redis": {
@@ -576,6 +588,9 @@ class MonitoringConfigurationManager:
     
     def _get_testing_config(self) -> Dict[str, Any]:
         """Get testing environment configuration"""
+
+
+
         return {
             "profile": MonitoringProfile.MINIMAL.value,
             "redis": {
@@ -690,6 +705,9 @@ class MonitoringConfigurationManager:
     
     def get_full_config(self) -> Dict[str, Any]:
         """Get complete configuration dictionary"""
+
+
+
         return self._config.copy()
     
     def update_config(self, updates: Dict[str, Any]):

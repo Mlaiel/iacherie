@@ -82,6 +82,9 @@ class AdapterConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert config to dictionary."""
+
+
+
         return {
             'adapter_id': self.adapter_id,
             'category': self.category.value,
@@ -143,6 +146,9 @@ class AdapterRegistry:
     
     async def register_adapter(self, config: AdapterConfig) -> str:
         """Register a new adapter instance."""
+
+
+
         try:
             # Validate configuration
             await self._validate_config(config)
@@ -181,6 +187,9 @@ class AdapterRegistry:
     
     async def unregister_adapter(self, adapter_id: str) -> bool:
         """Unregister an adapter instance."""
+
+
+
         try:
             if adapter_id not in self.adapters:
                 logger.warning(f"Adapter not found for unregistration: {adapter_id}")
@@ -301,6 +310,9 @@ class AdapterRegistry:
     
     async def update_adapter_config(self, adapter_id: str, updates: Dict[str, Any]) -> bool:
         """Update adapter configuration."""
+
+
+
         try:
             instance = self.adapters.get(adapter_id)
             if not instance:
@@ -325,10 +337,16 @@ class AdapterRegistry:
     
     async def enable_adapter(self, adapter_id: str) -> bool:
         """Enable an adapter."""
+
+
+
         return await self.update_adapter_config(adapter_id, {'enabled': True})
     
     async def disable_adapter(self, adapter_id: str) -> bool:
         """Disable an adapter."""
+
+
+
         return await self.update_adapter_config(adapter_id, {'enabled': False})
     
     async def record_request(self, adapter_id: str, success: bool, error: Optional[str] = None):
@@ -400,6 +418,9 @@ class AdapterRegistry:
     
     async def _store_adapter_config(self, config: AdapterConfig) -> None:
         """Store adapter configuration in Redis."""
+
+
+
         try:
             key = f"adapter_config:{config.adapter_id}"
             data = json.dumps(config.to_dict(), default=str)

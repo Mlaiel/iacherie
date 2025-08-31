@@ -248,6 +248,9 @@ class OnlyFansCrawler(BaseCrawler):
         Returns:
             bool: Authentication success status
         """
+
+
+
         try:
             self.auth_token = auth_token
             self.user_id = user_id
@@ -448,6 +451,9 @@ class OnlyFansCrawler(BaseCrawler):
         Returns:
             OnlyFansAnalytics: Comprehensive analytics data
         """
+
+
+
         try:
             start_time, end_time = analysis_period
             
@@ -550,6 +556,9 @@ class OnlyFansCrawler(BaseCrawler):
     
     async def _search_creators(self, query: str, limit: int) -> List[OnlyFansCreator]:
         """Search for OnlyFans creators"""
+
+
+
         try:
             params = {
                 "query": query,
@@ -586,6 +595,9 @@ class OnlyFansCrawler(BaseCrawler):
 
     async def _get_creator_recent_posts(self, username: str) -> List[OnlyFansPost]:
         """Get recent posts from creator"""
+
+
+
         try:
             async with self.session.get(f"{self.api_base}/users/{username}/posts") as response:
                 if response.status == 200:
@@ -606,6 +618,9 @@ class OnlyFansCrawler(BaseCrawler):
 
     async def _parse_creator_data(self, data: Dict[str, Any]) -> OnlyFansCreator:
         """Parse creator data from API response"""
+
+
+
         return OnlyFansCreator(
             creator_id=str(data.get("id", "")),
             username=data.get("username", ""),
@@ -686,6 +701,9 @@ class OnlyFansCrawler(BaseCrawler):
         features2: Dict[str, Any]
     ) -> float:
         """Calculate similarity between post features"""
+
+
+
         try:
             scores = []
             
@@ -751,6 +769,9 @@ class OnlyFansCrawler(BaseCrawler):
 
     async def close(self):
         """Close crawler and cleanup resources"""
+
+
+
         try:
             await self.cache_manager.close()
             await super().close()

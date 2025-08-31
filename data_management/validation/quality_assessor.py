@@ -1,15 +1,15 @@
 """
-🚀 Content Quality Assessor - IA Influencer Agent Platform Enterprise
+ Content Quality Assessor - IA Influencer Agent Platform Enterprise
 ==================================================================
 Module: backend/data_management/validation/quality_assessor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ==================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 SYSTÈME D'ÉVALUATION QUALITÉ CONTENU IA
+ SYSTÈME D'ÉVALUATION QUALITÉ CONTENU IA
 Évaluation intelligente de la qualité de contenu multi-format
 - Analyse qualité technique automatisée
 - Scoring multi-critères avec IA
@@ -123,6 +123,9 @@ class AudioQualityAnalyzer:
     
     def assess_audio_quality(self, file_path: str, creator_type: str = "musician") -> QualityAssessmentResult:
         """Évalue la qualité audio complète"""
+
+
+
         try:
             # Chargement audio
             y, sr = librosa.load(file_path, sr=None)
@@ -571,6 +574,9 @@ class AudioQualityAnalyzer:
     
     def _create_error_result(self, error_msg: str) -> QualityAssessmentResult:
         """Crée un résultat d'erreur"""
+
+
+
         return QualityAssessmentResult(
             overall_score=0.0,
             overall_level=QualityLevel.POOR,
@@ -609,6 +615,9 @@ class VideoQualityAnalyzer:
     
     def assess_video_quality(self, file_path: str, creator_type: str = "influencer") -> QualityAssessmentResult:
         """Évalue la qualité vidéo complète"""
+
+
+
         try:
             # Ouverture vidéo
             cap = cv2.VideoCapture(file_path)
@@ -970,6 +979,9 @@ class VideoQualityAnalyzer:
     
     def _create_error_result(self, error_msg: str) -> QualityAssessmentResult:
         """Crée un résultat d'erreur"""
+
+
+
         return QualityAssessmentResult(
             overall_score=0.0,
             overall_level=QualityLevel.POOR,
@@ -1028,6 +1040,9 @@ class QualityAssessor:
     
     def _create_placeholder_result(self, message: str) -> QualityAssessmentResult:
         """Crée un résultat placeholder"""
+
+
+
         return QualityAssessmentResult(
             overall_score=0.5,
             overall_level=QualityLevel.FAIR,
@@ -1042,6 +1057,9 @@ class QualityAssessor:
     
     def _create_error_result(self, error_msg: str) -> QualityAssessmentResult:
         """Crée un résultat d'erreur"""
+
+
+
         return QualityAssessmentResult(
             overall_score=0.0,
             overall_level=QualityLevel.POOR,
@@ -1056,6 +1074,9 @@ class QualityAssessor:
     
     def _calculate_accessibility_score(self, technical_metrics: Dict[str, Any]) -> float:
         """Calculate accessibility score based on technical metrics"""
+
+
+
         try:
             score = 0.8  # Base score
             
@@ -1091,6 +1112,9 @@ class ImageQualityAnalyzer:
     
     def assess_image_quality(self, file_path: str, creator_type: str = "photographer") -> QualityAssessmentResult:
         """Assess image quality"""
+
+
+
         try:
             # Basic image quality assessment
             img_path = Path(file_path)
@@ -1167,6 +1191,9 @@ class ImageQualityAnalyzer:
     
     def _create_error_result(self, error_msg: str) -> QualityAssessmentResult:
         """Create error result for images"""
+
+
+
         return QualityAssessmentResult(
             overall_score=0.0,
             overall_level=QualityLevel.POOR,
@@ -1188,6 +1215,9 @@ class TextQualityAnalyzer:
     
     def assess_text_quality(self, file_path: str, creator_type: str = "writer") -> QualityAssessmentResult:
         """Assess text quality"""
+
+
+
         try:
             # Read text content
             text_path = Path(file_path)
@@ -1269,6 +1299,9 @@ class TextQualityAnalyzer:
     
     def _create_error_result(self, error_msg: str) -> QualityAssessmentResult:
         """Create error result for text"""
+
+
+
         return QualityAssessmentResult(
             overall_score=0.0,
             overall_level=QualityLevel.POOR,

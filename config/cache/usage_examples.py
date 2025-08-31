@@ -93,11 +93,11 @@ class CacheUsageExamples:
             print("Production configuration activated:")
             print(f"  Environment: {active.environment}")
             print(f"  Cache Type: {active.cache_type}")
-            print(f"  Redis Config: {'✓' if active.redis_config else '✗'}")
-            print(f"  Memcached Config: {'✓' if active.memcached_config else '✗'}")
-            print(f"  Distributed: {'✓' if active.distributed_config else '✗'}")
-            print(f"  Monitoring: {'✓' if active.metrics_config else '✗'}")
-            print(f"  Compression: {'✓' if active.compression_config else '✗'}")
+            print(f"  Redis Config: {'' if active.redis_config else ''}")
+            print(f"  Memcached Config: {'' if active.memcached_config else ''}")
+            print(f"  Distributed: {'' if active.distributed_config else ''}")
+            print(f"  Monitoring: {'' if active.metrics_config else ''}")
+            print(f"  Compression: {'' if active.compression_config else ''}")
     
     @staticmethod
     def example_3_redis_specific_config():
@@ -274,7 +274,7 @@ class CacheUsageExamples:
         validation_results = config_manager.validate_all_bundles()
         print("\nBundle Validation Results:")
         for bundle_name, is_valid in validation_results.items():
-            print(f"  {bundle_name}: {'✓' if is_valid else '✗'}")
+            print(f"  {bundle_name}: {'' if is_valid else ''}")
 
 
 class AsyncCacheExamples:

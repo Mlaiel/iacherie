@@ -1,15 +1,15 @@
 """
-🚀 Service Mesh & Discovery - IA Influencer Agent Platform Enterprise
+ Service Mesh & Discovery - IA Influencer Agent Platform Enterprise
 ===================================================================
 Module: backend/platform_core/communication/service_mesh.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ===================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 SERVICE MESH INTELLIGENT
+ SERVICE MESH INTELLIGENT
 Infrastructure de communication microservices avancée
 - Service discovery automatique avec consensus
 - Traffic management et circuit breakers
@@ -268,6 +268,9 @@ class ServiceDiscovery:
         
     async def get_service_policy(self, service_name: str) -> Optional[ServicePolicy]:
         """Récupère la politique d'un service"""
+
+
+
         return self.policies.get(service_name)
         
     async def _persist_service(self, service: ServiceInstance):
@@ -293,6 +296,9 @@ class ServiceDiscovery:
         
     async def _load_from_redis(self):
         """Charge les services et politiques depuis Redis"""
+
+
+
         try:
             # Charger les services
             pattern = f"{self.registry_key}:*"
@@ -403,6 +409,9 @@ class ServiceDiscovery:
         
     def get_discovery_stats(self) -> Dict[str, Any]:
         """Retourne les statistiques de découverte"""
+
+
+
         return {
             "total_services": len(self.services),
             "total_instances": sum(len(instances) for instances in self.services.values()),
@@ -671,6 +680,9 @@ class ServiceMesh:
         
     def get_mesh_stats(self) -> Dict[str, Any]:
         """Retourne les statistiques du mesh"""
+
+
+
         return {
             "discovery": self.discovery.get_discovery_stats(),
             "circuit_breakers": {

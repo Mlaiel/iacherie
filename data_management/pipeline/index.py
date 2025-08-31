@@ -227,6 +227,9 @@ class PipelineInterface:
         Returns:
             Processing results with all pipeline outputs
         """
+
+
+
         try:
             self.logger.info(f"Starting content processing: {content_path}")
             
@@ -477,6 +480,9 @@ class PipelineInterface:
     
     def get_pipeline_status(self) -> Dict[str, Any]:
         """Get current pipeline status and statistics."""
+
+
+
         return {
             'config': {
                 'creator_type': self.config.creator_type.value,
@@ -549,6 +555,9 @@ def create_pipeline(creator_type: str, **kwargs) -> PipelineInterface:
     Returns:
         Configured PipelineInterface instance
     """
+
+
+
     try:
         creator_enum = CreatorType(creator_type.lower())
     except ValueError:

@@ -9,7 +9,7 @@ Created: 2025-08-20
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -475,14 +475,17 @@ __all__ = [item for item in __all__ if item is not None]
 # Module initialization
 def _initialize_core_logging():
     """Initialize core module logging"""
+
+
+
     try:
         logging.basicConfig(
             level=logging.INFO,
             format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
         )
-        logger.info(f"🚀 IA-Influencer-Agent Core Module v{__version__} initialized")
-        logger.info(f"👨‍💻 Author: {__author__} ({__email__})")
-        logger.info(f"📊 Core modules loaded: {len(CORE_MODULES)}")
+        logger.info(f" IA-Influencer-Agent Core Module v{__version__} initialized")
+        logger.info(f"‍ Author: {__author__} ({__email__})")
+        logger.info(f" Core modules loaded: {len(CORE_MODULES)}")
     except Exception as e:
         print(f"Failed to initialize core logging: {e}")
 
@@ -518,7 +521,7 @@ MODULE_METADATA = {
 }
 
 # Legal notice
-LEGAL_NOTICE = """⚠️  AVERTISSEMENT LÉGAL - PROPRIÉTÉ INTELLECTUELLE ⚠️
+LEGAL_NOTICE = """  AVERTISSEMENT LÉGAL - PROPRIÉTÉ INTELLECTUELLE 
 
 Ce code et tous les concepts associés sont la propriété exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou redistribution non autorisée est 
@@ -533,10 +536,16 @@ Pour toute demande de licence ou autorisation: mlaiel@live.de
 """
 def get_legal_notice() -> str:
     """Retourne l'avertissement légal"""
+
+
+
     return LEGAL_NOTICE
 
 def get_module_metadata() -> Dict[str, Any]:
     """Retourne les métadonnées complètes du module"""
+
+
+
     return MODULE_METADATA.copy()
 
 # Core validation system
@@ -559,19 +568,19 @@ __all__.extend([
 try:
     validation_result = validate_core_installation()
     if validation_result.get('status') == 'success':
-        logger.info("✅ Core module validation successful")
+        logger.info(" Core module validation successful")
     else:
-        logger.warning(f"⚠️ Core module validation issues: {validation_result.get('issues', [])}")
+        logger.warning(f" Core module validation issues: {validation_result.get('issues', [])}")
 except Exception as e:
-    logger.error(f"❌ Core module validation failed: {e}")
+    logger.error(f" Core module validation failed: {e}")
 
 # Quick validation check
 try:
     if quick_validate_core():
-        logger.info("🚀 Quick validation passed - Core system operational")
+        logger.info(" Quick validation passed - Core system operational")
     else:
-        logger.warning("⚠️ Quick validation detected issues")
+        logger.warning(" Quick validation detected issues")
 except Exception as e:
-    logger.warning(f"⚠️ Quick validation error: {e}")
+    logger.warning(f" Quick validation error: {e}")
 
-logger.info(f"🏭 IA-Influencer-Agent Core Module ready for production deployment")
+logger.info(f" IA-Influencer-Agent Core Module ready for production deployment")

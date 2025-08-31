@@ -5,7 +5,7 @@ Architecture: Central Access Point for Event Management System
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 INTERDIT : Copie, reproduction, modification, ou usage sans autorisation écrite explicite.
 Toute violation sera poursuivie selon la loi allemande et française.
@@ -346,6 +346,9 @@ class EventSystemManager:
     
     def get_configuration(self) -> Dict[str, Any]:
         """Retourne la configuration actuelle"""
+
+
+
         return self._config.copy()
 
 

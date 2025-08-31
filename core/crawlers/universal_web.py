@@ -9,7 +9,7 @@ proxy rotation, and intelligent content extraction for copyright protection.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, modification, or distribution is strictly prohibited.
 Violators will face immediate legal action under German and international law.
@@ -112,6 +112,9 @@ class ContentExtractor:
     
     async def extract_article_content(self, url: str) -> Optional[WebsiteData]:
         """Extract article content using newspaper3k and custom methods."""
+
+
+
         try:
             # Use newspaper3k for article extraction
             article = Article(url)
@@ -169,6 +172,9 @@ class ContentExtractor:
     
     async def _get_response_metadata(self, url: str) -> Dict[str, Any]:
         """Get HTTP response metadata."""
+
+
+
         try:
             start_time = datetime.now()
             
@@ -194,6 +200,9 @@ class ContentExtractor:
     
     async def _extract_videos(self, url: str) -> List[str]:
         """Extract video URLs from page."""
+
+
+
         try:
             async with self.session.get(url) as response:
                 html = await response.text()
@@ -227,6 +236,9 @@ class ContentExtractor:
     
     async def _calculate_structure_hash(self, url: str) -> str:
         """Calculate hash of page structure for change detection."""
+
+
+
         try:
             async with self.session.get(url) as response:
                 html = await response.text()
@@ -251,6 +263,9 @@ class ContentExtractor:
     
     def _extract_keywords(self, text: str, max_keywords: int = 20) -> List[str]:
         """Extract important keywords from text content."""
+
+
+
         try:
             # Simple keyword extraction (could be enhanced with NLP)
             words = re.findall(r'\b\w{4,}\b', text.lower())
@@ -343,6 +358,9 @@ class ScrapyWebCrawler:
     
     async def crawl(self) -> List[Dict[str, Any]]:
         """Run Scrapy crawler and return results."""
+
+
+
         try:
             process = CrawlerProcess(get_project_settings())
             spider_class = self.create_spider()
@@ -447,6 +465,9 @@ class UniversalWebCrawler(BaseCrawler):
     
     async def crawl_domain(self, target: CrawlingTarget) -> List[CrawlResult]:
         """Crawl an entire domain based on target configuration."""
+
+
+
         try:
             results = []
             
@@ -472,6 +493,9 @@ class UniversalWebCrawler(BaseCrawler):
     
     async def monitor_websites(self) -> List[CrawlResult]:
         """Monitor all configured crawling targets for changes."""
+
+
+
         try:
             all_results = []
             
@@ -498,6 +522,9 @@ class UniversalWebCrawler(BaseCrawler):
         similarity_threshold: float = 0.8
     ) -> List[CrawlResult]:
         """Search for similar content across specified domains."""
+
+
+
         try:
             results = []
             reference_keywords = self.content_extractor._extract_keywords(reference_content)
@@ -536,6 +563,9 @@ class UniversalWebCrawler(BaseCrawler):
     
     async def _search_domain(self, domain: str, query: str) -> List[str]:
         """Search within a specific domain using search engines."""
+
+
+
         try:
             # Use Google search with site: operator
             search_query = f"site:{domain} {query}"
@@ -550,6 +580,9 @@ class UniversalWebCrawler(BaseCrawler):
     
     def _calculate_content_similarity(self, content1: str, content2: str) -> float:
         """Calculate similarity between two content strings."""
+
+
+
         try:
             # Simple Jaccard similarity (could be enhanced with NLP)
             words1 = set(content1.lower().split())

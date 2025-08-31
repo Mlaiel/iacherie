@@ -8,7 +8,7 @@ Responsibility: Production-grade backup strategies and disaster recovery
 Technologies: Python, Multi-Cloud Backup, Versioning, Point-in-Time Recovery
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -224,7 +224,7 @@ class BackupMetrics:
 
 class AdvancedBackupManager:
     """
-    🎯 Advanced Backup Storage Manager - IA-Influencer-Agent
+     Advanced Backup Storage Manager - IA-Influencer-Agent
     
     Enterprise-grade backup and disaster recovery solution providing:
     - Multi-cloud backup strategies with automatic failover
@@ -258,10 +258,13 @@ class AdvancedBackupManager:
         # Setup default policies
         self._create_default_policies()
         
-        logger.info("🚀 AdvancedBackupManager initialized with multi-cloud support")
+        logger.info(" AdvancedBackupManager initialized with multi-cloud support")
     
     def _initialize_cloud_clients(self):
         """Initialize cloud storage clients"""
+
+
+
         try:
             # AWS S3 client
             if os.getenv("AWS_ACCESS_KEY_ID"):
@@ -271,25 +274,28 @@ class AdvancedBackupManager:
                     aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
                     region_name=os.getenv("AWS_REGION", "eu-west-1")
                 )
-                logger.info("✅ AWS S3 client initialized")
+                logger.info(" AWS S3 client initialized")
             
             # Google Cloud Storage client
             if os.getenv("GOOGLE_APPLICATION_CREDENTIALS"):
                 self._gcs_client = gcs.Client()
-                logger.info("✅ Google Cloud Storage client initialized")
+                logger.info(" Google Cloud Storage client initialized")
             
             # Azure Blob Storage client
             if os.getenv("AZURE_STORAGE_CONNECTION_STRING"):
                 self._azure_blob_client = BlobServiceClient.from_connection_string(
                     os.getenv("AZURE_STORAGE_CONNECTION_STRING")
                 )
-                logger.info("✅ Azure Blob Storage client initialized")
+                logger.info(" Azure Blob Storage client initialized")
             
         except Exception as e:
-            logger.warning(f"⚠️ Cloud client initialization partial: {e}")
+            logger.warning(f" Cloud client initialization partial: {e}")
     
     def _create_default_policies(self):
         """Create default backup policies"""
+
+
+
         try:
             # High-frequency policy for critical data
             self.policies["critical_data"] = BackupPolicy(
@@ -331,14 +337,17 @@ class AdvancedBackupManager:
                 compression_enabled=True
             )
             
-            logger.info("✅ Default backup policies created")
+            logger.info(" Default backup policies created")
             
         except Exception as e:
-            logger.error(f"❌ Default policy creation failed: {e}")
+            logger.error(f" Default policy creation failed: {e}")
     
     async def create_backup(self, source_path: str, policy_name: str, 
                            tags: Optional[Dict[str, str]] = None) -> str:
         """Create backup according to specified policy"""
+
+
+
         try:
             backup_id = f"backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{hashlib.sha256(source_path.encode()).hexdigest()[:8]}"
             
@@ -358,7 +367,7 @@ class AdvancedBackupManager:
                 tags=tags or {}
             )
             
-            logger.info(f"🔄 Starting backup: {backup_id} for {source_path}")
+            logger.info(f" Starting backup: {backup_id} for {source_path}")
             
             try:
                 # Determine what to backup based on type
@@ -367,7 +376,7 @@ class AdvancedBackupManager:
                 if not files_to_backup:
                     backup_metadata.status = BackupStatus.COMPLETED
                     backup_metadata.completed_at = datetime.now()
-                    logger.info(f"✅ No changes detected for incremental backup: {backup_id}")
+                    logger.info(f" No changes detected for incremental backup: {backup_id}")
                     return backup_id
                 
                 # Calculate source size
@@ -403,13 +412,13 @@ class AdvancedBackupManager:
                 # Update metrics
                 self._update_backup_metrics(backup_metadata)
                 
-                logger.info(f"✅ Backup completed successfully: {backup_id}")
+                logger.info(f" Backup completed successfully: {backup_id}")
                 
             except Exception as e:
                 backup_metadata.status = BackupStatus.FAILED
                 backup_metadata.error_message = str(e)
                 backup_metadata.completed_at = datetime.now()
-                logger.error(f"❌ Backup failed: {backup_id} - {e}")
+                logger.error(f" Backup failed: {backup_id} - {e}")
                 raise
             
             finally:
@@ -422,11 +431,14 @@ class AdvancedBackupManager:
             return backup_id
             
         except Exception as e:
-            logger.error(f"❌ Backup creation failed: {e}")
+            logger.error(f" Backup creation failed: {e}")
             raise
     
     async def _determine_backup_files(self, source_path: str, policy: BackupPolicy) -> List[str]:
         """Determine which files need to be backed up based on backup type"""
+
+
+
         try:
             files_to_backup = []
             
@@ -464,11 +476,14 @@ class AdvancedBackupManager:
             return files_to_backup
             
         except Exception as e:
-            logger.error(f"❌ Failed to determine backup files: {e}")
+            logger.error(f" Failed to determine backup files: {e}")
             return []
     
     def _find_last_successful_backup(self, source_path: str, policy_name: str) -> Optional[BackupMetadata]:
         """Find the last successful backup for given source and policy"""
+
+
+
         try:
             successful_backups = [
                 backup for backup in self.backup_history
@@ -483,11 +498,14 @@ class AdvancedBackupManager:
             return None
             
         except Exception as e:
-            logger.error(f"❌ Failed to find last backup: {e}")
+            logger.error(f" Failed to find last backup: {e}")
             return None
     
     async def _create_backup_package(self, files: List[str], policy: BackupPolicy) -> bytes:
         """Create compressed and optionally encrypted backup package"""
+
+
+
         try:
             # Create temporary tar-like structure in memory
             backup_data = {}
@@ -503,7 +521,7 @@ class AdvancedBackupManager:
                                 'modified_time': os.path.getmtime(file_path)
                             }
                 except Exception as e:
-                    logger.warning(f"⚠️ Failed to read file {file_path}: {e}")
+                    logger.warning(f" Failed to read file {file_path}: {e}")
                     continue
             
             # Serialize backup data
@@ -524,12 +542,15 @@ class AdvancedBackupManager:
                 return serialized_data
                 
         except Exception as e:
-            logger.error(f"❌ Backup package creation failed: {e}")
+            logger.error(f" Backup package creation failed: {e}")
             raise
     
     async def _upload_to_clouds(self, backup_data: bytes, metadata: BackupMetadata, 
                                policy: BackupPolicy) -> List[str]:
         """Upload backup to configured cloud providers"""
+
+
+
         try:
             upload_tasks = []
             cloud_locations = []
@@ -558,9 +579,9 @@ class AdvancedBackupManager:
                 try:
                     location = await task
                     cloud_locations.append(f"{provider.value}:{location}")
-                    logger.info(f"✅ Uploaded to {provider.value}: {location}")
+                    logger.info(f" Uploaded to {provider.value}: {location}")
                 except Exception as e:
-                    logger.error(f"❌ Upload to {provider.value} failed: {e}")
+                    logger.error(f" Upload to {provider.value} failed: {e}")
                     # Continue with other providers
             
             if not cloud_locations:
@@ -569,12 +590,15 @@ class AdvancedBackupManager:
             return cloud_locations
             
         except Exception as e:
-            logger.error(f"❌ Cloud upload failed: {e}")
+            logger.error(f" Cloud upload failed: {e}")
             raise
     
     async def _upload_to_aws_s3(self, backup_data: bytes, metadata: BackupMetadata, 
                                policy: BackupPolicy) -> str:
         """Upload backup to AWS S3"""
+
+
+
         try:
             bucket_name = os.getenv("AWS_BACKUP_BUCKET", "ia-influencer-backups")
             key = f"{policy.policy_name}/{metadata.backup_id}/{metadata.backup_id}.backup"
@@ -626,12 +650,15 @@ class AdvancedBackupManager:
             return f"s3://{bucket_name}/{key}"
             
         except Exception as e:
-            logger.error(f"❌ AWS S3 upload failed: {e}")
+            logger.error(f" AWS S3 upload failed: {e}")
             raise
     
     async def _upload_to_gcs(self, backup_data: bytes, metadata: BackupMetadata, 
                             policy: BackupPolicy) -> str:
         """Upload backup to Google Cloud Storage"""
+
+
+
         try:
             bucket_name = os.getenv("GCS_BACKUP_BUCKET", "ia-influencer-backups")
             blob_name = f"{policy.policy_name}/{metadata.backup_id}/{metadata.backup_id}.backup"
@@ -666,12 +693,15 @@ class AdvancedBackupManager:
             return f"gs://{bucket_name}/{blob_name}"
             
         except Exception as e:
-            logger.error(f"❌ Google Cloud Storage upload failed: {e}")
+            logger.error(f" Google Cloud Storage upload failed: {e}")
             raise
     
     async def _upload_to_azure(self, backup_data: bytes, metadata: BackupMetadata, 
                               policy: BackupPolicy) -> str:
         """Upload backup to Azure Blob Storage"""
+
+
+
         try:
             container_name = os.getenv("AZURE_BACKUP_CONTAINER", "ia-influencer-backups")
             blob_name = f"{policy.policy_name}/{metadata.backup_id}/{metadata.backup_id}.backup"
@@ -710,11 +740,14 @@ class AdvancedBackupManager:
             return f"https://{blob_client.account_name}.blob.core.windows.net/{container_name}/{blob_name}"
             
         except Exception as e:
-            logger.error(f"❌ Azure Blob Storage upload failed: {e}")
+            logger.error(f" Azure Blob Storage upload failed: {e}")
             raise
     
     def _update_backup_metrics(self, metadata: BackupMetadata):
         """Update backup metrics based on completed backup"""
+
+
+
         try:
             self.metrics.total_backups += 1
             
@@ -752,11 +785,14 @@ class AdvancedBackupManager:
             self.metrics.last_updated = datetime.now()
             
         except Exception as e:
-            logger.error(f"❌ Metrics update failed: {e}")
+            logger.error(f" Metrics update failed: {e}")
     
     async def restore_backup(self, backup_id: str, target_path: str, 
                             requested_by: str, point_in_time: Optional[datetime] = None) -> str:
         """Restore backup to specified location"""
+
+
+
         try:
             request_id = f"restore_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{hashlib.sha256(backup_id.encode()).hexdigest()[:8]}"
             
@@ -786,7 +822,7 @@ class AdvancedBackupManager:
             
             self.recovery_requests[request_id] = recovery_request
             
-            logger.info(f"🔄 Starting restore: {request_id} for backup {backup_id}")
+            logger.info(f" Starting restore: {request_id} for backup {backup_id}")
             
             try:
                 # Download backup data from cloud
@@ -809,23 +845,26 @@ class AdvancedBackupManager:
                 # Update metrics
                 self._update_recovery_metrics(recovery_request)
                 
-                logger.info(f"✅ Restore completed: {request_id} - {len(restored_files)} files restored")
+                logger.info(f" Restore completed: {request_id} - {len(restored_files)} files restored")
                 
             except Exception as e:
                 recovery_request.status = BackupStatus.FAILED
                 recovery_request.error_message = str(e)
                 recovery_request.completed_at = datetime.now()
-                logger.error(f"❌ Restore failed: {request_id} - {e}")
+                logger.error(f" Restore failed: {request_id} - {e}")
                 raise
             
             return request_id
             
         except Exception as e:
-            logger.error(f"❌ Backup restore failed: {e}")
+            logger.error(f" Backup restore failed: {e}")
             raise
     
     async def _download_backup_data(self, metadata: BackupMetadata) -> bytes:
         """Download backup data from cloud storage"""
+
+
+
         try:
             # Try each cloud location until successful
             for location in metadata.cloud_locations:
@@ -840,17 +879,20 @@ class AdvancedBackupManager:
                         return await self._download_from_azure(path)
                     
                 except Exception as e:
-                    logger.warning(f"⚠️ Failed to download from {location}: {e}")
+                    logger.warning(f" Failed to download from {location}: {e}")
                     continue
             
             raise Exception("Failed to download from all cloud locations")
             
         except Exception as e:
-            logger.error(f"❌ Backup download failed: {e}")
+            logger.error(f" Backup download failed: {e}")
             raise
     
     async def _download_from_aws_s3(self, s3_path: str) -> bytes:
         """Download backup from AWS S3"""
+
+
+
         try:
             # Parse S3 path
             s3_path = s3_path.replace('s3://', '')
@@ -860,11 +902,14 @@ class AdvancedBackupManager:
             return response['Body'].read()
             
         except Exception as e:
-            logger.error(f"❌ AWS S3 download failed: {e}")
+            logger.error(f" AWS S3 download failed: {e}")
             raise
     
     async def _download_from_gcs(self, gcs_path: str) -> bytes:
         """Download backup from Google Cloud Storage"""
+
+
+
         try:
             # Parse GCS path
             gcs_path = gcs_path.replace('gs://', '')
@@ -876,11 +921,14 @@ class AdvancedBackupManager:
             return blob.download_as_bytes()
             
         except Exception as e:
-            logger.error(f"❌ Google Cloud Storage download failed: {e}")
+            logger.error(f" Google Cloud Storage download failed: {e}")
             raise
     
     async def _download_from_azure(self, azure_path: str) -> bytes:
         """Download backup from Azure Blob Storage"""
+
+
+
         try:
             # Parse Azure path and extract container and blob name
             # Format: https://account.blob.core.windows.net/container/blob
@@ -896,11 +944,14 @@ class AdvancedBackupManager:
             return blob_client.download_blob().readall()
             
         except Exception as e:
-            logger.error(f"❌ Azure Blob Storage download failed: {e}")
+            logger.error(f" Azure Blob Storage download failed: {e}")
             raise
     
     async def _extract_backup_package(self, backup_data: bytes, metadata: BackupMetadata) -> Dict[str, Any]:
         """Extract and decompress backup package"""
+
+
+
         try:
             # Get policy for compression settings
             policy = self.policies.get(metadata.policy_name)
@@ -924,12 +975,15 @@ class AdvancedBackupManager:
             return restored_data
             
         except Exception as e:
-            logger.error(f"❌ Backup package extraction failed: {e}")
+            logger.error(f" Backup package extraction failed: {e}")
             raise
     
     async def _restore_files(self, restored_data: Dict[str, Any], target_path: str, 
                             recovery_request: RecoveryRequest) -> List[str]:
         """Restore files to target location"""
+
+
+
         try:
             restored_files = []
             
@@ -960,17 +1014,20 @@ class AdvancedBackupManager:
                     restored_files.append(target_file_path)
                     
                 except Exception as e:
-                    logger.warning(f"⚠️ Failed to restore file {file_path}: {e}")
+                    logger.warning(f" Failed to restore file {file_path}: {e}")
                     continue
             
             return restored_files
             
         except Exception as e:
-            logger.error(f"❌ File restoration failed: {e}")
+            logger.error(f" File restoration failed: {e}")
             raise
     
     def _update_recovery_metrics(self, recovery_request: RecoveryRequest):
         """Update recovery metrics"""
+
+
+
         try:
             self.metrics.total_recovery_requests += 1
             
@@ -992,12 +1049,15 @@ class AdvancedBackupManager:
             self.metrics.last_updated = datetime.now()
             
         except Exception as e:
-            logger.error(f"❌ Recovery metrics update failed: {e}")
+            logger.error(f" Recovery metrics update failed: {e}")
     
     async def verify_backup_integrity(self, backup_id: str) -> Dict[str, Any]:
         """Verify backup integrity using checksums"""
+
+
+
         try:
-            logger.info(f"🔍 Verifying backup integrity: {backup_id}")
+            logger.info(f" Verifying backup integrity: {backup_id}")
             
             # Find backup metadata
             backup_metadata = next(
@@ -1065,16 +1125,19 @@ class AdvancedBackupManager:
             
             verification_results["integrity_status"] = "valid" if all_verifications_passed else "corrupted"
             
-            logger.info(f"✅ Backup verification completed: {backup_id} - Status: {verification_results['integrity_status']}")
+            logger.info(f" Backup verification completed: {backup_id} - Status: {verification_results['integrity_status']}")
             
             return verification_results
             
         except Exception as e:
-            logger.error(f"❌ Backup verification failed: {e}")
+            logger.error(f" Backup verification failed: {e}")
             return {"backup_id": backup_id, "error": str(e)}
     
     async def get_backup_metrics(self) -> Dict[str, Any]:
         """Get comprehensive backup metrics"""
+
+
+
         try:
             # Calculate additional metrics
             success_rate = (
@@ -1122,7 +1185,7 @@ class AdvancedBackupManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Backup metrics calculation failed: {e}")
+            logger.error(f" Backup metrics calculation failed: {e}")
             return {"error": str(e)}
 
 
@@ -1133,6 +1196,9 @@ backup_manager = AdvancedBackupManager()
 # Factory functions
 def create_backup_manager() -> AdvancedBackupManager:
     """Factory function to create backup manager instance"""
+
+
+
     return AdvancedBackupManager()
 
 
@@ -1143,6 +1209,9 @@ def create_custom_backup_policy(
     retention_days: int = 90
 ) -> BackupPolicy:
     """Factory function to create custom backup policy"""
+
+
+
     return BackupPolicy(
         policy_name=name,
         backup_type=backup_type,
@@ -1157,6 +1226,9 @@ def create_custom_backup_policy(
 # Usage Example
 async def main():
     """Example usage of AdvancedBackupManager"""
+
+
+
     try:
         backup_mgr = create_backup_manager()
         
@@ -1185,7 +1257,7 @@ async def main():
         print(f"Backup metrics: {json.dumps(metrics, indent=2)}")
         
     except Exception as e:
-        logger.error(f"❌ Example failed: {e}")
+        logger.error(f" Example failed: {e}")
 
 
 if __name__ == "__main__":

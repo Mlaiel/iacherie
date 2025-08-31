@@ -1,15 +1,15 @@
 """
-🚀 Format Validation System - IA Influencer Agent Platform Enterprise
+ Format Validation System - IA Influencer Agent Platform Enterprise
 ==================================================================
 Module: backend/data_management/validation/format_validator.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ==================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 SYSTÈME DE VALIDATION DE FORMATS MULTIMÉDIA
+ SYSTÈME DE VALIDATION DE FORMATS MULTIMÉDIA
 Validation avancée des formats pour tous types de créateurs
 - Support multi-format (audio, vidéo, image, document)
 - Détection de corruption et intégrité
@@ -159,6 +159,9 @@ class FormatDetector:
     
     def _validate_file_signature(self, file_path: str, format_name: str) -> bool:
         """Valide la signature binaire du fichier"""
+
+
+
         try:
             if format_name not in self.file_signatures:
                 return True  # Pas de signature à vérifier
@@ -935,6 +938,9 @@ class DocumentFormatValidator:
     
     def _validate_pdf(self, file_path: str, metadata: Dict, errors: List[str], warnings: List[str]):
         """Validation spécifique PDF"""
+
+
+
         try:
             with open(file_path, 'rb') as f:
                 pdf_reader = PyPDF2.PdfReader(f)
@@ -968,6 +974,9 @@ class DocumentFormatValidator:
     
     def _validate_docx(self, file_path: str, metadata: Dict, errors: List[str], warnings: List[str]):
         """Validation spécifique DOCX"""
+
+
+
         try:
             doc = docx.Document(file_path)
             
@@ -1000,6 +1009,9 @@ class DocumentFormatValidator:
     
     def _validate_text(self, file_path: str, metadata: Dict, errors: List[str], warnings: List[str]):
         """Validation spécifique fichiers texte"""
+
+
+
         try:
             encoding = metadata.get('detected_encoding', 'utf-8')
             
@@ -1021,6 +1033,9 @@ class DocumentFormatValidator:
     
     def _validate_json(self, file_path: str, metadata: Dict, errors: List[str], warnings: List[str]):
         """Validation spécifique JSON"""
+
+
+
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
@@ -1042,6 +1057,9 @@ class DocumentFormatValidator:
     
     def _validate_xml(self, file_path: str, metadata: Dict, errors: List[str], warnings: List[str]):
         """Validation spécifique XML"""
+
+
+
         try:
             import xml.etree.ElementTree as ET
             
@@ -1061,6 +1079,9 @@ class DocumentFormatValidator:
     
     def _validate_html(self, file_path: str, metadata: Dict, errors: List[str], warnings: List[str]):
         """Validation spécifique HTML"""
+
+
+
         try:
             from bs4 import BeautifulSoup
             

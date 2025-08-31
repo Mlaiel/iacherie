@@ -161,6 +161,9 @@ class TextFingerprinter:
     
     def _initialize_components(self):
         """Initialize fingerprinting components"""
+
+
+
         try:
             # Initialize scikit-learn vectorizers
             if SKLEARN_AVAILABLE:
@@ -348,6 +351,9 @@ class TextFingerprinter:
     
     async def _create_semantic_fingerprint(self, text: str) -> Optional[np.ndarray]:
         """Create semantic fingerprint using embeddings"""
+
+
+
         try:
             if TRANSFORMERS_AVAILABLE and "embeddings" in self.pipelines:
                 # Generate embeddings
@@ -645,6 +651,9 @@ class TextFingerprinter:
         similarity_method: SimilarityMethod
     ) -> float:
         """Calculate semantic similarity between vectors"""
+
+
+
         try:
             if similarity_method == SimilarityMethod.COSINE:
                 # Cosine similarity
@@ -668,6 +677,9 @@ class TextFingerprinter:
     
     def _calculate_structural_similarity(self, struct1: Dict[str, float], struct2: Dict[str, float]) -> float:
         """Calculate similarity between structural fingerprints"""
+
+
+
         try:
             common_keys = set(struct1.keys()) & set(struct2.keys())
             if not common_keys:
@@ -689,6 +701,9 @@ class TextFingerprinter:
     
     def _calculate_stylometric_similarity(self, style1: Dict[str, float], style2: Dict[str, float]) -> float:
         """Calculate similarity between stylometric fingerprints"""
+
+
+
         return self._calculate_structural_similarity(style1, style2)  # Same method
     
     async def batch_fingerprint(

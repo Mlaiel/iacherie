@@ -47,6 +47,9 @@ class TestPostgreSQLConnections:
     @pytest.fixture
     def mock_postgresql_config(self):
         """Mock PostgreSQL configuration for testing"""
+
+
+
         return {
             "host": "localhost",
             "port": 5432,
@@ -61,6 +64,9 @@ class TestPostgreSQLConnections:
     @pytest.fixture
     def mock_connection_handler(self, mock_postgresql_config):
         """Create a mock connection handler for testing"""
+
+
+
         try:
             from database.connections.postgresql import PostgreSQLConnectionHandler
             return PostgreSQLConnectionHandler(mock_postgresql_config)
@@ -77,7 +83,7 @@ class TestPostgreSQLConnections:
     @pytest.mark.asyncio
     async def test_database_connection_establishment(self, mock_connection_handler):
         """Test that database connections can be established"""
-        print("🔌 Testing PostgreSQL connection establishment...")
+        print(" Testing PostgreSQL connection establishment...")
         
         # Mock the connection establishment
         with patch.object(mock_connection_handler, 'connect', new_callable=AsyncMock) as mock_connect:
@@ -87,12 +93,12 @@ class TestPostgreSQLConnections:
             connection = await mock_connect()
             assert connection is not None, "Connection should be established"
             
-        print("✅ Database connection establishment test passed")
+        print(" Database connection establishment test passed")
     
     @pytest.mark.asyncio
     async def test_connection_health_check(self, mock_connection_handler):
         """Test database connection health check functionality"""
-        print("🏥 Testing PostgreSQL health check...")
+        print(" Testing PostgreSQL health check...")
         
         # Mock health check response
         expected_health = {
@@ -130,12 +136,12 @@ class TestPostgreSQLConnections:
             }
             assert health_result["status"] == "healthy", "Mock health check should be healthy"
         
-        print("✅ Database health check test passed")
+        print(" Database health check test passed")
     
     @pytest.mark.asyncio
     async def test_connection_pool_management(self, mock_connection_handler):
         """Test connection pool creation and management"""
-        print("🏊 Testing PostgreSQL connection pool management...")
+        print(" Testing PostgreSQL connection pool management...")
         
         # Test pool initialization
         if hasattr(mock_connection_handler, 'pool'):
@@ -154,12 +160,12 @@ class TestPostgreSQLConnections:
             connection = await mock_get()
             assert connection is not None, "Should be able to acquire connection from pool"
         
-        print("✅ Connection pool management test passed")
+        print(" Connection pool management test passed")
     
     @pytest.mark.asyncio
     async def test_database_query_execution(self, mock_connection_handler):
         """Test basic database query execution"""
-        print("📝 Testing PostgreSQL query execution...")
+        print(" Testing PostgreSQL query execution...")
         
         # Mock query execution
         with patch.object(mock_connection_handler, 'execute_query', new_callable=AsyncMock) as mock_query:
@@ -169,12 +175,12 @@ class TestPostgreSQLConnections:
             assert result is not None, "Query should return results"
             assert len(result) > 0, "Query should return at least one row"
         
-        print("✅ Database query execution test passed")
+        print(" Database query execution test passed")
     
     @pytest.mark.asyncio
     async def test_connection_error_handling(self, mock_connection_handler):
         """Test database connection error handling and resilience"""
-        print("🚨 Testing PostgreSQL error handling...")
+        print(" Testing PostgreSQL error handling...")
         
         # Test connection failure handling
         with patch.object(mock_connection_handler, 'connect', new_callable=AsyncMock) as mock_connect:
@@ -198,11 +204,11 @@ class TestPostgreSQLConnections:
                 assert health_result["status"] == "unhealthy", "Health check should report unhealthy status"
                 assert "error" in health_result, "Health check should include error information"
         
-        print("✅ Database error handling test passed")
+        print(" Database error handling test passed")
     
     def test_postgresql_config_validation(self, mock_postgresql_config):
         """Test PostgreSQL configuration validation"""
-        print("⚙️ Testing PostgreSQL configuration validation...")
+        print(" Testing PostgreSQL configuration validation...")
         
         # Test required configuration fields
         required_fields = ["host", "port", "database", "username"]
@@ -213,12 +219,12 @@ class TestPostgreSQLConnections:
         assert isinstance(mock_postgresql_config["port"], int), "Port should be integer"
         assert isinstance(mock_postgresql_config["pool_size"], int), "Pool size should be integer"
         
-        print("✅ PostgreSQL configuration validation test passed")
+        print(" PostgreSQL configuration validation test passed")
     
     @pytest.mark.asyncio
     async def test_database_migration_readiness(self, mock_connection_handler):
         """Test database migration readiness"""
-        print("🔄 Testing database migration readiness...")
+        print(" Testing database migration readiness...")
         
         # Mock migration table check
         with patch.object(mock_connection_handler, 'execute_query', new_callable=AsyncMock) as mock_query:
@@ -228,12 +234,12 @@ class TestPostgreSQLConnections:
             result = await mock_query("SELECT version FROM alembic_version")
             assert result is not None, "Should be able to check migration status"
         
-        print("✅ Database migration readiness test passed")
+        print(" Database migration readiness test passed")
     
     @pytest.mark.asyncio
     async def test_connection_security_features(self, mock_connection_handler):
         """Test database connection security features"""
-        print("🔒 Testing PostgreSQL security features...")
+        print(" Testing PostgreSQL security features...")
         
         # Test SSL configuration - Mock the ssl_mode attribute
         mock_connection_handler.config.ssl_mode = 'require'
@@ -248,7 +254,7 @@ class TestPostgreSQLConnections:
             is_encrypted = await mock_verify()
             assert is_encrypted is True, "Connection should support encryption"
         
-        print("✅ Database security features test passed")
+        print(" Database security features test passed")
 
 
 if __name__ == "__main__":

@@ -107,6 +107,9 @@ class KeywordAnalyzer:
         target_platforms: List[SEOPlatform]
     ) -> List[SEOKeyword]:
         """Analyze and extract optimal keywords from content"""
+
+
+
         try:
             # Extract base keywords from content
             base_keywords = await self._extract_base_keywords(content_text)
@@ -281,6 +284,9 @@ class ContentOptimizer:
         target_platforms: List[SEOPlatform]
     ) -> SEOMetadata:
         """Generate optimized SEO metadata for content"""
+
+
+
         try:
             # Extract content text for analysis
             content_text = await self._extract_content_text(content_data, metadata)
@@ -633,6 +639,9 @@ class PerformanceAnalyzer:
         content_metrics: Dict[str, Any]
     ) -> SEOAnalytics:
         """Analyze comprehensive SEO performance"""
+
+
+
         try:
             # Calculate individual scores
             keyword_score = await self._analyze_keyword_optimization(metadata)

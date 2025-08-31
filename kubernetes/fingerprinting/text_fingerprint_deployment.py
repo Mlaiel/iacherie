@@ -8,7 +8,7 @@ services using BERT, RoBERTa, and advanced NLP technologies.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+ UNAUTHORIZED USE STRICTLY PROHIBITED 
 This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use without written permission
 will result in legal action under German and international copyright law.
@@ -155,6 +155,9 @@ class TextFingerprintDeployment:
     
     def _initialize_clients(self) -> None:
         """Initialize Kubernetes, Docker, and Redis clients"""
+
+
+
         try:
             # Kubernetes client
             config.load_incluster_config()
@@ -187,6 +190,9 @@ class TextFingerprintDeployment:
         Returns:
             Infrastructure deployment summary
         """
+
+
+
         try:
             self.deployment_status = "deploying_infrastructure"
             logger.info("Deploying text fingerprinting infrastructure")
@@ -280,6 +286,9 @@ class TextFingerprintDeployment:
     
     async def _ensure_namespace(self) -> None:
         """Create namespace if it doesn't exist"""
+
+
+
         try:
             self.k8s_core_v1.read_namespace(name=self.config.namespace)
         except client.exceptions.ApiException as e:
@@ -1369,6 +1378,9 @@ class TextFingerprintDeployment:
     
     async def _validate_deployment(self) -> bool:
         """Validate the deployment"""
+
+
+
         try:
             essential_services = [
                 "text-bert-service", "text-roberta-service", "text-sentence-transformer",
@@ -1407,6 +1419,9 @@ class TextFingerprintDeployment:
     
     async def get_deployment_status(self) -> Dict[str, Any]:
         """Get deployment status and metrics"""
+
+
+
         try:
             services_status = {}
             
@@ -1447,6 +1462,9 @@ class TextFingerprintDeployment:
     
     async def _cleanup_failed_deployment(self) -> None:
         """Clean up failed deployment"""
+
+
+
         try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.config.namespace)
@@ -1456,6 +1474,9 @@ class TextFingerprintDeployment:
     
     async def cleanup(self) -> None:
         """Clean up the entire deployment"""
+
+
+
         try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.config.namespace)

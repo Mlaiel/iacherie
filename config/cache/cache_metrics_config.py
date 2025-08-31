@@ -230,10 +230,16 @@ class CacheMetricsConfig(BaseModel):
     
     def get_enabled_metrics(self) -> List[MetricDefinition]:
         """Get list of enabled metrics"""
+
+
+
         return [m for m in self.metric_definitions if m.enabled]
     
     def get_enabled_alerts(self) -> List[AlertRule]:
         """Get list of enabled alert rules"""
+
+
+
         return [a for a in self.alert_rules if a.enabled]
     
     def should_collect_metric(self, metric_name: str, labels: Dict[str, str] = None) -> bool:
@@ -652,10 +658,16 @@ class MetricsCollector:
     
     def _get_current_memory_usage(self) -> float:
         """Get current memory usage"""
+
+
+
         return self._get_current_metric_value("cache_memory_usage_mb") or 0.0
     
     def _get_current_connection_count(self) -> int:
         """Get current connection count"""
+
+
+
         return int(self._get_current_metric_value("cache_connections_active") or 0)
 
 

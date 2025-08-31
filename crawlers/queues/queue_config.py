@@ -8,7 +8,7 @@ Responsibility: Advanced configuration, environment detection, adaptive settings
 Technologies: Dynamic Configuration, Environment Adaptation, Performance Tuning
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -139,7 +139,7 @@ class QueueConfigurationManager:
     ) -> QueueConfiguration:
         """Generate optimal configuration based on system resources and requirements"""
         
-        logger.info("🎯 Generating optimal queue configuration")
+        logger.info(" Generating optimal queue configuration")
         logger.info(f"Environment: {self.environment_type.value}")
         logger.info(f"Resource Tier: {self.resource_tier.value}")
         logger.info(f"Security Profile: {security_profile.value}")
@@ -167,13 +167,16 @@ class QueueConfigurationManager:
         # Save generated configuration
         self._save_configuration(config)
         
-        logger.info("✅ Optimal configuration generated successfully")
+        logger.info(" Optimal configuration generated successfully")
         self._log_configuration_summary(config)
         
         return config
     
     def load_configuration(self) -> Optional[QueueConfiguration]:
         """Load existing configuration from file"""
+
+
+
         
         try:
             if self.generated_config_file.exists():
@@ -451,6 +454,9 @@ class QueueConfigurationManager:
     
     def _get_base_configuration(self) -> Dict[str, Any]:
         """Get base configuration template"""
+
+
+
         
         return {
             'max_workers': 10,
@@ -693,7 +699,7 @@ class QueueConfigurationManager:
     def _log_configuration_summary(self, config: QueueConfiguration):
         """Log configuration summary"""
         
-        logger.info("📋 Generated Configuration Summary:")
+        logger.info(" Generated Configuration Summary:")
         logger.info(f"  Workers: {config.max_workers}")
         logger.info(f"  Queue Size: {config.max_queue_size}")
         logger.info(f"  Batch Size: {config.batch_size}")
@@ -707,6 +713,9 @@ class QueueConfigurationManager:
 # Factory function
 def create_queue_configuration_manager(config_dir: Optional[str] = None) -> QueueConfigurationManager:
     """Create queue configuration manager instance"""
+
+
+
     return QueueConfigurationManager(config_dir)
 
 

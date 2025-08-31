@@ -9,7 +9,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -111,6 +111,9 @@ class DataSubject:
     @property
     def is_minor(self) -> bool:
         """Check if subject is a minor (under 18)"""
+
+
+
         return self.age is not None and self.age < 18
     
     @property
@@ -126,6 +129,9 @@ class DataSubject:
     @property
     def requires_gdpr_protection(self) -> bool:
         """Check if subject requires GDPR protection"""
+
+
+
         return self.is_eu_resident or self.country == 'GB'  # Include UK
 
 
@@ -144,6 +150,9 @@ class ComplianceEvent:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'event_id': self.event_id,
             'event_type': self.event_type,
@@ -172,6 +181,9 @@ class ComplianceReport:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'report_id': self.report_id,
             'framework': self.framework.value,
@@ -1541,6 +1553,9 @@ async def track_creator_data_processing(
     ip_address: str
 ) -> str:
     """Track creator data processing"""
+
+
+
     
     return await compliance_tracker.track_data_processing(
         subject_id=creator_id,
@@ -1556,6 +1571,9 @@ async def handle_creator_data_request(
     request_type: str
 ) -> str:
     """Handle creator data subject request"""
+
+
+
     
     return await compliance_tracker.handle_data_subject_request(
         subject_id=creator_id,
@@ -1570,6 +1588,9 @@ async def file_content_dmca_takedown(
     claimant_info: Dict[str, str]
 ) -> str:
     """File DMCA takedown for content violation"""
+
+
+
     
     return await compliance_tracker.file_dmca_takedown(
         content_id=content_id,

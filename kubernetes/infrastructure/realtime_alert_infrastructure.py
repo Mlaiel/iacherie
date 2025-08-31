@@ -7,11 +7,11 @@ system monitoring, security incidents, and business intelligence.
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
-⚠️  This software is protected by international copyright laws.         ⚠️
-⚠️  Unauthorized reproduction, distribution, or use is strictly        ⚠️
-⚠️  prohibited and may result in severe civil and criminal penalties.  ⚠️
-⚠️  All rights reserved to Fahed Mlaiel (mlaiel@live.de).             ⚠️
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED 
+  This software is protected by international copyright laws.         
+  Unauthorized reproduction, distribution, or use is strictly        
+  prohibited and may result in severe civil and criminal penalties.  
+  All rights reserved to Fahed Mlaiel (mlaiel@live.de).             
 """
 
 import asyncio
@@ -146,6 +146,9 @@ class EmailAlertChannel:
         
     async def send_alert(self, alert: Alert) -> Dict[str, Any]:
         """Send alert via email"""
+
+
+
         try:
             msg = MIMEMultipart()
             msg['From'] = self.from_email
@@ -369,6 +372,9 @@ class SlackAlertChannel:
         
     async def send_alert(self, alert: Alert) -> Dict[str, Any]:
         """Send alert to Slack"""
+
+
+
         try:
             color_map = {
                 AlertSeverity.LOW: "good",
@@ -379,7 +385,7 @@ class SlackAlertChannel:
             }
             
             payload = {
-                "text": f"🚨 {alert.severity.value.upper()} Alert",
+                "text": f" {alert.severity.value.upper()} Alert",
                 "attachments": [
                     {
                         "color": color_map.get(alert.severity, "good"),
@@ -457,6 +463,9 @@ class RealTimeAlertInfrastructureManager:
         
     async def initialize_alert_infrastructure(self) -> Dict[str, Any]:
         """Initialize complete real-time alert infrastructure"""
+
+
+
         try:
             logger.info("Initializing real-time alert infrastructure...")
             
@@ -494,6 +503,9 @@ class RealTimeAlertInfrastructureManager:
 
     async def create_alert_rule(self, rule: AlertRule) -> Dict[str, Any]:
         """Create new alert rule"""
+
+
+
         try:
             # Validate rule
             validation_result = await self._validate_alert_rule(rule)
@@ -529,6 +541,9 @@ class RealTimeAlertInfrastructureManager:
                            source: str,
                            metadata: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """Trigger new alert"""
+
+
+
         try:
             alert = Alert(
                 alert_id=str(uuid.uuid4()),
@@ -580,6 +595,9 @@ class RealTimeAlertInfrastructureManager:
 
     async def acknowledge_alert(self, alert_id: str, acknowledged_by: str) -> Dict[str, Any]:
         """Acknowledge alert"""
+
+
+
         try:
             if alert_id not in self.active_alerts:
                 return {"status": "not_found", "message": "Alert not found"}
@@ -610,6 +628,9 @@ class RealTimeAlertInfrastructureManager:
 
     async def resolve_alert(self, alert_id: str, resolved_by: str) -> Dict[str, Any]:
         """Resolve alert"""
+
+
+
         try:
             if alert_id not in self.active_alerts:
                 return {"status": "not_found", "message": "Alert not found"}
@@ -656,6 +677,9 @@ class RealTimeAlertInfrastructureManager:
 
     async def get_alert_statistics(self) -> Dict[str, Any]:
         """Get alert system statistics"""
+
+
+
         try:
             active_count = len(self.active_alerts)
             
@@ -727,6 +751,9 @@ class RealTimeAlertInfrastructureManager:
 
     async def _setup_alert_workers(self) -> Dict[str, Any]:
         """Setup alert processing workers"""
+
+
+
         return {
             "status": "configured",
             "max_concurrent_alerts": self.spec.max_concurrent_alerts,
@@ -735,6 +762,9 @@ class RealTimeAlertInfrastructureManager:
 
     async def _setup_alert_rules_engine(self) -> Dict[str, Any]:
         """Setup alert rules engine"""
+
+
+
         return {
             "status": "configured",
             "rules_loaded": len(self.alert_rules),
@@ -743,6 +773,9 @@ class RealTimeAlertInfrastructureManager:
 
     async def _setup_alert_monitoring(self) -> Dict[str, Any]:
         """Setup alert system monitoring"""
+
+
+
         return {
             "status": "configured",
             "retention_days": self.spec.alert_retention_days,
@@ -838,6 +871,9 @@ class RealTimeAlertInfrastructureManager:
 
     async def _process_alert_with_rule(self, alert: Alert, rule: AlertRule) -> Dict[str, Any]:
         """Process alert using specific rule"""
+
+
+
         try:
             # Update alert with rule information
             alert.rule_id = rule.rule_id
@@ -879,6 +915,9 @@ class RealTimeAlertInfrastructureManager:
 
     async def _get_redis_statistics(self) -> Dict[str, Any]:
         """Get Redis statistics"""
+
+
+
         try:
             info = await self.redis_client.info()
             return {

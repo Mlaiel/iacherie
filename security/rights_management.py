@@ -24,6 +24,9 @@ class RightsManager:
     
     async def validate_rights(self, content_id: str, creator_id: str) -> Dict[str, Any]:
         """Validate content rights"""
+
+
+
         return {
             "valid": True,
             "rights_data": {

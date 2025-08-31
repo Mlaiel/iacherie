@@ -70,6 +70,9 @@ class DistributedTransaction:
     
     def is_expired(self) -> bool:
         """Check if transaction has expired"""
+
+
+
         return datetime.utcnow() - self.started_at > self.timeout
 
 
@@ -262,6 +265,9 @@ class TransactionManager:
     
     async def _commit_participant(self, db_type: str, transaction: DistributedTransaction) -> None:
         """Commit transaction for a single database participant"""
+
+
+
         try:
             handler = self.handlers[db_type]
             
@@ -312,6 +318,9 @@ class TransactionManager:
     
     async def _abort_participant(self, db_type: str, transaction: DistributedTransaction) -> None:
         """Abort transaction for a single database participant"""
+
+
+
         try:
             handler = self.handlers[db_type]
             

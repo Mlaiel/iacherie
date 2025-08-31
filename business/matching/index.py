@@ -19,7 +19,7 @@ Expert Team Specialties:
 - DevOps & Infrastructure Engineer
 - AI Prompt Engineering Expert
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 © 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 This software, concept and intellectual property are protected by international copyright laws.
@@ -80,6 +80,9 @@ __copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
 
 def get_module_info() -> Dict[str, Any]:
     """Get comprehensive module information"""
+
+
+
     return {
         'name': 'IA Influencer Agent - Matching Module',
         'version': __version__,

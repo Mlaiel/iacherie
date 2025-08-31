@@ -16,7 +16,7 @@ Key Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  LEGAL WARNING:
+  LEGAL WARNING:
 This code is proprietary and confidential. Any unauthorized copying, modification, 
 distribution, or use without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and may result in legal action.
@@ -364,6 +364,9 @@ class HeaderGenerator:
     
     def _load_header_templates(self) -> Dict[BrowserFamily, Dict[str, str]]:
         """Load browser-specific header templates"""
+
+
+
         return {
             BrowserFamily.CHROME: {
                 "sec-ch-ua": '"Not_A Brand";v="8", "Chromium";v="120", "Google Chrome";v="120"',
@@ -621,6 +624,9 @@ class UserAgentRotator:
     
     def get_popular_agents(self, count: int = 10) -> List[UserAgentData]:
         """Get most popular user agents"""
+
+
+
         return sorted(
             self.database.user_agents,
             key=lambda a: a.popularity_score,
@@ -659,6 +665,9 @@ class UserAgentRotator:
     
     def export_agents(self, file_path: str) -> None:
         """Export user agent database to file"""
+
+
+
         try:
             data = {
                 'agents': [
@@ -691,6 +700,9 @@ class UserAgentRotator:
     
     def import_agents(self, file_path: str) -> int:
         """Import user agents from file"""
+
+
+
         try:
             with open(file_path, 'r') as f:
                 data = json.load(f)

@@ -18,7 +18,7 @@ This system delivers:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This cost optimization technology and all associated financial algorithms are the exclusive
 intellectual property of Fahed Mlaiel. Unauthorized use, copying, distribution, or
 commercialization without explicit written permission is strictly prohibited.
@@ -153,6 +153,9 @@ class BudgetConstraints:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for serialization"""
+
+
+
         return {
             'total_monthly_budget': float(self.total_monthly_budget),
             'daily_budget_limit': float(self.daily_budget_limit),
@@ -534,6 +537,9 @@ class CostOptimizer(BaseAgent):
 
     def _update_cost_metrics(self):
         """Update current cost metrics"""
+
+
+
         try:
             # Calculate current costs
             current_hour_cost = self._calculate_current_hour_cost()
@@ -641,6 +647,9 @@ class CostOptimizer(BaseAgent):
 
     async def _auto_optimize_costs(self):
         """Automatically optimize costs based on current metrics"""
+
+
+
         try:
             # Identify optimization opportunities
             opportunities = await self._identify_optimization_opportunities()
@@ -678,6 +687,9 @@ class CostOptimizer(BaseAgent):
 
     async def _apply_cost_optimization(self, optimization: CostReduction):
         """Apply a specific cost optimization"""
+
+
+
         try:
             logger.info(f"Applying cost optimization: {optimization.reduction_id}")
             
@@ -865,6 +877,9 @@ class CostOptimizer(BaseAgent):
 
     async def get_cost_dashboard(self, user_id: str) -> Dict[str, Any]:
         """Get comprehensive cost dashboard data"""
+
+
+
         return {
             "current_metrics": {
                 "total_cost_today": float(self.current_metrics.total_cost_today),
@@ -895,6 +910,9 @@ class CostOptimizer(BaseAgent):
 
     async def get_status(self) -> Dict[str, Any]:
         """Get cost optimizer status"""
+
+
+
         return {
             "status": "active" if self._monitoring_active else "inactive",
             "current_monthly_cost": float(self.current_metrics.total_cost_this_month),
@@ -905,6 +923,9 @@ class CostOptimizer(BaseAgent):
 
     async def health_check(self) -> Dict[str, Any]:
         """Comprehensive health check"""
+
+
+
         return {
             "overall_status": "ok",
             "monitoring_active": self._monitoring_active,
@@ -1035,6 +1056,9 @@ class CostOptimizer:
 
     def _initialize_pricing_models(self) -> Dict[str, Dict[str, Any]]:
         """Initialize pricing models for different services"""
+
+
+
         return {
             'compute': {
                 'cpu_hour': 0.05,  # Per CPU core per hour
@@ -1066,6 +1090,9 @@ class CostOptimizer:
 
     def _initialize_resource_costs(self) -> Dict[str, float]:
         """Initialize current resource costs"""
+
+
+
         return {
             'cpu_cores': 0.0,
             'memory_gb': 0.0,
@@ -1088,6 +1115,9 @@ class CostOptimizer:
         Returns:
             Cost optimization results and recommendations
         """
+
+
+
         try:
             start_time = time.time()
             optimization_id = f"cost_opt_{int(start_time)}"
@@ -1142,6 +1172,9 @@ class CostOptimizer:
 
     async def _get_current_cost_metrics(self) -> CostMetrics:
         """Get comprehensive current cost metrics"""
+
+
+
         try:
             # Collect cost data from various sources
             compute_costs = await self.cost_calculator.calculate_compute_costs()
@@ -1331,6 +1364,9 @@ class CostOptimizer:
 
     async def manage_budget(self, budget_name: str, budget_config: Dict[str, Any]) -> Dict[str, Any]:
         """Manage budget tracking and alerting"""
+
+
+
         try:
             # Create or update budget
             budget = {
@@ -1429,6 +1465,9 @@ class BudgetManager:
                           time_period: str = "monthly",
                           categories: List[str] = None) -> Dict[str, Any]:
         """Create new budget with tracking and forecasting"""
+
+
+
         try:
             budget = {
                 'name': budget_name,
@@ -1458,6 +1497,9 @@ class BudgetManager:
                               budget_name: str, 
                               forecast_days: int = 30) -> Dict[str, Any]:
         """Forecast future spending based on historical data and trends"""
+
+
+
         try:
             if budget_name not in self.budgets:
                 raise BudgetError(f"Budget {budget_name} not found")

@@ -10,7 +10,7 @@ audience behavior analysis, and performance-based scheduling improvements.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -147,6 +147,9 @@ class ScheduleOptimizer:
     
     def _load_or_initialize_models(self):
         """Load existing models or initialize new ones"""
+
+
+
         try:
             # Try to load existing models
             self.engagement_model = joblib.load(f"{self.model_storage_path}/engagement_model.joblib")
@@ -201,6 +204,9 @@ class ScheduleOptimizer:
         Returns:
             Timing prediction with optimal schedule
         """
+
+
+
         try:
             logger.info(f"Optimizing schedule for creator {creator_id}")
             
@@ -298,6 +304,9 @@ class ScheduleOptimizer:
         Returns:
             Performance evaluation results
         """
+
+
+
         try:
             logger.info(f"Evaluating schedule performance for {schedule_id}")
             
@@ -371,6 +380,9 @@ class ScheduleOptimizer:
         Returns:
             Retraining results
         """
+
+
+
         try:
             logger.info("Starting model retraining")
             
@@ -570,6 +582,9 @@ class ScheduleOptimizer:
         config: OptimizationConfig
     ) -> float:
         """Evaluate a candidate timing using multiple factors"""
+
+
+
         try:
             total_score = 0.0
             total_weight = 0.0
@@ -601,6 +616,9 @@ class ScheduleOptimizer:
         platforms: List[str]
     ) -> float:
         """Evaluate a specific timing factor"""
+
+
+
         try:
             if factor == TimingFactor.AUDIENCE_ACTIVITY:
                 return await self._evaluate_audience_activity(candidate_time, creator_id, platforms)
@@ -640,6 +658,9 @@ class ScheduleOptimizer:
         platforms: List[str]
     ) -> float:
         """Evaluate audience activity at candidate time"""
+
+
+
         try:
             with get_db_session() as db:
                 hour = candidate_time.hour
@@ -806,6 +827,9 @@ class ScheduleOptimizer:
         platforms: List[str]
     ) -> float:
         """Evaluate based on historical performance at similar times"""
+
+
+
         try:
             # Mock implementation - would analyze actual historical data
             hour = candidate_time.hour
@@ -892,6 +916,9 @@ class ScheduleOptimizer:
         platforms: List[str]
     ) -> Dict[str, float]:
         """Predict performance metrics for optimal time"""
+
+
+
         try:
             # Extract features for the optimal time
             features_df = await self._extract_features(
@@ -1121,6 +1148,9 @@ class ScheduleOptimizer:
     
     def _save_models(self):
         """Save trained models to disk"""
+
+
+
         try:
             joblib.dump(self.engagement_model, f"{self.model_storage_path}/engagement_model.joblib")
             joblib.dump(self.reach_model, f"{self.model_storage_path}/reach_model.joblib")
@@ -1173,6 +1203,9 @@ class TimingAnalyzer:
     
     async def analyze_creator_patterns(self, creator_id: str) -> Dict[str, Any]:
         """Analyze creator's posting patterns and performance"""
+
+
+
         try:
             with get_db_session() as db:
                 # Get creator's schedule history

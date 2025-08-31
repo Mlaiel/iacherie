@@ -8,7 +8,7 @@ Responsibility: Production-grade storage performance analysis and optimization
 Technologies: Python, Machine Learning, Storage Analytics, Performance Tuning
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -172,7 +172,7 @@ class PerformanceAnalysisResult:
 
 class StoragePerformanceOptimizer:
     """
-    🎯 Industrial Storage Performance Optimizer - IA-Influencer-Agent
+     Industrial Storage Performance Optimizer - IA-Influencer-Agent
     
     Advanced storage performance analysis and optimization system providing:
     - Real-time performance monitoring and anomaly detection
@@ -203,10 +203,13 @@ class StoragePerformanceOptimizer:
         # Initialize ML models
         self._initialize_ml_models()
         
-        logger.info("🚀 StoragePerformanceOptimizer initialized")
+        logger.info(" StoragePerformanceOptimizer initialized")
     
     def _initialize_ml_models(self):
         """Initialize machine learning models for performance analysis"""
+
+
+
         try:
             # Anomaly detection model
             self.ml_models['anomaly_detector'] = IsolationForest(
@@ -226,15 +229,18 @@ class StoragePerformanceOptimizer:
                 random_state=42
             )
             
-            logger.info("✅ ML models initialized successfully")
+            logger.info(" ML models initialized successfully")
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize ML models: {e}")
+            logger.error(f" Failed to initialize ML models: {e}")
     
     async def collect_performance_metrics(self, source: str) -> Dict[str, PerformanceMetric]:
         """Collect real-time performance metrics from storage system"""
+
+
+
         try:
-            logger.debug(f"📊 Collecting performance metrics from {source}")
+            logger.debug(f" Collecting performance metrics from {source}")
             
             current_time = datetime.now()
             metrics = {}
@@ -317,17 +323,20 @@ class StoragePerformanceOptimizer:
             for metric in metrics.values():
                 self.metrics_history.append(metric)
             
-            logger.debug(f"✅ Collected {len(metrics)} performance metrics from {source}")
+            logger.debug(f" Collected {len(metrics)} performance metrics from {source}")
             return metrics
             
         except Exception as e:
-            logger.error(f"❌ Failed to collect performance metrics from {source}: {e}")
+            logger.error(f" Failed to collect performance metrics from {source}: {e}")
             return {}
     
     async def analyze_performance_trends(self, analysis_period: timedelta = timedelta(hours=24)) -> PerformanceAnalysisResult:
         """Analyze performance trends and identify optimization opportunities"""
+
+
+
         try:
-            logger.info(f"🔍 Analyzing performance trends for period: {analysis_period}")
+            logger.info(f" Analyzing performance trends for period: {analysis_period}")
             
             analysis_start = datetime.now() - analysis_period
             
@@ -412,15 +421,18 @@ class StoragePerformanceOptimizer:
                 recommended_scaling=scaling_recommendations
             )
             
-            logger.info(f"✅ Performance analysis completed - Score: {performance_score:.1f}/100")
+            logger.info(f" Performance analysis completed - Score: {performance_score:.1f}/100")
             return analysis_result
             
         except Exception as e:
-            logger.error(f"❌ Performance analysis failed: {e}")
+            logger.error(f" Performance analysis failed: {e}")
             raise
     
     async def _detect_performance_anomalies(self, metrics: List[PerformanceMetric]) -> List[str]:
         """Detect performance anomalies using machine learning"""
+
+
+
         try:
             if len(metrics) < 50:  # Need minimum data for anomaly detection
                 return []
@@ -462,15 +474,18 @@ class StoragePerformanceOptimizer:
                     )
                     anomalies.append(anomaly_description)
             
-            logger.info(f"🚨 Detected {len(anomalies)} performance anomalies")
+            logger.info(f" Detected {len(anomalies)} performance anomalies")
             return anomalies
             
         except Exception as e:
-            logger.error(f"❌ Anomaly detection failed: {e}")
+            logger.error(f" Anomaly detection failed: {e}")
             return []
     
     async def _identify_bottlenecks(self, metric_summaries: Dict[str, Dict[str, float]]) -> List[str]:
         """Identify performance bottlenecks based on metric analysis"""
+
+
+
         try:
             bottlenecks = []
             
@@ -514,11 +529,11 @@ class StoragePerformanceOptimizer:
                         f"Latency bottleneck detected - 95th percentile: {latency_stats['percentile_95']:.1f}ms"
                     )
             
-            logger.info(f"🔍 Identified {len(bottlenecks)} performance bottlenecks")
+            logger.info(f" Identified {len(bottlenecks)} performance bottlenecks")
             return bottlenecks
             
         except Exception as e:
-            logger.error(f"❌ Bottleneck identification failed: {e}")
+            logger.error(f" Bottleneck identification failed: {e}")
             return []
     
     async def _generate_optimization_recommendations(
@@ -528,6 +543,9 @@ class StoragePerformanceOptimizer:
         anomalies: List[str]
     ) -> List[OptimizationRecommendation]:
         """Generate intelligent optimization recommendations"""
+
+
+
         try:
             recommendations = []
             
@@ -690,15 +708,18 @@ class StoragePerformanceOptimizer:
                 reverse=True
             )
             
-            logger.info(f"💡 Generated {len(recommendations)} optimization recommendations")
+            logger.info(f" Generated {len(recommendations)} optimization recommendations")
             return recommendations
             
         except Exception as e:
-            logger.error(f"❌ Failed to generate optimization recommendations: {e}")
+            logger.error(f" Failed to generate optimization recommendations: {e}")
             return []
     
     def _calculate_performance_score(self, metric_summaries: Dict[str, Dict[str, float]]) -> float:
         """Calculate overall performance score (0-100)"""
+
+
+
         try:
             scores = []
             
@@ -732,11 +753,14 @@ class StoragePerformanceOptimizer:
             return min(100.0, max(0.0, overall_score))
             
         except Exception as e:
-            logger.error(f"❌ Failed to calculate performance score: {e}")
+            logger.error(f" Failed to calculate performance score: {e}")
             return 50.0  # Default score
     
     def _analyze_performance_trend(self, metrics_by_type: Dict[PerformanceMetricType, List[PerformanceMetric]]) -> str:
         """Analyze performance trend over time"""
+
+
+
         try:
             trends = []
             
@@ -782,11 +806,14 @@ class StoragePerformanceOptimizer:
             return max(trend_counts, key=trend_counts.get)
             
         except Exception as e:
-            logger.error(f"❌ Failed to analyze performance trend: {e}")
+            logger.error(f" Failed to analyze performance trend: {e}")
             return "stable"
     
     async def _forecast_capacity_needs(self, metrics_by_type: Dict[PerformanceMetricType, List[PerformanceMetric]]) -> Dict[str, float]:
         """Forecast future capacity needs using time series analysis"""
+
+
+
         try:
             capacity_forecast = {}
             
@@ -829,15 +856,18 @@ class StoragePerformanceOptimizer:
                     capacity_forecast['iops_demand_60_days'] = current_iops + (growth_rate * 60)
                     capacity_forecast['iops_demand_90_days'] = current_iops + (growth_rate * 90)
             
-            logger.info(f"📈 Generated capacity forecast for {len(capacity_forecast)} metrics")
+            logger.info(f" Generated capacity forecast for {len(capacity_forecast)} metrics")
             return capacity_forecast
             
         except Exception as e:
-            logger.error(f"❌ Capacity forecasting failed: {e}")
+            logger.error(f" Capacity forecasting failed: {e}")
             return {}
     
     async def _forecast_performance(self, metrics_by_type: Dict[PerformanceMetricType, List[PerformanceMetric]]) -> Dict[str, float]:
         """Forecast future performance metrics"""
+
+
+
         try:
             performance_forecast = {}
             
@@ -874,11 +904,14 @@ class StoragePerformanceOptimizer:
             return performance_forecast
             
         except Exception as e:
-            logger.error(f"❌ Performance forecasting failed: {e}")
+            logger.error(f" Performance forecasting failed: {e}")
             return {}
     
     def _calculate_growth_rate(self, sorted_metrics: List[PerformanceMetric]) -> float:
         """Calculate growth rate from time series data"""
+
+
+
         try:
             if len(sorted_metrics) < 2:
                 return 0.0
@@ -897,11 +930,14 @@ class StoragePerformanceOptimizer:
             return growth_rate_per_day
             
         except Exception as e:
-            logger.error(f"❌ Growth rate calculation failed: {e}")
+            logger.error(f" Growth rate calculation failed: {e}")
             return 0.0
     
     def _compare_with_baselines(self, metric_summaries: Dict[str, Dict[str, float]]) -> Dict[str, Dict[str, float]]:
         """Compare current metrics with established baselines"""
+
+
+
         try:
             comparisons = {}
             
@@ -921,11 +957,14 @@ class StoragePerformanceOptimizer:
             return comparisons
             
         except Exception as e:
-            logger.error(f"❌ Baseline comparison failed: {e}")
+            logger.error(f" Baseline comparison failed: {e}")
             return {}
     
     def _generate_scaling_recommendations(self, metric_summaries: Dict[str, Dict[str, float]], capacity_forecast: Dict[str, float]) -> Dict[str, Any]:
         """Generate scaling recommendations based on analysis"""
+
+
+
         try:
             scaling_recommendations = {
                 "immediate_scaling": [],
@@ -983,13 +1022,16 @@ class StoragePerformanceOptimizer:
             return scaling_recommendations
             
         except Exception as e:
-            logger.error(f"❌ Scaling recommendations failed: {e}")
+            logger.error(f" Scaling recommendations failed: {e}")
             return {}
     
     async def implement_optimization(self, recommendation: OptimizationRecommendation) -> Dict[str, Any]:
         """Implement a specific optimization recommendation"""
+
+
+
         try:
-            logger.info(f"🔧 Implementing optimization: {recommendation.optimization_type.value}")
+            logger.info(f" Implementing optimization: {recommendation.optimization_type.value}")
             
             implementation_result = {
                 "success": False,
@@ -1030,7 +1072,7 @@ class StoragePerformanceOptimizer:
                 # Add to optimization history
                 self.optimization_history.append(recommendation)
                 
-                logger.info(f"✅ Optimization implemented successfully: {recommendation.optimization_type.value}")
+                logger.info(f" Optimization implemented successfully: {recommendation.optimization_type.value}")
                 
             except Exception as e:
                 # Rollback on failure
@@ -1040,16 +1082,19 @@ class StoragePerformanceOptimizer:
                     "error": str(e),
                     "rollback_performed": True
                 })
-                logger.error(f"❌ Optimization implementation failed, rolled back: {e}")
+                logger.error(f" Optimization implementation failed, rolled back: {e}")
             
             return implementation_result
             
         except Exception as e:
-            logger.error(f"❌ Optimization implementation failed: {e}")
+            logger.error(f" Optimization implementation failed: {e}")
             return {"success": False, "error": str(e)}
     
     async def _backup_current_configuration(self) -> Dict[str, Any]:
         """Backup current configuration before making changes"""
+
+
+
         try:
             backup_id = f"backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
@@ -1067,7 +1112,7 @@ class StoragePerformanceOptimizer:
             }
             
         except Exception as e:
-            logger.error(f"❌ Configuration backup failed: {e}")
+            logger.error(f" Configuration backup failed: {e}")
             return {}
     
     async def _implement_cache_optimization(self, recommendation: OptimizationRecommendation) -> List[str]:
@@ -1174,27 +1219,33 @@ class StoragePerformanceOptimizer:
     
     async def _rollback_configuration(self, backup_config: Dict[str, Any]):
         """Rollback configuration to previous state"""
+
+
+
         try:
             if not backup_config:
-                logger.warning("⚠️ No backup configuration available for rollback")
+                logger.warning(" No backup configuration available for rollback")
                 return
             
-            logger.info(f"🔄 Rolling back configuration to backup: {backup_config.get('backup_id')}")
+            logger.info(f" Rolling back configuration to backup: {backup_config.get('backup_id')}")
             
             # This would restore actual system configuration
             # Implementation depends on the specific storage system
             
-            logger.info("✅ Configuration rollback completed")
+            logger.info(" Configuration rollback completed")
             
         except Exception as e:
-            logger.error(f"❌ Configuration rollback failed: {e}")
+            logger.error(f" Configuration rollback failed: {e}")
     
     async def generate_performance_report(self, analysis_result: PerformanceAnalysisResult) -> str:
         """Generate comprehensive performance report"""
+
+
+
         try:
             report_lines = []
             report_lines.append("=" * 80)
-            report_lines.append("🎯 IA-INFLUENCER-AGENT STORAGE PERFORMANCE REPORT")
+            report_lines.append(" IA-INFLUENCER-AGENT STORAGE PERFORMANCE REPORT")
             report_lines.append("=" * 80)
             report_lines.append(f"Generated: {analysis_result.analysis_timestamp.strftime('%Y-%m-%d %H:%M:%S')}")
             report_lines.append(f"Analysis Period: {analysis_result.analysis_period}")
@@ -1202,7 +1253,7 @@ class StoragePerformanceOptimizer:
             report_lines.append("")
             
             # Performance Summary
-            report_lines.append("📊 PERFORMANCE SUMMARY")
+            report_lines.append(" PERFORMANCE SUMMARY")
             report_lines.append("-" * 40)
             report_lines.append(f"Overall Performance Score: {analysis_result.overall_performance_score:.1f}/100")
             report_lines.append(f"Performance Trend: {analysis_result.performance_trend.upper()}")
@@ -1211,7 +1262,7 @@ class StoragePerformanceOptimizer:
             report_lines.append("")
             
             # Metric Details
-            report_lines.append("📈 METRIC DETAILS")
+            report_lines.append(" METRIC DETAILS")
             report_lines.append("-" * 40)
             for metric_name, stats in analysis_result.metric_summaries.items():
                 report_lines.append(f"{metric_name.upper()}:")
@@ -1222,14 +1273,14 @@ class StoragePerformanceOptimizer:
             
             # Bottlenecks
             if analysis_result.bottlenecks_detected:
-                report_lines.append("🚨 BOTTLENECKS DETECTED")
+                report_lines.append(" BOTTLENECKS DETECTED")
                 report_lines.append("-" * 40)
                 for i, bottleneck in enumerate(analysis_result.bottlenecks_detected, 1):
                     report_lines.append(f"{i}. {bottleneck}")
                 report_lines.append("")
             
             # Optimization Recommendations
-            report_lines.append("💡 OPTIMIZATION RECOMMENDATIONS")
+            report_lines.append(" OPTIMIZATION RECOMMENDATIONS")
             report_lines.append("-" * 40)
             for i, rec in enumerate(analysis_result.recommendations[:5], 1):  # Top 5
                 report_lines.append(f"{i}. {rec.optimization_type.value.upper()}")
@@ -1241,7 +1292,7 @@ class StoragePerformanceOptimizer:
                 report_lines.append("")
             
             # Financial Summary
-            report_lines.append("💰 FINANCIAL SUMMARY")
+            report_lines.append(" FINANCIAL SUMMARY")
             report_lines.append("-" * 40)
             report_lines.append(f"Total Potential Savings: ${analysis_result.potential_savings_usd:,.2f}")
             report_lines.append(f"Estimated ROI: {analysis_result.estimated_roi_percent:.1f}%")
@@ -1249,7 +1300,7 @@ class StoragePerformanceOptimizer:
             
             # Capacity Forecast
             if analysis_result.capacity_forecast:
-                report_lines.append("📅 CAPACITY FORECAST")
+                report_lines.append(" CAPACITY FORECAST")
                 report_lines.append("-" * 40)
                 for metric, value in analysis_result.capacity_forecast.items():
                     report_lines.append(f"{metric}: {value:.1f}")
@@ -1257,7 +1308,7 @@ class StoragePerformanceOptimizer:
             
             # Scaling Recommendations
             if analysis_result.recommended_scaling:
-                report_lines.append("⚖️ SCALING RECOMMENDATIONS")
+                report_lines.append(" SCALING RECOMMENDATIONS")
                 report_lines.append("-" * 40)
                 
                 if analysis_result.recommended_scaling.get("immediate_scaling"):
@@ -1281,7 +1332,7 @@ class StoragePerformanceOptimizer:
             return "\n".join(report_lines)
             
         except Exception as e:
-            logger.error(f"❌ Performance report generation failed: {e}")
+            logger.error(f" Performance report generation failed: {e}")
             return f"Error generating performance report: {e}"
 
 
@@ -1292,12 +1343,18 @@ performance_optimizer = StoragePerformanceOptimizer()
 # Factory function
 def create_performance_optimizer() -> StoragePerformanceOptimizer:
     """Factory function to create performance optimizer instance"""
+
+
+
     return StoragePerformanceOptimizer()
 
 
 # Usage Example
 async def main():
     """Example usage of StoragePerformanceOptimizer"""
+
+
+
     try:
         optimizer = create_performance_optimizer()
         
@@ -1326,7 +1383,7 @@ async def main():
             print(f"Implementation result: {implementation_result}")
         
     except Exception as e:
-        logger.error(f"❌ Example failed: {e}")
+        logger.error(f" Example failed: {e}")
 
 
 if __name__ == "__main__":

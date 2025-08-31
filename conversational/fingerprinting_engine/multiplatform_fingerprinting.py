@@ -17,7 +17,7 @@ major platforms and content formats (audio, video, image, text).
 - Advanced Anti-Tampering and Security Features
 - High-Performance Processing with GPU Acceleration
 
-🏗️ ENTERPRISE ARCHITECTURE:
+ ENTERPRISE ARCHITECTURE:
 - Multi-Modal AI Models (CLIP, BERT, Chromaprint, OpenCV)
 - Vector Database Integration (FAISS, Pinecone, Weaviate)
 - Real-Time Processing Pipeline with GPU Acceleration
@@ -31,7 +31,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING - ZERO TOLERANCE POLICY ⚠️
+  CRITICAL LEGAL WARNING - ZERO TOLERANCE POLICY 
 This revolutionary fingerprinting platform is the EXCLUSIVE intellectual property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution
 under German and International Law. Contact: mlaiel@live.de for legal authorization.
@@ -249,6 +249,9 @@ class MultiplePlatformFingerprintingEngine:
     
     async def _initialize_engines(self):
         """Initialize all fingerprinting engines and AI models"""
+
+
+
         try:
             # Initialize AI Models
             await self._initialize_ai_models()
@@ -266,6 +269,9 @@ class MultiplePlatformFingerprintingEngine:
     
     async def _initialize_ai_models(self):
         """Initialize AI models for advanced fingerprinting"""
+
+
+
         try:
             # CLIP Model for image/video analysis
             self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-large-patch14").to(self.device)
@@ -285,6 +291,9 @@ class MultiplePlatformFingerprintingEngine:
     
     async def _initialize_audio_engines(self):
         """Initialize audio fingerprinting engines"""
+
+
+
         try:
             self.audio_engines = {
                 FingerprintAlgorithm.CHROMAPRINT: self._chromaprint_fingerprint,
@@ -297,6 +306,9 @@ class MultiplePlatformFingerprintingEngine:
     
     async def _initialize_video_engines(self):
         """Initialize video fingerprinting engines"""
+
+
+
         try:
             self.video_engines = {
                 FingerprintAlgorithm.OPENCV_ORB: self._opencv_orb_fingerprint,
@@ -309,6 +321,9 @@ class MultiplePlatformFingerprintingEngine:
     
     async def _initialize_image_engines(self):
         """Initialize image fingerprinting engines"""
+
+
+
         try:
             self.image_engines = {
                 FingerprintAlgorithm.PERCEPTUAL_HASH: self._perceptual_hash_fingerprint,
@@ -321,6 +336,9 @@ class MultiplePlatformFingerprintingEngine:
     
     async def _initialize_text_engines(self):
         """Initialize text fingerprinting engines"""
+
+
+
         try:
             self.text_engines = {
                 FingerprintAlgorithm.BERT_EMBEDDING: self._bert_embedding_fingerprint,
@@ -341,6 +359,9 @@ class MultiplePlatformFingerprintingEngine:
         Returns:
             ContentFingerprint: Generated fingerprint data
         """
+
+
+
         try:
             # Update task status
             task.status = "processing"
@@ -463,6 +484,9 @@ class MultiplePlatformFingerprintingEngine:
     
     async def _detect_content_type(self, content_path: str) -> ContentType:
         """Detect content type from file"""
+
+
+
         try:
             file_ext = Path(content_path).suffix.lower()
             
@@ -501,6 +525,9 @@ class MultiplePlatformFingerprintingEngine:
     
     async def _extract_file_metadata(self, content_path: str, fingerprint: ContentFingerprint):
         """Extract file metadata"""
+
+
+
         try:
             stat = os.stat(content_path)
             fingerprint.file_size = stat.st_size
@@ -524,6 +551,9 @@ class MultiplePlatformFingerprintingEngine:
     
     async def _extract_audio_metadata(self, content_path: str, fingerprint: ContentFingerprint):
         """Extract audio-specific metadata"""
+
+
+
         try:
             # Load audio file
             y, sr = librosa.load(content_path, sr=None)
@@ -541,6 +571,9 @@ class MultiplePlatformFingerprintingEngine:
     
     async def _extract_video_metadata(self, content_path: str, fingerprint: ContentFingerprint):
         """Extract video-specific metadata"""
+
+
+
         try:
             # Use OpenCV for basic video info
             cap = cv2.VideoCapture(content_path)
@@ -568,6 +601,9 @@ class MultiplePlatformFingerprintingEngine:
     
     async def _extract_image_metadata(self, content_path: str, fingerprint: ContentFingerprint):
         """Extract image-specific metadata"""
+
+
+
         try:
             with Image.open(content_path) as img:
                 fingerprint.dimensions = img.size
@@ -583,6 +619,9 @@ class MultiplePlatformFingerprintingEngine:
     
     async def _extract_text_metadata(self, content_path: str, fingerprint: ContentFingerprint):
         """Extract text-specific metadata"""
+
+
+
         try:
             with open(content_path, 'r', encoding='utf-8') as f:
                 text = f.read()
@@ -684,6 +723,9 @@ class MultiplePlatformFingerprintingEngine:
                                             algorithm: FingerprintAlgorithm,
                                             fingerprint: ContentFingerprint) -> Optional[Dict[str, Any]]:
         """Generate fingerprint using specific algorithm"""
+
+
+
         try:
             # Get appropriate engine based on content type
             if fingerprint.content_type == ContentType.AUDIO:
@@ -717,6 +759,9 @@ class MultiplePlatformFingerprintingEngine:
     # Audio Fingerprinting Methods
     async def _chromaprint_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
         """Generate Chromaprint fingerprint for audio"""
+
+
+
         try:
             # Load audio
             y, sr = librosa.load(content_path, sr=22050, mono=True)
@@ -744,6 +789,9 @@ class MultiplePlatformFingerprintingEngine:
     
     async def _mfcc_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
         """Generate MFCC-based fingerprint for audio"""
+
+
+
         try:
             # Load audio
             y, sr = librosa.load(content_path, sr=22050, mono=True)
@@ -774,6 +822,9 @@ class MultiplePlatformFingerprintingEngine:
     # Image Fingerprinting Methods
     async def _perceptual_hash_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
         """Generate perceptual hash for image"""
+
+
+
         try:
             # Load image
             image = Image.open(content_path)
@@ -803,6 +854,9 @@ class MultiplePlatformFingerprintingEngine:
     
     async def _clip_embedding_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
         """Generate CLIP embedding for image"""
+
+
+
         try:
             if not self.clip_model or not self.clip_processor:
                 return None
@@ -832,6 +886,9 @@ class MultiplePlatformFingerprintingEngine:
     # Text Fingerprinting Methods
     async def _bert_embedding_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
         """Generate BERT embedding for text"""
+
+
+
         try:
             if not self.bert_model or not self.bert_tokenizer:
                 return None
@@ -869,6 +926,9 @@ class MultiplePlatformFingerprintingEngine:
     
     async def _ngram_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
         """Generate n-gram based fingerprint for text"""
+
+
+
         try:
             # Read text
             with open(content_path, 'r', encoding='utf-8') as f:
@@ -912,46 +972,79 @@ class MultiplePlatformFingerprintingEngine:
     # Placeholder methods for other algorithms
     async def _essentia_spectral_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
         """Placeholder for Essentia spectral fingerprinting"""
+
+
+
         return await self._mfcc_fingerprint(content_path, fingerprint)
     
     async def _audio_neural_hash(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
         """Placeholder for audio neural hash"""
+
+
+
         return await self._mfcc_fingerprint(content_path, fingerprint)
     
     async def _opencv_orb_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
         """Placeholder for OpenCV ORB fingerprinting"""
+
+
+
         return await self._perceptual_hash_fingerprint(content_path, fingerprint)
     
     async def _perceptual_video_hash(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
         """Placeholder for perceptual video hash"""
+
+
+
         return await self._perceptual_hash_fingerprint(content_path, fingerprint)
     
     async def _temporal_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
         """Placeholder for temporal fingerprinting"""
+
+
+
         return await self._perceptual_hash_fingerprint(content_path, fingerprint)
     
     async def _video_neural_hash(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
         """Placeholder for video neural hash"""
+
+
+
         return await self._perceptual_hash_fingerprint(content_path, fingerprint)
     
     async def _difference_hash_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
         """Placeholder for difference hash"""
+
+
+
         return await self._perceptual_hash_fingerprint(content_path, fingerprint)
     
     async def _wavelet_hash_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
         """Placeholder for wavelet hash"""
+
+
+
         return await self._perceptual_hash_fingerprint(content_path, fingerprint)
     
     async def _sentence_transformer_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
         """Placeholder for sentence transformer"""
+
+
+
         return await self._bert_embedding_fingerprint(content_path, fingerprint)
     
     async def _semantic_hash_fingerprint(self, content_path: str, fingerprint: ContentFingerprint) -> Dict[str, Any]:
         """Placeholder for semantic hash"""
+
+
+
         return await self._bert_embedding_fingerprint(content_path, fingerprint)
     
     async def _combine_fingerprint_results(self, fingerprint: ContentFingerprint, results: List[Dict[str, Any]]):
         """Combine results from multiple algorithms"""
+
+
+
         try:
             if not results:
                 raise BusinessLogicError("No valid fingerprint results generated")
@@ -979,6 +1072,9 @@ class MultiplePlatformFingerprintingEngine:
     
     async def _add_blockchain_verification(self, fingerprint: ContentFingerprint):
         """Add blockchain verification to fingerprint"""
+
+
+
         try:
             # Create blockchain record (placeholder implementation)
             blockchain_data = {
@@ -1000,6 +1096,9 @@ class MultiplePlatformFingerprintingEngine:
     
     async def _encrypt_fingerprint_data(self, fingerprint: ContentFingerprint):
         """Encrypt sensitive fingerprint data"""
+
+
+
         try:
             # Encrypt vector embedding if present
             if fingerprint.vector_embedding is not None:
@@ -1018,6 +1117,9 @@ class MultiplePlatformFingerprintingEngine:
     
     async def _store_fingerprint(self, fingerprint: ContentFingerprint):
         """Store fingerprint in database"""
+
+
+
         try:
             async with get_db_session() as db:
                 # Store fingerprint data in database

@@ -8,7 +8,7 @@ Optimized for concurrent processing and resource management.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️ CRITICAL LEGAL WARNING ⚠️
+ CRITICAL LEGAL WARNING 
 UNAUTHORIZED USE, COPYING, OR DISTRIBUTION IS STRICTLY PROHIBITED AND WILL RESULT IN IMMEDIATE LEGAL ACTION.
 This technology is EXCLUSIVE property of Fahed Mlaiel. Contact: mlaiel@live.de for licensing.
 """
@@ -157,6 +157,9 @@ class BatchScraper:
     def create_job(self, urls: List[str], job_id: Optional[str] = None, 
                   priority: int = 1, **kwargs) -> BatchJob:
         """Create batch job from URLs."""
+
+
+
         return BatchJob(
             job_id=job_id or self._generate_job_id(),
             urls=urls,

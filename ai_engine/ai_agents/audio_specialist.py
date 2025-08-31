@@ -7,7 +7,7 @@ and protection for the IA Influencer platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
@@ -208,6 +208,9 @@ class AudioSpecialistAgent(BaseAIAgent):
     
     async def _custom_initialize(self) -> None:
         """Initialize audio processing components"""
+
+
+
         try:
             # Initialize audio processing engines
             self.signal_processor = AudioSignalProcessor()
@@ -520,6 +523,9 @@ class AudioSpecialistAgent(BaseAIAgent):
     
     async def _validate_audio_file(self, file_path: str) -> bool:
         """Validate audio file"""
+
+
+
         try:
             import os
             

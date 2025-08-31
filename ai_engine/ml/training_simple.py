@@ -108,6 +108,9 @@ class SimpleModelTrainer:
              eval_dataset: Optional[Any] = None,
              data_collator: Optional[Any] = None) -> TrainingResult:
         """Train the model"""
+
+
+
         try:
             self.status = TrainingStatus.INITIALIZING
             start_time = time.time()
@@ -223,6 +226,9 @@ class SimpleModelTrainer:
     
     def _save_checkpoint(self, model: Any, epoch: int, checkpoint_type: str):
         """Save model checkpoint"""
+
+
+
         try:
             checkpoint_dir = Path(self.config.output_dir) / f"checkpoint-{checkpoint_type}-{epoch}"
             checkpoint_dir.mkdir(parents=True, exist_ok=True)
@@ -242,6 +248,9 @@ class SimpleModelTrainer:
     
     def _save_artifacts(self, result: TrainingResult):
         """Save training artifacts"""
+
+
+
         try:
             output_dir = Path(self.config.output_dir)
             
@@ -274,6 +283,9 @@ class SimpleModelTrainer:
     
     def _get_hyperparameters(self) -> Dict[str, Any]:
         """Get hyperparameters dictionary"""
+
+
+
         return {
             'learning_rate': self.config.learning_rate,
             'batch_size': self.config.batch_size,
@@ -286,6 +298,9 @@ class SimpleModelTrainer:
     
     def get_training_progress(self) -> Dict[str, Any]:
         """Get current training progress"""
+
+
+
         return {
             'status': self.status.value,
             'current_epoch': self.current_epoch,

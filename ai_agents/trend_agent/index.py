@@ -14,7 +14,7 @@ Advanced service orchestration system that provides:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code, algorithms, and business logic are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in legal action.
@@ -254,6 +254,9 @@ class TrendAgentIndex:
 
     async def get_service_status(self) -> Dict[str, Any]:
         """Get comprehensive service status information"""
+
+
+
         return {
             "overall_status": "active" if self.is_initialized else "inactive",
             "services": {
@@ -407,6 +410,9 @@ class TrendAgentIndex:
 
     async def _initialize_trend_agent(self):
         """Initialize trend agent service"""
+
+
+
         try:
             manager = TrendAgentManager(max_agents=self.config.get("max_trend_agents", 5))
             self._service_managers[ServiceType.TREND_ANALYSIS] = manager
@@ -418,6 +424,9 @@ class TrendAgentIndex:
 
     async def _initialize_viral_detector(self):
         """Initialize viral detector service"""
+
+
+
         try:
             detector = ViralDetector(self.config.get("viral_detector", {}))
             await detector.initialize()
@@ -443,6 +452,9 @@ class TrendAgentIndex:
 
     async def cleanup(self):
         """Clean up all services and resources"""
+
+
+
         try:
             logger.info("Cleaning up TrendAgentIndex")
             

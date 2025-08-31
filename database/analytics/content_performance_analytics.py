@@ -8,7 +8,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Development Team: Lead AI Developer, Senior Backend Engineer, ML Engineer, DBA, Security Expert
 Architecture: Enterprise-grade, microservices-ready, production-optimized
 
-⚠️ INTELLECTUAL PROPERTY WARNING ⚠️
+ INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 Violations will be prosecuted under international copyright law.
@@ -308,6 +308,9 @@ class ContentPerformanceManager:
         Returns:
             ContentPerformanceAnalytics: Complete analytics object
         """
+
+
+
         try:
             self.logger.info(f"Analyzing content performance for content {content_id}")
             
@@ -364,6 +367,9 @@ class ContentPerformanceManager:
     
     def _extract_core_metrics(self, engagement_data: Dict[str, Any]) -> Dict[str, Any]:
         """Extract core engagement metrics from platform data"""
+
+
+
         
         return {
             "total_views": engagement_data.get("views", 0),
@@ -585,6 +591,9 @@ class ContentPerformanceManager:
         """
         Get content analytics for a user with optional filtering
         """
+
+
+
         try:
             cutoff_date = datetime.utcnow() - timedelta(days=days_back)
             
@@ -620,6 +629,9 @@ class ContentPerformanceManager:
         """
         Get top performing content for a user
         """
+
+
+
         try:
             cutoff_date = datetime.utcnow() - timedelta(days=days_back)
             

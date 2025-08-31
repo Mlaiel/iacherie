@@ -593,6 +593,9 @@ class AIContentProcessingPipelineManager:
         
     def get_model_performance_metrics(self) -> Dict[str, Any]:
         """Get AI model performance metrics and statistics"""
+
+
+
         return {
             "model_metrics": self.model_performance_metrics,
             "total_processing_requests": len(self.active_requests),

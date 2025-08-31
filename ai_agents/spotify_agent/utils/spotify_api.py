@@ -7,7 +7,7 @@ token management, and advanced caching for optimal performance.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 """
@@ -241,6 +241,9 @@ class AuthManager:
     
     async def get_user_tokens(self, user_id: str) -> Optional[SpotifyTokens]:
         """Get stored tokens for user"""
+
+
+
         try:
             # Get encrypted tokens from database
             with get_db_session() as db:
@@ -260,6 +263,9 @@ class AuthManager:
     
     async def store_user_tokens(self, user_id: str, tokens: SpotifyTokens) -> bool:
         """Store encrypted tokens for user"""
+
+
+
         try:
             # Serialize and encrypt tokens
             token_data = {
@@ -310,6 +316,9 @@ class AuthManager:
     
     def _generate_code_verifier(self) -> str:
         """Generate PKCE code verifier"""
+
+
+
         return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode('utf-8').rstrip('=')
     
     def _generate_code_challenge(self, code_verifier: str) -> str:
@@ -412,6 +421,9 @@ class SpotifyAPIClient:
     
     async def get_current_user_profile(self, access_token: str) -> Dict[str, Any]:
         """Get current user's Spotify profile"""
+
+
+
         return await self._make_request(
             "GET", 
             "/me", 
@@ -560,6 +572,9 @@ class SpotifyAPIClient:
     async def get_user_playlists(self, user_id: str, limit: int = 50, offset: int = 0,
                                access_token: str) -> Dict[str, Any]:
         """Get user's playlists"""
+
+
+
         return await self._make_request(
             "GET",
             f"/users/{user_id}/playlists",

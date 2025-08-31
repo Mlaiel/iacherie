@@ -8,7 +8,7 @@ for the IA-Influencer-Agent ML platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This training system and methodologies are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 is strictly PROHIBITED and will result in legal action.
@@ -313,6 +313,9 @@ class ModelTrainer:
         
     async def initialize(self) -> bool:
         """Initialize the model trainer"""
+
+
+
         try:
             # Setup MLflow if enabled
             if self.mlflow_enabled:
@@ -486,6 +489,9 @@ class ModelTrainer:
         """
         Comprehensive cross-validation with multiple strategies
         """
+
+
+
         try:
             logger.info(f"Starting cross-validation: {config.validation_strategy.value}")
             
@@ -537,6 +543,9 @@ class ModelTrainer:
         """
         Comprehensive model evaluation with multiple metrics
         """
+
+
+
         try:
             logger.info("Starting comprehensive model evaluation")
             
@@ -809,6 +818,9 @@ class ModelTrainer:
 
     def _initialize_algorithm_registry(self) -> Dict[str, Dict[str, Any]]:
         """Initialize algorithm registry with supported algorithms"""
+
+
+
         return {
             "random_forest": {
                 "class": RandomForestClassifier,
@@ -934,6 +946,9 @@ class ModelTrainer:
 
     async def _setup_mlflow(self):
         """Setup MLflow tracking"""
+
+
+
         try:
             mlflow.set_tracking_uri(self.mlflow_tracking_uri)
             mlflow.set_experiment(self.mlflow_experiment_name)
@@ -1011,6 +1026,9 @@ class ModelTrainer:
 
     async def _save_trained_model(self, model: Any, config: TrainingConfig, result: TrainingResult) -> Optional[str]:
         """Save trained model to disk"""
+
+
+
         try:
             models_dir = Path(self.config.get('models_directory', 'models'))
             models_dir.mkdir(exist_ok=True)
@@ -1120,12 +1138,18 @@ class TrainingPipeline:
     
     async def initialize(self) -> bool:
         """Initialize training pipeline"""
+
+
+
         return await self.model_trainer.initialize()
     
     async def run_pipeline(self, 
                          data_source: Union[str, pd.DataFrame],
                          pipeline_config: Dict[str, Any]) -> Dict[str, Any]:
         """Execute complete training pipeline"""
+
+
+
         try:
             logger.info(f"Starting training pipeline: {self.pipeline_id}")
             

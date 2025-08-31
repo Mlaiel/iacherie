@@ -5,7 +5,7 @@ Advanced AI model configurations, ML pipelines, and intelligent processing schem
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
+ INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 """
 

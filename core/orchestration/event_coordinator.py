@@ -7,7 +7,7 @@ choreography, and sagas across distributed microservices and workflows.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -230,6 +230,9 @@ class EventCoordinator:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             # Validate definition
             if not await self._validate_event_definition(definition):
@@ -262,6 +265,9 @@ class EventCoordinator:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             # Validate handler
             if not await self._validate_event_handler(handler):
@@ -302,6 +308,9 @@ class EventCoordinator:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             # Validate flow
             if not await self._validate_event_flow(flow):
@@ -335,6 +344,9 @@ class EventCoordinator:
         Returns:
             str: Event processing ID
         """
+
+
+
         try:
             # Validate event
             if not await self._validate_event_instance(event):
@@ -369,6 +381,9 @@ class EventCoordinator:
     
     async def _process_event_async(self, event: EventInstance) -> None:
         """Internal asynchronous event processing."""
+
+
+
         try:
             # Move to processing
             if event.instance_id in self.pending_events:
@@ -522,6 +537,9 @@ class EventCoordinator:
     
     async def _execute_flow_async(self, execution: FlowExecution, flow: EventFlow) -> None:
         """Execute flow steps asynchronously."""
+
+
+
         try:
             for step_index, step in enumerate(flow.steps):
                 execution.current_step = step_index
@@ -575,6 +593,9 @@ class EventCoordinator:
         flow: EventFlow
     ) -> bool:
         """Execute individual flow step."""
+
+
+
         try:
             step_type = step.get('type', 'event')
             
@@ -799,18 +820,30 @@ class EventCoordinator:
     
     async def _validate_event_definition(self, definition: EventDefinition) -> bool:
         """Validate event definition."""
+
+
+
         return bool(definition.event_id and definition.name)
     
     async def _validate_event_handler(self, handler: EventHandler) -> bool:
         """Validate event handler."""
+
+
+
         return bool(handler.handler_id and handler.name and handler.event_types and handler.handler_function)
     
     async def _validate_event_flow(self, flow: EventFlow) -> bool:
         """Validate event flow."""
+
+
+
         return bool(flow.flow_id and flow.name and flow.trigger_events and flow.steps)
     
     async def _validate_event_instance(self, event: EventInstance) -> bool:
         """Validate event instance."""
+
+
+
         return bool(event.instance_id and event.event_id and event.source)
     
     async def get_event_status(self, instance_id: str) -> Optional[Dict[str, Any]]:
@@ -865,6 +898,9 @@ class EventCoordinator:
     
     def _event_to_status_dict(self, event: EventInstance) -> Dict[str, Any]:
         """Convert event to status dictionary."""
+
+
+
         return {
             'instance_id': event.instance_id,
             'event_id': event.event_id,
@@ -880,6 +916,9 @@ class EventCoordinator:
     
     def _execution_to_status_dict(self, execution: FlowExecution) -> Dict[str, Any]:
         """Convert execution to status dictionary."""
+
+
+
         return {
             'execution_id': execution.execution_id,
             'flow_id': execution.flow_id,
@@ -895,6 +934,9 @@ class EventCoordinator:
     
     async def get_coordinator_stats(self) -> Dict[str, Any]:
         """Get event coordinator statistics."""
+
+
+
         return {
             **self.coordinator_stats,
             'pending_events': len(self.pending_events),

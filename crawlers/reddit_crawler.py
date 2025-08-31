@@ -301,6 +301,9 @@ class RedditCrawler:
         Returns:
             List of matching posts
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -353,6 +356,9 @@ class RedditCrawler:
         Returns:
             List of subreddit posts
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -398,6 +404,9 @@ class RedditCrawler:
         Returns:
             List of comments
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -434,6 +443,9 @@ class RedditCrawler:
         Returns:
             Monitoring configuration
         """
+
+
+
         try:
             subreddit = self.reddit.subreddit(subreddit_name)
             
@@ -471,6 +483,9 @@ class RedditCrawler:
         Returns:
             List of potential violations
         """
+
+
+
         try:
             violations = []
             
@@ -527,6 +542,9 @@ class RedditCrawler:
         Returns:
             List of trending posts
         """
+
+
+
         try:
             trending_posts = []
             
@@ -616,6 +634,9 @@ class RedditCrawler:
     
     async def _analyze_subreddit(self, subreddit) -> RedditSubreddit:
         """Perform comprehensive subreddit analysis."""
+
+
+
         return RedditSubreddit(
             subreddit_id=subreddit.id,
             display_name=subreddit.display_name,
@@ -650,10 +671,16 @@ class RedditCrawler:
     
     async def _calculate_content_similarity(self, fingerprint1: str, fingerprint2: str) -> float:
         """Calculate similarity between content fingerprints."""
+
+
+
         return await self.text_fingerprinter.calculate_similarity(fingerprint1, fingerprint2)
     
     def get_crawler_stats(self) -> Dict[str, any]:
         """Get crawler statistics and status."""
+
+
+
         return {
             'platform': 'reddit',
             'authenticated': bool(self.username),
@@ -824,6 +851,9 @@ class RedditCrawler(BaseCrawler):
         
     async def authenticate(self, client_id: str, client_secret: str, username: str = None, password: str = None) -> bool:
         """Authenticate with Reddit API using OAuth2"""
+
+
+
         try:
             # Reddit OAuth2 authentication
             auth_url = "https://www.reddit.com/api/v1/access_token"
@@ -1188,6 +1218,9 @@ class RedditCrawler(BaseCrawler):
         Returns:
             Comprehensive performance analysis
         """
+
+
+
         try:
             post = await self.get_post_details(post_id, subreddit)
             if not post:
@@ -1263,6 +1296,9 @@ class RedditCrawler(BaseCrawler):
         Returns:
             Comprehensive trend analysis
         """
+
+
+
         try:
             # Get recent posts from the subreddit
             hot_posts = await self.get_subreddit_posts(subreddit, "hot", time_period, limit//2)
@@ -1387,6 +1423,9 @@ class RedditCrawler(BaseCrawler):
     
     async def _parse_post_data(self, post_data: Dict) -> Optional[RedditPost]:
         """Parse Reddit API post data into RedditPost model"""
+
+
+
         try:
             if not post_data or post_data.get('kind') == 'more':
                 return None
@@ -1425,6 +1464,9 @@ class RedditCrawler(BaseCrawler):
     
     async def _parse_comment_data(self, comment_data: Dict, post_id: str) -> Optional[RedditComment]:
         """Parse Reddit API comment data into RedditComment model"""
+
+
+
         try:
             if not comment_data or comment_data.get('kind') == 'more':
                 return None
@@ -1455,6 +1497,9 @@ class RedditCrawler(BaseCrawler):
     
     async def _parse_subreddit_data(self, subreddit_data: Dict) -> Optional[RedditSubreddit]:
         """Parse Reddit API subreddit data into RedditSubreddit model"""
+
+
+
         try:
             subreddit = RedditSubreddit(
                 subreddit_name=subreddit_data.get('name', ''),
@@ -1480,6 +1525,9 @@ class RedditCrawler(BaseCrawler):
     
     async def _parse_user_data(self, user_data: Dict) -> Optional[RedditUser]:
         """Parse Reddit API user data into RedditUser model"""
+
+
+
         try:
             user = RedditUser(
                 username=user_data.get('name', ''),

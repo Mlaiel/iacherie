@@ -1,5 +1,5 @@
 """
-📊 Analytics Engine - Ultra-Professional DRM Analytics & Intelligence
+ Analytics Engine - Ultra-Professional DRM Analytics & Intelligence
 ==================================================================
 
 Advanced analytics and business intelligence system for digital rights
@@ -8,12 +8,12 @@ management with predictive modeling and revenue optimization.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL NOTICE:
+ CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing and usage rights.
 
-🎯 PROJECT TEAM SPECIALTIES:
+ PROJECT TEAM SPECIALTIES:
 - Lead AI Developer & Solution Architect: Advanced AI/ML systems and intelligent automation
 - Backend Senior Engineer: Enterprise-grade backend architecture and microservices  
 - ML Engineer: Machine learning models and predictive analytics
@@ -147,6 +147,9 @@ class AnalyticsEngine:
         
     async def initialize(self) -> bool:
         """Initialize analytics engine."""
+
+
+
         try:
             # Initialize prediction models
             await self._initialize_prediction_models()
@@ -220,6 +223,9 @@ class AnalyticsEngine:
         timestamp: Optional[datetime] = None
     ) -> str:
         """Record a metric value."""
+
+
+
         try:
             metric_id = str(uuid.uuid4())
             
@@ -256,6 +262,9 @@ class AnalyticsEngine:
         location_info: Optional[Dict[str, Any]] = None
     ) -> None:
         """Record a content usage event."""
+
+
+
         try:
             usage_event = {
                 "event_id": str(uuid.uuid4()),
@@ -298,6 +307,9 @@ class AnalyticsEngine:
         region: Optional[str] = None
     ) -> None:
         """Record a revenue event."""
+
+
+
         try:
             revenue_event = {
                 "transaction_id": transaction_id,
@@ -335,6 +347,9 @@ class AnalyticsEngine:
         user_segments: Optional[List[str]] = None
     ) -> Dict[str, Any]:
         """Generate comprehensive usage analytics."""
+
+
+
         try:
             # Filter usage data
             filtered_data = self._filter_usage_data(start_date, end_date, content_ids, user_segments)
@@ -404,6 +419,9 @@ class AnalyticsEngine:
         regions: Optional[List[str]] = None
     ) -> Dict[str, Any]:
         """Generate comprehensive revenue analytics."""
+
+
+
         try:
             # Filter revenue data
             filtered_data = self._filter_revenue_data(start_date, end_date, content_ids, regions)
@@ -476,6 +494,9 @@ class AnalyticsEngine:
         lookback_days: int = 30
     ) -> List[UsagePattern]:
         """Detect and analyze usage patterns."""
+
+
+
         try:
             patterns = []
             
@@ -511,6 +532,9 @@ class AnalyticsEngine:
         content_ids: Optional[List[str]] = None
     ) -> Dict[str, Any]:
         """Forecast future revenue using machine learning models."""
+
+
+
         try:
             # Get historical revenue data
             end_date = datetime.now(timezone.utc)
@@ -565,6 +589,9 @@ class AnalyticsEngine:
         lookback_hours: int = 24
     ) -> List[Dict[str, Any]]:
         """Detect anomalies in metrics and usage patterns."""
+
+
+
         try:
             anomalies = []
             
@@ -603,6 +630,9 @@ class AnalyticsEngine:
         report_type: str = "monthly"
     ) -> AnalyticsReport:
         """Generate a comprehensive analytics report."""
+
+
+
         try:
             report_id = str(uuid.uuid4())
             
@@ -1148,6 +1178,9 @@ class AnalyticsEngine:
     
     async def get_analytics_statistics(self) -> Dict[str, Any]:
         """Get analytics engine statistics."""
+
+
+
         return {
             "total_metrics": len(self.metrics),
             "usage_events": len(self.usage_data),
@@ -1158,6 +1191,9 @@ class AnalyticsEngine:
     
     async def cleanup(self) -> None:
         """Cleanup analytics engine resources."""
+
+
+
         try:
             # Archive old data
             cutoff_date = datetime.now(timezone.utc) - self.retention_period

@@ -29,10 +29,10 @@ def test_licensing_repositories():
         assert hasattr(content_repo, 'content')
         assert isinstance(content_repo.content, dict)
         
-        print("✅ Licensing repositories test passed")
+        print(" Licensing repositories test passed")
         return True
     except Exception as e:
-        print(f"❌ Licensing repositories test failed: {e}")
+        print(f" Licensing repositories test failed: {e}")
         return False
 
 
@@ -47,10 +47,10 @@ def test_crypto_provider():
         assert hasattr(crypto, 'secure_random')
         assert hasattr(crypto, 'logger')
         
-        print("✅ CryptoProvider test passed")
+        print(" CryptoProvider test passed")
         return True
     except Exception as e:
-        print(f"❌ CryptoProvider test failed: {e}")
+        print(f" CryptoProvider test failed: {e}")
         return False
 
 
@@ -77,10 +77,10 @@ def test_watermarker_configurations():
         text_wm = TextWatermarker(config)
         assert text_wm.config == config
         
-        print("✅ Watermarker configurations test passed")
+        print(" Watermarker configurations test passed")
         return True
     except Exception as e:
-        print(f"❌ Watermarker configurations test failed: {e}")
+        print(f" Watermarker configurations test failed: {e}")
         return False
 
 
@@ -104,10 +104,10 @@ def test_implementation_completeness():
             missing_files.append(file_path)
     
     if missing_files:
-        print(f"❌ Missing files: {missing_files}")
+        print(f" Missing files: {missing_files}")
         return False
     else:
-        print("✅ All implemented files exist")
+        print(" All implemented files exist")
         return True
 
 
@@ -132,13 +132,13 @@ def main():
             failed += 1
         print()
     
-    print(f"📊 Test Results: {passed} passed, {failed} failed")
+    print(f" Test Results: {passed} passed, {failed} failed")
     
     if failed == 0:
-        print("🎉 All tests passed!")
+        print(" All tests passed!")
         return True
     else:
-        print("❌ Some tests failed")
+        print(" Some tests failed")
         return False
 
 

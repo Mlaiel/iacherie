@@ -489,6 +489,9 @@ class CacheMonitor:
     
     async def _monitoring_loop(self, cache_name: str):
         """Main monitoring loop for cache"""
+
+
+
         try:
             while True:
                 await self._collect_cache_metrics(cache_name)

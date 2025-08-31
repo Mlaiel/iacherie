@@ -6,7 +6,7 @@ partnership performance tracking, and cross-creator monetization optimization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel - All rights reserved
-⚠️  WARNING: This code and concept are proprietary to Fahed Mlaiel.
+  WARNING: This code and concept are proprietary to Fahed Mlaiel.
     Any unauthorized use, copying, or distribution without explicit written 
     permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 
@@ -111,6 +111,9 @@ class CollaborationAnalyticsEvent(BaseEvent):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert collaboration event to dictionary"""
+
+
+
         return {
             **asdict(self),
             'collaboration_type': self.collaboration_type.value,
@@ -198,6 +201,9 @@ class CollaborationAnalyticsEventHandler(BaseEventHandler):
         
     async def handle(self, event: CollaborationAnalyticsEvent) -> Dict[str, Any]:
         """Process collaboration analytics event with comprehensive analysis"""
+
+
+
         try:
             # Validate event data
             await self._validate_event(event)

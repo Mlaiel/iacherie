@@ -7,7 +7,7 @@ quantification and reliability assessment for creative industry applications.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
@@ -110,6 +110,9 @@ class IntentConfidenceScorer:
     
     def _initialize_calibration(self):
         """Initialize calibration components"""
+
+
+
         try:
             # Temperature scaling parameter
             self.temperature_parameter = self.config.confidence_config.temperature_scaling
@@ -145,6 +148,9 @@ class IntentConfidenceScorer:
         Returns:
             ConfidenceMetrics: Comprehensive confidence assessment
         """
+
+
+
         try:
             # Extract probability distribution
             if prediction_probabilities is None:
@@ -409,6 +415,9 @@ class IntentConfidenceScorer:
         ground_truth: np.ndarray
     ) -> float:
         """Calculate Brier score for calibration assessment"""
+
+
+
         try:
             # Convert ground truth to one-hot if needed
             if len(ground_truth.shape) == 1:
@@ -448,6 +457,9 @@ class IntentConfidenceScorer:
         method: str = "isotonic"
     ):
         """Calibrate confidence scores using validation data"""
+
+
+
         try:
             from sklearn.calibration import CalibratedClassifierCV
             
@@ -469,6 +481,9 @@ class IntentConfidenceScorer:
     
     def update_temperature(self, validation_data: Dict[str, np.ndarray]):
         """Update temperature parameter for temperature scaling"""
+
+
+
         try:
             # Simple temperature optimization using validation data
             predictions = validation_data.get('predictions')

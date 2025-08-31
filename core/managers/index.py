@@ -7,7 +7,7 @@ Type: Industrial Manager Index - Central Manager Registry & Factory
 Responsibility: Centralized access point for all enterprise managers
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -140,7 +140,7 @@ class ManagerRegistry:
         """
         initialization_results = {}
         
-        logger.info("🚀 Starting IA-Influencer-Agent managers initialization...")
+        logger.info(" Starting IA-Influencer-Agent managers initialization...")
         
         for manager_name in self._initialization_order:
             try:
@@ -149,7 +149,7 @@ class ManagerRegistry:
                 # Get manager instance
                 manager_factory = self._manager_factories.get(manager_name)
                 if not manager_factory:
-                    logger.warning(f"⚠️ No factory found for manager: {manager_name}")
+                    logger.warning(f" No factory found for manager: {manager_name}")
                     initialization_results[manager_name] = False
                     continue
                 
@@ -180,23 +180,23 @@ class ManagerRegistry:
                         try:
                             await callback(manager_instance)
                         except Exception as e:
-                            logger.error(f"❌ Startup callback failed for {manager_name}: {e}")
+                            logger.error(f" Startup callback failed for {manager_name}: {e}")
                     
                     initialization_time = (datetime.now() - start_time).total_seconds()
-                    logger.info(f"✅ {manager_name} manager initialized in {initialization_time:.2f}s")
+                    logger.info(f" {manager_name} manager initialized in {initialization_time:.2f}s")
                 else:
-                    logger.error(f"❌ Failed to initialize {manager_name} manager")
+                    logger.error(f" Failed to initialize {manager_name} manager")
                 
                 initialization_results[manager_name] = success
                 
             except Exception as e:
-                logger.error(f"❌ Exception during {manager_name} initialization: {e}")
+                logger.error(f" Exception during {manager_name} initialization: {e}")
                 initialization_results[manager_name] = False
         
         successful_count = sum(initialization_results.values())
         total_count = len(initialization_results)
         
-        logger.info(f"🎯 Manager initialization completed: {successful_count}/{total_count} successful")
+        logger.info(f" Manager initialization completed: {successful_count}/{total_count} successful")
         
         # Perform initial health checks
         await self.perform_health_checks()
@@ -212,7 +212,7 @@ class ManagerRegistry:
         """
         shutdown_results = {}
         
-        logger.info("🛑 Starting IA-Influencer-Agent managers shutdown...")
+        logger.info(" Starting IA-Influencer-Agent managers shutdown...")
         
         # Shutdown in reverse order
         for manager_name in reversed(self._initialization_order):
@@ -226,7 +226,7 @@ class ManagerRegistry:
                     try:
                         await callback(manager_instance)
                     except Exception as e:
-                        logger.error(f"❌ Shutdown callback failed for {manager_name}: {e}")
+                        logger.error(f" Shutdown callback failed for {manager_name}: {e}")
                 
                 # Shutdown manager if it has a cleanup method
                 if hasattr(manager_instance, 'cleanup'):
@@ -237,14 +237,14 @@ class ManagerRegistry:
                     success = True
                 
                 if success:
-                    logger.info(f"✅ {manager_name} manager shutdown successfully")
+                    logger.info(f" {manager_name} manager shutdown successfully")
                 else:
-                    logger.error(f"❌ Failed to shutdown {manager_name} manager")
+                    logger.error(f" Failed to shutdown {manager_name} manager")
                 
                 shutdown_results[manager_name] = success
                 
             except Exception as e:
-                logger.error(f"❌ Exception during {manager_name} shutdown: {e}")
+                logger.error(f" Exception during {manager_name} shutdown: {e}")
                 shutdown_results[manager_name] = False
         
         self._managers.clear()
@@ -252,7 +252,7 @@ class ManagerRegistry:
         successful_count = sum(shutdown_results.values())
         total_count = len(shutdown_results)
         
-        logger.info(f"🎯 Manager shutdown completed: {successful_count}/{total_count} successful")
+        logger.info(f" Manager shutdown completed: {successful_count}/{total_count} successful")
         
         return shutdown_results
     
@@ -296,7 +296,7 @@ class ManagerRegistry:
                     "last_check": datetime.now().isoformat(),
                     "error": str(e)
                 }
-                logger.error(f"❌ Health check failed for {manager_name}: {e}")
+                logger.error(f" Health check failed for {manager_name}: {e}")
         
         # Update global health status
         global _MANAGER_HEALTH_STATUS
@@ -314,6 +314,9 @@ class ManagerRegistry:
         Returns:
             Manager instance or None if not found
         """
+
+
+
         return self._managers.get(manager_name)
     
     def register_startup_callback(self, manager_name: str, callback: callable):
@@ -330,10 +333,16 @@ class ManagerRegistry:
     
     def get_all_managers(self) -> Dict[str, Any]:
         """Get all registered managers"""
+
+
+
         return self._managers.copy()
     
     def get_manager_health_status(self) -> Dict[str, Dict[str, Any]]:
         """Get health status of all managers"""
+
+
+
         return _MANAGER_HEALTH_STATUS.copy()
 
 
@@ -349,6 +358,9 @@ async def initialize_all_managers() -> Dict[str, bool]:
     Returns:
         Dict mapping manager names to initialization success
     """
+
+
+
     return await _manager_registry.initialize_all_managers()
 
 
@@ -359,6 +371,9 @@ async def shutdown_all_managers() -> Dict[str, bool]:
     Returns:
         Dict mapping manager names to shutdown success
     """
+
+
+
     return await _manager_registry.shutdown_all_managers()
 
 
@@ -369,6 +384,9 @@ async def perform_health_checks() -> Dict[str, Dict[str, Any]]:
     Returns:
         Dict mapping manager names to health status
     """
+
+
+
     return await _manager_registry.perform_health_checks()
 
 
@@ -382,6 +400,9 @@ def get_manager(manager_name: str) -> Optional[Any]:
     Returns:
         Manager instance or None if not found
     """
+
+
+
     return _manager_registry.get_manager(manager_name)
 
 
@@ -392,6 +413,9 @@ def get_all_managers() -> Dict[str, Any]:
     Returns:
         Dict mapping manager names to instances
     """
+
+
+
     return _manager_registry.get_all_managers()
 
 
@@ -402,6 +426,9 @@ def get_manager_health_status() -> Dict[str, Dict[str, Any]]:
     Returns:
         Dict mapping manager names to health status
     """
+
+
+
     return _manager_registry.get_manager_health_status()
 
 
@@ -430,46 +457,73 @@ def register_shutdown_callback(manager_name: str, callback: callable):
 # Convenience functions for direct manager access
 def get_database_manager_instance():
     """Get database manager instance"""
+
+
+
     return get_manager("database") or get_database_manager()
 
 
 def get_cache_manager_instance():
     """Get cache manager instance"""
+
+
+
     return get_manager("cache") or get_cache_manager()
 
 
 def get_queue_manager_instance():
     """Get queue manager instance"""
+
+
+
     return get_manager("queue") or get_queue_manager()
 
 
 def get_storage_manager_instance():
     """Get storage manager instance"""
+
+
+
     return get_manager("storage") or get_storage_manager()
 
 
 def get_backup_manager_instance():
     """Get backup manager instance"""
+
+
+
     return get_manager("backup") or get_backup_manager()
 
 
 def get_protection_manager_instance():
     """Get protection manager instance"""
+
+
+
     return get_manager("protection") or get_protection_manager()
 
 
 def get_fingerprinting_manager_instance():
     """Get fingerprinting manager instance"""
+
+
+
     return get_manager("fingerprinting") or get_fingerprinting_manager()
 
 
 def get_monetization_manager_instance():
     """Get monetization manager instance"""
+
+
+
     return get_manager("monetization") or get_monetization_manager()
 
 
 def get_ai_agent_manager_instance():
     """Get AI agent manager instance"""
+
+
+
     return get_manager("ai_agent") or get_ai_agent_manager()
 
 

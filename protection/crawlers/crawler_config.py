@@ -1,5 +1,5 @@
 """
-⚙️ Enterprise Crawler Configuration Management
+ Enterprise Crawler Configuration Management
 =============================================
 
 Advanced configuration management system for enterprise crawler infrastructure
@@ -20,7 +20,7 @@ Features:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
+ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
 """
@@ -219,6 +219,9 @@ class ConfigurationManager:
     
     def _load_config_file(self, config_path: Path) -> Dict[str, Any]:
         """Load configuration from file."""
+
+
+
         try:
             with open(config_path, 'r', encoding='utf-8') as f:
                 if config_path.suffix.lower() == '.yaml' or config_path.suffix.lower() == '.yml':

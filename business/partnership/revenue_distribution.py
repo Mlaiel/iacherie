@@ -2,7 +2,7 @@
 Revenue Distribution Service for IA Influencer Agent
 Advanced revenue calculation and distribution management system
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
 All rights reserved. Unauthorized use, copying, or reproduction 
 of this code, concept, or intellectual property without explicit 
@@ -78,6 +78,9 @@ class RevenueDistributionService:
         revenue_data: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Calculate comprehensive revenue split for partnership"""
+
+
+
         try:
             revenue_breakdown = {
                 'gross_revenue': Decimal('0'),
@@ -151,6 +154,9 @@ class RevenueDistributionService:
         payout_details: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Process actual revenue distribution and payouts"""
+
+
+
         try:
             distribution_result = {
                 'distribution_id': str(uuid.uuid4()),
@@ -221,6 +227,9 @@ class RevenueDistributionService:
         market_data: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Optimize revenue strategy using AI analysis"""
+
+
+
         try:
             optimization = {
                 'current_performance': {},
@@ -275,6 +284,9 @@ class RevenueDistributionService:
         bonus_structure: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Calculate performance-based bonuses"""
+
+
+
         try:
             bonus_calculation = {
                 'total_bonus': Decimal('0'),
@@ -322,6 +334,9 @@ class RevenueDistributionService:
         forecast_period_months: int = 12
     ) -> Dict[str, Any]:
         """Generate AI-powered revenue forecast"""
+
+
+
         try:
             forecast = {
                 'forecast_period': forecast_period_months,
@@ -385,6 +400,9 @@ class RevenueDistributionService:
 
     def _load_tax_rates(self) -> Dict[str, Any]:
         """Load tax rates by jurisdiction"""
+
+
+
         return {
             'US': {'federal': 0.24, 'state_avg': 0.05},
             'EU': {'vat': 0.20, 'income': 0.25},
@@ -394,6 +412,9 @@ class RevenueDistributionService:
 
     def _load_platform_fees(self) -> Dict[str, Decimal]:
         """Load platform fee structures"""
+
+
+
         return {
             'standard_rate': Decimal('0.029'),  # 2.9%
             'premium_rate': Decimal('0.025'),   # 2.5%
@@ -404,6 +425,9 @@ class RevenueDistributionService:
 
     def _load_currency_rates(self) -> Dict[str, Decimal]:
         """Load current currency exchange rates"""
+
+
+
         return {
             'USD_EUR': Decimal('0.85'),
             'USD_GBP': Decimal('0.75'),
@@ -587,6 +611,9 @@ class RevenueDistributionService:
         payout_details: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Process creator payout"""
+
+
+
         return {
             'payout_id': str(uuid.uuid4()),
             'recipient': 'creator',
@@ -607,6 +634,9 @@ class RevenueDistributionService:
         payout_details: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Process partner commission payout"""
+
+
+
         return {
             'payout_id': str(uuid.uuid4()),
             'recipient': 'partner',
@@ -627,6 +657,9 @@ class RevenueDistributionService:
         payout_details: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Perform regulatory compliance checks"""
+
+
+
         return {
             'aml_check': 'passed',
             'sanctions_screening': 'clear',

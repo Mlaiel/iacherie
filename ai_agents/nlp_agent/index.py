@@ -128,6 +128,9 @@ class NLPAgentIndex:
     
     def _initialize_component(self, component_name: str):
         """Initialize a specific component"""
+
+
+
         try:
             component_info = self.component_registry[component_name]
             component_class = component_info["class"]
@@ -172,6 +175,9 @@ class NLPAgentIndex:
     
     def get_components_by_category(self, category: str) -> List[str]:
         """Get list of components by category"""
+
+
+
         return [
             name for name, info in self.component_registry.items()
             if info["category"] == category
@@ -179,6 +185,9 @@ class NLPAgentIndex:
     
     def get_available_categories(self) -> List[str]:
         """Get list of available component categories"""
+
+
+
         return list(set(
             info["category"] for info in self.component_registry.values()
         ))

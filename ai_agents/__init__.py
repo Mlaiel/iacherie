@@ -10,7 +10,7 @@ User (musician/blogger/photographer/influencer/comedian) → Upload multi-format
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -249,6 +249,9 @@ class AgentFactory:
 
 async def initialize_agent_system():
     """Initialize the complete agent system"""
+
+
+
     try:
         # Start the global agent manager
         await agent_manager.start()
@@ -269,6 +272,9 @@ async def initialize_agent_system():
 
 async def shutdown_agent_system():
     """Shutdown the complete agent system"""
+
+
+
     try:
         await agent_manager.stop()
         logger.info("Agent system shutdown completed")
@@ -279,6 +285,9 @@ async def shutdown_agent_system():
 # Utility functions
 def get_available_agent_types() -> List[str]:
     """Get list of available agent types"""
+
+
+
     return list(AGENT_REGISTRY.keys())
 
 def get_agent_info(agent_type: str) -> Optional[Dict[str, Any]]:

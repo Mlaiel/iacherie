@@ -8,7 +8,7 @@ suggestions, and self-healing mechanisms.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -113,14 +113,23 @@ class DiagnosticResult:
     
     def is_healthy(self) -> bool:
         """Check if result indicates healthy state"""
+
+
+
         return self.status in [DiagnosticStatus.PASS, DiagnosticStatus.SKIPPED]
     
     def requires_attention(self) -> bool:
         """Check if result requires attention"""
+
+
+
         return self.status in [DiagnosticStatus.FAIL, DiagnosticStatus.WARNING]
     
     def is_critical(self) -> bool:
         """Check if result is critical"""
+
+
+
         return (self.severity == DiagnosticSeverity.CRITICAL and 
                 self.status == DiagnosticStatus.FAIL)
 
@@ -266,6 +275,9 @@ class SystemResourceCheck(BaseDiagnosticCheck):
     
     async def execute_check(self) -> DiagnosticResult:
         """Execute system resource check"""
+
+
+
         try:
             # Get system metrics
             cpu_percent = psutil.cpu_percent(interval=1)
@@ -338,6 +350,9 @@ class DatabaseHealthCheck(BaseDiagnosticCheck):
     
     async def execute_check(self) -> DiagnosticResult:
         """Execute database health check"""
+
+
+
         try:
             import asyncpg
             import time
@@ -457,6 +472,9 @@ class AIModelPerformanceCheck(BaseDiagnosticCheck):
     
     async def execute_check(self) -> DiagnosticResult:
         """Execute AI model performance check"""
+
+
+
         try:
             metrics = {}
             issues = []
@@ -559,6 +577,9 @@ class SecurityComplianceCheck(BaseDiagnosticCheck):
     
     async def execute_check(self) -> DiagnosticResult:
         """Execute security compliance check"""
+
+
+
         try:
             metrics = {}
             issues = []
@@ -678,6 +699,9 @@ class ContentProtectionCheck(BaseDiagnosticCheck):
     
     async def execute_check(self) -> DiagnosticResult:
         """Execute content protection check"""
+
+
+
         try:
             metrics = {}
             issues = []
@@ -969,6 +993,9 @@ class DiagnosticEngine:
     
     async def _restart_high_cpu_processes(self, parameters: Dict[str, Any]) -> Tuple[bool, str, Dict]:
         """Restart processes with high CPU usage"""
+
+
+
         try:
             high_cpu_processes = []
             threshold = parameters.get("cpu_threshold", 50.0)
@@ -998,6 +1025,9 @@ class DiagnosticEngine:
     
     async def _clear_memory_caches(self, parameters: Dict[str, Any]) -> Tuple[bool, str, Dict]:
         """Clear system memory caches"""
+
+
+
         try:
             memory_before = psutil.virtual_memory().percent
             
@@ -1017,6 +1047,9 @@ class DiagnosticEngine:
     
     async def _cleanup_old_files(self, parameters: Dict[str, Any]) -> Tuple[bool, str, Dict]:
         """Clean up old files"""
+
+
+
         try:
             cleanup_paths = parameters.get("paths", ["/tmp", "/var/log"])
             days_old = parameters.get("days_old", 7)
@@ -1038,6 +1071,9 @@ class DiagnosticEngine:
     
     async def _scale_protection_workers(self, parameters: Dict[str, Any]) -> Tuple[bool, str, Dict]:
         """Scale content protection workers"""
+
+
+
         try:
             current_workers = parameters.get("current_workers", 5)
             target_workers = parameters.get("target_workers", current_workers + 2)
@@ -1166,6 +1202,9 @@ class DiagnosticEngine:
     
     def get_stats(self) -> Dict[str, Any]:
         """Get diagnostic engine statistics"""
+
+
+
         return {
             "registered_checks": len(self.checks),
             "registered_actions": len(self.remediation_actions),
@@ -1179,6 +1218,9 @@ class DiagnosticEngine:
 # Factory function
 def create_diagnostic_engine(config: Dict[str, Any] = None) -> DiagnosticEngine:
     """Factory function to create diagnostic engine"""
+
+
+
     return DiagnosticEngine(config)
 
 

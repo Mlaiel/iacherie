@@ -7,7 +7,7 @@ and debugging information for industrial IA influencer platform.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 ANY unauthorized use, reproduction, or distribution is STRICTLY PROHIBITED.
 Legal action will be taken against violators under German and international law.
@@ -79,6 +79,9 @@ class AnalyticsBaseError(Exception):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert exception to dictionary for logging/serialization"""
+
+
+
         return {
             'error_code': self.error_code,
             'message': self.message,
@@ -482,6 +485,9 @@ def handle_analytics_exception(
     Returns:
         Function result or raises appropriate exception
     """
+
+
+
     try:
         return func(*args, **kwargs)
     except AnalyticsBaseError:

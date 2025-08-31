@@ -7,7 +7,7 @@ and coordinated inter-agent messaging and collaboration.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
@@ -220,6 +220,9 @@ class AgentCommunicationHub:
     
     async def initialize(self) -> None:
         """Initialize the communication hub"""
+
+
+
         try:
             # Start background tasks
             self._background_tasks.extend([
@@ -259,6 +262,9 @@ class AgentCommunicationHub:
     
     async def send_message(self, message: AgentMessage) -> bool:
         """Send a message to an agent"""
+
+
+
         try:
             # Validate message
             if not self._validate_message(message):
@@ -515,6 +521,9 @@ class AgentCommunicationHub:
     
     async def _process_agent_handlers(self, agent_id: str) -> None:
         """Process message handlers for a specific agent"""
+
+
+
         try:
             # Get message without blocking
             message = await self.receive_message(agent_id, timeout=0.01)

@@ -45,7 +45,7 @@ Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
 
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE - INTELLECTUAL PROPERTY PROTECTION:
+  CRITICAL LEGAL NOTICE - INTELLECTUAL PROPERTY PROTECTION:
 This monetization system, revenue optimization algorithms, financial modeling methods, 
 and business intelligence strategies are the exclusive intellectual property of Fahed Mlaiel. 
 Any unauthorized use, copying, modification, distribution, reverse engineering, or 
@@ -190,6 +190,9 @@ class MonetizationDialogueHandler:
         
     def _initialize_monetization_flows(self) -> Dict[str, Dict[str, Any]]:
         """Initialize monetization conversation flows"""
+
+
+
         return {
             "revenue_assessment_flow": {
                 "name": "Comprehensive Revenue Assessment",
@@ -398,6 +401,9 @@ class MonetizationDialogueHandler:
         flow_id: Optional[str] = None
     ) -> Dict[str, Any]:
         """Handle monetization-focused conversation"""
+
+
+
         try:
             # Determine conversation flow if not specified
             if not flow_id:

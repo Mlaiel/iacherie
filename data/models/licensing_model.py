@@ -8,7 +8,7 @@ Comprehensive licensing management with contracts, royalties, and compliance.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  STRICT WARNING FOR UNAUTHORIZED USE:
+  STRICT WARNING FOR UNAUTHORIZED USE:
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use without explicit written 
 permission is strictly prohibited and will result in legal action.
@@ -307,6 +307,9 @@ class LicensingModel(Base):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert model to dictionary representation"""
+
+
+
         return {
             'id': self.id,
             'user_id': self.user_id,
@@ -359,6 +362,9 @@ class LicensingModel(Base):
     @property
     def is_active(self) -> bool:
         """Check if license is currently active"""
+
+
+
         return (self.status == LicenseStatus.ACTIVE.value and
                 not self.is_deleted and
                 self.is_within_validity_period)
@@ -397,6 +403,9 @@ class LicensingModel(Base):
     @property
     def is_renewable(self) -> bool:
         """Check if license can be renewed"""
+
+
+
         return self.renewal_option and not self.is_deleted
     
     @property

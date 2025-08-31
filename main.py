@@ -17,10 +17,10 @@ sys.path.insert(0, str(Path(__file__).parent))
 # Try to import the app, fallback to a simple one if complex dependencies fail
 try:
     from api.asgi import app
-    print("✓ Successfully imported api.asgi app")
+    print(" Successfully imported api.asgi app")
     MAIN_APP_AVAILABLE = True
 except ImportError as e:
-    print(f"⚠️  Could not import api.asgi app: {e}")
+    print(f"  Could not import api.asgi app: {e}")
     MAIN_APP_AVAILABLE = False
 
 # Try to import config, fallback to simple config if needed
@@ -28,23 +28,23 @@ try:
     # First try simple_config.py which has comprehensive settings
     import simple_config
     settings = simple_config.settings
-    print("✓ Successfully imported simple_config.py")
-    print(f"✓ Environment: {settings.app.environment}")
-    print(f"✓ Debug mode: {settings.app.debug}")
-    print(f"✓ Host: {settings.app.host}")
-    print(f"✓ Port: {settings.app.port}")
+    print(" Successfully imported simple_config.py")
+    print(f" Environment: {settings.app.environment}")
+    print(f" Debug mode: {settings.app.debug}")
+    print(f" Host: {settings.app.host}")
+    print(f" Port: {settings.app.port}")
 except ImportError as e:
     try:
         # Fallback to unified app_config module
         import app_config
         settings = app_config.settings
-        print("✓ Successfully imported app_config.py as fallback")
-        print(f"✓ Environment: {settings.app.environment}")
-        print(f"✓ Debug mode: {settings.app.debug}")
-        print(f"✓ Host: {settings.app.host}")
-        print(f"✓ Port: {settings.app.port}")
+        print(" Successfully imported app_config.py as fallback")
+        print(f" Environment: {settings.app.environment}")
+        print(f" Debug mode: {settings.app.debug}")
+        print(f" Host: {settings.app.host}")
+        print(f" Port: {settings.app.port}")
     except Exception as e:
-        print(f"❌ Failed to import any config: {e}")
+        print(f" Failed to import any config: {e}")
         # Create minimal fallback settings
         class MockSettings:
             class App:
@@ -54,11 +54,11 @@ except ImportError as e:
                 port = 8000
             app = App()
         settings = MockSettings()
-        print("⚠️  Using minimal fallback settings")
+        print("  Using minimal fallback settings")
 
 # Create minimal FastAPI app if main app not available
 if not MAIN_APP_AVAILABLE:
-    print("📦 Creating minimal FastAPI app for testing")
+    print(" Creating minimal FastAPI app for testing")
     
     from fastapi import FastAPI
     from pydantic import BaseModel
@@ -95,14 +95,14 @@ try:
     from database.schema import create_tables
     CREATE_TABLES_AVAILABLE = True
 except ImportError as e:
-    print(f"⚠️  Database schema not available: {e}")
+    print(f"  Database schema not available: {e}")
     CREATE_TABLES_AVAILABLE = False
 
 try:
     from core.logging import logger
     LOGGING_AVAILABLE = True
 except ImportError as e:
-    print(f"⚠️  Core logging not available: {e}")
+    print(f"  Core logging not available: {e}")
     import logging
     logger = logging.getLogger(__name__)
     LOGGING_AVAILABLE = False
@@ -112,6 +112,9 @@ import uvicorn
 
 async def initialize_platform():
     """Initialize the platform on first run"""
+
+
+
     try:
         logger.info("Initializing Ainflue platform...")
         

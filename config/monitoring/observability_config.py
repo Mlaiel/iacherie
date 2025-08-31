@@ -355,23 +355,38 @@ class ObservabilityConfig:
     
     def get_component(self, name: str) -> Optional[ObservabilityComponent]:
         """Get observability component by name"""
+
+
+
         return self._components.get(name)
     
     def get_slo(self, name: str) -> Optional[ServiceLevelObjective]:
         """Get SLO by name"""
+
+
+
         return self._slos.get(name)
     
     def get_pipeline(self, name: str) -> Optional[ObservabilityPipeline]:
         """Get pipeline by name"""
+
+
+
         return self._pipelines.get(name)
     
     def get_components_by_type(self, component_type: str) -> List[ObservabilityComponent]:
         """Get components by type"""
+
+
+
         return [comp for comp in self._components.values() 
                 if comp.component_type == component_type]
     
     def get_critical_components(self) -> List[ObservabilityComponent]:
         """Get critical components (tier 1)"""
+
+
+
         return [comp for comp in self._components.values()
                 if comp.metadata.get("tier", 99) == 1]
     
@@ -403,6 +418,9 @@ class ObservabilityConfig:
     
     def get_monitoring_dashboard_config(self) -> Dict[str, Any]:
         """Get configuration for monitoring dashboards"""
+
+
+
         return {
             "service_map": {
                 "components": list(self._components.keys()),
@@ -426,6 +444,9 @@ class ObservabilityConfig:
     
     def export_configuration(self) -> Dict[str, Any]:
         """Export complete observability configuration"""
+
+
+
         return {
             "metadata": {
                 "generated_at": datetime.utcnow().isoformat(),

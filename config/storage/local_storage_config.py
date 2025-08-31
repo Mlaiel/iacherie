@@ -211,12 +211,18 @@ class LocalStorageConfig:
     
     def get_content_types(self) -> List[str]:
         """Get list of supported content types."""
+
+
+
         return ['audio', 'video', 'image', 'document', 'model', 
                 'fingerprint', 'upload', 'processed', 'backup', 
                 'temp', 'log', 'cache']
     
     def validate_configuration(self) -> bool:
         """Validate local storage configuration and accessibility."""
+
+
+
         try:
             for content_type, dir_config in self.directories.items():
                 path = Path(dir_config.path)
@@ -330,6 +336,9 @@ class LocalStorageConfig:
     
     def export_configuration(self) -> Dict:
         """Export configuration to JSON-serializable format."""
+
+
+
         return {
             'base_path': self.base_path,
             'temp_path': self.temp_path,

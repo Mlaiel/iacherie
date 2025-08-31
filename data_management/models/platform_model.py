@@ -1,11 +1,11 @@
 """
-🌐 Platform & Audit Models - IA Influencer Agent Platform Enterprise
+ Platform & Audit Models - IA Influencer Agent Platform Enterprise
 ====================================================================
 Module: backend/data_management/models/platform_model.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ====================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de

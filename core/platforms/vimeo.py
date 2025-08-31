@@ -42,6 +42,9 @@ class VimeoPlatform(PlatformBase):
     
     async def authenticate(self) -> bool:
         """Authenticate with Vimeo OAuth2"""
+
+
+
         try:
             access_token = self.config.credentials.get('access_token')
             
@@ -75,10 +78,16 @@ class VimeoPlatform(PlatformBase):
     
     async def refresh_token(self) -> bool:
         """Refresh Vimeo token"""
+
+
+
         return await self.authenticate()
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
         """Make authenticated request to Vimeo API"""
+
+
+
         try:
             session = await self._get_session()
             
@@ -119,6 +128,9 @@ class VimeoPlatform(PlatformBase):
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
         """Upload video to Vimeo"""
+
+
+
         try:
             # Create video upload ticket
             upload_data = {
@@ -170,6 +182,9 @@ class VimeoPlatform(PlatformBase):
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
         """Get Vimeo video analytics"""
+
+
+
         try:
             # Get video stats
             video_data = await self._make_request('GET', f'/videos/{content_id}')
@@ -206,6 +221,9 @@ class VimeoPlatform(PlatformBase):
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
         """Search videos on Vimeo"""
+
+
+
         try:
             params = {
                 'query': query,
@@ -241,6 +259,9 @@ class VimeoPlatform(PlatformBase):
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
         """Get user's videos from Vimeo"""
+
+
+
         try:
             endpoint = f'/users/{user_id}/videos' if user_id else '/me/videos'
             result = await self._make_request('GET', endpoint)
@@ -270,6 +291,9 @@ class VimeoPlatform(PlatformBase):
     
     async def delete_content(self, content_id: str) -> bool:
         """Delete Vimeo video"""
+
+
+
         try:
             result = await self._make_request('DELETE', f'/videos/{content_id}')
             
@@ -286,6 +310,9 @@ class VimeoPlatform(PlatformBase):
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
         """Update Vimeo video"""
+
+
+
         try:
             update_data = {}
             
@@ -316,6 +343,9 @@ class VimeoPlatform(PlatformBase):
     
     async def get_video_chapters(self, video_id: str) -> List[Dict[str, Any]]:
         """Get video chapters"""
+
+
+
         try:
             result = await self._make_request('GET', f'/videos/{video_id}/chapters')
             
@@ -330,6 +360,9 @@ class VimeoPlatform(PlatformBase):
     
     async def add_video_to_collection(self, video_id: str, collection_id: str) -> bool:
         """Add video to collection/showcase"""
+
+
+
         try:
             result = await self._make_request('PUT', f'/me/albums/{collection_id}/videos/{video_id}')
             

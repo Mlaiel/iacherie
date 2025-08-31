@@ -154,6 +154,9 @@ class ImageOptimizer:
     
     def _optimize_original_format(self, image: Image.Image, options: Dict[str, Any]) -> Dict[str, Any]:
         """Optimize image in its original format"""
+
+
+
         
         try:
             # Create copy for optimization
@@ -198,6 +201,9 @@ class ImageOptimizer:
     
     def _generate_webp_variants(self, image: Image.Image, options: Dict[str, Any]) -> Dict[str, Any]:
         """Generate WebP variants"""
+
+
+
         
         try:
             variants = {}
@@ -219,6 +225,9 @@ class ImageOptimizer:
     
     def _generate_avif_variants(self, image: Image.Image, options: Dict[str, Any]) -> Dict[str, Any]:
         """Generate AVIF variants (if supported)"""
+
+
+
         
         try:
             # AVIF support may not be available in all PIL installations
@@ -232,6 +241,9 @@ class ImageOptimizer:
     
     def _generate_responsive_variants(self, image: Image.Image, options: Dict[str, Any]) -> Dict[str, Any]:
         """Generate responsive image variants"""
+
+
+
         
         try:
             variants = {}
@@ -262,6 +274,9 @@ class ImageOptimizer:
     
     def _resize_image(self, image: Image.Image, size_config: Dict[str, Any]) -> Optional[Image.Image]:
         """Resize image according to size configuration"""
+
+
+
         
         try:
             target_width = size_config['width']
@@ -288,6 +303,9 @@ class ImageOptimizer:
     
     def _save_webp(self, image: Image.Image, quality_key: str, options: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         """Save image as WebP"""
+
+
+
         
         try:
             # Convert to RGB if necessary
@@ -321,6 +339,9 @@ class ImageOptimizer:
     
     def _save_resized_image(self, image: Image.Image, original_format: str, options: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         """Save resized image in original format"""
+
+
+
         
         try:
             # Strip metadata if requested
@@ -357,6 +378,9 @@ class ImageOptimizer:
     
     def _strip_metadata(self, image: Image.Image) -> Image.Image:
         """Strip metadata from image"""
+
+
+
         
         try:
             # Create new image without metadata
@@ -371,6 +395,9 @@ class ImageOptimizer:
     
     def _calculate_optimization_stats(self, original_data: bytes, variants: Dict[str, Any]) -> Dict[str, Any]:
         """Calculate optimization statistics"""
+
+
+
         
         try:
             original_size = len(original_data)

@@ -61,6 +61,9 @@ class MetricData:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert metric to dictionary for serialization"""
+
+
+
         return {
             'timestamp': self.timestamp.isoformat(),
             'component': self.component.value,
@@ -87,6 +90,9 @@ class Alert:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert alert to dictionary for notifications"""
+
+
+
         return {
             'id': self.id,
             'severity': self.severity.value,
@@ -182,6 +188,9 @@ class ContentProtectionMonitor:
         
     def _load_config(self, config_path: str) -> Dict[str, Any]:
         """Load monitoring configuration from YAML file"""
+
+
+
         try:
             with open(config_path, 'r') as file:
                 return yaml.safe_load(file)
@@ -191,6 +200,9 @@ class ContentProtectionMonitor:
     
     def _get_default_config(self) -> Dict[str, Any]:
         """Default configuration for content protection monitoring"""
+
+
+
         return {
             'monitoring': {
                 'metrics': {
@@ -232,6 +244,9 @@ class ContentProtectionMonitor:
     
     async def initialize_connections(self):
         """Initialize connections to all monitored databases"""
+
+
+
         try:
             # Initialize Redis connections for each region
             for region, config in self.config.get('regions', {}).items():
@@ -338,6 +353,9 @@ class ContentProtectionMonitor:
     
     async def _measure_replication_lag(self, source_region: str, target_region: str) -> float:
         """Measure replication lag between two regions"""
+
+
+
         try:
             # Write timestamp to source
             timestamp = time.time()
@@ -402,6 +420,9 @@ class ContentProtectionMonitor:
     
     async def _get_fingerprint_processing_rate(self, region: str) -> float:
         """Get fingerprint processing rate for a region"""
+
+
+
         try:
             # Get processing stats from Redis
             stats_key = f"fingerprint_stats:{region}"
@@ -541,6 +562,9 @@ class ContentProtectionMonitor:
     
     async def _check_revenue_discrepancies(self, region: str, db):
         """Check for revenue tracking discrepancies"""
+
+
+
         try:
             # Compare with platform APIs (mock implementation)
             discrepancies = []
@@ -686,6 +710,9 @@ class ContentProtectionMonitor:
     
     async def _detect_suspicious_patterns(self):
         """Detect suspicious patterns in system usage"""
+
+
+
         try:
             # Analyze API usage patterns
             # Check for unusual spikes in requests
@@ -738,6 +765,9 @@ class ContentProtectionMonitor:
     
     async def _store_metrics(self, metrics: List[MetricData]):
         """Store metrics to time-series database"""
+
+
+
         try:
             # In real implementation, this would store to InfluxDB, TimescaleDB, etc.
             self.logger.info(f"Storing {len(metrics)} metrics to time-series database")
@@ -751,6 +781,9 @@ class ContentProtectionMonitor:
     
     async def _generate_aggregated_metrics(self, metrics: List[MetricData]):
         """Generate aggregated metrics for dashboards"""
+
+
+
         try:
             # Group metrics by component and calculate aggregations
             component_metrics = {}
@@ -839,6 +872,9 @@ class ContentProtectionMonitor:
     
     async def _check_redis_health(self, region: str) -> Dict[str, Any]:
         """Check Redis health for a specific region"""
+
+
+
         try:
             client = self.redis_clients[region]
             
@@ -868,6 +904,9 @@ class ContentProtectionMonitor:
     
     async def _check_mongodb_health(self, region: str) -> Dict[str, Any]:
         """Check MongoDB health for a specific region"""
+
+
+
         try:
             client = self.mongo_clients[region]
             
@@ -895,6 +934,9 @@ class ContentProtectionMonitor:
     
     async def _check_elasticsearch_health(self, region: str) -> Dict[str, Any]:
         """Check Elasticsearch health for a specific region"""
+
+
+
         try:
             client = self.es_clients[region]
             
@@ -931,6 +973,9 @@ class ContentProtectionMonitor:
     
     async def _check_security_status(self) -> Dict[str, Any]:
         """Check security status and compliance"""
+
+
+
         return {
             'status': 'secure',
             'failed_auth_attempts_last_hour': 2,
@@ -955,6 +1000,9 @@ class ContentProtectionMonitor:
     
     def _calculate_health_score(self, health_status: Dict[str, Any]) -> float:
         """Calculate overall system health score"""
+
+
+
         try:
             scores = []
             
@@ -1021,6 +1069,9 @@ class ContentProtectionMonitor:
     
     async def _send_alert_notifications(self, alert: Alert):
         """Send alert notifications via configured channels"""
+
+
+
         try:
             # Email notifications
             if self.config.get('monitoring', {}).get('notifications', {}).get('email', {}).get('enabled'):
@@ -1039,6 +1090,9 @@ class ContentProtectionMonitor:
     
     async def _send_email_alert(self, alert: Alert):
         """Send email alert notification"""
+
+
+
         try:
             # Email configuration
             email_config = self.config['monitoring']['notifications']['email']
@@ -1072,6 +1126,9 @@ class ContentProtectionMonitor:
     
     async def _send_slack_alert(self, alert: Alert):
         """Send Slack alert notification"""
+
+
+
         try:
             slack_config = self.config['monitoring']['notifications']['slack']
             webhook_url = slack_config['webhook_url']
@@ -1124,6 +1181,9 @@ class ContentProtectionMonitor:
     
     async def _send_pagerduty_alert(self, alert: Alert):
         """Send PagerDuty alert for critical issues"""
+
+
+
         try:
             # Note: In real implementation, you'd integrate with PagerDuty API
             self.logger.critical(f"PagerDuty alert triggered for {alert.id}")
@@ -1133,6 +1193,9 @@ class ContentProtectionMonitor:
     
     def get_metrics_summary(self) -> Dict[str, Any]:
         """Get summary of current metrics and system status"""
+
+
+
         return {
             'active_alerts': len(self.active_alerts),
             'monitoring_active': self.monitoring_active,
@@ -1144,7 +1207,7 @@ class ContentProtectionMonitor:
 # Example usage and demonstration
 async def run_monitoring_demo():
     """Demonstration of the content protection monitoring system"""
-    print("🚀 Starting IA Influencer Agent Content Protection Monitoring Demo")
+    print(" Starting IA Influencer Agent Content Protection Monitoring Demo")
     print("=" * 70)
     
     # Initialize monitor
@@ -1152,14 +1215,14 @@ async def run_monitoring_demo():
     
     try:
         # Start monitoring (in demo mode, this would run briefly)
-        print("📊 Initializing monitoring system...")
+        print(" Initializing monitoring system...")
         await monitor.initialize_connections()
         
-        print("✅ Monitoring system initialized successfully")
-        print(f"📈 Monitoring Summary: {monitor.get_metrics_summary()}")
+        print(" Monitoring system initialized successfully")
+        print(f" Monitoring Summary: {monitor.get_metrics_summary()}")
         
         # Simulate some monitoring activity
-        print("\n🔍 Simulating monitoring activities...")
+        print("\n Simulating monitoring activities...")
         
         # Create some demo alerts
         await monitor._create_alert(
@@ -1176,29 +1239,29 @@ async def run_monitoring_demo():
             "Unusual increase in copyright violations detected on YouTube platform"
         )
         
-        print(f"⚠️  Active alerts: {len(monitor.active_alerts)}")
+        print(f"  Active alerts: {len(monitor.active_alerts)}")
         
         # Perform health check
-        print("\n🏥 Performing system health check...")
+        print("\n Performing system health check...")
         health_status = await monitor._perform_comprehensive_health_check()
         health_score = monitor._calculate_health_score(health_status)
         
-        print(f"💚 System Health Score: {health_score:.1f}%")
+        print(f" System Health Score: {health_score:.1f}%")
         
         # Show metrics summary
-        print("\n📊 Current Monitoring Status:")
+        print("\n Current Monitoring Status:")
         summary = monitor.get_metrics_summary()
         for key, value in summary.items():
             print(f"   {key}: {value}")
         
-        print("\n✨ Monitoring demo completed successfully!")
+        print("\n Monitoring demo completed successfully!")
         
     except Exception as e:
-        print(f"❌ Error during monitoring demo: {e}")
+        print(f" Error during monitoring demo: {e}")
     
     finally:
         await monitor.stop_monitoring()
-        print("🛑 Monitoring system stopped")
+        print(" Monitoring system stopped")
 
 if __name__ == "__main__":
     # Run the monitoring demo

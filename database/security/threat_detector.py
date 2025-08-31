@@ -20,7 +20,7 @@ Team Specialists:
 - IA Prompt Engineer: AI threat detection prompts
 
 Contact: mlaiel@live.de
-⚠️ LEGAL WARNING: Any unauthorized use, copying, distribution, or commercialization 
+ LEGAL WARNING: Any unauthorized use, copying, distribution, or commercialization 
 of this code without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will result in immediate legal action.
 """
@@ -670,6 +670,9 @@ class ThreatDetector:
     
     def _initialize_threat_indicators(self):
         """Initialize default threat indicators"""
+
+
+
         try:
             default_indicators = [
                 ThreatIndicator(
@@ -771,6 +774,9 @@ class ThreatDetector:
     
     async def _process_threat_event(self, threat: ThreatEvent):
         """Process detected threat event"""
+
+
+
         try:
             # Store threat event
             self.threat_events[threat.event_id] = threat
@@ -836,6 +842,9 @@ class ThreatDetector:
     
     async def _execute_response_action(self, threat: ThreatEvent, action: ResponseAction):
         """Execute response action for threat"""
+
+
+
         try:
             handler = self.response_handlers.get(action)
             if handler:
@@ -919,10 +928,16 @@ class ThreatDetector:
     
     def is_ip_blocked(self, ip_address: str) -> bool:
         """Check if IP address is blocked"""
+
+
+
         return ip_address in self.blocked_ips
     
     def is_user_blocked(self, user_id: str) -> bool:
         """Check if user is blocked"""
+
+
+
         return user_id in self.blocked_users
     
     def unblock_ip(self, ip_address: str) -> bool:
@@ -973,6 +988,9 @@ class ThreatDetector:
     
     def get_security_metrics(self) -> Dict[str, Any]:
         """Get security monitoring metrics"""
+
+
+
         return {
             "total_threat_events": len(self.threat_events),
             "active_threats": len([

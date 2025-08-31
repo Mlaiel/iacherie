@@ -94,6 +94,9 @@ class TextProcessingEngine:
     
     def _initialize_models(self) -> None:
         """Initialize transformer models"""
+
+
+
         try:
             # BERT for general text understanding
             self.bert_tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
@@ -133,6 +136,9 @@ class TextProcessingEngine:
     
     def _initialize_nlp_libraries(self) -> None:
         """Initialize NLP libraries"""
+
+
+
         try:
             # Download required NLTK data
             nltk.download('punkt', quiet=True)
@@ -158,6 +164,9 @@ class TextProcessingEngine:
     
     def _initialize_vectorizers(self) -> None:
         """Initialize text vectorizers"""
+
+
+
         try:
             # TF-IDF vectorizer
             self.tfidf_vectorizer = TfidfVectorizer(
@@ -188,6 +197,9 @@ class TextProcessingEngine:
         Returns:
             Complete text analysis results
         """
+
+
+
         try:
             # Normalize input
             if isinstance(text_data, str):
@@ -258,6 +270,9 @@ class TextProcessingEngine:
     
     def _preprocess_text(self, text: str, config: Dict[str, Any]) -> str:
         """Preprocess text for analysis"""
+
+
+
         try:
             # Remove special characters if requested
             if config.get('remove_special_chars', False):
@@ -289,6 +304,9 @@ class TextProcessingEngine:
     
     def _extract_text_features(self, text: str, config: Dict[str, Any]) -> TextFeatures:
         """Extract comprehensive text features"""
+
+
+
         try:
             # Linguistic features
             linguistic_features = self._extract_linguistic_features(text)
@@ -503,6 +521,9 @@ class TextProcessingEngine:
     
     def _get_bert_embedding(self, text: str) -> np.ndarray:
         """Get BERT embedding for text"""
+
+
+
         try:
             inputs = self.bert_tokenizer(text, return_tensors='pt', truncation=True, padding=True, max_length=512)
             
@@ -519,6 +540,9 @@ class TextProcessingEngine:
     
     def _get_roberta_embedding(self, text: str) -> np.ndarray:
         """Get RoBERTa embedding for text"""
+
+
+
         try:
             inputs = self.roberta_tokenizer(text, return_tensors='pt', truncation=True, padding=True, max_length=512)
             
@@ -535,6 +559,9 @@ class TextProcessingEngine:
     
     def _get_tfidf_features(self, text: str) -> np.ndarray:
         """Get TF-IDF features for text"""
+
+
+
         try:
             # Fit and transform single text
             tfidf_matrix = self.tfidf_vectorizer.fit_transform([text])
@@ -546,6 +573,9 @@ class TextProcessingEngine:
     
     def _analyze_sentiment(self, text: str, config: Dict[str, Any]) -> SentimentResult:
         """Comprehensive sentiment analysis"""
+
+
+
         try:
             # TextBlob sentiment
             blob = TextBlob(text)
@@ -655,6 +685,9 @@ class TextProcessingEngine:
     
     def _calculate_coherence(self, sentences: List[str]) -> float:
         """Calculate text coherence based on sentence similarity"""
+
+
+
         try:
             if len(sentences) < 2:
                 return 1.0
@@ -683,6 +716,9 @@ class TextProcessingEngine:
     
     def _calculate_completeness(self, text: str) -> float:
         """Calculate text completeness based on structure"""
+
+
+
         try:
             sentences = sent_tokenize(text)
             if not sentences:
@@ -705,6 +741,9 @@ class TextProcessingEngine:
     
     def _calculate_clarity(self, text: str) -> float:
         """Calculate text clarity score"""
+
+
+
         try:
             words = word_tokenize(text)
             sentences = sent_tokenize(text)
@@ -735,6 +774,9 @@ class TextProcessingEngine:
     
     def _generate_text_fingerprint(self, text: str) -> str:
         """Generate text fingerprint for similarity matching"""
+
+
+
         try:
             # Normalize text
             normalized_text = re.sub(r'\s+', ' ', text.lower().strip())
@@ -760,6 +802,9 @@ class TextProcessingEngine:
     
     def _extract_topics(self, text: str, config: Dict[str, Any]) -> Dict[str, Any]:
         """Extract topics from text using LDA"""
+
+
+
         try:
             if not config.get('extract_topics', True):
                 return {}
@@ -950,6 +995,9 @@ class TextProcessingEngine:
     
     def calculate_similarity(self, text1: str, text2: str, method: str = 'semantic') -> float:
         """Calculate similarity between two texts"""
+
+
+
         try:
             if method == 'semantic':
                 # Use BERT embeddings for semantic similarity
@@ -986,6 +1034,9 @@ class TextProcessingEngine:
     
     def generate_summary(self, text: str, max_length: int = 150) -> str:
         """Generate text summary"""
+
+
+
         try:
             if len(text.split()) < 50:
                 return text  # Too short to summarize
@@ -1001,6 +1052,9 @@ class TextProcessingEngine:
     def detect_plagiarism(self, text: str, reference_texts: List[str], 
                          threshold: float = 0.8) -> Dict[str, Any]:
         """Detect potential plagiarism"""
+
+
+
         try:
             plagiarism_results = {
                 'is_plagiarized': False,
@@ -1032,6 +1086,9 @@ class TextProcessingEngine:
     
     def enhance_text_for_seo(self, text: str, target_keywords: List[str] = None) -> str:
         """Enhance text for SEO optimization"""
+
+
+
         try:
             enhanced_text = text
             

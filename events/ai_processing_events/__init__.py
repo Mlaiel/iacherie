@@ -125,7 +125,10 @@ class AIProcessingEvent(BaseEvent):
         self.ai_event_data = event_data
     
     def validate_event_data(self) -> bool:
-        """Validate AI processing event data structure and content"""        try:
+        """Validate AI processing event data structure and content"""
+
+
+        try:
             required_fields = ['content_id', 'content_type', 'creator_id', 'processing_stage']
             for field in required_fields:
                 if not hasattr(self.ai_event_data, field) or not getattr(self.ai_event_data, field):
@@ -145,10 +148,16 @@ class AIProcessingEvent(BaseEvent):
             return False
     
     def get_processing_metrics(self) -> Dict[str, float]:
-        """Extract performance metrics from event data"""        return self.ai_event_data.performance_metrics or {}
+        """Extract performance metrics from event data"""
+
+
+        return self.ai_event_data.performance_metrics or {}
     
     def get_business_context(self) -> Dict[str, Any]:
-        """Extract business logic context for workflow routing"""        return {
+        """Extract business logic context for workflow routing"""
+
+
+        return {
             'creator_id': self.ai_event_data.creator_id,
             'content_type': self.ai_event_data.content_type,
             'processing_stage': self.ai_event_data.processing_stage,
@@ -207,7 +216,10 @@ def get_handler_class(handler_name: str):
     return None
 
 def create_event_processing_pipeline(ai_engine):
-    """Create a complete event processing pipeline with all handlers"""    try:
+    """Create a complete event processing pipeline with all handlers"""
+
+
+    try:
         return EventProcessingPipeline(ai_engine)
     except Exception as e:
         logger.error(f"Failed to create event processing pipeline: {e}")

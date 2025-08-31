@@ -292,6 +292,9 @@ class WhatsAppCrawler(BaseCrawler):
         Returns:
             bool: Authentication success status
         """
+
+
+
         try:
             self.access_token = access_token
             self.phone_number_id = phone_number_id
@@ -508,6 +511,9 @@ class WhatsAppCrawler(BaseCrawler):
         Returns:
             WhatsAppAnalytics: Comprehensive analytics data
         """
+
+
+
         try:
             start_time, end_time = analysis_period
             
@@ -681,6 +687,9 @@ class WhatsAppCrawler(BaseCrawler):
         content: Dict[str, Any]
     ) -> bool:
         """Send a WhatsApp message"""
+
+
+
         try:
             payload = {
                 "messaging_product": "whatsapp",
@@ -719,6 +728,9 @@ class WhatsAppCrawler(BaseCrawler):
 
     async def _mark_message_as_read(self, message_id: str) -> bool:
         """Mark a message as read"""
+
+
+
         try:
             payload = {
                 "messaging_product": "whatsapp",
@@ -738,6 +750,9 @@ class WhatsAppCrawler(BaseCrawler):
 
     async def _process_webhook_message(self, webhook_data: Dict[str, Any]) -> Optional[WhatsAppMessage]:
         """Process incoming webhook message"""
+
+
+
         try:
             entry = webhook_data.get("entry", [{}])[0]
             changes = entry.get("changes", [{}])[0]
@@ -820,6 +835,9 @@ class WhatsAppCrawler(BaseCrawler):
         features2: Dict[str, Any]
     ) -> float:
         """Calculate similarity between message features"""
+
+
+
         try:
             scores = []
             
@@ -881,6 +899,9 @@ class WhatsAppCrawler(BaseCrawler):
 
     async def setup_webhook(self) -> bool:
         """Setup webhook for real-time message monitoring"""
+
+
+
         try:
             if not self.webhook_url:
                 logger.warning("No webhook URL configured")
@@ -896,6 +917,9 @@ class WhatsAppCrawler(BaseCrawler):
 
     async def close(self):
         """Close crawler and cleanup resources"""
+
+
+
         try:
             await self.cache_manager.close()
             await super().close()

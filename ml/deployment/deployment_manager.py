@@ -1,15 +1,15 @@
 """
-🚀 Model Deployment System - IA Influencer Agent Platform Enterprise
+ Model Deployment System - IA Influencer Agent Platform Enterprise
 ===================================================================
 Module: backend/ml/deployment/deployment_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ===================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 GESTIONNAIRE DE DÉPLOIEMENT DE MODÈLES
+ GESTIONNAIRE DE DÉPLOIEMENT DE MODÈLES
 Déploiement automatisé et monitoring des modèles ML
 - Containerized deployment avec Docker/Kubernetes
 - A/B testing et canary deployments
@@ -134,6 +134,9 @@ class ModelDeploymentManager:
                          model_version: str,
                          config: DeploymentConfig) -> str:
         """Déploie un modèle selon la configuration"""
+
+
+
         
         try:
             deployment_id = f"{model_name}-{model_version}-{uuid.uuid4().hex[:8]}"
@@ -165,6 +168,9 @@ class ModelDeploymentManager:
     
     async def _simulate_deployment(self, deployment_info: DeploymentInfo):
         """Simule un déploiement pour l'exemple"""
+
+
+
         
         try:
             # Simulation des phases
@@ -300,6 +306,9 @@ if __name__ == "__main__":
     
     def _generate_k8s_deployment(self, deployment_info: DeploymentInfo) -> Dict[str, Any]:
         """Génère le manifest de déploiement Kubernetes"""
+
+
+
         
         return {
             "apiVersion": "apps/v1",
@@ -376,6 +385,9 @@ if __name__ == "__main__":
     
     async def get_deployment_info(self, deployment_id: str) -> Optional[DeploymentInfo]:
         """Récupère les informations d'un déploiement"""
+
+
+
         return self.deployments.get(deployment_id)
     
     async def list_deployments(self, model_name: Optional[str] = None) -> List[DeploymentInfo]:
@@ -504,6 +516,9 @@ if __name__ == "__main__":
                                new_version: str,
                                traffic_percentage: float = 10.0) -> str:
         """Déploiement canary avec répartition du trafic"""
+
+
+
         
         try:
             # Créer un déploiement canary
@@ -555,6 +570,9 @@ if __name__ == "__main__":
                                    model_name: str,
                                    new_version: str) -> Tuple[str, str]:
         """Déploiement blue-green"""
+
+
+
         
         try:
             # Identifier le déploiement actuel (blue)
@@ -592,6 +610,9 @@ if __name__ == "__main__":
     
     async def switch_traffic(self, from_deployment: str, to_deployment: str) -> bool:
         """Bascule le trafic d'un déploiement à un autre"""
+
+
+
         
         try:
             from_info = self.deployments.get(from_deployment)
@@ -617,11 +638,17 @@ class DeploymentManagerFactory:
     @staticmethod
     def create_local_manager() -> ModelDeploymentManager:
         """Gestionnaire pour développement local"""
+
+
+
         return ModelDeploymentManager()
     
     @staticmethod
     def create_production_manager(k8s_namespace: str = "ml-production") -> ModelDeploymentManager:
         """Gestionnaire pour production"""
+
+
+
         return ModelDeploymentManager(k8s_namespace=k8s_namespace)
 
 

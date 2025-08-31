@@ -12,7 +12,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 
-⚠️ STRICT COPYRIGHT PROTECTION ⚠️
+ STRICT COPYRIGHT PROTECTION 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 
@@ -268,6 +268,9 @@ class BaseFingerprintExtractor(BaseExtractor):
     
     def _initialize_ai_models(self):
         """Initialize AI models for fingerprinting"""
+
+
+
         try:
             if HAS_AI_LIBS:
                 # Initialize device
@@ -278,6 +281,9 @@ class BaseFingerprintExtractor(BaseExtractor):
     
     def _initialize_vector_database(self):
         """Initialize FAISS vector database for similarity search"""
+
+
+
         try:
             if HAS_FAISS:
                 # Initialize FAISS index for similarity search
@@ -299,6 +305,9 @@ class BaseFingerprintExtractor(BaseExtractor):
     
     async def search_similar_fingerprints(self, fingerprint: FingerprintResult, top_k: int = 10) -> List[Tuple[str, float]]:
         """Search for similar fingerprints in vector database"""
+
+
+
         try:
             if not HAS_FAISS or not hasattr(self, 'faiss_index'):
                 return []
@@ -326,6 +335,9 @@ class BaseFingerprintExtractor(BaseExtractor):
     
     async def add_fingerprint_to_index(self, fingerprint: FingerprintResult, fingerprint_id: str):
         """Add fingerprint to vector database index"""
+
+
+
         try:
             if not HAS_FAISS or not hasattr(self, 'faiss_index'):
                 return
@@ -372,6 +384,9 @@ class AudioFingerprintExtractor(BaseFingerprintExtractor):
     
     def _initialize_audio_models(self):
         """Initialize specialized audio AI models"""
+
+
+
         try:
             # Audio feature extraction models
             self.audio_models = {
@@ -493,6 +508,9 @@ class AudioFingerprintExtractor(BaseFingerprintExtractor):
     
     async def _load_audio_data(self, content: Union[bytes, str, np.ndarray]) -> Tuple[Optional[np.ndarray], Optional[int]]:
         """Load audio data from various sources"""
+
+
+
         try:
             if isinstance(content, np.ndarray):
                 return content, self.sample_rate
@@ -719,6 +737,9 @@ class AudioFingerprintExtractor(BaseFingerprintExtractor):
     
     def _get_model_versions(self) -> Dict[str, str]:
         """Get versions of AI models used"""
+
+
+
         return {
             'librosa': '0.9.2',  # Example version
             'chromaprint': '1.5.1',
@@ -728,6 +749,9 @@ class AudioFingerprintExtractor(BaseFingerprintExtractor):
     
     async def compare_fingerprints(self, fp1: FingerprintResult, fp2: FingerprintResult) -> float:
         """Compare two audio fingerprints and return similarity score"""
+
+
+
         try:
             if fp1.fingerprint_type != "audio" or fp2.fingerprint_type != "audio":
                 return 0.0
@@ -867,6 +891,9 @@ class AudioFingerprintExtractor(BaseFingerprintExtractor):
     
     def _estimate_key(self, chroma: np.ndarray) -> Optional[str]:
         """Estimate musical key from chroma features"""
+
+
+
         try:
             # Simple key estimation based on chroma profile
             chroma_mean = np.mean(chroma, axis=1)
@@ -931,6 +958,9 @@ class AudioFingerprintExtractor(BaseFingerprintExtractor):
     
     def _compare_chromaprints(self, hash1: str, hash2: str) -> float:
         """Compare chromaprint hashes"""
+
+
+
         try:
             # Decode base64 hashes
             data1 = base64.b64decode(hash1)
@@ -950,6 +980,9 @@ class AudioFingerprintExtractor(BaseFingerprintExtractor):
     
     def _cosine_similarity(self, v1: np.ndarray, v2: np.ndarray) -> float:
         """Calculate cosine similarity between vectors"""
+
+
+
         try:
             dot_product = np.dot(v1, v2)
             norm_v1 = np.linalg.norm(v1)
@@ -1241,6 +1274,9 @@ class VideoFingerprintExtractor(BaseFingerprintExtractor):
     
     def _cosine_similarity(self, v1: np.ndarray, v2: np.ndarray) -> float:
         """Calculate cosine similarity between vectors"""
+
+
+
         try:
             dot_product = np.dot(v1, v2)
             norm_v1 = np.linalg.norm(v1)
@@ -1356,6 +1392,9 @@ class ImageFingerprintExtractor(BaseFingerprintExtractor):
     
     async def _extract_clip_embedding(self, image: Image.Image) -> Optional[np.ndarray]:
         """Extract CLIP embedding from image"""
+
+
+
         try:
             inputs = self.clip_processor(images=image, return_tensors="pt")
             
@@ -1503,6 +1542,9 @@ class ImageFingerprintExtractor(BaseFingerprintExtractor):
     
     def _cosine_similarity(self, v1: np.ndarray, v2: np.ndarray) -> float:
         """Calculate cosine similarity between vectors"""
+
+
+
         try:
             dot_product = np.dot(v1, v2)
             norm_v1 = np.linalg.norm(v1)
@@ -1542,6 +1584,9 @@ class TextFingerprintExtractor(BaseFingerprintExtractor):
     
     async def can_handle(self, request: ExtractionRequest) -> bool:
         """Check if request contains text content"""
+
+
+
         return request.content_type == ContentType.TEXT and request.content is not None
     
     async def extract_fingerprint(self, content: Union[bytes, str, np.ndarray]) -> FingerprintResult:
@@ -1626,6 +1671,9 @@ class TextFingerprintExtractor(BaseFingerprintExtractor):
     
     def _extract_syntactic_features(self, text: str) -> Dict[str, float]:
         """Extract syntactic features from text"""
+
+
+
         try:
             # Tokenize
             tokens = nltk.word_tokenize(text.lower())
@@ -1784,6 +1832,9 @@ class TextFingerprintExtractor(BaseFingerprintExtractor):
     
     def _cosine_similarity(self, v1: np.ndarray, v2: np.ndarray) -> float:
         """Calculate cosine similarity between vectors"""
+
+
+
         try:
             dot_product = np.dot(v1, v2)
             norm_v1 = np.linalg.norm(v1)
@@ -1820,6 +1871,9 @@ class FingerprintExtractorFactory:
     @staticmethod
     def get_supported_types() -> List[str]:
         """Get list of supported content types"""
+
+
+
         return ['audio', 'video', 'image', 'text']
 
 

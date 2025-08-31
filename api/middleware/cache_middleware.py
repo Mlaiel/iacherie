@@ -323,6 +323,9 @@ class CacheInvalidationMiddleware(BaseHTTPMiddleware):
     
     async def _invalidate_cache_pattern(self, pattern: str):
         """Invalidate cache keys matching pattern"""
+
+
+
         
         try:
             if hasattr(self.cache_backend, 'clear_pattern'):

@@ -290,10 +290,16 @@ class RevenueTrackingConfig:
     
     def get_platform_config(self, platform: RevenueSource) -> Optional[PlatformRevenueConfig]:
         """Get configuration for a specific platform."""
+
+
+
         return self.PLATFORM_CONFIGS.get(platform)
     
     def get_revenue_threshold(self, currency: CurrencyCode) -> Optional[RevenueThreshold]:
         """Get revenue threshold for a specific currency."""
+
+
+
         return self.REVENUE_THRESHOLDS.get(currency, 
                                          self.REVENUE_THRESHOLDS.get(self.DEFAULT_CURRENCY))
     
@@ -304,6 +310,9 @@ class RevenueTrackingConfig:
     
     def get_supported_revenue_types(self, platform: RevenueSource) -> List[RevenueType]:
         """Get supported revenue types for a platform."""
+
+
+
         return self.REVENUE_TYPE_MAPPING.get(platform, [])
 
 

@@ -351,55 +351,94 @@ from .collaboration import (
 
 # Workflow factory functions
 def create_content_processing_workflow(config: dict = None):
-    """Create a content processing workflow with optimal configuration."""    return ContentProcessingWorkflow(config or {})
+    """Create a content processing workflow with optimal configuration."""
+
+
+    return ContentProcessingWorkflow(config or {})
 
 
 def create_distribution_workflow(config: dict = None):
-    """Create a distribution workflow with multi-platform support."""    return DistributionWorkflow(config or {})
+    """Create a distribution workflow with multi-platform support."""
+
+
+    return DistributionWorkflow(config or {})
 
 
 def create_seo_optimization_workflow(config: dict = None):
-    """Create an SEO optimization workflow with AI-powered recommendations."""    return SEOOptimizationWorkflow(config or {})
+    """Create an SEO optimization workflow with AI-powered recommendations."""
+
+
+    return SEOOptimizationWorkflow(config or {})
 
 
 def create_monitoring_workflow(config: dict = None):
-    """Create a monitoring workflow with real-time analytics."""    return MonitoringWorkflow(config or {})
+    """Create a monitoring workflow with real-time analytics."""
+
+
+    return MonitoringWorkflow(config or {})
 
 
 def create_automation_workflow(config: dict = None):
-    """Create an automation workflow with intelligent triggers."""    return AutomationWorkflow(config or {})
+    """Create an automation workflow with intelligent triggers."""
+
+
+    return AutomationWorkflow(config or {})
 
 
 def create_analytics_workflow(config: dict = None):
-    """Create an analytics workflow with comprehensive reporting."""    return AnalyticsWorkflow(config or {})
+    """Create an analytics workflow with comprehensive reporting."""
+
+
+    return AnalyticsWorkflow(config or {})
 
 
 def create_security_workflow(config: dict = None):
-    """Create a security workflow with threat detection."""    return SecurityWorkflow(config or {})
+    """Create a security workflow with threat detection."""
+
+
+    return SecurityWorkflow(config or {})
 
 
 def create_scheduling_workflow(config: dict = None):
-    """Create a scheduling workflow with optimal timing."""    return SchedulingWorkflow(config or {})
+    """Create a scheduling workflow with optimal timing."""
+
+
+    return SchedulingWorkflow(config or {})
 
 
 def create_integration_workflow(config: dict = None):
-    """Create an integration workflow with service connectivity."""    return IntegrationWorkflow(config or {})
+    """Create an integration workflow with service connectivity."""
+
+
+    return IntegrationWorkflow(config or {})
 
 
 def create_fingerprinting_workflow(config: dict = None):
-    """Create a content fingerprinting workflow with AI-powered detection."""    return ContentFingerprintingWorkflow(config or {})
+    """Create a content fingerprinting workflow with AI-powered detection."""
+
+
+    return ContentFingerprintingWorkflow(config or {})
 
 
 def create_protection_workflow(config: dict = None):
-    """Create a content protection workflow with automated enforcement."""    return ContentProtectionWorkflow(config or {})
+    """Create a content protection workflow with automated enforcement."""
+
+
+    return ContentProtectionWorkflow(config or {})
 
 
 def create_revenue_optimization_workflow(config: dict = None):
-    """Create a revenue optimization workflow with monetization intelligence."""    return RevenueOptimizationWorkflow(config or {})
+    """Create a revenue optimization workflow with monetization intelligence."""
+
+
+    return RevenueOptimizationWorkflow(config or {})
 
 
 def create_collaboration_workflow(config: dict = None):
-    """Create a collaboration workflow with partner matching and campaign management."""    return CollaborationWorkflow(config or {})
+    """Create a collaboration workflow with partner matching and campaign management."""
+
+
+    return CollaborationWorkflow(config or {})
 
 
 # Default configurations
@@ -691,7 +730,10 @@ DEFAULT_CONFIG = {
 }
 
 def get_default_config():
-    """Get default workflow module configuration."""    return DEFAULT_CONFIG.copy()
+    """Get default workflow module configuration."""
+
+
+    return DEFAULT_CONFIG.copy()
 
 def create_default_orchestrator(config=None):
     """Create a default workflow orchestrator with standard configuration."""    from .orchestration import ContentWorkflowOrchestrator

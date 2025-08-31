@@ -171,6 +171,9 @@ class GenericWebCrawler:
         Returns:
             WebContent object or None if failed
         """
+
+
+
         try:
             # Check rate limiting
             domain = urlparse(url).netloc
@@ -205,6 +208,9 @@ class GenericWebCrawler:
     
     async def _crawl_with_requests(self, url: str) -> Optional[WebContent]:
         """Crawl URL using aiohttp requests."""
+
+
+
         try:
             async with self.session.get(url) as response:
                 if response.status != 200:
@@ -229,6 +235,9 @@ class GenericWebCrawler:
     
     async def _crawl_with_selenium(self, url: str) -> Optional[WebContent]:
         """Crawl URL using Selenium for JavaScript-heavy sites."""
+
+
+
         try:
             driver = webdriver.Chrome(options=self.selenium_options)
             driver.get(url)
@@ -254,6 +263,9 @@ class GenericWebCrawler:
     
     async def _crawl_with_requests_html(self, url: str) -> Optional[WebContent]:
         """Crawl URL using requests-html for JavaScript rendering."""
+
+
+
         try:
             # This would be implemented with requests-html
             # For now, fallback to requests method
@@ -265,6 +277,9 @@ class GenericWebCrawler:
     
     async def _extract_content(self, url: str, soup: BeautifulSoup, html_content: str) -> WebContent:
         """Extract structured content from parsed HTML."""
+
+
+
         try:
             # Extract title
             title = self._extract_element_text(soup, self.content_patterns['title'])
@@ -598,6 +613,9 @@ class GenericWebCrawler:
     
     async def _determine_best_method(self, url: str) -> str:
         """Determine the best crawling method for a URL."""
+
+
+
         try:
             # Quick check with HEAD request
             async with self.session.head(url) as response:
@@ -614,6 +632,9 @@ class GenericWebCrawler:
     
     async def _check_robots_allowed(self, url: str) -> bool:
         """Check if URL is allowed by robots.txt."""
+
+
+
         try:
             domain = urlparse(url).netloc
             robots_url = f"https://{domain}/robots.txt"
@@ -632,6 +653,9 @@ class GenericWebCrawler:
     
     async def crawl_sitemap(self, domain: str) -> Optional[SiteMap]:
         """Crawl and parse website sitemap."""
+
+
+
         try:
             sitemap_urls = [
                 f"https://{domain}/sitemap.xml",

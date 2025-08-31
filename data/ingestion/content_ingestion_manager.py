@@ -9,7 +9,7 @@ with advanced AI-powered analysis, quality assurance, and automated optimization
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code is proprietary and confidential. Any unauthorized copying, distribution,
 or use without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is
 strictly prohibited and will result in legal action.
@@ -398,6 +398,9 @@ class ContentIngestionManager:
         Returns:
             List of ingestion results
         """
+
+
+
         try:
             # Process in batches to control resource usage
             semaphore = asyncio.Semaphore(self.concurrent_uploads)
@@ -436,6 +439,9 @@ class ContentIngestionManager:
         Returns:
             Status information
         """
+
+
+
         try:
             cache_key = f"ingestion_status:{content_id}"
             status_data = await self.redis.get(cache_key)
@@ -465,6 +471,9 @@ class ContentIngestionManager:
         Returns:
             Success status
         """
+
+
+
         try:
             # Mark as cancelled in cache
             cancel_key = f"ingestion_cancel:{content_id}"
@@ -490,6 +499,9 @@ class ContentIngestionManager:
         Returns:
             Resume result
         """
+
+
+
         try:
             # Get ingestion checkpoint
             checkpoint = await self._get_ingestion_checkpoint(content_id)
@@ -523,6 +535,9 @@ class ContentIngestionManager:
     
     async def _validate_content(self, request: IngestionRequest) -> Dict[str, Any]:
         """Validate content before processing"""
+
+
+
         try:
             errors = []
             warnings = []
@@ -579,6 +594,9 @@ class ContentIngestionManager:
     
     async def _process_content(self, request: IngestionRequest, content_id: str) -> Dict[str, Any]:
         """Process content based on type"""
+
+
+
         try:
             # Select appropriate processor
             if request.content_type == ContentType.AUDIO:
@@ -621,6 +639,9 @@ class ContentIngestionManager:
     async def _store_content(self, content_id: str, processed_data: bytes, 
                            metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Store processed content"""
+
+
+
         try:
             # Generate storage path
             file_extension = metadata.get('file_extension', '')
@@ -648,6 +669,9 @@ class ContentIngestionManager:
     async def _create_content_record(self, content_id: str, request: IngestionRequest,
                                    processing_result: Dict, storage_result: Dict) -> ContentModel:
         """Create content database record"""
+
+
+
         try:
             metadata = processing_result.get('metadata', {})
             
@@ -689,6 +713,9 @@ class ContentIngestionManager:
     
     async def _index_content(self, content: ContentModel, metadata: Dict[str, Any]):
         """Index content for search and discovery"""
+
+
+
         try:
             # Index in search engine (Elasticsearch)
             index_data = {
@@ -714,6 +741,9 @@ class ContentIngestionManager:
     async def _update_ingestion_status(self, content_id: str, status: IngestionStatus,
                                      progress: float = 0, message: str = ""):
         """Update ingestion status in cache"""
+
+
+
         try:
             status_data = {
                 'content_id': content_id,
@@ -731,6 +761,9 @@ class ContentIngestionManager:
     
     async def _get_ingestion_checkpoint(self, content_id: str) -> Optional[Dict[str, Any]]:
         """Get ingestion checkpoint data"""
+
+
+
         try:
             checkpoint_key = f"ingestion_checkpoint:{content_id}"
             checkpoint_data = await self.redis.get(checkpoint_key)
@@ -747,6 +780,9 @@ class ContentIngestionManager:
     
     async def _save_checkpoint(self, content_id: str, stage: str, data: Dict[str, Any]):
         """Save ingestion checkpoint"""
+
+
+
         try:
             checkpoint_data = {
                 'content_id': content_id,
@@ -763,6 +799,9 @@ class ContentIngestionManager:
     
     def get_supported_formats(self) -> Dict[str, List[str]]:
         """Get supported file formats by content type"""
+
+
+
         return {
             content_type.value: formats 
             for content_type, formats in self.supported_formats.items()
@@ -770,6 +809,9 @@ class ContentIngestionManager:
     
     def get_ingestion_stats(self) -> Dict[str, Any]:
         """Get ingestion statistics"""
+
+
+
         return {
             'max_file_size': self.max_file_size,
             'chunk_size': self.chunk_size,

@@ -284,6 +284,9 @@ def get_all_audio_event_types():
     Returns:
         List[type]: List of all audio event classes
     """
+
+
+
     return [
         # Upload Events
         AudioUploadStartedEvent,
@@ -384,6 +387,9 @@ def get_all_audio_event_handlers():
     Returns:
         List[type]: List of all audio event handler classes
     """
+
+
+
     return [
         AudioUploadEventHandler,
         AudioProcessingEventHandler,

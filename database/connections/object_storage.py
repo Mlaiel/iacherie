@@ -89,6 +89,9 @@ class ObjectStorageConnectionHandler:
     
     def _get_default_content_types(self) -> Dict[str, str]:
         """Get default content type mappings"""
+
+
+
         return {
             "audio": "audio/",
             "video": "video/", 
@@ -101,6 +104,9 @@ class ObjectStorageConnectionHandler:
     
     async def initialize(self) -> None:
         """Initialize object storage connection"""
+
+
+
         try:
             self.logger.info(f"Initializing {self.config.provider} object storage...")
             
@@ -158,6 +164,9 @@ class ObjectStorageConnectionHandler:
     
     async def _initialize_gcs(self) -> None:
         """Initialize Google Cloud Storage"""
+
+
+
         try:
             from google.cloud import storage
             
@@ -226,6 +235,9 @@ class ObjectStorageConnectionHandler:
     
     async def _initialize_azure(self) -> None:
         """Initialize Azure Blob Storage"""
+
+
+
         try:
             from azure.storage.blob import BlobServiceClient
             
@@ -323,6 +335,9 @@ class ObjectStorageConnectionHandler:
     
     async def _ensure_bucket_exists(self) -> None:
         """Ensure the storage bucket exists"""
+
+
+
         try:
             if self.config.provider in ["s3", "minio"]:
                 # Check if bucket exists
@@ -344,6 +359,9 @@ class ObjectStorageConnectionHandler:
     
     async def _create_bucket(self) -> None:
         """Create storage bucket"""
+
+
+
         try:
             if self.config.region == 'us-east-1':
                 # us-east-1 doesn't need LocationConstraint
@@ -419,6 +437,9 @@ class ObjectStorageConnectionHandler:
                          metadata: Optional[Dict[str, str]] = None,
                          tenant_id: Optional[str] = None) -> str:
         """Upload file to object storage"""
+
+
+
         try:
             object_key = self._get_object_key(file_path, content_type, tenant_id)
             
@@ -468,6 +489,9 @@ class ObjectStorageConnectionHandler:
                                   metadata: Optional[Dict[str, str]] = None,
                                   tenant_id: Optional[str] = None) -> str:
         """Upload file from local filesystem"""
+
+
+
         try:
             async with aiofiles.open(local_path, 'rb') as file:
                 content = await file.read()
@@ -484,6 +508,9 @@ class ObjectStorageConnectionHandler:
                           object_key: str,
                           tenant_id: Optional[str] = None) -> bytes:
         """Download file from object storage"""
+
+
+
         try:
             response = self.s3_client.get_object(
                 Bucket=self.config.bucket_name,
@@ -505,6 +532,9 @@ class ObjectStorageConnectionHandler:
                                   local_path: str,
                                   tenant_id: Optional[str] = None) -> bool:
         """Download file to local filesystem"""
+
+
+
         try:
             # Ensure directory exists
             os.makedirs(os.path.dirname(local_path), exist_ok=True)
@@ -525,6 +555,9 @@ class ObjectStorageConnectionHandler:
                         object_key: str,
                         tenant_id: Optional[str] = None) -> bool:
         """Delete file from object storage"""
+
+
+
         try:
             self.s3_client.delete_object(
                 Bucket=self.config.bucket_name,
@@ -545,6 +578,9 @@ class ObjectStorageConnectionHandler:
                         tenant_id: Optional[str] = None,
                         max_keys: int = 1000) -> List[Dict[str, Any]]:
         """List files in storage"""
+
+
+
         try:
             # Build prefix
             if tenant_id and self.config.tenant_prefix_enabled:
@@ -581,6 +617,9 @@ class ObjectStorageConnectionHandler:
                           object_key: str,
                           tenant_id: Optional[str] = None) -> Optional[Dict[str, Any]]:
         """Get file metadata"""
+
+
+
         try:
             response = self.s3_client.head_object(
                 Bucket=self.config.bucket_name,
@@ -613,6 +652,9 @@ class ObjectStorageConnectionHandler:
                                    expiration: int = 3600,
                                    tenant_id: Optional[str] = None) -> str:
         """Generate presigned URL for file access"""
+
+
+
         try:
             url = self.s3_client.generate_presigned_url(
                 operation,
@@ -632,6 +674,9 @@ class ObjectStorageConnectionHandler:
                        destination_key: str,
                        tenant_id: Optional[str] = None) -> bool:
         """Copy file within storage"""
+
+
+
         try:
             copy_source = {
                 'Bucket': self.config.bucket_name,
@@ -665,6 +710,9 @@ class ObjectStorageConnectionHandler:
     
     async def health_check(self) -> Dict[str, Any]:
         """Check object storage health"""
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -734,6 +782,9 @@ class ObjectStorageConnectionHandler:
     
     async def get_metrics(self) -> Dict[str, Any]:
         """Get detailed storage metrics"""
+
+
+
         try:
             # Get bucket statistics
             response = self.s3_client.list_objects_v2(Bucket=self.config.bucket_name)

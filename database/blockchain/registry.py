@@ -117,6 +117,9 @@ class DigitalSignatureManager:
         Returns:
             Dictionary with public and private key bytes
         """
+
+
+
         try:
             private_key = rsa.generate_private_key(
                 public_exponent=65537,
@@ -162,6 +165,9 @@ class DigitalSignatureManager:
         Returns:
             Digital signature bytes
         """
+
+
+
         try:
             if creator_id not in self.key_pairs:
                 raise ValueError(f"No key pair found for creator {creator_id}")
@@ -199,6 +205,9 @@ class DigitalSignatureManager:
         Returns:
             True if signature is valid
         """
+
+
+
         try:
             public_key = serialization.load_pem_public_key(public_key_pem)
             
@@ -265,6 +274,9 @@ class CopyrightRegistry:
         Returns:
             Rights registration record
         """
+
+
+
         try:
             logger.info(f"Registering rights for content: {content_hash}")
             
@@ -349,6 +361,9 @@ class CopyrightRegistry:
         signature: bytes
     ) -> Dict[str, Any]:
         """Submit rights registration to blockchain."""
+
+
+
         try:
             # Import here to avoid circular imports
             from .contracts import SmartContractManager, ContractType
@@ -395,6 +410,9 @@ class CopyrightRegistry:
         Returns:
             Rights registration if found, None otherwise
         """
+
+
+
         try:
             # Search for registration by content hash
             for registration in self.registrations.values():
@@ -431,6 +449,9 @@ class CopyrightRegistry:
         Returns:
             Rights transfer record
         """
+
+
+
         try:
             registration = self.registrations.get(registration_id)
             if not registration:
@@ -486,6 +507,9 @@ class CopyrightRegistry:
         transfer_type: str
     ) -> Dict[str, Any]:
         """Submit rights transfer to blockchain."""
+
+
+
         try:
             from .contracts import SmartContractManager, ContractType
             
@@ -537,6 +561,9 @@ class CopyrightRegistry:
         Returns:
             List of matching registrations
         """
+
+
+
         try:
             results = []
             
@@ -560,6 +587,9 @@ class CopyrightRegistry:
 
     def get_registration_by_id(self, registration_id: str) -> Optional[RightsRegistration]:
         """Get registration by ID."""
+
+
+
         return self.registrations.get(registration_id)
 
     def dispute_registration(
@@ -579,6 +609,9 @@ class CopyrightRegistry:
         Returns:
             Dispute ID
         """
+
+
+
         try:
             registration = self.registrations.get(registration_id)
             if not registration:

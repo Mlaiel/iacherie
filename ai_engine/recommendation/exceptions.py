@@ -3,7 +3,7 @@ Recommendation System Exceptions
 Custom exception classes for recommendation engine error handling
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
-⚠️  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
+  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
     code, or intellectual property without explicit written authorization 
     from Fahed Mlaiel is strictly prohibited and will result in legal action.
 
@@ -43,6 +43,9 @@ class RecommendationError(Exception):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert exception to dictionary format"""
+
+
+
         return {
             "error": self.__class__.__name__,
             "message": self.message,
@@ -630,6 +633,9 @@ def log_error_with_context(error: RecommendationError, context: Dict[str, Any]) 
 
 def create_error_response(error: RecommendationError) -> Dict[str, Any]:
     """Create standardized error response"""
+
+
+
     return {
         "success": False,
         "error": error.to_dict(),

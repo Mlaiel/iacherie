@@ -260,6 +260,9 @@ class CacheFactory:
     @staticmethod
     async def initialize_cache_stack(cache_stack: Dict[str, Any]) -> bool:
         """Initialize all caches in the stack"""
+
+
+
         try:
             # Initialize Redis connection
             if 'redis' in cache_stack:
@@ -287,6 +290,9 @@ class CacheFactory:
     @staticmethod
     async def shutdown_cache_stack(cache_stack: Dict[str, Any]) -> bool:
         """Gracefully shutdown all caches"""
+
+
+
         try:
             # Shutdown in reverse order
             shutdown_order = ['manager', 'analytics', 'content', 'revenue', 
@@ -355,46 +361,73 @@ class GlobalCacheManager:
     @staticmethod
     def get_cache_manager() -> Optional[CacheManager]:
         """Get global cache manager instance"""
+
+
+
         return _global_cache_instances.get('cache_manager')
     
     @staticmethod
     def get_redis_cache() -> Optional[RedisCache]:
         """Get global Redis cache instance"""
+
+
+
         return _global_cache_instances.get('redis')
     
     @staticmethod
     def get_memory_cache() -> Optional[EnterpriseMemoryCache]:
         """Get global memory cache instance"""
+
+
+
         return _global_cache_instances.get('memory')
     
     @staticmethod
     def get_vector_cache() -> Optional[Union[VectorCache, FAISSCache]]:
         """Get global vector cache instance"""
+
+
+
         return _global_cache_instances.get('vector')
     
     @staticmethod
     def get_content_cache() -> Optional[ContentCache]:
         """Get global content cache instance"""
+
+
+
         return _global_cache_instances.get('content')
     
     @staticmethod
     def get_analytics_cache() -> Optional[AnalyticsCache]:
         """Get global analytics cache instance"""
+
+
+
         return _global_cache_instances.get('analytics')
     
     @staticmethod
     def get_creator_cache() -> Optional[CreatorContentCache]:
         """Get global creator cache instance"""
+
+
+
         return _global_cache_instances.get('creator')
     
     @staticmethod
     def get_ai_cache() -> Optional[AIProcessingCache]:
         """Get global AI processing cache instance"""
+
+
+
         return _global_cache_instances.get('ai_processing')
     
     @staticmethod
     def get_revenue_cache() -> Optional[RevenueAnalyticsCache]:
         """Get global revenue cache instance"""
+
+
+
         return _global_cache_instances.get('revenue')
     
     @staticmethod

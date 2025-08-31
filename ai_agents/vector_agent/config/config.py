@@ -7,7 +7,7 @@ production-ready defaults, environment-based overrides, and validation.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Any attempt to steal the concept, idea, or code without explicit written authorization
@@ -237,6 +237,9 @@ class VectorConfig:
     
     def __post_init__(self):
         """Post-initialization validation and environment variable loading"""
+
+
+
         try:
             # Load environment variables
             self._load_environment_variables()
@@ -311,6 +314,9 @@ class VectorConfig:
     
     def _ensure_directories(self):
         """Ensure required directories exist"""
+
+
+
         try:
             Path(self.persistence_dir).mkdir(parents=True, exist_ok=True)
             
@@ -340,10 +346,16 @@ class VectorConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert configuration to dictionary"""
+
+
+
         return asdict(self)
     
     def save_to_file(self, filepath: str) -> None:
         """Save configuration to JSON file"""
+
+
+
         try:
             config_dict = self.to_dict()
             with open(filepath, 'w') as f:
@@ -356,6 +368,9 @@ class VectorConfig:
     @classmethod
     def load_from_file(cls, filepath: str) -> 'VectorConfig':
         """Load configuration from JSON file"""
+
+
+
         try:
             with open(filepath, 'r') as f:
                 config_dict = json.load(f)
@@ -371,10 +386,16 @@ class VectorConfig:
     
     def get_content_type_config(self, content_type: str) -> Dict[str, Any]:
         """Get configuration for specific content type"""
+
+
+
         return self.content_type_configs.get(content_type, self.content_type_configs.get("default", {}))
     
     def get_similarity_weights(self, content_type: str) -> Dict[str, float]:
         """Get similarity algorithm weights for content type"""
+
+
+
         return self.similarity_algorithm_weights.get(content_type, 
                                                    self.similarity_algorithm_weights.get("default", {}))
     
@@ -395,6 +416,9 @@ class VectorConfig:
     
     def update_from_dict(self, config_dict: Dict[str, Any]) -> None:
         """Update configuration from dictionary"""
+
+
+
         try:
             for key, value in config_dict.items():
                 if hasattr(self, key):
@@ -412,6 +436,9 @@ class VectorConfig:
     
     def get_monitoring_config(self) -> Dict[str, Any]:
         """Get monitoring-specific configuration"""
+
+
+
         return {
             "enabled": self.enable_monitoring,
             "port": self.monitoring_port,
@@ -422,6 +449,9 @@ class VectorConfig:
     
     def get_security_config(self) -> Dict[str, Any]:
         """Get security-specific configuration"""
+
+
+
         return {
             "input_validation": self.enable_input_validation,
             "rate_limiting": self.enable_rate_limiting,
@@ -448,6 +478,9 @@ class VectorConfig:
 
 def create_development_config() -> VectorConfig:
     """Create configuration optimized for development"""
+
+
+
     return VectorConfig(
         batch_size=16,
         max_worker_threads=4,
@@ -461,6 +494,9 @@ def create_development_config() -> VectorConfig:
 
 def create_production_config() -> VectorConfig:
     """Create configuration optimized for production"""
+
+
+
     return VectorConfig(
         batch_size=64,
         max_worker_threads=16,
@@ -476,6 +512,9 @@ def create_production_config() -> VectorConfig:
 
 def create_testing_config() -> VectorConfig:
     """Create configuration optimized for testing"""
+
+
+
     return VectorConfig(
         batch_size=8,
         max_worker_threads=2,

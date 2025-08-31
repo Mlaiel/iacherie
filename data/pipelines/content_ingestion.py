@@ -15,7 +15,7 @@ Team Specialties:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️ STRICT WARNING ⚠️
+ STRICT WARNING 
 Unauthorized use, copying, or theft of this code is strictly prohibited.
 Legal action will be taken against violators.
 """
@@ -108,6 +108,9 @@ class MultiFormatProcessor:
         """
         Validate uploaded content for security and format compliance
         """
+
+
+
         try:
             # Basic file validation
             if not file_path.exists():
@@ -165,6 +168,9 @@ class MultiFormatProcessor:
         """
         Extract comprehensive metadata from uploaded content
         """
+
+
+
         try:
             metadata = {
                 "file_info": {
@@ -196,6 +202,9 @@ class MultiFormatProcessor:
 
     async def _extract_audio_metadata(self, file_path: Path) -> Dict[str, Any]:
         """Extract audio-specific metadata"""
+
+
+
         try:
             # Load audio for analysis
             y, sr = librosa.load(str(file_path), sr=None)
@@ -226,6 +235,9 @@ class MultiFormatProcessor:
 
     async def _extract_video_metadata(self, file_path: Path) -> Dict[str, Any]:
         """Extract video-specific metadata"""
+
+
+
         try:
             cap = cv2.VideoCapture(str(file_path))
             
@@ -277,6 +289,9 @@ class MultiFormatProcessor:
 
     async def _extract_image_metadata(self, file_path: Path) -> Dict[str, Any]:
         """Extract image-specific metadata"""
+
+
+
         try:
             with Image.open(file_path) as img:
                 # Basic image properties
@@ -324,6 +339,9 @@ class MultiFormatProcessor:
 
     async def _extract_text_metadata(self, file_path: Path) -> Dict[str, Any]:
         """Extract text-specific metadata"""
+
+
+
         try:
             async with aiofiles.open(file_path, 'r', encoding='utf-8') as f:
                 content = await f.read()
@@ -463,6 +481,9 @@ class ContentIngestionPipeline:
 
     async def _cleanup_temp_file(self, temp_file_path: Path):
         """Cleanup temporary file"""
+
+
+
         try:
             if temp_file_path.exists():
                 temp_file_path.unlink()

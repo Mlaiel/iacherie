@@ -69,6 +69,9 @@ class PerceptualHashGenerator:
         Returns:
             Hexadecimal string representation of the spectral hash
         """
+
+
+
         try:
             # Load and preprocess audio
             y, sr = self._load_audio(audio_data)
@@ -115,6 +118,9 @@ class PerceptualHashGenerator:
         Generate hash based on chromagram features.
         Robust to tempo and key variations.
         """
+
+
+
         try:
             y, sr = self._load_audio(audio_data)
             
@@ -155,6 +161,9 @@ class PerceptualHashGenerator:
         Generate hash based on rhythmic patterns.
         Captures tempo and beat structure.
         """
+
+
+
         try:
             y, sr = self._load_audio(audio_data)
             
@@ -195,6 +204,9 @@ class PerceptualHashGenerator:
         Generate hash based on Mel-Frequency Cepstral Coefficients.
         Captures timbral characteristics.
         """
+
+
+
         try:
             y, sr = self._load_audio(audio_data)
             
@@ -294,6 +306,9 @@ class PerceptualHashGenerator:
     
     def _resize_spectrogram(self, spectrogram: np.ndarray, target_shape: Tuple[int, int]) -> np.ndarray:
         """Resize spectrogram to target dimensions using interpolation."""
+
+
+
         return signal.resample(
             signal.resample(spectrogram, target_shape[1], axis=1), 
             target_shape[0], 
@@ -370,6 +385,9 @@ class PerceptualHashGenerator:
     
     def _hex_to_bits(self, hex_string: str) -> np.ndarray:
         """Convert hexadecimal string back to bit array."""
+
+
+
         try:
             # Convert hex to bytes
             bytes_data = bytes.fromhex(hex_string)

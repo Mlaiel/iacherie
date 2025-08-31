@@ -89,6 +89,9 @@ class SimilarityMatcher:
         
     def _initialize_models(self) -> None:
         """Initialize deep learning models for feature extraction."""
+
+
+
         try:
             # Load CLIP model for image/video similarity
             self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
@@ -105,6 +108,9 @@ class SimilarityMatcher:
     
     def _load_indexes(self) -> None:
         """Load FAISS indexes for similarity search."""
+
+
+
         try:
             index_path = Path(self.settings.VECTOR_DB_PATH)
             
@@ -162,6 +168,9 @@ class SimilarityMatcher:
         Returns:
             List of similar content with scores and metadata
         """
+
+
+
         try:
             # Get similarity threshold
             sim_threshold = threshold or self.similarity_thresholds.get(content_type, 0.8)
@@ -184,6 +193,9 @@ class SimilarityMatcher:
     
     def _find_similar_audio(self, audio_path: str, top_k: int, threshold: float) -> List[Dict[str, Any]]:
         """Find similar audio content using acoustic fingerprints."""
+
+
+
         try:
             # Extract audio fingerprint
             fingerprint = self.audio_fingerprint.extract_fingerprint(audio_path)
@@ -215,6 +227,9 @@ class SimilarityMatcher:
     
     def _find_similar_images(self, image_path: str, top_k: int, threshold: float) -> List[Dict[str, Any]]:
         """Find similar images using CLIP embeddings and perceptual hashing."""
+
+
+
         try:
             # Load and process image
             image = cv2.imread(image_path)
@@ -252,6 +267,9 @@ class SimilarityMatcher:
     
     def _find_similar_videos(self, video_path: str, top_k: int, threshold: float) -> List[Dict[str, Any]]:
         """Find similar videos using frame analysis and temporal features."""
+
+
+
         try:
             # Extract video features (keyframes + temporal)
             video_features = self._extract_video_features(video_path)
@@ -284,6 +302,9 @@ class SimilarityMatcher:
     
     def _find_similar_text(self, text_path: str, top_k: int, threshold: float) -> List[Dict[str, Any]]:
         """Find similar text using semantic embeddings."""
+
+
+
         try:
             # Read text content
             with open(text_path, 'r', encoding='utf-8') as f:
@@ -320,6 +341,9 @@ class SimilarityMatcher:
     
     def _extract_audio_features(self, audio_path: str) -> np.ndarray:
         """Extract comprehensive audio features for similarity matching."""
+
+
+
         try:
             # Load audio
             y, sr = librosa.load(audio_path, sr=22050)
@@ -354,6 +378,9 @@ class SimilarityMatcher:
     
     def _extract_clip_features(self, image: np.ndarray) -> np.ndarray:
         """Extract CLIP features from image."""
+
+
+
         try:
             # Convert BGR to RGB
             image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -372,6 +399,9 @@ class SimilarityMatcher:
     
     def _extract_video_features(self, video_path: str) -> np.ndarray:
         """Extract video features from keyframes and temporal analysis."""
+
+
+
         try:
             cap = cv2.VideoCapture(video_path)
             
@@ -408,6 +438,9 @@ class SimilarityMatcher:
     
     def _extract_text_embeddings(self, text: str) -> np.ndarray:
         """Extract semantic text embeddings."""
+
+
+
         try:
             # Tokenize text
             encoded = self.text_tokenizer(
@@ -459,6 +492,9 @@ class SimilarityMatcher:
         metadata: Optional[Dict] = None
     ) -> bool:
         """Add new content to similarity index."""
+
+
+
         try:
             if content_type == 'audio':
                 features = self._extract_audio_features(content_path)
@@ -485,6 +521,9 @@ class SimilarityMatcher:
     
     def save_indexes(self) -> None:
         """Save FAISS indexes to disk."""
+
+
+
         try:
             index_path = Path(self.settings.VECTOR_DB_PATH)
             index_path.mkdir(parents=True, exist_ok=True)
@@ -505,6 +544,9 @@ class SimilarityMatcher:
     
     def get_similarity_stats(self) -> Dict[str, Any]:
         """Get statistics about similarity indexes."""
+
+
+
         return {
             'audio_index_size': self.audio_index.ntotal if self.audio_index else 0,
             'image_index_size': self.image_index.ntotal if self.image_index else 0,

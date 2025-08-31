@@ -15,7 +15,7 @@ Business Logic Integration:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend + Security + API Integration Engineers
 
-⚠️ COPYRIGHT WARNING:
+ COPYRIGHT WARNING:
 This code is proprietary and belongs to Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit 
 written permission from Fahed Mlaiel is strictly prohibited.
@@ -477,6 +477,9 @@ platform_integration_security_config = PlatformIntegrationSecurityConfig()
 
 def get_platform_integration_security_config() -> PlatformIntegrationSecurityConfig:
     """Get the platform integration security configuration instance."""
+
+
+
     return platform_integration_security_config
 
 

@@ -8,7 +8,7 @@ Responsibility: Real-time web monitoring, piracy detection, and automated enforc
 Technologies: ML-based Crawling, Computer Vision, NLP, Automated Takedown, Real-time Alerts
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -213,8 +213,11 @@ class WebSurveillanceWorker:
 
     async def initialize(self) -> bool:
         """Initialize the web surveillance worker"""
+
+
+
         try:
-            logger.info(f"🚀 Initializing Web Surveillance Worker {self.worker_id}")
+            logger.info(f" Initializing Web Surveillance Worker {self.worker_id}")
             
             # Initialize content protection worker
             self.content_protection_worker = ContentProtectionWorker()
@@ -240,22 +243,25 @@ class WebSurveillanceWorker:
             asyncio.create_task(self._health_monitor_loop())
             
             self.initialized = True
-            logger.info(f"✅ Web Surveillance Worker {self.worker_id} initialized successfully")
+            logger.info(f" Web Surveillance Worker {self.worker_id} initialized successfully")
             
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize web surveillance worker: {e}")
+            logger.error(f" Failed to initialize web surveillance worker: {e}")
             return False
 
     async def add_surveillance_target(self, target: SurveillanceTarget) -> bool:
         """Add a new surveillance target"""
+
+
+
         try:
-            logger.info(f"📡 Adding surveillance target: {target.target_id}")
+            logger.info(f" Adding surveillance target: {target.target_id}")
             
             # Validate target
             if not await self._validate_target(target):
-                logger.error(f"❌ Invalid surveillance target: {target.target_id}")
+                logger.error(f" Invalid surveillance target: {target.target_id}")
                 return False
             
             # Store target
@@ -268,40 +274,46 @@ class WebSurveillanceWorker:
             if target.frequency == MonitoringFrequency.REALTIME:
                 asyncio.create_task(self._scan_target(target))
             
-            logger.info(f"✅ Surveillance target added: {target.target_id}")
+            logger.info(f" Surveillance target added: {target.target_id}")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to add surveillance target: {e}")
+            logger.error(f" Failed to add surveillance target: {e}")
             return False
 
     async def remove_surveillance_target(self, target_id: str) -> bool:
         """Remove a surveillance target"""
+
+
+
         try:
             if target_id in self.active_targets:
                 del self.active_targets[target_id]
                 if target_id in self.detection_cache:
                     del self.detection_cache[target_id]
-                logger.info(f"✅ Surveillance target removed: {target_id}")
+                logger.info(f" Surveillance target removed: {target_id}")
                 return True
             return False
             
         except Exception as e:
-            logger.error(f"❌ Failed to remove surveillance target: {e}")
+            logger.error(f" Failed to remove surveillance target: {e}")
             return False
 
     async def scan_target(self, target_id: str) -> List[SurveillanceResult]:
         """Manually trigger a scan for a specific target"""
+
+
+
         try:
             if target_id not in self.active_targets:
-                logger.error(f"❌ Target not found: {target_id}")
+                logger.error(f" Target not found: {target_id}")
                 return []
             
             target = self.active_targets[target_id]
             return await self._scan_target(target)
             
         except Exception as e:
-            logger.error(f"❌ Failed to scan target {target_id}: {e}")
+            logger.error(f" Failed to scan target {target_id}: {e}")
             return []
 
     async def get_surveillance_results(
@@ -311,6 +323,9 @@ class WebSurveillanceWorker:
         limit: int = 100
     ) -> List[SurveillanceResult]:
         """Get surveillance results with optional filtering"""
+
+
+
         try:
             results = []
             
@@ -329,11 +344,14 @@ class WebSurveillanceWorker:
             return results[:limit]
             
         except Exception as e:
-            logger.error(f"❌ Failed to get surveillance results: {e}")
+            logger.error(f" Failed to get surveillance results: {e}")
             return []
 
     async def _surveillance_loop(self) -> None:
         """Main surveillance monitoring loop"""
+
+
+
         try:
             while True:
                 try:
@@ -353,18 +371,21 @@ class WebSurveillanceWorker:
                     await asyncio.sleep(60)  # Check every minute
                     
                 except Exception as e:
-                    logger.error(f"❌ Error in surveillance loop: {e}")
+                    logger.error(f" Error in surveillance loop: {e}")
                     await asyncio.sleep(30)
                     
         except asyncio.CancelledError:
-            logger.info("🛑 Surveillance loop cancelled")
+            logger.info(" Surveillance loop cancelled")
         except Exception as e:
-            logger.error(f"❌ Surveillance loop failed: {e}")
+            logger.error(f" Surveillance loop failed: {e}")
 
     async def _scan_target(self, target: SurveillanceTarget) -> List[SurveillanceResult]:
         """Perform comprehensive scan for a surveillance target"""
+
+
+
         try:
-            logger.info(f"🔍 Scanning target: {target.target_id}")
+            logger.info(f" Scanning target: {target.target_id}")
             scan_start = time.time()
             
             # Generate search queries
@@ -391,7 +412,7 @@ class WebSurveillanceWorker:
                 if isinstance(result, list):
                     detections.extend(result)
                 elif isinstance(result, Exception):
-                    logger.error(f"❌ Scan task failed: {result}")
+                    logger.error(f" Scan task failed: {result}")
             
             # Remove duplicates and false positives
             unique_detections = await self._filter_detections(detections, target)
@@ -419,11 +440,11 @@ class WebSurveillanceWorker:
                 if detection.severity in [AlertSeverity.HIGH, AlertSeverity.CRITICAL, AlertSeverity.EMERGENCY]:
                     await self._send_alert(detection)
             
-            logger.info(f"✅ Target scan completed: {target.target_id} ({len(unique_detections)} detections in {scan_time:.2f}s)")
+            logger.info(f" Target scan completed: {target.target_id} ({len(unique_detections)} detections in {scan_time:.2f}s)")
             return unique_detections
             
         except Exception as e:
-            logger.error(f"❌ Failed to scan target {target.target_id}: {e}")
+            logger.error(f" Failed to scan target {target.target_id}: {e}")
             return []
 
     async def _scan_platform(
@@ -433,8 +454,11 @@ class WebSurveillanceWorker:
         target: SurveillanceTarget
     ) -> List[SurveillanceResult]:
         """Scan a specific platform with a search query"""
+
+
+
         try:
-            logger.debug(f"🔍 Scanning {platform} for: {query}")
+            logger.debug(f" Scanning {platform} for: {query}")
             
             detections = []
             
@@ -460,11 +484,14 @@ class WebSurveillanceWorker:
             return detections
             
         except Exception as e:
-            logger.error(f"❌ Failed to scan {platform} with query '{query}': {e}")
+            logger.error(f" Failed to scan {platform} with query '{query}': {e}")
             return []
 
     async def _scan_youtube(self, query: str, target: SurveillanceTarget) -> List[SurveillanceResult]:
         """Scan YouTube for content matches"""
+
+
+
         try:
             detections = []
             
@@ -502,11 +529,14 @@ class WebSurveillanceWorker:
             return detections
             
         except Exception as e:
-            logger.error(f"❌ Failed to scan YouTube: {e}")
+            logger.error(f" Failed to scan YouTube: {e}")
             return []
 
     async def _scan_instagram(self, query: str, target: SurveillanceTarget) -> List[SurveillanceResult]:
         """Scan Instagram for content matches"""
+
+
+
         try:
             detections = []
             
@@ -538,11 +568,14 @@ class WebSurveillanceWorker:
             return detections
             
         except Exception as e:
-            logger.error(f"❌ Failed to scan Instagram: {e}")
+            logger.error(f" Failed to scan Instagram: {e}")
             return []
 
     async def _scan_tiktok(self, query: str, target: SurveillanceTarget) -> List[SurveillanceResult]:
         """Scan TikTok for content matches"""
+
+
+
         try:
             detections = []
             
@@ -574,11 +607,14 @@ class WebSurveillanceWorker:
             return detections
             
         except Exception as e:
-            logger.error(f"❌ Failed to scan TikTok: {e}")
+            logger.error(f" Failed to scan TikTok: {e}")
             return []
 
     async def _scan_twitter(self, query: str, target: SurveillanceTarget) -> List[SurveillanceResult]:
         """Scan Twitter/X for content matches"""
+
+
+
         try:
             detections = []
             
@@ -610,11 +646,14 @@ class WebSurveillanceWorker:
             return detections
             
         except Exception as e:
-            logger.error(f"❌ Failed to scan Twitter: {e}")
+            logger.error(f" Failed to scan Twitter: {e}")
             return []
 
     async def _scan_generic_web(self, query: str, target: SurveillanceTarget) -> List[SurveillanceResult]:
         """Scan generic web using search engines and crawling"""
+
+
+
         try:
             detections = []
             
@@ -653,11 +692,14 @@ class WebSurveillanceWorker:
             return detections
             
         except Exception as e:
-            logger.error(f"❌ Failed to scan generic web: {e}")
+            logger.error(f" Failed to scan generic web: {e}")
             return []
 
     async def _analyze_content_similarity(self, url: str, target: SurveillanceTarget) -> float:
         """Analyze content similarity between found content and target"""
+
+
+
         try:
             # Download and analyze content
             content_data = await self._download_content(url)
@@ -688,11 +730,14 @@ class WebSurveillanceWorker:
             return max_similarity
             
         except Exception as e:
-            logger.error(f"❌ Failed to analyze content similarity for {url}: {e}")
+            logger.error(f" Failed to analyze content similarity for {url}: {e}")
             return 0.0
 
     async def _download_content(self, url: str) -> Optional[bytes]:
         """Download content from URL for analysis"""
+
+
+
         try:
             async with aiohttp.ClientSession(
                 headers={'User-Agent': self.user_agent.random},
@@ -705,11 +750,14 @@ class WebSurveillanceWorker:
             return None
             
         except Exception as e:
-            logger.error(f"❌ Failed to download content from {url}: {e}")
+            logger.error(f" Failed to download content from {url}: {e}")
             return None
 
     async def _generate_search_queries(self, target: SurveillanceTarget) -> List[str]:
         """Generate intelligent search queries for target"""
+
+
+
         try:
             queries = []
             
@@ -746,7 +794,7 @@ class WebSurveillanceWorker:
             return unique_queries[:20]  # Max 20 queries per scan
             
         except Exception as e:
-            logger.error(f"❌ Failed to generate search queries: {e}")
+            logger.error(f" Failed to generate search queries: {e}")
             return target.keywords or []
 
     async def _get_default_platforms(self, scope: SurveillanceScope) -> List[str]:
@@ -787,6 +835,9 @@ class WebSurveillanceWorker:
         target: SurveillanceTarget
     ) -> List[SurveillanceResult]:
         """Filter detections to remove duplicates and false positives"""
+
+
+
         try:
             # Remove duplicates by URL
             seen_urls = set()
@@ -811,11 +862,14 @@ class WebSurveillanceWorker:
             return filtered_detections
             
         except Exception as e:
-            logger.error(f"❌ Failed to filter detections: {e}")
+            logger.error(f" Failed to filter detections: {e}")
             return detections
 
     async def _is_false_positive(self, detection: SurveillanceResult, target: SurveillanceTarget) -> bool:
         """Determine if detection is likely a false positive"""
+
+
+
         try:
             # Check if URL is from authorized sources
             authorized_domains = [
@@ -836,7 +890,7 @@ class WebSurveillanceWorker:
             return False
             
         except Exception as e:
-            logger.error(f"❌ Failed to check false positive: {e}")
+            logger.error(f" Failed to check false positive: {e}")
             return False
 
     async def _calculate_severity(self, similarity_score: float) -> AlertSeverity:
@@ -854,6 +908,9 @@ class WebSurveillanceWorker:
 
     async def _collect_evidence(self, url: str) -> List[str]:
         """Collect evidence URLs for detected content"""
+
+
+
         try:
             evidence_urls = []
             
@@ -875,11 +932,14 @@ class WebSurveillanceWorker:
             return evidence_urls
             
         except Exception as e:
-            logger.error(f"❌ Failed to collect evidence for {url}: {e}")
+            logger.error(f" Failed to collect evidence for {url}: {e}")
             return []
 
     async def _send_alert(self, detection: SurveillanceResult) -> None:
         """Send alert for high-severity detection"""
+
+
+
         try:
             await self.surveillance_monitor.send_alert(
                 alert_type='piracy_detection',
@@ -895,10 +955,13 @@ class WebSurveillanceWorker:
             )
             
         except Exception as e:
-            logger.error(f"❌ Failed to send alert: {e}")
+            logger.error(f" Failed to send alert: {e}")
 
     async def _validate_target(self, target: SurveillanceTarget) -> bool:
         """Validate surveillance target configuration"""
+
+
+
         try:
             # Check required fields
             if not all([target.target_id, target.content_id, target.user_id]):
@@ -915,22 +978,28 @@ class WebSurveillanceWorker:
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to validate target: {e}")
+            logger.error(f" Failed to validate target: {e}")
             return False
 
     async def _load_surveillance_targets(self) -> None:
         """Load surveillance targets from storage"""
+
+
+
         try:
             # This would load from database in production
             # For now, we'll start with empty targets
             self.active_targets = {}
-            logger.info("📡 Surveillance targets loaded")
+            logger.info(" Surveillance targets loaded")
             
         except Exception as e:
-            logger.error(f"❌ Failed to load surveillance targets: {e}")
+            logger.error(f" Failed to load surveillance targets: {e}")
 
     async def _health_monitor_loop(self) -> None:
         """Health monitoring loop"""
+
+
+
         try:
             while True:
                 try:
@@ -946,14 +1015,17 @@ class WebSurveillanceWorker:
                     await asyncio.sleep(300)  # Every 5 minutes
                     
                 except Exception as e:
-                    logger.error(f"❌ Error in health monitor loop: {e}")
+                    logger.error(f" Error in health monitor loop: {e}")
                     await asyncio.sleep(60)
                     
         except asyncio.CancelledError:
-            logger.info("🛑 Health monitor loop cancelled")
+            logger.info(" Health monitor loop cancelled")
 
     async def get_worker_stats(self) -> Dict[str, Any]:
         """Get comprehensive worker statistics"""
+
+
+
         try:
             return {
                 'worker_id': self.worker_id,
@@ -965,25 +1037,28 @@ class WebSurveillanceWorker:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to get worker stats: {e}")
+            logger.error(f" Failed to get worker stats: {e}")
             return {}
 
     async def shutdown(self) -> bool:
         """Gracefully shutdown the worker"""
+
+
+
         try:
-            logger.info(f"🛑 Shutting down Web Surveillance Worker {self.worker_id}")
+            logger.info(f" Shutting down Web Surveillance Worker {self.worker_id}")
             
             # Cancel running tasks
             # Save state if necessary
             # Clean up resources
             
             self.initialized = False
-            logger.info(f"✅ Web Surveillance Worker {self.worker_id} shutdown complete")
+            logger.info(f" Web Surveillance Worker {self.worker_id} shutdown complete")
             
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to shutdown worker: {e}")
+            logger.error(f" Failed to shutdown worker: {e}")
             return False
 
 
@@ -1006,7 +1081,7 @@ async def initialize_web_surveillance_worker(worker_id: str = None) -> bool:
             return await _web_surveillance_worker.initialize()
         return True
     except Exception as e:
-        logger.error(f"❌ Failed to initialize web surveillance worker: {e}")
+        logger.error(f" Failed to initialize web surveillance worker: {e}")
         return False
 
 
@@ -1020,5 +1095,5 @@ async def shutdown_web_surveillance_worker() -> bool:
             return result
         return True
     except Exception as e:
-        logger.error(f"❌ Failed to shutdown web surveillance worker: {e}")
+        logger.error(f" Failed to shutdown web surveillance worker: {e}")
         return False

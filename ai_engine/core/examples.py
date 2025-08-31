@@ -41,7 +41,7 @@ def example_basic_setup():
     success = setup.quick_setup()
     
     if success:
-        print("✅ Setup completed successfully!")
+        print(" Setup completed successfully!")
         
         # Load configuration
         core_config = config.get_config()
@@ -50,7 +50,7 @@ def example_basic_setup():
         print(f"   AI Engine max models: {core_config.ai_engine.max_concurrent_models}")
         
     else:
-        print("❌ Setup failed!")
+        print(" Setup failed!")
         
     return success
 
@@ -149,11 +149,11 @@ def example_performance_monitoring():
     # Check for alerts
     alerts = monitor.check_alerts()
     if alerts:
-        print(f"   ⚠️  Performance alerts: {len(alerts)}")
+        print(f"     Performance alerts: {len(alerts)}")
         for alert in alerts:
             print(f"      - {alert.message}")
     else:
-        print("   ✅ No performance alerts")
+        print("    No performance alerts")
     
     # Stop monitoring
     monitor.stop_monitoring()
@@ -225,24 +225,24 @@ async def example_content_pipeline():
     )
     
     print("   Processing stages:")
-    print("   📋 1. Validation → 🛡️  2. AI Protection → 🔍 3. SEO → 🤝 4. Collaboration → 📤 5. Distribution")
+    print("    1. Validation →   2. AI Protection →  3. SEO → 🤝 4. Collaboration →  5. Distribution")
     
     try:
         # Process content through pipeline
         result = await pipeline.process_content_async(context)
         
         print(f"\n   Pipeline Result:")
-        print(f"   ✅ Success: {result.success}")
-        print(f"   ⏱️  Processing Time: {result.processing_time:.2f}s")
-        print(f"   📊 Stages Completed: {len(result.stage_results)}")
+        print(f"    Success: {result.success}")
+        print(f"   ⏱  Processing Time: {result.processing_time:.2f}s")
+        print(f"    Stages Completed: {len(result.stage_results)}")
         
         # Show stage results
         for stage_name, stage_result in result.stage_results.items():
-            status = "✅" if stage_result.success else "❌"
+            status = "" if stage_result.success else ""
             print(f"      {status} {stage_name}: {stage_result.message}")
             
     except Exception as e:
-        print(f"   ❌ Pipeline failed: {e}")
+        print(f"    Pipeline failed: {e}")
 
 
 def example_business_metrics():
@@ -326,7 +326,7 @@ def example_seo_optimization():
             for issue in result.issues:
                 print(f"      • {issue.description}")
         else:
-            print("   ✅ Great SEO optimization!")
+            print("    Great SEO optimization!")
 
 
 def example_error_handling():
@@ -342,12 +342,12 @@ def example_error_handling():
         result = validator.validate_content(None)  # This should fail gracefully
         
     except validation.ValidationError as e:
-        print(f"   ✅ Validation error handled: {e.error_code}")
+        print(f"    Validation error handled: {e.error_code}")
         print(f"      Message: {e}")
         print(f"      Context: {e.context}")
         
     except Exception as e:
-        print(f"   ⚠️  Unexpected error: {e}")
+        print(f"     Unexpected error: {e}")
     
     try:
         print("\n2. Testing AI engine error handling...")
@@ -357,11 +357,11 @@ def example_error_handling():
         result = engine.run_inference("non_existent_model", {"input": "test"})
         
     except ai_engine.AIEngineError as e:
-        print(f"   ✅ AI engine error handled: {e.error_code}")
+        print(f"    AI engine error handled: {e.error_code}")
         print(f"      Message: {e}")
         
     except Exception as e:
-        print(f"   ⚠️  Unexpected error: {e}")
+        print(f"     Unexpected error: {e}")
 
 
 def example_configuration_management():
@@ -383,11 +383,11 @@ def example_configuration_management():
     })
     
     if success:
-        print("   ✅ Configuration updated successfully!")
+        print("    Configuration updated successfully!")
         updated_config = config.get_config()
         print(f"   Max models: {updated_config.ai_engine.max_concurrent_models}")
     else:
-        print("   ❌ Configuration update failed!")
+        print("    Configuration update failed!")
     
     # Show configuration summary
     print("\n3. Configuration summary:")
@@ -400,7 +400,7 @@ def example_configuration_management():
 
 def run_all_examples():
     """Run all usage examples"""
-    print("🚀 AI Core Module - Usage Examples")
+    print(" AI Core Module - Usage Examples")
     print("=" * 50)
     
     try:
@@ -419,20 +419,20 @@ def run_all_examples():
         asyncio.run(example_content_pipeline())
         
         print("\n" + "=" * 50)
-        print("✅ All examples completed successfully!")
+        print(" All examples completed successfully!")
         print("\nFor more information, check the documentation:")
         print("   • README.md (English)")
         print("   • README.de.md (German)")
         print("   • README.fr.md (French)")
         
     except Exception as e:
-        print(f"\n❌ Examples failed: {e}")
+        print(f"\n Examples failed: {e}")
         logger.exception("Error in examples")
 
 
 def run_quick_demo():
     """Run a quick demonstration of key features"""
-    print("⚡ AI Core Module - Quick Demo")
+    print(" AI Core Module - Quick Demo")
     print("=" * 30)
     
     # Quick setup
@@ -451,7 +451,7 @@ def run_quick_demo():
     print("\n3. Metrics collection...")
     metrics_collector = metrics.metrics_collector
     metrics_collector.record_metric("demo_metric", 100)
-    print("   ✅ Metric recorded")
+    print("    Metric recorded")
     
     # Performance check
     print("\n4. Performance check...")
@@ -459,7 +459,7 @@ def run_quick_demo():
     perf_metrics = monitor.collect_metrics()
     print(f"   CPU: {perf_metrics.cpu_percent:.1f}%, Memory: {perf_metrics.memory_percent:.1f}%")
     
-    print("\n✅ Quick demo completed!")
+    print("\n Quick demo completed!")
 
 
 if __name__ == "__main__":

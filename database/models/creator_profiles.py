@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -322,6 +322,9 @@ class CreatorProfile(Base):
     @classmethod
     def create_basic_profile(cls, user_id: str, stage_name: str, creator_type: CreatorType) -> 'CreatorProfile':
         """Create basic creator profile"""
+
+
+
         return cls(
             user_id=user_id,
             stage_name=stage_name,
@@ -433,6 +436,9 @@ class CreatorProfile(Base):
     
     def get_profile_summary(self) -> Dict[str, Any]:
         """Get comprehensive profile summary"""
+
+
+
         return {
             'basic_info': {
                 'stage_name': self.stage_name,
@@ -468,6 +474,9 @@ class CreatorProfile(Base):
     
     def is_eligible_for_verification(self) -> bool:
         """Check if profile is eligible for verification"""
+
+
+
         return (
             self.profile_completeness >= 80 and
             self.total_followers >= 1000 and

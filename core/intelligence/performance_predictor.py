@@ -1,11 +1,11 @@
 """
-🎯 Performance Predictor - IA Influencer Agent
+ Performance Predictor - IA Influencer Agent
 ============================================
 
 Advanced performance prediction system for content creators to forecast
 success metrics, optimize content strategy, and maximize ROI.
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE PROHIBITED
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE PROHIBITED
 ====================================================
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright © 2025 Fahed Mlaiel - All rights reserved
@@ -192,6 +192,9 @@ class PerformancePredictor:
     
     def _initialize_models(self):
         """Initialize ML models for performance prediction"""
+
+
+
         try:
             # Initialize models for each metric type
             for metric_type in MetricType:
@@ -248,6 +251,9 @@ class PerformancePredictor:
     
     def _create_regression_ensemble(self) -> Dict[str, Any]:
         """Create ensemble of regression models"""
+
+
+
         return {
             'random_forest': RandomForestRegressor(
                 n_estimators=100,
@@ -273,6 +279,9 @@ class PerformancePredictor:
     
     def _create_time_series_model(self) -> Dict[str, Any]:
         """Create time series models"""
+
+
+
         return {
             'arima': None,  # Will be fitted per prediction
             'exponential_smoothing': None,  # Will be fitted per prediction
@@ -298,6 +307,9 @@ class PerformancePredictor:
         Returns:
             Dictionary mapping horizons to predictions
         """
+
+
+
         try:
             content_id = content_data.get('content_id', 'unknown')
             platform = content_data.get('platform', 'unknown')
@@ -378,6 +390,9 @@ class PerformancePredictor:
         content_data: Dict[str, Any]
     ) -> Optional[PerformancePrediction]:
         """Predict performance for a specific metric"""
+
+
+
         try:
             # Get baseline performance
             baseline_value = await self._calculate_baseline_performance(
@@ -509,6 +524,9 @@ class PerformancePredictor:
         creator_profile: Dict[str, Any]
     ) -> np.ndarray:
         """Extract features for performance prediction"""
+
+
+
         try:
             features = []
             
@@ -710,6 +728,9 @@ class PerformancePredictor:
         horizon: PredictionHorizon
     ) -> float:
         """Apply domain-specific constraints to predictions"""
+
+
+
         try:
             # Ensure non-negative values
             prediction = max(0, prediction)
@@ -759,6 +780,9 @@ class PerformancePredictor:
         metric: MetricType
     ) -> ConfidenceLevel:
         """Determine confidence level for prediction"""
+
+
+
         try:
             # Calculate prediction variance
             if len(predictions) > 1:
@@ -792,6 +816,9 @@ class PerformancePredictor:
     
     def _generate_id(self) -> str:
         """Generate unique ID"""
+
+
+
         return hashlib.md5(f"{datetime.now().isoformat()}{hash(self)}".encode()).hexdigest()[:12]
 
 
@@ -837,6 +864,9 @@ class SuccessMetricsEngine:
         Returns:
             Comprehensive success metrics analysis
         """
+
+
+
         try:
             self.logger.info(f"Analyzing success metrics for creator {creator_id}")
             
@@ -893,4 +923,7 @@ class SuccessMetricsEngine:
     
     def _generate_id(self) -> str:
         """Generate unique ID"""
+
+
+
         return hashlib.md5(f"{datetime.now().isoformat()}{hash(self)}".encode()).hexdigest()[:12]

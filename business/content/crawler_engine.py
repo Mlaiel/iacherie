@@ -11,7 +11,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 Expert Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️ LEGAL WARNING: This code and concept are protected by intellectual property laws.
+ LEGAL WARNING: This code and concept are protected by intellectual property laws.
 Any unauthorized copying, modification, or distribution without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.
@@ -207,6 +207,9 @@ class ContentCrawlerEngine:
         Returns:
             Crawl job details and status
         """
+
+
+
         try:
             # Get protection record
             protection = await self.db.content_protection.get_by_id(protection_id)
@@ -308,6 +311,9 @@ class ContentCrawlerEngine:
         Returns:
             Search results with content matches
         """
+
+
+
         try:
             if platform not in self.platform_configs:
                 raise CrawlerError(f"Unsupported platform: {platform}")
@@ -379,6 +385,9 @@ class ContentCrawlerEngine:
         Returns:
             Content match analysis results
         """
+
+
+
         try:
             matches = []
             potential_matches = []
@@ -491,6 +500,9 @@ class ContentCrawlerEngine:
         Returns:
             Detailed job status and statistics
         """
+
+
+
         try:
             # Get job from database
             crawl_job = await self.db.crawl_jobs.get_by_id(crawl_job_id)
@@ -566,6 +578,9 @@ class ContentCrawlerEngine:
         config: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
         """Search platform using official API."""
+
+
+
         try:
             platform_config = self.platform_configs[platform]
             api_endpoints = platform_config.get('api_endpoints', {})
@@ -593,6 +608,9 @@ class ContentCrawlerEngine:
         config: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
         """Search platform using web scraping."""
+
+
+
         try:
             platform_config = self.platform_configs[platform]
             results = []
@@ -624,6 +642,9 @@ class ContentCrawlerEngine:
         config: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
         """Search YouTube using official API."""
+
+
+
         try:
             results = []
             api_key = settings.YOUTUBE_API_KEY
@@ -682,6 +703,9 @@ class ContentCrawlerEngine:
         driver: webdriver.Chrome
     ) -> List[Dict[str, Any]]:
         """Scrape platform using Selenium for JavaScript content."""
+
+
+
         try:
             results = []
             platform_config = self.platform_configs[platform]
@@ -735,6 +759,9 @@ class ContentCrawlerEngine:
         selectors: Dict[str, str]
     ) -> List[Dict[str, Any]]:
         """Extract content from Instagram using Selenium."""
+
+
+
         try:
             results = []
             
@@ -973,6 +1000,9 @@ class ContentCrawlerEngine:
     
     async def _handle_captcha(self, driver: webdriver.Chrome, platform: str):
         """Handle captcha if detected."""
+
+
+
         try:
             # Try automated captcha solving
             if self.captcha_solver.is_available():

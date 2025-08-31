@@ -7,7 +7,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Created: 2025-08-13
 =================================================================
 
-🚨 STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
+ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
 This module is EXCLUSIVE PROPERTY of Fahed Mlaiel.
 Unauthorized access, copying, or usage is STRICTLY PROHIBITED.
@@ -132,7 +132,10 @@ def get_module_info() -> Dict[str, Any]:
     
     Returns:
         Dict containing module metadata and capabilities
-    """    return {
+    """
+
+
+    return {
         "name": MODULE_NAME,
         "version": __version__,
         "author": __author__,
@@ -174,7 +177,10 @@ def get_expert_team_info() -> Dict[str, str]:
     
     Returns:
         Dict mapping expert roles to responsibilities
-    """    return {
+    """
+
+
+    return {
         "Lead Developer IA": "AI Architecture & Advanced Algorithms",
         "Backend Senior Engineer": "Enterprise Backend Systems",
         "ML Engineer": "Machine Learning Pipelines & Models",
@@ -191,8 +197,11 @@ async def create_influencer_ai_ecosystem() -> Dict[str, Any]:
     
     Returns:
         Dict containing all initialized services
-    """    try:
-        logger.info("🚀 Creating Influencer AI Ecosystem...")
+    """
+
+
+    try:
+        logger.info(" Creating Influencer AI Ecosystem...")
         
         # Create all core services
         ai_assistant = await create_aiassistant_service()
@@ -205,11 +214,11 @@ async def create_influencer_ai_ecosystem() -> Dict[str, Any]:
             "author": __author__
         }
         
-        logger.info("✅ Influencer AI Ecosystem created successfully")
+        logger.info(" Influencer AI Ecosystem created successfully")
         return ecosystem
         
     except Exception as e:
-        logger.error(f"❌ Failed to create ecosystem: {e}")
+        logger.error(f" Failed to create ecosystem: {e}")
         raise
 
 def validate_business_logic() -> bool:
@@ -217,7 +226,10 @@ def validate_business_logic() -> bool:
     
     Returns:
         True if all validations pass
-    """    try:
+    """
+
+
+    try:
         # Check module structure
         required_modules = [
             "ai_assistant.py",
@@ -233,10 +245,10 @@ def validate_business_logic() -> bool:
         
         for module in required_modules:
             if not (MODULE_PATH / module).exists():
-                logger.error(f"❌ Missing required module: {module}")
+                logger.error(f" Missing required module: {module}")
                 return False
         
-        logger.info("✅ Business logic validation passed")
+        logger.info(" Business logic validation passed")
         return True
 
 # =============== MODULE EXPORTS ===============
@@ -263,5 +275,5 @@ __all__ = [
     "validate_business_logic"
 ]
     except Exception as e:
-        logger.error(f"❌ Business logic validation failed: {e}")
+        logger.error(f" Business logic validation failed: {e}")
         return False

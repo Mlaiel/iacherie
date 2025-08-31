@@ -9,7 +9,7 @@ access control, and comprehensive audit trails for all licensing and content ope
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE & COPYRIGHT PROTECTION:
+  CRITICAL LEGAL NOTICE & COPYRIGHT PROTECTION:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written 
 permission is strictly prohibited and will result in severe legal consequences.
@@ -327,6 +327,9 @@ class UltraAdvancedPermissionsHandler:
         """
         Process permission request with AI-powered decision making and compliance validation
         """
+
+
+
         try:
             # Validate request
             await self._validate_permission_request(request)
@@ -437,6 +440,9 @@ class UltraAdvancedPermissionsHandler:
         """
         Check if subject has specific permission for object with context validation
         """
+
+
+
         try:
             # Check cache first
             cache_key = f"permission_check:{subject_id}:{object_id}:{permission_type.value}"
@@ -482,6 +488,9 @@ class UltraAdvancedPermissionsHandler:
         """
         Get all permissions for a user, optionally filtered by object
         """
+
+
+
         try:
             # Check cache first
             cache_key = f"user_permissions:{user_id}:{object_id or 'all'}"
@@ -531,6 +540,9 @@ class UltraAdvancedPermissionsHandler:
         """
         Grant permission directly (for administrative use)
         """
+
+
+
         try:
             # Security validation - check if granter has authority
             await self.security_manager.validate_permission_operation(
@@ -605,6 +617,9 @@ class UltraAdvancedPermissionsHandler:
         """
         Revoke an existing permission
         """
+
+
+
         try:
             # Get permission
             permission = await self._get_permission_by_id(permission_id, session)
@@ -998,6 +1013,9 @@ class PermissionsHandler:
     
     async def initialize(self) -> None:
         """Initialize permissions handler and security systems"""
+
+
+
         try:
             self.logger.info("Initializing PermissionsHandler")
             
@@ -1367,6 +1385,9 @@ class PermissionsHandler:
         Returns:
             List of user permissions
         """
+
+
+
         try:
             permissions = []
             
@@ -1406,6 +1427,9 @@ class PermissionsHandler:
     
     async def _evaluate_permission(self, request: AccessRequest) -> PermissionGrant:
         """Evaluate permission request against all applicable permissions"""
+
+
+
         try:
             # Get user permissions for the resource
             user_permissions = await self.get_user_permissions(

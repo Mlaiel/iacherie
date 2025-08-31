@@ -5,7 +5,7 @@ Specialized metrics collection for content fingerprinting and protection systems
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 
-⚠️  AVERTISSEMENT LÉGAL STRICT ⚠️
+  AVERTISSEMENT LÉGAL STRICT 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et fera l'objet de poursuites 
@@ -257,6 +257,9 @@ class ContentProtectionMetricsCollector:
         time_range: str = "1h"
     ) -> Dict[str, Any]:
         """Get fingerprinting performance metrics"""
+
+
+
         
         try:
             # Parse time range
@@ -340,6 +343,9 @@ class ContentProtectionMetricsCollector:
         time_range: str = "1h"
     ) -> Dict[str, Any]:
         """Get content matching accuracy metrics"""
+
+
+
         
         try:
             # Parse time range
@@ -439,6 +445,9 @@ class ContentProtectionMetricsCollector:
         tenant_id: str
     ) -> Dict[str, Any]:
         """Get real-time protection system status"""
+
+
+
         
         try:
             # Get recent metrics from Redis
@@ -507,6 +516,9 @@ class ContentProtectionMetricsCollector:
     
     async def _store_fingerprint_metrics(self, metrics: FingerprintMetrics) -> None:
         """Store fingerprint metrics in database"""
+
+
+
         try:
             async with get_database_session() as session:
                 await session.execute(
@@ -534,6 +546,9 @@ class ContentProtectionMetricsCollector:
     
     async def _store_match_metrics(self, metrics: MatchMetrics) -> None:
         """Store match metrics in database"""
+
+
+
         try:
             async with get_database_session() as session:
                 await session.execute(
@@ -574,6 +589,9 @@ class ContentProtectionMetricsCollector:
     
     async def _aggregate_tenant_metrics(self) -> None:
         """Aggregate metrics for all tenants"""
+
+
+
         try:
             async with get_database_session() as session:
                 # Get list of active tenants

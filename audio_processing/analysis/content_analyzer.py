@@ -1,11 +1,11 @@
 """
-🎵 Content Analyzer - Ultra-Advanced Audio Content Understanding Engine
+ Content Analyzer - Ultra-Advanced Audio Content Understanding Engine
 
 Professional AI-powered content analysis system providing comprehensive audio
 content understanding, semantic analysis, and intelligent categorization for
 the IA Influencer Agent platform.
 
-⚡ INDUSTRIAL CAPABILITIES:
+ INDUSTRIAL CAPABILITIES:
 - Semantic audio content analysis using NLP and deep learning
 - Multi-language speech recognition and transcription
 - Music vs speech classification with 99%+ accuracy
@@ -22,12 +22,12 @@ the IA Influencer Agent platform.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-🛡️ TEAM SPECIALTIES:
+ TEAM SPECIALTIES:
 - Lead AI Developer & Content AI Specialist: Fahed Mlaiel
 - NLP & Speech Processing Expert: Fahed Mlaiel  
 - Content Moderation Specialist: Fahed Mlaiel
 
-⚠️ COPYRIGHT & INTELLECTUAL PROPERTY WARNING:
+ COPYRIGHT & INTELLECTUAL PROPERTY WARNING:
 This advanced content analysis system contains proprietary AI algorithms
 and content understanding technologies developed exclusively by Fahed Mlaiel.
 Unauthorized access, use, copying, or reverse engineering is strictly 
@@ -186,7 +186,7 @@ class ContentAnalysisResult:
 
 class ContentAnalyzer:
     """
-    🎵 Ultra-Advanced Audio Content Analysis Engine
+     Ultra-Advanced Audio Content Analysis Engine
     
     Professional AI-powered content understanding system providing comprehensive
     audio content analysis, semantic understanding, and intelligent classification
@@ -911,6 +911,9 @@ class ContentAnalyzer:
     # Helper methods
     def _estimate_speech_clarity(self, audio_data: np.ndarray, sample_rate: int) -> float:
         """Estimate speech clarity score"""
+
+
+
         try:
             # Speech clarity indicators
             zcr = librosa.feature.zero_crossing_rate(audio_data)[0]
@@ -958,6 +961,9 @@ class ContentAnalyzer:
     
     def _calculate_spectral_complexity(self, audio_data: np.ndarray, sample_rate: int) -> float:
         """Calculate spectral complexity measure"""
+
+
+
         try:
             # Compute spectrogram
             stft = librosa.stft(audio_data)
@@ -992,6 +998,9 @@ class ContentAnalyzer:
     
     def _load_explicit_indicators(self) -> List[str]:
         """Load explicit content indicators"""
+
+
+
         return [
             'sex', 'sexual', 'nude', 'naked', 'porn', 'erotic',
             'drug', 'cocaine', 'heroin', 'marijuana', 'weed',
@@ -1032,6 +1041,9 @@ class ContentAnalyzer:
     
     def _estimate_noise_level(self, audio_data: np.ndarray, sample_rate: int) -> float:
         """Estimate background noise level"""
+
+
+
         try:
             # Use quieter segments to estimate noise
             rms = librosa.feature.rms(y=audio_data)[0]
@@ -1045,6 +1057,9 @@ class ContentAnalyzer:
     
     def _calculate_dynamic_range(self, audio_data: np.ndarray) -> float:
         """Calculate dynamic range in dB"""
+
+
+
         try:
             rms = librosa.feature.rms(y=audio_data)[0]
             if len(rms) > 0:
@@ -1061,6 +1076,9 @@ class ContentAnalyzer:
     
     def _analyze_frequency_balance(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
         """Analyze frequency balance across spectrum"""
+
+
+
         try:
             # Compute power spectral density
             freqs, psd = scipy.signal.welch(audio_data, fs=sample_rate)
@@ -1096,6 +1114,9 @@ class ContentAnalyzer:
     
     def _assess_mastering_quality(self, audio_data: np.ndarray, sample_rate: int) -> float:
         """Assess mastering quality"""
+
+
+
         try:
             quality_factors = []
             
@@ -1142,6 +1163,9 @@ class ContentAnalyzer:
     
     def _extract_semantic_audio_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, bool]:
         """Extract semantic features from audio characteristics"""
+
+
+
         try:
             features = {}
             
@@ -1261,6 +1285,9 @@ class ContentAnalyzer:
     # Default analysis results for error cases
     def _default_emotion_analysis(self) -> EmotionAnalysis:
         """Default emotion analysis result"""
+
+
+
         return EmotionAnalysis(
             primary_emotion='neutral',
             emotion_scores={'neutral': 1.0},
@@ -1271,6 +1298,9 @@ class ContentAnalyzer:
     
     def _default_safety_analysis(self) -> ContentSafety:
         """Default content safety analysis result"""
+
+
+
         return ContentSafety(
             safety_rating=SafetyRating.FAMILY_FRIENDLY,
             explicit_content_detected=False,
@@ -1283,6 +1313,9 @@ class ContentAnalyzer:
     
     def _default_production_analysis(self) -> ProductionAnalysis:
         """Default production analysis result"""
+
+
+
         return ProductionAnalysis(
             quality_rating=ProductionQuality.AMATEUR,
             technical_score=0.7,
@@ -1320,6 +1353,9 @@ class ContentAnalyzer:
     
     def __del__(self):
         """Cleanup resources"""
+
+
+
         try:
             if hasattr(self, 'executor'):
                 self.executor.shutdown(wait=False)

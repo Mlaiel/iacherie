@@ -64,6 +64,9 @@ class ContentProtectionDemo:
         
     async def initialize(self):
         """Initialize the content protection replication demo"""
+
+
+
         try:
             logger.info("Initializing Content Protection Replication Demo")
             
@@ -218,6 +221,9 @@ class ContentProtectionDemo:
     
     async def run_demo(self):
         """Run the complete content protection replication demo"""
+
+
+
         try:
             logger.info("Starting Content Protection Replication Demo")
             
@@ -253,9 +259,9 @@ class ContentProtectionDemo:
             
             success = await self.protection_handler.add_content_fingerprint(fingerprint)
             if success:
-                logger.info(f"✓ Fingerprint {fingerprint.id} added and queued for replication")
+                logger.info(f" Fingerprint {fingerprint.id} added and queued for replication")
             else:
-                logger.error(f"✗ Failed to add fingerprint {fingerprint.id}")
+                logger.error(f" Failed to add fingerprint {fingerprint.id}")
             
             # Small delay to show real-time replication
             await asyncio.sleep(2)
@@ -297,9 +303,9 @@ class ContentProtectionDemo:
                 
                 success = await self.protection_handler.add_violation_alert(violation)
                 if success:
-                    logger.info(f"✓ Violation alert {violation.id} added and queued for urgent replication")
+                    logger.info(f" Violation alert {violation.id} added and queued for urgent replication")
                 else:
-                    logger.error(f"✗ Failed to add violation alert {violation.id}")
+                    logger.error(f" Failed to add violation alert {violation.id}")
                 
                 await asyncio.sleep(1)
         
@@ -367,14 +373,14 @@ class ContentProtectionDemo:
         
         success = await self.protection_handler.add_content_fingerprint(global_content)
         if success:
-            logger.info("✓ Global content added - will be replicated to all regions")
+            logger.info(" Global content added - will be replicated to all regions")
             
             # Simulate rapid global replication
             regions = ["us-east-1", "ap-southeast-1", "eu-central-1", "ca-central-1"]
             for region in regions:
                 logger.info(f"  → Replicating to {region}")
                 await asyncio.sleep(1)  # Simulate replication time
-                logger.info(f"  ✓ Successfully replicated to {region}")
+                logger.info(f"   Successfully replicated to {region}")
         
         logger.info("Cross-region synchronization demo completed")
     
@@ -403,15 +409,15 @@ class ContentProtectionDemo:
             region="global"
         )
         
-        logger.info(f"🚨 CRITICAL VIOLATION DETECTED: {high_priority_violation.similarity_score:.1%} similarity")
+        logger.info(f" CRITICAL VIOLATION DETECTED: {high_priority_violation.similarity_score:.1%} similarity")
         logger.info(f"   Platform: {high_priority_violation.platform}")
         logger.info(f"   Estimated revenue impact: €{high_priority_violation.evidence['estimated_revenue_impact']}")
         
         success = await self.protection_handler.add_violation_alert(high_priority_violation)
         if success:
-            logger.info("✓ Critical violation alert triggered immediate global replication")
-            logger.info("✓ Automated takedown notice will be generated")
-            logger.info("✓ Content creator has been notified")
+            logger.info(" Critical violation alert triggered immediate global replication")
+            logger.info(" Automated takedown notice will be generated")
+            logger.info(" Content creator has been notified")
         
         logger.info("High-priority violation handling demo completed")
     
@@ -422,7 +428,7 @@ class ContentProtectionDemo:
         for i in range(6):  # Monitor for 1 minute (6 x 10 seconds)
             metrics = await self.protection_handler.get_replication_metrics()
             
-            logger.info("📊 Replication Metrics:")
+            logger.info(" Replication Metrics:")
             logger.info(f"   Fingerprints replicated: {metrics.get('fingerprints_replicated', 0)}")
             logger.info(f"   Violations replicated: {metrics.get('violations_replicated', 0)}")
             logger.info(f"   Revenue entries replicated: {metrics.get('revenue_entries_replicated', 0)}")
@@ -439,6 +445,9 @@ class ContentProtectionDemo:
     
     async def cleanup(self):
         """Clean up demo resources"""
+
+
+
         try:
             logger.info("Cleaning up demo resources...")
             
@@ -496,7 +505,7 @@ if __name__ == "__main__":
     - ELASTICSEARCH_HOST, ELASTICSEARCH_PORT, ELASTICSEARCH_USERNAME, ELASTICSEARCH_PASSWORD
     """
     
-    print("🎯 IA Influencer Agent - Content Protection Replication Demo")
+    print(" IA Influencer Agent - Content Protection Replication Demo")
     print("=" * 60)
     print("This demo will showcase real-time replication of:")
     print("• Content fingerprints for global protection")

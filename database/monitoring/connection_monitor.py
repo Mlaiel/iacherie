@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-⚠️  AVERTISSEMENT STRICT ⚠️
+  AVERTISSEMENT STRICT 
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Propriété intellectuelle de Fahed Mlaiel (mlaiel@live.de).
 """
@@ -242,6 +242,9 @@ class ConnectionMonitor:
     
     async def _collect_connection_data(self) -> None:
         """Collect current connection information"""
+
+
+
         try:
             async with get_database_session() as session:
                 # Get active connections
@@ -316,6 +319,9 @@ class ConnectionMonitor:
     
     async def _collect_pool_metrics(self) -> Optional[PoolMetrics]:
         """Collect connection pool metrics"""
+
+
+
         try:
             # Get pool instance
             pool = get_connection_pool()
@@ -426,6 +432,9 @@ class ConnectionMonitor:
     
     async def _process_pool_metrics(self, metrics: PoolMetrics) -> None:
         """Process pool metrics and generate alerts"""
+
+
+
         try:
             # Cache metrics
             await self.cache.set(
@@ -488,6 +497,9 @@ class ConnectionMonitor:
     
     async def _check_for_leaks(self) -> None:
         """Check for connection leaks"""
+
+
+
         try:
             current_time = datetime.utcnow()
             potential_leaks = []
@@ -534,6 +546,9 @@ class ConnectionMonitor:
     
     async def _send_alert(self, alert: Dict[str, Any]) -> None:
         """Send connection pool alert"""
+
+
+
         try:
             # Store alert
             await self.cache.lpush(
@@ -555,6 +570,9 @@ class ConnectionMonitor:
     
     async def _send_leak_alert(self, leak: ConnectionLeak) -> None:
         """Send connection leak alert"""
+
+
+
         try:
             alert = {
                 "type": "connection_leak",
@@ -575,6 +593,9 @@ class ConnectionMonitor:
     
     async def get_connection_summary(self) -> Dict[str, Any]:
         """Get connection summary"""
+
+
+
         try:
             total_connections = len(self.active_connections)
             state_counts = defaultdict(int)
@@ -604,6 +625,9 @@ class ConnectionMonitor:
     
     async def get_connection_details(self, connection_id: str = None) -> Dict[str, Any]:
         """Get detailed connection information"""
+
+
+
         try:
             if connection_id:
                 # Get specific connection
@@ -624,6 +648,9 @@ class ConnectionMonitor:
     
     async def get_pool_metrics_history(self, hours: int = 24) -> List[Dict[str, Any]]:
         """Get pool metrics history"""
+
+
+
         try:
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             
@@ -640,6 +667,9 @@ class ConnectionMonitor:
     
     async def get_leak_report(self) -> Dict[str, Any]:
         """Get connection leak report"""
+
+
+
         try:
             report = {
                 "total_leaks": len(self.leaked_connections),
@@ -675,6 +705,9 @@ class ConnectionMonitor:
     
     async def kill_connection(self, connection_id: str, reason: str = "Manual termination") -> bool:
         """Kill a specific database connection"""
+
+
+
         try:
             async with get_database_session() as session:
                 result = await session.execute(text(f"SELECT pg_terminate_backend({connection_id})"))
@@ -698,6 +731,9 @@ class ConnectionMonitor:
     
     async def kill_idle_connections(self, idle_threshold_minutes: int = 30) -> int:
         """Kill idle connections older than threshold"""
+
+
+
         try:
             killed_count = 0
             current_time = datetime.utcnow()

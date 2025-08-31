@@ -7,7 +7,7 @@ AML screening, and regulatory reporting for international payments.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -174,6 +174,9 @@ class ComplianceManager:
         Raises:
             KYCError: If verification fails
         """
+
+
+
         try:
             logger.info(f"Starting KYC verification for creator {creator_id}")
             
@@ -258,6 +261,9 @@ class ComplianceManager:
         Raises:
             AMLError: If screening indicates high risk
         """
+
+
+
         try:
             logger.info(f"Starting AML screening for creator {creator_id}")
             
@@ -360,6 +366,9 @@ class ComplianceManager:
         Raises:
             TaxCalculationError: If calculation fails
         """
+
+
+
         try:
             logger.info(f"Calculating taxes for {creator_id}: {gross_amount} {currency}")
             
@@ -427,6 +436,9 @@ class ComplianceManager:
         Returns:
             ComplianceReport with tax data
         """
+
+
+
         try:
             logger.info(f"Generating tax report for {creator_id} - Year {year}")
             
@@ -495,6 +507,9 @@ class ComplianceManager:
         Returns:
             Dict with compliance check results
         """
+
+
+
         try:
             compliance_result = {
                 "compliant": True,

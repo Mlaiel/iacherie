@@ -7,7 +7,7 @@ and privacy rights enforcement for the IA-Influencer-Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -212,6 +212,9 @@ class GDPRManager:
     
     async def initialize_processing_activities(self):
         """Initialize standard processing activities for the platform"""
+
+
+
         try:
             activities = [
                 DataProcessingActivity(
@@ -290,6 +293,9 @@ class GDPRManager:
                            user_agent: Optional[str] = None,
                            granular_choices: Optional[Dict[str, bool]] = None) -> ConsentRecord:
         """Record user consent with full GDPR compliance"""
+
+
+
         try:
             consent_id = str(uuid.uuid4())
             
@@ -346,6 +352,9 @@ class GDPRManager:
     async def withdraw_consent(self, user_id: str, consent_type: ConsentType,
                              reason: Optional[str] = None) -> bool:
         """Process consent withdrawal"""
+
+
+
         try:
             # Find current consent record
             user_consents = self.consent_by_user.get(user_id, {})
@@ -400,6 +409,9 @@ class GDPRManager:
     
     async def get_user_consent(self, user_id: str) -> Dict[str, Any]:
         """Get comprehensive user consent status"""
+
+
+
         try:
             user_consents = self.consent_by_user.get(user_id, {})
             consent_status = {}
@@ -442,6 +454,9 @@ class GDPRManager:
     async def submit_data_subject_request(self, user_id: str, request_type: DataSubjectRight,
                                         description: str, user_email: Optional[str] = None) -> DataSubjectRequest:
         """Submit a data subject rights request"""
+
+
+
         try:
             request_id = str(uuid.uuid4())
             
@@ -496,6 +511,9 @@ class GDPRManager:
     
     async def _process_data_access_request(self, request: DataSubjectRequest):
         """Automatically process data access and portability requests"""
+
+
+
         try:
             request.status = "processing"
             
@@ -539,6 +557,9 @@ class GDPRManager:
     
     async def process_erasure_request(self, request_id: str, verified: bool = True) -> bool:
         """Process right to erasure (right to be forgotten) request"""
+
+
+
         try:
             request = self.data_subject_requests.get(request_id)
             if not request or request.request_type != DataSubjectRight.ERASURE:
@@ -602,6 +623,9 @@ class GDPRManager:
                                affected_individuals_count: int, breach_type: str,
                                discovery_date: Optional[datetime] = None) -> DataBreachIncident:
         """Report a data protection breach incident"""
+
+
+
         try:
             incident_id = str(uuid.uuid4())
             incident_date = discovery_date or datetime.now(timezone.utc)
@@ -658,6 +682,9 @@ class GDPRManager:
     
     async def _collect_user_data(self, user_id: str) -> Dict[str, Any]:
         """Collect all user data from various systems"""
+
+
+
         try:
             user_data = {
                 'user_profile': {},
@@ -745,6 +772,9 @@ class GDPRManager:
     
     async def _format_access_response(self, user_data: Dict[str, Any]) -> Dict[str, Any]:
         """Format data for Article 15 access response"""
+
+
+
         return {
             'data_subject_information': user_data.get('user_profile', {}),
             'processing_purposes': [
@@ -823,6 +853,9 @@ class GDPRManager:
     
     async def _execute_data_erasure(self, user_id: str) -> Dict[str, Any]:
         """Execute data erasure across all systems"""
+
+
+
         try:
             erasure_results = {
                 'systems': [],
@@ -877,6 +910,9 @@ class GDPRManager:
     
     async def _verify_erasure_completion(self, user_id: str, erasure_results: Dict[str, Any]) -> bool:
         """Verify that data erasure was completed successfully"""
+
+
+
         try:
             # Check if any critical systems failed
             if erasure_results.get('failure_count', 0) > 0:
@@ -975,6 +1011,9 @@ class GDPRManager:
     
     async def _handle_breach_notifications(self, incident: DataBreachIncident):
         """Handle breach notification requirements"""
+
+
+
         try:
             # Article 33 - Notification to supervisory authority (72 hours)
             if incident.notification_required and not incident.authority_notified:
@@ -1068,6 +1107,9 @@ class GDPRManager:
     
     async def _process_consent_withdrawal(self, user_id: str, consent_type: ConsentType):
         """Process data handling changes after consent withdrawal"""
+
+
+
         try:
             if consent_type == ConsentType.MARKETING:
                 # Remove from marketing lists
@@ -1132,6 +1174,9 @@ class DataProtectionOfficer:
         
     async def generate_compliance_dashboard(self) -> Dict[str, Any]:
         """Generate comprehensive GDPR compliance dashboard"""
+
+
+
         try:
             # Get current metrics
             total_users = len(self.gdpr_manager.consent_by_user)
@@ -1176,6 +1221,9 @@ class DataProtectionOfficer:
     
     async def _calculate_compliance_score(self) -> float:
         """Calculate overall GDPR compliance score"""
+
+
+
         try:
             score_components = {
                 'consent_management': 0,

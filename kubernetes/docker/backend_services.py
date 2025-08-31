@@ -1,11 +1,11 @@
 """
-🚀 Backend Services Docker Configuration - IA-Influencer-Agent Platform
+ Backend Services Docker Configuration - IA-Influencer-Agent Platform
 ========================================================================
 Expert: Backend Senior + Microservices Architect + Python Specialist
 Creator: Fahed Mlaiel <mlaiel@live.de>
 ========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL 
 Tout vol, copie ou utilisation non autorisée de ce code source,
 de ce concept ou de cette propriété intellectuelle sans
 l'autorisation écrite explicite de Fahed Mlaiel est strictement
@@ -98,6 +98,9 @@ class BackendServicesDockerConfig:
     
     def generate_dockerfile(self) -> str:
         """Generate production Dockerfile for Backend Services"""
+
+
+
         return f"""
 # IA-Influencer Backend Services - Production Docker Image
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -229,6 +232,9 @@ CMD ["gunicorn", \\
 
     def generate_docker_compose_service(self) -> Dict[str, Any]:
         """Generate docker-compose service configuration"""
+
+
+
         return {
             "image": f"{self.image_name}:{self.image_tag}",
             "container_name": self.container_name,
@@ -312,6 +318,9 @@ CMD ["gunicorn", \\
     
     def generate_celery_worker_service(self) -> Dict[str, Any]:
         """Generate Celery worker service configuration"""
+
+
+
         return {
             "image": f"{self.image_name}:{self.image_tag}",
             "container_name": f"{self.container_name}-worker",
@@ -378,6 +387,9 @@ CMD ["gunicorn", \\
     
     def generate_celery_beat_service(self) -> Dict[str, Any]:
         """Generate Celery beat scheduler service configuration"""
+
+
+
         return {
             "image": f"{self.image_name}:{self.image_tag}",
             "container_name": f"{self.container_name}-scheduler",
@@ -429,6 +441,9 @@ CMD ["gunicorn", \\
     
     def generate_flower_monitoring_service(self) -> Dict[str, Any]:
         """Generate Flower monitoring service configuration"""
+
+
+
         return {
             "image": f"{self.image_name}:{self.image_tag}",
             "container_name": f"{self.container_name}-flower",
@@ -463,6 +478,9 @@ CMD ["gunicorn", \\
     
     def generate_requirements_txt(self) -> str:
         """Generate production requirements.txt"""
+
+
+
         return """
 # IA-Influencer Backend Services - Production Dependencies
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -614,5 +632,5 @@ msgpack==1.0.7
             yaml.dump(service_config, f, default_flow_style=False)
         files_created.append(str(compose_config_path))
         
-        logger.info(f"✅ Backend Services configuration files saved: {files_created}")
+        logger.info(f" Backend Services configuration files saved: {files_created}")
         return files_created

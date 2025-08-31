@@ -16,7 +16,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team Specialization: Lead Dev IA + Backend Senior + ML Engineer + DBA + 
                     Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  WARNING: PROPRIETARY CODE
+  WARNING: PROPRIETARY CODE
 All code, concepts, and implementations in this module are proprietary 
 intellectual property of Fahed Mlaiel. Any unauthorized use, copying, 
 distribution, or commercial exploitation without explicit written 
@@ -326,6 +326,9 @@ class MetricsCollector:
     
     def get_recent_metrics(self, metric_type: str, count: int = 100) -> List[Any]:
         """Get recent metrics from buffer."""
+
+
+
         return list(self.metrics_buffer[metric_type])[-count:]
     
     def get_metric_statistics(self, metric_type: str, field: str) -> Dict[str, float]:
@@ -556,6 +559,9 @@ class AlertManager:
     
     async def _send_email_notification(self, config: Dict[str, Any], alert: AlertEvent, notification_type: str):
         """Send email notification."""
+
+
+
         try:
             # Prepare email
             subject = f"[{alert.severity.value.upper()}] {alert.alert_name}"
@@ -583,6 +589,9 @@ Duration: {alert.duration_seconds:.2f} seconds
     
     async def _send_webhook_notification(self, config: Dict[str, Any], alert: AlertEvent, notification_type: str):
         """Send webhook notification."""
+
+
+
         try:
             webhook_url = config.get('url')
             if not webhook_url:
@@ -619,6 +628,9 @@ Duration: {alert.duration_seconds:.2f} seconds
     
     async def _send_slack_notification(self, config: Dict[str, Any], alert: AlertEvent, notification_type: str):
         """Send Slack notification."""
+
+
+
         try:
             webhook_url = config.get('webhook_url')
             if not webhook_url:
@@ -638,7 +650,7 @@ Duration: {alert.duration_seconds:.2f} seconds
             message = {
                 'attachments': [{
                     'color': color,
-                    'title': f"{'🔴' if notification_type == 'alert' else '✅'} {alert.alert_name}",
+                    'title': f"{'' if notification_type == 'alert' else ''} {alert.alert_name}",
                     'fields': [
                         {'title': 'Severity', 'value': alert.severity.value, 'short': True},
                         {'title': 'Type', 'value': alert.alert_type.value, 'short': True},
@@ -662,10 +674,16 @@ Duration: {alert.duration_seconds:.2f} seconds
     
     def get_active_alerts(self) -> List[AlertEvent]:
         """Get list of currently active alerts."""
+
+
+
         return list(self.active_alerts.values())
     
     def get_alert_history(self, limit: int = 100) -> List[AlertEvent]:
         """Get alert history."""
+
+
+
         return self.alert_history[-limit:]
 
 
@@ -844,6 +862,9 @@ class HealthMonitor:
     
     def get_component_health(self, component: str) -> Optional[HealthCheckResult]:
         """Get health status for specific component."""
+
+
+
         return self.health_status.get(component)
 
 
@@ -864,6 +885,9 @@ class MonitoringSystem:
         
     async def initialize(self):
         """Initialize monitoring system."""
+
+
+
         try:
             # Start Prometheus metrics server
             if self.config.monitoring_enabled:
@@ -886,6 +910,9 @@ class MonitoringSystem:
     
     async def start(self):
         """Start all monitoring components."""
+
+
+
         try:
             # Start metrics collection
             await self.metrics_collector.start_collection()
@@ -904,6 +931,9 @@ class MonitoringSystem:
     
     async def stop(self):
         """Stop all monitoring components."""
+
+
+
         try:
             # Stop health monitoring
             await self.health_monitor.stop_monitoring()

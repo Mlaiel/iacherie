@@ -7,12 +7,12 @@ monitoring, and optimization for the IA-Influencer-Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This resource coordination system is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization.
 
-🎯 BUSINESS LOGIC:
+ BUSINESS LOGIC:
 Resource Discovery → Allocation → Monitoring → Optimization → Cleanup → Reporting
 """
 
@@ -183,6 +183,9 @@ class ResourceCoordinator:
     
     def _initialize_system_resources(self):
         """Initialize system resource instances"""
+
+
+
         try:
             # CPU Resources
             cpu_resource = ResourceInstance(
@@ -313,6 +316,9 @@ class ResourceCoordinator:
     
     def register_resource(self, resource: ResourceInstance) -> bool:
         """Register a new resource instance"""
+
+
+
         try:
             with self.resource_locks[resource.resource_id]:
                 self.resources[resource.resource_id] = resource
@@ -331,6 +337,9 @@ class ResourceCoordinator:
         strategy: Optional[AllocationStrategy] = None
     ) -> Dict[str, str]:
         """Allocate resources based on requirements"""
+
+
+
         try:
             strategy = strategy or self.default_strategy
             allocations = {}
@@ -384,6 +393,9 @@ class ResourceCoordinator:
         strategy: AllocationStrategy
     ) -> Optional[str]:
         """Allocate a single resource using specified strategy"""
+
+
+
         try:
             # Get suitable resources
             candidates = self._find_suitable_resources(requirement)
@@ -466,6 +478,9 @@ class ResourceCoordinator:
         constraints: Dict[str, Any]
     ) -> bool:
         """Check if resource meets allocation constraints"""
+
+
+
         try:
             for constraint_key, constraint_value in constraints.items():
                 if constraint_key == "location":
@@ -493,6 +508,9 @@ class ResourceCoordinator:
         requirement: ResourceRequirement
     ) -> Optional[ResourceInstance]:
         """First-fit allocation strategy"""
+
+
+
         return candidates[0] if candidates else None
     
     async def _allocate_best_fit(
@@ -598,6 +616,9 @@ class ResourceCoordinator:
     
     async def deallocate_resource(self, allocation_id: str) -> bool:
         """Deallocate a previously allocated resource"""
+
+
+
         try:
             if allocation_id not in self.allocations:
                 logger.warning(f"Allocation not found: {allocation_id}")
@@ -640,6 +661,9 @@ class ResourceCoordinator:
     
     async def deallocate_consumer_resources(self, consumer_id: str) -> int:
         """Deallocate all resources for a specific consumer"""
+
+
+
         try:
             consumer_allocations = [
                 allocation_id for allocation_id, allocation in self.allocations.items()
@@ -690,6 +714,9 @@ class ResourceCoordinator:
     
     def _update_resource_metrics(self):
         """Update resource utilization metrics"""
+
+
+
         try:
             for resource in self.resources.values():
                 with self.resource_locks[resource.resource_id]:
@@ -731,6 +758,9 @@ class ResourceCoordinator:
     
     def _check_resource_health(self):
         """Check health status of all resources"""
+
+
+
         try:
             for resource in self.resources.values():
                 with self.resource_locks[resource.resource_id]:
@@ -764,6 +794,9 @@ class ResourceCoordinator:
     
     def _handle_expired_allocations(self):
         """Handle expired resource allocations"""
+
+
+
         try:
             now = datetime.now(timezone.utc)
             expired_allocations = []
@@ -782,6 +815,9 @@ class ResourceCoordinator:
     
     def _generate_optimization_recommendations(self):
         """Generate resource optimization recommendations"""
+
+
+
         try:
             recommendations = []
             
@@ -820,6 +856,9 @@ class ResourceCoordinator:
     
     async def _emit_resource_event(self, event_type: str, event_data: Dict[str, Any]):
         """Emit resource events to registered handlers"""
+
+
+
         try:
             event_data.update({
                 "event_type": event_type,
@@ -912,6 +951,9 @@ class ResourceCoordinator:
     
     def shutdown(self):
         """Shutdown resource coordinator and cleanup"""
+
+
+
         try:
             self.stop_monitoring()
             

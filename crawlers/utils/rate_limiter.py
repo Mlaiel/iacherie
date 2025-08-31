@@ -144,6 +144,9 @@ class RateLimiter:
     
     async def _check_distributed_rate_limit(self, identifier: str) -> None:
         """Check distributed rate limiting using Redis."""
+
+
+
         try:
             key = f"rate_limit:{self.__class__.__name__}:{identifier}"
             current_time = time.time()
@@ -189,6 +192,9 @@ class RateLimiter:
     
     async def _update_distributed_usage(self, identifier: str, count: int, timestamp: float) -> None:
         """Update distributed usage in Redis."""
+
+
+
         try:
             key = f"rate_limit:{self.__class__.__name__}:{identifier}"
             
@@ -403,6 +409,9 @@ class AdaptiveRateLimiter(RateLimiter):
     
     def get_performance_metrics(self) -> Dict:
         """Get detailed performance metrics."""
+
+
+
         return {
             'success_rate': self.success_rate,
             'average_response_time': self.get_average_response_time(),

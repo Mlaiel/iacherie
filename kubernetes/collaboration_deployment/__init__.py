@@ -3,7 +3,7 @@
 # Auteur: Fahed Mlaiel <mlaiel@live.de>
 # Équipe: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 # 
-# ⚠️  AVERTISSEMENT STRICT DE PROPRIÉTÉ INTELLECTUELLE ⚠️
+#   AVERTISSEMENT STRICT DE PROPRIÉTÉ INTELLECTUELLE 
 # Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 # Toute reproduction, modification, distribution ou utilisation sans 
 # autorisation écrite explicite est STRICTEMENT INTERDITE et fera 

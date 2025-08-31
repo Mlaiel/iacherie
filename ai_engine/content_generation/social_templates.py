@@ -38,7 +38,7 @@ class SocialMediaTemplates:
         # Instagram Templates
         self.instagram_templates = {
             'motivational_post': {
-                'structure': "✨ {hook}\n\n{main_content}\n\n💪 {call_to_action}\n\n{hashtags}",
+                'structure': " {hook}\n\n{main_content}\n\n {call_to_action}\n\n{hashtags}",
                 'hooks': [
                     "Monday motivation coming your way!",
                     "Ready to transform your mindset?",
@@ -46,15 +46,15 @@ class SocialMediaTemplates:
                     "Your potential is limitless"
                 ],
                 'ctas': [
-                    "What's your Monday motivation? Share below! 👇",
-                    "Double-tap if you needed this reminder! ❤️",
-                    "Tag someone who needs to see this! 🙌",
-                    "Save this for when you need motivation! 📌"
+                    "What's your Monday motivation? Share below! ",
+                    "Double-tap if you needed this reminder! ",
+                    "Tag someone who needs to see this! ",
+                    "Save this for when you need motivation! "
                 ],
                 'hashtags': "#motivation #mindset #success #mondaymotivation #inspiration #goals #hustle #entrepreneur #positivevibes #growth"
             },
             'behind_the_scenes': {
-                'structure': "🎬 Behind the scenes: {title}\n\n{story}\n\n{insight}\n\n{engagement_question}\n\n{hashtags}",
+                'structure': " Behind the scenes: {title}\n\n{story}\n\n{insight}\n\n{engagement_question}\n\n{hashtags}",
                 'hooks': [
                     "Ever wondered what goes on behind the scenes?",
                     "Here's what you don't see...",
@@ -62,14 +62,14 @@ class SocialMediaTemplates:
                     "Pulling back the curtain on"
                 ],
                 'ctas': [
-                    "What would you like to see more of? Comment below! 👇",
-                    "Any questions about our process? Ask away! 💬",
-                    "Share your behind-the-scenes moments! 📸"
+                    "What would you like to see more of? Comment below! ",
+                    "Any questions about our process? Ask away! ",
+                    "Share your behind-the-scenes moments! "
                 ],
                 'hashtags': "#behindthescenes #process #reallife #authentic #transparent #journey #creation #work #team #storytelling"
             },
             'educational_carousel': {
-                'structure': "📚 {topic}: {subtitle}\n\nSwipe to learn ➡️\n\n{preview}\n\n{save_cta}\n\n{hashtags}",
+                'structure': " {topic}: {subtitle}\n\nSwipe to learn \n\n{preview}\n\n{save_cta}\n\n{hashtags}",
                 'hooks': [
                     "5 things you need to know about",
                     "The ultimate guide to",
@@ -77,14 +77,14 @@ class SocialMediaTemplates:
                     "Master the basics of"
                 ],
                 'ctas': [
-                    "Save this post for later! 📌",
-                    "Share with someone who needs this! 📲",
-                    "Which tip resonated most with you? 💭"
+                    "Save this post for later! ",
+                    "Share with someone who needs this! ",
+                    "Which tip resonated most with you? "
                 ],
                 'hashtags': "#education #tips #learn #howto #guide #knowledge #skills #growth #tutorial #information"
             },
             'product_showcase': {
-                'structure': "✨ {product_name}\n\n{benefits}\n\n{social_proof}\n\n{offer}\n\n{cta}\n\n{hashtags}",
+                'structure': " {product_name}\n\n{benefits}\n\n{social_proof}\n\n{offer}\n\n{cta}\n\n{hashtags}",
                 'hooks': [
                     "Introducing our latest",
                     "You asked, we delivered:",
@@ -92,10 +92,10 @@ class SocialMediaTemplates:
                     "This is exactly what you need:"
                 ],
                 'ctas': [
-                    "Link in bio to shop now! 🛒",
-                    "DM us for more details! 💌",
-                    "Tag someone who needs this! 🏷️",
-                    "Comment 'WANT' for direct link! 💬"
+                    "Link in bio to shop now! ",
+                    "DM us for more details! ",
+                    "Tag someone who needs this! ",
+                    "Comment 'WANT' for direct link! "
                 ],
                 'hashtags': "#product #new #launch #shop #quality #innovation #musthave #lifestyle #brand #shopping"
             }
@@ -115,7 +115,7 @@ class SocialMediaTemplates:
                 ]
             },
             'quote_tweet': {
-                'structure': "💭 {reaction}\n\n{additional_insight}\n\n{question}",
+                'structure': " {reaction}\n\n{additional_insight}\n\n{question}",
                 'reactions': [
                     "This hits different.",
                     "Absolutely this.",
@@ -125,7 +125,7 @@ class SocialMediaTemplates:
                 ]
             },
             'hot_take': {
-                'structure': "🔥 Hot take:\n\n{opinion}\n\n{reasoning}\n\nThoughts?",
+                'structure': " Hot take:\n\n{opinion}\n\n{reasoning}\n\nThoughts?",
                 'starters': [
                     "Hot take:",
                     "Unpopular opinion:",
@@ -139,7 +139,7 @@ class SocialMediaTemplates:
         # LinkedIn Templates
         self.linkedin_templates = {
             'professional_insight': {
-                'structure': "💼 {professional_hook}\n\n{situation}\n\n{insight}\n\n{application}\n\n{question}\n\n{hashtags}",
+                'structure': " {professional_hook}\n\n{situation}\n\n{insight}\n\n{application}\n\n{question}\n\n{hashtags}",
                 'hooks': [
                     "Here's what 10 years in the industry taught me:",
                     "A lesson from today's client meeting:",
@@ -155,7 +155,7 @@ class SocialMediaTemplates:
                 'hashtags': "#leadership #business #strategy #professional #industry #insights #growth #success #management #career"
             },
             'company_update': {
-                'structure': "🚀 {announcement}\n\n{details}\n\n{impact}\n\n{gratitude}\n\n{future_outlook}\n\n{hashtags}",
+                'structure': " {announcement}\n\n{details}\n\n{impact}\n\n{gratitude}\n\n{future_outlook}\n\n{hashtags}",
                 'starters': [
                     "Exciting company news:",
                     "Proud to announce:",
@@ -165,7 +165,7 @@ class SocialMediaTemplates:
                 'hashtags': "#companyupdate #growth #team #milestone #achievement #business #success #announcement #proud #grateful"
             },
             'thought_leadership': {
-                'structure': "🎯 {industry_trend}\n\n{analysis}\n\n{prediction}\n\n{actionable_advice}\n\n{engagement_question}\n\n{hashtags}",
+                'structure': " {industry_trend}\n\n{analysis}\n\n{prediction}\n\n{actionable_advice}\n\n{engagement_question}\n\n{hashtags}",
                 'starters': [
                     "The industry is shifting toward",
                     "Here's what I'm seeing in the market:",
@@ -179,7 +179,7 @@ class SocialMediaTemplates:
         # TikTok Templates
         self.tiktok_templates = {
             'trend_participation': {
-                'structure': "🎵 {trend_reference}\n\n{your_take}\n\n{hashtags}",
+                'structure': " {trend_reference}\n\n{your_take}\n\n{hashtags}",
                 'starters': [
                     "POV:",
                     "Tell me you're a [profession] without telling me",
@@ -189,7 +189,7 @@ class SocialMediaTemplates:
                 'hashtags': "#fyp #trending #viral #relatable #mood #aesthetic #vibes #content #creator #fun"
             },
             'educational_content': {
-                'structure': "📚 {fact_hook}\n\n{explanation}\n\n{mind_blown_element}\n\n{hashtags}",
+                'structure': " {fact_hook}\n\n{explanation}\n\n{mind_blown_element}\n\n{hashtags}",
                 'hooks': [
                     "Fun fact:",
                     "Did you know:",
@@ -200,7 +200,7 @@ class SocialMediaTemplates:
                 'hashtags': "#learn #facts #education #mindblown #interesting #knowledge #science #cool #amazing #wow"
             },
             'lifestyle_content': {
-                'structure': "✨ {lifestyle_moment}\n\n{relatability}\n\n{aesthetic_element}\n\n{hashtags}",
+                'structure': " {lifestyle_moment}\n\n{relatability}\n\n{aesthetic_element}\n\n{hashtags}",
                 'starters': [
                     "That girl energy:",
                     "Main character moment:",
@@ -214,12 +214,12 @@ class SocialMediaTemplates:
         # YouTube Templates
         self.youtube_templates = {
             'tutorial_description': {
-                'structure': "🎓 {tutorial_title}\n\n{overview}\n\n📚 TIMESTAMPS:\n{timestamps}\n\n🔔 {subscribe_cta}\n\n📱 CONNECT:\n{social_links}\n\n{hashtags}",
+                'structure': " {tutorial_title}\n\n{overview}\n\n TIMESTAMPS:\n{timestamps}\n\n {subscribe_cta}\n\n CONNECT:\n{social_links}\n\n{hashtags}",
                 'timestamps_example': "0:00 Introduction\n2:30 Step 1\n5:45 Step 2\n8:20 Step 3\n12:00 Conclusion",
                 'hashtags': "#tutorial #howto #learn #education #guide #tips #stepbystep #helpful #youtube #content"
             },
             'vlog_description': {
-                'structure': "📹 {vlog_title}\n\n{day_summary}\n\n{highlights}\n\n{personal_note}\n\n{engagement_cta}\n\n{social_links}\n\n{hashtags}",
+                'structure': " {vlog_title}\n\n{day_summary}\n\n{highlights}\n\n{personal_note}\n\n{engagement_cta}\n\n{social_links}\n\n{hashtags}",
                 'engagement_ctas': [
                     "What was your favorite part? Let me know!",
                     "How was your day? Tell me in the comments!",
@@ -241,14 +241,14 @@ class SocialMediaTemplates:
                     "Happy [day], everyone!"
                 ],
                 'engagement_elements': [
-                    "React with ❤️ if you agree!",
+                    "React with  if you agree!",
                     "Share your thoughts below!",
                     "Tag someone who needs to see this!",
                     "Save this post for later!"
                 ]
             },
             'event_promotion': {
-                'structure': "🎉 {event_announcement}\n\n📅 {date_time}\n📍 {location}\n\n{event_details}\n\n{registration_cta}\n\n{excitement_builder}",
+                'structure': " {event_announcement}\n\n {date_time}\n {location}\n\n{event_details}\n\n{registration_cta}\n\n{excitement_builder}",
                 'excitement_builders': [
                     "Can't wait to see you there!",
                     "This is going to be amazing!",
@@ -275,6 +275,9 @@ class SocialMediaTemplates:
         Returns:
             Template structure and content
         """
+
+
+
         try:
             platform_templates = getattr(self, f"{platform}_templates", {})
             template = platform_templates.get(template_type, {})
@@ -306,6 +309,9 @@ class SocialMediaTemplates:
         Returns:
             Filled template content
         """
+
+
+
         try:
             template = self.get_template(platform, template_type, content_data)
             
@@ -399,7 +405,7 @@ class SocialMediaTemplates:
         
         # Fill subscribe CTA
         if '{subscribe_cta}' in content:
-            subscribe_cta = "SUBSCRIBE for more content like this! Hit the bell icon for notifications! 🔔"
+            subscribe_cta = "SUBSCRIBE for more content like this! Hit the bell icon for notifications! "
             content = content.replace('{subscribe_cta}', subscribe_cta)
         
         # Fill engagement elements
@@ -415,7 +421,7 @@ class SocialMediaTemplates:
         default_templates = {
             'instagram': {
                 'structure': "{main_content}\n\n{call_to_action}\n\n#content #social #instagram",
-                'ctas': ['Share your thoughts below! 👇']
+                'ctas': ['Share your thoughts below! ']
             },
             'twitter': {
                 'structure': "{main_content}\n\nThoughts? 🤔",
@@ -426,11 +432,11 @@ class SocialMediaTemplates:
                 'ctas': ['Share your insights below.']
             },
             'tiktok': {
-                'structure': "{main_content} ✨\n\n#fyp #content #viral",
-                'ctas': ['Comment below! 💬']
+                'structure': "{main_content} \n\n#fyp #content #viral",
+                'ctas': ['Comment below! ']
             },
             'youtube': {
-                'structure': "{main_content}\n\n🔔 Subscribe for more!\n\n#youtube #content",
+                'structure': "{main_content}\n\n Subscribe for more!\n\n#youtube #content",
                 'ctas': ['Let me know in the comments!']
             },
             'facebook': {
@@ -452,10 +458,13 @@ class SocialMediaTemplates:
         if not main_content:
             main_content = content_data.get('text', 'Great content!')
         
-        return f"{main_content}\n\nThanks for reading! 👍"
+        return f"{main_content}\n\nThanks for reading! "
     
     def get_available_templates(self, platform: str) -> List[str]:
         """Get list of available templates for platform"""
+
+
+
         try:
             platform_templates = getattr(self, f"{platform}_templates", {})
             return list(platform_templates.keys())
@@ -464,6 +473,9 @@ class SocialMediaTemplates:
     
     def get_all_platforms(self) -> List[str]:
         """Get list of all supported platforms"""
+
+
+
         return ['instagram', 'twitter', 'linkedin', 'tiktok', 'youtube', 'facebook']
     
     def customize_template(
@@ -483,6 +495,9 @@ class SocialMediaTemplates:
         Returns:
             Customized template
         """
+
+
+
         try:
             template = self.get_template(platform, template_type).copy()
             
@@ -577,6 +592,9 @@ class TemplateEngine:
     
     def apply_conditional_logic(self, template: str, conditions: Dict[str, bool]) -> str:
         """Apply conditional logic to template"""
+
+
+
         return template  # Simplified implementation
 
 
@@ -597,6 +615,9 @@ class InstagramTemplate:
     
     def validate_length(self, content: str) -> bool:
         """Validate content length for Instagram"""
+
+
+
         return len(content) <= self.character_limit
 
 

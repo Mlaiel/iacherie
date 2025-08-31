@@ -9,7 +9,7 @@ intelligent scaling decisions based on workload patterns and predictions.
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED 
 This software is protected by international copyright laws.
 Contact: mlaiel@live.de for licensing inquiries.
 """
@@ -205,6 +205,9 @@ class AutoScalingManager:
     
     def _initialize_clients(self) -> None:
         """Initialize Kubernetes, Docker, and monitoring clients"""
+
+
+
         try:
             # Kubernetes clients
             config.load_incluster_config()
@@ -246,6 +249,9 @@ class AutoScalingManager:
     
     def _initialize_scaling_models(self) -> None:
         """Initialize ML models for predictive scaling"""
+
+
+
         try:
             # CPU utilization prediction model
             self.cpu_predictor = RandomForestRegressor(
@@ -298,6 +304,9 @@ class AutoScalingManager:
     
     def _initialize_deep_scaling_model(self) -> None:
         """Initialize deep learning model for complex scaling patterns"""
+
+
+
         try:
             class DeepScalingModel(nn.Module):
                 def __init__(self, input_dim=50, hidden_dim=128):
@@ -336,6 +345,9 @@ class AutoScalingManager:
         Returns:
             Infrastructure deployment summary
         """
+
+
+
         try:
             self.status = "deploying_infrastructure"
             logger.info("Deploying auto-scaling infrastructure")
@@ -451,6 +463,9 @@ class AutoScalingManager:
         Returns:
             Detailed scaling analysis and recommendations
         """
+
+
+
         try:
             workload_name = analysis_request.get("workload_name")
             workload_type = WorkloadType(analysis_request.get("workload_type", "inference"))
@@ -560,6 +575,9 @@ class AutoScalingManager:
         Returns:
             Scaling execution results and status
         """
+
+
+
         try:
             workload_name = scaling_request.get("workload_name")
             scaling_strategy = ScalingStrategy(scaling_request.get("strategy", self.config.scaling_strategy.value))
@@ -871,6 +889,9 @@ class AutoScalingManager:
                                            historical_analysis: Dict[str, Any], 
                                            time_horizon: int) -> Dict[str, Any]:
         """Generate resource utilization predictions"""
+
+
+
         try:
             predictions = {}
             
@@ -929,6 +950,9 @@ class AutoScalingManager:
     
     async def get_auto_scaling_metrics(self) -> Dict[str, Any]:
         """Get comprehensive auto-scaling metrics"""
+
+
+
         try:
             total_workloads = len(self.workload_profiles)
             active_scaling_policies = len([w for w in self.workload_profiles.values() if w.get("scaling_enabled", False)])
@@ -974,6 +998,9 @@ class AutoScalingManager:
     
     async def _ensure_auto_scaling_namespace(self) -> None:
         """Create auto-scaling namespace"""
+
+
+
         try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
@@ -1074,6 +1101,9 @@ class AutoScalingManager:
     
     async def _validate_auto_scaling_infrastructure(self) -> bool:
         """Validate auto-scaling infrastructure deployment"""
+
+
+
         try:
             # Check essential services
             essential_services = [
@@ -1110,6 +1140,9 @@ class AutoScalingManager:
     
     async def _cleanup_failed_infrastructure(self) -> None:
         """Clean up failed auto-scaling infrastructure"""
+
+
+
         try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
@@ -1119,6 +1152,9 @@ class AutoScalingManager:
     
     async def cleanup(self) -> None:
         """Clean up entire auto-scaling infrastructure"""
+
+
+
         try:
             # Stop monitoring
             self._monitoring_active = False

@@ -1,12 +1,12 @@
 """
-🔧 Configuration Environments Index - IA-Influencer-Agent
+ Configuration Environments Index - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps + Backend Senior + ML Engineer + DBA + Security
 Date: 2025-08-15
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -242,6 +242,9 @@ config_manager = ConfigurationManager()
 
 def get_config_manager() -> ConfigurationManager:
     """Retourne l'instance globale du gestionnaire de configuration"""
+
+
+
     return config_manager
 
 
@@ -287,7 +290,7 @@ def print_config_summary() -> None:
     """Affiche un résumé de la configuration actuelle"""
     config = config_manager.get_current_config()
     
-    print("🔧 Configuration IA-Influencer-Agent")
+    print(" Configuration IA-Influencer-Agent")
     print("=" * 50)
     print(f"Environment: {config.environment.value}")
     print(f"Debug Mode: {config.debug}")
@@ -306,21 +309,21 @@ def print_config_summary() -> None:
         "Monitoring": config.monitoring_config is not None
     }
     
-    print("📊 Components Status:")
+    print(" Components Status:")
     for component, status in components.items():
-        icon = "✅" if status else "❌"
+        icon = "" if status else ""
         print(f"  {icon} {component}")
     print()
     
     # Validation
     is_valid = config.validate_configuration()
-    validation_icon = "✅" if is_valid else "❌"
-    print(f"🔍 Validation: {validation_icon} {'PASSED' if is_valid else 'FAILED'}")
+    validation_icon = "" if is_valid else ""
+    print(f" Validation: {validation_icon} {'PASSED' if is_valid else 'FAILED'}")
 
 
 def run_diagnostics() -> Dict[str, Any]:
     """Exécute un diagnostic complet du système de configuration"""
-    print("🔍 Running IA-Influencer-Agent Configuration Diagnostics...")
+    print(" Running IA-Influencer-Agent Configuration Diagnostics...")
     print("=" * 60)
     
     # Test de toutes les configurations
@@ -330,23 +333,23 @@ def run_diagnostics() -> Dict[str, Any]:
     total_configs = len(validation_results)
     passed_configs = sum(1 for result in validation_results.values() if result)
     
-    print(f"\n📊 Diagnostic Results:")
+    print(f"\n Diagnostic Results:")
     print(f"Total Configurations: {total_configs}")
     print(f"Passed: {passed_configs}")
     print(f"Failed: {total_configs - passed_configs}")
     
     # Détail par configuration
-    print(f"\n📋 Detailed Results:")
+    print(f"\n Detailed Results:")
     for config_name, result in validation_results.items():
-        icon = "✅" if result else "❌"
+        icon = "" if result else ""
         print(f"  {icon} {config_name}")
         
     # Configuration actuelle
-    print(f"\n🔧 Current Configuration:")
+    print(f"\n Current Configuration:")
     current_validation = config_manager.validate_current_config()
     print(f"  Type: {current_validation['config_type']}")
     print(f"  Environment: {current_validation['environment']}")
-    print(f"  Valid: {'✅' if current_validation['is_valid'] else '❌'}")
+    print(f"  Valid: {'' if current_validation['is_valid'] else ''}")
     
     if current_validation['errors']:
         print(f"  Errors: {len(current_validation['errors'])}")

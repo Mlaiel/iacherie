@@ -246,6 +246,9 @@ class AIConfigManager:
     
     def _load_configurations(self) -> None:
         """Load AI configurations from files."""
+
+
+
         try:
             config_file = self.config_dir / "ai_models.json"
             if config_file.exists():
@@ -263,14 +266,23 @@ class AIConfigManager:
     
     def get_model(self, model_id: str) -> Optional[ModelConfig]:
         """Get model configuration by ID."""
+
+
+
         return self.models.get(model_id)
     
     def get_models_by_type(self, model_type: AIModelType) -> List[ModelConfig]:
         """Get all models of a specific type."""
+
+
+
         return [model for model in self.models.values() if model.model_type == model_type]
     
     def get_enabled_models(self) -> List[ModelConfig]:
         """Get all enabled models."""
+
+
+
         return [model for model in self.models.values() if model.enabled]
     
     def update_model_performance(self, model_id: str, response_time: float, accuracy: float) -> None:
@@ -316,6 +328,9 @@ class AIConfigManager:
     
     def _save_configurations(self) -> None:
         """Save configurations to file."""
+
+
+
         try:
             config_file = self.config_dir / "ai_models.json"
             config_data = {

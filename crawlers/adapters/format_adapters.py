@@ -812,6 +812,9 @@ class MediaFormatAdapter(FormatAdapter):
     
     async def validate(self, data: Any) -> bool:
         """Validate media data."""
+
+
+
         try:
             if isinstance(data, bytes):
                 mime_type = self._detect_mime_type(data)
@@ -920,6 +923,9 @@ class CompressionAdapter(FormatAdapter):
     
     async def validate(self, data: Any) -> bool:
         """Validate compressed data."""
+
+
+
         try:
             if not isinstance(data, bytes):
                 return False
@@ -949,10 +955,16 @@ class CompressionAdapter(FormatAdapter):
     
     async def compress(self, data: Any, algorithm: str = 'gzip') -> FormatResult:
         """Compress data."""
+
+
+
         return await self.process(data, operation='compress', algorithm=algorithm)
     
     async def decompress(self, data: bytes, algorithm: str = 'gzip') -> FormatResult:
         """Decompress data."""
+
+
+
         return await self.process(data, operation='decompress', algorithm=algorithm)
 
 class EncryptionAdapter(FormatAdapter):
@@ -1147,6 +1159,9 @@ class EncryptionAdapter(FormatAdapter):
     
     async def validate(self, data: Any) -> bool:
         """Validate encrypted data."""
+
+
+
         try:
             if not isinstance(data, bytes):
                 return False
@@ -1169,10 +1184,16 @@ class EncryptionAdapter(FormatAdapter):
     
     async def encrypt(self, data: Any, algorithm: str = 'fernet', **kwargs) -> FormatResult:
         """Encrypt data."""
+
+
+
         return await self.process(data, operation='encrypt', algorithm=algorithm, **kwargs)
     
     async def decrypt(self, data: bytes, algorithm: str = 'fernet', **kwargs) -> FormatResult:
         """Decrypt data."""
+
+
+
         return await self.process(data, operation='decrypt', algorithm=algorithm, **kwargs)
 
 class SerializationAdapter(FormatAdapter):
@@ -1306,6 +1327,9 @@ class SerializationAdapter(FormatAdapter):
     
     async def validate(self, data: Any) -> bool:
         """Validate serialized data."""
+
+
+
         try:
             # Try to detect serialization format and validate
             if isinstance(data, str):

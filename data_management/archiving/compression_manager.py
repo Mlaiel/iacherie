@@ -8,7 +8,7 @@ for different content types (audio, video, image, text).
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -154,10 +154,16 @@ class GzipCompressionAlgorithm(CompressionAlgorithm):
     
     async def compress(self, data: bytes, level: int = 6) -> bytes:
         """Compress using GZIP"""
+
+
+
         return gzip.compress(data, compresslevel=level)
     
     async def decompress(self, data: bytes) -> bytes:
         """Decompress GZIP data"""
+
+
+
         return gzip.decompress(data)
     
     def get_optimal_level(self, content_type: ContentType, size: int) -> int:
@@ -175,10 +181,16 @@ class ZlibCompressionAlgorithm(CompressionAlgorithm):
     
     async def compress(self, data: bytes, level: int = 6) -> bytes:
         """Compress using ZLIB"""
+
+
+
         return zlib.compress(data, level=level)
     
     async def decompress(self, data: bytes) -> bytes:
         """Decompress ZLIB data"""
+
+
+
         return zlib.decompress(data)
     
     def get_optimal_level(self, content_type: ContentType, size: int) -> int:
@@ -196,10 +208,16 @@ class LzmaCompressionAlgorithm(CompressionAlgorithm):
     
     async def compress(self, data: bytes, level: int = 6) -> bytes:
         """Compress using LZMA"""
+
+
+
         return lzma.compress(data, preset=level)
     
     async def decompress(self, data: bytes) -> bytes:
         """Decompress LZMA data"""
+
+
+
         return lzma.decompress(data)
     
     def get_optimal_level(self, content_type: ContentType, size: int) -> int:
@@ -215,14 +233,23 @@ class Bzip2CompressionAlgorithm(CompressionAlgorithm):
     
     async def compress(self, data: bytes, level: int = 6) -> bytes:
         """Compress using BZIP2"""
+
+
+
         return bz2.compress(data, compresslevel=level)
     
     async def decompress(self, data: bytes) -> bytes:
         """Decompress BZIP2 data"""
+
+
+
         return bz2.decompress(data)
     
     def get_optimal_level(self, content_type: ContentType, size: int) -> int:
         """Get optimal BZIP2 level"""
+
+
+
         return 9  # BZIP2 is best at highest level
 
 
@@ -405,6 +432,9 @@ class ArchivalCompressionManager:
         Returns:
             Tuple of compressed data and metrics
         """
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -491,6 +521,9 @@ class ArchivalCompressionManager:
         Returns:
             Tuple of decompressed data and decompression time
         """
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -538,6 +571,9 @@ class ArchivalCompressionManager:
         Returns:
             Dictionary mapping methods to their metrics
         """
+
+
+
         try:
             results = {}
             
@@ -584,6 +620,9 @@ class ArchivalCompressionManager:
         Returns:
             Optimized compression profile
         """
+
+
+
         try:
             method_performance = {}
             
@@ -656,6 +695,9 @@ class ArchivalCompressionManager:
     
     async def get_compression_stats(self) -> Dict[str, Any]:
         """Get comprehensive compression statistics"""
+
+
+
         try:
             total_compressions = 0
             total_original_size = 0

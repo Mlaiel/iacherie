@@ -371,7 +371,7 @@ class TestPerformanceIntegration:
         assert improvements['cache_tuning']['performance_targets_met'] >= 70, "Cache tuning targets not met"
         assert improvements['monitoring_alerting']['coverage_completeness'] >= 80, "Monitoring coverage insufficient"
         
-        print("\\n✅ All performance optimization tests passed!")
+        print("\\n All performance optimization tests passed!")
     
     @pytest.mark.performance
     def test_performance_benchmarks(self):
@@ -386,14 +386,14 @@ class TestPerformanceIntegration:
         api_results = tester.test_critical_apis_performance()
         print("\\nAPI Performance Benchmarks:")
         for endpoint, result in api_results.items():
-            status = "✅ PASS" if result["meets_sla"] else "❌ FAIL"
+            status = " PASS" if result["meets_sla"] else " FAIL"
             print(f"  {endpoint:25} | {result['response_time_ms']:6.1f}ms | {result['success_rate']:5.1f}% | {status}")
         
         # Test database optimization benchmarks
         db_results = tester.test_database_optimization_effectiveness()
         print("\\nDatabase Optimization Benchmarks:")
         for query, result in db_results.items():
-            status = "✅ PASS" if result["meets_sla"] else "❌ FAIL"
+            status = " PASS" if result["meets_sla"] else " FAIL"
             print(f"  {query:15} | Score: {result['performance_score']:5.1f} | Improvement: {result['estimated_improvement']:5.1f}% | {status}")
         
         # Test cache tuning benchmarks
@@ -402,10 +402,10 @@ class TestPerformanceIntegration:
         for operation, result in cache_results.items():
             current = result["current_performance"]
             improvements = result["improvements"]
-            status = "✅ PASS" if result["meets_performance_targets"] else "❌ FAIL"
+            status = " PASS" if result["meets_performance_targets"] else " FAIL"
             print(f"  {operation:20} | Hit: {current['hit_ratio']:.3f} | Latency: {current['latency_ms']:5.1f}ms | Improvement: {improvements['latency_reduction_percent']:5.1f}% | {status}")
         
-        print("\\n✅ Performance benchmarks completed!")
+        print("\\n Performance benchmarks completed!")
 
 
 if __name__ == "__main__":

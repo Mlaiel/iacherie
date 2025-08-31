@@ -2,7 +2,7 @@
 Centralized import and configuration for all AI models
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
-⚠️  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
+  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
     code, or intellectual property without explicit written authorization 
     from Fahed Mlaiel is strictly prohibited and will result in legal action.
 
@@ -278,7 +278,10 @@ def get_model_by_name(model_name: str) -> Optional[type]:
         
     Returns:
         Model class or None if not found
-    """    return MODEL_REGISTRY.get(model_name.lower())
+    """
+
+
+    return MODEL_REGISTRY.get(model_name.lower())
 
 
 def get_models_by_capability(capability: str) -> List[str]:
@@ -289,7 +292,10 @@ def get_models_by_capability(capability: str) -> List[str]:
         
     Returns:
         List of model names
-    """    return CAPABILITY_MAPPING.get(capability.lower(), [])
+    """
+
+
+    return CAPABILITY_MAPPING.get(capability.lower(), [])
 
 
 def get_model_for_content_type(content_type: str, operation: str = "default") -> Optional[str]:
@@ -314,7 +320,10 @@ async def create_model_instance(model_name: str, config: Optional[ModelConfig] =
         
     Returns:
         Initialized model instance or None if creation failed
-    """    try:
+    """
+
+
+    try:
         return await model_orchestrator.get_model(model_name, config)
     except Exception as e:
         logger.error(f"Failed to create model instance {model_name}: {e}")
@@ -332,7 +341,10 @@ async def process_with_best_model(content_type: str, operation: str, data: Any, 
         
     Returns:
         Processing result
-    """    try:
+    """
+
+
+    try:
         return await model_orchestrator.route_request(content_type, operation, data, **kwargs)
     except Exception as e:
         logger.error(f"Failed to process {content_type}/{operation}: {e}")
@@ -371,7 +383,10 @@ def list_capabilities() -> Dict[str, List[str]]:
     
     Returns:
         Dictionary mapping capabilities to model lists
-    """    return CAPABILITY_MAPPING.copy()
+    """
+
+
+    return CAPABILITY_MAPPING.copy()
 
 
 def get_model_statistics() -> Dict[str, Any]:
@@ -379,7 +394,10 @@ def get_model_statistics() -> Dict[str, Any]:
     
     Returns:
         Model statistics dictionary
-    """    return model_orchestrator.get_model_stats()
+    """
+
+
+    return model_orchestrator.get_model_stats()
 
 
 # Initialize logging for the module
@@ -539,7 +557,10 @@ class BaseAIModel(ABC):
     
     async def connect(self) -> bool:
         """        Connect to the AI model with enhanced error handling
-        """        try:
+        """
+
+
+        try:
             self.status = ModelStatus.LOADING
             self.logger.info(f"Connecting to {self.model_name} ({self.provider.value})")
             
@@ -561,7 +582,10 @@ class BaseAIModel(ABC):
             return False
     
     async def disconnect(self):
-        """Safely disconnect from the model"""        try:
+        """Safely disconnect from the model"""
+
+
+        try:
             self.is_connected = False
             self.status = ModelStatus.OFFLINE
             self.cache.clear()
@@ -665,7 +689,10 @@ class BaseAIModel(ABC):
                                         (1 - alpha) * self.average_response_time)
     
     def get_model_info(self) -> Dict[str, Any]:
-        """Get comprehensive model information"""        return {
+        """Get comprehensive model information"""
+
+
+        return {
             "name": self.model_name,
             "provider": self.provider.value,
             "type": self.model_type.value,
@@ -694,7 +721,10 @@ class BaseAIModel(ABC):
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on the model"""        try:
+        """Perform health check on the model"""
+
+
+        try:
             start_time = time.time()
             is_healthy = await self.validate_connection()
             response_time = time.time() - start_time
@@ -820,10 +850,16 @@ class ModelRegistry:
         self.logger.info(f"Registered model '{name}' of type {model.model_type.value}")
     
     def get_model(self, name: str) -> Optional[BaseAIModel]:
-        """Get a registered AI model"""        return self._models.get(name)
+        """Get a registered AI model"""
+
+
+        return self._models.get(name)
     
     def get_models_by_type(self, model_type: ModelType) -> List[BaseAIModel]:
-        """Get all models of a specific type"""        return [model for model in self._models.values() 
+        """Get all models of a specific type"""
+
+
+        return [model for model in self._models.values() 
                 if model.model_type == model_type]
     
     def get_models_by_group(self, group: str) -> List[BaseAIModel]:
@@ -834,10 +870,16 @@ class ModelRegistry:
                 if name in self._models]
     
     def list_models(self) -> List[str]:
-        """List all registered model names"""        return list(self._models.keys())
+        """List all registered model names"""
+
+
+        return list(self._models.keys())
     
     def list_groups(self) -> List[str]:
-        """List all model groups"""        return list(self._model_groups.keys())
+        """List all model groups"""
+
+
+        return list(self._model_groups.keys())
     
     def remove_model(self, name: str) -> bool:
         """Remove a model from registry"""        if name in self._models:

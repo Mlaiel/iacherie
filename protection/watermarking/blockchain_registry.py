@@ -63,6 +63,9 @@ class BlockchainWatermarkRegistry:
     
     def _initialize_blockchain(self):
         """Initialize blockchain connection"""
+
+
+
         try:
             # Connect to blockchain network
             provider_url = self.config.get('provider_url', 'https://mainnet.infura.io/v3/YOUR_PROJECT_ID')
@@ -99,6 +102,9 @@ class BlockchainWatermarkRegistry:
         Registers watermark on blockchain for immutable ownership proof
         Creates permanent record with cryptographic verification
         """
+
+
+
         try:
             if not BLOCKCHAIN_AVAILABLE or not self.web3:
                 return await self._register_local_watermark(watermark_data, content_hash, owner_id)
@@ -168,6 +174,9 @@ class BlockchainWatermarkRegistry:
         Verifies ownership using blockchain records
         Provides cryptographic proof of ownership
         """
+
+
+
         try:
             if not BLOCKCHAIN_AVAILABLE or not self.web3:
                 return await self._verify_local_ownership(content_hash, claimed_owner)
@@ -233,6 +242,9 @@ class BlockchainWatermarkRegistry:
         Creates cryptographic ownership proof
         Generates legally admissible evidence
         """
+
+
+
         try:
             # Create ownership hash
             ownership_data = {
@@ -287,6 +299,9 @@ class BlockchainWatermarkRegistry:
         Verifies watermark integrity against blockchain records
         Detects tampering and unauthorized modifications
         """
+
+
+
         try:
             # Retrieve original record from blockchain
             original_record = await self._get_blockchain_record(watermark_id)
@@ -375,6 +390,9 @@ class BlockchainWatermarkRegistry:
         Retrieves complete ownership history from blockchain
         Provides audit trail for content ownership
         """
+
+
+
         try:
             if not BLOCKCHAIN_AVAILABLE or not self.web3:
                 return await self._get_local_ownership_history(content_hash)
@@ -415,6 +433,9 @@ class BlockchainWatermarkRegistry:
     
     async def _submit_blockchain_transaction(self, record: WatermarkRecord) -> str:
         """Submits transaction to blockchain"""
+
+
+
         try:
             if not self.contract or not self.account:
                 return "local_tx_" + str(uuid.uuid4())[:8]
@@ -451,6 +472,9 @@ class BlockchainWatermarkRegistry:
     
     async def _query_blockchain_records(self, content_hash: str) -> List[Dict[str, Any]]:
         """Queries blockchain for records"""
+
+
+
         try:
             if not self.contract:
                 return []
@@ -466,6 +490,9 @@ class BlockchainWatermarkRegistry:
     
     async def _verify_record_integrity(self, record: Dict[str, Any]) -> Dict[str, Any]:
         """Verifies cryptographic integrity of record"""
+
+
+
         try:
             # Recreate verification hash
             watermark_hash = record.get('watermark_hash', '')
@@ -495,6 +522,9 @@ class BlockchainWatermarkRegistry:
     
     async def _get_blockchain_record(self, watermark_id: str) -> Optional[Dict[str, Any]]:
         """Retrieves specific record from blockchain"""
+
+
+
         try:
             if not self.contract:
                 return None
@@ -508,6 +538,9 @@ class BlockchainWatermarkRegistry:
     
     async def _submit_ownership_proof(self, ownership_data: Dict[str, Any], signature: str) -> str:
         """Submits ownership proof to blockchain"""
+
+
+
         try:
             if not self.contract or not self.account:
                 return "local_proof_" + str(uuid.uuid4())[:8]
@@ -540,6 +573,9 @@ class BlockchainWatermarkRegistry:
     
     async def _verify_local_ownership(self, content_hash: str, claimed_owner: str) -> Dict[str, Any]:
         """Local fallback for ownership verification"""
+
+
+
         return {
             "ownership_verified": False,
             "confidence": 0.0,
@@ -554,10 +590,16 @@ class BlockchainWatermarkRegistry:
     
     async def _get_local_ownership_history(self, content_hash: str) -> List[Dict[str, Any]]:
         """Local fallback for ownership history"""
+
+
+
         return []
     
     def _get_default_abi(self) -> List[Dict[str, Any]]:
         """Returns default smart contract ABI"""
+
+
+
         return [
             {
                 "inputs": [

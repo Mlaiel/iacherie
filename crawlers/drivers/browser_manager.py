@@ -16,7 +16,7 @@ Key Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  LEGAL WARNING:
+  LEGAL WARNING:
 This code is proprietary and confidential. Any unauthorized copying, modification, 
 distribution, or use without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and may result in legal action.
@@ -274,6 +274,9 @@ class ChromeDriver(BrowserDriver):
     
     def create_driver(self) -> webdriver.Chrome:
         """Create and configure Chrome driver instance"""
+
+
+
         try:
             options = self._setup_options()
             service = ChromeService(ChromeDriverManager().install())
@@ -374,6 +377,9 @@ class FirefoxDriver(BrowserDriver):
     
     def create_driver(self) -> webdriver.Firefox:
         """Create and configure Firefox driver instance"""
+
+
+
         try:
             options = self._setup_options()
             service = FirefoxService(GeckoDriverManager().install())
@@ -745,12 +751,18 @@ class BrowserManager:
 def create_browser_manager(max_sessions: int = 10, 
                           session_timeout: int = 3600) -> BrowserManager:
     """Create and configure browser manager instance"""
+
+
+
     return BrowserManager(max_sessions=max_sessions, session_timeout=session_timeout)
 
 
 # Configuration helpers
 def create_stealth_config() -> BrowserConfiguration:
     """Create configuration optimized for stealth operations"""
+
+
+
     return BrowserConfiguration(
         browser_type=BrowserType.CHROME,
         mode=BrowserMode.STEALTH,
@@ -765,6 +777,9 @@ def create_stealth_config() -> BrowserConfiguration:
 
 def create_performance_config() -> BrowserConfiguration:
     """Create configuration optimized for performance"""
+
+
+
     return BrowserConfiguration(
         browser_type=BrowserType.CHROME,
         mode=BrowserMode.HEADLESS,

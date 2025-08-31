@@ -118,6 +118,9 @@ class PaymentProcessor:
         
     def configure_gateway(self, config: PaymentConfig) -> None:
         """Configure payment gateway"""
+
+
+
         try:
             self.gateway_configs[config.gateway] = config
             
@@ -144,6 +147,9 @@ class PaymentProcessor:
         session: AsyncSession
     ) -> PaymentResponse:
         """Process payment through specified gateway"""
+
+
+
         try:
             # Validate gateway configuration
             if request.gateway not in self.gateway_configs:
@@ -193,6 +199,9 @@ class PaymentProcessor:
         config: PaymentConfig
     ) -> Dict[str, Any]:
         """Process payment through Stripe"""
+
+
+
         try:
             # Create Stripe transfer
             transfer = stripe.Transfer.create(
@@ -218,6 +227,9 @@ class PaymentProcessor:
         config: PaymentConfig
     ) -> Dict[str, Any]:
         """Process payment through Wise (formerly TransferWise)"""
+
+
+
         try:
             wise_client = self.gateway_clients[PaymentGateway.WISE]
             
@@ -251,6 +263,9 @@ class PaymentProcessor:
         config: PaymentConfig
     ) -> Dict[str, Any]:
         """Process payment through PayPal"""
+
+
+
         try:
             # PayPal payout implementation
             payout_data = {
@@ -321,6 +336,9 @@ class PaymentProcessor:
         gateway: PaymentGateway
     ) -> bool:
         """Verify webhook signature for security"""
+
+
+
         try:
             config = self.gateway_configs.get(gateway)
             if not config:
@@ -345,6 +363,9 @@ class PaymentProcessor:
         session: AsyncSession
     ) -> Optional[PaymentResponse]:
         """Get payment status by ID"""
+
+
+
         try:
             payment = await session.get(Payment, payment_id)
             if not payment:
@@ -371,6 +392,9 @@ class PaymentProcessor:
         session: AsyncSession
     ) -> bool:
         """Cancel pending payment"""
+
+
+
         try:
             payment = await session.get(Payment, payment_id)
             if not payment or payment.status != PaymentStatus.PENDING.value:
@@ -406,6 +430,9 @@ class PaymentWebhookHandler:
         session: AsyncSession
     ) -> bool:
         """Handle Stripe webhook events"""
+
+
+
         try:
             if not await self.payment_processor.verify_webhook(
                 payload, signature, PaymentGateway.STRIPE
@@ -436,6 +463,9 @@ class PaymentWebhookHandler:
         session: AsyncSession
     ) -> None:
         """Update payment status from webhook"""
+
+
+
         try:
             # Find payment by transaction ID
             from sqlalchemy import select

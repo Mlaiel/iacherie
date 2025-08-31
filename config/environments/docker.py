@@ -1,12 +1,12 @@
 """
-🔧 Docker Environment Configuration - IA-Influencer-Agent
+ Docker Environment Configuration - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps + Backend Senior + ML Engineer + Infrastructure
 Date: 2025-08-15
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -139,6 +139,9 @@ class DockerConfigManager(BaseEnvironmentConfigManager):
         
     def validate_configuration(self) -> bool:
         """Valide la configuration Docker"""
+
+
+
         try:
             # Vérifications Docker spécifiques
             assert self.database_config is not None, "Configuration base de données requise"
@@ -155,11 +158,14 @@ class DockerConfigManager(BaseEnvironmentConfigManager):
             return True
             
         except (AssertionError, AttributeError) as e:
-            print(f"❌ Erreur validation configuration Docker: {e}")
+            print(f" Erreur validation configuration Docker: {e}")
             return False
             
     def get_docker_features(self) -> Dict[str, Any]:
         """Fonctionnalités spécifiques Docker"""
+
+
+
         return {
             "containerized": True,
             "microservices_ready": True,
@@ -175,6 +181,9 @@ class DockerConfigManager(BaseEnvironmentConfigManager):
         
     def get_docker_services(self) -> Dict[str, Dict[str, Any]]:
         """Configuration des services Docker"""
+
+
+
         return {
             "postgres": {
                 "image": "postgres:15-alpine",
@@ -215,6 +224,9 @@ class DockerConfigManager(BaseEnvironmentConfigManager):
         
     def get_docker_networks(self) -> Dict[str, Dict[str, Any]]:
         """Configuration des réseaux Docker"""
+
+
+
         return {
             "ia-influencer-network": {
                 "driver": "bridge",
@@ -226,6 +238,9 @@ class DockerConfigManager(BaseEnvironmentConfigManager):
         
     def get_docker_volumes(self) -> List[str]:
         """Volumes Docker persistants"""
+
+
+
         return [
             "postgres_data",
             "redis_data",
@@ -239,6 +254,9 @@ class DockerConfigManager(BaseEnvironmentConfigManager):
         
     def get_health_check_config(self) -> Dict[str, Any]:
         """Configuration health check Docker"""
+
+
+
         return {
             "test": ["CMD", "curl", "-f", f"http://localhost:{self.port}/health"],
             "interval": "30s",
@@ -285,6 +303,9 @@ class DockerConfigManager(BaseEnvironmentConfigManager):
         
     def _get_environment_variables(self) -> Dict[str, str]:
         """Variables d'environnement pour conteneur"""
+
+
+
         return {
             "ENVIRONMENT": self.environment.value,
             "DATABASE_URL": self.get_database_url(),

@@ -93,6 +93,9 @@ class HealthMonitor:
     
     def _load_configuration(self) -> None:
         """Load monitoring configuration"""
+
+
+
         try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r') as f:
@@ -107,6 +110,9 @@ class HealthMonitor:
     
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default monitoring configuration"""
+
+
+
         return {
             "check_interval": 30,
             "thresholds": {
@@ -164,6 +170,9 @@ class HealthMonitor:
     
     def _initialize_kubernetes_client(self) -> None:
         """Initialize Kubernetes client if enabled"""
+
+
+
         try:
             if not self.config.get("kubernetes", {}).get("enabled", False):
                 return
@@ -192,6 +201,9 @@ class HealthMonitor:
     
     def start_monitoring(self) -> None:
         """Start continuous health monitoring"""
+
+
+
         try:
             logger.info("Starting health monitoring")
             self.running = True
@@ -221,6 +233,9 @@ class HealthMonitor:
     
     def _execute_health_checks(self) -> None:
         """Execute all registered health checks"""
+
+
+
         try:
             logger.debug("Executing health checks")
             
@@ -279,6 +294,9 @@ class HealthMonitor:
     
     def _check_system_cpu(self) -> HealthCheck:
         """Check system CPU usage"""
+
+
+
         try:
             cpu_percent = psutil.cpu_percent(interval=1)
             thresholds = self.config.get("thresholds", {}).get("cpu_usage", {})
@@ -313,6 +331,9 @@ class HealthMonitor:
     
     def _check_system_memory(self) -> HealthCheck:
         """Check system memory usage"""
+
+
+
         try:
             memory = psutil.virtual_memory()
             memory_percent = memory.percent
@@ -353,6 +374,9 @@ class HealthMonitor:
     
     def _check_system_disk(self) -> HealthCheck:
         """Check system disk usage"""
+
+
+
         try:
             disk = psutil.disk_usage('/')
             disk_percent = (disk.used / disk.total) * 100
@@ -393,6 +417,9 @@ class HealthMonitor:
     
     def _check_api_gateway(self) -> HealthCheck:
         """Check API Gateway health"""
+
+
+
         try:
             endpoint = self.config.get("endpoints", {}).get("api_gateway", "http://localhost:8000/health")
             
@@ -436,6 +463,9 @@ class HealthMonitor:
     
     def _check_database(self) -> HealthCheck:
         """Check database connectivity"""
+
+
+
         try:
             db_url = self.config.get("endpoints", {}).get("database", "postgresql://localhost:5432")
             
@@ -473,6 +503,9 @@ class HealthMonitor:
     
     def _check_redis(self) -> HealthCheck:
         """Check Redis connectivity"""
+
+
+
         try:
             redis_url = self.config.get("endpoints", {}).get("redis", "redis://localhost:6379")
             
@@ -504,6 +537,9 @@ class HealthMonitor:
     
     def _check_elasticsearch(self) -> HealthCheck:
         """Check Elasticsearch cluster health"""
+
+
+
         try:
             es_url = self.config.get("endpoints", {}).get("elasticsearch", "http://localhost:9200/_cluster/health")
             
@@ -553,6 +589,9 @@ class HealthMonitor:
     
     def _check_kubernetes_pods(self) -> HealthCheck:
         """Check Kubernetes pods health"""
+
+
+
         try:
             if not hasattr(self, 'k8s_core_v1'):
                 return HealthCheck(
@@ -607,6 +646,9 @@ class HealthMonitor:
     
     def _check_kubernetes_services(self) -> HealthCheck:
         """Check Kubernetes services health"""
+
+
+
         try:
             if not hasattr(self, 'k8s_core_v1'):
                 return HealthCheck(
@@ -645,6 +687,9 @@ class HealthMonitor:
     
     def _check_kubernetes_nodes(self) -> HealthCheck:
         """Check Kubernetes nodes health"""
+
+
+
         try:
             if not hasattr(self, 'k8s_core_v1'):
                 return HealthCheck(
@@ -698,6 +743,9 @@ class HealthMonitor:
     
     def _evaluate_health_check_for_alerts(self, health_check: HealthCheck) -> None:
         """Evaluate health check and generate alerts if needed"""
+
+
+
         try:
             # Check if we need to generate an alert
             if health_check.status in [HealthStatus.WARNING, HealthStatus.CRITICAL]:
@@ -751,6 +799,9 @@ class HealthMonitor:
     
     def _send_alert_notification(self, alert: Alert) -> None:
         """Send alert notification"""
+
+
+
         try:
             notifications_config = self.config.get("notifications", {})
             
@@ -771,6 +822,9 @@ class HealthMonitor:
     
     def _send_alert_resolution_notification(self, alert: Alert) -> None:
         """Send alert resolution notification"""
+
+
+
         try:
             notifications_config = self.config.get("notifications", {})
             
@@ -783,6 +837,9 @@ class HealthMonitor:
     
     def _send_slack_alert(self, alert: Alert, slack_config: Dict[str, Any]) -> None:
         """Send Slack alert notification"""
+
+
+
         try:
             webhook_url = slack_config.get("webhook")
             if not webhook_url:
@@ -825,6 +882,9 @@ class HealthMonitor:
     
     def _send_slack_resolution(self, alert: Alert, slack_config: Dict[str, Any]) -> None:
         """Send Slack alert resolution notification"""
+
+
+
         try:
             webhook_url = slack_config.get("webhook")
             if not webhook_url:
@@ -834,7 +894,7 @@ class HealthMonitor:
                 "attachments": [
                     {
                         "color": "good",
-                        "title": f"✅ RESOLVED: {alert.title}",
+                        "title": f" RESOLVED: {alert.title}",
                         "text": f"Alert has been resolved",
                         "fields": [
                             {
@@ -860,6 +920,9 @@ class HealthMonitor:
     
     def _send_email_alert(self, alert: Alert, email_config: Dict[str, Any]) -> None:
         """Send email alert notification"""
+
+
+
         try:
             # This would integrate with email service
             logger.info(f"Email alert notification sent: {alert.id}")
@@ -869,6 +932,9 @@ class HealthMonitor:
     
     def _send_pagerduty_alert(self, alert: Alert, pagerduty_config: Dict[str, Any]) -> None:
         """Send PagerDuty alert notification"""
+
+
+
         try:
             # This would integrate with PagerDuty API
             logger.info(f"PagerDuty alert notification sent: {alert.id}")
@@ -878,6 +944,9 @@ class HealthMonitor:
     
     def _process_health_results(self, health_results: Dict[str, HealthCheck]) -> None:
         """Process health check results"""
+
+
+
         try:
             # Store results (in production, this would go to a database)
             logger.debug(f"Processing {len(health_results)} health check results")
@@ -916,6 +985,9 @@ class HealthMonitor:
     
     def get_health_status(self) -> Dict[str, Any]:
         """Get current health status"""
+
+
+
         try:
             # Execute all checks once
             health_results = {}
@@ -959,6 +1031,9 @@ class HealthMonitor:
     
     def get_alerts(self, resolved: Optional[bool] = None, limit: int = 50) -> List[Dict[str, Any]]:
         """Get alerts with optional filtering"""
+
+
+
         try:
             alerts = self.alerts
             
@@ -989,6 +1064,9 @@ class HealthMonitor:
     
     def cleanup_old_data(self) -> None:
         """Clean up old health checks and resolved alerts"""
+
+
+
         try:
             retention_config = self.config.get("retention", {})
             alert_retention_days = retention_config.get("alerts", 30)

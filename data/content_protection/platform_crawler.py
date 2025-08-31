@@ -8,7 +8,7 @@ Monitors multiple platforms for unauthorized content usage with AI-powered detec
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  AVERTISSEMENT STRICT - PROPRIÉTÉ INTELLECTUELLE ⚠️
+  AVERTISSEMENT STRICT - PROPRIÉTÉ INTELLECTUELLE 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, modification ou distribution sans autorisation 
 écrite explicite de l'auteur est strictement interdite et constitue une violation 
@@ -180,6 +180,9 @@ class PlatformCrawler:
     
     def _initialize_api_clients(self):
         """Initialize platform API clients"""
+
+
+
         try:
             # YouTube API
             if 'youtube_api_key' in self.config:
@@ -255,6 +258,9 @@ class PlatformCrawler:
         Returns:
             Crawling result summary
         """
+
+
+
         try:
             start_time = datetime.utcnow()
             crawl_id = str(uuid.uuid4())
@@ -719,6 +725,9 @@ class PlatformCrawler:
     
     async def _quick_similarity_check(self, content: CrawledContent) -> bool:
         """Perform quick similarity check on discovered content"""
+
+
+
         try:
             # This would integrate with the fingerprinting engine
             # for actual similarity comparison
@@ -732,6 +741,9 @@ class PlatformCrawler:
     
     async def _store_crawled_content(self, content: CrawledContent):
         """Store crawled content in database"""
+
+
+
         try:
             # Implementation would store in database
             pass
@@ -740,6 +752,9 @@ class PlatformCrawler:
     
     async def _store_crawl_result(self, result: CrawlResult):
         """Store crawl result in database"""
+
+
+
         try:
             # Implementation would store crawl result
             pass
@@ -773,6 +788,9 @@ class PlatformCrawler:
     async def get_crawl_statistics(self, platform: Optional[PlatformType] = None,
                                  days: int = 7) -> Dict[str, Any]:
         """Get crawling statistics"""
+
+
+
         try:
             # Implementation would query crawl statistics from database
             return {

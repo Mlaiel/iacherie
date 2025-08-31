@@ -1,5 +1,5 @@
 """
-⚡ DMCA Escalation Management System - Enterprise Edition
+ DMCA Escalation Management System - Enterprise Edition
 =======================================================
 
 Professional multi-tier escalation management for non-compliant DMCA notices.
@@ -9,7 +9,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
-⚠️  LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
+  LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION 
 ====================================================
 This software and all associated concepts, algorithms, and implementations are the
 exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de).
@@ -198,6 +198,9 @@ class EscalationWorkflow:
     
     def _define_default_workflow(self) -> Dict[EscalationLevel, Dict[str, Any]]:
         """Define the default escalation workflow"""
+
+
+
         return {
             EscalationLevel.INITIAL_NOTICE: {
                 'description': 'Initial DMCA takedown notice',
@@ -245,6 +248,9 @@ class EscalationWorkflow:
     
     def _define_trigger_rules(self) -> List[EscalationTrigger]:
         """Define escalation trigger rules"""
+
+
+
         return [
             EscalationTrigger(
                 reason=EscalationReason.NO_RESPONSE,
@@ -288,6 +294,9 @@ class EscalationWorkflow:
     
     def _load_legal_templates(self) -> Dict[str, str]:
         """Load legal escalation templates"""
+
+
+
         return {
             'formal_reminder': """
 Subject: FORMAL REMINDER - DMCA Compliance Required
@@ -313,7 +322,7 @@ This is a final courtesy notice before formal escalation.
             'escalation_warning': """
 Subject: ESCALATION WARNING - Legal Action Imminent
 
-**⚠️ LEGAL ESCALATION WARNING ⚠️**
+** LEGAL ESCALATION WARNING **
 
 Dear Platform Legal Department,
 
@@ -344,7 +353,7 @@ This represents your final opportunity to resolve this matter without litigation
             'legal_threat': """
 Subject: NOTICE OF INTENT TO PURSUE LEGAL ACTION
 
-**⚖️ FORMAL LEGAL NOTICE ⚖️**
+** FORMAL LEGAL NOTICE **
 
 To Whom It May Concern:
 
@@ -384,7 +393,7 @@ We remain open to resolving this matter outside of litigation. Contact our legal
             'litigation_notice': """
 Subject: LITIGATION NOTICE - Legal Proceedings Imminent
 
-**⚖️ LITIGATION PROCEEDING NOTICE ⚖️**
+** LITIGATION PROCEEDING NOTICE **
 
 Dear Legal Counsel,
 
@@ -493,6 +502,9 @@ class EscalationManager:
     
     async def initialize(self) -> bool:
         """Initialize escalation manager"""
+
+
+
         try:
             # Initialize Redis
             self.redis_client = aioredis.from_url(
@@ -523,6 +535,9 @@ class EscalationManager:
                               urgency: EscalationUrgency = None,
                               evidence: Dict[str, Any] = None) -> EscalationRecord:
         """Create new escalation record"""
+
+
+
         
         try:
             # Determine escalation level
@@ -588,6 +603,9 @@ class EscalationManager:
     async def execute_escalation(self, escalation_id: str, 
                                approved_by: str = None) -> bool:
         """Execute escalation (send notice)"""
+
+
+
         
         try:
             escalation = self.active_escalations.get(escalation_id)
@@ -635,6 +653,9 @@ class EscalationManager:
     async def resolve_escalation(self, escalation_id: str, 
                                resolution_type: str = "compliance") -> bool:
         """Resolve escalation (mark as resolved)"""
+
+
+
         
         try:
             escalation = self.active_escalations.get(escalation_id)
@@ -827,6 +848,9 @@ class EscalationManager:
     async def _delayed_escalation_execution(self, escalation: EscalationRecord, 
                                           delay_seconds: float):
         """Execute escalation after delay"""
+
+
+
         
         try:
             await asyncio.sleep(delay_seconds)
@@ -842,6 +866,9 @@ class EscalationManager:
     
     async def _schedule_next_escalation(self, current_escalation: EscalationRecord):
         """Schedule next escalation level"""
+
+
+
         
         try:
             # Wait for deadline
@@ -879,6 +906,9 @@ class EscalationManager:
     
     async def _send_escalation_notice(self, escalation: EscalationRecord) -> bool:
         """Send escalation notice to platform"""
+
+
+
         
         try:
             # Here you would integrate with the platform integration system
@@ -987,6 +1017,9 @@ class EscalationManager:
     
     async def _handle_overdue_escalation(self, escalation: EscalationRecord):
         """Handle overdue escalation"""
+
+
+
         
         try:
             logger.warning(f"Escalation {escalation.escalation_id} is overdue")
@@ -1013,6 +1046,9 @@ class EscalationManager:
     
     async def _send_deadline_warning(self, escalation: EscalationRecord):
         """Send deadline warning notification"""
+
+
+
         
         try:
             warning_key = f"deadline_warning:{escalation.escalation_id}"
@@ -1032,6 +1068,9 @@ class EscalationManager:
     
     async def _persist_escalation(self, escalation: EscalationRecord):
         """Persist escalation to storage"""
+
+
+
         
         try:
             key = f"escalation:{escalation.escalation_id}"
@@ -1057,6 +1096,9 @@ class EscalationManager:
     
     async def _load_active_escalations(self):
         """Load active escalations from storage"""
+
+
+
         
         try:
             keys = await self.redis_client.keys("escalation:*")
@@ -1163,6 +1205,9 @@ class EscalationManager:
 # Factory function
 def create_escalation_manager(redis_url: str = None) -> EscalationManager:
     """Create new escalation manager instance"""
+
+
+
     return EscalationManager(redis_url)
 
 

@@ -1,11 +1,11 @@
 """
-🔐 Security Services Docker Configuration - IA-Influencer-Agent Platform
+ Security Services Docker Configuration - IA-Influencer-Agent Platform
 =========================================================================
 Expert: Security Engineer + Compliance Specialist + DevOps Engineer
 Creator: Fahed Mlaiel <mlaiel@live.de>
 =========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL 
 Tout vol, copie ou utilisation non autorisée de ce code source,
 de ce concept ou de cette propriété intellectuelle sans
 l'autorisation écrite explicite de Fahed Mlaiel est strictement
@@ -67,6 +67,9 @@ class SecurityServicesDockerConfig:
     
     def generate_dockerfile(self) -> str:
         """Generate Dockerfile for security services"""
+
+
+
         return f"""
 # Multi-stage build for Security Services
 FROM python:3.11-slim AS builder
@@ -187,6 +190,9 @@ CMD ["python", "-m", "security.main"]
 
     def generate_docker_compose_service(self) -> Dict[str, Any]:
         """Generate Docker Compose service configuration"""
+
+
+
         return {
             "image": f"{self.registry_url}/{self.image_name}:{self.image_tag}",
             "container_name": self.container_name,
@@ -244,6 +250,9 @@ CMD ["python", "-m", "security.main"]
     
     def generate_waf_service(self) -> Dict[str, Any]:
         """Generate WAF (Web Application Firewall) service"""
+
+
+
         return {
             "image": "owasp/modsecurity:apache",
             "container_name": f"{self.container_name}-waf",
@@ -277,6 +286,9 @@ CMD ["python", "-m", "security.main"]
     
     def generate_ids_service(self) -> Dict[str, Any]:
         """Generate IDS (Intrusion Detection System) service"""
+
+
+
         return {
             "image": "jasonish/suricata:latest",
             "container_name": f"{self.container_name}-ids",
@@ -312,6 +324,9 @@ CMD ["python", "-m", "security.main"]
     
     def generate_vulnerability_scanner_service(self) -> Dict[str, Any]:
         """Generate vulnerability scanner service"""
+
+
+
         return {
             "image": "owasp/zap2docker-stable",
             "container_name": f"{self.container_name}-scanner",
@@ -345,6 +360,9 @@ CMD ["python", "-m", "security.main"]
     
     def generate_compliance_monitor_service(self) -> Dict[str, Any]:
         """Generate compliance monitoring service"""
+
+
+
         return {
             "image": f"{self.registry_url}/compliance-monitor:latest",
             "container_name": f"{self.container_name}-compliance",
@@ -378,6 +396,9 @@ CMD ["python", "-m", "security.main"]
     
     def generate_security_requirements(self) -> str:
         """Generate security requirements.txt"""
+
+
+
         return """
 # Security Services Requirements
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -753,17 +774,23 @@ findtime = 300
 bantime = 7200
 """
 
+
+
+
         return configs
     
     def generate_entrypoint_script(self) -> str:
         """Generate entrypoint script for security services"""
+
+
+
         return """#!/bin/bash
 # Security Services Entrypoint Script
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
 set -e
 
-echo "🔐 Starting IA-Influencer Security Services..."
+echo " Starting IA-Influencer Security Services..."
 
 # Initialize directories
 mkdir -p /app/logs/security/{waf,ids,scanner,compliance,audit}
@@ -778,21 +805,21 @@ echo "🦠 Starting ClamAV daemon..."
 clamd &
 
 # Update virus definitions
-echo "🔄 Updating virus definitions..."
+echo " Updating virus definitions..."
 freshclam --quiet &
 
 # Start fail2ban
-echo "🚫 Starting Fail2ban..."
+echo " Starting Fail2ban..."
 fail2ban-server -b
 
 # Initialize iptables rules
 if [ -f /etc/iptables.rules ]; then
-    echo "🔥 Loading iptables rules..."
+    echo " Loading iptables rules..."
     iptables-restore < /etc/iptables.rules
 fi
 
 # Start Suricata IDS
-echo "🔍 Starting Suricata IDS..."
+echo " Starting Suricata IDS..."
 suricata -c /etc/suricata/suricata.yaml -i eth0 -D
 
 # Wait for dependencies
@@ -802,23 +829,23 @@ wait-for-it redis:6379 --timeout=60
 wait-for-it elasticsearch:9200 --timeout=60
 
 # Start security monitoring
-echo "🛡️ Starting security monitoring..."
+echo " Starting security monitoring..."
 python -m security.monitor &
 
 # Start vulnerability scanner
-echo "🔍 Starting vulnerability scanner..."
+echo " Starting vulnerability scanner..."
 python -m security.scanner &
 
 # Start compliance monitor
-echo "📋 Starting compliance monitor..."
+echo " Starting compliance monitor..."
 python -m security.compliance &
 
 # Start audit logger
-echo "📝 Starting audit logger..."
+echo " Starting audit logger..."
 python -m security.audit &
 
 # Start main security service
-echo "🚀 Starting main security service..."
+echo " Starting main security service..."
 exec "$@"
 """
     
@@ -861,5 +888,5 @@ exec "$@"
         entrypoint_path.chmod(0o755)
         files_created.append(str(entrypoint_path))
         
-        logger.info(f"✅ Security services configuration saved: {len(files_created)} files")
+        logger.info(f" Security services configuration saved: {len(files_created)} files")
         return files_created

@@ -66,6 +66,9 @@ class MessageSecurityManager:
 
     def _initialize_security(self) -> None:
         """Initialize security components"""
+
+
+
         try:
             # Generate or load encryption key
             self._setup_encryption_key()
@@ -85,6 +88,9 @@ class MessageSecurityManager:
 
     def _setup_encryption_key(self) -> None:
         """Setup symmetric encryption key"""
+
+
+
         try:
             # Try to load existing key
             key_file = "messaging_encryption.key"
@@ -110,6 +116,9 @@ class MessageSecurityManager:
 
     def _setup_signing_keys(self) -> None:
         """Setup RSA key pair for message signing"""
+
+
+
         try:
             private_key_file = "messaging_signing_private.pem"
             public_key_file = "messaging_signing_public.pem"
@@ -164,6 +173,9 @@ class MessageSecurityManager:
 
     def encrypt_message(self, message: Dict[str, Any]) -> Dict[str, Any]:
         """Encrypt a message"""
+
+
+
         try:
             if not self.config.encryption_enabled or not self.fernet:
                 return message
@@ -197,6 +209,9 @@ class MessageSecurityManager:
 
     def decrypt_message(self, encrypted_message: Dict[str, Any]) -> Dict[str, Any]:
         """Decrypt a message"""
+
+
+
         try:
             if not encrypted_message.get("encrypted", False):
                 return encrypted_message
@@ -231,6 +246,9 @@ class MessageSecurityManager:
 
     def sign_message(self, message: Dict[str, Any]) -> Dict[str, Any]:
         """Sign a message for integrity verification"""
+
+
+
         try:
             if not self.config.signing_enabled or not self.signing_key:
                 return message
@@ -270,6 +288,9 @@ class MessageSecurityManager:
 
     def verify_message_signature(self, signed_message: Dict[str, Any]) -> bool:
         """Verify message signature"""
+
+
+
         try:
             if "_signature" not in signed_message:
                 return not self.config.signing_enabled  # Allow unsigned if signing disabled
@@ -324,6 +345,9 @@ class MessageSecurityManager:
 
     def secure_message(self, message: Dict[str, Any]) -> Dict[str, Any]:
         """Apply full security to message (sign + encrypt)"""
+
+
+
         try:
             # First sign the message
             signed_message = self.sign_message(message)
@@ -339,6 +363,9 @@ class MessageSecurityManager:
 
     def unsecure_message(self, secured_message: Dict[str, Any]) -> Dict[str, Any]:
         """Remove security from message (decrypt + verify)"""
+
+
+
         try:
             # First decrypt the message
             decrypted_message = self.decrypt_message(secured_message)
@@ -360,6 +387,9 @@ class MessageSecurityManager:
 
     def generate_message_id(self, message: Dict[str, Any]) -> str:
         """Generate secure message ID"""
+
+
+
         try:
             # Create deterministic hash of message content
             message_str = str(sorted(message.items())).encode()
@@ -378,6 +408,9 @@ class MessageSecurityManager:
 
     def validate_message_format(self, message: Dict[str, Any]) -> bool:
         """Validate message format and security"""
+
+
+
         try:
             # Basic format validation
             if not isinstance(message, dict):
@@ -417,6 +450,9 @@ class MessageSecurityManager:
 
     def sanitize_message(self, message: Dict[str, Any]) -> Dict[str, Any]:
         """Sanitize message content"""
+
+
+
         try:
             sanitized = {}
             
@@ -453,6 +489,9 @@ class MessageSecurityManager:
 
     def _log_security_event(self, event_type: str, details: Dict[str, Any]) -> None:
         """Log security event for audit"""
+
+
+
         try:
             if not self.config.audit_logging:
                 return
@@ -477,6 +516,9 @@ class MessageSecurityManager:
 
     def rotate_keys(self) -> bool:
         """Rotate encryption and signing keys"""
+
+
+
         try:
             logger.info("Starting key rotation")
             
@@ -512,6 +554,9 @@ class MessageSecurityManager:
 
     def _backup_current_keys(self) -> None:
         """Backup current keys before rotation"""
+
+
+
         try:
             import shutil
             timestamp = int(time.time())
@@ -532,6 +577,9 @@ class MessageSecurityManager:
 
     def _save_keys(self) -> None:
         """Save current keys to files"""
+
+
+
         try:
             # Save encryption key
             with open("messaging_encryption.key", 'wb') as f:
@@ -563,6 +611,9 @@ class MessageSecurityManager:
 
     def get_security_stats(self) -> Dict[str, Any]:
         """Get security statistics"""
+
+
+
         try:
             # Count events by type
             event_counts = {}
@@ -586,6 +637,9 @@ class MessageSecurityManager:
 
     def get_audit_events(self, limit: int = 100) -> list:
         """Get recent audit events"""
+
+
+
         try:
             return self.audit_events[-limit:]
             

@@ -9,7 +9,7 @@ Project: IA Influencer Agent + Content Protection Platform
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-⚠️  AVERTISSEMENT STRICT - PROPRIÉTÉ INTELLECTUELLE ⚠️
+  AVERTISSEMENT STRICT - PROPRIÉTÉ INTELLECTUELLE 
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute violation sera poursuivie selon les lois en vigueur.
@@ -177,6 +177,9 @@ class DatabaseSecurityMonitor:
         
     def _load_geoip_database(self):
         """Load GeoIP database for location tracking"""
+
+
+
         try:
             # Use MaxMind GeoLite2 database
             self.geoip_db = geoip2.database.Reader('data/GeoLite2-City.mmdb')
@@ -222,6 +225,9 @@ class DatabaseSecurityMonitor:
                 
     async def _collect_security_events(self):
         """Collect database security events"""
+
+
+
         try:
             async with get_database_session() as session:
                 # Query PostgreSQL logs for security events
@@ -273,6 +279,9 @@ class DatabaseSecurityMonitor:
             
     async def _process_security_event(self, event_data):
         """Process individual security event"""
+
+
+
         try:
             # Extract IP address from connection info
             source_ip = self._extract_ip_from_connection(
@@ -330,6 +339,9 @@ class DatabaseSecurityMonitor:
             
     def _extract_ip_from_connection(self, connection_info: str) -> str:
         """Extract IP address from connection string"""
+
+
+
         try:
             # Format: "192.168.1.100:12345" or "[::1]:12345"
             if ':' in connection_info:
@@ -492,6 +504,9 @@ class DatabaseSecurityMonitor:
         
     async def _store_security_event(self, event: SecurityEvent):
         """Store security event for analysis"""
+
+
+
         try:
             # Store in Redis for real-time access
             await self.cache.set(
@@ -516,6 +531,9 @@ class DatabaseSecurityMonitor:
             
     async def _update_access_patterns(self, event: SecurityEvent):
         """Update user access patterns"""
+
+
+
         try:
             pattern_key = f"access_pattern:{event.username}"
             
@@ -601,6 +619,9 @@ class DatabaseSecurityMonitor:
         
     async def _analyze_access_patterns(self):
         """Analyze access patterns for anomalies"""
+
+
+
         try:
             for username, pattern in self.access_patterns.items():
                 if pattern.is_suspicious:
@@ -612,6 +633,9 @@ class DatabaseSecurityMonitor:
             
     async def _create_pattern_alert(self, pattern: AccessPattern):
         """Create alert for suspicious access pattern"""
+
+
+
         try:
             alert_data = {
                 'type': 'suspicious_access_pattern',
@@ -648,6 +672,9 @@ class DatabaseSecurityMonitor:
             
     async def _detect_threats(self):
         """Run AI-powered threat detection"""
+
+
+
         try:
             # Get recent security events
             recent_events = await self._get_recent_events(hours=1)
@@ -666,6 +693,9 @@ class DatabaseSecurityMonitor:
             
     async def _get_recent_events(self, hours: int = 1) -> List[SecurityEvent]:
         """Get recent security events"""
+
+
+
         try:
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             cutoff_timestamp = cutoff_time.timestamp()
@@ -691,6 +721,9 @@ class DatabaseSecurityMonitor:
             
     async def _handle_detected_threat(self, threat_result: ThreatDetectionResult):
         """Handle detected security threat"""
+
+
+
         try:
             # Log the threat
             self.logger.critical(
@@ -722,6 +755,9 @@ class DatabaseSecurityMonitor:
             
     async def _execute_automated_response(self, threat_result: ThreatDetectionResult):
         """Execute automated response to security threat"""
+
+
+
         try:
             # This would implement automated response actions
             # such as blocking IPs, disabling accounts, etc.
@@ -740,6 +776,9 @@ class DatabaseSecurityMonitor:
             
     async def _block_ip_address(self, ip_address: str):
         """Block suspicious IP address"""
+
+
+
         try:
             self.blocked_ips.add(ip_address)
             await self.cache.sadd("blocked_ips", ip_address)
@@ -749,6 +788,9 @@ class DatabaseSecurityMonitor:
             
     async def _disable_user_account(self, username: str):
         """Disable suspicious user account"""
+
+
+
         try:
             # This would integrate with user management system
             self.logger.warning(f"Would disable user account: {username}")
@@ -757,6 +799,9 @@ class DatabaseSecurityMonitor:
             
     async def _handle_immediate_threat(self, event: SecurityEvent):
         """Handle immediate high-priority threats"""
+
+
+
         try:
             await self.notification_manager.send_security_alert(
                 severity=event.threat_level.value.upper(),
@@ -770,6 +815,9 @@ class DatabaseSecurityMonitor:
             
     async def _cleanup_old_data(self):
         """Cleanup old security monitoring data"""
+
+
+
         try:
             # Remove events older than 30 days
             cutoff_time = datetime.utcnow() - timedelta(days=30)
@@ -788,6 +836,9 @@ class DatabaseSecurityMonitor:
             
     async def get_security_summary(self, hours: int = 24) -> Dict[str, Any]:
         """Get security monitoring summary"""
+
+
+
         try:
             events = await self._get_recent_events(hours)
             

@@ -1,5 +1,5 @@
 """
-🔧 Audio Processing Pipeline - Comprehensive Workflow Engine
+ Audio Processing Pipeline - Comprehensive Workflow Engine
 
 Advanced pipeline system for chaining audio processing operations.
 Supports parallel processing, caching, and intelligent optimization.
@@ -120,7 +120,7 @@ class PipelineResult:
 
 class PipelineStageBase(ABC):
     """
-    🔧 Abstract base class for pipeline stages
+     Abstract base class for pipeline stages
     
     All pipeline stages must inherit from this class and implement
     the execute method for consistent processing interfaces.
@@ -619,7 +619,7 @@ class SaveResultsStage(PipelineStageBase):
 
 class PipelineCache:
     """
-    💾 Advanced Pipeline Caching System
+     Advanced Pipeline Caching System
     
     Intelligent caching for pipeline stages:
     - Memory and disk caching
@@ -653,6 +653,9 @@ class PipelineCache:
     
     async def get(self, cache_key: str) -> Optional[Any]:
         """Get cached result"""
+
+
+
         try:
             current_time = time.time()
             
@@ -694,6 +697,9 @@ class PipelineCache:
     
     async def set(self, cache_key: str, data: Any):
         """Store result in cache"""
+
+
+
         try:
             current_time = time.time()
             
@@ -743,6 +749,9 @@ class PipelineCache:
     
     def _estimate_size(self, obj) -> int:
         """Estimate object size in bytes"""
+
+
+
         try:
             return len(pickle.dumps(obj))
         except:
@@ -750,6 +759,9 @@ class PipelineCache:
     
     async def _cleanup_disk_cache(self):
         """Clean up disk cache if size limit exceeded"""
+
+
+
         try:
             total_size = sum(f.stat().st_size for f in self.cache_directory.glob("*.pkl"))
             max_size = self.max_disk_mb * 1024 * 1024
@@ -782,7 +794,7 @@ class PipelineCache:
 
 class AudioProcessingPipeline:
     """
-    🔄 Advanced Audio Processing Pipeline
+     Advanced Audio Processing Pipeline
     
     Comprehensive pipeline system featuring:
     - Modular stage architecture
@@ -1148,6 +1160,9 @@ class AudioProcessingPipeline:
                                   input_data: Any,
                                   context: Dict[str, Any]) -> StageResult:
         """Execute a single pipeline stage with monitoring"""
+
+
+
         try:
             # Check resource limits
             if self.resource_monitor.current_memory_mb > self.config.memory_limit_mb:
@@ -1184,6 +1199,9 @@ class AudioProcessingPipeline:
     
     def get_pipeline_info(self) -> Dict[str, Any]:
         """Get information about the pipeline"""
+
+
+
         return {
             'name': self.config.name,
             'description': self.config.description,
@@ -1229,6 +1247,9 @@ class ResourceMonitor:
     
     async def _monitor_resources(self):
         """Monitor resource usage"""
+
+
+
         try:
             while self.monitoring:
                 # Get current memory usage

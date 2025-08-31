@@ -249,6 +249,9 @@ class MongoDBConfig:
         Returns:
             MongoDB connection string
         """
+
+
+
         try:
             # URL encode credentials
             username = quote_plus(self.credentials.username)
@@ -397,6 +400,9 @@ class MongoDBConfig:
 
     def get_content_protection_client(self) -> MongoClient:
         """Get MongoDB client optimized for content protection operations"""
+
+
+
         return self.create_client("ia_influencer_content_protection")
 
     def get_analytics_client(self) -> MongoClient:
@@ -406,6 +412,9 @@ class MongoDBConfig:
 
     def get_media_storage_client(self) -> MongoClient:
         """Get MongoDB client optimized for media storage"""
+
+
+
         return self.create_client("ia_influencer_media")
 
     def get_monetization_client(self) -> MongoClient:
@@ -426,6 +435,9 @@ class MongoDBConfig:
             client: MongoDB client
             database_name: Target database name
         """
+
+
+
         try:
             db = client[database_name]
             

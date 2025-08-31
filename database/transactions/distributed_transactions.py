@@ -9,7 +9,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -111,6 +111,9 @@ class SagaOrchestrator:
     
     async def execute_saga(self, transaction: DistributedTransaction) -> bool:
         """Execute saga pattern with compensation"""
+
+
+
         try:
             transaction.state = DistributedTransactionState.COORDINATING
             self.active_sagas[transaction.transaction_id] = transaction
@@ -193,6 +196,9 @@ class SagaOrchestrator:
     async def _execute_compensation(self, compensation_url: str, step: Dict[str, Any], 
                                   transaction: DistributedTransaction) -> None:
         """Execute compensation for a specific step"""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.post(
@@ -238,6 +244,9 @@ class DistributedTransactionManager:
     
     async def initialize(self) -> None:
         """Initialize Redis connection and saga orchestrator"""
+
+
+
         try:
             self.redis_client = redis.from_url(self.redis_url)
             await self.redis_client.ping()
@@ -460,6 +469,9 @@ class DistributedTransactionManager:
     async def _prepare_participant(self, participant: ServiceParticipant, 
                                  transaction: DistributedTransaction) -> bool:
         """Prepare individual participant"""
+
+
+
         
         try:
             async with aiohttp.ClientSession() as session:
@@ -494,6 +506,9 @@ class DistributedTransactionManager:
     async def _commit_participant(self, participant: ServiceParticipant, 
                                 transaction: DistributedTransaction) -> bool:
         """Commit individual participant"""
+
+
+
         
         try:
             async with aiohttp.ClientSession() as session:
@@ -549,6 +564,9 @@ class DistributedTransactionManager:
     async def _abort_participant(self, participant: ServiceParticipant, 
                                transaction: DistributedTransaction) -> None:
         """Abort individual participant"""
+
+
+
         
         try:
             async with aiohttp.ClientSession() as session:

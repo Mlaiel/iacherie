@@ -46,6 +46,9 @@ async def get_api_documentation():
     This endpoint provides complete technical documentation for developers
     including business logic flow, security standards, and implementation guidelines.
     """
+
+
+
     try:
         return ApiDocumentationResponse(
             title="IA Influencer Agent API - Enterprise Multi-Format Content Protection Platform",
@@ -69,6 +72,9 @@ async def get_api_documentation():
 @router.get("/openapi-spec", response_model=Dict[str, Any])
 async def get_openapi_specification():
     """Get OpenAPI 3.0 specification for the entire API."""
+
+
+
     try:
         openapi_spec = {
             "openapi": "3.0.0",
@@ -166,6 +172,9 @@ async def get_openapi_specification():
 @router.get("/business-logic", response_model=Dict[str, Any])
 async def get_business_logic_documentation():
     """Get detailed business logic flow documentation."""
+
+
+
     try:
         business_logic_detailed = {
             "overview": "IA Influencer Agent platform follows a comprehensive 6-stage business logic flow",
@@ -292,6 +301,9 @@ async def get_business_logic_documentation():
 @router.get("/integration-guide", response_model=Dict[str, Any])
 async def get_integration_guide():
     """Get comprehensive integration guide for developers."""
+
+
+
     try:
         integration_guide = {
             "overview": "Step-by-step integration guide for IA Influencer Agent API",

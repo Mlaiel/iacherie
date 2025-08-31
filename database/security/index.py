@@ -20,7 +20,7 @@ Team Specialists:
 - IA Prompt Engineer: AI security analysis prompts and automation
 
 Contact: mlaiel@live.de
-⚠️ LEGAL WARNING: Any unauthorized use, copying, distribution, or commercialization 
+ LEGAL WARNING: Any unauthorized use, copying, distribution, or commercialization 
 of this code without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will result in immediate legal action.
 """
@@ -253,6 +253,9 @@ def get_security_suite():
     Returns:
         Dictionary containing all security components ready for use
     """
+
+
+
     return {
         "encryption_manager": DatabaseEncryptionManager,
         "access_control": DatabaseAccessControl,
@@ -272,6 +275,9 @@ def get_module_info():
     Returns:
         Dictionary containing module metadata
     """
+
+
+
     return {
         "name": "Database Security Module",
         "version": __version__,

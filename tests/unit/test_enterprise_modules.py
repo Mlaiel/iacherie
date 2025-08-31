@@ -176,6 +176,9 @@ class TestBrandingEngine:
     @pytest.fixture
     def branding_engine(self):
         """Mock branding engine fixture"""
+
+
+
         return Mock(spec=BrandingEngine)
     
     @pytest.mark.asyncio
@@ -250,6 +253,9 @@ class TestEnterpriseSSO:
     @pytest.fixture
     def enterprise_sso(self):
         """Mock enterprise SSO fixture"""
+
+
+
         return Mock(spec=EnterpriseSSO)
     
     @pytest.mark.asyncio
@@ -332,6 +338,9 @@ class TestCustomAITrainer:
     @pytest.fixture
     def ai_trainer(self):
         """Mock AI trainer fixture"""
+
+
+
         return Mock(spec=CustomAITrainer)
     
     @pytest.mark.asyncio
@@ -415,6 +424,9 @@ class TestOnPremiseDeployment:
     @pytest.fixture
     def deployment_manager(self):
         """Mock deployment manager fixture"""
+
+
+
         return Mock(spec=OnPremiseDeployment)
     
     @pytest.mark.asyncio
@@ -488,6 +500,9 @@ class TestEnterpriseAnalytics:
     @pytest.fixture
     def analytics_engine(self):
         """Mock analytics engine fixture"""
+
+
+
         return Mock(spec=EnterpriseAnalytics)
     
     @pytest.mark.asyncio
@@ -557,6 +572,9 @@ class TestComplianceManager:
     @pytest.fixture
     def compliance_manager(self):
         """Mock compliance manager fixture"""
+
+
+
         return Mock(spec=ComplianceManager)
     
     @pytest.mark.asyncio
@@ -650,6 +668,9 @@ class TestEnterpriseIntegration:
     @pytest.fixture
     def enterprise_index(self):
         """Mock enterprise index fixture"""
+
+
+
         return Mock(spec=EnterpriseIndex)
     
     @pytest.mark.asyncio

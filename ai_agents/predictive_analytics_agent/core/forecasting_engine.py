@@ -7,7 +7,7 @@ for content performance, revenue, audience growth, and market trends.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This forecasting engine and its algorithms are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -85,21 +85,21 @@ class ForecastingEngine:
     
     Provides enterprise-grade time series forecasting and prediction capabilities:
     
-    🎯 Core Forecasting Capabilities:
+     Core Forecasting Capabilities:
     - Prophet-based seasonal trend decomposition with holiday effects
     - LSTM neural networks for deep learning time series prediction
     - ARIMA/SARIMA statistical modeling for complex seasonality
     - XGBoost/LightGBM gradient boosting for feature-rich predictions
     - Ensemble methods combining multiple models for robustness
     
-    📊 Specialized Prediction Models:
+     Specialized Prediction Models:
     - Content performance forecasting with viral coefficient modeling
     - Revenue prediction with market factor integration
     - Audience growth forecasting with retention analysis
     - Engagement rate prediction with platform algorithm factors
     - Collaboration success probability with partner compatibility scoring
     
-    🔧 Advanced Features:
+     Advanced Features:
     - Automatic hyperparameter tuning and model selection
     - Cross-validation and backtesting for model validation
     - Confidence interval estimation with Monte Carlo methods
@@ -162,6 +162,9 @@ class ForecastingEngine:
         Returns:
             ForecastResult: Comprehensive forecast results
         """
+
+
+
         try:
             # Validate input data
             self._validate_training_data(data)
@@ -206,6 +209,9 @@ class ForecastingEngine:
 
     async def _forecast_with_prophet(self, data: TrainingData, forecast_periods: int) -> ForecastResult:
         """Forecast using Facebook Prophet model"""
+
+
+
         try:
             # Prepare data for Prophet
             df = pd.DataFrame({
@@ -279,6 +285,9 @@ class ForecastingEngine:
 
     async def _forecast_with_lstm(self, data: TrainingData, forecast_periods: int) -> ForecastResult:
         """Forecast using LSTM neural network"""
+
+
+
         try:
             # Prepare data for LSTM
             values = np.array(data.values).reshape(-1, 1)
@@ -364,6 +373,9 @@ class ForecastingEngine:
 
     async def _forecast_with_arima(self, data: TrainingData, forecast_periods: int) -> ForecastResult:
         """Forecast using ARIMA statistical model"""
+
+
+
         try:
             # Convert to pandas series
             ts = pd.Series(data.values, index=pd.to_datetime(data.timestamps))
@@ -430,6 +442,9 @@ class ForecastingEngine:
 
     async def _forecast_with_xgboost(self, data: TrainingData, forecast_periods: int) -> ForecastResult:
         """Forecast using XGBoost gradient boosting"""
+
+
+
         try:
             # Create features from time series data
             df = self._create_feature_matrix(data)
@@ -489,6 +504,9 @@ class ForecastingEngine:
 
     async def _forecast_with_lightgbm(self, data: TrainingData, forecast_periods: int) -> ForecastResult:
         """Forecast using LightGBM gradient boosting"""
+
+
+
         try:
             # Create features from time series data
             df = self._create_feature_matrix(data)
@@ -552,6 +570,9 @@ class ForecastingEngine:
 
     async def _forecast_with_ensemble(self, data: TrainingData, forecast_periods: int) -> ForecastResult:
         """Forecast using ensemble of multiple models"""
+
+
+
         try:
             # Get predictions from multiple models
             models_to_use = [ForecastModel.PROPHET, ForecastModel.XGBOOST, ForecastModel.LIGHTGBM]
@@ -740,6 +761,9 @@ class ForecastingEngine:
 
     def _calculate_accuracy_metrics(self, actual: List[float], predicted: List[float]) -> Dict[str, float]:
         """Calculate accuracy metrics for model evaluation"""
+
+
+
         try:
             actual_arr = np.array(actual)
             predicted_arr = np.array(predicted)
@@ -783,6 +807,9 @@ class ForecastingEngine:
 
     async def _calculate_confidence_intervals(self, predictions: List[float], historical_values: List[float]) -> List[Tuple[float, float]]:
         """Calculate confidence intervals for predictions"""
+
+
+
         try:
             if not historical_values or len(historical_values) < 2:
                 # Fallback to simple percentage-based intervals

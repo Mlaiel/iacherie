@@ -2,7 +2,7 @@
 Contract Engine for IA Influencer Agent
 Advanced legal contract generation and management system
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
 All rights reserved. Unauthorized use, copying, or reproduction 
 of this code, concept, or intellectual property without explicit 
@@ -74,6 +74,9 @@ class ContractEngine:
         contract_terms: Dict[str, Any]
     ) -> Contract:
         """Generate comprehensive partnership contract"""
+
+
+
         try:
             # Determine contract type based on partnership
             contract_type = self._determine_contract_type(partnership, contract_terms)
@@ -114,6 +117,9 @@ class ContractEngine:
         validation_rules: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Validate contract terms for legal compliance"""
+
+
+
         try:
             validation_result = {
                 'is_valid': True,
@@ -159,6 +165,9 @@ class ContractEngine:
         amended_by: str
     ) -> Contract:
         """Create contract amendment with version control"""
+
+
+
         try:
             # Validate amendment permissions
             if not await self._validate_amendment_permissions(contract, amended_by):
@@ -207,6 +216,9 @@ class ContractEngine:
         partner_signature: Dict[str, Any]
     ) -> Contract:
         """Execute contract with digital signatures"""
+
+
+
         try:
             # Validate signatures
             creator_validation = await self._validate_signature(creator_signature)
@@ -248,6 +260,9 @@ class ContractEngine:
 
     async def generate_contract_summary(self, contract: Contract) -> Dict[str, Any]:
         """Generate executive summary of contract terms"""
+
+
+
         try:
             summary = {
                 'contract_overview': {
@@ -386,6 +401,9 @@ class ContractEngine:
         contract_terms: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Generate comprehensive payment terms"""
+
+
+
         return {
             'payment_schedule': contract_terms.get('payment_schedule', 'monthly'),
             'payment_method': contract_terms.get('payment_method', 'bank_transfer'),
@@ -407,6 +425,9 @@ class ContractEngine:
         contract_terms: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Generate intellectual property terms"""
+
+
+
         return {
             'content_ownership': 'Creator retains full ownership',
             'usage_rights': {
@@ -429,6 +450,9 @@ class ContractEngine:
 
     def _generate_termination_clauses(self, contract_terms: Dict[str, Any]) -> List[str]:
         """Generate contract termination clauses"""
+
+
+
         return [
             f"Either party may terminate with {contract_terms.get('termination_notice', 30)} days written notice",
             "Immediate termination for material breach if not cured within 10 days",
@@ -447,6 +471,9 @@ class ContractEngine:
         contract_terms: Dict[str, Any]
     ) -> str:
         """Generate formatted contract document"""
+
+
+
         try:
             template = self.template_env.get_template(
                 self.contract_templates.get(
@@ -626,6 +653,9 @@ class ContractEngine:
 
     async def _generate_executed_contract_document(self, contract: Contract) -> str:
         """Generate final executed contract document"""
+
+
+
         return f"/contracts/{contract.contract_id}_executed.pdf"
 
     async def _notify_contract_execution(self, contract: Contract):
@@ -635,6 +665,9 @@ class ContractEngine:
 
     async def _extract_obligations(self, contract: Contract) -> Dict[str, List[str]]:
         """Extract obligations from contract terms"""
+
+
+
         return {
             'creator_obligations': [
                 'Deliver agreed content according to schedule',
@@ -650,6 +683,9 @@ class ContractEngine:
 
     async def _identify_contract_risks(self, contract: Contract) -> List[str]:
         """Identify potential risks in contract"""
+
+
+
         return [
             'Payment delay risks due to complex approval processes',
             'Performance metric disputes without clear measurement criteria',

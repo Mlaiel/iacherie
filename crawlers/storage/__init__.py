@@ -589,13 +589,22 @@ def create_s3_provider(
     return S3ObjectStorageProvider(provider_id, config)
 
 def get_provider_types() -> List[str]:
-    """Get list of supported provider types."""    return list(STORAGE_PROVIDERS.keys())
+    """Get list of supported provider types."""
+
+
+    return list(STORAGE_PROVIDERS.keys())
 
 def get_content_provider_types() -> List[str]:
-    """Get list of supported content provider types."""    return list(CONTENT_PROVIDERS.keys())
+    """Get list of supported content provider types."""
+
+
+    return list(CONTENT_PROVIDERS.keys())
 
 def get_violation_provider_types() -> List[str]:
-    """Get list of supported violation provider types."""    return list(VIOLATION_PROVIDERS.keys())
+    """Get list of supported violation provider types."""
+
+
+    return list(VIOLATION_PROVIDERS.keys())
 
 def validate_provider_config(provider_type: str, config: Dict[str, Any]) -> List[str]:
     """    Validate provider configuration and return list of errors.

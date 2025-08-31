@@ -79,6 +79,9 @@ class DatabaseConfig:
     @property
     def connection_string(self) -> str:
         """Get database connection string"""
+
+
+
         return f"postgresql://{self.username}:{self.password}@{self.host}:{self.port}/{self.name}"
 
 
@@ -431,6 +434,9 @@ class EnforcementSettings(BaseSettings):
     
     def get_platform_config(self, platform_type: PlatformType) -> Optional[PlatformConfig]:
         """Get configuration for specific platform"""
+
+
+
         return self.platforms.get(platform_type.value)
     
     def update_platform_config(self, platform_type: PlatformType, config: PlatformConfig):
@@ -439,18 +445,30 @@ class EnforcementSettings(BaseSettings):
     
     def is_production(self) -> bool:
         """Check if running in production environment"""
+
+
+
         return self.environment == EnvironmentType.PRODUCTION
     
     def is_development(self) -> bool:
         """Check if running in development environment"""
+
+
+
         return self.environment == EnvironmentType.DEVELOPMENT
     
     def get_log_level(self) -> str:
         """Get logging level"""
+
+
+
         return self.monitoring.log_level.value
     
     def get_database_url(self) -> str:
         """Get database connection URL"""
+
+
+
         return self.database.connection_string
     
     def get_redis_url(self) -> str:
@@ -460,6 +478,9 @@ class EnforcementSettings(BaseSettings):
     
     def get_storage_paths(self) -> Dict[str, str]:
         """Get all storage paths"""
+
+
+
         return {
             'base': self.storage.base_storage_path,
             'evidence': self.storage.evidence_storage_path,
@@ -481,6 +502,9 @@ class EnforcementSettings(BaseSettings):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert settings to dictionary"""
+
+
+
         return {
             'environment': self.environment.value,
             'debug': self.debug,
@@ -506,6 +530,9 @@ class EnforcementSettings(BaseSettings):
     @classmethod
     def from_file(cls, config_path: str) -> 'EnforcementSettings':
         """Load settings from configuration file"""
+
+
+
         try:
             with open(config_path, 'r') as f:
                 config_data = json.load(f)
@@ -523,6 +550,9 @@ class EnforcementSettings(BaseSettings):
     
     def save_to_file(self, config_path: str):
         """Save current settings to configuration file"""
+
+
+
         try:
             config_data = self.to_dict()
             
@@ -544,6 +574,9 @@ settings = EnforcementSettings()
 
 def get_settings() -> EnforcementSettings:
     """Get the global settings instance"""
+
+
+
     return settings
 
 
@@ -556,6 +589,9 @@ def reload_settings():
 
 def configure_logging():
     """Configure logging based on settings"""
+
+
+
     try:
         log_config = {
             'level': getattr(logging, settings.get_log_level()),

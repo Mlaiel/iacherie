@@ -41,6 +41,9 @@ async def get_platform_connections(
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
     """Get user's platform connections"""
+
+
+
     try:
         user_id = current_user["user_id"]
         
@@ -85,6 +88,9 @@ async def get_platform_recommendations(
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
     """Get platform recommendations for content"""
+
+
+
     try:
         user_id = current_user["user_id"]
         

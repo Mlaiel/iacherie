@@ -233,6 +233,9 @@ All API endpoints require authentication using API keys or JWT tokens.
     
     def _generate_request_body(self, body_param: APIParameter) -> Dict[str, Any]:
         """Generate request body specification"""
+
+
+
         return {
             "description": body_param.description,
             "required": body_param.required,
@@ -248,6 +251,9 @@ All API endpoints require authentication using API keys or JWT tokens.
     
     def _generate_tags(self) -> List[Dict[str, Any]]:
         """Generate tag definitions"""
+
+
+
         return [
             {
                 "name": "Health",
@@ -1003,6 +1009,9 @@ def generate_swagger_json_file(output_path: str = "swagger.json"):
 
 def generate_swagger_yaml_file(output_path: str = "swagger.yaml"):
     """Generate and save Swagger YAML documentation to file"""
+
+
+
     try:
         import yaml
         

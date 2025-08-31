@@ -11,7 +11,7 @@ Enterprise smart contracts deployment and management system providing:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 - All Rights Reserved
 
-⚠️ IMPORTANT LEGAL NOTICE ⚠️
+ IMPORTANT LEGAL NOTICE 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
@@ -502,6 +502,9 @@ class SmartContractsManager:
         Returns:
             Dict containing compilation results
         """
+
+
+
         try:
             if template_name not in self.templates:
                 raise ValueError(f"Template not found: {template_name}")
@@ -570,6 +573,9 @@ class SmartContractsManager:
         Returns:
             str: Deployment transaction ID
         """
+
+
+
         try:
             if template_name not in self.templates:
                 raise ValueError(f"Template not found: {template_name}")
@@ -650,6 +656,9 @@ class SmartContractsManager:
         Returns:
             str: Transaction ID
         """
+
+
+
         try:
             if network not in self.blockchain_agent.web3_connections:
                 raise ValueError(f"Network {network.value} not available")
@@ -713,6 +722,9 @@ class SmartContractsManager:
         Returns:
             str: Upgrade transaction ID
         """
+
+
+
         try:
             if deployment_id not in self.deployed_contracts:
                 raise ValueError(f"Deployment not found: {deployment_id}")
@@ -855,6 +867,9 @@ class SmartContractsManager:
         to_block: str = 'latest'
     ) -> List[Dict[str, Any]]:
         """Get events emitted by a smart contract."""
+
+
+
         try:
             # Find contract network and ABI
             contract_info = None

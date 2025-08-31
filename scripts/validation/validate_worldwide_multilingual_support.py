@@ -17,6 +17,9 @@ from typing import List, Dict, Set
 
 def extract_languages_from_file(file_path: str) -> List[str]:
     """Extract language entries from language_manager.py"""
+
+
+
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
@@ -32,6 +35,9 @@ def extract_languages_from_file(file_path: str) -> List[str]:
 
 def extract_localizations_from_file(file_path: str) -> List[str]:
     """Extract localization entries from dialect_localization.py"""
+
+
+
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
@@ -78,7 +84,7 @@ def analyze_language_coverage(languages: List[tuple]) -> Dict[str, List[str]]:
 def main():
     """Main validation function"""
     
-    print("🌍 VALIDATION: Enhanced Worldwide Multilingual Support")
+    print(" VALIDATION: Enhanced Worldwide Multilingual Support")
     print("=" * 60)
     
     # File paths
@@ -87,11 +93,11 @@ def main():
     
     # Check if files exist
     if not os.path.exists(language_file):
-        print(f"❌ Language file not found: {language_file}")
+        print(f" Language file not found: {language_file}")
         return False
     
     if not os.path.exists(localization_file):
-        print(f"❌ Localization file not found: {localization_file}")
+        print(f" Localization file not found: {localization_file}")
         return False
     
     # Extract data
@@ -99,10 +105,10 @@ def main():
     localizations = extract_localizations_from_file(localization_file)
     
     if not languages:
-        print("❌ No languages extracted")
+        print(" No languages extracted")
         return False
     
-    print(f"📊 LANGUAGE COVERAGE ANALYSIS")
+    print(f" LANGUAGE COVERAGE ANALYSIS")
     print(f"   Total languages supported: {len(languages)}")
     print(f"   Total localizations: {len(localizations)}")
     print()
@@ -110,7 +116,7 @@ def main():
     # Analyze coverage
     coverage = analyze_language_coverage(languages)
     
-    print(f"🗺️  REGIONAL COVERAGE ANALYSIS")
+    print(f"  REGIONAL COVERAGE ANALYSIS")
     print("-" * 40)
     
     total_coverage = 0
@@ -121,17 +127,17 @@ def main():
         total_coverage += coverage_percent
         
         if coverage_percent >= 75:
-            status = "✅ EXCELLENT"
+            status = " EXCELLENT"
             regions_with_good_coverage += 1
         elif coverage_percent >= 50:
-            status = "⚠️  GOOD"
+            status = "  GOOD"
         else:
-            status = "❌ NEEDS IMPROVEMENT"
+            status = " NEEDS IMPROVEMENT"
         
         print(f"   {region:15}: {coverage_percent:5.1f}% ({data['present']}/{data['total_sample']}) {status}")
     
     average_coverage = total_coverage / len(coverage)
-    print(f"\n📈 OVERALL METRICS")
+    print(f"\n OVERALL METRICS")
     print(f"   Average regional coverage: {average_coverage:.1f}%")
     print(f"   Regions with good coverage: {regions_with_good_coverage}/{len(coverage)}")
     
@@ -149,7 +155,7 @@ def main():
         ('MIXTEC', 'mix')
     ]
     
-    print(f"\n🆕 CRITICAL NEW LANGUAGES")
+    print(f"\n CRITICAL NEW LANGUAGES")
     print("-" * 40)
     
     language_names = [name for name, _ in languages]
@@ -157,10 +163,10 @@ def main():
     
     for name, code in critical_new_languages:
         if name in language_names:
-            print(f"   ✅ {name} ({code})")
+            print(f"    {name} ({code})")
             present_critical += 1
         else:
-            print(f"   ❌ {name} ({code}) - MISSING")
+            print(f"    {name} ({code}) - MISSING")
     
     critical_coverage = (present_critical / len(critical_new_languages)) * 100
     print(f"\n   Critical languages coverage: {critical_coverage:.1f}%")
@@ -174,7 +180,7 @@ def main():
                          regional_coverage_score * 0.4 + 
                          critical_languages_score * 0.2)
     
-    print(f"\n🎯 CONFORMITY ASSESSMENT")
+    print(f"\n CONFORMITY ASSESSMENT")
     print("-" * 40)
     print(f"   Language count score:    {language_count_score:.1f}%")
     print(f"   Regional coverage score: {regional_coverage_score:.1f}%") 
@@ -182,20 +188,20 @@ def main():
     print(f"   OVERALL CONFORMITY:      {overall_conformity:.1f}%")
     
     if overall_conformity >= 95:
-        print(f"\n🎉 RESULT: EXCELLENCE ACHIEVED!")
+        print(f"\n RESULT: EXCELLENCE ACHIEVED!")
         print(f"   The system achieves comprehensive worldwide language coverage")
         print(f"   Meeting the requirement: 'parler et comprendre tous les langues et dialecte locale du monde entier'")
         return True
     elif overall_conformity >= 90:
-        print(f"\n✅ RESULT: OBJECTIVE EXCEEDED!")
+        print(f"\n RESULT: OBJECTIVE EXCEEDED!")
         print(f"   Strong worldwide multilingual support implemented")
         return True
     elif overall_conformity >= 75:
-        print(f"\n⚠️  RESULT: GOOD PROGRESS")
+        print(f"\n  RESULT: GOOD PROGRESS")
         print(f"   Substantial multilingual support, but some gaps remain")
         return True
     else:
-        print(f"\n❌ RESULT: NEEDS IMPROVEMENT")
+        print(f"\n RESULT: NEEDS IMPROVEMENT")
         print(f"   Significant gaps in worldwide language coverage")
         return False
 

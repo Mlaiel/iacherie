@@ -8,7 +8,7 @@ Handles Google Analytics, social media insights, and performance metrics.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
@@ -86,6 +86,9 @@ class GoogleAnalyticsParser(BaseAnalyticsParser):
     
     async def parse_analytics(self, property_id: str, **kwargs) -> Dict[str, Any]:
         """Parse Google Analytics 4 data"""
+
+
+
         try:
             start_date, end_date = self._calculate_date_range(kwargs.get('days'))
             
@@ -271,6 +274,9 @@ class FacebookInsightsParser(BaseAnalyticsParser):
     
     async def parse_analytics(self, page_id: str, **kwargs) -> Dict[str, Any]:
         """Parse Facebook Insights data"""
+
+
+
         try:
             start_date, end_date = self._calculate_date_range(kwargs.get('days'))
             
@@ -380,6 +386,9 @@ class TwitterAnalyticsParser(BaseAnalyticsParser):
     
     async def parse_analytics(self, user_id: str, **kwargs) -> Dict[str, Any]:
         """Parse Twitter Analytics data"""
+
+
+
         try:
             start_date, end_date = self._calculate_date_range(kwargs.get('days'))
             
@@ -420,6 +429,9 @@ class TwitterAnalyticsParser(BaseAnalyticsParser):
     
     async def _parse_twitter_metrics(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Parse Twitter metrics data"""
+
+
+
         return {
             'overview': {
                 'total_tweets': 0,
@@ -440,6 +452,9 @@ class YouTubeAnalyticsParser(BaseAnalyticsParser):
     
     async def parse_analytics(self, channel_id: str, **kwargs) -> Dict[str, Any]:
         """Parse YouTube Analytics data"""
+
+
+
         try:
             start_date, end_date = self._calculate_date_range(kwargs.get('days'))
             
@@ -544,6 +559,9 @@ class InstagramInsightsParser(BaseAnalyticsParser):
     
     async def parse_analytics(self, account_id: str, **kwargs) -> Dict[str, Any]:
         """Parse Instagram Insights data"""
+
+
+
         try:
             start_date, end_date = self._calculate_date_range(kwargs.get('days'))
             
@@ -637,6 +655,9 @@ class TikTokAnalyticsParser(BaseAnalyticsParser):
     
     async def parse_analytics(self, user_id: str, **kwargs) -> Dict[str, Any]:
         """Parse TikTok Analytics data"""
+
+
+
         try:
             start_date, end_date = self._calculate_date_range(kwargs.get('days'))
             
@@ -670,6 +691,9 @@ class TikTokAnalyticsParser(BaseAnalyticsParser):
     
     async def _parse_tiktok_analytics(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Parse TikTok Analytics data"""
+
+
+
         return {
             'overview': {},
             'time_series': [],
@@ -686,6 +710,9 @@ class SpotifyAnalyticsParser(BaseAnalyticsParser):
     
     async def parse_analytics(self, artist_id: str, **kwargs) -> Dict[str, Any]:
         """Parse Spotify analytics data"""
+
+
+
         try:
             start_date, end_date = self._calculate_date_range(kwargs.get('days'))
             
@@ -719,6 +746,9 @@ class SpotifyAnalyticsParser(BaseAnalyticsParser):
     
     async def _parse_spotify_analytics(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Parse Spotify analytics data"""
+
+
+
         return {
             'overview': {
                 'total_streams': 0,

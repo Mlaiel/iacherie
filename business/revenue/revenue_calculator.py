@@ -1,5 +1,5 @@
 """
-🚀 Revenue Calculator - Ultra-Advanced Revenue Calculation Engine
+ Revenue Calculator - Ultra-Advanced Revenue Calculation Engine
 ================================================================
 
 Industrial-grade revenue calculation system with multi-platform support,
@@ -11,7 +11,7 @@ Created by: Fahed Mlaiel <mlaiel@live.de>
 Team Specialists:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
+ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED 
 Contact mlaiel@live.de for licensing inquiries.
 
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Revenue Calculation
@@ -135,6 +135,9 @@ class RevenueCalculator:
         
     async def _initialize_calculation_engines(self):
         """Initialize all calculation engines and platform configurations"""
+
+
+
         try:
             # Load platform configurations
             self._platform_configs = await self._load_platform_configurations()
@@ -170,6 +173,9 @@ class RevenueCalculator:
         Returns:
             Calculated revenue data with all deductions
         """
+
+
+
         try:
             # Validate input data
             await self._validate_revenue_data(creator_id, platform, raw_data)
@@ -318,6 +324,9 @@ class RevenueCalculator:
                                     raw_data: Dict[str, Any],
                                     platform_config: Dict[str, Any]) -> Decimal:
         """Calculate gross revenue amount based on platform and type"""
+
+
+
         try:
             # Platform-specific calculation logic
             if platform == 'spotify':
@@ -392,6 +401,9 @@ class RevenueCalculator:
                              platform: str,
                              revenue_type: RevenueType) -> Decimal:
         """Calculate taxes based on creator location and platform"""
+
+
+
         try:
             # Get creator tax information
             creator_tax_info = await self.db.fetch_one(
@@ -421,6 +433,9 @@ class RevenueCalculator:
                                   platform_config: Dict[str, Any],
                                   revenue_type: RevenueType) -> Decimal:
         """Calculate commission based on creator tier and revenue type"""
+
+
+
         try:
             # Get creator tier information
             creator_info = await self.db.fetch_one(
@@ -465,6 +480,9 @@ class RevenueCalculator:
         Returns:
             Comprehensive revenue summary
         """
+
+
+
         try:
             # Build query conditions
             conditions = ["creator_id = %s", "calculation_date BETWEEN %s AND %s"]
@@ -561,6 +579,9 @@ class RevenueCalculator:
 
     async def _load_platform_configurations(self) -> Dict[str, Any]:
         """Load platform-specific configurations"""
+
+
+
         try:
             configs = await self.db.fetch_all(
                 "SELECT platform, configuration FROM platform_configurations WHERE active = TRUE"
@@ -596,6 +617,9 @@ class RevenueCalculator:
 
     async def _store_revenue_calculation(self, revenue_data: RevenueData):
         """Store revenue calculation result in database"""
+
+
+
         try:
             query = """
                 INSERT INTO revenue_calculations 
@@ -625,6 +649,9 @@ class RevenueCalculator:
                                           platform_results: Dict[str, List[RevenueData]],
                                           date_range: Tuple[datetime, datetime]):
         """Calculate and store aggregated revenue metrics"""
+
+
+
         try:
             # Calculate total revenue across all platforms
             total_gross = Decimal('0')
@@ -655,6 +682,9 @@ class RevenueCalculator:
                           tax_status: str,
                           revenue_type: RevenueType) -> Decimal:
         """Get tax rate based on country, status, and revenue type"""
+
+
+
         try:
             # This would integrate with a comprehensive tax calculation service
             # For now, returning basic rates
@@ -688,6 +718,9 @@ class RevenueCalculator:
 
     async def cleanup(self):
         """Cleanup resources and connections"""
+
+
+
         try:
             # Close platform connections
             for platform_integration in self.platforms.values():

@@ -19,7 +19,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING 🚨
+ INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
@@ -241,6 +241,9 @@ class PartitionPruner:
         Returns:
             List of relevant partitions
         """
+
+
+
         try:
             relevant_partitions = []
             
@@ -345,6 +348,9 @@ class PartitionPruner:
     
     def get_pruning_stats(self) -> Dict[str, Any]:
         """Get partition pruning statistics"""
+
+
+
         return dict(self.pruning_stats)
 
 class QueryOptimizer:
@@ -357,6 +363,9 @@ class QueryOptimizer:
     
     def _initialize_rewrite_patterns(self) -> List[Dict[str, Any]]:
         """Initialize query rewrite patterns"""
+
+
+
         return [
             {
                 'name': 'partition_key_optimization',
@@ -387,6 +396,9 @@ class QueryOptimizer:
         Returns:
             Tuple of (optimized_queries, optimization_metadata)
         """
+
+
+
         try:
             optimized_queries = []
             optimization_metadata = {
@@ -576,6 +588,9 @@ class QueryExecutor:
     
     def _execute_parallel(self, query_plan: QueryPlan) -> QueryResult:
         """Execute query plan in parallel across partitions"""
+
+
+
         try:
             # Submit parallel queries
             future_to_partition = {}
@@ -641,6 +656,9 @@ class QueryExecutor:
     
     def _execute_sequential(self, query_plan: QueryPlan) -> QueryResult:
         """Execute query plan sequentially across partitions"""
+
+
+
         try:
             all_results = []
             partitions_accessed = []
@@ -1064,6 +1082,9 @@ class QueryRouter:
     
     def shutdown(self):
         """Shutdown query router gracefully"""
+
+
+
         try:
             logger.info("Shutting down query router...")
             
@@ -1078,6 +1099,9 @@ class QueryRouter:
 
     def __enter__(self):
         """Context manager entry"""
+
+
+
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
@@ -1336,18 +1360,30 @@ class QueryOptimizer:
     
     def _optimize_aggregate_queries(self, query: str, context: QueryContext, partitions: List[PartitionInfo]) -> str:
         """Optimize aggregate queries for parallel execution"""
+
+
+
         return query
     
     def _optimize_join_queries(self, query: str, context: QueryContext, partitions: List[PartitionInfo]) -> str:
         """Optimize join queries"""
+
+
+
         return query
     
     def _optimize_index_usage(self, query: str, context: QueryContext, partitions: List[PartitionInfo]) -> str:
         """Optimize index usage"""
+
+
+
         return query
     
     def _optimize_partition_access(self, query: str, context: QueryContext, partitions: List[PartitionInfo]) -> str:
         """Optimize partition access patterns"""
+
+
+
         return query
 
 class QueryExecutor:
@@ -1473,6 +1509,9 @@ class QueryExecutor:
     
     def _execute_single_query(self, query: str, parameters: Dict[str, Any], partition_name: str) -> Dict[str, Any]:
         """Execute single query on partition"""
+
+
+
         try:
             with self.session_factory() as session:
                 result = session.execute(text(query), parameters)
@@ -1567,6 +1606,9 @@ class QueryRouter:
     
     def route_query(self, query_context: QueryContext) -> QueryResult:
         """Route and execute query with optimization"""
+
+
+
         try:
             # Check cache first
             cached_result = self.cache.get(query_context.query_text, query_context.parameters)
@@ -1622,6 +1664,9 @@ class QueryRouter:
     
     def _create_query_plan(self, query_context: QueryContext) -> Optional[QueryPlan]:
         """Create optimized query plan"""
+
+
+
         try:
             # Analyze query to extract filters
             filters = self.pruner.analyze_query_filters(query_context)
@@ -1727,6 +1772,9 @@ class QueryRouter:
     
     def _update_performance_metrics(self, query_context: QueryContext, plan: QueryPlan, result: QueryResult):
         """Update performance metrics and statistics"""
+
+
+
         try:
             with self._lock:
                 # Update query type metrics
@@ -1778,6 +1826,9 @@ class QueryRouter:
     
     def get_performance_report(self) -> Dict[str, Any]:
         """Get comprehensive performance report"""
+
+
+
         try:
             with self._lock:
                 # Query statistics
@@ -1834,6 +1885,9 @@ class QueryRouter:
     
     def optimize_partition_access(self, table_name: str) -> Dict[str, Any]:
         """Optimize partition access patterns"""
+
+
+
         try:
             # Analyze partition usage patterns
             partition_analysis = {}
@@ -1902,6 +1956,9 @@ class QueryRouter:
     
     def shutdown(self):
         """Shutdown query router gracefully"""
+
+
+
         try:
             logger.info("Shutting down query router...")
             

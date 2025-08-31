@@ -12,7 +12,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 
-⚠️ STRICT COPYRIGHT PROTECTION ⚠️
+ STRICT COPYRIGHT PROTECTION 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 
@@ -295,6 +295,9 @@ class BaseRevenueExtractor(BaseExtractor):
     
     def _initialize_ai_components(self):
         """Initialize AI components for revenue analysis"""
+
+
+
         try:
             if HAS_ANALYSIS_LIBS:
                 # Initialize AI models for revenue prediction and analysis
@@ -336,6 +339,9 @@ class BaseRevenueExtractor(BaseExtractor):
     
     async def analyze_revenue_trends(self, revenue_data: PlatformRevenueData) -> Dict[str, Any]:
         """Analyze revenue trends using AI"""
+
+
+
         try:
             if not HAS_ANALYSIS_LIBS:
                 return {"error": "Analysis libraries not available"}
@@ -570,6 +576,9 @@ class BaseRevenueExtractor(BaseExtractor):
     
     async def calculate_audience_value(self, revenue_data: PlatformRevenueData) -> Decimal:
         """Calculate the monetary value per audience member"""
+
+
+
         try:
             total_revenue = float(revenue_data.total_revenue)
             audience_size = revenue_data.platform_metrics.get('follower_count', 0)
@@ -586,6 +595,9 @@ class BaseRevenueExtractor(BaseExtractor):
     
     async def optimize_content_strategy(self, revenue_data: PlatformRevenueData) -> Dict[str, Any]:
         """AI-powered content strategy optimization"""
+
+
+
         try:
             optimization_suggestions = {
                 "top_performing_content_types": [],
@@ -690,6 +702,9 @@ class YouTubeRevenueExtractor(BaseRevenueExtractor):
     
     async def can_handle(self, request: ExtractionRequest) -> bool:
         """Check if request is for YouTube revenue"""
+
+
+
         return (request.url and 'youtube.com' in request.url) or \
                (request.metadata and request.metadata.get('platform') == 'youtube')
     
@@ -812,6 +827,9 @@ class YouTubeRevenueExtractor(BaseRevenueExtractor):
     
     async def _get_channel_info(self, channel_id: str) -> Dict[str, Any]:
         """Get comprehensive YouTube channel information"""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 url = f"{self.base_url}/channels"
@@ -835,6 +853,9 @@ class YouTubeRevenueExtractor(BaseRevenueExtractor):
     async def _get_channel_videos_in_period(self, channel_id: str, start_date: datetime, 
                                           end_date: datetime) -> List[Dict[str, Any]]:
         """Get channel videos published in specific time period"""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 url = f"{self.base_url}/search"
@@ -914,6 +935,9 @@ class YouTubeRevenueExtractor(BaseRevenueExtractor):
     async def _get_video_analytics(self, video_id: str, start_date: datetime, 
                                  end_date: datetime) -> Dict[str, Any]:
         """Get comprehensive video analytics data"""
+
+
+
         try:
             # Note: This requires YouTube Analytics API access which is restricted
             # For demonstration, we'll calculate estimated metrics from public data
@@ -948,6 +972,9 @@ class YouTubeRevenueExtractor(BaseRevenueExtractor):
     
     async def _estimate_video_revenue(self, video: Dict[str, Any], analytics: Dict[str, Any]) -> Decimal:
         """Estimate video revenue using AI-powered algorithms"""
+
+
+
         try:
             views = analytics.get('views', 0)
             duration = analytics.get('duration', '')
@@ -1033,6 +1060,9 @@ class YouTubeRevenueExtractor(BaseRevenueExtractor):
     async def _generate_revenue_trend(self, channel_id: str, start_date: datetime, 
                                     end_date: datetime) -> List[Dict[str, Any]]:
         """Generate revenue trend data over time period"""
+
+
+
         try:
             trend_data = []
             current_date = start_date
@@ -1076,6 +1106,9 @@ class YouTubeRevenueExtractor(BaseRevenueExtractor):
     
     async def _analyze_audience_demographics(self, channel_id: str) -> Dict[str, Any]:
         """Analyze audience demographics using AI"""
+
+
+
         try:
             # Note: Detailed demographics require YouTube Analytics API access
             # This is a simplified estimation based on available data
@@ -1134,6 +1167,9 @@ class YouTubeRevenueExtractor(BaseRevenueExtractor):
     
     async def verify_payment(self, payment_info: Dict[str, Any]) -> bool:
         """Verify YouTube/AdSense payment"""
+
+
+
         try:
             # YouTube payments are handled through AdSense
             # This would require AdSense API integration
@@ -1170,6 +1206,9 @@ class SpotifyRevenueExtractor(BaseRevenueExtractor):
         
     async def can_handle(self, request: ExtractionRequest) -> bool:
         """Check if request is for Spotify revenue"""
+
+
+
         return (request.source_url and 'spotify.com' in request.source_url) or \
                (request.metadata and request.metadata.get('platform') == 'spotify')
     
@@ -1325,6 +1364,9 @@ class InstagramRevenueExtractor(BaseRevenueExtractor):
         
     async def can_handle(self, request: ExtractionRequest) -> bool:
         """Check if request is for Instagram revenue"""
+
+
+
         return (request.source_url and 'instagram.com' in request.source_url) or \
                (request.metadata and request.metadata.get('platform') == 'instagram')
     
@@ -1457,6 +1499,9 @@ class TikTokRevenueExtractor(BaseRevenueExtractor):
         
     async def can_handle(self, request: ExtractionRequest) -> bool:
         """Check if request is for TikTok revenue"""
+
+
+
         return (request.source_url and 'tiktok.com' in request.source_url) or \
                (request.metadata and request.metadata.get('platform') == 'tiktok')
     
@@ -1558,6 +1603,9 @@ class TikTokRevenueExtractor(BaseRevenueExtractor):
     
     async def verify_payment(self, payment_info: PaymentInfo) -> bool:
         """Verify TikTok payment"""
+
+
+
         return True  # Simplified for now
 
 
@@ -1744,6 +1792,9 @@ class PaymentProcessor:
     
     async def process_payment(self, payment_info: PaymentInfo) -> Dict[str, Any]:
         """Process payment transaction"""
+
+
+
         try:
             # Validate payment information
             if not self._validate_payment_info(payment_info):
@@ -1858,6 +1909,9 @@ class RevenueExtractorFactory:
     @staticmethod
     def get_supported_platforms() -> List[PlatformType]:
         """Get list of supported platforms"""
+
+
+
         return [PlatformType.YOUTUBE, PlatformType.SPOTIFY, PlatformType.INSTAGRAM, PlatformType.TIKTOK]
 
 

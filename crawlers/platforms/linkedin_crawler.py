@@ -425,6 +425,9 @@ class LinkedInCrawler:
     
     async def _parse_post_data(self, post_data: Dict) -> Optional[LinkedInPost]:
         """Parse LinkedIn post data from API response."""
+
+
+
         try:
             activity = post_data.get("activity", {})
             actor = activity.get("actor", {})
@@ -501,6 +504,9 @@ class LinkedInCrawler:
     
     def _extract_post_from_element(self, element) -> Optional[LinkedInPost]:
         """Extract post data from Selenium web element."""
+
+
+
         try:
             # This would be implemented based on LinkedIn's current HTML structure
             # Note: LinkedIn actively blocks scraping, so this is for fallback only
@@ -531,6 +537,9 @@ class LinkedInCrawler:
     
     def _calculate_engagement_rate(self, metrics: Dict) -> float:
         """Calculate engagement rate from metrics."""
+
+
+
         try:
             likes = metrics.get("likes", 0)
             comments = metrics.get("comments", 0)

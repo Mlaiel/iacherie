@@ -1,5 +1,5 @@
 """
-🎵 Melody Extractor - AI-Powered Melody Line Detection & Analysis
+ Melody Extractor - AI-Powered Melody Line Detection & Analysis
 
 Advanced melody extraction engine using machine learning and signal processing
 to identify, track, and analyze melodic content in audio signals.
@@ -71,7 +71,7 @@ class MelodyAnalysisResult:
 
 class MelodyExtractor:
     """
-    🎼 Professional Melody Extraction Engine
+     Professional Melody Extraction Engine
     
     Advanced AI-powered melody line detection with multiple extraction methods,
     confidence scoring, vibrato analysis, and comprehensive melodic characterization.
@@ -132,6 +132,9 @@ class MelodyExtractor:
         Returns:
             Complete melody analysis results
         """
+
+
+
         try:
             self.logger.info("Starting melody extraction...")
             
@@ -208,6 +211,9 @@ class MelodyExtractor:
     
     def _pyin_extraction(self, audio_data: np.ndarray) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         """PYIN-based fundamental frequency extraction"""
+
+
+
         try:
             f0, voiced_flag, voiced_probs = librosa.pyin(
                 audio_data,
@@ -234,6 +240,9 @@ class MelodyExtractor:
     
     def _yin_extraction(self, audio_data: np.ndarray) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         """YIN-based fundamental frequency extraction"""
+
+
+
         try:
             # Simplified YIN implementation
             f0 = librosa.yin(
@@ -261,6 +270,9 @@ class MelodyExtractor:
     
     def _hybrid_extraction(self, audio_data: np.ndarray) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         """Hybrid extraction combining multiple methods"""
+
+
+
         try:
             # Get results from multiple methods
             f0_pyin, conf_pyin, voiced_pyin = self._pyin_extraction(audio_data)
@@ -603,6 +615,9 @@ class MelodyExtractor:
         Real-time melody extraction for single frame
         Optimized for low-latency processing
         """
+
+
+
         try:
             # Simple YIN-based pitch detection
             f0 = librosa.yin(

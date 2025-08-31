@@ -7,7 +7,7 @@ Provides dynamic component discovery, registration, and lifecycle management.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -146,6 +146,9 @@ class MultimediaRegistry:
         
     async def initialize(self):
         """Initialize registry and discover components"""
+
+
+
         try:
             if self.auto_discovery_enabled:
                 await self._discover_components()
@@ -164,6 +167,9 @@ class MultimediaRegistry:
         config: Dict[str, Any] = None
     ) -> str:
         """Register multimedia component"""
+
+
+
         try:
             # Create temporary instance to get metadata
             temp_instance = component_class()
@@ -200,6 +206,9 @@ class MultimediaRegistry:
             
     async def get_component(self, component_id: str) -> Optional[MultimediaComponent]:
         """Get component instance by ID"""
+
+
+
         try:
             registration = self.components.get(component_id)
             if not registration:
@@ -222,14 +231,23 @@ class MultimediaRegistry:
             
     def find_components_by_type(self, component_type: ComponentType) -> List[str]:
         """Find components by type"""
+
+
+
         return self.component_types.get(component_type, [])
         
     def find_components_by_format(self, format_name: str) -> List[str]:
         """Find components that support specific format"""
+
+
+
         return self.format_mappings.get(format_name.lower(), [])
         
     def find_components_by_capability(self, capability: str) -> List[str]:
         """Find components by capability"""
+
+
+
         return self.capability_index.get(capability, [])
         
     async def search_components(self, criteria: Dict[str, Any]) -> List[ComponentRegistration]:
@@ -271,6 +289,9 @@ class MultimediaRegistry:
             
     async def unregister_component(self, component_id: str) -> bool:
         """Unregister component"""
+
+
+
         try:
             registration = self.components.get(component_id)
             if not registration:
@@ -298,6 +319,9 @@ class MultimediaRegistry:
             
     async def reload_component(self, component_id: str) -> bool:
         """Reload component"""
+
+
+
         try:
             registration = self.components.get(component_id)
             if not registration:
@@ -365,6 +389,9 @@ class MultimediaRegistry:
         
     async def health_check(self) -> Dict[str, Any]:
         """Registry health check"""
+
+
+
         try:
             # Check all active components
             healthy_components = 0
@@ -424,6 +451,9 @@ class MultimediaRegistry:
                 
     async def _discover_components_in_path(self, path: str):
         """Discover components in specific path"""
+
+
+
         try:
             # Import modules and scan for component classes
             module = importlib.import_module(path)
@@ -459,6 +489,9 @@ class MultimediaRegistry:
                 
     async def _initialize_component(self, registration: ComponentRegistration):
         """Initialize component instance"""
+
+
+
         try:
             # Create instance
             instance = registration.component_class()
@@ -481,6 +514,9 @@ class MultimediaRegistry:
             
     def _validate_component(self, component_class: Type, metadata: ComponentMetadata) -> bool:
         """Validate component implementation"""
+
+
+
         try:
             # Check if class implements required methods
             required_methods = ['initialize', 'process', 'health_check', 'get_metadata']

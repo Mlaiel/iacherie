@@ -1,5 +1,5 @@
 """
-📋 Models - Backup System Data Models
+ Models - Backup System Data Models
 ====================================
 Module: backend/data_management/backups/models.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Data Models - Enterprise Production-Ready
 Responsibility: Modèles de données centralisés pour système de sauvegarde
 ======================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -108,6 +108,9 @@ class FileMetadata:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit en dictionnaire"""
+
+
+
         return {
             "path": self.path,
             "size": self.size,
@@ -133,6 +136,9 @@ class FileMetadata:
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'FileMetadata':
         """Crée depuis un dictionnaire"""
+
+
+
         return cls(
             path=data["path"],
             size=data["size"],
@@ -183,6 +189,9 @@ class BackupJob:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit en dictionnaire"""
+
+
+
         return {
             "job_id": self.job_id,
             "user_id": self.user_id,
@@ -254,6 +263,9 @@ class BackupProgress:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit en dictionnaire"""
+
+
+
         return {
             "backup_id": self.backup_id,
             "job_id": self.job_id,
@@ -342,16 +354,25 @@ class BackupMetadata:
     @property
     def is_completed(self) -> bool:
         """Vérifie si la sauvegarde est terminée"""
+
+
+
         return self.status == BackupStatus.COMPLETED
     
     @property
     def is_failed(self) -> bool:
         """Vérifie si la sauvegarde a échoué"""
+
+
+
         return self.status in [BackupStatus.FAILED, BackupStatus.CORRUPTED]
     
     @property
     def is_running(self) -> bool:
         """Vérifie si la sauvegarde est en cours"""
+
+
+
         return self.status in [BackupStatus.RUNNING, BackupStatus.VERIFYING]
     
     @property
@@ -365,15 +386,24 @@ class BackupMetadata:
     @property
     def size_gb(self) -> float:
         """Taille en GB"""
+
+
+
         return self.total_size / (1024**3)
     
     @property
     def compressed_size_gb(self) -> float:
         """Taille compressée en GB"""
+
+
+
         return self.compressed_size / (1024**3)
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit en dictionnaire"""
+
+
+
         return {
             "backup_id": self.backup_id,
             "user_id": self.user_id,
@@ -421,6 +451,9 @@ class BackupMetadata:
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'BackupMetadata':
         """Crée depuis un dictionnaire"""
+
+
+
         return cls(
             backup_id=data["backup_id"],
             user_id=data["user_id"],
@@ -508,6 +541,9 @@ class BackupSchedule:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit en dictionnaire"""
+
+
+
         return {
             "schedule_id": self.schedule_id,
             "user_id": self.user_id,
@@ -576,15 +612,24 @@ class BackupStats:
     @property
     def total_size_gb(self) -> float:
         """Taille totale en GB"""
+
+
+
         return self.total_size_bytes / (1024**3)
     
     @property
     def compressed_size_gb(self) -> float:
         """Taille compressée en GB"""
+
+
+
         return self.compressed_size_bytes / (1024**3)
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit en dictionnaire"""
+
+
+
         return {
             "total_backups": self.total_backups,
             "successful_backups": self.successful_backups,

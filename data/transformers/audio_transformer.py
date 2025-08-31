@@ -154,6 +154,9 @@ class AudioTransformer:
     
     def _check_ffmpeg(self) -> bool:
         """Check if FFmpeg is available."""
+
+
+
         try:
             subprocess.run(["ffmpeg", "-version"], capture_output=True, check=True)
             return True
@@ -285,6 +288,9 @@ class AudioTransformer:
         Returns:
             Success status
         """
+
+
+
         try:
             if not AUDIO_LIBS_AVAILABLE:
                 logger.warning("Audio enhancement requires librosa and essentia")
@@ -315,6 +321,9 @@ class AudioTransformer:
         Returns:
             AudioMetadata object
         """
+
+
+
         try:
             metadata = AudioMetadata()
             file_path_obj = Path(file_path)
@@ -535,6 +544,9 @@ class AudioTransformer:
     
     def _reduce_noise(self, audio: np.ndarray, sample_rate: int) -> np.ndarray:
         """Apply noise reduction."""
+
+
+
         try:
             # Simple spectral gating approach
             stft = librosa.stft(audio)
@@ -558,6 +570,9 @@ class AudioTransformer:
     
     def _enhance_bass(self, audio: np.ndarray, sample_rate: int) -> np.ndarray:
         """Enhance bass frequencies."""
+
+
+
         try:
             # Low-shelf filter for bass enhancement
             from scipy.signal import butter, filtfilt
@@ -577,6 +592,9 @@ class AudioTransformer:
     
     def _enhance_treble(self, audio: np.ndarray, sample_rate: int) -> np.ndarray:
         """Enhance treble frequencies."""
+
+
+
         try:
             # High-shelf filter for treble enhancement
             from scipy.signal import butter, filtfilt
@@ -596,6 +614,9 @@ class AudioTransformer:
     
     async def _calculate_quality_score(self, input_path: str, output_path: str) -> Optional[float]:
         """Calculate audio quality score comparing input and output."""
+
+
+
         try:
             if not AUDIO_LIBS_AVAILABLE:
                 return None
@@ -677,6 +698,9 @@ class AudioTransformer:
     
     async def cleanup(self):
         """Cleanup temporary files and resources."""
+
+
+
         try:
             # Clean temp directory
             if self.temp_dir.exists():
@@ -703,6 +727,9 @@ class AudioConverter:
         quality: str = "high"
     ) -> bool:
         """Convert audio file."""
+
+
+
         return await self.transformer.convert(input_path, output_path, format, quality)
 
 
@@ -719,4 +746,7 @@ class AudioEnhancer:
         options: Optional[Dict[str, Any]] = None
     ) -> bool:
         """Enhance audio quality."""
+
+
+
         return await self.transformer.enhance(input_path, output_path, options)

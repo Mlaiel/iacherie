@@ -7,7 +7,7 @@ performance optimization, and common crawling operations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -60,6 +60,9 @@ class URLProcessor:
         """
         Normalize URL by removing unnecessary parameters and fragments
         """
+
+
+
         try:
             parsed = urlparse(url.strip())
             
@@ -99,6 +102,9 @@ class URLProcessor:
         """
         Extract comprehensive domain information
         """
+
+
+
         try:
             parsed = urlparse(url)
             extracted = tldextract.extract(url)
@@ -134,6 +140,9 @@ class URLProcessor:
         """
         Validate URL format and structure
         """
+
+
+
         try:
             parsed = urlparse(url)
             return all([
@@ -212,6 +221,9 @@ class ContentAnalyzer:
         """
         Detect content language with confidence score
         """
+
+
+
         try:
             if not text.strip():
                 return {'language': 'unknown', 'confidence': 0.0}
@@ -367,6 +379,9 @@ class HTMLProcessor:
         """
         Extract clean text from HTML content
         """
+
+
+
         try:
             soup = BeautifulSoup(html, 'html.parser')
             
@@ -393,6 +408,9 @@ class HTMLProcessor:
         """
         Extract comprehensive metadata from HTML
         """
+
+
+
         try:
             soup = BeautifulSoup(html, 'html.parser')
             metadata = {}
@@ -486,6 +504,9 @@ class HTMLProcessor:
         """
         Extract image information from HTML
         """
+
+
+
         try:
             soup = BeautifulSoup(html, 'html.parser')
             images = []
@@ -617,6 +638,9 @@ class RobotsChecker:
         """
         Check if URL can be fetched according to robots.txt
         """
+
+
+
         try:
             parsed_url = urlparse(url)
             robots_url = f"{parsed_url.scheme}://{parsed_url.netloc}/robots.txt"
@@ -647,6 +671,9 @@ class RobotsChecker:
         """
         Fetch and parse robots.txt
         """
+
+
+
         try:
             rp = RobotFileParser()
             rp.set_url(robots_url)
@@ -688,6 +715,9 @@ class UserAgentRotator:
     
     def get_random_user_agent(self) -> str:
         """Get random user agent string"""
+
+
+
         return random.choice(self.user_agents)
     
     def get_next_user_agent(self) -> str:

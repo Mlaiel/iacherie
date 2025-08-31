@@ -1,5 +1,5 @@
 """
-📈 Performance Monitor - IA Influencer Agent Platform Enterprise
+ Performance Monitor - IA Influencer Agent Platform Enterprise
 ================================================================
 Module: backend/data_management/storage/performance_monitor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Advanced performance monitoring for storage operations
 with real-time analytics and predictive insights.
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -166,6 +166,9 @@ class ResourceMonitor:
     
     def get_current_usage(self) -> Dict[str, float]:
         """Get current resource usage"""
+
+
+
         try:
             return {
                 'cpu_percent': psutil.cpu_percent(),

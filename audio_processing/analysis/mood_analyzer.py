@@ -1,5 +1,5 @@
 """
-😊 Mood Analyzer - AI-Powered Musical Mood Detection
+ Mood Analyzer - AI-Powered Musical Mood Detection
 
 Advanced mood and emotion analysis engine for identifying emotional
 characteristics and affective content in audio signals.
@@ -47,6 +47,9 @@ class MoodAnalyzer:
     
     async def analyze_mood(self, audio_data: np.ndarray) -> Dict[str, Any]:
         """Analyze musical mood and emotion"""
+
+
+
         try:
             # Extract mood-relevant features
             features = await self._extract_mood_features(audio_data)

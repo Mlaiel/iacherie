@@ -297,10 +297,16 @@ class CDNConfig:
     
     def get_content_types(self) -> List[str]:
         """Get list of supported content types."""
+
+
+
         return list(self.endpoints.keys())
     
     def validate_configuration(self) -> bool:
         """Validate CDN configuration."""
+
+
+
         try:
             # Validate primary provider configuration
             if self.primary_provider == CDNProvider.CLOUDFLARE:
@@ -377,6 +383,9 @@ class CDNConfig:
     
     def export_configuration(self) -> Dict[str, Any]:
         """Export CDN configuration to JSON-serializable format."""
+
+
+
         return {
             'primary_provider': self.primary_provider.value,
             'fallback_provider': self.fallback_provider.value if self.fallback_provider else None,

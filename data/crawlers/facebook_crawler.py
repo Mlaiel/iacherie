@@ -12,7 +12,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL WARNING ⚠️
+  CRITICAL WARNING 
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
 Any unauthorized use, reproduction, distribution, or reverse engineering 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -94,6 +94,9 @@ class FacebookCrawler(PlatformCrawler):
     
     async def _initialize_api_client(self):
         """Initialize Facebook Graph API client"""
+
+
+
         try:
             self.graph_api = facebook.GraphAPI(
                 access_token=self.access_token,
@@ -111,6 +114,9 @@ class FacebookCrawler(PlatformCrawler):
     
     async def _test_api_connection(self):
         """Test API connection and permissions"""
+
+
+
         try:
             # Test with simple API call
             me = self.graph_api.get_object('me')
@@ -131,6 +137,9 @@ class FacebookCrawler(PlatformCrawler):
         Returns:
             List of found content items
         """
+
+
+
         try:
             await self._check_rate_limit()
             
@@ -174,6 +183,9 @@ class FacebookCrawler(PlatformCrawler):
         Returns:
             Content metadata dictionary
         """
+
+
+
         try:
             # Extract post ID from URL
             post_id = self._extract_post_id_from_url(content_url)
@@ -199,6 +211,9 @@ class FacebookCrawler(PlatformCrawler):
         Returns:
             Content data bytes or None if failed
         """
+
+
+
         try:
             # Extract post ID and get media
             post_id = self._extract_post_id_from_url(content_url)
@@ -237,6 +252,9 @@ class FacebookCrawler(PlatformCrawler):
         Returns:
             List of found Facebook pages
         """
+
+
+
         try:
             all_pages = []
             
@@ -261,6 +279,9 @@ class FacebookCrawler(PlatformCrawler):
         Returns:
             List of page posts
         """
+
+
+
         try:
             return await self._get_page_posts(page_id, None, max_posts)
             
@@ -280,6 +301,9 @@ class FacebookCrawler(PlatformCrawler):
         Returns:
             Monitoring session ID
         """
+
+
+
         try:
             monitoring_id = f"facebook_monitor_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
             
@@ -326,6 +350,9 @@ class FacebookCrawler(PlatformCrawler):
         Returns:
             Engagement analysis data
         """
+
+
+
         try:
             # Get post insights (requires page access token)
             insights = self.graph_api.get_object(
@@ -357,6 +384,9 @@ class FacebookCrawler(PlatformCrawler):
     
     async def _search_pages(self, search_term: str) -> List[Dict[str, Any]]:
         """Search for Facebook pages"""
+
+
+
         try:
             # Use Graph API search
             results = self.graph_api.get_object(
@@ -388,6 +418,9 @@ class FacebookCrawler(PlatformCrawler):
     async def _get_page_posts(self, page_id: str, keyword: str = None, 
                             max_posts: int = 50) -> List[Dict[str, Any]]:
         """Get posts from a Facebook page"""
+
+
+
         try:
             # Get page posts
             posts = self.graph_api.get_object(
@@ -417,6 +450,9 @@ class FacebookCrawler(PlatformCrawler):
     
     async def _get_page_posts_since(self, page_id: str, since_time: datetime) -> List[Dict[str, Any]]:
         """Get page posts since specific time"""
+
+
+
         try:
             # Convert datetime to Unix timestamp
             since_timestamp = int(since_time.timestamp())
@@ -440,6 +476,9 @@ class FacebookCrawler(PlatformCrawler):
     
     async def _get_post_details(self, post_id: str) -> Dict[str, Any]:
         """Get detailed information about a specific post"""
+
+
+
         try:
             post = self.graph_api.get_object(
                 post_id,
@@ -455,6 +494,9 @@ class FacebookCrawler(PlatformCrawler):
     
     async def _process_post_data(self, post: Dict[str, Any], page_id: str = None) -> Dict[str, Any]:
         """Process raw post data into standardized format"""
+
+
+
         try:
             # Extract basic information
             post_id = post.get('id')
@@ -511,6 +553,9 @@ class FacebookCrawler(PlatformCrawler):
     
     def _extract_post_id_from_url(self, url: str) -> Optional[str]:
         """Extract post ID from Facebook URL"""
+
+
+
         try:
             # Patterns for Facebook URLs
             patterns = [
@@ -578,6 +623,9 @@ class FacebookCrawler(PlatformCrawler):
     async def _send_monitoring_notification(self, post: Dict[str, Any], 
                                           callback_url: str, monitoring_id: str):
         """Send monitoring notification for new post"""
+
+
+
         try:
             notification_data = {
                 'monitoring_id': monitoring_id,

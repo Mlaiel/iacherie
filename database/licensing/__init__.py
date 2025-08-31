@@ -168,7 +168,10 @@ async def validate_content_licensing_rights(content_id: str,
         
     Returns:
         Validation result
-    """    return await quick_license_validation(content_id, user_id, usage_type)
+    """
+
+
+    return await quick_license_validation(content_id, user_id, usage_type)
 
 async def create_comprehensive_license(licensor_id: str,
                                      licensee_id: str,
@@ -212,13 +215,22 @@ def get_module_info(module_name: str) -> Dict[str, Any]:
         
     Returns:
         Module information
-    """    return MODULE_REGISTRY.get(module_name, {})
+    """
+
+
+    return MODULE_REGISTRY.get(module_name, {})
 
 def list_available_modules() -> List[str]:
-    """List all available licensing modules"""    return list(MODULE_REGISTRY.keys())
+    """List all available licensing modules"""
+
+
+    return list(MODULE_REGISTRY.keys())
 
 def get_licensing_statistics() -> Dict[str, Any]:
-    """Get comprehensive licensing system statistics"""    return {
+    """Get comprehensive licensing system statistics"""
+
+
+    return {
         'total_modules': len(MODULE_REGISTRY),
         'available_services': [info['service'].__name__ for info in MODULE_REGISTRY.values()],
         'total_model_classes': sum(len(info['models']) for info in MODULE_REGISTRY.values()),
@@ -381,7 +393,10 @@ def get_module_info() -> Dict[str, Any]:
     
     Returns:
         Dict[str, Any]: Informations détaillées du module
-    """    return {
+    """
+
+
+    return {
         "name": "IA Influencer Agent - Licensing Database Module",
         "version": __version__,
         "author": "Fahed Mlaiel",
@@ -419,21 +434,30 @@ def create_licensing_manager(db_session) -> LicensingDatabaseManager:
         
     Returns:
         LicensingDatabaseManager: Instance configurée du gestionnaire
-    """    return LicensingDatabaseManager(db_session)
+    """
+
+
+    return LicensingDatabaseManager(db_session)
 
 def get_supported_license_types() -> List[str]:
     """    Retourne la liste des types de licences supportés.
     
     Returns:
         List[str]: Types de licences disponibles
-    """    return [license_type.value for license_type in LicenseType]
+    """
+
+
+    return [license_type.value for license_type in LicenseType]
 
 def get_supported_usage_types() -> List[str]:
     """    Retourne la liste des types d'usage supportés.
     
     Returns:
         List[str]: Types d'usage disponibles  
-    """    return [usage_type.value for usage_type in UsageType]
+    """
+
+
+    return [usage_type.value for usage_type in UsageType]
 
 def validate_module_dependencies() -> Dict[str, bool]:
     """    Valide que toutes les dépendances du module sont disponibles.

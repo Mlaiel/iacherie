@@ -1,11 +1,11 @@
 """
-🔄 Stream Processing Transformer - IA Influencer Agent Platform Enterprise
+ Stream Processing Transformer - IA Influencer Agent Platform Enterprise
 ========================================================================
 Module: backend/data_management/transformers/stream_transformer.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -163,6 +163,9 @@ class AudioStreamProcessor:
     
     async def start_stream(self, source: Optional[str] = None) -> str:
         """Démarre le flux audio"""
+
+
+
         
         try:
             stream_id = f"audio_stream_{uuid.uuid4().hex[:8]}"
@@ -216,6 +219,9 @@ class AudioStreamProcessor:
     
     async def _start_file_stream(self, file_path: str, stream_id: str):
         """Démarre le flux depuis un fichier audio"""
+
+
+
         
         try:
             # Chargement du fichier audio
@@ -369,6 +375,9 @@ class AudioStreamProcessor:
     
     def get_metrics(self) -> Dict[str, float]:
         """Retourne les métriques actuelles"""
+
+
+
         return self.metrics.copy()
 
 class VideoStreamProcessor:
@@ -399,6 +408,9 @@ class VideoStreamProcessor:
     
     async def start_stream(self, source: Union[int, str] = 0) -> str:
         """Démarre le flux vidéo"""
+
+
+
         
         try:
             stream_id = f"video_stream_{uuid.uuid4().hex[:8]}"
@@ -593,6 +605,9 @@ class VideoStreamProcessor:
     
     def get_metrics(self) -> Dict[str, float]:
         """Retourne les métriques actuelles"""
+
+
+
         return self.metrics.copy()
 
 class WebSocketStreamProcessor:
@@ -614,6 +629,9 @@ class WebSocketStreamProcessor:
     
     async def start_server(self, host: str = "localhost", port: int = 8765) -> str:
         """Démarre le serveur WebSocket"""
+
+
+
         
         try:
             stream_id = f"websocket_stream_{uuid.uuid4().hex[:8]}"
@@ -759,6 +777,9 @@ class WebSocketStreamProcessor:
     
     def get_metrics(self) -> Dict[str, float]:
         """Retourne les métriques actuelles"""
+
+
+
         return self.metrics.copy()
 
 class KafkaStreamProcessor:
@@ -788,6 +809,9 @@ class KafkaStreamProcessor:
     
     async def start_producer(self) -> str:
         """Démarre le producteur Kafka"""
+
+
+
         
         try:
             stream_id = f"kafka_producer_{uuid.uuid4().hex[:8]}"
@@ -807,6 +831,9 @@ class KafkaStreamProcessor:
     
     async def start_consumer(self) -> str:
         """Démarre le consommateur Kafka"""
+
+
+
         
         try:
             stream_id = f"kafka_consumer_{uuid.uuid4().hex[:8]}"
@@ -830,6 +857,9 @@ class KafkaStreamProcessor:
     
     async def produce_message(self, data: Dict[str, Any], key: Optional[str] = None) -> bool:
         """Produit un message vers Kafka"""
+
+
+
         
         try:
             if not self.producer:
@@ -968,6 +998,9 @@ class KafkaStreamProcessor:
     
     def get_metrics(self) -> Dict[str, float]:
         """Retourne les métriques Kafka"""
+
+
+
         return self.metrics.copy()
 
 class StreamTransformer:
@@ -1039,6 +1072,9 @@ class StreamTransformer:
         source: Optional[Union[str, int]] = None
     ) -> str:
         """Démarre le traitement en temps réel"""
+
+
+
         
         try:
             # Création du processeur
@@ -1087,6 +1123,9 @@ class StreamTransformer:
         processor_func: Callable[[Any], Dict[str, Any]]
     ):
         """Traite le flux de manière asynchrone"""
+
+
+
         
         try:
             async for result in processor.process_stream(processor_func):
@@ -1106,6 +1145,9 @@ class StreamTransformer:
     
     async def _store_result_redis(self, stream_id: str, result: StreamProcessingResult):
         """Stocke le résultat dans Redis"""
+
+
+
         
         try:
             # Conversion en dictionnaire sérialisable

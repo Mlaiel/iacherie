@@ -8,7 +8,7 @@ Handles video metadata extraction, hashtag tracking, and engagement analysis.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
@@ -196,6 +196,9 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
     
     def _setup_selenium_driver(self) -> None:
         """Setup Selenium WebDriver with TikTok-optimized stealth"""
+
+
+
         try:
             chrome_options = webdriver.ChromeOptions()
             
@@ -232,6 +235,9 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
     
     async def _setup_playwright(self) -> None:
         """Setup Playwright for advanced scraping"""
+
+
+
         try:
             playwright_instance = await async_playwright().start()
             browser = await playwright_instance.chromium.launch(
@@ -497,6 +503,9 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
     
     async def _get_user_selenium(self, username: str) -> Optional[TikTokUserData]:
         """Get user data using Selenium"""
+
+
+
         try:
             url = f"https://www.tiktok.com/@{username}"
             self.driver.get(url)
@@ -703,6 +712,9 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
     
     def _parse_tiktok_count(self, count_str: str) -> int:
         """Parse TikTok count strings (e.g., '1.2K', '5.6M', '123.4K')"""
+
+
+
         try:
             count_str = count_str.replace(' ', '').upper()
             
@@ -720,6 +732,9 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
     
     async def _calculate_virality_score(self, video: TikTokVideoData) -> float:
         """Calculate virality score based on engagement metrics"""
+
+
+
         try:
             # Basic virality factors
             total_engagements = video.likes_count + video.comments_count + video.shares_count
@@ -756,6 +771,9 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
     
     async def _calculate_video_similarity(self, original: Dict, candidate: Dict) -> float:
         """Calculate similarity between original and candidate videos"""
+
+
+
         try:
             # Description similarity
             original_desc = original.get('description', '').lower()
@@ -815,6 +833,9 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
     
     async def _classify_theft_type(self, original: Dict, candidate: TikTokVideoData) -> str:
         """Classify the type of potential content theft"""
+
+
+
         try:
             # Exact repost
             if original.get('description', '').strip() == candidate.description.strip():
@@ -842,6 +863,9 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
     
     async def cleanup(self) -> None:
         """Cleanup resources"""
+
+
+
         try:
             if hasattr(self, 'driver') and self.driver:
                 self.driver.quit()
@@ -856,6 +880,9 @@ class TikTokCrawlerEngine(BaseCrawlerEngine):
     
     def __del__(self):
         """Destructor to ensure cleanup"""
+
+
+
         try:
             if hasattr(self, 'driver') and self.driver:
                 self.driver.quit()

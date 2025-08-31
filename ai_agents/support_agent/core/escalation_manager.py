@@ -8,7 +8,7 @@ human support representatives.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -410,6 +410,9 @@ class EscalationManager:
         requested_specialty: Optional[AgentSpecialty] = None
     ) -> EscalationRequest:
         """Create new escalation request"""
+
+
+
         try:
             escalation_id = str(uuid.uuid4())
             
@@ -462,6 +465,9 @@ class EscalationManager:
     
     async def assign_to_agent(self, escalation_id: str) -> Optional[Tuple[str, HumanAgent]]:
         """Assign escalation to best available agent"""
+
+
+
         try:
             # Get escalation from cache
             escalation = await self._get_escalation(escalation_id)
@@ -506,6 +512,9 @@ class EscalationManager:
         customer_rating: Optional[float] = None
     ) -> bool:
         """Mark escalation as resolved"""
+
+
+
         try:
             escalation = await self._get_escalation(escalation_id)
             if not escalation:
@@ -587,6 +596,9 @@ class EscalationManager:
         reason: str
     ) -> Dict[str, Any]:
         """Analyze escalation context using AI"""
+
+
+
         try:
             analysis = {}
             
@@ -773,6 +785,9 @@ class EscalationManager:
     
     async def _count_previous_escalations(self, user_id: str) -> int:
         """Count previous escalations for user"""
+
+
+
         try:
             count = await self.redis_client.get(f"user_escalations:{user_id}")
             return int(count) if count else 0
@@ -812,6 +827,9 @@ class EscalationManager:
     
     async def _reassign_escalation(self, escalation_id: str) -> bool:
         """Reassign escalation to different agent"""
+
+
+
         try:
             escalation = await self._get_escalation(escalation_id)
             if not escalation:
@@ -842,6 +860,9 @@ class EscalationManager:
     
     async def _process_pending_assignments(self):
         """Process pending escalations and assign to available agents"""
+
+
+
         try:
             while True:
                 escalation = await self.escalation_queue.get_next_request()
@@ -909,6 +930,9 @@ class EscalationManager:
     
     async def _send_notification(self, notification: Dict[str, Any]):
         """Send notification via appropriate channel"""
+
+
+
         try:
             notification_type = notification["type"]
             
@@ -937,6 +961,9 @@ class EscalationManager:
     
     async def _send_email(self, to_email: str, subject: str, body: str):
         """Send email notification"""
+
+
+
         try:
             # In real implementation, would use proper email service
             logger.info(f"Email notification sent to {to_email}: {subject}")
@@ -945,6 +972,9 @@ class EscalationManager:
     
     async def _cache_escalation(self, escalation: EscalationRequest):
         """Cache escalation in Redis"""
+
+
+
         try:
             escalation_data = {
                 "escalation_id": escalation.escalation_id,
@@ -975,6 +1005,9 @@ class EscalationManager:
     
     async def _cache_agent(self, agent: HumanAgent):
         """Cache agent in Redis"""
+
+
+
         try:
             agent_data = {
                 "agent_id": agent.agent_id,
@@ -1002,6 +1035,9 @@ class EscalationManager:
     
     async def _get_escalation(self, escalation_id: str) -> Optional[EscalationRequest]:
         """Get escalation from cache"""
+
+
+
         try:
             data = await self.redis_client.get(f"escalation:{escalation_id}")
             if not data:

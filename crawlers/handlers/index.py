@@ -89,6 +89,9 @@ class HandlersManager:
         Returns:
             True if initialization successful
         """
+
+
+
         try:
             logger.info("Initializing Handlers Manager...")
             
@@ -143,6 +146,9 @@ class HandlersManager:
     
     async def shutdown(self):
         """Gracefully shutdown all handlers."""
+
+
+
         try:
             logger.info("Shutting down Handlers Manager...")
             
@@ -160,6 +166,9 @@ class HandlersManager:
     
     def is_ready(self) -> bool:
         """Check if all handlers are ready."""
+
+
+
         return (
             self._initialized and
             self.content_handler is not None and
@@ -172,6 +181,9 @@ class HandlersManager:
     
     async def health_check(self) -> Dict[str, Any]:
         """Perform health check on all handlers."""
+
+
+
         try:
             health_status = {
                 'overall_status': 'healthy',
@@ -219,6 +231,9 @@ class HandlersManager:
     
     async def get_statistics(self) -> Dict[str, Any]:
         """Get comprehensive statistics from all handlers."""
+
+
+
         try:
             stats = {
                 'manager_status': {

@@ -1,5 +1,5 @@
 """
-🔎 Similarity Search Engine
+ Similarity Search Engine
 ===========================
 
 Advanced similarity search engine for content fingerprint matching.
@@ -91,6 +91,9 @@ class SimilarityCalculator:
         metric: SimilarityMetric = SimilarityMetric.COSINE
     ) -> float:
         """Calculate similarity between two vectors"""
+
+
+
         try:
             # Ensure vectors are the same length
             min_len = min(len(vector1), len(vector2))
@@ -121,6 +124,9 @@ class SimilarityCalculator:
         metric: SimilarityMetric
     ) -> float:
         """Synchronous similarity calculation"""
+
+
+
         try:
             if metric == SimilarityMetric.COSINE:
                 if SKLEARN_AVAILABLE:
@@ -181,6 +187,9 @@ class SimilarityCalculator:
         metric: SimilarityMetric = SimilarityMetric.COSINE
     ) -> List[float]:
         """Calculate similarity between query and multiple candidates"""
+
+
+
         try:
             if not candidate_vectors:
                 return []
@@ -413,6 +422,9 @@ class SearchEngine:
         metadata: Optional[Dict[str, Dict[str, Any]]] = None
     ) -> List[List[str]]:
         """Find groups of duplicate vectors"""
+
+
+
         try:
             duplicate_groups = []
             processed = set()
@@ -461,6 +473,9 @@ class SearchEngine:
         metric: SimilarityMetric = SimilarityMetric.COSINE
     ) -> List[Tuple[str, float]]:
         """Find k nearest neighbors"""
+
+
+
         try:
             # Calculate all similarities
             similarities = {}
@@ -509,6 +524,9 @@ class SearchEngine:
         vectors: Dict[str, np.ndarray]
     ) -> SearchConfiguration:
         """Optimize similarity thresholds based on ground truth data"""
+
+
+
         try:
             # Calculate similarities for ground truth pairs
             similarities_true = []

@@ -7,12 +7,12 @@ execution monitoring, and resource coordination for the IA-Influencer-Agent plat
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This process management system is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization.
 
-🎯 BUSINESS LOGIC:
+ BUSINESS LOGIC:
 Process Creation → Resource Allocation → Execution → Monitoring → Completion → Cleanup
 """
 
@@ -169,6 +169,9 @@ class ProcessManager:
     
     def _initialize_resource_pool(self) -> Dict[str, Any]:
         """Initialize system resource pool"""
+
+
+
         try:
             system_info = {
                 "cpu_cores": psutil.cpu_count(),
@@ -279,6 +282,9 @@ class ProcessManager:
     
     def register_process(self, configuration: ProcessConfiguration) -> bool:
         """Register a new process configuration"""
+
+
+
         try:
             # Validate configuration
             if not self._validate_process_configuration(configuration):
@@ -299,6 +305,9 @@ class ProcessManager:
     
     def _validate_process_configuration(self, config: ProcessConfiguration) -> bool:
         """Validate process configuration"""
+
+
+
         try:
             # Required fields validation
             if not all([config.process_id, config.name, config.process_type]):
@@ -324,6 +333,9 @@ class ProcessManager:
     
     def _check_resource_availability(self, required: ProcessResource) -> bool:
         """Check if required resources are available"""
+
+
+
         try:
             current_usage = self._calculate_current_resource_usage()
             
@@ -359,6 +371,9 @@ class ProcessManager:
         priority_override: Optional[ProcessPriority] = None
     ) -> str:
         """Start a process execution"""
+
+
+
         try:
             if process_id not in self.process_configurations:
                 raise ValueError(f"Process configuration '{process_id}' not found")
@@ -416,6 +431,9 @@ class ProcessManager:
     
     async def _start_process_execution(self, execution: ProcessExecution):
         """Start process execution based on execution context"""
+
+
+
         try:
             execution.status = ProcessStatus.RUNNING
             execution.started_at = datetime.now(timezone.utc)
@@ -443,6 +461,9 @@ class ProcessManager:
     
     async def _execute_synchronous(self, execution: ProcessExecution):
         """Execute process synchronously"""
+
+
+
         try:
             # Simulate synchronous processing
             result = await self._process_business_logic(execution)
@@ -462,6 +483,9 @@ class ProcessManager:
     
     async def _execute_asynchronous(self, execution: ProcessExecution):
         """Execute process asynchronously"""
+
+
+
         try:
             # Create async task for processing
             task = asyncio.create_task(self._process_business_logic(execution))
@@ -490,6 +514,9 @@ class ProcessManager:
     
     async def _execute_threaded(self, execution: ProcessExecution):
         """Execute process in thread pool"""
+
+
+
         try:
             loop = asyncio.get_event_loop()
             result = await loop.run_in_executor(
@@ -513,6 +540,9 @@ class ProcessManager:
     
     async def _execute_multi_process(self, execution: ProcessExecution):
         """Execute process in process pool"""
+
+
+
         try:
             loop = asyncio.get_event_loop()
             result = await loop.run_in_executor(
@@ -588,6 +618,9 @@ class ProcessManager:
     
     async def _complete_process_execution(self, execution: ProcessExecution):
         """Complete process execution and cleanup"""
+
+
+
         try:
             # Calculate execution time
             if execution.started_at:
@@ -616,6 +649,9 @@ class ProcessManager:
     
     async def _handle_process_failure(self, execution: ProcessExecution):
         """Handle process execution failure"""
+
+
+
         try:
             # Check for auto-restart
             if (execution.configuration.auto_restart and 
@@ -655,6 +691,9 @@ class ProcessManager:
     
     async def _process_next_queued(self):
         """Process next queued process if resources are available"""
+
+
+
         try:
             if self.execution_queue:
                 next_execution = self.execution_queue.popleft()
@@ -675,6 +714,9 @@ class ProcessManager:
     
     async def _emit_process_event(self, event_type: str, execution: ProcessExecution):
         """Emit process events to registered handlers"""
+
+
+
         try:
             event_data = {
                 "event_type": event_type,
@@ -723,6 +765,9 @@ class ProcessManager:
     
     def _update_process_metrics(self):
         """Update process performance metrics"""
+
+
+
         try:
             for execution in self.active_executions.values():
                 if execution.pid:
@@ -746,6 +791,9 @@ class ProcessManager:
     
     def _check_process_health(self):
         """Check health of all active processes"""
+
+
+
         try:
             for execution in list(self.active_executions.values()):
                 # Check execution timeout
@@ -766,6 +814,9 @@ class ProcessManager:
     
     async def terminate_process(self, execution_id: str) -> bool:
         """Terminate a running process"""
+
+
+
         try:
             if execution_id not in self.active_executions:
                 return False
@@ -848,6 +899,9 @@ class ProcessManager:
     
     def shutdown(self):
         """Shutdown process manager and cleanup"""
+
+
+
         try:
             self.stop_monitoring()
             

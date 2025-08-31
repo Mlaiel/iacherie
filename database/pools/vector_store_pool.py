@@ -107,6 +107,9 @@ class IVectorStore:
     async def add_vectors(self, vectors: np.ndarray, metadata: List[Dict[str, Any]], 
                          ids: Optional[List[str]] = None) -> bool:
         """Add vectors to the store"""
+
+
+
         try:
             if self.index is None:
                 # Initialize index with first vectors
@@ -135,11 +138,11 @@ class IVectorStore:
             self.next_id += len(vectors)
             self.stats["total_vectors"] = self.next_id
             
-            logger.info(f"✅ Added {len(vectors)} vectors to FAISS store {self.store_name}")
+            logger.info(f" Added {len(vectors)} vectors to FAISS store {self.store_name}")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to add vectors to FAISS store: {e}")
+            logger.error(f" Failed to add vectors to FAISS store: {e}")
             return False
     
     async def search_similar(self, query_vector: np.ndarray, top_k: int = 100, 
@@ -185,7 +188,7 @@ class IVectorStore:
             return results
             
         except Exception as e:
-            logger.error(f"❌ Vector search failed: {e}")
+            logger.error(f" Vector search failed: {e}")
             return []
     
     def _matches_filter(self, metadata: Dict[str, Any], filter_criteria: Dict) -> bool:
@@ -202,6 +205,9 @@ class IVectorStore:
     
     async def delete_vectors(self, ids: List[str]) -> bool:
         """Delete vectors by IDs"""
+
+
+
         try:
             # FAISS doesn't support deletion, so we mark as deleted in metadata
             deleted_count = 0
@@ -213,15 +219,18 @@ class IVectorStore:
                         self.metadata_store[index_id]["_deleted"] = True
                         deleted_count += 1
             
-            logger.info(f"✅ Marked {deleted_count} vectors as deleted in FAISS store")
+            logger.info(f" Marked {deleted_count} vectors as deleted in FAISS store")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to delete vectors: {e}")
+            logger.error(f" Failed to delete vectors: {e}")
             return False
     
     async def update_metadata(self, id: str, metadata: Dict[str, Any]) -> bool:
         """Update metadata for a vector"""
+
+
+
         try:
             index_id = self.id_to_index.get(id)
             if index_id is not None and index_id in self.metadata_store:
@@ -230,7 +239,7 @@ class IVectorStore:
             return False
             
         except Exception as e:
-            logger.error(f"❌ Failed to update metadata: {e}")
+            logger.error(f" Failed to update metadata: {e}")
             return False
     
     async def get_stats(self) -> Dict[str, Any]:
@@ -279,6 +288,9 @@ class FAISSVectorStore(IVectorStore):
     
     async def initialize(self) -> bool:
         """Initialize FAISS index"""
+
+
+
         try:
             # Create index based on configuration
             if self.config.faiss_index_type == "IndexFlatIP":
@@ -301,7 +313,7 @@ class FAISSVectorStore(IVectorStore):
             if self.config.use_gpu and faiss.get_num_gpus() > 0:
                 res = faiss.StandardGpuResources()
                 self.index = faiss.index_cpu_to_gpu(res, self.config.gpu_device_id, self.index)
-                logger.info(f"✅ FAISS index moved to GPU {self.config.gpu_device_id}")
+                logger.info(f" FAISS index moved to GPU {self.config.gpu_device_id}")
             
             # Set number of threads
             faiss.omp_set_num_threads(self.config.num_threads)
@@ -312,15 +324,18 @@ class FAISSVectorStore(IVectorStore):
             # Start auto-save task
             self._auto_save_task = asyncio.create_task(self._auto_save_loop())
             
-            logger.info(f"✅ FAISS vector store '{self.store_name}' initialized")
+            logger.info(f" FAISS vector store '{self.store_name}' initialized")
             return True
             
         except Exception as e:
-            logger.error(f"❌ FAISS initialization failed: {e}")
+            logger.error(f" FAISS initialization failed: {e}")
             return False
     
     async def _load_index(self) -> None:
         """Load existing index from disk"""
+
+
+
         try:
             index_path = Path(self.config.index_persist_path) / f"{self.store_name}.faiss"
             metadata_path = Path(self.config.index_persist_path) / f"{self.store_name}_metadata.pkl"
@@ -339,13 +354,16 @@ class FAISSVectorStore(IVectorStore):
                     self.stats.update(data.get('stats', {}))
                 
                 self.stats["total_vectors"] = self.index.ntotal
-                logger.info(f"✅ Loaded existing index with {self.index.ntotal} vectors")
+                logger.info(f" Loaded existing index with {self.index.ntotal} vectors")
             
         except Exception as e:
             logger.warning(f"Could not load existing index: {e}")
     
     async def _save_index(self) -> None:
         """Save index to disk"""
+
+
+
         try:
             # Create directory if it doesn't exist
             index_dir = Path(self.config.index_persist_path)
@@ -378,7 +396,7 @@ class FAISSVectorStore(IVectorStore):
             self.stats["index_size_mb"] = index_path.stat().st_size / (1024 * 1024)
             self._dirty = False
             
-            logger.info(f"✅ Index saved to {index_path}")
+            logger.info(f" Index saved to {index_path}")
             
         except Exception as e:
             logger.error(f"Failed to save index: {e}")
@@ -398,6 +416,9 @@ class FAISSVectorStore(IVectorStore):
     async def add_vectors(self, vectors: np.ndarray, metadata: List[Dict[str, Any]], 
                          ids: Optional[List[str]] = None) -> bool:
         """Add vectors to FAISS index"""
+
+
+
         try:
             if vectors.shape[1] != self.config.vector_dimension:
                 raise ValueError(f"Vector dimension mismatch: expected {self.config.vector_dimension}, got {vectors.shape[1]}")
@@ -433,7 +454,7 @@ class FAISSVectorStore(IVectorStore):
             self.stats["total_vectors"] = self.index.ntotal
             self._dirty = True
             
-            logger.info(f"✅ Added {len(vectors)} vectors to FAISS index")
+            logger.info(f" Added {len(vectors)} vectors to FAISS index")
             return True
             
         except Exception as e:
@@ -532,6 +553,9 @@ class FAISSVectorStore(IVectorStore):
     
     async def delete_vectors(self, ids: List[str]) -> bool:
         """Delete vectors by IDs (FAISS doesn't support deletion, so we mark as deleted)"""
+
+
+
         try:
             deleted_count = 0
             for vec_id in ids:
@@ -545,7 +569,7 @@ class FAISSVectorStore(IVectorStore):
                         deleted_count += 1
             
             self._dirty = True
-            logger.info(f"✅ Marked {deleted_count} vectors as deleted")
+            logger.info(f" Marked {deleted_count} vectors as deleted")
             return True
             
         except Exception as e:
@@ -554,6 +578,9 @@ class FAISSVectorStore(IVectorStore):
     
     async def update_metadata(self, vec_id: str, metadata: Dict[str, Any]) -> bool:
         """Update metadata for a vector"""
+
+
+
         try:
             if vec_id in self.id_to_index:
                 index_id = self.id_to_index[vec_id]
@@ -571,6 +598,9 @@ class FAISSVectorStore(IVectorStore):
     
     async def get_stats(self) -> Dict[str, Any]:
         """Get FAISS store statistics"""
+
+
+
         return {
             "store_name": self.store_name,
             "index_type": self.config.faiss_index_type,
@@ -582,6 +612,9 @@ class FAISSVectorStore(IVectorStore):
     
     async def close(self) -> None:
         """Close FAISS store"""
+
+
+
         try:
             # Cancel auto-save task
             if self._auto_save_task:
@@ -595,7 +628,7 @@ class FAISSVectorStore(IVectorStore):
             if self._dirty:
                 await self._save_index()
             
-            logger.info(f"✅ FAISS store '{self.store_name}' closed")
+            logger.info(f" FAISS store '{self.store_name}' closed")
             
         except Exception as e:
             logger.error(f"Error closing FAISS store: {e}")
@@ -633,6 +666,9 @@ class VectorStoreConnectionPool(IConnectionPool):
     
     async def initialize(self) -> bool:
         """Initialize vector stores for each content type"""
+
+
+
         try:
             # Create vector store for each content type
             for content_type in self.content_types:
@@ -644,9 +680,9 @@ class VectorStoreConnectionPool(IConnectionPool):
                 
                 if success:
                     self.vector_stores[content_type] = store
-                    logger.info(f"✅ Vector store for {content_type} initialized")
+                    logger.info(f" Vector store for {content_type} initialized")
                 else:
-                    logger.error(f"❌ Failed to initialize vector store for {content_type}")
+                    logger.error(f" Failed to initialize vector store for {content_type}")
                     return False
             
             self.stats["total_stores"] = len(self.vector_stores)
@@ -656,11 +692,11 @@ class VectorStoreConnectionPool(IConnectionPool):
             if self.config.enable_monitoring:
                 self._health_check_task = asyncio.create_task(self._health_monitor())
             
-            logger.info(f"✅ Vector store pool initialized with {len(self.vector_stores)} stores")
+            logger.info(f" Vector store pool initialized with {len(self.vector_stores)} stores")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Vector store pool initialization failed: {e}")
+            logger.error(f" Vector store pool initialization failed: {e}")
             self.state = ConnectionState.FAILED
             return False
     
@@ -679,6 +715,9 @@ class VectorStoreConnectionPool(IConnectionPool):
                                     metadata: Dict[str, Any], 
                                     fingerprint_id: Optional[str] = None) -> bool:
         """Add content fingerprint to appropriate vector store"""
+
+
+
         try:
             if content_type not in self.vector_stores:
                 raise ValueError(f"Unsupported content type: {content_type}")
@@ -718,6 +757,9 @@ class VectorStoreConnectionPool(IConnectionPool):
                                    top_k: int = 100, similarity_threshold: float = None,
                                    filter_criteria: Optional[Dict] = None) -> List[Tuple[str, float, Dict]]:
         """Search for similar content across vector stores"""
+
+
+
         try:
             if content_type not in self.vector_stores:
                 raise ValueError(f"Unsupported content type: {content_type}")
@@ -748,6 +790,9 @@ class VectorStoreConnectionPool(IConnectionPool):
                                        content_types: Optional[List[str]] = None,
                                        top_k: int = 100) -> Dict[str, List[Tuple[str, float, Dict]]]:
         """Search across multiple content types"""
+
+
+
         try:
             if content_types is None:
                 content_types = list(self.vector_stores.keys())
@@ -770,6 +815,9 @@ class VectorStoreConnectionPool(IConnectionPool):
     
     async def delete_content_fingerprint(self, content_type: str, fingerprint_id: str) -> bool:
         """Delete content fingerprint"""
+
+
+
         try:
             if content_type not in self.vector_stores:
                 raise ValueError(f"Unsupported content type: {content_type}")
@@ -784,6 +832,9 @@ class VectorStoreConnectionPool(IConnectionPool):
     async def update_content_metadata(self, content_type: str, fingerprint_id: str, 
                                     metadata: Dict[str, Any]) -> bool:
         """Update content metadata"""
+
+
+
         try:
             if content_type not in self.vector_stores:
                 raise ValueError(f"Unsupported content type: {content_type}")
@@ -797,6 +848,9 @@ class VectorStoreConnectionPool(IConnectionPool):
     
     async def get_content_stats(self, content_type: Optional[str] = None) -> Dict[str, Any]:
         """Get statistics for specific content type or all"""
+
+
+
         try:
             if content_type:
                 if content_type in self.vector_stores:
@@ -816,6 +870,9 @@ class VectorStoreConnectionPool(IConnectionPool):
     
     async def health_check(self) -> bool:
         """Check vector store pool health"""
+
+
+
         try:
             healthy_stores = 0
             total_stores = len(self.vector_stores)
@@ -859,6 +916,9 @@ class VectorStoreConnectionPool(IConnectionPool):
     
     async def _update_stats(self) -> None:
         """Update aggregated statistics"""
+
+
+
         try:
             total_vectors = 0
             total_searches = 0
@@ -893,6 +953,9 @@ class VectorStoreConnectionPool(IConnectionPool):
     
     async def close(self) -> None:
         """Close vector store pool"""
+
+
+
         try:
             self.state = ConnectionState.CLOSED
             
@@ -908,11 +971,11 @@ class VectorStoreConnectionPool(IConnectionPool):
             for content_type, store in self.vector_stores.items():
                 try:
                     await store.close()
-                    logger.info(f"✅ Vector store {content_type} closed")
+                    logger.info(f" Vector store {content_type} closed")
                 except Exception as e:
                     logger.error(f"Error closing vector store {content_type}: {e}")
             
-            logger.info("✅ Vector store pool closed")
+            logger.info(" Vector store pool closed")
             
         except Exception as e:
             logger.error(f"Error closing vector store pool: {e}")

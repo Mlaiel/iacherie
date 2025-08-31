@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -440,6 +440,9 @@ class LiveCollaboration:
     
     async def initialize(self):
         """Initialize collaboration system"""
+
+
+
         try:
             # Load active rooms
             await self._load_active_rooms()
@@ -482,6 +485,9 @@ class LiveCollaboration:
         description: Optional[str] = None
     ) -> str:
         """Create new collaboration room"""
+
+
+
         try:
             room_id = f"room_{uuid.uuid4().hex[:12]}"
             
@@ -548,6 +554,9 @@ class LiveCollaboration:
         role: ParticipantRole = ParticipantRole.COLLABORATOR
     ) -> bool:
         """Join collaboration room"""
+
+
+
         try:
             # Get room
             room = self.db.query(CollaborationRoom).filter(
@@ -631,6 +640,9 @@ class LiveCollaboration:
     
     async def leave_room(self, room_id: str, user_id: str) -> bool:
         """Leave collaboration room"""
+
+
+
         try:
             participant = self.db.query(RoomParticipant).filter(
                 RoomParticipant.room_id == room_id,
@@ -687,6 +699,9 @@ class LiveCollaboration:
         reply_to: Optional[str] = None
     ) -> str:
         """Send message in collaboration room"""
+
+
+
         try:
             message_id = f"msg_{uuid.uuid4().hex[:12]}"
             
@@ -764,6 +779,9 @@ class LiveCollaboration:
         permissions: Optional[Dict[str, bool]] = None
     ) -> str:
         """Share content in collaboration room"""
+
+
+
         try:
             content_id = f"content_{uuid.uuid4().hex[:12]}"
             
@@ -833,6 +851,9 @@ class LiveCollaboration:
     
     async def get_room_participants(self, room_id: str) -> List[Dict[str, Any]]:
         """Get room participants with status"""
+
+
+
         try:
             participants = self.db.query(RoomParticipant).filter(
                 RoomParticipant.room_id == room_id,
@@ -873,6 +894,9 @@ class LiveCollaboration:
         since: Optional[datetime] = None
     ) -> List[Dict[str, Any]]:
         """Get room messages"""
+
+
+
         try:
             query = self.db.query(CollaborationMessage).filter(
                 CollaborationMessage.room_id == room_id,

@@ -132,7 +132,7 @@ async def lifespan(app: FastAPI):
         }
         
         logger.info("All licensing services initialized successfully")
-        logger.info("✅ IA Influencer Agent Licensing System is READY")
+        logger.info(" IA Influencer Agent Licensing System is READY")
         
     except Exception as e:
         logger.error(f"Failed to initialize licensing services: {str(e)}")
@@ -148,24 +148,24 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="IA Influencer Agent - Professional Licensing System",
     description="""
-    ## 🏢 Industrial-Grade Licensing & Rights Management Platform
+    ##  Industrial-Grade Licensing & Rights Management Platform
     
     **Created by: Fahed Mlaiel** <mlaiel@live.de>
     
     ### Advanced Features:
     - 🤖 AI-Powered License Automation
-    - ⛓️ Blockchain Smart Contracts  
-    - 🌍 Global Rights Management
-    - 💰 Revenue Optimization
-    - 🔒 Enterprise Security
-    - 📊 Predictive Analytics
-    - 🔗 External Integrations
-    - ⚖️ Regulatory Compliance
+    -  Blockchain Smart Contracts  
+    -  Global Rights Management
+    -  Revenue Optimization
+    -  Enterprise Security
+    -  Predictive Analytics
+    -  External Integrations
+    -  Regulatory Compliance
     
     ### Core Business Flow:
     **Content Creation → AI Analysis → Rights Protection → Automated Licensing → Revenue Distribution → Collaborative Monetization**
     
-    ⚠️ **COPYRIGHT PROTECTION**: This system is the exclusive property of Fahed Mlaiel.
+     **COPYRIGHT PROTECTION**: This system is the exclusive property of Fahed Mlaiel.
     Unauthorized use is strictly prohibited and will result in legal action.
     """,
     version="1.0.0",
@@ -208,6 +208,9 @@ def get_licensing_service(service_name: str):
 @app.get("/")
 async def root():
     """Root endpoint with system information"""
+
+
+
     return {
         "system": "IA Influencer Agent - Professional Licensing System",
         "version": "1.0.0",
@@ -223,6 +226,9 @@ async def root():
 @app.get("/health")
 async def health_check():
     """System health check"""
+
+
+
     try:
         service_health = {}
         for service_name, service in licensing_services.items():
@@ -257,6 +263,9 @@ async def create_automated_license(
     current_user: dict = Depends(get_current_user)
 ):
     """Create automated license with AI-powered optimization"""
+
+
+
     try:
         service = get_licensing_service("automated_licensing")
         result = await service.create_automated_license(license_request)
@@ -276,6 +285,9 @@ async def optimize_licensing_strategy(
     current_user: dict = Depends(get_current_user)
 ):
     """Optimize licensing strategy using AI analysis"""
+
+
+
     try:
         service = get_licensing_service("automated_licensing")
         result = await service.optimize_licensing_strategy(content_id, target_revenue)
@@ -296,6 +308,9 @@ async def report_copyright_violation(
     current_user: dict = Depends(get_current_user)
 ):
     """Report copyright violation with automated enforcement"""
+
+
+
     try:
         service = get_licensing_service("copyright_enforcement")
         result = await service.process_violation_report(violation_report)
@@ -314,6 +329,9 @@ async def monitor_copyright_protection(
     current_user: dict = Depends(get_current_user)
 ):
     """Monitor copyright protection status"""
+
+
+
     try:
         service = get_licensing_service("copyright_enforcement")
         result = await service.monitor_content_protection(content_id)
@@ -334,6 +352,9 @@ async def create_contract(
     current_user: dict = Depends(get_current_user)
 ):
     """Create intelligent contract with AI-assisted terms"""
+
+
+
     try:
         service = get_licensing_service("contract_management")
         result = await service.create_intelligent_contract(contract_request)
@@ -352,6 +373,9 @@ async def get_contract_status(
     current_user: dict = Depends(get_current_user)
 ):
     """Get contract status and performance metrics"""
+
+
+
     try:
         service = get_licensing_service("contract_management")
         result = await service.get_contract_performance_metrics(contract_id)
@@ -372,6 +396,9 @@ async def optimize_distribution_strategy(
     current_user: dict = Depends(get_current_user)
 ):
     """Optimize distribution strategy with AI-driven analysis"""
+
+
+
     try:
         service = get_licensing_service("distribution_rights")
         result = await service.optimize_distribution_strategy(distribution_request)
@@ -392,6 +419,9 @@ async def calculate_revenue_distribution(
     current_user: dict = Depends(get_current_user)
 ):
     """Calculate intelligent revenue distribution"""
+
+
+
     try:
         service = get_licensing_service("revenue_sharing")
         result = await service.calculate_intelligent_revenue_distribution(sharing_request)
@@ -413,6 +443,9 @@ async def get_usage_analytics(
     current_user: dict = Depends(get_current_user)
 ):
     """Get comprehensive usage analytics"""
+
+
+
     try:
         service = get_licensing_service("usage_analytics")
         result = await service.generate_comprehensive_usage_analytics(content_id, scope)
@@ -433,6 +466,9 @@ async def setup_integration(
     current_user: dict = Depends(get_current_user)
 ):
     """Setup external system integration"""
+
+
+
     try:
         service = get_licensing_service("integration_hub")
         result = await service.setup_integration(integration_request)
@@ -451,6 +487,9 @@ async def synchronize_data(
     current_user: dict = Depends(get_current_user)
 ):
     """Synchronize licensing data across integrations"""
+
+
+
     try:
         service = get_licensing_service("integration_hub")
         result = await service.synchronize_licensing_data(integration_id)
@@ -471,6 +510,9 @@ async def get_system_analytics(
     current_user: dict = Depends(get_current_user)
 ):
     """Get comprehensive system analytics"""
+
+
+
     try:
         analytics_data = {}
         
@@ -505,6 +547,9 @@ async def get_services_status(
     current_user: dict = Depends(get_current_user)
 ):
     """Get status of all licensing services"""
+
+
+
     return {
         "services": list(licensing_services.keys()),
         "total_services": len(licensing_services),

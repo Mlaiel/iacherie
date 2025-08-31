@@ -64,6 +64,9 @@ class EncryptedData:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for storage"""
+
+
+
         return {
             'ciphertext': base64.b64encode(self.ciphertext).decode(),
             'algorithm': self.algorithm.value,
@@ -77,6 +80,9 @@ class EncryptedData:
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'EncryptedData':
         """Create from dictionary"""
+
+
+
         return cls(
             ciphertext=base64.b64decode(data['ciphertext']),
             algorithm=EncryptionAlgorithm(data['algorithm']),
@@ -99,12 +105,18 @@ class KeyPair:
     
     def get_private_key_object(self):
         """Get private key object"""
+
+
+
         return serialization.load_pem_private_key(
             self.private_key, password=None
         )
     
     def get_public_key_object(self):
         """Get public key object"""
+
+
+
         return serialization.load_pem_public_key(self.public_key)
 
 
@@ -120,6 +132,9 @@ class EncryptionManager:
         
     def _generate_master_key(self) -> bytes:
         """Generate secure master key"""
+
+
+
         return secrets.token_bytes(32)  # 256-bit key
     
     def _initialize_fernet(self):
@@ -133,6 +148,9 @@ class EncryptionManager:
                          algorithm: EncryptionAlgorithm = EncryptionAlgorithm.AES_256_GCM,
                          key_id: Optional[str] = None) -> EncryptedData:
         """Encrypt data using specified algorithm"""
+
+
+
         try:
             if isinstance(data, str):
                 data = data.encode('utf-8')
@@ -154,6 +172,9 @@ class EncryptionManager:
     
     async def decrypt_data(self, encrypted_data: EncryptedData) -> bytes:
         """Decrypt data using stored algorithm and parameters"""
+
+
+
         try:
             algorithm = encrypted_data.algorithm
             
@@ -187,6 +208,9 @@ class EncryptionManager:
     
     async def _decrypt_fernet(self, encrypted_data: EncryptedData) -> bytes:
         """Decrypt using Fernet"""
+
+
+
         return self.fernet_instance.decrypt(encrypted_data.ciphertext)
     
     async def _encrypt_aes_gcm(self, data: bytes, key_id: Optional[str]) -> EncryptedData:
@@ -519,6 +543,9 @@ class HashGenerator:
     
     def _generate_bcrypt_hash(self, data: bytes) -> str:
         """Generate bcrypt hash"""
+
+
+
         return bcrypt.hashpw(data, bcrypt.gensalt()).decode()
     
     def verify_bcrypt_hash(self, data: Union[str, bytes], hashed: str) -> bool:
@@ -591,6 +618,9 @@ class TokenValidator:
     
     def validate_token(self, token: str) -> Dict[str, Any]:
         """Validate and decode JWT token"""
+
+
+
         try:
             payload = jwt.decode(token, self.secret_key, algorithms=[self.algorithm])
             return {'valid': True, 'payload': payload}
@@ -625,6 +655,9 @@ class SecureStorage:
     async def store_encrypted_file(self, data: Union[str, bytes], filename: str,
                                  algorithm: EncryptionAlgorithm = EncryptionAlgorithm.AES_256_GCM) -> Dict[str, Any]:
         """Store encrypted file"""
+
+
+
         try:
             # Encrypt data
             encrypted_data = await self.encryption_manager.encrypt_data(data, algorithm)
@@ -652,6 +685,9 @@ class SecureStorage:
     
     async def retrieve_encrypted_file(self, filename: str) -> Dict[str, Any]:
         """Retrieve and decrypt file"""
+
+
+
         try:
             file_path = self.storage_path / filename
             
@@ -711,11 +747,17 @@ class CryptoHelper:
     @staticmethod
     def generate_secure_random(length: int) -> bytes:
         """Generate cryptographically secure random bytes"""
+
+
+
         return secrets.token_bytes(length)
     
     @staticmethod
     def generate_secure_token(length: int = 32) -> str:
         """Generate secure URL-safe token"""
+
+
+
         return secrets.token_urlsafe(length)
     
     @staticmethod
@@ -744,16 +786,25 @@ class CryptoHelper:
     @staticmethod
     def generate_salt(length: int = 16) -> bytes:
         """Generate random salt"""
+
+
+
         return secrets.token_bytes(length)
     
     @staticmethod
     def encode_base64(data: bytes) -> str:
         """Base64 encode data"""
+
+
+
         return base64.b64encode(data).decode('ascii')
     
     @staticmethod
     def decode_base64(data: str) -> bytes:
         """Base64 decode data"""
+
+
+
         return base64.b64decode(data.encode('ascii'))
 
 

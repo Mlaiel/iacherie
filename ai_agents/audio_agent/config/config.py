@@ -7,7 +7,7 @@ settings for AI models, business logic, security, and performance optimization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  PROPRIETARY CONFIGURATION - AUTHORIZED ACCESS ONLY ⚠️
+  PROPRIETARY CONFIGURATION - AUTHORIZED ACCESS ONLY 
 This configuration contains proprietary settings and business logic owned exclusively by Fahed Mlaiel.
 Unauthorized access, modification, or distribution is strictly prohibited.
 """
@@ -279,6 +279,9 @@ class AudioAgentConfig:
     
     def get_summary(self) -> Dict[str, Any]:
         """Get configuration summary for logging"""
+
+
+
         return {
             "environment": self.environment,
             "audio_processing": {

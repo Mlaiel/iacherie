@@ -5,7 +5,7 @@ Architecture: Advanced Event Analytics and Performance Monitoring
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 INTERDIT : Copie, reproduction, modification, ou usage sans autorisation écrite explicite.
 Toute violation sera poursuivie selon la loi allemande et française.
@@ -191,6 +191,9 @@ class EventMetricsCollector(MetricCollector):
     
     def get_definitions(self) -> List[MetricDefinition]:
         """Définitions des métriques d'événements"""
+
+
+
         return [
             MetricDefinition(
                 name="events_total",
@@ -273,6 +276,9 @@ class SystemMetricsCollector(MetricCollector):
     
     def get_definitions(self) -> List[MetricDefinition]:
         """Définitions des métriques système"""
+
+
+
         return [
             MetricDefinition(
                 name="system_cpu_usage",
@@ -357,6 +363,9 @@ class BusinessMetricsCollector(MetricCollector):
     
     def get_definitions(self) -> List[MetricDefinition]:
         """Définitions des métriques business"""
+
+
+
         return [
             MetricDefinition(
                 name="business_content_uploads_total",
@@ -461,6 +470,9 @@ class AlertManager:
     
     def _evaluate_condition(self, value: Union[int, float], condition: str) -> bool:
         """Évalue une condition d'alerte"""
+
+
+
         try:
             # Parse simple conditions like "> 100", "< 0.5", "== 0"
             if condition.startswith("> "):
@@ -769,6 +781,9 @@ class EventMetricsManager:
     
     async def _persist_metrics(self, metrics: Dict[str, MetricValue]):
         """Persiste les métriques dans Redis"""
+
+
+
         try:
             pipe = self.redis_client.pipeline()
             timestamp = int(time.time())
@@ -812,6 +827,9 @@ class EventMetricsManager:
     
     def get_current_metrics(self) -> Dict[str, MetricValue]:
         """Retourne les métriques courantes"""
+
+
+
         return self.current_metrics.copy()
     
     def get_historical_metrics(
@@ -832,6 +850,9 @@ class EventMetricsManager:
     
     def get_active_alerts(self) -> List[Alert]:
         """Retourne les alertes actives"""
+
+
+
         return list(self.alert_manager.active_alerts.values())
     
     def get_alert_history(

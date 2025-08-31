@@ -209,6 +209,9 @@ def get_ttl_for_content_type(content_type: str) -> int:
     Returns:
         Recommended TTL in seconds
     """
+
+
+
     return CONTENT_TYPE_TTL_MAP.get(content_type, 3600)  # Default 1 hour
 
 # Priority Mapping for Different Content Types
@@ -242,4 +245,7 @@ def get_priority_for_content_type(content_type: str) -> CachePriority:
     Returns:
         Recommended cache priority
     """
+
+
+
     return CONTENT_PRIORITY_MAP.get(content_type, CachePriority.NORMAL)

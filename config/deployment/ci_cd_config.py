@@ -111,6 +111,9 @@ class CICDConfig:
     
     def get_github_actions_config(self) -> GitHubActionsConfig:
         """Generate GitHub Actions workflow configuration"""
+
+
+
         return GitHubActionsConfig(
             name=f"IA-Influencer Agent {self.environment.title()} Pipeline",
             trigger_events=["push", "pull_request", "workflow_dispatch"],
@@ -297,6 +300,9 @@ class CICDConfig:
     
     def get_gitlab_ci_config(self) -> GitLabCIConfig:
         """Generate GitLab CI/CD configuration"""
+
+
+
         return GitLabCIConfig(
             image="python:3.11",
             stages=[
@@ -765,6 +771,9 @@ pipeline {{
     
     def get_deployment_strategies(self) -> Dict[str, Dict[str, Any]]:
         """Get deployment strategy configurations"""
+
+
+
         return {
             "blue_green": {
                 "name": "Blue-Green Deployment",

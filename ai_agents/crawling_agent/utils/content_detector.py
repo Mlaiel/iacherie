@@ -7,7 +7,7 @@ and similarity matching for content protection and infringement detection.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -226,6 +226,9 @@ class ContentDetector:
 
     async def initialize(self) -> None:
         """Initialize content detection models and indices"""
+
+
+
         try:
             # Download required NLTK data
             try:
@@ -422,6 +425,9 @@ class ContentDetector:
 
     async def _create_image_signature(self, image_data: bytes, signature: ContentSignature) -> None:
         """Create image-specific signature components"""
+
+
+
         try:
             # Load image
             image = Image.open(io.BytesIO(image_data))
@@ -447,6 +453,9 @@ class ContentDetector:
 
     async def _extract_deep_image_features(self, image: Image.Image) -> np.ndarray:
         """Extract deep features from image using pre-trained model"""
+
+
+
         try:
             # Convert PIL image to numpy array
             img_array = np.array(image.resize((224, 224)))
@@ -465,6 +474,9 @@ class ContentDetector:
 
     async def _create_audio_signature(self, audio_data: bytes, signature: ContentSignature) -> None:
         """Create audio-specific signature components"""
+
+
+
         try:
             # Load audio data
             # This is a placeholder - implement actual audio loading
@@ -501,6 +513,9 @@ class ContentDetector:
 
     async def _add_to_indices(self, signature: ContentSignature) -> None:
         """Add signature to FAISS indices for fast retrieval"""
+
+
+
         try:
             # Add text embeddings to index
             if signature.semantic_embedding is not None and self.text_index is not None:
@@ -876,6 +891,9 @@ class ContentDetector:
 
     def get_content_signature(self, content_id: str) -> Optional[ContentSignature]:
         """Get content signature by ID"""
+
+
+
         return self.content_signatures.get(content_id)
 
     def remove_content_signature(self, content_id: str) -> bool:
@@ -888,6 +906,9 @@ class ContentDetector:
 
     def get_detection_statistics(self) -> Dict[str, Any]:
         """Get detection system statistics"""
+
+
+
         return {
             **self.detection_stats,
             'total_signatures': len(self.content_signatures),
@@ -1011,4 +1032,7 @@ class SimilarityScanner:
     
     def get_scan_history(self) -> List[Dict]:
         """Get historical scan results"""
+
+
+
         return self.scan_history

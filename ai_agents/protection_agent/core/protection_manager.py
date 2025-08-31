@@ -90,6 +90,9 @@ class ProtectionManager:
         
     async def start_services(self):
         """Start all protection services and background tasks"""
+
+
+
         try:
             # Start monitoring service
             if not self.monitoring_active:
@@ -107,6 +110,9 @@ class ProtectionManager:
             
     async def stop_services(self):
         """Stop all protection services gracefully"""
+
+
+
         try:
             self.monitoring_active = False
             
@@ -134,6 +140,9 @@ class ProtectionManager:
         Returns:
             Request ID for tracking
         """
+
+
+
         try:
             request_id = f"REQ_{uuid.uuid4().hex[:16].upper()}"
             
@@ -170,6 +179,9 @@ class ProtectionManager:
         Returns:
             Batch processing results
         """
+
+
+
         try:
             batch_id = f"BATCH_{uuid.uuid4().hex[:12].upper()}"
             batch_results = {
@@ -212,6 +224,9 @@ class ProtectionManager:
             
     def get_request_status(self, request_id: str) -> Dict:
         """Get status of protection request"""
+
+
+
         try:
             if request_id in self.active_requests:
                 request = self.active_requests[request_id]
@@ -245,6 +260,9 @@ class ProtectionManager:
             
     def get_dashboard_metrics(self) -> Dict:
         """Get comprehensive dashboard metrics"""
+
+
+
         try:
             # Calculate processing statistics
             total_requests = self.metrics['requests_processed']
@@ -289,6 +307,9 @@ class ProtectionManager:
             
     def get_owner_protection_summary(self, owner_id: str) -> Dict:
         """Get protection summary for specific owner"""
+
+
+
         try:
             # Get owner's requests
             owner_requests = [req for req in list(self.active_requests.values()) + list(self.completed_requests.values()) if req.owner_id == owner_id]
@@ -331,6 +352,9 @@ class ProtectionManager:
             
     async def handle_monitoring_alert(self, alert_data: Dict) -> str:
         """Handle monitoring alert and take appropriate actions"""
+
+
+
         try:
             alert_id = f"ALERT_{uuid.uuid4().hex[:12].upper()}"
             
@@ -435,6 +459,9 @@ class ProtectionManager:
                 
     async def _monitor_protected_content(self):
         """Monitor all protected content for violations and usage"""
+
+
+
         try:
             # Get all protected content IDs
             protected_content = []
@@ -518,6 +545,9 @@ class ProtectionManager:
         
     async def _cleanup_old_records(self):
         """Clean up old completed requests and resolved alerts"""
+
+
+
         try:
             cutoff_date = datetime.utcnow() - timedelta(days=30)
             
@@ -624,6 +654,9 @@ class ProtectionAgentManager(BaseAgent):
         
     async def initialize(self):
         """Initialize protection manager and all components"""
+
+
+
         try:
             # Initialize core protection agent
             await self.protection_agent.initialize()
@@ -1137,6 +1170,9 @@ class ProtectionAgentManager(BaseAgent):
     
     async def _start_monitoring_services(self):
         """Start background monitoring services"""
+
+
+
         try:
             # Start violation monitoring
             asyncio.create_task(self._continuous_violation_monitoring())
@@ -1231,24 +1267,42 @@ class ProtectionAgentManager(BaseAgent):
     
     async def _check_protection_agent_health(self):
         """Check protection agent health"""
+
+
+
         return {'status': 'healthy', 'response_time': 0.1}
     
     async def _check_batch_processor_health(self):
         """Check batch processor health"""
+
+
+
         return {'status': 'healthy', 'queue_size': 0}
     
     async def _check_monitoring_services_health(self):
         """Check monitoring services health"""
+
+
+
         return {'status': 'healthy', 'active_monitors': 5}
     
     async def _check_database_health(self):
         """Check database health"""
+
+
+
         return {'status': 'healthy', 'connection_pool': '10/10'}
     
     async def _check_queue_health(self):
         """Check queue health"""
+
+
+
         return {'status': 'healthy', 'pending_jobs': 0}
     
     async def _get_system_uptime(self):
         """Get system uptime"""
+
+
+
         return "99.9%"

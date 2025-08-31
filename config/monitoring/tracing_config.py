@@ -76,6 +76,9 @@ class TracingConfig:
     
     def get_global_config(self) -> Dict[str, Any]:
         """Get global tracing configuration"""
+
+
+
         return {
             "enabled": self.tracing_enabled,
             "service_name": self.service_name,
@@ -202,6 +205,9 @@ class TracingConfig:
     
     def get_sampling_config(self) -> Dict[str, Any]:
         """Get sampling configuration"""
+
+
+
         return {
             "default_strategy": SamplingStrategy.PARENT_BASED.value,
             "strategies": {
@@ -246,6 +252,9 @@ class TracingConfig:
     
     def get_propagation_config(self) -> Dict[str, Any]:
         """Get context propagation configuration"""
+
+
+
         return {
             "propagators": [
                 "tracecontext",
@@ -260,6 +269,9 @@ class TracingConfig:
     
     def get_span_processor_config(self) -> Dict[str, Any]:
         """Get span processor configuration"""
+
+
+
         return {
             "batch_processor": {
                 "max_queue_size": 2048,
@@ -274,6 +286,9 @@ class TracingConfig:
     
     def get_instrumentation_libraries(self) -> List[str]:
         """Get list of auto-instrumentation libraries"""
+
+
+
         return [
             "opentelemetry-instrumentation-fastapi",
             "opentelemetry-instrumentation-requests",
@@ -291,6 +306,9 @@ class TracingConfig:
     
     def get_custom_span_attributes(self) -> Dict[str, List[SpanAttribute]]:
         """Get custom span attributes for different operations"""
+
+
+
         return {
             "http_requests": [
                 SpanAttribute("http.route", ""),
@@ -345,6 +363,9 @@ class TracingConfig:
     
     def get_trace_filters(self) -> Dict[str, Any]:
         """Get trace filtering configuration"""
+
+
+
         return {
             "exclude_endpoints": [
                 "/health",
@@ -377,6 +398,9 @@ class TracingConfig:
     
     def get_performance_config(self) -> Dict[str, Any]:
         """Get performance optimization configuration"""
+
+
+
         return {
             "memory_limits": {
                 "max_spans_in_memory": 10000,
@@ -399,6 +423,9 @@ class TracingConfig:
     
     def get_jaeger_config(self) -> Dict[str, Any]:
         """Get Jaeger-specific configuration"""
+
+
+
         return {
             "collector_endpoint": self.jaeger_endpoint,
             "agent_host": os.getenv("JAEGER_AGENT_HOST", "jaeger-agent"),
@@ -419,6 +446,9 @@ class TracingConfig:
     
     def get_complete_config(self) -> Dict[str, Any]:
         """Get complete tracing configuration"""
+
+
+
         return {
             "global": self.get_global_config(),
             "exporter": self.get_exporter_config(),

@@ -96,6 +96,9 @@ class AnalyticsStorage:
         
     def _initialize_storage_configs(self) -> Dict[StorageTier, StorageConfig]:
         """Initialize storage tier configurations."""
+
+
+
         
         return {
             StorageTier.HOT: StorageConfig(
@@ -155,6 +158,9 @@ class AnalyticsStorage:
         Returns:
             Data identifier for retrieval
         """
+
+
+
         try:
             if not data_id:
                 data_id = f"{data_type}_{datetime.now().strftime('%Y%m%d_%H%M%S_%f')}"
@@ -419,6 +425,9 @@ class AnalyticsStorage:
         Returns:
             Retrieved data or None if not found
         """
+
+
+
         try:
             # Get metadata first
             metadata = await self._get_metadata(data_id)
@@ -639,6 +648,9 @@ class AnalyticsStorage:
             
     async def _promote_data_tier(self, data_id: str, new_tier: StorageTier) -> None:
         """Promote data to higher performance tier."""
+
+
+
         
         try:
             # Retrieve current data
@@ -660,6 +672,9 @@ class AnalyticsStorage:
             
     async def _delete_expired_data(self, data_id: str) -> None:
         """Delete expired data from all storage tiers."""
+
+
+
         
         try:
             # Get metadata to determine storage locations
@@ -736,6 +751,9 @@ class AnalyticsStorage:
         Returns:
             List of matching data metadata
         """
+
+
+
         try:
             async with get_database_session() as session:
                 query = select(AnalyticsMetadata)
@@ -791,6 +809,9 @@ class AnalyticsStorage:
             
     async def cleanup_expired_data(self) -> int:
         """Clean up all expired data across tiers."""
+
+
+
         
         try:
             cleanup_count = 0
@@ -835,6 +856,9 @@ class MetricsWarehouse:
         aggregation_level: str = "daily"
     ) -> None:
         """Store pre-aggregated metrics for fast querying."""
+
+
+
         
         try:
             async with get_database_session() as session:
@@ -886,6 +910,9 @@ class TimeSeriesStore:
         tags: Optional[Dict[str, str]] = None
     ) -> None:
         """Store time-series data point."""
+
+
+
         
         try:
             async with get_database_session() as session:
@@ -913,6 +940,9 @@ class TimeSeriesStore:
         interval: Optional[str] = None
     ) -> List[Dict[str, Any]]:
         """Query time-series data with optional aggregation."""
+
+
+
         
         try:
             async with get_database_session() as session:
@@ -998,6 +1028,9 @@ class CacheManager:
         
     async def get_cached_data(self, cache_key: str) -> Optional[Any]:
         """Retrieve data from cache."""
+
+
+
         
         try:
             redis_client = redis.Redis()  # Use sync Redis for caching
@@ -1022,6 +1055,9 @@ class CacheManager:
         ttl_seconds: int = 3600
     ) -> None:
         """Store data in cache with TTL."""
+
+
+
         
         try:
             redis_client = redis.Redis()
@@ -1034,6 +1070,9 @@ class CacheManager:
             
     async def invalidate_cache(self, pattern: str) -> int:
         """Invalidate cache entries matching pattern."""
+
+
+
         
         try:
             redis_client = redis.Redis()

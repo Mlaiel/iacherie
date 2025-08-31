@@ -203,7 +203,10 @@ class ContentProtectionSystem:
         self.logger.info("ContentProtectionSystem initialized successfully")
     
     def _initialize_protection_engines(self):
-        """Initialize all protection engine components."""        try:
+        """Initialize all protection engine components."""
+
+
+        try:
             # AI fingerprint engines
             self.audio_fingerprint = AudioFingerprintEngine(
                 self.config.get("audio_fingerprint", {})
@@ -601,7 +604,10 @@ class ContentProtectionSystem:
         self,
         protection_request: ContentProtectionRequest
     ) -> Dict[str, Any]:
-        """Apply digital watermarking to content."""        try:
+        """Apply digital watermarking to content."""
+
+
+        try:
             watermark_data = {
                 "owner_id": protection_request.user_id,
                 "content_id": protection_request.content_id,
@@ -638,7 +644,10 @@ class ContentProtectionSystem:
         protection_request: ContentProtectionRequest,
         fingerprint_hashes: Dict[str, str]
     ) -> Dict[str, Any]:
-        """Register content protection on blockchain."""        try:
+        """Register content protection on blockchain."""
+
+
+        try:
             registration_data = {
                 "content_id": protection_request.content_id,
                 "owner_id": protection_request.user_id,
@@ -663,7 +672,10 @@ class ContentProtectionSystem:
         protection_request: ContentProtectionRequest,
         fingerprint_hashes: Dict[str, str]
     ) -> Dict[str, Any]:
-        """Setup real-time content monitoring."""        try:
+        """Setup real-time content monitoring."""
+
+
+        try:
             monitoring_config = {
                 "content_id": protection_request.content_id,
                 "fingerprint_hashes": fingerprint_hashes,
@@ -800,7 +812,10 @@ class ContentProtectionSystem:
                 self.logger.error(f"Automated response failed for threat {threat.alert_id}: {e}")
     
     async def _get_monitoring_data(self, content_id: str) -> Dict[str, Any]:
-        """Get real-time monitoring data for content."""        return {
+        """Get real-time monitoring data for content."""
+
+
+        return {
             "monitoring_active": True,
             "last_scan": datetime.utcnow().isoformat(),
             "platforms_monitored": 7,

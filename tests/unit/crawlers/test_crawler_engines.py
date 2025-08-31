@@ -71,6 +71,9 @@ class TestSpotifyCrawler:
     @pytest.fixture
     def mock_spotify_api_response(self):
         """Mock Spotify API response data."""
+
+
+
         return {
             'tracks': {
                 'items': [
@@ -220,6 +223,9 @@ class TestYouTubeCrawler:
     @pytest.fixture
     def mock_youtube_api_response(self):
         """Mock YouTube API response data."""
+
+
+
         return {
             'items': [
                 {
@@ -545,6 +551,9 @@ class TestRateLimiter:
     @pytest.fixture
     def rate_limiter(self):
         """Create rate limiter instance."""
+
+
+
         return RateLimiter(max_requests=10, time_window=60)
     
     @pytest.mark.asyncio

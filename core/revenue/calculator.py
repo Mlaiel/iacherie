@@ -4,26 +4,26 @@ Revenue Calculator Engine - Advanced mathematical revenue computation system
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  STRICT COPYRIGHT WARNING ⚠️
+  STRICT COPYRIGHT WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, reproduction, modification, or distribution without explicit 
 written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 REVENUE CALCULATOR ENGINE - ENTERPRISE EDITION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 
 Developed by Expert Team:
-🎯 Lead Dev IA: Fahed Mlaiel (Advanced AI/ML Architecture)
-🛠️  Backend Senior: System Architecture & Performance Optimization  
+ Lead Dev IA: Fahed Mlaiel (Advanced AI/ML Architecture)
+  Backend Senior: System Architecture & Performance Optimization  
 🤖 ML Engineer: Revenue Forecasting & Optimization Algorithms
-🗄️  DBA: Advanced Data Management & Analytics
-🔒 Security Expert: Enterprise-Grade Security & Encryption
-🚀 Microservices: Scalable Distributed Architecture
-🎵 Audio Expert: Audio Revenue Stream Optimization
-⚙️  DevOps: Production Infrastructure & Monitoring
+  DBA: Advanced Data Management & Analytics
+ Security Expert: Enterprise-Grade Security & Encryption
+ Microservices: Scalable Distributed Architecture
+ Audio Expert: Audio Revenue Stream Optimization
+  DevOps: Production Infrastructure & Monitoring
 🧠 IA Prompt Engineer: AI-Powered Decision Making
 """
 
@@ -114,6 +114,9 @@ class RevenueCalculation:
     @property
     def profit(self) -> Decimal:
         """Calculate profit (revenue - costs)"""
+
+
+
         return self.result - self.inputs.costs
     
     @property
@@ -157,6 +160,9 @@ class RevenueCalculatorEngine:
         
     async def initialize(self) -> None:
         """Initialize calculator engine"""
+
+
+
         try:
             # Load custom formulas
             await self._load_custom_formulas()
@@ -201,6 +207,9 @@ class RevenueCalculatorEngine:
         include_sensitivity: bool = False
     ) -> RevenueCalculation:
         """Calculate revenue using specified method and model"""
+
+
+
         try:
             calculation_id = str(uuid.uuid4())
             
@@ -275,6 +284,9 @@ class RevenueCalculatorEngine:
     
     async def _simple_multiplicative(self, inputs: RevenueInputs, time_period: TimePeriod) -> Decimal:
         """Simple multiplicative calculation: base * multiplier"""
+
+
+
         return inputs.base_amount * inputs.multiplier
     
     async def _weighted_average(self, inputs: RevenueInputs, time_period: TimePeriod) -> Decimal:
@@ -529,6 +541,9 @@ class RevenueCalculatorEngine:
         time_period: TimePeriod
     ) -> Dict[str, Any]:
         """Perform sensitivity analysis"""
+
+
+
         try:
             base_result = await self._execute_calculation_method(method, inputs, time_period)
             
@@ -605,6 +620,9 @@ class RevenueCalculatorEngine:
     
     async def _spotify_revenue_formula(self, streams: int, rate_per_stream: Decimal) -> Decimal:
         """Spotify revenue calculation"""
+
+
+
         return Decimal(str(streams)) * rate_per_stream
     
     async def _youtube_revenue_formula(self, views: int, cpm: Decimal, engagement_rate: Decimal) -> Decimal:
@@ -634,6 +652,9 @@ class RevenueCalculatorEngine:
     
     async def _commission_revenue_formula(self, sales_volume: Decimal, commission_rate: Decimal) -> Decimal:
         """Commission revenue calculation"""
+
+
+
         return sales_volume * commission_rate
     
     async def _licensing_revenue_formula(self, licenses: int, license_fee: Decimal, royalty_rate: Decimal, usage_volume: Decimal) -> Decimal:
@@ -648,6 +669,9 @@ class RevenueCalculatorEngine:
         parameters: Dict[str, Any]
     ) -> Decimal:
         """Calculate using custom formula"""
+
+
+
         try:
             if formula_name not in self.custom_formulas:
                 raise ValueError(f"Unknown formula: {formula_name}")
@@ -680,6 +704,9 @@ class RevenueCalculatorEngine:
         time_period: TimePeriod = TimePeriod.MONTHLY
     ) -> Dict[str, Any]:
         """Optimize revenue parameters to reach target"""
+
+
+
         try:
             def objective_function(x):
                 """Objective function for optimization"""
@@ -814,6 +841,9 @@ class RevenueCalculatorEngine:
         time_period: TimePeriod = TimePeriod.MONTHLY
     ) -> Dict[str, Any]:
         """Perform scenario analysis"""
+
+
+
         try:
             scenario_results = []
             
@@ -917,6 +947,9 @@ class RevenueCalculatorEngine:
         include_details: bool = True
     ) -> Dict[str, Any]:
         """Export comprehensive calculation report"""
+
+
+
         try:
             report = {
                 'calculation_info': {

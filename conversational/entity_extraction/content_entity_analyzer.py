@@ -8,7 +8,7 @@ specific entity recognition for musicians, influencers, and content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
@@ -164,6 +164,9 @@ class ContentEntityAnalyzer(BaseService):
         
     async def initialize(self):
         """Initialize content analysis resources"""
+
+
+
         try:
             self.logger.info("Initializing ContentEntityAnalyzer...")
             
@@ -187,6 +190,9 @@ class ContentEntityAnalyzer(BaseService):
     
     async def _load_content_models(self):
         """Load comprehensive machine learning models for advanced content analysis"""
+
+
+
         try:
             # Primary content classification model with creative industry fine-tuning
             self.content_classifier = pipeline(
@@ -375,6 +381,9 @@ class ContentEntityAnalyzer(BaseService):
                 
             def fit(self, content_corpus):
                 """Fit the recommendation model on content corpus"""
+
+
+
                 try:
                     tfidf_matrix = self.tfidf.fit_transform(content_corpus)
                     self.nmf.fit(tfidf_matrix)
@@ -425,6 +434,9 @@ class ContentEntityAnalyzer(BaseService):
     
     async def _load_fallback_content_models(self):
         """Load simplified fallback models if advanced models fail"""
+
+
+
         try:
             # Basic content classifier
             self.content_classifier = pipeline(
@@ -453,6 +465,9 @@ class ContentEntityAnalyzer(BaseService):
     
     async def _initialize_format_analyzers(self):
         """Initialize format-specific analyzers"""
+
+
+
         try:
             # Audio analyzer initialization
             self.audio_analyzer = {
@@ -535,6 +550,9 @@ class ContentEntityAnalyzer(BaseService):
     
     async def _initialize_quality_models(self):
         """Initialize quality assessment models"""
+
+
+
         try:
             # Audio quality metrics
             self.quality_metrics = {
@@ -1113,6 +1131,9 @@ class ContentEntityAnalyzer(BaseService):
         metadata: ContentMetadata
     ) -> Dict[str, Any]:
         """Analyze generic content"""
+
+
+
         return {
             'entities': [],
             'technical_analysis': {'format': 'unknown'},
@@ -1123,6 +1144,9 @@ class ContentEntityAnalyzer(BaseService):
     # Helper methods for audio analysis
     def _estimate_key_from_chroma(self, chroma: np.ndarray) -> str:
         """Estimate musical key from chroma features"""
+
+
+
         try:
             # Simplified key estimation
             chroma_mean = np.mean(chroma, axis=1)
@@ -1160,6 +1184,9 @@ class ContentEntityAnalyzer(BaseService):
     
     def _analyze_tonal_characteristics(self, chroma: np.ndarray) -> Dict[str, float]:
         """Analyze tonal characteristics"""
+
+
+
         return {
             'harmonic_complexity': float(np.std(np.mean(chroma, axis=1))),
             'tonal_stability': float(1 - np.std(chroma) / np.mean(chroma)) if np.mean(chroma) > 0 else 0
@@ -1232,6 +1259,9 @@ class ContentEntityAnalyzer(BaseService):
     
     def _extract_dominant_colors(self, img_array: np.ndarray) -> List[str]:
         """Extract dominant colors from image"""
+
+
+
         try:
             # Reshape image for clustering
             pixels = img_array.reshape(-1, 3)
@@ -1254,6 +1284,9 @@ class ContentEntityAnalyzer(BaseService):
     
     def _analyze_color_distribution(self, img_array: np.ndarray) -> Dict[str, float]:
         """Analyze color distribution in image"""
+
+
+
         try:
             # Calculate color statistics
             red_mean = float(np.mean(img_array[:, :, 0]))
@@ -1272,6 +1305,9 @@ class ContentEntityAnalyzer(BaseService):
     # Helper methods for text analysis
     def _calculate_readability_score(self, text: str) -> float:
         """Calculate readability score (simplified Flesch score)"""
+
+
+
         try:
             sentences = text.count('.') + text.count('!') + text.count('?')
             words = len(text.split())
@@ -1307,6 +1343,9 @@ class ContentEntityAnalyzer(BaseService):
     
     def _analyze_sentiment(self, text: str) -> Dict[str, float]:
         """Analyze sentiment of text"""
+
+
+
         try:
             if self.content_classifier:
                 # Use classifier for sentiment analysis
@@ -1337,6 +1376,9 @@ class ContentEntityAnalyzer(BaseService):
     
     def _extract_topic_keywords(self, doc) -> List[str]:
         """Extract topic keywords from spaCy doc"""
+
+
+
         try:
             # Extract important tokens
             keywords = []
@@ -1357,6 +1399,9 @@ class ContentEntityAnalyzer(BaseService):
     
     def _analyze_writing_style(self, doc) -> Dict[str, Any]:
         """Analyze writing style from spaCy doc"""
+
+
+
         try:
             # Calculate style metrics
             total_tokens = len(doc)
@@ -1660,6 +1705,9 @@ class ContentEntityAnalyzer(BaseService):
     
     async def get_analysis_statistics(self) -> Dict[str, Any]:
         """Get content analysis statistics"""
+
+
+
         return {
             **self.analysis_stats,
             'supported_formats': {
@@ -1674,6 +1722,9 @@ class ContentEntityAnalyzer(BaseService):
     
     async def health_check(self) -> Dict[str, Any]:
         """Health check for content entity analyzer"""
+
+
+
         return {
             'status': 'healthy',
             'text_analyzer_available': self.text_analyzer is not None,

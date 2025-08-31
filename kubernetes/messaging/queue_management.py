@@ -136,6 +136,9 @@ class QueueManager:
 
     async def initialize(self) -> None:
         """Initialize queue manager"""
+
+
+
         try:
             # Setup Redis connection
             self.redis_client = aioredis.from_url(
@@ -279,6 +282,9 @@ class QueueManager:
 
     async def create_queue(self, config: QueueConfiguration) -> bool:
         """Create a new queue"""
+
+
+
         try:
             # Store configuration
             self.queues[config.name] = config
@@ -314,6 +320,9 @@ class QueueManager:
 
     async def _initialize_queue_redis_structures(self, queue_name: str) -> None:
         """Initialize Redis structures for queue"""
+
+
+
         try:
             # Priority queues for different priority levels
             for priority in QueuePriority:
@@ -343,6 +352,9 @@ class QueueManager:
         max_retries: int = 3
     ) -> str:
         """Enqueue a task for processing"""
+
+
+
         try:
             if queue_name not in self.queues:
                 raise ValueError(f"Queue '{queue_name}' does not exist")
@@ -400,6 +412,9 @@ class QueueManager:
 
     async def dequeue_task(self, queue_name: str, worker_id: str) -> Optional[QueueTask]:
         """Dequeue next task for processing"""
+
+
+
         try:
             if queue_name not in self.queues:
                 return None
@@ -450,6 +465,9 @@ class QueueManager:
 
     async def _process_scheduled_tasks(self, queue_name: str) -> None:
         """Move scheduled tasks to active queues when ready"""
+
+
+
         try:
             current_time = time.time()
             scheduled_key = f"queue:{queue_name}:scheduled"
@@ -474,6 +492,9 @@ class QueueManager:
 
     async def complete_task(self, task_id: str, result: Dict[str, Any] = None) -> bool:
         """Mark task as completed"""
+
+
+
         try:
             # Get task data
             task_data = await self.redis_client.hgetall(f"task:{task_id}")
@@ -510,6 +531,9 @@ class QueueManager:
 
     async def fail_task(self, task_id: str, error: str, retry: bool = True) -> bool:
         """Mark task as failed and optionally retry"""
+
+
+
         try:
             # Get task data
             task_data = await self.redis_client.hgetall(f"task:{task_id}")
@@ -564,6 +588,9 @@ class QueueManager:
 
     async def _start_queue_workers(self, queue_name: str, worker_count: int) -> None:
         """Start workers for a queue"""
+
+
+
         try:
             if queue_name not in self.workers:
                 self.workers[queue_name] = []
@@ -613,6 +640,9 @@ class QueueManager:
 
     async def _process_task(self, task: QueueTask) -> Dict[str, Any]:
         """Process a task (placeholder - would be implemented by specific processors)"""
+
+
+
         try:
             # This is a placeholder - actual task processing would be implemented
             # by specific task processors based on task_type
@@ -630,6 +660,9 @@ class QueueManager:
 
     async def _update_queue_stats(self, queue_name: str, metric: str, delta: int) -> None:
         """Update queue statistics"""
+
+
+
         try:
             if queue_name in self.queue_stats:
                 current_value = getattr(self.queue_stats[queue_name], metric, 0)
@@ -641,6 +674,9 @@ class QueueManager:
 
     async def _update_processing_time_stats(self, queue_name: str, processing_time: float) -> None:
         """Update average processing time statistics"""
+
+
+
         try:
             if queue_name in self.queue_stats:
                 stats = self.queue_stats[queue_name]
@@ -658,6 +694,9 @@ class QueueManager:
 
     async def _start_monitoring(self) -> None:
         """Start queue monitoring tasks"""
+
+
+
         try:
             # Queue stats monitor
             stats_task = asyncio.create_task(self._monitor_queue_stats())
@@ -691,6 +730,9 @@ class QueueManager:
 
     async def _collect_queue_metrics(self, queue_name: str) -> None:
         """Collect metrics for a specific queue"""
+
+
+
         try:
             # Get queue lengths
             pending_count = 0
@@ -740,6 +782,9 @@ class QueueManager:
 
     async def _auto_scale_queue(self, queue_name: str, config: QueueConfiguration) -> None:
         """Auto-scale workers for a queue based on demand"""
+
+
+
         try:
             stats = self.queue_stats.get(queue_name)
             if not stats:
@@ -764,6 +809,9 @@ class QueueManager:
 
     async def _scale_up_workers(self, queue_name: str, count: int) -> None:
         """Scale up workers for a queue"""
+
+
+
         try:
             current_count = len(self.workers.get(queue_name, []))
             
@@ -781,6 +829,9 @@ class QueueManager:
 
     async def _scale_down_workers(self, queue_name: str, count: int) -> None:
         """Scale down workers for a queue"""
+
+
+
         try:
             workers = self.workers.get(queue_name, [])
             
@@ -811,6 +862,9 @@ class QueueManager:
 
     async def get_queue_status(self, queue_name: str) -> Optional[QueueStats]:
         """Get status for a specific queue"""
+
+
+
         try:
             if queue_name not in self.queue_stats:
                 return None
@@ -826,6 +880,9 @@ class QueueManager:
 
     async def get_all_queue_status(self) -> Dict[str, QueueStats]:
         """Get status for all queues"""
+
+
+
         try:
             for queue_name in self.queues:
                 await self._collect_queue_metrics(queue_name)
@@ -838,6 +895,9 @@ class QueueManager:
 
     async def pause_queue(self, queue_name: str) -> bool:
         """Pause a queue"""
+
+
+
         try:
             if queue_name in self.queue_stats:
                 self.queue_stats[queue_name].status = QueueStatus.PAUSED
@@ -851,6 +911,9 @@ class QueueManager:
 
     async def resume_queue(self, queue_name: str) -> bool:
         """Resume a paused queue"""
+
+
+
         try:
             if queue_name in self.queue_stats:
                 self.queue_stats[queue_name].status = QueueStatus.ACTIVE
@@ -864,6 +927,9 @@ class QueueManager:
 
     async def shutdown(self) -> None:
         """Shutdown queue manager"""
+
+
+
         try:
             logger.info("Shutting down queue manager")
             

@@ -150,6 +150,9 @@ class DatabaseConnectionFactory:
                               tenant_id: Optional[str] = None,
                               custom_config: Optional[Dict[str, Any]] = None) -> Any:
         """Create a database connection handler"""
+
+
+
         
         try:
             # Validate handler type
@@ -282,6 +285,9 @@ class DatabaseConnectionFactory:
     
     def list_connections(self) -> List[str]:
         """List all active connections"""
+
+
+
         return list(self.handlers.keys())
     
     async def validate_connection(self, handler_type: str, tenant_id: Optional[str] = None) -> bool:
@@ -337,6 +343,9 @@ class DatabaseConnectionFactory:
     
     async def refresh_connection(self, handler_type: str, tenant_id: Optional[str] = None) -> bool:
         """Refresh a connection (close and recreate)"""
+
+
+
         
         try:
             # Close existing connection
@@ -371,6 +380,9 @@ class DatabaseConnectionFactory:
     
     async def add_tenant(self, tenant_config: TenantConfig) -> bool:
         """Add a new tenant and create its connections"""
+
+
+
         
         try:
             # Add tenant to configuration manager
@@ -390,6 +402,9 @@ class DatabaseConnectionFactory:
     
     async def remove_tenant(self, tenant_id: str) -> bool:
         """Remove a tenant and close its connections"""
+
+
+
         
         try:
             # Close tenant connections

@@ -7,7 +7,7 @@ correctly and that the basic structure is functional.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -46,7 +46,7 @@ def validate_orchestration_imports() -> Dict[str, Any]:
         "backend.core.orchestration.index"
     ]
     
-    print("🔍 Validating Orchestration Module Imports...")
+    print(" Validating Orchestration Module Imports...")
     print("=" * 60)
     
     for module_name in modules_to_test:
@@ -54,7 +54,7 @@ def validate_orchestration_imports() -> Dict[str, Any]:
             print(f"Testing import: {module_name}")
             __import__(module_name)
             results["success"].append(module_name)
-            print(f"✅ SUCCESS: {module_name}")
+            print(f" SUCCESS: {module_name}")
             
         except Exception as e:
             error_info = {
@@ -63,23 +63,23 @@ def validate_orchestration_imports() -> Dict[str, Any]:
                 "traceback": traceback.format_exc()
             }
             results["failed"].append(error_info)
-            print(f"❌ FAILED: {module_name} - {str(e)}")
+            print(f" FAILED: {module_name} - {str(e)}")
     
     # Test main module import
     try:
         print(f"\nTesting main module import...")
         import backend.core.orchestration
         results["success"].append("backend.core.orchestration")
-        print(f"✅ SUCCESS: backend.core.orchestration")
+        print(f" SUCCESS: backend.core.orchestration")
         
         # Test __all__ exports
         if hasattr(backend.core.orchestration, '__all__'):
-            print(f"📋 Available exports: {len(backend.core.orchestration.__all__)} items")
+            print(f" Available exports: {len(backend.core.orchestration.__all__)} items")
             for export in backend.core.orchestration.__all__:
                 if hasattr(backend.core.orchestration, export):
-                    print(f"  ✓ {export}")
+                    print(f"   {export}")
                 else:
-                    print(f"  ❌ {export} (missing)")
+                    print(f"   {export} (missing)")
         
     except Exception as e:
         error_info = {
@@ -88,7 +88,7 @@ def validate_orchestration_imports() -> Dict[str, Any]:
             "traceback": traceback.format_exc()
         }
         results["failed"].append(error_info)
-        print(f"❌ FAILED: backend.core.orchestration - {str(e)}")
+        print(f" FAILED: backend.core.orchestration - {str(e)}")
     
     # Generate summary
     total_modules = len(modules_to_test) + 1  # +1 for main module
@@ -103,7 +103,7 @@ def validate_orchestration_imports() -> Dict[str, Any]:
     }
     
     print("\n" + "=" * 60)
-    print("📊 VALIDATION SUMMARY")
+    print(" VALIDATION SUMMARY")
     print("=" * 60)
     print(f"Total modules tested: {total_modules}")
     print(f"Successful imports: {success_count}")
@@ -111,15 +111,15 @@ def validate_orchestration_imports() -> Dict[str, Any]:
     print(f"Success rate: {results['summary']['success_rate']:.1f}%")
     
     if failed_count == 0:
-        print("\n🎉 ALL MODULES IMPORTED SUCCESSFULLY!")
-        print("✅ Orchestration module structure is valid and functional")
+        print("\n ALL MODULES IMPORTED SUCCESSFULLY!")
+        print(" Orchestration module structure is valid and functional")
     else:
-        print(f"\n⚠️  {failed_count} MODULES FAILED TO IMPORT")
-        print("❌ Please check the failed modules and fix import issues")
+        print(f"\n  {failed_count} MODULES FAILED TO IMPORT")
+        print(" Please check the failed modules and fix import issues")
         
-        print("\n🔍 FAILED MODULES DETAILS:")
+        print("\n FAILED MODULES DETAILS:")
         for failure in results["failed"]:
-            print(f"\n📍 Module: {failure['module']}")
+            print(f"\n Module: {failure['module']}")
             print(f"   Error: {failure['error']}")
     
     return results
@@ -127,7 +127,7 @@ def validate_orchestration_imports() -> Dict[str, Any]:
 
 def validate_orchestration_structure():
     """Validate the overall orchestration module structure."""
-    print("\n🏗️  VALIDATING ORCHESTRATION STRUCTURE...")
+    print("\n  VALIDATING ORCHESTRATION STRUCTURE...")
     print("=" * 60)
     
     try:
@@ -139,24 +139,24 @@ def validate_orchestration_structure():
             shutdown_orchestration_system
         )
         
-        print("✅ Main orchestration classes imported successfully")
+        print(" Main orchestration classes imported successfully")
         
         # Test configuration creation
         config = OrchestrationSystemConfig()
-        print("✅ OrchestrationSystemConfig creation successful")
+        print(" OrchestrationSystemConfig creation successful")
         
-        print("✅ Orchestration structure validation passed")
+        print(" Orchestration structure validation passed")
         return True
         
     except Exception as e:
-        print(f"❌ Orchestration structure validation failed: {str(e)}")
+        print(f" Orchestration structure validation failed: {str(e)}")
         print(f"   Full error: {traceback.format_exc()}")
         return False
 
 
 def validate_pipeline_templates():
     """Validate pipeline template functionality."""
-    print("\n🔧 VALIDATING PIPELINE TEMPLATES...")
+    print("\n VALIDATING PIPELINE TEMPLATES...")
     print("=" * 60)
     
     try:
@@ -166,25 +166,25 @@ def validate_pipeline_templates():
         
         # Check default templates
         templates = builder.list_templates()
-        print(f"✅ Available pipeline templates: {len(templates)}")
+        print(f" Available pipeline templates: {len(templates)}")
         for template in templates:
-            print(f"  📋 {template}")
+            print(f"   {template}")
         
         if len(templates) >= 3:  # Expecting at least 3 default templates
-            print("✅ Pipeline templates validation passed")
+            print(" Pipeline templates validation passed")
             return True
         else:
-            print("⚠️  Expected at least 3 default templates")
+            print("  Expected at least 3 default templates")
             return False
             
     except Exception as e:
-        print(f"❌ Pipeline templates validation failed: {str(e)}")
+        print(f" Pipeline templates validation failed: {str(e)}")
         return False
 
 
 def main():
     """Run all validation tests."""
-    print("🚀 IA INFLUENCER AGENT - ORCHESTRATION MODULE VALIDATION")
+    print(" IA INFLUENCER AGENT - ORCHESTRATION MODULE VALIDATION")
     print("=" * 80)
     print("Author: Fahed Mlaiel <mlaiel@live.de>")
     print("Copyright (c) 2025 Fahed Mlaiel. All rights reserved.")
@@ -197,7 +197,7 @@ def main():
     
     # Final summary
     print("\n" + "=" * 80)
-    print("🏁 FINAL VALIDATION RESULTS")
+    print(" FINAL VALIDATION RESULTS")
     print("=" * 80)
     
     all_passed = (
@@ -207,15 +207,15 @@ def main():
     )
     
     if all_passed:
-        print("🎉 ALL VALIDATIONS PASSED!")
-        print("✅ Orchestration module is fully functional and ready for use")
-        print("✅ All imports successful")
-        print("✅ Structure validation passed")
-        print("✅ Pipeline templates functional")
+        print(" ALL VALIDATIONS PASSED!")
+        print(" Orchestration module is fully functional and ready for use")
+        print(" All imports successful")
+        print(" Structure validation passed")
+        print(" Pipeline templates functional")
         return 0
     else:
-        print("⚠️  SOME VALIDATIONS FAILED")
-        print("❌ Please review and fix the issues above")
+        print("  SOME VALIDATIONS FAILED")
+        print(" Please review and fix the issues above")
         return 1
 
 

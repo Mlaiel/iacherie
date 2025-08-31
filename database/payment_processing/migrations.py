@@ -111,6 +111,9 @@ class MigrationManager:
     
     def apply_migration(self, migration: Migration) -> bool:
         """Apply a single migration"""
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -144,6 +147,9 @@ class MigrationManager:
     
     def rollback_migration(self, migration: Migration) -> bool:
         """Rollback a single migration"""
+
+
+
         try:
             # Execute rollback
             migration.down(self.engine)

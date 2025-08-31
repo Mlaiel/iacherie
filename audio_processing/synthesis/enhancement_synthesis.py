@@ -1,5 +1,5 @@
 """
-🎵 Audio Enhancement Synthesis Engine - Advanced Audio Enhancement and Spatial Processing
+ Audio Enhancement Synthesis Engine - Advanced Audio Enhancement and Spatial Processing
 
 This module provides comprehensive audio enhancement capabilities including
 upsampling, spatial audio, and immersive audio generation.
@@ -7,7 +7,7 @@ upsampling, spatial audio, and immersive audio generation.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ LEGAL WARNING: Unauthorized use prohibited. Contact mlaiel@live.de for licensing.
+ LEGAL WARNING: Unauthorized use prohibited. Contact mlaiel@live.de for licensing.
 """
 
 import numpy as np
@@ -254,6 +254,9 @@ class AudioUpsampling:
     def batch_upsample(self, audio_list: List[np.ndarray], 
                       source_sample_rate: int) -> List[np.ndarray]:
         """Batch upsample multiple audio files."""
+
+
+
         return [self.upsample(audio, source_sample_rate) for audio in audio_list]
 
 

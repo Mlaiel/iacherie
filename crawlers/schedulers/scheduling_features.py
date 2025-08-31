@@ -104,8 +104,11 @@ class SchedulerDemo:
         
     async def initialize(self):
         """Initialize the demonstration environment."""
+
+
+
         try:
-            logger.info("🚀 Initializing Advanced Scheduler Demo System...")
+            logger.info(" Initializing Advanced Scheduler Demo System...")
             
             # Create advanced configuration
             config = SchedulerConfiguration(
@@ -138,23 +141,23 @@ class SchedulerDemo:
             
             self.protection_api = await get_content_protection_api()
             
-            logger.info("✅ Advanced Scheduler Demo System initialized successfully!")
+            logger.info(" Advanced Scheduler Demo System initialized successfully!")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Demo initialization failed: {e}")
+            logger.error(f" Demo initialization failed: {e}")
             return False
             
     async def demonstrate_content_upload_workflow(self):
         """Demonstrate complete content upload and protection workflow."""
-        logger.info("\n🎵 === CONTENT UPLOAD & PROTECTION WORKFLOW DEMO ===")
+        logger.info("\n === CONTENT UPLOAD & PROTECTION WORKFLOW DEMO ===")
         
         for content in self.demo_data["content_uploads"]:
-            logger.info(f"\n📤 Processing content upload: {content['title']}")
+            logger.info(f"\n Processing content upload: {content['title']}")
             
             try:
                 # Step 1: Content Protection Activation
-                logger.info("🛡️  Activating content protection...")
+                logger.info("  Activating content protection...")
                 protection_result = await self.protection_api.protect_content(
                     content_id=content["content_id"],
                     creator_id=content["creator_id"],
@@ -162,19 +165,19 @@ class SchedulerDemo:
                     protection_level="high"
                 )
                 
-                logger.info(f"✅ Protection activated: {protection_result['protection_initiated']}")
+                logger.info(f" Protection activated: {protection_result['protection_initiated']}")
                 logger.info(f"   - Fingerprint Task: {protection_result.get('fingerprint_task', 'N/A')}")
                 logger.info(f"   - Protection Task: {protection_result.get('protection_task', 'N/A')}")
                 logger.info(f"   - Monitoring Tasks: {len(protection_result.get('monitoring_tasks', []))}")
                 
                 # Step 2: Revenue Analytics Setup
-                logger.info("📊 Setting up revenue analytics...")
+                logger.info(" Setting up revenue analytics...")
                 analytics_task = await self.scheduler_api.create_revenue_analytics_task(
                     creator_id=content["creator_id"],
                     time_period="monthly"
                 )
                 
-                logger.info(f"✅ Analytics task created: {analytics_task.task_id}")
+                logger.info(f" Analytics task created: {analytics_task.task_id}")
                 
                 # Step 3: Performance Monitoring
                 await asyncio.sleep(2)  # Simulate processing time
@@ -183,7 +186,7 @@ class SchedulerDemo:
                 await asyncio.sleep(1)
                 
             except Exception as e:
-                logger.error(f"❌ Content workflow failed for {content['content_id']}: {e}")
+                logger.error(f" Content workflow failed for {content['content_id']}: {e}")
                 
     async def demonstrate_intelligent_scheduling(self):
         """Demonstrate AI-powered intelligent scheduling capabilities."""
@@ -222,7 +225,7 @@ class SchedulerDemo:
             scheduled_tasks = []
             
             for task_info in tasks:
-                logger.info(f"🎯 Scheduling: {task_info['description']}")
+                logger.info(f" Scheduling: {task_info['description']}")
                 
                 # Create task with intelligent scheduling
                 if task_info["type"] == "content_fingerprinting":
@@ -265,23 +268,23 @@ class SchedulerDemo:
                     "estimated_duration": task.estimated_execution_time
                 })
                 
-                logger.info(f"   ✅ Task scheduled: {task.task_id}")
-                logger.info(f"   📅 Scheduled for: {task.scheduled_at}")
-                logger.info(f"   ⏱️  Estimated duration: {task.estimated_execution_time:.1f}s")
+                logger.info(f"    Task scheduled: {task.task_id}")
+                logger.info(f"    Scheduled for: {task.scheduled_at}")
+                logger.info(f"   ⏱  Estimated duration: {task.estimated_execution_time:.1f}s")
                 
             # Show intelligent scheduling results
-            logger.info(f"\n📋 Intelligent Scheduling Summary:")
+            logger.info(f"\n Intelligent Scheduling Summary:")
             sorted_tasks = sorted(scheduled_tasks, key=lambda x: x["priority"], reverse=True)
             
             for i, task in enumerate(sorted_tasks, 1):
                 logger.info(f"   {i}. {task['type']} (Priority: {task['priority']:.2f})")
                 
         except Exception as e:
-            logger.error(f"❌ Intelligent scheduling demo failed: {e}")
+            logger.error(f" Intelligent scheduling demo failed: {e}")
             
     async def demonstrate_real_time_monitoring(self):
         """Demonstrate real-time monitoring and event-driven scheduling."""
-        logger.info("\n📡 === REAL-TIME MONITORING & EVENT SYSTEM DEMO ===")
+        logger.info("\n === REAL-TIME MONITORING & EVENT SYSTEM DEMO ===")
         
         try:
             # Simulate real-time events
@@ -313,78 +316,78 @@ class SchedulerDemo:
                 }
             ]
             
-            logger.info("🎪 Simulating real-time events...")
+            logger.info(" Simulating real-time events...")
             
             for event in events:
-                logger.info(f"\n⚡ Event Triggered: {event['description']}")
+                logger.info(f"\n Event Triggered: {event['description']}")
                 
                 # Simulate event processing delay
                 await asyncio.sleep(1)
                 
                 # Show reactive scheduling based on event
                 if event["type"] == "violation_detected":
-                    logger.info("   🚨 Activating emergency protection protocols...")
-                    logger.info("   📞 Sending takedown notice...")
-                    logger.info("   📊 Updating violation statistics...")
+                    logger.info("    Activating emergency protection protocols...")
+                    logger.info("    Sending takedown notice...")
+                    logger.info("    Updating violation statistics...")
                     
                 elif event["type"] == "engagement_spike":
-                    logger.info("   🔥 Scaling monitoring resources...")
-                    logger.info("   📈 Increasing analytics frequency...")
-                    logger.info("   💰 Optimizing revenue tracking...")
+                    logger.info("    Scaling monitoring resources...")
+                    logger.info("    Increasing analytics frequency...")
+                    logger.info("    Optimizing revenue tracking...")
                     
                 elif event["type"] == "collaboration_request":
                     logger.info("   🤝 Initiating collaboration workflow...")
-                    logger.info("   📅 Scheduling coordination tasks...")
-                    logger.info("   🔄 Syncing creator calendars...")
+                    logger.info("    Scheduling coordination tasks...")
+                    logger.info("    Syncing creator calendars...")
                     
                 elif event["type"] == "revenue_threshold":
-                    logger.info("   💎 Activating premium analytics...")
-                    logger.info("   🎯 Optimizing monetization strategies...")
-                    logger.info("   📊 Generating revenue reports...")
+                    logger.info("    Activating premium analytics...")
+                    logger.info("    Optimizing monetization strategies...")
+                    logger.info("    Generating revenue reports...")
                     
-                logger.info("   ✅ Event processed successfully")
+                logger.info("    Event processed successfully")
                 
         except Exception as e:
-            logger.error(f"❌ Real-time monitoring demo failed: {e}")
+            logger.error(f" Real-time monitoring demo failed: {e}")
             
     async def demonstrate_performance_optimization(self):
         """Demonstrate AI-powered performance optimization."""
-        logger.info("\n⚡ === PERFORMANCE OPTIMIZATION DEMO ===")
+        logger.info("\n === PERFORMANCE OPTIMIZATION DEMO ===")
         
         try:
             # Get current system metrics
-            logger.info("📊 Analyzing current system performance...")
+            logger.info(" Analyzing current system performance...")
             metrics = await self.scheduler_api.get_performance_metrics()
             
-            logger.info(f"   📈 Tasks Processed: {metrics.get('total_tasks_processed', 0)}")
-            logger.info(f"   ⏱️  Average Response Time: {metrics.get('average_response_time', 0):.3f}s")
-            logger.info(f"   ✅ Success Rate: {metrics.get('success_rate', 0):.1%}")
-            logger.info(f"   🔧 Resource Utilization: {metrics.get('resource_utilization', 0):.1%}")
+            logger.info(f"    Tasks Processed: {metrics.get('total_tasks_processed', 0)}")
+            logger.info(f"   ⏱  Average Response Time: {metrics.get('average_response_time', 0):.3f}s")
+            logger.info(f"    Success Rate: {metrics.get('success_rate', 0):.1%}")
+            logger.info(f"    Resource Utilization: {metrics.get('resource_utilization', 0):.1%}")
             
             # Trigger optimization
             logger.info("\n🤖 Running AI-powered optimization...")
             optimization_result = await self.scheduler_api.optimize_scheduler_performance()
             
             if optimization_result.get("optimization_completed"):
-                logger.info("✅ Optimization completed successfully!")
+                logger.info(" Optimization completed successfully!")
                 
                 recommendations = optimization_result.get("recommendations", [])
                 if recommendations:
-                    logger.info("💡 Optimization Recommendations:")
+                    logger.info(" Optimization Recommendations:")
                     for rec in recommendations:
-                        priority_emoji = "🔴" if rec["priority"] == "high" else "🟡" if rec["priority"] == "medium" else "🟢"
+                        priority_emoji = "" if rec["priority"] == "high" else "🟡" if rec["priority"] == "medium" else "🟢"
                         logger.info(f"   {priority_emoji} {rec['type'].title()}: {rec['description']}")
                 else:
-                    logger.info("   🎯 System is already optimally configured!")
+                    logger.info("    System is already optimally configured!")
             else:
-                logger.warning(f"⚠️  Optimization failed: {optimization_result.get('error', 'Unknown error')}")
+                logger.warning(f"  Optimization failed: {optimization_result.get('error', 'Unknown error')}")
                 
         except Exception as e:
-            logger.error(f"❌ Performance optimization demo failed: {e}")
+            logger.error(f" Performance optimization demo failed: {e}")
             
     async def demonstrate_business_intelligence(self):
         """Demonstrate business intelligence and analytics capabilities."""
-        logger.info("\n💼 === BUSINESS INTELLIGENCE DEMO ===")
+        logger.info("\n === BUSINESS INTELLIGENCE DEMO ===")
         
         try:
             # Simulate business metrics
@@ -413,37 +416,37 @@ class SchedulerDemo:
                 }
             }
             
-            logger.info("📊 Current Business Intelligence Metrics:")
+            logger.info(" Current Business Intelligence Metrics:")
             
-            logger.info("\n👥 Creator Growth:")
+            logger.info("\n Creator Growth:")
             for metric, value in business_metrics["creator_growth"].items():
                 logger.info(f"   • {metric.replace('_', ' ').title()}: {value}")
                 
-            logger.info("\n🛡️  Content Protection:")
+            logger.info("\n  Content Protection:")
             for metric, value in business_metrics["content_protection"].items():
                 logger.info(f"   • {metric.replace('_', ' ').title()}: {value}")
                 
-            logger.info("\n💰 Revenue Impact:")
+            logger.info("\n Revenue Impact:")
             for metric, value in business_metrics["revenue_impact"].items():
                 logger.info(f"   • {metric.replace('_', ' ').title()}: {value}")
                 
-            logger.info("\n🌐 Platform Coverage:")
+            logger.info("\n Platform Coverage:")
             for platform, coverage in business_metrics["platform_coverage"].items():
                 logger.info(f"   • {platform.title()}: {coverage}")
                 
             # Generate business insights
-            logger.info("\n🎯 AI-Generated Business Insights:")
-            logger.info("   💡 Revenue protection effectiveness is exceeding targets by 15%")
-            logger.info("   📈 Creator retention improved due to enhanced protection services")
-            logger.info("   🚀 Platform coverage optimization resulted in 8% revenue increase")
-            logger.info("   🔄 Automated workflows reduced manual intervention by 67%")
+            logger.info("\n AI-Generated Business Insights:")
+            logger.info("    Revenue protection effectiveness is exceeding targets by 15%")
+            logger.info("    Creator retention improved due to enhanced protection services")
+            logger.info("    Platform coverage optimization resulted in 8% revenue increase")
+            logger.info("    Automated workflows reduced manual intervention by 67%")
             
         except Exception as e:
-            logger.error(f"❌ Business intelligence demo failed: {e}")
+            logger.error(f" Business intelligence demo failed: {e}")
             
     async def run_complete_demo(self):
         """Run the complete scheduler system demonstration."""
-        logger.info("🎬 === STARTING ULTRA-INDUSTRIAL SCHEDULER DEMO ===")
+        logger.info(" === STARTING ULTRA-INDUSTRIAL SCHEDULER DEMO ===")
         logger.info(f"⏰ Demo started at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         
         start_time = time.time()
@@ -451,7 +454,7 @@ class SchedulerDemo:
         try:
             # Initialize system
             if not await self.initialize():
-                logger.error("❌ Demo initialization failed!")
+                logger.error(" Demo initialization failed!")
                 return False
                 
             # Run demonstration modules
@@ -470,27 +473,27 @@ class SchedulerDemo:
             await self.demonstrate_business_intelligence()
             
             # Final system status
-            logger.info("\n📋 === FINAL SYSTEM STATUS ===")
+            logger.info("\n === FINAL SYSTEM STATUS ===")
             status = await self.scheduler_api.get_scheduler_status()
             
             if status.get("initialized"):
-                logger.info("✅ System Status: OPERATIONAL")
-                logger.info(f"   🔧 Active Schedulers: {len(status.get('factory', {}).get('instances', {}))}")
-                logger.info("   📊 All subsystems functioning optimally")
+                logger.info(" System Status: OPERATIONAL")
+                logger.info(f"    Active Schedulers: {len(status.get('factory', {}).get('instances', {}))}")
+                logger.info("    All subsystems functioning optimally")
             else:
-                logger.warning("⚠️  System Status: DEGRADED")
+                logger.warning("  System Status: DEGRADED")
                 
             # Demo completion
             duration = time.time() - start_time
-            logger.info(f"\n🏁 === DEMO COMPLETED SUCCESSFULLY ===")
-            logger.info(f"   ⏱️  Total Duration: {duration:.1f} seconds")
-            logger.info(f"   🎯 All demonstration modules executed successfully")
-            logger.info(f"   🚀 Ultra-industrial scheduler system ready for production!")
+            logger.info(f"\n === DEMO COMPLETED SUCCESSFULLY ===")
+            logger.info(f"   ⏱  Total Duration: {duration:.1f} seconds")
+            logger.info(f"    All demonstration modules executed successfully")
+            logger.info(f"    Ultra-industrial scheduler system ready for production!")
             
             return True
             
         except Exception as e:
-            logger.error(f"❌ Demo execution failed: {e}")
+            logger.error(f" Demo execution failed: {e}")
             return False
             
         finally:
@@ -498,15 +501,15 @@ class SchedulerDemo:
             try:
                 if self.scheduler_api:
                     await self.scheduler_api.shutdown()
-                    logger.info("🔄 Demo cleanup completed")
+                    logger.info(" Demo cleanup completed")
             except Exception as e:
-                logger.error(f"⚠️  Demo cleanup failed: {e}")
+                logger.error(f"  Demo cleanup failed: {e}")
 
 
 async def main():
     """Main demo execution function."""
     print("=" * 80)
-    print("🎯 IA-INFLUENCER-AGENT ULTRA-INDUSTRIAL SCHEDULER DEMO")
+    print(" IA-INFLUENCER-AGENT ULTRA-INDUSTRIAL SCHEDULER DEMO")
     print("=" * 80)
     print("Author: Fahed Mlaiel (mlaiel@live.de)")
     print("System: Ultra-Industrial Content Protection & Scheduling")
@@ -516,11 +519,11 @@ async def main():
     success = await demo.run_complete_demo()
     
     if success:
-        print("\n✅ DEMO COMPLETED SUCCESSFULLY!")
-        print("🚀 Ready for production deployment!")
+        print("\n DEMO COMPLETED SUCCESSFULLY!")
+        print(" Ready for production deployment!")
     else:
-        print("\n❌ DEMO FAILED!")
-        print("🔧 Please check system configuration!")
+        print("\n DEMO FAILED!")
+        print(" Please check system configuration!")
         
     print("=" * 80)
 

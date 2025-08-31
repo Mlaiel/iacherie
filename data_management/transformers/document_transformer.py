@@ -1,11 +1,11 @@
 """
-📄 Document Transformation Engine - IA Influencer Agent Platform Enterprise
+ Document Transformation Engine - IA Influencer Agent Platform Enterprise
 ========================================================================
 Module: backend/data_management/transformers/document_transformer.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -191,6 +191,9 @@ class DocumentAnalyzer:
     
     def analyze_document_file(self, document_path: str) -> DocumentMetadata:
         """Analyse complète d'un fichier document"""
+
+
+
         try:
             # Extraction du texte selon le format
             text_content = self._extract_text_from_file(document_path)
@@ -330,6 +333,9 @@ class DocumentAnalyzer:
     
     def _extract_from_docx(self, file_path: str) -> str:
         """Extraction de texte depuis DOCX"""
+
+
+
         
         try:
             # Méthode principale avec docx2txt
@@ -376,6 +382,9 @@ class DocumentAnalyzer:
     
     def _extract_from_html(self, file_path: str) -> str:
         """Extraction depuis HTML"""
+
+
+
         
         try:
             with open(file_path, 'r', encoding='utf-8') as file:
@@ -402,6 +411,9 @@ class DocumentAnalyzer:
     
     def _extract_from_excel(self, file_path: str) -> str:
         """Extraction depuis Excel"""
+
+
+
         
         try:
             workbook = openpyxl.load_workbook(file_path, data_only=True)
@@ -425,6 +437,9 @@ class DocumentAnalyzer:
     
     def _extract_from_csv(self, file_path: str) -> str:
         """Extraction depuis CSV"""
+
+
+
         
         try:
             import csv
@@ -441,6 +456,9 @@ class DocumentAnalyzer:
     
     def _extract_from_json(self, file_path: str) -> str:
         """Extraction depuis JSON"""
+
+
+
         
         try:
             with open(file_path, 'r', encoding='utf-8') as file:
@@ -525,6 +543,9 @@ class DocumentAnalyzer:
     
     def _detect_language(self, text: str) -> str:
         """Détecte la langue du texte"""
+
+
+
         
         try:
             from textblob import TextBlob
@@ -535,6 +556,9 @@ class DocumentAnalyzer:
     
     def _calculate_reading_level(self, text: str) -> str:
         """Calcule le niveau de lecture"""
+
+
+
         
         try:
             flesch_score = textstat.flesch_reading_ease(text)
@@ -558,6 +582,9 @@ class DocumentAnalyzer:
     
     def _calculate_readability_score(self, text: str) -> float:
         """Calcule un score de lisibilité normalisé"""
+
+
+
         
         try:
             # Plusieurs métriques de lisibilité
@@ -576,6 +603,9 @@ class DocumentAnalyzer:
     
     def _analyze_sentiment(self, text: str) -> float:
         """Analyse le sentiment du texte"""
+
+
+
         
         try:
             if self.sentiment_analyzer:
@@ -1169,6 +1199,9 @@ class DocumentTransformer:
         
         html_content += """</body>
 </html>"""
+
+
+
         
         return html_content
     
@@ -1287,6 +1320,9 @@ class DocumentTransformer:
     
     def _save_as_docx(self, text: str, output_path: str) -> None:
         """Sauvegarde en format DOCX"""
+
+
+
         
         try:
             doc = DocxDocument()
@@ -1303,6 +1339,9 @@ class DocumentTransformer:
     
     def _save_as_pdf(self, text: str, output_path: str) -> None:
         """Sauvegarde en format PDF"""
+
+
+
         
         try:
             # Utilisation de reportlab pour génération PDF

@@ -114,6 +114,9 @@ class CertificateManager:
     
     def _init_directories(self) -> None:
         """Initialize certificate directories with proper permissions"""
+
+
+
         try:
             for directory in [self.cert_directory, self.key_directory, self.ca_directory]:
                 directory.mkdir(parents=True, exist_ok=True)
@@ -143,6 +146,9 @@ class CertificateManager:
         Returns:
             Generated private key
         """
+
+
+
         try:
             if key_type.upper() == "RSA":
                 private_key = rsa.generate_private_key(
@@ -187,6 +193,9 @@ class CertificateManager:
         Returns:
             Generated CSR
         """
+
+
+
         try:
             # Build subject name
             subject_components = [
@@ -261,6 +270,9 @@ class CertificateManager:
         Returns:
             Loaded certificate
         """
+
+
+
         try:
             with open(cert_path, 'rb') as cert_file:
                 cert_data = cert_file.read()
@@ -293,6 +305,9 @@ class CertificateManager:
             cert_path: Destination path
             format_type: Certificate format (PEM/DER)
         """
+
+
+
         try:
             if format_type.upper() == "PEM":
                 cert_data = certificate.public_bytes(serialization.Encoding.PEM)
@@ -325,6 +340,9 @@ class CertificateManager:
             key_path: Destination path
             password: Optional encryption password
         """
+
+
+
         try:
             if password:
                 encryption_algorithm = serialization.BestAvailableEncryption(password)
@@ -359,6 +377,9 @@ class CertificateManager:
         Returns:
             Certificate information
         """
+
+
+
         try:
             # Extract basic information
             subject = certificate.subject
@@ -508,6 +529,9 @@ class CertificateManager:
         Returns:
             True if chain is valid
         """
+
+
+
         try:
             # Load trusted CA certificates
             ca_store = crypto.X509Store()
@@ -594,6 +618,9 @@ class CertificateManager:
         Returns:
             Expiry status information
         """
+
+
+
         try:
             now = datetime.utcnow()
             not_after = certificate.not_valid_after
@@ -681,6 +708,9 @@ class CertificateManager:
         Returns:
             True if backup successful
         """
+
+
+
         try:
             import shutil
             import tarfile
@@ -716,4 +746,7 @@ def create_certificate_manager(config: Dict[str, Any]) -> CertificateManager:
     Returns:
         Configured certificate manager
     """
+
+
+
     return CertificateManager(config)

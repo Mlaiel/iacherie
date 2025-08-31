@@ -1,5 +1,5 @@
 """
-📄 Contract Manager - Digital Contract Management System
+ Contract Manager - Digital Contract Management System
 ======================================================
 
 Professional contract lifecycle management system:
@@ -96,7 +96,7 @@ class ContractRecord:
 
 class ContractManager:
     """
-    🚀 Professional contract management system
+     Professional contract management system
     
     Advanced system for managing digital contracts with automated
     lifecycle management and compliance monitoring.
@@ -132,6 +132,9 @@ class ContractManager:
     
     def _initialize_signature_providers(self):
         """Initialize digital signature service integrations."""
+
+
+
         try:
             # DocuSign integration
             if self.config.get('docusign_enabled', False):
@@ -226,7 +229,7 @@ class ContractManager:
         smart_contract_address: Optional[str] = None
     ) -> str:
         """
-        📝 Register a new license as a digital contract
+         Register a new license as a digital contract
         
         Args:
             license_data: Complete license information
@@ -236,6 +239,9 @@ class ContractManager:
         Returns:
             contract_id: Unique contract identifier
         """
+
+
+
         try:
             contract_id = str(uuid.uuid4())
             license_id = license_data.get('metadata', {}).get('license_id', str(uuid.uuid4()))
@@ -352,6 +358,9 @@ class ContractManager:
     
     async def _store_on_blockchain(self, contract: ContractRecord, smart_contract_address: str):
         """Store contract hash on blockchain for immutability."""
+
+
+
         try:
             # This would integrate with actual blockchain
             blockchain_record = {
@@ -370,6 +379,9 @@ class ContractManager:
     
     async def _initiate_signature_workflow(self, contract: ContractRecord):
         """Initiate digital signature workflow."""
+
+
+
         try:
             # Get preferred signature provider
             provider_name = self.config.get('default_signature_provider', 'docusign')
@@ -401,7 +413,7 @@ class ContractManager:
         updates: Dict[str, Any]
     ) -> Dict[str, Any]:
         """
-        🔄 Update an existing license contract
+         Update an existing license contract
         
         Args:
             license_id: License identifier to update
@@ -410,6 +422,9 @@ class ContractManager:
         Returns:
             updated_contract: Updated contract information
         """
+
+
+
         try:
             # Find contract by license_id
             contract = None
@@ -467,6 +482,9 @@ class ContractManager:
     
     async def _update_blockchain_record(self, contract: ContractRecord):
         """Update blockchain record with new contract hash."""
+
+
+
         try:
             blockchain_record = self.blockchain_contracts.get(contract.contract_id)
             if blockchain_record:
@@ -487,7 +505,7 @@ class ContractManager:
         new_owner: Dict[str, Any]
     ) -> Dict[str, Any]:
         """
-        🔄 Transfer license ownership
+         Transfer license ownership
         
         Args:
             license_id: License identifier to transfer
@@ -496,6 +514,9 @@ class ContractManager:
         Returns:
             transfer_result: Transfer operation result
         """
+
+
+
         try:
             # Find contract
             contract = None
@@ -571,6 +592,9 @@ class ContractManager:
         renewal_period: str
     ) -> str:
         """Calculate new expiration date for license renewal."""
+
+
+
         try:
             current_date = datetime.fromisoformat(current_expiration)
             
@@ -595,6 +619,9 @@ class ContractManager:
     
     def get_active_license_count(self) -> int:
         """Get count of active licenses."""
+
+
+
         return len([c for c in self.contracts.values() if c.status == ContractStatus.ACTIVE])
     
     async def monitor_contract_performance(self, contract_id: str) -> Dict[str, Any]:

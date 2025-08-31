@@ -76,6 +76,9 @@ class TestUserProfile(IsolatedAsyncioTestCase):
 
     def _generate_profile_data(self) -> Dict[str, Any]:
         """Generate comprehensive profile data"""
+
+
+
         return {
             'demographics': {
                 'age': 28,

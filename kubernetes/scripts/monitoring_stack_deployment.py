@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-🔧 Monitoring Stack Deployment Manager - Ainflue Platform
+ Monitoring Stack Deployment Manager - Ainflue Platform
 ==========================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps + SRE + Backend Senior + Observability Engineer
 Date: 2025-08-31
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -98,6 +98,9 @@ class MonitoringStackDeployment:
     
     def create_namespace(self) -> bool:
         """Create monitoring namespace"""
+
+
+
         try:
             namespace_manifest = client.V1Namespace(
                 metadata=client.V1ObjectMeta(
@@ -127,6 +130,9 @@ class MonitoringStackDeployment:
     
     def deploy_prometheus(self) -> bool:
         """Deploy Prometheus monitoring"""
+
+
+
         try:
             # Create Prometheus ConfigMap
             prometheus_config = {
@@ -330,6 +336,9 @@ scrape_configs:
     
     def deploy_grafana(self) -> bool:
         """Deploy Grafana dashboards"""
+
+
+
         try:
             # Create Grafana ConfigMap for datasources
             grafana_datasources = {
@@ -507,6 +516,9 @@ datasources:
     
     def deploy_jaeger(self) -> bool:
         """Deploy Jaeger tracing"""
+
+
+
         try:
             # Create Jaeger All-in-One Deployment
             jaeger_deployment = client.V1Deployment(
@@ -647,6 +659,9 @@ datasources:
     
     def deploy_monitoring_stack(self) -> bool:
         """Deploy complete monitoring stack"""
+
+
+
         try:
             # Create namespace
             if not self.create_namespace():
@@ -758,10 +773,10 @@ if __name__ == "__main__":
     print(f"Deployment Status: {status}")
     
     if success:
-        print("✅ Monitoring stack deployment completed successfully!")
-        print(f"📊 Grafana UI: kubectl port-forward -n {monitoring_config.namespace} svc/grafana 3000:3000")
-        print(f"📈 Prometheus UI: kubectl port-forward -n {monitoring_config.namespace} svc/prometheus 9090:9090")
-        print(f"🔍 Jaeger UI: kubectl port-forward -n {monitoring_config.namespace} svc/jaeger-query 16686:16686")
+        print(" Monitoring stack deployment completed successfully!")
+        print(f" Grafana UI: kubectl port-forward -n {monitoring_config.namespace} svc/grafana 3000:3000")
+        print(f" Prometheus UI: kubectl port-forward -n {monitoring_config.namespace} svc/prometheus 9090:9090")
+        print(f" Jaeger UI: kubectl port-forward -n {monitoring_config.namespace} svc/jaeger-query 16686:16686")
     else:
-        print("❌ Monitoring stack deployment failed!")
+        print(" Monitoring stack deployment failed!")
         exit(1)

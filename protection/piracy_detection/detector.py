@@ -1,5 +1,5 @@
 """
-🔍 Piracy Detection Core Engine
+ Piracy Detection Core Engine
 ==============================
 
 Advanced AI-powered content piracy detection with multi-modal analysis.
@@ -179,6 +179,9 @@ class PiracyDetector:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             logger.info("Initializing Piracy Detector components...")
             
@@ -314,6 +317,9 @@ class PiracyDetector:
         Returns:
             Content fingerprint data
         """
+
+
+
         try:
             # Check cache first
             if content_id in self.detection_cache:
@@ -352,6 +358,9 @@ class PiracyDetector:
     
     def _get_default_platforms(self) -> List[str]:
         """Get default list of platforms to scan."""
+
+
+
         return [
             'youtube',
             'instagram',
@@ -377,6 +386,9 @@ class PiracyDetector:
         Returns:
             Detection results for the platform
         """
+
+
+
         try:
             logger.info(f"Scanning platform: {platform} for content: {content_id}")
             
@@ -431,6 +443,9 @@ class PiracyDetector:
         Returns:
             DetectionResult if violation detected, None otherwise
         """
+
+
+
         try:
             # Calculate similarity score
             similarity_score = await self._calculate_similarity(fingerprint, scan_item)
@@ -486,6 +501,9 @@ class PiracyDetector:
         Returns:
             Similarity score (0.0 to 1.0)
         """
+
+
+
         try:
             # Use vector matcher for similarity calculation
             if self.vector_matcher:
@@ -519,6 +537,9 @@ class PiracyDetector:
         Returns:
             AI classification results
         """
+
+
+
         try:
             # Simulate AI classification
             # In production, this would use trained ML models

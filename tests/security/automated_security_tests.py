@@ -1,15 +1,15 @@
 """
-🔒 Enhanced Security Test Automation - IA Influencer Agent Platform Enterprise
+ Enhanced Security Test Automation - IA Influencer Agent Platform Enterprise
 ==============================================================================
 Module: tests/security/automated_security_tests.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ==============================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 SYSTÈME DE TESTS DE SÉCURITÉ AUTOMATISÉS COMPLET
+ SYSTÈME DE TESTS DE SÉCURITÉ AUTOMATISÉS COMPLET
 Tests de sécurité enterprise-grade pour toutes les couches:
 - Tests d'intrusion automatisés OWASP Top 10
 - Validation de vulnérabilités avec scoring CVSS
@@ -132,6 +132,9 @@ class SecurityTestResult:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertir en dictionnaire"""
+
+
+
         return {
             "test_id": self.test_id,
             "test_name": self.test_name,
@@ -489,6 +492,9 @@ class SecurityTestSuite:
     
     async def _detect_sql_injection_response(self, response, payload: str) -> bool:
         """Détecter une réponse indiquant une injection SQL"""
+
+
+
         try:
             text = await response.text()
             

@@ -7,7 +7,7 @@ Handles image analysis, enhancement, conversion, and AI-powered features.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 This software is proprietary and confidential. Any unauthorized use, copying, 
 distribution, or commercialization without explicit written permission is 
 strictly prohibited and will result in legal action.
@@ -197,7 +197,7 @@ class ImageAnalysisResult:
 
 class ImageProcessor:
     """
-    🖼️ ENTERPRISE IMAGE PROCESSOR
+     ENTERPRISE IMAGE PROCESSOR
     
     Industrial-grade image processing engine with advanced AI capabilities
     for content creators, photographers, and influencers.
@@ -228,6 +228,9 @@ class ImageProcessor:
     
     async def initialize(self) -> bool:
         """Initialize the image processor"""
+
+
+
         try:
             if AI_LIBS_AVAILABLE and self.config.enable_ai_analysis:
                 # Initialize object detection model
@@ -252,11 +255,11 @@ class ImageProcessor:
                     self.logger.warning(f"Could not load image captioner: {e}")
             
             self._initialized = True
-            self.logger.info("✅ Image processor initialized successfully")
+            self.logger.info(" Image processor initialized successfully")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize image processor: {e}")
+            self.logger.error(f" Failed to initialize image processor: {e}")
             return False
     
     async def process(
@@ -376,6 +379,9 @@ class ImageProcessor:
     
     async def _load_image(self, content: Union[bytes, str, BinaryIO, Image.Image]) -> Optional[Image.Image]:
         """Load image data from various input types"""
+
+
+
         try:
             if not IMAGE_LIBS_AVAILABLE:
                 self.logger.error("Image libraries not available")
@@ -403,6 +409,9 @@ class ImageProcessor:
         original_content: Union[bytes, str, BinaryIO, Image.Image]
     ) -> ImageMetadata:
         """Extract comprehensive image metadata"""
+
+
+
         try:
             # Basic properties
             width, height = image.size
@@ -516,6 +525,9 @@ class ImageProcessor:
     
     def _parse_gps_coordinates(self, gps_info: Dict) -> Optional[Tuple[float, float]]:
         """Parse GPS coordinates from EXIF data"""
+
+
+
         try:
             def convert_to_degrees(value):
                 d, m, s = value
@@ -561,6 +573,9 @@ class ImageProcessor:
     
     async def _enhance_image(self, image: Image.Image) -> Image.Image:
         """Enhance image quality through various techniques"""
+
+
+
         try:
             enhanced = image.copy()
             
@@ -600,6 +615,9 @@ class ImageProcessor:
     
     async def _extract_features(self, image: Image.Image) -> ImageFeatures:
         """Extract advanced image features using computer vision and AI"""
+
+
+
         try:
             features = ImageFeatures()
             
@@ -653,6 +671,9 @@ class ImageProcessor:
     
     async def _detect_faces(self, image: Image.Image) -> List[Dict[str, Any]]:
         """Detect faces in the image"""
+
+
+
         try:
             # Convert PIL image to numpy array
             img_array = np.array(image)
@@ -693,6 +714,9 @@ class ImageProcessor:
     
     async def _detect_objects(self, image: Image.Image) -> List[Dict[str, Any]]:
         """Detect objects in the image using AI model"""
+
+
+
         try:
             if not self._object_detector:
                 return []
@@ -721,6 +745,9 @@ class ImageProcessor:
     
     async def _extract_text(self, image: Image.Image) -> Tuple[List[Dict[str, Any]], Optional[str]]:
         """Extract text from the image using OCR"""
+
+
+
         try:
             # Use pytesseract for OCR
             import pytesseract
@@ -758,6 +785,9 @@ class ImageProcessor:
     
     async def _generate_description(self, image: Image.Image) -> Optional[str]:
         """Generate scene description using AI captioning"""
+
+
+
         try:
             if not self._image_captioner:
                 return None
@@ -776,6 +806,9 @@ class ImageProcessor:
     
     async def _analyze_colors(self, image: Image.Image) -> ColorAnalysis:
         """Analyze color properties of the image"""
+
+
+
         try:
             # Convert to RGB if needed
             if image.mode != 'RGB':
@@ -831,6 +864,9 @@ class ImageProcessor:
     
     async def _extract_dominant_colors(self, img_array: np.ndarray, k: int = 5) -> List[Tuple[int, int, int]]:
         """Extract dominant colors using K-means clustering"""
+
+
+
         try:
             from sklearn.cluster import KMeans
             
@@ -864,6 +900,9 @@ class ImageProcessor:
     
     async def _determine_color_mood(self, brightness: float, saturation: float, warmth: float) -> str:
         """Determine the color mood of the image"""
+
+
+
         try:
             if brightness > 0.7 and saturation > 0.6:
                 if warmth > 0.6:
@@ -892,6 +931,9 @@ class ImageProcessor:
     
     async def _determine_color_harmony(self, dominant_colors: List[Tuple[int, int, int]]) -> str:
         """Determine the color harmony type"""
+
+
+
         try:
             if len(dominant_colors) < 2:
                 return "monochromatic"
@@ -927,6 +969,9 @@ class ImageProcessor:
     
     async def _calculate_blur_level(self, cv_image: np.ndarray) -> float:
         """Calculate blur level using Laplacian variance"""
+
+
+
         try:
             gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
             blur_score = cv2.Laplacian(gray, cv2.CV_64F).var()
@@ -942,6 +987,9 @@ class ImageProcessor:
     
     async def _calculate_noise_level(self, cv_image: np.ndarray) -> float:
         """Calculate noise level in the image"""
+
+
+
         try:
             gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
             
@@ -960,6 +1008,9 @@ class ImageProcessor:
     
     async def _calculate_exposure_level(self, cv_image: np.ndarray) -> float:
         """Calculate exposure level (0 = underexposed, 0.5 = optimal, 1 = overexposed)"""
+
+
+
         try:
             gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
             
@@ -993,6 +1044,9 @@ class ImageProcessor:
     
     async def _calculate_aesthetic_score(self, image: Image.Image) -> float:
         """Calculate aesthetic score using rule of thirds and other composition rules"""
+
+
+
         try:
             cv_image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
             gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
@@ -1059,6 +1113,9 @@ class ImageProcessor:
     
     async def _calculate_composition_score(self, cv_image: np.ndarray) -> float:
         """Calculate composition score based on visual balance and focal points"""
+
+
+
         try:
             gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
             height, width = gray.shape
@@ -1104,6 +1161,9 @@ class ImageProcessor:
     
     async def _calculate_technical_quality(self, cv_image: np.ndarray) -> float:
         """Calculate overall technical quality score"""
+
+
+
         try:
             # Combine various technical metrics
             blur_level = await self._calculate_blur_level(cv_image)
@@ -1139,6 +1199,9 @@ class ImageProcessor:
     
     async def _detect_artistic_style(self, image: Image.Image) -> str:
         """Detect artistic style of the image (simplified)"""
+
+
+
         try:
             # This is a simplified style detection
             # In production, you'd use a trained style classification model
@@ -1174,6 +1237,9 @@ class ImageProcessor:
     
     async def _generate_thumbnail(self, image: Image.Image) -> str:
         """Generate thumbnail and return as base64 string"""
+
+
+
         try:
             # Create thumbnail
             thumbnail = image.copy()
@@ -1193,6 +1259,9 @@ class ImageProcessor:
     
     async def _assess_quality(self, image: Image.Image) -> Dict[str, float]:
         """Assess overall image quality metrics"""
+
+
+
         try:
             cv_image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
             
@@ -1232,6 +1301,9 @@ class ImageProcessor:
     
     async def _generate_fingerprint(self, image: Image.Image) -> str:
         """Generate image fingerprint for content identification"""
+
+
+
         try:
             # Create a standardized representation
             resized = image.resize((64, 64), Image.Resampling.LANCZOS)
@@ -1249,6 +1321,9 @@ class ImageProcessor:
     
     async def _generate_perceptual_hash(self, image: Image.Image) -> str:
         """Generate perceptual hash for similarity detection"""
+
+
+
         try:
             # Use imagehash library for perceptual hashing
             phash = str(imagehash.phash(image))
@@ -1349,6 +1424,9 @@ class ImageProcessor:
         options: Dict[str, Any]
     ) -> bytes:
         """Convert image to target format"""
+
+
+
         try:
             # Prepare image for conversion
             converted_image = image.copy()
@@ -1397,6 +1475,9 @@ class ImageProcessor:
     
     async def health_check(self) -> Dict[str, Any]:
         """Perform health check on the image processor"""
+
+
+
         return {
             "status": "healthy" if self._initialized else "not_initialized",
             "image_libs_available": IMAGE_LIBS_AVAILABLE,

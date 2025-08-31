@@ -1,5 +1,5 @@
 """
-🔒 Advanced Encryption Service - Ultra-Professional DRM Security Engine
+ Advanced Encryption Service - Ultra-Professional DRM Security Engine
 ======================================================================
 
 Military-grade encryption and decryption service for digital content protection
@@ -8,12 +8,12 @@ with quantum-resistant algorithms and advanced key management.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL NOTICE:
+ CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing and usage rights.
 
-🎯 PROJECT TEAM SPECIALTIES:
+ PROJECT TEAM SPECIALTIES:
 - Lead AI Developer & Solution Architect: Advanced AI/ML systems and intelligent automation
 - Backend Senior Engineer: Enterprise-grade backend architecture and microservices  
 - ML Engineer: Machine learning models and predictive analytics
@@ -163,6 +163,9 @@ class EncryptionService:
 
     async def initialize(self) -> bool:
         """Initialize the Encryption Service."""
+
+
+
         try:
             # Initialize master key
             await self._initialize_master_key()
@@ -914,6 +917,9 @@ class EncryptionService:
 
     async def backup_keys(self, backup_path: str) -> bool:
         """Backup encryption keys to secure storage."""
+
+
+
         try:
             # Prepare backup data
             backup_data = {
@@ -954,6 +960,9 @@ class EncryptionService:
 
     async def restore_keys(self, backup_path: str) -> bool:
         """Restore encryption keys from backup."""
+
+
+
         try:
             # Read backup file
             with open(backup_path, 'rb') as f:

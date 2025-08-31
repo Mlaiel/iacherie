@@ -169,6 +169,9 @@ class ServiceContainer(IServiceContainer):
     
     def _resolve_transient(self, descriptor: ServiceDescriptor) -> T:
         """Resolve transient instance (always new)."""
+
+
+
         return self._create_instance(descriptor)
     
     def _create_instance(self, descriptor: ServiceDescriptor) -> Any:
@@ -196,6 +199,9 @@ class ServiceContainer(IServiceContainer):
     
     def _get_dependencies(self, impl_type: Type) -> list:
         """Extract constructor dependencies using type hints."""
+
+
+
         try:
             signature = inspect.signature(impl_type.__init__)
             dependencies = []
@@ -230,10 +236,16 @@ class ServiceContainer(IServiceContainer):
     
     def is_registered(self, service_type: Type) -> bool:
         """Check if service type is registered."""
+
+
+
         return service_type in self._services
     
     def get_registered_services(self) -> Dict[Type, ServiceDescriptor]:
         """Get all registered services for debugging."""
+
+
+
         return self._services.copy()
 
 
@@ -304,16 +316,25 @@ def register_instance(service_type: Type[T], instance: T) -> None:
 
 def resolve(service_type: Type[T]) -> T:
     """Resolve service from global container."""
+
+
+
     return _global_container.resolve(service_type)
 
 
 def get_container() -> ServiceContainer:
     """Get global service container."""
+
+
+
     return _global_container
 
 
 def create_scope():
     """Create dependency injection scope."""
+
+
+
     return _global_container.create_scope()
 
 

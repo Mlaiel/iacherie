@@ -1,11 +1,11 @@
 """
-🔗 Webhook Integration Manager - IA-Influencer-Agent CI/CD Enterprise Platform
+ Webhook Integration Manager - IA-Influencer-Agent CI/CD Enterprise Platform
 ================================================================
 Team Expertise: Integration Engineer + DevOps Engineer + Security Expert + Backend Developer
 Created: 2025-08-24
 Author: Fahed Mlaiel (mlaiel@live.de)
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copy, modification or distribution without written 
 permission is strictly prohibited and will result in legal action.
@@ -201,10 +201,16 @@ class WebhookSecurityManager:
         
     def _generate_encryption_key(self) -> bytes:
         """Generate encryption key for webhook secrets"""
+
+
+
         return Fernet.generate_key()
     
     def encrypt_secret(self, secret: str) -> str:
         """Encrypt webhook secret"""
+
+
+
         try:
             fernet = Fernet(self.encryption_key)
             encrypted_secret = fernet.encrypt(secret.encode())
@@ -215,6 +221,9 @@ class WebhookSecurityManager:
     
     def decrypt_secret(self, encrypted_secret: str) -> str:
         """Decrypt webhook secret"""
+
+
+
         try:
             fernet = Fernet(self.encryption_key)
             encrypted_bytes = base64.b64decode(encrypted_secret.encode())
@@ -226,10 +235,16 @@ class WebhookSecurityManager:
     
     def generate_webhook_secret(self) -> str:
         """Generate secure webhook secret"""
+
+
+
         return secrets.token_urlsafe(32)
     
     def create_signature(self, payload: str, secret: str, algorithm: str = "sha256") -> str:
         """Create webhook signature for payload verification"""
+
+
+
         try:
             signature = hmac.new(
                 secret.encode(),
@@ -243,6 +258,9 @@ class WebhookSecurityManager:
     
     def verify_signature(self, payload: str, signature: str, secret: str) -> bool:
         """Verify webhook signature"""
+
+
+
         try:
             # Extract algorithm and signature
             if "=" not in signature:
@@ -266,6 +284,9 @@ class WebhookSecurityManager:
     
     def validate_url(self, url: str) -> bool:
         """Validate webhook URL security"""
+
+
+
         try:
             parsed = urlparse(url)
             
@@ -298,6 +319,9 @@ class ExternalIntegrationManager:
         config: Dict[str, Any]
     ) -> bool:
         """Register external service integration"""
+
+
+
         try:
             # Validate integration configuration
             if not await self._validate_integration_config(integration_type, config):
@@ -322,6 +346,9 @@ class ExternalIntegrationManager:
         icon_emoji: str = ":robot_face:"
     ) -> bool:
         """Send Slack notification"""
+
+
+
         try:
             payload = {
                 "text": message,
@@ -348,6 +375,9 @@ class ExternalIntegrationManager:
         color: str = "0078D4"
     ) -> bool:
         """Send Microsoft Teams notification"""
+
+
+
         try:
             payload = {
                 "@type": "MessageCard",
@@ -382,6 +412,9 @@ class ExternalIntegrationManager:
         token: str = None
     ) -> bool:
         """Update GitHub commit status"""
+
+
+
         try:
             if not token:
                 token = self.integrations.get(IntegrationType.GITHUB, {}).get("token")
@@ -423,6 +456,9 @@ class ExternalIntegrationManager:
         api_key: str = None
     ) -> bool:
         """Send event to Datadog"""
+
+
+
         try:
             if not api_key:
                 api_key = self.integrations.get(IntegrationType.DATADOG, {}).get("api_key")
@@ -494,6 +530,9 @@ class WebhookIntegrationManager:
         
     async def initialize(self):
         """Initialize webhook integration manager"""
+
+
+
         try:
             self.logger.info("Initializing Webhook Integration Manager...")
             
@@ -601,10 +640,16 @@ class WebhookIntegrationManager:
     
     async def get_delivery_status(self, delivery_id: str) -> Optional[WebhookDelivery]:
         """Get webhook delivery status"""
+
+
+
         return self.deliveries.get(delivery_id)
     
     async def retry_failed_delivery(self, delivery_id: str) -> bool:
         """Retry a failed webhook delivery"""
+
+
+
         try:
             delivery = self.deliveries.get(delivery_id)
             if not delivery:
@@ -717,6 +762,9 @@ class WebhookIntegrationManager:
     
     async def _process_webhook_delivery(self, delivery: WebhookDelivery):
         """Process individual webhook delivery"""
+
+
+
         try:
             delivery.status = WebhookStatus.SENDING
             delivery.attempts += 1

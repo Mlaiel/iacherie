@@ -1,5 +1,5 @@
 """
-🚀 Pricing Module Index - Central Hub for Dynamic Pricing System
+ Pricing Module Index - Central Hub for Dynamic Pricing System
 ==============================================================
 
 Main entry point for the industrial-grade pricing module.
@@ -20,7 +20,7 @@ Project Team Specialists:
 Created by: Fahed Mlaiel <mlaiel@live.de>
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
+ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED 
 
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized copying, modification, distribution, or use of this code or its
@@ -33,15 +33,15 @@ Email: mlaiel@live.de
 All usage must be pre-approved in writing.
 
 System Architecture:
-┌─────────────────────────────────────────────────────────┐
-│                    PRICING MODULE                        │
-├─────────────────────────────────────────────────────────┤
-│  PricingService  │  TierManager  │  PricingEngine       │
-├─────────────────────────────────────────────────────────┤
-│        AI Models    │    Market Intelligence             │
-├─────────────────────────────────────────────────────────┤
-│     Database Models  │  Cache Layer  │  Analytics       │
-└─────────────────────────────────────────────────────────┘
+
+                    PRICING MODULE                        
+
+  PricingService    TierManager    PricingEngine       
+
+        AI Models        Market Intelligence             
+
+     Database Models    Cache Layer    Analytics       
+
 ==============================================================
 """
 
@@ -118,6 +118,9 @@ class PricingModuleManager:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             logger.info("Initializing Pricing Module...")
             
@@ -174,7 +177,7 @@ class PricingModuleManager:
             self._health_status = "healthy"
             self._last_health_check = datetime.utcnow()
             
-            logger.info("🚀 Pricing Module initialization completed successfully!")
+            logger.info(" Pricing Module initialization completed successfully!")
             return True
             
         except Exception as e:
@@ -185,6 +188,9 @@ class PricingModuleManager:
             
     async def shutdown(self):
         """Gracefully shutdown the pricing module"""
+
+
+
         try:
             logger.info("Shutting down Pricing Module...")
             
@@ -261,6 +267,9 @@ class PricingModuleManager:
         
     def get_module_info(self) -> Dict[str, Any]:
         """Get comprehensive module information"""
+
+
+
         
         return {
             "module_name": "pricing",
@@ -295,6 +304,9 @@ class PricingModuleManager:
         
     async def reload_configuration(self, new_config: Dict[str, Any]):
         """Reload module configuration (hot reload)"""
+
+
+
         
         try:
             logger.info("Reloading pricing module configuration...")
@@ -394,6 +406,9 @@ class MockMetricsCollector:
         
     async def track_pricing_calculation(self, creator_id: str, content_type: str, metrics: Any):
         """Track advanced pricing calculations with AI-powered analytics and insights."""
+
+
+
         try:
             timestamp = datetime.now(timezone.utc).isoformat()
             
@@ -438,6 +453,9 @@ class MockMetricsCollector:
             
     async def track_pricing_request(self, creator_id: str, content_type: str, platform: str, confidence: float):
         """Track pricing requests with comprehensive analytics and platform intelligence."""
+
+
+
         try:
             timestamp = datetime.now(timezone.utc).isoformat()
             
@@ -474,6 +492,9 @@ class MockMetricsCollector:
         
     async def track_tier_recommendation(self, creator_id: str, tier: str, score: float):
         """Track tier recommendations with advanced creator analytics and growth insights."""
+
+
+
         try:
             timestamp = datetime.now(timezone.utc).isoformat()
             
@@ -510,6 +531,9 @@ class MockMetricsCollector:
         
     async def track_bulk_pricing_request(self, creator_id: str, requested: int, processed: int):
         """Track bulk pricing requests with advanced performance analytics and optimization insights."""
+
+
+
         try:
             timestamp = datetime.now(timezone.utc).isoformat()
             processing_efficiency = processed / requested if requested > 0 else 0
@@ -547,6 +571,9 @@ class MockMetricsCollector:
         
     async def track_error(self, operation: str, error: str):
         """Track errors with advanced error analytics, pattern recognition, and automated resolution."""
+
+
+
         try:
             timestamp = datetime.now(timezone.utc).isoformat()
             
@@ -786,6 +813,9 @@ pricing_module_manager = PricingModuleManager()
 # Convenience functions for external access
 async def initialize_pricing_module(*args, **kwargs) -> bool:
     """Initialize the pricing module"""
+
+
+
     return await pricing_module_manager.initialize(*args, **kwargs)
 
 async def shutdown_pricing_module():
@@ -794,22 +824,37 @@ async def shutdown_pricing_module():
 
 def get_pricing_service() -> Optional[PricingService]:
     """Get the initialized pricing service"""
+
+
+
     return pricing_module_manager.get_component("pricing_service")
 
 def get_pricing_engine() -> Optional[PricingEngine]:
     """Get the initialized pricing engine"""
+
+
+
     return pricing_module_manager.get_component("pricing_engine")
 
 def get_tier_manager() -> Optional[TierManager]:
     """Get the initialized tier manager"""
+
+
+
     return pricing_module_manager.get_component("tier_manager")
 
 async def pricing_health_check() -> Dict[str, Any]:
     """Get pricing module health status"""
+
+
+
     return await pricing_module_manager.health_check()
 
 def pricing_module_info() -> Dict[str, Any]:
     """Get pricing module information"""
+
+
+
     return pricing_module_manager.get_module_info()
 
 # Export module manager for advanced usage

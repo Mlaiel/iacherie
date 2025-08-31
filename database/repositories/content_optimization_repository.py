@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -71,6 +71,9 @@ class ContentOptimizationRepository(BaseRepository[ContentOptimization]):
         Returns:
             Created content optimization instance
         """
+
+
+
         try:
             optimization_data = {
                 'user_id': user_id,
@@ -112,6 +115,9 @@ class ContentOptimizationRepository(BaseRepository[ContentOptimization]):
         Returns:
             Updated optimization instance
         """
+
+
+
         try:
             update_data = {
                 'status': status,
@@ -160,6 +166,9 @@ class ContentOptimizationRepository(BaseRepository[ContentOptimization]):
         Returns:
             List of content optimizations
         """
+
+
+
         try:
             filters = {'user_id': user_id}
             
@@ -195,6 +204,9 @@ class ContentOptimizationRepository(BaseRepository[ContentOptimization]):
         Returns:
             SEO performance analysis
         """
+
+
+
         try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
@@ -333,6 +345,9 @@ class ContentOptimizationRepository(BaseRepository[ContentOptimization]):
         Returns:
             Hashtag optimization insights
         """
+
+
+
         try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
@@ -463,6 +478,9 @@ class ContentOptimizationRepository(BaseRepository[ContentOptimization]):
         Returns:
             Readability analysis data
         """
+
+
+
         try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
@@ -594,6 +612,9 @@ class ContentOptimizationRepository(BaseRepository[ContentOptimization]):
         Returns:
             Personalized optimization recommendations
         """
+
+
+
         try:
             # Get recent optimizations for analysis
             filters = {'user_id': user_id, 'status': 'completed'}

@@ -188,6 +188,9 @@ class RevenueCalculator:
         Returns:
             Revenue metrics for the content
         """
+
+
+
         try:
             # Get content performance data
             performance = await self.analytics.get_content_performance(
@@ -249,6 +252,9 @@ class RevenueCalculator:
         Returns:
             Revenue projection data
         """
+
+
+
         try:
             # Get historical revenue data
             historical_data = await self._get_historical_revenue(content_id, days=90)
@@ -304,6 +310,9 @@ class RevenueCalculator:
         Returns:
             Comprehensive revenue report
         """
+
+
+
         try:
             # Calculate date range
             end_date = datetime.utcnow()
@@ -370,6 +379,9 @@ class RevenueCalculator:
         Returns:
             Optimization recommendations and potential impact
         """
+
+
+
         try:
             # Get current revenue performance
             current_metrics = await self._get_current_revenue_metrics(content_id)
@@ -426,6 +438,9 @@ class RevenueCalculator:
         Returns:
             Real-time revenue tracking data
         """
+
+
+
         try:
             # Get real-time metrics from cache
             cache_key = f"realtime_revenue:{content_id}"
@@ -495,6 +510,9 @@ class RevenueCalculator:
         Returns:
             Converted amount
         """
+
+
+
         try:
             if from_currency == to_currency:
                 return amount
@@ -597,6 +615,9 @@ class RevenueCalculator:
     
     async def _store_revenue_metrics(self, metrics: RevenueMetrics):
         """Store revenue metrics in database"""
+
+
+
         try:
             revenue_record = RevenueModel(
                 id=str(uuid.uuid4()),
@@ -761,6 +782,9 @@ class RevenueCalculator:
     
     async def _get_from_cache(self, key: str) -> Optional[Dict]:
         """Get data from cache"""
+
+
+
         try:
             cached_data = await self.redis.get(key)
             return json.loads(cached_data) if cached_data else None
@@ -769,6 +793,9 @@ class RevenueCalculator:
     
     async def _save_to_cache(self, key: str, data: Dict, ttl: int = None):
         """Save data to cache"""
+
+
+
         try:
             ttl = ttl or self.cache_ttl
             await self.redis.setex(key, ttl, json.dumps(data, default=str))

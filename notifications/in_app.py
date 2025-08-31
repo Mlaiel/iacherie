@@ -505,6 +505,9 @@ class InAppNotifier:
 
     async def get_user_preferences(self, user_id: str) -> NotificationPreferences:
         """Get notification preferences for a user."""
+
+
+
         return self.user_preferences.get(user_id, NotificationPreferences(
             user_id=user_id,
             enabled_types=set(InAppNotificationType)
@@ -538,6 +541,9 @@ class InAppNotifier:
 
     async def get_analytics(self, start_date: datetime, end_date: datetime, user_id: Optional[str] = None) -> Dict[str, Any]:
         """Get comprehensive in-app notification analytics."""
+
+
+
         return {
             "total_sent": await self._get_total_sent(start_date, end_date, user_id),
             "engagement_rate": await self._get_engagement_rate(start_date, end_date, user_id),

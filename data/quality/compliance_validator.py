@@ -54,7 +54,7 @@ Compliance Validator - Regulatory Compliance Verification System
 Enterprise-grade regulatory and legal compliance validation for content.
 Ensures GDPR, CCPA, copyright, and platform policy compliance.
 
-⚠️  COPYRIGHT WARNING ⚠️
+  COPYRIGHT WARNING 
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or theft of this code or concept without explicit 
 written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and 
@@ -320,6 +320,9 @@ class ComplianceValidator:
     
     def _initialize_personal_data_patterns(self) -> Dict[str, List[str]]:
         """Initialize personal data detection patterns"""
+
+
+
         return {
             'email': [
                 r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
@@ -350,6 +353,9 @@ class ComplianceValidator:
     
     def _initialize_copyright_patterns(self) -> Dict[str, List[str]]:
         """Initialize copyright detection patterns"""
+
+
+
         return {
             'copyright_notice': [
                 r'©\s*\d{4}',
@@ -718,6 +724,9 @@ class ComplianceValidator:
         metadata: Dict[str, Any]
     ) -> Optional[ComplianceViolation]:
         """Validate GDPR personal data handling"""
+
+
+
         
         try:
             # Convert content to text for analysis
@@ -1362,6 +1371,9 @@ class ComplianceValidator:
     
     def list_rules(self) -> List[Dict[str, Any]]:
         """List all compliance rules"""
+
+
+
         return [
             {
                 'rule_id': rule.rule_id,

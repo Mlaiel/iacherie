@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -340,6 +340,9 @@ class EngagementMetrics(Base):
         **kwargs
     ) -> 'EngagementMetrics':
         """Record a new engagement metric"""
+
+
+
         return cls(
             user_id=user_id,
             metric_type=metric_type,
@@ -447,6 +450,9 @@ class EngagementMetrics(Base):
     
     def get_audience_insights(self) -> Dict[str, Any]:
         """Get comprehensive audience insights"""
+
+
+
         return {
             'demographics': {
                 'unique_users': self.unique_users,

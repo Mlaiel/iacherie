@@ -9,7 +9,7 @@ and performance monitoring for AI models.
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED 
 This software is protected by international copyright laws.
 Contact: mlaiel@live.de for licensing inquiries.
 """
@@ -115,6 +115,9 @@ class ModelRegistryDeployment:
     
     def _initialize_clients(self) -> None:
         """Initialize Kubernetes, Docker, S3, and Redis clients"""
+
+
+
         try:
             # Kubernetes client
             config.load_incluster_config()
@@ -150,6 +153,9 @@ class ModelRegistryDeployment:
         Returns:
             Infrastructure deployment summary
         """
+
+
+
         try:
             self.status = "deploying_infrastructure"
             logger.info("Deploying model registry infrastructure")
@@ -228,6 +234,9 @@ class ModelRegistryDeployment:
         Returns:
             Model registration result
         """
+
+
+
         try:
             model_name = model_metadata.get("name")
             model_version = model_metadata.get("version", "1.0.0")
@@ -313,6 +322,9 @@ class ModelRegistryDeployment:
         Returns:
             Promotion result
         """
+
+
+
         try:
             logger.info(f"Promoting model {model_id} to {target_stage.value}")
             
@@ -372,6 +384,9 @@ class ModelRegistryDeployment:
         Returns:
             Deployment result
         """
+
+
+
         try:
             strategy = DeploymentStrategy(deployment_config.get("strategy", "rolling"))
             logger.info(f"Deploying model {model_id} with {strategy.value} strategy")
@@ -430,6 +445,9 @@ class ModelRegistryDeployment:
     
     async def _ensure_registry_namespace(self) -> None:
         """Create registry namespace"""
+
+
+
         try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
@@ -1066,6 +1084,9 @@ class ModelRegistryDeployment:
     
     async def _validate_registry_infrastructure(self) -> bool:
         """Validate registry infrastructure deployment"""
+
+
+
         try:
             # Check essential services
             essential_services = [
@@ -1118,6 +1139,9 @@ class ModelRegistryDeployment:
     
     async def _upload_model_artifacts(self, metadata: Dict[str, Any]) -> str:
         """Upload model artifacts to storage"""
+
+
+
         try:
             model_name = metadata["name"]
             model_version = metadata.get("version", "1.0.0")
@@ -1172,6 +1196,9 @@ class ModelRegistryDeployment:
     
     async def _get_model_entry(self, model_id: str) -> Optional[Dict[str, Any]]:
         """Get model entry from registry"""
+
+
+
         try:
             entry = self._redis_client.hgetall(f"model:{model_id}")
             return entry if entry else None
@@ -1220,6 +1247,9 @@ class ModelRegistryDeployment:
     
     async def _get_deployment_info(self, model_id: str) -> Dict[str, Any]:
         """Get deployment information for model"""
+
+
+
         return {
             "endpoints": [],
             "monitoring": True,
@@ -1237,6 +1267,9 @@ class ModelRegistryDeployment:
     
     async def _create_deployment_spec(self, model_entry: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
         """Create deployment specification"""
+
+
+
         return {
             "model_id": model_entry["model_id"],
             "image": f"ia-influencer/model-server:{model_entry['format']}",
@@ -1326,6 +1359,9 @@ class ModelRegistryDeployment:
     
     async def _rollback_failed_deployment(self, model_id: str) -> None:
         """Rollback failed deployment"""
+
+
+
         try:
             # Placeholder for rollback logic
             logger.info(f"Rolling back failed deployment for {model_id}")
@@ -1334,6 +1370,9 @@ class ModelRegistryDeployment:
     
     async def get_registry_metrics(self) -> Dict[str, Any]:
         """Get comprehensive registry metrics"""
+
+
+
         try:
             metrics = {
                 "infrastructure_status": self.status,
@@ -1359,6 +1398,9 @@ class ModelRegistryDeployment:
     
     async def _cleanup_failed_infrastructure(self) -> None:
         """Clean up failed registry infrastructure"""
+
+
+
         try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
@@ -1368,6 +1410,9 @@ class ModelRegistryDeployment:
     
     async def cleanup(self) -> None:
         """Clean up entire registry infrastructure"""
+
+
+
         try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)

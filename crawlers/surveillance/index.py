@@ -4,7 +4,7 @@
 """
 Surveillance Module Entry Point - IA Influencer Agent
 
-⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
+ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
 © 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
@@ -161,6 +161,9 @@ class SurveillanceSystemManager:
             violation_detector: Violation detection service
             platform_manager: Platform integration manager
         """
+
+
+
         try:
             self._logger.info("Initializing Surveillance System Manager...")
             
@@ -232,6 +235,9 @@ class SurveillanceSystemManager:
     
     async def stop_surveillance(self) -> None:
         """Stop all surveillance operations."""
+
+
+
         try:
             self._logger.info("Stopping surveillance operations...")
             
@@ -433,6 +439,9 @@ class SurveillanceSystemManager:
     
     async def _setup_callbacks(self) -> None:
         """Setup callbacks between components for integration."""
+
+
+
         try:
             # Connect monitoring system to other components
             if self.monitoring_system and self.analytics_engine:

@@ -7,7 +7,7 @@ providing multi-format analysis with state-of-the-art accuracy and performance.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -468,6 +468,9 @@ class MultiModalContentAnalyzer:
     
     def analyze_text(self, texts: List[str]) -> Dict[str, Any]:
         """Analyze text content for toxicity and harmful content"""
+
+
+
         try:
             results = self.toxicity_model.predict(texts, self.device)
             return {
@@ -481,6 +484,9 @@ class MultiModalContentAnalyzer:
     
     def analyze_image(self, image: torch.Tensor) -> Dict[str, Any]:
         """Analyze image for NSFW content, violence, and authenticity"""
+
+
+
         try:
             results = {}
             
@@ -517,6 +523,9 @@ class MultiModalContentAnalyzer:
     
     def analyze_audio(self, audio_features: torch.Tensor) -> Dict[str, Any]:
         """Analyze audio content for harmful patterns"""
+
+
+
         try:
             results = self.audio_model(audio_features.to(self.device))
             
@@ -537,6 +546,9 @@ class MultiModalContentAnalyzer:
     
     def extract_audio_features(self, audio_path: str) -> torch.Tensor:
         """Extract features from audio file for analysis"""
+
+
+
         try:
             # Load audio
             y, sr = librosa.load(audio_path, sr=16000)

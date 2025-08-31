@@ -129,6 +129,9 @@ class BasePlatformHandler(ABC):
         headers: Optional[Dict[str, str]] = None
     ) -> Dict[str, Any]:
         """Make rate-limited API request"""
+
+
+
         try:
             # Rate limiting
             await self._apply_rate_limit()
@@ -213,6 +216,9 @@ class BasePlatformHandler(ABC):
     
     def get_status(self) -> Dict[str, Any]:
         """Get handler status information"""
+
+
+
         return {
             'platform': self.platform_name,
             'status': self.status.value,
@@ -235,6 +241,9 @@ class YouTubeHandler(BasePlatformHandler):
     
     async def initialize(self) -> bool:
         """Initialize YouTube handler"""
+
+
+
         try:
             if not self.api_key:
                 logger.error("YouTube API key not configured")
@@ -261,6 +270,9 @@ class YouTubeHandler(BasePlatformHandler):
     
     async def submit_takedown(self, evidence_data: Dict[str, Any], case_id: str) -> PlatformActionResult:
         """Submit DMCA takedown to YouTube"""
+
+
+
         try:
             video_id = self.extract_content_id(evidence_data.get('infringing_content_url', ''))
             if not video_id:
@@ -323,6 +335,9 @@ class YouTubeHandler(BasePlatformHandler):
     
     async def claim_monetization(self, evidence_data: Dict[str, Any], case_id: str) -> PlatformActionResult:
         """Submit monetization claim via Content ID"""
+
+
+
         try:
             if not self.content_id_enabled:
                 return PlatformActionResult(
@@ -383,6 +398,9 @@ class YouTubeHandler(BasePlatformHandler):
     
     async def block_content(self, evidence_data: Dict[str, Any], case_id: str) -> PlatformActionResult:
         """Block content on YouTube"""
+
+
+
         try:
             video_id = self.extract_content_id(evidence_data.get('infringing_content_url', ''))
             if not video_id:
@@ -433,6 +451,9 @@ class YouTubeHandler(BasePlatformHandler):
     
     async def check_action_status(self, platform_case_id: str) -> Dict[str, Any]:
         """Check status of YouTube enforcement action"""
+
+
+
         try:
             # Parse case ID to determine action type
             if "TAKEDOWN" in platform_case_id:
@@ -470,6 +491,9 @@ class YouTubeHandler(BasePlatformHandler):
     
     def extract_content_id(self, url: str) -> Optional[str]:
         """Extract YouTube video ID from URL"""
+
+
+
         try:
             patterns = [
                 r'(?:youtube\.com/watch\?v=|youtu\.be/)([a-zA-Z0-9_-]{11})',
@@ -500,6 +524,9 @@ class SpotifyHandler(BasePlatformHandler):
     
     async def initialize(self) -> bool:
         """Initialize Spotify handler"""
+
+
+
         try:
             if not self.client_id or not self.client_secret:
                 logger.error("Spotify client credentials not configured")
@@ -529,6 +556,9 @@ class SpotifyHandler(BasePlatformHandler):
     
     async def _get_access_token(self) -> Optional[str]:
         """Get Spotify access token using client credentials"""
+
+
+
         try:
             auth_data = {
                 'grant_type': 'client_credentials',
@@ -551,6 +581,9 @@ class SpotifyHandler(BasePlatformHandler):
     
     async def submit_takedown(self, evidence_data: Dict[str, Any], case_id: str) -> PlatformActionResult:
         """Submit takedown request to Spotify"""
+
+
+
         try:
             track_id = self.extract_content_id(evidence_data.get('infringing_content_url', ''))
             if not track_id:
@@ -609,6 +642,9 @@ class SpotifyHandler(BasePlatformHandler):
     
     async def claim_monetization(self, evidence_data: Dict[str, Any], case_id: str) -> PlatformActionResult:
         """Submit monetization claim to Spotify"""
+
+
+
         try:
             # Spotify monetization claims are handled differently
             # Usually through distribution partners or direct rights management
@@ -654,6 +690,9 @@ class SpotifyHandler(BasePlatformHandler):
     
     async def block_content(self, evidence_data: Dict[str, Any], case_id: str) -> PlatformActionResult:
         """Block content on Spotify"""
+
+
+
         try:
             track_id = self.extract_content_id(evidence_data.get('infringing_content_url', ''))
             if not track_id:
@@ -697,6 +736,9 @@ class SpotifyHandler(BasePlatformHandler):
     
     async def check_action_status(self, platform_case_id: str) -> Dict[str, Any]:
         """Check status of Spotify enforcement action"""
+
+
+
         try:
             # Parse case ID to determine action type
             if "TAKEDOWN" in platform_case_id:
@@ -732,6 +774,9 @@ class SpotifyHandler(BasePlatformHandler):
     
     def extract_content_id(self, url: str) -> Optional[str]:
         """Extract Spotify track ID from URL"""
+
+
+
         try:
             patterns = [
                 r'spotify\.com/track/([a-zA-Z0-9]{22})',
@@ -760,6 +805,9 @@ class InstagramHandler(BasePlatformHandler):
     
     async def initialize(self) -> bool:
         """Initialize Instagram handler"""
+
+
+
         try:
             if not self.access_token:
                 logger.error("Instagram access token not configured")
@@ -782,6 +830,9 @@ class InstagramHandler(BasePlatformHandler):
     
     async def submit_takedown(self, evidence_data: Dict[str, Any], case_id: str) -> PlatformActionResult:
         """Submit takedown request to Instagram"""
+
+
+
         try:
             content_id = self.extract_content_id(evidence_data.get('infringing_content_url', ''))
             if not content_id:
@@ -839,6 +890,9 @@ class InstagramHandler(BasePlatformHandler):
     
     async def claim_monetization(self, evidence_data: Dict[str, Any], case_id: str) -> PlatformActionResult:
         """Submit monetization claim to Instagram"""
+
+
+
         try:
             content_id = self.extract_content_id(evidence_data.get('infringing_content_url', ''))
             if not content_id:
@@ -881,6 +935,9 @@ class InstagramHandler(BasePlatformHandler):
     
     async def block_content(self, evidence_data: Dict[str, Any], case_id: str) -> PlatformActionResult:
         """Block content on Instagram"""
+
+
+
         try:
             content_id = self.extract_content_id(evidence_data.get('infringing_content_url', ''))
             if not content_id:
@@ -923,6 +980,9 @@ class InstagramHandler(BasePlatformHandler):
     
     async def check_action_status(self, platform_case_id: str) -> Dict[str, Any]:
         """Check status of Instagram enforcement action"""
+
+
+
         try:
             # Parse case ID to determine action type
             if "TAKEDOWN" in platform_case_id:
@@ -958,6 +1018,9 @@ class InstagramHandler(BasePlatformHandler):
     
     def extract_content_id(self, url: str) -> Optional[str]:
         """Extract Instagram content ID from URL"""
+
+
+
         try:
             patterns = [
                 r'instagram\.com/p/([a-zA-Z0-9_-]+)',
@@ -987,6 +1050,9 @@ class PlatformHandlerManager:
     
     async def initialize(self) -> bool:
         """Initialize all configured platform handlers"""
+
+
+
         try:
             logger.info("Initializing platform handlers...")
             
@@ -1027,10 +1093,16 @@ class PlatformHandlerManager:
     
     def get_handler(self, platform: str) -> Optional[BasePlatformHandler]:
         """Get handler for specific platform"""
+
+
+
         return self.handlers.get(platform.lower())
     
     def get_supported_platforms(self) -> List[str]:
         """Get list of supported platforms"""
+
+
+
         return list(self.handlers.keys())
     
     async def submit_enforcement_action(
@@ -1041,6 +1113,9 @@ class PlatformHandlerManager:
         case_id: str
     ) -> Optional[PlatformActionResult]:
         """Submit enforcement action to specific platform"""
+
+
+
         try:
             handler = self.get_handler(platform)
             if not handler:
@@ -1063,6 +1138,9 @@ class PlatformHandlerManager:
     
     async def check_all_action_statuses(self, platform_case_ids: Dict[str, str]) -> Dict[str, Dict[str, Any]]:
         """Check status of actions across all platforms"""
+
+
+
         try:
             results = {}
             
@@ -1084,6 +1162,9 @@ class PlatformHandlerManager:
     
     def get_platform_statuses(self) -> Dict[str, Dict[str, Any]]:
         """Get status of all platform handlers"""
+
+
+
         return {
             platform: handler.get_status()
             for platform, handler in self.handlers.items()
@@ -1091,6 +1172,9 @@ class PlatformHandlerManager:
     
     async def shutdown(self):
         """Shutdown all platform handlers"""
+
+
+
         try:
             for handler in self.handlers.values():
                 if hasattr(handler, 'shutdown'):
@@ -1110,6 +1194,9 @@ platform_manager = PlatformHandlerManager({})
 
 async def get_platform_manager() -> PlatformHandlerManager:
     """Get the global platform handler manager instance"""
+
+
+
     return platform_manager
 
 

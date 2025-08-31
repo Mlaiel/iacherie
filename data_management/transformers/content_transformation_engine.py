@@ -1,5 +1,5 @@
 """
-🗄️ Advanced Content Transformation Engine - IA Influencer Agent Platform Enterprise
+ Advanced Content Transformation Engine - IA Influencer Agent Platform Enterprise
 =================================================================================
 Module: backend/data_management/transformers/content_transformation_engine.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Content Transformation Engine - Enterprise Production-Ready
 Responsibility: Transformation intelligente multi-format avec optimisation IA
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -20,10 +20,10 @@ Quality Validation → SEO Optimization → Multi-Platform Preparation →
 Performance Monitoring → Adaptive Learning
 
 SUPPORTS TRANSFORMATIONS:
-🎵 Audio: MP3↔WAV↔FLAC, Normalization, Noise Reduction, Mastering
-🎬 Vidéo: MP4↔AVI↔MOV, Compression, Resolution, Frame Rate
-📸 Images: JPG↔PNG↔WEBP, Optimization, HDR, Super Resolution
-📝 Texte: Format Conversion, SEO Enhancement, Translation
+ Audio: MP3↔WAV↔FLAC, Normalization, Noise Reduction, Mastering
+ Vidéo: MP4↔AVI↔MOV, Compression, Resolution, Frame Rate
+ Images: JPG↔PNG↔WEBP, Optimization, HDR, Super Resolution
+ Texte: Format Conversion, SEO Enhancement, Translation
 """
 
 from typing import Dict, List, Any, Optional, Union, Tuple, BinaryIO
@@ -198,6 +198,9 @@ class ContentTransformationEngine:
         
     def _load_supported_formats(self) -> Dict[str, List[str]]:
         """Charge la configuration des formats supportés"""
+
+
+
         return {
             "audio": {
                 "input": [".mp3", ".wav", ".flac", ".ogg", ".m4a", ".aiff", ".wma"],
@@ -235,6 +238,9 @@ class ContentTransformationEngine:
         Returns:
             List[TransformationResult]: Résultats des transformations
         """
+
+
+
         try:
             results = []
             
@@ -280,6 +286,9 @@ class ContentTransformationEngine:
     
     async def _analyze_source_content(self, content_path: str) -> Dict[str, Any]:
         """Analyse le contenu source pour optimiser les transformations"""
+
+
+
         try:
             file_path = Path(content_path)
             file_extension = file_path.suffix.lower()
@@ -339,6 +348,9 @@ class ContentTransformationEngine:
     
     async def _analyze_audio_content(self, audio_path: str) -> Dict[str, Any]:
         """Analyse spécifique pour le contenu audio"""
+
+
+
         try:
             # Chargement de l'audio
             y, sr = librosa.load(audio_path, sr=None)
@@ -370,6 +382,9 @@ class ContentTransformationEngine:
     
     async def _analyze_video_content(self, video_path: str) -> Dict[str, Any]:
         """Analyse spécifique pour le contenu vidéo"""
+
+
+
         try:
             # Utilisation de OpenCV pour l'analyse
             cap = cv2.VideoCapture(video_path)
@@ -427,6 +442,9 @@ class ContentTransformationEngine:
     
     async def _analyze_image_content(self, image_path: str) -> Dict[str, Any]:
         """Analyse spécifique pour le contenu image"""
+
+
+
         try:
             # Chargement de l'image
             image = Image.open(image_path)
@@ -481,6 +499,9 @@ class ContentTransformationEngine:
     
     async def _analyze_text_content(self, text_path: str) -> Dict[str, Any]:
         """Analyse spécifique pour le contenu texte"""
+
+
+
         try:
             # Lecture du contenu
             with open(text_path, 'r', encoding='utf-8') as f:
@@ -680,6 +701,9 @@ class ContentTransformationEngine:
     async def _transform_audio(self, input_path: str, output_path: str,
                              config: TransformationConfig, content_info: Dict[str, Any]) -> bool:
         """Transformations audio spécialisées"""
+
+
+
         try:
             if config.transformation_type == TransformationType.AUDIO_NORMALIZE:
                 # Normalisation audio
@@ -726,6 +750,9 @@ class ContentTransformationEngine:
     async def _transform_video(self, input_path: str, output_path: str,
                              config: TransformationConfig, content_info: Dict[str, Any]) -> bool:
         """Transformations vidéo spécialisées"""
+
+
+
         try:
             if config.transformation_type == TransformationType.VIDEO_RESIZE:
                 # Redimensionnement vidéo
@@ -778,6 +805,9 @@ class ContentTransformationEngine:
     async def _transform_image(self, input_path: str, output_path: str,
                              config: TransformationConfig, content_info: Dict[str, Any]) -> bool:
         """Transformations image spécialisées"""
+
+
+
         try:
             image = Image.open(input_path)
             
@@ -843,6 +873,9 @@ class ContentTransformationEngine:
     async def _transform_text(self, input_path: str, output_path: str,
                             config: TransformationConfig, content_info: Dict[str, Any]) -> bool:
         """Transformations texte spécialisées"""
+
+
+
         try:
             with open(input_path, 'r', encoding='utf-8') as f:
                 content = f.read()
@@ -900,6 +933,9 @@ class ContentTransformationEngine:
     async def _transform_generic(self, input_path: str, output_path: str,
                                config: TransformationConfig, content_info: Dict[str, Any]) -> bool:
         """Transformations génériques"""
+
+
+
         try:
             # Copie simple pour les transformations non spécialisées
             import shutil
@@ -931,6 +967,9 @@ class ContentTransformationEngine:
     async def _analyze_transformation_quality(self, original_path: str, transformed_path: str,
                                             config: TransformationConfig) -> Dict[str, float]:
         """Analyse la qualité post-transformation"""
+
+
+
         try:
             metrics = {}
             
@@ -960,6 +999,9 @@ class ContentTransformationEngine:
     
     async def _compare_image_quality(self, original_path: str, transformed_path: str) -> Dict[str, float]:
         """Compare la qualité entre deux images"""
+
+
+
         try:
             original = cv2.imread(original_path)
             transformed = cv2.imread(transformed_path)
@@ -990,6 +1032,9 @@ class ContentTransformationEngine:
     
     async def _compare_audio_quality(self, original_path: str, transformed_path: str) -> Dict[str, float]:
         """Compare la qualité entre deux fichiers audio"""
+
+
+
         try:
             y1, sr1 = librosa.load(original_path, sr=None)
             y2, sr2 = librosa.load(transformed_path, sr=None)
@@ -1022,6 +1067,9 @@ class ContentTransformationEngine:
     
     async def _compare_video_quality(self, original_path: str, transformed_path: str) -> Dict[str, float]:
         """Compare la qualité entre deux vidéos"""
+
+
+
         try:
             cap1 = cv2.VideoCapture(original_path)
             cap2 = cv2.VideoCapture(transformed_path)

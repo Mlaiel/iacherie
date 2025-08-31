@@ -7,7 +7,7 @@ security parameters, and system-wide payment policies.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -204,6 +204,9 @@ class PaymentConfig(BaseSettings):
     
     def get_provider_config(self, provider_name: str) -> Optional[Dict[str, Any]]:
         """Get configuration for specific provider."""
+
+
+
         return self.providers.get(provider_name)
     
     def is_provider_enabled(self, provider_name: str) -> bool:
@@ -307,6 +310,9 @@ class PaymentConfig(BaseSettings):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert configuration to dictionary."""
+
+
+
         return {
             "default_currency": self.default_currency,
             "supported_currencies": self.supported_currencies,
@@ -346,6 +352,9 @@ def override_payment_config(config: PaymentConfig):
 # Environment-specific configurations
 def get_test_config() -> PaymentConfig:
     """Get test configuration with safe defaults."""
+
+
+
     return PaymentConfig(
         environment="test",
         debug=True,
@@ -368,6 +377,9 @@ def get_test_config() -> PaymentConfig:
 
 def get_sandbox_config() -> PaymentConfig:
     """Get sandbox configuration for development."""
+
+
+
     return PaymentConfig(
         environment="sandbox",
         debug=True,

@@ -9,7 +9,7 @@ optimized workflows and content-specific features.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent - Content Protection Platform
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
@@ -120,6 +120,9 @@ class SpecializedIndexingService:
     
     async def create_creator_profile(self, profile: CreatorProfile) -> bool:
         """Create or update creator profile"""
+
+
+
         try:
             profile_data = {
                 "creator_id": profile.creator_id,
@@ -158,6 +161,9 @@ class SpecializedIndexingService:
         content_type: str
     ) -> Dict[str, Any]:
         """Index content with creator-specific optimizations"""
+
+
+
         try:
             # Enhanced metadata with creator context
             enhanced_metadata = {

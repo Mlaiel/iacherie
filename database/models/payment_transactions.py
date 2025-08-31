@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -406,6 +406,9 @@ class PaymentTransaction(Base):
         **kwargs
     ) -> 'PaymentTransaction':
         """Create a payout transaction"""
+
+
+
         return cls(
             user_id=user_id,
             transaction_type=TransactionType.PAYOUT,
@@ -566,6 +569,9 @@ class PaymentTransaction(Base):
     
     def get_transaction_summary(self) -> Dict[str, Any]:
         """Get comprehensive transaction summary"""
+
+
+
         return {
             'transaction_info': {
                 'id': str(self.id),
@@ -601,6 +607,9 @@ class PaymentTransaction(Base):
     
     def is_eligible_for_refund(self) -> bool:
         """Check if transaction is eligible for refund"""
+
+
+
         return (
             self.status == TransactionStatus.COMPLETED and
             self.transaction_type in [TransactionType.PAYMENT, TransactionType.SUBSCRIPTION] and
@@ -611,6 +620,9 @@ class PaymentTransaction(Base):
     
     def get_tax_summary(self) -> Dict[str, Any]:
         """Get tax information summary"""
+
+
+
         return {
             'tax_amount': float(self.tax_amount) if self.tax_amount else 0.0,
             'tax_rate': float(self.tax_rate) if self.tax_rate else 0.0,

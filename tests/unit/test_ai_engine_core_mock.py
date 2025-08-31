@@ -166,6 +166,9 @@ class MockAIOrchestrator:
     
     def get_performance_metrics(self) -> Dict:
         """Get orchestrator performance metrics"""
+
+
+
         return self.performance_metrics.copy()
 
 

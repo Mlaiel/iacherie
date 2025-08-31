@@ -8,7 +8,7 @@ automated compliance checking, and professional legal template management.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -258,6 +258,9 @@ class LegalDocumentGenerator:
     
     def _get_dmca_takedown_template(self) -> str:
         """Get DMCA takedown notice template"""
+
+
+
         return """
 <!DOCTYPE html>
 <html>
@@ -370,6 +373,9 @@ class LegalDocumentGenerator:
     
     def _get_dmca_counter_notice_template(self) -> str:
         """Get DMCA counter-notice template"""
+
+
+
         return """
 <!DOCTYPE html>
 <html>
@@ -461,6 +467,9 @@ class LegalDocumentGenerator:
     
     def _get_eu_copyright_template(self) -> str:
         """Get EU Copyright Directive template"""
+
+
+
         return """
 <!DOCTYPE html>
 <html>
@@ -580,6 +589,9 @@ class LegalDocumentGenerator:
     
     def _get_cease_desist_template(self) -> str:
         """Get cease and desist letter template"""
+
+
+
         return """
 <!DOCTYPE html>
 <html>
@@ -652,7 +664,7 @@ class LegalDocumentGenerator:
     </div>
 
     <div class="warning">
-        <strong>⚠️ IMMEDIATE DEMAND:</strong><br>
+        <strong> IMMEDIATE DEMAND:</strong><br>
         You are hereby demanded to CEASE AND DESIST from all infringing activities immediately, including:
         <br><br>
         {{ demand_action }}
@@ -716,6 +728,9 @@ class LegalDocumentGenerator:
     
     def _load_translations(self) -> Dict[DocumentLanguage, Dict[str, str]]:
         """Load document translations"""
+
+
+
         return {
             DocumentLanguage.GERMAN: {
                 "takedown_notice": "Abmahnung",
@@ -750,6 +765,9 @@ class LegalDocumentGenerator:
         Returns:
             GeneratedDocument with complete document content
         """
+
+
+
         try:
             self.logger.info(f"Generating document {request.document_type} for request {request.request_id}")
             
@@ -917,6 +935,9 @@ class LegalDocumentGenerator:
         variables: Dict[str, Any]
     ) -> str:
         """Render template with variables"""
+
+
+
         try:
             jinja_template = self.jinja_env.from_string(template.template_content)
             rendered_content = jinja_template.render(**variables)
@@ -936,6 +957,9 @@ class LegalDocumentGenerator:
         legal_framework: LegalFramework
     ) -> float:
         """Check document compliance with legal framework"""
+
+
+
         try:
             # Use compliance engine to check generated document
             compliance_result = await self.compliance_engine.check_compliance(
@@ -955,6 +979,9 @@ class LegalDocumentGenerator:
         target_format: DocumentFormat
     ) -> str:
         """Convert document to target format"""
+
+
+
         try:
             if target_format == DocumentFormat.PDF:
                 return await self.pdf_generator.html_to_pdf(content)
@@ -982,6 +1009,9 @@ class LegalDocumentGenerator:
     
     async def _apply_digital_signature(self, document: GeneratedDocument) -> str:
         """Apply digital signature to document"""
+
+
+
         try:
             signature = await self.digital_signer.sign_document(
                 document.content,
@@ -996,6 +1026,9 @@ class LegalDocumentGenerator:
     
     async def _apply_notarization(self, document: GeneratedDocument) -> Dict[str, Any]:
         """Apply notarization to document"""
+
+
+
         try:
             # This would integrate with notarization services
             notarization_info = {
@@ -1130,6 +1163,9 @@ class LegalDocumentGenerator:
     
     async def _save_document_to_database(self, document: GeneratedDocument) -> None:
         """Save generated document to database"""
+
+
+
         try:
             with get_db_session() as session:
                 db_document = LegalDocument(
@@ -1180,6 +1216,9 @@ class LegalDocumentGenerator:
     
     async def get_document_by_id(self, document_id: str) -> Optional[GeneratedDocument]:
         """Retrieve generated document by ID"""
+
+
+
         try:
             # Check cache first
             for cached_data in self.document_cache.values():
@@ -1205,6 +1244,9 @@ class LegalDocumentGenerator:
     
     async def get_generation_statistics(self) -> Dict[str, Any]:
         """Get document generation statistics"""
+
+
+
         try:
             with get_db_session() as session:
                 total_generated = session.query(LegalDocument).count()

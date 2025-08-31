@@ -193,6 +193,9 @@ class VideoTransformer:
     
     def _check_ffmpeg(self) -> bool:
         """Check if FFmpeg is available."""
+
+
+
         try:
             subprocess.run(["ffmpeg", "-version"], capture_output=True, check=True)
             return True
@@ -335,6 +338,9 @@ class VideoTransformer:
         Returns:
             Success status
         """
+
+
+
         try:
             options = enhancement_options or {}
             settings = VideoSettings(
@@ -364,6 +370,9 @@ class VideoTransformer:
         Returns:
             VideoMetadata object
         """
+
+
+
         try:
             metadata = VideoMetadata()
             file_path_obj = Path(file_path)
@@ -643,6 +652,9 @@ class VideoTransformer:
     
     async def _calculate_quality_score(self, input_path: str, output_path: str) -> Optional[float]:
         """Calculate video quality score comparing input and output."""
+
+
+
         try:
             if not VIDEO_LIBS_AVAILABLE:
                 return None
@@ -747,6 +759,9 @@ class VideoTransformer:
     
     async def cleanup(self):
         """Cleanup temporary files and resources."""
+
+
+
         try:
             # Clean temp directory
             if self.temp_dir.exists():
@@ -773,6 +788,9 @@ class VideoConverter:
         quality: str = "high"
     ) -> bool:
         """Convert video file."""
+
+
+
         return await self.transformer.convert(input_path, output_path, format, quality)
 
 
@@ -789,4 +807,7 @@ class VideoEnhancer:
         options: Optional[Dict[str, Any]] = None
     ) -> bool:
         """Enhance video quality."""
+
+
+
         return await self.transformer.enhance(input_path, output_path, options)

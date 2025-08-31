@@ -95,6 +95,9 @@ class TestMetricsCore:
     @pytest.fixture
     def sample_metric_data(self, sample_metrics):
         """Get sample metric data for testing."""
+
+
+
         return sample_metrics["performance_metrics"]
     
     async def test_metrics_collector_initialization(self, metrics_collector):

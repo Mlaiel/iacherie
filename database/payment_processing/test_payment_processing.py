@@ -92,6 +92,9 @@ class TestEnterprisePaymentProcessingService:
     @pytest.fixture
     def payment_service(self):
         """Create payment service instance for testing"""
+
+
+
         return EnterprisePaymentProcessingService()
     
     @pytest.mark.asyncio
@@ -175,6 +178,9 @@ class TestPaymentGatewayManager:
     @pytest.fixture
     def gateway_manager(self):
         """Create gateway manager instance for testing"""
+
+
+
         return PaymentGatewayManager()
     
     def test_gateway_registration(self, gateway_manager):
@@ -227,6 +233,9 @@ class TestFraudDetectionEngine:
     @pytest.fixture
     def fraud_engine(self):
         """Create fraud detection engine for testing"""
+
+
+
         return AdvancedFraudDetectionEngine()
     
     @pytest.mark.asyncio
@@ -289,6 +298,9 @@ class TestTransactionAnalytics:
     @pytest.fixture
     def analytics_engine(self):
         """Create analytics engine for testing"""
+
+
+
         return AdvancedTransactionAnalytics()
     
     @pytest.mark.asyncio
@@ -375,6 +387,9 @@ class TestComplianceManager:
     @pytest.fixture
     def compliance_manager(self):
         """Create compliance manager for testing"""
+
+
+
         return AdvancedComplianceManager()
     
     @pytest.mark.asyncio
@@ -433,6 +448,9 @@ class TestWebhookManager:
     @pytest.fixture
     def webhook_manager(self):
         """Create webhook manager for testing"""
+
+
+
         return AdvancedWebhookManager()
     
     @pytest.mark.asyncio

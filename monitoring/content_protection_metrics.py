@@ -1,5 +1,5 @@
 """
-🛡️ Content Protection Metrics - Advanced Security & Copyright Analytics
+ Content Protection Metrics - Advanced Security & Copyright Analytics
 ======================================================================
 
 Comprehensive metrics for content protection, copyright detection,
@@ -197,6 +197,9 @@ class ContentProtectionTracker:
             user_id: Associated user ID
             metadata: Additional metadata
         """
+
+
+
         try:
             # Generate event ID
             event_id = hashlib.md5(
@@ -273,6 +276,9 @@ class ContentProtectionTracker:
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
         """Track DMCA takedown request"""
+
+
+
         try:
             # Update DMCA metrics
             self.dmca_takedowns.labels(
@@ -310,6 +316,9 @@ class ContentProtectionTracker:
         quality_score: float
     ) -> None:
         """Track fingerprint generation"""
+
+
+
         try:
             fingerprint_info = {
                 "type": fingerprint_type,
@@ -340,6 +349,9 @@ class ContentProtectionTracker:
         Returns:
             Protection analytics data
         """
+
+
+
         try:
             # Check cache
             cache_key = f"protection_analytics_{period_days}"
@@ -624,6 +636,9 @@ class ContentProtectionTracker:
         detection_method: DetectionMethod
     ) -> None:
         """Update protection statistics for accuracy tracking"""
+
+
+
         try:
             key = f"{protection_type.value}_{detection_method.value}"
             
@@ -661,6 +676,9 @@ class ContentProtectionTracker:
     
     def get_tracker_stats(self) -> Dict[str, Any]:
         """Get protection tracker statistics"""
+
+
+
         return {
             "total_events": len(self.protection_events),
             "unique_content_scanned": len(set(e.content_id for e in self.protection_events)),

@@ -139,7 +139,10 @@ class AlgorithmManager:
         self._initialize_engines()
     
     def _initialize_engines(self) -> None:
-        """Initialize all algorithm engines"""        try:
+        """Initialize all algorithm engines"""
+
+
+        try:
             for name, engine_class in ALGORITHM_ENGINES.items():
                 self.engines[name] = engine_class()
                 logger.info(f"Initialized algorithm engine: {name}")
@@ -155,7 +158,10 @@ class AlgorithmManager:
     def process_content(self, content_type: str, content_data: Any, 
                        algorithm_config: Dict[str, Any]) -> Dict[str, Any]:
         """        Process content through appropriate algorithms
-        """        try:
+        """
+
+
+        try:
             results = {}
             
             # Route to appropriate engines based on content type
@@ -230,7 +236,10 @@ __all__ = [
 ]
 
 def get_algorithm_info() -> Dict[str, Any]:
-    """Get comprehensive information about all available algorithms"""    return {
+    """Get comprehensive information about all available algorithms"""
+
+
+    return {
         'module_name': 'Core Algorithms Module',
         'version': __version__,
         'author': __author__,
@@ -277,11 +286,11 @@ def validate_algorithm_installation() -> Dict[str, bool]:
                 engine = engine_class()
             
             validation_results[engine_name] = True
-            logger.info(f"✅ {engine_name} engine validated successfully")
+            logger.info(f" {engine_name} engine validated successfully")
             
         except Exception as e:
             validation_results[engine_name] = False
-            logger.error(f"❌ {engine_name} engine validation failed: {e}")
+            logger.error(f" {engine_name} engine validation failed: {e}")
     
     return validation_results
 

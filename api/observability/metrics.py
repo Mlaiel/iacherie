@@ -41,6 +41,9 @@ class MetricPoint:
 
     def to_dict(self) -> Dict:
         """Convert to dictionary."""
+
+
+
         return {
             'timestamp': self.timestamp.isoformat(),
             'value': self.value,
@@ -169,6 +172,9 @@ class MetricsCollector:
 
     def time_operation(self, name: str, labels: Optional[Dict] = None):
         """Context manager to time operations with enhanced features."""
+
+
+
         return TimingContext(self, name, labels)
 
     def get_metrics_summary(self) -> Dict:
@@ -492,6 +498,9 @@ class ContentMetricsCollector:
 
     def get_content_insights(self) -> Dict:
         """Get content processing insights."""
+
+
+
         return {
             "average_upload_size_mb": sum(self.upload_sizes) / len(self.upload_sizes) / (1024*1024) if self.upload_sizes else 0,
             "total_unique_users": len(self.content_by_user),

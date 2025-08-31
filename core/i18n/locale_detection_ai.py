@@ -8,7 +8,7 @@ Responsibility: AI-powered locale detection, cultural context analysis, and regi
 Technologies: Python, Machine Learning, Geolocation, Cultural Analysis, Neural Networks
 ================================================================================
 
-⚠️  PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
+  PROPRIETARY SOFTWARE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -518,6 +518,9 @@ class LocaleDetectionAI:
         detection_methods: List[DetectionMethod] = None
     ) -> LocaleDetectionResult:
         """Comprehensive AI-powered locale detection"""
+
+
+
         try:
             start_time = datetime.now()
             
@@ -1129,6 +1132,9 @@ class LocaleDetectionAI:
     
     async def health_check(self) -> bool:
         """Health check for locale detection AI service"""
+
+
+
         try:
             # Check if models are loaded
             if not self.locale_models:

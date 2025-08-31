@@ -7,7 +7,7 @@ using AI-powered algorithms and traditional computer vision techniques.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -295,6 +295,9 @@ class ImageEnhancer:
 
     async def _auto_detect_enhancements(self, image: Image.Image) -> List[EnhancementType]:
         """Automatically detect what enhancements are needed"""
+
+
+
         try:
             enhancements_needed = []
             
@@ -387,6 +390,9 @@ class ImageEnhancer:
 
     async def _apply_super_resolution(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
         """Apply AI-powered super-resolution"""
+
+
+
         try:
             # Load super-resolution model
             model = await self._load_enhancement_model(params.model)
@@ -435,6 +441,9 @@ class ImageEnhancer:
 
     async def _apply_noise_reduction(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
         """Apply advanced noise reduction"""
+
+
+
         try:
             img_array = np.array(image)
             
@@ -473,6 +482,9 @@ class ImageEnhancer:
 
     async def _apply_sharpening(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
         """Apply intelligent sharpening"""
+
+
+
         try:
             # Choose sharpening method based on quality level
             if params.quality_level in [QualityLevel.PROFESSIONAL, QualityLevel.ULTRA]:
@@ -493,6 +505,9 @@ class ImageEnhancer:
 
     async def _apply_contrast_enhancement(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
         """Apply contrast enhancement"""
+
+
+
         try:
             if params.quality_level in [QualityLevel.PROFESSIONAL, QualityLevel.ULTRA]:
                 # Advanced CLAHE (Contrast Limited Adaptive Histogram Equalization)
@@ -533,6 +548,9 @@ class ImageEnhancer:
 
     async def _apply_color_correction(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
         """Apply automatic color correction"""
+
+
+
         try:
             img_array = np.array(image).astype(np.float32)
             
@@ -578,6 +596,9 @@ class ImageEnhancer:
 
     async def _apply_brightness_adjustment(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
         """Apply intelligent brightness adjustment"""
+
+
+
         try:
             img_array = np.array(image)
             
@@ -600,6 +621,9 @@ class ImageEnhancer:
 
     async def _apply_saturation_enhancement(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
         """Apply saturation enhancement"""
+
+
+
         try:
             enhancement_factor = 1.0 + (params.color_enhancement if hasattr(params, 'color_enhancement') else 0.2)
             enhancer = ImageEnhance.Color(image)
@@ -611,6 +635,9 @@ class ImageEnhancer:
 
     async def _apply_gamma_correction(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
         """Apply gamma correction"""
+
+
+
         try:
             # Auto-calculate gamma if not specified
             img_array = np.array(image)
@@ -640,6 +667,9 @@ class ImageEnhancer:
 
     async def _apply_histogram_equalization(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
         """Apply histogram equalization"""
+
+
+
         try:
             img_array = np.array(image)
             
@@ -664,6 +694,9 @@ class ImageEnhancer:
 
     async def _apply_local_contrast(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
         """Apply local contrast enhancement"""
+
+
+
         try:
             img_array = np.array(image)
             
@@ -689,6 +722,9 @@ class ImageEnhancer:
 
     async def _apply_upscaling(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
         """Apply traditional upscaling"""
+
+
+
         try:
             new_size = (
                 int(image.size[0] * params.upscale_factor),
@@ -709,6 +745,9 @@ class ImageEnhancer:
 
     async def _load_enhancement_model(self, model_type: EnhancementModel) -> Optional[Any]:
         """Load AI enhancement model"""
+
+
+
         try:
             model_key = model_type.value
             
@@ -730,6 +769,9 @@ class ImageEnhancer:
         enhanced: Image.Image
     ) -> float:
         """Calculate quality improvement score"""
+
+
+
         try:
             # Convert to numpy arrays
             orig_array = np.array(original)
@@ -774,6 +816,9 @@ class ImageEnhancer:
         operations: List[str]
     ) -> Dict[str, float]:
         """Calculate comprehensive enhancement metrics"""
+
+
+
         try:
             metrics = {}
             
@@ -818,6 +863,9 @@ class ImageEnhancer:
         enhancement_id: str
     ) -> None:
         """Save enhanced image with high quality settings"""
+
+
+
         try:
             save_path = Path(save_path)
             save_path.parent.mkdir(parents=True, exist_ok=True)
@@ -880,6 +928,9 @@ class ImageEnhancer:
     # Placeholder methods for advanced enhancements
     async def _apply_artifact_removal(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
         """Remove compression artifacts and digital noise"""
+
+
+
         return await self._apply_noise_reduction(image, params)
 
     async def _apply_blur_removal(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
@@ -889,6 +940,9 @@ class ImageEnhancer:
 
     async def _apply_scratch_removal(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
         """Remove scratches and defects from old photos"""
+
+
+
         try:
             img_array = np.array(image)
             
@@ -915,6 +969,9 @@ class ImageEnhancer:
 
     async def _apply_restoration(self, image: Image.Image, params: EnhancementParams) -> Image.Image:
         """Comprehensive image restoration"""
+
+
+
         try:
             # Apply multiple restoration techniques
             restored = image.copy()
@@ -939,6 +996,9 @@ class ImageEnhancer:
 
     async def get_enhancement_stats(self) -> Dict[str, Any]:
         """Get comprehensive enhancement statistics"""
+
+
+
         try:
             stats = self.enhancement_stats.copy()
             
@@ -997,6 +1057,9 @@ class QualityUpscaler:
         Returns:
             Upscaled image
         """
+
+
+
         try:
             if method == "ai":
                 return await self._ai_upscale(image, scale_factor)

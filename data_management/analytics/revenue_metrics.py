@@ -733,6 +733,9 @@ class RevenueMetricsCollector:
         entity_type: str = "user"
     ) -> List[FinancialProfile]:
         """Generate comprehensive financial performance profiles."""
+
+
+
         
         try:
             # Collect revenue metrics

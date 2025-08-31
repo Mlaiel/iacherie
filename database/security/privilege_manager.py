@@ -20,7 +20,7 @@ Team Specialists:
 - IA Prompt Engineer: AI privilege analysis prompts
 
 Contact: mlaiel@live.de
-⚠️ LEGAL WARNING: Any unauthorized use, copying, distribution, or commercialization 
+ LEGAL WARNING: Any unauthorized use, copying, distribution, or commercialization 
 of this code without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will result in immediate legal action.
 """
@@ -238,6 +238,9 @@ class PostgreSQLPrivilegeEngine(PrivilegeEngine):
         grant_option: GrantOption = GrantOption.NONE
     ) -> bool:
         """Grant PostgreSQL privilege"""
+
+
+
         try:
             # Construct GRANT statement
             grant_sql = self._build_grant_statement(
@@ -260,6 +263,9 @@ class PostgreSQLPrivilegeEngine(PrivilegeEngine):
         privilege_type: PrivilegeType
     ) -> bool:
         """Revoke PostgreSQL privilege"""
+
+
+
         try:
             # Construct REVOKE statement
             revoke_sql = self._build_revoke_statement(
@@ -282,6 +288,9 @@ class PostgreSQLPrivilegeEngine(PrivilegeEngine):
         privilege_type: PrivilegeType
     ) -> bool:
         """Check PostgreSQL privilege"""
+
+
+
         try:
             # Query privilege information
             check_sql = self._build_privilege_check(
@@ -378,6 +387,9 @@ class PrivilegeManager:
     
     def _initialize_system_roles(self):
         """Initialize system roles"""
+
+
+
         try:
             # Create default system roles
             system_roles = [
@@ -443,6 +455,9 @@ class PrivilegeManager:
         Returns:
             User ID
         """
+
+
+
         try:
             # Check if username already exists
             if any(user.username == username for user in self.users.values()):
@@ -494,6 +509,9 @@ class PrivilegeManager:
         Returns:
             Role ID
         """
+
+
+
         try:
             # Check if role name already exists
             if any(role.name == name for role in self.roles.values()):
@@ -556,6 +574,9 @@ class PrivilegeManager:
         Returns:
             True if successful, False otherwise
         """
+
+
+
         try:
             # Validate user and role exist
             if user_id not in self.users:
@@ -616,6 +637,9 @@ class PrivilegeManager:
         Returns:
             True if successful, False otherwise
         """
+
+
+
         try:
             # Validate user and role exist
             if user_id not in self.users:
@@ -682,6 +706,9 @@ class PrivilegeManager:
         Returns:
             Grant ID
         """
+
+
+
         try:
             # Create privilege grant
             grant = PrivilegeGrant(
@@ -750,6 +777,9 @@ class PrivilegeManager:
         Returns:
             True if successful, False otherwise
         """
+
+
+
         try:
             # Find matching grant
             grant_to_revoke = None
@@ -814,6 +844,9 @@ class PrivilegeManager:
         Returns:
             True if user has privilege, False otherwise
         """
+
+
+
         try:
             if user_id not in self.users:
                 return False

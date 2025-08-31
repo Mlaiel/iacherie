@@ -517,14 +517,14 @@ class SEOConfig:
         
         # Add call to action based on content type
         cta_map = {
-            "music": "🎵 Listen now and discover amazing music!",
-            "blog": "📖 Read the full article for expert insights!",
-            "photography": "📸 See more stunning photography!",
-            "video": "🎬 Watch the full video now!",
-            "comedy": "😂 Get ready to laugh!"
+            "music": " Listen now and discover amazing music!",
+            "blog": " Read the full article for expert insights!",
+            "photography": " See more stunning photography!",
+            "video": " Watch the full video now!",
+            "comedy": " Get ready to laugh!"
         }
         
-        call_to_action = cta_map.get(settings.get("meta_focus", "").split("_")[0], "✨ Discover more!")
+        call_to_action = cta_map.get(settings.get("meta_focus", "").split("_")[0], " Discover more!")
         
         # Include primary keywords
         keywords_text = ", ".join(settings["primary_keywords"][:3])

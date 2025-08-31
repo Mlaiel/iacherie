@@ -192,6 +192,9 @@ class CrawlerModuleValidator:
     
     def _check_depth_compliance(self) -> bool:
         """Check directory depth compliance (max 3 levels)."""
+
+
+
         try:
             for root, dirs, files in os.walk(self.base_path):
                 # Calculate depth relative to base path
@@ -204,6 +207,9 @@ class CrawlerModuleValidator:
     
     def _check_naming_compliance(self) -> bool:
         """Check naming compliance (no amateur patterns)."""
+
+
+
         try:
             for root, dirs, files in os.walk(self.base_path):
                 # Check directory names
@@ -224,6 +230,9 @@ class CrawlerModuleValidator:
     
     def _check_structure_compliance(self) -> bool:
         """Check if all required subdirectories exist."""
+
+
+
         try:
             existing_dirs = [d.name for d in self.base_path.iterdir() if d.is_dir()]
             missing_dirs = set(self.required_subdirs) - set(existing_dirs)
@@ -233,6 +242,9 @@ class CrawlerModuleValidator:
     
     def _check_documentation_compliance(self) -> bool:
         """Check if all required documentation files exist."""
+
+
+
         try:
             existing_files = [f.name for f in self.base_path.iterdir() if f.is_file()]
             missing_docs = set(self.required_docs) - set(existing_files)
@@ -242,6 +254,9 @@ class CrawlerModuleValidator:
     
     def _check_security_compliance(self) -> bool:
         """Check security compliance in modules."""
+
+
+
         try:
             # Check for proper copyright notices and warnings
             for py_file in self.base_path.glob("*.py"):
@@ -264,6 +279,9 @@ class CrawlerModuleValidator:
     
     def _check_module_documentation(self, module_path: Path) -> bool:
         """Check if module has proper documentation."""
+
+
+
         try:
             if not module_path.exists():
                 return False
@@ -288,6 +306,9 @@ class CrawlerModuleValidator:
     
     async def _check_required_classes(self, module_path: Path, module_name: str) -> bool:
         """Check if module has required classes and functions."""
+
+
+
         try:
             if not module_path.exists():
                 return False
@@ -333,37 +354,37 @@ class CrawlerModuleValidator:
 
 ### Overall Score: {arch_validation.overall_score:.1%}
 
-- **Depth Compliance:** {'✅ PASS' if arch_validation.depth_compliance else '❌ FAIL'}
-- **Naming Compliance:** {'✅ PASS' if arch_validation.naming_compliance else '❌ FAIL'}
-- **Structure Compliance:** {'✅ PASS' if arch_validation.structure_compliance else '❌ FAIL'}
-- **Documentation Compliance:** {'✅ PASS' if arch_validation.documentation_compliance else '❌ FAIL'}
-- **Security Compliance:** {'✅ PASS' if arch_validation.security_compliance else '❌ FAIL'}
+- **Depth Compliance:** {' PASS' if arch_validation.depth_compliance else ' FAIL'}
+- **Naming Compliance:** {' PASS' if arch_validation.naming_compliance else ' FAIL'}
+- **Structure Compliance:** {' PASS' if arch_validation.structure_compliance else ' FAIL'}
+- **Documentation Compliance:** {' PASS' if arch_validation.documentation_compliance else ' FAIL'}
+- **Security Compliance:** {' PASS' if arch_validation.security_compliance else ' FAIL'}
 
 ### Violations:
 """
         
         if arch_validation.violations:
             for violation in arch_validation.violations:
-                report += f"- ❌ {violation}\n"
+                report += f"-  {violation}\n"
         else:
-            report += "- ✅ No violations detected\n"
+            report += "-  No violations detected\n"
         
         report += "\n## MODULE COMPLIANCE\n\n"
         
         for module_name, validation in module_validations.items():
-            status = "✅ COMPLIANT" if validation.compliance_score >= 0.8 else "❌ NON-COMPLIANT"
+            status = " COMPLIANT" if validation.compliance_score >= 0.8 else " NON-COMPLIANT"
             report += f"### {module_name.upper()} - {status} ({validation.compliance_score:.1%})\n\n"
             
-            report += f"- **Exists:** {'✅' if validation.exists else '❌'}\n"
-            report += f"- **Has __init__.py:** {'✅' if validation.has_init else '❌'}\n"
-            report += f"- **Professional Naming:** {'✅' if validation.has_proper_naming else '❌'}\n"
-            report += f"- **Documentation:** {'✅' if validation.has_documentation else '❌'}\n"
-            report += f"- **Required Classes:** {'✅' if validation.has_required_classes else '❌'}\n"
+            report += f"- **Exists:** {'' if validation.exists else ''}\n"
+            report += f"- **Has __init__.py:** {'' if validation.has_init else ''}\n"
+            report += f"- **Professional Naming:** {'' if validation.has_proper_naming else ''}\n"
+            report += f"- **Documentation:** {'' if validation.has_documentation else ''}\n"
+            report += f"- **Required Classes:** {'' if validation.has_required_classes else ''}\n"
             
             if validation.missing_elements:
                 report += "\n**Missing Elements:**\n"
                 for element in validation.missing_elements:
-                    report += f"- ❌ {element}\n"
+                    report += f"-  {element}\n"
             
             report += "\n"
         
@@ -380,7 +401,7 @@ class CrawlerModuleValidator:
 - **Overall Module Compliance:** {overall_compliance:.1%}
 - **Architecture Compliance:** {arch_validation.overall_score:.1%}
 
-### FINAL VERDICT: {'✅ SYSTEM COMPLIANT' if overall_compliance >= 0.8 and arch_validation.overall_score >= 0.8 else '❌ SYSTEM NEEDS ATTENTION'}
+### FINAL VERDICT: {' SYSTEM COMPLIANT' if overall_compliance >= 0.8 and arch_validation.overall_score >= 0.8 else ' SYSTEM NEEDS ATTENTION'}
 
 ## RECOMMENDATIONS
 
@@ -392,20 +413,26 @@ class CrawlerModuleValidator:
             report += "- Complete missing documentation and security headers\n"
             report += "- Verify all required classes and functions are implemented\n"
         else:
-            report += "- ✅ System meets all compliance requirements\n"
-            report += "- ✅ Ready for production deployment\n"
-            report += "- ✅ Maintenance mode: monitor for drift\n"
+            report += "-  System meets all compliance requirements\n"
+            report += "-  Ready for production deployment\n"
+            report += "-  Maintenance mode: monitor for drift\n"
         
         report += f"""
 ---
 **Report generated by CrawlerModuleValidator**
 **Contact:** mlaiel@live.de for compliance questions
 """
+
+
+
         
         return report
     
     async def run_full_validation(self) -> Tuple[bool, str]:
         """Run complete validation and return status with report."""
+
+
+
         try:
             report = await self.generate_compliance_report()
             arch_validation = await self.validate_complete_architecture()
@@ -425,14 +452,14 @@ class CrawlerModuleValidator:
             return overall_pass, report
             
         except Exception as e:
-            error_report = f"❌ VALIDATION FAILED: {str(e)}"
+            error_report = f" VALIDATION FAILED: {str(e)}"
             return False, error_report
 
 async def main():
     """Main validation entry point."""
     validator = CrawlerModuleValidator()
     
-    print("🔍 Starting comprehensive module validation...")
+    print(" Starting comprehensive module validation...")
     print("=" * 60)
     
     success, report = await validator.run_full_validation()
@@ -440,10 +467,10 @@ async def main():
     print(report)
     
     if success:
-        print("\n🎉 VALIDATION SUCCESSFUL - All systems compliant!")
+        print("\n VALIDATION SUCCESSFUL - All systems compliant!")
         sys.exit(0)
     else:
-        print("\n⚠️  VALIDATION ISSUES DETECTED - Review report above")
+        print("\n  VALIDATION ISSUES DETECTED - Review report above")
         sys.exit(1)
 
 if __name__ == "__main__":

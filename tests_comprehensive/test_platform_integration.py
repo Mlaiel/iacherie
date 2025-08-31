@@ -41,6 +41,9 @@ class AinfluePlatformTests:
     
     async def setup_test_environment(self):
         """Setup test environment"""
+
+
+
         try:
             # Initialize test client
             from api.main import app
@@ -50,10 +53,10 @@ class AinfluePlatformTests:
             await self._create_test_data()
             
             self.setup_complete = True
-            print("✅ Test environment setup complete")
+            print(" Test environment setup complete")
             
         except Exception as e:
-            print(f"❌ Test environment setup failed: {e}")
+            print(f" Test environment setup failed: {e}")
             raise
     
     async def _create_test_data(self):
@@ -107,9 +110,9 @@ class AinfluePlatformTests:
             
             response = self.client.post("/api/auth/register", json=registration_data)
             if response.status_code == 201:
-                results["details"].append("✅ User registration successful")
+                results["details"].append(" User registration successful")
             else:
-                results["errors"].append(f"❌ Registration failed: {response.status_code}")
+                results["errors"].append(f" Registration failed: {response.status_code}")
                 results["status"] = "failed"
             
             # Test user login
@@ -120,20 +123,20 @@ class AinfluePlatformTests:
             
             response = self.client.post("/api/auth/login", json=login_data)
             if response.status_code == 200:
-                results["details"].append("✅ User login successful")
+                results["details"].append(" User login successful")
                 token = response.json().get("access_token")
                 if token:
-                    results["details"].append("✅ JWT token received")
+                    results["details"].append(" JWT token received")
                 else:
-                    results["errors"].append("❌ No JWT token in response")
+                    results["errors"].append(" No JWT token in response")
                     results["status"] = "failed"
             else:
-                results["errors"].append(f"❌ Login failed: {response.status_code}")
+                results["errors"].append(f" Login failed: {response.status_code}")
                 results["status"] = "failed"
                 
         except Exception as e:
             results["status"] = "failed"
-            results["errors"].append(f"❌ Authentication test exception: {str(e)}")
+            results["errors"].append(f" Authentication test exception: {str(e)}")
         
         return results
     
@@ -158,9 +161,9 @@ class AinfluePlatformTests:
                 
                 response = self.client.post("/api/fingerprinting/create", json=fingerprint_data)
                 if response.status_code in [200, 201]:
-                    results["details"].append(f"✅ {content_type} fingerprinting successful")
+                    results["details"].append(f" {content_type} fingerprinting successful")
                 else:
-                    results["errors"].append(f"❌ {content_type} fingerprinting failed: {response.status_code}")
+                    results["errors"].append(f" {content_type} fingerprinting failed: {response.status_code}")
                     results["status"] = "failed"
             
             # Test fingerprint matching
@@ -172,14 +175,14 @@ class AinfluePlatformTests:
             
             response = self.client.post("/api/fingerprinting/match", json=match_data)
             if response.status_code == 200:
-                results["details"].append("✅ Fingerprint matching successful")
+                results["details"].append(" Fingerprint matching successful")
             else:
-                results["errors"].append(f"❌ Fingerprint matching failed: {response.status_code}")
+                results["errors"].append(f" Fingerprint matching failed: {response.status_code}")
                 results["status"] = "failed"
                 
         except Exception as e:
             results["status"] = "failed"
-            results["errors"].append(f"❌ Fingerprinting test exception: {str(e)}")
+            results["errors"].append(f" Fingerprinting test exception: {str(e)}")
         
         return results
     
@@ -204,22 +207,22 @@ class AinfluePlatformTests:
             
             response = self.client.post("/api/monitoring/targets", json=monitoring_data)
             if response.status_code in [200, 201]:
-                results["details"].append("✅ Monitoring target creation successful")
+                results["details"].append(" Monitoring target creation successful")
             else:
-                results["errors"].append(f"❌ Monitoring target creation failed: {response.status_code}")
+                results["errors"].append(f" Monitoring target creation failed: {response.status_code}")
                 results["status"] = "failed"
             
             # Test alerts retrieval
             response = self.client.get("/api/monitoring/alerts")
             if response.status_code == 200:
-                results["details"].append("✅ Alerts retrieval successful")
+                results["details"].append(" Alerts retrieval successful")
             else:
-                results["errors"].append(f"❌ Alerts retrieval failed: {response.status_code}")
+                results["errors"].append(f" Alerts retrieval failed: {response.status_code}")
                 results["status"] = "failed"
                 
         except Exception as e:
             results["status"] = "failed"
-            results["errors"].append(f"❌ Monitoring test exception: {str(e)}")
+            results["errors"].append(f" Monitoring test exception: {str(e)}")
         
         return results
     
@@ -239,22 +242,22 @@ class AinfluePlatformTests:
             for lang in TEST_CONFIG["supported_languages"]:
                 lang_file = frontend_locales_path / f"{lang}.json"
                 if lang_file.exists():
-                    results["details"].append(f"✅ {lang} translation file exists")
+                    results["details"].append(f" {lang} translation file exists")
                     
                     # Test file content
                     try:
                         with open(lang_file, 'r', encoding='utf-8') as f:
                             lang_data = json.load(f)
                             if len(lang_data) > 0:
-                                results["details"].append(f"✅ {lang} translations loaded ({len(lang_data)} keys)")
+                                results["details"].append(f" {lang} translations loaded ({len(lang_data)} keys)")
                             else:
-                                results["errors"].append(f"❌ {lang} translation file is empty")
+                                results["errors"].append(f" {lang} translation file is empty")
                                 results["status"] = "failed"
                     except Exception as e:
-                        results["errors"].append(f"❌ {lang} translation file corrupted: {str(e)}")
+                        results["errors"].append(f" {lang} translation file corrupted: {str(e)}")
                         results["status"] = "failed"
                 else:
-                    results["errors"].append(f"❌ {lang} translation file missing")
+                    results["errors"].append(f" {lang} translation file missing")
                     results["status"] = "failed"
             
             # Test Amazigh dialect support
@@ -262,17 +265,17 @@ class AinfluePlatformTests:
             if amazigh_dialects_path.exists():
                 dialect_files = list(amazigh_dialects_path.glob("*.json"))
                 if len(dialect_files) > 0:
-                    results["details"].append(f"✅ Amazigh dialects supported ({len(dialect_files)} dialects)")
+                    results["details"].append(f" Amazigh dialects supported ({len(dialect_files)} dialects)")
                 else:
-                    results["errors"].append("❌ No Amazigh dialect files found")
+                    results["errors"].append(" No Amazigh dialect files found")
                     results["status"] = "failed"
             else:
-                results["errors"].append("❌ Amazigh dialects directory missing")
+                results["errors"].append(" Amazigh dialects directory missing")
                 results["status"] = "failed"
                 
         except Exception as e:
             results["status"] = "failed"
-            results["errors"].append(f"❌ Internationalization test exception: {str(e)}")
+            results["errors"].append(f" Internationalization test exception: {str(e)}")
         
         return results
     
@@ -296,9 +299,9 @@ class AinfluePlatformTests:
             
             for component_path in frontend_components:
                 if Path(component_path).exists():
-                    results["details"].append(f"✅ {component_path.split('/')[-1]} component exists")
+                    results["details"].append(f" {component_path.split('/')[-1]} component exists")
                 else:
-                    results["errors"].append(f"❌ {component_path.split('/')[-1]} component missing")
+                    results["errors"].append(f" {component_path.split('/')[-1]} component missing")
                     results["status"] = "failed"
             
             # Test package.json exists and has required dependencies
@@ -310,17 +313,17 @@ class AinfluePlatformTests:
                 required_deps = ["next", "react", "tailwindcss", "recharts"]
                 for dep in required_deps:
                     if dep in package_data.get("dependencies", {}):
-                        results["details"].append(f"✅ {dep} dependency found")
+                        results["details"].append(f" {dep} dependency found")
                     else:
-                        results["errors"].append(f"❌ {dep} dependency missing")
+                        results["errors"].append(f" {dep} dependency missing")
                         results["status"] = "failed"
             else:
-                results["errors"].append("❌ Frontend package.json missing")
+                results["errors"].append(" Frontend package.json missing")
                 results["status"] = "failed"
                 
         except Exception as e:
             results["status"] = "failed" 
-            results["errors"].append(f"❌ Frontend component test exception: {str(e)}")
+            results["errors"].append(f" Frontend component test exception: {str(e)}")
         
         return results
     
@@ -347,27 +350,27 @@ class AinfluePlatformTests:
             
             for module_path in critical_modules:
                 if Path(module_path).exists():
-                    results["details"].append(f"✅ {module_path.split('/')[-1]} module exists")
+                    results["details"].append(f" {module_path.split('/')[-1]} module exists")
                 else:
-                    results["errors"].append(f"❌ {module_path.split('/')[-1]} module missing")
+                    results["errors"].append(f" {module_path.split('/')[-1]} module missing")
                     results["status"] = "failed"
             
             # Test requirements.txt
             if Path("requirements.txt").exists():
-                results["details"].append("✅ requirements.txt exists")
+                results["details"].append(" requirements.txt exists")
             else:
-                results["errors"].append("❌ requirements.txt missing")
+                results["errors"].append(" requirements.txt missing")
                 results["status"] = "failed"
                 
         except Exception as e:
             results["status"] = "failed"
-            results["errors"].append(f"❌ Backend module test exception: {str(e)}")
+            results["errors"].append(f" Backend module test exception: {str(e)}")
         
         return results
     
     async def run_comprehensive_tests(self) -> Dict[str, Any]:
         """Run all comprehensive tests"""
-        print("🚀 Starting Ainflue Comprehensive Platform Tests...")
+        print(" Starting Ainflue Comprehensive Platform Tests...")
         print("=" * 60)
         
         if not self.setup_complete:
@@ -403,11 +406,11 @@ class AinfluePlatformTests:
                 
                 if test_result["status"] == "passed":
                     results["passed_tests"] += 1
-                    print(f"✅ {test_result['test_name']}: PASSED")
+                    print(f" {test_result['test_name']}: PASSED")
                 else:
                     results["failed_tests"] += 1
                     results["overall_status"] = "failed"
-                    print(f"❌ {test_result['test_name']}: FAILED")
+                    print(f" {test_result['test_name']}: FAILED")
                     
                     # Add to critical issues
                     for error in test_result["errors"]:
@@ -422,31 +425,31 @@ class AinfluePlatformTests:
             except Exception as e:
                 results["failed_tests"] += 1
                 results["overall_status"] = "failed"
-                error_msg = f"❌ Test suite execution failed: {str(e)}"
+                error_msg = f" Test suite execution failed: {str(e)}"
                 print(error_msg)
                 results["summary"]["critical_issues"].append(error_msg)
         
         # Generate summary recommendations
         if results["overall_status"] == "passed":
             results["summary"]["recommendations"].append(
-                "🎉 All tests passed! Platform is ready for 100% key-in-hand deployment."
+                " All tests passed! Platform is ready for 100% key-in-hand deployment."
             )
         else:
             results["summary"]["recommendations"].extend([
-                "🔧 Address critical issues before production deployment",
-                "📋 Review failed test details for specific fixes needed",
-                "🚀 Re-run tests after implementing fixes"
+                " Address critical issues before production deployment",
+                " Review failed test details for specific fixes needed",
+                " Re-run tests after implementing fixes"
             ])
         
         print("\n" + "=" * 60)
-        print(f"📊 TEST SUMMARY:")
+        print(f" TEST SUMMARY:")
         print(f"   Total Tests: {results['total_tests']}")
         print(f"   Passed: {results['passed_tests']}")
         print(f"   Failed: {results['failed_tests']}")
         print(f"   Overall Status: {results['overall_status'].upper()}")
         
         if results["summary"]["critical_issues"]:
-            print(f"\n🚨 CRITICAL ISSUES ({len(results['summary']['critical_issues'])}):")
+            print(f"\n CRITICAL ISSUES ({len(results['summary']['critical_issues'])}):")
             for issue in results["summary"]["critical_issues"][:5]:  # Show top 5
                 print(f"   • {issue}")
         
@@ -463,7 +466,7 @@ async def main():
     with open("test_results.json", "w") as f:
         json.dump(results, f, indent=2, default=str)
     
-    print(f"\n📄 Detailed results saved to: test_results.json")
+    print(f"\n Detailed results saved to: test_results.json")
     return results
 
 

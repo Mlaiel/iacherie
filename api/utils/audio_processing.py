@@ -50,6 +50,9 @@ class AudioAnalyzer:
         
     def analyze_audio_file(self, file_path: str) -> AudioFeatures:
         """Complete audio analysis with feature extraction"""
+
+
+
         try:
             # Load audio file
             y, sr = librosa.load(file_path, sr=self.sample_rate)
@@ -184,6 +187,9 @@ class AudioFingerprinter:
         
     def create_fingerprint(self, audio_path: str) -> Dict[str, Any]:
         """Create comprehensive audio fingerprint"""
+
+
+
         try:
             y, sr = librosa.load(audio_path, sr=self.sample_rate)
             
@@ -372,6 +378,9 @@ class ChromaprintProcessor:
         
     def generate_chromaprint(self, audio_path: str) -> str:
         """Generate Chromaprint-compatible fingerprint"""
+
+
+
         try:
             y, sr = librosa.load(audio_path, sr=self.sample_rate)
             
@@ -461,6 +470,9 @@ class AudioFeatureExtractor:
     
     def _extract_basic_features(self, y: np.ndarray, sr: int) -> Dict[str, float]:
         """Extract basic audio features"""
+
+
+
         return {
             'duration': len(y) / sr,
             'rms_energy': float(np.mean(librosa.feature.rms(y=y))),

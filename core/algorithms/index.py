@@ -9,7 +9,7 @@ Provides a unified interface for algorithm discovery, instantiation, and managem
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, distribution, or modification without explicit 
 written permission is strictly prohibited and will result in legal action.
@@ -89,6 +89,9 @@ class AlgorithmRegistry:
     
     def _initialize_registry(self) -> None:
         """Initialize the algorithm registry with all available engines."""
+
+
+
         try:
             # Register all algorithm engines
             self._register_engine(
@@ -279,10 +282,10 @@ class AlgorithmRegistry:
                 )
             )
             
-            self.logger.info(f"✅ Successfully registered {len(self._engines)} algorithm engines")
+            self.logger.info(f" Successfully registered {len(self._engines)} algorithm engines")
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize algorithm registry: {e}")
+            self.logger.error(f" Failed to initialize algorithm registry: {e}")
             raise
     
     def _register_engine(self, name: str, engine_class: Type, metadata: AlgorithmMetadata) -> None:
@@ -308,15 +311,18 @@ class AlgorithmRegistry:
             if not kwargs:
                 self._instances[name] = instance
             
-            self.logger.info(f"✅ Created engine instance: {name}")
+            self.logger.info(f" Created engine instance: {name}")
             return instance
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to create engine {name}: {e}")
+            self.logger.error(f" Failed to create engine {name}: {e}")
             raise
     
     def get_engines_by_category(self, category: AlgorithmCategory) -> List[str]:
         """Get all engine names in a specific category."""
+
+
+
         return [
             name for name, metadata in self._metadata.items()
             if metadata.category == category
@@ -332,6 +338,9 @@ class AlgorithmRegistry:
     
     def get_gpu_engines(self) -> List[str]:
         """Get all engines that require GPU."""
+
+
+
         return [
             name for name, metadata in self._metadata.items()
             if metadata.requires_gpu
@@ -339,14 +348,23 @@ class AlgorithmRegistry:
     
     def get_engine_metadata(self, name: str) -> Optional[AlgorithmMetadata]:
         """Get metadata for a specific engine."""
+
+
+
         return self._metadata.get(name)
     
     def list_engines(self) -> List[str]:
         """List all available engine names."""
+
+
+
         return list(self._engines.keys())
     
     def get_registry_info(self) -> Dict[str, Any]:
         """Get comprehensive registry information."""
+
+
+
         return {
             "total_engines": len(self._engines),
             "categories": {
@@ -388,6 +406,9 @@ def get_algorithm_engine(name: str, **kwargs) -> Any:
 
 def list_available_algorithms() -> List[str]:
     """List all available algorithm engine names."""
+
+
+
     return _registry.list_engines()
 
 
@@ -400,16 +421,25 @@ def get_algorithms_by_category(category: Union[str, AlgorithmCategory]) -> List[
 
 def get_algorithms_for_format(file_format: str) -> List[str]:
     """Get compatible algorithms for a file format."""
+
+
+
     return _registry.get_engines_by_format(file_format)
 
 
 def get_algorithm_metadata(name: str) -> Optional[AlgorithmMetadata]:
     """Get metadata for an algorithm."""
+
+
+
     return _registry.get_engine_metadata(name)
 
 
 def get_registry_statistics() -> Dict[str, Any]:
     """Get algorithm registry statistics."""
+
+
+
     return _registry.get_registry_info()
 
 
@@ -448,7 +478,7 @@ class AlgorithmPipeline:
                 self.logger.error(f"Pipeline step {i+1} failed: {e}")
                 raise
         
-        self.logger.info(f"✅ Pipeline completed with {len(self.steps)} steps")
+        self.logger.info(f" Pipeline completed with {len(self.steps)} steps")
         return result
     
     def clear(self) -> None:
@@ -560,22 +590,22 @@ __all__ = [
 
 if __name__ == "__main__":
     # Demo usage
-    print("🚀 IA Influencer Agent - Algorithm Index")
+    print(" IA Influencer Agent - Algorithm Index")
     print("=" * 50)
     
     stats = get_registry_statistics()
-    print(f"📊 Total Engines: {stats['total_engines']}")
-    print(f"🎯 Version: {stats['version']}")
-    print(f"👨‍💻 Author: {stats['author']}")
+    print(f" Total Engines: {stats['total_engines']}")
+    print(f" Version: {stats['version']}")
+    print(f"‍ Author: {stats['author']}")
     
-    print("\n📂 Categories:")
+    print("\n Categories:")
     for category, count in stats['categories'].items():
         print(f"  - {category}: {count} engines")
     
-    print(f"\n🖥️  GPU Engines: {stats['gpu_engines']}")
-    print(f"📁 Supported Formats: {len(stats['supported_formats'])}")
+    print(f"\n  GPU Engines: {stats['gpu_engines']}")
+    print(f" Supported Formats: {len(stats['supported_formats'])}")
     
-    print("\n🚀 Available Engines:")
+    print("\n Available Engines:")
     for engine in list_available_algorithms():
         metadata = get_algorithm_metadata(engine)
         print(f"  - {metadata.name} ({metadata.performance_level})")

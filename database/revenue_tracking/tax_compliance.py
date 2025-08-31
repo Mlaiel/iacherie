@@ -8,7 +8,7 @@ Architecture: Multi-jurisdiction tax compliance with automated reporting
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe Projet: Lead AI Developer + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  AVERTISSEMENT DE PROPRIÉTÉ INTELLECTUELLE ⚠️
+  AVERTISSEMENT DE PROPRIÉTÉ INTELLECTUELLE 
 Ce code et concept sont la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Violation = Poursuites judiciaires selon le droit allemand et international.
@@ -267,6 +267,9 @@ class TaxCalculationEngine:
         """
         Calcule les taxes pour un enregistrement de revenus
         """
+
+
+
         try:
             # Récupération des données de base
             revenue_record = await self._get_revenue_record(revenue_record_id)
@@ -513,6 +516,9 @@ class TaxReportingEngine:
         """
         Génère un rapport fiscal complet
         """
+
+
+
         try:
             # Définition de la période
             period_start, period_end = self._get_reporting_period_dates(tax_year, reporting_period)

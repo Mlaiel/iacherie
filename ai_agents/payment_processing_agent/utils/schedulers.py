@@ -7,7 +7,7 @@ batch processing, and flexible payout strategies.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -144,6 +144,9 @@ class PayoutScheduler:
 
     async def start(self):
         """Start the payout scheduler"""
+
+
+
         try:
             if self.status == SchedulerStatus.RUNNING:
                 logger.warning("Scheduler is already running")
@@ -168,6 +171,9 @@ class PayoutScheduler:
 
     async def stop(self):
         """Stop the payout scheduler"""
+
+
+
         try:
             if self.status == SchedulerStatus.STOPPED:
                 logger.warning("Scheduler is already stopped")
@@ -184,6 +190,9 @@ class PayoutScheduler:
 
     async def pause(self):
         """Pause the payout scheduler"""
+
+
+
         try:
             self.scheduler.pause()
             self.status = SchedulerStatus.PAUSED
@@ -195,6 +204,9 @@ class PayoutScheduler:
 
     async def resume(self):
         """Resume the payout scheduler"""
+
+
+
         try:
             self.scheduler.resume()
             self.status = SchedulerStatus.RUNNING
@@ -219,6 +231,9 @@ class PayoutScheduler:
         Returns:
             True if scheduled successfully
         """
+
+
+
         try:
             # Validate payout
             if not payout or not payout.creator_id:
@@ -425,6 +440,9 @@ class PayoutScheduler:
 
     async def cancel_payout(self, payout_id: str) -> bool:
         """Cancel scheduled payout"""
+
+
+
         try:
             if not self.db_session:
                 return False
@@ -556,6 +574,9 @@ class PayoutScheduler:
 
     async def _execute_strategy_payouts(self, strategy_name: str):
         """Execute payouts for a specific strategy"""
+
+
+
         try:
             logger.info(f"Executing strategy payouts: {strategy_name}")
             
@@ -571,6 +592,9 @@ class PayoutScheduler:
 
     async def _execute_single_payout(self, payout_id: str):
         """Execute single scheduled payout"""
+
+
+
         try:
             if not self.db_session:
                 raise PayoutError("Database session not available")
@@ -639,6 +663,9 @@ class PayoutScheduler:
 
     async def _simulate_payout(self, payout_data: Dict[str, Any]) -> Dict[str, Any]:
         """Simulate payout execution for dry run"""
+
+
+
         return {
             "success": True,
             "amount": payout_data["available_balance"],

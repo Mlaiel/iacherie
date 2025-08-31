@@ -7,7 +7,7 @@ agent components with dependency injection and lifecycle management.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Any attempt to steal the concept, idea, or code without explicit written authorization
@@ -48,6 +48,9 @@ class VectorServiceRegistry:
         
     async def initialize(self, config: Optional[VectorConfig] = None) -> None:
         """Initialize the service registry with configuration"""
+
+
+
         try:
             if self._initialized:
                 logger.warning("Service registry already initialized")
@@ -71,6 +74,9 @@ class VectorServiceRegistry:
     
     async def _initialize_core_services(self) -> None:
         """Initialize core vector services"""
+
+
+
         try:
             # Initialize FAISS Manager
             faiss_manager = FAISSManager(self._config)
@@ -100,6 +106,9 @@ class VectorServiceRegistry:
     
     async def _initialize_orchestrator(self) -> None:
         """Initialize the main vector orchestrator"""
+
+
+
         try:
             orchestrator = VectorOrchestrator(self._config)
             await orchestrator.initialize()
@@ -123,22 +132,37 @@ class VectorServiceRegistry:
     
     def get_orchestrator(self) -> VectorOrchestrator:
         """Get the main vector orchestrator"""
+
+
+
         return self.get_service("orchestrator")
     
     def get_faiss_manager(self) -> FAISSManager:
         """Get the FAISS manager"""
+
+
+
         return self.get_service("faiss_manager")
     
     def get_similarity_engine(self) -> SimilarityEngine:
         """Get the similarity engine"""
+
+
+
         return self.get_service("similarity_engine")
     
     def get_vector_indexer(self) -> VectorIndexer:
         """Get the vector indexer"""
+
+
+
         return self.get_service("vector_indexer")
     
     def get_search_optimizer(self) -> SearchOptimizer:
         """Get the search optimizer"""
+
+
+
         return self.get_service("search_optimizer")
     
     def get_config(self) -> VectorConfig:
@@ -345,6 +369,9 @@ async def create_search_optimizer(config: Optional[VectorConfig] = None) -> Sear
 
 async def store_vector_document(document: VectorDocument) -> Dict[str, Any]:
     """Convenience function to store vector document"""
+
+
+
     try:
         registry = await get_service_registry()
         orchestrator = registry.get_orchestrator()
@@ -370,6 +397,9 @@ async def store_vector_document(document: VectorDocument) -> Dict[str, Any]:
 
 async def search_similar_vectors(request: VectorSearchRequest) -> List[VectorSearchResult]:
     """Convenience function to search for similar vectors"""
+
+
+
     try:
         registry = await get_service_registry()
         orchestrator = registry.get_orchestrator()
@@ -413,6 +443,9 @@ async def search_similar_vectors(request: VectorSearchRequest) -> List[VectorSea
 
 async def get_vector_statistics() -> Dict[str, Any]:
     """Convenience function to get vector system statistics"""
+
+
+
     try:
         registry = await get_service_registry()
         return await registry.get_statistics()
@@ -423,6 +456,9 @@ async def get_vector_statistics() -> Dict[str, Any]:
 
 async def perform_health_check() -> Dict[str, Any]:
     """Convenience function to perform system health check"""
+
+
+
     try:
         registry = await get_service_registry()
         return await registry.health_check()

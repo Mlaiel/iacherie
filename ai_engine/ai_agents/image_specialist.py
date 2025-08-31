@@ -127,6 +127,9 @@ class ImageSpecialistAgent(BaseAIAgent):
     async def create_image_project(self, title: str, format: ImageFormat, style: ImageStyle, 
                                  target_platforms: List[str]) -> ImageProject:
         """Create a new image project"""
+
+
+
         try:
             dimensions = self._get_optimal_dimensions(format, target_platforms)
             
@@ -153,6 +156,9 @@ class ImageSpecialistAgent(BaseAIAgent):
     
     async def generate_image_from_prompt(self, prompt: str, style: ImageStyle, format: ImageFormat) -> str:
         """Generate image using AI from text prompt"""
+
+
+
         try:
             request = GenerationRequest(
                 request_id=f"gen_{datetime.now().timestamp()}",
@@ -176,6 +182,9 @@ class ImageSpecialistAgent(BaseAIAgent):
     
     async def enhance_image_quality(self, image_path: str, enhancement_type: str = "auto") -> str:
         """Enhance image quality using AI"""
+
+
+
         try:
             enhanced_path = f"{image_path}_enhanced.jpg"
             
@@ -197,6 +206,9 @@ class ImageSpecialistAgent(BaseAIAgent):
     
     async def optimize_for_platform(self, project_id: str, platform: str) -> Dict[str, Any]:
         """Optimize image for specific platform requirements"""
+
+
+
         try:
             if project_id not in self.active_projects:
                 return {"error": "Project not found"}
@@ -222,6 +234,9 @@ class ImageSpecialistAgent(BaseAIAgent):
     async def create_brand_consistent_images(self, brand_guidelines: Dict[str, Any], 
                                            image_count: int = 5) -> List[str]:
         """Create brand-consistent images based on guidelines"""
+
+
+
         try:
             brand_images = []
             
@@ -252,6 +267,9 @@ class ImageSpecialistAgent(BaseAIAgent):
     async def batch_process_images(self, image_paths: List[str], 
                                  processing_type: ProcessingType) -> List[str]:
         """Batch process multiple images"""
+
+
+
         try:
             processed_images = []
             
@@ -268,6 +286,9 @@ class ImageSpecialistAgent(BaseAIAgent):
     
     async def analyze_image_performance(self, image_path: str, platform_data: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze image performance and provide improvement suggestions"""
+
+
+
         try:
             analysis = {
                 "visual_analysis": await self._analyze_visual_elements(image_path),
@@ -285,6 +306,9 @@ class ImageSpecialistAgent(BaseAIAgent):
     
     async def create_image_variations(self, base_image_path: str, variation_count: int = 3) -> List[str]:
         """Create variations of a base image"""
+
+
+
         try:
             variations = []
             
@@ -443,6 +467,9 @@ class ImageSpecialistAgent(BaseAIAgent):
     
     def _load_style_presets(self) -> Dict[str, Dict[str, Any]]:
         """Load predefined style presets"""
+
+
+
         return {
             "minimalist": {
                 "color_palette": ["#FFFFFF", "#F5F5F5", "#CCCCCC"],
@@ -466,6 +493,9 @@ class ImageSpecialistAgent(BaseAIAgent):
     
     def _load_platform_specifications(self) -> Dict[str, Dict[str, Any]]:
         """Load platform-specific image specifications"""
+
+
+
         return {
             "instagram": {
                 "max_file_size_mb": 30,
@@ -489,6 +519,9 @@ class ImageSpecialistAgent(BaseAIAgent):
     
     def _initialize_color_palettes(self) -> Dict[str, List[str]]:
         """Initialize color palettes for different styles"""
+
+
+
         return {
             "warm": ["#FF6B6B", "#FF8E53", "#FF6B9D", "#C44569"],
             "cool": ["#4ECDC4", "#45B7D1", "#96CEB4", "#FFEAA7"],

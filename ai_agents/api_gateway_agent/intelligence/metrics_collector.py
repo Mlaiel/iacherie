@@ -7,7 +7,7 @@ custom metrics, alerting, and comprehensive observability features.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -98,6 +98,9 @@ class MetricsCollector:
     
     def _initialize_default_metrics(self):
         """Initialize default API Gateway metrics"""
+
+
+
         try:
             # Request metrics
             self.metrics['requests_total'] = Counter(
@@ -456,6 +459,9 @@ class MetricsCollector:
     
     def add_alert(self, alert: Alert) -> bool:
         """Add alert configuration"""
+
+
+
         try:
             self.alerts[alert.name] = alert
             logger.info(f"Added alert: {alert.name}")
@@ -467,6 +473,9 @@ class MetricsCollector:
     
     def remove_alert(self, alert_name: str) -> bool:
         """Remove alert configuration"""
+
+
+
         try:
             if alert_name in self.alerts:
                 del self.alerts[alert_name]
@@ -501,6 +510,9 @@ class MetricsCollector:
     
     async def _check_individual_alert(self, alert: Alert):
         """Check individual alert condition"""
+
+
+
         try:
             # Placeholder implementation
             # In reality, this would evaluate the alert condition
@@ -525,6 +537,9 @@ class MetricsCollector:
     
     def get_metric_value(self, metric_name: str, labels: Optional[Dict[str, str]] = None) -> Optional[float]:
         """Get current value of a metric"""
+
+
+
         try:
             if metric_name not in self.metrics:
                 return None
@@ -550,6 +565,9 @@ class MetricsCollector:
     
     def get_custom_metric_stats(self, name: str) -> Dict[str, Any]:
         """Get statistics for custom metric"""
+
+
+
         try:
             if name not in self.custom_metrics or not self.custom_metrics[name]:
                 return {}
@@ -585,6 +603,9 @@ class MetricsCollector:
     
     def get_metrics_summary(self) -> Dict[str, Any]:
         """Get metrics summary"""
+
+
+
         try:
             summary = {
                 "enabled": self.enabled,
@@ -618,6 +639,9 @@ class MetricsCollector:
     
     async def stop_background_collection(self):
         """Stop background metrics collection"""
+
+
+
         try:
             if self._metrics_task:
                 self._metrics_task.cancel()
@@ -661,6 +685,9 @@ class MetricsCollector:
     
     async def _collect_system_metrics(self):
         """Collect system resource metrics"""
+
+
+
         try:
             import psutil
             

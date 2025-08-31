@@ -166,6 +166,9 @@ class ResourceMonitor(BaseAgent):
 
     async def start_monitoring(self):
         """Start resource monitoring"""
+
+
+
         try:
             if self.is_monitoring:
                 self.logger.warning("Resource monitoring already active")
@@ -196,6 +199,9 @@ class ResourceMonitor(BaseAgent):
 
     async def stop_monitoring(self):
         """Stop resource monitoring"""
+
+
+
         try:
             self.is_monitoring = False
             
@@ -305,6 +311,9 @@ class ResourceMonitor(BaseAgent):
 
     async def _collect_system_snapshot(self) -> SystemSnapshot:
         """Collect comprehensive system snapshot"""
+
+
+
         try:
             # CPU metrics
             cpu_percent = psutil.cpu_percent(interval=1)
@@ -365,6 +374,9 @@ class ResourceMonitor(BaseAgent):
 
     async def _store_system_metrics(self, snapshot: SystemSnapshot):
         """Store system metrics in structured format"""
+
+
+
         try:
             metrics = {
                 "cpu_percent": snapshot.cpu_percent,
@@ -401,6 +413,9 @@ class ResourceMonitor(BaseAgent):
 
     async def _collect_application_metrics(self) -> Dict[str, float]:
         """Collect application-specific metrics"""
+
+
+
         try:
             metrics = {}
             
@@ -449,6 +464,9 @@ class ResourceMonitor(BaseAgent):
 
     async def _evaluate_alert_rule(self, rule: AlertRule):
         """Evaluate a single alert rule"""
+
+
+
         try:
             # Get recent metrics for the rule
             recent_metrics = await self._get_recent_metrics(rule.metric_name, 300)  # 5 minutes
@@ -486,6 +504,9 @@ class ResourceMonitor(BaseAgent):
 
     async def _trigger_alert(self, rule: AlertRule, current_value: float):
         """Trigger an alert"""
+
+
+
         try:
             alert_key = f"{rule.rule_id}_{rule.metric_name}"
             
@@ -526,6 +547,9 @@ class ResourceMonitor(BaseAgent):
 
     async def _resolve_alert(self, rule_id: str):
         """Resolve an alert"""
+
+
+
         try:
             alert_keys_to_remove = []
             
@@ -543,6 +567,9 @@ class ResourceMonitor(BaseAgent):
 
     async def _send_alert_notifications(self, alert: Dict[str, Any]):
         """Send alert notifications"""
+
+
+
         try:
             # In production, this would send notifications via email, Slack, etc.
             self.logger.info(f"Alert notification: {alert['rule_name']} - {alert['current_value']}")
@@ -553,6 +580,9 @@ class ResourceMonitor(BaseAgent):
 
     async def _cleanup_resolved_alerts(self):
         """Clean up resolved alerts"""
+
+
+
         try:
             current_time = datetime.now()
             alert_keys_to_remove = []
@@ -571,6 +601,9 @@ class ResourceMonitor(BaseAgent):
 
     async def _cleanup_old_metrics(self):
         """Clean up old metrics data"""
+
+
+
         try:
             cutoff_time = datetime.now() - timedelta(days=self.metric_retention_days)
             
@@ -600,6 +633,9 @@ class ResourceMonitor(BaseAgent):
 
     def _get_system_info(self) -> Dict[str, Any]:
         """Get system information"""
+
+
+
         try:
             return {
                 "platform": psutil.LINUX if hasattr(psutil, 'LINUX') else "unknown",
@@ -679,6 +715,9 @@ class ResourceMonitor(BaseAgent):
                               metric_type: MetricType = MetricType.CUSTOM,
                               tags: Optional[Dict[str, str]] = None):
         """Add custom metric"""
+
+
+
         try:
             metric = MetricValue(
                 value=value,
@@ -701,6 +740,9 @@ class ResourceMonitor(BaseAgent):
     async def get_metric_statistics(self, metric_name: str, 
                                    hours: int = 1) -> Dict[str, float]:
         """Get metric statistics"""
+
+
+
         try:
             metrics = await self._get_recent_metrics(metric_name, hours * 3600)
             
@@ -723,6 +765,9 @@ class ResourceMonitor(BaseAgent):
 
     async def get_monitoring_status(self) -> Dict[str, Any]:
         """Get comprehensive monitoring status"""
+
+
+
         try:
             return {
                 "monitoring_active": self.is_monitoring,
@@ -741,6 +786,9 @@ class ResourceMonitor(BaseAgent):
 
     async def health_check(self) -> Dict[str, Any]:
         """Health check for resource monitor"""
+
+
+
         try:
             active_tasks = len([task for task in self.monitor_tasks if not task.done()])
             

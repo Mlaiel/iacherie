@@ -164,6 +164,9 @@ class TextEmbeddingGenerator(BaseEmbeddingGenerator):
     
     def preprocess_text(self, text: str) -> str:
         """Preprocess text for embedding generation."""
+
+
+
         try:
             # Basic cleaning
             text = text.strip()
@@ -181,6 +184,9 @@ class TextEmbeddingGenerator(BaseEmbeddingGenerator):
     
     def extract_features(self, text: str) -> Dict[str, Any]:
         """Extract comprehensive text features."""
+
+
+
         try:
             features = {}
             
@@ -253,6 +259,9 @@ class TextEmbeddingGenerator(BaseEmbeddingGenerator):
     
     async def _generate_bert_embedding(self, text: str) -> np.ndarray:
         """Generate BERT contextual embedding."""
+
+
+
         try:
             # Tokenize
             inputs = self.bert_tokenizer(
@@ -306,6 +315,9 @@ class AudioEmbeddingGenerator(BaseEmbeddingGenerator):
     
     def preprocess_audio(self, audio_data: np.ndarray, sr: int) -> Tuple[np.ndarray, int]:
         """Preprocess audio for feature extraction."""
+
+
+
         try:
             # Resample if needed
             if sr != self.sample_rate:
@@ -334,6 +346,9 @@ class AudioEmbeddingGenerator(BaseEmbeddingGenerator):
     
     def extract_features(self, audio_data: np.ndarray, sr: int = None) -> AudioFeatures:
         """Extract comprehensive audio features."""
+
+
+
         try:
             if sr is None:
                 sr = self.sample_rate
@@ -403,6 +418,9 @@ class AudioEmbeddingGenerator(BaseEmbeddingGenerator):
     
     def features_to_embedding(self, features: AudioFeatures) -> np.ndarray:
         """Convert audio features to a fixed-size embedding vector."""
+
+
+
         try:
             embedding_parts = []
             
@@ -556,6 +574,9 @@ class ImageEmbeddingGenerator(BaseEmbeddingGenerator):
     
     def preprocess_image(self, image: Image.Image) -> Image.Image:
         """Preprocess image for feature extraction."""
+
+
+
         try:
             # Convert to RGB if needed
             if image.mode != 'RGB':
@@ -572,6 +593,9 @@ class ImageEmbeddingGenerator(BaseEmbeddingGenerator):
     
     def extract_color_features(self, image: Image.Image) -> Dict[str, np.ndarray]:
         """Extract color-based features."""
+
+
+
         try:
             # Convert to numpy array
             img_array = np.array(image)
@@ -601,6 +625,9 @@ class ImageEmbeddingGenerator(BaseEmbeddingGenerator):
     
     def extract_texture_features(self, image: Image.Image) -> np.ndarray:
         """Extract texture features using edge detection."""
+
+
+
         try:
             # Convert to grayscale
             gray = np.array(image.convert('L'))
@@ -626,6 +653,9 @@ class ImageEmbeddingGenerator(BaseEmbeddingGenerator):
     
     def extract_perceptual_hashes(self, image: Image.Image) -> Dict[str, str]:
         """Extract perceptual hashes for image fingerprinting."""
+
+
+
         try:
             import imagehash
             
@@ -650,6 +680,9 @@ class ImageEmbeddingGenerator(BaseEmbeddingGenerator):
     
     def extract_features(self, image: Image.Image) -> ImageFeatures:
         """Extract comprehensive image features."""
+
+
+
         try:
             # Preprocess image
             processed_image = self.preprocess_image(image)
@@ -774,6 +807,9 @@ class VideoEmbeddingGenerator(BaseEmbeddingGenerator):
     
     def extract_frames(self, video_path: str) -> List[np.ndarray]:
         """Extract frames from video."""
+
+
+
         try:
             vr = VideoReader(video_path, ctx=decord.cpu(0))
             total_frames = len(vr)
@@ -793,6 +829,9 @@ class VideoEmbeddingGenerator(BaseEmbeddingGenerator):
     
     def detect_scene_changes(self, frames: List[np.ndarray]) -> List[int]:
         """Detect scene changes in video frames."""
+
+
+
         try:
             scene_changes = []
             
@@ -822,6 +861,9 @@ class VideoEmbeddingGenerator(BaseEmbeddingGenerator):
     
     def extract_motion_vectors(self, frames: List[np.ndarray]) -> np.ndarray:
         """Extract motion vectors between frames."""
+
+
+
         try:
             if len(frames) < 2:
                 return np.zeros((0, 2))
@@ -850,6 +892,9 @@ class VideoEmbeddingGenerator(BaseEmbeddingGenerator):
     
     def extract_features(self, video_path: str) -> VideoFeatures:
         """Extract comprehensive video features."""
+
+
+
         try:
             # Extract frames
             frames = self.extract_frames(video_path)
@@ -999,6 +1044,9 @@ class MultiModalEmbeddingEngine:
     async def generate_embedding(self, content: Any, content_type: str, 
                                metadata: Dict[str, Any]) -> EmbeddingResult:
         """Generate embedding for any content type."""
+
+
+
         try:
             if content_type == 'text':
                 return await self.text_generator.generate_embedding(content, metadata)
@@ -1017,10 +1065,16 @@ class MultiModalEmbeddingEngine:
     
     def get_supported_types(self) -> List[str]:
         """Get list of supported content types."""
+
+
+
         return ['text', 'audio', 'image', 'video']
     
     def get_embedding_dimensions(self) -> Dict[str, int]:
         """Get embedding dimensions for each content type."""
+
+
+
         return {
             'text': self.text_generator.sentence_model.get_sentence_embedding_dimension() + 768,  # Sentence + BERT
             'audio': 200,  # Estimated based on feature extraction

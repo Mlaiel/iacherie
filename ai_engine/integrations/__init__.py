@@ -161,7 +161,10 @@ class IntegrationOrchestrator:
     
     async def add_platform_integration(self, platform_type: str, 
                                      credentials: Dict[str, Any]) -> bool:
-        """Add a new platform integration"""        try:
+        """Add a new platform integration"""
+
+
+        try:
             success = False
             
             # Add to appropriate manager based on platform type
@@ -222,7 +225,10 @@ class IntegrationOrchestrator:
     
     async def distribute_content_everywhere(self, content_data: Dict[str, Any], 
                                           target_platforms: List[str]) -> Dict[str, Any]:
-        """Distribute content across all specified platforms"""        try:
+        """Distribute content across all specified platforms"""
+
+
+        try:
             # Create content asset
             metadata = ContentMetadata(
                 title=content_data['title'],
@@ -269,7 +275,10 @@ class IntegrationOrchestrator:
     
     async def get_unified_analytics(self, date_range: tuple, 
                                   metrics: List[str]) -> Dict[str, Any]:
-        """Get unified analytics across all platforms"""        try:
+        """Get unified analytics across all platforms"""
+
+
+        try:
             # Get analytics from all connected providers
             providers = list(self.analytics_hub.connectors.keys())
             
@@ -304,7 +313,10 @@ class IntegrationOrchestrator:
             }
     
     async def optimize_cloud_costs(self) -> Dict[str, Any]:
-        """Optimize costs across all cloud providers"""        try:
+        """Optimize costs across all cloud providers"""
+
+
+        try:
             # Discover all resources
             await self.cloud_orchestrator.discover_all_resources()
             
@@ -386,7 +398,10 @@ class IntegrationOrchestrator:
         return health_status
     
     async def cleanup_all_services(self):
-        """Cleanup all integration services"""        try:
+        """Cleanup all integration services"""
+
+
+        try:
             await self.content_distribution.cleanup()
             await self.analytics_hub.cleanup()
             await self.cloud_orchestrator.cleanup_all()

@@ -60,6 +60,9 @@ class IndexTemplate:
     
     def get_template(self) -> Dict[str, Any]:
         """Get index template configuration"""
+
+
+
         return {
             "index_patterns": [f"{self.template_name}-*"],
             "settings": {
@@ -232,6 +235,9 @@ class QueryBuilder:
     
     def build(self) -> Dict[str, Any]:
         """Build final query"""
+
+
+
         return self.query
 
 
@@ -248,6 +254,9 @@ class ElasticsearchManager:
         
     async def connect(self) -> bool:
         """Connect to Elasticsearch cluster"""
+
+
+
         try:
             client_config = {
                 'hosts': self.config.hosts,
@@ -296,6 +305,9 @@ class ElasticsearchManager:
     
     async def _setup_index_template(self):
         """Setup index template for log indices"""
+
+
+
         try:
             template = self.template_manager.get_template()
             

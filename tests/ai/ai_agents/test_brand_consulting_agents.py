@@ -23,7 +23,7 @@ brand positioning, and brand strategy optimization agents.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -58,11 +58,17 @@ class TestBrandConsultantAgent:
     @pytest.fixture
     def agent(self):
         """Create BrandConsultantAgent instance"""
+
+
+
         return BrandConsultantAgent()
     
     @pytest.fixture
     def sample_creator_profile(self):
         """Sample creator profile for brand analysis"""
+
+
+
         return {
             "creator_id": "test_creator",
             "personal_info": {
@@ -180,11 +186,17 @@ class TestPersonalBrandingAgent:
     @pytest.fixture
     def agent(self):
         """Create PersonalBrandingAgent instance"""
+
+
+
         return PersonalBrandingAgent()
     
     @pytest.fixture
     def sample_personal_data(self):
         """Sample personal data for branding"""
+
+
+
         return {
             "individual": {
                 "name": "Jane Doe",
@@ -258,11 +270,17 @@ class TestBrandPositioningAgent:
     @pytest.fixture
     def agent(self):
         """Create BrandPositioningAgent instance"""
+
+
+
         return BrandPositioningAgent()
     
     @pytest.fixture
     def sample_market_data(self):
         """Sample market data for positioning analysis"""
+
+
+
         return {
             "target_market": {
                 "size": 500000,
@@ -363,11 +381,17 @@ class TestBrandStrategyAgent:
     @pytest.fixture
     def agent(self):
         """Create BrandStrategyAgent instance"""
+
+
+
         return BrandStrategyAgent()
     
     @pytest.fixture
     def sample_brand_objectives(self):
         """Sample brand objectives"""
+
+
+
         return {
             "primary_goals": [
                 "increase brand awareness by 200%",
@@ -460,11 +484,17 @@ class TestBrandAuditAndAnalysis:
     @pytest.fixture
     def agent(self):
         """Create BrandConsultantAgent for audit testing"""
+
+
+
         return BrandConsultantAgent()
     
     @pytest.fixture
     def comprehensive_brand_data(self):
         """Comprehensive brand data for audit"""
+
+
+
         return {
             "brand_assets": {
                 "visual_identity": {
@@ -544,11 +574,17 @@ class TestCompetitiveBrandAnalysis:
     @pytest.fixture
     def agent(self):
         """Create BrandConsultantAgent for competitive analysis"""
+
+
+
         return BrandConsultantAgent()
     
     @pytest.fixture
     def competitive_landscape_data(self):
         """Competitive landscape data"""
+
+
+
         return {
             "direct_competitors": [
                 {
@@ -637,6 +673,9 @@ class TestIntegrationScenarios:
     @pytest.fixture
     def agents(self):
         """Create all brand agents for integration testing"""
+
+
+
         return {
             "consultant": BrandConsultantAgent(),
             "personal": PersonalBrandingAgent(),
@@ -705,6 +744,9 @@ class TestErrorHandling:
     @pytest.fixture
     def agent(self):
         """Create BrandConsultantAgent for error testing"""
+
+
+
         return BrandConsultantAgent()
     
     @pytest.mark.asyncio
@@ -749,6 +791,9 @@ class TestPerformanceAndScaling:
     @pytest.fixture
     def agent(self):
         """Create BrandConsultantAgent for performance testing"""
+
+
+
         return BrandConsultantAgent()
     
     @pytest.mark.asyncio

@@ -334,19 +334,31 @@ PAYMENT_CONFIGS: Dict[str, PaymentAPIConfig] = {
 
 def get_payment_config(provider: str) -> Optional[PaymentAPIConfig]:
     """Get payment configuration by provider name"""
+
+
+
     return PAYMENT_CONFIGS.get(provider.lower())
 
 def get_providers_by_type(provider_type: PaymentProviderType) -> List[PaymentAPIConfig]:
     """Get all payment providers of specific type"""
+
+
+
     return [config for config in PAYMENT_CONFIGS.values() 
             if config.provider_type == provider_type]
 
 def get_providers_by_currency(currency: str) -> List[PaymentAPIConfig]:
     """Get payment providers supporting specific currency"""
+
+
+
     return [config for config in PAYMENT_CONFIGS.values() 
             if currency.upper() in config.supported_currencies]
 
 def get_providers_by_country(country: str) -> List[PaymentAPIConfig]:
     """Get payment providers supporting specific country"""
+
+
+
     return [config for config in PAYMENT_CONFIGS.values() 
             if country.upper() in config.supported_countries]

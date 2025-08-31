@@ -1,5 +1,5 @@
 """
-🌍 Jurisdiction Handler - Multi-Jurisdiction Legal Compliance Engine
+ Jurisdiction Handler - Multi-Jurisdiction Legal Compliance Engine
 ==================================================================
 
 Professional multi-jurisdiction legal compliance system:
@@ -92,7 +92,7 @@ class CrossBorderRule:
 
 class JurisdictionHandler:
     """
-    🚀 Professional multi-jurisdiction legal compliance engine
+     Professional multi-jurisdiction legal compliance engine
     
     Advanced system for managing legal compliance across multiple
     jurisdictions with automated rule application and conflict resolution.
@@ -416,7 +416,7 @@ class JurisdictionHandler:
     
     async def get_compliance_requirements(self, jurisdiction: str) -> Dict[str, Any]:
         """
-        📋 Get comprehensive compliance requirements for a jurisdiction
+         Get comprehensive compliance requirements for a jurisdiction
         
         Args:
             jurisdiction: Target jurisdiction code
@@ -424,6 +424,9 @@ class JurisdictionHandler:
         Returns:
             compliance_requirements: Complete compliance requirement set
         """
+
+
+
         try:
             self.logger.info(f"Getting compliance requirements for jurisdiction: {jurisdiction}")
             
@@ -546,7 +549,7 @@ class JurisdictionHandler:
         license_terms: Dict[str, Any]
     ) -> Dict[str, Any]:
         """
-        🌐 Validate cross-border licensing compliance
+         Validate cross-border licensing compliance
         
         Args:
             source_jurisdiction: Origin jurisdiction
@@ -556,6 +559,9 @@ class JurisdictionHandler:
         Returns:
             validation_result: Cross-border validation result
         """
+
+
+
         try:
             self.logger.info(f"Validating cross-border licensing: {source_jurisdiction} → {target_jurisdiction}")
             
@@ -640,7 +646,7 @@ class JurisdictionHandler:
         business_model: str
     ) -> Dict[str, Any]:
         """
-        🎯 Get jurisdiction recommendations for content licensing
+         Get jurisdiction recommendations for content licensing
         
         Args:
             content_type: Type of content (audio, video, image, text)
@@ -650,6 +656,9 @@ class JurisdictionHandler:
         Returns:
             recommendations: Jurisdiction-specific recommendations
         """
+
+
+
         try:
             recommendations = {}
             
@@ -781,6 +790,9 @@ class JurisdictionHandler:
     
     def get_supported_jurisdictions(self) -> List[Dict[str, Any]]:
         """Get list of all supported jurisdictions with basic info."""
+
+
+
         return [
             {
                 'code': profile.jurisdiction_code,
@@ -794,6 +806,9 @@ class JurisdictionHandler:
     
     def get_jurisdiction_metrics(self) -> Dict[str, Any]:
         """Get jurisdiction handler performance metrics."""
+
+
+
         return {
             **self.metrics,
             'total_requirements': len(self.compliance_requirements),

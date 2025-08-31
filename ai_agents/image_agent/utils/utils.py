@@ -7,7 +7,7 @@ providing common operations, validations, and data processing capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -42,6 +42,9 @@ class ImageMetrics:
     @staticmethod
     def calculate_sharpness(image: np.ndarray) -> float:
         """Calculate image sharpness using Laplacian variance"""
+
+
+
         try:
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY) if len(image.shape) == 3 else image
             laplacian_var = cv2.Laplacian(gray, cv2.CV_64F).var()
@@ -53,6 +56,9 @@ class ImageMetrics:
     @staticmethod
     def calculate_contrast(image: np.ndarray) -> float:
         """Calculate image contrast using RMS contrast"""
+
+
+
         try:
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY) if len(image.shape) == 3 else image
             return float(gray.std())
@@ -63,6 +69,9 @@ class ImageMetrics:
     @staticmethod
     def calculate_brightness(image: np.ndarray) -> float:
         """Calculate image brightness"""
+
+
+
         try:
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY) if len(image.shape) == 3 else image
             return float(gray.mean())
@@ -73,6 +82,9 @@ class ImageMetrics:
     @staticmethod
     def calculate_color_diversity(image: np.ndarray) -> float:
         """Calculate color diversity using histogram analysis"""
+
+
+
         try:
             if len(image.shape) != 3:
                 return 0.0
@@ -102,6 +114,9 @@ class ImageMetrics:
     @staticmethod
     def detect_blur(image: np.ndarray, threshold: float = 100.0) -> bool:
         """Detect if image is blurry using Laplacian method"""
+
+
+
         try:
             sharpness = ImageMetrics.calculate_sharpness(image)
             return sharpness < threshold
@@ -112,6 +127,9 @@ class ImageMetrics:
     @staticmethod
     def calculate_noise_level(image: np.ndarray) -> float:
         """Estimate noise level in image"""
+
+
+
         try:
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY) if len(image.shape) == 3 else image
             
@@ -132,6 +150,9 @@ class ImageHashGenerator:
     @staticmethod
     def generate_perceptual_hash(image_path: str) -> str:
         """Generate perceptual hash using pHash algorithm"""
+
+
+
         try:
             with Image.open(image_path) as img:
                 phash = imagehash.phash(img)
@@ -143,6 +164,9 @@ class ImageHashGenerator:
     @staticmethod
     def generate_difference_hash(image_path: str) -> str:
         """Generate difference hash (dHash)"""
+
+
+
         try:
             with Image.open(image_path) as img:
                 dhash = imagehash.dhash(img)
@@ -154,6 +178,9 @@ class ImageHashGenerator:
     @staticmethod
     def generate_average_hash(image_path: str) -> str:
         """Generate average hash (aHash)"""
+
+
+
         try:
             with Image.open(image_path) as img:
                 ahash = imagehash.average_hash(img)
@@ -165,6 +192,9 @@ class ImageHashGenerator:
     @staticmethod
     def generate_wavelet_hash(image_path: str) -> str:
         """Generate wavelet hash"""
+
+
+
         try:
             with Image.open(image_path) as img:
                 whash = imagehash.whash(img)
@@ -176,6 +206,9 @@ class ImageHashGenerator:
     @staticmethod
     def generate_comprehensive_fingerprint(image_path: str) -> Dict[str, str]:
         """Generate comprehensive image fingerprint with multiple hashes"""
+
+
+
         return {
             "perceptual_hash": ImageHashGenerator.generate_perceptual_hash(image_path),
             "difference_hash": ImageHashGenerator.generate_difference_hash(image_path),
@@ -188,6 +221,9 @@ class ImageHashGenerator:
     @staticmethod
     def calculate_similarity(hash1: str, hash2: str) -> float:
         """Calculate similarity between two hashes (0.0 = identical, 1.0 = completely different)"""
+
+
+
         try:
             if not hash1 or not hash2:
                 return 1.0
@@ -287,6 +323,9 @@ class FileUtils:
     @staticmethod
     def calculate_file_hash(file_path: str, algorithm: str = "sha256") -> str:
         """Calculate file hash"""
+
+
+
         try:
             hash_func = hashlib.new(algorithm)
             
@@ -368,6 +407,9 @@ class SEOUtils:
     @staticmethod
     def generate_alt_text(image_path: str, context: str = "") -> str:
         """Generate SEO-optimized alt text for images"""
+
+
+
         try:
             metadata = FileUtils.get_image_metadata(image_path)
             
@@ -421,6 +463,9 @@ class SEOUtils:
     @staticmethod
     def generate_seo_metadata(image_path: str, keywords: List[str] = None) -> Dict[str, str]:
         """Generate comprehensive SEO metadata"""
+
+
+
         try:
             metadata = FileUtils.get_image_metadata(image_path)
             filename = Path(image_path).stem

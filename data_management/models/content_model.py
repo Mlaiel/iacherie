@@ -1,5 +1,5 @@
 """
-🎯 Content Model - IA Influencer Agent Platform Enterprise
+ Content Model - IA Influencer Agent Platform Enterprise
 =========================================================
 Module: backend/data_management/models/content_model.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Content Data Model - Ultra Production-Ready
 Responsibility: Advanced data models for multi-format creator content with AI protection and monetization
 ==========================================================================================================
 
-⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
+  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -180,6 +180,9 @@ class ContentFingerprint:
     
     def _cosine_similarity(self, vec1: List[float], vec2: List[float]) -> float:
         """Calculate cosine similarity between two vectors"""
+
+
+
         try:
             import numpy as np
             v1 = np.array(vec1)
@@ -190,6 +193,9 @@ class ContentFingerprint:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for storage"""
+
+
+
         return {
             "fingerprint_id": self.fingerprint_id,
             "content_id": self.content_id,
@@ -314,6 +320,9 @@ class ContentMetadata:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for storage"""
+
+
+
         return {
             "file_size": self.file_size,
             "mime_type": self.mime_type,
@@ -653,6 +662,9 @@ class ContentFingerprint:
     
     def to_dict(self) -> Dict[str, Any]:
         """Conversion en dictionnaire pour stockage"""
+
+
+
         return {
             "fingerprint_id": self.fingerprint_id,
             "content_hash": self.content_hash,

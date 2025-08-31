@@ -4,31 +4,31 @@ Advanced Analytics and Metrics Module for AI Engines
 Enterprise-grade analytics, performance monitoring, and business intelligence
 for the IA-Influencer platform AI content processing engines.
 
-🚀 Enterprise Team Project Specialties:
-✅ Lead Dev + Architecte Développeur IA
-✅ Développeur Backend Senior (Python/FastAPI/Django)  
-✅ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face)
-✅ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
-✅ Spécialiste Sécurité Backend
-✅ Architecte Microservices
-✅ Développeur Audio
-✅ DevOps Engineer
-✅ IA Prompt Engineer
+ Enterprise Team Project Specialties:
+ Lead Dev + Architecte Développeur IA
+ Développeur Backend Senior (Python/FastAPI/Django)  
+ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face)
+ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
+ Spécialiste Sécurité Backend
+ Architecte Microservices
+ Développeur Audio
+ DevOps Engineer
+ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. 
 Unauthorized use, modification, or distribution by any individual or entity 
 without explicit written consent from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will face legal action under international copyright law.
 
-⚖️ LEGAL NOTICE: THEFT OF IDEAS, CONCEPTS, OR CODE WITHOUT EXPLICIT WRITTEN AUTHORIZATION  
+ LEGAL NOTICE: THEFT OF IDEAS, CONCEPTS, OR CODE WITHOUT EXPLICIT WRITTEN AUTHORIZATION  
 FROM FAHED MLAIEL (mlaiel@live.de) IS STRICTLY FORBIDDEN AND WILL RESULT  
 IN IMMEDIATE LEGAL PROSECUTION UNDER INTERNATIONAL COPYRIGHT LAW.
 
-🔒 NO UNAUTHORIZED USE, COPYING, MODIFICATION, OR DISTRIBUTION ALLOWED.
+ NO UNAUTHORIZED USE, COPYING, MODIFICATION, OR DISTRIBUTION ALLOWED.
 
 Business Logic: User Upload → AI Processing → Protection → SEO → Collaboration → Distribution
 """
@@ -425,6 +425,9 @@ class MetricsCollector:
         
     def get_real_time_dashboard(self) -> Dict[str, Any]:
         """Get real-time dashboard data"""
+
+
+
         return {
             "current_time": datetime.now().isoformat(),
             "system_status": self._get_system_status(),
@@ -766,11 +769,17 @@ def record_revenue(engine_name: str, revenue: float, **kwargs):
 
 def get_dashboard_data() -> Dict[str, Any]:
     """Get real-time dashboard data"""
+
+
+
     return metrics_collector.get_real_time_dashboard()
 
 
 def get_metrics_summary(**kwargs) -> Dict[str, Any]:
     """Get metrics summary"""
+
+
+
     return metrics_collector.get_metrics_summary(**kwargs)
 
 

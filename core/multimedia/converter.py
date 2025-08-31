@@ -7,7 +7,7 @@ Provides intelligent format detection, conversion, and optimization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -151,6 +151,9 @@ class MultimediaConverter:
         
     async def initialize(self):
         """Initialize converter components"""
+
+
+
         try:
             await self.format_detector.initialize()
             await self.metadata_extractor.initialize()
@@ -232,6 +235,9 @@ class MultimediaConverter:
             
     async def batch_convert(self, requests: List[ConversionRequest]) -> List[ConversionResult]:
         """Convert multiple files in batch"""
+
+
+
         try:
             # Create semaphore for parallel processing
             semaphore = asyncio.Semaphore(self.parallel_conversions)
@@ -270,10 +276,16 @@ class MultimediaConverter:
             
     async def get_supported_conversions(self) -> Dict[str, List[str]]:
         """Get supported format conversions"""
+
+
+
         return self.conversion_matrix
         
     async def estimate_conversion_time(self, source_file: str, target_format: str) -> Dict[str, Any]:
         """Estimate conversion time and resources"""
+
+
+
         try:
             # Get file information
             file_size = os.path.getsize(source_file)
@@ -305,6 +317,9 @@ class MultimediaConverter:
             
     def create_custom_profile(self, profile: ConversionProfile) -> bool:
         """Create custom conversion profile"""
+
+
+
         try:
             # Validate profile
             if not self._validate_conversion_profile(profile):
@@ -390,6 +405,9 @@ class MultimediaConverter:
         
     async def get_conversion_stats(self) -> Dict[str, Any]:
         """Get conversion statistics"""
+
+
+
         return {
             **self.conversion_stats,
             "total_profiles": len(self.profiles),
@@ -399,6 +417,9 @@ class MultimediaConverter:
         
     async def health_check(self) -> Dict[str, Any]:
         """Converter health check"""
+
+
+
         try:
             # Check external tools
             tools_status = await self._check_external_tools()
@@ -450,6 +471,9 @@ class MultimediaConverter:
         source_metadata: Dict[str, Any]
     ) -> ConversionResult:
         """Perform actual file conversion"""
+
+
+
         try:
             # Generate output path if not provided
             if not request.output_path:
@@ -510,6 +534,9 @@ class MultimediaConverter:
             
     async def _convert_video(self, request: ConversionRequest, profile: ConversionProfile, metadata: Dict[str, Any]):
         """Convert video file using FFmpeg"""
+
+
+
         try:
             # Build FFmpeg command
             input_stream = ffmpeg.input(request.source_file)
@@ -537,6 +564,9 @@ class MultimediaConverter:
             
     async def _convert_audio(self, request: ConversionRequest, profile: ConversionProfile, metadata: Dict[str, Any]):
         """Convert audio file using FFmpeg"""
+
+
+
         try:
             # Build FFmpeg command for audio
             input_stream = ffmpeg.input(request.source_file)
@@ -561,6 +591,9 @@ class MultimediaConverter:
             
     async def _convert_image(self, request: ConversionRequest, profile: ConversionProfile, metadata: Dict[str, Any]):
         """Convert image file using PIL"""
+
+
+
         try:
             # Open image
             with Image.open(request.source_file) as img:
@@ -597,6 +630,9 @@ class MultimediaConverter:
             
     async def _convert_document(self, request: ConversionRequest, profile: ConversionProfile, metadata: Dict[str, Any]):
         """Convert document file using Pandoc"""
+
+
+
         try:
             # Use Pandoc for document conversion
             output = pypandoc.convert_file(
@@ -757,6 +793,9 @@ class MultimediaConverter:
         
     def _build_conversion_matrix(self) -> Dict[str, List[str]]:
         """Build supported conversion matrix"""
+
+
+
         return {
             # Video formats
             "mp4": ["avi", "mov", "mkv", "webm", "flv"],
@@ -790,6 +829,9 @@ class MultimediaConverter:
         
     def _is_conversion_supported(self, source_format: str, target_format: str) -> bool:
         """Check if conversion is supported"""
+
+
+
         return target_format.lower() in self.conversion_matrix.get(source_format.lower(), [])
         
     async def _select_optimal_profile(self, source_format: str, target_format: str, quality: ConversionQuality) -> ConversionProfile:
@@ -818,6 +860,9 @@ class MultimediaConverter:
         
     async def _validate_conversion_request(self, request: ConversionRequest) -> Dict[str, Any]:
         """Validate conversion request"""
+
+
+
         try:
             # Check source file exists
             if not os.path.exists(request.source_file):
@@ -839,6 +884,9 @@ class MultimediaConverter:
             
     def _validate_conversion_profile(self, profile: ConversionProfile) -> bool:
         """Validate conversion profile"""
+
+
+
         try:
             # Basic validation
             if not profile.profile_id or not profile.name:
@@ -896,6 +944,9 @@ class MultimediaConverter:
         
     async def _generate_thumbnails(self, video_file: str) -> List[str]:
         """Generate thumbnail images from video"""
+
+
+
         try:
             thumbnails = []
             # This is a simplified implementation

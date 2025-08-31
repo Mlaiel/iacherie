@@ -62,6 +62,9 @@ class CacheKey:
     
     def to_hash(self) -> str:
         """Convert cache key to hash for consistent key generation."""
+
+
+
         return hashlib.sha256(self.to_string().encode('utf-8')).hexdigest()[:16]
     
     @classmethod
@@ -117,6 +120,9 @@ class SerializationManager:
         Returns:
             Serialized data as bytes
         """
+
+
+
         try:
             if format_type == 'json':
                 json_str = json.dumps(data, default=str, ensure_ascii=False)
@@ -148,6 +154,9 @@ class SerializationManager:
         Returns:
             Deserialized data
         """
+
+
+
         try:
             if format_type == 'json':
                 json_str = data.decode('utf-8')
@@ -182,6 +191,9 @@ class CompressionManager:
         Returns:
             Compressed data
         """
+
+
+
         try:
             if compression_type == 'gzip':
                 return gzip.compress(data)
@@ -218,6 +230,9 @@ class CompressionManager:
         Returns:
             Decompressed data
         """
+
+
+
         try:
             if compression_type == 'gzip':
                 return gzip.decompress(data)
@@ -256,16 +271,25 @@ class TimingUtilities:
     @staticmethod
     def get_current_timestamp() -> float:
         """Get current timestamp in seconds."""
+
+
+
         return time.time()
     
     @staticmethod
     def get_ttl_expiry(ttl_seconds: int) -> float:
         """Get expiry timestamp from TTL."""
+
+
+
         return time.time() + ttl_seconds
     
     @staticmethod
     def is_expired(expiry_timestamp: float) -> bool:
         """Check if timestamp is expired."""
+
+
+
         return time.time() > expiry_timestamp
     
     @staticmethod
@@ -404,11 +428,17 @@ class ValidationUtilities:
     @staticmethod
     def validate_ttl(ttl: int) -> bool:
         """Validate TTL value."""
+
+
+
         return isinstance(ttl, int) and ttl >= 0
     
     @staticmethod
     def validate_size(size: int, max_size: int) -> bool:
         """Validate data size."""
+
+
+
         return isinstance(size, int) and 0 <= size <= max_size
 
 
@@ -418,6 +448,9 @@ class AsyncUtilities:
     @staticmethod
     async def run_with_timeout(coroutine, timeout_seconds: float):
         """Run coroutine with timeout."""
+
+
+
         try:
             return await asyncio.wait_for(coroutine, timeout=timeout_seconds)
         except asyncio.TimeoutError:
@@ -445,11 +478,17 @@ class ThreadUtilities:
     @classmethod
     def run_in_thread(cls, func, *args, **kwargs):
         """Run function in thread pool."""
+
+
+
         return cls._thread_pool.submit(func, *args, **kwargs)
     
     @classmethod
     def get_thread_safe_counter(cls):
         """Get thread-safe counter."""
+
+
+
         return ThreadSafeCounter()
 
 
@@ -504,10 +543,16 @@ class PerformanceTimer:
     
     def get_duration_ms(self) -> float:
         """Get duration in milliseconds."""
+
+
+
         return self.duration * 1000 if self.duration else 0
     
     def get_duration_seconds(self) -> float:
         """Get duration in seconds."""
+
+
+
         return self.duration if self.duration else 0
 
 

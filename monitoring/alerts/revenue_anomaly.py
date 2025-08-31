@@ -1,5 +1,5 @@
 """
-🚨 Revenue Anomaly Alert System
+ Revenue Anomaly Alert System
 =============================
 
 Intelligent revenue anomaly detection and alerting for the Ainflue platform.

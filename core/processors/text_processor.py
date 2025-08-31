@@ -7,7 +7,7 @@ Handles text analysis, enhancement, conversion, and AI-powered features.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 This software is proprietary and confidential. Any unauthorized use, copying, 
 distribution, or commercialization without explicit written permission is 
 strictly prohibited and will result in legal action.
@@ -223,7 +223,7 @@ class TextAnalysisResult:
 
 class TextProcessor:
     """
-    📝 ENTERPRISE TEXT PROCESSOR
+     ENTERPRISE TEXT PROCESSOR
     
     Industrial-grade text processing engine with advanced AI capabilities
     for content creators, writers, and influencers.
@@ -256,6 +256,9 @@ class TextProcessor:
     
     async def initialize(self) -> bool:
         """Initialize the text processor"""
+
+
+
         try:
             if TEXT_LIBS_AVAILABLE:
                 # Download required NLTK data
@@ -315,11 +318,11 @@ class TextProcessor:
                         self.logger.warning(f"Could not load translation model: {e}")
             
             self._initialized = True
-            self.logger.info("✅ Text processor initialized successfully")
+            self.logger.info(" Text processor initialized successfully")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize text processor: {e}")
+            self.logger.error(f" Failed to initialize text processor: {e}")
             return False
     
     async def process(
@@ -432,6 +435,9 @@ class TextProcessor:
     
     async def _load_text(self, content: Union[str, bytes, BinaryIO]) -> Optional[str]:
         """Load text data from various input types"""
+
+
+
         try:
             if isinstance(content, str):
                 return content
@@ -458,6 +464,9 @@ class TextProcessor:
     
     async def _extract_metadata(self, text: str) -> TextMetadata:
         """Extract comprehensive text metadata"""
+
+
+
         try:
             # Basic counts
             character_count = len(text)
@@ -547,6 +556,9 @@ class TextProcessor:
     
     async def _enhance_text(self, text: str) -> str:
         """Enhance text quality through various techniques"""
+
+
+
         try:
             enhanced = text
             
@@ -573,6 +585,9 @@ class TextProcessor:
     
     async def _extract_features(self, text: str) -> TextFeatures:
         """Extract advanced text features using NLP and AI"""
+
+
+
         try:
             features = TextFeatures()
             
@@ -625,6 +640,9 @@ class TextProcessor:
     
     async def _analyze_sentiment(self, text: str) -> SentimentAnalysis:
         """Analyze sentiment of the text"""
+
+
+
         try:
             sentiment_analysis = SentimentAnalysis(
                 overall_sentiment="neutral",
@@ -681,6 +699,9 @@ class TextProcessor:
     
     async def _recognize_entities(self, text: str) -> EntityRecognition:
         """Recognize named entities in the text"""
+
+
+
         try:
             entity_recognition = EntityRecognition()
             
@@ -734,6 +755,9 @@ class TextProcessor:
     
     async def _extract_keywords(self, text: str) -> KeywordExtraction:
         """Extract keywords and keyphrases from the text"""
+
+
+
         try:
             keyword_extraction = KeywordExtraction()
             
@@ -793,6 +817,9 @@ class TextProcessor:
     
     async def _analyze_readability(self, text: str) -> ReadabilityAnalysis:
         """Analyze readability of the text"""
+
+
+
         try:
             readability = ReadabilityAnalysis()
             
@@ -836,6 +863,9 @@ class TextProcessor:
     
     async def _analyze_style(self, text: str) -> StyleAnalysis:
         """Analyze writing style of the text"""
+
+
+
         try:
             style_analysis = StyleAnalysis()
             
@@ -886,6 +916,9 @@ class TextProcessor:
     
     async def _calculate_readability_scores(self, text: str) -> Dict[str, float]:
         """Calculate various readability scores"""
+
+
+
         try:
             scores = {}
             if TEXT_LIBS_AVAILABLE:
@@ -954,6 +987,9 @@ class TextProcessor:
     
     async def _extract_basic_keywords(self, text: str) -> List[str]:
         """Extract basic keywords from text"""
+
+
+
         try:
             if not TEXT_LIBS_AVAILABLE:
                 # Simple keyword extraction without NLTK
@@ -997,6 +1033,9 @@ class TextProcessor:
     
     async def _generate_summary(self, text: str) -> Optional[str]:
         """Generate summary of the text"""
+
+
+
         try:
             if not self._summarizer:
                 return None
@@ -1023,6 +1062,9 @@ class TextProcessor:
     
     async def _extract_topics(self, text: str) -> List[str]:
         """Extract topics from the text (simplified)"""
+
+
+
         try:
             # Simplified topic extraction using keyword frequency
             keywords = await self._extract_basic_keywords(text)
@@ -1108,6 +1150,9 @@ class TextProcessor:
     
     async def _calculate_seo_score(self, text: str) -> float:
         """Calculate SEO score of the text"""
+
+
+
         try:
             score = 0.0
             
@@ -1169,6 +1214,9 @@ class TextProcessor:
     
     async def _calculate_quality_score(self, text: str, features: TextFeatures) -> float:
         """Calculate overall text quality score"""
+
+
+
         try:
             score = 0.0
             
@@ -1228,6 +1276,9 @@ class TextProcessor:
     
     async def _calculate_uniqueness_score(self, text: str) -> float:
         """Calculate uniqueness score (simplified)"""
+
+
+
         try:
             # In production, this would check against a database of known content
             # For now, use text characteristics as proxy for uniqueness
@@ -1262,6 +1313,9 @@ class TextProcessor:
     
     async def _classify_writing_style(self, text: str, style_analysis: StyleAnalysis) -> str:
         """Classify the writing style"""
+
+
+
         try:
             # Academic style
             if (style_analysis.average_sentence_length and style_analysis.average_sentence_length > 20 and
@@ -1329,6 +1383,9 @@ class TextProcessor:
     
     async def _calculate_complexity_score(self, style_analysis: StyleAnalysis) -> float:
         """Calculate complexity score from style analysis"""
+
+
+
         try:
             score = 0.0
             
@@ -1357,6 +1414,9 @@ class TextProcessor:
     
     async def _generate_fingerprint(self, text: str) -> str:
         """Generate text fingerprint for content identification"""
+
+
+
         try:
             # Create a normalized version of the text
             normalized = re.sub(r'\s+', ' ', text.lower().strip())
@@ -1372,6 +1432,9 @@ class TextProcessor:
     
     async def _generate_semantic_hash(self, text: str) -> str:
         """Generate semantic hash based on content meaning"""
+
+
+
         try:
             # Simplified semantic hashing using keywords
             keywords = await self._extract_basic_keywords(text)
@@ -1463,6 +1526,9 @@ class TextProcessor:
         options: Dict[str, Any]
     ) -> str:
         """Convert text to target format"""
+
+
+
         try:
             if target_format == TextFormat.PLAIN:
                 # Strip HTML tags if present
@@ -1518,6 +1584,9 @@ class TextProcessor:
     
     async def health_check(self) -> Dict[str, Any]:
         """Perform health check on the text processor"""
+
+
+
         return {
             "status": "healthy" if self._initialized else "not_initialized",
             "text_libs_available": TEXT_LIBS_AVAILABLE,

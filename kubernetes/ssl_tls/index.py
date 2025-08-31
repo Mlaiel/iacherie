@@ -198,10 +198,16 @@ class SSLTLSManager:
         key_password: Optional[bytes] = None
     ) -> Dict[str, Any]:
         """Validate SSL configuration"""
+
+
+
         return validate_ssl_configuration(cert_path, key_path, key_password)
     
     def get_status(self) -> Dict[str, Any]:
         """Get overall SSL/TLS management status"""
+
+
+
         return {
             'certificate_manager': self.cert_manager is not None,
             'letsencrypt_manager': self.letsencrypt_manager is not None,
@@ -221,6 +227,9 @@ def create_ssl_manager(config: Optional[Dict[str, Any]] = None) -> SSLTLSManager
     Returns:
         SSL/TLS manager instance
     """
+
+
+
     return SSLTLSManager(config)
 
 

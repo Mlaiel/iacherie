@@ -1,11 +1,11 @@
-"""🔧 Configuration Core - IA-Influencer-Agent Infrastructure
+""" Configuration Core - IA-Influencer-Agent Infrastructure
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Backend Senior + ML Engineer + DevOps + DBA + Security + Audio
 Date: 2025-08-14
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation ou appropriation 
 de ce code, concept ou idée sans autorisation écrite explicite 
 de Fahed Mlaiel (mlaiel@live.de) constituera une violation 
@@ -126,16 +126,22 @@ class ConfigurationRegistry:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def register_manager(self, name: str, manager: ConfigurationManagerProtocol) -> None:
-        """Enregistrement d'un manager de configuration"""        try:
+        """Enregistrement d'un manager de configuration"""
+
+
+        try:
             await manager.initialize()
             self.managers[name] = manager
-            self.logger.info(f"✅ Manager '{name}' enregistré avec succès")
+            self.logger.info(f" Manager '{name}' enregistré avec succès")
         except Exception as e:
-            self.logger.error(f"❌ Erreur enregistrement manager '{name}': {e}")
+            self.logger.error(f" Erreur enregistrement manager '{name}': {e}")
             raise
     
     async def get_manager(self, name: str) -> Optional[ConfigurationManagerProtocol]:
-        """Récupération d'un manager spécifique"""        return self.managers.get(name)
+        """Récupération d'un manager spécifique"""
+
+
+        return self.managers.get(name)
     
     async def get_all_configurations(self) -> Dict[str, Dict[str, Any]]:
         """Récupération de toutes les configurations"""        configurations = {}
@@ -143,7 +149,7 @@ class ConfigurationRegistry:
             try:
                 configurations[name] = await manager.get_configuration()
             except Exception as e:
-                self.logger.error(f"❌ Erreur récupération config '{name}': {e}")
+                self.logger.error(f" Erreur récupération config '{name}': {e}")
                 configurations[name] = {"error": str(e)}
         return configurations
     
@@ -153,7 +159,7 @@ class ConfigurationRegistry:
             try:
                 validations[name] = await manager.validate_configuration()
             except Exception as e:
-                self.logger.error(f"❌ Erreur validation config '{name}': {e}")
+                self.logger.error(f" Erreur validation config '{name}': {e}")
                 validations[name] = {"valid": False, "error": str(e)}
         return validations
 
@@ -166,8 +172,11 @@ class MasterConfigurationManager:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def initialize_all_managers(self) -> bool:
-        """Initialisation complète de tous les managers"""        try:
-            self.logger.info("🚀 Initialisation des gestionnaires de configuration...")
+        """Initialisation complète de tous les managers"""
+
+
+        try:
+            self.logger.info(" Initialisation des gestionnaires de configuration...")
             
             # Environment managers
             await self._initialize_environment_managers()
@@ -191,11 +200,11 @@ class MasterConfigurationManager:
             await self._initialize_business_managers()
             
             self.initialized = True
-            self.logger.info("✅ Tous les gestionnaires de configuration initialisés")
+            self.logger.info(" Tous les gestionnaires de configuration initialisés")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur initialisation générale: {e}")
+            self.logger.error(f" Erreur initialisation générale: {e}")
             return False
     
     async def _initialize_environment_managers(self) -> None:
@@ -266,7 +275,10 @@ class MasterConfigurationManager:
 master_config = MasterConfigurationManager()
 
 async def initialize_configuration() -> bool:
-    """Point d'entrée pour l'initialisation de la configuration"""    return await master_config.initialize_all_managers()
+    """Point d'entrée pour l'initialisation de la configuration"""
+
+
+    return await master_config.initialize_all_managers()
 
 async def get_configuration(manager_name: Optional[str] = None) -> Union[Dict[str, Any], Optional[ConfigurationManagerProtocol]]:
     """Récupération de configuration spécifique ou complète"""    if manager_name:

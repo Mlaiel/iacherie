@@ -8,7 +8,7 @@ for multi-format content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 Unauthorized use prohibited. Contact: mlaiel@live.de
 """
 
@@ -222,6 +222,9 @@ class SessionCreationHandler:
     
     async def _start_session_monitoring(self, session_id: str, config: SessionConfig):
         """Start background session monitoring"""
+
+
+
         
         try:
             while True:
@@ -245,6 +248,9 @@ class SessionCreationHandler:
     
     async def _auto_save_session(self, session_id: str):
         """Auto-save session state to persistent storage"""
+
+
+
         
         try:
             # Get current session data from cache
@@ -272,6 +278,9 @@ class SessionCreationHandler:
     
     async def _check_idle_timeout(self, session_id: str, idle_timeout: timedelta):
         """Check and handle session idle timeout"""
+
+
+
         
         try:
             session_data = await self.cache_manager.get(f"session:{session_id}")
@@ -287,6 +296,9 @@ class SessionCreationHandler:
     
     async def _suspend_idle_session(self, session_id: str):
         """Suspend idle session"""
+
+
+
         
         try:
             # Update session state to suspended
@@ -333,6 +345,9 @@ class SessionTerminationHandler:
         save_conversation: bool = True
     ) -> bool:
         """Terminate session with complete cleanup"""
+
+
+
         
         try:
             # Get session data
@@ -401,6 +416,9 @@ class SessionTerminationHandler:
     
     async def _save_conversation_history(self, session_id: str):
         """Save conversation history to long-term storage"""
+
+
+
         
         try:
             workspace_data = await self.cache_manager.get(f"session_workspace:{session_id}")
@@ -445,6 +463,9 @@ class SessionTerminationHandler:
     
     async def _cleanup_session_data(self, session_id: str):
         """Clean up session cache and temporary data"""
+
+
+
         
         try:
             # Remove session cache entries
@@ -465,6 +486,9 @@ class SessionTerminationHandler:
     
     async def _generate_session_analytics(self, session_id: str, session_data: Dict[str, Any]):
         """Generate final session analytics"""
+
+
+
         
         try:
             created_at = datetime.fromisoformat(session_data["created_at"])
@@ -518,6 +542,9 @@ class SessionStateTransitionManager:
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
         """Execute session state transition with validation"""
+
+
+
         
         try:
             # Get current session state
@@ -583,6 +610,9 @@ class SessionStateTransitionManager:
     
     def _is_valid_transition(self, current_state: SessionState, target_state: SessionState) -> bool:
         """Validate if state transition is allowed"""
+
+
+
         
         return target_state in self.valid_transitions.get(current_state, [])
     
@@ -640,11 +670,17 @@ class SessionLifecycleManager:
         config: Optional[SessionConfig] = None
     ) -> str:
         """Create new session with full lifecycle management"""
+
+
+
         
         return await self.creation_handler.create_session(metadata, config)
     
     async def activate_session(self, session_id: str) -> bool:
         """Activate created session"""
+
+
+
         
         return await self.transition_manager.transition_session(
             session_id,
@@ -654,6 +690,9 @@ class SessionLifecycleManager:
     
     async def suspend_session(self, session_id: str, reason: str = "user_request") -> bool:
         """Suspend active session"""
+
+
+
         
         return await self.transition_manager.transition_session(
             session_id,
@@ -663,6 +702,9 @@ class SessionLifecycleManager:
     
     async def resume_session(self, session_id: str) -> bool:
         """Resume suspended session"""
+
+
+
         
         return await self.transition_manager.transition_session(
             session_id,
@@ -677,6 +719,9 @@ class SessionLifecycleManager:
         save_conversation: bool = True
     ) -> bool:
         """Terminate session with cleanup"""
+
+
+
         
         return await self.termination_handler.terminate_session(
             session_id,
@@ -686,6 +731,9 @@ class SessionLifecycleManager:
     
     async def get_session_status(self, session_id: str) -> Optional[Dict[str, Any]]:
         """Get comprehensive session status"""
+
+
+
         
         try:
             current_state = await self.transition_manager._get_current_state(session_id)

@@ -1,5 +1,5 @@
 """
-🗄️ Retention Manager - Advanced Backup Retention System
+ Retention Manager - Advanced Backup Retention System
 ======================================================
 Module: backend/data_management/backups/retention_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Retention System - Enterprise Production-Ready
 Responsibility: Gestion intelligente de la rétention des sauvegardes
 ====================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -85,6 +85,9 @@ class RetentionRule:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit en dictionnaire"""
+
+
+
         return {
             "rule_id": self.rule_id,
             "name": self.name,
@@ -120,6 +123,9 @@ class RetentionPlan:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit en dictionnaire"""
+
+
+
         return {
             "plan_id": self.plan_id,
             "rule_id": self.rule_id,
@@ -145,6 +151,9 @@ class RetentionStats:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit en dictionnaire"""
+
+
+
         return {
             "total_backups": self.total_backups,
             "backups_deleted": self.backups_deleted,
@@ -262,6 +271,9 @@ class RetentionManager:
         Returns:
             RetentionPlan: Plan de rétention
         """
+
+
+
         try:
             if rule_id not in self.retention_rules:
                 raise RetentionException(f"Retention rule not found: {rule_id}")
@@ -729,6 +741,9 @@ class RetentionManager:
         Returns:
             Dict[str, Any]: Résultats d'exécution
         """
+
+
+
         try:
             if plan.executed:
                 raise RetentionException("Plan already executed")
@@ -790,6 +805,9 @@ class RetentionManager:
         action: RetentionAction
     ) -> Dict[str, Any]:
         """Exécute une action de rétention"""
+
+
+
         try:
             if action == RetentionAction.KEEP:
                 return {"success": True, "space_changed": 0}
@@ -922,6 +940,9 @@ class RetentionManager:
         Returns:
             List[RetentionRule]: Liste des règles
         """
+
+
+
         return list(self.retention_rules.values())
     
     def get_retention_rule(self, rule_id: str) -> Optional[RetentionRule]:
@@ -934,6 +955,9 @@ class RetentionManager:
         Returns:
             Optional[RetentionRule]: Règle ou None
         """
+
+
+
         return self.retention_rules.get(rule_id)
 
 

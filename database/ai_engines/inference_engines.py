@@ -138,6 +138,9 @@ class InferenceEngineManager:
         Returns:
             Dict[str, Any]: Initialization status
         """
+
+
+
         try:
             # Initialize framework adapters
             await self._initialize_frameworks()
@@ -176,6 +179,9 @@ class InferenceEngineManager:
         Returns:
             Dict[str, Any]: Registration result
         """
+
+
+
         try:
             # Validate endpoint
             validation_result = await self._validate_endpoint(endpoint)
@@ -283,6 +289,9 @@ class InferenceEngineManager:
         Returns:
             Dict[str, Any]: Job creation result
         """
+
+
+
         try:
             # Validate job configuration
             if job_config.job_id in self.active_jobs:
@@ -334,6 +343,9 @@ class InferenceEngineManager:
         Returns:
             Dict[str, Any]: Job status
         """
+
+
+
         try:
             if job_id not in self.active_jobs:
                 return {
@@ -374,6 +386,9 @@ class InferenceEngineManager:
         Returns:
             Dict[str, Any]: Performance metrics
         """
+
+
+
         try:
             if endpoint_id:
                 if endpoint_id not in self.performance_metrics:
@@ -403,6 +418,9 @@ class InferenceEngineManager:
     
     async def get_active_endpoints_count(self) -> int:
         """Get number of active inference endpoints."""
+
+
+
         return len([ep for ep in self.endpoints.values() if ep.is_active])
     
     async def health_check(self) -> Dict[str, Any]:
@@ -412,6 +430,9 @@ class InferenceEngineManager:
         Returns:
             Dict[str, Any]: Health status
         """
+
+
+
         try:
             if not self.initialized:
                 return {
@@ -460,6 +481,9 @@ class InferenceEngineManager:
     
     async def _validate_endpoint(self, endpoint: InferenceEndpoint) -> Dict[str, Any]:
         """Validate endpoint configuration."""
+
+
+
         try:
             # Perform health check on endpoint
             if endpoint.health_check_url:
@@ -593,6 +617,9 @@ class InferenceEngineManager:
     
     async def _process_batch_job(self, job_id: str):
         """Process a batch job asynchronously."""
+
+
+
         try:
             job_record = self.active_jobs[job_id]
             job_record["status"] = InferenceStatus.RUNNING
@@ -657,6 +684,9 @@ class InferenceEngineManager:
     
     async def _check_endpoint_health(self, endpoint: InferenceEndpoint) -> bool:
         """Check individual endpoint health."""
+
+
+
         try:
             if not endpoint.health_check_url:
                 return True  # Assume healthy if no health check URL
@@ -695,6 +725,9 @@ class ModelServingInfrastructure:
         Returns:
             Dict[str, Any]: Deployment result
         """
+
+
+
         try:
             # Create serving pool
             pool_config = {

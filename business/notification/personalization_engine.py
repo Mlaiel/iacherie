@@ -241,6 +241,9 @@ class PersonalizationEngine:
     
     async def _build_personalization_context(self, request: NotificationRequest) -> PersonalizationContext:
         """Build personalization context from notification request."""
+
+
+
         try:
             # Get user profile
             user_profile = await self._get_user_profile(request.recipient_id)
@@ -285,6 +288,9 @@ class PersonalizationEngine:
     
     async def _get_user_profile(self, user_id: str) -> UserProfile:
         """Get user profile for personalization."""
+
+
+
         try:
             # Check cache first
             if user_id in self._profile_cache:
@@ -306,6 +312,9 @@ class PersonalizationEngine:
     
     async def _build_user_profile(self, user_id: str) -> UserProfile:
         """Build comprehensive user profile."""
+
+
+
         try:
             # In production, this would query various data sources:
             # - User account information
@@ -358,6 +367,9 @@ class PersonalizationEngine:
     
     async def _enhance_user_profile(self, profile: UserProfile) -> UserProfile:
         """Enhance user profile with additional data sources."""
+
+
+
         try:
             # Creator type detection based on content history
             creator_type = await self._detect_creator_type(profile.user_id)
@@ -392,6 +404,9 @@ class PersonalizationEngine:
     
     def _get_default_user_profile(self, user_id: str) -> UserProfile:
         """Get default user profile when data is unavailable."""
+
+
+
         return UserProfile(
             user_id=user_id,
             creator_type=CreatorType.CONTENT_CREATOR,
@@ -430,6 +445,9 @@ class PersonalizationEngine:
         context: PersonalizationContext
     ) -> NotificationContent:
         """Apply personalization transformations to notification content."""
+
+
+
         try:
             # Start with original content
             personalized_content = NotificationContent(
@@ -487,6 +505,9 @@ class PersonalizationEngine:
         context: PersonalizationContext
     ) -> NotificationContent:
         """Apply language localization to content."""
+
+
+
         try:
             target_language = context.user_profile.preferred_language
             
@@ -516,6 +537,9 @@ class PersonalizationEngine:
     
     async def _localize_text(self, text: str, target_language: str) -> str:
         """Localize text to target language."""
+
+
+
         try:
             # In production, this would use a translation service
             # For now, return original text with language marker
@@ -540,6 +564,9 @@ class PersonalizationEngine:
         context: PersonalizationContext
     ) -> NotificationContent:
         """Apply tone adaptation based on user preferences."""
+
+
+
         try:
             preferred_tone = context.user_profile.preferred_tone
             
@@ -567,6 +594,9 @@ class PersonalizationEngine:
     
     def _adapt_message_tone(self, message: str, tone: CommunicationTone) -> str:
         """Adapt message tone based on preference."""
+
+
+
         try:
             # Tone-specific adaptations
             if tone == CommunicationTone.FORMAL:
@@ -581,7 +611,7 @@ class PersonalizationEngine:
                 message = re.sub(r"Dear", "Hi", message)
                 message = message.replace("Thank you", "Thanks")
                 if not message.endswith(("!", "?")):
-                    message += " 😊"
+                    message += " "
                 
             elif tone == CommunicationTone.ENCOURAGING:
                 # Add encouraging language
@@ -594,12 +624,12 @@ class PersonalizationEngine:
                 
             elif tone == CommunicationTone.URGENT:
                 # Make more urgent
-                message = f"⚠️ IMPORTANT: {message}"
+                message = f" IMPORTANT: {message}"
                 message = message.replace(".", "!")
                 
             elif tone == CommunicationTone.CELEBRATORY:
                 # Add celebration
-                message = f"🎉 {message}"
+                message = f" {message}"
                 if "success" in message.lower() or "achievement" in message.lower():
                     message += " Congratulations!"
             
@@ -615,6 +645,9 @@ class PersonalizationEngine:
         context: PersonalizationContext
     ) -> NotificationContent:
         """Apply creator type-specific customizations."""
+
+
+
         try:
             creator_type = context.user_profile.creator_type
             
@@ -677,6 +710,9 @@ class PersonalizationEngine:
         context: PersonalizationContext
     ) -> NotificationContent:
         """Apply cultural adaptations to content."""
+
+
+
         try:
             cultural_context = context.user_profile.cultural_context
             
@@ -694,7 +730,7 @@ class PersonalizationEngine:
                 
             elif country == "JP":  # Japan
                 # Use more polite language
-                content.message = f"お疲れさまです。{content.message}"
+                content.message = f"{content.message}"
                 
             elif country == "FR":  # France
                 # Use French greetings
@@ -718,6 +754,9 @@ class PersonalizationEngine:
         context: PersonalizationContext
     ) -> NotificationContent:
         """Apply temporal optimization based on user patterns."""
+
+
+
         try:
             temporal_context = context.temporal_context
             engagement_patterns = context.user_profile.engagement_patterns
@@ -749,6 +788,9 @@ class PersonalizationEngine:
         context: PersonalizationContext
     ) -> NotificationContent:
         """Apply platform-specific optimizations."""
+
+
+
         try:
             platform_context = context.platform_context
             
@@ -784,6 +826,9 @@ class PersonalizationEngine:
         context: PersonalizationContext
     ) -> NotificationContent:
         """Apply engagement optimization based on historical data."""
+
+
+
         try:
             engagement_history = context.engagement_history
             
@@ -818,6 +863,9 @@ class PersonalizationEngine:
         context: PersonalizationContext
     ) -> NotificationContent:
         """Apply A/B test variant modifications."""
+
+
+
         try:
             variant = context.ab_test_variant
             
@@ -868,8 +916,8 @@ class PersonalizationEngine:
         # Add urgency if appropriate
         urgent_keywords = ["opportunity", "alert", "important", "deadline"]
         if any(keyword in message.lower() for keyword in urgent_keywords):
-            if not message.startswith(("⚠️", "🔔", "⏰")):
-                message = f"🔔 {message}"
+            if not message.startswith(("", "", "⏰")):
+                message = f" {message}"
         
         return message
     
@@ -938,6 +986,9 @@ class PersonalizationEngine:
     
     def _is_business_hours(self, timestamp: datetime) -> bool:
         """Check if timestamp is during business hours."""
+
+
+
         return timestamp.weekday() < 5 and 9 <= timestamp.hour < 17
     
     def _extract_platform_context(self, request: NotificationRequest) -> Dict[str, Any]:
@@ -959,6 +1010,9 @@ class PersonalizationEngine:
     
     async def _get_engagement_history(self, user_id: str) -> Dict[str, Any]:
         """Get user engagement history for optimization."""
+
+
+
         try:
             # In production, this would query engagement analytics
             return {
@@ -980,6 +1034,9 @@ class PersonalizationEngine:
     
     def _select_ab_test_variant(self, request: NotificationRequest, profile: UserProfile) -> Optional[str]:
         """Select A/B test variant for personalization."""
+
+
+
         try:
             # Simple hash-based variant selection
             user_hash = hash(profile.user_id) % 100
@@ -1000,6 +1057,9 @@ class PersonalizationEngine:
         context: PersonalizationContext
     ) -> float:
         """Calculate confidence score for personalization quality."""
+
+
+
         try:
             confidence_factors = []
             
@@ -1098,6 +1158,9 @@ class PersonalizationEngine:
     
     def _extract_personalization_factors(self, context: PersonalizationContext) -> Dict[str, Any]:
         """Extract personalization factors for transparency."""
+
+
+
         return {
             "creator_type": context.user_profile.creator_type.value,
             "preferred_language": context.user_profile.preferred_language,
@@ -1123,6 +1186,9 @@ class PersonalizationEngine:
     
     def _initialize_ab_test_variants(self) -> Dict[str, Any]:
         """Initialize A/B test variants."""
+
+
+
         return {
             "variant_a": {
                 "name": "Formal Communication",
@@ -1136,6 +1202,9 @@ class PersonalizationEngine:
     
     def _load_language_resources(self) -> Dict[str, Dict[str, str]]:
         """Load language resources for localization."""
+
+
+
         return {
             "de": {
                 "Hello": "Hallo",
@@ -1207,6 +1276,9 @@ class PersonalizationEngine:
     
     def get_personalization_stats(self) -> Dict[str, Any]:
         """Get personalization performance statistics."""
+
+
+
         return self.personalization_stats.copy()
     
     def clear_profile_cache(self):

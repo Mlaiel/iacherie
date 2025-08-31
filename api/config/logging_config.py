@@ -146,6 +146,9 @@ class SyslogHandlerConfig:
     @property
     def address(self) -> tuple:
         """Get syslog server address"""
+
+
+
         return (self.host, self.port)
 
 
@@ -289,6 +292,9 @@ class LoggingConfig:
     @property
     def log_level_int(self) -> int:
         """Get log level as integer"""
+
+
+
         return getattr(logging, self.root_level.value)
     
     def get_format_string(self, handler_type: LogHandler = LogHandler.CONSOLE) -> str:
@@ -412,6 +418,9 @@ class LoggingConfig:
     
     def get_logging_dict_config(self) -> Dict[str, Any]:
         """Get complete logging configuration dictionary for dictConfig"""
+
+
+
         return {
             "version": 1,
             "disable_existing_loggers": self.disable_existing_loggers,

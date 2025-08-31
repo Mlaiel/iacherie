@@ -7,7 +7,7 @@ for multi-cultural content creator communications.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE ⚠️
+  CRITICAL LEGAL NOTICE 
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -52,30 +52,30 @@ import uuid
 logger = logging.getLogger(__name__)
 
 """
-🌍 COMPREHENSIVE LANGUAGE COVERAGE ENHANCEMENT 🌍
+ COMPREHENSIVE LANGUAGE COVERAGE ENHANCEMENT 
 
 This Language Manager now includes comprehensive support for:
 
-📜 AMAZIGH/BERBER LANGUAGES (Afro-Asiatic Family):
+ AMAZIGH/BERBER LANGUAGES (Afro-Asiatic Family):
 - Full spectrum of Berber languages across North Africa
 - From Morocco's Rif mountains to Libya's Nafusi speakers
 - Includes Tuareg languages spanning the Sahara
 - Supports both Tifinagh and Latin scripts
 - Critical for North African content creator communications
 
-🔤 NORTH AFRICAN ARABIC DIALECTAL COVERAGE:
+ NORTH AFRICAN ARABIC DIALECTAL COVERAGE:
 - Distinct regional Arabic dialects (Darija, Hassaniya, etc.)
 - Specialized business and cultural communication patterns
 - Judeo-Arabic historical variants
 - Bridge languages connecting Arab and Berber communities
 
-🏜️ SAHARAN AND NILO-SAHARAN LANGUAGES:
+ SAHARAN AND NILO-SAHARAN LANGUAGES:
 - Toubou languages (Tedaga, Daza) for Chad-Libya-Niger region
 - Nubic languages for Egypt-Sudan Nile valley
 - Songhai for West African Sahel commerce
 - Critical for cross-Sahara trade and cultural communications
 
-💼 BUSINESS IMPACT:
+ BUSINESS IMPACT:
 - Enables authentic communication with 350M+ North African speakers
 - Supports cultural nuances in Berber-speaking creative communities
 - Essential for influencers working across Maghreb and Sahel regions
@@ -1384,6 +1384,9 @@ class LanguageDetector:
         
     async def _initialize_detection_engines(self):
         """Initialize multiple language detection engines"""
+
+
+
         try:
             # FastText model for language detection
             self.fasttext_model = None
@@ -1493,6 +1496,9 @@ class LanguageDetector:
     
     async def _detect_with_langdetect(self, text: str) -> Optional[Tuple[SupportedLanguage, float]]:
         """Detect language using langdetect library"""
+
+
+
         try:
             probabilities = detect_probabilities(text)
             if probabilities:
@@ -1511,6 +1517,9 @@ class LanguageDetector:
     
     async def _detect_with_fasttext(self, text: str) -> Optional[Tuple[SupportedLanguage, float]]:
         """Detect language using FastText model"""
+
+
+
         try:
             if self.fasttext_model:
                 predictions = self.fasttext_model.predict(text.replace('\n', ' '), k=3)
@@ -1532,6 +1541,9 @@ class LanguageDetector:
     
     async def _detect_with_transformer(self, text: str) -> Optional[Tuple[SupportedLanguage, float]]:
         """Detect language using transformer model"""
+
+
+
         try:
             if self.transformer_detector and len(text) > 10:
                 result = self.transformer_detector(text[:512])  # Limit text length
@@ -1552,6 +1564,9 @@ class LanguageDetector:
     
     async def _detect_with_polyglot(self, text: str) -> Optional[Tuple[SupportedLanguage, float]]:
         """Detect language using Polyglot"""
+
+
+
         try:
             detector = Detector(text)
             if detector.language and detector.language.confidence > 0.5:
@@ -1573,6 +1588,9 @@ class LanguageDetector:
         user_id: Optional[str]
     ) -> Optional[Tuple[SupportedLanguage, float]]:
         """Use user context to influence language detection"""
+
+
+
         try:
             if not user_id:
                 return None
@@ -1747,6 +1765,9 @@ class LanguageDetector:
     
     async def _cache_detection_result(self, text: str, result: LanguageDetectionResult):
         """Cache high-confidence detection results"""
+
+
+
         try:
             cache_key = f"lang_detect:{hash(text[:100])}"
             cache_data = {
@@ -1780,6 +1801,9 @@ class LanguageProfileManager:
         preferences: Optional[Dict[str, Any]] = None
     ) -> LanguageProfile:
         """Create comprehensive language profile for user"""
+
+
+
         try:
             # Infer cultural settings from country code
             cultural_settings = await self._infer_cultural_settings(country_code)
@@ -1814,6 +1838,9 @@ class LanguageProfileManager:
     
     async def get_language_profile(self, user_id: str) -> Optional[LanguageProfile]:
         """Get user language profile with fallback mechanisms"""
+
+
+
         try:
             # Try cache first
             cached_profile = await self.redis_client.get(f"language_profile:{user_id}")
@@ -1839,6 +1866,9 @@ class LanguageProfileManager:
         updates: Dict[str, Any]
     ) -> Optional[LanguageProfile]:
         """Update user language profile"""
+
+
+
         try:
             profile = await self.get_language_profile(user_id)
             if not profile:
@@ -1909,6 +1939,9 @@ class LanguageProfileManager:
     
     async def _cache_language_profile(self, profile: LanguageProfile):
         """Cache language profile in Redis"""
+
+
+
         try:
             cache_data = {
                 "user_id": profile.user_id,
@@ -1951,6 +1984,9 @@ class LanguageProfileManager:
     
     def _deserialize_language_profile(self, data: Dict[str, Any]) -> LanguageProfile:
         """Deserialize language profile from cached data"""
+
+
+
         return LanguageProfile(
             user_id=data["user_id"],
             primary_language=SupportedLanguage(data["primary_language"]),
@@ -2075,6 +2111,9 @@ class LanguageManager:
     
     async def get_language_statistics(self) -> Dict[str, Any]:
         """Get language usage statistics"""
+
+
+
         return {
             "detection_stats": dict(self.detector.detection_stats),
             "supported_languages_count": len(self.language_configs),

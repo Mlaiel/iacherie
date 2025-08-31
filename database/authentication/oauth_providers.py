@@ -1,5 +1,5 @@
 """
-🔐 OAuth Providers Database - Enterprise External Authentication System
+ OAuth Providers Database - Enterprise External Authentication System
 =======================================================================
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -7,7 +7,7 @@ Project: IA Influencer Agent + Content Protection Platform
 Type: Production-Ready OAuth Provider Management
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ INTELLECTUAL PROPERTY WARNING: Unauthorized use strictly prohibited.
+ INTELLECTUAL PROPERTY WARNING: Unauthorized use strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 
 Business Logic: OAuth Provider Registration → Authorization Flow → Token Exchange → 
@@ -258,6 +258,9 @@ class OAuthProvidersRepository:
         custom_scopes: Optional[List[str]] = None
     ) -> str:
         """Setup OAuth provider configuration"""
+
+
+
         try:
             config = self.provider_configs.get(provider)
             if not config:
@@ -300,6 +303,9 @@ class OAuthProvidersRepository:
         state_data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, str]:
         """Generate OAuth authorization URL"""
+
+
+
         try:
             # Get provider configuration
             config = await self._get_provider_config(provider)
@@ -360,6 +366,9 @@ class OAuthProvidersRepository:
         state: str
     ) -> Dict[str, Any]:
         """Exchange authorization code for access token"""
+
+
+
         try:
             # Verify and decode state
             state_data = json.loads(self.fernet.decrypt(state.encode()).decode())
@@ -445,6 +454,9 @@ class OAuthProvidersRepository:
     
     async def refresh_access_token(self, connection_id: str) -> bool:
         """Refresh OAuth access token"""
+
+
+
         try:
             # Get connection
             stmt = select(OAuthConnections).where(OAuthConnections.connection_id == connection_id)
@@ -532,6 +544,9 @@ class OAuthProvidersRepository:
     
     async def get_user_connections(self, user_id: str) -> List[Dict[str, Any]]:
         """Get all OAuth connections for a user"""
+
+
+
         try:
             stmt = select(OAuthConnections).where(
                 OAuthConnections.user_id == user_id
@@ -576,6 +591,9 @@ class OAuthProvidersRepository:
     
     async def disconnect_provider(self, user_id: str, connection_id: str, reason: str = "User requested") -> bool:
         """Disconnect OAuth provider"""
+
+
+
         try:
             stmt = select(OAuthConnections).where(
                 OAuthConnections.connection_id == connection_id,
@@ -621,6 +639,9 @@ class OAuthProvidersRepository:
     
     async def sync_user_profile(self, connection_id: str) -> Dict[str, Any]:
         """Sync user profile from OAuth provider"""
+
+
+
         try:
             # Get connection
             stmt = select(OAuthConnections).where(OAuthConnections.connection_id == connection_id)
@@ -821,6 +842,9 @@ class OAuthProvidersRepository:
     
     async def _revoke_provider_tokens(self, connection: OAuthConnections):
         """Revoke tokens at OAuth provider"""
+
+
+
         try:
             provider = OAuthProvider(connection.provider)
             config = await self._get_provider_config(provider)
@@ -857,6 +881,9 @@ class OAuthProvidersRepository:
         user_agent: Optional[str] = None
     ):
         """Log OAuth action for audit purposes"""
+
+
+
         try:
             audit_log = OAuthAuditLog(
                 audit_id=str(uuid4()),

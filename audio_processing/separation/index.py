@@ -7,7 +7,7 @@ for the professional audio separation module.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel - Unauthorized use strictly prohibited
 
-⚠️ WARNING: This code is the intellectual property of Fahed Mlaiel.
+ WARNING: This code is the intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or modification is strictly
 prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -111,7 +111,7 @@ stems = await realtime.process_audio_chunk(audio_chunk)
 
 # Legal Information
 LEGAL_NOTICE = """
-⚠️ IMPORTANT LEGAL NOTICE ⚠️
+ IMPORTANT LEGAL NOTICE 
 
 COPYRIGHT: This entire audio separation module is the exclusive 
 intellectual property of Fahed Mlaiel (mlaiel@live.de).
@@ -135,6 +135,9 @@ trade secret, and intellectual property laws.
 
 def get_module_overview():
     """Get comprehensive module overview."""
+
+
+
     return {
         "info": MODULE_INFO,
         "documentation": DOCUMENTATION,
@@ -144,17 +147,17 @@ def get_module_overview():
 
 def display_team_credits():
     """Display team expertise and credits."""
-    print("🏆 IA INFLUENCER AGENT - AUDIO SEPARATION MODULE 🏆")
+    print(" IA INFLUENCER AGENT - AUDIO SEPARATION MODULE ")
     print("=" * 60)
     print(f"Lead Developer & Architect: {MODULE_INFO['author']}")
     print(f"Contact: {MODULE_INFO['email']}")
     print(f"Version: {MODULE_INFO['version']}")
     print()
-    print("👥 EXPERT TEAM SPECIALIZATIONS:")
+    print(" EXPERT TEAM SPECIALIZATIONS:")
     for expertise in MODULE_INFO["team_expertise"]:
         print(f"  • {expertise}")
     print()
-    print("⚡ TECHNICAL CAPABILITIES:")
+    print(" TECHNICAL CAPABILITIES:")
     specs = MODULE_INFO["specifications"]
     for key, value in specs.items():
         if isinstance(value, list):
@@ -162,7 +165,7 @@ def display_team_credits():
         else:
             print(f"  • {key.replace('_', ' ').title()}: {value}")
     print()
-    print("📈 PERFORMANCE METRICS:")
+    print(" PERFORMANCE METRICS:")
     for metric, value in MODULE_INFO["performance"].items():
         print(f"  • {metric.replace('_', ' ').title()}: {value}")
 

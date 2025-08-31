@@ -313,6 +313,9 @@ class AdvancedFraudDetectionEngine:
     
     async def _assess_velocity_risk(self, request: FraudAssessmentRequest) -> Dict[str, Any]:
         """Assess transaction velocity risk"""
+
+
+
         try:
             # Get recent transactions for user
             recent_transactions = await self.transaction_repo.get_recent_transactions(
@@ -368,6 +371,9 @@ class AdvancedFraudDetectionEngine:
     
     async def _assess_geographic_risk(self, request: FraudAssessmentRequest) -> Dict[str, Any]:
         """Assess geographic risk based on location patterns"""
+
+
+
         try:
             # Get user's typical locations
             user_profile = await self._get_user_profile(request.user_id)
@@ -411,6 +417,9 @@ class AdvancedFraudDetectionEngine:
     
     async def _assess_device_risk(self, request: FraudAssessmentRequest) -> Dict[str, Any]:
         """Assess device-based risk"""
+
+
+
         try:
             device_score = 0.0
             reasons = []
@@ -453,6 +462,9 @@ class AdvancedFraudDetectionEngine:
     
     async def _assess_behavioral_risk(self, request: FraudAssessmentRequest) -> Dict[str, Any]:
         """Assess behavioral anomalies"""
+
+
+
         try:
             user_profile = await self._get_user_profile(request.user_id)
             
@@ -507,6 +519,9 @@ class AdvancedFraudDetectionEngine:
     
     async def _assess_amount_risk(self, request: FraudAssessmentRequest) -> Dict[str, Any]:
         """Assess amount-based risk"""
+
+
+
         try:
             amount_score = 0.0
             reasons = []
@@ -542,6 +557,9 @@ class AdvancedFraudDetectionEngine:
     
     async def _assess_temporal_risk(self, request: FraudAssessmentRequest) -> Dict[str, Any]:
         """Assess temporal patterns"""
+
+
+
         try:
             temporal_score = 0.0
             reasons = []
@@ -574,6 +592,9 @@ class AdvancedFraudDetectionEngine:
     
     async def _check_blacklists(self, request: FraudAssessmentRequest) -> Dict[str, Any]:
         """Check various blacklists"""
+
+
+
         try:
             blacklist_score = 0.0
             reasons = []
@@ -609,6 +630,9 @@ class AdvancedFraudDetectionEngine:
     
     async def _run_ml_predictions(self, request: FraudAssessmentRequest) -> Dict[str, Any]:
         """Run machine learning predictions"""
+
+
+
         try:
             if not self.classification_model:
                 return {'score': 0.0, 'reasons': [], 'analysis': {'ml_model': 'not_available'}}
@@ -682,6 +706,9 @@ class AdvancedFraudDetectionEngine:
     
     async def _initialize_models(self):
         """Initialize ML models"""
+
+
+
         try:
             # Load pre-trained models or train new ones
             await self._load_or_train_models()
@@ -698,6 +725,9 @@ class AdvancedFraudDetectionEngine:
     # Helper methods (simplified implementations)
     async def _get_user_profile(self, user_id: str) -> Optional[UserBehaviorProfile]:
         """Get user behavior profile"""
+
+
+
         return self.user_profiles.get(user_id)
     
     async def _get_location_from_ip(self, ip_address: str) -> Optional[Dict[str, str]]:
@@ -733,6 +763,9 @@ class AdvancedFraudDetectionEngine:
     
     async def _perform_external_checks(self, request: FraudAssessmentRequest) -> Dict[str, Any]:
         """Perform external fraud checks"""
+
+
+
         return await self.external_fraud_checker.check_multiple_sources(request)
     
     # Additional helper methods would be implemented here...

@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 CRITICAL LEGAL WARNING:
+ CRITICAL LEGAL WARNING:
 This code and all associated intellectual property belong exclusively to Fahed Mlaiel.
 Any unauthorized use, copying, modification, distribution, or commercialization 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -417,6 +417,9 @@ class RevenueRecord(Base):
     @property
     def total_deductions(self) -> Decimal:
         """Calculate total deductions from gross amount"""
+
+
+
         return (
             self.platform_fee + self.service_fee + self.processing_fee + 
             self.distribution_fee + self.transaction_fee + self.other_deductions +

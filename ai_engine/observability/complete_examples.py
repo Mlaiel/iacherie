@@ -7,7 +7,7 @@ with focus on IA Influencer Agent business processes and workflows.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -38,7 +38,7 @@ logger = logging.getLogger(__name__)
 
 async def run_complete_ia_influencer_demo():
     """Complete demonstration specific to IA Influencer Agent platform"""
-    logger.info("🎯 IA INFLUENCER AGENT - COMPLETE OBSERVABILITY DEMONSTRATION")
+    logger.info(" IA INFLUENCER AGENT - COMPLETE OBSERVABILITY DEMONSTRATION")
     logger.info("=" * 80)
     
     # Initialize observability system
@@ -51,7 +51,7 @@ async def run_complete_ia_influencer_demo():
     # Generate business intelligence
     business_report = await observability.get_business_intelligence_report()
     
-    logger.info("\n📊 FINAL BUSINESS INTELLIGENCE REPORT:")
+    logger.info("\n FINAL BUSINESS INTELLIGENCE REPORT:")
     logger.info("=" * 60)
     logger.info(json.dumps(business_report, indent=2, default=str))
     
@@ -83,7 +83,7 @@ async def simulate_creator_journey(observability: ObservabilityIndex):
     ]
     
     for creator in creators:
-        logger.info(f"\n🎨 Simulating journey for {creator['type'].value}: {creator['id']}")
+        logger.info(f"\n Simulating journey for {creator['type'].value}: {creator['id']}")
         
         # 1. Content Upload Process
         await simulate_content_upload(observability, creator)
@@ -108,7 +108,7 @@ async def simulate_creator_journey(observability: ObservabilityIndex):
 
 async def simulate_content_upload(observability: ObservabilityIndex, creator: Dict[str, Any]):
     """Simulate content upload process"""
-    logger.info(f"   📤 Content Upload: {creator['content_id']}")
+    logger.info(f"    Content Upload: {creator['content_id']}")
     
     file_sizes = {
         ContentType.MUSIC: random.uniform(8.0, 25.0),
@@ -176,7 +176,7 @@ async def simulate_ai_processing(observability: ObservabilityIndex, creator: Dic
 
 async def simulate_seo_optimization(observability: ObservabilityIndex, creator: Dict[str, Any]):
     """Simulate SEO optimization process"""
-    logger.info(f"   🔍 SEO Optimization: {creator['content_id']}")
+    logger.info(f"    SEO Optimization: {creator['content_id']}")
     
     seo_times = {
         ContentType.MUSIC: random.uniform(300, 600),
@@ -230,7 +230,7 @@ async def simulate_collaboration_matching(observability: ObservabilityIndex, cre
 
 async def simulate_content_distribution(observability: ObservabilityIndex, creator: Dict[str, Any]):
     """Simulate content distribution across platforms"""
-    logger.info(f"   📡 Multi-Platform Distribution: {creator['content_id']}")
+    logger.info(f"    Multi-Platform Distribution: {creator['content_id']}")
     
     # Platform preferences by content type
     platform_preferences = {
@@ -258,7 +258,7 @@ async def simulate_content_distribution(observability: ObservabilityIndex, creat
 
 async def simulate_monetization(observability: ObservabilityIndex, creator: Dict[str, Any]):
     """Simulate monetization events"""
-    logger.info(f"   💰 Monetization: {creator['id']}")
+    logger.info(f"    Monetization: {creator['id']}")
     
     # Revenue scenarios by content type
     revenue_scenarios = {
@@ -293,7 +293,7 @@ async def simulate_monetization(observability: ObservabilityIndex, creator: Dict
 # Quick demonstration functions
 async def quick_content_demo():
     """Quick demonstration focused on content processing"""
-    logger.info("🚀 QUICK DEMO: Content Processing Pipeline")
+    logger.info(" QUICK DEMO: Content Processing Pipeline")
     
     observability = ObservabilityIndex()
     await observability.initialize()
@@ -315,7 +315,7 @@ async def quick_content_demo():
     content_monitor = observability.get_content_monitor()
     if content_monitor:
         report = await content_monitor.get_pipeline_performance_report()
-        logger.info("📊 Pipeline Performance:")
+        logger.info(" Pipeline Performance:")
         logger.info(json.dumps(report, indent=2, default=str))
         return report
     
@@ -324,7 +324,7 @@ async def quick_content_demo():
 
 async def quick_collaboration_demo():
     """Quick demonstration of collaboration features"""
-    logger.info("🚀 QUICK DEMO: Collaboration Network")
+    logger.info(" QUICK DEMO: Collaboration Network")
     
     observability = ObservabilityIndex()
     await observability.initialize()
@@ -358,7 +358,7 @@ async def quick_collaboration_demo():
 
 async def quick_monetization_demo():
     """Quick demonstration of monetization tracking"""
-    logger.info("🚀 QUICK DEMO: Monetization Tracking")
+    logger.info(" QUICK DEMO: Monetization Tracking")
     
     observability = ObservabilityIndex()
     await observability.initialize()
@@ -383,7 +383,7 @@ async def quick_monetization_demo():
     monetization_monitor = observability.get_monetization_monitor()
     if monetization_monitor:
         report = await monetization_monitor.get_monetization_report()
-        logger.info("💰 Monetization Report:")
+        logger.info(" Monetization Report:")
         logger.info(json.dumps(report, indent=2, default=str))
         return report
     
@@ -412,5 +412,5 @@ if __name__ == "__main__":
         print("Invalid choice")
         exit(1)
     
-    print("\n✅ Demo completed successfully!")
-    print(f"📊 Results available in the logs above")
+    print("\n Demo completed successfully!")
+    print(f" Results available in the logs above")

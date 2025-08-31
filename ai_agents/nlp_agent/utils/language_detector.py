@@ -92,6 +92,9 @@ class LanguageDetector:
     
     def _load_language_mappings(self) -> Dict[str, str]:
         """Load ISO language code to name mappings"""
+
+
+
         return {
             'af': 'Afrikaans', 'ar': 'Arabic', 'bg': 'Bulgarian', 'bn': 'Bengali',
             'ca': 'Catalan', 'cs': 'Czech', 'cy': 'Welsh', 'da': 'Danish',
@@ -112,6 +115,9 @@ class LanguageDetector:
     
     def _load_script_patterns(self) -> Dict[str, re.Pattern]:
         """Load regex patterns for script detection"""
+
+
+
         return {
             'latin': re.compile(r'[a-zA-Z]'),
             'cyrillic': re.compile(r'[а-яё]', re.IGNORECASE),
@@ -128,6 +134,9 @@ class LanguageDetector:
     
     def _initialize_models(self):
         """Initialize language detection models"""
+
+
+
         try:
             # Primary transformer model
             if TRANSFORMERS_AVAILABLE:
@@ -297,6 +306,9 @@ class LanguageDetector:
         max_languages: int
     ) -> Optional[List[Dict[str, Any]]]:
         """Detect language using transformer model"""
+
+
+
         try:
             pipeline_obj = self.pipelines["primary"]
             
@@ -497,6 +509,9 @@ class LanguageDetector:
     
     def _analyze_encoding(self, text: str) -> str:
         """Analyze character encoding of text"""
+
+
+
         try:
             # Check for common encodings
             if all(ord(char) < 128 for char in text):
@@ -536,6 +551,9 @@ class LanguageDetector:
     
     def get_supported_languages(self) -> List[Dict[str, str]]:
         """Get list of supported languages"""
+
+
+
         return [
             {"code": code, "name": name}
             for code, name in self.iso_to_name.items()

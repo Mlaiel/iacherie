@@ -170,6 +170,9 @@ class ConversationalModel(BaseConversationalModel):
         
     def _load_response_templates(self) -> Dict[str, List[str]]:
         """Load response templates for different scenarios"""
+
+
+
         return {
             "greeting": [
                 "Hello! How can I help you today?",
@@ -205,6 +208,9 @@ class ConversationalModel(BaseConversationalModel):
     
     def load_model(self) -> bool:
         """Load conversational model"""
+
+
+
         try:
             if TRANSFORMERS_AVAILABLE:
                 # Load a conversational model like DialoGPT or BlenderBot
@@ -338,6 +344,9 @@ class ConversationalModel(BaseConversationalModel):
     
     def _generate_rule_based(self, user_input: str, context: Dict[str, Any]) -> str:
         """Generate response using rule-based model"""
+
+
+
         return self.model.generate(user_input, context)
     
     def _detect_emotion(self, text: str) -> EmotionalState:
@@ -387,7 +396,7 @@ class ConversationalModel(BaseConversationalModel):
             response = f"I understand your concern. {response}"
         
         if PersonalityTrait.HUMOROUS in self.personality_traits and user_emotion == EmotionalState.HAPPY:
-            response += " 😊"
+            response += " "
         
         return response
     

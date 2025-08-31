@@ -1,5 +1,5 @@
 """
-🎵 Audio Processing Engine - Professional Audio Intelligence System
+ Audio Processing Engine - Professional Audio Intelligence System
 
 This module provides comprehensive audio processing, protection, and intelligence
 capabilities for the IA Influencer Agent platform.
@@ -18,7 +18,7 @@ Expert Development Team:
 - DevOps Engineer: Containerization and production deployment
 - IA Prompt Engineer: Natural language audio interfaces
 
-⚠️ LEGAL WARNING & COPYRIGHT PROTECTION
+ LEGAL WARNING & COPYRIGHT PROTECTION
 =====================================
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 ANY unauthorized use, copying, modification, distribution, or commercialization

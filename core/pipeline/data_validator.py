@@ -159,6 +159,9 @@ class ValidationResult:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             "result_id": self.result_id,
             "rule_id": self.rule_id,
@@ -350,6 +353,9 @@ class SchemaValidator(BaseValidator):
     
     def _validate_type(self, value: Any, expected_type: DataType) -> bool:
         """Validate data type"""
+
+
+
         try:
             if expected_type == DataType.STRING:
                 return isinstance(value, str)
@@ -374,6 +380,9 @@ class SchemaValidator(BaseValidator):
     
     def _is_float_string(self, value: str) -> bool:
         """Check if string represents a float"""
+
+
+
         try:
             float(value)
             return True
@@ -392,6 +401,9 @@ class SchemaValidator(BaseValidator):
     
     def _is_valid_uuid(self, value: str) -> bool:
         """Validate UUID format"""
+
+
+
         try:
             uuid.UUID(value)
             return True
@@ -400,6 +412,9 @@ class SchemaValidator(BaseValidator):
     
     def _is_valid_json(self, value: Any) -> bool:
         """Validate JSON format"""
+
+
+
         try:
             if isinstance(value, str):
                 json.loads(value)
@@ -409,6 +424,9 @@ class SchemaValidator(BaseValidator):
     
     def _attempt_type_correction(self, value: Any, target_type: DataType) -> Any:
         """Attempt to correct type"""
+
+
+
         try:
             if target_type == DataType.INTEGER:
                 if isinstance(value, str) and value.isdigit():
@@ -429,6 +447,9 @@ class SchemaValidator(BaseValidator):
     
     def supports_type(self, data_type: DataType) -> bool:
         """Check if validator supports data type"""
+
+
+
         return True
 
 
@@ -523,6 +544,9 @@ class RangeValidator(BaseValidator):
     
     def supports_type(self, data_type: DataType) -> bool:
         """Check if validator supports data type"""
+
+
+
         return data_type in [DataType.INTEGER, DataType.FLOAT, DataType.STRING]
 
 
@@ -596,6 +620,9 @@ class PatternValidator(BaseValidator):
     
     def supports_type(self, data_type: DataType) -> bool:
         """Check if validator supports data type"""
+
+
+
         return data_type == DataType.STRING
 
 
@@ -875,6 +902,9 @@ class DataProfiler:
     
     async def _profile_numeric_field(self, values: List[Any], profile: DataProfile):
         """Profile numeric field"""
+
+
+
         try:
             numeric_values = [float(v) for v in values if self._is_numeric(v)]
             
@@ -889,6 +919,9 @@ class DataProfiler:
     
     async def _profile_string_field(self, values: List[Any], profile: DataProfile):
         """Profile string field"""
+
+
+
         try:
             string_values = [str(v) for v in values]
             lengths = [len(s) for s in string_values]
@@ -913,6 +946,9 @@ class DataProfiler:
     
     def _is_numeric(self, value: Any) -> bool:
         """Check if value is numeric"""
+
+
+
         try:
             float(value)
             return True
@@ -934,6 +970,9 @@ class DataProfiler:
     
     def _is_valid_for_type(self, value: Any, data_type: DataType) -> bool:
         """Check if value is valid for data type"""
+
+
+
         try:
             str_value = str(value)
             
@@ -1006,6 +1045,9 @@ class DataValidator:
     
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default configuration"""
+
+
+
         return {
             "validation_level": "standard",
             "auto_correction": True,
@@ -1308,6 +1350,9 @@ class DataValidator:
     
     def get_validation_history(self) -> List[ValidationReport]:
         """Get validation history"""
+
+
+
         return self.validation_history.copy()
     
     def get_field_statistics(self, dataset_name: str) -> Dict[str, Any]:
@@ -1350,6 +1395,9 @@ class DataValidator:
         **kwargs
     ) -> ValidationRule:
         """Helper to create validation rule"""
+
+
+
         return ValidationRule(
             rule_name=kwargs.get("rule_name", f"{field_name}_{validation_type.value}"),
             validation_type=validation_type,

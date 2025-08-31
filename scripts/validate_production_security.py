@@ -327,6 +327,9 @@ class ProductionSecurityValidator:
     
     def generate_secure_key(self, length: int = 32) -> str:
         """Generate a cryptographically secure random key."""
+
+
+
         return secrets.token_urlsafe(length)
     
     def print_report(self) -> None:
@@ -361,7 +364,7 @@ class ProductionSecurityValidator:
         print("-" * 80)
         
         for result in sorted(self.validation_results, key=lambda x: (x.severity, x.check_name)):
-            status = "✅ PASS" if result.passed else f"❌ FAIL ({result.severity.upper()})"
+            status = " PASS" if result.passed else f" FAIL ({result.severity.upper()})"
             print(f"{status}: {result.check_name}")
             print(f"  Message: {result.message}")
             if result.recommendation:
@@ -373,13 +376,13 @@ class ProductionSecurityValidator:
         high_issues = severity_counts['high']
         
         if critical_issues > 0:
-            print(f"❌ VALIDATION FAILED: {critical_issues} critical security issues found!")
+            print(f" VALIDATION FAILED: {critical_issues} critical security issues found!")
             sys.exit(1)
         elif high_issues > 0:
-            print(f"⚠️  VALIDATION WARNING: {high_issues} high severity issues found!")
+            print(f"  VALIDATION WARNING: {high_issues} high severity issues found!")
             sys.exit(2)
         else:
-            print("✅ VALIDATION PASSED: No critical or high severity issues found!")
+            print(" VALIDATION PASSED: No critical or high severity issues found!")
             sys.exit(0)
 
 

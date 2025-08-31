@@ -8,7 +8,7 @@ with priority-based resource allocation and adaptive throttling.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ WARNING: This code is proprietary and confidential.
+ WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
@@ -233,6 +233,9 @@ class TrafficShapingEngine:
     
     async def initialize(self) -> bool:
         """Initialize traffic shaping engine with platform configuration"""
+
+
+
         try:
             # Load configuration
             await self._load_configuration()
@@ -261,6 +264,9 @@ class TrafficShapingEngine:
     
     async def _load_configuration(self) -> None:
         """Load traffic shaping configuration"""
+
+
+
         try:
             if self.config_file and Path(self.config_file).exists():
                 async with aiofiles.open(self.config_file, 'r') as f:
@@ -276,6 +282,9 @@ class TrafficShapingEngine:
     
     async def _configure_platform_traffic_classes(self) -> None:
         """Configure traffic classes for IA Influencer Agent platform services"""
+
+
+
         try:
             # Critical priority - Real-time AI agent and payments
             critical_class = TrafficClass(
@@ -373,6 +382,9 @@ class TrafficShapingEngine:
     
     async def _configure_bandwidth_pools(self) -> None:
         """Configure bandwidth pools for different service categories"""
+
+
+
         try:
             total_bandwidth = self.config["total_bandwidth_mbps"]
             
@@ -425,6 +437,9 @@ class TrafficShapingEngine:
     
     async def _configure_shaping_policies(self) -> None:
         """Configure traffic shaping policies for platform services"""
+
+
+
         try:
             # AI Agent API priority policy
             ai_agent_policy = ShapingPolicy(
@@ -522,6 +537,9 @@ class TrafficShapingEngine:
         Classify traffic into appropriate traffic class
         Returns: (traffic_class_name, traffic_class_config)
         """
+
+
+
         try:
             # Service-based classification (highest priority)
             if service_type:
@@ -567,6 +585,9 @@ class TrafficShapingEngine:
         Apply traffic shaping to a flow
         Returns: (action, parameters)
         """
+
+
+
         try:
             traffic_class = self.traffic_classes.get(flow.traffic_class)
             if not traffic_class:
@@ -615,6 +636,9 @@ class TrafficShapingEngine:
     
     async def _get_applicable_policies(self, flow: TrafficFlow) -> List[ShapingPolicy]:
         """Get applicable shaping policies for a flow"""
+
+
+
         try:
             applicable = []
             
@@ -649,6 +673,9 @@ class TrafficShapingEngine:
         traffic_class: TrafficClass
     ) -> Tuple[TrafficAction, Dict[str, Any]]:
         """Check bandwidth limits for traffic class"""
+
+
+
         try:
             # Check class bandwidth limit
             if traffic_class.bandwidth_limit_mbps:
@@ -684,6 +711,9 @@ class TrafficShapingEngine:
         traffic_class: TrafficClass
     ) -> Tuple[TrafficAction, Dict[str, Any]]:
         """Check connection limits for traffic class"""
+
+
+
         try:
             if not traffic_class.connection_limit:
                 return TrafficAction.ALLOW, {}
@@ -713,6 +743,9 @@ class TrafficShapingEngine:
         traffic_class: TrafficClass
     ) -> Tuple[TrafficAction, Dict[str, Any]]:
         """Check rate limits for traffic class"""
+
+
+
         try:
             if not traffic_class.rate_limit_per_second:
                 return TrafficAction.ALLOW, {}
@@ -747,6 +780,9 @@ class TrafficShapingEngine:
         traffic_class: TrafficClass
     ) -> Tuple[TrafficAction, Dict[str, Any]]:
         """Apply adaptive traffic shaping based on network conditions"""
+
+
+
         try:
             # Check for congestion
             network_utilization = await self._get_network_utilization()
@@ -797,6 +833,9 @@ class TrafficShapingEngine:
         traffic_class: TrafficClass
     ) -> Tuple[TrafficAction, Dict[str, Any]]:
         """Apply priority-based traffic shaping"""
+
+
+
         try:
             # Critical and high priority traffic gets prioritized
             if traffic_class.priority in [TrafficPriority.CRITICAL, TrafficPriority.HIGH]:
@@ -831,6 +870,9 @@ class TrafficShapingEngine:
     
     async def _get_flow_bandwidth_pool(self, flow: TrafficFlow) -> Optional[BandwidthPool]:
         """Get bandwidth pool for a flow"""
+
+
+
         try:
             for pool in self.bandwidth_pools.values():
                 if flow.traffic_class in pool.traffic_classes:
@@ -843,6 +885,9 @@ class TrafficShapingEngine:
     
     async def _try_borrow_bandwidth(self, pool: BandwidthPool, required_mbps: float) -> bool:
         """Try to borrow bandwidth from other pools"""
+
+
+
         try:
             if not pool.can_borrow:
                 return False
@@ -873,6 +918,9 @@ class TrafficShapingEngine:
     
     async def _get_network_utilization(self) -> float:
         """Get current network utilization"""
+
+
+
         try:
             # Calculate total allocated bandwidth across all pools
             total_allocated = sum(pool.allocated_bandwidth_mbps for pool in self.bandwidth_pools.values())
@@ -889,6 +937,9 @@ class TrafficShapingEngine:
     
     async def _detect_traffic_burst(self, flow: TrafficFlow) -> bool:
         """Detect if traffic flow is experiencing a burst"""
+
+
+
         try:
             # Get recent bandwidth history for this flow
             flow_history = self.bandwidth_history.get(flow.flow_id, deque(maxlen=10))
@@ -910,6 +961,9 @@ class TrafficShapingEngine:
     
     async def _initialize_monitoring(self) -> None:
         """Initialize traffic monitoring"""
+
+
+
         try:
             self._monitoring_active = True
             
@@ -933,6 +987,9 @@ class TrafficShapingEngine:
     
     async def _start_traffic_shaping(self) -> None:
         """Start traffic shaping engine"""
+
+
+
         try:
             self._shaping_active = True
             logger.info("Traffic shaping engine started")
@@ -942,6 +999,9 @@ class TrafficShapingEngine:
     
     async def _update_traffic_statistics(self) -> None:
         """Update traffic flow statistics"""
+
+
+
         try:
             current_time = datetime.now()
             
@@ -970,6 +1030,9 @@ class TrafficShapingEngine:
     
     async def _update_bandwidth_pools(self) -> None:
         """Update bandwidth pool allocations"""
+
+
+
         try:
             for pool in self.bandwidth_pools.values():
                 # Calculate current allocation
@@ -988,6 +1051,9 @@ class TrafficShapingEngine:
     
     async def _update_metrics(self) -> None:
         """Update Prometheus metrics"""
+
+
+
         try:
             if not self.enable_metrics:
                 return
@@ -1020,6 +1086,9 @@ class TrafficShapingEngine:
         service_type: str = "general"
     ) -> str:
         """Register a new traffic flow"""
+
+
+
         try:
             flow_id = f"{source_ip}:{source_port}-{destination_ip}:{destination_port}-{protocol}"
             
@@ -1058,6 +1127,9 @@ class TrafficShapingEngine:
         packets_received: int = 0
     ) -> None:
         """Update statistics for a traffic flow"""
+
+
+
         try:
             if flow_id not in self.active_flows:
                 return
@@ -1080,6 +1152,9 @@ class TrafficShapingEngine:
     
     async def get_status(self) -> Dict[str, Any]:
         """Get comprehensive status of traffic shaping engine"""
+
+
+
         try:
             # Flow statistics
             total_flows = len(self.active_flows)
@@ -1124,6 +1199,9 @@ class TrafficShapingEngine:
     
     async def shutdown(self) -> None:
         """Shutdown traffic shaping engine"""
+
+
+
         try:
             logger.info("Shutting down Traffic Shaping Engine...")
             
@@ -1147,6 +1225,9 @@ async def shape_fingerprinting_traffic(
     content_type: str = "audio"
 ) -> Dict[str, Any]:
     """Apply traffic shaping for fingerprinting uploads"""
+
+
+
     try:
         # Register flow for fingerprinting service
         flow_id = await shaping_engine.register_flow(
@@ -1182,6 +1263,9 @@ async def shape_ai_agent_traffic(
     request_type: str = "recommendation"
 ) -> Dict[str, Any]:
     """Apply traffic shaping for AI agent requests with priority"""
+
+
+
     try:
         # Register flow for AI agent service
         flow_id = await shaping_engine.register_flow(

@@ -15,7 +15,7 @@ Team Specialties:
 - DevOps Engineer: CI/CD and cloud infrastructure deployment
 - AI Prompt Engineer: LLM integration and optimization
 
-⚠️  COPYRIGHT NOTICE - STRICTLY PROTECTED ⚠️
+  COPYRIGHT NOTICE - STRICTLY PROTECTED 
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, REPRODUCTION, DISTRIBUTION, OR THEFT OF THIS CODE
 OR CONCEPT WITHOUT EXPLICIT WRITTEN PERMISSION IS STRICTLY FORBIDDEN.

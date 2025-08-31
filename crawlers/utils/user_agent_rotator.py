@@ -406,10 +406,16 @@ class UserAgentRotator:
     
     def get_mobile_user_agent(self) -> UserAgentInfo:
         """Get a mobile user agent."""
+
+
+
         return self.get_user_agent(mobile=True)
     
     def get_desktop_user_agent(self) -> UserAgentInfo:
         """Get a desktop user agent."""
+
+
+
         return self.get_user_agent(mobile=False)
     
     def get_random_user_agent(self) -> UserAgentInfo:

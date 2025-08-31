@@ -7,7 +7,7 @@ for infrastructure provisioning and management.
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED 
 """
 
 import asyncio
@@ -100,6 +100,9 @@ class AWSProvider(CloudProviderInterface):
         
     async def provision_compute(self, spec: Dict[str, Any]) -> Dict[str, Any]:
         """Provision EC2 instances"""
+
+
+
         try:
             response = self.ec2.run_instances(
                 ImageId=spec.get('ami_id', 'ami-0c02fb55956c7d316'),
@@ -134,6 +137,9 @@ class AWSProvider(CloudProviderInterface):
     
     async def provision_storage(self, spec: Dict[str, Any]) -> Dict[str, Any]:
         """Provision S3 storage"""
+
+
+
         try:
             bucket_name = spec.get('bucket_name', f"ia-influencer-{self.credentials.region}")
             
@@ -177,6 +183,9 @@ class AWSProvider(CloudProviderInterface):
     
     async def setup_networking(self, spec: Dict[str, Any]) -> Dict[str, Any]:
         """Setup VPC and networking"""
+
+
+
         try:
             # Create VPC
             vpc_response = self.ec2.create_vpc(
@@ -229,6 +238,9 @@ class AWSProvider(CloudProviderInterface):
     
     async def configure_security(self, spec: Dict[str, Any]) -> Dict[str, Any]:
         """Configure security groups and IAM roles"""
+
+
+
         try:
             # Create security group
             sg_response = self.ec2.create_security_group(
@@ -275,6 +287,9 @@ class AWSProvider(CloudProviderInterface):
     
     async def deploy_load_balancer(self, spec: Dict[str, Any]) -> Dict[str, Any]:
         """Deploy Application Load Balancer"""
+
+
+
         try:
             # Create load balancer
             lb_response = self.elbv2.create_load_balancer(
@@ -338,6 +353,9 @@ class GCPProvider(CloudProviderInterface):
         
     async def provision_compute(self, spec: Dict[str, Any]) -> Dict[str, Any]:
         """Provision Compute Engine instances"""
+
+
+
         try:
             # Implementation for GCP compute provisioning
             logger.info("Provisioning GCP Compute Engine instances")
@@ -348,6 +366,9 @@ class GCPProvider(CloudProviderInterface):
     
     async def provision_storage(self, spec: Dict[str, Any]) -> Dict[str, Any]:
         """Provision Cloud Storage"""
+
+
+
         try:
             # Implementation for GCP storage provisioning
             logger.info("Provisioning GCP Cloud Storage")
@@ -358,6 +379,9 @@ class GCPProvider(CloudProviderInterface):
     
     async def setup_networking(self, spec: Dict[str, Any]) -> Dict[str, Any]:
         """Setup VPC networking"""
+
+
+
         try:
             # Implementation for GCP networking
             logger.info("Setting up GCP VPC networking")
@@ -368,6 +392,9 @@ class GCPProvider(CloudProviderInterface):
     
     async def configure_security(self, spec: Dict[str, Any]) -> Dict[str, Any]:
         """Configure firewall and IAM"""
+
+
+
         try:
             # Implementation for GCP security
             logger.info("Configuring GCP security")
@@ -378,6 +405,9 @@ class GCPProvider(CloudProviderInterface):
     
     async def deploy_load_balancer(self, spec: Dict[str, Any]) -> Dict[str, Any]:
         """Deploy Cloud Load Balancing"""
+
+
+
         try:
             # Implementation for GCP load balancer
             logger.info("Deploying GCP Load Balancer")
@@ -399,6 +429,9 @@ class AzureProvider(CloudProviderInterface):
         
     async def provision_compute(self, spec: Dict[str, Any]) -> Dict[str, Any]:
         """Provision Azure VMs"""
+
+
+
         try:
             # Implementation for Azure compute provisioning
             logger.info("Provisioning Azure Virtual Machines")
@@ -409,6 +442,9 @@ class AzureProvider(CloudProviderInterface):
     
     async def provision_storage(self, spec: Dict[str, Any]) -> Dict[str, Any]:
         """Provision Azure Storage"""
+
+
+
         try:
             # Implementation for Azure storage provisioning
             logger.info("Provisioning Azure Storage")
@@ -419,6 +455,9 @@ class AzureProvider(CloudProviderInterface):
     
     async def setup_networking(self, spec: Dict[str, Any]) -> Dict[str, Any]:
         """Setup Azure Virtual Network"""
+
+
+
         try:
             # Implementation for Azure networking
             logger.info("Setting up Azure Virtual Network")
@@ -429,6 +468,9 @@ class AzureProvider(CloudProviderInterface):
     
     async def configure_security(self, spec: Dict[str, Any]) -> Dict[str, Any]:
         """Configure NSG and Azure AD"""
+
+
+
         try:
             # Implementation for Azure security
             logger.info("Configuring Azure security")
@@ -439,6 +481,9 @@ class AzureProvider(CloudProviderInterface):
     
     async def deploy_load_balancer(self, spec: Dict[str, Any]) -> Dict[str, Any]:
         """Deploy Azure Load Balancer"""
+
+
+
         try:
             # Implementation for Azure load balancer
             logger.info("Deploying Azure Load Balancer")
@@ -456,6 +501,9 @@ class CloudProviderManager:
         
     def register_provider(self, provider: CloudProvider, credentials: CloudCredentials):
         """Register a cloud provider"""
+
+
+
         try:
             if provider == CloudProvider.AWS:
                 self.providers[provider] = AWSProvider(credentials)

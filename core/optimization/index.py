@@ -439,10 +439,16 @@ class OptimizationOrchestrator:
     
     def get_optimizer(self, optimizer_type: str) -> Optional[Any]:
         """Get specific optimizer instance"""
+
+
+
         return self.optimizers.get(optimizer_type)
     
     def list_available_optimizers(self) -> List[str]:
         """List all available optimizer types"""
+
+
+
         return list(self.optimizers.keys())
     
     async def health_check(self) -> Dict[str, Any]:

@@ -477,6 +477,9 @@ class PerformanceTracker:
                 
     async def _collect_resource_metrics(self):
         """Collect system resource metrics"""
+
+
+
         try:
             # CPU and memory
             cpu_percent = psutil.cpu_percent(interval=0.1)
@@ -956,10 +959,16 @@ class PerformanceTracker:
         
     def get_bottlenecks(self) -> List[Dict[str, Any]]:
         """Get current performance bottlenecks"""
+
+
+
         return self._bottleneck_detector.get_current_bottlenecks()
         
     def get_optimization_recommendations(self) -> List[Dict[str, Any]]:
         """Get performance optimization recommendations"""
+
+
+
         return self._optimizer.generate_recommendations(
             self._profiles,
             self._resource_history
@@ -1024,6 +1033,9 @@ class BottleneckDetector:
         
     def get_current_bottlenecks(self) -> List[Dict[str, Any]]:
         """Get current bottlenecks"""
+
+
+
         return self._current_bottlenecks
 
 

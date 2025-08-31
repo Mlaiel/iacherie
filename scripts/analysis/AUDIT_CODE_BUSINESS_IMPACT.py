@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-🔍 AUDIT CODE BUSINESS vs UTILITAIRES - ANALYSER IMPACT MÉTIER
+ AUDIT CODE BUSINESS vs UTILITAIRES - ANALYSER IMPACT MÉTIER
 Outil d'audit professionnel pour classifier et prioriser le code par impact métier
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -149,6 +149,9 @@ class CodeAuditor:
     
     def analyze_file_content(self, file_path: str) -> Tuple[str, List[CodeIssue], int]:
         """Analyse le contenu d'un fichier"""
+
+
+
         try:
             with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
                 content = f.read()
@@ -210,14 +213,14 @@ class CodeAuditor:
     
     def scan_repository(self) -> List[FileAnalysis]:
         """Scanne tout le repository"""
-        print(f"🔍 Début audit repository: {self.repo_path}")
+        print(f" Début audit repository: {self.repo_path}")
         results = []
         
         # Trouver tous les fichiers Python
         python_files = list(self.repo_path.rglob("*.py"))
         total_files = len(python_files)
         
-        print(f"📁 {total_files} fichiers Python trouvés")
+        print(f" {total_files} fichiers Python trouvés")
         
         for i, file_path in enumerate(python_files):
             if i % 100 == 0:
@@ -248,7 +251,7 @@ class CodeAuditor:
             self.files_analyzed += 1
             self.total_issues += len(issues)
         
-        print(f"✅ Audit terminé: {self.files_analyzed} fichiers analysés")
+        print(f" Audit terminé: {self.files_analyzed} fichiers analysés")
         return results
     
     def generate_report(self, analyses: List[FileAnalysis]) -> Dict:
@@ -383,7 +386,7 @@ class CodeAuditor:
         
         if critical_with_issues:
             recommendations.append({
-                "priority": "🔴 URGENCE",
+                "priority": " URGENCE",
                 "title": "Résoudre issues dans modules business critiques",
                 "description": f"{len(critical_with_issues)} fichiers critiques ont des issues",
                 "action": "Corriger TODOs/FIXMEs dans modules monétisation/IA/protection",
@@ -425,7 +428,7 @@ class CodeAuditor:
         
         # 4. Optimisation architecture
         recommendations.append({
-            "priority": "🔵 OPTIMISATION",
+            "priority": " OPTIMISATION",
             "title": "Surveillance continue qualité code",
             "description": "Mettre en place monitoring automatique qualité",
             "action": "CI/CD avec contrôles qualité automatiques",
@@ -439,7 +442,7 @@ class CodeAuditor:
 def main():
     """Fonction principale d'audit"""
     
-    print("🔍 AUDIT CODE BUSINESS vs UTILITAIRES - DÉMARRAGE")
+    print(" AUDIT CODE BUSINESS vs UTILITAIRES - DÉMARRAGE")
     print("=" * 60)
     
     # Initialiser l'auditeur
@@ -450,7 +453,7 @@ def main():
     analyses = auditor.scan_repository()
     
     # Générer le rapport
-    print("\n📊 Génération du rapport d'audit...")
+    print("\n Génération du rapport d'audit...")
     report = auditor.generate_report(analyses)
     
     # Sauvegarder le rapport
@@ -458,36 +461,36 @@ def main():
     with open(report_file, 'w', encoding='utf-8') as f:
         json.dump(report, f, indent=2, ensure_ascii=False)
     
-    print(f"✅ Rapport sauvegardé: {report_file}")
+    print(f" Rapport sauvegardé: {report_file}")
     
     # Afficher résumé
     print("\n" + "=" * 60)
-    print("📋 RÉSUMÉ AUDIT CODE")
+    print(" RÉSUMÉ AUDIT CODE")
     print("=" * 60)
     
     summary = report['summary']
-    print(f"📁 Fichiers analysés: {summary['total_files_analyzed']:,}")
-    print(f"📝 Lignes de code: {summary['total_lines_of_code']:,}")
-    print(f"⚠️  Fichiers avec issues: {summary['files_with_issues']:,}")
-    print(f"🔴 Issues totales: {summary['total_issues_found']:,}")
-    print(f"💥 Fichiers critiques avec issues: {summary['critical_files_with_issues']:,}")
+    print(f" Fichiers analysés: {summary['total_files_analyzed']:,}")
+    print(f" Lignes de code: {summary['total_lines_of_code']:,}")
+    print(f"  Fichiers avec issues: {summary['files_with_issues']:,}")
+    print(f" Issues totales: {summary['total_issues_found']:,}")
+    print(f" Fichiers critiques avec issues: {summary['critical_files_with_issues']:,}")
     
-    print("\n📊 DISTRIBUTION IMPACT MÉTIER:")
+    print("\n DISTRIBUTION IMPACT MÉTIER:")
     for impact, data in report['business_impact_distribution'].items():
         print(f"  {impact}: {data['file_count']} fichiers ({data['percentage']}%)")
     
-    print("\n🎯 TOP RECOMMANDATIONS:")
+    print("\n TOP RECOMMANDATIONS:")
     for i, rec in enumerate(report['recommendations'][:3], 1):
         print(f"  {i}. {rec['priority']} {rec['title']}")
         print(f"     → {rec['action']}")
     
-    print(f"\n💰 IMPACT REVENUS ESTIMÉ:")
+    print(f"\n IMPACT REVENUS ESTIMÉ:")
     revenue = report['revenue_impact_summary']
     print(f"  Modules critiques: {revenue['critical_modules']['estimated_hourly_revenue_impact']}/heure")
     print(f"  Valeur plateforme: {revenue['total_estimated_platform_value']}")
     
-    print("\n🎉 AUDIT TERMINÉ AVEC SUCCÈS!")
-    print(f"📄 Rapport détaillé disponible: {report_file}")
+    print("\n AUDIT TERMINÉ AVEC SUCCÈS!")
+    print(f" Rapport détaillé disponible: {report_file}")
 
 if __name__ == "__main__":
     main()

@@ -60,6 +60,9 @@ class VideoMetadata:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'filename': self.filename,
             'duration': self.duration,
@@ -93,6 +96,9 @@ class VideoFingerprint:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'video_hash': self.video_hash,
             'frame_hashes': self.frame_hashes,
@@ -124,6 +130,9 @@ class VideoAnalysisResult:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'metadata': self.metadata.to_dict(),
             'fingerprint': self.fingerprint.to_dict(),
@@ -153,6 +162,9 @@ class VideoOptimizationResult:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'original_size': self.original_size,
             'optimized_size': self.optimized_size,
@@ -239,6 +251,9 @@ class VideoMetadataExtractor:
     
     def extract_metadata_ffprobe(self, video_path: str) -> Dict[str, Any]:
         """Extract detailed metadata using ffprobe"""
+
+
+
         try:
             cmd = [
                 'ffprobe',
@@ -655,6 +670,9 @@ class VideoFingerprinter:
     
     def _extract_audio_fingerprint(self, video_path: str) -> Optional[str]:
         """Extract audio fingerprint if audio track exists"""
+
+
+
         try:
             with VideoFileClip(video_path) as clip:
                 if clip.audio is None:
@@ -925,6 +943,9 @@ class VideoAnalyzer:
     
     def _analyze_audio(self, video_path: str) -> Optional[Dict[str, Any]]:
         """Analyze audio track"""
+
+
+
         try:
             with VideoFileClip(video_path) as clip:
                 if clip.audio is None:
@@ -972,6 +993,9 @@ class VideoAnalyzer:
     
     def _detect_faces(self, video_path: str) -> List[Dict[str, Any]]:
         """Detect faces in video"""
+
+
+
         try:
             # Load face cascade
             face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
@@ -1060,6 +1084,9 @@ class VideoOptimizer:
     
     def _check_ffmpeg(self) -> bool:
         """Check if FFmpeg is available"""
+
+
+
         try:
             subprocess.run(['ffmpeg', '-version'], 
                          capture_output=True, check=True)
@@ -1128,6 +1155,9 @@ class VideoOptimizer:
     def _optimize_with_ffmpeg(self, input_path: str, output_path: str, 
                             settings: Dict[str, Any]) -> bool:
         """Optimize video using FFmpeg"""
+
+
+
         try:
             cmd = [
                 'ffmpeg', '-i', input_path,
@@ -1163,6 +1193,9 @@ class VideoOptimizer:
     def _optimize_with_moviepy(self, input_path: str, output_path: str, 
                              settings: Dict[str, Any]) -> bool:
         """Optimize video using MoviePy"""
+
+
+
         try:
             with VideoFileClip(input_path) as clip:
                 # Apply resolution scaling

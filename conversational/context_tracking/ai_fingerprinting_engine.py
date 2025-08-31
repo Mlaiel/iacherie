@@ -2,24 +2,24 @@
 # -*- coding: utf-8 -*-
 
 """
-🔬 AI FINGERPRINTING ENGINE - ULTRA-ADVANCED DIGITAL FINGERPRINTING SYSTEM
+ AI FINGERPRINTING ENGINE - ULTRA-ADVANCED DIGITAL FINGERPRINTING SYSTEM
 ============================================================================
 
 Enterprise-grade multi-format digital fingerprinting engine using cutting-edge
 AI technologies for real-time content protection, DMCA automation, and revenue
 optimization for content creators.
 
-🎯 ULTRA-ADVANCED FEATURES :
-- ✅ Multi-Format AI Fingerprinting (Audio, Video, Image, Text)
-- ✅ Real-time Content Protection & Monitoring
-- ✅ Cross-Platform Violation Detection & Evidence Collection
-- ✅ Automated DMCA Processing & Legal Documentation
-- ✅ Revenue Loss Prevention & Optimization
-- ✅ Blockchain-based Evidence Storage & Authenticity
-- ✅ ML-Powered Similarity Detection (>98% accuracy)
-- ✅ Enterprise Performance (<100ms fingerprint generation)
+ ULTRA-ADVANCED FEATURES :
+-  Multi-Format AI Fingerprinting (Audio, Video, Image, Text)
+-  Real-time Content Protection & Monitoring
+-  Cross-Platform Violation Detection & Evidence Collection
+-  Automated DMCA Processing & Legal Documentation
+-  Revenue Loss Prevention & Optimization
+-  Blockchain-based Evidence Storage & Authenticity
+-  ML-Powered Similarity Detection (>98% accuracy)
+-  Enterprise Performance (<100ms fingerprint generation)
 
-🔧 CUTTING-EDGE TECHNOLOGY STACK :
+ CUTTING-EDGE TECHNOLOGY STACK :
 - Audio Intelligence : Chromaprint + Essentia + Librosa + MIR
 - Video Analysis : OpenCV + YOLO + MediaPipe + CLIP
 - Image Processing : CLIP + ImageHash + ResNet + Vision Transformers
@@ -28,13 +28,13 @@ optimization for content creators.
 - Blockchain : Ethereum + IPFS for immutable evidence
 - Performance : GPU acceleration + distributed processing
 
-⚡ COMPREHENSIVE BUSINESS LOGIC :
+ COMPREHENSIVE BUSINESS LOGIC :
 Creator Upload → Multi-Format Analysis → AI Fingerprint Generation → 
 Vector Database Storage → Real-time Web Monitoring → Violation Detection → 
 Evidence Collection → Legal Document Generation → DMCA Automation → 
 Revenue Protection → Cross-Platform Enforcement → Analytics Dashboard
 
-🏗️ DEVELOPED BY ELITE AI SPECIALISTS :
+ DEVELOPED BY ELITE AI SPECIALISTS :
 Lead AI Engineer : Fahed Mlaiel <mlaiel@live.de>
 - Computer Vision Expert : Advanced CNN & Transformer architectures
 - Audio Processing Specialist : Signal processing & MIR algorithms
@@ -42,7 +42,7 @@ Lead AI Engineer : Fahed Mlaiel <mlaiel@live.de>
 - Blockchain Developer : Smart contracts & evidence immutability
 - Performance Engineer : GPU optimization & distributed systems
 
-⚠️  STRICT INTELLECTUAL PROPERTY WARNING :
+  STRICT INTELLECTUAL PROPERTY WARNING :
 This code is the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 UNAUTHORIZED USE IS STRICTLY PROHIBITED AND LEGALLY PROSECUTED.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -111,12 +111,12 @@ logger = logging.getLogger(__name__)
 
 class AIFingerprintingEngine:
     """
-    🔬 SYSTÈME D'EMPREINTES NUMÉRIQUES IA ULTRA-AVANCÉ
+     SYSTÈME D'EMPREINTES NUMÉRIQUES IA ULTRA-AVANCÉ
     
     Moteur de fingerprinting multi-format utilisant les dernières avancées
     en intelligence artificielle pour la protection de contenu numérique.
     
-    ⚡ CARACTÉRISTIQUES TECHNIQUES :
+     CARACTÉRISTIQUES TECHNIQUES :
     - Audio : Chromaprint + Essentia + MFCC + Spectrograms
     - Video : OpenCV + YOLO + Optical Flow + Scene Detection
     - Image : CLIP + CNN Features + Perceptual Hashing
@@ -155,6 +155,9 @@ class AIFingerprintingEngine:
         
     async def initialize(self):
         """Initialisation asynchrone des connexions et modèles."""
+
+
+
         try:
             # Redis connection
             self.redis_client = await get_redis_client()
@@ -168,14 +171,17 @@ class AIFingerprintingEngine:
             # FAISS Index initialization
             await self._initialize_faiss_index()
             
-            logger.info("✅ AI Fingerprinting Engine initialized successfully")
+            logger.info(" AI Fingerprinting Engine initialized successfully")
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize fingerprinting engine: {e}")
+            logger.error(f" Failed to initialize fingerprinting engine: {e}")
             raise FingerprintingError(f"Initialization failed: {e}")
     
     def _initialize_models(self):
         """Initialisation des modèles ML pour le fingerprinting."""
+
+
+
         try:
             # CLIP Model for Image/Video
             self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
@@ -192,14 +198,17 @@ class AIFingerprintingEngine:
             # Video Feature Extractors
             self.yolo_model = None  # Initialize if needed
             
-            logger.info("✅ ML models initialized for fingerprinting")
+            logger.info(" ML models initialized for fingerprinting")
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize ML models: {e}")
+            logger.error(f" Failed to initialize ML models: {e}")
             raise FingerprintingError(f"Model initialization failed: {e}")
     
     async def _initialize_faiss_index(self):
         """Initialisation de l'index FAISS pour la recherche vectorielle."""
+
+
+
         try:
             # Dimension based on CLIP embeddings (512)
             dimension = 512
@@ -212,10 +221,10 @@ class AIFingerprintingEngine:
                 gpu_resource = faiss.StandardGpuResources()
                 self.faiss_index = faiss.index_cpu_to_gpu(gpu_resource, 0, self.faiss_index)
             
-            logger.info(f"✅ FAISS index initialized with dimension {dimension}")
+            logger.info(f" FAISS index initialized with dimension {dimension}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize FAISS index: {e}")
+            logger.error(f" Failed to initialize FAISS index: {e}")
             raise FingerprintingError(f"FAISS initialization failed: {e}")
     
     async def create_fingerprint(
@@ -225,7 +234,7 @@ class AIFingerprintingEngine:
         metadata: Optional[Dict] = None
     ) -> Dict[str, Any]:
         """
-        🔬 CRÉATION D'EMPREINTE NUMÉRIQUE MULTI-FORMAT
+         CRÉATION D'EMPREINTE NUMÉRIQUE MULTI-FORMAT
         
         Génère une empreinte unique utilisant l'IA pour identifier
         et protéger le contenu numérique.
@@ -285,7 +294,7 @@ class AIFingerprintingEngine:
             # Cleanup
             Path(tmp_file_path).unlink()
             
-            logger.info(f"✅ Fingerprint created for {file.filename} in {fingerprint_record['processing_time']:.2f}s")
+            logger.info(f" Fingerprint created for {file.filename} in {fingerprint_record['processing_time']:.2f}s")
             
             return {
                 'fingerprint_id': fingerprint_record['id'],
@@ -297,7 +306,7 @@ class AIFingerprintingEngine:
             
         except Exception as e:
             self.metrics.increment('fingerprint_errors_total')
-            logger.error(f"❌ Fingerprint creation failed: {e}")
+            logger.error(f" Fingerprint creation failed: {e}")
             raise FingerprintingError(f"Failed to create fingerprint: {e}")
     
     def _detect_content_type(self, filename: str) -> str:
@@ -331,11 +340,14 @@ class AIFingerprintingEngine:
     
     async def _generate_audio_fingerprint(self, file_path: str) -> Dict[str, Any]:
         """
-        🎵 GÉNÉRATION D'EMPREINTE AUDIO AVANCÉE
+         GÉNÉRATION D'EMPREINTE AUDIO AVANCÉE
         
         Utilise Chromaprint + Essentia + Librosa pour créer une empreinte
         audio robuste et unique.
         """
+
+
+
         try:
             # Load audio file
             y, sr = librosa.load(file_path, sr=self.audio_sr)
@@ -392,15 +404,18 @@ class AIFingerprintingEngine:
             }
             
         except Exception as e:
-            logger.error(f"❌ Audio fingerprint generation failed: {e}")
+            logger.error(f" Audio fingerprint generation failed: {e}")
             raise FingerprintingError(f"Audio processing failed: {e}")
     
     async def _generate_video_fingerprint(self, file_path: str) -> Dict[str, Any]:
         """
-        🎬 GÉNÉRATION D'EMPREINTE VIDÉO AVANCÉE
+         GÉNÉRATION D'EMPREINTE VIDÉO AVANCÉE
         
         Utilise OpenCV + CLIP + Optical Flow pour analyser le contenu vidéo.
         """
+
+
+
         try:
             cap = cv2.VideoCapture(file_path)
             
@@ -479,15 +494,18 @@ class AIFingerprintingEngine:
             }
             
         except Exception as e:
-            logger.error(f"❌ Video fingerprint generation failed: {e}")
+            logger.error(f" Video fingerprint generation failed: {e}")
             raise FingerprintingError(f"Video processing failed: {e}")
     
     async def _generate_image_fingerprint(self, file_path: str) -> Dict[str, Any]:
         """
-        🖼️ GÉNÉRATION D'EMPREINTE IMAGE AVANCÉE
+         GÉNÉRATION D'EMPREINTE IMAGE AVANCÉE
         
         Utilise CLIP + CNN + Perceptual Hashing pour analyser les images.
         """
+
+
+
         try:
             # Load image
             image = Image.open(file_path).convert('RGB')
@@ -544,15 +562,18 @@ class AIFingerprintingEngine:
             }
             
         except Exception as e:
-            logger.error(f"❌ Image fingerprint generation failed: {e}")
+            logger.error(f" Image fingerprint generation failed: {e}")
             raise FingerprintingError(f"Image processing failed: {e}")
     
     async def _generate_text_fingerprint(self, content: bytes) -> Dict[str, Any]:
         """
-        📝 GÉNÉRATION D'EMPREINTE TEXTE AVANCÉE
+         GÉNÉRATION D'EMPREINTE TEXTE AVANCÉE
         
         Utilise BERT + TF-IDF + Semantic Analysis pour analyser le texte.
         """
+
+
+
         try:
             # Decode text content
             try:
@@ -602,7 +623,7 @@ class AIFingerprintingEngine:
             }
             
         except Exception as e:
-            logger.error(f"❌ Text fingerprint generation failed: {e}")
+            logger.error(f" Text fingerprint generation failed: {e}")
             raise FingerprintingError(f"Text processing failed: {e}")
     
     def _normalize_to_512d(self, vector: np.ndarray) -> np.ndarray:
@@ -619,6 +640,9 @@ class AIFingerprintingEngine:
     
     async def _store_fingerprint(self, fingerprint_record: Dict[str, Any]):
         """Stockage de l'empreinte dans les bases de données."""
+
+
+
         try:
             # Store in Redis for fast access
             redis_key = f"fingerprint:{fingerprint_record['id']}"
@@ -639,10 +663,10 @@ class AIFingerprintingEngine:
             embedding = np.array(fingerprint_record['vector_embedding']).reshape(1, -1)
             self.faiss_index.add(embedding.astype('float32'))
             
-            logger.info(f"✅ Fingerprint stored: {fingerprint_record['id']}")
+            logger.info(f" Fingerprint stored: {fingerprint_record['id']}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to store fingerprint: {e}")
+            logger.error(f" Failed to store fingerprint: {e}")
             raise FingerprintingError(f"Storage failed: {e}")
     
     async def find_similar_content(
@@ -652,10 +676,13 @@ class AIFingerprintingEngine:
         limit: int = 10
     ) -> List[Dict[str, Any]]:
         """
-        🔍 RECHERCHE DE CONTENU SIMILAIRE
+         RECHERCHE DE CONTENU SIMILAIRE
         
         Utilise FAISS + Elasticsearch pour trouver du contenu similaire.
         """
+
+
+
         try:
             # Get fingerprint from Redis
             redis_key = f"fingerprint:{fingerprint_id}"
@@ -699,7 +726,7 @@ class AIFingerprintingEngine:
             return detailed_results
             
         except Exception as e:
-            logger.error(f"❌ Similarity search failed: {e}")
+            logger.error(f" Similarity search failed: {e}")
             raise FingerprintingError(f"Similarity search failed: {e}")
     
     async def batch_process_fingerprints(
@@ -709,10 +736,13 @@ class AIFingerprintingEngine:
         metadata: Optional[Dict] = None
     ) -> List[Dict[str, Any]]:
         """
-        ⚡ TRAITEMENT EN LOT D'EMPREINTES
+         TRAITEMENT EN LOT D'EMPREINTES
         
         Traite plusieurs fichiers simultanément pour optimiser les performances.
         """
+
+
+
         try:
             # Limit concurrent processing
             semaphore = asyncio.Semaphore(self.performance_targets['concurrent_limit'])
@@ -757,7 +787,7 @@ class AIFingerprintingEngine:
             }
             
         except Exception as e:
-            logger.error(f"❌ Batch processing failed: {e}")
+            logger.error(f" Batch processing failed: {e}")
             raise FingerprintingError(f"Batch processing failed: {e}")
     
     async def get_fingerprint_analytics(
@@ -766,10 +796,13 @@ class AIFingerprintingEngine:
         time_range: str = '24h'
     ) -> Dict[str, Any]:
         """
-        📊 ANALYTICS DES EMPREINTES NUMÉRIQUES
+         ANALYTICS DES EMPREINTES NUMÉRIQUES
         
         Fournit des statistiques avancées sur l'utilisation du fingerprinting.
         """
+
+
+
         try:
             # Calculate time range
             time_ranges = {
@@ -825,7 +858,7 @@ class AIFingerprintingEngine:
             return analytics
             
         except Exception as e:
-            logger.error(f"❌ Analytics query failed: {e}")
+            logger.error(f" Analytics query failed: {e}")
             raise FingerprintingError(f"Analytics failed: {e}")
     
     async def cleanup_expired_fingerprints(self, days_old: int = 30):
@@ -834,6 +867,9 @@ class AIFingerprintingEngine:
         
         Supprime les empreintes anciennes pour optimiser les performances.
         """
+
+
+
         try:
             cutoff_date = datetime.utcnow() - timedelta(days=days_old)
             
@@ -871,7 +907,7 @@ class AIFingerprintingEngine:
             # Note: FAISS index cleanup would require rebuilding the index
             # This is typically done during maintenance windows
             
-            logger.info(f"✅ Cleaned up {expired_count} expired fingerprints")
+            logger.info(f" Cleaned up {expired_count} expired fingerprints")
             
             return {
                 'cleaned_count': expired_count,
@@ -879,7 +915,7 @@ class AIFingerprintingEngine:
             }
             
         except Exception as e:
-            logger.error(f"❌ Cleanup failed: {e}")
+            logger.error(f" Cleanup failed: {e}")
             raise FingerprintingError(f"Cleanup failed: {e}")
 
 # Factory function

@@ -8,7 +8,7 @@ for the IA-Influencer-Agent ML platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This model registry system and methodologies are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 is strictly PROHIBITED and will result in legal action.
@@ -369,6 +369,9 @@ class ModelRegistry:
     
     async def initialize(self) -> bool:
         """Initialize model registry"""
+
+
+
         try:
             # Test database connection
             with self.Session() as session:
@@ -415,6 +418,9 @@ class ModelRegistry:
         Returns:
             str: Model ID of registered model
         """
+
+
+
         try:
             logger.info(f"Registering model: {metadata.name} v{metadata.version}")
             
@@ -520,6 +526,9 @@ class ModelRegistry:
         Returns:
             Dict containing model, metadata, and artifacts
         """
+
+
+
         try:
             logger.info(f"Retrieving model: {model_id} v{version or 'latest'}")
             
@@ -590,6 +599,9 @@ class ModelRegistry:
                                 status: ModelStatus,
                                 notes: str = "") -> bool:
         """Update model status"""
+
+
+
         try:
             logger.info(f"Updating model status: {model_id} -> {status.value}")
             
@@ -641,6 +653,9 @@ class ModelRegistry:
                                  changes: List[str],
                                  parent_version: Optional[str] = None) -> str:
         """Create new version of existing model"""
+
+
+
         try:
             logger.info(f"Creating model version: {model_id} v{version}")
             
@@ -685,6 +700,9 @@ class ModelRegistry:
                            model_id_2: str,
                            comparison_metrics: List[str] = None) -> Dict[str, Any]:
         """Compare two models across various metrics"""
+
+
+
         try:
             logger.info(f"Comparing models: {model_id_1} vs {model_id_2}")
             
@@ -776,6 +794,9 @@ class ModelRegistry:
                          limit: int = 100,
                          offset: int = 0) -> List[ModelMetadata]:
         """List models with filtering"""
+
+
+
         try:
             logger.info("Listing models with filters")
             
@@ -810,6 +831,9 @@ class ModelRegistry:
                          model_id: str,
                          force: bool = False) -> bool:
         """Delete model and all associated data"""
+
+
+
         try:
             logger.info(f"Deleting model: {model_id} (force={force})")
             
@@ -881,6 +905,9 @@ class ModelRegistry:
 
     async def _generate_model_signature(self, model: Any, framework: ModelFramework) -> str:
         """Generate unique model signature"""
+
+
+
         try:
             if framework == ModelFramework.SKLEARN:
                 model_str = str(model.get_params()) if hasattr(model, 'get_params') else str(model)
@@ -899,6 +926,9 @@ class ModelRegistry:
 
     async def _analyze_model_structure(self, model: Any, framework: ModelFramework) -> Dict[str, Any]:
         """Analyze model structure and calculate size/parameters"""
+
+
+
         try:
             info = {"size_mb": 0.0, "parameter_count": 0}
             
@@ -943,6 +973,9 @@ class ModelRegistry:
 
     async def _save_model(self, model: Any, model_dir: Path, framework: ModelFramework) -> Path:
         """Save model to storage"""
+
+
+
         try:
             if framework == ModelFramework.SKLEARN:
                 model_path = model_dir / "model.pkl"
@@ -974,6 +1007,9 @@ class ModelRegistry:
 
     async def _load_model(self, model_path: Path, framework: ModelFramework) -> Any:
         """Load model from storage"""
+
+
+
         try:
             if framework == ModelFramework.SKLEARN:
                 return joblib.load(model_path)
@@ -998,6 +1034,9 @@ class ModelRegistry:
 
     async def _save_model_to_db(self, metadata: ModelMetadata):
         """Save model metadata to database"""
+
+
+
         try:
             with self.Session() as session:
                 existing = session.query(ModelRegistryDB).filter(
@@ -1032,6 +1071,9 @@ class ModelRegistry:
 
     async def _load_model_from_db(self, model_id: str, version: Optional[str] = None) -> Optional[ModelMetadata]:
         """Load model metadata from database"""
+
+
+
         try:
             with self.Session() as session:
                 query = session.query(ModelRegistryDB).filter(
@@ -1056,6 +1098,9 @@ class ModelRegistry:
 
     async def _register_with_mlflow(self, model: Any, metadata: ModelMetadata, artifacts: Optional[Dict[str, Any]]):
         """Register model with MLflow"""
+
+
+
         try:
             if not self.config.get("enable_mlflow", True):
                 return
@@ -1097,6 +1142,9 @@ class ModelRegistry:
 
     async def _upload_model_to_cloud(self, model_dir: Path, metadata: ModelMetadata):
         """Upload model to cloud storage"""
+
+
+
         try:
             if not self.s3_client:
                 return
@@ -1122,6 +1170,9 @@ class ModelRegistry:
 
     async def _download_model_from_cloud(self, model_id: str, version: Optional[str] = None):
         """Download model from cloud storage"""
+
+
+
         try:
             if not self.s3_client:
                 return
@@ -1134,6 +1185,9 @@ class ModelRegistry:
 
     async def _delete_model_from_cloud(self, model_id: str):
         """Delete model from cloud storage"""
+
+
+
         try:
             if not self.s3_client:
                 return
@@ -1176,6 +1230,9 @@ class ModelDeploymentManager:
                          model_id: str,
                          deployment_config: DeploymentConfig) -> str:
         """Deploy model to specified target"""
+
+
+
         try:
             logger.info(f"Deploying model: {model_id}")
             

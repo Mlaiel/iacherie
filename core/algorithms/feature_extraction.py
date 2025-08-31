@@ -100,6 +100,9 @@ class FeatureExtractionEngine:
     
     def _initialize_models(self) -> None:
         """Initialize AI models for feature extraction"""
+
+
+
         try:
             # Text models
             self.text_tokenizer = AutoTokenizer.from_pretrained('sentence-transformers/all-MiniLM-L6-v2')
@@ -205,6 +208,9 @@ class FeatureExtractionEngine:
     
     def _extract_audio_spectral_features(self, audio_data: Any, content_type: str) -> Tuple[np.ndarray, Dict, float]:
         """Extract spectral features from audio"""
+
+
+
         try:
             if isinstance(audio_data, str):
                 # Audio file path
@@ -251,6 +257,9 @@ class FeatureExtractionEngine:
     
     def _extract_audio_temporal_features(self, audio_data: Any, content_type: str) -> Tuple[np.ndarray, Dict, float]:
         """Extract temporal features from audio"""
+
+
+
         try:
             if isinstance(audio_data, str):
                 y, sr = librosa.load(audio_data, sr=22050)
@@ -288,6 +297,9 @@ class FeatureExtractionEngine:
     
     def _extract_audio_semantic_features(self, audio_data: Any, content_type: str) -> Tuple[np.ndarray, Dict, float]:
         """Extract semantic features from audio using Wav2Vec2"""
+
+
+
         try:
             if isinstance(audio_data, str):
                 y, sr = librosa.load(audio_data, sr=16000)  # Wav2Vec2 expects 16kHz
@@ -319,6 +331,9 @@ class FeatureExtractionEngine:
     
     def _extract_video_visual_features(self, video_data: Any, content_type: str) -> Tuple[np.ndarray, Dict, float]:
         """Extract visual features from video"""
+
+
+
         try:
             if isinstance(video_data, str):
                 cap = cv2.VideoCapture(video_data)
@@ -383,6 +398,9 @@ class FeatureExtractionEngine:
     
     def _extract_video_temporal_features(self, video_data: Any, content_type: str) -> Tuple[np.ndarray, Dict, float]:
         """Extract temporal features from video"""
+
+
+
         try:
             if isinstance(video_data, str):
                 cap = cv2.VideoCapture(video_data)
@@ -422,6 +440,9 @@ class FeatureExtractionEngine:
     
     def _extract_video_semantic_features(self, video_data: Any, content_type: str) -> Tuple[np.ndarray, Dict, float]:
         """Extract semantic features from video using CLIP"""
+
+
+
         try:
             # Sample key frames for semantic analysis
             frames = self._sample_video_frames(video_data, num_frames=5)
@@ -462,6 +483,9 @@ class FeatureExtractionEngine:
     
     def _extract_image_visual_features(self, image_data: Any, content_type: str) -> Tuple[np.ndarray, Dict, float]:
         """Extract visual features from image"""
+
+
+
         try:
             if isinstance(image_data, str):
                 image = cv2.imread(image_data)
@@ -496,6 +520,9 @@ class FeatureExtractionEngine:
     
     def _extract_image_semantic_features(self, image_data: Any, content_type: str) -> Tuple[np.ndarray, Dict, float]:
         """Extract semantic features from image using CLIP"""
+
+
+
         try:
             if isinstance(image_data, str):
                 pil_image = Image.open(image_data)
@@ -530,6 +557,9 @@ class FeatureExtractionEngine:
     
     def _extract_text_linguistic_features(self, text_data: Any, content_type: str) -> Tuple[np.ndarray, Dict, float]:
         """Extract linguistic features from text"""
+
+
+
         try:
             if isinstance(text_data, str):
                 if text_data.endswith('.txt'):
@@ -575,6 +605,9 @@ class FeatureExtractionEngine:
     
     def _extract_text_semantic_features(self, text_data: Any, content_type: str) -> Tuple[np.ndarray, Dict, float]:
         """Extract semantic features from text"""
+
+
+
         try:
             if isinstance(text_data, str):
                 if text_data.endswith('.txt'):
@@ -616,6 +649,9 @@ class FeatureExtractionEngine:
     
     def _extract_cross_modal_features(self, content_data: Any, content_type: str) -> Tuple[np.ndarray, Dict, float]:
         """Extract cross-modal features"""
+
+
+
         try:
             # This would involve combining features from multiple modalities
             # For now, return placeholder

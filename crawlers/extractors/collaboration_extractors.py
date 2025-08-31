@@ -12,7 +12,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 
-⚠️ STRICT COPYRIGHT PROTECTION ⚠️
+ STRICT COPYRIGHT PROTECTION 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 
@@ -220,10 +220,16 @@ class CreatorProfileExtractor(BaseCollaborationExtractor):
         
     async def can_handle(self, request: ExtractionRequest) -> bool:
         """Check if request is for creator profile extraction"""
+
+
+
         return request.metadata and request.metadata.get('extract_type') == 'creator_profile'
     
     async def extract_creator_profile(self, creator_id: str, platform: str) -> CreatorProfile:
         """Extract comprehensive creator profile"""
+
+
+
         try:
             # This would integrate with platform-specific extractors
             # For now, we'll create a comprehensive profile structure
@@ -297,6 +303,9 @@ class CreatorProfileExtractor(BaseCollaborationExtractor):
     
     async def _analyze_follower_metrics(self, profile_data: Dict[str, Any]) -> Dict[str, int]:
         """Analyze follower metrics across platforms"""
+
+
+
         return {
             'total': profile_data.get('follower_count', 0),
             'active': int(profile_data.get('follower_count', 0) * 0.8),  # Estimated active followers
@@ -353,6 +362,9 @@ class CreatorProfileExtractor(BaseCollaborationExtractor):
     
     async def _extract_collaboration_preferences(self, profile_data: Dict[str, Any]) -> Dict[str, Any]:
         """Extract collaboration preferences from profile"""
+
+
+
         return {
             'open_to_collaborations': True,
             'preferred_collaboration_types': ['duet', 'feature', 'cross_promotion'],
@@ -386,6 +398,9 @@ class CollaborationMatcher(BaseCollaborationExtractor):
     
     async def can_handle(self, request: ExtractionRequest) -> bool:
         """Check if request is for collaboration matching"""
+
+
+
         return request.metadata and request.metadata.get('extract_type') == 'collaboration_matching'
     
     async def find_collaboration_matches(self, creator_profile: CreatorProfile, 
@@ -736,6 +751,9 @@ class CollaborationAnalyzer:
     
     async def analyze_collaboration_performance(self, collaboration_metrics: CollaborationMetrics) -> Dict[str, Any]:
         """Analyze collaboration performance"""
+
+
+
         try:
             analysis = {
                 'collaboration_id': collaboration_metrics.collaboration_id,
@@ -856,6 +874,9 @@ class CollaborationExtractorFactory:
     @staticmethod
     def get_supported_types() -> List[str]:
         """Get list of supported extractor types"""
+
+
+
         return ['profile', 'matcher']
 
 

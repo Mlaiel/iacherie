@@ -180,6 +180,9 @@ class CryptoPaymentsProcessor:
         wallet_type: WalletType = WalletType.HOT_WALLET
     ) -> CryptoWallet:
         """Create a new cryptocurrency wallet"""
+
+
+
         try:
             # Generate wallet address (mock implementation)
             if network == BlockchainNetwork.BITCOIN:
@@ -217,6 +220,9 @@ class CryptoPaymentsProcessor:
         network: BlockchainNetwork
     ) -> Decimal:
         """Get wallet balance"""
+
+
+
         try:
             # Simulate API call to blockchain
             await asyncio.sleep(0.1)
@@ -243,6 +249,9 @@ class CryptoPaymentsProcessor:
         priority: str = "medium"
     ) -> Decimal:
         """Estimate transaction fee"""
+
+
+
         try:
             # Fee estimation based on network
             if network == BlockchainNetwork.BITCOIN:
@@ -292,6 +301,9 @@ class CryptoPaymentsProcessor:
         priority: str = "medium"
     ) -> CryptoTransaction:
         """Send cryptocurrency transaction"""
+
+
+
         try:
             # Estimate fee
             gas_fee = await self.estimate_fee(
@@ -337,6 +349,9 @@ class CryptoPaymentsProcessor:
         network: BlockchainNetwork
     ) -> Dict[str, Any]:
         """Get transaction status from blockchain"""
+
+
+
         try:
             # Simulate blockchain query
             await asyncio.sleep(0.1)
@@ -372,6 +387,9 @@ class CryptoPaymentsProcessor:
         fiat_currency: str = "USD"
     ) -> ExchangeRate:
         """Get current cryptocurrency exchange rate"""
+
+
+
         try:
             # Mock exchange rates (in production, use real API like CoinGecko)
             mock_rates = {
@@ -418,6 +436,9 @@ class CryptoPaymentsProcessor:
         slippage_tolerance: Decimal = Decimal("0.005")  # 0.5%
     ) -> Dict[str, Any]:
         """Convert between cryptocurrencies using DEX"""
+
+
+
         try:
             # Get exchange rates
             from_rate = await self.get_exchange_rate(from_currency)
@@ -463,6 +484,9 @@ class CryptoPaymentsProcessor:
         memo: Optional[str] = None
     ) -> Dict[str, Any]:
         """Create a cryptocurrency payment request"""
+
+
+
         try:
             request_id = f"req_{uuid.uuid4().hex[:16]}"
             expiry_time = datetime.now() + timedelta(minutes=expiry_minutes)
@@ -502,6 +526,9 @@ class CryptoPaymentsProcessor:
         network: BlockchainNetwork
     ) -> Dict[str, Any]:
         """Verify a payment against a payment request"""
+
+
+
         try:
             # Get transaction details
             tx_status = await self.get_transaction_status(transaction_hash, network)
@@ -528,6 +555,9 @@ class CryptoPaymentsProcessor:
     
     async def handle_webhook(self, headers: Dict[str, str], body: str) -> Dict[str, Any]:
         """Handle cryptocurrency webhook events"""
+
+
+
         try:
             # Verify webhook signature
             if not self._verify_webhook_signature(headers, body):
@@ -554,6 +584,9 @@ class CryptoPaymentsProcessor:
     
     def _verify_webhook_signature(self, headers: Dict[str, str], body: str) -> bool:
         """Verify cryptocurrency webhook signature"""
+
+
+
         try:
             if not self.webhook_secret:
                 return True  # Skip verification if no secret configured
@@ -602,6 +635,9 @@ class CryptoPaymentsProcessor:
     
     def get_supported_currencies(self) -> Dict[CryptoCurrency, Dict[str, Any]]:
         """Get all supported cryptocurrencies"""
+
+
+
         return {
             currency: {
                 "name": currency.value,

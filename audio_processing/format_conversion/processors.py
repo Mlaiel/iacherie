@@ -800,6 +800,9 @@ class ProcessorChain:
     
     def get_chain_status(self) -> Dict[str, Any]:
         """Get current chain status and statistics"""
+
+
+
         return {
             'total_processors': len(self.processors),
             'enabled_processors': len([p for p in self.processors if p.enabled]),

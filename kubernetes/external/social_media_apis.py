@@ -1,5 +1,5 @@
 """
-🌐 Social Media Apis - IA-Influencer-Agent API Layer
+ Social Media Apis - IA-Influencer-Agent API Layer
 ==================================================================
 Expert: BACKEND_SENIOR + MICROSERVICES_ARCHITECT
 Architecture: RESTful API + GraphQL + WebSocket
@@ -47,6 +47,9 @@ class APIError(BaseModel):
 
 async def authentication_middleware(request: Request, credentials: HTTPAuthorizationCredentials = Depends(security)):
     """Middleware d'authentification"""
+
+
+
     try:
         # JWT validation implementation
         import jwt
@@ -141,6 +144,9 @@ class SocialMediaApisAPI:
         @self.app.get("/health")
         async def health_check():
             """Vérification de santé de l'API"""
+
+
+
             return APIResponse(
                 success=True,
                 data={"status": "healthy", "version": "1.0.0"},
@@ -153,6 +159,9 @@ class SocialMediaApisAPI:
             auth_data: dict = Depends(authentication_middleware)
         ):
             """Récupération des données"""
+
+
+
             try:
                 # Social Media API business logic implementation
                 user_id = auth_data["user_id"]
@@ -194,6 +203,9 @@ class SocialMediaApisAPI:
             auth_data: dict = Depends(authentication_middleware)
         ):
             """Création de données"""
+
+
+
             try:
                 # Social Media API validation and creation logic
                 from datetime import datetime
@@ -269,6 +281,9 @@ class WebSocketManager:
 
 def create_socialmediaapis_api(app: FastAPI) -> SocialMediaApisAPI:
     """Factory pour créer l'API Social Media Apis"""
+
+
+
     return SocialMediaApisAPI(app)
 
 __all__ = [

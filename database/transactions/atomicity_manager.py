@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -77,12 +77,18 @@ class AtomicOperation:
     
     def is_executable(self) -> bool:
         """Check if operation can be executed"""
+
+
+
         return (self.state == OperationState.PENDING and 
                 self.execute_func is not None and
                 self.retry_count <= self.max_retries)
     
     def is_rollbackable(self) -> bool:
         """Check if operation can be rolled back"""
+
+
+
         return (self.state == OperationState.COMPLETED and 
                 self.rollback_func is not None)
 
@@ -378,6 +384,9 @@ class AtomicityManager:
     
     async def _call_function(self, func: Callable, timeout: float) -> Any:
         """Call function with proper async/sync handling and timeout"""
+
+
+
         
         try:
             if asyncio.iscoroutinefunction(func):
@@ -444,6 +453,9 @@ class AtomicityManager:
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
         """Get atomicity manager performance metrics"""
+
+
+
         return {
             **self.performance_metrics,
             "active_groups": len(self.active_groups),

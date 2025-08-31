@@ -2,7 +2,7 @@
 Partnership Manager for IA Influencer Agent  
 Core partnership management and relationship orchestration system
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
 All rights reserved. Unauthorized use, copying, or reproduction 
 of this code, concept, or intellectual property without explicit 
@@ -78,6 +78,9 @@ class PartnershipManager:
         created_by: str
     ) -> Partnership:
         """Create new strategic partnership with comprehensive setup"""
+
+
+
         try:
             partnership = Partnership(
                 creator_id=creator_id,
@@ -139,6 +142,9 @@ class PartnershipManager:
         updated_by: str
     ) -> Partnership:
         """Update partnership status with comprehensive tracking"""
+
+
+
         try:
             partnership = await self.get_partnership(partnership_id)
             if not partnership:
@@ -182,6 +188,9 @@ class PartnershipManager:
         period_end: datetime
     ) -> PartnershipRevenue:
         """Calculate comprehensive partnership revenue for period"""
+
+
+
         try:
             partnership = await self.get_partnership(partnership_id)
             if not partnership:
@@ -229,6 +238,9 @@ class PartnershipManager:
         criteria: Dict[str, Any]
     ) -> List[PartnershipOpportunity]:
         """Find strategic partnership opportunities using AI matching"""
+
+
+
         try:
             # Get creator profile and preferences
             creator_profile = await self._get_creator_profile(creator_id)
@@ -293,6 +305,9 @@ class PartnershipManager:
         partnership_id: str
     ) -> Dict[str, Any]:
         """Comprehensive partnership lifecycle management"""
+
+
+
         try:
             partnership = await self.get_partnership(partnership_id)
             if not partnership:
@@ -341,6 +356,9 @@ class PartnershipManager:
 
     async def get_partnership(self, partnership_id: str) -> Optional[Partnership]:
         """Retrieve partnership with full details"""
+
+
+
         try:
             # Implementation would query database
             # For now, return mock data
@@ -409,6 +427,9 @@ class PartnershipManager:
 
     async def _get_creator_profile(self, creator_id: str) -> Dict[str, Any]:
         """Get comprehensive creator profile"""
+
+
+
         return {
             'creator_id': creator_id,
             'content_categories': ['music', 'lifestyle'],
@@ -462,6 +483,9 @@ class PartnershipManager:
         partner: Dict[str, Any]
     ) -> float:
         """Assess partnership risk factors"""
+
+
+
         return 0.2
 
     async def _calculate_strategic_alignment(
@@ -470,6 +494,9 @@ class PartnershipManager:
         partner: Dict[str, Any]
     ) -> float:
         """Calculate strategic alignment score"""
+
+
+
         return 0.75
 
     async def _generate_recommended_terms(
@@ -478,6 +505,9 @@ class PartnershipManager:
         partner: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Generate AI-recommended partnership terms"""
+
+
+
         return {
             'commission_rate': 0.15,
             'contract_length': 12,
@@ -487,6 +517,9 @@ class PartnershipManager:
 
     async def _generate_next_actions(self, partner: Dict[str, Any]) -> List[str]:
         """Generate recommended next actions"""
+
+
+
         return [
             'Research partner brand alignment',
             'Prepare initial proposal',
@@ -508,6 +541,9 @@ class PartnershipManager:
 
     async def _generate_performance_summary(self, partnership: Partnership) -> Dict[str, Any]:
         """Generate comprehensive performance summary"""
+
+
+
         return {
             'revenue_performance': 'strong' if partnership.metrics and partnership.metrics.revenue_generated > 1000 else 'moderate',
             'engagement_trend': 'positive',
@@ -525,6 +561,9 @@ class PartnershipManager:
 
     async def _analyze_renewal_potential(self, partnership: Partnership) -> Dict[str, Any]:
         """Analyze partnership renewal potential"""
+
+
+
         return {
             'renewal_probability': partnership.metrics.renewal_probability if partnership.metrics else 0.5,
             'recommended_changes': ['Increase commission rate', 'Expand content categories'],
@@ -534,6 +573,9 @@ class PartnershipManager:
 
     async def _get_active_partnership_actions(self, partnership: Partnership) -> List[str]:
         """Get action items for active partnerships"""
+
+
+
         return [
             'Review monthly performance metrics',
             'Schedule quarterly business review',
@@ -542,6 +584,9 @@ class PartnershipManager:
 
     async def _get_negotiation_actions(self, partnership: Partnership) -> List[str]:
         """Get action items for partnerships in negotiation"""
+
+
+
         return [
             'Follow up on pending contract terms',
             'Schedule stakeholder alignment call',
@@ -562,6 +607,9 @@ class PartnershipManager:
 
     async def _generate_optimization_recommendations(self, partnership: Partnership) -> List[str]:
         """Generate partnership optimization recommendations"""
+
+
+
         return [
             'Increase content frequency for better engagement',
             'Explore cross-platform distribution opportunities',

@@ -60,6 +60,9 @@ class FormatProfile:
     
     def get_quality_preset(self, quality: QualityLevel) -> Dict[str, Any]:
         """Get quality preset for specified level"""
+
+
+
         return self.quality_presets.get(quality, {})
     
     def validate_parameters(self, sample_rate: int, channels: int, 
@@ -407,10 +410,16 @@ class ConversionConfig:
     
     def get_format_profile(self, format: AudioFormat) -> Optional[FormatProfile]:
         """Get format profile for specified format"""
+
+
+
         return self.format_profiles.get(format)
     
     def get_quality_preset(self, preset_name: str) -> Optional[QualityPreset]:
         """Get quality preset by name"""
+
+
+
         return self.quality_presets.get(preset_name)
     
     def validate_configuration(self) -> List[str]:
@@ -442,6 +451,9 @@ class ConversionConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert configuration to dictionary"""
+
+
+
         return {
             'temp_directory': str(self.temp_directory) if self.temp_directory else None,
             'clean_temp_files': self.clean_temp_files,

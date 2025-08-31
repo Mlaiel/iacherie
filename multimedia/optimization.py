@@ -150,6 +150,9 @@ class BaseOptimizer(ABC):
     
     async def _preserve_metadata(self, original_path: Path, optimized_path: Path):
         """Preserve important metadata from original to optimized file"""
+
+
+
         try:
             original_metadata = await self.metadata_extractor.extract_metadata(original_path)
             if original_metadata and hasattr(original_metadata, 'technical_metadata'):
@@ -379,6 +382,9 @@ class AudioOptimizer(BaseOptimizer):
                                   output_path: Path, output_format: str,
                                   result: OptimizationResult):
         """Save optimized audio to file"""
+
+
+
         try:
             if output_format in ['wav', 'flac']:
                 # Lossless formats
@@ -1155,6 +1161,9 @@ class ImageOptimizer(BaseOptimizer):
     async def _calculate_visual_difference(self, original: Image.Image,
                                          optimized: Image.Image) -> float:
         """Calculate visual difference between original and optimized image"""
+
+
+
         try:
             # Resize images to same size for comparison
             size = min(original.size, optimized.size)
@@ -1452,11 +1461,17 @@ class MediaOptimizer:
     @classmethod
     def get_available_profiles(cls) -> List[str]:
         """Get list of available optimization profiles"""
+
+
+
         return list(cls.OPTIMIZATION_PROFILES.keys())
     
     @classmethod
     def create_custom_profile(cls, **kwargs) -> OptimizationProfile:
         """Create a custom optimization profile"""
+
+
+
         return OptimizationProfile(**kwargs)
 
 

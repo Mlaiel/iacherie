@@ -12,7 +12,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 
-⚠️ STRICT COPYRIGHT PROTECTION ⚠️
+ STRICT COPYRIGHT PROTECTION 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 
@@ -172,6 +172,9 @@ class BaseStreamExtractor(BaseExtractor):
     
     async def get_stream_status(self, stream_id: str) -> Optional[StreamMetadata]:
         """Get stream status"""
+
+
+
         return self.active_streams.get(stream_id)
     
     def _generate_stream_id(self, request: ExtractionRequest) -> str:
@@ -227,6 +230,9 @@ class WebSocketExtractor(BaseStreamExtractor):
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
         """Start WebSocket extraction"""
+
+
+
         try:
             stream_id = await self.start_stream(request)
             
@@ -334,6 +340,9 @@ class HTTPStreamExtractor(BaseStreamExtractor):
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
         """Start HTTP stream extraction"""
+
+
+
         try:
             stream_id = await self.start_stream(request)
             
@@ -444,6 +453,9 @@ class AudioStreamExtractor(BaseStreamExtractor):
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
         """Start audio stream extraction"""
+
+
+
         try:
             stream_id = await self.start_stream(request)
             
@@ -554,6 +566,9 @@ class VideoStreamExtractor(BaseStreamExtractor):
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
         """Start video stream extraction"""
+
+
+
         try:
             stream_id = await self.start_stream(request)
             
@@ -671,6 +686,9 @@ class RedisStreamExtractor(BaseStreamExtractor):
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
         """Start Redis stream extraction"""
+
+
+
         try:
             # Initialize Redis client
             redis_config = request.metadata.get('redis_config', {})
@@ -797,6 +815,9 @@ class LiveAPIExtractor(BaseStreamExtractor):
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
         """Start live API extraction"""
+
+
+
         try:
             stream_id = await self.start_stream(request)
             
@@ -985,6 +1006,9 @@ class StreamManager:
     
     def get_stream_buffer(self, stream_id: str) -> Optional[StreamBuffer]:
         """Get stream buffer"""
+
+
+
         return self.buffers.get(stream_id)
     
     def _detect_stream_type(self, request: ExtractionRequest) -> Optional[StreamType]:

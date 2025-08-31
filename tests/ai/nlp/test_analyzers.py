@@ -44,7 +44,7 @@ topic modeling, and collaboration detection with real implementations.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
 
@@ -135,16 +135,16 @@ class TestAdvancedContentAnalyzer:
         """Test sentiment analysis accuracy with known examples"""
         # Positive sentiment examples
         positive_texts = [
-            "I absolutely love this product! It's amazing and perfect! 😍✨",
-            "Best day ever! So happy and grateful! 🎉❤️",
-            "This is incredible! Fantastic work! 👏🌟"
+            "I absolutely love this product! It's amazing and perfect! ",
+            "Best day ever! So happy and grateful! ",
+            "This is incredible! Fantastic work! "
         ]
         
         # Negative sentiment examples
         negative_texts = [
-            "This is terrible and disappointing. Worst experience ever! 😞💔",
-            "I hate this! Complete waste of time and money! 😡",
-            "Awful quality, terrible service. Never again! 👎"
+            "This is terrible and disappointing. Worst experience ever! ",
+            "I hate this! Complete waste of time and money! ",
+            "Awful quality, terrible service. Never again! "
         ]
         
         # Neutral sentiment examples
@@ -203,12 +203,12 @@ class TestAdvancedContentAnalyzer:
     async def test_emotion_detection(self, content_analyzer):
         """Test emotion detection capabilities"""
         emotion_texts = {
-            'joy': "I'm so happy and excited! This is wonderful! 🎉😊",
-            'anger': "This is infuriating! I'm so angry about this! 😡🔥",
-            'sadness': "I'm feeling really sad and disappointed today 😢💔",
-            'fear': "I'm really worried and scared about this situation 😰😨",
-            'surprise': "Wow! I can't believe this happened! So unexpected! 😱✨",
-            'love': "I love you so much! You mean everything to me! ❤️💕"
+            'joy': "I'm so happy and excited! This is wonderful! ",
+            'anger': "This is infuriating! I'm so angry about this! ",
+            'sadness': "I'm feeling really sad and disappointed today ",
+            'fear': "I'm really worried and scared about this situation ",
+            'surprise': "Wow! I can't believe this happened! So unexpected! ",
+            'love': "I love you so much! You mean everything to me! "
         }
         
         for expected_emotion, text in emotion_texts.items():
@@ -624,7 +624,7 @@ class TestSentimentAnalyzer:
         """Test detailed sentiment analysis"""
         analyzer = SentimentAnalyzer()
         
-        text = "I absolutely love this amazing product! It's fantastic! 😍"
+        text = "I absolutely love this amazing product! It's fantastic! "
         
         result = await analyzer.analyze(
             content=text,

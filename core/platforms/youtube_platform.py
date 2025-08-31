@@ -410,6 +410,9 @@ class AdvancedYouTubePlatform(BasePlatform):
         Returns:
             bool: Authentication success
         """
+
+
+
         try:
             if credentials_data:
                 # Use provided credentials
@@ -542,6 +545,9 @@ class AdvancedYouTubePlatform(BasePlatform):
         Returns:
             YouTubeVideo: Video information
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -641,6 +647,9 @@ class AdvancedYouTubePlatform(BasePlatform):
         Returns:
             str: Video ID if successful
         """
+
+
+
         try:
             if not self.youtube_service or not self.credentials:
                 raise ValueError("Authentication required for video upload")
@@ -735,6 +744,9 @@ class AdvancedYouTubePlatform(BasePlatform):
         Returns:
             bool: Update success
         """
+
+
+
         try:
             if not self.youtube_service or not self.credentials:
                 raise ValueError("Authentication required for video update")
@@ -821,6 +833,9 @@ class AdvancedYouTubePlatform(BasePlatform):
         Returns:
             List[YouTubeComment]: Video comments
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -895,6 +910,9 @@ class AdvancedYouTubePlatform(BasePlatform):
         Returns:
             YouTubeAnalytics: Analytics data
         """
+
+
+
         try:
             if not self.analytics_service:
                 logger.warning("YouTube Analytics API not available")
@@ -986,6 +1004,9 @@ class AdvancedYouTubePlatform(BasePlatform):
         Returns:
             YouTubeOptimization: Optimization recommendations
         """
+
+
+
         try:
             if not (channel_id or video_id):
                 raise ValueError("Either channel_id or video_id must be provided")
@@ -1030,6 +1051,9 @@ class AdvancedYouTubePlatform(BasePlatform):
 
     async def start_monitoring(self):
         """Start background monitoring tasks"""
+
+
+
         try:
             if self.monitoring_active:
                 return
@@ -1050,6 +1074,9 @@ class AdvancedYouTubePlatform(BasePlatform):
 
     async def stop_monitoring(self):
         """Stop background monitoring tasks"""
+
+
+
         try:
             self.monitoring_active = False
             
@@ -1070,6 +1097,9 @@ class AdvancedYouTubePlatform(BasePlatform):
     
     async def _analyze_video_content(self, video: YouTubeVideo):
         """Analyze video content with AI"""
+
+
+
         try:
             if not self.content_analysis_endpoint:
                 return
@@ -1100,6 +1130,9 @@ class AdvancedYouTubePlatform(BasePlatform):
 
     async def _analyze_channel_content(self, channel: YouTubeChannel):
         """Analyze channel content with AI"""
+
+
+
         try:
             if not self.content_analysis_endpoint:
                 return
@@ -1149,6 +1182,9 @@ class AdvancedYouTubePlatform(BasePlatform):
 
     async def _analyze_comment_sentiment(self, comment: YouTubeComment):
         """Analyze comment sentiment"""
+
+
+
         try:
             if not self.content_analysis_endpoint:
                 return
@@ -1182,6 +1218,9 @@ class AdvancedYouTubePlatform(BasePlatform):
         tags: List[str]
     ) -> Optional[Dict[str, Any]]:
         """Optimize video metadata with AI"""
+
+
+
         try:
             if not self.optimization_engine_endpoint:
                 return None
@@ -1214,6 +1253,9 @@ class AdvancedYouTubePlatform(BasePlatform):
         optimization_data: Dict[str, Any]
     ) -> Optional[YouTubeOptimization]:
         """Generate AI-powered optimization recommendations"""
+
+
+
         try:
             if not self.optimization_engine_endpoint:
                 return None
@@ -1296,6 +1338,9 @@ class AdvancedYouTubePlatform(BasePlatform):
     
     async def _test_authentication(self) -> bool:
         """Test YouTube API authentication"""
+
+
+
         try:
             if self.youtube_service:
                 # Test with a simple API call
@@ -1311,6 +1356,9 @@ class AdvancedYouTubePlatform(BasePlatform):
 
     def _parse_datetime(self, datetime_str: str) -> Optional[datetime]:
         """Parse YouTube datetime string"""
+
+
+
         try:
             if not datetime_str:
                 return None
@@ -1321,6 +1369,9 @@ class AdvancedYouTubePlatform(BasePlatform):
 
     async def _calculate_video_engagement_metrics(self, video: YouTubeVideo):
         """Calculate engagement metrics for video"""
+
+
+
         try:
             if video.view_count > 0:
                 total_engagements = (video.like_count + video.dislike_count + 
@@ -1339,6 +1390,9 @@ class AdvancedYouTubePlatform(BasePlatform):
 
     def _parse_duration(self, duration_str: str) -> int:
         """Parse ISO 8601 duration to seconds"""
+
+
+
         try:
             return int(isodate.parse_duration(duration_str).total_seconds())
         except Exception:
@@ -1346,6 +1400,9 @@ class AdvancedYouTubePlatform(BasePlatform):
 
     async def close(self):
         """Close YouTube platform and cleanup resources"""
+
+
+
         try:
             await self.stop_monitoring()
             await self.cache_manager.close()

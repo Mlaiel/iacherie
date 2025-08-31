@@ -225,7 +225,10 @@ def create_notification_service(
     
     Returns:
         Configured NotificationService instance
-    """    try:
+    """
+
+
+    try:
         # Load configuration
         notification_config = NotificationConfig(config or {})
         
@@ -282,7 +285,10 @@ def get_default_config() -> Dict[str, Any]:
     
     Returns:
         Default configuration dictionary
-    """    return {
+    """
+
+
+    return {
         "ai_features": {
             "priority_classification": True,
             "personalization": True,
@@ -362,7 +368,10 @@ def validate_notification_request(request: Dict[str, Any]) -> bool:
     
     Returns:
         True if valid, False otherwise
-    """    try:
+    """
+
+
+    try:
         required_fields = ["recipient", "notification_type", "content"]
         
         # Check required fields

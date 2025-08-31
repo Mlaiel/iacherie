@@ -1,4 +1,4 @@
-"""🔍 Content Fingerprinting Module - IA Influencer Agent Platform Enterprise
+""" Content Fingerprinting Module - IA Influencer Agent Platform Enterprise
 ==========================================================================
 Module: backend/data_management/fingerprinting/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -7,7 +7,7 @@ Type: Industrial AI Fingerprinting System - Ultra Enterprise Production-Ready
 Responsibility: Advanced multi-format content fingerprinting and protection system
 ====================================================================================
 
-⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
+  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -18,14 +18,14 @@ FAISS Indexing → Real-time Monitoring → Similarity Detection → Violation A
 Automated Takedown → Revenue Recovery
 
 FINGERPRINTING ARCHITECTURE:
-├── 🎵 Audio Fingerprinting (Chromaprint + Essentia)
-├── 🎬 Video Fingerprinting (OpenCV + pHash + YOLO)
-├── 📸 Image Fingerprinting (CLIP + ImageHash + Perceptual)
-├── 📝 Text Fingerprinting (BERT + RoBERTa + Vector)
-├── 🔍 Vector Similarity (FAISS + Elasticsearch)
-├── 🚨 Real-time Detection (Web Crawlers + APIs)
-├── 📊 Analytics Dashboard (Performance + Alerts)
-└── 🛡️ Protection Management (Takedown + Recovery)
+  Audio Fingerprinting (Chromaprint + Essentia)
+  Video Fingerprinting (OpenCV + pHash + YOLO)
+  Image Fingerprinting (CLIP + ImageHash + Perceptual)
+  Text Fingerprinting (BERT + RoBERTa + Vector)
+  Vector Similarity (FAISS + Elasticsearch)
+  Real-time Detection (Web Crawlers + APIs)
+  Analytics Dashboard (Performance + Alerts)
+  Protection Management (Takedown + Recovery)
 """
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
@@ -293,7 +293,10 @@ class FingerprintingEngine:
             
         Returns:
             Dictionnaire contenant l'empreinte complète
-        """        try:
+        """
+
+
+        try:
             start_time = datetime.now()
             
             # Détection automatique du type si nécessaire
@@ -369,7 +372,10 @@ class FingerprintingEngine:
             
         Returns:
             Liste des contenus similaires trouvés
-        """        try:
+        """
+
+
+        try:
             # Recherche dans l'index vectoriel
             similar_content = await self.vector_engine.search_similar(
                 fingerprint_data["vectors"],
@@ -410,7 +416,10 @@ class FingerprintingEngine:
             
         Returns:
             ID de la session de monitoring
-        """        try:
+        """
+
+
+        try:
             if not self.realtime_monitor:
                 raise ValueError("Real-time monitoring not enabled")
             
@@ -434,7 +443,10 @@ class FingerprintingEngine:
             
         Returns:
             Résultat du traitement de la violation
-        """        try:
+        """
+
+
+        try:
             # Mise à jour des métriques
             self.metrics["violations_found"] += 1
             
@@ -519,10 +531,16 @@ class FingerprintingEngine:
         return 0.85  # Simulation
 
     def get_metrics(self) -> Dict[str, Any]:
-        """Retourne les métriques de performance"""        return self.metrics.copy()
+        """Retourne les métriques de performance"""
+
+
+        return self.metrics.copy()
 
     def get_status(self) -> Dict[str, Any]:
-        """Retourne le statut du système"""        return {
+        """Retourne le statut du système"""
+
+
+        return {
             "version": __version__,
             "engines_active": {
                 "audio": self.audio_engine is not None,

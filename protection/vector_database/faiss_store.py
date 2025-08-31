@@ -1,5 +1,5 @@
 """
-🔍 FAISS Vector Store
+ FAISS Vector Store
 =====================
 
 High-performance vector database using Facebook AI Similarity Search (FAISS).
@@ -101,6 +101,9 @@ class FaissVectorStore:
     
     def _initialize_index(self):
         """Initialize FAISS index based on configuration"""
+
+
+
         try:
             if self.index_type == IndexType.FLAT_L2:
                 self.index = faiss.IndexFlatL2(self.dimension)
@@ -138,6 +141,9 @@ class FaissVectorStore:
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
         """Add a vector to the index"""
+
+
+
         try:
             # Validate vector
             if vector.shape[0] != self.dimension:
@@ -186,6 +192,9 @@ class FaissVectorStore:
         vectors_data: List[Tuple[str, np.ndarray, Optional[Dict[str, Any]]]]
     ) -> List[bool]:
         """Add multiple vectors in batch"""
+
+
+
         try:
             # Validate all vectors first
             for vector_id, vector, _ in vectors_data:
@@ -258,6 +267,9 @@ class FaissVectorStore:
         metadata_filter: Optional[Dict[str, Any]] = None
     ) -> List[SearchResult]:
         """Search for similar vectors"""
+
+
+
         try:
             # Validate query vector
             if query_vector.shape[0] != self.dimension:
@@ -320,6 +332,9 @@ class FaissVectorStore:
     
     def _search_sync(self, query_vector: np.ndarray, k: int) -> Tuple[np.ndarray, np.ndarray]:
         """Synchronous vector search"""
+
+
+
         return self.index.search(query_vector, k)
     
     def _matches_filter(self, metadata: Dict[str, Any], filter_criteria: Dict[str, Any]) -> bool:
@@ -338,6 +353,9 @@ class FaissVectorStore:
     
     async def remove_vector(self, vector_id: str) -> bool:
         """Remove a vector from the index"""
+
+
+
         try:
             if vector_id not in self.reverse_id_mapping:
                 self.logger.warning(f"Vector {vector_id} not found in index")
@@ -361,6 +379,9 @@ class FaissVectorStore:
     
     async def update_metadata(self, vector_id: str, metadata: Dict[str, Any]) -> bool:
         """Update metadata for a vector"""
+
+
+
         try:
             if vector_id not in self.metadata_store:
                 return False
@@ -374,10 +395,16 @@ class FaissVectorStore:
     
     async def get_vector_count(self) -> int:
         """Get total number of vectors in index"""
+
+
+
         return self.index.ntotal if self.index else 0
     
     async def get_stats(self) -> IndexStats:
         """Get index statistics"""
+
+
+
         try:
             # Calculate memory usage (approximate)
             if hasattr(self.index, 'sa_encode'):
@@ -402,6 +429,9 @@ class FaissVectorStore:
     
     async def save_index(self, filename: Optional[str] = None) -> str:
         """Save index to disk"""
+
+
+
         try:
             if filename is None:
                 filename = f"faiss_index_{self.index_type.value}_{self.dimension}d.index"
@@ -439,6 +469,9 @@ class FaissVectorStore:
     
     async def load_index(self, filename: str) -> bool:
         """Load index from disk"""
+
+
+
         try:
             index_path = self.storage_path / filename
             metadata_path = self.storage_path / f"{filename}.metadata"
@@ -473,6 +506,9 @@ class FaissVectorStore:
     
     async def train_index(self, training_vectors: np.ndarray) -> bool:
         """Train index (required for some index types like IVF)"""
+
+
+
         try:
             if not self.index.is_trained:
                 self.logger.info(f"Training {self.index_type.value} index with {len(training_vectors)} vectors")
@@ -494,6 +530,9 @@ class FaissVectorStore:
     
     async def optimize_index(self) -> bool:
         """Optimize index for better performance"""
+
+
+
         try:
             # For IVF indexes, set search parameters
             if self.index_type in [IndexType.IVF_FLAT, IndexType.IVF_PQ]:
@@ -515,6 +554,9 @@ class FaissVectorStore:
     
     async def clear_index(self) -> bool:
         """Clear all vectors from index"""
+
+
+
         try:
             # Reinitialize index
             self._initialize_index()

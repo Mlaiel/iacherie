@@ -16,7 +16,7 @@ content creators across all major platforms and revenue streams.
 - Competitive Revenue Intelligence and Benchmarking
 - Automated Revenue Recovery and Loss Prevention
 
-🏗️ ENTERPRISE ARCHITECTURE:
+ ENTERPRISE ARCHITECTURE:
 - Advanced ML Models (XGBoost, Prophet, LSTM, Neural Networks)
 - Real-Time Analytics Pipeline with Streaming Data
 - Multi-Platform API Integration (50+ revenue sources)
@@ -30,7 +30,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING - ZERO TOLERANCE POLICY ⚠️
+  CRITICAL LEGAL WARNING - ZERO TOLERANCE POLICY 
 This revolutionary revenue intelligence platform is the EXCLUSIVE intellectual property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution
 under German and International Law. Contact: mlaiel@live.de for legal authorization.

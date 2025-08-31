@@ -1,5 +1,5 @@
 """
-⚠️ Exceptions - Backup System Exception Classes
+ Exceptions - Backup System Exception Classes
 ==============================================
 Module: backend/data_management/backups/exceptions.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Exception System - Enterprise Production-Ready
 Responsibility: Exceptions hiérarchiques pour système de sauvegarde
 ===================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -66,6 +66,9 @@ class BackupException(Exception):
         Returns:
             Dict[str, Any]: Représentation dictionnaire
         """
+
+
+
         return {
             "exception_type": self.__class__.__name__,
             "message": self.message,

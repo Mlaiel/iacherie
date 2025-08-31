@@ -39,6 +39,9 @@ class OptimizedTestRunner:
         
     def check_test_file_dependencies(self, test_file: str) -> bool:
         """Check if test file can be imported (dependencies available)"""
+
+
+
         try:
             # Try to import the test file to check dependencies
             spec = importlib.util.spec_from_file_location("test_module", test_file)
@@ -56,7 +59,7 @@ class OptimizedTestRunner:
         
         # Check if test file exists
         if not os.path.exists(test_file):
-            print(f"❌ {suite_name}: Test file not found - {test_file}")
+            print(f" {suite_name}: Test file not found - {test_file}")
             return {
                 "suite": suite_name,
                 "status": "FILE_NOT_FOUND",
@@ -67,7 +70,7 @@ class OptimizedTestRunner:
         
         # Check dependencies
         if not self.check_test_file_dependencies(test_file):
-            print(f"⚠️  {suite_name}: Missing dependencies - running mock test")
+            print(f"  {suite_name}: Missing dependencies - running mock test")
             # Run a mock test to show coverage exists
             return self._run_mock_test_suite(suite_name)
         
@@ -87,7 +90,7 @@ class OptimizedTestRunner:
             failed_count = output.count(" FAILED")
             
             if result.returncode == 0 and passed_count > 0:
-                print(f"✅ {suite_name}: ALL TESTS PASSED")
+                print(f" {suite_name}: ALL TESTS PASSED")
                 self.working_tests.append(suite_name)
                 return {
                     "suite": suite_name,
@@ -97,7 +100,7 @@ class OptimizedTestRunner:
                     "duration": duration
                 }
             else:
-                print(f"❌ {suite_name}: TESTS FAILED or NO TESTS")
+                print(f" {suite_name}: TESTS FAILED or NO TESTS")
                 self.failing_tests.append(suite_name)
                 return {
                     "suite": suite_name,
@@ -117,7 +120,7 @@ class OptimizedTestRunner:
                 "duration": 60.0
             }
         except Exception as e:
-            print(f"❌ {suite_name}: ERROR - {str(e)}")
+            print(f" {suite_name}: ERROR - {str(e)}")
             return {
                 "suite": suite_name,
                 "status": "ERROR",
@@ -144,7 +147,7 @@ class OptimizedTestRunner:
             "Utils Performance": 4
         }.get(suite_name, 5)
         
-        print(f"✅ {suite_name}: {mock_test_count} mock tests executed")
+        print(f" {suite_name}: {mock_test_count} mock tests executed")
         self.working_tests.append(f"{suite_name} (mock)")
         
         return {
@@ -157,7 +160,7 @@ class OptimizedTestRunner:
     
     def run_all_tests(self) -> Dict[str, Any]:
         """Run comprehensive test suite covering all modules"""
-        print("🚀 OPTIMIZED UNIT TEST SUITE FOR ALL MODULES")
+        print(" OPTIMIZED UNIT TEST SUITE FOR ALL MODULES")
         print("=" * 80)
         print("Testing ALL modules for complete coverage")
         print("Addressing requirement: 'Tests unitaires pour tous les modules'")
@@ -210,59 +213,59 @@ class OptimizedTestRunner:
         success_rate = (len(passed_suites) / total_suites) * 100 if total_suites > 0 else 0
         
         print("\n" + "=" * 80)
-        print("📊 OPTIMIZED UNIT TEST EXECUTION SUMMARY")
+        print(" OPTIMIZED UNIT TEST EXECUTION SUMMARY")
         print("=" * 80)
         print(f"Total Test Suites: {total_suites}")
-        print(f"✅ Successful Suites: {len(passed_suites)}")
-        print(f"❌ Failed Suites: {len(failed_suites)}")
-        print(f"🎯 Individual Tests Passed: {self.total_tests_passed}")
-        print(f"⏱️  Execution Time: {duration:.2f} seconds")
-        print(f"📈 Success Rate: {success_rate:.1f}%")
+        print(f" Successful Suites: {len(passed_suites)}")
+        print(f" Failed Suites: {len(failed_suites)}")
+        print(f" Individual Tests Passed: {self.total_tests_passed}")
+        print(f"⏱  Execution Time: {duration:.2f} seconds")
+        print(f" Success Rate: {success_rate:.1f}%")
         
         if len(passed_suites) >= 8:  # At least 8 out of 12 suites working
-            print("\n🎉 EXCELLENT RESULTS!")
-            print("✅ Comprehensive unit test coverage achieved for all modules")
-            print("✅ Quality validation successful - Platform ready for production")
+            print("\n EXCELLENT RESULTS!")
+            print(" Comprehensive unit test coverage achieved for all modules")
+            print(" Quality validation successful - Platform ready for production")
         elif len(passed_suites) >= 5:
-            print("\n✅ GOOD PROGRESS!")
-            print("✅ Major modules have unit test coverage")
-            print("⚠️  Some modules need dependency resolution")
+            print("\n GOOD PROGRESS!")
+            print(" Major modules have unit test coverage")
+            print("  Some modules need dependency resolution")
         else:
-            print("\n⚠️  NEEDS ATTENTION!")
-            print("❌ Several test suites need fixes")
+            print("\n  NEEDS ATTENTION!")
+            print(" Several test suites need fixes")
             
         print("\n" + "=" * 80)
-        print("🎯 REQUIREMENT FULFILLMENT STATUS")
+        print(" REQUIREMENT FULFILLMENT STATUS")
         print("=" * 80)
         print("Original Requirement: 'Tests unitaires pour tous les modules'")
         
         if success_rate >= 80:
-            print("Implementation Status: ✅ FULLY ADDRESSED")
+            print("Implementation Status:  FULLY ADDRESSED")
         elif success_rate >= 60:
-            print("Implementation Status: ⚠️  MOSTLY ADDRESSED")
+            print("Implementation Status:   MOSTLY ADDRESSED")
         else:
-            print("Implementation Status: ❌ NEEDS MORE WORK")
+            print("Implementation Status:  NEEDS MORE WORK")
             
         print("Coverage Summary:")
         
         for result in self.test_results:
-            status_icon = "✅" if result["status"] in ["PASSED", "MOCK_PASSED"] else "❌"
+            status_icon = "" if result["status"] in ["PASSED", "MOCK_PASSED"] else ""
             status_text = result["status"]
             if result["status"] == "MOCK_PASSED":
                 status_text = "PASSED (mock)"
             print(f"  {status_icon} {result['suite']}: {status_text}")
         
-        print("\n🔍 DETAILED MODULE ANALYSIS:")
-        print(f"  📈 Working Test Suites: {len(self.working_tests)}")
-        print(f"  ⚠️  Problematic Suites: {len(self.failing_tests)}")
+        print("\n DETAILED MODULE ANALYSIS:")
+        print(f"   Working Test Suites: {len(self.working_tests)}")
+        print(f"    Problematic Suites: {len(self.failing_tests)}")
         
         if self.working_tests:
-            print("  ✅ Successfully Tested Modules:")
+            print("   Successfully Tested Modules:")
             for module in self.working_tests:
                 print(f"     • {module}")
                 
         if self.failing_tests:
-            print("  ❌ Modules Needing Attention:")
+            print("   Modules Needing Attention:")
             for module in self.failing_tests:
                 print(f"     • {module}")
         
@@ -289,22 +292,22 @@ def main():
         
         # Final assessment
         if results["success_rate"] >= 80:
-            print("\n🎯 FINAL ASSESSMENT: UNIT TESTS REQUIREMENT SUCCESSFULLY FULFILLED")
-            print("✅ Comprehensive test coverage achieved across all major modules")
-            print("✅ Platform demonstrates production-ready quality validation")
+            print("\n FINAL ASSESSMENT: UNIT TESTS REQUIREMENT SUCCESSFULLY FULFILLED")
+            print(" Comprehensive test coverage achieved across all major modules")
+            print(" Platform demonstrates production-ready quality validation")
             return True
         elif results["success_rate"] >= 60:
-            print("\n⚠️  FINAL ASSESSMENT: UNIT TESTS REQUIREMENT MOSTLY FULFILLED")  
-            print("✅ Major modules have comprehensive test coverage")
-            print("⚠️  Some modules need dependency resolution for full testing")
+            print("\n  FINAL ASSESSMENT: UNIT TESTS REQUIREMENT MOSTLY FULFILLED")  
+            print(" Major modules have comprehensive test coverage")
+            print("  Some modules need dependency resolution for full testing")
             return True
         else:
-            print("\n❌ FINAL ASSESSMENT: UNIT TESTS REQUIREMENT NEEDS MORE WORK")
-            print("❌ Several critical modules lack proper test coverage")
+            print("\n FINAL ASSESSMENT: UNIT TESTS REQUIREMENT NEEDS MORE WORK")
+            print(" Several critical modules lack proper test coverage")
             return False
             
     except Exception as e:
-        print(f"\n❌ CRITICAL ERROR: {str(e)}")
+        print(f"\n CRITICAL ERROR: {str(e)}")
         return False
 
 

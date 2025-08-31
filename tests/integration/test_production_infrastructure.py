@@ -27,7 +27,7 @@ sys.path.insert(0, os.path.abspath('.'))
 
 async def test_monitoring_components():
     """Test monitoring components"""
-    print("🔍 Testing Monitoring Components...")
+    print(" Testing Monitoring Components...")
     
     try:
         # Test revenue tracking
@@ -45,7 +45,7 @@ async def test_monitoring_components():
         
         # Get analytics
         analytics = await revenue_tracker.get_revenue_analytics(period_days=7)
-        print(f"✅ Revenue tracking working - Total revenue: €{analytics['total_revenue']['amount']}")
+        print(f" Revenue tracking working - Total revenue: €{analytics['total_revenue']['amount']}")
         
         # Test collaboration metrics
         from monitoring.collaboration_success_metrics import CollaborationSuccessTracker, CollaborationType, CollaborationStatus
@@ -63,7 +63,7 @@ async def test_monitoring_components():
         )
         
         analytics = await collab_tracker.get_collaboration_analytics(period_days=7)
-        print(f"✅ Collaboration tracking working - Total collaborations: {analytics['summary']['total_collaborations']}")
+        print(f" Collaboration tracking working - Total collaborations: {analytics['summary']['total_collaborations']}")
         
         # Test content protection
         from monitoring.content_protection_metrics import ContentProtectionTracker, ProtectionType, DetectionMethod, ThreatLevel
@@ -81,18 +81,18 @@ async def test_monitoring_components():
         )
         
         analytics = await protection_tracker.get_protection_analytics(period_days=7)
-        print(f"✅ Content protection working - Total scans: {analytics['summary']['total_scans']}")
+        print(f" Content protection working - Total scans: {analytics['summary']['total_scans']}")
         
-        print("✅ All monitoring components working correctly!")
+        print(" All monitoring components working correctly!")
         
     except Exception as e:
-        print(f"❌ Error testing monitoring components: {e}")
+        print(f" Error testing monitoring components: {e}")
         import traceback
         traceback.print_exc()
 
 async def test_performance_profiler():
     """Test performance profiler"""
-    print("\n⚡ Testing Performance Profiler...")
+    print("\n Testing Performance Profiler...")
     
     try:
         from monitoring.profiling.performance_profiler import PerformanceProfiler, ProfilerType
@@ -108,31 +108,31 @@ async def test_performance_profiler():
         
         # Profile the function
         profile_data = await profiler.profile_function(test_function)
-        print(f"✅ Function profiling working - Execution time: {profile_data['execution_time']:.4f}s")
+        print(f" Function profiling working - Execution time: {profile_data['execution_time']:.4f}s")
         
         # Get real-time metrics
         metrics = await profiler.get_real_time_metrics()
-        print(f"✅ Real-time metrics working - CPU: {metrics['system']['cpu_percent']:.1f}%")
+        print(f" Real-time metrics working - CPU: {metrics['system']['cpu_percent']:.1f}%")
         
         # Start profiling session
         session_id = await profiler.start_profiling([ProfilerType.CPU, ProfilerType.MEMORY], duration_seconds=5)
-        print(f"✅ Profiling session started: {session_id}")
+        print(f" Profiling session started: {session_id}")
         
         # Wait a bit and stop
         await asyncio.sleep(2)
         report = await profiler.stop_profiling(session_id)
-        print(f"✅ Profiling session completed - Duration: {report['duration']:.1f}s")
+        print(f" Profiling session completed - Duration: {report['duration']:.1f}s")
         
-        print("✅ Performance profiler working correctly!")
+        print(" Performance profiler working correctly!")
         
     except Exception as e:
-        print(f"❌ Error testing performance profiler: {e}")
+        print(f" Error testing performance profiler: {e}")
         import traceback
         traceback.print_exc()
 
 def test_security_hardening():
     """Test security hardening"""
-    print("\n🔒 Testing Security Hardening...")
+    print("\n Testing Security Hardening...")
     
     try:
         # Test basic import and initialization
@@ -143,25 +143,25 @@ def test_security_hardening():
         
         # Test security status
         status = hardening.get_security_status()
-        print(f"✅ Security status retrieved - Policies: {status.get('security_policies', 0)}")
+        print(f" Security status retrieved - Policies: {status.get('security_policies', 0)}")
         
         # Test audit (simplified)
         audit = hardening._run_security_audit()
         if audit:
-            print(f"✅ Security audit completed - {audit.passed_checks} passed, {audit.failed_checks} failed")
+            print(f" Security audit completed - {audit.passed_checks} passed, {audit.failed_checks} failed")
         else:
-            print("⚠️ Security audit returned None")
+            print(" Security audit returned None")
         
-        print("✅ Security hardening working correctly!")
+        print(" Security hardening working correctly!")
         
     except Exception as e:
-        print(f"❌ Error testing security hardening: {e}")
+        print(f" Error testing security hardening: {e}")
         import traceback
         traceback.print_exc()
 
 def test_alert_system():
     """Test alert system"""
-    print("\n🚨 Testing Alert System...")
+    print("\n Testing Alert System...")
     
     try:
         from monitoring.alerts.revenue_anomaly import RevenueAnomalyDetector, AnomalyType, AlertSeverity
@@ -173,16 +173,16 @@ def test_alert_system():
         # Create anomaly detector
         detector = RevenueAnomalyDetector(revenue_tracker)
         
-        print("✅ Alert system components loaded successfully!")
+        print(" Alert system components loaded successfully!")
         
     except Exception as e:
-        print(f"❌ Error testing alert system: {e}")
+        print(f" Error testing alert system: {e}")
         import traceback
         traceback.print_exc()
 
 async def main():
     """Main test function"""
-    print("🚀 Testing Production Infrastructure Implementation")
+    print(" Testing Production Infrastructure Implementation")
     print("=" * 60)
     
     # Test monitoring components
@@ -198,22 +198,22 @@ async def main():
     test_alert_system()
     
     print("\n" + "=" * 60)
-    print("🎉 Production infrastructure testing completed!")
-    print("\n📊 Summary:")
-    print("- ✅ Advanced monitoring metrics with Prometheus integration")
-    print("- ✅ Real-time performance profiling and optimization")
-    print("- ✅ Enhanced security hardening with compliance checks")
-    print("- ✅ Intelligent alerting and anomaly detection")
-    print("- ✅ CI/CD workflows with automated testing and security scanning")
+    print(" Production infrastructure testing completed!")
+    print("\n Summary:")
+    print("-  Advanced monitoring metrics with Prometheus integration")
+    print("-  Real-time performance profiling and optimization")
+    print("-  Enhanced security hardening with compliance checks")
+    print("-  Intelligent alerting and anomaly detection")
+    print("-  CI/CD workflows with automated testing and security scanning")
 
 if __name__ == "__main__":
     # Handle missing dependencies gracefully
     try:
         asyncio.run(main())
     except ImportError as e:
-        print(f"⚠️ Missing dependencies: {e}")
+        print(f" Missing dependencies: {e}")
         print("Run 'pip install -r requirements.txt' to install dependencies")
     except Exception as e:
-        print(f"❌ Test execution error: {e}")
+        print(f" Test execution error: {e}")
         import traceback
         traceback.print_exc()

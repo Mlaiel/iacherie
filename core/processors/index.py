@@ -7,7 +7,7 @@ Provides unified access to all industrial-grade processing capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 This software is proprietary and confidential. Any unauthorized use, copying, 
 distribution, or commercialization without explicit written permission is 
 strictly prohibited and will result in legal action.
@@ -84,7 +84,7 @@ PROCESSOR_CLASSES = {
 
 class ProcessorManager:
     """
-    🏭 ENTERPRISE PROCESSOR MANAGER
+     ENTERPRISE PROCESSOR MANAGER
     
     Central management system for all content processors with unified
     initialization, health monitoring, and resource management.
@@ -118,6 +118,9 @@ class ProcessorManager:
         Returns:
             Initialization result
         """
+
+
+
         try:
             if processor_type not in PROCESSOR_FACTORIES:
                 return {
@@ -147,7 +150,7 @@ class ProcessorManager:
             # Register with registry
             self._registry.register_processor(processor_type, processor)
             
-            self.logger.info(f"✅ Processor '{processor_type}' initialized successfully")
+            self.logger.info(f" Processor '{processor_type}' initialized successfully")
             
             return {
                 "success": True,
@@ -157,7 +160,7 @@ class ProcessorManager:
             }
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize processor '{processor_type}': {e}")
+            self.logger.error(f" Failed to initialize processor '{processor_type}': {e}")
             return {
                 "success": False,
                 "processor_type": processor_type,
@@ -177,6 +180,9 @@ class ProcessorManager:
         Returns:
             Initialization results for all processors
         """
+
+
+
         try:
             results = {}
             successful_inits = 0
@@ -231,6 +237,9 @@ class ProcessorManager:
         Returns:
             Processor instance or None
         """
+
+
+
         return self._processors.get(processor_type)
     
     def get_all_processors(self) -> Dict[str, Any]:
@@ -240,6 +249,9 @@ class ProcessorManager:
         Returns:
             Dictionary of all processor instances
         """
+
+
+
         return self._processors.copy()
     
     async def health_check_all(self) -> Dict[str, Any]:
@@ -249,6 +261,9 @@ class ProcessorManager:
         Returns:
             Health check results for all processors
         """
+
+
+
         try:
             health_results = {}
             healthy_count = 0
@@ -301,6 +316,9 @@ class ProcessorManager:
         Returns:
             Shutdown results
         """
+
+
+
         try:
             shutdown_results = {}
             successful_shutdowns = 0
@@ -356,6 +374,9 @@ class ProcessorManager:
         Returns:
             Processor information
         """
+
+
+
         return {
             "available_processors": list(PROCESSOR_FACTORIES.keys()),
             "initialized_processors": list(self._processors.keys()),
@@ -512,25 +533,37 @@ MODULE_INFO = {
 
 def get_module_info() -> Dict[str, Any]:
     """Get module information"""
+
+
+
     return MODULE_INFO.copy()
 
 
 def list_available_processors() -> List[str]:
     """List all available processor types"""
+
+
+
     return list(PROCESSOR_FACTORIES.keys())
 
 
 def get_processor_class(processor_type: str) -> Optional[Type]:
     """Get processor class by type"""
+
+
+
     return PROCESSOR_CLASSES.get(processor_type)
 
 
 def is_processor_available(processor_type: str) -> bool:
     """Check if a processor type is available"""
+
+
+
     return processor_type in PROCESSOR_FACTORIES
 
 
 # Print module loading confirmation
-logger.info("🏭 IA-Influencer-Agent Processors Module Loaded Successfully")
-logger.info(f"📊 Available Processors: {', '.join(list_available_processors())}")
-logger.info("⚡ Ready for industrial-grade content processing")
+logger.info(" IA-Influencer-Agent Processors Module Loaded Successfully")
+logger.info(f" Available Processors: {', '.join(list_available_processors())}")
+logger.info(" Ready for industrial-grade content processing")

@@ -1,12 +1,12 @@
 """
-🔧 Cloud Environment Configuration - IA-Influencer-Agent
+ Cloud Environment Configuration - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps + Backend Senior + ML Engineer + Cloud Architect
 Date: 2025-08-15
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -230,6 +230,9 @@ class CloudConfigManager(BaseEnvironmentConfigManager):
         
     def _get_aws_secret(self, secret_name: str) -> str:
         """Récupère un secret depuis AWS Secrets Manager"""
+
+
+
         try:
             import boto3
             client = boto3.client('secretsmanager', region_name=self.storage_config.aws_region if self.storage_config else 'eu-central-1')
@@ -240,6 +243,9 @@ class CloudConfigManager(BaseEnvironmentConfigManager):
             
     def _get_azure_secret(self, secret_name: str) -> str:
         """Récupère un secret depuis Azure Key Vault"""
+
+
+
         try:
             from azure.keyvault.secrets import SecretClient
             from azure.identity import DefaultAzureCredential
@@ -254,6 +260,9 @@ class CloudConfigManager(BaseEnvironmentConfigManager):
             
     def _get_gcp_secret(self, secret_name: str) -> str:
         """Récupère un secret depuis GCP Secret Manager"""
+
+
+
         try:
             from google.cloud import secretmanager
             client = secretmanager.SecretManagerServiceClient()
@@ -282,6 +291,9 @@ class CloudConfigManager(BaseEnvironmentConfigManager):
         
     def validate_configuration(self) -> bool:
         """Valide la configuration cloud"""
+
+
+
         try:
             # Vérifications cloud génériques
             assert self.database_config is not None, "Configuration base de données requise"
@@ -301,11 +313,14 @@ class CloudConfigManager(BaseEnvironmentConfigManager):
             return True
             
         except (AssertionError, AttributeError) as e:
-            print(f"❌ Erreur validation configuration cloud: {e}")
+            print(f" Erreur validation configuration cloud: {e}")
             return False
             
     def get_cloud_features(self) -> Dict[str, Any]:
         """Fonctionnalités spécifiques cloud"""
+
+
+
         return {
             "cloud_native": True,
             "auto_scaling": True,
@@ -408,6 +423,9 @@ class CloudConfigManager(BaseEnvironmentConfigManager):
         
     def get_cost_optimization_config(self) -> Dict[str, Any]:
         """Configuration optimisation coûts"""
+
+
+
         return {
             "auto_shutdown": {
                 "enabled": bool(os.getenv("COST_AUTO_SHUTDOWN", True)),

@@ -1,5 +1,5 @@
 """
-🌐 Middleware - IA-Influencer-Agent API Layer
+ Middleware - IA-Influencer-Agent API Layer
 ==================================================================
 Expert: BACKEND_SENIOR + MICROSERVICES_ARCHITECT
 Architecture: RESTful API + GraphQL + WebSocket
@@ -47,6 +47,9 @@ class APIError(BaseModel):
 
 async def authentication_middleware(request: Request, credentials: HTTPAuthorizationCredentials = Depends(security)):
     """Middleware d'authentification"""
+
+
+
     try:
         # JWT validation implementation
         import jwt
@@ -141,6 +144,9 @@ class MiddlewareAPI:
         @self.app.get("/health")
         async def health_check():
             """Vérification de santé de l'API"""
+
+
+
             return APIResponse(
                 success=True,
                 data={"status": "healthy", "version": "1.0.0"},
@@ -153,9 +159,12 @@ class MiddlewareAPI:
             auth_data: dict = Depends(authentication_middleware)
         ):
             """Récupération des données"""
+
+
+
             try:
                 # Implement business logic for data retrieval
-                logger.info(f"🔄 Retrieving data for user {auth_data['user_id']}")
+                logger.info(f" Retrieving data for user {auth_data['user_id']}")
                 
                 # Validate request parameters
                 request_data = {
@@ -199,9 +208,12 @@ class MiddlewareAPI:
             auth_data: dict = Depends(authentication_middleware)
         ):
             """Création de données"""
+
+
+
             try:
                 # Implement validation and creation logic
-                logger.info(f"🔄 Creating data for user {auth_data['user_id']}")
+                logger.info(f" Creating data for user {auth_data['user_id']}")
                 
                 # Validate input data
                 if not data or not isinstance(data, dict):
@@ -278,6 +290,9 @@ class WebSocketManager:
 
 def create_middleware_api(app: FastAPI) -> MiddlewareAPI:
     """Factory pour créer l'API Middleware"""
+
+
+
     return MiddlewareAPI(app)
 
 __all__ = [

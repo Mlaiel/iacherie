@@ -53,11 +53,17 @@ class TestSEOOptimizer:
     @pytest.fixture
     def optimizer(self):
         """Create an SEO optimizer instance"""
+
+
+
         return SEOOptimizer()
     
     @pytest.fixture
     def sample_content(self):
         """Create sample content for SEO analysis"""
+
+
+
         return """
         # The Future of Artificial Intelligence in 2025
         
@@ -85,6 +91,9 @@ class TestSEOOptimizer:
     @pytest.fixture
     def target_keywords(self):
         """Create sample target keywords"""
+
+
+
         return [
             "artificial intelligence",
             "AI technology",

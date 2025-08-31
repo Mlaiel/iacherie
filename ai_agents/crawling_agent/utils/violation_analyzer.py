@@ -7,7 +7,7 @@ evidence collection, and automated response capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de
@@ -201,6 +201,9 @@ class ViolationAnalyzer:
     
     async def initialize(self):
         """Initialize violation analyzer components"""
+
+
+
         try:
             start_time = time.time()
             
@@ -370,6 +373,9 @@ class ViolationAnalyzer:
                                        violation_types: List[ViolationType],
                                        platform: str) -> ViolationSeverity:
         """Assess the severity of the violation"""
+
+
+
         try:
             # Base severity from similarity score
             base_score = similarity_match.similarity_score
@@ -620,6 +626,9 @@ class ViolationAnalyzer:
                                       similarity_match: SimilarityMatch,
                                       platform: str) -> float:
         """Calculate priority score for violation handling"""
+
+
+
         try:
             # Base score from severity
             severity_scores = {
@@ -673,6 +682,9 @@ class ViolationAnalyzer:
                               platform: str,
                               violation_types: List[ViolationType]) -> Optional[float]:
         """Estimate potential financial damages"""
+
+
+
         try:
             base_damage = 0.0
             
@@ -766,6 +778,9 @@ class ViolationAnalyzer:
                                       content_metadata: Dict[str, Any],
                                       violation_types: List[ViolationType]) -> float:
         """Assess the commercial impact of the violation"""
+
+
+
         try:
             impact_score = 0.0
             
@@ -807,6 +822,9 @@ class ViolationAnalyzer:
                                             content_metadata: Dict[str, Any],
                                             platform: str) -> Dict[str, Any]:
         """Analyze jurisdictional factors for legal action"""
+
+
+
         try:
             factors = {
                 'target_jurisdiction': 'unknown',
@@ -896,6 +914,9 @@ class ViolationAnalyzer:
                                         fair_use_likelihood: float,
                                         precedent_count: int) -> float:
         """Calculate confidence in legal assessment"""
+
+
+
         try:
             # Base confidence from copyright strength
             confidence = copyright_strength * 0.4
@@ -954,6 +975,9 @@ class ViolationAnalyzer:
     
     async def generate_takedown_notice(self, analysis: ViolationAnalysis) -> Dict[str, Any]:
         """Generate DMCA takedown notice for the violation"""
+
+
+
         try:
             if ActionType.DMCA_TAKEDOWN in analysis.recommended_actions:
                 notice = await self.dmca_generator.generate_notice(
@@ -973,6 +997,9 @@ class ViolationAnalyzer:
                                    new_status: ViolationStatus,
                                    action_taken: Optional[str] = None):
         """Update the status of a violation analysis"""
+
+
+
         try:
             if analysis_id in self.analysis_cache:
                 analysis = self.analysis_cache[analysis_id]
@@ -995,6 +1022,9 @@ class ViolationAnalyzer:
     
     async def get_violation_statistics(self) -> Dict[str, Any]:
         """Get comprehensive violation analysis statistics"""
+
+
+
         try:
             stats = self.analysis_stats.copy()
             
@@ -1029,6 +1059,9 @@ class ViolationAnalyzer:
     
     async def cleanup(self):
         """Cleanup analyzer resources"""
+
+
+
         try:
             # Clear cache
             self.analysis_cache.clear()

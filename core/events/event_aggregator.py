@@ -4,7 +4,7 @@ Module: backend/core/events/event_aggregator.py
 Architecture: Event Stream Processing and Analytics
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 
 Description:
@@ -225,6 +225,9 @@ class EventBuffer:
     
     def size(self) -> int:
         """Retourne la taille du buffer"""
+
+
+
         return len(self._events)
 
 
@@ -371,6 +374,9 @@ class AggregationProcessor:
     
     def _compute_aggregation(self, window: AggregationWindow) -> Optional[AggregationResult]:
         """Calcule l'agrégation pour une fenêtre"""
+
+
+
         try:
             # Récupération des valeurs pour cette fenêtre
             window_values = []
@@ -486,6 +492,9 @@ class EventAggregator:
     
     def register_rule(self, rule: AggregationRule) -> bool:
         """Enregistre une règle d'agrégation"""
+
+
+
         try:
             self._rules[rule.rule_id] = rule
             self._processors[rule.rule_id] = AggregationProcessor(rule)
@@ -647,6 +656,9 @@ class EventAggregator:
     
     def get_stats(self) -> Dict[str, Any]:
         """Retourne les statistiques complètes"""
+
+
+
         return {
             "stats": self._stats.copy(),
             "buffer_size": self._buffer.size(),
@@ -719,6 +731,9 @@ class EventProcessor:
     
     def _handle_aggregation_result(self, result: AggregationResult):
         """Traite les résultats d'agrégation"""
+
+
+
         try:
             # Alertes automatiques pour certains seuils
             if result.rule_id == "violations_per_tenant" and result.value > 10:
@@ -750,6 +765,9 @@ class EventProcessor:
     
     async def process_event(self, event: Event) -> List[AggregationResult]:
         """Point d'entrée principal pour traitement d'événements"""
+
+
+
         return await self.aggregator.process_event(event)
 
 

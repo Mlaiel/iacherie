@@ -114,6 +114,9 @@ class BlockchainManager:
     
     def _initialize_networks(self) -> Dict[str, BlockchainNetwork]:
         """Initialize blockchain network configurations"""
+
+
+
         return {
             "ethereum_mainnet": BlockchainNetwork(
                 name="Ethereum Mainnet",
@@ -159,6 +162,9 @@ class BlockchainManager:
     
     async def initialize(self) -> None:
         """Initialize blockchain connections and services"""
+
+
+
         try:
             logger.info("Initializing blockchain connections...")
             
@@ -213,6 +219,9 @@ class BlockchainManager:
     
     async def _test_network_connection(self, web3: Web3) -> bool:
         """Test blockchain network connection"""
+
+
+
         try:
             # Test if we can get the latest block
             latest_block = web3.eth.block_number
@@ -234,6 +243,9 @@ class BlockchainManager:
         This creates an immutable record of content ownership and metadata
         that can be used for copyright protection and licensing.
         """
+
+
+
         try:
             logger.info(f"Registering content rights for content {content_id}")
             
@@ -302,6 +314,9 @@ class BlockchainManager:
         This mints an NFT representing licensing rights for the content,
         enabling automated licensing and royalty distribution.
         """
+
+
+
         try:
             logger.info(f"Creating NFT license for content {content_id}")
             
@@ -384,6 +399,9 @@ class BlockchainManager:
         Supports Bitcoin, Ethereum, and other major cryptocurrencies
         as specified in the cahier des charges.
         """
+
+
+
         try:
             logger.info(f"Processing crypto payment: {amount} {currency}")
             
@@ -441,6 +459,9 @@ class BlockchainManager:
         Uses smart contracts to ensure transparent and automatic distribution
         based on predefined rules and percentages.
         """
+
+
+
         try:
             logger.info(f"Distributing royalties for content {content_id}: {total_revenue}")
             
@@ -509,6 +530,9 @@ class BlockchainManager:
         Enables community governance of platform parameters, upgrades,
         and policy decisions through democratic voting.
         """
+
+
+
         try:
             logger.info(f"Creating governance proposal: {title}")
             
@@ -580,6 +604,9 @@ class BlockchainManager:
         Enables cross-chain functionality for multi-network operations
         and asset mobility across supported blockchain ecosystems.
         """
+
+
+
         try:
             logger.info(f"Bridging {amount} {token} from {from_network} to {to_network}")
             
@@ -777,6 +804,9 @@ class BlockchainManager:
     
     async def cleanup(self) -> None:
         """Cleanup blockchain connections and resources"""
+
+
+
         try:
             logger.info("Cleaning up blockchain manager...")
             

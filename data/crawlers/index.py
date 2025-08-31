@@ -82,6 +82,9 @@ class CrawlerFactory:
         Returns:
             Dictionary of results per platform
         """
+
+
+
         try:
             # Initialize manager if needed
             if not self.manager:
@@ -130,6 +133,9 @@ class CrawlerFactory:
         Returns:
             List of created task IDs
         """
+
+
+
         try:
             # Initialize manager if needed
             if not self.manager:
@@ -178,6 +184,9 @@ class CrawlerFactory:
         Returns:
             Configured crawler instance
         """
+
+
+
         try:
             # Merge default config with overrides
             base_config = self.default_configs.get(crawler_type, {})
@@ -225,6 +234,9 @@ class CrawlerFactory:
     
     def _get_default_configs(self) -> Dict[str, Dict[str, Any]]:
         """Get default configurations for all crawler types"""
+
+
+
         return {
             'youtube': {
                 'api_key': None,  # Must be provided

@@ -88,6 +88,9 @@ class PerformanceAnalyticsEngine:
         
     async def initialize(self) -> None:
         """Initialize analytics engine with database connections and models"""
+
+
+
         try:
             await self._setup_database_tables()
             await self._load_historical_data()
@@ -147,6 +150,9 @@ class PerformanceAnalyticsEngine:
 
     def _train_performance_models(self, df: pd.DataFrame) -> None:
         """Train ML models with historical performance data"""
+
+
+
         try:
             # Extract features from metrics
             metrics_features = []
@@ -178,6 +184,9 @@ class PerformanceAnalyticsEngine:
 
     async def track_performance_real_time(self, content_id: str, platform: str) -> PerformanceSnapshot:
         """Track real-time performance metrics for content"""
+
+
+
         try:
             # Get current metrics from platform APIs
             current_metrics = await self._fetch_platform_metrics(content_id, platform)
@@ -242,6 +251,9 @@ class PerformanceAnalyticsEngine:
 
     async def _calculate_performance_score(self, metrics: Dict[str, Any], platform: str) -> float:
         """Calculate normalized performance score (0-100)"""
+
+
+
         try:
             # Weighted scoring based on platform characteristics
             platform_weights = {
@@ -267,6 +279,9 @@ class PerformanceAnalyticsEngine:
 
     async def _calculate_trending_probability(self, metrics: Dict[str, Any], content_id: str) -> float:
         """Calculate probability of content trending (0-1)"""
+
+
+
         try:
             # Get historical performance for comparison
             historical_avg = await self._get_historical_average_performance(content_id)
@@ -293,6 +308,9 @@ class PerformanceAnalyticsEngine:
 
     async def _get_historical_average_performance(self, content_id: str) -> Dict[str, float]:
         """Get historical average performance metrics"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 result = await conn.fetchrow("""
@@ -318,6 +336,9 @@ class PerformanceAnalyticsEngine:
 
     async def _store_performance_snapshot(self, snapshot: PerformanceSnapshot) -> None:
         """Store performance snapshot in database"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 await conn.execute("""
@@ -339,6 +360,9 @@ class PerformanceAnalyticsEngine:
 
     async def generate_performance_insights(self, content_id: str) -> List[PerformanceInsight]:
         """Generate AI-powered performance insights and recommendations"""
+
+
+
         try:
             # Get recent performance data
             recent_snapshots = await self._get_recent_snapshots(content_id, limit=10)
@@ -375,6 +399,9 @@ class PerformanceAnalyticsEngine:
 
     async def _get_recent_snapshots(self, content_id: str, limit: int = 10) -> List[PerformanceSnapshot]:
         """Get recent performance snapshots for analysis"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 records = await conn.fetch("""
@@ -449,6 +476,9 @@ class PerformanceAnalyticsEngine:
 
     async def _analyze_engagement_patterns(self, snapshots: List[PerformanceSnapshot]) -> Optional[PerformanceInsight]:
         """Analyze engagement patterns for optimization"""
+
+
+
         try:
             engagement_rates = [s.metrics.get('engagement_rate', 0) for s in snapshots]
             avg_engagement = np.mean(engagement_rates)
@@ -474,6 +504,9 @@ class PerformanceAnalyticsEngine:
 
     async def _analyze_optimal_timing(self, snapshots: List[PerformanceSnapshot]) -> Optional[PerformanceInsight]:
         """Analyze optimal posting timing"""
+
+
+
         try:
             # Group by hour and calculate average performance
             hourly_performance = {}
@@ -511,6 +544,9 @@ class PerformanceAnalyticsEngine:
 
     async def _store_performance_insight(self, insight: PerformanceInsight) -> None:
         """Store performance insight in database"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 await conn.execute("""
@@ -534,6 +570,9 @@ class PerformanceAnalyticsEngine:
 
     async def get_performance_dashboard_data(self, creator_id: str, timeframe: str = "7d") -> Dict[str, Any]:
         """Get comprehensive performance data for dashboard"""
+
+
+
         try:
             timeframe_mapping = {
                 '1d': timedelta(days=1),
@@ -608,6 +647,9 @@ class PerformanceAnalyticsEngine:
 
     async def optimize_content_strategy(self, creator_id: str) -> Dict[str, Any]:
         """Generate AI-powered content strategy optimization recommendations"""
+
+
+
         try:
             # Get comprehensive performance data
             dashboard_data = await self.get_performance_dashboard_data(creator_id, "30d")
@@ -655,6 +697,9 @@ class PerformanceAnalyticsEngine:
 
     async def _optimize_content_format(self, creator_id: str) -> Dict[str, Any]:
         """Optimize content format strategy"""
+
+
+
         return {
             'high_performing_formats': ['Short-form video', 'Carousel posts', 'Stories'],
             'underperforming_formats': ['Long-form text', 'Static images'],
@@ -668,6 +713,9 @@ class PerformanceAnalyticsEngine:
 
     async def _optimize_engagement_strategy(self, creator_id: str) -> Dict[str, Any]:
         """Optimize audience engagement tactics"""
+
+
+
         return {
             'engagement_tactics': [
                 'Use interactive stickers in stories',
@@ -682,6 +730,9 @@ class PerformanceAnalyticsEngine:
 
     async def _set_performance_targets(self, creator_id: str) -> Dict[str, Any]:
         """Set realistic performance targets based on historical data"""
+
+
+
         return {
             'monthly_targets': {
                 'engagement_rate': 4.5,

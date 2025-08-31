@@ -190,6 +190,9 @@ class ProtectionManager:
     
     async def start_protection_service(self):
         """Start the protection service background tasks"""
+
+
+
         try:
             # Start job processor
             job_processor_task = asyncio.create_task(self._process_job_queue())
@@ -211,6 +214,9 @@ class ProtectionManager:
     
     async def stop_protection_service(self):
         """Stop the protection service and cleanup"""
+
+
+
         try:
             # Cancel all background tasks
             for task in self.background_tasks:
@@ -241,6 +247,9 @@ class ProtectionManager:
                             search_terms: Optional[List[str]] = None,
                             metadata: Optional[Dict[str, Any]] = None) -> str:
         """Start protection for new content"""
+
+
+
         try:
             # Generate content ID
             content_id = str(uuid.uuid4())
@@ -344,6 +353,9 @@ class ProtectionManager:
     
     async def _process_fingerprint_job(self, job: ProtectionJob):
         """Process fingerprinting job"""
+
+
+
         try:
             job.status = "running"
             job.progress = 0.1
@@ -378,6 +390,9 @@ class ProtectionManager:
     
     async def _process_monitoring_job(self, job: ProtectionJob):
         """Process monitoring setup job"""
+
+
+
         try:
             job.status = "running"
             job.progress = 0.1
@@ -423,6 +438,9 @@ class ProtectionManager:
     
     async def _process_detection_job(self, job: ProtectionJob):
         """Process violation detection job"""
+
+
+
         try:
             job.status = "running"
             job.progress = 0.1
@@ -531,6 +549,9 @@ class ProtectionManager:
     
     async def _quick_violation_check(self, content_id: str, urls: List[str]):
         """Perform quick violation check for real-time alerts"""
+
+
+
         try:
             content = self.protected_content[content_id]
             
@@ -620,6 +641,9 @@ class ProtectionManager:
     
     async def stop_protection(self, content_id: str) -> bool:
         """Stop protection for specific content"""
+
+
+
         try:
             if content_id not in self.protected_content:
                 return False
@@ -645,6 +669,9 @@ class ProtectionManager:
                                      content_id: str, 
                                      config_name: str) -> bool:
         """Update protection configuration for content"""
+
+
+
         try:
             if content_id not in self.protected_content:
                 return False

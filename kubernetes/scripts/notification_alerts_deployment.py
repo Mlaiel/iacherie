@@ -15,7 +15,7 @@ Project Team Specializations:
 - Mobile Engineer + Push Notifications
 - Communication Engineer + Multi-channel
 
-⚠️ STRONG WARNING FOR UNAUTHORIZED USE:
+ STRONG WARNING FOR UNAUTHORIZED USE:
 This code contains proprietary notification algorithms and trade secrets of Fahed Mlaiel.
 Any unauthorized copying, modification, distribution, or use of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is
@@ -311,6 +311,9 @@ class NotificationAlertsDeploymentManager:
     
     def _init_kubernetes_client(self):
         """Initialize Kubernetes client"""
+
+
+
         try:
             config.load_incluster_config()
         except:
@@ -330,6 +333,9 @@ class NotificationAlertsDeploymentManager:
     
     def _init_docker_client(self):
         """Initialize Docker client"""
+
+
+
         try:
             self.docker_client = docker.from_env()
             logger.info("Docker client initialized")
@@ -339,6 +345,9 @@ class NotificationAlertsDeploymentManager:
     
     def _init_database_client(self):
         """Initialize database client"""
+
+
+
         try:
             db_url = os.getenv('DATABASE_URL', 'postgresql://user:pass@localhost:5432/ia_influencer')
             self.db_engine = create_engine(db_url)
@@ -349,6 +358,9 @@ class NotificationAlertsDeploymentManager:
     
     def _init_redis_client(self):
         """Initialize Redis client for caching and rate limiting"""
+
+
+
         try:
             redis_host = os.getenv('REDIS_HOST', 'localhost')
             redis_port = int(os.getenv('REDIS_PORT', '6379'))
@@ -368,6 +380,9 @@ class NotificationAlertsDeploymentManager:
     
     def _init_message_queue_client(self):
         """Initialize message queue for notification processing"""
+
+
+
         try:
             # RabbitMQ or similar message queue
             rabbitmq_url = os.getenv('RABBITMQ_URL', 'amqp://guest:guest@localhost:5672/')
@@ -1356,6 +1371,9 @@ class NotificationAlertsDeploymentManager:
     
     def send_notification(self, notification_request: NotificationRequest) -> Dict[str, Any]:
         """Send notification through the system"""
+
+
+
         try:
             # Validate request
             if notification_request.template_id not in self.templates:
@@ -1451,6 +1469,9 @@ class NotificationAlertsDeploymentManager:
     
     def _create_namespace(self, namespace: str):
         """Create Kubernetes namespace if it doesn't exist"""
+
+
+
         try:
             self.core_v1.read_namespace(name=namespace)
         except ApiException as e:
@@ -1465,6 +1486,9 @@ class NotificationAlertsDeploymentManager:
     
     def _create_or_update_configmap(self, configmap_manifest: Dict[str, Any]):
         """Create or update ConfigMap"""
+
+
+
         try:
             self.core_v1.read_namespaced_config_map(
                 name=configmap_manifest['metadata']['name'],
@@ -1549,7 +1573,7 @@ def main():
     
     # Deploy notification system
     if manager.deploy_notification_system(deployment_config):
-        print("✅ Notification and alerting system deployed successfully")
+        print(" Notification and alerting system deployed successfully")
     
     # Example notification request
     notification_request = NotificationRequest(
@@ -1568,13 +1592,13 @@ def main():
     
     # Send notification
     result = manager.send_notification(notification_request)
-    print(f"✅ Notification sent: {result['status']}")
+    print(f" Notification sent: {result['status']}")
     
     # Health check
     health = manager.health_check()
-    print(f"✅ Health check completed: {health['overall_status']}")
+    print(f" Health check completed: {health['overall_status']}")
     
-    print("\n🎯 Notification Alerts Deployment Manager test completed")
+    print("\n Notification Alerts Deployment Manager test completed")
 
 
 if __name__ == "__main__":

@@ -412,6 +412,9 @@ class DeezerEngine:
     
     def _is_cache_valid(self, cache_time: datetime) -> bool:
         """Check if cached data is still valid"""
+
+
+
         return datetime.utcnow() - cache_time < self.cache_ttl
     
     def _get_cached_result(self, key: str) -> Optional[Any]:
@@ -606,6 +609,9 @@ class DeezerEngine:
     
     async def _extract_track_metadata_api(self, track_id: str) -> Optional[TrackMetadata]:
         """Extract track metadata using Deezer API"""
+
+
+
         try:
             api_url = f"{self.api_url}/track/{track_id}"
             response = await self._make_request(api_url)
@@ -724,6 +730,9 @@ class DeezerEngine:
     
     async def _extract_lyrics(self, track_id: str) -> Optional[str]:
         """Extract track lyrics"""
+
+
+
         try:
             # Lyrics extraction would require additional API endpoints
             # This is a placeholder for the implementation
@@ -1218,24 +1227,24 @@ async def main():
         result = await engine.extract(test_urls[0])
         
         if result.success:
-            print(f"✅ Successfully extracted: {result.track_metadata.title}")
-            print(f"🎵 Artist: {result.track_metadata.artist_name}")
-            print(f"💿 Album: {result.track_metadata.album_name}")
-            print(f"⏱️ Duration: {result.track_metadata.duration}s")
-            print(f"🎨 Artwork: {len(result.track_metadata.album_art)} sizes")
+            print(f" Successfully extracted: {result.track_metadata.title}")
+            print(f" Artist: {result.track_metadata.artist_name}")
+            print(f" Album: {result.track_metadata.album_name}")
+            print(f"⏱ Duration: {result.track_metadata.duration}s")
+            print(f" Artwork: {len(result.track_metadata.album_art)} sizes")
         else:
-            print(f"❌ Extraction failed: {result.errors}")
+            print(f" Extraction failed: {result.errors}")
         
         # Batch extraction
         print("\nBatch extracting...")
         results = await engine.batch_extract(test_urls[:2])
         
         successful = sum(1 for r in results if r.success)
-        print(f"✅ Successfully extracted {successful}/{len(results)} items")
+        print(f" Successfully extracted {successful}/{len(results)} items")
         
         # Print statistics
         stats = engine.get_stats()
-        print(f"\n📈 Engine Statistics:")
+        print(f"\n Engine Statistics:")
         print(f"Success rate: {stats['success_rate']:.1f}%")
         print(f"Requests made: {stats['requests_made']}")
         print(f"Cache hits: {stats['cache_hits']}")

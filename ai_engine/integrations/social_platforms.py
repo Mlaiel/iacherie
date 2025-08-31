@@ -151,6 +151,9 @@ class YouTubeConnector(BasePlatformConnector):
     
     async def authenticate(self) -> bool:
         """Authenticate with YouTube API"""
+
+
+
         try:
             # Test authentication with a simple API call
             url = f"{self.BASE_URL}/channels"
@@ -178,6 +181,9 @@ class YouTubeConnector(BasePlatformConnector):
     
     async def post_content(self, content: ContentPost) -> PostResult:
         """Post video content to YouTube"""
+
+
+
         try:
             if not self.check_rate_limit():
                 return PostResult(
@@ -226,6 +232,9 @@ class YouTubeConnector(BasePlatformConnector):
     
     async def delete_post(self, post_id: str) -> bool:
         """Delete YouTube video"""
+
+
+
         try:
             # Simulate deletion
             self.logger.info(f"Deleted YouTube video: {post_id}")
@@ -241,6 +250,9 @@ class InstagramConnector(BasePlatformConnector):
     
     async def authenticate(self) -> bool:
         """Authenticate with Instagram Graph API"""
+
+
+
         try:
             # Test authentication
             url = f"{self.BASE_URL}/me"
@@ -267,6 +279,9 @@ class InstagramConnector(BasePlatformConnector):
     
     async def post_content(self, content: ContentPost) -> PostResult:
         """Post content to Instagram"""
+
+
+
         try:
             if not self.check_rate_limit():
                 return PostResult(
@@ -300,6 +315,9 @@ class InstagramConnector(BasePlatformConnector):
     
     async def get_analytics(self, post_id: str, date_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
         """Get Instagram post analytics"""
+
+
+
         return {
             "likes": 150,
             "comments": 20,
@@ -311,6 +329,9 @@ class InstagramConnector(BasePlatformConnector):
     
     async def delete_post(self, post_id: str) -> bool:
         """Delete Instagram post"""
+
+
+
         try:
             self.logger.info(f"Deleted Instagram post: {post_id}")
             return True
@@ -325,6 +346,9 @@ class TwitterConnector(BasePlatformConnector):
     
     async def authenticate(self) -> bool:
         """Authenticate with Twitter API"""
+
+
+
         try:
             # Test authentication with user info
             url = f"{self.BASE_URL}/users/me"
@@ -351,6 +375,9 @@ class TwitterConnector(BasePlatformConnector):
     
     async def post_content(self, content: ContentPost) -> PostResult:
         """Post tweet to Twitter"""
+
+
+
         try:
             if not self.check_rate_limit():
                 return PostResult(
@@ -384,6 +411,9 @@ class TwitterConnector(BasePlatformConnector):
     
     async def get_analytics(self, post_id: str, date_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
         """Get Twitter tweet analytics"""
+
+
+
         return {
             "likes": 75,
             "retweets": 25,
@@ -395,6 +425,9 @@ class TwitterConnector(BasePlatformConnector):
     
     async def delete_post(self, post_id: str) -> bool:
         """Delete Twitter tweet"""
+
+
+
         try:
             self.logger.info(f"Deleted Twitter tweet: {post_id}")
             return True
@@ -409,6 +442,9 @@ class LinkedInConnector(BasePlatformConnector):
     
     async def authenticate(self) -> bool:
         """Authenticate with LinkedIn API"""
+
+
+
         try:
             # Test authentication
             url = f"{self.BASE_URL}/me"
@@ -435,6 +471,9 @@ class LinkedInConnector(BasePlatformConnector):
     
     async def post_content(self, content: ContentPost) -> PostResult:
         """Post content to LinkedIn"""
+
+
+
         try:
             if not self.check_rate_limit():
                 return PostResult(
@@ -468,6 +507,9 @@ class LinkedInConnector(BasePlatformConnector):
     
     async def get_analytics(self, post_id: str, date_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
         """Get LinkedIn post analytics"""
+
+
+
         return {
             "likes": 45,
             "comments": 8,
@@ -479,6 +521,9 @@ class LinkedInConnector(BasePlatformConnector):
     
     async def delete_post(self, post_id: str) -> bool:
         """Delete LinkedIn post"""
+
+
+
         try:
             self.logger.info(f"Deleted LinkedIn post: {post_id}")
             return True
@@ -507,6 +552,9 @@ class SocialPlatformManager:
     
     def add_platform(self, credentials: PlatformCredentials) -> bool:
         """Add a platform with credentials"""
+
+
+
         try:
             platform = credentials.platform
             
@@ -599,6 +647,9 @@ class SocialPlatformManager:
     
     def schedule_post(self, platform: PlatformType, content: ContentPost, schedule_time: datetime) -> bool:
         """Schedule a post for future publishing"""
+
+
+
         try:
             content.schedule_time = schedule_time
             self.scheduled_posts.append((schedule_time, platform, content))
@@ -661,6 +712,9 @@ class SocialPlatformManager:
     
     def get_platform_status(self) -> Dict[PlatformType, PlatformStatus]:
         """Get status of all configured platforms"""
+
+
+
         return {platform: connector.status for platform, connector in self.connectors.items()}
     
     def get_posting_statistics(self) -> Dict[str, Any]:

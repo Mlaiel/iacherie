@@ -293,6 +293,9 @@ class SessionManager:
     
     def _proxy_to_dict(self, proxy: ProxyInfo) -> Dict:
         """Convert ProxyInfo to dictionary."""
+
+
+
         return {
             'host': proxy.host,
             'port': proxy.port,
@@ -303,6 +306,9 @@ class SessionManager:
     
     def _dict_to_proxy(self, proxy_dict: Dict) -> ProxyInfo:
         """Convert dictionary to ProxyInfo."""
+
+
+
         return ProxyInfo(
             host=proxy_dict['host'],
             port=proxy_dict['port'],
@@ -462,6 +468,9 @@ class SessionManager:
     
     def _save_session_state(self, session_id: str) -> None:
         """Save session state to disk."""
+
+
+
         try:
             state = self.session_states.get(session_id)
             metrics = self.session_metrics.get(session_id)
@@ -481,6 +490,9 @@ class SessionManager:
     
     def _load_session_states(self) -> None:
         """Load session states from disk."""
+
+
+
         try:
             for file_path in self.session_data_dir.glob("session_*.json"):
                 try:

@@ -12,7 +12,7 @@ Project: IA Influencer Agent + Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL WARNING:
+ CRITICAL LEGAL WARNING:
 This code, concept, and intellectual property are exclusively owned by Fahed Mlaiel.
 Any unauthorized use, copying, distribution, reverse engineering, or commercialization 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
@@ -186,6 +186,9 @@ class MultiFactorAuth:
         Returns:
             TOTP setup information including QR code
         """
+
+
+
         try:
             self.logger.info(f"Setting up TOTP for creator {creator_id}")
             
@@ -254,6 +257,9 @@ class MultiFactorAuth:
         Returns:
             True if verification successful
         """
+
+
+
         try:
             # Get MFA setup data
             cached_setup = await self.cache.get(f"mfa_setup:{creator_id}")
@@ -302,6 +308,9 @@ class MultiFactorAuth:
         Returns:
             True if verification successful
         """
+
+
+
         try:
             # Get verified MFA setup
             cached_setup = await self.cache.get(f"mfa_verified:{creator_id}")
@@ -342,6 +351,9 @@ class MultiFactorAuth:
         Returns:
             True if successful
         """
+
+
+
         try:
             await self.cache.delete(f"mfa_verified:{creator_id}")
             await self.cache.delete(f"mfa_setup:{creator_id}")
@@ -363,6 +375,9 @@ class MultiFactorAuth:
         Returns:
             MFA status information
         """
+
+
+
         try:
             cached_setup = await self.cache.get(f"mfa_verified:{creator_id}")
             if not cached_setup:
@@ -392,6 +407,9 @@ class MultiFactorAuth:
     
     async def _generate_qr_code(self, data: str) -> str:
         """Generate QR code as base64 image"""
+
+
+
         try:
             qr = qrcode.QRCode(version=1, box_size=10, border=5)
             qr.add_data(data)
@@ -452,6 +470,9 @@ class SessionManager:
         Returns:
             Created session information
         """
+
+
+
         try:
             session_id = str(uuid.uuid4())
             now = datetime.utcnow()
@@ -523,6 +544,9 @@ class SessionManager:
         Returns:
             Valid session information or None
         """
+
+
+
         try:
             # Get session from cache
             cached_session = await self.cache.get(f"session:{session_id}")
@@ -580,6 +604,9 @@ class SessionManager:
         Returns:
             True if successful
         """
+
+
+
         try:
             return await self._revoke_session(session_id)
             
@@ -598,6 +625,9 @@ class SessionManager:
         Returns:
             Number of sessions revoked
         """
+
+
+
         try:
             # Get all sessions for creator
             session_keys = await self.cache.get(f"user_sessions:{creator_id}")
@@ -641,6 +671,9 @@ class SessionManager:
         Returns:
             List of active session information
         """
+
+
+
         try:
             session_keys = await self.cache.get(f"user_sessions:{creator_id}")
             if not session_keys:
@@ -696,6 +729,9 @@ class SessionManager:
     
     async def _check_session_security(self, session: SessionInfo) -> None:
         """Check session for security threats"""
+
+
+
         try:
             threat_level = SecurityThreatLevel.LOW
             
@@ -714,6 +750,9 @@ class SessionManager:
     
     async def _is_suspicious_ip(self, ip_address: str) -> bool:
         """Check if IP address is suspicious"""
+
+
+
         try:
             # Implement IP reputation checking
             # For now, just check against some known bad networks
@@ -731,6 +770,9 @@ class SessionManager:
     
     async def _store_session(self, session: SessionInfo) -> None:
         """Store session in cache"""
+
+
+
         try:
             session_data = {
                 'session_id': session.session_id,
@@ -781,6 +823,9 @@ class SessionManager:
     
     async def _revoke_session(self, session_id: str) -> bool:
         """Revoke a specific session"""
+
+
+
         try:
             # Get session first
             cached_session = await self.cache.get(f"session:{session_id}")
@@ -825,6 +870,9 @@ class SessionManager:
     
     async def _cleanup_old_sessions(self, creator_id: str) -> None:
         """Clean up old sessions for a creator"""
+
+
+
         try:
             session_keys = await self.cache.get(f"user_sessions:{creator_id}")
             if not session_keys:
@@ -858,6 +906,9 @@ class SessionManager:
         details: Dict[str, Any]
     ) -> None:
         """Log security event"""
+
+
+
         try:
             event = SecurityEvent(
                 event_id=str(uuid.uuid4()),
@@ -936,6 +987,9 @@ class SecurityController:
         Returns:
             Security check results
         """
+
+
+
         try:
             security_issues = []
             threat_level = SecurityThreatLevel.LOW
@@ -983,6 +1037,9 @@ class SecurityController:
     
     async def record_failed_login(self, creator_id: str, request_info: Dict[str, Any]) -> None:
         """Record failed login attempt"""
+
+
+
         try:
             # Increment failed attempts counter
             failed_key = f"failed_logins:{creator_id}"
@@ -1012,6 +1069,9 @@ class SecurityController:
     
     async def record_successful_login(self, creator_id: str, request_info: Dict[str, Any]) -> None:
         """Record successful login attempt"""
+
+
+
         try:
             # Clear failed attempts
             await self.cache.delete(f"failed_logins:{creator_id}")
@@ -1037,6 +1097,9 @@ class SecurityController:
     
     async def _is_account_locked(self, creator_id: str) -> bool:
         """Check if account is locked"""
+
+
+
         try:
             locked_until = await self.cache.get(f"account_locked:{creator_id}")
             if not locked_until:
@@ -1051,6 +1114,9 @@ class SecurityController:
     
     async def _lock_account(self, creator_id: str) -> None:
         """Lock account temporarily"""
+
+
+
         try:
             unlock_time = datetime.utcnow() + timedelta(seconds=self.lockout_duration)
             await self.cache.set(
@@ -1066,6 +1132,9 @@ class SecurityController:
     
     async def _get_failed_attempts(self, creator_id: str) -> int:
         """Get number of failed attempts"""
+
+
+
         try:
             failed_count = await self.cache.get(f"failed_logins:{creator_id}")
             return int(failed_count) if failed_count else 0
@@ -1074,6 +1143,9 @@ class SecurityController:
     
     async def _is_unusual_ip(self, creator_id: str, ip_address: str) -> bool:
         """Check if IP address is unusual for this creator"""
+
+
+
         try:
             known_ips_key = f"known_ips:{creator_id}"
             known_ips = await self.cache.get(known_ips_key)
@@ -1090,6 +1162,9 @@ class SecurityController:
     
     async def _record_ip_address(self, creator_id: str, ip_address: str) -> None:
         """Record IP address for creator"""
+
+
+
         try:
             known_ips_key = f"known_ips:{creator_id}"
             known_ips = await self.cache.get(known_ips_key)
@@ -1115,6 +1190,9 @@ class SecurityController:
     
     async def _is_rate_limited(self, creator_id: str, ip_address: str) -> bool:
         """Check if requests are rate limited"""
+
+
+
         try:
             rate_key = f"rate_limit:{ip_address}:{creator_id}"
             request_count = await self.cache.get(rate_key)
@@ -1142,6 +1220,9 @@ class SecurityController:
         details: Dict[str, Any]
     ) -> None:
         """Log security event"""
+
+
+
         try:
             event = SecurityEvent(
                 event_id=str(uuid.uuid4()),
@@ -1208,6 +1289,9 @@ class CreatorAuthenticationSystem:
         Returns:
             Authentication result with tokens and session info
         """
+
+
+
         try:
             self.logger.info(f"Authentication attempt for {auth_request.email}")
             
@@ -1321,6 +1405,9 @@ class CreatorAuthenticationSystem:
         Returns:
             New access token
         """
+
+
+
         try:
             # Validate refresh token
             payload = jwt.decode(refresh_token, self.jwt_secret, algorithms=[self.jwt_algorithm])
@@ -1384,6 +1471,9 @@ class CreatorAuthenticationSystem:
         Returns:
             Logout result
         """
+
+
+
         try:
             success = await self.session_manager.revoke_session(session_id)
             
@@ -1403,6 +1493,9 @@ class CreatorAuthenticationSystem:
     
     async def _verify_credentials(self, email: str, password: str) -> Optional[Dict[str, Any]]:
         """Verify creator credentials"""
+
+
+
         try:
             # This would be a database query in production
             # For now, return placeholder data
@@ -1420,6 +1513,9 @@ class CreatorAuthenticationSystem:
     
     async def _get_creator_profile(self, creator_id: str) -> Optional[Dict[str, Any]]:
         """Get creator profile by ID"""
+
+
+
         try:
             # This would be a database query in production
             return {
@@ -1440,6 +1536,9 @@ class CreatorAuthenticationSystem:
         session: SessionInfo
     ) -> str:
         """Generate JWT access token"""
+
+
+
         try:
             expire = datetime.utcnow() + timedelta(minutes=self.access_token_expire_minutes)
             
@@ -1462,6 +1561,9 @@ class CreatorAuthenticationSystem:
     
     async def _generate_refresh_token(self, session_id: str) -> str:
         """Generate JWT refresh token"""
+
+
+
         try:
             expire = datetime.utcnow() + timedelta(days=30)
             
@@ -1480,6 +1582,9 @@ class CreatorAuthenticationSystem:
     
     async def _generate_partial_token(self, creator_id: str) -> str:
         """Generate partial token for MFA flow"""
+
+
+
         try:
             expire = datetime.utcnow() + timedelta(minutes=10)
             

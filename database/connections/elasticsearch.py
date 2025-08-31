@@ -79,6 +79,9 @@ class ElasticsearchConnectionHandler:
     
     async def initialize(self) -> None:
         """Initialize Elasticsearch connection"""
+
+
+
         try:
             self.logger.info("Initializing Elasticsearch connection...")
             
@@ -150,6 +153,9 @@ class ElasticsearchConnectionHandler:
     
     def _get_index_mappings(self) -> Dict[str, Dict[str, Any]]:
         """Get index mappings for different content types"""
+
+
+
         return {
             "content_fingerprints": {
                 "mappings": {
@@ -288,6 +294,9 @@ class ElasticsearchConnectionHandler:
     
     def _get_tenant_index_name(self, base_index: str, tenant_id: str) -> str:
         """Get tenant-specific index name"""
+
+
+
         return f"{self.config.tenant_index_prefix}_{tenant_id}_{base_index}"
     
     async def get_tenant_index(self, index_suffix: str, tenant_id: str) -> str:
@@ -313,6 +322,9 @@ class ElasticsearchConnectionHandler:
                            doc_id: Optional[str] = None,
                            tenant_id: Optional[str] = None) -> str:
         """Index a document"""
+
+
+
         try:
             client = await self.get_connection()
             
@@ -344,6 +356,9 @@ class ElasticsearchConnectionHandler:
                           doc_id: str,
                           tenant_id: Optional[str] = None) -> Optional[Dict[str, Any]]:
         """Get document by ID"""
+
+
+
         try:
             client = await self.get_connection()
             
@@ -373,6 +388,9 @@ class ElasticsearchConnectionHandler:
                             update_data: Dict[str, Any],
                             tenant_id: Optional[str] = None) -> bool:
         """Update document"""
+
+
+
         try:
             client = await self.get_connection()
             
@@ -403,6 +421,9 @@ class ElasticsearchConnectionHandler:
                             doc_id: str,
                             tenant_id: Optional[str] = None) -> bool:
         """Delete document"""
+
+
+
         try:
             client = await self.get_connection()
             
@@ -434,6 +455,9 @@ class ElasticsearchConnectionHandler:
                     sort: Optional[List[Dict]] = None,
                     tenant_id: Optional[str] = None) -> Dict[str, Any]:
         """Search documents"""
+
+
+
         try:
             client = await self.get_connection()
             
@@ -468,6 +492,9 @@ class ElasticsearchConnectionHandler:
                         operations: List[Dict[str, Any]],
                         tenant_id: Optional[str] = None) -> Dict[str, Any]:
         """Bulk index operations"""
+
+
+
         try:
             client = await self.get_connection()
             
@@ -494,6 +521,9 @@ class ElasticsearchConnectionHandler:
                        query: Optional[Dict[str, Any]] = None,
                        tenant_id: Optional[str] = None) -> Dict[str, Any]:
         """Execute aggregation query"""
+
+
+
         try:
             client = await self.get_connection()
             
@@ -525,6 +555,9 @@ class ElasticsearchConnectionHandler:
     
     async def health_check(self) -> Dict[str, Any]:
         """Check Elasticsearch connection health"""
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -580,6 +613,9 @@ class ElasticsearchConnectionHandler:
     
     async def get_metrics(self) -> Dict[str, Any]:
         """Get detailed Elasticsearch metrics"""
+
+
+
         try:
             client = await self.get_connection()
             

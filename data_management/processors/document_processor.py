@@ -1,5 +1,5 @@
 """
-📄 Document Processor - IA Influencer Agent Platform Enterprise
+ Document Processor - IA Influencer Agent Platform Enterprise
 ===============================================================
 Module: backend/data_management/processors/document_processor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Document Processing - Enterprise Production-Ready
 Responsibility: Traitement avancé des documents pour créateurs de contenu textuel
 ===================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -83,6 +83,9 @@ class DocumentProcessor(BaseProcessor):
     
     def _init_nlp_models(self):
         """Initialize NLP models and tools"""
+
+
+
         try:
             # Load spaCy model for advanced NLP
             self.nlp = spacy.load("en_core_web_sm")
@@ -140,6 +143,9 @@ class DocumentProcessor(BaseProcessor):
     
     def process(self, input_data: Any) -> Dict[str, Any]:
         """Traite un document complètement"""
+
+
+
         try:
             # Extract text content
             text_content = self._extract_text(input_data)
@@ -264,6 +270,9 @@ class DocumentProcessor(BaseProcessor):
     
     def _extract_docx_text(self, file_path: str) -> str:
         """Extrait le texte d'un DOCX"""
+
+
+
         try:
             doc = docx.Document(file_path)
             text = "\n".join([paragraph.text for paragraph in doc.paragraphs])
@@ -274,6 +283,9 @@ class DocumentProcessor(BaseProcessor):
     
     def _extract_excel_text(self, file_path: str) -> str:
         """Extrait le texte d'un Excel"""
+
+
+
         try:
             workbook = openpyxl.load_workbook(file_path)
             text = ""
@@ -289,6 +301,9 @@ class DocumentProcessor(BaseProcessor):
     
     def _extract_html_text(self, file_path: str) -> str:
         """Extrait le texte d'un HTML"""
+
+
+
         try:
             with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
                 soup = BeautifulSoup(f.read(), 'html.parser')
@@ -299,6 +314,9 @@ class DocumentProcessor(BaseProcessor):
     
     def _extract_markdown_text(self, file_path: str) -> str:
         """Extrait le texte d'un Markdown"""
+
+
+
         try:
             with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
                 md_content = f.read()
@@ -588,6 +606,9 @@ class DocumentProcessor(BaseProcessor):
     
     def _analyze_readability(self, text: str) -> Dict[str, Any]:
         """Analyse de lisibilité"""
+
+
+
         return {
             "flesch_kincaid_grade": self._calculate_flesch_kincaid(text),
             "flesch_reading_ease": self._calculate_flesch_reading_ease(text),
@@ -619,6 +640,9 @@ class DocumentProcessor(BaseProcessor):
     # Utility methods
     def _detect_language(self, text: str) -> str:
         """Détecte la langue du texte"""
+
+
+
         try:
             from langdetect import detect
             return detect(text)

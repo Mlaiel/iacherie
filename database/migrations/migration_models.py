@@ -1,5 +1,5 @@
 """
-📊 Migration Data Models - Ultra-Industrial Entity Framework
+ Migration Data Models - Ultra-Industrial Entity Framework
 ===========================================================
 Module: backend/database/migrations/migration_models.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Data Models - Ultra Enterprise Production-Ready
 Responsibility: Comprehensive data models for content protection and monetization migrations
 ===========================================================================================
 
-⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
+  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de

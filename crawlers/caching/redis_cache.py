@@ -10,7 +10,7 @@ and advanced performance optimization features.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️ PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
+ PROPRIETARY SOFTWARE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -174,18 +174,24 @@ class RedisMetrics:
     @property
     def avg_response_time(self) -> float:
         """Calculate average response time."""
+
+
+
         return (self.total_response_time / self.successful_commands 
                 if self.successful_commands > 0 else 0.0)
     
     @property
     def error_rate(self) -> float:
         """Calculate error rate percentage."""
+
+
+
         return (self.failed_commands / self.total_commands * 100 
                 if self.total_commands > 0 else 0.0)
 
 class IndustrialRedisCache:
     """
-    🎯 Industrial-Grade Redis Cache Implementation
+     Industrial-Grade Redis Cache Implementation
     
     Enterprise Redis caching system featuring:
     - Multi-mode support (Standalone, Cluster, Sentinel, Sharded)
@@ -245,12 +251,15 @@ class IndustrialRedisCache:
         self._last_health_check = datetime.now()
         self._health_status = True
         
-        self.logger.info("🚀 Industrial Redis Cache initialized")
+        self.logger.info(" Industrial Redis Cache initialized")
 
     async def initialize(self) -> bool:
         """Initialize Redis connections and components."""
+
+
+
         try:
-            self.logger.info("🔧 Initializing Redis connections...")
+            self.logger.info(" Initializing Redis connections...")
             
             # Initialize based on deployment mode
             if self.config.mode == RedisMode.CLUSTER:
@@ -277,11 +286,11 @@ class IndustrialRedisCache:
             # Verify connection
             await self._verify_connection()
             
-            self.logger.info("✅ Redis Cache successfully initialized")
+            self.logger.info(" Redis Cache successfully initialized")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Redis Cache initialization failed: {e}")
+            self.logger.error(f" Redis Cache initialization failed: {e}")
             return False
 
     async def _initialize_standalone(self) -> None:
@@ -396,15 +405,18 @@ class IndustrialRedisCache:
         for name, script in self.lua_scripts.items():
             try:
                 self.compiled_scripts[name] = self.redis_client.register_script(script)
-                self.logger.debug(f"✅ Compiled Lua script: {name}")
+                self.logger.debug(f" Compiled Lua script: {name}")
             except Exception as e:
-                self.logger.warning(f"❌ Failed to compile Lua script {name}: {e}")
+                self.logger.warning(f" Failed to compile Lua script {name}: {e}")
 
     async def _verify_connection(self) -> None:
         """Verify Redis connection is working."""
+
+
+
         try:
             await self.redis_client.ping()
-            self.logger.info("✅ Redis connection verified")
+            self.logger.info(" Redis connection verified")
         except Exception as e:
             raise ConnectionError(f"Redis connection verification failed: {e}")
 
@@ -442,7 +454,7 @@ class IndustrialRedisCache:
             
         except Exception as e:
             await self._record_error('get', key, e)
-            self.logger.error(f"❌ Redis GET failed for key '{key}': {e}")
+            self.logger.error(f" Redis GET failed for key '{key}': {e}")
             return None
 
     async def set(
@@ -494,7 +506,7 @@ class IndustrialRedisCache:
             
         except Exception as e:
             await self._record_error('set', key, e)
-            self.logger.error(f"❌ Redis SET failed for key '{key}': {e}")
+            self.logger.error(f" Redis SET failed for key '{key}': {e}")
             return False
 
     async def delete(self, key: str) -> bool:
@@ -508,11 +520,14 @@ class IndustrialRedisCache:
             
         except Exception as e:
             await self._record_error('delete', key, e)
-            self.logger.error(f"❌ Redis DELETE failed for key '{key}': {e}")
+            self.logger.error(f" Redis DELETE failed for key '{key}': {e}")
             return False
 
     async def invalidate_pattern(self, pattern: str) -> int:
         """Invalidate all keys matching pattern using optimized Lua script."""
+
+
+
         try:
             if 'safe_delete_pattern' in self.compiled_scripts:
                 # Use compiled Lua script for atomic operation
@@ -527,12 +542,12 @@ class IndustrialRedisCache:
                 else:
                     deleted = 0
             
-            self.logger.info(f"🗑️ Invalidated {deleted} keys matching pattern '{pattern}'")
+            self.logger.info(f" Invalidated {deleted} keys matching pattern '{pattern}'")
             return int(deleted)
             
         except Exception as e:
             await self._record_error('invalidate_pattern', pattern, e)
-            self.logger.error(f"❌ Pattern invalidation failed for '{pattern}': {e}")
+            self.logger.error(f" Pattern invalidation failed for '{pattern}': {e}")
             return 0
 
     # Compression methods
@@ -562,6 +577,9 @@ class IndustrialRedisCache:
     
     def _deserialize_value(self, raw_value: bytes, use_decompression: bool = True) -> Any:
         """Deserialize value with automatic decompression detection."""
+
+
+
         try:
             # Check for compression header
             if use_decompression and raw_value.startswith(b'COMPRESSED:'):
@@ -572,7 +590,7 @@ class IndustrialRedisCache:
                 return pickle.loads(raw_value)
                 
         except Exception as e:
-            self.logger.error(f"❌ Value deserialization failed: {e}")
+            self.logger.error(f" Value deserialization failed: {e}")
             return None
     
     def _compress_data(self, data: bytes) -> bytes:
@@ -591,18 +609,30 @@ class IndustrialRedisCache:
     
     def _gzip_compress(self, data: bytes) -> bytes:
         """GZIP compression."""
+
+
+
         return gzip.compress(data)
     
     def _gzip_decompress(self, data: bytes) -> bytes:
         """GZIP decompression."""
+
+
+
         return gzip.decompress(data)
     
     def _lz4_compress(self, data: bytes) -> bytes:
         """LZ4 compression for high-speed scenarios."""
+
+
+
         return lz4.frame.compress(data)
     
     def _lz4_decompress(self, data: bytes) -> bytes:
         """LZ4 decompression."""
+
+
+
         return lz4.frame.decompress(data)
     
     def _zstd_compress(self, data: bytes) -> bytes:
@@ -670,10 +700,16 @@ class IndustrialRedisCache:
 
     async def get_metrics(self) -> RedisMetrics:
         """Get comprehensive Redis metrics."""
+
+
+
         return self.metrics
 
     async def health_check(self) -> Dict[str, Any]:
         """Perform comprehensive health check."""
+
+
+
         try:
             start_time = time.time()
             await self.redis_client.ping()
@@ -715,14 +751,14 @@ class IndustrialRedisCache:
                 # Log performance metrics periodically
                 if self.metrics.successful_commands > 0:
                     self.logger.info(
-                        f"📊 Redis Metrics - "
+                        f" Redis Metrics - "
                         f"Hit Ratio: {self.metrics.hit_ratio:.2%}, "
                         f"Avg Response: {self.metrics.avg_response_time:.2f}ms, "
                         f"Error Rate: {self.metrics.error_rate:.2f}%"
                     )
                 
             except Exception as e:
-                self.logger.error(f"❌ Monitoring loop error: {e}")
+                self.logger.error(f" Monitoring loop error: {e}")
 
 # Create aliases for backward compatibility
 RedisCache = IndustrialRedisCache
@@ -770,10 +806,16 @@ class RedisClusterCache(IndustrialRedisCache):
     
     def _make_key(self, key: str) -> str:
         """Create prefixed cache key."""
+
+
+
         return f"{self.key_prefix}{key}"
     
     def _serialize_value(self, value: Any) -> bytes:
         """Serialize value for Redis storage."""
+
+
+
         try:
             # Try JSON first for simple types
             if isinstance(value, (str, int, float, bool, list, dict, type(None))):
@@ -787,6 +829,9 @@ class RedisClusterCache(IndustrialRedisCache):
     
     def _deserialize_value(self, data: bytes) -> Any:
         """Deserialize value from Redis storage."""
+
+
+
         try:
             # Try JSON first
             try:

@@ -67,11 +67,17 @@ class BackendServer:
     @property
     def endpoint(self) -> str:
         """Get server endpoint."""
+
+
+
         return f"{self.host}:{self.port}"
     
     @property
     def is_available(self) -> bool:
         """Check if server is available for requests."""
+
+
+
         return (
             self.health_status == HealthStatus.HEALTHY and
             self.current_connections < self.max_connections
@@ -181,6 +187,9 @@ class LoadBalancer:
     
     def get_upstream(self, name: str) -> Optional[UpstreamConfig]:
         """Get upstream configuration."""
+
+
+
         return self.upstreams.get(name)
     
     def select_server(
@@ -276,6 +285,9 @@ class LoadBalancer:
         session_id: Optional[str] = None
     ) -> BackendServer:
         """Least connections load balancing."""
+
+
+
         return min(servers, key=lambda s: s.current_connections)
     
     def _weighted_least_connections(
@@ -286,6 +298,9 @@ class LoadBalancer:
         session_id: Optional[str] = None
     ) -> BackendServer:
         """Weighted least connections load balancing."""
+
+
+
         return min(
             servers, 
             key=lambda s: s.current_connections / (s.weight or 1)
@@ -313,6 +328,9 @@ class LoadBalancer:
         session_id: Optional[str] = None
     ) -> BackendServer:
         """Random load balancing."""
+
+
+
         return random.choice(servers)
     
     def _weighted_random(
@@ -357,6 +375,9 @@ class LoadBalancer:
         session_id: Optional[str] = None
     ) -> BackendServer:
         """Least response time load balancing."""
+
+
+
         return min(servers, key=lambda s: s.response_time)
     
     def _health_based(

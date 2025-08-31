@@ -12,7 +12,7 @@ Copyright © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, modification, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing and collaboration.
 
-⚠️ STRONG WARNING: This code and concept are the exclusive property of Fahed Mlaiel.
+ STRONG WARNING: This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted
 to the full extent of the law.
@@ -261,6 +261,9 @@ class GenreDetector:
         Returns:
             Comprehensive genre detection results
         """
+
+
+
         try:
             if not content_data:
                 raise ClassificationError("No content data provided")
@@ -325,6 +328,9 @@ class GenreDetector:
 
     def _extract_genre_indicators(self, content_data: Dict[str, Any], content_type: str) -> Dict[str, Any]:
         """Extract genre indicators from content analysis data."""
+
+
+
         try:
             indicators = {
                 'keywords': [],
@@ -484,6 +490,9 @@ class GenreDetector:
 
     def _detect_primary_genre(self, indicators: Dict[str, Any], content_type: str) -> Optional[Dict[str, Any]]:
         """Detect primary genre from indicators."""
+
+
+
         try:
             genre_scores = {}
             
@@ -683,6 +692,9 @@ class GenreDetector:
         content_type: str
     ) -> List[Dict[str, Any]]:
         """Detect subgenres within the primary genre."""
+
+
+
         try:
             subgenres = []
             
@@ -754,6 +766,9 @@ class GenreDetector:
 
     def _analyze_fusion_genres(self, indicators: Dict[str, Any], content_type: str) -> Dict[str, Any]:
         """Analyze potential fusion/cross-genre characteristics."""
+
+
+
         try:
             fusion_analysis = {
                 'detected_fusions': [],
@@ -805,6 +820,9 @@ class GenreDetector:
 
     def _analyze_regional_genres(self, indicators: Dict[str, Any], content_type: str) -> Dict[str, Any]:
         """Analyze regional genre characteristics."""
+
+
+
         try:
             regional_analysis = {
                 'detected_regions': [],
@@ -858,6 +876,9 @@ class GenreDetector:
 
     def _analyze_temporal_characteristics(self, indicators: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze temporal/era characteristics of the content."""
+
+
+
         try:
             temporal_analysis = {
                 'detected_era': None,
@@ -936,6 +957,9 @@ class GenreDetector:
 
     def _calculate_overall_confidence(self, detection: Dict[str, Any]) -> float:
         """Calculate overall confidence in genre detection."""
+
+
+
         try:
             confidence_scores = detection.get('confidence_scores', {})
             primary_confidence = confidence_scores.get('primary', 0)
@@ -1011,6 +1035,9 @@ class GenreDetector:
 
     def _analyze_color_scheme_for_genre(self, colors: List[str]) -> Optional[str]:
         """Analyze color scheme for genre indicators."""
+
+
+
         try:
             # Simple color-genre associations
             color_genre_mapping = {
@@ -1039,6 +1066,9 @@ class GenreDetector:
 
     def get_genre_info(self, genre: str) -> Dict[str, Any]:
         """Get detailed information about a specific genre."""
+
+
+
         try:
             genre = genre.lower()
             
@@ -1073,6 +1103,9 @@ class GenreDetector:
 
     def get_all_genres(self) -> Dict[str, List[str]]:
         """Get list of all available genres."""
+
+
+
         try:
             all_genres = {
                 'main_genres': list(self.music_genres.keys()),
@@ -1100,6 +1133,9 @@ class GenreDetector:
         parent_genre: Optional[str] = None
     ) -> bool:
         """Add a custom genre to the system."""
+
+
+
         try:
             genre_name = genre_name.lower()
             
@@ -1128,6 +1164,9 @@ class GenreDetector:
 
     def get_detection_summary(self, detection: Dict[str, Any]) -> str:
         """Generate a human-readable summary of genre detection results."""
+
+
+
         try:
             summary_parts = []
             

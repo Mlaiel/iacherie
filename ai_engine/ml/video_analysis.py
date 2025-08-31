@@ -224,6 +224,9 @@ class VideoAnalyzer(BaseVideoAnalyzer):
         
     def load_model(self) -> bool:
         """Load video analysis model"""
+
+
+
         try:
             if TORCHVISION_AVAILABLE:
                 # Use pre-trained model for video classification
@@ -422,6 +425,9 @@ class ActionRecognizer(BaseVideoAnalyzer):
         
     def load_model(self) -> bool:
         """Load action recognition model"""
+
+
+
         try:
             # Create 3D CNN for action recognition
             self.model = self._create_3d_model()
@@ -546,6 +552,9 @@ class ActionRecognizer(BaseVideoAnalyzer):
     
     def _analyze_action_segment(self, frames: List[VideoFrame]) -> Optional[ActionDetection]:
         """Analyze action in a segment of frames"""
+
+
+
         try:
             # Prepare 3D tensor: (1, channels, frames, height, width)
             frame_tensors = []
@@ -593,6 +602,9 @@ class SceneDetector(BaseVideoAnalyzer):
         
     def load_model(self) -> bool:
         """Load scene detection model"""
+
+
+
         try:
             if TORCHVISION_AVAILABLE:
                 # Use pre-trained model for scene classification

@@ -42,6 +42,9 @@ class BandcampPlatform(PlatformBase):
     
     async def authenticate(self) -> bool:
         """Authenticate with Bandcamp"""
+
+
+
         try:
             # Bandcamp doesn't have a traditional API key system
             # Authentication is typically done through website sessions
@@ -63,6 +66,9 @@ class BandcampPlatform(PlatformBase):
     
     async def refresh_token(self) -> bool:
         """Refresh Bandcamp token (not applicable)"""
+
+
+
         return await self.authenticate()
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
@@ -112,6 +118,9 @@ class BandcampPlatform(PlatformBase):
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
         """Get Bandcamp analytics (limited data available)"""
+
+
+
         try:
             # Bandcamp doesn't provide comprehensive analytics via API
             # This would typically require web scraping or manual data collection
@@ -138,6 +147,9 @@ class BandcampPlatform(PlatformBase):
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
         """Search content on Bandcamp using web scraping approach"""
+
+
+
         try:
             # This would typically require web scraping as Bandcamp doesn't have a search API
             # For demonstration, return empty results with explanation
@@ -151,6 +163,9 @@ class BandcampPlatform(PlatformBase):
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
         """Get user's content from Bandcamp"""
+
+
+
         try:
             # This would require web scraping or artist dashboard access
             logger.warning("Bandcamp user content requires web scraping or dashboard access")
@@ -172,6 +187,9 @@ class BandcampPlatform(PlatformBase):
     
     async def get_artist_info(self, artist_name: str) -> Optional[Dict[str, Any]]:
         """Get artist information from Bandcamp (via web scraping)"""
+
+
+
         try:
             # This would require web scraping implementation
             # Bandcamp artist pages follow pattern: https://artistname.bandcamp.com
@@ -197,6 +215,9 @@ class BandcampPlatform(PlatformBase):
     
     async def get_album_info(self, album_url: str) -> Optional[Dict[str, Any]]:
         """Get album information from Bandcamp URL"""
+
+
+
         try:
             session = await self._get_session()
             
@@ -224,6 +245,9 @@ class BandcampPlatform(PlatformBase):
     
     async def get_fan_activity(self, artist_name: str) -> List[Dict[str, Any]]:
         """Get fan activity for an artist (purchases, follows, etc.)"""
+
+
+
         try:
             # This would require artist dashboard access or web scraping
             logger.warning("Fan activity data requires Bandcamp artist dashboard access")
@@ -235,6 +259,9 @@ class BandcampPlatform(PlatformBase):
     
     async def get_sales_data(self, artist_name: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
         """Get sales data for an artist"""
+
+
+
         try:
             # This would require artist dashboard access
             logger.warning("Sales data requires Bandcamp artist dashboard access")
@@ -253,6 +280,9 @@ class BandcampPlatform(PlatformBase):
     
     async def discover_music(self, genre: str = None, location: str = None) -> List[Dict[str, Any]]:
         """Discover music on Bandcamp by genre or location"""
+
+
+
         try:
             # Bandcamp has discovery features that could be accessed via web scraping
             # URLs like: https://bandcamp.com/discover/rock or https://bandcamp.com/discover/berlin
@@ -283,6 +313,9 @@ class BandcampPlatform(PlatformBase):
     
     async def get_trending_tags(self) -> List[str]:
         """Get trending tags on Bandcamp"""
+
+
+
         try:
             # This would require web scraping the Bandcamp discover page
             logger.warning("Trending tags require web scraping implementation")
@@ -300,6 +333,9 @@ class BandcampPlatform(PlatformBase):
     
     async def check_artist_availability(self, artist_name: str) -> bool:
         """Check if an artist name/subdomain is available on Bandcamp"""
+
+
+
         try:
             session = await self._get_session()
             artist_url = f"https://{artist_name.lower().replace(' ', '')}.bandcamp.com"

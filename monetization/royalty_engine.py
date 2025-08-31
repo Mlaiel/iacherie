@@ -154,6 +154,9 @@ class RoyaltyEngine:
         Returns:
             Decimal: Calculated royalty amount
         """
+
+
+
         try:
             # Get usage count
             usage_count = usage_data.get("count", 1)
@@ -206,6 +209,9 @@ class RoyaltyEngine:
         Returns:
             Dict: Comprehensive royalty calculation summary
         """
+
+
+
         try:
             calculation_id = f"calc_{license_data['id']}_{period_start.strftime('%Y%m%d')}_{period_end.strftime('%Y%m%d')}"
             
@@ -307,6 +313,9 @@ class RoyaltyEngine:
         Returns:
             RoyaltyPayment: Payment record or None if failed
         """
+
+
+
         try:
             if calculation_id not in self.calculation_cache:
                 logger.error(f"Calculation not found: {calculation_id}")
@@ -370,6 +379,9 @@ class RoyaltyEngine:
         Returns:
             bool: True if payment processed successfully
         """
+
+
+
         try:
             # Find payment
             payment = None
@@ -413,6 +425,9 @@ class RoyaltyEngine:
     
     async def get_license_royalty_history(self, license_id: int) -> List[Dict[str, Any]]:
         """Get royalty history for a license"""
+
+
+
         try:
             history = []
             
@@ -468,6 +483,9 @@ class RoyaltyEngine:
         usage_data: Dict[str, Any]
     ) -> Decimal:
         """Get royalty rate for usage type"""
+
+
+
         try:
             # Check license-specific rates
             license_rates = license_data.get("royalty_rates", {})
@@ -497,6 +515,9 @@ class RoyaltyEngine:
         usage_data: Dict[str, Any]
     ) -> Decimal:
         """Calculate quality-based multiplier"""
+
+
+
         try:
             quality_score = usage_data.get("quality_score", 1.0)
             
@@ -516,6 +537,9 @@ class RoyaltyEngine:
         usage_data: Dict[str, Any]
     ) -> Decimal:
         """Calculate territory-based multiplier"""
+
+
+
         try:
             territory = usage_data.get("territory", "unknown")
             license_territory = license_data.get("territory", "worldwide")
@@ -540,6 +564,9 @@ class RoyaltyEngine:
         usage_breakdown: Dict[str, Any]
     ) -> Dict[str, Decimal]:
         """Calculate all deductions"""
+
+
+
         try:
             deductions = {}
             
@@ -580,6 +607,9 @@ class RoyaltyEngine:
         payment_method: str
     ) -> Decimal:
         """Calculate payment processing fees"""
+
+
+
         try:
             method_config = self.payment_methods.get(payment_method, {})
             
@@ -597,10 +627,16 @@ class RoyaltyEngine:
     
     def _get_minimum_payment_threshold(self, license_data: Dict[str, Any]) -> Decimal:
         """Get minimum payment threshold"""
+
+
+
         return Decimal(str(license_data.get("min_payment_threshold", "10.00")))
     
     def get_engine_stats(self) -> Dict[str, Any]:
         """Get royalty engine statistics"""
+
+
+
         try:
             total_calculations = len(self.calculation_cache)
             total_payments = len(self.payment_history)

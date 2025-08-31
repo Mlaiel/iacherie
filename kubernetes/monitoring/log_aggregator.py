@@ -371,6 +371,9 @@ class SecurityEventProcessor:
         
     def _load_threat_patterns(self) -> Dict[str, List[str]]:
         """Load threat detection patterns"""
+
+
+
         return {
             "brute_force": [
                 r"Failed login attempt.*user_id.*",
@@ -718,6 +721,9 @@ class LogAggregator:
                 
     async def _process_log_file(self, log_file: Path):
         """Process entire log file"""
+
+
+
         try:
             async with aiofiles.open(log_file, 'r') as f:
                 async for line in f:
@@ -736,6 +742,9 @@ class LogAggregator:
         
     async def _process_log_line(self, line: str, source_file: str):
         """Process a single log line"""
+
+
+
         try:
             # Determine parser based on file or content
             parser = self._get_parser_for_source(source_file)
@@ -770,6 +779,9 @@ class LogAggregator:
         
     def _parse_structured_log(self, line: str, source_file: str) -> Optional[LogEntry]:
         """Parse structured log entry"""
+
+
+
         try:
             # Try to parse as JSON first
             if line.startswith('{'):
@@ -905,6 +917,9 @@ class LogAggregator:
                 
     async def _store_logs_to_redis(self):
         """Store logs to Redis"""
+
+
+
         try:
             pipeline = self.redis_client.pipeline()
             
@@ -1166,6 +1181,9 @@ class LogAggregator:
             
     async def get_log_summary(self) -> Dict[str, Any]:
         """Get log summary statistics"""
+
+
+
         return {
             "total_processed": self._stats["total_processed"],
             "errors_detected": self._stats["errors_detected"],

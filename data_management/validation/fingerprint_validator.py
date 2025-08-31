@@ -1,15 +1,15 @@
 """
-🚀 AI Fingerprinting Validator - IA Influencer Agent Platform Enterprise
+ AI Fingerprinting Validator - IA Influencer Agent Platform Enterprise
 ======================================================================
 Module: backend/data_management/validation/fingerprint_validator.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ======================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 SYSTÈME DE VALIDATION D'EMPREINTES NUMÉRIQUES IA
+ SYSTÈME DE VALIDATION D'EMPREINTES NUMÉRIQUES IA
 Validation avancée des empreintes numériques pour protection du contenu
 - Génération d'empreintes multi-format (audio, vidéo, image, texte)
 - Validation d'unicité et détection de doublons
@@ -606,6 +606,9 @@ class SimilarityMatcher:
     
     def add_fingerprint_to_database(self, fingerprint_id: str, fingerprint_result: FingerprintResult, file_path: str):
         """Ajoute une empreinte à la base de données"""
+
+
+
         try:
             # Stockage métadonnées
             self.fingerprint_database[fingerprint_id] = {
@@ -752,6 +755,9 @@ class SimilarityMatcher:
     
     def _add_to_faiss_index(self, fingerprint_id: str, fingerprint_result: FingerprintResult):
         """Ajoute un vecteur à l'index FAISS"""
+
+
+
         try:
             fingerprint_type = fingerprint_result.fingerprint_type
             vector = fingerprint_result.fingerprint_data.astype(np.float32)
@@ -936,6 +942,9 @@ class FingerprintValidator:
     
     def _create_error_result(self, errors: List[str]) -> FingerprintValidationResult:
         """Crée un résultat d'erreur"""
+
+
+
         return FingerprintValidationResult(
             is_unique=False,
             is_valid=False,
@@ -950,6 +959,9 @@ class FingerprintValidator:
     
     def register_fingerprint(self, fingerprint_id: str, validation_result: FingerprintValidationResult, file_path: str):
         """Enregistre une empreinte validée dans la base"""
+
+
+
         try:
             for fingerprint_result in validation_result.fingerprint_results:
                 if fingerprint_result.confidence_score > 0.5:

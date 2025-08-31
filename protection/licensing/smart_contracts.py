@@ -1,5 +1,5 @@
 """
-🔗 Smart Contract Manager - Blockchain Integration Engine
+ Smart Contract Manager - Blockchain Integration Engine
 ======================================================
 
 Professional blockchain smart contract management system:
@@ -83,7 +83,7 @@ class BlockchainTransaction:
 
 class SmartContractManager:
     """
-    🚀 Professional blockchain smart contract management system
+     Professional blockchain smart contract management system
     
     Advanced system for deploying and managing smart contracts for
     content licensing with multi-chain support and automated operations.
@@ -119,6 +119,9 @@ class SmartContractManager:
     
     def _initialize_blockchain_clients(self):
         """Initialize blockchain network clients."""
+
+
+
         try:
             # Ethereum/Polygon Web3 integration
             if self.config.get('ethereum_enabled', False):
@@ -247,7 +250,7 @@ class SmartContractManager:
         network: str = 'polygon'
     ) -> str:
         """
-        🚀 Deploy smart contract for license agreement
+         Deploy smart contract for license agreement
         
         Args:
             license_data: Complete license information
@@ -257,6 +260,9 @@ class SmartContractManager:
         Returns:
             contract_address: Deployed contract address
         """
+
+
+
         try:
             self.logger.info(f"Deploying license contract on {network}")
             
@@ -423,6 +429,9 @@ class SmartContractManager:
     
     async def _store_metadata_on_ipfs(self, license_data: Dict[str, Any]) -> str:
         """Store license metadata on IPFS and return URI."""
+
+
+
         try:
             # This would integrate with IPFS client
             # For now, return a mock IPFS URI
@@ -458,7 +467,7 @@ class SmartContractManager:
         parameters: Dict[str, Any]
     ) -> Dict[str, Any]:
         """
-        🔄 Update smart contract with new action
+         Update smart contract with new action
         
         Args:
             contract_address: Contract to update
@@ -468,6 +477,9 @@ class SmartContractManager:
         Returns:
             update_result: Transaction result
         """
+
+
+
         try:
             self.logger.info(f"Updating contract {contract_address} with action: {action}")
             
@@ -594,7 +606,7 @@ class SmartContractManager:
         currency: str = 'USD'
     ) -> Dict[str, Any]:
         """
-        💰 Distribute revenue through smart contract
+         Distribute revenue through smart contract
         
         Args:
             contract_address: Contract handling distribution
@@ -604,6 +616,9 @@ class SmartContractManager:
         Returns:
             distribution_result: On-chain distribution result
         """
+
+
+
         try:
             self.logger.info(f"Distributing revenue on-chain: {revenue_amount} {currency}")
             
@@ -672,6 +687,9 @@ class SmartContractManager:
     
     async def verify_contract_integrity(self, contract_address: str) -> Dict[str, Any]:
         """Verify smart contract integrity and status."""
+
+
+
         try:
             contract_info = self.deployed_contracts.get(contract_address)
             if not contract_info:
@@ -741,6 +759,9 @@ class SmartContractManager:
     
     def get_smart_contract_metrics(self) -> Dict[str, Any]:
         """Get comprehensive smart contract metrics."""
+
+
+
         return {
             **self.metrics,
             'deployed_contracts': len(self.deployed_contracts),

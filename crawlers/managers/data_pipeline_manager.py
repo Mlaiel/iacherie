@@ -132,6 +132,9 @@ class PipelineStageProcessor:
         
     async def process(self, record: DataRecord) -> DataRecord:
         """Process a data record through this stage - base implementation."""
+
+
+
         try:
             self.logger.info(f"Processing record {record.record_id} in {self.stage.value} stage")
             
@@ -169,6 +172,9 @@ class PipelineStageProcessor:
         
     async def validate_input(self, record: DataRecord) -> bool:
         """Validate input for this stage."""
+
+
+
         return True
         
     async def cleanup(self, record: DataRecord):
@@ -185,6 +191,9 @@ class IngestionProcessor(PipelineStageProcessor):
         
     async def process(self, record: DataRecord) -> DataRecord:
         """Process data ingestion."""
+
+
+
         try:
             # Calculate checksum if not present
             if not record.checksum:
@@ -229,6 +238,9 @@ class ValidationProcessor(PipelineStageProcessor):
         
     async def process(self, record: DataRecord) -> DataRecord:
         """Process data validation."""
+
+
+
         try:
             # Validate data format
             is_valid = await self._validate_format(record)
@@ -274,6 +286,9 @@ class ValidationProcessor(PipelineStageProcessor):
             
     async def _validate_format(self, record: DataRecord) -> bool:
         """Validate data format."""
+
+
+
         try:
             if record.data_format == DataFormat.JSON:
                 if isinstance(record.raw_data, str):
@@ -325,6 +340,9 @@ class TransformationProcessor(PipelineStageProcessor):
         
     async def process(self, record: DataRecord) -> DataRecord:
         """Process data transformation."""
+
+
+
         try:
             # Apply transformations based on data format
             if record.data_format == DataFormat.JSON:
@@ -348,6 +366,9 @@ class TransformationProcessor(PipelineStageProcessor):
             
     async def _transform_json(self, record: DataRecord) -> DataRecord:
         """Transform JSON data."""
+
+
+
         try:
             if isinstance(record.raw_data, str):
                 data = json.loads(record.raw_data)
@@ -366,6 +387,9 @@ class TransformationProcessor(PipelineStageProcessor):
             
     async def _transform_html(self, record: DataRecord) -> DataRecord:
         """Transform HTML data."""
+
+
+
         try:
             # Apply HTML transformations
             transformed_data = await self.transformer.transform_html(record.raw_data, self.config)
@@ -379,6 +403,9 @@ class TransformationProcessor(PipelineStageProcessor):
             
     async def _transform_text(self, record: DataRecord) -> DataRecord:
         """Transform text data."""
+
+
+
         try:
             # Apply text transformations
             transformed_data = await self.transformer.transform_text(record.raw_data, self.config)
@@ -400,6 +427,9 @@ class EnrichmentProcessor(PipelineStageProcessor):
         
     async def process(self, record: DataRecord) -> DataRecord:
         """Process data enrichment."""
+
+
+
         try:
             # Enrich with metadata
             enriched_metadata = await self._enrich_metadata(record)
@@ -451,6 +481,9 @@ class EnrichmentProcessor(PipelineStageProcessor):
             
     async def _enrich_content(self, record: DataRecord) -> Optional[Any]:
         """Enrich record content."""
+
+
+
         try:
             # Content enrichment based on format
             if record.data_format == DataFormat.JSON:
@@ -505,6 +538,9 @@ class DataPipelineManager:
         
     def _initialize_processors(self):
         """Initialize pipeline stage processors."""
+
+
+
         try:
             # Standard processors
             self.processors[PipelineStage.INGESTION] = IngestionProcessor(self.config.INGESTION_CONFIG)
@@ -529,6 +565,9 @@ class DataPipelineManager:
             
     async def start(self):
         """Start the data pipeline manager."""
+
+
+
         try:
             if self.processing_active:
                 return
@@ -574,6 +613,9 @@ class DataPipelineManager:
         
     async def _process_record(self, record: DataRecord, worker_id: str):
         """Process a single record through the pipeline."""
+
+
+
         try:
             start_time = time.time()
             
@@ -674,6 +716,9 @@ class DataPipelineManager:
             
     async def submit_record(self, record: DataRecord) -> bool:
         """Submit a record for processing."""
+
+
+
         try:
             if not self.processing_active:
                 self.logger.error("Pipeline manager not started")
@@ -783,6 +828,9 @@ class DataPipelineManager:
         
     async def _save_record_to_database(self, record: DataRecord):
         """Save processed record to database."""
+
+
+
         try:
             async with get_database_session() as db:
                 db_record = CrawledDataRecord(
@@ -806,6 +854,9 @@ class DataPipelineManager:
     async def export_data(self, pipeline_name: str = None, format: str = "json", 
                          filters: Dict[str, Any] = None) -> AsyncGenerator[Dict[str, Any], None]:
         """Export processed data."""
+
+
+
         try:
             # Get records to export
             records_to_export = []
@@ -844,6 +895,9 @@ class DataPipelineManager:
             
     def _apply_filters(self, record: DataRecord, filters: Dict[str, Any]) -> bool:
         """Apply filters to a record."""
+
+
+
         try:
             for filter_key, filter_value in filters.items():
                 if filter_key == 'data_format':
@@ -868,6 +922,9 @@ class DataPipelineManager:
             
     async def shutdown(self):
         """Shutdown the data pipeline manager."""
+
+
+
         try:
             self.processing_active = False
             
@@ -896,6 +953,9 @@ class DataPipelineManager:
 # Factory function
 def create_data_pipeline_manager(config: Optional[PipelineConfig] = None) -> DataPipelineManager:
     """Create and return a data pipeline manager instance."""
+
+
+
     return DataPipelineManager(config)
 
 

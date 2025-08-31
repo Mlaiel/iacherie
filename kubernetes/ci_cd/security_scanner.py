@@ -1,5 +1,5 @@
 """
-🔧 Security Scanner - IA-Influencer-Agent CI/CD
+ Security Scanner - IA-Influencer-Agent CI/CD
 ================================================================
 Expert: SECURITY_ENGINEER + DEVOPS_ENGINEER
 Created: 2025-08-24
@@ -105,6 +105,9 @@ class SecurityScanEngine:
         
     async def initialize(self) -> bool:
         """Initialize security scanner"""
+
+
+
         try:
             # Initialize Docker client for container scanning
             self.docker_client = docker.from_env()
@@ -113,10 +116,10 @@ class SecurityScanEngine:
             await self._verify_security_tools()
             
             self.initialized = True
-            self.logger.info("✅ Security scanner initialized")
+            self.logger.info(" Security scanner initialized")
             return True
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize security scanner: {e}")
+            self.logger.error(f" Failed to initialize security scanner: {e}")
             return False
     
     async def _verify_security_tools(self) -> None:
@@ -134,6 +137,9 @@ class SecurityScanEngine:
     
     async def _check_tool_available(self, tool: str) -> bool:
         """Check if security tool is available"""
+
+
+
         try:
             result = await self._run_command([tool, "--version"], timeout=30)
             return result.returncode == 0
@@ -200,7 +206,7 @@ class SecurityScanEngine:
             
             self.scan_history.append(result)
             
-            self.logger.info(f"✅ Security scan {scan_id} completed. Score: {overall_score:.1f}")
+            self.logger.info(f" Security scan {scan_id} completed. Score: {overall_score:.1f}")
             return result
             
         except Exception as e:
@@ -221,7 +227,7 @@ class SecurityScanEngine:
             )
             
             self.scan_history.append(result)
-            self.logger.error(f"❌ Security scan {scan_id} failed: {e}")
+            self.logger.error(f" Security scan {scan_id} failed: {e}")
             return result
     
     def _generate_scan_id(self) -> str:
@@ -742,6 +748,9 @@ class SecurityScanEngine:
         timeout: int = 1800
     ) -> subprocess.CompletedProcess:
         """Run command asynchronously"""
+
+
+
         try:
             process = await asyncio.create_subprocess_exec(
                 *cmd,
@@ -769,6 +778,9 @@ class SecurityScanEngine:
     
     def get_scan_history(self, limit: int = 10) -> List[SecurityScanResult]:
         """Get security scan history"""
+
+
+
         return self.scan_history[-limit:]
     
     def get_security_trends(self) -> Dict[str, Any]:

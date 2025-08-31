@@ -8,7 +8,7 @@ container orchestration, database provisioning, monitoring, and security.
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED 
 """
 
 import asyncio
@@ -208,6 +208,9 @@ class IAInfluencerInfrastructureManager:
         This method orchestrates the deployment of all infrastructure components
         in the correct order with proper dependencies and health checks.
         """
+
+
+
         try:
             results = {}
             logger.info(f"Starting complete infrastructure deployment for IA Influencer platform")
@@ -310,6 +313,9 @@ class IAInfluencerInfrastructureManager:
     
     async def _setup_cloud_provider(self) -> Dict[str, Any]:
         """Setup cloud provider infrastructure"""
+
+
+
         try:
             logger.info(f"Setting up {self.config.cloud_provider.value} cloud provider")
             
@@ -352,6 +358,9 @@ class IAInfluencerInfrastructureManager:
     
     async def _setup_networking(self) -> Dict[str, Any]:
         """Setup networking infrastructure"""
+
+
+
         try:
             logger.info("Setting up networking infrastructure")
             
@@ -386,6 +395,9 @@ class IAInfluencerInfrastructureManager:
     
     async def _setup_storage(self) -> Dict[str, Any]:
         """Setup storage infrastructure"""
+
+
+
         try:
             logger.info("Setting up storage infrastructure")
             
@@ -459,6 +471,9 @@ class IAInfluencerInfrastructureManager:
     
     async def _deploy_databases(self) -> Dict[str, Any]:
         """Deploy database infrastructure"""
+
+
+
         try:
             logger.info("Deploying database infrastructure")
             
@@ -551,6 +566,9 @@ class IAInfluencerInfrastructureManager:
     
     async def _deploy_vector_databases(self) -> Dict[str, Any]:
         """Deploy vector databases for AI content fingerprinting"""
+
+
+
         try:
             logger.info("Deploying vector databases for AI content fingerprinting")
             
@@ -567,6 +585,9 @@ class IAInfluencerInfrastructureManager:
     
     async def _setup_container_orchestration(self) -> Dict[str, Any]:
         """Setup container orchestration with Kubernetes"""
+
+
+
         try:
             logger.info("Setting up container orchestration")
             
@@ -625,6 +646,9 @@ class IAInfluencerInfrastructureManager:
     
     async def _deploy_service_mesh(self) -> Dict[str, Any]:
         """Deploy service mesh for microservices communication"""
+
+
+
         try:
             logger.info("Deploying service mesh")
             
@@ -647,6 +671,9 @@ class IAInfluencerInfrastructureManager:
     
     async def _setup_monitoring(self) -> Dict[str, Any]:
         """Setup monitoring and observability stack"""
+
+
+
         try:
             logger.info("Setting up monitoring and observability")
             
@@ -670,6 +697,9 @@ class IAInfluencerInfrastructureManager:
     
     async def _deploy_load_balancer(self) -> Dict[str, Any]:
         """Deploy load balancer and ingress"""
+
+
+
         try:
             logger.info("Deploying load balancer")
             
@@ -692,6 +722,9 @@ class IAInfluencerInfrastructureManager:
     
     async def _setup_auto_scaling(self) -> Dict[str, Any]:
         """Setup auto-scaling for services"""
+
+
+
         try:
             logger.info("Setting up auto-scaling")
             
@@ -731,6 +764,9 @@ class IAInfluencerInfrastructureManager:
     
     async def _get_deployment_endpoints(self) -> Dict[str, Any]:
         """Get deployment endpoints and access information"""
+
+
+
         try:
             endpoints = {
                 'api_endpoint': f"https://api.ia-influencer.{self.config.region}.com",
@@ -749,6 +785,9 @@ class IAInfluencerInfrastructureManager:
     
     async def get_infrastructure_status(self) -> Dict[str, Any]:
         """Get comprehensive infrastructure status"""
+
+
+
         try:
             status = {
                 'deployment_status': self.deployment_status,
@@ -775,6 +814,9 @@ class IAInfluencerInfrastructureManager:
     
     async def destroy_infrastructure(self) -> Dict[str, Any]:
         """Destroy complete infrastructure (use with caution)"""
+
+
+
         try:
             logger.warning("Starting infrastructure destruction - THIS WILL DELETE ALL RESOURCES")
             

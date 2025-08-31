@@ -15,7 +15,7 @@ Auteur: Fahed Mlaiel <mlaiel@live.de>
 Email: mlaiel@live.de
 Équipe: Lead AI Developer, Backend Senior, Security Specialist, DevOps Engineer
 
-⚠️  AVERTISSEMENT LEGAL ⚠️
+  AVERTISSEMENT LEGAL 
 Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et fera l'objet de poursuites 
@@ -247,11 +247,17 @@ class APICredential(BaseModel):
     @property
     def daily_quota_remaining(self) -> int:
         """Calcule le quota journalier restant."""
+
+
+
         return max(0, self.daily_quota - self.current_daily_usage)
     
     @property
     def hourly_quota_remaining(self) -> int:
         """Calcule le quota horaire restant."""
+
+
+
         return max(0, self.hourly_quota - self.current_hourly_usage)
     
     def encrypt_credential(self, value: str, field_name: str) -> str:
@@ -287,6 +293,9 @@ class APICredential(BaseModel):
     
     def get_client_secret(self) -> str:
         """Récupère le client secret déchiffré."""
+
+
+
         return self.decrypt_credential(self.encrypted_client_secret)
     
     def set_api_key(self, api_key: str):
@@ -295,6 +304,9 @@ class APICredential(BaseModel):
     
     def get_api_key(self) -> str:
         """Récupère la clé API déchiffrée."""
+
+
+
         return self.decrypt_credential(self.encrypted_api_key)
     
     def increment_usage(self):
@@ -520,6 +532,9 @@ def create_platform_credential(
 
 def generate_encryption_key() -> str:
     """Génère une nouvelle clé de chiffrement Fernet."""
+
+
+
     return Fernet.generate_key().decode()
 
 
@@ -611,6 +626,9 @@ def hash_credential(credential_value: str) -> str:
     
     def get_client_secret(self) -> str:
         """Récupère le client secret déchiffré."""
+
+
+
         return self.decrypt_value(self.client_secret)
     
     def set_api_key(self, key: str):
@@ -619,6 +637,9 @@ def hash_credential(credential_value: str) -> str:
     
     def get_api_key(self) -> str:
         """Récupère la clé API déchiffrée."""
+
+
+
         return self.decrypt_value(self.api_key)
     
     def set_api_secret(self, secret: str):
@@ -627,6 +648,9 @@ def hash_credential(credential_value: str) -> str:
     
     def get_api_secret(self) -> str:
         """Récupère le secret API déchiffré."""
+
+
+
         return self.decrypt_value(self.api_secret)
     
     @property
@@ -653,6 +677,9 @@ def hash_credential(credential_value: str) -> str:
     
     def to_dict_safe(self) -> Dict[str, Any]:
         """Retourne un dictionnaire sans les données sensibles."""
+
+
+
         return {
             "id": str(self.id),
             "platform_name": self.platform_name,

@@ -1,5 +1,5 @@
 """
-🎯 Quality Metrics - Professional Quality Measurement System
+ Quality Metrics - Professional Quality Measurement System
 
 Comprehensive quality metrics system for detailed audio quality measurement,
 scoring, and reporting. Provides structured quality data and analysis.
@@ -8,7 +8,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Developer + DevOps + DBA + Security + Microservices
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ AVERTISSEMENT STRICT ⚠️
+ AVERTISSEMENT STRICT 
 Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou reproduction sans 
 autorisation écrite explicite de Fahed Mlaiel (mlaiel@live.de) est strictement 
@@ -111,6 +111,9 @@ class QualityMetrics:
     
     def get_scores_by_category(self, category: MetricCategory) -> List[QualityScore]:
         """Get scores filtered by category"""
+
+
+
         return [score for score in self.scores if score.category == category]
     
     def calculate_category_score(self, category: MetricCategory) -> float:
@@ -184,6 +187,9 @@ class QualityMetrics:
     
     def get_failed_metrics(self) -> List[QualityScore]:
         """Get metrics that failed their thresholds"""
+
+
+
         return [score for score in self.scores if not score.passed]
     
     def get_summary_stats(self) -> Dict[str, Any]:
@@ -276,6 +282,9 @@ class QualityReport:
     
     def get_detailed_analysis(self) -> Dict[str, Any]:
         """Get detailed analysis breakdown"""
+
+
+
         return {
             'overall_assessment': {
                 'score': self.overall_score,
@@ -421,7 +430,7 @@ class QualityReport:
 
 class QualityMetricsCalculator:
     """
-    🎯 Quality Metrics Calculator
+     Quality Metrics Calculator
     
     Advanced quality metrics calculation engine:
     - Technical quality metrics
@@ -437,6 +446,9 @@ class QualityMetricsCalculator:
     
     def _initialize_metric_definitions(self) -> Dict[str, Dict[str, Any]]:
         """Initialize standard metric definitions"""
+
+
+
         return {
             # Technical metrics
             'sample_rate': {

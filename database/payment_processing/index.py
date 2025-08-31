@@ -174,6 +174,9 @@ class PaymentProcessingOrchestrator:
         Returns:
             bool: True si l'initialisation réussit, False sinon
         """
+
+
+
         try:
             logger.info("Initializing Payment Processing Orchestrator...")
             
@@ -418,6 +421,9 @@ class PaymentProcessingOrchestrator:
         Returns:
             Dict: Statut de santé détaillé
         """
+
+
+
         try:
             health_status = {
                 'timestamp': datetime.utcnow().isoformat(),
@@ -465,6 +471,9 @@ class PaymentProcessingOrchestrator:
         Returns:
             Dict: Données du dashboard
         """
+
+
+
         try:
             dashboard_data = await self.analytics_engine.generate_real_time_dashboard()
             
@@ -483,6 +492,9 @@ class PaymentProcessingOrchestrator:
     
     def _load_configuration(self, config_path: Optional[str] = None) -> Dict[str, Any]:
         """Charge la configuration depuis le fichier YAML"""
+
+
+
         try:
             if config_path:
                 config_file = Path(config_path)
@@ -656,6 +668,9 @@ def get_module_status() -> Dict[str, Any]:
     Returns:
         Dict: Informations sur le module et son statut
     """
+
+
+
     return {
         'module_info': get_module_info(),
         'compliance_status': get_compliance_status(),
@@ -680,19 +695,19 @@ if __name__ == "__main__":
         # Initialize orchestrator
         print("Initializing Payment Processing Orchestrator...")
         async with payment_processing_context() as orchestrator:
-            print("✅ Orchestrator initialized successfully")
+            print(" Orchestrator initialized successfully")
             
             # Health check
             health = await orchestrator.health_check()
-            print(f"🏥 Health Status: {'✅ Healthy' if health['overall_healthy'] else '❌ Unhealthy'}")
+            print(f" Health Status: {' Healthy' if health['overall_healthy'] else ' Unhealthy'}")
             
             # Module status
             status = get_module_status()
-            print(f"📊 Module Status: {status}")
+            print(f" Module Status: {status}")
             
             # Demo transaction (if in development mode)
             if len(sys.argv) > 1 and sys.argv[1] == "--demo":
-                print("\n🔄 Running demo transaction...")
+                print("\n Running demo transaction...")
                 demo_result = await process_payment_simple(
                     user_id="demo_user_123",
                     amount="99.99",

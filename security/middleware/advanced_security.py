@@ -17,7 +17,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use prohibited
 
-⚠️  PROPRIETARY SECURITY CODE ⚠️
+  PROPRIETARY SECURITY CODE 
 This security implementation contains proprietary algorithms and methods.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 """
@@ -203,6 +203,9 @@ class JWTManager:
         token_type: str = "access"
     ) -> Dict[str, Any]:
         """Verify and decode JWT token"""
+
+
+
         try:
             payload = jwt.decode(
                 token,
@@ -397,6 +400,9 @@ class InputValidator:
     
     def _validate_list(self, data: List[Any], field_name: str) -> List[Any]:
         """Validate list input"""
+
+
+
         return [
             self.validate_input(item, f"{field_name}[{i}]")
             for i, item in enumerate(data)
@@ -659,6 +665,9 @@ class SecurityMiddleware:
     
     async def _validate_request_body(self, request: Request):
         """Validate request body"""
+
+
+
         try:
             if request.headers.get("content-type", "").startswith("application/json"):
                 body = await request.body()

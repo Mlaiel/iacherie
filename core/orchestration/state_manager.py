@@ -7,7 +7,7 @@ and recovery capabilities across distributed orchestration processes.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -176,6 +176,9 @@ class StateManager:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             # Validate state definition
             if not await self._validate_state_definition(state_def):
@@ -215,6 +218,9 @@ class StateManager:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             if state_id not in self.state_definitions:
                 raise ValueError(f"State definition not found: {state_id}")
@@ -266,6 +272,9 @@ class StateManager:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             if state_id not in self.active_states:
                 raise ValueError(f"State not found: {state_id}")
@@ -330,6 +339,9 @@ class StateManager:
         Returns:
             Optional[Dict[str, Any]]: State data or None
         """
+
+
+
         try:
             # Check cache first
             if use_cache and state_id in self.memory_cache:
@@ -373,6 +385,9 @@ class StateManager:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             if state_id not in self.active_states:
                 return False
@@ -418,6 +433,9 @@ class StateManager:
         Returns:
             Optional[str]: Checkpoint snapshot ID
         """
+
+
+
         try:
             if state_id not in self.active_states:
                 return None
@@ -476,6 +494,9 @@ class StateManager:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             start_time = datetime.now()
             
@@ -535,6 +556,9 @@ class StateManager:
         tags: Optional[Set[str]] = None
     ) -> Optional[StateSnapshot]:
         """Create state snapshot."""
+
+
+
         try:
             snapshot_id = str(uuid.uuid4())
             timestamp = datetime.now()
@@ -566,6 +590,9 @@ class StateManager:
     
     async def _create_recovery_point(self, state_id: str, data: Dict[str, Any]) -> bool:
         """Create recovery point for state."""
+
+
+
         try:
             recovery_id = str(uuid.uuid4())
             
@@ -613,6 +640,9 @@ class StateManager:
     
     async def _verify_snapshot_integrity(self, snapshot: StateSnapshot) -> bool:
         """Verify snapshot data integrity."""
+
+
+
         try:
             # Recalculate checksum
             data_json = json.dumps(snapshot.data, sort_keys=True)
@@ -631,6 +661,9 @@ class StateManager:
     
     async def _persist_state(self, state_id: str, data: Dict[str, Any]) -> bool:
         """Persist state data."""
+
+
+
         try:
             state_def = self.state_definitions[state_id]
             
@@ -659,6 +692,9 @@ class StateManager:
     
     async def _load_state(self, state_id: str) -> Optional[Dict[str, Any]]:
         """Load state from persistence."""
+
+
+
         try:
             # This would load from the appropriate storage backend
             return None
@@ -669,6 +705,9 @@ class StateManager:
     
     async def _delete_persisted_state(self, state_id: str) -> bool:
         """Delete state from persistence."""
+
+
+
         try:
             # This would delete from all configured storage backends
             return True
@@ -679,6 +718,9 @@ class StateManager:
     
     async def _persist_snapshot(self, snapshot: StateSnapshot) -> bool:
         """Persist snapshot to storage."""
+
+
+
         try:
             # This would persist snapshot based on configuration
             return True
@@ -772,6 +814,9 @@ class StateManager:
     
     async def _validate_state_definition(self, state_def: StateDefinition) -> bool:
         """Validate state definition."""
+
+
+
         try:
             if not state_def.state_id or not state_def.name:
                 return False
@@ -823,6 +868,9 @@ class StateManager:
     
     async def get_state_stats(self) -> Dict[str, Any]:
         """Get state management statistics."""
+
+
+
         return {
             **self.state_stats,
             'registered_states': len(self.state_definitions),

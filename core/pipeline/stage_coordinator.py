@@ -781,6 +781,9 @@ class StageCoordinator:
     
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default configuration"""
+
+
+
         return {
             "coordination": {
                 "default_strategy": "adaptive",
@@ -1238,10 +1241,16 @@ class StageCoordinator:
     # Public API methods
     def get_coordination_status(self, context_id: str) -> Optional[CoordinationContext]:
         """Get coordination status"""
+
+
+
         return self.active_coordinations.get(context_id) or self.completed_coordinations.get(context_id)
     
     def get_active_coordinations(self) -> Dict[str, CoordinationContext]:
         """Get all active coordinations"""
+
+
+
         return self.active_coordinations.copy()
     
     def get_coordination_metrics(self) -> Dict[str, Any]:

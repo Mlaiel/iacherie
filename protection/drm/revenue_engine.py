@@ -1,5 +1,5 @@
 """
-💰 Advanced Revenue Engine - Ultra-Professional DRM Monetization System
+ Advanced Revenue Engine - Ultra-Professional DRM Monetization System
 ====================================================================
 
 Comprehensive revenue tracking, calculation, and distribution system for DRM
@@ -8,12 +8,12 @@ with advanced analytics, multi-currency support, and real-time processing.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL NOTICE:
+ CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing and usage rights.
 
-🎯 PROJECT TEAM SPECIALTIES:
+ PROJECT TEAM SPECIALTIES:
 - Lead AI Developer & Solution Architect: Advanced AI/ML systems and intelligent automation
 - Backend Senior Engineer: Enterprise-grade backend architecture and microservices  
 - ML Engineer: Machine learning models and predictive analytics
@@ -194,6 +194,9 @@ class RevenueEngine:
 
     async def initialize(self) -> bool:
         """Initialize the Revenue Engine."""
+
+
+
         try:
             # Load exchange rates
             await self._load_exchange_rates()

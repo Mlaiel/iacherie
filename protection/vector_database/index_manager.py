@@ -1,5 +1,5 @@
 """
-📊 Vector Index Manager
+ Vector Index Manager
 =======================
 
 Manages multiple vector indexes for different content types and embedding dimensions.
@@ -152,6 +152,9 @@ class VectorIndexManager:
         custom_config: Optional[IndexConfiguration] = None
     ) -> bool:
         """Create a new vector index"""
+
+
+
         try:
             # Use custom config or default
             config = custom_config or self.default_configs[embedding_type]
@@ -220,6 +223,9 @@ class VectorIndexManager:
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
         """Add an embedding to the appropriate index"""
+
+
+
         try:
             # Find the appropriate index
             index_name = self._get_index_name(embedding_result.embedding_type)
@@ -276,6 +282,9 @@ class VectorIndexManager:
         embeddings: List[Tuple[EmbeddingResult, str, Optional[Dict[str, Any]]]]
     ) -> List[bool]:
         """Add multiple embeddings in batch"""
+
+
+
         try:
             # Group embeddings by index
             grouped_embeddings = {}
@@ -346,6 +355,9 @@ class VectorIndexManager:
         metadata_filter: Optional[Dict[str, Any]] = None
     ) -> List[SearchResult]:
         """Search for similar embeddings"""
+
+
+
         try:
             start_time = time.time()
             
@@ -391,6 +403,9 @@ class VectorIndexManager:
         metadata_filter: Optional[Dict[str, Any]]
     ) -> List[SearchResult]:
         """Search across multiple indexes"""
+
+
+
         try:
             all_results = []
             
@@ -584,10 +599,16 @@ class VectorIndexManager:
     
     def _get_index_name(self, embedding_type: EmbeddingType) -> str:
         """Get index name for embedding type"""
+
+
+
         return embedding_type.value.replace('_', '_')
     
     async def get_index_info(self, index_name: Optional[str] = None) -> Union[IndexInfo, Dict[str, IndexInfo]]:
         """Get information about indexes"""
+
+
+
         try:
             if index_name:
                 # Get info for specific index
@@ -640,6 +661,9 @@ class VectorIndexManager:
     
     async def remove_vector(self, embedding_id: str, index_name: Optional[str] = None) -> bool:
         """Remove a vector from index(es)"""
+
+
+
         try:
             if index_name:
                 # Remove from specific index
@@ -662,6 +686,9 @@ class VectorIndexManager:
     
     async def clear_index(self, index_name: str) -> bool:
         """Clear all vectors from an index"""
+
+
+
         try:
             if index_name not in self.indexes:
                 return False

@@ -92,6 +92,9 @@ class QualityProfile:
     @property
     def dimension_scores(self) -> Dict[str, float]:
         """Get scores by dimension"""
+
+
+
         return {dim.value: metric.score for dim, metric in self.metrics.items()}
     
     @property
@@ -1034,6 +1037,9 @@ class DataQualityValidator:
     
     def _default_thresholds(self) -> Dict[str, float]:
         """Default quality thresholds for each dimension"""
+
+
+
         return {
             'completeness': 0.8,
             'consistency': 0.7,
@@ -1047,6 +1053,9 @@ class DataQualityValidator:
     
     def _load_quality_rules(self) -> Dict[str, Dict[str, Any]]:
         """Load quality rules for different content types"""
+
+
+
         return {
             'user_profile': {
                 'completeness': {
@@ -1108,6 +1117,9 @@ class DataQualityValidator:
     
     def _load_scoring_weights(self) -> Dict[str, float]:
         """Load scoring weights for quality dimensions"""
+
+
+
         return {
             'completeness': 1.2,
             'consistency': 1.0,
@@ -1126,6 +1138,9 @@ class DataQualityValidator:
     
     def get_quality_summary(self, profile: QualityProfile) -> Dict[str, Any]:
         """Get a summary of quality assessment"""
+
+
+
         return {
             'overall_score': profile.overall_score,
             'quality_level': profile.quality_level.value,

@@ -5,7 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 Version: 3.0.0
 
-⚠️ LEGAL WARNING: Unauthorized use prohibited. See __init__.py for full notice.
+ LEGAL WARNING: Unauthorized use prohibited. See __init__.py for full notice.
 """
 from typing import Dict, Any, List, Optional, Callable, Union
 from datetime import datetime, timezone, timedelta
@@ -77,7 +77,10 @@ class QueueMessage:
         return True
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert message to dictionary for serialization"""        return {
+        """Convert message to dictionary for serialization"""
+
+
+        return {
             "message_id": self.message_id,
             "queue_name": self.queue_name,
             "payload": self.payload,
@@ -95,7 +98,10 @@ class QueueMessage:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "QueueMessage":
-        """Create message from dictionary"""        return cls(
+        """Create message from dictionary"""
+
+
+        return cls(
             message_id=data["message_id"],
             queue_name=data["queue_name"],
             payload=data["payload"],
@@ -161,7 +167,10 @@ class RedisMessageQueue(MessageQueue):
         self.stats_key = f"queue:{queue_name}:stats"
     
     async def enqueue(self, message: QueueMessage) -> str:
-        """Add message to Redis queue with priority support"""        try:
+        """Add message to Redis queue with priority support"""
+
+
+        try:
             # Encrypt message payload
             encrypted_payload = await self.encryption.encrypt_data(
                 json.dumps(message.payload)
@@ -205,7 +214,10 @@ class RedisMessageQueue(MessageQueue):
             raise MessageQueueError(f"Failed to enqueue message: {str(e)}")
     
     async def dequeue(self, timeout: Optional[int] = None) -> Optional[QueueMessage]:
-        """Dequeue message with timeout support"""        try:
+        """Dequeue message with timeout support"""
+
+
+        try:
             # Move scheduled messages that are ready
             await self._process_scheduled_messages()
             
@@ -260,7 +272,10 @@ class RedisMessageQueue(MessageQueue):
             raise MessageQueueError(f"Failed to dequeue message: {str(e)}")
     
     async def peek(self) -> Optional[QueueMessage]:
-        """Peek at next message without removing it"""        try:
+        """Peek at next message without removing it"""
+
+
+        try:
             await self._process_scheduled_messages()
             
             # Get highest priority message without removing
@@ -289,7 +304,10 @@ class RedisMessageQueue(MessageQueue):
             return None
     
     async def ack(self, message_id: str) -> bool:
-        """Acknowledge successful message processing"""        try:
+        """Acknowledge successful message processing"""
+
+
+        try:
             # Remove from processing queue
             removed = await self.redis.zrem(self.processing_key, message_id)
             
@@ -310,7 +328,10 @@ class RedisMessageQueue(MessageQueue):
             return False
     
     async def nack(self, message_id: str, requeue: bool = True) -> bool:
-        """Negative acknowledge - handle failed message"""        try:
+        """Negative acknowledge - handle failed message"""
+
+
+        try:
             # Get message from processing queue
             score = await self.redis.zscore(self.processing_key, message_id)
             if score is None:
@@ -366,7 +387,10 @@ class RedisMessageQueue(MessageQueue):
             return False
     
     async def size(self) -> int:
-        """Get total queue size"""        try:
+        """Get total queue size"""
+
+
+        try:
             pending_size = await self.redis.zcard(self.pending_key)
             processing_size = await self.redis.zcard(self.processing_key)
             scheduled_size = await self.redis.zcard(self.scheduled_key)
@@ -378,7 +402,10 @@ class RedisMessageQueue(MessageQueue):
             return 0
     
     async def purge(self) -> int:
-        """Remove all messages from queue"""        try:
+        """Remove all messages from queue"""
+
+
+        try:
             # Get all message IDs
             pending_ids = await self.redis.zrange(self.pending_key, 0, -1)
             processing_ids = await self.redis.zrange(self.processing_key, 0, -1)
@@ -410,7 +437,10 @@ class RedisMessageQueue(MessageQueue):
             return 0
     
     async def _process_scheduled_messages(self):
-        """Move ready scheduled messages to pending queue"""        try:
+        """Move ready scheduled messages to pending queue"""
+
+
+        try:
             current_time = datetime.now(timezone.utc).timestamp()
             
             # Get messages that are ready to be processed
@@ -443,7 +473,10 @@ class RedisMessageQueue(MessageQueue):
             logger.error(f"Error processing scheduled messages: {str(e)}")
     
     async def get_stats(self) -> Dict[str, Any]:
-        """Get queue statistics"""        try:
+        """Get queue statistics"""
+
+
+        try:
             stats = await self.redis.hgetall(self.stats_key)
             
             # Convert byte keys/values to strings/integers
@@ -546,7 +579,10 @@ class QueueProcessor:
         logger.info(f"Worker {worker_id} stopped")
     
     async def _process_message(self, message: QueueMessage, worker_id: int):
-        """Process a single message"""        try:
+        """Process a single message"""
+
+
+        try:
             # Determine message type from payload or headers
             message_type = (
                 message.headers.get("message_type") or

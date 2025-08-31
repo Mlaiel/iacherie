@@ -7,7 +7,7 @@ protection, distribution, crawling, recommendations, and performance optimizatio
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️ LEGAL WARNING: This code and concept are protected by intellectual property laws.
+ LEGAL WARNING: This code and concept are protected by intellectual property laws.
 Any unauthorized copying, modification, or distribution without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.

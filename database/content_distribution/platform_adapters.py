@@ -7,7 +7,7 @@ and platform-specific content adaptation within the IA Influencer Agent ecosyste
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL NOTICE:
+ CRITICAL LEGAL NOTICE:
 This code and database architecture are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written 
 permission is strictly prohibited and will result in immediate legal action.
@@ -371,6 +371,9 @@ class PlatformAdapterManager:
         adapter_request: PlatformAdapterRequest
     ) -> PlatformAdapter:
         """Register new platform adapter"""
+
+
+
         try:
             # Validate platform requirements
             await self._validate_platform_configuration(adapter_request)
@@ -418,6 +421,9 @@ class PlatformAdapterManager:
         credential_request: CredentialRequest
     ) -> PlatformCredential:
         """Add platform credentials for user"""
+
+
+
         try:
             # Encrypt sensitive data before storage
             encrypted_data = await self._encrypt_credential_data(credential_request)
@@ -469,6 +475,9 @@ class PlatformAdapterManager:
         operation_request: PlatformOperationRequest
     ) -> PlatformOperation:
         """Execute operation on platform"""
+
+
+
         try:
             # Get platform adapter and credentials
             adapter = await self._get_adapter_by_id(operation_request.platform_id)
@@ -546,6 +555,9 @@ class PlatformAdapterManager:
         date_range: Optional[Tuple[datetime, datetime]] = None
     ) -> List[PlatformAnalytics]:
         """Get platform analytics data"""
+
+
+
         try:
             # Build query
             query = self.db_session.query(PlatformAnalytics).filter(
@@ -575,6 +587,9 @@ class PlatformAdapterManager:
     
     async def update_adapter_health(self, adapter_id: str) -> Dict[str, Any]:
         """Update platform adapter health status"""
+
+
+
         try:
             adapter = await self._get_adapter_by_id(adapter_id)
             if not adapter:
@@ -632,6 +647,9 @@ class PlatformAdapterManager:
     
     async def _perform_health_check(self, adapter: PlatformAdapter) -> Dict[str, Any]:
         """Perform health check on platform adapter"""
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -670,6 +688,9 @@ class PlatformAdapterManager:
     
     async def _cache_adapter(self, adapter: PlatformAdapter):
         """Cache adapter data in Redis"""
+
+
+
         try:
             cache_key = f"adapter:{adapter.id}"
             adapter_data = {
@@ -693,6 +714,9 @@ class PlatformAdapterManager:
     
     async def _get_adapter_by_id(self, adapter_id: str) -> Optional[PlatformAdapter]:
         """Get adapter by ID with caching"""
+
+
+
         try:
             # Try cache first
             cache_key = f"adapter:{adapter_id}"

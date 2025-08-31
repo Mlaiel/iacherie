@@ -9,7 +9,7 @@ for comprehensive content surveillance and rights protection.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, modification, or distribution is strictly prohibited.
 Violators will face immediate legal action under German and international law.
@@ -268,6 +268,9 @@ class InstagramWebScraper:
     
     async def scrape_post_data(self, post_url: str) -> Optional[InstagramMediaData]:
         """Scrape comprehensive post data from Instagram post page."""
+
+
+
         try:
             self.driver.get(post_url)
             
@@ -316,6 +319,9 @@ class InstagramWebScraper:
         shortcode: str
     ) -> Optional[InstagramMediaData]:
         """Extract post data from Instagram shared data object."""
+
+
+
         try:
             # Navigate through Instagram's complex shared data structure
             entry_data = shared_data.get('entry_data', {})
@@ -394,6 +400,9 @@ class InstagramWebScraper:
     
     def _extract_post_from_dom(self, shortcode: str, post_url: str) -> Optional[InstagramMediaData]:
         """Fallback method to extract post data from DOM elements."""
+
+
+
         try:
             # Extract basic information from DOM
             # Note: Instagram's DOM structure changes frequently
@@ -478,6 +487,9 @@ class InstagramWebScraper:
     
     async def search_hashtag_posts(self, hashtag: str, limit: int = 50) -> List[str]:
         """Search posts by hashtag and return post URLs."""
+
+
+
         try:
             hashtag_url = f"https://www.instagram.com/explore/tags/{hashtag.replace('#', '')}/"
             self.driver.get(hashtag_url)
@@ -544,6 +556,9 @@ class InstagramCrawler(BaseCrawler):
     
     async def crawl_post(self, post_url: str) -> Optional[CrawlResult]:
         """Crawl comprehensive data for a specific Instagram post."""
+
+
+
         try:
             # Scrape post data
             post_data = await self.web_scraper.scrape_post_data(post_url)
@@ -599,6 +614,9 @@ class InstagramCrawler(BaseCrawler):
         time_range: Optional[timedelta] = None
     ) -> List[CrawlResult]:
         """Search for potentially infringing content on Instagram."""
+
+
+
         try:
             results = []
             
@@ -637,6 +655,9 @@ class InstagramCrawler(BaseCrawler):
         check_period: timedelta = timedelta(hours=24)
     ) -> List[CrawlResult]:
         """Monitor a specific user for new content."""
+
+
+
         try:
             user_url = f"https://www.instagram.com/{username}/"
             self.web_scraper.driver.get(user_url)

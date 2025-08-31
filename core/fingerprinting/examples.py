@@ -149,7 +149,7 @@ class FingerprintingExamples:
                     if result and hasattr(result, 'file_path'):
                         filename = Path(result.file_path).name
                         methods = list(result.fingerprints.keys()) if result.fingerprints else []
-                        print(f"  ✓ {filename}: {', '.join(methods)}")
+                        print(f"   {filename}: {', '.join(methods)}")
             
             print(f"\nBatch Processing Summary:")
             print(f"  Total Images: {len(image_files)}")
@@ -252,19 +252,19 @@ class FingerprintingExamples:
             print(f"\nHash Verification:")
             for algorithm, hash_result in hashes.items():
                 is_valid = self.hash_generator.verify_hash(original_data, hash_result.hash, algorithm)
-                print(f"  {algorithm.upper()}: {'✓ Valid' if is_valid else '✗ Invalid'}")
+                print(f"  {algorithm.upper()}: {' Valid' if is_valid else ' Invalid'}")
             
             # Verify salted hash
             is_salted_valid = self.hash_generator.verify_salted_hash(
                 original_data, salted_hash.hash, salted_hash.salt
             )
-            print(f"  Salted SHA-256: {'✓ Valid' if is_salted_valid else '✗ Invalid'}")
+            print(f"  Salted SHA-256: {' Valid' if is_salted_valid else ' Invalid'}")
             
             # Verify HMAC
             is_hmac_valid = self.hash_generator.verify_hmac(
                 original_data, hmac_result.hash, secret_key
             )
-            print(f"  HMAC: {'✓ Valid' if is_hmac_valid else '✗ Invalid'}")
+            print(f"  HMAC: {' Valid' if is_hmac_valid else ' Invalid'}")
             
             # Generate Merkle tree (demo with multiple items)
             items = [f"item_{i}" for i in range(8)]
@@ -287,7 +287,7 @@ class FingerprintingExamples:
             requirements = validate_fingerprinting_system()
             
             all_valid = all(requirements.values())
-            print(f"   System Ready: {'✓ Yes' if all_valid else '✗ No'}")
+            print(f"   System Ready: {' Yes' if all_valid else ' No'}")
             
             if not all_valid:
                 print("   Issues found:")
@@ -327,7 +327,7 @@ class FingerprintingExamples:
                         'fingerprints': {'demo': f"fingerprint_data_{fingerprint_id}"},
                         'created_at': 'demo_timestamp'
                     }
-                    print(f"     ✓ Fingerprint created: {fingerprint_id}")
+                    print(f"      Fingerprint created: {fingerprint_id}")
             
             # Step 3: Security and protection
             print(f"\n3. Applying security measures...")
@@ -341,7 +341,7 @@ class FingerprintingExamples:
                     'secure_hash': hash_result.hash,
                     'salt': hash_result.salt
                 }
-                print(f"   ✓ Protected: {fp_id}")
+                print(f"    Protected: {fp_id}")
             
             # Step 4: Analysis and reporting
             print(f"\n4. Analysis and reporting...")
@@ -365,7 +365,7 @@ class FingerprintingExamples:
             for key, value in report.items():
                 print(f"     {key}: {value}")
             
-            print(f"\n✓ Comprehensive workflow completed successfully!")
+            print(f"\n Comprehensive workflow completed successfully!")
             
         except Exception as e:
             print(f"Error in comprehensive workflow: {str(e)}")
@@ -398,6 +398,9 @@ class FingerprintingExamples:
 
 async def main():
     """Main function to run examples"""
+
+
+
     try:
         # Create examples instance
         examples = FingerprintingExamples()

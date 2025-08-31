@@ -8,7 +8,7 @@ specialized repositories for vectors, fingerprints, search, and metadata.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent - Content Protection Platform
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
@@ -130,6 +130,9 @@ class BaseRepository(ABC):
     
     async def _cache_get(self, key: str) -> Optional[str]:
         """Get value from Redis cache"""
+
+
+
         try:
             value = await self.redis_client.get(key)
             return value.decode() if value else None
@@ -139,6 +142,9 @@ class BaseRepository(ABC):
     
     async def _cache_set(self, key: str, value: str, expire: int = 3600) -> None:
         """Set value in Redis cache"""
+
+
+
         try:
             await self.redis_client.setex(key, expire, value)
         except Exception as e:
@@ -146,6 +152,9 @@ class BaseRepository(ABC):
     
     async def _cache_delete(self, key: str) -> None:
         """Delete value from Redis cache"""
+
+
+
         try:
             await self.redis_client.delete(key)
         except Exception as e:
@@ -157,6 +166,9 @@ class IndexRepository(BaseRepository):
     
     async def create(self, record: IndexRecord) -> str:
         """Create new index record"""
+
+
+
         try:
             # Generate ID if not provided
             if not record.content_id:
@@ -210,6 +222,9 @@ class IndexRepository(BaseRepository):
     
     async def get_by_id(self, content_id: str) -> Optional[IndexRecord]:
         """Get index record by content ID"""
+
+
+
         try:
             # Try cache first
             cache_key = f"index:{content_id}"
@@ -258,6 +273,9 @@ class IndexRepository(BaseRepository):
     
     async def update(self, content_id: str, updates: Dict[str, Any]) -> bool:
         """Update index record"""
+
+
+
         try:
             # Prepare update fields
             set_clauses = []
@@ -302,6 +320,9 @@ class IndexRepository(BaseRepository):
     
     async def delete(self, content_id: str) -> bool:
         """Delete index record"""
+
+
+
         try:
             query = text("DELETE FROM content_index WHERE content_id = :content_id")
             result = await self.db_session.execute(query, {"content_id": content_id})
@@ -327,6 +348,9 @@ class IndexRepository(BaseRepository):
     
     async def search(self, query: SearchQuery) -> List[IndexRecord]:
         """Search index records with filters"""
+
+
+
         try:
             # Build SQL query
             conditions = []
@@ -410,6 +434,9 @@ class IndexRepository(BaseRepository):
     
     async def get_by_creator(self, creator_id: str, limit: int = 100) -> List[IndexRecord]:
         """Get all records for a specific creator"""
+
+
+
         try:
             query = text("""
                 SELECT * FROM content_index 
@@ -451,6 +478,9 @@ class IndexRepository(BaseRepository):
     
     async def _update_secondary_indexes(self, record: IndexRecord) -> None:
         """Update Redis secondary indexes"""
+
+
+
         try:
             # Index by creator
             await self.redis_client.sadd(f"creator:{record.creator_id}:content", record.content_id)
@@ -471,6 +501,9 @@ class IndexRepository(BaseRepository):
     
     async def _remove_from_secondary_indexes(self, content_id: str) -> None:
         """Remove from Redis secondary indexes"""
+
+
+
         try:
             # Get record first to know what to remove
             record = await self.get_by_id(content_id)
@@ -505,6 +538,9 @@ class VectorRepository(BaseRepository):
     
     async def create(self, record: VectorRecord) -> str:
         """Create new vector record"""
+
+
+
         try:
             # Generate ID if not provided
             if not record.vector_id:
@@ -558,6 +594,9 @@ class VectorRepository(BaseRepository):
     
     async def get_by_id(self, vector_id: str) -> Optional[VectorRecord]:
         """Get vector record by ID"""
+
+
+
         try:
             # Try cache first
             cache_key = f"vector:{vector_id}"
@@ -599,6 +638,9 @@ class VectorRepository(BaseRepository):
     
     async def get_by_content_id(self, content_id: str) -> List[VectorRecord]:
         """Get all vector records for a content ID"""
+
+
+
         try:
             query = text("""
                 SELECT * FROM vector_embeddings 
@@ -632,6 +674,9 @@ class VectorRepository(BaseRepository):
     
     async def similarity_search(self, query_vector: List[float], top_k: int = 10) -> List[Tuple[str, float]]:
         """Perform similarity search using FAISS"""
+
+
+
         try:
             if not self.faiss_index:
                 raise ValueError("FAISS index not available")
@@ -666,6 +711,9 @@ class VectorRepository(BaseRepository):
     
     async def update(self, vector_id: str, updates: Dict[str, Any]) -> bool:
         """Update vector record"""
+
+
+
         try:
             # Prepare update fields
             set_clauses = []
@@ -706,6 +754,9 @@ class VectorRepository(BaseRepository):
     
     async def delete(self, vector_id: str) -> bool:
         """Delete vector record"""
+
+
+
         try:
             query = text("DELETE FROM vector_embeddings WHERE vector_id = :vector_id")
             result = await self.db_session.execute(query, {"vector_id": vector_id})
@@ -736,6 +787,9 @@ class FingerprintRepository(BaseRepository):
     
     async def create(self, record: FingerprintRecord) -> str:
         """Create new fingerprint record"""
+
+
+
         try:
             # Generate ID if not provided
             if not record.fingerprint_id:
@@ -783,6 +837,9 @@ class FingerprintRepository(BaseRepository):
     
     async def get_by_id(self, fingerprint_id: str) -> Optional[FingerprintRecord]:
         """Get fingerprint record by ID"""
+
+
+
         try:
             # Try cache first
             cache_key = f"fingerprint:{fingerprint_id}"
@@ -822,6 +879,9 @@ class FingerprintRepository(BaseRepository):
     
     async def get_by_content_id(self, content_id: str) -> List[FingerprintRecord]:
         """Get all fingerprint records for a content ID"""
+
+
+
         try:
             query = text("""
                 SELECT * FROM content_fingerprints 
@@ -855,6 +915,9 @@ class FingerprintRepository(BaseRepository):
     async def find_similar_fingerprints(self, fingerprint_data: Dict[str, str], 
                                       fingerprint_type: str) -> List[Tuple[str, float]]:
         """Find similar fingerprints"""
+
+
+
         try:
             results = []
             
@@ -890,6 +953,9 @@ class FingerprintRepository(BaseRepository):
     
     async def _find_similar_perceptual_hashes(self, algorithm: str, query_hash: str) -> List[Tuple[str, float]]:
         """Find similar perceptual hashes using Hamming distance"""
+
+
+
         try:
             results = []
             threshold = 10  # Maximum Hamming distance for similarity
@@ -937,6 +1003,9 @@ class FingerprintRepository(BaseRepository):
     
     async def _index_fingerprint_hashes(self, record: FingerprintRecord) -> None:
         """Index fingerprint hashes in Redis for fast lookup"""
+
+
+
         try:
             for algorithm, fingerprint_hash in record.fingerprint_data.items():
                 key = f"fp:{algorithm}:{fingerprint_hash}"
@@ -947,6 +1016,9 @@ class FingerprintRepository(BaseRepository):
     
     async def update(self, fingerprint_id: str, updates: Dict[str, Any]) -> bool:
         """Update fingerprint record"""
+
+
+
         try:
             # Prepare update fields
             set_clauses = []
@@ -991,6 +1063,9 @@ class FingerprintRepository(BaseRepository):
     
     async def delete(self, fingerprint_id: str) -> bool:
         """Delete fingerprint record"""
+
+
+
         try:
             # Get record to remove from indexes
             record = await self.get_by_id(fingerprint_id)
@@ -1020,6 +1095,9 @@ class FingerprintRepository(BaseRepository):
     
     async def _remove_fingerprint_hashes(self, record: FingerprintRecord) -> None:
         """Remove fingerprint hashes from Redis indexes"""
+
+
+
         try:
             for algorithm, fingerprint_hash in record.fingerprint_data.items():
                 key = f"fp:{algorithm}:{fingerprint_hash}"
@@ -1045,6 +1123,9 @@ class SearchRepository:
     
     async def unified_search(self, query: SearchQuery) -> Dict[str, Any]:
         """Perform unified search across all repository types"""
+
+
+
         try:
             results = {
                 "text_results": [],
@@ -1103,6 +1184,9 @@ class SearchRepository:
     
     async def find_duplicate_content(self, content_id: str) -> List[Dict[str, Any]]:
         """Find potential duplicate content using multiple detection methods"""
+
+
+
         try:
             duplicates = []
             
@@ -1175,6 +1259,9 @@ class SearchRepository:
     
     async def get_content_recommendations(self, content_id: str, limit: int = 10) -> List[Dict[str, Any]]:
         """Get content recommendations based on similarity"""
+
+
+
         try:
             recommendations = []
             

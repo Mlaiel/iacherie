@@ -144,6 +144,9 @@ class ContentMonetizationEngine:
         Returns:
             Created monetization strategy details
         """
+
+
+
         try:
             # Validate strategy type
             if strategy_type not in self.monetization_strategies:
@@ -234,6 +237,9 @@ class ContentMonetizationEngine:
         Returns:
             Payment processing result and subscription details
         """
+
+
+
         try:
             # Get strategy details
             strategy = await self.db.monetization_strategies.get_by_id(strategy_id)
@@ -356,6 +362,9 @@ class ContentMonetizationEngine:
         Returns:
             Created NFT collection details
         """
+
+
+
         try:
             # Validate collection configuration
             required_fields = ['name', 'description', 'content_items', 'price_per_nft']
@@ -465,6 +474,9 @@ class ContentMonetizationEngine:
         Returns:
             Partnership agreement details
         """
+
+
+
         try:
             # Validate partnership configuration
             required_fields = ['brand_name', 'campaign_type', 'compensation_amount', 'deliverables']
@@ -562,6 +574,9 @@ class ContentMonetizationEngine:
         Returns:
             Detailed revenue analytics and insights
         """
+
+
+
         try:
             # Calculate period dates
             end_date = datetime.utcnow()
@@ -632,6 +647,9 @@ class ContentMonetizationEngine:
         Returns:
             Payout processing result
         """
+
+
+
         try:
             # Get creator's available balance
             available_balance = await self._get_available_balance(creator_id)
@@ -737,6 +755,9 @@ class ContentMonetizationEngine:
         strategy_data: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Set up payment processing for monetization strategy."""
+
+
+
         try:
             # Configure payment gateway
             gateway_config = await self.payment_manager.setup_merchant_account(
@@ -1010,6 +1031,9 @@ class ContentMonetizationEngine:
     
     def _generate_agreement_content(self, partnership_data: Dict[str, Any]) -> str:
         """Generate partnership agreement content."""
+
+
+
         return f"""
         BRAND PARTNERSHIP AGREEMENT
         
@@ -1094,14 +1118,23 @@ class ContentMonetizationEngine:
     
     def _calculate_total_revenue(self, transactions: List[Any]) -> float:
         """Calculate total gross revenue."""
+
+
+
         return float(sum(t.gross_amount for t in transactions))
     
     def _calculate_net_revenue(self, transactions: List[Any]) -> float:
         """Calculate net revenue after platform fees."""
+
+
+
         return float(sum(t.net_amount for t in transactions))
     
     def _calculate_platform_fees(self, transactions: List[Any]) -> float:
         """Calculate total platform fees."""
+
+
+
         return float(sum(t.commission_amount for t in transactions))
     
     def _calculate_average_transaction(self, transactions: List[Any]) -> float:

@@ -8,7 +8,7 @@ Handles track metadata extraction, playlist analysis, and music trend tracking.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
@@ -170,6 +170,9 @@ class SpotifyCrawlerEngine(BaseCrawlerEngine):
     
     def _setup_spotify_client(self) -> None:
         """Setup Spotify API client"""
+
+
+
         try:
             client_credentials_manager = SpotifyClientCredentials(
                 client_id=self.api_credentials.get('client_id'),
@@ -208,6 +211,9 @@ class SpotifyCrawlerEngine(BaseCrawlerEngine):
     
     def _setup_selenium_driver(self) -> None:
         """Setup Selenium WebDriver for web scraping"""
+
+
+
         try:
             chrome_options = webdriver.ChromeOptions()
             chrome_options.add_argument('--headless')
@@ -808,6 +814,9 @@ class SpotifyCrawlerEngine(BaseCrawlerEngine):
     
     async def cleanup(self) -> None:
         """Cleanup resources"""
+
+
+
         try:
             if hasattr(self, 'driver') and self.driver:
                 self.driver.quit()
@@ -820,6 +829,9 @@ class SpotifyCrawlerEngine(BaseCrawlerEngine):
     
     def __del__(self):
         """Destructor to ensure cleanup"""
+
+
+
         try:
             if hasattr(self, 'driver') and self.driver:
                 self.driver.quit()

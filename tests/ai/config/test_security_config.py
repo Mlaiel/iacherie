@@ -15,22 +15,22 @@ Expert Team Specifications:
 
 Creator: Fahed Mlaiel (mlaiel@live.de)
 
-⚠️ COPYRIGHT WARNING ⚠️
+ COPYRIGHT WARNING 
 STRICT INTELLECTUAL PROPERTY PROTECTION
 
 This code, concept, and implementation are the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 
 UNAUTHORIZED USE IS STRICTLY PROHIBITED:
-- ❌ NO copying, cloning, or reproduction without written authorization
-- ❌ NO use of concepts, ideas, or implementation patterns
-- ❌ NO reverse engineering or code inspiration
-- ❌ NO commercial or private use without express permission
+-  NO copying, cloning, or reproduction without written authorization
+-  NO use of concepts, ideas, or implementation patterns
+-  NO reverse engineering or code inspiration
+-  NO commercial or private use without express permission
 
 LEGAL CONSEQUENCES:
-- 🚨 Legal action will be taken against violators
-- 🚨 Full prosecution under German and international copyright law
-- 🚨 Damages will be claimed
-- 🚨 Immediate injunctions
+-  Legal action will be taken against violators
+-  Full prosecution under German and international copyright law
+-  Damages will be claimed
+-  Immediate injunctions
 
 FOR AUTHORIZATION: Contact Fahed Mlaiel at mlaiel@live.de with detailed usage request.
 
@@ -86,6 +86,9 @@ class TestSecurityConfig:
     
     def _generate_test_credentials(self) -> Dict[str, Any]:
         """Génère des identifiants de test sécurisés."""
+
+
+
         return {
             "valid_user": {
                 "user_id": "test_user_001",
@@ -121,6 +124,9 @@ class TestSecurityConfig:
     
     def _create_security_scenarios(self) -> Dict[str, Any]:
         """Crée des scénarios de test de sécurité."""
+
+
+
         return {
             "brute_force_attack": {
                 "attack_type": "brute_force",

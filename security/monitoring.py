@@ -59,6 +59,9 @@ class SecurityIncident:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             "incident_id": self.incident_id,
             "title": self.title,
@@ -138,6 +141,9 @@ class SecurityMonitoringDashboard:
     
     async def _get_vulnerability_status(self) -> Dict[str, Any]:
         """Get vulnerability scanner status"""
+
+
+
         return await self.vulnerability_scanner.get_compliance_status()
     
     async def _get_audit_summary(self) -> Dict[str, Any]:
@@ -345,6 +351,9 @@ class SecurityMonitoringDashboard:
     
     async def _get_last_scan_info(self) -> Dict[str, Any]:
         """Get last vulnerability scan information"""
+
+
+
         
         try:
             if hasattr(self.vulnerability_scanner, 'scan_history') and self.vulnerability_scanner.scan_history:
@@ -395,6 +404,9 @@ class SecurityMonitoringDashboard:
     
     async def _check_audit_health(self) -> Dict[str, Any]:
         """Check audit trail health"""
+
+
+
         try:
             integrity = await self.audit_trail.verify_audit_integrity()
             return {
@@ -409,6 +421,9 @@ class SecurityMonitoringDashboard:
     
     async def _check_scanner_health(self) -> Dict[str, Any]:
         """Check vulnerability scanner health"""
+
+
+
         try:
             status = await self.vulnerability_scanner.get_compliance_status()
             return {
@@ -423,6 +438,9 @@ class SecurityMonitoringDashboard:
     
     async def _check_monitoring_health(self) -> Dict[str, Any]:
         """Check security monitoring health"""
+
+
+
         return {
             "status": "healthy",
             "details": {
@@ -433,6 +451,9 @@ class SecurityMonitoringDashboard:
     
     async def _check_compliance_health(self) -> Dict[str, Any]:
         """Check compliance tracking health"""
+
+
+
         return {
             "status": "healthy",
             "details": {
@@ -631,6 +652,9 @@ security_dashboard = SecurityMonitoringDashboard()
 # Helper functions for easy integration
 async def get_security_status() -> Dict[str, Any]:
     """Get current security status"""
+
+
+
     return await security_dashboard.get_security_dashboard()
 
 

@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Computer Vision Expert, Image Processing Specialist, Content Protection Expert  
 Copyright: Fahed Mlaiel - All rights reserved
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
@@ -190,6 +190,9 @@ class ImageContentManager:
         
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default configuration for image processing"""
+
+
+
         return {
             "max_file_size_mb": 50,
             "max_dimension": 8192,
@@ -257,6 +260,9 @@ class ImageContentManager:
         Returns:
             Dict containing processed image information
         """
+
+
+
         try:
             file_path = Path(file_path)
             self.logger.info(f"Processing image file: {file_path}")
@@ -317,6 +323,9 @@ class ImageContentManager:
     
     async def _validate_image_file(self, file_path: Path) -> bool:
         """Validate image file format and accessibility"""
+
+
+
         try:
             # Check file existence and size
             if not file_path.exists():
@@ -353,6 +362,9 @@ class ImageContentManager:
         cv_image: np.ndarray
     ) -> ImageMetadata:
         """Extract comprehensive image metadata"""
+
+
+
         try:
             # Basic technical metadata
             width, height = pil_image.size
@@ -426,6 +438,9 @@ class ImageContentManager:
     
     async def _extract_exif_metadata(self, pil_image: Image.Image, metadata: ImageMetadata):
         """Extract EXIF metadata from image"""
+
+
+
         try:
             exif_data = pil_image._getexif()
             if exif_data is not None:
@@ -494,6 +509,9 @@ class ImageContentManager:
     
     def _extract_gps_coordinates(self, gps_info: Dict) -> Tuple[Optional[float], Optional[float]]:
         """Extract GPS coordinates from EXIF GPS info"""
+
+
+
         try:
             def convert_to_degrees(value):
                 d = float(value[0])
@@ -522,6 +540,9 @@ class ImageContentManager:
     
     async def _analyze_color_properties(self, image: np.ndarray) -> Dict[str, Any]:
         """Analyze color properties of the image"""
+
+
+
         try:
             # Convert to different color spaces for analysis
             lab_image = cv2.cvtColor(image, cv2.COLOR_RGB2LAB)
@@ -557,6 +578,9 @@ class ImageContentManager:
     
     async def _extract_dominant_colors(self, image: np.ndarray, k: int = 5) -> List[Tuple[int, int, int]]:
         """Extract dominant colors using K-means clustering"""
+
+
+
         try:
             # Reshape image to list of pixels
             data = image.reshape((-1, 3))
@@ -581,6 +605,9 @@ class ImageContentManager:
     
     async def _detect_faces(self, image: np.ndarray) -> int:
         """Detect faces in the image"""
+
+
+
         try:
             if self.face_cascade is None:
                 return 0
@@ -595,6 +622,9 @@ class ImageContentManager:
     
     async def _detect_text(self, image: np.ndarray) -> bool:
         """Detect text presence in the image using edge analysis"""
+
+
+
         try:
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
             
@@ -619,6 +649,9 @@ class ImageContentManager:
     
     async def _assess_image_quality(self, image: np.ndarray) -> Dict[str, float]:
         """Assess technical quality of the image"""
+
+
+
         try:
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
             
@@ -657,6 +690,9 @@ class ImageContentManager:
         content_id: str
     ) -> ImageFingerprint:
         """Generate comprehensive image fingerprint for content protection"""
+
+
+
         try:
             # Primary hash (raw image data)
             primary_hash = hashlib.sha256(cv_image.tobytes()).hexdigest()
@@ -721,6 +757,9 @@ class ImageContentManager:
     
     async def _generate_color_hash(self, image: np.ndarray) -> str:
         """Generate color-based hash"""
+
+
+
         try:
             # Calculate color histogram
             hist_r = cv2.calcHist([image], [0], None, [32], [0, 256])
@@ -741,6 +780,9 @@ class ImageContentManager:
     
     async def _generate_structural_hash(self, image: np.ndarray) -> str:
         """Generate structural hash based on edges and shapes"""
+
+
+
         try:
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
             
@@ -773,6 +815,9 @@ class ImageContentManager:
     
     async def _extract_histogram_features(self, image: np.ndarray) -> Optional[np.ndarray]:
         """Extract histogram-based features"""
+
+
+
         try:
             # Color histograms
             hist_r = cv2.calcHist([image], [0], None, [64], [0, 256])
@@ -802,6 +847,9 @@ class ImageContentManager:
     
     async def _extract_texture_features(self, image: np.ndarray) -> Optional[np.ndarray]:
         """Extract texture-based features using LBP and GLCM"""
+
+
+
         try:
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
             
@@ -846,6 +894,9 @@ class ImageContentManager:
     
     async def _extract_edge_features(self, image: np.ndarray) -> Optional[np.ndarray]:
         """Extract edge-based features"""
+
+
+
         try:
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
             
@@ -885,6 +936,9 @@ class ImageContentManager:
     
     async def _extract_sift_features(self, image: np.ndarray) -> Tuple[Optional[List], Optional[np.ndarray]]:
         """Extract SIFT keypoints and descriptors"""
+
+
+
         try:
             if self.sift is None:
                 return None, None
@@ -914,6 +968,9 @@ class ImageContentManager:
     
     async def _analyze_image_quality(self, image: np.ndarray) -> Dict[str, float]:
         """Analyze comprehensive image quality metrics"""
+
+
+
         try:
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
             
@@ -972,6 +1029,9 @@ class ImageContentManager:
     
     async def _analyze_image_content(self, image: np.ndarray) -> Dict[str, Any]:
         """Analyze image content for objects, scenes, etc."""
+
+
+
         try:
             content_analysis = {
                 "objects_detected": [],
@@ -1044,6 +1104,9 @@ class ImageContentManager:
         metadata: Optional[ImageMetadata] = None
     ) -> ImageContentType:
         """Classify image content type using visual and metadata features"""
+
+
+
         try:
             # Simple heuristic classification (in production, use ML model)
             
@@ -1111,6 +1174,9 @@ class ImageContentManager:
     
     async def store_content(self, image_content: Dict[str, Any]) -> str:
         """Store processed image content in database"""
+
+
+
         try:
             # Generate unique content ID
             content_id = hashlib.sha256(
@@ -1129,6 +1195,9 @@ class ImageContentManager:
     
     def get_supported_formats(self) -> List[str]:
         """Get list of supported image formats"""
+
+
+
         return [fmt.value["ext"] for fmt in ImageFormat]
     
     def get_format_info(self, format_name: str) -> Optional[Dict[str, Any]]:

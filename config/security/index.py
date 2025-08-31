@@ -18,7 +18,7 @@ Business Logic Integration:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend + Security Engineers
 
-⚠️ COPYRIGHT WARNING:
+ COPYRIGHT WARNING:
 This code is proprietary and belongs to Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit 
 written permission from Fahed Mlaiel is strictly prohibited.
@@ -167,6 +167,9 @@ class SecurityConfigurationManager:
     
     def get_security_summary(self) -> Dict[str, Any]:
         """Get a summary of current security configuration."""
+
+
+
         return {
             "profile": self.security_profile.value,
             "strict_mode": self.strict_mode,
@@ -344,6 +347,9 @@ security_manager = SecurityConfigurationManager()
 
 def get_security_manager() -> SecurityConfigurationManager:
     """Get the global security configuration manager instance."""
+
+
+
     return security_manager
 
 

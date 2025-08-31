@@ -77,6 +77,9 @@ class ExecutionNode:
     @property
     def is_expensive(self) -> bool:
         """Check if node is expensive"""
+
+
+
         return self.total_cost > 1000 or (self.actual_time and self.actual_time > 100)
     
     @property
@@ -208,6 +211,9 @@ class CostEstimator:
         engine: AsyncEngine
     ) -> float:
         """Estimate cost of table scan operation"""
+
+
+
         
         try:
             # Get table statistics
@@ -258,6 +264,9 @@ class CostEstimator:
         engine: AsyncEngine
     ) -> float:
         """Estimate cost of join operation"""
+
+
+
         
         try:
             left_stats = await self._get_table_statistics(left_table, engine)
@@ -737,6 +746,9 @@ class ExecutionPlanner:
     
     async def _get_database_plan(self, query: str, engine: AsyncEngine) -> Dict[str, Any]:
         """Get execution plan from database"""
+
+
+
         try:
             async with engine.begin() as conn:
                 # Get detailed execution plan
@@ -794,6 +806,9 @@ class ExecutionPlanner:
     
     def _create_mock_plan(self, query: str) -> ExecutionNode:
         """Create mock execution plan for testing"""
+
+
+
         return ExecutionNode(
             node_id="mock_root",
             node_type="Seq Scan",
@@ -882,6 +897,9 @@ class ExecutionPlanner:
     
     async def _send_plan_metrics(self, plan: ExecutionPlanResult) -> None:
         """Send plan metrics to monitoring system"""
+
+
+
         try:
             self.metrics_collector.histogram(
                 "execution_plan_cost",
@@ -904,6 +922,9 @@ class ExecutionPlanner:
     
     def get_plan_statistics(self) -> Dict[str, Any]:
         """Get execution planner statistics"""
+
+
+
         return {
             "cached_plans": len(self._plan_cache),
             "execution_history_count": len(self._execution_history),

@@ -665,6 +665,9 @@ class EnterpriseChatAnalytics:
         Returns:
             Dict containing creator performance insights
         """
+
+
+
         
         try:
             # Get creator metrics from cache or generate
@@ -716,6 +719,9 @@ class EnterpriseChatAnalytics:
         Returns:
             Dict containing monetization insights
         """
+
+
+
         
         try:
             date_range = self._get_default_date_range(timeframe)
@@ -1359,6 +1365,9 @@ class EnterpriseChatAnalytics:
     
     async def _generate_automated_insights(self) -> None:
         """Generate automated insights using ML"""
+
+
+
         
         try:
             # Use ML insights engine to generate automated insights
@@ -1450,6 +1459,9 @@ class EnterpriseChatAnalytics:
     # Public interface methods
     def get_analytics_summary(self) -> Dict[str, Any]:
         """Get summary of current analytics state"""
+
+
+
         
         return {
             "total_conversations_tracked": len(self.conversation_data),

@@ -4,7 +4,7 @@ Revenue Forecasting Engine - Advanced AI-powered revenue prediction and forecast
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  STRICT COPYRIGHT WARNING ⚠️
+  STRICT COPYRIGHT WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, reproduction, modification, or distribution without explicit 
 written permission from the author is strictly prohibited.
@@ -87,6 +87,9 @@ class PredictionAccuracy:
     @property
     def accuracy_percentage(self) -> float:
         """Get accuracy as percentage"""
+
+
+
         return max(0, (1 - self.mape / 100) * 100)
 
 
@@ -147,6 +150,9 @@ class LSTMForecastModel(BaseForecastModel):
         
     async def train(self, data: pd.DataFrame) -> None:
         """Train LSTM model"""
+
+
+
         try:
             # Prepare data
             revenue_data = data['revenue'].values.reshape(-1, 1)
@@ -240,6 +246,9 @@ class EnsembleForecastModel(BaseForecastModel):
         
     async def train(self, data: pd.DataFrame) -> None:
         """Train ensemble of models"""
+
+
+
         try:
             # Initialize models
             self.models = {
@@ -349,6 +358,9 @@ class RevenueForecastEngine:
         
     async def initialize(self) -> None:
         """Initialize the forecast engine"""
+
+
+
         try:
             # Initialize models
             self.models = {
@@ -374,6 +386,9 @@ class RevenueForecastEngine:
         confidence_level: float = 0.95
     ) -> RevenueForecast:
         """Generate revenue forecast"""
+
+
+
         try:
             validate_forecast_data(historical_data)
             
@@ -454,6 +469,9 @@ class RevenueForecastEngine:
         model: BaseForecastModel
     ) -> PredictionAccuracy:
         """Calculate forecast accuracy using historical data"""
+
+
+
         try:
             # Split data for validation
             split_point = int(len(historical_data) * 0.8)
@@ -573,6 +591,9 @@ class RevenueForecastEngine:
         horizon: ForecastHorizon
     ) -> List[ForecastScenario]:
         """Generate forecasts for multiple scenarios"""
+
+
+
         try:
             scenario_forecasts = []
             
@@ -646,6 +667,9 @@ class RevenueForecastEngine:
     
     async def export_forecast_report(self, format: str = 'json') -> Dict[str, Any]:
         """Export comprehensive forecast report"""
+
+
+
         try:
             report = {
                 'timestamp': datetime.utcnow().isoformat(),

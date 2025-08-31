@@ -162,6 +162,9 @@ class BlockchainPlatform:
         
     async def initialize(self):
         """Initialize all blockchain components"""
+
+
+
         try:
             logger.info("Initializing blockchain platform...")
             
@@ -415,6 +418,9 @@ class BlockchainPlatform:
     # Health Check
     async def health_check(self) -> Dict[str, Any]:
         """Comprehensive blockchain platform health check"""
+
+
+
         try:
             health_status = {
                 "platform_initialized": self.initialized,
@@ -475,6 +481,9 @@ class BlockchainPlatform:
     
     async def _check_component_health(self, component_name: str) -> bool:
         """Check health of specific component"""
+
+
+
         try:
             component = getattr(self, component_name)
             if hasattr(component, 'health_check'):

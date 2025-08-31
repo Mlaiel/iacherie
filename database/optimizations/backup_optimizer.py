@@ -156,6 +156,9 @@ class LocalBackupStorage(BackupStorage):
     
     async def upload_backup(self, local_path: str, remote_path: str) -> bool:
         """Copy backup to remote local path"""
+
+
+
         try:
             os.makedirs(os.path.dirname(remote_path), exist_ok=True)
             shutil.copy2(local_path, remote_path)
@@ -166,6 +169,9 @@ class LocalBackupStorage(BackupStorage):
     
     async def download_backup(self, remote_path: str, local_path: str) -> bool:
         """Copy backup from remote local path"""
+
+
+
         try:
             os.makedirs(os.path.dirname(local_path), exist_ok=True)
             shutil.copy2(remote_path, local_path)
@@ -176,6 +182,9 @@ class LocalBackupStorage(BackupStorage):
     
     async def delete_backup(self, remote_path: str) -> bool:
         """Delete backup file"""
+
+
+
         try:
             if os.path.exists(remote_path):
                 os.remove(remote_path)
@@ -186,6 +195,9 @@ class LocalBackupStorage(BackupStorage):
     
     async def list_backups(self) -> List[str]:
         """List backup files in storage path"""
+
+
+
         try:
             storage_path = self.config.get('storage_path', '/var/backups')
             if os.path.exists(storage_path):
@@ -208,6 +220,9 @@ class S3BackupStorage(BackupStorage):
     
     async def upload_backup(self, local_path: str, remote_path: str) -> bool:
         """Upload backup to S3"""
+
+
+
         try:
             # Simplified S3 upload - in practice use boto3
             logger.info(f"Would upload {local_path} to s3://{self.bucket_name}/{remote_path}")
@@ -218,6 +233,9 @@ class S3BackupStorage(BackupStorage):
     
     async def download_backup(self, remote_path: str, local_path: str) -> bool:
         """Download backup from S3"""
+
+
+
         try:
             # Simplified S3 download - in practice use boto3
             logger.info(f"Would download s3://{self.bucket_name}/{remote_path} to {local_path}")
@@ -228,6 +246,9 @@ class S3BackupStorage(BackupStorage):
     
     async def delete_backup(self, remote_path: str) -> bool:
         """Delete backup from S3"""
+
+
+
         try:
             # Simplified S3 delete - in practice use boto3
             logger.info(f"Would delete s3://{self.bucket_name}/{remote_path}")
@@ -238,6 +259,9 @@ class S3BackupStorage(BackupStorage):
     
     async def list_backups(self) -> List[str]:
         """List backups in S3 bucket"""
+
+
+
         try:
             # Simplified S3 list - in practice use boto3
             return []
@@ -361,6 +385,9 @@ class BackupExecutor:
     
     async def _execute_full_backup(self, backup_path: str) -> bool:
         """Execute full database backup"""
+
+
+
         try:
             # Use pg_dump for logical backup
             cmd = [
@@ -395,6 +422,9 @@ class BackupExecutor:
     
     async def _execute_incremental_backup(self, backup_path: str) -> bool:
         """Execute incremental backup"""
+
+
+
         try:
             # Incremental backup using WAL files
             # This is a simplified implementation
@@ -437,6 +467,9 @@ class BackupExecutor:
     
     async def _execute_logical_backup(self, backup_path: str) -> bool:
         """Execute logical backup"""
+
+
+
         try:
             # Logical backup using pg_dump with custom format
             cmd = [
@@ -472,6 +505,9 @@ class BackupExecutor:
     
     async def _compress_backup(self, backup_path: str) -> Optional[str]:
         """Compress backup file"""
+
+
+
         try:
             compressed_path = f"{backup_path}.{self.config.compression.value}"
             
@@ -501,6 +537,9 @@ class BackupExecutor:
     
     async def _calculate_checksum(self, file_path: str) -> str:
         """Calculate SHA256 checksum of backup file"""
+
+
+
         try:
             sha256_hash = hashlib.sha256()
             with open(file_path, "rb") as f:
@@ -513,6 +552,9 @@ class BackupExecutor:
     
     async def _verify_backup(self, backup_path: str) -> bool:
         """Verify backup integrity"""
+
+
+
         try:
             # Basic verification - check if file exists and is readable
             if not os.path.exists(backup_path):

@@ -7,7 +7,7 @@ Ensures adherence to platform policies, legal requirements, and industry standar
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software and all associated concepts, algorithms, and implementations are the exclusive 
 intellectual property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, reproduction, 
 distribution, modification, or appropriation of this code, in whole or in part, without 
@@ -539,6 +539,9 @@ class ComplianceAnalyzer(BaseAIModel):
     
     async def _analyze_content_safety(self, content_data: Dict[str, Any], profile: ComplianceProfile):
         """Analyze content safety and moderation requirements"""
+
+
+
         try:
             text_content = content_data.get('text', '').lower()
             media_type = content_data.get('media_type', 'unknown')
@@ -693,6 +696,9 @@ class ComplianceAnalyzer(BaseAIModel):
     
     async def _analyze_intellectual_property(self, content_data: Dict[str, Any], profile: ComplianceProfile):
         """Analyze intellectual property compliance"""
+
+
+
         try:
             text_content = content_data.get('text', '').lower()
             media_info = content_data.get('media_info', {})
@@ -800,6 +806,9 @@ class ComplianceAnalyzer(BaseAIModel):
     
     async def _analyze_platform_compliance(self, content_data: Dict[str, Any], platforms: List[Platform], profile: ComplianceProfile):
         """Analyze platform-specific compliance"""
+
+
+
         try:
             text_content = content_data.get('text', '')
             hashtags = content_data.get('hashtags', [])
@@ -930,6 +939,9 @@ class ComplianceAnalyzer(BaseAIModel):
     
     async def _analyze_legal_compliance(self, content_data: Dict[str, Any], jurisdictions: List[LegalJurisdiction], profile: ComplianceProfile):
         """Analyze legal compliance requirements"""
+
+
+
         try:
             text_content = content_data.get('text', '')
             user_data = content_data.get('user_data', {})
@@ -1053,6 +1065,9 @@ class ComplianceAnalyzer(BaseAIModel):
     
     def _calculate_overall_compliance(self, profile: ComplianceProfile):
         """Calculate overall compliance score and level"""
+
+
+
         try:
             # Collect all compliance scores
             scores = []
@@ -1101,6 +1116,9 @@ class ComplianceAnalyzer(BaseAIModel):
     
     def _generate_compliance_recommendations(self, profile: ComplianceProfile):
         """Generate compliance recommendations"""
+
+
+
         try:
             priority_actions = []
             compliance_recommendations = []
@@ -1164,6 +1182,9 @@ class ComplianceAnalyzer(BaseAIModel):
     
     def _assess_critical_violations(self, profile: ComplianceProfile):
         """Assess and handle critical violations"""
+
+
+
         try:
             critical_types = [
                 ViolationType.HATE_SPEECH,
@@ -1198,6 +1219,9 @@ class ComplianceAnalyzer(BaseAIModel):
     
     async def _calculate_analysis_metrics(self, content_data: Dict[str, Any], profile: ComplianceProfile, metrics: ComplianceAnalysisMetrics):
         """Calculate analysis metrics and statistics"""
+
+
+
         try:
             # Count total checks performed
             checks_performed = 0
@@ -1285,6 +1309,9 @@ async def analyze_content_compliance(
     Returns:
         Dict containing compliance analysis results
     """
+
+
+
     try:
         result = await compliance_analyzer.analyze_compliance(
             content_data, platforms, jurisdictions

@@ -169,6 +169,9 @@ class ContentManager:
             InvalidContentError: If file format not supported
             StorageError: If upload fails
         """
+
+
+
         try:
             # Validate file and determine content type
             content_type, file_extension = self._determine_content_type(filename)
@@ -269,6 +272,9 @@ class ContentManager:
         Returns:
             Content data or None if not found/accessible
         """
+
+
+
         try:
             query = self.db.query(Content).filter(Content.id == content_id)
             
@@ -306,6 +312,9 @@ class ContentManager:
         Returns:
             Paginated content list
         """
+
+
+
         try:
             query = self.db.query(Content).filter(Content.client_id == client_id)
             
@@ -353,6 +362,9 @@ class ContentManager:
         Returns:
             True if successful
         """
+
+
+
         try:
             content = self.db.query(Content).filter(
                 Content.id == content_id,
@@ -397,6 +409,9 @@ class ContentManager:
         - Fingerprinting for protection
         - SEO optimization
         """
+
+
+
         try:
             content = self.db.query(Content).filter(Content.id == content_id).first()
             if not content:
@@ -530,6 +545,9 @@ class ContentManager:
         
     async def _format_content_data(self, content: Content) -> Dict[str, Any]:
         """Format content data for API response."""
+
+
+
         return {
             "id": str(content.id),
             "title": content.title,
@@ -556,6 +574,9 @@ class ContentManager:
         
     async def _validate_content_file(self, content: Content) -> Dict[str, Any]:
         """Validate uploaded content file."""
+
+
+
         try:
             # Implementation would validate file integrity, format, etc.
             return {"valid": True}

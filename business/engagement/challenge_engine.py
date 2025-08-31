@@ -12,7 +12,7 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Micro
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
+ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
 This code and concept are the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 Unauthorized access, copying, modification, distribution, reverse engineering,
@@ -240,10 +240,16 @@ class ChallengeParticipation:
     
     def is_completed(self) -> bool:
         """Check if participation is completed."""
+
+
+
         return self.status in [ParticipationStatus.COMPLETED, ParticipationStatus.SUBMITTED]
     
     def can_submit(self) -> bool:
         """Check if user can submit for this challenge."""
+
+
+
         return self.status in [ParticipationStatus.REGISTERED, ParticipationStatus.IN_PROGRESS]
 
 
@@ -447,6 +453,9 @@ class ChallengeEngine:
         custom_params: Optional[Dict[str, Any]] = None
     ) -> Challenge:
         """Create a new challenge from template or custom parameters."""
+
+
+
         try:
             if template_name and template_name in self._challenge_templates:
                 # Create from template
@@ -589,6 +598,9 @@ class ChallengeEngine:
         team_id: Optional[str] = None
     ) -> ChallengeParticipation:
         """Register a user for a challenge."""
+
+
+
         try:
             if challenge_id not in self._challenges:
                 raise ValueError(f"Challenge {challenge_id} not found")
@@ -643,6 +655,9 @@ class ChallengeEngine:
         submission_data: Dict[str, Any]
     ) -> bool:
         """Submit an entry for a challenge."""
+
+
+
         try:
             participation = self._get_user_participation(challenge_id, user_id)
             if not participation:
@@ -685,6 +700,9 @@ class ChallengeEngine:
         participation: ChallengeParticipation
     ) -> None:
         """Automatically evaluate a challenge submission."""
+
+
+
         try:
             total_score = 0.0
             total_weight = 0.0
@@ -720,6 +738,9 @@ class ChallengeEngine:
         challenge: Challenge
     ) -> float:
         """Evaluate a specific criterion for a submission."""
+
+
+
         try:
             if criterion.evaluation_method == "metric_based":
                 return await self._evaluate_metric_based_criterion(criterion, participation, challenge)
@@ -806,6 +827,9 @@ class ChallengeEngine:
         participation: ChallengeParticipation
     ) -> None:
         """Award rewards for challenge completion."""
+
+
+
         try:
             # Award completion rewards
             for reward in challenge.completion_rewards:
@@ -984,6 +1008,9 @@ class ChallengeEngine:
         progress_data: Dict[str, Any]
     ) -> bool:
         """Update user's progress in a challenge."""
+
+
+
         try:
             participation = self._get_user_participation(challenge_id, user_id)
             if not participation:

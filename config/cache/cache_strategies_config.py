@@ -312,6 +312,9 @@ class WriteThroughStrategy(BaseCacheStrategy):
     
     async def _write_to_store(self, key: str, value: Any) -> bool:
         """Write data to data store"""
+
+
+
         try:
             if asyncio.iscoroutinefunction(self.data_store.set):
                 return await self.data_store.set(key, value)
@@ -324,6 +327,9 @@ class WriteThroughStrategy(BaseCacheStrategy):
     
     async def _delete_from_store(self, key: str) -> bool:
         """Delete data from data store"""
+
+
+
         try:
             if asyncio.iscoroutinefunction(self.data_store.delete):
                 return await self.data_store.delete(key)
@@ -423,6 +429,9 @@ class CacheStrategiesConfig(BaseModel):
     
     def get_l1_cache_config(self) -> Dict[str, Any]:
         """Get L1 (in-memory) cache configuration"""
+
+
+
         return {
             "enabled": self.enable_l1_cache,
             "size": self.l1_cache_size,
@@ -432,6 +441,9 @@ class CacheStrategiesConfig(BaseModel):
     
     def get_l2_cache_config(self) -> Dict[str, Any]:
         """Get L2 (distributed) cache configuration"""
+
+
+
         return {
             "enabled": self.enable_l2_cache,
             "consistency_level": self.consistency_level,
@@ -441,6 +453,9 @@ class CacheStrategiesConfig(BaseModel):
     
     def get_performance_config(self) -> Dict[str, Any]:
         """Get performance-related configuration"""
+
+
+
         return {
             "batch_size": self.batch_size,
             "concurrent_requests": self.concurrent_requests,
@@ -458,6 +473,9 @@ class CacheStrategyFactory:
     @staticmethod
     def create_high_performance_config() -> CacheStrategiesConfig:
         """Configuration optimized for high performance"""
+
+
+
         return CacheStrategiesConfig(
             primary_strategy=CacheStrategy.CACHE_ASIDE,
             enable_l1_cache=True,
@@ -473,6 +491,9 @@ class CacheStrategyFactory:
     @staticmethod
     def create_consistency_focused_config() -> CacheStrategiesConfig:
         """Configuration optimized for data consistency"""
+
+
+
         return CacheStrategiesConfig(
             primary_strategy=CacheStrategy.WRITE_THROUGH,
             consistency_level=ConsistencyLevel.STRONG,
@@ -486,6 +507,9 @@ class CacheStrategyFactory:
     @staticmethod
     def create_memory_optimized_config() -> CacheStrategiesConfig:
         """Configuration optimized for memory usage"""
+
+
+
         return CacheStrategiesConfig(
             primary_strategy=CacheStrategy.CACHE_ASIDE,
             eviction_policy=EvictionPolicy.LFU,

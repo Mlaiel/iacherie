@@ -8,7 +8,7 @@ Type: INFLUENCER_AI_ASSISTANT
 Created: 2025-08-13
 ================================================================
 
-🚨 STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
+ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
 This code is EXCLUSIVE PROPERTY of Fahed Mlaiel.
 Unauthorized access, copying, or usage is STRICTLY PROHIBITED.
@@ -171,6 +171,9 @@ class PromptEngineering:
     
     def _initialize_prompt_templates(self) -> Dict[str, str]:
         """Initialiser les templates de prompts professionnels"""
+
+
+
         return {
             "content_analysis": """
             Analyze this {content_type} content for a {creator_type} creator:
@@ -229,6 +232,9 @@ class PromptEngineering:
     
     def _initialize_optimization_strategies(self) -> Dict[str, Dict[str, Any]]:
         """Initialiser les stratégies d'optimisation par type de créateur"""
+
+
+
         return {
             "musician": {
                 "content_focus": ["audio_quality", "streaming_optimization", "fan_engagement"],
@@ -265,6 +271,9 @@ class PromptEngineering:
     def generate_optimized_prompt(self, template_key: str, creator_profile: CreatorProfile, 
                                  context: Dict[str, Any]) -> str:
         """Générer un prompt optimisé basé sur le profil créateur"""
+
+
+
         try:
             template = self.prompt_templates.get(template_key, "")
             creator_strategy = self.optimization_strategies.get(creator_profile.creator_type, {})
@@ -282,7 +291,7 @@ class PromptEngineering:
             return template.format(**optimized_context)
             
         except Exception as e:
-            logger.error(f"❌ Erreur génération prompt: {e}")
+            logger.error(f" Erreur génération prompt: {e}")
             return template_key  # Fallback basique
 
 class ConversationMemory:
@@ -295,6 +304,9 @@ class ConversationMemory:
     
     async def store_conversation(self, context: ConversationContext) -> bool:
         """Stocker contexte de conversation"""
+
+
+
         try:
             self.conversations[context.conversation_id] = context
             
@@ -307,21 +319,27 @@ class ConversationMemory:
             
             return True
         except Exception as e:
-            logger.error(f"❌ Erreur stockage conversation: {e}")
+            logger.error(f" Erreur stockage conversation: {e}")
             return False
     
     def _generate_embedding(self, text: str) -> np.ndarray:
         """Générer embedding vectoriel pour le texte"""
+
+
+
         try:
             # Utiliser TF-IDF pour créer des embeddings simples
             vectors = self.vectorizer.fit_transform([text])
             return vectors.toarray()[0]
         except Exception as e:
-            logger.error(f"❌ Erreur génération embedding: {e}")
+            logger.error(f" Erreur génération embedding: {e}")
             return np.array([])
     
     async def find_similar_conversations(self, query: str, limit: int = 5) -> List[str]:
         """Trouver conversations similaires"""
+
+
+
         try:
             if not self.conversation_embeddings:
                 return []
@@ -341,7 +359,7 @@ class ConversationMemory:
             return [conv_id for conv_id, _ in similarities[:limit]]
             
         except Exception as e:
-            logger.error(f"❌ Erreur recherche conversations similaires: {e}")
+            logger.error(f" Erreur recherche conversations similaires: {e}")
             return []
 
 class ContentAnalyzer:
@@ -352,6 +370,9 @@ class ContentAnalyzer:
     
     def _initialize_analysis_models(self) -> Dict[str, Any]:
         """Initialiser les modèles d'analyse"""
+
+
+
         return {
             "sentiment_analyzer": None,  # Placeholder pour futur modèle
             "quality_scorer": None,
@@ -361,6 +382,9 @@ class ContentAnalyzer:
     
     async def analyze_content_quality(self, content: str, content_type: ContentType) -> Dict[str, Any]:
         """Analyser qualité du contenu"""
+
+
+
         try:
             analysis = {
                 "overall_score": 0.0,
@@ -401,11 +425,14 @@ class ContentAnalyzer:
             return analysis
             
         except Exception as e:
-            logger.error(f"❌ Erreur analyse contenu: {e}")
+            logger.error(f" Erreur analyse contenu: {e}")
             return {"error": str(e), "analyzed_at": datetime.now().isoformat()}
     
     def _calculate_seo_score(self, content: str) -> float:
         """Calculer score SEO basique"""
+
+
+
         try:
             score = 0.0
             content_lower = content.lower()
@@ -441,16 +468,19 @@ class AiAssistantManager:
         
     async def start(self) -> bool:
         """Démarrage du gestionnaire"""
+
+
+
         try:
             self.status = AssistantStatus.ACTIVE
-            self.logger.info("🚀 AI Assistant Manager démarré avec succès")
+            self.logger.info(" AI Assistant Manager démarré avec succès")
             
             # Initialiser les composants
             await self._initialize_components()
             
             return True
         except Exception as e:
-            self.logger.error(f"❌ Erreur démarrage: {e}")
+            self.logger.error(f" Erreur démarrage: {e}")
             self.status = AssistantStatus.ERROR
             return False
     
@@ -462,7 +492,7 @@ class AiAssistantManager:
         # Initialiser conversations actives
         self.active_conversations.clear()
         
-        self.logger.info("✅ Composants AI Assistant initialisés")
+        self.logger.info(" Composants AI Assistant initialisés")
     
     async def _load_creator_profiles(self):
         """Charger les profils créateurs (simulation)"""
@@ -486,7 +516,7 @@ class AiAssistantManager:
         for profile in sample_profiles:
             self.creator_profiles[profile.creator_id] = profile
         
-        self.logger.info(f"📊 {len(sample_profiles)} profils créateurs chargés")
+        self.logger.info(f" {len(sample_profiles)} profils créateurs chargés")
     
     async def stop(self) -> bool:
         """Arrêt du gestionnaire"""
@@ -495,7 +525,7 @@ class AiAssistantManager:
         # Sauvegarder conversations actives
         await self._save_active_conversations()
         
-        self.logger.info("⏹️ AI Assistant Manager arrêté proprement")
+        self.logger.info("⏹ AI Assistant Manager arrêté proprement")
         return True
     
     async def _save_active_conversations(self):
@@ -503,7 +533,7 @@ class AiAssistantManager:
         for conv_id, context in self.active_conversations.items():
             await self.conversation_memory.store_conversation(context)
         
-        self.logger.info(f"💾 {len(self.active_conversations)} conversations sauvegardées")
+        self.logger.info(f" {len(self.active_conversations)} conversations sauvegardées")
 
 class AiAssistantService(IAiAssistantService):
     """Service principal AI Assistant"""
@@ -520,8 +550,11 @@ class AiAssistantService(IAiAssistantService):
     
     async def initialize(self) -> bool:
         """Initialisation du service"""
+
+
+
         try:
-            self.logger.info("🔧 Initialisation AI Assistant Service")
+            self.logger.info(" Initialisation AI Assistant Service")
             
             # Vérifier que le manager est actif
             if self.manager.status != AssistantStatus.ACTIVE:
@@ -529,11 +562,14 @@ class AiAssistantService(IAiAssistantService):
             
             return True
         except Exception as e:
-            self.logger.error(f"❌ Erreur initialisation: {e}")
+            self.logger.error(f" Erreur initialisation: {e}")
             return False
     
     async def start_conversation(self, creator_id: str, language: ConversationLanguage) -> str:
         """Démarrer nouvelle conversation personnalisée"""
+
+
+
         try:
             conversation_id = str(uuid.uuid4())
             
@@ -575,13 +611,13 @@ class AiAssistantService(IAiAssistantService):
             self.manager.active_conversations[conversation_id] = context
             
             self.session_stats["conversations_started"] += 1
-            self.logger.info(f"🎯 Nouvelle conversation démarrée: {conversation_id}")
+            self.logger.info(f" Nouvelle conversation démarrée: {conversation_id}")
             
             return conversation_id
             
         except Exception as e:
             self.session_stats["errors_encountered"] += 1
-            self.logger.error(f"❌ Erreur démarrage conversation: {e}")
+            self.logger.error(f" Erreur démarrage conversation: {e}")
             raise
     
     async def _generate_welcome_message(self, profile: CreatorProfile, language: ConversationLanguage) -> str:
@@ -596,6 +632,9 @@ class AiAssistantService(IAiAssistantService):
     
     async def process_message(self, conversation_id: str, message: str) -> Dict[str, Any]:
         """Traiter message utilisateur avec IA avancée"""
+
+
+
         try:
             context = self.manager.active_conversations.get(conversation_id)
             if not context:
@@ -635,7 +674,7 @@ class AiAssistantService(IAiAssistantService):
             
         except Exception as e:
             self.session_stats["errors_encountered"] += 1
-            self.logger.error(f"❌ Erreur traitement message: {e}")
+            self.logger.error(f" Erreur traitement message: {e}")
             return {
                 "error": str(e),
                 "conversation_id": conversation_id,
@@ -644,6 +683,9 @@ class AiAssistantService(IAiAssistantService):
     
     async def _generate_intelligent_response(self, context: ConversationContext, message: str) -> Dict[str, Any]:
         """Générer réponse IA intelligente basée sur le contexte"""
+
+
+
         try:
             # Analyser intention du message
             intent = await self._analyze_message_intent(message, context)
@@ -661,7 +703,7 @@ class AiAssistantService(IAiAssistantService):
                 return await self._handle_general_conversation(context, message)
                 
         except Exception as e:
-            self.logger.error(f"❌ Erreur génération réponse: {e}")
+            self.logger.error(f" Erreur génération réponse: {e}")
             return {
                 "content": "I apologize, but I encountered an error processing your request. Please try rephrasing your question.",
                 "metadata": {"error": str(e)}
@@ -685,6 +727,9 @@ class AiAssistantService(IAiAssistantService):
     
     async def _handle_content_analysis_request(self, context: ConversationContext, message: str) -> Dict[str, Any]:
         """Gérer demande d'analyse de contenu"""
+
+
+
         try:
             # Extraire contenu à analyser du message (simulation)
             content_type = ContentType.BLOG  # Default
@@ -697,10 +742,10 @@ class AiAssistantService(IAiAssistantService):
             response_content = f"""
 I've analyzed your content and here's what I found:
 
-📊 **Overall Score**: {analysis['overall_score']:.1f}/100
-📚 **Readability Score**: {analysis['readability_score']:.1f}/100  
-🎯 **Engagement Potential**: {analysis['engagement_potential']:.1f}/100
-🔍 **SEO Score**: {analysis['seo_score']:.1f}/100
+ **Overall Score**: {analysis['overall_score']:.1f}/100
+ **Readability Score**: {analysis['readability_score']:.1f}/100  
+ **Engagement Potential**: {analysis['engagement_potential']:.1f}/100
+ **SEO Score**: {analysis['seo_score']:.1f}/100
 
 **Recommendations:**
 {chr(10).join('• ' + rec for rec in analysis.get('recommendations', []))}
@@ -716,7 +761,7 @@ Would you like me to provide specific optimization strategies for any of these a
             }
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur analyse contenu: {e}")
+            self.logger.error(f" Erreur analyse contenu: {e}")
             return {
                 "content": "I had trouble analyzing your content. Could you please share the specific content you'd like me to review?",
                 "metadata": {"error": str(e)}
@@ -758,10 +803,10 @@ Would you like me to provide specific optimization strategies for any of these a
         response_content = f"""
 Here are SEO optimization strategies specifically for {creator_type}s:
 
-🎯 **Top SEO Recommendations:**
+ **Top SEO Recommendations:**
 {chr(10).join('• ' + tip for tip in tips)}
 
-📈 **Platform-Specific Tips:**
+ **Platform-Specific Tips:**
 • Focus on your primary platforms: {', '.join(context.creator_profile.preferred_platforms)}
 • Target your audience demographics: {context.creator_profile.target_audience.get('age_range', 'General audience')}
 
@@ -801,7 +846,7 @@ Based on your profile as a {profile.creator_type} specializing in {', '.join(pro
 🤝 **Recommended Collaborations:**
 {chr(10).join(f"• **{collab['type']}**: {collab['description']}" for collab in collaboration_suggestions)}
 
-🎯 **Your Collaboration Interests:**
+ **Your Collaboration Interests:**
 {chr(10).join('• ' + interest.replace('_', ' ').title() for interest in profile.collaboration_interests)}
 
 I can help you find creators who match your collaboration goals. Would you like me to search for specific types of partners?
@@ -824,13 +869,13 @@ I can help you find creators who match your collaboration goals. Would you like 
         response_content = f"""
 Let me analyze your revenue optimization opportunities as a {profile.creator_type}:
 
-💰 **Current Performance:**
+ **Current Performance:**
 {chr(10).join(f"• {metric.replace('_', ' ').title()}: {value:,}" for metric, value in metrics.items())}
 
-🚀 **Revenue Optimization Strategies:**
+ **Revenue Optimization Strategies:**
 {chr(10).join(f"• **{strategy.replace('_', ' ').title()}**: Leverage this monetization channel" for strategy in revenue_strategies)}
 
-📊 **Recommended Next Steps:**
+ **Recommended Next Steps:**
 1. Diversify across multiple revenue streams
 2. Optimize content for your most profitable platforms
 3. Build audience engagement to improve conversion rates
@@ -853,11 +898,11 @@ Would you like detailed strategies for any specific revenue stream?
         response_content = f"""
 As your AI assistant for {profile.creator_type} content creation, I'm here to help you with:
 
-🎯 **Content Analysis & Optimization**
-🔍 **SEO and Discoverability** 
+ **Content Analysis & Optimization**
+ **SEO and Discoverability** 
 🤝 **Collaboration Opportunities**
-💰 **Revenue Optimization**
-📊 **Performance Analytics**
+ **Revenue Optimization**
+ **Performance Analytics**
 
 Based on your specialization in {', '.join(profile.specialization)}, what specific area would you like to focus on today?
         """.strip()
@@ -901,6 +946,9 @@ Based on your specialization in {', '.join(profile.specialization)}, what specif
     
     async def get_content_recommendations(self, creator_profile: CreatorProfile) -> List[Dict[str, Any]]:
         """Obtenir recommandations personnalisées"""
+
+
+
         try:
             recommendations = []
             creator_type = creator_profile.creator_type
@@ -958,11 +1006,14 @@ Based on your specialization in {', '.join(profile.specialization)}, what specif
             
         except Exception as e:
             self.session_stats["errors_encountered"] += 1
-            self.logger.error(f"❌ Erreur génération recommandations: {e}")
+            self.logger.error(f" Erreur génération recommandations: {e}")
             return []
     
     async def analyze_content_performance(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
         """Analyser performance du contenu"""
+
+
+
         try:
             # Analyse de performance basique
             performance_analysis = {
@@ -993,11 +1044,14 @@ Based on your specialization in {', '.join(profile.specialization)}, what specif
             return performance_analysis
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur analyse performance: {e}")
+            self.logger.error(f" Erreur analyse performance: {e}")
             return {"error": str(e), "analyzed_at": datetime.now().isoformat()}
     
     def get_session_stats(self) -> Dict[str, Any]:
         """Obtenir statistiques de session"""
+
+
+
         return {
             **self.session_stats,
             "active_conversations": len(self.manager.active_conversations),
@@ -1010,6 +1064,9 @@ Based on your specialization in {', '.join(profile.specialization)}, what specif
 
 async def create_aiassistant_service(config: Optional[AiAssistantConfig] = None) -> AiAssistantService:
     """Factory pour créer le service AI Assistant avec configuration avancée"""
+
+
+
     try:
         if config is None:
             config = AiAssistantConfig()
@@ -1022,15 +1079,18 @@ async def create_aiassistant_service(config: Optional[AiAssistantConfig] = None)
         service = AiAssistantService(manager)
         await service.initialize()
         
-        logger.info("✅ AI Assistant Service créé avec succès")
+        logger.info(" AI Assistant Service créé avec succès")
         return service
         
     except Exception as e:
-        logger.error(f"❌ Erreur création service: {e}")
+        logger.error(f" Erreur création service: {e}")
         raise
 
 def get_aiassistant_status() -> Dict[str, Any]:
     """Récupération du statut détaillé du module"""
+
+
+
     return {
         "module": "AI Assistant",
         "version": "2.1.0",
@@ -1066,6 +1126,9 @@ class AiAssistantAPI:
     
     async def health_check(self) -> Dict[str, Any]:
         """Vérification de santé complète du module"""
+
+
+
         try:
             health_status = {
                 "status": "healthy",
@@ -1087,7 +1150,7 @@ class AiAssistantAPI:
             return health_status
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur health check: {e}")
+            self.logger.error(f" Erreur health check: {e}")
             return {
                 "status": "unhealthy",
                 "error": str(e),
@@ -1096,6 +1159,9 @@ class AiAssistantAPI:
     
     async def get_creator_insights(self, creator_id: str) -> Dict[str, Any]:
         """Obtenir insights complets pour un créateur"""
+
+
+
         try:
             profile = self.service.manager.creator_profiles.get(creator_id)
             if not profile:
@@ -1119,7 +1185,7 @@ class AiAssistantAPI:
             }
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur creator insights: {e}")
+            self.logger.error(f" Erreur creator insights: {e}")
             return {"error": str(e)}
 
 # =============== EXPORT MODULE ===============
@@ -1154,8 +1220,11 @@ __all__ = [
     
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Traitement principal des données"""
+
+
+
         try:
-            self.logger.info(f"⚡ Traitement Ai Assistant")
+            self.logger.info(f" Traitement Ai Assistant")
             
             # Validation des données
             if not await self.validate(data):
@@ -1171,7 +1240,7 @@ __all__ = [
             }
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur traitement: {e}")
+            self.logger.error(f" Erreur traitement: {e}")
             return {
                 "status": "error", 
                 "error": str(e),
@@ -1284,6 +1353,9 @@ async def create_aiassistant_service(config: Optional[AiAssistantConfig] = None)
 
 def get_aiassistant_status() -> Dict[str, Any]:
     """Récupération du statut du module"""
+
+
+
     return {
         "module": "Ai Assistant",
         "version": "1.0.0",
@@ -1302,6 +1374,9 @@ class AiAssistantAPI:
     
     async def health_check(self) -> Dict[str, Any]:
         """Vérification de santé du module"""
+
+
+
         return {
             "status": "healthy",
             "module": "Ai Assistant",

@@ -993,6 +993,9 @@ class EnterpriseContentCache:
     
     async def delete_content(self, content_id: str) -> bool:
         """Delete content and all associated data"""
+
+
+
         try:
             # Get metadata first
             metadata = await self.get_content_metadata(content_id)

@@ -143,6 +143,9 @@ class EmailProcessor(MessageProcessor):
     
     async def process(self, message: QueueMessage) -> ProcessingResult:
         """Traiter un message email"""
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -203,6 +206,9 @@ class PushProcessor(MessageProcessor):
     
     async def process(self, message: QueueMessage) -> ProcessingResult:
         """Traiter une notification push"""
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -262,6 +268,9 @@ class WebhookProcessor(MessageProcessor):
     
     async def process(self, message: QueueMessage) -> ProcessingResult:
         """Traiter un webhook"""
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -335,6 +344,9 @@ class RedisQueueBackend:
         
     async def enqueue(self, queue_name: str, message: QueueMessage, delay: Optional[int] = None):
         """Ajouter un message à la queue"""
+
+
+
         try:
             # Sérialiser le message
             serialized_message = self._serialize_message(message)
@@ -357,6 +369,9 @@ class RedisQueueBackend:
     
     async def dequeue(self, queue_name: str, timeout: int = 10) -> Optional[QueueMessage]:
         """Récupérer un message de la queue"""
+
+
+
         try:
             # Vérifier d'abord les messages délayés
             await self._process_delayed_messages(queue_name)
@@ -382,6 +397,9 @@ class RedisQueueBackend:
     
     async def ack(self, queue_name: str, message: QueueMessage, result: ProcessingResult):
         """Acquitter un message traité"""
+
+
+
         try:
             # Supprimer de la liste de traitement
             await self.redis.zrem(f"queue:processing:{queue_name}", self._serialize_message(message))
@@ -398,6 +416,9 @@ class RedisQueueBackend:
     
     async def nack(self, queue_name: str, message: QueueMessage, retry_delay: Optional[int] = None):
         """Rejeter un message et le remettre en queue"""
+
+
+
         try:
             # Supprimer de la liste de traitement
             await self.redis.zrem(f"queue:processing:{queue_name}", self._serialize_message(message))
@@ -422,6 +443,9 @@ class RedisQueueBackend:
     
     async def _process_delayed_messages(self, queue_name: str):
         """Traiter les messages délayés"""
+
+
+
         try:
             now = datetime.utcnow().timestamp()
             
@@ -446,6 +470,9 @@ class RedisQueueBackend:
     
     async def _mark_processing(self, queue_name: str, message: QueueMessage):
         """Marquer un message comme en cours de traitement"""
+
+
+
         try:
             score = datetime.utcnow().timestamp()
             await self.redis.zadd(
@@ -457,6 +484,9 @@ class RedisQueueBackend:
     
     async def _send_to_dead_letter_queue(self, queue_name: str, message: QueueMessage):
         """Envoyer vers la dead letter queue"""
+
+
+
         try:
             await self.redis.lpush(
                 f"queue:dead:{queue_name}",
@@ -470,6 +500,9 @@ class RedisQueueBackend:
     
     async def _save_processing_result(self, queue_name: str, result: ProcessingResult):
         """Sauvegarder le résultat de traitement"""
+
+
+
         try:
             key = f"queue:results:{queue_name}:{result.message_id}"
             await self.redis.setex(
@@ -482,6 +515,9 @@ class RedisQueueBackend:
     
     async def _update_queue_stats(self, queue_name: str, event: str, processing_time: Optional[float] = None):
         """Mettre à jour les statistiques de queue"""
+
+
+
         try:
             key = f"queue:stats:{queue_name}"
             
@@ -510,6 +546,9 @@ class RedisQueueBackend:
     
     def _serialize_message(self, message: QueueMessage) -> str:
         """Sérialiser un message"""
+
+
+
         try:
             # Convertir en dict
             message_dict = asdict(message)
@@ -528,6 +567,9 @@ class RedisQueueBackend:
     
     def _deserialize_message(self, serialized_data: str) -> QueueMessage:
         """Désérialiser un message"""
+
+
+
         try:
             import base64
             
@@ -556,6 +598,9 @@ class RedisQueueBackend:
     
     async def get_queue_stats(self, queue_name: str) -> QueueStats:
         """Récupérer les statistiques d'une queue"""
+
+
+
         try:
             key = f"queue:stats:{queue_name}"
             stats_data = await self.redis.hgetall(key)
@@ -611,6 +656,9 @@ class NotificationQueueManager:
     
     async def start(self):
         """Démarrer le gestionnaire de queues"""
+
+
+
         try:
             self.is_running = True
             
@@ -638,6 +686,9 @@ class NotificationQueueManager:
     
     async def stop(self):
         """Arrêter le gestionnaire de queues"""
+
+
+
         try:
             self.is_running = False
             
@@ -657,6 +708,9 @@ class NotificationQueueManager:
     
     async def enqueue_message(self, message: QueueMessage) -> str:
         """Ajouter un message à la queue"""
+
+
+
         try:
             queue_name = message.queue_type.value
             
@@ -795,6 +849,9 @@ class NotificationQueueManager:
     
     async def _cleanup_stale_processing_messages(self):
         """Nettoyer les messages en cours de traitement depuis trop longtemps"""
+
+
+
         try:
             stale_timeout = self.config.get("stale_processing_timeout", 3600)  # 1 heure
             cutoff_time = (datetime.utcnow() - timedelta(seconds=stale_timeout)).timestamp()
@@ -823,6 +880,9 @@ class NotificationQueueManager:
     
     async def _cleanup_old_results(self):
         """Nettoyer les anciens résultats"""
+
+
+
         try:
             # Les résultats sont automatiquement expirés par Redis (24h)
             # Cette fonction peut être étendue pour d'autres nettoyages
@@ -832,6 +892,9 @@ class NotificationQueueManager:
     
     async def _compact_stats(self):
         """Compacter les statistiques"""
+
+
+
         try:
             # Archiver les stats anciennes vers la base de données
             for queue_type in QueueType:
@@ -846,6 +909,9 @@ class NotificationQueueManager:
     
     async def _collect_metrics(self):
         """Collecter les métriques"""
+
+
+
         try:
             metrics = {}
             
@@ -874,6 +940,9 @@ class NotificationQueueManager:
     
     async def _check_queue_alerts(self):
         """Vérifier les alertes de queue"""
+
+
+
         try:
             alert_thresholds = self.config.get("alert_thresholds", {})
             
@@ -936,6 +1005,9 @@ class NotificationQueueManager:
     
     async def get_queue_status(self, queue_type: Optional[QueueType] = None) -> Dict[str, QueueStats]:
         """Récupérer le statut des queues"""
+
+
+
         try:
             status = {}
             
@@ -981,6 +1053,9 @@ class NotificationQueueManager:
     
     async def get_dead_letter_messages(self, queue_type: QueueType, limit: int = 100) -> List[QueueMessage]:
         """Récupérer les messages de la dead letter queue"""
+
+
+
         try:
             queue_name = queue_type.value
             
@@ -1003,6 +1078,9 @@ class NotificationQueueManager:
     
     async def requeue_dead_message(self, queue_type: QueueType, message_id: str) -> bool:
         """Remettre un message mort en queue"""
+
+
+
         try:
             queue_name = queue_type.value
             dead_queue_key = f"queue:dead:{queue_name}"

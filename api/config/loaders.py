@@ -57,10 +57,16 @@ class YAMLConfigLoader(ConfigurationLoader):
     
     def supports(self, source: str) -> bool:
         """Check if source is a YAML file"""
+
+
+
         return source.lower().endswith(('.yaml', '.yml'))
     
     def load(self, source: str) -> Dict[str, Any]:
         """Load configuration from YAML file"""
+
+
+
         try:
             file_path = Path(source).expanduser()
             if not file_path.exists():
@@ -81,6 +87,9 @@ class YAMLConfigLoader(ConfigurationLoader):
     
     def _process_config(self, config: Dict[str, Any]) -> Dict[str, Any]:
         """Process loaded configuration for environment variable substitution"""
+
+
+
         return self._substitute_env_vars(config)
     
     def _substitute_env_vars(self, obj: Any) -> Any:
@@ -107,10 +116,16 @@ class JSONConfigLoader(ConfigurationLoader):
     
     def supports(self, source: str) -> bool:
         """Check if source is a JSON file"""
+
+
+
         return source.lower().endswith('.json')
     
     def load(self, source: str) -> Dict[str, Any]:
         """Load configuration from JSON file"""
+
+
+
         try:
             file_path = Path(source).expanduser()
             if not file_path.exists():
@@ -131,6 +146,9 @@ class JSONConfigLoader(ConfigurationLoader):
     
     def _process_config(self, config: Dict[str, Any]) -> Dict[str, Any]:
         """Process loaded configuration"""
+
+
+
         return self._substitute_env_vars(config)
     
     def _substitute_env_vars(self, obj: Any) -> Any:
@@ -155,10 +173,16 @@ class TOMLConfigLoader(ConfigurationLoader):
     
     def supports(self, source: str) -> bool:
         """Check if source is a TOML file"""
+
+
+
         return source.lower().endswith('.toml')
     
     def load(self, source: str) -> Dict[str, Any]:
         """Load configuration from TOML file"""
+
+
+
         try:
             file_path = Path(source).expanduser()
             if not file_path.exists():
@@ -179,6 +203,9 @@ class TOMLConfigLoader(ConfigurationLoader):
     
     def _process_config(self, config: Dict[str, Any]) -> Dict[str, Any]:
         """Process loaded configuration"""
+
+
+
         return config  # TOML doesn't support env var substitution by default
 
 
@@ -187,10 +214,16 @@ class INIConfigLoader(ConfigurationLoader):
     
     def supports(self, source: str) -> bool:
         """Check if source is an INI file"""
+
+
+
         return source.lower().endswith(('.ini', '.cfg', '.conf'))
     
     def load(self, source: str) -> Dict[str, Any]:
         """Load configuration from INI file"""
+
+
+
         try:
             file_path = Path(source).expanduser()
             if not file_path.exists():
@@ -216,6 +249,9 @@ class INIConfigLoader(ConfigurationLoader):
     
     def _process_config(self, config: Dict[str, Any]) -> Dict[str, Any]:
         """Process loaded configuration with type conversion"""
+
+
+
         return self._convert_types(config)
     
     def _convert_types(self, config: Dict[str, Any]) -> Dict[str, Any]:
@@ -270,6 +306,9 @@ class EnvironmentConfigLoader(ConfigurationLoader):
     
     def supports(self, source: str) -> bool:
         """Always supports environment loading"""
+
+
+
         return source == "environment" or source.startswith("env:")
     
     def load(self, source: str) -> Dict[str, Any]:
@@ -348,10 +387,16 @@ class S3ConfigLoader(ConfigurationLoader):
     
     def supports(self, source: str) -> bool:
         """Check if source is an S3 URL"""
+
+
+
         return source.startswith('s3://')
     
     def load(self, source: str) -> Dict[str, Any]:
         """Load configuration from S3 object"""
+
+
+
         try:
             # Parse S3 URL
             parsed = urlparse(source)
@@ -406,10 +451,16 @@ class HTTPConfigLoader(ConfigurationLoader):
     
     def supports(self, source: str) -> bool:
         """Check if source is an HTTP URL"""
+
+
+
         return source.startswith(('http://', 'https://'))
     
     def load(self, source: str) -> Dict[str, Any]:
         """Load configuration from HTTP endpoint"""
+
+
+
         try:
             response = requests.get(source, headers=self.headers, timeout=self.timeout)
             response.raise_for_status()
@@ -454,10 +505,16 @@ class RedisConfigLoader(ConfigurationLoader):
     
     def supports(self, source: str) -> bool:
         """Check if source is Redis"""
+
+
+
         return source.startswith('redis://') or source == 'redis'
     
     def load(self, source: str) -> Dict[str, Any]:
         """Load configuration from Redis"""
+
+
+
         try:
             if not self.redis_client:
                 redis_url = source if source.startswith('redis://') else self.redis_url
@@ -519,10 +576,16 @@ class DatabaseConfigLoader(ConfigurationLoader):
     
     def supports(self, source: str) -> bool:
         """Check if source is database"""
+
+
+
         return source.startswith(('postgresql://', 'mysql://', 'sqlite://')) or source == 'database'
     
     def load(self, source: str) -> Dict[str, Any]:
         """Load configuration from database"""
+
+
+
         try:
             from sqlalchemy import create_engine, text
             

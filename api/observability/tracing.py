@@ -220,6 +220,9 @@ class Span:
 
     def to_dict(self) -> Dict:
         """Convert span to dictionary for serialization."""
+
+
+
         return {
             "span_id": self.span_id,
             "trace_id": self.trace_id,
@@ -246,6 +249,9 @@ class Span:
 
     def to_jaeger_format(self) -> Dict:
         """Convert span to Jaeger-compatible format."""
+
+
+
         return {
             "traceID": self.trace_id.replace("-", ""),
             "spanID": self.span_id.replace("-", ""),
@@ -435,10 +441,16 @@ class TracingManager:
 
     def get_trace(self, trace_id: str) -> Optional[List[Span]]:
         """Get all spans for a trace."""
+
+
+
         return self.traces.get(trace_id)
 
     def get_span(self, span_id: str) -> Optional[Span]:
         """Get a specific span by ID."""
+
+
+
         return self.span_index.get(span_id)
 
     def get_trace_tree(self, trace_id: str) -> Optional[Dict]:
@@ -819,6 +831,9 @@ class RequestTracer:
 
     def get_active_span(self) -> Optional[Span]:
         """Get the currently active span for this thread."""
+
+
+
         return self.active_spans.get(threading.get_ident())
 
     def finish_span(self, span: Span):

@@ -19,7 +19,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING 🚨
+ INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
@@ -155,6 +155,9 @@ class StatisticsCollector:
         
     def collect_partition_statistics(self, partition_name: str) -> PartitionStatistics:
         """Collect comprehensive statistics for a partition"""
+
+
+
         try:
             with self.session_factory() as session:
                 # Basic table statistics
@@ -371,6 +374,9 @@ class PartitionOptimizer:
         Returns:
             Dict containing detailed performance analysis
         """
+
+
+
         try:
             # Collect current statistics
             stats = self.statistics_collector.collect_partition_statistics(partition_name)
@@ -619,6 +625,9 @@ class PartitionOptimizer:
 
     def _analyze_performance_trends(self, partition_name: str) -> Dict[str, Any]:
         """Analyze performance trends over time"""
+
+
+
         try:
             historical_data = self.historical_data[partition_name]
             
@@ -657,6 +666,9 @@ class PartitionOptimizer:
 
     def _analyze_indexes(self, partition_name: str) -> Dict[str, Any]:
         """Analyze index usage and efficiency"""
+
+
+
         try:
             with self.session_factory() as session:
                 # Get index usage statistics
@@ -723,6 +735,9 @@ class PartitionOptimizer:
 
     def _analyze_query_patterns(self, partition_name: str) -> Dict[str, Any]:
         """Analyze query patterns and performance"""
+
+
+
         try:
             with self.session_factory() as session:
                 # Get query statistics from pg_stat_statements
@@ -803,6 +818,9 @@ class PartitionOptimizer:
         Returns:
             Dict containing optimization results
         """
+
+
+
         try:
             strategy = strategy or self.strategy
             logger.info(f"Starting optimization for partition {partition_name} with {strategy.value} strategy")
@@ -934,6 +952,9 @@ class PartitionOptimizer:
         Returns:
             Dict containing detailed optimization report
         """
+
+
+
         try:
             report = {
                 'timestamp': datetime.utcnow().isoformat(),
@@ -1019,6 +1040,9 @@ class PartitionOptimizer:
 
     def start_continuous_optimization(self):
         """Start continuous optimization monitoring"""
+
+
+
         try:
             if self._optimization_active:
                 logger.warning("Continuous optimization is already active")
@@ -1051,6 +1075,9 @@ class PartitionOptimizer:
 
     def shutdown(self):
         """Shutdown optimizer gracefully"""
+
+
+
         try:
             logger.info("Shutting down partition optimizer...")
             
@@ -1067,6 +1094,9 @@ class PartitionOptimizer:
 
     def __enter__(self):
         """Context manager entry"""
+
+
+
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
@@ -1115,6 +1145,9 @@ class StatisticsCollector:
     
     def collect_partition_statistics(self, partition_name: str) -> PartitionStatistics:
         """Collect comprehensive statistics for a partition"""
+
+
+
         try:
             with self.session_factory() as session:
                 # Get basic table statistics
@@ -1329,6 +1362,9 @@ class PartitionOptimizer:
         Returns:
             PerformanceReport: Optimization results and recommendations
         """
+
+
+
         try:
             logger.info(f"Starting optimization for partition: {partition_name}")
             
@@ -1568,6 +1604,9 @@ class PartitionOptimizer:
     
     def _execute_optimization_task(self, task: OptimizationTask) -> bool:
         """Execute individual optimization task"""
+
+
+
         try:
             with self.session_factory() as session:
                 if task.operation_type == "VACUUM":
@@ -1594,6 +1633,9 @@ class PartitionOptimizer:
     
     def _optimize_indexes(self, session: Session, partition_name: str) -> bool:
         """Optimize indexes for partition"""
+
+
+
         try:
             # Get current indexes
             indexes_query = text(f"""
@@ -1638,6 +1680,9 @@ class PartitionOptimizer:
     
     def _create_missing_indexes(self, session: Session, partition_name: str):
         """Create missing indexes based on table structure and usage patterns"""
+
+
+
         try:
             # This is a simplified implementation
             # In practice, you would analyze query logs and execution plans
@@ -1722,6 +1767,9 @@ class PartitionOptimizer:
     
     def get_optimization_summary(self) -> Dict[str, Any]:
         """Get comprehensive optimization summary"""
+
+
+
         try:
             total_partitions = len(self.performance_reports)
             
@@ -1838,6 +1886,9 @@ class PartitionOptimizer:
     
     def shutdown(self):
         """Shutdown optimizer gracefully"""
+
+
+
         try:
             logger.info("Shutting down partition optimizer...")
             

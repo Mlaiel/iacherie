@@ -8,7 +8,7 @@ adaptation, and contextual response optimization for content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -179,6 +179,9 @@ class ConversationalIntelligenceEngine:
 
     def _load_personality_classifier(self) -> AutoModelForSequenceClassification:
         """Load personality classification model"""
+
+
+
         try:
             model = AutoModelForSequenceClassification.from_pretrained(
                 "microsoft/DialoGPT-medium",
@@ -191,6 +194,9 @@ class ConversationalIntelligenceEngine:
 
     def _initialize_intelligence_rules(self) -> Dict[str, Any]:
         """Initialize conversational intelligence rules"""
+
+
+
         return {
             "personality_adaptation": {
                 "analytical": {
@@ -284,6 +290,9 @@ class ConversationalIntelligenceEngine:
         previous_context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Analyze a conversation turn with advanced AI insights"""
+
+
+
         try:
             # Get or create conversational context
             context = await self._get_or_create_context(session_id, creator_id, previous_context)

@@ -131,6 +131,9 @@ class HelmManager(BaseDeploymentManager):
 
     def _verify_helm_installation(self) -> None:
         """Verify Helm is installed and accessible."""
+
+
+
         try:
             result = self._run_helm_command(["version", "--short"])
             self.logger.info(f"Helm version: {result.strip()}")
@@ -194,6 +197,9 @@ class HelmManager(BaseDeploymentManager):
         Returns:
             True if repository added successfully, False otherwise
         """
+
+
+
         try:
             cmd = ["repo", "add", repository.name, repository.url]
             
@@ -230,6 +236,9 @@ class HelmManager(BaseDeploymentManager):
         Returns:
             True if update successful, False otherwise
         """
+
+
+
         try:
             self._run_helm_command(["repo", "update"])
             self.logger.info("Repositories updated successfully")
@@ -250,6 +259,9 @@ class HelmManager(BaseDeploymentManager):
         Returns:
             List of chart information
         """
+
+
+
         try:
             cmd = ["search", "repo", keyword]
             if repo:
@@ -302,6 +314,9 @@ class HelmManager(BaseDeploymentManager):
         Returns:
             True if installation successful, False otherwise
         """
+
+
+
         try:
             namespace = namespace or self.default_namespace
             
@@ -374,6 +389,9 @@ class HelmManager(BaseDeploymentManager):
         Returns:
             True if upgrade successful, False otherwise
         """
+
+
+
         try:
             namespace = namespace or self.default_namespace
             
@@ -439,6 +457,9 @@ class HelmManager(BaseDeploymentManager):
         Returns:
             True if rollback successful, False otherwise
         """
+
+
+
         try:
             namespace = namespace or self.default_namespace
             
@@ -491,6 +512,9 @@ class HelmManager(BaseDeploymentManager):
         Returns:
             True if uninstallation successful, False otherwise
         """
+
+
+
         try:
             namespace = namespace or self.default_namespace
             
@@ -533,6 +557,9 @@ class HelmManager(BaseDeploymentManager):
         Returns:
             Release information or None if not found
         """
+
+
+
         try:
             namespace = namespace or self.default_namespace
             
@@ -567,6 +594,9 @@ class HelmManager(BaseDeploymentManager):
         Returns:
             List of releases
         """
+
+
+
         try:
             cmd = ["list", "--output", "json"]
             
@@ -612,6 +642,9 @@ class HelmManager(BaseDeploymentManager):
         Returns:
             List of release revisions
         """
+
+
+
         try:
             namespace = namespace or self.default_namespace
             
@@ -649,6 +682,9 @@ class HelmManager(BaseDeploymentManager):
         Returns:
             True if chart created successfully, False otherwise
         """
+
+
+
         try:
             chart_dir = Path(output_dir) / chart_config.name
             
@@ -698,6 +734,9 @@ class HelmManager(BaseDeploymentManager):
         Returns:
             Path to the packaged chart or None if failed
         """
+
+
+
         try:
             cmd = ["package", chart_path, "--destination", output_dir]
             
@@ -727,6 +766,9 @@ class HelmManager(BaseDeploymentManager):
         Returns:
             Lint results
         """
+
+
+
         try:
             cmd = ["lint", chart_path, "--output", "json"]
             
@@ -761,6 +803,9 @@ class HelmManager(BaseDeploymentManager):
         Returns:
             Rendered templates
         """
+
+
+
         try:
             cmd = ["template"]
             
@@ -804,6 +849,9 @@ class HelmManager(BaseDeploymentManager):
         Returns:
             Release values
         """
+
+
+
         try:
             namespace = namespace or self.default_namespace
             
@@ -829,6 +877,9 @@ class HelmManager(BaseDeploymentManager):
         Returns:
             True if dependencies are valid, False otherwise
         """
+
+
+
         try:
             cmd = ["dependency", "build", chart_path]
             self._run_helm_command(cmd)
@@ -850,6 +901,9 @@ class HelmManager(BaseDeploymentManager):
         Returns:
             True if cleanup successful, False otherwise
         """
+
+
+
         try:
             releases = await self.list_releases()
             

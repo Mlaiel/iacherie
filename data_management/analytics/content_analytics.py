@@ -841,6 +841,9 @@ class ContentAnalyticsCollector:
         content_ids: Optional[List[str]] = None
     ) -> List[ContentPerformanceProfile]:
         """Generate comprehensive content performance profiles."""
+
+
+
         
         try:
             # Collect all content metrics

@@ -9,7 +9,7 @@ property across multi-format content distribution networks.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing and usage rights.
@@ -194,6 +194,9 @@ class BlockchainValidator:
         
     async def initialize_blockchain_connections(self, network_configs: Dict[str, Dict[str, str]]):
         """Initialize connections to various blockchain networks"""
+
+
+
         try:
             for network_name, config in network_configs.items():
                 if network_name in [net.value for net in BlockchainNetwork]:
@@ -235,6 +238,9 @@ class BlockchainValidator:
         deployment_params: Optional[Dict[str, Any]] = None
     ) -> SmartContractDeployment:
         """Deploy smart contract to specified blockchain network"""
+
+
+
         try:
             if blockchain_network not in self.web3_connections:
                 raise BlockchainError(f"No connection to {blockchain_network.value}")
@@ -334,6 +340,9 @@ class BlockchainValidator:
         blockchain_network: BlockchainNetwork = BlockchainNetwork.ETHEREUM
     ) -> DecentralizedRights:
         """Register intellectual property rights on blockchain"""
+
+
+
         try:
             # Hash license terms for immutability
             license_terms_hash = hashlib.sha256(
@@ -434,6 +443,9 @@ class BlockchainValidator:
         expected_confirmations: int = 6
     ) -> BlockchainTransaction:
         """Validate blockchain transaction and check confirmations"""
+
+
+
         try:
             web3 = self.web3_connections[blockchain_network]
             
@@ -494,6 +506,9 @@ class BlockchainValidator:
         blockchain_network: BlockchainNetwork = BlockchainNetwork.ETHEREUM
     ) -> Dict[str, Any]:
         """Verify content ownership on blockchain"""
+
+
+
         try:
             # Get rights registry contract
             registry_contract = await self._get_rights_registry_contract(blockchain_network)
@@ -537,6 +552,9 @@ class BlockchainValidator:
         blockchain_network: BlockchainNetwork = BlockchainNetwork.ETHEREUM
     ) -> List[BlockchainTransaction]:
         """Execute automated royalty distribution via smart contracts"""
+
+
+
         try:
             # Get royalty distribution contract
             distribution_contract = await self._get_royalty_distribution_contract(blockchain_network)
@@ -594,6 +612,9 @@ class BlockchainValidator:
         blockchain_network: BlockchainNetwork = BlockchainNetwork.ETHEREUM
     ) -> Dict[str, Any]:
         """Create NFT representing licensing rights"""
+
+
+
         try:
             # Get NFT contract
             nft_contract = await self._get_nft_contract(blockchain_network)
@@ -687,10 +708,16 @@ class BlockchainValidator:
     
     async def _get_contract_template(self, contract_type: ContractType) -> str:
         """Get smart contract template"""
+
+
+
         return self.contract_factories.get(contract_type, "")
     
     async def _compile_contract(self, source_code: str, params: Dict[str, Any]) -> Dict[str, Any]:
         """Compile smart contract (simplified for demo)"""
+
+
+
         return {
             'abi': [
                 {
@@ -712,10 +739,16 @@ class BlockchainValidator:
     
     async def _estimate_deployment_gas(self, contract_factory, constructor_args: List[Any], web3: Web3) -> int:
         """Estimate gas for contract deployment"""
+
+
+
         return 2000000  # Default gas estimate
     
     async def _perform_security_audit(self, compiled_contract: Dict[str, Any]) -> Dict[str, Any]:
         """Perform automated security audit"""
+
+
+
         return {
             'audit_score': 95.0,
             'vulnerabilities_found': 0,
@@ -724,6 +757,9 @@ class BlockchainValidator:
     
     async def _calculate_performance_metrics(self, receipt: Dict[str, Any]) -> Dict[str, float]:
         """Calculate contract performance metrics"""
+
+
+
         return {
             'gas_efficiency': 0.85,
             'deployment_time': 30.0,  # seconds

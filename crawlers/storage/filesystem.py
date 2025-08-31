@@ -110,6 +110,9 @@ class FileSystemStorageProvider(BaseStorageProvider):
     
     async def connect(self) -> None:
         """Initialize file system storage."""
+
+
+
         try:
             # Create directory structure
             for directory in [self.data_dir, self.metadata_dir, self.index_dir, self.backup_dir, self.temp_dir]:
@@ -128,6 +131,9 @@ class FileSystemStorageProvider(BaseStorageProvider):
     
     async def disconnect(self) -> None:
         """Close file system storage."""
+
+
+
         try:
             # Close index database
             if self.index_db:
@@ -145,6 +151,9 @@ class FileSystemStorageProvider(BaseStorageProvider):
     
     async def health_check(self) -> bool:
         """Check file system health."""
+
+
+
         try:
             if not self.is_connected:
                 return False
@@ -182,6 +191,9 @@ class FileSystemStorageProvider(BaseStorageProvider):
     
     async def _initialize_index_database(self) -> None:
         """Initialize SQLite index database."""
+
+
+
         try:
             self.index_db = await aiosqlite.connect(str(self.index_db_path))
             
@@ -277,6 +289,9 @@ class FileSystemStorageProvider(BaseStorageProvider):
     
     def _calculate_checksum(self, data: bytes) -> str:
         """Calculate SHA-256 checksum of data."""
+
+
+
         return hashlib.sha256(data).hexdigest()
     
     async def _get_file_lock(self, record_id: str) -> asyncio.Lock:
@@ -778,6 +793,9 @@ class FileSystemStorageProvider(BaseStorageProvider):
     
     async def get_statistics(self) -> StorageStats:
         """Get storage statistics."""
+
+
+
         try:
             if self.enable_indexing and self.index_db:
                 # Get statistics from index database
@@ -958,6 +976,9 @@ class FileSystemTransaction(StorageTransaction):
     
     async def begin(self) -> None:
         """Begin transaction by creating transaction directory."""
+
+
+
         try:
             self.transaction_dir.mkdir(exist_ok=True)
             logger.debug(f"File system transaction {self.transaction_id} started")
@@ -967,6 +988,9 @@ class FileSystemTransaction(StorageTransaction):
     
     async def commit(self) -> bool:
         """Commit transaction by applying all operations."""
+
+
+
         try:
             # Apply all logged operations
             for operation in self.operations_log:
@@ -1004,6 +1028,9 @@ class FileSystemTransaction(StorageTransaction):
     
     async def rollback(self) -> bool:
         """Rollback transaction by cleaning up transaction directory."""
+
+
+
         try:
             # Clean up transaction directory
             if self.transaction_dir.exists():

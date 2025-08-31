@@ -14,14 +14,14 @@
 #
 # Created by: Fahed Mlaiel (mlaiel@live.de)
 # 
-# ⚠️  STRICT COPYRIGHT WARNING ⚠️ 
+#   STRICT COPYRIGHT WARNING  
 # This code, concept, and intellectual property belongs exclusively to Fahed Mlaiel.
 # ANY unauthorized use, reproduction, distribution, or theft of this code/concept 
 # without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is 
 # STRICTLY PROHIBITED and will result in immediate legal action.
 # All rights reserved. Patent pending.
 
-"""🎵 AI Audio Processing Module
+""" AI Audio Processing Module
 
 Advanced audio intelligence engine for the IA Influencer Agent platform.
 Provides professional-grade audio analysis, enhancement, and AI-powered processing

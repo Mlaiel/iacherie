@@ -92,6 +92,9 @@ class MonetizationAdvisorAgent(BaseAIAgent):
         Returns:
             Comprehensive revenue analysis
         """
+
+
+
         try:
             # Extract current metrics
             followers = creator_profile.get('total_followers', 0)
@@ -188,6 +191,9 @@ class MonetizationAdvisorAgent(BaseAIAgent):
         Returns:
             List of relevant sponsorship opportunities
         """
+
+
+
         try:
             niche = creator_profile.get('niche', 'general')
             followers = creator_profile.get('total_followers', 0)
@@ -305,6 +311,9 @@ class MonetizationAdvisorAgent(BaseAIAgent):
         Returns:
             Optimized pricing recommendations
         """
+
+
+
         try:
             followers = creator_profile.get('total_followers', 0)
             engagement_rate = creator_profile.get('engagement_rate', 0.03)

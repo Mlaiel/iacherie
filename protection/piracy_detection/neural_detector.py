@@ -7,7 +7,7 @@ Advanced neural network-based piracy detection with deep learning models.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
+ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
 and will result in immediate legal action under German and international copyright law.
 
@@ -216,6 +216,9 @@ class NeuralPiracyDetector:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             # Initialize neural network
             model_config = {
@@ -411,6 +414,9 @@ class NeuralPiracyDetector:
     
     async def _load_pretrained_weights(self):
         """Load pre-trained weights if available."""
+
+
+
         try:
             # Implementation for loading custom trained weights
             weights_path = self.config.get('pretrained_weights_path')
@@ -464,6 +470,9 @@ class NeuralPiracyDetector:
     
     def get_detection_statistics(self) -> Dict[str, Any]:
         """Get current detection statistics."""
+
+
+
         return {
             **self.detection_stats,
             'model_type': 'neural_multimodal',

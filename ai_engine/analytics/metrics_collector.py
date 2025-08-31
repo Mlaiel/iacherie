@@ -266,6 +266,9 @@ class MetricsCollector:
                      unit: Optional[str] = None,
                      metadata: Optional[Dict[str, Any]] = None) -> bool:
         """Record a new metric"""
+
+
+
         try:
             # Get metric definition if exists
             definition = self.metric_definitions.get(metric_name, {})
@@ -303,6 +306,9 @@ class MetricsCollector:
     def record_counter(self, name: str, increment: int = 1, 
                       tags: Optional[Dict[str, str]] = None) -> bool:
         """Record a counter metric"""
+
+
+
         return self.record_metric(
             name, increment, tags, 
             MetricCategory.OPERATIONAL, MetricType.COUNTER
@@ -311,6 +317,9 @@ class MetricsCollector:
     def record_gauge(self, name: str, value: Union[int, float], 
                     tags: Optional[Dict[str, str]] = None) -> bool:
         """Record a gauge metric"""
+
+
+
         return self.record_metric(
             name, value, tags, 
             MetricCategory.OPERATIONAL, MetricType.GAUGE
@@ -319,6 +328,9 @@ class MetricsCollector:
     def record_timer(self, name: str, duration_ms: float, 
                     tags: Optional[Dict[str, str]] = None) -> bool:
         """Record a timer metric"""
+
+
+
         return self.record_metric(
             name, duration_ms, tags, 
             MetricCategory.PERFORMANCE, MetricType.TIMER, unit="milliseconds"
@@ -326,10 +338,16 @@ class MetricsCollector:
     
     def start_timer(self, name: str, tags: Optional[Dict[str, str]] = None) -> 'TimerContext':
         """Start a timer context manager"""
+
+
+
         return TimerContext(self, name, tags)
     
     def _check_alerts(self, metric: MetricData):
         """Check if metric triggers any alerts"""
+
+
+
         try:
             for alert_name, alert in self.alerts.items():
                 if not alert.enabled or alert.metric_name != metric.metric_name:
@@ -361,6 +379,9 @@ class MetricsCollector:
     
     def _evaluate_condition(self, value: float, condition: str, threshold: float) -> bool:
         """Evaluate alert condition"""
+
+
+
         try:
             if condition.startswith('>'):
                 return value > threshold
@@ -382,6 +403,9 @@ class MetricsCollector:
     
     def _trigger_alert(self, alert: MetricAlert, metric: MetricData):
         """Trigger an alert"""
+
+
+
         try:
             self.logger.warning(
                 f"ALERT: {alert.alert_name} - {metric.metric_name}={metric.value} "
@@ -400,6 +424,9 @@ class MetricsCollector:
     
     def add_alert(self, alert: MetricAlert) -> bool:
         """Add a new alert"""
+
+
+
         try:
             self.alerts[alert.alert_name] = alert
             self.logger.info(f"Added alert: {alert.alert_name}")
@@ -410,6 +437,9 @@ class MetricsCollector:
     
     def remove_alert(self, alert_name: str) -> bool:
         """Remove an alert"""
+
+
+
         try:
             if alert_name in self.alerts:
                 del self.alerts[alert_name]
@@ -422,6 +452,9 @@ class MetricsCollector:
     
     def flush_metrics(self) -> int:
         """Flush buffered metrics and perform aggregation"""
+
+
+
         try:
             metrics = self.buffer.get_all(clear=True)
             if not metrics:
@@ -450,6 +483,9 @@ class MetricsCollector:
     
     def _perform_aggregations(self, metrics: List[MetricData]):
         """Perform metric aggregations"""
+
+
+
         try:
             # Group metrics by name and time window
             now = datetime.utcnow()
@@ -487,6 +523,9 @@ class MetricsCollector:
                               window_start: datetime, window_end: datetime,
                               window_name: str):
         """Calculate aggregations for a metric within a time window"""
+
+
+
         try:
             if not metrics:
                 return
@@ -562,6 +601,9 @@ class MetricsCollector:
                         aggregation: AggregationMethod = AggregationMethod.AVERAGE,
                         window: str = "1h") -> Optional[float]:
         """Get aggregated metric value"""
+
+
+
         try:
             key = f"{metric_name}_{window}_{aggregation.value}"
             agg_metric = self.aggregated_metrics.get(key)
@@ -573,6 +615,9 @@ class MetricsCollector:
     def get_metric_history(self, metric_name: str, 
                           hours_back: int = 24) -> List[MetricData]:
         """Get metric history"""
+
+
+
         try:
             cutoff = datetime.utcnow() - timedelta(hours=hours_back)
             history = self.metric_history.get(metric_name, [])
@@ -583,6 +628,9 @@ class MetricsCollector:
     
     def get_metrics_summary(self) -> Dict[str, Any]:
         """Get comprehensive metrics summary"""
+
+
+
         try:
             buffer_stats = {
                 "current_buffer_size": self.buffer.size(),
@@ -617,6 +665,9 @@ class MetricsCollector:
     def export_metrics(self, format_type: str = "json", 
                       include_raw: bool = False) -> Union[str, Dict[str, Any]]:
         """Export metrics data"""
+
+
+
         try:
             export_data = {
                 "export_timestamp": datetime.utcnow().isoformat(),
@@ -664,6 +715,9 @@ class MetricsCollector:
     
     def shutdown(self):
         """Shutdown the metrics collector"""
+
+
+
         try:
             self.logger.info("Shutting down MetricsCollector")
             self.running = False

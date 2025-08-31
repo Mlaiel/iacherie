@@ -4,26 +4,26 @@ Enterprise secrets management and deployment
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 
-⚠️  AVERTISSEMENT LEGAL STRICT ⚠️
+  AVERTISSEMENT LEGAL STRICT 
 
 Ce code et concept sont la propriété intellectuelle exclusive de :
-👤 Fahed Mlaiel (mlaiel@live.de)
-🏢 IA-Influencer Agent Platform
+ Fahed Mlaiel (mlaiel@live.de)
+ IA-Influencer Agent Platform
 
-🚫 INTERDICTIONS ABSOLUES :
+ INTERDICTIONS ABSOLUES :
 - Copie, reproduction ou utilisation sans autorisation écrite personnelle
 - Distribution, modification ou dérivation du code
 - Utilisation commerciale ou personnelle non autorisée
 - Reverse engineering ou extraction de concepts
 
-⚖️  CONSÉQUENCES LÉGALES :
+  CONSÉQUENCES LÉGALES :
 Toute violation entraînera des poursuites judiciaires immédiates selon :
 - Droit d'auteur international
 - Propriété intellectuelle
 - Code pénal pour vol de propriété
 
-📧 Contact autorisé : mlaiel@live.de
-📅 Copyright 2025 - Tous droits réservés
+ Contact autorisé : mlaiel@live.de
+ Copyright 2025 - Tous droits réservés
 """
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
@@ -117,14 +117,14 @@ __module_info__ = {
     "name": "IA Influencer Agent - Secrets Management",
     "description": "Enterprise-grade secrets management with encryption, rotation, compliance, and PKI",
     "team_specialties": [
-        "🔐 Lead Dev IA + Backend Senior",
-        "🛡️  ML Engineer + Security Expert", 
-        "🗄️  DBA + Data Engineer",
-        "🏗️  DevOps + Infrastructure",
-        "📊 Audio Processing + Analytics",
-        "🔗 Microservices + API Architecture",
-        "📋 Compliance + Audit Specialist",
-        "🎯 IA Prompt Engineering"
+        " Lead Dev IA + Backend Senior",
+        "  ML Engineer + Security Expert", 
+        "  DBA + Data Engineer",
+        "  DevOps + Infrastructure",
+        " Audio Processing + Analytics",
+        " Microservices + API Architecture",
+        " Compliance + Audit Specialist",
+        " IA Prompt Engineering"
     ],
     "author": "Fahed Mlaiel",
     "email": "mlaiel@live.de",

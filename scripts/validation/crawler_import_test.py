@@ -52,6 +52,9 @@ class CrawlerImportTester:
     
     def test_spotify_crawler(self) -> Dict[str, Any]:
         """Test Spotify crawler import and initialization."""
+
+
+
         try:
             self.mock_dependencies()
             
@@ -120,6 +123,9 @@ class CrawlerImportTester:
     
     def test_youtube_crawler(self) -> Dict[str, Any]:
         """Test YouTube crawler import and initialization."""
+
+
+
         try:
             self.mock_dependencies()
             
@@ -168,6 +174,9 @@ class CrawlerImportTester:
     
     def test_instagram_crawler(self) -> Dict[str, Any]:
         """Test Instagram crawler import and initialization."""
+
+
+
         try:
             self.mock_dependencies()
             
@@ -252,14 +261,14 @@ def main():
     # Print results
     summary = report["summary"]
     print(f"Total Tests: {summary['total']}")
-    print(f"✅ Success: {summary['success']}")
-    print(f"⚠️  Warning: {summary['warning']}")
-    print(f"❌ Error: {summary['error']}")
+    print(f" Success: {summary['success']}")
+    print(f"  Warning: {summary['warning']}")
+    print(f" Error: {summary['error']}")
     print(f"Success Rate: {summary['success_rate']:.1%}")
     print()
     
     for platform, result in report["results"].items():
-        icon = "✅" if result["status"] == "success" else "⚠️" if result["status"] == "warning" else "❌"
+        icon = "" if result["status"] == "success" else "" if result["status"] == "warning" else ""
         print(f"{icon} {platform.upper()}: {result['message']}")
         if result["details"] and "methods_count" in result["details"]:
             print(f"   Methods found: {result['details']['methods_count']}")
@@ -268,13 +277,13 @@ def main():
     with open('crawler_import_test_report.json', 'w') as f:
         json.dump(report, f, indent=2)
     
-    print(f"\n📄 Detailed report saved to: crawler_import_test_report.json")
+    print(f"\n Detailed report saved to: crawler_import_test_report.json")
     
     if summary["success"] == summary["total"]:
-        print("\n🎉 ALL CRAWLER IMPORTS SUCCESSFUL!")
+        print("\n ALL CRAWLER IMPORTS SUCCESSFUL!")
         return 0
     else:
-        print("\n⚠️  Some crawler imports had issues.")
+        print("\n  Some crawler imports had issues.")
         return 1
 
 if __name__ == "__main__":

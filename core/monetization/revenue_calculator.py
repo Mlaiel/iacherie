@@ -164,6 +164,9 @@ class RevenueCalculator:
         session: AsyncSession
     ) -> RevenueMetrics:
         """Calculate comprehensive revenue metrics for user"""
+
+
+
         try:
             metrics = RevenueMetrics(
                 user_id=user_id,
@@ -440,6 +443,9 @@ class RevenueCalculator:
         new: PlatformRevenue
     ) -> PlatformRevenue:
         """Merge platform revenue data"""
+
+
+
         return PlatformRevenue(
             platform=existing.platform,
             gross_revenue=existing.gross_revenue + new.gross_revenue,
@@ -486,6 +492,9 @@ class RevenueCalculator:
         session: AsyncSession
     ) -> Optional[Decimal]:
         """Calculate revenue growth rate compared to previous period"""
+
+
+
         try:
             period_length = period_end - period_start
             previous_period_start = period_start - period_length
@@ -537,6 +546,9 @@ class RevenueCalculator:
         session: AsyncSession
     ) -> Optional[Decimal]:
         """Predict next period revenue using ML model"""
+
+
+
         try:
             # Get historical data for prediction
             historical_data = await self._get_historical_revenue_data(user_id, session)

@@ -9,7 +9,7 @@ Project: IA Influencer Agent + Content Protection Platform
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-⚠️  AVERTISSEMENT STRICT - PROPRIÉTÉ INTELLECTUELLE ⚠️
+  AVERTISSEMENT STRICT - PROPRIÉTÉ INTELLECTUELLE 
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute violation sera poursuivie selon les lois en vigueur.
@@ -99,6 +99,9 @@ class BackupJob:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'job_id': self.job_id,
             'name': self.name,
@@ -137,6 +140,9 @@ class BackupExecution:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'execution_id': self.execution_id,
             'job_id': self.job_id,
@@ -173,6 +179,9 @@ class ReplicationMonitor:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'replica_id': self.replica_id,
             'replica_name': self.replica_name,
@@ -206,6 +215,9 @@ class RecoveryTest:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'test_id': self.test_id,
             'backup_id': self.backup_id,
@@ -248,6 +260,9 @@ class BackupMonitor:
         
     async def _load_backup_jobs(self):
         """Load backup job configurations"""
+
+
+
         try:
             # Default backup jobs for the IA Influencer platform
             default_jobs = [
@@ -360,6 +375,9 @@ class BackupMonitor:
                 
     async def _schedule_backup_jobs(self):
         """Schedule backup jobs based on cron expressions"""
+
+
+
         try:
             current_time = datetime.utcnow()
             
@@ -376,6 +394,9 @@ class BackupMonitor:
             
     async def _should_run_backup_job(self, job: BackupJob, current_time: datetime) -> bool:
         """Check if backup job should run"""
+
+
+
         try:
             # Simplified cron parsing - in production would use a proper cron library
             if job.last_run and (current_time - job.last_run).total_seconds() < 3600:
@@ -400,6 +421,9 @@ class BackupMonitor:
             
     async def _execute_backup_job(self, job: BackupJob):
         """Execute backup job"""
+
+
+
         try:
             execution_id = f"exec_{job.job_id}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
             
@@ -439,6 +463,9 @@ class BackupMonitor:
                 
     async def _execute_full_backup(self, execution: BackupExecution, job: BackupJob):
         """Execute full database backup"""
+
+
+
         try:
             backup_timestamp = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
             backup_filename = f"full_backup_{backup_timestamp}.sql"
@@ -538,6 +565,9 @@ class BackupMonitor:
             
     async def _execute_incremental_backup(self, execution: BackupExecution, job: BackupJob):
         """Execute incremental backup"""
+
+
+
         try:
             # For PostgreSQL, incremental backups typically use WAL archiving
             # This is a simplified implementation
@@ -632,6 +662,9 @@ class BackupMonitor:
             
     async def _execute_logical_backup(self, execution: BackupExecution, job: BackupJob):
         """Execute logical database backup"""
+
+
+
         try:
             backup_timestamp = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
             
@@ -715,6 +748,9 @@ class BackupMonitor:
             
     async def _calculate_file_checksum(self, file_path: str) -> str:
         """Calculate file checksum"""
+
+
+
         try:
             hash_md5 = hashlib.md5()
             with open(file_path, "rb") as f:
@@ -727,6 +763,9 @@ class BackupMonitor:
             
     async def _verify_backup(self, execution: BackupExecution, job: BackupJob) -> bool:
         """Verify backup integrity"""
+
+
+
         try:
             # Download backup file temporarily
             local_path = f"/tmp/verify_{execution.execution_id}"
@@ -767,6 +806,9 @@ class BackupMonitor:
             
     async def _get_last_successful_backup(self, job_id: str) -> Optional[BackupExecution]:
         """Get last successful backup for job"""
+
+
+
         try:
             for execution in reversed(list(self.backup_executions.values())):
                 if (execution.job_id == job_id and 
@@ -779,6 +821,9 @@ class BackupMonitor:
             
     async def _store_backup_execution(self, execution: BackupExecution):
         """Store backup execution record"""
+
+
+
         try:
             await self.cache.set(
                 f"backup_execution:{execution.execution_id}",
@@ -803,6 +848,9 @@ class BackupMonitor:
             
     async def _monitor_backup_executions(self):
         """Monitor ongoing backup executions"""
+
+
+
         try:
             current_time = datetime.utcnow()
             
@@ -828,6 +876,9 @@ class BackupMonitor:
             
     async def _monitor_replication_health(self):
         """Monitor database replication health"""
+
+
+
         try:
             async with get_database_session() as session:
                 # Check replication status
@@ -901,6 +952,9 @@ class BackupMonitor:
             
     async def _store_replication_monitor(self, monitor: ReplicationMonitor):
         """Store replication monitor data"""
+
+
+
         try:
             await self.cache.set(
                 f"replication_monitor:{monitor.replica_id}",
@@ -919,6 +973,9 @@ class BackupMonitor:
             
     async def _send_replication_alert(self, monitor: ReplicationMonitor):
         """Send replication health alert"""
+
+
+
         try:
             await self.notification_manager.send_replication_alert(
                 severity='CRITICAL',
@@ -931,6 +988,9 @@ class BackupMonitor:
             
     async def _verify_backup_integrity(self):
         """Verify integrity of recent backups"""
+
+
+
         try:
             # Get recent backups that need verification
             recent_executions = [
@@ -960,6 +1020,9 @@ class BackupMonitor:
             
     async def _check_backup_retention(self):
         """Check and enforce backup retention policies"""
+
+
+
         try:
             for job in self.backup_jobs.values():
                 # Get backups for this job
@@ -983,6 +1046,9 @@ class BackupMonitor:
             
     async def _delete_backup(self, execution: BackupExecution):
         """Delete expired backup"""
+
+
+
         try:
             # Delete from storage
             if execution.backup_path:
@@ -1002,6 +1068,9 @@ class BackupMonitor:
             
     async def _run_recovery_tests(self):
         """Run automated recovery tests"""
+
+
+
         try:
             # Run recovery tests weekly
             if datetime.utcnow().weekday() == 0 and datetime.utcnow().hour == 3:  # Monday 3 AM
@@ -1012,6 +1081,9 @@ class BackupMonitor:
             
     async def _execute_recovery_tests(self):
         """Execute recovery tests on recent backups"""
+
+
+
         try:
             # Get recent successful backups
             recent_backups = [
@@ -1049,6 +1121,9 @@ class BackupMonitor:
             
     async def _store_recovery_test(self, test: RecoveryTest):
         """Store recovery test result"""
+
+
+
         try:
             await self.cache.set(
                 f"recovery_test:{test.test_id}",
@@ -1067,6 +1142,9 @@ class BackupMonitor:
             
     async def _cleanup_old_backups(self):
         """Cleanup old backup monitoring data"""
+
+
+
         try:
             # Remove records older than 90 days
             cutoff_time = datetime.utcnow() - timedelta(days=90)
@@ -1093,6 +1171,9 @@ class BackupMonitor:
             
     async def _send_backup_alert(self, severity: str, title: str, message: str, details: Dict[str, Any]):
         """Send backup alert notification"""
+
+
+
         try:
             await self.notification_manager.send_backup_alert(
                 severity=severity,
@@ -1105,6 +1186,9 @@ class BackupMonitor:
             
     async def get_backup_summary(self, days: int = 7) -> Dict[str, Any]:
         """Get backup monitoring summary"""
+
+
+
         try:
             cutoff_time = datetime.utcnow() - timedelta(days=days)
             

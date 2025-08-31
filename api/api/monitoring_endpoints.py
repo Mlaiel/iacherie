@@ -69,6 +69,9 @@ async def comprehensive_health_check(
     - External API integrations
     - System resources and performance
     """
+
+
+
     try:
         health_check_start = datetime.utcnow()
         
@@ -173,6 +176,9 @@ async def get_service_metrics(
     Get detailed metrics for all platform services.
     Requires admin privileges.
     """
+
+
+
     try:
         service_metrics = await SystemMonitor.get_all_service_metrics()
         
@@ -206,6 +212,9 @@ async def get_performance_analytics(
     Get detailed performance analytics for the specified time period.
     Requires admin privileges.
     """
+
+
+
     try:
         end_time = datetime.utcnow()
         start_time = end_time - timedelta(hours=hours)
@@ -241,6 +250,9 @@ async def get_system_status():
     Get basic system status for load balancers and monitoring tools.
     No authentication required for this endpoint.
     """
+
+
+
     try:
         # Quick health checks
         database_ok = True
@@ -286,6 +298,9 @@ async def get_fingerprinting_metrics(
     current_user: User = Depends(require_admin)
 ):
     """Get AI fingerprinting engine performance metrics."""
+
+
+
     try:
         metrics = await SystemMonitor.get_fingerprinting_metrics()
         
@@ -313,6 +328,9 @@ async def get_protection_metrics(
     current_user: User = Depends(require_admin)
 ):
     """Get content protection system performance metrics."""
+
+
+
     try:
         metrics = await SystemMonitor.get_protection_metrics()
         
@@ -341,6 +359,9 @@ async def get_monetization_metrics(
     current_user: User = Depends(require_admin)
 ):
     """Get monetization system performance metrics."""
+
+
+
     try:
         metrics = await SystemMonitor.get_monetization_metrics()
         

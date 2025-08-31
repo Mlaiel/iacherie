@@ -104,6 +104,9 @@ class MetricsProcessor:
         Returns:
             List of processed metrics
         """
+
+
+
         try:
             processed_metrics = []
             
@@ -546,6 +549,9 @@ class TrendAnalyzer:
         Returns:
             List of trend analysis results
         """
+
+
+
         try:
             df = pd.DataFrame(metrics_data)
             
@@ -579,6 +585,9 @@ class TrendAnalyzer:
         metric_name: str
     ) -> Optional[TrendAnalysis]:
         """Analyze trend for a single metric."""
+
+
+
         
         try:
             metric_data = df[df['metric_name'] == metric_name].copy()
@@ -772,6 +781,9 @@ class AnomalyDetector:
         Returns:
             Dictionary of anomalies by metric name
         """
+
+
+
         try:
             df = pd.DataFrame(metrics_data)
             
@@ -802,6 +814,9 @@ class AnomalyDetector:
         sensitivity: float
     ) -> List[Dict[str, Any]]:
         """Detect anomalies for a specific metric."""
+
+
+
         
         try:
             metric_data = df[df['metric_name'] == metric_name].copy()
@@ -847,6 +862,9 @@ class AnomalyDetector:
         sensitivity: float
     ) -> List[bool]:
         """Detect anomalies using Isolation Forest."""
+
+
+
         
         try:
             iso_forest = IsolationForest(
@@ -866,6 +884,9 @@ class AnomalyDetector:
         sensitivity: float
     ) -> List[bool]:
         """Detect anomalies using statistical methods."""
+
+
+
         
         try:
             # Use modified Z-score method

@@ -8,7 +8,7 @@ protection, fingerprinting, and monetization services.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ WARNING: This code is proprietary and confidential.
+ WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
@@ -272,6 +272,9 @@ class RequestRouter:
     
     async def initialize(self) -> bool:
         """Initialize request router with platform configuration"""
+
+
+
         try:
             # Load configuration
             await self._load_configuration()
@@ -304,6 +307,9 @@ class RequestRouter:
     
     async def _load_configuration(self) -> None:
         """Load router configuration"""
+
+
+
         try:
             if self.config_file and Path(self.config_file).exists():
                 with open(self.config_file, 'r') as f:
@@ -318,6 +324,9 @@ class RequestRouter:
     
     async def _initialize_routing_strategies(self) -> None:
         """Initialize routing strategy implementations"""
+
+
+
         try:
             self.routing_strategies = {
                 RoutingStrategy.ROUND_ROBIN.value: self._route_round_robin,
@@ -338,6 +347,9 @@ class RequestRouter:
     
     async def _configure_platform_services(self) -> None:
         """Configure service instances for IA Influencer Agent platform"""
+
+
+
         try:
             # Fingerprinting service instances
             fingerprinting_instances = [
@@ -533,6 +545,9 @@ class RequestRouter:
     
     async def _configure_routing_rules(self) -> None:
         """Configure routing rules for platform endpoints"""
+
+
+
         try:
             # Fingerprinting API routes
             fingerprinting_rule = RoutingRule(
@@ -662,6 +677,9 @@ class RequestRouter:
         Route request to optimal service instance
         Returns the selected service instance or None if routing fails
         """
+
+
+
         try:
             start_time = time.time()
             
@@ -749,6 +767,9 @@ class RequestRouter:
     
     async def _find_matching_rule(self, context: RoutingContext) -> Optional[RoutingRule]:
         """Find the best matching routing rule for the request"""
+
+
+
         try:
             for rule in self.routing_rules:
                 if not rule.enabled:
@@ -807,6 +828,9 @@ class RequestRouter:
     
     def _match_path_pattern(self, path: str, pattern: str) -> bool:
         """Check if path matches pattern (supports wildcards)"""
+
+
+
         try:
             # Convert pattern to regex
             regex_pattern = pattern.replace("*", ".*").replace("?", ".")
@@ -818,6 +842,9 @@ class RequestRouter:
     
     def _ip_in_network(self, ip_str: str, network_str: str) -> bool:
         """Check if IP is in network"""
+
+
+
         try:
             ip = ip_address(ip_str)
             network = ip_network(network_str, strict=False)
@@ -829,6 +856,9 @@ class RequestRouter:
     
     def _is_instance_healthy(self, instance: ServiceInstance) -> bool:
         """Check if service instance is healthy"""
+
+
+
         try:
             # Check basic health status
             if instance.health_status != HealthStatus.HEALTHY:
@@ -860,6 +890,9 @@ class RequestRouter:
         instances: List[ServiceInstance]
     ) -> Optional[ServiceInstance]:
         """Get instance based on session affinity"""
+
+
+
         try:
             cache_key = f"affinity:{session_id}"
             if affinity_key:
@@ -882,6 +915,9 @@ class RequestRouter:
     
     async def _set_session_affinity(self, session_id: str, instance_id: str) -> None:
         """Set session affinity for future requests"""
+
+
+
         try:
             cache_key = f"affinity:{session_id}"
             
@@ -906,6 +942,9 @@ class RequestRouter:
         rule: RoutingRule
     ) -> Optional[ServiceInstance]:
         """Round robin routing strategy"""
+
+
+
         try:
             if not instances:
                 return None
@@ -929,6 +968,9 @@ class RequestRouter:
         rule: RoutingRule
     ) -> Optional[ServiceInstance]:
         """Weighted round robin routing strategy"""
+
+
+
         try:
             if not instances:
                 return None
@@ -964,6 +1006,9 @@ class RequestRouter:
         rule: RoutingRule
     ) -> Optional[ServiceInstance]:
         """Least connections routing strategy"""
+
+
+
         try:
             if not instances:
                 return None
@@ -983,6 +1028,9 @@ class RequestRouter:
         rule: RoutingRule
     ) -> Optional[ServiceInstance]:
         """Least response time routing strategy"""
+
+
+
         try:
             if not instances:
                 return None
@@ -1002,6 +1050,9 @@ class RequestRouter:
         rule: RoutingRule
     ) -> Optional[ServiceInstance]:
         """IP hash routing strategy"""
+
+
+
         try:
             if not instances:
                 return None
@@ -1024,6 +1075,9 @@ class RequestRouter:
         rule: RoutingRule
     ) -> Optional[ServiceInstance]:
         """Geographic routing strategy"""
+
+
+
         try:
             if not instances:
                 return None
@@ -1051,6 +1105,9 @@ class RequestRouter:
         rule: RoutingRule
     ) -> Optional[ServiceInstance]:
         """Service mesh routing strategy"""
+
+
+
         try:
             if not instances:
                 return None
@@ -1078,6 +1135,9 @@ class RequestRouter:
         rule: RoutingRule
     ) -> Optional[ServiceInstance]:
         """AI-optimized routing strategy combining multiple factors"""
+
+
+
         try:
             if not instances:
                 return None
@@ -1119,6 +1179,9 @@ class RequestRouter:
     
     async def _start_service_discovery(self) -> None:
         """Start service discovery monitoring"""
+
+
+
         try:
             self._discovery_active = True
             
@@ -1142,6 +1205,9 @@ class RequestRouter:
     
     async def _update_from_consul(self) -> None:
         """Update service instances from Consul"""
+
+
+
         try:
             # Get services from Consul
             services = self.consul_client.health.service(
@@ -1190,6 +1256,9 @@ class RequestRouter:
     
     async def _start_health_monitoring(self) -> None:
         """Start health monitoring for service instances"""
+
+
+
         try:
             self._monitoring_active = True
             
@@ -1211,6 +1280,9 @@ class RequestRouter:
     
     async def _check_all_instances_health(self) -> None:
         """Check health of all service instances"""
+
+
+
         try:
             tasks = []
             
@@ -1227,6 +1299,9 @@ class RequestRouter:
     
     async def _check_instance_health(self, instance: ServiceInstance) -> None:
         """Check health of a specific service instance"""
+
+
+
         try:
             start_time = time.time()
             
@@ -1258,6 +1333,9 @@ class RequestRouter:
     
     async def _initialize_circuit_breakers(self) -> None:
         """Initialize circuit breakers for service instances"""
+
+
+
         try:
             for service_name, instances in self.service_instances.items():
                 for instance in instances:
@@ -1280,6 +1358,9 @@ class RequestRouter:
         start_time: float
     ) -> None:
         """Update routing performance metrics"""
+
+
+
         try:
             routing_latency = time.time() - start_time
             
@@ -1298,6 +1379,9 @@ class RequestRouter:
     
     async def get_status(self) -> Dict[str, Any]:
         """Get comprehensive status of request router"""
+
+
+
         try:
             # Service instance statistics
             total_instances = sum(len(instances) for instances in self.service_instances.values())
@@ -1355,6 +1439,9 @@ class RequestRouter:
     
     async def shutdown(self) -> None:
         """Shutdown request router"""
+
+
+
         try:
             logger.info("Shutting down Request Router...")
             
@@ -1381,6 +1468,9 @@ async def route_fingerprinting_request(
     user_id: str
 ) -> Optional[ServiceInstance]:
     """Route fingerprinting request with content-type optimization"""
+
+
+
     try:
         context = RoutingContext(
             request_id=f"fingerprint_{int(time.time())}",
@@ -1411,6 +1501,9 @@ async def route_ai_agent_request(
     session_id: Optional[str] = None
 ) -> Optional[ServiceInstance]:
     """Route AI agent request with session affinity and low latency"""
+
+
+
     try:
         context = RoutingContext(
             request_id=f"ai_agent_{int(time.time())}",
@@ -1443,6 +1536,9 @@ async def route_monetization_request(
     region: Optional[str] = None
 ) -> Optional[ServiceInstance]:
     """Route monetization request with security and compliance"""
+
+
+
     try:
         context = RoutingContext(
             request_id=f"monetization_{int(time.time())}",

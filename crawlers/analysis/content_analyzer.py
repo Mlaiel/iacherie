@@ -160,6 +160,9 @@ class ContentAnalyzer:
     
     def _initialize_models(self) -> None:
         """Initialize AI models for content analysis."""
+
+
+
         try:
             # Text analysis models
             self.text_model = SentenceTransformer('all-MiniLM-L6-v2')
@@ -329,6 +332,9 @@ class ContentAnalyzer:
     
     async def _extract_image_features(self, image_data: Union[str, bytes, Path]) -> Dict[str, Any]:
         """Extract features from image content."""
+
+
+
         try:
             # Load image
             if isinstance(image_data, (str, Path)):
@@ -382,6 +388,9 @@ class ContentAnalyzer:
     
     async def _extract_audio_features(self, audio_data: Union[str, bytes, Path]) -> Dict[str, Any]:
         """Extract features from audio content."""
+
+
+
         try:
             # Load audio
             if isinstance(audio_data, (str, Path)):
@@ -432,6 +441,9 @@ class ContentAnalyzer:
     
     async def _extract_video_features(self, video_data: Union[str, Path]) -> Dict[str, Any]:
         """Extract features from video content."""
+
+
+
         try:
             # Open video
             cap = cv2.VideoCapture(str(video_data))
@@ -494,6 +506,9 @@ class ContentAnalyzer:
     
     async def _extract_video_audio_features(self, video_data: Union[str, Path]) -> Dict[str, Any]:
         """Extract audio features from video content."""
+
+
+
         try:
             # Extract audio from video using librosa
             y, sr = librosa.load(str(video_data))

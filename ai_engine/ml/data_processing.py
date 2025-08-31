@@ -7,7 +7,7 @@ including data transformation, feature extraction, and data validation.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Contact: mlaiel@live.de
@@ -276,6 +276,9 @@ class DataTransformer(ABC):
     
     def fit_transform(self, data: Any, **kwargs) -> Any:
         """Fit and transform data"""
+
+
+
         return self.fit(data, **kwargs).transform(data, **kwargs)
 
 
@@ -469,6 +472,9 @@ class TextTransformer(DataTransformer):
     
     def _initialize_text_tools(self):
         """Initialize text processing tools"""
+
+
+
         try:
             # Initialize spaCy
             self.nlp = spacy.load("en_core_web_sm")
@@ -617,6 +623,9 @@ class ImageTransformer(DataTransformer):
     
     def fit(self, data: List[str], **kwargs) -> 'ImageTransformer':
         """Fit image transformer (usually no fitting required)"""
+
+
+
         return self
     
     def transform(self, image_paths: List[str], **kwargs) -> np.ndarray:
@@ -693,6 +702,9 @@ class AudioTransformer(DataTransformer):
     
     def fit(self, data: List[str], **kwargs) -> 'AudioTransformer':
         """Fit audio transformer"""
+
+
+
         return self
     
     def transform(self, audio_paths: List[str], **kwargs) -> np.ndarray:
@@ -915,6 +927,9 @@ class DataProcessor:
         transformer: ImageTransformer
     ) -> np.ndarray:
         """Process image data"""
+
+
+
         return transformer.fit_transform(data)
     
     async def _process_audio_data(
@@ -923,6 +938,9 @@ class DataProcessor:
         transformer: AudioTransformer
     ) -> np.ndarray:
         """Process audio data"""
+
+
+
         return transformer.fit_transform(data)
     
     def _validate_input_data(self, data: Any, data_type: DataType) -> Dict[str, Any]:
@@ -947,6 +965,9 @@ class FeatureExtractor:
     
     def extract_statistical_features(self, data: np.ndarray) -> Dict[str, float]:
         """Extract statistical features from numerical data"""
+
+
+
         return {
             'mean': float(np.mean(data)),
             'std': float(np.std(data)),

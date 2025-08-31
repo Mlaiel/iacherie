@@ -81,6 +81,9 @@ class CompressionResult:
     @property
     def space_saved(self) -> int:
         """Calculate space saved in bytes"""
+
+
+
         return self.original_size - self.compressed_size
     
     @property
@@ -142,6 +145,9 @@ class CompressionEngine:
     
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default compression configuration"""
+
+
+
         return {
             "default_algorithm": CompressionAlgorithm.ZSTD,
             "default_level": CompressionLevel.BALANCED,
@@ -204,6 +210,9 @@ class CompressionEngine:
     
     def _create_default_profiles(self) -> Dict[str, CompressionProfile]:
         """Create default compression profiles"""
+
+
+
         return {
             "fast_text": CompressionProfile(
                 name="fast_text",
@@ -350,6 +359,9 @@ class CompressionEngine:
         """
         Decompress data using specified algorithm
         """
+
+
+
         try:
             if not isinstance(data, bytes):
                 raise CompressionException("Input data must be bytes")
@@ -500,6 +512,9 @@ class CompressionEngine:
         """
         Automatically select the optimal compression algorithm
         """
+
+
+
         try:
             # Use content type hints if available
             if content_type:
@@ -572,6 +587,9 @@ class CompressionEngine:
         """
         Benchmark compression algorithms on given data
         """
+
+
+
         try:
             algorithms = algorithms or list(self.available_algorithms.keys())
             results = {}
@@ -627,6 +645,9 @@ class CompressionEngine:
         """
         Compress a file with chunked processing for large files
         """
+
+
+
         try:
             input_path = Path(input_path)
             if not input_path.exists():
@@ -742,6 +763,9 @@ class CompressionEngine:
         """
         Decompress a file
         """
+
+
+
         try:
             input_path = Path(input_path)
             if not input_path.exists():
@@ -840,6 +864,9 @@ class CompressionEngine:
     
     def get_statistics(self) -> Dict[str, Any]:
         """Get compression engine statistics"""
+
+
+
         return {
             "statistics": self.compression_stats.copy(),
             "available_algorithms": {

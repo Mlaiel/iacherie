@@ -48,6 +48,9 @@ class DatabaseSession:
     
     def is_expired(self) -> bool:
         """Check if session has expired"""
+
+
+
         return datetime.utcnow() - self.last_activity > self.timeout
     
     def update_activity(self) -> None:

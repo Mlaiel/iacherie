@@ -204,6 +204,9 @@ class AdvancedEvidenceCollector:
         legal_hold: bool = False
     ) -> List[EvidenceCollectionResult]:
         """Collect multiple types of evidence for an alert"""
+
+
+
         try:
             results = []
             collection_id = str(uuid.uuid4())
@@ -358,6 +361,9 @@ class AdvancedEvidenceCollector:
         metadata: EvidenceMetadata
     ) -> Tuple[Optional[str], int]:
         """Perform the actual evidence collection based on type"""
+
+
+
         try:
             if evidence_type == EvidenceType.SCREENSHOT:
                 return await self._collect_screenshot(alert, metadata)
@@ -387,6 +393,9 @@ class AdvancedEvidenceCollector:
     
     async def _collect_screenshot(self, alert: ContentProtectionAlert, metadata: EvidenceMetadata) -> Tuple[str, int]:
         """Collect screenshot evidence using headless browser"""
+
+
+
         try:
             from playwright.async_api import async_playwright
             
@@ -424,6 +433,9 @@ class AdvancedEvidenceCollector:
     
     async def _collect_video_recording(self, alert: ContentProtectionAlert, metadata: EvidenceMetadata) -> Tuple[str, int]:
         """Collect video recording evidence"""
+
+
+
         try:
             from playwright.async_api import async_playwright
             
@@ -462,6 +474,9 @@ class AdvancedEvidenceCollector:
     
     async def _collect_webpage_snapshot(self, alert: ContentProtectionAlert, metadata: EvidenceMetadata) -> Tuple[str, int]:
         """Collect complete webpage snapshot including HTML, CSS, images"""
+
+
+
         try:
             file_name = f"webpage_{metadata.id}.mhtml"
             file_path = self.evidence_storage_path / file_name
@@ -493,6 +508,9 @@ class AdvancedEvidenceCollector:
     
     async def _collect_metadata(self, alert: ContentProtectionAlert, metadata: EvidenceMetadata) -> Tuple[str, int]:
         """Collect metadata information about the content"""
+
+
+
         try:
             file_name = f"metadata_{metadata.id}.json"
             file_path = self.evidence_storage_path / file_name
@@ -544,6 +562,9 @@ class AdvancedEvidenceCollector:
     
     async def _collect_network_traffic(self, alert: ContentProtectionAlert, metadata: EvidenceMetadata) -> Tuple[str, int]:
         """Collect network traffic during content access"""
+
+
+
         try:
             file_name = f"network_{metadata.id}.har"
             file_path = self.evidence_storage_path / file_name
@@ -573,6 +594,9 @@ class AdvancedEvidenceCollector:
     
     async def _collect_file_download(self, alert: ContentProtectionAlert, metadata: EvidenceMetadata) -> Tuple[str, int]:
         """Download and collect the actual file content"""
+
+
+
         try:
             from urllib.parse import urlparse
             parsed_url = urlparse(alert.content_url)
@@ -605,6 +629,9 @@ class AdvancedEvidenceCollector:
     
     async def _collect_api_response(self, alert: ContentProtectionAlert, metadata: EvidenceMetadata) -> Tuple[str, int]:
         """Collect API response data"""
+
+
+
         try:
             file_name = f"api_response_{metadata.id}.json"
             file_path = self.evidence_storage_path / file_name
@@ -630,6 +657,9 @@ class AdvancedEvidenceCollector:
     
     async def _collect_social_media_post(self, alert: ContentProtectionAlert, metadata: EvidenceMetadata) -> Tuple[str, int]:
         """Collect social media post content"""
+
+
+
         try:
             # This would integrate with platform-specific APIs
             file_name = f"social_media_{metadata.id}.json"
@@ -655,6 +685,9 @@ class AdvancedEvidenceCollector:
     
     async def _collect_digital_fingerprint(self, alert: ContentProtectionAlert, metadata: EvidenceMetadata) -> Tuple[str, int]:
         """Collect digital fingerprint of the content"""
+
+
+
         try:
             file_name = f"fingerprint_{metadata.id}.json"
             file_path = self.evidence_storage_path / file_name
@@ -676,6 +709,9 @@ class AdvancedEvidenceCollector:
     
     async def _generate_evidence_hashes(self, file_path: str) -> Dict[str, str]:
         """Generate cryptographic hashes for evidence file"""
+
+
+
         try:
             hashes_dict = {}
             
@@ -702,6 +738,9 @@ class AdvancedEvidenceCollector:
     
     async def _encrypt_evidence_file(self, file_path: str, metadata: EvidenceMetadata) -> str:
         """Encrypt evidence file using AES encryption"""
+
+
+
         try:
             encrypted_path = f"{file_path}.encrypted"
             key_id = await self.encryption_manager.encrypt_file(file_path, encrypted_path)
@@ -718,6 +757,9 @@ class AdvancedEvidenceCollector:
     
     async def _compress_evidence_file(self, file_path: str, metadata: EvidenceMetadata) -> Optional[str]:
         """Compress evidence file if beneficial"""
+
+
+
         try:
             compressed_path = f"{file_path}.gz"
             compression_ratio = await self.compression_manager.compress_file(file_path, compressed_path)
@@ -736,6 +778,9 @@ class AdvancedEvidenceCollector:
     
     async def _verify_evidence_integrity(self, file_path: str, metadata: EvidenceMetadata) -> bool:
         """Verify evidence integrity using multiple methods"""
+
+
+
         try:
             # Verify file exists and is readable
             file_obj = Path(file_path)
@@ -763,6 +808,9 @@ class AdvancedEvidenceCollector:
     
     async def _record_evidence_in_blockchain(self, metadata: EvidenceMetadata):
         """Record evidence existence and hashes in blockchain"""
+
+
+
         try:
             blockchain_data = {
                 "evidence_id": metadata.id,
@@ -865,6 +913,9 @@ class AdvancedEvidenceCollector:
     
     async def _archive_evidence(self, evidence_id: str):
         """Archive expired evidence"""
+
+
+
         try:
             metadata = self.evidence_registry.get(evidence_id)
             if not metadata:
@@ -894,6 +945,9 @@ class AdvancedEvidenceCollector:
     
     async def _load_evidence_registry(self):
         """Load evidence registry from storage"""
+
+
+
         try:
             registry_file = self.evidence_storage_path / "evidence_registry.json"
             if registry_file.exists():
@@ -910,6 +964,9 @@ class AdvancedEvidenceCollector:
     
     async def _save_evidence_registry(self):
         """Save evidence registry to storage"""
+
+
+
         try:
             registry_file = self.evidence_storage_path / "evidence_registry.json"
             registry_data = {}

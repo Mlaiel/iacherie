@@ -47,6 +47,9 @@ class ImageWatermarkEngine:
         Embeds watermark using Least Significant Bit technique
         High capacity but vulnerable to compression
         """
+
+
+
         try:
             if not IMAGING_AVAILABLE:
                 raise ValueError("Imaging libraries not available")
@@ -145,6 +148,9 @@ class ImageWatermarkEngine:
         Embeds watermark using Discrete Cosine Transform
         More robust to compression than LSB
         """
+
+
+
         try:
             if not IMAGING_AVAILABLE:
                 raise ValueError("Imaging libraries not available")
@@ -263,6 +269,9 @@ class ImageWatermarkEngine:
         Embeds watermark using Discrete Wavelet Transform
         Excellent robustness against geometric attacks
         """
+
+
+
         try:
             if not IMAGING_AVAILABLE:
                 raise ValueError("Imaging libraries not available")
@@ -398,6 +407,9 @@ class ImageWatermarkEngine:
         Detects and extracts watermark from image
         Returns detection result with confidence score
         """
+
+
+
         try:
             if method == "LSB":
                 return await self._detect_lsb_watermark(watermarked_image, embedding_params)
@@ -437,6 +449,9 @@ class ImageWatermarkEngine:
         params: Dict[str, Any]
     ) -> Tuple[bool, Dict[str, Any]]:
         """Detects LSB watermark"""
+
+
+
         try:
             height, width, channels = watermarked_image.shape
             bit_depth = params.get("bit_depth", 2)
@@ -501,6 +516,9 @@ class ImageWatermarkEngine:
         params: Dict[str, Any]
     ) -> Tuple[bool, Dict[str, Any]]:
         """Detects DCT watermark"""
+
+
+
         try:
             # Convert to YUV
             image_yuv = cv2.cvtColor(watermarked_image, cv2.COLOR_RGB2YUV)
@@ -579,6 +597,9 @@ class ImageWatermarkEngine:
         params: Dict[str, Any]
     ) -> Tuple[bool, Dict[str, Any]]:
         """Detects DWT watermark"""
+
+
+
         try:
             # Convert to grayscale
             if len(watermarked_image.shape) == 3:

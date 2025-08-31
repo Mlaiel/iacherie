@@ -49,9 +49,9 @@ class Settings:
                 self.app = simple_settings.app
                 self.database = simple_settings.database
                 self.security = simple_settings.security
-                print("✓ Loaded comprehensive settings from simple_config")
+                print(" Loaded comprehensive settings from simple_config")
             except Exception as e:
-                print(f"⚠️  Could not load simple_config settings: {e}")
+                print(f"  Could not load simple_config settings: {e}")
                 self._load_fallback_settings()
         
         # Try to load core settings as backup
@@ -60,9 +60,9 @@ class Settings:
                 core_settings = get_core_settings()
                 # Map core settings to our structure
                 self._map_core_settings(core_settings)
-                print("✓ Loaded settings from core.config")
+                print(" Loaded settings from core.config")
             except Exception as e:
-                print(f"⚠️  Could not load core settings: {e}")
+                print(f"  Could not load core settings: {e}")
                 self._load_fallback_settings()
         
         else:
@@ -70,7 +70,7 @@ class Settings:
     
     def _load_fallback_settings(self):
         """Load minimal fallback settings"""
-        print("⚠️  Using minimal fallback configuration")
+        print("  Using minimal fallback configuration")
         # Keep the app config we already have
         # Add minimal database config
         self.database = type('Database', (), {
@@ -111,4 +111,7 @@ settings = Settings()
 
 def get_settings():
     """Get settings instance for dependency injection."""
+
+
+
     return settings

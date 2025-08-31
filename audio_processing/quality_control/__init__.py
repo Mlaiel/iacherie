@@ -1,4 +1,4 @@
-"""🎯 Audio Quality Control - Professional Quality Management System
+""" Audio Quality Control - Professional Quality Management System
 
 Advanced audio quality control system for comprehensive audio content validation,
 monitoring, and optimization. Includes real-time quality assessment, automated
@@ -8,7 +8,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Developer + DevOps + DBA + Security + Microservices
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ AVERTISSEMENT STRICT ⚠️
+ AVERTISSEMENT STRICT 
 Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou reproduction sans 
 autorisation écrite explicite de Fahed Mlaiel (mlaiel@live.de) est strictement 

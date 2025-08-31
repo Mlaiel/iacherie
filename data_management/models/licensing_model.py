@@ -1,5 +1,5 @@
 """
-📋 Licensing Model - IA Influencer Agent Platform Enterprise
+ Licensing Model - IA Influencer Agent Platform Enterprise
 ===========================================================
 Module: backend/data_management/models/licensing_model.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Licensing Model - Production-Ready
 Responsibility: Content licensing and rights management
 ===========================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
@@ -80,7 +80,7 @@ class RoyaltyStructure:
 @dataclass
 class LicensingModel:
     """
-    🏛️ Modèle de licensing pour la gestion des droits de contenu
+     Modèle de licensing pour la gestion des droits de contenu
     
     Architecture complète pour:
     - Gestion des licences de contenu
@@ -196,6 +196,9 @@ class LicensingModel:
     
     def get_compliance_report(self) -> Dict[str, Any]:
         """Génère un rapport de conformité"""
+
+
+
         return {
             "license_id": self.license_id,
             "status": self.status.value,
@@ -212,6 +215,9 @@ class LicensingModel:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit le modèle en dictionnaire"""
+
+
+
         return {
             "license_id": self.license_id,
             "content_id": self.content_id,

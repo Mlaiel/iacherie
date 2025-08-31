@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + DBA + DevOps
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
+ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION 
 ==================================================================
 This code and all associated intellectual property are the EXCLUSIVE property of Fahed Mlaiel.
 ANY unauthorized use, copying, modification, distribution, or commercialization without 
@@ -153,6 +153,9 @@ class ProtectionAlertRepository:
         Raises:
             ProtectionAlertRepositoryError: If creation fails
         """
+
+
+
         try:
             # Validate detection data
             await self._validate_detection_data(detection_data)
@@ -241,6 +244,9 @@ class ProtectionAlertRepository:
         Returns:
             List of ProtectionAlert records
         """
+
+
+
         try:
             query = self.db_session.query(ProtectionAlert).filter(
                 ProtectionAlert.status == AlertStatus.PENDING.value
@@ -307,6 +313,9 @@ class ProtectionAlertRepository:
         Returns:
             Updated ProtectionAlert record
         """
+
+
+
         try:
             alert = await self.db_session.get(ProtectionAlert, alert_id)
             
@@ -385,6 +394,9 @@ class ProtectionAlertRepository:
         Returns:
             Created AlertEscalation record
         """
+
+
+
         try:
             alert = await self.db_session.get(ProtectionAlert, alert_id)
             
@@ -454,6 +466,9 @@ class ProtectionAlertRepository:
         Returns:
             Batch processing results
         """
+
+
+
         try:
             results = {
                 "processed": 0,
@@ -524,6 +539,9 @@ class ProtectionAlertRepository:
         Returns:
             Comprehensive analytics data
         """
+
+
+
         try:
             start_date = datetime.now(timezone.utc) - timedelta(days=time_range_days)
             
@@ -623,6 +641,9 @@ class ProtectionAlertRepository:
         Returns:
             List of identified patterns with details
         """
+
+
+
         try:
             start_date = datetime.now(timezone.utc) - timedelta(days=lookback_days)
             
@@ -783,6 +804,9 @@ class ProtectionAlertRepository:
     
     async def _send_alert_notifications(self, alert: ProtectionAlert) -> None:
         """Send notifications for new alert"""
+
+
+
         try:
             notification_data = {
                 "alert_id": str(alert.id),
@@ -804,6 +828,9 @@ class ProtectionAlertRepository:
         new_status: str
     ) -> None:
         """Send notifications for status updates"""
+
+
+
         try:
             notification_data = {
                 "alert_id": str(alert.id),
@@ -823,6 +850,9 @@ class ProtectionAlertRepository:
         escalation: AlertEscalation
     ) -> None:
         """Send notifications for alert escalation"""
+
+
+
         try:
             notification_data = {
                 "alert_id": str(alert.id),
@@ -862,6 +892,9 @@ class ProtectionAlertRepository:
     
     async def _calculate_escalation_rate(self) -> float:
         """Calculate current escalation rate"""
+
+
+
         try:
             total_alerts = await self.db_session.query(ProtectionAlert).count()
             escalated_alerts = await self.db_session.query(ProtectionAlert).filter(
@@ -879,6 +912,9 @@ class ProtectionAlertRepository:
         group_by: str
     ) -> List[Dict[str, Any]]:
         """Generate time series data for analytics"""
+
+
+
         try:
             time_format = {
                 "hour": "%Y-%m-%d %H:00:00",

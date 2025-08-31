@@ -75,6 +75,9 @@ class ConfigurationEntry:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             "key": self.key,
             "value": self.value,
@@ -549,6 +552,9 @@ class PipelineConfiguration:
     
     async def _load_from_source(self, source: Dict[str, Any]):
         """Load configuration from a specific source"""
+
+
+
         try:
             if source["type"] == "file":
                 data = await self.loader.load_from_file(source["path"], source["format"])
@@ -699,14 +705,23 @@ class PipelineConfiguration:
     
     def has_value(self, key: str) -> bool:
         """Check if configuration value exists"""
+
+
+
         return key in self.configuration
     
     def get_all_values(self) -> Dict[str, Any]:
         """Get all configuration values"""
+
+
+
         return {key: entry.value for key, entry in self.configuration.items()}
     
     def get_configuration_info(self) -> Dict[str, Any]:
         """Get configuration information"""
+
+
+
         return {
             "environment": self.environment,
             "total_entries": len(self.configuration),

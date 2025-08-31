@@ -8,7 +8,7 @@ Universal metadata handling, standardization, and cross-format compatibility.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 
-⚠️  COPYRIGHT WARNING ⚠️
+  COPYRIGHT WARNING 
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or theft of this code or concept without explicit 
 written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and 
@@ -157,6 +157,9 @@ class MetadataProcessor:
     
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default metadata processing configuration"""
+
+
+
         return {
             'extract_all_metadata': True,
             'privacy_protection': True,
@@ -186,6 +189,9 @@ class MetadataProcessor:
     
     def _initialize_engines(self):
         """Initialize metadata extraction engines"""
+
+
+
         try:
             # Initialize content type mappings
             self.content_type_mapping = {
@@ -222,6 +228,9 @@ class MetadataProcessor:
         Returns:
             Dict containing extracted and enriched metadata
         """
+
+
+
         try:
             # Merge configuration
             processing_config = self.config.copy()
@@ -300,6 +309,9 @@ class MetadataProcessor:
         format_hint: Optional[str] = None
     ) -> Tuple[str, bool]:
         """Prepare content for metadata extraction"""
+
+
+
         try:
             if isinstance(content_data, str):
                 # Already a file path
@@ -327,6 +339,9 @@ class MetadataProcessor:
     
     async def _extract_standard_metadata(self, file_path: str) -> ContentMetadata:
         """Extract standard file system metadata"""
+
+
+
         try:
             stat = os.stat(file_path)
             
@@ -355,6 +370,9 @@ class MetadataProcessor:
     
     def _determine_content_type(self, file_path: str, metadata: ContentMetadata) -> str:
         """Determine the content type based on file extension and MIME type"""
+
+
+
         try:
             extension = metadata.extension
             
@@ -385,6 +403,9 @@ class MetadataProcessor:
         content_type: str
     ) -> Dict[str, Any]:
         """Extract format-specific metadata"""
+
+
+
         try:
             format_metadata = {}
             
@@ -405,6 +426,9 @@ class MetadataProcessor:
     
     async def _extract_image_metadata(self, file_path: str) -> Dict[str, Any]:
         """Extract image-specific metadata"""
+
+
+
         try:
             metadata = {}
             
@@ -466,6 +490,9 @@ class MetadataProcessor:
     
     async def _extract_audio_metadata(self, file_path: str) -> Dict[str, Any]:
         """Extract audio-specific metadata"""
+
+
+
         try:
             metadata = {}
             
@@ -520,6 +547,9 @@ class MetadataProcessor:
     
     async def _extract_video_metadata(self, file_path: str) -> Dict[str, Any]:
         """Extract video-specific metadata"""
+
+
+
         try:
             metadata = {}
             
@@ -576,6 +606,9 @@ class MetadataProcessor:
     
     async def _extract_document_metadata(self, file_path: str) -> Dict[str, Any]:
         """Extract document-specific metadata"""
+
+
+
         try:
             metadata = {}
             extension = Path(file_path).suffix.lower()
@@ -650,6 +683,9 @@ class MetadataProcessor:
     
     def _extract_gps_coordinates(self, gps_dict: Dict) -> Tuple[Optional[float], Optional[float]]:
         """Extract GPS coordinates from EXIF GPS data"""
+
+
+
         try:
             def convert_to_degrees(value):
                 """Convert GPS coordinate to decimal degrees"""
@@ -681,6 +717,9 @@ class MetadataProcessor:
         format_metadata: Dict[str, Any]
     ) -> ContentMetadata:
         """Merge standard and format-specific metadata"""
+
+
+
         try:
             # Update standard metadata with format-specific data
             for key, value in format_metadata.items():
@@ -703,6 +742,9 @@ class MetadataProcessor:
         content_type: str
     ) -> Dict[str, Any]:
         """Enrich metadata using AI analysis"""
+
+
+
         try:
             ai_enrichment = {}
             
@@ -738,6 +780,9 @@ class MetadataProcessor:
     
     async def _analyze_privacy(self, metadata: ContentMetadata) -> Dict[str, Any]:
         """Analyze metadata for privacy concerns"""
+
+
+
         try:
             privacy_issues = []
             privacy_score = 1.0  # Start with perfect score
@@ -821,6 +866,9 @@ class MetadataProcessor:
     
     async def _assess_metadata_quality(self, metadata: ContentMetadata) -> Dict[str, Any]:
         """Assess the quality and completeness of metadata"""
+
+
+
         try:
             # Define important fields for each content type
             important_fields = {
@@ -917,6 +965,9 @@ class MetadataProcessor:
         content_type: str
     ) -> Dict[str, Any]:
         """Perform standard content analysis"""
+
+
+
         try:
             content_analysis = {}
             
@@ -971,6 +1022,9 @@ class MetadataProcessor:
         output_path: Optional[str] = None
     ) -> str:
         """Remove sensitive metadata from file"""
+
+
+
         try:
             if not output_path:
                 base_path = Path(file_path)
@@ -1136,6 +1190,9 @@ class MetadataProcessor:
         
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default metadata processing configuration"""
+
+
+
         return {
             'extract_exif': True,
             'extract_id3': True,
@@ -1158,6 +1215,9 @@ class MetadataProcessor:
     
     def _initialize_processors(self):
         """Initialize metadata processing components"""
+
+
+
         try:
             # Initialize format-specific processors
             self.audio_processor = AudioMetadataProcessor()
@@ -1193,6 +1253,9 @@ class MetadataProcessor:
         Returns:
             Dict containing extracted and processed metadata
         """
+
+
+
         try:
             # Merge configuration
             processing_config = self.config.copy()
@@ -1276,6 +1339,9 @@ class MetadataProcessor:
         config: Dict[str, Any]
     ) -> UniversalMetadata:
         """Extract generic metadata for unknown content types"""
+
+
+
         try:
             metadata = UniversalMetadata(content_type=content_type)
             
@@ -1315,6 +1381,9 @@ class MetadataProcessor:
         content_type: str
     ) -> UniversalMetadata:
         """Normalize metadata across different formats"""
+
+
+
         try:
             # Normalize resolution format
             if metadata.width and metadata.height:
@@ -1363,6 +1432,9 @@ class MetadataProcessor:
     
     async def _apply_privacy_filters(self, metadata: UniversalMetadata) -> UniversalMetadata:
         """Apply privacy filters to remove sensitive information"""
+
+
+
         try:
             # Remove location data
             metadata.gps_latitude = None
@@ -1394,6 +1466,9 @@ class MetadataProcessor:
     
     async def _assess_quality(self, metadata: UniversalMetadata) -> Dict[str, Any]:
         """Assess metadata quality and completeness"""
+
+
+
         try:
             assessment = {
                 'quality_score': 0.0,
@@ -1501,6 +1576,9 @@ class MetadataProcessor:
         content_type: str
     ) -> UniversalMetadata:
         """Enrich metadata with additional information"""
+
+
+
         try:
             # Add computed fields
             if metadata.width and metadata.height:
@@ -1555,6 +1633,9 @@ class MetadataProcessor:
     
     def _detect_format_from_bytes(self, data: bytes) -> Optional[str]:
         """Detect file format from byte signatures"""
+
+
+
         try:
             # Common file signatures
             signatures = {

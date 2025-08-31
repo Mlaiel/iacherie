@@ -7,7 +7,7 @@ Shows initialization, configuration, agent usage, and advanced workflows.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
@@ -77,7 +77,7 @@ class AIAgentsExamples:
             self.system = await initialize_system(config.__dict__)
             
             if self.system.initialized:
-                print("✅ AI Agents System initialized successfully!")
+                print(" AI Agents System initialized successfully!")
                 
                 # Get system status
                 status = await self.system.get_system_status()
@@ -89,7 +89,7 @@ class AIAgentsExamples:
                     print(f"  - {agent_name}: {agent_status['status']}")
             
             else:
-                print("❌ Failed to initialize AI Agents System")
+                print(" Failed to initialize AI Agents System")
         
         except Exception as e:
             logger.error(f"Initialization error: {str(e)}")
@@ -101,14 +101,14 @@ class AIAgentsExamples:
         print("\n=== Example 2: Content Creation Workflow ===")
         
         if not self.system or not self.system.initialized:
-            print("⚠️  System not initialized. Run example_1 first.")
+            print("  System not initialized. Run example_1 first.")
             return
         
         try:
             # Get the content creator agent
             content_agent = self.system.agents.get("content_creator")
             if not content_agent:
-                print("❌ Content Creator Agent not available")
+                print(" Content Creator Agent not available")
                 return
             
             # Create content request
@@ -122,7 +122,7 @@ class AIAgentsExamples:
                 "include_call_to_action": True
             }
             
-            print("📝 Creating content...")
+            print(" Creating content...")
             print(f"Topic: {content_request['topic']}")
             print(f"Platform: {content_request['target_platform']}")
             
@@ -133,13 +133,13 @@ class AIAgentsExamples:
             })
             
             if result.get("success"):
-                print("✅ Content created successfully!")
+                print(" Content created successfully!")
                 content = result.get("content", {})
                 print(f"Generated Text: {content.get('text', 'N/A')[:100]}...")
                 print(f"Hashtags: {content.get('hashtags', [])}")
                 print(f"Quality Score: {content.get('quality_score', 'N/A')}")
             else:
-                print(f"❌ Content creation failed: {result.get('error', 'Unknown error')}")
+                print(f" Content creation failed: {result.get('error', 'Unknown error')}")
         
         except Exception as e:
             logger.error(f"Content creation error: {str(e)}")
@@ -151,7 +151,7 @@ class AIAgentsExamples:
         print("\n=== Example 3: Multi-Agent Campaign Collaboration ===")
         
         if not self.system or not self.system.initialized:
-            print("⚠️  System not initialized. Run example_1 first.")
+            print("  System not initialized. Run example_1 first.")
             return
         
         try:
@@ -161,13 +161,13 @@ class AIAgentsExamples:
             analytics_agent = self.system.agents.get("analytics")
             
             if not all([content_agent, social_agent, analytics_agent]):
-                print("❌ Required agents not available")
+                print(" Required agents not available")
                 return
             
-            print("🚀 Starting multi-agent campaign collaboration...")
+            print(" Starting multi-agent campaign collaboration...")
             
             # Step 1: Analytics agent analyzes current trends
-            print("\n📊 Step 1: Trend Analysis")
+            print("\n Step 1: Trend Analysis")
             trend_analysis = await analytics_agent.process_task({
                 "task_type": "trend_analysis",
                 "scope": "current_week",
@@ -181,7 +181,7 @@ class AIAgentsExamples:
                     print(f"  {i}. {trend.get('topic', 'Unknown')} (score: {trend.get('score', 0)})")
             
             # Step 2: Content agent creates content based on trends
-            print("\n📝 Step 2: Content Creation")
+            print("\n Step 2: Content Creation")
             if trend_analysis.get("success") and trends:
                 top_trend = trends[0]
                 content_result = await content_agent.process_task({
@@ -195,12 +195,12 @@ class AIAgentsExamples:
                 })
                 
                 if content_result.get("success"):
-                    print("✅ Multi-format content created successfully")
+                    print(" Multi-format content created successfully")
                     formats = content_result.get("content", {}).get("formats", [])
                     print(f"Generated formats: {', '.join(formats)}")
             
             # Step 3: Social media manager optimizes and schedules
-            print("\n📅 Step 3: Content Optimization and Scheduling")
+            print("\n Step 3: Content Optimization and Scheduling")
             if content_result and content_result.get("success"):
                 optimization_result = await social_agent.process_task({
                     "task_type": "content_optimization",
@@ -210,12 +210,12 @@ class AIAgentsExamples:
                 })
                 
                 if optimization_result.get("success"):
-                    print("✅ Content optimized and scheduled")
+                    print(" Content optimized and scheduled")
                     schedule = optimization_result.get("schedule", {})
                     print(f"Scheduled posts: {len(schedule.get('posts', []))}")
                     print(f"Optimal posting times identified: {schedule.get('optimal_times', [])}")
             
-            print("\n🎉 Campaign collaboration completed successfully!")
+            print("\n Campaign collaboration completed successfully!")
         
         except Exception as e:
             logger.error(f"Multi-agent collaboration error: {str(e)}")
@@ -227,20 +227,20 @@ class AIAgentsExamples:
         print("\n=== Example 4: Audio and Music Production ===")
         
         if not self.system or not self.system.initialized:
-            print("⚠️  System not initialized. Run example_1 first.")
+            print("  System not initialized. Run example_1 first.")
             return
         
         try:
             # Get audio specialist agent
             audio_agent = self.system.agents.get("audio_specialist")
             if not audio_agent:
-                print("❌ Audio Specialist Agent not available")
+                print(" Audio Specialist Agent not available")
                 return
             
-            print("🎵 Starting audio production workflow...")
+            print(" Starting audio production workflow...")
             
             # Audio analysis task
-            print("\n🔍 Analyzing audio requirements")
+            print("\n Analyzing audio requirements")
             audio_request = {
                 "task_type": "music_composition",
                 "genre": "electronic",
@@ -257,7 +257,7 @@ class AIAgentsExamples:
             })
             
             if composition_result.get("success"):
-                print("✅ Music composition created")
+                print(" Music composition created")
                 composition = composition_result.get("composition", {})
                 print(f"Duration: {composition.get('duration', 'N/A')} seconds")
                 print(f"Key: {composition.get('key', 'N/A')}")
@@ -265,7 +265,7 @@ class AIAgentsExamples:
                 print(f"Instruments: {', '.join(composition.get('instruments', []))}")
                 
                 # Copyright check
-                print("\n📋 Running copyright analysis")
+                print("\n Running copyright analysis")
                 copyright_result = await audio_agent.process_task({
                     "task_type": "copyright_analysis",
                     "audio_data": composition
@@ -287,20 +287,20 @@ class AIAgentsExamples:
         print("\n=== Example 5: Engagement Optimization ===")
         
         if not self.system or not self.system.initialized:
-            print("⚠️  System not initialized. Run example_1 first.")
+            print("  System not initialized. Run example_1 first.")
             return
         
         try:
             # Get engagement specialist
             engagement_agent = self.system.agents.get("engagement_specialist")
             if not engagement_agent:
-                print("❌ Engagement Specialist Agent not available")
+                print(" Engagement Specialist Agent not available")
                 return
             
-            print("💬 Starting engagement optimization...")
+            print(" Starting engagement optimization...")
             
             # Analyze current engagement
-            print("\n📈 Analyzing current engagement patterns")
+            print("\n Analyzing current engagement patterns")
             engagement_analysis = await engagement_agent.process_task({
                 "task_type": "engagement_analysis",
                 "platforms": ["instagram", "tiktok", "youtube"],
@@ -309,13 +309,13 @@ class AIAgentsExamples:
             
             if engagement_analysis.get("success"):
                 metrics = engagement_analysis.get("metrics", {})
-                print("✅ Engagement analysis completed")
+                print(" Engagement analysis completed")
                 print(f"Average Engagement Rate: {metrics.get('avg_engagement_rate', 'N/A')}%")
                 print(f"Best Performing Content Type: {metrics.get('best_content_type', 'N/A')}")
                 print(f"Peak Engagement Hours: {metrics.get('peak_hours', [])}")
                 
                 # Optimize engagement strategy
-                print("\n🎯 Optimizing engagement strategy")
+                print("\n Optimizing engagement strategy")
                 optimization_result = await engagement_agent.process_task({
                     "task_type": "strategy_optimization",
                     "current_metrics": metrics,
@@ -328,7 +328,7 @@ class AIAgentsExamples:
                 
                 if optimization_result.get("success"):
                     strategy = optimization_result.get("strategy", {})
-                    print("✅ Strategy optimization completed")
+                    print(" Strategy optimization completed")
                     print(f"Recommended Actions: {len(strategy.get('actions', []))}")
                     
                     for i, action in enumerate(strategy.get('actions', [])[:3], 1):
@@ -344,16 +344,16 @@ class AIAgentsExamples:
         print("\n=== Example 6: System Monitoring and Analytics ===")
         
         if not self.system or not self.system.initialized:
-            print("⚠️  System not initialized. Run example_1 first.")
+            print("  System not initialized. Run example_1 first.")
             return
         
         try:
-            print("📊 Gathering system performance metrics...")
+            print(" Gathering system performance metrics...")
             
             # Get comprehensive system status
             status = await self.system.get_system_status()
             
-            print(f"\n🏥 System Health Report")
+            print(f"\n System Health Report")
             print(f"Overall Health: {status['system_health']}")
             print(f"Uptime: {status['uptime_seconds']:.2f} seconds")
             print(f"Total Errors: {status['error_count']}")
@@ -371,18 +371,18 @@ class AIAgentsExamples:
             # Performance metrics
             if status.get('performance_metrics'):
                 latest_metrics = list(status['performance_metrics'].values())[-1] if status['performance_metrics'] else {}
-                print(f"\n⚡ Latest Performance Metrics")
+                print(f"\n Latest Performance Metrics")
                 print(f"System Load: {latest_metrics.get('system_load', 'N/A')}")
                 print(f"Memory Usage: {latest_metrics.get('memory_usage', 'N/A')}")
                 print(f"Active Tasks: {latest_metrics.get('active_tasks', 'N/A')}")
             
             # Recent errors (if any)
             if status.get('recent_errors'):
-                print(f"\n⚠️  Recent Errors ({len(status['recent_errors'])})")
+                print(f"\n  Recent Errors ({len(status['recent_errors'])})")
                 for error in status['recent_errors'][-3:]:
                     print(f"  - {error.get('timestamp', 'N/A')}: {error.get('message', 'N/A')}")
             else:
-                print("\n✅ No recent errors detected")
+                print("\n No recent errors detected")
         
         except Exception as e:
             logger.error(f"System monitoring error: {str(e)}")
@@ -391,7 +391,7 @@ class AIAgentsExamples:
         """
         Run all examples in sequence
         """
-        print("🚀 Starting AI Agents System Examples")
+        print(" Starting AI Agents System Examples")
         print("=" * 50)
         
         try:
@@ -414,7 +414,7 @@ class AIAgentsExamples:
             await self.example_6_system_monitoring_and_analytics()
             
             print("\n" + "=" * 50)
-            print("🎉 All examples completed successfully!")
+            print(" All examples completed successfully!")
             
         except Exception as e:
             logger.error(f"Error running examples: {str(e)}")
@@ -422,16 +422,16 @@ class AIAgentsExamples:
         finally:
             # Clean shutdown
             if self.system:
-                print("\n🔄 Shutting down system...")
+                print("\n Shutting down system...")
                 await shutdown_system()
-                print("✅ System shutdown complete")
+                print(" System shutdown complete")
 
 
 async def quick_demo():
     """
     Quick demonstration of the AI Agents system
     """
-    print("🚀 Quick AI Agents Demo")
+    print(" Quick AI Agents Demo")
     print("-" * 30)
     
     try:
@@ -442,7 +442,7 @@ async def quick_demo():
         })
         
         if system and system.initialized:
-            print("✅ System initialized for demo")
+            print(" System initialized for demo")
             
             # Quick status check
             status = await system.get_system_status()
@@ -451,7 +451,7 @@ async def quick_demo():
             
             # Demo content creation
             if "content_creator" in system.agents:
-                print("\n📝 Creating demo content...")
+                print("\n Creating demo content...")
                 agent = system.agents["content_creator"]
                 result = await agent.process_task({
                     "task_type": "content_creation",
@@ -462,10 +462,10 @@ async def quick_demo():
                 })
                 
                 if result.get("success"):
-                    print("✅ Demo content created successfully!")
+                    print(" Demo content created successfully!")
         
         await shutdown_system()
-        print("✅ Demo completed")
+        print(" Demo completed")
         
     except Exception as e:
         logger.error(f"Demo error: {str(e)}")

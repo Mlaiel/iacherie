@@ -7,12 +7,12 @@ transition control, and state persistence for the IA-Influencer-Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This state management system is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization.
 
-🎯 BUSINESS LOGIC:
+ BUSINESS LOGIC:
 State Definition → Transition Rules → State Changes → Validation → Persistence → Notification
 """
 
@@ -304,6 +304,9 @@ class StateManager:
     
     def register_state(self, state_definition: StateDefinition) -> bool:
         """Register a new state definition"""
+
+
+
         try:
             # Validate state definition
             if not self._validate_state_definition(state_definition):
@@ -319,6 +322,9 @@ class StateManager:
     
     def _validate_state_definition(self, state_def: StateDefinition) -> bool:
         """Validate state definition integrity"""
+
+
+
         try:
             # Required fields validation
             if not all([state_def.state_id, state_def.name, state_def.state_type]):
@@ -349,6 +355,9 @@ class StateManager:
         initial_data: Dict[str, Any] = None
     ) -> str:
         """Create a new state instance for an entity"""
+
+
+
         try:
             if state_id not in self.state_definitions:
                 raise ValueError(f"State definition '{state_id}' not found")
@@ -395,6 +404,9 @@ class StateManager:
         force: bool = False
     ) -> bool:
         """Transition state instance to target state"""
+
+
+
         try:
             if instance_id not in self.state_instances:
                 raise ValueError(f"State instance '{instance_id}' not found")
@@ -450,6 +462,9 @@ class StateManager:
         parameters: Dict[str, Any]
     ) -> bool:
         """Validate if transition is allowed"""
+
+
+
         try:
             state_def = self.state_definitions.get(instance.state_id)
             if not state_def:
@@ -494,6 +509,9 @@ class StateManager:
         parameters: Dict[str, Any]
     ) -> bool:
         """Check if transition conditions are satisfied"""
+
+
+
         try:
             for condition_key, condition_value in conditions.items():
                 # Check in instance data
@@ -533,6 +551,9 @@ class StateManager:
         parameters: Dict[str, Any]
     ) -> bool:
         """Run transition validator function"""
+
+
+
         try:
             if asyncio.iscoroutinefunction(validator_func):
                 return await validator_func(instance, parameters)
@@ -544,6 +565,9 @@ class StateManager:
     
     async def _execute_transition(self, request: TransitionRequest) -> bool:
         """Execute state transition"""
+
+
+
         try:
             instance = self.state_instances[request.instance_id]
             old_state_id = instance.state_id
@@ -609,6 +633,9 @@ class StateManager:
     
     async def _execute_actions(self, actions: List[str], instance: StateInstance):
         """Execute state entry/exit actions"""
+
+
+
         try:
             for action_name in actions:
                 if action_name in self.transition_actions:
@@ -655,6 +682,9 @@ class StateManager:
     
     async def _create_state_snapshot(self, instance: StateInstance):
         """Create state snapshot for recovery"""
+
+
+
         try:
             snapshot = {
                 "instance_id": instance.instance_id,
@@ -677,6 +707,9 @@ class StateManager:
     
     async def _create_recovery_point(self, instance_id: str):
         """Create recovery point for state instance"""
+
+
+
         try:
             instance = self.state_instances[instance_id]
             
@@ -696,6 +729,9 @@ class StateManager:
     
     async def rollback_state(self, instance_id: str, target_version: Optional[int] = None) -> bool:
         """Rollback state to previous version or snapshot"""
+
+
+
         try:
             if instance_id not in self.state_instances:
                 logger.error(f"State instance not found: {instance_id}")
@@ -757,6 +793,9 @@ class StateManager:
         additional_data: Dict[str, Any] = None
     ):
         """Emit state events to registered handlers"""
+
+
+
         try:
             event_data = {
                 "event_type": event_type,
@@ -874,6 +913,9 @@ class StateManager:
     
     async def cleanup_expired_instances(self) -> int:
         """Cleanup expired and inactive state instances"""
+
+
+
         try:
             cleanup_count = 0
             current_time = datetime.now(timezone.utc)
@@ -911,6 +953,9 @@ class StateManager:
     
     def shutdown(self):
         """Shutdown state manager and cleanup"""
+
+
+
         try:
             # Unlock all locked instances
             for instance in self.state_instances.values():

@@ -12,7 +12,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 
-⚠️ STRICT COPYRIGHT PROTECTION ⚠️
+ STRICT COPYRIGHT PROTECTION 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 
@@ -175,6 +175,9 @@ class ExtractionOrchestrator:
     
     def _initialize_extractors(self):
         """Initialise tous les extracteurs disponibles"""
+
+
+
         try:
             # Extracteurs de contenu
             self._content_extractors = {
@@ -343,6 +346,9 @@ class ExtractionOrchestrator:
     
     async def _collect_metrics(self, job: ExtractionJob, worker_id: str):
         """Collecte les métriques de performance"""
+
+
+
         try:
             metrics = {
                 'job_id': job.job_id,
@@ -599,6 +605,9 @@ class ExtractionOrchestrator:
     
     def get_system_stats(self) -> Dict[str, Any]:
         """Récupère les statistiques système"""
+
+
+
         return {
             'active_jobs': len(self._active_jobs),
             'queue_size': self._job_queue.qsize(),
@@ -736,14 +745,23 @@ extraction_interface = ExtractionInterface()
 # Fonctions utilitaires de haut niveau
 async def quick_extract(source: str, **options) -> ExtractionResult:
     """Extraction rapide avec détection automatique"""
+
+
+
     return await extraction_interface.extract(source, **options)
 
 async def quick_fingerprint(source: str) -> ExtractionResult:
     """Création rapide d'empreinte digitale"""
+
+
+
     return await extraction_interface.create_fingerprint(source)
 
 async def quick_revenue_analysis(platform: str, creator_id: str) -> ExtractionResult:
     """Analyse rapide de revenus"""
+
+
+
     return await extraction_interface.analyze_revenue(platform, creator_id)
 
 async def setup_apis(**api_configs):

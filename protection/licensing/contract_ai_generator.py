@@ -14,7 +14,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Legal Tech Specialist + NLP Engineer + Contract Lawyer + Blockchain Engineer
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ LEGAL WARNING:
+ LEGAL WARNING:
 This software is protected by international copyright law and trade secret law.
 Unauthorized reproduction, distribution, or reverse engineering is strictly prohibited
 and may result in severe civil and criminal penalties. Users must comply with all
@@ -116,7 +116,7 @@ class RiskAssessment:
 
 class AIContractGenerator:
     """
-    🚀 AI-powered contract generation engine
+     AI-powered contract generation engine
     
     Advanced system for creating legally compliant contracts using
     natural language processing and machine learning.
@@ -147,6 +147,9 @@ class AIContractGenerator:
 
     def _initialize_ai_models(self):
         """Initialize NLP and AI models for contract generation."""
+
+
+
         try:
             # Legal language model for contract generation
             self.contract_generator = pipeline(
@@ -262,6 +265,9 @@ class AIContractGenerator:
         parameters: ContractParameters
     ) -> RiskAssessment:
         """Perform AI-powered risk assessment of contract parameters."""
+
+
+
         try:
             risk_factors = []
             overall_risk = RiskLevel.LOW
@@ -559,6 +565,9 @@ class AIContractGenerator:
         The parties agree to the terms and conditions set forth herein regarding 
         {parameters.content_details.get('description', 'the licensed content')}.
         """
+
+
+
         
         return preamble.strip()
 
@@ -605,6 +614,9 @@ class AIContractGenerator:
         parameters: ContractParameters
     ) -> str:
         """Enhance clause content using AI language model."""
+
+
+
         try:
             if not self.contract_generator:
                 return clause_content

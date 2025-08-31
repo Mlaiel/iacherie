@@ -7,7 +7,7 @@ Handles audio, video, image, and text processing with enterprise-grade performan
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  COPYRIGHT WARNING ⚠️
+  COPYRIGHT WARNING 
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or theft of this code or concept without explicit 
 written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and 
@@ -105,19 +105,31 @@ class ProcessorRegistry:
         logger.info(f"Initialized {len(self._processors)} processors")
     
     def get_processor(self, processor_type: str):
-        """Get processor instance by type"""        return self._processors.get(processor_type)
+        """Get processor instance by type"""
+
+
+        return self._processors.get(processor_type)
     
     def list_processors(self) -> List[str]:
-        """List all available processor types"""        return list(self._processors.keys())
+        """List all available processor types"""
+
+
+        return list(self._processors.keys())
 
 # Global processor registry
 processor_registry = ProcessorRegistry()
 
 def get_processor(processor_type: str):
-    """Get processor instance by type"""    return processor_registry.get_processor(processor_type)
+    """Get processor instance by type"""
+
+
+    return processor_registry.get_processor(processor_type)
 
 def list_processors() -> List[str]:
-    """List all available processor types"""    return processor_registry.list_processors()
+    """List all available processor types"""
+
+
+    return processor_registry.list_processors()
 
 async def process_content(
     content_data: bytes,

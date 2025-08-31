@@ -7,7 +7,7 @@ performance monitoring, health checks, and deployment validation across all envi
 
 Project Owner: Fahed Mlaiel (mlaiel@live.de)
 
-⚠️ CRITICAL LEGAL WARNING:
+ CRITICAL LEGAL WARNING:
 This software and all associated intellectual property belong exclusively to Fahed Mlaiel.
 Any unauthorized use, reproduction, distribution, or appropriation of this code, concept, 
 or business idea without explicit written permission from Fahed Mlaiel (mlaiel@live.de) 
@@ -138,6 +138,9 @@ class ValidationSuite:
     
     def has_critical_failures(self) -> bool:
         """Check if there are critical failures"""
+
+
+
         return any(
             r.status == ValidationStatus.FAILED and r.level == ValidationLevel.CRITICAL 
             for r in self.results
@@ -161,6 +164,9 @@ class BaseValidator(ABC):
     def create_result(self, status: ValidationStatus, message: str, 
                      details: Dict[str, Any] = None, remediation: str = None) -> ValidationResult:
         """Create validation result"""
+
+
+
         return ValidationResult(
             name=self.name,
             category=self.category,
@@ -1031,6 +1037,9 @@ class ValidationEngine:
     async def _run_single_validator(self, validator: BaseValidator, 
                                   context: Dict[str, Any]) -> ValidationResult:
         """Run a single validator with error handling"""
+
+
+
         try:
             self.logger.debug(f"Running validator: {validator.name}")
             result = await validator.validate(context)
@@ -1119,11 +1128,11 @@ class ValidationEngine:
         
         for result in suite.results:
             status_symbol = {
-                ValidationStatus.PASSED: "✓",
-                ValidationStatus.FAILED: "✗",
-                ValidationStatus.WARNING: "⚠",
+                ValidationStatus.PASSED: "",
+                ValidationStatus.FAILED: "",
+                ValidationStatus.WARNING: "",
                 ValidationStatus.SKIPPED: "⊘",
-                ValidationStatus.ERROR: "💥"
+                ValidationStatus.ERROR: ""
             }.get(result.status, "?")
             
             report_lines.extend([
@@ -1202,6 +1211,9 @@ class ValidationEngine:
 </body>
 </html>
 """
+
+
+
         
         return html_template
 

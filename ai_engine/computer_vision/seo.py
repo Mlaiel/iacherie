@@ -14,7 +14,7 @@
 #
 # Created by: Fahed Mlaiel (mlaiel@live.de)
 # 
-# ⚠️  STRICT COPYRIGHT WARNING ⚠️ 
+#   STRICT COPYRIGHT WARNING  
 # This code, concept, and intellectual property belongs exclusively to Fahed Mlaiel.
 # ANY unauthorized use, reproduction, distribution, or theft of this code/concept 
 # without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is 
@@ -161,6 +161,9 @@ class SEOOptimizer:
         
     def _init_nlp_components(self):
         """Initialize NLP processing components"""
+
+
+
         try:
             # Download required NLTK data
             nltk.download('punkt', quiet=True)
@@ -192,6 +195,9 @@ class SEOOptimizer:
     
     def _init_ai_models(self):
         """Initialize AI models for content analysis"""
+
+
+
         try:
             # Image captioning model
             self.caption_processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
@@ -214,6 +220,9 @@ class SEOOptimizer:
     
     def _load_seo_rules(self) -> Dict[str, Any]:
         """Load SEO rules and best practices"""
+
+
+
         return {
             'title_length': {'min': 30, 'max': 60},
             'description_length': {'min': 120, 'max': 160},
@@ -234,6 +243,9 @@ class SEOOptimizer:
     
     def _init_platform_configs(self) -> Dict[SEOPlatform, Dict[str, Any]]:
         """Initialize platform-specific configurations"""
+
+
+
         return {
             SEOPlatform.INSTAGRAM: {
                 'title_length': 125,
@@ -409,6 +421,9 @@ class SEOOptimizer:
     
     def _analyze_colors(self, image: np.ndarray) -> List[str]:
         """Analyze dominant colors in the image"""
+
+
+
         try:
             # Reshape image to pixels
             pixels = image.reshape(-1, 3)
@@ -492,6 +507,9 @@ class SEOOptimizer:
     
     def _analyze_composition(self, image: np.ndarray) -> float:
         """Analyze image composition quality"""
+
+
+
         try:
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
             h, w = gray.shape
@@ -577,6 +595,9 @@ class SEOOptimizer:
     
     def _analyze_quality(self, image: np.ndarray) -> float:
         """Analyze technical image quality"""
+
+
+
         try:
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
             
@@ -603,6 +624,9 @@ class SEOOptimizer:
     
     def _detect_content_type(self, image: np.ndarray, caption: str) -> ContentType:
         """Detect the type of visual content"""
+
+
+
         try:
             # Analyze image characteristics
             h, w = image.shape[:2]
@@ -783,6 +807,9 @@ class SEOOptimizer:
     
     def _generate_base_title(self, content_analysis: Dict[str, Any], settings: OptimizationSettings) -> str:
         """Generate base title from content analysis"""
+
+
+
         try:
             caption = content_analysis.get('caption', '')
             objects = content_analysis.get('objects_detected', [])
@@ -838,6 +865,9 @@ class SEOOptimizer:
     
     def _generate_base_description(self, content_analysis: Dict[str, Any], settings: OptimizationSettings) -> str:
         """Generate base description from content analysis"""
+
+
+
         try:
             caption = content_analysis.get('caption', '')
             objects = content_analysis.get('objects_detected', [])
@@ -914,6 +944,9 @@ class SEOOptimizer:
     
     def _optimize_title(self, base_title: str, keywords: List[str], settings: OptimizationSettings) -> str:
         """Optimize title with keywords and SEO best practices"""
+
+
+
         try:
             # Start with base title
             optimized = base_title
@@ -943,6 +976,9 @@ class SEOOptimizer:
     
     def _optimize_description(self, base_description: str, keywords: List[str], settings: OptimizationSettings) -> str:
         """Optimize description with keywords and SEO best practices"""
+
+
+
         try:
             optimized = base_description
             
@@ -973,6 +1009,9 @@ class MetadataGenerator:
     
     def _load_metadata_templates(self) -> Dict[str, Any]:
         """Load metadata templates for different platforms"""
+
+
+
         return {
             'dublin_core': {
                 'title': '',
@@ -1073,6 +1112,9 @@ class MetadataGenerator:
     
     def _generate_open_graph(self, seo_result: SEOResult) -> Dict[str, str]:
         """Generate Open Graph metadata"""
+
+
+
         return {
             'og:title': seo_result.optimized_title,
             'og:description': seo_result.optimized_description,
@@ -1082,6 +1124,9 @@ class MetadataGenerator:
     
     def _generate_twitter_card(self, seo_result: SEOResult) -> Dict[str, str]:
         """Generate Twitter Card metadata"""
+
+
+
         return {
             'twitter:card': 'summary_large_image',
             'twitter:title': seo_result.optimized_title,
@@ -1097,6 +1142,9 @@ class TagGenerator:
     
     def _init_tag_categories(self) -> Dict[str, List[str]]:
         """Initialize tag categories"""
+
+
+
         return {
             'emotions': ['happy', 'sad', 'excited', 'calm', 'energetic', 'peaceful', 'dramatic'],
             'styles': ['minimalist', 'vintage', 'modern', 'classic', 'artistic', 'professional', 'casual'],
@@ -1277,6 +1325,9 @@ class DescriptionGenerator:
     
     def _load_description_templates(self) -> Dict[str, List[str]]:
         """Load description templates for different content types"""
+
+
+
         return {
             ContentType.PHOTOGRAPHY: [
                 "Stunning {subject} captured with professional photography techniques.",
@@ -1337,7 +1388,7 @@ class DescriptionGenerator:
             short_desc = base_description
         
         # Add Instagram-specific elements
-        return f"{short_desc} 📸✨ #instagood #photooftheday"
+        return f"{short_desc}  #instagood #photooftheday"
     
     def _create_pinterest_description(self, base_description: str) -> str:
         """Create Pinterest-optimized description"""
@@ -1353,9 +1404,9 @@ class DescriptionGenerator:
         """Create YouTube-optimized description"""
         # YouTube allows very long descriptions
         extended_desc = f"{base_description}\n\n"
-        extended_desc += "🔔 Subscribe for more amazing content!\n"
-        extended_desc += "👍 Like if you enjoyed this content\n"
-        extended_desc += "💬 Comment your thoughts below\n\n"
+        extended_desc += " Subscribe for more amazing content!\n"
+        extended_desc += " Like if you enjoyed this content\n"
+        extended_desc += " Comment your thoughts below\n\n"
         extended_desc += "#YouTube #Content #Subscribe"
         
         return extended_desc

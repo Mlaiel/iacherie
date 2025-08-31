@@ -8,14 +8,14 @@ for the IA-Influencer-Agent ML platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This pipeline orchestration system and methodologies are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED and will result in legal action.
 
 ALL RIGHTS RESERVED - FAHED MLAIEL ©2025
 
-🎯 BUSINESS LOGIC INTEGRATION:
+ BUSINESS LOGIC INTEGRATION:
 Data Ingestion → Feature Engineering → Model Training → Validation
 → Optimization → Deployment → Monitoring → Retraining
 
@@ -191,6 +191,9 @@ class AbstractPipelineStep(ABC):
         
     async def validate_inputs(self, context: Dict[str, Any]) -> bool:
         """Validate step inputs"""
+
+
+
         return True
         
     async def cleanup(self, context: Dict[str, Any]):
@@ -413,6 +416,9 @@ class MLPipelineManager:
         
     async def create_pipeline(self, pipeline_def: Dict[str, Any]) -> str:
         """Create a new ML pipeline"""
+
+
+
         try:
             pipeline_id = str(uuid.uuid4())
             
@@ -493,6 +499,9 @@ class MLPipelineManager:
     
     async def execute_pipeline(self, pipeline_id: str, context: Dict[str, Any] = None) -> str:
         """Execute a pipeline"""
+
+
+
         try:
             if pipeline_id not in self.pipelines:
                 raise ValueError(f"Pipeline not found: {pipeline_id}")

@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -87,6 +87,9 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
         Returns:
             Created PlatformIntegration instance
         """
+
+
+
         try:
             # Check for existing integration
             existing = self.get_user_platform_integration(user_id, platform)
@@ -186,6 +189,9 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
         Returns:
             PlatformIntegration instance or None
         """
+
+
+
         try:
             return self.db_session.query(PlatformIntegration).filter(
                 and_(
@@ -216,6 +222,9 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
         Returns:
             List of PlatformIntegration instances
         """
+
+
+
         try:
             query = self.db_session.query(PlatformIntegration).filter(
                 PlatformIntegration.user_id == user_id
@@ -271,6 +280,9 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
         Returns:
             Updated PlatformIntegration instance
         """
+
+
+
         try:
             integration = self.get_by_id(integration_id)
             if not integration:
@@ -329,6 +341,9 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
         Returns:
             Updated PlatformIntegration instance
         """
+
+
+
         try:
             integration = self.get_by_id(integration_id)
             if not integration:
@@ -395,6 +410,9 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
         Returns:
             Updated PlatformIntegration instance
         """
+
+
+
         try:
             integration = self.get_by_id(integration_id)
             if not integration:
@@ -448,6 +466,9 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
         Returns:
             List of integrations due for sync
         """
+
+
+
         try:
             current_time = datetime.utcnow()
             
@@ -493,6 +514,9 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
         Returns:
             List of unhealthy integrations
         """
+
+
+
         try:
             integrations = self.db_session.query(PlatformIntegration).filter(
                 and_(
@@ -522,6 +546,9 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
         Returns:
             List of integrations with expiring tokens
         """
+
+
+
         try:
             expiry_threshold = datetime.utcnow() + timedelta(hours=hours_ahead)
             
@@ -553,6 +580,9 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
         Returns:
             Dictionary containing integration statistics
         """
+
+
+
         try:
             base_query = self.db_session.query(PlatformIntegration)
             
@@ -632,6 +662,9 @@ class PlatformIntegrationRepository(BaseRepository[PlatformIntegration]):
         Returns:
             Updated PlatformIntegration instance
         """
+
+
+
         try:
             integration = self.get_by_id(integration_id)
             if not integration:

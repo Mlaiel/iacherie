@@ -7,7 +7,7 @@ monitoring, campaign tracking, and optimization effectiveness measurement.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -117,6 +117,9 @@ class SEOMetricsCollector:
         
     async def initialize(self):
         """Initialize metrics collector"""
+
+
+
         try:
             # Initialize core SEO metrics
             await self._initialize_core_metrics()
@@ -225,6 +228,9 @@ class SEOMetricsCollector:
         timestamp: Optional[datetime] = None
     ):
         """Record a single metric point"""
+
+
+
         try:
             if metric_name not in self.metrics:
                 logger.warning(f"Unknown metric: {metric_name}")
@@ -248,6 +254,9 @@ class SEOMetricsCollector:
     
     def record_seo_analysis_metrics(self, analysis_results: Dict[str, Any]):
         """Record metrics from SEO analysis results"""
+
+
+
         try:
             content_id = analysis_results.get('content_id', 'unknown')
             labels = {'content_id': content_id}
@@ -315,6 +324,9 @@ class SEOMetricsCollector:
     
     def record_campaign_metrics(self, campaign_data: Dict[str, Any]):
         """Record metrics from campaign execution"""
+
+
+
         try:
             campaign_id = campaign_data.get('campaign_id', 'unknown')
             labels = {'campaign_id': campaign_id}
@@ -342,6 +354,9 @@ class SEOMetricsCollector:
     
     def record_ranking_metrics(self, ranking_data: Dict[str, Any]):
         """Record keyword ranking metrics"""
+
+
+
         try:
             for keyword, ranking_info in ranking_data.items():
                 if isinstance(ranking_info, dict) and 'position' in ranking_info:
@@ -370,6 +385,9 @@ class SEOMetricsCollector:
     
     def record_traffic_metrics(self, traffic_data: Dict[str, Any]):
         """Record traffic and performance metrics"""
+
+
+
         try:
             labels = {
                 'source': traffic_data.get('source', 'organic'),
@@ -420,6 +438,9 @@ class SEOMetricsCollector:
     
     def get_metric_summary(self, metric_name: str, time_window: timedelta = None) -> Dict[str, Any]:
         """Get statistical summary of a metric"""
+
+
+
         try:
             if metric_name not in self.metrics:
                 return {'error': f'Metric {metric_name} not found'}
@@ -464,6 +485,9 @@ class SEOMetricsCollector:
     
     def get_performance_dashboard(self) -> Dict[str, Any]:
         """Get comprehensive performance dashboard data"""
+
+
+
         try:
             dashboard = {
                 'timestamp': datetime.utcnow().isoformat(),
@@ -520,6 +544,9 @@ class SEOMetricsCollector:
     
     def _get_recent_average(self, metric_name: str, window_minutes: int = 60) -> float:
         """Get average value for metric in recent time window"""
+
+
+
         try:
             if metric_name not in self.metric_buffers:
                 return 0.0

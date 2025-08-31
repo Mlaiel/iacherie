@@ -35,7 +35,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 async def test_fingerprinting_engine():
     """Test the enhanced fingerprinting engine"""
-    print("🔍 Testing Fingerprinting Engine...")
+    print(" Testing Fingerprinting Engine...")
     
     try:
         # Direct import to avoid relative import issues
@@ -66,7 +66,7 @@ async def test_fingerprinting_engine():
             content_id="test_audio_001"
         )
         
-        print(f"✅ Fingerprint generated: {fingerprint.content_id}")
+        print(f" Fingerprint generated: {fingerprint.content_id}")
         print(f"   - Hash: {fingerprint.hash_fingerprint[:16]}...")
         print(f"   - Confidence: {fingerprint.confidence_score:.2f}")
         print(f"   - Type: {fingerprint.fingerprint_type.value}")
@@ -82,20 +82,20 @@ async def test_fingerprinting_engine():
             'content_data': 'Test text content'
         })
         
-        print(f"✅ Legacy interface works: {legacy_result.get('processed', False)}")
+        print(f" Legacy interface works: {legacy_result.get('processed', False)}")
         
         await engine.shutdown()
         return True
         
     except Exception as e:
-        print(f"❌ Fingerprinting engine test failed: {e}")
+        print(f" Fingerprinting engine test failed: {e}")
         import traceback
         traceback.print_exc()
         return False
 
 async def test_monetization_engine():
     """Test the enhanced monetization engine"""
-    print("\n💰 Testing Monetization Engine...")
+    print("\n Testing Monetization Engine...")
     
     try:
         # Direct import to avoid relative import issues
@@ -141,7 +141,7 @@ async def test_monetization_engine():
             performance_data=performance_data
         )
         
-        print(f"✅ Monetization opportunities identified: {len(opportunities)}")
+        print(f" Monetization opportunities identified: {len(opportunities)}")
         if opportunities:
             top_opp = opportunities[0]
             print(f"   - Top strategy: {top_opp.strategy.value}")
@@ -155,7 +155,7 @@ async def test_monetization_engine():
             performance_data=performance_data
         )
         
-        print(f"✅ Revenue optimization generated")
+        print(f" Revenue optimization generated")
         print(f"   - Projected improvement: {optimization.projected_improvement:.1%}")
         print(f"   - Recommendations: {len(optimization.optimization_recommendations)}")
         
@@ -170,7 +170,7 @@ async def test_monetization_engine():
             }
         )
         
-        print(f"✅ Collaboration revenue calculated")
+        print(f" Collaboration revenue calculated")
         print(f"   - Total revenue: ${collaboration_revenue.total_revenue}")
         print(f"   - Platform commission: ${collaboration_revenue.platform_commission}")
         print(f"   - Participants: {len(collaboration_revenue.revenue_distribution)}")
@@ -183,20 +183,20 @@ async def test_monetization_engine():
             'content_metadata': content_metadata
         })
         
-        print(f"✅ Legacy interface works: {legacy_result.get('processed', False)}")
+        print(f" Legacy interface works: {legacy_result.get('processed', False)}")
         
         await engine.shutdown()
         return True
         
     except Exception as e:
-        print(f"❌ Monetization engine test failed: {e}")
+        print(f" Monetization engine test failed: {e}")
         import traceback
         traceback.print_exc()
         return False
 
 async def test_seo_engine():
     """Test the enhanced SEO engine"""
-    print("\n🔍 Testing SEO Engine...")
+    print("\n Testing SEO Engine...")
     
     try:
         # Direct import to avoid relative import issues
@@ -237,7 +237,7 @@ async def test_seo_engine():
             target_keywords=target_keywords
         )
         
-        print(f"✅ SEO analysis completed")
+        print(f" SEO analysis completed")
         print(f"   - SEO Score: {analysis.current_seo_score:.1f}/100")
         print(f"   - Optimization opportunities: {len(analysis.optimization_opportunities)}")
         print(f"   - Priority recommendations: {len(analysis.priority_recommendations)}")
@@ -256,7 +256,7 @@ async def test_seo_engine():
             target_keywords=target_keywords
         )
         
-        print(f"✅ Content optimizations generated: {len(optimizations)}")
+        print(f" Content optimizations generated: {len(optimizations)}")
         if optimizations:
             for opt in optimizations:
                 print(f"   - {opt.optimization_type.value}: {opt.expected_improvement:.1%} improvement")
@@ -268,7 +268,7 @@ async def test_seo_engine():
             target_audience={'interests': ['technology', 'marketing']}
         )
         
-        print(f"✅ Keyword research completed")
+        print(f" Keyword research completed")
         print(f"   - Primary keywords: {len(keyword_research.primary_keywords)}")
         print(f"   - Secondary keywords: {len(keyword_research.secondary_keywords)}")
         print(f"   - Opportunity score: {keyword_research.opportunity_score:.1f}")
@@ -281,14 +281,14 @@ async def test_seo_engine():
             'target_keywords': target_keywords
         })
         
-        print(f"✅ Legacy interface works: {legacy_result.get('processed', False)}")
+        print(f" Legacy interface works: {legacy_result.get('processed', False)}")
         print(f"   - SEO Score: {legacy_result.get('seo_score', 0):.1f}")
         
         await engine.shutdown()
         return True
         
     except Exception as e:
-        print(f"❌ SEO engine test failed: {e}")
+        print(f" SEO engine test failed: {e}")
         import traceback
         traceback.print_exc()
         return False
@@ -303,7 +303,7 @@ async def test_collaboration_agent():
         matching_engine_path = "ai_agents/collaboration_agent/core/matching_engine.py"
         
         if not os.path.exists(matching_engine_path):
-            print("❌ Matching engine file not found")
+            print(" Matching engine file not found")
             return False
             
         # Read file to check implementation
@@ -327,25 +327,25 @@ async def test_collaboration_agent():
             if feature in content:
                 found_features.append(feature)
         
-        print(f"✅ Collaboration agent analysis completed")
+        print(f" Collaboration agent analysis completed")
         print(f"   - File size: {len(content)} characters")
         print(f"   - Advanced features found: {len(found_features)}/{len(advanced_features)}")
         print(f"   - Features: {', '.join(found_features[:3])}...")
         
         if len(found_features) >= 6:
-            print("✅ Collaboration agent is already highly advanced")
+            print(" Collaboration agent is already highly advanced")
             return True
         else:
-            print("⚠️  Collaboration agent needs enhancement")
+            print("  Collaboration agent needs enhancement")
             return False
         
     except Exception as e:
-        print(f"❌ Collaboration agent test failed: {e}")
+        print(f" Collaboration agent test failed: {e}")
         return False
 
 async def run_comprehensive_test():
     """Run comprehensive test of all enhanced agents"""
-    print("🚀 Starting Comprehensive AI Agent Testing")
+    print(" Starting Comprehensive AI Agent Testing")
     print("=" * 50)
     
     start_time = datetime.now()
@@ -364,19 +364,19 @@ async def run_comprehensive_test():
             result = await test_func()
             results.append((name, result))
         except Exception as e:
-            print(f"❌ {name} test crashed: {e}")
+            print(f" {name} test crashed: {e}")
             results.append((name, False))
     
     # Summary
     print("\n" + "=" * 50)
-    print("🎯 TEST SUMMARY")
+    print(" TEST SUMMARY")
     print("=" * 50)
     
     passed = sum(1 for _, result in results if result)
     total = len(results)
     
     for name, result in results:
-        status = "✅ PASSED" if result else "❌ FAILED"
+        status = " PASSED" if result else " FAILED"
         print(f"{name:<25} {status}")
     
     print(f"\nOverall: {passed}/{total} tests passed")
@@ -385,10 +385,10 @@ async def run_comprehensive_test():
     print(f"Execution time: {execution_time:.2f} seconds")
     
     if passed == total:
-        print("\n🎉 All AI agent enhancements are working correctly!")
+        print("\n All AI agent enhancements are working correctly!")
         return True
     else:
-        print(f"\n⚠️  {total - passed} tests failed. Check implementations.")
+        print(f"\n  {total - passed} tests failed. Check implementations.")
         return False
 
 if __name__ == "__main__":

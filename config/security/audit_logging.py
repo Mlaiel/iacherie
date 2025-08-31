@@ -15,7 +15,7 @@ Business Logic Integration:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend + Security Experts
 
-⚠️ COPYRIGHT WARNING:
+ COPYRIGHT WARNING:
 This code is proprietary and belongs to Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit 
 written permission from Fahed Mlaiel is strictly prohibited.
@@ -588,6 +588,9 @@ audit_logging_config = AuditLoggingConfig()
 
 def get_audit_logging_config() -> AuditLoggingConfig:
     """Get the audit logging configuration instance."""
+
+
+
     return audit_logging_config
 
 

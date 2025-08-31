@@ -20,7 +20,7 @@ Team Specialists:
 - IA Prompt Engineer: AI compliance analysis prompts
 
 Contact: mlaiel@live.de
-⚠️ LEGAL WARNING: Any unauthorized use, copying, distribution, or commercialization 
+ LEGAL WARNING: Any unauthorized use, copying, distribution, or commercialization 
 of this code without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will result in immediate legal action.
 """
@@ -189,6 +189,9 @@ class GDPRComplianceChecker(ComplianceChecker):
     @property
     def rules(self) -> List[ComplianceRule]:
         """GDPR compliance rules"""
+
+
+
         return [
             ComplianceRule(
                 rule_id="gdpr_art_32_encryption",
@@ -491,6 +494,9 @@ class PCIDSSComplianceChecker(ComplianceChecker):
     @property
     def rules(self) -> List[ComplianceRule]:
         """PCI-DSS compliance rules"""
+
+
+
         return [
             ComplianceRule(
                 rule_id="pci_req_3_encryption",
@@ -735,10 +741,16 @@ class ComplianceCheckerRegistry:
     
     def get_checker(self, framework: ComplianceFramework) -> Optional[ComplianceChecker]:
         """Get compliance checker for framework"""
+
+
+
         return self.checkers.get(framework)
     
     def list_supported_frameworks(self) -> List[ComplianceFramework]:
         """List supported compliance frameworks"""
+
+
+
         return list(self.checkers.keys())
 
 
@@ -1052,6 +1064,9 @@ class DatabaseComplianceChecker:
     
     def get_supported_frameworks(self) -> List[ComplianceFramework]:
         """Get list of supported compliance frameworks"""
+
+
+
         return self.checker_registry.list_supported_frameworks()
     
     def get_compliance_metrics(self) -> Dict[str, Any]:

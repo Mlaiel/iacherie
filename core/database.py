@@ -51,6 +51,9 @@ class DatabaseManager:
     
     async def _initialize_postgres(self) -> None:
         """Initialize PostgreSQL connection with connection pooling"""
+
+
+
         try:
             # Create async engine with connection pooling
             self.postgres_engine = create_async_engine(
@@ -81,6 +84,9 @@ class DatabaseManager:
     
     async def _initialize_redis(self) -> None:
         """Initialize Redis connection with connection pooling"""
+
+
+
         try:
             self.redis_client = aioredis.from_url(
                 settings.database.redis_url,
@@ -101,6 +107,9 @@ class DatabaseManager:
     
     async def _initialize_mongodb(self) -> None:
         """Initialize MongoDB connection"""
+
+
+
         try:
             self.mongodb_client = AsyncIOMotorClient(
                 settings.database.mongodb_url,
@@ -248,6 +257,9 @@ class DatabaseManager:
     
     async def close_connections(self) -> None:
         """Close all database connections"""
+
+
+
         try:
             if self.postgres_engine:
                 await self.postgres_engine.dispose()

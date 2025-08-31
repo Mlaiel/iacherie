@@ -1,5 +1,5 @@
 """
-⚖️ Takedown Manager - IA Influencer Agent Surveillance Module
+ Takedown Manager - IA Influencer Agent Surveillance Module
 ============================================================
 
 Automated takedown notice management system for copyright infringement
@@ -140,6 +140,9 @@ class YouTubeTakedownHandler(PlatformTakedownHandler):
     
     async def submit_takedown(self, request: TakedownRequest) -> bool:
         """Submit takedown request to YouTube"""
+
+
+
         try:
             # Format request for YouTube
             formatted_request = await self.format_request(request)
@@ -165,6 +168,9 @@ class YouTubeTakedownHandler(PlatformTakedownHandler):
     
     async def check_status(self, request: TakedownRequest) -> TakedownStatus:
         """Check YouTube takedown status"""
+
+
+
         try:
             if not request.platform_reference_id:
                 return TakedownStatus.PENDING
@@ -195,6 +201,9 @@ class YouTubeTakedownHandler(PlatformTakedownHandler):
     
     async def format_request(self, request: TakedownRequest) -> Dict[str, Any]:
         """Format request for YouTube submission"""
+
+
+
         return {
             "video_url": request.infringement_url,
             "original_content_url": request.original_content_url,
@@ -217,6 +226,9 @@ class TikTokTakedownHandler(PlatformTakedownHandler):
     
     async def submit_takedown(self, request: TakedownRequest) -> bool:
         """Submit takedown request to TikTok"""
+
+
+
         try:
             formatted_request = await self.format_request(request)
             
@@ -239,6 +251,9 @@ class TikTokTakedownHandler(PlatformTakedownHandler):
     
     async def check_status(self, request: TakedownRequest) -> TakedownStatus:
         """Check TikTok takedown status"""
+
+
+
         try:
             if not request.platform_reference_id:
                 return TakedownStatus.PENDING
@@ -267,6 +282,9 @@ class TikTokTakedownHandler(PlatformTakedownHandler):
     
     async def format_request(self, request: TakedownRequest) -> Dict[str, Any]:
         """Format request for TikTok submission"""
+
+
+
         return {
             "video_url": request.infringement_url,
             "original_content": request.original_content_url,
@@ -287,6 +305,9 @@ class InstagramTakedownHandler(PlatformTakedownHandler):
     
     async def submit_takedown(self, request: TakedownRequest) -> bool:
         """Submit takedown request to Instagram"""
+
+
+
         try:
             formatted_request = await self.format_request(request)
             
@@ -309,6 +330,9 @@ class InstagramTakedownHandler(PlatformTakedownHandler):
     
     async def check_status(self, request: TakedownRequest) -> TakedownStatus:
         """Check Instagram takedown status"""
+
+
+
         try:
             if not request.platform_reference_id:
                 return TakedownStatus.PENDING
@@ -336,6 +360,9 @@ class InstagramTakedownHandler(PlatformTakedownHandler):
     
     async def format_request(self, request: TakedownRequest) -> Dict[str, Any]:
         """Format request for Instagram submission"""
+
+
+
         return {
             "post_url": request.infringement_url,
             "original_content_url": request.original_content_url,
@@ -357,6 +384,9 @@ class GenericTakedownHandler(PlatformTakedownHandler):
     
     async def submit_takedown(self, request: TakedownRequest) -> bool:
         """Submit generic takedown request"""
+
+
+
         try:
             # Generic submission process
             formatted_request = await self.format_request(request)
@@ -379,6 +409,9 @@ class GenericTakedownHandler(PlatformTakedownHandler):
     
     async def check_status(self, request: TakedownRequest) -> TakedownStatus:
         """Check generic takedown status"""
+
+
+
         try:
             if not request.platform_reference_id:
                 return TakedownStatus.PENDING
@@ -407,6 +440,9 @@ class GenericTakedownHandler(PlatformTakedownHandler):
     
     async def format_request(self, request: TakedownRequest) -> Dict[str, Any]:
         """Format generic takedown request"""
+
+
+
         return {
             "platform": self.platform,
             "infringing_url": request.infringement_url,
@@ -432,6 +468,9 @@ class TakedownManager:
     
     async def initialize(self) -> None:
         """Initialize takedown manager and platform handlers"""
+
+
+
         try:
             # Initialize platform-specific handlers
             handler_config = {
@@ -637,6 +676,9 @@ class TakedownManager:
     
     def _extract_platform_data(self, infringement_data: Any) -> Dict[str, Any]:
         """Extract platform-specific data from infringement"""
+
+
+
         return {
             "detected_features": getattr(infringement_data, 'detected_features', {}),
             "uploader_info": getattr(infringement_data, 'uploader_info', {}),

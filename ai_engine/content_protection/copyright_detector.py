@@ -39,6 +39,9 @@ class CopyrightDetector:
     
     def detect_copyright(self, content: Any, content_type: str = "unknown") -> Dict[str, Any]:
         """Detect copyright violations in content"""
+
+
+
         try:
             # Simple mock detection
             result = {
@@ -66,18 +69,30 @@ class CopyrightDetector:
     
     def check_audio_copyright(self, audio_data: Any) -> Dict[str, Any]:
         """Check audio for copyright violations"""
+
+
+
         return self.detect_copyright(audio_data, "audio")
     
     def check_video_copyright(self, video_data: Any) -> Dict[str, Any]:
         """Check video for copyright violations"""
+
+
+
         return self.detect_copyright(video_data, "video")
     
     def check_image_copyright(self, image_data: Any) -> Dict[str, Any]:
         """Check image for copyright violations"""
+
+
+
         return self.detect_copyright(image_data, "image")
     
     def check_text_copyright(self, text_data: str) -> Dict[str, Any]:
         """Check text for copyright violations"""
+
+
+
         return self.detect_copyright(text_data, "text")
 
 # Export main class

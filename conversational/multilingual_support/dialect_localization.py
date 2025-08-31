@@ -753,7 +753,7 @@ DIALECT_LOCALIZATIONS: Dict[str, DialectLocalization] = {
     "fa": DialectLocalization(
         dialect_code="fa",
         region="Iran (Persian/Farsi)",
-        currency_symbol="﷼",
+        currency_symbol="",
         currency_position="after",
         date_format="%Y/%m/%d",
         phone_format="+98 {area_code} {number}",

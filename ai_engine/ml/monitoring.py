@@ -94,6 +94,9 @@ class ModelMonitor:
     
     def _initialize_storage(self):
         """Initialize metrics storage"""
+
+
+
         try:
             # Initialize storage for each metric type
             for metric_type in MetricType:
@@ -114,6 +117,9 @@ class ModelMonitor:
     
     def start_monitoring(self):
         """Start continuous monitoring"""
+
+
+
         try:
             if self.is_monitoring:
                 self.logger.warning("Monitoring is already running")
@@ -132,6 +138,9 @@ class ModelMonitor:
     
     def stop_monitoring(self):
         """Stop continuous monitoring"""
+
+
+
         try:
             self.is_monitoring = False
             if self.monitor_thread:
@@ -187,6 +196,9 @@ class ModelMonitor:
     
     def record_metric(self, metric_type: MetricType, value: float, metadata: Dict[str, Any] = None):
         """Record a metric measurement"""
+
+
+
         try:
             if metadata is None:
                 metadata = {}
@@ -206,6 +218,9 @@ class ModelMonitor:
     
     def _check_alert_conditions(self):
         """Check if any alert conditions are met"""
+
+
+
         try:
             for metric_type, threshold in self.config.alert_thresholds.items():
                 if metric_type not in self.metrics_storage:
@@ -239,6 +254,9 @@ class ModelMonitor:
     def _trigger_alert(self, metric_type: MetricType, actual_value: float, 
                       threshold_value: float, severity: AlertSeverity, message: str):
         """Trigger a monitoring alert"""
+
+
+
         try:
             alert = Alert(
                 alert_id=f"{int(time.time())}_{metric_type.value}",
@@ -271,6 +289,9 @@ class ModelMonitor:
     
     def get_metrics(self, metric_type: MetricType, hours: int = 24) -> List[MetricPoint]:
         """Get historical metrics for a specific type"""
+
+
+
         try:
             if metric_type not in self.metrics_storage:
                 return []
@@ -289,6 +310,9 @@ class ModelMonitor:
     
     def get_recent_alerts(self, hours: int = 24) -> List[Alert]:
         """Get recent alerts"""
+
+
+
         try:
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             return [
@@ -312,6 +336,9 @@ class PerformanceTracker:
     
     def set_baseline(self, metrics: Dict[str, float]):
         """Set baseline performance metrics"""
+
+
+
         try:
             self.baseline_metrics = metrics.copy()
             self.logger.info(f"Baseline set for model {self.model_name}: {metrics}")
@@ -321,6 +348,9 @@ class PerformanceTracker:
     
     def record_performance(self, metrics: Dict[str, float], metadata: Dict[str, Any] = None):
         """Record performance metrics"""
+
+
+
         try:
             if metadata is None:
                 metadata = {}
@@ -359,6 +389,9 @@ class PerformanceTracker:
     
     def get_performance_summary(self, hours: int = 24) -> Dict[str, Any]:
         """Get performance summary for the specified time period"""
+
+
+
         try:
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             cutoff_str = cutoff_time.isoformat()
@@ -409,6 +442,9 @@ class DriftDetector:
     
     def set_reference_data(self, data: np.ndarray, predictions: Optional[np.ndarray] = None):
         """Set reference data for drift detection"""
+
+
+
         try:
             self.reference_data = data.copy()
             if predictions is not None:
@@ -421,6 +457,9 @@ class DriftDetector:
     
     def detect_data_drift(self, current_data: np.ndarray) -> Dict[str, Any]:
         """Detect data drift using statistical methods"""
+
+
+
         try:
             if self.reference_data is None:
                 return {"error": "No reference data set"}
@@ -465,6 +504,9 @@ class DriftDetector:
     
     def detect_prediction_drift(self, current_predictions: np.ndarray) -> Dict[str, Any]:
         """Detect prediction drift"""
+
+
+
         try:
             if self.reference_predictions is None:
                 return {"error": "No reference predictions set"}
@@ -498,6 +540,9 @@ class DriftDetector:
     
     def _calculate_drift_score(self, reference: np.ndarray, current: np.ndarray) -> float:
         """Calculate drift score between two datasets"""
+
+
+
         try:
             # Simple statistical comparison (in production, use proper statistical tests)
             ref_mean = np.mean(reference)
@@ -523,6 +568,9 @@ class DriftDetector:
     
     def get_drift_summary(self, hours: int = 24) -> Dict[str, Any]:
         """Get summary of drift events"""
+
+
+
         try:
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             cutoff_str = cutoff_time.isoformat()

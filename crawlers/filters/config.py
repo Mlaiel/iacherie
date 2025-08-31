@@ -12,7 +12,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 
-⚠️ STRICT COPYRIGHT PROTECTION ⚠️
+ STRICT COPYRIGHT PROTECTION 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 
@@ -336,6 +336,9 @@ class FilterConfigManager:
     
     def get_summary(self) -> Dict[str, Any]:
         """Get configuration summary."""
+
+
+
         return {
             'audio': {
                 'bitrate_range': f"{self.audio_config.min_bitrate}-{self.audio_config.max_bitrate} kbps",

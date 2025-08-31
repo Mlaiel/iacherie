@@ -1,5 +1,5 @@
 """
-🛡️ Protection Models - IA Influencer Agent Platform Enterprise
+ Protection Models - IA Influencer Agent Platform Enterprise
 =============================================================
 Module: backend/data_management/models/protection_model.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -7,7 +7,7 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 Type: Industrial Protection Data Models - Production-Ready
 ===========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de

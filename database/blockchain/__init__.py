@@ -93,7 +93,10 @@ def get_module_info() -> Dict[str, Any]:
     
     Returns:
         Dict containing module version, features, and configuration
-    """    return {
+    """
+
+
+    return {
         "module": "blockchain",
         "version": __version__,
         "author": __author__,
@@ -148,7 +151,10 @@ def get_supported_chains() -> List[str]:
     
     Returns:
         List of supported chain names
-    """    return [
+    """
+
+
+    return [
         "Ethereum Mainnet",
         "Ethereum Sepolia",
         "Polygon Mainnet", 
@@ -166,7 +172,10 @@ def get_bridge_routes() -> List[Dict[str, Any]]:
     
     Returns:
         List of bridge route configurations
-    """    return [
+    """
+
+
+    return [
         {
             "source": "Ethereum Mainnet",
             "destination": "Polygon Mainnet",
@@ -195,7 +204,10 @@ def get_defi_protocols() -> List[Dict[str, Any]]:
     
     Returns:
         List of DeFi protocol configurations
-    """    return [
+    """
+
+
+    return [
         {
             "name": "Uniswap V3",
             "type": "DEX",
@@ -235,7 +247,10 @@ def validate_blockchain_config(config: Dict[str, Any]) -> bool:
         
     Returns:
         True if configuration is valid
-    """    try:
+    """
+
+
+    try:
         required_keys = ["networks", "contracts", "storage"]
         
         for key in required_keys:
@@ -277,13 +292,22 @@ class BlockchainConfig:
             raise ValueError("Invalid blockchain configuration")
             
     def get_network_config(self, network_name: str) -> Dict[str, Any]:
-        """Get configuration for a specific network."""        return self.config.get("networks", {}).get(network_name, {})
+        """Get configuration for a specific network."""
+
+
+        return self.config.get("networks", {}).get(network_name, {})
         
     def get_contract_config(self, contract_type: str) -> Dict[str, Any]:
-        """Get configuration for a specific contract type."""        return self.config.get("contracts", {}).get(contract_type, {})
+        """Get configuration for a specific contract type."""
+
+
+        return self.config.get("contracts", {}).get(contract_type, {})
         
     def get_storage_config(self, provider: str) -> Dict[str, Any]:
-        """Get configuration for a specific storage provider."""        return self.config.get("storage", {}).get(provider, {})
+        """Get configuration for a specific storage provider."""
+
+
+        return self.config.get("storage", {}).get(provider, {})
     
     Returns:
         Dict[str, Any]: Informations du module

@@ -75,6 +75,9 @@ class PredictiveIndexManager:
         
     async def analyze_usage_patterns(self, engine: AsyncEngine, days_back: int = 30) -> Dict[str, IndexUsagePattern]:
         """Analyze index usage patterns over time"""
+
+
+
         try:
             patterns = {}
             
@@ -144,6 +147,9 @@ class PredictiveIndexManager:
     
     def _calculate_performance_impact(self, usage_count: int, selectivity: float) -> float:
         """Calculate performance impact score"""
+
+
+
         return usage_count * selectivity * 10
     
     async def predict_index_needs(self, workload_profile: WorkloadProfile) -> List[IndexRecommendation]:
@@ -290,6 +296,9 @@ class AdaptiveIndexManager:
                 INCLUDE (status, metadata)
                 WHERE active = true
                 """
+
+
+
                 
                 try:
                     async with engine.begin() as conn:
@@ -331,6 +340,9 @@ class AdaptiveIndexManager:
                 CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_{table}_created_at_brin
                 ON {table} USING BRIN (created_at)
                 """
+
+
+
                 
                 try:
                     async with engine.begin() as conn:
@@ -370,6 +382,9 @@ class TenantAwareIndexManager:
         
     async def analyze_tenant_patterns(self, engine: AsyncEngine) -> Dict[str, Any]:
         """Analyze per-tenant access patterns"""
+
+
+
         try:
             patterns = {}
             
@@ -448,6 +463,9 @@ class CostOptimizedIndexManager:
     async def optimize_index_costs(self, engine: AsyncEngine, 
                                  budget_constraint: float = 100.0) -> List[Dict[str, Any]]:
         """Optimize indexes within budget constraints (in MB)"""
+
+
+
         try:
             # Get current index costs
             current_indexes = await self._get_index_costs(engine)
@@ -608,6 +626,9 @@ class AdvancedIndexStrategiesManager:
     
     async def auto_select_strategy(self, engine: AsyncEngine) -> AdvancedIndexStrategy:
         """Automatically select best strategy based on current conditions"""
+
+
+
         try:
             # Analyze current database state
             index_stats = self.base_optimizer.get_stats()
@@ -631,6 +652,9 @@ class AdvancedIndexStrategiesManager:
     
     def get_strategy_stats(self) -> Dict[str, Any]:
         """Get strategy execution statistics"""
+
+
+
         return {
             'current_strategy': self.current_strategy.value,
             'total_executions': len(self.strategy_history),

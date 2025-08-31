@@ -78,6 +78,9 @@ class APIResponse:
     @property
     def is_expired(self) -> bool:
         """Check if response is expired"""
+
+
+
         return datetime.utcnow() > self.expires_at
 
 @dataclass
@@ -94,11 +97,17 @@ class RateLimitInfo:
     @property
     def requests_remaining(self) -> int:
         """Get remaining requests in current window"""
+
+
+
         return max(0, self.requests_limit - self.requests_made)
     
     @property
     def is_rate_limited(self) -> bool:
         """Check if rate limited"""
+
+
+
         return self.requests_made >= self.requests_limit and datetime.utcnow() < self.reset_at
 
 class PlatformCache:
@@ -239,6 +248,9 @@ class PlatformCache:
                                user_id: Optional[str] = None,
                                custom_ttl: Optional[int] = None) -> bool:
         """Cache API response"""
+
+
+
         
         try:
             ttl = custom_ttl or self._get_ttl(platform, endpoint)
@@ -374,6 +386,9 @@ class PlatformCache:
                                  endpoint: APIEndpoint,
                                  user_id: Optional[str] = None) -> bool:
         """Increment rate limit counter"""
+
+
+
         
         try:
             rate_limit_info = await self.check_rate_limit(platform, endpoint, user_id)
@@ -416,6 +431,9 @@ class PlatformCache:
                              token_data: Dict[str, Any],
                              expires_in: Optional[int] = None) -> bool:
         """Store user authentication token for platform"""
+
+
+
         
         try:
             token_key = f"{self.USER_TOKEN_PREFIX}:{platform.value}:{user_id}"
@@ -462,6 +480,9 @@ class PlatformCache:
                               region: Optional[str] = None,
                               category: Optional[str] = None) -> bool:
         """Cache trending content data"""
+
+
+
         
         try:
             trends_key = f"{self.TRENDS_PREFIX}:{platform.value}"
@@ -514,6 +535,9 @@ class PlatformCache:
                                  results: Dict[str, Any],
                                  search_type: Optional[str] = None) -> bool:
         """Cache search results"""
+
+
+
         
         try:
             # Generate search key
@@ -560,6 +584,9 @@ class PlatformCache:
     
     async def invalidate_user_cache(self, platform: Platform, user_id: str):
         """Invalidate all cached data for a user on a platform"""
+
+
+
         
         try:
             # Get all keys for this user/platform combination
@@ -579,6 +606,9 @@ class PlatformCache:
     
     async def invalidate_platform_cache(self, platform: Platform):
         """Invalidate all cached data for a platform"""
+
+
+
         
         try:
             # Get all keys for this platform
@@ -632,6 +662,9 @@ class PlatformCache:
     
     async def cleanup_expired_responses(self) -> int:
         """Clean up expired API responses"""
+
+
+
         
         try:
             # Get all API response keys
@@ -703,6 +736,9 @@ class APIResponseCache(PlatformCache):
                            response_data: Dict[str, Any],
                            ttl: Optional[int] = None) -> bool:
         """Cache arbitrary API response"""
+
+
+
         
         try:
             url_hash = hashlib.md5(endpoint_url.encode()).hexdigest()

@@ -4,7 +4,7 @@ Audio Processor Module - IA-Influencer-Agent Platform
 Enterprise-grade audio processing engine for content creators, musicians, and influencers.
 Comprehensive audio analysis, enhancement, transcoding, AI-powered processing, and fingerprinting.
 
-✨ EXPERT TEAM SPECIALTIES:
+ EXPERT TEAM SPECIALTIES:
 - Lead Dev IA: AI-powered audio intelligence and machine learning pipelines
 - Backend Senior: Scalable audio processing architecture and performance optimization  
 - ML Engineer: Advanced audio analysis algorithms and neural network models
@@ -17,7 +17,7 @@ Comprehensive audio analysis, enhancement, transcoding, AI-powered processing, a
 Author: Fahed Mlaiel <mlaiel@live.de>
 Email: mlaiel@live.de
 
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 This software is proprietary and confidential. Any unauthorized use, copying, 
 distribution, or commercialization without explicit written permission from 
 Fahed Mlaiel is strictly prohibited and will result in legal action.
@@ -185,7 +185,7 @@ class AudioAnalysisResult:
 
 class AudioProcessor:
     """
-    🎵 ENTERPRISE AUDIO PROCESSOR
+     ENTERPRISE AUDIO PROCESSOR
     
     Industrial-grade audio processing engine with advanced AI capabilities
     for content creators, musicians, and influencers.
@@ -215,6 +215,9 @@ class AudioProcessor:
     
     async def initialize(self) -> bool:
         """Initialize the audio processor"""
+
+
+
         try:
             if AI_LIBS_AVAILABLE and self.config.enable_ai_analysis:
                 # Initialize speech recognition
@@ -233,11 +236,11 @@ class AudioProcessor:
                         self.logger.warning(f"Could not load mood classifier: {e}")
             
             self._initialized = True
-            self.logger.info("✅ Audio processor initialized successfully")
+            self.logger.info(" Audio processor initialized successfully")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize audio processor: {e}")
+            self.logger.error(f" Failed to initialize audio processor: {e}")
             return False
     
     async def process(
@@ -377,6 +380,9 @@ class AudioProcessor:
     
     async def _load_audio(self, content: Union[bytes, str, BinaryIO]) -> Tuple[Optional[np.ndarray], int]:
         """Load audio data from various input types"""
+
+
+
         try:
             if not AUDIO_LIBS_AVAILABLE:
                 self.logger.error("Audio libraries not available")
@@ -410,6 +416,9 @@ class AudioProcessor:
         original_content: Union[bytes, str, BinaryIO]
     ) -> AudioMetadata:
         """Extract comprehensive audio metadata"""
+
+
+
         try:
             duration = len(audio_data) / sample_rate
             channels = 1 if audio_data.ndim == 1 else audio_data.shape[0]
@@ -457,6 +466,9 @@ class AudioProcessor:
     
     async def _enhance_audio(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
         """Enhance audio quality through noise reduction and normalization"""
+
+
+
         try:
             enhanced = audio_data.copy()
             
@@ -489,6 +501,9 @@ class AudioProcessor:
     
     async def _extract_features(self, audio_data: np.ndarray, sample_rate: int) -> AudioFeatures:
         """Extract advanced audio features using librosa and aubio"""
+
+
+
         try:
             features = AudioFeatures()
             
@@ -544,6 +559,9 @@ class AudioProcessor:
     
     async def _transcribe_audio(self, audio_data: np.ndarray, sample_rate: int) -> Tuple[Optional[str], Optional[str]]:
         """Transcribe audio to text using speech recognition"""
+
+
+
         try:
             if not self._speech_recognizer:
                 return None, None
@@ -578,6 +596,9 @@ class AudioProcessor:
     
     async def _analyze_mood(self, audio_data: np.ndarray, sample_rate: int) -> Tuple[Optional[str], Optional[float]]:
         """Analyze audio mood using AI classification"""
+
+
+
         try:
             if not self._mood_classifier:
                 return None, None
@@ -612,6 +633,9 @@ class AudioProcessor:
     
     async def _assess_quality(self, audio_data: np.ndarray, sample_rate: int) -> float:
         """Assess audio quality score (0-1)"""
+
+
+
         try:
             quality_score = 1.0
             
@@ -647,6 +671,9 @@ class AudioProcessor:
     
     async def _calculate_noise_level(self, audio_data: np.ndarray, sample_rate: int) -> float:
         """Calculate noise level in the audio"""
+
+
+
         try:
             # Simple noise estimation using lowest 10% of amplitudes
             sorted_amplitudes = np.sort(np.abs(audio_data))
@@ -659,6 +686,9 @@ class AudioProcessor:
     
     async def _calculate_silence_ratio(self, audio_data: np.ndarray, sample_rate: int) -> float:
         """Calculate ratio of silence in the audio"""
+
+
+
         try:
             # Threshold for silence detection
             silence_threshold = np.max(np.abs(audio_data)) * 0.01
@@ -672,6 +702,9 @@ class AudioProcessor:
     
     async def _generate_fingerprint(self, audio_data: np.ndarray, sample_rate: int) -> str:
         """Generate audio fingerprint for content identification"""
+
+
+
         try:
             # Simple fingerprint based on spectral features
             mfccs = librosa.feature.mfcc(y=audio_data, sr=sample_rate, n_mfcc=13)
@@ -742,6 +775,9 @@ class AudioProcessor:
         target_format: AudioFormat
     ) -> bytes:
         """Convert audio to target format"""
+
+
+
         try:
             with tempfile.NamedTemporaryFile(suffix=f".{target_format.value}", delete=False) as temp_file:
                 # Write to temporary file with target format
@@ -769,6 +805,9 @@ class AudioProcessor:
     # Helper methods for advanced feature calculation
     async def _calculate_speechiness(self, audio_data: np.ndarray, sample_rate: int) -> float:
         """Calculate speechiness score"""
+
+
+
         try:
             # Simplified speechiness calculation based on spectral features
             spectral_centroid = np.mean(librosa.feature.spectral_centroid(y=audio_data, sr=sample_rate))
@@ -780,6 +819,9 @@ class AudioProcessor:
     
     async def _calculate_acousticness(self, audio_data: np.ndarray, sample_rate: int) -> float:
         """Calculate acousticness score"""
+
+
+
         try:
             # Simplified acousticness based on harmonic content
             harmonic, percussive = librosa.effects.hpss(audio_data)
@@ -790,6 +832,9 @@ class AudioProcessor:
     
     async def _calculate_instrumentalness(self, audio_data: np.ndarray, sample_rate: int) -> float:
         """Calculate instrumentalness score"""
+
+
+
         try:
             # Simplified instrumentalness (inverse of speechiness)
             speechiness = await self._calculate_speechiness(audio_data, sample_rate)
@@ -799,6 +844,9 @@ class AudioProcessor:
     
     async def _calculate_liveness(self, audio_data: np.ndarray, sample_rate: int) -> float:
         """Calculate liveness score"""
+
+
+
         try:
             # Simplified liveness based on spectral contrast and audience noise
             spectral_contrast = librosa.feature.spectral_contrast(y=audio_data, sr=sample_rate)
@@ -809,6 +857,9 @@ class AudioProcessor:
     
     async def _calculate_valence(self, audio_data: np.ndarray, sample_rate: int) -> float:
         """Calculate valence (positivity) score"""
+
+
+
         try:
             # Simplified valence based on tempo and spectral brightness
             tempo, _ = librosa.beat.beat_track(y=audio_data, sr=sample_rate)
@@ -821,6 +872,9 @@ class AudioProcessor:
     
     async def _calculate_danceability(self, audio_data: np.ndarray, sample_rate: int) -> float:
         """Calculate danceability score"""
+
+
+
         try:
             # Simplified danceability based on tempo stability and rhythm
             tempo, beats = librosa.beat.beat_track(y=audio_data, sr=sample_rate)
@@ -845,6 +899,9 @@ class AudioProcessor:
     
     async def health_check(self) -> Dict[str, Any]:
         """Perform health check on the audio processor"""
+
+
+
         return {
             "status": "healthy" if self._initialized else "not_initialized",
             "audio_libs_available": AUDIO_LIBS_AVAILABLE,

@@ -1,12 +1,12 @@
 """
-🔧 Performance Tuning Manager - IA-Influencer-Agent
+ Performance Tuning Manager - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Performance Engineer + DevOps + Backend Senior + MLOps Engineer
 Date: 2025-08-24
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -199,6 +199,9 @@ class PerformanceTuningManager:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             # Detect system resources
             await self._detect_system_resources()
@@ -221,6 +224,9 @@ class PerformanceTuningManager:
     
     async def _detect_system_resources(self) -> None:
         """Detect available system resources"""
+
+
+
         try:
             # CPU information
             cpu_info = {
@@ -527,6 +533,9 @@ class PerformanceTuningManager:
     
     async def _collect_performance_metrics(self) -> Dict[str, Any]:
         """Collect current performance metrics"""
+
+
+
         try:
             # CPU metrics
             cpu_percent = psutil.cpu_percent(interval=1)
@@ -631,6 +640,9 @@ class PerformanceTuningManager:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             if profile not in self.performance_configs:
                 raise ValueError(f"Performance profile not configured: {profile.value}")
@@ -688,6 +700,9 @@ class PerformanceTuningManager:
     
     async def configure_gpu_resources(self) -> bool:
         """Configure GPU resources for AI workloads"""
+
+
+
         try:
             if not self.active_config or not self.active_config.ai.gpu_enabled:
                 self.logger.info("GPU not enabled in current configuration")
@@ -715,6 +730,9 @@ class PerformanceTuningManager:
     
     async def setup_auto_scaling(self) -> bool:
         """Setup auto-scaling configuration"""
+
+
+
         try:
             if not self.active_config:
                 raise ValueError("No active performance configuration")
@@ -749,6 +767,9 @@ class PerformanceTuningManager:
         Returns:
             Optimization results
         """
+
+
+
         try:
             optimization_result = {
                 "target": target.value,
@@ -864,6 +885,9 @@ class PerformanceTuningManager:
     
     async def get_status(self) -> Dict[str, Any]:
         """Get performance manager status"""
+
+
+
         return {
             "current_profile": self.current_profile.value,
             "monitoring_enabled": True,

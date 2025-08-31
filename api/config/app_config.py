@@ -201,21 +201,33 @@ class AppConfig:
     @property
     def is_production(self) -> bool:
         """Check if running in production environment"""
+
+
+
         return self.environment.lower() == "production"
     
     @property
     def is_development(self) -> bool:
         """Check if running in development environment"""
+
+
+
         return self.environment.lower() == "development"
     
     @property
     def is_testing(self) -> bool:
         """Check if running in testing environment"""
+
+
+
         return self.environment.lower() == "testing"
     
     @property
     def database_dsn(self) -> str:
         """Get formatted database DSN"""
+
+
+
         return (f"postgresql://{self.database_username}:{self.database_password}"
                 f"@{self.database_host}:{self.database_port}/{self.database_name}")
     
@@ -227,6 +239,9 @@ class AppConfig:
     
     def get_feature_config(self) -> Dict[str, bool]:
         """Get all feature toggles as dictionary"""
+
+
+
         return {
             'fingerprinting': self.enable_fingerprinting,
             'content_protection': self.enable_content_protection,
@@ -237,6 +252,9 @@ class AppConfig:
     
     def get_database_config(self) -> Dict[str, Any]:
         """Get database configuration as dictionary"""
+
+
+
         return {
             'url': self.database_url,
             'host': self.database_host,
@@ -252,6 +270,9 @@ class AppConfig:
     
     def get_redis_config(self) -> Dict[str, Any]:
         """Get Redis configuration as dictionary"""
+
+
+
         return {
             'url': self.redis_url,
             'host': self.redis_host,
@@ -263,6 +284,9 @@ class AppConfig:
     
     def get_security_config(self) -> Dict[str, Any]:
         """Get security configuration as dictionary"""
+
+
+
         return {
             'secret_key': self.secret_key,
             'jwt_secret': self.jwt_secret,

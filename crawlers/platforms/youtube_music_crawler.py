@@ -309,6 +309,9 @@ class YouTubeMusicCrawler(BaseCrawler):
         Returns:
             bool: Authentication success status
         """
+
+
+
         try:
             if api_key:
                 self.api_key = api_key
@@ -566,6 +569,9 @@ class YouTubeMusicCrawler(BaseCrawler):
         Returns:
             YouTubeMusicAnalytics: Comprehensive analytics data
         """
+
+
+
         try:
             start_time, end_time = analysis_period
             
@@ -728,6 +734,9 @@ class YouTubeMusicCrawler(BaseCrawler):
     
     async def _search_songs(self, query: str, genre: Optional[str], limit: int) -> List[YouTubeMusicSong]:
         """Search for songs"""
+
+
+
         try:
             search_params = {
                 'key': self.api_key,
@@ -766,6 +775,9 @@ class YouTubeMusicCrawler(BaseCrawler):
 
     async def _search_artists(self, query: str, genre: Optional[str], limit: int) -> List[YouTubeMusicArtist]:
         """Search for artists"""
+
+
+
         try:
             search_params = {
                 'key': self.api_key,
@@ -798,6 +810,9 @@ class YouTubeMusicCrawler(BaseCrawler):
 
     async def _search_playlists(self, query: str, limit: int) -> List[YouTubeMusicPlaylist]:
         """Search for playlists"""
+
+
+
         try:
             search_params = {
                 'key': self.api_key,
@@ -835,6 +850,9 @@ class YouTubeMusicCrawler(BaseCrawler):
 
     async def _parse_song_from_video(self, video_data: Dict[str, Any]) -> Optional[YouTubeMusicSong]:
         """Parse song data from YouTube video"""
+
+
+
         try:
             snippet = video_data.get('snippet', {})
             video_id = video_data.get('id', {}).get('videoId', '')
@@ -870,6 +888,9 @@ class YouTubeMusicCrawler(BaseCrawler):
 
     async def _parse_artist_from_channel(self, channel_data: Dict[str, Any]) -> Optional[YouTubeMusicArtist]:
         """Parse artist data from YouTube channel"""
+
+
+
         try:
             snippet = channel_data.get('snippet', {})
             channel_id = channel_data.get('id', {}).get('channelId', '')
@@ -890,6 +911,9 @@ class YouTubeMusicCrawler(BaseCrawler):
 
     async def _parse_playlist_from_search(self, playlist_data: Dict[str, Any]) -> Optional[YouTubeMusicPlaylist]:
         """Parse playlist data from search result"""
+
+
+
         try:
             snippet = playlist_data.get('snippet', {})
             playlist_id = playlist_data.get('id', {}).get('playlistId', '')
@@ -916,6 +940,9 @@ class YouTubeMusicCrawler(BaseCrawler):
 
     async def _get_artist_new_releases(self, artist_id: str) -> List[YouTubeMusicSong]:
         """Get new releases from artist"""
+
+
+
         try:
             # Get recent uploads from artist's channel
             search_params = {
@@ -978,6 +1005,9 @@ class YouTubeMusicCrawler(BaseCrawler):
         features2: Dict[str, Any]
     ) -> float:
         """Calculate similarity between song features"""
+
+
+
         try:
             scores = []
             
@@ -1090,6 +1120,9 @@ class YouTubeMusicCrawler(BaseCrawler):
 
     async def close(self):
         """Close crawler and cleanup resources"""
+
+
+
         try:
             await self.cache_manager.close()
             await super().close()

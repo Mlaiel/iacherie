@@ -15,7 +15,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 """
-🎯 Quality Tests - Industrial-Grade Audio Quality Assessment Testing Suite
+ Quality Tests - Industrial-Grade Audio Quality Assessment Testing Suite
 
 Comprehensive testing for audio quality evaluation including:
 - QualityAnalyzer validation

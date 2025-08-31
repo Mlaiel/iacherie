@@ -6,7 +6,7 @@ Provides real-time content analytics, performance prediction, and optimization r
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel - All rights reserved
-⚠️  WARNING: This code and concept are proprietary to Fahed Mlaiel.
+  WARNING: This code and concept are proprietary to Fahed Mlaiel.
     Any unauthorized use, copying, or distribution without explicit written 
     permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 
@@ -105,6 +105,9 @@ class ContentPerformanceEvent(BaseEvent):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert content performance event to dictionary"""
+
+
+
         return {
             **asdict(self),
             'content_type': self.content_type.value,
@@ -144,6 +147,9 @@ class ContentPerformanceEventHandler(BaseEventHandler):
         
     async def handle(self, event: ContentPerformanceEvent) -> Dict[str, Any]:
         """Process content performance event with comprehensive analysis"""
+
+
+
         try:
             # Validate event data
             await self._validate_event(event)

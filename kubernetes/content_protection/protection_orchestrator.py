@@ -98,6 +98,9 @@ class ProtectionOrchestrator:
     
     def _initialize_clients(self) -> None:
         """Initialize Kubernetes, Docker, and Redis clients"""
+
+
+
         try:
             # Kubernetes client
             config.load_incluster_config()
@@ -213,6 +216,9 @@ class ProtectionOrchestrator:
     
     async def _ensure_protection_namespace(self) -> None:
         """Create dedicated namespace for protection services"""
+
+
+
         try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
@@ -991,6 +997,9 @@ class ProtectionOrchestrator:
     
     async def _validate_protection_stack(self) -> bool:
         """Validate complete protection stack deployment"""
+
+
+
         try:
             # Check all deployments are ready
             for service in self.deployed_services:
@@ -1026,6 +1035,9 @@ class ProtectionOrchestrator:
     
     async def _cleanup_failed_protection_deployment(self) -> None:
         """Clean up resources from failed protection deployment"""
+
+
+
         try:
             # Delete all deployments
             for service in self.deployed_services:
@@ -1052,6 +1064,9 @@ class ProtectionOrchestrator:
     
     async def get_protection_metrics(self) -> Dict[str, Any]:
         """Get comprehensive protection stack metrics"""
+
+
+
         try:
             # Get violations detected
             violations_24h = self._redis_client.get("violations_detected_24h") or 0
@@ -1101,6 +1116,9 @@ class ProtectionOrchestrator:
     
     async def cleanup(self) -> None:
         """Clean up entire protection stack"""
+
+
+
         try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)

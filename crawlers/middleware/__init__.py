@@ -347,11 +347,17 @@ class MiddlewarePipeline:
 
 # Factory functions for easy initialization
 def create_full_pipeline(**kwargs) -> MiddlewarePipeline:
-    """Create a complete middleware pipeline with all components enabled"""    return MiddlewarePipeline(**kwargs)
+    """Create a complete middleware pipeline with all components enabled"""
+
+
+    return MiddlewarePipeline(**kwargs)
 
 
 def create_basic_pipeline() -> MiddlewarePipeline:
-    """Create a basic middleware pipeline with essential components only"""    return MiddlewarePipeline(
+    """Create a basic middleware pipeline with essential components only"""
+
+
+    return MiddlewarePipeline(
         enable_authentication=True,
         enable_rate_limiting=True,
         enable_security=True,
@@ -364,7 +370,10 @@ def create_basic_pipeline() -> MiddlewarePipeline:
 
 
 def create_content_pipeline() -> MiddlewarePipeline:
-    """Create a content-focused pipeline for media processing"""    return MiddlewarePipeline(
+    """Create a content-focused pipeline for media processing"""
+
+
+    return MiddlewarePipeline(
         enable_authentication=True,
         enable_rate_limiting=True,
         enable_security=True,
@@ -648,7 +657,10 @@ class MiddlewarePipeline:
             }
     
     async def get_pipeline_status(self) -> Dict[str, Any]:
-        """Get comprehensive pipeline status"""        try:
+        """Get comprehensive pipeline status"""
+
+
+        try:
             # Get status from all components
             auth_status = await self.authentication.get_dashboard_data()
             rate_limit_status = await self.rate_limiting.get_dashboard_data()
@@ -684,7 +696,10 @@ class MiddlewarePipeline:
             }
     
     async def configure_pipeline(self, config: Dict[str, Any]):
-        """Configure pipeline settings"""        try:
+        """Configure pipeline settings"""
+
+
+        try:
             if "enabled" in config:
                 self.pipeline_enabled = config["enabled"]
             

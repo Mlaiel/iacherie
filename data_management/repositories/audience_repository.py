@@ -1,5 +1,5 @@
 """
-👥 Audience Repository - IA Influencer Agent Platform Enterprise
+ Audience Repository - IA Influencer Agent Platform Enterprise
 ===============================================================
 Module: backend/data_management/repositories/audience_repository.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Audience Management Repository - Production-Ready
 Responsibility: Advanced audience analysis, engagement tracking, and growth optimization
 ==================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
@@ -326,6 +326,9 @@ class AudienceRepository(BaseRepository):
     def track_engagement(self, content_id: str, platform: AudiencePlatform,
                         engagement_data: Dict[str, Any]) -> EngagementMetrics:
         """Track audience engagement event"""
+
+
+
         try:
             engagement = EngagementMetrics(
                 content_id=content_id,
@@ -363,6 +366,9 @@ class AudienceRepository(BaseRepository):
     def analyze_audience_demographics(self, creator_id: str, platform: AudiencePlatform = None,
                                     time_range: str = "30d") -> AudienceDemographics:
         """Analyze audience demographics"""
+
+
+
         try:
             # Get engagement data
             engagement_data = self._fetch_engagement_data(creator_id, platform, time_range)
@@ -384,6 +390,9 @@ class AudienceRepository(BaseRepository):
     def generate_audience_insights(self, creator_id: str, platforms: List[AudiencePlatform] = None,
                                  insight_types: List[str] = None) -> List[AudienceInsight]:
         """Generate AI-powered audience insights"""
+
+
+
         try:
             platforms = platforms or list(AudiencePlatform)
             insight_types = insight_types or ['engagement', 'growth', 'content', 'timing']
@@ -415,6 +424,9 @@ class AudienceRepository(BaseRepository):
                              target_platforms: List[AudiencePlatform] = None,
                              timeline_months: int = 6) -> GrowthStrategy:
         """Create AI-optimized growth strategy"""
+
+
+
         try:
             target_platforms = target_platforms or list(AudiencePlatform)
             
@@ -443,6 +455,9 @@ class AudienceRepository(BaseRepository):
     def get_content_personalization(self, creator_id: str, audience_segment: str = None,
                                   content_types: List[str] = None) -> List[ContentPersonalization]:
         """Get personalized content recommendations"""
+
+
+
         try:
             # Get audience segments
             segments = [audience_segment] if audience_segment else self._get_audience_segments(creator_id)
@@ -476,6 +491,9 @@ class AudienceRepository(BaseRepository):
     def analyze_audience_retention(self, creator_id: str, platform: AudiencePlatform,
                                  analysis_period: str = "90d") -> AudienceRetention:
         """Analyze audience retention and churn"""
+
+
+
         try:
             # Get retention data
             retention_data = self._fetch_retention_data(creator_id, platform, analysis_period)
@@ -500,6 +518,9 @@ class AudienceRepository(BaseRepository):
 
     def get_cross_platform_correlation(self, creator_id: str, metrics: List[str] = None) -> Dict[str, Any]:
         """Analyze cross-platform audience correlation"""
+
+
+
         try:
             metrics = metrics or ['engagement_rate', 'growth_rate', 'conversion_rate']
             
@@ -534,6 +555,9 @@ class AudienceRepository(BaseRepository):
     def predict_audience_growth(self, creator_id: str, prediction_period: str = "30d",
                               scenarios: List[str] = None) -> Dict[str, Any]:
         """Predict audience growth using AI"""
+
+
+
         try:
             scenarios = scenarios or ['current_trend', 'optimistic', 'pessimistic', 'with_strategy']
             
@@ -571,6 +595,9 @@ class AudienceRepository(BaseRepository):
     def get_engagement_analytics(self, creator_id: str, platform: AudiencePlatform = None,
                                time_range: str = "30d") -> Dict[str, Any]:
         """Get comprehensive engagement analytics"""
+
+
+
         try:
             # Get engagement data
             if platform:
@@ -802,6 +829,9 @@ class AudienceRepository(BaseRepository):
 
     def _generate_retention_improvement_recommendations(self, analysis: AudienceRetention):
         """Generate retention improvement recommendations"""
+
+
+
         try:
             recommendations = []
             
@@ -1086,6 +1116,9 @@ class AsyncAudienceRepository(AsyncBaseRepository):
 
     async def batch_track_engagement(self, engagement_events: List[Dict[str, Any]]) -> List[EngagementMetrics]:
         """Track multiple engagement events concurrently"""
+
+
+
         try:
             semaphore = asyncio.Semaphore(self._max_concurrent_operations)
             
@@ -1112,6 +1145,9 @@ class AsyncAudienceRepository(AsyncBaseRepository):
     async def generate_multi_platform_insights_async(self, creator_id: str, 
                                                    platforms: List[AudiencePlatform] = None) -> List[AudienceInsight]:
         """Generate insights for multiple platforms concurrently"""
+
+
+
         try:
             platforms = platforms or list(AudiencePlatform)
             insight_types = ['engagement', 'growth', 'content', 'timing']

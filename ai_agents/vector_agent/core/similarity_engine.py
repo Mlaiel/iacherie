@@ -7,7 +7,7 @@ content matching capabilities across audio, video, image, and text modalities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Any attempt to steal the concept, idea, or code without explicit written authorization
@@ -108,6 +108,9 @@ class SimilarityAlgorithm:
     
     def _pearson_correlation(self, a: np.ndarray, b: np.ndarray) -> float:
         """Compute Pearson correlation coefficient"""
+
+
+
         try:
             corr, _ = pearsonr(a.flatten(), b.flatten())
             return abs(corr) if not np.isnan(corr) else 0.0
@@ -116,6 +119,9 @@ class SimilarityAlgorithm:
     
     def _spearman_correlation(self, a: np.ndarray, b: np.ndarray) -> float:
         """Compute Spearman correlation coefficient"""
+
+
+
         try:
             corr, _ = spearmanr(a.flatten(), b.flatten())
             return abs(corr) if not np.isnan(corr) else 0.0
@@ -124,6 +130,9 @@ class SimilarityAlgorithm:
     
     def _jaccard_similarity(self, a: np.ndarray, b: np.ndarray) -> float:
         """Compute Jaccard similarity (for binary/sparse vectors)"""
+
+
+
         try:
             # Binarize vectors (threshold at mean)
             a_binary = (a > np.mean(a)).astype(int)
@@ -138,6 +147,9 @@ class SimilarityAlgorithm:
     
     def _hamming_similarity(self, a: np.ndarray, b: np.ndarray) -> float:
         """Compute similarity based on Hamming distance"""
+
+
+
         try:
             # Binarize vectors
             a_binary = (a > np.mean(a)).astype(int)
@@ -196,6 +208,9 @@ class ContentTypeSimilarityProcessor:
     def compute_comprehensive_similarity(self, vector_a: np.ndarray, 
                                        vector_b: np.ndarray) -> SimilarityScore:
         """Compute comprehensive similarity score"""
+
+
+
         try:
             # Normalize vectors
             vector_a = self._normalize_vector(vector_a)
@@ -236,6 +251,9 @@ class ContentTypeSimilarityProcessor:
     
     def _normalize_vector(self, vector: np.ndarray) -> np.ndarray:
         """Normalize vector using appropriate method for content type"""
+
+
+
         try:
             if self.content_type in ["audio", "music"]:
                 # L2 normalization for audio
@@ -314,6 +332,9 @@ class SimilarityEngine:
     
     async def initialize(self) -> None:
         """Initialize similarity engine and processors"""
+
+
+
         try:
             # Initialize processors for different content types
             content_types = ["audio", "video", "image", "text", "composite"]
@@ -331,6 +352,9 @@ class SimilarityEngine:
     
     async def search_similar(self, request: VectorSearchRequest) -> List[VectorSearchResult]:
         """Search for similar vectors using advanced similarity computation"""
+
+
+
         try:
             start_time = time.time()
             
@@ -402,6 +426,9 @@ class SimilarityEngine:
     async def compute_pairwise_similarity(self, vector_a: np.ndarray, vector_b: np.ndarray,
                                         content_type: str) -> SimilarityScore:
         """Compute similarity between two specific vectors"""
+
+
+
         try:
             # Generate cache key
             cache_key = self._generate_cache_key(vector_a, vector_b, content_type)
@@ -438,6 +465,9 @@ class SimilarityEngine:
                                          candidate_vectors: List[np.ndarray],
                                          content_type: str) -> List[SimilarityScore]:
         """Compute similarity for batch of candidates"""
+
+
+
         try:
             processor = self.processors.get(content_type, self.processors.get("composite"))
             
@@ -474,6 +504,9 @@ class SimilarityEngine:
     async def process_audio_similarity(self, vector_data: np.ndarray, 
                                      metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Process audio-specific similarity computation"""
+
+
+
         try:
             # Audio-specific preprocessing
             if "spectral_features" in metadata:
@@ -510,6 +543,9 @@ class SimilarityEngine:
     async def process_video_similarity(self, vector_data: np.ndarray, 
                                      metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Process video-specific similarity computation"""
+
+
+
         try:
             # Video-specific features
             visual_weight = 0.7
@@ -539,6 +575,9 @@ class SimilarityEngine:
     async def process_image_similarity(self, vector_data: np.ndarray, 
                                      metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Process image-specific similarity computation"""
+
+
+
         try:
             processor = self.processors["image"]
             reference_vector = np.random.rand(*vector_data.shape).astype(np.float32)
@@ -564,6 +603,9 @@ class SimilarityEngine:
     async def process_text_similarity(self, vector_data: np.ndarray, 
                                     metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Process text-specific similarity computation"""
+
+
+
         try:
             processor = self.processors["text"]
             reference_vector = np.random.rand(*vector_data.shape).astype(np.float32)
@@ -589,6 +631,9 @@ class SimilarityEngine:
     async def process_generic_similarity(self, vector_data: np.ndarray, 
                                        metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Process generic similarity computation"""
+
+
+
         try:
             processor = self.processors["composite"]
             reference_vector = np.random.rand(*vector_data.shape).astype(np.float32)
@@ -663,6 +708,9 @@ class SimilarityEngine:
     
     async def shutdown(self):
         """Graceful shutdown of similarity engine"""
+
+
+
         try:
             # Shutdown thread pool
             self.thread_pool.shutdown(wait=True)

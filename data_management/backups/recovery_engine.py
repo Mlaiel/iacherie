@@ -1,5 +1,5 @@
 """
-🔄 Recovery Engine - Advanced Backup Recovery System
+ Recovery Engine - Advanced Backup Recovery System
 ===================================================
 Module: backend/data_management/backups/recovery_engine.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Recovery System - Enterprise Production-Ready
 Responsibility: Récupération intelligente et restauration sauvegardes
 ==================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -84,6 +84,9 @@ class RecoveryPlan:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit en dictionnaire"""
+
+
+
         return {
             "recovery_id": self.recovery_id,
             "strategy": self.strategy.value,
@@ -143,6 +146,9 @@ class RecoveryProgress:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit en dictionnaire"""
+
+
+
         return {
             "recovery_id": self.recovery_id,
             "status": self.status.value,
@@ -178,6 +184,9 @@ class RecoveryConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit en dictionnaire"""
+
+
+
         return {
             "parallel_workers": self.parallel_workers,
             "chunk_size": self.chunk_size,
@@ -258,6 +267,9 @@ class RecoveryEngine:
         Returns:
             RecoveryPlan: Plan de récupération détaillé
         """
+
+
+
         try:
             recovery_id = self._generate_recovery_id()
             
@@ -428,6 +440,9 @@ class RecoveryEngine:
         Returns:
             str: ID de la récupération lancée
         """
+
+
+
         try:
             recovery_id = plan.recovery_id
             
@@ -470,6 +485,9 @@ class RecoveryEngine:
             plan: Plan de récupération
             progress: Objet de progression
         """
+
+
+
         try:
             # Récupération métadonnées
             backup_metadata = await self._get_backup_metadata(plan.source_backup_id)
@@ -652,6 +670,9 @@ class RecoveryEngine:
             file_info: Informations du fichier
             progress: Objet de progression
         """
+
+
+
         try:
             source_path = Path(file_info["path"])
             target_path = plan.target_location / source_path.name
@@ -733,6 +754,9 @@ class RecoveryEngine:
         Returns:
             Optional[Path]: Fichier temporaire récupéré
         """
+
+
+
         try:
             # En production: récupération depuis le storage provider
             # Ici: simulation avec fichier local
@@ -760,6 +784,9 @@ class RecoveryEngine:
         file_info: Dict[str, Any]
     ) -> Optional[Path]:
         """Déchiffre un fichier récupéré"""
+
+
+
         try:
             if not self.encryption_manager:
                 return None
@@ -791,6 +818,9 @@ class RecoveryEngine:
         file_info: Dict[str, Any]
     ) -> Optional[Path]:
         """Décompresse un fichier récupéré"""
+
+
+
         try:
             if not self.compression_engine:
                 return None
@@ -822,6 +852,9 @@ class RecoveryEngine:
         file_info: Dict[str, Any]
     ):
         """Vérifie l'intégrité du fichier restauré"""
+
+
+
         try:
             # Vérification taille
             expected_size = file_info.get("original_size", file_info.get("size"))
@@ -854,6 +887,9 @@ class RecoveryEngine:
         file_info: Dict[str, Any]
     ):
         """Restaure les permissions d'un fichier"""
+
+
+
         try:
             # Restauration permissions Unix
             if "permissions" in file_info:
@@ -925,6 +961,9 @@ class RecoveryEngine:
         Returns:
             bool: True si mise en pause réussie
         """
+
+
+
         try:
             if recovery_id not in self.active_recoveries:
                 return False
@@ -958,6 +997,9 @@ class RecoveryEngine:
         Returns:
             bool: True si reprise réussie
         """
+
+
+
         try:
             if recovery_id not in self.active_recoveries:
                 return False
@@ -988,6 +1030,9 @@ class RecoveryEngine:
         Returns:
             bool: True si annulation réussie
         """
+
+
+
         try:
             if recovery_id not in self.active_recoveries:
                 return False
@@ -1019,6 +1064,9 @@ class RecoveryEngine:
         Returns:
             Optional[RecoveryProgress]: Progression actuelle
         """
+
+
+
         return self.active_recoveries.get(recovery_id)
     
     def list_active_recoveries(self) -> List[RecoveryProgress]:
@@ -1028,6 +1076,9 @@ class RecoveryEngine:
         Returns:
             List[RecoveryProgress]: Récupérations en cours
         """
+
+
+
         return list(self.active_recoveries.values())
     
     def get_recovery_stats(self) -> Dict[str, Any]:

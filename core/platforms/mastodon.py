@@ -50,6 +50,9 @@ class MastodonPlatform(PlatformBase):
     
     async def authenticate(self) -> bool:
         """Authenticate with Mastodon"""
+
+
+
         try:
             access_token = self.config.credentials.get('access_token')
             
@@ -85,10 +88,16 @@ class MastodonPlatform(PlatformBase):
     
     async def refresh_token(self) -> bool:
         """Refresh Mastodon token"""
+
+
+
         return await self.authenticate()
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
         """Make authenticated request to Mastodon API"""
+
+
+
         try:
             session = await self._get_session()
             
@@ -130,6 +139,9 @@ class MastodonPlatform(PlatformBase):
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
         """Post content on Mastodon"""
+
+
+
         try:
             media_ids = []
             
@@ -195,6 +207,9 @@ class MastodonPlatform(PlatformBase):
     
     async def _upload_media(self, file_path: str, description: str = None) -> Optional[str]:
         """Upload media file to Mastodon"""
+
+
+
         try:
             session = await self._get_session()
             
@@ -226,6 +241,9 @@ class MastodonPlatform(PlatformBase):
     async def get_analytics(self, content_id: str, start_date: datetime, 
                            end_date: datetime) -> AnalyticsData:
         """Get Mastodon post analytics"""
+
+
+
         try:
             result = await self._make_request('GET', f'/statuses/{content_id}')
             
@@ -258,6 +276,9 @@ class MastodonPlatform(PlatformBase):
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
         """Search content on Mastodon"""
+
+
+
         try:
             params = {
                 'q': query,
@@ -293,6 +314,9 @@ class MastodonPlatform(PlatformBase):
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
         """Get user's statuses from Mastodon"""
+
+
+
         try:
             target_user_id = user_id or self.config.credentials.get('user_id')
             if not target_user_id:
@@ -331,6 +355,9 @@ class MastodonPlatform(PlatformBase):
     
     async def delete_content(self, content_id: str) -> bool:
         """Delete Mastodon status"""
+
+
+
         try:
             result = await self._make_request('DELETE', f'/statuses/{content_id}')
             return result is not None
@@ -341,6 +368,9 @@ class MastodonPlatform(PlatformBase):
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
         """Update Mastodon status (edit if supported)"""
+
+
+
         try:
             # Check if instance supports editing
             edit_data = {
@@ -356,6 +386,9 @@ class MastodonPlatform(PlatformBase):
     
     async def get_home_timeline(self, limit: int = 20) -> List[Dict[str, Any]]:
         """Get home timeline"""
+
+
+
         try:
             params = {'limit': min(limit, 40)}
             result = await self._make_request('GET', '/timelines/home', params=params)
@@ -385,6 +418,9 @@ class MastodonPlatform(PlatformBase):
     
     async def get_public_timeline(self, local: bool = False, limit: int = 20) -> List[Dict[str, Any]]:
         """Get public timeline"""
+
+
+
         try:
             params = {
                 'local': 'true' if local else 'false',
@@ -416,6 +452,9 @@ class MastodonPlatform(PlatformBase):
     
     async def follow_user(self, user_id: str) -> bool:
         """Follow a user"""
+
+
+
         try:
             result = await self._make_request('POST', f'/accounts/{user_id}/follow')
             return result is not None
@@ -426,6 +465,9 @@ class MastodonPlatform(PlatformBase):
     
     async def unfollow_user(self, user_id: str) -> bool:
         """Unfollow a user"""
+
+
+
         try:
             result = await self._make_request('POST', f'/accounts/{user_id}/unfollow')
             return result is not None
@@ -436,6 +478,9 @@ class MastodonPlatform(PlatformBase):
     
     async def favourite_status(self, status_id: str) -> bool:
         """Favourite a status"""
+
+
+
         try:
             result = await self._make_request('POST', f'/statuses/{status_id}/favourite')
             return result is not None
@@ -446,6 +491,9 @@ class MastodonPlatform(PlatformBase):
     
     async def boost_status(self, status_id: str) -> bool:
         """Boost (reblog) a status"""
+
+
+
         try:
             result = await self._make_request('POST', f'/statuses/{status_id}/reblog')
             return result is not None
@@ -456,6 +504,9 @@ class MastodonPlatform(PlatformBase):
     
     async def get_instance_info(self) -> Optional[Dict[str, Any]]:
         """Get Mastodon instance information"""
+
+
+
         try:
             result = await self._make_request('GET', '/instance')
             

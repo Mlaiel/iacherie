@@ -264,6 +264,9 @@ class AmazonMusicCrawler(BaseCrawler):
         
     async def authenticate(self, access_token: str = None, device_id: str = None, marketplace: str = "US") -> bool:
         """Authenticate with Amazon Music"""
+
+
+
         try:
             self.marketplace = marketplace
             
@@ -611,6 +614,9 @@ class AmazonMusicCrawler(BaseCrawler):
         Returns:
             Comprehensive performance analysis
         """
+
+
+
         try:
             track = await self.get_track_details(track_id)
             if not track:
@@ -682,6 +688,9 @@ class AmazonMusicCrawler(BaseCrawler):
         Returns:
             Comprehensive artist market analysis
         """
+
+
+
         try:
             artist = await self.get_artist_details(artist_id)
             if not artist:
@@ -758,6 +767,9 @@ class AmazonMusicCrawler(BaseCrawler):
         Returns:
             Comprehensive trend analysis
         """
+
+
+
         try:
             # Get chart data for trend analysis
             chart_tracks = await self.get_charts("top_songs", genre, country, time_period)
@@ -811,6 +823,9 @@ class AmazonMusicCrawler(BaseCrawler):
     
     async def _parse_search_results(self, html_content: str, content_type: str) -> List[Dict]:
         """Parse search results from Amazon Music HTML"""
+
+
+
         try:
             soup = BeautifulSoup(html_content, 'html.parser')
             results = []
@@ -869,6 +884,9 @@ class AmazonMusicCrawler(BaseCrawler):
     
     async def _parse_track_page(self, html_content: str) -> Dict:
         """Parse track page HTML for detailed information"""
+
+
+
         try:
             soup = BeautifulSoup(html_content, 'html.parser')
             track_data = {}
@@ -943,6 +961,9 @@ class AmazonMusicCrawler(BaseCrawler):
     
     async def _parse_artist_page(self, html_content: str) -> Dict:
         """Parse artist page HTML for detailed information"""
+
+
+
         try:
             soup = BeautifulSoup(html_content, 'html.parser')
             artist_data = {}
@@ -998,6 +1019,9 @@ class AmazonMusicCrawler(BaseCrawler):
     
     async def _parse_album_page(self, html_content: str) -> Dict:
         """Parse album page HTML for detailed information"""
+
+
+
         try:
             soup = BeautifulSoup(html_content, 'html.parser')
             album_data = {}
@@ -1048,6 +1072,9 @@ class AmazonMusicCrawler(BaseCrawler):
     
     def _extract_id_from_url(self, url: str) -> str:
         """Extract ID from Amazon Music URL"""
+
+
+
         try:
             # Amazon Music URLs typically contain IDs in various formats
             # e.g., /albums/B08XYZ123 or /tracks/B08ABC456
@@ -1071,6 +1098,9 @@ class AmazonMusicCrawler(BaseCrawler):
     
     def _parse_duration(self, duration_text: str) -> int:
         """Parse duration string to seconds"""
+
+
+
         try:
             if not duration_text:
                 return 0
@@ -1097,6 +1127,9 @@ class AmazonMusicCrawler(BaseCrawler):
     
     def _parse_date(self, date_text: str) -> Optional[datetime]:
         """Parse date string to datetime object"""
+
+
+
         try:
             if not date_text:
                 return None
@@ -1131,6 +1164,9 @@ class AmazonMusicCrawler(BaseCrawler):
     
     def _parse_count(self, count_text: str) -> int:
         """Parse count string (e.g., '1.2M', '10K') to integer"""
+
+
+
         try:
             if not count_text:
                 return 0
@@ -1160,6 +1196,9 @@ class AmazonMusicCrawler(BaseCrawler):
     
     def _parse_price(self, price_text: str) -> Optional[float]:
         """Parse price string to float"""
+
+
+
         try:
             if not price_text:
                 return None
@@ -1177,6 +1216,9 @@ class AmazonMusicCrawler(BaseCrawler):
     
     async def _create_track_model(self, track_data: Dict) -> Optional[AmazonMusicTrack]:
         """Create AmazonMusicTrack model from parsed data"""
+
+
+
         try:
             track = AmazonMusicTrack(
                 track_id=track_data.get('id', ''),
@@ -1205,6 +1247,9 @@ class AmazonMusicCrawler(BaseCrawler):
     
     async def _create_artist_model(self, artist_data: Dict) -> Optional[AmazonMusicArtist]:
         """Create AmazonMusicArtist model from parsed data"""
+
+
+
         try:
             artist = AmazonMusicArtist(
                 artist_id=artist_data.get('id', ''),
@@ -1226,6 +1271,9 @@ class AmazonMusicCrawler(BaseCrawler):
     
     async def _create_album_model(self, album_data: Dict) -> Optional[AmazonMusicAlbum]:
         """Create AmazonMusicAlbum model from parsed data"""
+
+
+
         try:
             album = AmazonMusicAlbum(
                 album_id=album_data.get('id', ''),
@@ -1340,22 +1388,37 @@ class AmazonMusicCrawler(BaseCrawler):
     # Placeholder methods for complex analysis features
     async def _get_track_chart_performance(self, track_id: str) -> Dict:
         """Get chart performance data for track"""
+
+
+
         return {'current_position': None, 'peak_position': None, 'weeks_on_chart': 0}
     
     async def _analyze_geographic_availability(self, track_id: str) -> Dict:
         """Analyze geographic availability of track"""
+
+
+
         return {'available_countries': [], 'restricted_countries': []}
     
     async def _analyze_genre_competition(self, track: AmazonMusicTrack) -> Dict:
         """Analyze competition within track's genre"""
+
+
+
         return {'competitive_density': 'medium', 'market_saturation': 0.6}
     
     async def _find_similar_tracks(self, track: AmazonMusicTrack) -> List[str]:
         """Find similar tracks on the platform"""
+
+
+
         return []
     
     def _calculate_market_opportunity(self, track: AmazonMusicTrack) -> float:
         """Calculate market opportunity score"""
+
+
+
         return 0.5  # Placeholder
     
     def _generate_track_optimization_recommendations(self, track: AmazonMusicTrack) -> List[str]:

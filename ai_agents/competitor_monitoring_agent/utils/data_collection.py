@@ -106,6 +106,9 @@ class DataCollectionManager:
     
     async def collect_competitor_data(self, competitor_id: str, data_types: List[str] = None) -> List[CollectedData]:
         """Collect data for a specific competitor from all relevant sources."""
+
+
+
         try:
             self.logger.info(f"Starting data collection for competitor: {competitor_id}")
             
@@ -163,6 +166,9 @@ class DataCollectionManager:
     
     async def collect_website_data(self, competitor_id: str, website_url: str) -> List[CollectedData]:
         """Collect data from competitor website."""
+
+
+
         try:
             collected_data = []
             
@@ -192,6 +198,9 @@ class DataCollectionManager:
     
     async def collect_social_media_data(self, competitor_id: str, platforms: Dict[str, str]) -> List[CollectedData]:
         """Collect data from social media platforms."""
+
+
+
         try:
             collected_data = []
             
@@ -218,6 +227,9 @@ class DataCollectionManager:
     
     async def collect_news_data(self, competitor_id: str, competitor_name: str) -> List[CollectedData]:
         """Collect news and media mentions."""
+
+
+
         try:
             collected_data = []
             
@@ -274,6 +286,9 @@ class DataCollectionManager:
     
     async def collect_financial_data(self, competitor_id: str, company_info: Dict[str, Any]) -> List[CollectedData]:
         """Collect financial and business data."""
+
+
+
         try:
             collected_data = []
             
@@ -339,6 +354,9 @@ class DataCollectionManager:
     
     async def _collect_from_source(self, source: DataSource, competitor_id: str, data_types: List[str]) -> List[CollectedData]:
         """Collect data from a specific source."""
+
+
+
         try:
             # Check rate limits
             if not await self.rate_limiter.can_proceed(source.source_id, source.rate_limit):
@@ -375,6 +393,9 @@ class DataCollectionManager:
     
     async def _collect_main_website_data(self, competitor_id: str, website_url: str) -> Optional[CollectedData]:
         """Collect main website information."""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(website_url, timeout=self.collection_timeout) as response:
@@ -420,6 +441,9 @@ class DataCollectionManager:
     
     async def _collect_platform_data(self, competitor_id: str, platform: str, profile_url: str) -> List[CollectedData]:
         """Collect data from a specific social media platform."""
+
+
+
         try:
             collected_data = []
             
@@ -462,6 +486,9 @@ class DataCollectionManager:
     
     async def _calculate_quality_score(self, data: Dict[str, Any]) -> float:
         """Calculate quality score for collected data."""
+
+
+
         try:
             score = 0.5  # Base score
             
@@ -487,6 +514,9 @@ class DataCollectionManager:
     
     async def get_collection_status(self) -> Dict[str, Any]:
         """Get current collection status and metrics."""
+
+
+
         return {
             "total_sources": len(self.data_sources),
             "active_sources": len([s for s in self.data_sources.values() if s.active]),

@@ -31,7 +31,7 @@ class NotificationManagerConfig:
 
 class NotificationManager(ABC):
     """
-    🎯 Gestionnaire NotificationManager - IA-Influencer-Agent
+     Gestionnaire NotificationManager - IA-Influencer-Agent
     
     Responsabilité:
     Fonctionnalité spécialisée IA-Influencer-Agent
@@ -58,7 +58,7 @@ class NotificationManager(ABC):
             "failed_requests": 0,
             "average_response_time": 0.0
         }
-        logger.info(f"🎯 Initialisation {self.__class__.__name__}")
+        logger.info(f" Initialisation {self.__class__.__name__}")
     
     @abstractmethod
     async def initialize_pool(self) -> bool:

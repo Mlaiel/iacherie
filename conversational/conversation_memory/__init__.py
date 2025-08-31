@@ -16,7 +16,7 @@ This module implements advanced conversation memory techniques including:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE ⚠️
+  CRITICAL LEGAL NOTICE 
 This software and all associated intellectual property are the exclusive property
 of Fahed Mlaiel. Unauthorized use, copying, distribution, modification, or 
 commercialization without explicit written permission is strictly prohibited.
@@ -168,4 +168,4 @@ def get_memory_indexer() -> MemoryIndexer:
 # Module initialization
 logger.info("Conversation Memory module initialized - Enterprise Memory Management System")
 logger.info(f"Version: {__version__} | Author: {__author__}")
-logger.info("⚠️  Protected Intellectual Property - Unauthorized use prohibited")
+logger.info("  Protected Intellectual Property - Unauthorized use prohibited")

@@ -1,5 +1,5 @@
 """
-🎵 Audio Processing Core Module - Professional Audio Intelligence Engine
+ Audio Processing Core Module - Professional Audio Intelligence Engine
 
 Advanced core components for high-performance audio processing in the IA Influencer Agent platform.
 Implements industrial-grade audio analysis, enhancement, and processing capabilities.
@@ -83,7 +83,7 @@ class AudioAnalysisResult:
 
 class AudioProcessor:
     """
-    🎵 Professional Audio Processor
+     Professional Audio Processor
     
     High-performance audio processing engine with advanced capabilities:
     - Multi-format support (WAV, MP3, FLAC, AAC, OGG)
@@ -127,6 +127,9 @@ class AudioProcessor:
         Returns:
             Tuple of (audio_data, sample_rate)
         """
+
+
+
         try:
             file_path = Path(file_path)
             
@@ -172,6 +175,9 @@ class AudioProcessor:
             format: Output format (wav, mp3, flac, etc.)
             quality: Quality setting (low, medium, high, lossless)
         """
+
+
+
         try:
             output_path = Path(output_path)
             output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -231,6 +237,9 @@ class AudioProcessor:
                           threshold_db: float = -40.0,
                           frame_length: int = 2048) -> np.ndarray:
         """Intelligent silence trimming"""
+
+
+
         try:
             # Convert dB threshold to amplitude
             threshold_amp = librosa.db_to_amplitude(threshold_db)
@@ -254,7 +263,7 @@ class AudioProcessor:
 
 class AudioAnalyzer:
     """
-    🔍 Advanced Audio Analyzer
+     Advanced Audio Analyzer
     
     Comprehensive audio analysis engine providing:
     - Spectral analysis and feature extraction
@@ -272,6 +281,9 @@ class AudioAnalyzer:
                              audio_data: np.ndarray,
                              sample_rate: int) -> AudioFeatures:
         """Extract comprehensive audio features"""
+
+
+
         try:
             # Basic spectral features
             mfcc = librosa.feature.mfcc(
@@ -352,6 +364,9 @@ class AudioAnalyzer:
                                         sample_rate: int,
                                         file_path: Optional[Path] = None) -> AudioAnalysisResult:
         """Perform comprehensive audio analysis"""
+
+
+
         try:
             # Extract features
             features = await self.extract_features(audio_data, sample_rate)
@@ -410,6 +425,9 @@ class AudioAnalyzer:
     
     def _calculate_quality_score(self, audio_data: np.ndarray, sample_rate: int) -> float:
         """Calculate audio quality score (0-100)"""
+
+
+
         try:
             # SNR estimation
             signal_power = np.mean(audio_data ** 2)
@@ -541,6 +559,9 @@ class AudioAnalyzer:
     
     def _detect_time_signature(self, audio_data: np.ndarray, sample_rate: int) -> int:
         """Detect time signature"""
+
+
+
         try:
             tempo, beats = librosa.beat.beat_track(y=audio_data, sr=sample_rate)
             beat_intervals = np.diff(beats)
@@ -557,7 +578,7 @@ class AudioAnalyzer:
 
 class AudioEnhancer:
     """
-    ✨ Professional Audio Enhancer
+     Professional Audio Enhancer
     
     Advanced audio enhancement capabilities:
     - Noise reduction and restoration
@@ -575,6 +596,9 @@ class AudioEnhancer:
                           sample_rate: int,
                           noise_floor_db: float = -40.0) -> np.ndarray:
         """Advanced noise reduction using spectral gating"""
+
+
+
         try:
             # Convert to frequency domain
             stft = librosa.stft(audio_data, hop_length=512)
@@ -608,6 +632,9 @@ class AudioEnhancer:
                                audio_data: np.ndarray,
                                target_lufs: float = -23.0) -> np.ndarray:
         """Normalize audio to target loudness (LUFS)"""
+
+
+
         try:
             # Calculate current RMS (approximation of LUFS)
             current_rms = np.sqrt(np.mean(audio_data ** 2))
@@ -637,6 +664,9 @@ class AudioEnhancer:
                             sample_rate: int,
                             enhancement_factor: float = 1.5) -> np.ndarray:
         """Enhance audio clarity and presence"""
+
+
+
         try:
             # Apply subtle high-frequency enhancement
             nyquist = sample_rate // 2
@@ -672,6 +702,9 @@ class AudioEnhancer:
                               release_ms: float = 100.0,
                               sample_rate: int = 44100) -> np.ndarray:
         """Apply dynamic range compression"""
+
+
+
         try:
             # Convert time constants to samples
             attack_samples = int(attack_ms * sample_rate / 1000)

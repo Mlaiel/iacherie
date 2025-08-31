@@ -4,7 +4,7 @@ Workflow Processor Module - IA-Influencer-Agent Platform
 Enterprise-grade workflow orchestration engine for multi-stage content processing.
 AI-powered pipeline management, content routing, and automated workflow execution.
 
-✨ EXPERT TEAM SPECIALTIES:
+ EXPERT TEAM SPECIALTIES:
 - Lead Dev IA: AI-powered workflow optimization and intelligent content routing
 - Backend Senior: Scalable orchestration architecture and distributed processing
 - ML Engineer: Workflow optimization algorithms and performance prediction models  
@@ -17,7 +17,7 @@ AI-powered pipeline management, content routing, and automated workflow executio
 Author: Fahed Mlaiel <mlaiel@live.de>
 Email: mlaiel@live.de
 
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 This software is proprietary and confidential. Any unauthorized use, copying, 
 distribution, or commercialization without explicit written permission from 
 Fahed Mlaiel is strictly prohibited and will result in legal action.
@@ -154,6 +154,9 @@ class WorkflowDefinition:
     
     def get_step(self, step_id: str) -> Optional[WorkflowStep]:
         """Get step by ID"""
+
+
+
         return next((step for step in self.steps if step.id == step_id), None)
     
     def get_dependencies_graph(self) -> nx.DiGraph:
@@ -232,7 +235,7 @@ class WorkflowConfig:
 
 class WorkflowProcessor:
     """
-    🏭 ENTERPRISE WORKFLOW ORCHESTRATION ENGINE
+     ENTERPRISE WORKFLOW ORCHESTRATION ENGINE
     
     Advanced workflow processor for orchestrating complex multi-stage content
     processing pipelines with AI-powered optimization and monitoring.
@@ -325,6 +328,9 @@ class WorkflowProcessor:
         Returns:
             Registration result
         """
+
+
+
         try:
             # Validate workflow definition
             validation_result = await self._validate_workflow_definition(definition)
@@ -341,7 +347,7 @@ class WorkflowProcessor:
             if self.config.enable_state_persistence:
                 await self._persist_workflow_definition(definition)
             
-            self.logger.info(f"✅ Workflow '{definition.name}' registered: {definition.id}")
+            self.logger.info(f" Workflow '{definition.name}' registered: {definition.id}")
             
             return {
                 "success": True,
@@ -350,7 +356,7 @@ class WorkflowProcessor:
             }
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to register workflow: {e}")
+            self.logger.error(f" Failed to register workflow: {e}")
             return {
                 "success": False,
                 "error_message": str(e)
@@ -377,6 +383,9 @@ class WorkflowProcessor:
         Returns:
             Execution result
         """
+
+
+
         try:
             # Get workflow definition
             definition = self._workflow_definitions.get(workflow_id)
@@ -406,7 +415,7 @@ class WorkflowProcessor:
                 self._metrics["workflows_started"].inc()
                 self._metrics["active_workflows"].set(len(self._active_workflows))
             
-            self.logger.info(f"🚀 Starting workflow execution: {execution.id}")
+            self.logger.info(f" Starting workflow execution: {execution.id}")
             
             # Execute workflow asynchronously
             asyncio.create_task(self._execute_workflow_async(execution))
@@ -420,7 +429,7 @@ class WorkflowProcessor:
             }
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to start workflow execution: {e}")
+            self.logger.error(f" Failed to start workflow execution: {e}")
             return {
                 "success": False,
                 "error_message": str(e)
@@ -433,6 +442,9 @@ class WorkflowProcessor:
         Args:
             execution: Workflow execution instance
         """
+
+
+
         try:
             execution.status = WorkflowStatus.RUNNING
             start_time = time.time()
@@ -488,7 +500,7 @@ class WorkflowProcessor:
             # Remove from active workflows
             self._active_workflows.pop(execution.id, None)
             
-            self.logger.info(f"✅ Workflow execution completed: {execution.id} ({execution.status.value})")
+            self.logger.info(f" Workflow execution completed: {execution.id} ({execution.status.value})")
             
         except Exception as e:
             execution.status = WorkflowStatus.FAILED
@@ -503,7 +515,7 @@ class WorkflowProcessor:
             # Remove from active workflows
             self._active_workflows.pop(execution.id, None)
             
-            self.logger.error(f"❌ Workflow execution failed: {execution.id} - {e}")
+            self.logger.error(f" Workflow execution failed: {execution.id} - {e}")
     
     async def _execute_step(
         self,
@@ -520,6 +532,9 @@ class WorkflowProcessor:
         Returns:
             Step execution result
         """
+
+
+
         try:
             step.status = StepStatus.RUNNING
             step.start_time = datetime.now()
@@ -579,6 +594,9 @@ class WorkflowProcessor:
         execution: WorkflowExecution
     ) -> Dict[str, Any]:
         """Execute a processor step"""
+
+
+
         try:
             # Get processor
             processor = self.processor_registry.get_processor(step.processor_type)
@@ -616,6 +634,9 @@ class WorkflowProcessor:
         execution: WorkflowExecution
     ) -> Dict[str, Any]:
         """Execute a condition step"""
+
+
+
         try:
             # Evaluate conditions
             for condition in step.conditions:
@@ -644,6 +665,9 @@ class WorkflowProcessor:
         execution: WorkflowExecution
     ) -> Dict[str, Any]:
         """Execute parallel steps"""
+
+
+
         try:
             parallel_steps = step.config.get("parallel_steps", [])
             
@@ -681,6 +705,9 @@ class WorkflowProcessor:
         execution: WorkflowExecution
     ) -> Dict[str, Any]:
         """Execute a wait step"""
+
+
+
         try:
             wait_seconds = step.config.get("wait_seconds", 0)
             await asyncio.sleep(wait_seconds)
@@ -702,6 +729,9 @@ class WorkflowProcessor:
         execution: WorkflowExecution
     ) -> Dict[str, Any]:
         """Execute a webhook step"""
+
+
+
         try:
             import aiohttp
             
@@ -737,6 +767,9 @@ class WorkflowProcessor:
         execution: WorkflowExecution
     ) -> Dict[str, Any]:
         """Execute a script step"""
+
+
+
         try:
             script = step.config.get("script", "")
             script_type = step.config.get("script_type", "python")
@@ -773,6 +806,9 @@ class WorkflowProcessor:
         execution: WorkflowExecution
     ) -> Dict[str, Any]:
         """Execute a human approval step"""
+
+
+
         try:
             # Create approval request
             approval_id = str(uuid.uuid4())
@@ -907,6 +943,9 @@ class WorkflowProcessor:
         Returns:
             Status information
         """
+
+
+
         try:
             execution = self._active_workflows.get(execution_id)
             if not execution:
@@ -952,6 +991,9 @@ class WorkflowProcessor:
     
     async def pause_workflow(self, execution_id: str) -> Dict[str, Any]:
         """Pause workflow execution"""
+
+
+
         try:
             execution = self._active_workflows.get(execution_id)
             if not execution:
@@ -975,6 +1017,9 @@ class WorkflowProcessor:
     
     async def resume_workflow(self, execution_id: str) -> Dict[str, Any]:
         """Resume paused workflow execution"""
+
+
+
         try:
             execution = self._active_workflows.get(execution_id)
             if not execution:
@@ -1007,6 +1052,9 @@ class WorkflowProcessor:
     
     async def cancel_workflow(self, execution_id: str) -> Dict[str, Any]:
         """Cancel workflow execution"""
+
+
+
         try:
             execution = self._active_workflows.get(execution_id)
             if not execution:
@@ -1034,6 +1082,9 @@ class WorkflowProcessor:
     
     async def list_active_workflows(self) -> Dict[str, Any]:
         """List all active workflow executions"""
+
+
+
         try:
             active_list = []
             for execution_id, execution in self._active_workflows.items():
@@ -1059,6 +1110,9 @@ class WorkflowProcessor:
     
     async def health_check(self) -> Dict[str, Any]:
         """Perform health check"""
+
+
+
         try:
             return {
                 "status": "healthy",
@@ -1111,7 +1165,7 @@ async def create_workflow_processor(
         processor_registry=processor_registry
     )
     
-    logger.info("🏭 Workflow Processor created successfully")
+    logger.info(" Workflow Processor created successfully")
     
     return processor
 
@@ -1131,4 +1185,4 @@ __all__ = [
 ]
 
 
-logger.info("🚀 Workflow Processor Module loaded - Enterprise workflow orchestration ready")
+logger.info(" Workflow Processor Module loaded - Enterprise workflow orchestration ready")

@@ -1,10 +1,10 @@
-"""🔄 Transformation System - IA Influencer Agent Platform Enterprise
+""" Transformation System - IA Influencer Agent Platform Enterprise
 ================================================================
 Module: backend/data_management/transformers/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 """
@@ -222,7 +222,10 @@ class TransformationManager:
         output_path: Optional[str] = None,
         creator_type: Optional[str] = None
     ) -> TransformationResult:
-        """Effectue une transformation selon la configuration"""        
+        """Effectue une transformation selon la configuration"""
+
+
+        
         try:
             # Déterminer le transformateur approprié
             transformer_type = self.transformation_mapping.get(config.type)
@@ -278,7 +281,10 @@ class TransformationManager:
         self,
         transformations: List[TransformationConfig]
     ) -> 'TransformationPipeline':
-        """Crée un pipeline de transformations séquentielles"""        return TransformationPipeline(transformations, self)
+        """Crée un pipeline de transformations séquentielles"""
+
+
+        return TransformationPipeline(transformations, self)
     
     def get_optimal_config(
         self,

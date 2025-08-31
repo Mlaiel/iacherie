@@ -12,7 +12,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 
-⚠️ STRICT COPYRIGHT PROTECTION ⚠️
+ STRICT COPYRIGHT PROTECTION 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 
@@ -62,6 +62,9 @@ class ImageQualityAnalyzer:
     
     def analyze_image_quality(self, image: np.ndarray) -> Dict[str, float]:
         """Analyze comprehensive image quality metrics."""
+
+
+
         try:
             quality_metrics = {}
             
@@ -110,6 +113,9 @@ class ImageQualityAnalyzer:
     
     def _analyze_color_properties(self, image: np.ndarray) -> Dict[str, float]:
         """Analyze color properties of the image."""
+
+
+
         try:
             # Convert to HSV for better color analysis
             hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
@@ -140,6 +146,9 @@ class ImageQualityAnalyzer:
     
     def _estimate_noise(self, gray_image: np.ndarray) -> float:
         """Estimate noise level in the image."""
+
+
+
         try:
             # Use high-pass filter to estimate noise
             kernel = np.array([[-1, -1, -1],
@@ -157,6 +166,9 @@ class ImageQualityAnalyzer:
     
     def _detect_compression_artifacts(self, gray_image: np.ndarray) -> float:
         """Detect JPEG compression artifacts."""
+
+
+
         try:
             # Use DCT to detect blocking artifacts
             h, w = gray_image.shape
@@ -190,6 +202,9 @@ class ImageQualityAnalyzer:
     
     def _calculate_quality_score(self, metrics: Dict[str, float]) -> float:
         """Calculate overall quality score from individual metrics."""
+
+
+
         try:
             scores = []
             
@@ -240,6 +255,9 @@ class ImageAestheticAnalyzer:
     
     def analyze_aesthetic_quality(self, image: np.ndarray) -> Dict[str, float]:
         """Analyze aesthetic properties of the image."""
+
+
+
         try:
             aesthetic_metrics = {}
             
@@ -267,6 +285,9 @@ class ImageAestheticAnalyzer:
     
     def _analyze_composition(self, image: np.ndarray) -> Dict[str, float]:
         """Analyze compositional elements."""
+
+
+
         try:
             h, w = image.shape[:2]
             
@@ -323,6 +344,9 @@ class ImageAestheticAnalyzer:
     
     def _analyze_color_harmony(self, image: np.ndarray) -> Dict[str, float]:
         """Analyze color harmony and palette."""
+
+
+
         try:
             if len(image.shape) != 3:
                 return {'color_harmony_score': 0.5}
@@ -383,6 +407,9 @@ class ImageAestheticAnalyzer:
     
     def _analyze_balance(self, image: np.ndarray) -> Dict[str, float]:
         """Analyze visual balance and symmetry."""
+
+
+
         try:
             h, w = image.shape[:2]
             
@@ -428,6 +455,9 @@ class ImageAestheticAnalyzer:
     
     def _analyze_depth(self, image: np.ndarray) -> Dict[str, float]:
         """Analyze depth and perspective cues."""
+
+
+
         try:
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) if len(image.shape) == 3 else image
             
@@ -469,6 +499,9 @@ class ImageAestheticAnalyzer:
     
     def _calculate_aesthetic_score(self, metrics: Dict[str, float]) -> float:
         """Calculate overall aesthetic score."""
+
+
+
         try:
             scores = []
             weights = []
@@ -517,6 +550,9 @@ class ImageDuplicateDetector:
     
     def generate_perceptual_hashes(self, image: np.ndarray) -> Dict[str, str]:
         """Generate multiple perceptual hashes for robust duplicate detection."""
+
+
+
         try:
             # Convert to PIL Image
             if len(image.shape) == 3:
@@ -551,6 +587,9 @@ class ImageDuplicateDetector:
     
     def calculate_similarity(self, hash1: str, hash2: str) -> float:
         """Calculate similarity between two perceptual hashes."""
+
+
+
         try:
             if len(hash1) != len(hash2):
                 return 0.0
@@ -588,6 +627,9 @@ class ImageContentFilter:
         strict_mode: bool = False
     ) -> FilterResponse:
         """Asynchronously filter image content."""
+
+
+
         return await asyncio.get_event_loop().run_in_executor(
             None, self.filter, content, ai_validation, strict_mode
         )
@@ -671,6 +713,9 @@ class ImageContentFilter:
     
     def _load_image_content(self, content: ContentItem) -> Tuple[Optional[np.ndarray], Dict[str, Any]]:
         """Load and validate image content."""
+
+
+
         try:
             metadata = {}
             
@@ -789,6 +834,9 @@ class ImageContentFilter:
     
     def _analyze_duplicates(self, image: np.ndarray) -> Dict[str, Any]:
         """Analyze image for duplicates."""
+
+
+
         try:
             hashes = self.duplicate_detector.generate_perceptual_hashes(image)
             
@@ -807,6 +855,9 @@ class ImageContentFilter:
     
     def _detect_objects(self, image: np.ndarray) -> Dict[str, Any]:
         """Detect objects in the image."""
+
+
+
         try:
             # Simplified object detection using OpenCV
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) if len(image.shape) == 3 else image
@@ -841,6 +892,9 @@ class ImageContentFilter:
     
     def _detect_nsfw_content(self, image: np.ndarray) -> Dict[str, Any]:
         """Detect NSFW content in the image."""
+
+
+
         try:
             # Placeholder for NSFW detection
             # In real implementation, use specialized models like Yahoo's OpenNSFW

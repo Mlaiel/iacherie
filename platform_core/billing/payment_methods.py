@@ -1,15 +1,15 @@
 """
-🚀 Payment Methods & Refund Manager - IA Influencer Agent Platform Enterprise
+ Payment Methods & Refund Manager - IA Influencer Agent Platform Enterprise
 ============================================================================
 Module: backend/platform_core/billing/payment_methods.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ============================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 GESTION DES MÉTHODES DE PAIEMENT
+ GESTION DES MÉTHODES DE PAIEMENT
 Système de gestion sécurisée des moyens de paiement clients
 - Tokenisation et chiffrement PCI-DSS
 - Gestion multi-cartes et comptes bancaires
@@ -322,10 +322,16 @@ class PaymentMethodManager:
         
     def _encrypt_sensitive_data(self, data: str) -> str:
         """Chiffre les données sensibles"""
+
+
+
         return base64.b64encode(self.cipher_suite.encrypt(data.encode())).decode()
         
     def _decrypt_sensitive_data(self, encrypted_data: str) -> str:
         """Déchiffre les données sensibles"""
+
+
+
         return self.cipher_suite.decrypt(base64.b64decode(encrypted_data.encode())).decode()
         
     def _calculate_risk_score(self, method: PaymentMethod) -> float:
@@ -350,6 +356,9 @@ class PaymentMethodManager:
         
     async def _save_payment_method(self, method: PaymentMethod):
         """Sauvegarde une méthode de paiement en base"""
+
+
+
         try:
             logger.info(f"Saving payment method {method.payment_method_id} for customer {method.customer_id}")
             
@@ -577,6 +586,9 @@ class RefundManager:
         
     async def get_pending_refunds(self) -> List[RefundRequest]:
         """Récupère toutes les demandes en attente"""
+
+
+
         return [r for r in self.refund_requests.values() if r.status == "pending"]
         
     async def _validate_refund_request(self, request: RefundRequest) -> bool:
@@ -596,6 +608,9 @@ class RefundManager:
         
     async def _process_refund(self, request: RefundRequest) -> bool:
         """Traite un remboursement approuvé"""
+
+
+
         try:
             # Utiliser le processeur de paiement pour effectuer le remboursement
             response = await self.payment_processor.refund_payment(
@@ -622,6 +637,9 @@ class RefundManager:
             
     async def _save_refund_request(self, request: RefundRequest):
         """Sauvegarde une demande de remboursement"""
+
+
+
         try:
             logger.info(f"Saving refund request {request.refund_id}")
             

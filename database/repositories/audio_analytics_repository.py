@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -72,6 +72,9 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
         Returns:
             Created audio analytics record
         """
+
+
+
         try:
             analytics_data = {
                 'user_id': user_id,
@@ -108,6 +111,9 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
         Returns:
             Updated analytics record
         """
+
+
+
         try:
             analytics = self.get_by_id(analytics_id)
             if not analytics:
@@ -154,6 +160,9 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
         Returns:
             Audio performance summary
         """
+
+
+
         try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
@@ -305,6 +314,9 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
         Returns:
             Audio trends analysis
         """
+
+
+
         try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
@@ -463,21 +475,21 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
         insights = []
         
         if overall_trend == 'growing':
-            insights.append("🔥 Your audio content is gaining momentum! Keep up the great work.")
+            insights.append(" Your audio content is gaining momentum! Keep up the great work.")
         elif overall_trend == 'declining':
-            insights.append("📉 Consider refreshing your content strategy to re-engage your audience.")
+            insights.append(" Consider refreshing your content strategy to re-engage your audience.")
         elif overall_trend == 'stable':
-            insights.append("📊 Your performance is stable. Consider experimenting with new release strategies.")
+            insights.append(" Your performance is stable. Consider experimenting with new release strategies.")
         
         # Platform-specific insights
         growing_platforms = [p for p, data in platform_trends.items() if data['trend'] == 'improving']
         declining_platforms = [p for p, data in platform_trends.items() if data['trend'] == 'declining']
         
         if growing_platforms:
-            insights.append(f"🚀 Strong growth on: {', '.join(growing_platforms)}")
+            insights.append(f" Strong growth on: {', '.join(growing_platforms)}")
             
         if declining_platforms:
-            insights.append(f"⚠️ Focus needed on: {', '.join(declining_platforms)}")
+            insights.append(f" Focus needed on: {', '.join(declining_platforms)}")
             
         return insights
         
@@ -494,6 +506,9 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
         Returns:
             Technical audio insights
         """
+
+
+
         try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
@@ -646,23 +661,23 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
         
         if tempo_insights.get('best_performing'):
             recommendations.append(
-                f"🎵 Your best-performing tempo range is {tempo_insights['best_performing']}. "
+                f" Your best-performing tempo range is {tempo_insights['best_performing']}. "
                 f"Consider creating more tracks in this range."
             )
         
         if key_insights.get('best_performing'):
             recommendations.append(
-                f"🎼 Tracks in {key_insights['best_performing']} perform best for your audience."
+                f" Tracks in {key_insights['best_performing']} perform best for your audience."
             )
         
         if energy_insights.get('best_performing'):
             recommendations.append(
-                f"⚡ {energy_insights['best_performing']} tracks resonate most with your listeners."
+                f" {energy_insights['best_performing']} tracks resonate most with your listeners."
             )
         
         if genre_insights.get('best_performing'):
             recommendations.append(
-                f"🎭 Your {genre_insights['best_performing']} content performs exceptionally well."
+                f" Your {genre_insights['best_performing']} content performs exceptionally well."
             )
         
         if not recommendations:
@@ -683,6 +698,9 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
         Returns:
             Audience listening patterns analysis
         """
+
+
+
         try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
@@ -794,20 +812,20 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
         # Peak listening time insights
         if listening_times:
             peak_hour = max(listening_times.items(), key=lambda x: x[1])[0]
-            insights.append(f"🕐 Peak listening time is {peak_hour}:00. Schedule releases and promotions accordingly.")
+            insights.append(f" Peak listening time is {peak_hour}:00. Schedule releases and promotions accordingly.")
         
         # Device preference insights
         if device_types:
             primary_device = max(device_types.items(), key=lambda x: x[1])[0]
             if primary_device == 'mobile':
-                insights.append("📱 Most listeners use mobile devices. Optimize for mobile experience.")
+                insights.append(" Most listeners use mobile devices. Optimize for mobile experience.")
             elif primary_device == 'desktop':
-                insights.append("💻 Desktop listening is prominent. Consider longer-form content.")
+                insights.append(" Desktop listening is prominent. Consider longer-form content.")
         
         # Geographic insights
         if geographic_distribution:
             top_location = max(geographic_distribution.items(), key=lambda x: x[1])[0]
-            insights.append(f"🌍 Strong audience in {top_location}. Consider local promotion strategies.")
+            insights.append(f" Strong audience in {top_location}. Consider local promotion strategies.")
         
         return insights
 

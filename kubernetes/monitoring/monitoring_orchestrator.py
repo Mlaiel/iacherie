@@ -111,6 +111,9 @@ class MonitoringOrchestrator:
         
     async def initialize(self, redis_client=None, db_engine=None):
         """Initialize all monitoring components"""
+
+
+
         try:
             logger.info("Initializing monitoring components...")
             
@@ -433,6 +436,9 @@ class MonitoringOrchestrator:
                         
     async def _restart_component(self, name: str, component):
         """Restart a failed component"""
+
+
+
         try:
             logger.info(f"Restarting component: {name}")
             

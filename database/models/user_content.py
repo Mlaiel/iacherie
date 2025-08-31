@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -465,10 +465,16 @@ class UserContent(Base):
     
     def get_completion_rate(self) -> float:
         """Get content completion rate"""
+
+
+
         return self.average_completion_rate or 0.0
     
     def is_monetizable(self) -> bool:
         """Check if content can be monetized"""
+
+
+
         return (
             self.monetization_enabled and
             self.content_status == ContentStatus.PUBLISHED and
@@ -512,6 +518,9 @@ class UserContent(Base):
     @classmethod
     def create_from_upload(cls, upload_data: Dict[str, Any], user_id: str) -> 'UserContent':
         """Create UserContent from upload data"""
+
+
+
         return cls(
             user_id=user_id,
             content_type=ContentType(upload_data.get('content_type', 'audio')),

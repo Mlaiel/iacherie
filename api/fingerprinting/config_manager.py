@@ -136,6 +136,9 @@ class FingerprintConfig:
     
     def load_from_file(self, config_file: Path):
         """Load configuration from JSON file"""
+
+
+
         try:
             if config_file.exists():
                 with open(config_file, 'r') as f:
@@ -150,6 +153,9 @@ class FingerprintConfig:
     
     def save_to_file(self, config_file: Path):
         """Save current configuration to JSON file"""
+
+
+
         try:
             config_file.parent.mkdir(parents=True, exist_ok=True)
             with open(config_file, 'w') as f:
@@ -236,6 +242,9 @@ class FingerprintConfig:
     
     def get(self, key: str, default: Any = None) -> Any:
         """Get configuration value using dot notation"""
+
+
+
         try:
             keys = key.split('.')
             current = self.config
@@ -249,34 +258,58 @@ class FingerprintConfig:
     
     def get_database_config(self) -> Dict[str, Any]:
         """Get database configuration"""
+
+
+
         return self.config.get('database', {})
     
     def get_audio_config(self) -> Dict[str, Any]:
         """Get audio processing configuration"""
+
+
+
         return self.config.get('audio', {})
     
     def get_video_config(self) -> Dict[str, Any]:
         """Get video processing configuration"""
+
+
+
         return self.config.get('video', {})
     
     def get_image_config(self) -> Dict[str, Any]:
         """Get image processing configuration"""
+
+
+
         return self.config.get('image', {})
     
     def get_text_config(self) -> Dict[str, Any]:
         """Get text processing configuration"""
+
+
+
         return self.config.get('text', {})
     
     def get_security_config(self) -> Dict[str, Any]:
         """Get security configuration"""
+
+
+
         return self.config.get('security', {})
     
     def get_monitoring_config(self) -> Dict[str, Any]:
         """Get monitoring configuration"""
+
+
+
         return self.config.get('monitoring', {})
     
     def get_logging_config(self) -> Dict[str, Any]:
         """Get logging configuration"""
+
+
+
         return self.config.get('logging', {})
     
     def validate_config(self) -> List[str]:
@@ -316,10 +349,16 @@ class FingerprintConfig:
     
     def is_valid(self) -> bool:
         """Check if configuration is valid"""
+
+
+
         return len(self.validate_config()) == 0
     
     def get_full_config(self) -> Dict[str, Any]:
         """Get full configuration dictionary"""
+
+
+
         return self.config.copy()
     
     def __str__(self) -> str:

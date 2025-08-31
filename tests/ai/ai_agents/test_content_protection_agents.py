@@ -23,7 +23,7 @@ plagiarism prevention, and digital rights management agents.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -59,11 +59,17 @@ class TestContentProtectionAgent:
     @pytest.fixture
     def agent(self):
         """Create ContentProtectionAgent instance"""
+
+
+
         return ContentProtectionAgent()
     
     @pytest.fixture
     def sample_content(self):
         """Sample content for protection testing"""
+
+
+
         return {
             "content_id": "content_001",
             "creator_id": "creator_001", 
@@ -216,11 +222,17 @@ class TestCopyrightDetectionAgent:
     @pytest.fixture
     def agent(self):
         """Create CopyrightDetectionAgent instance"""
+
+
+
         return CopyrightDetectionAgent()
     
     @pytest.fixture
     def sample_copyrighted_content(self):
         """Sample copyrighted content"""
+
+
+
         return {
             "content_id": "copyright_001",
             "title": "Original Music Track - Copyrighted",
@@ -344,11 +356,17 @@ class TestPlagiarismDetectionAgent:
     @pytest.fixture
     def agent(self):
         """Create PlagiarismDetectionAgent instance"""
+
+
+
         return PlagiarismDetectionAgent()
     
     @pytest.fixture
     def sample_text_content(self):
         """Sample text content for plagiarism detection"""
+
+
+
         return {
             "content_id": "text_001",
             "title": "The Future of Artificial Intelligence",
@@ -469,11 +487,17 @@ class TestDigitalRightsAgent:
     @pytest.fixture
     def agent(self):
         """Create DigitalRightsAgent instance"""
+
+
+
         return DigitalRightsAgent()
     
     @pytest.fixture
     def sample_digital_asset(self):
         """Sample digital asset for rights management"""
+
+
+
         return {
             "asset_id": "digital_asset_001",
             "asset_type": "video_course",
@@ -589,6 +613,9 @@ class TestIntegrationScenarios:
     @pytest.fixture
     def agents(self):
         """Create all content protection agents for integration testing"""
+
+
+
         return {
             "protection": ContentProtectionAgent(),
             "copyright": CopyrightDetectionAgent(),
@@ -695,6 +722,9 @@ class TestErrorHandling:
     @pytest.fixture
     def agent(self):
         """Create ContentProtectionAgent for error testing"""
+
+
+
         return ContentProtectionAgent()
     
     @pytest.mark.asyncio
@@ -748,6 +778,9 @@ class TestPerformanceAndScaling:
     @pytest.fixture
     def agent(self):
         """Create ContentProtectionAgent for performance testing"""
+
+
+
         return ContentProtectionAgent()
     
     @pytest.mark.asyncio

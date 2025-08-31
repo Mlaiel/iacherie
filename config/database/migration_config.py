@@ -110,6 +110,9 @@ class PostgreSQLMigrationManager:
 
     def _setup_alembic_config(self) -> AlembicConfig:
         """Setup Alembic configuration"""
+
+
+
         try:
             # Create migration directory structure
             migration_dir = Path(self.config.migration_path) / "postgresql" / self.schema.value
@@ -197,6 +200,9 @@ datefmt = %H:%M:%S
         Returns:
             Migration ID
         """
+
+
+
         try:
             # Generate migration
             revision = command.revision(
@@ -351,6 +357,9 @@ def downgrade():
         Returns:
             Migration record
         """
+
+
+
         try:
             record = MigrationRecord(
                 migration_id=f"rollback_{target_revision}",
@@ -379,6 +388,9 @@ def downgrade():
 
     def _create_backup(self, migration_id: str) -> str:
         """Create database backup before migration"""
+
+
+
         try:
             backup_dir = Path(self.config.backup_path) / self.schema.value
             backup_dir.mkdir(parents=True, exist_ok=True)
@@ -412,6 +424,9 @@ def downgrade():
 
     def _calculate_checksum(self, file_path: str) -> str:
         """Calculate checksum for migration file"""
+
+
+
         try:
             with open(file_path, 'rb') as f:
                 content = f.read()
@@ -562,6 +577,9 @@ class MigrationManager:
 
     def add_postgresql_manager(self, schema: DatabaseSchema, engine: Engine) -> None:
         """Add PostgreSQL migration manager for specific schema"""
+
+
+
         try:
             manager = PostgreSQLMigrationManager(engine, schema, self.config)
             self.postgresql_managers[schema] = manager
@@ -572,6 +590,9 @@ class MigrationManager:
 
     def add_mongodb_manager(self, database_name: str, client: Any) -> None:
         """Add MongoDB migration manager for specific database"""
+
+
+
         try:
             manager = MongoDBMigrationManager(client, database_name, self.config)
             self.mongodb_managers[database_name] = manager

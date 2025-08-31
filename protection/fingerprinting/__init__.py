@@ -1,4 +1,4 @@
-"""🔒 Content Fingerprinting System for IA-Influencer-Agent
+""" Content Fingerprinting System for IA-Influencer-Agent
 ========================================================
 
 Multi-modal content fingerprinting system supporting audio, video, image, and text content.

@@ -143,14 +143,23 @@ class SessionCache:
     
     def _encrypt_data(self, data: str) -> str:
         """Encrypt sensitive data"""
+
+
+
         return self.cipher.encrypt(data.encode()).decode()
     
     def _decrypt_data(self, encrypted_data: str) -> str:
         """Decrypt sensitive data"""
+
+
+
         return self.cipher.decrypt(encrypted_data.encode()).decode()
     
     def _generate_session_id(self) -> str:
         """Generate secure session ID"""
+
+
+
         return secrets.token_urlsafe(32)
     
     def _generate_token(self, user_id: str, session_id: str, token_type: str = "access") -> str:
@@ -350,6 +359,9 @@ class SessionCache:
     
     async def validate_token(self, token: str) -> Optional[Dict[str, Any]]:
         """Validate JWT token"""
+
+
+
         try:
             # Check if token is revoked
             token_key = f"{self.TOKEN_PREFIX}:{hashlib.sha256(token.encode()).hexdigest()}"

@@ -7,7 +7,7 @@ between workflows, tasks, and resources with circular dependency detection.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -181,6 +181,9 @@ class DependencyResolver:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             # Validate graph structure
             if not await self._validate_graph(graph):
@@ -232,6 +235,9 @@ class DependencyResolver:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             if graph_id not in self.dependency_graphs:
                 raise ValueError(f"Graph not found: {graph_id}")
@@ -291,6 +297,9 @@ class DependencyResolver:
         Returns:
             Optional[str]: Plan ID if successful
         """
+
+
+
         try:
             if graph_id not in self.dependency_graphs:
                 raise ValueError(f"Graph not found: {graph_id}")
@@ -714,6 +723,9 @@ class DependencyResolver:
     
     async def _validate_graph(self, graph: DependencyGraph) -> bool:
         """Validate dependency graph structure."""
+
+
+
         try:
             if not graph.graph_id or not graph.name:
                 return False
@@ -730,6 +742,9 @@ class DependencyResolver:
     
     async def _validate_dependency_rule(self, graph: DependencyGraph, rule: DependencyRule) -> bool:
         """Validate dependency rule."""
+
+
+
         try:
             if not rule.rule_id or not rule.source_id or not rule.target_id:
                 return False
@@ -805,6 +820,9 @@ class DependencyResolver:
     
     async def get_resolver_stats(self) -> Dict[str, Any]:
         """Get dependency resolver statistics."""
+
+
+
         return {
             **self.resolver_stats,
             'active_graphs': len(self.dependency_graphs),

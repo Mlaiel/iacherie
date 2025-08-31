@@ -7,7 +7,7 @@ for musicians, bloggers, photographers, influencers, and comedians.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -220,6 +220,9 @@ class ContentGenerator:
 
     def _load_specialized_models(self):
         """Load specialized AI models for different content types"""
+
+
+
         try:
             # Text generation models
             self.gpt2_model = GPT2LMHeadModel.from_pretrained('gpt2-large')
@@ -251,6 +254,9 @@ class ContentGenerator:
 
     def _load_content_templates(self) -> Dict[str, Dict]:
         """Load content templates for different types"""
+
+
+
         return {
             ContentGenerationType.BLOG_ARTICLE: {
                 "structure": ["introduction", "main_points", "conclusion", "call_to_action"],
@@ -289,6 +295,9 @@ class ContentGenerator:
 
     def _load_style_patterns(self) -> Dict[str, Dict]:
         """Load writing style patterns"""
+
+
+
         return {
             ContentTone.PROFESSIONAL: {
                 "vocabulary": "formal",
@@ -559,6 +568,9 @@ class ContentGenerator:
 
     def _build_visual_prompt(self, request: GenerationRequest) -> str:
         """Build prompt for visual content"""
+
+
+
         return f"""
         Generate a detailed and engaging {request.content_type.value} for:
         Subject: {request.prompt}
@@ -570,6 +582,9 @@ class ContentGenerator:
 
     def _build_generic_prompt(self, request: GenerationRequest) -> str:
         """Build generic prompt for other content types"""
+
+
+
         return f"""
         Create high-quality {request.content_type.value} content about:
         {request.prompt}
@@ -582,6 +597,9 @@ class ContentGenerator:
 
     async def _generate_with_openai(self, prompt: str, request: GenerationRequest) -> str:
         """Generate content using OpenAI GPT models"""
+
+
+
         try:
             messages = [
                 {"role": "system", "content": self._get_system_prompt(request)},
@@ -606,6 +624,9 @@ class ContentGenerator:
 
     async def _generate_with_anthropic(self, prompt: str, request: GenerationRequest, engine: CreativeEngine) -> str:
         """Generate content using Anthropic Claude"""
+
+
+
         try:
             model_map = {
                 CreativeEngine.CLAUDE_3_OPUS: "claude-3-opus-20240229",
@@ -628,6 +649,9 @@ class ContentGenerator:
 
     async def _generate_with_gemini(self, prompt: str, request: GenerationRequest) -> str:
         """Generate content using Google Gemini"""
+
+
+
         try:
             model = genai.GenerativeModel('gemini-pro')
             
@@ -653,6 +677,9 @@ class ContentGenerator:
 
     async def _generate_with_custom_model(self, prompt: str, request: GenerationRequest) -> str:
         """Generate content using custom local models"""
+
+
+
         try:
             # Use T5 for text-to-text generation
             input_text = f"generate {request.content_type.value}: {prompt}"
@@ -946,6 +973,9 @@ class ContentGenerator:
 
     def _calculate_readability_score(self, content: str) -> float:
         """Calculate Flesch-Kincaid readability score"""
+
+
+
         try:
             sentences = re.split(r'[.!?]+', content)
             sentences = [s.strip() for s in sentences if s.strip()]
@@ -1071,6 +1101,9 @@ class ContentGenerator:
 
     def _create_metadata(self, request: GenerationRequest, quality_metrics: Dict[str, float]) -> Dict[str, Any]:
         """Create comprehensive metadata for generated content"""
+
+
+
         return {
             'generation_params': {
                 'content_type': request.content_type.value,
@@ -1125,6 +1158,9 @@ class ContentGenerator:
 
     async def _store_generation_record(self, request: GenerationRequest, result: GeneratedContent):
         """Store generation record in database"""
+
+
+
         try:
             async with get_async_session() as session:
                 # Store in content generations table (would need to create this table)
@@ -1163,6 +1199,9 @@ class AICreativeEngine:
 
     async def create_content_stream(self, request: GenerationRequest) -> AsyncGenerator[str, None]:
         """Stream content generation for real-time feedback"""
+
+
+
         try:
             # Initialize streaming session
             session_id = str(uuid.uuid4())
@@ -1272,6 +1311,9 @@ class AICreativeEngine:
 
     async def get_performance_analytics(self) -> Dict[str, Any]:
         """Get performance analytics for the creative engine"""
+
+
+
         return {
             'active_sessions': len(self.active_sessions),
             'total_generations': len(self.model_performance),

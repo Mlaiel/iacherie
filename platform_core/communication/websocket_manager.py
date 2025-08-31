@@ -1,15 +1,15 @@
 """
-🚀 WebSocket Manager - IA Influencer Agent Platform Enterprise
+ WebSocket Manager - IA Influencer Agent Platform Enterprise
 ============================================================
 Module: backend/platform_core/communication/websocket_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ============================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 GESTIONNAIRE WEBSOCKET REAL-TIME
+ GESTIONNAIRE WEBSOCKET REAL-TIME
 Gestion des connexions WebSocket pour communication temps réel
 - Connexions persistantes sécurisées
 - Broadcasting intelligent multi-client
@@ -73,6 +73,9 @@ class WebSocketMessage:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit le message en dictionnaire"""
+
+
+
         return {
             "message_id": self.message_id,
             "type": self.type.value,
@@ -128,6 +131,9 @@ class ConnectionManager:
     async def connect(self, websocket: WebSocket, user_id: Optional[str] = None, 
                      metadata: Optional[Dict[str, Any]] = None) -> str:
         """Accepte une nouvelle connexion WebSocket"""
+
+
+
         try:
             await websocket.accept()
             
@@ -282,6 +288,9 @@ class ConnectionManager:
         
     async def send_direct(self, connection_id: str, message: WebSocketMessage) -> bool:
         """Envoie un message direct à une connexion spécifique"""
+
+
+
         return await self._send_to_connection(connection_id, message)
         
     async def _send_to_connection(self, connection_id: str, message: WebSocketMessage) -> bool:
@@ -357,6 +366,9 @@ class ConnectionManager:
             
     def get_connection_stats(self) -> Dict[str, Any]:
         """Retourne les statistiques des connexions"""
+
+
+
         return {
             "total_connections": len(self.connections),
             "connected_users": len(self.user_connections),
@@ -426,6 +438,9 @@ class WebSocketManager:
             
     async def _process_message(self, connection_id: str, message: WebSocketMessage):
         """Traite un message reçu"""
+
+
+
         try:
             # Appliquer le middleware
             for middleware in self.middleware:
@@ -512,6 +527,9 @@ class WebSocketManager:
         
     def get_stats(self) -> Dict[str, Any]:
         """Retourne les statistiques du gestionnaire"""
+
+
+
         return {
             "websocket_manager": {
                 "handlers_count": {

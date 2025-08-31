@@ -66,6 +66,9 @@ class MetaLearner:
     
     def _initialize_meta_model(self):
         """Initialize the meta-model"""
+
+
+
         try:
             # Simplified meta-model initialization
             self.meta_model = {
@@ -83,6 +86,9 @@ class MetaLearner:
     
     def train(self, tasks: List[Task]) -> Dict[str, Any]:
         """Train the meta-learner on multiple tasks"""
+
+
+
         try:
             self.logger.info(f"Starting meta-training on {len(tasks)} tasks")
             start_time = datetime.utcnow()
@@ -275,6 +281,9 @@ class MetaLearner:
     
     def _evaluate_task_performance(self, task: Task) -> Dict[str, float]:
         """Evaluate performance on a single task"""
+
+
+
         try:
             support_data, query_data = self._split_task_data(task)
             adapted_model = self._inner_loop_adaptation(
@@ -327,6 +336,9 @@ class FewShotLearner:
     def train(self, support_set: Dict[str, List[np.ndarray]], 
              embedding_function: Optional[Callable] = None) -> Dict[str, Any]:
         """Train few-shot learner on support set"""
+
+
+
         try:
             self.logger.info(f"Training few-shot learner with {len(support_set)} classes")
             
@@ -356,6 +368,9 @@ class FewShotLearner:
     def predict(self, query_samples: List[np.ndarray], 
                embedding_function: Optional[Callable] = None) -> List[str]:
         """Predict classes for query samples"""
+
+
+
         try:
             if not self.prototypes:
                 raise ValueError("Model not trained. Call train() first.")
@@ -419,6 +434,9 @@ class TransferLearner:
     def transfer(self, target_data: Dict[str, np.ndarray], 
                 target_labels: np.ndarray) -> Dict[str, Any]:
         """Perform transfer learning to target domain"""
+
+
+
         try:
             if self.source_model is None:
                 raise ValueError("Source model not set. Call set_source_model() first.")

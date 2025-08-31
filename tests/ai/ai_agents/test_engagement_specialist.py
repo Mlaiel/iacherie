@@ -23,7 +23,7 @@ interaction strategies, and audience retention capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
@@ -52,6 +52,9 @@ class TestEngagementSpecialistAgent:
     @pytest.fixture
     def engagement_config(self) -> AgentConfiguration:
         """Engagement specialist agent configuration"""
+
+
+
         return AgentConfiguration(
             agent_id="engagement_specialist_test",
             agent_name="Test Engagement Specialist Agent",

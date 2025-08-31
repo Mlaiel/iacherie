@@ -145,6 +145,9 @@ class WebhookHandlerRegistry:
     
     def get_handlers(self, event_type: str) -> List[HandlerConfig]:
         """Get all handlers for a specific event type."""
+
+
+
         return self.handlers.get(event_type, [])
     
     async def execute_handlers(
@@ -329,6 +332,9 @@ class DefaultHandlerConfigs:
     @staticmethod
     def get_default_configs() -> List[HandlerConfig]:
         """Get default handler configurations."""
+
+
+
         return [
             HandlerConfig(
                 name="spotify_track_handler",

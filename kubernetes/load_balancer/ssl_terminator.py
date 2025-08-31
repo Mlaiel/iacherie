@@ -8,7 +8,7 @@ and TLS optimization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ WARNING: This code is proprietary and confidential.
+ WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
@@ -89,6 +89,9 @@ class CertificateManager:
     
     def load_certificate(self, cert_path: str, key_path: str) -> Optional[SSLCertificate]:
         """Load and parse SSL certificate"""
+
+
+
         try:
             cert_file = Path(cert_path)
             key_file = Path(key_path)
@@ -171,6 +174,9 @@ class CertificateManager:
                                        key_size: int = 2048,
                                        validity_days: int = 365) -> Optional[SSLCertificate]:
         """Generate self-signed certificate"""
+
+
+
         try:
             san_domains = san_domains or []
             
@@ -237,6 +243,9 @@ class CertificateManager:
     
     def validate_certificate_chain(self, cert_path: str, ca_bundle_path: Optional[str] = None) -> bool:
         """Validate certificate chain"""
+
+
+
         try:
             # Load certificate
             with open(cert_path, 'rb') as f:
@@ -274,6 +283,9 @@ class CertificateManager:
     
     def check_certificate_expiry(self, cert_path: str) -> Tuple[bool, int]:
         """Check if certificate is expiring soon"""
+
+
+
         try:
             with open(cert_path, 'rb') as f:
                 cert_data = f.read()
@@ -311,6 +323,9 @@ class LetsEncryptManager:
     
     def obtain_certificate(self, domains: List[str], webroot_path: str = "/var/www/html") -> bool:
         """Obtain certificate using webroot method"""
+
+
+
         try:
             # Prepare certbot command
             cmd = [
@@ -343,6 +358,9 @@ class LetsEncryptManager:
     
     def renew_certificate(self, domain: str) -> bool:
         """Renew certificate for domain"""
+
+
+
         try:
             cmd = ["certbot", "renew", "--cert-name", domain, "--quiet"]
             
@@ -361,6 +379,9 @@ class LetsEncryptManager:
     
     def list_certificates(self) -> List[Dict[str, Any]]:
         """List all Let's Encrypt certificates"""
+
+
+
         try:
             cmd = ["certbot", "certificates"]
             result = subprocess.run(cmd, capture_output=True, text=True)
@@ -416,6 +437,9 @@ class SSLTerminator:
     
     def add_certificate(self, cert_path: str, key_path: str, ca_bundle_path: Optional[str] = None) -> bool:
         """Add SSL certificate"""
+
+
+
         try:
             certificate = self.cert_manager.load_certificate(cert_path, key_path)
             if not certificate:
@@ -444,6 +468,9 @@ class SSLTerminator:
     
     def remove_certificate(self, domain: str) -> bool:
         """Remove SSL certificate"""
+
+
+
         try:
             if domain in self.certificates:
                 certificate = self.certificates[domain]
@@ -485,6 +512,9 @@ class SSLTerminator:
     
     def configure_platform_certificates(self) -> bool:
         """Configure SSL certificates for platform services"""
+
+
+
         try:
             platform_domains = [
                 "api.ia-influencer.com",

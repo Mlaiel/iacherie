@@ -7,7 +7,7 @@ ensuring professional standards and brand compliance across all content types.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -196,6 +196,9 @@ class QualityController:
     
     def _initialize_quality_tools(self):
         """Initialize quality analysis tools and models"""
+
+
+
         try:
             # Grammar and spell checking
             self.grammar_tool = language_tool_python.LanguageTool('en-US')
@@ -229,6 +232,9 @@ class QualityController:
     
     def _initialize_quality_thresholds(self) -> Dict[str, Dict[str, float]]:
         """Initialize quality thresholds for different levels"""
+
+
+
         return {
             QualityLevel.DRAFT.value: {
                 "overall_score": 0.4,
@@ -320,6 +326,9 @@ class QualityController:
     
     def _parse_quality_criteria(self, criteria: Dict[str, Any]) -> QualityCriteria:
         """Parse and validate quality criteria"""
+
+
+
         
         try:
             return QualityCriteria(
@@ -360,6 +369,9 @@ class QualityController:
         criteria: QualityCriteria
     ) -> QualityMetrics:
         """Perform comprehensive quality assessment"""
+
+
+
         
         try:
             if content_format == ContentFormat.TEXT:
@@ -480,6 +492,9 @@ class QualityController:
     
     def _calculate_readability_score(self, text: str) -> float:
         """Calculate comprehensive readability score"""
+
+
+
         
         try:
             # Multiple readability metrics
@@ -500,6 +515,9 @@ class QualityController:
     
     def _analyze_sentence_structure(self, text: str) -> float:
         """Analyze sentence structure quality"""
+
+
+
         
         try:
             sentences = sent_tokenize(text)
@@ -537,6 +555,9 @@ class QualityController:
     
     async def _assess_originality(self, text: str) -> float:
         """Assess content originality using AI detection"""
+
+
+
         
         try:
             # Use LLM to assess originality
@@ -570,6 +591,9 @@ class QualityController:
     
     def _assess_tone_consistency(self, text: str) -> float:
         """Assess tone consistency throughout the text"""
+
+
+
         
         try:
             # Split text into chunks for analysis
@@ -604,6 +628,9 @@ class QualityController:
     
     def _assess_engagement_potential(self, text: str) -> float:
         """Assess content engagement potential"""
+
+
+
         
         try:
             # Engagement indicators
@@ -639,6 +666,9 @@ class QualityController:
     
     def _assess_seo_quality(self, text: str, seo_requirements: Dict[str, Any]) -> float:
         """Assess SEO quality of text content"""
+
+
+
         
         try:
             seo_score = 0.0
@@ -689,6 +719,9 @@ class QualityController:
         brand_guidelines: Dict[str, Any]
     ) -> float:
         """Assess brand alignment using guidelines"""
+
+
+
         
         try:
             alignment_score = 0.0
@@ -1163,6 +1196,9 @@ class QualityController:
     
     def _calculate_overall_score(self, metrics: QualityMetrics) -> float:
         """Calculate overall quality score from individual metrics"""
+
+
+
         
         try:
             # Weight different quality aspects
@@ -1256,6 +1292,9 @@ class QualityController:
         validation_id: str
     ) -> Dict[str, Any]:
         """Generate comprehensive validation result"""
+
+
+
         
         try:
             passed_checks = []
@@ -1337,6 +1376,9 @@ class QualityController:
     
     def _serialize_quality_metrics(self, metrics: QualityMetrics) -> Dict[str, Any]:
         """Serialize quality metrics for API response"""
+
+
+
         
         return {
             "overall_score": round(metrics.overall_score, 3),
@@ -1426,6 +1468,9 @@ class QualityController:
         db: AsyncSession
     ):
         """Store quality assessment record in database"""
+
+
+
         
         try:
             assessment_record = {
@@ -1457,6 +1502,9 @@ class QualityController:
     
     async def health_check(self) -> Dict[str, Any]:
         """Health check for quality controller"""
+
+
+
         return {
             "status": "healthy",
             "grammar_tool_available": self.grammar_tool is not None,

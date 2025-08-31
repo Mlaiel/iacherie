@@ -370,6 +370,9 @@ class AIFingerprintMetricsCollector:
     
     async def _store_realtime_metric(self, metric: FingerprintMetric):
         """Store metric in Redis for real-time access"""
+
+
+
         try:
             # Store individual metric
             await self.redis_client.lpush(
@@ -422,6 +425,9 @@ class AIFingerprintMetricsCollector:
     
     async def _store_metrics_in_database(self, metrics: List[FingerprintMetric]):
         """Store metrics in database"""
+
+
+
         try:
             async with self.db_engine.begin() as conn:
                 for metric in metrics:
@@ -446,6 +452,9 @@ class AIFingerprintMetricsCollector:
     
     async def _collect_realtime_metrics(self):
         """Collect real-time system metrics"""
+
+
+
         try:
             # System resource metrics
             import psutil
@@ -472,6 +481,9 @@ class AIFingerprintMetricsCollector:
     
     async def _update_metric_aggregations(self, metrics: List[FingerprintMetric]):
         """Update metric aggregations"""
+
+
+
         try:
             if not self.redis_client:
                 return
@@ -504,6 +516,9 @@ class AIFingerprintMetricsCollector:
     
     async def _check_model_performance_degradation(self, metrics: ModelPerformanceMetrics):
         """Check for model performance degradation"""
+
+
+
         try:
             model_id = metrics.model_id
             baseline_key = f"baseline:{model_id}"
@@ -545,6 +560,9 @@ class AIFingerprintMetricsCollector:
     
     async def _update_performance_baselines(self):
         """Update performance baselines"""
+
+
+
         try:
             for model_id, metrics in self._model_metrics.items():
                 # Update baseline if model is performing well
@@ -561,6 +579,9 @@ class AIFingerprintMetricsCollector:
     
     async def _generate_optimization_recommendations(self):
         """Generate optimization recommendations"""
+
+
+
         try:
             recommendations = []
             
@@ -622,6 +643,9 @@ class AIFingerprintMetricsCollector:
     
     async def _cleanup_old_metrics(self):
         """Cleanup old metrics beyond retention period"""
+
+
+
         try:
             cutoff_date = datetime.utcnow() - timedelta(days=self.retention_days)
             
@@ -666,6 +690,9 @@ class AIFingerprintMetricsCollector:
     
     async def get_optimization_recommendations(self) -> List[Dict[str, Any]]:
         """Get current optimization recommendations"""
+
+
+
         return self._optimization_recommendations.copy()
     
     async def get_protection_effectiveness(self) -> Dict[str, Any]:
@@ -693,6 +720,9 @@ class AIFingerprintMetricsCollector:
     
     async def health_check(self) -> Dict[str, Any]:
         """Health check for the metrics collector"""
+
+
+
         return {
             "healthy": self._running,
             "buffered_metrics": len(self._metrics_buffer),

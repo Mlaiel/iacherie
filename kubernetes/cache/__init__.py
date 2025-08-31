@@ -160,7 +160,10 @@ class IAInfluencerCacheOrchestrator:
             
         Returns:
             Cache key for the stored content
-        """        return await self.content_manager.cache_content(
+        """
+
+
+        return await self.content_manager.cache_content(
             creator_id=creator_id,
             content_data=content_data,
             content_type=content_type,
@@ -180,7 +183,10 @@ class IAInfluencerCacheOrchestrator:
             
         Returns:
             Tuple of (content_data, metadata) or (None, None) if not found
-        """        return await self.content_manager.get_content(
+        """
+
+
+        return await self.content_manager.get_content(
             cache_key=cache_key,
             creator_id=creator_id
         )
@@ -200,23 +206,38 @@ class IAInfluencerCacheOrchestrator:
             
         Returns:
             Invalidation request ID for tracking
-        """        return await self.invalidation_orchestrator.invalidate_creator_content(
+        """
+
+
+        return await self.invalidation_orchestrator.invalidate_creator_content(
             creator_id=creator_id,
             content_types=content_types,
             preserve_revenue_data=preserve_revenue_data
         )
     
     async def get_cache_health(self) -> dict:
-        """Get comprehensive cache health status"""        return await self.health_monitor.get_comprehensive_health_status()
+        """Get comprehensive cache health status"""
+
+
+        return await self.health_monitor.get_comprehensive_health_status()
     
     async def get_performance_metrics(self) -> dict:
-        """Get cache performance metrics"""        return await self.metrics_collector.get_comprehensive_metrics()
+        """Get cache performance metrics"""
+
+
+        return await self.metrics_collector.get_comprehensive_metrics()
     
     async def optimize_cache_performance(self) -> dict:
-        """Trigger cache performance optimization"""        return await self.performance_optimizer.optimize_cache_performance()
+        """Trigger cache performance optimization"""
+
+
+        return await self.performance_optimizer.optimize_cache_performance()
     
     async def warm_cache_for_creator(self, creator_id: str) -> dict:
-        """Warm cache for a specific creator"""        return await self.cache_warmer.warm_creator_content(creator_id)
+        """Warm cache for a specific creator"""
+
+
+        return await self.cache_warmer.warm_creator_content(creator_id)
     
     async def shutdown(self):
         """Gracefully shutdown all cache components"""        await self.health_monitor.shutdown()

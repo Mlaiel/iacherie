@@ -321,6 +321,9 @@ class BaseNeuralNetwork(nn.Module, ABC):
         inputs: torch.Tensor
     ) -> torch.Tensor:
         """Compute unsupervised loss (reconstruction, etc.)"""
+
+
+
         return nn.MSELoss()(outputs, inputs)
     
     def validate(
@@ -466,6 +469,9 @@ class ModelRegistry:
     
     def get_model(self, name: str) -> Optional[Dict[str, Any]]:
         """Get model information"""
+
+
+
         return self.models.get(name)
     
     def list_models(self, tag: str = None) -> List[str]:

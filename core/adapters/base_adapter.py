@@ -181,6 +181,9 @@ class AdapterMetrics:
     
     def _store_metrics_in_redis(self):
         """Store metrics in Redis for persistence."""
+
+
+
         try:
             key = f"adapter_metrics:{self.adapter_name}"
             self.redis_client.hset(key, mapping={
@@ -346,6 +349,9 @@ class BasePlatformAdapter(ABC):
     
     async def connect(self) -> bool:
         """Initialize connection to the platform."""
+
+
+
         try:
             # Create HTTP session
             timeout = aiohttp.ClientTimeout(total=30, connect=10)
@@ -526,6 +532,9 @@ class BasePlatformAdapter(ABC):
     
     def get_status(self) -> Dict[str, Any]:
         """Get adapter status and metrics."""
+
+
+
         return {
             'platform_name': self.platform_name,
             'platform_type': self.platform_type.value,

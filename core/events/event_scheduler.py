@@ -4,7 +4,7 @@ Module: backend/core/events/event_scheduler.py
 Architecture: Delayed and Scheduled Event Processing
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 
 Description:
@@ -111,6 +111,9 @@ class ConditionEvaluator:
     
     def evaluate(self, condition: str) -> bool:
         """Évalue une condition"""
+
+
+
         try:
             # Sécurisation de l'évaluation (simple)
             allowed_names = {
@@ -142,6 +145,9 @@ class CronScheduler:
     @staticmethod
     def parse_cron(expression: str) -> Dict[str, Any]:
         """Parse une expression cron (format simplifié)"""
+
+
+
         try:
             parts = expression.split()
             if len(parts) != 5:
@@ -161,6 +167,9 @@ class CronScheduler:
     @staticmethod
     def get_next_execution(cron_expr: str, from_time: datetime) -> Optional[datetime]:
         """Calcule la prochaine exécution selon expression cron"""
+
+
+
         try:
             # Implementation simplifiée - nécessiterait une librairie cron complète
             # Pour démo, retourne dans 1 heure
@@ -234,6 +243,9 @@ class DelayedEventHandler:
     
     async def _execute_event_creation(self, scheduler: "EventScheduler") -> bool:
         """Exécute la création d'un événement"""
+
+
+
         try:
             if not self.task.event_template:
                 return False
@@ -265,6 +277,9 @@ class DelayedEventHandler:
     
     async def _execute_handler_function(self, scheduler: "EventScheduler") -> bool:
         """Exécute une fonction handler"""
+
+
+
         try:
             if not self.task.handler_function:
                 return False
@@ -301,6 +316,9 @@ class DelayedEventHandler:
     
     def _substitute_variables(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Substitue les variables dans les données"""
+
+
+
         try:
             variables = {
                 'now': datetime.now(timezone.utc).isoformat(),
@@ -402,6 +420,9 @@ class EventScheduler:
     
     def schedule_task(self, task: ScheduledTask) -> str:
         """Planifie une tâche"""
+
+
+
         try:
             # Validation
             if not self._validate_task(task):
@@ -514,6 +535,9 @@ class EventScheduler:
     
     def get_handler_function(self, name: str) -> Optional[Callable]:
         """Récupère une fonction handler"""
+
+
+
         return self._handler_functions.get(name)
     
     def cancel_task(self, task_id: str) -> bool:
@@ -564,6 +588,9 @@ class EventScheduler:
     
     def get_task(self, task_id: str) -> Optional[ScheduledTask]:
         """Récupère une tâche par ID"""
+
+
+
         return self._tasks.get(task_id)
     
     def get_tasks(

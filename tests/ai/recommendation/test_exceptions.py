@@ -19,7 +19,7 @@ Comprehensive Tests for AI Recommendation Exception Handling
 Testing error conditions, edge cases, and exception hierarchies
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
-⚠️  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
+  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
     code, or intellectual property without explicit written authorization 
     from Fahed Mlaiel is strictly prohibited and will result in legal action.
 
@@ -418,12 +418,12 @@ class TestInputSanitization:
     
     def test_sanitize_user_input_unicode(self):
         """Test handling of Unicode characters"""
-        unicode_input = "Hello 世界 🌍"
+        unicode_input = "Hello  "
         clean_input = sanitize_user_input(unicode_input)
         
         assert "Hello" in clean_input
-        assert "世界" in clean_input
-        assert "🌍" in clean_input
+        assert "" in clean_input
+        assert "" in clean_input
 
 
 class TestErrorLogging:

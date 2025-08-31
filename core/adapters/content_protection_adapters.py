@@ -284,6 +284,9 @@ class YouTubeContentIDAdapter(BaseProtectionAdapter):
     
     async def register_content(self, content: ProtectedContent) -> bool:
         """Register content with YouTube Content ID."""
+
+
+
         try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.access_token}",
@@ -369,6 +372,9 @@ class YouTubeContentIDAdapter(BaseProtectionAdapter):
     
     async def submit_takedown_request(self, request: TakedownRequest) -> bool:
         """Submit a copyright claim through YouTube Content ID."""
+
+
+
         try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.access_token}",
@@ -405,6 +411,9 @@ class YouTubeContentIDAdapter(BaseProtectionAdapter):
     
     async def check_takedown_status(self, request_id: str) -> Dict[str, Any]:
         """Check YouTube copyright claim status."""
+
+
+
         try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.access_token}"
@@ -438,6 +447,9 @@ class FacebookRightsManagerAdapter(BaseProtectionAdapter):
     
     async def register_content(self, content: ProtectedContent) -> bool:
         """Register content with Facebook Rights Manager."""
+
+
+
         try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.access_token}",
@@ -521,6 +533,9 @@ class FacebookRightsManagerAdapter(BaseProtectionAdapter):
     
     async def submit_takedown_request(self, request: TakedownRequest) -> bool:
         """Submit a rights claim through Facebook Rights Manager."""
+
+
+
         try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.access_token}",
@@ -556,6 +571,9 @@ class FacebookRightsManagerAdapter(BaseProtectionAdapter):
     
     async def check_takedown_status(self, request_id: str) -> Dict[str, Any]:
         """Check Facebook rights action status."""
+
+
+
         try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.access_token}"
@@ -589,6 +607,9 @@ class DMCATakedownAdapter(BaseProtectionAdapter):
     
     async def register_content(self, content: ProtectedContent) -> bool:
         """Register content for DMCA protection monitoring."""
+
+
+
         try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}",
@@ -663,6 +684,9 @@ class DMCATakedownAdapter(BaseProtectionAdapter):
     
     async def submit_takedown_request(self, request: TakedownRequest) -> bool:
         """Submit DMCA takedown notice."""
+
+
+
         try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}",
@@ -702,6 +726,9 @@ class DMCATakedownAdapter(BaseProtectionAdapter):
     
     async def check_takedown_status(self, request_id: str) -> Dict[str, Any]:
         """Check DMCA takedown status."""
+
+
+
         try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.api_key}"
@@ -747,6 +774,9 @@ class ProtectionAdapterFactory:
     @classmethod
     def get_supported_platforms(cls) -> List[ProtectionPlatform]:
         """Get list of supported protection platforms."""
+
+
+
         return list(cls._adapters.keys())
 
 class ProtectionAdapterManager:

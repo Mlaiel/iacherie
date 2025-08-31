@@ -1,5 +1,5 @@
 """
-📊 Advanced Monitoring & Analytics System for Content Fingerprinting
+ Advanced Monitoring & Analytics System for Content Fingerprinting
 ===================================================================
 
 Enterprise-grade monitoring, metrics collection, and analytics system
@@ -207,6 +207,9 @@ class MetricsCollector:
     
     def _collect_system_metrics(self):
         """Collect system resource metrics."""
+
+
+
         try:
             # CPU metrics
             cpu_percent = psutil.cpu_percent()
@@ -297,6 +300,9 @@ class MetricsCollector:
     
     def get_prometheus_metrics(self) -> str:
         """Get metrics in Prometheus format."""
+
+
+
         return generate_latest(self.registry).decode('utf-8')
 
 class AlertingSystem:
@@ -585,6 +591,9 @@ class AnalyticsEngine:
     
     def create_dashboard_data(self, report: PerformanceReport) -> Dict[str, Any]:
         """Create data structure for dashboard visualization."""
+
+
+
         return {
             'overview': {
                 'total_files': report.total_files_processed,
@@ -739,6 +748,9 @@ class FingerprintingMonitor:
     
     def get_system_health(self) -> Dict[str, Any]:
         """Get overall system health status."""
+
+
+
         return {
             'status': 'healthy' if self.running else 'stopped',
             'active_alerts': len(self.alerting_system.active_alerts),

@@ -247,7 +247,10 @@ class MonetizationEngine:
         self.logger.info("MonetizationEngine initialized successfully")
     
     def _initialize_monetization_components(self):
-        """Initialize monetization engine components."""        try:
+        """Initialize monetization engine components."""
+
+
+        try:
             # Revenue stream storage
             self.revenue_streams: Dict[str, RevenueStream] = {}
             self.pricing_tiers: Dict[str, List[PricingTier]] = {}
@@ -310,7 +313,10 @@ class MonetizationEngine:
         
         Sets up comprehensive revenue stream with pricing strategy,
         payment processing integration, and analytics tracking.
-        """        try:
+        """
+
+
+        try:
             self.logger.info(f"Creating revenue stream for creator: {creator_id}")
             
             # Generate unique stream ID
@@ -396,7 +402,10 @@ class MonetizationEngine:
         }
     
     async def _configure_payment_processing(self, revenue_stream: RevenueStream):
-        """Configure payment processing for revenue stream."""        try:
+        """Configure payment processing for revenue stream."""
+
+
+        try:
             # Select appropriate payment processor
             preferred_processors = self._get_preferred_processors(
                 revenue_stream.currency,
@@ -470,7 +479,10 @@ class MonetizationEngine:
         
         Handles payment processing through configured gateways
         and updates revenue analytics and creator earnings.
-        """        try:
+        """
+
+
+        try:
             self.logger.info(f"Processing payment for stream: {stream_id}")
             
             # Validate revenue stream
@@ -780,7 +792,10 @@ class MonetizationEngine:
         
         Provides detailed analytics including revenue trends,
         conversion rates, customer lifetime value, and growth metrics.
-        """        try:
+        """
+
+
+        try:
             self.logger.info(f"Calculating revenue metrics for creator: {creator_id}")
             
             # Filter transactions for creator and period
@@ -1030,7 +1045,10 @@ class MonetizationEngine:
         
         Uses machine learning and statistical analysis to recommend
         optimal pricing strategies for maximum revenue or conversion.
-        """        try:
+        """
+
+
+        try:
             self.logger.info(f"Optimizing pricing for stream: {stream_id}")
             
             if stream_id not in self.revenue_streams:
@@ -1217,7 +1235,10 @@ class MonetizationEngine:
         start_date: datetime = None,
         end_date: datetime = None
     ) -> Dict[str, Any]:
-        """Generate comprehensive earnings report for creator."""        try:
+        """Generate comprehensive earnings report for creator."""
+
+
+        try:
             if start_date is None:
                 start_date = datetime.utcnow() - timedelta(days=30)
             if end_date is None:
@@ -1342,7 +1363,10 @@ class SubscriptionManager:
         self.logger.info("SubscriptionManager initialized successfully")
     
     async def process_subscription_renewals(self):
-        """Process automatic subscription renewals."""        try:
+        """Process automatic subscription renewals."""
+
+
+        try:
             now = datetime.utcnow()
             renewal_date = now + timedelta(days=self.renewal_notice_days)
             

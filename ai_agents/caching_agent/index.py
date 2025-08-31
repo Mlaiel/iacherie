@@ -7,7 +7,7 @@ with clear categorization and professional module structure.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit 
 written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and 
@@ -181,6 +181,9 @@ def get_component_info() -> dict:
     Returns:
         Dictionary containing component categories and descriptions
     """
+
+
+
     return {
         "version": __version__,
         "author": __author__,

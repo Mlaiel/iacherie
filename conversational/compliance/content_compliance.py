@@ -146,6 +146,9 @@ class ContentComplianceEngine:
     
     def _load_safety_thresholds(self) -> Dict[ContentCategory, Dict[str, float]]:
         """Load content safety thresholds"""
+
+
+
         return {
             ContentCategory.TOXICITY: {
                 "safe": 0.2,
@@ -186,6 +189,9 @@ class ContentComplianceEngine:
     
     def _load_content_patterns(self) -> Dict[ContentCategory, List[Dict[str, Any]]]:
         """Load content detection patterns"""
+
+
+
         return {
             ContentCategory.PROFANITY: [
                 {
@@ -245,6 +251,9 @@ class ContentComplianceEngine:
     
     def _load_brand_safety_rules(self) -> Dict[str, Any]:
         """Load brand safety rules"""
+
+
+
         return {
             "unsafe_topics": [
                 "controversial_politics", "extremism", "adult_content", 
@@ -260,6 +269,9 @@ class ContentComplianceEngine:
     
     def _load_age_rating_rules(self) -> Dict[AgeRating, Dict[str, Any]]:
         """Load age rating classification rules"""
+
+
+
         return {
             AgeRating.ALL_AGES: {
                 "max_toxicity": 0.1,
@@ -511,6 +523,9 @@ class ContentComplianceEngine:
     
     async def _analyze_content_sentiment(self, content: str) -> Dict[str, Any]:
         """Analyze content sentiment for context"""
+
+
+
         try:
             sentiment_result = await self.sentiment_analyzer.analyze(content)
             return {
@@ -529,6 +544,9 @@ class ContentComplianceEngine:
         context: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
         """Classify content for safety assessment"""
+
+
+
         try:
             classification_result = await self.content_classifier.classify(content)
             return {
@@ -754,6 +772,9 @@ class ContentComplianceEngine:
         ai_response: str
     ) -> None:
         """Store content safety assessment results"""
+
+
+
         try:
             query = """
                 INSERT INTO content_safety_assessments 
@@ -802,6 +823,9 @@ class ContentComplianceEngine:
     
     async def get_safety_statistics(self, days: int = 30) -> Dict[str, Any]:
         """Get content safety statistics"""
+
+
+
         try:
             # Overall safety metrics
             safety_query = """
@@ -857,8 +881,14 @@ class ContentComplianceEngine:
     
     def get_supported_categories(self) -> List[str]:
         """Get list of supported content categories"""
+
+
+
         return [category.value for category in ContentCategory]
     
     def get_category_thresholds(self, category: ContentCategory) -> Dict[str, float]:
         """Get safety thresholds for specific category"""
+
+
+
         return self.safety_thresholds.get(category, {})

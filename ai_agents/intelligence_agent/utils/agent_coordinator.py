@@ -8,7 +8,7 @@ Author: Fahed Mlaiel
 Contact: mlaiel@live.de
 Copyright: 2025 - All rights reserved
 
-⚠️ IMPORTANT LEGAL NOTICE ⚠️
+ IMPORTANT LEGAL NOTICE 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
@@ -330,6 +330,9 @@ class AgentCoordinator:
         Returns:
             bool: Registration success status
         """
+
+
+
         try:
             if agent_id in self.registered_agents:
                 self.logger.warning(f"Agent {agent_id} already registered, updating...")
@@ -383,6 +386,9 @@ class AgentCoordinator:
         Returns:
             str: Workflow execution ID
         """
+
+
+
         try:
             workflow_id = f"workflow_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
             
@@ -438,6 +444,9 @@ class AgentCoordinator:
         Returns:
             str: Task ID for tracking
         """
+
+
+
         try:
             task_id = f"task_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
             
@@ -556,6 +565,9 @@ class AgentCoordinator:
     
     async def _execute_workflow_plan(self, workflow_plan: WorkflowPlan):
         """Execute a workflow plan with proper coordination."""
+
+
+
         try:
             workflow_id = workflow_plan.workflow_id
             self.logger.info(f"Executing workflow plan: {workflow_id}")
@@ -611,6 +623,9 @@ class AgentCoordinator:
     
     async def _execute_single_task(self, task: CoordinationTask) -> Dict[str, Any]:
         """Execute a single coordination task."""
+
+
+
         try:
             task.status = TaskStatus.IN_PROGRESS
             task.started_at = datetime.now()

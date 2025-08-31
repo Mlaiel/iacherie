@@ -149,6 +149,9 @@ class CachingManager(BaseAgent):
         
     async def initialize(self) -> bool:
         """Initialize caching manager and all components"""
+
+
+
         try:
             await super().initialize()
             
@@ -325,6 +328,9 @@ class CachingManager(BaseAgent):
         tenant_id: Optional[str] = None
     ) -> bool:
         """Delete entry from all cache levels"""
+
+
+
         try:
             cache_key = self._generate_cache_key(key, user_id, tenant_id)
             
@@ -346,6 +352,9 @@ class CachingManager(BaseAgent):
     
     async def invalidate_by_tags(self, tags: List[str]) -> int:
         """Invalidate all entries matching specified tags"""
+
+
+
         try:
             invalidated_count = 0
             
@@ -363,6 +372,9 @@ class CachingManager(BaseAgent):
     
     async def invalidate_by_pattern(self, pattern: str) -> int:
         """Invalidate entries matching key pattern"""
+
+
+
         try:
             import re
             regex = re.compile(pattern)
@@ -387,6 +399,9 @@ class CachingManager(BaseAgent):
         batch_size: int = 100
     ) -> int:
         """Pre-populate cache with anticipated data"""
+
+
+
         try:
             warmed_count = 0
             
@@ -421,6 +436,9 @@ class CachingManager(BaseAgent):
     
     async def optimize_cache(self) -> Dict[str, Any]:
         """Perform comprehensive cache optimization"""
+
+
+
         try:
             optimization_results = await self.optimizer.optimize(
                 self._cache_entries,
@@ -469,6 +487,9 @@ class CachingManager(BaseAgent):
     
     def _calculate_size(self, value: Any) -> int:
         """Calculate memory size of value in bytes"""
+
+
+
         try:
             return len(pickle.dumps(value))
         except:
@@ -484,6 +505,9 @@ class CachingManager(BaseAgent):
     
     async def _store_in_level(self, level: CacheLevel, entry: CacheEntry) -> bool:
         """Store entry in specific cache level"""
+
+
+
         return await self.storage.set_in_level(level, entry.key, entry)
     
     async def _determine_optimal_level(self, entry: CacheEntry) -> CacheLevel:
@@ -553,6 +577,9 @@ class CachingManager(BaseAgent):
     
     async def _encrypt_value(self, value: Any) -> bytes:
         """Encrypt value for security"""
+
+
+
         return await self._encryption.encrypt(pickle.dumps(value))
     
     def _requires_encryption(self, content_type: Optional[str]) -> bool:

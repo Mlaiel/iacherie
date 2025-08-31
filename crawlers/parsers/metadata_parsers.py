@@ -8,7 +8,7 @@ Handles Open Graph, Twitter Cards, Schema.org, Dublin Core, and other metadata s
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
@@ -79,6 +79,9 @@ class OpenGraphParser(BaseMetadataParser):
     
     async def parse(self, html: str, base_url: Optional[str] = None) -> Dict[str, Any]:
         """Parse Open Graph metadata from HTML"""
+
+
+
         try:
             soup = BeautifulSoup(html, 'html.parser')
             og_data = {}
@@ -208,6 +211,9 @@ class TwitterCardParser(BaseMetadataParser):
     
     async def parse(self, html: str, base_url: Optional[str] = None) -> Dict[str, Any]:
         """Parse Twitter Card metadata from HTML"""
+
+
+
         try:
             soup = BeautifulSoup(html, 'html.parser')
             twitter_data = {}
@@ -300,6 +306,9 @@ class SchemaOrgParser(BaseMetadataParser):
     
     async def parse(self, html: str, base_url: Optional[str] = None) -> Dict[str, Any]:
         """Parse Schema.org structured data from HTML"""
+
+
+
         try:
             soup = BeautifulSoup(html, 'html.parser')
             schema_data = {
@@ -444,6 +453,9 @@ class DublinCoreParser(BaseMetadataParser):
     
     async def parse(self, html: str, base_url: Optional[str] = None) -> Dict[str, Any]:
         """Parse Dublin Core metadata from HTML"""
+
+
+
         try:
             soup = BeautifulSoup(html, 'html.parser')
             dc_data = {}
@@ -499,6 +511,9 @@ class MetaTagParser(BaseMetadataParser):
     
     async def parse(self, html: str, base_url: Optional[str] = None) -> Dict[str, Any]:
         """Parse standard meta tags from HTML"""
+
+
+
         try:
             soup = BeautifulSoup(html, 'html.parser')
             meta_data = {
@@ -597,6 +612,9 @@ class JsonLdParser(BaseMetadataParser):
     
     async def parse(self, html: str, base_url: Optional[str] = None) -> Dict[str, Any]:
         """Parse JSON-LD structured data with detailed analysis"""
+
+
+
         try:
             soup = BeautifulSoup(html, 'html.parser')
             json_ld_data = []
@@ -693,6 +711,9 @@ class MicrodataParser(BaseMetadataParser):
     
     async def parse(self, html: str, base_url: Optional[str] = None) -> Dict[str, Any]:
         """Parse Microdata with detailed analysis"""
+
+
+
         try:
             soup = BeautifulSoup(html, 'html.parser')
             

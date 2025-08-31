@@ -252,6 +252,9 @@ class APIIntegrationEngine:
     
     def _setup_platform_clients(self):
         """Initialize platform-specific API clients."""
+
+
+
         try:
             # YouTube Data API
             if self.config.get("youtube_credentials"):
@@ -296,6 +299,9 @@ class APIIntegrationEngine:
         credentials: APICredentials
     ) -> bool:
         """Authenticate with a platform API."""
+
+
+
         try:
             self.logger.info(f"Authenticating with {provider.value}")
             
@@ -319,6 +325,9 @@ class APIIntegrationEngine:
     
     async def _auth_youtube(self, credentials: APICredentials) -> bool:
         """Authenticate with YouTube Data API."""
+
+
+
         try:
             # Test API key with a simple request
             test_url = "https://www.googleapis.com/youtube/v3/search"
@@ -345,6 +354,9 @@ class APIIntegrationEngine:
     
     async def _auth_instagram(self, credentials: APICredentials) -> bool:
         """Authenticate with Instagram Business API."""
+
+
+
         try:
             if credentials.auth_type == AuthenticationType.OAUTH2:
                 # Use existing access token or initiate OAuth flow
@@ -382,6 +394,9 @@ class APIIntegrationEngine:
     
     async def _auth_twitter(self, credentials: APICredentials) -> bool:
         """Authenticate with Twitter API v2."""
+
+
+
         try:
             if credentials.bearer_token:
                 # Test bearer token
@@ -410,6 +425,9 @@ class APIIntegrationEngine:
     
     async def _auth_spotify(self, credentials: APICredentials) -> bool:
         """Authenticate with Spotify Web API."""
+
+
+
         try:
             if credentials.client_id and credentials.client_secret:
                 # Use client credentials flow
@@ -443,6 +461,9 @@ class APIIntegrationEngine:
     
     async def _auth_tiktok(self, credentials: APICredentials) -> bool:
         """Authenticate with TikTok Business API."""
+
+
+
         try:
             # TikTok Business API authentication
             if credentials.access_token:
@@ -470,6 +491,9 @@ class APIIntegrationEngine:
         request: APIRequest
     ) -> APIResponse:
         """Make an API request with rate limiting and caching."""
+
+
+
         try:
             start_time = time.time()
             
@@ -621,6 +645,9 @@ class APIIntegrationEngine:
         start_time: float
     ) -> APIResponse:
         """Process API response."""
+
+
+
         try:
             # Read response data
             response_text = await response.text()
@@ -681,6 +708,9 @@ class APIIntegrationEngine:
         order: str = "relevance"
     ) -> List[NormalizedContent]:
         """Search YouTube videos and return normalized content."""
+
+
+
         try:
             request = APIRequest(
                 request_id=str(uuid.uuid4()),
@@ -735,6 +765,9 @@ class APIIntegrationEngine:
         limit: int = 25
     ) -> List[NormalizedContent]:
         """Get Instagram posts for a user."""
+
+
+
         try:
             if APIProvider.INSTAGRAM_BUSINESS not in self.platform_clients:
                 raise APIException("Instagram client not authenticated")
@@ -755,6 +788,9 @@ class APIIntegrationEngine:
     
     def _normalize_instagram_post(self, post_data) -> NormalizedContent:
         """Normalize Instagram post data."""
+
+
+
         return NormalizedContent(
             content_id=post_data.pk,
             platform="instagram",
@@ -778,6 +814,9 @@ class APIIntegrationEngine:
         max_results: int = 100
     ) -> List[NormalizedContent]:
         """Search Twitter tweets and return normalized content."""
+
+
+
         try:
             if APIProvider.TWITTER_API_V2 not in self.platform_clients:
                 raise APIException("Twitter client not authenticated")
@@ -851,6 +890,9 @@ class APIIntegrationEngine:
         market: str = "US"
     ) -> List[NormalizedContent]:
         """Search Spotify tracks and return normalized content."""
+
+
+
         try:
             if APIProvider.SPOTIFY_WEB_API not in self.platform_clients:
                 raise APIException("Spotify client not authenticated")
@@ -898,6 +940,9 @@ class APIIntegrationEngine:
         max_concurrent: int = 10
     ) -> List[APIResponse]:
         """Execute multiple API requests concurrently."""
+
+
+
         try:
             semaphore = asyncio.Semaphore(max_concurrent)
             
@@ -939,6 +984,9 @@ class APIIntegrationEngine:
     
     async def refresh_access_tokens(self):
         """Refresh expired access tokens for OAuth providers."""
+
+
+
         try:
             for provider, credentials in self.credentials.items():
                 if (credentials.expires_at and 
@@ -952,6 +1000,9 @@ class APIIntegrationEngine:
     
     async def _refresh_token(self, provider: APIProvider, credentials: APICredentials):
         """Refresh access token for a specific provider."""
+
+
+
         try:
             if credentials.refresh_token and credentials.client_id and credentials.client_secret:
                 # Standard OAuth2 refresh flow

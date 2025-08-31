@@ -51,6 +51,9 @@ class SpotifyAdapter(BasePlatformAdapter):
     
     def _initialize_client(self):
         """Initialize Spotify API client with authentication."""
+
+
+
         try:
             # For user-specific operations
             self.auth_manager = SpotifyOAuth(
@@ -75,6 +78,9 @@ class SpotifyAdapter(BasePlatformAdapter):
     
     async def authenticate_user(self, user_id: str) -> Dict[str, Any]:
         """Authenticate user and return access tokens."""
+
+
+
         try:
             # Get authorization URL
             auth_url = self.auth_manager.get_authorize_url()
@@ -134,6 +140,9 @@ class SpotifyAdapter(BasePlatformAdapter):
         Upload music content to Spotify for Artists.
         Note: Direct upload requires Spotify for Artists API access.
         """
+
+
+
         try:
             # Validate content first
             validation = await self.validate_content(distribution_request.content_metadata)
@@ -184,6 +193,9 @@ class SpotifyAdapter(BasePlatformAdapter):
     
     async def _create_playlist(self, user_id: str, name: str, description: str) -> Dict[str, Any]:
         """Create a new playlist on Spotify."""
+
+
+
         try:
             # Get user's Spotify client
             user_client = spotipy.Spotify(auth_manager=self.auth_manager)
@@ -209,6 +221,9 @@ class SpotifyAdapter(BasePlatformAdapter):
     
     async def get_analytics(self, content_id: str, date_range: tuple = None) -> PlatformAnalytics:
         """Retrieve analytics data for distributed content."""
+
+
+
         try:
             if not date_range:
                 end_date = datetime.now()
@@ -265,6 +280,9 @@ class SpotifyAdapter(BasePlatformAdapter):
     
     async def get_revenue_data(self, content_id: str, date_range: tuple = None) -> RevenueData:
         """Calculate revenue data for distributed content."""
+
+
+
         try:
             analytics = await self.get_analytics(content_id, date_range)
             
@@ -301,6 +319,9 @@ class SpotifyAdapter(BasePlatformAdapter):
     
     async def update_content_metadata(self, content_id: str, metadata: Dict[str, Any]) -> bool:
         """Update content metadata on Spotify."""
+
+
+
         try:
             # This would require Spotify for Artists API access
             # For now, return success for supported metadata updates
@@ -324,6 +345,9 @@ class SpotifyAdapter(BasePlatformAdapter):
     
     async def delete_content(self, content_id: str) -> bool:
         """Delete content from Spotify (requires special permissions)."""
+
+
+
         try:
             # Direct content deletion on Spotify requires distributor-level access
             # For now, we can remove from playlists and mark as inactive
@@ -339,6 +363,9 @@ class SpotifyAdapter(BasePlatformAdapter):
     
     def get_platform_limits(self) -> Dict[str, Any]:
         """Return platform-specific limits and requirements."""
+
+
+
         return {
             "max_file_size_mb": self.MAX_TRACK_SIZE_MB,
             "supported_formats": self.SUPPORTED_FORMATS,

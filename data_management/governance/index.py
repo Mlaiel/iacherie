@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel - All rights reserved
 Email: mlaiel@live.de
 
-⚠️ LEGAL WARNING: Unauthorized use prohibited ⚠️
+ LEGAL WARNING: Unauthorized use prohibited 
 """
 
 import asyncio
@@ -164,6 +164,9 @@ async def cleanup_expired_content() -> Dict[str, int]:
 # Content type validation helpers
 def validate_content_type(content_type: str) -> bool:
     """Validate if content type is supported"""
+
+
+
     try:
         ContentType(content_type.lower())
         return True
@@ -173,11 +176,17 @@ def validate_content_type(content_type: str) -> bool:
 
 def get_supported_content_types() -> List[str]:
     """Get list of supported content types"""
+
+
+
     return [ct.value for ct in ContentType]
 
 
 def get_governance_status_options() -> List[str]:
     """Get list of possible governance status values"""
+
+
+
     return [gs.value for gs in GovernanceStatus]
 
 
@@ -333,6 +342,9 @@ async def emergency_content_review(content_id: str) -> Dict[str, Any]:
 # Module health check
 async def governance_health_check() -> Dict[str, Any]:
     """Check health status of governance system"""
+
+
+
     
     try:
         manager = get_governance_manager()

@@ -1,5 +1,5 @@
 """
-📊 Metering System - Professional Audio Measurement and Visualization
+ Metering System - Professional Audio Measurement and Visualization
 
 Industrial-grade audio metering system with multiple meter types, real-time
 analysis, and professional broadcast standards compliance.

@@ -23,7 +23,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + Legal Tech + DevOps + DBA
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL PROTECTION NOTICE:
+  LEGAL PROTECTION NOTICE:
 This code and all concepts are protected intellectual property under international
 copyright law. Unauthorized use will result in immediate legal action and maximum
 financial penalties. Contact mlaiel@live.de for authorization.
@@ -149,6 +149,9 @@ class FingerprintingService:
         Returns:
             bool: True if successful, False otherwise
         """
+
+
+
         try:
             logger.info("Initializing unified fingerprinting services...")
             
@@ -418,6 +421,9 @@ class FingerprintingService:
         content_type: ContentType
     ) -> ContentMetadata:
         """Extract metadata from content file."""
+
+
+
         try:
             stat = file_path.stat()
             
@@ -449,6 +455,9 @@ class FingerprintingService:
         metadata: ContentMetadata
     ) -> ContentMetadata:
         """Extract audio-specific metadata."""
+
+
+
         try:
             import librosa
             duration = librosa.get_duration(path=file_path)
@@ -463,6 +472,9 @@ class FingerprintingService:
         metadata: ContentMetadata
     ) -> ContentMetadata:
         """Extract video-specific metadata."""
+
+
+
         try:
             import cv2
             cap = cv2.VideoCapture(str(file_path))
@@ -485,6 +497,9 @@ class FingerprintingService:
         metadata: ContentMetadata
     ) -> ContentMetadata:
         """Extract image-specific metadata."""
+
+
+
         try:
             from PIL import Image
             with Image.open(file_path) as img:
@@ -522,6 +537,9 @@ class FingerprintingService:
         fingerprint: UniversalFingerprint
     ) -> bool:
         """Store universal fingerprint in vector database."""
+
+
+
         try:
             if not self.vector_db:
                 return False
@@ -564,6 +582,9 @@ class FingerprintingService:
         min_similarity: float
     ) -> List[SimilarityResult]:
         """Search for similar audio content."""
+
+
+
         try:
             if not self.audio_service:
                 return []

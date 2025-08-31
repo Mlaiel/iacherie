@@ -92,6 +92,9 @@ class ContentStrategistAgent(BaseAIAgent):
         Returns:
             Comprehensive content analysis
         """
+
+
+
         try:
             # Extract performance metrics
             views = content_data.get('views', 0)
@@ -172,6 +175,9 @@ class ContentStrategistAgent(BaseAIAgent):
         Returns:
             List of strategic recommendations
         """
+
+
+
         try:
             recommendations = []
             

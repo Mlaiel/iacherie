@@ -35,7 +35,7 @@ class CoverageValidator:
     
     def run_coverage_analysis(self):
         """Run pytest with coverage analysis"""
-        print("🔍 Running Test Coverage Analysis...")
+        print(" Running Test Coverage Analysis...")
         print("=" * 60)
         
         try:
@@ -62,7 +62,7 @@ class CoverageValidator:
             return result.returncode == 0
             
         except Exception as e:
-            print(f"❌ Error running coverage analysis: {e}")
+            print(f" Error running coverage analysis: {e}")
             return False
     
     def analyze_coverage_data(self):
@@ -70,7 +70,7 @@ class CoverageValidator:
         coverage_file = self.project_root / "coverage.json"
         
         if not coverage_file.exists():
-            print("⚠️  Coverage JSON file not found")
+            print("  Coverage JSON file not found")
             return False
         
         try:
@@ -79,14 +79,14 @@ class CoverageValidator:
             
             total_coverage = coverage_data.get('totals', {}).get('percent_covered', 0)
             
-            print(f"\n📊 Coverage Analysis Results:")
+            print(f"\n Coverage Analysis Results:")
             print("=" * 60)
             print(f"Overall Coverage: {total_coverage:.1f}%")
             
             if total_coverage >= self.coverage_requirements["minimum_coverage"]:
-                print(f"✅ Meets minimum coverage requirement ({self.coverage_requirements['minimum_coverage']}%)")
+                print(f" Meets minimum coverage requirement ({self.coverage_requirements['minimum_coverage']}%)")
             else:
-                print(f"❌ Below minimum coverage requirement ({self.coverage_requirements['minimum_coverage']}%)")
+                print(f" Below minimum coverage requirement ({self.coverage_requirements['minimum_coverage']}%)")
             
             # Analyze file-level coverage
             files = coverage_data.get('files', {})
@@ -98,19 +98,19 @@ class CoverageValidator:
                     low_coverage_files.append((file_path, file_coverage))
             
             if low_coverage_files:
-                print(f"\n⚠️  Files with low coverage (< 50%):")
+                print(f"\n  Files with low coverage (< 50%):")
                 for file_path, coverage in low_coverage_files[:5]:  # Show top 5
                     print(f"  {file_path}: {coverage:.1f}%")
             
             return total_coverage >= self.coverage_requirements["minimum_coverage"]
             
         except Exception as e:
-            print(f"❌ Error analyzing coverage data: {e}")
+            print(f" Error analyzing coverage data: {e}")
             return False
     
     def validate_critical_components(self):
         """Validate that critical components have adequate test coverage"""
-        print(f"\n🎯 Critical Component Validation:")
+        print(f"\n Critical Component Validation:")
         print("=" * 60)
         
         # Check if our test files exist and are comprehensive
@@ -130,20 +130,20 @@ class CoverageValidator:
                     content = f.read()
                     test_count = content.count('def test_')
                 
-                print(f"✅ {component.title()}: {test_count} tests implemented")
+                print(f" {component.title()}: {test_count} tests implemented")
                 
                 if test_count < 3:  # Minimum 3 tests per critical component
-                    print(f"   ⚠️  Consider adding more comprehensive tests")
+                    print(f"     Consider adding more comprehensive tests")
                     all_critical_covered = False
             else:
-                print(f"❌ {component.title()}: No tests found")
+                print(f" {component.title()}: No tests found")
                 all_critical_covered = False
         
         return all_critical_covered
     
     def generate_quality_report(self):
         """Generate a comprehensive quality report"""
-        print(f"\n📋 Quality Validation Report:")
+        print(f"\n Quality Validation Report:")
         print("=" * 60)
         
         # Run all validations
@@ -152,45 +152,45 @@ class CoverageValidator:
         critical_ok = self.validate_critical_components()
         
         # Overall assessment
-        print(f"\n🎯 Overall Quality Assessment:")
+        print(f"\n Overall Quality Assessment:")
         print("=" * 60)
         
         quality_score = 0
         total_checks = 3
         
         if coverage_ok:
-            print("✅ Test Execution: PASSING")
+            print(" Test Execution: PASSING")
             quality_score += 1
         else:
-            print("❌ Test Execution: FAILING")
+            print(" Test Execution: FAILING")
         
         if data_ok:
-            print("✅ Coverage Standards: MEETING")
+            print(" Coverage Standards: MEETING")
             quality_score += 1
         else:
-            print("⚠️  Coverage Standards: NEEDS IMPROVEMENT")
+            print("  Coverage Standards: NEEDS IMPROVEMENT")
         
         if critical_ok:
-            print("✅ Critical Components: COVERED")
+            print(" Critical Components: COVERED")
             quality_score += 1
         else:
-            print("⚠️  Critical Components: NEEDS IMPROVEMENT")
+            print("  Critical Components: NEEDS IMPROVEMENT")
         
         # Final assessment
         quality_percentage = (quality_score / total_checks) * 100
         print(f"\nQuality Score: {quality_score}/{total_checks} ({quality_percentage:.0f}%)")
         
         if quality_score == total_checks:
-            print("\n🎉 PRODUCTION READY: All quality checks passed!")
-            print("✅ Platform meets production quality standards")
+            print("\n PRODUCTION READY: All quality checks passed!")
+            print(" Platform meets production quality standards")
             return True
         elif quality_score >= 2:
-            print("\n⚠️  MOSTLY READY: Some improvements needed")
-            print("🔄 Platform is functional but could benefit from improvements")
+            print("\n  MOSTLY READY: Some improvements needed")
+            print(" Platform is functional but could benefit from improvements")
             return True
         else:
-            print("\n❌ NOT READY: Significant issues need to be addressed")
-            print("🚫 Platform needs more work before production deployment")
+            print("\n NOT READY: Significant issues need to be addressed")
+            print(" Platform needs more work before production deployment")
             return False
 
 
@@ -206,19 +206,19 @@ def main():
     production_ready = validator.generate_quality_report()
     
     # Final status for the critical issue
-    print(f"\n🎯 CRITICAL ISSUE STATUS:")
+    print(f"\n CRITICAL ISSUE STATUS:")
     print("=" * 60)
     print("Issue: 'Tests Manquants: Pas de tests unitaires centralisés'")
-    print("Priority: '🔴 CRITIQUE'")
+    print("Priority: ' CRITIQUE'")
     print("")
     
     if production_ready:
-        print("✅ RESOLVED: Centralized unit testing infrastructure is operational")
-        print("✅ Quality validation framework provides production confidence")
-        print("✅ Critical testing gap has been successfully addressed")
+        print(" RESOLVED: Centralized unit testing infrastructure is operational")
+        print(" Quality validation framework provides production confidence")
+        print(" Critical testing gap has been successfully addressed")
     else:
-        print("🔄 PARTIALLY RESOLVED: Basic infrastructure in place, improvements ongoing")
-        print("⚠️  Quality validation framework is functional with room for enhancement")
+        print(" PARTIALLY RESOLVED: Basic infrastructure in place, improvements ongoing")
+        print("  Quality validation framework is functional with room for enhancement")
     
     return 0 if production_ready else 1
 

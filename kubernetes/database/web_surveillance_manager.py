@@ -22,7 +22,7 @@ Contact: mlaiel@live.de
 - DevOps Engineer: Fahed Mlaiel
 - IA Prompt Engineer: Fahed Mlaiel
 
-⚠️ ATTENTION IMPORTANTE ⚠️
+ ATTENTION IMPORTANTE 
 Toute tentative de vol, copie, ou utilisation non autorisée de ce code, 
 concept ou idée sans autorisation écrite explicite de Fahed Mlaiel 
 sera poursuivie selon la loi allemande et internationale.
@@ -32,7 +32,7 @@ Contact autorisé: mlaiel@live.de
 FONCTIONNALITÉS ENTERPRISE:
 =========================
 
-🕷️ WEB CRAWLING AVANCÉ:
+ WEB CRAWLING AVANCÉ:
 - Multi-platform crawler management
 - Distributed crawling architecture
 - Rate limiting et politeness policies
@@ -40,7 +40,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Anti-detection mechanisms avancés
 - Content extraction optimization
 
-🔍 SURVEILLANCE TEMPS RÉEL:
+ SURVEILLANCE TEMPS RÉEL:
 - Real-time content monitoring
 - Automated alert generation
 - Pattern recognition avancé
@@ -48,7 +48,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Threat assessment automation
 - Performance tracking continu
 
-📊 DATA PROCESSING PIPELINE:
+ DATA PROCESSING PIPELINE:
 - Stream processing architecture
 - Real-time data normalization
 - Duplicate detection avancée
@@ -56,7 +56,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Sentiment analysis integration
 - Language detection automatique
 
-🎯 PLATFORM SPECIALIZATION:
+ PLATFORM SPECIALIZATION:
 - YouTube crawler optimization
 - Instagram API integration
 - TikTok content monitoring
@@ -64,7 +64,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Facebook content tracking
 - Generic web crawler engine
 
-📈 ANALYTICS ET INSIGHTS:
+ ANALYTICS ET INSIGHTS:
 - Trend analysis automation
 - Competitive intelligence
 - Market monitoring dashboards
@@ -72,7 +72,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - ROI tracking per platform
 - Predictive analytics AI
 
-🛡️ PROTECTION ET COMPLIANCE:
+ PROTECTION ET COMPLIANCE:
 - GDPR compliance automation
 - Terms of service monitoring
 - Copyright violation detection
@@ -80,7 +80,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Legal compliance tracking
 - Audit trail complet
 
-⚡ PERFORMANCE OPTIMIZATION:
+ PERFORMANCE OPTIMIZATION:
 - Async crawling architecture
 - Intelligent caching strategies
 - Load balancing automation
@@ -88,7 +88,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Scalability automation
 - Cost optimization algorithms
 
-🔒 SÉCURITÉ ET FIABILITÉ:
+ SÉCURITÉ ET FIABILITÉ:
 - Secure data transmission
 - Encrypted storage solutions
 - Access control granulaire
@@ -238,8 +238,11 @@ class WebSurveillanceManager:
     
     async def initialize(self) -> bool:
         """Initialize the web surveillance manager"""
+
+
+
         try:
-            self.logger.info("🚀 Initializing Web Surveillance Manager...")
+            self.logger.info(" Initializing Web Surveillance Manager...")
             
             # Get database manager
             self._db_manager = get_postgresql_manager()
@@ -250,11 +253,11 @@ class WebSurveillanceManager:
             # Load active crawl jobs
             await self._load_active_crawls()
             
-            self.logger.info("✅ Web Surveillance Manager initialized successfully")
+            self.logger.info(" Web Surveillance Manager initialized successfully")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize Web Surveillance Manager: {e}")
+            self.logger.error(f" Failed to initialize Web Surveillance Manager: {e}")
             return False
     
     async def _create_surveillance_schema(self):
@@ -612,10 +615,13 @@ class WebSurveillanceManager:
             await session.execute(text(schema_sql))
             await session.commit()
         
-        self.logger.debug("✅ Web surveillance schema created successfully")
+        self.logger.debug(" Web surveillance schema created successfully")
     
     async def _load_active_crawls(self):
         """Load active crawl jobs from database"""
+
+
+
         try:
             async with self._db_manager.get_session() as session:
                 result = await session.execute(
@@ -656,6 +662,9 @@ class WebSurveillanceManager:
         config: Dict[str, Any] = None
     ) -> str:
         """Create a new crawler configuration"""
+
+
+
         try:
             self.logger.debug(f"Creating crawler config for user {user_id}")
             
@@ -691,15 +700,18 @@ class WebSurveillanceManager:
                 config_id = result.scalar()
                 await session.commit()
             
-            self.logger.debug(f"✅ Crawler config created successfully: {config_id}")
+            self.logger.debug(f" Crawler config created successfully: {config_id}")
             return config_id
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to create crawler config: {e}")
+            self.logger.error(f" Failed to create crawler config: {e}")
             raise
     
     async def start_crawl_job(self, config_id: str, job_name: Optional[str] = None) -> str:
         """Start a new crawl job"""
+
+
+
         try:
             self.logger.debug(f"Starting crawl job for config {config_id}")
             
@@ -752,11 +764,11 @@ class WebSurveillanceManager:
                 'started_at': datetime.utcnow()
             }
             
-            self.logger.debug(f"✅ Crawl job started successfully: {job_id}")
+            self.logger.debug(f" Crawl job started successfully: {job_id}")
             return job_id
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to start crawl job: {e}")
+            self.logger.error(f" Failed to start crawl job: {e}")
             raise
     
     async def update_crawl_progress(
@@ -768,6 +780,9 @@ class WebSurveillanceManager:
         errors_count: int = 0
     ) -> bool:
         """Update crawl job progress"""
+
+
+
         try:
             async with self._db_manager.get_session() as session:
                 result = await session.execute(
@@ -808,6 +823,9 @@ class WebSurveillanceManager:
     
     async def store_detected_content(self, job_id: str, content: DetectedContent) -> str:
         """Store detected content"""
+
+
+
         try:
             # Generate URL hash for deduplication
             url_hash = hashlib.sha256(content.url.encode()).hexdigest()
@@ -866,15 +884,18 @@ class WebSurveillanceManager:
                 # Check for alert triggers
                 await self._check_alert_triggers(content_id, content)
                 
-                self.logger.debug(f"✅ Content stored successfully: {content_id}")
+                self.logger.debug(f" Content stored successfully: {content_id}")
                 return content_id
         
         except Exception as e:
-            self.logger.error(f"❌ Failed to store detected content: {e}")
+            self.logger.error(f" Failed to store detected content: {e}")
             raise
     
     async def _check_alert_triggers(self, content_id: str, content: DetectedContent):
         """Check if content triggers any alerts"""
+
+
+
         try:
             # This is a simplified alert trigger system
             # In a real implementation, this would be more sophisticated
@@ -950,6 +971,9 @@ class WebSurveillanceManager:
         error_log: Optional[List[str]] = None
     ) -> bool:
         """Complete a crawl job"""
+
+
+
         try:
             async with self._db_manager.get_session() as session:
                 result = await session.execute(
@@ -988,6 +1012,9 @@ class WebSurveillanceManager:
     
     async def _update_crawl_statistics(self, job_id: str):
         """Update crawl statistics"""
+
+
+
         try:
             async with self._db_manager.get_session() as session:
                 # Get job details
@@ -1048,6 +1075,9 @@ class WebSurveillanceManager:
         limit: int = 50
     ) -> List[Dict[str, Any]]:
         """Get surveillance alerts for a user"""
+
+
+
         try:
             query = """
                 SELECT sa.alert_id, sa.alert_type, sa.severity, sa.title, sa.description,
@@ -1087,6 +1117,9 @@ class WebSurveillanceManager:
     
     async def get_crawl_jobs_status(self, user_id: str, limit: int = 20) -> List[Dict[str, Any]]:
         """Get crawl jobs status for a user"""
+
+
+
         try:
             async with self._db_manager.get_session() as session:
                 result = await session.execute(
@@ -1119,6 +1152,9 @@ class WebSurveillanceManager:
         limit: int = 100
     ) -> List[Dict[str, Any]]:
         """Get detected content for a user"""
+
+
+
         try:
             query = """
                 SELECT content_id, url, title, description, author, platform,
@@ -1153,6 +1189,9 @@ class WebSurveillanceManager:
     
     async def health_check(self) -> Dict[str, Any]:
         """Perform health check"""
+
+
+
         try:
             health = {
                 'status': 'healthy',
@@ -1214,8 +1253,11 @@ class WebSurveillanceManager:
     
     async def shutdown(self):
         """Shutdown the web surveillance manager"""
+
+
+
         try:
-            self.logger.info("🚨 Shutting down Web Surveillance Manager...")
+            self.logger.info(" Shutting down Web Surveillance Manager...")
             
             # Mark active crawls as paused
             for job_id in list(self._active_crawls.keys()):
@@ -1230,10 +1272,10 @@ class WebSurveillanceManager:
             self._content_cache.clear()
             self._url_fingerprints.clear()
             
-            self.logger.info("✅ Web Surveillance Manager shutdown completed")
+            self.logger.info(" Web Surveillance Manager shutdown completed")
             
         except Exception as e:
-            self.logger.error(f"❌ Shutdown failed: {e}")
+            self.logger.error(f" Shutdown failed: {e}")
 
 
 # Factory function

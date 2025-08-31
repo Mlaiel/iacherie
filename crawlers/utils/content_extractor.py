@@ -161,6 +161,9 @@ class ContentExtractor:
     
     def _load_social_media_patterns(self) -> Dict[str, Dict[str, str]]:
         """Load social media URL patterns."""
+
+
+
         return {
             'youtube': {
                 'channel': r'youtube\.com/(?:c/|channel/|user/|@)([^/?]+)',
@@ -198,6 +201,9 @@ class ContentExtractor:
     
     def _load_contact_patterns(self) -> Dict[str, str]:
         """Load contact information patterns."""
+
+
+
         return {
             'email': r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b',
             'phone': r'(\+?1?[-.\s]?)?\(?([0-9]{3})\)?[-.\s]?([0-9]{3})[-.\s]?([0-9]{4})',
@@ -208,6 +214,9 @@ class ContentExtractor:
     
     def _load_content_selectors(self) -> Dict[str, List[str]]:
         """Load CSS selectors for content extraction."""
+
+
+
         return {
             'title': [
                 'h1',
@@ -702,6 +711,9 @@ class ContentExtractor:
     
     async def _extract_dynamic_content(self, driver) -> Optional[Dict[str, str]]:
         """Extract content from dynamic pages using Selenium."""
+
+
+
         try:
             # Wait for content to load
             await asyncio.sleep(2)
@@ -1074,6 +1086,9 @@ class ContentExtractor:
     
     def _determine_content_type(self, soup: BeautifulSoup, metadata: Dict) -> str:
         """Determine the type of content."""
+
+
+
         try:
             # Check Open Graph type
             og_type = metadata.get('og:type', '').lower()
@@ -1238,6 +1253,9 @@ class ContentExtractor:
     
     def _categorize_image_size(self, img) -> str:
         """Categorize image size."""
+
+
+
         try:
             width = int(img.get('width', 0))
             height = int(img.get('height', 0))
@@ -1421,6 +1439,9 @@ class ContentExtractor:
 # Utility functions for content extraction
 async def extract_content_from_url(url: str, timeout: int = 30) -> Optional[ExtractedContent]:
     """Extract content directly from URL."""
+
+
+
     try:
         async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=timeout)) as session:
             async with session.get(url) as response:
@@ -1454,6 +1475,9 @@ def clean_extracted_text(text: str) -> str:
 
 def extract_domain_info(url: str) -> Dict[str, str]:
     """Extract domain information from URL."""
+
+
+
     try:
         parsed = urlparse(url)
         return {

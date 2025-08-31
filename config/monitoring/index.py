@@ -58,6 +58,9 @@ class MonitoringModuleIndex:
     
     def _build_module_index(self) -> Dict[str, Dict[str, Any]]:
         """Build comprehensive module index"""
+
+
+
         return {
             "core_monitoring": {
                 "prometheus": {
@@ -176,6 +179,9 @@ class MonitoringModuleIndex:
     
     def _build_capability_map(self) -> Dict[str, List[str]]:
         """Build capability mapping across modules"""
+
+
+
         return {
             "metrics_collection": ["prometheus", "metrics", "infrastructure_monitoring"],
             "alerting": ["prometheus", "grafana", "alerting"],
@@ -191,6 +197,9 @@ class MonitoringModuleIndex:
     
     def _build_integration_map(self) -> Dict[str, Dict[str, List[str]]]:
         """Build integration mapping between modules"""
+
+
+
         return {
             "data_flow": {
                 "prometheus": ["grafana", "alerting", "observability_orchestration"],
@@ -225,18 +234,30 @@ class MonitoringModuleIndex:
     
     def get_modules_by_capability(self, capability: str) -> List[str]:
         """Get modules that provide a specific capability"""
+
+
+
         return self.capabilities.get(capability, [])
     
     def get_integration_dependencies(self, module_name: str) -> List[str]:
         """Get integration dependencies for a module"""
+
+
+
         return self.integration_points.get("dependency_graph", {}).get(module_name, [])
     
     def get_data_flow_targets(self, module_name: str) -> List[str]:
         """Get data flow targets for a module"""
+
+
+
         return self.integration_points.get("data_flow", {}).get(module_name, [])
     
     def list_all_modules(self) -> Dict[str, List[str]]:
         """List all modules organized by category"""
+
+
+
         return {
             category: list(modules.keys())
             for category, modules in self.modules.items()
@@ -282,6 +303,9 @@ class MonitoringModuleIndex:
     
     def get_quick_setup_guide(self) -> Dict[str, List[str]]:
         """Get quick setup guide for different monitoring scenarios"""
+
+
+
         return {
             "basic_monitoring": [
                 "prometheus", "grafana", "metrics", "alerting"

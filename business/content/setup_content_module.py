@@ -12,7 +12,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 Expert Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️ LEGAL WARNING: This code and concept are protected by intellectual property laws.
+ LEGAL WARNING: This code and concept are protected by intellectual property laws.
 Any unauthorized copying, modification, or distribution without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.
@@ -88,7 +88,7 @@ class ContentModuleSetup:
         
     def validate_environment(self) -> Dict[str, Any]:
         """Validate system environment for content module."""
-        logger.info("🔍 Validating Environment...")
+        logger.info(" Validating Environment...")
         
         validation_results = {
             'python_version': self._check_python_version(),
@@ -102,9 +102,9 @@ class ContentModuleSetup:
         overall_status = all(result['status'] for result in validation_results.values())
         
         if overall_status:
-            logger.info("✅ Environment validation passed")
+            logger.info(" Environment validation passed")
         else:
-            logger.warning("⚠️ Environment validation found issues")
+            logger.warning(" Environment validation found issues")
         
         return {
             'overall_status': overall_status,
@@ -127,6 +127,9 @@ class ContentModuleSetup:
     
     def _check_system_resources(self) -> Dict[str, Any]:
         """Check system resource availability."""
+
+
+
         try:
             import psutil
             
@@ -173,6 +176,9 @@ class ContentModuleSetup:
     
     def _check_redis_connection(self) -> Dict[str, Any]:
         """Check Redis connection."""
+
+
+
         try:
             import redis
             client = redis.Redis(host='localhost', port=6379, decode_responses=True)
@@ -183,6 +189,9 @@ class ContentModuleSetup:
     
     def _check_database_connection(self) -> Dict[str, Any]:
         """Check database connection."""
+
+
+
         try:
             # This would connect to your actual database
             # For demo, we'll simulate the check
@@ -192,6 +201,9 @@ class ContentModuleSetup:
     
     def _check_elasticsearch_connection(self) -> Dict[str, Any]:
         """Check Elasticsearch connection."""
+
+
+
         try:
             # This would connect to your actual Elasticsearch
             # For demo, we'll simulate the check
@@ -294,7 +306,7 @@ class ContentModuleSetup:
     
     async def setup_configuration(self) -> Dict[str, Any]:
         """Setup module configuration."""
-        logger.info("⚙️ Setting up Content Module Configuration...")
+        logger.info(" Setting up Content Module Configuration...")
         
         config = {
             'module_info': {
@@ -387,7 +399,7 @@ class ContentModuleSetup:
         with open(config_path, 'w') as f:
             json.dump(config, f, indent=2)
         
-        logger.info(f"✅ Configuration saved to: {config_path}")
+        logger.info(f" Configuration saved to: {config_path}")
         
         # Generate environment template
         await self._generate_env_template()
@@ -455,11 +467,11 @@ SUPPORT_EMAIL=mlaiel@live.de
         with open(env_path, 'w') as f:
             f.write(env_template.strip())
         
-        logger.info(f"✅ Environment template generated: {env_path}")
+        logger.info(f" Environment template generated: {env_path}")
     
     def generate_deployment_scripts(self):
         """Generate deployment scripts."""
-        logger.info("📦 Generating Deployment Scripts...")
+        logger.info(" Generating Deployment Scripts...")
         
         # Docker Compose
         docker_compose = """
@@ -554,40 +566,40 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", 
         Path('docker-compose.yml').write_text(docker_compose.strip())
         Path('Dockerfile').write_text(dockerfile.strip())
         
-        logger.info("✅ Deployment scripts generated")
+        logger.info(" Deployment scripts generated")
     
     def print_setup_summary(self):
         """Print setup completion summary."""
         print("""
-    ╔══════════════════════════════════════════════════════════════════════════════╗
-    ║                   CONTENT MODULE SETUP COMPLETED                            ║
-    ║                                                                              ║
-    ║  🏗️  Industrial-Grade Content Management System Ready                       ║
-    ║  📁  All 11 Content Engines Configured                                      ║
-    ║  🔧  Environment Templates Generated                                         ║
-    ║  📦  Deployment Scripts Created                                              ║
-    ║                                                                              ║
-    ║  Next Steps:                                                                 ║
-    ║  1. Configure .env file with your API keys                                  ║
-    ║  2. Run: docker-compose up -d                                               ║
-    ║  3. Execute: python demo_complete_system.py                                 ║
-    ║                                                                              ║
-    ║  📧  Enterprise Support: mlaiel@live.de                                     ║
-    ║  📖  Documentation: README.md                                               ║
-    ║  🧪  Testing: python -m pytest test_content_complete.py                    ║
-    ╚══════════════════════════════════════════════════════════════════════════════╝
+    
+                       CONTENT MODULE SETUP COMPLETED                            
+                                                                                  
+        Industrial-Grade Content Management System Ready                       
+        All 11 Content Engines Configured                                      
+        Environment Templates Generated                                         
+        Deployment Scripts Created                                              
+                                                                                  
+      Next Steps:                                                                 
+      1. Configure .env file with your API keys                                  
+      2. Run: docker-compose up -d                                               
+      3. Execute: python demo_complete_system.py                                 
+                                                                                  
+        Enterprise Support: mlaiel@live.de                                     
+        Documentation: README.md                                               
+      🧪  Testing: python -m pytest test_content_complete.py                    
+    
         """)
 
 
 async def main():
     """Main setup function."""
     print("""
-    ╔══════════════════════════════════════════════════════════════════════════════╗
-    ║                 IA Influencer Agent - Content Module Setup                  ║
-    ║                                                                              ║
-    ║  Author: Fahed Mlaiel <mlaiel@live.de>                                      ║
-    ║  Industrial-Grade Content Management System                                  ║
-    ╚══════════════════════════════════════════════════════════════════════════════╝
+    
+                     IA Influencer Agent - Content Module Setup                  
+                                                                                  
+      Author: Fahed Mlaiel <mlaiel@live.de>                                      
+      Industrial-Grade Content Management System                                  
+    
     """)
     
     setup = ContentModuleSetup()
@@ -606,11 +618,11 @@ async def main():
         setup.print_setup_summary()
         
         # Final validation report
-        print(f"\n📊 Setup Summary:")
-        print(f"   - Environment Status: {'✅ PASSED' if env_validation['overall_status'] else '⚠️  ISSUES'}")
-        print(f"   - Configuration: ✅ {config_result['engines_enabled']} engines configured")
-        print(f"   - Deployment: ✅ Docker compose and scripts ready")
-        print(f"   - Templates: ✅ Environment and config templates generated")
+        print(f"\n Setup Summary:")
+        print(f"   - Environment Status: {' PASSED' if env_validation['overall_status'] else '  ISSUES'}")
+        print(f"   - Configuration:  {config_result['engines_enabled']} engines configured")
+        print(f"   - Deployment:  Docker compose and scripts ready")
+        print(f"   - Templates:  Environment and config templates generated")
         
     except Exception as e:
         logger.error(f"Setup failed: {str(e)}")

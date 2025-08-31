@@ -1,5 +1,5 @@
 """
-🔍 Web Crawling & Monitoring Configuration Manager - IA-Influencer-Agent
+ Web Crawling & Monitoring Configuration Manager - IA-Influencer-Agent
 ========================================================================
 Project Creator & Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
@@ -7,7 +7,7 @@ Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert +
 Date: 2025-08-24
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -508,6 +508,9 @@ class CrawlingMonitoringConfigManager:
     
     def _load_configuration(self) -> bool:
         """Load configuration from file"""
+
+
+
         try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r', encoding='utf-8') as f:
@@ -538,6 +541,9 @@ class CrawlingMonitoringConfigManager:
     
     def add_platform(self, platform_id: str, config: PlatformCrawlerConfig) -> bool:
         """Add platform crawler configuration"""
+
+
+
         try:
             self._config.platform_configs[platform_id] = config
             self._config.updated_at = datetime.now()
@@ -550,10 +556,16 @@ class CrawlingMonitoringConfigManager:
     
     def get_platform_config(self, platform_id: str) -> Optional[PlatformCrawlerConfig]:
         """Get platform crawler configuration"""
+
+
+
         return self._config.platform_configs.get(platform_id)
     
     def get_enabled_platforms(self) -> List[str]:
         """Get list of enabled platforms"""
+
+
+
         return [
             platform_id for platform_id, config in self._config.platform_configs.items()
             if config.enabled
@@ -603,6 +615,9 @@ class CrawlingMonitoringConfigManager:
     
     def get_configuration_status(self) -> Dict[str, Any]:
         """Get configuration status and metadata"""
+
+
+
         return {
             "initialized": self.initialized,
             "last_updated": self.last_updated,

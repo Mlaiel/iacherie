@@ -18,7 +18,7 @@ Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -158,6 +158,9 @@ class TimezoneManager(BaseAgent):
     
     async def _initialize_timezone_database(self):
         """Initialize comprehensive timezone database"""
+
+
+
         try:
             # Load all pytz timezones
             all_timezones = pytz.all_timezones
@@ -181,6 +184,9 @@ class TimezoneManager(BaseAgent):
     
     async def _build_timezone_info(self, timezone_id: str) -> Optional[TimezoneInfo]:
         """Build comprehensive timezone information"""
+
+
+
         try:
             tz = pytz.timezone(timezone_id)
             now = datetime.now(tz)
@@ -308,6 +314,9 @@ class TimezoneManager(BaseAgent):
         Returns:
             Detected timezone identifier
         """
+
+
+
         try:
             detected_timezone = None
             confidence = 0.0
@@ -379,6 +388,9 @@ class TimezoneManager(BaseAgent):
     
     async def _detect_timezone_by_profile(self, profile_data: Dict[str, Any]) -> Tuple[Optional[str], float]:
         """Detect timezone from user profile information"""
+
+
+
         try:
             # Check for explicit timezone setting
             if 'timezone' in profile_data:
@@ -403,6 +415,9 @@ class TimezoneManager(BaseAgent):
     
     async def _detect_timezone_by_engagement(self, user_id: str, engagement_history: List[Dict]) -> Tuple[Optional[str], float]:
         """Detect timezone based on engagement pattern analysis"""
+
+
+
         try:
             if not engagement_history:
                 return None, 0.0
@@ -445,6 +460,9 @@ class TimezoneManager(BaseAgent):
     
     async def _detect_timezone_by_device(self, device_timezone: str) -> Tuple[Optional[str], float]:
         """Detect timezone from device settings"""
+
+
+
         try:
             if device_timezone and device_timezone in pytz.all_timezones:
                 return device_timezone, 0.85  # High confidence for device settings
@@ -457,6 +475,9 @@ class TimezoneManager(BaseAgent):
     
     async def _get_timezone_from_location(self, location: str) -> Optional[str]:
         """Get timezone from location string using geocoding"""
+
+
+
         try:
             location_data = self.geocoder.geocode(location)
             if location_data:
@@ -482,6 +503,9 @@ class TimezoneManager(BaseAgent):
     async def _store_detection_result(self, user_id: str, method: TimezoneDetectionMethod, 
                                     timezone: str, confidence: float):
         """Store timezone detection result for accuracy tracking"""
+
+
+
         try:
             # In production, store in database for analytics
             detection_key = f"{method.value}:{user_id}"
@@ -502,6 +526,9 @@ class TimezoneManager(BaseAgent):
         Returns:
             Comprehensive audience timezone profile
         """
+
+
+
         try:
             timezone_distribution = Counter()
             engagement_by_timezone = defaultdict(lambda: defaultdict(float))
@@ -612,6 +639,9 @@ class TimezoneManager(BaseAgent):
         Returns:
             List of optimal global scheduling windows
         """
+
+
+
         try:
             windows = []
             
@@ -701,6 +731,9 @@ class TimezoneManager(BaseAgent):
     
     async def _estimate_competition_level(self, hour_utc: int, content_type: str) -> float:
         """Estimate competition level for posting at specific UTC hour"""
+
+
+
         try:
             # Simplified competition estimation - in production, use real platform data
             peak_hours_utc = [12, 13, 14, 18, 19, 20]  # Common global peak hours
@@ -782,6 +815,9 @@ class GlobalScheduler:
         Returns:
             Optimized global schedule with timezone-aware posting times
         """
+
+
+
         try:
             # Get user's audience timezone profile
             audience_profile = self.timezone_manager.audience_profiles.get(user_id)
@@ -846,6 +882,9 @@ class GlobalScheduler:
     async def _select_optimal_window(self, windows: List[GlobalSchedulingWindow], 
                                    priority: str, existing_schedules: List[Dict]) -> Optional[GlobalSchedulingWindow]:
         """Select optimal window avoiding conflicts with existing schedules"""
+
+
+
         try:
             priority_weights = {
                 'high': 1.0,
@@ -884,6 +923,9 @@ class GlobalScheduler:
     async def _calculate_schedule_metrics(self, schedule: Dict[str, Any], 
                                         audience_profile: AudienceTimezoneProfile):
         """Calculate overall schedule performance metrics"""
+
+
+
         try:
             if not schedule['content_schedules']:
                 return
@@ -917,6 +959,9 @@ class GlobalScheduler:
     
     async def optimize_existing_schedule(self, user_id: str, schedule_id: str) -> Dict[str, Any]:
         """Optimize existing schedule based on performance data"""
+
+
+
         try:
             # This would analyze actual performance data and suggest improvements
             # For now, return optimization suggestions

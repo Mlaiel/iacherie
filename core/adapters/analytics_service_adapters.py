@@ -168,6 +168,9 @@ class GoogleAnalyticsAdapter(BasePlatformAdapter):
     
     async def authenticate(self) -> bool:
         """Authenticate with Google Analytics."""
+
+
+
         try:
             if self.credentials.auth_type == AuthenticationType.API_KEY:
                 # For Measurement Protocol, we just need to validate the measurement ID and API secret
@@ -205,6 +208,9 @@ class GoogleAnalyticsAdapter(BasePlatformAdapter):
     
     async def track_event(self, event: AnalyticsEvent) -> bool:
         """Track event using GA4 Measurement Protocol."""
+
+
+
         try:
             # Prepare event data for GA4 Measurement Protocol
             event_data = {
@@ -243,6 +249,9 @@ class GoogleAnalyticsAdapter(BasePlatformAdapter):
     
     async def get_report(self, query: AnalyticsQuery) -> AnalyticsReport:
         """Get analytics report from GA4 Reporting API."""
+
+
+
         try:
             # Prepare reporting request
             request_data = {
@@ -382,6 +391,9 @@ class GoogleAnalyticsAdapter(BasePlatformAdapter):
     
     async def health_check(self) -> bool:
         """Perform Google Analytics health check."""
+
+
+
         try:
             if self.measurement_id and self.api_secret:
                 return True
@@ -441,6 +453,9 @@ class MixpanelAdapter(BasePlatformAdapter):
     
     async def authenticate(self) -> bool:
         """Authenticate with Mixpanel API."""
+
+
+
         try:
             # Test authentication with a simple query
             response = await self.make_request(
@@ -467,6 +482,9 @@ class MixpanelAdapter(BasePlatformAdapter):
     
     async def track_event(self, event: AnalyticsEvent) -> bool:
         """Track event in Mixpanel."""
+
+
+
         try:
             event_data = {
                 "event": self._map_event_type(event.event_type),
@@ -537,6 +555,9 @@ class MixpanelAdapter(BasePlatformAdapter):
     
     async def health_check(self) -> bool:
         """Perform Mixpanel health check."""
+
+
+
         try:
             response = await self.make_request(
                 method="GET",
@@ -574,6 +595,9 @@ class AnalyticsAdapterFactory:
     @classmethod
     def get_supported_platforms(cls) -> List[AnalyticsPlatform]:
         """Get list of supported analytics platforms."""
+
+
+
         return list(cls._adapters.keys())
 
 # Export all classes

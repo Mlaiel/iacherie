@@ -136,6 +136,9 @@ class DatabaseOperation(TransactionOperation):
     
     async def execute(self, session: AsyncSession, context: TransactionContext) -> Any:
         """Execute database operation"""
+
+
+
         try:
             result = await session.execute(text(self.sql), self.params)
             self.result = result
@@ -208,6 +211,9 @@ class TransactionManager:
     
     async def initialize(self):
         """Initialize transaction manager"""
+
+
+
         try:
             self.db_connection = await DatabaseConnection.get_instance()
             self.redis_client = self.db_connection.connections.get('redis_primary')
@@ -562,6 +568,9 @@ class TransactionManager:
     
     async def get_active_transactions(self) -> List[TransactionContext]:
         """Get all active transactions"""
+
+
+
         return list(self.active_transactions.values())
     
     async def get_transaction_statistics(self) -> Dict[str, Any]:
@@ -784,6 +793,9 @@ class DistributedTransactionCoordinator:
     
     async def _send_commit_request(self, participant: Any, transaction_id: str) -> bool:
         """Send commit request to participant"""
+
+
+
         try:
             if hasattr(participant, 'commit_transaction'):
                 return await participant.commit_transaction(transaction_id)

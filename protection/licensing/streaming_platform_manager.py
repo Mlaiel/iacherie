@@ -1,5 +1,5 @@
 """
-🎵 Streaming Platform License Manager - Multi-Platform Licensing Engine
+ Streaming Platform License Manager - Multi-Platform Licensing Engine
 ====================================================================
 
 Ultra-advanced streaming platform licensing and rights management:
@@ -14,7 +14,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Music Business Expert + Platform Integration Specialist + Revenue Analyst + Legal Tech Engineer
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ LEGAL WARNING:
+ LEGAL WARNING:
 This software is protected by international copyright law and trade secret law.
 Unauthorized reproduction, distribution, or reverse engineering is strictly prohibited
 and may result in severe civil and criminal penalties. Users must comply with all
@@ -126,7 +126,7 @@ class PlatformMetrics:
 
 class StreamingPlatformLicenseManager:
     """
-    🚀 Comprehensive streaming platform license management system
+     Comprehensive streaming platform license management system
     
     Advanced system for managing licenses across multiple streaming
     platforms with automated optimization and compliance monitoring.
@@ -423,6 +423,9 @@ class StreamingPlatformLicenseManager:
         license_terms: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Create license for specific platform."""
+
+
+
         try:
             platform_spec = self.platform_specs[platform]
             
@@ -766,6 +769,9 @@ class StreamingPlatformLicenseManager:
         date_range: Dict[str, datetime]
     ) -> Dict[str, Any]:
         """Get performance analytics across all platforms for content."""
+
+
+
         try:
             analytics_data = {}
             
@@ -909,6 +915,9 @@ class StreamingPlatformLicenseManager:
 
     def get_licensing_metrics(self) -> Dict[str, Any]:
         """Get licensing performance metrics."""
+
+
+
         return {
             **self.licensing_metrics,
             'supported_platforms': len(self.platform_specs),

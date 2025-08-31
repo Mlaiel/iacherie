@@ -1,15 +1,15 @@
 """
-🚀 Validation Rules Engine - IA Influencer Agent Platform Enterprise
+ Validation Rules Engine - IA Influencer Agent Platform Enterprise
 =================================================================
 Module: backend/data_management/validation/rules_engine.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 =================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 MOTEUR DE RÈGLES DE VALIDATION CONFIGURABLE
+ MOTEUR DE RÈGLES DE VALIDATION CONFIGURABLE
 Système de règles flexibles pour validation personnalisée
 - Règles configurables par type de créateur
 - Moteur d'évaluation dynamique
@@ -213,6 +213,9 @@ class RuleEvaluator:
     
     def _extract_field_value(self, data: Dict[str, Any], field_path: str) -> Any:
         """Extrait une valeur depuis un chemin de champ"""
+
+
+
         try:
             parts = field_path.split('.')
             value = data
@@ -237,6 +240,9 @@ class RuleEvaluator:
     
     def _evaluate_operator(self, op: RuleOperator, actual: Any, expected: Any) -> bool:
         """Évalue un opérateur"""
+
+
+
         try:
             if op in self.operators:
                 return self.operators[op](actual, expected)
@@ -346,6 +352,9 @@ class RuleSetManager:
     
     def load_rules_from_config(self, config_path: str) -> bool:
         """Charge les règles depuis un fichier de configuration"""
+
+
+
         try:
             with open(config_path, 'r', encoding='utf-8') as f:
                 config = json.load(f)
@@ -367,6 +376,9 @@ class RuleSetManager:
     
     def save_rules_to_config(self, config_path: str) -> bool:
         """Sauvegarde les règles dans un fichier de configuration"""
+
+
+
         try:
             config = {}
             
@@ -503,6 +515,9 @@ class RuleSetManager:
     
     def _create_rule_from_dict(self, rule_data: Dict[str, Any]) -> ValidationRule:
         """Crée une règle depuis un dictionnaire"""
+
+
+
         return ValidationRule(
             id=rule_data['id'],
             name=rule_data['name'],
@@ -523,6 +538,9 @@ class RuleSetManager:
     
     def _rule_to_dict(self, rule: ValidationRule) -> Dict[str, Any]:
         """Convertit une règle en dictionnaire"""
+
+
+
         return {
             'id': rule.id,
             'name': rule.name,
@@ -782,6 +800,9 @@ class RulesEngine:
     
     def add_custom_rule(self, rule_set_name: str, rule_config: Dict[str, Any]) -> bool:
         """Ajoute une règle personnalisée"""
+
+
+
         try:
             rule = ValidationRule(
                 id=rule_config['id'],
@@ -808,6 +829,9 @@ class RulesEngine:
     
     def get_validation_summary(self, result: RulesEvaluationResult) -> Dict[str, Any]:
         """Génère un résumé de validation formaté"""
+
+
+
         return {
             'status': 'VALID' if result.is_valid else 'INVALID',
             'overall_score': (result.passed_rules / result.total_rules) * 100 if result.total_rules > 0 else 100,

@@ -1,15 +1,15 @@
 """
-🚀 Security Validation System - IA Influencer Agent Platform Enterprise
+ Security Validation System - IA Influencer Agent Platform Enterprise
 =====================================================================
 Module: backend/data_management/validation/security_validator.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 =====================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 SYSTÈME DE VALIDATION SÉCURITAIRE AVANCÉ
+ SYSTÈME DE VALIDATION SÉCURITAIRE AVANCÉ
 Validation sécuritaire complète pour protection du contenu
 - Détection malwares et virus
 - Analyse de vulnérabilités
@@ -310,6 +310,9 @@ class MalwareScanner:
     
     def _calculate_file_hash(self, file_path: str) -> str:
         """Calcule le hash SHA-256 du fichier"""
+
+
+
         try:
             hasher = hashlib.sha256()
             with open(file_path, 'rb') as f:
@@ -343,6 +346,9 @@ class MalwareScanner:
     
     def _load_yara_rules(self) -> Optional[yara.Rules]:
         """Charge les règles YARA"""
+
+
+
         try:
             # Règles YARA basiques pour la détection
             yara_rules_text = '''

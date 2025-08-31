@@ -5,7 +5,7 @@ Advanced platform management with unified API and intelligent routing
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent - Ultra-Industrial Content Protection & Monetization Platform
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This code and concept are the intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit written permission 
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in legal action.
@@ -214,6 +214,9 @@ class PlatformManager:
         
     async def register_platform(self, config: PlatformConfig, adapter_class: type):
         """Register a new platform with its adapter"""
+
+
+
         try:
             # Encrypt credentials
             encrypted_config = self.credential_manager.encrypt_credentials(config)
@@ -496,6 +499,9 @@ class PlatformManager:
     
     def get_platform_status(self) -> Dict[str, Any]:
         """Get status of all registered platforms"""
+
+
+
         return {
             'total_platforms': len(self.adapters),
             'platforms': {

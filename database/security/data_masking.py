@@ -20,7 +20,7 @@ Team Specialists:
 - IA Prompt Engineer: AI masking algorithms
 
 Contact: mlaiel@live.de
-⚠️ LEGAL WARNING: Any unauthorized use, copying, distribution, or commercialization 
+ LEGAL WARNING: Any unauthorized use, copying, distribution, or commercialization 
 of this code without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will result in immediate legal action.
 """
@@ -292,6 +292,9 @@ class RedactionMasker(DataMasker):
     
     async def validate_rule(self, rule: MaskingRule) -> bool:
         """Validate redaction rule"""
+
+
+
         return rule.masking_technique == self.technique
 
 
@@ -343,6 +346,9 @@ class SubstitutionMasker(DataMasker):
     
     async def validate_rule(self, rule: MaskingRule) -> bool:
         """Validate substitution rule"""
+
+
+
         return (rule.masking_technique == self.technique and 
                 rule.data_type in self.supported_data_types)
 
@@ -384,6 +390,9 @@ class EncryptionMasker(DataMasker):
     
     async def validate_rule(self, rule: MaskingRule) -> bool:
         """Validate encryption rule"""
+
+
+
         return rule.masking_technique == self.technique
 
 
@@ -427,6 +436,9 @@ class ShufflingMasker(DataMasker):
     
     async def validate_rule(self, rule: MaskingRule) -> bool:
         """Validate shuffling rule"""
+
+
+
         return rule.masking_technique == self.technique
 
 
@@ -485,10 +497,16 @@ class TokenizationMasker(DataMasker):
     
     async def validate_rule(self, rule: MaskingRule) -> bool:
         """Validate tokenization rule"""
+
+
+
         return rule.masking_technique == self.technique
     
     def detokenize(self, token: str) -> Optional[str]:
         """Reverse tokenization to get original value"""
+
+
+
         return self.reverse_map.get(token)
 
 
@@ -524,6 +542,9 @@ class DataMaskingEngine:
     
     def _initialize_maskers(self):
         """Initialize data masking implementations"""
+
+
+
         try:
             # Register built-in maskers
             self.maskers[MaskingTechnique.REDACTION] = RedactionMasker()
@@ -548,6 +569,9 @@ class DataMaskingEngine:
         Returns:
             True if rule added successfully, False otherwise
         """
+
+
+
         try:
             # Validate rule
             if not await self._validate_masking_rule(rule):
@@ -566,6 +590,9 @@ class DataMaskingEngine:
     
     async def _validate_masking_rule(self, rule: MaskingRule) -> bool:
         """Validate masking rule"""
+
+
+
         try:
             # Check if masker exists for technique
             if rule.masking_technique not in self.maskers:
@@ -603,6 +630,9 @@ class DataMaskingEngine:
         Returns:
             Job ID
         """
+
+
+
         try:
             # Validate rules exist
             job_rules = []
@@ -638,6 +668,9 @@ class DataMaskingEngine:
     
     async def _execute_masking_job(self, job: MaskingJob):
         """Execute data masking job"""
+
+
+
         try:
             # Update job status
             job.status = "running"
@@ -689,6 +722,9 @@ class DataMaskingEngine:
     
     async def _mask_table(self, job: MaskingJob, table_name: str, rules: List[MaskingRule]):
         """Mask data in a specific table"""
+
+
+
         try:
             # In a real implementation, this would:
             # 1. Connect to source database
@@ -765,6 +801,9 @@ class DataMaskingEngine:
         Returns:
             Test results including original and masked values
         """
+
+
+
         try:
             if rule_id not in self.masking_rules:
                 raise ValueError(f"Masking rule not found: {rule_id}")
@@ -875,14 +914,23 @@ class DataMaskingEngine:
     
     def get_job_status(self, job_id: str) -> Optional[MaskingJob]:
         """Get masking job status"""
+
+
+
         return self.masking_jobs.get(job_id)
     
     def list_masking_rules(self) -> List[MaskingRule]:
         """List all masking rules"""
+
+
+
         return list(self.masking_rules.values())
     
     def list_active_jobs(self) -> List[MaskingJob]:
         """List active masking jobs"""
+
+
+
         return [
             job for job in self.masking_jobs.values()
             if job.status in ["pending", "running"]
@@ -890,6 +938,9 @@ class DataMaskingEngine:
     
     async def cancel_job(self, job_id: str) -> bool:
         """Cancel running masking job"""
+
+
+
         try:
             if job_id in self.masking_jobs:
                 job = self.masking_jobs[job_id]

@@ -7,7 +7,7 @@ Auteur: Fahed Mlaiel - Lead Developer & AI Architect
 Email: mlaiel@live.de
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps
 
-⚠️  AVERTISSEMENT LÉGAL - PROPRIÉTÉ INTELLECTUELLE PROTÉGÉE ⚠️
+  AVERTISSEMENT LÉGAL - PROPRIÉTÉ INTELLECTUELLE PROTÉGÉE 
 Ce code est la propriété exclusive de Fahed Mlaiel et est protégé par les lois
 sur la propriété intellectuelle. Toute reproduction, distribution, ou utilisation
 non autorisée est strictement interdite et passible de poursuites judiciaires.
@@ -217,6 +217,9 @@ class TerritoryManager:
     
     async def _initialize_global_territories(self):
         """Initialise les territoires globaux de base"""
+
+
+
         try:
             # Territoire mondial
             worldwide = TerritoryDefinition(
@@ -431,6 +434,9 @@ class TerritoryManager:
         conditions: Optional[Dict[str, Any]] = None
     ) -> str:
         """Accorde des droits territoriaux pour un contenu"""
+
+
+
         try:
             if territory_id not in self.territories:
                 raise ValueError(f"Territoire {territory_id} non reconnu")
@@ -505,6 +511,9 @@ class TerritoryManager:
         requested_rights: List[str]
     ) -> Dict[str, Any]:
         """Vérifie la disponibilité territoriale pour des droits spécifiques"""
+
+
+
         try:
             availability_report = {
                 'content_id': content_id,
@@ -619,6 +628,9 @@ class TerritoryManager:
         resolution_data: Dict[str, Any]
     ) -> bool:
         """Résout un conflit territorial"""
+
+
+
         try:
             if conflict_id not in self.territorial_conflicts:
                 raise ValueError(f"Conflit {conflict_id} non trouvé")
@@ -687,6 +699,9 @@ class TerritoryManager:
         content_type: str = "audio"
     ) -> Dict[str, Any]:
         """Récupère les exigences de conformité pour un territoire"""
+
+
+
         try:
             if territory_id not in self.territories:
                 raise ValueError(f"Territoire {territory_id} non trouvé")
@@ -749,6 +764,9 @@ class TerritoryManager:
         business_objectives: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Génère une stratégie territoriale optimisée"""
+
+
+
         try:
             strategy = {
                 'content_id': content_id,
@@ -868,6 +886,9 @@ class TerritoryManager:
         territorial_rights: TerritorialRights
     ) -> Dict[str, Any]:
         """Vérifie la conformité territoriale"""
+
+
+
         try:
             territory = self.territories[territorial_rights.territory_id]
             issues = []
@@ -903,14 +924,23 @@ class TerritoryManager:
     
     def _generate_rights_id(self) -> str:
         """Génère un ID unique pour les droits territoriaux"""
+
+
+
         return f"TR-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
     
     def _generate_conflict_id(self) -> str:
         """Génère un ID unique pour les conflits"""
+
+
+
         return f"TC-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
     
     async def get_territory_statistics(self) -> Dict[str, Any]:
         """Retourne les statistiques du gestionnaire de territoires"""
+
+
+
         try:
             total_territories = len(self.territories)
             active_rights = len([r for r in self.territorial_rights.values() if r.status == 'active'])

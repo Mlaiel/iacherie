@@ -80,6 +80,9 @@ class RequestContext:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert context to dictionary for logging."""
+
+
+
         return {
             "request_id": self.request.request_id,
             "correlation_id": self.request.correlation_id,
@@ -95,6 +98,9 @@ class RequestContext:
     
     def get_correlation_id(self) -> str:
         """Get correlation ID for distributed tracing."""
+
+
+
         return self.request.correlation_id
     
     def get_trace_context(self) -> Dict[str, str]:
@@ -160,6 +166,9 @@ class ContextManager:
     
     def get_context(self) -> Optional[RequestContext]:
         """Get current request context."""
+
+
+
         try:
             # Try async context first
             context = _current_context.get()
@@ -319,11 +328,17 @@ _context_manager = ContextManager()
 
 def get_context_manager() -> ContextManager:
     """Get global context manager instance."""
+
+
+
     return _context_manager
 
 
 def get_current_context() -> Optional[RequestContext]:
     """Get current request context."""
+
+
+
     return _context_manager.get_context()
 
 

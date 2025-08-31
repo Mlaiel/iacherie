@@ -7,7 +7,7 @@ and viral potential in content for the IA Influencer platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Contact: mlaiel@live.de
@@ -496,6 +496,9 @@ class StatisticalTrendDetector(TrendDetector):
     
     def _passes_threshold_filters(self, trend: Trend) -> bool:
         """Check if trend passes minimum thresholds"""
+
+
+
         return (trend.metrics.volume >= self.min_volume_threshold and 
                 abs(trend.metrics.velocity) >= self.min_velocity_threshold)
     
@@ -545,6 +548,9 @@ class MachineLearningTrendDetector(TrendDetector):
     
     async def load_models(self):
         """Load ML models"""
+
+
+
         try:
             # Load sentence transformer for semantic similarity
             self.nlp_pipeline = pipeline(
@@ -899,6 +905,9 @@ class TrendPredictor:
     
     def _create_low_confidence_prediction(self, trend: Trend, horizon: timedelta) -> TrendPrediction:
         """Create low confidence prediction for trends with insufficient data"""
+
+
+
         return TrendPrediction(
             trend_id=trend.trend_id,
             predicted_status=TrendStatus.STABLE,
@@ -1041,6 +1050,9 @@ class TrendAnalyticsEngine:
     
     async def initialize(self):
         """Initialize the analytics engine"""
+
+
+
         try:
             await self.ml_detector.load_models()
             self.is_initialized = True
@@ -1151,6 +1163,9 @@ class TrendAnalyticsEngine:
     
     async def get_trend_by_id(self, trend_id: str) -> Optional[Trend]:
         """Get specific trend by ID"""
+
+
+
         return self.active_trends.get(trend_id)
     
     async def get_trending_now(self, limit: int = 20) -> List[Trend]:
@@ -1168,6 +1183,9 @@ class TrendAnalyticsEngine:
     
     async def export_trends(self, filepath: str, format: str = "json"):
         """Export trends to file"""
+
+
+
         try:
             trends_data = {
                 'active_trends': {tid: trend.to_dict() for tid, trend in self.active_trends.items()},

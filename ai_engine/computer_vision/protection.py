@@ -14,7 +14,7 @@
 #
 # Created by: Fahed Mlaiel (mlaiel@live.de)
 # 
-# ⚠️  STRICT COPYRIGHT WARNING ⚠️ 
+#   STRICT COPYRIGHT WARNING  
 # This code, concept, and intellectual property belongs exclusively to Fahed Mlaiel.
 # ANY unauthorized use, reproduction, distribution, or theft of this code/concept 
 # without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is 
@@ -114,10 +114,16 @@ class ContentProtector:
         
     def _generate_master_key(self) -> bytes:
         """Generate cryptographically secure master key"""
+
+
+
         return secrets.token_bytes(32)  # 256-bit key
     
     def _init_protection_algorithms(self) -> Dict[str, Any]:
         """Initialize protection algorithms"""
+
+
+
         return {
             'aes_encryption': self._setup_aes_encryption(),
             'steganography': self._setup_steganography(),
@@ -128,6 +134,9 @@ class ContentProtector:
     
     def _init_watermark_generators(self) -> Dict[str, Any]:
         """Initialize watermark generation systems"""
+
+
+
         return {
             'text_watermark': TextWatermarkGenerator(),
             'logo_watermark': LogoWatermarkGenerator(),
@@ -138,6 +147,9 @@ class ContentProtector:
     
     def _init_fingerprint_extractors(self) -> Dict[str, Any]:
         """Initialize fingerprint extraction systems"""
+
+
+
         return {
             'perceptual_hash': PerceptualHashExtractor(),
             'robust_hash': RobustHashExtractor(),
@@ -516,6 +528,9 @@ class ContentProtector:
     
     def _string_to_bits(self, s: str) -> str:
         """Convert string to binary representation"""
+
+
+
         return ''.join(format(ord(c), '08b') for c in s)
     
     def _generate_watermark_pattern(self, watermark_data: WatermarkData, shape: Tuple[int, int]) -> np.ndarray:
@@ -553,6 +568,9 @@ class ContentProtector:
     
     def _setup_aes_encryption(self) -> Dict[str, Any]:
         """Setup AES encryption configuration"""
+
+
+
         return {
             'key_size': 256,
             'block_size': 16,
@@ -602,6 +620,9 @@ class ContentProtector:
     
     def _setup_steganography(self) -> Dict[str, Any]:
         """Setup steganography configuration"""
+
+
+
         return {
             'method': 'lsb',
             'channels': ['r', 'g', 'b'],
@@ -610,6 +631,9 @@ class ContentProtector:
     
     def _setup_frequency_watermarking(self) -> Dict[str, Any]:
         """Setup frequency domain watermarking"""
+
+
+
         return {
             'transform': 'dct',
             'block_size': 8,
@@ -618,6 +642,9 @@ class ContentProtector:
     
     def _setup_robust_watermarking(self) -> Dict[str, Any]:
         """Setup robust watermarking configuration"""
+
+
+
         return {
             'redundancy_factor': 3,
             'error_correction': 'reed_solomon',
@@ -626,6 +653,9 @@ class ContentProtector:
     
     def _setup_blockchain_integration(self) -> Dict[str, Any]:
         """Setup blockchain integration for copyright registration"""
+
+
+
         return {
             'blockchain': 'ethereum',
             'smart_contract': 'copyright_registry',
@@ -635,6 +665,9 @@ class ContentProtector:
     def _register_on_blockchain(self, watermark_data: WatermarkData, 
                                protection_metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Register content on blockchain using smart contracts"""
+
+
+
         
         try:
             # Prepare blockchain transaction data
@@ -995,6 +1028,9 @@ class DeepFeatureExtractor(FingerprintExtractor):
                 
             def _residual_block(self, in_channels, out_channels, stride):
                 """Residual block with skip connection"""
+
+
+
                 return nn.Sequential(
                     nn.Conv2d(in_channels, out_channels, 3, stride, 1, bias=False),
                     nn.BatchNorm2d(out_channels),
@@ -1044,6 +1080,9 @@ class DeepFeatureExtractor(FingerprintExtractor):
 
     def extract_fingerprint(self, image: np.ndarray) -> str:
         """Extract deep learning-based robust fingerprint"""
+
+
+
         try:
             # Preprocess image
             if len(image.shape) == 3:
@@ -1078,6 +1117,9 @@ class DeepFeatureExtractor(FingerprintExtractor):
     
     def _extract_robust_features(self, image: np.ndarray) -> str:
         """Extract additional robust features for enhanced fingerprinting"""
+
+
+
         try:
             # Color histogram features
             hist_r = cv2.calcHist([image], [0], None, [64], [0, 256])
@@ -1336,6 +1378,9 @@ class CopyrightValidator:
     
     def _extract_lsb_watermark(self, image: np.ndarray) -> Optional[Dict[str, Any]]:
         """Extract LSB steganographic watermark"""
+
+
+
         try:
             h, w, c = image.shape
             bits = []

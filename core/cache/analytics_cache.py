@@ -63,6 +63,9 @@ class AnalyticsEvent:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return asdict(self)
 
 class AnalyticsCache:
@@ -247,6 +250,9 @@ class AnalyticsCache:
                         end_time: Optional[float] = None,
                         limit: int = 1000) -> List[AnalyticsEvent]:
         """Query analytics events"""
+
+
+
         
         try:
             # Build search pattern
@@ -309,6 +315,9 @@ class AnalyticsCache:
                             end_time: Optional[float] = None,
                             aggregation: str = "avg") -> List[Tuple[float, float]]:
         """Get metric data points"""
+
+
+
         
         try:
             # Build time range
@@ -488,6 +497,9 @@ class AnalyticsCache:
     
     async def _update_realtime_counters(self, event: AnalyticsEvent):
         """Update real-time event counters"""
+
+
+
         try:
             # Update minute-level counters
             minute_bucket = int(event.timestamp // 60) * 60
@@ -505,6 +517,9 @@ class AnalyticsCache:
     
     async def _update_user_analytics(self, user_id: str, event: AnalyticsEvent):
         """Update user-specific analytics"""
+
+
+
         try:
             user_key = f"{self.USER_ANALYTICS_PREFIX}:{user_id}"
             user_data = await self.redis_cache.get(user_key)
@@ -536,6 +551,9 @@ class AnalyticsCache:
     
     async def _update_content_analytics(self, content_id: str, event: AnalyticsEvent):
         """Update content-specific analytics"""
+
+
+
         try:
             content_key = f"{self.CONTENT_ANALYTICS_PREFIX}:{content_id}"
             content_data = await self.redis_cache.get(content_key)
@@ -577,6 +595,9 @@ class AnalyticsCache:
     
     async def aggregate_metrics(self, time_window: TimeWindow) -> Dict[str, Any]:
         """Aggregate metrics for specified time window"""
+
+
+
         try:
             current_time = time.time()
             
@@ -657,6 +678,9 @@ class AnalyticsCache:
     
     async def cleanup_old_data(self):
         """Clean up old analytics data beyond retention period"""
+
+
+
         try:
             cutoff_time = time.time() - (self.retention_days * 86400)
             
@@ -760,6 +784,9 @@ class MetricsCache(AnalyticsCache):
     
     async def get_dashboard_metrics(self) -> Dict[str, Any]:
         """Get key metrics for dashboard display"""
+
+
+
         try:
             current_time = time.time()
             last_hour = current_time - 3600

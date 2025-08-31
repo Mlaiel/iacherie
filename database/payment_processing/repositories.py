@@ -98,6 +98,9 @@ class BaseRepository(ABC, Generic[T]):
     
     async def create(self, data: Dict[str, Any]) -> T:
         """Create new record"""
+
+
+
         try:
             with self.get_session() as session:
                 instance = self.model_class(**data)
@@ -114,6 +117,9 @@ class BaseRepository(ABC, Generic[T]):
     
     async def get_by_id(self, record_id: Union[str, uuid.UUID]) -> Optional[T]:
         """Get record by ID"""
+
+
+
         try:
             with self.get_session() as session:
                 return session.query(self.model_class).filter(
@@ -125,6 +131,9 @@ class BaseRepository(ABC, Generic[T]):
     
     async def update(self, record_id: Union[str, uuid.UUID], data: Dict[str, Any]) -> Optional[T]:
         """Update record by ID"""
+
+
+
         try:
             with self.get_session() as session:
                 instance = session.query(self.model_class).filter(
@@ -149,6 +158,9 @@ class BaseRepository(ABC, Generic[T]):
     
     async def delete(self, record_id: Union[str, uuid.UUID]) -> bool:
         """Delete record by ID"""
+
+
+
         try:
             with self.get_session() as session:
                 instance = session.query(self.model_class).filter(
@@ -172,6 +184,9 @@ class BaseRepository(ABC, Generic[T]):
         order_direction: str = "desc"
     ) -> QueryResult:
         """List records with pagination and filtering"""
+
+
+
         try:
             with self.get_session() as session:
                 query = session.query(self.model_class)
@@ -250,6 +265,9 @@ class PaymentTransactionRepository(BaseRepository[PaymentTransaction]):
         status_filter: Optional[List[str]] = None
     ) -> QueryResult:
         """Get transactions for a specific user"""
+
+
+
         try:
             with self.get_session() as session:
                 query = session.query(PaymentTransaction).filter(
@@ -285,6 +303,9 @@ class PaymentTransactionRepository(BaseRepository[PaymentTransaction]):
         transaction_types: Optional[List[str]] = None
     ) -> List[PaymentTransaction]:
         """Get transactions within date range"""
+
+
+
         try:
             with self.get_session() as session:
                 query = session.query(PaymentTransaction).filter(
@@ -313,6 +334,9 @@ class PaymentTransactionRepository(BaseRepository[PaymentTransaction]):
         currency: str = "EUR"
     ) -> Dict[str, Any]:
         """Get revenue summary for date range"""
+
+
+
         try:
             with self.get_session() as session:
                 query = session.query(
@@ -351,6 +375,9 @@ class PaymentTransactionRepository(BaseRepository[PaymentTransaction]):
     
     async def update_status(self, transaction_id: str, new_status: str) -> bool:
         """Update transaction status"""
+
+
+
         try:
             with self.get_session() as session:
                 result = session.query(PaymentTransaction).filter(
@@ -368,6 +395,9 @@ class PaymentTransactionRepository(BaseRepository[PaymentTransaction]):
     
     async def get_pending_transactions(self, older_than_minutes: int = 30) -> List[PaymentTransaction]:
         """Get pending transactions older than specified minutes"""
+
+
+
         try:
             cutoff_time = datetime.utcnow() - timedelta(minutes=older_than_minutes)
             
@@ -388,6 +418,9 @@ class PaymentTransactionRepository(BaseRepository[PaymentTransaction]):
         date: Optional[datetime] = None
     ) -> Decimal:
         """Get daily transaction volume for user"""
+
+
+
         try:
             target_date = date or datetime.utcnow()
             start_of_day = target_date.replace(hour=0, minute=0, second=0, microsecond=0)
@@ -424,6 +457,9 @@ class PaymentMethodRepository(BaseRepository[PaymentMethod]):
     
     async def get_by_user_id(self, user_id: str, active_only: bool = True) -> List[PaymentMethod]:
         """Get payment methods for a user"""
+
+
+
         try:
             with self.get_session() as session:
                 query = session.query(PaymentMethod).filter(
@@ -440,6 +476,9 @@ class PaymentMethodRepository(BaseRepository[PaymentMethod]):
     
     async def get_default_method(self, user_id: str) -> Optional[PaymentMethod]:
         """Get default payment method for user"""
+
+
+
         try:
             with self.get_session() as session:
                 return session.query(PaymentMethod).filter(
@@ -455,6 +494,9 @@ class PaymentMethodRepository(BaseRepository[PaymentMethod]):
     
     async def set_as_default(self, method_id: str, user_id: str) -> bool:
         """Set payment method as default for user"""
+
+
+
         try:
             with self.get_session() as session:
                 # First, unset all other methods as default
@@ -480,6 +522,9 @@ class PaymentMethodRepository(BaseRepository[PaymentMethod]):
     
     async def deactivate_method(self, method_id: str, user_id: str) -> bool:
         """Deactivate payment method"""
+
+
+
         try:
             with self.get_session() as session:
                 result = session.query(PaymentMethod).filter(
@@ -509,6 +554,9 @@ class BillingRecordRepository(BaseRepository[BillingRecord]):
     
     async def get_by_subscription_id(self, subscription_id: str) -> List[BillingRecord]:
         """Get billing records for subscription"""
+
+
+
         try:
             with self.get_session() as session:
                 return session.query(BillingRecord).filter(
@@ -520,6 +568,9 @@ class BillingRecordRepository(BaseRepository[BillingRecord]):
     
     async def get_upcoming_billings(self, days_ahead: int = 7) -> List[BillingRecord]:
         """Get upcoming billing records"""
+
+
+
         try:
             cutoff_date = datetime.utcnow() + timedelta(days=days_ahead)
             
@@ -551,6 +602,9 @@ class FinancialRecordRepository(BaseRepository[FinancialRecord]):
         record_types: Optional[List[str]] = None
     ) -> List[FinancialRecord]:
         """Get financial records for user within period"""
+
+
+
         try:
             with self.get_session() as session:
                 query = session.query(FinancialRecord).filter(
@@ -580,6 +634,9 @@ class AutomatedPayoutRepository(BaseRepository[AutomatedPayout]):
     
     async def get_scheduled(self, due_before: Optional[datetime] = None) -> List[AutomatedPayout]:
         """Get scheduled payouts"""
+
+
+
         try:
             cutoff_time = due_before or datetime.utcnow()
             
@@ -596,6 +653,9 @@ class AutomatedPayoutRepository(BaseRepository[AutomatedPayout]):
     
     async def update_status(self, payout_id: str, new_status: str, error_message: Optional[str] = None) -> bool:
         """Update payout status"""
+
+
+
         try:
             with self.get_session() as session:
                 update_data = {
@@ -635,6 +695,9 @@ class PaymentAnalyticsRepository(BaseRepository[PaymentAnalytics]):
         user_id: Optional[str] = None
     ) -> List[PaymentAnalytics]:
         """Get analytics metrics for period"""
+
+
+
         try:
             with self.get_session() as session:
                 query = session.query(PaymentAnalytics).filter(
@@ -669,6 +732,9 @@ class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
         period_end: datetime
     ) -> List[RevenueTracking]:
         """Get revenue tracking records for user and period"""
+
+
+
         try:
             with self.get_session() as session:
                 return session.query(RevenueTracking).filter(
@@ -693,6 +759,9 @@ class PaymentWebhookRepository(BaseRepository[PaymentWebhook]):
     
     async def get_unprocessed(self, limit: int = 100) -> List[PaymentWebhook]:
         """Get unprocessed webhooks"""
+
+
+
         try:
             with self.get_session() as session:
                 return session.query(PaymentWebhook).filter(
@@ -704,6 +773,9 @@ class PaymentWebhookRepository(BaseRepository[PaymentWebhook]):
     
     async def mark_as_processed(self, webhook_id: str, success: bool, error_message: Optional[str] = None) -> bool:
         """Mark webhook as processed"""
+
+
+
         try:
             with self.get_session() as session:
                 update_data = {
@@ -740,6 +812,9 @@ class PaymentConfigurationRepository(BaseRepository[PaymentConfiguration]):
         user_id: Optional[str] = None
     ) -> Optional[PaymentConfiguration]:
         """Get configuration by type and provider"""
+
+
+
         try:
             with self.get_session() as session:
                 query = session.query(PaymentConfiguration).filter(
@@ -1268,6 +1343,9 @@ class PaymentAnalyticsRepository(PaymentProcessingRepository):
 # Utility functions for repository operations
 def create_repository_manager(session_factory: sessionmaker) -> Dict[str, Any]:
     """Create a repository manager with all repositories"""
+
+
+
     return {
         'transactions': PaymentTransactionRepository(session_factory),
         'payment_methods': PaymentMethodRepository(session_factory),

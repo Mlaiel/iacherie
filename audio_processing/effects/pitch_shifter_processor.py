@@ -1,5 +1,5 @@
 """
-🎵 Pitch Shifter Processor - Professional Pitch Manipulation Engine
+ Pitch Shifter Processor - Professional Pitch Manipulation Engine
 
 Advanced pitch shifting with multiple algorithms including phase vocoder,
 PSOLA, granular synthesis, formant preservation, and real-time modulation.
@@ -330,6 +330,9 @@ class PitchShifterProcessor:
         
     def _init_processors(self):
         """Initialize processing components"""
+
+
+
         try:
             self.phase_vocoder = PhaseVocoder(
                 self.params.window_size,
@@ -363,6 +366,9 @@ class PitchShifterProcessor:
     
     def cents_to_ratio(self, cents: float) -> float:
         """Convert cents to frequency ratio"""
+
+
+
         return 2.0 ** (cents / 1200.0)
     
     def generate_pitch_modulation(self) -> float:
@@ -602,6 +608,9 @@ class PitchShifterProcessor:
     def analyze_pitch(self, signal: np.ndarray, 
                      frame_size: int = 2048) -> Dict[str, float]:
         """Analyze pitch characteristics of input signal"""
+
+
+
         try:
             # Autocorrelation-based pitch detection
             correlation = np.correlate(signal, signal, mode='full')
@@ -679,6 +688,9 @@ class PitchShifterProcessor:
     
     def get_processor_info(self) -> Dict[str, Any]:
         """Get current processor information"""
+
+
+
         return {
             'algorithm': self.params.algorithm.value,
             'pitch_shift_cents': self.params.pitch_shift_cents,
@@ -765,6 +777,9 @@ class PitchShifterProcessor:
     
     def process(self, audio_data: np.ndarray) -> np.ndarray:
         """Apply pitch shifting processing"""
+
+
+
         try:
             if self.pitch_shift_cents == 0:
                 return audio_data  # No processing needed
@@ -1064,6 +1079,9 @@ class PitchShifterProcessor:
     
     def get_current_settings(self) -> dict:
         """Get current pitch shifter settings"""
+
+
+
         return {
             "pitch_shift_cents": self.pitch_shift_cents,
             "pitch_shift_semitones": self.pitch_shift_cents / 100,

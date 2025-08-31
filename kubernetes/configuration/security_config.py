@@ -1,12 +1,12 @@
 """
-🔧 Security Configuration Manager - IA-Influencer-Agent
+ Security Configuration Manager - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Security Engineer + DevOps + Backend Senior + Compliance Officer
 Date: 2025-08-24
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -174,6 +174,9 @@ class SecurityConfigManager:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             # Load security configurations for all levels
             await self._load_security_configurations()
@@ -447,6 +450,9 @@ class SecurityConfigManager:
     
     async def _generate_jwt_secret(self) -> str:
         """Generate secure JWT secret"""
+
+
+
         return base64.b64encode(secrets.token_bytes(64)).decode('utf-8')
     
     async def _initialize_encryption_keys(self) -> None:
@@ -531,6 +537,9 @@ class SecurityConfigManager:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             if level not in self.security_configs:
                 raise ValueError(f"Security level not configured: {level.value}")
@@ -583,6 +592,9 @@ class SecurityConfigManager:
     
     async def configure_ssl_certificates(self) -> bool:
         """Configure SSL/TLS certificates"""
+
+
+
         try:
             if not self.active_config:
                 raise ValueError("No active security configuration")
@@ -611,6 +623,9 @@ class SecurityConfigManager:
     
     async def setup_secret_rotation(self) -> bool:
         """Setup automatic secret rotation"""
+
+
+
         try:
             if not self.active_config:
                 raise ValueError("No active security configuration")
@@ -629,6 +644,9 @@ class SecurityConfigManager:
     
     async def rotate_encryption_keys(self) -> bool:
         """Rotate encryption keys"""
+
+
+
         try:
             if not self.active_config:
                 raise ValueError("No active security configuration")
@@ -669,6 +687,9 @@ class SecurityConfigManager:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             if framework not in self.compliance_status:
                 raise ValueError(f"Unknown compliance framework: {framework.value}")
@@ -708,6 +729,9 @@ class SecurityConfigManager:
     
     async def get_security_status(self) -> Dict[str, Any]:
         """Get comprehensive security status"""
+
+
+
         return {
             "current_level": self.current_level.value,
             "encryption_algorithm": self.active_config.encryption.algorithm.value if self.active_config else None,
@@ -723,6 +747,9 @@ class SecurityConfigManager:
     
     async def get_compliance_report(self) -> Dict[str, Any]:
         """Get compliance status report"""
+
+
+
         return {
             "frameworks": {
                 framework.value: {
@@ -787,4 +814,7 @@ class SecurityConfigManager:
     
     async def get_status(self) -> Dict[str, Any]:
         """Get security manager status"""
+
+
+
         return await self.get_security_status()

@@ -83,6 +83,9 @@ class CacheDecoratorManager:
     
     def get_cache(self, name: str = "default"):
         """Get cache instance by name"""
+
+
+
         return self.cache_instances.get(name)
     
     def update_metrics(self, func_name: str, hit: bool, cache_time: float, compute_time: float):
@@ -120,6 +123,9 @@ def register_cache_instance(name: str, cache_instance):
 
 def get_cache_metrics(func_name: Optional[str] = None) -> Dict[str, Any]:
     """Get cache metrics globally"""
+
+
+
     return _decorator_manager.get_metrics(func_name)
 
 def _generate_cache_key(func: Callable, args: Tuple, kwargs: Dict[str, Any], config: CacheConfig) -> str:
@@ -161,6 +167,9 @@ def _hash_arguments(args: Tuple, kwargs: Dict[str, Any]) -> str:
 
 def _serialize_argument(arg: Any) -> str:
     """Serialize argument to string"""
+
+
+
     try:
         if hasattr(arg, '__dict__'):
             # Object with attributes
@@ -359,6 +368,9 @@ def _sync_cached_wrapper(func: Callable, config: CacheConfig, cache_name: str) -
 
 async def _refresh_cache_async(func: Callable, args: Tuple, kwargs: Dict, cache, cache_key: str, config: CacheConfig):
     """Refresh cache entry in background"""
+
+
+
     try:
         result = await func(*args, **kwargs)
         serialized_result = _serialize_result(result, config)
@@ -768,6 +780,9 @@ def clear_cache_metrics():
 
 def get_cache_decorator_stats() -> Dict[str, Any]:
     """Get comprehensive cache decorator statistics"""
+
+
+
     return {
         'registered_caches': list(_decorator_manager.cache_instances.keys()),
         'function_metrics': _decorator_manager.get_metrics(),

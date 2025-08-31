@@ -30,7 +30,7 @@ class TestRunner:
         
     def run_all_tests(self) -> Dict[str, Any]:
         """Run all test suites and generate comprehensive report."""
-        print("🚀 Starting Comprehensive Test Suite for Ainflue Platform")
+        print(" Starting Comprehensive Test Suite for Ainflue Platform")
         print("=" * 60)
         
         self.start_time = datetime.now()
@@ -47,7 +47,7 @@ class TestRunner:
         ]
         
         for suite_name, test_function in test_suites:
-            print(f"\n📊 Running {suite_name}...")
+            print(f"\n Running {suite_name}...")
             print("-" * 40)
             
             try:
@@ -56,7 +56,7 @@ class TestRunner:
                 self._print_suite_result(suite_name, result)
                 
             except Exception as e:
-                print(f"❌ {suite_name} failed: {str(e)}")
+                print(f" {suite_name} failed: {str(e)}")
                 self.test_results[suite_name] = {
                     "success": False,
                     "error": str(e),
@@ -301,6 +301,9 @@ class TestRunner:
     
     def _count_tests_from_output(self, output: str) -> int:
         """Extract test count from pytest output."""
+
+
+
         try:
             # Look for pytest summary line
             lines = output.split('\n')
@@ -322,6 +325,9 @@ class TestRunner:
     
     def _extract_performance_metrics(self, output: str) -> Dict[str, Any]:
         """Extract performance metrics from test output."""
+
+
+
         try:
             # Look for JSON performance data in output
             import re
@@ -334,6 +340,9 @@ class TestRunner:
     
     def _extract_security_score(self, output: str) -> float:
         """Extract security score from audit output."""
+
+
+
         try:
             # Look for security score in output
             import re
@@ -346,6 +355,9 @@ class TestRunner:
     
     def _read_coverage_report(self) -> Dict[str, Any]:
         """Read coverage report if available."""
+
+
+
         try:
             coverage_file = self.project_root / "coverage.json"
             if coverage_file.exists():
@@ -364,9 +376,9 @@ class TestRunner:
     def _print_suite_result(self, suite_name: str, result: Dict[str, Any]):
         """Print individual test suite result."""
         if result["success"]:
-            print(f"✅ {suite_name}: PASSED")
+            print(f" {suite_name}: PASSED")
         else:
-            print(f"❌ {suite_name}: FAILED")
+            print(f" {suite_name}: FAILED")
         
         print(f"   Duration: {result['duration']:.2f}s")
         
@@ -453,6 +465,9 @@ class TestRunner:
     
     def _check_requirements_compliance(self, coverage: float, security_score: float, tests_passed: bool) -> Dict[str, bool]:
         """Check compliance with critical production requirements."""
+
+
+
         return {
             "unit_tests_implemented": tests_passed,
             "integration_tests_implemented": "Integration Tests - API" in self.test_results,
@@ -467,50 +482,50 @@ class TestRunner:
     def _print_final_report(self, report: Dict[str, Any]):
         """Print comprehensive final report."""
         print("\n" + "=" * 60)
-        print("🎯 FINAL TEST REPORT - AINFLUE PLATFORM")
+        print(" FINAL TEST REPORT - AINFLUE PLATFORM")
         print("=" * 60)
         
-        print(f"\n📊 OVERALL STATUS: {report['overall_status']}")
-        print(f"⏱️  Total Duration: {report['total_duration_seconds']:.2f} seconds")
+        print(f"\n OVERALL STATUS: {report['overall_status']}")
+        print(f"⏱  Total Duration: {report['total_duration_seconds']:.2f} seconds")
         print(f"🧪 Total Tests Run: {report['total_tests_run']}")
-        print(f"📋 Test Suites: {report['test_suites']['successful']}/{report['test_suites']['total']} passed")
-        print(f"📈 Test Coverage: {report['coverage_percentage']:.1f}%")
-        print(f"🔒 Security Score: {report['security_score']:.1f}%")
+        print(f" Test Suites: {report['test_suites']['successful']}/{report['test_suites']['total']} passed")
+        print(f" Test Coverage: {report['coverage_percentage']:.1f}%")
+        print(f" Security Score: {report['security_score']:.1f}%")
         
-        print(f"\n🚀 PRODUCTION READINESS: {report['production_readiness']['status']}")
-        print(f"📊 Readiness Score: {report['production_readiness']['score']:.1f}%")
+        print(f"\n PRODUCTION READINESS: {report['production_readiness']['status']}")
+        print(f" Readiness Score: {report['production_readiness']['score']:.1f}%")
         
-        print("\n✅ REQUIREMENTS COMPLIANCE:")
+        print("\n REQUIREMENTS COMPLIANCE:")
         for requirement, met in report['requirements_met'].items():
-            status = "✅ MET" if met else "❌ NOT MET"
+            status = " MET" if met else " NOT MET"
             print(f"   {requirement.replace('_', ' ').title()}: {status}")
         
         # Critical findings
-        print("\n🔍 CRITICAL FINDINGS:")
+        print("\n CRITICAL FINDINGS:")
         if report['overall_status'] == "PASS":
-            print("   ✅ All test suites completed successfully")
+            print("    All test suites completed successfully")
         else:
-            print("   ❌ Some test suites failed - review detailed results")
+            print("    Some test suites failed - review detailed results")
         
         if report['coverage_percentage'] >= 85:
-            print("   ✅ Test coverage meets production standards (≥85%)")
+            print("    Test coverage meets production standards (≥85%)")
         else:
-            print(f"   ⚠️  Test coverage below production standard: {report['coverage_percentage']:.1f}% < 85%")
+            print(f"     Test coverage below production standard: {report['coverage_percentage']:.1f}% < 85%")
         
         if report['security_score'] >= 80:
-            print("   ✅ Security standards met (≥80%)")
+            print("    Security standards met (≥80%)")
         else:
-            print(f"   ⚠️  Security score below standard: {report['security_score']:.1f}% < 80%")
+            print(f"     Security score below standard: {report['security_score']:.1f}% < 80%")
         
-        print("\n📝 SUMMARY:")
-        print("   - Comprehensive test suite implemented ✅")
-        print("   - Unit tests for critical modules ✅")
-        print("   - Integration tests for API endpoints ✅")
-        print("   - Performance and load tests ✅")
-        print("   - Security audit implementation ✅")
-        print("   - API documentation (OpenAPI/Swagger) ✅")
+        print("\n SUMMARY:")
+        print("   - Comprehensive test suite implemented ")
+        print("   - Unit tests for critical modules ")
+        print("   - Integration tests for API endpoints ")
+        print("   - Performance and load tests ")
+        print("   - Security audit implementation ")
+        print("   - API documentation (OpenAPI/Swagger) ")
         
-        print(f"\n🎉 Test execution completed at {report['timestamp']}")
+        print(f"\n Test execution completed at {report['timestamp']}")
         print("=" * 60)
 
 
@@ -534,17 +549,17 @@ def main():
         if args.save_report:
             with open(args.save_report, 'w') as f:
                 json.dump(final_report, f, indent=2)
-            print(f"\n📄 Report saved to: {args.save_report}")
+            print(f"\n Report saved to: {args.save_report}")
         
         # Exit with appropriate code
         exit_code = 0 if final_report['overall_status'] == "PASS" else 1
         sys.exit(exit_code)
         
     except KeyboardInterrupt:
-        print("\n\n⚠️  Test execution interrupted by user")
+        print("\n\n  Test execution interrupted by user")
         sys.exit(130)
     except Exception as e:
-        print(f"\n❌ Test runner failed: {str(e)}")
+        print(f"\n Test runner failed: {str(e)}")
         sys.exit(1)
 
 

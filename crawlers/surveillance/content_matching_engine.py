@@ -2,7 +2,7 @@
 Content Matching Engine - Moteur Matching Contenu
 =================================================
 
-⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
+ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
 © 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
@@ -193,6 +193,9 @@ class ContentMatchingEngine:
     
     async def initialize(self) -> None:
         """Initialize the content matching engine."""
+
+
+
         try:
             self._logger.info("Initializing content matching engine...")
             
@@ -214,6 +217,9 @@ class ContentMatchingEngine:
     
     async def _initialize_fingerprinting(self) -> None:
         """Initialize fingerprinting algorithms."""
+
+
+
         try:
             # This would initialize actual fingerprinting algorithms
             # For now, implement placeholders
@@ -237,6 +243,9 @@ class ContentMatchingEngine:
     
     async def _initialize_ml_models(self) -> None:
         """Initialize ML models for content analysis."""
+
+
+
         try:
             # This would load actual ML models
             # For now, implement placeholders
@@ -258,6 +267,9 @@ class ContentMatchingEngine:
     
     async def _setup_analysis_pipelines(self) -> None:
         """Setup content analysis pipelines."""
+
+
+
         try:
             # This would setup actual analysis pipelines
             # For now, implement placeholder
@@ -269,6 +281,9 @@ class ContentMatchingEngine:
     
     async def start_matching_engine(self) -> None:
         """Start the content matching engine."""
+
+
+
         try:
             if self._matching_active:
                 self._logger.warning("Content matching engine is already active")
@@ -288,6 +303,9 @@ class ContentMatchingEngine:
     
     async def stop_matching_engine(self) -> None:
         """Stop the content matching engine."""
+
+
+
         try:
             if not self._matching_active:
                 self._logger.warning("Content matching engine is not active")
@@ -320,6 +338,9 @@ class ContentMatchingEngine:
         protection_config: Optional[Dict[str, Any]] = None
     ) -> str:
         """Register content for protection."""
+
+
+
         try:
             content_id = f"content_{datetime.now().timestamp()}_{hash(title) % 10000}"
             
@@ -363,6 +384,9 @@ class ContentMatchingEngine:
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
         """Submit content for matching against protected content."""
+
+
+
         try:
             task_id = f"task_{datetime.now().timestamp()}_{hash(str(content_data[:100])) % 10000}"
             
@@ -391,6 +415,9 @@ class ContentMatchingEngine:
     
     async def get_matching_results(self, task_id: str) -> Optional[Dict[str, Any]]:
         """Get matching results for a task."""
+
+
+
         try:
             if task_id not in self.matching_tasks:
                 return None
@@ -461,6 +488,9 @@ class ContentMatchingEngine:
     
     async def _execute_matching_task(self, task_id: str) -> None:
         """Execute a content matching task."""
+
+
+
         try:
             task = self.matching_tasks[task_id]
             self.active_tasks.add(task_id)
@@ -733,6 +763,9 @@ class ContentMatchingEngine:
         metadata: Dict[str, Any]
     ) -> None:
         """Store candidate content for matching."""
+
+
+
         try:
             # Generate fingerprints for candidate content
             fingerprints = await self._generate_content_fingerprints(content_id, content_data, content_type)
@@ -749,6 +782,9 @@ class ContentMatchingEngine:
         content_type: ContentType
     ) -> List[str]:
         """Get fingerprint IDs for candidate content."""
+
+
+
         try:
             # Return fingerprint IDs for this content
             fingerprint_ids = [
@@ -843,6 +879,9 @@ class ContentMatchingEngine:
         fp2: ContentFingerprint
     ) -> float:
         """Calculate similarity between two fingerprints."""
+
+
+
         try:
             # Exact hash match
             if fp1.hash_value == fp2.hash_value:
@@ -868,6 +907,9 @@ class ContentMatchingEngine:
     
     async def _calculate_perceptual_similarity(self, hash1: str, hash2: str) -> float:
         """Calculate similarity between perceptual hashes."""
+
+
+
         try:
             # Hamming distance for perceptual hashes
             if len(hash1) != len(hash2):
@@ -885,6 +927,9 @@ class ContentMatchingEngine:
     
     async def _calculate_vector_similarity(self, vec1: List[float], vec2: List[float]) -> float:
         """Calculate cosine similarity between feature vectors."""
+
+
+
         try:
             if len(vec1) != len(vec2):
                 return 0.0
@@ -906,6 +951,9 @@ class ContentMatchingEngine:
     
     async def _calculate_metadata_similarity(self, meta1: Dict[str, Any], meta2: Dict[str, Any]) -> float:
         """Calculate similarity based on metadata."""
+
+
+
         try:
             # For text shingles
             if 'shingles' in meta1 and 'shingles' in meta2:
@@ -961,6 +1009,9 @@ class ContentMatchingEngine:
     # Fingerprinting algorithm implementations (placeholders)
     async def _compute_text_hash(self, text: str) -> str:
         """Compute text hash."""
+
+
+
         return hashlib.sha256(text.encode()).hexdigest()
     
     async def _compute_text_shingles(self, text: str, k: int = 3) -> List[str]:
@@ -1068,6 +1119,9 @@ class ContentMatchingEngine:
     
     async def shutdown(self) -> None:
         """Shutdown the content matching engine."""
+
+
+
         try:
             self._logger.info("Shutting down content matching engine...")
             

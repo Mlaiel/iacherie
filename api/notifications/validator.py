@@ -314,6 +314,9 @@ class NotificationSystemValidator:
 
     async def quick_health_check(self) -> bool:
         """Quick health check for system monitoring."""
+
+
+
         try:
             # Test basic system creation
             system = create_notification_system()
@@ -353,12 +356,12 @@ if __name__ == "__main__":
     import json
     
     async def main():
-        print("🔍 Running IA Influencer Agent Notification System Validation...")
+        print(" Running IA Influencer Agent Notification System Validation...")
         print("=" * 60)
         
         # Quick health check
         is_healthy = await health_check()
-        print(f"Quick Health Check: {'✅ PASSED' if is_healthy else '❌ FAILED'}")
+        print(f"Quick Health Check: {' PASSED' if is_healthy else ' FAILED'}")
         print()
         
         # Full validation
@@ -374,7 +377,7 @@ if __name__ == "__main__":
         for component, details in results["components"].items():
             if isinstance(details, dict):
                 status = details.get("status", "unknown")
-                status_icon = "✅" if status == "healthy" else "⚠️" if status == "degraded" else "❌"
+                status_icon = "" if status == "healthy" else "" if status == "degraded" else ""
                 print(f"{status_icon} {component}: {status}")
                 
                 if details.get("errors"):
@@ -389,7 +392,7 @@ if __name__ == "__main__":
         with open("notification_validation_results.json", "w") as f:
             json.dump(results, f, indent=2)
         
-        print("📄 Detailed results saved to: notification_validation_results.json")
+        print(" Detailed results saved to: notification_validation_results.json")
 
     # Run validation
     asyncio.run(main())

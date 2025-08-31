@@ -8,7 +8,7 @@ Responsibility: Asynchronous crawler task execution with intelligent load balanc
 Technologies: Celery, Redis, AsyncIO, Priority Queues, Resource Management
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -196,8 +196,11 @@ class CrawlerWorker:
 
     async def start(self) -> bool:
         """Start the crawler worker"""
+
+
+
         try:
-            logger.info(f"🚀 Starting crawler worker: {self.worker_id}")
+            logger.info(f" Starting crawler worker: {self.worker_id}")
             
             # Initialize components
             await self._initialize_components()
@@ -208,18 +211,21 @@ class CrawlerWorker:
             self.status = WorkerStatus.IDLE
             self.metrics.last_activity = datetime.utcnow()
             
-            logger.info(f"✅ Crawler worker {self.worker_id} started successfully")
+            logger.info(f" Crawler worker {self.worker_id} started successfully")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to start crawler worker {self.worker_id}: {e}")
+            logger.error(f" Failed to start crawler worker {self.worker_id}: {e}")
             self.status = WorkerStatus.ERROR
             return False
 
     async def stop(self) -> None:
         """Gracefully stop the crawler worker"""
+
+
+
         try:
-            logger.info(f"🛑 Stopping crawler worker: {self.worker_id}")
+            logger.info(f" Stopping crawler worker: {self.worker_id}")
             
             self.status = WorkerStatus.SHUTDOWN
             self.shutdown_event.set()
@@ -243,35 +249,41 @@ class CrawlerWorker:
             # Shutdown thread pool
             self.thread_pool.shutdown(wait=True, timeout=30.0)
             
-            logger.info(f"✅ Crawler worker {self.worker_id} stopped gracefully")
+            logger.info(f" Crawler worker {self.worker_id} stopped gracefully")
             
         except Exception as e:
-            logger.error(f"❌ Error stopping crawler worker {self.worker_id}: {e}")
+            logger.error(f" Error stopping crawler worker {self.worker_id}: {e}")
 
     async def submit_task(self, task: CrawlerTask) -> bool:
         """Submit a crawler task for execution"""
+
+
+
         try:
             # Validate task
             if not await self._validate_task(task):
-                logger.warning(f"❌ Invalid task rejected: {task.task_id}")
+                logger.warning(f" Invalid task rejected: {task.task_id}")
                 return False
             
             # Check worker capacity
             if len(self.running_tasks) >= self.max_concurrent_tasks:
-                logger.warning(f"⚠️ Worker {self.worker_id} at capacity, task queued: {task.task_id}")
+                logger.warning(f" Worker {self.worker_id} at capacity, task queued: {task.task_id}")
             
             # Add to queue
             await self.task_queue.put(task)
-            logger.info(f"📝 Task submitted to worker {self.worker_id}: {task.task_id}")
+            logger.info(f" Task submitted to worker {self.worker_id}: {task.task_id}")
             
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to submit task {task.task_id}: {e}")
+            logger.error(f" Failed to submit task {task.task_id}: {e}")
             return False
 
     async def get_status(self) -> Dict[str, Any]:
         """Get comprehensive worker status"""
+
+
+
         return {
             "worker_id": self.worker_id,
             "status": self.status.value,
@@ -301,6 +313,9 @@ class CrawlerWorker:
 
     async def _initialize_components(self) -> None:
         """Initialize worker components"""
+
+
+
         try:
             # Initialize crawler engine
             await self.crawler_engine.initialize()
@@ -314,14 +329,17 @@ class CrawlerWorker:
             # Initialize result storage
             await self.result_storage.initialize()
             
-            logger.info(f"✅ Worker {self.worker_id} components initialized")
+            logger.info(f" Worker {self.worker_id} components initialized")
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize worker components: {e}")
+            logger.error(f" Failed to initialize worker components: {e}")
             raise
 
     async def _start_background_tasks(self) -> None:
         """Start background worker tasks"""
+
+
+
         try:
             # Task processor
             task_processor = asyncio.create_task(self._task_processor())
@@ -339,10 +357,10 @@ class CrawlerWorker:
             metrics_updater = asyncio.create_task(self._metrics_updater())
             self.background_tasks.add(metrics_updater)
             
-            logger.info(f"✅ Background tasks started for worker {self.worker_id}")
+            logger.info(f" Background tasks started for worker {self.worker_id}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to start background tasks: {e}")
+            logger.error(f" Failed to start background tasks: {e}")
             raise
 
     async def _task_processor(self) -> None:
@@ -361,7 +379,7 @@ class CrawlerWorker:
             except asyncio.TimeoutError:
                 continue
             except Exception as e:
-                logger.error(f"❌ Task processor error: {e}")
+                logger.error(f" Task processor error: {e}")
                 await asyncio.sleep(5)
 
     async def _execute_task(self, task: CrawlerTask) -> None:
@@ -379,7 +397,7 @@ class CrawlerWorker:
                 self.running_tasks.add(task.task_id)
                 self.status = WorkerStatus.RUNNING
                 
-                logger.info(f"🚀 Executing task {task.task_id} on worker {self.worker_id}")
+                logger.info(f" Executing task {task.task_id} on worker {self.worker_id}")
                 
                 # Execute with timeout
                 result = await asyncio.wait_for(
@@ -398,7 +416,7 @@ class CrawlerWorker:
                 # Update metrics
                 self.metrics.successful_tasks += 1
                 
-                logger.info(f"✅ Task {task.task_id} completed successfully")
+                logger.info(f" Task {task.task_id} completed successfully")
                 
             except asyncio.TimeoutError:
                 execution.result = TaskResult.TIMEOUT
@@ -419,7 +437,7 @@ class CrawlerWorker:
                 execution.error_message = str(e)
                 execution.end_time = datetime.utcnow()
                 
-                logger.error(f"❌ Task {task.task_id} failed: {e}")
+                logger.error(f" Task {task.task_id} failed: {e}")
                 
                 # Retry if possible
                 if task.retry_count < task.max_retries:
@@ -444,6 +462,9 @@ class CrawlerWorker:
 
     async def _perform_crawling(self, task: CrawlerTask) -> Dict[str, Any]:
         """Perform the actual crawling operation"""
+
+
+
         try:
             # Detect platform
             platform_info = await self.platform_detector.detect_platform(task.target_url)
@@ -500,11 +521,14 @@ class CrawlerWorker:
             return result
             
         except Exception as e:
-            logger.error(f"❌ Crawling operation failed for {task.target_url}: {e}")
+            logger.error(f" Crawling operation failed for {task.target_url}: {e}")
             raise
 
     async def _generate_content_fingerprints(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
         """Generate fingerprints for extracted content"""
+
+
+
         try:
             fingerprints = {}
             
@@ -531,11 +555,14 @@ class CrawlerWorker:
             return fingerprints
             
         except Exception as e:
-            logger.error(f"❌ Fingerprint generation failed: {e}")
+            logger.error(f" Fingerprint generation failed: {e}")
             return {}
 
     async def _configure_crawler_for_platform(self, platform_info: Dict[str, Any], task: CrawlerTask) -> Dict[str, Any]:
         """Configure crawler settings for specific platform"""
+
+
+
         try:
             config = {
                 'user_agent': 'IA-Influencer-Agent/1.0',
@@ -579,11 +606,14 @@ class CrawlerWorker:
             return config
             
         except Exception as e:
-            logger.error(f"❌ Failed to configure crawler for platform: {e}")
+            logger.error(f" Failed to configure crawler for platform: {e}")
             return {}
 
     async def _store_result(self, execution: TaskExecution) -> None:
         """Store task execution result"""
+
+
+
         try:
             await self.result_storage.store_result({
                 'task_id': execution.task.task_id,
@@ -601,23 +631,26 @@ class CrawlerWorker:
             self.completed_tasks.append(execution)
             
         except Exception as e:
-            logger.error(f"❌ Failed to store result for task {execution.task.task_id}: {e}")
+            logger.error(f" Failed to store result for task {execution.task.task_id}: {e}")
 
     async def _retry_task(self, task: CrawlerTask) -> None:
         """Retry a failed task"""
+
+
+
         try:
             task.retry_count += 1
             
             # Calculate backoff delay
             delay = self.config.backoff_factor ** task.retry_count
             
-            logger.info(f"🔄 Retrying task {task.task_id} (attempt {task.retry_count + 1}) in {delay}s")
+            logger.info(f" Retrying task {task.task_id} (attempt {task.retry_count + 1}) in {delay}s")
             
             # Schedule retry
             asyncio.create_task(self._delayed_retry(task, delay))
             
         except Exception as e:
-            logger.error(f"❌ Failed to schedule retry for task {task.task_id}: {e}")
+            logger.error(f" Failed to schedule retry for task {task.task_id}: {e}")
 
     async def _delayed_retry(self, task: CrawlerTask, delay: float) -> None:
         """Execute delayed task retry"""
@@ -626,6 +659,9 @@ class CrawlerWorker:
 
     async def _handle_failed_task(self, execution: TaskExecution) -> None:
         """Handle permanently failed task"""
+
+
+
         try:
             # Store failed task
             self.failed_tasks.append(execution)
@@ -634,13 +670,16 @@ class CrawlerWorker:
             if execution.task.callback_url:
                 await self._send_failure_notification(execution)
             
-            logger.error(f"❌ Task {execution.task.task_id} permanently failed after {execution.task.retry_count} retries")
+            logger.error(f" Task {execution.task.task_id} permanently failed after {execution.task.retry_count} retries")
             
         except Exception as e:
-            logger.error(f"❌ Failed to handle failed task {execution.task.task_id}: {e}")
+            logger.error(f" Failed to handle failed task {execution.task.task_id}: {e}")
 
     async def _send_failure_notification(self, execution: TaskExecution) -> None:
         """Send failure notification to callback URL"""
+
+
+
         try:
             notification_data = {
                 'task_id': execution.task.task_id,
@@ -651,13 +690,16 @@ class CrawlerWorker:
             }
             
             # Implementation would include HTTP callback
-            logger.info(f"📢 Failure notification prepared for task {execution.task.task_id}")
+            logger.info(f" Failure notification prepared for task {execution.task.task_id}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to send failure notification: {e}")
+            logger.error(f" Failed to send failure notification: {e}")
 
     async def _validate_task(self, task: CrawlerTask) -> bool:
         """Validate task before execution"""
+
+
+
         try:
             # Basic validation
             if not task.task_id or not task.target_url:
@@ -676,7 +718,7 @@ class CrawlerWorker:
             return True
             
         except Exception as e:
-            logger.error(f"❌ Task validation failed: {e}")
+            logger.error(f" Task validation failed: {e}")
             return False
 
     async def _resource_monitor(self) -> None:
@@ -692,10 +734,10 @@ class CrawlerWorker:
                 
                 # Check resource limits
                 if self.metrics.current_memory_usage > self.config.max_memory_mb:
-                    logger.warning(f"⚠️ Worker {self.worker_id} memory usage high: {self.metrics.current_memory_usage:.1f}MB")
+                    logger.warning(f" Worker {self.worker_id} memory usage high: {self.metrics.current_memory_usage:.1f}MB")
                     self.status = WorkerStatus.OVERLOADED
                 elif self.metrics.current_cpu_usage > self.config.max_cpu_percent:
-                    logger.warning(f"⚠️ Worker {self.worker_id} CPU usage high: {self.metrics.current_cpu_usage:.1f}%")
+                    logger.warning(f" Worker {self.worker_id} CPU usage high: {self.metrics.current_cpu_usage:.1f}%")
                     self.status = WorkerStatus.OVERLOADED
                 elif self.status == WorkerStatus.OVERLOADED and len(self.running_tasks) == 0:
                     self.status = WorkerStatus.IDLE
@@ -703,7 +745,7 @@ class CrawlerWorker:
                 await asyncio.sleep(10)  # Check every 10 seconds
                 
             except Exception as e:
-                logger.error(f"❌ Resource monitor error: {e}")
+                logger.error(f" Resource monitor error: {e}")
                 await asyncio.sleep(30)
 
     async def _health_checker(self) -> None:
@@ -715,18 +757,21 @@ class CrawlerWorker:
                 
                 if not components_healthy:
                     self.status = WorkerStatus.ERROR
-                    logger.error(f"❌ Worker {self.worker_id} health check failed")
+                    logger.error(f" Worker {self.worker_id} health check failed")
                 elif self.status == WorkerStatus.ERROR and len(self.running_tasks) == 0:
                     self.status = WorkerStatus.IDLE
                 
                 await asyncio.sleep(self.config.health_check_interval)
                 
             except Exception as e:
-                logger.error(f"❌ Health checker error: {e}")
+                logger.error(f" Health checker error: {e}")
                 await asyncio.sleep(60)
 
     async def _check_component_health(self) -> bool:
         """Check health of worker components"""
+
+
+
         try:
             # Check crawler engine
             if not await self.crawler_engine.health_check():
@@ -743,7 +788,7 @@ class CrawlerWorker:
             return True
             
         except Exception as e:
-            logger.error(f"❌ Component health check failed: {e}")
+            logger.error(f" Component health check failed: {e}")
             return False
 
     async def _metrics_updater(self) -> None:
@@ -777,7 +822,7 @@ class CrawlerWorker:
                 await asyncio.sleep(60)  # Update every minute
                 
             except Exception as e:
-                logger.error(f"❌ Metrics updater error: {e}")
+                logger.error(f" Metrics updater error: {e}")
                 await asyncio.sleep(120)
 
     async def _wait_for_active_tasks(self) -> None:
@@ -787,6 +832,9 @@ class CrawlerWorker:
 
     def __del__(self):
         """Cleanup on deletion"""
+
+
+
         try:
             if hasattr(self, 'thread_pool') and self.thread_pool:
                 self.thread_pool.shutdown(wait=False)

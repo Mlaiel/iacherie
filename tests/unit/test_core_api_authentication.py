@@ -206,11 +206,17 @@ class TestCriticalAPIEndpoints:
     @pytest.fixture
     def auth_api(self):
         """Create authentication API fixture"""
+
+
+
         return MockAuthenticationAPI()
     
     @pytest.fixture
     def sample_user_data(self):
         """Sample user registration data"""
+
+
+
         return {
             "email": "test@example.com",
             "password": "SecurePassword123!",

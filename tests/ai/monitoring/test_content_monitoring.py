@@ -96,6 +96,9 @@ class TestContentProcessingMonitorCore:
     @pytest.fixture
     def content_samples(self, content_test_data):
         """Generate realistic content samples for testing."""
+
+
+
         return content_test_data["production_samples"]
     
     async def test_monitor_initialization_comprehensive(self, content_monitor):
@@ -1174,6 +1177,9 @@ class TestContentProcessingMonitor:
     @pytest.fixture
     def content_test_data(self):
         """Generate comprehensive content test data."""
+
+
+
         return TestDataGenerator.generate_content_processing_data(num_contents=50)
     
     @pytest.fixture

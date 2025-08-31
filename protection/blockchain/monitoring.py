@@ -13,7 +13,7 @@ Project Team Specialties:
 - Microservices Architect & Audio Processing: Multi-format Support  
 - DevOps Engineer & IA Prompt Engineer: Production Deployment
 
-⚠️ STRONG WARNING ⚠️
+ STRONG WARNING 
 Any attempt to steal, copy, reproduce, or use this concept, idea, or code 
 without explicit written authorization from Fahed Mlaiel is strictly 
 prohibited and will result in legal action.
@@ -310,6 +310,9 @@ class BlockchainMonitor:
     
     async def initialize(self):
         """Initialize monitoring service"""
+
+
+
         try:
             # Start alert monitoring
             asyncio.create_task(self.alert_manager.start_monitoring())
@@ -436,6 +439,9 @@ class BlockchainMonitor:
     # Query methods
     def get_transaction_metrics(self, hours: int = 24) -> Dict[str, Any]:
         """Get transaction performance metrics"""
+
+
+
         return {
             'total_transactions': self.metrics_collector.get_metric_summary('transactions_total', hours),
             'failed_transactions': self.metrics_collector.get_metric_summary('transaction_failures', hours),
@@ -445,6 +451,9 @@ class BlockchainMonitor:
     
     def get_network_metrics(self, hours: int = 24) -> Dict[str, Any]:
         """Get network performance metrics"""
+
+
+
         return {
             'gas_prices': self.metrics_collector.get_metric_summary('gas_price_gwei', hours),
             'confirmation_times': self.metrics_collector.get_metric_summary('confirmation_time', hours),
@@ -453,6 +462,9 @@ class BlockchainMonitor:
     
     def get_comprehensive_report(self, hours: int = 24) -> Dict[str, Any]:
         """Get comprehensive monitoring report"""
+
+
+
         return {
             'timestamp': datetime.utcnow().isoformat(),
             'period_hours': hours,
@@ -478,10 +490,16 @@ class BlockchainMonitor:
     
     def timer(self, metric_name: str, labels: Dict[str, str] = None) -> PerformanceTimer:
         """Get a timer context manager for measuring operations"""
+
+
+
         return PerformanceTimer(self.metrics_collector, metric_name, labels)
     
     async def shutdown(self):
         """Shutdown monitoring service"""
+
+
+
         try:
             self.alert_manager.stop_monitoring()
             logger.info("Blockchain monitoring shutdown complete")

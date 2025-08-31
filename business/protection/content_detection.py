@@ -47,6 +47,9 @@ class ContentHashGenerator:
     
     def generate_image_hash(self, image_path: str) -> Dict[str, str]:
         """Generate multiple hash signatures for images"""
+
+
+
         try:
             image = Image.open(image_path)
             
@@ -68,6 +71,9 @@ class ContentHashGenerator:
     
     def generate_audio_hash(self, audio_path: str) -> Dict[str, str]:
         """Generate audio fingerprint using spectral analysis"""
+
+
+
         try:
             # Load audio file
             y, sr = librosa.load(audio_path, duration=30)  # First 30 seconds
@@ -102,6 +108,9 @@ class ContentHashGenerator:
     
     def generate_video_hash(self, video_path: str) -> Dict[str, str]:
         """Generate video fingerprint using frame analysis"""
+
+
+
         try:
             cap = cv2.VideoCapture(video_path)
             frame_hashes = []
@@ -147,6 +156,9 @@ class ContentHashGenerator:
     
     def generate_text_hash(self, text_content: str) -> Dict[str, str]:
         """Generate text content fingerprint"""
+
+
+
         try:
             # Normalize text
             normalized = text_content.lower().strip()
@@ -200,6 +212,9 @@ class ContentDetectionEngine:
     
     def analyze_content(self, content_path: str, content_type: str = None) -> ContentFingerprint:
         """Comprehensive content analysis and fingerprinting"""
+
+
+
         try:
             if not content_type:
                 content_type = self._detect_content_type(content_path)
@@ -247,6 +262,9 @@ class ContentDetectionEngine:
     
     def detect_similarity(self, fingerprint1: ContentFingerprint, fingerprint2: ContentFingerprint) -> float:
         """Calculate similarity between two content fingerprints"""
+
+
+
         try:
             if fingerprint1.content_type != fingerprint2.content_type:
                 return 0.0
@@ -302,6 +320,9 @@ class ContentDetectionEngine:
     
     def _extract_image_features(self, image_path: str) -> Dict[str, List[float]]:
         """Extract advanced image features"""
+
+
+
         try:
             image = cv2.imread(image_path)
             
@@ -327,6 +348,9 @@ class ContentDetectionEngine:
     
     def _extract_audio_features(self, audio_path: str) -> Dict[str, List[float]]:
         """Extract advanced audio features"""
+
+
+
         try:
             y, sr = librosa.load(audio_path, duration=30)
             
@@ -353,6 +377,9 @@ class ContentDetectionEngine:
     
     def _extract_video_features(self, video_path: str) -> Dict[str, List[float]]:
         """Extract video-specific features"""
+
+
+
         try:
             cap = cv2.VideoCapture(video_path)
             
@@ -479,6 +506,9 @@ class ContentDetectionManager:
     
     def register_content(self, content_path: str, owner_id: str, content_metadata: Dict[str, Any] = None) -> str:
         """Register new content for protection"""
+
+
+
         try:
             fingerprint = self.detection_engine.analyze_content(content_path)
             
@@ -501,6 +531,9 @@ class ContentDetectionManager:
     
     def detect_infringement(self, suspicious_content_path: str) -> List[Dict[str, Any]]:
         """Detect potential copyright infringement"""
+
+
+
         try:
             # Analyze suspicious content
             suspicious_fingerprint = self.detection_engine.analyze_content(suspicious_content_path)
@@ -533,6 +566,9 @@ class ContentDetectionManager:
     
     def export_fingerprint_database(self) -> str:
         """Export fingerprint database to JSON"""
+
+
+
         try:
             export_data = []
             for fp in self.fingerprint_database:
@@ -546,6 +582,9 @@ class ContentDetectionManager:
     
     def import_fingerprint_database(self, json_data: str) -> int:
         """Import fingerprint database from JSON"""
+
+
+
         try:
             import_data = json.loads(json_data)
             imported_count = 0

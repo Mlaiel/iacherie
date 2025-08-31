@@ -9,7 +9,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -471,6 +471,9 @@ class PerformanceAnalyticsEngine:
     
     def _initialize_metric_calculators(self) -> Dict[str, callable]:
         """Initialize metric calculation functions"""
+
+
+
         return {
             'engagement_rate': self._calculate_engagement_rate,
             'conversion_rate': self._calculate_conversion_rate,

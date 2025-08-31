@@ -23,7 +23,7 @@ prediction algorithms, and trend-based content strategy agents.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -58,11 +58,17 @@ class TestTrendAnalysisAgent:
     @pytest.fixture
     def agent(self):
         """Create TrendAnalysisAgent instance"""
+
+
+
         return TrendAnalysisAgent()
     
     @pytest.fixture
     def sample_trend_data(self):
         """Sample trend data for analysis"""
+
+
+
         return {
             "analysis_id": "trend_001",
             "market_segment": "tech_education",
@@ -236,11 +242,17 @@ class TestMarketTrendAnalyzer:
     @pytest.fixture
     def agent(self):
         """Create MarketTrendAnalyzer instance"""
+
+
+
         return MarketTrendAnalyzer()
     
     @pytest.fixture
     def sample_market_data(self):
         """Sample market data for analysis"""
+
+
+
         return {
             "market_id": "digital_marketing_2025",
             "industry_segment": "content_creation",
@@ -418,11 +430,17 @@ class TestContentTrendAgent:
     @pytest.fixture
     def agent(self):
         """Create ContentTrendAgent instance"""
+
+
+
         return ContentTrendAgent()
     
     @pytest.fixture
     def sample_content_trends(self):
         """Sample content trend data"""
+
+
+
         return {
             "content_analysis_id": "content_trends_001",
             "platforms": ["youtube", "tiktok", "instagram", "twitter"],
@@ -582,11 +600,17 @@ class TestPredictiveTrendAgent:
     @pytest.fixture
     def agent(self):
         """Create PredictiveTrendAgent instance"""
+
+
+
         return PredictiveTrendAgent()
     
     @pytest.fixture
     def sample_prediction_data(self):
         """Sample data for trend prediction"""
+
+
+
         return {
             "prediction_id": "pred_001",
             "historical_data": {
@@ -785,6 +809,9 @@ class TestIntegrationScenarios:
     @pytest.fixture
     def agents(self):
         """Create all trend analysis agents for integration testing"""
+
+
+
         return {
             "trend": TrendAnalysisAgent(),
             "market": MarketTrendAnalyzer(),
@@ -836,6 +863,9 @@ class TestErrorHandling:
     @pytest.fixture
     def agent(self):
         """Create TrendAnalysisAgent for error testing"""
+
+
+
         return TrendAnalysisAgent()
     
     @pytest.mark.asyncio
@@ -890,6 +920,9 @@ class TestPerformanceAndScaling:
     @pytest.fixture
     def agent(self):
         """Create TrendAnalysisAgent for performance testing"""
+
+
+
         return TrendAnalysisAgent()
     
     @pytest.mark.asyncio

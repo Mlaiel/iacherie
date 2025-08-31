@@ -138,6 +138,9 @@ class FingerprintingIntegrationManager:
         Returns:
             Résultat du traitement
         """
+
+
+
         try:
             # Channels par défaut si non spécifiés
             if notification_channels is None:
@@ -204,7 +207,7 @@ class FingerprintingIntegrationManager:
         if event_type == FingerprintingEventType.FINGERPRINT_GENERATED:
             return {
                 **base_data,
-                "title": "🔍 Empreinte générée avec succès",
+                "title": " Empreinte générée avec succès",
                 "message": f"L'empreinte de votre contenu {data.content_type} a été générée avec un score de qualité de {data.quality_score:.2%}.",
                 "priority": "normal",
                 "category": "fingerprint_success",
@@ -215,7 +218,7 @@ class FingerprintingIntegrationManager:
             similarity_count = len(data.similarity_matches)
             return {
                 **base_data,
-                "title": "⚠️ Contenu similaire détecté",
+                "title": " Contenu similaire détecté",
                 "message": f"Nous avons détecté {similarity_count} contenus similaires à votre {data.content_type}.",
                 "priority": "high",
                 "category": "similarity_alert",
@@ -232,7 +235,7 @@ class FingerprintingIntegrationManager:
             quality_level = self._determine_quality_level(data.quality_score)
             return {
                 **base_data,
-                "title": "📊 Alerte qualité d'empreinte",
+                "title": " Alerte qualité d'empreinte",
                 "message": f"La qualité de l'empreinte est {quality_level.value} ({data.quality_score:.2%}). Amélioration recommandée.",
                 "priority": "medium" if quality_level != FingerprintQuality.FAILED else "high",
                 "category": "quality_alert",
@@ -244,7 +247,7 @@ class FingerprintingIntegrationManager:
         elif event_type == FingerprintingEventType.RIGHTS_VIOLATION:
             return {
                 **base_data,
-                "title": "🚨 Violation potentielle des droits détectée",
+                "title": " Violation potentielle des droits détectée",
                 "message": f"Une violation potentielle de vos droits a été détectée sur la plateforme {data.platform_source}.",
                 "priority": "urgent",
                 "category": "rights_violation",
@@ -264,7 +267,7 @@ class FingerprintingIntegrationManager:
         elif event_type == FingerprintingEventType.PROCESSING_FAILED:
             return {
                 **base_data,
-                "title": "❌ Échec de traitement",
+                "title": " Échec de traitement",
                 "message": f"Le traitement de votre contenu {data.content_type} a échoué. Notre équipe technique a été notifiée.",
                 "priority": "high",
                 "category": "processing_error",
@@ -276,7 +279,7 @@ class FingerprintingIntegrationManager:
         elif event_type == FingerprintingEventType.BATCH_COMPLETED:
             return {
                 **base_data,
-                "title": "✅ Traitement batch terminé",
+                "title": " Traitement batch terminé",
                 "message": f"Le traitement en lot de vos contenus est terminé. {data.metadata.get('processed_count', 'N/A')} éléments traités.",
                 "priority": "normal",
                 "category": "batch_completion",
@@ -287,7 +290,7 @@ class FingerprintingIntegrationManager:
         else:
             return {
                 **base_data,
-                "title": f"📢 Événement {event_type.value}",
+                "title": f" Événement {event_type.value}",
                 "message": f"Un événement de type {event_type.value} s'est produit pour votre contenu.",
                 "priority": "normal",
                 "category": "general_event",
@@ -372,6 +375,9 @@ class FingerprintingIntegrationManager:
         data: FingerprintingNotificationData
     ):
         """Traitement spécialisé selon le type d'événement"""
+
+
+
         
         try:
             if event_type == FingerprintingEventType.SIMILARITY_DETECTED:
@@ -601,6 +607,9 @@ class FingerprintingIntegrationManager:
 
     async def _update_dashboard_notification(self, notification_id: str, message_data: Dict[str, Any]) -> Dict[str, Any]:
         """Met à jour le tableau de bord"""
+
+
+
         return {"success": True, "method": "dashboard", "notification_id": notification_id}
 
     async def _cache_notification_data(self, notification_id: str, message_data: Dict[str, Any]):

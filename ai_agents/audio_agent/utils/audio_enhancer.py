@@ -7,7 +7,7 @@ dynamic processing, and professional audio restoration capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -534,6 +534,9 @@ class AudioEnhancer:
     
     def _initialize_ai_models(self):
         """Initialize AI models for enhancement"""
+
+
+
         try:
             # In production, these would be pre-trained models
             self.denoise_model = self._create_denoise_model()
@@ -695,6 +698,9 @@ class AudioEnhancer:
                                    sample_rate: int,
                                    config: EnhancementConfig) -> np.ndarray:
         """Apply comprehensive noise reduction"""
+
+
+
         try:
             denoised = audio.copy()
             
@@ -804,6 +810,9 @@ class AudioEnhancer:
     
     async def _apply_adaptive_filtering(self, audio: np.ndarray, sample_rate: int) -> np.ndarray:
         """Apply adaptive filtering for noise reduction"""
+
+
+
         try:
             # Simple adaptive filtering using spectral subtraction
             # Compute STFT
@@ -862,6 +871,9 @@ class AudioEnhancer:
                                          sample_rate: int,
                                          config: EnhancementConfig) -> np.ndarray:
         """Apply multiband enhancement processing"""
+
+
+
         try:
             # Set up multiband processor
             self.multiband_processor.sample_rate = sample_rate
@@ -900,6 +912,9 @@ class AudioEnhancer:
                                        sample_rate: int,
                                        config: EnhancementConfig) -> np.ndarray:
         """Apply dynamics processing (compression, limiting, gating)"""
+
+
+
         try:
             processed = audio.copy()
             
@@ -985,6 +1000,9 @@ class AudioEnhancer:
                                     sample_rate: int,
                                     config: EnhancementConfig) -> np.ndarray:
         """Apply final processing and cleanup"""
+
+
+
         try:
             processed = audio.copy()
             
@@ -1015,6 +1033,9 @@ class AudioEnhancer:
     
     async def _analyze_audio_quality(self, audio: np.ndarray, sample_rate: int) -> Dict[str, Any]:
         """Analyze audio quality metrics"""
+
+
+
         try:
             # Dynamic range
             dynamic_range = np.max(audio) - np.min(audio)
@@ -1143,6 +1164,9 @@ class NoiseReducer:
                                   alpha: float = 2.0,
                                   beta: float = 0.01) -> np.ndarray:
         """Advanced spectral subtraction algorithm"""
+
+
+
         try:
             # Compute STFT
             f, t, stft = signal.stft(
@@ -1179,6 +1203,9 @@ class NoiseReducer:
     
     async def _wiener_filtering(self, audio: np.ndarray, **kwargs) -> np.ndarray:
         """Wiener filtering for noise reduction"""
+
+
+
         try:
             # Simplified Wiener filtering implementation
             # In production, this would use more sophisticated estimation
@@ -1212,6 +1239,9 @@ class NoiseReducer:
     
     async def _kalman_filtering(self, audio: np.ndarray, **kwargs) -> np.ndarray:
         """Kalman filtering for noise reduction"""
+
+
+
         try:
             # Simplified Kalman filter for audio denoising
             # Process noise covariance

@@ -12,7 +12,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 Expert Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️ LEGAL WARNING: This code and concept are protected by intellectual property laws.
+ LEGAL WARNING: This code and concept are protected by intellectual property laws.
 Any unauthorized copying, modification, or distribution without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.
@@ -56,7 +56,7 @@ class ContentModuleMaintenance:
     
     async def create_system_backup(self, backup_name: Optional[str] = None) -> Path:
         """Create comprehensive system backup."""
-        logger.info("📦 Creating System Backup...")
+        logger.info(" Creating System Backup...")
         
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         backup_name = backup_name or f"content_module_backup_{timestamp}"
@@ -104,8 +104,8 @@ class ContentModuleMaintenance:
         with open(manifest_file, 'w') as f:
             json.dump(manifest, f, indent=2)
         
-        logger.info(f"✅ Backup created: {backup_file}")
-        logger.info(f"📋 Manifest saved: {manifest_file}")
+        logger.info(f" Backup created: {backup_file}")
+        logger.info(f" Manifest saved: {manifest_file}")
         
         return backup_file
     
@@ -176,12 +176,15 @@ class ContentModuleMaintenance:
         final_usage = self._get_disk_usage()
         cleanup_results['space_freed_mb'] = round(cleanup_results['space_freed_mb'], 2)
         
-        logger.info(f"✅ Cleanup completed: {cleanup_results['temp_files_removed']} files removed, {cleanup_results['space_freed_mb']} MB freed")
+        logger.info(f" Cleanup completed: {cleanup_results['temp_files_removed']} files removed, {cleanup_results['space_freed_mb']} MB freed")
         
         return cleanup_results
     
     def _get_disk_usage(self) -> float:
         """Get current disk usage in MB."""
+
+
+
         try:
             return psutil.disk_usage(str(self.base_path)).used / 1024 / 1024
         except Exception:
@@ -189,7 +192,7 @@ class ContentModuleMaintenance:
     
     async def optimize_performance(self) -> Dict[str, Any]:
         """Optimize system performance."""
-        logger.info("⚡ Optimizing System Performance...")
+        logger.info(" Optimizing System Performance...")
         
         optimization_results = {
             'python_cache_cleared': False,
@@ -230,13 +233,13 @@ class ContentModuleMaintenance:
             "Use async operations for I/O-bound tasks"
         ])
         
-        logger.info(f"✅ Performance optimization completed with {len(optimization_results['recommendations'])} recommendations")
+        logger.info(f" Performance optimization completed with {len(optimization_results['recommendations'])} recommendations")
         
         return optimization_results
     
     async def generate_system_report(self) -> Dict[str, Any]:
         """Generate comprehensive system status report."""
-        logger.info("📊 Generating System Report...")
+        logger.info(" Generating System Report...")
         
         # System information
         process = psutil.Process()
@@ -282,13 +285,13 @@ class ContentModuleMaintenance:
         with open(report_file, 'w') as f:
             json.dump(report, f, indent=2)
         
-        logger.info(f"✅ System report saved: {report_file}")
+        logger.info(f" System report saved: {report_file}")
         
         return report
     
     async def monitor_system(self, duration_seconds: int = 60) -> Dict[str, Any]:
         """Monitor system resources for specified duration."""
-        logger.info(f"👁️ Monitoring system for {duration_seconds} seconds...")
+        logger.info(f" Monitoring system for {duration_seconds} seconds...")
         
         monitoring_data = {
             'duration_seconds': duration_seconds,
@@ -336,7 +339,7 @@ class ContentModuleMaintenance:
         with open(monitor_file, 'w') as f:
             json.dump(monitoring_data, f, indent=2)
         
-        logger.info(f"✅ Monitoring completed. Data saved: {monitor_file}")
+        logger.info(f" Monitoring completed. Data saved: {monitor_file}")
         
         return monitoring_data
     
@@ -371,7 +374,7 @@ class ContentModuleMaintenance:
     
     async def restore_backup(self, backup_filename: str, target_dir: Optional[str] = None) -> bool:
         """Restore from backup."""
-        logger.info(f"🔄 Restoring from backup: {backup_filename}")
+        logger.info(f" Restoring from backup: {backup_filename}")
         
         backup_file = self.backup_path / backup_filename
         if not backup_file.exists():
@@ -385,7 +388,7 @@ class ContentModuleMaintenance:
             with tarfile.open(backup_file, "r:gz") as tar:
                 tar.extractall(target_path)
             
-            logger.info(f"✅ Backup restored to: {target_path}")
+            logger.info(f" Backup restored to: {target_path}")
             return True
             
         except Exception as e:
@@ -450,25 +453,25 @@ Examples:
     async def run_command():
         if args.command == 'backup':
             backup_file = await maintenance.create_system_backup(args.name)
-            print(f"✅ Backup created: {backup_file}")
+            print(f" Backup created: {backup_file}")
             
         elif args.command == 'cleanup':
             results = await maintenance.cleanup_system(args.aggressive)
-            print(f"✅ Cleanup completed:")
+            print(f" Cleanup completed:")
             print(f"   - Files removed: {results['temp_files_removed']}")
             print(f"   - Logs archived: {results['logs_archived']}")
             print(f"   - Space freed: {results['space_freed_mb']} MB")
             
         elif args.command == 'optimize':
             results = await maintenance.optimize_performance()
-            print(f"✅ Performance optimization completed")
+            print(f" Performance optimization completed")
             print(f"   - Recommendations: {len(results['recommendations'])}")
             for rec in results['recommendations'][:3]:
                 print(f"     • {rec}")
             
         elif args.command == 'report':
             report = await maintenance.generate_system_report()
-            print(f"✅ System report generated:")
+            print(f" System report generated:")
             print(f"   - Memory usage: {report['resource_usage']['memory_mb']} MB")
             print(f"   - CPU usage: {report['resource_usage']['cpu_percent']}%")
             print(f"   - Python files: {report['file_counts']['python_files']}")
@@ -477,7 +480,7 @@ Examples:
         elif args.command == 'monitor':
             results = await maintenance.monitor_system(args.duration)
             summary = results['summary']
-            print(f"✅ Monitoring completed ({args.duration}s):")
+            print(f" Monitoring completed ({args.duration}s):")
             print(f"   - Average memory: {summary['avg_memory_mb']} MB")
             print(f"   - Peak memory: {summary['max_memory_mb']} MB")
             print(f"   - Average CPU: {summary['avg_cpu_percent']}%")
@@ -486,7 +489,7 @@ Examples:
         elif args.command == 'list-backups':
             backups = maintenance.list_backups()
             if backups:
-                print("📦 Available backups:")
+                print(" Available backups:")
                 for backup in backups:
                     print(f"   • {backup['filename']} ({backup['size_mb']} MB) - {backup['created']}")
             else:
@@ -495,15 +498,15 @@ Examples:
         elif args.command == 'restore':
             success = await maintenance.restore_backup(args.backup, args.target)
             if success:
-                print(f"✅ Backup restored successfully")
+                print(f" Backup restored successfully")
             else:
-                print(f"❌ Backup restoration failed")
+                print(f" Backup restoration failed")
     
     # Run the async command
     try:
         asyncio.run(run_command())
     except KeyboardInterrupt:
-        print("\n🛑 Operation cancelled by user")
+        print("\n Operation cancelled by user")
     except Exception as e:
         logger.error(f"Operation failed: {e}")
         sys.exit(1)

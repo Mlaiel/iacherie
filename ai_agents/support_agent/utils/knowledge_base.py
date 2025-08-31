@@ -8,7 +8,7 @@ customer support operations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -200,6 +200,9 @@ class KnowledgeBaseManager:
     
     async def _initialize_knowledge_base(self):
         """Initialize knowledge base with default content"""
+
+
+
         try:
             await self._load_existing_articles()
             await self._create_default_articles()
@@ -764,6 +767,9 @@ class KnowledgeBaseManager:
     
     async def add_article(self, article: KnowledgeArticle) -> bool:
         """Add new article to knowledge base"""
+
+
+
         try:
             # Generate embedding
             article.embedding = self.embedding_model.encode(
@@ -790,6 +796,9 @@ class KnowledgeBaseManager:
     
     async def search(self, query: SearchQuery) -> List[SearchResult]:
         """Perform comprehensive knowledge base search"""
+
+
+
         try:
             start_time = datetime.now()
             
@@ -1067,6 +1076,9 @@ class KnowledgeBaseManager:
     
     async def _generate_snippet(self, article: KnowledgeArticle, query: str) -> str:
         """Generate contextual snippet from article"""
+
+
+
         try:
             # Use QA model to find relevant snippet
             qa_input = {
@@ -1193,6 +1205,9 @@ class KnowledgeBaseManager:
     
     async def _update_vector_index(self, article: KnowledgeArticle):
         """Update vector index with new article"""
+
+
+
         try:
             if self.faiss_index is None:
                 await self._build_vector_index()
@@ -1236,6 +1251,9 @@ class KnowledgeBaseManager:
     
     async def _cache_article(self, article: KnowledgeArticle):
         """Cache article in Redis"""
+
+
+
         try:
             article_data = {
                 "id": article.id,
@@ -1268,6 +1286,9 @@ class KnowledgeBaseManager:
     
     async def _load_existing_articles(self):
         """Load existing articles from database or cache"""
+
+
+
         try:
             # Try to load from Redis cache first
             cached_articles = await self.redis_client.keys("knowledge_article:*")
@@ -1306,6 +1327,9 @@ class KnowledgeBaseManager:
     
     async def _update_search_stats(self, query: SearchQuery, result_count: int, search_time: float):
         """Update search statistics"""
+
+
+
         try:
             stats_key = f"search_stats:{datetime.now().strftime('%Y-%m-%d')}"
             
@@ -1367,6 +1391,9 @@ class KnowledgeBaseManager:
     
     async def get_knowledge_analytics(self) -> Dict[str, Any]:
         """Get knowledge base analytics"""
+
+
+
         return {
             "total_articles": len(self.knowledge_articles),
             "categories": {

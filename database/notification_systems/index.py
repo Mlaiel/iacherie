@@ -149,6 +149,9 @@ class EnterpriseNotificationOrchestrator:
         
     async def initialize(self) -> Dict[str, Any]:
         """Initialise tous les gestionnaires de notifications"""
+
+
+
         try:
             # Initialisation des gestionnaires core
             self.managers["email"] = EmailNotificationManager(
@@ -364,6 +367,9 @@ class EnterpriseNotificationOrchestrator:
 
     async def get_system_metrics(self) -> Dict[str, Any]:
         """Récupère les métriques globales du système"""
+
+
+
         try:
             # Métriques globales
             global_metrics = dict(self.metrics)
@@ -463,6 +469,9 @@ class EnterpriseNotificationOrchestrator:
 
     async def _get_queue_metrics(self) -> Dict[str, Any]:
         """Récupère les métriques de la queue Redis"""
+
+
+
         try:
             queue_size = await self.config.redis_client.llen("notification_queue")
             processing_count = await self.config.redis_client.llen("notification_processing")
@@ -479,6 +488,9 @@ class EnterpriseNotificationOrchestrator:
 
     async def _get_database_metrics(self) -> Dict[str, Any]:
         """Récupère les métriques de performance base de données"""
+
+
+
         try:
             async with self.config.db_pool.acquire() as conn:
                 # Métriques notifications récentes
@@ -515,6 +527,9 @@ async def get_notification_orchestrator(config: NotificationSystemConfig = None)
 # Fonctions utilitaires d'export
 async def create_database_schema(db_pool: asyncpg.Pool) -> bool:
     """Crée le schéma complet de la base de données"""
+
+
+
     try:
         schema_sql = create_notification_schema_sql()
         async with db_pool.acquire() as conn:
@@ -653,6 +668,9 @@ class NotificationSystemOrchestrator:
         Returns:
             bool: True si l'initialisation est réussie
         """
+
+
+
         try:
             logger.info("Initializing Notification System...")
             
@@ -671,11 +689,11 @@ class NotificationSystemOrchestrator:
             self.is_initialized = True
             self.is_running = True
             
-            logger.info("✅ Notification System successfully initialized")
+            logger.info(" Notification System successfully initialized")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize Notification System: {str(e)}")
+            logger.error(f" Failed to initialize Notification System: {str(e)}")
             await self.shutdown()
             return False
 
@@ -702,6 +720,9 @@ class NotificationSystemOrchestrator:
         Returns:
             Dict[str, Any]: Résultat de l'envoi avec IDs des messages
         """
+
+
+
         try:
             if not self.is_initialized:
                 raise RuntimeError("Notification system not initialized")
@@ -770,6 +791,9 @@ class NotificationSystemOrchestrator:
 
     async def get_system_status(self) -> Dict[str, Any]:
         """Retourne le statut complet du système"""
+
+
+
         return {
             "is_initialized": self.is_initialized,
             "is_running": self.is_running,
@@ -791,6 +815,9 @@ class NotificationSystemOrchestrator:
 
     async def shutdown(self) -> None:
         """Arrête proprement le système de notifications"""
+
+
+
         try:
             logger.info("Shutting down Notification System...")
             
@@ -812,10 +839,10 @@ class NotificationSystemOrchestrator:
             if self.db_pool:
                 await self.db_pool.close()
             
-            logger.info("✅ Notification System shut down successfully")
+            logger.info(" Notification System shut down successfully")
             
         except Exception as e:
-            logger.error(f"❌ Error during shutdown: {str(e)}")
+            logger.error(f" Error during shutdown: {str(e)}")
 
 # Instance globale pour utilisation simplifiée
 _global_orchestrator: Optional[NotificationSystemOrchestrator] = None
@@ -842,6 +869,9 @@ async def initialize_notification_system(config: NotificationSystemConfig) -> No
 
 async def get_notification_system() -> Optional[NotificationSystemOrchestrator]:
     """Retourne l'instance globale du système de notifications"""
+
+
+
     return _global_orchestrator
 
 async def send_notification(
@@ -873,6 +903,9 @@ async def send_notification(
 
 async def send_welcome_notification(user_email: str, user_name: str, account_type: str = "creator") -> Dict[str, Any]:
     """Envoie une notification de bienvenue"""
+
+
+
     return await send_notification(
         "welcome",
         user_email,
@@ -894,6 +927,9 @@ async def send_content_protection_alert(
     recommended_action: str
 ) -> Dict[str, Any]:
     """Envoie une alerte de protection de contenu"""
+
+
+
     return await send_notification(
         "protection_alert",
         user_email,
@@ -901,7 +937,7 @@ async def send_content_protection_alert(
             "content_title": content_title,
             "platform": platform,
             "recommended_action": recommended_action,
-            "subject": "🚨 Alerte de Protection de Contenu",
+            "subject": " Alerte de Protection de Contenu",
             "title": "Violation Détectée",
             "body": f"Utilisation non autorisée de '{content_title}' détectée sur {platform}"
         },

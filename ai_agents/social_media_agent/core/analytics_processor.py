@@ -8,7 +8,7 @@ all social media platforms with integrated content protection and monetization a
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL NOTICE:
+ CRITICAL LEGAL NOTICE:
 This analytics engine and business intelligence system are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, reverse engineering, or commercialization without 
 explicit written permission is strictly prohibited and will result in immediate legal action.
@@ -507,6 +507,9 @@ class AudienceSegmenter:
     
     def _calculate_segmentation_quality(self, X: np.ndarray, labels: np.ndarray) -> float:
         """Calculate silhouette score to measure segmentation quality"""
+
+
+
         try:
             from sklearn.metrics import silhouette_score
             return silhouette_score(X, labels)

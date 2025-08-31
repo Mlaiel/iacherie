@@ -82,7 +82,10 @@ def get_ai_config_summary():
     
     Returns:
         Dict[str, Any]: Summary of all AI configurations
-    """    return {
+    """
+
+
+    return {
         "version": __version__,
         "author": __author__,
         "modules": {

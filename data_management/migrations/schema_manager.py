@@ -1,5 +1,5 @@
 """
-🗂️ Schema Manager - Enterprise Database Schema Evolution Controller
+ Schema Manager - Enterprise Database Schema Evolution Controller
 ===================================================================
 
 Ultra-advanced database schema management system for IA Influencer Agent:
@@ -13,7 +13,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+ UNAUTHORIZED USE STRICTLY PROHIBITED 
 This schema management system is protected intellectual property.
 Contact mlaiel@live.de for licensing inquiries.
 """
@@ -634,6 +634,9 @@ class SchemaManager:
         
     async def _get_session(self) -> Session:
         """Get database session"""
+
+
+
         return self.session_maker()
         
     async def _rollback_version_changes(self, version: SchemaVersion) -> None:

@@ -20,7 +20,7 @@ Team Specialists:
 - IA Prompt Engineer: AI security analysis prompts
 
 Contact: mlaiel@live.de
-⚠️ LEGAL WARNING: Any unauthorized use, copying, distribution, or commercialization 
+ LEGAL WARNING: Any unauthorized use, copying, distribution, or commercialization 
 of this code without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will result in immediate legal action.
 """
@@ -480,6 +480,9 @@ class NetworkSecurityCheck(SecurityCheck):
     
     def _is_internal_ip(self, ip: str) -> bool:
         """Check if IP address is internal/private"""
+
+
+
         try:
             ip_obj = ipaddress.ip_address(ip)
             return ip_obj.is_private
@@ -533,6 +536,9 @@ class DatabaseSecurityScanner:
     
     def _initialize_security_checks(self):
         """Initialize security check modules"""
+
+
+
         try:
             # Register security checks
             checks = [
@@ -568,6 +574,9 @@ class DatabaseSecurityScanner:
         Returns:
             Scan ID for tracking progress
         """
+
+
+
         try:
             # Create scan configuration
             scan_config = ScanConfiguration(
@@ -601,6 +610,9 @@ class DatabaseSecurityScanner:
     
     async def _execute_scan(self, scan_result: ScanResult):
         """Execute security scan"""
+
+
+
         try:
             # Update status
             scan_result.status = ScanStatus.RUNNING
@@ -878,10 +890,16 @@ class DatabaseSecurityScanner:
     
     def get_scan_status(self, scan_id: str) -> Optional[ScanResult]:
         """Get scan status and results"""
+
+
+
         return self.scan_results.get(scan_id)
     
     def list_active_scans(self) -> List[str]:
         """List active scan IDs"""
+
+
+
         return [
             scan_id for scan_id, result in self.scan_results.items()
             if result.status in [ScanStatus.PENDING, ScanStatus.RUNNING]
@@ -889,6 +907,9 @@ class DatabaseSecurityScanner:
     
     async def cancel_scan(self, scan_id: str) -> bool:
         """Cancel running scan"""
+
+
+
         try:
             if scan_id in self.scan_results:
                 scan_result = self.scan_results[scan_id]

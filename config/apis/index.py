@@ -3,7 +3,7 @@ APIs Configuration Index - Centralized API Registry & Orchestration
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL NOTICE:
+ CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission 
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in legal action.
@@ -64,6 +64,9 @@ class APIRegistry:
     
     def _initialize_registry(self) -> None:
         """Initialize the complete API registry"""
+
+
+
         try:
             # Register all API configurations
             all_configs = {
@@ -98,6 +101,9 @@ class APIRegistry:
         Returns:
             Authenticated API client instance
         """
+
+
+
         try:
             if api_name not in self._api_configs:
                 raise ValueError(f"API configuration not found: {api_name}")
@@ -134,6 +140,9 @@ class APIRegistry:
     
     async def _validate_client(self, client: Any) -> bool:
         """Validate if client is still valid and authenticated"""
+
+
+
         try:
             # Implementation depends on client type
             # This is a simplified validation
@@ -164,6 +173,9 @@ class APIRegistry:
         Returns:
             API response data
         """
+
+
+
         try:
             # Check rate limiting
             rate_limit_result = await self.rate_limiter.check_rate_limit(
@@ -209,6 +221,9 @@ class APIRegistry:
     
     def get_registered_apis(self) -> List[str]:
         """Get list of all registered API names"""
+
+
+
         return list(self._api_configs.keys())
     
     async def health_check(self, api_name: Optional[str] = None) -> Dict[str, Dict[str, Any]]:
@@ -250,6 +265,9 @@ class APIRegistry:
         Returns:
             True if refresh successful
         """
+
+
+
         try:
             client_key = f"{api_name}_{user_id or 'global'}"
             
@@ -269,6 +287,9 @@ class APIRegistry:
     
     async def shutdown(self) -> None:
         """Gracefully shutdown API registry and cleanup resources"""
+
+
+
         try:
             # Stop monitoring
             await self.monitoring_manager.stop_all_monitoring()

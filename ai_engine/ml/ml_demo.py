@@ -8,7 +8,7 @@ for the IA Influencer Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Contact: mlaiel@live.de
@@ -50,13 +50,13 @@ class MLModuleDemo:
         
         # Sample data
         self.sample_texts = [
-            "I absolutely love this new song! It's incredible and makes me so happy! 😊",
+            "I absolutely love this new song! It's incredible and makes me so happy! ",
             "This movie was terrible. Waste of time and money. Very disappointed.",
             "The weather is nice today. Perfect for a walk in the park.",
             "I'm so excited about the new AI technology. It will revolutionize everything!",
             "This product is okay, nothing special but not bad either.",
             "Breaking: Major breakthrough in renewable energy announced today!",
-            "Can't believe how amazing this concert was! Best night ever! 🎵",
+            "Can't believe how amazing this concert was! Best night ever! ",
             "The service at this restaurant was horrible. Never going back.",
             "Just finished reading an interesting book about machine learning.",
             "This new social media trend is getting out of hand..."

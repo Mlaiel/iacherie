@@ -12,7 +12,7 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Micro
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
+ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
 This code and concept are the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 Unauthorized access, copying, modification, distribution, reverse engineering,
@@ -413,6 +413,9 @@ class RewardCalculator:
         context: RewardCalculationContext
     ) -> List[CalculatedReward]:
         """Calculate rewards for a given context."""
+
+
+
         try:
             calculated_rewards = []
             
@@ -496,6 +499,9 @@ class RewardCalculator:
         context: RewardCalculationContext
     ) -> bool:
         """Check if rule conditions are met."""
+
+
+
         try:
             for condition_key, condition_value in rule.conditions.items():
                 
@@ -535,6 +541,9 @@ class RewardCalculator:
     
     async def _check_rule_limits(self, rule: RewardRule, user_id: str) -> bool:
         """Check if rule limits allow for more rewards."""
+
+
+
         try:
             today = datetime.utcnow().date()
             this_month = datetime.utcnow().replace(day=1).date()
@@ -571,6 +580,9 @@ class RewardCalculator:
         context: RewardCalculationContext
     ) -> Union[int, float, Decimal]:
         """Calculate the reward value based on the rule's calculation method."""
+
+
+
         try:
             if rule.calculation_method == RewardCalculationMethod.FIXED:
                 return rule.base_value
@@ -770,6 +782,9 @@ class RewardCalculator:
         context: RewardCalculationContext
     ) -> None:
         """Apply various multipliers and bonuses to the reward."""
+
+
+
         try:
             original_value = reward.value
             
@@ -836,6 +851,9 @@ class RewardCalculator:
         rewards: List[CalculatedReward]
     ) -> List[CalculatedReward]:
         """Award calculated rewards to a user."""
+
+
+
         try:
             awarded_rewards = []
             
@@ -870,6 +888,9 @@ class RewardCalculator:
     
     async def _update_user_limits(self, user_id: str, reward: CalculatedReward) -> None:
         """Update user's daily and monthly limits."""
+
+
+
         try:
             rule = self._rules.get(reward.rule_id)
             if not rule:
@@ -905,6 +926,9 @@ class RewardCalculator:
         period_days: int = 30
     ) -> Dict[str, Any]:
         """Get summary of user's rewards over a period."""
+
+
+
         try:
             if user_id not in self._user_reward_history:
                 return {
@@ -976,6 +1000,9 @@ class RewardCalculator:
         optimization_goals: List[str]
     ) -> Dict[str, Any]:
         """Optimize reward calculations for a specific user."""
+
+
+
         try:
             # Analyze user's reward history and engagement patterns
             history = self._user_reward_history.get(user_id, [])

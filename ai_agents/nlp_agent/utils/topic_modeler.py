@@ -166,6 +166,9 @@ class TopicModeler:
     
     def _initialize_models(self):
         """Initialize topic modeling components"""
+
+
+
         try:
             # Initialize scikit-learn models if available
             if SKLEARN_AVAILABLE:
@@ -372,6 +375,9 @@ class TopicModeler:
         result: TopicModelResult
     ):
         """Discover topics using scikit-learn models"""
+
+
+
         try:
             # Get vectorizer
             if vectorizer_type == VectorizerType.TFIDF:
@@ -434,6 +440,9 @@ class TopicModeler:
         result: TopicModelResult
     ):
         """Discover topics using transformer models"""
+
+
+
         try:
             # Get embeddings for all texts
             embeddings_pipeline = self.pipelines.get("embeddings")
@@ -479,6 +488,9 @@ class TopicModeler:
         result: TopicModelResult
     ):
         """Discover topics using fallback methods"""
+
+
+
         try:
             # Simple keyword-based topic discovery
             all_words = []
@@ -668,6 +680,9 @@ class TopicModeler:
     
     async def _post_process_results(self, result: TopicModelResult, min_topic_size: int):
         """Post-process topic modeling results"""
+
+
+
         try:
             # Filter topics by size
             if min_topic_size > 0:

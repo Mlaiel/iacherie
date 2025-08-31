@@ -5,7 +5,7 @@ Evidence Collection System
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 Unauthorized use, copying or distribution prohibited.
 
 Professional evidence collection system for content violation cases.
@@ -182,6 +182,9 @@ class EvidenceCollector:
     
     async def _collect_visual_evidence(self, evidence: EvidencePackage, violation_dir: Path):
         """Collect visual evidence including screenshots and video frames."""
+
+
+
         
         try:
             driver = None
@@ -245,6 +248,9 @@ class EvidenceCollector:
     
     async def _capture_youtube_screenshots(self, driver, evidence: EvidencePackage, violation_dir: Path):
         """Capture YouTube-specific evidence."""
+
+
+
         
         try:
             # Video player area
@@ -273,6 +279,9 @@ class EvidenceCollector:
     
     async def _capture_tiktok_screenshots(self, driver, evidence: EvidencePackage, violation_dir: Path):
         """Capture TikTok-specific evidence."""
+
+
+
         
         try:
             # Video container
@@ -294,6 +303,9 @@ class EvidenceCollector:
     
     async def _capture_instagram_screenshots(self, driver, evidence: EvidencePackage, violation_dir: Path):
         """Capture Instagram-specific evidence."""
+
+
+
         
         try:
             # Post container
@@ -308,6 +320,9 @@ class EvidenceCollector:
     
     async def _capture_twitter_screenshots(self, driver, evidence: EvidencePackage, violation_dir: Path):
         """Capture Twitter-specific evidence."""
+
+
+
         
         try:
             # Tweet container
@@ -322,6 +337,9 @@ class EvidenceCollector:
     
     async def _capture_video_frames(self, driver, evidence: EvidencePackage, violation_dir: Path):
         """Capture multiple frames from video content for evidence."""
+
+
+
         
         try:
             # This would be implemented with JavaScript to capture video frames
@@ -351,6 +369,9 @@ class EvidenceCollector:
     
     async def _collect_metadata_evidence(self, evidence: EvidencePackage, violation_dir: Path):
         """Collect metadata and technical evidence."""
+
+
+
         
         try:
             metadata = {}
@@ -390,6 +411,9 @@ class EvidenceCollector:
     
     async def _collect_source_evidence(self, evidence: EvidencePackage, violation_dir: Path):
         """Collect page source and technical documentation."""
+
+
+
         
         try:
             # Download page source
@@ -412,6 +436,9 @@ class EvidenceCollector:
     
     async def _collect_platform_specific_evidence(self, evidence: EvidencePackage, violation_dir: Path):
         """Collect platform-specific metadata and API data."""
+
+
+
         
         try:
             platform_data = {}
@@ -447,18 +474,30 @@ class EvidenceCollector:
     
     async def _collect_tiktok_metadata(self, url: str) -> Dict[str, Any]:
         """Collect TikTok-specific metadata."""
+
+
+
         return {"platform": "tiktok", "url": url, "api_data": "placeholder"}
     
     async def _collect_instagram_metadata(self, url: str) -> Dict[str, Any]:
         """Collect Instagram-specific metadata."""
+
+
+
         return {"platform": "instagram", "url": url, "api_data": "placeholder"}
     
     async def _collect_twitter_metadata(self, url: str) -> Dict[str, Any]:
         """Collect Twitter-specific metadata."""
+
+
+
         return {"platform": "twitter", "url": url, "api_data": "placeholder"}
     
     async def _generate_legal_documentation(self, evidence: EvidencePackage, violation_dir: Path):
         """Generate legal documentation for the evidence package."""
+
+
+
         
         try:
             legal_doc = {
@@ -499,6 +538,9 @@ class EvidenceCollector:
     
     async def _create_evidence_manifest(self, evidence: EvidencePackage, violation_dir: Path):
         """Create a manifest file listing all evidence components."""
+
+
+
         
         try:
             manifest = {
@@ -547,6 +589,9 @@ class EvidenceCollector:
     
     def _calculate_directory_size(self, directory: Path) -> float:
         """Calculate total size of directory in MB."""
+
+
+
         
         try:
             total_size = sum(f.stat().st_size for f in directory.glob('**/*') if f.is_file())

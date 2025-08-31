@@ -140,6 +140,9 @@ class RhythmAnalyzer:
         Returns:
             Complete rhythm analysis results
         """
+
+
+
         try:
             self.logger.info("Starting rhythm analysis...")
             
@@ -651,6 +654,9 @@ class RhythmAnalyzer:
         Real-time beat analysis for single frame
         Optimized for low-latency processing
         """
+
+
+
         try:
             # Simple onset strength computation
             onset_strength = librosa.onset.onset_strength(

@@ -467,6 +467,9 @@ class PlatformOAuthManager:
         
     def decrypt_tokens(self, encrypted_tokens: str) -> OAuthTokens:
         """Decrypt tokens from secure storage"""
+
+
+
         try:
             encrypted_data = base64.b64decode(encrypted_tokens.encode())
             decrypted_data = self.cipher_suite.decrypt(encrypted_data)
@@ -542,6 +545,9 @@ class PlatformOAuthManager:
             
     def get_supported_platforms(self) -> List[str]:
         """Get list of supported platforms"""
+
+
+
         return list(self.platform_configs.keys())
         
     def get_platform_scopes(self, platform: str) -> List[str]:

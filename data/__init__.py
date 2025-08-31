@@ -1,13 +1,13 @@
 """
-🚀 Data Management Module - IA Influencer Agent Platform Enterprise
+ Data Management Module - IA Influencer Agent Platform Enterprise
 ==================================================================
 
 Système de gestion de données professionnel pour créateurs multi-format :
-- 🎵 Musiciens (Spotify, SoundCloud, Apple Music)
-- 📱 Influenceurs (Instagram, TikTok, YouTube)  
-- 📸 Photographes (Instagram, portfolios web)
-- ✍️ Blogueurs (Medium, blogs personnels)
-- 🎭 Comédiens (YouTube, TikTok, Twitch)
+-  Musiciens (Spotify, SoundCloud, Apple Music)
+-  Influenceurs (Instagram, TikTok, YouTube)  
+-  Photographes (Instagram, portfolios web)
+-  Blogueurs (Medium, blogs personnels)
+-  Comédiens (YouTube, TikTok, Twitch)
 
 Architecture Enterprise 3-Niveaux | Production-Ready
 
@@ -17,7 +17,7 @@ Distribution Multi-Plateformes → Monétisation Avancée
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
+ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
 """
 
 # Core Data Management Imports - Architecture Enterprise
@@ -49,7 +49,7 @@ __license__ = "Proprietary - Unauthorized use prohibited"
 __all__ = [
     # ========== CORE BUSINESS LOGIC ==========
     
-    # 📊 Analytics Enterprise - Business Intelligence
+    #  Analytics Enterprise - Business Intelligence
     "ContentAnalytics",         # Analytics contenu multi-format (audio, video, image, texte)
     "CreatorPerformanceMetrics", # Métriques performance créateurs (musiciens, influenceurs, etc.)
     "RevenueAnalytics",         # Analytics revenus et monétisation avancée
@@ -59,7 +59,7 @@ __all__ = [
     "TrendAnalytics",           # Analytics tendances marché et contenu viral
     "CompetitorAnalytics",      # Intelligence concurrentielle et veille marché
     
-    # 🛡️ Content Protection - Protection Droits d'Auteur IA
+    #  Content Protection - Protection Droits d'Auteur IA
     "ContentProtectionManager", # Gestionnaire protection contenu multi-format
     "RightsManager",           # Gestion droits d'auteur et propriété intellectuelle
     "ViolationDetector",       # Détection violations et contenu non autorisé
@@ -68,7 +68,7 @@ __all__ = [
     "ContentWatermarking",     # Watermarking intelligent et traçabilité
     "AntiPiracySystem",        # Système anti-piratage avancé
     
-    # 🔍 Fingerprinting IA - Empreintes Numériques Avancées
+    #  Fingerprinting IA - Empreintes Numériques Avancées
     "AudioFingerprinter",      # Fingerprinting audio (Chromaprint, Essentia)
     "VideoFingerprinter",      # Fingerprinting vidéo (OpenCV, YOLO, pHash)
     "ImageFingerprinter",      # Fingerprinting image (CLIP, ImageHash)
@@ -77,7 +77,7 @@ __all__ = [
     "SimilaritySearchEngine",  # Moteur recherche similarité temps réel
     "FingerprintDatabase",     # Base de données empreintes vectorielles
     
-    # 🕷️ Web Crawlers - Surveillance Multi-Plateformes
+    #  Web Crawlers - Surveillance Multi-Plateformes
     "PlatformCrawler",         # Crawler générique multi-plateformes
     "YouTubeCrawler",          # Surveillance YouTube (API + scraping)
     "InstagramCrawler",        # Surveillance Instagram (API + scraping)
@@ -88,7 +88,7 @@ __all__ = [
     "GenericWebCrawler",       # Crawler web générique (Scrapy)
     "CrawlerScheduler",        # Planificateur surveillance automatisée
     
-    # 📥 Content Ingestion - Traitement Multi-Format
+    #  Content Ingestion - Traitement Multi-Format
     "ContentIngestionManager", # Gestionnaire ingestion contenu global
     "MultiFormatProcessor",    # Processeur multi-format (audio, vidéo, image, texte)
     "MetadataExtractor",       # Extracteur métadonnées avancé
@@ -97,7 +97,7 @@ __all__ = [
     "FormatValidator",         # Validateur formats et standards
     "ContentEnricher",         # Enrichissement métadonnées IA
     
-    # 📄 Licensing - Gestion Licences Automatisée
+    #  Licensing - Gestion Licences Automatisée
     "LicenseManager",          # Gestionnaire licences et contrats
     "AutomatedLicensing",      # Licensing automatisé multi-plateformes
     "LicenseTracker",          # Suivi licences et renouvellements
@@ -105,7 +105,7 @@ __all__ = [
     "RoyaltyCalculator",       # Calculateur royalties automatisé
     "LicenseCompliance",       # Conformité licences et audit
     
-    # 📊 Data Models - Modèles de Données Enterprise
+    #  Data Models - Modèles de Données Enterprise
     "CreatorModel",            # Modèle créateur multi-format (musicien, influenceur, etc.)
     "ContentModel",            # Modèle contenu multi-format avec métadonnées
     "FingerprintModel",        # Modèle empreintes vectorielles
@@ -115,7 +115,7 @@ __all__ = [
     "AnalyticsModel",          # Modèle analytics et métriques
     "LicenseModel",            # Modèle licences et contrats
     
-    # 💰 Monetization - Monétisation Avancée
+    #  Monetization - Monétisation Avancée
     "RevenueCalculator",       # Calculateur revenus multi-plateformes
     "PaymentProcessor",        # Processeur paiements (Stripe, Wise, PayPal)
     "DistributionEngine",      # Moteur distribution revenus automatisée
@@ -124,7 +124,7 @@ __all__ = [
     "PayoutManager",           # Gestionnaire paiements automatisés
     "TaxCalculator",           # Calculateur taxes et conformité fiscale
     
-    # 🔄 Data Pipelines - Pipelines de Données Enterprise
+    #  Data Pipelines - Pipelines de Données Enterprise
     "DataPipeline",            # Pipeline données principal
     "ProcessingPipeline",      # Pipeline traitement contenu
     "AnalyticsPipeline",       # Pipeline analytics temps réel
@@ -133,7 +133,7 @@ __all__ = [
     "IngestionPipeline",       # Pipeline ingestion multi-format
     "DistributionPipeline",    # Pipeline distribution multi-plateformes
     
-    # ⚙️ Content Processors - Processeurs Spécialisés
+    #  Content Processors - Processeurs Spécialisés
     "AudioProcessor",          # Processeur audio professionnel (Librosa, Essentia)
     "VideoProcessor",          # Processeur vidéo (OpenCV, FFmpeg)
     "ImageProcessor",          # Processeur image (PIL, OpenCV, CLIP)
@@ -142,7 +142,7 @@ __all__ = [
     "ThumbnailGenerator",      # Générateur miniatures automatisé
     "PreviewGenerator",        # Générateur aperçus contenu
     
-    # ✅ Quality Assurance - Assurance Qualité Enterprise
+    #  Quality Assurance - Assurance Qualité Enterprise
     "DataQualityManager",      # Gestionnaire qualité données global
     "ContentValidator",        # Validateur contenu multi-format
     "QualityMetrics",          # Métriques qualité temps réel
@@ -150,7 +150,7 @@ __all__ = [
     "ErrorDetector",           # Détecteur erreurs et anomalies
     "QualityReporter",         # Rapporteur qualité automatisé
     
-    # 💾 Storage Management - Gestion Stockage Enterprise
+    #  Storage Management - Gestion Stockage Enterprise
     "StorageManager",          # Gestionnaire stockage global (S3, MinIO)
     "FileManager",             # Gestionnaire fichiers avancé
     "VersionManager",          # Gestionnaire versions et historique
@@ -159,7 +159,7 @@ __all__ = [
     "CDNManager",              # Gestionnaire CDN et distribution
     "StorageOptimizer",        # Optimiseur stockage et coûts
     
-    # 🌊 Real-Time Streams - Flux Temps Réel
+    #  Real-Time Streams - Flux Temps Réel
     "DataStreamManager",       # Gestionnaire flux données temps réel
     "RealTimeProcessor",       # Processeur temps réel (Kafka, Redis Streams)
     "EventStreamer",           # Streameur événements système
@@ -167,7 +167,7 @@ __all__ = [
     "AlertStreamer",           # Streameur alertes critiques
     "AnalyticsStreamer",       # Streameur analytics temps réel
     
-    # 🔄 Data Transformers - Transformateurs de Données
+    #  Data Transformers - Transformateurs de Données
     "DataTransformer",         # Transformateur données principal
     "FormatConverter",         # Convertisseur formats multi-media
     "EncodingManager",         # Gestionnaire encodage et compression
@@ -175,7 +175,7 @@ __all__ = [
     "ETLProcessor",            # Processeur ETL enterprise
     "DataMigrator",            # Migrateur données automatisé
     
-    # ✅ Validators - Validateurs Enterprise
+    #  Validators - Validateurs Enterprise
     "ContentValidator",        # Validateur contenu multi-format
     "SchemaValidator",         # Validateur schémas et structures
     "SecurityValidator",       # Validateur sécurité et conformité
@@ -183,7 +183,7 @@ __all__ = [
     "IntegrityChecker",        # Vérificateur intégrité données
     "ComplianceValidator",     # Validateur conformité réglementaire
     
-    # 🔍 Vector Database - Base de Données Vectorielle
+    #  Vector Database - Base de Données Vectorielle
     "VectorDBManager",         # Gestionnaire base vectorielle (FAISS, Pinecone)
     "SimilaritySearcher",      # Chercheur similarité haute performance
     "EmbeddingManager",        # Gestionnaire embeddings IA

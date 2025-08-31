@@ -182,7 +182,7 @@ class NotificationHandler(BaseComponent):
             event_type=NotificationEventType.DEPLOYMENT_STARTED,
             level=NotificationLevel.INFO,
             channels=[NotificationChannel.SLACK, NotificationChannel.EMAIL],
-            subject_template="🚀 Deployment Started: {service_name} in {environment}",
+            subject_template=" Deployment Started: {service_name} in {environment}",
             body_template="""
 Deployment has started for the IA Influencer Agent platform.
 
@@ -209,7 +209,7 @@ IA Influencer Agent Deployment System
             event_type=NotificationEventType.DEPLOYMENT_COMPLETED,
             level=NotificationLevel.INFO,
             channels=[NotificationChannel.SLACK, NotificationChannel.EMAIL],
-            subject_template="✅ Deployment Completed: {service_name} in {environment}",
+            subject_template=" Deployment Completed: {service_name} in {environment}",
             body_template="""
 Deployment has completed successfully for the IA Influencer Agent platform.
 
@@ -238,7 +238,7 @@ IA Influencer Agent Deployment System
             event_type=NotificationEventType.DEPLOYMENT_FAILED,
             level=NotificationLevel.ERROR,
             channels=[NotificationChannel.SLACK, NotificationChannel.EMAIL, NotificationChannel.SMS],
-            subject_template="❌ Deployment Failed: {service_name} in {environment}",
+            subject_template=" Deployment Failed: {service_name} in {environment}",
             body_template="""
 DEPLOYMENT FAILURE ALERT
 
@@ -276,7 +276,7 @@ IA Influencer Agent Deployment System
             event_type=NotificationEventType.ROLLBACK_COMPLETED,
             level=NotificationLevel.WARNING,
             channels=[NotificationChannel.SLACK, NotificationChannel.EMAIL],
-            subject_template="🔄 Rollback Completed: {service_name} in {environment}",
+            subject_template=" Rollback Completed: {service_name} in {environment}",
             body_template="""
 Rollback has completed for the IA Influencer Agent platform.
 
@@ -306,7 +306,7 @@ IA Influencer Agent Deployment System
             event_type=NotificationEventType.SCALING_EVENT,
             level=NotificationLevel.INFO,
             channels=[NotificationChannel.SLACK],
-            subject_template="📊 Scaling Event: {service_name} ({from_replicas} → {to_replicas})",
+            subject_template=" Scaling Event: {service_name} ({from_replicas} → {to_replicas})",
             body_template="""
 Auto-scaling event occurred for the IA Influencer Agent platform.
 
@@ -339,7 +339,7 @@ IA Influencer Agent Deployment System
             event_type=NotificationEventType.HEALTH_CHECK_FAILED,
             level=NotificationLevel.ERROR,
             channels=[NotificationChannel.SLACK, NotificationChannel.EMAIL, NotificationChannel.SMS],
-            subject_template="🚨 Health Check Failed: {service_name} in {environment}",
+            subject_template=" Health Check Failed: {service_name} in {environment}",
             body_template="""
 HEALTH CHECK FAILURE ALERT
 
@@ -491,6 +491,9 @@ IA Influencer Agent Deployment System
 
     async def _process_notification(self, event: NotificationEvent) -> None:
         """Process a notification event"""
+
+
+
         
         try:
             # Get template for this event type
@@ -540,13 +543,16 @@ IA Influencer Agent Deployment System
 
     def _get_critical_template(self) -> NotificationTemplate:
         """Get default critical notification template"""
+
+
+
         
         return NotificationTemplate(
             name="Critical Alert",
             event_type=NotificationEventType.SYSTEM_ALERT,
             level=NotificationLevel.CRITICAL,
             channels=[NotificationChannel.EMAIL, NotificationChannel.SLACK, NotificationChannel.SMS],
-            subject_template="🚨 CRITICAL ALERT: {title}",
+            subject_template=" CRITICAL ALERT: {title}",
             body_template="""
 CRITICAL SYSTEM ALERT
 
@@ -569,13 +575,16 @@ IA Influencer Agent Deployment System
 
     def _get_error_template(self) -> NotificationTemplate:
         """Get default error notification template"""
+
+
+
         
         return NotificationTemplate(
             name="Error Alert",
             event_type=NotificationEventType.SYSTEM_ALERT,
             level=NotificationLevel.ERROR,
             channels=[NotificationChannel.EMAIL, NotificationChannel.SLACK],
-            subject_template="❌ ERROR: {title}",
+            subject_template=" ERROR: {title}",
             body_template="""
 System Error Alert
 
@@ -617,6 +626,9 @@ IA Influencer Agent Deployment System
         recipient: NotificationRecipient
     ) -> None:
         """Send notification to a specific recipient"""
+
+
+
         
         try:
             # Check if recipient wants notifications at this level

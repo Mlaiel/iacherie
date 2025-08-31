@@ -8,7 +8,7 @@ Handles authentication, rate limiting, and API-specific protocols.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️ CRITICAL LEGAL WARNING ⚠️
+ CRITICAL LEGAL WARNING 
 UNAUTHORIZED USE, COPYING, OR DISTRIBUTION IS STRICTLY PROHIBITED AND WILL RESULT IN IMMEDIATE LEGAL ACTION.
 This technology is EXCLUSIVE property of Fahed Mlaiel. Contact: mlaiel@live.de for licensing.
 """
@@ -389,6 +389,9 @@ class ApiScraper:
         
     async def webhook_handler(self, webhook_data: Dict[str, Any]) -> Dict[str, Any]:
         """Handle incoming webhook data."""
+
+
+
         try:
             # Validate webhook (implement signature verification if needed)
             if not self._validate_webhook(webhook_data):
@@ -415,6 +418,9 @@ class ApiScraper:
         
     async def get_api_status(self) -> Dict[str, Any]:
         """Get API health and status information."""
+
+
+
         try:
             # Create a simple health check endpoint
             health_endpoint = ApiEndpoint(
@@ -441,6 +447,9 @@ class ApiScraper:
             
     def get_stats(self) -> Dict[str, Any]:
         """Get API scraper statistics."""
+
+
+
         return {
             **self.stats,
             'cache_size': len(self.cache),

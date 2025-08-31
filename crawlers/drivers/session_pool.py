@@ -16,7 +16,7 @@ Key Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  LEGAL WARNING:
+  LEGAL WARNING:
 This code is proprietary and confidential. Any unauthorized copying, modification, 
 distribution, or use without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and may result in legal action.
@@ -155,6 +155,9 @@ class SessionPool:
     
     async def initialize(self) -> None:
         """Initialize session pool with initial sessions"""
+
+
+
         try:
             # Create initial sessions
             for i in range(self.config.initial_size):
@@ -221,6 +224,9 @@ class SessionPool:
     
     async def checkin_session(self, session: PooledSession) -> bool:
         """Return a session to the pool"""
+
+
+
         try:
             with self.pool_lock:
                 session_id = session.session.session_id
@@ -268,6 +274,9 @@ class SessionPool:
     
     async def _create_session(self) -> Optional[PooledSession]:
         """Create a new session and add to pool"""
+
+
+
         try:
             # Create WebDriver instance
             driver = self.factory.create_driver(self.browser_config)
@@ -304,6 +313,9 @@ class SessionPool:
     
     async def _destroy_session(self, session_id: str) -> bool:
         """Destroy a session and cleanup resources"""
+
+
+
         try:
             with self.pool_lock:
                 pooled_session = self.sessions.get(session_id)
@@ -665,6 +677,9 @@ class SessionPoolManager:
 # Factory functions for common pool configurations
 def create_stealth_pool_config() -> PoolConfiguration:
     """Create configuration for stealth crawling pool"""
+
+
+
     return PoolConfiguration(
         min_size=3,
         max_size=10,
@@ -677,6 +692,9 @@ def create_stealth_pool_config() -> PoolConfiguration:
 
 def create_performance_pool_config() -> PoolConfiguration:
     """Create configuration for high-performance pool"""
+
+
+
     return PoolConfiguration(
         min_size=10,
         max_size=50,

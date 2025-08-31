@@ -4,21 +4,21 @@ Vector Index Manager for IA-Influencer-Agent Platform
 Ultra-advanced vector indexing system for high-performance similarity search
 across multi-modal content embeddings with enterprise-grade optimization.
 
-🚀 Enterprise Team Project Specialties:
-✅ Lead Dev + Architecte Développeur IA
-✅ Développeur Backend Senior (Python/FastAPI/Django)  
-✅ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face)
-✅ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
-✅ Spécialiste Sécurité Backend
-✅ Architecte Microservices
-✅ Développeur Audio
-✅ DevOps Engineer
-✅ IA Prompt Engineer
+ Enterprise Team Project Specialties:
+ Lead Dev + Architecte Développeur IA
+ Développeur Backend Senior (Python/FastAPI/Django)  
+ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face)
+ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
+ Spécialiste Sécurité Backend
+ Architecte Microservices
+ Développeur Audio
+ DevOps Engineer
+ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. 
 Unauthorized use, modification, or distribution by any individual or entity 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
@@ -115,6 +115,9 @@ class VectorIndexManager:
     
     async def initialize(self) -> bool:
         """Initialize vector index manager"""
+
+
+
         try:
             # Initialize database connections
             if not await self.db_manager.initialize():
@@ -146,6 +149,9 @@ class VectorIndexManager:
     
     async def _setup_postgresql_vector_support(self):
         """Setup PostgreSQL with pgvector extension"""
+
+
+
         try:
             conn = await self.db_manager.get_connection()
             
@@ -199,6 +205,9 @@ class VectorIndexManager:
     
     async def create_index(self, index_name: str, config: Dict[str, Any]) -> bool:
         """Create a new vector index with specified configuration"""
+
+
+
         try:
             dimension = config.get('dimension', 512)
             index_type = config.get('index_type', VectorIndexType.COSINE)
@@ -263,6 +272,9 @@ class VectorIndexManager:
     async def _create_postgresql_index(self, index_name: str, dimension: int, 
                                      index_type: str, config: Dict[str, Any]) -> bool:
         """Create PostgreSQL-based vector index"""
+
+
+
         try:
             if not PGVECTOR_AVAILABLE:
                 raise Exception("pgvector not available")
@@ -334,6 +346,9 @@ class VectorIndexManager:
     async def _create_redis_index(self, index_name: str, dimension: int,
                                 index_type: str, config: Dict[str, Any]) -> bool:
         """Create Redis-based vector index"""
+
+
+
         try:
             redis_conn = await self.redis_manager.get_connection()
             
@@ -374,6 +389,9 @@ class VectorIndexManager:
     async def _create_memory_index(self, index_name: str, dimension: int,
                                  index_type: str, config: Dict[str, Any]) -> bool:
         """Create in-memory vector index"""
+
+
+
         try:
             self.memory_indexes[index_name] = {
                 'vectors': np.empty((0, dimension), dtype=np.float32),
@@ -392,6 +410,9 @@ class VectorIndexManager:
     async def _create_hybrid_index(self, index_name: str, dimension: int,
                                  index_type: str, config: Dict[str, Any]) -> bool:
         """Create hybrid vector index (PostgreSQL + Redis + Memory)"""
+
+
+
         try:
             # Create all three backends
             pg_success = await self._create_postgresql_index(index_name, dimension, index_type, config)
@@ -407,6 +428,9 @@ class VectorIndexManager:
     async def add_vectors(self, index_name: str, vectors: np.ndarray,
                          content_ids: List[str], metadata: Optional[List[Dict]] = None) -> bool:
         """Add vectors to the index"""
+
+
+
         try:
             if index_name not in self.index_metadata:
                 raise ValueError(f"Index {index_name} not found")
@@ -466,6 +490,9 @@ class VectorIndexManager:
     async def _add_vectors_postgresql(self, index_name: str, vectors: np.ndarray,
                                     content_ids: List[str], metadata: Optional[List[Dict]]) -> bool:
         """Add vectors to PostgreSQL backend"""
+
+
+
         try:
             if index_name not in self.postgresql_indexes:
                 raise ValueError(f"PostgreSQL index {index_name} not found")
@@ -505,6 +532,9 @@ class VectorIndexManager:
     async def _add_vectors_redis(self, index_name: str, vectors: np.ndarray,
                                content_ids: List[str], metadata: Optional[List[Dict]]) -> bool:
         """Add vectors to Redis backend"""
+
+
+
         try:
             redis_conn = await self.redis_manager.get_connection()
             
@@ -534,6 +564,9 @@ class VectorIndexManager:
     async def _add_vectors_memory(self, index_name: str, vectors: np.ndarray,
                                 content_ids: List[str], metadata: Optional[List[Dict]]) -> bool:
         """Add vectors to memory backend"""
+
+
+
         try:
             mem_index = self.memory_indexes[index_name]
             
@@ -556,6 +589,9 @@ class VectorIndexManager:
     async def _add_vectors_hybrid(self, index_name: str, vectors: np.ndarray,
                                 content_ids: List[str], metadata: Optional[List[Dict]]) -> bool:
         """Add vectors to all hybrid backends"""
+
+
+
         try:
             # Add to all backends
             pg_success = await self._add_vectors_postgresql(index_name, vectors, content_ids, metadata)
@@ -572,6 +608,9 @@ class VectorIndexManager:
                            k: int = 10, similarity_threshold: Optional[float] = None,
                            filters: Optional[Dict[str, Any]] = None) -> List[Dict[str, Any]]:
         """Search for similar vectors"""
+
+
+
         try:
             if index_name not in self.index_metadata:
                 raise ValueError(f"Index {index_name} not found")
@@ -617,6 +656,9 @@ class VectorIndexManager:
     async def _search_postgresql(self, index_name: str, query_vector: np.ndarray,
                                k: int, threshold: float, filters: Optional[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Search vectors in PostgreSQL backend"""
+
+
+
         try:
             if index_name not in self.postgresql_indexes:
                 raise ValueError(f"PostgreSQL index {index_name} not found")
@@ -700,6 +742,9 @@ class VectorIndexManager:
     async def _search_memory(self, index_name: str, query_vector: np.ndarray,
                            k: int, threshold: float, filters: Optional[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Search vectors in memory backend"""
+
+
+
         try:
             mem_index = self.memory_indexes[index_name]
             
@@ -743,6 +788,9 @@ class VectorIndexManager:
     async def _search_hybrid(self, index_name: str, query_vector: np.ndarray,
                            k: int, threshold: float, filters: Optional[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Search vectors using hybrid approach"""
+
+
+
         try:
             # First try memory for fast search
             mem_results = await self._search_memory(index_name, query_vector, k, threshold, filters)
@@ -773,6 +821,9 @@ class VectorIndexManager:
     
     async def _save_index_metadata(self, index_name: str):
         """Save index metadata to disk"""
+
+
+
         try:
             metadata_path = self.storage_path / f"{index_name}_metadata.json"
             
@@ -791,6 +842,9 @@ class VectorIndexManager:
     
     async def _load_existing_indexes(self):
         """Load existing vector indexes"""
+
+
+
         try:
             # Load from metadata files
             for metadata_file in self.storage_path.glob("*_metadata.json"):
@@ -819,6 +873,9 @@ class VectorIndexManager:
     
     async def _load_postgresql_indexes(self):
         """Load PostgreSQL vector indexes"""
+
+
+
         try:
             conn = await self.db_manager.get_connection()
             
@@ -886,6 +943,9 @@ class VectorIndexManager:
     
     async def cleanup(self):
         """Cleanup resources and save indexes"""
+
+
+
         try:
             # Save all index metadata
             save_tasks = [self._save_index_metadata(name) for name in self.index_metadata]

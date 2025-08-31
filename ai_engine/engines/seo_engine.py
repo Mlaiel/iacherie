@@ -11,7 +11,7 @@ Advanced SEO optimization specifically designed for content creators:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ WARNING: This code is the intellectual property of Fahed Mlaiel.
+ WARNING: This code is the intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
 
@@ -613,10 +613,10 @@ class SEOEngine:
             return f"{title} [2025]"
         elif platform == 'tiktok':
             # TikTok titles should be engaging and trendy
-            return f"✨ {title} #Trending"
+            return f" {title} #Trending"
         elif platform == 'instagram':
             # Instagram titles should be visually appealing
-            return f"📸 {title}"
+            return f" {title}"
         
         return title
     
@@ -636,13 +636,13 @@ class SEOEngine:
         # Platform-specific description formatting
         if platform == 'youtube':
             # YouTube descriptions should include timestamps and links
-            return f"{description}\n\n🔔 Subscribe for more content!\n💬 Let us know what you think in the comments!"
+            return f"{description}\n\n Subscribe for more content!\n Let us know what you think in the comments!"
         elif platform == 'instagram':
             # Instagram descriptions should include call-to-actions
-            return f"{description}\n\n👆 Double tap if you love this!\n📩 DM us for collaborations!"
+            return f"{description}\n\n Double tap if you love this!\n DM us for collaborations!"
         elif platform == 'tiktok':
             # TikTok descriptions should be short and engaging
-            return f"{description} What do you think? 👇"
+            return f"{description} What do you think? "
         
         return description
     

@@ -133,6 +133,9 @@ class ContentProtectionAlertManager:
         
     def _load_escalation_rules(self) -> List[EscalationRule]:
         """Charge les règles d'escalation depuis la configuration"""
+
+
+
         return [
             EscalationRule(
                 violation_type=ViolationType.COMMERCIAL_USE,
@@ -164,7 +167,7 @@ class ContentProtectionAlertManager:
         """Charge les templates de notification personnalisés"""
         templates = {
             "violation_detected": Template("""
-                🚨 VIOLATION DE DROITS D'AUTEUR DÉTECTÉE
+                 VIOLATION DE DROITS D'AUTEUR DÉTECTÉE
 
                 Artiste: {{ artist_name }}
                 Contenu: {{ content_title }}
@@ -177,30 +180,30 @@ class ContentProtectionAlertManager:
                 
                 Action requise: {{ recommended_action }}
                 
-                🔗 Voir détails: {{ dashboard_url }}
-                ⚡ Action rapide: {{ quick_action_url }}
+                 Voir détails: {{ dashboard_url }}
+                 Action rapide: {{ quick_action_url }}
             """),
             
             "critical_violation": Template("""
-                🔴 ALERTE CRITIQUE - VIOLATION MAJEURE
+                 ALERTE CRITIQUE - VIOLATION MAJEURE
 
-                ⚠️ VIOLATION COMMERCIALE DÉTECTÉE
+                 VIOLATION COMMERCIALE DÉTECTÉE
                 
                 Contenu protégé: {{ content_title }}
                 Violateur: {{ violator_name }}
                 Plateforme: {{ platform }}
                 Impact financier: {{ revenue_impact }}€/jour
                 
-                🚨 ACTION IMMÉDIATE REQUISE
+                 ACTION IMMÉDIATE REQUISE
                 - Envoi notice DMCA automatique activé
                 - Équipe juridique notifiée
                 - Surveillance renforcée activée
                 
-                📞 Contact urgence: +49 xxx xxx xxxx
+                 Contact urgence: +49 xxx xxx xxxx
             """),
             
             "escalation_legal": Template("""
-                ⚖️ ESCALATION JURIDIQUE AUTOMATIQUE
+                 ESCALATION JURIDIQUE AUTOMATIQUE
                 
                 Violation: {{ violation_id }}
                 Récidive: {{ is_repeat_offender }}
@@ -217,6 +220,9 @@ class ContentProtectionAlertManager:
 
     def _load_legal_contacts(self) -> Dict[str, Any]:
         """Charge les contacts juridiques pour escalation"""
+
+
+
         return {
             "primary_lawyer": {
                 "name": "Dr. Maria Schmidt",
@@ -249,6 +255,9 @@ class ContentProtectionAlertManager:
         Returns:
             Dict contenant les actions prises et les notifications envoyées
         """
+
+
+
         try:
             # Enrichissement des données de violation
             enriched_violation = await self._enrich_violation_data(violation)

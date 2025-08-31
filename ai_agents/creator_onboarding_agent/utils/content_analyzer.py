@@ -156,6 +156,9 @@ class ContentAnalyzer:
     
     def _initialize_ai_models(self):
         """Initialize AI models for content analysis."""
+
+
+
         try:
             # Text analysis models
             self.sentiment_analyzer = pipeline(
@@ -263,6 +266,9 @@ class ContentAnalyzer:
         """
         Perform batch content analysis with concurrency control.
         """
+
+
+
         try:
             semaphore = asyncio.Semaphore(concurrent_limit)
             
@@ -291,6 +297,9 @@ class ContentAnalyzer:
     
     async def _prepare_content(self, content: Union[str, bytes, Dict[str, Any]]) -> Tuple[ContentType, Any]:
         """Prepare and validate content for analysis."""
+
+
+
         try:
             # Handle different input types
             if isinstance(content, dict):
@@ -439,6 +448,9 @@ class ContentAnalyzer:
     async def _analyze_audio_content(self, analysis: ContentAnalysis, 
                                    content_data: bytes, options: Dict[str, bool]) -> None:
         """Analyze audio content with specialized metrics."""
+
+
+
         try:
             # Load audio data
             audio_io = io.BytesIO(content_data)
@@ -482,6 +494,9 @@ class ContentAnalyzer:
     async def _analyze_image_content(self, analysis: ContentAnalysis, 
                                    content_data: bytes, options: Dict[str, bool]) -> None:
         """Analyze image content with computer vision."""
+
+
+
         try:
             # Load image
             image = Image.open(io.BytesIO(content_data))
@@ -534,6 +549,9 @@ class ContentAnalyzer:
     async def _analyze_video_content(self, analysis: ContentAnalysis, 
                                    content_data: bytes, options: Dict[str, bool]) -> None:
         """Analyze video content with frame-by-frame analysis."""
+
+
+
         try:
             # For now, treat as image analysis of first frame
             # In production, this would include temporal analysis
@@ -563,6 +581,9 @@ class ContentAnalyzer:
     async def _analyze_text_content(self, analysis: ContentAnalysis, 
                                   content_data: str, options: Dict[str, bool]) -> None:
         """Analyze text content with NLP and readability metrics."""
+
+
+
         try:
             text = content_data.strip()
             
@@ -741,6 +762,9 @@ class ContentAnalyzer:
     # Helper methods for various calculations
     def _calculate_snr(self, audio_data: np.ndarray) -> float:
         """Calculate signal-to-noise ratio for audio."""
+
+
+
         try:
             # Simple SNR calculation
             signal_power = np.mean(audio_data ** 2)
@@ -752,6 +776,9 @@ class ContentAnalyzer:
     
     def _calculate_dynamic_range(self, audio_data: np.ndarray) -> float:
         """Calculate dynamic range of audio."""
+
+
+
         try:
             peak = np.max(np.abs(audio_data))
             rms = np.sqrt(np.mean(audio_data ** 2))
@@ -762,6 +789,9 @@ class ContentAnalyzer:
     
     def _analyze_frequency_balance(self, audio_data: np.ndarray, sr: int) -> float:
         """Analyze frequency balance in audio."""
+
+
+
         try:
             # Simple frequency balance analysis
             fft = np.fft.fft(audio_data)
@@ -782,6 +812,9 @@ class ContentAnalyzer:
     
     def _detect_clipping(self, audio_data: np.ndarray) -> float:
         """Detect audio clipping."""
+
+
+
         try:
             threshold = 0.99
             clipped_samples = np.sum(np.abs(audio_data) >= threshold)
@@ -792,6 +825,9 @@ class ContentAnalyzer:
     
     def _calculate_silence_ratio(self, audio_data: np.ndarray) -> float:
         """Calculate silence ratio in audio."""
+
+
+
         try:
             threshold = 0.01
             silent_samples = np.sum(np.abs(audio_data) < threshold)
@@ -802,6 +838,9 @@ class ContentAnalyzer:
     
     def _calculate_energy_level(self, audio_data: np.ndarray) -> str:
         """Calculate energy level category."""
+
+
+
         try:
             energy = np.mean(audio_data ** 2)
             if energy > 0.1:
@@ -815,6 +854,9 @@ class ContentAnalyzer:
     
     async def _classify_audio_genre(self, audio_data: np.ndarray, sr: int) -> str:
         """Classify audio genre (simplified)."""
+
+
+
         try:
             # Extract basic features for genre classification
             tempo, _ = librosa.beat.beat_track(y=audio_data, sr=sr)
@@ -851,6 +893,9 @@ class ContentAnalyzer:
     
     def _calculate_sharpness(self, img_array: np.ndarray) -> float:
         """Calculate image sharpness using Laplacian variance."""
+
+
+
         try:
             gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY) if len(img_array.shape) == 3 else img_array
             laplacian_var = cv2.Laplacian(gray, cv2.CV_64F).var()
@@ -861,6 +906,9 @@ class ContentAnalyzer:
     
     def _analyze_brightness(self, img_array: np.ndarray) -> float:
         """Analyze image brightness."""
+
+
+
         try:
             # Convert to grayscale and calculate mean brightness
             if len(img_array.shape) == 3:
@@ -882,6 +930,9 @@ class ContentAnalyzer:
     
     def _analyze_contrast(self, img_array: np.ndarray) -> float:
         """Analyze image contrast."""
+
+
+
         try:
             if len(img_array.shape) == 3:
                 gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
@@ -895,6 +946,9 @@ class ContentAnalyzer:
     
     def _analyze_color_balance(self, img_array: np.ndarray) -> float:
         """Analyze color balance in image."""
+
+
+
         try:
             if len(img_array.shape) != 3:
                 return 1.0  # Grayscale images are balanced by definition
@@ -940,6 +994,9 @@ class ContentAnalyzer:
     
     def _calculate_text_complexity(self, text: str) -> float:
         """Calculate text complexity score."""
+
+
+
         try:
             # Simple complexity metrics
             avg_word_length = np.mean([len(word) for word in text.split()])

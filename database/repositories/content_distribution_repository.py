@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -67,6 +67,9 @@ class ContentDistributionRepository(BaseRepository[ContentDistribution]):
         Returns:
             Created content distribution instance
         """
+
+
+
         try:
             distribution_data = {
                 'user_id': user_id,
@@ -103,6 +106,9 @@ class ContentDistributionRepository(BaseRepository[ContentDistribution]):
         Returns:
             Updated distribution instance
         """
+
+
+
         try:
             update_data = {
                 'status': status,
@@ -145,6 +151,9 @@ class ContentDistributionRepository(BaseRepository[ContentDistribution]):
         Returns:
             List of scheduled distributions
         """
+
+
+
         try:
             current_time = schedule_time or datetime.utcnow()
             
@@ -187,6 +196,9 @@ class ContentDistributionRepository(BaseRepository[ContentDistribution]):
         Returns:
             List of user's content distributions
         """
+
+
+
         try:
             filters = {'user_id': user_id}
             
@@ -228,6 +240,9 @@ class ContentDistributionRepository(BaseRepository[ContentDistribution]):
         Returns:
             Distribution analytics data
         """
+
+
+
         try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
@@ -318,6 +333,9 @@ class ContentDistributionRepository(BaseRepository[ContentDistribution]):
         Returns:
             Platform performance statistics
         """
+
+
+
         try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
@@ -384,6 +402,9 @@ class ContentDistributionRepository(BaseRepository[ContentDistribution]):
         Returns:
             Optimization recommendations
         """
+
+
+
         try:
             # Get user's recent distributions (last 30 days)
             recent_distributions = self.get_user_distributions(user_id, limit=100)
@@ -494,6 +515,9 @@ class ContentDistributionRepository(BaseRepository[ContentDistribution]):
         Returns:
             List of created distribution plans
         """
+
+
+
         try:
             distributions = []
             
@@ -529,6 +553,9 @@ class ContentDistributionRepository(BaseRepository[ContentDistribution]):
         Returns:
             Number of cleaned up records
         """
+
+
+
         try:
             cutoff_date = datetime.utcnow() - timedelta(days=days_to_keep)
             

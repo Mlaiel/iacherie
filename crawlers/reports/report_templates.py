@@ -423,6 +423,9 @@ class ReportTemplate(ABC):
     
     def _setup_jinja_environment(self) -> Environment:
         """Setup Jinja2 environment with custom filters and functions."""
+
+
+
         try:
             # Create Jinja2 environment
             env = Environment(
@@ -454,6 +457,9 @@ class ReportTemplate(ABC):
     
     def _format_currency(self, value: float) -> str:
         """Format value as currency."""
+
+
+
         try:
             return f"{self.config.currency_symbol}{value:,.2f}"
         except:
@@ -461,6 +467,9 @@ class ReportTemplate(ABC):
     
     def _format_percentage(self, value: float, decimal_places: int = 2) -> str:
         """Format value as percentage."""
+
+
+
         try:
             return f"{value:.{decimal_places}f}%"
         except:
@@ -468,6 +477,9 @@ class ReportTemplate(ABC):
     
     def _format_date(self, date_value: Union[datetime, str], format_string: Optional[str] = None) -> str:
         """Format date using configured format."""
+
+
+
         try:
             if isinstance(date_value, str):
                 date_value = datetime.fromisoformat(date_value.replace('Z', '+00:00'))
@@ -479,6 +491,9 @@ class ReportTemplate(ABC):
     
     def _format_number(self, value: Union[int, float], decimal_places: int = 2) -> str:
         """Format number with thousand separators."""
+
+
+
         try:
             if isinstance(value, int):
                 return f"{value:,}"
@@ -489,6 +504,9 @@ class ReportTemplate(ABC):
     
     def _truncate_words(self, text: str, max_words: int = 50) -> str:
         """Truncate text to specified number of words."""
+
+
+
         try:
             words = text.split()
             if len(words) <= max_words:
@@ -499,6 +517,9 @@ class ReportTemplate(ABC):
     
     def _highlight_text(self, text: str, highlight_class: str = "highlight") -> str:
         """Add HTML highlighting to text."""
+
+
+
         try:
             return f'<span class="{highlight_class}">{text}</span>'
         except:
@@ -506,6 +527,9 @@ class ReportTemplate(ABC):
     
     def _format_duration(self, seconds: float) -> str:
         """Format duration in human readable format."""
+
+
+
         try:
             if seconds < 60:
                 return f"{seconds:.1f} seconds"
@@ -520,6 +544,9 @@ class ReportTemplate(ABC):
     
     def _calculate_change(self, current: float, previous: float) -> Dict[str, Any]:
         """Calculate percentage change between two values."""
+
+
+
         try:
             if previous == 0:
                 return {"change": float('inf'), "percentage": float('inf'), "direction": "up"}
@@ -540,6 +567,9 @@ class ReportTemplate(ABC):
     
     def _generate_summary(self, data: Dict[str, Any], max_length: int = 200) -> str:
         """Generate a summary from data."""
+
+
+
         try:
             key_metrics = []
             
@@ -570,6 +600,9 @@ class ReportTemplate(ABC):
     
     async def render_section(self, section: TemplateSection, data: Dict[str, Any], variables: Dict[str, Any]) -> str:
         """Render a specific template section."""
+
+
+
         try:
             # Check condition if specified
             if section.condition:
@@ -605,6 +638,9 @@ class ReportTemplate(ABC):
     
     def _evaluate_condition(self, condition: str, data: Dict[str, Any], variables: Dict[str, Any]) -> bool:
         """Evaluate a condition for conditional rendering."""
+
+
+
         try:
             # Simple condition evaluation (in production, use a proper expression evaluator)
             context = {**variables, **data}
@@ -635,6 +671,9 @@ class ReportTemplate(ABC):
     
     def _get_nested_value(self, data: Dict[str, Any], path: str, default: Any = None) -> Any:
         """Get value from nested dictionary using dot notation."""
+
+
+
         try:
             keys = path.split('.')
             value = data
@@ -653,6 +692,9 @@ class ReportTemplate(ABC):
     
     def _get_template_css(self) -> str:
         """Get CSS styles for the template."""
+
+
+
         try:
             # Base CSS styles
             base_css = self._get_base_css()
@@ -671,6 +713,9 @@ class ReportTemplate(ABC):
     
     def _get_base_css(self) -> str:
         """Get base CSS styles."""
+
+
+
         return """
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -944,6 +989,9 @@ class ReportTemplate(ABC):
     
     def _generate_header(self, variables: Dict[str, Any]) -> str:
         """Generate report header."""
+
+
+
         try:
             header_template = self.config.header_template or self._get_default_header_template()
             
@@ -964,6 +1012,9 @@ class ReportTemplate(ABC):
     
     def _generate_footer(self, variables: Dict[str, Any]) -> str:
         """Generate report footer."""
+
+
+
         try:
             footer_template = self.config.footer_template or self._get_default_footer_template()
             
@@ -984,6 +1035,9 @@ class ReportTemplate(ABC):
     
     def _get_default_header_template(self) -> str:
         """Get default header template."""
+
+
+
         return """
         <div class="report-header">
             {% if company_logo %}
@@ -1003,6 +1057,9 @@ class ReportTemplate(ABC):
     
     def _get_default_footer_template(self) -> str:
         """Get default footer template."""
+
+
+
         return """
         <div class="report-footer">
             <p>&copy; {{ current_date.year }} {{ company_name }}. All rights reserved.</p>
@@ -1150,6 +1207,9 @@ class ExecutiveTemplate(ReportTemplate):
     
     def _get_executive_summary_template(self) -> str:
         """Get executive summary section template."""
+
+
+
         return """
         <div class="section executive-summary">
             <h2 class="section-title">{{ section.title }}</h2>
@@ -1194,6 +1254,9 @@ class ExecutiveTemplate(ReportTemplate):
     
     def _get_kpi_template(self) -> str:
         """Get KPI metrics template."""
+
+
+
         return """
         <div class="section kpi-section">
             <h2 class="section-title">{{ section.title }}</h2>
@@ -1252,6 +1315,9 @@ class ExecutiveTemplate(ReportTemplate):
     
     def _get_dashboard_template(self) -> str:
         """Get dashboard visualization template."""
+
+
+
         return """
         <div class="section dashboard-section">
             <h2 class="section-title">{{ section.title }}</h2>
@@ -1297,6 +1363,9 @@ class ExecutiveTemplate(ReportTemplate):
     
     def _get_recommendations_template(self) -> str:
         """Get strategic recommendations template."""
+
+
+
         return """
         <div class="section recommendations-section">
             <h2 class="section-title">{{ section.title }}</h2>
@@ -1495,6 +1564,9 @@ class TechnicalTemplate(ReportTemplate):
     
     def _get_technical_css(self) -> str:
         """Get technical-specific CSS styles."""
+
+
+
         return """
         .technical-report .code-block {
             background: #f8f9fa;
@@ -1564,6 +1636,9 @@ class TechnicalTemplate(ReportTemplate):
     
     def _get_technical_overview_template(self) -> str:
         """Get technical overview template."""
+
+
+
         return """
         <div class="section technical-overview">
             <h2 class="section-title">{{ section.title }}</h2>
@@ -1622,6 +1697,9 @@ class TechnicalTemplate(ReportTemplate):
     
     def _get_performance_metrics_template(self) -> str:
         """Get performance metrics template."""
+
+
+
         return """
         <div class="section performance-metrics">
             <h2 class="section-title">{{ section.title }}</h2>
@@ -1674,6 +1752,9 @@ class TechnicalTemplate(ReportTemplate):
     
     def _get_system_stats_template(self) -> str:
         """Get system statistics template."""
+
+
+
         return """
         <div class="section system-stats">
             <h2 class="section-title">{{ section.title }}</h2>
@@ -1740,6 +1821,9 @@ class TechnicalTemplate(ReportTemplate):
     
     def _get_technical_analysis_template(self) -> str:
         """Get technical analysis template."""
+
+
+
         return """
         <div class="section technical-analysis">
             <h2 class="section-title">{{ section.title }}</h2>
@@ -1803,6 +1887,9 @@ class TechnicalTemplate(ReportTemplate):
     
     def _get_technical_recommendations_template(self) -> str:
         """Get technical recommendations template."""
+
+
+
         return """
         <div class="section technical-recommendations">
             <h2 class="section-title">{{ section.title }}</h2>
@@ -2015,6 +2102,9 @@ class ComplianceTemplate(ReportTemplate):
     
     def _get_compliance_css(self) -> str:
         """Get compliance-specific CSS styles."""
+
+
+
         return """
         .compliance-report .compliance-status {
             display: inline-block;
@@ -2093,6 +2183,9 @@ class ComplianceTemplate(ReportTemplate):
     
     def _get_compliance_overview_template(self) -> str:
         """Get compliance overview template."""
+
+
+
         return """
         <div class="section compliance-overview">
             <h2 class="section-title">{{ section.title }}</h2>
@@ -2157,6 +2250,9 @@ class ComplianceTemplate(ReportTemplate):
     
     def _get_compliance_metrics_template(self) -> str:
         """Get compliance metrics template."""
+
+
+
         return """
         <div class="section compliance-metrics">
             <h2 class="section-title">{{ section.title }}</h2>
@@ -2198,6 +2294,9 @@ class ComplianceTemplate(ReportTemplate):
     
     def _get_audit_trail_template(self) -> str:
         """Get audit trail template."""
+
+
+
         return """
         <div class="section audit-trail">
             <h2 class="section-title">{{ section.title }}</h2>
@@ -2266,6 +2365,9 @@ class ComplianceTemplate(ReportTemplate):
     
     def _get_risk_assessment_template(self) -> str:
         """Get risk assessment template."""
+
+
+
         return """
         <div class="section risk-assessment">
             <h2 class="section-title">{{ section.title }}</h2>
@@ -2345,6 +2447,9 @@ class ComplianceTemplate(ReportTemplate):
     
     def _get_compliance_actions_template(self) -> str:
         """Get compliance actions template."""
+
+
+
         return """
         <div class="section compliance-actions">
             <h2 class="section-title">{{ section.title }}</h2>
@@ -2443,6 +2548,9 @@ class TemplateManager:
     
     async def create_template(self, template_type: TemplateType, config: Optional[TemplateConfiguration] = None) -> str:
         """Create a new template instance."""
+
+
+
         try:
             template_class = self._template_registry.get(template_type)
             if not template_class:
@@ -2464,6 +2572,9 @@ class TemplateManager:
                             variables: Optional[Dict[str, Any]] = None, 
                             use_cache: bool = True) -> TemplateResult:
         """Render a template with provided data."""
+
+
+
         try:
             template = self._templates.get(template_id)
             if not template:
@@ -2495,6 +2606,9 @@ class TemplateManager:
     
     async def update_template_config(self, template_id: str, config: TemplateConfiguration) -> bool:
         """Update template configuration."""
+
+
+
         try:
             template = self._templates.get(template_id)
             if not template:
@@ -2517,6 +2631,9 @@ class TemplateManager:
     
     async def delete_template(self, template_id: str) -> bool:
         """Delete a template."""
+
+
+
         try:
             if template_id not in self._templates:
                 return False
@@ -2533,6 +2650,9 @@ class TemplateManager:
     
     async def list_templates(self) -> List[Dict[str, Any]]:
         """List all available templates."""
+
+
+
         try:
             templates_info = []
             
@@ -2558,6 +2678,9 @@ class TemplateManager:
     
     async def get_template_info(self, template_id: str) -> Optional[Dict[str, Any]]:
         """Get detailed information about a template."""
+
+
+
         try:
             template = self._templates.get(template_id)
             if not template:
@@ -2603,6 +2726,9 @@ class TemplateManager:
     def _generate_cache_key(self, template_id: str, data: Dict[str, Any], 
                           variables: Optional[Dict[str, Any]]) -> str:
         """Generate cache key for template result."""
+
+
+
         try:
             import hashlib
             
@@ -2622,6 +2748,9 @@ class TemplateManager:
     
     def _clear_template_cache(self, template_id: str) -> None:
         """Clear cache entries for a specific template."""
+
+
+
         try:
             keys_to_remove = [
                 key for key in self._template_cache.keys()
@@ -2638,6 +2767,9 @@ class TemplateManager:
     
     async def clear_all_cache(self) -> None:
         """Clear all cached template results."""
+
+
+
         try:
             cache_count = len(self._template_cache)
             self._template_cache.clear()
@@ -2649,6 +2781,9 @@ class TemplateManager:
     
     async def get_cache_statistics(self) -> Dict[str, Any]:
         """Get template cache statistics."""
+
+
+
         try:
             return {
                 'total_cached_results': len(self._template_cache),
@@ -2668,16 +2803,25 @@ class TemplateManager:
 # Factory functions for easy template creation
 async def create_executive_template(config: Optional[TemplateConfiguration] = None) -> ExecutiveTemplate:
     """Create an executive template instance."""
+
+
+
     return ExecutiveTemplate(config)
 
 
 async def create_technical_template(config: Optional[TemplateConfiguration] = None) -> TechnicalTemplate:
     """Create a technical template instance."""
+
+
+
     return TechnicalTemplate(config)
 
 
 async def create_compliance_template(config: Optional[TemplateConfiguration] = None) -> ComplianceTemplate:
     """Create a compliance template instance."""
+
+
+
     return ComplianceTemplate(config)
 
 

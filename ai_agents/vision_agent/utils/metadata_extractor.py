@@ -8,7 +8,7 @@ EXIF, IPTC, XMP data processing and content forensics capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -84,6 +84,9 @@ class MetadataExtractor(BaseAgent):
 
     async def initialize(self) -> bool:
         """Initialize metadata extraction components"""
+
+
+
         try:
             logger.info("Initializing Metadata Extractor...")
             
@@ -239,6 +242,9 @@ class MetadataExtractor(BaseAgent):
 
     async def _get_basic_file_info(self, file_path: str) -> Dict[str, Any]:
         """Extract basic file system information"""
+
+
+
         try:
             file_stat = os.stat(file_path)
             file_path_obj = Path(file_path)
@@ -264,6 +270,9 @@ class MetadataExtractor(BaseAgent):
 
     async def _calculate_file_hash(self, file_path: str) -> str:
         """Calculate SHA256 hash of file"""
+
+
+
         try:
             sha256_hash = hashlib.sha256()
             with open(file_path, "rb") as f:
@@ -279,6 +288,9 @@ class MetadataExtractor(BaseAgent):
 
     async def _extract_image_metadata(self, file_path: str) -> Dict[str, Any]:
         """Extract comprehensive image metadata"""
+
+
+
         try:
             metadata = {
                 'format_info': {},
@@ -327,6 +339,9 @@ class MetadataExtractor(BaseAgent):
 
     async def _process_exif_data(self, exif_data: Dict[int, Any]) -> Dict[str, Any]:
         """Process raw EXIF data into readable format"""
+
+
+
         try:
             processed_exif = {}
             
@@ -359,6 +374,9 @@ class MetadataExtractor(BaseAgent):
 
     async def _extract_camera_settings(self, exif_data: Dict[int, Any]) -> Dict[str, Any]:
         """Extract camera-specific settings from EXIF"""
+
+
+
         try:
             camera_settings = {}
             
@@ -394,6 +412,9 @@ class MetadataExtractor(BaseAgent):
 
     async def _extract_gps_data(self, exif_data: Dict[int, Any]) -> Dict[str, Any]:
         """Extract GPS data from EXIF with privacy consideration"""
+
+
+
         try:
             gps_data = {}
             
@@ -433,6 +454,9 @@ class MetadataExtractor(BaseAgent):
 
     def _convert_gps_coordinate(self, coordinate_tuple, direction):
         """Convert GPS coordinate from EXIF format to decimal"""
+
+
+
         try:
             if not coordinate_tuple or len(coordinate_tuple) != 3:
                 return None
@@ -455,6 +479,9 @@ class MetadataExtractor(BaseAgent):
 
     async def _extract_processing_info(self, exif_data: Dict[int, Any]) -> Dict[str, Any]:
         """Extract image processing information"""
+
+
+
         try:
             processing_info = {}
             
@@ -482,6 +509,9 @@ class MetadataExtractor(BaseAgent):
 
     async def _process_exifread_data(self, exif_tags: Dict) -> Dict[str, Any]:
         """Process exifread library data"""
+
+
+
         try:
             additional_data = {}
             
@@ -500,6 +530,9 @@ class MetadataExtractor(BaseAgent):
 
     async def _extract_video_metadata(self, file_path: str) -> Dict[str, Any]:
         """Extract video metadata (placeholder implementation)"""
+
+
+
         try:
             # This would use ffprobe or similar tool in production
             metadata = {
@@ -519,6 +552,9 @@ class MetadataExtractor(BaseAgent):
 
     async def _extract_audio_metadata(self, file_path: str) -> Dict[str, Any]:
         """Extract audio metadata (placeholder implementation)"""
+
+
+
         try:
             # This would use mutagen or similar library in production
             metadata = {
@@ -536,6 +572,9 @@ class MetadataExtractor(BaseAgent):
 
     async def _remove_sensitive_metadata(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Remove privacy-sensitive metadata fields"""
+
+
+
         try:
             cleaned_metadata = {}
             
@@ -572,6 +611,9 @@ class MetadataExtractor(BaseAgent):
 
     async def _sanitize_metadata(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Apply data sanitization to metadata"""
+
+
+
         try:
             return await self.data_sanitizer.sanitize_metadata(metadata)
         except Exception as e:
@@ -580,6 +622,9 @@ class MetadataExtractor(BaseAgent):
 
     async def _analyze_forensics(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze metadata for forensic indicators"""
+
+
+
         try:
             forensics_analysis = {
                 'authenticity_indicators': [],
@@ -644,6 +689,9 @@ class MetadataExtractor(BaseAgent):
 
     async def _validate_datetime(self, datetime_str: str) -> bool:
         """Validate datetime format"""
+
+
+
         try:
             datetime.fromisoformat(datetime_str.replace('Z', '+00:00'))
             return True
@@ -652,6 +700,9 @@ class MetadataExtractor(BaseAgent):
 
     async def _validate_gps_coordinates(self, lat: float, lon: float) -> bool:
         """Validate GPS coordinates"""
+
+
+
         try:
             return -90 <= lat <= 90 and -180 <= lon <= 180
         except:
@@ -659,6 +710,9 @@ class MetadataExtractor(BaseAgent):
 
     async def _validate_camera_info(self, camera_info: Dict) -> bool:
         """Validate camera information"""
+
+
+
         try:
             required_fields = ['camera_make', 'camera_model']
             return all(field in camera_info for field in required_fields)
@@ -686,14 +740,23 @@ class MetadataExtractor(BaseAgent):
 
     def get_supported_formats(self) -> Dict[str, List[str]]:
         """Get supported file formats"""
+
+
+
         return self.supported_formats.copy()
 
     def get_metadata_categories(self) -> Dict[str, List[str]]:
         """Get metadata categories"""
+
+
+
         return self.metadata_categories.copy()
 
     async def cleanup(self) -> None:
         """Cleanup resources"""
+
+
+
         try:
             await self.performance_monitor.close()
             await self.data_sanitizer.cleanup()
@@ -703,6 +766,9 @@ class MetadataExtractor(BaseAgent):
 
     def get_extraction_capabilities(self) -> Dict[str, Any]:
         """Get metadata extraction capabilities"""
+
+
+
         return {
             'supported_formats': self.supported_formats,
             'metadata_categories': list(self.metadata_categories.keys()),

@@ -66,6 +66,9 @@ class ImageFingerprintEngine:
             
     def extract_fingerprint(self, image_file_path: str) -> ImageFingerprint:
         """Extract comprehensive image fingerprint from file"""
+
+
+
         try:
             # Load image
             image = Image.open(image_file_path)
@@ -117,6 +120,9 @@ class ImageFingerprintEngine:
             
     def _extract_clip_embedding(self, image: Image.Image) -> np.ndarray:
         """Extract CLIP semantic embedding"""
+
+
+
         try:
             if not self.clip_model or not self.clip_processor:
                 return np.array([])
@@ -141,6 +147,9 @@ class ImageFingerprintEngine:
             
     def _extract_color_histogram(self, image: Image.Image, bins: int = 64) -> np.ndarray:
         """Extract color histogram features"""
+
+
+
         try:
             # Convert to numpy array
             img_array = np.array(image)
@@ -164,6 +173,9 @@ class ImageFingerprintEngine:
             
     def _extract_texture_features(self, image: Image.Image) -> np.ndarray:
         """Extract texture features using Gray Level Co-occurrence Matrix (GLCM)"""
+
+
+
         try:
             # Convert to grayscale
             gray_image = image.convert('L')
@@ -202,6 +214,9 @@ class ImageFingerprintEngine:
             
     def _extract_edge_features(self, image: Image.Image) -> np.ndarray:
         """Extract edge-based features"""
+
+
+
         try:
             # Convert to grayscale
             gray_image = image.convert('L')
@@ -237,6 +252,9 @@ class ImageFingerprintEngine:
             
     def _calculate_confidence(self, image: Image.Image, file_size: int) -> float:
         """Calculate confidence score based on image quality metrics"""
+
+
+
         try:
             # Image size factor
             width, height = image.size
@@ -265,6 +283,9 @@ class ImageFingerprintEngine:
     def compare_fingerprints(self, fp1: ImageFingerprint, 
                            fp2: ImageFingerprint) -> float:
         """Compare two image fingerprints and return similarity score (0-1)"""
+
+
+
         try:
             scores = []
             
@@ -309,6 +330,9 @@ class ImageFingerprintEngine:
             
     def _compare_hashes(self, fp1: ImageFingerprint, fp2: ImageFingerprint) -> float:
         """Compare perceptual hashes"""
+
+
+
         try:
             # Convert hashes back to imagehash objects for comparison
             ph1 = imagehash.hex_to_hash(fp1.perceptual_hash)
@@ -348,6 +372,9 @@ class ImageFingerprintEngine:
             
     def _histogram_intersection(self, hist1: np.ndarray, hist2: np.ndarray) -> float:
         """Calculate histogram intersection similarity"""
+
+
+
         try:
             if len(hist1) == 0 or len(hist2) == 0:
                 return 0.0
@@ -395,6 +422,9 @@ class ImageFingerprintEngine:
     def detect_modifications(self, original_fp: ImageFingerprint,
                            modified_fp: ImageFingerprint) -> Dict[str, bool]:
         """Detect types of modifications made to an image"""
+
+
+
         try:
             modifications = {
                 'resized': False,

@@ -191,6 +191,9 @@ class LegalValidator:
     
     def _load_jurisdiction_rules(self) -> Dict[str, Dict[str, Any]]:
         """Load jurisdiction-specific legal rules"""
+
+
+
         return {
             "US": {
                 "financial_licensing_required": True,
@@ -241,6 +244,9 @@ class LegalValidator:
     
     def _load_disclaimer_templates(self) -> Dict[LegalDomain, List[str]]:
         """Load legal disclaimer templates"""
+
+
+
         return {
             LegalDomain.FINANCIAL_ADVICE: [
                 "This information is for educational purposes only and does not constitute financial advice.",
@@ -653,6 +659,9 @@ class LegalValidator:
         domain: Optional[LegalDomain] = None
     ) -> List[Dict[str, Any]]:
         """Get historical risk assessment data"""
+
+
+
         try:
             where_clauses = ["created_at >= $1"]
             params = [datetime.now() - timedelta(days=days)]
@@ -669,6 +678,9 @@ class LegalValidator:
                 ORDER BY created_at DESC
                 LIMIT 1000
             """
+
+
+
             
             return await self.db_manager.fetch_all(query, *params)
             
@@ -690,8 +702,14 @@ class LegalValidator:
     
     def get_supported_jurisdictions(self) -> List[str]:
         """Get list of supported jurisdictions"""
+
+
+
         return list(self.jurisdiction_rules.keys())
     
     def get_risk_patterns_by_domain(self, domain: LegalDomain) -> List[Dict[str, Any]]:
         """Get risk patterns for specific legal domain"""
+
+
+
         return self.legal_patterns.get(domain, [])

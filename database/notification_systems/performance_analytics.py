@@ -189,6 +189,9 @@ class PerformanceAnalyticsManager:
         
     def _init_ml_models(self) -> Dict[str, Any]:
         """Initialise les modèles ML pour analytics"""
+
+
+
         return {
             "trend_predictor": RandomForestRegressor(n_estimators=100),
             "anomaly_detector": None,  # IsolationForest à charger
@@ -200,114 +203,114 @@ class PerformanceAnalyticsManager:
         """Charge les templates de notification analytics"""
         templates = {
             "performance_milestone": Template("""
-                🎯 JALON DE PERFORMANCE ATTEINT!
+                 JALON DE PERFORMANCE ATTEINT!
                 
-                🏆 {{ metric_name }}: {{ current_value | format_number }}
-                📈 Objectif: {{ target_value | format_number }}
-                ⚡ Dépassement: +{{ excess_percentage }}%
+                 {{ metric_name }}: {{ current_value | format_number }}
+                 Objectif: {{ target_value | format_number }}
+                 Dépassement: +{{ excess_percentage }}%
                 
-                📅 Atteint {{ days_early }} jours en avance!
-                📊 Progression: {{ progress_visualization }}
+                 Atteint {{ days_early }} jours en avance!
+                 Progression: {{ progress_visualization }}
                 
-                🔥 Top performances:
+                 Top performances:
                 {{ top_content | join('\n• ') }}
                 
-                🎊 Félicitations! Nouveau record personnel!
+                 Félicitations! Nouveau record personnel!
                 
-                🎯 Définir nouveau défi: {{ new_goal_url }}
+                 Définir nouveau défi: {{ new_goal_url }}
             """),
             
             "trend_alert": Template("""
-                📈 ALERTE TENDANCE {{ severity.upper() }}
+                 ALERTE TENDANCE {{ severity.upper() }}
                 
-                🔍 Tendance détectée: {{ trend_description }}
-                📊 Changement: {{ change_percentage }}% sur {{ period }}
+                 Tendance détectée: {{ trend_description }}
+                 Changement: {{ change_percentage }}% sur {{ period }}
                 
-                📈 Métriques affectées:
+                 Métriques affectées:
                 {{ affected_metrics | join('\n• ') }}
                 
                 🧠 Analyse IA:
                 {{ ai_analysis }}
                 
-                💡 Recommandations:
+                 Recommandations:
                 {{ recommendations | join('\n• ') }}
                 
                 {% if severity == 'critical' %}
-                🚨 ACTION IMMÉDIATE REQUISE
+                 ACTION IMMÉDIATE REQUISE
                 {% endif %}
                 
-                📊 Voir détails: {{ dashboard_url }}
+                 Voir détails: {{ dashboard_url }}
             """),
             
             "weekly_insights": Template("""
-                📊 INSIGHTS HEBDOMADAIRES IA
+                 INSIGHTS HEBDOMADAIRES IA
                 
-                📅 Semaine du {{ week_start }} au {{ week_end }}
+                 Semaine du {{ week_start }} au {{ week_end }}
                 
-                🏆 Performances exceptionnelles:
+                 Performances exceptionnelles:
                 {{ top_performances | join('\n• ') }}
                 
-                📈 Tendances clés:
+                 Tendances clés:
                 {{ key_trends | join('\n• ') }}
                 
-                🎯 Opportunités détectées:
+                 Opportunités détectées:
                 {{ opportunities | join('\n• ') }}
                 
-                ⚠️ Points d'attention:
+                 Points d'attention:
                 {{ attention_points | join('\n• ') }}
                 
-                🔮 Prédictions semaine prochaine:
+                 Prédictions semaine prochaine:
                 {{ predictions | join('\n• ') }}
                 
-                💡 Plan d'action personnalisé:
+                 Plan d'action personnalisé:
                 {{ action_plan | join('\n• ') }}
                 
-                📈 Dashboard complet: {{ dashboard_url }}
+                 Dashboard complet: {{ dashboard_url }}
             """),
             
             "competitive_update": Template("""
-                🏁 MISE À JOUR CONCURRENTIELLE
+                 MISE À JOUR CONCURRENTIELLE
                 
-                📊 Position marché: {{ market_position }}
-                📈 Évolution classement: {{ ranking_change }}
+                 Position marché: {{ market_position }}
+                 Évolution classement: {{ ranking_change }}
                 
-                🔍 Analyse concurrents:
+                 Analyse concurrents:
                 {{ competitor_analysis | join('\n• ') }}
                 
-                💪 Vos avantages:
+                 Vos avantages:
                 {{ competitive_advantages | join('\n• ') }}
                 
-                ⚠️ Menaces identifiées:
+                 Menaces identifiées:
                 {{ threats | join('\n• ') }}
                 
-                🎯 Stratégies recommandées:
+                 Stratégies recommandées:
                 {{ strategies | join('\n• ') }}
                 
-                📈 Benchmark complet: {{ benchmark_url }}
+                 Benchmark complet: {{ benchmark_url }}
             """),
             
             "anomaly_detected": Template("""
-                ⚠️ ANOMALIE PERFORMANCE DÉTECTÉE
+                 ANOMALIE PERFORMANCE DÉTECTÉE
                 
-                🔍 Métrique: {{ metric_name }}
-                📊 Valeur actuelle: {{ current_value }}
-                📈 Valeur attendue: {{ expected_value }}
-                📉 Écart: {{ deviation_percentage }}%
+                 Métrique: {{ metric_name }}
+                 Valeur actuelle: {{ current_value }}
+                 Valeur attendue: {{ expected_value }}
+                 Écart: {{ deviation_percentage }}%
                 
-                🕐 Détectée: {{ detection_time }}
-                🎯 Plateformes affectées: {{ affected_platforms | join(', ') }}
+                 Détectée: {{ detection_time }}
+                 Plateformes affectées: {{ affected_platforms | join(', ') }}
                 
                 🧠 Causes probables:
                 {{ probable_causes | join('\n• ') }}
                 
-                🚀 Actions correctives suggérées:
+                 Actions correctives suggérées:
                 {{ corrective_actions | join('\n• ') }}
                 
                 {% if severity >= 3 %}
-                🚨 ATTENTION REQUISE - Impact sur revenus possible
+                 ATTENTION REQUISE - Impact sur revenus possible
                 {% endif %}
                 
-                📞 Support: {{ support_contact }}
+                 Support: {{ support_contact }}
             """)
         }
         
@@ -315,6 +318,9 @@ class PerformanceAnalyticsManager:
 
     def _init_platform_apis(self) -> Dict[str, Any]:
         """Initialise les APIs des plateformes"""
+
+
+
         return {
             "spotify": {
                 "client_id": "spotify_client_id",
@@ -348,6 +354,9 @@ class PerformanceAnalyticsManager:
         Returns:
             Dict contenant les données collectées et les insights générés
         """
+
+
+
         try:
             platforms = platforms or list(Platform)
             metrics = metrics or list(PerformanceMetric)
@@ -470,6 +479,9 @@ class PerformanceAnalyticsManager:
         monitoring_config: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Configure la surveillance automatique des performances"""
+
+
+
         try:
             # Validation configuration
             validated_config = await self._validate_monitoring_config(monitoring_config)
@@ -611,6 +623,9 @@ class PerformanceAnalyticsManager:
         metrics: List[PerformanceMetric]
     ) -> Dict[str, Any]:
         """Collecte données depuis une plateforme spécifique"""
+
+
+
         try:
             if platform == Platform.SPOTIFY:
                 return await self._collect_spotify_data(user_id, metrics)

@@ -5,7 +5,7 @@ Central entry point for enterprise metrics collection and monitoring deployment
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 
-⚠️  AVERTISSEMENT LÉGAL STRICT ⚠️
+  AVERTISSEMENT LÉGAL STRICT 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et fera l'objet de poursuites 
@@ -311,10 +311,16 @@ class MetricsDeploymentManager:
     
     def get_service(self, service_name: str) -> Optional[Any]:
         """Get a specific service by name"""
+
+
+
         return self._services.get(service_name)
     
     def get_collector(self, collector_name: str) -> Optional[Any]:
         """Get a specific collector by name"""
+
+
+
         return self._collectors.get(collector_name)
     
     def get_health_status(self) -> Dict[str, Any]:

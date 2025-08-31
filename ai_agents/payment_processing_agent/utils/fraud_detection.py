@@ -7,7 +7,7 @@ and real-time risk assessment for payment security.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -91,6 +91,9 @@ class RiskFeatures:
     
     def to_array(self) -> np.ndarray:
         """Convert features to numpy array for ML model"""
+
+
+
         return np.array([
             self.transaction_amount,
             self.account_age_days,
@@ -159,6 +162,9 @@ class FraudDetectionEngine:
 
     def _initialize_fraud_rules(self) -> Dict[str, FraudRule]:
         """Initialize fraud detection rules"""
+
+
+
         return {
             "velocity_check": FraudRule(
                 name="Transaction Velocity Check",
@@ -208,6 +214,9 @@ class FraudDetectionEngine:
         Returns:
             FraudAnalysis with risk assessment
         """
+
+
+
         try:
             logger.info(f"Starting fraud analysis for transaction {transaction.id}")
             
@@ -296,6 +305,9 @@ class FraudDetectionEngine:
         Returns:
             Fraud risk score (0.0 to 1.0)
         """
+
+
+
         try:
             risk_score = 0.0
             
@@ -344,6 +356,9 @@ class FraudDetectionEngine:
         Returns:
             Dict with fraud analysis results
         """
+
+
+
         try:
             metadata = metadata or {}
             risk_factors = []
@@ -412,6 +427,9 @@ class FraudDetectionEngine:
         Args:
             training_data: List of training examples with features and labels
         """
+
+
+
         try:
             if len(training_data) < 100:  # Minimum training data required
                 logger.warning("Insufficient training data for model update")
@@ -547,6 +565,9 @@ class FraudDetectionEngine:
 
     async def _behavioral_analysis(self, transaction: PaymentTransaction) -> float:
         """Analyze behavioral patterns"""
+
+
+
         try:
             risk_score = 0.0
             
@@ -570,6 +591,9 @@ class FraudDetectionEngine:
 
     async def _device_risk_analysis(self, transaction: PaymentTransaction) -> float:
         """Analyze device and network risk factors"""
+
+
+
         try:
             risk_score = 0.0
             
@@ -688,26 +712,44 @@ class FraudDetectionEngine:
     # Helper methods (simplified implementations)
     async def _get_account_age_days(self, creator_id: str) -> int:
         """Get account age in days"""
+
+
+
         return 180  # Mock value
 
     async def _calculate_transaction_velocity(self, creator_id: str) -> float:
         """Calculate transaction velocity"""
+
+
+
         return 2.5  # Mock value
 
     async def _get_transaction_count_24h(self, creator_id: str) -> int:
         """Get transaction count in last 24 hours"""
+
+
+
         return 3  # Mock value
 
     async def _get_failed_attempts_24h(self, creator_id: str) -> int:
         """Get failed transaction attempts in last 24 hours"""
+
+
+
         return 0  # Mock value
 
     async def _get_avg_transaction_amount(self, creator_id: str) -> float:
         """Get average transaction amount"""
+
+
+
         return 125.0  # Mock value
 
     async def _get_time_since_last_transaction(self, creator_id: str) -> float:
         """Get time since last transaction in hours"""
+
+
+
         return 8.5  # Mock value
 
     async def _calculate_geographic_risk(self, transaction: PaymentTransaction) -> float:
@@ -717,18 +759,30 @@ class FraudDetectionEngine:
 
     async def _calculate_device_risk(self, transaction: PaymentTransaction) -> float:
         """Calculate device risk score"""
+
+
+
         return 0.1  # Mock value
 
     async def _calculate_merchant_risk(self, transaction: PaymentTransaction) -> float:
         """Calculate merchant/platform risk score"""
+
+
+
         return 0.05  # Mock value
 
     async def _check_duplicate_transaction(self, transaction: PaymentTransaction) -> bool:
         """Check for duplicate transactions"""
+
+
+
         return False  # Mock implementation
 
     async def _check_revenue_velocity(self, creator_id: str, amount: Decimal) -> float:
         """Check revenue velocity anomalies"""
+
+
+
         return 0.1  # Mock value
 
     async def _check_revenue_source(self, source: str, metadata: Dict[str, Any]) -> float:
@@ -738,18 +792,30 @@ class FraudDetectionEngine:
 
     async def _check_amount_patterns(self, creator_id: str, amount: float) -> float:
         """Check amount patterns for anomalies"""
+
+
+
         return 0.05  # Mock value
 
     async def _check_creator_behavior(self, creator_id: str) -> float:
         """Check creator behavioral patterns"""
+
+
+
         return 0.1  # Mock value
 
     async def _check_time_patterns(self, creator_id: str) -> float:
         """Check time-based patterns"""
+
+
+
         return 0.05  # Mock value
 
     async def _analyze_user_risk(self, user_id: str) -> float:
         """Analyze user-specific risk factors"""
+
+
+
         return 0.1  # Mock value
 
     def _analyze_payment_method_risk(self, payment_method: str) -> float:
@@ -759,6 +825,9 @@ class FraudDetectionEngine:
 
     def _analyze_metadata_risk(self, metadata: Dict[str, Any]) -> float:
         """Analyze transaction metadata for risk indicators"""
+
+
+
         return 0.05  # Mock value
 
     async def _analyze_ip_risk(self, ip_address: str) -> float:
@@ -774,10 +843,16 @@ class FraudDetectionEngine:
 
     async def _analyze_transaction_patterns(self, creator_id: str) -> float:
         """Analyze transaction patterns"""
+
+
+
         return 0.1  # Mock value
 
     async def _analyze_spending_behavior(self, transaction: PaymentTransaction) -> float:
         """Analyze spending behavior"""
+
+
+
         return 0.05  # Mock value
 
     async def _analyze_timing_patterns(self, transaction: PaymentTransaction) -> float:

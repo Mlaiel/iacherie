@@ -1,5 +1,5 @@
 """
-🎯 Quality Controller - Central Quality Management System
+ Quality Controller - Central Quality Management System
 
 Professional audio quality controller responsible for orchestrating all
 quality control operations, managing quality workflows, and enforcing
@@ -9,7 +9,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Developer + DevOps + DBA + Security + Microservices
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ AVERTISSEMENT STRICT ⚠️
+ AVERTISSEMENT STRICT 
 Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou reproduction sans 
 autorisation écrite explicite de Fahed Mlaiel (mlaiel@live.de) est strictement 
@@ -84,7 +84,7 @@ class QualityDecision:
 
 class QualityController:
     """
-    🎯 Professional Audio Quality Controller
+     Professional Audio Quality Controller
     
     Central orchestrator for audio quality management:
     - Quality validation and assessment

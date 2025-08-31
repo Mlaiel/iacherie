@@ -213,6 +213,9 @@ class MarketIntelligenceAnalytics:
         Returns:
             List[MarketTrend]: Identified market trends
         """
+
+
+
         try:
             cache_key = self.trend_cache_key.format(f"{segment}_{lookback_days}")
             cached_data = await self._get_from_cache(cache_key)
@@ -253,6 +256,9 @@ class MarketIntelligenceAnalytics:
         Returns:
             List[CompetitorProfile]: Competitor analysis profiles
         """
+
+
+
         try:
             # Identify relevant competitors
             competitors = await self._identify_competitors(user_id, market_segment)
@@ -283,6 +289,9 @@ class MarketIntelligenceAnalytics:
         Returns:
             List[MarketOpportunity]: Identified market opportunities
         """
+
+
+
         try:
             # Get user profile if not provided
             if not user_profile:
@@ -323,6 +332,9 @@ class MarketIntelligenceAnalytics:
         Returns:
             MarketForecast: Market forecast analysis
         """
+
+
+
         try:
             cache_key = self.market_cache_key.format(f"forecast_{segment}_{forecast_days}")
             cached_data = await self._get_from_cache(cache_key)
@@ -375,6 +387,9 @@ class MarketIntelligenceAnalytics:
         Returns:
             Dict[str, Any]: Market position analysis
         """
+
+
+
         try:
             # Get user performance metrics
             user_metrics = await self._get_user_performance_metrics(user_id)
@@ -432,6 +447,9 @@ class MarketIntelligenceAnalytics:
         Returns:
             MarketIntelligenceReport: Comprehensive market intelligence
         """
+
+
+
         try:
             # Gather all intelligence components
             trending_topics = await self.identify_market_trends()
@@ -653,6 +671,9 @@ class MarketIntelligenceAnalytics:
     
     async def _get_from_cache(self, key: str) -> Optional[Dict]:
         """Get data from Redis cache"""
+
+
+
         try:
             data = self.redis.get(key)
             return json.loads(data) if data else None
@@ -661,6 +682,9 @@ class MarketIntelligenceAnalytics:
     
     async def _cache_data(self, key: str, data: Any, ttl: int):
         """Cache data in Redis"""
+
+
+
         try:
             self.redis.setex(key, ttl, json.dumps(data, default=str))
         except Exception as e:

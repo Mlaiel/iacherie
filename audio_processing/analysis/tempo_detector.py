@@ -24,6 +24,9 @@ class TempoDetector:
     
     async def detect_tempo(self, audio_data: np.ndarray) -> Dict[str, float]:
         """Detect tempo and analyze stability"""
+
+
+
         try:
             # Primary tempo detection
             tempo, beats = librosa.beat.beat_track(y=audio_data, sr=self.sample_rate)

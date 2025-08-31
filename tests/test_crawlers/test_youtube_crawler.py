@@ -40,6 +40,9 @@ class TestYouTubeCrawler:
     @pytest.fixture
     def sample_video_data(self):
         """Sample YouTube video data for testing"""
+
+
+
         return YouTubeVideoData(
             video_id="dQw4w9WgXcQ",
             title="Test Video Title",
@@ -61,6 +64,9 @@ class TestYouTubeCrawler:
     @pytest.fixture
     def sample_api_response(self):
         """Sample YouTube API response for testing"""
+
+
+
         return {
             "items": [
                 {
@@ -327,7 +333,7 @@ class TestYouTubeCrawler:
     @pytest.mark.crawlers
     def test_unicode_title_handling(self):
         """Test handling of Unicode characters in titles"""
-        unicode_title = "测试视频 🎵 مقطع فيديو 🎬 Тест 🎥"
+        unicode_title = "  مقطع فيديو  Тест "
         
         video_data = YouTubeVideoData(
             video_id="test",

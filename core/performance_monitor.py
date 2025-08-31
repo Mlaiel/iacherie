@@ -224,10 +224,16 @@ default_monitor = PerformanceMonitor("global")
 # Convenience functions using global monitor
 def timer(operation_name: str, tags: Optional[Dict[str, str]] = None):
     """Global timer context manager"""
+
+
+
     return default_monitor.timer(operation_name, tags)
 
 def timing_decorator(operation_name: Optional[str] = None, tags: Optional[Dict[str, str]] = None):
     """Global timing decorator"""
+
+
+
     return default_monitor.timing_decorator(operation_name, tags)
 
 def record_metric(name: str, value: float, tags: Optional[Dict[str, str]] = None, unit: str = "ms"):
@@ -236,4 +242,7 @@ def record_metric(name: str, value: float, tags: Optional[Dict[str, str]] = None
 
 def get_performance_summary() -> Dict[str, Any]:
     """Get global performance summary"""
+
+
+
     return default_monitor.get_summary()

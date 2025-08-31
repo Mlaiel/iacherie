@@ -6,7 +6,7 @@ Developed by: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Senior Backend + ML Engineer + DBA + Security Expert + 
                Microservices Architect + Audio Engineer + DevOps + AI Prompt Engineer
 
-⚠️ INTELLECTUAL PROPERTY WARNING:
+ INTELLECTUAL PROPERTY WARNING:
 This video watermarking engine, concept, and all associated code are the exclusive intellectual 
 property of Fahed Mlaiel. Any unauthorized use, copying, modification, or distribution 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly 
@@ -111,6 +111,9 @@ class MotionAnalyzer:
     
     async def analyze_motion(self, frame: np.ndarray) -> float:
         """Analyze motion in frame compared to previous"""
+
+
+
         try:
             frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             
@@ -152,6 +155,9 @@ class SceneDetector:
     
     async def detect_scene_change(self, frame: np.ndarray) -> bool:
         """Detect if current frame represents a scene change"""
+
+
+
         try:
             # Calculate color histogram
             hist = cv2.calcHist([frame], [0, 1, 2], None, [50, 50, 50], [0, 256, 0, 256, 0, 256])
@@ -190,6 +196,9 @@ class SpatialWatermarkEmbedder:
                                 watermark_bits: List[int],
                                 strength: float = 0.1) -> Tuple[np.ndarray, int]:
         """Embed watermark using DCT in frame"""
+
+
+
         try:
             if len(frame.shape) != 3:
                 raise ValueError("Frame must be color image")
@@ -250,6 +259,9 @@ class SpatialWatermarkEmbedder:
                                 watermark_bits: List[int],
                                 strength: float = 0.1) -> Tuple[np.ndarray, int]:
         """Embed watermark using DWT in frame"""
+
+
+
         try:
             # Convert to grayscale for DWT processing
             if len(frame.shape) == 3:
@@ -305,6 +317,9 @@ class SpatialWatermarkEmbedder:
                                 watermark_bits: List[int],
                                 channel: int = 2) -> Tuple[np.ndarray, int]:
         """Embed watermark using LSB in frame"""
+
+
+
         try:
             watermarked_frame = frame.copy()
             height, width = frame.shape[:2]
@@ -352,6 +367,9 @@ class TemporalWatermarkEmbedder:
                                        watermark_bits: List[int],
                                        strength: float = 0.1) -> List[np.ndarray]:
         """Embed watermark using temporal correlation"""
+
+
+
         try:
             if len(frames) < 2:
                 return frames
@@ -388,6 +406,9 @@ class TemporalWatermarkEmbedder:
                                          bits: List[int],
                                          strength: float) -> np.ndarray:
         """Modify temporal correlation between two frames"""
+
+
+
         try:
             # Convert to grayscale for correlation analysis
             gray1 = cv2.cvtColor(frame1, cv2.COLOR_BGR2GRAY) if len(frame1.shape) == 3 else frame1
@@ -658,6 +679,9 @@ class VideoWatermarkEngine:
     
     async def _get_video_info(self, cap: cv2.VideoCapture) -> Dict[str, Any]:
         """Extract video information"""
+
+
+
         try:
             info = {
                 'width': int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)),
@@ -684,6 +708,9 @@ class VideoWatermarkEngine:
                                           video_info: Dict[str, Any],
                                           watermark_bits: List[int]) -> Dict[str, Any]:
         """Calculate embedding capacity and requirements"""
+
+
+
         try:
             total_frames = video_info['frame_count']
             
@@ -732,6 +759,9 @@ class VideoWatermarkEngine:
                                   video_info: Dict[str, Any],
                                   progress_callback: Optional[callable] = None) -> Dict[str, Any]:
         """Process video frames for watermark embedding"""
+
+
+
         try:
             frames_processed = 0
             frames_watermarked = 0
@@ -811,6 +841,9 @@ class VideoWatermarkEngine:
     
     async def _should_process_frame(self, frame: np.ndarray, frame_number: int) -> bool:
         """Determine if frame should be processed for watermarking"""
+
+
+
         try:
             # Uniform selection
             if self.config.frame_selection == VideoFrameSelection.UNIFORM:
@@ -848,6 +881,9 @@ class VideoWatermarkEngine:
                                    frame: np.ndarray,
                                    watermark_bits: List[int]) -> Tuple[np.ndarray, int]:
         """Embed watermark in a single frame"""
+
+
+
         try:
             if self.config.technique == VideoWatermarkTechnique.FRAME_DCT:
                 return await self.spatial_embedder.embed_dct_watermark(
@@ -877,6 +913,9 @@ class VideoWatermarkEngine:
                                            original_cap: Optional[cv2.VideoCapture],
                                            expected_bits: int) -> Dict[str, Any]:
         """Extract watermark from video frames"""
+
+
+
         try:
             extracted_bits = []
             confidence_scores = []
@@ -938,6 +977,9 @@ class VideoWatermarkEngine:
                                      original_frame: Optional[np.ndarray],
                                      max_bits: int) -> Tuple[List[int], float]:
         """Extract watermark from a single frame"""
+
+
+
         try:
             # Placeholder implementation - would need original frame for proper extraction
             # This is a simplified version for demonstration
@@ -958,6 +1000,9 @@ class VideoWatermarkEngine:
     
     async def _extract_lsb_from_frame(self, frame: np.ndarray, max_bits: int) -> Tuple[List[int], float]:
         """Extract LSB watermark from frame"""
+
+
+
         try:
             height, width = frame.shape[:2]
             extracted_bits = []
@@ -989,6 +1034,9 @@ class VideoWatermarkEngine:
                                         original_frame: np.ndarray,
                                         max_bits: int) -> Tuple[List[int], float]:
         """Extract spatial domain watermark by comparison"""
+
+
+
         try:
             # This would implement DCT/DWT comparison extraction
             # Placeholder implementation
@@ -1026,6 +1074,9 @@ class VideoWatermarkEngine:
     
     async def _calculate_frame_complexity(self, frame: np.ndarray) -> float:
         """Calculate frame complexity score"""
+
+
+
         try:
             gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             
@@ -1052,6 +1103,9 @@ class VideoWatermarkEngine:
     
     async def _adaptive_frame_selection(self, frame: np.ndarray, frame_number: int) -> bool:
         """Adaptive frame selection logic"""
+
+
+
         try:
             # Combine multiple criteria
             motion = await self.motion_analyzer.analyze_motion(frame)
@@ -1082,6 +1136,9 @@ class VideoWatermarkEngine:
     
     async def _calculate_quality_metrics(self) -> Dict[str, Any]:
         """Calculate quality metrics for processed video"""
+
+
+
         try:
             if not self.frame_metadata:
                 return {}
@@ -1234,6 +1291,9 @@ class VideoWatermarkEngine:
         Embeds watermark using temporal redundancy between frames
         Exploits motion estimation and temporal correlations
         """
+
+
+
         try:
             if not VIDEO_AVAILABLE:
                 raise ValueError("Video processing libraries not available")
@@ -1361,6 +1421,9 @@ class VideoWatermarkEngine:
         Embeds completely invisible watermark using advanced techniques
         Combines multiple embedding strategies for maximum imperceptibility
         """
+
+
+
         try:
             if not VIDEO_AVAILABLE:
                 raise ValueError("Video processing libraries not available")
@@ -1418,6 +1481,9 @@ class VideoWatermarkEngine:
         Detects and extracts watermark from video
         Supports multiple detection strategies
         """
+
+
+
         try:
             if not VIDEO_AVAILABLE:
                 raise ValueError("Video processing libraries not available")
@@ -1536,6 +1602,9 @@ class VideoWatermarkEngine:
     
     async def _detect_keyframes(self, video_path: str) -> List[int]:
         """Detects keyframes in video for strategic watermark placement"""
+
+
+
         try:
             cap = cv2.VideoCapture(video_path)
             keyframes = []
@@ -1588,6 +1657,9 @@ class VideoWatermarkEngine:
         motion_threshold: float
     ) -> np.ndarray:
         """Embeds watermark in motion vector field"""
+
+
+
         try:
             # Calculate dense optical flow
             flow = cv2.calcOpticalFlowPyrLK(
@@ -1638,6 +1710,9 @@ class VideoWatermarkEngine:
         frame_index: int
     ) -> np.ndarray:
         """Embeds watermark using frame differences"""
+
+
+
         try:
             # Calculate frame difference
             diff = cv2.absdiff(current_gray, prev_gray)
@@ -1679,6 +1754,9 @@ class VideoWatermarkEngine:
         alpha: float
     ) -> np.ndarray:
         """Embeds watermark using temporal correlations"""
+
+
+
         try:
             if len(frame_buffer) < 3:
                 return frame
@@ -1734,6 +1812,9 @@ async def batch_process_videos(video_paths: List[str],
     Returns:
         List of processing results
     """
+
+
+
     try:
         output_dir = Path(output_directory)
         output_dir.mkdir(parents=True, exist_ok=True)
@@ -1803,6 +1884,9 @@ async def assess_video_watermark_quality(original_path: str,
     Returns:
         Quality assessment results
     """
+
+
+
     try:
         if not VIDEO_AVAILABLE:
             raise ValueError("Video processing libraries not available")
@@ -1906,6 +1990,9 @@ def create_video_watermark_engine(technique: VideoWatermarkTechnique = VideoWate
 
 def create_high_quality_config() -> VideoWatermarkConfig:
     """Create configuration for high quality video watermarking"""
+
+
+
     return VideoWatermarkConfig(
         technique=VideoWatermarkTechnique.FRAME_DCT,
         frame_selection=VideoFrameSelection.ADAPTIVE,
@@ -1923,6 +2010,9 @@ def create_high_quality_config() -> VideoWatermarkConfig:
 
 def create_robust_config() -> VideoWatermarkConfig:
     """Create configuration for robust video watermarking"""
+
+
+
     return VideoWatermarkConfig(
         technique=VideoWatermarkTechnique.SPATIAL_TEMPORAL,
         frame_selection=VideoFrameSelection.UNIFORM,
@@ -1942,6 +2032,9 @@ def create_robust_config() -> VideoWatermarkConfig:
 
 def get_supported_video_formats() -> List[str]:
     """Get list of supported video formats"""
+
+
+
     return [
         '.mp4', '.avi', '.mov', '.mkv', '.wmv', '.flv',
         '.webm', '.m4v', '.3gp', '.ogv'
@@ -1950,6 +2043,9 @@ def get_supported_video_formats() -> List[str]:
 
 def validate_video_file(file_path: str) -> Dict[str, Any]:
     """Validate video file format and properties"""
+
+
+
     try:
         path = Path(file_path)
         

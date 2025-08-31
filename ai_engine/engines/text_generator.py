@@ -5,31 +5,31 @@ Enterprise-grade specialized text content generation engine for the IA-Influence
 Provides ultra-advanced text generation capabilities for multi-format content creators with 
 AI-powered SEO optimization, collaboration matching, and monetization strategies.
 
-🚀 Enterprise Team Project Specialties:
-✅ Lead Dev + Architecte Développeur IA
-✅ Développeur Backend Senior (Python/FastAPI/Django)  
-✅ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face)
-✅ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
-✅ Spécialiste Sécurité Backend
-✅ Architecte Microservices
-✅ Développeur Audio
-✅ DevOps Engineer
-✅ IA Prompt Engineer
+ Enterprise Team Project Specialties:
+ Lead Dev + Architecte Développeur IA
+ Développeur Backend Senior (Python/FastAPI/Django)  
+ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face)
+ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
+ Spécialiste Sécurité Backend
+ Architecte Microservices
+ Développeur Audio
+ DevOps Engineer
+ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. 
 Unauthorized use, modification, or distribution by any individual or entity 
 without explicit written consent from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will face legal action under international copyright law.
 
-⚖️ LEGAL NOTICE: THEFT OF IDEAS, CONCEPTS, OR CODE WITHOUT EXPLICIT WRITTEN AUTHORIZATION  
+ LEGAL NOTICE: THEFT OF IDEAS, CONCEPTS, OR CODE WITHOUT EXPLICIT WRITTEN AUTHORIZATION  
 FROM FAHED MLAIEL (mlaiel@live.de) IS STRICTLY FORBIDDEN AND WILL RESULT  
 IN IMMEDIATE LEGAL PROSECUTION UNDER INTERNATIONAL COPYRIGHT LAW.
 
-🔒 NO UNAUTHORIZED USE, COPYING, MODIFICATION, OR DISTRIBUTION ALLOWED.
+ NO UNAUTHORIZED USE, COPYING, MODIFICATION, OR DISTRIBUTION ALLOWED.
 
 Business Logic: User Upload → AI Processing → Protection → SEO → Collaboration → Distribution
 """
@@ -364,9 +364,9 @@ class AdvancedTextGenerator:
         
     def _generate_social_media_content(self, request: TextGenerationRequest) -> str:
         """Generate optimized social media content"""
-        hook = f"🚀 {request.target_audience}, this is for you!"
+        hook = f" {request.target_audience}, this is for you!"
         content = f"Discover amazing {request.keywords[0] if request.keywords else 'content'} that will transform your experience."
-        cta = "👇 Share your thoughts in the comments!"
+        cta = " Share your thoughts in the comments!"
         hashtags = f"#{' #'.join(request.keywords[:5])}" if request.keywords else "#content #creation"
         
         return f"{hook}\n\n{content}\n\n{cta}\n\n{hashtags}"
@@ -391,9 +391,9 @@ class AdvancedTextGenerator:
     def _generate_marketing_content(self, request: TextGenerationRequest) -> str:
         """Generate conversion-focused marketing content"""
         headline = f"Transform Your {request.keywords[0].title() if request.keywords else 'Business'} Today!"
-        benefits = f"✅ Increase engagement\n✅ Boost conversions\n✅ Maximize ROI"
+        benefits = f" Increase engagement\n Boost conversions\n Maximize ROI"
         proof = f"Join thousands of {request.target_audience} who have already achieved success."
-        cta = "🚀 Get Started Now - Limited Time Offer!"
+        cta = " Get Started Now - Limited Time Offer!"
         
         return f"{headline}\n\n{benefits}\n\n{proof}\n\n{cta}"
         
@@ -407,7 +407,7 @@ class AdvancedTextGenerator:
         content += f"By maintaining a {request.tone} tone and targeting the right audience, content creators can achieve remarkable results."
         
         if request.include_call_to_action:
-            content += "\n\n📢 Ready to take your content to the next level? Start implementing these strategies today!"
+            content += "\n\n Ready to take your content to the next level? Start implementing these strategies today!"
             
         return content
         
@@ -505,7 +505,7 @@ class AdvancedTextGenerator:
             TextContentStyle.PROFESSIONAL: ["furthermore", "therefore", "consequently"],
             TextContentStyle.CASUAL: ["hey", "awesome", "cool", "great"],
             TextContentStyle.CREATIVE: ["imagine", "discover", "transform", "amazing"],
-            TextContentStyle.SOCIAL_MEDIA: ["🚀", "👇", "✅", "#"]
+            TextContentStyle.SOCIAL_MEDIA: ["", "", "", "#"]
         }
         
         indicators = style_indicators.get(request.style, [])

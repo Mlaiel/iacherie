@@ -15,7 +15,7 @@ Team Specialties:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️ STRICT WARNING ⚠️
+ STRICT WARNING 
 This proprietary AI protection technology belongs exclusively to Fahed Mlaiel.
 Unauthorized use, reverse engineering, or intellectual property theft will
 result in immediate prosecution under international copyright and patent laws.
@@ -114,6 +114,9 @@ class FingerprintingEngine:
         """
         Generate comprehensive AI fingerprint for content protection
         """
+
+
+
         try:
             logger.info(f"Generating fingerprint for content {content_id}")
             
@@ -156,6 +159,9 @@ class FingerprintingEngine:
 
     async def _generate_audio_fingerprint(self, file_path: str) -> Dict[str, Any]:
         """Generate audio-specific fingerprint"""
+
+
+
         try:
             # Load audio
             y, sr = librosa.load(file_path, sr=22050)
@@ -191,6 +197,9 @@ class FingerprintingEngine:
 
     async def _generate_video_fingerprint(self, file_path: str) -> Dict[str, Any]:
         """Generate video-specific fingerprint"""
+
+
+
         try:
             cap = cv2.VideoCapture(file_path)
             fingerprints = {}
@@ -274,6 +283,9 @@ class FingerprintingEngine:
 
     async def _generate_image_fingerprint(self, file_path: str) -> Dict[str, Any]:
         """Generate image-specific fingerprint"""
+
+
+
         try:
             import cv2
             from PIL import Image
@@ -322,6 +334,9 @@ class FingerprintingEngine:
 
     async def _generate_text_fingerprint(self, file_path: str) -> Dict[str, Any]:
         """Generate text-specific fingerprint"""
+
+
+
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 text = f.read()
@@ -371,6 +386,9 @@ class FingerprintingEngine:
         content_type: str
     ) -> np.ndarray:
         """Generate CLIP embedding for cross-modal similarity"""
+
+
+
         try:
             if content_type == "image":
                 from PIL import Image
@@ -406,6 +424,9 @@ class FingerprintingEngine:
         """
         Compare two fingerprints and return similarity score and violation type
         """
+
+
+
         try:
             content_type = fingerprint1.get("content_type")
             threshold = self.similarity_thresholds[protection_level]
@@ -660,6 +681,9 @@ class ProtectionPipeline:
         """
         Initiate comprehensive protection for uploaded content
         """
+
+
+
         try:
             logger.info(f"Starting content protection for {content_id}")
             
@@ -700,6 +724,9 @@ class ProtectionPipeline:
         """
         Scan platforms for content violations
         """
+
+
+
         try:
             # Get fingerprint data
             async with AsyncDatabaseSession() as session:
@@ -742,6 +769,9 @@ class ProtectionPipeline:
         """
         Process automated takedown request for detected violation
         """
+
+
+
         try:
             # Get violation details
             async with AsyncDatabaseSession() as session:
@@ -841,6 +871,9 @@ class ProtectionPipeline:
     # Private helper methods for complete protection implementation
     async def _generate_content_fingerprint(self, content_id: str) -> Dict[str, Any]:
         """Generate comprehensive fingerprint for content"""
+
+
+
         try:
             # Retrieve content metadata and file path
             async with AsyncDatabaseSession() as session:
@@ -897,6 +930,9 @@ class ProtectionPipeline:
         protection_level: ProtectionLevel
     ) -> str:
         """Initiate comprehensive content monitoring across platforms"""
+
+
+
         try:
             monitoring_id = str(uuid4())
             
@@ -930,6 +966,9 @@ class ProtectionPipeline:
 
     async def _schedule_protection_scans(self, fingerprint_id: str):
         """Schedule comprehensive protection scanning tasks"""
+
+
+
         try:
             # Schedule platform-specific scans
             platforms = {
@@ -965,6 +1004,9 @@ class ProtectionPipeline:
         platform: str
     ) -> List[Dict[str, Any]]:
         """Scan specific platform for content violations using AI matching"""
+
+
+
         try:
             violations = []
             
@@ -1098,6 +1140,9 @@ class ProtectionPipeline:
         platform: str
     ) -> Optional[Dict[str, Any]]:
         """Analyze potential violation using AI fingerprint comparison"""
+
+
+
         try:
             # Download content for analysis
             content_url = search_result.get("content_url")
@@ -1158,6 +1203,9 @@ class ProtectionPipeline:
         platform: str
     ) -> Optional[str]:
         """Download content temporarily for fingerprint analysis"""
+
+
+
         try:
             import aiohttp
             import tempfile
@@ -1217,6 +1265,9 @@ class ProtectionPipeline:
         violation: ViolationAlert
     ) -> Dict[str, Any]:
         """Generate comprehensive automated takedown request with legal compliance"""
+
+
+
         try:
             # Get original content information
             async with AsyncDatabaseSession() as session:
@@ -1294,6 +1345,9 @@ class ProtectionPipeline:
 
     def _generate_legal_basis(self, violation: ViolationAlert) -> str:
         """Generate legal basis for takedown request"""
+
+
+
         return f"""
         This takedown request is submitted under the Digital Millennium Copyright Act (DMCA) 
         and applicable international copyright laws. The infringing content at {violation.detected_url} 
@@ -1309,6 +1363,9 @@ class ProtectionPipeline:
         original_content: 'ContentModel'
     ) -> str:
         """Generate formal DMCA takedown notice"""
+
+
+
         return f"""
         DMCA TAKEDOWN NOTICE
         
@@ -1343,6 +1400,9 @@ class ProtectionPipeline:
         takedown_data: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Submit takedown request to platform using official APIs/forms"""
+
+
+
         try:
             platform_handlers = {
                 "youtube": self._submit_youtube_takedown,
@@ -1374,6 +1434,9 @@ class ProtectionPipeline:
 
     async def _submit_youtube_takedown(self, takedown_data: Dict[str, Any]) -> Dict[str, Any]:
         """Submit takedown to YouTube using official API"""
+
+
+
         try:
             from backend.integrations.youtube import YouTubeAPI
             youtube_api = YouTubeAPI()
@@ -1398,6 +1461,9 @@ class ProtectionPipeline:
 
     async def _submit_instagram_takedown(self, takedown_data: Dict[str, Any]) -> Dict[str, Any]:
         """Submit takedown to Instagram using official reporting"""
+
+
+
         try:
             from backend.integrations.instagram import InstagramAPI
             instagram_api = InstagramAPI()
@@ -1420,6 +1486,9 @@ class ProtectionPipeline:
 
     async def _submit_tiktok_takedown(self, takedown_data: Dict[str, Any]) -> Dict[str, Any]:
         """Submit takedown to TikTok using official reporting"""
+
+
+
         try:
             from backend.integrations.tiktok import TikTokAPI
             tiktok_api = TikTokAPI()
@@ -1442,6 +1511,9 @@ class ProtectionPipeline:
 
     async def _submit_twitter_takedown(self, takedown_data: Dict[str, Any]) -> Dict[str, Any]:
         """Submit takedown to Twitter using official reporting"""
+
+
+
         try:
             from backend.integrations.twitter import TwitterAPI
             twitter_api = TwitterAPI()
@@ -1464,6 +1536,9 @@ class ProtectionPipeline:
 
     async def _submit_facebook_takedown(self, takedown_data: Dict[str, Any]) -> Dict[str, Any]:
         """Submit takedown to Facebook using official reporting"""
+
+
+
         try:
             from backend.integrations.facebook import FacebookAPI
             facebook_api = FacebookAPI()

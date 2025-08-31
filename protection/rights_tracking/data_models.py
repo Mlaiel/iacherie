@@ -1042,22 +1042,37 @@ class LicenseAgreementSchema(BaseModel):
 
 def generate_content_id() -> str:
     """Génère un ID unique pour le contenu"""
+
+
+
     return f"CNT-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
 
 def generate_holder_id() -> str:
     """Génère un ID unique pour le détenteur"""
+
+
+
     return f"HLD-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
 
 def generate_rights_record_id() -> str:
     """Génère un ID unique pour l'enregistrement de droits"""
+
+
+
     return f"RR-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
 
 def generate_license_id() -> str:
     """Génère un ID unique pour la licence"""
+
+
+
     return f"LIC-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
 
 def generate_usage_event_id() -> str:
     """Génère un ID unique pour l'événement d'utilisation"""
+
+
+
     return f"USE-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
 
 def calculate_content_hash(content_data: bytes) -> Tuple[str, str]:
@@ -1068,6 +1083,9 @@ def calculate_content_hash(content_data: bytes) -> Tuple[str, str]:
 
 def validate_percentage(value: float) -> bool:
     """Valide qu'un pourcentage est entre 0 et 1"""
+
+
+
     return 0.0 <= value <= 1.0
 
 def validate_currency_code(currency: str) -> bool:

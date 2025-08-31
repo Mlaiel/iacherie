@@ -286,6 +286,9 @@ class L2RedisCache:
     
     async def initialize(self) -> bool:
         """Initialize Redis connection"""
+
+
+
         try:
             if self.config.redis_cluster_nodes:
                 # Redis Cluster
@@ -315,15 +318,18 @@ class L2RedisCache:
             
             # Test connection
             await self.redis_client.ping()
-            logger.info("✅ L2 Redis cache initialized")
+            logger.info(" L2 Redis cache initialized")
             return True
             
         except Exception as e:
-            logger.error(f"❌ L2 Redis cache initialization failed: {e}")
+            logger.error(f" L2 Redis cache initialization failed: {e}")
             return False
     
     def _serialize_value(self, value: Any) -> bytes:
         """Serialize value for Redis storage"""
+
+
+
         try:
             if self.config.serialization_method == SerializationMethod.JSON:
                 data = json.dumps(value).encode('utf-8')
@@ -355,6 +361,9 @@ class L2RedisCache:
     
     def _deserialize_value(self, data: bytes) -> Any:
         """Deserialize value from Redis storage"""
+
+
+
         try:
             # Check for compression
             if data.startswith(b'lz4:'):
@@ -377,10 +386,16 @@ class L2RedisCache:
     
     def _get_cache_key(self, key: str) -> str:
         """Get full cache key with prefix"""
+
+
+
         return f"{self.config.l2_key_prefix}:{key}"
     
     async def get(self, key: str) -> Optional[Any]:
         """Get value from Redis cache"""
+
+
+
         try:
             cache_key = self._get_cache_key(key)
             data = await self.redis_client.get(cache_key)
@@ -401,6 +416,9 @@ class L2RedisCache:
     
     async def set(self, key: str, value: Any, ttl: Optional[int] = None) -> bool:
         """Set value in Redis cache"""
+
+
+
         try:
             cache_key = self._get_cache_key(key)
             serialized_value = self._serialize_value(value)
@@ -422,6 +440,9 @@ class L2RedisCache:
     
     async def delete(self, key: str) -> bool:
         """Delete value from Redis cache"""
+
+
+
         try:
             cache_key = self._get_cache_key(key)
             result = await self.redis_client.delete(cache_key)
@@ -438,6 +459,9 @@ class L2RedisCache:
     
     async def exists(self, key: str) -> bool:
         """Check if key exists in Redis cache"""
+
+
+
         try:
             cache_key = self._get_cache_key(key)
             return await self.redis_client.exists(cache_key) > 0
@@ -447,6 +471,9 @@ class L2RedisCache:
     
     async def increment(self, key: str, amount: int = 1) -> Optional[int]:
         """Increment integer value in Redis cache"""
+
+
+
         try:
             cache_key = self._get_cache_key(key)
             return await self.redis_client.incrby(cache_key, amount)
@@ -456,6 +483,9 @@ class L2RedisCache:
     
     async def expire(self, key: str, ttl: int) -> bool:
         """Set TTL for existing key"""
+
+
+
         try:
             cache_key = self._get_cache_key(key)
             return await self.redis_client.expire(cache_key, ttl) > 0
@@ -465,6 +495,9 @@ class L2RedisCache:
     
     async def clear_pattern(self, pattern: str) -> int:
         """Clear keys matching pattern"""
+
+
+
         try:
             cache_pattern = self._get_cache_key(pattern)
             keys = []
@@ -481,6 +514,9 @@ class L2RedisCache:
     
     async def get_stats(self) -> Dict[str, Any]:
         """Get Redis cache statistics"""
+
+
+
         try:
             info = await self.redis_client.info('memory')
             hit_rate = self.stats["hits"] / (self.stats["hits"] + self.stats["misses"]) if (self.stats["hits"] + self.stats["misses"]) > 0 else 0
@@ -497,6 +533,9 @@ class L2RedisCache:
     
     async def close(self) -> None:
         """Close Redis connections"""
+
+
+
         try:
             if self.redis_client:
                 await self.redis_client.close()
@@ -543,11 +582,14 @@ class AdvancedCacheConnectionPool(IConnectionPool):
     
     async def initialize(self) -> bool:
         """Initialize cache layers"""
+
+
+
         try:
             # Initialize L1 memory cache
             if self.config.enable_l1_cache:
                 self.l1_cache = L1MemoryCache(self.config)
-                logger.info("✅ L1 memory cache initialized")
+                logger.info(" L1 memory cache initialized")
             
             # Initialize L2 Redis cache
             if self.config.enable_l2_cache:
@@ -564,11 +606,11 @@ class AdvancedCacheConnectionPool(IConnectionPool):
                 self._health_check_task = asyncio.create_task(self._health_monitor())
                 self._metrics_collection_task = asyncio.create_task(self._metrics_collector())
             
-            logger.info(f"✅ Advanced cache pool initialized - L1: {self.config.enable_l1_cache}, L2: {self.config.enable_l2_cache}")
+            logger.info(f" Advanced cache pool initialized - L1: {self.config.enable_l1_cache}, L2: {self.config.enable_l2_cache}")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Advanced cache pool initialization failed: {e}")
+            logger.error(f" Advanced cache pool initialization failed: {e}")
             self.state = ConnectionState.FAILED
             return False
     
@@ -691,6 +733,9 @@ class AdvancedCacheConnectionPool(IConnectionPool):
     
     async def exists(self, key: str) -> bool:
         """Check if key exists in any cache level"""
+
+
+
         try:
             # Check L1 cache
             if self.l1_cache and self.config.enable_l1_cache:
@@ -709,6 +754,9 @@ class AdvancedCacheConnectionPool(IConnectionPool):
     
     async def increment(self, key: str, amount: int = 1, ttl: Optional[int] = None) -> Optional[int]:
         """Increment counter in cache"""
+
+
+
         try:
             # Use L2 cache for atomic increments
             if self.l2_cache and self.config.enable_l2_cache:
@@ -732,6 +780,9 @@ class AdvancedCacheConnectionPool(IConnectionPool):
     
     async def clear_pattern(self, pattern: str) -> int:
         """Clear keys matching pattern from all cache levels"""
+
+
+
         try:
             cleared_count = 0
             
@@ -757,6 +808,9 @@ class AdvancedCacheConnectionPool(IConnectionPool):
     
     async def _trigger_cache_warming(self, pattern: str, key: str) -> None:
         """Trigger cache warming for related keys"""
+
+
+
         try:
             # Implementation for cache warming logic
             # This can be extended based on specific business needs
@@ -766,6 +820,9 @@ class AdvancedCacheConnectionPool(IConnectionPool):
     
     async def _trigger_invalidation_listeners(self, key: str) -> None:
         """Trigger registered invalidation listeners"""
+
+
+
         try:
             for pattern, listeners in self._invalidation_listeners.items():
                 if pattern in key or pattern == "*":
@@ -901,6 +958,9 @@ class AdvancedCacheConnectionPool(IConnectionPool):
     
     async def health_check(self) -> bool:
         """Check cache pool health"""
+
+
+
         try:
             # Test L1 cache
             l1_healthy = True
@@ -965,6 +1025,9 @@ class AdvancedCacheConnectionPool(IConnectionPool):
     
     async def _collect_metrics(self) -> None:
         """Collect detailed metrics from all cache levels"""
+
+
+
         try:
             # Update hit rates and performance metrics
             total_requests = self.stats["cache_hits"] + self.stats["cache_misses"]
@@ -1001,6 +1064,9 @@ class AdvancedCacheConnectionPool(IConnectionPool):
     
     async def close(self) -> None:
         """Close cache pool"""
+
+
+
         try:
             self.state = ConnectionState.CLOSED
             
@@ -1027,7 +1093,7 @@ class AdvancedCacheConnectionPool(IConnectionPool):
             if self.l1_cache:
                 self.l1_cache.clear()
             
-            logger.info("✅ Advanced cache pool closed")
+            logger.info(" Advanced cache pool closed")
             
         except Exception as e:
             logger.error(f"Error closing cache pool: {e}")

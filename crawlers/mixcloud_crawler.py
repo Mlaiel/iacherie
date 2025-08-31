@@ -277,6 +277,9 @@ class MixcloudCrawler:
         
     async def get_show_details(self, show_key: str) -> Optional[MixcloudShow]:
         """Get detailed information about a specific show."""
+
+
+
         try:
             data = await self._make_request(show_key)
             return await self._parse_show_data(data)
@@ -438,6 +441,9 @@ class MixcloudCrawler:
         
     async def _parse_show_data(self, data: Dict) -> Optional[MixcloudShow]:
         """Parse Mixcloud API show data into structured format."""
+
+
+
         try:
             return MixcloudShow(
                 show_id=data.get('slug', ''),
@@ -482,6 +488,9 @@ class MixcloudCrawler:
             
     async def _generate_audio_fingerprint(self, audio_url: str) -> str:
         """Generate audio fingerprint for content."""
+
+
+
         try:
             # This would implement audio fingerprinting
             # using libraries like chromaprint/acoustid
@@ -493,6 +502,9 @@ class MixcloudCrawler:
             
     async def _detect_similar_audio(self, audio_fingerprint: str) -> List[str]:
         """Detect similar audio content using fingerprinting."""
+
+
+
         try:
             similar_hashes = await self.fingerprinter.find_similar_content(
                 audio_fingerprint, 
@@ -620,6 +632,9 @@ class MixcloudCrawler:
         
     async def _find_similar_content(self, content_id: str) -> List[MixcloudShow]:
         """Find content similar to protected content."""
+
+
+
         return []
         
     async def _calculate_violation_score(
@@ -628,6 +643,9 @@ class MixcloudCrawler:
         show: MixcloudShow
     ) -> float:
         """Calculate violation score between original content and show."""
+
+
+
         return 0.0
         
     async def _generate_section_fingerprint(
@@ -637,14 +655,23 @@ class MixcloudCrawler:
         end_time: int
     ) -> str:
         """Generate fingerprint for specific audio section."""
+
+
+
         return ""
         
     async def _check_track_copyright(self, track_info: Dict) -> Dict:
         """Check copyright status of identified track."""
+
+
+
         return {'is_copyrighted': False}
         
     def get_performance_metrics(self) -> Dict:
         """Get crawler performance metrics."""
+
+
+
         return {
             'requests_made': self.requests_made,
             'content_analyzed': self.content_analyzed,

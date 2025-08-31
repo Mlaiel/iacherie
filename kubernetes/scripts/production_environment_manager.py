@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-🔧 Production Environment Configuration Manager - Ainflue Platform
+ Production Environment Configuration Manager - Ainflue Platform
 ===================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps + Backend Senior + DBA + Security Engineer
 Date: 2025-08-31
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -208,6 +208,9 @@ class ProductionEnvironmentManager:
     
     def generate_configmap_data(self) -> Dict[str, str]:
         """Generate ConfigMap data from production configuration"""
+
+
+
         return {
             # Application Configuration
             "APP_NAME": self.config.app_name,
@@ -448,6 +451,9 @@ class ProductionEnvironmentManager:
     
     def setup_production_environment(self) -> bool:
         """Setup complete production environment"""
+
+
+
         try:
             # Create production ConfigMap
             if self.create_production_configmap():
@@ -482,7 +488,7 @@ if __name__ == "__main__":
     print(f"Environment Status: {status}")
     
     if success:
-        print("✅ Production environment setup completed successfully!")
+        print(" Production environment setup completed successfully!")
     else:
-        print("❌ Production environment setup failed!")
+        print(" Production environment setup failed!")
         exit(1)

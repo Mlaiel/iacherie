@@ -6,19 +6,19 @@ covering all modules with industrial-grade testing standards.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 This software is proprietary and confidential. Contact: mlaiel@live.de
 
 Team Expertise:
-✅ Lead Dev + Architecte Développeur IA - Fahed Mlaiel
-✅ Développeur Backend Senior (Python/FastAPI/Django) - Fahed Mlaiel  
-✅ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face) - Fahed Mlaiel
-✅ DBA & Data Engineer (PostgreSQL/Redis/MongoDB) - Fahed Mlaiel
-✅ Spécialiste Sécurité Backend - Fahed Mlaiel
-✅ Architecte Microservices - Fahed Mlaiel
-✅ Développeur Audio - Fahed Mlaiel
-✅ DevOps Engineer - Fahed Mlaiel
-✅ IA Prompt Engineer - Fahed Mlaiel
+ Lead Dev + Architecte Développeur IA - Fahed Mlaiel
+ Développeur Backend Senior (Python/FastAPI/Django) - Fahed Mlaiel  
+ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face) - Fahed Mlaiel
+ DBA & Data Engineer (PostgreSQL/Redis/MongoDB) - Fahed Mlaiel
+ Spécialiste Sécurité Backend - Fahed Mlaiel
+ Architecte Microservices - Fahed Mlaiel
+ Développeur Audio - Fahed Mlaiel
+ DevOps Engineer - Fahed Mlaiel
+ IA Prompt Engineer - Fahed Mlaiel
 """
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"

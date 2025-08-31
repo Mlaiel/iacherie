@@ -1,5 +1,5 @@
 """
-🎤 Instrument Identifier - AI-Powered Musical Instrument Recognition
+ Instrument Identifier - AI-Powered Musical Instrument Recognition
 
 Advanced instrument identification engine using machine learning and signal processing
 to detect and classify musical instruments in audio signals.
@@ -62,6 +62,9 @@ class InstrumentIdentifier:
                                  audio_data: np.ndarray, 
                                  sample_rate: int = 44100) -> List[InstrumentDetection]:
         """Identify instruments in audio signal"""
+
+
+
         try:
             detections = []
             

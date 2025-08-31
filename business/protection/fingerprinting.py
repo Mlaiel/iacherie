@@ -1,11 +1,11 @@
 """
-🔍 Fingerprinting Engine - IA-Influencer-Agent  
+ Fingerprinting Engine - IA-Influencer-Agent  
 ==================================================================
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 ==================================================================
 
-⚠️  COPYRIGHT NOTICE & LEGAL WARNING ⚠️
+  COPYRIGHT NOTICE & LEGAL WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copy, distribution, or modification of this code
 without explicit written permission is strictly prohibited and will be
@@ -178,6 +178,9 @@ class AudioFingerprintEngine:
         
     async def generate_chromaprint(self, audio_data: bytes) -> np.ndarray:
         """Generate Chromaprint fingerprint for audio"""
+
+
+
         try:
             # Convert bytes to audio array
             audio_array = np.frombuffer(audio_data, dtype=np.float32)
@@ -200,6 +203,9 @@ class AudioFingerprintEngine:
     
     async def generate_spectral_hash(self, audio_data: bytes) -> np.ndarray:
         """Generate spectral hash for audio content"""
+
+
+
         try:
             audio_array = np.frombuffer(audio_data, dtype=np.float32)
             
@@ -219,6 +225,9 @@ class AudioFingerprintEngine:
     
     async def generate_mfcc_features(self, audio_data: bytes) -> np.ndarray:
         """Generate MFCC features for audio"""
+
+
+
         try:
             audio_array = np.frombuffer(audio_data, dtype=np.float32)
             
@@ -301,6 +310,9 @@ class VideoFingerprintEngine:
     
     async def generate_frame_analysis(self, video_data: bytes) -> np.ndarray:
         """Advanced frame analysis for video fingerprinting"""
+
+
+
         try:
             temp_path = f"/tmp/temp_video_{uuid.uuid4().hex}.mp4"
             
@@ -370,6 +382,9 @@ class ImageFingerprintEngine:
         
     async def generate_dhash(self, image_data: bytes) -> str:
         """Generate difference hash for image"""
+
+
+
         try:
             image = Image.open(io.BytesIO(image_data))
             dhash = str(imagehash.dhash(image))
@@ -381,6 +396,9 @@ class ImageFingerprintEngine:
     
     async def generate_phash(self, image_data: bytes) -> str:
         """Generate perceptual hash for image"""
+
+
+
         try:
             image = Image.open(io.BytesIO(image_data))
             phash = str(imagehash.phash(image))
@@ -392,6 +410,9 @@ class ImageFingerprintEngine:
     
     async def generate_whash(self, image_data: bytes) -> str:
         """Generate wavelet hash for image"""
+
+
+
         try:
             image = Image.open(io.BytesIO(image_data))
             whash = str(imagehash.whash(image))
@@ -403,6 +424,9 @@ class ImageFingerprintEngine:
     
     async def generate_clip_embedding(self, image_data: bytes) -> np.ndarray:
         """Generate CLIP embedding for image (placeholder)"""
+
+
+
         try:
             # This would use actual CLIP model
             # For now, return mock embedding
@@ -444,6 +468,9 @@ class TextFingerprintEngine:
         
     async def generate_semantic_hash(self, text: str) -> str:
         """Generate semantic hash for text"""
+
+
+
         try:
             # Simple semantic hashing
             words = text.lower().split()
@@ -467,6 +494,9 @@ class TextFingerprintEngine:
     
     async def generate_tfidf_vector(self, text: str) -> np.ndarray:
         """Generate TF-IDF vector for text"""
+
+
+
         try:
             # Fit and transform text
             tfidf_matrix = self.vectorizer.fit_transform([text])
@@ -480,6 +510,9 @@ class TextFingerprintEngine:
     
     async def generate_bert_embedding(self, text: str) -> np.ndarray:
         """Generate BERT embedding for text (placeholder)"""
+
+
+
         try:
             # This would use actual BERT model
             # For now, return mock embedding
@@ -526,8 +559,11 @@ class FingerprintingEngineService(IFingerprintingEngineService):
         
     async def initialize(self) -> bool:
         """Initialize fingerprinting engine service"""
+
+
+
         try:
-            self.logger.info("🚀 Initializing Fingerprinting Engine Service")
+            self.logger.info(" Initializing Fingerprinting Engine Service")
             
             # Create storage directories
             Path(self.config.storage_path).mkdir(parents=True, exist_ok=True)
@@ -539,11 +575,11 @@ class FingerprintingEngineService(IFingerprintingEngineService):
                 self.faiss_indexes[content_type] = index
             
             self.status = FingerprintingEngineStatus.ACTIVE
-            self.logger.info("✅ Fingerprinting Engine Service initialized successfully")
+            self.logger.info(" Fingerprinting Engine Service initialized successfully")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Fingerprinting Engine initialization failed: {e}")
+            self.logger.error(f" Fingerprinting Engine initialization failed: {e}")
             self.status = FingerprintingEngineStatus.ERROR
             return False
     
@@ -557,7 +593,7 @@ class FingerprintingEngineService(IFingerprintingEngineService):
         
         try:
             self.status = FingerprintingEngineStatus.PROCESSING
-            self.logger.info(f"🔍 Generating {content_type.value} fingerprint")
+            self.logger.info(f" Generating {content_type.value} fingerprint")
             
             if content_type == ContentType.AUDIO:
                 fingerprint = await self._generate_audio_fingerprint(content_data, fingerprint)
@@ -570,10 +606,10 @@ class FingerprintingEngineService(IFingerprintingEngineService):
                 fingerprint = await self._generate_text_fingerprint(text_content, fingerprint)
             
             self.status = FingerprintingEngineStatus.ACTIVE
-            self.logger.info(f"✅ Fingerprint generated: {fingerprint.fingerprint_id}")
+            self.logger.info(f" Fingerprint generated: {fingerprint.fingerprint_id}")
             
         except Exception as e:
-            self.logger.error(f"❌ Fingerprint generation failed: {e}")
+            self.logger.error(f" Fingerprint generation failed: {e}")
             self.status = FingerprintingEngineStatus.ERROR
             
         return fingerprint
@@ -612,16 +648,19 @@ class FingerprintingEngineService(IFingerprintingEngineService):
                     matches.append(match)
             
             self.status = FingerprintingEngineStatus.ACTIVE
-            self.logger.info(f"🔍 Found {len(matches)} similar fingerprints")
+            self.logger.info(f" Found {len(matches)} similar fingerprints")
             
         except Exception as e:
-            self.logger.error(f"❌ Similarity search failed: {e}")
+            self.logger.error(f" Similarity search failed: {e}")
             self.status = FingerprintingEngineStatus.ERROR
             
         return matches
     
     async def index_fingerprint(self, fingerprint: ContentFingerprint) -> bool:
         """Add fingerprint to FAISS search index"""
+
+
+
         try:
             self.status = FingerprintingEngineStatus.INDEXING
             
@@ -643,11 +682,11 @@ class FingerprintingEngineService(IFingerprintingEngineService):
             self.fingerprint_store[fingerprint.fingerprint_id] = fingerprint
             
             self.status = FingerprintingEngineStatus.ACTIVE
-            self.logger.info(f"✅ Fingerprint indexed: {fingerprint.fingerprint_id}")
+            self.logger.info(f" Fingerprint indexed: {fingerprint.fingerprint_id}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Fingerprint indexing failed: {e}")
+            self.logger.error(f" Fingerprint indexing failed: {e}")
             self.status = FingerprintingEngineStatus.ERROR
             return False
 
@@ -655,6 +694,9 @@ class FingerprintingEngineService(IFingerprintingEngineService):
     
     async def _generate_audio_fingerprint(self, audio_data: bytes, fingerprint: ContentFingerprint) -> ContentFingerprint:
         """Generate audio fingerprint using multiple methods"""
+
+
+
         try:
             # Generate different types of audio fingerprints
             chromaprint = await self.audio_engine.generate_chromaprint(audio_data)
@@ -686,6 +728,9 @@ class FingerprintingEngineService(IFingerprintingEngineService):
     
     async def _generate_video_fingerprint(self, video_data: bytes, fingerprint: ContentFingerprint) -> ContentFingerprint:
         """Generate video fingerprint using computer vision"""
+
+
+
         try:
             # Generate perceptual hashes for frames
             frame_hashes = await self.video_engine.generate_perceptual_hash(video_data)
@@ -714,6 +759,9 @@ class FingerprintingEngineService(IFingerprintingEngineService):
     
     async def _generate_image_fingerprint(self, image_data: bytes, fingerprint: ContentFingerprint) -> ContentFingerprint:
         """Generate image fingerprint using multiple hash methods"""
+
+
+
         try:
             # Generate multiple hash types
             dhash = await self.image_engine.generate_dhash(image_data)
@@ -738,6 +786,9 @@ class FingerprintingEngineService(IFingerprintingEngineService):
     
     async def _generate_text_fingerprint(self, text: str, fingerprint: ContentFingerprint) -> ContentFingerprint:
         """Generate text fingerprint using NLP techniques"""
+
+
+
         try:
             # Generate different text representations
             semantic_hash = await self.text_engine.generate_semantic_hash(text)
@@ -780,6 +831,9 @@ class FingerprintingEngineFactory:
         **kwargs
     ) -> FingerprintingEngineConfig:
         """Create fingerprinting engine configuration"""
+
+
+
         return FingerprintingEngineConfig(
             vector_dimension=vector_dimension,
             similarity_threshold=similarity_threshold,

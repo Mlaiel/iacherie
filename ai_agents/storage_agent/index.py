@@ -9,7 +9,7 @@ optimisation et sauvegarde de contenu.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVIS JURIDIQUE CRITIQUE:
+  AVIS JURIDIQUE CRITIQUE:
 Cette technologie d'agent de stockage est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation non autorisée, copie, distribution, ingénierie inverse ou commercialisation est strictement interdite.
 Contact: mlaiel@live.de pour demandes de licence UNIQUEMENT.
@@ -56,7 +56,7 @@ class StorageAgentIndex:
         
     def _initialize_components(self):
         """Initialise tous les composants du Storage Agent"""
-        logger.info("🚀 Initialisation des composants Storage Agent...")
+        logger.info(" Initialisation des composants Storage Agent...")
         
         # Orchestrateur principal
         self.orchestrator = StorageOrchestrator(self.config.get('orchestrator', {}))
@@ -73,7 +73,7 @@ class StorageAgentIndex:
         # Gestionnaire de sauvegardes
         self.backup_manager = BackupManager(self.config.get('backup', {}))
         
-        logger.info("✅ Tous les composants Storage Agent initialisés avec succès")
+        logger.info(" Tous les composants Storage Agent initialisés avec succès")
         
     def _setup_logging(self):
         """Configure le logging pour tous les composants"""
@@ -87,7 +87,7 @@ class StorageAgentIndex:
         Returns:
             Dict contenant l'état de santé de tous les composants
         """
-        logger.info("🔍 Vérification santé Storage Agent...")
+        logger.info(" Vérification santé Storage Agent...")
         
         health_status = {
             'overall_status': 'healthy',
@@ -133,11 +133,11 @@ class StorageAgentIndex:
             }
             
         except Exception as e:
-            logger.error(f"❌ Erreur lors de la vérification santé: {e}")
+            logger.error(f" Erreur lors de la vérification santé: {e}")
             health_status['overall_status'] = 'unhealthy'
             health_status['error'] = str(e)
             
-        logger.info(f"✅ Vérification santé terminée: {health_status['overall_status']}")
+        logger.info(f" Vérification santé terminée: {health_status['overall_status']}")
         return health_status
         
     async def store_content(
@@ -163,7 +163,7 @@ class StorageAgentIndex:
         Returns:
             Dict contenant les résultats de l'opération de stockage
         """
-        logger.info(f"📁 Stockage contenu: {file_path} avec stratégie {strategy.value}")
+        logger.info(f" Stockage contenu: {file_path} avec stratégie {strategy.value}")
         
         try:
             # Créer la requête de stockage
@@ -179,7 +179,7 @@ class StorageAgentIndex:
             # Exécuter le stockage via l'orchestrateur
             result = await self.orchestrator.store_file(request)
             
-            logger.info(f"✅ Contenu stocké avec succès: {result.file_id}")
+            logger.info(f" Contenu stocké avec succès: {result.file_id}")
             return {
                 'success': True,
                 'file_id': result.file_id,
@@ -190,7 +190,7 @@ class StorageAgentIndex:
             }
             
         except Exception as e:
-            logger.error(f"❌ Erreur stockage contenu: {e}")
+            logger.error(f" Erreur stockage contenu: {e}")
             return {
                 'success': False,
                 'error': str(e),
@@ -214,7 +214,7 @@ class StorageAgentIndex:
         Returns:
             Dict contenant les informations et URLs du fichier
         """
-        logger.info(f"📥 Récupération contenu: {file_id}")
+        logger.info(f" Récupération contenu: {file_id}")
         
         try:
             file_info = await self.orchestrator.retrieve_file(
@@ -223,14 +223,14 @@ class StorageAgentIndex:
                 quality=quality
             )
             
-            logger.info(f"✅ Contenu récupéré avec succès: {file_id}")
+            logger.info(f" Contenu récupéré avec succès: {file_id}")
             return {
                 'success': True,
                 'file_info': file_info
             }
             
         except Exception as e:
-            logger.error(f"❌ Erreur récupération contenu: {e}")
+            logger.error(f" Erreur récupération contenu: {e}")
             return {
                 'success': False,
                 'error': str(e),
@@ -254,7 +254,7 @@ class StorageAgentIndex:
         Returns:
             Dict contenant les résultats de l'optimisation
         """
-        logger.info(f"🎨 Optimisation contenu: {file_path}")
+        logger.info(f" Optimisation contenu: {file_path}")
         
         try:
             result = await self.content_optimizer.optimize_content(
@@ -263,14 +263,14 @@ class StorageAgentIndex:
                 options=options or {}
             )
             
-            logger.info(f"✅ Contenu optimisé avec succès")
+            logger.info(f" Contenu optimisé avec succès")
             return {
                 'success': True,
                 'optimization_result': result
             }
             
         except Exception as e:
-            logger.error(f"❌ Erreur optimisation contenu: {e}")
+            logger.error(f" Erreur optimisation contenu: {e}")
             return {
                 'success': False,
                 'error': str(e),
@@ -294,7 +294,7 @@ class StorageAgentIndex:
         Returns:
             Dict contenant les informations de sauvegarde
         """
-        logger.info(f"💾 Création sauvegarde pour {len(file_ids)} fichiers")
+        logger.info(f" Création sauvegarde pour {len(file_ids)} fichiers")
         
         try:
             backup_result = await self.backup_manager.create_backup(
@@ -303,14 +303,14 @@ class StorageAgentIndex:
                 destination_backends=destination_backends
             )
             
-            logger.info(f"✅ Sauvegarde créée avec succès: {backup_result.backup_id}")
+            logger.info(f" Sauvegarde créée avec succès: {backup_result.backup_id}")
             return {
                 'success': True,
                 'backup_result': backup_result
             }
             
         except Exception as e:
-            logger.error(f"❌ Erreur création sauvegarde: {e}")
+            logger.error(f" Erreur création sauvegarde: {e}")
             return {
                 'success': False,
                 'error': str(e),
@@ -324,7 +324,7 @@ class StorageAgentIndex:
         Returns:
             Dict contenant toutes les métriques système
         """
-        logger.info("📊 Récupération analytics Storage Agent")
+        logger.info(" Récupération analytics Storage Agent")
         
         try:
             analytics = {
@@ -335,15 +335,18 @@ class StorageAgentIndex:
                 'performance_metrics': await self._get_performance_metrics()
             }
             
-            logger.info("✅ Analytics récupérées avec succès")
+            logger.info(" Analytics récupérées avec succès")
             return analytics
             
         except Exception as e:
-            logger.error(f"❌ Erreur récupération analytics: {e}")
+            logger.error(f" Erreur récupération analytics: {e}")
             return {'error': str(e)}
             
     async def _get_storage_stats(self) -> Dict[str, Any]:
         """Récupère les statistiques de stockage"""
+
+
+
         return {
             'total_files': getattr(self.orchestrator, 'total_files', 0),
             'total_size': getattr(self.orchestrator, 'total_size', 0),
@@ -353,6 +356,9 @@ class StorageAgentIndex:
         
     async def _get_processing_stats(self) -> Dict[str, Any]:
         """Récupère les statistiques de traitement"""
+
+
+
         return {
             'files_processed': getattr(self.file_processor, 'files_processed', 0),
             'processing_time_avg': getattr(self.file_processor, 'avg_processing_time', 0),
@@ -362,6 +368,9 @@ class StorageAgentIndex:
         
     async def _get_optimization_stats(self) -> Dict[str, Any]:
         """Récupère les statistiques d'optimisation"""
+
+
+
         return {
             'optimizations_performed': getattr(self.content_optimizer, 'optimizations_count', 0),
             'avg_size_reduction': getattr(self.content_optimizer, 'avg_size_reduction', 0),
@@ -371,6 +380,9 @@ class StorageAgentIndex:
         
     async def _get_backup_stats(self) -> Dict[str, Any]:
         """Récupère les statistiques de sauvegarde"""
+
+
+
         return {
             'total_backups': getattr(self.backup_manager, 'total_backups', 0),
             'backup_size': getattr(self.backup_manager, 'total_backup_size', 0),
@@ -380,6 +392,9 @@ class StorageAgentIndex:
         
     async def _get_performance_metrics(self) -> Dict[str, Any]:
         """Récupère les métriques de performance système"""
+
+
+
         return {
             'response_time': getattr(self, 'avg_response_time', 0),
             'throughput': getattr(self, 'throughput', 0),
@@ -399,6 +414,9 @@ def create_storage_agent_index(config: Optional[Dict[str, Any]] = None) -> Stora
     Returns:
         StorageAgentIndex: Instance configurée de l'index principal
     """
+
+
+
     return StorageAgentIndex(config)
 
 # Configuration par défaut recommandée

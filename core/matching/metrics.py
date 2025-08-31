@@ -8,7 +8,7 @@ performance tracking, and business intelligence dashboards.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This monitoring module contains proprietary metrics and algorithms
 developed by Fahed Mlaiel. Unauthorized use is prohibited.
 """
@@ -259,6 +259,9 @@ class PerformanceMonitor:
     
     def _collect_system_metrics(self) -> None:
         """Collect system performance metrics"""
+
+
+
         try:
             # System metrics
             process = psutil.Process()
@@ -469,10 +472,16 @@ class AlertManager:
     
     def get_active_alerts(self) -> List[Alert]:
         """Get all active alerts"""
+
+
+
         return list(self.active_alerts.values())
     
     def get_alert_history(self, limit: int = 100) -> List[Alert]:
         """Get alert history"""
+
+
+
         return self.alert_history[-limit:]
 
 
@@ -778,21 +787,33 @@ def get_monitoring_service() -> MonitoringService:
 
 def get_metrics_collector() -> MetricsCollector:
     """Get global metrics collector"""
+
+
+
     return get_monitoring_service().metrics_collector
 
 
 def get_performance_monitor() -> PerformanceMonitor:
     """Get global performance monitor"""
+
+
+
     return get_monitoring_service().performance_monitor
 
 
 def get_alert_manager() -> AlertManager:
     """Get global alert manager"""
+
+
+
     return get_monitoring_service().alert_manager
 
 
 def get_business_metrics() -> BusinessMetricsCollector:
     """Get global business metrics collector"""
+
+
+
     return get_monitoring_service().business_metrics
 
 

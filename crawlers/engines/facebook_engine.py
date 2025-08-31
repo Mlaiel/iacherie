@@ -8,12 +8,12 @@ Handles posts, pages, groups, and marketplace data extraction.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
 
-🏗️ Architecture Enterprise - Équipe Projet Spécialisée :
+ Architecture Enterprise - Équipe Projet Spécialisée :
 • Lead Developer IA : Fahed Mlaiel (mlaiel@live.de)
 • Backend Senior Engineer : Architecture microservices & APIs
 • ML/AI Engineer : Intelligence artificielle & algorithmes avancés
@@ -252,6 +252,9 @@ class FacebookCrawlerEngine(BaseCrawlerEngine):
 
     async def authenticate(self) -> bool:
         """Authenticate with Facebook API"""
+
+
+
         try:
             if not self.graph:
                 return False
@@ -591,6 +594,9 @@ class FacebookCrawlerEngine(BaseCrawlerEngine):
 
     async def _process_post_data(self, post_data: Dict[str, Any]) -> Optional[FacebookPostData]:
         """Process raw Facebook post data into FacebookPostData object"""
+
+
+
         try:
             # Extract hashtags and mentions
             message = post_data.get('message', '')

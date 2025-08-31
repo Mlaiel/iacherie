@@ -1,5 +1,5 @@
 """
-🗄️ Advanced Revenue Tracking Engine - IA Influencer Agent Platform Enterprise
+ Advanced Revenue Tracking Engine - IA Influencer Agent Platform Enterprise
 ============================================================================
 Module: backend/data_management/analytics/platform_revenue_tracker.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Revenue Analytics Engine - Enterprise Production-Ready
 Responsibility: Suivi automatisé des revenus multi-plateformes avec IA prédictive
 ===============================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -19,10 +19,10 @@ Predictive Modeling → Performance Optimization → Distribution Analytics →
 Payout Automation → Tax Compliance → Reporting Intelligence
 
 PLATFORMS SUPPORTÉES:
-🎵 Spotify, Apple Music, YouTube Music (Musiciens)
-🎬 YouTube, TikTok, Instagram, Twitch (Influenceurs/Comédiens)
-📸 Instagram, Pinterest, Getty Images (Photographes)
-📝 Medium, Substack, WordPress (Blogueurs)
+ Spotify, Apple Music, YouTube Music (Musiciens)
+ YouTube, TikTok, Instagram, Twitch (Influenceurs/Comédiens)
+ Instagram, Pinterest, Getty Images (Photographes)
+ Medium, Substack, WordPress (Blogueurs)
 """
 
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -157,6 +157,9 @@ class PlatformRevenueTracker:
         
     def _load_prediction_models(self) -> Dict[str, Any]:
         """Charge les modèles IA de prédiction de revenus"""
+
+
+
         return {
             "revenue_forecasting": "models/revenue_forecast_v2.pkl",
             "trend_analysis": "models/trend_analyzer_v1.pkl", 
@@ -166,6 +169,9 @@ class PlatformRevenueTracker:
         
     def _load_platform_configs(self) -> Dict[str, Dict[str, Any]]:
         """Configuration spécifique par plateforme"""
+
+
+
         return {
             "spotify": {
                 "revenue_endpoints": ["/artists/{id}/revenue", "/analytics/revenue"],
@@ -203,6 +209,9 @@ class PlatformRevenueTracker:
         Returns:
             PlatformRevenueData: Données de revenus structurées
         """
+
+
+
         try:
             # Récupération du client API
             api_client = self.api_clients.get(platform)
@@ -297,6 +306,9 @@ class PlatformRevenueTracker:
         Returns:
             RevenuePrediction: Prédiction avec score de confiance
         """
+
+
+
         try:
             # Récupération de l'historique de revenus
             historical_data = await self.revenue_repository.get_historical_revenue(
@@ -390,6 +402,9 @@ class PlatformRevenueTracker:
     
     async def _get_audience_metrics(self, creator_id: str) -> Dict[str, float]:
         """Récupère les métriques d'audience"""
+
+
+
         return {
             "growth_rate": 0.05,  # 5% monthly growth
             "avg_engagement": 0.04,  # 4% engagement rate
@@ -420,6 +435,9 @@ class PlatformRevenueTracker:
     
     async def _get_market_indicators(self) -> Dict[str, float]:
         """Récupère les indicateurs de marché"""
+
+
+
         return {
             "industry_growth": 0.08,  # 8% annual growth
             "competition_level": 0.75,  # High competition
@@ -473,6 +491,9 @@ class PlatformRevenueTracker:
         Returns:
             Dict contenant les recommandations d'optimisation
         """
+
+
+
         try:
             # Analyse de la performance actuelle
             current_performance = await self._analyze_current_performance(creator_id)
@@ -499,6 +520,9 @@ class PlatformRevenueTracker:
     
     async def _analyze_current_performance(self, creator_id: str) -> Dict[str, Any]:
         """Analyse la performance actuelle du créateur"""
+
+
+
         return {
             "total_monthly_revenue": 2500.00,
             "platform_distribution": {
@@ -516,6 +540,9 @@ class PlatformRevenueTracker:
     
     async def _identify_revenue_opportunities(self, creator_id: str) -> List[Dict[str, Any]]:
         """Identifie les opportunités de revenus"""
+
+
+
         return [
             {
                 "type": "platform_expansion",
@@ -543,6 +570,9 @@ class PlatformRevenueTracker:
     def _generate_optimization_recommendations(self, performance: Dict[str, Any], 
                                              opportunities: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Génère des recommandations d'optimisation personnalisées"""
+
+
+
         return [
             {
                 "recommendation": "Expand to TikTok platform",

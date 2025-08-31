@@ -8,7 +8,7 @@ alerting, and automated recovery mechanisms.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ WARNING: This code is proprietary and confidential.
+ WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
@@ -361,6 +361,9 @@ class HealthMonitor:
     
     def add_endpoint(self, endpoint: ServiceEndpoint) -> bool:
         """Add service endpoint for monitoring"""
+
+
+
         try:
             self.endpoints[endpoint.name] = endpoint
             self.health_history[endpoint.name] = []
@@ -373,6 +376,9 @@ class HealthMonitor:
     
     def remove_endpoint(self, endpoint_name: str) -> bool:
         """Remove service endpoint from monitoring"""
+
+
+
         try:
             if endpoint_name in self.endpoints:
                 del self.endpoints[endpoint_name]
@@ -535,6 +541,9 @@ class HealthMonitor:
     
     def get_all_endpoints_status(self) -> Dict[str, Any]:
         """Get status of all monitored endpoints"""
+
+
+
         return {
             "monitoring_active": self.running,
             "endpoints_count": len(self.endpoints),
@@ -546,6 +555,9 @@ class HealthMonitor:
     
     def configure_platform_endpoints(self) -> bool:
         """Configure health monitoring for platform services"""
+
+
+
         try:
             # Configure fingerprinting service endpoints
             fingerprinting_endpoints = [

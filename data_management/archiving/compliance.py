@@ -8,7 +8,7 @@ for global content protection and archival standards.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -315,6 +315,9 @@ class GDPRComplianceChecker(ComplianceChecker):
         requirement: RegulatoryRequirement
     ) -> Tuple[bool, List[str]]:
         """Check GDPR compliance"""
+
+
+
         try:
             issues = []
             
@@ -364,6 +367,9 @@ class SOXComplianceChecker(ComplianceChecker):
         requirement: RegulatoryRequirement
     ) -> Tuple[bool, List[str]]:
         """Check SOX compliance"""
+
+
+
         try:
             issues = []
             
@@ -435,6 +441,9 @@ class ComplianceManager:
     
     async def add_requirement(self, requirement: RegulatoryRequirement) -> bool:
         """Add regulatory requirement"""
+
+
+
         try:
             if not await self._validate_requirement(requirement):
                 raise ArchivalError(f"Invalid requirement: {requirement.requirement_id}")
@@ -463,6 +472,9 @@ class ComplianceManager:
         Returns:
             Dictionary mapping requirement IDs to compliance results
         """
+
+
+
         try:
             self.total_checks += 1
             results = {}
@@ -498,6 +510,9 @@ class ComplianceManager:
     
     async def log_audit_event(self, event: AuditEvent):
         """Log audit event for compliance tracking"""
+
+
+
         try:
             # Validate event
             if not event.event_id or not event.user_id:
@@ -527,6 +542,9 @@ class ComplianceManager:
         end_date: datetime
     ) -> ComplianceReport:
         """Generate comprehensive compliance report"""
+
+
+
         try:
             report_id = f"report_{int(datetime.utcnow().timestamp())}"
             
@@ -620,6 +638,9 @@ class ComplianceManager:
         resource_id: Optional[str] = None
     ) -> List[AuditEvent]:
         """Get filtered audit trail"""
+
+
+
         try:
             filtered_events = self.audit_events.copy()
             
@@ -650,6 +671,9 @@ class ComplianceManager:
     
     async def add_governance_policy(self, policy: DataGovernancePolicy) -> bool:
         """Add data governance policy"""
+
+
+
         try:
             if not await self._validate_governance_policy(policy):
                 raise ArchivalError(f"Invalid governance policy: {policy.policy_id}")
@@ -665,6 +689,9 @@ class ComplianceManager:
     
     async def classify_data(self, archive_entry: ArchiveEntry) -> DataClassification:
         """Classify data according to governance policies"""
+
+
+
         try:
             # Apply classification rules from active policies
             for policy in self.governance_policies.values():
@@ -690,6 +717,9 @@ class ComplianceManager:
     
     async def get_compliance_dashboard(self) -> Dict[str, Any]:
         """Get compliance dashboard data"""
+
+
+
         try:
             # Overall compliance metrics
             total_requirements = len(self.requirements)
@@ -745,6 +775,9 @@ class ComplianceManager:
     
     async def _validate_requirement(self, requirement: RegulatoryRequirement) -> bool:
         """Validate regulatory requirement"""
+
+
+
         try:
             return (
                 requirement.requirement_id and
@@ -758,6 +791,9 @@ class ComplianceManager:
     
     async def _validate_governance_policy(self, policy: DataGovernancePolicy) -> bool:
         """Validate governance policy"""
+
+
+
         try:
             return (
                 policy.policy_id and
@@ -776,6 +812,9 @@ class ComplianceManager:
         issues: List[str]
     ):
         """Log compliance check as audit event"""
+
+
+
         try:
             event = AuditEvent(
                 event_id=str(uuid.uuid4()),
@@ -804,6 +843,9 @@ class ComplianceManager:
     
     async def _generate_compliance_recommendations(self, report: ComplianceReport) -> List[str]:
         """Generate compliance recommendations"""
+
+
+
         try:
             recommendations = []
             
@@ -837,6 +879,9 @@ class ComplianceManager:
     
     async def _assess_risk_level(self, report: ComplianceReport) -> str:
         """Assess overall risk level"""
+
+
+
         try:
             risk_score = 0
             
@@ -878,6 +923,9 @@ class ComplianceManager:
     
     async def _initialize_default_requirements(self):
         """Initialize default regulatory requirements"""
+
+
+
         try:
             # GDPR requirement for personal data
             gdpr_personal_data = RegulatoryRequirement(
@@ -936,6 +984,9 @@ class AuditTrail:
     
     async def add_event(self, event: AuditEvent) -> str:
         """Add event to audit trail with integrity protection"""
+
+
+
         try:
             # Calculate event hash
             event_data = {
@@ -973,6 +1024,9 @@ class AuditTrail:
     
     async def verify_integrity(self) -> bool:
         """Verify audit trail integrity"""
+
+
+
         try:
             if not self.events:
                 return True

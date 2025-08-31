@@ -164,6 +164,9 @@ class VoiceAnalytics:
     
     async def initialize_voice_models(self):
         """Initialize voice processing and analysis models."""
+
+
+
         try:
             self.logger.info("Initializing voice analytics models")
             
@@ -188,6 +191,9 @@ class VoiceAnalytics:
     
     async def analyze_voice_audio(self, audio_data: bytes, user_id: Optional[str] = None) -> VoiceAnalysisResult:
         """Perform comprehensive voice analysis on audio data."""
+
+
+
         try:
             analysis_id = f"voice_{int(datetime.utcnow().timestamp())}"
             
@@ -243,6 +249,9 @@ class VoiceAnalytics:
     
     async def analyze_conversation_voice_dynamics(self, audio_segments: List[bytes]) -> Dict[str, Any]:
         """Analyze voice dynamics throughout a conversation."""
+
+
+
         try:
             conversation_analysis = {
                 'total_segments': len(audio_segments),
@@ -290,6 +299,9 @@ class VoiceAnalytics:
     
     async def generate_voice_insights_report(self, user_id: str, time_period: int = 30) -> Dict[str, Any]:
         """Generate comprehensive voice insights report for a user."""
+
+
+
         try:
             # Get user's voice data for the period
             voice_analyses = await self._get_user_voice_analyses(user_id, time_period)
@@ -334,6 +346,9 @@ class VoiceAnalytics:
     
     async def real_time_voice_feedback(self, audio_stream: bytes) -> Dict[str, Any]:
         """Provide real-time voice feedback during conversation."""
+
+
+
         try:
             # Quick voice analysis for real-time feedback
             audio_array, sample_rate = await self._process_audio_data(audio_stream)
@@ -372,6 +387,9 @@ class VoiceAnalytics:
     
     async def _process_audio_data(self, audio_data: bytes) -> Tuple[np.ndarray, int]:
         """Process audio data and convert to numpy array."""
+
+
+
         try:
             # Convert bytes to audio segment
             audio_segment = AudioSegment.from_raw(
@@ -395,6 +413,9 @@ class VoiceAnalytics:
     
     async def _extract_voice_features(self, audio_array: np.ndarray, sample_rate: int) -> VoiceFeatures:
         """Extract comprehensive voice features from audio."""
+
+
+
         try:
             # Extract MFCC features
             mfcc = librosa.feature.mfcc(
@@ -439,6 +460,9 @@ class VoiceAnalytics:
     
     async def _transcribe_audio(self, audio_data: bytes) -> Tuple[str, float]:
         """Transcribe audio to text with confidence score."""
+
+
+
         try:
             # Convert audio data for speech recognition
             audio_segment = AudioSegment.from_raw(
@@ -482,6 +506,9 @@ class VoiceAnalytics:
     
     async def _detect_emotional_state(self, voice_features: VoiceFeatures) -> Tuple[EmotionalState, float]:
         """Detect emotional state from voice features."""
+
+
+
         try:
             # Extract key emotional indicators
             pitch_mean = np.mean(voice_features.prosodic_features.get('pitch', [0]))
@@ -531,6 +558,9 @@ class VoiceAnalytics:
     
     async def _extract_prosodic_features(self, audio_array: np.ndarray, sample_rate: int) -> Dict[str, Any]:
         """Extract prosodic features (pitch, rhythm, stress)."""
+
+
+
         try:
             # Extract pitch using librosa
             pitches, magnitudes = librosa.piptrack(y=audio_array, sr=sample_rate)
@@ -561,6 +591,9 @@ class VoiceAnalytics:
     
     def _calculate_speaking_rate(self, audio_array: np.ndarray, sample_rate: int) -> float:
         """Calculate speaking rate (words per minute)."""
+
+
+
         try:
             # Estimate speaking rate based on voice activity
             frame_length = int(0.025 * sample_rate)  # 25ms frames

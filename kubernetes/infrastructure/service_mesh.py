@@ -7,7 +7,7 @@ traffic management, security policies, and observability.
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED 
 """
 
 import asyncio
@@ -112,6 +112,9 @@ class ServiceMeshManager:
         
     async def deploy_service_mesh(self, config: ServiceMeshConfig) -> Dict[str, Any]:
         """Deploy service mesh infrastructure"""
+
+
+
         try:
             if config.mesh_type == ServiceMeshType.ISTIO:
                 return await self._deploy_istio(config)
@@ -126,6 +129,9 @@ class ServiceMeshManager:
     
     async def _deploy_istio(self, config: ServiceMeshConfig) -> Dict[str, Any]:
         """Deploy Istio service mesh"""
+
+
+
         try:
             results = {}
             
@@ -172,6 +178,9 @@ class ServiceMeshManager:
     
     async def _create_istio_namespace(self, namespace: str) -> Dict[str, Any]:
         """Create Istio namespace with proper labels"""
+
+
+
         try:
             namespace_obj = client.V1Namespace(
                 metadata=client.V1ObjectMeta(
@@ -199,6 +208,9 @@ class ServiceMeshManager:
     
     async def _deploy_istio_control_plane(self, config: ServiceMeshConfig) -> Dict[str, Any]:
         """Deploy Istio control plane (istiod)"""
+
+
+
         try:
             # Istiod deployment
             istiod_deployment = client.V1Deployment(
@@ -350,6 +362,9 @@ class ServiceMeshManager:
     
     async def _deploy_istio_data_plane(self, config: ServiceMeshConfig) -> Dict[str, Any]:
         """Deploy Istio data plane components"""
+
+
+
         try:
             # Istio proxy (Envoy) is injected as sidecar automatically
             # Configure istio-proxy injection for namespaces
@@ -366,6 +381,9 @@ class ServiceMeshManager:
     
     async def _deploy_istio_gateways(self, config: ServiceMeshConfig, gateway_type: str) -> Dict[str, Any]:
         """Deploy Istio ingress/egress gateways"""
+
+
+
         try:
             gateway_name = f"istio-{gateway_type}gateway"
             
@@ -579,6 +597,9 @@ class ServiceMeshManager:
     
     async def _create_istio_rbac(self, namespace: str) -> Dict[str, Any]:
         """Create RBAC for Istio components"""
+
+
+
         try:
             # Service accounts
             service_accounts = ['istiod', 'istio-ingressgateway', 'istio-egressgateway']
@@ -609,6 +630,9 @@ class ServiceMeshManager:
     
     async def _create_istio_configmap(self, config: ServiceMeshConfig) -> Dict[str, Any]:
         """Create Istio configuration ConfigMap"""
+
+
+
         try:
             istio_config = {
                 'mesh': yaml.dump({
@@ -664,6 +688,9 @@ class ServiceMeshManager:
     
     async def _create_gateway_service_account(self, gateway_name: str, namespace: str) -> Dict[str, Any]:
         """Create service account for gateway"""
+
+
+
         try:
             service_account = client.V1ServiceAccount(
                 metadata=client.V1ObjectMeta(
@@ -689,6 +716,9 @@ class ServiceMeshManager:
     
     async def _configure_istio_mtls(self, config: ServiceMeshConfig) -> Dict[str, Any]:
         """Configure mTLS for Istio"""
+
+
+
         try:
             # Create PeerAuthentication for strict mTLS
             peer_auth_resource = {
@@ -726,6 +756,9 @@ class ServiceMeshManager:
     
     async def _configure_istio_observability(self, config: ServiceMeshConfig) -> Dict[str, Any]:
         """Configure observability for Istio"""
+
+
+
         try:
             observability_components = []
             
@@ -753,6 +786,9 @@ class ServiceMeshManager:
     
     async def _deploy_linkerd(self, config: ServiceMeshConfig) -> Dict[str, Any]:
         """Deploy Linkerd service mesh"""
+
+
+
         try:
             # Implementation for Linkerd deployment
             logger.info(f"Deploying Linkerd service mesh: {config.name}")
@@ -767,6 +803,9 @@ class ServiceMeshManager:
     
     async def create_virtual_service(self, vs_spec: VirtualServiceSpec) -> Dict[str, Any]:
         """Create Istio Virtual Service"""
+
+
+
         try:
             virtual_service = {
                 'apiVersion': 'networking.istio.io/v1beta1',
@@ -809,6 +848,9 @@ class ServiceMeshManager:
     
     async def create_destination_rule(self, dr_spec: DestinationRuleSpec) -> Dict[str, Any]:
         """Create Istio Destination Rule"""
+
+
+
         try:
             destination_rule = {
                 'apiVersion': 'networking.istio.io/v1beta1',
@@ -850,6 +892,9 @@ class ServiceMeshManager:
     
     async def create_ia_influencer_service_mesh(self, namespace: str = "ia-influencer") -> Dict[str, Any]:
         """Create complete service mesh setup for IA Influencer platform"""
+
+
+
         try:
             results = {}
             
@@ -963,6 +1008,9 @@ class ServiceMeshManager:
     
     async def create_gateway(self, gateway_spec: GatewaySpec) -> Dict[str, Any]:
         """Create Istio Gateway"""
+
+
+
         try:
             gateway = {
                 'apiVersion': 'networking.istio.io/v1beta1',
@@ -998,6 +1046,9 @@ class ServiceMeshManager:
     
     async def get_service_mesh_status(self, namespace: str = "istio-system") -> Dict[str, Any]:
         """Get service mesh status"""
+
+
+
         try:
             status = {
                 'control_plane': {'status': 'running'},

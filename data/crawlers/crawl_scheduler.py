@@ -12,7 +12,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL WARNING ⚠️
+  CRITICAL WARNING 
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
 Any unauthorized use, reproduction, distribution, or reverse engineering 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -146,6 +146,9 @@ class PriorityQueue:
     
     def size(self):
         """Get queue size"""
+
+
+
         return len(self._queue)
     
     def clear(self):
@@ -225,6 +228,9 @@ class CrawlScheduler:
     
     async def start(self):
         """Start the scheduler"""
+
+
+
         try:
             if self.is_running:
                 self.logger.warning("Scheduler is already running")
@@ -245,6 +251,9 @@ class CrawlScheduler:
     
     async def stop(self):
         """Stop the scheduler gracefully"""
+
+
+
         try:
             if not self.is_running:
                 return
@@ -296,6 +305,9 @@ class CrawlScheduler:
         Returns:
             Task ID
         """
+
+
+
         try:
             # Validate task configuration
             if not self._validate_task_config(task_config):
@@ -343,6 +355,9 @@ class CrawlScheduler:
         Returns:
             Success status
         """
+
+
+
         try:
             # Remove from configurations
             if task_id in self.task_configurations:
@@ -385,6 +400,9 @@ class CrawlScheduler:
         Returns:
             Execution ID
         """
+
+
+
         try:
             if task_id not in self.task_configurations:
                 raise ValueError(f"Task {task_id} not found")
@@ -426,6 +444,9 @@ class CrawlScheduler:
         Returns:
             Task status information
         """
+
+
+
         try:
             if task_id not in self.task_configurations:
                 return {'error': 'Task not found'}
@@ -485,6 +506,9 @@ class CrawlScheduler:
     
     def get_scheduler_status(self) -> Dict[str, Any]:
         """Get overall scheduler status and metrics"""
+
+
+
         try:
             # Update metrics
             self._update_metrics()
@@ -537,6 +561,9 @@ class CrawlScheduler:
     
     def update_resource_limits(self, limits: Dict[str, Union[int, float]]):
         """Update resource limits"""
+
+
+
         try:
             for key, value in limits.items():
                 if key in self.resource_limits:
@@ -550,6 +577,9 @@ class CrawlScheduler:
     
     def get_task_analytics(self, time_range_hours: int = 24) -> Dict[str, Any]:
         """Get task execution analytics"""
+
+
+
         try:
             cutoff_time = datetime.utcnow() - timedelta(hours=time_range_hours)
             
@@ -619,6 +649,9 @@ class CrawlScheduler:
     
     def _validate_task_config(self, task_config: TaskConfiguration) -> bool:
         """Validate task configuration"""
+
+
+
         try:
             # Basic validation
             if not task_config.task_id or not task_config.name:
@@ -663,6 +696,9 @@ class CrawlScheduler:
     
     def _schedule_interval_task(self, task_config: TaskConfiguration):
         """Schedule interval-based task"""
+
+
+
         try:
             interval_seconds = int(task_config.schedule_expression)
             
@@ -685,6 +721,9 @@ class CrawlScheduler:
     
     def _schedule_cron_task(self, task_config: TaskConfiguration):
         """Schedule cron-based task"""
+
+
+
         try:
             cron = croniter(task_config.schedule_expression, datetime.utcnow())
             self.cron_schedules[task_config.task_id] = cron
@@ -715,6 +754,9 @@ class CrawlScheduler:
     
     def _schedule_conditional_task(self, task_config: TaskConfiguration):
         """Schedule condition-based task"""
+
+
+
         try:
             async def condition_scheduler():
                 while task_config.enabled and self.is_running:
@@ -762,6 +804,9 @@ class CrawlScheduler:
     
     async def _can_execute_task(self, task_config: TaskConfiguration) -> bool:
         """Check if task can be executed based on constraints"""
+
+
+
         try:
             # Check if scheduler is running
             if not self.is_running:
@@ -801,6 +846,9 @@ class CrawlScheduler:
     
     def _check_resource_availability(self, task_config: TaskConfiguration) -> bool:
         """Check if resources are available for task execution"""
+
+
+
         try:
             required_resources = task_config.resource_requirements
             
@@ -820,6 +868,9 @@ class CrawlScheduler:
     
     async def _execute_task(self, execution: TaskExecution, task_config: TaskConfiguration):
         """Execute a single task"""
+
+
+
         try:
             execution.status = TaskStatus.RUNNING
             execution.start_time = datetime.utcnow()
@@ -910,6 +961,9 @@ class CrawlScheduler:
     
     async def _run_crawler_task(self, execution: TaskExecution, task_config: TaskConfiguration):
         """Execute the actual crawler task"""
+
+
+
         try:
             # This would integrate with the actual crawler implementations
             # For now, simulate with a delay
@@ -959,6 +1013,9 @@ class CrawlScheduler:
     
     def _update_resource_usage(self, resource_requirements: Dict[str, Any], increment: bool):
         """Update current resource usage"""
+
+
+
         try:
             multiplier = 1 if increment else -1
             
@@ -980,6 +1037,9 @@ class CrawlScheduler:
     
     async def _scheduler_loop(self):
         """Main scheduler loop for processing queued tasks"""
+
+
+
         try:
             while self.is_running:
                 try:
@@ -1019,6 +1079,9 @@ class CrawlScheduler:
     
     async def _monitor_loop(self):
         """Monitor loop for metrics and health checks"""
+
+
+
         try:
             while self.is_running:
                 try:
@@ -1052,6 +1115,9 @@ class CrawlScheduler:
     
     def _update_metrics(self):
         """Update scheduler metrics"""
+
+
+
         try:
             self.metrics.queue_length = self.task_queue.size()
             self.metrics.active_executions = len(self.active_executions)
@@ -1073,6 +1139,9 @@ class CrawlScheduler:
     
     def _calculate_success_rate(self, task_id: str) -> float:
         """Calculate success rate for a specific task"""
+
+
+
         try:
             task_executions = [ex for ex in self.execution_history if ex.task_id == task_id]
             
@@ -1088,6 +1157,9 @@ class CrawlScheduler:
     
     def _calculate_overall_success_rate(self) -> float:
         """Calculate overall success rate"""
+
+
+
         try:
             if not self.execution_history:
                 return 0.0
@@ -1101,6 +1173,9 @@ class CrawlScheduler:
     
     def _get_hourly_distribution(self, executions: List[TaskExecution]) -> Dict[int, int]:
         """Get hourly distribution of executions"""
+
+
+
         try:
             hourly_dist = defaultdict(int)
             

@@ -25,7 +25,7 @@ Development Team Specialties:
 
 Architecture: Ultra-industrialized, enterprise-grade, microservices-ready, production-optimized
 
-⚠️ STRICT INTELLECTUAL PROPERTY WARNING ⚠️
+ STRICT INTELLECTUAL PROPERTY WARNING 
 This code is the EXCLUSIVE property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, modification, or distribution is STRICTLY PROHIBITED.
 This includes but not limited to: reverse engineering, code analysis, concept theft.

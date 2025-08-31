@@ -7,7 +7,7 @@ Provides comprehensive analysis of audio, video, image, and document content.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -152,6 +152,9 @@ class MultimediaAnalyzer:
         
     async def initialize(self):
         """Initialize analyzer models"""
+
+
+
         try:
             await self._load_models()
             await self.format_detector.initialize()
@@ -244,6 +247,9 @@ class MultimediaAnalyzer:
         options: Dict[str, Any] = None
     ) -> List[AnalysisResult]:
         """Analyze multiple files in batch"""
+
+
+
         try:
             # Create semaphore for parallel processing
             semaphore = asyncio.Semaphore(self.batch_size)
@@ -284,6 +290,9 @@ class MultimediaAnalyzer:
             
     async def compare_content(self, file1: str, file2: str) -> Dict[str, Any]:
         """Compare two multimedia files"""
+
+
+
         try:
             # Analyze both files
             result1 = await self.analyze_file(file1, [AnalysisType.FEATURE_EXTRACTION])
@@ -343,6 +352,9 @@ class MultimediaAnalyzer:
             
     async def extract_features(self, file_path: str) -> Dict[str, List[float]]:
         """Extract feature vectors from multimedia file"""
+
+
+
         try:
             result = await self.analyze_file(file_path, [AnalysisType.FEATURE_EXTRACTION])
             return result.feature_vectors
@@ -353,6 +365,9 @@ class MultimediaAnalyzer:
             
     async def classify_content(self, file_path: str) -> Dict[str, Any]:
         """Classify multimedia content"""
+
+
+
         try:
             result = await self.analyze_file(file_path, [AnalysisType.CLASSIFICATION])
             
@@ -373,6 +388,9 @@ class MultimediaAnalyzer:
             
     async def get_analysis_stats(self) -> Dict[str, Any]:
         """Get analysis statistics"""
+
+
+
         return {
             **self.analysis_stats,
             "loaded_models": list(self.models.keys()),
@@ -382,6 +400,9 @@ class MultimediaAnalyzer:
         
     async def health_check(self) -> Dict[str, Any]:
         """Analyzer health check"""
+
+
+
         try:
             # Check model availability
             model_status = {}
@@ -422,6 +443,9 @@ class MultimediaAnalyzer:
     
     async def _load_models(self):
         """Load AI models for analysis"""
+
+
+
         try:
             device = "cuda" if self.gpu_enabled else "cpu"
             
@@ -465,6 +489,9 @@ class MultimediaAnalyzer:
         options: Dict[str, Any]
     ):
         """Analyze audio file"""
+
+
+
         try:
             # Load audio
             y, sr = librosa.load(file_path, sr=None)
@@ -546,6 +573,9 @@ class MultimediaAnalyzer:
         options: Dict[str, Any]
     ):
         """Analyze video file"""
+
+
+
         try:
             # Open video
             cap = cv2.VideoCapture(file_path)
@@ -638,6 +668,9 @@ class MultimediaAnalyzer:
         options: Dict[str, Any]
     ):
         """Analyze image file"""
+
+
+
         try:
             # Load image
             image = Image.open(file_path).convert("RGB")
@@ -788,6 +821,9 @@ class MultimediaAnalyzer:
         options: Dict[str, Any]
     ):
         """Analyze document file"""
+
+
+
         try:
             # Extract text based on format
             text_content = ""
@@ -872,6 +908,9 @@ class MultimediaAnalyzer:
         options: Dict[str, Any]
     ):
         """Analyze video frames"""
+
+
+
         try:
             all_objects = []
             all_faces = []

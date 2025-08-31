@@ -47,6 +47,9 @@ class ValidationResult:
     
     def merge(self, other: 'ValidationResult') -> 'ValidationResult':
         """Merge with another validation result"""
+
+
+
         return ValidationResult(
             is_valid=self.is_valid and other.is_valid,
             errors=self.errors + other.errors,
@@ -85,6 +88,9 @@ class BaseValidator:
     @staticmethod
     def validate_ip_address(ip: str) -> bool:
         """Validate IP address format"""
+
+
+
         try:
             ipaddress.ip_address(ip)
             return True
@@ -94,11 +100,17 @@ class BaseValidator:
     @staticmethod
     def validate_port(port: int) -> bool:
         """Validate port number"""
+
+
+
         return 1 <= port <= 65535
     
     @staticmethod
     def validate_directory_exists(path: str, create: bool = False) -> bool:
         """Validate directory exists or can be created"""
+
+
+
         try:
             path_obj = Path(path)
             if path_obj.exists():
@@ -113,6 +125,9 @@ class BaseValidator:
     @staticmethod
     def validate_file_permissions(path: str, required_permissions: int) -> bool:
         """Validate file permissions"""
+
+
+
         try:
             if not os.path.exists(path):
                 return False
@@ -125,6 +140,9 @@ class BaseValidator:
     @staticmethod
     def test_network_connectivity(host: str, port: int, timeout: int = 5) -> bool:
         """Test network connectivity to host:port"""
+
+
+
         try:
             with socket.create_connection((host, port), timeout=timeout):
                 return True
@@ -134,6 +152,9 @@ class BaseValidator:
     @staticmethod
     def validate_ssl_certificate(host: str, port: int = 443) -> bool:
         """Validate SSL certificate"""
+
+
+
         try:
             context = ssl.create_default_context()
             with socket.create_connection((host, port), timeout=5) as sock:
@@ -146,6 +167,9 @@ class BaseValidator:
     @staticmethod
     def validate_dns_resolution(hostname: str) -> bool:
         """Validate DNS resolution"""
+
+
+
         try:
             dns.resolver.resolve(hostname, 'A')
             return True

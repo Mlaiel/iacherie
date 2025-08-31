@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -78,6 +78,9 @@ class TransactionMetrics:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert metrics to dictionary"""
+
+
+
         return {
             "transaction_id": self.transaction_id,
             "transaction_type": self.transaction_type,
@@ -169,6 +172,9 @@ class AlertRule:
     
     def format_message(self, metrics: AggregatedMetrics) -> str:
         """Format alert message"""
+
+
+
         return self.message_template.format(
             name=self.name,
             metrics=metrics,

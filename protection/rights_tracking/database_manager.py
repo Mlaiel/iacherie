@@ -7,7 +7,7 @@ Auteur: Fahed Mlaiel - Lead Developer & AI Architect
 Email: mlaiel@live.de
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps
 
-⚠️  AVERTISSEMENT LÉGAL - PROPRIÉTÉ INTELLECTUELLE PROTÉGÉE ⚠️
+  AVERTISSEMENT LÉGAL - PROPRIÉTÉ INTELLECTUELLE PROTÉGÉE 
 Ce code est la propriété exclusive de Fahed Mlaiel et est protégé par les lois
 sur la propriété intellectuelle. Toute reproduction, distribution, ou utilisation
 non autorisée est strictement interdite et passible de poursuites judiciaires.
@@ -65,6 +65,9 @@ class DatabaseManager:
         
     async def initialize(self) -> bool:
         """Initialise le gestionnaire de base de données"""
+
+
+
         try:
             # Configuration de l'engine async
             self.engine = create_async_engine(
@@ -133,6 +136,9 @@ class DatabaseManager:
         content_data: Dict[str, Any]
     ) -> Optional[ContentMetadata]:
         """Crée une nouvelle entrée de métadonnées de contenu"""
+
+
+
         try:
             async with self.get_session() as session:
                 content_metadata = ContentMetadata(**content_data)
@@ -157,6 +163,9 @@ class DatabaseManager:
         include_relations: bool = False
     ) -> Optional[ContentMetadata]:
         """Récupère les métadonnées d'un contenu"""
+
+
+
         try:
             # Vérification cache
             if self.cache_enabled:
@@ -192,6 +201,9 @@ class DatabaseManager:
         similarity_threshold: float = 0.85
     ) -> List[ContentMetadata]:
         """Recherche de contenu par empreinte digitale"""
+
+
+
         try:
             async with self.get_session() as session:
                 # Recherche par hash exact d'abord
@@ -241,6 +253,9 @@ class DatabaseManager:
         holder_data: Dict[str, Any]
     ) -> Optional[RightsHolder]:
         """Crée un nouveau détenteur de droits"""
+
+
+
         try:
             async with self.get_session() as session:
                 rights_holder = RightsHolder(**holder_data)
@@ -265,6 +280,9 @@ class DatabaseManager:
         include_relations: bool = False
     ) -> Optional[RightsHolder]:
         """Récupère un détenteur de droits"""
+
+
+
         try:
             # Vérification cache
             if self.cache_enabled:
@@ -301,6 +319,9 @@ class DatabaseManager:
         offset: int = 0
     ) -> Tuple[List[RightsHolder], int]:
         """Recherche de détenteurs de droits avec pagination"""
+
+
+
         try:
             async with self.get_session() as session:
                 query = session.query(RightsHolder)
@@ -362,6 +383,9 @@ class DatabaseManager:
         co_holders: Optional[List[Dict[str, Any]]] = None
     ) -> Optional[RightsRecord]:
         """Crée un enregistrement de droits avec co-détenteurs"""
+
+
+
         try:
             async with self.get_session() as session:
                 # Création de l'enregistrement principal
@@ -398,6 +422,9 @@ class DatabaseManager:
         include_relations: bool = False
     ) -> Optional[RightsRecord]:
         """Récupère un enregistrement de droits"""
+
+
+
         try:
             # Vérification cache
             if self.cache_enabled:
@@ -435,6 +462,9 @@ class DatabaseManager:
         include_relations: bool = False
     ) -> List[RightsRecord]:
         """Récupère tous les enregistrements de droits pour un contenu"""
+
+
+
         try:
             async with self.get_session() as session:
                 query = session.query(RightsRecord).filter(
@@ -462,6 +492,9 @@ class DatabaseManager:
         offset: int = 0
     ) -> Tuple[List[RightsRecord], int]:
         """Récupère tous les droits d'un détenteur"""
+
+
+
         try:
             async with self.get_session() as session:
                 query = session.query(RightsRecord)
@@ -504,6 +537,9 @@ class DatabaseManager:
         license_data: Dict[str, Any]
     ) -> Optional[LicenseAgreement]:
         """Crée un accord de licence"""
+
+
+
         try:
             async with self.get_session() as session:
                 license_agreement = LicenseAgreement(**license_data)
@@ -528,6 +564,9 @@ class DatabaseManager:
         include_relations: bool = False
     ) -> Optional[LicenseAgreement]:
         """Récupère un accord de licence"""
+
+
+
         try:
             # Vérification cache
             if self.cache_enabled:
@@ -563,6 +602,9 @@ class DatabaseManager:
         content_id: str
     ) -> List[LicenseAgreement]:
         """Récupère les licences actives pour un contenu"""
+
+
+
         try:
             async with self.get_session() as session:
                 current_time = datetime.utcnow()
@@ -598,6 +640,9 @@ class DatabaseManager:
         event_data: Dict[str, Any]
     ) -> Optional[UsageEvent]:
         """Crée un événement d'utilisation"""
+
+
+
         try:
             async with self.get_session() as session:
                 usage_event = UsageEvent(**event_data)
@@ -617,6 +662,9 @@ class DatabaseManager:
         events_data: List[Dict[str, Any]]
     ) -> int:
         """Création en lot d'événements d'utilisation"""
+
+
+
         try:
             created_count = 0
             batch_size = self.batch_size
@@ -648,6 +696,9 @@ class DatabaseManager:
         offset: int = 0
     ) -> Tuple[List[UsageEvent], int]:
         """Récupère les événements d'utilisation pour un contenu"""
+
+
+
         try:
             async with self.get_session() as session:
                 query = session.query(UsageEvent).filter(
@@ -700,6 +751,9 @@ class DatabaseManager:
         period_end: datetime
     ) -> Dict[str, Any]:
         """Génère des analytics d'utilisation pour un contenu"""
+
+
+
         try:
             async with self.get_session() as session:
                 # Métriques de base
@@ -799,6 +853,9 @@ class DatabaseManager:
         period_end: datetime
     ) -> Dict[str, Any]:
         """Génère un résumé des revenus pour un détenteur"""
+
+
+
         try:
             async with self.get_session() as session:
                 # Jointure complexe pour récupérer les revenus
@@ -1003,6 +1060,9 @@ class DatabaseManager:
     
     async def health_check(self) -> Dict[str, Any]:
         """Vérifie la santé de la base de données"""
+
+
+
         try:
             health_status = {
                 'database': 'unknown',
@@ -1040,6 +1100,9 @@ class DatabaseManager:
     
     async def get_database_stats(self) -> Dict[str, Any]:
         """Récupère les statistiques de la base de données"""
+
+
+
         try:
             async with self.get_session() as session:
                 stats = {}
@@ -1099,6 +1162,9 @@ class DatabaseManager:
     
     async def cleanup_old_data(self, retention_days: int = 365):
         """Nettoie les anciennes données selon la politique de rétention"""
+
+
+
         try:
             cutoff_date = datetime.utcnow() - timedelta(days=retention_days)
             deleted_counts = {}
@@ -1135,6 +1201,9 @@ class DatabaseManager:
     
     async def shutdown(self):
         """Arrêt propre du gestionnaire de base de données"""
+
+
+
         try:
             if self.redis_client:
                 await self.redis_client.close()

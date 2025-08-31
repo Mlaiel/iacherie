@@ -130,6 +130,9 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
 
 def detect_content_type(file_content: bytes, filename: str) -> str:
     """Detect content type using file magic and extension"""
+
+
+
     try:
         # Use python-magic for MIME type detection
         mime_type = magic.from_buffer(file_content, mime=True)
@@ -188,6 +191,9 @@ async def upload_single_file(
     user: dict = Depends(get_current_user)
 ):
     """Upload a single file with metadata"""
+
+
+
     try:
         # Parse metadata
         import json
@@ -287,6 +293,9 @@ async def upload_multiple_files(
     user: dict = Depends(get_current_user)
 ):
     """Upload multiple files with shared metadata"""
+
+
+
     try:
         if len(files) > 20:  # Limit batch size
             raise HTTPException(
@@ -393,6 +402,9 @@ async def get_processing_status(
     user: dict = Depends(get_current_user)
 ):
     """Get file processing status"""
+
+
+
     try:
         async with database_manager.get_postgres_session() as session:
             result = await session.execute("""
@@ -435,6 +447,9 @@ async def convert_file_format(
     user: dict = Depends(get_current_user)
 ):
     """Convert file to different format"""
+
+
+
     try:
         # Verify file ownership
         async with database_manager.get_postgres_session() as session:
@@ -506,6 +521,9 @@ async def list_uploaded_files(
     user: dict = Depends(get_current_user)
 ):
     """List user's uploaded files"""
+
+
+
     try:
         query = """
             SELECT file_id, original_filename, content_type, file_size, status,
@@ -560,6 +578,9 @@ async def delete_uploaded_file(
     user: dict = Depends(get_current_user)
 ):
     """Delete an uploaded file"""
+
+
+
     try:
         async with database_manager.get_postgres_session() as session:
             # Get file info
@@ -617,6 +638,9 @@ async def download_file(
     user: dict = Depends(get_current_user)
 ):
     """Download uploaded file"""
+
+
+
     try:
         async with database_manager.get_postgres_session() as session:
             result = await session.execute("""
@@ -671,6 +695,9 @@ async def download_file(
 # Background processing functions
 async def _process_uploaded_file(file_id: str, file_path: str, content_type: str, metadata: UploadMetadata):
     """Process uploaded file in background"""
+
+
+
     try:
         # Update status to processing
         async with database_manager.get_postgres_session() as session:
@@ -733,6 +760,9 @@ async def _process_uploaded_file(file_id: str, file_path: str, content_type: str
 async def _process_file_conversion(conversion_id: str, conversion_request: ConversionRequest, 
                                   source_path: str, source_type: str):
     """Process file format conversion"""
+
+
+
     try:
         # Update status to processing
         async with database_manager.get_postgres_session() as session:

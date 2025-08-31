@@ -6,7 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project Team: Multi-format Creator Platform with AI Protection & Monetization
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -165,6 +165,9 @@ class DockerEnvironmentManager:
     
     def load_configuration(self) -> Dict[str, Any]:
         """Load Docker environment configuration"""
+
+
+
         try:
             config = {
                 'environment': self.environment,
@@ -245,6 +248,9 @@ class DockerEnvironmentManager:
     
     def generate_dockerfile(self, stage: str = "production") -> str:
         """Generate optimized Dockerfile for different stages"""
+
+
+
         try:
             dockerfile_content = self._generate_dockerfile_content(stage)
             
@@ -264,6 +270,9 @@ class DockerEnvironmentManager:
     
     def generate_docker_compose(self, environment: str = "development") -> str:
         """Generate Docker Compose configuration"""
+
+
+
         try:
             compose_config = self._generate_compose_config(environment)
             
@@ -283,6 +292,9 @@ class DockerEnvironmentManager:
     
     def build_image(self, stage: str = "production", no_cache: bool = False) -> bool:
         """Build Docker image with optimization"""
+
+
+
         try:
             # Generate Dockerfile
             dockerfile_path = self.generate_dockerfile(stage)
@@ -304,6 +316,9 @@ class DockerEnvironmentManager:
     
     def scan_image_vulnerabilities(self, image_tag: str) -> Dict[str, Any]:
         """Scan Docker image for vulnerabilities"""
+
+
+
         try:
             scan_results = {
                 'image': image_tag,
@@ -329,6 +344,9 @@ class DockerEnvironmentManager:
     
     def optimize_image_layers(self, dockerfile_path: str) -> bool:
         """Optimize Docker image layers for size and caching"""
+
+
+
         try:
             # Analyze current layers
             layer_analysis = self._analyze_image_layers(dockerfile_path)
@@ -350,6 +368,9 @@ class DockerEnvironmentManager:
     
     def setup_container_security(self) -> bool:
         """Setup container security hardening"""
+
+
+
         try:
             # Create non-root user script
             self._create_user_setup_script()
@@ -375,6 +396,9 @@ class DockerEnvironmentManager:
     
     def setup_container_monitoring(self) -> bool:
         """Setup container monitoring and observability"""
+
+
+
         try:
             # Configure metrics collection
             self._configure_metrics_collection()
@@ -431,6 +455,9 @@ class DockerEnvironmentManager:
     
     def get_health_status(self) -> Dict[str, Any]:
         """Get Docker environment health status"""
+
+
+
         return {
             'environment': self.environment,
             'status': 'healthy',
@@ -458,6 +485,9 @@ class DockerEnvironmentManager:
     
     def _generate_production_dockerfile(self) -> str:
         """Generate production Dockerfile"""
+
+
+
         return f"""# Multi-stage production Dockerfile for IA Influencer Agent
 # Author: Fahed Mlaiel <mlaiel@live.de>
 # Security hardened with non-root user and minimal attack surface
@@ -528,6 +558,9 @@ CMD ["python", "-m", "gunicorn", "-w", "4", "-k", "uvicorn.workers.UvicornWorker
     
     def _generate_development_dockerfile(self) -> str:
         """Generate development Dockerfile with debugging tools"""
+
+
+
         return f"""# Development Dockerfile for IA Influencer Agent
 FROM {self.image.base_image} as development
 
@@ -559,6 +592,9 @@ CMD ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "
     
     def _generate_testing_dockerfile(self) -> str:
         """Generate testing Dockerfile for CI/CD"""
+
+
+
         return f"""# Testing Dockerfile for IA Influencer Agent
 FROM {self.image.base_image} as testing
 
@@ -585,6 +621,9 @@ CMD ["python", "-m", "pytest", "-v", "--cov=app", "--cov-report=html"]
     
     def _generate_base_dockerfile(self) -> str:
         """Generate base Dockerfile"""
+
+
+
         return f"""# Base Dockerfile for IA Influencer Agent
 FROM {self.image.base_image}
 
@@ -668,6 +707,9 @@ CMD ["python", "app/main.py"]
     
     def _generate_expose_commands(self) -> str:
         """Generate EXPOSE commands for Dockerfile"""
+
+
+
         return '\\n'.join([f"EXPOSE {port}" for port in self.network.expose_ports])
     
     def _get_environment_variables(self, environment: str) -> Dict[str, str]:
@@ -720,6 +762,9 @@ CMD ["python", "app/main.py"]
     
     def _execute_docker_command(self, command: str, capture_output: bool = False) -> Union[bool, str]:
         """Execute Docker command"""
+
+
+
         try:
             import subprocess
             

@@ -338,6 +338,9 @@ class ValidationChain:
         Returns:
             Chain result or None
         """
+
+
+
         return self.active_chains.get(chain_id)
     
     async def cancel_chain(self, chain_id: str) -> bool:
@@ -417,6 +420,9 @@ class ValidationChain:
         context: Optional[Dict[str, Any]]
     ) -> None:
         """Execute pipeline steps in parallel."""
+
+
+
         try:
             # Group steps that can run in parallel
             parallel_groups = self._group_parallel_steps(pipeline.steps)
@@ -487,6 +493,9 @@ class ValidationChain:
         context: Optional[Dict[str, Any]]
     ) -> None:
         """Execute pipeline with conditional logic."""
+
+
+
         try:
             current_data = data
             executed_steps = set()
@@ -557,6 +566,9 @@ class ValidationChain:
         context: Optional[Dict[str, Any]]
     ) -> None:
         """Execute pipeline in pipeline mode (data flows through steps)."""
+
+
+
         try:
             current_data = data
             
@@ -660,6 +672,9 @@ class ValidationChain:
     
     async def _transform_data(self, step: ValidationStep, step_result: Any, original_data: Any) -> Any:
         """Transform data based on step result."""
+
+
+
         try:
             # Check if step result has processed data
             if hasattr(step_result, 'processed_data'):
@@ -750,6 +765,9 @@ class ValidationChain:
     
     async def _generate_summary(self, result: ChainResult) -> Dict[str, Any]:
         """Generate validation summary."""
+
+
+
         try:
             total_steps = len(result.step_results) + len(result.failed_steps) + len(result.skipped_steps)
             successful_steps = len(result.step_results) - len(result.failed_steps)
@@ -770,6 +788,9 @@ class ValidationChain:
     
     async def _calculate_overall_score(self, result: ChainResult) -> float:
         """Calculate overall validation score."""
+
+
+
         try:
             if not result.step_results:
                 return 0.0
@@ -981,14 +1002,23 @@ class ChainValidator:
         **kwargs
     ) -> str:
         """Create new validation pipeline."""
+
+
+
         return await self.chain.create_pipeline(name, steps, **kwargs)
     
     def get_builtin_pipelines(self) -> List[str]:
         """Get list of built-in pipelines."""
+
+
+
         return list(self.chain.builtin_pipelines.keys())
     
     async def get_pipeline_info(self, pipeline_id: str) -> Optional[Dict[str, Any]]:
         """Get pipeline information."""
+
+
+
         try:
             pipeline = await self.chain._get_pipeline(pipeline_id)
             return {

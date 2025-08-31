@@ -54,11 +54,17 @@ class TestPerformanceTracker:
     @pytest.fixture
     def performance_tracker(self):
         """Create a performance tracker instance"""
+
+
+
         return PerformanceTracker()
     
     @pytest.fixture
     def sample_content_data(self):
         """Create sample content performance data"""
+
+
+
         return {
             "content_id": "content_12345",
             "title": "10 AI Tools Every Content Creator Should Know",
@@ -106,6 +112,9 @@ class TestPerformanceTracker:
     @pytest.fixture
     def campaign_data(self):
         """Create sample campaign performance data"""
+
+
+
         return {
             "campaign_id": "campaign_67890",
             "campaign_name": "AI Content Course Launch",
@@ -611,6 +620,9 @@ class TestMetricsCollector:
     @pytest.fixture
     def metrics_collector(self):
         """Create a metrics collector instance"""
+
+
+
         return MetricsCollector()
     
     def test_metrics_collector_initialization(self, metrics_collector):

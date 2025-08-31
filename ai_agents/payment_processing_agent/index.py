@@ -7,7 +7,7 @@ configuration management, and service orchestration.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -99,7 +99,7 @@ class PaymentProcessingService:
                     redis_url=self.config.redis_url
                 )
                 await self.cache.initialize()
-                logger.info("✅ Performance cache initialized")
+                logger.info(" Performance cache initialized")
             
             # Initialize currency converter
             self.currency_converter = CurrencyConverter(
@@ -107,14 +107,14 @@ class PaymentProcessingService:
                 cache=self.cache
             )
             await self.currency_converter.initialize()
-            logger.info("✅ Currency converter initialized")
+            logger.info(" Currency converter initialized")
             
             # Initialize fraud detection engine
             if self.enable_fraud_detection:
                 self.fraud_engine = FraudDetectionEngine(
                     config=self.config
                 )
-                logger.info("✅ Fraud detection engine initialized")
+                logger.info(" Fraud detection engine initialized")
             
             # Initialize compliance manager
             if self.enable_compliance:
@@ -122,7 +122,7 @@ class PaymentProcessingService:
                     config=self.config
                 )
                 await self.compliance_manager.initialize()
-                logger.info("✅ Compliance manager initialized")
+                logger.info(" Compliance manager initialized")
             
             # Initialize analytics engine
             if self.enable_analytics:
@@ -131,7 +131,7 @@ class PaymentProcessingService:
                     cache=self.cache
                 )
                 await self.analytics_engine.initialize()
-                logger.info("✅ Analytics engine initialized")
+                logger.info(" Analytics engine initialized")
             
             # Initialize payout scheduler
             if self.enable_scheduling:
@@ -139,7 +139,7 @@ class PaymentProcessingService:
                     config=self.config
                 )
                 await self.payout_scheduler.initialize()
-                logger.info("✅ Payout scheduler initialized")
+                logger.info(" Payout scheduler initialized")
             
             # Initialize main payment agent
             self.payment_agent = PaymentProcessingAgent(
@@ -151,13 +151,13 @@ class PaymentProcessingService:
                 currency_converter=self.currency_converter
             )
             await self.payment_agent.initialize()
-            logger.info("✅ Payment processing agent initialized")
+            logger.info(" Payment processing agent initialized")
             
             self.initialized = True
-            logger.info("🎉 Payment processing service fully initialized")
+            logger.info(" Payment processing service fully initialized")
             
         except Exception as e:
-            logger.error(f"❌ Service initialization failed: {str(e)}")
+            logger.error(f" Service initialization failed: {str(e)}")
             await self.shutdown()  # Cleanup on failure
             raise PaymentProcessingError(f"Service initialization failed: {str(e)}")
     
@@ -176,18 +176,18 @@ class PaymentProcessingService:
             # Start schedulers
             if self.payout_scheduler:
                 await self.payout_scheduler.start()
-                logger.info("✅ Payout scheduler started")
+                logger.info(" Payout scheduler started")
             
             # Start background tasks
             if self.analytics_engine:
                 await self.analytics_engine.start_background_tasks()
-                logger.info("✅ Analytics background tasks started")
+                logger.info(" Analytics background tasks started")
             
             self.running = True
-            logger.info("🚀 Payment processing service is now running")
+            logger.info(" Payment processing service is now running")
             
         except Exception as e:
-            logger.error(f"❌ Service start failed: {str(e)}")
+            logger.error(f" Service start failed: {str(e)}")
             raise PaymentProcessingError(f"Service start failed: {str(e)}")
     
     async def stop(self) -> None:
@@ -201,15 +201,15 @@ class PaymentProcessingService:
         # Stop schedulers
         if self.payout_scheduler:
             await self.payout_scheduler.stop()
-            logger.info("✅ Payout scheduler stopped")
+            logger.info(" Payout scheduler stopped")
         
         # Stop background tasks
         if self.analytics_engine:
             await self.analytics_engine.stop_background_tasks()
-            logger.info("✅ Analytics background tasks stopped")
+            logger.info(" Analytics background tasks stopped")
         
         self.running = False
-        logger.info("⏹️ Payment processing service stopped")
+        logger.info("⏹ Payment processing service stopped")
     
     async def shutdown(self) -> None:
         """Shutdown all service components"""
@@ -224,30 +224,30 @@ class PaymentProcessingService:
         # Shutdown components in reverse order
         if self.payment_agent:
             await self.payment_agent.shutdown()
-            logger.info("✅ Payment agent shutdown")
+            logger.info(" Payment agent shutdown")
         
         if self.payout_scheduler:
             await self.payout_scheduler.shutdown()
-            logger.info("✅ Payout scheduler shutdown")
+            logger.info(" Payout scheduler shutdown")
         
         if self.analytics_engine:
             await self.analytics_engine.shutdown()
-            logger.info("✅ Analytics engine shutdown")
+            logger.info(" Analytics engine shutdown")
         
         if self.compliance_manager:
             await self.compliance_manager.shutdown()
-            logger.info("✅ Compliance manager shutdown")
+            logger.info(" Compliance manager shutdown")
         
         if self.currency_converter:
             await self.currency_converter.shutdown()
-            logger.info("✅ Currency converter shutdown")
+            logger.info(" Currency converter shutdown")
         
         if self.cache:
             await self.cache.shutdown()
-            logger.info("✅ Performance cache shutdown")
+            logger.info(" Performance cache shutdown")
         
         self.initialized = False
-        logger.info("🔌 Payment processing service fully shutdown")
+        logger.info(" Payment processing service fully shutdown")
     
     async def health_check(self) -> Dict[str, Any]:
         """Perform comprehensive health check of all components"""
@@ -324,6 +324,9 @@ class PaymentProcessingService:
     @asynccontextmanager
     async def lifespan(self):
         """Context manager for service lifecycle"""
+
+
+
         try:
             await self.start()
             yield self
@@ -417,6 +420,9 @@ async def create_currency_converter(
 # CLI and testing utilities
 async def run_health_check():
     """Run a comprehensive health check"""
+
+
+
     try:
         service = await get_service()
         health = await service.health_check()
@@ -441,6 +447,9 @@ async def run_health_check():
 
 async def run_performance_test():
     """Run basic performance tests"""
+
+
+
     try:
         service = await get_service()
         agent = service.get_agent()

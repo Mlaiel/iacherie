@@ -140,6 +140,9 @@ class RightsManager:
     
     def _load_copyright_patterns(self) -> List[Dict[str, Any]]:
         """Load copyright detection patterns"""
+
+
+
         return [
             {
                 "pattern": r"©\s*\d{4}",
@@ -170,6 +173,9 @@ class RightsManager:
     
     def _load_trademark_patterns(self) -> List[Dict[str, Any]]:
         """Load trademark detection patterns"""
+
+
+
         return [
             {
                 "pattern": r"\b(Apple|Microsoft|Google|Amazon|Facebook|Meta|Tesla|Nike|Coca-Cola)\b",
@@ -185,6 +191,9 @@ class RightsManager:
     
     def _load_fair_use_factors(self) -> Dict[str, Any]:
         """Load fair use assessment factors"""
+
+
+
         return {
             "purpose_and_character": {
                 "educational": 0.8,
@@ -217,6 +226,9 @@ class RightsManager:
     
     async def _initialize_rights_databases(self) -> None:
         """Initialize rights databases from various sources"""
+
+
+
         try:
             # Load known copyrighted works from database
             copyrighted_works = await self.db_manager.fetch_all(
@@ -726,6 +738,9 @@ class RightsManager:
     
     def _generate_content_hash(self, content: str) -> str:
         """Generate hash for content identification"""
+
+
+
         return hashlib.sha256(content.encode('utf-8')).hexdigest()
     
     def _determine_content_type(self, content: str) -> ContentType:
@@ -735,6 +750,9 @@ class RightsManager:
     
     async def _store_rights_assessment(self, assessment: RightsAssessment) -> None:
         """Store rights assessment results"""
+
+
+
         try:
             query = """
                 INSERT INTO rights_assessments 
@@ -766,6 +784,9 @@ class RightsManager:
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
         """Add copyrighted work to database"""
+
+
+
         try:
             work_data = {
                 "content_hash": content_hash,
@@ -794,6 +815,9 @@ class RightsManager:
     
     async def register_content_license(self, license_info: ContentLicense) -> None:
         """Register a content license"""
+
+
+
         try:
             await self.db_manager.execute(
                 """
@@ -825,6 +849,9 @@ class RightsManager:
     
     async def get_rights_statistics(self, days: int = 30) -> Dict[str, Any]:
         """Get rights management statistics"""
+
+
+
         try:
             stats_query = """
                 SELECT 

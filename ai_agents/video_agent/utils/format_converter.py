@@ -7,7 +7,7 @@ compression algorithms, and professional-quality output for all major formats.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -514,6 +514,9 @@ class VideoFormatConverter:
     
     async def _analyze_input_video(self, video_path: str) -> Dict[str, Any]:
         """Analyze input video properties using ffprobe"""
+
+
+
         try:
             probe = ffmpeg.probe(video_path)
             
@@ -572,6 +575,9 @@ class VideoFormatConverter:
     
     def _parse_fps(self, fps_string: str) -> float:
         """Parse FPS from fraction string"""
+
+
+
         try:
             if "/" in fps_string:
                 numerator, denominator = fps_string.split("/")
@@ -767,6 +773,9 @@ class VideoFormatConverter:
     async def _execute_conversion(self, input_path: str, output_path: str, 
                                 settings: Dict[str, Any]) -> Dict[str, Any]:
         """Execute the actual video conversion"""
+
+
+
         
         try:
             # Build ffmpeg command
@@ -834,6 +843,9 @@ class VideoFormatConverter:
     async def _create_stream_variant(self, input_path: str, output_path: str,
                                    resolution_settings: Dict[str, Any], format_type: str) -> bool:
         """Create a single streaming variant"""
+
+
+
         
         try:
             input_stream = ffmpeg.input(input_path)
@@ -924,6 +936,9 @@ class VideoFormatConverter:
     
     async def cleanup(self):
         """Cleanup temporary files and resources"""
+
+
+
         try:
             if self.temp_dir.exists():
                 import shutil
@@ -1004,6 +1019,9 @@ class CompressionOptimizer:
     
     async def _analyze_video_complexity(self, video_path: str) -> Dict[str, Any]:
         """Analyze video complexity for compression optimization"""
+
+
+
         
         try:
             # Basic video properties
@@ -1034,6 +1052,9 @@ class CompressionOptimizer:
     
     async def _calculate_complexity_score(self, video_path: str) -> float:
         """Calculate video complexity score based on motion and detail"""
+
+
+
         
         try:
             # Sample a few frames for analysis
@@ -1084,6 +1105,9 @@ class CompressionOptimizer:
     async def _optimize_for_size(self, input_path: str, output_path: str, 
                                target_size_mb: float, video_info: Dict[str, Any]) -> Dict[str, Any]:
         """Optimize video for specific target file size"""
+
+
+
         
         try:
             duration = video_info.get("duration", 0)
@@ -1235,6 +1259,9 @@ class CompressionOptimizer:
     
     async def cleanup(self):
         """Cleanup temporary files"""
+
+
+
         try:
             if self.temp_dir.exists():
                 import shutil

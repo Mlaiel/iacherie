@@ -7,7 +7,7 @@ discoverability and engagement across platforms and search engines.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
 
@@ -75,6 +75,9 @@ class SEOOptimizer:
         
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default SEO configuration"""
+
+
+
         return {
             'target_keyword_density': 0.02,  # 2%
             'max_keyword_density': 0.05,     # 5%
@@ -90,6 +93,9 @@ class SEOOptimizer:
     
     def _load_stop_words(self) -> set:
         """Load stop words for filtering"""
+
+
+
         try:
             nltk.data.find('corpora/stopwords')
         except LookupError:
@@ -99,6 +105,9 @@ class SEOOptimizer:
     
     def _load_seo_rules(self) -> Dict[str, Any]:
         """Load SEO optimization rules"""
+
+
+
         return {
             'title_rules': {
                 'max_length': 60,

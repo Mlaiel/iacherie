@@ -153,10 +153,16 @@ class SEOAnalysisResult:
     
     def get_issues_by_category(self, category: SEOMetricType) -> List[SEOIssue]:
         """Get issues by category"""
+
+
+
         return [issue for issue in self.issues if issue.category == category]
     
     def get_critical_issues(self) -> List[SEOIssue]:
         """Get critical issues"""
+
+
+
         return [issue for issue in self.issues if issue.severity == 'critical']
     
     def to_dict(self) -> Dict[str, Any]:

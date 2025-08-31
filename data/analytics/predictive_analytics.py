@@ -194,6 +194,9 @@ class PredictiveAnalytics:
         Returns:
             Content performance prediction
         """
+
+
+
         try:
             cache_key = f"content_prediction:{user_id}:{hash(str(content_data))}:{prediction_horizon.days}"
             cached_result = await self._get_cached_result(cache_key)
@@ -275,6 +278,9 @@ class PredictiveAnalytics:
         Returns:
             Audience growth forecast
         """
+
+
+
         try:
             cache_key = f"audience_forecast:{user_id}:{forecast_days}"
             cached_result = await self._get_cached_result(cache_key)
@@ -347,6 +353,9 @@ class PredictiveAnalytics:
         Returns:
             Viral potential prediction
         """
+
+
+
         try:
             cache_key = f"viral_prediction:{user_id}:{hash(str(content_data))}"
             cached_result = await self._get_cached_result(cache_key)
@@ -418,6 +427,9 @@ class PredictiveAnalytics:
         Returns:
             Comprehensive trend analysis
         """
+
+
+
         try:
             cache_key = f"trend_analysis:{user_id}:{metric}:{time_period.days}"
             cached_result = await self._get_cached_result(cache_key)
@@ -490,6 +502,9 @@ class PredictiveAnalytics:
         Returns:
             List of optimization recommendations
         """
+
+
+
         try:
             cache_key = f"optimization_recs:{user_id}:{content_type}"
             cached_result = await self._get_cached_result(cache_key)
@@ -551,6 +566,9 @@ class PredictiveAnalytics:
         Returns:
             Churn risk analysis and predictions
         """
+
+
+
         try:
             cache_key = f"churn_prediction:{user_id}"
             cached_result = await self._get_cached_result(cache_key)
@@ -607,6 +625,9 @@ class PredictiveAnalytics:
     
     async def _get_historical_performance_data(self, user_id: str) -> List[Dict]:
         """Get historical content performance data."""
+
+
+
         try:
             query = text("""
                 SELECT 
@@ -661,6 +682,9 @@ class PredictiveAnalytics:
     
     def _prepare_content_features(self, historical_data: List[Dict], content_data: Dict) -> Tuple[np.ndarray, np.ndarray]:
         """Prepare features for content performance prediction."""
+
+
+
         try:
             df = pd.DataFrame(historical_data)
             
@@ -691,6 +715,9 @@ class PredictiveAnalytics:
     
     def _extract_content_features(self, content_data: Dict) -> List[float]:
         """Extract features from new content data."""
+
+
+
         try:
             return [
                 len(content_data.get('title', '')) / 10,
@@ -710,6 +737,9 @@ class PredictiveAnalytics:
                                  features: np.ndarray, target: np.ndarray,
                                  model_type: ModelType) -> Any:
         """Get existing model or train new one."""
+
+
+
         try:
             model_key = f"{user_id}_{prediction_type.value}_{model_type.value}"
             
@@ -796,6 +826,9 @@ class PredictiveAnalytics:
     
     async def _get_cached_result(self, cache_key: str) -> Optional[Dict]:
         """Get cached result from Redis."""
+
+
+
         try:
             cached_data = self.redis_client.get(cache_key)
             if cached_data:
@@ -807,6 +840,9 @@ class PredictiveAnalytics:
     
     async def _cache_result(self, cache_key: str, data: Dict, ttl: int = None) -> None:
         """Cache result in Redis."""
+
+
+
         try:
             cache_ttl = ttl or self.cache_ttl
             self.redis_client.setex(

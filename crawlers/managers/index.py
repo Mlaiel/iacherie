@@ -9,7 +9,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  CRITICAL LEGAL WARNING ⚠️
+  CRITICAL LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel. Any unauthorized use,
 reproduction, distribution, or commercialization without explicit written 
 permission is strictly prohibited and will result in legal action.
@@ -63,6 +63,9 @@ class ManagerRegistry:
         Returns:
             bool: True if all managers initialized successfully
         """
+
+
+
         try:
             if self._initialized:
                 self.logger.warning("Managers already initialized")
@@ -126,46 +129,79 @@ class ManagerRegistry:
         Returns:
             Manager instance or None if not found
         """
+
+
+
         return self.managers.get(manager_name)
     
     def get_content_discovery_manager(self) -> Optional[ContentDiscoveryManager]:
         """Get content discovery manager."""
+
+
+
         return self.get_manager("content_discovery")
     
     def get_resource_allocation_manager(self) -> Optional[ResourceAllocationManager]:
         """Get resource allocation manager."""
+
+
+
         return self.get_manager("resource_allocation")
     
     def get_session_manager(self) -> Optional[SessionManager]:
         """Get session manager."""
+
+
+
         return self.get_manager("session")
     
     def get_queue_manager(self) -> Optional[QueueManager]:
         """Get queue manager."""
+
+
+
         return self.get_manager("queue")
     
     def get_data_pipeline_manager(self) -> Optional[DataPipelineManager]:
         """Get data pipeline manager."""
+
+
+
         return self.get_manager("data_pipeline")
     
     def get_error_recovery_manager(self) -> Optional[ErrorRecoveryManager]:
         """Get error recovery manager."""
+
+
+
         return self.get_manager("error_recovery")
     
     def get_platform_integration_manager(self) -> Optional[PlatformIntegrationManager]:
         """Get platform integration manager."""
+
+
+
         return self.get_manager("platform_integration")
     
     def get_content_protection_manager(self) -> Optional[ContentProtectionManager]:
         """Get content protection manager."""
+
+
+
         return self.get_manager("content_protection")
     
     def get_monetization_manager(self) -> Optional[MonetizationManager]:
         """Get monetization manager."""
+
+
+
         return self.get_manager("monetization")
     
     def get_collaboration_manager(self) -> Optional[CollaborationManager]:
         """Get collaboration manager."""
+
+
+
         return self.get_manager("collaboration")
     
     async def check_health(self) -> Dict[str, bool]:
@@ -232,6 +268,9 @@ class ManagerRegistry:
         Returns:
             bool: True if restart successful
         """
+
+
+
         try:
             if manager_name not in self.managers:
                 self.logger.error(f"Manager '{manager_name}' not found")
@@ -278,6 +317,9 @@ class ManagerRegistry:
     
     async def close_all(self):
         """Close all managers and cleanup resources."""
+
+
+
         try:
             for manager_name, manager in self.managers.items():
                 try:
@@ -299,6 +341,9 @@ class ManagerRegistry:
     
     async def __aenter__(self):
         """Async context manager entry."""
+
+
+
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):

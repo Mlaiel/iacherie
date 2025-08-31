@@ -370,6 +370,9 @@ class SupportedFormats:
     
     def _initialize_aliases(self) -> Dict[str, str]:
         """Initialize format aliases and alternative extensions"""
+
+
+
         return {
             'wave': 'wav',
             'oga': 'ogg',
@@ -441,6 +444,9 @@ class SupportedFormats:
     
     def is_format_supported(self, format_name: str) -> bool:
         """Check if format is supported"""
+
+
+
         return self.get_format_profile(format_name) is not None
     
     def get_supported_formats(self, category: Optional[FormatCategory] = None) -> List[str]:
@@ -706,12 +712,18 @@ class FormatRegistry:
     
     def get_streaming_formats(self) -> List[str]:
         """Get formats suitable for streaming"""
+
+
+
         return self.supported_formats.get_supported_formats(FormatCategory.STREAMING) + \
                [fmt for fmt, profile in self.supported_formats.formats.items() 
                 if profile.capabilities.streaming_friendly]
     
     def get_professional_formats(self) -> List[str]:
         """Get formats suitable for professional use"""
+
+
+
         return [fmt for fmt, profile in self.supported_formats.formats.items() 
                 if profile.capabilities.professional_grade]
     
@@ -733,6 +745,9 @@ class FormatRegistry:
     
     async def _detect_by_content(self, file_path: Path) -> Optional[str]:
         """Detect format by analyzing file content"""
+
+
+
         try:
             audio_file = mutagen.File(str(file_path))
             if not audio_file:
@@ -756,6 +771,9 @@ class FormatRegistry:
     
     async def _detect_by_magic_number(self, file_path: Path) -> Optional[str]:
         """Detect format by magic number (file signature)"""
+
+
+
         try:
             with open(file_path, 'rb') as f:
                 header = f.read(16)
@@ -1012,6 +1030,9 @@ class FormatValidator:
                                        file_path: Path, 
                                        format_name: str) -> Dict[str, Any]:
         """Validate technical specifications"""
+
+
+
         try:
             # Load file info
             audio_file = mutagen.File(str(file_path))

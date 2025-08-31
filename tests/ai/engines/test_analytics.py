@@ -8,7 +8,7 @@ Tous les tests sont industriels, ultra-avancés et clé en main.
 Copyright © 2024 Fahed Mlaiel - Tous droits réservés
 Email: mlaiel@live.de
 
-⚠️ AVERTISSEMENT COPYRIGHT STRICT ⚠️
+ AVERTISSEMENT COPYRIGHT STRICT 
 Ce logiciel est propriétaire et confidentiel.
 Toute utilisation, modification ou distribution non autorisée par une personne ou entité
 sans consentement écrit explicite de Fahed Mlaiel (mlaiel@live.de) est strictement interdite.
@@ -265,6 +265,9 @@ class TestMetricsCollector:
     @pytest.fixture
     def collector(self):
         """Fixture pour créer un collecteur de métriques."""
+
+
+
         return MetricsCollector()
     
     @pytest.fixture
@@ -376,6 +379,9 @@ class TestMetricsCollectorDashboard:
     @pytest.fixture
     def collector(self):
         """Fixture pour créer un collecteur de métriques."""
+
+
+
         return MetricsCollector()
     
     def test_collector_initialization(self, collector):
@@ -404,6 +410,9 @@ class TestMetricsCollectorReporting:
     @pytest.fixture
     def collector(self):
         """Fixture pour créer un collecteur de métriques."""
+
+
+
         return MetricsCollector()
     
     def test_collector_reporting_initialization(self, collector):
@@ -448,6 +457,9 @@ class TestAnalyticsIntegration:
     @pytest.fixture
     def collector(self):
         """Fixture pour créer un collecteur de métriques."""
+
+
+
         return MetricsCollector()
     
     def test_full_analytics_workflow(self, collector):

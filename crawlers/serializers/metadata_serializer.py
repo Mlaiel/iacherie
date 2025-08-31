@@ -260,6 +260,9 @@ class MetadataSerializer:
         Returns:
             Serialized metadata dictionary
         """
+
+
+
         try:
             # Convert to dictionary
             data = metadata.dict()
@@ -326,6 +329,9 @@ class MetadataSerializer:
         Returns:
             Deserialized MetadataData object
         """
+
+
+
         try:
             # Handle datetime conversions
             if isinstance(data.get('extracted_at'), str):
@@ -379,6 +385,9 @@ class MetadataSerializer:
         compact_mode: bool = True
     ) -> List[Dict[str, Any]]:
         """Serialize multiple metadata objects efficiently."""
+
+
+
         try:
             serialized_list = []
             
@@ -402,6 +411,9 @@ class MetadataSerializer:
         data_list: List[Dict[str, Any]]
     ) -> List[MetadataData]:
         """Deserialize multiple metadata objects efficiently."""
+
+
+
         try:
             metadata_list = []
             
@@ -418,6 +430,9 @@ class MetadataSerializer:
     
     def _serialize_technical_metadata(self, tech: TechnicalMetadata) -> Dict[str, Any]:
         """Serialize technical metadata."""
+
+
+
         return {
             'file_size': tech.file_size,
             'file_format': tech.file_format,
@@ -434,6 +449,9 @@ class MetadataSerializer:
     
     def _deserialize_technical_metadata(self, data: Dict[str, Any]) -> TechnicalMetadata:
         """Deserialize technical metadata."""
+
+
+
         return TechnicalMetadata(**data)
     
     def _serialize_exif_metadata(self, exif: ExifMetadata) -> Dict[str, Any]:
@@ -469,6 +487,9 @@ class MetadataSerializer:
     
     def _serialize_audio_metadata(self, audio: AudioMetadata) -> Dict[str, Any]:
         """Serialize audio metadata."""
+
+
+
         return {
             'duration': audio.duration,
             'channels': audio.channels,
@@ -497,10 +518,16 @@ class MetadataSerializer:
     
     def _deserialize_audio_metadata(self, data: Dict[str, Any]) -> AudioMetadata:
         """Deserialize audio metadata."""
+
+
+
         return AudioMetadata(**data)
     
     def _serialize_video_metadata(self, video: VideoMetadata) -> Dict[str, Any]:
         """Serialize video metadata."""
+
+
+
         return {
             'duration': video.duration,
             'width': video.width,
@@ -521,10 +548,16 @@ class MetadataSerializer:
     
     def _deserialize_video_metadata(self, data: Dict[str, Any]) -> VideoMetadata:
         """Deserialize video metadata."""
+
+
+
         return VideoMetadata(**data)
     
     def _serialize_image_metadata(self, image: ImageMetadata) -> Dict[str, Any]:
         """Serialize image metadata."""
+
+
+
         return {
             'width': image.width,
             'height': image.height,
@@ -542,10 +575,16 @@ class MetadataSerializer:
     
     def _deserialize_image_metadata(self, data: Dict[str, Any]) -> ImageMetadata:
         """Deserialize image metadata."""
+
+
+
         return ImageMetadata(**data)
     
     def _serialize_rights_metadata(self, rights: RightsMetadata) -> Dict[str, Any]:
         """Serialize rights metadata."""
+
+
+
         return {
             'copyright': rights.copyright,
             'license': rights.license,
@@ -561,10 +600,16 @@ class MetadataSerializer:
     
     def _deserialize_rights_metadata(self, data: Dict[str, Any]) -> RightsMetadata:
         """Deserialize rights metadata."""
+
+
+
         return RightsMetadata(**data)
     
     def _compress_text_field(self, text: str) -> str:
         """Compress large text field."""
+
+
+
         try:
             import gzip
             import base64
@@ -577,6 +622,9 @@ class MetadataSerializer:
     
     def _decompress_text_field(self, compressed_text: str) -> str:
         """Decompress compressed text field."""
+
+
+
         try:
             import gzip
             import base64
@@ -592,6 +640,9 @@ class MetadataSerializer:
     
     def calculate_metadata_quality_score(self, metadata: MetadataData) -> float:
         """Calculate quality score for metadata completeness."""
+
+
+
         try:
             total_fields = 0
             filled_fields = 0
@@ -641,6 +692,9 @@ class MetadataSerializer:
     
     def extract_metadata_summary(self, metadata: MetadataData) -> Dict[str, Any]:
         """Extract summary information from metadata."""
+
+
+
         try:
             summary = {
                 'metadata_id': metadata.metadata_id,

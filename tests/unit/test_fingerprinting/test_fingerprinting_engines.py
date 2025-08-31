@@ -311,6 +311,9 @@ class TestTextFingerprintEngine:
     @pytest.fixture
     def sample_texts(self):
         """Sample texts for testing"""
+
+
+
         return {
             'original': "This is an original piece of creative writing about artificial intelligence and machine learning.",
             'similar': "This is an original piece of creative content about AI and machine learning.",

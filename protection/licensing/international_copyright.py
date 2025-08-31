@@ -1,5 +1,5 @@
 """
-🌍 International Copyright Manager - Global Rights Management System
+ International Copyright Manager - Global Rights Management System
 ================================================================
 
 Ultra-advanced international copyright and intellectual property management:
@@ -14,7 +14,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + International IP Lawyer + Music Business Expert + Cultural Analyst + Blockchain Engineer
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ LEGAL WARNING:
+ LEGAL WARNING:
 This software is protected by international copyright law and trade secret law.
 Unauthorized reproduction, distribution, or reverse engineering is strictly prohibited
 and may result in severe civil and criminal penalties. Users must comply with all
@@ -130,7 +130,7 @@ class RegistrationRecord:
 
 class InternationalCopyrightManager:
     """
-    🚀 International copyright management system
+     International copyright management system
     
     Comprehensive system for managing copyright across multiple
     jurisdictions with treaty compliance and automated registration.
@@ -372,6 +372,9 @@ class InternationalCopyrightManager:
         priority_filing: bool
     ) -> Dict[str, Any]:
         """Register work in specific territory."""
+
+
+
         try:
             # Get territorial requirements
             territory_info = self.territorial_rights.get(territory)
@@ -821,6 +824,9 @@ class InternationalCopyrightManager:
 
     def get_copyright_metrics(self) -> Dict[str, Any]:
         """Get copyright management performance metrics."""
+
+
+
         return {
             **self.copyright_metrics,
             'supported_territories': len(self.territorial_rights),

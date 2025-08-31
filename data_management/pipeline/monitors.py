@@ -362,6 +362,9 @@ class PipelineHealthMonitor:
     # Health check implementations
     async def _check_database_health(self) -> Dict[str, Any]:
         """Check database connectivity and performance."""
+
+
+
         
         try:
             # Simulate database health check
@@ -385,6 +388,9 @@ class PipelineHealthMonitor:
     
     async def _check_redis_health(self) -> Dict[str, Any]:
         """Check Redis connectivity and performance."""
+
+
+
         
         try:
             # Simulate Redis health check
@@ -409,6 +415,9 @@ class PipelineHealthMonitor:
     
     async def _check_storage_health(self) -> Dict[str, Any]:
         """Check storage system accessibility and performance."""
+
+
+
         
         try:
             # Simulate storage health check
@@ -432,6 +441,9 @@ class PipelineHealthMonitor:
     
     async def _check_processing_engine_health(self) -> Dict[str, Any]:
         """Check processing engine health and capacity."""
+
+
+
         
         try:
             # Simulate processing engine health check
@@ -456,6 +468,9 @@ class PipelineHealthMonitor:
     
     async def _check_api_health(self) -> Dict[str, Any]:
         """Check API endpoint health and responsiveness."""
+
+
+
         
         try:
             # Simulate API health check
@@ -592,6 +607,9 @@ class PerformanceMetricsCollector:
     
     def _collect_system_metrics(self) -> Dict[str, Any]:
         """Collect system-level performance metrics."""
+
+
+
         
         return {
             'cpu_usage_percent': psutil.cpu_percent(interval=1),

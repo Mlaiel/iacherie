@@ -8,7 +8,7 @@ This script showcases real-world usage scenarios and validates all components.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -38,32 +38,32 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-def print_section_header(title: str, emoji: str = "📊"):
+def print_section_header(title: str, emoji: str = ""):
     """Print formatted section header"""
     print(f"\n{emoji} " + "="*60)
     print(f"{emoji} {title}")
     print(f"{emoji} " + "="*60)
 
-def print_subsection(title: str, emoji: str = "📋"):
+def print_subsection(title: str, emoji: str = ""):
     """Print formatted subsection header"""
     print(f"\n{emoji} {title}")
     print("-" * 50)
 
 def print_success(message: str):
     """Print success message"""
-    print(f"✅ {message}")
+    print(f" {message}")
 
 def print_error(message: str):
     """Print error message"""
-    print(f"❌ {message}")
+    print(f" {message}")
 
 def print_info(message: str):
     """Print info message"""
-    print(f"ℹ️  {message}")
+    print(f"ℹ  {message}")
 
 async def demo_initialization():
     """Demonstrate observability initialization"""
-    print_section_header("Observability Suite Initialization", "🚀")
+    print_section_header("Observability Suite Initialization", "")
     
     try:
         # Import observability components
@@ -115,7 +115,7 @@ async def demo_initialization():
 
 async def demo_content_analytics(obs_index):
     """Demonstrate content performance analytics"""
-    print_section_header("Content Performance Analytics", "📈")
+    print_section_header("Content Performance Analytics", "")
     
     if not obs_index:
         print_error("Observability index not available")
@@ -247,10 +247,10 @@ async def demo_content_analytics(obs_index):
             
             # Display overall results
             print_subsection("Overall Performance Metrics")
-            print(f"📊 Overall Engagement Rate: {analysis_results.get('overall_engagement_rate', 0):.1f}%")
-            print(f"🚀 Viral Potential Score: {analysis_results.get('viral_potential_score', 0):.1f}/100")
-            print(f"⭐ Content Quality Index: {analysis_results.get('content_quality_index', 0):.1f}/100")
-            print(f"💰 Total Revenue: ${analysis_results.get('total_revenue', 0):,.2f}")
+            print(f" Overall Engagement Rate: {analysis_results.get('overall_engagement_rate', 0):.1f}%")
+            print(f" Viral Potential Score: {analysis_results.get('viral_potential_score', 0):.1f}/100")
+            print(f" Content Quality Index: {analysis_results.get('content_quality_index', 0):.1f}/100")
+            print(f" Total Revenue: ${analysis_results.get('total_revenue', 0):,.2f}")
             
             # Cross-platform performance
             cross_platform = analysis_results.get('cross_platform_performance', {})
@@ -260,7 +260,7 @@ async def demo_content_analytics(obs_index):
                     engagement = metrics.get('engagement_rate', 0)
                     content_count = metrics.get('content_count', 0)
                     revenue = metrics.get('total_revenue', 0)
-                    print(f"📱 {platform.title()}: {engagement:.1f}% engagement, {content_count} items, ${revenue:.2f}")
+                    print(f" {platform.title()}: {engagement:.1f}% engagement, {content_count} items, ${revenue:.2f}")
             
             # Content type analysis
             content_types = analysis_results.get('content_type_analysis', {})
@@ -270,8 +270,8 @@ async def demo_content_analytics(obs_index):
                     avg_engagement = metrics.get('avg_engagement_rate', 0)
                     count = metrics.get('count', 0)
                     best_performer = metrics.get('best_performer', 'N/A')
-                    print(f"🎵 {content_type.title()}: {avg_engagement:.1f}% avg engagement, {count} items")
-                    print(f"   🏆 Best performer: {best_performer}")
+                    print(f" {content_type.title()}: {avg_engagement:.1f}% avg engagement, {count} items")
+                    print(f"    Best performer: {best_performer}")
             
             # Trending topics
             trending = analysis_results.get('trending_topics', [])
@@ -281,7 +281,7 @@ async def demo_content_analytics(obs_index):
                     topic_name = topic.get('topic', 'Unknown')
                     trend_score = topic.get('trend_score', 0)
                     growth_rate = topic.get('growth_rate', 0)
-                    print(f"{i}. #️⃣ {topic_name}: {trend_score:.1f} trend score (+{growth_rate:.1f}%)")
+                    print(f"{i}. #⃣ {topic_name}: {trend_score:.1f} trend score (+{growth_rate:.1f}%)")
             
         else:
             print_error("Content analyzer not available")
@@ -291,7 +291,7 @@ async def demo_content_analytics(obs_index):
 
 async def demo_user_behavior_analytics(obs_index):
     """Demonstrate user behavior analytics"""
-    print_section_header("User Behavior Analytics", "👥")
+    print_section_header("User Behavior Analytics", "")
     
     if not obs_index:
         print_error("Observability index not available")
@@ -432,7 +432,7 @@ async def demo_user_behavior_analytics(obs_index):
             if 'segments' in segmentation:
                 print_subsection("User Segmentation Analysis")
                 total_users = segmentation.get('total_users', 0)
-                print(f"👥 Total users analyzed: {total_users}")
+                print(f" Total users analyzed: {total_users}")
                 
                 for segment_id, segment_info in segmentation['segments'].items():
                     size = segment_info.get('size', 0)
@@ -441,12 +441,12 @@ async def demo_user_behavior_analytics(obs_index):
                     ltv = segment_info.get('avg_lifetime_value', 0)
                     characteristics = segment_info.get('characteristics', [])
                     
-                    print(f"\n🎯 Segment: {segment_id}")
-                    print(f"   👤 Size: {size} users ({percentage:.1f}%)")
-                    print(f"   📊 Avg Engagement: {engagement:.1f}%") 
-                    print(f"   💰 Avg LTV: ${ltv:.2f}")
+                    print(f"\n Segment: {segment_id}")
+                    print(f"    Size: {size} users ({percentage:.1f}%)")
+                    print(f"    Avg Engagement: {engagement:.1f}%") 
+                    print(f"    Avg LTV: ${ltv:.2f}")
                     if characteristics:
-                        print(f"   🔍 Key traits: {', '.join(characteristics[:3])}")
+                        print(f"    Key traits: {', '.join(characteristics[:3])}")
             
             # Churn prediction analysis
             churn_info = behavior_results.get('churn_prediction', {})
@@ -456,13 +456,13 @@ async def demo_user_behavior_analytics(obs_index):
                 medium_risk_pct = churn_info.get('medium_risk_percentage', 0)
                 low_risk_pct = churn_info.get('low_risk_percentage', 0)
                 
-                print(f"🚨 High-risk users: {high_risk_pct:.1f}%")
-                print(f"⚠️ Medium-risk users: {medium_risk_pct:.1f}%")
-                print(f"✅ Low-risk users: {low_risk_pct:.1f}%")
+                print(f" High-risk users: {high_risk_pct:.1f}%")
+                print(f" Medium-risk users: {medium_risk_pct:.1f}%")
+                print(f" Low-risk users: {low_risk_pct:.1f}%")
                 
                 # Risk recommendations
                 if high_risk_pct > 15:
-                    print("💡 Recommendation: Implement retention campaign")
+                    print(" Recommendation: Implement retention campaign")
                     print("   - Personalized content recommendations")
                     print("   - Special offers for at-risk segments")
                     print("   - Re-engagement email series")
@@ -470,7 +470,7 @@ async def demo_user_behavior_analytics(obs_index):
                 # Top risk factors
                 risk_factors = churn_info.get('risk_factors', [])
                 if risk_factors:
-                    print("\n📊 Top Churn Risk Factors:")
+                    print("\n Top Churn Risk Factors:")
                     for i, factor in enumerate(risk_factors[:3], 1):
                         impact = factor.get('impact_score', 0)
                         print(f"{i}. {factor.get('factor', 'Unknown')}: {impact:.2f} impact score")
@@ -483,19 +483,19 @@ async def demo_user_behavior_analytics(obs_index):
                 
                 for level, count in engagement_dist.items():
                     percentage = (count / len(user_data) * 100) if len(user_data) > 0 else 0
-                    emoji = {"high_engagement": "🔥", "medium_engagement": "📈", 
-                            "low_engagement": "📉"}.get(level, "📊")
+                    emoji = {"high_engagement": "", "medium_engagement": "", 
+                            "low_engagement": ""}.get(level, "")
                     level_name = level.replace('_', ' ').title()
                     print(f"{emoji} {level_name}: {count} users ({percentage:.1f}%)")
                 
                 # Engagement insights
                 avg_engagement = engagement_info.get('average_engagement_score', 0)
-                print(f"\n📊 Platform Average Engagement: {avg_engagement:.1f}%")
+                print(f"\n Platform Average Engagement: {avg_engagement:.1f}%")
                 
                 if avg_engagement < 60:
-                    print("⚠️ Warning: Platform engagement below industry standard")
+                    print(" Warning: Platform engagement below industry standard")
                 elif avg_engagement > 80:
-                    print("🎉 Excellent: Platform engagement above industry standard")
+                    print(" Excellent: Platform engagement above industry standard")
         
         else:
             print_error("User analytics not available")
@@ -505,7 +505,7 @@ async def demo_user_behavior_analytics(obs_index):
 
 async def demo_roi_analysis(obs_index):
     """Demonstrate ROI analysis and optimization"""
-    print_section_header("ROI Analysis & Financial Optimization", "💰")
+    print_section_header("ROI Analysis & Financial Optimization", "")
     
     if not obs_index:
         print_error("Observability index not available")
@@ -664,21 +664,21 @@ async def demo_roi_analysis(obs_index):
                 roi_percentage = overall_roi.get('roi_percentage', 0)
                 profit_margin = (total_profit / total_revenue * 100) if total_revenue > 0 else 0
                 
-                print(f"💵 Total Revenue: ${total_revenue:,.2f}")
-                print(f"💸 Total Cost: ${total_cost:,.2f}")
-                print(f"💰 Total Profit: ${total_profit:,.2f}")
-                print(f"📈 ROI: {roi_percentage:.1f}%")
-                print(f"📊 Profit Margin: {profit_margin:.1f}%")
+                print(f" Total Revenue: ${total_revenue:,.2f}")
+                print(f" Total Cost: ${total_cost:,.2f}")
+                print(f" Total Profit: ${total_profit:,.2f}")
+                print(f" ROI: {roi_percentage:.1f}%")
+                print(f" Profit Margin: {profit_margin:.1f}%")
                 
                 # Performance assessment
                 if roi_percentage > 300:
-                    print("🎉 Excellent: ROI significantly above industry standard")
+                    print(" Excellent: ROI significantly above industry standard")
                 elif roi_percentage > 200:
-                    print("✅ Good: ROI above industry standard")
+                    print(" Good: ROI above industry standard")
                 elif roi_percentage > 100:
-                    print("⚠️ Fair: ROI positive but could be improved")
+                    print(" Fair: ROI positive but could be improved")
                 else:
-                    print("🚨 Poor: ROI below break-even")
+                    print(" Poor: ROI below break-even")
             
             # Channel performance breakdown
             channel_roi = roi_results.get('channel_roi', {})
@@ -700,21 +700,21 @@ async def demo_roi_analysis(obs_index):
                     conversions = metrics.get('total_conversions', 0)
                     
                     channel_name = channel.replace('_', ' ').title()
-                    emoji = {"Social Media Ads": "📱", "Influencer Partnerships": "🤝", 
-                            "Content Promotion": "📺", "Email Marketing": "📧"}.get(channel_name, "📊")
+                    emoji = {"Social Media Ads": "", "Influencer Partnerships": "🤝", 
+                            "Content Promotion": "", "Email Marketing": ""}.get(channel_name, "")
                     
                     print(f"\n{emoji} {channel_name}:")
-                    print(f"   💰 Revenue: ${revenue:,.2f}")
-                    print(f"   💸 Cost: ${cost:,.2f}")
-                    print(f"   📈 ROI: {roi:.1f}%")
-                    print(f"   ⚡ Efficiency: {efficiency:.2f}")
-                    print(f"   🎯 Conversions: {conversions}")
+                    print(f"    Revenue: ${revenue:,.2f}")
+                    print(f"    Cost: ${cost:,.2f}")
+                    print(f"    ROI: {roi:.1f}%")
+                    print(f"    Efficiency: {efficiency:.2f}")
+                    print(f"    Conversions: {conversions}")
                     
                     # Channel-specific insights
                     if roi > 300:
-                        print(f"   🏆 Top performing channel")
+                        print(f"    Top performing channel")
                     elif roi < 100:
-                        print(f"   ⚠️ Underperforming - needs optimization")
+                        print(f"    Underperforming - needs optimization")
             
             # Cost optimization recommendations
             optimizations = roi_results.get('cost_optimization', [])
@@ -727,13 +727,13 @@ async def demo_roi_analysis(obs_index):
                     savings = opt.get('estimated_savings', 0)
                     effort = opt.get('implementation_effort', 'medium')
                     
-                    impact_emoji = {"high": "🔥", "medium": "📈", "low": "📊"}.get(impact, "📊")
-                    effort_emoji = {"low": "🟢", "medium": "🟡", "high": "🔴"}.get(effort, "🟡")
+                    impact_emoji = {"high": "", "medium": "", "low": ""}.get(impact, "")
+                    effort_emoji = {"low": "🟢", "medium": "🟡", "high": ""}.get(effort, "🟡")
                     
                     print(f"\n{i}. {impact_emoji} {recommendation}")
                     if savings > 0:
-                        print(f"   💰 Potential savings: ${savings:,.2f}")
-                    print(f"   ⚡ Impact: {impact.title()}")
+                        print(f"    Potential savings: ${savings:,.2f}")
+                    print(f"    Impact: {impact.title()}")
                     print(f"   {effort_emoji} Effort: {effort.title()}")
             
             # Predictive insights
@@ -745,18 +745,18 @@ async def demo_roi_analysis(obs_index):
                 revenue_confidence = predictions.get('revenue_confidence', 0)
                 growth_rate = predictions.get('projected_growth_rate', 0)
                 
-                print(f"🔮 Next Month Revenue Forecast: ${next_month_revenue:,.2f}")
-                print(f"📊 Confidence Level: {revenue_confidence:.1f}%")
-                print(f"📈 Projected Growth Rate: {growth_rate:+.1f}%")
+                print(f" Next Month Revenue Forecast: ${next_month_revenue:,.2f}")
+                print(f" Confidence Level: {revenue_confidence:.1f}%")
+                print(f" Projected Growth Rate: {growth_rate:+.1f}%")
                 
                 if growth_rate > 20:
-                    print("🚀 Exceptional growth trajectory predicted")
+                    print(" Exceptional growth trajectory predicted")
                 elif growth_rate > 10:
-                    print("📈 Strong growth expected")
+                    print(" Strong growth expected")
                 elif growth_rate > 0:
-                    print("📊 Modest growth anticipated")
+                    print(" Modest growth anticipated")
                 else:
-                    print("⚠️ Potential decline - review strategy")
+                    print(" Potential decline - review strategy")
         
         else:
             print_error("ROI optimizer not available")
@@ -787,7 +787,7 @@ async def demo_intelligent_monitoring(obs_index):
             system_health = system_status.get('system_health', {})
             alert_status = system_status.get('alert_status', {})
             
-            status_emoji = "💚" if monitoring_active else "🔴"
+            status_emoji = "" if monitoring_active else ""
             print(f"{status_emoji} Monitoring Status: {'Active' if monitoring_active else 'Inactive'}")
             
             if system_health:
@@ -796,27 +796,27 @@ async def demo_intelligent_monitoring(obs_index):
                 error_rate = system_health.get('error_rate', 0)
                 throughput = system_health.get('requests_per_minute', 0)
                 
-                print(f"⏱️ System Uptime: {uptime:.2f}%")
-                print(f"🚀 Avg Response Time: {response_time:.0f}ms")
-                print(f"❌ Error Rate: {error_rate:.2f}%")
-                print(f"📊 Throughput: {throughput:.0f} req/min")
+                print(f"⏱ System Uptime: {uptime:.2f}%")
+                print(f" Avg Response Time: {response_time:.0f}ms")
+                print(f" Error Rate: {error_rate:.2f}%")
+                print(f" Throughput: {throughput:.0f} req/min")
                 
                 # Health assessment
                 if uptime >= 99.9 and error_rate < 0.1:
-                    print("🎉 Excellent system health")
+                    print(" Excellent system health")
                 elif uptime >= 99.5 and error_rate < 0.5:
-                    print("✅ Good system health")
+                    print(" Good system health")
                 elif uptime >= 99.0 and error_rate < 1.0:
-                    print("⚠️ Fair system health - monitor closely")
+                    print(" Fair system health - monitor closely")
                 else:
-                    print("🚨 Poor system health - immediate attention needed")
+                    print(" Poor system health - immediate attention needed")
             
             if alert_status:
                 active_incidents = alert_status.get('active_incidents', 0)
                 resolved_today = alert_status.get('resolved_incidents_today', 0)
                 
-                print(f"🚨 Active Incidents: {active_incidents}")
-                print(f"✅ Resolved Today: {resolved_today}")
+                print(f" Active Incidents: {active_incidents}")
+                print(f" Resolved Today: {resolved_today}")
             
             # Run anomaly detection
             print_subsection("Anomaly Detection Analysis")
@@ -827,7 +827,7 @@ async def demo_intelligent_monitoring(obs_index):
             detection_summary = anomaly_analysis.get('detection_summary', {})
             
             if anomalies:
-                print(f"⚠️ Detected {len(anomalies)} potential anomalies:")
+                print(f" Detected {len(anomalies)} potential anomalies:")
                 
                 for i, anomaly in enumerate(anomalies[:3], 1):
                     title = anomaly.get('title', 'Unknown Anomaly')
@@ -835,20 +835,20 @@ async def demo_intelligent_monitoring(obs_index):
                     confidence = anomaly.get('confidence', 0)
                     description = anomaly.get('description', 'No description')
                     
-                    severity_emoji = {"critical": "🔴", "high": "🟡", "medium": "🟠", "low": "🔵"}.get(severity, "🟠")
+                    severity_emoji = {"critical": "", "high": "🟡", "medium": "🟠", "low": ""}.get(severity, "🟠")
                     
                     print(f"\n{i}. {severity_emoji} {title}")
-                    print(f"   📊 Confidence: {confidence:.1f}%")
-                    print(f"   📝 {description}")
+                    print(f"    Confidence: {confidence:.1f}%")
+                    print(f"    {description}")
                     
                     # Recommendations for anomalies
                     if severity in ['critical', 'high']:
-                        print(f"   💡 Action: Immediate investigation recommended")
+                        print(f"    Action: Immediate investigation recommended")
                     else:
-                        print(f"   💡 Action: Monitor trend over next 24 hours")
+                        print(f"    Action: Monitor trend over next 24 hours")
             else:
-                print("✅ No significant anomalies detected")
-                print("🎯 System operating within normal parameters")
+                print(" No significant anomalies detected")
+                print(" System operating within normal parameters")
             
             # Summary statistics
             if detection_summary:
@@ -856,10 +856,10 @@ async def demo_intelligent_monitoring(obs_index):
                 total_metrics_analyzed = detection_summary.get('total_metrics_analyzed', 0)
                 analysis_duration = detection_summary.get('analysis_duration_seconds', 0)
                 
-                print(f"\n📊 Analysis Summary:")
-                print(f"   🔬 Algorithms: {', '.join(algorithms_used)}")
-                print(f"   📈 Metrics Analyzed: {total_metrics_analyzed}")
-                print(f"   ⏱️ Duration: {analysis_duration:.1f}s")
+                print(f"\n Analysis Summary:")
+                print(f"    Algorithms: {', '.join(algorithms_used)}")
+                print(f"    Metrics Analyzed: {total_metrics_analyzed}")
+                print(f"   ⏱ Duration: {analysis_duration:.1f}s")
             
             # Run capacity prediction
             print_subsection("Capacity & Resource Predictions")
@@ -870,7 +870,7 @@ async def demo_intelligent_monitoring(obs_index):
             confidence_scores = capacity_analysis.get('confidence_scores', {})
             
             if predictions:
-                print(f"🔮 Generated {len(predictions)} capacity predictions:")
+                print(f" Generated {len(predictions)} capacity predictions:")
                 
                 for i, prediction in enumerate(predictions[:3], 1):
                     title = prediction.get('title', 'Unknown Prediction')
@@ -879,22 +879,22 @@ async def demo_intelligent_monitoring(obs_index):
                     current_value = prediction.get('current_value', 'N/A')
                     confidence = prediction.get('confidence', 0)
                     
-                    print(f"\n{i}. 📊 {title}")
+                    print(f"\n{i}.  {title}")
                     print(f"   ⏰ Timeframe: {timeframe}")
-                    print(f"   📈 Current: {current_value}")
-                    print(f"   🎯 Predicted: {prediction_value}")
-                    print(f"   🎲 Confidence: {confidence:.1f}%")
+                    print(f"    Current: {current_value}")
+                    print(f"    Predicted: {prediction_value}")
+                    print(f"    Confidence: {confidence:.1f}%")
                     
                     # Capacity recommendations
                     if confidence > 80:
-                        print(f"   💡 High confidence - plan accordingly")
+                        print(f"    High confidence - plan accordingly")
                     elif confidence > 60:
-                        print(f"   💡 Moderate confidence - monitor trend")
+                        print(f"    Moderate confidence - monitor trend")
                     else:
-                        print(f"   💡 Low confidence - gather more data")
+                        print(f"    Low confidence - gather more data")
             else:
-                print("📊 No capacity concerns predicted")
-                print("✅ Current resources sufficient for projected usage")
+                print(" No capacity concerns predicted")
+                print(" Current resources sufficient for projected usage")
             
             # Overall monitoring time
             monitoring_time = time.time() - start_time
@@ -908,7 +908,7 @@ async def demo_intelligent_monitoring(obs_index):
 
 async def demo_automated_reporting(obs_index):
     """Demonstrate automated reporting system"""
-    print_section_header("Automated Reporting & Dashboard Generation", "📊")
+    print_section_header("Automated Reporting & Dashboard Generation", "")
     
     if not obs_index:
         print_error("Observability index not available")
@@ -1013,9 +1013,9 @@ async def demo_automated_reporting(obs_index):
                 generated_at = exec_report.get('generated_at', 'Unknown')
                 sections = exec_report.get('sections', {})
                 
-                print(f"📄 Report ID: {report_id[:12]}...")
+                print(f" Report ID: {report_id[:12]}...")
                 print(f"⏰ Generated: {generated_at}")
-                print(f"📊 Sections: {len(sections)}")
+                print(f" Sections: {len(sections)}")
                 
                 # Executive summary highlights
                 if 'executive_summary' in sections:
@@ -1023,7 +1023,7 @@ async def demo_automated_reporting(obs_index):
                     key_highlights = exec_summary.get('key_highlights', [])
                     
                     if key_highlights:
-                        print("\n✨ Executive Summary Highlights:")
+                        print("\n Executive Summary Highlights:")
                         for i, highlight in enumerate(key_highlights[:4], 1):
                             print(f"{i}. {highlight}")
                 
@@ -1033,9 +1033,9 @@ async def demo_automated_reporting(obs_index):
                     metrics_summary = key_metrics.get('metrics_summary', {})
                     
                     if metrics_summary:
-                        print("\n📊 Key Business Metrics:")
+                        print("\n Key Business Metrics:")
                         for metric, value in list(metrics_summary.items())[:3]:
-                            print(f"📈 {metric.replace('_', ' ').title()}: {value}")
+                            print(f" {metric.replace('_', ' ').title()}: {value}")
                 
                 # Strategic recommendations
                 if 'recommendations' in sections:
@@ -1043,11 +1043,11 @@ async def demo_automated_reporting(obs_index):
                     strategic_actions = recommendations.get('strategic_actions', [])
                     
                     if strategic_actions:
-                        print("\n💡 Strategic Recommendations:")
+                        print("\n Strategic Recommendations:")
                         for i, action in enumerate(strategic_actions[:3], 1):
                             priority = action.get('priority', 'medium')
                             description = action.get('description', 'No description')
-                            priority_emoji = {"high": "🔴", "medium": "🟡", "low": "🟢"}.get(priority, "🟡")
+                            priority_emoji = {"high": "", "medium": "🟡", "low": "🟢"}.get(priority, "🟡")
                             print(f"{i}. {priority_emoji} {description}")
             else:
                 print_error(f"Executive report generation failed: {exec_report['error']}")
@@ -1098,7 +1098,7 @@ async def demo_automated_reporting(obs_index):
             else:
                 print_error(f"Failed to schedule: {config['name']}")
         
-        print(f"\n📅 Total scheduled reports: {len(scheduled_reports)}")
+        print(f"\n Total scheduled reports: {len(scheduled_reports)}")
         
         print_subsection("Executive Dashboard Generation")
         
@@ -1115,7 +1115,7 @@ async def demo_automated_reporting(obs_index):
             sections = dashboard.get('sections', {})
             generated_at = dashboard.get('generated_at', 'Unknown')
             
-            print(f"🎯 Dashboard Sections: {len(sections)}")
+            print(f" Dashboard Sections: {len(sections)}")
             print(f"⏰ Generated: {generated_at}")
             
             # System health overview
@@ -1124,9 +1124,9 @@ async def demo_automated_reporting(obs_index):
                 monitoring_active = health.get('monitoring_active', False)
                 overall_status = health.get('overall_status', 'unknown')
                 
-                status_emoji = {"healthy": "💚", "warning": "🟡", "critical": "🔴"}.get(overall_status, "⚪")
+                status_emoji = {"healthy": "", "warning": "🟡", "critical": ""}.get(overall_status, "")
                 print(f"\n{status_emoji} System Status: {overall_status.title()}")
-                print(f"🔍 Monitoring: {'Active' if monitoring_active else 'Inactive'}")
+                print(f" Monitoring: {'Active' if monitoring_active else 'Inactive'}")
             
             # Analytics overview
             if 'analytics' in sections:
@@ -1136,24 +1136,24 @@ async def demo_automated_reporting(obs_index):
                     content_perf = analytics['content_performance']
                     avg_engagement = content_perf.get('average_engagement_rate', 0)
                     total_revenue = content_perf.get('total_revenue', 0)
-                    print(f"\n📊 Content Performance:")
-                    print(f"   📈 Avg Engagement: {avg_engagement:.1f}%")
-                    print(f"   💰 Total Revenue: ${total_revenue:,.2f}")
+                    print(f"\n Content Performance:")
+                    print(f"    Avg Engagement: {avg_engagement:.1f}%")
+                    print(f"    Total Revenue: ${total_revenue:,.2f}")
                 
                 if 'user_insights' in analytics:
                     user_insights = analytics['user_insights']
                     active_users = user_insights.get('total_active_users', 0)
                     avg_ltv = user_insights.get('average_lifetime_value', 0)
-                    print(f"\n👥 User Analytics:")
-                    print(f"   🎯 Active Users: {active_users:,}")
-                    print(f"   💎 Avg LTV: ${avg_ltv:,.2f}")
+                    print(f"\n User Analytics:")
+                    print(f"    Active Users: {active_users:,}")
+                    print(f"    Avg LTV: ${avg_ltv:,.2f}")
             
             # Visualization components
             if 'visualizations' in sections:
                 visualizations = sections['visualizations']
                 elements = visualizations.get('elements', [])
                 
-                print(f"\n📊 Dashboard Visualizations: {len(elements)} components")
+                print(f"\n Dashboard Visualizations: {len(elements)} components")
                 
                 viz_types = {}
                 for element in elements:
@@ -1161,7 +1161,7 @@ async def demo_automated_reporting(obs_index):
                     viz_types[viz_type] = viz_types.get(viz_type, 0) + 1
                 
                 for viz_type, count in viz_types.items():
-                    type_emoji = {"chart": "📈", "table": "📋", "metric": "🔢", "gauge": "⚡"}.get(viz_type, "📊")
+                    type_emoji = {"chart": "", "table": "", "metric": "", "gauge": ""}.get(viz_type, "")
                     print(f"   {type_emoji} {viz_type.title()}: {count}")
         else:
             print_error(f"Dashboard generation failed: {dashboard['error']}")
@@ -1171,7 +1171,7 @@ async def demo_automated_reporting(obs_index):
 
 async def run_comprehensive_demo():
     """Run complete observability suite demonstration"""
-    print_section_header("IA Influencer Agent - Complete Observability Suite Demo", "🚀")
+    print_section_header("IA Influencer Agent - Complete Observability Suite Demo", "")
     
     start_time = time.time()
     
@@ -1200,53 +1200,53 @@ async def run_comprehensive_demo():
     # Final summary
     total_time = time.time() - start_time
     
-    print_section_header("Demonstration Complete", "🎉")
+    print_section_header("Demonstration Complete", "")
     print_success(f"Full observability suite demonstration completed in {total_time:.2f}s")
     
-    print("\n📊 Demonstrated Capabilities:")
-    print("✅ Advanced content performance analytics with ML predictions")
-    print("✅ User behavior segmentation and churn prediction")
-    print("✅ ROI optimization and financial forecasting")
-    print("✅ AI-powered anomaly detection and monitoring")
-    print("✅ Automated report generation and distribution")
-    print("✅ Executive dashboard creation with real-time insights")
+    print("\n Demonstrated Capabilities:")
+    print(" Advanced content performance analytics with ML predictions")
+    print(" User behavior segmentation and churn prediction")
+    print(" ROI optimization and financial forecasting")
+    print(" AI-powered anomaly detection and monitoring")
+    print(" Automated report generation and distribution")
+    print(" Executive dashboard creation with real-time insights")
     
-    print("\n🔧 Technical Highlights:")
-    print("✅ Asynchronous processing for optimal performance")
-    print("✅ Machine learning integration for predictive analytics")
-    print("✅ Enterprise-grade configuration management")
-    print("✅ Comprehensive error handling and validation")
-    print("✅ Production-ready code with full documentation")
+    print("\n Technical Highlights:")
+    print(" Asynchronous processing for optimal performance")
+    print(" Machine learning integration for predictive analytics")
+    print(" Enterprise-grade configuration management")
+    print(" Comprehensive error handling and validation")
+    print(" Production-ready code with full documentation")
     
-    print("\n👥 Business Value:")
-    print("✅ Data-driven decision making for content creators")
-    print("✅ Predictive insights for platform optimization")
-    print("✅ Automated monitoring and alerting capabilities")
-    print("✅ Executive-level reporting and visualizations")
-    print("✅ ROI optimization for marketing investments")
+    print("\n Business Value:")
+    print(" Data-driven decision making for content creators")
+    print(" Predictive insights for platform optimization")
+    print(" Automated monitoring and alerting capabilities")
+    print(" Executive-level reporting and visualizations")
+    print(" ROI optimization for marketing investments")
     
-    print(f"\n📞 Contact: Fahed Mlaiel <mlaiel@live.de>")
-    print(f"📄 Full documentation available in 3 languages (EN, DE, FR)")
-    print(f"🔒 Enterprise support and customization available")
+    print(f"\n Contact: Fahed Mlaiel <mlaiel@live.de>")
+    print(f" Full documentation available in 3 languages (EN, DE, FR)")
+    print(f" Enterprise support and customization available")
 
 
 if __name__ == "__main__":
     try:
-        print("🎬 Starting IA Influencer Agent Observability Suite Demonstration")
-        print("📧 Contact: Fahed Mlaiel <mlaiel@live.de>")
-        print("⚖️  Copyright (c) 2025 Fahed Mlaiel. All rights reserved.")
+        print(" Starting IA Influencer Agent Observability Suite Demonstration")
+        print(" Contact: Fahed Mlaiel <mlaiel@live.de>")
+        print("  Copyright (c) 2025 Fahed Mlaiel. All rights reserved.")
         
         # Run the complete demonstration
         asyncio.run(run_comprehensive_demo())
         
     except KeyboardInterrupt:
-        print("\n\n🛑 Demo interrupted by user")
-        print("👋 Thank you for exploring the IA Influencer Agent Observability Suite!")
+        print("\n\n Demo interrupted by user")
+        print(" Thank you for exploring the IA Influencer Agent Observability Suite!")
         
     except Exception as e:
-        print(f"\n\n❌ Demo failed with error: {e}")
+        print(f"\n\n Demo failed with error: {e}")
         logger.error(f"Demo failed: {e}", exc_info=True)
         
     finally:
-        print("\n📊 Observability Suite Demo Session Complete")
-        print("🔍 Check observability_demo.log for detailed logs")
+        print("\n Observability Suite Demo Session Complete")
+        print(" Check observability_demo.log for detailed logs")

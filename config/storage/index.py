@@ -48,14 +48,17 @@ class StorageOrchestrator:
         
     def initialize(self) -> bool:
         """Initialize all storage configurations and validate connectivity."""
+
+
+
         try:
-            print("🚀 Initializing IA-Influencer Agent Storage System...")
+            print(" Initializing IA-Influencer Agent Storage System...")
             
             # Validate all configurations
             validation_result = validate_all_storage_configs()
             
             if validation_result:
-                print("✅ All storage configurations validated successfully")
+                print(" All storage configurations validated successfully")
                 self.initialized = True
                 
                 # Perform health checks
@@ -66,16 +69,16 @@ class StorageOrchestrator:
                 
                 return True
             else:
-                print("❌ Storage configuration validation failed")
+                print(" Storage configuration validation failed")
                 return False
                 
         except Exception as e:
-            print(f"❌ Storage initialization failed: {e}")
+            print(f" Storage initialization failed: {e}")
             return False
     
     def _perform_health_checks(self):
         """Perform health checks on all storage services."""
-        print("🔍 Performing storage health checks...")
+        print(" Performing storage health checks...")
         
         health_checks = {
             's3': self._check_s3_health,
@@ -89,34 +92,52 @@ class StorageOrchestrator:
         for service, check_func in health_checks.items():
             try:
                 self.health_status[service] = check_func()
-                status = "✅" if self.health_status[service] else "⚠️"
+                status = "" if self.health_status[service] else ""
                 print(f"  {status} {service.upper()}: {'Healthy' if self.health_status[service] else 'Warning'}")
             except Exception as e:
                 self.health_status[service] = False
-                print(f"  ❌ {service.upper()}: Error - {e}")
+                print(f"   {service.upper()}: Error - {e}")
     
     def _check_s3_health(self) -> bool:
         """Check AWS S3 connectivity and configuration."""
+
+
+
         return s3_config.validate_configuration()
     
     def _check_azure_health(self) -> bool:
         """Check Azure Blob Storage connectivity and configuration."""
+
+
+
         return azure_blob_config.validate_configuration()
     
     def _check_gcs_health(self) -> bool:
         """Check Google Cloud Storage connectivity and configuration."""
+
+
+
         return gcs_config.validate_configuration()
     
     def _check_local_health(self) -> bool:
         """Check local storage accessibility and configuration."""
+
+
+
         return local_storage_config.validate_configuration()
     
     def _check_cdn_health(self) -> bool:
         """Check CDN configuration and endpoints."""
+
+
+
         return cdn_config.validate_configuration()
     
     def _check_security_health(self) -> bool:
         """Check security configuration and policies."""
+
+
+
         return storage_security_config.validate_configuration()
     
     def _log_initialization(self):
@@ -216,6 +237,9 @@ class StorageOrchestrator:
     
     def get_system_status(self) -> Dict[str, Any]:
         """Get comprehensive system status."""
+
+
+
         return {
             'initialized': self.initialized,
             'health_status': self.health_status,
@@ -228,6 +252,9 @@ class StorageOrchestrator:
     
     def refresh_configurations(self) -> bool:
         """Refresh all storage configurations."""
+
+
+
         try:
             # Re-validate configurations
             validation_result = validate_all_storage_configs()
@@ -236,14 +263,14 @@ class StorageOrchestrator:
                 # Update health status
                 self._perform_health_checks()
                 
-                print("✅ Storage configurations refreshed successfully")
+                print(" Storage configurations refreshed successfully")
                 return True
             else:
-                print("❌ Configuration refresh failed validation")
+                print(" Configuration refresh failed validation")
                 return False
                 
         except Exception as e:
-            print(f"❌ Configuration refresh failed: {e}")
+            print(f" Configuration refresh failed: {e}")
             return False
     
     def export_configuration_summary(self, output_path: Optional[str] = None) -> Dict[str, Any]:
@@ -270,9 +297,9 @@ class StorageOrchestrator:
             try:
                 with open(output_path, 'w', encoding='utf-8') as f:
                     json.dump(summary, f, indent=2, ensure_ascii=False)
-                print(f"✅ Configuration summary exported to: {output_path}")
+                print(f" Configuration summary exported to: {output_path}")
             except Exception as e:
-                print(f"❌ Failed to export summary: {e}")
+                print(f" Failed to export summary: {e}")
         
         return summary
     
@@ -312,10 +339,16 @@ storage_orchestrator = StorageOrchestrator()
 
 def initialize_storage_system() -> bool:
     """Initialize the complete storage system."""
+
+
+
     return storage_orchestrator.initialize()
 
 def get_storage_orchestrator() -> StorageOrchestrator:
     """Get the global storage orchestrator instance."""
+
+
+
     return storage_orchestrator
 
 # Auto-initialize in production environments

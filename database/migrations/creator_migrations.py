@@ -1,5 +1,5 @@
 """
-🎭 Creator Database Migrations - Multi-Format Content Creator Schema Evolution
+ Creator Database Migrations - Multi-Format Content Creator Schema Evolution
 ==============================================================================
 Module: backend/database/migrations/creator_migrations.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Creator Migration Engine - Ultra Enterprise Production-Ready
 Responsibility: Database schema evolution for multi-format content creators (musicians, bloggers, photographers, influencers, comedians)
 ============================================================================================================================
 
-⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
+  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -187,6 +187,9 @@ class CreatorMigrations:
         CREATE INDEX IF NOT EXISTS idx_creator_profiles_platforms ON creator_profiles USING GIN(platform_accounts);
         CREATE INDEX IF NOT EXISTS idx_creator_profiles_collaboration_types ON creator_profiles USING GIN(collaboration_types);
         """
+
+
+
         
         return await self.migration_manager.execute_migration(
             migration_sql,
@@ -267,6 +270,9 @@ class CreatorMigrations:
         CREATE INDEX IF NOT EXISTS idx_content_types_extensions ON creator_content_types USING GIN(file_extensions);
         CREATE INDEX IF NOT EXISTS idx_content_types_platforms ON creator_content_types USING GIN(distribution_platforms);
         """
+
+
+
         
         return await self.migration_manager.execute_migration(
             migration_sql,
@@ -349,6 +355,9 @@ class CreatorMigrations:
         CREATE INDEX IF NOT EXISTS idx_collaborations_creator_status ON creator_collaborations(initiator_id, status);
         CREATE INDEX IF NOT EXISTS idx_collaborations_active ON creator_collaborations(status) WHERE status IN ('pending', 'accepted', 'in_progress');
         """
+
+
+
         
         return await self.migration_manager.execute_migration(
             migration_sql,
@@ -433,6 +442,9 @@ class CreatorMigrations:
         CREATE INDEX IF NOT EXISTS idx_monetization_platform_earnings ON creator_monetization USING GIN(platform_earnings);
         CREATE INDEX IF NOT EXISTS idx_monetization_content_pricing ON creator_monetization USING GIN(content_pricing);
         """
+
+
+
         
         return await self.migration_manager.execute_migration(
             migration_sql,
@@ -519,6 +531,9 @@ class CreatorMigrations:
         CREATE INDEX IF NOT EXISTS idx_analytics_platform_metrics ON creator_analytics USING GIN(platform_metrics);
         CREATE INDEX IF NOT EXISTS idx_analytics_geographic ON creator_analytics USING GIN(geographic_reach);
         """
+
+
+
         
         return await self.migration_manager.execute_migration(
             migration_sql,
@@ -620,6 +635,9 @@ class CreatorMigrations:
             content_format IN ('mixed_media', 'live_stream')
         );
         """
+
+
+
         
         return await self.migration_manager.execute_migration(
             migration_sql,

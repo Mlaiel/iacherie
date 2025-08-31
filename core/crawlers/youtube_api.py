@@ -9,7 +9,7 @@ for comprehensive content surveillance and rights protection.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, modification, or distribution is strictly prohibited.
 Violators will face immediate legal action under German and international law.
@@ -104,6 +104,9 @@ class YouTubeAPIManager:
     
     def _initialize_service(self):
         """Initialize YouTube Data API v3 service."""
+
+
+
         try:
             self.service = build('youtube', 'v3', developerKey=self.api_key)
             logger.info("YouTube API service initialized successfully")
@@ -274,6 +277,9 @@ class YouTubeContentExtractor:
     
     async def extract_audio_metadata(self, video_url: str) -> Dict[str, Any]:
         """Extract detailed audio metadata from YouTube video."""
+
+
+
         try:
             with yt_dlp.YoutubeDL(self.ydl_opts) as ydl:
                 info = ydl.extract_info(video_url, download=False)
@@ -307,6 +313,9 @@ class YouTubeContentExtractor:
         duration: int = 30
     ) -> Optional[str]:
         """Download audio sample for fingerprinting analysis."""
+
+
+
         try:
             import tempfile
             import os
@@ -350,6 +359,9 @@ class YouTubeCrawler(BaseCrawler):
     
     async def crawl_video(self, video_id: str) -> Optional[CrawlResult]:
         """Crawl comprehensive data for a specific YouTube video."""
+
+
+
         try:
             # Get video metadata from API
             video_data = await self.api_manager.get_video_details(video_id)
@@ -399,6 +411,9 @@ class YouTubeCrawler(BaseCrawler):
         time_range: Optional[timedelta] = None
     ) -> List[CrawlResult]:
         """Search for potentially infringing content on YouTube."""
+
+
+
         try:
             published_after = None
             if time_range:
@@ -433,6 +448,9 @@ class YouTubeCrawler(BaseCrawler):
         check_period: timedelta = timedelta(hours=24)
     ) -> List[CrawlResult]:
         """Monitor a specific channel for new content."""
+
+
+
         try:
             published_after = datetime.now() - check_period
             
@@ -457,6 +475,9 @@ class YouTubeCrawler(BaseCrawler):
     
     def _parse_duration_to_ms(self, duration: str) -> Optional[int]:
         """Convert ISO 8601 duration to milliseconds."""
+
+
+
         try:
             # Parse ISO 8601 duration format (PT4M20S)
             import re
@@ -481,6 +502,9 @@ class YouTubeCrawler(BaseCrawler):
         video_id: str
     ) -> Optional[str]:
         """Download audio sample for fingerprinting analysis."""
+
+
+
         try:
             video_url = f"https://www.youtube.com/watch?v={video_id}"
             audio_path = await self.content_extractor.download_audio_sample(

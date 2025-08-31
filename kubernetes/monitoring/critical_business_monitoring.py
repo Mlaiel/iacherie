@@ -73,6 +73,9 @@ class CriticalBusinessMonitoring:
         
     def _define_sla_targets(self) -> Dict[str, List[SLATarget]]:
         """Define SLA targets for critical business operations"""
+
+
+
         return {
             "authentication": [
                 SLATarget("api_response_time_seconds", 0.2, "<=", "seconds", "Users cannot login - direct revenue impact"),
@@ -397,6 +400,9 @@ class CriticalBusinessMonitoring:
     
     def _define_notification_channels(self) -> Dict[str, Dict[str, Any]]:
         """Define notification channels for different alert types"""
+
+
+
         return {
             "slack_critical": {
                 "type": "slack",
@@ -405,7 +411,7 @@ class CriticalBusinessMonitoring:
                 "username": "Ainflue Critical Alert Bot",
                 "severity_filter": [AlertSeverity.CRITICAL, AlertSeverity.EMERGENCY],
                 "template": {
-                    "title": "🚨 CRITICAL: {{ .GroupLabels.alertname }}",
+                    "title": " CRITICAL: {{ .GroupLabels.alertname }}",
                     "text": "{{ range .Alerts }}{{ .Annotations.description }}{{ end }}",
                     "color": "danger"
                 }
@@ -417,7 +423,7 @@ class CriticalBusinessMonitoring:
                 "username": "Ainflue Warning Bot",
                 "severity_filter": [AlertSeverity.WARNING],
                 "template": {
-                    "title": "⚠️ WARNING: {{ .GroupLabels.alertname }}",
+                    "title": " WARNING: {{ .GroupLabels.alertname }}",
                     "text": "{{ range .Alerts }}{{ .Annotations.description }}{{ end }}",
                     "color": "warning"
                 }
@@ -456,6 +462,9 @@ class CriticalBusinessMonitoring:
     
     def _define_monitoring_dashboards(self) -> Dict[str, Dict[str, Any]]:
         """Define Grafana dashboard configurations"""
+
+
+
         return {
             "critical_business_operations": {
                 "title": "Critical Business Operations - Ainflue Platform",
@@ -710,6 +719,9 @@ class CriticalBusinessMonitoring:
     
     def generate_alertmanager_config(self) -> Dict[str, Any]:
         """Generate Alertmanager configuration"""
+
+
+
         return {
             "global": {
                 "smtp_smarthost": "smtp.gmail.com:587",
@@ -760,7 +772,7 @@ class CriticalBusinessMonitoring:
                         {
                             "api_url": "${SLACK_CRITICAL_WEBHOOK}",
                             "channel": "#critical-alerts",
-                            "title": "🚨 EMERGENCY: {{ .GroupLabels.alertname }}",
+                            "title": " EMERGENCY: {{ .GroupLabels.alertname }}",
                             "text": "{{ range .Alerts }}{{ .Annotations.description }}{{ end }}",
                             "color": "danger"
                         }
@@ -785,7 +797,7 @@ class CriticalBusinessMonitoring:
                         {
                             "api_url": "${SLACK_CRITICAL_WEBHOOK}",
                             "channel": "#critical-alerts",
-                            "title": "🚨 CRITICAL: {{ .GroupLabels.alertname }}",
+                            "title": " CRITICAL: {{ .GroupLabels.alertname }}",
                             "text": "{{ range .Alerts }}{{ .Annotations.description }}{{ end }}",
                             "color": "danger"
                         }
@@ -804,7 +816,7 @@ class CriticalBusinessMonitoring:
                         {
                             "api_url": "${SLACK_WARNINGS_WEBHOOK}",
                             "channel": "#warnings",
-                            "title": "⚠️ WARNING: {{ .GroupLabels.alertname }}",
+                            "title": " WARNING: {{ .GroupLabels.alertname }}",
                             "text": "{{ range .Alerts }}{{ .Annotations.description }}{{ end }}",
                             "color": "warning"
                         }
@@ -822,6 +834,9 @@ class CriticalBusinessMonitoring:
     
     def generate_deployment_plan(self) -> Dict[str, Any]:
         """Generate deployment plan for monitoring infrastructure"""
+
+
+
         return {
             "overview": {
                 "components": ["Prometheus", "Alertmanager", "Grafana", "Exporters"],

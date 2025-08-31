@@ -182,6 +182,9 @@ class CollaborationNotificationManager:
         
     def _init_ml_models(self) -> Dict[str, Any]:
         """Initialise les modèles ML pour le matching"""
+
+
+
         return {
             "tfidf_vectorizer": TfidfVectorizer(max_features=1000, stop_words='english'),
             "genre_similarity_matrix": self._build_genre_similarity_matrix(),
@@ -216,107 +219,107 @@ class CollaborationNotificationManager:
             "collaboration_suggestion": Template("""
                 🤝 NOUVELLE OPPORTUNITÉ DE COLLABORATION!
                 
-                🎵 Artiste suggéré: {{ target_artist }}
-                🎯 Type: {{ collaboration_type }}
-                ⭐ Compatibilité: {{ compatibility_score }}% ({{ match_quality }})
+                 Artiste suggéré: {{ target_artist }}
+                 Type: {{ collaboration_type }}
+                 Compatibilité: {{ compatibility_score }}% ({{ match_quality }})
                 
-                🔥 Pourquoi ce match?
+                 Pourquoi ce match?
                 {{ ai_reasoning }}
                 
-                💎 Bénéfices mutuels:
+                 Bénéfices mutuels:
                 {{ mutual_benefits | join('\n• ') }}
                 
-                📊 Profil artiste:
+                 Profil artiste:
                 • Genres: {{ target_genres | join(', ') }}
                 • Followers: {{ target_followers }}
                 • Taux de réponse: {{ response_rate }}%
                 
-                🚀 Prêt à collaborer?
+                 Prêt à collaborer?
                 
-                ✅ Accepter collaboration: {{ accept_url }}
-                📞 Contacter artiste: {{ contact_url }}
-                👀 Voir profil complet: {{ profile_url }}
+                 Accepter collaboration: {{ accept_url }}
+                 Contacter artiste: {{ contact_url }}
+                 Voir profil complet: {{ profile_url }}
             """),
             
             "collaboration_request": Template("""
-                🎼 DEMANDE DE COLLABORATION REÇUE
+                 DEMANDE DE COLLABORATION REÇUE
                 
-                👤 De: {{ initiator_name }}
-                🎵 Projet: {{ project_title }}
-                📅 Timeline: {{ timeline }}
+                 De: {{ initiator_name }}
+                 Projet: {{ project_title }}
+                 Timeline: {{ timeline }}
                 
-                📝 Description:
+                 Description:
                 {{ project_description }}
                 
-                💰 Conditions proposées:
+                 Conditions proposées:
                 {{ proposed_terms | join('\n• ') }}
                 
                 ⏰ Réponde avant: {{ expires_at }}
                 
-                🔍 Profil demandeur:
+                 Profil demandeur:
                 • Expérience: {{ initiator_experience }}
                 • Collaborations passées: {{ past_collaborations }}
                 • Note réputation: {{ reputation_score }}/5
                 
-                📲 Actions:
-                ✅ Accepter: {{ accept_url }}
-                ❌ Décliner: {{ decline_url }}
-                💬 Négocier: {{ negotiate_url }}
-                👀 Voir portfolio: {{ portfolio_url }}
+                 Actions:
+                 Accepter: {{ accept_url }}
+                 Décliner: {{ decline_url }}
+                 Négocier: {{ negotiate_url }}
+                 Voir portfolio: {{ portfolio_url }}
             """),
             
             "collaboration_accepted": Template("""
-                🎉 COLLABORATION ACCEPTÉE!
+                 COLLABORATION ACCEPTÉE!
                 
-                🎵 Projet: {{ project_title }}
-                👥 Collaborateurs: {{ participants | join(', ') }}
-                📅 Début: {{ start_date }}
+                 Projet: {{ project_title }}
+                 Collaborateurs: {{ participants | join(', ') }}
+                 Début: {{ start_date }}
                 
-                📋 Prochaines étapes:
+                 Prochaines étapes:
                 {{ next_steps | join('\n• ') }}
                 
-                📁 Espace de travail partagé créé:
-                🔗 {{ workspace_url }}
+                 Espace de travail partagé créé:
+                 {{ workspace_url }}
                 
-                📞 Première réunion programmée:
-                📅 {{ meeting_date }}
-                🔗 {{ meeting_link }}
+                 Première réunion programmée:
+                 {{ meeting_date }}
+                 {{ meeting_link }}
                 
-                💪 Faisons de la magie ensemble!
+                 Faisons de la magie ensemble!
             """),
             
             "milestone_achieved": Template("""
-                🏆 ÉTAPE FRANCHIE - {{ project_title }}
+                 ÉTAPE FRANCHIE - {{ project_title }}
                 
-                ✅ Étape complétée: {{ milestone_name }}
-                📈 Progression: {{ progress_percentage }}%
+                 Étape complétée: {{ milestone_name }}
+                 Progression: {{ progress_percentage }}%
                 
-                🎯 Prochaine étape: {{ next_milestone }}
-                📅 Échéance: {{ next_deadline }}
+                 Prochaine étape: {{ next_milestone }}
+                 Échéance: {{ next_deadline }}
                 
-                💼 Livrables attendus:
+                 Livrables attendus:
                 {{ next_deliverables | join('\n• ') }}
                 
-                🔥 Excellent travail d'équipe!
+                 Excellent travail d'équipe!
                 
-                📊 Tableau de bord: {{ dashboard_url }}
+                 Tableau de bord: {{ dashboard_url }}
             """),
             
             "trending_opportunity": Template("""
-                📈 OPPORTUNITÉ TRENDING DÉTECTÉE!
+                 OPPORTUNITÉ TRENDING DÉTECTÉE!
                 
-                🔥 {{ opportunity_type }} en tendance
-                📊 Popularité: +{{ trend_percentage }}% cette semaine
+                 {{ opportunity_type }} en tendance
+                 Popularité: +{{ trend_percentage }}% cette semaine
                 
-                🎯 Artistes recommandés pour vous:
+                 Artistes recommandés pour vous:
                 {{ recommended_artists | join('\n• ') }}
                 
-                ⚡ Agissez vite - opportunité limitée!
+                 Agissez vite - opportunité limitée!
                 
-                💡 Pourquoi maintenant?
+                 Pourquoi maintenant?
                 {{ trend_reasoning }}
                 
-                🚀 Démarrer collaboration: {{ start_url }}
+                 Démarrer collaboration: {{ start_url }}
             """)
         }
         
@@ -324,6 +327,9 @@ class CollaborationNotificationManager:
 
     def _load_matching_weights(self) -> Dict[str, float]:
         """Charge les poids pour l'algorithme de matching"""
+
+
+
         return {
             "genre_compatibility": 0.25,
             "skill_complementarity": 0.20,
@@ -351,6 +357,9 @@ class CollaborationNotificationManager:
         Returns:
             Liste d'opportunités de collaboration classées par compatibilité
         """
+
+
+
         try:
             # Récupération profil utilisateur
             user_profile = await self._get_artist_profile(user_id)
@@ -405,6 +414,9 @@ class CollaborationNotificationManager:
         collaboration_details: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Traite une demande de collaboration entre artistes"""
+
+
+
         try:
             # Validation des participants
             initiator_profile = await self._get_artist_profile(initiator_id)

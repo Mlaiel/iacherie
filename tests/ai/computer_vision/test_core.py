@@ -30,7 +30,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 #
 # Created by: Fahed Mlaiel (mlaiel@live.de)
 # 
-# ⚠️  STRICT COPYRIGHT WARNING ⚠️ 
+#   STRICT COPYRIGHT WARNING  
 # This code, concept, and intellectual property belongs exclusively to Fahed Mlaiel.
 # ANY unauthorized use, reproduction, distribution, or theft of this code/concept 
 # without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is 
@@ -136,6 +136,9 @@ class TestVisionProcessor(unittest.TestCase):
         
     def test_process_image_with_array(self):
         """Test processing image from numpy array"""
+
+
+
         try:
             result = self.processor.process_image(self.test_image)
             self.assertIsNotNone(result)
@@ -165,6 +168,9 @@ class TestVisionProcessor(unittest.TestCase):
     
     def test_process_video(self):
         """Test video processing"""
+
+
+
         try:
             result = self.processor.process_video(self.test_video_path)
             self.assertIsNotNone(result)
@@ -185,6 +191,9 @@ class TestVisionProcessor(unittest.TestCase):
     
     def test_invalid_input_handling(self):
         """Test handling of invalid inputs"""
+
+
+
         try:
             # Test with None
             with self.assertRaises((ValueError, TypeError)):
@@ -226,6 +235,9 @@ class TestImageAnalyzer(unittest.TestCase):
     
     def test_analyze_composition(self):
         """Test composition analysis"""
+
+
+
         try:
             metrics = self.analyzer.analyze_composition(self.test_image)
             self.assertIsNotNone(metrics)
@@ -254,6 +266,9 @@ class TestImageAnalyzer(unittest.TestCase):
     
     def test_assess_quality(self):
         """Test quality assessment"""
+
+
+
         try:
             quality = self.analyzer.assess_quality(self.test_image)
             self.assertIsNotNone(quality)
@@ -265,6 +280,9 @@ class TestImageAnalyzer(unittest.TestCase):
     
     def test_quality_metrics_components(self):
         """Test individual quality metric components"""
+
+
+
         try:
             quality = self.analyzer.assess_quality(self.test_image)
             if hasattr(quality, 'sharpness'):
@@ -321,6 +339,9 @@ class TestVideoAnalyzer(unittest.TestCase):
     
     def test_analyze_video(self):
         """Test video analysis"""
+
+
+
         try:
             result = self.analyzer.analyze_video(self.test_video_path)
             self.assertIsNotNone(result)
@@ -331,6 +352,9 @@ class TestVideoAnalyzer(unittest.TestCase):
     
     def test_extract_frames(self):
         """Test frame extraction"""
+
+
+
         try:
             frames = self.analyzer.extract_frames(self.test_video_path, max_frames=5)
             self.assertIsInstance(frames, list)
@@ -343,6 +367,9 @@ class TestVideoAnalyzer(unittest.TestCase):
     
     def test_video_quality_assessment(self):
         """Test video quality assessment"""
+
+
+
         try:
             quality = self.analyzer.assess_video_quality(self.test_video_path)
             self.assertIsNotNone(quality)
@@ -383,6 +410,9 @@ class TestMetadataExtractor(unittest.TestCase):
     
     def test_extract_basic_metadata(self):
         """Test basic metadata extraction"""
+
+
+
         try:
             metadata = self.extractor.extract_metadata(self.test_image_path)
             self.assertIsNotNone(metadata)
@@ -395,6 +425,9 @@ class TestMetadataExtractor(unittest.TestCase):
     
     def test_extract_exif_data(self):
         """Test EXIF data extraction"""
+
+
+
         try:
             exif_data = self.extractor.extract_exif(self.test_image_path)
             self.assertIsInstance(exif_data, dict)
@@ -403,6 +436,9 @@ class TestMetadataExtractor(unittest.TestCase):
     
     def test_extract_color_profile(self):
         """Test color profile extraction"""
+
+
+
         try:
             color_profile = self.extractor.extract_color_profile(self.test_image_path)
             self.assertIsNotNone(color_profile)
@@ -419,10 +455,16 @@ class TestPerformanceMetrics(unittest.TestCase):
     
     def _create_test_image(self) -> np.ndarray:
         """Create a test image"""
+
+
+
         return np.random.randint(0, 255, (480, 640, 3), dtype=np.uint8)
     
     def test_processing_speed_benchmark(self):
         """Benchmark processing speed"""
+
+
+
         try:
             start_time = time.time()
             
@@ -442,6 +484,9 @@ class TestPerformanceMetrics(unittest.TestCase):
     
     def test_memory_usage(self):
         """Test memory usage during processing"""
+
+
+
         try:
             import psutil
             import os
@@ -474,6 +519,9 @@ class TestErrorHandling(unittest.TestCase):
     
     def test_corrupted_image_handling(self):
         """Test handling of corrupted images"""
+
+
+
         try:
             # Create a corrupted image file
             temp_file = tempfile.NamedTemporaryFile(suffix='.jpg', delete=False)
@@ -492,6 +540,9 @@ class TestErrorHandling(unittest.TestCase):
     
     def test_unsupported_format_handling(self):
         """Test handling of unsupported image formats"""
+
+
+
         try:
             # Create a file with unsupported extension
             temp_file = tempfile.NamedTemporaryFile(suffix='.xyz', delete=False)
@@ -509,6 +560,9 @@ class TestErrorHandling(unittest.TestCase):
     
     def test_empty_image_handling(self):
         """Test handling of empty images"""
+
+
+
         try:
             empty_image = np.array([])
             
@@ -520,6 +574,9 @@ class TestErrorHandling(unittest.TestCase):
     
     def test_extremely_large_image_handling(self):
         """Test handling of extremely large images"""
+
+
+
         try:
             # Create a very large image (this might be memory intensive)
             # Use a smaller size for testing to avoid memory issues
@@ -547,6 +604,9 @@ class TestIntegrationScenarios(unittest.TestCase):
     
     def test_complete_image_processing_workflow(self):
         """Test complete image processing workflow"""
+
+
+
         try:
             # Create test image
             test_image = np.random.randint(0, 255, (480, 640, 3), dtype=np.uint8)

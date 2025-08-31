@@ -8,7 +8,7 @@ Optimized for high-performance caching, TTL management, and data retrieval.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️ LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION:
+ LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION:
 This code, concept, and intellectual property belong exclusively to Fahed Mlaiel (mlaiel@live.de). 
 Any unauthorized copying, distribution, modification, or commercial use is STRICTLY PROHIBITED 
 and will result in immediate legal action under German and International Copyright Law.
@@ -187,6 +187,9 @@ class CacheSerializer:
         Returns:
             Serialized cache dictionary
         """
+
+
+
         try:
             # Convert to dictionary
             data = cache_data.dict(exclude={'entries'})
@@ -257,6 +260,9 @@ class CacheSerializer:
         Returns:
             Deserialized CacheData object
         """
+
+
+
         try:
             # Handle datetime conversions
             datetime_fields = ['created_at', 'updated_at', 'last_cleanup', 'next_cleanup']
@@ -305,6 +311,9 @@ class CacheSerializer:
         Returns:
             Serialized cache entry dictionary
         """
+
+
+
         try:
             return self._serialize_cache_entry(entry, compress_data)
             
@@ -325,6 +334,9 @@ class CacheSerializer:
         Returns:
             Deserialized CacheEntry object
         """
+
+
+
         try:
             return self._deserialize_cache_entry(data)
             
@@ -410,6 +422,9 @@ class CacheSerializer:
     
     def _serialize_cache_metrics(self, metrics: CacheMetrics) -> Dict[str, Any]:
         """Serialize cache metrics."""
+
+
+
         return {
             'hit_count': metrics.hit_count,
             'miss_count': metrics.miss_count,
@@ -423,10 +438,16 @@ class CacheSerializer:
     
     def _deserialize_cache_metrics(self, data: Dict[str, Any]) -> CacheMetrics:
         """Deserialize cache metrics."""
+
+
+
         return CacheMetrics(**data)
     
     def _compress_entry_data(self, data: Any) -> str:
         """Compress cache entry data."""
+
+
+
         try:
             import gzip
             import pickle
@@ -449,6 +470,9 @@ class CacheSerializer:
     
     def _decompress_entry_data(self, compressed_data: str) -> Any:
         """Decompress cache entry data."""
+
+
+
         try:
             if compressed_data.startswith('gzip_pickle:'):
                 import gzip
@@ -478,6 +502,9 @@ class CacheSerializer:
         namespace: Optional[str] = None
     ) -> str:
         """Calculate standardized cache key."""
+
+
+
         try:
             key_components = [base_key]
             
@@ -511,6 +538,9 @@ class CacheSerializer:
         compress_large_entries: bool = True
     ) -> CacheData:
         """Optimize cache data for better performance."""
+
+
+
         try:
             optimized_entries = {}
             current_time = datetime.now()
@@ -551,6 +581,9 @@ class CacheSerializer:
     
     def calculate_cache_statistics(self, cache_data: CacheData) -> Dict[str, Any]:
         """Calculate comprehensive cache statistics."""
+
+
+
         try:
             total_requests = cache_data.metrics.hit_count + cache_data.metrics.miss_count
             hit_rate = cache_data.metrics.hit_count / max(total_requests, 1) * 100

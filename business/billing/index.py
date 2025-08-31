@@ -36,6 +36,9 @@ class BillingSystemManager:
     
     async def initialize(self, redis_config: Dict[str, Any], db_config: Dict[str, Any]) -> None:
         """Initialize the complete billing system"""
+
+
+
         try:
             # Initialize Redis connection
             self.redis_client = redis.Redis(
@@ -76,6 +79,9 @@ class BillingSystemManager:
     
     async def cleanup(self) -> None:
         """Cleanup billing system resources"""
+
+
+
         try:
             if self.db_pool:
                 await self.db_pool.close()
@@ -97,6 +103,9 @@ class BillingSystemManager:
     
     async def get_system_status(self) -> Dict[str, Any]:
         """Get billing system status"""
+
+
+
         try:
             if not self.is_initialized:
                 return {
@@ -127,6 +136,9 @@ billing_system = BillingSystemManager()
 @asynccontextmanager
 async def billing_system_lifespan(app: FastAPI):
     """FastAPI lifespan context manager for billing system"""
+
+
+
     try:
         # Initialize billing system on startup
         redis_config = {
@@ -154,6 +166,9 @@ async def billing_system_lifespan(app: FastAPI):
 # Convenience functions for accessing billing components
 async def get_billing_aggregator() -> BillingAggregatorEngine:
     """Get billing aggregator instance"""
+
+
+
     return billing_system.get_billing_aggregator()
 
 async def process_one_time_payment(payment_data: Dict[str, Any]) -> Dict[str, Any]:
@@ -183,6 +198,9 @@ async def get_comprehensive_dashboard() -> Dict[str, Any]:
 
 async def get_billing_health_status() -> Dict[str, Any]:
     """Get billing system health status"""
+
+
+
     return await billing_system.get_system_status()
 
 # Direct access to individual engines (for advanced use cases)

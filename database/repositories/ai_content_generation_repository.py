@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -69,6 +69,9 @@ class AIContentGenerationRepository(BaseRepository[AIContentGeneration]):
         Returns:
             Created AI content generation instance
         """
+
+
+
         try:
             generation_data = {
                 'user_id': user_id,
@@ -106,6 +109,9 @@ class AIContentGenerationRepository(BaseRepository[AIContentGeneration]):
         Returns:
             Updated generation instance
         """
+
+
+
         try:
             update_data = {
                 'status': status,
@@ -152,6 +158,9 @@ class AIContentGenerationRepository(BaseRepository[AIContentGeneration]):
         Returns:
             List of user's AI content generations
         """
+
+
+
         try:
             filters = {'user_id': user_id}
             
@@ -189,6 +198,9 @@ class AIContentGenerationRepository(BaseRepository[AIContentGeneration]):
         Returns:
             List of pending generation tasks
         """
+
+
+
         try:
             filters = {'status': 'pending'}
             
@@ -224,6 +236,9 @@ class AIContentGenerationRepository(BaseRepository[AIContentGeneration]):
         Returns:
             Analytics data
         """
+
+
+
         try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
@@ -299,6 +314,9 @@ class AIContentGenerationRepository(BaseRepository[AIContentGeneration]):
         Returns:
             Model performance statistics
         """
+
+
+
         try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
@@ -364,6 +382,9 @@ class AIContentGenerationRepository(BaseRepository[AIContentGeneration]):
         Returns:
             Number of cleaned up records
         """
+
+
+
         try:
             cutoff_date = datetime.utcnow() - timedelta(days=days_to_keep)
             
@@ -386,6 +407,9 @@ class AIContentGenerationRepository(BaseRepository[AIContentGeneration]):
         Returns:
             Queue statistics by content type
         """
+
+
+
         try:
             # Get pending tasks by content type
             pending_stats = self.db_session.query(

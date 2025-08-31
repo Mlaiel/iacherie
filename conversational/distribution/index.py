@@ -85,6 +85,9 @@ class DistributionService:
         
     async def initialize(self, db: Session) -> None:
         """Initialize the distribution service"""
+
+
+
         try:
             logger.info("Initializing Distribution Service...")
             
@@ -109,6 +112,9 @@ class DistributionService:
     
     async def shutdown(self) -> None:
         """Shutdown the distribution service"""
+
+
+
         try:
             logger.info("Shutting down Distribution Service...")
             
@@ -352,6 +358,9 @@ async def lifespan(app: FastAPI):
 # FastAPI dependency
 async def get_service(db: Session = Depends(get_db)) -> DistributionService:
     """FastAPI dependency to get distribution service"""
+
+
+
     return await initialize_distribution_service(db)
 
 
@@ -403,6 +412,9 @@ async def get_distribution_status() -> Dict[str, Any]:
 
 async def get_distribution_health() -> Dict[str, Any]:
     """Get distribution module health check"""
+
+
+
     return await health_check()
 
 
@@ -425,18 +437,18 @@ __all__ = [
 
 # Initialize logging
 logger.info("""
-🎯 Distribution Module Index v2.1.0 Loaded
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ Distribution Module Index v2.1.0 Loaded
 
-🚀 Enterprise Distribution Service Ready
-✅ Multi-platform content distribution
-✅ AI-powered analytics and insights  
-✅ Revenue tracking and monetization
-✅ Intelligent scheduling and optimization
-✅ Content adaptation and formatting
 
-👨‍💻 Author: Fahed Mlaiel (mlaiel@live.de)
-🛡️  Protected by copyright - Unauthorized use prohibited
+ Enterprise Distribution Service Ready
+ Multi-platform content distribution
+ AI-powered analytics and insights  
+ Revenue tracking and monetization
+ Intelligent scheduling and optimization
+ Content adaptation and formatting
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+‍ Author: Fahed Mlaiel (mlaiel@live.de)
+  Protected by copyright - Unauthorized use prohibited
+
+
 """)

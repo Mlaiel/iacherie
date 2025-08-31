@@ -61,6 +61,9 @@ class DiscordAdapter(BasePlatformAdapter):
     
     def _verify_credentials(self):
         """Verify Discord API credentials."""
+
+
+
         try:
             # Test bot connection
             response = self.session.get(f"{self.API_BASE_URL}/users/@me")
@@ -77,6 +80,9 @@ class DiscordAdapter(BasePlatformAdapter):
     
     async def authenticate_user(self, user_id: str) -> Dict[str, Any]:
         """Generate Discord OAuth URL for user authentication."""
+
+
+
         try:
             auth_params = {
                 "response_type": "code",
@@ -135,6 +141,9 @@ class DiscordAdapter(BasePlatformAdapter):
     
     async def upload_content(self, distribution_request: DistributionRequest) -> DistributionResult:
         """Upload content to Discord channel."""
+
+
+
         try:
             # Validate content first
             validation = await self.validate_content(distribution_request.content_metadata)
@@ -188,6 +197,9 @@ class DiscordAdapter(BasePlatformAdapter):
     
     async def _get_default_channel(self) -> str:
         """Get default channel for posting."""
+
+
+
         try:
             if not self.credentials.guild_id:
                 raise DistributionError("No guild ID configured for Discord")
@@ -267,6 +279,9 @@ class DiscordAdapter(BasePlatformAdapter):
     
     async def _prepare_file_upload(self, file_path: str, content_metadata: ContentMetadata) -> Dict:
         """Prepare file for Discord upload."""
+
+
+
         try:
             import os
             filename = os.path.basename(file_path)
@@ -284,6 +299,9 @@ class DiscordAdapter(BasePlatformAdapter):
     
     async def _send_message(self, channel_id: str, message_data: Dict, files: Optional[Dict] = None) -> Dict:
         """Send message to Discord channel."""
+
+
+
         try:
             url = f"{self.API_BASE_URL}/channels/{channel_id}/messages"
             
@@ -311,6 +329,9 @@ class DiscordAdapter(BasePlatformAdapter):
     
     async def get_analytics(self, content_id: str, date_range: tuple = None) -> PlatformAnalytics:
         """Retrieve analytics data for Discord message."""
+
+
+
         try:
             message_id = content_id.replace("discord_", "")
             channel_id = self.credentials.channel_id or await self._get_default_channel()
@@ -362,6 +383,9 @@ class DiscordAdapter(BasePlatformAdapter):
     
     async def _get_server_member_count(self) -> int:
         """Get server member count."""
+
+
+
         try:
             if not self.credentials.guild_id:
                 return 0
@@ -380,6 +404,9 @@ class DiscordAdapter(BasePlatformAdapter):
     
     async def get_revenue_data(self, content_id: str, date_range: tuple = None) -> RevenueData:
         """Estimate revenue from Discord content (server boosts, premium features)."""
+
+
+
         try:
             analytics = await self.get_analytics(content_id, date_range)
             
@@ -414,6 +441,9 @@ class DiscordAdapter(BasePlatformAdapter):
     
     async def update_content_metadata(self, content_id: str, metadata: Dict[str, Any]) -> bool:
         """Update Discord message (limited editing available)."""
+
+
+
         try:
             message_id = content_id.replace("discord_", "")
             channel_id = self.credentials.channel_id or await self._get_default_channel()
@@ -444,6 +474,9 @@ class DiscordAdapter(BasePlatformAdapter):
     
     async def delete_content(self, content_id: str) -> bool:
         """Delete Discord message."""
+
+
+
         try:
             message_id = content_id.replace("discord_", "")
             channel_id = self.credentials.channel_id or await self._get_default_channel()
@@ -463,6 +496,9 @@ class DiscordAdapter(BasePlatformAdapter):
     
     def get_platform_limits(self) -> Dict[str, Any]:
         """Return platform-specific limits and requirements."""
+
+
+
         return {
             "max_message_length": self.MAX_MESSAGE_LENGTH,
             "max_embed_title_length": self.MAX_EMBED_TITLE_LENGTH,

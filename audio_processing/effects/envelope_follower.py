@@ -1,5 +1,5 @@
 """
-📊 Envelope Follower - Professional Audio Level Detection
+ Envelope Follower - Professional Audio Level Detection
 
 High-quality envelope following for dynamic processing applications with
 multiple detection modes and adaptive response characteristics.

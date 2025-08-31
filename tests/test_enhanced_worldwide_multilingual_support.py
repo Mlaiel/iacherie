@@ -283,24 +283,24 @@ if __name__ == "__main__":
     test_accessibility = TestAccessibilitySupport()
     test_conformity = TestConformityMetrics()
     
-    print("🌍 Testing Enhanced Worldwide Multilingual Support...")
+    print(" Testing Enhanced Worldwide Multilingual Support...")
     
     try:
         test_coverage.test_import_availability()
-        print("✅ Import availability: PASSED")
+        print(" Import availability: PASSED")
         
         test_coverage.test_language_count_worldwide_coverage()
-        print("✅ Language count coverage: PASSED")
+        print(" Language count coverage: PASSED")
         
         test_coverage.test_critical_new_languages_present()
-        print("✅ Critical new languages: PASSED")
+        print(" Critical new languages: PASSED")
         
         test_conformity.test_worldwide_coverage_conformity()
-        print("✅ Conformity metrics: PASSED")
+        print(" Conformity metrics: PASSED")
         
-        print("\n🎉 All critical tests PASSED - Enhanced worldwide multilingual support is working!")
+        print("\n All critical tests PASSED - Enhanced worldwide multilingual support is working!")
         
     except Exception as e:
-        print(f"❌ Test failed: {e}")
+        print(f" Test failed: {e}")
         import traceback
         traceback.print_exc()

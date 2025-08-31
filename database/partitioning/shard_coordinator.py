@@ -19,7 +19,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING 🚨
+ INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
@@ -228,6 +228,9 @@ class ShardCoordinator:
         Returns:
             bool: True if shard added successfully
         """
+
+
+
         try:
             with self._lock:
                 shard_id = shard_config.shard_id
@@ -285,6 +288,9 @@ class ShardCoordinator:
 
     def _test_shard_connection(self, shard_node: ShardNode) -> bool:
         """Test connection to a shard node"""
+
+
+
         try:
             with shard_node.session_factory() as session:
                 result = session.execute(text("SELECT 1")).scalar()
@@ -295,6 +301,9 @@ class ShardCoordinator:
 
     def _update_hash_ring(self):
         """Update consistent hashing ring for load distribution"""
+
+
+
         try:
             self.shard_ring.clear()
             
@@ -327,6 +336,9 @@ class ShardCoordinator:
         Returns:
             Optional[str]: Shard ID or None if no active shards
         """
+
+
+
         try:
             if not self.shard_ring:
                 return None
@@ -368,6 +380,9 @@ class ShardCoordinator:
         Returns:
             Optional[str]: Optimal shard ID
         """
+
+
+
         try:
             with self._lock:
                 active_shards = [
@@ -492,6 +507,9 @@ class ShardCoordinator:
     def _execute_on_shard(self, shard_node: ShardNode, query: str, 
                          params: Dict[str, Any], timeout: int) -> Any:
         """Execute query on specific shard with proper resource management"""
+
+
+
         try:
             with shard_node.session_factory() as session:
                 # Set query timeout
@@ -521,6 +539,9 @@ class ShardCoordinator:
     def _attempt_failover_execution(self, query: str, params: Dict[str, Any], 
                                   failed_shard_id: str, timeout: int) -> Any:
         """Attempt to execute query on backup shards"""
+
+
+
         try:
             failed_shard = self.shards.get(failed_shard_id)
             if not failed_shard:
@@ -580,6 +601,9 @@ class ShardCoordinator:
 
     def _update_query_metrics(self, shard_id: str, start_time: float, success: bool):
         """Update query performance metrics"""
+
+
+
         try:
             execution_time = time.time() - start_time
             
@@ -611,6 +635,9 @@ class ShardCoordinator:
 
     def start_monitoring(self):
         """Start comprehensive health monitoring for all shards"""
+
+
+
         try:
             if self._monitoring_active:
                 logger.warning("Monitoring is already active")
@@ -642,6 +669,9 @@ class ShardCoordinator:
 
     def _perform_health_checks(self):
         """Perform health checks on all shards"""
+
+
+
         try:
             futures = []
             
@@ -664,6 +694,9 @@ class ShardCoordinator:
 
     def _check_shard_health(self, shard_node: ShardNode) -> ShardHealthStatus:
         """Check health of individual shard"""
+
+
+
         try:
             start_time = time.time()
             
@@ -690,6 +723,9 @@ class ShardCoordinator:
 
     def _collect_shard_metrics(self, shard_node: ShardNode):
         """Collect detailed performance metrics for shard"""
+
+
+
         try:
             metrics = shard_node.metrics
             
@@ -730,6 +766,9 @@ class ShardCoordinator:
 
     def _update_shard_health(self, shard_id: str, health_status: ShardHealthStatus):
         """Update shard health status and take appropriate actions"""
+
+
+
         try:
             shard_node = self.shards.get(shard_id)
             if not shard_node:
@@ -763,6 +802,9 @@ class ShardCoordinator:
 
     def _trigger_failover_actions(self, failed_shard_id: str):
         """Trigger automated failover actions"""
+
+
+
         try:
             logger.info(f"Triggering failover actions for shard: {failed_shard_id}")
             
@@ -786,6 +828,9 @@ class ShardCoordinator:
 
     def _send_alert(self, message: str, severity: str = "error"):
         """Send alert to monitoring systems"""
+
+
+
         try:
             alert = {
                 'timestamp': datetime.utcnow().isoformat(),
@@ -829,6 +874,9 @@ class ShardCoordinator:
         Returns:
             Dict containing detailed status information
         """
+
+
+
         try:
             with self._lock:
                 active_shards = [s for s in self.shards.values() if s.status == ShardStatus.ACTIVE]
@@ -897,6 +945,9 @@ class ShardCoordinator:
         Returns:
             bool: True if rebalancing was successful
         """
+
+
+
         try:
             logger.info("Starting intelligent shard rebalancing...")
             
@@ -970,6 +1021,9 @@ class ShardCoordinator:
         Returns:
             bool: True if removal was successful
         """
+
+
+
         try:
             with self._lock:
                 if shard_id not in self.shards:
@@ -1008,6 +1062,9 @@ class ShardCoordinator:
 
     def shutdown(self):
         """Gracefully shutdown shard coordinator"""
+
+
+
         try:
             logger.info("Shutting down shard coordinator...")
             
@@ -1040,6 +1097,9 @@ class ShardCoordinator:
 
     def __enter__(self):
         """Context manager entry"""
+
+
+
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
@@ -1111,6 +1171,9 @@ class ShardCoordinator:
 
     def _initialize_redis(self) -> Optional[redis.Redis]:
         """Initialize Redis client for coordination"""
+
+
+
         try:
             redis_client = redis.Redis.from_url(
                 self.config['redis_url'],
@@ -1134,6 +1197,9 @@ class ShardCoordinator:
         Returns:
             bool: True if shard added successfully
         """
+
+
+
         try:
             with self._lock:
                 if shard_config.shard_id in self.shards:
@@ -1169,6 +1235,9 @@ class ShardCoordinator:
 
     def _initialize_shard_connection(self, shard_node: ShardNode) -> bool:
         """Initialize database connection for shard"""
+
+
+
         try:
             # Create SQLAlchemy engine with connection pooling
             engine = create_engine(
@@ -1216,6 +1285,9 @@ class ShardCoordinator:
         Returns:
             bool: True if shard removed successfully
         """
+
+
+
         try:
             with self._lock:
                 if shard_id not in self.shards:
@@ -1255,6 +1327,9 @@ class ShardCoordinator:
         Returns:
             ShardNode: Selected shard node or None if no active shards
         """
+
+
+
         try:
             if not self.active_shards:
                 logger.warning("No active shards available")
@@ -1449,6 +1524,9 @@ class ShardCoordinator:
 
     def _handle_shard_failure(self, shard: ShardNode):
         """Handle shard failure and initiate recovery"""
+
+
+
         try:
             with self._lock:
                 # Mark shard as failed
@@ -1538,6 +1616,9 @@ class ShardCoordinator:
 
     def _check_shard_health(self, shard: ShardNode):
         """Check health of individual shard"""
+
+
+
         try:
             start_time = time.time()
             
@@ -1579,6 +1660,9 @@ class ShardCoordinator:
         Returns:
             Dict containing cluster status information
         """
+
+
+
         try:
             total_shards = len(self.shards)
             active_shards = len(self.active_shards)
@@ -1639,6 +1723,9 @@ class ShardCoordinator:
         Returns:
             bool: True if rebalancing completed successfully
         """
+
+
+
         try:
             logger.info("Starting shard rebalancing...")
             
@@ -1692,6 +1779,9 @@ class ShardCoordinator:
 
     def shutdown(self):
         """Shutdown shard coordinator gracefully"""
+
+
+
         try:
             logger.info("Shutting down shard coordinator...")
             
@@ -1736,6 +1826,9 @@ class ConsistentHashRing:
     
     def _hash(self, key: str) -> int:
         """Generate hash for key"""
+
+
+
         return int(hashlib.md5(key.encode()).hexdigest(), 16)
     
     def add_node(self, node: str, weight: float = 1.0):

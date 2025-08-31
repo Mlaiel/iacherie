@@ -145,6 +145,9 @@ class DecisionEngine:
     
     def _initialize_models(self) -> None:
         """Initialize ML models for decision making"""
+
+
+
         try:
             # Revenue prediction model
             self.revenue_model = RandomForestClassifier(
@@ -188,6 +191,9 @@ class DecisionEngine:
     
     def _load_pretrained_models(self) -> None:
         """Load pre-trained models from storage"""
+
+
+
         try:
             # This would load actual pre-trained models in production
             # For now, we'll train with synthetic data
@@ -789,6 +795,9 @@ class DecisionEngine:
         criteria: DecisionCriteria
     ) -> float:
         """Get ML-based score adjustment"""
+
+
+
         try:
             # Prepare features for ML models
             features = self._prepare_ml_features(option, criteria)
@@ -1013,6 +1022,9 @@ class DecisionEngine:
     
     async def _store_decision(self, decision_result: DecisionResult) -> None:
         """Store decision result"""
+
+
+
         try:
             await self.decision_storage.store_decision(decision_result)
             self.active_decisions[decision_result.decision_id] = decision_result
@@ -1042,6 +1054,9 @@ class DecisionEngine:
     
     async def get_decision_status(self, decision_id: str) -> Optional[DecisionResult]:
         """Get status of a specific decision"""
+
+
+
         return self.active_decisions.get(decision_id)
     
     async def update_decision_status(
@@ -1059,6 +1074,9 @@ class DecisionEngine:
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
         """Get decision engine performance metrics"""
+
+
+
         return self.performance_metrics.copy()
     
     async def get_decision_history(

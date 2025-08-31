@@ -155,6 +155,9 @@ class AIProcessingScheduler:
     
     async def _initialize_scheduler(self):
         """Initialize scheduler components."""
+
+
+
         try:
             # Initialize Redis for persistence
             self.redis_client = aioredis.from_url(
@@ -179,6 +182,9 @@ class AIProcessingScheduler:
     
     async def _initialize_resource_pools(self):
         """Initialize resource pools for different task types."""
+
+
+
         try:
             # CPU-intensive tasks pool
             self.resource_pools['cpu_pool'] = ResourcePool(
@@ -255,6 +261,9 @@ class AIProcessingScheduler:
         Returns:
             str: Scheduled task ID
         """
+
+
+
         try:
             scheduler_tasks_queued.inc()
             
@@ -397,6 +406,9 @@ class AIProcessingScheduler:
     
     async def _process_pending_tasks(self):
         """Process pending tasks from the queue."""
+
+
+
         try:
             while (self.task_queue and 
                    len(self.active_tasks) < self.config.max_concurrent_tasks):
@@ -426,6 +438,9 @@ class AIProcessingScheduler:
     
     async def _allocate_resources(self, scheduled_task: ScheduledTask) -> bool:
         """Allocate resources for task execution."""
+
+
+
         try:
             pool_id = self._get_pool_for_resource(scheduled_task.resource_requirement)
             pool = self.resource_pools.get(pool_id)
@@ -450,6 +465,9 @@ class AIProcessingScheduler:
     
     async def _start_task_execution(self, scheduled_task: ScheduledTask):
         """Start execution of a scheduled task."""
+
+
+
         try:
             task_id = scheduled_task.task.task_id
             
@@ -481,6 +499,9 @@ class AIProcessingScheduler:
     
     async def _check_active_tasks(self):
         """Check active tasks for completion or timeout."""
+
+
+
         try:
             completed_tasks = []
             current_time = datetime.utcnow()
@@ -520,6 +541,9 @@ class AIProcessingScheduler:
     
     async def _complete_task(self, task_id: str):
         """Complete and cleanup a task."""
+
+
+
         try:
             scheduled_task = self.active_tasks.get(task_id)
             if not scheduled_task:
@@ -568,6 +592,9 @@ class AIProcessingScheduler:
     
     async def _release_resources(self, scheduled_task: ScheduledTask):
         """Release allocated resources for a task."""
+
+
+
         try:
             task_id = scheduled_task.task.task_id
             pool_id = self.resource_allocation.get(task_id)
@@ -587,6 +614,9 @@ class AIProcessingScheduler:
     
     async def _retry_task(self, scheduled_task: ScheduledTask):
         """Retry a failed task."""
+
+
+
         try:
             scheduled_task.retry_count += 1
             scheduled_task.task.status = ProcessingStatus.PENDING
@@ -611,6 +641,9 @@ class AIProcessingScheduler:
     
     async def _update_resource_pools(self):
         """Update resource pool statistics and optimization."""
+
+
+
         try:
             for pool_id, pool in self.resource_pools.items():
                 # Calculate utilization
@@ -628,6 +661,9 @@ class AIProcessingScheduler:
     
     async def _optimize_pool_capacity(self, pool: ResourcePool):
         """Optimize resource pool capacity based on usage patterns."""
+
+
+
         try:
             utilization_key = f"{pool.pool_id}_utilization"
             recent_utilization = self.performance_metrics[utilization_key][-10:]  # Last 10 measurements
@@ -709,6 +745,9 @@ class AIProcessingScheduler:
     
     async def get_task_status(self, task_id: str) -> Optional[Dict[str, Any]]:
         """Get status of a scheduled task."""
+
+
+
         try:
             # Check active tasks
             if task_id in self.active_tasks:
@@ -738,6 +777,9 @@ class AIProcessingScheduler:
     
     def _format_task_status(self, scheduled_task: ScheduledTask) -> Dict[str, Any]:
         """Format task status for response."""
+
+
+
         return {
             'task_id': scheduled_task.task.task_id,
             'status': scheduled_task.task.status.value,
@@ -754,6 +796,9 @@ class AIProcessingScheduler:
     
     async def get_scheduler_statistics(self) -> Dict[str, Any]:
         """Get comprehensive scheduler statistics."""
+
+
+
         try:
             # Resource pool stats
             pool_stats = {}
@@ -790,6 +835,9 @@ class AIProcessingScheduler:
     
     async def shutdown(self):
         """Gracefully shutdown scheduler."""
+
+
+
         try:
             logger.info("Shutting down AI processing scheduler")
             

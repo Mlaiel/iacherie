@@ -1,12 +1,12 @@
 """
-⚙️ COLLABORATION CONFIG - Configuration Management System
+ COLLABORATION CONFIG - Configuration Management System
 ========================================================
 
 Developed by: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved - Unauthorized use is strictly prohibited
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive property of Fahed Mlaiel.
 Any attempt to steal, copy, or reproduce this concept, idea, or code
 without explicit written authorization from Fahed Mlaiel is strictly forbidden
@@ -418,10 +418,16 @@ class CollaborationConfig:
         
     def is_feature_enabled(self, feature_name: str) -> bool:
         """Check if feature flag is enabled"""
+
+
+
         return getattr(self.features, feature_name, False)
         
     def to_dict(self) -> Dict[str, Any]:
         """Convert configuration to dictionary (excluding secrets)"""
+
+
+
         return {
             'environment': self.environment.value,
             'database': {

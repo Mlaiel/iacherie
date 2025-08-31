@@ -168,6 +168,9 @@ class ServiceMeshManager(BaseDeploymentManager):
 
     def _init_kubernetes_clients(self) -> None:
         """Initialize Kubernetes clients."""
+
+
+
         try:
             config.load_incluster_config()
             self.v1_core = client.CoreV1Api()
@@ -190,6 +193,9 @@ class ServiceMeshManager(BaseDeploymentManager):
         Returns:
             True if installation successful, False otherwise
         """
+
+
+
         try:
             # Create mesh namespace
             namespace_created = await self._create_mesh_namespace(config.namespace)
@@ -230,6 +236,9 @@ class ServiceMeshManager(BaseDeploymentManager):
 
     async def _create_mesh_namespace(self, namespace: str) -> bool:
         """Create service mesh namespace."""
+
+
+
         try:
             namespace_body = client.V1Namespace(
                 metadata=client.V1ObjectMeta(
@@ -258,6 +267,9 @@ class ServiceMeshManager(BaseDeploymentManager):
 
     async def _install_control_plane(self, config: ServiceMeshConfig) -> bool:
         """Install service mesh control plane."""
+
+
+
         try:
             if config.mesh_type == ServiceMeshType.ISTIO:
                 return await self._install_istio_control_plane(config)
@@ -273,6 +285,9 @@ class ServiceMeshManager(BaseDeploymentManager):
 
     async def _install_istio_control_plane(self, config: ServiceMeshConfig) -> bool:
         """Install Istio control plane."""
+
+
+
         try:
             # Create Istio operator configuration
             istio_operator = {
@@ -352,6 +367,9 @@ class ServiceMeshManager(BaseDeploymentManager):
 
     async def _install_linkerd_control_plane(self, config: ServiceMeshConfig) -> bool:
         """Install Linkerd control plane."""
+
+
+
         try:
             # Linkerd installation would go here
             self.logger.info("Linkerd control plane installation not implemented yet")
@@ -363,6 +381,9 @@ class ServiceMeshManager(BaseDeploymentManager):
 
     async def _install_gateways(self, config: ServiceMeshConfig) -> bool:
         """Install ingress and egress gateways."""
+
+
+
         try:
             # Install ingress gateways
             for ingress_config in config.ingress_gateways:
@@ -384,6 +405,9 @@ class ServiceMeshManager(BaseDeploymentManager):
 
     async def _install_ingress_gateway(self, gateway_config: Dict[str, Any], namespace: str) -> bool:
         """Install ingress gateway."""
+
+
+
         try:
             gateway_name = gateway_config.get("name", "istio-ingressgateway")
             
@@ -399,6 +423,9 @@ class ServiceMeshManager(BaseDeploymentManager):
 
     async def _install_egress_gateway(self, gateway_config: Dict[str, Any], namespace: str) -> bool:
         """Install egress gateway."""
+
+
+
         try:
             gateway_name = gateway_config.get("name", "istio-egressgateway")
             
@@ -444,6 +471,9 @@ class ServiceMeshManager(BaseDeploymentManager):
 
     async def _configure_mesh_security(self, config: ServiceMeshConfig) -> bool:
         """Configure mesh security policies."""
+
+
+
         try:
             # Create default peer authentication
             default_peer_auth = PeerAuthentication(
@@ -470,6 +500,9 @@ class ServiceMeshManager(BaseDeploymentManager):
 
     async def _configure_namespace_policies(self, config: ServiceMeshConfig) -> bool:
         """Configure namespace-level security policies."""
+
+
+
         try:
             # Enable auto mTLS for application namespaces
             application_namespaces = ["ia-influencer-agent", "default"]
@@ -492,6 +525,9 @@ class ServiceMeshManager(BaseDeploymentManager):
 
     async def _install_observability_addons(self, config: ServiceMeshConfig) -> bool:
         """Install observability addons."""
+
+
+
         try:
             observability_config = config.observability
             
@@ -521,6 +557,9 @@ class ServiceMeshManager(BaseDeploymentManager):
 
     async def _install_jaeger(self, namespace: str) -> bool:
         """Install Jaeger for distributed tracing."""
+
+
+
         try:
             jaeger_config = {
                 "apiVersion": "jaegertracing.io/v1",
@@ -567,6 +606,9 @@ class ServiceMeshManager(BaseDeploymentManager):
 
     async def _install_kiali(self, namespace: str) -> bool:
         """Install Kiali for service mesh visualization."""
+
+
+
         try:
             kiali_config = {
                 "apiVersion": "kiali.io/v1alpha1",
@@ -615,6 +657,9 @@ class ServiceMeshManager(BaseDeploymentManager):
 
     async def _install_grafana(self, namespace: str) -> bool:
         """Install Grafana for metrics visualization."""
+
+
+
         try:
             # Grafana deployment
             grafana_deployment = {
@@ -703,6 +748,9 @@ class ServiceMeshManager(BaseDeploymentManager):
 
     async def _wait_for_mesh_ready(self, namespace: str, timeout: int = 600) -> bool:
         """Wait for service mesh to be ready."""
+
+
+
         try:
             start_time = datetime.now()
             
@@ -747,6 +795,9 @@ class ServiceMeshManager(BaseDeploymentManager):
         Returns:
             True if creation successful, False otherwise
         """
+
+
+
         try:
             vs_config = {
                 "apiVersion": "networking.istio.io/v1beta1",
@@ -795,6 +846,9 @@ class ServiceMeshManager(BaseDeploymentManager):
         Returns:
             True if creation successful, False otherwise
         """
+
+
+
         try:
             dr_config = {
                 "apiVersion": "networking.istio.io/v1beta1",
@@ -840,6 +894,9 @@ class ServiceMeshManager(BaseDeploymentManager):
         Returns:
             True if creation successful, False otherwise
         """
+
+
+
         try:
             gateway_config = {
                 "apiVersion": "networking.istio.io/v1beta1",
@@ -881,6 +938,9 @@ class ServiceMeshManager(BaseDeploymentManager):
         Returns:
             True if creation successful, False otherwise
         """
+
+
+
         try:
             pa_config = {
                 "apiVersion": "security.istio.io/v1beta1",
@@ -932,6 +992,9 @@ class ServiceMeshManager(BaseDeploymentManager):
         Returns:
             True if enabled successfully, False otherwise
         """
+
+
+
         try:
             # Get current namespace
             current_namespace = self.v1_core.read_namespace(name=namespace)
@@ -974,6 +1037,9 @@ class ServiceMeshManager(BaseDeploymentManager):
         Returns:
             True if canary deployment created successfully, False otherwise
         """
+
+
+
         try:
             # Create destination rule with subsets
             destination_rule = DestinationRule(
@@ -1049,6 +1115,9 @@ class ServiceMeshManager(BaseDeploymentManager):
         namespace: str
     ) -> bool:
         """Apply custom resource to Kubernetes."""
+
+
+
         try:
             self.custom_objects_api.create_namespaced_custom_object(
                 group=group,
@@ -1088,6 +1157,9 @@ class ServiceMeshManager(BaseDeploymentManager):
         Returns:
             Service mesh status information
         """
+
+
+
         try:
             # Get control plane status
             control_plane_pods = self.v1_core.list_namespaced_pod(
@@ -1171,6 +1243,9 @@ class ServiceMeshManager(BaseDeploymentManager):
         Returns:
             True if uninstallation successful, False otherwise
         """
+
+
+
         try:
             # Remove custom resources
             await self._cleanup_custom_resources()
@@ -1196,6 +1271,9 @@ class ServiceMeshManager(BaseDeploymentManager):
 
     async def _cleanup_custom_resources(self) -> None:
         """Cleanup all mesh custom resources."""
+
+
+
         try:
             # Clear local registries
             self.virtual_services.clear()
@@ -1210,6 +1288,9 @@ class ServiceMeshManager(BaseDeploymentManager):
 
     async def _remove_control_plane(self) -> bool:
         """Remove service mesh control plane."""
+
+
+
         try:
             # Remove Istio operator
             try:

@@ -9,7 +9,7 @@ for audio, video, image, and text content with AI-powered analysis.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code is proprietary and confidential. Any unauthorized copying, distribution,
 or use without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is
 strictly prohibited and will result in legal action.
@@ -137,6 +137,9 @@ class MetadataExtractor:
     
     def _init_ai_models(self):
         """Initialize AI models for content analysis"""
+
+
+
         try:
             # Image analysis models
             self.image_classifier = pipeline(
@@ -255,6 +258,9 @@ class MetadataExtractor:
         Returns:
             List of metadata collections
         """
+
+
+
         try:
             self.logger.info(f"Starting batch metadata extraction: {len(content_items)} items")
             
@@ -309,6 +315,9 @@ class MetadataExtractor:
         Returns:
             Enriched metadata collection
         """
+
+
+
         try:
             self.logger.info(f"Enriching metadata: {metadata_collection.content_id}")
             
@@ -349,6 +358,9 @@ class MetadataExtractor:
         Returns:
             Validation results with issues and recommendations
         """
+
+
+
         try:
             validation_results = {
                 'is_valid': True,
@@ -441,6 +453,9 @@ class MetadataExtractor:
         Returns:
             Exported metadata in requested format
         """
+
+
+
         try:
             if format.lower() == "json":
                 return await self._export_json(metadata_collection)
@@ -459,6 +474,9 @@ class MetadataExtractor:
     
     async def _detect_content_format(self, file_data: bytes, filename: str) -> ContentFormat:
         """Auto-detect content format"""
+
+
+
         try:
             # Use python-magic for MIME type detection
             mime_type = magic.from_buffer(file_data, mime=True)
@@ -493,6 +511,9 @@ class MetadataExtractor:
     async def _extract_basic_metadata(self, metadata_collection: MetadataCollection,
                                     file_data: bytes, filename: str):
         """Extract basic file metadata"""
+
+
+
         try:
             # Basic file information
             metadata_collection.administrative_metadata.update({
@@ -519,6 +540,9 @@ class MetadataExtractor:
     async def _extract_audio_metadata(self, metadata_collection: MetadataCollection,
                                     file_data: bytes, filename: str):
         """Extract audio-specific metadata"""
+
+
+
         try:
             # Save to temporary file for processing
             with tempfile.NamedTemporaryFile(suffix=Path(filename).suffix, delete=False) as temp_file:
@@ -604,6 +628,9 @@ class MetadataExtractor:
     async def _extract_video_metadata(self, metadata_collection: MetadataCollection,
                                     file_data: bytes, filename: str):
         """Extract video-specific metadata"""
+
+
+
         try:
             # Save to temporary file for processing
             with tempfile.NamedTemporaryFile(suffix=Path(filename).suffix, delete=False) as temp_file:
@@ -726,6 +753,9 @@ class MetadataExtractor:
     async def _extract_image_metadata(self, metadata_collection: MetadataCollection,
                                     file_data: bytes, filename: str):
         """Extract image-specific metadata"""
+
+
+
         try:
             # Load image with PIL
             with tempfile.NamedTemporaryFile() as temp_file:
@@ -833,6 +863,9 @@ class MetadataExtractor:
     async def _extract_text_metadata(self, metadata_collection: MetadataCollection,
                                    file_data: bytes, filename: str):
         """Extract text/document-specific metadata"""
+
+
+
         try:
             file_ext = Path(filename).suffix.lower()
             
@@ -936,6 +969,9 @@ class MetadataExtractor:
     
     async def _extract_pdf_metadata(self, pdf_data: bytes) -> tuple:
         """Extract metadata from PDF"""
+
+
+
         try:
             doc = fitz.open(stream=pdf_data, filetype="pdf")
             
@@ -966,6 +1002,9 @@ class MetadataExtractor:
     
     async def _extract_docx_metadata(self, docx_data: bytes) -> tuple:
         """Extract metadata from DOCX"""
+
+
+
         try:
             with tempfile.NamedTemporaryFile() as temp_file:
                 temp_file.write(docx_data)
@@ -1003,6 +1042,9 @@ class MetadataExtractor:
     async def _extract_ai_metadata(self, metadata_collection: MetadataCollection,
                                  file_data: bytes, content_type: ContentFormat):
         """Extract AI-powered metadata analysis"""
+
+
+
         try:
             ai_metadata = {}
             
@@ -1090,6 +1132,9 @@ class MetadataExtractor:
     
     async def _calculate_metadata_scores(self, metadata_collection: MetadataCollection):
         """Calculate quality and completeness scores for metadata"""
+
+
+
         try:
             # Count extracted fields
             total_fields = 0
@@ -1196,6 +1241,9 @@ class MetadataExtractor:
     
     async def _generate_extraction_summary(self, metadata_collection: MetadataCollection):
         """Generate extraction summary with statistics and insights"""
+
+
+
         try:
             summary = {
                 'extraction_status': 'completed',
@@ -1285,6 +1333,9 @@ class MetadataExtractor:
     
     async def _export_json(self, metadata_collection: MetadataCollection) -> str:
         """Export metadata as JSON"""
+
+
+
         try:
             export_data = {
                 'content_id': metadata_collection.content_id,
@@ -1313,6 +1364,9 @@ class MetadataExtractor:
     
     async def _export_xml(self, metadata_collection: MetadataCollection) -> str:
         """Export metadata as XML"""
+
+
+
         try:
             import xml.etree.ElementTree as ET
             
@@ -1351,6 +1405,9 @@ class MetadataExtractor:
     
     async def _export_dublin_core(self, metadata_collection: MetadataCollection) -> str:
         """Export metadata in Dublin Core format"""
+
+
+
         try:
             dublin_core_mapping = {
                 'title': metadata_collection.descriptive_metadata.get('title', ''),
@@ -1389,10 +1446,16 @@ class MetadataExtractor:
     
     def get_supported_formats(self) -> Dict[str, List[str]]:
         """Get supported formats by content type"""
+
+
+
         return {fmt.value: exts for fmt, exts in self.supported_formats.items()}
     
     def get_extraction_capabilities(self) -> Dict[str, Any]:
         """Get extractor capabilities and configuration"""
+
+
+
         return {
             'supported_formats': self.get_supported_formats(),
             'ai_models_available': {

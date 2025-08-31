@@ -1,5 +1,5 @@
 """
-📊 Reporting Engine - IA Influencer Agent Surveillance Module
+ Reporting Engine - IA Influencer Agent Surveillance Module
 ===========================================================
 
 Advanced reporting and analytics engine for surveillance activities,
@@ -623,6 +623,9 @@ class ReportingEngine:
     
     async def initialize(self) -> None:
         """Initialize reporting engine"""
+
+
+
         try:
             # Initialize report generators
             self.generators[ReportType.INFRINGEMENT_SUMMARY] = InfringementSummaryGenerator(self.surveillance_system)
@@ -827,6 +830,9 @@ class ReportingEngine:
     
     async def get_report(self, report_id: str) -> Optional[ReportData]:
         """Get a cached report"""
+
+
+
         return self.report_cache.get(report_id)
     
     async def list_reports(self, creator_id: Optional[str] = None) -> List[Dict[str, Any]]:
@@ -896,6 +902,9 @@ class ReportingEngine:
     
     async def health_check(self) -> Dict[str, Any]:
         """Perform health check on reporting engine"""
+
+
+
         return {
             "engine": "healthy" if self.initialized else "unhealthy",
             "generators_available": len(self.generators),

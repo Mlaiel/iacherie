@@ -39,11 +39,17 @@ class TestRevenueCalculator:
     @pytest.fixture
     def calculator(self):
         """Create RevenueCalculator instance for testing"""
+
+
+
         return RevenueCalculator()
     
     @pytest.fixture
     def sample_revenue_data(self):
         """Sample revenue data for testing"""
+
+
+
         return [
             RevenueData(
                 platform="youtube",

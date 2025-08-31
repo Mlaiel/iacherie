@@ -7,7 +7,7 @@ social media, streaming, and content distribution platforms.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
@@ -167,6 +167,9 @@ class PlatformSpecificIntentProcessor:
     
     def _initialize_platform_patterns(self) -> Dict[Platform, re.Pattern]:
         """Initialize platform detection patterns"""
+
+
+
         return {
             Platform.SPOTIFY: re.compile(
                 r'\b(spotify|streaming|playlist|album|track|artist)\b', re.IGNORECASE
@@ -196,6 +199,9 @@ class PlatformSpecificIntentProcessor:
     
     def _initialize_platform_specifications(self) -> Dict[Platform, PlatformSpecification]:
         """Initialize platform-specific specifications"""
+
+
+
         return {
             Platform.SPOTIFY: PlatformSpecification(
                 max_file_size=100,  # MB
@@ -266,6 +272,9 @@ class PlatformSpecificIntentProcessor:
     
     def _initialize_intent_patterns(self) -> Dict[PlatformIntentType, re.Pattern]:
         """Initialize intent type patterns"""
+
+
+
         return {
             PlatformIntentType.CONTENT_UPLOAD: re.compile(
                 r'\b(upload|post|publish|share|release|drop)\b', re.IGNORECASE
@@ -292,6 +301,9 @@ class PlatformSpecificIntentProcessor:
     
     def _load_optimization_rules(self) -> Dict[Platform, Dict[str, Any]]:
         """Load platform-specific optimization rules"""
+
+
+
         return {
             Platform.INSTAGRAM: {
                 "best_posting_times": [
@@ -366,6 +378,9 @@ class PlatformSpecificIntentProcessor:
         Returns:
             PlatformIntentAnalysis: Comprehensive platform intent analysis
         """
+
+
+
         try:
             # Identify target platform
             platform = self._identify_platform(message_text, user_profile, explicit_platform)

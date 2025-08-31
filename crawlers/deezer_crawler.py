@@ -151,6 +151,9 @@ class DeezerCrawler(BaseCrawler):
         
     async def authenticate(self, access_token: str) -> bool:
         """Authenticate with Deezer API (if available)"""
+
+
+
         try:
             # Note: Deezer API is mostly public, OAuth for user-specific data
             if access_token:
@@ -470,6 +473,9 @@ class DeezerCrawler(BaseCrawler):
         Returns:
             Comprehensive artist performance analysis
         """
+
+
+
         try:
             artist = await self.get_artist_details(artist_id)
             if not artist:
@@ -537,6 +543,9 @@ class DeezerCrawler(BaseCrawler):
         Returns:
             Comprehensive trend analysis
         """
+
+
+
         try:
             # Get chart data
             trending_tracks = await self.get_charts("tracks", limit)
@@ -604,6 +613,9 @@ class DeezerCrawler(BaseCrawler):
     
     async def _parse_track_data(self, track_data: Dict) -> Optional[DeezerTrack]:
         """Parse Deezer API track data into DeezerTrack model"""
+
+
+
         try:
             # Parse artist information
             artist_info = track_data.get('artist', {})
@@ -657,6 +669,9 @@ class DeezerCrawler(BaseCrawler):
     
     async def _parse_artist_data(self, artist_data: Dict) -> Optional[DeezerArtist]:
         """Parse Deezer API artist data into DeezerArtist model"""
+
+
+
         try:
             artist = DeezerArtist(
                 artist_id=str(artist_data.get('id', '')),
@@ -827,6 +842,9 @@ class DeezerCrawler(BaseCrawler):
     
     async def _analyze_track_performance(self, track: DeezerTrack) -> Dict[str, Any]:
         """Analyze individual track performance metrics"""
+
+
+
         return {
             'track_id': track.track_id,
             'title': track.title,

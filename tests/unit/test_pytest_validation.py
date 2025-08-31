@@ -49,6 +49,9 @@ def test_async_functionality():
 
 def test_imports_work():
     """Test that basic imports work without conftest"""
+
+
+
     try:
         import numpy as np
         # Test numpy works

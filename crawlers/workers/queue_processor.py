@@ -8,7 +8,7 @@ Responsibility: High-performance queue management and task distribution
 Technologies: Redis, RabbitMQ, Priority Queues, Dead Letter Queues
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -178,8 +178,11 @@ class QueueProcessor:
 
     async def start(self) -> bool:
         """Start queue processor"""
+
+
+
         try:
-            logger.info(f"🚀 Starting queue processor: {self.queue_name}")
+            logger.info(f" Starting queue processor: {self.queue_name}")
             
             # Initialize Redis connection
             await self._initialize_redis()
@@ -190,18 +193,21 @@ class QueueProcessor:
             self.is_running = True
             self.status = QueueStatus.ACTIVE
             
-            logger.info(f"✅ Queue processor {self.queue_name} started successfully")
+            logger.info(f" Queue processor {self.queue_name} started successfully")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to start queue processor {self.queue_name}: {e}")
+            logger.error(f" Failed to start queue processor {self.queue_name}: {e}")
             self.status = QueueStatus.ERROR
             return False
 
     async def stop(self) -> None:
         """Stop queue processor gracefully"""
+
+
+
         try:
-            logger.info(f"🛑 Stopping queue processor: {self.queue_name}")
+            logger.info(f" Stopping queue processor: {self.queue_name}")
             
             self.is_running = False
             self.status = QueueStatus.DRAINING
@@ -222,14 +228,17 @@ class QueueProcessor:
             if self.redis:
                 await self.redis.close()
             
-            logger.info(f"✅ Queue processor {self.queue_name} stopped gracefully")
+            logger.info(f" Queue processor {self.queue_name} stopped gracefully")
             
         except Exception as e:
-            logger.error(f"❌ Error stopping queue processor {self.queue_name}: {e}")
+            logger.error(f" Error stopping queue processor {self.queue_name}: {e}")
 
     async def enqueue(self, payload: Any, priority: int = 0, delay_seconds: int = 0, 
                      metadata: Optional[Dict[str, Any]] = None) -> str:
         """Enqueue a message for processing"""
+
+
+
         try:
             # Create message
             message = QueueMessage(
@@ -255,15 +264,18 @@ class QueueProcessor:
             self.metrics.total_messages += 1
             self.metrics.pending_messages += 1
             
-            logger.debug(f"📝 Message enqueued: {message.message_id} in queue {self.queue_name}")
+            logger.debug(f" Message enqueued: {message.message_id} in queue {self.queue_name}")
             return message.message_id
             
         except Exception as e:
-            logger.error(f"❌ Failed to enqueue message: {e}")
+            logger.error(f" Failed to enqueue message: {e}")
             raise
 
     async def dequeue(self, timeout: int = 30) -> Optional[QueueMessage]:
         """Dequeue a message for processing"""
+
+
+
         try:
             if self.status != QueueStatus.ACTIVE:
                 return None
@@ -277,20 +289,23 @@ class QueueProcessor:
                 self.metrics.pending_messages -= 1
                 self.metrics.processing_messages += 1
                 
-                logger.debug(f"📤 Message dequeued: {message.message_id} from queue {self.queue_name}")
+                logger.debug(f" Message dequeued: {message.message_id} from queue {self.queue_name}")
             
             return message
             
         except Exception as e:
-            logger.error(f"❌ Failed to dequeue message: {e}")
+            logger.error(f" Failed to dequeue message: {e}")
             return None
 
     async def acknowledge(self, message_id: str, success: bool = True, error_message: Optional[str] = None) -> bool:
         """Acknowledge message processing completion"""
+
+
+
         try:
             message = self.processing_messages.get(message_id)
             if not message:
-                logger.warning(f"⚠️ Message not found for acknowledgment: {message_id}")
+                logger.warning(f" Message not found for acknowledgment: {message_id}")
                 return False
             
             # Remove from processing
@@ -302,13 +317,13 @@ class QueueProcessor:
                 self.metrics.completed_messages += 1
                 await self._remove_message_from_storage(message_id)
                 
-                logger.debug(f"✅ Message acknowledged successfully: {message_id}")
+                logger.debug(f" Message acknowledged successfully: {message_id}")
                 
             else:
                 # Handle failure
                 await self._handle_failed_message(message, error_message)
                 
-                logger.warning(f"❌ Message acknowledged with failure: {message_id}")
+                logger.warning(f" Message acknowledged with failure: {message_id}")
             
             # Update metrics
             self.metrics.last_activity = datetime.utcnow()
@@ -316,11 +331,14 @@ class QueueProcessor:
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to acknowledge message {message_id}: {e}")
+            logger.error(f" Failed to acknowledge message {message_id}: {e}")
             return False
 
     async def get_queue_info(self) -> Dict[str, Any]:
         """Get comprehensive queue information"""
+
+
+
         try:
             # Update current metrics
             await self._update_metrics()
@@ -361,11 +379,14 @@ class QueueProcessor:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to get queue info: {e}")
+            logger.error(f" Failed to get queue info: {e}")
             return {"error": str(e)}
 
     async def clear_queue(self, queue_type: Optional[QueueType] = None) -> int:
         """Clear messages from queue"""
+
+
+
         try:
             if queue_type == QueueType.DEAD_LETTER:
                 count = len(self.dead_letter_messages)
@@ -381,25 +402,31 @@ class QueueProcessor:
             return count
             
         except Exception as e:
-            logger.error(f"❌ Failed to clear queue: {e}")
+            logger.error(f" Failed to clear queue: {e}")
             return 0
 
     async def _initialize_redis(self) -> None:
         """Initialize Redis connection"""
+
+
+
         try:
             self.redis = redis.from_url(self.redis_url, decode_responses=False)
             
             # Test connection
             await self.redis.ping()
             
-            logger.info(f"✅ Redis connection established for queue {self.queue_name}")
+            logger.info(f" Redis connection established for queue {self.queue_name}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize Redis: {e}")
+            logger.error(f" Failed to initialize Redis: {e}")
             raise
 
     async def _start_background_tasks(self) -> None:
         """Start background processing tasks"""
+
+
+
         try:
             # Message processor
             processor_task = asyncio.create_task(self._background_processor())
@@ -421,14 +448,17 @@ class QueueProcessor:
             circuit_task = asyncio.create_task(self._circuit_breaker_monitor())
             self.background_tasks.add(circuit_task)
             
-            logger.info(f"✅ Background tasks started for queue {self.queue_name}")
+            logger.info(f" Background tasks started for queue {self.queue_name}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to start background tasks: {e}")
+            logger.error(f" Failed to start background tasks: {e}")
             raise
 
     async def _serialize_message(self, message: QueueMessage) -> bytes:
         """Serialize message for storage"""
+
+
+
         try:
             # Convert to dict
             message_dict = {
@@ -461,11 +491,14 @@ class QueueProcessor:
             return serialized
             
         except Exception as e:
-            logger.error(f"❌ Failed to serialize message: {e}")
+            logger.error(f" Failed to serialize message: {e}")
             raise
 
     async def _deserialize_message(self, data: bytes) -> QueueMessage:
         """Deserialize message from storage"""
+
+
+
         try:
             # Decrypt if enabled
             if self.config.encryption_enabled:
@@ -498,11 +531,14 @@ class QueueProcessor:
             return message
             
         except Exception as e:
-            logger.error(f"❌ Failed to deserialize message: {e}")
+            logger.error(f" Failed to deserialize message: {e}")
             raise
 
     async def _store_message(self, message: QueueMessage, serialized_data: bytes) -> None:
         """Store message in Redis based on processing mode"""
+
+
+
         try:
             queue_key = self._get_queue_key(message)
             
@@ -526,11 +562,14 @@ class QueueProcessor:
                 await self.redis.expire(queue_key, self.config.ttl_seconds)
             
         except Exception as e:
-            logger.error(f"❌ Failed to store message: {e}")
+            logger.error(f" Failed to store message: {e}")
             raise
 
     async def _get_next_message(self, timeout: int) -> Optional[QueueMessage]:
         """Get next message based on processing mode"""
+
+
+
         try:
             queue_key = self._get_queue_key()
             
@@ -554,11 +593,14 @@ class QueueProcessor:
             return None
             
         except Exception as e:
-            logger.error(f"❌ Failed to get next message: {e}")
+            logger.error(f" Failed to get next message: {e}")
             return None
 
     async def _handle_failed_message(self, message: QueueMessage, error_message: Optional[str] = None) -> None:
         """Handle failed message processing"""
+
+
+
         try:
             message.attempt_count += 1
             
@@ -573,20 +615,23 @@ class QueueProcessor:
                 timestamp = message.scheduled_at.timestamp()
                 await self.redis.zadd(retry_key, {serialized_data: timestamp})
                 
-                logger.info(f"🔄 Message scheduled for retry {message.attempt_count}/{message.max_retries}: {message.message_id}")
+                logger.info(f" Message scheduled for retry {message.attempt_count}/{message.max_retries}: {message.message_id}")
                 
             else:
                 # Move to dead letter queue
                 await self._move_to_dead_letter(message, error_message)
                 self.metrics.failed_messages += 1
                 
-                logger.warning(f"💀 Message moved to dead letter queue: {message.message_id}")
+                logger.warning(f" Message moved to dead letter queue: {message.message_id}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to handle failed message: {e}")
+            logger.error(f" Failed to handle failed message: {e}")
 
     async def _move_to_dead_letter(self, message: QueueMessage, error_message: Optional[str] = None) -> None:
         """Move message to dead letter queue"""
+
+
+
         try:
             # Add error information
             message.metadata['error_message'] = error_message
@@ -603,7 +648,7 @@ class QueueProcessor:
             self.metrics.dead_letter_messages += 1
             
         except Exception as e:
-            logger.error(f"❌ Failed to move message to dead letter queue: {e}")
+            logger.error(f" Failed to move message to dead letter queue: {e}")
 
     async def _background_processor(self) -> None:
         """Background task for processing delayed messages"""
@@ -618,11 +663,14 @@ class QueueProcessor:
                 await asyncio.sleep(5)  # Check every 5 seconds
                 
             except Exception as e:
-                logger.error(f"❌ Background processor error: {e}")
+                logger.error(f" Background processor error: {e}")
                 await asyncio.sleep(30)
 
     async def _process_delayed_messages(self) -> None:
         """Process delayed messages that are ready"""
+
+
+
         try:
             delayed_key = f"{self.queue_name}:delayed"
             current_time = datetime.utcnow().timestamp()
@@ -642,13 +690,16 @@ class QueueProcessor:
                     await self.redis.rpush(queue_key, serialized_data)
                     
                 except Exception as e:
-                    logger.error(f"❌ Failed to process delayed message: {e}")
+                    logger.error(f" Failed to process delayed message: {e}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to process delayed messages: {e}")
+            logger.error(f" Failed to process delayed messages: {e}")
 
     async def _process_retry_messages(self) -> None:
         """Process retry messages that are ready"""
+
+
+
         try:
             retry_key = f"{self.queue_name}:retry"
             current_time = datetime.utcnow().timestamp()
@@ -668,10 +719,10 @@ class QueueProcessor:
                     await self.redis.rpush(queue_key, serialized_data)
                     
                 except Exception as e:
-                    logger.error(f"❌ Failed to process retry message: {e}")
+                    logger.error(f" Failed to process retry message: {e}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to process retry messages: {e}")
+            logger.error(f" Failed to process retry messages: {e}")
 
     async def _dead_letter_processor(self) -> None:
         """Background task for dead letter queue processing"""
@@ -681,12 +732,12 @@ class QueueProcessor:
                 dlq_size = await self.redis.llen(f"{self.queue_name}:dead_letter")
                 
                 if dlq_size > 1000:  # Alert if too many dead letters
-                    logger.warning(f"⚠️ High dead letter queue size: {dlq_size} for queue {self.queue_name}")
+                    logger.warning(f" High dead letter queue size: {dlq_size} for queue {self.queue_name}")
                 
                 await asyncio.sleep(60)  # Check every minute
                 
             except Exception as e:
-                logger.error(f"❌ Dead letter processor error: {e}")
+                logger.error(f" Dead letter processor error: {e}")
                 await asyncio.sleep(120)
 
     async def _metrics_updater(self) -> None:
@@ -697,11 +748,14 @@ class QueueProcessor:
                 await asyncio.sleep(30)  # Update every 30 seconds
                 
             except Exception as e:
-                logger.error(f"❌ Metrics updater error: {e}")
+                logger.error(f" Metrics updater error: {e}")
                 await asyncio.sleep(60)
 
     async def _update_metrics(self) -> None:
         """Update queue metrics"""
+
+
+
         try:
             # Update queue sizes
             queue_key = self._get_queue_key()
@@ -725,7 +779,7 @@ class QueueProcessor:
                     self.metrics.throughput_per_second = 1.0 / time_diff
             
         except Exception as e:
-            logger.error(f"❌ Failed to update metrics: {e}")
+            logger.error(f" Failed to update metrics: {e}")
 
     async def _ttl_cleaner(self) -> None:
         """Background task for cleaning expired messages"""
@@ -745,7 +799,7 @@ class QueueProcessor:
                 await asyncio.sleep(300)  # Check every 5 minutes
                 
             except Exception as e:
-                logger.error(f"❌ TTL cleaner error: {e}")
+                logger.error(f" TTL cleaner error: {e}")
                 await asyncio.sleep(600)
 
     async def _circuit_breaker_monitor(self) -> None:
@@ -758,18 +812,21 @@ class QueueProcessor:
                     if time_since_failure.total_seconds() > 300:  # 5 minutes
                         self.circuit_breaker_open = False
                         self.circuit_breaker_failures = 0
-                        logger.info(f"🔓 Circuit breaker reset for queue {self.queue_name}")
+                        logger.info(f" Circuit breaker reset for queue {self.queue_name}")
                 
                 await asyncio.sleep(60)  # Check every minute
                 
             except Exception as e:
-                logger.error(f"❌ Circuit breaker monitor error: {e}")
+                logger.error(f" Circuit breaker monitor error: {e}")
                 await asyncio.sleep(120)
 
     async def _drain_messages(self) -> None:
         """Drain remaining messages during shutdown"""
+
+
+
         try:
-            logger.info(f"🔄 Draining messages for queue {self.queue_name}")
+            logger.info(f" Draining messages for queue {self.queue_name}")
             
             # Wait for processing messages to complete
             timeout = 60  # 1 minute timeout
@@ -780,30 +837,36 @@ class QueueProcessor:
             
             # Force acknowledge remaining messages
             if self.processing_messages:
-                logger.warning(f"⚠️ Force acknowledging {len(self.processing_messages)} messages")
+                logger.warning(f" Force acknowledging {len(self.processing_messages)} messages")
                 for msg_id in list(self.processing_messages.keys()):
                     await self.acknowledge(msg_id, success=False, error_message="System shutdown")
             
         except Exception as e:
-            logger.error(f"❌ Failed to drain messages: {e}")
+            logger.error(f" Failed to drain messages: {e}")
 
     async def _remove_message_from_storage(self, message_id: str) -> None:
         """Remove message from Redis storage"""
+
+
+
         try:
             # This is a simplified implementation
             # In practice, you'd need to track message locations more precisely
             pass
             
         except Exception as e:
-            logger.error(f"❌ Failed to remove message from storage: {e}")
+            logger.error(f" Failed to remove message from storage: {e}")
 
     async def _clear_redis_queue(self, queue_key: str) -> None:
         """Clear Redis queue"""
+
+
+
         try:
             await self.redis.delete(queue_key)
             
         except Exception as e:
-            logger.error(f"❌ Failed to clear Redis queue: {e}")
+            logger.error(f" Failed to clear Redis queue: {e}")
 
     def _get_queue_key(self, message: Optional[QueueMessage] = None) -> str:
         """Get Redis key for queue"""
@@ -832,22 +895,28 @@ class QueueProcessorManager:
 
     async def start(self) -> bool:
         """Start queue processor manager"""
+
+
+
         try:
-            logger.info("🚀 Starting queue processor manager")
+            logger.info(" Starting queue processor manager")
             
             self.is_running = True
             
-            logger.info("✅ Queue processor manager started")
+            logger.info(" Queue processor manager started")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to start queue processor manager: {e}")
+            logger.error(f" Failed to start queue processor manager: {e}")
             return False
 
     async def stop(self) -> None:
         """Stop all queue processors"""
+
+
+
         try:
-            logger.info("🛑 Stopping queue processor manager")
+            logger.info(" Stopping queue processor manager")
             
             # Stop all processors
             for processor in self.processors.values():
@@ -855,16 +924,19 @@ class QueueProcessorManager:
             
             self.is_running = False
             
-            logger.info("✅ Queue processor manager stopped")
+            logger.info(" Queue processor manager stopped")
             
         except Exception as e:
-            logger.error(f"❌ Error stopping queue processor manager: {e}")
+            logger.error(f" Error stopping queue processor manager: {e}")
 
     async def create_processor(self, config: QueueConfig) -> bool:
         """Create a new queue processor"""
+
+
+
         try:
             if config.queue_name in self.processors:
-                logger.warning(f"⚠️ Queue processor already exists: {config.queue_name}")
+                logger.warning(f" Queue processor already exists: {config.queue_name}")
                 return False
             
             processor = QueueProcessor(config, self.redis_url)
@@ -872,22 +944,28 @@ class QueueProcessorManager:
             
             if success:
                 self.processors[config.queue_name] = processor
-                logger.info(f"✅ Created queue processor: {config.queue_name}")
+                logger.info(f" Created queue processor: {config.queue_name}")
                 return True
             else:
-                logger.error(f"❌ Failed to start queue processor: {config.queue_name}")
+                logger.error(f" Failed to start queue processor: {config.queue_name}")
                 return False
                 
         except Exception as e:
-            logger.error(f"❌ Failed to create queue processor: {e}")
+            logger.error(f" Failed to create queue processor: {e}")
             return False
 
     async def get_processor(self, queue_name: str) -> Optional[QueueProcessor]:
         """Get queue processor by name"""
+
+
+
         return self.processors.get(queue_name)
 
     async def get_global_status(self) -> Dict[str, Any]:
         """Get global status of all processors"""
+
+
+
         try:
             total_processors = len(self.processors)
             active_processors = sum(1 for p in self.processors.values() if p.status == QueueStatus.ACTIVE)
@@ -916,5 +994,5 @@ class QueueProcessorManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to get global status: {e}")
+            logger.error(f" Failed to get global status: {e}")
             return {"error": str(e)}

@@ -22,7 +22,7 @@ Contact: mlaiel@live.de
 - DevOps Engineer: Fahed Mlaiel
 - IA Prompt Engineer: Fahed Mlaiel
 
-⚠️ ATTENTION IMPORTANTE ⚠️
+ ATTENTION IMPORTANTE 
 Toute tentative de vol, copie, ou utilisation non autorisée de ce code, 
 concept ou idée sans autorisation écrite explicite de Fahed Mlaiel 
 sera poursuivie selon la loi allemande et internationale.
@@ -32,7 +32,7 @@ Contact autorisé: mlaiel@live.de
 FONCTIONNALITÉS ENTERPRISE:
 =========================
 
-🔐 VAULT INTEGRATION:
+ VAULT INTEGRATION:
 - HashiCorp Vault client enterprise
 - Multi-auth methods (token, AWS, K8s)
 - Automatic token renewal
@@ -40,7 +40,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Dynamic secrets management
 - Policy-based access control
 
-🛡️ SÉCURITÉ AVANCÉE:
+ SÉCURITÉ AVANCÉE:
 - TLS mutual authentication
 - Certificate management
 - Token lifecycle management
@@ -48,7 +48,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Audit logging complet
 - Compliance reporting
 
-🔑 GESTION SECRETS:
+ GESTION SECRETS:
 - KV v2 secrets engine
 - Transit encryption engine
 - PKI certificate authority
@@ -56,7 +56,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - SSH certificate authority
 - TOTP secrets generation
 
-📊 MONITORING VAULT:
+ MONITORING VAULT:
 - Health check automatique
 - Performance metrics
 - Token expiration tracking
@@ -169,6 +169,9 @@ class VaultClient:
     
     def _setup_ssl_context(self):
         """Configure le contexte SSL pour Vault"""
+
+
+
         try:
             if not self.verify_ssl:
                 self.ssl_context = False
@@ -193,6 +196,9 @@ class VaultClient:
     
     async def _initialize_session(self):
         """Initialise la session HTTP asynchrone"""
+
+
+
         try:
             connector = aiohttp.TCPConnector(
                 ssl=self.ssl_context,
@@ -216,14 +222,17 @@ class VaultClient:
             # Authentification automatique
             await self._authenticate()
             
-            self.logger.info("✅ Vault session initialized successfully")
+            self.logger.info(" Vault session initialized successfully")
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize Vault session: {e}")
+            self.logger.error(f" Failed to initialize Vault session: {e}")
             raise
     
     async def _authenticate(self):
         """Authentification automatique selon la méthode configurée"""
+
+
+
         try:
             if self.auth_method == AuthMethod.TOKEN:
                 await self._auth_with_token()
@@ -236,14 +245,17 @@ class VaultClient:
             else:
                 raise ValueError(f"Unsupported auth method: {self.auth_method}")
             
-            self.logger.info(f"✅ Vault authentication successful ({self.auth_method.value})")
+            self.logger.info(f" Vault authentication successful ({self.auth_method.value})")
             
         except Exception as e:
-            self.logger.error(f"❌ Vault authentication failed: {e}")
+            self.logger.error(f" Vault authentication failed: {e}")
             raise
     
     async def _auth_with_token(self):
         """Authentification par token"""
+
+
+
         try:
             token = self.config.get('vault_token', os.getenv('VAULT_TOKEN'))
             if not token:
@@ -277,6 +289,9 @@ class VaultClient:
     
     async def _auth_with_approle(self):
         """Authentification par AppRole"""
+
+
+
         try:
             if not self.role_id or not self.secret_id:
                 raise ValueError("AppRole credentials not provided")
@@ -317,6 +332,9 @@ class VaultClient:
     
     async def _auth_with_aws(self):
         """Authentification AWS IAM"""
+
+
+
         try:
             # Récupération métadonnées EC2
             import boto3
@@ -381,6 +399,9 @@ class VaultClient:
     
     async def _auth_with_kubernetes(self):
         """Authentification Kubernetes service account"""
+
+
+
         try:
             # Lecture du token de service account
             token_path = '/var/run/secrets/kubernetes.io/serviceaccount/token'
@@ -427,6 +448,9 @@ class VaultClient:
     
     async def _ensure_authenticated(self):
         """S'assure que l'authentification est valide"""
+
+
+
         try:
             if not self.vault_token:
                 await self._authenticate()
@@ -463,6 +487,9 @@ class VaultClient:
         params: Optional[Dict[str, Any]] = None
     ) -> aiohttp.ClientResponse:
         """Effectue une requête authentifiée vers Vault"""
+
+
+
         try:
             await self._ensure_authenticated()
             
@@ -498,6 +525,9 @@ class VaultClient:
         Returns:
             Données du secret ou None si non trouvé
         """
+
+
+
         try:
             # Construction du chemin pour KV v2
             if not path.startswith('/'):
@@ -541,6 +571,9 @@ class VaultClient:
         Returns:
             True si succès, False sinon
         """
+
+
+
         try:
             # Construction du chemin pour KV v2
             if not path.startswith('/'):
@@ -584,6 +617,9 @@ class VaultClient:
         Returns:
             True si succès, False sinon
         """
+
+
+
         try:
             if versions:
                 # Suppression de versions spécifiques
@@ -621,6 +657,9 @@ class VaultClient:
         Returns:
             Liste des noms de secrets
         """
+
+
+
         try:
             if not path.startswith('/'):
                 list_path = f'/v1/secret/metadata/{path}'
@@ -654,6 +693,9 @@ class VaultClient:
         Returns:
             Métadonnées du secret ou None
         """
+
+
+
         try:
             if not path.startswith('/'):
                 metadata_path = f'/v1/secret/metadata/{path}'
@@ -694,6 +736,9 @@ class VaultClient:
         Returns:
             Données chiffrées ou None
         """
+
+
+
         try:
             if isinstance(plaintext, str):
                 plaintext = plaintext.encode('utf-8')
@@ -742,6 +787,9 @@ class VaultClient:
         Returns:
             Données déchiffrées ou None
         """
+
+
+
         try:
             data = {'ciphertext': ciphertext}
             
@@ -776,6 +824,9 @@ class VaultClient:
         Returns:
             Statut de santé de Vault
         """
+
+
+
         try:
             response = await self._make_request('GET', '/v1/sys/health')
             
@@ -809,6 +860,9 @@ class VaultClient:
         Returns:
             Informations du token ou None
         """
+
+
+
         try:
             await self._ensure_authenticated()
             
@@ -834,6 +888,9 @@ class VaultClient:
         Returns:
             True si succès, False sinon
         """
+
+
+
         try:
             await self._ensure_authenticated()
             
@@ -865,15 +922,18 @@ class VaultClient:
     
     async def close(self):
         """Ferme proprement la connexion Vault"""
+
+
+
         try:
             if self.session:
                 await self.session.close()
                 self.session = None
             
-            self.logger.info("✅ Vault client closed successfully")
+            self.logger.info(" Vault client closed successfully")
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to close Vault client: {e}")
+            self.logger.error(f" Failed to close Vault client: {e}")
 
 
 # Factory function

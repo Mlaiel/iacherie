@@ -12,7 +12,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL WARNING ⚠️
+  CRITICAL WARNING 
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
 Any unauthorized use, reproduction, distribution, or reverse engineering 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -318,15 +318,15 @@ Please review and take appropriate action.
             name="Slack Violation Alert",
             platform=PlatformType.GENERIC_WEB,
             channel=AlertChannel.SLACK,
-            subject_template="🚨 Copyright Violation Detected",
+            subject_template=" Copyright Violation Detected",
             message_template="""
-🚨 **COPYRIGHT VIOLATION DETECTED** 🚨
+ **COPYRIGHT VIOLATION DETECTED** 
 
-📍 **Platform:** {platform_name}
-🔗 **URL:** {violation_url}
-📊 **Similarity:** {similarity_score}%
+ **Platform:** {platform_name}
+ **URL:** {violation_url}
+ **Similarity:** {similarity_score}%
 ⏰ **Detected:** {detection_date}
-🆔 **Content ID:** {content_id}
+ **Content ID:** {content_id}
 
 **Evidence:** {evidence_summary}
 
@@ -429,6 +429,9 @@ Please review and take appropriate action.
         **kwargs
     ) -> List[str]:
         """Send platform-specific alert"""
+
+
+
         try:
             # Determine alert level
             if similarity_score >= 0.95:
@@ -531,6 +534,9 @@ Please review and take appropriate action.
     
     async def _generate_alert_content(self, alert: PlatformAlert, rule: AlertRule):
         """Generate alert message content using templates"""
+
+
+
         try:
             # Find appropriate template
             template = self._find_template(alert.platform, alert.channel)
@@ -549,6 +555,9 @@ Detection Time: {alert.created_at.isoformat()}
 
 Please review and take appropriate action.
                 """
+
+
+
                 return
             
             # Prepare template variables
@@ -637,6 +646,9 @@ Please review and take appropriate action.
         evidence: Dict[str, Any]
     ):
         """Execute automated action"""
+
+
+
         try:
             if action == AlertActionType.EVIDENCE_COLLECTION:
                 await self._collect_additional_evidence(alert, evidence)
@@ -705,6 +717,9 @@ Please review and take appropriate action.
     
     async def _process_single_alert(self, alert: PlatformAlert):
         """Process a single alert"""
+
+
+
         try:
             alert.status = AlertStatus.PROCESSING
             alert.attempts += 1
@@ -787,6 +802,9 @@ Please review and take appropriate action.
     # Channel handlers
     async def _send_email_alert(self, alert: PlatformAlert) -> AlertResponse:
         """Send email alert"""
+
+
+
         try:
             # Configure SMTP (these would come from config)
             smtp_server = getattr(self.config, 'smtp_server', 'localhost')
@@ -825,6 +843,9 @@ Please review and take appropriate action.
     
     async def _send_webhook_alert(self, alert: PlatformAlert) -> AlertResponse:
         """Send webhook alert"""
+
+
+
         try:
             if not alert.webhook_url:
                 return AlertResponse(
@@ -879,6 +900,9 @@ Please review and take appropriate action.
     
     async def _send_slack_alert(self, alert: PlatformAlert) -> AlertResponse:
         """Send Slack alert"""
+
+
+
         try:
             slack_webhook = getattr(self.config, 'slack_webhook_url', '')
             if not slack_webhook:
@@ -998,6 +1022,9 @@ Please review and take appropriate action.
     
     def get_statistics(self) -> Dict[str, Any]:
         """Get alert system statistics"""
+
+
+
         return {
             **self.stats,
             'pending_alerts': len([a for a in self.pending_alerts.values() if a.status == AlertStatus.PENDING]),

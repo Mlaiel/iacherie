@@ -10,7 +10,7 @@ optimization, predictive preloading, and intelligent data distribution.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️ PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
+ PROPRIETARY SOFTWARE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -208,18 +208,24 @@ class CacheStats:
     @property
     def miss_ratio(self) -> float:
         """Calculate cache miss ratio."""
+
+
+
         return 1.0 - self.hit_ratio
     
     @property
     def efficiency_score(self) -> float:
         """Calculate overall cache efficiency score."""
+
+
+
         return (self.hit_ratio * 0.4 + 
                 self.memory_efficiency * 0.3 + 
                 self.data_freshness_score * 0.3)
 
 class IndustrialCacheManager:
     """
-    🎯 Industrial-Grade Multi-Tier Cache Manager
+     Industrial-Grade Multi-Tier Cache Manager
     
     Enterprise cache management system featuring:
     - Multi-tier cache hierarchy (L1 → L2 → L3 → L4)
@@ -263,12 +269,15 @@ class IndustrialCacheManager:
         self._lock = asyncio.Lock()
         self.executor = ThreadPoolExecutor(max_workers=8)
         
-        self.logger.info("🚀 Industrial Cache Manager initialized")
+        self.logger.info(" Industrial Cache Manager initialized")
 
     async def initialize(self) -> bool:
         """Initialize all cache levels and components asynchronously."""
+
+
+
         try:
-            self.logger.info("🔧 Initializing cache hierarchy...")
+            self.logger.info(" Initializing cache hierarchy...")
             
             # Initialize cache levels based on configuration
             initialization_tasks = []
@@ -298,15 +307,18 @@ class IndustrialCacheManager:
             # Start background tasks
             await self._start_background_tasks()
             
-            self.logger.info(f"✅ Cache Manager initialized: {success_count}/{total_count} levels active")
+            self.logger.info(f" Cache Manager initialized: {success_count}/{total_count} levels active")
             return success_count > 0
             
         except Exception as e:
-            self.logger.error(f"❌ Cache Manager initialization failed: {e}")
+            self.logger.error(f" Cache Manager initialization failed: {e}")
             return False
 
     async def _initialize_l1_memory(self) -> bool:
         """Initialize L1 memory cache with advanced features."""
+
+
+
         try:
             self.caches[CacheLevel.L1_MEMORY] = MemoryCache(
                 max_size_mb=self.config.l1_max_size_mb,
@@ -315,14 +327,17 @@ class IndustrialCacheManager:
                 eviction_policy=self.config.l1_eviction_policy
             )
             self.cache_enabled[CacheLevel.L1_MEMORY] = True
-            self.logger.info("✅ L1 Memory Cache initialized")
+            self.logger.info(" L1 Memory Cache initialized")
             return True
         except Exception as e:
-            self.logger.error(f"❌ L1 Memory Cache initialization failed: {e}")
+            self.logger.error(f" L1 Memory Cache initialization failed: {e}")
             return False
 
     async def _initialize_l2_redis(self) -> bool:
         """Initialize L2 Redis cache with cluster support."""
+
+
+
         try:
             if len(self.config.redis_cluster_nodes) > 1:
                 self.caches[CacheLevel.L2_REDIS] = RedisClusterCache(
@@ -340,14 +355,17 @@ class IndustrialCacheManager:
             
             await self.caches[CacheLevel.L2_REDIS].initialize()
             self.cache_enabled[CacheLevel.L2_REDIS] = True
-            self.logger.info("✅ L2 Redis Cache initialized")
+            self.logger.info(" L2 Redis Cache initialized")
             return True
         except Exception as e:
-            self.logger.error(f"❌ L2 Redis Cache initialization failed: {e}")
+            self.logger.error(f" L2 Redis Cache initialization failed: {e}")
             return False
 
     async def _initialize_l3_distributed(self) -> bool:
         """Initialize L3 distributed cache with consistent hashing."""
+
+
+
         try:
             self.caches[CacheLevel.L3_DISTRIBUTED] = DistributedCache(
                 nodes=self.config.distributed_nodes,
@@ -357,14 +375,17 @@ class IndustrialCacheManager:
             
             await self.caches[CacheLevel.L3_DISTRIBUTED].initialize()
             self.cache_enabled[CacheLevel.L3_DISTRIBUTED] = True
-            self.logger.info("✅ L3 Distributed Cache initialized")
+            self.logger.info(" L3 Distributed Cache initialized")
             return True
         except Exception as e:
-            self.logger.error(f"❌ L3 Distributed Cache initialization failed: {e}")
+            self.logger.error(f" L3 Distributed Cache initialization failed: {e}")
             return False
 
     async def _initialize_l4_persistent(self) -> bool:
         """Initialize L4 persistent cache with file-based storage."""
+
+
+
         try:
             from .persistence import CachePersistence
             
@@ -377,15 +398,18 @@ class IndustrialCacheManager:
             
             await self.caches[CacheLevel.L4_PERSISTENT].initialize()
             self.cache_enabled[CacheLevel.L4_PERSISTENT] = True
-            self.logger.info("✅ L4 Persistent Cache initialized")
+            self.logger.info(" L4 Persistent Cache initialized")
             return True
         except Exception as e:
-            self.logger.error(f"❌ L4 Persistent Cache initialization failed: {e}")
+            self.logger.error(f" L4 Persistent Cache initialization failed: {e}")
             return False
             return False
 
     async def _initialize_components(self) -> bool:
         """Initialize cache components and optimization engines."""
+
+
+
         try:
             # Initialize metrics system
             await self.metrics.initialize()
@@ -405,11 +429,11 @@ class IndustrialCacheManager:
             if self.config.ai_optimization_enabled:
                 await self.strategy.initialize()
             
-            self.logger.info("✅ All cache components initialized")
+            self.logger.info(" All cache components initialized")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Component initialization failed: {e}")
+            self.logger.error(f" Component initialization failed: {e}")
             return False
 
     async def _start_background_tasks(self) -> None:
@@ -423,7 +447,7 @@ class IndustrialCacheManager:
         if self.config.predictive_preloading:
             asyncio.create_task(self._preloading_loop())
             
-        self.logger.info("🔄 Background tasks started")
+        self.logger.info(" Background tasks started")
 
     async def get(
         self, 
@@ -487,7 +511,7 @@ class IndustrialCacheManager:
             return default
             
         except Exception as e:
-            self.logger.error(f"❌ Cache get failed for key '{key}': {e}")
+            self.logger.error(f" Cache get failed for key '{key}': {e}")
             return default
 
     async def set(
@@ -567,7 +591,7 @@ class IndustrialCacheManager:
             return success_count > 0
             
         except Exception as e:
-            self.logger.error(f"❌ Cache set failed for key '{key}': {e}")
+            self.logger.error(f" Cache set failed for key '{key}': {e}")
             return False
 
     async def delete(
@@ -585,6 +609,9 @@ class IndustrialCacheManager:
         Returns:
             Success status
         """
+
+
+
         try:
             cache_key = self._generate_cache_key(key)
             delete_levels = cache_levels or set(self.cache_enabled.keys())
@@ -612,7 +639,7 @@ class IndustrialCacheManager:
             return success_count > 0
             
         except Exception as e:
-            self.logger.error(f"❌ Cache delete failed for key '{key}': {e}")
+            self.logger.error(f" Cache delete failed for key '{key}': {e}")
             return False
 
     async def invalidate_pattern(
@@ -630,6 +657,9 @@ class IndustrialCacheManager:
         Returns:
             Number of keys invalidated
         """
+
+
+
         try:
             invalidate_levels = cache_levels or set(self.cache_enabled.keys())
             total_invalidated = 0
@@ -652,22 +682,25 @@ class IndustrialCacheManager:
                     self.logger.warning(f"Cache invalidation error on {level}: {e}")
                     continue
             
-            self.logger.info(f"🗑️ Invalidated {total_invalidated} keys matching '{pattern}'")
+            self.logger.info(f" Invalidated {total_invalidated} keys matching '{pattern}'")
             return total_invalidated
             
         except Exception as e:
-            self.logger.error(f"❌ Cache invalidation failed for pattern '{pattern}': {e}")
+            self.logger.error(f" Cache invalidation failed for pattern '{pattern}': {e}")
             return 0
 
     async def get_stats(self) -> CacheStats:
         """Get comprehensive cache statistics."""
+
+
+
         try:
             # Update current statistics
             await self._update_comprehensive_stats()
             return self.stats
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to get cache stats: {e}")
+            self.logger.error(f" Failed to get cache stats: {e}")
             return CacheStats()
 
     async def optimize_performance(self) -> Dict[str, Any]:
@@ -725,11 +758,11 @@ class IndustrialCacheManager:
             results["optimization_duration_seconds"] = optimization_time
             results["optimization_end"] = datetime.now().isoformat()
             
-            self.logger.info(f"⚡ Cache optimization completed in {optimization_time:.2f}s")
+            self.logger.info(f" Cache optimization completed in {optimization_time:.2f}s")
             return results
             
         except Exception as e:
-            self.logger.error(f"❌ Cache optimization failed: {e}")
+            self.logger.error(f" Cache optimization failed: {e}")
             return {"status": "optimization_failed", "error": str(e)}
             
         finally:
@@ -739,6 +772,9 @@ class IndustrialCacheManager:
     
     def _generate_cache_key(self, key: str) -> str:
         """Generate consistent cache key with namespace."""
+
+
+
         return f"{self.config.redis_key_prefix}{hashlib.sha256(key.encode()).hexdigest()[:16]}"
     
     def _get_search_order(self) -> List[CacheLevel]:
@@ -831,6 +867,9 @@ class IndustrialCacheManager:
     
     def _deserialize_value(self, serialized_value: bytes) -> Any:
         """Deserialize value with decompression and decryption."""
+
+
+
         try:
             # Handle decryption if needed
             data = serialized_value
@@ -846,7 +885,7 @@ class IndustrialCacheManager:
             return pickle.loads(data)
             
         except Exception as e:
-            self.logger.error(f"❌ Value deserialization failed: {e}")
+            self.logger.error(f" Value deserialization failed: {e}")
             return None
 
 # Export main class

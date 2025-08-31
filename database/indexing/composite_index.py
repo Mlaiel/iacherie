@@ -4,21 +4,21 @@ Composite Index Manager for IA-Influencer-Agent Platform
 Advanced composite indexing system combining multiple index types
 for optimal performance across diverse query patterns.
 
-🚀 Enterprise Team Project Specialties:
-✅ Lead Dev + Architecte Développeur IA
-✅ Développeur Backend Senior (Python/FastAPI/Django)  
-✅ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face)
-✅ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
-✅ Spécialiste Sécurité Backend
-✅ Architecte Microservices
-✅ Développeur Audio
-✅ DevOps Engineer
-✅ IA Prompt Engineer
+ Enterprise Team Project Specialties:
+ Lead Dev + Architecte Développeur IA
+ Développeur Backend Senior (Python/FastAPI/Django)  
+ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face)
+ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
+ Spécialiste Sécurité Backend
+ Architecte Microservices
+ Développeur Audio
+ DevOps Engineer
+ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. 
 Unauthorized use, modification, or distribution by any individual or entity 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
@@ -145,6 +145,9 @@ class CompositeIndexManager:
     
     async def initialize(self) -> bool:
         """Initialize composite index manager and all sub-managers"""
+
+
+
         try:
             # Initialize performance tracking
             await self.performance_tracker.initialize()
@@ -193,6 +196,9 @@ class CompositeIndexManager:
     
     async def create_index(self, index_name: str, config: Dict[str, Any]) -> bool:
         """Create composite index across multiple backends"""
+
+
+
         try:
             index_types = config.get('index_types', ['content'])
             if not isinstance(index_types, list):
@@ -245,6 +251,9 @@ class CompositeIndexManager:
     
     async def query(self, query_config: Dict[str, Any]) -> Dict[str, Any]:
         """Execute composite query across multiple indexes"""
+
+
+
         try:
             query_type = QueryType(query_config.get('type', 'exact_match'))
             query_text = query_config.get('query', '')
@@ -381,6 +390,9 @@ class CompositeIndexManager:
     
     async def _execute_manager_query(self, manager, query_config: Dict[str, Any]) -> Dict[str, Any]:
         """Execute query on specific index manager"""
+
+
+
         try:
             if hasattr(manager, 'search'):
                 # For managers with search method (Elasticsearch)
@@ -418,6 +430,9 @@ class CompositeIndexManager:
     async def _merge_query_results(self, manager_results: Dict[str, Any], 
                                  max_results: int, query_type: QueryType) -> Dict[str, Any]:
         """Merge results from multiple index managers"""
+
+
+
         try:
             all_hits = []
             total_weight = 0
@@ -511,6 +526,9 @@ class CompositeIndexManager:
     async def _update_query_statistics(self, query_type: QueryType, query_time: float,
                                      manager_results: Dict[str, Any]):
         """Update query performance statistics"""
+
+
+
         try:
             stats_key = query_type.value
             
@@ -553,6 +571,9 @@ class CompositeIndexManager:
     
     async def _load_performance_baselines(self):
         """Load performance baselines for index selection"""
+
+
+
         try:
             # Initialize performance tracking for each manager
             for manager_name in self.managers:
@@ -576,6 +597,9 @@ class CompositeIndexManager:
     
     async def optimize_composite_indexes(self) -> Dict[str, Any]:
         """Optimize all composite indexes"""
+
+
+
         try:
             start_time = datetime.now()
             optimization_results = {}
@@ -619,6 +643,9 @@ class CompositeIndexManager:
     
     async def get_composite_statistics(self) -> Dict[str, Any]:
         """Get comprehensive statistics for all composite indexes"""
+
+
+
         try:
             stats = {
                 'query_statistics': self.query_stats,
@@ -649,6 +676,9 @@ class CompositeIndexManager:
     
     async def cleanup(self):
         """Cleanup all managers and resources"""
+
+
+
         try:
             # Cleanup all managers in parallel
             cleanup_tasks = []

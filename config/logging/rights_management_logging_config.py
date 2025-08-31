@@ -10,7 +10,7 @@ Project: IA-Influencer Agent + Content Protection Platform
 Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                  Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This code, concept, and intellectual property are exclusively owned by Fahed Mlaiel.
 Any unauthorized use, copying, distribution, reverse engineering, or commercialization 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
@@ -515,6 +515,9 @@ class RightsManagementLogger:
     
     def get_rights_management_metrics(self) -> Dict[str, Any]:
         """Get rights management system metrics"""
+
+
+
         return {
             "copyright_logging_enabled": self.config.enable_copyright_logging,
             "licensing_logging_enabled": self.config.enable_licensing_logging,
@@ -537,11 +540,17 @@ class RightsManagementLoggingConfig:
     @staticmethod
     def create_default_config() -> RightsManagementLogConfig:
         """Create default rights management logging configuration"""
+
+
+
         return RightsManagementLogConfig()
     
     @staticmethod
     def create_legal_compliant_config() -> RightsManagementLogConfig:
         """Create legally compliant rights management logging configuration"""
+
+
+
         return RightsManagementLogConfig(
             enable_copyright_logging=True,
             enable_licensing_logging=True,

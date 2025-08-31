@@ -1,7 +1,7 @@
 """IA Influencer Agent - Professional Surveillance Module
 ========================================================
 
-⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
+ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
 © 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
@@ -10,7 +10,7 @@ distribution, or reverse engineering is strictly prohibited by law.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-🚨 STRICT COPYRIGHT WARNING:
+ STRICT COPYRIGHT WARNING:
 This software and its concepts are the exclusive intellectual property of Fahed Mlaiel.
 ANY UNAUTHORIZED COPYING, DISTRIBUTION, REVERSE ENGINEERING, OR THEFT OF IDEAS, CONCEPTS, 
 OR CODE WITHOUT EXPLICIT WRITTEN AUTHORIZATION from Fahed Mlaiel will result in immediate 
@@ -140,7 +140,10 @@ class SurveillanceSystem:
         self._running = False
     
     async def initialize(self) -> None:
-        """Initialize all surveillance components."""        try:
+        """Initialize all surveillance components."""
+
+
+        try:
             self._logger.info("Initializing IA Influencer Agent Professional Surveillance System...")
             
             # Initialize all components
@@ -179,7 +182,10 @@ class SurveillanceSystem:
             raise
     
     async def stop_monitoring(self) -> None:
-        """Stop the surveillance monitoring operations."""        try:
+        """Stop the surveillance monitoring operations."""
+
+
+        try:
             self._logger.info("Stopping professional surveillance monitoring operations...")
             
             # Stop monitoring components
@@ -202,7 +208,10 @@ class SurveillanceSystem:
         platforms: List[str],
         monitoring_config: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Monitor a specific creator across platforms."""        try:
+        """Monitor a specific creator across platforms."""
+
+
+        try:
             await self.monitoring_system.add_creator_monitoring(
                 creator_id, platforms, monitoring_config
             )
@@ -231,7 +240,10 @@ class SurveillanceSystem:
             raise
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get overall system status."""        return {
+        """Get overall system status."""
+
+
+        return {
             'initialized': self._initialized,
             'running': self._running,
             'monitoring_system': await self.monitoring_system.get_status(),
@@ -242,7 +254,10 @@ class SurveillanceSystem:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown the surveillance system gracefully."""        try:
+        """Shutdown the surveillance system gracefully."""
+
+
+        try:
             self._logger.info("Shutting down Professional Surveillance System...")
             
             # Stop monitoring if running
@@ -831,7 +846,10 @@ class SurveillanceEngine:
         target: SurveillanceTarget,
         results: Dict[str, Any]
     ) -> None:
-        """Process surveillance results and detect violations."""        try:
+        """Process surveillance results and detect violations."""
+
+
+        try:
             # Extract content items
             content_items = []
             
@@ -975,7 +993,10 @@ class SurveillanceEngine:
         """Add error callback."""        self.error_callbacks.append(callback)
     
     def get_metrics(self) -> SurveillanceMetrics:
-        """Get current surveillance metrics."""        return self.metrics
+        """Get current surveillance metrics."""
+
+
+        return self.metrics
     
     def get_target_status(self, target_id: str) -> Optional[Dict]:
         """Get status for specific target."""        target = self.targets.get(target_id)
@@ -1010,7 +1031,10 @@ class SurveillanceEngine:
         }
     
     def get_all_targets_status(self) -> List[Dict]:
-        """Get status for all targets."""        return [self.get_target_status(target_id) for target_id in self.targets.keys()]
+        """Get status for all targets."""
+
+
+        return [self.get_target_status(target_id) for target_id in self.targets.keys()]
     
     async def force_target_check(self, target_id: str) -> bool:
         """Force immediate check for target."""        target = self.targets.get(target_id)

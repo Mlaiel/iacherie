@@ -70,6 +70,9 @@ class HealthCheckResult:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary."""
+
+
+
         return {
             "service_name": self.service_name,
             "status": self.status.value,

@@ -8,7 +8,7 @@ for the IA Influencer platform multi-format content creator ecosystem.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE - INTELLECTUAL PROPERTY PROTECTION:
+  CRITICAL LEGAL NOTICE - INTELLECTUAL PROPERTY PROTECTION:
 This code, concept, and intellectual property are the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 
 STRICTLY PROHIBITED WITHOUT EXPLICIT WRITTEN AUTHORIZATION:
@@ -277,6 +277,9 @@ class NotificationEventManager:
         Returns:
             True if successfully registered
         """
+
+
+
         try:
             # Validate rule
             if not await self._validate_event_rule(rule):
@@ -294,6 +297,9 @@ class NotificationEventManager:
     
     async def remove_event_rule(self, rule_id: str) -> bool:
         """Remove an event rule"""
+
+
+
         try:
             if rule_id in self._event_rules:
                 del self._event_rules[rule_id]
@@ -534,6 +540,9 @@ class NotificationEventManager:
         """
         Safely evaluate a condition function
         """
+
+
+
         try:
             return condition(event)
         except Exception as e:
@@ -669,6 +678,9 @@ class NotificationEventManager:
     
     async def get_event_metrics(self) -> Dict[str, Any]:
         """Get comprehensive event processing metrics"""
+
+
+
         return self._event_metrics.copy()
     
     async def queue_event(self, event: NotificationEvent):

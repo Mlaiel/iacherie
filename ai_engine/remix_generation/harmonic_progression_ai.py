@@ -10,7 +10,7 @@ Created: 2025-08-30
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -292,10 +292,16 @@ class ChordVocabulary:
     
     def encode_chord(self, chord_symbol: str) -> int:
         """Encode chord symbol to token"""
+
+
+
         return self.chord_to_token.get(chord_symbol, self.chord_to_token["<UNK>"])
     
     def decode_token(self, token: int) -> str:
         """Decode token to chord symbol"""
+
+
+
         return self.token_to_chord.get(token, "<UNK>")
 
 class HarmonyAnalyzer:
@@ -308,6 +314,9 @@ class HarmonyAnalyzer:
     
     def _initialize_functional_rules(self) -> Dict[str, Any]:
         """Initialize functional harmony rules"""
+
+
+
         return {
             "major_key_functions": {
                 "I": HarmonicFunction.TONIC,
@@ -337,6 +346,9 @@ class HarmonyAnalyzer:
     
     def _initialize_voice_leading_rules(self) -> Dict[str, Any]:
         """Initialize voice leading rules"""
+
+
+
         return {
             "smooth_voice_leading": {
                 "max_leap_semitones": 7,
@@ -359,6 +371,9 @@ class HarmonyAnalyzer:
     async def analyze_chord_from_audio(self, audio: np.ndarray, 
                                      sample_rate: int = 44100) -> ChordData:
         """Analyze chord from audio signal"""
+
+
+
         try:
             # Chromagram analysis
             chroma = librosa.feature.chroma_stft(y=audio, sr=sample_rate)
@@ -390,6 +405,9 @@ class HarmonyAnalyzer:
     
     async def _determine_chord_quality(self, notes: List[str]) -> Tuple[str, ChordQuality]:
         """Determine chord root and quality from notes"""
+
+
+
         try:
             if len(notes) < 3:
                 return notes[0] if notes else "C", ChordQuality.MAJOR
@@ -429,6 +447,9 @@ class HarmonyAnalyzer:
     
     async def _match_chord_pattern(self, intervals: List[int]) -> Tuple[ChordQuality, float]:
         """Match interval pattern to chord quality"""
+
+
+
         try:
             # Chord patterns (intervals from root)
             patterns = {
@@ -467,6 +488,9 @@ class HarmonyAnalyzer:
     
     async def _notes_to_midi(self, notes: List[str]) -> List[int]:
         """Convert note names to MIDI numbers"""
+
+
+
         try:
             note_to_midi = {"C": 60, "C#": 61, "D": 62, "D#": 63, "E": 64, "F": 65,
                            "F#": 66, "G": 67, "G#": 68, "A": 69, "A#": 70, "B": 71}
@@ -480,6 +504,9 @@ class HarmonyAnalyzer:
     async def analyze_harmonic_function(self, chord: ChordData, 
                                       key_center: str, mode: str) -> HarmonicFunction:
         """Analyze harmonic function of chord in key"""
+
+
+
         try:
             # Convert to roman numeral analysis
             roman_numeral = await self._chord_to_roman(chord, key_center, mode)
@@ -498,6 +525,9 @@ class HarmonyAnalyzer:
     
     async def _chord_to_roman(self, chord: ChordData, key_center: str, mode: str) -> str:
         """Convert chord to roman numeral in key"""
+
+
+
         try:
             # Simplified roman numeral conversion
             note_to_scale_degree = {
@@ -535,6 +565,9 @@ class HarmonyAnalyzer:
     async def analyze_voice_leading(self, chord1: ChordData, 
                                   chord2: ChordData) -> Dict[str, Any]:
         """Analyze voice leading between two chords"""
+
+
+
         try:
             analysis = {}
             
@@ -580,6 +613,9 @@ class HarmonyAnalyzer:
     
     async def _check_parallel_motion(self, chord1: ChordData, chord2: ChordData) -> float:
         """Check for parallel motion between chords"""
+
+
+
         try:
             if len(chord1.midi_notes) < 2 or len(chord2.midi_notes) < 2:
                 return 0.0
@@ -625,6 +661,9 @@ class HarmonicProgressionAI:
     
     def _initialize_progression_templates(self) -> Dict[HarmonicStyle, Dict[str, Any]]:
         """Initialize style-specific progression templates"""
+
+
+
         return {
             HarmonicStyle.CLASSICAL: {
                 "common_progressions": [
@@ -686,6 +725,9 @@ class HarmonicProgressionAI:
                                           parameters: HarmonicParameters,
                                           use_neural_network: bool = True) -> HarmonicProgression:
         """Generate harmonic progression with specified style and parameters"""
+
+
+
         try:
             start_time = datetime.now()
             progression_id = f"harmony_{int(start_time.timestamp())}"
@@ -760,6 +802,9 @@ class HarmonicProgressionAI:
     async def _generate_with_neural_network(self, style: HarmonicStyle,
                                           parameters: HarmonicParameters) -> List[ChordData]:
         """Generate progression using neural network"""
+
+
+
         try:
             # Convert parameters to tensor
             param_tensor = await self._parameters_to_tensor(parameters)
@@ -803,6 +848,9 @@ class HarmonicProgressionAI:
     async def _generate_with_templates(self, style: HarmonicStyle,
                                      parameters: HarmonicParameters) -> List[ChordData]:
         """Generate progression using style templates"""
+
+
+
         try:
             # Get style template
             template = self.progression_templates.get(style, self.progression_templates[HarmonicStyle.POP])
@@ -839,6 +887,9 @@ class HarmonicProgressionAI:
     async def _roman_to_chord_data(self, roman: str, key: str, mode: str,
                                  template: Dict[str, Any]) -> ChordData:
         """Convert roman numeral to chord data"""
+
+
+
         try:
             # Roman numeral to scale degree mapping
             roman_to_degree = {
@@ -902,6 +953,9 @@ class HarmonicProgressionAI:
     
     async def _generate_chord_tones(self, root: str, quality: ChordQuality) -> List[str]:
         """Generate chord tones for given root and quality"""
+
+
+
         try:
             # Chromatic scale
             notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
@@ -937,6 +991,9 @@ class HarmonicProgressionAI:
                                        template: Dict[str, Any],
                                        parameters: HarmonicParameters) -> List[ChordData]:
         """Apply inversions, extensions, and other modifications"""
+
+
+
         try:
             modified_chords = []
             qualities = template["chord_qualities"]
@@ -983,6 +1040,9 @@ class HarmonicProgressionAI:
     
     async def _generate_basic_progression(self, parameters: HarmonicParameters) -> List[ChordData]:
         """Generate basic I-V-vi-IV progression as fallback"""
+
+
+
         try:
             pattern = ["I", "V", "vi", "IV"]
             progression_pattern = (pattern * ((parameters.progression_length // 4) + 1))[:parameters.progression_length]
@@ -1003,6 +1063,9 @@ class HarmonicProgressionAI:
     
     async def _symbol_to_chord_data(self, symbol: str) -> ChordData:
         """Convert chord symbol to chord data"""
+
+
+
         try:
             # Parse chord symbol
             root = symbol[0]
@@ -1047,6 +1110,9 @@ class HarmonicProgressionAI:
     
     async def _generate_harmonic_rhythm(self, parameters: HarmonicParameters) -> List[float]:
         """Generate harmonic rhythm (duration of each chord)"""
+
+
+
         try:
             if parameters.chord_rhythm == "whole_notes":
                 return [1.0] * parameters.progression_length
@@ -1066,6 +1132,9 @@ class HarmonicProgressionAI:
     
     async def _analyze_progression_voice_leading(self, chords: List[ChordData]) -> Dict[str, Any]:
         """Analyze voice leading for entire progression"""
+
+
+
         try:
             if len(chords) < 2:
                 return {"overall_quality": 1.0}
@@ -1096,6 +1165,9 @@ class HarmonicProgressionAI:
     async def _calculate_tension_curve(self, chords: List[ChordData], 
                                      parameters: HarmonicParameters) -> List[float]:
         """Calculate harmonic tension curve"""
+
+
+
         try:
             tension_scores = []
             
@@ -1133,6 +1205,9 @@ class HarmonicProgressionAI:
     async def _detect_modulations(self, chords: List[ChordData], 
                                 key_center: str) -> List[Dict[str, Any]]:
         """Detect key modulations in progression"""
+
+
+
         try:
             modulations = []
             current_key = key_center
@@ -1167,6 +1242,9 @@ class HarmonicProgressionAI:
     
     async def _analyze_possible_keys(self, chord_segment: List[ChordData]) -> List[str]:
         """Analyze possible keys for chord segment"""
+
+
+
         try:
             # Simplified key analysis
             root_notes = [chord.root_note for chord in chord_segment]
@@ -1189,6 +1267,9 @@ class HarmonicProgressionAI:
                                        voice_leading_analysis: Dict[str, Any],
                                        parameters: HarmonicParameters) -> Dict[str, float]:
         """Calculate overall quality metrics"""
+
+
+
         try:
             metrics = {}
             
@@ -1229,6 +1310,9 @@ class HarmonicProgressionAI:
     
     async def _parameters_to_tensor(self, parameters: HarmonicParameters) -> torch.Tensor:
         """Convert parameters to tensor for neural network"""
+
+
+
         try:
             # Normalize parameters to 0-1 range
             key_offset = ord(parameters.key_signature[0]) - ord('C')
@@ -1257,6 +1341,9 @@ class HarmonicProgressionAI:
                                style: HarmonicStyle,
                                parameters: HarmonicParameters) -> HarmonicProgression:
         """Generate harmonization for existing melody"""
+
+
+
         try:
             # Analyze melody for implied harmony
             chord_suggestions = await self._analyze_melody_harmony(melody_notes, parameters)
@@ -1283,6 +1370,9 @@ class HarmonicProgressionAI:
     async def _analyze_melody_harmony(self, melody_notes: List[int],
                                     parameters: HarmonicParameters) -> List[str]:
         """Analyze melody for harmonic implications"""
+
+
+
         try:
             chord_suggestions = []
             
@@ -1313,6 +1403,9 @@ class HarmonicProgressionAI:
                                            style: HarmonicStyle,
                                            parameters: HarmonicParameters) -> List[ChordData]:
         """Generate chords from melody analysis"""
+
+
+
         try:
             chords = []
             
@@ -1345,6 +1438,9 @@ class HarmonicProgressionAI:
     
     def get_generation_statistics(self) -> Dict[str, Any]:
         """Get generation performance statistics"""
+
+
+
         try:
             if not self.generation_history:
                 return {"total_generated": 0}

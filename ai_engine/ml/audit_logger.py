@@ -7,7 +7,7 @@ security monitoring, and business intelligence through comprehensive logging.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  STRICT LEGAL WARNING ⚠️
+  STRICT LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Contact: mlaiel@live.de
@@ -200,6 +200,9 @@ class AuditStorage:
     
     async def store_event(self, event: AuditEvent) -> bool:
         """Store audit event - base implementation"""
+
+
+
         try:
             logger.info(f"Storing audit event: {event.event_type.value} for {event.user_id}")
             
@@ -225,6 +228,9 @@ class AuditStorage:
     
     async def query_events(self, filters: Dict[str, Any]) -> List[AuditEvent]:
         """Query audit events - base implementation"""
+
+
+
         try:
             logger.info(f"Querying audit events with filters: {filters}")
             
@@ -254,6 +260,9 @@ class AuditStorage:
     async def get_compliance_report(self, standard: ComplianceStandard, 
                                   start_date: datetime, end_date: datetime) -> Dict[str, Any]:
         """Generate compliance report - base implementation"""
+
+
+
         try:
             logger.info(f"Generating compliance report for {standard.value} from {start_date} to {end_date}")
             
@@ -334,6 +343,9 @@ class FileAuditStorage(AuditStorage):
     
     async def store_event(self, event: AuditEvent) -> bool:
         """Store event to file"""
+
+
+
         try:
             file_path = await self._get_current_log_file()
             
@@ -445,6 +457,9 @@ class DatabaseAuditStorage(AuditStorage):
     
     async def store_event(self, event: AuditEvent) -> bool:
         """Store event to database"""
+
+
+
         try:
             # Simulated database storage with in-memory fallback
             # In production, this would use SQLAlchemy async session
@@ -491,6 +506,9 @@ class DatabaseAuditStorage(AuditStorage):
     
     async def query_events(self, filters: Dict[str, Any]) -> List[AuditEvent]:
         """Query events from database"""
+
+
+
         try:
             # In production, this would use SQLAlchemy queries with proper filtering
             events = []
@@ -551,6 +569,9 @@ class DatabaseAuditStorage(AuditStorage):
     async def get_compliance_report(self, standard: ComplianceStandard, 
                                   start_date: datetime, end_date: datetime) -> Dict[str, Any]:
         """Generate compliance report from database"""
+
+
+
         try:
             # Query events for the compliance standard and date range
             filters = {
@@ -779,26 +800,44 @@ class AuditLogger:
     # Convenience methods for different log levels
     async def trace(self, category: AuditCategory, message: str, **kwargs):
         """Log trace event"""
+
+
+
         return await self.log_event(AuditLevel.TRACE, category, message, **kwargs)
     
     async def debug(self, category: AuditCategory, message: str, **kwargs):
         """Log debug event"""
+
+
+
         return await self.log_event(AuditLevel.DEBUG, category, message, **kwargs)
     
     async def info(self, category: AuditCategory, message: str, **kwargs):
         """Log info event"""
+
+
+
         return await self.log_event(AuditLevel.INFO, category, message, **kwargs)
     
     async def warning(self, category: AuditCategory, message: str, **kwargs):
         """Log warning event"""
+
+
+
         return await self.log_event(AuditLevel.WARNING, category, message, **kwargs)
     
     async def error(self, category: AuditCategory, message: str, **kwargs):
         """Log error event"""
+
+
+
         return await self.log_event(AuditLevel.ERROR, category, message, **kwargs)
     
     async def critical(self, category: AuditCategory, message: str, **kwargs):
         """Log critical event"""
+
+
+
         return await self.log_event(AuditLevel.CRITICAL, category, message, **kwargs)
     
     async def security(self, category: AuditCategory, message: str, **kwargs):
@@ -858,6 +897,9 @@ class AuditLogger:
     async def log_content_processing(self, content_id: str, creator_id: str, 
                                    processing_type: str, model_id: str = "", **kwargs):
         """Log content processing event"""
+
+
+
         return await self.log_event(
             level=AuditLevel.BUSINESS,
             category=AuditCategory.CONTENT_PROCESSING,
@@ -877,6 +919,9 @@ class AuditLogger:
                              input_data: Optional[Dict[str, Any]] = None,
                              sensitive_data: bool = False, **kwargs):
         """Log AI/ML decision for explainability"""
+
+
+
         return await self.log_event(
             level=AuditLevel.BUSINESS,
             category=AuditCategory.AI_DECISION,
@@ -909,6 +954,9 @@ class AuditLogger:
     async def log_gdpr_request(self, user_id: str, request_type: str, 
                               data_categories: List[str], **kwargs):
         """Log GDPR data subject request"""
+
+
+
         return await self.log_event(
             level=AuditLevel.COMPLIANCE,
             category=AuditCategory.GDPR_REQUEST,
@@ -925,6 +973,9 @@ class AuditLogger:
     # Performance and metrics
     def get_audit_stats(self) -> Dict[str, Any]:
         """Get audit logging statistics"""
+
+
+
         return {
             "events_logged": self.events_logged,
             "events_failed": self.events_failed,

@@ -1,5 +1,5 @@
 """
-🎵 Synthesis Pipeline Manager - Advanced Audio Processing Pipeline Architecture
+ Synthesis Pipeline Manager - Advanced Audio Processing Pipeline Architecture
 
 This module provides comprehensive pipeline management for complex audio synthesis
 workflows, including chained processing, parallel execution, and dynamic routing.
@@ -7,7 +7,7 @@ workflows, including chained processing, parallel execution, and dynamic routing
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ LEGAL WARNING: Unauthorized use prohibited. Contact mlaiel@live.de for licensing.
+ LEGAL WARNING: Unauthorized use prohibited. Contact mlaiel@live.de for licensing.
 """
 
 import torch
@@ -136,6 +136,9 @@ class SynthesisStage(ABC):
         
     def can_process(self, input_data: Any, context: PipelineContext) -> bool:
         """Check if stage can process the input."""
+
+
+
         return self.validate_input(input_data)
         
     def record_performance(self, execution_time: float, memory_used: int) -> None:
@@ -442,6 +445,9 @@ class SynthesisProcessingStage(SynthesisStage):
         
     def _estimate_memory_usage(self, tensor: torch.Tensor) -> int:
         """Estimate memory usage of tensor."""
+
+
+
         return tensor.numel() * tensor.element_size()
         
     def _evaluate_synthesis_quality(self, output: torch.Tensor, context: PipelineContext) -> float:

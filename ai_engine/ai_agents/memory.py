@@ -105,6 +105,9 @@ class MemoryManager:
                     context: Dict[str, Any] = None,
                     expiry: Optional[datetime] = None) -> str:
         """Store a new memory item."""
+
+
+
         try:
             # Generate unique ID
             content_str = json.dumps(content, sort_keys=True, default=str)
@@ -143,6 +146,9 @@ class MemoryManager:
     
     def retrieve_memory(self, memory_id: str) -> Optional[MemoryItem]:
         """Retrieve a specific memory by ID."""
+
+
+
         try:
             if memory_id in self.memories:
                 memory_item = self.memories[memory_id]
@@ -163,6 +169,9 @@ class MemoryManager:
     
     def search_memories(self, query: MemoryQuery) -> List[MemoryItem]:
         """Search for memories matching the query."""
+
+
+
         try:
             matching_memories = []
             
@@ -243,6 +252,9 @@ class MemoryManager:
                      tags: Optional[List[str]] = None,
                      context: Optional[Dict[str, Any]] = None) -> bool:
         """Update an existing memory item."""
+
+
+
         try:
             if memory_id not in self.memories:
                 logger.warning(f"Memory {memory_id} not found for update")
@@ -287,6 +299,9 @@ class MemoryManager:
     
     def delete_memory(self, memory_id: str) -> bool:
         """Delete a memory item."""
+
+
+
         try:
             if memory_id not in self.memories:
                 logger.warning(f"Memory {memory_id} not found for deletion")
@@ -316,6 +331,9 @@ class MemoryManager:
     
     def _cleanup_memory(self, memory_type: MemoryType):
         """Clean up memory based on type limits."""
+
+
+
         try:
             memory_ids = self.memory_index[memory_type]
             
@@ -361,6 +379,9 @@ class MemoryManager:
     
     def consolidate_memories(self):
         """Consolidate short-term memories into long-term storage."""
+
+
+
         try:
             short_term_ids = self.memory_index[MemoryType.SHORT_TERM].copy()
             consolidated_count = 0
@@ -396,6 +417,9 @@ class MemoryManager:
     
     def get_memory_stats(self) -> Dict[str, Any]:
         """Get memory system statistics."""
+
+
+
         try:
             stats = {
                 'total_memories': len(self.memories),
@@ -441,6 +465,9 @@ class MemoryManager:
     
     def clear_expired_memories(self):
         """Clear all expired memories."""
+
+
+
         try:
             current_time = datetime.now()
             expired_ids = []
@@ -495,6 +522,9 @@ class WorkingMemory:
     
     def get_current_context(self) -> List[Any]:
         """Get current working memory context."""
+
+
+
         return [item.content for item in self.items]
     
     def clear(self):

@@ -55,6 +55,9 @@ class LicensingRepository:
         user_id: UUID
     ) -> LicenseAgreement:
         """Create new license agreement with validation"""
+
+
+
         try:
             # Validate input data
             validated_data = await self._validate_license_agreement_data(agreement_data)
@@ -124,6 +127,9 @@ class LicensingRepository:
         include_relations: bool = False
     ) -> Optional[LicenseAgreement]:
         """Get license agreement by ID with caching"""
+
+
+
         try:
             # Check cache first
             cache_key = f"license_agreement:{agreement_id}"
@@ -166,6 +172,9 @@ class LicensingRepository:
         user_id: UUID
     ) -> LicenseAgreement:
         """Update license agreement with validation"""
+
+
+
         try:
             # Get existing agreement
             agreement = await self.get_license_agreement(agreement_id, user_id)
@@ -217,6 +226,9 @@ class LicensingRepository:
         offset: int = 0
     ) -> Tuple[List[LicenseAgreement], int]:
         """Get user's license agreements with pagination"""
+
+
+
         try:
             # Build query
             query = self.session.query(LicenseAgreement)
@@ -258,6 +270,9 @@ class LicensingRepository:
         user_id: UUID
     ) -> RoyaltyCalculation:
         """Create new royalty calculation"""
+
+
+
         try:
             # Validate input data
             validated_data = await self._validate_royalty_calculation_data(calculation_data)
@@ -323,6 +338,9 @@ class LicensingRepository:
         offset: int = 0
     ) -> Tuple[List[RoyaltyCalculation], int]:
         """Get royalty calculations with filtering"""
+
+
+
         try:
             # Build query
             query = self.session.query(RoyaltyCalculation)
@@ -369,6 +387,9 @@ class LicensingRepository:
         user_id: UUID = None
     ) -> LicenseUsageTracking:
         """Create usage tracking record"""
+
+
+
         try:
             # Validate input data
             validated_data = await self._validate_usage_tracking_data(tracking_data)
@@ -425,6 +446,9 @@ class LicensingRepository:
         end_date: date = None
     ) -> Dict[str, Any]:
         """Get comprehensive usage analytics for a license"""
+
+
+
         try:
             # Verify user has access to this license
             license_agreement = await self.get_license_agreement(license_agreement_id, user_id)
@@ -580,6 +604,9 @@ class LicensingRepository:
     
     async def _check_agreement_access(self, agreement: LicenseAgreement, user_id: UUID) -> bool:
         """Check if user has access to license agreement"""
+
+
+
         return (
             str(agreement.licensor_id) == str(user_id) or 
             str(agreement.licensee_id) == str(user_id) or

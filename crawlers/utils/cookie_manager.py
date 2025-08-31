@@ -216,10 +216,16 @@ class CookieJar:
     
     def get_cookie_count(self) -> int:
         """Get total cookie count."""
+
+
+
         return sum(len(domain_cookies) for domain_cookies in self.cookies.values())
     
     def get_domains(self) -> Set[str]:
         """Get all domains with cookies."""
+
+
+
         return set(self.cookies.keys())
 
 class CookiePolicy:
@@ -334,6 +340,9 @@ class CookieManager:
     
     def _init_sqlite_storage(self) -> None:
         """Initialize SQLite storage."""
+
+
+
         try:
             conn = sqlite3.connect(self.storage_path)
             cursor = conn.cursor()
@@ -366,6 +375,9 @@ class CookieManager:
     
     async def add_cookies_from_response(self, url: str, set_cookie_header: str) -> None:
         """Add cookies from HTTP Set-Cookie header."""
+
+
+
         try:
             domain = urlparse(url).netloc
             
@@ -411,6 +423,9 @@ class CookieManager:
     
     async def get_cookie_header_for_request(self, url: str) -> str:
         """Get cookie header for outgoing request."""
+
+
+
         try:
             parsed_url = urlparse(url)
             domain = parsed_url.netloc
@@ -438,6 +453,9 @@ class CookieManager:
     
     async def _load_from_sqlite(self) -> None:
         """Load cookies from SQLite."""
+
+
+
         try:
             conn = sqlite3.connect(self.storage_path)
             cursor = conn.cursor()
@@ -479,6 +497,9 @@ class CookieManager:
     
     async def _save_to_sqlite(self) -> None:
         """Save cookies to SQLite."""
+
+
+
         try:
             conn = sqlite3.connect(self.storage_path)
             cursor = conn.cursor()
@@ -550,6 +571,9 @@ class CookieManager:
     
     async def _persist_cookie_sqlite(self, cookie: CookieData) -> None:
         """Persist single cookie to SQLite."""
+
+
+
         try:
             conn = sqlite3.connect(self.storage_path)
             cursor = conn.cursor()
@@ -648,18 +672,30 @@ def parse_cookie_string(cookie_string: str) -> Dict[str, str]:
 
 def format_cookie_header(cookies: Dict[str, str]) -> str:
     """Format cookies into header string."""
+
+
+
     return '; '.join(f"{name}={value}" for name, value in cookies.items())
 
 def is_secure_cookie(cookie: CookieData) -> bool:
     """Check if cookie has secure attributes."""
+
+
+
     return cookie.secure and cookie.http_only
 
 def get_cookie_domain_level(domain: str) -> int:
     """Get domain level (number of dots + 1)."""
+
+
+
     return domain.count('.') + 1
 
 def extract_domain_from_url(url: str) -> str:
     """Extract domain from URL for cookie purposes."""
+
+
+
     try:
         return urlparse(url).netloc.lower()
     except Exception:

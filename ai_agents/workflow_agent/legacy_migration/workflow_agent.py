@@ -15,7 +15,7 @@ Key Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 - All Rights Reserved
 
-⚠️ IMPORTANT LEGAL NOTICE ⚠️
+ IMPORTANT LEGAL NOTICE 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
@@ -78,6 +78,9 @@ class WorkflowAgent(BaseAgent):
 
     async def initialize(self):
         """Initialize the workflow agent and all components."""
+
+
+
         try:
             self.logger.info("Initializing Workflow Agent...")
             
@@ -122,6 +125,9 @@ class WorkflowAgent(BaseAgent):
         Returns:
             str: Workflow ID
         """
+
+
+
         try:
             workflow_id = str(uuid.uuid4())
             
@@ -178,6 +184,9 @@ class WorkflowAgent(BaseAgent):
         Returns:
             Dict containing execution results
         """
+
+
+
         try:
             # Get workflow definition
             workflow = self.workflows.get(workflow_id)
@@ -268,6 +277,9 @@ class WorkflowAgent(BaseAgent):
         Returns:
             str: Workflow ID
         """
+
+
+
         try:
             # Get template
             template = await self.template_manager.get_template(template_id)
@@ -316,6 +328,9 @@ class WorkflowAgent(BaseAgent):
         Returns:
             str: Schedule ID
         """
+
+
+
         try:
             # Validate workflow exists
             if workflow_id not in self.workflows:
@@ -344,6 +359,9 @@ class WorkflowAgent(BaseAgent):
 
     async def get_workflow_status(self, workflow_id: str) -> Dict[str, Any]:
         """Get comprehensive workflow status."""
+
+
+
         try:
             # Get workflow info
             workflow = self.workflows.get(workflow_id)
@@ -396,6 +414,9 @@ class WorkflowAgent(BaseAgent):
         created_by: Optional[str] = None
     ) -> List[Dict[str, Any]]:
         """List workflows with optional filtering."""
+
+
+
         try:
             workflows = []
             
@@ -432,6 +453,9 @@ class WorkflowAgent(BaseAgent):
 
     async def search_templates(self, query: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Search workflow templates."""
+
+
+
         try:
             return await self.template_manager.search_templates(
                 category=TemplateCategory(query.get('category')) if query.get('category') else None,
@@ -451,6 +475,9 @@ class WorkflowAgent(BaseAgent):
         user_profile: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
         """Get template recommendations for user."""
+
+
+
         try:
             return await self.template_manager.get_template_recommendations(
                 user_id, user_profile
@@ -462,6 +489,9 @@ class WorkflowAgent(BaseAgent):
 
     async def get_agent_statistics(self) -> Dict[str, Any]:
         """Get comprehensive agent statistics."""
+
+
+
         try:
             # Get component statistics
             orchestrator_stats = await self.orchestrator.get_execution_stats()
@@ -492,6 +522,9 @@ class WorkflowAgent(BaseAgent):
 
     async def _load_builtin_workflows(self):
         """Load built-in workflows."""
+
+
+
         try:
             # Content creation workflow
             content_workflow = {
@@ -574,6 +607,9 @@ class WorkflowAgent(BaseAgent):
 
     async def _initialize_agent_integrations(self):
         """Initialize integrations with other agents."""
+
+
+
         try:
             # Placeholder for agent integrations
             # In a real implementation, this would set up connections to other agents
@@ -595,6 +631,9 @@ class WorkflowAgent(BaseAgent):
         execution_result: Dict[str, Any]
     ):
         """Record execution metrics."""
+
+
+
         try:
             execution_data = {
                 'instance_id': instance_id,
@@ -616,6 +655,9 @@ class WorkflowAgent(BaseAgent):
         execution_result: Dict[str, Any]
     ):
         """Update workflow statistics."""
+
+
+
         try:
             workflow = self.workflows.get(workflow_id)
             if not workflow:
@@ -653,6 +695,9 @@ class WorkflowAgent(BaseAgent):
 
     async def shutdown(self):
         """Shutdown the workflow agent gracefully."""
+
+
+
         try:
             self.logger.info("Shutting down Workflow Agent...")
             
@@ -674,6 +719,9 @@ class WorkflowAgent(BaseAgent):
     
     async def pause_workflow(self, workflow_id: str) -> bool:
         """Pause a workflow (stop scheduling and execution)."""
+
+
+
         try:
             if workflow_id in self.workflows:
                 self.workflows[workflow_id]['status'] = 'paused'
@@ -685,6 +733,9 @@ class WorkflowAgent(BaseAgent):
 
     async def resume_workflow(self, workflow_id: str) -> bool:
         """Resume a paused workflow."""
+
+
+
         try:
             if workflow_id in self.workflows:
                 self.workflows[workflow_id]['status'] = 'active'
@@ -696,6 +747,9 @@ class WorkflowAgent(BaseAgent):
 
     async def delete_workflow(self, workflow_id: str) -> bool:
         """Delete a workflow."""
+
+
+
         try:
             if workflow_id in self.workflows:
                 # Update statistics
@@ -722,6 +776,9 @@ class WorkflowAgent(BaseAgent):
         updates: Dict[str, Any]
     ) -> bool:
         """Update workflow properties."""
+
+
+
         try:
             workflow = self.workflows.get(workflow_id)
             if not workflow:
@@ -871,6 +928,9 @@ class WorkflowAgent(BaseAgent):
         Returns:
             str: Workflow ID
         """
+
+
+
         try:
             workflow_id = str(uuid.uuid4())
             
@@ -931,6 +991,9 @@ class WorkflowAgent(BaseAgent):
         Returns:
             Union[str, Tuple[str, Any]]: Execution ID or (execution_id, result)
         """
+
+
+
         try:
             if workflow_id not in self.workflows:
                 raise ValueError(f"Workflow not found: {workflow_id}")
@@ -1142,6 +1205,9 @@ class WorkflowAgent(BaseAgent):
     
     async def cancel_workflow(self, execution_id: str) -> bool:
         """Cancel a running workflow execution."""
+
+
+
         try:
             if execution_id in self.running_workflows:
                 workflow_task = self.running_workflows[execution_id]

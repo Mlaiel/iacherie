@@ -11,7 +11,7 @@ Enterprise NFT creation and management platform providing:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 - All Rights Reserved
 
-⚠️ IMPORTANT LEGAL NOTICE ⚠️
+ IMPORTANT LEGAL NOTICE 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
@@ -241,6 +241,9 @@ class NFTCreator:
         Returns:
             str: NFT token ID
         """
+
+
+
         try:
             # Validate content file
             content_info = await self._validate_and_process_content(content_file_path, metadata)
@@ -349,6 +352,9 @@ class NFTCreator:
         Returns:
             str: Collection ID
         """
+
+
+
         try:
             collection_id = str(uuid.uuid4())
             
@@ -406,6 +412,9 @@ class NFTCreator:
         Returns:
             str: Listing ID
         """
+
+
+
         try:
             if nft_id not in self.nfts:
                 raise ValueError(f"NFT not found: {nft_id}")
@@ -457,6 +466,9 @@ class NFTCreator:
         Returns:
             List[str]: List of generated NFT IDs
         """
+
+
+
         try:
             if collection_id not in self.collections:
                 raise ValueError(f"Collection not found: {collection_id}")
@@ -529,6 +541,9 @@ class NFTCreator:
     
     async def _validate_and_process_content(self, file_path: str, metadata: ContentMetadata) -> Dict[str, Any]:
         """Validate and extract information from content file."""
+
+
+
         try:
             file_path = Path(file_path)
             
@@ -657,6 +672,9 @@ class NFTCreator:
     
     async def _upload_to_ipfs(self, content: Union[str, Dict], content_type: str) -> str:
         """Upload content to IPFS with Pinata pinning service."""
+
+
+
         try:
             if self.pinata_api_key and self.pinata_secret:
                 # Use Pinata for IPFS pinning
@@ -699,6 +717,9 @@ class NFTCreator:
     
     async def _deploy_nft_collection(self, name: str, symbol: str, network: BlockchainNetwork) -> str:
         """Deploy NFT collection smart contract."""
+
+
+
         try:
             from .smart_contracts import DeploymentConfig
             

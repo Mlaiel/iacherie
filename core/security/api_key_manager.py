@@ -132,6 +132,9 @@ class APIKeyManager:
         custom_rate_limit: Optional[Dict[str, int]] = None
     ) -> Tuple[str, APIKey]:
         """Generate new API key"""
+
+
+
         try:
             # Generate secure random key
             raw_key = secrets.token_urlsafe(self.key_length)
@@ -179,6 +182,9 @@ class APIKeyManager:
     
     async def validate_api_key(self, api_key: str) -> Optional[APIKey]:
         """Validate API key and return key information"""
+
+
+
         try:
             # Validate key format
             if not self._is_valid_key_format(api_key):
@@ -224,6 +230,9 @@ class APIKeyManager:
     
     async def revoke_api_key(self, key_id: str, reason: str = "Manual revocation") -> bool:
         """Revoke an API key"""
+
+
+
         try:
             api_key = await self._get_api_key(key_id)
             if not api_key:
@@ -248,6 +257,9 @@ class APIKeyManager:
     
     async def rotate_api_key(self, key_id: str) -> Optional[Tuple[str, APIKey]]:
         """Rotate an existing API key"""
+
+
+
         try:
             old_key = await self._get_api_key(key_id)
             if not old_key:
@@ -275,6 +287,9 @@ class APIKeyManager:
     
     async def list_user_api_keys(self, user_id: str) -> List[APIKey]:
         """List all API keys for a user"""
+
+
+
         try:
             # In production, this would query the database
             # For now, use file-based storage
@@ -311,6 +326,9 @@ class APIKeyManager:
         response_size: int = 0
     ):
         """Record API key usage for analytics and monitoring"""
+
+
+
         try:
             usage = APIKeyUsage(
                 key_id=key_id,
@@ -333,6 +351,9 @@ class APIKeyManager:
     
     def _hash_api_key(self, api_key: str) -> str:
         """Create secure hash of API key"""
+
+
+
         return hashlib.sha256(api_key.encode()).hexdigest()
     
     def _is_valid_key_format(self, api_key: str) -> bool:
@@ -353,6 +374,9 @@ class APIKeyManager:
     
     def _extract_key_id(self, api_key: str) -> Optional[str]:
         """Extract key ID from API key"""
+
+
+
         try:
             if not api_key.startswith(self.key_prefix):
                 return None
@@ -367,6 +391,9 @@ class APIKeyManager:
     
     async def _store_api_key(self, api_key: APIKey):
         """Store API key data"""
+
+
+
         try:
             # Cache for quick access
             cache_key = f"api_key:{api_key.key_id}"
@@ -396,6 +423,9 @@ class APIKeyManager:
     
     async def _get_api_key(self, key_id: str) -> Optional[APIKey]:
         """Retrieve API key data"""
+
+
+
         try:
             # Check cache first
             cache_key = f"api_key:{key_id}"
@@ -431,6 +461,9 @@ class APIKeyManager:
     
     def _serialize_api_key(self, api_key: APIKey) -> Dict[str, Any]:
         """Serialize API key for storage"""
+
+
+
         return {
             "key_id": api_key.key_id,
             "key_hash": api_key.key_hash,
@@ -449,6 +482,9 @@ class APIKeyManager:
     
     def _deserialize_api_key(self, data: Dict[str, Any]) -> APIKey:
         """Deserialize API key from storage"""
+
+
+
         return APIKey(
             key_id=data["key_id"],
             key_hash=data["key_hash"],
@@ -467,6 +503,9 @@ class APIKeyManager:
     
     async def _update_key_usage(self, key_id: str):
         """Update API key usage statistics"""
+
+
+
         try:
             api_key = await self._get_api_key(key_id)
             if api_key:
@@ -479,6 +518,9 @@ class APIKeyManager:
     
     async def _mark_key_expired(self, key_id: str):
         """Mark API key as expired"""
+
+
+
         try:
             api_key = await self._get_api_key(key_id)
             if api_key:

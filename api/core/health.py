@@ -51,6 +51,9 @@ class HealthCheckResult:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for serialization."""
+
+
+
         return {
             "component_name": self.component_name,
             "component_type": self.component_type.value,
@@ -74,6 +77,9 @@ class SystemHealthStatus:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for API response."""
+
+
+
         return {
             "status": self.overall_status.value,
             "version": self.version,
@@ -88,11 +94,17 @@ class SystemHealthStatus:
     @property
     def is_healthy(self) -> bool:
         """Check if system is healthy."""
+
+
+
         return self.overall_status == HealthStatus.HEALTHY
     
     @property
     def unhealthy_components(self) -> List[HealthCheckResult]:
         """Get list of unhealthy components."""
+
+
+
         return [
             result for result in self.component_results
             if result.status == HealthStatus.UNHEALTHY
@@ -101,6 +113,9 @@ class SystemHealthStatus:
     @property
     def degraded_components(self) -> List[HealthCheckResult]:
         """Get list of degraded components."""
+
+
+
         return [
             result for result in self.component_results
             if result.status == HealthStatus.DEGRADED
@@ -130,11 +145,17 @@ class IHealthCheck(ABC):
     @property
     def timeout_seconds(self) -> float:
         """Health check timeout in seconds."""
+
+
+
         return 5.0
     
     @property
     def tags(self) -> Dict[str, str]:
         """Additional tags for the health check."""
+
+
+
         return {}
 
 
@@ -442,6 +463,9 @@ class HealthCheckManager:
     
     async def _execute_health_check(self, health_check: IHealthCheck) -> HealthCheckResult:
         """Execute single health check with timeout."""
+
+
+
         try:
             return await asyncio.wait_for(
                 health_check.check_health(),
@@ -486,6 +510,9 @@ class HealthCheckManager:
     
     def _get_uptime_seconds(self) -> float:
         """Get application uptime in seconds."""
+
+
+
         return (datetime.now(timezone.utc) - self.start_time).total_seconds()
     
     def get_registered_checks(self) -> List[str]:
@@ -511,6 +538,9 @@ class SimpleHealthCheck(IHealthCheck):
     
     async def check_health(self) -> HealthCheckResult:
         """Always return healthy status."""
+
+
+
         return HealthCheckResult(
             component_name=self.name,
             component_type=self.component_type,
@@ -530,6 +560,9 @@ _health_manager.register_health_check(
 
 def get_health_manager() -> HealthCheckManager:
     """Get global health check manager."""
+
+
+
     return _health_manager
 
 
@@ -540,9 +573,15 @@ def register_health_check(health_check: IHealthCheck) -> None:
 
 async def check_system_health() -> SystemHealthStatus:
     """Check overall system health."""
+
+
+
     return await _health_manager.check_health()
 
 
 async def check_component_health(component_name: str) -> SystemHealthStatus:
     """Check specific component health."""
+
+
+
     return await _health_manager.check_health(component_name)

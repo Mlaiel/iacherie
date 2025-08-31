@@ -1,11 +1,11 @@
 """
-🔍 Elasticsearch Cluster Configuration - IA-Influencer-Agent Platform
+ Elasticsearch Cluster Configuration - IA-Influencer-Agent Platform
 ======================================================================
 Expert: Search Engineer + Data Specialist + Performance Analyst
 Creator: Fahed Mlaiel <mlaiel@live.de>
 ======================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL 
 Tout vol, copie ou utilisation non autorisée de ce code source,
 de ce concept ou de cette propriété intellectuelle sans
 l'autorisation écrite explicite de Fahed Mlaiel est strictement
@@ -218,6 +218,9 @@ cluster.routing.allocation.disk.watermark.flood_stage: 95%
     
     def generate_kibana_service(self) -> Dict[str, Any]:
         """Generate Kibana service for Elasticsearch visualization"""
+
+
+
         return {
             "image": f"docker.elastic.co/kibana/kibana:{self.es_version}",
             "container_name": "ia-influencer-kibana",
@@ -257,6 +260,9 @@ cluster.routing.allocation.disk.watermark.flood_stage: 95%
     
     def generate_kibana_config(self) -> str:
         """Generate Kibana configuration file"""
+
+
+
         return f"""
 # Kibana Configuration for IA-Influencer Platform
 # Analytics and visualization interface
@@ -302,6 +308,9 @@ xpack.uptime.enabled: true
     
     def generate_jvm_options(self) -> str:
         """Generate JVM options for Elasticsearch"""
+
+
+
         return f"""
 # JVM Options for IA-Influencer Elasticsearch
 # Optimized for production performance
@@ -356,6 +365,9 @@ xpack.uptime.enabled: true
     
     def generate_elasticsearch_exporter_service(self) -> Dict[str, Any]:
         """Generate Elasticsearch Exporter for Prometheus monitoring"""
+
+
+
         return {
             "image": "quay.io/prometheuscommunity/elasticsearch-exporter:latest",
             "container_name": "ia-influencer-elasticsearch-exporter",
@@ -390,6 +402,9 @@ xpack.uptime.enabled: true
     
     def generate_dockerfile(self) -> str:
         """Generate custom Elasticsearch Dockerfile"""
+
+
+
         return f"""
 # IA-Influencer Elasticsearch Dockerfile
 # Production-optimized search engine
@@ -436,6 +451,9 @@ EXPOSE 9200 9300
     
     def generate_healthcheck_script(self) -> str:
         """Generate Elasticsearch health check script"""
+
+
+
         return """#!/bin/bash
 # Elasticsearch Health Check Script
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -524,11 +542,14 @@ fi
             yaml.dump(compose_config, f, default_flow_style=False, indent=2)
         files_created.append(str(compose_file))
         
-        logger.info(f"✅ Elasticsearch cluster configuration saved: {len(files_created)} files created")
+        logger.info(f" Elasticsearch cluster configuration saved: {len(files_created)} files created")
         return files_created
     
     def _generate_log4j_config(self) -> str:
         """Generate Log4j configuration for Elasticsearch"""
+
+
+
         return """
 # Log4j Configuration for IA-Influencer Elasticsearch
 # Optimized logging configuration

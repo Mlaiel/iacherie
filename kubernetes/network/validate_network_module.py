@@ -8,7 +8,7 @@ Copyright: All rights reserved - Unauthorized use prohibited
 Project: IA Influencer Agent Platform - Content Protection & Monetization
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  AVERTISSEMENT SÉVÈRE ⚠️
+  AVERTISSEMENT SÉVÈRE 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
@@ -26,35 +26,44 @@ validation_results: List[Tuple[str, bool, str]] = []
 
 def validate_import(module_name: str, description: str) -> bool:
     """Validate that a module can be imported"""
+
+
+
     try:
         importlib.import_module(module_name)
-        validation_results.append((description, True, f"✅ Module '{module_name}' imported successfully"))
+        validation_results.append((description, True, f" Module '{module_name}' imported successfully"))
         return True
     except ImportError as e:
-        validation_results.append((description, False, f"❌ Failed to import '{module_name}': {e}"))
+        validation_results.append((description, False, f" Failed to import '{module_name}': {e}"))
         return False
     except Exception as e:
-        validation_results.append((description, False, f"❌ Error importing '{module_name}': {e}"))
+        validation_results.append((description, False, f" Error importing '{module_name}': {e}"))
         return False
 
 
 def validate_class_availability(module_name: str, class_name: str, description: str) -> bool:
     """Validate that a class is available in a module"""
+
+
+
     try:
         module = importlib.import_module(module_name)
         if hasattr(module, class_name):
-            validation_results.append((description, True, f"✅ Class '{class_name}' available in '{module_name}'"))
+            validation_results.append((description, True, f" Class '{class_name}' available in '{module_name}'"))
             return True
         else:
-            validation_results.append((description, False, f"❌ Class '{class_name}' not found in '{module_name}'"))
+            validation_results.append((description, False, f" Class '{class_name}' not found in '{module_name}'"))
             return False
     except Exception as e:
-        validation_results.append((description, False, f"❌ Error validating class '{class_name}': {e}"))
+        validation_results.append((description, False, f" Error validating class '{class_name}': {e}"))
         return False
 
 
 async def validate_async_initialization(module_name: str, class_name: str, description: str) -> bool:
     """Validate that an async class can be initialized"""
+
+
+
     try:
         module = importlib.import_module(module_name)
         if hasattr(module, class_name):
@@ -68,13 +77,13 @@ async def validate_async_initialization(module_name: str, class_name: str, descr
             else:
                 instance = cls()
             
-            validation_results.append((description, True, f"✅ Class '{class_name}' can be instantiated"))
+            validation_results.append((description, True, f" Class '{class_name}' can be instantiated"))
             return True
         else:
-            validation_results.append((description, False, f"❌ Class '{class_name}' not available for testing"))
+            validation_results.append((description, False, f" Class '{class_name}' not available for testing"))
             return False
     except Exception as e:
-        validation_results.append((description, False, f"❌ Error testing '{class_name}': {e}"))
+        validation_results.append((description, False, f" Error testing '{class_name}': {e}"))
         return False
 
 
@@ -111,9 +120,9 @@ def validate_file_structure() -> bool:
     for file_name in required_files:
         file_path = os.path.join(base_path, file_name)
         if os.path.exists(file_path):
-            validation_results.append((f"File Structure - {file_name}", True, f"✅ File exists: {file_name}"))
+            validation_results.append((f"File Structure - {file_name}", True, f" File exists: {file_name}"))
         else:
-            validation_results.append((f"File Structure - {file_name}", False, f"❌ Missing file: {file_name}"))
+            validation_results.append((f"File Structure - {file_name}", False, f" Missing file: {file_name}"))
             all_files_exist = False
     
     return all_files_exist
@@ -122,20 +131,20 @@ def validate_file_structure() -> bool:
 async def run_comprehensive_validation():
     """Run comprehensive validation of network module"""
     
-    print("🚀 IA INFLUENCER AGENT - NETWORK MODULE VALIDATION")
+    print(" IA INFLUENCER AGENT - NETWORK MODULE VALIDATION")
     print("=" * 60)
-    print("🔍 Validating complete network deployment module...")
+    print(" Validating complete network deployment module...")
     print()
     
     # 1. Validate file structure
-    print("📁 1. FILE STRUCTURE VALIDATION")
+    print(" 1. FILE STRUCTURE VALIDATION")
     print("-" * 40)
     file_structure_valid = validate_file_structure()
-    print(f"File Structure: {'✅ VALID' if file_structure_valid else '❌ INVALID'}")
+    print(f"File Structure: {' VALID' if file_structure_valid else ' INVALID'}")
     print()
     
     # 2. Validate core module imports
-    print("📦 2. CORE MODULE IMPORTS")
+    print(" 2. CORE MODULE IMPORTS")
     print("-" * 40)
     
     core_modules = [
@@ -152,11 +161,11 @@ async def run_comprehensive_validation():
         if not validate_import(module, description):
             core_imports_valid = False
     
-    print(f"Core Modules: {'✅ VALID' if core_imports_valid else '❌ INVALID'}")
+    print(f"Core Modules: {' VALID' if core_imports_valid else ' INVALID'}")
     print()
     
     # 3. Validate content delivery modules
-    print("🎵 3. CONTENT DELIVERY MODULES")
+    print(" 3. CONTENT DELIVERY MODULES")
     print("-" * 40)
     
     content_modules = [
@@ -171,11 +180,11 @@ async def run_comprehensive_validation():
         if not validate_import(module, description):
             content_imports_valid = False
     
-    print(f"Content Delivery Modules: {'✅ VALID' if content_imports_valid else '❌ INVALID'}")
+    print(f"Content Delivery Modules: {' VALID' if content_imports_valid else ' INVALID'}")
     print()
     
     # 4. Validate enterprise modules
-    print("🏢 4. ENTERPRISE MODULES")
+    print(" 4. ENTERPRISE MODULES")
     print("-" * 40)
     
     enterprise_modules = [
@@ -188,11 +197,11 @@ async def run_comprehensive_validation():
         if not validate_import(module, description):
             enterprise_imports_valid = False
     
-    print(f"Enterprise Modules: {'✅ VALID' if enterprise_imports_valid else '❌ INVALID'}")
+    print(f"Enterprise Modules: {' VALID' if enterprise_imports_valid else ' INVALID'}")
     print()
     
     # 5. Validate example modules
-    print("📋 5. EXAMPLE MODULES")
+    print(" 5. EXAMPLE MODULES")
     print("-" * 40)
     
     example_modules = [
@@ -205,11 +214,11 @@ async def run_comprehensive_validation():
         if not validate_import(module, description):
             example_imports_valid = False
     
-    print(f"Example Modules: {'✅ VALID' if example_imports_valid else '❌ INVALID'}")
+    print(f"Example Modules: {' VALID' if example_imports_valid else ' INVALID'}")
     print()
     
     # 6. Validate class availability
-    print("🔧 6. CLASS AVAILABILITY VALIDATION")
+    print(" 6. CLASS AVAILABILITY VALIDATION")
     print("-" * 40)
     
     key_classes = [
@@ -225,11 +234,11 @@ async def run_comprehensive_validation():
         if not validate_class_availability(module, class_name, description):
             class_availability_valid = False
     
-    print(f"Class Availability: {'✅ VALID' if class_availability_valid else '❌ INVALID'}")
+    print(f"Class Availability: {' VALID' if class_availability_valid else ' INVALID'}")
     print()
     
     # 7. Validate async initialization capability
-    print("⚡ 7. ASYNC INITIALIZATION VALIDATION")
+    print(" 7. ASYNC INITIALIZATION VALIDATION")
     print("-" * 40)
     
     async_classes = [
@@ -243,11 +252,11 @@ async def run_comprehensive_validation():
         if not await validate_async_initialization(module, class_name, description):
             async_init_valid = False
     
-    print(f"Async Initialization: {'✅ VALID' if async_init_valid else '❌ INVALID'}")
+    print(f"Async Initialization: {' VALID' if async_init_valid else ' INVALID'}")
     print()
     
     # 8. Generate validation summary
-    print("📊 8. VALIDATION SUMMARY")
+    print(" 8. VALIDATION SUMMARY")
     print("-" * 40)
     
     # Count results
@@ -275,14 +284,14 @@ async def run_comprehensive_validation():
     ])
     
     if overall_valid:
-        print("🎯 OVERALL VALIDATION STATUS: ✅ ALL MODULES VALID")
-        print("🚀 Network module is ready for production deployment!")
+        print(" OVERALL VALIDATION STATUS:  ALL MODULES VALID")
+        print(" Network module is ready for production deployment!")
     else:
-        print("⚠️ OVERALL VALIDATION STATUS: ❌ ISSUES DETECTED")
-        print("🔧 Please review and fix the reported issues.")
+        print(" OVERALL VALIDATION STATUS:  ISSUES DETECTED")
+        print(" Please review and fix the reported issues.")
     
     print()
-    print("📋 DETAILED VALIDATION RESULTS:")
+    print(" DETAILED VALIDATION RESULTS:")
     print("-" * 40)
     
     # Group results by category
@@ -294,14 +303,14 @@ async def run_comprehensive_validation():
         categories[category].append((description, passed, message))
     
     for category, results in categories.items():
-        print(f"\n📁 {category}:")
+        print(f"\n {category}:")
         for description, passed, message in results:
             print(f"   {message}")
     
     print("\n" + "=" * 60)
-    print("🎵 IA Influencer Agent - Network Module Validation Complete")
-    print("👨‍💻 Author: Fahed Mlaiel <mlaiel@live.de>")
-    print("⚠️ Copyright: All rights reserved")
+    print(" IA Influencer Agent - Network Module Validation Complete")
+    print("‍ Author: Fahed Mlaiel <mlaiel@live.de>")
+    print(" Copyright: All rights reserved")
     
     return overall_valid
 

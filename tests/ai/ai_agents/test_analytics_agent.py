@@ -23,7 +23,7 @@ predictive insights, trend detection, audience segmentation, and real-time monit
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
@@ -82,6 +82,9 @@ class AnalyticsAgent(BaseAIAgent):
         
     async def analyze_performance(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Mock performance analysis"""
+
+
+
         return {
             "engagement_rate": 0.85,
             "reach": 10000,
@@ -91,6 +94,9 @@ class AnalyticsAgent(BaseAIAgent):
         
     async def generate_insights(self, metrics: Dict[str, Any]) -> List[str]:
         """Mock insights generation"""
+
+
+
         return [
             "Engagement rate is above average",
             "Best posting time is 2-4 PM",
@@ -106,6 +112,9 @@ class TestAnalyticsAgent:
     @pytest.fixture
     def analytics_config(self) -> AgentConfiguration:
         """Analytics agent configuration"""
+
+
+
         return AgentConfiguration(
             agent_id="analytics_test",
             agent_name="Test Analytics Agent",

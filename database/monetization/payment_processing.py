@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 CRITICAL LEGAL WARNING:
+ CRITICAL LEGAL WARNING:
 This code and all associated intellectual property belong exclusively to Fahed Mlaiel.
 Any unauthorized use, copying, modification, distribution, or commercialization 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -75,6 +75,9 @@ class PaymentProcessingEngine:
     
     def _initialize_gateways(self):
         """Initialize payment gateway clients with configuration"""
+
+
+
         try:
             # Stripe configuration
             stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -119,6 +122,9 @@ class PaymentProcessingEngine:
         Process a payment through the specified gateway with comprehensive
         fraud detection and validation
         """
+
+
+
         try:
             # Get user's payment account
             payment_account = await self._get_payment_account(session, user_id, gateway)
@@ -193,6 +199,9 @@ class PaymentProcessingEngine:
         """
         Process revenue payout for a user within the specified period
         """
+
+
+
         try:
             # Get user's payment account
             payment_account = await self._get_payment_account(session, user_id, gateway)
@@ -291,6 +300,9 @@ class PaymentProcessingEngine:
         payment_method_id: Optional[str] = None
     ) -> Dict[str, Any]:
         """Process payment through Stripe"""
+
+
+
         try:
             stripe_client = self.gateway_clients[PaymentGateway.STRIPE]
             
@@ -333,6 +345,9 @@ class PaymentProcessingEngine:
         transaction: PaymentTransaction
     ) -> Dict[str, Any]:
         """Process payment through PayPal"""
+
+
+
         try:
             payment_data = {
                 "intent": "sale",
@@ -375,6 +390,9 @@ class PaymentProcessingEngine:
         transaction: PaymentTransaction
     ) -> Dict[str, Any]:
         """Process payment through Wise (formerly TransferWise)"""
+
+
+
         try:
             wise_client = self.gateway_clients[PaymentGateway.WISE]
             

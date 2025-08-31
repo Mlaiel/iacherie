@@ -7,7 +7,7 @@ and optimization in the IA Influencer platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Contact: mlaiel@live.de
@@ -191,10 +191,16 @@ class ContentModel(ABC):
     
     async def preprocess_content(self, content: Any) -> Any:
         """Preprocess content for analysis"""
+
+
+
         return content
     
     async def postprocess_results(self, results: ContentAnalysisResult) -> ContentAnalysisResult:
         """Postprocess analysis results"""
+
+
+
         return results
 
 
@@ -211,6 +217,9 @@ class TextContentModel(ContentModel):
     
     async def load_model(self):
         """Load text analysis models"""
+
+
+
         try:
             # Load BERT for embeddings and classification
             self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
@@ -662,6 +671,9 @@ class TextContentModel(ContentModel):
     
     async def generate_content(self, config: ContentGenerationConfig) -> str:
         """Generate text content based on configuration"""
+
+
+
         try:
             # Prepare prompt based on configuration
             prompt = self._build_generation_prompt(config)
@@ -727,6 +739,9 @@ class ImageContentModel(ContentModel):
     
     async def load_model(self):
         """Load image analysis and generation models"""
+
+
+
         try:
             # Load CLIP for image understanding
             self.clip_model, self.clip_preprocess = clip.load("ViT-B/32", device=self.device)
@@ -812,6 +827,9 @@ class ImageContentModel(ContentModel):
     
     async def _generate_image_caption(self, image: Image.Image) -> str:
         """Generate caption for image"""
+
+
+
         try:
             inputs = self.caption_processor(image, return_tensors="pt").to(self.device)
             out = self.caption_model.generate(**inputs, max_length=50)

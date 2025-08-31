@@ -74,6 +74,9 @@ class BaseAIException(Exception):
         
     def to_dict(self) -> Dict[str, Any]:
         """Convert exception to dictionary for logging/monitoring"""
+
+
+
         return {
             "error_code": self.error_code,
             "message": self.message,
@@ -868,4 +871,7 @@ def get_exception_by_code(error_code: str) -> type:
     Returns:
         Exception class or BaseAIException if not found
     """
+
+
+
     return EXCEPTION_REGISTRY.get(error_code.lower(), BaseAIException)

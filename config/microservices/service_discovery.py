@@ -147,6 +147,9 @@ class ServiceDiscoveryConfig(BaseSettings):
     
     def get_consul_client(self) -> consul.Consul:
         """Get configured Consul client."""
+
+
+
         return consul.Consul(
             host=self.consul_host,
             port=self.consul_port,
@@ -157,6 +160,9 @@ class ServiceDiscoveryConfig(BaseSettings):
     
     def get_etcd_client(self) -> etcd3.Etcd3Client:
         """Get configured etcd client."""
+
+
+
         return etcd3.client(
             host=self.etcd_host,
             port=self.etcd_port,
@@ -169,6 +175,9 @@ class ServiceDiscoveryConfig(BaseSettings):
     
     def get_redis_client(self) -> redis.Redis:
         """Get configured Redis client."""
+
+
+
         return redis.Redis(
             host=self.redis_host,
             port=self.redis_port,
@@ -179,6 +188,9 @@ class ServiceDiscoveryConfig(BaseSettings):
     
     def get_service_config(self) -> Dict[str, Any]:
         """Get complete service configuration."""
+
+
+
         return {
             "discovery": {
                 "type": self.discovery_type,
@@ -249,6 +261,9 @@ class ServiceRegistry:
     
     def get_service_instances(self, service_name: str) -> List[ServiceRegistration]:
         """Get all instances of a service."""
+
+
+
         return self._services.get(service_name, [])
     
     def get_healthy_instances(self, service_name: str) -> List[ServiceRegistration]:

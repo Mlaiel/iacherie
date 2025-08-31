@@ -291,6 +291,9 @@ class LicenseManagementConfig:
     
     def _initialize_pro_integrations(self) -> Dict[RightsOrganization, Dict[str, Any]]:
         """Initialize Performing Rights Organizations integrations."""
+
+
+
         return {
             RightsOrganization.GEMA: {
                 "name": "GEMA",
@@ -346,6 +349,9 @@ class LicenseManagementConfig:
     
     def _initialize_default_rates(self) -> Dict[LicenseType, LicensingRate]:
         """Initialize default licensing rates."""
+
+
+
         return {
             LicenseType.SYNC_RIGHTS: LicensingRate(
                 license_type=LicenseType.SYNC_RIGHTS,
@@ -413,10 +419,16 @@ class LicenseManagementConfig:
     
     def get_pro_integration(self, organization: RightsOrganization) -> Optional[Dict[str, Any]]:
         """Get configuration for a specific PRO integration."""
+
+
+
         return self.PRO_INTEGRATIONS.get(organization)
     
     def get_default_rate(self, license_type: LicenseType) -> Optional[LicensingRate]:
         """Get default licensing rate for a license type."""
+
+
+
         return self.DEFAULT_LICENSING_RATES.get(license_type)
     
     def calculate_license_fee(

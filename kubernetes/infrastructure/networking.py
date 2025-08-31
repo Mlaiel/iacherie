@@ -7,7 +7,7 @@ security groups, service mesh, and network policies for Kubernetes.
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED 
 """
 
 import asyncio
@@ -114,6 +114,9 @@ class NetworkingManager:
         
     async def create_vpc_infrastructure(self, vpc_spec: VPCSpec) -> Dict[str, Any]:
         """Create complete VPC infrastructure"""
+
+
+
         try:
             results = {}
             
@@ -161,6 +164,9 @@ class NetworkingManager:
     
     async def _create_vpc(self, vpc_spec: VPCSpec) -> Dict[str, Any]:
         """Create VPC"""
+
+
+
         try:
             if self.cloud_provider:
                 # Implementation depends on cloud provider (AWS, GCP, Azure)
@@ -183,6 +189,9 @@ class NetworkingManager:
     
     async def _create_subnet(self, subnet_spec: SubnetSpec) -> Dict[str, Any]:
         """Create subnet"""
+
+
+
         try:
             logger.info(f"Creating subnet: {subnet_spec.name}")
             return {
@@ -197,6 +206,9 @@ class NetworkingManager:
     
     async def _create_security_group(self, sg_spec: SecurityGroupSpec) -> Dict[str, Any]:
         """Create security group"""
+
+
+
         try:
             logger.info(f"Creating security group: {sg_spec.name}")
             return {
@@ -210,6 +222,9 @@ class NetworkingManager:
     
     async def _create_internet_gateway(self, vpc_id: str) -> Dict[str, Any]:
         """Create internet gateway"""
+
+
+
         try:
             logger.info(f"Creating internet gateway for VPC: {vpc_id}")
             return {
@@ -223,6 +238,9 @@ class NetworkingManager:
     
     async def _create_route_tables(self, vpc_id: str, subnet_results: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Create route tables for subnets"""
+
+
+
         try:
             logger.info(f"Creating route tables for VPC: {vpc_id}")
             return {
@@ -235,6 +253,9 @@ class NetworkingManager:
     
     async def create_network_policies(self, policies: List[NetworkPolicySpec]) -> Dict[str, Any]:
         """Create Kubernetes network policies"""
+
+
+
         try:
             results = []
             
@@ -254,6 +275,9 @@ class NetworkingManager:
     
     async def _create_network_policy(self, policy_spec: NetworkPolicySpec) -> Dict[str, Any]:
         """Create individual network policy"""
+
+
+
         try:
             # Build ingress rules
             ingress_rules = []
@@ -308,6 +332,9 @@ class NetworkingManager:
     
     async def deploy_service_mesh(self, mesh_spec: ServiceMeshSpec) -> Dict[str, Any]:
         """Deploy service mesh infrastructure"""
+
+
+
         try:
             if mesh_spec.mesh_type == "istio":
                 return await self._deploy_istio(mesh_spec)
@@ -320,6 +347,9 @@ class NetworkingManager:
     
     async def _deploy_istio(self, mesh_spec: ServiceMeshSpec) -> Dict[str, Any]:
         """Deploy Istio service mesh"""
+
+
+
         try:
             # Create Istio namespace
             namespace = client.V1Namespace(
@@ -477,6 +507,9 @@ class NetworkingManager:
     
     async def create_ia_influencer_networking(self, namespace: str = "ia-influencer") -> Dict[str, Any]:
         """Create networking setup for IA Influencer platform"""
+
+
+
         try:
             results = {}
             
@@ -658,6 +691,9 @@ class NetworkingManager:
     
     async def configure_network_monitoring(self, namespace: str = "monitoring") -> Dict[str, Any]:
         """Configure network monitoring and observability"""
+
+
+
         try:
             # Deploy network monitoring tools
             monitoring_deployments = []
@@ -713,6 +749,9 @@ class NetworkingManager:
     
     async def validate_network_connectivity(self, namespace: str = "ia-influencer") -> Dict[str, Any]:
         """Validate network connectivity between services"""
+
+
+
         try:
             connectivity_tests = []
             
@@ -753,6 +792,9 @@ class NetworkingManager:
     
     async def get_network_status(self) -> Dict[str, Any]:
         """Get comprehensive network status"""
+
+
+
         try:
             status = {
                 'vpc': {'status': 'healthy'},

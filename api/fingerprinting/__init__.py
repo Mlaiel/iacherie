@@ -102,22 +102,40 @@ def create_protection_service(config=None):
         
     Returns:
         ContentProtectionService instance
-    """    return ContentProtectionService(config)
+    """
+
+
+    return ContentProtectionService(config)
 
 def create_audio_processor(config=None):
-    """Create an audio fingerprint processor"""    return AudioFingerprintProcessor(config)
+    """Create an audio fingerprint processor"""
+
+
+    return AudioFingerprintProcessor(config)
 
 def create_video_processor(config=None):
-    """Create a video fingerprint processor"""    return VideoFingerprintProcessor(config)
+    """Create a video fingerprint processor"""
+
+
+    return VideoFingerprintProcessor(config)
 
 def create_image_processor(config=None):
-    """Create an image fingerprint processor"""    return ImageFingerprintProcessor(config)
+    """Create an image fingerprint processor"""
+
+
+    return ImageFingerprintProcessor(config)
 
 def create_text_processor(config=None):
-    """Create a text fingerprint processor"""    return TextFingerprintProcessor(config)
+    """Create a text fingerprint processor"""
+
+
+    return TextFingerprintProcessor(config)
 
 def create_database_manager(config=None):
-    """Create a database manager"""    return DatabaseManager(config)
+    """Create a database manager"""
+
+
+    return DatabaseManager(config)
     ContentType
 )
 
@@ -273,7 +291,10 @@ class AudioFingerprintEngine:
         self.logger.info("AudioFingerprintEngine initialized successfully")
     
     def _initialize_audio_engines(self):
-        """Initialize audio processing engines."""        try:
+        """Initialize audio processing engines."""
+
+
+        try:
             # Chromaprint fingerprinter
             self.chromaprint = Chromaprint()
             
@@ -352,7 +373,10 @@ class AudioFingerprintEngine:
         self,
         audio_path: Union[str, Path, BinaryIO]
     ) -> Tuple[np.ndarray, int]:
-        """Load and preprocess audio data."""        try:
+        """Load and preprocess audio data."""
+
+
+        try:
             # Load audio using librosa with appropriate settings
             audio_data, sr = librosa.load(
                 audio_path,
@@ -540,7 +564,10 @@ class AudioFingerprintEngine:
         audio_path: Union[str, Path],
         watermark_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply digital watermark to audio content."""        try:
+        """Apply digital watermark to audio content."""
+
+
+        try:
             # Load audio
             audio_data, sr = await self._load_audio_data(audio_path)
             
@@ -612,7 +639,10 @@ class ImageFingerprintEngine:
         self.logger.info("ImageFingerprintEngine initialized successfully")
     
     def _initialize_image_engines(self):
-        """Initialize image processing engines."""        try:
+        """Initialize image processing engines."""
+
+
+        try:
             # OpenCV feature detectors
             self.orb = cv2.ORB_create(nfeatures=500)
             self.sift = cv2.SIFT_create(nfeatures=500)
@@ -679,7 +709,10 @@ class ImageFingerprintEngine:
             raise FingerprintException(f"Image fingerprinting error: {e}")
     
     async def _load_image_data(self, image_path: Union[str, Path, BinaryIO]) -> np.ndarray:
-        """Load and preprocess image data."""        try:
+        """Load and preprocess image data."""
+
+
+        try:
             if hasattr(image_path, 'read'):
                 # Handle file-like objects
                 image_data = np.frombuffer(image_path.read(), np.uint8)
@@ -871,7 +904,10 @@ class ImageFingerprintEngine:
         image_path: Union[str, Path],
         watermark_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply digital watermark to image content."""        try:
+        """Apply digital watermark to image content."""
+
+
+        try:
             # Load image
             image_data = await self._load_image_data(image_path)
             
@@ -963,7 +999,10 @@ class TextFingerprintEngine:
         self.logger.info("TextFingerprintEngine initialized successfully")
     
     def _initialize_text_engines(self):
-        """Initialize text processing engines."""        try:
+        """Initialize text processing engines."""
+
+
+        try:
             # Sentence transformer for semantic embeddings
             self.sentence_model = SentenceTransformer('all-MiniLM-L6-v2')
             
@@ -1029,7 +1068,10 @@ class TextFingerprintEngine:
             raise FingerprintException(f"Text fingerprinting error: {e}")
     
     async def _load_text_data(self, text_content: Union[str, Path, BinaryIO]) -> str:
-        """Load and preprocess text data."""        try:
+        """Load and preprocess text data."""
+
+
+        try:
             if isinstance(text_content, str):
                 if len(text_content) < 1000:  # Likely a file path
                     try:

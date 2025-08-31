@@ -8,7 +8,7 @@ for multi-platform content protection with legal enforcement.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -57,7 +57,7 @@ for multi-platform content protection with legal enforcement.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -499,6 +499,9 @@ class DMCAOrchestrator(BaseAgent):
     
     async def _prepare_document_data(self, dmca_case: DMCACase) -> Dict[str, Any]:
         """Prepare data for document generation"""
+
+
+
         return {
             "case_id": dmca_case.case_id,
             "copyright_owner_name": dmca_case.copyright_owner,
@@ -595,6 +598,9 @@ class DMCAOrchestrator(BaseAgent):
     
     async def _send_status_notifications(self, dmca_case: DMCACase, result: DMCAProcessResult) -> None:
         """Send status notifications"""
+
+
+
         try:
             notification_data = {
                 "case_id": dmca_case.case_id,
@@ -615,6 +621,9 @@ class DMCAOrchestrator(BaseAgent):
     
     async def _save_case_to_database(self, dmca_case: DMCACase) -> None:
         """Save case to database"""
+
+
+
         try:
             with get_db_session() as session:
                 db_case = DMCACaseRecord(
@@ -735,6 +744,9 @@ class DMCAOrchestrator(BaseAgent):
         response_data: Dict[str, Any]
     ) -> bool:
         """Handle response from platform regarding takedown"""
+
+
+
         try:
             case = self.active_cases.get(case_id)
             if not case:
@@ -806,6 +818,9 @@ class DMCAOrchestrator(BaseAgent):
         manual_review: bool = False
     ) -> bool:
         """Escalate DMCA case to higher priority or manual review"""
+
+
+
         try:
             case = self.active_cases.get(case_id)
             if not case:
@@ -858,6 +873,9 @@ class DMCAOrchestrator(BaseAgent):
         
     def _initialize_platform_handlers(self) -> Dict[str, Any]:
         """Initialize platform-specific DMCA handlers"""
+
+
+
         return {
             "youtube": self._handle_youtube_dmca,
             "instagram": self._handle_instagram_dmca,
@@ -871,6 +889,9 @@ class DMCAOrchestrator(BaseAgent):
     
     async def process_request(self, request: AgentRequest) -> AgentResponse:
         """Process DMCA-related requests"""
+
+
+
         try:
             action = request.action
             
@@ -897,6 +918,9 @@ class DMCAOrchestrator(BaseAgent):
     
     async def _initiate_dmca_takedown(self, data: Dict) -> AgentResponse:
         """Initiate automated DMCA takedown process"""
+
+
+
         try:
             content_id = data["content_id"]
             infringing_url = data["infringing_url"]
@@ -970,6 +994,9 @@ class DMCAOrchestrator(BaseAgent):
     
     async def _track_dmca_cases(self, data: Dict) -> AgentResponse:
         """Track status of active DMCA cases"""
+
+
+
         try:
             user_id = data.get("user_id")
             status_filter = data.get("status")
@@ -1017,6 +1044,9 @@ class DMCAOrchestrator(BaseAgent):
     
     async def _escalate_dmca_case(self, data: Dict) -> AgentResponse:
         """Escalate DMCA case to legal team or authorities"""
+
+
+
         try:
             case_id = data["case_id"]
             escalation_reason = data.get("reason", "Non-compliance")
@@ -1064,6 +1094,9 @@ class DMCAOrchestrator(BaseAgent):
     
     async def _generate_dmca_report(self, data: Dict) -> AgentResponse:
         """Generate comprehensive DMCA activity report"""
+
+
+
         try:
             period_start = datetime.fromisoformat(data.get("start_date", 
                 (datetime.now() - timedelta(days=30)).isoformat()))
@@ -1110,6 +1143,9 @@ class DMCAOrchestrator(BaseAgent):
     
     async def _verify_legal_compliance(self, data: Dict) -> AgentResponse:
         """Verify legal compliance of DMCA processes"""
+
+
+
         try:
             jurisdiction = data.get("jurisdiction", "US")
             
@@ -1156,6 +1192,9 @@ class DMCAOrchestrator(BaseAgent):
     
     async def _update_case_status(self, case: DMCACase):
         """Update case status by checking platform responses"""
+
+
+
         try:
             handler = self.platform_handlers.get(case.platform)
             if handler:

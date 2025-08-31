@@ -7,7 +7,7 @@ persistent volumes, backup strategies, and data lifecycle management.
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED 
 """
 
 import asyncio
@@ -125,6 +125,9 @@ class StorageManager:
         
     async def create_storage_infrastructure(self, configs: List[StorageConfig]) -> Dict[str, Any]:
         """Create complete storage infrastructure"""
+
+
+
         try:
             results = {}
             
@@ -154,6 +157,9 @@ class StorageManager:
     
     async def _create_object_storage(self, config: StorageConfig) -> Dict[str, Any]:
         """Create object storage (S3 buckets)"""
+
+
+
         try:
             if not self.s3_client:
                 return {'status': 'error', 'message': 'S3 client not configured'}
@@ -284,6 +290,9 @@ class StorageManager:
     
     async def _create_block_storage(self, config: StorageConfig) -> Dict[str, Any]:
         """Create block storage (Persistent Volumes)"""
+
+
+
         try:
             results = {}
             
@@ -328,6 +337,9 @@ class StorageManager:
     
     async def _create_file_storage(self, config: StorageConfig) -> Dict[str, Any]:
         """Create file storage (NFS, EFS)"""
+
+
+
         try:
             # Create NFS-based file storage
             nfs_pv_spec = PersistentVolumeSpec(
@@ -367,6 +379,9 @@ class StorageManager:
     
     async def _create_database_storage(self, config: StorageConfig) -> Dict[str, Any]:
         """Create database storage"""
+
+
+
         try:
             # Create high-performance storage for databases
             db_pv_spec = PersistentVolumeSpec(
@@ -405,6 +420,9 @@ class StorageManager:
     
     async def _create_storage_class(self, config: StorageConfig) -> Dict[str, Any]:
         """Create Kubernetes StorageClass"""
+
+
+
         try:
             # Define provisioner based on storage class
             provisioner_map = {
@@ -456,6 +474,9 @@ class StorageManager:
     
     async def create_persistent_volume(self, pv_spec: PersistentVolumeSpec) -> Dict[str, Any]:
         """Create Kubernetes PersistentVolume"""
+
+
+
         try:
             # Configure volume source based on type
             volume_source = None
@@ -528,6 +549,9 @@ class StorageManager:
     
     async def create_persistent_volume_claim(self, pvc_spec: PersistentVolumeClaimSpec) -> Dict[str, Any]:
         """Create Kubernetes PersistentVolumeClaim"""
+
+
+
         try:
             pvc_spec_obj = client.V1PersistentVolumeClaimSpec(
                 access_modes=pvc_spec.access_modes,
@@ -578,6 +602,9 @@ class StorageManager:
     
     async def create_backup_system(self, backup_config: BackupConfig) -> Dict[str, Any]:
         """Create backup system with Velero"""
+
+
+
         try:
             # Create Velero backup schedule
             backup_schedule = {
@@ -651,6 +678,9 @@ class StorageManager:
     
     async def create_ia_influencer_storage(self, namespace: str = "ia-influencer") -> Dict[str, Any]:
         """Create complete storage setup for IA Influencer platform"""
+
+
+
         try:
             results = {}
             
@@ -762,6 +792,9 @@ class StorageManager:
     
     async def _create_s3_buckets(self, configs: List[ObjectStorageConfig]) -> Dict[str, Any]:
         """Create S3 buckets with configurations"""
+
+
+
         try:
             if not self.s3_client:
                 return {'status': 'error', 'message': 'S3 client not configured'}
@@ -835,6 +868,9 @@ class StorageManager:
     
     async def _create_storage_monitoring(self, namespace: str) -> Dict[str, Any]:
         """Create storage monitoring and alerting"""
+
+
+
         try:
             # Create ServiceMonitor for storage metrics
             service_monitor = {
@@ -919,6 +955,9 @@ class StorageManager:
     
     async def get_storage_status(self, namespace: str = "ia-influencer") -> Dict[str, Any]:
         """Get storage infrastructure status"""
+
+
+
         try:
             status = {
                 'persistent_volumes': {'total': 5, 'bound': 5, 'available': 0},

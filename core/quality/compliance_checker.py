@@ -13,7 +13,7 @@ Protection compliance → Violation detection → Compliance reporting
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. 
 Unauthorized use, modification, or distribution by any individual or entity 
 without explicit written permission from Fahed Mlaiel is strictly prohibited.
@@ -103,10 +103,16 @@ class ComplianceRule:
     
     def applies_to_platform(self, platform: Platform) -> bool:
         """Check if rule applies to specific platform"""
+
+
+
         return Platform.GENERIC in self.platforms or platform in self.platforms
     
     def applies_to_jurisdiction(self, jurisdiction: Jurisdiction) -> bool:
         """Check if rule applies to specific jurisdiction"""
+
+
+
         return Jurisdiction.GLOBAL in self.jurisdictions or jurisdiction in self.jurisdictions
 
 
@@ -195,14 +201,23 @@ class ComplianceReport:
     
     def get_violations_by_category(self, category: ComplianceCategory) -> List[ComplianceViolation]:
         """Get violations by category"""
+
+
+
         return [v for v in self.violations if v.category == category]
     
     def get_critical_violations(self) -> List[ComplianceViolation]:
         """Get critical violations"""
+
+
+
         return [v for v in self.violations if v.severity == ComplianceSeverity.CRITICAL]
     
     def has_blocking_violations(self) -> bool:
         """Check if there are blocking violations"""
+
+
+
         return self.critical_violations > 0 or self.violation_violations > 0
     
     def to_dict(self) -> Dict[str, Any]:
@@ -508,6 +523,9 @@ class LegalComplianceChecker:
     
     def _initialize_legal_rules(self) -> List[ComplianceRule]:
         """Initialize legal compliance rules"""
+
+
+
         return [
             ComplianceRule(
                 id="gdpr_data_collection",

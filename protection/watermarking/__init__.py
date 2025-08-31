@@ -1,4 +1,4 @@
-"""🔒 Ultra-Industrial Digital Watermarking & Forensic Protection System
+""" Ultra-Industrial Digital Watermarking & Forensic Protection System
 ====================================================================
 
 Enterprise-grade invisible watermarking ecosystem for comprehensive content
@@ -32,7 +32,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + Legal Tech + DevOps + DBA
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL STEGANOGRAPHY IP PROTECTION - NATIONAL SECURITY WARNING ⚠️
+  CRITICAL STEGANOGRAPHY IP PROTECTION - NATIONAL SECURITY WARNING 
 ========================================================================
 This watermarking system contains classified steganography technologies:
 - Advanced Steganography Algorithms: Patent Pending + Trade Secret
@@ -194,7 +194,10 @@ class AudioWatermarker:
         watermark_data: bytes,
         strength: WatermarkStrength = WatermarkStrength.MEDIUM
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Insère un filigrane dans le domaine spectral"""        try:
+        """Insère un filigrane dans le domaine spectral"""
+
+
+        try:
             if not MULTIMEDIA_AVAILABLE:
                 raise ValueError("Bibliothèques audio non disponibles")
             
@@ -269,7 +272,10 @@ class AudioWatermarker:
         watermark_data: bytes,
         strength: WatermarkStrength = WatermarkStrength.MEDIUM
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Insère un filigrane LSB (Least Significant Bit)"""        try:
+        """Insère un filigrane LSB (Least Significant Bit)"""
+
+
+        try:
             # Conversion en entiers 16-bit
             if audio_data.dtype != np.int16:
                 audio_data_int = (audio_data * 32767).astype(np.int16)
@@ -341,7 +347,10 @@ class AudioWatermarker:
         watermark_data: bytes,
         strength: WatermarkStrength = WatermarkStrength.MEDIUM
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Insère un filigrane par technique d'écho"""        try:
+        """Insère un filigrane par technique d'écho"""
+
+
+        try:
             data_bits = self._data_to_bits(watermark_data)
             
             # Paramètres d'écho selon la force
@@ -396,7 +405,10 @@ class AudioWatermarker:
         audio_data: np.ndarray,
         expected_data_length: int
     ) -> Tuple[Optional[bytes], float]:
-        """Détecte un filigrane spectral"""        try:
+        """Détecte un filigrane spectral"""
+
+
+        try:
             if not MULTIMEDIA_AVAILABLE:
                 return None, 0.0
             
@@ -495,7 +507,10 @@ class ImageWatermarker:
         watermark_data: bytes,
         strength: WatermarkStrength = WatermarkStrength.MEDIUM
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Insère un filigrane LSB dans une image"""        try:
+        """Insère un filigrane LSB dans une image"""
+
+
+        try:
             if not MULTIMEDIA_AVAILABLE:
                 raise ValueError("Bibliothèques image non disponibles")
             
@@ -567,7 +582,10 @@ class ImageWatermarker:
         watermark_data: bytes,
         strength: WatermarkStrength = WatermarkStrength.MEDIUM
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Insère un filigrane DCT dans une image"""        try:
+        """Insère un filigrane DCT dans une image"""
+
+
+        try:
             if not MULTIMEDIA_AVAILABLE:
                 raise ValueError("OpenCV non disponible")
             
@@ -669,7 +687,10 @@ class TextWatermarker:
         watermark_data: bytes,
         strength: WatermarkStrength = WatermarkStrength.MEDIUM
     ) -> Tuple[str, Dict[str, Any]]:
-        """Insère un filigrane sémantique dans le texte"""        try:
+        """Insère un filigrane sémantique dans le texte"""
+
+
+        try:
             data_bits = self._data_to_bits(watermark_data)
             
             # Séparation en phrases
@@ -721,7 +742,10 @@ class TextWatermarker:
         watermark_data: bytes,
         strength: WatermarkStrength = WatermarkStrength.MEDIUM
     ) -> Tuple[str, Dict[str, Any]]:
-        """Insère un filigrane avec caractères invisibles"""        try:
+        """Insère un filigrane avec caractères invisibles"""
+
+
+        try:
             data_bits = self._data_to_bits(watermark_data)
             
             # Sélection des caractères selon la force
@@ -821,7 +845,10 @@ class WatermarkingService:
         Path(output_dir).mkdir(parents=True, exist_ok=True)
     
     async def initialize(self) -> bool:
-        """Initialise le service de filigranage"""        try:
+        """Initialise le service de filigranage"""
+
+
+        try:
             logger.info("Initialisation du service de filigranage...")
             
             # Vérification des dépendances
@@ -931,7 +958,10 @@ class WatermarkingService:
         strength: WatermarkStrength,
         output_path: str
     ) -> Dict[str, Any]:
-        """Insère un filigrane audio"""        try:
+        """Insère un filigrane audio"""
+
+
+        try:
             if not MULTIMEDIA_AVAILABLE:
                 raise ValueError("Bibliothèques audio non disponibles")
             
@@ -981,7 +1011,10 @@ class WatermarkingService:
         strength: WatermarkStrength,
         output_path: str
     ) -> Dict[str, Any]:
-        """Insère un filigrane image"""        try:
+        """Insère un filigrane image"""
+
+
+        try:
             if not MULTIMEDIA_AVAILABLE:
                 raise ValueError("Bibliothèques image non disponibles")
             
@@ -1029,7 +1062,10 @@ class WatermarkingService:
         strength: WatermarkStrength,
         output_path: str
     ) -> Dict[str, Any]:
-        """Insère un filigrane texte"""        try:
+        """Insère un filigrane texte"""
+
+
+        try:
             # Chargement du texte
             with open(text_path, 'r', encoding='utf-8') as f:
                 text_content = f.read()
@@ -1131,7 +1167,10 @@ class WatermarkingService:
         watermark_type: WatermarkType,
         expected_data_length: Optional[int]
     ) -> Dict[str, Any]:
-        """Détecte un filigrane audio"""        try:
+        """Détecte un filigrane audio"""
+
+
+        try:
             if not MULTIMEDIA_AVAILABLE:
                 return {'detected': False, 'confidence': 0.0}
             
@@ -1170,7 +1209,10 @@ class WatermarkingService:
         watermark_type: WatermarkType,
         expected_data_length: Optional[int]
     ) -> Dict[str, Any]:
-        """Détecte un filigrane image"""        try:
+        """Détecte un filigrane image"""
+
+
+        try:
             # Implementation for image watermark detection
             import hashlib
             
@@ -1224,7 +1266,10 @@ class WatermarkingService:
         watermark_type: WatermarkType,
         expected_data_length: Optional[int]
     ) -> Dict[str, Any]:
-        """Détecte un filigrane texte"""        try:
+        """Détecte un filigrane texte"""
+
+
+        try:
             # Implementation for text watermark detection
             import re
             
@@ -1323,7 +1368,10 @@ class WatermarkingService:
             raise ValueError(f"Extension de fichier non supportée: {suffix}")
     
     async def _backup_original(self, file_path: str):
-        """Sauvegarde le fichier original"""        try:
+        """Sauvegarde le fichier original"""
+
+
+        try:
             backup_dir = Path(self.config.get('output_directory', self.default_config['output_directory'])) / 'backups'
             backup_dir.mkdir(exist_ok=True)
             
@@ -1343,7 +1391,10 @@ class WatermarkingService:
         original: np.ndarray,
         watermarked: np.ndarray
     ) -> Dict[str, float]:
-        """Évalue la qualité audio après filigranage"""        try:
+        """Évalue la qualité audio après filigranage"""
+
+
+        try:
             # Calcul SNR
             noise = watermarked - original
             signal_power = np.mean(original ** 2)
@@ -1373,7 +1424,10 @@ class WatermarkingService:
         original: np.ndarray,
         watermarked: np.ndarray
     ) -> Dict[str, float]:
-        """Évalue la qualité image après filigranage"""        try:
+        """Évalue la qualité image après filigranage"""
+
+
+        try:
             # Calcul PSNR
             mse = np.mean((original - watermarked) ** 2)
             
@@ -1404,7 +1458,10 @@ class WatermarkingService:
         return f"WM-{timestamp}-{random_suffix}"
     
     async def _load_watermark_registry(self):
-        """Charge le registre des filigranes"""        try:
+        """Charge le registre des filigranes"""
+
+
+        try:
             # Implementation for loading watermark registry from persistent storage
             
             # Load watermark database
@@ -1456,7 +1513,10 @@ class WatermarkingService:
             self.statistics = {}
     
     async def get_watermark_info(self, watermark_id: str) -> Optional[Dict[str, Any]]:
-        """Récupère les informations d'un filigrane"""        return self.watermark_registry.get(watermark_id)
+        """Récupère les informations d'un filigrane"""
+
+
+        return self.watermark_registry.get(watermark_id)
     
     async def batch_watermark(
         self,
@@ -1465,7 +1525,10 @@ class WatermarkingService:
         watermark_type: WatermarkType,
         strength: WatermarkStrength = WatermarkStrength.MEDIUM
     ) -> List[WatermarkResult]:
-        """Traitement par lot de fichiers"""        try:
+        """Traitement par lot de fichiers"""
+
+
+        try:
             results = []
             semaphore = asyncio.Semaphore(self.config.get('max_concurrent_jobs', 4))
             
@@ -1502,7 +1565,10 @@ class WatermarkingService:
             return []
     
     async def shutdown(self):
-        """Arrêt propre du service"""        try:
+        """Arrêt propre du service"""
+
+
+        try:
             logger.info("Arrêt du service de filigranage...")
             self.running = False
             
@@ -1515,7 +1581,10 @@ class WatermarkingService:
             logger.error(f"Erreur arrêt service filigranage: {e}")
     
     async def _save_watermark_registry(self):
-        """Sauvegarde le registre des filigranes"""        try:
+        """Sauvegarde le registre des filigranes"""
+
+
+        try:
             # Implementation for saving watermark registry to persistent storage
             
             # Save watermark database
@@ -1554,7 +1623,10 @@ class WatermarkingService:
     # Helper methods for watermarking implementation
     
     async def _fetch_from_database(self, table_name: str) -> Dict:
-        """Fetch data from database"""        try:
+        """Fetch data from database"""
+
+
+        try:
             # In production, would connect to actual database
             logger.debug(f"Simulation chargement depuis table: {table_name}")
             return {}
@@ -1563,7 +1635,10 @@ class WatermarkingService:
             return {}
     
     async def _save_to_database(self, table_name: str, data: Dict):
-        """Save data to database"""        try:
+        """Save data to database"""
+
+
+        try:
             # In production, would save to actual database
             logger.debug(f"Simulation sauvegarde vers table {table_name}: {len(data)} enregistrements")
         except Exception as e:
@@ -1575,7 +1650,10 @@ watermarking_service = WatermarkingService()
 
 
 async def get_watermarking_service() -> WatermarkingService:
-    """Récupère l'instance du service de filigranage"""    return watermarking_service
+    """Récupère l'instance du service de filigranage"""
+
+
+    return watermarking_service
 
 
 __all__ = [

@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 CRITICAL LEGAL WARNING:
+ CRITICAL LEGAL WARNING:
 This code and all associated intellectual property belong exclusively to Fahed Mlaiel.
 Any unauthorized use, copying, modification, distribution, or commercialization 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -577,7 +577,7 @@ class MonetizationAnalyticsEngine:
         )
         if diversification_insight and diversification_insight.impact_score > 70:
             recommendations.append(
-                "🎯 Urgent: Reduce revenue concentration risk by developing additional income streams. "
+                " Urgent: Reduce revenue concentration risk by developing additional income streams. "
                 "Consider expanding to platforms where you're currently underrepresented."
             )
         
@@ -586,7 +586,7 @@ class MonetizationAnalyticsEngine:
             top_platform = platform_performance[0]
             if top_platform["rpm"] > 10:  # High RPM
                 recommendations.append(
-                    f"💰 Optimize content strategy for {top_platform['platform']} - "
+                    f" Optimize content strategy for {top_platform['platform']} - "
                     f"your RPM of €{top_platform['rpm']:.2f} is excellent. Double down on this platform."
                 )
             
@@ -595,7 +595,7 @@ class MonetizationAnalyticsEngine:
             if low_performers:
                 platforms = ", ".join([p["platform"] for p in low_performers[:2]])
                 recommendations.append(
-                    f"📈 Improve performance on {platforms}. Consider analyzing successful content "
+                    f" Improve performance on {platforms}. Consider analyzing successful content "
                     "patterns and optimizing posting schedules."
                 )
         
@@ -604,7 +604,7 @@ class MonetizationAnalyticsEngine:
             predicted_total = predictions["next_30_days"]["total_predicted"]
             if predicted_total > 0:
                 recommendations.append(
-                    f"📊 Based on current trends, you're projected to earn €{predicted_total:.2f} "
+                    f" Based on current trends, you're projected to earn €{predicted_total:.2f} "
                     "in the next 30 days. Focus on consistency to achieve this target."
                 )
         
@@ -615,14 +615,14 @@ class MonetizationAnalyticsEngine:
         if high_engagement_platforms:
             platform_names = ", ".join([p["platform"] for p in high_engagement_platforms[:2]])
             recommendations.append(
-                f"🚀 Your engagement rates on {platform_names} are strong. "
+                f" Your engagement rates on {platform_names} are strong. "
                 "Consider increasing posting frequency and exploring premium monetization options."
             )
         
         # Seasonal optimization
         if "trends" in predictions and "seasonal_patterns" in predictions["trends"]:
             recommendations.append(
-                "📅 Leverage seasonal trends in your content calendar. "
+                " Leverage seasonal trends in your content calendar. "
                 "Plan high-value content releases during historically strong periods."
             )
         

@@ -8,7 +8,7 @@ for the IA-Influencer-Agent ML platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This configuration system and methodologies are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED and will result in legal action.
@@ -286,6 +286,9 @@ class MLAgentConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert configuration to dictionary"""
+
+
+
         return {
             'environment': self.environment.value,
             'debug': self.debug,
@@ -447,10 +450,16 @@ class MLAgentConfig:
     
     def is_production(self) -> bool:
         """Check if running in production environment"""
+
+
+
         return self.environment == Environment.PRODUCTION
     
     def is_development(self) -> bool:
         """Check if running in development environment"""
+
+
+
         return self.environment == Environment.DEVELOPMENT
 
 # Default configuration instance

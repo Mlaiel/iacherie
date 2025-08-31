@@ -1,5 +1,5 @@
 """
-🎛️ Audio Effects Processing Module - Professional Audio Enhancement Engine
+ Audio Effects Processing Module - Professional Audio Enhancement Engine
 
 Advanced audio effects and restoration capabilities for the IA Influencer Agent platform.
 Implements industry-standard audio processing algorithms with AI enhancement.
@@ -68,7 +68,7 @@ class RestorationResult:
 
 class EffectsProcessor:
     """
-    🎛️ Professional Audio Effects Processor
+     Professional Audio Effects Processor
     
     Comprehensive effects processing system featuring:
     - Industry-standard audio effects
@@ -127,6 +127,9 @@ class EffectsProcessor:
         Returns:
             Processed audio samples
         """
+
+
+
         try:
             if effect_params:
                 # Apply single effect
@@ -149,6 +152,9 @@ class EffectsProcessor:
                                  audio_data: np.ndarray,
                                  effect_params: EffectParameters) -> np.ndarray:
         """Apply a single effect to audio data"""
+
+
+
         try:
             effect_type = effect_params.effect_type
             params = effect_params.parameters
@@ -195,6 +201,9 @@ class EffectsProcessor:
     
     async def _apply_reverb(self, audio_data: np.ndarray, params: Dict[str, Any]) -> np.ndarray:
         """Apply reverb effect using convolution with impulse response"""
+
+
+
         try:
             room_size = params.get('room_size', 0.5)  # 0.0 - 1.0
             damping = params.get('damping', 0.5)  # 0.0 - 1.0
@@ -246,6 +255,9 @@ class EffectsProcessor:
     
     async def _apply_delay(self, audio_data: np.ndarray, params: Dict[str, Any]) -> np.ndarray:
         """Apply delay effect with feedback"""
+
+
+
         try:
             delay_time = params.get('delay_time', 0.25)  # seconds
             feedback = params.get('feedback', 0.3)  # 0.0 - 0.95
@@ -290,6 +302,9 @@ class EffectsProcessor:
     
     async def _apply_chorus(self, audio_data: np.ndarray, params: Dict[str, Any]) -> np.ndarray:
         """Apply chorus effect using modulated delay lines"""
+
+
+
         try:
             rate = params.get('rate', 1.0)  # LFO rate in Hz
             depth = params.get('depth', 0.005)  # Modulation depth in seconds
@@ -332,6 +347,9 @@ class EffectsProcessor:
     
     async def _apply_distortion(self, audio_data: np.ndarray, params: Dict[str, Any]) -> np.ndarray:
         """Apply distortion effect with various algorithms"""
+
+
+
         try:
             drive = params.get('drive', 2.0)  # Distortion amount
             distortion_type = params.get('type', 'soft_clip')  # Type of distortion
@@ -370,6 +388,9 @@ class EffectsProcessor:
     
     async def _apply_compression(self, audio_data: np.ndarray, params: Dict[str, Any]) -> np.ndarray:
         """Apply dynamic range compression"""
+
+
+
         try:
             threshold = params.get('threshold', 0.7)  # Compression threshold
             ratio = params.get('ratio', 4.0)  # Compression ratio
@@ -413,6 +434,9 @@ class EffectsProcessor:
     
     async def _apply_equalizer(self, audio_data: np.ndarray, params: Dict[str, Any]) -> np.ndarray:
         """Apply parametric equalizer"""
+
+
+
         try:
             bands = params.get('bands', [
                 {'freq': 100, 'gain': 0, 'q': 1.0},
@@ -461,6 +485,9 @@ class EffectsProcessor:
     
     async def _apply_pitch_shift(self, audio_data: np.ndarray, params: Dict[str, Any]) -> np.ndarray:
         """Apply pitch shifting using phase vocoder"""
+
+
+
         try:
             semitones = params.get('semitones', 0)  # Pitch shift in semitones
             
@@ -485,6 +512,9 @@ class EffectsProcessor:
     
     async def _apply_time_stretch(self, audio_data: np.ndarray, params: Dict[str, Any]) -> np.ndarray:
         """Apply time stretching without pitch change"""
+
+
+
         try:
             stretch_factor = params.get('stretch_factor', 1.0)  # 1.0 = no change
             
@@ -510,6 +540,9 @@ class EffectsProcessor:
     
     async def _apply_limiter(self, audio_data: np.ndarray, params: Dict[str, Any]) -> np.ndarray:
         """Apply brick-wall limiter"""
+
+
+
         try:
             threshold = params.get('threshold', 0.95)
             lookahead_ms = params.get('lookahead_ms', 5.0)
@@ -542,6 +575,9 @@ class EffectsProcessor:
     
     async def _apply_gate(self, audio_data: np.ndarray, params: Dict[str, Any]) -> np.ndarray:
         """Apply noise gate"""
+
+
+
         try:
             threshold = params.get('threshold', 0.1)
             ratio = params.get('ratio', 10.0)  # Gate ratio
@@ -581,6 +617,9 @@ class EffectsProcessor:
     
     async def _apply_flanger(self, audio_data: np.ndarray, params: Dict[str, Any]) -> np.ndarray:
         """Apply flanger effect"""
+
+
+
         try:
             rate = params.get('rate', 0.5)  # LFO rate
             depth = params.get('depth', 0.002)  # Modulation depth
@@ -618,6 +657,9 @@ class EffectsProcessor:
     
     async def _apply_phaser(self, audio_data: np.ndarray, params: Dict[str, Any]) -> np.ndarray:
         """Apply phaser effect using all-pass filters"""
+
+
+
         try:
             rate = params.get('rate', 0.5)  # LFO rate
             depth = params.get('depth', 0.8)  # Modulation depth
@@ -653,7 +695,7 @@ class EffectsProcessor:
 
 class AudioRestoration:
     """
-    🔧 Advanced Audio Restoration Engine
+     Advanced Audio Restoration Engine
     
     Professional audio restoration capabilities:
     - Noise reduction algorithms
@@ -684,6 +726,9 @@ class AudioRestoration:
         Returns:
             Tuple of (restored_audio, restoration_result)
         """
+
+
+
         try:
             original_quality = self._assess_audio_quality(audio_data)
             restored = audio_data.copy()
@@ -742,6 +787,9 @@ class AudioRestoration:
     
     def _assess_audio_quality(self, audio_data: np.ndarray) -> float:
         """Assess overall audio quality (0-100 scale)"""
+
+
+
         try:
             # SNR estimation
             signal_power = np.mean(audio_data ** 2)
@@ -838,6 +886,9 @@ class AudioRestoration:
     
     async def _reduce_noise(self, audio_data: np.ndarray) -> np.ndarray:
         """Advanced noise reduction using spectral subtraction"""
+
+
+
         try:
             # Spectral subtraction noise reduction
             stft = librosa.stft(audio_data, hop_length=512)
@@ -872,6 +923,9 @@ class AudioRestoration:
     
     async def _remove_clicks(self, audio_data: np.ndarray) -> np.ndarray:
         """Remove clicks and pops using interpolation"""
+
+
+
         try:
             # Detect clicks using difference signal
             diff_signal = np.abs(np.diff(audio_data))
@@ -908,6 +962,9 @@ class AudioRestoration:
     
     async def _remove_hum(self, audio_data: np.ndarray) -> np.ndarray:
         """Remove power line hum using notch filters"""
+
+
+
         try:
             # Design notch filters for common hum frequencies
             hum_freqs = [50, 60, 100, 120, 150, 180]  # Hz
@@ -933,6 +990,9 @@ class AudioRestoration:
     
     async def _spectral_repair(self, audio_data: np.ndarray) -> np.ndarray:
         """Repair spectral damage using interpolation"""
+
+
+
         try:
             # STFT for spectral analysis
             stft = librosa.stft(audio_data, hop_length=512)
@@ -986,6 +1046,9 @@ class AudioRestoration:
                                  original: np.ndarray, 
                                  restored: np.ndarray) -> float:
         """Calculate noise reduction in dB"""
+
+
+
         try:
             # Estimate noise floor before and after
             original_noise = np.percentile(np.abs(original), 10)
@@ -1004,6 +1067,9 @@ class AudioRestoration:
                                      original: np.ndarray, 
                                      restored: np.ndarray) -> Dict[str, float]:
         """Calculate various improvement metrics"""
+
+
+
         try:
             metrics = {}
             
@@ -1042,6 +1108,9 @@ class AudioRestoration:
     
     def _calculate_spectral_flatness(self, audio_data: np.ndarray) -> float:
         """Calculate spectral flatness (Wiener entropy)"""
+
+
+
         try:
             # Calculate power spectral density
             freqs, psd = signal.welch(audio_data, self.sample_rate)

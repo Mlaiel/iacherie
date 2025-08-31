@@ -134,10 +134,10 @@ class TestAlertSystem(unittest.TestCase):
         
         # Generate different message templates
         templates = {
-            "email": f"🚨 HIGH PRIORITY: Potential violation of '{violation_data['content_title']}' detected on {violation_data['platform'].title()} with {violation_data['similarity_score']*100:.1f}% similarity. Review required: {violation_data['violation_url']}",
+            "email": f" HIGH PRIORITY: Potential violation of '{violation_data['content_title']}' detected on {violation_data['platform'].title()} with {violation_data['similarity_score']*100:.1f}% similarity. Review required: {violation_data['violation_url']}",
             "sms": f"VIOLATION ALERT: {violation_data['similarity_score']*100:.0f}% match found on {violation_data['platform'].upper()}. Check email for details.",
-            "push": f"🔒 Content violation detected on {violation_data['platform'].title()} ({violation_data['similarity_score']*100:.0f}% similarity)",
-            "slack": f"⚠️ *VIOLATION DETECTED*\n*Platform:* {violation_data['platform'].title()}\n*Similarity:* {violation_data['similarity_score']*100:.1f}%\n*URL:* {violation_data['violation_url']}"
+            "push": f" Content violation detected on {violation_data['platform'].title()} ({violation_data['similarity_score']*100:.0f}% similarity)",
+            "slack": f" *VIOLATION DETECTED*\n*Platform:* {violation_data['platform'].title()}\n*Similarity:* {violation_data['similarity_score']*100:.1f}%\n*URL:* {violation_data['violation_url']}"
         }
         
         # Verify message generation

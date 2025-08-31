@@ -9,7 +9,7 @@ with AI-powered enhancement and intelligent content adaptation.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code is proprietary and confidential. Any unauthorized copying, distribution,
 or use without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is
 strictly prohibited and will result in legal action.
@@ -218,6 +218,9 @@ class ContentTransformer:
     
     def _initialize_ai_models(self):
         """Initialize AI models for transformation"""
+
+
+
         try:
             # Load models based on availability and configuration
             if self.settings.enable_ai_enhancement:
@@ -258,6 +261,9 @@ class ContentTransformer:
     
     def _load_optimization_presets(self) -> Dict[str, Dict[str, Any]]:
         """Load platform optimization presets"""
+
+
+
         return {
             'instagram_post': {
                 'image_size': (1080, 1080),
@@ -426,6 +432,9 @@ class ContentTransformer:
                                            content_type: str,
                                            options: TransformationOptions):
         """Validate transformation input parameters"""
+
+
+
         try:
             # Check content size
             content_size = len(content_data) if isinstance(content_data, bytes) else 0
@@ -452,6 +461,9 @@ class ContentTransformer:
     
     def _get_supported_content_types(self) -> List[str]:
         """Get list of supported content types"""
+
+
+
         return [
             'image/', 'audio/', 'video/', 'text/', 'application/pdf',
             'application/msword', 'application/vnd.openxmlformats-officedocument'
@@ -462,6 +474,9 @@ class ContentTransformer:
                              content_type: str,
                              filename: str) -> Dict[str, Any]:
         """Analyze content for transformation optimization"""
+
+
+
         try:
             analysis = {
                 'content_type': content_type,
@@ -486,6 +501,9 @@ class ContentTransformer:
     
     async def _analyze_image_content(self, content_data: bytes) -> Dict[str, Any]:
         """Analyze image content"""
+
+
+
         try:
             import io
             
@@ -520,6 +538,9 @@ class ContentTransformer:
     
     async def _analyze_audio_content(self, content_data: bytes) -> Dict[str, Any]:
         """Analyze audio content"""
+
+
+
         try:
             # Save to temporary file for analysis
             with tempfile.NamedTemporaryFile(suffix='.audio', delete=False) as temp_file:
@@ -565,6 +586,9 @@ class ContentTransformer:
     
     async def _analyze_video_content(self, content_data: bytes) -> Dict[str, Any]:
         """Analyze video content"""
+
+
+
         try:
             # Save to temporary file for analysis
             with tempfile.NamedTemporaryFile(suffix='.video', delete=False) as temp_file:
@@ -610,6 +634,9 @@ class ContentTransformer:
     
     async def _analyze_text_content(self, content_data: bytes) -> Dict[str, Any]:
         """Analyze text content"""
+
+
+
         try:
             # Decode text
             text = content_data.decode('utf-8')
@@ -708,6 +735,9 @@ class ContentTransformer:
                                          step: Dict[str, Any],
                                          options: TransformationOptions) -> Union[bytes, BinaryIO]:
         """Execute single transformation step"""
+
+
+
         try:
             step_function = step['function']
             step_params = step.get('params', {})
@@ -736,6 +766,9 @@ class ContentTransformer:
                                content_type: str, 
                                params: Dict[str, Any]) -> bytes:
         """Convert content to different format"""
+
+
+
         try:
             output_format = params['output_format']
             
@@ -753,6 +786,9 @@ class ContentTransformer:
     
     async def _convert_image_format(self, content: bytes, output_format: str) -> bytes:
         """Convert image to different format"""
+
+
+
         try:
             import io
             
@@ -776,6 +812,9 @@ class ContentTransformer:
     
     async def _convert_audio_format(self, content: bytes, output_format: str) -> bytes:
         """Convert audio to different format"""
+
+
+
         try:
             # Save input to temporary file
             with tempfile.NamedTemporaryFile(suffix='.audio') as input_file:
@@ -796,6 +835,9 @@ class ContentTransformer:
     
     async def _convert_video_format(self, content: bytes, output_format: str) -> bytes:
         """Convert video to different format"""
+
+
+
         try:
             # This would use ffmpeg for video conversion
             # Implementation would depend on ffmpeg-python library
@@ -818,6 +860,9 @@ class ContentTransformer:
     
     async def _enhance_image_quality(self, content: bytes, content_type: str, params: Dict[str, Any]) -> bytes:
         """Enhance image quality using AI and traditional methods"""
+
+
+
         try:
             import io
             
@@ -847,6 +892,9 @@ class ContentTransformer:
     
     def _estimate_image_quality(self, image: Image.Image) -> float:
         """Estimate image quality score"""
+
+
+
         try:
             # Convert to grayscale for analysis
             gray = image.convert('L')
@@ -865,6 +913,9 @@ class ContentTransformer:
     
     def _estimate_compression_potential(self, image: Image.Image) -> float:
         """Estimate compression potential for image"""
+
+
+
         try:
             # Analyze color diversity and complexity
             colors = image.getcolors(maxcolors=256*256*256)
@@ -918,6 +969,9 @@ class ContentTransformer:
                                            content_type: str,
                                            options: TransformationOptions) -> Dict[str, Any]:
         """Assess transformation quality"""
+
+
+
         try:
             metrics = {
                 'size_reduction': self._calculate_size_reduction(
@@ -944,6 +998,9 @@ class ContentTransformer:
     
     async def _assess_image_quality(self, original: bytes, transformed: bytes) -> Dict[str, Any]:
         """Assess image transformation quality"""
+
+
+
         try:
             import io
             
@@ -974,6 +1031,9 @@ class ContentTransformer:
     
     async def _assess_audio_quality(self, original: bytes, transformed: bytes) -> Dict[str, Any]:
         """Assess audio transformation quality"""
+
+
+
         try:
             # Placeholder for audio quality assessment
             # In production, would use audio analysis libraries
@@ -992,6 +1052,9 @@ class ContentTransformer:
                                     result: TransformationResult, 
                                     options: TransformationOptions) -> Dict[str, Any]:
         """Generate optimization report"""
+
+
+
         try:
             report = {
                 'summary': {
@@ -1026,6 +1089,9 @@ class ContentTransformer:
     
     def _calculate_efficiency_score(self, result: TransformationResult) -> float:
         """Calculate transformation efficiency score"""
+
+
+
         try:
             # Combine size reduction and quality preservation
             size_score = min(result.file_size_reduction / 50, 1.0)  # Normalize to 50% reduction
@@ -1039,6 +1105,9 @@ class ContentTransformer:
     
     def _calculate_speed_score(self, processing_time: float) -> float:
         """Calculate processing speed score"""
+
+
+
         try:
             # Normalize based on reasonable processing time (10 seconds)
             target_time = 10.0
@@ -1079,6 +1148,9 @@ class ContentTransformer:
     
     async def get_transformation_capabilities(self) -> Dict[str, Any]:
         """Get transformation engine capabilities"""
+
+
+
         try:
             return {
                 'supported_transformations': [t.value for t in TransformationType],
@@ -1102,6 +1174,9 @@ class ContentTransformer:
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
         """Get transformation engine performance metrics"""
+
+
+
         try:
             return {
                 'total_transformations': self.transformation_metrics['total_transformations'],

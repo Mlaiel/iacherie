@@ -9,7 +9,7 @@ for content protection and surveillance systems.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, modification, or distribution is strictly prohibited.
 Violators will face immediate legal action under German and international law.
@@ -201,6 +201,9 @@ class RealTimeMonitor:
     
     async def _calculate_crawler_metrics(self, crawler_type: CrawlerType) -> Optional[CrawlerMetrics]:
         """Calculate performance metrics for a specific crawler type."""
+
+
+
         try:
             # Get recent job results for this crawler type
             recent_jobs = [
@@ -260,6 +263,9 @@ class RealTimeMonitor:
     
     async def _collect_system_health(self) -> SystemHealth:
         """Collect system health metrics."""
+
+
+
         try:
             # Get system metrics from metrics collector
             system_metrics = await self.metrics_collector.get_system_metrics()
@@ -303,6 +309,9 @@ class RealTimeMonitor:
     
     async def _calculate_violation_trend(self, platform: str) -> Optional[ViolationTrend]:
         """Calculate violation trends for a platform."""
+
+
+
         try:
             # Get recent job results for this platform
             recent_jobs = [
@@ -335,6 +344,9 @@ class RealTimeMonitor:
     
     async def _check_performance_alerts(self):
         """Check for performance-related alerts."""
+
+
+
         try:
             for crawler_type, history in self.metrics_history.items():
                 if not history:
@@ -365,6 +377,9 @@ class RealTimeMonitor:
     
     async def _check_violation_alerts(self):
         """Check for violation-related alerts."""
+
+
+
         try:
             if not self.violation_trends:
                 return
@@ -393,6 +408,9 @@ class RealTimeMonitor:
     
     async def _check_system_alerts(self):
         """Check for system-related alerts."""
+
+
+
         try:
             if not self.system_health_history:
                 return
@@ -422,6 +440,9 @@ class RealTimeMonitor:
     
     def get_real_time_dashboard_data(self) -> Dict[str, Any]:
         """Get comprehensive dashboard data for real-time display."""
+
+
+
         try:
             # Current metrics for each crawler
             crawler_metrics = {}
@@ -470,6 +491,9 @@ class RealTimeMonitor:
         time_range: timedelta = timedelta(hours=24)
     ) -> Dict[str, Any]:
         """Get historical metrics for analysis."""
+
+
+
         try:
             cutoff_time = datetime.now() - time_range
             
@@ -508,6 +532,9 @@ class RealTimeMonitor:
     
     def get_violation_analytics(self, time_range: timedelta = timedelta(days=7)) -> Dict[str, Any]:
         """Get comprehensive violation analytics."""
+
+
+
         try:
             cutoff_time = datetime.now() - time_range
             
@@ -555,6 +582,9 @@ class RealTimeMonitor:
     
     async def cleanup(self):
         """Clean up monitoring resources."""
+
+
+
         try:
             self.stop_monitoring()
             

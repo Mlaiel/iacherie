@@ -1,5 +1,5 @@
 """
-🚀 Production Deployment & Orchestration System
+ Production Deployment & Orchestration System
 ===============================================
 
 Enterprise deployment system with container orchestration, load balancing,

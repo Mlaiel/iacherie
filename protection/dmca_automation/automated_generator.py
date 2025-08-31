@@ -7,7 +7,7 @@ optimization, legal compliance validation, and multi-jurisdiction support.
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 
-⚠️ COPYRIGHT WARNING ⚠️
+ COPYRIGHT WARNING 
 Unauthorized copying or distribution prohibited. All rights reserved © 2025 Fahed Mlaiel
 """
 
@@ -279,6 +279,9 @@ class AutomatedNoticeGenerator:
         Returns:
             Enhanced notice generation result
         """
+
+
+
         try:
             self.logger.info(f"Enhancing notice: {notice_id}, type: {enhancement_type}")
             
@@ -335,6 +338,9 @@ class AutomatedNoticeGenerator:
         Returns:
             Analytics data with performance metrics
         """
+
+
+
         try:
             # Query generation statistics from database
             analytics_query = """
@@ -667,6 +673,9 @@ Date: {datetime.now(timezone.utc).strftime("%Y-%m-%d")}
                                     request: GenerationRequest,
                                     metrics: Dict[str, Any]) -> None:
         """Store generated notice in database"""
+
+
+
         try:
             insert_query = """
                 INSERT INTO dmca_notice_generations (
@@ -749,6 +758,9 @@ Date: {datetime.now(timezone.utc).strftime("%Y-%m-%d")}
     
     async def _get_notice_from_database(self, notice_id: str) -> Optional[TakedownNotice]:
         """Retrieve notice from database"""
+
+
+
         try:
             query = "SELECT * FROM dmca_notice_generations WHERE notice_id = %s"
             result = await self.db.fetch_one(query, [notice_id])

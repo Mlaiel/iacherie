@@ -8,7 +8,7 @@ Optimized for low-latency, high-throughput data streaming and real-time updates.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️ LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION:
+ LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION:
 This code, concept, and intellectual property belong exclusively to Fahed Mlaiel (mlaiel@live.de). 
 Any unauthorized copying, distribution, modification, or commercial use is STRICTLY PROHIBITED 
 and will result in immediate legal action under German and International Copyright Law.
@@ -380,6 +380,9 @@ class StreamingSerializer:
         Returns:
             Serialized message dictionary
         """
+
+
+
         try:
             return self._serialize_stream_message(message, compress)
             
@@ -400,6 +403,9 @@ class StreamingSerializer:
         Returns:
             Deserialized StreamMessage object
         """
+
+
+
         try:
             return self._deserialize_stream_message(data)
             
@@ -471,6 +477,9 @@ class StreamingSerializer:
     
     def _serialize_stream_metrics(self, metrics: StreamMetrics) -> Dict[str, Any]:
         """Serialize stream metrics."""
+
+
+
         return {
             'messages_sent': metrics.messages_sent,
             'messages_received': metrics.messages_received,
@@ -488,10 +497,16 @@ class StreamingSerializer:
     
     def _deserialize_stream_metrics(self, data: Dict[str, Any]) -> StreamMetrics:
         """Deserialize stream metrics."""
+
+
+
         return StreamMetrics(**data)
     
     def _compress_message_content(self, content: Any) -> str:
         """Compress message content for streaming."""
+
+
+
         try:
             import gzip
             import pickle
@@ -518,6 +533,9 @@ class StreamingSerializer:
     
     def _decompress_message_content(self, compressed_content: str) -> Any:
         """Decompress message content."""
+
+
+
         try:
             if compressed_content.startswith('gzip_pickle_fast:'):
                 import gzip
@@ -553,6 +571,9 @@ class StreamingSerializer:
         bytes_processed: int
     ):
         """Update performance counters."""
+
+
+
         try:
             if operation in ['serialization', 'deserialization']:
                 self.performance_counters[f'{operation}s'] += 1
@@ -595,6 +616,9 @@ class StreamingSerializer:
         Yields:
             Serialized message dictionaries
         """
+
+
+
         try:
             async for message in message_generator:
                 # Update stream metrics
@@ -639,6 +663,9 @@ class StreamingSerializer:
         Returns:
             List of serialized message batches
         """
+
+
+
         try:
             batches = []
             
@@ -667,6 +694,9 @@ class StreamingSerializer:
     
     def get_streaming_statistics(self) -> Dict[str, Any]:
         """Get comprehensive streaming statistics."""
+
+
+
         try:
             total_streams = len(self.active_streams)
             total_messages = sum(

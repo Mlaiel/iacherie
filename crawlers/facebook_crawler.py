@@ -178,6 +178,9 @@ class FacebookCrawler:
         Returns:
             List of Facebook page objects
         """
+
+
+
         try:
             await self.rate_limiter.wait_if_needed()
             
@@ -192,6 +195,9 @@ class FacebookCrawler:
     
     async def _search_pages_api(self, query: str, max_results: int, fields: List[str]) -> List[FacebookPage]:
         """Search pages using Facebook Graph API."""
+
+
+
         try:
             if not fields:
                 fields = [
@@ -251,6 +257,9 @@ class FacebookCrawler:
     
     def _parse_page_data(self, page_data: dict) -> Optional[FacebookPage]:
         """Parse Facebook page data from API response."""
+
+
+
         try:
             return FacebookPage(
                 page_id=page_data.get('id', ''),
@@ -289,6 +298,9 @@ class FacebookCrawler:
         fields: List[str] = None
     ) -> List[FacebookPost]:
         """Get posts from a Facebook page."""
+
+
+
         try:
             await self.rate_limiter.wait_if_needed()
             
@@ -310,6 +322,9 @@ class FacebookCrawler:
         fields: List[str]
     ) -> List[FacebookPost]:
         """Get page posts using Facebook Graph API."""
+
+
+
         try:
             if not fields:
                 fields = [
@@ -373,6 +388,9 @@ class FacebookCrawler:
     
     def _parse_post_data(self, post_data: dict) -> Optional[FacebookPost]:
         """Parse Facebook post data from API response."""
+
+
+
         try:
             # Parse timestamps
             created_time = datetime.fromisoformat(
@@ -434,6 +452,9 @@ class FacebookCrawler:
         max_results: int = 50
     ) -> List[FacebookEvent]:
         """Search Facebook events."""
+
+
+
         try:
             await self.rate_limiter.wait_if_needed()
             
@@ -448,6 +469,9 @@ class FacebookCrawler:
     
     async def _search_events_api(self, query: str, location: Optional[str], max_results: int) -> List[FacebookEvent]:
         """Search events using Facebook Graph API."""
+
+
+
         try:
             # Note: Public event search was restricted in Facebook API
             # This would require special permissions or alternative approaches
@@ -495,6 +519,9 @@ class FacebookCrawler:
     
     async def analyze_post_engagement(self, post: FacebookPost) -> Dict:
         """Analyze Facebook post engagement metrics."""
+
+
+
         try:
             # Extract engagement counts
             reaction_count = post.reactions.get('total_count', 0)
@@ -551,6 +578,9 @@ class FacebookCrawler:
         similarity_threshold: float = 0.7
     ) -> List[Dict]:
         """Detect posts similar to reference post."""
+
+
+
         try:
             similar_posts = []
             
@@ -647,6 +677,9 @@ class FacebookCrawler:
     
     async def get_page_insights(self, page_id: str, metrics: List[str] = None) -> Dict:
         """Get Facebook page insights (requires page access token)."""
+
+
+
         try:
             await self.rate_limiter.wait_if_needed()
             

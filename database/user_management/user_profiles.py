@@ -158,11 +158,17 @@ class User(Base):
     @property
     def is_creator(self) -> bool:
         """Vérifie si l'utilisateur est un créateur."""
+
+
+
         return self.creator_account is not None
     
     @property
     def avatar_hash(self) -> str:
         """Génère un hash pour l'avatar par défaut."""
+
+
+
         return hashlib.md5(self.email.encode()).hexdigest()
 
 
@@ -436,6 +442,9 @@ class UserRepository:
     
     def create_user(self, user_data: Dict[str, Any]) -> User:
         """Créer un nouvel utilisateur avec profil complet."""
+
+
+
         try:
             # Vérifier l'unicité de l'email et du username
             existing_user = self.db.query(User).filter(
@@ -472,14 +481,23 @@ class UserRepository:
     
     def get_user_by_email(self, email: str) -> Optional[User]:
         """Récupérer un utilisateur par email."""
+
+
+
         return self.db.query(User).filter(User.email == email).first()
     
     def get_user_by_username(self, username: str) -> Optional[User]:
         """Récupérer un utilisateur par nom d'utilisateur."""
+
+
+
         return self.db.query(User).filter(User.username == username).first()
     
     def authenticate_user(self, identifier: str, password: str) -> Optional[User]:
         """Authentifier un utilisateur par email/username et mot de passe."""
+
+
+
         try:
             user = self.db.query(User).filter(
                 (User.email == identifier) | (User.username == identifier)
@@ -504,6 +522,9 @@ class UserRepository:
     
     def update_user_profile(self, user_id: str, profile_data: Dict[str, Any]) -> bool:
         """Mettre à jour le profil utilisateur."""
+
+
+
         try:
             user = self.db.query(User).filter(User.id == user_id).first()
             if not user:
@@ -528,6 +549,9 @@ class UserRepository:
     
     def create_user_session(self, user_id: str, session_data: Dict[str, Any]) -> UserSession:
         """Créer une nouvelle session utilisateur."""
+
+
+
         try:
             session = UserSession(
                 user_id=user_id,
@@ -547,6 +571,9 @@ class UserRepository:
     
     def log_user_activity(self, user_id: str, activity_type: str, activity_data: Dict[str, Any] = None) -> UserActivity:
         """Enregistrer une activité utilisateur."""
+
+
+
         try:
             activity = UserActivity(
                 user_id=user_id,
@@ -565,6 +592,9 @@ class UserRepository:
     
     def log_security_event(self, user_id: str, event_type: str, event_data: Dict[str, Any] = None) -> UserSecurityLog:
         """Enregistrer un événement de sécurité."""
+
+
+
         try:
             security_log = UserSecurityLog(
                 user_id=user_id,
@@ -583,6 +613,9 @@ class UserRepository:
     
     def get_user_analytics(self, user_id: str, days: int = 30) -> Dict[str, Any]:
         """Obtenir les analytics d'un utilisateur."""
+
+
+
         try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=days)
@@ -629,6 +662,9 @@ class UserRepository:
     
     def update_ai_profile(self, user_id: str, ai_data: Dict[str, Any]) -> bool:
         """Mettre à jour le profil IA d'un utilisateur."""
+
+
+
         try:
             ai_profile = self.db.query(UserAIProfile).filter(
                 UserAIProfile.user_id == user_id
@@ -655,6 +691,9 @@ class UserRepository:
     
     def get_users_by_criteria(self, criteria: Dict[str, Any], limit: int = 100) -> List[User]:
         """Rechercher des utilisateurs selon des critères."""
+
+
+
         try:
             query = self.db.query(User)
             
@@ -755,6 +794,9 @@ class UserRepository:
             ValueError: Si les données sont invalides
             Exception: En cas d'erreur de création
         """
+
+
+
         try:
             # Validation des données obligatoires
             required_fields = ['email', 'username']
@@ -800,14 +842,23 @@ class UserRepository:
     
     def get_user_by_id(self, user_id: str) -> Optional[User]:
         """Récupère un utilisateur par son ID."""
+
+
+
         return self.session.query(User).filter(User.id == user_id).first()
     
     def get_user_by_email(self, email: str) -> Optional[User]:
         """Récupère un utilisateur par son email."""
+
+
+
         return self.session.query(User).filter(User.email == email.lower()).first()
     
     def get_user_by_username(self, username: str) -> Optional[User]:
         """Récupère un utilisateur par son nom d'utilisateur."""
+
+
+
         return self.session.query(User).filter(User.username == username).first()
     
     def update_user_status(self, user_id: str, status: UserStatus) -> bool:
@@ -821,6 +872,9 @@ class UserRepository:
         Returns:
             bool: True si mis à jour avec succès
         """
+
+
+
         try:
             user = self.get_user_by_id(user_id)
             if not user:
@@ -849,6 +903,9 @@ class UserRepository:
         Returns:
             bool: True si mis à jour avec succès
         """
+
+
+
         try:
             user = self.get_user_by_id(user_id)
             if not user:
@@ -879,6 +936,9 @@ class UserRepository:
         Returns:
             bool: True si enregistré avec succès
         """
+
+
+
         try:
             activity = UserActivity(
                 user_id=user_id,

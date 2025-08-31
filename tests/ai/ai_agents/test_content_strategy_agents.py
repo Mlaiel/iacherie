@@ -23,7 +23,7 @@ and performance analysis agents.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -58,11 +58,17 @@ class TestContentStrategistAgent:
     @pytest.fixture
     def agent(self):
         """Create ContentStrategistAgent instance"""
+
+
+
         return ContentStrategistAgent()
     
     @pytest.fixture
     def sample_content_data(self):
         """Sample content data for strategy analysis"""
+
+
+
         return {
             "content_id": "content_001",
             "title": "AI Tutorial: Getting Started with Machine Learning",
@@ -242,11 +248,17 @@ class TestPerformanceAnalysisAgent:
     @pytest.fixture
     def agent(self):
         """Create PerformanceAnalysisAgent instance"""
+
+
+
         return PerformanceAnalysisAgent()
     
     @pytest.fixture
     def sample_performance_data(self):
         """Sample performance data for analysis"""
+
+
+
         return {
             "creator_id": "creator_001",
             "time_period": "30_days",
@@ -372,11 +384,17 @@ class TestTrendAnalysisAgent:
     @pytest.fixture
     def agent(self):
         """Create TrendAnalysisAgent instance"""
+
+
+
         return TrendAnalysisAgent()
     
     @pytest.fixture
     def sample_trend_data(self):
         """Sample trend data for analysis"""
+
+
+
         return {
             "platform": "youtube",
             "niche": "technology",
@@ -486,11 +504,17 @@ class TestContentPlanningAgent:
     @pytest.fixture
     def agent(self):
         """Create ContentPlanningAgent instance"""
+
+
+
         return ContentPlanningAgent()
     
     @pytest.fixture
     def sample_planning_requirements(self):
         """Sample content planning requirements"""
+
+
+
         return {
             "creator_profile": {
                 "creator_id": "creator_001",
@@ -602,6 +626,9 @@ class TestIntegrationScenarios:
     @pytest.fixture
     def agents(self):
         """Create all content strategy agents for integration testing"""
+
+
+
         return {
             "strategist": ContentStrategistAgent(),
             "performance": PerformanceAnalysisAgent(),
@@ -675,6 +702,9 @@ class TestErrorHandling:
     @pytest.fixture
     def agent(self):
         """Create ContentStrategistAgent for error testing"""
+
+
+
         return ContentStrategistAgent()
     
     @pytest.mark.asyncio
@@ -731,6 +761,9 @@ class TestPerformanceAndScaling:
     @pytest.fixture
     def agent(self):
         """Create ContentStrategistAgent for performance testing"""
+
+
+
         return ContentStrategistAgent()
     
     @pytest.mark.asyncio

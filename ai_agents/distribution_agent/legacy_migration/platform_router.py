@@ -47,6 +47,9 @@ class PlatformRouter:
         Route content to optimal platforms with confidence scores and reasoning.
         Returns list of (platform_name, confidence_score, routing_details)
         """
+
+
+
         try:
             if not business_objectives:
                 business_objectives = {"primary": "engagement", "secondary": "reach"}
@@ -106,6 +109,9 @@ class PlatformRouter:
         target_audience: Dict[str, Any]
     ) -> Tuple[float, Dict[str, Any]]:
         """Score a platform for content suitability."""
+
+
+
         try:
             platform_config = self.platform_registry.get_platform_config(platform_name)
             if not platform_config:
@@ -182,6 +188,9 @@ class PlatformRouter:
         platform_config: Dict[str, Any]
     ) -> float:
         """Calculate how well content matches platform capabilities."""
+
+
+
         try:
             score = 0.0
             
@@ -232,6 +241,9 @@ class PlatformRouter:
         platform_config: Dict[str, Any]
     ) -> float:
         """Calculate audience alignment score."""
+
+
+
         try:
             if not target_audience:
                 return 0.5  # Neutral score for unspecified audience
@@ -297,6 +309,9 @@ class PlatformRouter:
         platform_config: Dict[str, Any]
     ) -> float:
         """Calculate expected engagement potential."""
+
+
+
         try:
             score = 0.0
             
@@ -372,6 +387,9 @@ class PlatformRouter:
         business_objectives: Dict[str, Any]
     ) -> float:
         """Calculate monetization potential score."""
+
+
+
         try:
             if not content_metadata.monetization_enabled:
                 return 0.0
@@ -423,6 +441,9 @@ class PlatformRouter:
         platform_config: Dict[str, Any]
     ) -> float:
         """Calculate platform growth and trend score."""
+
+
+
         try:
             # This would ideally use real market data
             # For now, using predefined growth scores based on 2024 trends
@@ -546,6 +567,9 @@ class PlatformRouter:
         routing_results: List[Tuple[str, float, Dict[str, Any]]]
     ) -> Dict[str, Any]:
         """Generate analytics and insights from routing results."""
+
+
+
         try:
             analytics = {
                 "total_platforms_evaluated": len(routing_results),

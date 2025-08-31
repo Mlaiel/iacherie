@@ -7,7 +7,7 @@ frame stabilization, upscaling, and advanced post-processing capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -121,6 +121,9 @@ class VideoEnhancer:
     
     def _initialize_models(self):
         """Initialize AI models for enhancement"""
+
+
+
         try:
             # Super-resolution model (simplified placeholder)
             if self.gpu_available:
@@ -343,6 +346,9 @@ class VideoEnhancer:
     
     async def _traditional_upscale(self, input_path: str, output_path: str, upscale_factor: int) -> Dict[str, Any]:
         """Traditional upscaling using ffmpeg"""
+
+
+
         try:
             # Get input video info
             video_info = await self._get_video_info(input_path)
@@ -379,6 +385,9 @@ class VideoEnhancer:
     async def _denoise_video(self, input_path: str, output_path: str,
                            quality_level: str, custom_params: Optional[Dict[str, Any]]) -> Dict[str, Any]:
         """Apply denoising to video"""
+
+
+
         try:
             # Determine denoising strength based on quality level
             strength_map = {
@@ -418,6 +427,9 @@ class VideoEnhancer:
     async def _sharpen_video(self, input_path: str, output_path: str,
                            quality_level: str, custom_params: Optional[Dict[str, Any]]) -> Dict[str, Any]:
         """Apply sharpening to video"""
+
+
+
         try:
             # Determine sharpening strength
             strength_map = {
@@ -457,6 +469,9 @@ class VideoEnhancer:
     async def _color_correct_video(self, input_path: str, output_path: str,
                                  quality_level: str, custom_params: Optional[Dict[str, Any]]) -> Dict[str, Any]:
         """Apply automatic color correction"""
+
+
+
         try:
             # Color correction parameters based on quality level
             correction_map = {
@@ -496,6 +511,9 @@ class VideoEnhancer:
     async def _stabilize_video(self, input_path: str, output_path: str,
                              quality_level: str, custom_params: Optional[Dict[str, Any]]) -> Dict[str, Any]:
         """Apply video stabilization"""
+
+
+
         try:
             # Stabilization parameters
             smoothing_map = {
@@ -535,6 +553,9 @@ class VideoEnhancer:
     async def _adjust_brightness(self, input_path: str, output_path: str,
                                quality_level: str, custom_params: Optional[Dict[str, Any]]) -> Dict[str, Any]:
         """Adjust video brightness"""
+
+
+
         try:
             brightness_adjustment = custom_params.get("brightness", 0.1) if custom_params else 0.1
             
@@ -564,6 +585,9 @@ class VideoEnhancer:
     async def _adjust_contrast(self, input_path: str, output_path: str,
                              quality_level: str, custom_params: Optional[Dict[str, Any]]) -> Dict[str, Any]:
         """Adjust video contrast"""
+
+
+
         try:
             contrast_adjustment = custom_params.get("contrast", 1.1) if custom_params else 1.1
             
@@ -593,6 +617,9 @@ class VideoEnhancer:
     async def _adjust_saturation(self, input_path: str, output_path: str,
                                quality_level: str, custom_params: Optional[Dict[str, Any]]) -> Dict[str, Any]:
         """Adjust video saturation"""
+
+
+
         try:
             saturation_adjustment = custom_params.get("saturation", 1.1) if custom_params else 1.1
             
@@ -622,6 +649,9 @@ class VideoEnhancer:
     async def _deblur_video(self, input_path: str, output_path: str,
                           quality_level: str, custom_params: Optional[Dict[str, Any]]) -> Dict[str, Any]:
         """Apply deblurring to video"""
+
+
+
         try:
             # Extract and process frames for deblurring
             frames = await self._extract_frames(input_path)
@@ -716,6 +746,9 @@ class VideoEnhancer:
     
     async def _get_video_info(self, video_path: str) -> Dict[str, Any]:
         """Get video information"""
+
+
+
         try:
             probe = ffmpeg.probe(video_path)
             video_stream = next(s for s in probe['streams'] if s['codec_type'] == 'video')
@@ -734,6 +767,9 @@ class VideoEnhancer:
     
     async def _analyze_quality_improvement(self, original_path: str, enhanced_path: str) -> Dict[str, Any]:
         """Analyze quality improvement between original and enhanced videos"""
+
+
+
         try:
             # Extract sample frames for comparison
             original_frames = await self._extract_sample_frames(original_path, 5)
@@ -808,6 +844,9 @@ class VideoEnhancer:
     
     async def cleanup(self):
         """Cleanup temporary files and GPU memory"""
+
+
+
         try:
             # Clear GPU memory
             if self.gpu_available:
@@ -888,6 +927,9 @@ class FrameStabilizer:
     
     async def _optical_flow_stabilization(self, input_path: str, output_path: str) -> Dict[str, Any]:
         """Stabilize video using optical flow analysis"""
+
+
+
         try:
             # Extract frames
             cap = cv2.VideoCapture(input_path)
@@ -985,6 +1027,9 @@ class FrameStabilizer:
     
     async def _simple_stabilization(self, input_path: str, output_path: str) -> Dict[str, Any]:
         """Simple stabilization using ffmpeg deshake filter"""
+
+
+
         try:
             input_stream = ffmpeg.input(input_path)
             output_stream = ffmpeg.output(
@@ -1011,6 +1056,9 @@ class FrameStabilizer:
     
     async def cleanup(self):
         """Cleanup temporary files"""
+
+
+
         try:
             if self.temp_dir.exists():
                 import shutil

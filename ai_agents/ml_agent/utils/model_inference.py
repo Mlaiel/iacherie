@@ -7,7 +7,7 @@ streaming inference, and advanced caching for the IA-Influencer-Agent ML platfor
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This inference engine and optimization techniques are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 is strictly PROHIBITED and will result in legal action.
@@ -307,6 +307,9 @@ class ModelInference:
         
     async def initialize(self) -> bool:
         """Initialize inference engine"""
+
+
+
         try:
             # Start background monitoring
             monitor_task = asyncio.create_task(self._monitor_inference_performance())
@@ -343,6 +346,9 @@ class ModelInference:
         - ONNX (.onnx)
         - Hugging Face transformers
         """
+
+
+
         try:
             logger.info(f"Loading model: {model_name} from {model_path}")
             
@@ -527,6 +533,9 @@ class ModelInference:
         """
         High-performance batch inference with parallel processing
         """
+
+
+
         try:
             logger.info(f"Starting batch inference: {model_name} ({len(input_batch)} items)")
             
@@ -583,6 +592,9 @@ class ModelInference:
         """
         Streaming inference for real-time data processing
         """
+
+
+
         try:
             logger.info(f"Starting streaming inference: {model_name}")
             
@@ -634,6 +646,9 @@ class ModelInference:
 
     async def unload_model(self, model_name: str) -> bool:
         """Unload model from memory"""
+
+
+
         try:
             if model_name in self.loaded_models:
                 del self.loaded_models[model_name]
@@ -672,6 +687,9 @@ class ModelInference:
 
     async def _load_model_by_format(self, model_path: Path, model_format: ModelFormat) -> Dict[str, Any]:
         """Load model based on detected format"""
+
+
+
         try:
             if model_format == ModelFormat.SKLEARN:
                 model = joblib.load(model_path)
@@ -748,6 +766,9 @@ class ModelInference:
 
     def _generate_cache_key(self, model_name: str, input_data: Any) -> str:
         """Generate cache key for input data"""
+
+
+
         try:
             # Create hash of input data
             if isinstance(input_data, (dict, list)):
@@ -764,6 +785,9 @@ class ModelInference:
 
     async def _get_from_cache(self, cache_key: str) -> Optional[InferenceResult]:
         """Retrieve result from cache"""
+
+
+
         try:
             # Try memory cache first
             cached_result = self.cache_manager.get(cache_key)
@@ -791,6 +815,9 @@ class ModelInference:
 
     async def _cache_result(self, cache_key: str, result: InferenceResult, ttl_seconds: int):
         """Cache inference result"""
+
+
+
         try:
             # Store in memory cache
             self.cache_manager.set(cache_key, result, ttl_seconds)
@@ -831,6 +858,9 @@ class ModelInference:
 
     async def _preprocess_input(self, input_data: Any, model_info: Dict[str, Any], config: InferenceConfig) -> Any:
         """Preprocess input data for model inference"""
+
+
+
         try:
             model_format = model_info["format"]
             
@@ -916,6 +946,9 @@ class ModelInference:
 
     async def _batch_inference(self, model_info: Dict[str, Any], input_data: Any, config: InferenceConfig) -> Dict[str, Any]:
         """Execute optimized batch inference"""
+
+
+
         return await self._real_time_inference(model_info, input_data, config)
 
     async def _gpu_inference(self, model_info: Dict[str, Any], input_data: Any, config: InferenceConfig) -> Dict[str, Any]:
@@ -928,10 +961,16 @@ class ModelInference:
 
     async def _default_inference(self, model_info: Dict[str, Any], input_data: Any, config: InferenceConfig) -> Dict[str, Any]:
         """Default inference implementation"""
+
+
+
         return await self._real_time_inference(model_info, input_data, config)
 
     async def _postprocess_output(self, predictions: Dict[str, Any], model_info: Dict[str, Any], config: InferenceConfig) -> Dict[str, Any]:
         """Postprocess model output"""
+
+
+
         try:
             processed_predictions = predictions.copy()
             
@@ -949,6 +988,9 @@ class ModelInference:
 
     async def _assess_prediction_quality(self, predictions: Dict[str, Any], config: InferenceConfig) -> Dict[str, Any]:
         """Assess prediction quality and generate quality score"""
+
+
+
         try:
             quality_score = 1.0
             quality_flags = []
@@ -1033,6 +1075,9 @@ class ModelInference:
 
     async def _warmup_gpu(self):
         """Warm up GPU for optimal performance"""
+
+
+
         try:
             if torch.cuda.is_available():
                 # Warm up CUDA context
@@ -1069,6 +1114,9 @@ class BatchProcessor:
                           input_batch: List[Any],
                           config: Optional[InferenceConfig] = None) -> List[InferenceResult]:
         """Process large batch with optimal chunking and parallelization"""
+
+
+
         try:
             batch_id = f"batch_{uuid.uuid4().hex[:8]}"
             logger.info(f"Processing batch {batch_id}: {len(input_batch)} items")

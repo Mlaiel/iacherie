@@ -107,11 +107,11 @@ class FormatOptimizer:
         # Format templates
         self.format_templates = {
             'social_hook': [
-                "💡 Did you know that {fact}?",
-                "🔥 Hot take: {opinion}",
-                "✨ Pro tip: {advice}",
-                "❓ Question for you: {question}",
-                "🚀 Ready to {action}?"
+                " Did you know that {fact}?",
+                " Hot take: {opinion}",
+                " Pro tip: {advice}",
+                " Question for you: {question}",
+                " Ready to {action}?"
             ],
             'blog_structure': [
                 "# {title}\n\n## Introduction\n\n{intro}\n\n## Main Content\n\n{content}\n\n## Conclusion\n\n{conclusion}",
@@ -125,11 +125,11 @@ class FormatOptimizer:
         
         # Emoji mappings for different contexts
         self.emoji_mappings = {
-            'positive': ['✨', '🚀', '💡', '🔥', '⭐', '🎯', '💪', '🌟'],
-            'question': ['❓', '🤔', '💭', '🧠'],
-            'celebration': ['🎉', '🎊', '🥳', '🏆', '🎈'],
-            'warning': ['⚠️', '🚨', '⛔', '❌'],
-            'professional': ['📊', '📈', '💼', '🎯', '⚡', '🔧']
+            'positive': ['', '', '', '', '', '', '', ''],
+            'question': ['', '🤔', '', '🧠'],
+            'celebration': ['', '', '🥳', '', ''],
+            'warning': ['', '', '', ''],
+            'professional': ['', '', '', '', '', '']
         }
         
         # Alias for backward compatibility
@@ -152,6 +152,9 @@ class FormatOptimizer:
         Returns:
             Optimized content formatted for the target platform
         """
+
+
+
         try:
             # Extract text content
             text_content = self._extract_text_content(content)
@@ -431,23 +434,23 @@ class FormatOptimizer:
     def _has_engaging_hook(self, content: str) -> bool:
         """Check if content has an engaging hook"""
         first_line = content.split('\n')[0].lower()
-        hook_indicators = ['did you know', 'imagine', 'what if', '💡', '🔥', '✨']
+        hook_indicators = ['did you know', 'imagine', 'what if', '', '', '']
         return any(indicator in first_line for indicator in hook_indicators)
     
     async def _generate_social_hook(self, content: str, platform: str) -> str:
         """Generate an engaging social media hook"""
         hooks = {
             'instagram': [
-                "✨ Ready to transform your perspective?",
-                "💡 Here's something that might surprise you:",
-                "🔥 Hot take coming your way:",
-                "🚀 Let's dive into something amazing:"
+                " Ready to transform your perspective?",
+                " Here's something that might surprise you:",
+                " Hot take coming your way:",
+                " Let's dive into something amazing:"
             ],
             'twitter': [
                 "🧵 Thread time:",
-                "💭 Unpopular opinion:",
-                "🔥 Hot take:",
-                "💡 Quick insight:"
+                " Unpopular opinion:",
+                " Hot take:",
+                " Quick insight:"
             ]
         }
         
@@ -526,11 +529,11 @@ class FormatOptimizer:
         
         # Add emojis based on content sentiment and context
         if any(word in content_lower for word in ['success', 'win', 'achieve']):
-            content = '🎯 ' + content
+            content = ' ' + content
         elif any(word in content_lower for word in ['idea', 'think', 'insight']):
-            content = '💡 ' + content
+            content = ' ' + content
         elif any(word in content_lower for word in ['grow', 'improve', 'better']):
-            content = '🚀 ' + content
+            content = ' ' + content
         
         return content
     
@@ -543,11 +546,11 @@ class FormatOptimizer:
         enhanced = content
         
         if 'questions' in elements and '?' not in enhanced:
-            enhanced += "\n\nWhat's your experience with this? Share in the comments! 👇"
+            enhanced += "\n\nWhat's your experience with this? Share in the comments! "
         
         if 'calls_to_action' in elements:
             if not any(cta in enhanced.lower() for cta in ['follow', 'like', 'share', 'comment']):
-                enhanced += "\n\n💝 Double-tap if you found this helpful!"
+                enhanced += "\n\n Double-tap if you found this helpful!"
         
         return enhanced
     
@@ -597,8 +600,8 @@ class FormatOptimizer:
         optimized = content
         
         # Add Twitter-style formatting
-        if not optimized.startswith(('💭', '🧵', '🔥', '💡')):
-            optimized = f"💭 {optimized}"
+        if not optimized.startswith(('', '🧵', '', '')):
+            optimized = f" {optimized}"
         
         # Add hashtags if space allows
         remaining_space = platform_spec['max_length'] - len(optimized)
@@ -618,10 +621,10 @@ class FormatOptimizer:
     async def _generate_professional_hook(self, content: str) -> str:
         """Generate professional hook for LinkedIn"""
         hooks = [
-            "💼 Professional insight:",
-            "📊 Industry analysis:",
-            "🎯 Strategic perspective:",
-            "⚡ Business insight:"
+            " Professional insight:",
+            " Industry analysis:",
+            " Strategic perspective:",
+            " Business insight:"
         ]
         return hooks[0]
     
@@ -714,18 +717,21 @@ class FormatOptimizer:
     
     async def _create_youtube_description(self, content: str) -> str:
         """Create structured YouTube description"""
-        structure = f"""📖 {content}
+        structure = f""" {content}
 
-🔔 SUBSCRIBE for more content like this!
-👍 LIKE if this helped you
-💬 COMMENT your thoughts below
+ SUBSCRIBE for more content like this!
+ LIKE if this helped you
+ COMMENT your thoughts below
 
-📱 FOLLOW US:
+ FOLLOW US:
 • Website: [Your Website]
 • Instagram: @youraccount
 • Twitter: @youraccount
 
 #YouTube #Content #Education"""
+
+
+
         
         return structure
     
@@ -734,7 +740,7 @@ class FormatOptimizer:
         paragraphs = content.split('\n\n')
         
         if len(paragraphs) > 3:
-            timestamped = "📚 TIMESTAMPS:\n"
+            timestamped = " TIMESTAMPS:\n"
             timestamped += "0:00 Introduction\n"
             
             time_increment = 60  # 1 minute per section
@@ -754,7 +760,7 @@ class FormatOptimizer:
     async def _add_youtube_ctas(self, content: str) -> str:
         """Add YouTube-specific calls to action"""
         if 'subscribe' not in content.lower():
-            content += "\n\n🔔 Don't forget to SUBSCRIBE and turn on notifications!"
+            content += "\n\n Don't forget to SUBSCRIBE and turn on notifications!"
         
         return content
     
@@ -822,6 +828,9 @@ Best regards,
 
 ---
 Unsubscribe | Update Preferences | Contact Us"""
+
+
+
         
         return structured
     
@@ -833,7 +842,7 @@ Unsubscribe | Update Preferences | Contact Us"""
     async def _add_email_ctas(self, content: str) -> str:
         """Add email-specific calls to action"""
         if not any(cta in content.lower() for cta in ['click', 'visit', 'download', 'contact']):
-            content += "\n\n👉 [CALL TO ACTION BUTTON]"
+            content += "\n\n [CALL TO ACTION BUTTON]"
         
         return content
     
@@ -855,6 +864,9 @@ Unsubscribe | Update Preferences | Contact Us"""
         platform_spec: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Calculate optimization metrics"""
+
+
+
         return {
             'length_optimization': {
                 'original_length': len(original),

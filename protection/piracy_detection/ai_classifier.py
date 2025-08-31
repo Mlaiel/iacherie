@@ -7,7 +7,7 @@ Advanced AI-powered content classification and violation categorization system.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
+ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
 and will result in immediate legal action under German and international copyright law.
 
@@ -143,6 +143,9 @@ class ContentFeatureExtractor:
     
     async def extract_text_features(self, text: str) -> Dict[str, Any]:
         """Extract features from text content."""
+
+
+
         try:
             if not self.text_tokenizer:
                 self.text_tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
@@ -177,6 +180,9 @@ class ContentFeatureExtractor:
     
     async def extract_audio_features(self, audio_data: np.ndarray) -> Dict[str, Any]:
         """Extract features from audio content."""
+
+
+
         try:
             # Basic audio features
             features = {
@@ -213,6 +219,9 @@ class ContentFeatureExtractor:
     
     async def extract_image_features(self, image: np.ndarray) -> Dict[str, Any]:
         """Extract features from image content."""
+
+
+
         try:
             # Resize image
             image_resized = cv2.resize(image, self.image_size)
@@ -256,6 +265,9 @@ class ContentFeatureExtractor:
     
     async def extract_metadata_features(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Extract features from content metadata."""
+
+
+
         try:
             features = {}
             
@@ -560,6 +572,9 @@ class AdvancedAIClassifier:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             # Load pre-trained model if available
             model_path = self.config.get('model_path')
@@ -703,6 +718,9 @@ class AdvancedAIClassifier:
         Returns:
             Training data ID
         """
+
+
+
         try:
             # Extract features
             features = await self._extract_all_features(content_data, content_metadata)
@@ -1001,6 +1019,9 @@ class AdvancedAIClassifier:
     
     async def _save_model(self, model_path: str):
         """Save model state."""
+
+
+
         try:
             torch.save({
                 'model_state_dict': self.model.state_dict(),
@@ -1017,6 +1038,9 @@ class AdvancedAIClassifier:
     
     async def _load_model(self, model_path: str):
         """Load model state."""
+
+
+
         try:
             checkpoint = torch.load(model_path, map_location=self.device)
             
@@ -1032,6 +1056,9 @@ class AdvancedAIClassifier:
     
     def get_classifier_statistics(self) -> Dict[str, Any]:
         """Get classifier statistics."""
+
+
+
         return {
             **self.classifier_stats,
             'model_version': self.model_version,

@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -67,6 +67,9 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
         Returns:
             Created creator profile instance
         """
+
+
+
         try:
             creator_profile_data = {
                 'user_id': user_id,
@@ -108,6 +111,9 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
         Returns:
             Updated creator profile
         """
+
+
+
         try:
             profile = self.get_by_id(profile_id)
             if not profile:
@@ -149,6 +155,9 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
         Returns:
             Updated creator profile
         """
+
+
+
         try:
             updated_profile = self.update(profile_id, 
                                         specializations=json.dumps(specializations),
@@ -172,6 +181,9 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
         Returns:
             Creator profile if found
         """
+
+
+
         try:
             profile = self.db_session.query(CreatorProfile).filter(
                 CreatorProfile.user_id == user_id
@@ -197,6 +209,9 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
         Returns:
             List of matching creator profiles
         """
+
+
+
         try:
             query = self.db_session.query(CreatorProfile).filter(
                 CreatorProfile.is_public == True
@@ -261,6 +276,9 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
         Returns:
             Creator analytics data
         """
+
+
+
         try:
             profile = self.get_by_id(profile_id)
             if not profile:
@@ -299,6 +317,9 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
             
     def _analyze_portfolio(self, profile: CreatorProfile) -> Dict[str, Any]:
         """Analyze creator's portfolio"""
+
+
+
         try:
             portfolio_items = json.loads(profile.portfolio_items or '[]')
             
@@ -337,6 +358,9 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
             
     def _analyze_specializations(self, profile: CreatorProfile) -> Dict[str, Any]:
         """Analyze creator's specializations"""
+
+
+
         try:
             specializations = json.loads(profile.specializations or '[]')
             
@@ -351,6 +375,9 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
             
     def _analyze_social_links(self, profile: CreatorProfile) -> Dict[str, Any]:
         """Analyze creator's social media presence"""
+
+
+
         try:
             social_links = json.loads(profile.social_links or '{}')
             
@@ -507,6 +534,9 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
         Returns:
             List of trending specializations
         """
+
+
+
         try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
@@ -563,6 +593,9 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
         Returns:
             List of recommended creators
         """
+
+
+
         try:
             profile = self.get_by_id(profile_id)
             if not profile:
@@ -649,6 +682,9 @@ class CreatorProfileRepository(BaseRepository[CreatorProfile]):
         Returns:
             Updated creator profile
         """
+
+
+
         try:
             profile = self.get_by_id(profile_id)
             if not profile:

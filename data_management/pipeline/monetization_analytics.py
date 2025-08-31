@@ -12,7 +12,7 @@ Supports complete creator monetization ecosystem:
 - Performance optimization recommendations
 - ROI analysis and profit maximization
 
-⚠️ COPYRIGHT NOTICE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+ COPYRIGHT NOTICE - UNAUTHORIZED USE STRICTLY PROHIBITED 
 This code and all associated concepts are the EXCLUSIVE PROPERTY of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use will result in immediate legal action.
 """
@@ -168,6 +168,9 @@ class CreatorMonetizationAnalyzer:
 
     def _initialize_ai_models(self):
         """Initialize AI models for revenue prediction and opportunity analysis."""
+
+
+
         try:
             # Try to load pre-trained models
             self.revenue_predictor = joblib.load(f"models/revenue_predictor_{self.creator_type}.pkl")

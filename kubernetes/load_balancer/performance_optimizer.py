@@ -7,7 +7,7 @@ providing intelligent resource allocation and dynamic scaling capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ WARNING: This code is proprietary and confidential.
+ WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
@@ -141,6 +141,9 @@ class PerformanceOptimizer:
     
     async def initialize(self) -> None:
         """Initialize performance optimizer"""
+
+
+
         try:
             logger.info("Initializing Performance Optimizer...")
             
@@ -161,6 +164,9 @@ class PerformanceOptimizer:
     
     async def _load_historical_data(self) -> None:
         """Load historical performance data"""
+
+
+
         try:
             # Try to load from file
             data_file = "/var/lib/ia-influencer/performance_data.json"
@@ -197,6 +203,9 @@ class PerformanceOptimizer:
     
     async def _initialize_ml_models(self) -> None:
         """Initialize machine learning models"""
+
+
+
         try:
             # Initialize load prediction model
             self.load_predictor = LinearRegression()
@@ -321,6 +330,9 @@ class PerformanceOptimizer:
     
     async def _collect_metrics(self) -> None:
         """Collect current performance metrics"""
+
+
+
         try:
             current_time = datetime.now()
             
@@ -415,6 +427,9 @@ class PerformanceOptimizer:
     
     def _estimate_active_connections(self) -> int:
         """Estimate current active connections"""
+
+
+
         try:
             # Get network connections
             connections = psutil.net_connections(kind='inet')
@@ -434,6 +449,9 @@ class PerformanceOptimizer:
     
     async def _generate_recommendations(self) -> None:
         """Generate optimization recommendations"""
+
+
+
         try:
             recommendations = []
             
@@ -532,6 +550,9 @@ class PerformanceOptimizer:
     
     async def _apply_optimizations(self) -> None:
         """Apply automatic optimizations"""
+
+
+
         try:
             applied_count = 0
             
@@ -568,6 +589,9 @@ class PerformanceOptimizer:
     
     async def _apply_single_optimization(self, recommendation: OptimizationRecommendation) -> bool:
         """Apply a single optimization"""
+
+
+
         try:
             # This would implement actual configuration changes
             # For now, just log the action
@@ -587,6 +611,9 @@ class PerformanceOptimizer:
     
     async def _predict_future_load(self) -> Dict[str, float]:
         """Predict future load using ML models"""
+
+
+
         try:
             if len(self.metrics_history) < self.min_data_points:
                 return {}
@@ -638,6 +665,9 @@ class PerformanceOptimizer:
     
     async def _generate_scaling_recommendations(self, predictions: Dict[str, float]) -> None:
         """Generate scaling recommendations based on predictions"""
+
+
+
         try:
             recommendations = []
             
@@ -722,6 +752,9 @@ class PerformanceOptimizer:
     
     async def _train_models(self) -> None:
         """Train machine learning models with available data"""
+
+
+
         try:
             if len(self.metrics_history) < self.min_data_points:
                 return
@@ -773,6 +806,9 @@ class PerformanceOptimizer:
     
     async def _save_model(self) -> None:
         """Save trained ML model"""
+
+
+
         try:
             model_file = "/var/lib/ia-influencer/load_predictor.pkl"
             model_data = {
@@ -790,6 +826,9 @@ class PerformanceOptimizer:
     
     async def _save_performance_data(self) -> None:
         """Save performance data for persistence"""
+
+
+
         try:
             data_file = "/var/lib/ia-influencer/performance_data.json"
             
@@ -823,6 +862,9 @@ class PerformanceOptimizer:
     
     async def get_optimization_status(self) -> Dict[str, Any]:
         """Get comprehensive optimization status"""
+
+
+
         try:
             # Calculate recent performance
             recent_metrics = list(self.metrics_history)[-10:] if self.metrics_history else []
@@ -888,6 +930,9 @@ class PerformanceOptimizer:
     
     async def manual_optimization(self, component: str, parameter: str, value: Any) -> bool:
         """Apply manual optimization"""
+
+
+
         try:
             logger.info(f"Applying manual optimization: {component}.{parameter} = {value}")
             
@@ -923,6 +968,9 @@ class PerformanceOptimizer:
     
     async def shutdown(self) -> None:
         """Shutdown performance optimizer"""
+
+
+
         try:
             logger.info("Shutting down Performance Optimizer...")
             

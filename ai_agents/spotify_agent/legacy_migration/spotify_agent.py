@@ -7,7 +7,7 @@ playlist management, and automated marketing for musicians and content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -207,6 +207,9 @@ class SpotifyAgent(BaseAgent):
 
     async def authenticate_user(self, user_id: str, auth_code: Optional[str] = None) -> Dict[str, Any]:
         """Authenticate user with Spotify and store tokens"""
+
+
+
         try:
             if auth_code:
                 # Exchange authorization code for tokens
@@ -575,6 +578,9 @@ class SpotifyAgent(BaseAgent):
                                                audio_features: List[Dict[str, Any]],
                                                streaming_metrics: Dict[str, Any]) -> Dict[str, Any]:
         """Calculate advanced artist performance metrics"""
+
+
+
         try:
             # Audio feature analysis
             feature_analysis = self._analyze_audio_features(audio_features)
@@ -674,6 +680,9 @@ class SpotifyAgent(BaseAgent):
 
     async def process_request(self, request: AgentRequest) -> AgentResponse:
         """Process Spotify agent requests with comprehensive error handling"""
+
+
+
         try:
             action = request.action.lower()
             

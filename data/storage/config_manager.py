@@ -8,7 +8,7 @@ Responsibility: Centralized configuration management for all storage components
 Technologies: Python, YAML, JSON, Environment variables, Dynamic loading
 =========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -325,6 +325,9 @@ class ConfigurationManager:
     
     def _initialize_configuration(self):
         """Initialize configuration system"""
+
+
+
         try:
             # Load configuration
             self.load_configuration()
@@ -353,6 +356,9 @@ class ConfigurationManager:
         Returns:
             Loaded storage configuration
         """
+
+
+
         try:
             with self.config_lock:
                 target_path = config_path or self.config_path
@@ -414,6 +420,9 @@ class ConfigurationManager:
         Returns:
             Success status
         """
+
+
+
         try:
             with self.config_lock:
                 target_config = config or self.current_config
@@ -519,6 +528,9 @@ class ConfigurationManager:
         Returns:
             Success status
         """
+
+
+
         try:
             with self.config_lock:
                 if not self.current_config:
@@ -552,6 +564,9 @@ class ConfigurationManager:
         Returns:
             Success status
         """
+
+
+
         try:
             with self.config_lock:
                 provider = self.get_provider_config(provider_name)
@@ -583,6 +598,9 @@ class ConfigurationManager:
         Returns:
             Success status
         """
+
+
+
         try:
             with self.config_lock:
                 if not self.current_config:
@@ -613,6 +631,9 @@ class ConfigurationManager:
         Returns:
             Success status
         """
+
+
+
         try:
             old_config = self.current_config
             
@@ -641,6 +662,9 @@ class ConfigurationManager:
         Returns:
             Validation result
         """
+
+
+
         try:
             target_config = config or self.current_config
             if not target_config:

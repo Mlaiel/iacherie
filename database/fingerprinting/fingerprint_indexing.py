@@ -21,7 +21,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Email: mlaiel@live.de
 Project: IA Influencer Agent + Content Protection Platform
 
-⚠️  STRICT COPYRIGHT WARNING ⚠️
+  STRICT COPYRIGHT WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, modification, or distribution is strictly prohibited
 and will result in immediate legal action under German and international law.
@@ -182,6 +182,9 @@ class AdvancedVectorIndexManager:
         
     async def initialize_index(self) -> None:
         """Initialize advanced FAISS index with optimal configuration"""
+
+
+
         try:
             self.status = IndexStatus.INITIALIZING
             dimension = self.config.dimension
@@ -222,6 +225,9 @@ class AdvancedVectorIndexManager:
     
     async def _apply_optimizations(self, base_index: faiss.Index, dimension: int) -> faiss.Index:
         """Apply advanced FAISS optimizations"""
+
+
+
         try:
             # Use IVF for large-scale datasets
             if self.config.nlist > 1:
@@ -250,6 +256,9 @@ class AdvancedVectorIndexManager:
     
     async def _enable_gpu_acceleration(self, index: faiss.Index) -> faiss.Index:
         """Enable GPU acceleration if available"""
+
+
+
         try:
             if faiss.get_num_gpus() > 0:
                 res = faiss.StandardGpuResources()
@@ -270,6 +279,9 @@ class AdvancedVectorIndexManager:
         metadata: Optional[List[Dict[str, Any]]] = None
     ) -> bool:
         """Add vectors to index with batch optimization"""
+
+
+
         try:
             if vectors.shape[0] != len(fingerprint_ids):
                 raise ValidationError("Vector count must match fingerprint ID count")
@@ -370,6 +382,9 @@ class AdvancedVectorIndexManager:
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
         """Update existing vector in index"""
+
+
+
         try:
             if fingerprint_id not in self.reverse_id_map:
                 return False
@@ -394,6 +409,9 @@ class AdvancedVectorIndexManager:
     
     async def remove_vector(self, fingerprint_id: str) -> bool:
         """Remove vector from index"""
+
+
+
         try:
             if fingerprint_id not in self.reverse_id_map:
                 return False
@@ -419,6 +437,9 @@ class AdvancedVectorIndexManager:
     
     async def rebuild_index(self) -> bool:
         """Rebuild index to optimize performance"""
+
+
+
         try:
             self.status = IndexStatus.REBUILDING
             self.logger.info("Starting index rebuild...")
@@ -469,6 +490,9 @@ class AdvancedVectorIndexManager:
     
     async def _train_index(self, vectors: np.ndarray) -> None:
         """Train index with sample vectors"""
+
+
+
         try:
             if hasattr(self.index, 'train'):
                 self.index.train(vectors)
@@ -478,6 +502,9 @@ class AdvancedVectorIndexManager:
     
     def _calculate_index_size(self) -> float:
         """Calculate index size in MB"""
+
+
+
         try:
             # Approximate calculation
             vector_size = self.config.dimension * 4  # 4 bytes per float32
@@ -489,6 +516,9 @@ class AdvancedVectorIndexManager:
     
     def _calculate_fragmentation(self) -> float:
         """Calculate index fragmentation ratio"""
+
+
+
         try:
             active_vectors = len(self.reverse_id_map)
             total_capacity = self.index.ntotal if self.index else 0
@@ -553,6 +583,9 @@ class AdvancedVectorIndexManager:
         metadata_list: List[Dict[str, Any]]
     ) -> None:
         """Cache metadata for quick retrieval"""
+
+
+
         try:
             for fingerprint_id, metadata in zip(fingerprint_ids, metadata_list):
                 cache_key = f"metadata:{fingerprint_id}"
@@ -610,6 +643,9 @@ class AdvancedVectorIndexManager:
         vectors: np.ndarray
     ) -> None:
         """Add vectors to the index"""
+
+
+
         try:
             if self.index is None:
                 await self.initialize_index()
@@ -645,6 +681,9 @@ class AdvancedVectorIndexManager:
         threshold: float = 0.7
     ) -> List[Tuple[str, float]]:
         """Search for similar vectors"""
+
+
+
         try:
             if self.index is None or self.index.ntotal == 0:
                 return []
@@ -679,6 +718,9 @@ class AdvancedVectorIndexManager:
     
     async def remove_vectors(self, fingerprint_ids: List[str]) -> None:
         """Remove vectors from index (rebuild required for FAISS)"""
+
+
+
         try:
             # Remove from ID mappings
             faiss_ids_to_remove = set()
@@ -718,6 +760,9 @@ class HashIndexManager:
         hashes: Dict[str, str]
     ) -> None:
         """Add hash indexes for a fingerprint"""
+
+
+
         try:
             pipeline = self.redis.pipeline()
             
@@ -754,6 +799,9 @@ class HashIndexManager:
         hash_value: str
     ) -> Set[str]:
         """Search fingerprints by hash value"""
+
+
+
         try:
             key = self.hash_key_pattern.format(
                 hash_type=hash_type,
@@ -768,6 +816,9 @@ class HashIndexManager:
     
     async def search_by_content(self, content_id: str) -> Set[str]:
         """Search fingerprints by content ID"""
+
+
+
         try:
             key = self.content_key_pattern.format(content_id=content_id)
             fingerprint_ids = await self.redis.smembers(key)
@@ -779,6 +830,9 @@ class HashIndexManager:
     
     async def search_by_user(self, user_id: str) -> Set[str]:
         """Search fingerprints by user ID"""
+
+
+
         try:
             key = self.user_key_pattern.format(user_id=user_id)
             fingerprint_ids = await self.redis.smembers(key)
@@ -796,6 +850,9 @@ class HashIndexManager:
         hashes: Dict[str, str]
     ) -> None:
         """Remove hash indexes for a fingerprint"""
+
+
+
         try:
             pipeline = self.redis.pipeline()
             
@@ -834,6 +891,9 @@ class SemanticIndexManager:
     
     async def initialize_index(self) -> None:
         """Initialize Elasticsearch index with proper mapping"""
+
+
+
         try:
             mapping = {
                 "mappings": {
@@ -885,6 +945,9 @@ class SemanticIndexManager:
         embedding_vector: Optional[np.ndarray] = None
     ) -> None:
         """Add semantic document to index"""
+
+
+
         try:
             doc = {
                 "fingerprint_id": fingerprint_id,
@@ -928,6 +991,9 @@ class SemanticIndexManager:
         size: int = 10
     ) -> List[Dict[str, Any]]:
         """Search semantic content"""
+
+
+
         try:
             # Build search query
             search_body = {
@@ -998,6 +1064,9 @@ class SemanticIndexManager:
         size: int = 10
     ) -> List[Dict[str, Any]]:
         """Search by embedding vector similarity"""
+
+
+
         try:
             search_body = {
                 "query": {
@@ -1046,6 +1115,9 @@ class SemanticIndexManager:
     
     async def remove_semantic_document(self, fingerprint_id: str) -> None:
         """Remove semantic document from index"""
+
+
+
         try:
             await self.es.delete(
                 index=self.index_name,
@@ -1094,6 +1166,9 @@ class FingerprintIndexManager:
     
     async def initialize_indexes(self) -> None:
         """Initialize all index types"""
+
+
+
         try:
             # Initialize semantic index
             await self.semantic_index.initialize_index()
@@ -1117,6 +1192,9 @@ class FingerprintIndexManager:
         embedding_vector: Optional[np.ndarray] = None
     ) -> None:
         """Add fingerprint to all relevant indexes"""
+
+
+
         try:
             fingerprint_id = fingerprint.fingerprint_id
             content_type = str(fingerprint.content_type).lower()
@@ -1187,6 +1265,9 @@ class FingerprintIndexManager:
         Returns:
             List of search results with scores and metadata
         """
+
+
+
         try:
             results = {}  # fingerprint_id -> result dict
             
@@ -1263,6 +1344,9 @@ class FingerprintIndexManager:
         user_id: str
     ) -> None:
         """Remove fingerprint from all indexes"""
+
+
+
         try:
             fingerprint_id = fingerprint.fingerprint_id
             content_type = str(fingerprint.content_type).lower()
@@ -1303,6 +1387,9 @@ class FingerprintIndexManager:
         batch_size: int = 1000
     ) -> None:
         """Rebuild indexes from database"""
+
+
+
         try:
             self.logger.info("Starting index rebuild...")
             
@@ -1463,6 +1550,9 @@ class FingerprintIndexManager:
     
     async def get_index_statistics(self) -> Dict[str, Any]:
         """Get comprehensive index statistics"""
+
+
+
         try:
             stats = {
                 "vector_indexes": {},

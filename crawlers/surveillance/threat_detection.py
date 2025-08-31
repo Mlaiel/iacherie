@@ -7,7 +7,7 @@
 """
 Advanced Threat Detection Engine - IA Influencer Agent
 
-⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
+ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
 © 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
@@ -230,6 +230,9 @@ class ThreatDetectionEngine:
     
     async def initialize(self) -> None:
         """Initialize the threat detection engine."""
+
+
+
         try:
             self._logger.info("Initializing Threat Detection Engine...")
             
@@ -273,6 +276,9 @@ class ThreatDetectionEngine:
         Returns:
             List of threat detections
         """
+
+
+
         try:
             detections = []
             
@@ -335,6 +341,9 @@ class ThreatDetectionEngine:
         Returns:
             Threat intelligence report
         """
+
+
+
         try:
             intel_id = f"intel_{uuid.uuid4().hex[:8]}"
             
@@ -415,6 +424,9 @@ class ThreatDetectionEngine:
         Returns:
             Success status
         """
+
+
+
         try:
             if detection_id not in self.active_detections:
                 return False
@@ -850,6 +862,9 @@ class ThreatDetectionEngine:
     
     def get_detection_metrics(self) -> Dict[str, Any]:
         """Get detection performance metrics."""
+
+
+
         return self.detection_metrics.copy()
     
     def get_threat_intelligence(self, intel_id: Optional[str] = None) -> Union[ThreatIntelligence, List[ThreatIntelligence]]:
@@ -1427,6 +1442,9 @@ class ThreatDetectionEngine:
     
     async def initialize(self) -> None:
         """Initialize the threat detection engine."""
+
+
+
         try:
             self._logger.info("Initializing Threat Detection Engine...")
             
@@ -1455,6 +1473,9 @@ class ThreatDetectionEngine:
         Returns:
             List of detected threat events
         """
+
+
+
         try:
             # Add to violation buffer for pattern analysis
             self.violation_buffer.append({
@@ -1639,6 +1660,9 @@ class ThreatDetectionEngine:
     
     async def _perform_actor_attribution(self, threat_event: ThreatEvent, violation: ViolationAlert) -> None:
         """Perform threat actor attribution for detected threat."""
+
+
+
         try:
             # Extract attribution indicators
             indicators = await self._extract_attribution_indicators(violation)

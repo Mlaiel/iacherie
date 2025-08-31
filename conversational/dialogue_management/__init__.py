@@ -37,7 +37,7 @@ Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
 
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE - INTELLECTUAL PROPERTY PROTECTION:
+  CRITICAL LEGAL NOTICE - INTELLECTUAL PROPERTY PROTECTION:
 This code, architectural design, and business logic are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, modification, distribution, reverse engineering, or commercialization 
 is strictly PROHIBITED and will result in immediate legal action under international copyright law.

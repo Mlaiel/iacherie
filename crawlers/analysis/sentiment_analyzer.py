@@ -183,6 +183,9 @@ class SentimentAnalyzer:
     
     def _initialize_models(self) -> None:
         """Initialize sentiment and emotion analysis models."""
+
+
+
         try:
             # Multi-language sentiment model
             self.sentiment_pipeline = pipeline(
@@ -706,6 +709,9 @@ class SentimentAnalyzer:
         threshold: float = 0.4
     ) -> List[EmotionType]:
         """Identify mixed emotions above threshold."""
+
+
+
         return [emotion for emotion, score in emotion_scores.items() if score >= threshold]
     
     def _calculate_audience_appeal(

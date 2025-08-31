@@ -88,6 +88,9 @@ class StructuredLogEntry:
 
     def to_json(self) -> str:
         """Convert to JSON string."""
+
+
+
         return json.dumps(self.to_dict(), ensure_ascii=False)
 
 

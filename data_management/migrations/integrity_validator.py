@@ -1,5 +1,5 @@
 """
-🔍 Integrity Validator - Enterprise Data Integrity and Validation Engine
+ Integrity Validator - Enterprise Data Integrity and Validation Engine
 ========================================================================
 
 Ultra-advanced data integrity validation system for IA Influencer Agent:
@@ -13,7 +13,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+ UNAUTHORIZED USE STRICTLY PROHIBITED 
 This data validation engine is protected intellectual property.
 Contact mlaiel@live.de for licensing inquiries.
 """
@@ -288,6 +288,9 @@ class IntegrityValidator:
         
     async def _execute_validation_rule(self, rule: ValidationRule) -> List[ValidationError]:
         """Execute single validation rule"""
+
+
+
         try:
             if rule.validation_function in self.custom_validators:
                 validator_func = self.custom_validators[rule.validation_function]
@@ -755,4 +758,7 @@ class IntegrityValidator:
         
     async def _get_session(self) -> Session:
         """Get database session"""
+
+
+
         return self.session_maker()

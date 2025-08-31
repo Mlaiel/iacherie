@@ -51,6 +51,9 @@ def event_loop():
 @pytest.fixture(scope="session")
 def test_config():
     """Configuration de test globale"""
+
+
+
     return {
         "test_env": "pytest",
         "project_root": str(PROJECT_ROOT),
@@ -61,6 +64,9 @@ def test_config():
 @pytest.fixture
 def temp_dir(tmp_path):
     """Répertoire temporaire pour les tests"""
+
+
+
     return tmp_path
 
 # Hook pour modifier la collection de tests

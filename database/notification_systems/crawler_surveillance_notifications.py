@@ -159,6 +159,9 @@ class CrawlerSurveillanceManager:
         Returns:
             Résultat du traitement
         """
+
+
+
         try:
             # Channels par défaut si non spécifiés
             if notification_channels is None:
@@ -230,7 +233,7 @@ class CrawlerSurveillanceManager:
         if event_type == CrawlerEventType.CONTENT_DETECTED:
             return {
                 **base_data,
-                "title": f"🔍 Contenu détecté sur {data.platform.value.title()}",
+                "title": f" Contenu détecté sur {data.platform.value.title()}",
                 "message": f"Nous avons détecté votre contenu sur {data.platform.value} avec {data.similarity_score:.1%} de similarité.",
                 "priority": self._get_priority_from_severity(data.severity),
                 "category": "content_detection",
@@ -246,7 +249,7 @@ class CrawlerSurveillanceManager:
         elif event_type == CrawlerEventType.VIOLATION_FOUND:
             return {
                 **base_data,
-                "title": f"🚨 Violation détectée sur {data.platform.value.title()}",
+                "title": f" Violation détectée sur {data.platform.value.title()}",
                 "message": f"Une violation de niveau {data.severity.value} a été détectée. Actions automatiques initiées.",
                 "priority": "urgent" if data.severity == ViolationSeverity.CRITICAL else "high",
                 "category": "rights_violation",
@@ -264,7 +267,7 @@ class CrawlerSurveillanceManager:
             scan_results = data.crawler_metadata.get("scan_results", {})
             return {
                 **base_data,
-                "title": f"✅ Scan {data.platform.value.title()} terminé",
+                "title": f" Scan {data.platform.value.title()} terminé",
                 "message": f"Scan terminé. {scan_results.get('items_scanned', 0)} éléments analysés, {scan_results.get('matches_found', 0)} correspondances trouvées.",
                 "priority": "normal",
                 "category": "scan_completion",
@@ -276,7 +279,7 @@ class CrawlerSurveillanceManager:
         elif event_type == CrawlerEventType.TAKEDOWN_INITIATED:
             return {
                 **base_data,
-                "title": f"⚖️ Procédure de retrait initiée",
+                "title": f" Procédure de retrait initiée",
                 "message": f"Une demande de retrait DMCA a été envoyée à {data.platform.value} pour la violation détectée.",
                 "priority": "high",
                 "category": "legal_action",
@@ -292,7 +295,7 @@ class CrawlerSurveillanceManager:
         elif event_type == CrawlerEventType.MASS_UPLOAD_DETECTED:
             return {
                 **base_data,
-                "title": f"⚠️ Upload en masse détecté",
+                "title": f" Upload en masse détecté",
                 "message": f"Plusieurs uploads de votre contenu détectés sur {data.platform.value}. Possibles violations coordonnées.",
                 "priority": "urgent",
                 "category": "mass_violation",
@@ -308,7 +311,7 @@ class CrawlerSurveillanceManager:
         elif event_type == CrawlerEventType.CRAWLER_ERROR:
             return {
                 **base_data,
-                "title": f"❌ Erreur de surveillance {data.platform.value.title()}",
+                "title": f" Erreur de surveillance {data.platform.value.title()}",
                 "message": f"Erreur lors de la surveillance de {data.platform.value}. L'équipe technique a été notifiée.",
                 "priority": "medium",
                 "category": "system_error",
@@ -321,7 +324,7 @@ class CrawlerSurveillanceManager:
         elif event_type == CrawlerEventType.SUSPICIOUS_ACTIVITY:
             return {
                 **base_data,
-                "title": f"🕵️ Activité suspecte détectée",
+                "title": f" Activité suspecte détectée",
                 "message": f"Activité anormale détectée concernant votre contenu sur {data.platform.value}.",
                 "priority": "high",
                 "category": "security_alert",
@@ -333,7 +336,7 @@ class CrawlerSurveillanceManager:
         else:
             return {
                 **base_data,
-                "title": f"📢 Événement surveillance {event_type.value}",
+                "title": f" Événement surveillance {event_type.value}",
                 "message": f"Un événement de surveillance s'est produit sur {data.platform.value}.",
                 "priority": "normal",
                 "category": "general_surveillance",
@@ -387,6 +390,9 @@ class CrawlerSurveillanceManager:
         data: CrawlerNotificationData
     ):
         """Traitement spécialisé selon le type d'événement de surveillance"""
+
+
+
         
         try:
             if event_type == CrawlerEventType.VIOLATION_FOUND:
@@ -478,19 +484,19 @@ class CrawlerSurveillanceManager:
     def _get_platform_icon(self, platform: PlatformType) -> str:
         """Retourne l'icône de la plateforme"""
         platform_icons = {
-            PlatformType.YOUTUBE: "🎥",
-            PlatformType.TIKTOK: "🎵",
-            PlatformType.INSTAGRAM: "📸",
-            PlatformType.TWITTER: "🐦",
-            PlatformType.SOUNDCLOUD: "🎧",
-            PlatformType.SPOTIFY: "🎶",
-            PlatformType.FACEBOOK: "👥",
-            PlatformType.LINKEDIN: "💼",
-            PlatformType.VIMEO: "🎬",
-            PlatformType.TWITCH: "🎮",
-            PlatformType.GENERIC_WEB: "🌐"
+            PlatformType.YOUTUBE: "",
+            PlatformType.TIKTOK: "",
+            PlatformType.INSTAGRAM: "",
+            PlatformType.TWITTER: "",
+            PlatformType.SOUNDCLOUD: "",
+            PlatformType.SPOTIFY: "",
+            PlatformType.FACEBOOK: "",
+            PlatformType.LINKEDIN: "",
+            PlatformType.VIMEO: "",
+            PlatformType.TWITCH: "",
+            PlatformType.GENERIC_WEB: ""
         }
-        return platform_icons.get(platform, "📱")
+        return platform_icons.get(platform, "")
 
     def _get_recommended_actions(self, severity: ViolationSeverity) -> List[str]:
         """Retourne les actions recommandées selon la sévérité"""
@@ -686,6 +692,9 @@ class CrawlerSurveillanceManager:
 
     async def _analyze_mass_upload_pattern(self, data: CrawlerNotificationData) -> Dict[str, Any]:
         """Analyse les patterns d'upload en masse"""
+
+
+
         return {"bot_activity_confirmed": False}
 
     async def _escalate_to_legal_team(self, data: CrawlerNotificationData, reason: str):
@@ -698,6 +707,9 @@ class CrawlerSurveillanceManager:
 
     async def _create_investigation_case(self, data: CrawlerNotificationData) -> str:
         """Crée un cas d'investigation"""
+
+
+
         return f"INV_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
 
     async def _collect_extended_evidence(self, data: CrawlerNotificationData, investigation_id: str):

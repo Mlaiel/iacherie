@@ -241,6 +241,9 @@ class EngagementAnalyzer:
     
     def _initialize_ml_models(self) -> None:
         """Initialize machine learning models for engagement analysis."""
+
+
+
         try:
             if self.enable_prediction:
                 # Engagement prediction model
@@ -468,6 +471,9 @@ class EngagementAnalyzer:
         platform: str
     ) -> EngagementMetrics:
         """Calculate comprehensive engagement metrics."""
+
+
+
         try:
             # Extract basic engagement numbers
             likes = engagement_data.get('likes', 0)
@@ -542,6 +548,9 @@ class EngagementAnalyzer:
         engagement_data: Dict[str, Any]
     ) -> AudienceInsights:
         """Analyze audience behavior and demographics."""
+
+
+
         try:
             total_audience_size = audience_data.get('total_followers', 1000)
             active_users = engagement_data.get('unique_users', 0)
@@ -599,6 +608,9 @@ class EngagementAnalyzer:
         platform: str
     ) -> EngagementPrediction:
         """Predict future engagement performance."""
+
+
+
         try:
             # Extract features for prediction
             features = self._extract_prediction_features(
@@ -691,7 +703,7 @@ class EngagementAnalyzer:
         comments = engagement_data.get('comment_texts', [])
         if comments:
             # Generic comment detection
-            generic_comments = ['nice', 'good', 'great', 'wow', 'amazing', '👍', '❤️']
+            generic_comments = ['nice', 'good', 'great', 'wow', 'amazing', '', '']
             generic_count = sum(1 for comment in comments if comment.lower().strip() in generic_comments)
             if generic_count > len(comments) * 0.5:
                 spam_indicators += int(len(comments) * 0.3)

@@ -7,7 +7,7 @@ circuit breaker patterns, and intelligent failure recovery mechanisms.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission from Fahed Mlaiel <mlaiel@live.de> is strictly prohibited.
@@ -225,6 +225,9 @@ class RetryHandler:
 
     async def initialize(self) -> None:
         """Initialize retry handler with required services"""
+
+
+
         try:
             # Initialize Redis connection
             self._redis_client = await aioredis.from_url(
@@ -283,6 +286,9 @@ class RetryHandler:
         Returns:
             Retry scheduling result
         """
+
+
+
         try:
             # Get retry policy
             retry_policy = await self._get_retry_policy(platform, event_type)
@@ -372,6 +378,9 @@ class RetryHandler:
         Returns:
             Retry execution result
         """
+
+
+
         try:
             # Get retry attempt
             retry_attempt = await self._get_retry_attempt(attempt_id)
@@ -497,6 +506,9 @@ class RetryHandler:
         Returns:
             Cancellation result
         """
+
+
+
         try:
             cancelled_attempts = []
             
@@ -556,6 +568,9 @@ class RetryHandler:
         Returns:
             Retry status information
         """
+
+
+
         try:
             # Query retry attempts from database
             query = self.db_session.query(RetryAttemptModel)
@@ -670,6 +685,9 @@ class RetryHandler:
         Returns:
             Policy ID
         """
+
+
+
         try:
             # Create retry policy
             policy = RetryPolicy(
@@ -710,6 +728,9 @@ class RetryHandler:
 
     async def health_check(self) -> Dict[str, Any]:
         """Comprehensive health check for retry handler"""
+
+
+
         return {
             'status': 'healthy',
             'redis_connected': self._redis_client is not None,
@@ -725,6 +746,9 @@ class RetryHandler:
 
     async def shutdown(self) -> None:
         """Graceful shutdown of retry handler"""
+
+
+
         try:
             logger.info("Shutting down RetryHandler")
             
@@ -1021,6 +1045,9 @@ class RetryHandler:
     
     async def _get_retry_attempt(self, attempt_id: str) -> Optional[RetryAttempt]:
         """Get retry attempt from database - placeholder"""
+
+
+
         return None
     
     async def _add_to_retry_queue(self, retry_attempt: RetryAttempt) -> None:

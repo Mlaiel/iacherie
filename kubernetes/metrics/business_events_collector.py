@@ -5,7 +5,7 @@ Enterprise business metrics collection for content protection and monetization
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 
-⚠️  AVERTISSEMENT LÉGAL STRICT ⚠️
+  AVERTISSEMENT LÉGAL STRICT 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et fera l'objet de poursuites 
@@ -349,6 +349,9 @@ class BusinessEventsCollector:
     
     async def _store_events(self, events: List[BusinessEvent]) -> None:
         """Store events in database"""
+
+
+
         try:
             async with get_database_session() as session:
                 for event in events:
@@ -378,6 +381,9 @@ class BusinessEventsCollector:
     
     async def _process_realtime_metrics(self, events: List[BusinessEvent]) -> None:
         """Process real-time metrics from events"""
+
+
+
         try:
             # Group events by type and tenant
             event_groups = defaultdict(lambda: defaultdict(list))
@@ -444,6 +450,9 @@ class BusinessEventsCollector:
     
     async def _cache_events_for_aggregation(self, events: List[BusinessEvent]) -> None:
         """Cache events for later aggregation"""
+
+
+
         try:
             # Group events by hour for aggregation
             current_hour = datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0)
@@ -467,6 +476,9 @@ class BusinessEventsCollector:
         time_range: str = "24h"
     ) -> Dict[str, Any]:
         """Get business metrics summary for tenant"""
+
+
+
         try:
             # Parse time range
             if time_range == "1h":
@@ -520,6 +532,9 @@ class BusinessEventsCollector:
         time_range: str = "24h"
     ) -> Dict[str, Any]:
         """Get platform-specific performance metrics"""
+
+
+
         try:
             if time_range == "1h":
                 start_time = datetime.now(timezone.utc) - timedelta(hours=1)

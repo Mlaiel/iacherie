@@ -1,5 +1,5 @@
 """
-🏢 Repositories Index - IA Influencer Agent Platform Enterprise
+ Repositories Index - IA Influencer Agent Platform Enterprise
 ===============================================================
 Module: backend/data_management/repositories/index.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Repositories Index - Production-Ready
 Responsibility: Central repository registry and factory patterns
 =====================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
@@ -113,6 +113,9 @@ class RepositoryFactory:
         **kwargs
     ) -> BaseRepository:
         """Create a repository instance with dependency injection"""
+
+
+
         try:
             # Normalize repository type
             if isinstance(repo_type, RepositoryType):
@@ -157,6 +160,9 @@ class RepositoryFactory:
         **kwargs
     ) -> AsyncBaseRepository:
         """Create an async repository instance with dependency injection"""
+
+
+
         try:
             # Normalize repository type
             if isinstance(repo_type, RepositoryType):
@@ -211,6 +217,9 @@ class RepositoryFactory:
         shared_config: Optional[Dict[str, Any]] = None
     ) -> Dict[str, BaseRepository]:
         """Create a complete suite of repositories with shared configuration"""
+
+
+
         try:
             repositories = {}
             
@@ -235,6 +244,9 @@ class RepositoryFactory:
         shared_config: Optional[Dict[str, Any]] = None
     ) -> Dict[str, AsyncBaseRepository]:
         """Create a complete suite of async repositories with shared configuration"""
+
+
+
         try:
             repositories = {}
             
@@ -255,6 +267,9 @@ class RepositoryFactory:
 
     async def check_repositories_health(self) -> Dict[str, RepositoryHealth]:
         """Check health status of all repositories"""
+
+
+
         try:
             health_results = {}
             
@@ -278,6 +293,9 @@ class RepositoryFactory:
 
     def collect_repositories_metrics(self) -> Dict[str, RepositoryMetrics]:
         """Collect performance metrics from all repositories"""
+
+
+
         try:
             metrics_results = {}
             
@@ -305,6 +323,9 @@ class RepositoryFactory:
         optimization_config: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Optimize repository performance based on metrics"""
+
+
+
         try:
             repo_type_str = repo_type.value if isinstance(repo_type, RepositoryType) else repo_type.lower()
             
@@ -328,6 +349,9 @@ class RepositoryFactory:
 
     def shutdown_repositories(self):
         """Gracefully shutdown all repositories"""
+
+
+
         try:
             # Shutdown sync repositories
             for repo_type, repository in self.repositories.items():

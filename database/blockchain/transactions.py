@@ -151,6 +151,9 @@ class GasEstimator:
         Returns:
             Dictionary with gas price recommendations
         """
+
+
+
         try:
             w3 = self.web3_instances.get(network)
             if not w3:
@@ -207,6 +210,9 @@ class GasEstimator:
         Returns:
             Optimized gas limit
         """
+
+
+
         try:
             # Estimate gas usage
             estimated_gas = w3.eth.estimate_gas(transaction_data)
@@ -286,6 +292,9 @@ class TransactionProcessor:
         Returns:
             Transaction hash
         """
+
+
+
         try:
             w3 = self.web3_instances.get(network)
             if not w3:
@@ -398,6 +407,9 @@ class TransactionProcessor:
         Returns:
             Transaction result with confirmation details
         """
+
+
+
         try:
             w3 = self.web3_instances.get(network)
             if not w3:
@@ -484,6 +496,9 @@ class TransactionProcessor:
 
     async def _retry_transaction(self, original_hash: str, pending_tx: PendingTransaction) -> str:
         """Retry a failed or stuck transaction with higher gas price."""
+
+
+
         try:
             # Increase gas price by 20%
             if pending_tx.request.gas_config:
@@ -549,10 +564,16 @@ class TransactionProcessor:
 
     def get_transaction_by_hash(self, transaction_hash: str) -> Optional[TransactionResult]:
         """Get transaction result by hash."""
+
+
+
         return self.transaction_history.get(transaction_hash)
 
     def get_transactions_by_type(self, transaction_type: TransactionType) -> List[TransactionResult]:
         """Get all transactions of a specific type."""
+
+
+
         return [
             result for result in self.transaction_history.values()
             if result.transaction_type == transaction_type

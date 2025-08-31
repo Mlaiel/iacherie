@@ -259,6 +259,9 @@ class TwitterAPIv2:
         
     async def delete_tweet(self, tokens: OAuthTokens, tweet_id: str) -> bool:
         """Delete a tweet"""
+
+
+
         
         try:
             response = await self._make_request("DELETE", f"tweets/{tweet_id}", tokens)
@@ -403,6 +406,9 @@ class TwitterAPIv2:
             
     async def unlike_tweet(self, tokens: OAuthTokens, user_id: str, tweet_id: str) -> bool:
         """Unlike a tweet"""
+
+
+
         
         try:
             response = await self._make_request("DELETE", f"users/{user_id}/likes/{tweet_id}", tokens)
@@ -437,6 +443,9 @@ class TwitterAPIv2:
             
     async def unretweet(self, tokens: OAuthTokens, user_id: str, tweet_id: str) -> bool:
         """Remove retweet"""
+
+
+
         
         try:
             response = await self._make_request("DELETE", f"users/{user_id}/retweets/{tweet_id}", tokens)
@@ -471,6 +480,9 @@ class TwitterAPIv2:
             
     async def unfollow_user(self, tokens: OAuthTokens, user_id: str, target_user_id: str) -> bool:
         """Unfollow a user"""
+
+
+
         
         try:
             response = await self._make_request("DELETE", f"users/{user_id}/following/{target_user_id}", tokens)

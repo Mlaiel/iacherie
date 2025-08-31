@@ -7,7 +7,7 @@ for multi-platform content protection with legal enforcement capabilities.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission is strictly prohibited and will result in immediate legal action.
@@ -260,35 +260,50 @@ def create_dmca_agent(**kwargs) -> DMCAOrchestrator:
     
     Returns:
         DMCAOrchestrator: Fully configured DMCA orchestration system
-    """    return DMCAOrchestrator(**kwargs)
+    """
+
+
+    return DMCAOrchestrator(**kwargs)
 
 def create_compliance_engine(**kwargs) -> LegalComplianceEngine:
     """    Factory function to create legal compliance engine
     
     Returns:
         LegalComplianceEngine: Configured compliance validation system
-    """    return LegalComplianceEngine(**kwargs)
+    """
+
+
+    return LegalComplianceEngine(**kwargs)
 
 def create_takedown_automation(**kwargs) -> TakedownAutomation:
     """    Factory function to create takedown automation system
     
     Returns:
         TakedownAutomation: Configured automated takedown system
-    """    return TakedownAutomation(**kwargs)
+    """
+
+
+    return TakedownAutomation(**kwargs)
 
 def create_copyright_verification(**kwargs) -> CopyrightVerification:
     """    Factory function to create copyright verification system
     
     Returns:
         CopyrightVerification: Configured ownership verification system
-    """    return CopyrightVerification(**kwargs)
+    """
+
+
+    return CopyrightVerification(**kwargs)
 
 def create_document_generator(**kwargs) -> LegalDocumentGenerator:
     """    Factory function to create legal document generator
     
     Returns:
         LegalDocumentGenerator: Configured document generation system
-    """    return LegalDocumentGenerator(**kwargs)
+    """
+
+
+    return LegalDocumentGenerator(**kwargs)
 
 # Module metadata for enterprise tracking
 MODULE_INFO = {

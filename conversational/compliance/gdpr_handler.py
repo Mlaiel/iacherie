@@ -142,6 +142,9 @@ class GDPRHandler:
     
     def _load_pii_patterns(self) -> Dict[PIICategory, List[Dict[str, Any]]]:
         """Load PII detection patterns"""
+
+
+
         return {
             PIICategory.EMAIL: [
                 {
@@ -223,6 +226,9 @@ class GDPRHandler:
     
     def _load_lawful_basis_rules(self) -> Dict[str, Dict[str, Any]]:
         """Load GDPR lawful basis rules"""
+
+
+
         return {
             "consent": {
                 "requires_explicit_consent": True,
@@ -265,6 +271,9 @@ class GDPRHandler:
     
     def _load_retention_policies(self) -> Dict[DataProcessingPurpose, Dict[str, Any]]:
         """Load data retention policies by purpose"""
+
+
+
         return {
             DataProcessingPurpose.CONVERSATIONAL_AI: {
                 "retention_period_days": 365,
@@ -811,6 +820,9 @@ class GDPRHandler:
         user_id: Optional[int]
     ) -> None:
         """Store GDPR assessment results"""
+
+
+
         try:
             query = """
                 INSERT INTO gdpr_assessments 
@@ -849,6 +861,9 @@ class GDPRHandler:
         details: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Process data subject rights requests"""
+
+
+
         try:
             self.logger.info(f"Processing {request_type.value} request for user {user_id}")
             
@@ -879,6 +894,9 @@ class GDPRHandler:
     
     async def _process_access_request(self, user_id: int, details: Dict[str, Any]) -> Dict[str, Any]:
         """Process data access request (Article 15)"""
+
+
+
         try:
             # Gather all personal data for the user
             user_data = await self.db_manager.fetch_all(
@@ -923,6 +941,9 @@ class GDPRHandler:
     
     async def _process_erasure_request(self, user_id: int, details: Dict[str, Any]) -> Dict[str, Any]:
         """Process data erasure request (Article 17)"""
+
+
+
         try:
             # Check if erasure is legally permissible
             legal_obligations = await self.db_manager.fetch_all(
@@ -984,6 +1005,9 @@ class GDPRHandler:
     
     async def _process_portability_request(self, user_id: int, details: Dict[str, Any]) -> Dict[str, Any]:
         """Process data portability request (Article 20)"""
+
+
+
         try:
             # Export data in machine-readable format
             portable_data = await self._generate_portable_data_export(user_id)
@@ -1031,6 +1055,9 @@ class GDPRHandler:
         consent_evidence: Dict[str, Any]
     ) -> bool:
         """Grant user consent for specific processing purpose"""
+
+
+
         try:
             consent_record = ConsentRecord(
                 user_id=user_id,
@@ -1071,6 +1098,9 @@ class GDPRHandler:
     
     async def withdraw_consent(self, user_id: int, purpose: DataProcessingPurpose) -> bool:
         """Withdraw user consent for specific processing purpose"""
+
+
+
         try:
             await self.db_manager.execute(
                 """
@@ -1099,6 +1129,9 @@ class GDPRHandler:
     
     async def get_gdpr_compliance_metrics(self, days: int = 30) -> Dict[str, Any]:
         """Get GDPR compliance metrics and statistics"""
+
+
+
         try:
             # Overall compliance metrics
             compliance_query = """

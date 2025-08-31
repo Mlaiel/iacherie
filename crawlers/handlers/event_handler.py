@@ -140,6 +140,9 @@ class Event:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert event to dictionary."""
+
+
+
         return {
             'event_id': self.event_id,
             'event_type': self.event_type.value,
@@ -159,6 +162,9 @@ class Event:
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'Event':
         """Create event from dictionary."""
+
+
+
         return cls(
             event_id=data['event_id'],
             event_type=EventType(data['event_type']),
@@ -198,6 +204,9 @@ class EventHandler:
         Returns:
             True if handled successfully, False otherwise
         """
+
+
+
         try:
             # Basic event handling implementation
             logger.info(f"Handling event {event.event_id} of type {event.event_type} in {self.name}")
@@ -253,6 +262,9 @@ class EventHandler:
         Returns:
             True if can handle, False otherwise
         """
+
+
+
         return self.is_active
     
     def update_stats(self, success: bool):
@@ -279,6 +291,9 @@ class AsyncEventHandler(EventHandler):
     
     async def handle(self, event: Event) -> bool:
         """Execute the async handler function."""
+
+
+
         try:
             result = await self.handler_func(event)
             self.update_stats(True)
@@ -316,6 +331,9 @@ class SyncEventHandler(EventHandler):
     
     async def handle(self, event: Event) -> bool:
         """Execute the sync handler function in thread pool."""
+
+
+
         try:
             loop = asyncio.get_event_loop()
             result = await loop.run_in_executor(
@@ -359,6 +377,9 @@ class EventQueue:
         Returns:
             True if enqueued successfully
         """
+
+
+
         try:
             # Serialize event
             event_data = json.dumps(event.to_dict())
@@ -388,6 +409,9 @@ class EventQueue:
         Returns:
             Next event or None if timeout
         """
+
+
+
         try:
             # Get highest priority event (highest score)
             result = await self.redis.bzpopmax(self.queue_key, timeout)
@@ -417,6 +441,9 @@ class EventQueue:
     
     async def mark_completed(self, event_id: str) -> bool:
         """Mark event as completed and remove from processing."""
+
+
+
         try:
             await self.redis.hdel(self.processing_key, event_id)
             await self._update_stats('completed')
@@ -427,6 +454,9 @@ class EventQueue:
     
     async def mark_failed(self, event: Event, error: str) -> bool:
         """Mark event as failed and handle retry logic."""
+
+
+
         try:
             # Remove from processing
             await self.redis.hdel(self.processing_key, event.event_id)
@@ -466,6 +496,9 @@ class EventQueue:
     
     async def get_queue_stats(self) -> Dict[str, Any]:
         """Get queue statistics."""
+
+
+
         try:
             pending = await self.redis.zcard(self.queue_key)
             processing = await self.redis.hlen(self.processing_key)
@@ -490,6 +523,9 @@ class EventQueue:
     
     async def _update_stats(self, operation: str):
         """Update queue statistics."""
+
+
+
         try:
             await self.redis.hincrby(self.stats_key, operation, 1)
         except Exception as e:
@@ -519,6 +555,9 @@ class EventRegistry:
         Returns:
             True if registered successfully
         """
+
+
+
         try:
             async with self._lock:
                 # Check for duplicate handler IDs
@@ -546,6 +585,9 @@ class EventRegistry:
     
     async def unregister_handler(self, handler_id: str) -> bool:
         """Unregister an event handler."""
+
+
+
         try:
             async with self._lock:
                 if handler_id not in self.handlers:
@@ -567,6 +609,9 @@ class EventRegistry:
     
     async def get_handlers_for_event(self, event: Event) -> List[EventHandler]:
         """Get all handlers that can process the given event."""
+
+
+
         try:
             eligible_handlers = []
             
@@ -633,6 +678,9 @@ class EventDispatcher:
         Returns:
             True if dispatched successfully
         """
+
+
+
         try:
             # Validate event
             self._validate_event(event)
@@ -667,6 +715,9 @@ class EventDispatcher:
     
     async def _log_event(self, event: Event):
         """Log event to database."""
+
+
+
         try:
             async with async_session() as session:
                 event_log = EventLog(
@@ -817,6 +868,9 @@ async def create_content_event(
     priority: EventPriority = EventPriority.NORMAL
 ) -> Event:
     """Create a content-related event."""
+
+
+
     return Event(
         event_id=str(uuid.uuid4()),
         event_type=event_type,
@@ -837,6 +891,9 @@ async def create_platform_event(
     priority: EventPriority = EventPriority.NORMAL
 ) -> Event:
     """Create a platform-related event."""
+
+
+
     return Event(
         event_id=str(uuid.uuid4()),
         event_type=event_type,

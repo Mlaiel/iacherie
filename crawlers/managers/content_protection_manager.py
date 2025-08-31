@@ -16,7 +16,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  IMPORTANT LEGAL NOTICE ⚠️
+  IMPORTANT LEGAL NOTICE 
 This code is the intellectual property of Fahed Mlaiel. Any unauthorized use,
 reproduction, distribution, or commercialization without explicit written 
 permission is strictly prohibited and will result in legal action.
@@ -229,6 +229,9 @@ class ContentProtectionManager:
     
     def _initialize_ml_models(self):
         """Initialize machine learning models for content analysis."""
+
+
+
         try:
             # Initialize text similarity model
             self.text_model = SentenceTransformer('all-MiniLM-L6-v2')
@@ -246,6 +249,9 @@ class ContentProtectionManager:
     
     def _initialize_vector_databases(self):
         """Initialize FAISS vector databases for similarity matching."""
+
+
+
         try:
             # Audio fingerprint vectors (512 dimensions)
             self.audio_index = faiss.IndexFlatIP(512)
@@ -285,6 +291,9 @@ class ContentProtectionManager:
         Returns:
             str: Content protection ID
         """
+
+
+
         try:
             content_id = str(uuid.uuid4())
             start_time = time.time()
@@ -575,6 +584,9 @@ class ContentProtectionManager:
         Returns:
             List[InfringementMatch]: List of potential infringement matches
         """
+
+
+
         try:
             matches = []
             
@@ -658,6 +670,9 @@ class ContentProtectionManager:
         fingerprint_type: FingerprintType
     ) -> float:
         """Calculate similarity between two fingerprints."""
+
+
+
         try:
             if fingerprint_type in [FingerprintType.CONTENT_ID, FingerprintType.SPECTRAL_HASH, FingerprintType.VISUAL_HASH]:
                 # Exact hash comparison
@@ -721,6 +736,9 @@ class ContentProtectionManager:
         Returns:
             TakedownRequestData: Generated takedown request
         """
+
+
+
         try:
             request_id = str(uuid.uuid4())
             
@@ -765,6 +783,9 @@ class ContentProtectionManager:
     
     async def _store_protection_record(self, record: ContentProtectionRecord):
         """Store content protection record in database."""
+
+
+
         try:
             async with get_database_session() as db:
                 await db.execute(
@@ -806,6 +827,9 @@ class ContentProtectionManager:
     
     async def _store_takedown_request(self, request: TakedownRequestData):
         """Store takedown request in database."""
+
+
+
         try:
             async with get_database_session() as db:
                 await db.execute(
@@ -849,6 +873,9 @@ class ContentProtectionManager:
     
     async def _add_to_vector_database(self, record: ContentProtectionRecord):
         """Add content fingerprints to vector database for fast similarity search."""
+
+
+
         try:
             # This would add vector representations to FAISS indexes
             # Implementation depends on the specific vector format used
@@ -859,10 +886,16 @@ class ContentProtectionManager:
     
     async def get_protection_status(self, content_id: str) -> Optional[ContentProtectionRecord]:
         """Get protection status for specific content."""
+
+
+
         return self.protected_content.get(content_id)
     
     async def update_protection_level(self, content_id: str, new_level: ProtectionLevel) -> bool:
         """Update protection level for content."""
+
+
+
         try:
             if content_id in self.protected_content:
                 self.protected_content[content_id].protection_level = new_level
@@ -884,6 +917,9 @@ class ContentProtectionManager:
     
     async def close(self):
         """Close and cleanup resources."""
+
+
+
         try:
             # Clear memory caches
             self.protected_content.clear()
@@ -898,6 +934,9 @@ class ContentProtectionManager:
 # Factory functions
 async def create_content_protection_manager(config: Optional[ProtectionConfig] = None) -> ContentProtectionManager:
     """Create and initialize content protection manager."""
+
+
+
     return ContentProtectionManager(config)
 
 

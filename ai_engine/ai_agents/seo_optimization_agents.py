@@ -96,6 +96,9 @@ class SEOOptimizerAgent(BaseAIAgent):
         Returns:
             Comprehensive SEO analysis
         """
+
+
+
         try:
             content_type = content_data.get('type', 'video')
             title = content_data.get('title', '')
@@ -189,6 +192,9 @@ class SEOOptimizerAgent(BaseAIAgent):
         Returns:
             List of keyword opportunities ranked by potential
         """
+
+
+
         try:
             niche = creator_profile.get('niche', 'general')
             audience_demographics = creator_profile.get('audience_demographics', {})
@@ -261,6 +267,9 @@ class SEOOptimizerAgent(BaseAIAgent):
         Returns:
             Optimized content recommendations
         """
+
+
+
         try:
             content_type = content_data.get('type', 'video')
             current_title = content_data.get('title', '')
@@ -921,7 +930,7 @@ class SEOOptimizerAgent(BaseAIAgent):
         # Add call-to-action if missing
         cta_phrases = ['subscribe', 'like', 'comment', 'share']
         if not any(phrase in optimized_desc.lower() for phrase in cta_phrases):
-            optimized_desc += "\n\n👍 Like this video and subscribe for more content!"
+            optimized_desc += "\n\n Like this video and subscribe for more content!"
         
         return optimized_desc
 

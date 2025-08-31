@@ -1,11 +1,11 @@
 """
-🔧 Deployment Orchestrator - IA-Influencer-Agent CI/CD Enterprise
+ Deployment Orchestrator - IA-Influencer-Agent CI/CD Enterprise
 ================================================================
 Team Expertise: DevOps Engineer + Kubernetes Specialist + Cloud Architect + ML Engineer
 Created: 2025-08-24
 Author: Fahed Mlaiel (mlaiel@live.de)
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copy, modification or distribution without written 
 permission is strictly prohibited and will result in legal action.
@@ -115,6 +115,9 @@ class DeploymentOrchestrator:
         
     async def initialize(self) -> bool:
         """Initialize orchestrator with Kubernetes client"""
+
+
+
         try:
             # Load Kubernetes configuration
             try:
@@ -131,14 +134,17 @@ class DeploymentOrchestrator:
             await self._verify_cluster_connection()
             
             self.initialized = True
-            self.logger.info("✅ Deployment orchestrator initialized")
+            self.logger.info(" Deployment orchestrator initialized")
             return True
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize orchestrator: {e}")
+            self.logger.error(f" Failed to initialize orchestrator: {e}")
             return False
     
     async def _verify_cluster_connection(self) -> None:
         """Verify Kubernetes cluster connection"""
+
+
+
         try:
             version = self.core_v1.get_code()
             self.logger.info(f"Connected to Kubernetes cluster version: {version.git_version}")
@@ -194,7 +200,7 @@ class DeploymentOrchestrator:
             if config.rollback_enabled:
                 self.rollback_stack.append(config)
             
-            self.logger.info(f"✅ Deployment {deployment_id} completed successfully")
+            self.logger.info(f" Deployment {deployment_id} completed successfully")
             
             if progress_callback:
                 await progress_callback(result)
@@ -209,7 +215,7 @@ class DeploymentOrchestrator:
             result.error_message = str(e)
             
             self.deployment_history.append(result)
-            self.logger.error(f"❌ Deployment {deployment_id} failed: {e}")
+            self.logger.error(f" Deployment {deployment_id} failed: {e}")
             
             # Attempt auto-rollback if enabled
             if config.rollback_enabled and config.auto_rollback_conditions:
@@ -227,6 +233,9 @@ class DeploymentOrchestrator:
         progress_callback: Optional[Callable] = None
     ) -> None:
         """Execute blue-green deployment strategy"""
+
+
+
         try:
             # Step 1: Deploy to green environment
             await self._deploy_green_environment(config)
@@ -257,6 +266,9 @@ class DeploymentOrchestrator:
         progress_callback: Optional[Callable] = None
     ) -> None:
         """Execute canary deployment strategy"""
+
+
+
         try:
             traffic_split = config.traffic_split or {"canary": 10, "stable": 90}
             
@@ -291,6 +303,9 @@ class DeploymentOrchestrator:
         progress_callback: Optional[Callable] = None
     ) -> None:
         """Execute rolling deployment strategy"""
+
+
+
         try:
             # Update deployment with rolling update strategy
             deployment_manifest = await self._create_deployment_manifest(config)
@@ -322,6 +337,9 @@ class DeploymentOrchestrator:
         progress_callback: Optional[Callable] = None
     ) -> None:
         """Execute recreate deployment strategy"""
+
+
+
         try:
             # Step 1: Scale down existing deployment
             await self._scale_deployment(config, replicas=0)
@@ -496,6 +514,9 @@ class DeploymentOrchestrator:
     
     async def _apply_kubernetes_manifest(self, manifest: Dict[str, Any], namespace: str) -> None:
         """Apply Kubernetes manifest"""
+
+
+
         try:
             kind = manifest["kind"]
             name = manifest["metadata"]["name"]
@@ -566,6 +587,9 @@ class DeploymentOrchestrator:
     
     async def _verify_deployment_health(self, config: DeploymentConfiguration, result: DeploymentResult) -> None:
         """Verify deployment health status"""
+
+
+
         try:
             # Get pod status
             pods = self.core_v1.list_namespaced_pod(
@@ -601,6 +625,9 @@ class DeploymentOrchestrator:
     
     async def _get_service_endpoints(self, config: DeploymentConfiguration) -> List[str]:
         """Get service endpoint URLs"""
+
+
+
         try:
             services = self.core_v1.list_namespaced_service(
                 namespace=config.target.namespace,
@@ -624,6 +651,9 @@ class DeploymentOrchestrator:
     
     async def _ensure_namespace_exists(self, namespace: str) -> None:
         """Ensure Kubernetes namespace exists"""
+
+
+
         try:
             self.core_v1.read_namespace(name=namespace)
         except ApiException as e:
@@ -640,6 +670,9 @@ class DeploymentOrchestrator:
     
     async def rollback_deployment(self, deployment_id: str) -> DeploymentResult:
         """Rollback to previous deployment"""
+
+
+
         try:
             # Find previous configuration from rollback stack
             previous_config = None
@@ -684,6 +717,9 @@ class DeploymentOrchestrator:
     
     async def _attempt_auto_rollback(self, config: DeploymentConfiguration, result: DeploymentResult) -> None:
         """Attempt automatic rollback on deployment failure"""
+
+
+
         try:
             self.logger.info(f"Attempting auto-rollback for deployment {config.deployment_id}")
             result.status = DeploymentStatus.ROLLING_BACK
@@ -702,6 +738,9 @@ class DeploymentOrchestrator:
     
     def get_deployment_history(self, limit: int = 10) -> List[DeploymentResult]:
         """Get deployment history"""
+
+
+
         return self.deployment_history[-limit:]
     
     def get_deployment_statistics(self) -> Dict[str, Any]:

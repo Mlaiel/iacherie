@@ -9,7 +9,7 @@ content understanding, classification, and quality assessment.
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED 
 This software is protected by international copyright laws.
 Contact: mlaiel@live.de for licensing inquiries.
 """
@@ -170,6 +170,9 @@ class ContentAnalysisDeployment:
     
     def _initialize_clients(self) -> None:
         """Initialize Kubernetes, Docker, and service clients"""
+
+
+
         try:
             # Kubernetes client
             config.load_incluster_config()
@@ -197,6 +200,9 @@ class ContentAnalysisDeployment:
     
     def _initialize_ai_models(self) -> None:
         """Initialize AI models for content analysis"""
+
+
+
         try:
             # Text analysis models
             self.text_classifier = pipeline("text-classification", 
@@ -229,6 +235,9 @@ class ContentAnalysisDeployment:
         Returns:
             Infrastructure deployment summary
         """
+
+
+
         try:
             self.status = "deploying_infrastructure"
             logger.info("Deploying content analysis infrastructure")
@@ -322,6 +331,9 @@ class ContentAnalysisDeployment:
         Returns:
             Analysis results with insights and metrics
         """
+
+
+
         try:
             content_url = analysis_request.get("content_url")
             content_type = ContentType(analysis_request.get("content_type"))
@@ -437,6 +449,9 @@ class ContentAnalysisDeployment:
         Returns:
             Batch analysis results
         """
+
+
+
         try:
             batch_id = f"batch_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
             logger.info(f"Starting batch content analysis: {batch_id}")
@@ -629,6 +644,9 @@ class ContentAnalysisDeployment:
     
     async def _validate_and_prepare_content(self, content_url: str, content_type: ContentType) -> Dict[str, Any]:
         """Validate and prepare content for analysis"""
+
+
+
         try:
             content_info = {
                 "url": content_url,
@@ -712,6 +730,9 @@ class ContentAnalysisDeployment:
     
     async def _analyze_classification(self, content_info: Dict[str, Any]) -> Dict[str, Any]:
         """Perform content classification analysis"""
+
+
+
         try:
             if content_info["type"] == "text":
                 # Text classification using transformer model
@@ -767,6 +788,9 @@ class ContentAnalysisDeployment:
     
     async def _analyze_sentiment(self, content_info: Dict[str, Any]) -> Dict[str, Any]:
         """Perform sentiment analysis"""
+
+
+
         try:
             if content_info["type"] in ["text", "video", "audio"]:
                 # For video/audio, this would analyze transcribed text
@@ -802,6 +826,9 @@ class ContentAnalysisDeployment:
     
     async def _analyze_objects(self, content_info: Dict[str, Any]) -> Dict[str, Any]:
         """Perform object detection analysis"""
+
+
+
         try:
             if content_info["type"] in ["image", "video"]:
                 return {
@@ -843,6 +870,9 @@ class ContentAnalysisDeployment:
     
     async def _analyze_transcription(self, content_info: Dict[str, Any]) -> Dict[str, Any]:
         """Perform audio transcription"""
+
+
+
         try:
             if content_info["type"] in ["audio", "video"]:
                 # Using Whisper for transcription
@@ -890,6 +920,9 @@ class ContentAnalysisDeployment:
     
     async def _analyze_quality(self, content_info: Dict[str, Any]) -> Dict[str, Any]:
         """Perform quality assessment"""
+
+
+
         try:
             if content_info["type"] == "video":
                 return {
@@ -980,6 +1013,9 @@ class ContentAnalysisDeployment:
     
     async def _analyze_moderation(self, content_info: Dict[str, Any]) -> Dict[str, Any]:
         """Perform content moderation analysis"""
+
+
+
         try:
             return {
                 "status": "success",
@@ -1015,6 +1051,9 @@ class ContentAnalysisDeployment:
     
     async def _generate_content_insights(self, content_info: Dict[str, Any], analysis_results: Dict[str, Any]) -> Dict[str, Any]:
         """Generate comprehensive content insights"""
+
+
+
         try:
             insights = {
                 "content_summary": {
@@ -1061,6 +1100,9 @@ class ContentAnalysisDeployment:
     
     async def _predict_engagement(self, content_info: Dict[str, Any], analysis_results: Dict[str, Any]) -> Dict[str, Any]:
         """Predict content engagement metrics"""
+
+
+
         try:
             # Simulate engagement prediction based on analysis results
             base_score = 0.7
@@ -1140,6 +1182,9 @@ class ContentAnalysisDeployment:
     
     async def get_analysis_metrics(self) -> Dict[str, Any]:
         """Get comprehensive content analysis metrics"""
+
+
+
         try:
             completed_analyses = [job for job in self.analysis_jobs.values() if job.get("status") == "completed"]
             
@@ -1171,6 +1216,9 @@ class ContentAnalysisDeployment:
     
     async def _ensure_content_analysis_namespace(self) -> None:
         """Create content analysis namespace"""
+
+
+
         try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
@@ -1228,6 +1276,9 @@ class ContentAnalysisDeployment:
     
     async def _validate_analysis_infrastructure(self) -> bool:
         """Validate content analysis infrastructure deployment"""
+
+
+
         try:
             # Check essential services
             essential_services = [
@@ -1256,6 +1307,9 @@ class ContentAnalysisDeployment:
     
     async def _cleanup_failed_infrastructure(self) -> None:
         """Clean up failed content analysis infrastructure"""
+
+
+
         try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
@@ -1265,6 +1319,9 @@ class ContentAnalysisDeployment:
     
     async def cleanup(self) -> None:
         """Clean up entire content analysis infrastructure"""
+
+
+
         try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)

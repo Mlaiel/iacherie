@@ -286,6 +286,9 @@ class TestTimerContext:
         
     def test_timer_context_exception_handling(self):
         """Test timer context when exception occurs"""
+
+
+
         try:
             with TimerContext(self.collector, "failed_operation"):
                 time.sleep(0.01)

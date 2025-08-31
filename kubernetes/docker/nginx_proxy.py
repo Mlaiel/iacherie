@@ -1,11 +1,11 @@
 """
-🌐 Nginx Proxy Docker Configuration - IA-Influencer-Agent Platform
+ Nginx Proxy Docker Configuration - IA-Influencer-Agent Platform
 ==================================================================
 Expert: DevOps Engineer + Network Specialist + Load Balancing Expert
 Creator: Fahed Mlaiel <mlaiel@live.de>
 ==================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL 
 Tout vol, copie ou utilisation non autorisée de ce code source,
 de ce concept ou de cette propriété intellectuelle sans
 l'autorisation écrite explicite de Fahed Mlaiel est strictement
@@ -103,6 +103,9 @@ class NginxProxyDockerConfig:
     
     def generate_dockerfile(self) -> str:
         """Generate Dockerfile for Nginx proxy"""
+
+
+
         return f"""
 FROM {self.image_name}:{self.image_tag}
 
@@ -168,6 +171,9 @@ CMD ["nginx", "-g", "daemon off;"]
 
     def generate_docker_compose_service(self) -> Dict[str, Any]:
         """Generate Docker Compose service configuration"""
+
+
+
         return {
             "build": {
                 "context": ".",
@@ -218,6 +224,9 @@ CMD ["nginx", "-g", "daemon off;"]
     
     def generate_nginx_config(self) -> str:
         """Generate main nginx.conf"""
+
+
+
         return f"""
 # IA-Influencer Nginx Configuration
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -386,6 +395,9 @@ upstream {service_name} {{
 
     def generate_server_config(self) -> str:
         """Generate main server configuration"""
+
+
+
         return f"""
 # IA-Influencer Main Server Configuration
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -605,6 +617,9 @@ server {{
 
     def generate_security_config(self) -> str:
         """Generate security configuration"""
+
+
+
         return """
 # IA-Influencer Nginx Security Configuration
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -721,6 +736,9 @@ server {
 
     def generate_monitoring_config(self) -> str:
         """Generate monitoring configuration"""
+
+
+
         return """
 # IA-Influencer Nginx Monitoring Configuration
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -772,7 +790,7 @@ SSL_DIR="/etc/ssl"
 CERT_DIR="$SSL_DIR/certs"
 KEY_DIR="$SSL_DIR/private"
 
-echo "🔐 Generating SSL certificates for $DOMAIN..."
+echo " Generating SSL certificates for $DOMAIN..."
 
 # Create directories
 mkdir -p "$CERT_DIR" "$KEY_DIR"
@@ -793,7 +811,7 @@ openssl dhparam -out "$CERT_DIR/dhparam.pem" 2048
 chmod 644 "$CERT_DIR"/*
 chmod 600 "$KEY_DIR"/*
 
-echo "✅ SSL certificates generated successfully!"
+echo " SSL certificates generated successfully!"
 echo "Certificate: $CERT_DIR/ia-influencer.crt"
 echo "Private key: $KEY_DIR/ia-influencer.key"
 echo "DH params: $CERT_DIR/dhparam.pem"
@@ -804,42 +822,42 @@ echo "DH params: $CERT_DIR/dhparam.pem"
 # Nginx Configuration Validator
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
-echo "🔍 Validating Nginx configuration..."
+echo " Validating Nginx configuration..."
 
 # Test nginx configuration
 if nginx -t -c /etc/nginx/nginx.conf; then
-    echo "✅ Nginx configuration is valid"
+    echo " Nginx configuration is valid"
 else
-    echo "❌ Nginx configuration has errors"
+    echo " Nginx configuration has errors"
     exit 1
 fi
 
 # Check SSL certificates
 if [ -f "/etc/ssl/certs/ia-influencer.crt" ] && [ -f "/etc/ssl/private/ia-influencer.key" ]; then
-    echo "✅ SSL certificates found"
+    echo " SSL certificates found"
     
     # Verify certificate
     if openssl x509 -in /etc/ssl/certs/ia-influencer.crt -text -noout > /dev/null 2>&1; then
-        echo "✅ SSL certificate is valid"
+        echo " SSL certificate is valid"
     else
-        echo "❌ SSL certificate is invalid"
+        echo " SSL certificate is invalid"
         exit 1
     fi
 else
-    echo "⚠️  SSL certificates not found"
+    echo "  SSL certificates not found"
 fi
 
 # Check upstream services
-echo "🔍 Checking upstream services..."
+echo " Checking upstream services..."
 for service in api-gateway backend-services ai-engines fingerprinting-engine content-protection monetization-engine; do
     if curl -f --connect-timeout 5 "http://$service:8000/health" > /dev/null 2>&1; then
-        echo "✅ $service is healthy"
+        echo " $service is healthy"
     else
-        echo "⚠️  $service is not responding"
+        echo "  $service is not responding"
     fi
 done
 
-echo "🏁 Configuration validation completed"
+echo " Configuration validation completed"
 """
 
         # Log analyzer
@@ -850,35 +868,35 @@ echo "🏁 Configuration validation completed"
 LOG_FILE=${1:-/var/log/nginx/access.log}
 LINES=${2:-1000}
 
-echo "📊 Analyzing Nginx logs: $LOG_FILE (last $LINES lines)"
+echo " Analyzing Nginx logs: $LOG_FILE (last $LINES lines)"
 
 if [ ! -f "$LOG_FILE" ]; then
-    echo "❌ Log file not found: $LOG_FILE"
+    echo " Log file not found: $LOG_FILE"
     exit 1
 fi
 
 echo ""
-echo "🔝 Top 10 IP addresses:"
+echo " Top 10 IP addresses:"
 tail -n "$LINES" "$LOG_FILE" | awk '{print $1}' | sort | uniq -c | sort -nr | head -10
 
 echo ""
-echo "🔝 Top 10 requested URLs:"
+echo " Top 10 requested URLs:"
 tail -n "$LINES" "$LOG_FILE" | awk '{print $7}' | sort | uniq -c | sort -nr | head -10
 
 echo ""
-echo "📈 Status code distribution:"
+echo " Status code distribution:"
 tail -n "$LINES" "$LOG_FILE" | awk '{print $9}' | sort | uniq -c | sort -nr
 
 echo ""
-echo "🕐 Requests by hour:"
+echo " Requests by hour:"
 tail -n "$LINES" "$LOG_FILE" | awk '{print $4}' | cut -d: -f2 | sort | uniq -c
 
 echo ""
-echo "🌍 Top 10 User Agents:"
+echo " Top 10 User Agents:"
 tail -n "$LINES" "$LOG_FILE" | awk -F'"' '{print $6}' | sort | uniq -c | sort -nr | head -10
 
 echo ""
-echo "⚡ Response time statistics:"
+echo " Response time statistics:"
 tail -n "$LINES" "$LOG_FILE" | awk '{print $NF}' | grep -E '^[0-9]+\.[0-9]+$' | awk '
 {
     sum += $1
@@ -895,7 +913,7 @@ END {
 }'
 
 echo ""
-echo "🚨 4xx and 5xx errors:"
+echo " 4xx and 5xx errors:"
 tail -n "$LINES" "$LOG_FILE" | awk '$9 >= 400 {print $0}' | tail -20
 """
 
@@ -963,5 +981,5 @@ tail -n "$LINES" "$LOG_FILE" | awk '$9 >= 400 {print $0}' | tail -20
             script_path.chmod(0o755)
             files_created.append(str(script_path))
         
-        logger.info(f"✅ Nginx proxy configuration saved: {len(files_created)} files")
+        logger.info(f" Nginx proxy configuration saved: {len(files_created)} files")
         return files_created

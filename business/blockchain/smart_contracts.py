@@ -69,6 +69,9 @@ class ContentProtectionContract:
         tx_params: TransactionParams
     ) -> Dict[str, Any]:
         """Register content on blockchain for immutable protection"""
+
+
+
         try:
             self.logger.info(f"Registering content with hash: {content_hash[:16]}...")
             
@@ -121,6 +124,9 @@ class ContentProtectionContract:
     
     async def verify_ownership(self, content_hash: str, claimed_owner: str) -> bool:
         """Verify content ownership on blockchain"""
+
+
+
         try:
             owner = self.contract.functions.getContentOwner(content_hash).call()
             return owner.lower() == claimed_owner.lower()
@@ -130,6 +136,9 @@ class ContentProtectionContract:
     
     async def get_content_info(self, content_hash: str) -> Optional[Dict[str, Any]]:
         """Get content information from blockchain"""
+
+
+
         try:
             content_info = self.contract.functions.getContentInfo(content_hash).call()
             if content_info[0]:  # exists
@@ -167,6 +176,9 @@ class LicensingContract:
         tx_params: TransactionParams
     ) -> Dict[str, Any]:
         """Create automated license for content"""
+
+
+
         try:
             self.logger.info(f"Creating license for content: {content_hash[:16]}...")
             
@@ -219,6 +231,9 @@ class LicensingContract:
         tx_params: TransactionParams
     ) -> Dict[str, Any]:
         """Purchase content license"""
+
+
+
         try:
             # Get license price
             license_info = self.contract.functions.getLicenseInfo(license_id).call()
@@ -251,6 +266,9 @@ class LicensingContract:
     
     async def validate_license(self, license_id: int, user_address: str) -> bool:
         """Validate if user has active license"""
+
+
+
         try:
             return self.contract.functions.hasValidLicense(license_id, user_address).call()
         except Exception as e:
@@ -279,6 +297,9 @@ class RoyaltyDistributionContract:
         tx_params: TransactionParams
     ) -> Dict[str, Any]:
         """Set royalty distribution scheme for content"""
+
+
+
         try:
             self.logger.info(f"Setting royalty scheme for content: {content_hash[:16]}...")
             
@@ -323,6 +344,9 @@ class RoyaltyDistributionContract:
         tx_params: TransactionParams
     ) -> Dict[str, Any]:
         """Distribute royalties to beneficiaries"""
+
+
+
         try:
             amount_wei = int(total_amount * 10**18)
             
@@ -382,6 +406,9 @@ class GovernanceContract:
         tx_params: TransactionParams
     ) -> Dict[str, Any]:
         """Create governance proposal"""
+
+
+
         try:
             function_call = self.contract.functions.createProposal(
                 title,
@@ -424,6 +451,9 @@ class GovernanceContract:
         tx_params: TransactionParams
     ) -> Dict[str, Any]:
         """Cast vote on governance proposal"""
+
+
+
         try:
             function_call = self.contract.functions.castVote(
                 proposal_id,
@@ -473,6 +503,9 @@ class StakingContract:
         tx_params: TransactionParams
     ) -> Dict[str, Any]:
         """Stake tokens for rewards and governance rights"""
+
+
+
         try:
             amount_wei = int(amount * 10**18)
             
@@ -504,6 +537,9 @@ class StakingContract:
     
     async def claim_rewards(self, tx_params: TransactionParams) -> Dict[str, Any]:
         """Claim staking rewards"""
+
+
+
         try:
             function_call = self.contract.functions.claimRewards()
             
@@ -546,6 +582,9 @@ class SmartContractManager:
     
     async def initialize(self) -> None:
         """Initialize smart contract manager and load contract instances"""
+
+
+
         try:
             self.logger.info("Initializing smart contract manager...")
             
@@ -606,6 +645,9 @@ class SmartContractManager:
         deployer_address: str
     ) -> Dict[str, Any]:
         """Deploy new smart contract to network"""
+
+
+
         try:
             self.logger.info(f"Deploying {contract_name} to {network}")
             
@@ -673,6 +715,9 @@ class SmartContractManager:
         upgrader_address: str
     ) -> Dict[str, Any]:
         """Upgrade smart contract to new implementation"""
+
+
+
         try:
             self.logger.info(f"Upgrading {contract_name} on {network}")
             
@@ -779,6 +824,9 @@ class SmartContractManager:
     
     async def _get_optimal_gas_price(self, network: str) -> int:
         """Get optimal gas price for network"""
+
+
+
         try:
             web3 = self.web3_instances[network]
             gas_price = web3.eth.gas_price
@@ -821,6 +869,9 @@ class SmartContractManager:
     
     async def cleanup(self) -> None:
         """Cleanup contract manager resources"""
+
+
+
         try:
             self.logger.info("Cleaning up smart contract manager...")
             self.contracts.clear()

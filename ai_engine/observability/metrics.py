@@ -7,7 +7,7 @@ real-time metrics collection, aggregation, and analysis capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -85,6 +85,9 @@ class MetricSample:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'timestamp': self.timestamp.isoformat(),
             'value': self.value,
@@ -145,6 +148,9 @@ class Counter:
     
     def get_value(self) -> float:
         """Get current counter value"""
+
+
+
         return self._value
     
     def get_samples(self, since: Optional[datetime] = None) -> List[MetricSample]:
@@ -199,6 +205,9 @@ class Gauge:
     
     def get_value(self) -> float:
         """Get current gauge value"""
+
+
+
         return self._value
     
     def get_samples(self, since: Optional[datetime] = None) -> List[MetricSample]:
@@ -249,14 +258,23 @@ class Histogram:
     
     def get_bucket_counts(self) -> Dict[Union[float, str], int]:
         """Get bucket counts"""
+
+
+
         return self._bucket_counts.copy()
     
     def get_sum(self) -> float:
         """Get sum of all observed values"""
+
+
+
         return self._sum
     
     def get_count(self) -> int:
         """Get count of all observations"""
+
+
+
         return self._count
     
     def get_quantile(self, quantile: float) -> Optional[float]:
@@ -304,10 +322,16 @@ class Summary:
     
     def get_sum(self) -> float:
         """Get sum of all observed values"""
+
+
+
         return self._sum
     
     def get_count(self) -> int:
         """Get count of all observations"""
+
+
+
         return self._count
     
     def get_quantiles(self) -> Dict[float, float]:
@@ -456,10 +480,16 @@ class MetricsCollector:
     
     def get_all_metrics(self) -> Dict[str, Union[Counter, Gauge, Histogram, Summary]]:
         """Get all metrics"""
+
+
+
         return self.metrics.copy()
     
     async def start_collection(self):
         """Start metrics collection background tasks"""
+
+
+
         try:
             logger.info("Starting metrics collection")
             self.is_collecting = True
@@ -473,6 +503,9 @@ class MetricsCollector:
     
     async def stop_collection(self):
         """Stop metrics collection background tasks"""
+
+
+
         try:
             logger.info("Stopping metrics collection")
             self.is_collecting = False
@@ -523,6 +556,9 @@ class MetricsCollector:
     
     async def _aggregate_metrics(self):
         """Aggregate metrics for different time intervals"""
+
+
+
         try:
             current_time = datetime.now(timezone.utc)
             aggregation_window = current_time - self.last_aggregation
@@ -605,6 +641,9 @@ class MetricsCollector:
     
     async def _cleanup_old_data(self):
         """Clean up old metrics data"""
+
+
+
         try:
             cutoff_time = datetime.now(timezone.utc) - timedelta(seconds=self.retention_period)
             
@@ -634,6 +673,9 @@ class MetricsCollector:
     
     async def _export_metrics(self):
         """Export metrics to configured backends"""
+
+
+
         try:
             # Prepare metrics data for export
             metrics_data = await self._prepare_export_data()
@@ -750,6 +792,9 @@ class MetricsAggregator:
     
     async def aggregate_metrics(self, metrics_data: Dict[str, Any]) -> Dict[str, Any]:
         """Aggregate metrics across different time windows"""
+
+
+
         
         try:
             timestamp = datetime.now(timezone.utc)
@@ -1019,6 +1064,9 @@ class MetricsAnalyzer:
     
     async def analyze_metrics(self, metrics_data: Dict[str, Any]) -> Dict[str, Any]:
         """Perform comprehensive metrics analysis"""
+
+
+
         
         try:
             analysis_results = {

@@ -132,6 +132,9 @@ class PineconeVectorStore:
     
     async def initialize(self) -> None:
         """Initialize Pinecone index"""
+
+
+
         try:
             # Check if index exists
             existing_indexes = self.pc.list_indexes()
@@ -171,6 +174,9 @@ class PineconeVectorStore:
         Returns:
             Upsert statistics
         """
+
+
+
         try:
             if not self.index:
                 await self.initialize()
@@ -258,6 +264,9 @@ class PineconeVectorStore:
         Returns:
             List of search results
         """
+
+
+
         try:
             self.search_stats["total_searches"] += 1
             start_time = datetime.now()
@@ -349,6 +358,9 @@ class PineconeVectorStore:
         Returns:
             Deletion statistics
         """
+
+
+
         try:
             if not self.index:
                 await self.initialize()
@@ -405,6 +417,9 @@ class PineconeVectorStore:
         Returns:
             Vector data or None if not found
         """
+
+
+
         try:
             if not self.index:
                 await self.initialize()
@@ -438,6 +453,9 @@ class PineconeVectorStore:
     
     async def get_index_stats(self) -> Optional[PineconeIndexStats]:
         """Get Pinecone index statistics"""
+
+
+
         try:
             if not self.index:
                 await self.initialize()
@@ -480,6 +498,9 @@ class PineconeVectorStore:
         Returns:
             True if updated successfully
         """
+
+
+
         try:
             if not self.index:
                 await self.initialize()
@@ -523,6 +544,9 @@ class PineconeVectorStore:
         Returns:
             True if cleared successfully
         """
+
+
+
         try:
             if not self.index:
                 await self.initialize()
@@ -544,6 +568,9 @@ class PineconeVectorStore:
     
     async def _create_index(self) -> None:
         """Create Pinecone index"""
+
+
+
         try:
             # Determine index spec based on environment
             if self.environment.startswith("gcp-starter"):
@@ -574,6 +601,9 @@ class PineconeVectorStore:
     
     async def _get_fingerprint_info(self, content_id: str) -> Dict[str, Any]:
         """Get fingerprint information from database"""
+
+
+
         try:
             async with get_db_session() as session:
                 stmt = select(ContentFingerprint).where(
@@ -607,6 +637,9 @@ class PineconeVectorStore:
     
     async def close(self) -> None:
         """Close Pinecone connection"""
+
+
+
         try:
             # Pinecone client doesn't require explicit closing
             self.index = None

@@ -663,6 +663,9 @@ class PaymentTransaction(Base):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert transaction to dictionary"""
+
+
+
         return {
             "id": str(self.id),
             "user_id": self.user_id,
@@ -1170,6 +1173,9 @@ def create_all_tables(engine):
 
 def get_table_names() -> List[str]:
     """Get list of all table names in this module"""
+
+
+
     return [table.name for table in Base.metadata.tables.values()]
 
 

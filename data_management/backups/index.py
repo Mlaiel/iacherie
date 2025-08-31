@@ -1,5 +1,5 @@
 """
-⚠️ Index - Backup System Public API
+ Index - Backup System Public API
 ===================================
 Module: backend/data_management/backups/index.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Public API - Enterprise Production-Ready
 Responsibility: Point d'entrée unifié pour le système de sauvegarde
 ================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -131,6 +131,9 @@ class BackupSystem:
         Returns:
             BackupJob: Tâche de sauvegarde créée
         """
+
+
+
         return await self.backup_manager.create_backup(
             source_path=source_path,
             backup_plan_id=backup_plan_id,
@@ -156,6 +159,9 @@ class BackupSystem:
         Returns:
             BackupJob: Tâche de sauvegarde incrémentale
         """
+
+
+
         return await self.backup_manager.create_incremental_backup(
             source_path=source_path,
             base_backup_id=base_backup_id,
@@ -180,6 +186,9 @@ class BackupSystem:
         Returns:
             str: ID de la tâche de restauration
         """
+
+
+
         return await self.recovery_engine.restore_backup(
             backup_id=backup_id,
             target_path=target_path,
@@ -205,6 +214,9 @@ class BackupSystem:
         Returns:
             str: ID de la tâche de restauration
         """
+
+
+
         return await self.recovery_engine.restore_point_in_time(
             backup_chain_id=backup_chain_id,
             target_time=target_time,
@@ -229,6 +241,9 @@ class BackupSystem:
         Returns:
             BackupPlan: Plan créé
         """
+
+
+
         return await self.backup_manager.create_backup_plan(
             name=name,
             configuration=configuration
@@ -251,6 +266,9 @@ class BackupSystem:
         Returns:
             str: ID de la planification
         """
+
+
+
         return await self.scheduler.schedule_backup(
             backup_plan_id=backup_plan_id,
             cron_expression=cron_expression,
@@ -269,6 +287,9 @@ class BackupSystem:
         Returns:
             BackupStatus: Statut de la sauvegarde
         """
+
+
+
         return await self.backup_manager.get_backup_status(backup_id)
     
     async def get_system_metrics(self) -> Dict[str, Any]:
@@ -278,6 +299,9 @@ class BackupSystem:
         Returns:
             Dict[str, Any]: Métriques du système
         """
+
+
+
         return await self.monitor.get_system_metrics()
     
     async def get_backup_statistics(
@@ -297,6 +321,9 @@ class BackupSystem:
         Returns:
             Dict[str, Any]: Statistiques
         """
+
+
+
         return await self.monitor.get_backup_statistics(
             user_id=user_id,
             date_from=date_from,
@@ -315,6 +342,9 @@ class BackupSystem:
         Returns:
             Dict[str, Any]: Résultat de la vérification
         """
+
+
+
         return await self.verification_engine.verify_backup(backup_id)
     
     async def verify_backup_chain(self, chain_id: str) -> Dict[str, Any]:
@@ -327,6 +357,9 @@ class BackupSystem:
         Returns:
             Dict[str, Any]: Résultat de la vérification
         """
+
+
+
         return await self.verification_engine.verify_backup_chain(chain_id)
     
     async def cleanup_expired_backups(self) -> Dict[str, Any]:
@@ -336,6 +369,9 @@ class BackupSystem:
         Returns:
             Dict[str, Any]: Résultat du nettoyage
         """
+
+
+
         return await self.retention_manager.cleanup_expired_backups()
     
     # Gestion des politiques de rétention
@@ -355,6 +391,9 @@ class BackupSystem:
         Returns:
             RetentionPolicy: Politique créée
         """
+
+
+
         return await self.retention_manager.create_retention_policy(
             name=name,
             rules=rules
@@ -529,6 +568,9 @@ def get_backup_system_info() -> Dict[str, Any]:
     Returns:
         Dict[str, Any]: Informations système
     """
+
+
+
     return {
         "name": "IA Influencer Agent Backup System",
         "version": "1.0.0",
@@ -577,6 +619,9 @@ def create_backup_system(config: Dict[str, Any]) -> BackupSystem:
     Returns:
         BackupSystem: Instance du système
     """
+
+
+
     return BackupSystem(config)
 
 

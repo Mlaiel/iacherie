@@ -1,15 +1,15 @@
 """
-🚀 Content Validation System - IA Influencer Agent Platform Enterprise
+ Content Validation System - IA Influencer Agent Platform Enterprise
 =====================================================================
 Module: backend/data_management/validation/content_validator.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 =====================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 SYSTÈME DE VALIDATION DE CONTENU MULTIMÉDIA
+ SYSTÈME DE VALIDATION DE CONTENU MULTIMÉDIA
 Validation avancée pour musiciens, influenceurs, photographes, blogueurs, comédiens
 - Analyse de qualité audio/vidéo/image/texte
 - Détection de contenu inapproprié
@@ -431,6 +431,9 @@ class VideoContentValidator:
     
     def _create_error_result(self, errors: List[str]) -> ContentValidationResult:
         """Crée un résultat d'erreur"""
+
+
+
         return ContentValidationResult(
             is_valid=False,
             quality_score=0.0,
@@ -576,6 +579,9 @@ class ImageContentValidator:
     
     def _extract_exif_data(self, img: Image.Image, metadata: Dict, analysis_data: Dict):
         """Extrait les données EXIF"""
+
+
+
         try:
             exif = img._getexif()
             if exif:
@@ -599,6 +605,9 @@ class ImageContentValidator:
     
     def _analyze_image_content(self, file_path: str, analysis_data: Dict, warnings: List[str]):
         """Analyse le contenu de l'image"""
+
+
+
         try:
             # Détection de contenu inapproprié
             if self.nude_detector:
@@ -904,6 +913,9 @@ class ContentValidator:
     
     def _detect_content_type(self, file_path: str) -> str:
         """Détecte automatiquement le type de contenu"""
+
+
+
         try:
             # Détection par extension
             extension = Path(file_path).suffix.lower().lstrip('.')

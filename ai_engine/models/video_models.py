@@ -3,7 +3,7 @@ Advanced Video AI Models for IA Influencer Agent Platform
 Enterprise-grade video processing, analysis and protection models
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
-⚠️  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
+  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
     code, or intellectual property without explicit written authorization 
     from Fahed Mlaiel is strictly prohibited and will result in legal action.
 
@@ -178,6 +178,9 @@ class VideoFeatureExtractor(BaseAIModel):
         Returns:
             VideoFeatures object with all extracted features
         """
+
+
+
         try:
             # Open video
             cap = cv2.VideoCapture(str(video_path))
@@ -1002,6 +1005,9 @@ class VideoCopyrightDetector(BaseAIModel):
         Returns:
             VideoProtectionResult with protection analysis
         """
+
+
+
         try:
             # Check content fingerprint database
             fingerprint_matches = self._check_fingerprint_matches(video_features.content_fingerprint)

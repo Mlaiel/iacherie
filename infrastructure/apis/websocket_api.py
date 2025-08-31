@@ -1,5 +1,5 @@
 """
-🌐 Websocket Api - IA-Influencer-Agent API Layer
+ Websocket Api - IA-Influencer-Agent API Layer
 ==================================================================
 Expert: BACKEND_SENIOR + MICROSERVICES_ARCHITECT
 Architecture: RESTful API + GraphQL + WebSocket
@@ -47,6 +47,9 @@ class APIError(BaseModel):
 
 async def authentication_middleware(request: Request, credentials: HTTPAuthorizationCredentials = Depends(security)):
     """Middleware d'authentification"""
+
+
+
     try:
         # JWT validation implementation for WebSocket
         token = credentials.credentials
@@ -174,6 +177,9 @@ class WebsocketApiAPI:
         @self.app.get("/health")
         async def health_check():
             """Vérification de santé de l'API"""
+
+
+
             return APIResponse(
                 success=True,
                 data={"status": "healthy", "version": "1.0.0"},
@@ -186,6 +192,9 @@ class WebsocketApiAPI:
             auth_data: dict = Depends(authentication_middleware)
         ):
             """Récupération des données"""
+
+
+
             try:
                 # WebSocket-specific business logic implementation
                 # Handle real-time data and subscriptions
@@ -251,6 +260,9 @@ class WebsocketApiAPI:
             auth_data: dict = Depends(authentication_middleware)
         ):
             """Création de données"""
+
+
+
             try:
                 # WebSocket-specific validation and creation
                 # Support real-time creation with immediate broadcasting
@@ -343,6 +355,9 @@ class WebSocketManager:
 
 def create_websocketapi_api(app: FastAPI) -> WebsocketApiAPI:
     """Factory pour créer l'API Websocket Api"""
+
+
+
     return WebsocketApiAPI(app)
 
 __all__ = [

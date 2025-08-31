@@ -12,7 +12,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 
-⚠️ STRICT COPYRIGHT PROTECTION ⚠️
+ STRICT COPYRIGHT PROTECTION 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 
@@ -116,6 +116,9 @@ class ContentFilterEngine:
     
     def _initialize_filters(self) -> None:
         """Initialize all filter modules."""
+
+
+
         try:
             self.audio_filter = AudioContentFilter(self.config.audio_config)
             self.video_filter = VideoContentFilter(self.config.video_config)
@@ -398,6 +401,9 @@ class ContentFilterEngine:
     
     def get_filter_statistics(self) -> Dict[str, Any]:
         """Get filtering engine statistics."""
+
+
+
         return {
             'engine_stats': self.stats.copy(),
             'config_summary': self.config.get_summary(),

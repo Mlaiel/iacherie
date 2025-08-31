@@ -59,6 +59,9 @@ class GCPConfig:
     
     def get_vpc_configuration(self) -> Dict[str, Any]:
         """Generate VPC network configuration"""
+
+
+
         return {
             "resource": {
                 "google_compute_network": {
@@ -110,6 +113,9 @@ class GCPConfig:
     
     def get_firewall_configuration(self) -> Dict[str, Any]:
         """Generate firewall rules configuration"""
+
+
+
         return {
             "resource": {
                 "google_compute_firewall": {
@@ -320,6 +326,9 @@ class GCPConfig:
     
     def get_cloud_sql_configuration(self) -> Dict[str, Any]:
         """Generate Cloud SQL PostgreSQL configuration"""
+
+
+
         return {
             "resource": {
                 "google_sql_database_instance": {
@@ -415,6 +424,9 @@ class GCPConfig:
     
     def get_memorystore_redis_configuration(self) -> Dict[str, Any]:
         """Generate Memorystore Redis configuration"""
+
+
+
         return {
             "resource": {
                 "google_redis_instance": {
@@ -443,6 +455,9 @@ class GCPConfig:
     
     def get_cloud_storage_configuration(self) -> Dict[str, Any]:
         """Generate Cloud Storage buckets configuration"""
+
+
+
         return {
             "resource": {
                 "google_storage_bucket": {
@@ -527,6 +542,9 @@ class GCPConfig:
     
     def get_cloud_functions_configuration(self) -> Dict[str, Any]:
         """Generate Cloud Functions configuration"""
+
+
+
         return {
             "resource": {
                 "google_storage_bucket": {
@@ -590,6 +608,9 @@ class GCPConfig:
     
     def get_cloud_run_configuration(self) -> Dict[str, Any]:
         """Generate Cloud Run services configuration"""
+
+
+
         return {
             "resource": {
                 "google_cloud_run_v2_service": {
@@ -696,6 +717,9 @@ class GCPConfig:
     
     def get_monitoring_configuration(self) -> Dict[str, Any]:
         """Generate Cloud Monitoring configuration"""
+
+
+
         return {
             "resource": {
                 "google_monitoring_alert_policy": {
@@ -843,6 +867,9 @@ class GCPConfig:
     
     def get_deployment_script(self) -> str:
         """Generate GCP deployment script"""
+
+
+
         return f'''#!/bin/bash
 # GCP deployment script for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -854,31 +881,31 @@ ENVIRONMENT="{self.environment}"
 REGION="{self.region}"
 ZONE="{self.zone}"
 
-echo "🚀 Deploying IA-Influencer Agent to Google Cloud..."
+echo " Deploying IA-Influencer Agent to Google Cloud..."
 echo "Project: $PROJECT_ID"
 echo "Environment: $ENVIRONMENT"
 echo "Region: $REGION"
 
 # Check prerequisites
 if ! command -v gcloud &> /dev/null; then
-    echo "❌ gcloud CLI is not installed"
+    echo " gcloud CLI is not installed"
     exit 1
 fi
 
 if ! command -v terraform &> /dev/null; then
-    echo "❌ Terraform is not installed"
+    echo " Terraform is not installed"
     exit 1
 fi
 
 # Authenticate with GCP
-echo "🔐 Authenticating with Google Cloud..."
+echo " Authenticating with Google Cloud..."
 gcloud auth application-default login
 
 # Set project
 gcloud config set project $PROJECT_ID
 
 # Enable required APIs
-echo "🔧 Enabling required APIs..."
+echo " Enabling required APIs..."
 gcloud services enable \\
     container.googleapis.com \\
     sqladmin.googleapis.com \\
@@ -893,36 +920,36 @@ gcloud services enable \\
     speech.googleapis.com
 
 # Initialize Terraform
-echo "📦 Initializing Terraform..."
+echo " Initializing Terraform..."
 terraform init
 
 # Plan deployment
-echo "📋 Planning Terraform deployment..."
+echo " Planning Terraform deployment..."
 terraform plan -var="project_id=$PROJECT_ID" -var="environment=$ENVIRONMENT"
 
 # Apply deployment
-echo "🚀 Applying Terraform deployment..."
+echo " Applying Terraform deployment..."
 terraform apply -var="project_id=$PROJECT_ID" -var="environment=$ENVIRONMENT" -auto-approve
 
 # Get GKE credentials
-echo "⚙️ Getting GKE credentials..."
+echo " Getting GKE credentials..."
 gcloud container clusters get-credentials \\
     ia-influencer-gke-$ENVIRONMENT \\
     --zone=$ZONE \\
     --project=$PROJECT_ID
 
 # Verify GKE connection
-echo "🔍 Verifying GKE connection..."
+echo " Verifying GKE connection..."
 kubectl get nodes
 
-echo "✅ GCP infrastructure deployed successfully!"
-echo "🎯 Next steps:"
+echo " GCP infrastructure deployed successfully!"
+echo " Next steps:"
 echo "1. Deploy Kubernetes manifests: kubectl apply -f k8s-manifests/"
 echo "2. Configure Cloud DNS: gcloud dns managed-zones create"
 echo "3. Setup monitoring: Configure Cloud Monitoring"
 echo "4. Configure CI/CD: Setup Cloud Build triggers"
 
 # Display important endpoints
-echo "📊 Important endpoints:"
+echo " Important endpoints:"
 terraform output
 '''

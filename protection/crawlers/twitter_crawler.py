@@ -1,5 +1,5 @@
 """
-🐦 Twitter/X Content Crawler
+ Twitter/X Content Crawler
 ============================
 
 Professional Twitter/X content discovery and monitoring system.
@@ -8,7 +8,7 @@ Integrates Twitter API v2 with advanced content analysis capabilities.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
+ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
 """
@@ -208,6 +208,9 @@ class TwitterAPIClient:
     
     def _parse_tweet(self, tweet, users_dict: Dict[str, Any]) -> Optional[TwitterTweetInfo]:
         """Parse tweet data from API response."""
+
+
+
         try:
             # Get author info
             author = users_dict.get(tweet.author_id)
@@ -253,6 +256,9 @@ class TwitterAPIClient:
         exclude: List[str] = None
     ) -> List[TwitterTweetInfo]:
         """Get tweets from a specific user."""
+
+
+
         try:
             if not exclude:
                 exclude = ['retweets', 'replies']
@@ -284,6 +290,9 @@ class TwitterAPIClient:
     
     async def get_user_by_username(self, username: str) -> Optional[TwitterUserInfo]:
         """Get user information by username."""
+
+
+
         try:
             response = self.client.get_user(
                 username=username,
@@ -320,6 +329,9 @@ class TwitterAPIClient:
     
     async def search_spaces(self, query: str, max_results: int = 10) -> List[TwitterSpaceInfo]:
         """Search for Twitter Spaces."""
+
+
+
         try:
             response = self.client.search_spaces(
                 query=query,
@@ -633,6 +645,9 @@ class TwitterCrawler(BasePlatformCrawler):
         filters: Optional[Dict[str, Any]] = None
     ) -> bool:
         """Monitor keywords for new tweets."""
+
+
+
         try:
             query = ' OR '.join(keywords)
             monitoring_key = f"keywords_{hash(query)}"
@@ -734,6 +749,9 @@ class TwitterCrawler(BasePlatformCrawler):
     
     async def get_crawler_stats(self) -> Dict[str, Any]:
         """Get crawler statistics."""
+
+
+
         return {
             "platform": "twitter",
             "api_available": self.api_client is not None,

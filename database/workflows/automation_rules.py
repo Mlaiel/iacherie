@@ -9,7 +9,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -311,6 +311,9 @@ class AutomationRulesEngine:
     
     def _initialize_evaluators(self) -> Dict[ConditionOperator, Callable]:
         """Initialize condition evaluation functions"""
+
+
+
         return {
             ConditionOperator.EQUALS: lambda a, b: a == b,
             ConditionOperator.NOT_EQUALS: lambda a, b: a != b,
@@ -332,6 +335,9 @@ class AutomationRulesEngine:
     
     def _initialize_action_executors(self) -> Dict[ActionType, Callable]:
         """Initialize action execution functions"""
+
+
+
         return {
             ActionType.TRIGGER_WORKFLOW: self._execute_trigger_workflow,
             ActionType.SEND_NOTIFICATION: self._execute_send_notification,

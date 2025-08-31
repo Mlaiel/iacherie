@@ -8,7 +8,7 @@ Responsibility: Advanced orchestration of 53+ AI agents with intelligent routing
 Technologies: Python, AI/ML Orchestration, Multi-Agent Systems, Task Distribution
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -386,6 +386,9 @@ class AiAgentManager(ABC):
         Returns:
             AgentTask: Created task
         """
+
+
+
         try:
             # Create task
             task = AgentTask(
@@ -414,7 +417,7 @@ class AiAgentManager(ABC):
             return task
             
         except Exception as e:
-            logger.error(f"❌ Task submission failed: {e}")
+            logger.error(f" Task submission failed: {e}")
             raise
     
     async def orchestrate_multi_agent_workflow(
@@ -434,6 +437,9 @@ class AiAgentManager(ABC):
         Returns:
             OrchestrationPlan: Created orchestration plan
         """
+
+
+
         try:
             # Create orchestration plan
             plan = OrchestrationPlan(
@@ -466,7 +472,7 @@ class AiAgentManager(ABC):
             return plan
             
         except Exception as e:
-            logger.error(f"❌ Orchestration failed: {e}")
+            logger.error(f" Orchestration failed: {e}")
             raise
     
     async def get_agent_performance_analytics(
@@ -627,11 +633,14 @@ class AiAgentManager(ABC):
             except asyncio.TimeoutError:
                 continue
             except Exception as e:
-                logger.error(f"❌ Task processor error: {e}")
+                logger.error(f" Task processor error: {e}")
                 await asyncio.sleep(1)
     
     async def _process_task(self, task: AgentTask) -> None:
         """Process individual task"""
+
+
+
         try:
             # Find best agent for task
             agent_id = await self.route_task_to_best_agent(task)
@@ -639,7 +648,7 @@ class AiAgentManager(ABC):
             if not agent_id:
                 task.status = TaskStatus.FAILED
                 task.error_message = "No suitable agent available"
-                logger.warning(f"⚠️ No agent available for task {task.id}")
+                logger.warning(f" No agent available for task {task.id}")
                 return
             
             # Assign task to agent
@@ -705,7 +714,7 @@ class AiAgentManager(ABC):
                     
                     self._metrics["total_tasks_failed"] += 1
             
-            logger.error(f"❌ Task failed: {task.id} - {e}")
+            logger.error(f" Task failed: {task.id} - {e}")
             
             # Retry logic
             if task.retry_count < task.max_retries:
@@ -721,7 +730,7 @@ class AiAgentManager(ABC):
                 await asyncio.sleep(self.config.health_check_interval)
                 await self._check_agent_health()
             except Exception as e:
-                logger.error(f"❌ Health monitor error: {e}")
+                logger.error(f" Health monitor error: {e}")
     
     async def _check_agent_health(self) -> None:
         """Check health of all agents"""
@@ -736,7 +745,7 @@ class AiAgentManager(ABC):
                     if agent.status != AgentStatus.OFFLINE:
                         agent.status = AgentStatus.ERROR
                         agent.health_status = "unresponsive"
-                        logger.warning(f"⚠️ Agent {agent.id} marked as unresponsive")
+                        logger.warning(f" Agent {agent.id} marked as unresponsive")
                 
                 # Update load factor
                 if agent.status == AgentStatus.BUSY:
@@ -826,6 +835,9 @@ class AiAgentManager(ABC):
     
     async def _execute_orchestration_plan(self, plan_id: str) -> None:
         """Execute orchestration plan"""
+
+
+
         try:
             plan = self._orchestration_plans.get(plan_id)
             if not plan:
@@ -858,7 +870,7 @@ class AiAgentManager(ABC):
         except Exception as e:
             if plan_id in self._orchestration_plans:
                 self._orchestration_plans[plan_id].status = "failed"
-            logger.error(f"❌ Orchestration failed: {plan_id} - {e}")
+            logger.error(f" Orchestration failed: {plan_id} - {e}")
     
     async def _submit_orchestration_task(self, task_id: str, plan_id: str) -> None:
         """Submit task from orchestration plan"""
@@ -909,6 +921,9 @@ class AiAgentManager(ABC):
     
     async def cleanup(self) -> bool:
         """Cleanup AI agent management resources"""
+
+
+
         try:
             # Stop monitoring
             self._monitoring_active = False
@@ -949,7 +964,7 @@ class AiAgentManager(ABC):
             return True
             
         except Exception as e:
-            logger.error(f"❌ AI Agent cleanup failed: {e}")
+            logger.error(f" AI Agent cleanup failed: {e}")
             return False
     
     def get_stats(self) -> Dict[str, Any]:

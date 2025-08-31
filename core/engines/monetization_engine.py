@@ -231,7 +231,7 @@ class RevenueRequest(BaseModel):
 
 class MonetizationEngine:
     """
-    🏭 ENTERPRISE MONETIZATION ENGINE
+     ENTERPRISE MONETIZATION ENGINE
     
     Advanced AI-powered revenue tracking and optimization system for
     multi-platform content creators with real-time analytics,
@@ -290,14 +290,14 @@ class MonetizationEngine:
             "analytics": "monetization:analytics:{creator_id}",
         }
         
-        logger.info("💰 MonetizationEngine initialized successfully")
+        logger.info(" MonetizationEngine initialized successfully")
     
     async def track_revenue(
         self,
         revenue_data: Union[RevenueData, RevenueRequest]
     ) -> Dict[str, Any]:
         """
-        🎯 Track revenue from content monetization
+         Track revenue from content monetization
         
         Args:
             revenue_data: Revenue information to track
@@ -305,6 +305,9 @@ class MonetizationEngine:
         Returns:
             Dict containing tracking result and analytics
         """
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -399,7 +402,7 @@ class MonetizationEngine:
         revenue_types: Optional[List[RevenueType]] = None
     ) -> RevenueAnalytics:
         """
-        📊 Get comprehensive revenue analytics
+         Get comprehensive revenue analytics
         
         Args:
             creator_id: Creator identifier
@@ -411,6 +414,9 @@ class MonetizationEngine:
         Returns:
             Detailed revenue analytics
         """
+
+
+
         try:
             # Check cache first
             cache_key = self.cache_keys["analytics"].format(creator_id=creator_id)
@@ -515,7 +521,7 @@ class MonetizationEngine:
         licensing_deal: LicensingDeal
     ) -> Dict[str, Any]:
         """
-        📄 Create automated licensing agreement
+         Create automated licensing agreement
         
         Args:
             licensing_deal: Licensing deal information
@@ -523,6 +529,9 @@ class MonetizationEngine:
         Returns:
             Created licensing agreement details
         """
+
+
+
         try:
             # Validate content ownership
             await self._validate_content_ownership(licensing_deal.content_id)
@@ -580,7 +589,7 @@ class MonetizationEngine:
         platforms: List[Platform]
     ) -> Dict[str, Any]:
         """
-        🔄 Sync revenue data from connected platforms
+         Sync revenue data from connected platforms
         
         Args:
             creator_id: Creator to sync data for
@@ -589,6 +598,9 @@ class MonetizationEngine:
         Returns:
             Sync results with statistics
         """
+
+
+
         try:
             sync_results = {}
             total_synced = 0
@@ -657,7 +669,7 @@ class MonetizationEngine:
         tax_region: Optional[TaxRegion] = None
     ) -> Dict[str, Any]:
         """
-        💰 Calculate tax liability for revenue
+         Calculate tax liability for revenue
         
         Args:
             creator_id: Creator identifier
@@ -667,6 +679,9 @@ class MonetizationEngine:
         Returns:
             Tax calculation breakdown
         """
+
+
+
         try:
             region = tax_region or self.tax_region
             
@@ -974,6 +989,9 @@ class MonetizationEngine:
 
     def _load_platform_configs(self) -> Dict[Platform, Dict[str, Any]]:
         """Load API configurations for each platform"""
+
+
+
         return {
             Platform.YOUTUBE: {
                 "api_base": "https://www.googleapis.com/youtube/analytics/v2",
@@ -1018,6 +1036,9 @@ class MonetizationEngine:
         Returns:
             RevenueData: Comprehensive revenue information
         """
+
+
+
         try:
             # Set default period if not provided
             if not period_end:
@@ -1088,6 +1109,9 @@ class MonetizationEngine:
         period_end: datetime
     ) -> Dict[str, Any]:
         """Fetch YouTube Analytics API data"""
+
+
+
         try:
             # Get user's YouTube access token
             access_token = await self._get_user_platform_token(user_id, Platform.YOUTUBE)
@@ -1136,6 +1160,9 @@ class MonetizationEngine:
         period_end: datetime
     ) -> Dict[str, Any]:
         """Fetch Spotify for Artists API data"""
+
+
+
         try:
             access_token = await self._get_user_platform_token(user_id, Platform.SPOTIFY)
             
@@ -1185,6 +1212,9 @@ class MonetizationEngine:
         period_end: datetime
     ) -> Dict[str, Any]:
         """Fetch Instagram Business API data"""
+
+
+
         try:
             access_token = await self._get_user_platform_token(user_id, Platform.INSTAGRAM)
             
@@ -1240,6 +1270,9 @@ class MonetizationEngine:
         period_end: datetime
     ) -> Dict[str, Any]:
         """Fetch TikTok Creator Fund data"""
+
+
+
         try:
             access_token = await self._get_user_platform_token(user_id, Platform.TIKTOK)
             
@@ -1294,6 +1327,9 @@ class MonetizationEngine:
         period_end: datetime
     ) -> Dict[str, Any]:
         """Fetch revenue from custom/generic platforms"""
+
+
+
         try:
             # For custom platforms, look up stored revenue data
             stored_revenue = await self._get_stored_platform_revenue(
@@ -1308,6 +1344,9 @@ class MonetizationEngine:
 
     def _parse_youtube_response(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Parse YouTube Analytics API response"""
+
+
+
         try:
             rows = data.get("rows", [])
             if not rows:
@@ -1333,6 +1372,9 @@ class MonetizationEngine:
 
     def _extract_metric_value(self, insights_data: Dict[str, Any], metric_name: str) -> int:
         """Extract metric value from Instagram insights response"""
+
+
+
         try:
             data_list = insights_data.get("data", [])
             for item in data_list:
@@ -1352,6 +1394,9 @@ class MonetizationEngine:
         platform: Platform
     ) -> RevenueData:
         """Process and standardize revenue data"""
+
+
+
         try:
             # Extract basic revenue info
             revenue_amount = Decimal(str(raw_data.get("revenue", 0)))
@@ -1409,6 +1454,9 @@ class MonetizationEngine:
         to_currency: Currency
     ) -> Decimal:
         """Convert currency using current exchange rates"""
+
+
+
         try:
             if from_currency == to_currency:
                 return amount
@@ -1425,6 +1473,9 @@ class MonetizationEngine:
 
     async def _get_exchange_rate(self, from_currency: Currency, to_currency: Currency) -> float:
         """Get current exchange rate between currencies"""
+
+
+
         try:
             # Check cache first
             cache_key = f"exchange_rate:{from_currency.value}:{to_currency.value}"
@@ -1472,6 +1523,9 @@ class MonetizationEngine:
         Returns:
             MonetizationMetrics: Complete revenue analysis
         """
+
+
+
         try:
             # Set default period
             if not period_end:
@@ -1564,6 +1618,9 @@ class MonetizationEngine:
         forecast_from: datetime
     ) -> Decimal:
         """Calculate revenue forecast using simple trend analysis"""
+
+
+
         try:
             if len(historical_data) < 7:  # Need at least a week of data
                 return Decimal('0')
@@ -1624,6 +1681,9 @@ class MonetizationEngine:
         Returns:
             Deal ID
         """
+
+
+
         try:
             deal_id = hashlib.sha256(
                 f"{content_id}_{licensee}_{datetime.now().isoformat()}".encode()
@@ -1681,6 +1741,9 @@ class MonetizationEngine:
         Returns:
             Payment result data
         """
+
+
+
         try:
             # Select payment processor
             processor = self.payment_processors.get(payment_method, self.payment_processors["stripe"])
@@ -1712,6 +1775,9 @@ class MonetizationEngine:
     # Helper methods for data persistence
     async def _get_cached_revenue(self, cache_key: str) -> Optional[RevenueData]:
         """Get cached revenue data"""
+
+
+
         try:
             cached_data = await self.redis_manager.get(cache_key)
             if cached_data:
@@ -1723,6 +1789,9 @@ class MonetizationEngine:
 
     async def _cache_revenue_data(self, cache_key: str, revenue_data: RevenueData):
         """Cache revenue data"""
+
+
+
         try:
             data = asdict(revenue_data)
             # Convert datetime objects to ISO strings

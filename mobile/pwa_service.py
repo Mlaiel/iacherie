@@ -6,7 +6,7 @@ push notifications, and native app-like features.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️ STRICT COPYRIGHT NOTICE ⚠️
+ STRICT COPYRIGHT NOTICE 
 This code is proprietary and confidential to Fahed Mlaiel.
 Any unauthorized use, copying, modification, or distribution
 without explicit written permission is strictly prohibited.
@@ -126,6 +126,9 @@ class MobilePWAService:
     
     def _create_default_pwa_config(self) -> PWAConfiguration:
         """Create default PWA configuration."""
+
+
+
         return PWAConfiguration(
             app_name="Ainflue - AI Content Protection",
             short_name="Ainflue",
@@ -670,6 +673,9 @@ async function clearPendingAnalyticsEvents() {{
 
 console.log('PWA Service Worker loaded successfully');
 """
+
+
+
         
         return service_worker_code
     
@@ -912,7 +918,7 @@ console.log('PWA Service Worker loaded successfully');
         }
         
         .features-list li:before {
-            content: "✓ ";
+            content: " ";
             color: #4caf50;
             font-weight: bold;
             margin-right: 0.5rem;
@@ -921,7 +927,7 @@ console.log('PWA Service Worker loaded successfully');
 </head>
 <body>
     <div class="offline-container">
-        <div class="offline-icon">📱</div>
+        <div class="offline-icon"></div>
         
         <h1 class="offline-title">You're Offline</h1>
         
@@ -974,6 +980,9 @@ console.log('PWA Service Worker loaded successfully');
     
     def get_pwa_configuration(self) -> PWAConfiguration:
         """Get current PWA configuration."""
+
+
+
         return self.pwa_config
     
     async def update_pwa_configuration(

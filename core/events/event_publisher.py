@@ -4,7 +4,7 @@ Module: backend/core/events/event_publisher.py
 Architecture: Event Publishing and Real-time Notifications
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 
 Description:
@@ -161,6 +161,9 @@ class EmailChannel(NotificationChannel):
     
     async def validate_config(self) -> bool:
         """Valide la configuration SMTP"""
+
+
+
         try:
             server = smtplib.SMTP(self.smtp_host, self.smtp_port)
             if self.use_tls:
@@ -266,6 +269,9 @@ class WebSocketChannel(NotificationChannel):
     
     async def validate_config(self) -> bool:
         """Valide la configuration WebSocket"""
+
+
+
         return True  # Configuration simple
     
     async def send(self, message: NotificationMessage) -> bool:
@@ -343,6 +349,9 @@ class SlackChannel(NotificationChannel):
     
     async def validate_config(self) -> bool:
         """Valide la configuration Slack"""
+
+
+
         try:
             response = await self.client.auth_test()
             return response["ok"]
@@ -528,6 +537,9 @@ class EventPublisher:
     
     def register_channel(self, channel: NotificationChannel) -> bool:
         """Enregistre un canal de notification"""
+
+
+
         try:
             self._channels[channel.channel_id] = channel
             self._stats["channels_count"] += 1
@@ -540,6 +552,9 @@ class EventPublisher:
     
     def register_template(self, template: NotificationTemplate) -> bool:
         """Enregistre un template de notification"""
+
+
+
         try:
             self._templates[template.template_id] = template
             self._stats["templates_count"] += 1
@@ -645,6 +660,9 @@ class EventPublisher:
         channel: NotificationChannel
     ) -> Optional[NotificationMessage]:
         """Crée un message depuis un template"""
+
+
+
         try:
             # Variables pour le template
             variables = {
@@ -713,6 +731,9 @@ class EventPublisher:
     
     async def _send_message(self, message: NotificationMessage):
         """Envoie un message via le canal approprié"""
+
+
+
         try:
             # Recherche du canal approprié
             channel = None
@@ -751,6 +772,9 @@ class EventPublisher:
     
     def get_stats(self) -> Dict[str, Any]:
         """Retourne les statistiques"""
+
+
+
         return {
             "stats": self._stats.copy(),
             "queue_size": self._message_queue.qsize(),
@@ -842,10 +866,16 @@ class NotificationService:
     
     async def notify(self, event: Event) -> Dict[str, Any]:
         """Envoie les notifications pour un événement"""
+
+
+
         return await self.publisher.publish_event(event)
     
     async def send_direct(self, message: NotificationMessage) -> bool:
         """Envoie une notification directe"""
+
+
+
         return await self.publisher.send_notification(message)
 
 

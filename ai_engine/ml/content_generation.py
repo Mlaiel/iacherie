@@ -73,11 +73,14 @@ class ContentGenerator:
     
     def _load_templates(self) -> Dict[str, List[str]]:
         """Load content templates"""
+
+
+
         return {
             "social_post": [
-                "🚀 {main_message} {call_to_action}",
-                "✨ {intro} {main_content} {hashtags}",
-                "📢 {announcement} {details} {engagement_hook}"
+                " {main_message} {call_to_action}",
+                " {intro} {main_content} {hashtags}",
+                " {announcement} {details} {engagement_hook}"
             ],
             "blog_article": [
                 "# {title}\n\n{introduction}\n\n## Main Content\n{body}\n\n## Conclusion\n{conclusion}",
@@ -91,6 +94,9 @@ class ContentGenerator:
     
     def _load_vocabulary(self) -> Dict[str, List[str]]:
         """Load vocabulary for content generation"""
+
+
+
         return {
             "creative_adjectives": ["innovative", "groundbreaking", "revolutionary", "cutting-edge", "transformative"],
             "action_words": ["discover", "explore", "unlock", "unleash", "master", "achieve", "create"],
@@ -101,6 +107,9 @@ class ContentGenerator:
     
     def generate(self, config: GenerationConfig, prompt: str = "") -> GeneratedContent:
         """Generate content based on configuration"""
+
+
+
         try:
             self.logger.info(f"Generating {config.content_type.value} content with {config.strategy.value} strategy")
             
@@ -178,12 +187,12 @@ class ContentGenerator:
         content_vars = {
             "main_message": prompt or "Check out this amazing content!",
             "call_to_action": random.choice(self.vocabulary["engagement_hooks"]),
-            "intro": "✨ Exciting news!",
+            "intro": " Exciting news!",
             "main_content": prompt or "Something amazing is happening.",
             "hashtags": "#AI #Content #Innovation",
-            "announcement": "📢 Big announcement:",
+            "announcement": " Big announcement:",
             "details": prompt or "We're launching something incredible.",
-            "engagement_hook": "What do you think? 💭"
+            "engagement_hook": "What do you think? "
         }
         
         return template.format(**content_vars)
@@ -225,6 +234,9 @@ class ContentGenerator:
     
     def _generate_generic_content(self, config: GenerationConfig, prompt: str) -> str:
         """Generate generic content for other types"""
+
+
+
         return prompt or f"Generated {config.content_type.value} content using {config.strategy.value} strategy."
     
     def _generate_additional_content(self, config: GenerationConfig) -> str:
@@ -283,6 +295,9 @@ class ContentGenerator:
     
     def optimize_content(self, content: str, target_metrics: Dict[str, float]) -> str:
         """Optimize existing content for specific metrics"""
+
+
+
         try:
             # Simple optimization simulation
             optimized = content
@@ -376,6 +391,9 @@ class ContentAnalyzer:
     
     def analyze(self, content: str) -> Dict[str, Any]:
         """Analyze content quality and characteristics"""
+
+
+
         return {
             "word_count": len(content.split()),
             "character_count": len(content),

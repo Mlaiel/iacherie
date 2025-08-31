@@ -1,5 +1,5 @@
 """
-🎵 Audio Fingerprinting Engine - IA Influencer Agent Platform Enterprise
+ Audio Fingerprinting Engine - IA Influencer Agent Platform Enterprise
 ========================================================================
 Module: backend/data_management/fingerprinting/audio_fingerprint.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Audio Fingerprinting - Ultra Enterprise Production-Ready
 Responsibility: Advanced audio fingerprinting with Chromaprint, Essentia, and spectral analysis
 ===========================================================================================
 
-⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
+  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -20,14 +20,14 @@ Spectral Analysis → Mel Spectrogram → Vector Embedding → FAISS Indexing �
 Real-time Monitoring → Violation Detection → Revenue Protection
 
 AUDIO FINGERPRINTING TECHNOLOGIES:
-├── 🎼 Chromaprint (Acoustic Fingerprinting)
-├── 🔊 Essentia (Music Information Retrieval)
-├── 📊 Spectral Analysis (FFT + STFT)
-├── 🎛️ Mel Spectrograms (MFCC Features)
-├── 🧠 Deep Audio Features (CNN + RNN)
-├── 🔍 Similarity Matching (Cosine + Euclidean)
-├── ⚡ Real-time Processing (Stream + Batch)
-└── 🛡️ Protection System (Monitoring + Alerts)
+  Chromaprint (Acoustic Fingerprinting)
+  Essentia (Music Information Retrieval)
+  Spectral Analysis (FFT + STFT)
+  Mel Spectrograms (MFCC Features)
+ 🧠 Deep Audio Features (CNN + RNN)
+  Similarity Matching (Cosine + Euclidean)
+  Real-time Processing (Stream + Batch)
+  Protection System (Monitoring + Alerts)
 """
 
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -143,6 +143,9 @@ class AudioProcessor(ABC):
     @abstractmethod
     def get_name(self) -> str:
         """Get processor name"""
+
+
+
         return f"default_{self.__class__.__name__.lower()}"
 
 class ChromaprintProcessor(AudioProcessor):
@@ -155,6 +158,9 @@ class ChromaprintProcessor(AudioProcessor):
     
     async def process(self, audio_path: str, config: AudioFingerprintConfig) -> Dict[str, Any]:
         """Génère une empreinte Chromaprint"""
+
+
+
         try:
             start_time = time.time()
             
@@ -196,6 +202,9 @@ class ChromaprintProcessor(AudioProcessor):
     
     def _calculate_quality_score(self, audio: np.ndarray, sr: int) -> float:
         """Calcule un score de qualité pour l'audio"""
+
+
+
         try:
             # Analyse RMS pour le niveau audio
             rms = librosa.feature.rms(y=audio)[0]
@@ -228,6 +237,9 @@ class EssentiaProcessor(AudioProcessor):
     
     async def process(self, audio_path: str, config: AudioFingerprintConfig) -> Dict[str, Any]:
         """Analyse audio avec Essentia"""
+
+
+
         try:
             start_time = time.time()
             
@@ -302,6 +314,9 @@ class EssentiaProcessor(AudioProcessor):
     
     def _create_feature_vector(self, features: Dict[str, Any]) -> np.ndarray:
         """Crée un vecteur de caractéristiques unifié"""
+
+
+
         try:
             vector_parts = []
             
@@ -356,6 +371,9 @@ class SpectralHashProcessor(AudioProcessor):
     
     async def process(self, audio_path: str, config: AudioFingerprintConfig) -> Dict[str, Any]:
         """Génère des hash spectraux"""
+
+
+
         try:
             start_time = time.time()
             
@@ -405,6 +423,9 @@ class SpectralHashProcessor(AudioProcessor):
     
     def _compute_spectral_hash(self, magnitude: np.ndarray) -> str:
         """Calcule un hash spectral"""
+
+
+
         try:
             # Réduction dimensionnelle par moyennage
             reduced = np.mean(magnitude, axis=1)
@@ -421,6 +442,9 @@ class SpectralHashProcessor(AudioProcessor):
     
     def _compute_mel_hash(self, mel_spec: np.ndarray) -> str:
         """Calcule un hash mel"""
+
+
+
         try:
             # Réduction par moyennage temporel
             mel_mean = np.mean(mel_spec, axis=1)
@@ -438,6 +462,9 @@ class SpectralHashProcessor(AudioProcessor):
     
     def _extract_spectral_features(self, magnitude: np.ndarray, mel_spec: np.ndarray) -> Dict[str, float]:
         """Extrait des caractéristiques spectrales avancées"""
+
+
+
         try:
             features = {}
             
@@ -465,6 +492,9 @@ class SpectralHashProcessor(AudioProcessor):
     
     def _calculate_skewness(self, data: np.ndarray) -> float:
         """Calcule l'asymétrie"""
+
+
+
         try:
             mean = np.mean(data)
             std = np.std(data)
@@ -476,6 +506,9 @@ class SpectralHashProcessor(AudioProcessor):
     
     def _calculate_kurtosis(self, data: np.ndarray) -> float:
         """Calcule l'aplatissement"""
+
+
+
         try:
             mean = np.mean(data)
             std = np.std(data)
@@ -496,6 +529,9 @@ class MelSpectrogramProcessor(AudioProcessor):
     
     async def process(self, audio_path: str, config: AudioFingerprintConfig) -> Dict[str, Any]:
         """Traite les spectrogrammes mel"""
+
+
+
         try:
             start_time = time.time()
             
@@ -552,6 +588,9 @@ class MelSpectrogramProcessor(AudioProcessor):
     
     def _compute_feature_stats(self, mel_spec: np.ndarray, mfcc: np.ndarray) -> Dict[str, Any]:
         """Calcule des statistiques sur les caractéristiques"""
+
+
+
         try:
             stats = {}
             
@@ -619,6 +658,9 @@ class AudioFingerprintEngine:
         Returns:
             Dictionnaire contenant toutes les empreintes générées
         """
+
+
+
         try:
             start_time = datetime.now()
             
@@ -692,6 +734,9 @@ class AudioFingerprintEngine:
     
     def _combine_features(self, processors_results: Dict[str, Any]) -> Dict[str, Any]:
         """Combine les caractéristiques de tous les processeurs"""
+
+
+
         try:
             combined = {
                 "primary_hashes": {},
@@ -750,10 +795,16 @@ class AudioFingerprintEngine:
     
     def get_supported_formats(self) -> List[str]:
         """Retourne les formats audio supportés"""
+
+
+
         return [".mp3", ".wav", ".flac", ".ogg", ".m4a", ".aiff", ".wma"]
     
     def get_processor_status(self) -> Dict[str, bool]:
         """Retourne le statut des processeurs"""
+
+
+
         return {
             "chromaprint": "chromaprint" in self.processors,
             "essentia": "essentia" in self.processors,

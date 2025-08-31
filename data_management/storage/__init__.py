@@ -1,4 +1,4 @@
-"""🗄️ Storage System Module - IA Influencer Agent Platform Enterprise
+""" Storage System Module - IA Influencer Agent Platform Enterprise
 ==================================================================
 Module: backend/data_management/storage/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -7,7 +7,7 @@ Type: Industrial Storage System - Multi-Tier Enterprise Production-Ready
 Responsibility: Stockage intelligent multi-format avec protection et distribution avancée
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -311,7 +311,10 @@ class StorageFactory:
         return StorageManager(config)
 
 def initialize_storage_system(config: Dict[str, Any]) -> Dict[str, Any]:
-    """Initialize complete storage system with all components"""    try:
+    """Initialize complete storage system with all components"""
+
+
+    try:
         # Create main storage manager
         storage_manager = StorageFactory.create_enterprise_manager(config)
         
@@ -327,7 +330,7 @@ def initialize_storage_system(config: Dict[str, Any]) -> Dict[str, Any]:
         # Initialize quota manager
         quota_manager = QuotaManager(config.get('quota_config', {}))
         
-        logger.info("✅ Storage system initialized successfully")
+        logger.info(" Storage system initialized successfully")
         
         return {
             'storage_manager': storage_manager,
@@ -340,7 +343,7 @@ def initialize_storage_system(config: Dict[str, Any]) -> Dict[str, Any]:
         }
         
     except Exception as e:
-        logger.error(f"❌ Failed to initialize storage system: {str(e)}")
+        logger.error(f" Failed to initialize storage system: {str(e)}")
         raise
 
 def get_content_type_from_filename(filename: str) -> ContentType:
@@ -622,7 +625,10 @@ class StorageManager:
         tier: Optional[StorageTier] = None,
         tags: Optional[List[str]] = None
     ) -> StorageResult:
-        """Stocke un fichier dans le tiers approprié"""        
+        """Stocke un fichier dans le tiers approprié"""
+
+
+        
         try:
             # Déterminer le tiers si non spécifié
             if tier is None:
@@ -697,7 +703,10 @@ class StorageManager:
             )
     
     def retrieve(self, file_id: str, local_path: Optional[str] = None) -> StorageResult:
-        """Récupère un fichier depuis le stockage"""        
+        """Récupère un fichier depuis le stockage"""
+
+
+        
         try:
             # Vérifier l'existence du fichier
             if file_id not in self.metadata_store:
@@ -741,7 +750,10 @@ class StorageManager:
             )
     
     def delete(self, file_id: str) -> StorageResult:
-        """Supprime un fichier du stockage"""        
+        """Supprime un fichier du stockage"""
+
+
+        
         try:
             if file_id not in self.metadata_store:
                 return StorageResult(
@@ -786,7 +798,10 @@ class StorageManager:
             )
     
     def migrate_tier(self, file_id: str, target_tier: StorageTier) -> StorageResult:
-        """Migre un fichier vers un autre tiers de stockage"""        
+        """Migre un fichier vers un autre tiers de stockage"""
+
+
+        
         try:
             if file_id not in self.metadata_store:
                 return StorageResult(

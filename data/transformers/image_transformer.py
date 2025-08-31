@@ -388,6 +388,9 @@ class ImageTransformer:
         Returns:
             ImageMetadata object
         """
+
+
+
         try:
             metadata = ImageMetadata()
             file_path_obj = Path(file_path)
@@ -487,6 +490,9 @@ class ImageTransformer:
     
     async def _resize_image(self, image: Image.Image, settings: ImageSettings) -> Image.Image:
         """Resize image according to settings."""
+
+
+
         try:
             width = settings.width
             height = settings.height
@@ -519,6 +525,9 @@ class ImageTransformer:
     
     async def _apply_filters(self, image: Image.Image, settings: ImageSettings) -> Image.Image:
         """Apply image filters."""
+
+
+
         try:
             filtered = image
             
@@ -545,6 +554,9 @@ class ImageTransformer:
     
     async def _apply_enhancements(self, image: Image.Image, settings: ImageSettings) -> Image.Image:
         """Apply image enhancements."""
+
+
+
         try:
             enhanced = image
             
@@ -572,6 +584,9 @@ class ImageTransformer:
     
     async def _enhance_image(self, image: Image.Image, settings: ImageSettings) -> Image.Image:
         """Advanced image enhancement using AI and image processing."""
+
+
+
         try:
             enhanced = image.copy()
             
@@ -605,6 +620,9 @@ class ImageTransformer:
     
     async def _add_watermark(self, image: Image.Image, settings: ImageSettings) -> Image.Image:
         """Add watermark to image."""
+
+
+
         try:
             from PIL import ImageDraw, ImageFont
             
@@ -658,6 +676,9 @@ class ImageTransformer:
     
     async def _save_image(self, image: Image.Image, output_path: Path, settings: ImageSettings) -> None:
         """Save image with format-specific settings."""
+
+
+
         try:
             # Prepare save parameters
             save_kwargs = {}
@@ -712,6 +733,9 @@ class ImageTransformer:
     
     async def _calculate_quality_score(self, input_path: str, output_path: str) -> Optional[float]:
         """Calculate image quality score comparing input and output."""
+
+
+
         try:
             if not IMAGE_LIBS_AVAILABLE:
                 return None
@@ -803,6 +827,9 @@ class ImageTransformer:
     
     async def cleanup(self):
         """Cleanup temporary files and resources."""
+
+
+
         try:
             # Clean temp directory
             if self.temp_dir.exists():
@@ -829,6 +856,9 @@ class ImageConverter:
         quality: str = "high"
     ) -> bool:
         """Convert image file."""
+
+
+
         return await self.transformer.convert(input_path, output_path, format, quality)
 
 
@@ -845,4 +875,7 @@ class ImageEnhancer:
         options: Optional[Dict[str, Any]] = None
     ) -> bool:
         """Enhance image quality."""
+
+
+
         return await self.transformer.enhance(input_path, output_path, options)

@@ -51,11 +51,17 @@ class TestBlogTemplates:
     @pytest.fixture
     def blog_templates(self):
         """Create a blog templates instance"""
+
+
+
         return BlogTemplates()
     
     @pytest.fixture
     def article_data(self):
         """Create sample article data"""
+
+
+
         return {
             "title": "The Complete Guide to AI in Content Creation",
             "subtitle": "How Artificial Intelligence is Revolutionizing Digital Content",
@@ -76,6 +82,9 @@ class TestBlogTemplates:
     @pytest.fixture
     def tutorial_data(self):
         """Create sample tutorial data"""
+
+
+
         return {
             "title": "How to Build an AI-Powered Content Pipeline",
             "difficulty": "Intermediate",
@@ -187,25 +196,25 @@ class TestBlogTemplates:
                 "tutorial_content": {
                     "header": {
                         "title": "How to Build an AI-Powered Content Pipeline",
-                        "difficulty_badge": "⚡ Intermediate",
-                        "time_estimate": "⏱️ 45 minutes",
-                        "requirements": "✅ Prerequisites and tools needed"
+                        "difficulty_badge": " Intermediate",
+                        "time_estimate": "⏱ 45 minutes",
+                        "requirements": " Prerequisites and tools needed"
                     },
                     "introduction": """
 In this comprehensive tutorial, you'll learn how to build a complete AI-powered content pipeline that can automate your content creation process. By the end, you'll have a functional system that generates, optimizes, and publishes content automatically.
 
-🎯 **What You'll Achieve:**
+ **What You'll Achieve:**
 - Automated content generation
 - SEO-optimized articles
 - Multi-platform publishing
 - Performance tracking
 
-📋 **Prerequisites:**
+ **Prerequisites:**
 • Basic understanding of AI concepts
 • Content marketing experience
 • Python programming knowledge (beginner level)
 
-🛠️ **Tools We'll Use:**
+ **Tools We'll Use:**
 • Python and required libraries
 • OpenAI API for content generation
 • Content management system integration
@@ -599,7 +608,7 @@ The future of content creation isn't human versus AI—it's human with AI. Those
                     "social_media_posts": [
                         {
                             "platform": "LinkedIn",
-                            "content": "🚀 AI is transforming content creation...",
+                            "content": " AI is transforming content creation...",
                             "character_count": 1200
                         },
                         {

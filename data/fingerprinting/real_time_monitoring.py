@@ -12,7 +12,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL WARNING ⚠️
+  CRITICAL WARNING 
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
 Any unauthorized use, reproduction, distribution, or reverse engineering 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -464,6 +464,9 @@ class RealTimeMonitor:
     
     async def record_metric(self, metric: RealTimeMetric):
         """Record a real-time metric"""
+
+
+
         try:
             # Add to buffer
             self.metrics_buffer.append(metric)
@@ -503,6 +506,9 @@ class RealTimeMonitor:
     
     async def generate_alert(self, alert: AlertEvent):
         """Generate a real-time alert"""
+
+
+
         try:
             # Add to buffer
             self.alerts_buffer.append(alert)
@@ -557,6 +563,9 @@ class RealTimeMonitor:
     
     async def _collect_system_metrics(self):
         """Collect system performance metrics"""
+
+
+
         try:
             # CPU usage
             cpu_percent = psutil.cpu_percent(interval=1)
@@ -603,6 +612,9 @@ class RealTimeMonitor:
     
     async def _update_streaming_windows(self, metric: RealTimeMetric):
         """Update streaming analytics windows"""
+
+
+
         try:
             # Map metrics to windows
             if metric.metric_type == MetricType.FINGERPRINT_CREATED:
@@ -628,6 +640,9 @@ class RealTimeMonitor:
     
     async def _check_metric_alerts(self, metric: RealTimeMetric):
         """Check if metric triggers any alerts"""
+
+
+
         try:
             thresholds = self.alert_thresholds.get(metric.metric_type, {})
             
@@ -678,6 +693,9 @@ class RealTimeMonitor:
     
     async def _process_pending_alerts(self):
         """Process pending alerts and handle escalation"""
+
+
+
         try:
             current_time = datetime.utcnow()
             
@@ -700,6 +718,9 @@ class RealTimeMonitor:
     
     async def _escalate_alert(self, alert: AlertEvent):
         """Escalate unacknowledged alert"""
+
+
+
         try:
             escalated_alert = AlertEvent(
                 level=AlertLevel.EMERGENCY,
@@ -720,6 +741,9 @@ class RealTimeMonitor:
     
     async def _send_websocket_updates(self):
         """Send real-time updates to WebSocket clients"""
+
+
+
         try:
             if not self.subscriptions:
                 return
@@ -812,6 +836,9 @@ class RealTimeMonitor:
     
     async def _cleanup_old_data(self):
         """Clean up old metrics and alerts"""
+
+
+
         try:
             current_time = datetime.utcnow()
             cutoff_time = current_time - timedelta(hours=24)
@@ -835,6 +862,9 @@ class RealTimeMonitor:
     
     async def _acknowledge_alert(self, alert_id: str):
         """Acknowledge an alert"""
+
+
+
         try:
             for alert in self.alerts_buffer:
                 if alert.alert_id == alert_id:
@@ -853,6 +883,9 @@ class RealTimeMonitor:
     
     async def get_system_status(self) -> Dict[str, Any]:
         """Get current system monitoring status"""
+
+
+
         try:
             current_time = datetime.utcnow()
             uptime = (current_time - self.start_time).total_seconds()

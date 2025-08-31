@@ -1,5 +1,5 @@
 """
-🗄️ Multi-Modal Fingerprinting Engine - IA Influencer Agent Platform Enterprise
+ Multi-Modal Fingerprinting Engine - IA Influencer Agent Platform Enterprise
 ===========================================================================
 Module: backend/data_management/fingerprinting/multimodal_fingerprint_engine.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial AI Fingerprinting Engine - Enterprise Production-Ready
 Responsibility: Protection avancée multi-format avec IA et détection similitude vectorielle
 ====================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -19,10 +19,10 @@ Vector Encoding → Similarity Matching → Protection Registration →
 Monitoring Setup → Violation Detection → Legal Action Triggers
 
 TECHNOLOGIES IA INTÉGRÉES:
-🎵 Audio: Chromaprint, Essentia, Spectral Hashing (>95% précision)
-🎬 Vidéo: OpenCV, YOLO, Frame Analysis, Motion Vectors (>90% précision)
-📸 Images: CLIP, ImageHash, Perceptual Hashing (>92% précision)
-📝 Texte: BERT, RoBERTa, Vector Similarity (>88% précision)
+ Audio: Chromaprint, Essentia, Spectral Hashing (>95% précision)
+ Vidéo: OpenCV, YOLO, Frame Analysis, Motion Vectors (>90% précision)
+ Images: CLIP, ImageHash, Perceptual Hashing (>92% précision)
+ Texte: BERT, RoBERTa, Vector Similarity (>88% précision)
 """
 
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
@@ -192,6 +192,9 @@ class MultiModalFingerprintEngine:
         Returns:
             FingerprintModel: Modèle de fingerprint créé
         """
+
+
+
         try:
             content_id = str(uuid.uuid4())
             
@@ -593,6 +596,9 @@ class MultiModalFingerprintEngine:
         Returns:
             List[SimilarityResult]: Liste des contenus similaires trouvés
         """
+
+
+
         try:
             # Extraction des caractéristiques du contenu candidat
             temp_id = str(uuid.uuid4())
@@ -673,6 +679,9 @@ class MultiModalFingerprintEngine:
         Returns:
             Dict contenant les informations de monitoring
         """
+
+
+
         try:
             # Récupération du fingerprint
             fingerprint = await self.fingerprint_repository.get_by_id(fingerprint_id)
@@ -739,6 +748,9 @@ class MultiModalFingerprintEngine:
         Returns:
             Dict contenant le rapport de protection
         """
+
+
+
         try:
             # Récupération des fingerprints du créateur
             fingerprints = await self.fingerprint_repository.get_by_creator(creator_id)

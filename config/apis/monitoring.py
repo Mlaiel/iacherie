@@ -356,10 +356,16 @@ class HealthChecker:
     
     def get_health_status(self, api_name: str) -> Dict[str, Any]:
         """Get current health status for API"""
+
+
+
         return self.health_status.get(api_name, {'status': 'unknown'})
     
     def get_all_health_status(self) -> Dict[str, Dict[str, Any]]:
         """Get health status for all APIs"""
+
+
+
         return self.health_status.copy()
 
 class AlertManager:
@@ -505,10 +511,16 @@ class AlertManager:
     
     def get_active_alerts(self) -> List[Alert]:
         """Get all active alerts"""
+
+
+
         return list(self.active_alerts.values())
     
     def get_alert_history(self, limit: int = 100) -> List[Alert]:
         """Get alert history"""
+
+
+
         return self.alert_history[-limit:]
 
 class APIMonitoringManager:

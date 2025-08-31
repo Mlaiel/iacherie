@@ -23,7 +23,7 @@ optimization analysis, resource utilization, and performance intelligence system
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  STRICT LEGAL WARNING ⚠️
+  STRICT LEGAL WARNING 
 Contact: mlaiel@live.de - Unauthorized use STRICTLY PROHIBITED
 """
 

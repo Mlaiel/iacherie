@@ -12,7 +12,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL WARNING ⚠️
+  CRITICAL WARNING 
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
 Any unauthorized use, reproduction, distribution, or reverse engineering 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -275,6 +275,9 @@ class SoundCloudCrawler(PlatformCrawler):
         Returns:
             List of crawler results
         """
+
+
+
         try:
             await self._check_rate_limit()
             
@@ -294,6 +297,9 @@ class SoundCloudCrawler(PlatformCrawler):
     
     async def _crawl_tracks(self, query: str, max_results: int) -> List[CrawlerResult]:
         """Crawl SoundCloud tracks"""
+
+
+
         try:
             results = []
             
@@ -359,6 +365,9 @@ class SoundCloudCrawler(PlatformCrawler):
     
     async def _crawl_users(self, query: str, max_results: int) -> List[CrawlerResult]:
         """Crawl SoundCloud users"""
+
+
+
         try:
             results = []
             
@@ -418,6 +427,9 @@ class SoundCloudCrawler(PlatformCrawler):
     
     async def _crawl_playlists(self, query: str, max_results: int) -> List[CrawlerResult]:
         """Crawl SoundCloud playlists"""
+
+
+
         try:
             results = []
             
@@ -477,6 +489,9 @@ class SoundCloudCrawler(PlatformCrawler):
     
     async def _crawl_search(self, query: str, max_results: int) -> List[CrawlerResult]:
         """General SoundCloud search"""
+
+
+
         try:
             results = []
             
@@ -497,6 +512,9 @@ class SoundCloudCrawler(PlatformCrawler):
     
     async def _crawl_trending(self, query: str, max_results: int) -> List[CrawlerResult]:
         """Crawl trending content"""
+
+
+
         try:
             results = []
             
@@ -552,6 +570,9 @@ class SoundCloudCrawler(PlatformCrawler):
     
     async def _crawl_genres(self, query: str, max_results: int) -> List[CrawlerResult]:
         """Crawl content by genre"""
+
+
+
         try:
             results = []
             
@@ -604,6 +625,9 @@ class SoundCloudCrawler(PlatformCrawler):
     
     async def _crawl_tags(self, query: str, max_results: int) -> List[CrawlerResult]:
         """Crawl content by tags"""
+
+
+
         try:
             results = []
             
@@ -658,6 +682,9 @@ class SoundCloudCrawler(PlatformCrawler):
     
     async def _parse_track_data(self, track_data: Dict[str, Any]) -> Optional[SoundCloudTrack]:
         """Parse track data from API response"""
+
+
+
         try:
             created_at = datetime.fromisoformat(track_data.get('created_at', '').replace('Z', '+00:00'))
             
@@ -725,6 +752,9 @@ class SoundCloudCrawler(PlatformCrawler):
     
     async def _parse_playlist_data(self, playlist_data: Dict[str, Any]) -> Optional[SoundCloudPlaylist]:
         """Parse playlist data from API response"""
+
+
+
         try:
             created_at = datetime.fromisoformat(playlist_data.get('created_at', '').replace('Z', '+00:00'))
             last_modified = datetime.fromisoformat(playlist_data.get('last_modified', '').replace('Z', '+00:00'))
@@ -789,6 +819,9 @@ class SoundCloudCrawler(PlatformCrawler):
     
     async def _get_detailed_user_info(self, user_id: str) -> Optional[SoundCloudUser]:
         """Get detailed user information"""
+
+
+
         try:
             api_url = f"{self.api_base_url}/users/{user_id}"
             params = {'client_id': self.client_id}
@@ -808,6 +841,9 @@ class SoundCloudCrawler(PlatformCrawler):
     
     async def _parse_user_data(self, user_data: Dict[str, Any]) -> Optional[SoundCloudUser]:
         """Parse user data from API response"""
+
+
+
         try:
             created_at = datetime.fromisoformat(user_data.get('created_at', '').replace('Z', '+00:00'))
             last_modified = datetime.fromisoformat(user_data.get('last_modified', '').replace('Z', '+00:00'))
@@ -867,6 +903,9 @@ class SoundCloudCrawler(PlatformCrawler):
     
     async def _extract_audio_fingerprint(self, stream_url: str) -> Optional[Dict[str, Any]]:
         """Extract audio fingerprint from track"""
+
+
+
         try:
             # Download a sample of the audio
             async with self.session.get(stream_url) as response:
@@ -914,6 +953,9 @@ class SoundCloudCrawler(PlatformCrawler):
     
     async def _check_rate_limit(self):
         """Check and enforce rate limiting"""
+
+
+
         try:
             current_time = time.time()
             time_since_last = current_time - self.last_request_time
@@ -931,6 +973,9 @@ class SoundCloudCrawler(PlatformCrawler):
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
         """Extract metadata from SoundCloud content"""
+
+
+
         try:
             # Parse URL to determine content type
             parsed_url = urlparse(url)
@@ -983,6 +1028,9 @@ class SoundCloudCrawler(PlatformCrawler):
     
     async def _get_track_by_permalink(self, username: str, track_permalink: str) -> Optional[SoundCloudTrack]:
         """Get track by permalink"""
+
+
+
         try:
             track_url = f"{self.base_url}/{username}/{track_permalink}"
             
@@ -1007,6 +1055,9 @@ class SoundCloudCrawler(PlatformCrawler):
     
     async def _get_playlist_by_permalink(self, username: str, playlist_permalink: str) -> Optional[SoundCloudPlaylist]:
         """Get playlist by permalink"""
+
+
+
         try:
             playlist_url = f"{self.base_url}/{username}/sets/{playlist_permalink}"
             
@@ -1031,6 +1082,9 @@ class SoundCloudCrawler(PlatformCrawler):
     
     async def _get_user_by_permalink(self, username: str) -> Optional[SoundCloudUser]:
         """Get user by permalink"""
+
+
+
         try:
             user_url = f"{self.base_url}/{username}"
             
@@ -1055,6 +1109,9 @@ class SoundCloudCrawler(PlatformCrawler):
     
     def get_platform_info(self) -> Dict[str, Any]:
         """Get SoundCloud platform information"""
+
+
+
         return {
             'platform_name': 'SoundCloud',
             'base_url': self.base_url,

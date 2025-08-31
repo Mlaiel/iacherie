@@ -1,11 +1,11 @@
 """
-🔍 Audio Fingerprinter - Advanced Audio Fingerprinting & Content Protection Engine
+ Audio Fingerprinter - Advanced Audio Fingerprinting & Content Protection Engine
 
 Ultra-advanced AI-powered audio fingerprinting system for content protection,
 copyright detection, and audio similarity matching using state-of-the-art 
 perceptual hashing and machine learning algorithms.
 
-⚡ INDUSTRIAL CAPABILITIES:
+ INDUSTRIAL CAPABILITIES:
 - Chromaprint-based acoustic fingerprinting with 99.5% accuracy
 - Perceptual hash generation for robust content matching
 - Real-time streaming fingerprint generation
@@ -21,12 +21,12 @@ perceptual hashing and machine learning algorithms.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-🛡️ TEAM SPECIALTIES:
+ TEAM SPECIALTIES:
 - Lead AI Developer & ML Engineer: Fahed Mlaiel
 - Audio Security Specialist: Fahed Mlaiel
 - Content Protection Expert: Fahed Mlaiel
 
-⚠️ COPYRIGHT & INTELLECTUAL PROPERTY WARNING:
+ COPYRIGHT & INTELLECTUAL PROPERTY WARNING:
 This software contains proprietary algorithms for audio fingerprinting and 
 content protection developed by Fahed Mlaiel. Unauthorized use, reverse 
 engineering, or replication is strictly prohibited and will result in 
@@ -113,7 +113,7 @@ class FingerprintExtractionResult:
 
 class AudioFingerprinter:
     """
-    🔍 Ultra-Advanced Audio Fingerprinting Engine
+     Ultra-Advanced Audio Fingerprinting Engine
     
     Professional-grade audio fingerprinting system providing robust content
     identification, similarity matching, and copyright protection capabilities
@@ -252,6 +252,9 @@ class AudioFingerprinter:
         Returns:
             List of similarity matches sorted by confidence
         """
+
+
+
         try:
             matches = []
             
@@ -609,6 +612,9 @@ class AudioFingerprinter:
     
     async def _extract_hybrid_fingerprint(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
         """Extract hybrid fingerprint combining multiple methods"""
+
+
+
         try:
             # Extract all fingerprint types
             chromaprint_data = await self._extract_chromaprint(audio_data, sample_rate)
@@ -854,6 +860,9 @@ class AudioFingerprinter:
     
     def _estimate_snr(self, audio_data: np.ndarray) -> float:
         """Estimate signal-to-noise ratio of audio"""
+
+
+
         try:
             # Simple energy-based SNR estimation
             signal_power = np.mean(audio_data ** 2)
@@ -911,6 +920,9 @@ class AudioFingerprinter:
         Returns:
             Similarity score between 0.0 and 1.0
         """
+
+
+
         try:
             match = await self._compare_fingerprints(fp1, fp2)
             return match.similarity_score if match else 0.0
@@ -943,6 +955,9 @@ class AudioFingerprinter:
     
     def __del__(self):
         """Cleanup resources"""
+
+
+
         try:
             if hasattr(self, 'thread_executor'):
                 self.thread_executor.shutdown(wait=False)

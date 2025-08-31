@@ -7,7 +7,7 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 Version: 3.0.0
 Last Updated: August 2025
 
-⚠️ LEGAL WARNING / AVERTISSEMENT LÉGAL
+ LEGAL WARNING / AVERTISSEMENT LÉGAL
 =====================================
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use of this code without explicit 
@@ -169,6 +169,9 @@ def initialize_event_system() -> Dict[str, Any]:
     Returns:
         Dict containing initialized components
     """
+
+
+
     try:
         logger.info("Initializing IA Influencer Event System...")
         

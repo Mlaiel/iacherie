@@ -1,12 +1,12 @@
 """
-🔧 Monitoring Configuration Manager - IA-Influencer-Agent
+ Monitoring Configuration Manager - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps + SRE + Backend Senior + Observability Engineer
 Date: 2025-08-24
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -190,6 +190,9 @@ class MonitoringConfigManager:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             # Load monitoring configurations
             await self._load_monitoring_configurations()
@@ -671,6 +674,9 @@ class MonitoringConfigManager:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             if level not in self.monitoring_configs:
                 raise ValueError(f"Monitoring level not configured: {level.value}")
@@ -738,6 +744,9 @@ class MonitoringConfigManager:
     
     async def enable_full_monitoring(self) -> bool:
         """Enable full monitoring capabilities"""
+
+
+
         return await self.set_monitoring_level(ObservabilityLevel.FULL)
     
     async def add_custom_alert(
@@ -761,6 +770,9 @@ class MonitoringConfigManager:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             alert_rule = {
                 "name": name,
@@ -805,6 +817,9 @@ class MonitoringConfigManager:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             dashboard = {
                 "name": name,
@@ -832,6 +847,9 @@ class MonitoringConfigManager:
     
     async def get_monitoring_status(self) -> Dict[str, Any]:
         """Get comprehensive monitoring status"""
+
+
+
         return {
             "level": self.current_level.value,
             "prometheus_enabled": self.active_config.prometheus.enabled if self.active_config else False,
@@ -886,4 +904,7 @@ class MonitoringConfigManager:
     
     async def get_status(self) -> Dict[str, Any]:
         """Get monitoring manager status"""
+
+
+
         return await self.get_monitoring_status()

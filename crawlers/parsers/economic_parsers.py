@@ -8,7 +8,7 @@ and business intelligence for creator monetization platforms.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
@@ -128,6 +128,9 @@ class YouTubeRevenueParser:
     
     async def parse_analytics_data(self, channel_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
         """Parse YouTube Analytics API data"""
+
+
+
         try:
             analytics_data = await self._fetch_youtube_analytics(channel_id, start_date, end_date)
             
@@ -171,6 +174,9 @@ class SpotifyRoyaltyParser:
     
     async def parse_royalty_report(self, report_data: str) -> List[RevenueRecord]:
         """Parse Spotify royalty CSV report"""
+
+
+
         try:
             records = []
             csv_reader = csv.DictReader(StringIO(report_data))
@@ -200,6 +206,9 @@ class SpotifyRoyaltyParser:
     
     async def analyze_streaming_performance(self, records: List[RevenueRecord]) -> Dict[str, Any]:
         """Analyze streaming performance metrics"""
+
+
+
         try:
             total_streams = sum(record.metadata.get('streams', 0) for record in records)
             total_royalties = sum(record.amount for record in records)
@@ -284,6 +293,9 @@ class StripePaymentsParser:
     
     async def parse_payment_data(self, payment_data: Dict[str, Any]) -> RevenueRecord:
         """Parse Stripe payment data"""
+
+
+
         try:
             # Calculate net amount after fees
             gross_amount = Decimal(str(payment_data.get('amount', 0))) / 100  # Stripe amounts are in cents
@@ -317,6 +329,9 @@ class StripePaymentsParser:
     
     async def analyze_payment_patterns(self, records: List[RevenueRecord]) -> Dict[str, Any]:
         """Analyze payment patterns and trends"""
+
+
+
         try:
             # Group by payment method
             payment_methods = {}
@@ -392,6 +407,9 @@ class EconomicIntelligenceEngine:
         period_days: int = 30
     ) -> EconomicIntelligence:
         """Generate comprehensive economic intelligence report"""
+
+
+
         try:
             # Calculate financial metrics
             financial_metrics = await self._calculate_financial_metrics(revenue_records)
@@ -467,6 +485,9 @@ class EconomicIntelligenceEngine:
     
     async def _calculate_growth_rate(self, records: List[RevenueRecord]) -> float:
         """Calculate revenue growth rate"""
+
+
+
         try:
             # Group by month
             monthly_revenue = {}
@@ -502,6 +523,9 @@ class EconomicIntelligenceEngine:
         forecast_days: int
     ) -> Dict[str, Any]:
         """Generate revenue forecast using trend analysis"""
+
+
+
         try:
             # Simple linear trend analysis
             daily_revenue = {}
@@ -539,6 +563,9 @@ class EconomicIntelligenceEngine:
     
     async def _analyze_market_trends(self, records: List[RevenueRecord]) -> Dict[str, Any]:
         """Analyze market trends and patterns"""
+
+
+
         try:
             # Analyze seasonal patterns
             monthly_patterns = {}
@@ -628,6 +655,9 @@ class EconomicIntelligenceEngine:
     
     async def _assess_financial_risks(self, records: List[RevenueRecord]) -> Dict[str, Any]:
         """Assess financial risks and volatility"""
+
+
+
         try:
             # Calculate revenue volatility
             daily_revenues = {}

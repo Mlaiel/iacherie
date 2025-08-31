@@ -8,7 +8,7 @@ resource management, auto-scaling, and intelligent caching strategies.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent - Content Protection Platform
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
@@ -113,6 +113,9 @@ class IntelligentCache:
         
     async def get(self, key: str) -> Optional[Any]:
         """Get value from cache with intelligent strategy"""
+
+
+
         try:
             # Check local cache first
             if key in self.local_cache:
@@ -149,6 +152,9 @@ class IntelligentCache:
         priority: int = 1
     ):
         """Set value in cache with intelligent placement"""
+
+
+
         try:
             ttl = ttl or self.config.cache_ttl_seconds
             
@@ -175,6 +181,9 @@ class IntelligentCache:
     
     async def _store_local(self, key: str, value: Any, ttl: int = None):
         """Store data in local cache with eviction policy"""
+
+
+
         try:
             current_time = time.time()
             
@@ -194,6 +203,9 @@ class IntelligentCache:
     
     async def _evict_if_needed(self):
         """Evict cache entries based on strategy"""
+
+
+
         try:
             # Calculate current cache size
             current_size = sum(
@@ -327,6 +339,9 @@ class WorkloadBalancer:
         
     async def initialize(self):
         """Initialize workload balancer"""
+
+
+
         try:
             self.worker_pool = ThreadPoolExecutor(max_workers=self.config.max_workers)
             logger.info(f"WorkloadBalancer initialized with {self.config.max_workers} workers")
@@ -343,6 +358,9 @@ class WorkloadBalancer:
         **kwargs
     ) -> asyncio.Future:
         """Submit task with intelligent scheduling"""
+
+
+
         try:
             # Create task wrapper with monitoring
             wrapped_task = self._wrap_task(func, *args, **kwargs)
@@ -396,6 +414,9 @@ class WorkloadBalancer:
     
     async def _monitor_performance(self):
         """Monitor performance and trigger auto-scaling if needed"""
+
+
+
         try:
             if not self.config.auto_scaling_enabled:
                 return
@@ -424,6 +445,9 @@ class WorkloadBalancer:
     
     def _calculate_current_load(self) -> float:
         """Calculate current system load"""
+
+
+
         try:
             # CPU load
             cpu_load = psutil.cpu_percent() / 100.0
@@ -449,6 +473,9 @@ class WorkloadBalancer:
     
     async def _scale_up(self):
         """Scale up worker pool"""
+
+
+
         try:
             new_max_workers = min(
                 self.config.max_workers * 2,
@@ -466,6 +493,9 @@ class WorkloadBalancer:
     
     async def _scale_down(self):
         """Scale down worker pool"""
+
+
+
         try:
             new_max_workers = max(
                 self.config.max_workers // 2,
@@ -483,6 +513,9 @@ class WorkloadBalancer:
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
         """Get current performance metrics"""
+
+
+
         try:
             recent_metrics = list(self.performance_history)[-10:]
             
@@ -524,6 +557,9 @@ class BatchProcessor:
         callback: Callable = None
     ):
         """Add item to batch with intelligent batching"""
+
+
+
         try:
             self.pending_batches[batch_type].append({
                 "item": item,
@@ -561,6 +597,9 @@ class BatchProcessor:
     
     async def _process_batch(self, batch_type: str):
         """Process accumulated batch"""
+
+
+
         try:
             batch = self.pending_batches[batch_type]
             if not batch:
@@ -662,6 +701,9 @@ class BatchProcessor:
     
     async def get_batch_statistics(self) -> Dict[str, Any]:
         """Get batch processing statistics"""
+
+
+
         try:
             stats = {}
             
@@ -697,6 +739,9 @@ class OptimizationEngine:
         
     async def initialize(self):
         """Initialize optimization engine"""
+
+
+
         try:
             # Initialize Redis client
             self.redis_client = Redis.from_url(redis_url)
@@ -717,6 +762,9 @@ class OptimizationEngine:
     
     async def optimize_performance(self) -> OptimizationResult:
         """Perform comprehensive performance optimization"""
+
+
+
         try:
             # Collect baseline metrics
             metrics_before = await self._collect_performance_metrics()
@@ -768,6 +816,9 @@ class OptimizationEngine:
     
     async def _collect_performance_metrics(self) -> PerformanceMetrics:
         """Collect current performance metrics"""
+
+
+
         try:
             cpu_usage = psutil.cpu_percent()
             memory_info = psutil.virtual_memory()
@@ -813,6 +864,9 @@ class OptimizationEngine:
     
     async def _optimize_cpu_usage(self):
         """Optimize CPU usage"""
+
+
+
         try:
             # Adjust worker pool size based on CPU usage
             current_cpu = psutil.cpu_percent()
@@ -832,6 +886,9 @@ class OptimizationEngine:
     
     async def _optimize_memory_usage(self):
         """Optimize memory usage"""
+
+
+
         try:
             memory_info = psutil.virtual_memory()
             
@@ -849,6 +906,9 @@ class OptimizationEngine:
     
     async def _optimize_throughput(self):
         """Optimize throughput"""
+
+
+
         try:
             # Increase batch sizes if system can handle it
             current_load = psutil.cpu_percent() / 100.0
@@ -862,6 +922,9 @@ class OptimizationEngine:
     
     async def _optimize_latency(self):
         """Optimize latency"""
+
+
+
         try:
             # Reduce batch sizes for lower latency
             self.config.batch_size = max(self.config.batch_size // 2, 5)
@@ -880,6 +943,9 @@ class OptimizationEngine:
         after: PerformanceMetrics
     ) -> float:
         """Calculate overall performance improvement percentage"""
+
+
+
         try:
             improvements = []
             
@@ -914,6 +980,9 @@ class OptimizationEngine:
         after: PerformanceMetrics
     ) -> Dict[str, float]:
         """Calculate resource savings"""
+
+
+
         try:
             return {
                 "cpu_savings_percent": max(0, before.cpu_usage - after.cpu_usage),

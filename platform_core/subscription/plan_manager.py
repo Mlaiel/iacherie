@@ -1,15 +1,15 @@
 """
-🚀 Plan Manager - IA Influencer Agent Platform Enterprise
+ Plan Manager - IA Influencer Agent Platform Enterprise
 ========================================================
 Module: backend/platform_core/subscription/plan_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ========================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 GESTIONNAIRE DE PLANS D'ABONNEMENT
+ GESTIONNAIRE DE PLANS D'ABONNEMENT
 Système de gestion intelligent des plans tarifaires
 - Plans dynamiques avec IA prédictive
 - Features et limites configurables
@@ -169,6 +169,9 @@ class SubscriptionPlan:
         
     def get_feature(self, feature_name: str) -> Optional[PlanFeature]:
         """Récupère une fonctionnalité par nom"""
+
+
+
         return next((f for f in self.features if f.name == feature_name), None)
         
     def has_feature(self, feature_name: str) -> bool:
@@ -219,6 +222,9 @@ class SubscriptionPlan:
         
     def to_dict(self) -> Dict[str, Any]:
         """Convertit le plan en dictionnaire"""
+
+
+
         return {
             "plan_id": self.plan_id,
             "name": self.name,
@@ -477,6 +483,9 @@ class PlanManager:
         
     async def get_plans_by_tier(self, tier: PlanTier) -> List[SubscriptionPlan]:
         """Récupère tous les plans d'un niveau"""
+
+
+
         return [plan for plan in self.plans.values() if plan.tier == tier and plan.is_active]
         
     async def get_visible_plans(self, 
@@ -527,6 +536,9 @@ class PlanManager:
         
     async def deactivate_plan(self, plan_id: str) -> bool:
         """Désactive un plan"""
+
+
+
         return await self.update_plan(plan_id, {"is_active": False})
         
     async def optimize_plan_pricing(self,
@@ -648,6 +660,9 @@ class PlanManager:
         
     async def _save_plan(self, plan: SubscriptionPlan):
         """Sauvegarde un plan en base"""
+
+
+
         try:
             logger.info(f"Saving subscription plan {plan.plan_id}")
             

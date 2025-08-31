@@ -13,7 +13,7 @@ Project Team Specialties:
 - Microservices Architect & Audio Processing: Multi-format Support  
 - DevOps Engineer & IA Prompt Engineer: Production Deployment
 
-⚠️ STRONG WARNING ⚠️
+ STRONG WARNING 
 Any attempt to steal, copy, reproduce, or use this concept, idea, or code 
 without explicit written authorization from Fahed Mlaiel is strictly 
 prohibited and will result in legal action.
@@ -63,6 +63,9 @@ class SmartContractTemplates:
         Copyright Registry Smart Contract
         Immutable registration of content ownership and creation timestamps
         """
+
+
+
         return """
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
@@ -349,6 +352,9 @@ contract ContentCopyrightRegistry is Ownable, ReentrancyGuard {
         Content Licensing Smart Contract
         Advanced licensing system with flexible terms and royalty distribution
         """
+
+
+
         return """
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
@@ -711,6 +717,9 @@ contract ContentLicensingSystem is Ownable, ReentrancyGuard {
         Access Control Smart Contract
         Granular permission management for content access
         """
+
+
+
         return """
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
@@ -1056,6 +1065,9 @@ contract ContentAccessControl is AccessControl, ReentrancyGuard {
         Usage Tracking Smart Contract
         Comprehensive tracking of content usage and analytics
         """
+
+
+
         return """
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;

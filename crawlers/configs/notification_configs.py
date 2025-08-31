@@ -247,6 +247,9 @@ class NotificationConfigManager:
     
     def _load_configurations(self) -> None:
         """Load notification configurations from files."""
+
+
+
         try:
             config_file = self.config_dir / "notification_config.json"
             if config_file.exists():
@@ -535,6 +538,9 @@ Recommended Actions:
     
     def _save_configurations(self) -> None:
         """Save configurations to file."""
+
+
+
         try:
             config_file = self.config_dir / "notification_config.json"
             config_data = {

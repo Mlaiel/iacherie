@@ -1,5 +1,5 @@
 """
-🔁 Storage Replication Engine - IA Influencer Agent Platform Enterprise
+ Storage Replication Engine - IA Influencer Agent Platform Enterprise
 ========================================================================
 Module: backend/data_management/storage/replication_engine.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Advanced multi-cloud replication engine for high availability,
 disaster recovery, and geographic distribution of content.
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -191,6 +191,9 @@ class StorageReplicationEngine:
     
     async def start(self) -> None:
         """Start the replication engine"""
+
+
+
         
         try:
             # Initialize storage managers
@@ -213,6 +216,9 @@ class StorageReplicationEngine:
     
     async def stop(self) -> None:
         """Stop the replication engine"""
+
+
+
         
         try:
             # Cancel background tasks
@@ -232,6 +238,9 @@ class StorageReplicationEngine:
     
     async def add_replication_rule(self, rule: ReplicationRule) -> None:
         """Add a replication rule"""
+
+
+
         
         try:
             # Validate rule
@@ -251,6 +260,9 @@ class StorageReplicationEngine:
     
     async def remove_replication_rule(self, rule_id: str) -> None:
         """Remove a replication rule"""
+
+
+
         
         try:
             if rule_id in self.rules:
@@ -271,6 +283,9 @@ class StorageReplicationEngine:
         force_rules: Optional[List[str]] = None
     ) -> List[str]:
         """Replicate content according to rules"""
+
+
+
         
         try:
             job_ids = []
@@ -315,6 +330,9 @@ class StorageReplicationEngine:
     
     async def get_replication_status(self, job_id: str) -> Optional[Dict[str, Any]]:
         """Get replication job status"""
+
+
+
         
         try:
             if job_id in self.active_jobs:
@@ -358,6 +376,9 @@ class StorageReplicationEngine:
     
     async def verify_consistency(self, content_id: str) -> Dict[str, Any]:
         """Verify content consistency across replicas"""
+
+
+
         
         try:
             # Find all replicas of the content
@@ -428,6 +449,9 @@ class StorageReplicationEngine:
         resolution_strategy: Optional[ConflictResolution] = None
     ) -> Dict[str, Any]:
         """Resolve conflicts between replicas"""
+
+
+
         
         try:
             strategy = resolution_strategy or self.conflict_resolver
@@ -489,6 +513,9 @@ class StorageReplicationEngine:
     
     async def get_replication_metrics(self) -> Dict[str, Any]:
         """Get replication engine metrics"""
+
+
+
         
         try:
             return {
@@ -514,6 +541,9 @@ class StorageReplicationEngine:
     
     async def _initialize_storage_managers(self) -> None:
         """Initialize storage managers for different providers"""
+
+
+
         
         try:
             provider_configs = self.config.get('providers', {})
@@ -535,6 +565,9 @@ class StorageReplicationEngine:
     
     async def _discover_nodes(self) -> None:
         """Discover available replication nodes"""
+
+
+
         
         try:
             # This would discover actual nodes from providers
@@ -584,6 +617,9 @@ class StorageReplicationEngine:
     
     async def _start_background_workers(self) -> None:
         """Start background worker tasks"""
+
+
+
         
         try:
             # Start replication worker
@@ -610,6 +646,9 @@ class StorageReplicationEngine:
     
     async def _load_replication_rules(self) -> None:
         """Load replication rules from configuration"""
+
+
+
         
         try:
             rules_config = self.config.get('replication_rules', [])
@@ -658,6 +697,9 @@ class StorageReplicationEngine:
     
     async def _apply_rule_to_existing_content(self, rule: ReplicationRule) -> None:
         """Apply new rule to existing content"""
+
+
+
         
         try:
             # This would scan existing content and apply the new rule
@@ -786,6 +828,9 @@ class StorageReplicationEngine:
     
     async def _process_replication_job(self, job: ReplicationJob) -> None:
         """Process a single replication job"""
+
+
+
         
         try:
             job.status = ReplicationStatus.IN_PROGRESS
@@ -862,6 +907,9 @@ class StorageReplicationEngine:
     
     async def _read_source_content(self, source_location: str) -> bytes:
         """Read content from source location"""
+
+
+
         
         try:
             # Parse source location
@@ -887,6 +935,9 @@ class StorageReplicationEngine:
         job: ReplicationJob
     ) -> None:
         """Replicate content to target location"""
+
+
+
         
         try:
             # Parse target location
@@ -965,6 +1016,9 @@ class StorageReplicationEngine:
     
     async def _check_node_health(self, node: ReplicationNode) -> bool:
         """Check health of a replication node"""
+
+
+
         
         try:
             # Simulate health check

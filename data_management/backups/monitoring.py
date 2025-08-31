@@ -1,5 +1,5 @@
 """
-📊 Monitoring System - Advanced Backup Monitoring & Analytics
+ Monitoring System - Advanced Backup Monitoring & Analytics
 ============================================================
 Module: backend/data_management/backups/monitoring.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Monitoring System - Enterprise Production-Ready
 Responsibility: Monitoring temps réel et analytics des sauvegardes
 =====================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -67,6 +67,9 @@ class Alert:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit en dictionnaire"""
+
+
+
         return {
             "alert_id": self.alert_id,
             "level": self.level.value,
@@ -95,6 +98,9 @@ class Metric:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit en dictionnaire"""
+
+
+
         return {
             "name": self.name,
             "type": self.type.value,
@@ -121,6 +127,9 @@ class PerformanceStats:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit en dictionnaire"""
+
+
+
         return {
             "cpu_usage": self.cpu_usage,
             "memory_usage": self.memory_usage,
@@ -147,6 +156,9 @@ class MonitoringConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit en dictionnaire"""
+
+
+
         return {
             "collection_interval": self.collection_interval,
             "retention_days": self.retention_days,
@@ -203,6 +215,9 @@ class MetricsCollector:
             labels: Labels additionnels
             unit: Unité de mesure
         """
+
+
+
         try:
             metric = Metric(
                 name=name,
@@ -273,6 +288,9 @@ class MetricsCollector:
         Returns:
             Optional[Dict[str, float]]: Statistiques ou None
         """
+
+
+
         return self.aggregated_metrics.get(metric_name)
     
     def collect_system_metrics(self) -> PerformanceStats:
@@ -282,6 +300,9 @@ class MetricsCollector:
         Returns:
             PerformanceStats: Statistiques système
         """
+
+
+
         try:
             # CPU
             cpu_usage = psutil.cpu_percent(interval=1)
@@ -331,6 +352,9 @@ class MetricsCollector:
         Returns:
             str: Métriques exportées
         """
+
+
+
         try:
             if format == "json":
                 return self._export_json()
@@ -533,6 +557,9 @@ class AlertManager:
     
     def _trigger_alert(self, rule_name: str, rule: Dict[str, Any], metric: Metric):
         """Déclenche une alerte"""
+
+
+
         try:
             # Rate limiting
             if not self._check_rate_limit(rule_name):
@@ -776,6 +803,9 @@ class BackupMonitor:
     
     async def _monitoring_loop(self):
         """Boucle principale de monitoring"""
+
+
+
         try:
             while self.monitoring_active:
                 await self._collect_and_process_metrics()
@@ -788,6 +818,9 @@ class BackupMonitor:
     
     async def _collect_and_process_metrics(self):
         """Collecte et traite les métriques"""
+
+
+
         try:
             collected_metrics = []
             
@@ -953,6 +986,9 @@ class BackupMonitor:
         Returns:
             Dict[str, Any]: Données du dashboard
         """
+
+
+
         try:
             # Métriques récentes
             recent_metrics = {}
@@ -1014,6 +1050,9 @@ class BackupMonitor:
         Returns:
             str: Données exportées
         """
+
+
+
         try:
             if format == "json":
                 return self._export_monitoring_json(duration)
@@ -1049,6 +1088,9 @@ class BackupMonitor:
         Returns:
             Dict[str, Any]: Statistiques détaillées
         """
+
+
+
         return {
             "monitoring_active": self.monitoring_active,
             "collection_interval": self.config.collection_interval,

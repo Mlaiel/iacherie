@@ -7,7 +7,7 @@ and financial optimization within the IA Influencer Agent ecosystem.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL NOTICE:
+ CRITICAL LEGAL NOTICE:
 This code and database architecture are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written 
 permission is strictly prohibited and will result in immediate legal action.
@@ -483,6 +483,9 @@ class RevenueDistributionManager:
         revenue_request: RevenueStreamRequest
     ) -> RevenueStream:
         """Record new revenue stream"""
+
+
+
         try:
             # Calculate revenue metrics
             revenue_metrics = await self._calculate_revenue_metrics(revenue_request)
@@ -554,6 +557,9 @@ class RevenueDistributionManager:
         distribution_request: DistributionRequest
     ) -> RevenueDistribution:
         """Create revenue distribution"""
+
+
+
         try:
             # Get revenue streams
             revenue_streams = []
@@ -627,6 +633,9 @@ class RevenueDistributionManager:
         payment_request: PaymentRequest
     ) -> PaymentTransaction:
         """Process payment transaction"""
+
+
+
         try:
             # Get distribution
             distribution = await self._get_distribution_by_id(payment_request.distribution_id)
@@ -701,6 +710,9 @@ class RevenueDistributionManager:
         platforms: Optional[List[str]] = None
     ) -> Dict[str, Any]:
         """Get comprehensive revenue analytics"""
+
+
+
         try:
             # Get revenue streams for period
             query = self.db_session.query(RevenueStream).filter(
@@ -751,6 +763,9 @@ class RevenueDistributionManager:
         rule_request: MonetizationRuleRequest
     ) -> MonetizationRule:
         """Create monetization rule"""
+
+
+
         try:
             # Validate rule configuration
             await self._validate_monetization_rule(rule_request)
@@ -831,6 +846,9 @@ class RevenueDistributionManager:
     
     async def _get_revenue_stream_by_id(self, stream_id: str) -> Optional[RevenueStream]:
         """Get revenue stream by ID"""
+
+
+
         try:
             stream_uuid = uuid.UUID(stream_id)
             return await self.db_session.query(RevenueStream).filter(

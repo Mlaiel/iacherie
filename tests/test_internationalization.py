@@ -32,6 +32,9 @@ from core.i18n.manager import InternationalizationManager, LanguageScript, Langu
 @pytest.fixture
 def i18n_manager():
     """Create an i18n manager instance for testing."""
+
+
+
     return InternationalizationManager()
 
 class TestInternationalizationManager:
@@ -85,7 +88,7 @@ class TestInternationalizationManager:
         assert detected == 'ar'
         
         # Test Tifinagh text detection
-        tifinagh_text = "ⴰⵣⵓⵍ ⴼⵍⵍⴰⵡⵏ"  # Amazigh greeting
+        tifinagh_text = " "  # Amazigh greeting
         detected = await i18n_manager.detect_language(tifinagh_text)
         assert detected == 'tzm'
         

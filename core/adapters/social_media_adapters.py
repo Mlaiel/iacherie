@@ -130,6 +130,9 @@ class InstagramAdapter(BasePlatformAdapter):
     
     async def authenticate(self) -> bool:
         """Authenticate with Instagram API."""
+
+
+
         try:
             # Test authentication with user info request
             response = await self.make_request(
@@ -153,6 +156,9 @@ class InstagramAdapter(BasePlatformAdapter):
     
     async def publish_content(self, content: SocialMediaContent) -> Dict[str, Any]:
         """Publish content to Instagram."""
+
+
+
         try:
             if content.content_type == ContentType.POST:
                 return await self._publish_feed_post(content)
@@ -270,6 +276,9 @@ class InstagramAdapter(BasePlatformAdapter):
                            start_date: Optional[datetime] = None,
                            end_date: Optional[datetime] = None) -> SocialMediaMetrics:
         """Get Instagram analytics and insights."""
+
+
+
         try:
             if post_id:
                 # Get specific post metrics
@@ -337,6 +346,9 @@ class InstagramAdapter(BasePlatformAdapter):
     
     async def health_check(self) -> bool:
         """Perform Instagram API health check."""
+
+
+
         try:
             response = await self.make_request(
                 method="GET",
@@ -381,6 +393,9 @@ class YouTubeAdapter(BasePlatformAdapter):
     
     async def authenticate(self) -> bool:
         """Authenticate with YouTube API."""
+
+
+
         try:
             response = await self.make_request(
                 method="GET",
@@ -406,6 +421,9 @@ class YouTubeAdapter(BasePlatformAdapter):
     
     async def upload_video(self, content: SocialMediaContent, video_file_path: str) -> Dict[str, Any]:
         """Upload video to YouTube."""
+
+
+
         try:
             # Prepare video metadata
             video_metadata = {
@@ -462,6 +480,9 @@ class YouTubeAdapter(BasePlatformAdapter):
                            start_date: Optional[datetime] = None,
                            end_date: Optional[datetime] = None) -> SocialMediaMetrics:
         """Get YouTube analytics."""
+
+
+
         try:
             if video_id:
                 # Get video statistics
@@ -520,6 +541,9 @@ class YouTubeAdapter(BasePlatformAdapter):
     
     async def health_check(self) -> bool:
         """Perform YouTube API health check."""
+
+
+
         try:
             response = await self.make_request(
                 method="GET",
@@ -568,6 +592,9 @@ class TikTokAdapter(BasePlatformAdapter):
     
     async def authenticate(self) -> bool:
         """Authenticate with TikTok API."""
+
+
+
         try:
             response = await self.make_request(
                 method="GET",
@@ -589,6 +616,9 @@ class TikTokAdapter(BasePlatformAdapter):
     
     async def publish_video(self, content: SocialMediaContent, video_file_path: str) -> Dict[str, Any]:
         """Publish video to TikTok."""
+
+
+
         try:
             # TikTok requires video upload in chunks
             # This is a simplified version - actual implementation would handle file upload
@@ -636,6 +666,9 @@ class TikTokAdapter(BasePlatformAdapter):
     async def get_analytics(self, start_date: Optional[datetime] = None,
                            end_date: Optional[datetime] = None) -> SocialMediaMetrics:
         """Get TikTok creator analytics."""
+
+
+
         try:
             # Get user videos first
             videos_response = await self.make_request(
@@ -681,6 +714,9 @@ class TikTokAdapter(BasePlatformAdapter):
     
     async def health_check(self) -> bool:
         """Perform TikTok API health check."""
+
+
+
         try:
             response = await self.make_request(
                 method="GET",
@@ -716,6 +752,9 @@ class SocialMediaAdapterFactory:
     @classmethod
     def get_supported_platforms(cls) -> List[SocialMediaPlatform]:
         """Get list of supported platforms."""
+
+
+
         return list(cls._adapters.keys())
 
 # Export all classes

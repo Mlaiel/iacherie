@@ -1,5 +1,5 @@
 """
-🎯 Advanced Metrics Module - Enterprise Analytics & Business Intelligence
+ Advanced Metrics Module - Enterprise Analytics & Business Intelligence
 ========================================================================
 
 Comprehensive advanced metrics collection and analysis system for the Ainflue platform.
@@ -197,10 +197,16 @@ MODULE_INFO = {
 
 def get_module_info() -> dict:
     """Get comprehensive module information and metadata"""
+
+
+
     return MODULE_INFO.copy()
 
 def get_health_status() -> dict:
     """Get module health status and operational metrics"""
+
+
+
     return {
         "status": "operational",
         "version": __version__,

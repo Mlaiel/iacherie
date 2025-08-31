@@ -95,6 +95,9 @@ class AWSConfig:
     
     def _get_account_id(self) -> str:
         """Get AWS account ID"""
+
+
+
         try:
             sts_client = boto3.client('sts', region_name=self.region)
             return sts_client.get_caller_identity()["Account"]
@@ -103,6 +106,9 @@ class AWSConfig:
     
     def _get_availability_zones(self) -> List[str]:
         """Get available AZs in region"""
+
+
+
         try:
             ec2_client = boto3.client('ec2', region_name=self.region)
             azs = ec2_client.describe_availability_zones()
@@ -112,6 +118,9 @@ class AWSConfig:
     
     def get_vpc_configuration(self) -> Dict[str, Any]:
         """Generate VPC configuration"""
+
+
+
         return {
             "VPC": {
                 "Type": "AWS::EC2::VPC",
@@ -326,6 +335,9 @@ class AWSConfig:
     
     def get_eks_configuration(self) -> Dict[str, Any]:
         """Generate EKS cluster configuration"""
+
+
+
         return {
             "EKSClusterRole": {
                 "Type": "AWS::IAM::Role",
@@ -392,6 +404,9 @@ class AWSConfig:
     
     def get_eks_node_group_configuration(self) -> Dict[str, Any]:
         """Generate EKS node group configuration"""
+
+
+
         return {
             "EKSNodeGroupRole": {
                 "Type": "AWS::IAM::Role",
@@ -486,6 +501,9 @@ class AWSConfig:
     
     def get_rds_configuration(self) -> Dict[str, Any]:
         """Generate RDS configuration"""
+
+
+
         return {
             "DBSubnetGroup": {
                 "Type": "AWS::RDS::DBSubnetGroup",
@@ -536,6 +554,9 @@ class AWSConfig:
     
     def get_elasticache_configuration(self) -> Dict[str, Any]:
         """Generate ElastiCache Redis configuration"""
+
+
+
         return {
             "ElastiCacheSubnetGroup": {
                 "Type": "AWS::ElastiCache::SubnetGroup",
@@ -571,6 +592,9 @@ class AWSConfig:
     
     def get_s3_configuration(self) -> Dict[str, Any]:
         """Generate S3 bucket configurations"""
+
+
+
         return {
             "ContentStorageBucket": {
                 "Type": "AWS::S3::Bucket",
@@ -699,6 +723,9 @@ class AWSConfig:
     
     def get_lambda_configuration(self) -> Dict[str, Any]:
         """Generate Lambda function configurations"""
+
+
+
         return {
             "LambdaExecutionRole": {
                 "Type": "AWS::IAM::Role",
@@ -816,6 +843,9 @@ def handler(event, context):
     
     def get_cloudfront_configuration(self) -> Dict[str, Any]:
         """Generate CloudFront CDN configuration"""
+
+
+
         return {
             "CloudFrontDistribution": {
                 "Type": "AWS::CloudFront::Distribution",
@@ -944,6 +974,9 @@ def handler(event, context):
     
     def get_deployment_script(self) -> str:
         """Generate AWS deployment script"""
+
+
+
         return f'''#!/bin/bash
 # AWS deployment script for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -955,29 +988,29 @@ REGION="{self.region}"
 STACK_NAME="ia-influencer-agent-$ENVIRONMENT"
 TEMPLATE_FILE="aws-infrastructure.yaml"
 
-echo "🚀 Deploying IA-Influencer Agent to AWS..."
+echo " Deploying IA-Influencer Agent to AWS..."
 echo "Environment: $ENVIRONMENT"
 echo "Region: $REGION"
 echo "Stack: $STACK_NAME"
 
 # Check prerequisites
 if ! command -v aws &> /dev/null; then
-    echo "❌ AWS CLI is not installed"
+    echo " AWS CLI is not installed"
     exit 1
 fi
 
 # Check AWS credentials
 if ! aws sts get-caller-identity &> /dev/null; then
-    echo "❌ AWS credentials not configured"
+    echo " AWS credentials not configured"
     exit 1
 fi
 
 # Validate CloudFormation template
-echo "✅ Validating CloudFormation template..."
+echo " Validating CloudFormation template..."
 aws cloudformation validate-template --template-body file://$TEMPLATE_FILE --region $REGION
 
 # Deploy stack
-echo "📦 Deploying CloudFormation stack..."
+echo " Deploying CloudFormation stack..."
 aws cloudformation deploy \\
     --template-file $TEMPLATE_FILE \\
     --stack-name $STACK_NAME \\
@@ -993,24 +1026,24 @@ aws cloudformation deploy \\
         Email=mlaiel@live.de
 
 # Get stack outputs
-echo "📊 Getting stack outputs..."
+echo " Getting stack outputs..."
 aws cloudformation describe-stacks \\
     --stack-name $STACK_NAME \\
     --region $REGION \\
     --query 'Stacks[0].Outputs'
 
 # Configure kubectl for EKS
-echo "⚙️ Configuring kubectl for EKS..."
+echo " Configuring kubectl for EKS..."
 aws eks update-kubeconfig \\
     --region $REGION \\
     --name ia-influencer-agent-cluster-$ENVIRONMENT
 
 # Verify EKS connection
-echo "🔍 Verifying EKS connection..."
+echo " Verifying EKS connection..."
 kubectl get nodes
 
-echo "✅ AWS infrastructure deployed successfully!"
-echo "🎯 Next steps:"
+echo " AWS infrastructure deployed successfully!"
+echo " Next steps:"
 echo "1. Deploy Kubernetes manifests: kubectl apply -f k8s-manifests/"
 echo "2. Configure DNS: Update Route53 records"
 echo "3. Setup monitoring: Deploy Prometheus/Grafana"

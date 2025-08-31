@@ -1,5 +1,5 @@
 """
-📊 Distributed Storage Manager - IA Influencer Agent Platform Enterprise
+ Distributed Storage Manager - IA Influencer Agent Platform Enterprise
 ========================================================================
 Module: backend/data_management/storage/distributed_storage.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Enterprise distributed storage management with sharding, consistency,
 partitioning, and high-availability cluster orchestration.
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -81,6 +81,9 @@ class ClusterNode:
     @property
     def endpoint(self) -> str:
         """Get node endpoint URL"""
+
+
+
         return f"http://{self.hostname}:{self.port}"
 
 @dataclass
@@ -98,6 +101,9 @@ class ShardInfo:
     @property
     def replication_factor(self) -> int:
         """Get replication factor for this shard"""
+
+
+
         return 1 + len(self.replica_nodes)
 
 @dataclass
@@ -160,6 +166,9 @@ class DistributedStorageManager:
     
     async def initialize_cluster(self, initial_nodes: List[Dict[str, Any]]) -> bool:
         """Initialize the distributed cluster with initial nodes"""
+
+
+
         try:
             # Add initial nodes to cluster
             for node_config in initial_nodes:
@@ -186,15 +195,18 @@ class DistributedStorageManager:
             if self.config.auto_rebalancing:
                 self.rebalance_task = asyncio.create_task(self._rebalance_loop())
             
-            logger.info(f"✅ Cluster initialized with {len(self.cluster_nodes)} nodes")
+            logger.info(f" Cluster initialized with {len(self.cluster_nodes)} nodes")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize cluster: {str(e)}")
+            logger.error(f" Failed to initialize cluster: {str(e)}")
             return False
     
     async def add_node(self, node: ClusterNode) -> bool:
         """Add a new node to the cluster"""
+
+
+
         try:
             # Verify node connectivity
             if not await self._verify_node_connectivity(node):
@@ -215,15 +227,18 @@ class DistributedStorageManager:
             if len(self.cluster_nodes) > 1 and self.config.auto_rebalancing:
                 asyncio.create_task(self._trigger_rebalancing())
             
-            logger.info(f"✅ Node added to cluster: {node.node_id}")
+            logger.info(f" Node added to cluster: {node.node_id}")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to add node {node.node_id}: {str(e)}")
+            logger.error(f" Failed to add node {node.node_id}: {str(e)}")
             return False
     
     async def remove_node(self, node_id: str, graceful: bool = True) -> bool:
         """Remove a node from the cluster"""
+
+
+
         try:
             if node_id not in self.cluster_nodes:
                 return False
@@ -245,11 +260,11 @@ class DistributedStorageManager:
             # Update shard assignments
             await self.shard_manager.remove_node(node_id)
             
-            logger.info(f"✅ Node removed from cluster: {node_id}")
+            logger.info(f" Node removed from cluster: {node_id}")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to remove node {node_id}: {str(e)}")
+            logger.error(f" Failed to remove node {node_id}: {str(e)}")
             return False
     
     async def store_data(
@@ -438,6 +453,9 @@ class DistributedStorageManager:
     
     async def get_cluster_status(self) -> Dict[str, Any]:
         """Get comprehensive cluster status and health information"""
+
+
+
         try:
             total_capacity = sum(node.storage_capacity for node in self.cluster_nodes.values())
             used_capacity = sum(
@@ -488,6 +506,9 @@ class DistributedStorageManager:
     
     async def rebalance_cluster(self, force: bool = False) -> Dict[str, Any]:
         """Manually trigger cluster rebalancing"""
+
+
+
         try:
             if not force and not self._needs_rebalancing():
                 return {
@@ -539,6 +560,9 @@ class DistributedStorageManager:
     
     async def _verify_node_connectivity(self, node: ClusterNode) -> bool:
         """Verify that we can connect to a node"""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(f"{node.endpoint}/health", timeout=aiohttp.ClientTimeout(total=5)) as response:
@@ -598,6 +622,9 @@ class DistributedStorageManager:
         metadata: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
         """Store data on a specific node"""
+
+
+
         try:
             if node_id not in self.node_sessions:
                 return {'success': False, 'error': 'Node session not found'}
@@ -630,6 +657,9 @@ class DistributedStorageManager:
     
     async def _retrieve_from_node(self, node_id: str, key: str) -> Dict[str, Any]:
         """Retrieve data from a specific node"""
+
+
+
         try:
             if node_id not in self.node_sessions:
                 return {'success': False, 'error': 'Node session not found'}
@@ -655,6 +685,9 @@ class DistributedStorageManager:
     
     async def _delete_from_node(self, node_id: str, key: str) -> Dict[str, Any]:
         """Delete data from a specific node"""
+
+
+
         try:
             if node_id not in self.node_sessions:
                 return {'success': False, 'error': 'Node session not found'}

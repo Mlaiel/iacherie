@@ -62,6 +62,9 @@ class ServiceMeshService:
     
     def to_kubernetes_service(self) -> Dict[str, Any]:
         """Convert to Kubernetes service manifest."""
+
+
+
         return {
             "apiVersion": "v1",
             "kind": "Service",
@@ -166,6 +169,9 @@ class Gateway:
     
     def to_istio_gateway(self) -> Dict[str, Any]:
         """Convert to Istio Gateway manifest."""
+
+
+
         return {
             "apiVersion": "networking.istio.io/v1beta1",
             "kind": "Gateway",
@@ -366,6 +372,9 @@ class ServiceMeshConfig(BaseSettings):
     
     def get_mesh_config(self) -> Dict[str, Any]:
         """Get complete service mesh configuration."""
+
+
+
         return {
             "mesh_type": self.mesh_type,
             "enabled": self.enabled,

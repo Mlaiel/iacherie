@@ -48,6 +48,9 @@ class TestGamificationWorkflows:
     @pytest.fixture
     def sample_user_data(self):
         """Sample user data for testing"""
+
+
+
         return {
             "user_id": "test_user_123",
             "username": "test_creator",
@@ -63,6 +66,9 @@ class TestGamificationWorkflows:
     @pytest.fixture
     def mock_gamification_manager(self):
         """Mock gamification manager for testing"""
+
+
+
         try:
             from business.engagement.gamification_manager import GamificationManager
             return GamificationManager()
@@ -78,6 +84,9 @@ class TestGamificationWorkflows:
     @pytest.fixture
     def mock_reward_calculator(self):
         """Mock reward calculator for testing"""
+
+
+
         try:
             from business.engagement.reward_calculator import RewardCalculator
             calculator = RewardCalculator()
@@ -93,7 +102,7 @@ class TestGamificationWorkflows:
     @pytest.mark.asyncio
     async def test_user_registration_workflow(self, mock_gamification_manager, sample_user_data):
         """Test complete user registration and gamification profile creation"""
-        print("👤 Testing user registration gamification workflow...")
+        print(" Testing user registration gamification workflow...")
         
         user_id = sample_user_data["user_id"]
         
@@ -113,12 +122,12 @@ class TestGamificationWorkflows:
             assert profile["level"] == 1, "New user should start at level 1"
             assert profile["xp"] == 0, "New user should start with 0 XP"
         
-        print("✅ User registration workflow test passed")
+        print(" User registration workflow test passed")
     
     @pytest.mark.asyncio
     async def test_content_creation_reward_workflow(self, mock_gamification_manager, mock_reward_calculator, sample_user_data):
         """Test content creation reward calculation and XP award workflow"""
-        print("🎨 Testing content creation reward workflow...")
+        print(" Testing content creation reward workflow...")
         
         user_id = sample_user_data["user_id"]
         content_data = {
@@ -160,12 +169,12 @@ class TestGamificationWorkflows:
             assert profile["xp"] > sample_user_data["xp"], "XP should increase"
             assert profile["total_points"] > sample_user_data["total_points"], "Points should increase"
         
-        print("✅ Content creation reward workflow test passed")
+        print(" Content creation reward workflow test passed")
     
     @pytest.mark.asyncio
     async def test_level_progression_workflow(self, mock_gamification_manager, sample_user_data):
         """Test user level progression and unlocks"""
-        print("📈 Testing level progression workflow...")
+        print(" Testing level progression workflow...")
         
         user_id = sample_user_data["user_id"]
         
@@ -186,12 +195,12 @@ class TestGamificationWorkflows:
             assert result["new_level"] > 1, "Should advance to higher level"
             assert len(result["rewards_unlocked"]) > 0, "Should unlock level rewards"
         
-        print("✅ Level progression workflow test passed")
+        print(" Level progression workflow test passed")
     
     @pytest.mark.asyncio
     async def test_achievement_tracking_workflow(self, mock_gamification_manager, sample_user_data):
         """Test achievement tracking and unlocking system"""
-        print("🏆 Testing achievement tracking workflow...")
+        print(" Testing achievement tracking workflow...")
         
         user_id = sample_user_data["user_id"]
         
@@ -224,12 +233,12 @@ class TestGamificationWorkflows:
             assert len(result["newly_unlocked"]) > 0, "Should unlock achievements"
             assert len(result["progress_updated"]) > 0, "Should update achievement progress"
         
-        print("✅ Achievement tracking workflow test passed")
+        print(" Achievement tracking workflow test passed")
     
     @pytest.mark.asyncio
     async def test_challenge_participation_workflow(self, mock_gamification_manager, sample_user_data):
         """Test challenge participation and completion workflow"""
-        print("🎯 Testing challenge participation workflow...")
+        print(" Testing challenge participation workflow...")
         
         user_id = sample_user_data["user_id"]
         challenge_data = {
@@ -273,12 +282,12 @@ class TestGamificationWorkflows:
             assert result["progress"] > 0, "Should update challenge progress"
             assert result["completed"] is False, "Should not be completed yet"
         
-        print("✅ Challenge participation workflow test passed")
+        print(" Challenge participation workflow test passed")
     
     @pytest.mark.asyncio
     async def test_leaderboard_ranking_workflow(self, mock_gamification_manager, sample_user_data):
         """Test leaderboard ranking and position calculation"""
-        print("🏅 Testing leaderboard ranking workflow...")
+        print(" Testing leaderboard ranking workflow...")
         
         user_id = sample_user_data["user_id"]
         
@@ -303,12 +312,12 @@ class TestGamificationWorkflows:
             assert "category_ranks" in result, "Should include category-specific ranks"
             assert result["percentile"] > 0, "Should calculate percentile position"
         
-        print("✅ Leaderboard ranking workflow test passed")
+        print(" Leaderboard ranking workflow test passed")
     
     @pytest.mark.asyncio
     async def test_daily_streak_workflow(self, mock_gamification_manager, sample_user_data):
         """Test daily streak tracking and bonus calculation"""
-        print("🔥 Testing daily streak workflow...")
+        print(" Testing daily streak workflow...")
         
         user_id = sample_user_data["user_id"]
         
@@ -329,12 +338,12 @@ class TestGamificationWorkflows:
             assert result["streak_bonus"] > 0, "Should calculate streak bonus"
             assert "next_milestone" in result, "Should show next milestone"
         
-        print("✅ Daily streak workflow test passed")
+        print(" Daily streak workflow test passed")
     
     @pytest.mark.asyncio
     async def test_gamification_analytics_workflow(self, mock_gamification_manager, sample_user_data):
         """Test gamification analytics and insights generation"""
-        print("📊 Testing gamification analytics workflow...")
+        print(" Testing gamification analytics workflow...")
         
         user_id = sample_user_data["user_id"]
         
@@ -362,7 +371,7 @@ class TestGamificationWorkflows:
             assert "activity_trends" in result, "Should include activity trends"
             assert len(result["recommendations"]) > 0, "Should provide recommendations"
         
-        print("✅ Gamification analytics workflow test passed")
+        print(" Gamification analytics workflow test passed")
 
 
 if __name__ == "__main__":

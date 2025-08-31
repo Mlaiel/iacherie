@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -147,6 +147,9 @@ class EngagementInsight:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for JSON serialization"""
+
+
+
         return {
             "insight_type": self.insight_type,
             "title": self.title,
@@ -214,6 +217,9 @@ class EngagementAnalyzer:
         Returns:
             Created engagement metric record
         """
+
+
+
         try:
             # Calculate derived metrics
             engagement_rate = self._calculate_engagement_rate(engagement_data)
@@ -325,6 +331,9 @@ class EngagementAnalyzer:
         Returns:
             List of engagement insights
         """
+
+
+
         try:
             # Build query filters
             filters = [EngagementMetric.user_id == user_id]
@@ -677,6 +686,9 @@ class EngagementAnalyzer:
         Returns:
             Comprehensive audience insights
         """
+
+
+
         try:
             # Get engagement data for analysis period
             start_date = datetime.utcnow() - timedelta(days=analysis_period_days)

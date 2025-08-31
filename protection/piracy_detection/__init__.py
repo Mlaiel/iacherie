@@ -1,4 +1,4 @@
-"""🔍 Ultra-Industrial Anti-Piracy Detection & Enforcement Orchestration
+""" Ultra-Industrial Anti-Piracy Detection & Enforcement Orchestration
 =====================================================================
 
 Enterprise-grade AI-powered anti-piracy ecosystem with advanced threat detection,
@@ -33,7 +33,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + Legal Tech + DevOps + DBA
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  MAXIMUM ANTI-PIRACY IP PROTECTION - INTERPOL COORDINATION ⚠️
+  MAXIMUM ANTI-PIRACY IP PROTECTION - INTERPOL COORDINATION 
 ================================================================
 This anti-piracy system contains classified law enforcement technologies:
 - Dark Web Surveillance: Classified Intelligence Agency Methods
@@ -132,7 +132,10 @@ class PiracyDetectionSystem:
         self.initialized = False
         
     async def initialize(self) -> bool:
-        """Initialize all system components."""        try:
+        """Initialize all system components."""
+
+
+        try:
             self.logger.info("Initializing Piracy Detection System...")
             
             # Initialize core detector
@@ -268,7 +271,10 @@ class PiracyDetectionSystem:
         return status
     
     async def close(self) -> None:
-        """Clean up all system components."""        try:
+        """Clean up all system components."""
+
+
+        try:
             components = [
                 self.detector, self.monitor, self.analyzer, self.enforcement,
                 self.forensic_analyzer, self.revenue_analyzer, self.social_intelligence
@@ -357,7 +363,7 @@ __copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
 __license__ = "Proprietary"
 
 # Legal notice
-__legal_notice__ = """⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
+__legal_notice__ = """ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
@@ -479,7 +485,10 @@ class PiracyDetectionService:
         
         Returns:
             bool: True if initialization successful, False otherwise
-        """        try:
+        """
+
+
+        try:
             logger.info("Initializing Piracy Detection Services...")
             
             # Initialize detector

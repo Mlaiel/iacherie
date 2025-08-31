@@ -94,22 +94,34 @@ class SchemaValidationResult:
     @property
     def has_errors(self) -> bool:
         """Check if validation has errors"""
+
+
+
         return any(issue.severity in [ValidationSeverity.ERROR, ValidationSeverity.CRITICAL] 
                   for issue in self.issues)
     
     @property
     def has_warnings(self) -> bool:
         """Check if validation has warnings"""
+
+
+
         return any(issue.severity == ValidationSeverity.WARNING for issue in self.issues)
     
     @property
     def error_count(self) -> int:
         """Count of error-level issues"""
+
+
+
         return len([i for i in self.issues if i.severity in [ValidationSeverity.ERROR, ValidationSeverity.CRITICAL]])
     
     @property
     def warning_count(self) -> int:
         """Count of warning-level issues"""
+
+
+
         return len([i for i in self.issues if i.severity == ValidationSeverity.WARNING])
     
     @property
@@ -141,6 +153,9 @@ class CustomValidationRule:
     
     def validate(self, value: Any) -> Optional[SchemaValidationIssue]:
         """Execute validation rule"""
+
+
+
         try:
             if not self.validator_func(value):
                 return SchemaValidationIssue(

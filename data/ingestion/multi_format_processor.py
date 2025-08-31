@@ -9,7 +9,7 @@ advanced AI-powered optimization and format conversion.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code is proprietary and confidential. Any unauthorized copying, distribution,
 or use without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is
 strictly prohibited and will result in legal action.
@@ -159,6 +159,9 @@ class MultiFormatProcessor:
     
     def _init_ai_models(self):
         """Initialize AI models for content enhancement"""
+
+
+
         try:
             # Image enhancement models
             self.image_enhancer = pipeline(
@@ -286,6 +289,9 @@ class MultiFormatProcessor:
         Returns:
             List of processing results
         """
+
+
+
         try:
             self.logger.info(f"Starting batch processing of {len(content_items)} items")
             
@@ -330,6 +336,9 @@ class MultiFormatProcessor:
     
     async def _detect_content_type(self, file_data: bytes, filename: str) -> str:
         """Auto-detect content type from file data and filename"""
+
+
+
         try:
             # Use python-magic for MIME type detection
             mime_type = magic.from_buffer(file_data, mime=True)
@@ -365,6 +374,9 @@ class MultiFormatProcessor:
     async def _process_audio_content(self, file_data: bytes, filename: str, 
                                    options: ProcessingOptions) -> ProcessingResult:
         """Process audio content with enhancement and optimization"""
+
+
+
         try:
             warnings = []
             errors = []
@@ -469,6 +481,9 @@ class MultiFormatProcessor:
     async def _process_video_content(self, file_data: bytes, filename: str, 
                                    options: ProcessingOptions) -> ProcessingResult:
         """Process video content with enhancement and optimization"""
+
+
+
         try:
             warnings = []
             errors = []
@@ -567,6 +582,9 @@ class MultiFormatProcessor:
     async def _process_image_content(self, file_data: bytes, filename: str, 
                                    options: ProcessingOptions) -> ProcessingResult:
         """Process image content with enhancement and optimization"""
+
+
+
         try:
             warnings = []
             errors = []
@@ -681,6 +699,9 @@ class MultiFormatProcessor:
     async def _process_text_content(self, file_data: bytes, filename: str, 
                                   options: ProcessingOptions) -> ProcessingResult:
         """Process text content with NLP analysis and enhancement"""
+
+
+
         try:
             warnings = []
             errors = []
@@ -780,6 +801,9 @@ class MultiFormatProcessor:
     
     def _reduce_noise(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
         """Apply noise reduction to audio"""
+
+
+
         try:
             # Simple spectral subtraction noise reduction
             # This is a basic implementation - in production, use more sophisticated methods
@@ -808,6 +832,9 @@ class MultiFormatProcessor:
     
     def _compress_dynamic_range(self, audio_data: np.ndarray) -> np.ndarray:
         """Apply dynamic range compression"""
+
+
+
         try:
             # Simple compression using numpy
             threshold = 0.7
@@ -830,6 +857,9 @@ class MultiFormatProcessor:
     
     async def _generate_waveform_thumbnail(self, audio_data: np.ndarray, sample_rate: int) -> bytes:
         """Generate waveform visualization thumbnail"""
+
+
+
         try:
             import matplotlib.pyplot as plt
             import matplotlib
@@ -860,6 +890,9 @@ class MultiFormatProcessor:
     
     async def _generate_spectrogram_thumbnail(self, audio_data: np.ndarray, sample_rate: int) -> bytes:
         """Generate spectrogram visualization thumbnail"""
+
+
+
         try:
             import matplotlib.pyplot as plt
             import matplotlib
@@ -894,6 +927,9 @@ class MultiFormatProcessor:
     
     async def _generate_video_thumbnail(self, video_path: str, metadata: Dict) -> bytes:
         """Generate video thumbnail from middle frame"""
+
+
+
         try:
             # Extract frame from middle of video
             duration = metadata.get('duration', 10)
@@ -920,6 +956,9 @@ class MultiFormatProcessor:
     
     async def _generate_video_timeline(self, video_path: str, metadata: Dict) -> bytes:
         """Generate video timeline with multiple frames"""
+
+
+
         try:
             duration = metadata.get('duration', 10)
             frame_count = min(10, int(duration))
@@ -964,6 +1003,9 @@ class MultiFormatProcessor:
     
     async def _generate_text_preview(self, text_content: str) -> bytes:
         """Generate text preview image"""
+
+
+
         try:
             import matplotlib.pyplot as plt
             import matplotlib
@@ -989,6 +1031,9 @@ class MultiFormatProcessor:
     
     async def _extract_pdf_text(self, pdf_data: bytes) -> str:
         """Extract text from PDF using PyMuPDF"""
+
+
+
         try:
             doc = fitz.open(stream=pdf_data, filetype="pdf")
             text_content = ""
@@ -1005,6 +1050,9 @@ class MultiFormatProcessor:
     
     async def _extract_docx_text(self, docx_data: bytes) -> str:
         """Extract text from DOCX file"""
+
+
+
         try:
             import docx
             
@@ -1026,6 +1074,9 @@ class MultiFormatProcessor:
     
     def _clean_text(self, text: str) -> str:
         """Clean and normalize text content"""
+
+
+
         try:
             import re
             
@@ -1045,6 +1096,9 @@ class MultiFormatProcessor:
     
     async def _analyze_audio_quality(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
         """Analyze audio quality metrics"""
+
+
+
         try:
             metrics = {}
             
@@ -1078,6 +1132,9 @@ class MultiFormatProcessor:
     
     async def _analyze_video_quality(self, video_path: str, metadata: Dict) -> Dict[str, float]:
         """Analyze video quality metrics"""
+
+
+
         try:
             metrics = {}
             
@@ -1123,6 +1180,9 @@ class MultiFormatProcessor:
     
     async def _analyze_image_quality(self, image: Image.Image) -> Dict[str, float]:
         """Analyze image quality metrics"""
+
+
+
         try:
             metrics = {}
             
@@ -1176,6 +1236,9 @@ class MultiFormatProcessor:
     
     async def _analyze_text_quality(self, text_content: str) -> Dict[str, float]:
         """Analyze text quality metrics"""
+
+
+
         try:
             metrics = {}
             
@@ -1221,8 +1284,14 @@ class MultiFormatProcessor:
     
     def get_supported_formats(self) -> Dict[str, List[str]]:
         """Get all supported formats by content type"""
+
+
+
         return self.supported_formats.copy()
     
     def get_quality_presets(self) -> Dict[str, Dict[str, Any]]:
         """Get quality presets configuration"""
+
+
+
         return {preset.value: config for preset, config in self.quality_presets.items()}

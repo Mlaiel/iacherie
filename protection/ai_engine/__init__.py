@@ -13,7 +13,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL WARNING ⚠️
+ CRITICAL LEGAL WARNING 
 This proprietary AI system contains advanced algorithms, trade secrets, and intellectual property
 belonging exclusively to Fahed Mlaiel (mlaiel@live.de).
 
@@ -155,7 +155,10 @@ class EnterpriseAIProtectionEngine:
         logger.info(f"Enterprise AI Protection Engine initialized - Session: {self.session_id}")
         
     def _initialize_ai_engines(self):
-        """Initialize all AI engine components with advanced configuration"""        try:
+        """Initialize all AI engine components with advanced configuration"""
+
+
+        try:
             # Core AI Intelligence Components
             self.content_classifier = ContentClassifierEngine(self.config.__dict__)
             self.threat_detector = ThreatDetectionEngine(self.config.__dict__)
@@ -194,7 +197,10 @@ class EnterpriseAIProtectionEngine:
         health_thread.start()
     
     def _check_engine_health(self):
-        """Comprehensive health check of all engine components"""        try:
+        """Comprehensive health check of all engine components"""
+
+
+        try:
             # Check Redis connectivity
             self.redis_client.ping()
             
@@ -336,7 +342,10 @@ class EnterpriseAIProtectionEngine:
                 raise
     
     async def _cache_analysis_results(self, analysis_id: str, results: Dict[str, Any]):
-        """Cache analysis results in Redis for performance optimization"""        try:
+        """Cache analysis results in Redis for performance optimization"""
+
+
+        try:
             cache_key = f"analysis_results:{analysis_id}"
             cache_data = json.dumps(results, default=str)
             
@@ -350,7 +359,10 @@ class EnterpriseAIProtectionEngine:
             logger.warning(f"Failed to cache analysis results: {str(e)}")
     
     async def get_cached_analysis(self, analysis_id: str) -> Optional[Dict[str, Any]]:
-        """Retrieve cached analysis results"""        try:
+        """Retrieve cached analysis results"""
+
+
+        try:
             cache_key = f"analysis_results:{analysis_id}"
             cached_data = await asyncio.get_event_loop().run_in_executor(
                 self.thread_pool,
@@ -410,7 +422,10 @@ class EnterpriseAIProtectionEngine:
                 raise
     
     def get_engine_status(self) -> Dict[str, Any]:
-        """Get comprehensive engine status and metrics"""        return {
+        """Get comprehensive engine status and metrics"""
+
+
+        return {
             'status': self.status.value,
             'session_id': self.session_id,
             'version': __version__,
@@ -438,7 +453,10 @@ class EnterpriseAIProtectionEngine:
         }
     
     async def shutdown(self):
-        """Graceful shutdown of all engine components"""        try:
+        """Graceful shutdown of all engine components"""
+
+
+        try:
             logger.info("Initiating AI Engine shutdown sequence")
             self.status = EngineStatus.MAINTENANCE
             
@@ -464,7 +482,10 @@ class EnterpriseAIProtectionEngine:
     
     async def continuous_learning(self, feedback_data: List[Dict[str, Any]]) -> Dict[str, Any]:
         """        Continuous learning from protection outcomes
-        """        try:
+        """
+
+
+        try:
             learning_results = {}
             
             # Update content classifier

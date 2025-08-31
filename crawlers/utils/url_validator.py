@@ -249,6 +249,9 @@ class URLValidator:
     
     def _is_valid_url_structure(self, url: str) -> bool:
         """Validate basic URL structure."""
+
+
+
         try:
             result = urlparse(url)
             return all([result.scheme, result.netloc])
@@ -257,6 +260,9 @@ class URLValidator:
     
     def _normalize_url(self, url: str) -> str:
         """Normalize URL for consistent processing."""
+
+
+
         try:
             # Parse URL
             parsed = urlparse(url)
@@ -350,6 +356,9 @@ class URLValidator:
     
     def _detect_platform_and_type(self, url: str) -> Tuple[URLType, str, Optional[str]]:
         """Detect platform and content type from URL."""
+
+
+
         try:
             for platform, patterns in self.platform_patterns.items():
                 domain_pattern = patterns['domain_pattern']
@@ -402,6 +411,9 @@ class URLValidator:
     
     async def _check_accessibility(self, url: str, timeout: int = 10) -> bool:
         """Check if URL is accessible."""
+
+
+
         try:
             async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=timeout)) as session:
                 async with session.head(url) as response:
@@ -541,6 +553,9 @@ class URLValidator:
     
     def get_platform_from_url(self, url: str) -> str:
         """Quick platform detection from URL."""
+
+
+
         try:
             for platform, patterns in self.platform_patterns.items():
                 if re.search(patterns['domain_pattern'], url, re.IGNORECASE):
@@ -551,6 +566,9 @@ class URLValidator:
     
     def extract_content_id(self, url: str, platform: str) -> Optional[str]:
         """Extract content ID for specific platform."""
+
+
+
         try:
             if platform not in self.platform_patterns:
                 return None
@@ -602,6 +620,9 @@ class URLNormalizer:
     @staticmethod
     def normalize_youtube_url(url: str) -> str:
         """Normalize YouTube URL."""
+
+
+
         try:
             # Extract video ID
             video_match = re.search(r'(?:v=|youtu\.be/)([a-zA-Z0-9_-]{11})', url)
@@ -623,6 +644,9 @@ class URLNormalizer:
     @staticmethod
     def normalize_instagram_url(url: str) -> str:
         """Normalize Instagram URL."""
+
+
+
         try:
             # Extract post ID
             post_match = re.search(r'/p/([a-zA-Z0-9_-]+)', url)
@@ -659,6 +683,9 @@ class URLNormalizer:
 # URL validation utilities
 def quick_validate_url(url: str) -> bool:
     """Quick URL validation."""
+
+
+
     try:
         result = urlparse(url)
         return all([result.scheme, result.netloc])
@@ -667,6 +694,9 @@ def quick_validate_url(url: str) -> bool:
 
 def extract_domain(url: str) -> str:
     """Extract domain from URL."""
+
+
+
     try:
         return urlparse(url).netloc.lower()
     except Exception:
@@ -674,6 +704,9 @@ def extract_domain(url: str) -> str:
 
 def is_same_domain(url1: str, url2: str) -> bool:
     """Check if two URLs are from same domain."""
+
+
+
     try:
         domain1 = extract_domain(url1)
         domain2 = extract_domain(url2)
@@ -683,6 +716,9 @@ def is_same_domain(url1: str, url2: str) -> bool:
 
 def clean_url_parameters(url: str, keep_params: Optional[List[str]] = None) -> str:
     """Clean URL parameters keeping only specified ones."""
+
+
+
     try:
         parsed = urlparse(url)
         if not keep_params:

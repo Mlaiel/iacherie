@@ -1,5 +1,5 @@
 """
-🌐 Global Configuration Manager - IA-Influencer-Agent
+ Global Configuration Manager - IA-Influencer-Agent
 ==================================================================
 Project Creator & Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
@@ -7,7 +7,7 @@ Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert +
 Date: 2025-08-24
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -264,6 +264,9 @@ class GlobalConfigurationManager:
     
     def _load_global_configuration(self) -> bool:
         """Load global configuration from file"""
+
+
+
         try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r', encoding='utf-8') as f:
@@ -294,6 +297,9 @@ class GlobalConfigurationManager:
         Returns:
             bool: True if all components initialized successfully
         """
+
+
+
         try:
             self.logger.info("Starting global system initialization...")
             
@@ -361,7 +367,7 @@ class GlobalConfigurationManager:
             await self.perform_health_check()
             
             self.initialized = True
-            self.logger.info("✅ Global system initialization completed successfully")
+            self.logger.info(" Global system initialization completed successfully")
             return True
             
         except Exception as e:
@@ -375,6 +381,9 @@ class GlobalConfigurationManager:
         Returns:
             Dict containing validation results
         """
+
+
+
         try:
             validation_result = {
                 "valid": True,
@@ -516,6 +525,9 @@ class GlobalConfigurationManager:
         Returns:
             SystemHealthStatus containing health information
         """
+
+
+
         try:
             self.logger.info("Performing comprehensive system health check...")
             
@@ -615,6 +627,9 @@ class GlobalConfigurationManager:
         Returns:
             Dict containing complete system information
         """
+
+
+
         try:
             # Perform health check if needed
             if not self.last_health_check or (datetime.now() - self.last_health_check).seconds > 300:
@@ -702,6 +717,9 @@ class GlobalConfigurationManager:
         Returns:
             bool: True if shutdown successful
         """
+
+
+
         try:
             self.logger.warning("Initiating emergency shutdown...")
             
@@ -729,6 +747,9 @@ class GlobalConfigurationManager:
     
     def get_configuration_summary(self) -> Dict[str, Any]:
         """Get high-level configuration summary"""
+
+
+
         return {
             "system_name": self._global_config.system_name,
             "version": self._global_config.system_version,

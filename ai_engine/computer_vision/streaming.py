@@ -3,7 +3,7 @@
 #
 # Created by: Fahed Mlaiel (mlaiel@live.de)
 # 
-# ⚠️  STRICT COPYRIGHT WARNING ⚠️ 
+#   STRICT COPYRIGHT WARNING  
 # This code, concept, and intellectual property belongs exclusively to Fahed Mlaiel.
 # ANY unauthorized use, reproduction, distribution, or theft of this code/concept 
 # without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is 
@@ -123,6 +123,9 @@ class AdaptiveBitrate:
         
     def analyze_network_conditions(self) -> Dict[str, float]:
         """Analyze current network and system conditions"""
+
+
+
         try:
             # Get system metrics
             cpu_percent = psutil.cpu_percent(interval=0.1)
@@ -149,6 +152,9 @@ class AdaptiveBitrate:
     
     def _get_gpu_usage(self) -> float:
         """Get GPU usage percentage"""
+
+
+
         try:
             if torch.cuda.is_available():
                 gpu_memory = torch.cuda.memory_allocated() / torch.cuda.max_memory_allocated()
@@ -324,6 +330,9 @@ class RealTimeAnalyzer:
         
     def _initialize_models(self):
         """Initialize optimized models for real-time analysis"""
+
+
+
         try:
             # Load lightweight detection model
             self.object_detector = self._load_optimized_detector()
@@ -345,6 +354,9 @@ class RealTimeAnalyzer:
     
     def _load_optimized_detector(self):
         """Load optimized object detection model for real-time processing"""
+
+
+
         try:
             # Use lightweight YOLO model optimized for speed - suppress warnings
             import warnings
@@ -368,6 +380,9 @@ class RealTimeAnalyzer:
     
     def _load_face_detector(self):
         """Load optimized face detection model"""
+
+
+
         try:
             # Use OpenCV's DNN face detector for speed
             net = cv2.dnn.readNetFromTensorflow(
@@ -381,6 +396,9 @@ class RealTimeAnalyzer:
     
     def _load_emotion_classifier(self):
         """Load emotion classification model"""
+
+
+
         try:
             # Lightweight emotion recognition model - suppress warnings
             import warnings
@@ -404,6 +422,9 @@ class RealTimeAnalyzer:
     
     def _load_content_classifier(self):
         """Load content classification model"""
+
+
+
         try:
             # Lightweight content classification for streaming safety - suppress warnings
             import warnings
@@ -532,6 +553,9 @@ class RealTimeAnalyzer:
     
     def _detect_objects(self, frame: np.ndarray) -> List[Dict[str, Any]]:
         """Detect objects in frame using YOLO"""
+
+
+
         try:
             # Convert BGR to RGB
             rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -558,6 +582,9 @@ class RealTimeAnalyzer:
     
     def _detect_faces(self, frame: np.ndarray) -> List[Dict[str, Any]]:
         """Detect faces in frame"""
+
+
+
         try:
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             
@@ -699,6 +726,9 @@ class RealTimeAnalyzer:
     
     def _analyze_frame_quality(self, frame: np.ndarray) -> Dict[str, float]:
         """Analyze frame quality metrics"""
+
+
+
         try:
             # Convert to grayscale for some metrics
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -737,6 +767,9 @@ class RealTimeAnalyzer:
     
     def _estimate_noise(self, gray_frame: np.ndarray) -> float:
         """Estimate noise level in grayscale frame"""
+
+
+
         try:
             # Use Laplacian to estimate noise
             laplacian = cv2.Laplacian(gray_frame, cv2.CV_64F)
@@ -748,6 +781,9 @@ class RealTimeAnalyzer:
     def _calculate_quality_score(self, sharpness: float, brightness: float, 
                                contrast: float, noise_level: float) -> float:
         """Calculate overall quality score (0-1)"""
+
+
+
         try:
             # Normalize individual metrics
             sharpness_score = min(sharpness / 1000, 1.0)  # Normalize sharpness
@@ -791,6 +827,9 @@ class RealTimeAnalyzer:
     
     def get_analysis_result(self, timeout: float = 0.1) -> Optional[Dict[str, Any]]:
         """Get analysis result if available"""
+
+
+
         try:
             return self.result_queue.get(timeout=timeout)
         except queue.Empty:
@@ -881,6 +920,9 @@ class PerformanceMonitor:
     
     def _get_gpu_usage(self) -> float:
         """Get GPU usage percentage"""
+
+
+
         try:
             if torch.cuda.is_available():
                 return torch.cuda.utilization() if hasattr(torch.cuda, 'utilization') else 0.0
@@ -934,6 +976,9 @@ class LiveStreamProcessor:
     
     def _initialize_enhancement_pipeline(self):
         """Initialize real-time enhancement pipeline"""
+
+
+
         try:
             # Import enhancement modules
             from .enhancement import ImageEnhancer, EnhancementSettings
@@ -1000,14 +1045,23 @@ class LiveStreamProcessor:
     
     def get_current_metrics(self) -> Optional[StreamMetrics]:
         """Get current streaming metrics"""
+
+
+
         return self.performance_monitor.get_latest_metrics()
     
     def get_analysis_results(self) -> List[Dict]:
         """Get latest analysis results from real-time analyzer"""
+
+
+
         return self.realtime_analyzer.get_latest_results()
     
     def _streaming_loop(self):
         """Main streaming processing loop"""
+
+
+
         try:
             # Initialize video capture
             cap = self._initialize_video_capture()
@@ -1080,6 +1134,9 @@ class LiveStreamProcessor:
     
     def _initialize_video_capture(self):
         """Initialize video capture from input source"""
+
+
+
         try:
             if self.input_source.isdigit():
                 # Camera input
@@ -1136,6 +1193,9 @@ class LiveStreamProcessor:
     
     def _create_rtmp_writer(self, rtmp_url: str):
         """Create RTMP writer using FFmpeg"""
+
+
+
         try:
             # This would use FFmpeg for RTMP output
             # For now, return None as it requires FFmpeg integration
@@ -1147,6 +1207,9 @@ class LiveStreamProcessor:
     
     def _process_frame(self, frame: np.ndarray) -> np.ndarray:
         """Process frame with enhancement and filters"""
+
+
+
         try:
             processed_frame = frame.copy()
             
@@ -1166,6 +1229,9 @@ class LiveStreamProcessor:
     
     def _adapt_streaming_quality(self, metrics: StreamMetrics):
         """Adapt streaming quality based on performance metrics"""
+
+
+
         try:
             # Get quality adaptation recommendation
             adaptation = self.adaptive_bitrate.recommend_quality_adaptation(metrics)
@@ -1186,6 +1252,9 @@ class LiveStreamProcessor:
     
     def _apply_quality_settings(self, settings: Dict[str, Any]):
         """Apply new quality settings to streaming pipeline"""
+
+
+
         try:
             # Update output resolution
             if 'width' in settings and 'height' in settings:
@@ -1206,6 +1275,9 @@ class LiveStreamProcessor:
     
     def _control_frame_rate(self, loop_start_time: float):
         """Control frame rate to maintain target FPS"""
+
+
+
         try:
             target_frame_time = 1.0 / self.config.fps
             elapsed_time = time.time() - loop_start_time
@@ -1258,6 +1330,9 @@ class StreamOptimizer:
     def optimize_stream_settings(self, metrics: StreamMetrics, 
                                analysis_results: List[Dict]) -> Dict[str, Any]:
         """Optimize streaming settings based on performance and content analysis"""
+
+
+
         try:
             optimization_recommendations = {
                 'settings_changes': {},
@@ -1451,6 +1526,9 @@ class StreamOptimizer:
     def _ml_based_optimization(self, metrics: StreamMetrics, 
                              analysis_results: List[Dict]) -> Dict[str, Any]:
         """Machine learning-based optimization recommendations"""
+
+
+
         try:
             # This would use a trained ML model to predict optimal settings
             # For now, implement rule-based heuristics

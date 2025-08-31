@@ -17,7 +17,7 @@ Industrial-grade content protection components:
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED 
 This software is protected by international copyright laws.
 Contact: mlaiel@live.de for licensing inquiries.
 """

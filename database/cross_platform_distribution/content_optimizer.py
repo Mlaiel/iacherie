@@ -8,7 +8,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Development Team: Lead AI Developer, Senior Backend Engineer, ML Engineer, DBA, Security Expert
 Architecture: Enterprise-grade, microservices-ready, production-optimized
 
-⚠️ INTELLECTUAL PROPERTY WARNING ⚠️
+ INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 Violations will be prosecuted under international copyright law.
@@ -350,14 +350,14 @@ class ContentOptimizer:
         if platform == PlatformTarget.YOUTUBE:
             # Add standard YouTube elements
             if content_type == ContentType.MUSIC_TRACK:
-                footer = "\n\n🎵 Follow for more music!\n#Music #NewRelease"
+                footer = "\n\n Follow for more music!\n#Music #NewRelease"
                 if len(description) + len(footer) <= constraints.max_description_length:
                     description += footer
         
         elif platform == PlatformTarget.INSTAGRAM:
             # Add call-to-action for Instagram
             if "follow" not in description.lower():
-                cta = "\n\nFollow for more! 💫"
+                cta = "\n\nFollow for more! "
                 if len(description) + len(cta) <= constraints.max_description_length:
                     description += cta
         
@@ -612,6 +612,9 @@ class ContentOptimizer:
         platform: PlatformTarget
     ) -> Optional[PlatformConstraints]:
         """Get constraints for a specific platform"""
+
+
+
         return self.PLATFORM_CONSTRAINTS.get(platform)
     
     async def validate_content_for_platform(

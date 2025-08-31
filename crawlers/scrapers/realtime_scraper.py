@@ -8,7 +8,7 @@ Designed for continuous surveillance and instant alerts.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️ CRITICAL LEGAL WARNING ⚠️
+ CRITICAL LEGAL WARNING 
 UNAUTHORIZED USE, COPYING, OR DISTRIBUTION IS STRICTLY PROHIBITED AND WILL RESULT IN IMMEDIATE LEGAL ACTION.
 This technology is EXCLUSIVE property of Fahed Mlaiel. Contact: mlaiel@live.de for licensing.
 """
@@ -363,6 +363,9 @@ class RealtimeScraper:
             
     async def _send_webhook(self, webhook_url: str, event: RealtimeEvent):
         """Send webhook notification."""
+
+
+
         try:
             payload = {
                 'event_id': event.event_id,

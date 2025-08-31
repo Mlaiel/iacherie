@@ -30,6 +30,9 @@ class CachingAgentError(Exception):
         
     def to_dict(self) -> Dict[str, Any]:
         """Convert exception to dictionary for logging/serialization."""
+
+
+
         return {
             "error_code": self.error_code,
             "message": self.message,

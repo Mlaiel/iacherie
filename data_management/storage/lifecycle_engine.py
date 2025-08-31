@@ -1,5 +1,5 @@
 """
-🔄 Storage Lifecycle Engine - IA Influencer Agent Platform Enterprise
+ Storage Lifecycle Engine - IA Influencer Agent Platform Enterprise
 =====================================================================
 Module: backend/data_management/storage/lifecycle_engine.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Intelligent storage lifecycle management with automated tiering,
 archival policies, and cost optimization for content creators.
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -218,6 +218,9 @@ class LifecycleEngine:
     
     def add_rule(self, rule: LifecycleRule) -> bool:
         """Add or update a lifecycle rule"""
+
+
+
         try:
             self.rules[rule.rule_id] = rule
             logger.info(f"Added lifecycle rule: {rule.name}")
@@ -228,6 +231,9 @@ class LifecycleEngine:
     
     def remove_rule(self, rule_id: str) -> bool:
         """Remove a lifecycle rule"""
+
+
+
         try:
             if rule_id in self.rules:
                 del self.rules[rule_id]
@@ -240,6 +246,9 @@ class LifecycleEngine:
     
     def get_rule(self, rule_id: str) -> Optional[LifecycleRule]:
         """Get a specific lifecycle rule"""
+
+
+
         return self.rules.get(rule_id)
     
     def list_rules(self, enabled_only: bool = False) -> List[LifecycleRule]:
@@ -370,6 +379,9 @@ class LifecycleEngine:
     
     async def get_execution_status(self, execution_id: str) -> Optional[LifecycleExecution]:
         """Get status of a specific execution"""
+
+
+
         return self.executions.get(execution_id)
     
     async def list_executions(
@@ -449,6 +461,9 @@ class LifecycleEngine:
         rule: LifecycleRule
     ) -> bool:
         """Check if a file matches the rule conditions"""
+
+
+
         
         try:
             conditions = rule.conditions
@@ -1014,6 +1029,9 @@ class LifecycleEngine:
     
     async def _get_content_analysis_summary(self) -> Dict[str, Any]:
         """Get summary of content analysis cache"""
+
+
+
         
         return {
             'cached_analyses': len(self.content_analysis_cache),

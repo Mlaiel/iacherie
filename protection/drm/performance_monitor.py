@@ -1,5 +1,5 @@
 """
-⚡ Performance Monitor - Ultra-Professional DRM System Performance Tracking
+ Performance Monitor - Ultra-Professional DRM System Performance Tracking
 ========================================================================
 
 Comprehensive performance monitoring, alerting, and optimization system for DRM
@@ -8,12 +8,12 @@ with real-time metrics, predictive analytics, and automated performance tuning.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL NOTICE:
+ CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing and usage rights.
 
-🎯 PROJECT TEAM SPECIALTIES:
+ PROJECT TEAM SPECIALTIES:
 - Lead AI Developer & Solution Architect: Advanced AI/ML systems and intelligent automation
 - Backend Senior Engineer: Enterprise-grade backend architecture and microservices  
 - ML Engineer: Machine learning models and predictive analytics
@@ -163,6 +163,9 @@ class PerformanceCollector:
 
     def _collect_system_metrics(self, monitor: 'PerformanceMonitor') -> None:
         """Collect system-level metrics."""
+
+
+
         try:
             # CPU metrics
             cpu_percent = psutil.cpu_percent(interval=1)
@@ -383,6 +386,9 @@ class PerformanceMonitor:
 
     async def initialize(self) -> bool:
         """Initialize the Performance Monitor."""
+
+
+
         try:
             # Load thresholds
             await self._load_thresholds()

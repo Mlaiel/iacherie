@@ -12,7 +12,7 @@ Enterprise cryptocurrency payment processing system providing:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 - All Rights Reserved
 
-⚠️ IMPORTANT LEGAL NOTICE ⚠️
+ IMPORTANT LEGAL NOTICE 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
@@ -219,6 +219,9 @@ class CryptoPaymentProcessor:
     
     def _initialize_exchanges(self):
         """Initialize cryptocurrency exchange connections."""
+
+
+
         try:
             if ccxt and self.exchange_api_key:
                 # Initialize supported exchanges
@@ -267,6 +270,9 @@ class CryptoPaymentProcessor:
         Returns:
             str: Payment request ID
         """
+
+
+
         try:
             request_id = str(uuid.uuid4())
             
@@ -330,6 +336,9 @@ class CryptoPaymentProcessor:
         Returns:
             str: Payment transaction ID
         """
+
+
+
         try:
             if payment_request_id not in self.payment_requests:
                 raise ValueError(f"Payment request not found: {payment_request_id}")
@@ -421,6 +430,9 @@ class CryptoPaymentProcessor:
         Returns:
             str: Subscription plan ID
         """
+
+
+
         try:
             subscription_id = str(uuid.uuid4())
             
@@ -482,6 +494,9 @@ class CryptoPaymentProcessor:
         Returns:
             str: Payment stream ID
         """
+
+
+
         try:
             stream_id = str(uuid.uuid4())
             
@@ -531,6 +546,9 @@ class CryptoPaymentProcessor:
         Returns:
             str: Batch transaction ID
         """
+
+
+
         try:
             batch_id = str(uuid.uuid4())
             
@@ -594,6 +612,9 @@ class CryptoPaymentProcessor:
     
     async def _monitor_transaction_confirmations(self, transaction_id: str):
         """Monitor blockchain confirmations for a transaction."""
+
+
+
         try:
             if transaction_id not in self.transactions:
                 return
@@ -621,6 +642,9 @@ class CryptoPaymentProcessor:
     
     async def _monitor_payment_stream(self, stream_id: str):
         """Monitor and process payment stream."""
+
+
+
         try:
             if stream_id not in self.payment_streams:
                 return
@@ -660,6 +684,9 @@ class CryptoPaymentProcessor:
     
     async def _post_confirmation_processing(self, transaction_id: str):
         """Execute post-confirmation processing."""
+
+
+
         try:
             transaction = self.transactions[transaction_id]
             
@@ -682,6 +709,9 @@ class CryptoPaymentProcessor:
     
     async def _execute_callback(self, callback_url: str, transaction: PaymentTransaction):
         """Execute payment confirmation callback."""
+
+
+
         try:
             if requests:
                 callback_data = {
@@ -706,6 +736,9 @@ class CryptoPaymentProcessor:
     
     async def _get_exchange_rate(self, from_currency: str, to_currency: str) -> Decimal:
         """Get current exchange rate between currencies."""
+
+
+
         try:
             if requests:
                 url = f"{self.price_api_url}/simple/price"

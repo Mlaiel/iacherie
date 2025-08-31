@@ -146,6 +146,9 @@ class ModuleIndex:
         Returns:
             Dictionary of discovered modules
         """
+
+
+
         try:
             # Check if recent scan exists
             if not force_rescan and self.last_scan:
@@ -192,6 +195,9 @@ class ModuleIndex:
     
     async def get_module_info(self, module_name: str) -> Optional[ModuleInfo]:
         """Get detailed information about a specific module."""
+
+
+
         return self.modules.get(module_name)
     
     async def load_module(self, module_name: str) -> Optional[Any]:
@@ -204,6 +210,9 @@ class ModuleIndex:
         Returns:
             Loaded module instance
         """
+
+
+
         try:
             # Check if already loaded
             if module_name in self.loaded_modules:
@@ -298,6 +307,9 @@ class ModuleIndex:
         Returns:
             List of transformers in sequence, or None if no path exists
         """
+
+
+
         try:
             # Direct transformation available
             direct_transformers = await self.find_transformers_for_format(
@@ -317,10 +329,16 @@ class ModuleIndex:
     
     async def get_module_capabilities(self, module_name: str) -> List[TransformationCapability]:
         """Get all transformation capabilities of a module."""
+
+
+
         return self.capabilities.get(module_name, [])
     
     async def get_system_overview(self) -> Dict[str, Any]:
         """Get comprehensive system overview."""
+
+
+
         try:
             # Module statistics
             total_modules = len(self.modules)
@@ -413,6 +431,9 @@ class ModuleIndex:
     
     async def export_index(self, output_file: str) -> bool:
         """Export module index to file."""
+
+
+
         try:
             index_data = {
                 "version": self.index_version,
@@ -742,6 +763,9 @@ async def get_available_formats() -> List[str]:
 
 async def export_module_documentation(output_dir: str) -> bool:
     """Export comprehensive module documentation."""
+
+
+
     try:
         index = get_module_index()
         overview = await index.get_system_overview()

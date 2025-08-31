@@ -12,7 +12,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL WARNING ⚠️
+  CRITICAL WARNING 
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
 Any unauthorized use, reproduction, distribution, or reverse engineering 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -173,6 +173,9 @@ class FingerprintManager:
     
     def _initialize_fingerprinters(self):
         """Initialize all fingerprinting components"""
+
+
+
         try:
             self.audio_fingerprinter = AudioFingerprinter(
                 max_workers=self.max_workers // 4,
@@ -204,6 +207,9 @@ class FingerprintManager:
     
     async def start_workers(self):
         """Start background worker tasks"""
+
+
+
         try:
             if self.workers_running:
                 self.logger.warning("Workers already running")
@@ -224,6 +230,9 @@ class FingerprintManager:
     
     async def stop_workers(self):
         """Stop background worker tasks"""
+
+
+
         try:
             self.workers_running = False
             
@@ -263,6 +272,9 @@ class FingerprintManager:
         Returns:
             Job ID for tracking
         """
+
+
+
         try:
             # Auto-detect content type if not provided
             if content_type is None:
@@ -304,6 +316,9 @@ class FingerprintManager:
     
     async def get_job_status(self, job_id: str) -> Optional[Dict[str, Any]]:
         """Get status of a fingerprinting job"""
+
+
+
         try:
             # Check active jobs
             if job_id in self.active_jobs:
@@ -361,6 +376,9 @@ class FingerprintManager:
         Returns:
             Fingerprint result if available
         """
+
+
+
         try:
             if job_id and job_id in self.completed_jobs:
                 return self.completed_jobs[job_id]
@@ -399,6 +417,9 @@ class FingerprintManager:
         Returns:
             List of similar content matches
         """
+
+
+
         try:
             # Get query fingerprint
             query_result = await self.get_fingerprint_result(content_id=query_content_id)
@@ -452,6 +473,9 @@ class FingerprintManager:
         Returns:
             Dictionary mapping content_id to job_id
         """
+
+
+
         try:
             job_mapping = {}
             
@@ -487,6 +511,9 @@ class FingerprintManager:
     
     async def cleanup_expired_jobs(self, max_age_hours: int = 24):
         """Clean up expired jobs and results"""
+
+
+
         try:
             cutoff_time = datetime.utcnow() - timedelta(hours=max_age_hours)
             
@@ -524,6 +551,9 @@ class FingerprintManager:
     
     def get_system_statistics(self) -> Dict[str, Any]:
         """Get comprehensive system statistics"""
+
+
+
         try:
             performance_stats = self.performance_monitor.get_performance_report()
             
@@ -586,6 +616,9 @@ class FingerprintManager:
     @performance_timer
     async def _process_job(self, job: FingerprintJob, worker_name: str):
         """Process a single fingerprinting job"""
+
+
+
         try:
             self.logger.info(f"Worker {worker_name} processing job {job.job_id}")
             
@@ -671,6 +704,9 @@ class FingerprintManager:
     
     async def _store_result(self, job: FingerprintJob, result: FingerprintResult):
         """Store fingerprint result"""
+
+
+
         try:
             # Add to completed jobs
             job.status = FingerprintStatus.COMPLETED
@@ -697,6 +733,9 @@ class FingerprintManager:
     
     async def _handle_job_failure(self, job: FingerprintJob, error_message: str):
         """Handle job failure with retry logic"""
+
+
+
         try:
             job.retry_count += 1
             job.error_message = error_message
@@ -725,6 +764,9 @@ class FingerprintManager:
     
     def _detect_content_type(self, file_path: str) -> ContentType:
         """Auto-detect content type from file extension"""
+
+
+
         try:
             file_ext = Path(file_path).suffix.lower()
             
@@ -789,6 +831,9 @@ class FingerprintManager:
     
     def _calculate_confidence_score(self, fingerprints: Dict[str, Any]) -> float:
         """Calculate overall confidence score for fingerprints"""
+
+
+
         try:
             if not fingerprints:
                 return 0.0
@@ -815,6 +860,9 @@ class FingerprintManager:
                                           result1: FingerprintResult, 
                                           result2: FingerprintResult) -> Dict[str, float]:
         """Calculate similarity between two fingerprint results"""
+
+
+
         try:
             similarities = {}
             
@@ -851,6 +899,9 @@ class FingerprintManager:
     
     async def _compare_audio_fingerprints(self, fp1, fp2) -> float:
         """Compare audio fingerprints"""
+
+
+
         try:
             # Placeholder - would use actual audio fingerprint comparison
             return 0.8  # Dummy similarity
@@ -860,6 +911,9 @@ class FingerprintManager:
     
     async def _compare_video_fingerprints(self, fp1, fp2) -> float:
         """Compare video fingerprints"""
+
+
+
         try:
             # Placeholder - would use actual video fingerprint comparison
             return 0.7  # Dummy similarity
@@ -869,6 +923,9 @@ class FingerprintManager:
     
     async def _compare_image_fingerprints(self, fp1, fp2) -> float:
         """Compare image fingerprints"""
+
+
+
         try:
             # Use the image fingerprinter's comparison method
             if hasattr(fp1, 'fingerprint_type') and hasattr(fp2, 'fingerprint_type'):
@@ -881,6 +938,9 @@ class FingerprintManager:
     
     async def _compare_text_fingerprints(self, fp1, fp2) -> float:
         """Compare text fingerprints"""
+
+
+
         try:
             # Use the text fingerprinter's comparison method
             if hasattr(fp1, 'fingerprint_type') and hasattr(fp2, 'fingerprint_type'):
@@ -893,6 +953,9 @@ class FingerprintManager:
     
     async def _save_to_persistent_storage(self, result: FingerprintResult):
         """Save result to persistent storage"""
+
+
+
         try:
             # Create content-specific directory
             content_dir = self.storage_path / result.content_type.value / result.content_id
@@ -922,6 +985,9 @@ class FingerprintManager:
     
     async def close(self):
         """Cleanup resources"""
+
+
+
         try:
             # Stop workers
             await self.stop_workers()

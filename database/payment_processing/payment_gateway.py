@@ -186,6 +186,9 @@ class PaymentGateway(ABC):
     
     async def health_check(self) -> bool:
         """Check gateway health and connectivity"""
+
+
+
         try:
             # Basic connectivity test - should be overridden by specific implementations
             return True
@@ -214,6 +217,9 @@ class StripeGateway(PaymentGateway):
         metadata: Optional[Dict[str, Any]] = None
     ) -> GatewayResponse:
         """Process payment through Stripe"""
+
+
+
         try:
             # Convert amount to cents for Stripe
             amount_cents = int(amount * 100)
@@ -280,6 +286,9 @@ class StripeGateway(PaymentGateway):
         reason: Optional[str] = None
     ) -> GatewayResponse:
         """Process refund through Stripe"""
+
+
+
         try:
             refund_data = {
                 'payment_intent': original_transaction_id,
@@ -316,6 +325,9 @@ class StripeGateway(PaymentGateway):
         amount: Optional[Decimal] = None
     ) -> GatewayResponse:
         """Capture authorized payment through Stripe"""
+
+
+
         try:
             intent = stripe.PaymentIntent.retrieve(authorization_id)
             
@@ -350,6 +362,9 @@ class StripeGateway(PaymentGateway):
         reason: Optional[str] = None
     ) -> GatewayResponse:
         """Void authorized payment through Stripe"""
+
+
+
         try:
             intent = stripe.PaymentIntent.cancel(transaction_id)
             
@@ -372,6 +387,9 @@ class StripeGateway(PaymentGateway):
         transaction_id: str
     ) -> GatewayResponse:
         """Get payment status from Stripe"""
+
+
+
         try:
             intent = stripe.PaymentIntent.retrieve(transaction_id)
             
@@ -398,6 +416,9 @@ class StripeGateway(PaymentGateway):
         event_type: str
     ) -> bool:
         """Validate Stripe webhook"""
+
+
+
         try:
             event = stripe.Webhook.construct_event(
                 payload, signature, self.webhook_secret
@@ -415,6 +436,9 @@ class StripeGateway(PaymentGateway):
         description: Optional[str] = None
     ) -> GatewayResponse:
         """Create payout through Stripe"""
+
+
+
         try:
             payout = stripe.Payout.create(
                 amount=int(amount * 100),
@@ -464,6 +488,9 @@ class PayPalGateway(PaymentGateway):
         metadata: Optional[Dict[str, Any]] = None
     ) -> GatewayResponse:
         """Process payment through PayPal"""
+
+
+
         try:
             payment = paypalrestsdk.Payment({
                 "intent": "sale",
@@ -523,6 +550,9 @@ class PayPalGateway(PaymentGateway):
         reason: Optional[str] = None
     ) -> GatewayResponse:
         """Process refund through PayPal"""
+
+
+
         try:
             # Get the sale object
             sale = paypalrestsdk.Sale.find(original_transaction_id)
@@ -566,6 +596,9 @@ class PayPalGateway(PaymentGateway):
         amount: Optional[Decimal] = None
     ) -> GatewayResponse:
         """Capture authorized payment through PayPal"""
+
+
+
         try:
             authorization = paypalrestsdk.Authorization.find(authorization_id)
             
@@ -604,6 +637,9 @@ class PayPalGateway(PaymentGateway):
         reason: Optional[str] = None
     ) -> GatewayResponse:
         """Void authorized payment through PayPal"""
+
+
+
         try:
             authorization = paypalrestsdk.Authorization.find(transaction_id)
             void_response = authorization.void()
@@ -632,6 +668,9 @@ class PayPalGateway(PaymentGateway):
         transaction_id: str
     ) -> GatewayResponse:
         """Get payment status from PayPal"""
+
+
+
         try:
             payment = paypalrestsdk.Payment.find(transaction_id)
             
@@ -656,6 +695,9 @@ class PayPalGateway(PaymentGateway):
         event_type: str
     ) -> bool:
         """Validate PayPal webhook"""
+
+
+
         try:
             # PayPal webhook validation logic
             # This would need PayPal's webhook validation implementation
@@ -672,6 +714,9 @@ class PayPalGateway(PaymentGateway):
         description: Optional[str] = None
     ) -> GatewayResponse:
         """Create payout through PayPal"""
+
+
+
         try:
             payout = paypalrestsdk.Payout({
                 "sender_batch_header": {
@@ -731,6 +776,9 @@ class WiseGateway(PaymentGateway):
         metadata: Optional[Dict[str, Any]] = None
     ) -> GatewayResponse:
         """Process payment through Wise"""
+
+
+
         try:
             # Wise payment processing implementation
             # This would require Wise API integration
@@ -800,6 +848,9 @@ class WiseGateway(PaymentGateway):
         amount: Optional[Decimal] = None
     ) -> GatewayResponse:
         """Capture not applicable for Wise"""
+
+
+
         return GatewayResponse(
             success=False,
             message="Capture not applicable for Wise transfers"
@@ -811,6 +862,9 @@ class WiseGateway(PaymentGateway):
         reason: Optional[str] = None
     ) -> GatewayResponse:
         """Cancel Wise transfer"""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 headers = {
@@ -848,6 +902,9 @@ class WiseGateway(PaymentGateway):
         transaction_id: str
     ) -> GatewayResponse:
         """Get payment status from Wise"""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 headers = {
@@ -886,6 +943,9 @@ class WiseGateway(PaymentGateway):
         event_type: str
     ) -> bool:
         """Validate Wise webhook"""
+
+
+
         try:
             # Wise webhook validation implementation
             return True
@@ -932,6 +992,9 @@ class CryptoGateway(PaymentGateway):
         metadata: Optional[Dict[str, Any]] = None
     ) -> GatewayResponse:
         """Process cryptocurrency payment"""
+
+
+
         try:
             if not self.w3:
                 return GatewayResponse(
@@ -978,6 +1041,9 @@ class CryptoGateway(PaymentGateway):
         reason: Optional[str] = None
     ) -> GatewayResponse:
         """Crypto refunds are manual processes"""
+
+
+
         return GatewayResponse(
             success=False,
             message="Crypto refunds require manual processing"
@@ -989,6 +1055,9 @@ class CryptoGateway(PaymentGateway):
         amount: Optional[Decimal] = None
     ) -> GatewayResponse:
         """Capture not applicable for crypto"""
+
+
+
         return GatewayResponse(
             success=False,
             message="Capture not applicable for crypto payments"
@@ -1000,6 +1069,9 @@ class CryptoGateway(PaymentGateway):
         reason: Optional[str] = None
     ) -> GatewayResponse:
         """Void not applicable for crypto"""
+
+
+
         return GatewayResponse(
             success=False,
             message="Void not applicable for crypto payments"
@@ -1010,6 +1082,9 @@ class CryptoGateway(PaymentGateway):
         transaction_id: str
     ) -> GatewayResponse:
         """Get crypto payment status"""
+
+
+
         try:
             # In a real implementation, this would check the blockchain
             # for transaction confirmations
@@ -1034,6 +1109,9 @@ class CryptoGateway(PaymentGateway):
         event_type: str
     ) -> bool:
         """Validate crypto webhook (blockchain notifications)"""
+
+
+
         try:
             # Blockchain webhook validation
             return True
@@ -1049,6 +1127,9 @@ class CryptoGateway(PaymentGateway):
         description: Optional[str] = None
     ) -> GatewayResponse:
         """Create crypto payout"""
+
+
+
         try:
             # In a real implementation, this would create a blockchain transaction
             transaction_hash = f"0x{uuid.uuid4().hex}"
@@ -1099,6 +1180,9 @@ class PaymentGatewayFactory:
     @classmethod
     def get_supported_providers(cls) -> List[str]:
         """Get list of supported payment providers"""
+
+
+
         return list(cls._gateways.keys())
     
     @classmethod
@@ -1185,10 +1269,16 @@ class PaymentProcessor:
     
     def get_gateway(self, provider: str) -> Optional[PaymentGateway]:
         """Get specific gateway instance"""
+
+
+
         return self.gateways.get(provider)
     
     def get_available_providers(self) -> List[str]:
         """Get list of available payment providers"""
+
+
+
         return list(self.gateways.keys())
     ) -> Dict[str, Any]:
         """Process a refund"""
@@ -1216,6 +1306,9 @@ class StripeGateway(PaymentGateway):
         metadata: Dict[str, Any] = None
     ) -> Dict[str, Any]:
         """Process Stripe payment"""
+
+
+
         try:
             # Convert amount to cents for Stripe
             amount_cents = int(amount * 100)
@@ -1249,6 +1342,9 @@ class StripeGateway(PaymentGateway):
         reason: str = None
     ) -> Dict[str, Any]:
         """Process Stripe refund"""
+
+
+
         try:
             refund_data = {'payment_intent': transaction_id}
             
@@ -1274,6 +1370,9 @@ class StripeGateway(PaymentGateway):
     
     async def get_transaction_status(self, transaction_id: str) -> Dict[str, Any]:
         """Get Stripe transaction status"""
+
+
+
         try:
             payment_intent = stripe.PaymentIntent.retrieve(transaction_id)
             
@@ -1309,6 +1408,9 @@ class PayPalGateway(PaymentGateway):
         metadata: Dict[str, Any] = None
     ) -> Dict[str, Any]:
         """Process PayPal payment"""
+
+
+
         try:
             payment = paypalrestsdk.Payment({
                 "intent": "sale",
@@ -1364,6 +1466,9 @@ class PayPalGateway(PaymentGateway):
         reason: str = None
     ) -> Dict[str, Any]:
         """Process PayPal refund"""
+
+
+
         try:
             # First get the sale from the payment
             payment = paypalrestsdk.Payment.find(transaction_id)
@@ -1397,6 +1502,9 @@ class PayPalGateway(PaymentGateway):
     
     async def get_transaction_status(self, transaction_id: str) -> Dict[str, Any]:
         """Get PayPal transaction status"""
+
+
+
         try:
             payment = paypalrestsdk.Payment.find(transaction_id)
             
@@ -1430,6 +1538,9 @@ class CryptoGateway(PaymentGateway):
         metadata: Dict[str, Any] = None
     ) -> Dict[str, Any]:
         """Process crypto payment"""
+
+
+
         try:
             if currency not in self.supported_currencies:
                 raise PaymentGatewayError(f"Unsupported crypto currency: {currency}")
@@ -1479,6 +1590,9 @@ class CryptoGateway(PaymentGateway):
     
     async def get_transaction_status(self, transaction_id: str) -> Dict[str, Any]:
         """Get crypto transaction status"""
+
+
+
         try:
             # Check blockchain for transaction confirmation
             # This would integrate with blockchain APIs

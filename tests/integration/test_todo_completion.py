@@ -197,14 +197,14 @@ def main():
         try:
             success, message = test_func()
             if success:
-                print(f"✅ {test_name}: {message}")
+                print(f" {test_name}: {message}")
                 passed += 1
             else:
-                print(f"❌ {test_name}: {message}")
+                print(f" {test_name}: {message}")
         except Exception as e:
-            print(f"❌ {test_name}: Error running test - {str(e)}")
+            print(f" {test_name}: Error running test - {str(e)}")
     
-    print("\n📊 TODO Count Analysis")
+    print("\n TODO Count Analysis")
     print("-" * 30)
     todo_count, todo_files = count_remaining_todos()
     print(f"Total remaining TODOs: {todo_count}")
@@ -215,13 +215,13 @@ def main():
         for file_path, count in todo_files[:10]:
             print(f"  {file_path}: {count} TODOs")
     
-    print(f"\n🎯 Test Results: {passed}/{total} tests passed")
+    print(f"\n Test Results: {passed}/{total} tests passed")
     
     if passed == total and todo_count < 200:  # Significant reduction from 254
-        print("🎉 TODO completion implementation successful!")
+        print(" TODO completion implementation successful!")
         return 0
     else:
-        print("⚠️  Additional work needed")
+        print("  Additional work needed")
         return 1
 
 if __name__ == "__main__":

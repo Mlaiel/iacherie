@@ -8,7 +8,7 @@ and platform-specific metadata for multi-channel content strategy optimization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
@@ -248,6 +248,9 @@ class PlatformEntityExtractor(BaseService):
     
     def _load_models(self):
         """Load ML models for platform detection and entity classification"""
+
+
+
         try:
             # Platform classifier for ambiguous URLs
             self.platform_classifier = pipeline(
@@ -397,6 +400,9 @@ class PlatformEntityExtractor(BaseService):
         include_metrics: bool
     ) -> Optional[PlatformEntity]:
         """Create platform entity from regex match"""
+
+
+
         try:
             # Determine entity type enum
             try:
@@ -468,6 +474,9 @@ class PlatformEntityExtractor(BaseService):
     
     async def _is_platform_url(self, url: str, platform: PlatformType) -> bool:
         """Check if URL belongs to specified platform"""
+
+
+
         try:
             parsed = urlparse(url)
             domain = parsed.netloc.lower()
@@ -499,6 +508,9 @@ class PlatformEntityExtractor(BaseService):
         include_metrics: bool
     ) -> Optional[PlatformEntity]:
         """Create platform entity from URL match"""
+
+
+
         try:
             url = match.group(0)
             parsed = urlparse(url)
@@ -547,6 +559,9 @@ class PlatformEntityExtractor(BaseService):
         platform: PlatformType
     ) -> Optional[str]:
         """Extract content ID from platform URL"""
+
+
+
         try:
             parsed = urlparse(url)
             
@@ -586,6 +601,9 @@ class PlatformEntityExtractor(BaseService):
         platform: PlatformType
     ) -> PlatformEntityType:
         """Determine entity type from URL structure"""
+
+
+
         try:
             parsed = urlparse(url)
             path = parsed.path.lower()
@@ -713,6 +731,9 @@ class PlatformEntityExtractor(BaseService):
         entity_type: str
     ) -> Optional[str]:
         """Construct full URL from extracted entity"""
+
+
+
         try:
             text = match.group(0)
             
@@ -758,6 +779,9 @@ class PlatformEntityExtractor(BaseService):
         platform: PlatformType
     ) -> Dict[str, int]:
         """Fetch comprehensive engagement metrics for platform content"""
+
+
+
         try:
             # Initialize metrics structure
             metrics = {
@@ -810,6 +834,9 @@ class PlatformEntityExtractor(BaseService):
     
     async def _fetch_youtube_api_metrics(self, url: str) -> Dict[str, int]:
         """Fetch YouTube API metrics"""
+
+
+
         try:
             # Extract video/channel ID from URL
             video_id = self._extract_youtube_id(url)
@@ -835,6 +862,9 @@ class PlatformEntityExtractor(BaseService):
     
     async def _fetch_instagram_api_metrics(self, url: str) -> Dict[str, int]:
         """Fetch Instagram API metrics"""
+
+
+
         try:
             # Extract post/profile ID
             entity_id = self._extract_instagram_id(url)
@@ -858,6 +888,9 @@ class PlatformEntityExtractor(BaseService):
     
     async def _fetch_spotify_api_metrics(self, url: str) -> Dict[str, int]:
         """Fetch Spotify API metrics"""
+
+
+
         try:
             # Extract track/artist/album ID
             entity_id = self._extract_spotify_id(url)
@@ -993,10 +1026,16 @@ class PlatformEntityExtractor(BaseService):
     
     async def get_platform_statistics(self) -> Dict[str, Any]:
         """Get extraction statistics by platform"""
+
+
+
         return await self.metrics.get_all_metrics()
     
     async def health_check(self) -> Dict[str, Any]:
         """Check service health status"""
+
+
+
         return {
             "status": "healthy" if self.models_loaded else "degraded",
             "models_loaded": self.models_loaded,

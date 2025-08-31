@@ -260,29 +260,47 @@ class SecurityConfig:
     @property
     def jwt_access_token_expire_delta(self) -> timedelta:
         """Get JWT access token expiration as timedelta"""
+
+
+
         return timedelta(minutes=self.jwt_access_token_expire_minutes)
     
     @property
     def jwt_refresh_token_expire_delta(self) -> timedelta:
         """Get JWT refresh token expiration as timedelta"""
+
+
+
         return timedelta(days=self.jwt_refresh_token_expire_days)
     
     @property
     def session_timeout_delta(self) -> timedelta:
         """Get session timeout as timedelta"""
+
+
+
         return timedelta(minutes=self.session_timeout_minutes)
     
     @property
     def login_lockout_delta(self) -> timedelta:
         """Get login lockout duration as timedelta"""
+
+
+
         return timedelta(minutes=self.login_lockout_duration_minutes)
     
     def hash_password(self, password: str) -> str:
         """Hash a password using configured algorithm"""
+
+
+
         return self.password_context.hash(password)
     
     def verify_password(self, password: str, hashed: str) -> bool:
         """Verify a password against its hash"""
+
+
+
         return self.password_context.verify(password, hashed)
     
     def encrypt_data(self, data: str) -> str:
@@ -295,6 +313,9 @@ class SecurityConfig:
         Returns:
             str: Encrypted data as string
         """
+
+
+
         try:
             if self.encryption_algorithm == EncryptionAlgorithm.FERNET:
                 return self.cipher_suite.encrypt(data.encode()).decode()
@@ -322,6 +343,9 @@ class SecurityConfig:
         Returns:
             str: Decrypted plain text data
         """
+
+
+
         try:
             if self.encryption_algorithm == EncryptionAlgorithm.FERNET:
                 return self.cipher_suite.decrypt(encrypted_data.encode()).decode()
@@ -341,6 +365,9 @@ class SecurityConfig:
     
     def _encrypt_aes_256(self, data: str) -> str:
         """Encrypt data using AES-256"""
+
+
+
         try:
             from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
             from cryptography.hazmat.backends import default_backend
@@ -370,6 +397,9 @@ class SecurityConfig:
     
     def _decrypt_aes_256(self, encrypted_data: str) -> str:
         """Decrypt data using AES-256"""
+
+
+
         try:
             from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
             from cryptography.hazmat.backends import default_backend
@@ -401,6 +431,9 @@ class SecurityConfig:
     
     def _encrypt_rsa(self, data: str, key_size: int) -> str:
         """Encrypt data using RSA"""
+
+
+
         try:
             from cryptography.hazmat.primitives.asymmetric import rsa, padding
             from cryptography.hazmat.primitives import hashes, serialization
@@ -456,6 +489,9 @@ class SecurityConfig:
     
     def _decrypt_rsa(self, encrypted_data: str, key_size: int) -> str:
         """Decrypt data using RSA"""
+
+
+
         try:
             from cryptography.hazmat.primitives.asymmetric import padding
             from cryptography.hazmat.primitives import hashes, serialization
@@ -495,14 +531,23 @@ class SecurityConfig:
     
     def generate_api_key(self) -> str:
         """Generate a new API key"""
+
+
+
         return secrets.token_urlsafe(self.api_key_length)
     
     def generate_csrf_token(self) -> str:
         """Generate CSRF token"""
+
+
+
         return secrets.token_urlsafe(32)
     
     def create_hmac_signature(self, data: str) -> str:
         """Create HMAC signature for data integrity"""
+
+
+
         return hmac.new(
             self.secret_key.encode(),
             data.encode(),
@@ -566,6 +611,9 @@ class SecurityConfig:
     
     def is_file_type_allowed(self, content_type: str) -> bool:
         """Check if file type is allowed for upload"""
+
+
+
         return content_type in self.allowed_file_types
     
     def get_oauth_config(self, provider: str) -> Optional[Dict[str, str]]:

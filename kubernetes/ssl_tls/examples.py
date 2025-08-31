@@ -220,23 +220,23 @@ def example_basic_certificate_management():
         with open(key_path, 'wb') as f:
             f.write(key_data)
         
-        print(f"✓ Self-signed certificate created for {domain}")
+        print(f" Self-signed certificate created for {domain}")
         print(f"  Certificate: {cert_path.absolute()}")
         print(f"  Private key: {key_path.absolute()}")
         
         # Validate the certificate
         validation_result = runner.ssl_validator.validate_certificate(cert_data)
-        print(f"✓ Certificate validation: {'Valid' if validation_result.is_valid else 'Invalid'}")
+        print(f" Certificate validation: {'Valid' if validation_result.is_valid else 'Invalid'}")
         print(f"  Subject: {validation_result.subject}")
         print(f"  Issuer: {validation_result.issuer}")
         print(f"  Expiry: {validation_result.not_after}")
         
         # List managed certificates
         certificates = runner.cert_manager.list_certificates()
-        print(f"✓ Total managed certificates: {len(certificates)}")
+        print(f" Total managed certificates: {len(certificates)}")
         
     except Exception as e:
-        print(f"✗ Error in certificate management example: {e}")
+        print(f" Error in certificate management example: {e}")
 
 
 def example_letsencrypt_certificate():
@@ -266,17 +266,17 @@ def example_letsencrypt_certificate():
             organizational_unit="Web Services"
         )
         
-        print(f"📝 Certificate request created for domains: {cert_request.domains}")
+        print(f" Certificate request created for domains: {cert_request.domains}")
         print(f"  Challenge type: {cert_request.challenge_type.value}")
         print(f"  Key size: {cert_request.key_size}")
-        print("⚠  Note: This example uses staging environment")
+        print("  Note: This example uses staging environment")
         print("   For production, set staging=False in LetsEncryptConfig")
         
         # In a real scenario, you would call:
         # result = letsencrypt_manager.issue_certificate(cert_request)
         
     except Exception as e:
-        print(f"✗ Error in Let's Encrypt example: {e}")
+        print(f" Error in Let's Encrypt example: {e}")
         check_interval=3600,
         warning_days=30,
         critical_days=7,
@@ -459,6 +459,9 @@ def export_monitoring_config(output_path: Path) -> None:
 
 def generate_docker_compose_ssl() -> str:
     """Generate Docker Compose SSL configuration"""
+
+
+
     return """
 version: '3.8'
 
@@ -514,6 +517,9 @@ volumes:
 
 def generate_systemd_service() -> str:
     """Generate systemd service configuration"""
+
+
+
     return """
 [Unit]
 Description=IA Influencer Agent SSL Certificate Monitor
@@ -551,6 +557,9 @@ WantedBy=multi-user.target
 
 def generate_logrotate_config() -> str:
     """Generate logrotate configuration"""
+
+
+
     return """
 /var/log/ssl-monitor.log {
     daily
@@ -596,4 +605,4 @@ if __name__ == "__main__":
     with open(output_dir / "ssl-monitor-logrotate", "w") as f:
         f.write(generate_logrotate_config())
     
-    print("✅ SSL/TLS example configurations exported to examples/configs/")
+    print(" SSL/TLS example configurations exported to examples/configs/")

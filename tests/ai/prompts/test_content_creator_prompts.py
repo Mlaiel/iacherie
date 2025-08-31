@@ -21,7 +21,7 @@ Ultra-professional test suite for Content Creator Prompts system
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️ COPYRIGHT WARNING ⚠️
+ COPYRIGHT WARNING 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
@@ -60,6 +60,9 @@ class TestContentCreatorPrompts:
     @pytest.fixture
     def sample_musician_context(self):
         """Create sample musician context for testing"""
+
+
+
         return PromptContext(
             creator_type=ContentCreatorType.MUSICIAN,
             content_format=ContentFormat.AUDIO,
@@ -90,6 +93,9 @@ class TestContentCreatorPrompts:
     @pytest.fixture
     def sample_blogger_context(self):
         """Create sample blogger context for testing"""
+
+
+
         return PromptContext(
             creator_type=ContentCreatorType.BLOGGER,
             content_format=ContentFormat.TEXT,
@@ -119,6 +125,9 @@ class TestContentCreatorPrompts:
     @pytest.fixture
     def sample_photographer_context(self):
         """Create sample photographer context for testing"""
+
+
+
         return PromptContext(
             creator_type=ContentCreatorType.PHOTOGRAPHER,
             content_format=ContentFormat.IMAGE,

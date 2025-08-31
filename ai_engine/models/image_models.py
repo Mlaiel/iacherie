@@ -3,7 +3,7 @@ Image AI Models for IA Influencer Agent Platform
 Enterprise-grade image processing, analysis and protection models
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
-⚠️  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
+  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
     code, or intellectual property without explicit written authorization 
     from Fahed Mlaiel is strictly prohibited and will result in legal action.
 
@@ -141,6 +141,9 @@ class ImageFeatureExtractor(BaseAIModel):
         
     def _load_feature_extractor(self):
         """Load pre-trained feature extraction model"""
+
+
+
         try:
             # Use ResNet-50 for feature extraction
             import torchvision.models as models
@@ -153,6 +156,9 @@ class ImageFeatureExtractor(BaseAIModel):
     
     def _load_object_detector(self):
         """Load object detection model"""
+
+
+
         try:
             # YOLO or similar object detection model
             return cv2.dnn.readNet('yolo.weights', 'yolo.cfg') if Path('yolo.weights').exists() else None
@@ -162,6 +168,9 @@ class ImageFeatureExtractor(BaseAIModel):
     
     def _load_text_detector(self):
         """Load text detection model"""
+
+
+
         try:
             # EAST text detector or similar
             return cv2.dnn.readNet('frozen_east_text_detection.pb') if Path('frozen_east_text_detection.pb').exists() else None
@@ -171,6 +180,9 @@ class ImageFeatureExtractor(BaseAIModel):
     
     async def process(self, image_path: str, **kwargs) -> ProcessingResult:
         """Process image and extract comprehensive features"""
+
+
+
         try:
             start_time = datetime.now()
             
@@ -222,6 +234,9 @@ class ImageFeatureExtractor(BaseAIModel):
     
     def _load_image(self, image_path: str) -> Optional[np.ndarray]:
         """Load image from path"""
+
+
+
         try:
             if isinstance(image_path, str):
                 image = cv2.imread(image_path)
@@ -349,6 +364,9 @@ class ImageFeatureExtractor(BaseAIModel):
     
     def _get_dominant_colors(self, image: np.ndarray, k: int = 5) -> List[Tuple[int, int, int]]:
         """Extract dominant colors using k-means clustering"""
+
+
+
         try:
             from sklearn.cluster import KMeans
             
@@ -611,6 +629,9 @@ class ImageFeatureExtractor(BaseAIModel):
     
     async def validate_connection(self) -> bool:
         """Validate image processing capabilities"""
+
+
+
         try:
             # Test with a simple image
             test_image = np.zeros((100, 100, 3), dtype=np.uint8)
@@ -629,6 +650,9 @@ class ImageEnhancer(BaseAIModel):
         
     async def process(self, image_data: Any, enhancement_type: str = "auto", **kwargs) -> ProcessingResult:
         """Enhance image with specified enhancement type"""
+
+
+
         try:
             start_time = datetime.now()
             
@@ -741,6 +765,9 @@ class ImageEnhancer(BaseAIModel):
     
     async def validate_connection(self) -> bool:
         """Validate image enhancement capabilities"""
+
+
+
         try:
             test_image = Image.new('RGB', (100, 100), color='red')
             result = await self.process(test_image, "auto")
@@ -758,6 +785,9 @@ class ImageProtector(BaseAIModel):
         
     async def process(self, image_data: Any, **kwargs) -> ProcessingResult:
         """Analyze image for protection and copyright status"""
+
+
+
         try:
             start_time = datetime.now()
             
@@ -922,6 +952,9 @@ class ImageProtector(BaseAIModel):
     
     async def validate_connection(self) -> bool:
         """Validate image protection capabilities"""
+
+
+
         try:
             test_image = Image.new('RGB', (100, 100), color='blue')
             result = await self.process(test_image)

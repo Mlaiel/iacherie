@@ -344,6 +344,9 @@ class LicenseAgreement(BaseModel, TimestampMixin, AuditMixin):
     
     def can_execute(self) -> bool:
         """Check if agreement can be executed"""
+
+
+
         return (
             self.is_fully_signed and
             self.status in [LicenseStatus.PENDING_SIGNATURE.value, LicenseStatus.PARTIALLY_SIGNED.value] and
@@ -860,6 +863,9 @@ class LicenseAgreementService:
     
     def _create_rights_package(self, rights_data: Dict[str, Any]) -> RightsPackage:
         """Create standardized rights package"""
+
+
+
         return RightsPackage(
             reproduction_rights=rights_data.get('reproduction_rights', False),
             distribution_rights=rights_data.get('distribution_rights', False),
@@ -930,6 +936,9 @@ class LicenseAgreementService:
     
     def _calculate_contract_hash(self, contract_content: str) -> str:
         """Calculate SHA-256 hash of contract content"""
+
+
+
         return hashlib.sha256(contract_content.encode('utf-8')).hexdigest()
     
     def _generate_agreement_number(self) -> str:
@@ -955,6 +964,9 @@ class LicenseAgreementService:
     
     async def _initiate_validation_process(self, agreement: LicenseAgreement):
         """Start automated validation process"""
+
+
+
         try:
             await self.validate_agreement(str(agreement.id), "comprehensive")
         except Exception as e:
@@ -962,6 +974,9 @@ class LicenseAgreementService:
     
     async def _check_compliance_requirements(self, agreement: LicenseAgreement) -> Dict[str, Any]:
         """Check agreement against compliance requirements"""
+
+
+
         return await self.legal_service.check_agreement_compliance(agreement)
     
     async def _validate_contract_clauses(self, agreement: LicenseAgreement) -> Dict[str, Any]:
@@ -984,6 +999,9 @@ class LicenseAgreementService:
     
     async def _assess_agreement_risks(self, agreement: LicenseAgreement) -> Dict[str, Any]:
         """Assess legal and business risks"""
+
+
+
         return await self.legal_analyzer.assess_risks(agreement)
     
     def _calculate_validation_score(self, legal_analysis: Dict, compliance_check: Dict, 
@@ -1150,6 +1168,9 @@ class LicenseAgreement(BaseModel):
 
     def is_fully_signed(self) -> bool:
         """Vérifie si l'accord est entièrement signé"""
+
+
+
         return self.signed_by_licensor and self.signed_by_licensee
 
     def is_active(self) -> bool:
@@ -1177,6 +1198,9 @@ class LicenseAgreement(BaseModel):
 
     def can_auto_renew(self) -> bool:
         """Vérifie si l'accord peut être renouvelé automatiquement"""
+
+
+
         return (
             self.auto_renewal and
             self.is_active() and
@@ -1220,6 +1244,9 @@ class LicenseAgreementManager:
         custom_clauses: Optional[Dict] = None
     ) -> LicenseAgreement:
         """Crée un nouvel accord de licence"""
+
+
+
         
         try:
             # Validation des données
@@ -1258,6 +1285,9 @@ class LicenseAgreementManager:
 
     def get_agreement_by_id(self, agreement_id: str) -> Optional[LicenseAgreement]:
         """Récupère un accord par son ID"""
+
+
+
         return self.db.query(LicenseAgreement).filter(
             LicenseAgreement.agreement_id == agreement_id
         ).first()
@@ -1289,6 +1319,9 @@ class LicenseAgreementManager:
         digital_signature: str
     ) -> bool:
         """Signe un accord de licence"""
+
+
+
         
         try:
             agreement = self.get_agreement_by_id(agreement_id)
@@ -1326,6 +1359,9 @@ class LicenseAgreementManager:
         terminating_user_id: int
     ) -> bool:
         """Termine un accord de licence"""
+
+
+
         
         try:
             agreement = self.get_agreement_by_id(agreement_id)

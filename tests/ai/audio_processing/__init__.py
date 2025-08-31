@@ -14,7 +14,7 @@
 #
 # Created by: Fahed Mlaiel (mlaiel@live.de)
 # 
-# ⚠️  STRICT COPYRIGHT WARNING ⚠️ 
+#   STRICT COPYRIGHT WARNING  
 # This testing code, concepts, and intellectual property belongs exclusively to Fahed Mlaiel.
 # ANY unauthorized use, reproduction, distribution, or theft of this testing code/concept 
 # without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is 
@@ -77,7 +77,10 @@ def setup_test_environment():
     _create_test_audio_samples()
 
 def _create_test_audio_samples():
-    """Generate standard test audio samples for testing"""    try:
+    """Generate standard test audio samples for testing"""
+
+
+    try:
         import numpy as np
         import soundfile as sf
     except ImportError:
@@ -119,14 +122,14 @@ setup_test_environment()
 
 # Copyright protection for tests
 def _test_copyright_check():
-    """    ⚠️ COPYRIGHT PROTECTION SYSTEM FOR TESTS ⚠️
+    """     COPYRIGHT PROTECTION SYSTEM FOR TESTS 
     
     This function validates proper licensing and usage rights for testing code.
     Unauthorized access to testing capabilities will be logged and restricted.
     """    logger = logging.getLogger(__name__)
-    logger.warning("🔒 AUDIO PROCESSING TESTS ACCESS - COPYRIGHT PROTECTED")
-    logger.warning("📧 Contact: mlaiel@live.de for testing framework licensing")
-    logger.warning("⚖️  All testing algorithms and methodologies are proprietary to Fahed Mlaiel")
+    logger.warning(" AUDIO PROCESSING TESTS ACCESS - COPYRIGHT PROTECTED")
+    logger.warning(" Contact: mlaiel@live.de for testing framework licensing")
+    logger.warning("  All testing algorithms and methodologies are proprietary to Fahed Mlaiel")
 
 # Execute copyright check on test module import
 _test_copyright_check()
@@ -138,7 +141,7 @@ class AudioAnalysisTests(unittest.TestCase):
     """Ultra-Advanced Industrial-Grade Audio Analysis Test Suite"""    
     def setUp(self):
         """Initialize test environment"""        logger = logging.getLogger(__name__)
-        logger.info("🔧 Setting up Audio Analysis Tests")
+        logger.info(" Setting up Audio Analysis Tests")
     
     def test_audio_processing(self):
         """Test audio processing functionality"""        logger = logging.getLogger(__name__)
@@ -150,7 +153,7 @@ class MusicProcessingTests(unittest.TestCase):
     """Ultra-Advanced Industrial-Grade Music Processing Test Suite"""    
     def setUp(self):
         """Initialize test environment"""        logger = logging.getLogger(__name__)
-        logger.info("🔧 Setting up Music Processing Tests")
+        logger.info(" Setting up Music Processing Tests")
     
     def test_music_analysis(self):
         """Test music analysis functionality"""        logger = logging.getLogger(__name__)
@@ -162,7 +165,7 @@ class SpeechRecognitionTests(unittest.TestCase):
     """Ultra-Advanced Industrial-Grade Speech Recognition Test Suite"""    
     def setUp(self):
         """Initialize test environment"""        logger = logging.getLogger(__name__)
-        logger.info("🔧 Setting up Speech Recognition Tests")
+        logger.info(" Setting up Speech Recognition Tests")
     
     def test_speech_recognition(self):
         """Test speech recognition functionality"""        logger = logging.getLogger(__name__)
@@ -174,7 +177,7 @@ class AudioFingerprintingTests(unittest.TestCase):
     """Ultra-Advanced Industrial-Grade Audio Fingerprinting Test Suite"""    
     def setUp(self):
         """Initialize test environment"""        logger = logging.getLogger(__name__)
-        logger.info("🔧 Setting up Audio Fingerprinting Tests")
+        logger.info(" Setting up Audio Fingerprinting Tests")
     
     def test_audio_fingerprinting(self):
         """Test audio fingerprinting functionality"""        logger = logging.getLogger(__name__)
@@ -186,7 +189,7 @@ class SoundQualityTests(unittest.TestCase):
     """Ultra-Advanced Industrial-Grade Sound Quality Test Suite"""    
     def setUp(self):
         """Initialize test environment"""        logger = logging.getLogger(__name__)
-        logger.info("🔧 Setting up Sound Quality Tests")
+        logger.info(" Setting up Sound Quality Tests")
     
     def test_sound_quality_analysis(self):
         """Test sound quality analysis functionality"""        logger = logging.getLogger(__name__)

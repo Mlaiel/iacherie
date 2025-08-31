@@ -12,7 +12,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL WARNING ⚠️
+  CRITICAL WARNING 
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
 Any unauthorized use, reproduction, distribution, or reverse engineering 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -272,6 +272,9 @@ class TelegramCrawler(PlatformCrawler):
         Returns:
             List of crawler results
         """
+
+
+
         try:
             await self._check_rate_limit()
             
@@ -299,6 +302,9 @@ class TelegramCrawler(PlatformCrawler):
     
     async def _crawl_messages(self, query: str, max_results: int, channel_username: str = None) -> List[CrawlerResult]:
         """Crawl Telegram messages"""
+
+
+
         try:
             results = []
             
@@ -374,6 +380,9 @@ class TelegramCrawler(PlatformCrawler):
     
     async def _crawl_channels(self, query: str, max_results: int, channel_username: str = None) -> List[CrawlerResult]:
         """Crawl Telegram channels"""
+
+
+
         try:
             results = []
             
@@ -450,6 +459,9 @@ class TelegramCrawler(PlatformCrawler):
     
     async def _crawl_users(self, query: str, max_results: int, channel_username: str = None) -> List[CrawlerResult]:
         """Crawl Telegram users"""
+
+
+
         try:
             results = []
             
@@ -530,6 +542,9 @@ class TelegramCrawler(PlatformCrawler):
     
     async def _crawl_search(self, query: str, max_results: int, channel_username: str = None) -> List[CrawlerResult]:
         """General Telegram search across all content types"""
+
+
+
         try:
             results = []
             
@@ -550,6 +565,9 @@ class TelegramCrawler(PlatformCrawler):
     
     async def _crawl_media(self, query: str, max_results: int, channel_username: str = None) -> List[CrawlerResult]:
         """Crawl media messages on Telegram"""
+
+
+
         try:
             results = []
             
@@ -628,6 +646,9 @@ class TelegramCrawler(PlatformCrawler):
     
     async def _crawl_forwards(self, query: str, max_results: int, channel_username: str = None) -> List[CrawlerResult]:
         """Crawl forwarded messages"""
+
+
+
         try:
             results = []
             
@@ -701,6 +722,9 @@ class TelegramCrawler(PlatformCrawler):
     
     async def _crawl_reactions(self, query: str, max_results: int, channel_username: str = None) -> List[CrawlerResult]:
         """Crawl messages with reactions"""
+
+
+
         try:
             results = []
             
@@ -776,6 +800,9 @@ class TelegramCrawler(PlatformCrawler):
     
     async def _parse_message_data(self, message, channel) -> Optional[TelegramMessage]:
         """Parse message data from Telegram API"""
+
+
+
         try:
             # Get sender information
             sender = await message.get_sender() if message.sender_id else None
@@ -937,6 +964,9 @@ class TelegramCrawler(PlatformCrawler):
     
     async def _get_detailed_channel_info(self, channel) -> Optional[TelegramChannel]:
         """Get detailed channel information"""
+
+
+
         try:
             # Get full channel information
             full_channel = await self.client(GetFullChannelRequest(channel))
@@ -1008,6 +1038,9 @@ class TelegramCrawler(PlatformCrawler):
     
     async def _parse_user_data(self, user) -> Optional[TelegramUser]:
         """Parse user data from Telegram API"""
+
+
+
         try:
             # Get full user information if possible
             full_user = None
@@ -1066,6 +1099,9 @@ class TelegramCrawler(PlatformCrawler):
     
     async def _check_rate_limit(self):
         """Check and enforce rate limiting"""
+
+
+
         try:
             current_time = time.time()
             time_since_last = current_time - self.last_request_time
@@ -1083,6 +1119,9 @@ class TelegramCrawler(PlatformCrawler):
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
         """Extract metadata from Telegram content"""
+
+
+
         try:
             # Parse Telegram URL
             parsed_url = urlparse(url)
@@ -1133,6 +1172,9 @@ class TelegramCrawler(PlatformCrawler):
     
     def get_platform_info(self) -> Dict[str, Any]:
         """Get Telegram platform information"""
+
+
+
         return {
             'platform_name': 'Telegram',
             'base_url': self.base_url,

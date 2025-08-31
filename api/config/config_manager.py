@@ -177,6 +177,9 @@ class ConfigManager(metaclass=SingletonMeta):
     
     def _load_from_file(self, file_path: str, key: str) -> Any:
         """Load configuration from file"""
+
+
+
         try:
             with open(file_path, 'r') as f:
                 if file_path.endswith('.json'):
@@ -200,6 +203,9 @@ class ConfigManager(metaclass=SingletonMeta):
     
     def _load_from_aws_ssm(self, parameter_name: str) -> Any:
         """Load configuration from AWS Systems Manager Parameter Store"""
+
+
+
         try:
             import boto3
             ssm = boto3.client('ssm')
@@ -216,6 +222,9 @@ class ConfigManager(metaclass=SingletonMeta):
     
     def _load_from_redis(self, redis_url: str, key: str) -> Any:
         """Load configuration from Redis"""
+
+
+
         try:
             r = redis.from_url(redis_url)
             value = r.get(key)
@@ -230,6 +239,9 @@ class ConfigManager(metaclass=SingletonMeta):
     
     def _load_from_s3(self, s3_path: str, key: str) -> Any:
         """Load configuration from S3"""
+
+
+
         try:
             import boto3
             # Parse S3 path: s3://bucket/path/file.json
@@ -311,10 +323,16 @@ class ConfigManager(metaclass=SingletonMeta):
     @staticmethod
     def get_current_environment() -> str:
         """Get current environment"""
+
+
+
         return os.getenv("ENVIRONMENT", "development").lower()
     
     def get_all_config(self) -> Dict[str, Any]:
         """Get all configuration as dictionary"""
+
+
+
         return dict(self._config_cache)
     
     def reload(self):
@@ -368,18 +386,30 @@ class EnvironmentManager:
     
     def list_environments(self) -> List[str]:
         """List available environments"""
+
+
+
         return ["development", "testing", "staging", "production"]
     
     def is_production(self) -> bool:
         """Check if running in production"""
+
+
+
         return self.get_current_environment() == "production"
     
     def is_development(self) -> bool:
         """Check if running in development"""
+
+
+
         return self.get_current_environment() == "development"
     
     def is_testing(self) -> bool:
         """Check if running in testing"""
+
+
+
         return self.get_current_environment() == "testing"
 
 
@@ -423,6 +453,9 @@ class SecretManager:
     
     def store_secret(self, name: str, value: str, encrypted: bool = True) -> bool:
         """Store a secret securely"""
+
+
+
         try:
             if encrypted:
                 value = self.encrypt(value)
@@ -485,6 +518,9 @@ class SecretManager:
     
     def _store_in_aws_secrets_manager(self, name: str, value: str) -> bool:
         """Store secret in AWS Secrets Manager"""
+
+
+
         try:
             import boto3
             secrets_client = boto3.client('secretsmanager')
@@ -497,6 +533,9 @@ class SecretManager:
     
     def _get_from_aws_secrets_manager(self, name: str) -> Optional[str]:
         """Get secret from AWS Secrets Manager"""
+
+
+
         try:
             import boto3
             secrets_client = boto3.client('secretsmanager')
@@ -509,6 +548,9 @@ class SecretManager:
     
     def _store_in_redis(self, name: str, value: str) -> bool:
         """Store secret in Redis"""
+
+
+
         try:
             key = f"secrets:{name}"
             self._redis_client.set(key, value, ex=86400)  # 24 hour expiry
@@ -518,6 +560,9 @@ class SecretManager:
     
     def _get_from_redis(self, name: str) -> Optional[str]:
         """Get secret from Redis"""
+
+
+
         try:
             key = f"secrets:{name}"
             value = self._redis_client.get(key)
@@ -527,6 +572,9 @@ class SecretManager:
     
     def _store_locally(self, name: str, value: str) -> bool:
         """Store secret locally"""
+
+
+
         try:
             secrets_dir = os.path.expanduser("~/.ia-influencer-agent/secrets")
             os.makedirs(secrets_dir, exist_ok=True)
@@ -541,6 +589,9 @@ class SecretManager:
     
     def _get_locally(self, name: str) -> Optional[str]:
         """Get secret from local storage"""
+
+
+
         try:
             secrets_dir = os.path.expanduser("~/.ia-influencer-agent/secrets")
             secret_file = os.path.join(secrets_dir, f"{name}.secret")
@@ -554,14 +605,23 @@ class SecretManager:
     
     def encrypt(self, plaintext: str) -> str:
         """Encrypt a string"""
+
+
+
         return self._cipher_suite.encrypt(plaintext.encode()).decode()
     
     def decrypt(self, ciphertext: str) -> str:
         """Decrypt a string"""
+
+
+
         return self._cipher_suite.decrypt(ciphertext.encode()).decode()
     
     def rotate_encryption_key(self) -> bool:
         """Rotate the encryption key (re-encrypt all secrets)"""
+
+
+
         try:
             # Generate new key
             new_key = Fernet.generate_key()
@@ -637,6 +697,9 @@ class FeatureToggleManager:
     
     def _get_feature_config(self, feature_name: str) -> Optional[Dict[str, Any]]:
         """Get feature configuration from config manager"""
+
+
+
         return self._config_manager.get(f"features.{feature_name}")
     
     def _evaluate_feature_rules(self, feature_config: Dict[str, Any], 

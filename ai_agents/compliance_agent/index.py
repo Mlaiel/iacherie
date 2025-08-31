@@ -7,7 +7,7 @@ Provides centralized access to all compliance management components and systems.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -144,14 +144,23 @@ class ComplianceModuleInterface:
     
     def get_component(self, component_name: str) -> Optional[Any]:
         """Get compliance component by name"""
+
+
+
         return self.components.get(component_name)
     
     def list_components(self) -> List[str]:
         """List all available compliance components"""
+
+
+
         return list(self.components.keys())
     
     def get_module_info(self) -> Dict[str, Any]:
         """Get module information"""
+
+
+
         return {
             'name': 'compliance_agent',
             'version': __version__,

@@ -24,17 +24,17 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
 Project Team Specialties:
-✅ Lead Dev + AI Developer Architect - Fahed Mlaiel
-✅ Senior Backend Developer (Python/FastAPI/Django) - Fahed Mlaiel  
-✅ Machine Learning Engineer (TensorFlow/PyTorch/Hugging Face) - Fahed Mlaiel
-✅ DBA & Data Engineer (PostgreSQL/Redis/MongoDB) - Fahed Mlaiel
-✅ Backend Security Specialist - Fahed Mlaiel
-✅ Microservices Architect - Fahed Mlaiel
-✅ Audio Developer - Fahed Mlaiel
-✅ DevOps Engineer - Fahed Mlaiel
-✅ AI Prompt Engineer - Fahed Mlaiel
+ Lead Dev + AI Developer Architect - Fahed Mlaiel
+ Senior Backend Developer (Python/FastAPI/Django) - Fahed Mlaiel  
+ Machine Learning Engineer (TensorFlow/PyTorch/Hugging Face) - Fahed Mlaiel
+ DBA & Data Engineer (PostgreSQL/Redis/MongoDB) - Fahed Mlaiel
+ Backend Security Specialist - Fahed Mlaiel
+ Microservices Architect - Fahed Mlaiel
+ Audio Developer - Fahed Mlaiel
+ DevOps Engineer - Fahed Mlaiel
+ AI Prompt Engineer - Fahed Mlaiel
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software and all associated concepts, algorithms, and implementations are the exclusive 
 intellectual property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, reproduction, 
 distribution, modification, or appropriation of this code, in whole or in part, without 

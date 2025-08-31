@@ -8,7 +8,7 @@ Responsibility: Intelligent worker orchestration and load balancing
 Technologies: AsyncIO, Dynamic Scaling, Load Balancing, Health Monitoring
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -163,8 +163,11 @@ class WorkerPool:
 
     async def start(self) -> bool:
         """Start the worker pool"""
+
+
+
         try:
-            logger.info(f"🚀 Starting worker pool: {self.pool_id}")
+            logger.info(f" Starting worker pool: {self.pool_id}")
             
             # Initialize components
             await self._initialize_components()
@@ -177,24 +180,27 @@ class WorkerPool:
             
             self.status = PoolStatus.ACTIVE
             
-            logger.info(f"✅ Worker pool {self.pool_id} started with {len(self.workers)} workers")
+            logger.info(f" Worker pool {self.pool_id} started with {len(self.workers)} workers")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to start worker pool {self.pool_id}: {e}")
+            logger.error(f" Failed to start worker pool {self.pool_id}: {e}")
             self.status = PoolStatus.SHUTDOWN
             return False
 
     async def stop(self) -> None:
         """Gracefully stop the worker pool"""
+
+
+
         try:
-            logger.info(f"🛑 Stopping worker pool: {self.pool_id}")
+            logger.info(f" Stopping worker pool: {self.pool_id}")
             
             self.status = PoolStatus.SHUTDOWN
             self.shutdown_event.set()
             
             # Stop accepting new tasks
-            logger.info("⏹️ Stopping task acceptance...")
+            logger.info("⏹ Stopping task acceptance...")
             
             # Wait for active tasks to complete
             if self.active_assignments:
@@ -205,7 +211,7 @@ class WorkerPool:
                 )
             
             # Stop all workers
-            logger.info(f"🛑 Stopping {len(self.workers)} workers...")
+            logger.info(f" Stopping {len(self.workers)} workers...")
             await self._stop_all_workers()
             
             # Cancel background tasks
@@ -216,22 +222,25 @@ class WorkerPool:
             if self.background_tasks:
                 await asyncio.gather(*self.background_tasks, return_exceptions=True)
             
-            logger.info(f"✅ Worker pool {self.pool_id} stopped gracefully")
+            logger.info(f" Worker pool {self.pool_id} stopped gracefully")
             
         except Exception as e:
-            logger.error(f"❌ Error stopping worker pool {self.pool_id}: {e}")
+            logger.error(f" Error stopping worker pool {self.pool_id}: {e}")
 
     async def submit_task(self, task: CrawlerTask, priority: Optional[TaskPriority] = None) -> bool:
         """Submit a task to the worker pool"""
+
+
+
         try:
             # Validate task
             if not await self._validate_task(task):
-                logger.warning(f"❌ Invalid task rejected: {task.task_id}")
+                logger.warning(f" Invalid task rejected: {task.task_id}")
                 return False
             
             # Check pool capacity
             if self.task_queue.full():
-                logger.warning(f"⚠️ Worker pool {self.pool_id} queue full, task rejected: {task.task_id}")
+                logger.warning(f" Worker pool {self.pool_id} queue full, task rejected: {task.task_id}")
                 return False
             
             # Determine priority
@@ -245,16 +254,19 @@ class WorkerPool:
             self.pending_tasks[task.task_id] = task
             self.metrics.queue_size = self.task_queue.qsize()
             
-            logger.info(f"📝 Task submitted to pool {self.pool_id}: {task.task_id} (priority: {priority.value})")
+            logger.info(f" Task submitted to pool {self.pool_id}: {task.task_id} (priority: {priority.value})")
             
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to submit task {task.task_id}: {e}")
+            logger.error(f" Failed to submit task {task.task_id}: {e}")
             return False
 
     async def get_task_status(self, task_id: str) -> Dict[str, Any]:
         """Get comprehensive task status"""
+
+
+
         try:
             # Check if task is active
             if task_id in self.active_assignments:
@@ -298,11 +310,14 @@ class WorkerPool:
             return {"task_id": task_id, "status": "not_found"}
             
         except Exception as e:
-            logger.error(f"❌ Failed to get task status {task_id}: {e}")
+            logger.error(f" Failed to get task status {task_id}: {e}")
             return {"task_id": task_id, "status": "error", "error": str(e)}
 
     async def get_pool_status(self) -> Dict[str, Any]:
         """Get comprehensive pool status"""
+
+
+
         try:
             # Update metrics
             await self._update_pool_metrics()
@@ -344,41 +359,47 @@ class WorkerPool:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to get pool status: {e}")
+            logger.error(f" Failed to get pool status: {e}")
             return {"pool_id": self.pool_id, "status": "error", "error": str(e)}
 
     async def scale_workers(self, target_count: int) -> bool:
         """Manually scale workers to target count"""
+
+
+
         try:
             current_count = len(self.workers)
             
             if target_count > self.config.max_workers:
                 target_count = self.config.max_workers
-                logger.warning(f"⚠️ Target count capped at max_workers: {self.config.max_workers}")
+                logger.warning(f" Target count capped at max_workers: {self.config.max_workers}")
             elif target_count < self.config.min_workers:
                 target_count = self.config.min_workers
-                logger.warning(f"⚠️ Target count raised to min_workers: {self.config.min_workers}")
+                logger.warning(f" Target count raised to min_workers: {self.config.min_workers}")
             
             if target_count > current_count:
                 # Scale up
                 workers_to_add = target_count - current_count
                 await self._add_workers(workers_to_add)
-                logger.info(f"📈 Scaled up pool {self.pool_id}: {current_count} → {target_count} workers")
+                logger.info(f" Scaled up pool {self.pool_id}: {current_count} → {target_count} workers")
             elif target_count < current_count:
                 # Scale down
                 workers_to_remove = current_count - target_count
                 await self._remove_workers(workers_to_remove)
-                logger.info(f"📉 Scaled down pool {self.pool_id}: {current_count} → {target_count} workers")
+                logger.info(f" Scaled down pool {self.pool_id}: {current_count} → {target_count} workers")
             
             self.metrics.last_scaling_action = datetime.utcnow()
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to scale workers: {e}")
+            logger.error(f" Failed to scale workers: {e}")
             return False
 
     async def _initialize_components(self) -> None:
         """Initialize pool components"""
+
+
+
         try:
             # Initialize scheduler
             await self.scheduler.initialize()
@@ -389,14 +410,17 @@ class WorkerPool:
             # Initialize scaling manager
             await self.scaling_manager.initialize()
             
-            logger.info(f"✅ Pool {self.pool_id} components initialized")
+            logger.info(f" Pool {self.pool_id} components initialized")
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize pool components: {e}")
+            logger.error(f" Failed to initialize pool components: {e}")
             raise
 
     async def _create_initial_workers(self) -> None:
         """Create initial set of workers"""
+
+
+
         try:
             for i in range(self.config.initial_workers):
                 worker_id = f"{self.pool_id}-worker-{i+1}"
@@ -404,14 +428,17 @@ class WorkerPool:
                 
                 await self._create_worker(worker_id, worker_type)
             
-            logger.info(f"✅ Created {self.config.initial_workers} initial workers")
+            logger.info(f" Created {self.config.initial_workers} initial workers")
             
         except Exception as e:
-            logger.error(f"❌ Failed to create initial workers: {e}")
+            logger.error(f" Failed to create initial workers: {e}")
             raise
 
     async def _create_worker(self, worker_id: str, worker_type: WorkerType) -> bool:
         """Create and start a new worker"""
+
+
+
         try:
             # Create worker config
             worker_config = WorkerConfig(
@@ -433,18 +460,21 @@ class WorkerPool:
                     "consecutive_failures": 0
                 }
                 
-                logger.info(f"✅ Created worker: {worker_id} ({worker_type.value})")
+                logger.info(f" Created worker: {worker_id} ({worker_type.value})")
                 return True
             else:
-                logger.error(f"❌ Failed to start worker: {worker_id}")
+                logger.error(f" Failed to start worker: {worker_id}")
                 return False
                 
         except Exception as e:
-            logger.error(f"❌ Failed to create worker {worker_id}: {e}")
+            logger.error(f" Failed to create worker {worker_id}: {e}")
             return False
 
     async def _start_background_tasks(self) -> None:
         """Start background pool tasks"""
+
+
+
         try:
             # Task dispatcher
             task_dispatcher = asyncio.create_task(self._task_dispatcher())
@@ -467,10 +497,10 @@ class WorkerPool:
                 auto_scaler = asyncio.create_task(self._auto_scaler())
                 self.background_tasks.add(auto_scaler)
             
-            logger.info(f"✅ Background tasks started for pool {self.pool_id}")
+            logger.info(f" Background tasks started for pool {self.pool_id}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to start background tasks: {e}")
+            logger.error(f" Failed to start background tasks: {e}")
             raise
 
     async def _task_dispatcher(self) -> None:
@@ -499,11 +529,14 @@ class WorkerPool:
             except asyncio.TimeoutError:
                 continue
             except Exception as e:
-                logger.error(f"❌ Task dispatcher error: {e}")
+                logger.error(f" Task dispatcher error: {e}")
                 await asyncio.sleep(5)
 
     async def _assign_task_to_worker(self, task: CrawlerTask, worker_id: str) -> None:
         """Assign a task to a specific worker"""
+
+
+
         try:
             worker = self.workers[worker_id]
             
@@ -519,19 +552,22 @@ class WorkerPool:
                 self.active_assignments[task.task_id] = assignment
                 self.pending_tasks.pop(task.task_id, None)
                 
-                logger.info(f"✅ Task {task.task_id} assigned to worker {worker_id}")
+                logger.info(f" Task {task.task_id} assigned to worker {worker_id}")
                 
                 # Monitor task execution
                 asyncio.create_task(self._monitor_task_execution(assignment))
                 
             else:
-                logger.error(f"❌ Failed to assign task {task.task_id} to worker {worker_id}")
+                logger.error(f" Failed to assign task {task.task_id} to worker {worker_id}")
                 
         except Exception as e:
-            logger.error(f"❌ Failed to assign task {task.task_id} to worker {worker_id}: {e}")
+            logger.error(f" Failed to assign task {task.task_id} to worker {worker_id}: {e}")
 
     async def _monitor_task_execution(self, assignment: TaskAssignment) -> None:
         """Monitor task execution and update assignment"""
+
+
+
         try:
             task_id = assignment.task_id
             worker_id = assignment.worker_id
@@ -561,7 +597,7 @@ class WorkerPool:
                     self.metrics.total_tasks_processed += 1
                     self.metrics.successful_tasks += 1
                     
-                    logger.info(f"✅ Task {task_id} completed on worker {worker_id}")
+                    logger.info(f" Task {task_id} completed on worker {worker_id}")
                     break
                 
                 await asyncio.sleep(5)  # Check every 5 seconds
@@ -573,7 +609,7 @@ class WorkerPool:
                 logger.warning(f"⏰ Task {task_id} timed out on worker {worker_id}")
                 
         except Exception as e:
-            logger.error(f"❌ Task monitoring error for {assignment.task_id}: {e}")
+            logger.error(f" Task monitoring error for {assignment.task_id}: {e}")
 
     async def _pool_monitor(self) -> None:
         """Monitor pool status and performance"""
@@ -587,14 +623,14 @@ class WorkerPool:
                 
                 # Log pool status
                 if len(self.workers) > 0:
-                    logger.debug(f"📊 Pool {self.pool_id}: {len(self.workers)} workers, "
+                    logger.debug(f" Pool {self.pool_id}: {len(self.workers)} workers, "
                                f"{self.metrics.queue_size} queued, "
                                f"{len(self.active_assignments)} active")
                 
                 await asyncio.sleep(30)  # Monitor every 30 seconds
                 
             except Exception as e:
-                logger.error(f"❌ Pool monitor error: {e}")
+                logger.error(f" Pool monitor error: {e}")
                 await asyncio.sleep(60)
 
     async def _health_checker(self) -> None:
@@ -623,10 +659,10 @@ class WorkerPool:
                         self.worker_health[worker_id]['last_check'] = datetime.utcnow()
                         
                     except asyncio.TimeoutError:
-                        logger.warning(f"⚠️ Worker {worker_id} health check timeout")
+                        logger.warning(f" Worker {worker_id} health check timeout")
                         self.worker_health[worker_id]['consecutive_failures'] += 1
                     except Exception as e:
-                        logger.error(f"❌ Health check failed for worker {worker_id}: {e}")
+                        logger.error(f" Health check failed for worker {worker_id}: {e}")
                         self.worker_health[worker_id]['consecutive_failures'] += 1
                 
                 # Replace unhealthy workers
@@ -636,13 +672,16 @@ class WorkerPool:
                 await asyncio.sleep(self.config.health_check_interval)
                 
             except Exception as e:
-                logger.error(f"❌ Health checker error: {e}")
+                logger.error(f" Health checker error: {e}")
                 await asyncio.sleep(60)
 
     async def _replace_unhealthy_worker(self, worker_id: str) -> None:
         """Replace an unhealthy worker"""
+
+
+
         try:
-            logger.warning(f"🔄 Replacing unhealthy worker: {worker_id}")
+            logger.warning(f" Replacing unhealthy worker: {worker_id}")
             
             # Get worker config
             worker_config = self.worker_configs.get(worker_id)
@@ -662,10 +701,10 @@ class WorkerPool:
             new_worker_id = f"{worker_id}-replacement-{int(time.time())}"
             await self._create_worker(new_worker_id, worker_config.worker_type)
             
-            logger.info(f"✅ Replaced worker {worker_id} with {new_worker_id}")
+            logger.info(f" Replaced worker {worker_id} with {new_worker_id}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to replace unhealthy worker {worker_id}: {e}")
+            logger.error(f" Failed to replace unhealthy worker {worker_id}: {e}")
 
     async def _auto_scaler(self) -> None:
         """Automatic worker scaling based on load"""
@@ -685,11 +724,14 @@ class WorkerPool:
                 await asyncio.sleep(60)  # Check every minute
                 
             except Exception as e:
-                logger.error(f"❌ Auto scaler error: {e}")
+                logger.error(f" Auto scaler error: {e}")
                 await asyncio.sleep(120)
 
     async def _calculate_pool_load(self) -> float:
         """Calculate current pool load percentage"""
+
+
+
         try:
             if not self.workers:
                 return 0.0
@@ -700,11 +742,14 @@ class WorkerPool:
             return min(1.0, current_usage / total_capacity)
             
         except Exception as e:
-            logger.error(f"❌ Failed to calculate pool load: {e}")
+            logger.error(f" Failed to calculate pool load: {e}")
             return 0.0
 
     async def _update_pool_metrics(self) -> None:
         """Update pool performance metrics"""
+
+
+
         try:
             # Count workers by status
             status_counts = defaultdict(int)
@@ -737,10 +782,13 @@ class WorkerPool:
                     self.metrics.average_response_time = statistics.mean(durations)
             
         except Exception as e:
-            logger.error(f"❌ Failed to update pool metrics: {e}")
+            logger.error(f" Failed to update pool metrics: {e}")
 
     async def _check_pool_health(self) -> None:
         """Check overall pool health"""
+
+
+
         try:
             healthy_workers = sum(1 for h in self.worker_health.values() if h['status'] == 'healthy')
             total_workers = len(self.workers)
@@ -755,10 +803,13 @@ class WorkerPool:
                 self.status = PoolStatus.ACTIVE
                 
         except Exception as e:
-            logger.error(f"❌ Pool health check failed: {e}")
+            logger.error(f" Pool health check failed: {e}")
 
     async def _add_workers(self, count: int) -> None:
         """Add new workers to the pool"""
+
+
+
         try:
             for i in range(count):
                 worker_id = f"{self.pool_id}-worker-{len(self.workers) + i + 1}"
@@ -766,10 +817,13 @@ class WorkerPool:
                 await self._create_worker(worker_id, worker_type)
                 
         except Exception as e:
-            logger.error(f"❌ Failed to add workers: {e}")
+            logger.error(f" Failed to add workers: {e}")
 
     async def _remove_workers(self, count: int) -> None:
         """Remove workers from the pool"""
+
+
+
         try:
             # Select workers to remove (prefer idle workers)
             workers_to_remove = []
@@ -792,10 +846,13 @@ class WorkerPool:
                     self.worker_health.pop(worker_id, None)
                     
         except Exception as e:
-            logger.error(f"❌ Failed to remove workers: {e}")
+            logger.error(f" Failed to remove workers: {e}")
 
     async def _stop_all_workers(self) -> None:
         """Stop all workers in the pool"""
+
+
+
         try:
             stop_tasks = []
             for worker in self.workers.values():
@@ -809,7 +866,7 @@ class WorkerPool:
             self.worker_health.clear()
             
         except Exception as e:
-            logger.error(f"❌ Failed to stop all workers: {e}")
+            logger.error(f" Failed to stop all workers: {e}")
 
     async def _wait_for_active_tasks(self) -> None:
         """Wait for all active tasks to complete"""
@@ -829,6 +886,9 @@ class WorkerPool:
 
     async def _validate_task(self, task: CrawlerTask) -> bool:
         """Validate task before queueing"""
+
+
+
         try:
             # Basic validation
             if not task.task_id or not task.target_url:
@@ -841,11 +901,14 @@ class WorkerPool:
             return True
             
         except Exception as e:
-            logger.error(f"❌ Task validation failed: {e}")
+            logger.error(f" Task validation failed: {e}")
             return False
 
     async def _calculate_task_priority(self, task: CrawlerTask) -> TaskPriority:
         """Calculate intelligent task priority"""
+
+
+
         try:
             # Default priority
             priority = TaskPriority.MEDIUM
@@ -861,11 +924,14 @@ class WorkerPool:
             return priority
             
         except Exception as e:
-            logger.error(f"❌ Priority calculation failed: {e}")
+            logger.error(f" Priority calculation failed: {e}")
             return TaskPriority.MEDIUM
 
     async def _get_queue_position(self, task_id: str) -> int:
         """Get position of task in queue"""
+
+
+
         try:
             position = 0
             temp_queue = []
@@ -886,11 +952,14 @@ class WorkerPool:
             return position
             
         except Exception as e:
-            logger.error(f"❌ Failed to get queue position: {e}")
+            logger.error(f" Failed to get queue position: {e}")
             return -1
 
     async def _estimate_start_time(self, queue_position: int) -> Optional[str]:
         """Estimate when task will start"""
+
+
+
         try:
             if queue_position < 0:
                 return None
@@ -905,11 +974,14 @@ class WorkerPool:
             return estimated_time.isoformat()
             
         except Exception as e:
-            logger.error(f"❌ Failed to estimate start time: {e}")
+            logger.error(f" Failed to estimate start time: {e}")
             return None
 
     async def _estimate_completion_time(self, assignment: TaskAssignment) -> Optional[str]:
         """Estimate when task will complete"""
+
+
+
         try:
             if not assignment.started_at:
                 return None
@@ -923,7 +995,7 @@ class WorkerPool:
             return estimated_time.isoformat()
             
         except Exception as e:
-            logger.error(f"❌ Failed to estimate completion time: {e}")
+            logger.error(f" Failed to estimate completion time: {e}")
             return None
 
     async def _metrics_collector(self) -> None:
@@ -948,5 +1020,5 @@ class WorkerPool:
                 await asyncio.sleep(60)  # Collect every minute
                 
             except Exception as e:
-                logger.error(f"❌ Metrics collector error: {e}")
+                logger.error(f" Metrics collector error: {e}")
                 await asyncio.sleep(120)

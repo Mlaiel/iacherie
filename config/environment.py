@@ -78,6 +78,9 @@ class SecretManager:
         
     async def get_secret(self, secret_config: SecretConfig) -> Optional[str]:
         """Get secret from configured source"""
+
+
+
         try:
             cache_key = f"{secret_config.source.value}:{secret_config.key}"
             
@@ -221,6 +224,9 @@ class EnvironmentManager:
     
     async def load_configuration(self) -> Dict[str, Any]:
         """Load complete environment configuration"""
+
+
+
         try:
             self.logger.info(f"Loading configuration for environment: {self.environment.value}")
             
@@ -432,10 +438,16 @@ class EnvironmentManager:
     
     def _generate_secret_key(self) -> str:
         """Generate a secure random secret key"""
+
+
+
         return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode()
     
     def _generate_encryption_key(self) -> str:
         """Generate a secure encryption key"""
+
+
+
         return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode()
     
     async def _validate_configuration(self, config: Dict[str, Any]):
@@ -527,10 +539,16 @@ class EnvironmentManager:
     
     def is_production(self) -> bool:
         """Check if running in production environment"""
+
+
+
         return self.environment == Environment.PRODUCTION
     
     def is_development(self) -> bool:
         """Check if running in development environment"""
+
+
+
         return self.environment == Environment.DEVELOPMENT
 
 
@@ -540,24 +558,39 @@ env_manager = EnvironmentManager()
 
 async def load_configuration() -> Dict[str, Any]:
     """Load application configuration"""
+
+
+
     return await env_manager.load_configuration()
 
 
 def get_config(key: str, default: Any = None) -> Any:
     """Get configuration value"""
+
+
+
     return env_manager.get(key, default)
 
 
 def get_environment() -> Environment:
     """Get current environment"""
+
+
+
     return env_manager.environment
 
 
 def is_production() -> bool:
     """Check if running in production"""
+
+
+
     return env_manager.is_production()
 
 
 def is_development() -> bool:
     """Check if running in development"""
+
+
+
     return env_manager.is_development()

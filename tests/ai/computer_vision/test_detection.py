@@ -30,7 +30,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 #
 # Created by: Fahed Mlaiel (mlaiel@live.de)
 # 
-# ⚠️  STRICT COPYRIGHT WARNING ⚠️ 
+#   STRICT COPYRIGHT WARNING  
 # This code, concept, and intellectual property belongs exclusively to Fahed Mlaiel.
 # ANY unauthorized use, reproduction, distribution, or theft of this code/concept 
 # without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is 
@@ -117,6 +117,9 @@ class TestObjectDetector(unittest.TestCase):
     
     def test_detect_objects_basic(self):
         """Test basic object detection"""
+
+
+
         try:
             detections = self.detector.detect_objects(self.test_image)
             self.assertIsInstance(detections, list)
@@ -135,6 +138,9 @@ class TestObjectDetector(unittest.TestCase):
     
     def test_detect_objects_with_confidence_threshold(self):
         """Test object detection with confidence threshold"""
+
+
+
         try:
             # Test with different confidence thresholds
             detections_low = self.detector.detect_objects(self.test_image, confidence_threshold=0.1)
@@ -149,6 +155,9 @@ class TestObjectDetector(unittest.TestCase):
     
     def test_detect_custom_classes(self):
         """Test detection of custom object classes"""
+
+
+
         try:
             custom_classes = ['person', 'car', 'book']
             detections = self.detector.detect_custom(self.test_image, classes=custom_classes)
@@ -164,6 +173,9 @@ class TestObjectDetector(unittest.TestCase):
     
     def test_batch_detection(self):
         """Test batch object detection"""
+
+
+
         try:
             # Create multiple test images
             images = [self.test_image for _ in range(3)]
@@ -180,6 +192,9 @@ class TestObjectDetector(unittest.TestCase):
     
     def test_detection_performance(self):
         """Test detection performance benchmarks"""
+
+
+
         try:
             start_time = time.time()
             detections = self.detector.detect_objects(self.test_image)
@@ -231,6 +246,9 @@ class TestFaceDetector(unittest.TestCase):
     
     def test_detect_faces_basic(self):
         """Test basic face detection"""
+
+
+
         try:
             detections = self.detector.detect_faces(self.test_image)
             self.assertIsInstance(detections, list)
@@ -251,6 +269,9 @@ class TestFaceDetector(unittest.TestCase):
     
     def test_analyze_emotion(self):
         """Test emotion analysis from face region"""
+
+
+
         try:
             # Extract face region
             face_region = self.test_image[140:340, 220:420]  # Crop around the face
@@ -267,6 +288,9 @@ class TestFaceDetector(unittest.TestCase):
     
     def test_estimate_age_gender(self):
         """Test age and gender estimation"""
+
+
+
         try:
             face_region = self.test_image[140:340, 220:420]
             
@@ -285,6 +309,9 @@ class TestFaceDetector(unittest.TestCase):
     
     def test_face_landmarks_detection(self):
         """Test facial landmarks detection"""
+
+
+
         try:
             detections = self.detector.detect_faces(self.test_image)
             
@@ -304,6 +331,9 @@ class TestFaceDetector(unittest.TestCase):
     
     def test_multiple_faces_detection(self):
         """Test detection of multiple faces"""
+
+
+
         try:
             # Create image with multiple faces
             multi_face_image = self._create_test_image_with_multiple_faces()
@@ -369,6 +399,9 @@ class TestTextDetector(unittest.TestCase):
     
     def test_detect_text_basic(self):
         """Test basic text detection"""
+
+
+
         try:
             detections = self.detector.detect_text(self.test_image)
             self.assertIsInstance(detections, list)
@@ -388,6 +421,9 @@ class TestTextDetector(unittest.TestCase):
     
     def test_extract_text_content(self):
         """Test text content extraction"""
+
+
+
         try:
             text_content = self.detector.extract_text(self.test_image)
             self.assertIsInstance(text_content, str)
@@ -406,6 +442,9 @@ class TestTextDetector(unittest.TestCase):
     
     def test_detect_with_language_hint(self):
         """Test text detection with language hints"""
+
+
+
         try:
             detections_en = self.detector.detect_text(self.test_image, language='en')
             detections_auto = self.detector.detect_text(self.test_image, language='auto')
@@ -418,6 +457,9 @@ class TestTextDetector(unittest.TestCase):
     
     def test_handwriting_detection(self):
         """Test handwriting text detection"""
+
+
+
         try:
             # Create an image with handwriting-style text
             handwriting_image = self._create_handwriting_test_image()
@@ -442,6 +484,9 @@ class TestTextDetector(unittest.TestCase):
     
     def test_text_region_analysis(self):
         """Test text region analysis and layout detection"""
+
+
+
         try:
             regions = self.detector.analyze_text_layout(self.test_image)
             self.assertIsInstance(regions, list)
@@ -485,6 +530,9 @@ class TestGestureDetector(unittest.TestCase):
     
     def test_detect_gestures_basic(self):
         """Test basic gesture detection"""
+
+
+
         try:
             detections = self.detector.detect_gestures(self.test_image)
             self.assertIsInstance(detections, list)
@@ -503,6 +551,9 @@ class TestGestureDetector(unittest.TestCase):
     
     def test_hand_landmark_detection(self):
         """Test hand landmark detection"""
+
+
+
         try:
             landmarks = self.detector.detect_hand_landmarks(self.test_image)
             self.assertIsInstance(landmarks, (list, dict))
@@ -516,6 +567,9 @@ class TestGestureDetector(unittest.TestCase):
     
     def test_pose_detection(self):
         """Test pose detection"""
+
+
+
         try:
             pose_image = self._create_test_pose_image()
             pose_landmarks = self.detector.detect_pose(pose_image)
@@ -547,6 +601,9 @@ class TestGestureDetector(unittest.TestCase):
     
     def test_gesture_classification(self):
         """Test gesture classification"""
+
+
+
         try:
             classification = self.detector.classify_gesture(self.test_image)
             self.assertIsNotNone(classification)
@@ -635,6 +692,9 @@ class TestSceneDetector(unittest.TestCase):
     
     def test_classify_scene_basic(self):
         """Test basic scene classification"""
+
+
+
         try:
             for scene_type, image in self.test_images.items():
                 classification = self.detector.classify_scene(image)
@@ -651,6 +711,9 @@ class TestSceneDetector(unittest.TestCase):
     
     def test_detect_scene_elements(self):
         """Test detection of scene elements"""
+
+
+
         try:
             for scene_type, image in self.test_images.items():
                 elements = self.detector.detect_scene_elements(image)
@@ -667,6 +730,9 @@ class TestSceneDetector(unittest.TestCase):
     
     def test_analyze_scene_context(self):
         """Test scene context analysis"""
+
+
+
         try:
             context = self.detector.analyze_context(self.test_images['indoor'])
             self.assertIsNotNone(context)
@@ -680,6 +746,9 @@ class TestSceneDetector(unittest.TestCase):
     
     def test_lighting_analysis(self):
         """Test lighting condition analysis"""
+
+
+
         try:
             lighting = self.detector.analyze_lighting(self.test_images['outdoor'])
             self.assertIsNotNone(lighting)
@@ -730,6 +799,9 @@ class TestDetectionIntegration(unittest.TestCase):
     
     def test_comprehensive_detection_pipeline(self):
         """Test comprehensive detection pipeline"""
+
+
+
         try:
             # Run all detectors on the same image
             object_results = self.object_detector.detect_objects(self.complex_test_image)
@@ -750,6 +822,9 @@ class TestDetectionIntegration(unittest.TestCase):
     
     def test_detection_consistency(self):
         """Test consistency across multiple runs"""
+
+
+
         try:
             # Run the same detection multiple times
             results1 = self.object_detector.detect_objects(self.complex_test_image)
@@ -765,6 +840,9 @@ class TestDetectionIntegration(unittest.TestCase):
     
     def test_performance_integration(self):
         """Test performance of integrated detection pipeline"""
+
+
+
         try:
             start_time = time.time()
             

@@ -1,4 +1,4 @@
-"""🚀 Configuration Management Module - IA-Influencer-Agent
+""" Configuration Management Module - IA-Influencer-Agent
 ==================================================================
 Project Creator & Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
@@ -6,7 +6,7 @@ Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert +
 Date: 2025-08-24
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -633,7 +633,10 @@ class ConfigurationModule:
             
         Returns:
             bool: True if initialization successful
-        """        try:
+        """
+
+
+        try:
             self.logger.info(f"Initializing configuration for environment: {environment}")
             
             # Initialize all managers
@@ -704,7 +707,10 @@ class ConfigurationModule:
             
         Returns:
             Dict containing deployment results and metrics
-        """        try:
+        """
+
+
+        try:
             self.logger.info(f"Starting deployment to {target_environment} (dry_run={dry_run})")
             
             deployment_id = f"deploy_{target_environment}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
@@ -738,7 +744,10 @@ class ConfigurationModule:
             raise
     
     async def get_environment_status(self, environment: str) -> Dict[str, Any]:
-        """Get comprehensive status of specified environment"""        try:
+        """Get comprehensive status of specified environment"""
+
+
+        try:
             status = {
                 "environment": environment,
                 "timestamp": datetime.now(),
@@ -777,7 +786,10 @@ class ConfigurationModule:
             raise
     
     def get_module_info(self) -> Dict[str, Any]:
-        """Get module information and metadata"""        return {
+        """Get module information and metadata"""
+
+
+        return {
             "name": "Deployment Configuration Module",
             "version": __version__,
             "author": __author__,

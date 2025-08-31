@@ -73,6 +73,9 @@ class ContentHashingEngine:
     
     def initialize_extractors(self):
         """Initialize feature extraction models"""
+
+
+
         try:
             # Initialize text embeddings model
             self.text_tokenizer = AutoTokenizer.from_pretrained('sentence-transformers/all-MiniLM-L6-v2', local_files_only=False)
@@ -86,6 +89,9 @@ class ContentHashingEngine:
     
     def generate_multi_hash(self, content: Any, content_type: str) -> Dict[str, str]:
         """Generate multiple hash signatures for content"""
+
+
+
         try:
             hashes = {}
             
@@ -107,6 +113,9 @@ class ContentHashingEngine:
     
     def _hash_image(self, image_path: str) -> Dict[str, str]:
         """Generate image hashes"""
+
+
+
         try:
             image = Image.open(image_path)
             
@@ -125,6 +134,9 @@ class ContentHashingEngine:
     
     def _hash_audio(self, audio_path: str) -> Dict[str, str]:
         """Generate audio hashes"""
+
+
+
         try:
             y, sr = librosa.load(audio_path, duration=30)
             
@@ -152,6 +164,9 @@ class ContentHashingEngine:
     
     def _hash_video(self, video_path: str) -> Dict[str, str]:
         """Generate video hashes"""
+
+
+
         try:
             cap = cv2.VideoCapture(video_path)
             frame_hashes = []
@@ -188,6 +203,9 @@ class ContentHashingEngine:
     
     def _hash_text(self, text_content: str) -> Dict[str, str]:
         """Generate text hashes"""
+
+
+
         try:
             # Basic hashes
             hashes = {
@@ -218,6 +236,9 @@ class ContentHashingEngine:
     
     def _color_moment_hash(self, image: Image) -> str:
         """Create color moment based hash"""
+
+
+
         try:
             img_array = np.array(image)
             if len(img_array.shape) == 3:
@@ -238,6 +259,9 @@ class ContentHashingEngine:
     
     def _create_audio_fingerprint(self, y: np.ndarray, sr: int) -> str:
         """Create compact audio fingerprint"""
+
+
+
         try:
             # Create spectral fingerprint
             stft = librosa.stft(y, n_fft=2048, hop_length=512)
@@ -252,6 +276,9 @@ class ContentHashingEngine:
     
     def _create_temporal_signature(self, frame_hashes: List[str]) -> str:
         """Create temporal signature from frame sequence"""
+
+
+
         try:
             # Analyze hash differences between consecutive frames
             transitions = []
@@ -268,6 +295,9 @@ class ContentHashingEngine:
     
     def _create_semantic_hash(self, text: str) -> str:
         """Create semantic hash using text embeddings"""
+
+
+
         try:
             inputs = self.text_tokenizer(text, return_tensors='pt', truncate=True, max_length=512)
             with torch.no_grad():
@@ -282,6 +312,9 @@ class ContentHashingEngine:
     
     def _create_ngram_hashes(self, text: str, n_values: List[int] = [2, 3, 4]) -> Dict[str, str]:
         """Create n-gram based hashes"""
+
+
+
         try:
             hashes = {}
             words = text.lower().split()
@@ -312,6 +345,9 @@ class AnomalyDetectionEngine:
     
     def train_model(self, normal_behavior_data: List[Dict[str, float]]):
         """Train anomaly detection model on normal behavior"""
+
+
+
         try:
             if not normal_behavior_data:
                 raise ValueError("No training data provided")
@@ -334,6 +370,9 @@ class AnomalyDetectionEngine:
     
     def detect_anomalies(self, user_behaviors: List[Dict[str, float]]) -> List[Dict[str, Any]]:
         """Detect anomalous user behaviors"""
+
+
+
         try:
             if not self.is_trained:
                 raise ValueError("Model not trained yet")
@@ -425,6 +464,9 @@ class ContentSimilarityEngine:
     
     def compare_content(self, content1: Dict[str, Any], content2: Dict[str, Any]) -> Dict[str, float]:
         """Compare two pieces of content for similarity"""
+
+
+
         try:
             content_type = content1.get('type', 'unknown')
             
@@ -445,6 +487,9 @@ class ContentSimilarityEngine:
     
     def _compare_images(self, img1: Dict[str, Any], img2: Dict[str, Any]) -> Dict[str, float]:
         """Compare image similarity"""
+
+
+
         try:
             # Hash-based comparison
             hash_similarity = self._compare_image_hashes(img1['hashes'], img2['hashes'])
@@ -476,6 +521,9 @@ class ContentSimilarityEngine:
     
     def _compare_audio(self, audio1: Dict[str, Any], audio2: Dict[str, Any]) -> Dict[str, float]:
         """Compare audio similarity"""
+
+
+
         try:
             # Spectral feature comparison
             spectral_similarity = self._compare_audio_features(audio1['features'], audio2['features'])
@@ -509,6 +557,9 @@ class ContentSimilarityEngine:
     
     def _compare_videos(self, video1: Dict[str, Any], video2: Dict[str, Any]) -> Dict[str, float]:
         """Compare video similarity"""
+
+
+
         try:
             # Frame-based comparison
             frame_similarity = self._compare_video_frames(video1.get('frames', []), video2.get('frames', []))
@@ -547,6 +598,9 @@ class ContentSimilarityEngine:
     
     def _compare_text(self, text1: Dict[str, Any], text2: Dict[str, Any]) -> Dict[str, float]:
         """Compare text similarity"""
+
+
+
         try:
             # Exact matching
             exact_similarity = 1.0 if text1.get('content', '') == text2.get('content', '') else 0.0
@@ -591,6 +645,9 @@ class ContentSimilarityEngine:
     
     def _compare_image_hashes(self, hashes1: Dict[str, str], hashes2: Dict[str, str]) -> float:
         """Compare image hashes"""
+
+
+
         try:
             similarities = []
             
@@ -618,6 +675,9 @@ class ContentSimilarityEngine:
     
     def _compare_image_features(self, features1: Dict[str, List[float]], features2: Dict[str, List[float]]) -> float:
         """Compare image feature vectors"""
+
+
+
         try:
             similarities = []
             
@@ -644,10 +704,16 @@ class ContentSimilarityEngine:
     
     def _compare_audio_features(self, features1: Dict[str, List[float]], features2: Dict[str, List[float]]) -> float:
         """Compare audio feature vectors"""
+
+
+
         return self._compare_image_features(features1, features2)  # Same logic
     
     def _compare_ngrams(self, ngrams1: Dict[str, str], ngrams2: Dict[str, str]) -> float:
         """Compare n-gram hashes"""
+
+
+
         try:
             similarities = []
             
@@ -672,30 +738,51 @@ class ContentSimilarityEngine:
     # Placeholder methods for advanced comparison features
     def _compare_image_structure(self, struct1: Dict, struct2: Dict) -> float:
         """Compare structural features of images"""
+
+
+
         return 0.5  # Placeholder
     
     def _compare_temporal_patterns(self, temp1: Dict, temp2: Dict) -> float:
         """Compare temporal patterns in audio"""
+
+
+
         return 0.5  # Placeholder
     
     def _compare_audio_hashes(self, hashes1: Dict, hashes2: Dict) -> float:
         """Compare audio-specific hashes"""
+
+
+
         return self._compare_image_hashes(hashes1, hashes2)  # Reuse logic
     
     def _compare_video_frames(self, frames1: List, frames2: List) -> float:
         """Compare video frame sequences"""
+
+
+
         return 0.5  # Placeholder
     
     def _compare_motion_patterns(self, motion1: Dict, motion2: Dict) -> float:
         """Compare motion patterns in video"""
+
+
+
         return 0.5  # Placeholder
     
     def _compare_semantic_features(self, sem1: Dict, sem2: Dict) -> float:
         """Compare semantic text features"""
+
+
+
         return 0.5  # Placeholder
     
     def _compare_text_structure(self, struct1: Dict, struct2: Dict) -> float:
         """Compare text structural features"""
+
+
+
         return 0.5  # Placeholder
 
 
@@ -719,6 +806,9 @@ class ThreatIntelligenceEngine:
     
     def check_threat_indicators(self, content_data: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Check content against known threat indicators"""
+
+
+
         try:
             matches = []
             
@@ -744,6 +834,9 @@ class ThreatIntelligenceEngine:
     
     def _matches_indicator(self, content_data: Dict[str, Any], indicator: str) -> bool:
         """Check if content matches threat indicator"""
+
+
+
         try:
             # Check various fields for indicator presence
             searchable_fields = [
@@ -766,6 +859,9 @@ class ThreatIntelligenceEngine:
     
     def _analyze_match(self, content_data: Dict[str, Any], indicator: str) -> Dict[str, Any]:
         """Analyze details of threat indicator match"""
+
+
+
         return {
             'matched_fields': [
                 field for field in content_data.keys() 
@@ -795,6 +891,9 @@ class AdvancedProtectionEngine:
     
     async def analyze_content_protection(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
         """Comprehensive content protection analysis"""
+
+
+
         try:
             analysis_results = {
                 'content_id': content_data.get('content_id'),
@@ -923,6 +1022,9 @@ class AdvancedProtectionEngine:
     
     def get_protection_statistics(self) -> Dict[str, Any]:
         """Get protection engine statistics"""
+
+
+
         return {
             **self.protection_stats,
             'active_rules': len([r for r in self.protection_rules if r.active]),

@@ -1,5 +1,5 @@
 """
-🚨 Ultra-Industrial Real-Time Alert & Threat Response Orchestration
+ Ultra-Industrial Real-Time Alert & Threat Response Orchestration
 ==================================================================
 
 Enterprise-grade intelligent alert management system for comprehensive content
@@ -33,7 +33,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + Legal Tech + DevOps + DBA
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL THREAT INTELLIGENCE IP PROTECTION ⚠️
+  CRITICAL THREAT INTELLIGENCE IP PROTECTION 
 =================================================
 This alert system contains classified threat detection technologies:
 - AI Threat Classification: Patent Pending Military-Grade Technology

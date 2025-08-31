@@ -1,11 +1,11 @@
 """
-🔍 Similarity Engine - Advanced Audio Similarity & Matching System
+ Similarity Engine - Advanced Audio Similarity & Matching System
 
 Ultra-sophisticated AI-powered audio similarity engine providing comprehensive
 audio matching, content discovery, and similarity analysis for the IA Influencer
 Agent platform.
 
-⚡ INDUSTRIAL CAPABILITIES:
+ INDUSTRIAL CAPABILITIES:
 - Multi-dimensional audio similarity analysis with 98%+ accuracy
 - Perceptual similarity matching using advanced ML models
 - Content-based filtering for music recommendation
@@ -22,12 +22,12 @@ Agent platform.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-🛡️ TEAM SPECIALTIES:
+ TEAM SPECIALTIES:
 - Lead AI Similarity Expert & ML Engineer: Fahed Mlaiel
 - Audio Information Retrieval Specialist: Fahed Mlaiel  
 - Content Discovery Algorithm Expert: Fahed Mlaiel
 
-⚠️ COPYRIGHT & INTELLECTUAL PROPERTY WARNING:
+ COPYRIGHT & INTELLECTUAL PROPERTY WARNING:
 This advanced audio similarity engine contains proprietary algorithms for
 audio matching and content discovery developed exclusively by Fahed Mlaiel.
 Unauthorized use, copying, reverse engineering, or commercial exploitation
@@ -215,7 +215,7 @@ class SimilarityAnalysisReport:
 
 class SimilarityEngine:
     """
-    🔍 Ultra-Advanced Audio Similarity & Matching Engine
+     Ultra-Advanced Audio Similarity & Matching Engine
     
     Professional AI-powered similarity engine providing comprehensive audio
     matching, content discovery, and similarity analysis capabilities for
@@ -303,6 +303,9 @@ class SimilarityEngine:
         Returns:
             Comprehensive audio feature vector
         """
+
+
+
         try:
             # Generate audio ID if not provided
             if audio_id is None:
@@ -777,6 +780,9 @@ class SimilarityEngine:
                                          features2: AudioFeatureVector,
                                          metric: SimilarityMetric) -> float:
         """Calculate similarity for a specific metric"""
+
+
+
         try:
             if metric == SimilarityMetric.SPECTRAL_SIMILARITY:
                 return self._calculate_spectral_similarity(features1, features2)
@@ -807,6 +813,9 @@ class SimilarityEngine:
     
     def _calculate_spectral_similarity(self, features1: AudioFeatureVector, features2: AudioFeatureVector) -> float:
         """Calculate spectral similarity"""
+
+
+
         try:
             # Compare spectral features
             spec_sim = cosine_similarity(
@@ -839,6 +848,9 @@ class SimilarityEngine:
     
     def _calculate_timbral_similarity(self, features1: AudioFeatureVector, features2: AudioFeatureVector) -> float:
         """Calculate timbral similarity"""
+
+
+
         try:
             # MFCC similarity (primary timbral descriptor)
             mfcc_sim = cosine_similarity(
@@ -853,6 +865,9 @@ class SimilarityEngine:
     
     def _calculate_rhythmic_similarity(self, features1: AudioFeatureVector, features2: AudioFeatureVector) -> float:
         """Calculate rhythmic similarity"""
+
+
+
         try:
             # Tempo similarity
             tempo_diff = abs(features1.tempo - features2.tempo)
@@ -885,6 +900,9 @@ class SimilarityEngine:
     
     def _calculate_harmonic_similarity(self, features1: AudioFeatureVector, features2: AudioFeatureVector) -> float:
         """Calculate harmonic similarity"""
+
+
+
         try:
             # Chroma similarity
             chroma_sim = cosine_similarity(
@@ -919,6 +937,9 @@ class SimilarityEngine:
     
     def _calculate_mood_similarity(self, features1: AudioFeatureVector, features2: AudioFeatureVector) -> float:
         """Calculate mood similarity"""
+
+
+
         try:
             if features1.mood_features.size > 0 and features2.mood_features.size > 0:
                 mood_sim = cosine_similarity(
@@ -932,6 +953,9 @@ class SimilarityEngine:
     
     def _calculate_style_similarity(self, features1: AudioFeatureVector, features2: AudioFeatureVector) -> float:
         """Calculate style similarity"""
+
+
+
         try:
             if features1.style_features.size > 0 and features2.style_features.size > 0:
                 style_sim = cosine_similarity(
@@ -946,18 +970,30 @@ class SimilarityEngine:
     # Placeholder implementations for remaining similarity methods
     def _calculate_structural_similarity(self, features1: AudioFeatureVector, features2: AudioFeatureVector) -> float:
         """Calculate structural similarity (placeholder)"""
+
+
+
         return 0.7
     
     def _calculate_perceptual_similarity(self, features1: AudioFeatureVector, features2: AudioFeatureVector) -> float:
         """Calculate perceptual similarity (placeholder)"""
+
+
+
         return 0.6
     
     def _calculate_semantic_similarity(self, features1: AudioFeatureVector, features2: AudioFeatureVector) -> float:
         """Calculate semantic similarity (placeholder)"""
+
+
+
         return 0.5
     
     def _calculate_temporal_similarity(self, features1: AudioFeatureVector, features2: AudioFeatureVector) -> float:
         """Calculate temporal similarity"""
+
+
+
         try:
             # Duration similarity
             duration_ratio = min(features1.duration, features2.duration) / max(features1.duration, features2.duration)
@@ -1017,6 +1053,9 @@ class SimilarityEngine:
     
     def _detect_key_transposition(self, features1: AudioFeatureVector, features2: AudioFeatureVector) -> Optional[int]:
         """Detect key transposition between audio files"""
+
+
+
         try:
             if features1.chroma_features.size > 0 and features2.chroma_features.size > 0:
                 # Find the shift that maximizes correlation
@@ -1037,6 +1076,9 @@ class SimilarityEngine:
     
     def _calculate_tempo_ratio(self, features1: AudioFeatureVector, features2: AudioFeatureVector) -> Optional[float]:
         """Calculate tempo ratio between audio files"""
+
+
+
         try:
             if features1.tempo > 0 and features2.tempo > 0:
                 return float(features2.tempo / features1.tempo)
@@ -1084,6 +1126,9 @@ class SimilarityEngine:
                                           features2: AudioFeatureVector,
                                           metric_scores: Dict[SimilarityMetric, float]) -> Dict[str, float]:
         """Calculate match quality indicators"""
+
+
+
         return {
             'feature_quality': (features1.feature_quality_score + features2.feature_quality_score) / 2,
             'score_consistency': 1.0 - np.std(list(metric_scores.values())),
@@ -1125,6 +1170,9 @@ class SimilarityEngine:
     
     def _calculate_feature_quality(self, *feature_dicts) -> float:
         """Calculate overall feature quality score"""
+
+
+
         try:
             quality_factors = []
             
@@ -1189,6 +1237,9 @@ class SimilarityEngine:
     
     def save_database(self, filepath: str):
         """Save feature database to file"""
+
+
+
         try:
             with self.database_lock:
                 with open(filepath, 'wb') as f:
@@ -1200,6 +1251,9 @@ class SimilarityEngine:
     
     def load_database(self, filepath: str):
         """Load feature database from file"""
+
+
+
         try:
             with open(filepath, 'rb') as f:
                 loaded_db = pickle.load(f)
@@ -1215,6 +1269,9 @@ class SimilarityEngine:
     
     def __del__(self):
         """Cleanup resources"""
+
+
+
         try:
             if hasattr(self, 'thread_executor'):
                 self.thread_executor.shutdown(wait=False)

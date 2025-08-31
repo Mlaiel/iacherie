@@ -1,5 +1,5 @@
 """
-📝 Text Content Fingerprinting Service
+ Text Content Fingerprinting Service
 ======================================
 
 Enterprise-grade text fingerprinting with advanced NLP techniques:
@@ -87,6 +87,9 @@ class BERTEmbeddingExtractor:
         
     def _initialize_model(self):
         """Initialize BERT model."""
+
+
+
         try:
             self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
             self.model = AutoModel.from_pretrained(self.model_name)
@@ -201,6 +204,9 @@ class BERTEmbeddingExtractor:
     
     def _extract_semantic_features(self, embeddings: np.ndarray) -> Dict[str, float]:
         """Extract semantic features from embeddings."""
+
+
+
         return {
             "embedding_mean": float(np.mean(embeddings)),
             "embedding_std": float(np.std(embeddings)),
@@ -220,6 +226,9 @@ class SentenceTransformerExtractor:
         
     def _initialize_model(self):
         """Initialize Sentence-BERT model."""
+
+
+
         try:
             self.model = SentenceTransformer(self.model_name)
         except Exception as e:
@@ -285,6 +294,9 @@ class TFIDFAnalyzer:
         
     def _get_stop_words(self) -> Set[str]:
         """Get combined stop words from multiple sources."""
+
+
+
         try:
             nltk_stops = set(stopwords.words('english'))
         except LookupError:
@@ -310,6 +322,9 @@ class TFIDFAnalyzer:
         Returns:
             Dictionary containing TF-IDF analysis results
         """
+
+
+
         try:
             # Preprocess text
             processed_text = self._preprocess_text(text)
@@ -412,6 +427,9 @@ class NGramAnalyzer:
         Returns:
             Dictionary containing N-gram analysis results
         """
+
+
+
         try:
             # Preprocess and tokenize
             tokens = self._preprocess_and_tokenize(text)
@@ -575,6 +593,9 @@ class SemanticAnalyzer:
         
     def _initialize_pipelines(self):
         """Initialize HuggingFace pipelines."""
+
+
+
         try:
             self.sentiment_pipeline = pipeline("sentiment-analysis")
             self.ner_pipeline = pipeline("ner", aggregation_strategy="simple")
@@ -591,6 +612,9 @@ class SemanticAnalyzer:
         Returns:
             Dictionary containing semantic analysis results
         """
+
+
+
         try:
             # Language detection
             language_info = self._detect_language(text)
@@ -628,6 +652,9 @@ class SemanticAnalyzer:
     
     def _detect_language(self, text: str) -> Dict[str, Any]:
         """Detect text language."""
+
+
+
         try:
             # Clean text for language detection
             clean_text = re.sub(r'[^a-zA-Z\s]', ' ', text)
@@ -746,6 +773,9 @@ class SemanticAnalyzer:
     
     def _analyze_topics(self, text: str) -> Dict[str, Any]:
         """Simplified topic analysis using keyword extraction."""
+
+
+
         try:
             # Preprocess text
             tokens = self._preprocess_and_tokenize(text)
@@ -840,6 +870,9 @@ class SemanticAnalyzer:
     
     def _analyze_readability(self, text: str) -> Dict[str, Any]:
         """Analyze text readability."""
+
+
+
         try:
             # Basic text statistics
             sentences = sent_tokenize(text)
@@ -1009,6 +1042,9 @@ class TextFingerprintingService:
         Returns:
             FingerprintResult containing all fingerprint data
         """
+
+
+
         try:
             logger.info(f"Processing text fingerprint for user {user_id}")
             
@@ -1062,6 +1098,9 @@ class TextFingerprintingService:
     
     async def _extract_metadata(self, text: str) -> TextMetadata:
         """Extract comprehensive text metadata."""
+
+
+
         try:
             # Basic counts
             char_count = len(text)
@@ -1123,6 +1162,9 @@ class TextFingerprintingService:
     
     def _calculate_complexity_score(self, text: str, words: List[str], sentences: List[str]) -> float:
         """Calculate text complexity score."""
+
+
+
         try:
             # Average word length
             avg_word_length = sum(len(word) for word in words) / len(words) if words else 0
@@ -1148,30 +1190,45 @@ class TextFingerprintingService:
     
     async def _run_bert_extraction(self, text: str) -> Dict[str, Any]:
         """Run BERT embedding extraction."""
+
+
+
         return await asyncio.get_event_loop().run_in_executor(
             None, self.bert_extractor.extract_embeddings, text
         )
     
     async def _run_sentence_bert_extraction(self, text: str) -> Dict[str, Any]:
         """Run Sentence-BERT extraction."""
+
+
+
         return await asyncio.get_event_loop().run_in_executor(
             None, self.sentence_bert_extractor.extract_embeddings, text
         )
     
     async def _run_tfidf_analysis(self, text: str) -> Dict[str, Any]:
         """Run TF-IDF analysis."""
+
+
+
         return await asyncio.get_event_loop().run_in_executor(
             None, self.tfidf_analyzer.analyze_tfidf, text
         )
     
     async def _run_ngram_analysis(self, text: str) -> Dict[str, Any]:
         """Run N-gram analysis."""
+
+
+
         return await asyncio.get_event_loop().run_in_executor(
             None, self.ngram_analyzer.analyze_ngrams, text
         )
     
     async def _run_semantic_analysis(self, text: str) -> Dict[str, Any]:
         """Run semantic analysis."""
+
+
+
         return await asyncio.get_event_loop().run_in_executor(
             None, self.semantic_analyzer.analyze_semantics, text
         )
@@ -1258,6 +1315,9 @@ class TextFingerprintingService:
     
     def _cosine_similarity(self, vec1: List[float], vec2: List[float]) -> float:
         """Calculate cosine similarity between vectors."""
+
+
+
         try:
             vec1_array = np.array(vec1)
             vec2_array = np.array(vec2)
@@ -1277,6 +1337,9 @@ class TextFingerprintingService:
     
     def _ngram_similarity(self, ngrams1: Dict[str, str], ngrams2: Dict[str, str]) -> float:
         """Calculate N-gram fingerprint similarity."""
+
+
+
         try:
             # Compare common fingerprint types
             common_types = set(ngrams1.keys()).intersection(set(ngrams2.keys()))

@@ -7,7 +7,7 @@ behavioral pattern recognition, and personalized audience development strategies
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
@@ -188,6 +188,9 @@ class AudienceInsightsAgent(BaseAIAgent):
         """
         Perform comprehensive audience analysis across multiple dimensions
         """
+
+
+
         try:
             logger.info(f"Starting comprehensive audience analysis for creator {request.creator_id}")
             
@@ -249,6 +252,9 @@ class AudienceInsightsAgent(BaseAIAgent):
     
     def _generate_mock_demographics(self) -> Dict[str, Any]:
         """Generate realistic mock demographic data"""
+
+
+
         return {
             'age_distribution': {
                 '18-24': 0.25,
@@ -266,6 +272,9 @@ class AudienceInsightsAgent(BaseAIAgent):
     
     def _generate_mock_activity_patterns(self) -> Dict[str, Any]:
         """Generate realistic activity pattern data"""
+
+
+
         return {
             'peak_hours': [19, 20, 21],  # 7-9 PM
             'active_days': ['Monday', 'Wednesday', 'Friday', 'Sunday'],
@@ -275,6 +284,9 @@ class AudienceInsightsAgent(BaseAIAgent):
     
     def _generate_mock_content_performance(self) -> Dict[str, Any]:
         """Generate content performance insights"""
+
+
+
         return {
             'top_content_types': {
                 ContentType.VIDEO.value: 0.4,
@@ -308,6 +320,9 @@ class AudienceInsightsAgent(BaseAIAgent):
     
     def _create_age_based_segments(self, audience_data: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Create age-based audience segments"""
+
+
+
         return [
             {
                 'name': 'Gen Z Creators',
@@ -327,6 +342,9 @@ class AudienceInsightsAgent(BaseAIAgent):
     
     def _create_behavioral_segments(self, audience_data: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Create behavior-based segments"""
+
+
+
         return [
             {
                 'name': 'Heavy Consumers',
@@ -346,6 +364,9 @@ class AudienceInsightsAgent(BaseAIAgent):
     
     def _create_engagement_segments(self, audience_data: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Create engagement-based segments"""
+
+
+
         return [
             {
                 'name': 'Super Fans',
@@ -399,6 +420,9 @@ class AudienceInsightsAgent(BaseAIAgent):
     
     def _build_demographic_profile(self, segment_data: Dict[str, Any], audience_data: Dict[str, Any]) -> DemographicProfile:
         """Build detailed demographic profile"""
+
+
+
         return DemographicProfile(
             age_range=segment_data.get('criteria', {}).get('age_range', '25-34'),
             gender_distribution={'female': 0.55, 'male': 0.40, 'other': 0.05},
@@ -409,6 +433,9 @@ class AudienceInsightsAgent(BaseAIAgent):
     
     def _build_behavioral_profile(self, segment_data: Dict[str, Any], audience_data: Dict[str, Any]) -> BehavioralProfile:
         """Build comprehensive behavioral profile"""
+
+
+
         return BehavioralProfile(
             content_preferences={
                 ContentType.VIDEO: 0.45,
@@ -425,6 +452,9 @@ class AudienceInsightsAgent(BaseAIAgent):
     
     def _build_psychographic_profile(self, segment_data: Dict[str, Any], audience_data: Dict[str, Any]) -> PsychographicProfile:
         """Build psychographic profile"""
+
+
+
         return PsychographicProfile(
             interests={'music': 0.8, 'technology': 0.6, 'lifestyle': 0.7},
             values={'authenticity': 0.9, 'creativity': 0.85, 'community': 0.75},
@@ -455,6 +485,9 @@ class AudienceInsightsAgent(BaseAIAgent):
     
     def _generate_platform_strategies(self, segment_data: Dict[str, Any]) -> Dict[SocialPlatform, Dict[str, Any]]:
         """Generate platform-specific strategies"""
+
+
+
         return {
             SocialPlatform.INSTAGRAM: {
                 'content_types': ['stories', 'reels', 'posts'],

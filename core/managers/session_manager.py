@@ -31,7 +31,7 @@ class SessionManagerConfig:
 
 class SessionManager(ABC):
     """
-    🎯 Gestionnaire SessionManager - IA-Influencer-Agent
+     Gestionnaire SessionManager - IA-Influencer-Agent
     
     Responsabilité:
     Fonctionnalité spécialisée IA-Influencer-Agent
@@ -58,7 +58,7 @@ class SessionManager(ABC):
             "failed_requests": 0,
             "average_response_time": 0.0
         }
-        logger.info(f"🎯 Initialisation {self.__class__.__name__}")
+        logger.info(f" Initialisation {self.__class__.__name__}")
     
     @abstractmethod
     async def initialize_pool(self) -> bool:

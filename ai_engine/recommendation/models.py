@@ -4,7 +4,7 @@ Comprehensive data structures for multi-format content recommendations, creator 
 revenue optimization, and market intelligence
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
-⚠️  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
+  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
     code, or intellectual property without explicit written authorization 
     from Fahed Mlaiel is strictly prohibited and will result in legal action.
 
@@ -247,6 +247,9 @@ class UserProfile:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert profile to dictionary for serialization"""
+
+
+
         return {
             'user_id': self.user_id,
             'username': self.username,
@@ -444,6 +447,9 @@ class ContentRecommendation:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert recommendation to dictionary for API response"""
+
+
+
         return {
             'recommendation_id': self.recommendation_id,
             'content_info': {

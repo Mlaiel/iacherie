@@ -16,7 +16,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Specialist + DevOps Expert
 Copyright: Fahed Mlaiel - All Rights Reserved
 
-⚠️  STRICT LEGAL WARNING: 
+  STRICT LEGAL WARNING: 
     This proprietary code is protected by international copyright law.
     Unauthorized use, copying, distribution, modification, or reverse engineering 
     is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -148,6 +148,9 @@ class NLPPipeline:
         
     def _initialize_processors(self):
         """Initialize all NLP processors"""
+
+
+
         try:
             # Core processors
             self.processors['text_analyzer'] = TextAnalyzer()
@@ -211,6 +214,9 @@ class NLPPipeline:
         Returns:
             PipelineResult with comprehensive analysis
         """
+
+
+
         try:
             # Use custom stages or default
             stages = custom_stages or self.pipeline_stages
@@ -317,6 +323,9 @@ class NLPPipeline:
             
     async def _preprocessing_stage(self, text: str, content_profile: Optional[ContentProfile]) -> Dict[str, Any]:
         """Preprocessing stage: cleaning and normalization"""
+
+
+
         try:
             # Text cleaning
             cleaned_text = clean_text(text)
@@ -351,6 +360,9 @@ class NLPPipeline:
             
     async def _tokenization_stage(self, text: str, content_profile: Optional[ContentProfile]) -> Dict[str, Any]:
         """Tokenization stage: breaking text into tokens"""
+
+
+
         try:
             # Sentence tokenization
             sentences = sent_tokenize(text)
@@ -394,6 +406,9 @@ class NLPPipeline:
         
     async def _linguistic_analysis_stage(self, text: str, content_profile: Optional[ContentProfile]) -> Dict[str, Any]:
         """Linguistic analysis stage: detailed language analysis"""
+
+
+
         try:
             # POS tagging
             words = word_tokenize(text)
@@ -441,6 +456,9 @@ class NLPPipeline:
         
     async def _analyze_grammar_patterns(self, pos_tags: List[Tuple[str, str]]) -> Dict[str, Any]:
         """Analyze grammar patterns"""
+
+
+
         try:
             patterns = {
                 'passive_voice_count': 0,
@@ -472,6 +490,9 @@ class NLPPipeline:
             
     async def _analyze_sentence_complexity(self, text: str) -> Dict[str, float]:
         """Analyze sentence complexity"""
+
+
+
         try:
             sentences = sent_tokenize(text)
             
@@ -499,6 +520,9 @@ class NLPPipeline:
             
     async def _semantic_analysis_stage(self, text: str, content_profile: Optional[ContentProfile]) -> Dict[str, Any]:
         """Semantic analysis stage: meaning and context analysis"""
+
+
+
         try:
             semantic_features = {}
             
@@ -538,6 +562,9 @@ class NLPPipeline:
         current_result: PipelineResult
     ) -> Dict[str, Any]:
         """Quality assessment stage: comprehensive quality scoring"""
+
+
+
         try:
             quality_scores = {}
             recommendations = []
@@ -589,6 +616,9 @@ class NLPPipeline:
             
     async def _assess_grammar_quality(self, text: str, linguistic_features: Dict) -> float:
         """Assess grammar quality"""
+
+
+
         try:
             # Simple grammar assessment based on patterns
             score = 1.0
@@ -619,6 +649,9 @@ class NLPPipeline:
             
     async def _assess_coherence(self, text: str, semantic_features: Dict) -> float:
         """Assess text coherence"""
+
+
+
         try:
             # Use semantic density and concept relationships
             if 'semantic_density' in semantic_features:
@@ -641,6 +674,9 @@ class NLPPipeline:
             
     async def _assess_seo_optimization(self, text: str, keywords: List[str]) -> float:
         """Assess SEO optimization"""
+
+
+
         try:
             if not keywords:
                 return 0.5
@@ -672,6 +708,9 @@ class NLPPipeline:
             
     async def _assess_completeness(self, text: str, content_profile: Optional[ContentProfile]) -> float:
         """Assess content completeness"""
+
+
+
         try:
             # Basic completeness check
             word_count = len(text.split())
@@ -712,6 +751,9 @@ class NLPPipeline:
         current_result: PipelineResult
     ) -> Dict[str, Any]:
         """Optimization stage: generate improvement suggestions"""
+
+
+
         try:
             optimization_suggestions = []
             
@@ -773,6 +815,9 @@ class NLPPipeline:
         current_result: PipelineResult
     ) -> List[str]:
         """Get format-specific optimization suggestions"""
+
+
+
         try:
             suggestions = []
             
@@ -816,6 +861,9 @@ class NLPPipeline:
         current_result: PipelineResult
     ) -> Dict[str, Any]:
         """Postprocessing stage: final cleanup and metadata"""
+
+
+
         try:
             # Final text cleanup
             processed_text = text.strip()

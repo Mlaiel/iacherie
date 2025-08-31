@@ -418,6 +418,9 @@ class SoundCloudCrawler:
         Returns:
             Dict: Audio analysis results
         """
+
+
+
         try:
             # Get track stream URL
             track = await self._get_track_by_id(track_id)
@@ -512,6 +515,9 @@ class SoundCloudCrawler:
     
     async def _get_user_id(self, username: str) -> Optional[str]:
         """Get SoundCloud user ID from username."""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 url = f"{self.base_api_url}/resolve"
@@ -533,6 +539,9 @@ class SoundCloudCrawler:
     
     async def _get_track_by_id(self, track_id: str) -> Optional[SoundCloudTrack]:
         """Get track data by ID."""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 url = f"{self.base_api_url}/tracks/{track_id}"
@@ -550,6 +559,9 @@ class SoundCloudCrawler:
     
     def _parse_track_data(self, track_data: Dict) -> Optional[SoundCloudTrack]:
         """Parse SoundCloud track data from API response."""
+
+
+
         try:
             user_data = track_data.get("user", {})
             
@@ -602,6 +614,9 @@ class SoundCloudCrawler:
     
     def _parse_comment_data(self, comment_data: Dict) -> Optional[SoundCloudComment]:
         """Parse SoundCloud comment data from API response."""
+
+
+
         try:
             user_data = comment_data.get("user", {})
             
@@ -633,6 +648,9 @@ class SoundCloudCrawler:
         created_at_filter: Optional[tuple]
     ) -> bool:
         """Filter track based on criteria."""
+
+
+
         try:
             # Duration filter
             if duration_filter:
@@ -653,6 +671,9 @@ class SoundCloudCrawler:
     
     def _extract_track_from_element(self, element) -> Optional[SoundCloudTrack]:
         """Extract track data from Selenium web element."""
+
+
+
         try:
             # Extract title
             title_element = element.find_element(By.CSS_SELECTOR, ".soundTitle__title")

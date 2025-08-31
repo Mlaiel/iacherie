@@ -1,5 +1,5 @@
 """
-🔒 Advanced Access Control System - Ultra-Professional DRM Security
+ Advanced Access Control System - Ultra-Professional DRM Security
 ================================================================
 
 Comprehensive multi-level access control system for digital content protection
@@ -8,12 +8,12 @@ with advanced security features, role-based permissions, and real-time enforceme
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL NOTICE:
+ CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing and usage rights.
 
-🎯 PROJECT TEAM SPECIALTIES:
+ PROJECT TEAM SPECIALTIES:
 - Lead AI Developer & Solution Architect: Advanced AI/ML systems and intelligent automation
 - Backend Senior Engineer: Enterprise-grade backend architecture and microservices  
 - ML Engineer: Machine learning models and predictive analytics
@@ -177,6 +177,9 @@ class AccessController:
 
     async def initialize(self) -> bool:
         """Initialize the Access Controller."""
+
+
+
         try:
             # Load default roles and permissions
             await self._initialize_default_roles()

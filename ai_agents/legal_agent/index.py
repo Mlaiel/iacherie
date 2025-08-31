@@ -154,6 +154,9 @@ async def shutdown_event():
 @app.get("/legal/health")
 async def health_check():
     """Health check endpoint"""
+
+
+
     return {
         "status": "healthy",
         "timestamp": datetime.utcnow().isoformat(),
@@ -166,6 +169,9 @@ async def health_check():
 @app.post("/legal/analyze")
 async def analyze_content(request: LegalAnalysisRequest):
     """Analyze content for legal compliance and risks"""
+
+
+
     try:
         if not legal_analyzer:
             raise HTTPException(status_code=503, detail="Legal analyzer not available")
@@ -191,6 +197,9 @@ async def analyze_content(request: LegalAnalysisRequest):
 @app.post("/legal/copyright/check")
 async def check_copyright(request: LegalAnalysisRequest):
     """Check content for copyright issues"""
+
+
+
     try:
         if not legal_analyzer:
             raise HTTPException(status_code=503, detail="Legal analyzer not available")
@@ -214,6 +223,9 @@ async def check_copyright(request: LegalAnalysisRequest):
 @app.post("/legal/trademark/check")
 async def check_trademark(request: LegalAnalysisRequest):
     """Check content for trademark issues"""
+
+
+
     try:
         if not legal_analyzer:
             raise HTTPException(status_code=503, detail="Legal analyzer not available")
@@ -238,6 +250,9 @@ async def check_trademark(request: LegalAnalysisRequest):
 @app.post("/legal/contracts/generate")
 async def generate_contract(request: ContractGenerationRequest):
     """Generate legal contracts and agreements"""
+
+
+
     try:
         if not document_generator:
             raise HTTPException(status_code=503, detail="Document generator not available")
@@ -263,6 +278,9 @@ async def generate_contract(request: ContractGenerationRequest):
 @app.post("/legal/documents/privacy-policy")
 async def generate_privacy_policy(request: ContractGenerationRequest):
     """Generate privacy policy document"""
+
+
+
     try:
         if not document_generator:
             raise HTTPException(status_code=503, detail="Document generator not available")
@@ -287,6 +305,9 @@ async def generate_privacy_policy(request: ContractGenerationRequest):
 @app.post("/legal/documents/terms-of-service")
 async def generate_terms_of_service(request: ContractGenerationRequest):
     """Generate terms of service document"""
+
+
+
     try:
         if not document_generator:
             raise HTTPException(status_code=503, detail="Document generator not available")
@@ -312,6 +333,9 @@ async def generate_terms_of_service(request: ContractGenerationRequest):
 @app.post("/legal/compliance/check")
 async def check_compliance(request: ComplianceCheckRequest):
     """Check content compliance with platform policies"""
+
+
+
     try:
         if not legal_agent:
             raise HTTPException(status_code=503, detail="Legal agent not available")
@@ -336,6 +360,9 @@ async def check_compliance(request: ComplianceCheckRequest):
 @app.get("/legal/compliance/requirements/{platform}")
 async def get_compliance_requirements(platform: str):
     """Get compliance requirements for a specific platform"""
+
+
+
     try:
         if not legal_agent:
             raise HTTPException(status_code=503, detail="Legal agent not available")
@@ -358,6 +385,9 @@ async def get_compliance_requirements(platform: str):
 @app.post("/legal/research")
 async def conduct_legal_research(request: LegalResearchRequest):
     """Conduct comprehensive legal research"""
+
+
+
     try:
         if not legal_researcher:
             raise HTTPException(status_code=503, detail="Legal researcher not available")
@@ -383,6 +413,9 @@ async def conduct_legal_research(request: LegalResearchRequest):
 @app.get("/legal/precedents/{case_type}")
 async def find_legal_precedents(case_type: str, jurisdiction: str = "US"):
     """Find relevant legal precedents"""
+
+
+
     try:
         if not legal_researcher:
             raise HTTPException(status_code=503, detail="Legal researcher not available")
@@ -409,6 +442,9 @@ async def find_legal_precedents(case_type: str, jurisdiction: str = "US"):
 @app.post("/legal/regulatory/updates")
 async def get_regulatory_updates(request: RegulatoryUpdateRequest):
     """Get latest regulatory updates"""
+
+
+
     try:
         if not regulatory_monitor:
             raise HTTPException(status_code=503, detail="Regulatory monitor not available")
@@ -432,6 +468,9 @@ async def get_regulatory_updates(request: RegulatoryUpdateRequest):
 @app.get("/legal/regulatory/alerts")
 async def get_regulatory_alerts():
     """Get active regulatory alerts"""
+
+
+
     try:
         if not regulatory_monitor:
             raise HTTPException(status_code=503, detail="Regulatory monitor not available")
@@ -453,6 +492,9 @@ async def get_regulatory_alerts():
 @app.post("/legal/risk/assess")
 async def assess_legal_risk(request: LegalAnalysisRequest):
     """Assess legal risks for content or business decision"""
+
+
+
     try:
         if not legal_agent:
             raise HTTPException(status_code=503, detail="Legal agent not available")
@@ -478,6 +520,9 @@ async def assess_legal_risk(request: LegalAnalysisRequest):
 @app.post("/legal/advice/request")
 async def request_legal_advice(request: LegalAnalysisRequest):
     """Request legal advice for specific situation"""
+
+
+
     try:
         if not legal_agent:
             raise HTTPException(status_code=503, detail="Legal agent not available")
@@ -503,6 +548,9 @@ async def request_legal_advice(request: LegalAnalysisRequest):
 @app.get("/legal/status")
 async def get_service_status():
     """Get comprehensive service status"""
+
+
+
     try:
         status = {
             "legal_agent": legal_agent is not None,

@@ -1,5 +1,5 @@
 """
-📊 Audio Metadata Extractor - Professional Audio Metadata Analysis
+ Audio Metadata Extractor - Professional Audio Metadata Analysis
 
 Advanced metadata extraction engine for comprehensive audio file information,
 technical specifications, and content analysis.
@@ -40,6 +40,9 @@ class AudioMetadataExtractor:
                              sample_rate: int = 44100,
                              **kwargs) -> AudioMetadata:
         """Extract comprehensive audio metadata"""
+
+
+
         try:
             # Basic technical specs
             duration = len(audio_data) / sample_rate

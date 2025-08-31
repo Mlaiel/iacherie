@@ -7,7 +7,7 @@ and detailed error context for debugging and monitoring.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -100,6 +100,9 @@ class CrawlingAgentException(Exception):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert exception to dictionary for logging/monitoring"""
+
+
+
         return {
             "error_id": self.error_id,
             "message": self.message,
@@ -115,6 +118,9 @@ class CrawlingAgentException(Exception):
     
     def to_json(self) -> str:
         """Convert exception to JSON string"""
+
+
+
         return json.dumps(self.to_dict(), default=str, indent=2)
 
 

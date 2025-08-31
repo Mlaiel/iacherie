@@ -8,7 +8,7 @@ Provides environment-aware configuration loading and validation with security fe
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  LEGAL WARNING:
+  LEGAL WARNING:
 This code is proprietary and confidential. Any unauthorized copying, modification, 
 distribution, or use without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and may result in legal action.
@@ -222,6 +222,9 @@ class ConfigurationManager:
     
     def save_configuration(self, config: DriversConfiguration) -> bool:
         """Save configuration to file"""
+
+
+
         try:
             config_file = self.config_dir / f"drivers_{self.environment.value}.yaml"
             
@@ -279,6 +282,9 @@ class ConfigurationManager:
         updates: Dict[str, Any]
     ) -> bool:
         """Update specific configuration section"""
+
+
+
         try:
             config = self.load_configuration()
             
@@ -304,6 +310,9 @@ class ConfigurationManager:
     
     def rollback_configuration(self, steps: int = 1) -> bool:
         """Rollback configuration to previous version"""
+
+
+
         try:
             if len(self.config_history) < steps:
                 self.logger.warning("Not enough configuration history for rollback")
@@ -324,6 +333,9 @@ class ConfigurationManager:
     
     def validate_configuration_file(self, file_path: str) -> bool:
         """Validate configuration file"""
+
+
+
         try:
             with open(file_path, 'r') as f:
                 if file_path.endswith('.yaml') or file_path.endswith('.yml'):
@@ -347,6 +359,9 @@ class ConfigurationManager:
     
     def get_configuration_status(self) -> Dict[str, Any]:
         """Get configuration status information"""
+
+
+
         return {
             'environment': self.environment.value,
             'config_loaded': self.current_config is not None,
@@ -513,6 +528,9 @@ class ConfigurationManager:
     
     def _dict_to_config(self, config_dict: Dict) -> DriversConfiguration:
         """Convert dictionary to DriversConfiguration object"""
+
+
+
         return DriversConfiguration(
             environment=Environment(config_dict.get('environment', 'development')),
             proxy=ProxyConfig(**config_dict.get('proxy', {})),
@@ -526,6 +544,9 @@ class ConfigurationManager:
     
     def _config_to_dict(self, config: DriversConfiguration) -> Dict:
         """Convert DriversConfiguration object to dictionary"""
+
+
+
         return {
             'environment': config.environment.value,
             'proxy': {
@@ -725,4 +746,7 @@ def get_config_manager(
 
 def load_drivers_config() -> DriversConfiguration:
     """Load drivers configuration using singleton manager"""
+
+
+
     return get_config_manager().load_configuration()

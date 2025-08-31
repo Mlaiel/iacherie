@@ -8,7 +8,7 @@ automated DMCA compliance, and multi-platform surveillance capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Enterprise Content Protection Platform - Copyright Detection Core
 
-⚠️  COPYRIGHT NOTICE ⚠️
+  COPYRIGHT NOTICE 
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
@@ -170,6 +170,9 @@ class CopyrightDetectionService:
         Returns:
             Monitoring setup result with task IDs
         """
+
+
+
         try:
             # Validate content ownership
             content_record = await self._get_content_record(content_id)
@@ -249,6 +252,9 @@ class CopyrightDetectionService:
         Returns:
             List of detected violations
         """
+
+
+
         try:
             detection_tasks = [
                 self._detect_on_platform(platform, fingerprint, sensitivity)
@@ -298,6 +304,9 @@ class CopyrightDetectionService:
         Returns:
             Generated DMCA notice and filing information
         """
+
+
+
         try:
             dmca_id = str(uuid4())
             
@@ -360,6 +369,9 @@ class CopyrightDetectionService:
         Returns:
             Comprehensive violation analysis
         """
+
+
+
         try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
@@ -493,6 +505,9 @@ class CopyrightDetectionService:
         self, violation: ViolationReport, owner_info: Dict[str, Any]
     ) -> Dict[str, str]:
         """Generate DMCA takedown notice content."""
+
+
+
         return {
             "subject": f"DMCA Takedown Notice - Copyright Infringement",
             "body": f"Formal DMCA takedown notice for copyright violation detected at {violation.detected_url}",
@@ -504,6 +519,9 @@ class CopyrightDetectionService:
         self, violation: ViolationReport
     ) -> Dict[str, Any]:
         """Compile evidence package for DMCA filing."""
+
+
+
         return {
             "similarity_analysis": violation.similarity_score,
             "detection_metadata": violation.evidence,
@@ -563,6 +581,9 @@ class CopyrightDetectionService:
         self, violations: List[Any], days: int
     ) -> Dict[str, float]:
         """Calculate daily violation statistics."""
+
+
+
         return {
             "avg_per_day": len(violations) / days,
             "max_single_day": 0,  # Would calculate from actual data
@@ -571,6 +592,9 @@ class CopyrightDetectionService:
     
     async def _estimate_revenue_impact(self, violations: List[Any]) -> Dict[str, float]:
         """Estimate revenue impact of violations."""
+
+
+
         return {
             "total_estimated_loss": 0.0,  # Would calculate based on violation metrics
             "avg_per_violation": 0.0,
@@ -685,6 +709,9 @@ class BasePlatformClient:
         request: CopyrightDetectionRequest, monitoring_id: str
     ) -> str:
         """Start continuous monitoring with generic implementation."""
+
+
+
         try:
             self.logger.info(
                 f"Starting monitoring on {self.platform_name}",
@@ -779,6 +806,9 @@ class BasePlatformClient:
         self, violation_data: Dict[str, Any], fingerprint: FingerprintResult, sensitivity: float
     ) -> Optional[ViolationReport]:
         """Create violation report from platform data."""
+
+
+
         try:
             # Extract violation information
             violation_url = violation_data.get("url", "")
@@ -843,6 +873,9 @@ class BasePlatformClient:
         self, fingerprint: FingerprintResult, request: CopyrightDetectionRequest, config: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Initialize platform-specific monitoring - to be overridden by subclasses."""
+
+
+
         try:
             self.logger.debug(f"Initializing generic monitoring on {self.platform_name}")
             
@@ -884,6 +917,9 @@ class BasePlatformClient:
     
     async def stop_monitoring(self, monitoring_id: str) -> bool:
         """Stop monitoring process."""
+
+
+
         try:
             self.logger.info(f"Stopping monitoring {monitoring_id} on {self.platform_name}")
             
@@ -901,6 +937,9 @@ class BasePlatformClient:
     
     async def get_monitoring_status(self, monitoring_id: str) -> Dict[str, Any]:
         """Get monitoring status."""
+
+
+
         try:
             # In a real implementation, this would query the monitoring system
             return {
@@ -932,6 +971,9 @@ class YouTubeDetectionClient(BasePlatformClient):
         request: CopyrightDetectionRequest, monitoring_id: str
     ) -> str:
         """Start YouTube monitoring."""
+
+
+
         return f"youtube_monitor_{monitoring_id}"
 
 
@@ -942,6 +984,9 @@ class InstagramDetectionClient(BasePlatformClient):
         self, fingerprint: FingerprintResult, sensitivity: float
     ) -> List[ViolationReport]:
         """Search Instagram for violations."""
+
+
+
         return []
     
     async def start_monitoring(
@@ -949,6 +994,9 @@ class InstagramDetectionClient(BasePlatformClient):
         request: CopyrightDetectionRequest, monitoring_id: str
     ) -> str:
         """Start Instagram monitoring."""
+
+
+
         return f"instagram_monitor_{monitoring_id}"
 
 
@@ -959,6 +1007,9 @@ class TikTokDetectionClient(BasePlatformClient):
         self, fingerprint: FingerprintResult, sensitivity: float
     ) -> List[ViolationReport]:
         """Search TikTok for violations."""
+
+
+
         return []
     
     async def start_monitoring(
@@ -966,6 +1017,9 @@ class TikTokDetectionClient(BasePlatformClient):
         request: CopyrightDetectionRequest, monitoring_id: str
     ) -> str:
         """Start TikTok monitoring."""
+
+
+
         return f"tiktok_monitor_{monitoring_id}"
 
 
@@ -976,6 +1030,9 @@ class TwitterDetectionClient(BasePlatformClient):
         self, fingerprint: FingerprintResult, sensitivity: float
     ) -> List[ViolationReport]:
         """Search Twitter for violations."""
+
+
+
         return []
     
     async def start_monitoring(
@@ -983,6 +1040,9 @@ class TwitterDetectionClient(BasePlatformClient):
         request: CopyrightDetectionRequest, monitoring_id: str
     ) -> str:
         """Start Twitter monitoring."""
+
+
+
         return f"twitter_monitor_{monitoring_id}"
 
 
@@ -993,6 +1053,9 @@ class FacebookDetectionClient(BasePlatformClient):
         self, fingerprint: FingerprintResult, sensitivity: float
     ) -> List[ViolationReport]:
         """Search Facebook for violations."""
+
+
+
         return []
     
     async def start_monitoring(
@@ -1000,6 +1063,9 @@ class FacebookDetectionClient(BasePlatformClient):
         request: CopyrightDetectionRequest, monitoring_id: str
     ) -> str:
         """Start Facebook monitoring."""
+
+
+
         return f"facebook_monitor_{monitoring_id}"
 
 
@@ -1010,6 +1076,9 @@ class SpotifyDetectionClient(BasePlatformClient):
         self, fingerprint: FingerprintResult, sensitivity: float
     ) -> List[ViolationReport]:
         """Search Spotify for violations."""
+
+
+
         return []
     
     async def start_monitoring(
@@ -1017,6 +1086,9 @@ class SpotifyDetectionClient(BasePlatformClient):
         request: CopyrightDetectionRequest, monitoring_id: str
     ) -> str:
         """Start Spotify monitoring."""
+
+
+
         return f"spotify_monitor_{monitoring_id}"
 
 
@@ -1027,6 +1099,9 @@ class SoundCloudDetectionClient(BasePlatformClient):
         self, fingerprint: FingerprintResult, sensitivity: float
     ) -> List[ViolationReport]:
         """Search SoundCloud for violations."""
+
+
+
         return []
     
     async def start_monitoring(
@@ -1034,6 +1109,9 @@ class SoundCloudDetectionClient(BasePlatformClient):
         request: CopyrightDetectionRequest, monitoring_id: str
     ) -> str:
         """Start SoundCloud monitoring."""
+
+
+
         return f"soundcloud_monitor_{monitoring_id}"
 
 
@@ -1044,6 +1122,9 @@ class GenericWebDetectionClient(BasePlatformClient):
         self, fingerprint: FingerprintResult, sensitivity: float
     ) -> List[ViolationReport]:
         """Search generic web for violations."""
+
+
+
         return []
     
     async def start_monitoring(
@@ -1051,4 +1132,7 @@ class GenericWebDetectionClient(BasePlatformClient):
         request: CopyrightDetectionRequest, monitoring_id: str
     ) -> str:
         """Start generic web monitoring."""
+
+
+
         return f"web_monitor_{monitoring_id}"

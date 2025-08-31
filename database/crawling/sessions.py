@@ -94,6 +94,9 @@ class CrawlingSessionManager(DatabaseManager):
             CrawlingSessionError: If session creation fails
             ValidationError: If invalid parameters provided
         """
+
+
+
         try:
             # Validate platform
             if platform not in [p.value for p in PlatformType]:
@@ -161,6 +164,9 @@ class CrawlingSessionManager(DatabaseManager):
         Returns:
             Dict containing session data or None if not found
         """
+
+
+
         try:
             session = await self.db.query(CrawlingSession).filter(
                 CrawlingSession.session_id == session_id
@@ -211,6 +217,9 @@ class CrawlingSessionManager(DatabaseManager):
         Returns:
             bool indicating success
         """
+
+
+
         try:
             result = await self.db.execute(
                 text("""
@@ -253,6 +262,9 @@ class CrawlingSessionManager(DatabaseManager):
         Returns:
             bool indicating success
         """
+
+
+
         try:
             result = await self.db.execute(
                 text("""
@@ -291,6 +303,9 @@ class CrawlingSessionManager(DatabaseManager):
         Returns:
             bool indicating success
         """
+
+
+
         try:
             result = await self.db.execute(
                 text("""
@@ -324,6 +339,9 @@ class CrawlingSessionManager(DatabaseManager):
         Returns:
             bool indicating success
         """
+
+
+
         try:
             result = await self.db.execute(
                 text("""
@@ -362,6 +380,9 @@ class CrawlingSessionManager(DatabaseManager):
         Returns:
             List of active session dictionaries
         """
+
+
+
         try:
             query = self.db.query(CrawlingSession).filter(
                 and_(
@@ -413,6 +434,9 @@ class CrawlingSessionManager(DatabaseManager):
         Returns:
             List of expired session dictionaries
         """
+
+
+
         try:
             sessions = await self.db.query(CrawlingSession).filter(
                 or_(
@@ -452,6 +476,9 @@ class CrawlingSessionManager(DatabaseManager):
         Returns:
             bool indicating success
         """
+
+
+
         try:
             result = await self.db.execute(
                 text("DELETE FROM crawling_sessions WHERE session_id = :session_id"),
@@ -478,6 +505,9 @@ class CrawlingSessionManager(DatabaseManager):
         Returns:
             Dict containing session statistics
         """
+
+
+
         try:
             since_time = datetime.utcnow() - time_range
             
@@ -556,6 +586,9 @@ class CrawlingSessionManager(DatabaseManager):
         Returns:
             Dict containing health status
         """
+
+
+
         try:
             # Check active sessions count
             active_count = await self.db.query(func.count(CrawlingSession.session_id)).filter(

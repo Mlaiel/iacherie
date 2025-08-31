@@ -8,7 +8,7 @@ health checks, dependency validation, and performance monitoring setup.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  PROPRIETARY DEPLOYMENT AUTOMATION - AUTHORIZED PERSONNEL ONLY ⚠️
+  PROPRIETARY DEPLOYMENT AUTOMATION - AUTHORIZED PERSONNEL ONLY 
 This deployment script contains proprietary deployment procedures and configurations.
 Unauthorized use or modification is strictly prohibited. Contact: mlaiel@live.de
 """
@@ -85,15 +85,15 @@ class AudioAgentDeployer:
             "setup_monitoring"
         ]
         
-        logger.info(f"🚀 Audio Agent Deployment Initialized")
-        logger.info(f"📋 Deployment ID: {self.deployment_id}")
-        logger.info(f"🏢 Environment: {self.environment}")
-        logger.info(f"👨‍💻 Author: Fahed Mlaiel <mlaiel@live.de>")
+        logger.info(f" Audio Agent Deployment Initialized")
+        logger.info(f" Deployment ID: {self.deployment_id}")
+        logger.info(f" Environment: {self.environment}")
+        logger.info(f"‍ Author: Fahed Mlaiel <mlaiel@live.de>")
     
     async def deploy(self):
         """Execute complete deployment workflow"""
         
-        print("🎵 AUDIO AGENT ENTERPRISE DEPLOYMENT")
+        print(" AUDIO AGENT ENTERPRISE DEPLOYMENT")
         print("=" * 60)
         print(f"Author: Fahed Mlaiel <mlaiel@live.de>")
         print(f"Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security")
@@ -104,7 +104,7 @@ class AudioAgentDeployer:
         total_steps = len(self.deployment_steps)
         
         for i, step in enumerate(self.deployment_steps, 1):
-            print(f"\n📋 Step {i}/{total_steps}: {step.replace('_', ' ').title()}")
+            print(f"\n Step {i}/{total_steps}: {step.replace('_', ' ').title()}")
             print("-" * 40)
             
             try:
@@ -116,41 +116,41 @@ class AudioAgentDeployer:
                 step_duration = time.time() - step_start
                 success_count += 1
                 
-                print(f"✅ {step.replace('_', ' ').title()}: COMPLETED ({step_duration:.2f}s)")
+                print(f" {step.replace('_', ' ').title()}: COMPLETED ({step_duration:.2f}s)")
                 logger.info(f"Deployment step completed: {step} ({step_duration:.2f}s)")
                 
             except Exception as e:
                 step_duration = time.time() - step_start
-                print(f"❌ {step.replace('_', ' ').title()}: FAILED ({step_duration:.2f}s)")
+                print(f" {step.replace('_', ' ').title()}: FAILED ({step_duration:.2f}s)")
                 print(f"   Error: {str(e)}")
                 logger.error(f"Deployment step failed: {step} - {str(e)}")
                 
                 # Decide whether to continue or abort
                 if step in ["validate_environment", "check_dependencies", "validate_configuration"]:
-                    print("💥 Critical deployment step failed. Aborting deployment.")
+                    print(" Critical deployment step failed. Aborting deployment.")
                     return False
                 else:
-                    print("⚠️  Non-critical step failed. Continuing deployment...")
+                    print("  Non-critical step failed. Continuing deployment...")
         
         # Deployment summary
         deployment_duration = time.time() - self.deployment_start_time
         success_rate = (success_count / total_steps) * 100
         
         print("\n" + "=" * 60)
-        print("📊 DEPLOYMENT SUMMARY")
+        print(" DEPLOYMENT SUMMARY")
         print("=" * 60)
-        print(f"🆔 Deployment ID: {self.deployment_id}")
-        print(f"⏱️  Total Duration: {deployment_duration:.2f} seconds")
-        print(f"📋 Steps Completed: {success_count}/{total_steps}")
-        print(f"📈 Success Rate: {success_rate:.1f}%")
+        print(f" Deployment ID: {self.deployment_id}")
+        print(f"⏱  Total Duration: {deployment_duration:.2f} seconds")
+        print(f" Steps Completed: {success_count}/{total_steps}")
+        print(f" Success Rate: {success_rate:.1f}%")
         
         if success_rate >= 80:
-            print("🎉 DEPLOYMENT SUCCESSFUL!")
-            print(f"🌐 Audio Agent is running on {self.config[self.environment]['domain']}:{self.config[self.environment]['port']}")
+            print(" DEPLOYMENT SUCCESSFUL!")
+            print(f" Audio Agent is running on {self.config[self.environment]['domain']}:{self.config[self.environment]['port']}")
             logger.info(f"Audio Agent deployment successful: {self.deployment_id}")
             return True
         else:
-            print("💥 DEPLOYMENT FAILED!")
+            print(" DEPLOYMENT FAILED!")
             print("Please review the errors above and retry deployment.")
             logger.error(f"Audio Agent deployment failed: {self.deployment_id}")
             return False
@@ -191,7 +191,7 @@ class AudioAgentDeployer:
         if python_version < (3, 11):
             raise RuntimeError(f"Python 3.11+ required. Found: {python_version.major}.{python_version.minor}")
         
-        print(f"   ✓ Python version: {python_version.major}.{python_version.minor}.{python_version.micro}")
+        print(f"    Python version: {python_version.major}.{python_version.minor}.{python_version.micro}")
         
         # Check system requirements
         import psutil
@@ -202,7 +202,7 @@ class AudioAgentDeployer:
         if memory_gb < 8:
             raise RuntimeError(f"Minimum 8GB RAM required. Found: {memory_gb:.1f}GB")
         
-        print(f"   ✓ System memory: {memory_gb:.1f}GB")
+        print(f"    System memory: {memory_gb:.1f}GB")
         
         # Disk space check
         disk = psutil.disk_usage('/')
@@ -210,7 +210,7 @@ class AudioAgentDeployer:
         if disk_free_gb < 10:
             raise RuntimeError(f"Minimum 10GB free disk space required. Found: {disk_free_gb:.1f}GB")
         
-        print(f"   ✓ Free disk space: {disk_free_gb:.1f}GB")
+        print(f"    Free disk space: {disk_free_gb:.1f}GB")
         
         # Check environment variables
         required_env_vars = ["DATABASE_URL", "REDIS_URL"]
@@ -218,7 +218,7 @@ class AudioAgentDeployer:
             if not os.getenv(env_var):
                 logger.warning(f"Environment variable not set: {env_var} (using default)")
             else:
-                print(f"   ✓ Environment variable: {env_var}")
+                print(f"    Environment variable: {env_var}")
     
     async def _check_dependencies(self):
         """Check and install required dependencies"""
@@ -241,7 +241,7 @@ class AudioAgentDeployer:
                 
                 # Try to get version
                 version = getattr(module, '__version__', 'unknown')
-                print(f"   ✓ {package}: {version}")
+                print(f"    {package}: {version}")
                 
             except ImportError:
                 raise RuntimeError(f"Required package not found: {package}>={min_version}")
@@ -252,14 +252,17 @@ class AudioAgentDeployer:
             if torch.cuda.is_available():
                 gpu_count = torch.cuda.device_count()
                 gpu_name = torch.cuda.get_device_name(0)
-                print(f"   ✓ GPU acceleration: {gpu_count} GPU(s) - {gpu_name}")
+                print(f"    GPU acceleration: {gpu_count} GPU(s) - {gpu_name}")
             else:
-                print(f"   ⚠ GPU acceleration: Not available (using CPU)")
+                print(f"    GPU acceleration: Not available (using CPU)")
         except Exception:
-            print(f"   ⚠ GPU check: Failed")
+            print(f"    GPU check: Failed")
     
     async def _validate_configuration(self):
         """Validate Audio Agent configuration"""
+
+
+
         
         try:
             # Import and validate configuration
@@ -269,10 +272,10 @@ class AudioAgentDeployer:
             config = get_config(self.environment)
             config_summary = config.get_summary()
             
-            print(f"   ✓ Configuration loaded for: {self.environment}")
-            print(f"   ✓ Sample rate: {config_summary['audio_processing']['sample_rate']}Hz")
-            print(f"   ✓ Business features: {len([k for k, v in config_summary['business_features'].items() if v])} enabled")
-            print(f"   ✓ Security features: {len([k for k, v in config_summary['security'].items() if v])} enabled")
+            print(f"    Configuration loaded for: {self.environment}")
+            print(f"    Sample rate: {config_summary['audio_processing']['sample_rate']}Hz")
+            print(f"    Business features: {len([k for k, v in config_summary['business_features'].items() if v])} enabled")
+            print(f"    Security features: {len([k for k, v in config_summary['security'].items() if v])} enabled")
             
         except ImportError as e:
             raise RuntimeError(f"Failed to import Audio Agent configuration: {e}")
@@ -298,14 +301,14 @@ class AudioAgentDeployer:
                 # Set permissions (755)
                 os.chmod(directory, 0o755)
                 
-                print(f"   ✓ Directory created: {directory}")
+                print(f"    Directory created: {directory}")
                 
             except PermissionError:
                 logger.warning(f"Permission denied creating directory: {directory}")
                 # Try alternative location
                 alt_dir = f"/tmp/audio_agent_fallback/{Path(directory).name}"
                 Path(alt_dir).mkdir(parents=True, exist_ok=True)
-                print(f"   ⚠ Using fallback directory: {alt_dir}")
+                print(f"    Using fallback directory: {alt_dir}")
     
     async def _download_ai_models(self):
         """Download and verify AI models"""
@@ -326,9 +329,9 @@ class AudioAgentDeployer:
                     from transformers import AutoModel
                     try:
                         # Try to load model metadata (without downloading full model)
-                        print(f"   ✓ Model available: {model['name']}")
+                        print(f"    Model available: {model['name']}")
                     except Exception:
-                        print(f"   ⚠ Model download needed: {model['name']} (~{model['size_mb']}MB)")
+                        print(f"    Model download needed: {model['name']} (~{model['size_mb']}MB)")
                         logger.warning(f"Model {model['name']} may need to be downloaded on first use")
                 
             except Exception as e:
@@ -336,6 +339,9 @@ class AudioAgentDeployer:
     
     async def _setup_database(self):
         """Setup database connections and tables"""
+
+
+
         
         try:
             database_url = os.getenv("DATABASE_URL", "sqlite:///audio_agent.db")
@@ -344,25 +350,28 @@ class AudioAgentDeployer:
             if database_url.startswith("postgresql"):
                 import psycopg2
                 # Extract connection parameters
-                print(f"   ✓ PostgreSQL connection configured")
+                print(f"    PostgreSQL connection configured")
             elif database_url.startswith("sqlite"):
                 import sqlite3
                 # Test SQLite connection
                 db_path = database_url.replace("sqlite:///", "")
                 conn = sqlite3.connect(db_path)
                 conn.close()
-                print(f"   ✓ SQLite database: {db_path}")
+                print(f"    SQLite database: {db_path}")
             else:
-                print(f"   ⚠ Unknown database type: {database_url}")
+                print(f"    Unknown database type: {database_url}")
             
             # Database tables will be created by SQLAlchemy on first run
-            print(f"   ✓ Database connection validated")
+            print(f"    Database connection validated")
             
         except Exception as e:
             raise RuntimeError(f"Database setup failed: {e}")
     
     async def _setup_redis(self):
         """Setup Redis connection and configuration"""
+
+
+
         
         try:
             import redis
@@ -375,11 +384,11 @@ class AudioAgentDeployer:
             # Set basic configuration
             client.config_set("maxmemory-policy", "allkeys-lru")
             
-            print(f"   ✓ Redis connection validated: {redis_url}")
+            print(f"    Redis connection validated: {redis_url}")
             
         except Exception as e:
             logger.warning(f"Redis setup failed: {e}")
-            print(f"   ⚠ Redis connection failed - caching disabled")
+            print(f"    Redis connection failed - caching disabled")
     
     async def _run_health_checks(self):
         """Run comprehensive health checks"""
@@ -394,9 +403,9 @@ class AudioAgentDeployer:
         for check_name, check_func in health_checks:
             try:
                 await check_func()
-                print(f"   ✓ {check_name}: OK")
+                print(f"    {check_name}: OK")
             except Exception as e:
-                print(f"   ⚠ {check_name}: WARNING - {e}")
+                print(f"    {check_name}: WARNING - {e}")
     
     async def _check_memory_usage(self):
         """Check current memory usage"""
@@ -423,6 +432,9 @@ class AudioAgentDeployer:
     
     async def _check_audio_processing(self):
         """Basic audio processing functionality check"""
+
+
+
         try:
             import numpy as np
             import librosa
@@ -446,7 +458,7 @@ class AudioAgentDeployer:
         
         env_config = self.config[self.environment]
         
-        print(f"   🚀 Starting Audio Agent server...")
+        print(f"    Starting Audio Agent server...")
         print(f"      Host: {env_config['host']}")
         print(f"      Port: {env_config['port']}")
         print(f"      Workers: {env_config['workers']}")
@@ -454,9 +466,9 @@ class AudioAgentDeployer:
         
         # In production, this would use proper service management (systemd, supervisor, etc.)
         if self.environment == "development":
-            print(f"   ✓ Development server configuration ready")
+            print(f"    Development server configuration ready")
         else:
-            print(f"   ✓ Production server configuration ready")
+            print(f"    Production server configuration ready")
             print(f"      Use: uvicorn backend.ai_agents.audio_agent.index:app --host {env_config['host']} --port {env_config['port']} --workers {env_config['workers']}")
     
     async def _validate_deployment(self):
@@ -474,15 +486,15 @@ class AudioAgentDeployer:
                 # Test health endpoint
                 async with session.get(f"{base_url}/health") as response:
                     if response.status == 200:
-                        print(f"   ✓ Health endpoint: OK")
+                        print(f"    Health endpoint: OK")
                     else:
                         raise RuntimeError(f"Health endpoint failed: {response.status}")
                         
         except ImportError:
-            print(f"   ⚠ Deployment validation skipped (aiohttp not available)")
+            print(f"    Deployment validation skipped (aiohttp not available)")
         except Exception as e:
             logger.warning(f"Deployment validation failed: {e}")
-            print(f"   ⚠ API validation: Manual testing required")
+            print(f"    API validation: Manual testing required")
     
     async def _setup_monitoring(self):
         """Setup monitoring and alerting"""
@@ -495,9 +507,9 @@ class AudioAgentDeployer:
         ]
         
         for config in monitoring_configs:
-            print(f"   ✓ {config}")
+            print(f"    {config}")
         
-        print(f"   ✓ Monitoring dashboard: http://{self.config[self.environment]['domain']}/docs")
+        print(f"    Monitoring dashboard: http://{self.config[self.environment]['domain']}/docs")
 
 async def main():
     """Main deployment execution"""
@@ -508,7 +520,7 @@ async def main():
         environment = "production"
     
     if environment not in ["development", "staging", "production"]:
-        print(f"❌ Invalid environment: {environment}")
+        print(f" Invalid environment: {environment}")
         print("Valid options: development, staging, production")
         return 1
     
@@ -517,23 +529,23 @@ async def main():
         success = await deployer.deploy()
         
         if success:
-            print(f"\n🎉 Audio Agent deployment successful!")
-            print(f"🌐 Access the API at: http://{deployer.config[environment]['domain']}:{deployer.config[environment]['port']}")
+            print(f"\n Audio Agent deployment successful!")
+            print(f" Access the API at: http://{deployer.config[environment]['domain']}:{deployer.config[environment]['port']}")
             return 0
         else:
-            print(f"\n💥 Audio Agent deployment failed!")
+            print(f"\n Audio Agent deployment failed!")
             return 1
             
     except KeyboardInterrupt:
-        print(f"\n⏹️  Deployment interrupted by user")
+        print(f"\n⏹  Deployment interrupted by user")
         return 1
     except Exception as e:
-        print(f"\n💥 Deployment crashed: {str(e)}")
+        print(f"\n Deployment crashed: {str(e)}")
         return 1
 
 if __name__ == "__main__":
-    print("🎵 Audio Agent Enterprise Deployment System")
-    print("👨‍💻 Author: Fahed Mlaiel <mlaiel@live.de>")
+    print(" Audio Agent Enterprise Deployment System")
+    print("‍ Author: Fahed Mlaiel <mlaiel@live.de>")
     print("© 2025 Fahed Mlaiel - All Rights Reserved\n")
     
     exit_code = asyncio.run(main())

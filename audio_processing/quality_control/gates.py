@@ -1,5 +1,5 @@
 """
-🎯 Quality Gates - Automated Quality Gate System
+ Quality Gates - Automated Quality Gate System
 
 Professional quality gate system for automated quality control checkpoints.
 Implements configurable quality gates with pass/fail criteria and automated
@@ -9,7 +9,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Developer + DevOps + DBA + Security + Microservices
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ AVERTISSEMENT STRICT ⚠️
+ AVERTISSEMENT STRICT 
 Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou reproduction sans 
 autorisation écrite explicite de Fahed Mlaiel (mlaiel@live.de) est strictement 
@@ -68,7 +68,7 @@ class QualityGateResult:
 
 class QualityGate(ABC):
     """
-    🎯 Abstract Quality Gate Base Class
+     Abstract Quality Gate Base Class
     
     Base class for all quality gates:
     - Configurable pass/fail criteria
@@ -108,6 +108,9 @@ class QualityGate(ABC):
     
     def get_statistics(self) -> Dict[str, Any]:
         """Get gate evaluation statistics"""
+
+
+
         return {
             'name': self.name,
             'type': self.gate_type.value,
@@ -729,7 +732,7 @@ class CustomGate(QualityGate):
 
 class QualityGateManager:
     """
-    🎯 Quality Gate Manager
+     Quality Gate Manager
     
     Manages collection of quality gates:
     - Gate registration and configuration
@@ -922,8 +925,14 @@ class QualityGateManager:
     
     def list_gates(self) -> List[str]:
         """List all registered gates"""
+
+
+
         return list(self.gates.keys())
     
     def list_enabled_gates(self) -> List[str]:
         """List enabled gates"""
+
+
+
         return [name for name, gate in self.gates.items() if gate.enabled]

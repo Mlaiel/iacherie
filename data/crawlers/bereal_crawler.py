@@ -12,7 +12,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL WARNING ⚠️
+  CRITICAL WARNING 
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
 Any unauthorized use, reproduction, distribution, or reverse engineering 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -234,6 +234,9 @@ class BeRealCrawler(PlatformCrawler):
         Returns:
             List of crawler results
         """
+
+
+
         try:
             await self._check_rate_limit()
             
@@ -253,6 +256,9 @@ class BeRealCrawler(PlatformCrawler):
     
     async def _crawl_posts(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl BeReal posts"""
+
+
+
         try:
             results = []
             
@@ -300,6 +306,9 @@ class BeRealCrawler(PlatformCrawler):
     
     async def _crawl_users(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl BeReal users"""
+
+
+
         try:
             results = []
             
@@ -345,6 +354,9 @@ class BeRealCrawler(PlatformCrawler):
     
     async def _crawl_memories(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl BeReal memories"""
+
+
+
         try:
             results = []
             
@@ -389,6 +401,9 @@ class BeRealCrawler(PlatformCrawler):
     
     async def _crawl_comments(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl BeReal comments"""
+
+
+
         try:
             results = []
             
@@ -429,6 +444,9 @@ class BeRealCrawler(PlatformCrawler):
     
     async def _crawl_reactions(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl BeReal reactions"""
+
+
+
         try:
             results = []
             
@@ -468,6 +486,9 @@ class BeRealCrawler(PlatformCrawler):
     
     async def _crawl_discovery(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl BeReal discovery feed"""
+
+
+
         try:
             results = []
             
@@ -500,6 +521,9 @@ class BeRealCrawler(PlatformCrawler):
     
     async def _crawl_friends(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl BeReal friends feed"""
+
+
+
         try:
             results = []
             
@@ -531,6 +555,9 @@ class BeRealCrawler(PlatformCrawler):
     
     async def _crawl_search(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """General BeReal search"""
+
+
+
         try:
             results = []
             
@@ -656,7 +683,7 @@ class BeRealCrawler(PlatformCrawler):
     async def _get_mock_reactions(self, query: str, max_results: int) -> List[Dict[str, Any]]:
         """Generate mock reaction data"""
         reactions = []
-        emojis = ['😍', '😂', '🔥', '👏', '💯', '😱', '🥰', '😭']
+        emojis = ['', '', '', '', '', '', '🥰', '']
         
         for i in range(min(max_results, 40)):
             creation_time = datetime.utcnow() - timedelta(minutes=random.randint(1, 1440))
@@ -707,6 +734,9 @@ class BeRealCrawler(PlatformCrawler):
     
     async def _parse_post_data(self, post_data: Dict[str, Any]) -> Optional[BeRealPost]:
         """Parse post data"""
+
+
+
         try:
             creation_time = datetime.fromisoformat(post_data.get('creation_time', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
@@ -750,6 +780,9 @@ class BeRealCrawler(PlatformCrawler):
     
     async def _parse_user_data(self, user_data: Dict[str, Any]) -> Optional[BeRealUser]:
         """Parse user data"""
+
+
+
         try:
             creation_date = datetime.fromisoformat(user_data.get('creation_date', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
@@ -790,6 +823,9 @@ class BeRealCrawler(PlatformCrawler):
     
     async def _parse_memory_data(self, memory_data: Dict[str, Any]) -> Optional[BeRealMemory]:
         """Parse memory data"""
+
+
+
         try:
             memory_date = datetime.fromisoformat(memory_data.get('date', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
@@ -821,6 +857,9 @@ class BeRealCrawler(PlatformCrawler):
     
     async def _parse_comment_data(self, comment_data: Dict[str, Any]) -> Optional[BeRealComment]:
         """Parse comment data"""
+
+
+
         try:
             creation_time = datetime.fromisoformat(comment_data.get('creation_time', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
@@ -848,6 +887,9 @@ class BeRealCrawler(PlatformCrawler):
     
     async def _parse_reaction_data(self, reaction_data: Dict[str, Any]) -> Optional[BeRealReaction]:
         """Parse reaction data"""
+
+
+
         try:
             creation_time = datetime.fromisoformat(reaction_data.get('creation_time', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
@@ -872,6 +914,9 @@ class BeRealCrawler(PlatformCrawler):
     
     async def _check_rate_limit(self):
         """Check and enforce rate limiting"""
+
+
+
         try:
             current_time = time.time()
             time_since_last = current_time - self.last_request_time
@@ -889,6 +934,9 @@ class BeRealCrawler(PlatformCrawler):
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
         """Extract metadata from BeReal content"""
+
+
+
         try:
             # Parse BeReal URL
             parsed_url = urlparse(url)
@@ -927,6 +975,9 @@ class BeRealCrawler(PlatformCrawler):
     
     def get_platform_info(self) -> Dict[str, Any]:
         """Get BeReal platform information"""
+
+
+
         return {
             'platform_name': 'BeReal',
             'base_url': self.base_url,

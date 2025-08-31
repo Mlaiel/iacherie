@@ -314,6 +314,9 @@ class YouTubeEngine(BaseCrawlerEngine):
             
     async def _process_youtube_video(self, video_item: Dict[str, Any]) -> Optional[YouTubeVideo]:
         """Process and analyze YouTube video with comprehensive metrics"""
+
+
+
         
         try:
             # Extract basic video information
@@ -542,6 +545,9 @@ class YouTubeCrawlerEngine(BaseCrawlerEngine):
     
     def _setup_youtube_service(self) -> None:
         """Setup YouTube Data API service"""
+
+
+
         try:
             self.youtube_service = googleapiclient.discovery.build(
                 'youtube', 'v3', 
@@ -555,6 +561,9 @@ class YouTubeCrawlerEngine(BaseCrawlerEngine):
     
     def _setup_selenium_driver(self) -> None:
         """Setup Selenium WebDriver for advanced scraping"""
+
+
+
         try:
             chrome_options = webdriver.ChromeOptions()
             chrome_options.add_argument('--headless')
@@ -859,6 +868,9 @@ class YouTubeCrawlerEngine(BaseCrawlerEngine):
     
     async def _parse_video_item(self, item: Dict) -> Optional[YouTubeVideoData]:
         """Parse YouTube API video item into structured data"""
+
+
+
         try:
             snippet = item['snippet']
             statistics = item.get('statistics', {})
@@ -938,6 +950,9 @@ class YouTubeCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Similarity score between 0 and 1
         """
+
+
+
         try:
             # Title similarity (using simple word overlap)
             original_title_words = set(original.get('title', '').lower().split())
@@ -985,6 +1000,9 @@ class YouTubeCrawlerEngine(BaseCrawlerEngine):
     
     async def cleanup(self) -> None:
         """Cleanup resources"""
+
+
+
         try:
             if hasattr(self, 'driver') and self.driver:
                 self.driver.quit()
@@ -995,6 +1013,9 @@ class YouTubeCrawlerEngine(BaseCrawlerEngine):
     
     def __del__(self):
         """Destructor to ensure cleanup"""
+
+
+
         try:
             if hasattr(self, 'driver') and self.driver:
                 self.driver.quit()

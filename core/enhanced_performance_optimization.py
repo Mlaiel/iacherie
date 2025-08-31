@@ -81,6 +81,9 @@ class EnhancedPerformanceProfiler:
     
     def start_profiling(self) -> bool:
         """Start performance profiling"""
+
+
+
         try:
             self.profiling_active = True
             self.start_time = datetime.now()
@@ -97,6 +100,9 @@ class EnhancedPerformanceProfiler:
     
     def stop_profiling(self) -> Dict[str, Any]:
         """Stop profiling and return analysis results"""
+
+
+
         try:
             self.profiling_active = False
             end_time = datetime.now()
@@ -124,6 +130,9 @@ class EnhancedPerformanceProfiler:
     
     def record_metrics(self, metrics: PerformanceMetrics) -> bool:
         """Record performance metrics"""
+
+
+
         try:
             if not self.profiling_active:
                 return False
@@ -146,6 +155,9 @@ class EnhancedPerformanceProfiler:
     
     def analyze_performance(self) -> Dict[str, Any]:
         """Analyze performance data and generate insights"""
+
+
+
         try:
             if not self.metrics_history:
                 return {"status": "no_data", "analysis": {}}
@@ -599,6 +611,9 @@ class EnhancedPerformanceProfiler:
     
     def export_results(self, filepath: str) -> bool:
         """Export profiling results to file"""
+
+
+
         try:
             results = {
                 "profiling_session": {
@@ -916,11 +931,11 @@ def test_enhanced_optimization():
     # Test EnhancedPerformanceProfiler
     print("\n1. Testing EnhancedPerformanceProfiler:")
     profiler = EnhancedPerformanceProfiler()
-    print("✓ Profiler initialized")
+    print(" Profiler initialized")
     
     # Start profiling
     result = profiler.start_profiling()
-    print(f"✓ Start profiling: {result}")
+    print(f" Start profiling: {result}")
     
     # Add test metrics
     for i in range(5):
@@ -933,36 +948,36 @@ def test_enhanced_optimization():
         )
         profiler.record_metrics(metrics)
     
-    print(f"✓ Recorded {len(profiler.metrics_history)} metrics")
+    print(f" Recorded {len(profiler.metrics_history)} metrics")
     
     # Analyze bottlenecks
     bottlenecks = profiler._analyze_bottlenecks()
-    print(f"✓ Found {len(bottlenecks)} bottlenecks")
+    print(f" Found {len(bottlenecks)} bottlenecks")
     
     # Get recommendations
     recommendations = profiler._identify_optimizations()
-    print(f"✓ Generated {len(recommendations)} optimization recommendations")
+    print(f" Generated {len(recommendations)} optimization recommendations")
     
     # Stop profiling
     results = profiler.stop_profiling()
-    print(f"✓ Profiling completed with {results['total_measurements']} measurements")
+    print(f" Profiling completed with {results['total_measurements']} measurements")
     
     # Test AdvancedCacheStrategy
     print("\n2. Testing AdvancedCacheStrategy:")
     cache_strategy = AdvancedCacheStrategy()
-    print("✓ Cache strategy initialized")
+    print(" Cache strategy initialized")
     
     # Test cache recommendations
     strategy1 = cache_strategy.get_cache_strategy("hot_data", 512*1024, 200)
-    print(f"✓ Hot data strategy: {strategy1['recommended_layer']}")
+    print(f" Hot data strategy: {strategy1['recommended_layer']}")
     
     strategy2 = cache_strategy.get_cache_strategy("large_data", 500*1024*1024, 10)
-    print(f"✓ Large data strategy: {strategy2['recommended_layer']}")
+    print(f" Large data strategy: {strategy2['recommended_layer']}")
     
     # Test DatabaseIndexingOptimizer
     print("\n3. Testing DatabaseIndexingOptimizer:")
     db_optimizer = DatabaseIndexingOptimizer()
-    print(f"✓ DB optimizer initialized with {len(db_optimizer.index_types)} index types")
+    print(f" DB optimizer initialized with {len(db_optimizer.index_types)} index types")
     
     # Test query analysis
     query_stats = {
@@ -974,11 +989,11 @@ def test_enhanced_optimization():
     }
     
     analysis = db_optimizer.analyze_query_performance(query_stats)
-    print(f"✓ Query analysis completed with priority: {analysis['optimization_priority']}")
-    print(f"✓ Found {len(analysis['bottlenecks'])} bottlenecks")
-    print(f"✓ Generated {len(analysis['index_recommendations'])} index recommendations")
+    print(f" Query analysis completed with priority: {analysis['optimization_priority']}")
+    print(f" Found {len(analysis['bottlenecks'])} bottlenecks")
+    print(f" Generated {len(analysis['index_recommendations'])} index recommendations")
     
-    print("\n🎉 All enhanced optimization features working correctly!")
+    print("\n All enhanced optimization features working correctly!")
     return True
 
 
@@ -986,6 +1001,6 @@ if __name__ == "__main__":
     try:
         test_enhanced_optimization()
     except Exception as e:
-        print(f"❌ Test failed: {e}")
+        print(f" Test failed: {e}")
         import traceback
         traceback.print_exc()

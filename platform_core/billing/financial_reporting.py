@@ -1,15 +1,15 @@
 """
-🚀 Financial Reporting - IA Influencer Agent Platform Enterprise
+ Financial Reporting - IA Influencer Agent Platform Enterprise
 ==============================================================
 Module: backend/platform_core/billing/financial_reporting.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ==============================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 RAPPORTS FINANCIERS ET ANALYTICS
+ RAPPORTS FINANCIERS ET ANALYTICS
 Système de reporting financier enterprise avec analytics avancées
 - Rapports P&L, cash-flow, réconciliation automatique
 - Analytics revenue avec cohorts et prédictions
@@ -84,6 +84,9 @@ class ReportFilter:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit en dictionnaire"""
+
+
+
         return {
             "start_date": self.start_date.isoformat(),
             "end_date": self.end_date.isoformat(),
@@ -373,6 +376,9 @@ class FinancialReporting:
             
     def _revenue_data_to_dict(self, revenue: RevenueData) -> Dict[str, Any]:
         """Convertit RevenueData en dictionnaire"""
+
+
+
         return {
             "period": revenue.period,
             "gross_revenue": float(revenue.gross_revenue),
@@ -572,6 +578,9 @@ class RevenueAnalytics:
         
     def get_analytics_stats(self) -> Dict[str, Any]:
         """Retourne les statistiques des analytics"""
+
+
+
         return {
             "available_metrics": [metric.value for metric in RevenueMetric],
             "supported_exports": ["csv", "excel", "pdf"]

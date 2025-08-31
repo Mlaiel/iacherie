@@ -43,6 +43,9 @@ class SnapchatPlatform(PlatformBase):
     
     async def authenticate(self) -> bool:
         """Authenticate with Snapchat OAuth2"""
+
+
+
         try:
             access_token = self.config.credentials.get('access_token')
             
@@ -74,6 +77,9 @@ class SnapchatPlatform(PlatformBase):
     
     async def refresh_token(self) -> bool:
         """Refresh Snapchat token"""
+
+
+
         try:
             refresh_token = self.config.credentials.get('refresh_token')
             client_id = self.config.credentials.get('client_id')
@@ -112,6 +118,9 @@ class SnapchatPlatform(PlatformBase):
     
     async def _make_request(self, method: str, endpoint: str, use_marketing_api: bool = False, **kwargs) -> Optional[Dict[str, Any]]:
         """Make authenticated request to Snapchat API"""
+
+
+
         try:
             session = await self._get_session()
             
@@ -153,6 +162,9 @@ class SnapchatPlatform(PlatformBase):
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
         """Upload content to Snapchat (Story or Ad)"""
+
+
+
         try:
             # Snapchat API primarily supports advertising content
             # For organic content, this would typically be done through Snap Kit
@@ -221,6 +233,9 @@ class SnapchatPlatform(PlatformBase):
     
     async def _upload_media(self, media_path: str) -> Optional[Dict[str, Any]]:
         """Upload media file to Snapchat"""
+
+
+
         try:
             # This would require actual file upload implementation
             # Snapchat requires specific media formats and upload process
@@ -233,6 +248,9 @@ class SnapchatPlatform(PlatformBase):
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
         """Get Snapchat content analytics"""
+
+
+
         try:
             # Get creative stats
             params = {
@@ -275,6 +293,9 @@ class SnapchatPlatform(PlatformBase):
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
         """Search content on Snapchat (limited API access)"""
+
+
+
         try:
             # Snapchat doesn't provide public content search API
             # This would typically require Snap Kit integration
@@ -287,6 +308,9 @@ class SnapchatPlatform(PlatformBase):
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
         """Get user's creatives from Snapchat"""
+
+
+
         try:
             result = await self._make_request('GET', '/creatives', use_marketing_api=True)
             
@@ -312,6 +336,9 @@ class SnapchatPlatform(PlatformBase):
     
     async def delete_content(self, content_id: str) -> bool:
         """Delete Snapchat creative"""
+
+
+
         try:
             result = await self._make_request('DELETE', f'/creatives/{content_id}', use_marketing_api=True)
             
@@ -324,6 +351,9 @@ class SnapchatPlatform(PlatformBase):
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
         """Update Snapchat creative"""
+
+
+
         try:
             update_data = {}
             
@@ -349,6 +379,9 @@ class SnapchatPlatform(PlatformBase):
     
     async def get_account_info(self) -> Optional[Dict[str, Any]]:
         """Get Snapchat account information"""
+
+
+
         try:
             result = await self._make_request('GET', '/me')
             
@@ -370,6 +403,9 @@ class SnapchatPlatform(PlatformBase):
     
     async def get_ad_accounts(self) -> List[Dict[str, Any]]:
         """Get Snapchat ad accounts"""
+
+
+
         try:
             result = await self._make_request('GET', '/adaccounts', use_marketing_api=True)
             
@@ -395,6 +431,9 @@ class SnapchatPlatform(PlatformBase):
     
     async def get_audience_insights(self, ad_account_id: str) -> Dict[str, Any]:
         """Get Snapchat audience insights"""
+
+
+
         try:
             params = {
                 'granularity': 'TOTAL',
@@ -424,6 +463,9 @@ class SnapchatPlatform(PlatformBase):
     async def create_audience(self, ad_account_id: str, audience_name: str, 
                             audience_spec: Dict[str, Any]) -> Optional[str]:
         """Create custom audience on Snapchat"""
+
+
+
         try:
             audience_data = {
                 'name': audience_name,
@@ -449,6 +491,9 @@ class SnapchatPlatform(PlatformBase):
     
     async def get_pixel_stats(self, pixel_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
         """Get Snapchat pixel statistics"""
+
+
+
         try:
             params = {
                 'granularity': 'DAY',
@@ -479,6 +524,9 @@ class SnapchatPlatform(PlatformBase):
     
     async def get_lens_analytics(self, lens_id: str) -> Dict[str, Any]:
         """Get Snapchat Lens analytics"""
+
+
+
         try:
             # Lens analytics would require Lens Studio API access
             logger.warning("Lens analytics require Lens Studio API access")

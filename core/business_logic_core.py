@@ -74,6 +74,9 @@ class BusinessLogicCore:
     
     async def initialize(self) -> bool:
         """Initialize all business logic components and agents"""
+
+
+
         try:
             # Initialize core agents
             await self._initialize_core_agents()
@@ -85,11 +88,11 @@ class BusinessLogicCore:
             await self._initialize_monitoring()
             
             self.initialized = True
-            logger.info("✅ Business Logic Core fully initialized")
+            logger.info(" Business Logic Core fully initialized")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize Business Logic Core: {e}")
+            logger.error(f" Failed to initialize Business Logic Core: {e}")
             return False
     
     async def _initialize_core_agents(self):
@@ -180,10 +183,13 @@ class BusinessLogicCore:
             'blockchain_agent': await self._create_agent('blockchain', 'Blockchain integration'),
         })
         
-        logger.info(f"✅ Initialized {len(self.agents)} AI agents")
+        logger.info(f" Initialized {len(self.agents)} AI agents")
     
     async def _create_agent(self, agent_type: str, description: str) -> Dict[str, Any]:
         """Create a standardized agent instance"""
+
+
+
         return {
             'type': agent_type,
             'description': description,
@@ -210,11 +216,11 @@ class BusinessLogicCore:
                 'enabled': True
             }
         }
-        logger.info("✅ Workflow orchestration initialized")
+        logger.info(" Workflow orchestration initialized")
     
     async def _initialize_monitoring(self):
         """Initialize monitoring and analytics"""
-        logger.info("✅ Monitoring and analytics initialized")
+        logger.info(" Monitoring and analytics initialized")
     
     async def process_content_workflow(self, content: ContentUpload) -> List[WorkflowResult]:
         """Process complete content workflow through all agents"""
@@ -222,7 +228,7 @@ class BusinessLogicCore:
             raise RuntimeError("Business Logic Core not initialized")
         
         results = []
-        logger.info(f"🚀 Starting workflow for content {content.content_id}")
+        logger.info(f" Starting workflow for content {content.content_id}")
         
         try:
             # Stage 1: Content Analysis
@@ -253,10 +259,10 @@ class BusinessLogicCore:
             analytics_result = await self._process_analytics(content, results)
             results.append(analytics_result)
             
-            logger.info(f"✅ Workflow completed for content {content.content_id}")
+            logger.info(f" Workflow completed for content {content.content_id}")
             
         except Exception as e:
-            logger.error(f"❌ Workflow failed for content {content.content_id}: {e}")
+            logger.error(f" Workflow failed for content {content.content_id}: {e}")
             results.append(WorkflowResult(
                 content_id=content.content_id,
                 stage=WorkflowStage.CONTENT_ANALYSIS,
@@ -269,7 +275,7 @@ class BusinessLogicCore:
     
     async def _process_content_analysis(self, content: ContentUpload) -> WorkflowResult:
         """Process content analysis stage"""
-        logger.info(f"📊 Analyzing content {content.content_id}")
+        logger.info(f" Analyzing content {content.content_id}")
         
         # Simulate content analysis using multiple agents
         analysis_data = {
@@ -291,7 +297,7 @@ class BusinessLogicCore:
     
     async def _process_rights_protection(self, content: ContentUpload, analysis: Dict[str, Any]) -> WorkflowResult:
         """Process rights protection stage"""
-        logger.info(f"🛡️ Protecting rights for content {content.content_id}")
+        logger.info(f" Protecting rights for content {content.content_id}")
         
         protection_data = {
             'protection_applied': True,
@@ -311,7 +317,7 @@ class BusinessLogicCore:
     
     async def _process_seo_optimization(self, content: ContentUpload, analysis: Dict[str, Any]) -> WorkflowResult:
         """Process SEO optimization stage"""
-        logger.info(f"🎯 Optimizing SEO for content {content.content_id}")
+        logger.info(f" Optimizing SEO for content {content.content_id}")
         
         seo_data = {
             'optimized_title': f"Optimized: {content.metadata.get('title', 'Content')}",
@@ -353,7 +359,7 @@ class BusinessLogicCore:
     
     async def _process_distribution(self, content: ContentUpload, analysis: Dict[str, Any]) -> WorkflowResult:
         """Process distribution stage"""
-        logger.info(f"📡 Distributing content {content.content_id}")
+        logger.info(f" Distributing content {content.content_id}")
         
         distribution_data = {
             'platforms': ['youtube', 'instagram', 'tiktok', 'spotify'],
@@ -377,7 +383,7 @@ class BusinessLogicCore:
     
     async def _process_monetization(self, content: ContentUpload, analysis: Dict[str, Any]) -> WorkflowResult:
         """Process monetization stage"""
-        logger.info(f"💰 Setting up monetization for content {content.content_id}")
+        logger.info(f" Setting up monetization for content {content.content_id}")
         
         monetization_data = {
             'monetization_enabled': True,
@@ -397,7 +403,7 @@ class BusinessLogicCore:
     
     async def _process_analytics(self, content: ContentUpload, workflow_results: List[WorkflowResult]) -> WorkflowResult:
         """Process analytics stage"""
-        logger.info(f"📈 Generating analytics for content {content.content_id}")
+        logger.info(f" Generating analytics for content {content.content_id}")
         
         analytics_data = {
             'workflow_success': all(r.success for r in workflow_results),
@@ -417,6 +423,9 @@ class BusinessLogicCore:
     
     def get_agent_status(self) -> Dict[str, Any]:
         """Get status of all agents"""
+
+
+
         return {
             'total_agents': len(self.agents),
             'active_agents': len([a for a in self.agents.values() if a['status'] == 'active']),
@@ -426,6 +435,9 @@ class BusinessLogicCore:
     
     def get_workflow_status(self) -> Dict[str, Any]:
         """Get status of workflows"""
+
+
+
         return {
             'total_workflows': len(self.workflows),
             'enabled_workflows': len([w for w in self.workflows.values() if w.get('enabled', False)]),
@@ -440,7 +452,7 @@ class BusinessLogicCore:
         if not self.initialized:
             raise RuntimeError("Business Logic Core not initialized")
         
-        logger.info(f"🚀 Starting creator workflow for {content.creator_type.value} content: {content.content_id}")
+        logger.info(f" Starting creator workflow for {content.creator_type.value} content: {content.content_id}")
         
         workflow_results = []
         
@@ -450,7 +462,7 @@ class BusinessLogicCore:
             workflow_results.append(upload_result)
             
             if not upload_result.success:
-                logger.error(f"❌ Content upload failed for {content.content_id}")
+                logger.error(f" Content upload failed for {content.content_id}")
                 return workflow_results
             
             # Stage 2: Content Analysis and Fingerprinting
@@ -485,13 +497,13 @@ class BusinessLogicCore:
             successful_stages = len([r for r in workflow_results if r.success])
             total_stages = len(workflow_results)
             
-            logger.info(f"✅ Creator workflow completed for {content.content_id}: "
+            logger.info(f" Creator workflow completed for {content.content_id}: "
                        f"{successful_stages}/{total_stages} stages successful")
             
             return workflow_results
             
         except Exception as e:
-            logger.error(f"❌ Critical error in creator workflow for {content.content_id}: {e}")
+            logger.error(f" Critical error in creator workflow for {content.content_id}: {e}")
             
             # Add error result
             error_result = WorkflowResult(
@@ -512,25 +524,28 @@ business_logic_core = BusinessLogicCore()
 
 async def initialize_business_logic_core() -> bool:
     """Initialize the business logic core"""
+
+
+
     return await business_logic_core.initialize()
 
 
 if __name__ == "__main__":
     async def test_business_logic_core():
         """Test the business logic core"""
-        print("🚀 Testing Business Logic Core with 53 AI Agents")
+        print(" Testing Business Logic Core with 53 AI Agents")
         
         # Initialize
         success = await initialize_business_logic_core()
         if not success:
-            print("❌ Failed to initialize business logic core")
+            print(" Failed to initialize business logic core")
             return
         
-        print("✅ Business Logic Core initialized successfully")
+        print(" Business Logic Core initialized successfully")
         
         # Show agent status
         agent_status = business_logic_core.get_agent_status()
-        print(f"📊 Agent Status: {agent_status['active_agents']}/{agent_status['total_agents']} agents active")
+        print(f" Agent Status: {agent_status['active_agents']}/{agent_status['total_agents']} agents active")
         
         # Test workflow
         test_content = ContentUpload(
@@ -547,15 +562,15 @@ if __name__ == "__main__":
             }
         )
         
-        print(f"🎵 Processing test content: {test_content.content_id}")
+        print(f" Processing test content: {test_content.content_id}")
         results = await business_logic_core.process_content_workflow(test_content)
         
-        print(f"✅ Workflow completed with {len(results)} stages")
+        print(f" Workflow completed with {len(results)} stages")
         for result in results:
-            status = "✅" if result.success else "❌"
+            status = "" if result.success else ""
             print(f"  {status} {result.stage.value}")
         
-        print("🏆 Business Logic Core test completed successfully!")
+        print(" Business Logic Core test completed successfully!")
     
     # Run the test
     asyncio.run(test_business_logic_core())

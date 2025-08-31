@@ -8,7 +8,7 @@ Handles text analysis, fingerprinting, enhancement, and transformation.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 
-⚠️  COPYRIGHT WARNING ⚠️
+  COPYRIGHT WARNING 
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or theft of this code or concept without explicit 
 written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and 
@@ -157,6 +157,9 @@ class TextProcessor:
     
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default text processing configuration"""
+
+
+
         return {
             'language': 'auto',
             'sentiment_analysis': True,
@@ -179,6 +182,9 @@ class TextProcessor:
     
     def _initialize_engines(self):
         """Initialize text processing engines"""
+
+
+
         try:
             # Initialize NLTK tools
             if NLTK_AVAILABLE:
@@ -257,6 +263,9 @@ class TextProcessor:
         Returns:
             Dict containing processed text data and analysis results
         """
+
+
+
         try:
             # Merge configuration
             processing_config = self.config.copy()
@@ -323,6 +332,9 @@ class TextProcessor:
         format_hint: Optional[str] = None
     ) -> str:
         """Prepare text data for processing"""
+
+
+
         try:
             if isinstance(text_data, bytes):
                 # Decode bytes to string
@@ -348,6 +360,9 @@ class TextProcessor:
     
     def _clean_text(self, text: str) -> str:
         """Clean and normalize text"""
+
+
+
         try:
             # Normalize unicode characters
             text = unicodedata.normalize('NFKD', text)
@@ -502,6 +517,9 @@ class TextProcessor:
         
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default text processing configuration"""
+
+
+
         return {
             'language': 'auto',
             'max_length': 100000,
@@ -526,6 +544,9 @@ class TextProcessor:
     
     def _initialize_engines(self):
         """Initialize text processing engines"""
+
+
+
         try:
             # Initialize NLTK components
             if NLTK_AVAILABLE:
@@ -598,6 +619,9 @@ class TextProcessor:
         Returns:
             Dict containing processed text data and analysis results
         """
+
+
+
         try:
             # Merge configuration
             processing_config = self.config.copy()
@@ -671,6 +695,9 @@ class TextProcessor:
         format_hint: Optional[str] = None
     ) -> str:
         """Prepare text data for processing"""
+
+
+
         try:
             if isinstance(text_data, bytes):
                 # Decode bytes to string
@@ -703,6 +730,9 @@ class TextProcessor:
     
     def _clean_text(self, text: str) -> str:
         """Clean and normalize text"""
+
+
+
         try:
             # Remove extra whitespace
             text = re.sub(r'\s+', ' ', text)
@@ -727,6 +757,9 @@ class TextProcessor:
     
     async def _extract_metadata(self, text: str) -> TextMetadata:
         """Extract comprehensive text metadata"""
+
+
+
         try:
             # Standard counts
             char_count = len(text)
@@ -775,6 +808,9 @@ class TextProcessor:
     
     async def _extract_features(self, text: str) -> Dict[str, Any]:
         """Extract comprehensive text features"""
+
+
+
         try:
             features_data = {}
             
@@ -891,6 +927,9 @@ class TextProcessor:
     
     async def _generate_fingerprint(self, text: str) -> Dict[str, Any]:
         """Generate comprehensive text fingerprint"""
+
+
+
         try:
             fingerprint = TextFingerprint()
             
@@ -989,6 +1028,9 @@ class TextProcessor:
     
     async def _analyze_sentiment(self, text: str) -> Dict[str, Any]:
         """Analyze text sentiment"""
+
+
+
         try:
             sentiment_data = {}
             
@@ -1083,6 +1125,9 @@ class TextProcessor:
     
     async def _extract_named_entities(self, text: str) -> Dict[str, Any]:
         """Extract named entities from text"""
+
+
+
         try:
             named_entities = []
             
@@ -1151,6 +1196,9 @@ class TextProcessor:
     
     async def _extract_keywords(self, text: str) -> Dict[str, Any]:
         """Extract keywords from text"""
+
+
+
         try:
             keywords_data = {}
             
@@ -1241,6 +1289,9 @@ class TextProcessor:
     
     async def _analyze_readability(self, text: str) -> Dict[str, Any]:
         """Analyze text readability"""
+
+
+
         try:
             readability_data = {}
             
@@ -1303,6 +1354,9 @@ class TextProcessor:
     
     async def _enhance_text(self, text: str) -> Dict[str, Any]:
         """Enhance text quality"""
+
+
+
         try:
             enhanced_text = text
             enhancements_applied = []
@@ -1356,6 +1410,9 @@ class TextProcessor:
     
     def _calculate_text_quality(self, text: str) -> float:
         """Calculate a professional text quality score"""
+
+
+
         try:
             score = 0.0
             

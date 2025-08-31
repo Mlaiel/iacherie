@@ -8,7 +8,7 @@ error handling, logging, and recovery mechanisms for legal processing failures.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission is strictly prohibited and will result in immediate legal action.
@@ -101,6 +101,9 @@ class DMCABaseException(Exception):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert exception to dictionary for API responses"""
+
+
+
         return {
             "error": True,
             "error_code": self.error_code,

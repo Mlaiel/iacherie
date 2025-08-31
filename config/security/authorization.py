@@ -17,7 +17,7 @@ Business Logic Integration:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend + Security Experts
 
-⚠️ COPYRIGHT WARNING:
+ COPYRIGHT WARNING:
 This code is proprietary and belongs to Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit 
 written permission from Fahed Mlaiel is strictly prohibited.
@@ -400,6 +400,9 @@ authorization_config = AuthorizationConfig()
 
 def get_authorization_config() -> AuthorizationConfig:
     """Get the authorization configuration instance."""
+
+
+
     return authorization_config
 
 

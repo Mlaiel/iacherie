@@ -116,6 +116,9 @@ class MLOrchestrator:
     
     def _initialize_clients(self) -> None:
         """Initialize Kubernetes, Docker, and Redis clients"""
+
+
+
         try:
             # Kubernetes client
             config.load_incluster_config()
@@ -246,6 +249,9 @@ class MLOrchestrator:
     
     async def _ensure_ai_namespace(self) -> None:
         """Create dedicated namespace for AI services"""
+
+
+
         try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
@@ -1292,6 +1298,9 @@ class MLOrchestrator:
     
     async def _validate_ai_stack(self) -> bool:
         """Validate complete AI/ML stack deployment"""
+
+
+
         try:
             # Check all deployments are ready
             for service in self.deployed_services:
@@ -1321,6 +1330,9 @@ class MLOrchestrator:
     
     async def _cleanup_failed_ai_deployment(self) -> None:
         """Clean up resources from failed AI deployment"""
+
+
+
         try:
             # Delete all deployments
             for service in self.deployed_services:
@@ -1339,6 +1351,9 @@ class MLOrchestrator:
     
     async def deploy_custom_model(self, model_config: Dict[str, Any]) -> Dict[str, Any]:
         """Deploy a custom ML model"""
+
+
+
         try:
             model_name = model_config.get("name")
             framework = model_config.get("framework")
@@ -1408,6 +1423,9 @@ class MLOrchestrator:
     
     async def get_ai_metrics(self) -> Dict[str, Any]:
         """Get comprehensive AI/ML metrics"""
+
+
+
         try:
             # Get AI performance data
             inference_count_24h = self._redis_client.get("inference_count_24h") or "0"
@@ -1459,6 +1477,9 @@ class MLOrchestrator:
     
     async def cleanup(self) -> None:
         """Clean up entire AI/ML stack"""
+
+
+
         try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)

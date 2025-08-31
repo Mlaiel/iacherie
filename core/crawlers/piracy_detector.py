@@ -157,6 +157,9 @@ class PiracyDetectionEngine:
 
     def _initialize_ai_models(self) -> None:
         """Initialise les modèles IA spécialisés"""
+
+
+
         try:
             # Modèle de classification de contenu pirate
             self.piracy_classifier = pipeline(
@@ -240,6 +243,9 @@ class PiracyDetectionEngine:
         Returns:
             bool: Succès de l'enregistrement
         """
+
+
+
         try:
             # Génération d'empreinte avancée
             fingerprint = await self.fingerprint_engine.generate_comprehensive_fingerprint(
@@ -497,6 +503,9 @@ class PiracyDetectionEngine:
 
     def _extract_domain(self, url: str) -> str:
         """Extrait le domaine d'une URL"""
+
+
+
         try:
             from urllib.parse import urlparse
             return urlparse(url).netloc.lower()
@@ -510,6 +519,9 @@ class PiracyDetectionEngine:
         detection_method: str
     ) -> Optional[PiracyDetection]:
         """Analyse approfondie d'un piratage potentiel"""
+
+
+
         try:
             suspect_url = suspect_result['url']
             
@@ -563,6 +575,9 @@ class PiracyDetectionEngine:
 
     async def _analyze_suspect_page(self, url: str) -> Optional[Dict[str, Any]]:
         """Analyse approfondie d'une page suspecte"""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 proxy = await self.proxy_manager.get_proxy()
@@ -916,10 +931,16 @@ class PiracyDetectionEngine:
 
     async def _scan_deep_web(self, content_info: Dict[str, Any]) -> List[PiracyDetection]:
         """Scan du deep web"""
+
+
+
         return await self.deep_web_scanner.scan_for_content(content_info)
 
     async def _scan_darknet(self, content_info: Dict[str, Any]) -> List[PiracyDetection]:
         """Scan du darknet via Tor"""
+
+
+
         return await self.tor_manager.scan_darknet_for_piracy(content_info)
 
     def _filter_and_deduplicate_detections(

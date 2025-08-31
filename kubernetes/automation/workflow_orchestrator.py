@@ -594,6 +594,9 @@ class WorkflowOrchestrator(BaseComponent):
 
     async def get_workflow_status(self, workflow_id: str) -> Optional[Dict[str, Any]]:
         """Get current workflow status"""
+
+
+
         return self.workflow_states.get(workflow_id)
 
     async def cancel_workflow(self, workflow_id: str, reason: str = "") -> bool:
@@ -623,6 +626,9 @@ class WorkflowOrchestrator(BaseComponent):
 
     async def list_active_workflows(self) -> List[Dict[str, Any]]:
         """List all active workflows"""
+
+
+
         return [
             {
                 'workflow_id': workflow.workflow_id,

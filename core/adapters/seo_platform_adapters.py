@@ -269,6 +269,9 @@ class GoogleSearchConsoleAdapter(BaseSEOAdapter):
     
     async def track_domain(self, domain: str) -> bool:
         """Add a domain to Google Search Console tracking."""
+
+
+
         try:
             headers = {
                 "Authorization": f"Bearer {self.credentials.access_token}",
@@ -533,6 +536,9 @@ class SEMrushAdapter(BaseSEOAdapter):
     
     async def get_backlink_profile(self, domain: str) -> Optional[BacklinkProfile]:
         """Get backlink profile from SEMrush."""
+
+
+
         try:
             params = {
                 "type": "backlinks_overview",
@@ -734,6 +740,9 @@ class SEOAdapterFactory:
     @classmethod
     def get_supported_platforms(cls) -> List[SEOPlatform]:
         """Get list of supported SEO platforms."""
+
+
+
         return list(cls._adapters.keys())
 
 class SEOAdapterManager:

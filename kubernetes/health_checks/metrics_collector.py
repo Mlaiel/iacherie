@@ -253,6 +253,9 @@ class HealthMetricsCollector:
 
     async def _store_metric(self, metric: HealthMetric):
         """Store metric in memory and check thresholds"""
+
+
+
         try:
             # Check threshold breaches
             threshold_key = f"{metric.service_name}.{metric.metric_name}"
@@ -291,6 +294,9 @@ class HealthMetricsCollector:
 
     async def _detect_anomaly(self, metric: HealthMetric):
         """Detect anomalies in metric values using statistical analysis"""
+
+
+
         try:
             service_metric_key = f"{metric.service_name}.{metric.metric_name}"
             
@@ -356,6 +362,9 @@ class HealthMetricsCollector:
         Returns:
             List[AggregatedMetrics]: Aggregated metrics for the interval
         """
+
+
+
         try:
             current_time = datetime.utcnow()
             interval_start = current_time - timedelta(minutes=interval_minutes)
@@ -418,6 +427,9 @@ class HealthMetricsCollector:
         Returns:
             HealthTrend: Trend analysis result
         """
+
+
+
         try:
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             
@@ -509,6 +521,9 @@ class HealthMetricsCollector:
         Returns:
             Dict[str, Any]: Metrics summary with statistics and insights
         """
+
+
+
         try:
             cutoff_time = datetime.utcnow() - timedelta(hours=time_range_hours)
             
@@ -596,6 +611,9 @@ class HealthMetricsCollector:
         Returns:
             str: Metrics in Prometheus exposition format
         """
+
+
+
         try:
             prometheus_output = []
             current_time = int(datetime.utcnow().timestamp() * 1000)
@@ -631,6 +649,9 @@ class HealthMetricsCollector:
 
     async def cleanup_old_metrics(self):
         """Clean up old metrics based on retention policies"""
+
+
+
         try:
             current_time = datetime.utcnow()
             raw_cutoff = current_time - timedelta(hours=self.raw_metrics_retention_hours)
@@ -662,6 +683,9 @@ class HealthMetricsCollector:
 
     def get_current_metrics_stats(self) -> Dict[str, Any]:
         """Get current metrics collection statistics"""
+
+
+
         return {
             "total_raw_metrics": len(self._raw_metrics),
             "unique_services": len(self._service_metrics),

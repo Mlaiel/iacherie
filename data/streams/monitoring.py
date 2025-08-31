@@ -124,6 +124,9 @@ class StreamMonitor:
         
     async def initialize(self) -> None:
         """Initialize stream monitor with dependencies"""
+
+
+
         try:
             from ...core.cache import get_redis_client
             self.redis = await get_redis_client()
@@ -214,6 +217,9 @@ class StreamMonitor:
             processing_time: Processing time in seconds
             error: Error message if failed
         """
+
+
+
         try:
             # Update stream health
             if stream_id not in self.stream_health:
@@ -251,14 +257,23 @@ class StreamMonitor:
             
     async def get_stream_health(self, stream_id: str) -> Optional[StreamHealth]:
         """Get health status for specific stream"""
+
+
+
         return self.stream_health.get(stream_id)
         
     async def get_all_stream_health(self) -> List[StreamHealth]:
         """Get health status for all monitored streams"""
+
+
+
         return list(self.stream_health.values())
         
     async def get_monitoring_stats(self) -> MonitoringStats:
         """Get comprehensive monitoring statistics"""
+
+
+
         try:
             total_events = sum(health.event_count for health in self.stream_health.values())
             total_errors = sum(health.error_count for health in self.stream_health.values())
@@ -325,6 +340,9 @@ class StreamMonitor:
         
     async def get_active_alerts(self) -> List[Alert]:
         """Get all active alerts"""
+
+
+
         return [alert for alert in self.active_alerts.values() if not alert.resolved_at]
         
     async def acknowledge_alert(self, alert_id: str) -> bool:
@@ -355,6 +373,9 @@ class StreamMonitor:
         end_time: Optional[datetime] = None
     ) -> List[Dict[str, Any]]:
         """Get historical metrics data"""
+
+
+
         try:
             # Filter metrics based on parameters
             if stream_id:
@@ -498,6 +519,9 @@ class StreamMonitor:
         
     async def _trigger_alert(self, rule: AlertRule, metric_value: float) -> None:
         """Trigger alert for rule violation"""
+
+
+
         try:
             alert = Alert(
                 id=f"alert_{rule.id}_{int(datetime.now(timezone.utc).timestamp())}",
@@ -530,6 +554,9 @@ class StreamMonitor:
         error: Optional[str]
     ) -> None:
         """Store metrics for historical analysis"""
+
+
+
         try:
             if stream_id not in self.metrics_history:
                 self.metrics_history[stream_id] = []
@@ -556,6 +583,9 @@ class StreamMonitor:
             
     async def _get_recent_event_count(self) -> int:
         """Get event count in the last minute"""
+
+
+
         try:
             cutoff_time = datetime.now(timezone.utc) - timedelta(minutes=1)
             recent_count = 0
@@ -574,6 +604,9 @@ class StreamMonitor:
             
     async def shutdown(self) -> None:
         """Gracefully shutdown stream monitor"""
+
+
+
         try:
             self._shutdown_event.set()
             

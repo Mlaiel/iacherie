@@ -112,6 +112,9 @@ class PlatformCrawlerManager(DatabaseManager):
         Raises:
             CrawlerConfigurationError: If configuration is invalid
         """
+
+
+
         try:
             crawler_id = str(uuid4())
             
@@ -165,6 +168,9 @@ class PlatformCrawlerManager(DatabaseManager):
         Returns:
             Crawler ID for YouTube operations
         """
+
+
+
         try:
             crawler_config = {
                 "api_key": api_key,
@@ -231,6 +237,9 @@ class PlatformCrawlerManager(DatabaseManager):
         Returns:
             Crawler ID for TikTok operations
         """
+
+
+
         try:
             crawler_config = {
                 "auth_token": auth_token,
@@ -297,6 +306,9 @@ class PlatformCrawlerManager(DatabaseManager):
         Returns:
             Crawler ID for Instagram operations
         """
+
+
+
         try:
             crawler_config = {
                 "access_token": access_token,
@@ -364,6 +376,9 @@ class PlatformCrawlerManager(DatabaseManager):
         Returns:
             Crawler ID for Twitter operations
         """
+
+
+
         try:
             crawler_config = {
                 "bearer_token": bearer_token,
@@ -433,6 +448,9 @@ class PlatformCrawlerManager(DatabaseManager):
         Returns:
             Crawler ID for Spotify operations
         """
+
+
+
         try:
             crawler_config = {
                 "client_id": client_id,
@@ -490,6 +508,9 @@ class PlatformCrawlerManager(DatabaseManager):
         Returns:
             Dictionary containing crawler status and metrics
         """
+
+
+
         try:
             crawler = await self.db_session.query(PlatformCrawler).filter(
                 PlatformCrawler.crawler_id == crawler_id
@@ -541,6 +562,9 @@ class PlatformCrawlerManager(DatabaseManager):
         Returns:
             True if update successful
         """
+
+
+
         try:
             crawler = await self.db_session.query(PlatformCrawler).filter(
                 PlatformCrawler.crawler_id == crawler_id

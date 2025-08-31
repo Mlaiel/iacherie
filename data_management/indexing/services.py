@@ -8,7 +8,7 @@ for content indexing, search, vectors, and real-time processing.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent - Content Protection Platform
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
@@ -142,6 +142,9 @@ class IndexingService:
     
     async def initialize(self) -> None:
         """Initialize all components"""
+
+
+
         try:
             # Initialize engines
             await asyncio.gather(
@@ -163,6 +166,9 @@ class IndexingService:
     
     async def index_content(self, request: IndexingRequest) -> IndexingResult:
         """Index content with comprehensive feature extraction"""
+
+
+
         try:
             if not self._initialized:
                 await self.initialize()
@@ -282,6 +288,9 @@ class IndexingService:
     async def _generate_embeddings(self, content_id: str, processed_data: Dict, 
                                  index_record: IndexRecord) -> List[str]:
         """Generate embeddings for content"""
+
+
+
         try:
             embeddings_generated = []
             
@@ -352,6 +361,9 @@ class IndexingService:
     
     async def _create_audio_embedding(self, audio_features: Dict) -> Optional[List[float]]:
         """Create embedding from audio features"""
+
+
+
         try:
             # Extract key audio features and create a simple embedding
             features = []
@@ -384,6 +396,9 @@ class IndexingService:
     async def _generate_fingerprints(self, content_id: str, processed_data: Dict, 
                                    file_path: Optional[str]) -> List[str]:
         """Generate fingerprints for content"""
+
+
+
         try:
             fingerprints_created = []
             
@@ -411,6 +426,9 @@ class IndexingService:
     
     async def update_index(self, content_id: str, updates: Dict[str, Any]) -> bool:
         """Update existing index"""
+
+
+
         try:
             # Update in repository
             repo_updated = await self.index_repo.update(content_id, updates)
@@ -431,6 +449,9 @@ class IndexingService:
     
     async def delete_index(self, content_id: str) -> bool:
         """Delete content from all indexes"""
+
+
+
         try:
             # Delete from all engines
             engine_results = await asyncio.gather(
@@ -462,6 +483,9 @@ class IndexingService:
     
     async def _delete_vectors_by_content(self, content_id: str) -> bool:
         """Delete all vectors for a content ID"""
+
+
+
         try:
             vectors = await self.vector_repo.get_by_content_id(content_id)
             
@@ -476,6 +500,9 @@ class IndexingService:
     
     async def _delete_fingerprints_by_content(self, content_id: str) -> bool:
         """Delete all fingerprints for a content ID"""
+
+
+
         try:
             fingerprints = await self.fingerprint_repo.get_by_content_id(content_id)
             
@@ -490,6 +517,9 @@ class IndexingService:
     
     async def get_indexing_stats(self, creator_id: Optional[str] = None) -> Dict[str, Any]:
         """Get indexing statistics"""
+
+
+
         try:
             stats = {
                 "total_indexed": 0,
@@ -567,6 +597,9 @@ class SearchService:
     
     async def initialize(self) -> None:
         """Initialize search components"""
+
+
+
         try:
             await asyncio.gather(
                 self.content_engine.initialize(),
@@ -582,6 +615,9 @@ class SearchService:
     
     async def search(self, request: SearchRequest) -> SearchResult:
         """Perform comprehensive search"""
+
+
+
         try:
             if not self._initialized:
                 await self.initialize()
@@ -660,6 +696,9 @@ class SearchService:
     
     async def _generate_aggregations(self, results: List[Dict]) -> Dict[str, Any]:
         """Generate aggregations from search results"""
+
+
+
         try:
             aggregations = {
                 "content_types": {},
@@ -693,6 +732,9 @@ class SearchService:
     
     async def _generate_suggestions(self, query_text: Optional[str]) -> List[str]:
         """Generate search suggestions"""
+
+
+
         try:
             if not query_text:
                 return []
@@ -725,6 +767,9 @@ class SearchService:
     
     async def find_similar_content(self, content_id: str, limit: int = 10) -> List[Dict[str, Any]]:
         """Find content similar to the given content"""
+
+
+
         try:
             return await self.search_repo.find_duplicate_content(content_id)
             
@@ -734,6 +779,9 @@ class SearchService:
     
     async def get_recommendations(self, content_id: str, limit: int = 10) -> List[Dict[str, Any]]:
         """Get content recommendations"""
+
+
+
         try:
             return await self.search_repo.get_content_recommendations(content_id, limit)
             
@@ -760,6 +808,9 @@ class VectorService:
     async def create_embedding(self, content_id: str, text: str, 
                              embedding_type: str = "text") -> Optional[str]:
         """Create text embedding for content"""
+
+
+
         try:
             # Generate embedding using engine
             result = await self.vector_engine.index_content(content_id, {
@@ -793,6 +844,9 @@ class VectorService:
     async def similarity_search_by_text(self, query_text: str, 
                                       top_k: int = 10) -> List[Dict[str, Any]]:
         """Perform similarity search using text query"""
+
+
+
         try:
             # Generate query embedding
             query_result = await self.vector_engine._generate_embedding(query_text)
@@ -821,6 +875,9 @@ class VectorService:
     
     async def get_content_vectors(self, content_id: str) -> List[VectorRecord]:
         """Get all vectors for a content ID"""
+
+
+
         try:
             return await self.vector_repo.get_by_content_id(content_id)
             
@@ -841,6 +898,9 @@ class RealtimeIndexService:
     
     async def start(self, num_workers: int = 3) -> None:
         """Start real-time processing workers"""
+
+
+
         try:
             self._running = True
             
@@ -857,6 +917,9 @@ class RealtimeIndexService:
     
     async def stop(self) -> None:
         """Stop real-time processing"""
+
+
+
         try:
             self._running = False
             
@@ -876,6 +939,9 @@ class RealtimeIndexService:
     
     async def queue_indexing(self, request: IndexingRequest) -> None:
         """Queue content for real-time indexing"""
+
+
+
         try:
             await self.pending_operations.put(("index", request))
             self.logger.debug(f"Queued indexing for content: {request.content_id}")
@@ -885,6 +951,9 @@ class RealtimeIndexService:
     
     async def queue_update(self, content_id: str, updates: Dict[str, Any]) -> None:
         """Queue content update"""
+
+
+
         try:
             await self.pending_operations.put(("update", (content_id, updates)))
             self.logger.debug(f"Queued update for content: {content_id}")
@@ -894,6 +963,9 @@ class RealtimeIndexService:
     
     async def queue_deletion(self, content_id: str) -> None:
         """Queue content deletion"""
+
+
+
         try:
             await self.pending_operations.put(("delete", content_id))
             self.logger.debug(f"Queued deletion for content: {content_id}")
@@ -965,6 +1037,9 @@ class RealtimeIndexService:
     
     async def get_queue_status(self) -> Dict[str, Any]:
         """Get queue status information"""
+
+
+
         return {
             "pending_operations": self.pending_operations.qsize(),
             "active_workers": len([t for t in self.worker_tasks if not t.done()]),

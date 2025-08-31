@@ -9,7 +9,7 @@ Project: IA Influencer Agent + Content Protection Platform
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-⚠️  AVERTISSEMENT STRICT - PROPRIÉTÉ INTELLECTUELLE ⚠️
+  AVERTISSEMENT STRICT - PROPRIÉTÉ INTELLECTUELLE 
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute violation sera poursuivie selon les lois en vigueur.
@@ -235,6 +235,9 @@ class ContentPipelineMonitor:
     async def start_pipeline_monitoring(self, content_id: str, content_type: ContentType, 
                                       creator_id: str, metadata: Dict[str, Any] = None) -> None:
         """Start monitoring a new content processing pipeline"""
+
+
+
         try:
             pipeline_metrics = ContentProcessingMetrics(
                 content_id=content_id,
@@ -265,6 +268,9 @@ class ContentPipelineMonitor:
                                   status: PipelineStatus, quality_score: float = 0.0,
                                   ai_confidence: float = 0.0, error_message: str = None) -> None:
         """Update pipeline stage and status"""
+
+
+
         try:
             if content_id not in self.active_pipelines:
                 self.logger.warning(f"Pipeline {content_id} not found in active pipelines")
@@ -305,6 +311,9 @@ class ContentPipelineMonitor:
     async def complete_pipeline(self, content_id: str, final_quality_score: float = 0.0,
                               monetization_data: Dict[str, Any] = None) -> None:
         """Complete pipeline monitoring and archive metrics"""
+
+
+
         try:
             if content_id not in self.active_pipelines:
                 self.logger.warning(f"Pipeline {content_id} not found in active pipelines")
@@ -341,6 +350,9 @@ class ContentPipelineMonitor:
     
     async def _check_pipeline_performance(self, pipeline: ContentProcessingMetrics) -> None:
         """Check pipeline performance against thresholds"""
+
+
+
         try:
             content_config = self.content_configs.get(pipeline.content_type, {})
             
@@ -374,6 +386,9 @@ class ContentPipelineMonitor:
     
     async def _send_performance_alert(self, pipeline: ContentProcessingMetrics, message: str) -> None:
         """Send performance alert for pipeline issues"""
+
+
+
         try:
             alert_data = {
                 'alert_type': 'pipeline_performance',
@@ -399,6 +414,9 @@ class ContentPipelineMonitor:
     
     async def _store_pipeline_metrics(self, pipeline: ContentProcessingMetrics) -> None:
         """Store pipeline metrics in database for historical analysis"""
+
+
+
         try:
             async with get_database_session() as session:
                 await session.execute(text("""
@@ -431,6 +449,9 @@ class ContentPipelineMonitor:
     
     async def _analyze_pipeline_performance(self, pipeline: ContentProcessingMetrics) -> None:
         """Run AI analysis on pipeline performance"""
+
+
+
         try:
             # Analyze pipeline efficiency
             efficiency_score = await self.ai_analyzer.analyze_pipeline_efficiency(pipeline.to_dict())
@@ -459,6 +480,9 @@ class ContentPipelineMonitor:
     
     async def get_pipeline_analytics(self, hours: int = 24) -> Dict[str, Any]:
         """Get comprehensive pipeline analytics"""
+
+
+
         try:
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             
@@ -524,6 +548,9 @@ class ContentPipelineMonitor:
     
     async def get_creator_analytics(self, creator_id: str, days: int = 7) -> Dict[str, Any]:
         """Get analytics for specific creator"""
+
+
+
         try:
             cutoff_time = datetime.utcnow() - timedelta(days=days)
             
@@ -567,6 +594,9 @@ class ContentPipelineMonitor:
     
     async def get_real_time_pipeline_status(self) -> Dict[str, Any]:
         """Get real-time status of all active pipelines"""
+
+
+
         try:
             active_status = {}
             for content_id, pipeline in self.active_pipelines.items():
@@ -607,4 +637,7 @@ class ContentPipelineMonitor:
 
 async def create_content_pipeline_monitor(settings: Settings) -> ContentPipelineMonitor:
     """Factory function to create content pipeline monitor"""
+
+
+
     return ContentPipelineMonitor(settings)

@@ -1,11 +1,11 @@
 """
-💰 Monetization Engine Docker Configuration - IA-Influencer-Agent Platform
+ Monetization Engine Docker Configuration - IA-Influencer-Agent Platform
 ===========================================================================
 Expert: FinTech Engineer + Revenue Optimization + Payment Systems
 Creator: Fahed Mlaiel <mlaiel@live.de>
 ===========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL 
 Tout vol, copie ou utilisation non autorisée de ce code source,
 de ce concept ou de cette propriété intellectuelle sans
 l'autorisation écrite explicite de Fahed Mlaiel est strictement
@@ -130,6 +130,9 @@ class MonetizationEngineDockerConfig:
     
     def generate_dockerfile(self) -> str:
         """Generate production Dockerfile for Monetization Engine"""
+
+
+
         return f"""
 # IA-Influencer Monetization Engine - Production Docker Image
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -304,6 +307,9 @@ CMD ["gunicorn", \\
 
     def generate_docker_compose_service(self) -> Dict[str, Any]:
         """Generate docker-compose service configuration"""
+
+
+
         return {
             "image": f"{self.image_name}:{self.image_tag}",
             "container_name": self.container_name,
@@ -387,6 +393,9 @@ CMD ["gunicorn", \\
 
     def generate_payment_worker_service(self) -> Dict[str, Any]:
         """Generate payment processing worker service configuration"""
+
+
+
         return {
             "image": f"{self.image_name}:{self.image_tag}",
             "container_name": f"{self.container_name}-payments",
@@ -450,6 +459,9 @@ CMD ["gunicorn", \\
 
     def generate_requirements_txt(self) -> str:
         """Generate monetization engine requirements.txt"""
+
+
+
         return """
 # IA-Influencer Monetization Engine - Production Dependencies
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -614,5 +626,5 @@ flake8==6.1.0
             yaml.dump(service_config, f, default_flow_style=False)
         files_created.append(str(compose_config_path))
         
-        logger.info(f"✅ Monetization Engine configuration files saved: {files_created}")
+        logger.info(f" Monetization Engine configuration files saved: {files_created}")
         return files_created

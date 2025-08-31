@@ -7,7 +7,7 @@ local filesystem, and other cloud storage providers with intelligent failover.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This backend management technology is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, reverse engineering, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -165,6 +165,9 @@ class BackendManager:
         config: StorageConfig
     ) -> Optional[Any]:
         """Initialize specific backend client"""
+
+
+
         try:
             if backend_type == StorageBackend.LOCAL:
                 return await self._initialize_local_backend(config)
@@ -380,6 +383,9 @@ class BackendManager:
         Returns:
             Local file path or file content
         """
+
+
+
         try:
             if backend not in self.backends:
                 raise StorageError(f"Backend {backend} not available")
@@ -419,6 +425,9 @@ class BackendManager:
         Returns:
             True if deletion successful
         """
+
+
+
         try:
             if backend not in self.backends:
                 raise StorageError(f"Backend {backend} not available")
@@ -845,6 +854,9 @@ class BackendManager:
     
     async def _delete_local(self, backend_client: Dict[str, Any], file_path: str) -> bool:
         """Delete file from local filesystem"""
+
+
+
         try:
             base_path = backend_client['base_path']
             full_file_path = base_path / file_path
@@ -861,6 +873,9 @@ class BackendManager:
     
     async def _delete_s3(self, backend_client: Dict[str, Any], file_path: str) -> bool:
         """Delete file from AWS S3"""
+
+
+
         try:
             s3_client = backend_client['client']
             bucket = backend_client['bucket']
@@ -879,6 +894,9 @@ class BackendManager:
     
     async def _delete_minio(self, backend_client: Dict[str, Any], file_path: str) -> bool:
         """Delete file from MinIO"""
+
+
+
         try:
             minio_client = backend_client['client']
             bucket = backend_client['bucket']
@@ -897,6 +915,9 @@ class BackendManager:
     
     async def _delete_gcs(self, backend_client: Dict[str, Any], file_path: str) -> bool:
         """Delete file from Google Cloud Storage"""
+
+
+
         try:
             bucket = backend_client['bucket']
             blob = bucket.blob(file_path)
@@ -913,6 +934,9 @@ class BackendManager:
     
     async def _delete_azure(self, backend_client: Dict[str, Any], file_path: str) -> bool:
         """Delete file from Azure Blob Storage"""
+
+
+
         try:
             blob_service_client = backend_client['client']
             container = backend_client['container']
@@ -974,6 +998,9 @@ class BackendManager:
     
     async def _test_s3_connection(self, s3_client, bucket: str):
         """Test S3 connection and bucket access"""
+
+
+
         try:
             await asyncio.get_event_loop().run_in_executor(
                 None,
@@ -1075,6 +1102,9 @@ class BackendManager:
     
     async def cleanup(self):
         """Cleanup backend manager resources"""
+
+
+
         try:
             # Close all backend connections
             for backend_type, backend_client in self.backends.items():

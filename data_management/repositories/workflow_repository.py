@@ -1,5 +1,5 @@
 """
-⚙️ Workflow Repository - IA Influencer Agent Platform Enterprise
+ Workflow Repository - IA Influencer Agent Platform Enterprise
 ================================================================
 Module: backend/data_management/repositories/workflow_repository.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Workflow Management Repository - Production-Ready
 Responsibility: Advanced AI workflow orchestration and automation pipeline management
 =================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
@@ -388,6 +388,9 @@ class WorkflowRepository(BaseRepository):
     def execute_workflow(self, workflow_id: str, trigger_data: Dict[str, Any] = None,
                         context: Dict[str, Any] = None) -> WorkflowExecution:
         """Execute a workflow"""
+
+
+
         try:
             # Get workflow definition
             workflow = self.get_by_id(workflow_id)
@@ -431,6 +434,9 @@ class WorkflowRepository(BaseRepository):
 
     def get_execution_status(self, execution_id: str) -> Dict[str, Any]:
         """Get detailed execution status"""
+
+
+
         try:
             execution = self.get_by_id(execution_id)
             if not execution or not isinstance(execution, WorkflowExecution):
@@ -471,6 +477,9 @@ class WorkflowRepository(BaseRepository):
 
     def cancel_execution(self, execution_id: str, reason: str = "User cancelled") -> bool:
         """Cancel running workflow execution"""
+
+
+
         try:
             execution = self.get_by_id(execution_id)
             if not execution or not isinstance(execution, WorkflowExecution):
@@ -508,6 +517,9 @@ class WorkflowRepository(BaseRepository):
 
     def pause_execution(self, execution_id: str) -> bool:
         """Pause running workflow execution"""
+
+
+
         try:
             execution = self.get_by_id(execution_id)
             if not execution or not isinstance(execution, WorkflowExecution):
@@ -534,6 +546,9 @@ class WorkflowRepository(BaseRepository):
 
     def resume_execution(self, execution_id: str) -> bool:
         """Resume paused workflow execution"""
+
+
+
         try:
             execution = self.get_by_id(execution_id)
             if not execution or not isinstance(execution, WorkflowExecution):
@@ -560,6 +575,9 @@ class WorkflowRepository(BaseRepository):
 
     def create_workflow_template(self, template_data: Dict[str, Any]) -> WorkflowTemplate:
         """Create reusable workflow template"""
+
+
+
         try:
             # Create workflow definition from template data
             workflow_def = self._create_workflow_definition_from_template(template_data)
@@ -588,6 +606,9 @@ class WorkflowRepository(BaseRepository):
 
     def instantiate_from_template(self, template_id: str, instance_data: Dict[str, Any]) -> WorkflowDefinition:
         """Create workflow instance from template"""
+
+
+
         try:
             # Get template
             template = self.get_by_id(template_id)
@@ -620,6 +641,9 @@ class WorkflowRepository(BaseRepository):
 
     def get_workflow_metrics(self, workflow_id: str, time_range: str = "30d") -> WorkflowMetrics:
         """Get comprehensive workflow performance metrics"""
+
+
+
         try:
             # Get executions for time range
             executions = self._fetch_workflow_executions(workflow_id, time_range)
@@ -678,6 +702,9 @@ class WorkflowRepository(BaseRepository):
 
     def get_workflow_analytics(self, filters: Dict[str, Any] = None) -> Dict[str, Any]:
         """Get comprehensive workflow analytics"""
+
+
+
         try:
             filters = filters or {}
             
@@ -772,6 +799,9 @@ class WorkflowRepository(BaseRepository):
 
     def _increment_version(self, current_version: str) -> str:
         """Increment version number"""
+
+
+
         try:
             parts = current_version.split('.')
             parts[-1] = str(int(parts[-1]) + 1)
@@ -1104,6 +1134,9 @@ class AsyncWorkflowRepository(AsyncBaseRepository):
     async def execute_workflow_async(self, workflow_id: str, trigger_data: Dict[str, Any] = None,
                                    context: Dict[str, Any] = None) -> WorkflowExecution:
         """Execute a workflow asynchronously"""
+
+
+
         try:
             # Get workflow definition
             workflow = await self.get_by_id(workflow_id)
@@ -1147,6 +1180,9 @@ class AsyncWorkflowRepository(AsyncBaseRepository):
 
     async def batch_execute_workflows(self, execution_requests: List[Dict[str, Any]]) -> List[WorkflowExecution]:
         """Execute multiple workflows concurrently"""
+
+
+
         try:
             semaphore = asyncio.Semaphore(self._max_concurrent_operations)
             

@@ -73,6 +73,9 @@ class TaxComplianceEngine:
         
     async def initialize(self) -> None:
         """Initialize tax compliance engine"""
+
+
+
         try:
             await self._setup_database_tables()
             await self._load_tax_rules()
@@ -139,6 +142,9 @@ class TaxComplianceEngine:
 
     async def _load_tax_rules(self) -> None:
         """Load tax rules for different countries"""
+
+
+
         try:
             # Default tax rules for major markets
             default_rules = [
@@ -214,6 +220,9 @@ class TaxComplianceEngine:
 
     async def _setup_compliance_monitoring(self) -> None:
         """Setup compliance monitoring system"""
+
+
+
         try:
             # Cache compliance thresholds
             thresholds = {
@@ -233,6 +242,9 @@ class TaxComplianceEngine:
     async def calculate_tax(self, transaction_id: str, amount: Decimal, 
                            customer_country: str, category: str = 'digital_content') -> TaxCalculation:
         """Calculate taxes for transaction"""
+
+
+
         try:
             # Get applicable tax rules
             tax_rules = await self._get_tax_rules(customer_country, category)
@@ -287,6 +299,9 @@ class TaxComplianceEngine:
 
     async def _get_tax_rules(self, country: str, category: str) -> List[TaxRule]:
         """Get applicable tax rules for country and category"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 # Check for country-specific rules first
@@ -322,6 +337,9 @@ class TaxComplianceEngine:
 
     async def _store_tax_calculation(self, tax_calc: TaxCalculation, customer_country: str) -> None:
         """Store tax calculation record"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 await conn.execute("""
@@ -346,6 +364,9 @@ class TaxComplianceEngine:
     async def generate_tax_report(self, country: str, start_date: datetime, 
                                 end_date: datetime, report_type: str = 'summary') -> Dict[str, Any]:
         """Generate tax compliance report"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 # Get transaction summary
@@ -447,6 +468,9 @@ class TaxComplianceEngine:
 
     async def check_compliance_threshold(self, country: str, current_revenue: Decimal) -> Dict[str, Any]:
         """Check if revenue exceeds compliance thresholds"""
+
+
+
         try:
             # Get threshold data
             cached_thresholds = self.redis.get(f"tax_threshold_{country}")
@@ -480,6 +504,9 @@ class TaxComplianceEngine:
 
     async def update_tax_rule(self, rule_id: str, updates: Dict[str, Any]) -> bool:
         """Update tax rule"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 set_clauses = []
@@ -517,6 +544,9 @@ class TaxComplianceEngine:
 
     async def get_compliance_dashboard(self) -> Dict[str, Any]:
         """Get tax compliance dashboard data"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 # Recent calculations

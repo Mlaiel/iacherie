@@ -7,7 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -128,64 +128,124 @@ class RepositoryFactory:
         return repository_instance
     
     def get_content_fingerprint_repository(self) -> ContentFingerprintRepository:
-        """Get ContentFingerprintRepository instance"""        return self.get_repository('content_fingerprint')
+        """Get ContentFingerprintRepository instance"""
+
+
+        return self.get_repository('content_fingerprint')
     
     def get_protection_alert_repository(self) -> ProtectionAlertRepository:
-        """Get ProtectionAlertRepository instance"""        return self.get_repository('protection_alert')
+        """Get ProtectionAlertRepository instance"""
+
+
+        return self.get_repository('protection_alert')
     
     def get_revenue_tracking_repository(self) -> RevenueTrackingRepository:
-        """Get RevenueTrackingRepository instance"""        return self.get_repository('revenue_tracking')
+        """Get RevenueTrackingRepository instance"""
+
+
+        return self.get_repository('revenue_tracking')
     
     def get_user_content_repository(self) -> UserContentRepository:
-        """Get UserContentRepository instance"""        return self.get_repository('user_content')
+        """Get UserContentRepository instance"""
+
+
+        return self.get_repository('user_content')
     
     def get_platform_integration_repository(self) -> PlatformIntegrationRepository:
-        """Get PlatformIntegrationRepository instance"""        return self.get_repository('platform_integration')
+        """Get PlatformIntegrationRepository instance"""
+
+
+        return self.get_repository('platform_integration')
     
     def get_licensing_agreement_repository(self) -> LicensingAgreementRepository:
-        """Get LicensingAgreementRepository instance"""        return self.get_repository('licensing_agreement')
+        """Get LicensingAgreementRepository instance"""
+
+
+        return self.get_repository('licensing_agreement')
     
     def get_audit_log_repository(self) -> AuditLogRepository:
-        """Get AuditLogRepository instance"""        return self.get_repository('audit_log')
+        """Get AuditLogRepository instance"""
+
+
+        return self.get_repository('audit_log')
     
     def get_content_metadata_repository(self) -> ContentMetadataRepository:
-        """Get ContentMetadataRepository instance"""        return self.get_repository('content_metadata')
+        """Get ContentMetadataRepository instance"""
+
+
+        return self.get_repository('content_metadata')
     
     def get_monetization_rule_repository(self) -> MonetizationRuleRepository:
-        """Get MonetizationRuleRepository instance"""        return self.get_repository('monetization_rule')
+        """Get MonetizationRuleRepository instance"""
+
+
+        return self.get_repository('monetization_rule')
     
     def get_collaboration_request_repository(self) -> CollaborationRequestRepository:
-        """Get CollaborationRequestRepository instance"""        return self.get_repository('collaboration_request')
+        """Get CollaborationRequestRepository instance"""
+
+
+        return self.get_repository('collaboration_request')
     
     def get_ai_content_generation_repository(self) -> AIContentGenerationRepository:
-        """Get AIContentGenerationRepository instance"""        return self.get_repository('ai_content_generation')
+        """Get AIContentGenerationRepository instance"""
+
+
+        return self.get_repository('ai_content_generation')
     
     def get_content_distribution_repository(self) -> ContentDistributionRepository:
-        """Get ContentDistributionRepository instance"""        return self.get_repository('content_distribution')
+        """Get ContentDistributionRepository instance"""
+
+
+        return self.get_repository('content_distribution')
     
     def get_social_media_analytics_repository(self) -> SocialMediaAnalyticsRepository:
-        """Get SocialMediaAnalyticsRepository instance"""        return self.get_repository('social_media_analytics')
+        """Get SocialMediaAnalyticsRepository instance"""
+
+
+        return self.get_repository('social_media_analytics')
     
     def get_content_optimization_repository(self) -> ContentOptimizationRepository:
-        """Get ContentOptimizationRepository instance"""        return self.get_repository('content_optimization')
+        """Get ContentOptimizationRepository instance"""
+
+
+        return self.get_repository('content_optimization')
     
     def get_creator_profile_repository(self) -> CreatorProfileRepository:
-        """Get CreatorProfileRepository instance"""        return self.get_repository('creator_profile')
+        """Get CreatorProfileRepository instance"""
+
+
+        return self.get_repository('creator_profile')
     
     def get_audio_analytics_repository(self) -> AudioAnalyticsRepository:
-        """Get AudioAnalyticsRepository instance"""        return self.get_repository('audio_analytics')
+        """Get AudioAnalyticsRepository instance"""
+
+
+        return self.get_repository('audio_analytics')
     
     def get_blockchain_rights_repository(self) -> BlockchainRightsRepository:
-        """Get BlockchainRightsRepository instance"""        return self.get_repository('blockchain_rights')
+        """Get BlockchainRightsRepository instance"""
+
+
+        return self.get_repository('blockchain_rights')
     
     def get_cross_platform_monitoring_repository(self) -> CrossPlatformMonitoringRepository:
-        """Get CrossPlatformMonitoringRepository instance"""        return self.get_repository('cross_platform_monitoring')
+        """Get CrossPlatformMonitoringRepository instance"""
+
+
+        return self.get_repository('cross_platform_monitoring')
     
     def get_ai_revenue_analytics_repository(self) -> AIRevenueAnalyticsRepository:
-        """Get AIRevenueAnalyticsRepository instance"""        return self.get_repository('ai_revenue_analytics')
+        """Get AIRevenueAnalyticsRepository instance"""
+
+
+        return self.get_repository('ai_revenue_analytics')
     
     def get_advanced_team_collaboration_repository(self) -> AdvancedTeamCollaborationRepository:
-        """Get AdvancedTeamCollaborationRepository instance"""        return self.get_repository('advanced_team_collaboration')
+        """Get AdvancedTeamCollaborationRepository instance"""
+
+
+        return self.get_repository('advanced_team_collaboration')
     
     def clear_cache(self) -> None:
         """Clear repository instance cache"""        self._repository_cache.clear()
@@ -209,7 +269,10 @@ def create_repository_factory(db_session: Session) -> RepositoryFactory:
         
     Returns:
         RepositoryFactory instance
-    """    return RepositoryFactory(db_session)
+    """
+
+
+    return RepositoryFactory(db_session)
 
 # Export all repository classes for direct import
 __all__ = [

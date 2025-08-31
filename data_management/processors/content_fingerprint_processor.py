@@ -1,5 +1,5 @@
 """
-🔐 Content Fingerprint Processor - IA Influencer Agent Platform Enterprise
+ Content Fingerprint Processor - IA Influencer Agent Platform Enterprise
 ===========================================================================
 Module: backend/data_management/processors/content_fingerprint_processor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial AI Fingerprinting - Enterprise Production-Ready Ultra Advanced
 Responsibility: Génération d'empreintes AI multi-format pour protection contenu
 ===============================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Toute tentative de vol de ce concept, de cette idée ou de ce code sans autorisation personnelle claire 
 et écrite de Fahed Mlaiel est strictement interdite et sera poursuivie en justice selon la loi allemande.
@@ -576,6 +576,9 @@ class AsyncContentFingerprintProcessor(AsyncBaseProcessor):
     
     async def validate_input(self, input_data: Any) -> bool:
         """Validation asynchrone"""
+
+
+
         return self.sync_processor.validate_input(input_data)
     
     async def find_similar_content(self, fingerprint_vector: List[float], content_type: str, threshold: float = 0.8) -> List[Dict[str, Any]]:

@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-🔧 Production Environment Secrets Manager - Ainflue Platform
+ Production Environment Secrets Manager - Ainflue Platform
 ==============================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps + Security + Backend Senior
 Date: 2025-08-31
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -119,6 +119,9 @@ class ProductionSecretsManager:
     
     def load_secrets_from_environment(self) -> ExternalAPISecrets:
         """Load secrets from environment variables"""
+
+
+
         return ExternalAPISecrets(
             # Social Media APIs
             youtube_api_key=os.getenv('YOUTUBE_API_KEY', ''),
@@ -323,6 +326,9 @@ class ProductionSecretsManager:
     
     def rotate_secrets(self) -> bool:
         """Rotate secrets that support programmatic rotation"""
+
+
+
         try:
             # Generate new JWT and encryption keys
             new_jwt_secret = secrets.token_urlsafe(64)
@@ -340,6 +346,9 @@ class ProductionSecretsManager:
     
     def setup_production_secrets(self) -> bool:
         """Complete setup of production secrets"""
+
+
+
         try:
             # Load secrets from environment
             secrets_config = self.load_secrets_from_environment()
@@ -406,7 +415,7 @@ if __name__ == "__main__":
     print(f"Secrets Status: {status}")
     
     if success:
-        print("✅ Production secrets setup completed successfully!")
+        print(" Production secrets setup completed successfully!")
     else:
-        print("❌ Production secrets setup failed!")
+        print(" Production secrets setup failed!")
         exit(1)

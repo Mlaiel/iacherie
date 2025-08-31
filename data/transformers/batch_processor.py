@@ -250,6 +250,9 @@ class BatchProcessor:
         Returns:
             Job ID
         """
+
+
+
         try:
             # Validate job
             if not job.tasks:
@@ -297,6 +300,9 @@ class BatchProcessor:
         Returns:
             Created batch job
         """
+
+
+
         try:
             # Generate job ID
             job_id = f"batch_{int(time.time())}_{len(self.active_jobs)}"
@@ -346,6 +352,9 @@ class BatchProcessor:
         Returns:
             Processed job
         """
+
+
+
         try:
             job = self.active_jobs.get(job_id)
             if not job:
@@ -384,6 +393,9 @@ class BatchProcessor:
     
     async def _schedule_job(self, job: BatchJob):
         """Schedule job for processing."""
+
+
+
         try:
             # Priority-based scheduling
             priority_value = {
@@ -405,6 +417,9 @@ class BatchProcessor:
     
     async def _process_sequential(self, job: BatchJob):
         """Process job tasks sequentially."""
+
+
+
         try:
             for task in job.tasks:
                 if self.shutdown_requested or (job.stop_on_error and job.failed_tasks > 0):
@@ -428,6 +443,9 @@ class BatchProcessor:
     
     async def _process_parallel_thread(self, job: BatchJob):
         """Process job tasks using thread parallelism."""
+
+
+
         try:
             # Create semaphore for worker limiting
             semaphore = asyncio.Semaphore(job.max_workers or self.config.max_thread_workers)
@@ -451,6 +469,9 @@ class BatchProcessor:
     
     async def _process_parallel_process(self, job: BatchJob):
         """Process job tasks using process parallelism."""
+
+
+
         try:
             loop = asyncio.get_event_loop()
             
@@ -489,6 +510,9 @@ class BatchProcessor:
     
     async def _process_hybrid(self, job: BatchJob):
         """Process job using hybrid thread/process approach."""
+
+
+
         try:
             # Determine optimal split
             cpu_intensive_tasks = []
@@ -532,6 +556,9 @@ class BatchProcessor:
     
     async def _process_task(self, task: BatchTask):
         """Process individual task."""
+
+
+
         try:
             task.status = TaskStatus.PROCESSING
             task.started_at = time.time()
@@ -584,6 +611,9 @@ class BatchProcessor:
     
     def _process_task_sync(self, task: BatchTask) -> BatchTask:
         """Synchronous task processing for process pools."""
+
+
+
         try:
             # This would be called in a separate process
             # Need to handle transformer execution differently
@@ -637,6 +667,9 @@ class BatchProcessor:
     
     def get_system_metrics(self) -> Dict[str, Any]:
         """Get system processing metrics."""
+
+
+
         return {
             "active_jobs": len(self.active_jobs),
             "queue_size": self.task_queue.qsize(),
@@ -650,6 +683,9 @@ class BatchProcessor:
     
     def cancel_job(self, job_id: str) -> bool:
         """Cancel a running job."""
+
+
+
         try:
             job = self.active_jobs.get(job_id)
             if not job:
@@ -677,6 +713,9 @@ class BatchProcessor:
     
     async def shutdown(self, timeout: float = 30.0):
         """Shutdown batch processor gracefully."""
+
+
+
         try:
             logger.info("Shutting down batch processor...")
             self.shutdown_requested = True
@@ -740,6 +779,9 @@ class BatchProcessor:
     
     def _estimate_completion_time(self, job: BatchJob) -> Optional[float]:
         """Estimate job completion time."""
+
+
+
         try:
             if job.completed_at:
                 return job.completed_at
@@ -759,6 +801,9 @@ class BatchProcessor:
     
     def _get_system_resources(self) -> Dict[str, Any]:
         """Get current system resource usage."""
+
+
+
         try:
             import psutil
             return {

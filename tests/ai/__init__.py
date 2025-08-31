@@ -6,7 +6,7 @@ protection, processing and distribution platform.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This code is proprietary and confidential. Unauthorized use, modification, 
 distribution, or copying is strictly prohibited without explicit written 
 permission from the author Fahed Mlaiel (mlaiel@live.de).

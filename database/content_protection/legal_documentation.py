@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + DBA + DevOps
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
+ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION 
 ==================================================================
 This code and all associated intellectual property are the EXCLUSIVE property of Fahed Mlaiel.
 ANY unauthorized use, copying, modification, distribution, or commercialization without 
@@ -175,6 +175,9 @@ class LegalDocumentationGenerator:
         Returns:
             Dict containing generated DMCA notice and metadata
         """
+
+
+
         try:
             logger.info(f"Generating DMCA takedown notice for violation: {violation_report_id}")
             
@@ -300,6 +303,9 @@ class LegalDocumentationGenerator:
         Returns:
             Dict containing generated cease and desist letter
         """
+
+
+
         try:
             logger.info(f"Generating cease and desist letter for infringer: {infringer_info.get('name', 'Unknown')}")
             
@@ -404,6 +410,9 @@ class LegalDocumentationGenerator:
         Returns:
             Dict containing litigation documents
         """
+
+
+
         try:
             logger.info(f"Generating litigation notice for case: {case_details.get('case_name', 'Unknown')}")
             
@@ -491,6 +500,9 @@ class LegalDocumentationGenerator:
         Returns:
             Dict containing delivery confirmation and tracking info
         """
+
+
+
         try:
             logger.info(f"Sending legal document: {document_id} via {delivery_method}")
             
@@ -551,6 +563,9 @@ class LegalDocumentationGenerator:
     
     async def _store_legal_document(self, document_data: Dict[str, Any]) -> None:
         """Store legal document in database"""
+
+
+
         try:
             legal_doc = LegalDocument(
                 id=uuid4(),

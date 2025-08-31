@@ -120,6 +120,9 @@ async def generate_comprehensive_analytics(
     - Predictive analytics and forecasting
     - Actionable recommendations for optimization
     """
+
+
+
     try:
         # Determine date range
         if analytics_request.timeframe == AnalyticsTimeframe.CUSTOM:
@@ -285,6 +288,9 @@ async def get_content_performance(
     - AI-generated optimization recommendations
     - Trend analysis and growth trajectory
     """
+
+
+
     try:
         # Validate content belongs to user
         fingerprint = db.query(ContentFingerprint).filter(
@@ -353,6 +359,9 @@ async def get_market_intelligence(
     - Opportunity identification and market gaps
     - Industry-specific insights and recommendations
     """
+
+
+
     try:
         # Get user's content for market analysis
         query = db.query(ContentFingerprint).filter(
@@ -444,6 +453,9 @@ async def generate_predictive_analytics(
     - Market timing optimization
     - Actionable insights for strategic planning
     """
+
+
+
     try:
         # Get user's historical data
         user_content = db.query(ContentFingerprint).filter(
@@ -512,6 +524,9 @@ async def get_analytics_dashboard(
     analytics_service: AnalyticsService = Depends()
 ):
     """Get real-time analytics dashboard with key metrics and insights."""
+
+
+
     try:
         # Get dashboard metrics
         dashboard_data = await analytics_service.generate_dashboard_data(current_user.id)
@@ -539,6 +554,9 @@ async def get_analytics_reports(
     db: Session = Depends(get_db)
 ):
     """Get historical analytics reports for the user."""
+
+
+
     try:
         reports = db.query(AnalyticsReport).filter(
             AnalyticsReport.user_id == current_user.id

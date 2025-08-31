@@ -6,7 +6,7 @@ implementing a complete workflow from upload to monetization across multiple pla
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
+ LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION 
 This code is the EXCLUSIVE intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, distribution, modification, reverse engineering,
 or commercial exploitation without EXPLICIT WRITTEN PERMISSION is STRICTLY PROHIBITED
@@ -122,7 +122,10 @@ def get_creator_workflow_info():
     
     Returns:
         dict: Workflow information including stages and supported platforms
-    """    return {
+    """
+
+
+    return {
         "workflow_stages": [
             "Multi-Format Content Upload",
             "AI-Powered Content Processing & Enhancement", 
@@ -161,18 +164,21 @@ def get_module_status():
     
     Returns:
         dict: Module status and availability information
-    """    return {
+    """
+
+
+    return {
         "content_lifecycle_version": __version__,
         "author": __author__,
         "contact": __email__,
         "license": __license__,
         "status": __status__,
         "modules": {
-            "content_format_processor": "✅ Active - Multi-format processing ready",
-            "content_protection_manager": "✅ Active - Rights protection enabled", 
-            "seo_optimization_engine": "✅ Active - SEO optimization ready",
-            "collaboration_matcher": "✅ Active - Creator matching enabled",
-            "distribution_coordinator": "✅ Active - Multi-platform distribution ready"
+            "content_format_processor": " Active - Multi-format processing ready",
+            "content_protection_manager": " Active - Rights protection enabled", 
+            "seo_optimization_engine": " Active - SEO optimization ready",
+            "collaboration_matcher": " Active - Creator matching enabled",
+            "distribution_coordinator": " Active - Multi-platform distribution ready"
         },
         "legal_notice": "© 2025 Fahed Mlaiel. All rights reserved. Unauthorized use prohibited."
     }

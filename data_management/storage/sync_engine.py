@@ -1,5 +1,5 @@
 """
-🔄 Sync Engine - IA Influencer Agent Platform Enterprise
+ Sync Engine - IA Influencer Agent Platform Enterprise
 ========================================================
 Module: backend/data_management/storage/sync_engine.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Enterprise synchronization engine for bidirectional data sync,
 conflict resolution, and distributed storage coordination.
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -287,6 +287,9 @@ class SyncEngine:
     
     def _initialize_sync_directories(self) -> None:
         """Initialize sync directory structure"""
+
+
+
         try:
             directories = [
                 self.config.sync_root_path,
@@ -313,6 +316,9 @@ class SyncEngine:
     
     async def create_sync_endpoint(self, endpoint_config: Dict[str, Any]) -> Dict[str, Any]:
         """Create new sync endpoint"""
+
+
+
         try:
             # Validate required fields
             required_fields = ['name', 'endpoint_type', 'connection_config']
@@ -372,6 +378,9 @@ class SyncEngine:
     
     async def create_sync_profile(self, profile_config: Dict[str, Any]) -> Dict[str, Any]:
         """Create new sync profile"""
+
+
+
         try:
             # Validate required fields
             required_fields = ['name', 'source_endpoint', 'target_endpoints']
@@ -453,6 +462,9 @@ class SyncEngine:
     
     async def start_sync(self, profile_id: str, force: bool = False) -> Dict[str, Any]:
         """Start synchronization for a profile"""
+
+
+
         try:
             if profile_id not in self.sync_profiles:
                 return {
@@ -537,6 +549,9 @@ class SyncEngine:
         custom_resolution: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Resolve synchronization conflict"""
+
+
+
         try:
             if conflict_id not in self.sync_conflicts:
                 return {
@@ -595,6 +610,9 @@ class SyncEngine:
     
     async def get_sync_status(self, profile_id: Optional[str] = None) -> Dict[str, Any]:
         """Get synchronization status"""
+
+
+
         try:
             if profile_id:
                 # Get status for specific profile
@@ -677,6 +695,9 @@ class SyncEngine:
     
     async def shutdown(self) -> None:
         """Shutdown sync engine"""
+
+
+
         try:
             logger.info("Shutting down sync engine...")
             
@@ -701,6 +722,9 @@ class SyncEngine:
     
     async def _execute_sync_profile(self, sync_profile: SyncProfile) -> Dict[str, Any]:
         """Execute synchronization for a profile"""
+
+
+
         try:
             start_time = datetime.now()
             operations_count = 0
@@ -842,6 +866,9 @@ class SyncEngine:
     
     async def _emit_event(self, event: SyncEvent, data: Dict[str, Any]) -> None:
         """Emit sync event"""
+
+
+
         try:
             await self.event_queue.put({
                 'event': event,
@@ -900,6 +927,9 @@ class SyncEngine:
     
     async def _save_endpoint_configuration(self, endpoint: SyncEndpoint) -> None:
         """Save endpoint configuration to disk"""
+
+
+
         try:
             config_path = Path(self.config.metadata_directory) / "endpoints" / f"{endpoint.endpoint_id}.json"
             
@@ -927,6 +957,9 @@ class SyncEngine:
     
     async def _save_profile_configuration(self, profile: SyncProfile) -> None:
         """Save profile configuration to disk"""
+
+
+
         try:
             config_path = Path(self.config.metadata_directory) / "profiles" / f"{profile.profile_id}.json"
             
@@ -963,6 +996,9 @@ class SyncEngine:
     
     async def _save_conflict_record(self, conflict: SyncConflict) -> None:
         """Save conflict record to disk"""
+
+
+
         try:
             record_path = Path(self.config.metadata_directory) / "conflicts" / f"{conflict.conflict_id}.json"
             
@@ -998,6 +1034,9 @@ class EndpointManager:
     
     async def test_connection(self, endpoint: SyncEndpoint) -> Dict[str, Any]:
         """Test connection to endpoint"""
+
+
+
         try:
             if endpoint.endpoint_type == "local":
                 # Test local filesystem access
@@ -1024,6 +1063,9 @@ class EndpointManager:
     
     async def check_health(self, endpoint: SyncEndpoint) -> Dict[str, Any]:
         """Check endpoint health"""
+
+
+
         try:
             # Perform basic connectivity check
             connection_result = await self.test_connection(endpoint)
@@ -1053,6 +1095,9 @@ class ConflictResolver:
         custom_resolution: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Resolve conflict using specified strategy"""
+
+
+
         try:
             if strategy == ConflictResolution.MANUAL:
                 if not custom_resolution:
@@ -1103,6 +1148,9 @@ class ConflictResolver:
     
     async def _resolve_local_wins(self, conflict: SyncConflict) -> Dict[str, Any]:
         """Resolve conflict by keeping local version"""
+
+
+
         return {
             'success': True,
             'result': {
@@ -1113,6 +1161,9 @@ class ConflictResolver:
     
     async def _resolve_remote_wins(self, conflict: SyncConflict) -> Dict[str, Any]:
         """Resolve conflict by keeping remote version"""
+
+
+
         return {
             'success': True,
             'result': {
@@ -1189,6 +1240,9 @@ class ChangeDetector:
         sync_profile: SyncProfile
     ) -> Dict[str, Any]:
         """Scan endpoint for changes"""
+
+
+
         try:
             changes = []
             
@@ -1338,6 +1392,9 @@ class ChangeDetector:
     
     async def _calculate_file_hash(self, file_path: Path) -> str:
         """Calculate SHA-256 hash of file"""
+
+
+
         try:
             hash_sha256 = hashlib.sha256()
             
@@ -1366,6 +1423,9 @@ class TransferManager:
         sync_profile: SyncProfile
     ) -> Dict[str, Any]:
         """Transfer file between endpoints"""
+
+
+
         try:
             operation.status = SyncStatus.SYNCING
             
@@ -1414,6 +1474,9 @@ class TransferManager:
         target_endpoint: SyncEndpoint
     ) -> Dict[str, Any]:
         """Check for potential conflicts"""
+
+
+
         try:
             source_path = Path(operation.source_path)
             target_path = Path(target_endpoint.base_path) / Path(operation.target_path).name
@@ -1456,6 +1519,9 @@ class TransferManager:
         target_endpoint: SyncEndpoint
     ) -> Dict[str, Any]:
         """Transfer file from local to local"""
+
+
+
         try:
             source_path = Path(operation.source_path)
             target_path = Path(target_endpoint.base_path) / Path(operation.target_path).name

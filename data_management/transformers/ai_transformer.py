@@ -5,7 +5,7 @@ Module: backend/data_management/transformers/ai_transformer.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -825,7 +825,7 @@ class VisionAITransformer:
             
         elif creator_opt == CreatorOptimization.INFLUENCER_FOCUSED:
             # Style influenceur
-            return f"✨ {caption} ✨ #lifestyle #content #authentic"
+            return f" {caption}  #lifestyle #content #authentic"
             
         elif creator_opt == CreatorOptimization.PHOTOGRAPHER_FOCUSED:
             # Détails techniques
@@ -1058,6 +1058,9 @@ class AudioAITransformer:
     
     def _calculate_audio_quality_metrics(self, audio_path: str, metadata: Dict[str, Any]) -> EnhancementMetrics:
         """Calcule les métriques de qualité pour audio"""
+
+
+
         
         try:
             # Analyse basique du fichier audio
@@ -1118,6 +1121,9 @@ class AITransformer:
         config: AITransformationConfig
     ) -> AIProcessingResult:
         """Transformation IA selon le type de contenu"""
+
+
+
         
         try:
             # Détermination du type de contenu
@@ -1208,6 +1214,9 @@ class AITransformer:
     
     def get_supported_transformations(self) -> Dict[str, List[str]]:
         """Récupère les transformations supportées par type de contenu"""
+
+
+
         
         return {
             'text': [

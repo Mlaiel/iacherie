@@ -1,11 +1,11 @@
 """
-🔧 Redis Cluster Configuration - IA-Influencer-Agent Platform
+ Redis Cluster Configuration - IA-Influencer-Agent Platform
 =============================================================
 Expert: Backend Senior + Cache Specialist + Performance Engineer
 Creator: Fahed Mlaiel <mlaiel@live.de>
 =============================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL 
 Tout vol, copie ou utilisation non autorisée de ce code source,
 de ce concept ou de cette propriété intellectuelle sans
 l'autorisation écrite explicite de Fahed Mlaiel est strictement
@@ -199,6 +199,9 @@ stream-node-max-entries 100
     
     def generate_redis_sentinel_service(self) -> Dict[str, Any]:
         """Generate Redis Sentinel service for high availability"""
+
+
+
         return {
             "image": f"redis:{self.redis_version}",
             "container_name": "ia-influencer-redis-sentinel",
@@ -232,6 +235,9 @@ stream-node-max-entries 100
     
     def generate_sentinel_config(self) -> str:
         """Generate Redis Sentinel configuration"""
+
+
+
         return f"""
 # Redis Sentinel Configuration for IA-Influencer Platform
 # High availability Redis monitoring
@@ -258,6 +264,9 @@ loglevel notice
     
     def generate_dockerfile(self) -> str:
         """Generate custom Redis Dockerfile with optimizations"""
+
+
+
         return f"""
 # IA-Influencer Redis Cluster Dockerfile
 # High-performance Redis with custom optimizations
@@ -305,6 +314,9 @@ CMD ["redis-server", "/usr/local/etc/redis/redis.conf"]
     
     def generate_healthcheck_script(self) -> str:
         """Generate Redis health check script"""
+
+
+
         return f"""#!/bin/sh
 # Redis Health Check Script
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -338,6 +350,9 @@ fi
     
     def generate_redis_exporter_service(self) -> Dict[str, Any]:
         """Generate Redis Exporter service for Prometheus monitoring"""
+
+
+
         return {
             "image": "oliver006/redis_exporter:latest",
             "container_name": "ia-influencer-redis-exporter",
@@ -423,5 +438,5 @@ fi
             yaml.dump(compose_config, f, default_flow_style=False, indent=2)
         files_created.append(str(compose_file))
         
-        logger.info(f"✅ Redis cluster configuration saved: {len(files_created)} files created")
+        logger.info(f" Redis cluster configuration saved: {len(files_created)} files created")
         return files_created

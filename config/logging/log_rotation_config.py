@@ -175,6 +175,9 @@ class LogRotationConfig:
     
     def _create_default_policies(self) -> List[RotationPolicy]:
         """Create default rotation policies for platform components"""
+
+
+
         return [
             # Main application logs
             RotationPolicy(
@@ -408,6 +411,9 @@ class LogRotationConfig:
     
     def _rotate_policy_logs(self, policy: RotationPolicy) -> bool:
         """Rotate logs for a specific policy"""
+
+
+
         try:
             # Find matching log files
             log_files = list(self.base_log_path.glob(policy.log_pattern))
@@ -547,6 +553,9 @@ class LogRotationConfig:
     
     def _compress_file(self, file_path: Path, compression: CompressionType, level: int) -> None:
         """Compress a single file"""
+
+
+
         try:
             if compression == CompressionType.GZIP:
                 compressed_path = file_path.with_suffix(file_path.suffix + '.gz')
@@ -689,6 +698,9 @@ class LogRotationConfig:
     
     def _emergency_rotate_policy(self, policy: RotationPolicy) -> None:
         """Emergency rotation for a policy - more aggressive cleanup"""
+
+
+
         try:
             # Reduce backup count temporarily for emergency cleanup
             original_backup_count = policy.backup_count
@@ -704,6 +716,9 @@ class LogRotationConfig:
     
     def _emergency_compress_all(self) -> None:
         """Emergency compression of all uncompressed log files"""
+
+
+
         try:
             for policy in self.policies:
                 if policy.compression != CompressionType.NONE:
@@ -776,6 +791,9 @@ class LogRotationConfig:
     
     def _scheduled_rotation(self) -> None:
         """Scheduled rotation job"""
+
+
+
         try:
             results = self.rotate_logs()
             logging.info(f"Scheduled rotation completed: {results}")
@@ -784,6 +802,9 @@ class LogRotationConfig:
     
     def _scheduled_disk_check(self) -> None:
         """Scheduled disk space check"""
+
+
+
         try:
             status = self.check_disk_space()
             if status.get("status") in ["warning", "critical"]:

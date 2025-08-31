@@ -568,6 +568,9 @@ class BillingEngine:
         db: Session
     ) -> Invoice:
         """Generate invoice for billing cycle."""
+
+
+
         return await self.generate_invoice(subscription.id, billing_cycle.id, db)
     
     async def _process_payment(

@@ -15,7 +15,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 """
-🔄 Pipeline Tests - Industrial-Grade Audio Processing Pipeline Testing Suite
+ Pipeline Tests - Industrial-Grade Audio Processing Pipeline Testing Suite
 
 Comprehensive testing for audio processing pipelines including:
 - AudioPipeline orchestration

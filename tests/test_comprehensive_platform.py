@@ -186,11 +186,17 @@ class TestPlatformIntegrationManager:
     @pytest.fixture
     def integration_manager(self):
         """Create platform integration manager fixture"""
+
+
+
         return PlatformIntegrationManager()
     
     @pytest.fixture
     def mock_credentials(self):
         """Mock API credentials"""
+
+
+
         return {
             "youtube": APICredentials(
                 platform_id="youtube",
@@ -529,6 +535,9 @@ def create_mock_content_data(content_type: str = "audio") -> Dict[str, Any]:
 
 def create_test_config() -> Dict[str, Any]:
     """Create test configuration"""
+
+
+
     return {
         "max_concurrent_tasks": 3,
         "default_timeout": 10,

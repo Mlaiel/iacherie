@@ -112,6 +112,9 @@ async def get_protection_alerts(
     - AI-powered similarity detection and false positive reduction
     - Revenue impact estimation for each infringement
     """
+
+
+
     try:
         # Get user's fingerprints to filter alerts
         user_fingerprints = db.query(ContentFingerprint).filter(
@@ -190,6 +193,9 @@ async def initiate_takedown_request(
     - Platform-specific takedown procedures
     - Success rate tracking and follow-up automation
     """
+
+
+
     try:
         # Validate alert belongs to user
         alert = db.query(ProtectionAlert).filter(
@@ -335,6 +341,9 @@ async def setup_rights_management(
     - Revenue sharing and royalty distribution
     - Usage monitoring and compliance tracking
     """
+
+
+
     try:
         # Validate all content IDs belong to user
         fingerprints = db.query(ContentFingerprint).filter(
@@ -440,6 +449,9 @@ async def configure_monitoring(
     - AI-powered content recognition across languages
     - Geographic monitoring with jurisdiction-specific enforcement
     """
+
+
+
     try:
         # Validate supported platforms
         supported_platforms = settings.SUPPORTED_MONITORING_PLATFORMS
@@ -529,6 +541,9 @@ async def get_takedown_status(
     dmca_service: DMCAService = Depends()
 ):
     """Get detailed status of a DMCA takedown request."""
+
+
+
     try:
         takedown = db.query(TakedownRequest).filter(
             TakedownRequest.id == takedown_id,
@@ -577,6 +592,9 @@ async def get_protection_statistics(
     protection_service: ContentProtectionService = Depends()
 ):
     """Get comprehensive protection statistics for user's content."""
+
+
+
     try:
         stats = await protection_service.get_user_protection_statistics(current_user.id)
         

@@ -7,7 +7,7 @@ Provides intelligent optimization strategies for different content types and use
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -125,6 +125,9 @@ class MultimediaOptimizer:
     
     def _initialize_default_profiles(self) -> Dict[str, OptimizationProfile]:
         """Initialize default optimization profiles"""
+
+
+
         return {
             'web_optimized': OptimizationProfile(
                 name="Web Optimized",
@@ -499,6 +502,9 @@ class MultimediaOptimizer:
     
     def get_statistics(self) -> Dict[str, Any]:
         """Get optimization statistics"""
+
+
+
         return self.stats.copy()
     
     def reset_statistics(self):

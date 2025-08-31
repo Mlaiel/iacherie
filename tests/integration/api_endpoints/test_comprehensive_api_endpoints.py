@@ -56,6 +56,9 @@ class MockAPIClient:
         
     async def __aenter__(self):
         """Async context manager entry."""
+
+
+
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
@@ -70,6 +73,9 @@ class MockAPIClient:
     
     async def register_user(self, email: str, password: str, **kwargs):
         """Mock user registration."""
+
+
+
         return {
             "user_id": self.user_id,
             "email": email,
@@ -95,18 +101,30 @@ class MockAPIClient:
     
     async def get(self, endpoint: str, **kwargs):
         """Mock authenticated GET request."""
+
+
+
         return self._handle_mock_request("GET", endpoint, **kwargs)
     
     async def post(self, endpoint: str, data: Any = None, **kwargs):
         """Mock authenticated POST request."""
+
+
+
         return self._handle_mock_request("POST", endpoint, data=data, **kwargs)
     
     async def put(self, endpoint: str, data: Any = None, **kwargs):
         """Mock authenticated PUT request."""
+
+
+
         return self._handle_mock_request("PUT", endpoint, data=data, **kwargs)
     
     async def delete(self, endpoint: str, **kwargs):
         """Mock authenticated DELETE request."""
+
+
+
         return self._handle_mock_request("DELETE", endpoint, **kwargs)
     
     def _handle_mock_request(self, method: str, endpoint: str, data: Any = None, **kwargs):

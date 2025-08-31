@@ -9,7 +9,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
-⚠️  LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
+  LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION 
 ====================================================
 This software and all associated concepts, algorithms, and implementations are the
 exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de).
@@ -122,6 +122,9 @@ class DMCAAutomatedValidator:
         
     def _load_legal_precedents(self) -> Dict[str, Any]:
         """Load legal precedents and guidelines for validation"""
+
+
+
         return {
             'fair_use_keywords': [
                 'parody', 'criticism', 'review', 'comment', 'news reporting',
@@ -310,6 +313,9 @@ class DMCAAutomatedValidator:
     
     def _calculate_text_similarity(self, text1: str, text2: str) -> float:
         """Calculate text similarity using TF-IDF and cosine similarity"""
+
+
+
         try:
             corpus = [text1.lower(), text2.lower()]
             tfidf_matrix = self.text_vectorizer.fit_transform(corpus)

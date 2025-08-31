@@ -216,11 +216,11 @@ class PlatformSeedsManager:
                 'details': results
             }
             
-            logger.info(f"✅ Platform integration seeds initialized successfully in {duration:.2f}s")
+            logger.info(f" Platform integration seeds initialized successfully in {duration:.2f}s")
             return summary
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize platform integration seeds: {str(e)}")
+            logger.error(f" Failed to initialize platform integration seeds: {str(e)}")
             raise
     
     async def _initialize_platform_configurations(self) -> Dict[str, Any]:

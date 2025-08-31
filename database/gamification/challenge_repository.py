@@ -1,5 +1,5 @@
 """
-🎯 Challenge Repository - IA Influencer Agent Platform Enterprise
+ Challenge Repository - IA Influencer Agent Platform Enterprise
 =================================================================
 Module: backend/database/gamification/challenge_repository.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Challenge Repository - Production-Ready
 Responsibility: Challenge lifecycle management and competition data persistence
 ===============================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
@@ -167,6 +167,9 @@ class ChallengeRepository(BaseRepository[Challenge]):
         metadata: Optional[Dict[str, Any]] = None
     ) -> Challenge:
         """Create new challenge with validation"""
+
+
+
         try:
             # Validate inputs
             if not title or len(title) < 5:
@@ -239,6 +242,9 @@ class ChallengeRepository(BaseRepository[Challenge]):
         registration_data: Optional[Dict[str, Any]] = None
     ) -> Optional[ChallengeParticipation]:
         """Register user for challenge with validation"""
+
+
+
         try:
             # Get challenge details
             challenge = self.get_by_id(challenge_id)
@@ -314,6 +320,9 @@ class ChallengeRepository(BaseRepository[Challenge]):
         auto_complete: bool = True
     ) -> Optional[ChallengeParticipation]:
         """Update user progress on challenge"""
+
+
+
         try:
             # Get participation record
             participation = self.get_user_participation(user_id, challenge_id)
@@ -369,6 +378,9 @@ class ChallengeRepository(BaseRepository[Challenge]):
         offset: int = 0
     ) -> List[Challenge]:
         """Get active challenges with filtering"""
+
+
+
         try:
             cache_key = f"active_challenges:{category}:{challenge_type}:{difficulty_min}:{difficulty_max}:{limit}:{offset}"
             
@@ -416,6 +428,9 @@ class ChallengeRepository(BaseRepository[Challenge]):
         limit: int = 100
     ) -> List[Dict[str, Any]]:
         """Get challenge leaderboard"""
+
+
+
         try:
             cache_key = f"challenge_leaderboard:{challenge_id}:{limit}"
             
@@ -447,6 +462,9 @@ class ChallengeRepository(BaseRepository[Challenge]):
         offset: int = 0
     ) -> List[ChallengeParticipation]:
         """Get user challenge participation history"""
+
+
+
         try:
             cache_key = f"user_challenge_history:{user_id}:{status}:{category}:{limit}:{offset}"
             
@@ -481,6 +499,9 @@ class ChallengeRepository(BaseRepository[Challenge]):
         challenge_id: str
     ) -> Dict[str, Any]:
         """Get comprehensive challenge analytics"""
+
+
+
         try:
             cache_key = f"challenge_analytics:{challenge_id}"
             
@@ -519,6 +540,9 @@ class ChallengeRepository(BaseRepository[Challenge]):
         challenge: Challenge
     ) -> bool:
         """Validate user meets challenge entry requirements"""
+
+
+
         try:
             entry_reqs = challenge.entry_requirements
             
@@ -553,6 +577,9 @@ class ChallengeRepository(BaseRepository[Challenge]):
         progress_data: Dict[str, Any]
     ) -> float:
         """Calculate progress percentage based on requirements"""
+
+
+
         try:
             total_weight = 0
             completed_weight = 0
@@ -587,6 +614,9 @@ class ChallengeRepository(BaseRepository[Challenge]):
         challenge: Challenge
     ) -> ChallengeParticipation:
         """Complete user challenge and calculate rewards"""
+
+
+
         try:
             current_time = datetime.now(timezone.utc)
             

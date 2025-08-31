@@ -3,7 +3,7 @@
 #
 # Created by: Fahed Mlaiel (mlaiel@live.de)
 # 
-# ⚠️  STRICT COPYRIGHT WARNING ⚠️ 
+#   STRICT COPYRIGHT WARNING  
 # This code, concept, and intellectual property belongs exclusively to Fahed Mlaiel.
 # ANY unauthorized use, reproduction, distribution, or theft of this code/concept 
 # without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is 
@@ -284,6 +284,9 @@ class VisionProcessor:
     
     def _load_image(self, image_input: Union[str, np.ndarray, Image.Image]) -> Optional[np.ndarray]:
         """Load image from various input formats"""
+
+
+
         try:
             if isinstance(image_input, str):
                 # Load from file path
@@ -697,6 +700,9 @@ class VisionProcessor:
     
     def get_cache_stats(self) -> Dict[str, Any]:
         """Get cache statistics"""
+
+
+
         return {
             "cache_size": len(self._cache),
             "cache_capacity": self.cache_size,
@@ -1020,6 +1026,9 @@ class VideoAnalyzer:
         Returns:
             Dict: Comprehensive video analysis results
         """
+
+
+
         try:
             cap = cv2.VideoCapture(video_path)
             

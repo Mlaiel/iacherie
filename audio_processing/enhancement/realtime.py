@@ -531,6 +531,9 @@ class RealTimeEnhancer:
     
     def get_latency_metrics(self) -> LatencyMetrics:
         """Get current latency performance metrics"""
+
+
+
         return self.latency_metrics
     
     def get_performance_summary(self) -> Dict[str, Any]:
@@ -573,6 +576,9 @@ class RealTimeEnhancer:
     
     def get_buffer_status(self) -> Dict[str, Any]:
         """Get detailed buffer status information"""
+
+
+
         return {
             'input_buffer': {
                 'size': self.input_buffer.size,

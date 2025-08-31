@@ -43,6 +43,9 @@ class ThreadsPlatform(PlatformBase):
     
     async def authenticate(self) -> bool:
         """Authenticate with Threads API"""
+
+
+
         try:
             access_token = self.config.credentials.get('access_token')
             
@@ -77,6 +80,9 @@ class ThreadsPlatform(PlatformBase):
     
     async def refresh_token(self) -> bool:
         """Refresh Threads token"""
+
+
+
         try:
             access_token = self.config.credentials.get('access_token')
             if not access_token:
@@ -103,6 +109,9 @@ class ThreadsPlatform(PlatformBase):
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
         """Make authenticated request to Threads API"""
+
+
+
         try:
             session = await self._get_session()
             
@@ -149,6 +158,9 @@ class ThreadsPlatform(PlatformBase):
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
         """Create Threads post"""
+
+
+
         try:
             user_id = self.config.credentials.get('user_id')
             if not user_id:
@@ -243,6 +255,9 @@ class ThreadsPlatform(PlatformBase):
     
     async def _upload_media(self, file_path: str) -> Optional[str]:
         """Upload media file and return URL"""
+
+
+
         try:
             # For Threads, we need to upload to a hosting service first
             # This is a placeholder - in real implementation, you'd upload to
@@ -259,6 +274,9 @@ class ThreadsPlatform(PlatformBase):
     async def get_analytics(self, content_id: str, start_date: datetime, 
                            end_date: datetime) -> AnalyticsData:
         """Get Threads post analytics"""
+
+
+
         try:
             params = {
                 'fields': 'id,media_product_type,media_type,media_url,permalink,username,text,timestamp,shortcode,thumbnail_url,children,is_quote_post'
@@ -326,6 +344,9 @@ class ThreadsPlatform(PlatformBase):
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
         """Search content on Threads (limited API support)"""
+
+
+
         try:
             # Threads search API is limited - placeholder implementation
             logger.warning("Threads search API has limited public access")
@@ -337,6 +358,9 @@ class ThreadsPlatform(PlatformBase):
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
         """Get user's Threads posts"""
+
+
+
         try:
             target_user_id = user_id or self.config.credentials.get('user_id')
             if not target_user_id:
@@ -374,6 +398,9 @@ class ThreadsPlatform(PlatformBase):
     
     async def delete_content(self, content_id: str) -> bool:
         """Delete Threads post (not supported via API)"""
+
+
+
         try:
             logger.warning("Threads doesn't support post deletion via API")
             return False
@@ -384,6 +411,9 @@ class ThreadsPlatform(PlatformBase):
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
         """Update Threads post (not supported via API)"""
+
+
+
         try:
             logger.warning("Threads doesn't support post editing via API")
             return False
@@ -394,6 +424,9 @@ class ThreadsPlatform(PlatformBase):
     
     async def reply_to_thread(self, thread_id: str, text: str, media_path: str = None) -> Optional[str]:
         """Reply to a thread"""
+
+
+
         try:
             user_id = self.config.credentials.get('user_id')
             if not user_id:
@@ -440,6 +473,9 @@ class ThreadsPlatform(PlatformBase):
     
     async def get_thread_conversation(self, thread_id: str) -> List[Dict[str, Any]]:
         """Get thread conversation/replies"""
+
+
+
         try:
             params = {
                 'fields': 'id,text,timestamp,username,media_type,media_url,children'
@@ -469,6 +505,9 @@ class ThreadsPlatform(PlatformBase):
     
     async def get_user_profile(self, user_id: str = None) -> Optional[Dict[str, Any]]:
         """Get user profile information"""
+
+
+
         try:
             target_user_id = user_id or self.config.credentials.get('user_id')
             if not target_user_id:

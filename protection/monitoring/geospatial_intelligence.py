@@ -1,5 +1,5 @@
 """
-🌍 Geospatial Intelligence & Surveillance Engine
+ Geospatial Intelligence & Surveillance Engine
 ===============================================
 
 Ultra-advanced geospatial monitoring system with geopolitical analysis,
@@ -16,7 +16,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
-⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
+ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
@@ -164,6 +164,9 @@ class GeospatialIntelligenceEngine:
 
     async def _initialize_geoip_database(self):
         """Initialize GeoIP database for location resolution."""
+
+
+
         try:
             # In production, use actual GeoIP2 database file
             geoip_db_path = self.config.get("geoip_db_path", "/usr/share/GeoIP/GeoLite2-City.mmdb")
@@ -181,6 +184,9 @@ class GeospatialIntelligenceEngine:
 
     async def _load_jurisdiction_profiles(self):
         """Load comprehensive jurisdiction profiles."""
+
+
+
         try:
             # Load jurisdiction data (in production, this would come from a database)
             jurisdiction_data = {
@@ -273,6 +279,9 @@ class GeospatialIntelligenceEngine:
         source_ip: str
     ) -> GeospatialThreat:
         """Analyze geospatial threat from detection data."""
+
+
+
         try:
             # Resolve IP to location
             location_data = await self._resolve_ip_location(source_ip)
@@ -367,6 +376,9 @@ class GeospatialIntelligenceEngine:
 
     async def _resolve_ip_location(self, ip_address: str) -> Dict[str, Any]:
         """Resolve IP address to geographical location."""
+
+
+
         try:
             location_data = {}
             
@@ -399,6 +411,9 @@ class GeospatialIntelligenceEngine:
 
     async def _fallback_ip_geolocation(self, ip_address: str) -> Dict[str, Any]:
         """Fallback IP geolocation using online service."""
+
+
+
         try:
             # Use a free IP geolocation service as fallback
             async with aiohttp.ClientSession() as session:
@@ -431,6 +446,9 @@ class GeospatialIntelligenceEngine:
         jurisdiction_profile: Optional[JurisdictionProfile]
     ) -> str:
         """Assess threat severity based on geospatial factors."""
+
+
+
         try:
             severity_score = 0.0
             
@@ -482,6 +500,9 @@ class GeospatialIntelligenceEngine:
         detection_data: Dict[str, Any]
     ) -> float:
         """Calculate confidence in threat attribution."""
+
+
+
         try:
             confidence = 0.5  # Base confidence
             
@@ -521,6 +542,9 @@ class GeospatialIntelligenceEngine:
 
     async def _analyze_infrastructure(self, ip_address: str) -> Dict[str, Any]:
         """Analyze infrastructure details for IP address."""
+
+
+
         try:
             infrastructure = {
                 "ip_address": ip_address,
@@ -556,6 +580,9 @@ class GeospatialIntelligenceEngine:
 
     async def _analyze_legal_context(self, country_code: str, detection_data: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze legal context for enforcement actions."""
+
+
+
         try:
             legal_context = {
                 "jurisdiction": country_code,
@@ -621,6 +648,9 @@ class GeospatialIntelligenceEngine:
 
     async def detect_territorial_clusters(self, timeframe_hours: int = 24) -> List[GeospatialCluster]:
         """Detect clusters of territorial activity."""
+
+
+
         try:
             # Get recent threats within timeframe
             cutoff_time = datetime.utcnow() - timedelta(hours=timeframe_hours)
@@ -666,6 +696,9 @@ class GeospatialIntelligenceEngine:
 
     async def _perform_geographic_clustering(self, threats: List[GeospatialThreat]) -> List[List[GeospatialThreat]]:
         """Perform geographic clustering of threats."""
+
+
+
         try:
             from sklearn.cluster import DBSCAN
             from sklearn.preprocessing import StandardScaler
@@ -701,6 +734,9 @@ class GeospatialIntelligenceEngine:
         all_threats: List[GeospatialThreat]
     ) -> Optional[GeospatialCluster]:
         """Analyze a territorial cluster for patterns."""
+
+
+
         try:
             if len(cluster_threats) < 3:
                 return None
@@ -758,6 +794,9 @@ class GeospatialIntelligenceEngine:
         countries_involved: List[str]
     ) -> TerritorialPattern:
         """Determine the territorial pattern type."""
+
+
+
         try:
             # Single country
             if len(countries_involved) == 1:
@@ -830,6 +869,9 @@ class GeospatialIntelligenceEngine:
 
     def _calculate_territorial_coordination(self, threats: List[GeospatialThreat]) -> float:
         """Calculate coordination score for territorial cluster."""
+
+
+
         try:
             if len(threats) < 2:
                 return 0.0
@@ -870,6 +912,9 @@ class GeospatialIntelligenceEngine:
 
     def _calculate_cluster_growth_rate(self, threats: List[GeospatialThreat]) -> float:
         """Calculate growth rate of cluster."""
+
+
+
         try:
             if len(threats) < 2:
                 return 0.0
@@ -897,6 +942,9 @@ class GeospatialIntelligenceEngine:
         timeframe_hours: int = 168  # 7 days
     ) -> Dict[str, Any]:
         """Generate comprehensive geospatial intelligence report."""
+
+
+
         try:
             cutoff_time = datetime.utcnow() - timedelta(hours=timeframe_hours)
             
@@ -1186,6 +1234,9 @@ class GeospatialIntelligenceEngine:
 
     async def create_threat_heat_map(self, output_path: str = None) -> str:
         """Create interactive heat map of geospatial threats."""
+
+
+
         try:
             if not self._heat_map_data:
                 logger.warning("No heat map data available")
@@ -1243,6 +1294,9 @@ class GeospatialIntelligenceEngine:
 
     async def _start_geospatial_monitoring(self):
         """Start continuous geospatial monitoring."""
+
+
+
         try:
             self._geospatial_monitoring_active = True
             
@@ -1256,6 +1310,9 @@ class GeospatialIntelligenceEngine:
 
     async def _geospatial_monitoring_loop(self):
         """Main geospatial monitoring loop."""
+
+
+
         try:
             while self._geospatial_monitoring_active:
                 # Perform periodic analysis
@@ -1277,6 +1334,9 @@ class GeospatialIntelligenceEngine:
 
     async def _perform_periodic_analysis(self):
         """Perform periodic geospatial analysis."""
+
+
+
         try:
             # Generate intelligence report
             report = await self.generate_geospatial_intelligence_report(timeframe_hours=24)
@@ -1290,6 +1350,9 @@ class GeospatialIntelligenceEngine:
 
     async def _handle_high_risk_situation(self, report: Dict[str, Any]):
         """Handle high-risk geospatial situations."""
+
+
+
         try:
             alert_data = {
                 "alert_type": "geospatial_high_risk",
@@ -1312,6 +1375,9 @@ class GeospatialIntelligenceEngine:
 
     async def _cleanup_old_data(self):
         """Clean up old geospatial data."""
+
+
+
         try:
             cutoff_time = datetime.utcnow() - timedelta(days=30)
             
@@ -1346,6 +1412,9 @@ class GeospatialIntelligenceEngine:
 
     async def get_geospatial_statistics(self) -> Dict[str, Any]:
         """Get comprehensive geospatial statistics."""
+
+
+
         try:
             stats = {
                 "total_threats": 0,

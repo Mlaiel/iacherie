@@ -7,7 +7,7 @@ dynamic updates, environment-specific settings, and secure configuration handlin
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -228,6 +228,9 @@ class ConfigurationManager:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             # Validate definition
             if not await self._validate_config_definition(definition):
@@ -262,6 +265,9 @@ class ConfigurationManager:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             environment = environment or self.current_environment
             
@@ -318,6 +324,9 @@ class ConfigurationManager:
         Returns:
             Configuration value or None if not found
         """
+
+
+
         try:
             # Check cache first
             cache_key = self._generate_cache_key(config_id, scope, environment, service, component, user)
@@ -367,6 +376,9 @@ class ConfigurationManager:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             # Get or create definition
             definition = self.config_definitions.get(config_id)
@@ -451,6 +463,9 @@ class ConfigurationManager:
         Returns:
             str: Snapshot ID
         """
+
+
+
         try:
             snapshot_id = str(uuid.uuid4())
             
@@ -496,6 +511,9 @@ class ConfigurationManager:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             if snapshot_id not in self.config_snapshots:
                 raise ValueError(f"Snapshot not found: {snapshot_id}")
@@ -549,6 +567,9 @@ class ConfigurationManager:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             self.config_watchers[watcher.watcher_id] = watcher
             
@@ -578,6 +599,9 @@ class ConfigurationManager:
         Returns:
             ConfigValidationResult: Validation result
         """
+
+
+
         try:
             definition = self.config_definitions.get(config_id)
             if not definition:
@@ -615,6 +639,9 @@ class ConfigurationManager:
         Returns:
             str: Exported configuration
         """
+
+
+
         try:
             # Collect configurations
             export_data = {}
@@ -667,6 +694,9 @@ class ConfigurationManager:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             # Parse data
             if format_type.lower() == "yaml":
@@ -703,6 +733,9 @@ class ConfigurationManager:
     
     async def _load_from_source(self, source: ConfigSource, environment: str) -> None:
         """Load configurations from specific source."""
+
+
+
         try:
             if source == ConfigSource.FILE:
                 await self._load_from_files(environment)
@@ -735,6 +768,9 @@ class ConfigurationManager:
     
     async def _load_config_file(self, file_path: Path, environment: str) -> None:
         """Load configuration from single file."""
+
+
+
         try:
             with open(file_path, 'r') as f:
                 if file_path.suffix == '.json':
@@ -858,6 +894,9 @@ class ConfigurationManager:
     
     async def _validate_type(self, config_type: ConfigType, value: Any) -> bool:
         """Validate value type."""
+
+
+
         try:
             if config_type == ConfigType.STRING:
                 return isinstance(value, str)
@@ -1113,6 +1152,9 @@ class ConfigurationManager:
     
     async def _validate_config_definition(self, definition: ConfigDefinition) -> bool:
         """Validate configuration definition."""
+
+
+
         return bool(definition.config_id and definition.name)
     
     async def get_config_summary(self) -> Dict[str, Any]:
@@ -1134,6 +1176,9 @@ class ConfigurationManager:
     
     async def get_manager_stats(self) -> Dict[str, Any]:
         """Get configuration manager statistics."""
+
+
+
         return {
             **self.manager_stats,
             'config_definitions': len(self.config_definitions),

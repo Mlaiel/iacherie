@@ -2,12 +2,12 @@
 router.py - MÉGA-MOTEUR INDUSTRIEL CONSOLIDÉ
 ================================================================================
 
-🏭 CONSOLIDATION INDUSTRIELLE COMPLÈTE
-📁 Modules consolidés: 74
-📝 Lignes totales: 83
-🕐 Date: 2025-07-31 07:02:24
+ CONSOLIDATION INDUSTRIELLE COMPLÈTE
+ Modules consolidés: 74
+ Lignes totales: 83
+ Date: 2025-07-31 07:02:24
 
-📋 MODULES INTÉGRÉS:
+ MODULES INTÉGRÉS:
 #     1. api_docs_generator.py (1 lignes) - /scripts/development/api_docs_generator.py\n#     2. wsgi.py (1 lignes) - /app/wsgi.py\n#     3. asgi.py (1 lignes) - /app/asgi.py\n#     4. integration_config.py (1 lignes) - /app/business/creators/creator_workflow/handlers/collaboration/config/integratio\n#     5. api_utils.py (1 lignes) - /app/ml/enterprise_integrations/api_utils.py\n#     6. external_apis.py (1 lignes) - /app/ml/enterprise_integrations/external_apis.py\n#     7. backup_restore.py (2 lignes) - /app/utils/backup/backup_restore.py\n#     8. webhook_processor.py (1 lignes) - /app/utils/processors/webhook_processor.py\n#     9. api.py (5 lignes) - /app/utils/helpers/api.py\n#    10. webhooks.py (1 lignes) - /app/utils/integration/webhooks.py\n#    11. webhook_manager.py (1 lignes) - /app/utils/integration/webhook_manager.py\n#    12. monitoring_rest_api_service.py (1 lignes) - /app/analytics/tools/monitoring/api_services/monitoring_rest_api_service.py\n#    13. dashboard_rest_api_controller.py (1 lignes) - /app/analytics/tools/dashboards/api_controllers/dashboard_rest_api_controller.py\n#    14. base_connector.py (1 lignes) - /app/analytics/core/business_logic/infrastructure/base_connector.py\n#    15. analytics_admin_api.py (1 lignes) - /app/analytics/core/api_gateway/endpoints/analytics_admin_api.py\n#    16. spotify_api_collectors.py (1 lignes) - /app/analytics/core/api_gateway/endpoints/spotify_api_collectors.py\n#    17. integration_config.py (1 lignes) - /app/analytics/blockchain/consensus/monitoring/alerts/business/handlers/creator_\n#    18. integration_config.py (1 lignes) - /app/analytics/blockchain/consensus_backup_20250730_082819/monitoring/alerts/bus\n#    19. __init__.py (1 lignes) - /app/api/__init__.py\n#    20. router.py (1 lignes) - /app/api/router.py\n#    21. __init__.py (1 lignes) - /app/api/v2/__init__.py\n#    22. schema.py (1 lignes) - /app/api/v2/graphql/schema.py\n#    23. scalars.py (1 lignes) - /app/api/v2/graphql/scalars.py\n#    24. mutations.py (1 lignes) - /app/api/v2/graphql/mutations.py\n#    25. resolvers.py (1 lignes) - /app/api/v2/graphql/resolvers.py\n#    26. __init__.py (1 lignes) - /app/api/v2/graphql/__init__.py\n#    27. subscriptions.py (1 lignes) - /app/api/v2/graphql/subscriptions.py\n#    28. __init__.py (1 lignes) - /app/api/v1/__init__.py\n#    29. security_middleware.py (1 lignes) - /app/api/v1/auth/security_middleware.py\n#    30. notification_system.py (1 lignes) - /app/api/v1/collaboration/notification_system.py\n#    31. api_scoring.py (1 lignes) - /app/api/v1/collaboration/api_scoring.py\n#    32. spotify_webhook.py (1 lignes) - /app/api/v1/spotify/spotify_webhook.py\n#    33. __init__.py (1 lignes) - /app/api/v1/spotify/__init__.py\n#    34. style_transfer.py (1 lignes) - /app/api/v1/content_generation/style_transfer.py\n#    35. arrangement_suggester.py (1 lignes) - /app/api/v1/content_generation/arrangement_suggester.py\n#    36. melody_composer.py (1 lignes) - /app/api/v1/content_generation/melody_composer.py\n#    37. genre_classifier.py (1 lignes) - /app/api/v1/content_generation/genre_classifier.py\n#    38. lyrics_generator.py (5 lignes) - /app/api/v1/content_generation/lyrics_generator.py\n#    39. factory.py (1 lignes) - /app/api/core/factory.py\n#    40. __init__.py (1 lignes) - /app/api/core/__init__.py\n#    41. real_time_events.py (1 lignes) - /app/api/websocket/real_time_events.py\n#    42. notification_pusher.py (1 lignes) - /app/api/websocket/notification_pusher.py\n#    43. ai_moderation.py (1 lignes) - /app/api/websocket/services/ai_moderation.py\n#    44. rate_limiter.py (1 lignes) - /app/api/websocket/middleware/rate_limiter.py\n#    45. api_response_handler.py (1 lignes) - /app/core/api_services/api_response_handler.py\n#    46. api_client_factory.py (1 lignes) - /app/core/api_services/api_client_factory.py\n#    47. __init__.py (1 lignes) - /app/core/api_services/__init__.py\n#    48. api_key_manager.py (1 lignes) - /app/security/core/api_key_manager.py\n#    49. hybrid_orchestration.py (1 lignes) - /app/frameworks/backend_architectures/hybrid_orchestration.py\n#    50. webhook_processor.py (1 lignes) - /app/fixtures/templates/template_processors/webhook_processor.py\n#    51. test_api_docs_generator.py (1 lignes) - /tests_backend/scripts/development/test_api_docs_generator.py\n#    52. test_health.py (1 lignes) - /tests_backend/services/spleeter_microservice/test_health.py\n#    53. test_restore.py (1 lignes) - /tests_backend/docker/test_restore.py\n#    54. test_router.py (1 lignes) - /tests_backend/app/api/test_router.py\n#    55. test_network_utils.py (1 lignes) - /tests_backend/app/api/utils/test_network_utils.py\n#    56. test_scalars.py (1 lignes) - /tests_backend/app/api/v2/graphql/test_scalars.py\n#    57. test_subscriptions.py (1 lignes) - /tests_backend/app/api/v2/graphql/test_subscriptions.py\n#    58. test_mutations.py (1 lignes) - /tests_backend/app/api/v2/graphql/test_mutations.py\n#    59. test_resolvers.py (1 lignes) - /tests_backend/app/api/v2/graphql/test_resolvers.py\n#    60. test_schema.py (1 lignes) - /tests_backend/app/api/v2/graphql/test_schema.py\n#    61. __init__.py (1 lignes) - /tests_backend/app/api/v2/graphql/__init__.py\n#    62. test_spotify_webhook.py (1 lignes) - /tests_backend/app/api/v1/spotify/test_spotify_webhook.py\n#    63. test_integration.py (1 lignes) - /tests_backend/app/api/core/test_integration.py\n#    64. test_context.py (1 lignes) - /tests_backend/app/api/core/test_context.py\n#    65. test_factory.py (1 lignes) - /tests_backend/app/api/core/test_factory.py\n#    66. test_exceptions.py (1 lignes) - /tests_backend/app/api/core/test_exceptions.py\n#    67. test_config.py (1 lignes) - /tests_backend/app/api/core/test_config.py\n#    68. test_error_handler.py (1 lignes) - /tests_backend/app/api/middleware/test_error_handler.py\n#    69. test_rate_limiting.py (1 lignes) - /tests_backend/app/api/middleware/test_rate_limiting.py\n#    70. test_webhooks.py (1 lignes) - /tests_backend/app/billing/test_webhooks.py\n#    71. test_api_exceptions.py (1 lignes) - /tests_backend/app/core/exceptions/test_api_exceptions.py\n#    72. test_api_key_manager.py (1 lignes) - /tests_backend/app/core/security/test_api_key_manager.py\n#    73. test_spotify_api_service.py (1 lignes) - /tests_backend/app/services/spotify/test_spotify_api_service.py\n#    74. test_connection_manager.py (1 lignes) - /tests_backend/app/realtime/test_connection_manager.py\n
 ================================================================================
 """
@@ -178,7 +178,7 @@ Configuration for external service integrations, API endpoints, credentials mana
 and connection settings for the collaboration system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 
 Project Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -502,6 +502,9 @@ class TimeoutSettings:
     
     def get_timeout_config(self) -> Dict[str, int]:
         """Get timeout configuration as dictionary."""
+
+
+
         return {
             "connection": self.connection_timeout,
             "read": self.read_timeout,
@@ -638,6 +641,9 @@ class IntegrationConfig:
     
     def get_service_config(self, service: ServiceType) -> Dict[str, Any]:
         """Get complete configuration for a specific service."""
+
+
+
         return {
             "endpoint": self.endpoints.get_endpoint(service),
             "credentials": self.credentials.get_credentials(service),
@@ -649,6 +655,9 @@ class IntegrationConfig:
     @classmethod
     def from_environment(cls) -> 'IntegrationConfig':
         """Create configuration from environment variables."""
+
+
+
         return cls()
 
 
@@ -818,10 +827,16 @@ class APIResponse:
     @property
     def success(self) -> bool:
         """Check if response is successful"""
+
+
+
         return 200 <= self.status_code < 300
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'status_code': self.status_code,
             'data': self.data,
@@ -901,6 +916,9 @@ class APICircuitBreaker:
     
     def get_state(self, endpoint_key: str) -> str:
         """Get current circuit breaker state"""
+
+
+
         return self.states.get(endpoint_key, CircuitBreakerState()).state
 
 
@@ -1013,6 +1031,9 @@ class APICache:
     
     async def get_cached_response(self, cache_key: str) -> Optional[APIResponse]:
         """Get cached API response"""
+
+
+
         try:
             if self.redis_client:
                 cached_data = await self.redis_client.get(f"api_cache:{cache_key}")
@@ -1072,6 +1093,9 @@ class APICache:
     
     async def invalidate_cache(self, pattern: str):
         """Invalidate cached responses by pattern"""
+
+
+
         try:
             if self.redis_client:
                 keys = await self.redis_client.keys(f"api_cache:{pattern}")
@@ -1624,7 +1648,7 @@ def get_api_service_manager(config: Optional[Dict[str, Any]] = None) -> APIServi
 # ==========================================================================================
 
 """
-🌐 External APIs - Ultra-Advanced API Integration Hub
+ External APIs - Ultra-Advanced API Integration Hub
 Enterprise-grade external API connectors for Spotify, OpenAI, Stripe, and other services
 with intelligent rate limiting, caching, retry logic, and comprehensive monitoring.
 """
@@ -1741,7 +1765,7 @@ class APIResponse:
 
 class SpotifyAPIIntegrator:
     """
-    🎵 Intégrateur Spotify API Ultra-Avancé
+     Intégrateur Spotify API Ultra-Avancé
     
     Connecteur Spotify Web API avec OAuth2, gestion automatique des tokens,
     cache intelligent, et intégration complète des fonctionnalités Spotify.
@@ -1777,6 +1801,9 @@ class SpotifyAPIIntegrator:
     
     async def initialize(self) -> bool:
         """Initialise la connexion Spotify API."""
+
+
+
         try:
             # Créer session HTTP
             timeout = aiohttp.ClientTimeout(total=self.config.timeout_seconds)
@@ -1803,6 +1830,9 @@ class SpotifyAPIIntegrator:
     
     async def _authenticate(self) -> bool:
         """Authentification OAuth2 Spotify."""
+
+
+
         try:
             client_id = self.config.credentials.get('client_id')
             client_secret = self.config.credentials.get('client_secret')
@@ -1849,6 +1879,9 @@ class SpotifyAPIIntegrator:
     
     async def health_check(self) -> bool:
         """Vérifie la santé de l'API Spotify."""
+
+
+
         try:
             await self._refresh_token_if_needed()
             
@@ -2097,10 +2130,16 @@ class SpotifyAPIIntegrator:
     
     async def get_metrics(self) -> APIMetrics:
         """Retourne les métriques actuelles."""
+
+
+
         return self.metrics
     
     async def cleanup(self):
         """Nettoie les ressources."""
+
+
+
         try:
             if self.session:
                 await self.session.close()
@@ -2144,6 +2183,9 @@ class OpenAIIntegrator:
     
     async def initialize(self) -> bool:
         """Initialise la connexion OpenAI API."""
+
+
+
         try:
             api_key = self.config.credentials.get('api_key')
             if not api_key:
@@ -2176,6 +2218,9 @@ class OpenAIIntegrator:
     
     async def health_check(self) -> bool:
         """Vérifie la santé de l'API OpenAI."""
+
+
+
         try:
             start_time = time.time()
             
@@ -2474,6 +2519,9 @@ class OpenAIIntegrator:
     
     async def get_cost_breakdown(self) -> Dict[str, Any]:
         """Récupère la répartition des coûts par modèle."""
+
+
+
         return {
             'total_cost': sum(self.cost_tracker.values()),
             'cost_by_model': dict(self.cost_tracker),
@@ -2483,10 +2531,16 @@ class OpenAIIntegrator:
     
     async def get_metrics(self) -> APIMetrics:
         """Retourne les métriques actuelles."""
+
+
+
         return self.metrics
     
     async def cleanup(self):
         """Nettoie les ressources."""
+
+
+
         try:
             if self.session:
                 await self.session.close()
@@ -2498,7 +2552,7 @@ class OpenAIIntegrator:
 
 class ExternalAPIManager:
     """
-    🌐 Gestionnaire d'APIs Externes Ultra-Avancé
+     Gestionnaire d'APIs Externes Ultra-Avancé
     
     Orchestrateur central pour toutes les APIs externes avec load balancing,
     failover automatique, monitoring unifié, et optimisation intelligente.
@@ -2532,6 +2586,9 @@ class ExternalAPIManager:
         config: APIConfig
     ) -> bool:
         """Enregistre une API externe."""
+
+
+
         try:
             if provider == APIProvider.SPOTIFY:
                 integrator = SpotifyAPIIntegrator(config)
@@ -2683,6 +2740,9 @@ class ExternalAPIManager:
     
     async def cleanup(self):
         """Nettoie toutes les ressources."""
+
+
+
         try:
             # Arrêter le monitoring
             await self.stop_monitoring()
@@ -2821,7 +2881,7 @@ class BackupRestoreManager:
                           compress: bool = True,
                           verify: bool = True) -> BackupMetadata:
         """Crée une sauvegarde complète."""
-        print("📦 Création d'une sauvegarde complète...")
+        print(" Création d'une sauvegarde complète...")
         
         backup_id = f"backup-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
         backup_start = datetime.now()
@@ -2884,9 +2944,9 @@ class BackupRestoreManager:
             # Vérification de l'intégrité
             if verify:
                 if self._verify_backup_integrity(backup_file, metadata):
-                    print("✅ Vérification d'intégrité réussie")
+                    print(" Vérification d'intégrité réussie")
                 else:
-                    print("❌ Échec de la vérification d'intégrité")
+                    print(" Échec de la vérification d'intégrité")
                     metadata.backup_status = "corrupted"
             
             # Synchronisation avec le stockage externe
@@ -2896,7 +2956,7 @@ class BackupRestoreManager:
             self.backup_history.append(metadata)
             
             duration = (datetime.now() - backup_start).total_seconds()
-            print(f"✅ Sauvegarde créée en {duration:.1f}s")
+            print(f" Sauvegarde créée en {duration:.1f}s")
             print(f"   ID: {backup_id}")
             print(f"   Taille: {self._format_size(backup_size)}")
             print(f"   Ressources: {len(resources)}")
@@ -2905,7 +2965,7 @@ class BackupRestoreManager:
             return metadata
             
         except Exception as e:
-            print(f"❌ Erreur lors de la sauvegarde: {e}")
+            print(f" Erreur lors de la sauvegarde: {e}")
             # Marquer comme échouée
             failed_metadata = BackupMetadata(
                 backup_id=backup_id,
@@ -2934,7 +2994,7 @@ class BackupRestoreManager:
                                  description: str = "",
                                  created_by: str = "system") -> BackupMetadata:
         """Crée une sauvegarde incrémentale."""
-        print(f"📦 Création d'une sauvegarde incrémentale basée sur {base_backup_id}...")
+        print(f" Création d'une sauvegarde incrémentale basée sur {base_backup_id}...")
         
         # Chargement de la sauvegarde de base
         base_backup = self._load_backup_metadata(base_backup_id)
@@ -2993,7 +3053,7 @@ class BackupRestoreManager:
         self._save_backup_metadata(metadata)
         self.backup_history.append(metadata)
         
-        print(f"✅ Sauvegarde incrémentale créée: {len(changed_resources)} changements")
+        print(f" Sauvegarde incrémentale créée: {len(changed_resources)} changements")
         return metadata
     
     def restore_from_backup(self, 
@@ -3004,7 +3064,7 @@ class BackupRestoreManager:
                            requested_by: str = "system",
                            selective_resources: Optional[List[str]] = None) -> RestoreOperation:
         """Restaure depuis une sauvegarde."""
-        print(f"🔄 Restauration depuis la sauvegarde {backup_id}...")
+        print(f" Restauration depuis la sauvegarde {backup_id}...")
         
         restore_id = f"restore-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
         restore_start = datetime.now()
@@ -3050,7 +3110,7 @@ class BackupRestoreManager:
                     description=f"Sauvegarde de sécurité avant restauration {restore_id}",
                     created_by="restore-system"
                 )
-                print(f"📦 Sauvegarde de sécurité créée: {security_backup.backup_id}")
+                print(f" Sauvegarde de sécurité créée: {security_backup.backup_id}")
             
             restore_op.progress_percent = 20
             
@@ -3074,7 +3134,7 @@ class BackupRestoreManager:
                     
                 except Exception as e:
                     error_msg = f"Erreur lors de la restauration de {self._get_resource_key(resource)}: {e}"
-                    print(f"⚠️ {error_msg}")
+                    print(f" {error_msg}")
                     restore_op.failed_resources.append(error_msg)
                 
                 # Mise à jour du progrès
@@ -3091,15 +3151,15 @@ class BackupRestoreManager:
             # Finalisation
             if len(restore_op.failed_resources) == 0:
                 restore_op.status = "completed"
-                print("✅ Restauration terminée avec succès")
+                print(" Restauration terminée avec succès")
             else:
                 restore_op.status = "completed_with_errors"
-                print(f"⚠️ Restauration terminée avec {len(restore_op.failed_resources)} erreurs")
+                print(f" Restauration terminée avec {len(restore_op.failed_resources)} erreurs")
             
             restore_op.progress_percent = 100
             
         except Exception as e:
-            print(f"❌ Erreur lors de la restauration: {e}")
+            print(f" Erreur lors de la restauration: {e}")
             restore_op.status = "failed"
             restore_op.failed_resources.append(str(e))
         
@@ -3136,7 +3196,7 @@ class BackupRestoreManager:
                 backups.append(metadata)
                 
             except Exception as e:
-                print(f"⚠️ Erreur lors du chargement de {metadata_file}: {e}")
+                print(f" Erreur lors du chargement de {metadata_file}: {e}")
         
         # Tri par timestamp décroissant
         backups.sort(key=lambda x: x.timestamp, reverse=True)
@@ -3191,13 +3251,13 @@ class BackupRestoreManager:
                 cleanup_stats["deleted_count"] += 1
                 cleanup_stats["freed_bytes"] += backup.size_bytes
                 
-                print(f"🗑️ {'[DRY-RUN] ' if dry_run else ''}Supprimé: {backup.backup_id}")
+                print(f" {'[DRY-RUN] ' if dry_run else ''}Supprimé: {backup.backup_id}")
                 
             except Exception as e:
-                print(f"❌ Erreur lors de la suppression de {backup.backup_id}: {e}")
+                print(f" Erreur lors de la suppression de {backup.backup_id}: {e}")
                 cleanup_stats["errors"] += 1
         
-        print(f"✅ Nettoyage terminé: {cleanup_stats['deleted_count']} sauvegardes supprimées")
+        print(f" Nettoyage terminé: {cleanup_stats['deleted_count']} sauvegardes supprimées")
         print(f"   Espace libéré: {self._format_size(cleanup_stats['freed_bytes'])}")
         
         return cleanup_stats
@@ -3207,7 +3267,7 @@ class BackupRestoreManager:
                              backup_ids: Optional[List[str]] = None,
                              parallel_uploads: int = 3) -> Dict[str, str]:
         """Synchronise les sauvegardes vers le stockage cloud."""
-        print(f"☁️ Synchronisation vers {provider}...")
+        print(f" Synchronisation vers {provider}...")
         
         backups_to_sync = []
         
@@ -3253,42 +3313,42 @@ class BackupRestoreManager:
         successful = sum(1 for result in sync_results.values() if result.startswith("success"))
         failed = len(sync_results) - successful
         
-        print(f"✅ Synchronisation terminée: {successful} réussies, {failed} échouées")
+        print(f" Synchronisation terminée: {successful} réussies, {failed} échouées")
         
         return sync_results
     
     def verify_backup_integrity(self, backup_id: str) -> bool:
         """Vérifie l'intégrité d'une sauvegarde."""
-        print(f"🔍 Vérification de l'intégrité de {backup_id}...")
+        print(f" Vérification de l'intégrité de {backup_id}...")
         
         metadata = self._load_backup_metadata(backup_id)
         if not metadata:
-            print(f"❌ Métadonnées de {backup_id} non trouvées")
+            print(f" Métadonnées de {backup_id} non trouvées")
             return False
         
         # Vérification de l'existence du fichier
         backup_file = self._get_backup_file_path(backup_id)
         if not backup_file.exists():
-            print(f"❌ Fichier de sauvegarde {backup_file} non trouvé")
+            print(f" Fichier de sauvegarde {backup_file} non trouvé")
             return False
         
         # Vérification du checksum
         current_checksum = self._calculate_file_checksum(backup_file)
         if current_checksum != metadata.checksum:
-            print(f"❌ Checksum invalide: attendu {metadata.checksum}, obtenu {current_checksum}")
+            print(f" Checksum invalide: attendu {metadata.checksum}, obtenu {current_checksum}")
             return False
         
         # Vérification de la structure
         try:
             backup_data = self._load_backup_from_file(backup_file)
             if not self._validate_backup_structure(backup_data):
-                print("❌ Structure de sauvegarde invalide")
+                print(" Structure de sauvegarde invalide")
                 return False
         except Exception as e:
-            print(f"❌ Erreur lors du chargement: {e}")
+            print(f" Erreur lors du chargement: {e}")
             return False
         
-        print("✅ Intégrité vérifiée")
+        print(" Intégrité vérifiée")
         return True
     
     def test_restore(self, backup_id: str) -> bool:
@@ -3306,7 +3366,7 @@ class BackupRestoreManager:
             success = restore_op.status == "completed"
             
             if success:
-                print("✅ Test de restauration réussi")
+                print(" Test de restauration réussi")
                 
                 # Marquer comme testé
                 metadata = self._load_backup_metadata(backup_id)
@@ -3314,12 +3374,12 @@ class BackupRestoreManager:
                     metadata.restoration_tested = True
                     self._save_backup_metadata(metadata)
             else:
-                print(f"❌ Test de restauration échoué: {len(restore_op.failed_resources)} erreurs")
+                print(f" Test de restauration échoué: {len(restore_op.failed_resources)} erreurs")
             
             return success
             
         except Exception as e:
-            print(f"❌ Erreur lors du test: {e}")
+            print(f" Erreur lors du test: {e}")
             return False
     
     # Méthodes privées helper
@@ -3335,7 +3395,7 @@ class BackupRestoreManager:
                     region_name=self.storage_config["aws"].get("region")
                 )
             except Exception as e:
-                print(f"⚠️ Impossible d'initialiser le client S3: {e}")
+                print(f" Impossible d'initialiser le client S3: {e}")
         
         if "azure" in self.storage_config:
             try:
@@ -3344,7 +3404,7 @@ class BackupRestoreManager:
                     credential=self.storage_config["azure"].get("credential")
                 )
             except Exception as e:
-                print(f"⚠️ Impossible d'initialiser le client Azure: {e}")
+                print(f" Impossible d'initialiser le client Azure: {e}")
         
         if "gcp" in self.storage_config:
             try:
@@ -3352,7 +3412,7 @@ class BackupRestoreManager:
                     project=self.storage_config["gcp"].get("project_id")
                 )
             except Exception as e:
-                print(f"⚠️ Impossible d'initialiser le client GCS: {e}")
+                print(f" Impossible d'initialiser le client GCS: {e}")
     
     def _get_or_create_encryption_key(self) -> str:
         """Obtient ou crée une clé de chiffrement."""
@@ -3485,6 +3545,9 @@ class BackupRestoreManager:
     
     def _encrypt_data(self, data: bytes) -> bytes:
         """Chiffre des données."""
+
+
+
         try:
             from cryptography.fernet import Fernet
             import base64
@@ -3495,11 +3558,14 @@ class BackupRestoreManager:
             
             return f.encrypt(data)
         except ImportError:
-            print("⚠️ Module cryptography non disponible, chiffrement ignoré")
+            print(" Module cryptography non disponible, chiffrement ignoré")
             return data
     
     def _decrypt_data(self, encrypted_data: bytes) -> bytes:
         """Déchiffre des données."""
+
+
+
         try:
             from cryptography.fernet import Fernet
             import base64
@@ -3509,7 +3575,7 @@ class BackupRestoreManager:
             
             return f.decrypt(encrypted_data)
         except ImportError:
-            print("⚠️ Module cryptography non disponible, déchiffrement ignoré")
+            print(" Module cryptography non disponible, déchiffrement ignoré")
             return encrypted_data
     
     def _calculate_file_checksum(self, file_path: Path) -> str:
@@ -3563,7 +3629,7 @@ class BackupRestoreManager:
             
             return BackupMetadata(**data)
         except Exception as e:
-            print(f"⚠️ Erreur lors du chargement des métadonnées {backup_id}: {e}")
+            print(f" Erreur lors du chargement des métadonnées {backup_id}: {e}")
             return None
     
     def _format_size(self, size_bytes: int) -> str:
@@ -3712,7 +3778,7 @@ Exemples d'utilisation:
                 description=args.description,
                 created_by=args.created_by
             )
-            print(f"✅ Sauvegarde créée: {metadata.backup_id}")
+            print(f" Sauvegarde créée: {metadata.backup_id}")
         
         elif args.create_incremental:
             metadata = manager.create_incremental_backup(
@@ -3720,13 +3786,13 @@ Exemples d'utilisation:
                 description=args.description,
                 created_by=args.created_by
             )
-            print(f"✅ Sauvegarde incrémentale créée: {metadata.backup_id}")
+            print(f" Sauvegarde incrémentale créée: {metadata.backup_id}")
         
         elif args.list_backups:
             backups = manager.list_backups(limit=args.limit)
             
             if backups:
-                print(f"\n📋 Sauvegardes disponibles ({len(backups)}):")
+                print(f"\n Sauvegardes disponibles ({len(backups)}):")
                 print(f"{'ID':<25} {'Type':<12} {'Date':<20} {'Taille':<10} {'Statut':<12} {'Description'}")
                 print("-" * 100)
                 
@@ -3741,7 +3807,7 @@ Exemples d'utilisation:
         
         elif args.restore:
             if not args.backup_id:
-                print("❌ ID de sauvegarde requis pour la restauration")
+                print(" ID de sauvegarde requis pour la restauration")
                 sys.exit(1)
             
             restore_op = manager.restore_from_backup(
@@ -3751,7 +3817,7 @@ Exemples d'utilisation:
                 requested_by=args.created_by
             )
             
-            print(f"📊 Résultats de la restauration:")
+            print(f" Résultats de la restauration:")
             print(f"   Statut: {restore_op.status}")
             print(f"   Ressources restaurées: {len(restore_op.restored_resources)}")
             print(f"   Ressources échouées: {len(restore_op.failed_resources)}")
@@ -3768,21 +3834,21 @@ Exemples d'utilisation:
         
         elif args.cleanup:
             stats = manager.cleanup_old_backups(dry_run=args.dry_run)
-            print(f"📊 Statistiques de nettoyage:")
+            print(f" Statistiques de nettoyage:")
             print(f"   Sauvegardes supprimées: {stats['deleted_count']}")
             print(f"   Espace libéré: {manager._format_size(stats['freed_bytes'])}")
         
         elif args.sync_to_cloud:
             results = manager.sync_to_cloud_storage(args.sync_to_cloud)
             successful = sum(1 for r in results.values() if r.startswith("success"))
-            print(f"☁️ Synchronisation: {successful}/{len(results)} réussies")
+            print(f" Synchronisation: {successful}/{len(results)} réussies")
         
         else:
             print("Aucune action spécifiée. Utilisez --help pour voir les options.")
             parser.print_help()
     
     except Exception as e:
-        print(f"❌ Erreur: {e}")
+        print(f" Erreur: {e}")
         sys.exit(1)
 
 if __name__ == "__main__":
@@ -4140,6 +4206,9 @@ class WebhookProcessor:
     
     async def _parse_payload(self, request: WebhookRequest, config: WebhookConfig) -> Dict[str, Any]:
         """Parse webhook payload based on format."""
+
+
+
         try:
             if config.format == WebhookFormat.JSON:
                 return json.loads(request.body.decode('utf-8'))
@@ -4195,6 +4264,9 @@ class WebhookProcessor:
     
     def _create_pagerduty_event(self, message: Dict[str, Any]) -> Optional[WebhookEvent]:
         """Create webhook event from PagerDuty message."""
+
+
+
         try:
             event_type = message.get('event')
             if not event_type:
@@ -4234,6 +4306,9 @@ class WebhookProcessor:
     
     async def _process_event(self, event: WebhookEvent, config: WebhookConfig):
         """Process a single webhook event."""
+
+
+
         try:
             # Call global handlers first
             for handler in self.global_handlers:
@@ -4318,6 +4393,9 @@ class WebhookProcessor:
     
     async def drain_queue(self, timeout: float = 30.0):
         """Wait for all queued events to be processed."""
+
+
+
         try:
             await asyncio.wait_for(self.processing_queue.join(), timeout=timeout)
         except asyncio.TimeoutError:
@@ -4346,6 +4424,9 @@ class WebhookProcessor:
                                        endpoint_path: str,
                                        secret: str) -> WebhookConfig:
         """Create standard PagerDuty webhook configuration."""
+
+
+
         return WebhookConfig(
             name=name,
             endpoint_path=endpoint_path,
@@ -4417,12 +4498,12 @@ Architecture API:
 - Cache Redis pour performance
 
 Équipe Engineering:
-✅ Lead Dev + Architecte IA : Fahed Mlaiel
-✅ Développeur Backend Senior (Python/FastAPI/Django)
-✅ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face)
-✅ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
-✅ Spécialiste Sécurité Backend
-✅ Architecte Microservices
+ Lead Dev + Architecte IA : Fahed Mlaiel
+ Développeur Backend Senior (Python/FastAPI/Django)
+ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face)
+ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
+ Spécialiste Sécurité Backend
+ Architecte Microservices
 
 License: Spotify Proprietary
 Copyright: © 2025 Spotify Technology S.A.
@@ -4760,6 +4841,9 @@ class AuthManager:
     
     def verify_token(self, token: str) -> Dict[str, Any]:
         """Vérifie et décode un token JWT"""
+
+
+
         try:
             payload = jwt.decode(token, self.secret_key, algorithms=[self.algorithm])
             return payload
@@ -4768,6 +4852,9 @@ class AuthManager:
     
     def get_current_user(self, credentials: HTTPAuthorizationCredentials = Depends(security)):
         """Récupère l'utilisateur actuel depuis le token"""
+
+
+
         try:
             payload = self.verify_token(credentials.credentials)
             tenant_id: str = payload.get("tenant_id")
@@ -4951,6 +5038,9 @@ class AlertRulesAPI:
         @self.app.get("/", response_model=APIResponse)
         async def root():
             """Point d'entrée de l'API"""
+
+
+
             return APIResponse(
                 success=True,
                 message="Spotify Alert Rules API v2.0.0",
@@ -4990,6 +5080,9 @@ class AlertRulesAPI:
             current_user: dict = Depends(self.auth_manager.get_current_user)
         ):
             """Crée une nouvelle règle d'alerte"""
+
+
+
             try:
                 # Vérification des permissions
                 if rule_config.tenant_id != current_user["tenant_id"]:
@@ -5047,6 +5140,9 @@ class AlertRulesAPI:
             current_user: dict = Depends(self.auth_manager.get_current_user)
         ):
             """Liste les règles d'un tenant"""
+
+
+
             try:
                 tenant_id = current_user["tenant_id"]
                 
@@ -5116,6 +5212,9 @@ class AlertRulesAPI:
             current_user: dict = Depends(self.auth_manager.get_current_user)
         ):
             """Récupère une règle spécifique"""
+
+
+
             try:
                 rule = await self.rule_manager.get_rule(rule_id)
                 
@@ -5176,6 +5275,9 @@ class AlertRulesAPI:
             current_user: dict = Depends(self.auth_manager.get_current_user)
         ):
             """Met à jour une règle"""
+
+
+
             try:
                 rule = await self.rule_manager.get_rule(rule_id)
                 
@@ -5229,6 +5331,9 @@ class AlertRulesAPI:
             current_user: dict = Depends(self.auth_manager.get_current_user)
         ):
             """Supprime une règle"""
+
+
+
             try:
                 rule = await self.rule_manager.get_rule(rule_id)
                 
@@ -5289,6 +5394,9 @@ class AlertRulesAPI:
             current_user: dict = Depends(self.auth_manager.get_current_user)
         ):
             """Évalue les règles d'un tenant"""
+
+
+
             try:
                 # Vérification des permissions
                 if evaluation_request.tenant_id != current_user["tenant_id"]:
@@ -5422,6 +5530,9 @@ class AlertRulesAPI:
             current_user: dict = Depends(self.auth_manager.get_current_user)
         ):
             """Récupère les statistiques du gestionnaire"""
+
+
+
             try:
                 stats = await self.rule_manager.get_statistics()
                 
@@ -5823,6 +5934,9 @@ class WebhookEndpoint(BaseSchema, TimestampMixin, TenantMixin, MetadataMixin):
     @property
     def is_healthy(self) -> bool:
         """Indique si le webhook est en bonne santé"""
+
+
+
         return (
             self.enabled and
             self.status == WebhookStatus.ACTIVE and
@@ -5962,6 +6076,9 @@ class WebhookDelivery(BaseSchema, TimestampMixin, TenantMixin):
     @property
     def is_successful(self) -> bool:
         """Indique si la livraison a réussi"""
+
+
+
         return (
             self.status == DeliveryStatus.DELIVERED and
             self.response_status_code is not None and
@@ -5972,6 +6089,9 @@ class WebhookDelivery(BaseSchema, TimestampMixin, TenantMixin):
     @property
     def should_retry(self) -> bool:
         """Indique si une nouvelle tentative doit être faite"""
+
+
+
         return (
             self.status in [DeliveryStatus.FAILED, DeliveryStatus.TIMEOUT] and
             self.attempt_count < self.max_attempts and
@@ -6319,6 +6439,9 @@ class SlackWebhookManager:
     
     async def start(self):
         """Démarre le gestionnaire de webhooks."""
+
+
+
         try:
             # Créer la session HTTP
             connector = aiohttp.TCPConnector(
@@ -6355,6 +6478,9 @@ class SlackWebhookManager:
     
     async def stop(self):
         """Arrête le gestionnaire de webhooks."""
+
+
+
         try:
             # Arrêter les workers
             await self._stop_workers()
@@ -6462,6 +6588,9 @@ class SlackWebhookManager:
         Returns:
             True si succès, False sinon
         """
+
+
+
         try:
             # Valider l'URL
             if not self._validate_webhook_url(webhook_url):
@@ -6502,6 +6631,9 @@ class SlackWebhookManager:
     
     def _validate_webhook_url(self, url: str) -> bool:
         """Valide une URL de webhook Slack."""
+
+
+
         try:
             parsed = urlparse(url)
             
@@ -6524,6 +6656,9 @@ class SlackWebhookManager:
     
     def _get_webhook_key(self, webhook_url: str) -> str:
         """Génère une clé unique pour un webhook."""
+
+
+
         return hashlib.md5(webhook_url.encode()).hexdigest()[:16]
     
     async def _init_rate_limiter(self, tenant_id: str, webhook_key: str, rate_limit: int):
@@ -6571,6 +6706,9 @@ class SlackWebhookManager:
         Returns:
             ID de la requête
         """
+
+
+
         try:
             # Créer la requête
             request = WebhookRequest(
@@ -6863,6 +7001,9 @@ class SlackWebhookManager:
     
     async def _persist_webhook_config(self, tenant_id: str, webhook_key: str, config: WebhookConfig):
         """Persiste la configuration webhook en Redis."""
+
+
+
         try:
             if self.redis_client:
                 key = f"webhook_config:{tenant_id}:{webhook_key}"
@@ -6883,6 +7024,9 @@ class SlackWebhookManager:
     
     async def _persist_request_result(self, request: WebhookRequest):
         """Persiste le résultat d'une requête en Redis."""
+
+
+
         try:
             if self.redis_client:
                 key = f"webhook_result:{request.tenant_id}:{request.id}"
@@ -6905,6 +7049,9 @@ class SlackWebhookManager:
     
     async def get_webhook_status(self, tenant_id: str, request_id: str) -> Optional[Dict[str, Any]]:
         """Récupère le statut d'une requête webhook."""
+
+
+
         try:
             if self.redis_client:
                 key = f"webhook_result:{tenant_id}:{request_id}"
@@ -7270,10 +7417,16 @@ class AuthManager:
 
     def verify_password(self, plain_password: str, hashed_password: str) -> bool:
         """Vérification du mot de passe"""
+
+
+
         return pwd_context.verify(plain_password, hashed_password)
 
     def get_password_hash(self, password: str) -> str:
         """Hashage du mot de passe"""
+
+
+
         return pwd_context.hash(password)
 
     def authenticate_user(self, username: str, password: str, tenant_id: Optional[str] = None) -> Optional[Dict[str, Any]]:
@@ -7323,6 +7476,9 @@ class AuthManager:
 
     def verify_token(self, token: str) -> Optional[TokenData]:
         """Vérification d'un token JWT"""
+
+
+
         
         try:
             payload = jwt.decode(token, self.jwt_secret, algorithms=[self.algorithm])
@@ -7641,6 +7797,9 @@ async def logout(current_user: TokenData = Depends(get_current_user)):
 @app.get("/auth/me", response_model=APIResponse, tags=["Authentication"])
 async def get_current_user_info(current_user: TokenData = Depends(get_current_user)):
     """Informations de l'utilisateur actuel"""
+
+
+
     
     return APIResponse(
         success=True,
@@ -8174,6 +8333,9 @@ class QueryFilter(BaseModel):
 # Dépendances
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
     """Obtient l'utilisateur actuel à partir du token JWT."""
+
+
+
     try:
         token = credentials.credentials
         payload = jwt.decode(token, config.security.secret_key, algorithms=["HS256"])
@@ -8230,6 +8392,9 @@ async def create_metric(
     user: dict = Depends(check_rate_limit)
 ):
     """Créer une nouvelle métrique."""
+
+
+
     try:
         # Créer la métrique
         metric = create_metric(
@@ -8273,6 +8438,9 @@ async def get_metrics(
     user: dict = Depends(check_rate_limit)
 ):
     """Récupérer les métriques avec filtrage."""
+
+
+
     try:
         # Filtres
         filters = {
@@ -8314,6 +8482,9 @@ async def get_metric(
     user: dict = Depends(check_rate_limit)
 ):
     """Récupérer une métrique spécifique."""
+
+
+
     try:
         # Simulation
         metric = create_metric(
@@ -8340,6 +8511,9 @@ async def get_aggregated_metrics(
     user: dict = Depends(check_rate_limit)
 ):
     """Récupérer des métriques agrégées."""
+
+
+
     try:
         # Simulation de données agrégées
         time_points = []
@@ -8383,6 +8557,9 @@ async def create_dashboard(
     user: dict = Depends(check_rate_limit)
 ):
     """Créer un nouveau tableau de bord."""
+
+
+
     try:
         # Créer le dashboard
         dashboard = Dashboard(
@@ -8415,6 +8592,9 @@ async def get_dashboards(
     user: dict = Depends(check_rate_limit)
 ):
     """Récupérer les tableaux de bord."""
+
+
+
     try:
         # Simulation
         dashboards = []
@@ -8448,6 +8628,9 @@ async def create_alert(
     user: dict = Depends(check_rate_limit)
 ):
     """Créer une nouvelle alerte."""
+
+
+
     try:
         # Créer l'alerte
         alert = Alert(
@@ -8481,6 +8664,9 @@ async def get_alerts(
     user: dict = Depends(check_rate_limit)
 ):
     """Récupérer les alertes."""
+
+
+
     try:
         # Récupérer depuis le gestionnaire d'alertes
         active_alerts = analytics_engine.alert_manager.active_alerts
@@ -8514,6 +8700,9 @@ async def predict(
     user: dict = Depends(check_rate_limit)
 ):
     """Faire une prédiction avec un modèle ML."""
+
+
+
     try:
         # Récupérer le modèle
         model = model_manager.get_model(prediction_request.model_name)
@@ -8543,6 +8732,9 @@ async def predict(
 @app.get("/api/v1/ml/models")
 async def get_models(user: dict = Depends(check_rate_limit)):
     """Récupérer la liste des modèles ML."""
+
+
+
     try:
         models_stats = model_manager.get_all_model_stats()
         
@@ -8571,6 +8763,9 @@ async def train_model(
     user: dict = Depends(check_rate_limit)
 ):
     """Entraîner un modèle ML."""
+
+
+
     try:
         model = model_manager.get_model(model_name)
         if not model:
@@ -8592,6 +8787,9 @@ async def train_model(
 
 async def _train_model_background(model, model_name: str):
     """Entraînement de modèle en arrière-plan."""
+
+
+
     try:
         # Simulation de données d'entraînement
         training_data = [{"feature1": i, "feature2": i*2} for i in range(100)]
@@ -8616,6 +8814,9 @@ async def _train_model_background(model, model_name: str):
 @app.get("/api/v1/performance/status")
 async def get_performance_status(user: dict = Depends(check_rate_limit)):
     """Récupérer le statut de performances."""
+
+
+
     try:
         # Collecter les métriques actuelles
         system_metrics = performance_monitor.collect_system_metrics()
@@ -8663,6 +8864,9 @@ async def get_performance_report(
     user: dict = Depends(check_rate_limit)
 ):
     """Générer un rapport de performances."""
+
+
+
     try:
         report = performance_monitor.generate_performance_report()
         
@@ -8736,6 +8940,9 @@ async def websocket_performance(websocket: WebSocket):
 @app.get("/health")
 async def health_check():
     """Vérification de santé de l'API."""
+
+
+
     return {
         "status": "healthy",
         "timestamp": datetime.utcnow().isoformat(),
@@ -8801,14 +9008,14 @@ if __name__ == "__main__":
     import uvicorn
     
     print("""
-    🚀 SPOTIFY AI ANALYTICS DASHBOARD API
+     SPOTIFY AI ANALYTICS DASHBOARD API
     ====================================
-    📊 API REST complète
-    🔄 WebSocket temps réel
-    🔐 Authentification JWT
-    📈 Monitoring intégré
-    🎯 Rate limiting
-    📚 Documentation auto
+     API REST complète
+     WebSocket temps réel
+     Authentification JWT
+     Monitoring intégré
+     Rate limiting
+     Documentation auto
     
     By Fahed Mlaiel & API Team
     """)
@@ -9083,6 +9290,9 @@ class EnterpriseAdminConsole:
         @self.app.get("/admin", response_class=HTMLResponse)
         async def admin_dashboard(request: Request):
             """Admin dashboard homepage."""
+
+
+
             
             try:
                 # Get system overview
@@ -9107,6 +9317,9 @@ class EnterpriseAdminConsole:
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
             """Create new admin user."""
+
+
+
             
             try:
                 # Validate admin permissions
@@ -9158,6 +9371,9 @@ class EnterpriseAdminConsole:
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
             """List admin users."""
+
+
+
             
             try:
                 # Validate admin permissions
@@ -9197,6 +9413,9 @@ class EnterpriseAdminConsole:
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
             """List all tenants."""
+
+
+
             
             try:
                 # Validate admin permissions
@@ -9221,6 +9440,9 @@ class EnterpriseAdminConsole:
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
             """Get system health status."""
+
+
+
             
             try:
                 # Validate admin permissions
@@ -9246,6 +9468,9 @@ class EnterpriseAdminConsole:
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
             """Start bulk operation."""
+
+
+
             
             try:
                 # Validate admin permissions
@@ -9290,6 +9515,9 @@ class EnterpriseAdminConsole:
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
             """Get bulk operation status."""
+
+
+
             
             try:
                 # Validate admin permissions
@@ -9330,6 +9558,9 @@ class EnterpriseAdminConsole:
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
             """Generate analytics report."""
+
+
+
             
             try:
                 # Validate admin permissions
@@ -9381,6 +9612,9 @@ class EnterpriseAdminConsole:
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
             """Get security threats."""
+
+
+
             
             try:
                 # Validate admin permissions
@@ -9406,6 +9640,9 @@ class EnterpriseAdminConsole:
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
             """Respond to security threat."""
+
+
+
             
             try:
                 # Validate admin permissions
@@ -9441,6 +9678,9 @@ class EnterpriseAdminConsole:
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
             """Get audit logs."""
+
+
+
             
             try:
                 # Validate admin permissions
@@ -9479,6 +9719,9 @@ class EnterpriseAdminConsole:
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
             """Get real-time metrics."""
+
+
+
             
             try:
                 # Validate admin permissions
@@ -9549,6 +9792,9 @@ class EnterpriseAdminConsole:
     
     async def _store_admin_user(self, admin_user: EnterpriseAdminUser):
         """Store admin user in database."""
+
+
+
         
         try:
             async with self.async_session_maker() as session:
@@ -9821,6 +10067,9 @@ class EnterpriseAdminConsole:
         details: Dict[str, Any]
     ):
         """Log admin action for audit trail."""
+
+
+
         
         try:
             audit_entry = {
@@ -10451,6 +10700,9 @@ class SpotifyAPIMetricsCollector(BaseCollector):
     
     async def validate_data(self, data: Dict[str, Any]) -> bool:
         """Valide les données de métriques API Spotify."""
+
+
+
         try:
             api_data = data.get('spotify_api_metrics', {})
             
@@ -10925,6 +11177,9 @@ class PlaylistAnalyticsCollector(BaseCollector):
     
     async def validate_data(self, data: Dict[str, Any]) -> bool:
         """Valide les données d'analytics playlists."""
+
+
+
         try:
             playlist_data = data.get('playlist_analytics', {})
             
@@ -10959,6 +11214,9 @@ class RateLimitAnalyzer:
     
     async def analyze_rate_limits(self, tenant_id: str) -> Dict[str, Any]:
         """Analyse l'utilisation des rate limits."""
+
+
+
         return {
             'current_usage': {
                 'requests_per_hour': 2850,
@@ -10991,6 +11249,9 @@ class DataSyncMonitor:
     
     async def analyze_sync_performance(self, tenant_id: str) -> Dict[str, Any]:
         """Analyse la performance de synchronisation."""
+
+
+
         return {
             'sync_metrics': {
                 'last_full_sync': '2024-03-11T08:00:00Z',
@@ -11032,6 +11293,9 @@ class CacheAnalyzer:
     
     async def analyze_cache_performance(self, tenant_id: str) -> Dict[str, Any]:
         """Analyse la performance du cache."""
+
+
+
         return {
             'cache_metrics': {
                 'hit_rate_overall': 0.847,
@@ -11192,6 +11456,9 @@ class TrackMetricsCollector(BaseCollector):
     
     async def _analyze_playlist_performance(self, tenant_id: str) -> Dict[str, Any]:
         """Analyse la performance dans les playlists."""
+
+
+
         return {
             'playlist_inclusion_metrics': {
                 'avg_playlists_per_track': 8.7,
@@ -11215,6 +11482,9 @@ class TrackMetricsCollector(BaseCollector):
     
     async def _analyze_discovery_trends(self, tenant_id: str) -> Dict[str, Any]:
         """Analyse les tendances de découverte."""
+
+
+
         return {
             'discovery_channels': {
                 'recommendations': 0.34,
@@ -11253,6 +11523,9 @@ class TrackMetricsCollector(BaseCollector):
     
     async def validate_data(self, data: Dict[str, Any]) -> bool:
         """Valide les données de métriques tracks."""
+
+
+
         try:
             track_data = data.get('track_metrics', {})
             
@@ -11360,6 +11633,9 @@ class ArtistInsightsCollector(BaseCollector):
     
     async def _analyze_artist_audience(self, tenant_id: str) -> Dict[str, Any]:
         """Analyse l'audience des artistes."""
+
+
+
         return {
             'demographic_breakdown': {
                 'age_groups': {
@@ -11394,6 +11670,9 @@ class ArtistInsightsCollector(BaseCollector):
     
     async def _analyze_geographic_distribution(self, tenant_id: str) -> Dict[str, Any]:
         """Analyse la distribution géographique."""
+
+
+
         return {
             'top_countries': {
                 'US': 0.28,
@@ -11433,6 +11712,9 @@ class ArtistInsightsCollector(BaseCollector):
     
     async def _generate_artist_recommendations(self, tenant_id: str) -> List[Dict[str, Any]]:
         """Génère des recommandations pour les artistes."""
+
+
+
         return [
             {
                 'type': 'audience_expansion',
@@ -11494,6 +11776,9 @@ class ArtistInsightsCollector(BaseCollector):
     
     async def validate_data(self, data: Dict[str, Any]) -> bool:
         """Valide les données d'insights artistes."""
+
+
+
         try:
             artist_data = data.get('artist_insights', {})
             
@@ -11541,7 +11826,7 @@ Configuration for external service integrations, API endpoints, credentials mana
 and connection settings for the collaboration system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 
 Project Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -11865,6 +12150,9 @@ class TimeoutSettings:
     
     def get_timeout_config(self) -> Dict[str, int]:
         """Get timeout configuration as dictionary."""
+
+
+
         return {
             "connection": self.connection_timeout,
             "read": self.read_timeout,
@@ -12001,6 +12289,9 @@ class IntegrationConfig:
     
     def get_service_config(self, service: ServiceType) -> Dict[str, Any]:
         """Get complete configuration for a specific service."""
+
+
+
         return {
             "endpoint": self.endpoints.get_endpoint(service),
             "credentials": self.credentials.get_credentials(service),
@@ -12012,6 +12303,9 @@ class IntegrationConfig:
     @classmethod
     def from_environment(cls) -> 'IntegrationConfig':
         """Create configuration from environment variables."""
+
+
+
         return cls()
 
 
@@ -12056,7 +12350,7 @@ Configuration for external service integrations, API endpoints, credentials mana
 and connection settings for the collaboration system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 
 Project Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
@@ -12380,6 +12674,9 @@ class TimeoutSettings:
     
     def get_timeout_config(self) -> Dict[str, int]:
         """Get timeout configuration as dictionary."""
+
+
+
         return {
             "connection": self.connection_timeout,
             "read": self.read_timeout,
@@ -12516,6 +12813,9 @@ class IntegrationConfig:
     
     def get_service_config(self, service: ServiceType) -> Dict[str, Any]:
         """Get complete configuration for a specific service."""
+
+
+
         return {
             "endpoint": self.endpoints.get_endpoint(service),
             "credentials": self.credentials.get_credentials(service),
@@ -12527,6 +12827,9 @@ class IntegrationConfig:
     @classmethod
     def from_environment(cls) -> 'IntegrationConfig':
         """Create configuration from environment variables."""
+
+
+
         return cls()
 
 
@@ -13488,7 +13791,7 @@ class LyricsGenerator:
 # ==========================================================================================
 
 """
-🎵 Spotify AI Agent - API Factory Patterns
+ Spotify AI Agent - API Factory Patterns
 ==========================================
 
 Factory patterns enterprise pour la création de composants API,
@@ -13626,6 +13929,9 @@ class ComponentRegistry:
     
     def is_registered(self, name: str) -> bool:
         """Vérifie si un composant est enregistré"""
+
+
+
         return name in self._factories
     
     def clear(self):
@@ -13658,6 +13964,9 @@ class MiddlewareFactory(ComponentFactory):
     
     def create(self, name: str, **kwargs) -> BaseHTTPMiddleware:
         """Crée un middleware"""
+
+
+
         return self.registry.get(name, **kwargs)
     
     def register_defaults(self):
@@ -13693,6 +14002,9 @@ class ServiceFactory(ComponentFactory):
     
     def create(self, name: str, **kwargs) -> Any:
         """Crée un service"""
+
+
+
         return self.registry.get(name, **kwargs)
     
     def register_defaults(self):
@@ -13733,6 +14045,9 @@ class DatabaseFactory(ComponentFactory):
     
     def create(self, name: str, **kwargs) -> Any:
         """Crée un composant database"""
+
+
+
         return self.registry.get(name, **kwargs)
     
     def register_defaults(self):
@@ -13751,6 +14066,9 @@ class CacheFactory(ComponentFactory):
     
     def create(self, name: str, **kwargs) -> Any:
         """Crée un composant cache"""
+
+
+
         return self.registry.get(name, **kwargs)
     
     def register_defaults(self):
@@ -13831,6 +14149,9 @@ def get_container() -> DependencyContainer:
 
 def get_component(name: str, component_type: ComponentType = None) -> Any:
     """Récupère un composant depuis le container global"""
+
+
+
     return get_container().get(name, component_type)
 
 
@@ -13912,6 +14233,9 @@ def create_fastapi_app(settings: APISettings = None) -> FastAPI:
 @lru_cache()
 def get_cached_component(name: str, component_type: str = None) -> Any:
     """Version cachée de get_component pour les dépendances FastAPI"""
+
+
+
     return get_component(name, ComponentType(component_type) if component_type else None)
 
 
@@ -14000,16 +14324,25 @@ def create_api_components(app: FastAPI, settings: APISettings = None) -> Dict[st
 
 def create_service_registry():
     """Créer un registre de services"""
+
+
+
     return ComponentRegistry()
 
 
 def get_component_factory():
     """Obtenir la factory de composants"""
+
+
+
     return ComponentFactory()
 
 
 def get_dependency_container():
     """Obtenir le container de dépendances"""
+
+
+
     return get_container()
 
 
@@ -14067,7 +14400,7 @@ class ServiceLifetime:
 # ==========================================================================================
 
 """
-🎵 Spotify AI Agent - API Core Module
+ Spotify AI Agent - API Core Module
 =====================================
 
 Module central de l'API contenant les composants fondamentaux et la configuration
@@ -14277,6 +14610,9 @@ class APIClientFactory:
     @staticmethod
     def create_spotify_client(config: Dict[str, Any]):
         """Crée un client Spotify API avec authentification avancée et intégration Kubernetes."""
+
+
+
         try:
             import logging
             logger = logging.getLogger(__name__)
@@ -14312,6 +14648,9 @@ class APIClientFactory:
                     
                 async def authenticate(self):
                     """Authentification OAuth dans environnement Kubernetes distribué."""
+
+
+
                     try:
                         # Intégration avec secrets Kubernetes
                         self.auth_token = {
@@ -14454,6 +14793,9 @@ class APIClientFactory:
     @staticmethod  
     def create_oauth_client(provider: str, config: Dict[str, Any]):
         """Crée un client OAuth générique optimisé pour environnement Kubernetes."""
+
+
+
         try:
             import logging
             logger = logging.getLogger(__name__)
@@ -14591,6 +14933,9 @@ class APIClientFactory:
                 
                 async def exchange_code_for_token(self, authorization_code: str):
                     """Échange le code d'autorisation avec stockage sécurisé Kubernetes."""
+
+
+
                     try:
                         # Intégration avec Kubernetes Secrets pour stockage sécurisé
                         token_data = {
@@ -14831,7 +15176,7 @@ class APIKeyManager:
 # ==========================================================================================
 
 """
-🏗️ HYBRID BACKEND - ORCHESTRATION DJANGO/FASTAPI ENTERPRISE
+ HYBRID BACKEND - ORCHESTRATION DJANGO/FASTAPI ENTERPRISE
 Expert Team: Senior Backend Developer, Microservices Architect
 
 Architecture hybride ultra-avancée avec orchestration intelligente des frameworks
@@ -14921,7 +15266,7 @@ class HybridConfig:
 
 class DjangoFramework(BaseFramework):
     """
-    🐍 FRAMEWORK DJANGO ENTERPRISE
+     FRAMEWORK DJANGO ENTERPRISE
     
     Gestion avancée de Django avec:
     - Configuration automatique
@@ -14939,6 +15284,9 @@ class DjangoFramework(BaseFramework):
         
     async def initialize(self) -> bool:
         """Initialise Django avec configuration optimisée"""
+
+
+
         try:
             if not self._django_setup_done:
                 self._configure_django()
@@ -15126,6 +15474,9 @@ class DjangoFramework(BaseFramework):
     
     async def _run_migrations(self):
         """Exécute les migrations Django"""
+
+
+
         try:
             # Dans un thread séparé pour éviter les blocages
             loop = asyncio.get_event_loop()
@@ -15152,6 +15503,9 @@ class DjangoFramework(BaseFramework):
     
     def _setup_admin(self):
         """Configure l'interface admin Django"""
+
+
+
         try:
             # Import des modèles et admin configs
             from backend.app.models.orm.spotify import Track, Artist, Album, Playlist
@@ -15228,6 +15582,9 @@ class DjangoFramework(BaseFramework):
     
     async def _create_default_superuser(self):
         """Crée un superuser par défaut si nécessaire"""
+
+
+
         try:
             from django.contrib.auth.models import User
             
@@ -15244,6 +15601,9 @@ class DjangoFramework(BaseFramework):
     
     async def shutdown(self) -> bool:
         """Arrête Django proprement"""
+
+
+
         try:
             # Fermer les connexions DB
             from django.db import connections
@@ -15300,7 +15660,7 @@ class DjangoFramework(BaseFramework):
 
 class FastAPIFramework(BaseFramework):
     """
-    ⚡ FRAMEWORK FASTAPI ENTERPRISE
+     FRAMEWORK FASTAPI ENTERPRISE
     
     FastAPI haute performance avec:
     - Async/await natif
@@ -15318,6 +15678,9 @@ class FastAPIFramework(BaseFramework):
         
     async def initialize(self) -> bool:
         """Initialise FastAPI avec configuration optimisée"""
+
+
+
         try:
             # Créer l'application FastAPI
             self.app = FastAPI(
@@ -15327,7 +15690,7 @@ class FastAPIFramework(BaseFramework):
                 docs_url=self.config.fastapi_docs_url,
                 redoc_url=self.config.fastapi_redoc_url,
                 description="""
-                🎵 **Spotify AI Agent API** - Architecture Enterprise
+                 **Spotify AI Agent API** - Architecture Enterprise
                 
                 API haute performance avec FastAPI pour l'agent IA Spotify.
                 
@@ -15418,6 +15781,9 @@ class FastAPIFramework(BaseFramework):
     
     async def _setup_database(self):
         """Configure la base de données SQLAlchemy"""
+
+
+
         try:
             self.engine = create_async_engine(
                 self.config.database_url,
@@ -15452,6 +15818,9 @@ class FastAPIFramework(BaseFramework):
         @self.app.get("/health", tags=["Health"])
         async def health_check():
             """Vérification de santé de l'API"""
+
+
+
             return {
                 "status": "healthy",
                 "timestamp": time.time(),
@@ -15462,6 +15831,9 @@ class FastAPIFramework(BaseFramework):
         @self.app.get("/metrics", tags=["Monitoring"])
         async def metrics():
             """Métriques Prometheus"""
+
+
+
             return prometheus_client.generate_latest()
         
         # Inclure les routeurs des modules
@@ -15531,6 +15903,9 @@ class FastAPIFramework(BaseFramework):
     
     async def shutdown(self) -> bool:
         """Arrête FastAPI proprement"""
+
+
+
         try:
             if self.engine:
                 await self.engine.dispose()
@@ -15568,7 +15943,7 @@ class FastAPIFramework(BaseFramework):
 
 class HybridBackend:
     """
-    🚀 BACKEND HYBRIDE ENTERPRISE
+     BACKEND HYBRIDE ENTERPRISE
     
     Orchestration intelligente Django + FastAPI avec:
     - Load balancing automatique
@@ -15599,6 +15974,9 @@ class HybridBackend:
     
     async def initialize(self) -> bool:
         """Initialise le backend hybride"""
+
+
+
         try:
             # Enregistrer les frameworks dans l'orchestrateur
             framework_orchestrator.register_framework(self.django_framework)
@@ -15634,6 +16012,9 @@ class HybridBackend:
     
     async def shutdown(self) -> bool:
         """Arrête le backend hybride"""
+
+
+
         try:
             results = await framework_orchestrator.shutdown_all()
             success = all(results.values())
@@ -15651,14 +16032,23 @@ class HybridBackend:
     
     def get_django_app(self):
         """Récupère l'application Django"""
+
+
+
         return self.django_framework.wsgi_app
     
     def get_fastapi_app(self):
         """Récupère l'application FastAPI"""
+
+
+
         return self.fastapi_framework.app
     
     async def get_health_status(self) -> Dict[str, Any]:
         """Récupère le statut de santé complet"""
+
+
+
         return await framework_orchestrator.get_health_status()
 
 
@@ -15679,11 +16069,17 @@ async def initialize_hybrid_backend(config: Optional[HybridConfig] = None) -> Hy
 
 def get_django_app():
     """Récupère l'application Django"""
+
+
+
     return hybrid_backend.get_django_app()
 
 
 def get_fastapi_app():
     """Récupère l'application FastAPI"""
+
+
+
     return hybrid_backend.get_fastapi_app()
 
 
@@ -15867,6 +16263,9 @@ class WebhookProcessor:
         
     async def initialize(self, redis_url: str, encryption_key: str, webhook_secret: str):
         """Initialise le processeur de webhooks"""
+
+
+
         try:
             # Sécurité
             self.security_manager = SecurityManager(encryption_key)
@@ -15916,6 +16315,9 @@ class WebhookProcessor:
         
     async def _handle_pagerduty_webhook(self, request: web.Request) -> web.Response:
         """Traite les webhooks PagerDuty"""
+
+
+
         try:
             start_time = time.time()
             
@@ -16049,6 +16451,9 @@ class WebhookProcessor:
         
     def _validate_signature(self, payload: str, signature: str) -> bool:
         """Valide la signature HMAC du webhook"""
+
+
+
         try:
             expected_signature = self.security_manager.generate_webhook_signature(
                 payload, self.webhook_secret
@@ -16062,6 +16467,9 @@ class WebhookProcessor:
             
     def _validate_webhook_schema(self, data: Dict[str, Any]) -> bool:
         """Valide le schéma du webhook"""
+
+
+
         try:
             # Schéma de base pour les webhooks PagerDuty
             schema = {
@@ -16083,6 +16491,9 @@ class WebhookProcessor:
             
     async def _create_webhook_event(self, webhook_data: Dict[str, Any], source_ip: str, user_agent: str) -> WebhookEvent:
         """Crée un événement webhook enrichi"""
+
+
+
         try:
             payload = WebhookPayload(**webhook_data)
             
@@ -16142,6 +16553,9 @@ class WebhookProcessor:
             
     async def _process_webhook_event(self, event: WebhookEvent):
         """Traite un événement webhook"""
+
+
+
         try:
             event.status = ProcessingStatus.PROCESSING
             event.processed_at = datetime.now(timezone.utc)
@@ -16247,6 +16661,9 @@ class WebhookProcessor:
         
     async def _forward_to_external_systems(self, event: WebhookEvent, data: Dict[str, Any]):
         """Transmet les événements aux systèmes externes"""
+
+
+
         try:
             # Exemple: envoi vers Slack, Jira, etc.
             for rule in self.transformation_rules:
@@ -16266,6 +16683,9 @@ class WebhookProcessor:
         
     async def _load_transformation_rules(self):
         """Charge les règles de transformation depuis Redis"""
+
+
+
         try:
             async with aioredis.Redis(connection_pool=self.redis_pool) as redis:
                 rules_data = await redis.get("webhook:transformation_rules")
@@ -16280,6 +16700,9 @@ class WebhookProcessor:
             
     async def _log_webhook_event(self, event: WebhookEvent, action: str):
         """Log l'événement webhook pour audit"""
+
+
+
         try:
             async with aioredis.Redis(connection_pool=self.redis_pool) as redis:
                 audit_data = {
@@ -16391,13 +16814,13 @@ import pytest
 # ==========================================================================================
 
 """
-🎵 Spotify AI Agent - Tests Network Utils Module
+ Spotify AI Agent - Tests Network Utils Module
 ================================================
 
 Tests enterprise complets pour le module network_utils
 avec validation de réseau, sécurité et performance.
 
-🎖️ Développé par l'équipe d'experts enterprise
+ Développé par l'équipe d'experts enterprise
 """
 
 import pytest
@@ -17114,7 +17537,7 @@ class TestNetworkUtils:
         assert security_check is not None
         assert latency['avg_latency'] > 0
         
-        print("✅ Workflow réseau complet validé")
+        print(" Workflow réseau complet validé")
 
 
 # Tests de robustesse réseau
@@ -17588,7 +18011,7 @@ def test_spotifywebhook_class():
 # ==========================================================================================
 
 """
-🎵 Tests d'Intégration Ultra-Avancés pour API Core Module Complet
+ Tests d'Intégration Ultra-Avancés pour API Core Module Complet
 ===============================================================
 
 Tests d'intégration industriels pour valider l'interaction entre tous les
@@ -17626,6 +18049,9 @@ from app.api.core.monitoring import get_api_metrics, get_health_checker, setup_m
 @pytest.fixture
 def integration_config():
     """Configuration complète pour les tests d'intégration"""
+
+
+
     return {
         "app": {
             "name": "Test Spotify AI Agent",
@@ -18298,7 +18724,7 @@ class TestEndToEndIntegration:
 # ==========================================================================================
 
 """
-🎵 Tests Ultra-Avancés pour API Core Context Management
+ Tests Ultra-Avancés pour API Core Context Management
 ======================================================
 
 Tests industriels complets pour la gestion de contexte avec patterns enterprise,
@@ -18361,6 +18787,9 @@ def clean_context():
 @pytest.fixture
 def sample_user_context():
     """Contexte utilisateur de test"""
+
+
+
     return UserContext(
         user_id="user_12345",
         username="test_user",
@@ -19136,7 +19565,7 @@ class TestContextConcurrency:
 # ==========================================================================================
 
 """
-🎵 Tests Ultra-Avancés pour API Core Factory Management  
+ Tests Ultra-Avancés pour API Core Factory Management  
 ========================================================
 
 Tests industriels complets pour la factory pattern et dependency injection avec
@@ -19250,6 +19679,9 @@ def sample_middleware():
 @pytest.fixture
 def factory_config():
     """Configuration factory pour les tests"""
+
+
+
     return {
         "database": {
             "url": "postgresql://test:test@localhost/test",
@@ -20101,7 +20533,7 @@ class TestFactoryConfiguration:
 # ==========================================================================================
 
 """
-🎵 Tests Ultra-Avancés pour API Core Exception Management
+ Tests Ultra-Avancés pour API Core Exception Management
 ========================================================
 
 Tests industriels complets pour la gestion d'exceptions avec patterns enterprise,
@@ -20890,7 +21322,7 @@ class TestExceptionSecurity:
 # ==========================================================================================
 
 """
-🎵 Tests Ultra-Avancés pour API Core Configuration
+ Tests Ultra-Avancés pour API Core Configuration
 =================================================
 
 Tests industriels complets pour la configuration de l'API Core avec validation
@@ -20953,6 +21385,9 @@ def clean_env():
 @pytest.fixture
 def sample_env_vars():
     """Variables d'environnement de test"""
+
+
+
     return {
         'API_HOST': '127.0.0.1',
         'API_PORT': '9000',
@@ -22861,13 +23296,13 @@ def test_spotifyapiservice_class():
 # Tests complets pour le gestionnaire de connexions
 # avec tests de pool, load balancing et résilience.
 #
-# 🎖️ Expert: Network Testing Specialist + Infrastructure Engineer
+#  Expert: Network Testing Specialist + Infrastructure Engineer
 #
-# 👨‍💻 Développé par: Fahed Mlaiel
+# ‍ Développé par: Fahed Mlaiel
 # =================================
 
 """
-🔗 Connection Manager Tests
+ Connection Manager Tests
 ===========================
 
 Comprehensive test suite for the Real-Time Connection Manager:
@@ -23071,6 +23506,9 @@ class TestConnection:
     @pytest.fixture
     def test_endpoint(self):
         """Endpoint de test"""
+
+
+
         return ServerEndpoint(
             host="localhost",
             port=8080,
@@ -23190,6 +23628,9 @@ class TestConnectionPool:
     @pytest.fixture
     def test_endpoints(self):
         """Endpoints de test"""
+
+
+
         return [
             ServerEndpoint("server1.test", 8080, weight=10),
             ServerEndpoint("server2.test", 8080, weight=5),
@@ -23307,6 +23748,9 @@ class TestRealTimeConnectionManager:
     @pytest.fixture
     def test_endpoints(self):
         """Endpoints de test pour le manager"""
+
+
+
         return [
             ServerEndpoint("mgr1.test", 8080, max_connections=100),
             ServerEndpoint("mgr2.test", 8080, max_connections=100)

@@ -7,7 +7,7 @@ international laws, treaties, and platform-specific requirements.
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 
-⚠️ COPYRIGHT WARNING ⚠️
+ COPYRIGHT WARNING 
 Unauthorized copying or distribution prohibited. All rights reserved © 2025 Fahed Mlaiel
 """
 
@@ -160,6 +160,9 @@ class InternationalHandler:
         Returns:
             International notice generation result
         """
+
+
+
         try:
             self.logger.info(f"Generating international notices for {len(target_jurisdictions)} jurisdictions")
             
@@ -249,6 +252,9 @@ class InternationalHandler:
         Returns:
             Cross-border enforcement validation result
         """
+
+
+
         try:
             self.logger.info(f"Validating cross-border enforcement for {len(enforcement_jurisdictions)} jurisdictions")
             
@@ -339,6 +345,9 @@ class InternationalHandler:
         Returns:
             International delivery coordination result
         """
+
+
+
         try:
             self.logger.info(f"Coordinating international delivery for {len(international_notices)} jurisdictions")
             
@@ -414,6 +423,9 @@ class InternationalHandler:
         Returns:
             International compliance monitoring result
         """
+
+
+
         try:
             self.logger.info(f"Monitoring international compliance for batch: {batch_id}")
             
@@ -610,6 +622,9 @@ class InternationalHandler:
     
     async def _get_base_notice(self, notice_id: str) -> Optional[TakedownNotice]:
         """Retrieve base notice for internationalization"""
+
+
+
         try:
             query = "SELECT * FROM dmca_notices WHERE notice_id = %s"
             result = await self.db.fetch_one(query, [notice_id])
@@ -636,6 +651,9 @@ class InternationalHandler:
     
     async def _extract_platform_from_notice(self, notice: TakedownNotice) -> str:
         """Extract platform from notice"""
+
+
+
         try:
             from urllib.parse import urlparse
             parsed = urlparse(notice.infringing_url)

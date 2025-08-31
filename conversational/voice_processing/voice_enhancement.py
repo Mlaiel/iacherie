@@ -126,6 +126,9 @@ class VoiceEnhancer:
     
     def _calculate_enhancement_metrics(self, original: np.ndarray, enhanced: np.ndarray) -> Dict[str, float]:
         """Calculate enhancement quality metrics"""
+
+
+
         return {
             "snr_improvement": 3.5,  # Mock improvement in dB
             "noise_reduction": 12.0,  # Mock noise reduction in dB
@@ -134,6 +137,9 @@ class VoiceEnhancer:
     
     def _calculate_quality_improvement(self, original: np.ndarray, enhanced: np.ndarray) -> float:
         """Calculate overall quality improvement score"""
+
+
+
         return 0.75  # Mock quality improvement score
     
     async def shutdown(self) -> None:

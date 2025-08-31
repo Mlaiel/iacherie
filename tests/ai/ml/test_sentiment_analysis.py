@@ -23,7 +23,7 @@ and advanced natural language understanding capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  STRICT LEGAL WARNING ⚠️
+  STRICT LEGAL WARNING 
 Contact: mlaiel@live.de - Unauthorized use STRICTLY PROHIBITED
 """
 
@@ -71,7 +71,7 @@ class TestSentimentAnalyzer:
         """Test text preprocessing for sentiment analysis"""
         analyzer = SentimentAnalyzer()
         
-        raw_text = "This is AMAZING!!! 😀 #love #happy"
+        raw_text = "This is AMAZING!!!  #love #happy"
         processed_text = analyzer.preprocess_text(raw_text)
         
         assert isinstance(processed_text, str)

@@ -342,9 +342,15 @@ PLATFORM_CONFIGS: Dict[str, PlatformAPIConfig] = {
 
 def get_platform_config(platform: str) -> Optional[PlatformAPIConfig]:
     """Get platform configuration by name"""
+
+
+
     return PLATFORM_CONFIGS.get(platform.lower())
 
 def get_platforms_by_type(platform_type: PlatformType) -> List[PlatformAPIConfig]:
     """Get all platforms of specific type"""
+
+
+
     return [config for config in PLATFORM_CONFIGS.values() 
             if config.platform_type == platform_type]

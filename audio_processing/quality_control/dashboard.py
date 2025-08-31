@@ -1,5 +1,5 @@
 """
-📊 Quality Control Dashboard - Real-time Quality Management Interface
+ Quality Control Dashboard - Real-time Quality Management Interface
 
 Advanced dashboard system for real-time monitoring, management, and visualization
 of audio quality control operations with comprehensive analytics and reporting.
@@ -8,7 +8,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Developer + DevOps + DBA + Security + Microservices
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ AVERTISSEMENT STRICT ⚠️
+ AVERTISSEMENT STRICT 
 Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou reproduction sans 
 autorisation écrite explicite de Fahed Mlaiel (mlaiel@live.de) est strictement 
@@ -89,7 +89,7 @@ class DashboardData:
 
 class RealTimeDashboard:
     """
-    📊 Real-time Quality Control Dashboard
+     Real-time Quality Control Dashboard
     
     Comprehensive dashboard for monitoring and managing audio quality control:
     - Real-time quality metrics visualization
@@ -360,6 +360,9 @@ class RealTimeDashboard:
 
     async def _get_active_alerts(self) -> List[QualityAlert]:
         """Get active quality alerts"""
+
+
+
         return self.monitor.get_active_alerts()
 
     async def _get_recent_reports(self, start_time: datetime, end_time: datetime) -> List[Dict[str, Any]]:
@@ -704,6 +707,9 @@ class RealTimeDashboard:
 
     def get_dashboard_config(self) -> Dict[str, Any]:
         """Get complete dashboard configuration"""
+
+
+
         return {
             "dashboard_id": self.dashboard_id,
             "widgets": {wid: asdict(widget) for wid, widget in self.widgets.items()},

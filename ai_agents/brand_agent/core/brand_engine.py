@@ -54,6 +54,9 @@ class BrandEngine:
 
     async def start(self) -> None:
         """Start the brand processing engine"""
+
+
+
         try:
             self.is_running = True
             logger.info("BrandEngine started successfully")
@@ -63,6 +66,9 @@ class BrandEngine:
 
     async def process(self, data: Dict[str, Any]) -> BrandResult:
         """Process brand operation"""
+
+
+
         try:
             job_id = data.get('job_id', 'auto-generated')
             

@@ -9,7 +9,7 @@ with interactive menu, quick start options, and system monitoring.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️ LEGAL WARNING: This code and concept are protected by intellectual property laws.
+ LEGAL WARNING: This code and concept are protected by intellectual property laws.
 Any unauthorized copying, modification, or distribution without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.
@@ -30,7 +30,7 @@ try:
     from maintenance import ContentModuleMaintenance
     from setup_content_module import ContentModuleSetup
 except ImportError as e:
-    print(f"❌ Import Error: {e}")
+    print(f" Import Error: {e}")
     print("Please ensure all required files are present in the content module directory.")
     sys.exit(1)
 
@@ -45,51 +45,51 @@ class ContentSystemLauncher:
     def print_banner(self):
         """Print system banner."""
         print("""
-╔══════════════════════════════════════════════════════════════════════════════╗
-║                IA Influencer Agent - Content Management System              ║
-║                                                                              ║
-║  🚀 Industrial-Grade Content Processing Platform                             ║
-║  🎵 Multi-Format Support (Audio, Video, Image, Text)                        ║
-║  🤖 AI-Powered Enhancement & Protection                                      ║
-║  📈 Smart Distribution & Monetization                                        ║
-║  🔒 Advanced Security & Copyright Protection                                 ║
-║  🌐 Intelligent Web Crawling & Monitoring                                    ║
-║  📊 Performance Optimization & Analytics                                     ║
-║                                                                              ║
-║  Author: Fahed Mlaiel <mlaiel@live.de>                                      ║
-║  Version: 2.1.0 Enterprise Edition                                          ║
-╚══════════════════════════════════════════════════════════════════════════════╝
+
+                IA Influencer Agent - Content Management System              
+                                                                              
+   Industrial-Grade Content Processing Platform                             
+   Multi-Format Support (Audio, Video, Image, Text)                        
+  🤖 AI-Powered Enhancement & Protection                                      
+   Smart Distribution & Monetization                                        
+   Advanced Security & Copyright Protection                                 
+   Intelligent Web Crawling & Monitoring                                    
+   Performance Optimization & Analytics                                     
+                                                                              
+  Author: Fahed Mlaiel <mlaiel@live.de>                                      
+  Version: 2.1.0 Enterprise Edition                                          
+
         """)
     
     def print_menu(self):
         """Print interactive menu."""
         print("""
-┌─ Main Menu ──────────────────────────────────────────────────────────────────┐
-│                                                                              │
-│  1. 🚀 Quick Start - Initialize & Launch System                             │
-│  2. 🔍 System Health Check                                                   │
-│  3. ⚙️  Setup & Configuration                                                │
-│  4. 🧹 System Maintenance                                                    │
-│  5. 📊 Performance Monitor                                                   │
-│  6. 🎬 Demo Complete System                                                  │
-│  7. 📋 System Information                                                    │
-│  8. 🛑 Shutdown System                                                       │
-│  9. ❓ Help & Documentation                                                  │
-│  0. 🚪 Exit                                                                  │
-│                                                                              │
-└──────────────────────────────────────────────────────────────────────────────┘
+ Main Menu 
+                                                                              
+  1.  Quick Start - Initialize & Launch System                             
+  2.  System Health Check                                                   
+  3.   Setup & Configuration                                                
+  4. 🧹 System Maintenance                                                    
+  5.  Performance Monitor                                                   
+  6.  Demo Complete System                                                  
+  7.  System Information                                                    
+  8.  Shutdown System                                                       
+  9.  Help & Documentation                                                  
+  0.  Exit                                                                  
+                                                                              
+
         """)
     
     async def quick_start(self):
         """Quick start the system."""
-        print("🚀 Starting Content Management System...")
+        print(" Starting Content Management System...")
         
         try:
             self.system = await initialize_content_system()
             
             if self.system and self.system.is_initialized:
                 info = self.system.get_system_info()
-                print(f"✅ System started successfully!")
+                print(f" System started successfully!")
                 print(f"   - Engines loaded: {info['engines_count']}")
                 print(f"   - Status: {info['health_status']}")
                 print(f"   - Startup time: {info['startup_time']}")
@@ -103,16 +103,16 @@ class ContentSystemLauncher:
                 
                 return True
             else:
-                print("❌ Failed to start system")
+                print(" Failed to start system")
                 return False
                 
         except Exception as e:
-            print(f"❌ Startup failed: {e}")
+            print(f" Startup failed: {e}")
             return False
     
     async def health_check(self):
         """Run system health check."""
-        print("🔍 Running System Health Check...")
+        print(" Running System Health Check...")
         
         health_checker = ContentModuleHealthCheck()
         report = await health_checker.run_comprehensive_health_check()
@@ -121,11 +121,11 @@ class ContentSystemLauncher:
         
         # Save report
         report_path = health_checker.save_report(report)
-        print(f"\n📋 Detailed report saved: {report_path}")
+        print(f"\n Detailed report saved: {report_path}")
     
     async def setup_system(self):
         """Run system setup and configuration."""
-        print("⚙️ Running System Setup...")
+        print(" Running System Setup...")
         
         setup = ContentModuleSetup()
         
@@ -147,48 +147,48 @@ class ContentSystemLauncher:
         
         while True:
             print("""
-┌─ Maintenance Menu ───────────────────────────────────────────────────────────┐
-│                                                                              │
-│  1. 📦 Create System Backup                                                  │
-│  2. 🧹 System Cleanup                                                        │
-│  3. ⚡ Performance Optimization                                               │
-│  4. 📊 Generate System Report                                                │
-│  5. 📋 List Backups                                                          │
-│  6. 🔄 Restore from Backup                                                   │
-│  7. 🔙 Back to Main Menu                                                     │
-│                                                                              │
-└──────────────────────────────────────────────────────────────────────────────┘
+ Maintenance Menu 
+                                                                              
+  1.  Create System Backup                                                  
+  2. 🧹 System Cleanup                                                        
+  3.  Performance Optimization                                               
+  4.  Generate System Report                                                
+  5.  List Backups                                                          
+  6.  Restore from Backup                                                   
+  7.  Back to Main Menu                                                     
+                                                                              
+
             """)
             
             choice = input("Select option: ").strip()
             
             if choice == '1':
                 backup_file = await maintenance.create_system_backup()
-                print(f"✅ Backup created: {backup_file}")
+                print(f" Backup created: {backup_file}")
                 
             elif choice == '2':
                 aggressive = input("Aggressive cleanup? (y/N): ").lower() == 'y'
                 results = await maintenance.cleanup_system(aggressive)
-                print(f"✅ Cleanup completed:")
+                print(f" Cleanup completed:")
                 print(f"   - Files removed: {results['temp_files_removed']}")
                 print(f"   - Space freed: {results['space_freed_mb']} MB")
                 
             elif choice == '3':
                 results = await maintenance.optimize_performance()
-                print(f"✅ Optimization completed:")
+                print(f" Optimization completed:")
                 for rec in results['recommendations'][:3]:
                     print(f"   • {rec}")
                     
             elif choice == '4':
                 report = await maintenance.generate_system_report()
-                print(f"✅ System report generated:")
+                print(f" System report generated:")
                 print(f"   - Memory: {report['resource_usage']['memory_mb']} MB")
                 print(f"   - CPU: {report['resource_usage']['cpu_percent']}%")
                 
             elif choice == '5':
                 backups = maintenance.list_backups()
                 if backups:
-                    print("📦 Available backups:")
+                    print(" Available backups:")
                     for backup in backups:
                         print(f"   • {backup['filename']} ({backup['size_mb']} MB)")
                 else:
@@ -207,9 +207,9 @@ class ContentSystemLauncher:
                             backup_file = backups[selection]['filename']
                             success = await maintenance.restore_backup(backup_file)
                             if success:
-                                print(f"✅ Backup restored successfully")
+                                print(f" Backup restored successfully")
                             else:
-                                print(f"❌ Backup restoration failed")
+                                print(f" Backup restoration failed")
                         else:
                             print("Invalid selection")
                     except ValueError:
@@ -227,7 +227,7 @@ class ContentSystemLauncher:
     
     async def performance_monitor(self):
         """Run performance monitoring."""
-        print("📊 Starting Performance Monitor...")
+        print(" Starting Performance Monitor...")
         
         duration = input("Monitoring duration in seconds (default 60): ").strip()
         try:
@@ -239,7 +239,7 @@ class ContentSystemLauncher:
         results = await maintenance.monitor_system(duration)
         
         summary = results['summary']
-        print(f"✅ Monitoring completed:")
+        print(f" Monitoring completed:")
         print(f"   - Average memory: {summary['avg_memory_mb']} MB")
         print(f"   - Peak memory: {summary['max_memory_mb']} MB")
         print(f"   - Average CPU: {summary['avg_cpu_percent']}%")
@@ -247,7 +247,7 @@ class ContentSystemLauncher:
     
     async def demo_system(self):
         """Run complete system demo."""
-        print("🎬 Starting Complete System Demo...")
+        print(" Starting Complete System Demo...")
         
         try:
             from demo_complete_system import ContentSystemDemo
@@ -256,9 +256,9 @@ class ContentSystemLauncher:
             await demo.run_complete_demo()
             
         except ImportError:
-            print("❌ Demo system not available")
+            print(" Demo system not available")
         except Exception as e:
-            print(f"❌ Demo failed: {e}")
+            print(f" Demo failed: {e}")
     
     async def show_system_info(self):
         """Show system information."""
@@ -267,76 +267,76 @@ class ContentSystemLauncher:
             health = await self.system.health_check()
             
             print(f"""
-╔─ System Information ─────────────────────────────────────────────────────────╗
-║                                                                              ║
-║  System: {info['system_name']}                             ║
-║  Version: {info['version']}                                                 ║
-║  Author: {info['author']}                               ║
-║                                                                              ║
-║  Status: {'🟢 RUNNING' if self.running else '🔴 STOPPED'}                                                   ║
-║  Health: {health['status'].upper()}                                                  ║
-║  Uptime: {health['uptime_seconds']:.2f} seconds                                      ║
-║                                                                              ║
-║  Engines: {info['engines_count']} loaded                                                ║
-║  Memory: {health['system_metrics'].get('memory_mb', 'N/A')} MB                                                 ║
-║  CPU: {health['system_metrics'].get('cpu_percent', 'N/A')}%                                                    ║
-║                                                                              ║
-╚══════════════════════════════════════════════════════════════════════════════╝
+ System Information 
+                                                                              
+  System: {info['system_name']}                             
+  Version: {info['version']}                                                 
+  Author: {info['author']}                               
+                                                                              
+  Status: {'🟢 RUNNING' if self.running else ' STOPPED'}                                                   
+  Health: {health['status'].upper()}                                                  
+  Uptime: {health['uptime_seconds']:.2f} seconds                                      
+                                                                              
+  Engines: {info['engines_count']} loaded                                                
+  Memory: {health['system_metrics'].get('memory_mb', 'N/A')} MB                                                 
+  CPU: {health['system_metrics'].get('cpu_percent', 'N/A')}%                                                    
+                                                                              
+
             """)
         else:
             print("""
-╔─ System Information ─────────────────────────────────────────────────────────╗
-║                                                                              ║
-║  System: IA Influencer Agent - Content Management System                    ║
-║  Version: 2.1.0                                                             ║
-║  Author: Fahed Mlaiel <mlaiel@live.de>                                      ║
-║                                                                              ║
-║  Status: 🔴 NOT RUNNING                                                      ║
-║                                                                              ║
-║  Use option 1 to start the system                                           ║
-║                                                                              ║
-╚══════════════════════════════════════════════════════════════════════════════╝
+ System Information 
+                                                                              
+  System: IA Influencer Agent - Content Management System                    
+  Version: 2.1.0                                                             
+  Author: Fahed Mlaiel <mlaiel@live.de>                                      
+                                                                              
+  Status:  NOT RUNNING                                                      
+                                                                              
+  Use option 1 to start the system                                           
+                                                                              
+
             """)
     
     def show_help(self):
         """Show help information."""
         print("""
-╔─ Help & Documentation ───────────────────────────────────────────────────────╗
-║                                                                              ║
-║  📖 Documentation Files:                                                     ║
-║     • README.md - English documentation                                     ║
-║     • README.de.md - German documentation                                   ║
-║     • README.fr.md - French documentation                                   ║
-║                                                                              ║
-║  🔧 Configuration:                                                           ║
-║     • config.py - Module configuration                                      ║
-║     • .env.template - Environment variables template                        ║
-║     • content_module_config.json - Runtime configuration                    ║
-║                                                                              ║
-║  🧪 Testing & Validation:                                                    ║
-║     • python health_check.py - System health check                          ║
-║     • python -m pytest - Run test suite                                     ║
-║     • python demo_complete_system.py - Run demo                             ║
-║                                                                              ║
-║  🛠️ Utilities:                                                              ║
-║     • python setup_content_module.py - Setup system                         ║
-║     • python maintenance.py - Maintenance tools                             ║
-║                                                                              ║
-║  📧 Enterprise Support: mlaiel@live.de                                      ║
-║                                                                              ║
-╚══════════════════════════════════════════════════════════════════════════════╝
+ Help & Documentation 
+                                                                              
+   Documentation Files:                                                     
+     • README.md - English documentation                                     
+     • README.de.md - German documentation                                   
+     • README.fr.md - French documentation                                   
+                                                                              
+   Configuration:                                                           
+     • config.py - Module configuration                                      
+     • .env.template - Environment variables template                        
+     • content_module_config.json - Runtime configuration                    
+                                                                              
+  🧪 Testing & Validation:                                                    
+     • python health_check.py - System health check                          
+     • python -m pytest - Run test suite                                     
+     • python demo_complete_system.py - Run demo                             
+                                                                              
+   Utilities:                                                              
+     • python setup_content_module.py - Setup system                         
+     • python maintenance.py - Maintenance tools                             
+                                                                              
+   Enterprise Support: mlaiel@live.de                                      
+                                                                              
+
         """)
     
     async def shutdown_system(self):
         """Shutdown the system."""
         if self.system and self.running:
-            print("🛑 Shutting down Content Management System...")
+            print(" Shutting down Content Management System...")
             await shutdown_content_system()
             self.running = False
             self.system = None
-            print("✅ System shutdown completed")
+            print(" System shutdown completed")
         else:
-            print("💡 System is not running")
+            print(" System is not running")
     
     async def run_interactive(self):
         """Run interactive mode."""
@@ -378,17 +378,17 @@ class ContentSystemLauncher:
                 elif choice == '0':
                     if self.running:
                         await self.shutdown_system()
-                    print("👋 Goodbye!")
+                    print(" Goodbye!")
                     break
                     
                 else:
-                    print("❌ Invalid option. Please try again.")
+                    print(" Invalid option. Please try again.")
                     
             except KeyboardInterrupt:
-                print("\n🛑 Operation cancelled by user")
+                print("\n Operation cancelled by user")
                 
             except Exception as e:
-                print(f"❌ Error: {e}")
+                print(f" Error: {e}")
             
             if choice not in ['0', '4']:  # Don't pause for exit or maintenance menu
                 input("\nPress Enter to continue...")
@@ -442,7 +442,7 @@ if __name__ == '__main__':
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
-        print("\n🛑 Launcher interrupted by user")
+        print("\n Launcher interrupted by user")
     except Exception as e:
-        print(f"❌ Launcher error: {e}")
+        print(f" Launcher error: {e}")
         sys.exit(1)

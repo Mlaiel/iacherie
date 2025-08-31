@@ -7,7 +7,7 @@ and analysis supporting the ultra-advanced moderation system.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -199,6 +199,9 @@ class ContentPreprocessor:
         Returns:
             Preprocessed image tensor and metadata
         """
+
+
+
         try:
             # Load image
             if isinstance(image_input, str):
@@ -256,6 +259,9 @@ class ContentPreprocessor:
         Returns:
             Processed audio features and metadata
         """
+
+
+
         try:
             # Load audio
             if isinstance(audio_input, str):
@@ -322,6 +328,9 @@ class ContentPreprocessor:
     
     def _detect_language(self, text: str) -> str:
         """Simple language detection based on character patterns"""
+
+
+
         try:
             # Simple heuristic-based language detection
             if re.search(r'[äöüÄÖÜß]', text):
@@ -336,11 +345,11 @@ class ContentPreprocessor:
                 return 'pl'
             elif re.search(r'[а-я]', text.lower()):
                 return 'ru'
-            elif re.search(r'[ひらがなカタカナ漢字]', text):
+            elif re.search(r'[]', text):
                 return 'ja'
-            elif re.search(r'[가-힣]', text):
+            elif re.search(r'[-]', text):
                 return 'ko'
-            elif re.search(r'[一-龯]', text):
+            elif re.search(r'[-]', text):
                 return 'zh'
             else:
                 return 'en'  # Default to English
@@ -418,6 +427,9 @@ class ContentPreprocessor:
     
     def _enhance_image_quality(self, image: Image.Image) -> Image.Image:
         """Enhance image quality for better analysis"""
+
+
+
         try:
             # Brightness and contrast enhancement
             enhancer = ImageEnhance.Brightness(image)
@@ -441,6 +453,9 @@ class ContentPreprocessor:
     
     def _extract_visual_features(self, image: Image.Image) -> Dict[str, Any]:
         """Extract visual features from image"""
+
+
+
         try:
             # Convert to numpy array
             img_array = np.array(image)
@@ -530,6 +545,9 @@ class ContentPreprocessor:
     
     def _extract_audio_features(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
         """Extract comprehensive audio features"""
+
+
+
         try:
             features = {}
             
@@ -571,6 +589,9 @@ class ContentPreprocessor:
     
     def _generate_spectrograms(self, audio: np.ndarray, sr: int) -> Dict[str, np.ndarray]:
         """Generate different types of spectrograms"""
+
+
+
         try:
             spectrograms = {}
             
@@ -593,6 +614,9 @@ class ContentPreprocessor:
     
     def _analyze_audio_quality(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
         """Analyze audio quality metrics"""
+
+
+
         try:
             # Signal-to-noise ratio estimation
             signal_power = np.mean(audio**2)
@@ -645,6 +669,9 @@ class ContentHasher:
     @staticmethod
     def hash_image(image: Union[Image.Image, np.ndarray]) -> str:
         """Generate perceptual hash for image"""
+
+
+
         try:
             if isinstance(image, np.ndarray):
                 image = Image.fromarray(image)
@@ -674,6 +701,9 @@ class ContentHasher:
     @staticmethod
     def hash_audio(audio: np.ndarray, sr: int) -> str:
         """Generate audio fingerprint hash"""
+
+
+
         try:
             # Extract spectral features
             mfcc = librosa.feature.mfcc(y=audio, sr=sr, n_mfcc=12)

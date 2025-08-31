@@ -67,6 +67,9 @@ class ContentFingerprint:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert fingerprint to dictionary"""
+
+
+
         return {
             'content_id': self.content_id,
             'content_type': self.content_type.value,
@@ -94,6 +97,9 @@ class ViolationReport:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert violation report to dictionary"""
+
+
+
         return {
             'violation_id': self.violation_id,
             'original_content_id': self.original_content_id,
@@ -118,6 +124,9 @@ class FingerprintGenerator:
         
     async def generate_fingerprint(self, content_path: str, content_id: str) -> ContentFingerprint:
         """Generate comprehensive content fingerprint"""
+
+
+
         try:
             content_type = self._detect_content_type(content_path)
             
@@ -149,6 +158,9 @@ class FingerprintGenerator:
     
     async def _generate_audio_fingerprint(self, audio_path: str, content_id: str) -> ContentFingerprint:
         """Generate audio fingerprint using multiple techniques"""
+
+
+
         try:
             # Load audio
             y, sr = librosa.load(audio_path)
@@ -192,6 +204,9 @@ class FingerprintGenerator:
     
     async def _generate_video_fingerprint(self, video_path: str, content_id: str) -> ContentFingerprint:
         """Generate video fingerprint using frame analysis"""
+
+
+
         try:
             cap = cv2.VideoCapture(video_path)
             
@@ -247,6 +262,9 @@ class FingerprintGenerator:
     
     async def _generate_image_fingerprint(self, image_path: str, content_id: str) -> ContentFingerprint:
         """Generate image fingerprint using perceptual hashing"""
+
+
+
         try:
             # Load image
             image = Image.open(image_path)
@@ -467,6 +485,9 @@ class ContentValidator:
     
     def validate_content(self, content_path: str, content_type: ContentType) -> Dict[str, Any]:
         """Validate content meets quality standards"""
+
+
+
         try:
             if content_type == ContentType.AUDIO:
                 return self._validate_audio(content_path)
@@ -482,6 +503,9 @@ class ContentValidator:
     
     def _validate_audio(self, audio_path: str) -> Dict[str, Any]:
         """Validate audio content"""
+
+
+
         try:
             y, sr = librosa.load(audio_path)
             duration = len(y) / sr
@@ -510,6 +534,9 @@ class ContentValidator:
     
     def _validate_video(self, video_path: str) -> Dict[str, Any]:
         """Validate video content"""
+
+
+
         try:
             cap = cv2.VideoCapture(video_path)
             
@@ -547,6 +574,9 @@ class ContentValidator:
     
     def _validate_image(self, image_path: str) -> Dict[str, Any]:
         """Validate image content"""
+
+
+
         try:
             image = Image.open(image_path)
             file_size = Path(image_path).stat().st_size
@@ -670,6 +700,9 @@ class ProtectionEngine:
         
     async def protect_content(self, content_path: str, content_id: str, user_id: str) -> Dict[str, Any]:
         """Complete content protection workflow"""
+
+
+
         try:
             # Step 1: Validate content
             content_type = self.fingerprint_generator._detect_content_type(content_path)
@@ -770,6 +803,9 @@ class ViolationReporter:
     
     async def file_violation_report(self, violation: ViolationReport, user_contact: Dict[str, str]) -> Dict[str, Any]:
         """File copyright violation report"""
+
+
+
         try:
             platform = self._detect_platform_from_url(violation.infringing_url)
             
@@ -810,6 +846,9 @@ class ViolationReporter:
     
     def _generate_dmca_notice(self, violation: ViolationReport, user_contact: Dict[str, str]) -> Dict[str, Any]:
         """Generate DMCA takedown notice"""
+
+
+
         return {
             'copyright_owner': user_contact.get('name', ''),
             'contact_email': user_contact.get('email', ''),

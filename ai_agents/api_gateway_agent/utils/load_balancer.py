@@ -7,7 +7,7 @@ service discovery integration, and intelligent traffic distribution.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -83,6 +83,9 @@ class LoadBalancer:
     
     def _initialize_services(self, services_config: Dict[str, Dict[str, Any]]):
         """Initialize service instances from configuration"""
+
+
+
         try:
             for service_name, config in services_config.items():
                 instance = ServiceInstance(
@@ -121,6 +124,9 @@ class LoadBalancer:
         Returns:
             Upstream URL or None if no healthy instance available
         """
+
+
+
         try:
             if service_name not in self.services:
                 logger.warning(f"Service {service_name} not found")
@@ -227,6 +233,9 @@ class LoadBalancer:
     
     def _least_connections_selection(self, instances: List[ServiceInstance]) -> ServiceInstance:
         """Least connections instance selection"""
+
+
+
         return min(instances, key=lambda x: x.current_connections)
     
     def _ip_hash_selection(
@@ -249,6 +258,9 @@ class LoadBalancer:
     
     def _random_selection(self, instances: List[ServiceInstance]) -> ServiceInstance:
         """Random instance selection"""
+
+
+
         return random.choice(instances)
     
     def _health_based_selection(self, instances: List[ServiceInstance]) -> ServiceInstance:
@@ -267,6 +279,9 @@ class LoadBalancer:
     
     def _calculate_instance_score(self, instance: ServiceInstance) -> float:
         """Calculate instance health score"""
+
+
+
         try:
             score = 100.0  # Base score
             
@@ -298,6 +313,9 @@ class LoadBalancer:
     
     async def release_connection(self, service_name: str, upstream_url: str):
         """Release connection after request completion"""
+
+
+
         try:
             if service_name in self.services:
                 for instance in self.services[service_name]:
@@ -315,6 +333,9 @@ class LoadBalancer:
         success: bool
     ):
         """Record request metrics for instance"""
+
+
+
         try:
             if service_name in self.services:
                 for instance in self.services[service_name]:
@@ -343,6 +364,9 @@ class LoadBalancer:
         max_connections: int = 1000
     ) -> bool:
         """Add new service instance"""
+
+
+
         try:
             instance = ServiceInstance(
                 service_name=service_name,
@@ -366,6 +390,9 @@ class LoadBalancer:
     
     async def remove_service_instance(self, service_name: str, upstream_url: str) -> bool:
         """Remove service instance"""
+
+
+
         try:
             if service_name in self.services:
                 initial_count = len(self.services[service_name])
@@ -422,6 +449,9 @@ class LoadBalancer:
     
     async def _perform_health_checks(self):
         """Perform health checks on all service instances"""
+
+
+
         try:
             tasks = []
             
@@ -440,6 +470,9 @@ class LoadBalancer:
     
     async def _check_instance_health(self, instance: ServiceInstance):
         """Check health of individual service instance"""
+
+
+
         try:
             health_url = f"{instance.upstream_url}/health"
             
@@ -472,6 +505,9 @@ class LoadBalancer:
     
     def get_load_balancer_stats(self) -> Dict[str, Any]:
         """Get comprehensive load balancer statistics"""
+
+
+
         try:
             stats = {
                 "strategy": self.strategy.value,

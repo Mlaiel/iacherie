@@ -8,7 +8,7 @@ Project: IA Influencer Agent + Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL WARNING:
+ CRITICAL LEGAL WARNING:
 This code, concept, and intellectual property are exclusively owned by Fahed Mlaiel.
 Any unauthorized use, copying, distribution, reverse engineering, or commercialization 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
@@ -56,6 +56,9 @@ class RealTimeAnalytics:
     
     async def get_real_time_metrics(self, creator_id: str) -> Dict[str, Any]:
         """Get real-time metrics for creator"""
+
+
+
         return {
             'views_today': 1250,
             'engagement_rate': 4.2,
@@ -74,6 +77,9 @@ class PerformanceMetrics:
     
     async def calculate_performance_score(self, creator_id: str) -> float:
         """Calculate overall performance score"""
+
+
+
         return 87.5  # Placeholder
 
 
@@ -86,6 +92,9 @@ class InsightEngine:
     
     async def generate_insights(self, creator_id: str) -> List[Dict[str, Any]]:
         """Generate AI insights for creator"""
+
+
+
         return [
             {
                 'type': 'growth_opportunity',
@@ -124,6 +133,9 @@ class CreatorDashboardController:
         Returns:
             Complete dashboard data
         """
+
+
+
         try:
             # Get creator profile
             profile = await self.profile_manager.get_creator_profile(creator_id)
@@ -159,6 +171,9 @@ class CreatorDashboardController:
     
     async def get_analytics_summary(self, creator_id: str, period: str = "30d") -> Dict[str, Any]:
         """Get analytics summary for specified period"""
+
+
+
         return {
             'period': period,
             'total_views': 45000,

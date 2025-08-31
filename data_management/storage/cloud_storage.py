@@ -1,5 +1,5 @@
 """
-☁️ Cloud Storage Provider - IA Influencer Agent Platform Enterprise
+ Cloud Storage Provider - IA Influencer Agent Platform Enterprise
 ==================================================================
 Module: backend/data_management/storage/cloud_storage.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Multi-cloud storage provider supporting AWS S3, MinIO, Azure Blob, and Google Cloud
 with intelligent failover, cost optimization, and global distribution.
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -105,6 +105,9 @@ class CloudStorageManager:
     
     def _initialize_client(self) -> None:
         """Initialize cloud provider client"""
+
+
+
         try:
             if self.config.provider == CloudProvider.AWS_S3:
                 self._initialize_s3_client()
@@ -123,6 +126,9 @@ class CloudStorageManager:
     
     def _initialize_s3_client(self) -> None:
         """Initialize AWS S3 client"""
+
+
+
         try:
             session = boto3.Session(
                 aws_access_key_id=self.config.access_key,
@@ -144,6 +150,9 @@ class CloudStorageManager:
     
     def _initialize_minio_client(self) -> None:
         """Initialize MinIO client"""
+
+
+
         try:
             session = boto3.Session(
                 aws_access_key_id=self.config.access_key,
@@ -164,6 +173,9 @@ class CloudStorageManager:
     
     def _initialize_azure_client(self) -> None:
         """Initialize Azure Blob Storage client"""
+
+
+
         try:
             # Azure uses connection string format
             connection_string = (
@@ -184,6 +196,9 @@ class CloudStorageManager:
     
     def _initialize_gcp_client(self) -> None:
         """Initialize Google Cloud Storage client"""
+
+
+
         try:
             # Set credentials from environment or service account
             os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = self.config.secret_key
@@ -328,6 +343,9 @@ class CloudStorageManager:
     
     async def delete_file(self, file_path: str) -> Dict[str, Any]:
         """Delete file from cloud storage"""
+
+
+
         try:
             # Delete based on provider
             if self.config.provider in [CloudProvider.AWS_S3, CloudProvider.MINIO]:
@@ -359,6 +377,9 @@ class CloudStorageManager:
         include_metadata: bool = True
     ) -> List[Dict[str, Any]]:
         """List files in cloud storage with optional filtering"""
+
+
+
         try:
             # List based on provider
             if self.config.provider in [CloudProvider.AWS_S3, CloudProvider.MINIO]:
@@ -379,6 +400,9 @@ class CloudStorageManager:
     
     async def get_file_metadata(self, file_path: str) -> Dict[str, Any]:
         """Get file metadata without downloading content"""
+
+
+
         try:
             # Get metadata based on provider
             if self.config.provider in [CloudProvider.AWS_S3, CloudProvider.MINIO]:
@@ -403,6 +427,9 @@ class CloudStorageManager:
         preserve_metadata: bool = True
     ) -> Dict[str, Any]:
         """Copy file within cloud storage"""
+
+
+
         try:
             # Copy based on provider
             if self.config.provider in [CloudProvider.AWS_S3, CloudProvider.MINIO]:
@@ -423,6 +450,9 @@ class CloudStorageManager:
     
     def get_storage_statistics(self) -> Dict[str, Any]:
         """Get storage usage and performance statistics"""
+
+
+
         return {
             'provider': self.config.provider.value,
             'bucket_name': self.bucket_name,
@@ -447,6 +477,9 @@ class CloudStorageManager:
         content_type: str
     ) -> Dict[str, Any]:
         """Upload file to AWS S3 or MinIO"""
+
+
+
         try:
             extra_args = {
                 'StorageClass': storage_class,
@@ -496,6 +529,9 @@ class CloudStorageManager:
         local_path: Optional[str] = None
     ) -> Dict[str, Any]:
         """Download file from AWS S3 or MinIO"""
+
+
+
         try:
             # Get object with metadata
             response = self.client.get_object(
@@ -525,6 +561,9 @@ class CloudStorageManager:
     
     async def _delete_from_s3(self, file_path: str) -> None:
         """Delete file from AWS S3 or MinIO"""
+
+
+
         try:
             self.client.delete_object(
                 Bucket=self.bucket_name,
@@ -541,6 +580,9 @@ class CloudStorageManager:
         include_metadata: bool
     ) -> List[Dict[str, Any]]:
         """List objects in S3 bucket"""
+
+
+
         try:
             objects = []
             
@@ -575,6 +617,9 @@ class CloudStorageManager:
     
     async def _get_s3_metadata(self, file_path: str) -> Dict[str, Any]:
         """Get S3 object metadata"""
+
+
+
         try:
             response = self.client.head_object(
                 Bucket=self.bucket_name,
@@ -603,6 +648,9 @@ class CloudStorageManager:
         preserve_metadata: bool
     ) -> Dict[str, Any]:
         """Copy S3 object"""
+
+
+
         try:
             copy_source = {
                 'Bucket': self.bucket_name,
@@ -680,6 +728,9 @@ class CloudStorageManager:
     
     def _ensure_bucket_exists(self) -> None:
         """Ensure S3 bucket exists"""
+
+
+
         try:
             self.client.head_bucket(Bucket=self.bucket_name)
         except ClientError as e:
@@ -705,6 +756,9 @@ class CloudStorageManager:
     
     def _configure_bucket_policies(self) -> None:
         """Configure bucket security and lifecycle policies"""
+
+
+
         try:
             # Enable versioning if configured
             if self.config.versioning_enabled:

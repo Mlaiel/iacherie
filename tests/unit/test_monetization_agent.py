@@ -273,11 +273,17 @@ class TestMonetizationAgent:
     @pytest.fixture
     def monetization_engine(self):
         """Create monetization engine fixture"""
+
+
+
         return MockMonetizationEngine()
     
     @pytest.fixture
     def sample_content_metrics(self):
         """Sample content performance metrics"""
+
+
+
         return {
             "views": 10000,
             "likes": 500,
@@ -290,6 +296,9 @@ class TestMonetizationAgent:
     @pytest.fixture
     def sample_payment_data(self):
         """Sample payment data"""
+
+
+
         return {
             "user_id": "user_123",
             "amount": 25.99,
@@ -300,6 +309,9 @@ class TestMonetizationAgent:
     @pytest.fixture
     def sample_subscription_data(self):
         """Sample subscription data"""
+
+
+
         return {
             "user_id": "user_456",
             "plan_type": "premium"

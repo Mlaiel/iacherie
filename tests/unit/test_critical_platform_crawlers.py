@@ -443,16 +443,25 @@ class TestCriticalCrawlers:
     @pytest.fixture
     def spotify_crawler(self):
         """Create Spotify crawler fixture"""
+
+
+
         return MockSpotifyCrawler("test_client_id", "test_client_secret")
     
     @pytest.fixture
     def youtube_crawler(self):
         """Create YouTube crawler fixture"""
+
+
+
         return MockYouTubeCrawler("test_api_key")
     
     @pytest.fixture
     def integration_engine(self):
         """Create platform integration engine fixture"""
+
+
+
         return MockPlatformIntegrationEngine()
     
     @pytest.mark.asyncio

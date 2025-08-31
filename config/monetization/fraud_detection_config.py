@@ -308,6 +308,9 @@ class FraudDetectionConfig:
     
     def _initialize_risk_thresholds(self) -> List[RiskThreshold]:
         """Initialize risk threshold configurations."""
+
+
+
         return [
             RiskThreshold(
                 risk_level=RiskLevel.VERY_LOW,
@@ -359,6 +362,9 @@ class FraudDetectionConfig:
     
     def _initialize_fraud_rules(self) -> List[FraudRule]:
         """Initialize fraud detection rules."""
+
+
+
         return [
             # Payment Fraud Rules
             FraudRule(
@@ -471,6 +477,9 @@ class FraudDetectionConfig:
     
     def _initialize_ml_models(self) -> Dict[str, MLModelConfig]:
         """Initialize ML model configurations."""
+
+
+
         return {
             "payment_fraud_classifier": MLModelConfig(
                 model_name="Payment Fraud Classifier",
@@ -522,6 +531,9 @@ class FraudDetectionConfig:
     
     def get_fraud_rule(self, rule_id: str) -> Optional[FraudRule]:
         """Get fraud rule by ID."""
+
+
+
         return next((rule for rule in self.FRAUD_RULES if rule.rule_id == rule_id), None)
     
     def get_enabled_rules(self, fraud_type: Optional[FraudType] = None) -> List[FraudRule]:
@@ -533,6 +545,9 @@ class FraudDetectionConfig:
     
     def get_ml_model(self, model_name: str) -> Optional[MLModelConfig]:
         """Get ML model configuration by name."""
+
+
+
         return self.ML_MODELS.get(model_name)
     
     def calculate_composite_risk_score(self, individual_scores: Dict[str, Decimal]) -> Decimal:

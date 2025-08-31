@@ -12,7 +12,7 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Micro
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
+ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
 This code and concept are the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 Unauthorized access, copying, modification, distribution, reverse engineering,
@@ -459,6 +459,9 @@ class LeaderboardManager:
         user_profile: Optional[Dict[str, Any]] = None
     ) -> List[str]:
         """Update user score for a specific metric and affected leaderboards."""
+
+
+
         try:
             # Cache user profile for performance
             if user_profile:
@@ -499,6 +502,9 @@ class LeaderboardManager:
         value: Union[int, float, Decimal]
     ) -> None:
         """Update a specific entry in a leaderboard."""
+
+
+
         try:
             if leaderboard_id not in self._leaderboard_data:
                 self._leaderboard_data[leaderboard_id] = []
@@ -546,6 +552,9 @@ class LeaderboardManager:
     
     async def _calculate_entry_momentum(self, entry: LeaderboardEntry) -> None:
         """Calculate momentum and trending indicators for an entry."""
+
+
+
         try:
             # Calculate momentum based on recent score changes
             if entry.previous_score and entry.score > entry.previous_score:
@@ -609,6 +618,9 @@ class LeaderboardManager:
         leaderboard: LeaderboardDefinition
     ) -> Decimal:
         """Calculate composite score based on weighted metrics."""
+
+
+
         try:
             composite_score = Decimal('0')
             
@@ -638,6 +650,9 @@ class LeaderboardManager:
         include_user_context: Optional[str] = None
     ) -> Dict[str, Any]:
         """Get leaderboard data with optional user context."""
+
+
+
         try:
             if leaderboard_id not in self._leaderboards:
                 raise ValueError(f"Leaderboard {leaderboard_id} not found")
@@ -756,6 +771,9 @@ class LeaderboardManager:
     
     async def get_user_leaderboard_summary(self, user_id: str) -> Dict[str, Any]:
         """Get summary of user's performance across all leaderboards."""
+
+
+
         try:
             summary = {
                 "user_id": user_id,
@@ -844,6 +862,9 @@ class LeaderboardManager:
         featured_only: bool = False
     ) -> List[Dict[str, Any]]:
         """Get list of available leaderboards, optionally filtered by user eligibility."""
+
+
+
         try:
             leaderboards = []
             
@@ -903,6 +924,9 @@ class LeaderboardManager:
         creator_id: str
     ) -> str:
         """Create a custom leaderboard."""
+
+
+
         try:
             # Validate required fields
             required_fields = ["name", "primary_metric"]
@@ -953,6 +977,9 @@ class LeaderboardManager:
     
     async def schedule_leaderboard_updates(self) -> None:
         """Schedule regular leaderboard updates."""
+
+
+
         try:
             for leaderboard_id, leaderboard in self._leaderboards.items():
                 if leaderboard.status == LeaderboardStatus.ACTIVE and not leaderboard.real_time_updates:
@@ -969,6 +996,9 @@ class LeaderboardManager:
     
     async def get_leaderboard_analytics(self, leaderboard_id: str) -> Dict[str, Any]:
         """Get analytics data for a specific leaderboard."""
+
+
+
         try:
             if leaderboard_id not in self._leaderboards:
                 raise ValueError(f"Leaderboard {leaderboard_id} not found")

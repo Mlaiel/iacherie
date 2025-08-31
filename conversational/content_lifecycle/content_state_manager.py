@@ -7,7 +7,7 @@ validation, and workflow orchestration for multi-format content.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will result in legal action.
@@ -204,6 +204,9 @@ class ContentStateManager:
     
     def _initialize_validation_rules(self) -> Dict[str, Dict[str, Any]]:
         """Initialize state validation rules"""
+
+
+
         return {
             "content_completeness": {
                 "required_fields": ["title", "description", "content_type", "format"],
@@ -240,6 +243,9 @@ class ContentStateManager:
     
     async def get_content_state(self, content_id: str, user_id: str) -> Optional[ContentState]:
         """Get current content state"""
+
+
+
         try:
             # Check cache first
             cache_key = f"content_state:{content_id}"
@@ -276,6 +282,9 @@ class ContentStateManager:
         force: bool = False
     ) -> LifecycleEvent:
         """Transition content to new state with validation"""
+
+
+
         try:
             current_state = await self.get_content_state(content_id, user_id)
             if not current_state:
@@ -343,6 +352,9 @@ class ContentStateManager:
         user_id: str
     ) -> Dict[str, Any]:
         """Validate if state transition is possible"""
+
+
+
         try:
             current_state = await self.get_content_state(content_id, user_id)
             if not current_state:
@@ -384,6 +396,9 @@ class ContentStateManager:
         duration: Optional[timedelta] = None
     ) -> bool:
         """Lock content to prevent state changes"""
+
+
+
         try:
             async with get_db_session() as session:
                 # Update content lock status
@@ -410,6 +425,9 @@ class ContentStateManager:
     
     async def unlock_content(self, content_id: str, user_id: str) -> bool:
         """Unlock content to allow state changes"""
+
+
+
         try:
             async with get_db_session() as session:
                 # Update content lock status
@@ -434,6 +452,9 @@ class ContentStateManager:
     
     async def get_state_history(self, content_id: str, user_id: str) -> List[LifecycleEvent]:
         """Get content state transition history"""
+
+
+
         try:
             async with get_db_session() as session:
                 # Fetch state history from database
@@ -478,6 +499,9 @@ class ContentStateManager:
         transition: StateTransition
     ) -> Dict[str, Any]:
         """Check if transition conditions are met"""
+
+
+
         try:
             missing_conditions = []
             validation_errors = []

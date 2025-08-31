@@ -623,6 +623,9 @@ class BackupValidator:
     # Individual check implementations
     async def _check_metadata_exists(self, backup_id: str) -> Dict[str, Any]:
         """Check if backup metadata exists and is readable."""
+
+
+
         try:
             if not self.storage:
                 return {"status": "warning", "message": "No storage interface available"}
@@ -647,6 +650,9 @@ class BackupValidator:
 
     async def _check_backup_size_valid(self, backup_id: str) -> Dict[str, Any]:
         """Check if backup size matches metadata."""
+
+
+
         try:
             if not self.storage:
                 return {"status": "warning", "message": "No storage interface available"}
@@ -684,6 +690,9 @@ class BackupValidator:
 
     async def _check_checksum_verification(self, backup_id: str) -> Dict[str, Any]:
         """Verify backup data checksum."""
+
+
+
         try:
             if not self.storage:
                 return {"status": "warning", "message": "No storage interface available"}
@@ -725,6 +734,9 @@ class BackupValidator:
 
     async def _check_data_structure_valid(self, backup_id: str) -> Dict[str, Any]:
         """Check if backup data structure is valid."""
+
+
+
         try:
             if not self.storage:
                 return {"status": "warning", "message": "No storage interface available"}

@@ -210,6 +210,9 @@ class SubscriptionManager:
         Raises:
             PaymentError: If payment setup fails
         """
+
+
+
         try:
             # Check if client already has active subscription
             existing_subscription = self.db.query(Subscription).filter(
@@ -305,6 +308,9 @@ class SubscriptionManager:
         Returns:
             Current subscription data or None
         """
+
+
+
         try:
             subscription = self.db.query(Subscription).filter(
                 Subscription.client_id == client_id,
@@ -341,6 +347,9 @@ class SubscriptionManager:
         Returns:
             Updated subscription information
         """
+
+
+
         try:
             current_subscription = self.db.query(Subscription).filter(
                 Subscription.client_id == client_id,
@@ -428,6 +437,9 @@ class SubscriptionManager:
         Returns:
             Cancellation result
         """
+
+
+
         try:
             subscription = self.db.query(Subscription).filter(
                 Subscription.client_id == client_id,
@@ -494,6 +506,9 @@ class SubscriptionManager:
         Returns:
             Usage status and limits information
         """
+
+
+
         try:
             subscription = await self.get_subscription(client_id)
             if not subscription:
@@ -537,6 +552,9 @@ class SubscriptionManager:
         Returns:
             Renewal processing result
         """
+
+
+
         try:
             subscription = self.db.query(Subscription).filter(
                 Subscription.id == subscription_id
@@ -650,6 +668,9 @@ class SubscriptionManager:
         
     async def _format_subscription_data(self, subscription: Subscription) -> Dict[str, Any]:
         """Format subscription data for API response."""
+
+
+
         return {
             "id": str(subscription.id),
             "plan": subscription.plan.value,

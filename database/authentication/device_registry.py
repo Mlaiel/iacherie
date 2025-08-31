@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -319,6 +319,9 @@ class DeviceRegistry:
         capabilities: Optional[DeviceCapabilities] = None
     ) -> Tuple[str, bool]:
         """Register new device or update existing"""
+
+
+
         try:
             # Generate fingerprint
             fingerprint_hash = self._generate_device_fingerprint(
@@ -403,6 +406,9 @@ class DeviceRegistry:
         verification_token: Optional[str] = None
     ) -> str:
         """Establish trust relationship with device"""
+
+
+
         try:
             # Get location info
             location_info = self._get_location_info(ip_address)
@@ -451,6 +457,9 @@ class DeviceRegistry:
         activity_type: str
     ) -> Dict[str, Any]:
         """Verify device trust and calculate risk"""
+
+
+
         try:
             # Find device fingerprint
             fingerprint = self.db.query(DeviceFingerprint).filter(
@@ -598,6 +607,9 @@ class DeviceRegistry:
         anomaly_score: Optional[int] = None
     ):
         """Log device activity"""
+
+
+
         try:
             location_info = self._get_location_info(ip_address)
             
@@ -633,6 +645,9 @@ class DeviceRegistry:
         recommended_actions: Optional[List[str]] = None
     ) -> str:
         """Create security alert for device"""
+
+
+
         try:
             alert = DeviceSecurityAlert(
                 device_id=uuid.UUID(device_id),
@@ -658,6 +673,9 @@ class DeviceRegistry:
     
     async def get_user_devices(self, user_id: str) -> List[Dict[str, Any]]:
         """Get user's trusted devices"""
+
+
+
         try:
             devices = self.db.query(TrustedDevice).join(DeviceFingerprint).filter(
                 TrustedDevice.user_id == uuid.UUID(user_id),
@@ -691,6 +709,9 @@ class DeviceRegistry:
     
     async def revoke_device_trust(self, user_id: str, device_id: str, reason: str) -> bool:
         """Revoke trust for a device"""
+
+
+
         try:
             device = self.db.query(TrustedDevice).filter(
                 TrustedDevice.id == uuid.UUID(device_id),

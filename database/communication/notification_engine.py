@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -349,6 +349,9 @@ class NotificationEngine:
     
     async def initialize(self):
         """Initialize notification engine"""
+
+
+
         try:
             # Load templates and channels
             await self._load_templates()
@@ -391,6 +394,9 @@ class NotificationEngine:
         priority: NotificationPriority = NotificationPriority.NORMAL
     ) -> NotificationTemplate:
         """Create notification template"""
+
+
+
         try:
             template = NotificationTemplate(
                 template_key=template_key,
@@ -430,6 +436,9 @@ class NotificationEngine:
         context: Optional[Dict[str, Any]] = None
     ) -> str:
         """Send notification to user"""
+
+
+
         try:
             # Get template
             template = self.templates.get(template_key)
@@ -533,6 +542,9 @@ class NotificationEngine:
         verify: bool = True
     ) -> NotificationChannel:
         """Register notification channel for user"""
+
+
+
         try:
             # Check if channel already exists
             existing = self.db.query(NotificationChannel).filter(
@@ -574,6 +586,9 @@ class NotificationEngine:
     
     async def verify_channel(self, user_id: str, channel_type: ChannelType, token: str) -> bool:
         """Verify notification channel"""
+
+
+
         try:
             channel = self.db.query(NotificationChannel).filter(
                 NotificationChannel.user_id == user_id,
@@ -608,6 +623,9 @@ class NotificationEngine:
         preferences: Dict[str, Any]
     ):
         """Update user notification preferences"""
+
+
+
         try:
             existing = self.db.query(NotificationPreference).filter(
                 NotificationPreference.user_id == user_id,
@@ -647,6 +665,9 @@ class NotificationEngine:
         notification_type: Optional[NotificationType] = None
     ) -> List[Dict[str, Any]]:
         """Get user's notification history"""
+
+
+
         try:
             query = self.db.query(Notification).filter(
                 Notification.user_id == user_id
@@ -682,6 +703,9 @@ class NotificationEngine:
         notification_id: str
     ) -> Dict[str, Any]:
         """Get notification delivery statistics"""
+
+
+
         try:
             deliveries = self.db.query(NotificationDelivery).filter(
                 NotificationDelivery.notification_id == notification_id
@@ -723,6 +747,9 @@ class NotificationEngine:
     
     async def _load_channel_configurations(self):
         """Load channel configurations"""
+
+
+
         try:
             # Email configuration
             self.channel_configs[ChannelType.EMAIL] = {
@@ -803,6 +830,9 @@ class NotificationEngine:
     
     async def _render_template(self, template: str, variables: Dict[str, Any]) -> str:
         """Render template with variables"""
+
+
+
         try:
             # Simple string replacement - could use Jinja2 for more complex templates
             rendered = template
@@ -826,6 +856,9 @@ class NotificationEngine:
     
     async def _send_verification(self, channel: NotificationChannel):
         """Send channel verification message"""
+
+
+
         try:
             channel_type = ChannelType(channel.channel_type)
             verification_code = str(uuid.uuid4())[:8].upper()

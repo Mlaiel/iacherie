@@ -419,6 +419,9 @@ class InstagramMonitor(PlatformMonitor):
     
     async def _take_screenshot(self, element) -> Optional[str]:
         """Take screenshot of specific element"""
+
+
+
         try:
             # Scroll element into view
             self.driver.execute_script("arguments[0].scrollIntoView();", element)
@@ -581,6 +584,9 @@ class GenericWebMonitor(PlatformMonitor):
     
     def _is_valid_url(self, url: str) -> bool:
         """Check if URL is valid and not from excluded domains"""
+
+
+
         try:
             parsed = urlparse(url)
             excluded_domains = ['google.com', 'youtube.com', 'facebook.com', 'instagram.com']
@@ -625,6 +631,9 @@ class ContentMonitor:
     
     async def start_monitoring(self, monitor_id: str) -> bool:
         """Start monitoring task"""
+
+
+
         try:
             if monitor_id not in self.active_monitors:
                 return False
@@ -645,6 +654,9 @@ class ContentMonitor:
     
     async def stop_monitoring(self, monitor_id: str) -> bool:
         """Stop monitoring task"""
+
+
+
         try:
             # Cancel task
             if monitor_id in self.monitoring_tasks:
@@ -714,6 +726,9 @@ class ContentMonitor:
     
     def get_monitoring_statistics(self) -> Dict[str, Any]:
         """Get monitoring system statistics"""
+
+
+
         return {
             'active_monitors': len(self.active_monitors),
             'running_tasks': len(self.monitoring_tasks),

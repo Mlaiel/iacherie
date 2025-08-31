@@ -1,5 +1,5 @@
 """
-🌐 Platform Repository - IA Influencer Agent Platform Enterprise
+ Platform Repository - IA Influencer Agent Platform Enterprise
 ===============================================================
 Module: backend/data_management/repositories/platform_repository.py
 Author: Fahed Mlaiel (mlaiel@live.de)

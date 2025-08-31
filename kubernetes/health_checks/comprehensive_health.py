@@ -523,6 +523,9 @@ class ComprehensiveHealthChecker:
 
     async def cleanup_resources(self):
         """Clean up health checker resources"""
+
+
+
         try:
             await self.database_checker.cleanup_connections()
             self.logger.info("Health checker resources cleaned up successfully")

@@ -141,6 +141,9 @@ class ContentPublisher:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             self.logger.info("Initializing Content Publisher")
             
@@ -178,6 +181,9 @@ class ContentPublisher:
         Returns:
             bool: True if shutdown successful
         """
+
+
+
         try:
             self.logger.info("Shutting down Content Publisher")
             
@@ -600,6 +606,9 @@ class ContentPublisher:
     
     async def _post_publishing_actions(self, request: PublishingRequest, result: PublishingResult) -> None:
         """Perform post-publishing actions."""
+
+
+
         try:
             # Cleanup temporary files
             await self._cleanup_request_files(request)
@@ -811,6 +820,9 @@ class ContentPublisher:
     
     async def _get_file_size(self, file_path: str) -> int:
         """Get file size in bytes."""
+
+
+
         try:
             return Path(file_path).stat().st_size
         except (OSError, FileNotFoundError):
@@ -859,6 +871,9 @@ class ContentPublisher:
     
     def get_platform_status(self, platform: str) -> Dict[str, Any]:
         """Get status for a specific platform."""
+
+
+
         return {
             'platform': platform,
             'connected': self.platform_connections.get(platform, False),
@@ -869,6 +884,9 @@ class ContentPublisher:
     
     def get_metrics(self) -> Dict[str, Any]:
         """Get current performance metrics."""
+
+
+
         return {
             **self.metrics,
             'timestamp': datetime.utcnow().isoformat(),

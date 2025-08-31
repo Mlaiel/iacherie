@@ -5,7 +5,7 @@ Enterprise metrics for automated licensing and rights management
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 
-⚠️  AVERTISSEMENT LÉGAL STRICT ⚠️
+  AVERTISSEMENT LÉGAL STRICT 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et fera l'objet de poursuites 
@@ -657,6 +657,9 @@ class LicensingAutomationMetricsCollector:
     
     def get_health_status(self) -> Dict[str, Any]:
         """Get health status of the licensing metrics collector"""
+
+
+
         
         return {
             "status": "healthy",

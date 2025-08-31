@@ -237,6 +237,9 @@ class PostgreSQLBackupManager:
 
     def restore_backup(self, backup_path: str, target_database: Optional[str] = None) -> bool:
         """Restore PostgreSQL backup"""
+
+
+
         try:
             # Prepare psql command
             cmd = ["psql", "--no-password", "--quiet"]
@@ -267,6 +270,9 @@ class PostgreSQLBackupManager:
 
     def _get_pg_dump_version(self) -> str:
         """Get pg_dump version"""
+
+
+
         try:
             result = subprocess.run(["pg_dump", "--version"], capture_output=True, text=True)
             return result.stdout.strip()
@@ -275,6 +281,9 @@ class PostgreSQLBackupManager:
 
     def _upload_to_storage(self, local_path: Path, record: BackupRecord) -> None:
         """Upload backup to cloud storage"""
+
+
+
         try:
             if self.config.provider == StorageProvider.AWS_S3:
                 self._upload_to_s3(local_path, record)
@@ -418,6 +427,9 @@ class MongoDBBackupManager:
 
     def _get_mongodump_version(self) -> str:
         """Get mongodump version"""
+
+
+
         try:
             result = subprocess.run(["mongodump", "--version"], capture_output=True, text=True)
             return result.stdout.strip()
@@ -595,6 +607,9 @@ class BackupConfig:
                        backup_name: str,
                        backup_type: BackupType) -> None:
         """Execute backup operation"""
+
+
+
         try:
             if database_system not in self.backup_managers:
                 raise ValueError(f"No backup manager registered for {database_system.value}")
@@ -620,6 +635,9 @@ class BackupConfig:
 
     def _cleanup_old_backups(self, database_system: DatabaseSystem, backup_name: str) -> None:
         """Cleanup old backups based on retention policy"""
+
+
+
         try:
             schedule_key = f"{database_system.value}_{backup_name}"
             if schedule_key not in self.schedules:

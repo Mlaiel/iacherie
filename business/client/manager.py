@@ -142,6 +142,9 @@ class ClientManager:
             DuplicateClientError: If email already exists
             InvalidClientDataError: If registration data is invalid
         """
+
+
+
         try:
             # Check if email already exists
             existing_client = self.db.query(Client).filter(
@@ -227,6 +230,9 @@ class ClientManager:
         Raises:
             ClientNotFoundError: If token is invalid or client not found
         """
+
+
+
         try:
             # Decode and validate token
             payload = self.security_utils.decode_verification_token(verification_token)
@@ -279,6 +285,9 @@ class ClientManager:
         Returns:
             Client data dictionary or None if not found
         """
+
+
+
         try:
             client = self.db.query(Client).filter(Client.id == client_id).first()
             if not client:
@@ -308,6 +317,9 @@ class ClientManager:
         Raises:
             ClientNotFoundError: If client doesn't exist
         """
+
+
+
         try:
             client = self.db.query(Client).filter(Client.id == client_id).first()
             if not client:
@@ -355,6 +367,9 @@ class ClientManager:
         Returns:
             True if successful
         """
+
+
+
         try:
             client = self.db.query(Client).filter(Client.id == client_id).first()
             if not client:
@@ -396,6 +411,9 @@ class ClientManager:
             
     def _format_client_data(self, client: Client) -> Dict[str, Any]:
         """Format client data for API response."""
+
+
+
         return {
             "id": str(client.id),
             "email": client.email,

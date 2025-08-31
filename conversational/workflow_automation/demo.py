@@ -9,7 +9,7 @@ Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This code, concept, and intellectual property are exclusively owned by Fahed Mlaiel.
 Any unauthorized use, copying, distribution, reverse engineering, or commercialization 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
@@ -43,7 +43,7 @@ async def demo_complete_music_workflow():
     Demonstrate complete music content workflow:
     Upload → AI Analysis → Protection → SEO → Collaboration → Distribution → Monetization
     """
-    print("\n🎵 === MUSIC CONTENT WORKFLOW DEMO ===")
+    print("\n === MUSIC CONTENT WORKFLOW DEMO ===")
     
     # Configuration for the workflow system
     config = {
@@ -119,7 +119,7 @@ async def demo_complete_music_workflow():
     }
     
     try:
-        print(f"🚀 Starting complete workflow for '{metadata['title']}' by {metadata['artist']}")
+        print(f" Starting complete workflow for '{metadata['title']}' by {metadata['artist']}")
         
         # Execute the complete workflow
         result = await execute_content_workflow(
@@ -133,38 +133,38 @@ async def demo_complete_music_workflow():
         )
         
         if result["success"]:
-            print("✅ Workflow completed successfully!")
-            print(f"📊 Workflow ID: {result['workflow_id']}")
-            print(f"⏱️  Total Duration: {result.get('total_duration_seconds', 0):.2f} seconds")
-            print(f"📈 Performance Grade: {result.get('metrics', {}).get('performance_grade', 'N/A')}")
+            print(" Workflow completed successfully!")
+            print(f" Workflow ID: {result['workflow_id']}")
+            print(f"⏱  Total Duration: {result.get('total_duration_seconds', 0):.2f} seconds")
+            print(f" Performance Grade: {result.get('metrics', {}).get('performance_grade', 'N/A')}")
             
             # Display stage results
-            print("\n📋 Stage Results:")
+            print("\n Stage Results:")
             for stage, stage_result in result.get("stage_results", {}).items():
-                success_indicator = "✅" if stage_result.get("success", True) else "❌"
+                success_indicator = "" if stage_result.get("success", True) else ""
                 print(f"  {success_indicator} {stage.upper()}: {stage_result.get('status', 'completed')}")
             
             # Display business metrics
             business_metrics = result.get("metrics", {}).get("business_metrics", {})
             if business_metrics:
-                print("\n💼 Business Metrics:")
-                print(f"  🎯 Content Quality Score: {business_metrics.get('content_quality_score', 0):.2f}")
-                print(f"  📈 Market Potential: €{business_metrics.get('market_potential', 0):,.2f}")
-                print(f"  👥 Estimated Reach: {business_metrics.get('estimated_reach', 0):,} people")
-                print(f"  💰 Est. Monthly Revenue: €{business_metrics.get('estimated_monthly_revenue', 0):,.2f}")
+                print("\n Business Metrics:")
+                print(f"   Content Quality Score: {business_metrics.get('content_quality_score', 0):.2f}")
+                print(f"   Market Potential: €{business_metrics.get('market_potential', 0):,.2f}")
+                print(f"   Estimated Reach: {business_metrics.get('estimated_reach', 0):,} people")
+                print(f"   Est. Monthly Revenue: €{business_metrics.get('estimated_monthly_revenue', 0):,.2f}")
             
             # Display platform distribution
             distribution_result = result.get("stage_results", {}).get("distribution", {})
             if distribution_result.get("platform_results"):
-                print("\n🌐 Platform Distribution:")
+                print("\n Platform Distribution:")
                 for platform, platform_result in distribution_result["platform_results"].items():
-                    status_icon = "✅" if platform_result.get("success") else "❌"
+                    status_icon = "" if platform_result.get("success") else ""
                     print(f"  {status_icon} {platform.upper()}: {platform_result.get('url', 'Processing...')}")
             
-            print(f"\n🔗 Monitoring Dashboard: {result.get('monitoring', {}).get('dashboard_url', 'Available in system')}")
+            print(f"\n Monitoring Dashboard: {result.get('monitoring', {}).get('dashboard_url', 'Available in system')}")
             
         else:
-            print("❌ Workflow failed!")
+            print(" Workflow failed!")
             print(f"Error: {result.get('error', 'Unknown error')}")
             print(f"Failed at stage: {result.get('failed_stage', 'Unknown')}")
         
@@ -172,7 +172,7 @@ async def demo_complete_music_workflow():
         
     except Exception as e:
         logger.error(f"Demo workflow failed: {e}")
-        print(f"❌ Demo failed: {e}")
+        print(f" Demo failed: {e}")
         return {"success": False, "error": str(e)}
 
 
@@ -180,7 +180,7 @@ async def demo_video_content_workflow():
     """
     Demonstrate video content workflow for influencers
     """
-    print("\n🎬 === VIDEO CONTENT WORKFLOW DEMO ===")
+    print("\n === VIDEO CONTENT WORKFLOW DEMO ===")
     
     config = {
         "automation": {"max_concurrent_workflows": 50},
@@ -213,7 +213,7 @@ async def demo_video_content_workflow():
     }
     
     try:
-        print(f"🚀 Starting video workflow for '{metadata['title']}'")
+        print(f" Starting video workflow for '{metadata['title']}'")
         
         # Create orchestrator for video workflow
         orchestrator = await create_workflow_orchestrator(config)
@@ -228,13 +228,13 @@ async def demo_video_content_workflow():
         )
         
         if result["success"]:
-            print("✅ Video workflow completed!")
-            print(f"📊 Stages completed: {len(result['stages_completed'])}/8")
+            print(" Video workflow completed!")
+            print(f" Stages completed: {len(result['stages_completed'])}/8")
             
             # Show video-specific results
             analysis = result.get("stage_results", {}).get("analysis", {})
             if "engagement_metrics" in str(analysis):
-                print("📈 High engagement potential detected!")
+                print(" High engagement potential detected!")
             
         await orchestrator.shutdown()
         return result
@@ -248,7 +248,7 @@ async def demo_batch_content_processing():
     """
     Demonstrate batch processing of multiple content pieces
     """
-    print("\n📦 === BATCH CONTENT PROCESSING DEMO ===")
+    print("\n === BATCH CONTENT PROCESSING DEMO ===")
     
     # Multiple content pieces to process
     content_batch = [
@@ -281,7 +281,7 @@ async def demo_batch_content_processing():
     config = {"automation": {"max_concurrent_workflows": 10}}
     
     try:
-        print(f"🚀 Processing {len(content_batch)} content pieces...")
+        print(f" Processing {len(content_batch)} content pieces...")
         
         # Create orchestrator
         orchestrator = await create_workflow_orchestrator(config)
@@ -299,16 +299,16 @@ async def demo_batch_content_processing():
         successful_workflows = sum(1 for r in results if isinstance(r, dict) and r.get("success"))
         total_workflows = len(results)
         
-        print(f"✅ Batch processing completed!")
-        print(f"📊 Success rate: {successful_workflows}/{total_workflows} ({successful_workflows/total_workflows*100:.1f}%)")
+        print(f" Batch processing completed!")
+        print(f" Success rate: {successful_workflows}/{total_workflows} ({successful_workflows/total_workflows*100:.1f}%)")
         
         # Show individual results
         for i, result in enumerate(results):
             content_title = content_batch[i]["metadata"]["title"]
             if isinstance(result, dict) and result.get("success"):
-                print(f"  ✅ '{content_title}': Completed")
+                print(f"   '{content_title}': Completed")
             else:
-                print(f"  ❌ '{content_title}': Failed")
+                print(f"   '{content_title}': Failed")
         
         await orchestrator.shutdown()
         return {"batch_results": results, "success_rate": successful_workflows/total_workflows}
@@ -322,7 +322,7 @@ async def demo_system_monitoring():
     """
     Demonstrate system monitoring and health checks
     """
-    print("\n🏥 === SYSTEM MONITORING DEMO ===")
+    print("\n === SYSTEM MONITORING DEMO ===")
     
     config = {"automation": {"monitoring_enabled": True}}
     
@@ -332,7 +332,7 @@ async def demo_system_monitoring():
         # Get system health
         health_status = await orchestrator.get_system_health()
         
-        print("🏥 System Health Check:")
+        print(" System Health Check:")
         print(f"  Overall Status: {health_status.get('overall_health', 'unknown').upper()}")
         print(f"  Success Rate: {health_status.get('success_rate', 0)*100:.1f}%")
         print(f"  Active Workflows: {health_status.get('total_workflows', 0)}")
@@ -356,7 +356,7 @@ async def run_all_demos():
     """
     Run all demonstration workflows
     """
-    print("🎯 === IA INFLUENCER AGENT WORKFLOW AUTOMATION DEMOS ===")
+    print(" === IA INFLUENCER AGENT WORKFLOW AUTOMATION DEMOS ===")
     print("Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer")
     print("Author: Fahed Mlaiel <mlaiel@live.de>")
     print("=" * 80)
@@ -374,11 +374,11 @@ async def run_all_demos():
         # Demo 4: System monitoring
         monitoring_result = await demo_system_monitoring()
         
-        print("\n🎉 === ALL DEMOS COMPLETED ===")
-        print(f"Music Workflow: {'✅ SUCCESS' if music_result.get('success') else '❌ FAILED'}")
-        print(f"Video Workflow: {'✅ SUCCESS' if video_result.get('success') else '❌ FAILED'}")
-        print(f"Batch Processing: {'✅ SUCCESS' if batch_result.get('success_rate', 0) > 0.5 else '❌ FAILED'}")
-        print(f"System Monitoring: {'✅ SUCCESS' if monitoring_result.get('overall_health') == 'healthy' else '❌ FAILED'}")
+        print("\n === ALL DEMOS COMPLETED ===")
+        print(f"Music Workflow: {' SUCCESS' if music_result.get('success') else ' FAILED'}")
+        print(f"Video Workflow: {' SUCCESS' if video_result.get('success') else ' FAILED'}")
+        print(f"Batch Processing: {' SUCCESS' if batch_result.get('success_rate', 0) > 0.5 else ' FAILED'}")
+        print(f"System Monitoring: {' SUCCESS' if monitoring_result.get('overall_health') == 'healthy' else ' FAILED'}")
         
         return {
             "music_workflow": music_result,
@@ -389,19 +389,19 @@ async def run_all_demos():
         
     except Exception as e:
         logger.error(f"Demo suite failed: {e}")
-        print(f"❌ Demo suite failed: {e}")
+        print(f" Demo suite failed: {e}")
         return {"success": False, "error": str(e)}
 
 
 if __name__ == "__main__":
     # Run the complete demo suite
     print("Starting IA Influencer Agent Workflow Automation Demo...")
-    print("⚠️  This demo showcases the complete enterprise workflow automation system")
+    print("  This demo showcases the complete enterprise workflow automation system")
     print("   for multi-format content creators with AI-powered optimization.\n")
     
     # Execute all demos
     results = asyncio.run(run_all_demos())
     
-    print(f"\n📊 Demo Results: {results}")
+    print(f"\n Demo Results: {results}")
     print("\n© 2025 Fahed Mlaiel. All rights reserved.")
     print("Contact: mlaiel@live.de")

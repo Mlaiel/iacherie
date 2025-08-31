@@ -315,7 +315,7 @@ class CacheTestSuite:
         result = await self.cache_manager.get("test:key")
         assert result is None
         
-        print("✓ Basic operations test passed")
+        print(" Basic operations test passed")
     
     async def test_bulk_operations(self):
         """Test bulk cache operations."""
@@ -331,7 +331,7 @@ class CacheTestSuite:
         assert len(results) == 3
         assert results["bulk:1"] == {"value": 1}
         
-        print("✓ Bulk operations test passed")
+        print(" Bulk operations test passed")
     
     async def test_invalidation(self):
         """Test cache invalidation."""
@@ -352,7 +352,7 @@ class CacheTestSuite:
         assert result2 is None
         assert result3 == {"data": 3}
         
-        print("✓ Invalidation test passed")
+        print(" Invalidation test passed")
     
     async def run_all_tests(self):
         """Run all tests."""
@@ -361,7 +361,7 @@ class CacheTestSuite:
             await self.test_basic_operations()
             await self.test_bulk_operations()
             await self.test_invalidation()
-            print("✅ All tests passed!")
+            print(" All tests passed!")
         finally:
             await self.teardown()
 
@@ -433,4 +433,7 @@ class IAInfluencerCacheIntegration:
     
     async def get_cache_health_report(self):
         """Get cache health and performance report."""
+
+
+
         return await self.cache_manager.analytics.generate_report()

@@ -1,4 +1,4 @@
-"""🚀 Pricing Module - Industrial-Grade Dynamic Pricing & Revenue Optimization System
+""" Pricing Module - Industrial-Grade Dynamic Pricing & Revenue Optimization System
 ================================================================================
 
 Advanced pricing management for multi-format content creators with AI-driven optimization.
@@ -18,7 +18,7 @@ Project Team Specialists:
 Created by: Fahed Mlaiel <mlaiel@live.de>
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
+ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED 
 
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized copying, modification, distribution, or use of this code or its

@@ -57,6 +57,9 @@ class ContentAgentManager:
         
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default configuration for content agent"""
+
+
+
         return {
             'max_file_size_mb': 500,
             'supported_formats': {
@@ -73,6 +76,9 @@ class ContentAgentManager:
     
     async def initialize(self):
         """Initialize the content agent manager"""
+
+
+
         try:
             # Initialize the content agent
             self.agent = ContentAgent(config=self.config)
@@ -346,6 +352,9 @@ class ContentAgentManager:
         limit: int = 10
     ) -> List[Dict[str, Any]]:
         """Get processing history for a content file"""
+
+
+
         try:
             # Query database for historical analysis results
             from ...database.queries import get_content_analysis_history
@@ -366,6 +375,9 @@ class ContentAgentManager:
         date_range: Optional[tuple] = None
     ) -> Dict[str, Any]:
         """Get analytics summary for content processing"""
+
+
+
         try:
             # Get metrics from collector
             metrics = self.metrics.get_summary()
@@ -398,6 +410,9 @@ class ContentAgentManager:
     
     async def cleanup_old_data(self, days_old: int = 30) -> Dict[str, int]:
         """Clean up old cache and database entries"""
+
+
+
         try:
             # Clean cache
             cache_cleaned = await self.cache_manager.cleanup_expired()
@@ -452,6 +467,9 @@ class ContentAgentManager:
     
     async def _validate_content_file(self, content_path: Path) -> bool:
         """Validate content file before processing"""
+
+
+
         try:
             # Check file existence
             if not content_path.exists():
@@ -485,6 +503,9 @@ class ContentAgentManager:
         analysis_data: Dict[str, Any]
     ) -> bool:
         """Store analysis results in database"""
+
+
+
         try:
             from ...database.operations import store_content_analysis
             
@@ -504,6 +525,9 @@ class ContentAgentManager:
     
     async def shutdown(self):
         """Shutdown the content agent manager"""
+
+
+
         try:
             # Cancel all running jobs
             for job_id, job in self.processing_jobs.items():

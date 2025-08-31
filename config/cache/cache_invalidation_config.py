@@ -83,6 +83,9 @@ class InvalidationRule:
     
     def matches_event(self, event: InvalidationEvent) -> bool:
         """Check if rule applies to given event"""
+
+
+
         return event in self.events
     
     def matches_conditions(self, context: Dict[str, Any]) -> bool:
@@ -260,6 +263,9 @@ class CacheInvalidationConfig(BaseModel):
     
     def get_keys_by_pattern(self, pattern: str, all_keys: List[str]) -> List[str]:
         """Get keys matching pattern"""
+
+
+
         try:
             compiled_pattern = re.compile(pattern)
             return [key for key in all_keys if compiled_pattern.match(key)]
@@ -285,6 +291,9 @@ class CacheInvalidationConfig(BaseModel):
     
     def should_invalidate_version(self, key_version: int) -> bool:
         """Check if key should be invalidated based on version"""
+
+
+
         return self.version_tracking_enabled and key_version < self.global_version
     
     def create_dependency_chain(self, key: str, dependencies: List[str]) -> Dict[str, List[str]]:
@@ -299,6 +308,9 @@ class CacheInvalidationConfig(BaseModel):
     
     def get_configuration_summary(self) -> Dict[str, Any]:
         """Get configuration summary for monitoring"""
+
+
+
         return {
             "enabled": self.enabled,
             "default_strategy": self.default_strategy,
@@ -505,6 +517,9 @@ class InvalidationExecutor:
     
     async def _delete_from_cache(self, cache_client: Any, key: str) -> bool:
         """Delete key from cache"""
+
+
+
         try:
             # Implementation depends on cache client interface
             if hasattr(cache_client, 'delete'):

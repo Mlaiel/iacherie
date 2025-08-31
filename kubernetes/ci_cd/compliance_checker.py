@@ -1,5 +1,5 @@
 """
-🔧 Compliance Checker - IA-Influencer-Agent CI/CD
+ Compliance Checker - IA-Influencer-Agent CI/CD
 ================================================================
 Expert: COMPLIANCE_ENGINEER + SECURITY_SPECIALIST
 Created: 2025-08-24
@@ -125,6 +125,9 @@ class ComplianceChecker:
     
     async def initialize(self) -> bool:
         """Initialize compliance checker"""
+
+
+
         try:
             # Setup compliance rules for IA-Influencer platform
             await self._setup_ia_influencer_compliance_rules()
@@ -136,11 +139,11 @@ class ComplianceChecker:
             await self._load_compliance_configurations()
             
             self.initialized = True
-            self.logger.info("✅ Compliance checker initialized")
+            self.logger.info(" Compliance checker initialized")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize compliance checker: {e}")
+            self.logger.error(f" Failed to initialize compliance checker: {e}")
             return False
     
     async def _setup_ia_influencer_compliance_rules(self) -> None:
@@ -409,6 +412,9 @@ class ComplianceChecker:
         exclude_patterns: Optional[List[str]] = None
     ) -> ComplianceReport:
         """Run comprehensive compliance assessment"""
+
+
+
         try:
             self.logger.info(f"Starting compliance assessment for {framework.value}")
             

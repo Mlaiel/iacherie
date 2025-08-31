@@ -1,5 +1,5 @@
 """
-⚖️ Legal & Licensing Configuration Manager - IA-Influencer-Agent
+ Legal & Licensing Configuration Manager - IA-Influencer-Agent
 ===============================================================
 Project Creator & Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
@@ -7,7 +7,7 @@ Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert +
 Date: 2025-08-24
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -502,6 +502,9 @@ class LegalLicensingConfigManager:
     
     def _load_configuration(self) -> bool:
         """Load configuration from file"""
+
+
+
         try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r', encoding='utf-8') as f:
@@ -532,6 +535,9 @@ class LegalLicensingConfigManager:
     
     def add_license_configuration(self, license_type: LicenseType, config: LicenseConfiguration) -> bool:
         """Add license configuration"""
+
+
+
         try:
             self._config.license_configs[license_type] = config
             self._config.updated_at = datetime.now()
@@ -544,10 +550,16 @@ class LegalLicensingConfigManager:
     
     def get_license_configuration(self, license_type: LicenseType) -> Optional[LicenseConfiguration]:
         """Get license configuration"""
+
+
+
         return self._config.license_configs.get(license_type)
     
     def get_available_licenses(self) -> List[LicenseType]:
         """Get list of available license types"""
+
+
+
         return [
             license_type for license_type, config in self._config.license_configs.items()
             if config.enabled
@@ -596,6 +608,9 @@ class LegalLicensingConfigManager:
     
     def get_configuration_status(self) -> Dict[str, Any]:
         """Get configuration status and metadata"""
+
+
+
         return {
             "initialized": self.initialized,
             "last_updated": self.last_updated,

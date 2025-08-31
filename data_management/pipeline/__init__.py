@@ -2,7 +2,7 @@
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ AVERTISSEMENT DE PROPRIÉTÉ INTELLECTUELLE ⚠️
+ AVERTISSEMENT DE PROPRIÉTÉ INTELLECTUELLE 
 Ce code et tous les concepts associés sont la propriété exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation écrite 
 explicite de l'auteur est strictement interdite et constitue une violation du 

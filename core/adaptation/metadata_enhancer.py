@@ -869,6 +869,9 @@ class MetadataEnhancer:
     
     def _load_nlp_model(self):
         """Load NLP model for text processing"""
+
+
+
         try:
             import spacy
             return spacy.load("en_core_web_sm")
@@ -878,6 +881,9 @@ class MetadataEnhancer:
     
     def _load_metadata_schemas(self) -> Dict[str, Any]:
         """Load metadata schema definitions"""
+
+
+
         return {
             'dublin_core': {
                 'title': str,
@@ -913,6 +919,9 @@ class MetadataEnhancer:
     
     def _load_platform_requirements(self) -> Dict[str, Dict[str, Any]]:
         """Load platform-specific metadata requirements"""
+
+
+
         return {
             'youtube': {
                 'title_max_length': 100,
@@ -944,6 +953,9 @@ class MetadataEnhancer:
     
     def _load_seo_templates(self) -> Dict[str, Any]:
         """Load SEO metadata templates"""
+
+
+
         return {
             'title_templates': [
                 "{main_keyword} - {brand_name}",

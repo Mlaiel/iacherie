@@ -13,7 +13,7 @@ Copyright © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, modification, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing and collaboration.
 
-⚠️ STRONG WARNING: This code and concept are the exclusive property of Fahed Mlaiel.
+ STRONG WARNING: This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted
 to the full extent of German and international copyright law.
@@ -187,6 +187,9 @@ class ClassifierFactory:
         Returns:
             Appropriate classifier instance
         """
+
+
+
         try:
             # Handle different input types
             if isinstance(content_type, list):
@@ -264,6 +267,9 @@ class ClassifierFactory:
 
     def _analyze_file_content(self, file_path: Path) -> ContentType:
         """Analyze file content to determine type (fallback method)."""
+
+
+
         try:
             # Read first few bytes to detect format
             with open(file_path, 'rb') as f:
@@ -341,6 +347,9 @@ class ClassifierFactory:
         Returns:
             Classification results
         """
+
+
+
         try:
             # Determine input type and create appropriate classifier
             if isinstance(content_input, str):
@@ -399,6 +408,9 @@ class ClassifierFactory:
         options: Optional[Dict]
     ) -> Dict[str, Any]:
         """Classify a single content file."""
+
+
+
         try:
             if content_type == ContentType.AUDIO:
                 return classifier.classify_audio(file_path, options)
@@ -440,6 +452,9 @@ class ClassifierFactory:
 
     def _generate_batch_summary(self, results: Dict[str, Any]) -> Dict[str, Any]:
         """Generate summary for batch classification results."""
+
+
+
         try:
             total_files = len(results)
             successful_classifications = sum(1 for result in results.values() 
@@ -526,6 +541,9 @@ class ClassifierFactory:
         Returns:
             Similarity analysis results
         """
+
+
+
         try:
             # Determine content types
             type1 = self._determine_comparison_type(content1)
@@ -586,6 +604,9 @@ class ClassifierFactory:
         options: Optional[Dict]
     ) -> Dict[str, Any]:
         """Compare content within a single modality."""
+
+
+
         try:
             # For now, handle simple string comparison
             if isinstance(content1, str) and isinstance(content2, str):
@@ -645,6 +666,9 @@ class ClassifierFactory:
         Returns:
             Validation results
         """
+
+
+
         try:
             validation = {
                 'is_valid': True,
@@ -725,6 +749,9 @@ class ClassifierFactory:
 
     def get_cache_info(self) -> Dict[str, Any]:
         """Get information about cached classifiers."""
+
+
+
         return {
             'cached_classifiers': len(self._classifier_cache),
             'cache_keys': list(self._classifier_cache.keys()),
@@ -738,6 +765,9 @@ class ClassifierFactory:
 
     def get_classifier_info(self, content_type: Union[ContentType, str]) -> Dict[str, Any]:
         """Get information about a specific classifier type."""
+
+
+
         try:
             if isinstance(content_type, str):
                 content_type = ContentType(content_type.lower())

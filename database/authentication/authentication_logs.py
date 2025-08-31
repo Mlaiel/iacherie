@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -281,6 +281,9 @@ class AuthenticationLogger:
         duration_ms: Optional[int] = None
     ) -> str:
         """Log authentication event"""
+
+
+
         try:
             # Calculate risk score
             risk_score = self._calculate_risk_score(auth_context, event_type, auth_result)
@@ -435,6 +438,9 @@ class AuthenticationLogger:
     
     async def _trigger_security_alert(self, auth_log: AuthenticationLog):
         """Trigger security alert for high-risk events"""
+
+
+
         try:
             # Create security audit entry
             audit_entry = SecurityAudit(
@@ -481,6 +487,9 @@ class AuthenticationLogger:
         compliance_tags: Optional[List[str]] = None
     ) -> str:
         """Log security audit event"""
+
+
+
         try:
             audit_entry = SecurityAudit(
                 user_id=uuid.UUID(user_id) if user_id else None,
@@ -528,6 +537,9 @@ class AuthenticationLogger:
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
         """Track user activity"""
+
+
+
         try:
             activity = ActivityTracker(
                 user_id=uuid.UUID(user_id),
@@ -568,6 +580,9 @@ class AuthenticationLogger:
         compliance_status: str = "compliant"
     ) -> str:
         """Log compliance event"""
+
+
+
         try:
             compliance_log = ComplianceLog(
                 user_id=uuid.UUID(user_id) if user_id else None,
@@ -598,6 +613,9 @@ class AuthenticationLogger:
         event_type: Optional[AuthEventType] = None
     ) -> List[Dict[str, Any]]:
         """Get user authentication history"""
+
+
+
         try:
             query = self.db.query(AuthenticationLog).filter(
                 AuthenticationLog.user_id == uuid.UUID(user_id)
@@ -636,6 +654,9 @@ class AuthenticationLogger:
         limit: int = 50
     ) -> List[Dict[str, Any]]:
         """Get security alerts"""
+
+
+
         try:
             query = self.db.query(SecurityAudit).filter(
                 SecurityAudit.audit_category == "authentication"

@@ -275,6 +275,9 @@ class SecretsConfig:
     
     def _load_config(self) -> None:
         """Load configuration from file."""
+
+
+
         try:
             if not os.path.exists(self.config_file):
                 self._create_default_config_file()
@@ -302,6 +305,9 @@ class SecretsConfig:
     
     def _create_default_config_file(self) -> None:
         """Create default configuration file."""
+
+
+
         try:
             config_data = {
                 'global': {
@@ -518,6 +524,9 @@ class SecretsConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert configuration to dictionary."""
+
+
+
         return {
             'environment': self.environment.value,
             'service_account': self.service_account,
@@ -564,6 +573,9 @@ class SecretsConfig:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             save_path = file_path or self.config_file
             config_data = {
@@ -593,41 +605,65 @@ class SecretsConfig:
     @property
     def vault_url(self) -> str:
         """Get Vault URL."""
+
+
+
         return self.vault.url
     
     @property
     def vault_token(self) -> Optional[str]:
         """Get Vault token."""
+
+
+
         return self.vault.token
     
     @property
     def vault_namespace(self) -> Optional[str]:
         """Get Vault namespace."""
+
+
+
         return self.vault.namespace
     
     @property
     def vault_auth_method(self) -> str:
         """Get Vault auth method."""
+
+
+
         return self.vault.auth_method
     
     @property
     def vault_role(self) -> str:
         """Get Vault role."""
+
+
+
         return self.vault.role
     
     @property
     def vault_kv_version(self) -> int:
         """Get Vault KV version."""
+
+
+
         return self.vault.kv_version
     
     @property
     def kubernetes_namespace(self) -> str:
         """Get Kubernetes namespace."""
+
+
+
         return self.kubernetes.namespace
     
     @property
     def kubernetes_token(self) -> str:
         """Get Kubernetes service account token."""
+
+
+
         try:
             with open(self.kubernetes.token_path, 'r') as f:
                 return f.read().strip()
@@ -637,31 +673,49 @@ class SecretsConfig:
     @property
     def ldap_username(self) -> Optional[str]:
         """Get LDAP username from environment."""
+
+
+
         return os.getenv('LDAP_USERNAME')
     
     @property
     def ldap_password(self) -> Optional[str]:
         """Get LDAP password from environment."""
+
+
+
         return os.getenv('LDAP_PASSWORD')
     
     @property
     def rotation_jobs_file(self) -> str:
         """Get rotation jobs file path."""
+
+
+
         return self.rotation.jobs_file
     
     @property
     def audit_webhook_url(self) -> Optional[str]:
         """Get audit webhook URL."""
+
+
+
         return self.compliance.audit_webhook_url
     
     @property
     def is_production(self) -> bool:
         """Check if running in production."""
+
+
+
         return self.environment == Environment.PRODUCTION
     
     @property
     def is_development(self) -> bool:
         """Check if running in development."""
+
+
+
         return self.environment == Environment.DEVELOPMENT
 
 
@@ -686,19 +740,31 @@ def set_config(config: SecretsConfig) -> None:
 # Environment-specific configuration helpers
 def load_development_config() -> SecretsConfig:
     """Load development configuration."""
+
+
+
     return SecretsConfig(environment=Environment.DEVELOPMENT)
 
 
 def load_staging_config() -> SecretsConfig:
     """Load staging configuration."""
+
+
+
     return SecretsConfig(environment=Environment.STAGING)
 
 
 def load_production_config() -> SecretsConfig:
     """Load production configuration."""
+
+
+
     return SecretsConfig(environment=Environment.PRODUCTION)
 
 
 def load_testing_config() -> SecretsConfig:
     """Load testing configuration."""
+
+
+
     return SecretsConfig(environment=Environment.TESTING)

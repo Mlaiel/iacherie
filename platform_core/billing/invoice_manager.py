@@ -1,15 +1,15 @@
 """
-🚀 Invoice Manager - IA Influencer Agent Platform Enterprise
+ Invoice Manager - IA Influencer Agent Platform Enterprise
 ==========================================================
 Module: backend/platform_core/billing/invoice_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ==========================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 GESTIONNAIRE DE FACTURATION AUTOMATISÉE
+ GESTIONNAIRE DE FACTURATION AUTOMATISÉE
 Génération et gestion complète des factures enterprise
 - Facturation automatique et récurrente
 - Templates PDF personnalisables et multi-langue
@@ -79,26 +79,41 @@ class InvoiceItem:
     @property
     def subtotal(self) -> Decimal:
         """Sous-total avant remise"""
+
+
+
         return self.quantity * self.unit_price
         
     @property
     def discount_amount(self) -> Decimal:
         """Montant de la remise"""
+
+
+
         return self.subtotal * (self.discount_percentage / Decimal("100"))
         
     @property
     def net_amount(self) -> Decimal:
         """Montant net après remise"""
+
+
+
         return self.subtotal - self.discount_amount
         
     @property
     def tax_amount(self) -> Decimal:
         """Montant des taxes"""
+
+
+
         return self.net_amount * (self.tax_percentage / Decimal("100"))
         
     @property
     def total(self) -> Decimal:
         """Total TTC"""
+
+
+
         return self.net_amount + self.tax_amount
 
 @dataclass
@@ -177,6 +192,9 @@ class Invoice:
     @property
     def subtotal(self) -> Decimal:
         """Sous-total de tous les items"""
+
+
+
         return sum(item.subtotal for item in self.items)
         
     @property
@@ -191,26 +209,41 @@ class Invoice:
     @property
     def net_amount(self) -> Decimal:
         """Montant net après toutes les remises"""
+
+
+
         return self.subtotal - self.total_discount + self.shipping_cost
         
     @property
     def total_tax(self) -> Decimal:
         """Total des taxes"""
+
+
+
         return sum(item.tax_amount for item in self.items)
         
     @property
     def total_amount(self) -> Decimal:
         """Montant total TTC"""
+
+
+
         return self.net_amount + self.total_tax
         
     @property
     def amount_paid(self) -> Decimal:
         """Montant payé"""
+
+
+
         return sum(Decimal(str(payment.get("amount", 0))) for payment in self.payments)
         
     @property
     def amount_due(self) -> Decimal:
         """Montant dû"""
+
+
+
         return self.total_amount - self.amount_paid
         
     @property
@@ -452,6 +485,9 @@ class InvoiceManager:
         
     async def send_invoice(self, invoice: Invoice, recipient_email: str) -> bool:
         """Envoie une facture par email"""
+
+
+
         try:
             # Générer le PDF
             template = self.templates.get(invoice.template_id or "default")
@@ -533,6 +569,9 @@ class InvoiceManager:
         
     async def _save_invoice(self, invoice: Invoice):
         """Sauvegarde une facture en base"""
+
+
+
         try:
             # Convert invoice to dict for storage
             invoice_data = {
@@ -578,6 +617,9 @@ class InvoiceManager:
         
     async def _load_invoice(self, invoice_id: str) -> Optional[Invoice]:
         """Charge une facture depuis la base"""
+
+
+
         try:
             invoice_data = None
             
@@ -627,6 +669,9 @@ class InvoiceManager:
         
     def get_invoice_stats(self) -> Dict[str, Any]:
         """Retourne les statistiques des factures"""
+
+
+
         return {
             "templates_count": len(self.templates),
             "auto_numbering": self.auto_numbering_enabled,

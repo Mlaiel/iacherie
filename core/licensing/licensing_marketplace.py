@@ -9,7 +9,7 @@ marketplace optimization for content creators and licensing professionals.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing and usage rights.
@@ -404,6 +404,9 @@ class LicensingMarketplaceEngine:
         
     async def initialize_marketplace(self, config: Dict[str, Any]):
         """Initialize licensing marketplace"""
+
+
+
         try:
             # Initialize blockchain connection
             await self._initialize_blockchain_connection(config.get('blockchain_config', {}))
@@ -439,6 +442,9 @@ class LicensingMarketplaceEngine:
         listing_data: Dict[str, Any]
     ) -> LicenseListing:
         """Create new license listing in marketplace"""
+
+
+
         try:
             # Validate seller and content
             await self._validate_seller_permissions(seller_id, content_id)
@@ -553,6 +559,9 @@ class LicensingMarketplaceEngine:
         pagination: Optional[Dict[str, int]] = None
     ) -> Dict[str, Any]:
         """Search marketplace listings with advanced filtering"""
+
+
+
         try:
             # Parse search query
             parsed_query = await self._parse_search_query(search_query)
@@ -605,6 +614,9 @@ class LicensingMarketplaceEngine:
         transaction_data: Dict[str, Any]
     ) -> TradingTransaction:
         """Initiate licensing transaction"""
+
+
+
         try:
             # Validate listing and buyer
             if listing_id not in self.active_listings:
@@ -728,6 +740,9 @@ class LicensingMarketplaceEngine:
         execution_parameters: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Execute smart contract with specified parameters"""
+
+
+
         try:
             if contract_id not in self.smart_contracts:
                 raise ContractError(f"Smart contract not found: {contract_id}")
@@ -777,6 +792,9 @@ class LicensingMarketplaceEngine:
         include_predictions: bool = True
     ) -> MarketplaceAnalytics:
         """Generate comprehensive marketplace analytics"""
+
+
+
         try:
             if analysis_period is None:
                 end_date = datetime.utcnow()
@@ -890,6 +908,9 @@ class LicensingMarketplaceEngine:
     # Private helper methods
     async def _initialize_blockchain_connection(self, config: Dict[str, Any]):
         """Initialize blockchain connection for smart contracts"""
+
+
+
         try:
             if config.get('enabled', False):
                 self.web3_client = Web3(Web3.HTTPProvider(config.get('rpc_url', 'http://localhost:8545')))

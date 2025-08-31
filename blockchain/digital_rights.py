@@ -158,6 +158,9 @@ class DRMManager:
         Raises:
             DRMError: If license creation fails
         """
+
+
+
         try:
             # Verify asset exists and ownership
             asset = await self.copyright_registry.get_copyright_asset(asset_id)
@@ -251,6 +254,9 @@ class DRMManager:
         Returns:
             Tuple[bool, Optional[str]]: (is_valid, error_message)
         """
+
+
+
         try:
             # Get license
             license_obj = await self.get_digital_license(license_id)
@@ -310,6 +316,9 @@ class DRMManager:
         Returns:
             UsageEvent: Recorded usage event
         """
+
+
+
         try:
             # Get license to verify asset
             license_obj = await self.get_digital_license(license_id)
@@ -375,6 +384,9 @@ class DRMManager:
         Returns:
             ProtectionPolicy: Created protection policy
         """
+
+
+
         try:
             # Verify asset ownership
             asset = await self.copyright_registry.get_copyright_asset(asset_id)
@@ -427,6 +439,9 @@ class DRMManager:
         Returns:
             Optional[DigitalLicense]: License if found
         """
+
+
+
         try:
             # Check cache first
             if license_id in self._license_cache:
@@ -458,6 +473,9 @@ class DRMManager:
         Returns:
             List[DigitalLicense]: User's licenses
         """
+
+
+
         try:
             license_ids = await self.smart_contract_manager.get_user_licenses(user_id)
             licenses = []
@@ -492,6 +510,9 @@ class DRMManager:
         Returns:
             bool: True if revocation successful
         """
+
+
+
         try:
             license_obj = await self.get_digital_license(license_id)
             if not license_obj:
@@ -544,6 +565,9 @@ class DRMManager:
         Returns:
             Dict[str, Any]: Usage analytics report
         """
+
+
+
         try:
             # Filter usage events
             filtered_events = self._filter_usage_events(
@@ -637,6 +661,9 @@ class DRMManager:
     
     def _reconstruct_license_from_blockchain(self, blockchain_data: Dict[str, Any]) -> DigitalLicense:
         """Reconstruct license object from blockchain data"""
+
+
+
         return DigitalLicense(
             license_id=blockchain_data['license_id'],
             asset_id=blockchain_data['asset_id'],

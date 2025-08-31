@@ -7,7 +7,7 @@ Vérification de tous les composants professionnels implémentés.
 Créé par : Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. Tous droits réservés.
 
-⚠️ AVERTISSEMENT COPYRIGHT STRICT - Utilisation non autorisée interdite ⚠️
+ AVERTISSEMENT COPYRIGHT STRICT - Utilisation non autorisée interdite 
 Ce logiciel est propriétaire et confidentiel. Contact: mlaiel@live.de
 
 Équipe Spécialisée :
@@ -684,7 +684,7 @@ Date: {validation_report.get('validation_metadata', {}).get('timestamp', 'Inconn
 
 if __name__ == "__main__":
     # Exécution de la validation complète
-    print("🔍 Démarrage de la validation complète du module NLP...")
+    print(" Démarrage de la validation complète du module NLP...")
     print("=" * 70)
     
     try:
@@ -693,9 +693,9 @@ if __name__ == "__main__":
         
         print(summary)
         print("=" * 70)
-        print(f"✅ Validation terminée avec succès!")
-        print(f"📊 Rapport détaillé disponible dans: validation_report.json")
+        print(f" Validation terminée avec succès!")
+        print(f" Rapport détaillé disponible dans: validation_report.json")
         
     except Exception as e:
-        print(f"❌ Erreur lors de la validation: {str(e)}")
+        print(f" Erreur lors de la validation: {str(e)}")
         logger.error(f"Validation failed: {str(e)}")

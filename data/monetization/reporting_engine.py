@@ -222,6 +222,9 @@ class ReportingEngine:
         Returns:
             Complete revenue report
         """
+
+
+
         try:
             self.logger.info(f"Generating {config.report_type.value} report for user {user_id}")
             
@@ -315,6 +318,9 @@ class ReportingEngine:
         Returns:
             Interactive dashboard configuration
         """
+
+
+
         try:
             # Collect real-time data
             dashboard_data = await self._collect_dashboard_data(user_id, config)
@@ -357,6 +363,9 @@ class ReportingEngine:
         Returns:
             Schedule ID
         """
+
+
+
         try:
             schedule_id = str(uuid.uuid4())
             
@@ -402,6 +411,9 @@ class ReportingEngine:
         Returns:
             Benchmark analysis results
         """
+
+
+
         try:
             # Collect user performance data
             user_metrics = await self._collect_benchmark_data(user_id, config)
@@ -530,6 +542,9 @@ class ReportingEngine:
 
     def _get_executive_template(self) -> str:
         """Get executive summary HTML template"""
+
+
+
         return """
         <html>
         <head>
@@ -565,6 +580,9 @@ class ReportingEngine:
 
     def _get_detailed_template(self) -> str:
         """Get detailed revenue HTML template"""
+
+
+
         return """
         <html>
         <head>
@@ -592,14 +610,23 @@ class ReportingEngine:
 
     def _get_html_template(self) -> str:
         """Get general HTML template"""
+
+
+
         return self._get_detailed_template()
 
     def _generate_report_title(self, config: ReportConfiguration) -> str:
         """Generate report title based on configuration"""
+
+
+
         return f"Revenue {config.report_type.value.replace('_', ' ').title()} Report"
 
     def _generate_report_subtitle(self, config: ReportConfiguration) -> str:
         """Generate report subtitle"""
+
+
+
         return f"{config.start_date.strftime('%B %Y')} - {config.end_date.strftime('%B %Y')}"
 
     def _calculate_next_execution(self, schedule: Dict[str, Any]) -> str:

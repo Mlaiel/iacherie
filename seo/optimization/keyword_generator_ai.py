@@ -115,6 +115,9 @@ class KeywordGeneratorAI:
         Returns:
             KeywordResearchResult with categorized keywords
         """
+
+
+
         try:
             logger.info(f"Starting keyword generation for {len(seed_keywords)} seed keywords")
             
@@ -598,6 +601,9 @@ class KeywordGeneratorAI:
 
     def _initialize_keyword_database(self) -> Dict[str, Any]:
         """Initialize internal keyword database"""
+
+
+
         return {
             'high_volume_terms': [
                 'marketing', 'business', 'social media', 'content', 'digital',
@@ -679,6 +685,9 @@ class KeywordGeneratorAI:
 
     def _keyword_to_dict(self, keyword_suggestion: KeywordSuggestion) -> Dict[str, Any]:
         """Convert KeywordSuggestion to dictionary"""
+
+
+
         return {
             'keyword': keyword_suggestion.keyword,
             'type': keyword_suggestion.keyword_type.value,

@@ -142,6 +142,9 @@ class MetricsCollector:
                 
     def _collect_system_metrics(self):
         """Collect system-level metrics"""
+
+
+
         try:
             # CPU usage
             cpu_percent = psutil.cpu_percent(interval=1)
@@ -184,6 +187,9 @@ class MetricsCollector:
             
     def _collect_application_metrics(self):
         """Collect application-level metrics"""
+
+
+
         try:
             # Redis metrics
             if self.redis_client:
@@ -213,6 +219,9 @@ class MetricsCollector:
             
     def _collect_business_metrics(self):
         """Collect business-specific metrics"""
+
+
+
         try:
             if self.db_engine:
                 with self.db_engine.connect() as conn:
@@ -439,6 +448,9 @@ class MetricsCollector:
             
     def get_summary_stats(self) -> Dict[str, Any]:
         """Get summary statistics of metrics collection"""
+
+
+
         try:
             current_metrics = self.get_current_metrics()
             violations = self.check_thresholds()

@@ -49,6 +49,9 @@ class GenericWebCrawler:
         target_domains: Optional[List[str]] = None
     ) -> List[WebContentData]:
         """Crawl websites for content violations"""
+
+
+
         try:
             logger.info("Starting generic web crawl")
             

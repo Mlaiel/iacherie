@@ -8,13 +8,13 @@ Architecture: Enterprise-grade revenue tracking with AI-powered analytics
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe Projet: Lead AI Developer + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  AVERTISSEMENT DE PROPRIÉTÉ INTELLECTUELLE ⚠️
+  AVERTISSEMENT DE PROPRIÉTÉ INTELLECTUELLE 
 Ce code et concept sont la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Violation = Poursuites judiciaires selon le droit allemand et international.
 """
 
-⚠️  AVERTISSEMENT DE PROPRIÉTÉ INTELLECTUELLE ⚠️
+  AVERTISSEMENT DE PROPRIÉTÉ INTELLECTUELLE 
 Ce code et concept sont la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Violation = Poursuites judiciaires selon le droit allemand et international.
@@ -103,6 +103,9 @@ class RevenueTrackingModuleManager:
         Returns:
             True si l'initialisation réussit
         """
+
+
+
         try:
             self.logger.info("Initializing Revenue Tracking Module...")
             
@@ -332,6 +335,9 @@ class RevenueTrackingModuleManager:
     
     async def _perform_health_checks(self) -> Dict[str, Any]:
         """Effectue des vérifications de santé du système"""
+
+
+
         try:
             health_status = {
                 "overall_status": "healthy",
@@ -389,6 +395,9 @@ class RevenueTrackingModuleManager:
         Returns:
             Statut du module
         """
+
+
+
         try:
             # Perform fresh health check
             health_status = await self._perform_health_checks()
@@ -424,6 +433,9 @@ async def initialize_revenue_tracking_module(config: Dict[str, Any]) -> RevenueT
     Returns:
         Gestionnaire de module initialisé
     """
+
+
+
     try:
         manager = RevenueTrackingModuleManager(config)
         success = await manager.initialize()

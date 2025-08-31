@@ -1,11 +1,11 @@
 """
-📈 Trend Analyzer - IA Influencer Agent
+ Trend Analyzer - IA Influencer Agent
 =====================================
 
 Advanced trend analysis system for identifying viral content patterns,
 market opportunities, and predictive analytics for content creators.
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE PROHIBITED
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE PROHIBITED
 ====================================================
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright © 2025 Fahed Mlaiel - All rights reserved
@@ -196,6 +196,9 @@ class TrendAnalyzer:
     
     def _initialize_models(self):
         """Initialize ML models for trend analysis"""
+
+
+
         try:
             # Trend detection model
             class TrendDetector(nn.Module):
@@ -321,6 +324,9 @@ class TrendAnalyzer:
         Returns:
             List of current trends with analysis
         """
+
+
+
         try:
             self.logger.info(f"Analyzing current trends for {time_window_hours}h window")
             
@@ -401,6 +407,9 @@ class TrendAnalyzer:
         Returns:
             Viral prediction with optimization suggestions
         """
+
+
+
         try:
             self.logger.info(f"Predicting viral potential for content {content_data.get('content_id', 'unknown')}")
             
@@ -497,6 +506,9 @@ class TrendAnalyzer:
         time_window_hours: int = 24
     ) -> Dict[str, Any]:
         """Collect trending data from specific platform"""
+
+
+
         try:
             # Get trending content from platform
             trending_content = await self.social_crawler.get_trending_content(
@@ -979,6 +991,9 @@ class TrendAnalyzer:
         platform_count: int
     ) -> float:
         """Calculate trend momentum score"""
+
+
+
         try:
             # Normalize components
             growth_component = min(growth_rate, 1.0)
@@ -1194,6 +1209,9 @@ class TrendAnalyzer:
         temporal_features: List[float]
     ) -> float:
         """Predict viral probability using ML model"""
+
+
+
         try:
             if self.viral_predictor:
                 with torch.no_grad():
@@ -1223,6 +1241,9 @@ class TrendAnalyzer:
         temporal_features: List[float]
     ) -> float:
         """Rule-based viral probability prediction"""
+
+
+
         try:
             # Extract key features
             content_quality = np.mean(content_features[:10])
@@ -1260,6 +1281,9 @@ class TrendAnalyzer:
     
     def _generate_id(self) -> str:
         """Generate unique ID"""
+
+
+
         return hashlib.md5(f"{datetime.now().isoformat()}{hash(self)}".encode()).hexdigest()[:12]
 
 
@@ -1284,6 +1308,9 @@ class ViralPredictionEngine:
     
     def _initialize_ensemble_models(self):
         """Initialize ensemble of prediction models"""
+
+
+
         try:
             # Model 1: Neural network
             self.prediction_models.append(self._create_neural_model())
@@ -1361,6 +1388,9 @@ class MarketIntelligence:
         Returns:
             Market intelligence analysis
         """
+
+
+
         try:
             self.logger.info(f"Analyzing market opportunity for {content_niche}")
             
@@ -1405,4 +1435,7 @@ class MarketIntelligence:
     
     def _generate_id(self) -> str:
         """Generate unique ID"""
+
+
+
         return hashlib.md5(f"{datetime.now().isoformat()}{hash(self)}".encode()).hexdigest()[:12]

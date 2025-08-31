@@ -89,6 +89,9 @@ class TimeStretcherProcessor:
     
     def process(self, audio_data: np.ndarray) -> np.ndarray:
         """Apply time stretching processing"""
+
+
+
         try:
             if abs(self.time_stretch_factor - 1.0) < 1e-6:
                 return audio_data  # No processing needed
@@ -383,6 +386,9 @@ class TimeStretcherProcessor:
     
     def get_current_settings(self) -> dict:
         """Get current time stretcher settings"""
+
+
+
         return {
             "time_stretch_factor": self.time_stretch_factor,
             "preserve_pitch": self.preserve_pitch,

@@ -8,7 +8,7 @@ Tests all components, workflows, and integrations to ensure enterprise-grade qua
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+ UNAUTHORIZED USE STRICTLY PROHIBITED 
 """
 
 import asyncio
@@ -45,16 +45,19 @@ def log_test_result(test_name: str, success: bool, details: str = "", error: str
     
     if success:
         validation_results["tests_passed"] += 1
-        logger.info(f"✅ {test_name}: PASSED {details}")
+        logger.info(f" {test_name}: PASSED {details}")
     else:
         validation_results["tests_failed"] += 1
-        logger.error(f"❌ {test_name}: FAILED {details}")
+        logger.error(f" {test_name}: FAILED {details}")
         if error:
             validation_results["errors"].append(f"{test_name}: {error}")
 
 
 def test_imports():
     """Test all imports and core functionality"""
+
+
+
     try:
         # Test basic imports
         from ai.core import (
@@ -101,6 +104,9 @@ def test_imports():
 
 async def test_orchestrator():
     """Test AI orchestrator functionality"""
+
+
+
     try:
         from ai.core import ai_orchestrator, WorkflowType, ProcessingPriority, WorkflowRequest
         
@@ -177,6 +183,9 @@ async def test_components():
 
 def test_configuration():
     """Test configuration system"""
+
+
+
     try:
         from ai.core.config import get_config, Environment, get_database_config, get_security_config
         
@@ -204,6 +213,9 @@ def test_configuration():
 
 def test_data_models():
     """Test data model creation and validation"""
+
+
+
     try:
         from ai.core import CreatorProfile, CollaborationOpportunity, WorkflowRequest, WorkflowType, ProcessingPriority
         
@@ -243,6 +255,9 @@ def test_data_models():
 
 def test_package_completeness():
     """Test package completeness and exports"""
+
+
+
     try:
         import ai.core as ai_core
         
@@ -287,7 +302,7 @@ def test_package_completeness():
 
 async def run_validation():
     """Run complete validation suite"""
-    print("🚀 Starting IA-Influencer-Agent AI Core Validation Suite")
+    print(" Starting IA-Influencer-Agent AI Core Validation Suite")
     print("=" * 60)
     print(f"Validation started at: {datetime.utcnow()}")
     print("=" * 60)
@@ -296,53 +311,53 @@ async def run_validation():
     test_results = []
     
     # 1. Import tests
-    print("\n📦 Testing Imports and Basic Functionality...")
+    print("\n Testing Imports and Basic Functionality...")
     test_results.append(test_imports())
     
     # 2. Configuration tests
-    print("\n⚙️ Testing Configuration System...")
+    print("\n Testing Configuration System...")
     test_results.append(test_configuration())
     
     # 3. Data model tests
-    print("\n📊 Testing Data Models...")
+    print("\n Testing Data Models...")
     test_results.append(test_data_models())
     
     # 4. Package completeness
-    print("\n📋 Testing Package Completeness...")
+    print("\n Testing Package Completeness...")
     test_results.append(test_package_completeness())
     
     # 5. Orchestrator tests (async)
-    print("\n🎯 Testing AI Orchestrator...")
+    print("\n Testing AI Orchestrator...")
     test_results.append(await test_orchestrator())
     
     # 6. Component tests (async)
-    print("\n🔧 Testing AI Components...")
+    print("\n Testing AI Components...")
     test_results.append(await test_components())
     
     # Generate final report
     print("\n" + "=" * 60)
-    print("🎯 VALIDATION RESULTS SUMMARY")
+    print(" VALIDATION RESULTS SUMMARY")
     print("=" * 60)
     
     passed = validation_results["tests_passed"]
     failed = validation_results["tests_failed"]
     total = validation_results["total_tests"]
     
-    print(f"✅ Tests Passed: {passed}")
-    print(f"❌ Tests Failed: {failed}")
-    print(f"📊 Total Tests: {total}")
-    print(f"📈 Success Rate: {(passed/total*100):.1f}%" if total > 0 else "0%")
+    print(f" Tests Passed: {passed}")
+    print(f" Tests Failed: {failed}")
+    print(f" Total Tests: {total}")
+    print(f" Success Rate: {(passed/total*100):.1f}%" if total > 0 else "0%")
     
     # Component status summary
     if validation_results["component_status"]:
-        print(f"\n🔧 Component Status:")
+        print(f"\n Component Status:")
         for component, status in validation_results["component_status"].items():
-            status_icon = "✅" if status == "healthy" else "❌" if status == "error" else "⚠️"
+            status_icon = "" if status == "healthy" else "" if status == "error" else ""
             print(f"  {status_icon} {component}: {status}")
     
     # Show errors if any
     if validation_results["errors"]:
-        print(f"\n❌ Errors Found:")
+        print(f"\n Errors Found:")
         for error in validation_results["errors"][:5]:  # Show first 5 errors
             print(f"  • {error}")
         if len(validation_results["errors"]) > 5:
@@ -350,7 +365,7 @@ async def run_validation():
     
     # Show warnings if any
     if validation_results["warnings"]:
-        print(f"\n⚠️ Warnings:")
+        print(f"\n Warnings:")
         for warning in validation_results["warnings"][:3]:  # Show first 3 warnings
             print(f"  • {warning}")
     
@@ -359,9 +374,9 @@ async def run_validation():
     overall_success = passed >= total * 0.8  # 80% success rate required
     
     if overall_success:
-        print("🎉 AI CORE SYSTEM: VALIDATION SUCCESSFUL!")
-        print("✅ System is ready for enterprise deployment")
-        print("🚀 All critical components are operational")
+        print(" AI CORE SYSTEM: VALIDATION SUCCESSFUL!")
+        print(" System is ready for enterprise deployment")
+        print(" All critical components are operational")
         
         # Generate recommendations for successful validation
         validation_results["recommendations"] = [
@@ -373,9 +388,9 @@ async def run_validation():
         
         exit_code = 0
     else:
-        print("⚠️ AI CORE SYSTEM: VALIDATION FAILED!")
-        print("❌ System requires fixes before deployment")
-        print("🔧 Please address the errors above")
+        print(" AI CORE SYSTEM: VALIDATION FAILED!")
+        print(" System requires fixes before deployment")
+        print(" Please address the errors above")
         
         # Generate recommendations for failed validation
         validation_results["recommendations"] = [
@@ -392,9 +407,9 @@ async def run_validation():
         report_file = f"ai_core_validation_report_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.json"
         with open(report_file, 'w') as f:
             json.dump(validation_results, f, indent=2)
-        print(f"\n📄 Detailed report saved to: {report_file}")
+        print(f"\n Detailed report saved to: {report_file}")
     except Exception as e:
-        print(f"\n⚠️ Could not save validation report: {e}")
+        print(f"\n Could not save validation report: {e}")
     
     print("=" * 60)
     print(f"Validation completed at: {datetime.utcnow()}")
@@ -411,9 +426,9 @@ if __name__ == "__main__":
         sys.exit(exit_code)
         
     except KeyboardInterrupt:
-        print("\n⚠️ Validation interrupted by user")
+        print("\n Validation interrupted by user")
         sys.exit(1)
     except Exception as e:
-        print(f"\n❌ Validation failed with unexpected error: {e}")
+        print(f"\n Validation failed with unexpected error: {e}")
         print(traceback.format_exc())
         sys.exit(1)

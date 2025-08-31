@@ -24,6 +24,9 @@ class AlertSystem:
     
     async def send_violation_alert(self, user_id: str, violation_data: Dict[str, Any]):
         """Send alert for content protection violation"""
+
+
+
         try:
             # Determine alert severity
             similarity_score = violation_data.get("similarity_score", 0.0)
@@ -62,6 +65,9 @@ class AlertSystem:
     
     def _create_alert_message(self, violation_data: Dict[str, Any], severity: str) -> Dict[str, Any]:
         """Create structured alert message"""
+
+
+
         return {
             "title": f"Content Protection Alert - {severity.upper()}",
             "message": f"Potential violation detected on {violation_data['platform']}",
@@ -87,6 +93,9 @@ class AlertSystem:
     async def _send_alert_via_channel(self, channel: str, user_id: str, 
                                     message: Dict[str, Any], severity: str):
         """Send alert through specific channel"""
+
+
+
         try:
             if channel == "email":
                 await self._send_email_alert(user_id, message)
@@ -116,6 +125,9 @@ class AlertSystem:
     async def _store_alert(self, user_id: str, violation_data: Dict[str, Any], 
                          message: Dict[str, Any], severity: str):
         """Store alert in database"""
+
+
+
         try:
             async with database_manager.get_postgres_session() as session:
                 await session.execute(

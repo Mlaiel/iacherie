@@ -22,7 +22,7 @@ Copyright: All rights reserved. Unauthorized use prohibited.
 Project: IA Influencer Agent - Ultra-Advanced Industrial Platform
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + DevOps + Legal Automation
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 ALL RIGHTS RESERVED. UNAUTHORIZED USE PROHIBITED.
 This code belongs exclusively to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use will result in immediate legal action.
@@ -154,6 +154,9 @@ class AdvancedAnalyticsEngine:
         config: ReportConfig
     ) -> Dict[str, Any]:
         """Generate comprehensive executive summary report"""
+
+
+
         try:
             # Collect key metrics
             kpis = await self._calculate_executive_kpis(config)
@@ -186,6 +189,9 @@ class AdvancedAnalyticsEngine:
     
     async def _calculate_executive_kpis(self, config: ReportConfig) -> List[KPIMetric]:
         """Calculate key performance indicators for executive summary"""
+
+
+
         try:
             async with get_async_session() as session:
                 kpis = []
@@ -293,6 +299,9 @@ class AdvancedAnalyticsEngine:
     
     async def _generate_executive_insights(self, config: ReportConfig) -> List[AnalyticsInsight]:
         """Generate AI-powered insights for executive summary"""
+
+
+
         try:
             insights = []
             
@@ -352,6 +361,9 @@ class AdvancedAnalyticsEngine:
     
     async def _create_executive_charts(self, config: ReportConfig) -> Dict[str, str]:
         """Create executive dashboard charts"""
+
+
+
         try:
             charts = {}
             
@@ -421,6 +433,9 @@ class AdvancedAnalyticsEngine:
     
     async def generate_violation_analytics(self, config: ReportConfig) -> Dict[str, Any]:
         """Generate detailed violation analytics report"""
+
+
+
         try:
             async with get_async_session() as session:
                 # Violation statistics
@@ -460,6 +475,9 @@ class AdvancedAnalyticsEngine:
     
     async def generate_platform_performance_report(self, config: ReportConfig) -> Dict[str, Any]:
         """Generate platform performance comparison report"""
+
+
+
         try:
             async with get_async_session() as session:
                 platforms = config.platforms or await self._get_all_platforms(session)
@@ -510,6 +528,9 @@ class AdvancedAnalyticsEngine:
     
     async def generate_predictive_analysis(self, config: ReportConfig) -> Dict[str, Any]:
         """Generate predictive analysis and forecasting report"""
+
+
+
         try:
             async with get_async_session() as session:
                 # Historical trend analysis
@@ -562,6 +583,9 @@ class AdvancedAnalyticsEngine:
         chart_types: List[str]
     ) -> Dict[str, Any]:
         """Create custom dashboard with specified metrics and charts"""
+
+
+
         try:
             dashboard_data = {}
             
@@ -604,6 +628,9 @@ class AdvancedAnalyticsEngine:
         file_path: Optional[str] = None
     ) -> str:
         """Export report in specified format"""
+
+
+
         try:
             if output_format.lower() == "html":
                 return await self._export_html_report(report_data, file_path)
@@ -627,6 +654,9 @@ class AdvancedAnalyticsEngine:
         report_name: str
     ) -> bool:
         """Schedule automated report generation"""
+
+
+
         try:
             # This would integrate with a job scheduler like Celery
             # For now, just store the configuration
@@ -711,6 +741,9 @@ class AdvancedAnalyticsEngine:
     
     async def _export_html_report(self, report_data: Dict[str, Any], file_path: Optional[str]) -> str:
         """Export report as HTML"""
+
+
+
         try:
             template = self.template_env.get_template('executive_summary.html')
             html_content = template.render(report=report_data)
@@ -728,6 +761,9 @@ class AdvancedAnalyticsEngine:
     
     async def _export_pdf_report(self, report_data: Dict[str, Any], file_path: Optional[str]) -> str:
         """Export report as PDF"""
+
+
+
         try:
             # This would use a library like WeasyPrint or ReportLab
             # For now, return a placeholder
@@ -758,6 +794,9 @@ class ReportScheduler:
     
     async def run_scheduled_reports(self) -> None:
         """Run all scheduled reports"""
+
+
+
         try:
             # This would be called by a scheduled job
             # Implementation depends on job scheduler used
@@ -772,6 +811,9 @@ class ReportScheduler:
         subject: str
     ) -> bool:
         """Send report via email"""
+
+
+
         try:
             html_content = await self.analytics_engine._export_html_report(report_data, None)
             

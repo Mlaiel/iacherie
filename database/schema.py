@@ -13,6 +13,9 @@ from ..core.logging import logger
 
 async def create_tables():
     """Create all database tables"""
+
+
+
     try:
         async with database_manager.get_postgres_session() as session:
             # Users table
@@ -122,6 +125,9 @@ async def create_tables():
 
 async def drop_tables():
     """Drop all database tables (use with caution)"""
+
+
+
     try:
         async with database_manager.get_postgres_session() as session:
             await session.execute(text("DROP TABLE IF EXISTS platform_connections CASCADE"))

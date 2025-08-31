@@ -18,7 +18,7 @@ Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -209,6 +209,9 @@ class SchedulingAgent(BaseAgent):
     
     def _setup_scheduler(self):
         """Initialize the enterprise scheduler with database persistence"""
+
+
+
         try:
             jobstores = {
                 'default': SQLAlchemyJobStore(url=settings.DATABASE_URL)
@@ -263,6 +266,9 @@ class SchedulingAgent(BaseAgent):
         Returns:
             Schedule ID
         """
+
+
+
         try:
             self.logger.info(f"Creating schedule for content {request.content_id}")
             
@@ -335,6 +341,9 @@ class SchedulingAgent(BaseAgent):
         Returns:
             Optimal timing analysis results
         """
+
+
+
         try:
             self.logger.info(f"Analyzing optimal timing for creator {creator_id}")
             
@@ -412,6 +421,9 @@ class SchedulingAgent(BaseAgent):
         Returns:
             Execution result
         """
+
+
+
         try:
             self.logger.info(f"Executing scheduled job {schedule_id}")
             
@@ -484,6 +496,9 @@ class SchedulingAgent(BaseAgent):
     
     async def get_schedule_status(self, schedule_id: str) -> Dict[str, Any]:
         """Get current status of a scheduled job"""
+
+
+
         try:
             with get_db_session() as db:
                 job = db.query(ScheduledJob).filter(ScheduledJob.id == schedule_id).first()
@@ -508,6 +523,9 @@ class SchedulingAgent(BaseAgent):
     
     async def cancel_schedule(self, schedule_id: str) -> bool:
         """Cancel a scheduled job"""
+
+
+
         try:
             # Remove from scheduler
             try:
@@ -535,6 +553,9 @@ class SchedulingAgent(BaseAgent):
         reason: str = None
     ) -> bool:
         """Reschedule an existing job"""
+
+
+
         try:
             # Update scheduler
             self.scheduler.modify_job(
@@ -567,6 +588,9 @@ class SchedulingAgent(BaseAgent):
         limit: int = 100
     ) -> List[Dict[str, Any]]:
         """Get schedules for a specific creator"""
+
+
+
         try:
             with get_db_session() as db:
                 query = db.query(ScheduledJob).filter(ScheduledJob.creator_id == creator_id)
@@ -670,6 +694,9 @@ class SchedulingAgent(BaseAgent):
         timezone: str
     ) -> Dict[str, Any]:
         """Analyze audience activity patterns"""
+
+
+
         try:
             activity_data = {}
             
@@ -943,6 +970,9 @@ class SchedulingAgent(BaseAgent):
         platform_analysis: Dict[str, Any]
     ) -> float:
         """Calculate platform optimization score for a given time"""
+
+
+
         return platform_analysis.get('overall_score', 0.5)
     
     def _calculate_confidence_score(

@@ -1,11 +1,11 @@
 """
-🏗️ Base Processor - IA Influencer Agent Platform Enterprise
+ Base Processor - IA Influencer Agent Platform Enterprise
 ============================================================
 Module: backend/data_management/processors/base_processor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ============================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -36,6 +36,9 @@ class BaseProcessor(ABC):
     
     def process(self, input_data: Any) -> Dict[str, Any]:
         """Process input data - base implementation"""
+
+
+
         try:
             self.logger.info(f"Processing data with {self.__class__.__name__}")
             
@@ -63,6 +66,9 @@ class BaseProcessor(ABC):
     
     def validate_input(self, input_data: Any) -> bool:
         """Validate input data - base implementation"""
+
+
+
         try:
             self.logger.debug(f"Validating input data in {self.__class__.__name__}")
             
@@ -141,6 +147,9 @@ class BaseProcessor(ABC):
     
     def get_stats(self) -> Dict[str, Any]:
         """Retourne les statistiques de traitement"""
+
+
+
         return self.processing_stats.copy()
     
     def reset_stats(self):
@@ -167,6 +176,9 @@ class AsyncBaseProcessor(ABC):
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
         """Process input data asynchronously - base implementation"""
+
+
+
         try:
             self.logger.info(f"Async processing data with {self.__class__.__name__}")
             
@@ -196,6 +208,9 @@ class AsyncBaseProcessor(ABC):
     
     async def validate_input(self, input_data: Any) -> bool:
         """Validate input data asynchronously - base implementation"""
+
+
+
         try:
             self.logger.debug(f"Async validating input data in {self.__class__.__name__}")
             
@@ -270,6 +285,9 @@ class AsyncBaseProcessor(ABC):
     
     def get_stats(self) -> Dict[str, Any]:
         """Retourne les statistiques de traitement"""
+
+
+
         return self.processing_stats.copy()
     
     def reset_stats(self):

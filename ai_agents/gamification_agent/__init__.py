@@ -8,14 +8,14 @@ for the IA-Influencer-Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This gamification system and AI methodologies are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED and will result in legal action.
 
 ALL RIGHTS RESERVED - FAHED MLAIEL ©2025
 
-🎯 BUSINESS LOGIC INTEGRATION:
+ BUSINESS LOGIC INTEGRATION:
 Creator Registration → Content Upload → AI Gamification Analysis → Challenge Generation
 → Engagement Prediction → Reward Optimization → Social Competition → Badge Generation
 

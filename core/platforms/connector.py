@@ -301,11 +301,17 @@ class PlatformConnector:
     async def create_platform(self, platform_type: PlatformType, 
                             config: PlatformConfig) -> PlatformBase:
         """Create a new platform instance (not pooled)"""
+
+
+
         return await self.pool._create_connection(platform_type, config)
     
     async def test_connection(self, platform_type: PlatformType, 
                             config: PlatformConfig) -> bool:
         """Test platform connection without using pool"""
+
+
+
         try:
             async with self.get_platform(platform_type, config) as platform:
                 return await platform.authenticate()
@@ -339,6 +345,9 @@ class PlatformConnector:
     async def get_platform_health(self, platform_type: PlatformType, 
                                 config: PlatformConfig) -> Dict[str, Any]:
         """Get detailed health information for a platform"""
+
+
+
         try:
             start_time = time.time()
             
@@ -449,6 +458,9 @@ class PlatformConnector:
     
     async def _cleanup_loop(self):
         """Background cleanup task"""
+
+
+
         try:
             while True:
                 await asyncio.sleep(self.cleanup_interval)
@@ -476,6 +488,9 @@ class PlatformConnector:
     
     def get_connector_stats(self) -> Dict[str, Any]:
         """Get connector statistics"""
+
+
+
         return {
             'pool_stats': self.pool.get_pool_stats(),
             'active_sessions': len(self.active_sessions),

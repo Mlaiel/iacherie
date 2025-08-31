@@ -10,7 +10,7 @@ Project: IA-Influencer Agent + Content Protection Platform
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps
 
 Copyright Notice:
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This code and all associated concepts, algorithms, and implementations are the exclusive 
 intellectual property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, reproduction, 
 distribution, modification, or appropriation of this code, in whole or in part, without 
@@ -118,6 +118,9 @@ class CodecConfig:
     
     def _initialize_codec_registry(self) -> Dict[str, Dict[str, Any]]:
         """Initialize comprehensive codec registry"""
+
+
+
         return {
             "wav": {
                 "name": "WAV",
@@ -397,6 +400,9 @@ class CodecConfig:
     
     def _initialize_platform_codecs(self) -> Dict[str, Dict[str, Any]]:
         """Initialize platform-specific codec preferences"""
+
+
+
         return {
             "spotify": {
                 "primary": "ogg",
@@ -482,6 +488,9 @@ class CodecConfig:
     
     def _initialize_quality_profiles(self) -> Dict[QualityProfile, Dict[str, Any]]:
         """Initialize quality profiles with codec recommendations"""
+
+
+
         return {
             QualityProfile.ARCHIVAL: {
                 "description": "Highest quality for archival storage",
@@ -543,14 +552,23 @@ class CodecConfig:
         Returns:
             Codec information dictionary or None if not found
         """
+
+
+
         return self._codecs.get(codec.lower())
     
     def get_supported_codecs(self) -> List[str]:
         """Get list of all supported codecs"""
+
+
+
         return list(self._codecs.keys())
     
     def get_lossless_codecs(self) -> List[str]:
         """Get list of lossless codecs"""
+
+
+
         return [
             codec for codec, info in self._codecs.items()
             if info["type"] == CodecType.LOSSLESS
@@ -558,6 +576,9 @@ class CodecConfig:
     
     def get_streaming_codecs(self) -> List[str]:
         """Get list of streaming-friendly codecs"""
+
+
+
         return [
             codec for codec, info in self._codecs.items()
             if info["capabilities"].streaming_friendly
@@ -580,6 +601,9 @@ class CodecConfig:
         Returns:
             Codec recommendation with rationale
         """
+
+
+
         try:
             recommendations = []
             
@@ -786,6 +810,9 @@ class CodecConfig:
         Returns:
             Platform requirements or None if not found
         """
+
+
+
         return self._platform_codecs.get(platform.lower())
     
     def estimate_file_size(self, 
@@ -805,6 +832,9 @@ class CodecConfig:
         Returns:
             Size estimates in different units
         """
+
+
+
         try:
             # Base calculation: bitrate * duration
             base_size_bits = bitrate_kbps * 1000 * duration_seconds
@@ -847,6 +877,9 @@ class CodecConfig:
         Returns:
             Quality metrics for each codec
         """
+
+
+
         return {
             "flac": {
                 "quality_score": 1.0,
@@ -901,6 +934,9 @@ class CodecConfig:
         Returns:
             Success status
         """
+
+
+
         try:
             if codec.lower() not in self._presets:
                 self._presets[codec.lower()] = {}
@@ -920,6 +956,9 @@ class CodecConfig:
     
     def export_configuration(self) -> Dict[str, Any]:
         """Export complete codec configuration"""
+
+
+
         try:
             return {
                 "codecs": self._codecs,

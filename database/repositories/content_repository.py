@@ -123,6 +123,9 @@ class ContentRepository(BaseRepository):
         Returns:
             Dict: Content data or None if not found
         """
+
+
+
         try:
             # Check cache first
             if self._is_cached_and_valid(content_id):
@@ -170,6 +173,9 @@ class ContentRepository(BaseRepository):
         Returns:
             int: Content ID
         """
+
+
+
         try:
             # Prepare content data for database
             db_data = {
@@ -237,6 +243,9 @@ class ContentRepository(BaseRepository):
         Returns:
             bool: True if updated successfully
         """
+
+
+
         try:
             # Add update timestamp
             updates["updated_at"] = datetime.utcnow()
@@ -288,6 +297,9 @@ class ContentRepository(BaseRepository):
         Returns:
             bool: True if deleted successfully
         """
+
+
+
         try:
             return await self.update_content(content_id, {
                 "status": "deleted",
@@ -319,6 +331,9 @@ class ContentRepository(BaseRepository):
         Returns:
             List[Dict]: User's content
         """
+
+
+
         try:
             if self.db_connection:
                 # Build dynamic query
@@ -382,6 +397,9 @@ class ContentRepository(BaseRepository):
         Returns:
             List[Dict]: Matching content
         """
+
+
+
         try:
             if self.db_connection:
                 # Build dynamic search query
@@ -504,6 +522,9 @@ class ContentRepository(BaseRepository):
         Returns:
             Dict: Content statistics
         """
+
+
+
         try:
             if self.db_connection:
                 # Base statistics query
@@ -604,6 +625,9 @@ class ContentRepository(BaseRepository):
         Returns:
             List[Dict]: Popular content
         """
+
+
+
         try:
             if self.db_connection:
                 # Join with usage statistics to find popular content
@@ -663,6 +687,9 @@ class ContentRepository(BaseRepository):
     
     def _format_content_data(self, raw_data: Dict[str, Any]) -> Dict[str, Any]:
         """Format content data for consumption"""
+
+
+
         try:
             formatted_data = raw_data.copy()
             
@@ -691,6 +718,9 @@ class ContentRepository(BaseRepository):
     
     async def cleanup_cache(self) -> None:
         """Clean up expired cache entries"""
+
+
+
         try:
             current_time = datetime.utcnow()
             expired_ids = []
@@ -711,6 +741,9 @@ class ContentRepository(BaseRepository):
     
     def get_repository_stats(self) -> Dict[str, Any]:
         """Get repository statistics"""
+
+
+
         return {
             "cache_size": len(self.content_cache),
             "mock_content_size": len(self.mock_content),

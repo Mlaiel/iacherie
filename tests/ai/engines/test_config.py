@@ -455,6 +455,9 @@ class TestConfigManager:
     @pytest.fixture
     def config_manager(self):
         """Fixture pour créer un gestionnaire de configuration."""
+
+
+
         return ConfigManager()
     
     @pytest.fixture
@@ -614,6 +617,9 @@ class TestSettingsValidator:
     @pytest.fixture
     def validator(self):
         """Fixture pour créer un validateur."""
+
+
+
         return SettingsValidator()
     
     def test_validate_database_settings(self, validator):
@@ -673,6 +679,9 @@ class TestEnvironmentManager:
     @pytest.fixture
     def env_manager(self):
         """Fixture pour créer un gestionnaire d'environnement."""
+
+
+
         return EnvironmentManager()
     
     def test_detect_environment(self, env_manager):
@@ -711,6 +720,9 @@ class TestSecretManager:
     @pytest.fixture
     def secret_manager(self):
         """Fixture pour créer un gestionnaire de secrets."""
+
+
+
         return SecretManager()
     
     def test_encrypt_decrypt_secret(self, secret_manager):
@@ -746,6 +758,9 @@ class TestConfigWatcher:
     @pytest.fixture
     def config_watcher(self):
         """Fixture pour créer un surveillant de configuration."""
+
+
+
         return ConfigWatcher()
     
     def test_watch_file_changes(self, config_watcher):
@@ -779,6 +794,9 @@ class TestConfigMerger:
     @pytest.fixture
     def config_merger(self):
         """Fixture pour créer un fusionneur de configuration."""
+
+
+
         return ConfigMerger()
     
     def test_merge_simple_configs(self, config_merger):
@@ -823,6 +841,9 @@ class TestIntegration:
     @pytest.fixture
     def full_system(self):
         """Fixture pour créer un système complet."""
+
+
+
         return {
             'manager': ConfigManager(),
             'validator': SettingsValidator(),

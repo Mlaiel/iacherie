@@ -5,7 +5,7 @@ Ultra-Advanced Testing Framework for AI-Powered Content Protection System
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-🚨 INTELLECTUAL PROPERTY WARNING 🚨
+ INTELLECTUAL PROPERTY WARNING 
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, modification, or commercial 
 exploitation without explicit written permission is STRICTLY PROHIBITED 
@@ -103,22 +103,34 @@ SAMPLE_FINGERPRINT_DATA = {
 
 @pytest.fixture
 def test_config():
-    """Provide test configuration"""    return TEST_CONFIG.copy()
+    """Provide test configuration"""
+
+
+    return TEST_CONFIG.copy()
 
 
 @pytest.fixture
 def sample_content_metadata():
-    """Provide sample content metadata"""    return SAMPLE_CONTENT_METADATA.copy()
+    """Provide sample content metadata"""
+
+
+    return SAMPLE_CONTENT_METADATA.copy()
 
 
 @pytest.fixture
 def sample_rights_data():
-    """Provide sample rights data"""    return SAMPLE_RIGHTS_DATA.copy()
+    """Provide sample rights data"""
+
+
+    return SAMPLE_RIGHTS_DATA.copy()
 
 
 @pytest.fixture
 def sample_fingerprint_data():
-    """Provide sample fingerprint data"""    return SAMPLE_FINGERPRINT_DATA.copy()
+    """Provide sample fingerprint data"""
+
+
+    return SAMPLE_FINGERPRINT_DATA.copy()
 
 
 @pytest.fixture
@@ -239,7 +251,10 @@ class TestDataGenerator:
     
     @staticmethod
     def generate_piracy_scenarios() -> list:
-        """Generate piracy test scenarios"""        return [
+        """Generate piracy test scenarios"""
+
+
+        return [
             {
                 'scenario': 'exact_copy',
                 'similarity_score': 1.0,
@@ -281,7 +296,10 @@ class TestUtils:
     """Utility functions for tests"""    
     @staticmethod
     async def wait_for_async_completion(coro, timeout: float = 5.0):
-        """Wait for async operation with timeout"""        try:
+        """Wait for async operation with timeout"""
+
+
+        try:
             return await asyncio.wait_for(coro, timeout=timeout)
         except asyncio.TimeoutError:
             pytest.fail(f"Async operation timed out after {timeout} seconds")

@@ -8,7 +8,7 @@ compliance updates, and multi-channel communication management.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Enterprise Content Protection Platform - Notification Core
 
-⚠️  COPYRIGHT NOTICE ⚠️
+  COPYRIGHT NOTICE 
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
@@ -129,6 +129,9 @@ class EmailNotificationHandler:
     
     async def send_notification(self, notification: NotificationData, recipient: str) -> bool:
         """Send email notification."""
+
+
+
         try:
             # Create email message
             msg = MIMEMultipart()
@@ -203,7 +206,7 @@ class EmailNotificationHandler:
                 <div class="footer">
                     <p>IA Influencer Agent - Enterprise Content Protection Platform</p>
                     <p>© 2025 Fahed Mlaiel. All rights reserved.</p>
-                    <p><strong>⚠️ This software is proprietary. Unauthorized use is prohibited.</strong></p>
+                    <p><strong> This software is proprietary. Unauthorized use is prohibited.</strong></p>
                 </div>
             </div>
         </body>
@@ -237,6 +240,9 @@ class SMSNotificationHandler:
     
     async def send_notification(self, notification: NotificationData, recipient: str) -> bool:
         """Send SMS notification."""
+
+
+
         try:
             # Format message for SMS
             sms_message = self._format_sms_message(notification)
@@ -258,14 +264,14 @@ class SMSNotificationHandler:
     def _format_sms_message(self, notification: NotificationData) -> str:
         """Format notification for SMS."""
         priority_emoji = {
-            NotificationPriority.LOW: "ℹ️",
-            NotificationPriority.NORMAL: "📢",
-            NotificationPriority.HIGH: "⚠️",
-            NotificationPriority.CRITICAL: "🚨",
-            NotificationPriority.EMERGENCY: "🆘"
+            NotificationPriority.LOW: "ℹ",
+            NotificationPriority.NORMAL: "",
+            NotificationPriority.HIGH: "",
+            NotificationPriority.CRITICAL: "",
+            NotificationPriority.EMERGENCY: ""
         }
         
-        emoji = priority_emoji.get(notification.priority, "📢")
+        emoji = priority_emoji.get(notification.priority, "")
         
         message = f"{emoji} {notification.title}\n\n{notification.message}"
         
@@ -295,6 +301,9 @@ class PushNotificationHandler:
     
     async def send_notification(self, notification: NotificationData, device_token: str) -> bool:
         """Send push notification."""
+
+
+
         try:
             # Create push notification message
             message = messaging.Message(
@@ -416,6 +425,9 @@ class SlackNotificationHandler:
     
     async def send_notification(self, notification: NotificationData, channel: str) -> bool:
         """Send Slack notification."""
+
+
+
         try:
             # Create Slack message blocks
             blocks = self._create_slack_blocks(notification)
@@ -577,6 +589,9 @@ class NotificationEngine:
     
     def _initialize_handlers(self) -> Dict[NotificationChannel, Any]:
         """Initialize notification handlers."""
+
+
+
         return {
             NotificationChannel.EMAIL: EmailNotificationHandler(),
             NotificationChannel.SMS: SMSNotificationHandler(),
@@ -588,11 +603,14 @@ class NotificationEngine:
     
     def _load_templates(self) -> Dict[NotificationType, NotificationTemplate]:
         """Load notification templates."""
+
+
+
         return {
             NotificationType.VIOLATION_DETECTED: NotificationTemplate(
                 template_id="violation_detected",
                 type=NotificationType.VIOLATION_DETECTED,
-                title_template="🚨 Copyright Violation Detected",
+                title_template=" Copyright Violation Detected",
                 message_template="Unauthorized use of your content '{content_title}' detected on {platform}. Similarity: {similarity}%",
                 channels=[NotificationChannel.EMAIL, NotificationChannel.PUSH, NotificationChannel.WEBSOCKET],
                 priority=NotificationPriority.HIGH,
@@ -601,7 +619,7 @@ class NotificationEngine:
             NotificationType.DMCA_SENT: NotificationTemplate(
                 template_id="dmca_sent",
                 type=NotificationType.DMCA_SENT,
-                title_template="📧 DMCA Notice Sent",
+                title_template=" DMCA Notice Sent",
                 message_template="DMCA takedown notice sent to {platform} for content '{content_title}'",
                 channels=[NotificationChannel.EMAIL, NotificationChannel.WEBSOCKET],
                 priority=NotificationPriority.NORMAL,
@@ -610,7 +628,7 @@ class NotificationEngine:
             NotificationType.REVENUE_ALERT: NotificationTemplate(
                 template_id="revenue_alert",
                 type=NotificationType.REVENUE_ALERT,
-                title_template="💰 Revenue Alert",
+                title_template=" Revenue Alert",
                 message_template="Revenue update for '{content_title}': ${amount} from {platform}",
                 channels=[NotificationChannel.EMAIL, NotificationChannel.PUSH],
                 priority=NotificationPriority.NORMAL,
@@ -799,6 +817,9 @@ class NotificationEngine:
     
     def _render_template(self, template: str, data: Dict[str, Any]) -> str:
         """Render notification template with data."""
+
+
+
         try:
             # Simple template rendering (could use Jinja2 for more complex templates)
             result = template

@@ -10,7 +10,7 @@ Contact: mlaiel@live.de
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
       Microservices Architect + Audio Processing Expert + DevOps Engineer + IA Prompt Engineer
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE PROHIBITED ⚠️
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE PROHIBITED 
 Copyright (C) 2024 Fahed Mlaiel. All rights reserved.
 For licensing inquiries: mlaiel@live.de
 """
@@ -184,6 +184,9 @@ class RedisMetrics:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert metrics to dictionary"""
+
+
+
         return {
             'performance': {
                 'hit_rate': self.hit_rate,
@@ -322,6 +325,9 @@ class RedisCache:
     
     async def connect(self):
         """Establish Redis connection with enterprise features"""
+
+
+
         try:
             # SSL context setup
             ssl_context = None
@@ -367,6 +373,9 @@ class RedisCache:
     
     async def _configure_redis_optimization(self):
         """Configure Redis for optimal performance"""
+
+
+
         try:
             if self.config.enable_memory_optimization:
                 # Set memory policy
@@ -796,6 +805,9 @@ class RedisCache:
                                    profile_data: Dict[str, Any],
                                    ttl: Optional[int] = None) -> bool:
         """Cache creator profile with optimized settings"""
+
+
+
         return await self.set(
             key=f"profile:{creator_id}",
             value=profile_data,
@@ -806,6 +818,9 @@ class RedisCache:
     
     async def get_creator_profile(self, creator_id: str) -> Optional[Dict[str, Any]]:
         """Get cached creator profile"""
+
+
+
         return await self.get(
             key=f"profile:{creator_id}",
             content_type="creator_profile",
@@ -819,6 +834,9 @@ class RedisCache:
                                     creator_id: str,
                                     ttl: Optional[int] = None) -> bool:
         """Cache content metadata (audio, video, image, text)"""
+
+
+
         return await self.set(
             key=f"content:{content_id}:metadata",
             value=metadata,
@@ -832,6 +850,9 @@ class RedisCache:
                                   content_type: str,
                                   creator_id: str) -> Optional[Dict[str, Any]]:
         """Get cached content metadata"""
+
+
+
         return await self.get(
             key=f"content:{content_id}:metadata",
             content_type=f"{content_type}_content",
@@ -844,6 +865,9 @@ class RedisCache:
                                   creator_id: str,
                                   ttl: Optional[int] = None) -> bool:
         """Cache analytics data with short TTL"""
+
+
+
         return await self.set(
             key=f"analytics:{analytics_id}",
             value=analytics_data,
@@ -856,6 +880,9 @@ class RedisCache:
                                 analytics_id: str,
                                 creator_id: str) -> Optional[Dict[str, Any]]:
         """Get cached analytics data"""
+
+
+
         return await self.get(
             key=f"analytics:{analytics_id}",
             content_type="analytics",
@@ -868,6 +895,9 @@ class RedisCache:
                                 creator_id: str,
                                 ttl: Optional[int] = None) -> bool:
         """Cache revenue tracking data"""
+
+
+
         return await self.set(
             key=f"revenue:{revenue_id}",
             value=revenue_data,
@@ -880,6 +910,9 @@ class RedisCache:
                               revenue_id: str,
                               creator_id: str) -> Optional[Dict[str, Any]]:
         """Get cached revenue data"""
+
+
+
         return await self.get(
             key=f"revenue:{revenue_id}",
             content_type="revenue",
@@ -921,6 +954,9 @@ class RedisCache:
                                   creator_id: str,
                                   ttl: Optional[int] = None) -> bool:
         """Cache AI fingerprint for content protection"""
+
+
+
         return await self.set(
             key=f"fingerprint:{content_type}:{fingerprint_id}",
             value=fingerprint_data,
@@ -934,6 +970,9 @@ class RedisCache:
                                 content_type: str,
                                 creator_id: str) -> Optional[Dict[str, Any]]:
         """Get cached AI fingerprint"""
+
+
+
         return await self.get(
             key=f"fingerprint:{content_type}:{fingerprint_id}",
             content_type="fingerprint",
@@ -1192,6 +1231,9 @@ class RedisCache:
     
     async def health_check(self) -> Dict[str, Any]:
         """Comprehensive health check for monitoring"""
+
+
+
         try:
             if not self._redis:
                 await self.connect()
@@ -1241,6 +1283,9 @@ class RedisCache:
     
     async def close(self):
         """Close Redis connection gracefully"""
+
+
+
         try:
             if self._redis:
                 await self._redis.close()
@@ -1267,6 +1312,9 @@ class RedisClusterCache(RedisCache):
     
     async def connect(self):
         """Establish Redis Cluster connection with enterprise features"""
+
+
+
         try:
             cluster_kwargs = {
                 'startup_nodes': self.startup_nodes,
@@ -1307,6 +1355,9 @@ class RedisClusterCache(RedisCache):
     
     async def _configure_cluster_optimization(self):
         """Configure Redis Cluster for optimal performance"""
+
+
+
         try:
             # Apply optimization settings to all cluster nodes
             cluster_info = await self._cluster.cluster_info()
@@ -1433,6 +1484,9 @@ class RedisClusterCache(RedisCache):
     
     async def close(self):
         """Close Redis Cluster connection gracefully"""
+
+
+
         try:
             if self._cluster:
                 await self._cluster.close()

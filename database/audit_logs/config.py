@@ -17,7 +17,7 @@ Enterprise Features:
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Team: Multi-Expert Lead AI Developer & Security Audit Specialist
 
-⚠️ ULTRA-STRONG INTELLECTUAL PROPERTY WARNING ⚠️
+ ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 
 This revolutionary audit configuration system is the EXCLUSIVE property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
@@ -406,6 +406,9 @@ class AuditLogsConfig:
         Returns:
             AuditLogsConfig: Configuration instance
         """
+
+
+
         return cls(
             service_name=os.getenv("AUDIT_SERVICE_NAME", "ia_influencer_agent"),
             environment=os.getenv("ENVIRONMENT", "production"),
@@ -422,6 +425,9 @@ class AuditLogsConfig:
         Returns:
             Dict[str, Any]: Configuration as dictionary
         """
+
+
+
         return {
             "service_name": self.service_name,
             "environment": self.environment,

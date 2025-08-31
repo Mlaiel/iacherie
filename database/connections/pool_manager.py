@@ -211,6 +211,9 @@ class ConnectionPoolManager:
     
     async def _scale_pool_up(self, db_type: str, config: PoolConfig) -> None:
         """Scale up connection pool"""
+
+
+
         try:
             handler = self.handlers[db_type]
             stats = self.pool_stats[db_type]
@@ -231,6 +234,9 @@ class ConnectionPoolManager:
     
     async def _scale_pool_down(self, db_type: str, config: PoolConfig) -> None:
         """Scale down connection pool"""
+
+
+
         try:
             handler = self.handlers[db_type]
             stats = self.pool_stats[db_type]
@@ -282,6 +288,9 @@ class ConnectionPoolManager:
     
     def get_pool_config(self, db_type: str) -> Optional[PoolConfig]:
         """Get pool configuration for database type"""
+
+
+
         return self.pool_configs.get(db_type)
     
     def set_pool_config(self, db_type: str, config: PoolConfig) -> None:
@@ -370,6 +379,9 @@ class ConnectionPoolManager:
     
     def _calculate_efficiency_score(self, stats: Dict[str, Any], trends: Dict[str, Any]) -> float:
         """Calculate pool efficiency score (0-100)"""
+
+
+
         try:
             avg_usage = trends.get("average_load", 0.0)
             peak_usage = trends.get("peak_load", 0.0)

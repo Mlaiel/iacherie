@@ -8,7 +8,7 @@ musicians, influencers, content creators, and creative industry professionals.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
@@ -94,6 +94,9 @@ class LinkingResult:
     @property
     def is_linked(self) -> bool:
         """Check if entity was successfully linked"""
+
+
+
         return self.linked_entity is not None and self.confidence > ConfidenceLevel.LOW.value
 
 
@@ -150,6 +153,9 @@ class EntityLinker(BaseService):
         
     async def initialize(self):
         """Initialize comprehensive entity linking system with advanced capabilities"""
+
+
+
         try:
             self.logger.info("Initializing advanced EntityLinker system...")
             
@@ -194,6 +200,9 @@ class EntityLinker(BaseService):
     
     async def _load_advanced_transformers(self):
         """Load multiple sentence transformer models for different use cases"""
+
+
+
         try:
             # Primary model for general semantic similarity
             self.primary_transformer = SentenceTransformer('all-MiniLM-L6-v2')
@@ -349,6 +358,9 @@ class EntityLinker(BaseService):
     
     async def _load_knowledge_base(self, kb_name: str, kb_config: Dict[str, Any]):
         """Load individual knowledge base from file or API"""
+
+
+
         try:
             # Try to load from local file first
             if os.path.exists(kb_config['path']):
@@ -404,6 +416,9 @@ class EntityLinker(BaseService):
     
     async def _load_optimized_vector_indexes(self):
         """Load high-performance FAISS vector indexes for entity embeddings"""
+
+
+
         try:
             self.vector_indexes = {}
             
@@ -434,6 +449,9 @@ class EntityLinker(BaseService):
     
     async def _create_vector_index(self, kb_name: str, kb_config: Dict[str, Any]):
         """Create FAISS vector index for knowledge base"""
+
+
+
         try:
             entities = kb_config['entities']
             if not entities:
@@ -527,6 +545,9 @@ class EntityLinker(BaseService):
     
     async def _setup_api_authentication(self):
         """Setup authentication for external APIs"""
+
+
+
         try:
             # Spotify authentication
             if self.external_apis['spotify']['enabled']:
@@ -539,6 +560,9 @@ class EntityLinker(BaseService):
     
     async def _authenticate_spotify(self):
         """Authenticate with Spotify API"""
+
+
+
         try:
             import base64
             
@@ -608,6 +632,9 @@ class EntityLinker(BaseService):
     
     async def _load_knowledge_base(self, name: str, config: Dict[str, Any]):
         """Load a specific knowledge base"""
+
+
+
         try:
             # Try to load from file
             import os
@@ -686,6 +713,9 @@ class EntityLinker(BaseService):
     
     def _process_knowledge_base_entity(self, entity_id: str, entity_data: Dict[str, Any], config: Dict[str, Any]) -> EntityCandidate:
         """Process and normalize knowledge base entity"""
+
+
+
         return EntityCandidate(
             entity_id=entity_id,
             canonical_name=entity_data.get('name', entity_id),
@@ -700,6 +730,9 @@ class EntityLinker(BaseService):
     
     async def _load_vector_indexes(self):
         """Load FAISS vector indexes for fast similarity search"""
+
+
+
         try:
             # Initialize vector indexes for each knowledge base
             for kb_name, kb_data in self.knowledge_bases.items():
@@ -710,6 +743,9 @@ class EntityLinker(BaseService):
     
     async def _build_vector_index(self, kb_name: str, kb_data: Dict[str, Any]):
         """Build FAISS vector index for a knowledge base"""
+
+
+
         try:
             if not self.sentence_transformer:
                 return
@@ -785,6 +821,9 @@ class EntityLinker(BaseService):
     
     async def _load_knowledge_graph(self):
         """Load knowledge graph for relationship-based linking"""
+
+
+
         try:
             # Build knowledge graph from all knowledge bases
             for kb_name, kb_data in self.knowledge_bases.items():
@@ -809,6 +848,9 @@ class EntityLinker(BaseService):
     
     async def _load_linking_cache(self):
         """Load cached linking results"""
+
+
+
         try:
             cache_path = '/cache/entity_linking.json'
             import os
@@ -1334,10 +1376,16 @@ class EntityLinker(BaseService):
     
     def _score_exact_match(self, text1: str, text2: str) -> float:
         """Score exact match between two texts"""
+
+
+
         return 1.0 if text1.lower() == text2.lower() else 0.0
     
     def _score_fuzzy_match(self, text1: str, text2: str) -> float:
         """Score fuzzy match between two texts"""
+
+
+
         return fuzz.ratio(text1.lower(), text2.lower()) / 100.0
     
     async def _score_semantic_match(self, text1: str, text2: str) -> float:
@@ -1454,6 +1502,9 @@ class EntityLinker(BaseService):
     
     def _serialize_linking_result(self, result: LinkingResult) -> Dict[str, Any]:
         """Serialize linking result for caching"""
+
+
+
         return {
             'linked_entity': result.linked_entity.__dict__ if result.linked_entity else None,
             'confidence': result.confidence,
@@ -1517,6 +1568,9 @@ class EntityLinker(BaseService):
     
     async def save_linking_cache(self):
         """Save linking cache to disk"""
+
+
+
         try:
             cache_path = '/cache/entity_linking.json'
             with open(cache_path, 'w') as f:
@@ -1528,6 +1582,9 @@ class EntityLinker(BaseService):
     
     async def get_linking_statistics(self) -> Dict[str, Any]:
         """Get entity linking statistics"""
+
+
+
         return {
             **self.linking_stats,
             'knowledge_bases': {
@@ -1547,6 +1604,9 @@ class EntityLinker(BaseService):
     
     async def health_check(self) -> Dict[str, Any]:
         """Health check for entity linking service"""
+
+
+
         return {
             'status': 'healthy',
             'knowledge_bases_loaded': len(self.knowledge_bases),

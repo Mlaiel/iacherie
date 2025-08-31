@@ -8,7 +8,7 @@ protection and monetization platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -315,6 +315,9 @@ class ArchivalManager:
     
     def get_policy(self, policy_id: str) -> Optional[ArchivalPolicy]:
         """Get archival policy by ID"""
+
+
+
         return self.policies.get(policy_id)
     
     def find_applicable_policy(
@@ -521,6 +524,9 @@ class ArchivalManager:
         decompress: bool = True
     ) -> Optional[bytes]:
         """Retrieve archived content"""
+
+
+
         
         try:
             self.logger.info(f"Retrieving archived content {archive_id}")
@@ -552,6 +558,9 @@ class ArchivalManager:
     
     async def delete_archive(self, archive_id: str, force: bool = False) -> bool:
         """Delete archived content"""
+
+
+
         
         try:
             # Check retention policy
@@ -583,6 +592,9 @@ class ArchivalManager:
         policy_override: bool = False
     ) -> bool:
         """Migrate archive to different storage tier"""
+
+
+
         
         try:
             self.logger.info(f"Migrating archive {archive_id} to tier {target_tier.value}")
@@ -758,6 +770,9 @@ class ArchivalManager:
     
     async def _recompress_archive(self, archive_id: str) -> bool:
         """Re-compress archive with improved algorithm"""
+
+
+
         
         try:
             # Retrieve original data

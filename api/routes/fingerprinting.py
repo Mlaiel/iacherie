@@ -116,6 +116,9 @@ async def upload_file_for_fingerprinting(
     user: dict = Depends(get_current_user)
 ):
     """Upload a file for fingerprinting analysis"""
+
+
+
     try:
         # Validate file type
         allowed_types = {
@@ -186,6 +189,9 @@ async def create_fingerprint(
     user: dict = Depends(get_current_user)
 ):
     """Create fingerprint for uploaded content"""
+
+
+
     try:
         start_time = datetime.utcnow()
         
@@ -296,6 +302,9 @@ async def search_similar_content(
     user: dict = Depends(get_current_user)
 ):
     """Search for similar content using fingerprint data"""
+
+
+
     try:
         # Search in vector database
         matches = await vector_engine.find_similar(
@@ -347,6 +356,9 @@ async def batch_fingerprint(
     user: dict = Depends(get_current_user)
 ):
     """Create fingerprints for multiple files in batch"""
+
+
+
     try:
         batch_id = str(uuid.uuid4())
         
@@ -415,6 +427,9 @@ async def get_fingerprint_status(
     user: dict = Depends(get_current_user)
 ):
     """Get fingerprint processing status"""
+
+
+
     try:
         async with database_manager.get_postgres_session() as session:
             result = await session.execute("""
@@ -454,6 +469,9 @@ async def delete_fingerprint(
     user: dict = Depends(get_current_user)
 ):
     """Delete a fingerprint"""
+
+
+
     try:
         async with database_manager.get_postgres_session() as session:
             # Verify ownership
@@ -493,6 +511,9 @@ async def delete_fingerprint(
 
 async def _process_batch_fingerprints(batch_id: str, tasks: List[FingerprintRequest], user: dict):
     """Background task to process batch fingerprints"""
+
+
+
     try:
         completed = 0
         total = len(tasks)

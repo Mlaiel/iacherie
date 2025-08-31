@@ -1,12 +1,12 @@
 """
-🌐 Network Configuration Manager - IA-Influencer-Agent
+ Network Configuration Manager - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Network Engineer + DevOps Senior + Security Architect
 Date: 2025-08-24
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -213,6 +213,9 @@ class NetworkConfigManager:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             # Load default network configuration
             await self._load_default_configuration()
@@ -581,6 +584,9 @@ class NetworkConfigManager:
     
     async def _check_service_health(self, service_name: str, endpoint: ServiceEndpoint) -> None:
         """Check health of a service"""
+
+
+
         try:
             # Simulate health check
             self.service_health[service_name] = {
@@ -635,6 +641,9 @@ class NetworkConfigManager:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             self.service_registry[endpoint.name] = endpoint
             
@@ -671,6 +680,9 @@ class NetworkConfigManager:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             if service_name not in self.service_registry:
                 raise ValueError(f"Service not found: {service_name}")
@@ -715,6 +727,9 @@ class NetworkConfigManager:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             self.network_config.firewall_rules.append(rule)
             
@@ -738,6 +753,9 @@ class NetworkConfigManager:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             # Find and remove rule
             for i, rule in enumerate(self.network_config.firewall_rules):
@@ -782,6 +800,9 @@ class NetworkConfigManager:
     
     async def get_network_status(self) -> Dict[str, Any]:
         """Get comprehensive network status"""
+
+
+
         return {
             "topology": self.network_config.topology.value,
             "service_discovery": self.network_config.service_discovery.value,
@@ -813,6 +834,9 @@ class NetworkConfigManager:
     
     async def get_traffic_report(self) -> Dict[str, Any]:
         """Get network traffic report"""
+
+
+
         return {
             "timestamp": datetime.now(),
             "metrics": self.traffic_metrics,
@@ -823,4 +847,7 @@ class NetworkConfigManager:
     
     async def get_status(self) -> Dict[str, Any]:
         """Get network manager status"""
+
+
+
         return await self.get_network_status()

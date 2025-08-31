@@ -7,7 +7,7 @@ Ensures model integrity, prevents adversarial attacks, and validates model safet
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  STRICT LEGAL WARNING ⚠️
+  STRICT LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Contact: mlaiel@live.de
@@ -167,6 +167,9 @@ class ModelSecurityValidator:
     
     async def _validate_model_integrity(self, model: torch.nn.Module, model_path: str) -> float:
         """Validate model file integrity and structure"""
+
+
+
         try:
             # Check file existence and basic properties
             model_file = Path(model_path)
@@ -200,6 +203,9 @@ class ModelSecurityValidator:
     
     async def _validate_io_security(self, model: torch.nn.Module, metadata: Dict[str, Any]) -> float:
         """Validate input/output security and sanitization"""
+
+
+
         try:
             security_score = 0.7  # Base score
             
@@ -225,6 +231,9 @@ class ModelSecurityValidator:
     
     async def _test_adversarial_robustness(self, model: torch.nn.Module, metadata: Dict[str, Any]) -> float:
         """Test model robustness against adversarial attacks"""
+
+
+
         try:
             # Simplified adversarial testing
             robustness_score = 0.6  # Base score
@@ -265,6 +274,9 @@ class ModelSecurityValidator:
     
     async def _detect_model_poisoning(self, model: torch.nn.Module, metadata: Dict[str, Any]) -> float:
         """Detect potential model poisoning attacks"""
+
+
+
         try:
             poisoning_resistance = 0.7  # Base score
             
@@ -299,6 +311,9 @@ class ModelSecurityValidator:
     
     async def _assess_bias_fairness(self, model: torch.nn.Module, metadata: Dict[str, Any]) -> float:
         """Assess model bias and fairness"""
+
+
+
         try:
             bias_score = 0.6  # Base score
             
@@ -327,6 +342,9 @@ class ModelSecurityValidator:
     
     async def _validate_privacy_compliance(self, model: torch.nn.Module, metadata: Dict[str, Any]) -> float:
         """Validate privacy compliance (GDPR, etc.)"""
+
+
+
         try:
             privacy_score = 0.7  # Base score
             
@@ -475,6 +493,9 @@ class AdversarialDefense:
     
     async def apply_input_preprocessing(self, input_data: torch.Tensor, technique: str = "gaussian_noise") -> torch.Tensor:
         """Apply input preprocessing defense"""
+
+
+
         try:
             if technique == "gaussian_noise":
                 noise = torch.randn_like(input_data) * 0.01
@@ -490,6 +511,9 @@ class AdversarialDefense:
     
     async def detect_adversarial_input(self, input_data: torch.Tensor, model: torch.nn.Module) -> Dict[str, Any]:
         """Detect potential adversarial inputs"""
+
+
+
         try:
             detection_results = {
                 'is_adversarial': False,
@@ -540,6 +564,9 @@ class ModelIntegrityChecker:
     
     async def verify_model_integrity(self, model_path: str, expected_checksum: Optional[str] = None) -> Dict[str, Any]:
         """Comprehensive model integrity verification"""
+
+
+
         try:
             integrity_results = {
                 'checksum_valid': False,
@@ -605,6 +632,9 @@ class ModelIntegrityChecker:
     
     def _validate_parameters(self, parameters: Dict[str, torch.Tensor]) -> bool:
         """Validate model parameters for anomalies"""
+
+
+
         try:
             for name, param in parameters.items():
                 # Check for NaN or infinite values

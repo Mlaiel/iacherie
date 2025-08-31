@@ -1,4 +1,4 @@
-"""🎵 Audio Synthesis Engine - Professional AI-Powered Audio Generation System
+""" Audio Synthesis Engine - Professional AI-Powered Audio Generation System
 
 This module provides comprehensive AI-driven audio synthesis, generation, and creation
 capabilities for the IA Influencer Agent platform.
@@ -17,7 +17,7 @@ Expert Development Team:
 - DevOps Engineer: Containerization and GPU orchestration
 - IA Prompt Engineer: Natural language to audio interfaces
 
-⚠️ LEGAL WARNING & COPYRIGHT PROTECTION
+ LEGAL WARNING & COPYRIGHT PROTECTION
 =====================================
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 ANY unauthorized use, copying, modification, distribution, or commercialization

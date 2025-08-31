@@ -58,6 +58,9 @@ class SessionController:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             # Convert session to dictionary for storage
             session_data = self._serialize_session(session)
@@ -96,6 +99,9 @@ class SessionController:
         Returns:
             ChatSession object or None if not found
         """
+
+
+
         try:
             # Try cache first
             session_data = await self._get_from_cache(session_id)
@@ -134,6 +140,9 @@ class SessionController:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             # Update timestamp
             session.updated_at = datetime.utcnow()
@@ -155,6 +164,9 @@ class SessionController:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             # Get session first to get user_id
             session_data = await self._get_from_database(session_id)
@@ -201,6 +213,9 @@ class SessionController:
         Returns:
             List of session summaries
         """
+
+
+
         try:
             # Get session IDs from user index
             session_ids = await self._get_user_session_ids(user_id)
@@ -248,6 +263,9 @@ class SessionController:
         Returns:
             int: Number of sessions cleaned up
         """
+
+
+
         try:
             current_time = datetime.utcnow()
             cleanup_count = 0
@@ -281,6 +299,9 @@ class SessionController:
         Returns:
             Dict with various statistics
         """
+
+
+
         try:
             stats = {
                 "total_active_sessions": await self._count_active_sessions(),
@@ -311,6 +332,9 @@ class SessionController:
         Returns:
             bool: Access granted status
         """
+
+
+
         try:
             session_data = await self._get_from_cache(session_id)
             if not session_data:
@@ -328,6 +352,9 @@ class SessionController:
     
     def _serialize_session(self, session: Any) -> Dict[str, Any]:
         """Convert session object to dictionary for storage"""
+
+
+
         try:
             # Convert session object to dictionary
             if hasattr(session, '__dict__'):
@@ -349,6 +376,9 @@ class SessionController:
     
     def _deserialize_session(self, session_data: Dict[str, Any]) -> Any:
         """Convert dictionary back to session object"""
+
+
+
         try:
             # Import here to avoid circular imports
             from .chat_manager import ChatSession, ChatStatus, CreatorType
@@ -377,6 +407,9 @@ class SessionController:
     
     async def _save_to_database(self, session_id: str, session_data: Dict[str, Any]) -> bool:
         """Save session to database"""
+
+
+
         try:
             query = """
                 INSERT INTO chat_sessions (
@@ -417,6 +450,9 @@ class SessionController:
     
     async def _get_from_database(self, session_id: str) -> Optional[Dict[str, Any]]:
         """Retrieve session from database"""
+
+
+
         try:
             query = """
                 SELECT session_id, user_id, creator_type, status, context,
@@ -444,6 +480,9 @@ class SessionController:
     
     async def _delete_from_database(self, session_id: str) -> bool:
         """Delete session from database"""
+
+
+
         try:
             query = "DELETE FROM chat_sessions WHERE session_id = %(session_id)s"
             await self.db.execute_query(query, {"session_id": session_id})
@@ -455,6 +494,9 @@ class SessionController:
     
     async def _save_to_cache(self, session_id: str, session_data: Dict[str, Any]) -> bool:
         """Save session to cache"""
+
+
+
         try:
             cache_key = f"chat_session:{session_id}"
             serialized_data = pickle.dumps(session_data)
@@ -467,6 +509,9 @@ class SessionController:
     
     async def _get_from_cache(self, session_id: str) -> Optional[Dict[str, Any]]:
         """Retrieve session from cache"""
+
+
+
         try:
             cache_key = f"chat_session:{session_id}"
             cached_data = await self.cache.get(cache_key)
@@ -482,6 +527,9 @@ class SessionController:
     
     async def _delete_from_cache(self, session_id: str) -> bool:
         """Delete session from cache"""
+
+
+
         try:
             cache_key = f"chat_session:{session_id}"
             await self.cache.delete(cache_key)
@@ -493,6 +541,9 @@ class SessionController:
     
     async def _update_user_session_index(self, user_id: str, session_id: str):
         """Update user session index for quick lookup"""
+
+
+
         try:
             cache_key = f"user_sessions:{user_id}"
             existing_sessions = await self.cache.get(cache_key) or []
@@ -513,6 +564,9 @@ class SessionController:
     
     async def _remove_from_user_session_index(self, user_id: str, session_id: str):
         """Remove session from user index"""
+
+
+
         try:
             cache_key = f"user_sessions:{user_id}"
             existing_sessions = await self.cache.get(cache_key) or []
@@ -530,6 +584,9 @@ class SessionController:
     
     async def _get_user_session_ids(self, user_id: str) -> List[str]:
         """Get session IDs for user"""
+
+
+
         try:
             cache_key = f"user_sessions:{user_id}"
             cached_sessions = await self.cache.get(cache_key)
@@ -562,6 +619,9 @@ class SessionController:
     
     async def _get_expired_sessions(self, current_time: datetime) -> List[Dict[str, Any]]:
         """Get expired sessions from database"""
+
+
+
         try:
             query = """
                 SELECT session_id, user_id FROM chat_sessions
@@ -579,6 +639,9 @@ class SessionController:
     
     async def _count_active_sessions(self) -> int:
         """Count active sessions"""
+
+
+
         try:
             query = "SELECT COUNT(*) as count FROM chat_sessions WHERE status = 'active'"
             result = await self.db.fetch_one(query)
@@ -590,6 +653,9 @@ class SessionController:
     
     async def _count_sessions_by_creator_type(self) -> Dict[str, int]:
         """Count sessions by creator type"""
+
+
+
         try:
             query = """
                 SELECT creator_type, COUNT(*) as count 
@@ -607,6 +673,9 @@ class SessionController:
     
     async def _calculate_average_session_duration(self) -> float:
         """Calculate average session duration in minutes"""
+
+
+
         try:
             query = """
                 SELECT AVG(EXTRACT(EPOCH FROM (updated_at - created_at))/60) as avg_duration

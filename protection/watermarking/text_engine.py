@@ -6,7 +6,7 @@ Developed by: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Senior Backend + ML Engineer + DBA + Security Expert + 
                Microservices Architect + Audio Engineer + DevOps + AI Prompt Engineer
 
-⚠️ INTELLECTUAL PROPERTY WARNING:
+ INTELLECTUAL PROPERTY WARNING:
 This text watermarking engine, concept, and all associated code are the exclusive intellectual 
 property of Fahed Mlaiel. Any unauthorized use, copying, modification, or distribution 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly 
@@ -106,6 +106,9 @@ class InvisibleCharacterEncoder:
     
     async def encode_bits(self, bits: List[int], base_radix: int = 5) -> str:
         """Encode bits using invisible characters"""
+
+
+
         try:
             encoded = ""
             
@@ -132,6 +135,9 @@ class InvisibleCharacterEncoder:
     
     async def decode_bits(self, encoded_text: str) -> List[int]:
         """Decode bits from invisible characters"""
+
+
+
         try:
             bits = []
             
@@ -186,6 +192,9 @@ class SemanticProcessor:
     
     async def get_synonyms(self, word: str, pos: str, similarity_threshold: float = 0.8) -> List[str]:
         """Get semantically similar synonyms for a word"""
+
+
+
         try:
             cache_key = f"{word}_{pos}_{similarity_threshold}"
             if cache_key in self.synonym_cache:
@@ -228,6 +237,9 @@ class SemanticProcessor:
     
     async def analyze_text_structure(self, text: str) -> Dict[str, Any]:
         """Analyze text structure for watermarking opportunities"""
+
+
+
         try:
             # Tokenization
             sentences = sent_tokenize(text)
@@ -283,6 +295,9 @@ class SemanticProcessor:
     
     async def _calculate_readability(self, text: str) -> Dict[str, float]:
         """Calculate readability metrics"""
+
+
+
         try:
             sentences = sent_tokenize(text)
             words = word_tokenize(text)
@@ -507,6 +522,9 @@ class TextWatermarkEngine:
     
     async def _embed_semantic_substitution(self, text: str, watermark_bits: List[int]) -> Tuple[str, Dict[str, Any]]:
         """Embed watermark using semantic substitution"""
+
+
+
         try:
             if not TEXT_NLP_AVAILABLE:
                 raise ValueError("NLP libraries not available for semantic substitution")
@@ -596,6 +614,9 @@ class TextWatermarkEngine:
     
     async def _embed_invisible_characters(self, text: str, watermark_bits: List[int]) -> Tuple[str, Dict[str, Any]]:
         """Embed watermark using invisible Unicode characters"""
+
+
+
         try:
             # Encode watermark bits to invisible characters
             invisible_sequence = await self.invisible_encoder.encode_bits(watermark_bits)
@@ -650,6 +671,9 @@ class TextWatermarkEngine:
     
     async def _embed_syntactic_transformation(self, text: str, watermark_bits: List[int]) -> Tuple[str, Dict[str, Any]]:
         """Embed watermark using syntactic transformations"""
+
+
+
         try:
             sentences = sent_tokenize(text)
             transformed_sentences = []
@@ -701,6 +725,9 @@ class TextWatermarkEngine:
     
     async def _embed_whitespace_encoding(self, text: str, watermark_bits: List[int]) -> Tuple[str, Dict[str, Any]]:
         """Embed watermark using whitespace patterns"""
+
+
+
         try:
             # Use different whitespace patterns to encode bits
             # 0 = single space, 1 = double space
@@ -749,6 +776,9 @@ class TextWatermarkEngine:
     
     async def _embed_unicode_homoglyphs(self, text: str, watermark_bits: List[int]) -> Tuple[str, Dict[str, Any]]:
         """Embed watermark using Unicode homoglyphs"""
+
+
+
         try:
             # Define homoglyph mappings (visually similar characters)
             homoglyphs = {
@@ -809,6 +839,9 @@ class TextWatermarkEngine:
     
     async def _detect_invisible_characters(self, text: str) -> Tuple[List[int], float]:
         """Detect invisible character watermarks"""
+
+
+
         try:
             # Extract invisible characters
             invisible_chars = []
@@ -833,6 +866,9 @@ class TextWatermarkEngine:
     
     async def _detect_whitespace_encoding(self, text: str) -> Tuple[List[int], float]:
         """Detect whitespace pattern watermarks"""
+
+
+
         try:
             lines = text.split('\n')
             extracted_bits = []
@@ -871,6 +907,9 @@ class TextWatermarkEngine:
     
     async def _detect_semantic_substitution(self, watermarked_text: str, original_text: str) -> Tuple[List[int], float]:
         """Detect semantic substitution watermarks by comparing with original"""
+
+
+
         try:
             if not TEXT_NLP_AVAILABLE:
                 return [], 0.0
@@ -918,6 +957,9 @@ class TextWatermarkEngine:
     
     async def _are_semantically_related(self, word1: str, word2: str) -> bool:
         """Check if two words are semantically related"""
+
+
+
         try:
             # Simple check using WordNet
             synsets1 = wordnet.synsets(word1)
@@ -936,6 +978,9 @@ class TextWatermarkEngine:
     
     async def _apply_syntactic_transformation(self, sentence: str) -> Tuple[str, Optional[str]]:
         """Apply syntactic transformation to sentence"""
+
+
+
         try:
             # Simple transformations - can be expanded
             transformations = [
@@ -1022,6 +1067,9 @@ class TextWatermarkEngine:
                                       original_analysis: Dict[str, Any],
                                       watermarked_analysis: Dict[str, Any]) -> Dict[str, float]:
         """Calculate quality preservation metrics"""
+
+
+
         try:
             metrics = {}
             
@@ -1085,6 +1133,9 @@ class TextWatermarkEngine:
         Returns:
             Dictionary with capacity analysis
         """
+
+
+
         try:
             analysis = await self.semantic_processor.analyze_text_structure(text)
             
@@ -1162,6 +1213,9 @@ class TextWatermarkEngine:
         Returns:
             Dictionary with integrity verification results
         """
+
+
+
         try:
             # Attempt extraction
             extracted_data, confidence, detection_info = await self.detect_watermark(
@@ -1312,6 +1366,9 @@ async def create_text_watermark_engine(config: Optional[TextWatermarkConfig] = N
         Embeds watermark using linguistic transformations
         Modifies sentence structure while preserving meaning
         """
+
+
+
         try:
             data_bits = self._data_to_bits(watermark_data)
             sentences = sent_tokenize(text)
@@ -1407,6 +1464,9 @@ async def create_text_watermark_engine(config: Optional[TextWatermarkConfig] = N
         Embeds completely invisible watermark using zero-width characters and Unicode variants
         Undetectable to human readers but recoverable by algorithms
         """
+
+
+
         try:
             data_bits = self._data_to_bits(watermark_data)
             
@@ -1545,6 +1605,9 @@ async def create_text_watermark_engine(config: Optional[TextWatermarkConfig] = N
         Detects and extracts watermark from text
         Supports multiple detection strategies
         """
+
+
+
         try:
             detections = []
             
@@ -1610,6 +1673,9 @@ async def create_text_watermark_engine(config: Optional[TextWatermarkConfig] = N
         semantic_distance: float
     ) -> List[str]:
         """Gets semantically similar words using WordNet"""
+
+
+
         try:
             if not TEXT_NLP_AVAILABLE:
                 return []
@@ -1654,6 +1720,9 @@ async def create_text_watermark_engine(config: Optional[TextWatermarkConfig] = N
     
     def _reconstruct_text(self, words: List[str], original_text: str) -> str:
         """Reconstructs text maintaining original formatting"""
+
+
+
         try:
             # Simple reconstruction - could be improved with better formatting preservation
             return ' '.join(words)
@@ -1662,6 +1731,9 @@ async def create_text_watermark_engine(config: Optional[TextWatermarkConfig] = N
     
     async def _calculate_semantic_similarity(self, text1: str, text2: str) -> float:
         """Calculates semantic similarity between texts"""
+
+
+
         try:
             # Simplified similarity - could use more advanced NLP models
             words1 = set(word_tokenize(text1.lower())) if TEXT_NLP_AVAILABLE else set(text1.lower().split())
@@ -1676,6 +1748,9 @@ async def create_text_watermark_engine(config: Optional[TextWatermarkConfig] = N
     
     async def _calculate_readability(self, text: str) -> float:
         """Calculates readability score"""
+
+
+
         try:
             # Simplified readability score
             sentences = sent_tokenize(text) if TEXT_NLP_AVAILABLE else text.split('.')
@@ -1773,6 +1848,9 @@ async def create_text_watermark_engine(config: Optional[TextWatermarkConfig] = N
         reference: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
         """Detects invisible watermarks"""
+
+
+
         try:
             # Look for zero-width characters
             zero_width_chars = ['\u200B', '\u200C', '\u200D', '\uFEFF']

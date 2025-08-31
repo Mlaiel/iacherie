@@ -7,7 +7,7 @@ Provides intelligent content analysis and format detection capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -173,6 +173,9 @@ class MultimediaDecoder:
     
     def _initialize_format_mappings(self) -> Dict[str, ContentType]:
         """Initialize format to content type mappings"""
+
+
+
         return {
             # Video formats
             'mp4': ContentType.VIDEO,
@@ -208,6 +211,9 @@ class MultimediaDecoder:
     
     def _initialize_magic_bytes(self) -> Dict[bytes, DecodingFormat]:
         """Initialize magic bytes for format detection"""
+
+
+
         return {
             # Video formats
             b'\x00\x00\x00\x18ftypmp4': DecodingFormat.MP4,
@@ -356,6 +362,9 @@ class MultimediaDecoder:
         source: Union[str, bytes, BinaryIO]
     ) -> Optional[Tuple[DecodingFormat, ContentType]]:
         """Detect content format and type"""
+
+
+
         try:
             # Get first few bytes for magic byte detection
             if isinstance(source, str):
@@ -581,6 +590,9 @@ class MultimediaDecoder:
         options: DecodingOptions
     ) -> Optional[str]:
         """Extract audio track from video content"""
+
+
+
         try:
             if content.content_type == ContentType.VIDEO:
                 audio_path = f"/tmp/audio_{content.content_id}.wav"

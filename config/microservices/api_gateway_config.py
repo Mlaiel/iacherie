@@ -245,6 +245,9 @@ class APIGatewayConfig(BaseSettings):
         
     def get_global_rate_limit_config(self) -> RateLimitConfig:
         """Get global rate limiting configuration."""
+
+
+
         return RateLimitConfig(
             requests=self.default_rate_limit_requests,
             window=self.default_rate_limit_window,
@@ -255,6 +258,9 @@ class APIGatewayConfig(BaseSettings):
     
     def get_global_cache_config(self) -> CacheConfig:
         """Get global cache configuration."""
+
+
+
         return CacheConfig(
             ttl=self.default_cache_ttl,
             redis_host=self.cache_redis_host,
@@ -264,6 +270,9 @@ class APIGatewayConfig(BaseSettings):
     
     def get_global_cors_config(self) -> CORSConfig:
         """Get global CORS configuration."""
+
+
+
         return CORSConfig(
             allowed_origins=self.cors_allowed_origins,
             allowed_methods=self.cors_allowed_methods,
@@ -272,6 +281,9 @@ class APIGatewayConfig(BaseSettings):
     
     def get_security_config(self) -> SecurityConfig:
         """Get security configuration."""
+
+
+
         return SecurityConfig(
             jwt_secret=self.jwt_secret_key,
             jwt_algorithm=self.jwt_algorithm,

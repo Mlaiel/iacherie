@@ -551,6 +551,9 @@ class RevenueTrackingService:
         end_date: datetime
     ) -> Dict[str, Decimal]:
         """Calculate revenue breakdown by source"""
+
+
+
         return await self.revenue_repo.get_revenue_by_source(
             creator_id=creator_id,
             start_date=start_date,
@@ -564,6 +567,9 @@ class RevenueTrackingService:
         end_date: datetime
     ) -> Dict[str, Decimal]:
         """Calculate revenue breakdown by country"""
+
+
+
         return await self.revenue_repo.get_revenue_by_country(
             creator_id=creator_id,
             start_date=start_date,
@@ -941,6 +947,9 @@ class PaymentProcessingService:
         """
         Process a payment transaction with comprehensive validation and fraud detection
         """
+
+
+
         try:
             # Validate input parameters
             if not self.validator.validate_amount(amount, currency):
@@ -1038,6 +1047,9 @@ class PaymentProcessingService:
         """
         Process a payment refund
         """
+
+
+
         try:
             # Get original transaction
             transaction = await self.transaction_repo.get_by_id(transaction_id)
@@ -1130,6 +1142,9 @@ class RevenueTrackingService:
         """
         Track revenue from external platforms (YouTube, Instagram, Spotify, etc.)
         """
+
+
+
         try:
             # Calculate fees and net revenue
             platform_fee = self.calculator.calculate_platform_fee(gross_revenue, revenue_source)
@@ -1182,6 +1197,9 @@ class RevenueTrackingService:
         """
         Generate comprehensive revenue report for a user
         """
+
+
+
         try:
             revenues = await self.revenue_repo.get_by_user_period(
                 user_id=user_id,
@@ -1252,6 +1270,9 @@ class AutomatedPayoutService:
         """
         Schedule automated payouts for eligible users
         """
+
+
+
         try:
             # Get users eligible for payouts
             eligible_users = await self._get_eligible_users(frequency)
@@ -1295,6 +1316,9 @@ class AutomatedPayoutService:
         """
         Process all scheduled payouts
         """
+
+
+
         try:
             # Get scheduled payouts
             scheduled_payouts = await self.payout_repo.get_scheduled()
@@ -1359,6 +1383,9 @@ class FinancialAnalyticsService:
         """
         Generate comprehensive financial insights and analytics
         """
+
+
+
         try:
             insights = {
                 "revenue_metrics": await self._calculate_revenue_metrics(user_id, period_start, period_end),
@@ -1418,6 +1445,9 @@ class PaymentSecurityService:
         """
         Comprehensive payment security validation
         """
+
+
+
         try:
             # Fraud detection
             fraud_score = await self.fraud_detector.calculate_risk_score(
@@ -1502,6 +1532,9 @@ class MultiCurrencyService:
         """
         Convert currency with real-time rates
         """
+
+
+
         try:
             rate = await self.currency_converter.get_exchange_rate(
                 from_currency, to_currency, rate_date
@@ -1628,6 +1661,9 @@ class PaymentTransactionService:
         """
         Create a new payment transaction with validation and fraud detection
         """
+
+
+
         try:
             # Validate transaction data
             await self._validate_transaction(transaction_data)
@@ -1683,6 +1719,9 @@ class PaymentTransactionService:
         processor_response: Dict[str, Any]
     ) -> bool:
         """Process a transaction with external processor response"""
+
+
+
         try:
             transaction = self.transaction_repo.get_transaction_by_id(transaction_id)
             if not transaction:
@@ -1719,6 +1758,9 @@ class PaymentTransactionService:
         reason: Optional[str] = None
     ) -> Dict[str, Any]:
         """Process a transaction refund"""
+
+
+
         try:
             original_transaction = self.transaction_repo.get_transaction_by_id(transaction_id)
             if not original_transaction:
@@ -1810,6 +1852,9 @@ class PaymentMethodService:
         encrypted_data: Dict[str, str]
     ) -> Dict[str, Any]:
         """Add a new payment method with encryption"""
+
+
+
         try:
             # Encrypt sensitive data
             encrypted_details = await self.encryption_service.encrypt_payment_data(
@@ -1854,6 +1899,9 @@ class PaymentMethodService:
         verification_data: Dict[str, Any]
     ) -> bool:
         """Verify a payment method with provider"""
+
+
+
         try:
             # Implementation would integrate with payment provider APIs
             # For now, return mock verification
@@ -1887,6 +1935,9 @@ class BillingService:
         billing_frequency: str
     ) -> Dict[str, Any]:
         """Create a new billing cycle"""
+
+
+
         try:
             # Calculate billing period
             period_start = datetime.utcnow()
@@ -1950,6 +2001,9 @@ class PayoutService:
         payout_data: AutomatedPayoutCreateSchema
     ) -> Dict[str, Any]:
         """Schedule an automated payout"""
+
+
+
         try:
             # Validate payout eligibility
             await self._validate_payout_eligibility(payout_data)
@@ -1987,6 +2041,9 @@ class PayoutService:
     
     async def process_pending_payouts(self) -> List[Dict[str, Any]]:
         """Process all pending payouts"""
+
+
+
         try:
             pending_payouts = self.payout_repo.get_pending_payouts()
             results = []

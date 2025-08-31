@@ -24,13 +24,13 @@ def check_file_exists(file_path):
         'path': str(file_path),
         'exists': exists,
         'size': size,
-        'status': '✅ EXISTS' if exists else '❌ MISSING'
+        'status': ' EXISTS' if exists else ' MISSING'
     }
 
 def validate_implementation():
     """Validate all major implementation components"""
     
-    print("🔍 VALIDATION COMPLÈTE - IMPLÉMENTATION AINFLUE")
+    print(" VALIDATION COMPLÈTE - IMPLÉMENTATION AINFLUE")
     print("=" * 60)
     
     # Files to validate based on checklist claims
@@ -84,7 +84,7 @@ def validate_implementation():
     existing_files = 0
     
     for category, files in validation_targets.items():
-        print(f"\n📂 {category}")
+        print(f"\n {category}")
         print("-" * 40)
         
         category_results = []
@@ -97,30 +97,30 @@ def validate_implementation():
             
             print(f"{result['status']} {file_path}")
             if result['exists'] and result['size'] > 0:
-                print(f"    📏 Size: {result['size']} bytes")
+                print(f"     Size: {result['size']} bytes")
         
         results[category] = category_results
     
     # Summary statistics
     print("\n" + "=" * 60)
-    print("📊 RÉSUMÉ FINAL")
+    print(" RÉSUMÉ FINAL")
     print("=" * 60)
     
     completion_rate = (existing_files / total_files) * 100 if total_files > 0 else 0
     
-    print(f"✅ Fichiers existants: {existing_files}/{total_files}")
-    print(f"📈 Taux de complétion: {completion_rate:.1f}%")
+    print(f" Fichiers existants: {existing_files}/{total_files}")
+    print(f" Taux de complétion: {completion_rate:.1f}%")
     
     if completion_rate >= 95:
-        print("🎉 VERDICT: IMPLÉMENTATION COMPLÈTE!")
-        print("✨ Tous les modules principaux sont implémentés")
-        print("🚀 Prêt pour tests d'intégration et déploiement")
+        print(" VERDICT: IMPLÉMENTATION COMPLÈTE!")
+        print(" Tous les modules principaux sont implémentés")
+        print(" Prêt pour tests d'intégration et déploiement")
     elif completion_rate >= 80:
         print("🟡 VERDICT: IMPLÉMENTATION QUASI-COMPLÈTE")
-        print("⚠️  Quelques fichiers mineurs manquants")
+        print("  Quelques fichiers mineurs manquants")
     else:
-        print("🔴 VERDICT: IMPLÉMENTATION INCOMPLÈTE")
-        print("❌ Développement supplémentaire requis")
+        print(" VERDICT: IMPLÉMENTATION INCOMPLÈTE")
+        print(" Développement supplémentaire requis")
     
     # Save detailed results
     with open('validation_results.json', 'w') as f:
@@ -134,7 +134,7 @@ def validate_implementation():
             'details': results
         }, f, indent=2)
     
-    print(f"\n📄 Rapport détaillé sauvegardé: validation_results.json")
+    print(f"\n Rapport détaillé sauvegardé: validation_results.json")
     
     return completion_rate >= 95
 

@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-⚠️  AVERTISSEMENT STRICT ⚠️
+  AVERTISSEMENT STRICT 
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Propriété intellectuelle de Fahed Mlaiel (mlaiel@live.de).
 """
@@ -240,6 +240,9 @@ class SlowQueryDetector:
     
     async def _capture_slow_queries(self) -> None:
         """Capture slow queries from database"""
+
+
+
         try:
             async with get_database_session() as session:
                 # Get slow queries from pg_stat_activity
@@ -278,6 +281,9 @@ class SlowQueryDetector:
     
     async def _process_slow_query_row(self, row) -> None:
         """Process a single slow query row"""
+
+
+
         try:
             # Clean and normalize query
             original_query = row.query[:self.max_query_length] if row.query else ""
@@ -326,6 +332,9 @@ class SlowQueryDetector:
     
     async def _capture_from_pg_stat_statements(self, session: AsyncSession) -> None:
         """Capture slow queries from pg_stat_statements"""
+
+
+
         try:
             # Check if pg_stat_statements is available
             result = await session.execute(text("""
@@ -369,6 +378,9 @@ class SlowQueryDetector:
     
     async def _process_pg_stat_statements_row(self, row) -> None:
         """Process row from pg_stat_statements"""
+
+
+
         try:
             original_query = row.query[:self.max_query_length] if row.query else ""
             normalized_query = self._normalize_query(original_query)
@@ -430,10 +442,16 @@ class SlowQueryDetector:
     
     def _generate_query_id(self, normalized_query: str) -> str:
         """Generate unique ID for query pattern"""
+
+
+
         return hashlib.md5(normalized_query.encode()).hexdigest()[:16]
     
     async def _analyze_query_patterns(self) -> None:
         """Analyze slow query patterns and trends"""
+
+
+
         try:
             # Group slow queries by pattern
             pattern_groups = defaultdict(list)
@@ -469,6 +487,9 @@ class SlowQueryDetector:
         queries: List[SlowQueryInstance]
     ) -> Optional[SlowQueryPattern]:
         """Create query pattern from slow query instances"""
+
+
+
         try:
             if not queries:
                 return None
@@ -696,6 +717,9 @@ class SlowQueryDetector:
     
     async def _generate_optimization_suggestions(self) -> None:
         """Generate optimization suggestions for slow query patterns"""
+
+
+
         try:
             for pattern_id, pattern in self.query_patterns.items():
                 if pattern.optimization_priority >= 5:  # Only high-priority patterns
@@ -838,6 +862,9 @@ class SlowQueryDetector:
     
     async def get_slow_query_summary(self) -> Dict[str, Any]:
         """Get slow query detection summary"""
+
+
+
         try:
             cutoff_time = datetime.utcnow() - timedelta(hours=self.analysis_window_hours)
             recent_queries = [q for q in self.slow_queries if q.query_start >= cutoff_time]
@@ -873,6 +900,9 @@ class SlowQueryDetector:
         min_priority: int = 1
     ) -> List[Dict[str, Any]]:
         """Get slow query patterns sorted by priority"""
+
+
+
         try:
             # Filter and sort patterns
             filtered_patterns = [
@@ -901,6 +931,9 @@ class SlowQueryDetector:
     
     async def get_optimization_suggestions(self, pattern_id: str = None) -> List[Dict[str, Any]]:
         """Get optimization suggestions"""
+
+
+
         try:
             if pattern_id:
                 # Get suggestions for specific pattern
@@ -926,6 +959,9 @@ class SlowQueryDetector:
     
     async def get_recent_slow_queries(self, limit: int = 50) -> List[Dict[str, Any]]:
         """Get recent slow query instances"""
+
+
+
         try:
             recent_queries = list(self.slow_queries)[-limit:]
             return [q.to_dict() for q in reversed(recent_queries)]
@@ -935,6 +971,9 @@ class SlowQueryDetector:
     
     async def analyze_query_now(self, query: str) -> Dict[str, Any]:
         """Analyze a specific query immediately"""
+
+
+
         try:
             normalized = self._normalize_query(query)
             query_id = self._generate_query_id(normalized)

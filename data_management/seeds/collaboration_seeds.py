@@ -226,11 +226,11 @@ class CollaborationSeedsManager:
                 'details': results
             }
             
-            logger.info(f"✅ Collaboration seeds initialized successfully in {duration:.2f}s")
+            logger.info(f" Collaboration seeds initialized successfully in {duration:.2f}s")
             return summary
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize collaboration seeds: {str(e)}")
+            logger.error(f" Failed to initialize collaboration seeds: {str(e)}")
             raise
     
     async def _initialize_collaboration_types(self) -> Dict[str, Any]:

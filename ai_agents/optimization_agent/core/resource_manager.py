@@ -17,7 +17,7 @@ This comprehensive system manages:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This resource management technology and all associated algorithms are the exclusive
 intellectual property of Fahed Mlaiel. Unauthorized use, copying, distribution, or
 commercialization without explicit written permission is strictly prohibited.
@@ -523,6 +523,9 @@ class ResourceManager(BaseAgent):
 
     def _initialize_resource_pools(self):
         """Initialize system resource pools"""
+
+
+
         try:
             # CPU pool
             cpu_info = psutil.cpu_count()
@@ -634,6 +637,9 @@ class ResourceManager(BaseAgent):
 
     def _collect_system_metrics(self):
         """Collect comprehensive system metrics"""
+
+
+
         try:
             # CPU metrics
             cpu_percent = psutil.cpu_percent(interval=1)
@@ -689,6 +695,9 @@ class ResourceManager(BaseAgent):
 
     def _update_resource_pools(self):
         """Update resource pool states based on current metrics"""
+
+
+
         try:
             # Update CPU pool
             cpu_pool = self.resource_pools.get(ResourceType.CPU_CORES)
@@ -788,6 +797,9 @@ class ResourceManager(BaseAgent):
 
     def _update_prometheus_metrics(self):
         """Update Prometheus metrics"""
+
+
+
         try:
             self.cpu_utilization_gauge.set(self.current_metrics.cpu_utilization_percent)
             self.memory_utilization_gauge.set(self.current_metrics.memory_utilization_percent)
@@ -1109,6 +1121,9 @@ class ResourceManager(BaseAgent):
 
     async def optimize_allocation(self, parameters: Dict[str, Any]) -> Dict[str, Any]:
         """Optimize resource allocation based on parameters"""
+
+
+
         return {
             "optimization_type": "resource_allocation",
             "status": "completed",
@@ -1120,6 +1135,9 @@ class ResourceManager(BaseAgent):
 
     async def get_status(self) -> Dict[str, Any]:
         """Get resource manager status"""
+
+
+
         return {
             "status": "active",
             "resource_pools": len(self.resource_pools),
@@ -1132,6 +1150,9 @@ class ResourceManager(BaseAgent):
 
     async def health_check(self) -> Dict[str, Any]:
         """Comprehensive health check"""
+
+
+
         return {
             "overall_status": "ok",
             "monitoring_active": self._monitoring_active,
@@ -1310,6 +1331,9 @@ class ResourceManager:
 
     def _initialize_allocation_policies(self) -> Dict[str, Dict[str, Any]]:
         """Initialize resource allocation policies"""
+
+
+
         return {
             'high_priority_services': {
                 'cpu_allocation_percent': 40,
@@ -1345,6 +1369,9 @@ class ResourceManager:
         Returns:
             Allocation result with allocated resources
         """
+
+
+
         try:
             start_time = time.time()
             allocation_id = f"alloc_{service_name}_{int(start_time)}"
@@ -1415,6 +1442,9 @@ class ResourceManager:
 
     async def deallocate_resources(self, allocation_id: str) -> Dict[str, Any]:
         """Deallocate previously allocated resources"""
+
+
+
         try:
             deallocated_resources = {}
             
@@ -1445,6 +1475,9 @@ class ResourceManager:
 
     async def get_resource_usage(self) -> ResourceUsage:
         """Get current system resource usage"""
+
+
+
         try:
             # CPU metrics
             cpu_percent = psutil.cpu_percent(interval=1)
@@ -1492,6 +1525,9 @@ class ResourceManager:
 
     async def optimize_resource_allocation(self) -> Dict[str, Any]:
         """Optimize current resource allocations for better efficiency"""
+
+
+
         try:
             start_time = time.time()
             
@@ -1527,6 +1563,9 @@ class ResourceManager:
 
     async def predict_resource_needs(self, time_horizon_minutes: int = 60) -> Dict[ResourceType, ResourcePrediction]:
         """Predict future resource needs using machine learning"""
+
+
+
         try:
             predictions = {}
             
@@ -1646,6 +1685,9 @@ class AllocationOptimizer:
         Returns:
             Optimized allocation plan
         """
+
+
+
         try:
             # Select optimization algorithm based on problem size and goal
             algorithm = self._select_optimization_algorithm(

@@ -7,13 +7,13 @@ for ultra-advanced industrial-level testing.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 
-📋 TEST SUITE COVERAGE:
+ TEST SUITE COVERAGE:
 • Audience Development Agents (AudienceDevelopmentAgent, CommunityBuildingAgent, etc.)
 • Brand Consulting Agents (BrandConsultantAgent, PersonalBrandingAgent, etc.)
 • Collaboration Agents (CollaborationMatcherAgent, NetworkAnalysisAgent, etc.)
@@ -24,7 +24,7 @@ Any unauthorized use is strictly prohibited.
 • Trend Analysis Agents (TrendAnalysisAgent, MarketTrendAnalyzer, etc.)
 • Index Module (AgentFactory, AgentManager, system initialization)
 
-🔬 TESTING METHODOLOGIES:
+ TESTING METHODOLOGIES:
 • Unit Testing: Individual agent method testing
 • Integration Testing: Multi-agent workflow testing
 • Performance Testing: Scalability and speed testing
@@ -34,7 +34,7 @@ Any unauthorized use is strictly prohibited.
 • Data Validation: Input/output verification
 • Business Logic Testing: Real-world scenario simulation
 
-🏭 INDUSTRIAL STANDARDS:
+ INDUSTRIAL STANDARDS:
 • Zero tolerance for errors and warnings
 • 100% code coverage target
 • Realistic test data and scenarios
@@ -77,7 +77,7 @@ __quality_standard__ = "Industrial Grade - Zero Error Tolerance"
 # Legal protection
 __copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
 __license__ = "Proprietary - Unauthorized use strictly prohibited"
-__legal_warning__ = """⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+__legal_warning__ = """  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -173,7 +173,10 @@ class TestUtilities:
         follower_count: int = 50000,
         engagement_rate: float = 0.05
     ) -> Dict[str, Any]:
-        """Create a mock creator profile for testing"""        return {
+        """Create a mock creator profile for testing"""
+
+
+        return {
             "creator_id": creator_id,
             "profile": {
                 "username": f"@{creator_id}",
@@ -226,8 +229,8 @@ __all__ = [
 
 # Legal reminder for test execution
 logger.info(__legal_warning__)
-logger.info(f"🔒 This test suite is protected intellectual property of {__author__}")
-logger.info("🎯 Target: 100% test coverage, 0 errors, 0 warnings, industrial grade quality")
+logger.info(f" This test suite is protected intellectual property of {__author__}")
+logger.info(" Target: 100% test coverage, 0 errors, 0 warnings, industrial grade quality")
 
 # Test categories
 TEST_CATEGORIES = {
@@ -265,14 +268,14 @@ COPYRIGHT_INFO = {
     "email": "mlaiel@live.de",
     "year": "2025",
     "license": "Proprietary",
-    "warning": """    🚨 CRITICAL LEGAL NOTICE 🚨
+    "warning": """     CRITICAL LEGAL NOTICE 
     
     This code, concepts, architecture, and intellectual property are the EXCLUSIVE 
     property of Fahed Mlaiel <mlaiel@live.de>.
     
     COPYRIGHT © 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
     
-    ⚠️  UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+      UNAUTHORIZED USE STRICTLY PROHIBITED 
     
     Any attempt to copy, modify, distribute, steal concepts, or use any part of this 
     system without written permission will result in IMMEDIATE LEGAL ACTION.
@@ -289,13 +292,22 @@ __license__ = "Proprietary"
 
 # Test utilities and helpers
 def get_test_config():
-    """Get the test configuration"""    return TEST_CONFIG.copy()
+    """Get the test configuration"""
+
+
+    return TEST_CONFIG.copy()
 
 def get_expert_team_info():
-    """Get expert team information"""    return EXPERT_TEAM.copy()
+    """Get expert team information"""
+
+
+    return EXPERT_TEAM.copy()
 
 def get_copyright_info():
-    """Get copyright and legal information"""    return COPYRIGHT_INFO.copy()
+    """Get copyright and legal information"""
+
+
+    return COPYRIGHT_INFO.copy()
 
 def setup_test_environment():
     """Setup the test environment"""    # Create test directories if they don't exist

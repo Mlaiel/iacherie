@@ -1,11 +1,11 @@
 """
-🎵 Audio Transformation Engine - IA Influencer Agent Platform Enterprise
+ Audio Transformation Engine - IA Influencer Agent Platform Enterprise
 ======================================================================
 Module: backend/data_management/transformers/audio_transformer.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ======================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -119,6 +119,9 @@ class AudioAnalyzer:
     
     def analyze_audio_file(self, audio_path: str) -> AudioMetadata:
         """Analyse complète d'un fichier audio"""
+
+
+
         try:
             # Chargement audio avec librosa pour analyse
             y, sr = librosa.load(audio_path, sr=None)
@@ -230,6 +233,9 @@ class AudioEnhancer:
         intensity: float = 0.5
     ) -> np.ndarray:
         """Améliore la qualité audio avec IA"""
+
+
+
         
         try:
             enhanced = audio_data.copy()
@@ -301,6 +307,9 @@ class AudioEnhancer:
     
     def _reduce_noise(self, audio: np.ndarray, sr: int, intensity: float) -> np.ndarray:
         """Réduction de bruit avancée"""
+
+
+
         try:
             # Utilisation de noisereduce
             reduced = nr.reduce_noise(

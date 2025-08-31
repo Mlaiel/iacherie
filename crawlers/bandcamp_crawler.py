@@ -152,6 +152,9 @@ class BandcampCrawler(BaseCrawler):
         Authenticate with Bandcamp (optional for enhanced access)
         Note: Bandcamp doesn't have a traditional API, this is for web scraping enhancement
         """
+
+
+
         try:
             if username and password:
                 # Implement login session for enhanced access
@@ -327,6 +330,9 @@ class BandcampCrawler(BaseCrawler):
     
     async def get_album_tracks(self, album_url: str) -> List[BandcampTrack]:
         """Get all tracks from a specific album"""
+
+
+
         try:
             album = await self.get_album_details(album_url)
             if not album:
@@ -486,6 +492,9 @@ class BandcampCrawler(BaseCrawler):
         Returns:
             Comprehensive artist performance analysis
         """
+
+
+
         try:
             artist = await self.get_artist_details(artist_url)
             if not artist:
@@ -542,6 +551,9 @@ class BandcampCrawler(BaseCrawler):
         Returns:
             Comprehensive indie trend analysis
         """
+
+
+
         try:
             # Get trending data from different categories
             trending_digital = await self.get_trending_music(genre, "digital", time_period)
@@ -631,6 +643,9 @@ class BandcampCrawler(BaseCrawler):
     
     async def _parse_album_page(self, html: str, album_url: str) -> Optional[BandcampAlbum]:
         """Parse album page to extract detailed information"""
+
+
+
         try:
             soup = BeautifulSoup(html, 'html.parser')
             
@@ -716,6 +731,9 @@ class BandcampCrawler(BaseCrawler):
     
     async def _parse_artist_page(self, html: str, artist_url: str) -> Optional[BandcampArtist]:
         """Parse artist page to extract detailed information"""
+
+
+
         try:
             soup = BeautifulSoup(html, 'html.parser')
             
@@ -777,6 +795,9 @@ class BandcampCrawler(BaseCrawler):
     
     async def _parse_track_page(self, html: str, track_url: str) -> Optional[BandcampTrack]:
         """Parse track page to extract detailed information"""
+
+
+
         try:
             soup = BeautifulSoup(html, 'html.parser')
             
@@ -932,6 +953,9 @@ class BandcampCrawler(BaseCrawler):
     
     async def _parse_label_page(self, html: str, label_url: str) -> Optional[BandcampLabel]:
         """Parse label page to extract detailed information"""
+
+
+
         try:
             soup = BeautifulSoup(html, 'html.parser')
             
@@ -1064,6 +1088,9 @@ class BandcampCrawler(BaseCrawler):
     
     async def _analyze_pricing_strategy(self, discography: List[Dict]) -> Dict[str, Any]:
         """Analyze artist's pricing strategy"""
+
+
+
         return {
             "strategy": "varied",
             "avg_price": 0.0,
@@ -1072,6 +1099,9 @@ class BandcampCrawler(BaseCrawler):
     
     async def _analyze_format_diversity(self, discography: List[Dict]) -> Dict[str, Any]:
         """Analyze format diversity in artist's releases"""
+
+
+
         return {
             "digital_count": 0,
             "vinyl_count": 0,
@@ -1133,6 +1163,9 @@ class BandcampCrawler(BaseCrawler):
     
     async def _analyze_label_diversity(self, items: List[Dict]) -> Dict[str, Any]:
         """Analyze label diversity in trending items"""
+
+
+
         return {
             "independent_percentage": 85.0,  # Bandcamp is primarily independent
             "label_count": len(set(item.get('label', 'Independent') for item in items))
@@ -1140,6 +1173,9 @@ class BandcampCrawler(BaseCrawler):
     
     async def _analyze_fan_activity(self, items: List[Dict]) -> Dict[str, Any]:
         """Analyze fan-to-fan activity metrics"""
+
+
+
         return {
             "community_engagement": "high",
             "discovery_rate": "active",

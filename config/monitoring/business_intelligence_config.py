@@ -621,26 +621,44 @@ class BusinessIntelligenceConfig:
     
     def get_kpi(self, name: str) -> Optional[BusinessKPI]:
         """Get KPI by name"""
+
+
+
         return self._kpis.get(name)
     
     def get_report(self, name: str) -> Optional[BusinessReport]:
         """Get report by name"""
+
+
+
         return self._reports.get(name)
     
     def get_competitive_intelligence(self, competitor: str) -> Optional[CompetitiveIntelligence]:
         """Get competitive intelligence by competitor name"""
+
+
+
         return self._competitive_intelligence.get(competitor)
     
     def get_kpis_by_category(self, category: BusinessMetricCategory) -> List[BusinessKPI]:
         """Get KPIs by category"""
+
+
+
         return [kpi for kpi in self._kpis.values() if kpi.category == category]
     
     def get_kpis_by_owner(self, owner: str) -> List[BusinessKPI]:
         """Get KPIs by business owner"""
+
+
+
         return [kpi for kpi in self._kpis.values() if kpi.business_owner == owner]
     
     def export_configuration(self) -> Dict[str, Any]:
         """Export complete business intelligence configuration"""
+
+
+
         return {
             "metadata": {
                 "generated_at": datetime.utcnow().isoformat(),

@@ -12,7 +12,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL WARNING ⚠️
+  CRITICAL WARNING 
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
 Any unauthorized use, reproduction, distribution, or reverse engineering 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -200,6 +200,9 @@ class WhatsAppBusinessCrawler(PlatformCrawler):
         Returns:
             List of crawler results
         """
+
+
+
         try:
             await self._check_rate_limit()
             
@@ -223,6 +226,9 @@ class WhatsAppBusinessCrawler(PlatformCrawler):
     
     async def _crawl_messages(self, query: str, max_results: int, **kwargs) -> List[CrawlerResult]:
         """Crawl WhatsApp Business messages"""
+
+
+
         try:
             results = []
             
@@ -345,6 +351,9 @@ class WhatsAppBusinessCrawler(PlatformCrawler):
     
     async def _crawl_contacts(self, query: str, max_results: int, **kwargs) -> List[CrawlerResult]:
         """Crawl WhatsApp Business contacts"""
+
+
+
         try:
             results = []
             
@@ -420,6 +429,9 @@ class WhatsAppBusinessCrawler(PlatformCrawler):
     
     async def _crawl_templates(self, query: str, max_results: int, **kwargs) -> List[CrawlerResult]:
         """Crawl WhatsApp Business message templates"""
+
+
+
         try:
             results = []
             
@@ -537,6 +549,9 @@ class WhatsAppBusinessCrawler(PlatformCrawler):
     
     async def _crawl_media(self, query: str, max_results: int, **kwargs) -> List[CrawlerResult]:
         """Crawl WhatsApp Business media messages"""
+
+
+
         try:
             results = []
             
@@ -581,6 +596,9 @@ class WhatsAppBusinessCrawler(PlatformCrawler):
     
     async def _crawl_conversations(self, query: str, max_results: int, **kwargs) -> List[CrawlerResult]:
         """Crawl WhatsApp Business conversations (grouped by contact)"""
+
+
+
         try:
             results = []
             
@@ -629,6 +647,9 @@ class WhatsAppBusinessCrawler(PlatformCrawler):
     
     async def _crawl_analytics(self, query: str, max_results: int, **kwargs) -> List[CrawlerResult]:
         """Crawl WhatsApp Business analytics data"""
+
+
+
         try:
             results = []
             
@@ -697,6 +718,9 @@ class WhatsAppBusinessCrawler(PlatformCrawler):
     
     async def _crawl_webhooks(self, query: str, max_results: int, **kwargs) -> List[CrawlerResult]:
         """Crawl WhatsApp Business webhook events (simulation)"""
+
+
+
         try:
             results = []
             
@@ -761,6 +785,9 @@ class WhatsAppBusinessCrawler(PlatformCrawler):
     
     async def _parse_message_data(self, message_data: Dict[str, Any]) -> Optional[WhatsAppMessage]:
         """Parse message data from WhatsApp Business API"""
+
+
+
         try:
             # Extract basic message info
             message_id = message_data.get('id', '')
@@ -864,6 +891,9 @@ class WhatsAppBusinessCrawler(PlatformCrawler):
     
     async def _check_rate_limit(self):
         """Check and enforce rate limiting"""
+
+
+
         try:
             current_time = time.time()
             time_since_last = current_time - self.last_request_time
@@ -881,6 +911,9 @@ class WhatsAppBusinessCrawler(PlatformCrawler):
     
     async def download_media(self, media_id: str, output_path: str = None) -> Optional[str]:
         """Download media file from WhatsApp Business API"""
+
+
+
         try:
             # Get media URL
             url = f"{self.base_url}/{media_id}"
@@ -914,6 +947,9 @@ class WhatsAppBusinessCrawler(PlatformCrawler):
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
         """Extract metadata from WhatsApp Business content"""
+
+
+
         try:
             metadata = {
                 'platform': 'whatsapp_business',
@@ -950,6 +986,9 @@ class WhatsAppBusinessCrawler(PlatformCrawler):
     
     def get_platform_info(self) -> Dict[str, Any]:
         """Get WhatsApp Business platform information"""
+
+
+
         return {
             'platform_name': 'WhatsApp Business',
             'base_url': self.base_url,

@@ -1,5 +1,5 @@
 """
-🔍 Verification Engine - Advanced Backup Integrity System
+ Verification Engine - Advanced Backup Integrity System
 =========================================================
 Module: backend/data_management/backups/verification_engine.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Verification System - Enterprise Production-Ready
 Responsibility: Vérification intégrité et validation sauvegardes
 ===============================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -65,6 +65,9 @@ class IntegrityChecksum:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit en dictionnaire"""
+
+
+
         return {
             "file_path": self.file_path,
             "algorithm": self.algorithm.value,
@@ -77,6 +80,9 @@ class IntegrityChecksum:
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'IntegrityChecksum':
         """Crée depuis un dictionnaire"""
+
+
+
         return cls(
             file_path=data["file_path"],
             algorithm=HashAlgorithm(data["algorithm"]),
@@ -102,6 +108,9 @@ class VerificationResult:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit en dictionnaire"""
+
+
+
         return {
             "file_path": self.file_path,
             "is_valid": self.is_valid,
@@ -129,6 +138,9 @@ class VerificationConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit en dictionnaire"""
+
+
+
         return {
             "level": self.level.value,
             "algorithms": [a.value for a in self.algorithms],
@@ -447,6 +459,9 @@ class VerificationEngine:
     
     async def _verify_file_integrity(self, file_path: Path, result: VerificationResult):
         """Vérifie l'intégrité basique du fichier"""
+
+
+
         try:
             # Test de lecture
             with open(file_path, 'rb') as f:
@@ -472,6 +487,9 @@ class VerificationEngine:
     
     async def _verify_file_structure(self, file_path: Path, result: VerificationResult):
         """Vérifie la structure du fichier selon son type"""
+
+
+
         try:
             mime_type, _ = mimetypes.guess_type(str(file_path))
             
@@ -498,6 +516,9 @@ class VerificationEngine:
     
     async def _verify_image_structure(self, file_path: Path, result: VerificationResult):
         """Vérifie la structure d'un fichier image"""
+
+
+
         try:
             from PIL import Image
             
@@ -530,6 +551,9 @@ class VerificationEngine:
     
     async def _verify_audio_structure(self, file_path: Path, result: VerificationResult):
         """Vérifie la structure d'un fichier audio"""
+
+
+
         try:
             import mutagen
             
@@ -558,6 +582,9 @@ class VerificationEngine:
     
     async def _verify_video_structure(self, file_path: Path, result: VerificationResult):
         """Vérifie la structure d'un fichier vidéo"""
+
+
+
         try:
             # Vérification basique du header
             with open(file_path, 'rb') as f:
@@ -586,6 +613,9 @@ class VerificationEngine:
     
     async def _verify_text_structure(self, file_path: Path, result: VerificationResult):
         """Vérifie la structure d'un fichier texte"""
+
+
+
         try:
             # Détection encodage et validation
             with open(file_path, 'rb') as f:
@@ -623,6 +653,9 @@ class VerificationEngine:
     
     async def _verify_json_structure(self, file_path: Path, result: VerificationResult):
         """Vérifie la structure d'un fichier JSON"""
+
+
+
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
@@ -646,6 +679,9 @@ class VerificationEngine:
     
     async def _verify_file_content(self, file_path: Path, result: VerificationResult):
         """Vérification spécialisée du contenu"""
+
+
+
         try:
             mime_type, _ = mimetypes.guess_type(str(file_path))
             
@@ -659,6 +695,9 @@ class VerificationEngine:
     
     async def _verify_image_content(self, file_path: Path, result: VerificationResult):
         """Vérification contenu image"""
+
+
+
         try:
             from PIL import Image
             
@@ -681,6 +720,9 @@ class VerificationEngine:
     
     async def _verify_audio_content(self, file_path: Path, result: VerificationResult):
         """Vérification contenu audio"""
+
+
+
         try:
             # Vérification silence/corruption audio basique
             file_size = file_path.stat().st_size
@@ -700,6 +742,9 @@ class VerificationEngine:
     
     async def _deep_scan_file(self, file_path: Path, result: VerificationResult):
         """Scan profond pour détecter corruptions subtiles"""
+
+
+
         try:
             file_size = file_path.stat().st_size
             sample_size = min(file_size, 1024 * 1024)  # 1MB max
@@ -745,6 +790,9 @@ class VerificationEngine:
     
     async def _additional_tests(self, file_path: Path, result: VerificationResult):
         """Tests supplémentaires pour vérification paranoïaque"""
+
+
+
         try:
             # Test accès concurrent
             try:
@@ -942,6 +990,9 @@ class VerificationEngine:
         Returns:
             List[VerificationResult]: Vérifications récentes
         """
+
+
+
         return sorted(
             self.verification_history,
             key=lambda x: x.verified_at,
@@ -977,6 +1028,9 @@ class IntegrityDatabase:
     
     def get_checksums(self, file_path: str) -> Optional[List[IntegrityChecksum]]:
         """Récupère les checksums d'un fichier"""
+
+
+
         return self.checksums.get(file_path)
     
     def store_verification_result(self, result: VerificationResult):
@@ -991,6 +1045,9 @@ class IntegrityDatabase:
     
     def load_database(self):
         """Charge la base de données depuis le disque"""
+
+
+
         try:
             if self.db_path.exists():
                 with open(self.db_path, 'r') as f:
@@ -1009,6 +1066,9 @@ class IntegrityDatabase:
     
     def save_database(self):
         """Sauvegarde la base de données sur disque"""
+
+
+
         try:
             data = {
                 "checksums": {

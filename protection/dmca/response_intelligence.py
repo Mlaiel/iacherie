@@ -1,5 +1,5 @@
 """
-📊 DMCA Response Intelligence System  
+ DMCA Response Intelligence System  
 ====================================
 
 Advanced response tracking and analytics engine for DMCA compliance monitoring.
@@ -9,7 +9,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
-⚠️  LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
+  LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION 
 ====================================================
 This software and all associated concepts, algorithms, and implementations are the
 exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de).
@@ -190,6 +190,9 @@ class ResponseIntelligenceEngine:
     
     def _initialize_platform_patterns(self) -> Dict[PlatformType, Dict[str, Any]]:
         """Initialize platform-specific response patterns and timeframes"""
+
+
+
         return {
             PlatformType.YOUTUBE: {
                 'typical_response_time': timedelta(hours=24),
@@ -243,6 +246,9 @@ class ResponseIntelligenceEngine:
     
     def _initialize_response_parsers(self) -> Dict[str, Dict[str, Any]]:
         """Initialize automated response parsing rules"""
+
+
+
         return {
             'compliance_keywords': [
                 'removed', 'taken down', 'deleted', 'blocked', 'disabled',

@@ -1,11 +1,11 @@
 """
-📊 Analytics Transformation Engine - IA Influencer Agent Platform Enterprise
+ Analytics Transformation Engine - IA Influencer Agent Platform Enterprise
 ==========================================================================
 Module: backend/data_management/transformers/analytics_transformer.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ==========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -152,6 +152,9 @@ class ContentQualityAnalyzer:
         config: AnalyticsConfig
     ) -> Dict[str, Any]:
         """Analyse la qualité audio avancée"""
+
+
+
         
         try:
             # Chargement audio
@@ -195,6 +198,9 @@ class ContentQualityAnalyzer:
         config: AnalyticsConfig
     ) -> Dict[str, Any]:
         """Analyse la qualité image avancée"""
+
+
+
         
         try:
             # Chargement image
@@ -239,6 +245,9 @@ class ContentQualityAnalyzer:
         config: AnalyticsConfig
     ) -> Dict[str, Any]:
         """Analyse la qualité textuelle avancée"""
+
+
+
         
         try:
             # Métriques de base
@@ -376,6 +385,9 @@ class ContentQualityAnalyzer:
     
     def _calculate_harmonic_ratio(self, audio: np.ndarray, sr: int) -> float:
         """Calcule le ratio harmonique/percussif"""
+
+
+
         try:
             harmonic, percussive = librosa.effects.hpss(audio)
             
@@ -513,6 +525,9 @@ class ContentQualityAnalyzer:
     
     def _detect_faces_quality(self, image_path: str) -> Dict[str, Any]:
         """Détecte et analyse la qualité des visages"""
+
+
+
         
         try:
             # Chargement avec face_recognition
@@ -784,6 +799,9 @@ class PerformanceAnalyzer:
         config: AnalyticsConfig
     ) -> Dict[str, Any]:
         """Analyse les métriques d'engagement"""
+
+
+
         
         try:
             results = {}
@@ -1236,6 +1254,9 @@ class AnalyticsTransformer:
         output_path: Path
     ) -> Optional[Path]:
         """Crée un dashboard de qualité"""
+
+
+
         
         try:
             fig, axes = plt.subplots(2, 2, figsize=(12, 10))
@@ -1299,6 +1320,9 @@ class AnalyticsTransformer:
         output_path: Path
     ) -> Optional[Path]:
         """Crée des graphiques de performance"""
+
+
+
         
         try:
             # Placeholder pour les graphiques de performance

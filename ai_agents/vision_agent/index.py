@@ -8,7 +8,7 @@ Fournit une interface unifiée et simplifiée pour tous les composants vision.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL CRITIQUE:
+  AVERTISSEMENT LÉGAL CRITIQUE:
 Ce code et cette conception architecturale sont la propriété intellectuelle exclusive de Fahed Mlaiel.
 L'utilisation, la copie, la distribution ou la commercialisation non autorisées sont strictement interdites.
 Contact: mlaiel@live.de pour les demandes de licence.
@@ -79,6 +79,9 @@ class VisionResponse:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertir la réponse en dictionnaire"""
+
+
+
         return {
             'content_id': self.content_id,
             'success': self.success,
@@ -128,6 +131,9 @@ class VisionAgentIndex:
         Returns:
             True si l'initialisation est réussie, False sinon
         """
+
+
+
         try:
             logger.info("Initialisation du système Vision Agent...")
             
@@ -137,10 +143,10 @@ class VisionAgentIndex:
             
             if success:
                 self.is_initialized = True
-                logger.info("✅ Système Vision Agent initialisé avec succès")
+                logger.info(" Système Vision Agent initialisé avec succès")
                 return True
             else:
-                logger.error("❌ Échec de l'initialisation du système Vision Agent")
+                logger.error(" Échec de l'initialisation du système Vision Agent")
                 return False
                 
         except Exception as e:
@@ -351,6 +357,9 @@ class VisionAgentIndex:
     
     def get_capabilities(self) -> Dict[str, Any]:
         """Obtenir les capacités du système"""
+
+
+
         return {
             'supported_formats': {
                 'image': ['jpg', 'jpeg', 'png', 'bmp', 'tiff', 'webp', 'gif'],
@@ -373,6 +382,9 @@ class VisionAgentIndex:
     
     def get_statistics(self) -> Dict[str, Any]:
         """Obtenir les statistiques d'utilisation"""
+
+
+
         return self.stats.copy()
     
     def get_health_status(self) -> Dict[str, Any]:
@@ -397,6 +409,9 @@ class VisionAgentIndex:
     
     async def cleanup(self) -> None:
         """Nettoyer les ressources"""
+
+
+
         try:
             if self.orchestrator:
                 await self.orchestrator.cleanup()
@@ -473,6 +488,9 @@ async def quick_analyze_video(file_path: str) -> Dict[str, Any]:
 # Fonctions de convenance pour l'API
 def create_vision_index(config: Optional[VisionAgentConfig] = None) -> VisionAgentIndex:
     """Créer une nouvelle instance de Vision Agent Index"""
+
+
+
     return VisionAgentIndex(config)
 
 
@@ -495,5 +513,5 @@ __all__ = [
 
 # Logging d'initialisation
 logger.info(f"Vision Agent Index v{__version__} chargé")
-logger.info("✅ Point d'entrée principal prêt")
-logger.info("⚠️  Code propriétaire - Fahed Mlaiel - Tous droits réservés")
+logger.info(" Point d'entrée principal prêt")
+logger.info("  Code propriétaire - Fahed Mlaiel - Tous droits réservés")

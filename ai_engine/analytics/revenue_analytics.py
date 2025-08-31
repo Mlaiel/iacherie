@@ -3,7 +3,7 @@ Revenue Analytics - Advanced Monetization and Revenue Analysis
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED 
 This software is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, reproduction, distribution, or modification is strictly 
 prohibited and will result in severe legal consequences.
@@ -219,6 +219,9 @@ class RevenueAnalyticsEngine:
     
     def add_revenue_transaction(self, transaction: RevenueTransaction) -> bool:
         """Add a revenue transaction for tracking"""
+
+
+
         try:
             # Validate transaction
             if not self._validate_transaction(transaction):
@@ -378,6 +381,9 @@ class RevenueAnalyticsEngine:
         timeframe: timedelta
     ):
         """Calculate revenue growth metrics"""
+
+
+
         try:
             # Get previous period for comparison
             previous_period_transactions = self._get_transactions_for_period(
@@ -447,6 +453,9 @@ class RevenueAnalyticsEngine:
         timeframe: timedelta
     ):
         """Calculate performance-related revenue metrics"""
+
+
+
         try:
             # Simulate getting engagement and view data
             total_views = await self._get_creator_views(creator_id, timeframe)
@@ -482,6 +491,9 @@ class RevenueAnalyticsEngine:
         transactions: List[RevenueTransaction]
     ):
         """Generate revenue forecasts and trends"""
+
+
+
         try:
             if len(transactions) < self.min_transactions_for_trend:
                 metrics.projected_monthly_revenue = metrics.net_revenue
@@ -698,6 +710,9 @@ class RevenueAnalyticsEngine:
         timeframe: Optional[timedelta] = None
     ) -> RevenueReport:
         """Generate comprehensive revenue report"""
+
+
+
         try:
             if not timeframe:
                 timeframe = timedelta(days=30)
@@ -864,6 +879,9 @@ class RevenueAnalyticsEngine:
     
     def _calculate_diversification_score(self, metrics: RevenueMetrics) -> float:
         """Calculate revenue diversification score (0-100)"""
+
+
+
         try:
             if not metrics.revenue_by_source or metrics.net_revenue == 0:
                 return 0.0
@@ -893,6 +911,9 @@ class RevenueAnalyticsEngine:
     
     async def _get_creator_views(self, creator_id: str, timeframe: timedelta) -> int:
         """Simulate getting creator's total views"""
+
+
+
         return hash(creator_id) % 50000 + 10000
     
     async def _get_creator_engagements(self, creator_id: str, timeframe: timedelta) -> int:
@@ -913,14 +934,23 @@ class RevenueAnalyticsEngine:
     
     async def _get_creator_audience_size(self, creator_id: str) -> int:
         """Simulate getting creator's audience size"""
+
+
+
         return hash(creator_id + 'audience') % 100000 + 5000
     
     async def _get_creator_engagement_rate(self, creator_id: str) -> float:
         """Simulate getting creator's engagement rate"""
+
+
+
         return (hash(creator_id + 'engagement') % 10) + 1  # 1-10%
     
     async def _get_industry_benchmarks(self, creator_id: str) -> Dict[str, float]:
         """Simulate industry benchmarking data"""
+
+
+
         return {
             'average_revenue_per_creator': 1500.0,
             'median_engagement_rate': 3.2,
@@ -930,6 +960,9 @@ class RevenueAnalyticsEngine:
     
     async def _get_peer_benchmarks(self, creator_id: str) -> Dict[str, float]:
         """Simulate peer comparison data"""
+
+
+
         return {
             'peer_average_revenue': 1800.0,
             'peer_median_engagement': 4.1,
@@ -962,6 +995,9 @@ class RevenueAnalyticsEngine:
         timeframe: Optional[timedelta] = None
     ) -> Dict[str, Any]:
         """Export revenue data in specified format"""
+
+
+
         try:
             if not timeframe:
                 timeframe = timedelta(days=90)  # 3 months default

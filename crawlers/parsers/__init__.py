@@ -6,7 +6,7 @@ Enterprise-grade parsers module with comprehensive content analysis capabilities
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
@@ -356,7 +356,10 @@ __all__ = [
 
 # Module information
 def get_module_info():
-    """Get comprehensive module information"""    return {
+    """Get comprehensive module information"""
+
+
+    return {
         "name": "IA-Influencer-Agent Parsers Module",
         "version": __version__,
         "author": __author__,
@@ -392,10 +395,16 @@ def get_module_info():
 
 # Quick access functions
 def get_available_parsers():
-    """Get list of all available parsers"""    return [name for name in __all__ if name.endswith("Parser") or name.endswith("Engine")]
+    """Get list of all available parsers"""
+
+
+    return [name for name in __all__ if name.endswith("Parser") or name.endswith("Engine")]
 
 def get_ai_features():
-    """Get list of AI-powered features"""    return [
+    """Get list of AI-powered features"""
+
+
+    return [
         "SemanticContentParser",
         "EconomicIntelligenceEngine",
         "ContentProtectionSurveillanceEngine", 
@@ -405,8 +414,8 @@ def get_ai_features():
     ]
 
 # Module initialization message
-print("🚀 IA-Influencer-Agent Parsers Module - Ultra-Advanced AI-Powered Content Analysis System")
-print(f"📧 Author: {__author__} <{__email__}>")
-print(f"⚖️ {__copyright__}")
-print("⚠️ PROPRIETARY SOFTWARE - Unauthorized use strictly prohibited")
-print(f"✅ Module loaded with {len(__all__)} components")
+print(" IA-Influencer-Agent Parsers Module - Ultra-Advanced AI-Powered Content Analysis System")
+print(f" Author: {__author__} <{__email__}>")
+print(f" {__copyright__}")
+print(" PROPRIETARY SOFTWARE - Unauthorized use strictly prohibited")
+print(f" Module loaded with {len(__all__)} components")

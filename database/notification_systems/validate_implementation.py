@@ -39,7 +39,7 @@ def validate_notification_systems_implementation():
         Dict avec le rapport de validation complet
     """
     
-    print("🔍 VALIDATION DE L'IMPLÉMENTATION NOTIFICATION SYSTEMS")
+    print(" VALIDATION DE L'IMPLÉMENTATION NOTIFICATION SYSTEMS")
     print("=" * 60)
     print(f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"Validateur: Fahed Mlaiel <mlaiel@live.de>")
@@ -60,7 +60,7 @@ def validate_notification_systems_implementation():
     
     try:
         # 1. Vérification des fichiers nouveaux gestionnaires
-        print("1️⃣ VÉRIFICATION NOUVEAUX GESTIONNAIRES")
+        print("1⃣ VÉRIFICATION NOUVEAUX GESTIONNAIRES")
         print("-" * 40)
         
         new_managers_check = validate_new_managers()
@@ -70,7 +70,7 @@ def validate_notification_systems_implementation():
         print_check_result("Nouveaux Gestionnaires", new_managers_check["passed"])
         
         # 2. Vérification du schema de base de données
-        print("2️⃣ VÉRIFICATION SCHEMA BASE DE DONNÉES")
+        print("2⃣ VÉRIFICATION SCHEMA BASE DE DONNÉES")
         print("-" * 40)
         
         schema_check = validate_database_schema()
@@ -80,7 +80,7 @@ def validate_notification_systems_implementation():
         print_check_result("Schema Base de Données", schema_check["passed"])
         
         # 3. Vérification de l'intégration orchestrateur
-        print("3️⃣ VÉRIFICATION INTÉGRATION ORCHESTRATEUR")
+        print("3⃣ VÉRIFICATION INTÉGRATION ORCHESTRATEUR")
         print("-" * 40)
         
         integration_check = validate_orchestrator_integration()
@@ -90,7 +90,7 @@ def validate_notification_systems_implementation():
         print_check_result("Intégration Orchestrateur", integration_check["passed"])
         
         # 4. Vérification de la logique métier
-        print("4️⃣ VÉRIFICATION LOGIQUE MÉTIER")
+        print("4⃣ VÉRIFICATION LOGIQUE MÉTIER")
         print("-" * 40)
         
         business_logic_check = validate_business_logic()
@@ -100,7 +100,7 @@ def validate_notification_systems_implementation():
         print_check_result("Logique Métier", business_logic_check["passed"])
         
         # 5. Validation des exports et __init__
-        print("5️⃣ VÉRIFICATION EXPORTS MODULE")
+        print("5⃣ VÉRIFICATION EXPORTS MODULE")
         print("-" * 40)
         
         exports_check = validate_module_exports()
@@ -132,35 +132,35 @@ def validate_notification_systems_implementation():
             status_emoji = "🟠"
         else:
             validation_report["overall_status"] = "NEEDS_IMPROVEMENT"
-            status_emoji = "🔴"
+            status_emoji = ""
         
         # Rapport final
         print()
-        print("📊 RAPPORT FINAL DE VALIDATION")
+        print(" RAPPORT FINAL DE VALIDATION")
         print("=" * 60)
         print(f"{status_emoji} Status Global: {validation_report['overall_status']}")
-        print(f"✅ Vérifications Réussies: {passed_checks}/{total_checks}")
-        print(f"📈 Taux de Réussite: {success_rate:.1f}%")
-        print(f"🎯 Implémentation Complète: {'OUI' if success_rate >= 90 else 'NON'}")
+        print(f" Vérifications Réussies: {passed_checks}/{total_checks}")
+        print(f" Taux de Réussite: {success_rate:.1f}%")
+        print(f" Implémentation Complète: {'OUI' if success_rate >= 90 else 'NON'}")
         
         if success_rate >= 90:
             print()
-            print("🎉 FÉLICITATIONS!")
+            print(" FÉLICITATIONS!")
             print("L'implémentation du module notification_systems est COMPLÈTE")
             print("et respecte toutes les exigences du cahier des charges.")
             print()
-            print("✅ Tous les nouveaux gestionnaires sont implémentés")
-            print("✅ Schema de base de données enrichi")
-            print("✅ Intégration orchestrateur fonctionnelle")
-            print("✅ Logique métier workflow complète")
-            print("✅ Module prêt pour la production")
+            print(" Tous les nouveaux gestionnaires sont implémentés")
+            print(" Schema de base de données enrichi")
+            print(" Intégration orchestrateur fonctionnelle")
+            print(" Logique métier workflow complète")
+            print(" Module prêt pour la production")
         
         return validation_report
         
     except Exception as e:
         validation_report["overall_status"] = "ERROR"
         validation_report["error"] = str(e)
-        print(f"❌ ERREUR DE VALIDATION: {str(e)}")
+        print(f" ERREUR DE VALIDATION: {str(e)}")
         return validation_report
 
 def validate_new_managers() -> Dict[str, Any]:
@@ -206,9 +206,9 @@ def validate_new_managers() -> Dict[str, Any]:
                 methods_found = sum(1 for method in required_methods if method in content)
                 check_details[manager_name]["has_required_methods"] = methods_found >= 3
                 
-            print(f"  ✅ {manager_name}: {check_details[manager_name]['line_count']} lignes")
+            print(f"   {manager_name}: {check_details[manager_name]['line_count']} lignes")
         else:
-            print(f"  ❌ {manager_name}: FICHIER MANQUANT")
+            print(f"   {manager_name}: FICHIER MANQUANT")
             all_passed = False
     
     return {
@@ -252,9 +252,9 @@ def validate_database_schema() -> Dict[str, Any]:
         
         if table_present:
             tables_found += 1
-            print(f"  ✅ Table {table}: Présente avec indexes")
+            print(f"   Table {table}: Présente avec indexes")
         else:
-            print(f"  ❌ Table {table}: MANQUANTE")
+            print(f"   Table {table}: MANQUANTE")
     
     all_passed = tables_found == len(expected_tables)
     
@@ -301,9 +301,9 @@ def validate_orchestrator_integration() -> Dict[str, Any]:
         
         if import_present and manager_initialized:
             imports_found += 1
-            print(f"  ✅ {import_name}: Importé et initialisé")
+            print(f"   {import_name}: Importé et initialisé")
         else:
-            print(f"  ❌ {import_name}: {'Import manquant' if not import_present else 'Non initialisé'}")
+            print(f"   {import_name}: {'Import manquant' if not import_present else 'Non initialisé'}")
     
     all_passed = imports_found >= 4  # Au moins 4 sur 5
     
@@ -346,9 +346,9 @@ def validate_business_logic() -> Dict[str, Any]:
         
         if step_present:
             steps_found += 1
-            print(f"  ✅ {step}: Implémenté")
+            print(f"   {step}: Implémenté")
         else:
-            print(f"  ❌ {step}: MANQUANT")
+            print(f"   {step}: MANQUANT")
     
     # Vérifier la classe principale
     main_class_present = "BusinessLogicIntegrationDemo" in demo_content
@@ -392,9 +392,9 @@ def validate_module_exports() -> Dict[str, Any]:
     for export in expected_exports:
         if export in init_content:
             exports_found += 1
-            print(f"  ✅ {export}: Exporté")
+            print(f"   {export}: Exporté")
         else:
-            print(f"  ❌ {export}: NON EXPORTÉ")
+            print(f"   {export}: NON EXPORTÉ")
     
     all_passed = exports_found >= 4
     
@@ -406,14 +406,14 @@ def validate_module_exports() -> Dict[str, Any]:
 
 def print_check_result(check_name: str, passed: bool):
     """Affiche le résultat d'une vérification"""
-    status = "✅ RÉUSSI" if passed else "❌ ÉCHEC"
+    status = " RÉUSSI" if passed else " ÉCHEC"
     print(f"  {status} - {check_name}")
     print()
 
 if __name__ == "__main__":
     """Point d'entrée du script de validation"""
     
-    print("🚀 DÉMARRAGE VALIDATION NOTIFICATION SYSTEMS")
+    print(" DÉMARRAGE VALIDATION NOTIFICATION SYSTEMS")
     print("Auteur: Fahed Mlaiel <mlaiel@live.de>")
     print("Copyright © 2025 Fahed Mlaiel. Tous droits réservés.")
     print()
@@ -427,15 +427,15 @@ if __name__ == "__main__":
         with open(report_path, 'w', encoding='utf-8') as f:
             json.dump(validation_result, f, indent=2, ensure_ascii=False)
         
-        print(f"📄 Rapport de validation sauvegardé: {report_path}")
+        print(f" Rapport de validation sauvegardé: {report_path}")
         
         # Code de sortie
         exit_code = 0 if validation_result["summary"]["success_rate"] >= 90 else 1
         sys.exit(exit_code)
         
     except KeyboardInterrupt:
-        print("\n⏹️ Validation interrompue par l'utilisateur")
+        print("\n⏹ Validation interrompue par l'utilisateur")
         sys.exit(130)
     except Exception as e:
-        print(f"\n💥 ERREUR CRITIQUE: {str(e)}")
+        print(f"\n ERREUR CRITIQUE: {str(e)}")
         sys.exit(1)

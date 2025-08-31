@@ -8,7 +8,7 @@ Comprehensive user management with multi-platform integration and analytics.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  STRICT WARNING FOR UNAUTHORIZED USE:
+  STRICT WARNING FOR UNAUTHORIZED USE:
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use without explicit written 
 permission is strictly prohibited and will result in legal action.
@@ -332,11 +332,17 @@ class UserModel(Base):
     @property
     def is_active(self) -> bool:
         """Check if user is active"""
+
+
+
         return self.status == UserStatus.ACTIVE.value and not self.is_deleted
     
     @property
     def is_premium_user(self) -> bool:
         """Check if user has premium subscription"""
+
+
+
         return (self.is_premium or 
                 self.subscription_tier in [SubscriptionTier.PROFESSIONAL.value, 
                                          SubscriptionTier.ENTERPRISE.value,

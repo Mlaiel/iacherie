@@ -92,6 +92,9 @@ class SpectralMatcher:
     
     def _default_config(self) -> Dict:
         """Default configuration for spectral matching."""
+
+
+
         return {
             'max_workers': 4,
             'feature_dimensions': 256,
@@ -120,6 +123,9 @@ class SpectralMatcher:
         Returns:
             List of tuples (candidate, similarity_score) sorted by relevance
         """
+
+
+
         try:
             if len(candidates) == 0:
                 return []
@@ -208,6 +214,9 @@ class SpectralMatcher:
         features2: np.ndarray
     ) -> float:
         """Calculate similarity between two spectral feature vectors."""
+
+
+
         try:
             # Ensure features are the same length
             min_len = min(len(features1), len(features2))
@@ -260,6 +269,9 @@ class TemporalMatcher:
     
     def _default_config(self) -> Dict:
         """Default configuration for temporal matching."""
+
+
+
         return {
             'max_workers': 2,
             'max_time_shift': 10.0,  # seconds
@@ -286,6 +298,9 @@ class TemporalMatcher:
         Returns:
             List of candidates with temporal match information
         """
+
+
+
         try:
             matches = []
             
@@ -387,6 +402,9 @@ class FingerprintMatchingEngine:
     
     def _default_config(self) -> Dict:
         """Default configuration for the matching engine."""
+
+
+
         return {
             'global_threshold': 0.80,
             'max_results_per_query': 100,
@@ -701,6 +719,9 @@ class FingerprintMatchingEngine:
     
     async def cleanup(self):
         """Cleanup resources."""
+
+
+
         try:
             if hasattr(self.spectral_matcher, 'cleanup'):
                 self.spectral_matcher.cleanup()

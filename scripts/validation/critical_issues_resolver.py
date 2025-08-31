@@ -30,13 +30,13 @@ class CriticalIssuesResolver:
         
     def resolve_critical_issues(self) -> Dict[str, Any]:
         """Resolve all critical business issues"""
-        logger.info("🎯 Starting Critical Business Issues Resolution")
+        logger.info(" Starting Critical Business Issues Resolution")
         logger.info("=" * 60)
         
         # Load the current analysis
         analysis_file = self.project_root / "todo_business_impact_analysis.json"
         if not analysis_file.exists():
-            logger.error("❌ Analysis file not found. Run todo_business_impact_analyzer.py first")
+            logger.error(" Analysis file not found. Run todo_business_impact_analyzer.py first")
             return {"success": False, "error": "Analysis file missing"}
         
         with open(analysis_file, 'r') as f:
@@ -44,7 +44,7 @@ class CriticalIssuesResolver:
         
         # Process critical files
         critical_files = self._identify_critical_files(analysis_data)
-        logger.info(f"🔍 Found {len(critical_files)} critical files to process")
+        logger.info(f" Found {len(critical_files)} critical files to process")
         
         # Apply fixes
         for filepath, issues in critical_files.items():
@@ -53,23 +53,23 @@ class CriticalIssuesResolver:
                 if fixes_count > 0:
                     self.fixes_applied[filepath] = fixes_count
                     self.total_fixes += fixes_count
-                    logger.info(f"✅ Fixed {fixes_count} issues in {filepath}")
+                    logger.info(f" Fixed {fixes_count} issues in {filepath}")
             except Exception as e:
-                logger.error(f"❌ Error fixing {filepath}: {e}")
+                logger.error(f" Error fixing {filepath}: {e}")
         
         # Generate summary
         summary = self._generate_summary()
         logger.info("=" * 60)
-        logger.info("📊 RESOLUTION SUMMARY")
+        logger.info(" RESOLUTION SUMMARY")
         logger.info("=" * 60)
         logger.info(f"Files processed: {len(self.fixes_applied)}")
         logger.info(f"Total fixes applied: {self.total_fixes}")
         logger.info(f"Success rate: {(len(self.fixes_applied) / max(len(critical_files), 1)) * 100:.1f}%")
         
         if self.total_fixes > 0:
-            logger.info("🎉 CRITICAL ISSUES RESOLUTION SUCCESSFUL!")
-            logger.info("✅ Business-critical files have been improved")
-            logger.info("🚀 Revenue impact has been addressed")
+            logger.info(" CRITICAL ISSUES RESOLUTION SUCCESSFUL!")
+            logger.info(" Business-critical files have been improved")
+            logger.info(" Revenue impact has been addressed")
         
         return summary
     
@@ -192,6 +192,9 @@ class CriticalIssuesResolver:
     
     def _generate_summary(self) -> Dict[str, Any]:
         """Generate resolution summary"""
+
+
+
         return {
             "success": True,
             "total_files_fixed": len(self.fixes_applied),
@@ -217,14 +220,14 @@ async def main():
             json.dump(result, f, indent=2)
         
         if result.get("success"):
-            logger.info("📄 Resolution report saved to: critical_issues_resolution_report.json")
+            logger.info(" Resolution report saved to: critical_issues_resolution_report.json")
             return 0
         else:
-            logger.error("❌ Resolution failed")
+            logger.error(" Resolution failed")
             return 1
             
     except Exception as e:
-        logger.error(f"❌ Resolution error: {e}")
+        logger.error(f" Resolution error: {e}")
         return 1
 
 

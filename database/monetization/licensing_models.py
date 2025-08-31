@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 CRITICAL LEGAL WARNING:
+ CRITICAL LEGAL WARNING:
 This code and all associated intellectual property belong exclusively to Fahed Mlaiel.
 Any unauthorized use, copying, modification, distribution, or commercialization 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -345,6 +345,9 @@ class LicenseAgreement(Base):
     @property
     def is_renewable(self) -> bool:
         """Check if license can be renewed"""
+
+
+
         return self.auto_renewal or self.license_status == LicenseStatus.ACTIVE
 
 

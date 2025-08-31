@@ -160,6 +160,9 @@ class ProfileManager:
         Raises:
             InvalidProfileDataError: If profile data is invalid
         """
+
+
+
         try:
             # Check if profile already exists
             existing_profile = self.db.query(CreatorProfile).filter(
@@ -220,6 +223,9 @@ class ProfileManager:
         Returns:
             Profile data or None if not found/accessible
         """
+
+
+
         try:
             profile = self.db.query(CreatorProfile).filter(
                 CreatorProfile.client_id == client_id
@@ -256,6 +262,9 @@ class ProfileManager:
         Raises:
             ProfileNotFoundError: If profile doesn't exist
         """
+
+
+
         try:
             profile = self.db.query(CreatorProfile).filter(
                 CreatorProfile.client_id == client_id
@@ -305,6 +314,9 @@ class ProfileManager:
         Returns:
             Upload result with image URLs
         """
+
+
+
         try:
             profile = self.db.query(CreatorProfile).filter(
                 CreatorProfile.client_id == client_id
@@ -369,6 +381,9 @@ class ProfileManager:
         Returns:
             Created portfolio item information
         """
+
+
+
         try:
             profile = self.db.query(CreatorProfile).filter(
                 CreatorProfile.client_id == client_id
@@ -414,6 +429,9 @@ class ProfileManager:
         Returns:
             Updated creator tier
         """
+
+
+
         try:
             profile = self.db.query(CreatorProfile).filter(
                 CreatorProfile.client_id == client_id
@@ -483,6 +501,9 @@ class ProfileManager:
         Returns:
             Search results with pagination
         """
+
+
+
         try:
             query_builder = self.db.query(CreatorProfile).filter(
                 CreatorProfile.visibility == ProfileVisibility.PUBLIC
@@ -629,6 +650,9 @@ class ProfileManager:
         
     def _format_portfolio_item(self, item: PortfolioItem) -> Dict[str, Any]:
         """Format portfolio item data."""
+
+
+
         return {
             "id": str(item.id),
             "title": item.title,

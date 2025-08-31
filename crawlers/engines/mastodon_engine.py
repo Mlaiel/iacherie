@@ -8,7 +8,7 @@ Handles toot metadata extraction, instance analysis, and federation monitoring.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
@@ -172,6 +172,9 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
     
     async def initialize(self) -> None:
         """Initialize the crawler engine"""
+
+
+
         try:
             await self._create_sessions()
             logger.info("Mastodon engine initialized successfully")
@@ -278,6 +281,9 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
         Returns:
             List of public toots
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -342,6 +348,9 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
         Returns:
             List of toots with the hashtag
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -401,6 +410,9 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Account information or None if not found
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -456,6 +468,9 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
         Returns:
             List of search results
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -515,6 +530,9 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
     
     def _parse_toot_data(self, toot_data: Dict[str, Any], instance_url: str) -> MastodonToot:
         """Parse toot data from API response"""
+
+
+
         try:
             # Parse media attachments
             media_attachments = []
@@ -572,6 +590,9 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
     
     def _parse_account_data(self, account_data: Dict[str, Any], instance_url: str) -> MastodonAccount:
         """Parse account data from API response"""
+
+
+
         try:
             # Parse custom fields
             fields = []
@@ -612,6 +633,9 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
     
     def _parse_instance_data(self, instance_data: Dict[str, Any], instance_url: str) -> MastodonInstance:
         """Parse instance data from API response"""
+
+
+
         try:
             return MastodonInstance(
                 uri=instance_data.get("uri", instance_url),
@@ -640,6 +664,9 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Federation network analysis
         """
+
+
+
         try:
             network_analysis = {
                 'instances_analyzed': len(self.instances),
@@ -681,6 +708,9 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Trending hashtags by instance
         """
+
+
+
         try:
             trending_data = {}
             
@@ -714,6 +744,9 @@ class MastodonCrawlerEngine(BaseCrawlerEngine):
     
     async def cleanup(self) -> None:
         """Clean up resources"""
+
+
+
         try:
             for session in self.sessions.values():
                 await session.close()

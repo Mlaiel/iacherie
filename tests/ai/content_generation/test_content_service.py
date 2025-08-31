@@ -59,6 +59,9 @@ class TestContentService:
     @pytest.fixture
     def service(self):
         """Create a content service instance"""
+
+
+
         return ContentService()
     
     @pytest.fixture
@@ -88,6 +91,9 @@ class TestContentService:
     @pytest.fixture
     def blog_request(self):
         """Create a blog post request"""
+
+
+
         return ContentGenerationRequest(
             content_type=ContentType.BLOG_POST,
             topic="Future of Artificial Intelligence",
@@ -100,6 +106,9 @@ class TestContentService:
     @pytest.fixture
     def social_request(self):
         """Create a social media request"""
+
+
+
         return ContentGenerationRequest(
             content_type=ContentType.INSTAGRAM_POST,
             topic="Daily motivation",
@@ -113,6 +122,9 @@ class TestContentService:
     @pytest.fixture
     def email_request(self):
         """Create an email marketing request"""
+
+
+
         return ContentGenerationRequest(
             content_type=ContentType.EMAIL_MARKETING,
             topic="New product launch",
@@ -532,6 +544,9 @@ class TestContentServiceIntegration:
     @pytest.fixture
     def integrated_service(self):
         """Create a service with real dependencies for integration testing"""
+
+
+
         return ContentService()
     
     @pytest.mark.asyncio

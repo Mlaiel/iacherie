@@ -7,7 +7,7 @@ Master configuration system for all AI module components and services.
 © 2025 Fahed Mlaiel. All Rights Reserved.
 Contact: mlaiel@live.de
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This configuration system contains proprietary settings and algorithms.
 Unauthorized use is strictly prohibited.
 """
@@ -236,6 +236,9 @@ class AIModuleMasterConfig:
     
     def get_database_url(self) -> str:
         """Get database connection URL"""
+
+
+
         return (
             f"postgresql://{self.database.username}:{self.database.password}@"
             f"{self.database.host}:{self.database.port}/{self.database.database}"
@@ -248,6 +251,9 @@ class AIModuleMasterConfig:
     
     def get_logging_config(self) -> Dict[str, Any]:
         """Get logging configuration"""
+
+
+
         return {
             'version': 1,
             'disable_existing_loggers': False,
@@ -286,6 +292,9 @@ class AIModuleMasterConfig:
     
     def get_cors_config(self) -> Dict[str, Any]:
         """Get CORS configuration"""
+
+
+
         return {
             'allow_origins': self.security.allowed_origins,
             'allow_credentials': True,
@@ -413,22 +422,37 @@ def get_config(environment: Optional[EnvironmentType] = None) -> AIModuleMasterC
 
 def get_database_config() -> DatabaseConfig:
     """Get database configuration"""
+
+
+
     return master_config.database
 
 def get_redis_config() -> RedisConfig:
     """Get Redis configuration"""
+
+
+
     return master_config.redis
 
 def get_ai_models_config() -> AIModelsConfig:
     """Get AI models configuration"""
+
+
+
     return master_config.ai_models
 
 def get_security_config() -> SecurityConfig:
     """Get security configuration"""
+
+
+
     return master_config.security
 
 def get_monitoring_config() -> MonitoringConfig:
     """Get monitoring configuration"""
+
+
+
     return master_config.monitoring
 
 # Export all configuration classes and functions

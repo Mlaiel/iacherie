@@ -8,7 +8,7 @@ Project: IA Influencer Agent + Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL WARNING:
+ CRITICAL LEGAL WARNING:
 This code, concept, and intellectual property are exclusively owned by Fahed Mlaiel.
 Any unauthorized use, copying, distribution, reverse engineering, or commercialization 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
@@ -155,6 +155,9 @@ class RevenueAnalytics:
     
     async def calculate_revenue_trends(self, creator_id: str, period: str = "30d") -> Dict[str, Any]:
         """Calculate revenue trends and projections"""
+
+
+
         return {
             'current_month_revenue': Decimal('2450.75'),
             'previous_month_revenue': Decimal('2100.50'),
@@ -222,6 +225,9 @@ class MonetizationEngine:
         Returns:
             Complete monetization data
         """
+
+
+
         try:
             # Get creator profile
             profile = await self.profile_manager.get_creator_profile(creator_id)
@@ -257,6 +263,9 @@ class MonetizationEngine:
     
     async def _generate_optimization_recommendations(self, creator_id: str) -> List[Dict[str, Any]]:
         """Generate monetization optimization recommendations"""
+
+
+
         return [
             {
                 'type': 'revenue_optimization',
@@ -276,6 +285,9 @@ class MonetizationEngine:
     
     async def create_revenue_stream(self, creator_id: str, stream_type: RevenueStream, stream_data: Dict[str, Any]) -> Dict[str, Any]:
         """Create new revenue stream"""
+
+
+
         try:
             if stream_type == RevenueStream.SUBSCRIPTIONS:
                 return await self.subscription_manager.create_subscription_tier(creator_id, stream_data)

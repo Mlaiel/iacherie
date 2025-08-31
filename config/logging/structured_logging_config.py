@@ -627,6 +627,9 @@ class StructuredLoggingConfig:
         Returns:
             Child logger with inherited and additional context
         """
+
+
+
         return parent_logger.bind(**context)
 
 

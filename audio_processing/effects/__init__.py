@@ -1,5 +1,5 @@
 """
-🎛️ Effects Module - Professional Audio Effects Processing
+ Effects Module - Professional Audio Effects Processing
 
 Complete audio effects suite with professional-grade processors for music production,
 audio post-production, and content creation workflows.

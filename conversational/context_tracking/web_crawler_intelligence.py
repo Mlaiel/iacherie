@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-🕷️ WEB CRAWLER INTELLIGENCE - ENTERPRISE AI-POWERED SURVEILLANCE SYSTEM
+ WEB CRAWLER INTELLIGENCE - ENTERPRISE AI-POWERED SURVEILLANCE SYSTEM
 =========================================================================
 
 Ultra-advanced web surveillance and intelligent crawling system featuring
@@ -10,20 +10,20 @@ AI-powered content detection, real-time violation monitoring, automated DMCA
 processing, and cross-platform content protection with enterprise-grade
 anti-detection and scalability.
 
-🎯 ENTERPRISE SURVEILLANCE CAPABILITIES :
-- ✅ Global Multi-Platform Crawling (100+ platforms supported)
-- ✅ AI-Powered Content Similarity Detection (>99% accuracy)
-- ✅ Real-time Violation Monitoring & Instant Alerts
-- ✅ Automated Evidence Collection & Legal Documentation
-- ✅ DMCA Automation & Takedown Processing
-- ✅ Advanced Anti-Detection & IP Rotation (10K+ proxies)
-- ✅ Distributed Crawling Architecture (1M+ pages/hour)
-- ✅ Blockchain Evidence Storage & Authenticity Verification
-- ✅ Cross-Platform API Integration & Social Media Monitoring
-- ✅ Competitive Intelligence & Market Analysis
-- ✅ Revenue Impact Assessment & Loss Prevention
+ ENTERPRISE SURVEILLANCE CAPABILITIES :
+-  Global Multi-Platform Crawling (100+ platforms supported)
+-  AI-Powered Content Similarity Detection (>99% accuracy)
+-  Real-time Violation Monitoring & Instant Alerts
+-  Automated Evidence Collection & Legal Documentation
+-  DMCA Automation & Takedown Processing
+-  Advanced Anti-Detection & IP Rotation (10K+ proxies)
+-  Distributed Crawling Architecture (1M+ pages/hour)
+-  Blockchain Evidence Storage & Authenticity Verification
+-  Cross-Platform API Integration & Social Media Monitoring
+-  Competitive Intelligence & Market Analysis
+-  Revenue Impact Assessment & Loss Prevention
 
-🔧 CUTTING-EDGE SURVEILLANCE TECHNOLOGY :
+ CUTTING-EDGE SURVEILLANCE TECHNOLOGY :
 - Web Intelligence : Scrapy + Selenium + Playwright + Puppeteer
 - Anti-Detection : Advanced proxy rotation + fingerprint spoofing
 - AI Detection : CLIP + BERT + Vision Transformers + Custom CNNs
@@ -32,14 +32,14 @@ anti-detection and scalability.
 - Performance : 10K+ pages/min, <100ms similarity detection
 - Scalability : Distributed cluster, auto-scaling infrastructure
 
-⚡ COMPREHENSIVE SURVEILLANCE WORKFLOW :
+ COMPREHENSIVE SURVEILLANCE WORKFLOW :
 Content Registration → AI Fingerprint Generation → Global Platform Monitoring → 
 Intelligent Crawling → Content Similarity Analysis → Violation Detection → 
 Evidence Collection → Legal Documentation → DMCA Automation → 
 Takedown Processing → Revenue Impact Analysis → Compliance Monitoring → 
 Competitive Intelligence → Market Trend Analysis → Protection Analytics
 
-🏗️ DEVELOPED BY ELITE WEB INTELLIGENCE SPECIALISTS :
+ DEVELOPED BY ELITE WEB INTELLIGENCE SPECIALISTS :
 Lead Web Intelligence Engineer : Fahed Mlaiel <mlaiel@live.de>
 - Crawler Architecture Expert : Distributed systems & anti-detection
 - AI Detection Specialist : Computer vision & content similarity
@@ -47,7 +47,7 @@ Lead Web Intelligence Engineer : Fahed Mlaiel <mlaiel@live.de>
 - Performance Engineer : Scalability & high-throughput optimization
 - Security Expert : Anti-detection & proxy management systems
 
-⚠️  STRICT INTELLECTUAL PROPERTY WARNING :
+  STRICT INTELLECTUAL PROPERTY WARNING :
 This web surveillance system is the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 UNAUTHORIZED USE IS STRICTLY PROHIBITED AND LEGALLY PROSECUTED.
 Respects robots.txt and platform terms of service.
@@ -145,12 +145,12 @@ class PlatformCrawler:
 
 class WebCrawlerIntelligence:
     """
-    🕷️ SYSTÈME DE SURVEILLANCE WEB ULTRA-AVANCÉ
+     SYSTÈME DE SURVEILLANCE WEB ULTRA-AVANCÉ
     
     Intelligence de crawling distribué utilisant l'IA pour la surveillance
     automatique et la détection de violations de contenu en temps réel.
     
-    ⚡ CARACTÉRISTIQUES TECHNIQUES :
+     CARACTÉRISTIQUES TECHNIQUES :
     - Crawling distribué : 1000+ pages/minute
     - Anti-détection : Proxy rotation + User-agent switching
     - IA Détection : >95% accuracy similarity detection
@@ -237,6 +237,9 @@ class WebCrawlerIntelligence:
     
     async def initialize(self):
         """Initialisation asynchrone des connexions et services."""
+
+
+
         try:
             # Database connections
             self.redis_client = await get_redis_client()
@@ -259,14 +262,17 @@ class WebCrawlerIntelligence:
             # Initialize selenium drivers pool
             await self._initialize_driver_pool()
             
-            logger.info("✅ Web Crawler Intelligence initialized successfully")
+            logger.info(" Web Crawler Intelligence initialized successfully")
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize crawler intelligence: {e}")
+            logger.error(f" Failed to initialize crawler intelligence: {e}")
             raise CrawlingError(f"Initialization failed: {e}")
     
     def _initialize_ai_models(self):
         """Initialisation des modèles IA pour la détection."""
+
+
+
         try:
             # CLIP model for image/video similarity
             self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
@@ -276,10 +282,10 @@ class WebCrawlerIntelligence:
             # Sentence transformer for text similarity
             self.text_model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
             
-            logger.info("✅ AI models initialized for content detection")
+            logger.info(" AI models initialized for content detection")
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize AI models: {e}")
+            logger.error(f" Failed to initialize AI models: {e}")
             raise CrawlingError(f"AI model initialization failed: {e}")
     
     async def schedule_surveillance_campaign(
@@ -291,7 +297,7 @@ class WebCrawlerIntelligence:
         monitoring_frequency: int = 3600  # seconds
     ) -> Dict[str, Any]:
         """
-        🗓️ PLANIFICATION DE CAMPAGNE DE SURVEILLANCE
+         PLANIFICATION DE CAMPAGNE DE SURVEILLANCE
         
         Planifie une campagne de surveillance automatique pour détecter
         les violations de contenu sur les plateformes spécifiées.
@@ -306,6 +312,9 @@ class WebCrawlerIntelligence:
         Returns:
             Dict contenant les détails de la campagne
         """
+
+
+
         try:
             # Create campaign record
             campaign = {
@@ -343,7 +352,7 @@ class WebCrawlerIntelligence:
             
             self.metrics.increment('surveillance_campaigns_created_total')
             
-            logger.info(f"✅ Surveillance campaign scheduled: {campaign['id']}")
+            logger.info(f" Surveillance campaign scheduled: {campaign['id']}")
             
             return {
                 'campaign_id': campaign['id'],
@@ -354,7 +363,7 @@ class WebCrawlerIntelligence:
             }
             
         except Exception as e:
-            logger.error(f"❌ Campaign scheduling failed: {e}")
+            logger.error(f" Campaign scheduling failed: {e}")
             raise CrawlingError(f"Campaign scheduling failed: {e}")
     
     async def execute_crawling_session(
@@ -364,7 +373,7 @@ class WebCrawlerIntelligence:
         search_terms: List[str]
     ) -> Dict[str, Any]:
         """
-        🔍 EXÉCUTION DE SESSION DE CRAWLING
+         EXÉCUTION DE SESSION DE CRAWLING
         
         Exécute une session de crawling sur une plateforme spécifique
         avec détection IA en temps réel.
@@ -433,7 +442,7 @@ class WebCrawlerIntelligence:
                     
                 except Exception as e:
                     session_data['errors_encountered'] += 1
-                    logger.error(f"❌ Search term crawling failed: {search_term} - {e}")
+                    logger.error(f" Search term crawling failed: {search_term} - {e}")
                     continue
             
             # Update session status
@@ -456,7 +465,7 @@ class WebCrawlerIntelligence:
             self.metrics.histogram('crawling_session_duration_seconds', session_data['duration'])
             self.metrics.gauge('violations_detected_total', len(violations_found))
             
-            logger.info(f"✅ Crawling session completed: {len(violations_found)} violations found")
+            logger.info(f" Crawling session completed: {len(violations_found)} violations found")
             
             return {
                 'session_id': session_id,
@@ -469,7 +478,7 @@ class WebCrawlerIntelligence:
             }
             
         except Exception as e:
-            logger.error(f"❌ Crawling session failed: {e}")
+            logger.error(f" Crawling session failed: {e}")
             raise CrawlingError(f"Crawling session failed: {e}")
     
     async def _get_platform_crawler(self, platform: str):
@@ -492,6 +501,9 @@ class WebCrawlerIntelligence:
         platform: str
     ) -> Optional[Dict[str, Any]]:
         """Analyse le contenu pour détecter les violations."""
+
+
+
         try:
             # Calculate similarity score
             similarity_score = await self._calculate_content_similarity(
@@ -536,7 +548,7 @@ class WebCrawlerIntelligence:
             return None
             
         except Exception as e:
-            logger.error(f"❌ Content analysis failed: {e}")
+            logger.error(f" Content analysis failed: {e}")
             return None
     
     async def _calculate_content_similarity(
@@ -545,6 +557,9 @@ class WebCrawlerIntelligence:
         fingerprint_data: Dict[str, Any]
     ) -> float:
         """Calcule la similarité entre le contenu trouvé et l'empreinte."""
+
+
+
         try:
             similarity_scores = []
             
@@ -579,11 +594,14 @@ class WebCrawlerIntelligence:
             return 0.0
             
         except Exception as e:
-            logger.error(f"❌ Similarity calculation failed: {e}")
+            logger.error(f" Similarity calculation failed: {e}")
             return 0.0
     
     def _calculate_text_similarity(self, text1: str, text2: str) -> float:
         """Calcule la similarité textuelle."""
+
+
+
         try:
             # Use sentence transformers
             embedding1 = self.text_model.encode(text1)
@@ -597,11 +615,14 @@ class WebCrawlerIntelligence:
             return float(similarity)
             
         except Exception as e:
-            logger.error(f"❌ Text similarity calculation failed: {e}")
+            logger.error(f" Text similarity calculation failed: {e}")
             return 0.0
     
     async def _calculate_image_similarity(self, image_url: str, reference_hash: str) -> float:
         """Calcule la similarité d'image."""
+
+
+
         try:
             # Download image
             async with aiohttp.ClientSession() as session:
@@ -623,11 +644,14 @@ class WebCrawlerIntelligence:
             return 0.0
             
         except Exception as e:
-            logger.error(f"❌ Image similarity calculation failed: {e}")
+            logger.error(f" Image similarity calculation failed: {e}")
             return 0.0
     
     def _calculate_metadata_similarity(self, metadata1: Dict, metadata2: Dict) -> float:
         """Calcule la similarité des métadonnées."""
+
+
+
         try:
             # Simple metadata comparison
             common_keys = set(metadata1.keys()) & set(metadata2.keys())
@@ -643,7 +667,7 @@ class WebCrawlerIntelligence:
             return matches / len(common_keys)
             
         except Exception as e:
-            logger.error(f"❌ Metadata similarity calculation failed: {e}")
+            logger.error(f" Metadata similarity calculation failed: {e}")
             return 0.0
     
     async def _collect_violation_evidence(
@@ -652,6 +676,9 @@ class WebCrawlerIntelligence:
         session_id: str
     ) -> Optional[Dict[str, Any]]:
         """Collecte automatique de preuves pour violation."""
+
+
+
         try:
             evidence = {
                 'id': str(uuid.uuid4()),
@@ -688,16 +715,19 @@ class WebCrawlerIntelligence:
             # Store evidence record
             await self._store_evidence_record(evidence)
             
-            logger.info(f"✅ Evidence collected for violation {violation['id']}")
+            logger.info(f" Evidence collected for violation {violation['id']}")
             
             return evidence
             
         except Exception as e:
-            logger.error(f"❌ Evidence collection failed: {e}")
+            logger.error(f" Evidence collection failed: {e}")
             return None
     
     async def _capture_violation_screenshot(self, url: str) -> Optional[str]:
         """Capture une capture d'écran de la violation."""
+
+
+
         try:
             # Get available driver from pool
             driver = await self._get_driver_from_pool()
@@ -718,11 +748,14 @@ class WebCrawlerIntelligence:
             return None
             
         except Exception as e:
-            logger.error(f"❌ Screenshot capture failed: {e}")
+            logger.error(f" Screenshot capture failed: {e}")
             return None
     
     async def _upload_evidence_to_s3(self, file_path: str, evidence_type: str) -> str:
         """Upload evidence file to S3."""
+
+
+
         try:
             bucket_name = self.settings.EVIDENCE_S3_BUCKET
             key = f"evidence/{evidence_type}/{datetime.utcnow().strftime('%Y/%m/%d')}/{Path(file_path).name}"
@@ -735,7 +768,7 @@ class WebCrawlerIntelligence:
             return f"s3://{bucket_name}/{key}"
             
         except Exception as e:
-            logger.error(f"❌ S3 upload failed: {e}")
+            logger.error(f" S3 upload failed: {e}")
             return ""
     
     async def get_surveillance_analytics(
@@ -744,11 +777,14 @@ class WebCrawlerIntelligence:
         time_range: str = '30d'
     ) -> Dict[str, Any]:
         """
-        📊 ANALYTICS DE SURVEILLANCE
+         ANALYTICS DE SURVEILLANCE
         
         Fournit des analytics détaillées sur les campagnes de surveillance
         et les performances de détection.
         """
+
+
+
         try:
             # Calculate time range
             time_ranges = {
@@ -831,22 +867,28 @@ class WebCrawlerIntelligence:
             return analytics
             
         except Exception as e:
-            logger.error(f"❌ Analytics generation failed: {e}")
+            logger.error(f" Analytics generation failed: {e}")
             raise CrawlingError(f"Analytics generation failed: {e}")
     
     # Platform-specific crawler implementations
     
     async def _load_proxy_pools(self):
         """Charge les pools de proxies."""
+
+
+
         try:
             # Load from configuration or external service
             # Placeholder implementation
             logger.info("Proxy pools loaded")
         except Exception as e:
-            logger.error(f"❌ Failed to load proxy pools: {e}")
+            logger.error(f" Failed to load proxy pools: {e}")
     
     async def _initialize_driver_pool(self):
         """Initialise le pool de drivers Selenium."""
+
+
+
         try:
             # Create pool of Chrome drivers
             self.driver_pool = []
@@ -860,10 +902,10 @@ class WebCrawlerIntelligence:
                 driver = webdriver.Chrome(options=options)
                 self.driver_pool.append(driver)
             
-            logger.info("✅ Selenium driver pool initialized")
+            logger.info(" Selenium driver pool initialized")
             
         except Exception as e:
-            logger.error(f"❌ Driver pool initialization failed: {e}")
+            logger.error(f" Driver pool initialization failed: {e}")
             self.driver_pool = []
     
     async def _get_driver_from_pool(self):
@@ -880,6 +922,9 @@ class WebCrawlerIntelligence:
     # Helper methods for data operations
     async def _get_campaign_data(self, campaign_id: str) -> Optional[Dict[str, Any]]:
         """Récupère les données de campagne."""
+
+
+
         try:
             redis_key = f"surveillance_campaign:{campaign_id}"
             data = await self.redis_client.get(redis_key)
@@ -887,11 +932,14 @@ class WebCrawlerIntelligence:
                 return json.loads(data)
             return None
         except Exception as e:
-            logger.error(f"❌ Failed to get campaign data: {e}")
+            logger.error(f" Failed to get campaign data: {e}")
             return None
     
     async def _get_fingerprint_data(self, fingerprint_id: str) -> Dict[str, Any]:
         """Récupère les données d'empreinte."""
+
+
+
         try:
             redis_key = f"fingerprint:{fingerprint_id}"
             data = await self.redis_client.get(redis_key)
@@ -900,7 +948,7 @@ class WebCrawlerIntelligence:
             else:
                 raise CrawlingError(f"Fingerprint not found: {fingerprint_id}")
         except Exception as e:
-            logger.error(f"❌ Failed to get fingerprint data: {e}")
+            logger.error(f" Failed to get fingerprint data: {e}")
             raise
     
     async def _schedule_next_crawl(self, campaign: Dict[str, Any]):
@@ -918,6 +966,9 @@ class WebCrawlerIntelligence:
     # Storage methods
     async def _store_crawling_session(self, session_data: Dict[str, Any]):
         """Stocke les données de session de crawling."""
+
+
+
         try:
             await self.elasticsearch_client.index(
                 index="crawling_sessions",
@@ -925,10 +976,13 @@ class WebCrawlerIntelligence:
                 body=session_data
             )
         except Exception as e:
-            logger.error(f"❌ Failed to store crawling session: {e}")
+            logger.error(f" Failed to store crawling session: {e}")
     
     async def _store_evidence_record(self, evidence: Dict[str, Any]):
         """Stocke l'enregistrement de preuve."""
+
+
+
         try:
             await self.elasticsearch_client.index(
                 index="evidence_records",
@@ -936,10 +990,13 @@ class WebCrawlerIntelligence:
                 body=evidence
             )
         except Exception as e:
-            logger.error(f"❌ Failed to store evidence record: {e}")
+            logger.error(f" Failed to store evidence record: {e}")
     
     async def _update_campaign_statistics(self, campaign_id: str, session_data: Dict[str, Any]):
         """Met à jour les statistiques de campagne."""
+
+
+
         try:
             # Update campaign counters
             redis_key = f"surveillance_campaign:{campaign_id}"
@@ -956,7 +1013,7 @@ class WebCrawlerIntelligence:
                     json.dumps(campaign, default=str)
                 )
         except Exception as e:
-            logger.error(f"❌ Failed to update campaign statistics: {e}")
+            logger.error(f" Failed to update campaign statistics: {e}")
     
     async def _send_violation_alerts(self, campaign_id: str, violations: List[Dict[str, Any]]):
         """Envoie des alertes pour violations détectées."""
@@ -965,6 +1022,9 @@ class WebCrawlerIntelligence:
     
     async def _archive_violation_page(self, url: str) -> Optional[str]:
         """Archive le contenu de la page de violation."""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
@@ -972,7 +1032,7 @@ class WebCrawlerIntelligence:
                         return await response.text()
             return None
         except Exception as e:
-            logger.error(f"❌ Page archiving failed: {e}")
+            logger.error(f" Page archiving failed: {e}")
             return None
     
     async def _save_page_content(self, content: str, violation_id: str) -> str:
@@ -993,6 +1053,9 @@ class YouTubeCrawler:
     
     async def search_content(self, search_term: str) -> List[Dict[str, Any]]:
         """Recherche de contenu sur YouTube."""
+
+
+
         try:
             search_url = f"{self.config['base_url']}{self.config['search_endpoint']}{search_term}"
             
@@ -1008,11 +1071,14 @@ class YouTubeCrawler:
             return []
             
         except Exception as e:
-            logger.error(f"❌ YouTube search failed: {e}")
+            logger.error(f" YouTube search failed: {e}")
             return []
     
     def _parse_youtube_results(self, html: str) -> List[Dict[str, Any]]:
         """Parse les résultats de recherche YouTube."""
+
+
+
         try:
             soup = BeautifulSoup(html, 'html.parser')
             results = []
@@ -1031,7 +1097,7 @@ class YouTubeCrawler:
             return results
             
         except Exception as e:
-            logger.error(f"❌ YouTube results parsing failed: {e}")
+            logger.error(f" YouTube results parsing failed: {e}")
             return []
 
 class InstagramCrawler:
@@ -1068,6 +1134,9 @@ class GenericWebCrawler:
     
     async def search_content(self, search_term: str) -> List[Dict[str, Any]]:
         """Recherche générique sur le web."""
+
+
+
         try:
             # Use search engines for generic web crawling
             search_engines = [
@@ -1089,11 +1158,14 @@ class GenericWebCrawler:
             return results[:20]  # Limit results
             
         except Exception as e:
-            logger.error(f"❌ Generic web search failed: {e}")
+            logger.error(f" Generic web search failed: {e}")
             return []
     
     def _parse_search_results(self, html: str) -> List[Dict[str, Any]]:
         """Parse les résultats de moteur de recherche."""
+
+
+
         try:
             soup = BeautifulSoup(html, 'html.parser')
             results = []
@@ -1111,7 +1183,7 @@ class GenericWebCrawler:
             return results
             
         except Exception as e:
-            logger.error(f"❌ Search results parsing failed: {e}")
+            logger.error(f" Search results parsing failed: {e}")
             return []
 
 # Factory function

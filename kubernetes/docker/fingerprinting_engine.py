@@ -1,11 +1,11 @@
 """
-🔍 Fingerprinting Engine Docker Configuration - IA-Influencer-Agent Platform
+ Fingerprinting Engine Docker Configuration - IA-Influencer-Agent Platform
 =============================================================================
 Expert: ML Engineer + Audio Specialist + Computer Vision Expert
 Creator: Fahed Mlaiel <mlaiel@live.de>
 =============================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL 
 Tout vol, copie ou utilisation non autorisée de ce code source,
 de ce concept ou de cette propriété intellectuelle sans
 l'autorisation écrite explicite de Fahed Mlaiel est strictement
@@ -122,6 +122,9 @@ class FingerprintingEngineDockerConfig:
     
     def generate_dockerfile(self) -> str:
         """Generate production Dockerfile for Fingerprinting Engine"""
+
+
+
         return f"""
 # IA-Influencer Fingerprinting Engine - Production Docker Image
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -317,6 +320,9 @@ CMD ["gunicorn", \\
 
     def generate_docker_compose_service(self) -> Dict[str, Any]:
         """Generate docker-compose service configuration"""
+
+
+
         return {
             "image": f"{self.image_name}:{self.image_tag}",
             "container_name": self.container_name,
@@ -406,6 +412,9 @@ CMD ["gunicorn", \\
 
     def generate_requirements_txt(self) -> str:
         """Generate fingerprinting engine requirements.txt"""
+
+
+
         return """
 # IA-Influencer Fingerprinting Engine - Production Dependencies
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -526,6 +535,9 @@ joblib==1.3.2
 
     def generate_model_download_script(self) -> str:
         """Generate script to download fingerprinting models"""
+
+
+
         return """
 #!/usr/bin/env python3
 \"\"\"
@@ -610,23 +622,23 @@ def download_fingerprinting_models(cache_dir: str):
                         model_name, 
                         cache_dir=str(category_path)
                     )
-                    logger.info(f"✅ Downloaded tokenizer for {model_name}")
+                    logger.info(f" Downloaded tokenizer for {model_name}")
                 except:
                     try:
                         processor = AutoProcessor.from_pretrained(
                             model_name,
                             cache_dir=str(category_path)
                         )
-                        logger.info(f"✅ Downloaded processor for {model_name}")
+                        logger.info(f" Downloaded processor for {model_name}")
                     except:
                         try:
                             feature_extractor = AutoFeatureExtractor.from_pretrained(
                                 model_name,
                                 cache_dir=str(category_path)
                             )
-                            logger.info(f"✅ Downloaded feature extractor for {model_name}")
+                            logger.info(f" Downloaded feature extractor for {model_name}")
                         except:
-                            logger.warning(f"⚠️ No tokenizer/processor/feature_extractor for {model_name}")
+                            logger.warning(f" No tokenizer/processor/feature_extractor for {model_name}")
                 
                 # Download model
                 model = AutoModel.from_pretrained(
@@ -634,7 +646,7 @@ def download_fingerprinting_models(cache_dir: str):
                     cache_dir=str(category_path),
                     torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32
                 )
-                logger.info(f"✅ Downloaded model {model_name}")
+                logger.info(f" Downloaded model {model_name}")
                 
                 # Clear memory
                 del model
@@ -642,7 +654,7 @@ def download_fingerprinting_models(cache_dir: str):
                     torch.cuda.empty_cache()
                     
             except Exception as e:
-                logger.error(f"❌ Failed to download {model_name}: {e}")
+                logger.error(f" Failed to download {model_name}: {e}")
     
     # Download sentence transformers models separately
     sentence_models = [
@@ -659,10 +671,10 @@ def download_fingerprinting_models(cache_dir: str):
         try:
             logger.info(f"Downloading sentence transformer {model_name}...")
             model = SentenceTransformer(model_name, cache_folder=str(sentence_path))
-            logger.info(f"✅ Downloaded sentence transformer {model_name}")
+            logger.info(f" Downloaded sentence transformer {model_name}")
             del model
         except Exception as e:
-            logger.error(f"❌ Failed to download sentence transformer {model_name}: {e}")
+            logger.error(f" Failed to download sentence transformer {model_name}: {e}")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Download fingerprinting models")
@@ -670,7 +682,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     download_fingerprinting_models(args.cache_dir)
-    logger.info("✅ Fingerprinting model download completed")
+    logger.info(" Fingerprinting model download completed")
 """
 
     def save_config_files(self, output_dir: str) -> List[str]:
@@ -713,5 +725,5 @@ if __name__ == "__main__":
             yaml.dump(service_config, f, default_flow_style=False)
         files_created.append(str(compose_config_path))
         
-        logger.info(f"✅ Fingerprinting Engine configuration files saved: {files_created}")
+        logger.info(f" Fingerprinting Engine configuration files saved: {files_created}")
         return files_created

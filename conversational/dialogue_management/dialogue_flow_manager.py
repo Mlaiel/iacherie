@@ -8,7 +8,7 @@ business workflows including content protection, collaboration, and monetization
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -590,6 +590,9 @@ class DialogueFlowManager:
 
     async def _classify_business_intent(self, message: str) -> Dict[str, Any]:
         """Classify message into business intent categories"""
+
+
+
         try:
             # Use zero-shot classification for business intents
             result = self.intent_classifier(message, self.business_intent_labels)
@@ -627,6 +630,9 @@ class DialogueFlowManager:
 
     async def _analyze_sentiment(self, message: str) -> Dict[str, float]:
         """Analyze message sentiment for creator experience optimization"""
+
+
+
         try:
             result = self.sentiment_analyzer(message)
             
@@ -774,15 +780,15 @@ class DialogueFlowManager:
         
         # Personalize based on creator type
         if creator_type == CreatorType.MUSICIAN:
-            greeting = "🎵 Welcome to IA-Influencer! I'm here to help you protect your music, find collaboration opportunities, and maximize your Spotify revenue."
+            greeting = " Welcome to IA-Influencer! I'm here to help you protect your music, find collaboration opportunities, and maximize your Spotify revenue."
         elif creator_type == CreatorType.PHOTOGRAPHER:
-            greeting = "📸 Welcome to IA-Influencer! Let's protect your visual content, connect you with brands, and monetize your photography."
+            greeting = " Welcome to IA-Influencer! Let's protect your visual content, connect you with brands, and monetize your photography."
         elif creator_type == CreatorType.BLOGGER:
-            greeting = "✍️ Welcome to IA-Influencer! I'll help you protect your written content, optimize for SEO, and find monetization opportunities."
+            greeting = " Welcome to IA-Influencer! I'll help you protect your written content, optimize for SEO, and find monetization opportunities."
         elif creator_type == CreatorType.VIDEO_CREATOR:
-            greeting = "🎬 Welcome to IA-Influencer! Ready to protect your videos, collaborate with other creators, and grow your revenue?"
+            greeting = " Welcome to IA-Influencer! Ready to protect your videos, collaborate with other creators, and grow your revenue?"
         else:
-            greeting = "🚀 Welcome to IA-Influencer! I'm your AI assistant for content protection, collaboration, and monetization."
+            greeting = " Welcome to IA-Influencer! I'm your AI assistant for content protection, collaboration, and monetization."
         
         question = "What would you like to accomplish today?"
         
@@ -812,6 +818,9 @@ class DialogueFlowManager:
 
     async def _generate_content_upload_response(self, context: DialogueContext) -> Dict[str, Any]:
         """Generate content upload guidance response"""
+
+
+
         return {
             "message": "Perfect! Let's get your content uploaded and protected. I'll guide you through our secure upload process.\n\n" +
                       "Which type of content are you uploading today?",
@@ -838,6 +847,9 @@ class DialogueFlowManager:
 
     async def _generate_protection_setup_response(self, context: DialogueContext) -> Dict[str, Any]:
         """Generate content protection setup response"""
+
+
+
         return {
             "message": "Excellent! Your content has been uploaded successfully. Now let's set up AI-powered protection.\n\n" +
                       "I'll configure:\n" +
@@ -867,6 +879,9 @@ class DialogueFlowManager:
 
     async def _generate_collaboration_response(self, context: DialogueContext) -> Dict[str, Any]:
         """Generate collaboration matching response"""
+
+
+
         return {
             "message": "Great choice! Collaborations can significantly boost your reach and revenue. Let me help you find the perfect creative partners.\n\n" +
                       "What type of collaboration are you looking for?",
@@ -894,6 +909,9 @@ class DialogueFlowManager:
 
     async def _generate_monetization_response(self, context: DialogueContext) -> Dict[str, Any]:
         """Generate monetization optimization response"""
+
+
+
         return {
             "message": "Smart focus on revenue! I'll analyze your content and audience to maximize your earning potential.\n\n" +
                       "Let's explore your monetization opportunities:\n" +
@@ -925,6 +943,9 @@ class DialogueFlowManager:
 
     async def _generate_support_response(self, context: DialogueContext) -> Dict[str, Any]:
         """Generate technical support response"""
+
+
+
         return {
             "message": "I'm here to help resolve any technical issues you're experiencing. Let me assist you quickly and efficiently.\n\n" +
                       "What specific problem are you encountering?",
@@ -952,6 +973,9 @@ class DialogueFlowManager:
 
     async def _generate_feedback_response(self, context: DialogueContext) -> Dict[str, Any]:
         """Generate feedback collection response"""
+
+
+
         return {
             "message": "Thank you for using IA-Influencer! I hope I was able to help you achieve your goals today.\n\n" +
                       "How would you rate your experience with me?",
@@ -986,7 +1010,7 @@ class DialogueFlowManager:
                       "• Your protection is active 24/7\n" +
                       "• Check your dashboard for collaboration opportunities\n" +
                       "• Monitor your revenue analytics regularly\n\n" +
-                      "Feel free to return anytime for more assistance. Keep creating amazing content! 🚀",
+                      "Feel free to return anytime for more assistance. Keep creating amazing content! ",
             "quick_replies": [
                 "Start new conversation",
                 "View dashboard",
@@ -1012,6 +1036,9 @@ class DialogueFlowManager:
         intent: DialogueIntent
     ) -> Dict[str, Any]:
         """Generate default business response for unhandled states"""
+
+
+
         return {
             "message": "I'm here to help you with content protection, collaborations, and monetization. " +
                       "Could you please clarify what you'd like to accomplish?",
@@ -1052,6 +1079,9 @@ class DialogueFlowManager:
 
     async def _persist_context(self, context: DialogueContext):
         """Persist dialogue context to Redis for session management"""
+
+
+
         try:
             context_data = {
                 "conversation_id": context.conversation_id,
@@ -1080,6 +1110,9 @@ class DialogueFlowManager:
 
     async def _load_context(self, conversation_id: str) -> Optional[DialogueContext]:
         """Load dialogue context from Redis"""
+
+
+
         try:
             context_data = await self.redis_client.get(f"dialogue_context:{conversation_id}")
             if not context_data:
@@ -1179,6 +1212,9 @@ class DialogueFlowManager:
 
     async def end_conversation(self, conversation_id: str, reason: str = "user_initiated") -> bool:
         """End conversation and cleanup resources"""
+
+
+
         try:
             context = self.active_contexts.get(conversation_id)
             if context:
@@ -1203,6 +1239,9 @@ class DialogueFlowManager:
 
     def get_active_conversations(self) -> List[str]:
         """Get list of active conversation IDs"""
+
+
+
         return list(self.active_contexts.keys())
 
     async def get_conversation_summary(self, conversation_id: str) -> Dict[str, Any]:

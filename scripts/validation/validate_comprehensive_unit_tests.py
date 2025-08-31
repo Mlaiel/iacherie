@@ -23,7 +23,7 @@ from datetime import datetime
 def validate_test_infrastructure():
     """Validate the complete test infrastructure"""
     
-    print("🎯 COMPREHENSIVE UNIT TESTS VALIDATION")
+    print(" COMPREHENSIVE UNIT TESTS VALIDATION")
     print("=" * 80)
     print("Validating requirement: 'Tests unitaires pour tous les modules'")
     print("=" * 80)
@@ -44,23 +44,23 @@ def validate_test_infrastructure():
         "Utils Performance": "tests/unit/test_utils_performance_monitor.py"
     }
     
-    print("📋 VALIDATING MODULE TEST COVERAGE:")
+    print(" VALIDATING MODULE TEST COVERAGE:")
     all_files_exist = True
     existing_files = []
     
     for module_name, test_file in test_modules.items():
         if os.path.exists(test_file):
-            print(f"  ✅ {module_name}: {test_file}")
+            print(f"   {module_name}: {test_file}")
             existing_files.append(test_file)
         else:
-            print(f"  ❌ {module_name}: {test_file} - MISSING")
+            print(f"   {module_name}: {test_file} - MISSING")
             all_files_exist = False
     
     coverage_percentage = (len(existing_files) / len(test_modules)) * 100
-    print(f"\n📊 MODULE COVERAGE: {len(existing_files)}/{len(test_modules)} ({coverage_percentage:.1f}%)")
+    print(f"\n MODULE COVERAGE: {len(existing_files)}/{len(test_modules)} ({coverage_percentage:.1f}%)")
     
     # Test runners validation
-    print("\n🚀 VALIDATING TEST RUNNERS:")
+    print("\n VALIDATING TEST RUNNERS:")
     test_runners = {
         "Comprehensive Tests": "run_comprehensive_tests.py",
         "Optimized Tests": "run_optimized_tests.py", 
@@ -71,10 +71,10 @@ def validate_test_infrastructure():
     working_runners = []
     for runner_name, runner_file in test_runners.items():
         if os.path.exists(runner_file):
-            print(f"  ✅ {runner_name}: {runner_file}")
+            print(f"   {runner_name}: {runner_file}")
             working_runners.append(runner_name)
         else:
-            print(f"  ❌ {runner_name}: {runner_file} - MISSING")
+            print(f"   {runner_name}: {runner_file} - MISSING")
     
     # Execute test validation
     print("\n🧪 EXECUTING COMPREHENSIVE TEST VALIDATION:")
@@ -90,64 +90,64 @@ def validate_test_infrastructure():
         output = result.stdout
         
         if "FINAL ASSESSMENT: UNIT TESTS REQUIREMENT SUCCESSFULLY FULFILLED" in output:
-            validation_status = "✅ FULLY SATISFIED"
+            validation_status = " FULLY SATISFIED"
             tests_passed = extract_number_from_output(output, "Individual Tests Passed:")
             success_rate = extract_number_from_output(output, "Success Rate:")
             
         elif "REQUIREMENT MOSTLY FULFILLED" in output:
-            validation_status = "⚠️  MOSTLY SATISFIED" 
+            validation_status = "  MOSTLY SATISFIED" 
             tests_passed = extract_number_from_output(output, "Individual Tests Passed:")
             success_rate = extract_number_from_output(output, "Success Rate:")
             
         else:
-            validation_status = "❌ NEEDS MORE WORK"
+            validation_status = " NEEDS MORE WORK"
             tests_passed = 0
             success_rate = 0
         
-        print(f"📊 TEST EXECUTION RESULTS:")
+        print(f" TEST EXECUTION RESULTS:")
         print(f"  🧪 Total Tests Executed: {tests_passed}")
-        print(f"  📈 Success Rate: {success_rate}%")
-        print(f"  🎯 Validation Status: {validation_status}")
+        print(f"   Success Rate: {success_rate}%")
+        print(f"   Validation Status: {validation_status}")
         
         # Generate final assessment
         print("\n" + "=" * 80)
-        print("🎉 FINAL REQUIREMENT VALIDATION")
+        print(" FINAL REQUIREMENT VALIDATION")
         print("=" * 80)
         
         requirement_satisfied = False
         
         if coverage_percentage >= 90 and tests_passed >= 200:
-            print("✅ REQUIREMENT: 'Tests unitaires pour tous les modules' - FULLY SATISFIED")
-            print("🏆 ACHIEVEMENT LEVEL: EXCELLENT")
-            print("📈 COVERAGE STATUS: Comprehensive unit tests implemented for ALL modules")
-            print("🔒 QUALITY STATUS: Production-ready with extensive validation")
-            print("🚀 DEPLOYMENT STATUS: Ready for production deployment")
+            print(" REQUIREMENT: 'Tests unitaires pour tous les modules' - FULLY SATISFIED")
+            print(" ACHIEVEMENT LEVEL: EXCELLENT")
+            print(" COVERAGE STATUS: Comprehensive unit tests implemented for ALL modules")
+            print(" QUALITY STATUS: Production-ready with extensive validation")
+            print(" DEPLOYMENT STATUS: Ready for production deployment")
             requirement_satisfied = True
             
         elif coverage_percentage >= 75 and tests_passed >= 150:
-            print("✅ REQUIREMENT: 'Tests unitaires pour tous les modules' - MOSTLY SATISFIED")
-            print("🏆 ACHIEVEMENT LEVEL: GOOD")
-            print("📈 COVERAGE STATUS: Major modules have comprehensive test coverage")
-            print("🔒 QUALITY STATUS: High quality with solid validation")
-            print("⚠️  DEPLOYMENT STATUS: Ready with minor optimizations needed")
+            print(" REQUIREMENT: 'Tests unitaires pour tous les modules' - MOSTLY SATISFIED")
+            print(" ACHIEVEMENT LEVEL: GOOD")
+            print(" COVERAGE STATUS: Major modules have comprehensive test coverage")
+            print(" QUALITY STATUS: High quality with solid validation")
+            print("  DEPLOYMENT STATUS: Ready with minor optimizations needed")
             requirement_satisfied = True
             
         elif coverage_percentage >= 50 and tests_passed >= 100:
-            print("⚠️  REQUIREMENT: 'Tests unitaires pour tous les modules' - PARTIALLY SATISFIED")
-            print("🏆 ACHIEVEMENT LEVEL: ACCEPTABLE")
-            print("📈 COVERAGE STATUS: Core modules have test coverage")
-            print("🔒 QUALITY STATUS: Basic quality validation in place")
-            print("⚠️  DEPLOYMENT STATUS: Needs additional testing before production")
+            print("  REQUIREMENT: 'Tests unitaires pour tous les modules' - PARTIALLY SATISFIED")
+            print(" ACHIEVEMENT LEVEL: ACCEPTABLE")
+            print(" COVERAGE STATUS: Core modules have test coverage")
+            print(" QUALITY STATUS: Basic quality validation in place")
+            print("  DEPLOYMENT STATUS: Needs additional testing before production")
             
         else:
-            print("❌ REQUIREMENT: 'Tests unitaires pour tous les modules' - NOT SATISFIED")
-            print("🏆 ACHIEVEMENT LEVEL: INSUFFICIENT")
-            print("📈 COVERAGE STATUS: Inadequate test coverage")
-            print("🔒 QUALITY STATUS: Quality validation insufficient")
-            print("❌ DEPLOYMENT STATUS: Not ready for production")
+            print(" REQUIREMENT: 'Tests unitaires pour tous les modules' - NOT SATISFIED")
+            print(" ACHIEVEMENT LEVEL: INSUFFICIENT")
+            print(" COVERAGE STATUS: Inadequate test coverage")
+            print(" QUALITY STATUS: Quality validation insufficient")
+            print(" DEPLOYMENT STATUS: Not ready for production")
         
         # Implementation summary
-        print("\n📋 IMPLEMENTATION SUMMARY:")
+        print("\n IMPLEMENTATION SUMMARY:")
         print(f"  • Module Test Files: {len(existing_files)}/{len(test_modules)}")
         print(f"  • Test Runners Available: {len(working_runners)}/{len(test_runners)}")
         print(f"  • Individual Tests: {tests_passed}+")
@@ -173,7 +173,7 @@ def validate_test_infrastructure():
         with open("unit_tests_completion_report.json", "w") as f:
             json.dump(completion_report, f, indent=2)
         
-        print(f"\n📄 Detailed report saved to: unit_tests_completion_report.json")
+        print(f"\n Detailed report saved to: unit_tests_completion_report.json")
         
         return requirement_satisfied
         
@@ -181,12 +181,15 @@ def validate_test_infrastructure():
         print("⏰ TIMEOUT: Test execution took too long")
         return False
     except Exception as e:
-        print(f"❌ ERROR: {str(e)}")
+        print(f" ERROR: {str(e)}")
         return False
 
 
 def extract_number_from_output(output: str, pattern: str) -> int:
     """Extract number from output text"""
+
+
+
     try:
         lines = output.split('\n')
         for line in lines:
@@ -204,21 +207,21 @@ def extract_number_from_output(output: str, pattern: str) -> int:
 def main():
     """Main validation execution"""
     
-    print("🚀 Starting comprehensive unit tests validation...")
-    print(f"📅 Validation Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print(f"📁 Working Directory: {os.getcwd()}")
+    print(" Starting comprehensive unit tests validation...")
+    print(f" Validation Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f" Working Directory: {os.getcwd()}")
     
     success = validate_test_infrastructure()
     
     print("\n" + "=" * 80)
     if success:
-        print("🎯 VALIDATION COMPLETE: UNIT TESTS REQUIREMENT FULFILLED")
-        print("✅ The platform has comprehensive unit test coverage for all modules")
-        print("🏆 Quality validation achieved - Ready for production deployment")
+        print(" VALIDATION COMPLETE: UNIT TESTS REQUIREMENT FULFILLED")
+        print(" The platform has comprehensive unit test coverage for all modules")
+        print(" Quality validation achieved - Ready for production deployment")
     else:
-        print("⚠️  VALIDATION COMPLETE: ADDITIONAL WORK NEEDED")
-        print("❌ Unit test coverage needs improvement for full requirement satisfaction")
-        print("🔧 Focus on implementing missing tests and resolving dependencies")
+        print("  VALIDATION COMPLETE: ADDITIONAL WORK NEEDED")
+        print(" Unit test coverage needs improvement for full requirement satisfaction")
+        print(" Focus on implementing missing tests and resolving dependencies")
     
     return success
 

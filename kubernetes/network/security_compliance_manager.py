@@ -7,7 +7,7 @@ Copyright: All rights reserved - Unauthorized use prohibited
 Project: IA Influencer Agent Platform - Content Protection & Monetization
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  AVERTISSEMENT SÉVÈRE ⚠️
+  AVERTISSEMENT SÉVÈRE 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
@@ -160,6 +160,9 @@ class NetworkSecurityComplianceManager:
     
     async def initialize(self) -> bool:
         """Initialize security and compliance manager"""
+
+
+
         try:
             logger.info("Initializing Network Security & Compliance Manager...")
             
@@ -320,6 +323,9 @@ class NetworkSecurityComplianceManager:
     
     async def get_security_dashboard_data(self) -> Dict[str, Any]:
         """Get comprehensive security dashboard data"""
+
+
+
         try:
             dashboard_data = {
                 'timestamp': datetime.now(),
@@ -385,6 +391,9 @@ class NetworkSecurityComplianceManager:
         response_actions: Optional[List[str]] = None
     ) -> bool:
         """Respond to security incident automatically"""
+
+
+
         try:
             if not self.automatic_threat_response:
                 logger.info(f"Automatic response disabled for threat: {threat.threat_id}")
@@ -432,6 +441,9 @@ class NetworkSecurityComplianceManager:
     
     async def _load_threat_intelligence(self) -> None:
         """Load threat intelligence feeds"""
+
+
+
         try:
             for feed_url in self.threat_intelligence_feeds:
                 async with aiohttp.ClientSession() as session:
@@ -447,6 +459,9 @@ class NetworkSecurityComplianceManager:
     
     async def _detect_ddos_attack(self, traffic_data: Dict[str, Any]) -> Optional[SecurityThreat]:
         """Detect DDoS attack patterns"""
+
+
+
         try:
             source_ip = traffic_data.get('source_ip')
             if not source_ip:
@@ -490,6 +505,9 @@ class NetworkSecurityComplianceManager:
     
     async def _detect_malicious_ip(self, traffic_data: Dict[str, Any]) -> Optional[SecurityThreat]:
         """Detect traffic from known malicious IPs"""
+
+
+
         try:
             source_ip = traffic_data.get('source_ip')
             if not source_ip or source_ip not in self.malicious_ips:
@@ -648,7 +666,7 @@ async def main():
     )
     
     if await security_manager.initialize():
-        print("✅ Network Security & Compliance Manager initialized")
+        print(" Network Security & Compliance Manager initialized")
         
         # Demo security scan
         scan_results = await security_manager.perform_security_scan(
@@ -656,14 +674,14 @@ async def main():
             ["google.com", "github.com"]
         )
         
-        print(f"🔍 Security scan completed: {scan_results['scan_id']}")
+        print(f" Security scan completed: {scan_results['scan_id']}")
         
         # Get dashboard data
         dashboard = await security_manager.get_security_dashboard_data()
-        print(f"📊 Security dashboard: {dashboard.get('threat_summary', {}).get('active_threats', 0)} active threats")
+        print(f" Security dashboard: {dashboard.get('threat_summary', {}).get('active_threats', 0)} active threats")
     
     else:
-        print("❌ Failed to initialize security manager")
+        print(" Failed to initialize security manager")
 
 
 if __name__ == "__main__":

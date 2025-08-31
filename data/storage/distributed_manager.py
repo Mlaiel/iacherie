@@ -8,7 +8,7 @@ Responsibility: Distributed storage orchestration across multiple cloud provider
 Technologies: Python, Multi-cloud APIs, Load balancing, Fault tolerance
 =======================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -181,6 +181,9 @@ class DistributedStorageManager:
         Returns:
             Distribution result with all storage locations
         """
+
+
+
         try:
             # Determine strategy
             target_strategy = strategy or self.config.strategy
@@ -273,6 +276,9 @@ class DistributedStorageManager:
         Returns:
             File content or None if not found
         """
+
+
+
         try:
             # Find distribution record
             distribution = None
@@ -351,6 +357,9 @@ class DistributedStorageManager:
         Returns:
             Success status
         """
+
+
+
         try:
             # Find distribution record
             distribution = None
@@ -422,6 +431,9 @@ class DistributedStorageManager:
         Returns:
             Success status
         """
+
+
+
         try:
             if file_hash not in self.file_registry:
                 return False
@@ -513,6 +525,9 @@ class DistributedStorageManager:
         Returns:
             Rebalancing statistics
         """
+
+
+
         try:
             rebalance_stats = {
                 'files_analyzed': 0,
@@ -554,6 +569,9 @@ class DistributedStorageManager:
         Returns:
             Distribution statistics
         """
+
+
+
         try:
             stats = {
                 'total_files': len(self.file_registry),
@@ -610,6 +628,9 @@ class DistributedStorageManager:
     async def _select_providers_for_strategy(self, strategy: DistributionStrategy,
                                            file_path: str, metadata: Dict[str, Any]) -> List[StorageProvider]:
         """Select providers based on distribution strategy"""
+
+
+
         try:
             available_providers = list(self.storage_managers.keys())
             healthy_providers = await self._get_healthy_providers()
@@ -701,6 +722,9 @@ class DistributedStorageManager:
     
     async def _check_provider_health(self, provider: StorageProvider):
         """Check health of specific provider"""
+
+
+
         try:
             start_time = time.time()
             
@@ -847,6 +871,9 @@ class DistributedStorageManager:
     
     def _format_distribution_result(self, distribution: FileDistribution) -> Dict[str, Any]:
         """Format distribution result for API response"""
+
+
+
         return {
             'file_path': distribution.file_path,
             'file_hash': distribution.file_hash,

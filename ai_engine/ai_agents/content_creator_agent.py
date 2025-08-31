@@ -5,11 +5,11 @@ Module: ai_engine/ai_agents/content_creator_agent.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ==================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 AGENT CRÉATEUR DE CONTENU INTELLIGENT
+ AGENT CRÉATEUR DE CONTENU INTELLIGENT
 Agent spécialisé dans la création automatisée de contenu multimédia
 - Génération de texte, audio, image et vidéo
 - Optimisation pour plateformes sociales
@@ -193,11 +193,11 @@ class ContentCreatorAgent(BaseAIAgent):
         
         # Templates basiques pour différents styles
         if style == ContentStyle.HUMOROUS.value:
-            base_text = f"🎉 {prompt} - but make it fun! Who else agrees? #ContentCreation #AI"
+            base_text = f" {prompt} - but make it fun! Who else agrees? #ContentCreation #AI"
         elif style == ContentStyle.EDUCATIONAL.value:
-            base_text = f"📚 Did you know? {prompt}. Here's what you need to know... 🧵"
+            base_text = f" Did you know? {prompt}. Here's what you need to know... 🧵"
         elif style == ContentStyle.PROMOTIONAL.value:
-            base_text = f"🚀 Exciting news! {prompt}. Don't miss out! Link in bio 👆"
+            base_text = f" Exciting news! {prompt}. Don't miss out! Link in bio "
         else:
             base_text = f"{prompt}. What are your thoughts on this? #Discussion"
         
@@ -474,9 +474,9 @@ When implementing strategies around {prompt.lower()}, consider:
         # Templates basiques (dans un vrai système, ceux-ci seraient chargés depuis une base de données)
         self.content_templates = {
             "social_post": {
-                "casual": "Hey everyone! {content} What do you think? 💭",
+                "casual": "Hey everyone! {content} What do you think? ",
                 "professional": "{content}. Looking forward to your thoughts on this.",
-                "humorous": "{content} 😄 Can you relate? Drop a comment!"
+                "humorous": "{content}  Can you relate? Drop a comment!"
             },
             "article": {
                 "introduction": "# {title}\n\n{content}",

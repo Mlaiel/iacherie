@@ -54,6 +54,9 @@ class VideoEngine:
 
     async def start(self) -> None:
         """Start the video processing engine"""
+
+
+
         try:
             self.is_running = True
             logger.info("VideoEngine started successfully")
@@ -63,6 +66,9 @@ class VideoEngine:
 
     async def process(self, data: Dict[str, Any]) -> VideoResult:
         """Process video operation"""
+
+
+
         try:
             job_id = data.get('job_id', 'auto-generated')
             

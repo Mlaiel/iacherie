@@ -22,7 +22,7 @@ Contact: mlaiel@live.de
 - DevOps Engineer: Fahed Mlaiel
 - IA Prompt Engineer: Fahed Mlaiel
 
-⚠️ ATTENTION IMPORTANTE ⚠️
+ ATTENTION IMPORTANTE 
 Toute tentative de vol, copie, ou utilisation non autorisée de ce code, 
 concept ou idée sans autorisation écrite explicite de Fahed Mlaiel 
 sera poursuivie selon la loi allemande et internationale.
@@ -101,6 +101,9 @@ class MigrationRunner:
     
     def _ensure_migrations_table(self) -> None:
         """Ensure schema_migrations table exists"""
+
+
+
         try:
             create_table_sql = """
                 CREATE TABLE IF NOT EXISTS schema_migrations (
@@ -137,6 +140,9 @@ class MigrationRunner:
     
     def _discover_migrations(self) -> None:
         """Discover and parse all migration files"""
+
+
+
         try:
             if not self.migrations_dir.exists():
                 self.migrations_dir.mkdir(parents=True, exist_ok=True)
@@ -165,6 +171,9 @@ class MigrationRunner:
     
     def _parse_migration_file(self, filepath: Path) -> Optional[Migration]:
         """Parse migration file and extract metadata"""
+
+
+
         try:
             # Extract version from filename (format: YYYYMMDD_HHMMSS_name.py)
             filename_pattern = r"(\d{8}_\d{6})_(.+)\.py"
@@ -233,6 +242,9 @@ class MigrationRunner:
     
     def _calculate_execution_order(self) -> None:
         """Calculate optimal execution order using topological sort"""
+
+
+
         try:
             # Topological sort with Kahn's algorithm
             in_degree = {v: 0 for v in self.discovered_migrations.keys()}
@@ -280,6 +292,9 @@ class MigrationRunner:
     
     def get_migration_status(self) -> Dict[str, Any]:
         """Get comprehensive migration status"""
+
+
+
         try:
             # Get executed migrations from database
             executed_query = """
@@ -339,6 +354,9 @@ class MigrationRunner:
     
     def migrate_up(self, target_version: Optional[str] = None) -> bool:
         """Execute pending migrations up to target version"""
+
+
+
         try:
             status = self.get_migration_status()
             pending_migrations = status.get('pending_migrations', [])
@@ -378,6 +396,9 @@ class MigrationRunner:
     
     def migrate_down(self, target_version: str) -> bool:
         """Rollback migrations to target version"""
+
+
+
         try:
             # Get current migration status
             status = self.get_migration_status()
@@ -555,6 +576,9 @@ class MigrationRunner:
     
     def _record_migration_start(self, migration: Migration) -> None:
         """Record migration start in database"""
+
+
+
         try:
             insert_query = """
                 INSERT INTO schema_migrations (version, name, checksum, status)
@@ -574,6 +598,9 @@ class MigrationRunner:
     
     def _record_migration_completion(self, migration: Migration, execution_time: float) -> None:
         """Record successful migration completion"""
+
+
+
         try:
             update_query = """
                 UPDATE schema_migrations 
@@ -595,6 +622,9 @@ class MigrationRunner:
     
     def _record_migration_failure(self, migration: Migration, error_message: str, execution_time: float) -> None:
         """Record migration failure"""
+
+
+
         try:
             update_query = """
                 UPDATE schema_migrations 
@@ -622,6 +652,9 @@ class MigrationRunner:
         dependencies: Optional[List[str]] = None
     ) -> str:
         """Create a new migration file"""
+
+
+
         try:
             # Generate version timestamp
             version = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -746,6 +779,9 @@ def post_migrate(db_manager):
     
     def validate_migrations(self) -> Dict[str, Any]:
         """Validate all discovered migrations"""
+
+
+
         try:
             validation_results = {
                 'valid': True,
@@ -830,6 +866,9 @@ def post_migrate(db_manager):
     
     def get_dependency_tree(self) -> Dict[str, Any]:
         """Get migration dependency tree visualization"""
+
+
+
         try:
             tree = {
                 'nodes': [],
@@ -871,6 +910,9 @@ def post_migrate(db_manager):
     
     def _get_migration_status(self, version: str) -> str:
         """Get status of a specific migration"""
+
+
+
         try:
             query = "SELECT status FROM schema_migrations WHERE version = %s"
             result = self.db_manager.execute_query(query, (version,))
@@ -885,6 +927,9 @@ def post_migrate(db_manager):
     
     def cleanup_failed_migrations(self) -> bool:
         """Clean up failed migration records"""
+
+
+
         try:
             # Remove failed migration records
             cleanup_query = "DELETE FROM schema_migrations WHERE status = 'failed'"
@@ -899,6 +944,9 @@ def post_migrate(db_manager):
     
     def export_migration_report(self, filepath: str) -> bool:
         """Export detailed migration report"""
+
+
+
         try:
             status = self.get_migration_status()
             validation = self.validate_migrations()
@@ -1016,6 +1064,9 @@ class MigrationRunner:
     
     def _ensure_migrations_table(self) -> None:
         """Create migrations tracking table if not exists"""
+
+
+
         try:
             create_table_sql = f"""
                 CREATE TABLE IF NOT EXISTS {self.migrations_table} (
@@ -1047,10 +1098,16 @@ class MigrationRunner:
     
     def _calculate_checksum(self, content: str) -> str:
         """Calculate MD5 checksum of migration content"""
+
+
+
         return hashlib.md5(content.encode('utf-8')).hexdigest()
     
     def _parse_migration_file(self, filepath: Path) -> MigrationFile:
         """Parse migration file and extract metadata"""
+
+
+
         try:
             with open(filepath, 'r', encoding='utf-8') as f:
                 content = f.read()
@@ -1107,6 +1164,9 @@ class MigrationRunner:
     
     def discover_migrations(self) -> List[MigrationFile]:
         """Discover and parse all migration files"""
+
+
+
         try:
             if not self.migrations_dir.exists():
                 self.logger.warning(f"Migrations directory not found: {self.migrations_dir}")
@@ -1135,6 +1195,9 @@ class MigrationRunner:
     
     def _version_sort_key(self, version: str) -> Tuple:
         """Generate sort key for version comparison"""
+
+
+
         try:
             # Handle numeric versions (1.0.0, 001, etc.)
             if re.match(r'^\d+(\.\d+)*$', version):
@@ -1160,6 +1223,9 @@ class MigrationRunner:
     
     def get_migration_records(self) -> List[MigrationRecord]:
         """Get all migration execution records"""
+
+
+
         try:
             query = f"""
                 SELECT version, name, checksum, status, executed_at, 
@@ -1190,6 +1256,9 @@ class MigrationRunner:
     
     def get_pending_migrations(self) -> List[MigrationFile]:
         """Get list of pending migrations"""
+
+
+
         try:
             all_migrations = self.discover_migrations()
             executed_versions = {
@@ -1231,6 +1300,9 @@ class MigrationRunner:
     
     def _record_migration_start(self, migration: MigrationFile) -> None:
         """Record migration start in tracking table"""
+
+
+
         try:
             query = f"""
                 INSERT INTO {self.migrations_table} 
@@ -1264,6 +1336,9 @@ class MigrationRunner:
         error_message: Optional[str] = None
     ) -> None:
         """Record migration completion in tracking table"""
+
+
+
         try:
             query = f"""
                 UPDATE {self.migrations_table}
@@ -1395,6 +1470,9 @@ class MigrationRunner:
     
     def _get_migration_record(self, version: str) -> Optional[MigrationRecord]:
         """Get migration record by version"""
+
+
+
         try:
             query = f"""
                 SELECT version, name, checksum, status, executed_at, 
@@ -1425,6 +1503,9 @@ class MigrationRunner:
     
     def migrate_up(self, target_version: Optional[str] = None) -> bool:
         """Execute all pending migrations up to target version"""
+
+
+
         try:
             pending_migrations = self.get_pending_migrations()
             
@@ -1467,6 +1548,9 @@ class MigrationRunner:
     
     def migrate_down(self, target_version: str) -> bool:
         """Rollback migrations down to target version"""
+
+
+
         try:
             executed_records = [
                 record for record in self.get_migration_records()
@@ -1514,6 +1598,9 @@ class MigrationRunner:
     
     def get_migration_status(self) -> Dict[str, Any]:
         """Get comprehensive migration status"""
+
+
+
         try:
             all_migrations = self.discover_migrations()
             records = self.get_migration_records()
@@ -1559,6 +1646,9 @@ class MigrationRunner:
         dependencies: List[str] = None
     ) -> Path:
         """Create new migration file template"""
+
+
+
         try:
             if dependencies is None:
                 dependencies = []
@@ -1603,6 +1693,9 @@ class MigrationRunner:
     
     def validate_migrations(self) -> Dict[str, List[str]]:
         """Validate all migration files for consistency"""
+
+
+
         try:
             validation_errors = {
                 'syntax_errors': [],

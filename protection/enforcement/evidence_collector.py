@@ -131,6 +131,9 @@ class EvidencePackage:
     
     def get_evidence_by_type(self, evidence_type: EvidenceType) -> List[EvidenceItem]:
         """Get all evidence items of specific type"""
+
+
+
         return [item for item in self.evidence_items if item.evidence_type == evidence_type]
     
     def calculate_package_hash(self) -> str:
@@ -159,6 +162,9 @@ class ScreenshotCollector:
         description: str = ""
     ) -> EvidenceItem:
         """Capture screenshot of specified URL"""
+
+
+
         try:
             logger.info(f"Capturing screenshot of {url}")
             
@@ -202,6 +208,9 @@ class ScreenshotCollector:
     
     async def _simulate_screenshot_capture(self, url: str) -> bytes:
         """Simulate screenshot capture (placeholder)"""
+
+
+
         try:
             # In real implementation, would use browser automation
             # Create a simple placeholder image
@@ -228,6 +237,9 @@ class ScreenshotCollector:
     
     def _extract_platform_from_url(self, url: str) -> str:
         """Extract platform name from URL"""
+
+
+
         try:
             parsed = urlparse(url)
             domain = parsed.netloc.lower()
@@ -265,6 +277,9 @@ class MetadataCollector:
         case_id: str
     ) -> EvidenceItem:
         """Collect metadata from URL"""
+
+
+
         try:
             logger.info(f"Collecting metadata from {url}")
             
@@ -304,6 +319,9 @@ class MetadataCollector:
     
     async def _fetch_page_metadata(self, url: str) -> Dict[str, Any]:
         """Fetch metadata from web page"""
+
+
+
         try:
             metadata = {
                 'url': url,
@@ -344,6 +362,9 @@ class MetadataCollector:
     
     def _parse_html_metadata(self, html: str) -> Dict[str, Any]:
         """Parse HTML for metadata (simplified implementation)"""
+
+
+
         try:
             # Simplified HTML parsing - in real implementation would use proper parser
             meta_data = {
@@ -380,6 +401,9 @@ class MetadataCollector:
     
     def _extract_platform_from_url(self, url: str) -> str:
         """Extract platform name from URL"""
+
+
+
         try:
             parsed = urlparse(url)
             domain = parsed.netloc.lower()
@@ -417,6 +441,9 @@ class TimestampCollector:
         description: str = ""
     ) -> EvidenceItem:
         """Create timestamp proof for content"""
+
+
+
         try:
             logger.info(f"Creating timestamp proof for case {case_id}")
             
@@ -464,6 +491,9 @@ class TimestampCollector:
     
     async def _create_blockchain_timestamp(self, content_hash: str) -> Dict[str, Any]:
         """Create blockchain timestamp (placeholder)"""
+
+
+
         try:
             # In real implementation, would interact with blockchain service
             # like OpenTimestamps, or submit to Bitcoin/Ethereum blockchain
@@ -498,6 +528,9 @@ class FingerprintCollector:
         similarity_score: float
     ) -> EvidenceItem:
         """Collect fingerprint matching evidence"""
+
+
+
         try:
             logger.info(f"Collecting fingerprint evidence for case {case_id}")
             
@@ -605,6 +638,9 @@ class EvidenceCollectionService:
         collection_types: Optional[List[EvidenceType]] = None
     ) -> EvidencePackage:
         """Start comprehensive evidence collection for a case"""
+
+
+
         try:
             logger.info(f"Starting evidence collection for case {case_id}")
             
@@ -667,6 +703,9 @@ class EvidenceCollectionService:
     
     async def _collect_screenshot_evidence(self, package: EvidencePackage, url: str):
         """Collect screenshot evidence"""
+
+
+
         try:
             evidence = await self.screenshot_collector.capture_screenshot(
                 url=url,
@@ -680,6 +719,9 @@ class EvidenceCollectionService:
     
     async def _collect_metadata_evidence(self, package: EvidencePackage, url: str):
         """Collect metadata evidence"""
+
+
+
         try:
             evidence = await self.metadata_collector.collect_metadata(
                 url=url,
@@ -692,6 +734,9 @@ class EvidenceCollectionService:
     
     async def _collect_timestamp_evidence(self, package: EvidencePackage):
         """Collect timestamp evidence"""
+
+
+
         try:
             # Create timestamp for the violation URL content
             url_hash = hashlib.sha256(package.violation_url.encode()).hexdigest()
@@ -714,6 +759,9 @@ class EvidenceCollectionService:
         similarity_score: float
     ) -> bool:
         """Add fingerprint evidence to existing package"""
+
+
+
         try:
             package = self.active_packages.get(case_id)
             if not package:
@@ -745,6 +793,9 @@ class EvidenceCollectionService:
     
     async def _verify_evidence_package(self, package: EvidencePackage):
         """Verify evidence package integrity and quality"""
+
+
+
         try:
             verification_checks = {
                 'has_screenshot': bool(package.get_evidence_by_type(EvidenceType.SCREENSHOT)),
@@ -790,6 +841,9 @@ class EvidenceCollectionService:
     
     async def _save_evidence_package(self, package: EvidencePackage):
         """Save evidence package to persistent storage"""
+
+
+
         try:
             case_dir = self.storage_path / package.case_id
             case_dir.mkdir(exist_ok=True)
@@ -862,6 +916,9 @@ class EvidenceCollectionService:
     
     async def get_evidence_package(self, case_id: str) -> Optional[EvidencePackage]:
         """Retrieve evidence package for case"""
+
+
+
         try:
             # Check active packages first
             if case_id in self.active_packages:
@@ -927,6 +984,9 @@ class EvidenceCollectionService:
     
     async def cleanup_expired_evidence(self):
         """Clean up expired evidence packages"""
+
+
+
         try:
             cutoff_date = datetime.utcnow() - timedelta(days=self.evidence_retention_days)
             cleaned_count = 0
@@ -961,6 +1021,9 @@ class EvidenceCollectionService:
     
     async def get_collection_statistics(self) -> Dict[str, Any]:
         """Get evidence collection statistics"""
+
+
+
         try:
             total_packages = len(list(self.storage_path.iterdir()))
             active_packages = len(self.active_packages)
@@ -995,6 +1058,9 @@ class EvidenceCollectionService:
     
     async def shutdown(self):
         """Shutdown evidence collection service"""
+
+
+
         try:
             # Save all active packages
             for package in self.active_packages.values():
@@ -1013,6 +1079,9 @@ evidence_service = EvidenceCollectionService()
 
 async def get_evidence_service() -> EvidenceCollectionService:
     """Get the global evidence collection service instance"""
+
+
+
     return evidence_service
 
 

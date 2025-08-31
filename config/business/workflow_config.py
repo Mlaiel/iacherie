@@ -377,16 +377,25 @@ class WorkflowConfig:
     @classmethod
     def get_workflow_for_content_type(cls, content_type: ContentType) -> Dict:
         """Get workflow configuration for specific content type."""
+
+
+
         return cls.CONTENT_WORKFLOWS.get(content_type, cls.CONTENT_WORKFLOWS[ContentType.TEXT])
 
     @classmethod
     def get_creator_workflow(cls, creator_type: str) -> Dict:
         """Get workflow configuration for specific creator type."""
+
+
+
         return cls.CREATOR_WORKFLOWS.get(creator_type.lower(), cls.CREATOR_WORKFLOWS["influencer"])
 
     @classmethod
     def get_stage_config(cls, stage: WorkflowStage) -> StageConfiguration:
         """Get configuration for specific workflow stage."""
+
+
+
         return cls.STAGE_CONFIGURATIONS.get(stage)
 
     @classmethod

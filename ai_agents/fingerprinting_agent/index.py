@@ -8,7 +8,7 @@ identification with industrial-grade precision and performance.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -137,6 +137,9 @@ DEFAULT_CONFIG = {
 
 def get_module_info() -> dict:
     """Get comprehensive module information"""
+
+
+
     return {
         "name": "Fingerprinting Agent Module",
         "version": __version__,
@@ -152,6 +155,9 @@ def get_module_info() -> dict:
 
 def validate_content_type(content_type: str) -> bool:
     """Validate if content type is supported"""
+
+
+
     return content_type in SUPPORTED_CONTENT_TYPES
 
 def get_recommended_quality(content_type: str, use_case: str) -> str:

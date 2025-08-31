@@ -254,6 +254,9 @@ class RedisCacheConfig(BaseModel):
     
     def get_connection_info(self) -> Dict[str, Any]:
         """Get connection information for monitoring"""
+
+
+
         return {
             "mode": self.mode,
             "host": self.connection.host,

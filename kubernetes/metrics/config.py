@@ -238,6 +238,9 @@ class MetricsConfiguration:
     
     def get_dashboard_configs(self) -> Dict[str, Dict[str, Any]]:
         """Get default dashboard configurations"""
+
+
+
         return {
             "application_overview": {
                 "title": "Application Overview",
@@ -385,6 +388,9 @@ class MetricsConfiguration:
     
     def get_notification_channels(self) -> Dict[str, Dict[str, Any]]:
         """Get notification channel configurations"""
+
+
+
         return {
             "email": {
                 "type": "email",

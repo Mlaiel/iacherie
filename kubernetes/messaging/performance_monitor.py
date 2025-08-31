@@ -91,6 +91,9 @@ class MessagingPerformanceMonitor:
 
     async def initialize(self) -> None:
         """Initialize performance monitor"""
+
+
+
         try:
             # Setup Redis connection
             self.redis_client = aioredis.from_url(
@@ -185,6 +188,9 @@ class MessagingPerformanceMonitor:
 
     async def _start_monitoring(self) -> None:
         """Start all monitoring tasks"""
+
+
+
         try:
             # System metrics monitoring
             system_task = asyncio.create_task(self._monitor_system_metrics())
@@ -235,6 +241,9 @@ class MessagingPerformanceMonitor:
 
     async def _collect_system_metrics(self) -> PerformanceMetrics:
         """Collect current system metrics"""
+
+
+
         try:
             # CPU metrics
             cpu_usage = psutil.cpu_percent(interval=1)
@@ -297,6 +306,9 @@ class MessagingPerformanceMonitor:
 
     async def _collect_queue_metrics(self) -> Dict[str, Any]:
         """Collect metrics from all queues"""
+
+
+
         try:
             queue_metrics = {}
             
@@ -333,6 +345,9 @@ class MessagingPerformanceMonitor:
 
     async def _calculate_queue_performance(self, queue_metrics: Dict[str, Any]) -> Dict[str, Dict[str, float]]:
         """Calculate queue performance indicators"""
+
+
+
         try:
             performance = {
                 "latency": {},
@@ -359,6 +374,9 @@ class MessagingPerformanceMonitor:
 
     def _estimate_queue_latency(self, metrics: Dict[str, Any]) -> float:
         """Estimate queue latency based on queue length and processing rate"""
+
+
+
         try:
             # Simple estimation: pending_tasks / estimated_processing_rate
             pending = metrics.get("pending_tasks", 0)
@@ -375,6 +393,9 @@ class MessagingPerformanceMonitor:
 
     async def _calculate_throughput(self, queue_name: str) -> float:
         """Calculate throughput for a queue"""
+
+
+
         try:
             # Get completed tasks count from Redis
             completed_key = f"queue:{queue_name}:completed_count"
@@ -401,6 +422,9 @@ class MessagingPerformanceMonitor:
 
     async def _calculate_error_rate(self, queue_name: str) -> float:
         """Calculate error rate for a queue"""
+
+
+
         try:
             # Get DLQ count and total processed
             dlq_count = await self.redis_client.llen(f"queue:{queue_name}:dlq")
@@ -421,6 +445,9 @@ class MessagingPerformanceMonitor:
 
     async def _store_metrics_in_redis(self, metrics: PerformanceMetrics) -> None:
         """Store metrics in Redis for external access"""
+
+
+
         try:
             metrics_data = {
                 "timestamp": metrics.timestamp,
@@ -450,6 +477,9 @@ class MessagingPerformanceMonitor:
 
     async def _check_alert_conditions(self, metrics: PerformanceMetrics) -> None:
         """Check alert conditions against current metrics"""
+
+
+
         try:
             for rule in self.alert_rules:
                 if not rule.enabled:
@@ -475,6 +505,9 @@ class MessagingPerformanceMonitor:
 
     def _get_metric_value(self, metrics: PerformanceMetrics, metric_name: str) -> Optional[float]:
         """Extract metric value from metrics object"""
+
+
+
         try:
             if metric_name == "cpu_usage":
                 return metrics.cpu_usage
@@ -508,6 +541,9 @@ class MessagingPerformanceMonitor:
 
     def _evaluate_threshold(self, value: float, threshold: float, operator: str) -> bool:
         """Evaluate threshold condition"""
+
+
+
         try:
             if operator == "greater":
                 return value > threshold
@@ -528,6 +564,9 @@ class MessagingPerformanceMonitor:
 
     async def _handle_alert(self, rule: AlertRule, metric_value: float, timestamp: float) -> None:
         """Handle triggered alert"""
+
+
+
         try:
             alert_key = rule.name
             
@@ -555,6 +594,9 @@ class MessagingPerformanceMonitor:
 
     async def _fire_alert(self, rule: AlertRule, metric_value: float, alert: Dict[str, Any]) -> None:
         """Fire an alert"""
+
+
+
         try:
             if alert["fired"]:
                 return  # Already fired
@@ -589,6 +631,9 @@ class MessagingPerformanceMonitor:
 
     async def _clear_alert(self, alert_name: str) -> None:
         """Clear an active alert"""
+
+
+
         try:
             if alert_name in self.active_alerts:
                 logger.info(f"CLEARED: Alert {alert_name} resolved")
@@ -634,6 +679,9 @@ class MessagingPerformanceMonitor:
 
     async def _auto_optimize_performance(self) -> None:
         """Auto-optimize performance based on current metrics"""
+
+
+
         try:
             if not self.metrics_history:
                 return
@@ -702,6 +750,9 @@ class MessagingPerformanceMonitor:
 
     async def get_current_metrics(self) -> Optional[PerformanceMetrics]:
         """Get current performance metrics"""
+
+
+
         try:
             if self.metrics_history:
                 return self.metrics_history[-1]
@@ -713,6 +764,9 @@ class MessagingPerformanceMonitor:
 
     async def get_metrics_history(self, duration_minutes: int = 60) -> List[PerformanceMetrics]:
         """Get metrics history for specified duration"""
+
+
+
         try:
             cutoff_time = time.time() - (duration_minutes * 60)
             
@@ -729,6 +783,9 @@ class MessagingPerformanceMonitor:
 
     async def get_performance_summary(self) -> Dict[str, Any]:
         """Get comprehensive performance summary"""
+
+
+
         try:
             if not self.metrics_history:
                 return {"status": "no_data"}
@@ -786,6 +843,9 @@ class MessagingPerformanceMonitor:
             metric_value: Current metric value
             alert_data: Alert data dictionary
         """
+
+
+
         try:
             notification_payload = {
                 "alert_type": "performance_threshold_exceeded",
@@ -830,6 +890,9 @@ class MessagingPerformanceMonitor:
     
     async def _send_email_alert(self, notification_payload: Dict[str, Any]) -> None:
         """Send email alert notification"""
+
+
+
         try:
             import smtplib
             from email.mime.text import MIMEText
@@ -887,6 +950,9 @@ class MessagingPerformanceMonitor:
     
     async def _send_slack_alert(self, notification_payload: Dict[str, Any]) -> None:
         """Send Slack alert notification"""
+
+
+
         try:
             import aiohttp
             import os
@@ -904,13 +970,13 @@ class MessagingPerformanceMonitor:
             }
             
             severity_emojis = {
-                "critical": "🚨",
-                "high": "⚠️",
-                "medium": "💛",
-                "low": "ℹ️"
+                "critical": "",
+                "high": "",
+                "medium": "",
+                "low": "ℹ"
             }
             
-            emoji = severity_emojis.get(notification_payload['severity'], "📊")
+            emoji = severity_emojis.get(notification_payload['severity'], "")
             color = severity_colors.get(notification_payload['severity'], "#808080")
             
             slack_payload = {
@@ -964,6 +1030,9 @@ class MessagingPerformanceMonitor:
     
     async def _send_webhook_alert(self, notification_payload: Dict[str, Any]) -> None:
         """Send webhook alert notification"""
+
+
+
         try:
             import aiohttp
             import os
@@ -985,6 +1054,9 @@ class MessagingPerformanceMonitor:
     
     async def _send_sms_alert(self, notification_payload: Dict[str, Any]) -> None:
         """Send SMS alert notification for critical alerts"""
+
+
+
         try:
             import os
             
@@ -1019,6 +1091,9 @@ class MessagingPerformanceMonitor:
 
     async def add_alert_rule(self, rule: AlertRule) -> bool:
         """Add a new alert rule"""
+
+
+
         try:
             # Check if rule already exists
             for existing_rule in self.alert_rules:
@@ -1035,6 +1110,9 @@ class MessagingPerformanceMonitor:
 
     async def remove_alert_rule(self, rule_name: str) -> bool:
         """Remove an alert rule"""
+
+
+
         try:
             self.alert_rules = [r for r in self.alert_rules if r.name != rule_name]
             
@@ -1051,6 +1129,9 @@ class MessagingPerformanceMonitor:
 
     async def get_active_alerts(self) -> List[Dict[str, Any]]:
         """Get list of active alerts"""
+
+
+
         try:
             active_alerts = []
             
@@ -1072,10 +1153,16 @@ class MessagingPerformanceMonitor:
 
     async def get_optimization_recommendations(self) -> List[Dict[str, Any]]:
         """Get current optimization recommendations"""
+
+
+
         return self.optimization_recommendations.copy()
 
     async def shutdown(self) -> None:
         """Shutdown performance monitor"""
+
+
+
         try:
             logger.info("Shutting down performance monitor")
             

@@ -43,6 +43,9 @@ class ContentOptimizer:
         platform_name: str
     ) -> ContentMetadata:
         """Optimize content for a specific platform."""
+
+
+
         try:
             platform_rules = self.platform_rules.get(platform_name.lower(), {})
             if not platform_rules:
@@ -80,6 +83,9 @@ class ContentOptimizer:
         platform_rules: Dict[str, Any]
     ) -> ContentMetadata:
         """Optimize text content based on platform rules."""
+
+
+
         try:
             # Title optimization
             if "title" in platform_rules:
@@ -132,6 +138,9 @@ class ContentOptimizer:
         platform_rules: Dict[str, Any]
     ) -> ContentMetadata:
         """Optimize media content based on platform rules."""
+
+
+
         try:
             if not content_metadata.file_path:
                 return content_metadata
@@ -208,6 +217,9 @@ class ContentOptimizer:
         platform_rules: Dict[str, Any]
     ) -> ContentMetadata:
         """Optimize SEO elements for platform discovery."""
+
+
+
         try:
             if "seo" in platform_rules:
                 seo_rules = platform_rules["seo"]
@@ -247,6 +259,9 @@ class ContentOptimizer:
         platform_rules: Dict[str, Any]
     ) -> ContentMetadata:
         """Optimize timing-related elements."""
+
+
+
         try:
             if "timing" in platform_rules:
                 timing_rules = platform_rules["timing"]
@@ -281,6 +296,9 @@ class ContentOptimizer:
         platform_rules: Dict[str, Any]
     ) -> ContentMetadata:
         """Optimize monetization settings for platform."""
+
+
+
         try:
             if "monetization" in platform_rules and content_metadata.monetization_enabled:
                 monetization_rules = platform_rules["monetization"]
@@ -315,6 +333,9 @@ class ContentOptimizer:
         available_categories: List[str]
     ) -> Optional[str]:
         """Automatically select the best category for content."""
+
+
+
         try:
             # Simple keyword-based category selection
             content_text = f"{content_metadata.title} {content_metadata.description}".lower()
@@ -352,6 +373,9 @@ class ContentOptimizer:
         platform_name: str
     ) -> Dict[str, Any]:
         """Get optimization suggestions without applying them."""
+
+
+
         try:
             platform_rules = self.platform_rules.get(platform_name.lower(), {})
             suggestions = {
@@ -412,6 +436,9 @@ class ContentOptimizer:
         target_platforms: List[str]
     ) -> Dict[str, List[ContentMetadata]]:
         """Optimize multiple content pieces for multiple platforms."""
+
+
+
         try:
             results = {}
             

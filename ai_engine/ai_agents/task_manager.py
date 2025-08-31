@@ -7,7 +7,7 @@ multiple AI agents with intelligent scheduling and resource optimization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
@@ -123,6 +123,9 @@ class Task:
     @property
     def is_ready(self) -> bool:
         """Check if task is ready to execute (dependencies satisfied)"""
+
+
+
         return self.status == TaskStatus.QUEUED and not self.depends_on
     
     @property
@@ -225,6 +228,9 @@ class TaskManager:
     
     async def initialize(self) -> None:
         """Initialize the task manager"""
+
+
+
         try:
             # Start background processing tasks
             self._background_tasks.extend([
@@ -243,6 +249,9 @@ class TaskManager:
     
     async def submit_task(self, task: Task) -> str:
         """Submit a new task for execution"""
+
+
+
         try:
             # Validate task
             if not self._validate_task(task):
@@ -270,6 +279,9 @@ class TaskManager:
     
     async def submit_batch(self, batch: TaskBatch) -> str:
         """Submit a batch of related tasks"""
+
+
+
         try:
             # Store batch
             self.task_batches[batch.batch_id] = batch
@@ -304,6 +316,9 @@ class TaskManager:
     
     async def cancel_task(self, task_id: str) -> bool:
         """Cancel a task"""
+
+
+
         try:
             task = self.tasks.get(task_id)
             if not task:
@@ -458,6 +473,9 @@ class TaskManager:
     
     async def _assign_and_start_task(self, task: Task, agent_id: str) -> None:
         """Assign task to agent and start execution"""
+
+
+
         try:
             # Update task status
             task.status = TaskStatus.ASSIGNED
@@ -506,6 +524,9 @@ class TaskManager:
     
     async def _execute_task_on_agent(self, task: Task, agent, agent_task) -> None:
         """Execute task on agent and handle result"""
+
+
+
         try:
             # Execute task
             result = await agent.execute_task(agent_task)
@@ -549,6 +570,9 @@ class TaskManager:
     
     async def get_system_statistics(self) -> Dict[str, Any]:
         """Get comprehensive system statistics"""
+
+
+
         return {
             "task_statistics": self.execution_stats,
             "queue_size": len(self.task_queue),

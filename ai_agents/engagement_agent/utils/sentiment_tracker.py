@@ -7,7 +7,7 @@ mood analysis, and psychological insights for audience engagement optimization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -168,6 +168,9 @@ class SentimentTracker:
 
     async def initialize(self) -> bool:
         """Initialize sentiment tracker with AI models"""
+
+
+
         try:
             # Load sentiment analysis models
             self.sentiment_pipeline = pipeline(
@@ -220,6 +223,9 @@ class SentimentTracker:
         Returns:
             SentimentMetrics: Comprehensive sentiment analysis
         """
+
+
+
         try:
             # Basic preprocessing
             clean_text = await self._preprocess_text(text)
@@ -305,6 +311,9 @@ class SentimentTracker:
         Returns:
             MoodAnalysis: Comprehensive mood analysis
         """
+
+
+
         try:
             # Get sentiment history for subject
             sentiment_data = self.sentiment_history.get(subject_id, [])
@@ -402,6 +411,9 @@ class SentimentTracker:
         Returns:
             Dict: Comprehensive audience sentiment analysis
         """
+
+
+
         try:
             # Analyze sentiment for each interaction
             sentiment_analyses = []
@@ -472,6 +484,9 @@ class SentimentTracker:
     
     async def _analyze_with_textblob(self, text: str) -> Dict[str, float]:
         """Analyze sentiment using TextBlob"""
+
+
+
         try:
             blob = TextBlob(text)
             return {
@@ -484,6 +499,9 @@ class SentimentTracker:
 
     async def _analyze_with_roberta(self, text: str) -> Dict[str, float]:
         """Analyze sentiment using RoBERTa model"""
+
+
+
         try:
             results = self.sentiment_pipeline(text)
             
@@ -508,6 +526,9 @@ class SentimentTracker:
 
     async def _analyze_with_bert(self, text: str) -> Dict[str, float]:
         """Analyze sentiment using BERT model"""
+
+
+
         try:
             results = self.bert_sentiment_model(text)
             
@@ -535,6 +556,9 @@ class SentimentTracker:
 
     async def _detect_emotions(self, text: str) -> Dict[str, float]:
         """Detect emotions in text using emotion classification model"""
+
+
+
         try:
             results = self.emotion_pipeline(text)
             
@@ -566,6 +590,9 @@ class SentimentTracker:
 
     async def _calculate_ensemble_scores(self, *analyses) -> Dict[str, float]:
         """Calculate ensemble sentiment scores from multiple models"""
+
+
+
         try:
             polarities = []
             confidences = []
@@ -618,6 +645,9 @@ class SentimentTracker:
     async def _determine_primary_emotion(self, 
                                        emotion_scores: Dict[str, float]) -> Tuple[EmotionType, float]:
         """Determine primary emotion and confidence"""
+
+
+
         try:
             if not emotion_scores:
                 return EmotionType.TRUST, 0.0
@@ -640,6 +670,9 @@ class SentimentTracker:
 
     async def _calculate_mood_trend(self, sentiment_scores: List[float]) -> MoodTrend:
         """Calculate mood trend from sentiment score sequence"""
+
+
+
         try:
             if len(sentiment_scores) < 2:
                 return MoodTrend.STABLE
@@ -672,6 +705,9 @@ class SentimentTracker:
                                         text: str, 
                                         context: Optional[Dict[str, Any]]) -> SentimentMetrics:
         """Create neutral sentiment metrics as fallback"""
+
+
+
         return SentimentMetrics(
             text_id=context.get('text_id', f"text_{datetime.utcnow().timestamp()}") if context else f"text_{datetime.utcnow().timestamp()}",
             platform=context.get('platform', 'unknown') if context else 'unknown',
@@ -726,6 +762,9 @@ class MoodAnalyzer:
         Returns:
             Dict: Comprehensive psychological profile analysis
         """
+
+
+
         try:
             # Analyze sentiment patterns
             sentiment_patterns = await self._analyze_sentiment_patterns(interaction_history)
@@ -800,6 +839,9 @@ class MoodAnalyzer:
         Returns:
             Dict: Mood prediction analysis
         """
+
+
+
         try:
             # Get recent mood history
             recent_mood_data = await self._get_recent_mood_data(subject_id, hours=168)  # 1 week
@@ -869,6 +911,9 @@ class MoodAnalyzer:
     async def _analyze_sentiment_patterns(self, 
                                         interaction_history: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Analyze sentiment patterns from interaction history"""
+
+
+
         try:
             sentiments = []
             

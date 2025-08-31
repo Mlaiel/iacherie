@@ -132,6 +132,9 @@ class TextSpecialistAgent(BaseAIAgent):
                                 tone: ToneOfVoice, target_audience: str, target_platforms: List[str],
                                 word_count: int) -> TextProject:
         """Create a new text content project"""
+
+
+
         try:
             project = TextProject(
                 project_id=f"text_project_{datetime.now().timestamp()}",
@@ -155,6 +158,9 @@ class TextSpecialistAgent(BaseAIAgent):
     
     async def generate_content(self, project_id: str, requirements: ContentRequirements) -> str:
         """Generate text content based on project and requirements"""
+
+
+
         try:
             if project_id not in self.active_projects:
                 return ""
@@ -188,6 +194,9 @@ class TextSpecialistAgent(BaseAIAgent):
     
     async def optimize_content(self, content: str, platform: str, objectives: List[str]) -> ContentOptimization:
         """Optimize content for specific platform and objectives"""
+
+
+
         try:
             optimization = ContentOptimization(
                 readability_score=await self._calculate_readability(content),
@@ -208,6 +217,9 @@ class TextSpecialistAgent(BaseAIAgent):
     
     async def generate_hashtags(self, content: str, platform: str, count: int = 20) -> List[str]:
         """Generate relevant hashtags for content"""
+
+
+
         try:
             # Extract key topics and themes
             key_topics = await self._extract_key_topics(content)
@@ -240,6 +252,9 @@ class TextSpecialistAgent(BaseAIAgent):
     
     async def create_content_variations(self, base_content: str, variation_count: int = 3) -> List[str]:
         """Create variations of base content for A/B testing"""
+
+
+
         try:
             variations = []
             
@@ -265,6 +280,9 @@ class TextSpecialistAgent(BaseAIAgent):
     
     async def analyze_content_performance(self, content: str, engagement_data: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze content performance and provide insights"""
+
+
+
         try:
             analysis = {
                 "content_metrics": await self._analyze_content_metrics(content),
@@ -282,6 +300,9 @@ class TextSpecialistAgent(BaseAIAgent):
     
     async def create_content_series(self, theme: str, series_length: int, content_type: ContentType) -> List[TextProject]:
         """Create a series of related content pieces"""
+
+
+
         try:
             series_projects = []
             
@@ -339,7 +360,7 @@ class TextSpecialistAgent(BaseAIAgent):
         """Generate content for a specific section"""
         # Simulate content generation based on section type
         if section == "Hook":
-            return f"🔥 Did you know that {requirements.topic} can change everything? Here's what you need to know..."
+            return f" Did you know that {requirements.topic} can change everything? Here's what you need to know..."
         elif section == "Introduction":
             return f"In today's post, we're diving deep into {requirements.topic}. This comprehensive guide will help you understand..."
         elif section == "Main Content" or section.startswith("Main Point"):
@@ -348,7 +369,7 @@ class TextSpecialistAgent(BaseAIAgent):
                 return f"Let's explore {point}. This is crucial because it impacts your daily life in ways you might not expect..."
             return f"The key aspect of {requirements.topic} that everyone should understand is..."
         elif section == "Call to Action":
-            return requirements.call_to_action or "What do you think? Share your thoughts in the comments below! 💭"
+            return requirements.call_to_action or "What do you think? Share your thoughts in the comments below! "
         elif section == "Conclusion":
             return f"To wrap up, {requirements.topic} is essential for anyone looking to improve their situation. Remember these key takeaways..."
         else:
@@ -373,7 +394,7 @@ class TextSpecialistAgent(BaseAIAgent):
         
         if project.tone == ToneOfVoice.ENTHUSIASTIC:
             # Add enthusiasm markers
-            content = content.replace(".", "! 🎉")
+            content = content.replace(".", "! ")
             content = content.replace("good", "amazing")
         
         return content
@@ -405,7 +426,7 @@ class TextSpecialistAgent(BaseAIAgent):
         # Check for engagement elements
         if "?" in content:
             score += 0.1  # Questions increase engagement
-        if any(emoji in content for emoji in ["🔥", "💭", "❤️", "👇", "🎉"]):
+        if any(emoji in content for emoji in ["", "", "", "", ""]):
             score += 0.15  # Emojis increase engagement
         if len(content.split()) < 50:
             score += 0.1  # Shorter content often performs better
@@ -452,10 +473,16 @@ class TextSpecialistAgent(BaseAIAgent):
     
     async def _get_generic_hashtags(self, platform: str) -> List[str]:
         """Get generic engagement hashtags"""
+
+
+
         return ["#follow", "#like", "#comment", "#share", "#engage", "#community"]
     
     def _load_writing_guidelines(self) -> Dict[str, Dict[str, Any]]:
         """Load writing guidelines for different content types"""
+
+
+
         return {
             "social_media_post": {
                 "max_length": 280,
@@ -479,6 +506,9 @@ class TextSpecialistAgent(BaseAIAgent):
     
     def _load_platform_requirements(self) -> Dict[str, Dict[str, Any]]:
         """Load platform-specific content requirements"""
+
+
+
         return {
             "instagram": {
                 "max_caption_length": 2200,
@@ -499,6 +529,9 @@ class TextSpecialistAgent(BaseAIAgent):
     
     def _initialize_content_formulas(self) -> Dict[str, str]:
         """Initialize proven content formulas"""
+
+
+
         return {
             "problem_solution": "Problem + Agitation + Solution + Call to Action",
             "story_formula": "Context + Conflict + Resolution + Lesson",

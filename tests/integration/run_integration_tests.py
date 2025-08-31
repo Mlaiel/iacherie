@@ -27,7 +27,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 try:
     import pytest
 except ImportError:
-    print("❌ pytest not available. Installing...")
+    print(" pytest not available. Installing...")
     subprocess.check_call([sys.executable, "-m", "pip", "install", "pytest", "pytest-asyncio"])
     import pytest
 
@@ -79,15 +79,15 @@ class IntegrationTestRunner:
         print("=" * 80)
         print("🧪 AINFLUE PLATFORM - HIGH PRIORITY INTEGRATION TESTS")
         print("=" * 80)
-        print("📋 Test Requirements from NOUVELLE_CHECKLIST_PROPRE.md:")
-        print("   ✓ Tester démarrage complet application FastAPI")
-        print("   ✓ Valider connexions base de données PostgreSQL")
-        print("   ✓ Tester workflows gamification end-to-end")
-        print("   ✓ Valider generation remix IA avec modèles")
-        print("   ✓ Tester interface multilingual switching")
+        print(" Test Requirements from NOUVELLE_CHECKLIST_PROPRE.md:")
+        print("    Tester démarrage complet application FastAPI")
+        print("    Valider connexions base de données PostgreSQL")
+        print("    Tester workflows gamification end-to-end")
+        print("    Valider generation remix IA avec modèles")
+        print("    Tester interface multilingual switching")
         print("-" * 80)
-        print(f"📊 Total Test Modules: {len(self.test_modules)}")
-        print("🚀 Starting comprehensive integration test execution...")
+        print(f" Total Test Modules: {len(self.test_modules)}")
+        print(" Starting comprehensive integration test execution...")
         print("=" * 80)
     
     def run_single_test_module(self, module_info: Dict[str, str]) -> Dict[str, Any]:
@@ -95,7 +95,7 @@ class IntegrationTestRunner:
         module_name = module_info["name"]
         module_path = module_info["module"]
         
-        print(f"🏃 Running {module_name} tests...")
+        print(f" Running {module_name} tests...")
         
         start_time = time.time()
         
@@ -117,10 +117,10 @@ class IntegrationTestRunner:
             
             if result == 0:
                 status = "PASSED"
-                print(f"✅ {module_name} tests completed successfully")
+                print(f" {module_name} tests completed successfully")
             else:
                 status = "FAILED"
-                print(f"❌ {module_name} tests failed with exit code {result}")
+                print(f" {module_name} tests failed with exit code {result}")
             
             return {
                 "status": status,
@@ -132,7 +132,7 @@ class IntegrationTestRunner:
         except Exception as e:
             end_time = time.time()
             execution_time = end_time - start_time
-            print(f"💥 {module_name} tests crashed: {str(e)}")
+            print(f" {module_name} tests crashed: {str(e)}")
             
             return {
                 "status": "CRASHED",
@@ -149,9 +149,9 @@ class IntegrationTestRunner:
         self.print_header()
         
         for i, module_info in enumerate(self.test_modules):
-            print(f"\n🔬 [{i + 1}/{len(self.test_modules)}] {module_info['name']}")
-            print(f"📝 Description: {module_info['description']}")
-            print(f"⚡ Priority: {module_info['priority']}")
+            print(f"\n [{i + 1}/{len(self.test_modules)}] {module_info['name']}")
+            print(f" Description: {module_info['description']}")
+            print(f" Priority: {module_info['priority']}")
             print("-" * 60)
             
             result = self.run_single_test_module(module_info)
@@ -175,16 +175,16 @@ class IntegrationTestRunner:
         success_rate = (passed_tests / total_tests) * 100 if total_tests > 0 else 0
         
         print("\n" + "=" * 80)
-        print("📊 INTEGRATION TEST EXECUTION SUMMARY")
+        print(" INTEGRATION TEST EXECUTION SUMMARY")
         print("=" * 80)
         
         # Print individual test results
         for test_name, result in self.results.items():
-            status_emoji = "✅" if result["passed"] else "❌" 
+            status_emoji = "" if result["passed"] else "" 
             print(f"{status_emoji} {test_name:<45} {result['status']:<8} ({result['execution_time']:.2f}s)")
         
         print("-" * 80)
-        print(f"📈 Overall Results:")
+        print(f" Overall Results:")
         print(f"   • Total Tests: {total_tests}")
         print(f"   • Passed: {passed_tests}")
         print(f"   • Failed: {failed_tests}")
@@ -194,15 +194,15 @@ class IntegrationTestRunner:
         # Status determination
         if success_rate == 100:
             overall_status = "ALL PASSED"
-            status_emoji = "🎉"
+            status_emoji = ""
             print(f"\n{status_emoji} {overall_status} - All integration tests completed successfully!")
         elif success_rate >= 80:
             overall_status = "MOSTLY PASSED" 
-            status_emoji = "⚠️"
+            status_emoji = ""
             print(f"\n{status_emoji} {overall_status} - Most tests passed with some failures")
         else:
             overall_status = "SIGNIFICANT FAILURES"
-            status_emoji = "🚨"
+            status_emoji = ""
             print(f"\n{status_emoji} {overall_status} - Multiple test failures detected")
         
         print("=" * 80)
@@ -225,7 +225,7 @@ class IntegrationTestRunner:
     def generate_requirements_compliance_report(self):
         """Generate compliance report against original requirements"""
         print("\n" + "=" * 80)
-        print("📋 REQUIREMENTS COMPLIANCE REPORT")
+        print(" REQUIREMENTS COMPLIANCE REPORT")
         print("=" * 80)
         print("Based on NOUVELLE_CHECKLIST_PROPRE.md - PRIORITÉ HAUTE - INTÉGRATION")
         print("-" * 80)
@@ -241,11 +241,11 @@ class IntegrationTestRunner:
         for requirement, test_name in requirements_mapping.items():
             if test_name in self.results:
                 result = self.results[test_name]
-                status_emoji = "✅" if result["passed"] else "❌"
+                status_emoji = "" if result["passed"] else ""
                 status_text = "COMPLIANT" if result["passed"] else "NON-COMPLIANT"
                 print(f"{status_emoji} {requirement:<50} {status_text}")
             else:
-                print(f"❓ {requirement:<50} NOT TESTED")
+                print(f" {requirement:<50} NOT TESTED")
         
         print("=" * 80)
 
@@ -268,7 +268,7 @@ def run_specific_test_category(category: str):
     }
     
     if category not in category_paths:
-        print(f"❌ Unknown category: {category}")
+        print(f" Unknown category: {category}")
         print(f"Available categories: {', '.join(category_paths.keys())}")
         return 1
     
@@ -281,15 +281,15 @@ def run_specific_test_category(category: str):
         "--asyncio-mode=auto",
     ]
     
-    print(f"🚀 Running {category.title()} Integration Tests")
+    print(f" Running {category.title()} Integration Tests")
     print("=" * 50)
     
     exit_code = pytest.main(pytest_args)
     
     if exit_code == 0:
-        print(f"✅ {category.title()} integration tests passed!")
+        print(f" {category.title()} integration tests passed!")
     else:
-        print(f"❌ {category.title()} integration tests failed with exit code: {exit_code}")
+        print(f" {category.title()} integration tests failed with exit code: {exit_code}")
     
     return exit_code
 
@@ -306,15 +306,15 @@ def run_fast_integration_tests():
         "--durations=5",
     ]
     
-    print("🚀 Running Fast Integration Tests")
+    print(" Running Fast Integration Tests")
     print("=" * 50)
     
     exit_code = pytest.main(pytest_args)
     
     if exit_code == 0:
-        print("✅ Fast integration tests passed!")
+        print(" Fast integration tests passed!")
     else:
-        print(f"❌ Fast integration tests failed with exit code: {exit_code}")
+        print(f" Fast integration tests failed with exit code: {exit_code}")
     
     return exit_code
 
@@ -331,15 +331,15 @@ def run_critical_integration_tests():
         "--maxfail=1",  # Stop on first failure for critical tests
     ]
     
-    print("🚀 Running Critical Integration Tests")
+    print(" Running Critical Integration Tests")
     print("=" * 50)
     
     exit_code = pytest.main(pytest_args)
     
     if exit_code == 0:
-        print("✅ Critical integration tests passed!")
+        print(" Critical integration tests passed!")
     else:
-        print(f"❌ Critical integration tests failed with exit code: {exit_code}")
+        print(f" Critical integration tests failed with exit code: {exit_code}")
     
     return exit_code
 
@@ -355,14 +355,14 @@ def main():
         # Exit with appropriate code
         exit_code = 0 if final_report["all_passed"] else 1
         
-        print(f"\n🏁 Integration test execution completed with exit code: {exit_code}")
+        print(f"\n Integration test execution completed with exit code: {exit_code}")
         return exit_code
         
     except KeyboardInterrupt:
-        print("\n\n⚡ Test execution interrupted by user")
+        print("\n\n Test execution interrupted by user")
         return 130
     except Exception as e:
-        print(f"\n\n💥 Unexpected error during test execution: {str(e)}")
+        print(f"\n\n Unexpected error during test execution: {str(e)}")
         return 1
 
 
@@ -389,7 +389,7 @@ if __name__ == "__main__":
     elif args.mode == "critical":
         exit_code = run_critical_integration_tests()
     else:
-        print(f"❌ Unknown mode: {args.mode}")
+        print(f" Unknown mode: {args.mode}")
         exit_code = 1
     
     sys.exit(exit_code)

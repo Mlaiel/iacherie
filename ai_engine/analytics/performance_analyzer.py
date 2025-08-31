@@ -199,6 +199,9 @@ class PerformanceAnalyzer:
     
     def start_monitoring(self) -> bool:
         """Start automatic performance monitoring"""
+
+
+
         try:
             if self.monitoring_active:
                 self.logger.warning("Monitoring is already active")
@@ -217,6 +220,9 @@ class PerformanceAnalyzer:
     
     def stop_monitoring(self) -> bool:
         """Stop automatic performance monitoring"""
+
+
+
         try:
             if not self.monitoring_active:
                 self.logger.warning("Monitoring is not active")
@@ -253,6 +259,9 @@ class PerformanceAnalyzer:
     
     def _collect_system_metrics(self):
         """Collect system performance metrics"""
+
+
+
         try:
             # CPU metrics
             cpu_percent = psutil.cpu_percent(interval=1)
@@ -311,6 +320,9 @@ class PerformanceAnalyzer:
                      unit: Optional[str] = None,
                      metadata: Optional[Dict[str, Any]] = None) -> bool:
         """Record a performance metric"""
+
+
+
         try:
             data_point = PerformanceData(
                 metric=metric,
@@ -331,6 +343,9 @@ class PerformanceAnalyzer:
     
     def _check_thresholds(self):
         """Check performance thresholds and generate alerts"""
+
+
+
         try:
             for metric, threshold in self.thresholds.items():
                 if not threshold.enabled:
@@ -373,6 +388,9 @@ class PerformanceAnalyzer:
     
     def _evaluate_threshold(self, value: float, threshold: float, operator: str) -> bool:
         """Evaluate if a value crosses a threshold"""
+
+
+
         try:
             if operator == ">":
                 return value > threshold
@@ -395,6 +413,9 @@ class PerformanceAnalyzer:
     def _create_alert(self, metric: PerformanceMetric, severity: AlertSeverity, 
                      current_value: float, threshold_value: float):
         """Create a performance alert"""
+
+
+
         try:
             alert_key = f"{metric.value}_{severity.value}"
             
@@ -430,6 +451,9 @@ class PerformanceAnalyzer:
     
     def _check_alert_resolution(self, metric: PerformanceMetric):
         """Check if alerts should be resolved"""
+
+
+
         try:
             alerts_to_resolve = []
             
@@ -475,6 +499,9 @@ class PerformanceAnalyzer:
     
     def analyze_performance(self, hours_back: int = 24) -> PerformanceReport:
         """Generate comprehensive performance analysis report"""
+
+
+
         try:
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(hours=hours_back)
@@ -537,6 +564,9 @@ class PerformanceAnalyzer:
     def _analyze_metric(self, metric: PerformanceMetric, 
                        start_time: datetime, end_time: datetime) -> Optional[Dict[str, Any]]:
         """Analyze a specific metric"""
+
+
+
         try:
             data = [d for d in self.performance_data[metric] 
                    if start_time <= d.timestamp <= end_time]
@@ -616,6 +646,9 @@ class PerformanceAnalyzer:
     
     def _summarize_alerts(self, start_time: datetime, end_time: datetime) -> Dict[str, int]:
         """Summarize alerts within time period"""
+
+
+
         try:
             period_alerts = [
                 a for a in self.alert_history
@@ -636,6 +669,9 @@ class PerformanceAnalyzer:
     
     def get_current_metrics(self) -> Dict[str, float]:
         """Get current values for all metrics"""
+
+
+
         try:
             current_metrics = {}
             
@@ -654,10 +690,16 @@ class PerformanceAnalyzer:
     
     def get_system_resources(self) -> Optional[SystemResource]:
         """Get current system resource information"""
+
+
+
         return self.system_resources
     
     def add_threshold(self, threshold: PerformanceThreshold) -> bool:
         """Add or update a performance threshold"""
+
+
+
         try:
             self.thresholds[threshold.metric] = threshold
             self.logger.info(f"Added threshold for {threshold.metric.value}")
@@ -668,6 +710,9 @@ class PerformanceAnalyzer:
     
     def remove_threshold(self, metric: PerformanceMetric) -> bool:
         """Remove a performance threshold"""
+
+
+
         try:
             if metric in self.thresholds:
                 del self.thresholds[metric]
@@ -680,6 +725,9 @@ class PerformanceAnalyzer:
     
     def export_data(self, format_type: str = "json") -> Union[str, Dict[str, Any]]:
         """Export performance data"""
+
+
+
         try:
             export_data = {
                 "export_timestamp": datetime.utcnow().isoformat(),

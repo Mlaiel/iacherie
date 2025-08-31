@@ -9,7 +9,7 @@ optimization for multi-format content creators and distributors.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing and usage rights.
@@ -325,6 +325,9 @@ class LicensingEngine:
     
     async def initialize(self) -> None:
         """Initialize the licensing engine and all components"""
+
+
+
         try:
             self.logger.info("Initializing LicensingEngine")
             
@@ -481,6 +484,9 @@ class LicensingEngine:
     
     async def get_license(self, license_id: str) -> Optional[License]:
         """Retrieve license by ID"""
+
+
+
         return self.licenses_database.get(license_id)
     
     async def update_license(

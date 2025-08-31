@@ -8,7 +8,7 @@ Responsibility: Optimal worker selection and load distribution
 Technologies: ML-based Load Balancing, Real-time Analytics, Performance Optimization
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -150,16 +150,19 @@ class WorkerLoadBalancer:
 
     async def initialize(self) -> None:
         """Initialize the load balancer"""
+
+
+
         try:
-            logger.info("🚀 Initializing load balancer")
+            logger.info(" Initializing load balancer")
             
             # Initialize prediction engine
             await self.prediction_engine.initialize()
             
-            logger.info("✅ Load balancer initialized")
+            logger.info(" Load balancer initialized")
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize load balancer: {e}")
+            logger.error(f" Failed to initialize load balancer: {e}")
             raise
 
     async def select_worker(
@@ -170,6 +173,9 @@ class WorkerLoadBalancer:
         criteria: Optional[SelectionCriteria] = None
     ) -> Optional[str]:
         """Select optimal worker for task"""
+
+
+
         try:
             if not available_workers:
                 return None
@@ -198,16 +204,19 @@ class WorkerLoadBalancer:
             else:
                 self.balancing_stats['failed_selections'] += 1
             
-            logger.info(f"🎯 Worker selected: {result.selected_worker} (confidence: {result.confidence_score:.2f}, reason: {result.selection_reason})")
+            logger.info(f" Worker selected: {result.selected_worker} (confidence: {result.confidence_score:.2f}, reason: {result.selection_reason})")
             
             return result.selected_worker
             
         except Exception as e:
-            logger.error(f"❌ Failed to select worker: {e}")
+            logger.error(f" Failed to select worker: {e}")
             return None
 
     async def update_worker_load(self, worker_id: str, load_data: Dict[str, Any]) -> None:
         """Update worker load information"""
+
+
+
         try:
             # Create or update worker load
             if worker_id not in self.worker_loads:
@@ -247,10 +256,13 @@ class WorkerLoadBalancer:
             await self._update_worker_weights(worker_id)
             
         except Exception as e:
-            logger.error(f"❌ Failed to update worker load for {worker_id}: {e}")
+            logger.error(f" Failed to update worker load for {worker_id}: {e}")
 
     async def get_load_distribution(self) -> Dict[str, Any]:
         """Get current load distribution across workers"""
+
+
+
         try:
             if not self.worker_loads:
                 return {}
@@ -291,7 +303,7 @@ class WorkerLoadBalancer:
             return distribution
             
         except Exception as e:
-            logger.error(f"❌ Failed to get load distribution: {e}")
+            logger.error(f" Failed to get load distribution: {e}")
             return {}
 
     async def _filter_healthy_workers(
@@ -300,6 +312,9 @@ class WorkerLoadBalancer:
         worker_health: Dict[str, Dict[str, Any]]
     ) -> List[str]:
         """Filter out unhealthy workers"""
+
+
+
         try:
             healthy_workers = []
             
@@ -319,7 +334,7 @@ class WorkerLoadBalancer:
             return healthy_workers
             
         except Exception as e:
-            logger.error(f"❌ Failed to filter healthy workers: {e}")
+            logger.error(f" Failed to filter healthy workers: {e}")
             return workers
 
     async def _apply_selection_criteria(
@@ -328,6 +343,9 @@ class WorkerLoadBalancer:
         criteria: SelectionCriteria
     ) -> List[str]:
         """Apply selection criteria to filter workers"""
+
+
+
         try:
             filtered_workers = []
             
@@ -361,7 +379,7 @@ class WorkerLoadBalancer:
             return filtered_workers
             
         except Exception as e:
-            logger.error(f"❌ Failed to apply selection criteria: {e}")
+            logger.error(f" Failed to apply selection criteria: {e}")
             return workers
 
     async def _select_by_strategy(
@@ -371,6 +389,9 @@ class WorkerLoadBalancer:
         criteria: Optional[SelectionCriteria]
     ) -> LoadBalancingResult:
         """Select worker based on strategy"""
+
+
+
         try:
             if self.strategy == LoadBalancingStrategy.ROUND_ROBIN:
                 return await self._round_robin_selection(workers)
@@ -389,7 +410,7 @@ class WorkerLoadBalancer:
                 return await self._round_robin_selection(workers)
                 
         except Exception as e:
-            logger.error(f"❌ Failed to select by strategy: {e}")
+            logger.error(f" Failed to select by strategy: {e}")
             return LoadBalancingResult(
                 selected_worker=None,
                 confidence_score=0.0,
@@ -398,6 +419,9 @@ class WorkerLoadBalancer:
 
     async def _round_robin_selection(self, workers: List[str]) -> LoadBalancingResult:
         """Round robin worker selection"""
+
+
+
         try:
             if not workers:
                 return LoadBalancingResult(
@@ -417,7 +441,7 @@ class WorkerLoadBalancer:
             )
             
         except Exception as e:
-            logger.error(f"❌ Round robin selection failed: {e}")
+            logger.error(f" Round robin selection failed: {e}")
             return LoadBalancingResult(
                 selected_worker=None,
                 confidence_score=0.0,
@@ -426,6 +450,9 @@ class WorkerLoadBalancer:
 
     async def _least_connections_selection(self, workers: List[str]) -> LoadBalancingResult:
         """Least connections worker selection"""
+
+
+
         try:
             if not workers:
                 return LoadBalancingResult(
@@ -459,7 +486,7 @@ class WorkerLoadBalancer:
             )
             
         except Exception as e:
-            logger.error(f"❌ Least connections selection failed: {e}")
+            logger.error(f" Least connections selection failed: {e}")
             return LoadBalancingResult(
                 selected_worker=None,
                 confidence_score=0.0,
@@ -468,6 +495,9 @@ class WorkerLoadBalancer:
 
     async def _weighted_round_robin_selection(self, workers: List[str]) -> LoadBalancingResult:
         """Weighted round robin worker selection"""
+
+
+
         try:
             if not workers:
                 return LoadBalancingResult(
@@ -512,7 +542,7 @@ class WorkerLoadBalancer:
             )
             
         except Exception as e:
-            logger.error(f"❌ Weighted round robin selection failed: {e}")
+            logger.error(f" Weighted round robin selection failed: {e}")
             return LoadBalancingResult(
                 selected_worker=None,
                 confidence_score=0.0,
@@ -521,6 +551,9 @@ class WorkerLoadBalancer:
 
     async def _response_time_selection(self, workers: List[str]) -> LoadBalancingResult:
         """Response time based worker selection"""
+
+
+
         try:
             if not workers:
                 return LoadBalancingResult(
@@ -555,7 +588,7 @@ class WorkerLoadBalancer:
             )
             
         except Exception as e:
-            logger.error(f"❌ Response time selection failed: {e}")
+            logger.error(f" Response time selection failed: {e}")
             return LoadBalancingResult(
                 selected_worker=None,
                 confidence_score=0.0,
@@ -564,6 +597,9 @@ class WorkerLoadBalancer:
 
     async def _resource_based_selection(self, workers: List[str], task: CrawlerTask) -> LoadBalancingResult:
         """Resource-based worker selection"""
+
+
+
         try:
             if not workers:
                 return LoadBalancingResult(
@@ -607,7 +643,7 @@ class WorkerLoadBalancer:
             )
             
         except Exception as e:
-            logger.error(f"❌ Resource-based selection failed: {e}")
+            logger.error(f" Resource-based selection failed: {e}")
             return LoadBalancingResult(
                 selected_worker=None,
                 confidence_score=0.0,
@@ -621,6 +657,9 @@ class WorkerLoadBalancer:
         criteria: Optional[SelectionCriteria]
     ) -> LoadBalancingResult:
         """Intelligent ML-based worker selection"""
+
+
+
         try:
             if not workers:
                 return LoadBalancingResult(
@@ -661,7 +700,7 @@ class WorkerLoadBalancer:
             )
             
         except Exception as e:
-            logger.error(f"❌ Intelligent selection failed: {e}")
+            logger.error(f" Intelligent selection failed: {e}")
             return LoadBalancingResult(
                 selected_worker=None,
                 confidence_score=0.0,
@@ -675,6 +714,9 @@ class WorkerLoadBalancer:
         criteria: Optional[SelectionCriteria]
     ) -> float:
         """Calculate intelligent score for worker"""
+
+
+
         try:
             load = self.worker_loads.get(worker_id)
             if not load:
@@ -721,11 +763,14 @@ class WorkerLoadBalancer:
             return min(1.0, max(0.0, final_score))
             
         except Exception as e:
-            logger.error(f"❌ Failed to calculate intelligent score for {worker_id}: {e}")
+            logger.error(f" Failed to calculate intelligent score for {worker_id}: {e}")
             return 0.0
 
     async def _calculate_performance_bonus(self, worker_id: str) -> float:
         """Calculate performance bonus based on historical data"""
+
+
+
         try:
             history = self.worker_performance_history.get(worker_id)
             if not history or not history['efficiency']:
@@ -744,11 +789,14 @@ class WorkerLoadBalancer:
             return max(0.0, min(0.2, bonus))
             
         except Exception as e:
-            logger.error(f"❌ Failed to calculate performance bonus: {e}")
+            logger.error(f" Failed to calculate performance bonus: {e}")
             return 0.0
 
     async def _calculate_affinity_bonus(self, worker_id: str, task: CrawlerTask) -> float:
         """Calculate worker-task affinity bonus"""
+
+
+
         try:
             if worker_id not in self.worker_affinities:
                 return 0.0
@@ -773,11 +821,14 @@ class WorkerLoadBalancer:
             return max(0.0, min(0.15, total_affinity))
             
         except Exception as e:
-            logger.error(f"❌ Failed to calculate affinity bonus: {e}")
+            logger.error(f" Failed to calculate affinity bonus: {e}")
             return 0.0
 
     async def _predict_wait_time(self, worker_id: str, task: CrawlerTask) -> float:
         """Predict wait time for task on worker"""
+
+
+
         try:
             load = self.worker_loads.get(worker_id)
             if not load:
@@ -790,11 +841,14 @@ class WorkerLoadBalancer:
             return queue_time + processing_time
             
         except Exception as e:
-            logger.error(f"❌ Failed to predict wait time: {e}")
+            logger.error(f" Failed to predict wait time: {e}")
             return 300.0
 
     async def _calculate_load_score(self, worker_id: str) -> float:
         """Calculate overall load score for worker"""
+
+
+
         try:
             load = self.worker_loads.get(worker_id)
             if not load:
@@ -808,11 +862,14 @@ class WorkerLoadBalancer:
             return (cpu_load * 0.4 + memory_load * 0.3 + task_load * 0.3)
             
         except Exception as e:
-            logger.error(f"❌ Failed to calculate load score: {e}")
+            logger.error(f" Failed to calculate load score: {e}")
             return 1.0
 
     async def _calculate_load_variance(self) -> float:
         """Calculate load variance across all workers"""
+
+
+
         try:
             if len(self.worker_loads) < 2:
                 return 0.0
@@ -821,21 +878,27 @@ class WorkerLoadBalancer:
             return statistics.variance(load_scores)
             
         except Exception as e:
-            logger.error(f"❌ Failed to calculate load variance: {e}")
+            logger.error(f" Failed to calculate load variance: {e}")
             return 0.0
 
     async def _is_load_balanced(self) -> bool:
         """Check if load is well balanced"""
+
+
+
         try:
             variance = await self._calculate_load_variance()
             return variance < 0.1  # Low variance indicates good balance
             
         except Exception as e:
-            logger.error(f"❌ Failed to check load balance: {e}")
+            logger.error(f" Failed to check load balance: {e}")
             return False
 
     async def _update_worker_weights(self, worker_id: str) -> None:
         """Update weighted round robin weights based on performance"""
+
+
+
         try:
             load = self.worker_loads.get(worker_id)
             if not load:
@@ -850,10 +913,13 @@ class WorkerLoadBalancer:
             self.weighted_round_robin_weights[worker_id] = weight
             
         except Exception as e:
-            logger.error(f"❌ Failed to update worker weights: {e}")
+            logger.error(f" Failed to update worker weights: {e}")
 
     async def _record_selection_decision(self, task: CrawlerTask, result: LoadBalancingResult) -> None:
         """Record selection decision for analysis"""
+
+
+
         try:
             decision = {
                 'timestamp': datetime.utcnow().isoformat(),
@@ -874,4 +940,4 @@ class WorkerLoadBalancer:
                 strategy_stats['success'] += 1
             
         except Exception as e:
-            logger.error(f"❌ Failed to record selection decision: {e}")
+            logger.error(f" Failed to record selection decision: {e}")

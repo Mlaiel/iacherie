@@ -121,7 +121,10 @@ def get_module_info() -> Dict[str, Any]:
     
     Returns:
         Dict[str, Any]: Informations détaillées du module
-    """    return {
+    """
+
+
+    return {
         "name": "IA Influencer Agent - User Management Database",
         "version": __version__,
         "author": "Fahed Mlaiel",
@@ -223,7 +226,10 @@ def get_architecture_overview() -> Dict[str, Any]:
     
     Returns:
         Dict[str, Any]: Vue d'ensemble architecturale
-    """    return {
+    """
+
+
+    return {
         "architecture_pattern": "Repository Pattern avec ORM SQLAlchemy et moteur orchestration",
         "database_support": ["PostgreSQL", "MySQL", "SQLite"],
         "scalability": "Multi-tenant avec partitioning automatique",

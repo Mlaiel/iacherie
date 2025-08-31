@@ -8,7 +8,7 @@ Provides easy access to all models, utilities, and helper functions.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  STRICT WARNING FOR UNAUTHORIZED USE:
+  STRICT WARNING FOR UNAUTHORIZED USE:
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use without explicit written 
 permission is strictly prohibited and will result in legal action.
@@ -64,10 +64,16 @@ class ModelManager:
     
     def get_model(self, name: str) -> Optional[Type]:
         """Get model class by name"""
+
+
+
         return self.models.get(name)
     
     def get_all_model_names(self) -> List[str]:
         """Get all registered model names"""
+
+
+
         return list(self.models.keys())
     
     def get_model_info(self, model_name: str) -> Dict[str, Any]:
@@ -229,6 +235,9 @@ class ModelManager:
     
     def get_session(self) -> Optional[Session]:
         """Get current database session"""
+
+
+
         return self._session
     
     def close_session(self):
@@ -360,18 +369,30 @@ model_manager = ModelManager()
 # Convenience functions
 def get_model(name: str):
     """Get model class by name"""
+
+
+
     return model_manager.get_model(name)
 
 def create_instance(model_name: str, **kwargs):
     """Create model instance with validation"""
+
+
+
     return model_manager.create_model_instance(model_name, **kwargs)
 
 def get_enum_values(enum_name: str):
     """Get enum values"""
+
+
+
     return model_manager.get_enum_values(enum_name)
 
 def setup_database(database_url: str, **kwargs):
     """Setup database connection"""
+
+
+
     return model_manager.setup_database(database_url, **kwargs)
 
 # Export all for easy access

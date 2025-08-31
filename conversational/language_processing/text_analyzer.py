@@ -15,7 +15,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Specialist + DevOps Expert
 Copyright: Fahed Mlaiel - All Rights Reserved
 
-⚠️  STRICT LEGAL WARNING: 
+  STRICT LEGAL WARNING: 
     This proprietary code is protected by international copyright law.
     Unauthorized use, copying, distribution, modification, or reverse engineering 
     is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -122,6 +122,9 @@ class SentimentAnalyzer:
         
     def _initialize_models(self):
         """Initialize ML models for sentiment analysis"""
+
+
+
         try:
             model_name = "cardiffnlp/twitter-roberta-base-sentiment-latest"
             self.transformer_tokenizer = AutoTokenizer.from_pretrained(model_name)
@@ -149,6 +152,9 @@ class SentimentAnalyzer:
         Returns:
             SentimentResult with detailed analysis
         """
+
+
+
         try:
             # Cache key for performance
             cache_key = f"sentiment_{hashlib.md5(text.encode()).hexdigest()}_{content_type}"
@@ -202,6 +208,9 @@ class SentimentAnalyzer:
             
     async def _transformer_sentiment(self, text: str) -> Dict[str, float]:
         """Use transformer model for sentiment analysis"""
+
+
+
         try:
             inputs = self.transformer_tokenizer(text, return_tensors="pt", truncation=True, padding=True, max_length=512)
             
@@ -223,6 +232,9 @@ class SentimentAnalyzer:
             
     async def _analyze_emotions(self, text: str) -> Dict[str, float]:
         """Analyze emotional content of text"""
+
+
+
         try:
             emotions_result = self.emotion_pipeline(text)
             emotions_dict = {emotion['label'].lower(): emotion['score'] for emotion in emotions_result}
@@ -246,6 +258,9 @@ class SentimentAnalyzer:
             
     async def _determine_emotional_tone(self, text: str, emotions: Dict[str, float]) -> EmotionalTone:
         """Determine emotional tone based on content analysis"""
+
+
+
         try:
             # Analyze text patterns for tone detection
             text_lower = text.lower()
@@ -261,7 +276,7 @@ class SentimentAnalyzer:
                 return EmotionalTone.EXCITED
                 
             # Humor indicators
-            humor_keywords = ['lol', 'haha', 'funny', 'joke', '😂', '🤣']
+            humor_keywords = ['lol', 'haha', 'funny', 'joke', '', '🤣']
             if any(keyword in text_lower for keyword in humor_keywords):
                 return EmotionalTone.HUMOROUS
                 
@@ -274,6 +289,9 @@ class SentimentAnalyzer:
             
     async def _extract_sentiment_keywords(self, text: str) -> List[str]:
         """Extract keywords that contribute to sentiment"""
+
+
+
         try:
             # Simple keyword extraction based on sentiment-bearing words
             positive_words = ['great', 'amazing', 'excellent', 'fantastic', 'wonderful', 'awesome', 'love', 'best']
@@ -294,6 +312,9 @@ class SentimentAnalyzer:
             
     def _calculate_subjectivity(self, text: str) -> float:
         """Calculate text subjectivity score"""
+
+
+
         try:
             # Simple subjectivity calculation based on personal pronouns and opinion words
             subjective_indicators = ['i', 'me', 'my', 'we', 'our', 'you', 'your', 'think', 'feel', 'believe', 'opinion']
@@ -320,6 +341,9 @@ class TextAnalyzer:
         
     def _initialize_nlp(self):
         """Initialize spaCy NLP pipeline"""
+
+
+
         try:
             self.nlp = spacy.load("en_core_web_sm")
             logger.info("spaCy NLP pipeline initialized")
@@ -337,6 +361,9 @@ class TextAnalyzer:
         Returns:
             TextAnalysisResult with detailed metrics
         """
+
+
+
         try:
             # Comprehensive text statistics
             analysis_result.text_length = len(text)
@@ -430,6 +457,9 @@ class TextAnalyzer:
             
     async def _detect_language(self, text: str) -> str:
         """Detect text language"""
+
+
+
         try:
             # Simple language detection based on character patterns
             # This would be enhanced with proper language detection library
@@ -440,6 +470,9 @@ class TextAnalyzer:
             
     async def _assess_content_quality(self, text: str, content_type: str) -> float:
         """Assess overall content quality"""
+
+
+
         try:
             quality_factors = []
             
@@ -473,6 +506,9 @@ class TextAnalyzer:
             
     async def _calculate_engagement_potential(self, text: str, content_type: str) -> float:
         """Calculate potential for audience engagement"""
+
+
+
         try:
             engagement_factors = []
             
@@ -506,6 +542,9 @@ class TextAnalyzer:
             
     async def _extract_seo_keywords(self, text: str) -> List[str]:
         """Extract SEO-relevant keywords"""
+
+
+
         try:
             # Simple keyword extraction using TF-IDF
             words = re.findall(r'\b[a-zA-Z]{3,}\b', text.lower())
@@ -523,6 +562,9 @@ class TextAnalyzer:
             
     async def _suggest_hashtags(self, text: str, content_type: str) -> List[str]:
         """Generate hashtag suggestions based on content"""
+
+
+
         try:
             # Extract potential hashtag words
             words = re.findall(r'\b[a-zA-Z]{3,}\b', text.lower())

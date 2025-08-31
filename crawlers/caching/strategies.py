@@ -71,10 +71,16 @@ class CacheEntry:
     
     def age_seconds(self) -> float:
         """Get entry age in seconds."""
+
+
+
         return (datetime.now() - self.created_at).total_seconds()
     
     def idle_seconds(self) -> float:
         """Get idle time since last access."""
+
+
+
         return (datetime.now() - self.last_accessed).total_seconds()
 
 @dataclass
@@ -214,6 +220,9 @@ class CacheStrategy:
     async def add_entry(self, key: str, value: Any, 
                        metadata: Optional[Dict[str, Any]] = None) -> bool:
         """Add entry to cache with strategy tracking."""
+
+
+
         try:
             entry = CacheEntry(
                 key=key,
@@ -244,6 +253,9 @@ class CacheStrategy:
     
     async def remove_entry(self, key: str) -> bool:
         """Remove entry from cache and tracking."""
+
+
+
         try:
             if key in self.entries:
                 del self.entries[key]
@@ -401,6 +413,9 @@ class AdaptiveStrategy(CacheStrategy):
     
     async def _adapt_strategy(self) -> None:
         """Adapt strategy weights based on performance."""
+
+
+
         try:
             # Calculate recent performance for each strategy
             current_hit_rate = self.metrics.hit_rate

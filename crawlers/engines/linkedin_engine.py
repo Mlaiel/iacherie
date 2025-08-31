@@ -8,12 +8,12 @@ Handles posts, profiles, companies, and job data extraction.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
 
-🏗️ Architecture Enterprise - Équipe Projet Spécialisée :
+ Architecture Enterprise - Équipe Projet Spécialisée :
 • Lead Developer IA : Fahed Mlaiel (mlaiel@live.de)
 • Backend Senior Engineer : Architecture microservices & APIs
 • ML/AI Engineer : Intelligence artificielle & algorithmes avancés
@@ -254,6 +254,9 @@ class LinkedInCrawlerEngine(BaseCrawlerEngine):
 
     async def authenticate(self) -> bool:
         """Authenticate with LinkedIn"""
+
+
+
         try:
             if self.api_client:
                 # Test API access
@@ -659,6 +662,9 @@ class LinkedInCrawlerEngine(BaseCrawlerEngine):
 
     async def _selenium_login(self) -> bool:
         """Login to LinkedIn using Selenium"""
+
+
+
         try:
             self.driver.get('https://www.linkedin.com/login')
             await asyncio.sleep(2)
@@ -701,6 +707,9 @@ class LinkedInCrawlerEngine(BaseCrawlerEngine):
 
     async def _process_profile_data(self, profile_data: Dict[str, Any]) -> Optional[LinkedInProfileData]:
         """Process raw LinkedIn profile data"""
+
+
+
         try:
             return LinkedInProfileData(
                 profile_id=profile_data.get('public_id', ''),
@@ -738,6 +747,9 @@ class LinkedInCrawlerEngine(BaseCrawlerEngine):
 
     async def _process_post_data(self, post_data: Dict[str, Any]) -> Optional[LinkedInPostData]:
         """Process raw LinkedIn post data"""
+
+
+
         try:
             content = post_data.get('commentary', {}).get('text', '')
             hashtags = re.findall(r'#(\w+)', content)

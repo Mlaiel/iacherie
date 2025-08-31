@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -72,6 +72,9 @@ class SocialMediaAnalyticsRepository(BaseRepository[SocialMediaAnalytics]):
         Returns:
             Created analytics record
         """
+
+
+
         try:
             analytics_data = {
                 'user_id': user_id,
@@ -108,6 +111,9 @@ class SocialMediaAnalyticsRepository(BaseRepository[SocialMediaAnalytics]):
         Returns:
             Updated analytics record
         """
+
+
+
         try:
             analytics = self.get_by_id(analytics_id)
             if not analytics:
@@ -156,6 +162,9 @@ class SocialMediaAnalyticsRepository(BaseRepository[SocialMediaAnalytics]):
         Returns:
             List of analytics records
         """
+
+
+
         try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
@@ -193,6 +202,9 @@ class SocialMediaAnalyticsRepository(BaseRepository[SocialMediaAnalytics]):
         Returns:
             Platform performance summary
         """
+
+
+
         try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
@@ -311,6 +323,9 @@ class SocialMediaAnalyticsRepository(BaseRepository[SocialMediaAnalytics]):
         Returns:
             Engagement trends data
         """
+
+
+
         try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
@@ -462,6 +477,9 @@ class SocialMediaAnalyticsRepository(BaseRepository[SocialMediaAnalytics]):
         Returns:
             Competitor analysis data
         """
+
+
+
         try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
@@ -622,6 +640,9 @@ class SocialMediaAnalyticsRepository(BaseRepository[SocialMediaAnalytics]):
         Returns:
             Content performance insights
         """
+
+
+
         try:
             analytics_records = self.get_user_analytics(user_id, platform, days, limit=1000)
             

@@ -420,6 +420,9 @@ class ReportsConfiguration:
     
     def _load_configuration(self) -> None:
         """Load configuration from file and environment variables."""
+
+
+
         try:
             # Load from file if exists
             if self.config_path.exists():
@@ -446,6 +449,9 @@ class ReportsConfiguration:
     
     def _load_from_file(self) -> None:
         """Load configuration from YAML file."""
+
+
+
         try:
             with open(self.config_path, 'r') as f:
                 config_data = yaml.safe_load(f)
@@ -521,6 +527,9 @@ class ReportsConfiguration:
     
     def _load_from_environment(self) -> None:
         """Load configuration from environment variables."""
+
+
+
         try:
             # Database configuration
             if os.getenv('DB_HOST'):
@@ -572,6 +581,9 @@ class ReportsConfiguration:
     
     def _validate_configuration(self) -> None:
         """Validate configuration values."""
+
+
+
         try:
             # Validate database configuration
             if not self.database.host:
@@ -611,6 +623,9 @@ class ReportsConfiguration:
     
     def _initialize_encryption(self) -> None:
         """Initialize encryption for sensitive data."""
+
+
+
         try:
             if self.security.encryption_key:
                 # Use provided encryption key
@@ -645,6 +660,9 @@ class ReportsConfiguration:
     
     def _setup_config_watching(self) -> None:
         """Setup configuration file watching for auto-reload."""
+
+
+
         try:
             class ConfigFileHandler(FileSystemEventHandler):
                 def __init__(self, config_instance):
@@ -695,6 +713,9 @@ class ReportsConfiguration:
     
     def reload(self) -> None:
         """Reload configuration from file and environment."""
+
+
+
         try:
             old_hash = self._config_hash
             self._load_configuration()
@@ -746,6 +767,9 @@ class ReportsConfiguration:
     
     def save_to_file(self, file_path: Optional[str] = None, include_secrets: bool = False) -> None:
         """Save configuration to file."""
+
+
+
         try:
             target_path = Path(file_path) if file_path else self.config_path
             target_path.parent.mkdir(parents=True, exist_ok=True)
@@ -761,26 +785,44 @@ class ReportsConfiguration:
     
     def get_database_url(self, async_driver: bool = True) -> str:
         """Get formatted database URL."""
+
+
+
         return self.database.url
     
     def get_redis_url(self) -> str:
         """Get formatted Redis URL."""
+
+
+
         return self.redis.url
     
     def is_development(self) -> bool:
         """Check if running in development environment."""
+
+
+
         return self.environment in [Environment.DEVELOPMENT, Environment.LOCAL]
     
     def is_production(self) -> bool:
         """Check if running in production environment."""
+
+
+
         return self.environment == Environment.PRODUCTION
     
     def is_testing(self) -> bool:
         """Check if running in testing environment."""
+
+
+
         return self.environment == Environment.TESTING
     
     def cleanup(self) -> None:
         """Cleanup watchers and resources."""
+
+
+
         try:
             for watcher in self._watchers:
                 watcher.stop()

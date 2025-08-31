@@ -1,14 +1,14 @@
-"""🚀 Platform Core Billing System - IA Influencer Agent Platform Enterprise
+""" Platform Core Billing System - IA Influencer Agent Platform Enterprise
 ========================================================================
 Module: backend/platform_core/billing/
 Author: Fahed Mlaiel (mlaiel@live.de)
 ========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 SYSTÈME DE FACTURATION ENTERPRISE
+ SYSTÈME DE FACTURATION ENTERPRISE
 Gestion complète de facturation et paiements pour plateforme IA
 - Intégration Stripe/PayPal/Wise pour paiements globaux
 - Facturation automatique et récurrente

@@ -8,14 +8,14 @@ in the IA-Influencer-Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This orchestration system and ML methodologies are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED and will result in legal action.
 
 ALL RIGHTS RESERVED - FAHED MLAIEL ©2025
 
-🎯 BUSINESS LOGIC INTEGRATION:
+ BUSINESS LOGIC INTEGRATION:
 Creator Upload → AI/ML Processing → Feature Extraction → Model Inference
 → Content Protection → SEO Optimization → Collaboration Matching
 → Distribution & Monetization → Performance Analytics
@@ -142,6 +142,9 @@ class MLServiceOrchestrator:
         
     def _initialize_services(self):
         """Initialize all ML services and components"""
+
+
+
         try:
             # Initialize core ML components
             self.ml_agent = MLAgent()
@@ -454,10 +457,16 @@ async def extract_features(request_data: Dict[str, Any]) -> Dict[str, Any]:
 
 async def get_ml_health() -> Dict[str, ServiceHealth]:
     """Get health status of all ML services"""
+
+
+
     return await ml_orchestrator.get_service_health()
 
 async def get_ml_metrics() -> Dict[str, Any]:
     """Get comprehensive ML performance metrics"""
+
+
+
     return await ml_orchestrator.get_service_metrics()
 
 # Export all components for external access

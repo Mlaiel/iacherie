@@ -7,7 +7,7 @@ Tracks real-time performance, resource usage, business metrics, and system healt
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  STRICT LEGAL WARNING ⚠️
+  STRICT LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Contact: mlaiel@live.de
@@ -602,6 +602,9 @@ class MLPerformanceMonitor:
     
     def get_active_alerts(self) -> List[Alert]:
         """Get all active (unresolved) alerts"""
+
+
+
         return [alert for alert in self.alerts if not alert.resolved]
     
     def resolve_alert(self, alert_id: str):

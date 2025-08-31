@@ -436,6 +436,9 @@ class ProtectionConfigManager:
     
     def _load_default_config(self) -> ProtectionConfig:
         """Load default protection configuration."""
+
+
+
         return ProtectionConfig(
             enabled=True,
             protection_level=ProtectionLevel.ENTERPRISE,
@@ -481,22 +484,37 @@ class ProtectionConfigManager:
     
     def get_config(self) -> ProtectionConfig:
         """Get current protection configuration."""
+
+
+
         return self.config
     
     def get_audio_config(self) -> AudioProtectionConfig:
         """Get audio protection configuration."""
+
+
+
         return self.config.audio
     
     def get_video_config(self) -> VideoProtectionConfig:
         """Get video protection configuration."""
+
+
+
         return self.config.video
     
     def get_image_config(self) -> ImageProtectionConfig:
         """Get image protection configuration."""
+
+
+
         return self.config.image
     
     def get_text_config(self) -> TextProtectionConfig:
         """Get text protection configuration."""
+
+
+
         return self.config.text
     
     def update_config(self, config: ProtectionConfig) -> None:

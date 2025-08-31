@@ -102,6 +102,9 @@ class WarmingRule:
     
     def matches_trigger(self, trigger: WarmingTrigger) -> bool:
         """Check if rule applies to given trigger"""
+
+
+
         return trigger in self.triggers
     
     def matches_conditions(self, context: Dict[str, Any]) -> bool:
@@ -291,6 +294,9 @@ class CacheWarmingConfig(BaseModel):
     
     def get_scheduled_rules(self) -> List[WarmingRule]:
         """Get rules with schedule configuration"""
+
+
+
         return [rule for rule in self.rules 
                 if rule.enabled and rule.schedule and rule.strategy == WarmingStrategy.SCHEDULED]
     
@@ -305,10 +311,16 @@ class CacheWarmingConfig(BaseModel):
     
     def get_tenant_weight(self, tenant_id: str) -> float:
         """Get warming priority weight for tenant"""
+
+
+
         return self.tenant_priority_weights.get(tenant_id, 1.0)
     
     def get_configuration_summary(self) -> Dict[str, Any]:
         """Get configuration summary for monitoring"""
+
+
+
         return {
             "enabled": self.enabled,
             "total_rules": len(self.rules),
@@ -413,6 +425,9 @@ class CacheWarmingEngine:
     async def warm_key(self, key: str, value_loader: Callable, cache_client: Any, 
                       ttl: Optional[int] = None) -> bool:
         """Warm specific cache key"""
+
+
+
         try:
             # Load value
             if asyncio.iscoroutinefunction(value_loader):

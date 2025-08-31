@@ -1,11 +1,11 @@
 """
-🎯 Batch & Metadata Processors - IA Influencer Agent Platform Enterprise
+ Batch & Metadata Processors - IA Influencer Agent Platform Enterprise
 =======================================================================
 Module: backend/data_management/processors/[batch/metadata]_processor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 =======================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 """
@@ -111,6 +111,9 @@ class BatchProcessor(BaseProcessor):
     
     def _process_single_file(self, processor: BaseProcessor, file_path: str) -> Dict[str, Any]:
         """Traite un seul fichier"""
+
+
+
         return processor.process({"file_path": file_path})
     
     def get_job_status(self, job_id: str) -> Optional[Dict[str, Any]]:
@@ -247,6 +250,9 @@ class MetadataProcessor(BaseProcessor):
     
     def _extract_audio_metadata(self, file_path: str) -> Dict[str, Any]:
         """Extrait métadonnées audio"""
+
+
+
         return {
             "duration": 240.5,
             "sample_rate": 44100,
@@ -262,6 +268,9 @@ class MetadataProcessor(BaseProcessor):
     
     def _extract_video_metadata(self, file_path: str) -> Dict[str, Any]:
         """Extrait métadonnées vidéo"""
+
+
+
         return {
             "duration": 300.0,
             "resolution": [1920, 1080],
@@ -274,6 +283,9 @@ class MetadataProcessor(BaseProcessor):
     
     def _extract_image_metadata(self, file_path: str) -> Dict[str, Any]:
         """Extrait métadonnées image"""
+
+
+
         return {
             "resolution": [1920, 1080],
             "color_space": "RGB",
@@ -286,6 +298,9 @@ class MetadataProcessor(BaseProcessor):
     
     def _extract_document_metadata(self, file_path: str) -> Dict[str, Any]:
         """Extrait métadonnées document"""
+
+
+
         return {
             "word_count": 1500,
             "page_count": 5,

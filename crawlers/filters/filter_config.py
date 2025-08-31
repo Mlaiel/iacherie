@@ -8,7 +8,7 @@ Professional tuning parameters for maximum performance and reliability.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️ STRICT COPYRIGHT PROTECTION ⚠️
+ STRICT COPYRIGHT PROTECTION 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 """
@@ -179,14 +179,23 @@ class AdvancedConfigManager:
     
     def get_filter_config(self) -> FilterConfigManager:
         """Get optimized filter configuration."""
+
+
+
         return self.base_config
     
     def get_advanced_config(self) -> AdvancedFilterConfig:
         """Get advanced configuration."""
+
+
+
         return self.advanced_config
     
     def export_config(self) -> Dict[str, Any]:
         """Export complete configuration as dictionary."""
+
+
+
         return {
             'environment': self.advanced_config.environment.value,
             'performance_profile': self.advanced_config.performance_profile.value,

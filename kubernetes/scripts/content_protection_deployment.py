@@ -114,6 +114,9 @@ class ContentProtectionDeploymentManager:
         
     def _load_configuration(self) -> Dict[str, Any]:
         """Load deployment configuration"""
+
+
+
         try:
             with open(self.config_path, 'r') as f:
                 config = yaml.safe_load(f)
@@ -125,6 +128,9 @@ class ContentProtectionDeploymentManager:
     
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default protection deployment configuration"""
+
+
+
         return {
             'fingerprint_engines': {
                 'audio': {
@@ -448,6 +454,9 @@ class ContentProtectionDeploymentManager:
     
     def _create_vector_db_manifest(self, config: Dict[str, Any]) -> Dict[str, Any]:
         """Create FAISS vector database deployment manifest"""
+
+
+
         return {
             'apiVersion': 'apps/v1',
             'kind': 'Deployment',
@@ -553,6 +562,9 @@ class ContentProtectionDeploymentManager:
     
     def _create_crawler_manifest(self, platform: str, config: Dict[str, Any]) -> Dict[str, Any]:
         """Create content crawler deployment manifest"""
+
+
+
         return {
             'apiVersion': 'apps/v1',
             'kind': 'Deployment',
@@ -718,6 +730,9 @@ class ContentProtectionDeploymentManager:
     
     def _get_vector_db_status(self) -> Dict[str, Any]:
         """Get vector database status"""
+
+
+
         try:
             deployment = self.k8s_apps_v1.read_namespaced_deployment(
                 name='faiss-vector-db',

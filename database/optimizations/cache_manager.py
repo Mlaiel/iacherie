@@ -92,6 +92,9 @@ class CacheMetrics:
     @property
     def miss_ratio(self) -> float:
         """Calculate cache miss ratio"""
+
+
+
         return 1.0 - self.hit_ratio
 
 
@@ -110,6 +113,9 @@ class CacheEntry:
     
     def _calculate_size(self) -> int:
         """Calculate entry size in bytes"""
+
+
+
         try:
             return len(json.dumps(self.value).encode('utf-8'))
         except (TypeError, ValueError):
@@ -203,10 +209,16 @@ class MemoryCache:
     
     def get_size(self) -> int:
         """Get current cache size"""
+
+
+
         return len(self._cache)
     
     def get_memory_usage(self) -> int:
         """Get memory usage in bytes"""
+
+
+
         return sum(entry.size for entry in self._cache.values())
 
 
@@ -227,6 +239,9 @@ class CacheManager:
     
     async def _initialize_redis(self) -> None:
         """Initialize Redis connection"""
+
+
+
         try:
             self.redis_client = redis.Redis(
                 host=self.config.redis_host,
@@ -276,6 +291,9 @@ class CacheManager:
     
     async def set(self, key: str, value: Any, ttl: Optional[int] = None) -> None:
         """Set value in cache (multi-level)"""
+
+
+
         try:
             effective_ttl = ttl or self.config.ttl_seconds
             
@@ -293,6 +311,9 @@ class CacheManager:
     
     async def delete(self, key: str) -> bool:
         """Delete key from all cache levels"""
+
+
+
         try:
             deleted = False
             
@@ -313,6 +334,9 @@ class CacheManager:
     
     async def invalidate_pattern(self, pattern: str) -> int:
         """Invalidate cache entries matching pattern"""
+
+
+
         try:
             deleted_count = 0
             
@@ -390,6 +414,9 @@ class CacheManager:
     
     async def _get_from_redis(self, key: str) -> Optional[Any]:
         """Get value from Redis cache"""
+
+
+
         try:
             value = await self.redis_client.get(key)
             if value is None:
@@ -406,6 +433,9 @@ class CacheManager:
     
     async def _set_in_redis(self, key: str, value: Any, ttl: int) -> None:
         """Set value in Redis cache"""
+
+
+
         try:
             # Serialize value
             if self.config.serialization_format == "json":

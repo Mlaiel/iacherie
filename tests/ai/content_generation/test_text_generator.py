@@ -71,6 +71,9 @@ class TestTextGenerator:
     @pytest.fixture
     def blog_request(self):
         """Create a blog post generation request"""
+
+
+
         return {
             "content_type": "blog_post",
             "topic": "Future of Artificial Intelligence",
@@ -84,6 +87,9 @@ class TestTextGenerator:
     @pytest.fixture
     def social_request(self):
         """Create a social media post request"""
+
+
+
         return {
             "content_type": "social_post",
             "topic": "Daily motivation",
@@ -97,6 +103,9 @@ class TestTextGenerator:
     @pytest.fixture
     def email_request(self):
         """Create an email marketing request"""
+
+
+
         return {
             "content_type": "email_marketing",
             "topic": "New product launch",

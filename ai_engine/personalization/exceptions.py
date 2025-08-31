@@ -27,7 +27,7 @@ Advanced Features:
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 ANY unauthorized use, reproduction, or distribution is STRICTLY PROHIBITED.
 Legal action will be taken against violators under German and international law.
@@ -152,6 +152,9 @@ class PersonalizationError(Exception):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert exception to dictionary for logging/API responses"""
+
+
+
         return {
             'error_type': self.error_type.value,
             'error_code': self.error_code,
@@ -537,6 +540,9 @@ def get_personalization_exception_by_code(error_code: str) -> Optional[type]:
     Returns:
         Exception class or None if not found
     """
+
+
+
     return PERSONALIZATION_EXCEPTION_REGISTRY.get(error_code)
 
 

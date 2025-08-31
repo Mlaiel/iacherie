@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -241,10 +241,16 @@ class BiometricAuthManager:
     
     def _encrypt_template(self, template_data: bytes) -> bytes:
         """Encrypt biometric template"""
+
+
+
         return self.fernet.encrypt(template_data)
     
     def _decrypt_template(self, encrypted_template: bytes) -> bytes:
         """Decrypt biometric template"""
+
+
+
         return self.fernet.decrypt(encrypted_template)
     
     def _calculate_feature_hash(self, features: BiometricFeatures) -> str:
@@ -270,6 +276,9 @@ class BiometricAuthManager:
         template_name: Optional[str] = None
     ) -> Optional[str]:
         """Enroll new biometric template"""
+
+
+
         try:
             # Validate quality
             quality_score = self._calculate_quality_score(features)
@@ -462,6 +471,9 @@ class BiometricAuthManager:
     
     def _calculate_match_score(self, input_features: BiometricFeatures, stored_features: BiometricFeatures) -> int:
         """Calculate biometric match score between templates"""
+
+
+
         try:
             # Convert feature vectors to numpy arrays
             input_vector = np.array(input_features.feature_vector)
@@ -503,6 +515,9 @@ class BiometricAuthManager:
         session_id: Optional[str] = None
     ):
         """Log biometric verification attempt"""
+
+
+
         try:
             elapsed_ms = int((datetime.now(timezone.utc) - verification_time).total_seconds() * 1000)
             
@@ -532,6 +547,9 @@ class BiometricAuthManager:
     
     async def get_user_biometrics(self, user_id: str) -> List[Dict[str, Any]]:
         """Get user's enrolled biometric templates"""
+
+
+
         try:
             templates = self.db.query(BiometricTemplate).filter(
                 BiometricTemplate.user_id == uuid.UUID(user_id),
@@ -559,6 +577,9 @@ class BiometricAuthManager:
     
     async def delete_biometric_template(self, user_id: str, template_id: str) -> bool:
         """Delete biometric template"""
+
+
+
         try:
             template = self.db.query(BiometricTemplate).filter(
                 BiometricTemplate.id == uuid.UUID(template_id),
@@ -588,6 +609,9 @@ class BiometricAuthManager:
         device_capabilities: Dict[str, Any]
     ) -> bool:
         """Register biometric-capable device"""
+
+
+
         try:
             device = BiometricDevice(
                 user_id=uuid.UUID(user_id),

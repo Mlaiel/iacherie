@@ -10,7 +10,7 @@ Project: IA-Influencer Agent + Content Protection Platform
 Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                  Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This code, concept, and intellectual property are exclusively owned by Fahed Mlaiel.
 Any unauthorized use, copying, distribution, reverse engineering, or commercialization 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
@@ -354,6 +354,9 @@ class ContentProtectionLogger:
     
     def get_protection_metrics(self) -> Dict[str, Any]:
         """Get content protection performance metrics"""
+
+
+
         return {
             "fingerprint_generation_enabled": self.config.enable_fingerprint_logging,
             "piracy_detection_enabled": self.config.enable_piracy_detection_logging,
@@ -375,11 +378,17 @@ class ContentProtectionLoggingConfig:
     @staticmethod
     def create_default_config() -> ContentProtectionLogConfig:
         """Create default content protection logging configuration"""
+
+
+
         return ContentProtectionLogConfig()
     
     @staticmethod
     def create_high_security_config() -> ContentProtectionLogConfig:
         """Create high-security content protection logging configuration"""
+
+
+
         return ContentProtectionLogConfig(
             enable_fingerprint_logging=True,
             enable_piracy_detection_logging=True,
@@ -407,6 +416,9 @@ class ContentProtectionLoggingConfig:
     @staticmethod
     def create_performance_focused_config() -> ContentProtectionLogConfig:
         """Create performance-focused content protection logging configuration"""
+
+
+
         return ContentProtectionLogConfig(
             enable_fingerprint_logging=True,
             enable_piracy_detection_logging=True,

@@ -1,4 +1,4 @@
-"""🚀 Revenue Management Module - Industrial-Grade Revenue Operations System
+""" Revenue Management Module - Industrial-Grade Revenue Operations System
 =========================================================================
 
 Ultra-advanced revenue management system providing comprehensive revenue tracking,
@@ -10,7 +10,7 @@ Created by: Fahed Mlaiel <mlaiel@live.de>
 Team Specialists:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
+ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED 
 =============================================================
 This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use without explicit written permission

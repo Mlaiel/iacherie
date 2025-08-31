@@ -7,7 +7,7 @@ metadata handling, and optimization capabilities for all major audio formats.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -143,6 +143,9 @@ class AudioFormatConverter:
     
     def _initialize_format_support(self) -> Dict[str, Dict[str, Any]]:
         """Initialize supported format configurations"""
+
+
+
         return {
             # Lossless formats
             "wav": {
@@ -211,6 +214,9 @@ class AudioFormatConverter:
     
     def _initialize_quality_presets(self) -> Dict[str, Dict[str, Any]]:
         """Initialize quality preset configurations"""
+
+
+
         return {
             "low": {
                 "sample_rate": 22050,
@@ -345,6 +351,9 @@ class AudioFormatConverter:
     
     async def _load_audio_file(self, file_path: str) -> Tuple[np.ndarray, int]:
         """Load audio file with comprehensive format support"""
+
+
+
         try:
             # Try librosa first (supports most formats)
             audio_data, sample_rate = librosa.load(file_path, sr=None, mono=False)
@@ -371,6 +380,9 @@ class AudioFormatConverter:
     
     async def _load_with_ffmpeg(self, file_path: str) -> Tuple[np.ndarray, int]:
         """Load audio using FFmpeg as fallback"""
+
+
+
         try:
             # Use FFmpeg to convert to WAV and load
             with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp_file:
@@ -400,6 +412,9 @@ class AudioFormatConverter:
     
     async def _analyze_audio_specs(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
         """Analyze audio specifications and quality"""
+
+
+
         try:
             if len(audio_data.shape) == 1:
                 channels = 1
@@ -688,6 +703,9 @@ class AudioFormatConverter:
     
     def _apply_antialias_filter(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
         """Apply anti-aliasing filter"""
+
+
+
         try:
             # Design anti-aliasing filter
             nyquist = sample_rate / 2
@@ -730,6 +748,9 @@ class AudioFormatConverter:
     
     def _apply_replaygain(self, audio_data: np.ndarray) -> np.ndarray:
         """Apply ReplayGain normalization"""
+
+
+
         try:
             # Calculate RMS level
             rms = np.sqrt(np.mean(audio_data**2))
@@ -753,6 +774,9 @@ class AudioFormatConverter:
                                   config: ConversionConfig,
                                   original_specs: Dict[str, Any]) -> str:
         """Save converted audio to file with appropriate format and metadata"""
+
+
+
         try:
             # Generate output filename
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -808,6 +832,9 @@ class AudioFormatConverter:
                                     config: ConversionConfig,
                                     output_path: str) -> str:
         """Save audio in compressed format using FFmpeg"""
+
+
+
         try:
             # First save as temporary WAV
             with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp_file:
@@ -848,6 +875,9 @@ class AudioFormatConverter:
                                      config: ConversionConfig,
                                      original_specs: Dict[str, Any]):
         """Add conversion metadata to the output file"""
+
+
+
         try:
             # In a real implementation, this would use libraries like mutagen
             # to write actual metadata to audio files
@@ -870,6 +900,9 @@ class AudioFormatConverter:
     
     async def _apply_content_protection(self, file_path: str):
         """Apply content protection to converted file"""
+
+
+
         try:
             # Create content protection fingerprint
             fingerprint = await self.content_protection.create_file_fingerprint(file_path)
@@ -888,6 +921,9 @@ class AudioFormatConverter:
                                        original_specs: Dict[str, Any],
                                        converted_specs: Dict[str, Any]) -> Dict[str, float]:
         """Calculate quality metrics comparing original and converted audio"""
+
+
+
         try:
             metrics = {}
             
@@ -984,6 +1020,9 @@ class QualityOptimizer:
                                          target_format: str,
                                          optimization_goal: str = "balanced") -> ConversionConfig:
         """Optimize conversion settings based on audio content and goals"""
+
+
+
         try:
             # Analyze audio content
             content_analysis = await self._analyze_content_characteristics(audio_data, sample_rate)
@@ -1011,6 +1050,9 @@ class QualityOptimizer:
                                              audio_data: np.ndarray, 
                                              sample_rate: int) -> Dict[str, Any]:
         """Analyze audio content to inform optimization decisions"""
+
+
+
         try:
             # Basic characteristics
             if len(audio_data.shape) > 1:

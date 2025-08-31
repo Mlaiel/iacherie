@@ -20,7 +20,7 @@ Team Specialists:
 - IA Prompt Engineer: AI access control prompts
 
 Contact: mlaiel@live.de
-⚠️ LEGAL WARNING: Any unauthorized use, copying, distribution, or commercialization 
+ LEGAL WARNING: Any unauthorized use, copying, distribution, or commercialization 
 of this code without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will result in immediate legal action.
 """
@@ -236,6 +236,9 @@ class DatabaseAccessControl:
     
     def _initialize_default_setup(self):
         """Initialize default roles, permissions, and policies"""
+
+
+
         try:
             # Create default roles
             default_roles = [
@@ -364,6 +367,9 @@ class DatabaseAccessControl:
         Returns:
             True if authentication successful, False otherwise
         """
+
+
+
         try:
             # Check if principal exists
             if principal_id not in self.principals:
@@ -744,6 +750,9 @@ class DatabaseAccessControl:
         granted_by: str
     ) -> bool:
         """Grant permission to principal"""
+
+
+
         try:
             if principal_id not in self.principals:
                 raise ValueError(f"Unknown principal: {principal_id}")
@@ -769,6 +778,9 @@ class DatabaseAccessControl:
         revoked_by: str
     ) -> bool:
         """Revoke permission from principal"""
+
+
+
         try:
             permission_key = f"{principal_id}:{permission_id}"
             
@@ -791,6 +803,9 @@ class DatabaseAccessControl:
     
     async def add_principal_to_role(self, principal_id: str, role_id: str) -> bool:
         """Add principal to role"""
+
+
+
         try:
             if principal_id not in self.principals:
                 raise ValueError(f"Unknown principal: {principal_id}")
@@ -815,6 +830,9 @@ class DatabaseAccessControl:
     
     async def remove_principal_from_role(self, principal_id: str, role_id: str) -> bool:
         """Remove principal from role"""
+
+
+
         try:
             if principal_id not in self.principals:
                 raise ValueError(f"Unknown principal: {principal_id}")
@@ -846,6 +864,9 @@ class DatabaseAccessControl:
     
     def get_access_metrics(self) -> Dict[str, Any]:
         """Get access control metrics"""
+
+
+
         return {
             "total_requests": self.metrics.total_requests,
             "allowed_requests": self.metrics.allowed_requests,

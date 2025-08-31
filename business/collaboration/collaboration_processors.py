@@ -355,6 +355,9 @@ class CollaborationMatchingProcessor:
     
     def _extract_request_features(self, request: CollaborationRequest) -> Dict[str, Any]:
         """Extract features from collaboration request for ML"""
+
+
+
         return {
             'collaboration_type': request.collaboration_type.value,
             'num_required_skills': len(request.required_skills),
@@ -368,6 +371,9 @@ class CollaborationMatchingProcessor:
     
     def _extract_candidate_features(self, candidate: Dict[str, Any]) -> Dict[str, Any]:
         """Extract features from candidate profile for ML"""
+
+
+
         return {
             'num_skills': len(candidate.get('skills', [])),
             'reputation_score': candidate.get('reputation_score', 0.5),

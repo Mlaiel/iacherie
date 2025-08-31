@@ -4,26 +4,26 @@ Revenue Platform Integration Manager - Multi-Platform Revenue Management
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  STRICT COPYRIGHT WARNING ⚠️
+  STRICT COPYRIGHT WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, reproduction, modification, or distribution without explicit 
 written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 PLATFORM INTEGRATION MANAGER - ENTERPRISE EDITION
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 
 Developed by Expert Team:
-🎯 Lead Dev IA: Fahed Mlaiel (Advanced AI/ML Architecture)
-🛠️  Backend Senior: System Architecture & Performance Optimization  
+ Lead Dev IA: Fahed Mlaiel (Advanced AI/ML Architecture)
+  Backend Senior: System Architecture & Performance Optimization  
 🤖 ML Engineer: Cross-Platform Revenue Optimization
-🗄️  DBA: Advanced Data Management & Analytics
-🔒 Security Expert: Enterprise-Grade Security & Encryption
-🚀 Microservices: Scalable Distributed Architecture
-🎵 Audio Expert: Audio Platform Integration
-⚙️  DevOps: Production Infrastructure & Monitoring
+  DBA: Advanced Data Management & Analytics
+ Security Expert: Enterprise-Grade Security & Encryption
+ Microservices: Scalable Distributed Architecture
+ Audio Expert: Audio Platform Integration
+  DevOps: Production Infrastructure & Monitoring
 🧠 IA Prompt Engineer: AI-Powered Platform Optimization
 """
 
@@ -251,6 +251,9 @@ class SpotifyConnector(BasePlatformConnector):
     
     async def authenticate(self) -> bool:
         """Authenticate with Spotify API"""
+
+
+
         try:
             if self.credentials.is_expired:
                 # Refresh token if needed
@@ -279,6 +282,9 @@ class SpotifyConnector(BasePlatformConnector):
         end_date: datetime
     ) -> PlatformRevenueData:
         """Fetch Spotify revenue data"""
+
+
+
         try:
             if not await self._check_rate_limits('revenue'):
                 raise PlatformIntegrationError("Rate limit exceeded for Spotify revenue endpoint")
@@ -321,6 +327,9 @@ class SpotifyConnector(BasePlatformConnector):
         end_date: datetime
     ) -> Dict[str, Any]:
         """Fetch Spotify analytics data"""
+
+
+
         try:
             headers = {
                 'Authorization': f'Bearer {self.credentials.access_token}',
@@ -422,6 +431,9 @@ class YouTubeConnector(BasePlatformConnector):
     
     async def authenticate(self) -> bool:
         """Authenticate with YouTube API"""
+
+
+
         try:
             headers = {
                 'Authorization': f'Bearer {self.credentials.access_token}',
@@ -447,6 +459,9 @@ class YouTubeConnector(BasePlatformConnector):
         end_date: datetime
     ) -> PlatformRevenueData:
         """Fetch YouTube revenue data"""
+
+
+
         try:
             if not await self._check_rate_limits('revenue'):
                 raise PlatformIntegrationError("Rate limit exceeded for YouTube revenue endpoint")
@@ -490,6 +505,9 @@ class YouTubeConnector(BasePlatformConnector):
         end_date: datetime
     ) -> Dict[str, Any]:
         """Fetch YouTube analytics data"""
+
+
+
         try:
             headers = {
                 'Authorization': f'Bearer {self.credentials.access_token}',
@@ -583,6 +601,9 @@ class InstagramConnector(BasePlatformConnector):
     
     async def authenticate(self) -> bool:
         """Authenticate with Instagram API"""
+
+
+
         try:
             headers = {
                 'Authorization': f'Bearer {self.credentials.access_token}',
@@ -608,6 +629,9 @@ class InstagramConnector(BasePlatformConnector):
         end_date: datetime
     ) -> PlatformRevenueData:
         """Fetch Instagram revenue data"""
+
+
+
         try:
             if not await self._check_rate_limits('revenue'):
                 raise PlatformIntegrationError("Rate limit exceeded for Instagram revenue endpoint")
@@ -653,6 +677,9 @@ class InstagramConnector(BasePlatformConnector):
         end_date: datetime
     ) -> Dict[str, Any]:
         """Fetch Instagram analytics data"""
+
+
+
         try:
             headers = {
                 'Authorization': f'Bearer {self.credentials.access_token}',
@@ -697,6 +724,9 @@ class PlatformIntegrationManager:
     
     async def initialize(self) -> None:
         """Initialize platform integration manager"""
+
+
+
         try:
             await self._load_existing_connections()
             await self._setup_monitoring()
@@ -771,6 +801,9 @@ class PlatformIntegrationManager:
         credentials: Dict[str, Any]
     ) -> str:
         """Connect to a platform"""
+
+
+
         try:
             connection_id = str(uuid.uuid4())
             
@@ -840,6 +873,9 @@ class PlatformIntegrationManager:
         end_date: Optional[datetime] = None
     ) -> Dict[str, Any]:
         """Sync data from platform"""
+
+
+
         try:
             if connection_id not in self.connections:
                 raise PlatformIntegrationError(f"Connection not found: {connection_id}")
@@ -922,6 +958,9 @@ class PlatformIntegrationManager:
         end_date: Optional[datetime] = None
     ) -> Dict[str, Any]:
         """Sync data from all connected platforms"""
+
+
+
         try:
             results = {}
             
@@ -977,6 +1016,9 @@ class PlatformIntegrationManager:
         period_days: int = 30
     ) -> Dict[str, Any]:
         """Get comprehensive platform analytics"""
+
+
+
         try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=period_days)
@@ -1102,6 +1144,9 @@ class PlatformIntegrationManager:
     
     async def disconnect_platform(self, connection_id: str) -> bool:
         """Disconnect from platform"""
+
+
+
         try:
             if connection_id not in self.connections:
                 raise PlatformIntegrationError(f"Connection not found: {connection_id}")
@@ -1155,4 +1200,7 @@ class PlatformIntegrationManager:
 
 def create_platform_integration_manager(config: Optional[Dict[str, Any]] = None) -> PlatformIntegrationManager:
     """Factory function to create platform integration manager"""
+
+
+
     return PlatformIntegrationManager(config)

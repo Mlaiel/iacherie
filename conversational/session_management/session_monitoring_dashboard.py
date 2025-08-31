@@ -8,7 +8,7 @@ for multi-format content creator sessions across all platforms.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copy, modification, or distribution without 
 explicit written permission is strictly prohibited.
@@ -260,6 +260,9 @@ class MetricsCollectionEngine:
         metadata: Dict[str, Any] = None
     ) -> SessionMetric:
         """Collect a session metric"""
+
+
+
         
         try:
             metric = SessionMetric(
@@ -304,6 +307,9 @@ class MetricsCollectionEngine:
     
     async def _cache_metric(self, metric: SessionMetric):
         """Cache metric for fast retrieval"""
+
+
+
         
         try:
             # Cache individual metric
@@ -333,6 +339,9 @@ class MetricsCollectionEngine:
         metric_names: List[str] = None
     ) -> Dict[str, List[SessionMetric]]:
         """Get session metrics with filters"""
+
+
+
         
         try:
             # Calculate time window
@@ -392,6 +401,9 @@ class MetricsCollectionEngine:
         time_range: TimeRange = TimeRange.LAST_HOUR
     ) -> float:
         """Aggregate metrics over time range"""
+
+
+
         
         try:
             metrics_data = await self.get_session_metrics(
@@ -427,6 +439,9 @@ class MetricsCollectionEngine:
     
     async def persist_metrics(self, session_id: str):
         """Persist metrics to database"""
+
+
+
         
         try:
             if session_id not in self.session_metrics:
@@ -478,6 +493,9 @@ class AnomalyDetectionEngine:
         metrics_data: Dict[str, List[SessionMetric]]
     ) -> List[Dict[str, Any]]:
         """Detect anomalies in session metrics"""
+
+
+
         
         try:
             anomalies = []
@@ -516,6 +534,9 @@ class AnomalyDetectionEngine:
         timestamps: List[datetime]
     ) -> List[Dict[str, Any]]:
         """Detect statistical anomalies using z-score"""
+
+
+
         
         try:
             anomalies = []
@@ -560,6 +581,9 @@ class AnomalyDetectionEngine:
         timestamps: List[datetime]
     ) -> List[Dict[str, Any]]:
         """Detect anomalies using machine learning"""
+
+
+
         
         try:
             anomalies = []
@@ -659,6 +683,9 @@ class AlertingEngine:
         anomalies: List[Dict[str, Any]] = None
     ) -> List[SessionAlert]:
         """Evaluate alert conditions"""
+
+
+
         
         try:
             triggered_alerts = []
@@ -698,6 +725,9 @@ class AlertingEngine:
         metrics_data: Dict[str, List[SessionMetric]]
     ) -> Optional[SessionAlert]:
         """Evaluate individual metric alert rule"""
+
+
+
         
         try:
             metric_name = rule_config["metric_name"]
@@ -779,6 +809,9 @@ class AlertingEngine:
         anomalies: List[Dict[str, Any]]
     ) -> List[SessionAlert]:
         """Evaluate anomaly-based alerts"""
+
+
+
         
         try:
             alerts = []
@@ -817,6 +850,9 @@ class AlertingEngine:
     
     async def _process_alert(self, alert: SessionAlert):
         """Process triggered alert"""
+
+
+
         
         try:
             # Store alert
@@ -862,6 +898,9 @@ class AlertingEngine:
     
     async def acknowledge_alert(self, alert_id: str, acknowledged_by: str) -> bool:
         """Acknowledge an alert"""
+
+
+
         
         try:
             if alert_id not in self.active_alerts:
@@ -898,6 +937,9 @@ class AlertingEngine:
     
     async def resolve_alert(self, alert_id: str) -> bool:
         """Resolve an alert"""
+
+
+
         
         try:
             if alert_id not in self.active_alerts:
@@ -949,6 +991,9 @@ class DashboardDataProvider:
         user_id: Optional[str] = None
     ) -> Dict[str, Any]:
         """Get data for dashboard widget"""
+
+
+
         
         try:
             # Check cache first
@@ -992,6 +1037,9 @@ class DashboardDataProvider:
         user_id: Optional[str]
     ) -> Dict[str, Any]:
         """Get data for metric widget"""
+
+
+
         
         try:
             # This would aggregate metrics from the metrics collection engine
@@ -1019,6 +1067,9 @@ class DashboardDataProvider:
         user_id: Optional[str]
     ) -> Dict[str, Any]:
         """Get data for chart widget"""
+
+
+
         
         try:
             # Generate time series data
@@ -1059,6 +1110,9 @@ class DashboardDataProvider:
         user_id: Optional[str]
     ) -> Dict[str, Any]:
         """Get data for table widget"""
+
+
+
         
         try:
             # Generate sample table data
@@ -1085,6 +1139,9 @@ class DashboardDataProvider:
         user_id: Optional[str]
     ) -> Dict[str, Any]:
         """Get data for alert list widget"""
+
+
+
         
         try:
             # This would fetch active alerts
@@ -1144,6 +1201,9 @@ class SessionMonitoringDashboard:
     
     async def start_monitoring(self):
         """Start real-time monitoring"""
+
+
+
         
         try:
             if self.monitoring_active:
@@ -1159,6 +1219,9 @@ class SessionMonitoringDashboard:
     
     async def stop_monitoring(self):
         """Stop real-time monitoring"""
+
+
+
         
         try:
             self.monitoring_active = False
@@ -1177,6 +1240,9 @@ class SessionMonitoringDashboard:
     
     async def _monitoring_loop(self):
         """Main monitoring loop"""
+
+
+
         
         try:
             while self.monitoring_active:
@@ -1230,6 +1296,9 @@ class SessionMonitoringDashboard:
     
     async def _get_active_sessions(self) -> List[str]:
         """Get list of active session IDs"""
+
+
+
         
         try:
             # This would query the database for active sessions
@@ -1242,6 +1311,9 @@ class SessionMonitoringDashboard:
     
     async def _get_session_user_id(self, session_id: str) -> str:
         """Get user ID for session"""
+
+
+
         
         try:
             # This would query the database
@@ -1260,6 +1332,9 @@ class SessionMonitoringDashboard:
         anomalies: List[Dict[str, Any]]
     ):
         """Broadcast real-time updates to connected clients"""
+
+
+
         
         try:
             update_data = {
@@ -1298,6 +1373,9 @@ class SessionMonitoringDashboard:
         widgets: List[DashboardWidget] = None
     ) -> DashboardView:
         """Create new dashboard view"""
+
+
+
         
         try:
             dashboard_view = DashboardView(
@@ -1332,6 +1410,9 @@ class SessionMonitoringDashboard:
         user_id: Optional[str] = None
     ) -> Dict[str, Any]:
         """Get complete dashboard data"""
+
+
+
         
         try:
             if view_id not in self.dashboard_views:
@@ -1382,6 +1463,9 @@ class SessionMonitoringDashboard:
         metadata: Dict[str, Any] = None
     ) -> bool:
         """Record a session metric"""
+
+
+
         
         try:
             metric = await self.metrics_engine.collect_session_metric(
@@ -1403,6 +1487,9 @@ class SessionMonitoringDashboard:
     
     async def get_session_analytics(self, session_id: str) -> Optional[SessionAnalytics]:
         """Get comprehensive session analytics"""
+
+
+
         
         try:
             # Get metrics data
@@ -1461,6 +1548,9 @@ class SessionMonitoringDashboard:
     
     async def get_monitoring_statistics(self) -> Dict[str, Any]:
         """Get comprehensive monitoring dashboard statistics"""
+
+
+
         
         try:
             active_sessions_count = len(await self._get_active_sessions())

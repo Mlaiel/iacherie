@@ -5,7 +5,7 @@ Enterprise infrastructure monitoring and optimization metrics
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 
-⚠️  AVERTISSEMENT LÉGAL STRICT ⚠️
+  AVERTISSEMENT LÉGAL STRICT 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et fera l'objet de poursuites 
@@ -166,6 +166,9 @@ class InfrastructureMetricsCollector:
     
     async def collect_system_metrics(self) -> SystemMetrics:
         """Collect comprehensive system metrics"""
+
+
+
         
         try:
             # CPU metrics
@@ -231,6 +234,9 @@ class InfrastructureMetricsCollector:
         custom_metrics: Optional[Dict[str, Any]] = None
     ) -> ServiceMetrics:
         """Collect service-specific metrics"""
+
+
+
         
         try:
             # Get service-specific metrics based on type
@@ -262,6 +268,9 @@ class InfrastructureMetricsCollector:
     
     async def collect_database_metrics(self) -> DatabaseMetrics:
         """Collect comprehensive database metrics"""
+
+
+
         
         try:
             async with get_database_session() as session:
@@ -328,6 +337,9 @@ class InfrastructureMetricsCollector:
     
     async def get_infrastructure_health_summary(self) -> Dict[str, Any]:
         """Get comprehensive infrastructure health summary"""
+
+
+
         
         try:
             # Get latest system metrics
@@ -408,6 +420,9 @@ class InfrastructureMetricsCollector:
         service_type: Optional[ServiceType] = None
     ) -> Dict[str, Any]:
         """Get performance trends over time"""
+
+
+
         
         try:
             # Parse time range
@@ -537,6 +552,9 @@ class InfrastructureMetricsCollector:
     
     async def _collect_redis_metrics(self) -> ServiceMetrics:
         """Collect Redis cache metrics"""
+
+
+
         try:
             # Get Redis info
             redis_info = await self.redis_manager.get_redis_info()
@@ -593,6 +611,9 @@ class InfrastructureMetricsCollector:
     
     async def _collect_audio_processing_metrics(self) -> ServiceMetrics:
         """Collect audio processing service metrics"""
+
+
+
         return ServiceMetrics(
             service_type=ServiceType.AUDIO_PROCESSING,
             timestamp=datetime.now(timezone.utc),
@@ -631,6 +652,9 @@ class InfrastructureMetricsCollector:
     
     async def _collect_generic_service_metrics(self, service_type: ServiceType) -> ServiceMetrics:
         """Collect generic service metrics"""
+
+
+
         return ServiceMetrics(
             service_type=service_type,
             timestamp=datetime.now(timezone.utc),
@@ -758,6 +782,9 @@ class InfrastructureMetricsCollector:
     
     async def _store_system_metrics(self, metrics: SystemMetrics) -> None:
         """Store system metrics in database"""
+
+
+
         try:
             async with get_database_session() as session:
                 await session.execute(
@@ -788,6 +815,9 @@ class InfrastructureMetricsCollector:
     
     async def _store_service_metrics(self, metrics: ServiceMetrics) -> None:
         """Store service metrics in database"""
+
+
+
         try:
             async with get_database_session() as session:
                 await session.execute(
@@ -815,6 +845,9 @@ class InfrastructureMetricsCollector:
     
     async def _store_database_metrics(self, metrics: DatabaseMetrics) -> None:
         """Store database metrics in database"""
+
+
+
         try:
             async with get_database_session() as session:
                 await session.execute(

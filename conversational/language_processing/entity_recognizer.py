@@ -16,7 +16,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Specialist + DevOps Expert
 Copyright: Fahed Mlaiel - All Rights Reserved
 
-⚠️  STRICT LEGAL WARNING: 
+  STRICT LEGAL WARNING: 
     This proprietary code is protected by international copyright law.
     Unauthorized use, copying, distribution, modification, or reverse engineering 
     is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -180,6 +180,9 @@ class EntityRecognizer:
         
     def _initialize_models(self):
         """Initialize NER models"""
+
+
+
         try:
             # Initialize spaCy NER
             self.nlp = spacy.load("en_core_web_lg")
@@ -202,6 +205,9 @@ class EntityRecognizer:
             
     def _initialize_custom_patterns(self):
         """Initialize custom entity patterns"""
+
+
+
         try:
             self.custom_patterns = {
                 EntityType.EMAIL: re.compile(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'),
@@ -236,6 +242,9 @@ class EntityRecognizer:
         Returns:
             EntityExtractionResult with extracted entities and relations
         """
+
+
+
         try:
             start_time = datetime.now()
             
@@ -299,6 +308,9 @@ class EntityRecognizer:
             
     async def _extract_spacy_entities(self, text: str, confidence_threshold: float) -> List[NamedEntity]:
         """Extract entities using spaCy NER"""
+
+
+
         try:
             if not self.nlp:
                 return []
@@ -368,6 +380,9 @@ class EntityRecognizer:
         
     def _get_entity_context(self, doc, entity) -> str:
         """Get context around an entity"""
+
+
+
         try:
             # Get sentence containing the entity
             for sent in doc.sents:
@@ -381,6 +396,9 @@ class EntityRecognizer:
             
     async def _extract_transformer_entities(self, text: str, confidence_threshold: float) -> List[NamedEntity]:
         """Extract entities using transformer-based NER"""
+
+
+
         try:
             if not self.transformer_ner:
                 return []
@@ -445,6 +463,9 @@ class EntityRecognizer:
         
     async def _extract_custom_entities(self, text: str) -> List[NamedEntity]:
         """Extract custom entity types using regex patterns"""
+
+
+
         try:
             entities = []
             
@@ -478,6 +499,9 @@ class EntityRecognizer:
             
     async def _merge_duplicate_entities(self, entities: List[NamedEntity]) -> List[NamedEntity]:
         """Merge duplicate entities and combine their mentions"""
+
+
+
         try:
             entity_map = {}
             
@@ -510,6 +534,9 @@ class EntityRecognizer:
             
     def _calculate_entity_importance(self, entity: NamedEntity) -> float:
         """Calculate importance score for an entity"""
+
+
+
         try:
             # Base score from frequency and confidence
             frequency_score = min(entity.frequency / 10, 1.0)
@@ -541,6 +568,9 @@ class EntityRecognizer:
             
     async def _link_entities(self, entities: List[NamedEntity], text: str) -> List[NamedEntity]:
         """Perform entity linking to external knowledge bases"""
+
+
+
         try:
             # This is a simplified implementation
             # In a full implementation, you would use services like:
@@ -565,6 +595,9 @@ class EntityRecognizer:
             
     async def _extract_entity_relations(self, entities: List[NamedEntity], text: str) -> List[EntityRelation]:
         """Extract relationships between entities"""
+
+
+
         try:
             relations = []
             
@@ -617,6 +650,9 @@ class EntityRecognizer:
             
     async def _cluster_entities(self, entities: List[NamedEntity]) -> Dict[str, List[str]]:
         """Cluster similar entities"""
+
+
+
         try:
             clusters = defaultdict(list)
             
@@ -642,6 +678,9 @@ class EntityRecognizer:
             
     async def _extract_entity_timeline(self, text: str, entities: List[NamedEntity]) -> List[Tuple[str, datetime]]:
         """Extract timeline events involving entities"""
+
+
+
         try:
             timeline = []
             
@@ -670,6 +709,9 @@ class EntityRecognizer:
             
     async def _build_entity_network(self, relations: List[EntityRelation]) -> Dict[str, List[str]]:
         """Build entity relationship network"""
+
+
+
         try:
             network = defaultdict(list)
             
@@ -686,6 +728,9 @@ class EntityRecognizer:
             
     async def _identify_content_topics(self, entities: List[NamedEntity]) -> List[str]:
         """Identify content topics based on entities"""
+
+
+
         try:
             topics = []
             
@@ -711,6 +756,9 @@ class EntityRecognizer:
             
     async def _identify_key_entities(self, entities: List[NamedEntity]) -> List[str]:
         """Identify the most important entities"""
+
+
+
         try:
             # Sort entities by importance score and return top ones
             sorted_entities = sorted(entities, key=lambda x: x.importance_score, reverse=True)
@@ -733,6 +781,9 @@ class EntityAnalyzer:
         entity: str
     ) -> Dict[str, float]:
         """Analyze sentiment towards a specific entity"""
+
+
+
         try:
             # This would integrate with sentiment analysis
             # Enhanced professional entity analysis with AI verification
@@ -753,6 +804,9 @@ class EntityAnalyzer:
         entity: str
     ) -> List[Dict[str, Any]]:
         """Track mentions of an entity across documents"""
+
+
+
         try:
             mentions = []
             

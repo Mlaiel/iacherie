@@ -92,6 +92,9 @@ class TestRealTimeAlertsCore:
     @pytest.fixture
     def sample_alert_rules(self, alert_rules):
         """Get sample alert rules for testing."""
+
+
+
         return alert_rules["production_rules"]
     
     async def test_alerts_system_initialization(self, alerts_system):
@@ -470,6 +473,9 @@ class TestRealTimeAlerts:
     @pytest.fixture
     def alert_test_config(self):
         """Alert system configuration for testing."""
+
+
+
         return {
             "notification_channels": {
                 "email": {

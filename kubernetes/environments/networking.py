@@ -6,7 +6,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project Team: Multi-format Creator Platform with AI Protection & Monetization
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -221,6 +221,9 @@ class NetworkingEnvironmentManager:
     
     def load_configuration(self) -> Dict[str, Any]:
         """Load networking environment configuration"""
+
+
+
         try:
             config = {
                 'environment': self.environment,
@@ -331,6 +334,9 @@ class NetworkingEnvironmentManager:
     
     def setup_load_balancer(self) -> bool:
         """Setup and configure load balancer"""
+
+
+
         try:
             # Configure load balancer algorithm
             self._configure_lb_algorithm()
@@ -359,6 +365,9 @@ class NetworkingEnvironmentManager:
     
     def setup_cdn(self) -> bool:
         """Setup and configure CDN"""
+
+
+
         try:
             # Configure edge locations
             self._configure_edge_locations()
@@ -390,6 +399,9 @@ class NetworkingEnvironmentManager:
     
     def setup_service_mesh(self) -> bool:
         """Setup and configure service mesh"""
+
+
+
         try:
             if not self.service_mesh.enabled:
                 logger.info("Service mesh is disabled, skipping setup")
@@ -428,6 +440,9 @@ class NetworkingEnvironmentManager:
     
     def setup_network_security(self) -> bool:
         """Setup network security policies"""
+
+
+
         try:
             # Configure firewall rules
             self._configure_firewall_rules()
@@ -459,6 +474,9 @@ class NetworkingEnvironmentManager:
     
     def setup_dns(self) -> bool:
         """Setup DNS configuration"""
+
+
+
         try:
             # Configure DNS servers
             self._configure_dns_servers()
@@ -487,6 +505,9 @@ class NetworkingEnvironmentManager:
     
     def setup_traffic_routing(self, policy: TrafficRoutingPolicy) -> bool:
         """Setup traffic routing policy"""
+
+
+
         try:
             if policy == TrafficRoutingPolicy.GEOGRAPHIC:
                 self._setup_geographic_routing()
@@ -508,6 +529,9 @@ class NetworkingEnvironmentManager:
     
     def monitor_network_performance(self) -> Dict[str, Any]:
         """Monitor network performance metrics"""
+
+
+
         try:
             metrics = {
                 'latency': self._measure_latency(),
@@ -537,6 +561,9 @@ class NetworkingEnvironmentManager:
     
     def get_network_topology(self) -> Dict[str, Any]:
         """Get current network topology"""
+
+
+
         return {
             'load_balancers': self._get_load_balancer_topology(),
             'cdn_edges': self._get_cdn_topology(),
@@ -548,6 +575,9 @@ class NetworkingEnvironmentManager:
     
     def get_health_status(self) -> Dict[str, Any]:
         """Get networking environment health status"""
+
+
+
         return {
             'environment': self.environment,
             'status': 'healthy',
@@ -747,42 +777,72 @@ class NetworkingEnvironmentManager:
     # Monitoring methods
     def _measure_latency(self) -> Dict[str, float]:
         """Measure network latency"""
+
+
+
         return {'p50': 50.2, 'p95': 120.5, 'p99': 250.8}
     
     def _measure_bandwidth_utilization(self) -> float:
         """Measure bandwidth utilization"""
+
+
+
         return 65.8
     
     def _count_active_connections(self) -> int:
         """Count active connections"""
+
+
+
         return sum(self.active_connections.values())
     
     def _calculate_error_rate(self) -> float:
         """Calculate error rate"""
+
+
+
         return 0.8
     
     def _measure_throughput(self) -> float:
         """Measure network throughput"""
+
+
+
         return 1250.5  # Mbps
     
     def _measure_packet_loss(self) -> float:
         """Measure packet loss percentage"""
+
+
+
         return 0.1
     
     def _measure_dns_resolution(self) -> float:
         """Measure DNS resolution time"""
+
+
+
         return 25.3  # milliseconds
     
     def _measure_ssl_handshake(self) -> float:
         """Measure SSL handshake time"""
+
+
+
         return 85.2  # milliseconds
     
     def _calculate_cdn_hit_ratio(self) -> float:
         """Calculate CDN cache hit ratio"""
+
+
+
         return 94.2
     
     def _get_lb_status(self) -> str:
         """Get load balancer status"""
+
+
+
         return "healthy"
     
     def _check_alert_thresholds(self, metrics: Dict[str, Any]):
@@ -793,49 +853,85 @@ class NetworkingEnvironmentManager:
     # Topology methods
     def _get_load_balancer_topology(self) -> Dict[str, Any]:
         """Get load balancer topology"""
+
+
+
         return {'type': 'application', 'instances': 3, 'algorithm': self.load_balancer.algorithm.value}
     
     def _get_cdn_topology(self) -> Dict[str, Any]:
         """Get CDN topology"""
+
+
+
         return {'provider': self.cdn.provider, 'edge_locations': len(self.cdn.edge_locations)}
     
     def _get_service_mesh_topology(self) -> Dict[str, Any]:
         """Get service mesh topology"""
+
+
+
         return {'provider': self.service_mesh.provider, 'mtls_enabled': self.service_mesh.mtls_enabled}
     
     def _get_dns_topology(self) -> Dict[str, Any]:
         """Get DNS topology"""
+
+
+
         return {'primary_servers': len(self.dns.primary_dns_servers), 'secondary_servers': len(self.dns.secondary_dns_servers)}
     
     def _get_traffic_flows(self) -> List[Dict[str, Any]]:
         """Get traffic flows"""
+
+
+
         return [{'source': 'internet', 'destination': 'load_balancer', 'protocol': 'https'}]
     
     def _get_security_zones(self) -> List[Dict[str, Any]]:
         """Get security zones"""
+
+
+
         return [{'name': 'dmz', 'type': 'public'}, {'name': 'private', 'type': 'internal'}]
     
     # Health check methods
     def _check_load_balancer_health(self) -> str:
         """Check load balancer health"""
+
+
+
         return "healthy"
     
     def _check_cdn_health(self) -> str:
         """Check CDN health"""
+
+
+
         return "healthy"
     
     def _check_service_mesh_health(self) -> str:
         """Check service mesh health"""
+
+
+
         return "healthy" if self.service_mesh.enabled else "disabled"
     
     def _check_dns_health(self) -> str:
         """Check DNS health"""
+
+
+
         return "healthy"
     
     def _check_security_status(self) -> str:
         """Check security status"""
+
+
+
         return "secure"
     
     def _get_current_traffic_load(self) -> float:
         """Get current traffic load"""
+
+
+
         return 72.3  # percentage

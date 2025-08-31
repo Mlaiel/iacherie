@@ -7,7 +7,7 @@ security, monitoring, and service orchestration for the IA-Influencer-Agent plat
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -111,6 +111,9 @@ class APIGatewayAgent(BaseAgent):
     
     def _initialize_components(self):
         """Initialize all gateway components"""
+
+
+
         try:
             # Request router
             self.router = RequestRouter(self.config)
@@ -234,6 +237,9 @@ class APIGatewayAgent(BaseAgent):
         @self.app.get("/health")
         async def health_check():
             """Gateway health check endpoint"""
+
+
+
             return {
                 "status": "healthy",
                 "version": self.config.version,
@@ -254,10 +260,16 @@ class APIGatewayAgent(BaseAgent):
         @self.app.api_route("/{path:path}", methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"])
         async def proxy_request(request: Request, path: str):
             """Main request proxying endpoint"""
+
+
+
             return await self._proxy_request(request, path)
     
     async def _proxy_request(self, request: Request, path: str) -> Response:
         """Proxy request to appropriate upstream service"""
+
+
+
         try:
             # Determine target service
             service_name = self.router.route_request(f"/{path}")
@@ -395,6 +407,9 @@ class APIGatewayAgent(BaseAgent):
     
     async def start(self) -> None:
         """Start the API Gateway Agent"""
+
+
+
         try:
             self.status = AgentStatus.INITIALIZING
             
@@ -412,6 +427,9 @@ class APIGatewayAgent(BaseAgent):
     
     async def stop(self) -> None:
         """Stop the API Gateway Agent"""
+
+
+
         try:
             self.status = AgentStatus.STOPPING
             
@@ -452,6 +470,9 @@ class APIGatewayAgent(BaseAgent):
     
     def get_stats(self) -> Dict[str, Any]:
         """Get comprehensive gateway statistics"""
+
+
+
         return {
             "agent_id": self.agent_id,
             "status": self.status.value,

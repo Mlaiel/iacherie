@@ -1,5 +1,5 @@
 """
-🔍 Content Scanner - IA Influencer Agent Surveillance Module
+ Content Scanner - IA Influencer Agent Surveillance Module
 ==========================================================
 
 Ultra-advanced content scanning and analysis system for deep content inspection,
@@ -13,7 +13,7 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Micro
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
+ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
 This code and concept are the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 Unauthorized access, copying, modification, distribution, reverse engineering,
@@ -159,6 +159,9 @@ class ContentFingerprint:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return asdict(self)
 
 
@@ -290,6 +293,9 @@ class BaseContentAnalyzer:
     
     def get_supported_formats(self) -> List[str]:
         """Get supported file formats"""
+
+
+
         return []
 
 
@@ -401,6 +407,9 @@ class VideoAnalyzer(BaseContentAnalyzer):
     
     def get_supported_formats(self) -> List[str]:
         """Get supported video formats"""
+
+
+
         return ["mp4", "avi", "mov", "mkv", "webm", "flv", "m4v"]
 
 
@@ -497,6 +506,9 @@ class AudioAnalyzer(BaseContentAnalyzer):
     
     def get_supported_formats(self) -> List[str]:
         """Get supported audio formats"""
+
+
+
         return ["mp3", "wav", "flac", "aac", "ogg", "m4a", "wma"]
 
 
@@ -620,6 +632,9 @@ class ImageAnalyzer(BaseContentAnalyzer):
     
     def get_supported_formats(self) -> List[str]:
         """Get supported image formats"""
+
+
+
         return ["jpg", "jpeg", "png", "gif", "bmp", "webp", "tiff", "svg"]
 
 
@@ -631,6 +646,9 @@ class TextAnalyzer(BaseContentAnalyzer):
     
     async def analyze(self, content_data: bytes, metadata: ContentMetadata) -> Dict[str, Any]:
         """Analyze text content"""
+
+
+
         try:
             text_content = content_data.decode('utf-8', errors='ignore')
         except:
@@ -703,6 +721,9 @@ class TextAnalyzer(BaseContentAnalyzer):
     
     async def extract_fingerprint(self, content_data: bytes) -> ContentFingerprint:
         """Extract text fingerprint"""
+
+
+
         try:
             text_content = content_data.decode('utf-8', errors='ignore')
         except:
@@ -735,6 +756,9 @@ class TextAnalyzer(BaseContentAnalyzer):
     
     def get_supported_formats(self) -> List[str]:
         """Get supported text formats"""
+
+
+
         return ["txt", "md", "html", "xml", "json", "csv", "rtf"]
 
 
@@ -754,6 +778,9 @@ class ContentScanner:
     
     async def initialize(self) -> None:
         """Initialize content scanner"""
+
+
+
         try:
             # Initialize content analyzers
             self.analyzers[ContentType.VIDEO] = VideoAnalyzer()
@@ -1084,6 +1111,9 @@ class ContentScanner:
     
     def _appears_to_be_text(self, content_data: bytes) -> bool:
         """Check if content appears to be text"""
+
+
+
         try:
             content_data.decode('utf-8')
             return True
@@ -1092,6 +1122,9 @@ class ContentScanner:
     
     async def get_scan_result(self, request_id: str) -> Optional[ScanResult]:
         """Get scan result by request ID"""
+
+
+
         return self.scan_results.get(request_id)
     
     async def get_scan_status(self, request_id: str) -> Dict[str, Any]:
@@ -1169,6 +1202,9 @@ class ContentScanner:
     
     async def health_check(self) -> Dict[str, Any]:
         """Perform health check on content scanner"""
+
+
+
         return {
             "scanner": "healthy" if self.initialized else "unhealthy",
             "analyzers": len(self.analyzers),

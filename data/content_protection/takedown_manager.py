@@ -8,7 +8,7 @@ Handles DMCA notices, legal document generation, and enforcement campaigns.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  AVERTISSEMENT STRICT - PROPRIÉTÉ INTELLECTUELLE ⚠️
+  AVERTISSEMENT STRICT - PROPRIÉTÉ INTELLECTUELLE 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, modification ou distribution sans autorisation 
 écrite explicite de l'auteur est strictement interdite et constitue une violation 
@@ -242,6 +242,9 @@ class TakedownManager:
         Returns:
             Created takedown request
         """
+
+
+
         try:
             # Generate unique request ID
             request_id = str(uuid.uuid4())
@@ -300,6 +303,9 @@ class TakedownManager:
         Returns:
             Success status
         """
+
+
+
         try:
             # Prepare DMCA data
             dmca_data = DMCATemplate(
@@ -379,6 +385,9 @@ class TakedownManager:
         Returns:
             Processed platform response
         """
+
+
+
         try:
             # Create platform response record
             platform_response = PlatformResponse(
@@ -439,6 +448,9 @@ class TakedownManager:
         Returns:
             Monitoring report with status updates
         """
+
+
+
         try:
             active_requests = await self._get_active_takedown_requests()
             monitoring_report = {
@@ -498,6 +510,9 @@ class TakedownManager:
         Returns:
             Created escalation campaign
         """
+
+
+
         try:
             # Analyze violation and previous takedown attempts
             violation_data = await self.violation_detector.get_violation_details(violation_id)
@@ -563,6 +578,9 @@ class TakedownManager:
         Returns:
             Batch processing results
         """
+
+
+
         try:
             results = {
                 'total_processed': 0,
@@ -641,6 +659,9 @@ class TakedownManager:
     
     def _generate_good_faith_statement(self) -> str:
         """Generate good faith belief statement"""
+
+
+
         return ("I have a good faith belief that the use of the copyrighted material "
                 "described above is not authorized by the copyright owner, its agent, "
                 "or the law.")
@@ -659,6 +680,9 @@ class TakedownManager:
     
     async def _send_to_platform(self, platform: str, dmca_document, takedown_request: TakedownRequest) -> bool:
         """Send DMCA notice to specific platform"""
+
+
+
         try:
             platform_config = self.platform_configs.get(platform.lower())
             if not platform_config:
@@ -684,6 +708,9 @@ class TakedownManager:
     
     async def _send_youtube_takedown(self, dmca_document, takedown_request: TakedownRequest) -> bool:
         """Send takedown to YouTube"""
+
+
+
         try:
             # YouTube API or form submission logic
             # This would integrate with YouTube's Copyright Management API
@@ -695,6 +722,9 @@ class TakedownManager:
     
     async def _send_instagram_takedown(self, dmca_document, takedown_request: TakedownRequest) -> bool:
         """Send takedown to Instagram"""
+
+
+
         try:
             # Instagram/Meta API submission logic
             self.logger.info(f"Sent Instagram takedown for {takedown_request.request_id}")
@@ -705,6 +735,9 @@ class TakedownManager:
     
     async def _send_tiktok_takedown(self, dmca_document, takedown_request: TakedownRequest) -> bool:
         """Send takedown to TikTok"""
+
+
+
         try:
             # TikTok submission logic
             self.logger.info(f"Sent TikTok takedown for {takedown_request.request_id}")
@@ -715,6 +748,9 @@ class TakedownManager:
     
     async def _send_twitter_takedown(self, dmca_document, takedown_request: TakedownRequest) -> bool:
         """Send takedown to Twitter/X"""
+
+
+
         try:
             # Twitter API submission logic
             self.logger.info(f"Sent Twitter takedown for {takedown_request.request_id}")
@@ -725,6 +761,9 @@ class TakedownManager:
     
     async def _send_generic_takedown(self, dmca_document, takedown_request: TakedownRequest, platform_config: Dict) -> bool:
         """Send takedown via generic web form"""
+
+
+
         try:
             # Generic web form submission using Selenium
             # This would handle platforms without specific API integration
@@ -736,6 +775,9 @@ class TakedownManager:
     
     async def _verify_content_removal(self, takedown_request: TakedownRequest) -> Dict[str, Any]:
         """Verify that content was actually removed"""
+
+
+
         try:
             # Use platform crawler to check if content still exists
             verification_result = await self.platform_crawler.check_url_status(
@@ -755,6 +797,9 @@ class TakedownManager:
     
     async def _initiate_escalation(self, takedown_request: TakedownRequest):
         """Initiate escalation for failed takedown"""
+
+
+
         try:
             escalation_campaign = await self.create_escalation_campaign(
                 takedown_request.violation_id
@@ -769,6 +814,9 @@ class TakedownManager:
     
     async def _handle_counter_notice(self, takedown_request: TakedownRequest, platform_response: PlatformResponse):
         """Handle platform counter-notice"""
+
+
+
         try:
             # Analyze counter-notice validity
             counter_notice_data = platform_response.metadata
@@ -862,6 +910,9 @@ class TakedownManager:
     
     async def _execute_escalation_action(self, campaign: EscalationCampaign, action: str):
         """Execute specific escalation action"""
+
+
+
         try:
             if action == "send_formal_dmca_notice":
                 # Logic for sending DMCA notice
@@ -878,6 +929,9 @@ class TakedownManager:
     
     async def _process_single_takedown(self, violation_data: Dict[str, Any]) -> Dict[str, Any]:
         """Process single takedown request"""
+
+
+
         try:
             # Create takedown request
             takedown_request = await self.create_takedown_request(violation_data)
@@ -899,6 +953,9 @@ class TakedownManager:
     
     async def _store_takedown_request(self, request: TakedownRequest):
         """Store takedown request in database"""
+
+
+
         try:
             # Database storage implementation
             pass
@@ -907,6 +964,9 @@ class TakedownManager:
     
     async def _update_takedown_request(self, request: TakedownRequest):
         """Update takedown request in database"""
+
+
+
         try:
             # Database update implementation
             pass
@@ -915,6 +975,9 @@ class TakedownManager:
     
     async def _get_takedown_request(self, request_id: str) -> Optional[TakedownRequest]:
         """Get takedown request by ID"""
+
+
+
         try:
             # Database retrieval implementation
             return None
@@ -924,6 +987,9 @@ class TakedownManager:
     
     async def _get_active_takedown_requests(self) -> List[TakedownRequest]:
         """Get all active takedown requests"""
+
+
+
         try:
             # Database query implementation
             return []
@@ -933,6 +999,9 @@ class TakedownManager:
     
     async def _get_takedown_requests_by_violation(self, violation_id: str) -> List[TakedownRequest]:
         """Get takedown requests for specific violation"""
+
+
+
         try:
             # Database query implementation
             return []
@@ -942,6 +1011,9 @@ class TakedownManager:
     
     async def _store_platform_response(self, response: PlatformResponse):
         """Store platform response in database"""
+
+
+
         try:
             # Database storage implementation
             pass
@@ -950,6 +1022,9 @@ class TakedownManager:
     
     async def _store_escalation_campaign(self, campaign: EscalationCampaign):
         """Store escalation campaign in database"""
+
+
+
         try:
             # Database storage implementation
             pass
@@ -958,6 +1033,9 @@ class TakedownManager:
     
     async def _cache_takedown_request(self, request: TakedownRequest):
         """Cache takedown request in Redis"""
+
+
+
         try:
             cache_key = f"takedown_request:{request.request_id}"
             request_data = asdict(request)
@@ -980,6 +1058,9 @@ class TakedownManager:
     
     async def _cache_monitoring_report(self, report: Dict[str, Any]):
         """Cache monitoring report in Redis"""
+
+
+
         try:
             cache_key = "takedown_monitoring_report"
             await self.redis.setex(
@@ -993,6 +1074,9 @@ class TakedownManager:
     
     async def _schedule_follow_up(self, request: TakedownRequest):
         """Schedule follow-up check for takedown request"""
+
+
+
         try:
             # Schedule follow-up task (would integrate with task queue like Celery)
             follow_up_time = request.deadline or (datetime.utcnow() + timedelta(days=7))
@@ -1236,6 +1320,9 @@ class TakedownManager:
         Returns:
             Takedown request ID
         """
+
+
+
         try:
             # Create takedown request
             request_id = str(uuid.uuid4())
@@ -1298,6 +1385,9 @@ class TakedownManager:
         Returns:
             DMCA notice ID
         """
+
+
+
         try:
             notice_id = str(uuid.uuid4())
             
@@ -1345,6 +1435,9 @@ class TakedownManager:
         Returns:
             Current status information
         """
+
+
+
         try:
             # Get request from database
             takedown_request = await self._get_takedown_request(request_id)
@@ -1388,6 +1481,9 @@ class TakedownManager:
         Returns:
             Processing success status
         """
+
+
+
         try:
             # Create response record
             response = TakedownResponse(
@@ -1471,6 +1567,9 @@ class TakedownManager:
         Returns:
             Takedown activity report
         """
+
+
+
         try:
             # Calculate date range
             end_date = datetime.utcnow()
@@ -1519,6 +1618,9 @@ class TakedownManager:
         Returns:
             Escalation success status
         """
+
+
+
         try:
             # Get takedown request
             takedown_request = await self._get_takedown_request(request_id)
@@ -1573,6 +1675,9 @@ class TakedownManager:
     
     async def _generate_dmca_notice(self, request: TakedownRequest, claimant_data: Dict) -> str:
         """Generate DMCA notice for request"""
+
+
+
         return await self.generate_dmca_notice(request, claimant_data)
     
     async def _generate_copyright_claim(self, request: TakedownRequest, claimant_data: Dict) -> str:
@@ -1621,6 +1726,9 @@ class TakedownManager:
     
     async def _render_dmca_notice(self, notice: DMCANotice) -> str:
         """Render DMCA notice from template"""
+
+
+
         try:
             async with aiofiles.open(self.dmca_template_path, 'r') as f:
                 template_content = await f.read()
@@ -1640,6 +1748,9 @@ class TakedownManager:
     
     def _generate_basic_dmca_notice(self, notice: DMCANotice) -> str:
         """Generate basic DMCA notice without template"""
+
+
+
         return f"""
 DMCA Takedown Notice
 
@@ -1662,12 +1773,18 @@ Address: {notice.claimant_address}
     
     def _generate_good_faith_statement(self) -> str:
         """Generate standard good faith statement"""
+
+
+
         return ("I have a good faith belief that use of the copyrighted materials described above "
                 "on the infringing web pages is not authorized by the copyright owner, or its agent, "
                 "or the law.")
     
     def _generate_perjury_statement(self) -> str:
         """Generate standard perjury statement"""
+
+
+
         return ("I swear, under penalty of perjury, that the information in this notification is "
                 "accurate and that I am the copyright owner, or am authorized to act on behalf of "
                 "the owner, of an exclusive right that is allegedly infringed.")

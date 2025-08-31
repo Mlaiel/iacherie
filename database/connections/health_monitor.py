@@ -503,6 +503,9 @@ class DatabaseHealthMonitor:
     
     def get_current_health_status(self) -> Dict[str, HealthStatus]:
         """Get current health status for all databases"""
+
+
+
         return self.current_status.copy()
     
     def get_health_history(self, 

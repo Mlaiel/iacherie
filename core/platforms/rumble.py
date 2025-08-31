@@ -43,6 +43,9 @@ class RumblePlatform(PlatformBase):
     
     async def authenticate(self) -> bool:
         """Authenticate with Rumble"""
+
+
+
         try:
             # Rumble uses cookie-based authentication
             username = self.config.credentials.get('username')
@@ -94,6 +97,9 @@ class RumblePlatform(PlatformBase):
     
     async def _login_with_credentials(self, username: str, password: str) -> bool:
         """Login with username and password"""
+
+
+
         try:
             session = await self._get_session()
             
@@ -134,6 +140,9 @@ class RumblePlatform(PlatformBase):
     
     async def _get_user_info(self) -> Optional[Dict[str, Any]]:
         """Get current user information"""
+
+
+
         try:
             result = await self._make_request('GET', '/user/profile')
             return result
@@ -143,10 +152,16 @@ class RumblePlatform(PlatformBase):
     
     async def refresh_token(self) -> bool:
         """Refresh Rumble session"""
+
+
+
         return await self.authenticate()
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
         """Make authenticated request to Rumble API"""
+
+
+
         try:
             session = await self._get_session()
             
@@ -190,6 +205,9 @@ class RumblePlatform(PlatformBase):
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
         """Upload video to Rumble"""
+
+
+
         try:
             if not os.path.exists(content_path):
                 return UploadResult(
@@ -263,6 +281,9 @@ class RumblePlatform(PlatformBase):
     
     async def _get_upload_params(self) -> Optional[Dict[str, Any]]:
         """Get upload parameters"""
+
+
+
         try:
             result = await self._make_request('GET', '/upload/params')
             return result
@@ -272,6 +293,9 @@ class RumblePlatform(PlatformBase):
     
     async def _upload_video_file(self, file_path: str, upload_params: Dict[str, Any]) -> Optional[str]:
         """Upload video file"""
+
+
+
         try:
             session = await self._get_session()
             
@@ -308,6 +332,9 @@ class RumblePlatform(PlatformBase):
     
     async def _set_video_metadata(self, video_id: str, video_data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         """Set video metadata"""
+
+
+
         try:
             result = await self._make_request('POST', f'/videos/{video_id}/metadata', json=video_data)
             return result
@@ -318,6 +345,9 @@ class RumblePlatform(PlatformBase):
     async def get_analytics(self, content_id: str, start_date: datetime, 
                            end_date: datetime) -> AnalyticsData:
         """Get Rumble video analytics"""
+
+
+
         try:
             result = await self._make_request('GET', f'/videos/{content_id}/stats')
             
@@ -351,6 +381,9 @@ class RumblePlatform(PlatformBase):
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
         """Search content on Rumble"""
+
+
+
         try:
             params = {
                 'q': query,
@@ -390,6 +423,9 @@ class RumblePlatform(PlatformBase):
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
         """Get user's Rumble videos"""
+
+
+
         try:
             target_user_id = user_id or self.config.credentials.get('user_id')
             if not target_user_id:
@@ -431,6 +467,9 @@ class RumblePlatform(PlatformBase):
     
     async def delete_content(self, content_id: str) -> bool:
         """Delete Rumble video"""
+
+
+
         try:
             result = await self._make_request('DELETE', f'/videos/{content_id}')
             return result is not None
@@ -441,6 +480,9 @@ class RumblePlatform(PlatformBase):
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
         """Update Rumble video metadata"""
+
+
+
         try:
             update_data = {
                 'title': metadata.title,
@@ -457,6 +499,9 @@ class RumblePlatform(PlatformBase):
     
     async def get_channel_info(self, username: str = None) -> Optional[Dict[str, Any]]:
         """Get channel information"""
+
+
+
         try:
             target_username = username or self.config.credentials.get('username')
             if not target_username:
@@ -488,6 +533,9 @@ class RumblePlatform(PlatformBase):
     
     async def subscribe_to_channel(self, username: str) -> bool:
         """Subscribe to a channel"""
+
+
+
         try:
             result = await self._make_request('POST', f'/channels/{username}/subscribe')
             return result is not None
@@ -498,6 +546,9 @@ class RumblePlatform(PlatformBase):
     
     async def unsubscribe_from_channel(self, username: str) -> bool:
         """Unsubscribe from a channel"""
+
+
+
         try:
             result = await self._make_request('DELETE', f'/channels/{username}/subscribe')
             return result is not None
@@ -508,6 +559,9 @@ class RumblePlatform(PlatformBase):
     
     async def like_video(self, video_id: str) -> bool:
         """Like a video"""
+
+
+
         try:
             result = await self._make_request('POST', f'/videos/{video_id}/like')
             return result is not None
@@ -518,6 +572,9 @@ class RumblePlatform(PlatformBase):
     
     async def dislike_video(self, video_id: str) -> bool:
         """Dislike a video"""
+
+
+
         try:
             result = await self._make_request('POST', f'/videos/{video_id}/dislike')
             return result is not None
@@ -528,6 +585,9 @@ class RumblePlatform(PlatformBase):
     
     async def get_trending_videos(self, category: str = None, limit: int = 20) -> List[Dict[str, Any]]:
         """Get trending videos"""
+
+
+
         try:
             params = {
                 'limit': limit,

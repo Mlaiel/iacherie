@@ -1,5 +1,5 @@
 """
-🎵 Music Generation Engine - AI-Powered Music Composition and Generation
+ Music Generation Engine - AI-Powered Music Composition and Generation
 
 This module implements advanced AI-driven music generation capabilities including
 melody, harmony, rhythm, and full composition generation.
@@ -7,7 +7,7 @@ melody, harmony, rhythm, and full composition generation.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ LEGAL WARNING: Unauthorized use prohibited. Contact mlaiel@live.de for licensing.
+ LEGAL WARNING: Unauthorized use prohibited. Contact mlaiel@live.de for licensing.
 """
 
 import torch
@@ -117,16 +117,25 @@ class MusicToken:
     @staticmethod
     def note_to_token(midi_note: int) -> int:
         """Convert MIDI note to token."""
+
+
+
         return midi_note + MusicToken.NOTE_OFFSET
         
     @staticmethod
     def token_to_note(token: int) -> int:
         """Convert token to MIDI note."""
+
+
+
         return token - MusicToken.NOTE_OFFSET
         
     @staticmethod
     def is_note_token(token: int) -> bool:
         """Check if token represents a note."""
+
+
+
         return MusicToken.NOTE_OFFSET <= token < 388
 
 
@@ -314,6 +323,9 @@ class ChordProgressionGenerator:
         
     def _build_chord_templates(self) -> Dict[str, List[int]]:
         """Build chord templates (intervals from root)."""
+
+
+
         return {
             'major': [0, 4, 7],
             'minor': [0, 3, 7],
@@ -330,6 +342,9 @@ class ChordProgressionGenerator:
         
     def _build_common_progressions(self) -> Dict[str, List[Tuple[int, str]]]:
         """Build common chord progressions (degree, quality)."""
+
+
+
         return {
             'pop': [(1, 'major'), (5, 'major'), (6, 'minor'), (4, 'major')],
             'jazz': [(1, 'major7'), (6, 'minor7'), (2, 'minor7'), (5, 'dominant7')],
@@ -435,6 +450,9 @@ class MelodyGenerator:
         
     def _build_melodic_intervals(self) -> Dict[str, List[int]]:
         """Build melodic interval patterns by style."""
+
+
+
         return {
             'stepwise': [-2, -1, 1, 2],  # Stepwise motion
             'skipwise': [-4, -3, 3, 4],  # Skip motion
@@ -529,6 +547,9 @@ class RhythmGenerator:
         
     def _build_rhythm_patterns(self) -> Dict[str, List[float]]:
         """Build rhythm patterns by style."""
+
+
+
         return {
             'pop': [1.0, 0.5, 0.5, 1.0, 0.5, 0.5, 1.0, 0.5],
             'jazz': [1.0, 0.0, 0.5, 0.0, 1.0, 0.5, 0.0, 0.5],
@@ -579,6 +600,9 @@ class InstrumentSynthesizer:
         
     def _build_instrument_configs(self) -> Dict[str, Dict]:
         """Build instrument synthesis configurations."""
+
+
+
         return {
             'piano': {
                 'attack': 0.01,
@@ -822,6 +846,9 @@ class StyleTransferEngine:
         
     def _build_style_profiles(self) -> Dict[str, Dict]:
         """Build style characteristic profiles."""
+
+
+
         return {
             'classical': {
                 'tempo_range': (60, 120),

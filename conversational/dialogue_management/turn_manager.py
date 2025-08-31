@@ -8,7 +8,7 @@ and intelligent turn routing for optimal conversation flow.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -298,6 +298,9 @@ class TurnManager:
 
     async def _analyze_turn_content(self, turn: ConversationTurn):
         """Analyze turn content for business intelligence"""
+
+
+
         
         try:
             # Sentiment analysis
@@ -843,6 +846,9 @@ class TurnManager:
 
     async def _persist_turn(self, turn: ConversationTurn):
         """Persist turn to Redis"""
+
+
+
         
         try:
             turn_data = {
@@ -879,6 +885,9 @@ class TurnManager:
 
     async def _persist_queue(self, queue: TurnQueue):
         """Persist queue to Redis"""
+
+
+
         
         try:
             queue_data = {
@@ -918,6 +927,9 @@ class TurnManager:
     # Public API methods
     async def get_turn_status(self, turn_id: str) -> Dict[str, Any]:
         """Get status of specific turn"""
+
+
+
         
         try:
             turn_data = await self.redis_client.get(f"turn:{turn_id}")
@@ -992,6 +1004,9 @@ class TurnManager:
 
     def get_system_metrics(self) -> Dict[str, Any]:
         """Get overall system metrics"""
+
+
+
         
         return {
             "global_metrics": self.metrics,

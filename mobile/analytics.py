@@ -750,6 +750,9 @@ class UsageMonitor:
 # Service factory functions
 def create_mobile_analytics() -> MobileAnalytics:
     """Create mobile analytics instance."""
+
+
+
     return MobileAnalytics()
 
 

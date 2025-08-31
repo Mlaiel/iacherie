@@ -7,7 +7,7 @@ the full capabilities of the SEO Agent system for various content types and use 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -16,7 +16,7 @@ Project Team Specializations:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + AI Prompt Engineer
 - Expert: Fahed Mlaiel <mlaiel@live.de>
 
-🚨 STRONG WARNING FOR COPYRIGHT VIOLATORS:
+ STRONG WARNING FOR COPYRIGHT VIOLATORS:
 Any attempt to steal, copy, reverse-engineer, or commercialize this code without explicit written authorization 
 will result in immediate legal action under German and international intellectual property law.
 Contact mlaiel@live.de for licensing inquiries only.
@@ -72,7 +72,7 @@ class SEOAgentExamples:
         - Playlist optimization
         - Cross-platform music discovery
         """
-        print("🎵 Music Industry SEO Optimization Example")
+        print(" Music Industry SEO Optimization Example")
         print("=" * 50)
         
         try:
@@ -120,7 +120,7 @@ class SEOAgentExamples:
             }
             
             # Perform comprehensive SEO analysis
-            print("🔍 Analyzing music track SEO performance...")
+            print(" Analyzing music track SEO performance...")
             seo_analysis = await self.seo_system.analyze_content(
                 content=music_track_content,
                 analysis_options={
@@ -135,14 +135,14 @@ class SEOAgentExamples:
                 }
             )
             
-            print(f"✅ SEO Analysis Results:")
+            print(f" SEO Analysis Results:")
             print(f"   • Current Score: {seo_analysis.current_score:.1f}/100")
             print(f"   • Potential Score: {seo_analysis.potential_score:.1f}/100")
             print(f"   • Traffic Impact Estimate: +{seo_analysis.estimated_traffic_impact.get('percentage_increase', 0):.1f}%")
             
             # Advanced keyword research for music content
             print("
-🎯 Performing music-specific keyword research...")
+ Performing music-specific keyword research...")
             music_keywords = await self.seo_system.research_keywords(
                 seed_keywords=[
                     'indie rock', 'alternative music', 'underground bands',
@@ -162,7 +162,7 @@ class SEOAgentExamples:
                 }
             )
             
-            print(f"✅ Music Keyword Research:")
+            print(f" Music Keyword Research:")
             print(f"   • Total Keywords: {len(music_keywords)}")
             
             # Display top performing keywords
@@ -181,7 +181,7 @@ class SEOAgentExamples:
             
             # Content optimization for music platforms
             print("
-⚡ Optimizing content for music platforms...")
+ Optimizing content for music platforms...")
             music_optimization = await self.seo_system.optimize_content(
                 content=music_track_content,
                 optimization_goals=[
@@ -200,13 +200,13 @@ class SEOAgentExamples:
                 }
             )
             
-            print(f"✅ Music Content Optimization:")
+            print(f" Music Content Optimization:")
             print(f"   • Optimizations Applied: {len(music_optimization['applied_optimizations'])}")
             print(f"   • Estimated Discoverability Increase: {music_optimization['improvement_metrics']['discoverability_score']:.1f}%")
             
             # Create music marketing campaign
             print("
-📈 Creating music marketing SEO campaign...")
+ Creating music marketing SEO campaign...")
             music_campaign_config = {
                 'name': 'Indie Dreams - Music Discovery Campaign',
                 'description': 'Comprehensive SEO campaign for indie rock track promotion and discovery',
@@ -252,7 +252,7 @@ class SEOAgentExamples:
                 auto_start=False
             )
             
-            print(f"✅ Music Campaign Created:")
+            print(f" Music Campaign Created:")
             print(f"   • Campaign ID: {music_campaign.campaign_id}")
             print(f"   • Duration: {music_campaign_config['timeline']['end_date'] - music_campaign_config['timeline']['start_date']}")
             print(f"   • Target Platforms: {len(music_campaign_config['platform_focus'])}")
@@ -285,7 +285,7 @@ class SEOAgentExamples:
         - Entertainment content
         - Video series and playlists
         """
-        print("🎬 Video Content SEO Optimization Example")
+        print(" Video Content SEO Optimization Example")
         print("=" * 50)
         
         video_content = {
@@ -335,7 +335,7 @@ class SEOAgentExamples:
         }
         
         # Comprehensive video SEO analysis
-        print("🔍 Analyzing video content SEO...")
+        print(" Analyzing video content SEO...")
         video_analysis = await self.seo_system.analyze_content(
             content=video_content,
             analysis_options={
@@ -351,7 +351,7 @@ class SEOAgentExamples:
             }
         )
         
-        print(f"✅ Video SEO Analysis:")
+        print(f" Video SEO Analysis:")
         print(f"   • Current Score: {video_analysis.current_score:.1f}/100")
         print(f"   • Video-specific Score: {video_analysis.content_quality_score:.1f}/100")
         print(f"   • Engagement Potential: {video_analysis.user_experience_score:.1f}/100")
@@ -377,7 +377,7 @@ class SEOAgentExamples:
         - Customer reviews integration
         - Shopping feed optimization
         """
-        print("🛒 E-commerce Product SEO Example")
+        print(" E-commerce Product SEO Example")
         print("=" * 45)
         
         product_content = {
@@ -442,7 +442,7 @@ class SEOAgentExamples:
         }
         
         # E-commerce SEO analysis
-        print("🔍 Analyzing product page SEO...")
+        print(" Analyzing product page SEO...")
         product_analysis = await self.seo_system.analyze_content(
             content=product_content,
             analysis_options={
@@ -455,7 +455,7 @@ class SEOAgentExamples:
             }
         )
         
-        print(f"✅ Product SEO Analysis:")
+        print(f" Product SEO Analysis:")
         print(f"   • Product Page Score: {product_analysis.current_score:.1f}/100")
         print(f"   • Schema Markup Score: {product_analysis.schema_markup_status.get('score', 0):.1f}/100")
         print(f"   • Commercial Intent Optimization: {product_analysis.content_quality_score:.1f}/100")
@@ -476,7 +476,7 @@ class SEOAgentExamples:
         """
         Run all SEO optimization examples and return comprehensive results
         """
-        print("🚀 Running All SEO Agent Examples")
+        print(" Running All SEO Agent Examples")
         print("=" * 60)
         
         await self.initialize()
@@ -500,7 +500,7 @@ class SEOAgentExamples:
             results['ecommerce'] = await self.ecommerce_product_seo_example()
             
             print("
-🎉 All Examples Completed Successfully!")
+ All Examples Completed Successfully!")
             print("
 Next Steps:")
             print("1. Review the detailed optimization recommendations")
@@ -598,7 +598,7 @@ async def example_basic_content_analysis():
     Example 1: Basic SEO content analysis
     Demonstrates analyzing a blog post for SEO optimization opportunities
     """
-    print("🔍 Example 1: Basic SEO Content Analysis")
+    print(" Example 1: Basic SEO Content Analysis")
     print("=" * 50)
     
     # Initialize SEO Agent
@@ -638,11 +638,11 @@ async def example_basic_content_analysis():
     print(f"Word Count: {result['content_analysis']['word_count']}")
     print(f"Reading Level: {result['content_analysis']['reading_level']}")
     
-    print("\n🎯 Top Keywords Found:")
+    print("\n Top Keywords Found:")
     for keyword in result['keyword_analysis']['top_keywords'][:5]:
         print(f"  • {keyword['keyword']} (density: {keyword['density']:.2f}%)")
     
-    print("\n💡 Optimization Suggestions:")
+    print("\n Optimization Suggestions:")
     for suggestion in result['optimization_suggestions'][:3]:
         print(f"  • {suggestion['title']}: {suggestion['description']}")
     
@@ -654,7 +654,7 @@ async def example_music_track_optimization():
     Example 2: Music track SEO optimization
     Shows how to optimize music content for better discoverability
     """
-    print("🎵 Example 2: Music Track SEO Optimization")
+    print(" Example 2: Music Track SEO Optimization")
     print("=" * 50)
     
     # Initialize complete SEO system
@@ -683,11 +683,11 @@ async def example_music_track_optimization():
     # Comprehensive analysis
     analysis_result = await seo_system.analyze_content_comprehensive(music_track)
     
-    print(f"🎼 Track: {music_track['title']}")
+    print(f" Track: {music_track['title']}")
     print(f"Artist: {music_track['artist']}")
     print(f"SEO Score: {analysis_result['seo_analysis']['seo_score']:.2f}/1.00")
     
-    print("\n🔍 SEO Analysis Results:")
+    print("\n SEO Analysis Results:")
     print(f"  • Content Quality Score: {analysis_result['seo_analysis']['content_quality_score']:.2f}")
     print(f"  • Keyword Optimization: {analysis_result['seo_analysis']['keyword_optimization_score']:.2f}")
     print(f"  • Metadata Completeness: {analysis_result['seo_analysis']['metadata_score']:.2f}")
@@ -698,12 +698,12 @@ async def example_music_track_optimization():
         target_keywords=['lo-fi beats', 'chill music', 'study playlist']
     )
     
-    print("\n✨ Optimization Results:")
+    print("\n Optimization Results:")
     print(f"  • Optimized Title: {optimized_result['optimized_content']['title']}")
     print(f"  • Enhanced Description: {optimized_result['optimized_content']['description'][:100]}...")
     print(f"  • SEO Tags: {', '.join(optimized_result['optimized_content']['seo_tags'][:5])}")
     
-    print("\n📈 Performance Predictions:")
+    print("\n Performance Predictions:")
     for prediction in optimized_result['performance_predictions']['keyword_rankings']:
         print(f"  • '{prediction['keyword']}' - Expected ranking: #{prediction['predicted_position']}")
     
@@ -715,7 +715,7 @@ async def example_keyword_research_workflow():
     Example 3: Advanced keyword research workflow
     Demonstrates comprehensive keyword research and analysis
     """
-    print("🔬 Example 3: Advanced Keyword Research Workflow")
+    print(" Example 3: Advanced Keyword Research Workflow")
     print("=" * 50)
     
     # Initialize keyword research components
@@ -740,7 +740,7 @@ async def example_keyword_research_workflow():
     # Research keywords for a music blog
     seed_keyword = 'electronic music production'
     
-    print(f"🔍 Researching keywords for: '{seed_keyword}'")
+    print(f" Researching keywords for: '{seed_keyword}'")
     
     # Step 1: Basic keyword research
     keyword_research = await keyword_analyzer.research_keywords(
@@ -749,7 +749,7 @@ async def example_keyword_research_workflow():
         max_keywords=25
     )
     
-    print(f"\n📊 Found {len(keyword_research['keywords'])} related keywords:")
+    print(f"\n Found {len(keyword_research['keywords'])} related keywords:")
     for kw in keyword_research['keywords'][:10]:
         print(f"  • {kw['keyword']} - Volume: {kw['search_volume']:,} - Difficulty: {kw['difficulty']:.1f}/10")
     
@@ -760,7 +760,7 @@ async def example_keyword_research_workflow():
         time_period=timedelta(days=90)
     )
     
-    print(f"\n📈 Trend Analysis (90 days):")
+    print(f"\n Trend Analysis (90 days):")
     print(f"  • Overall trend: {trend_analysis['overall_trend']}")
     print(f"  • Trending up: {len(trend_analysis['trending_up'])} keywords")
     print(f"  • Trending down: {len(trend_analysis['trending_down'])} keywords")
@@ -771,12 +771,12 @@ async def example_keyword_research_workflow():
         max_competitors=5
     )
     
-    print(f"\n🏆 Top Competitors:")
+    print(f"\n Top Competitors:")
     for competitor in competitor_analysis['competitors'][:3]:
         print(f"  • {competitor['domain']} - Authority: {competitor['domain_authority']}")
         print(f"    Keywords: {len(competitor['ranking_keywords'])}")
     
-    print(f"\n💎 Keyword Opportunities:")
+    print(f"\n Keyword Opportunities:")
     for opportunity in competitor_analysis['keyword_gaps'][:5]:
         print(f"  • '{opportunity['keyword']}' - Gap score: {opportunity['opportunity_score']:.1f}")
     
@@ -792,7 +792,7 @@ async def example_seo_campaign_management():
     Example 4: Complete SEO campaign management
     Shows how to create, run, and monitor SEO campaigns
     """
-    print("🚀 Example 4: SEO Campaign Management")
+    print(" Example 4: SEO Campaign Management")
     print("=" * 50)
     
     # Initialize SEO system with campaign management
@@ -839,12 +839,12 @@ async def example_seo_campaign_management():
         'tracking_metrics': ['rankings', 'traffic', 'conversions', 'engagement']
     }
     
-    print(f"📋 Creating campaign: '{campaign_config['name']}'")
+    print(f" Creating campaign: '{campaign_config['name']}'")
     
     # Create and start campaign
     campaign = await seo_system.campaign_manager.create_campaign(campaign_config)
     
-    print(f"✅ Campaign created successfully!")
+    print(f" Campaign created successfully!")
     print(f"  • Campaign ID: {campaign.id}")
     print(f"  • Content items: {len(campaign.content_items)}")
     print(f"  • Target keywords: {len(campaign.target_keywords)}")
@@ -853,7 +853,7 @@ async def example_seo_campaign_management():
     # Start campaign execution
     execution_result = await seo_system.campaign_manager.start_campaign(campaign.id)
     
-    print(f"\n🚀 Campaign execution started:")
+    print(f"\n Campaign execution started:")
     print(f"  • Status: {execution_result['status']}")
     print(f"  • Execution ID: {execution_result['execution_id']}")
     print(f"  • Estimated completion: {execution_result['estimated_completion']}")
@@ -861,12 +861,12 @@ async def example_seo_campaign_management():
     # Get campaign performance
     performance = await seo_system.campaign_manager.get_campaign_performance(campaign.id)
     
-    print(f"\n📊 Campaign Performance:")
+    print(f"\n Campaign Performance:")
     print(f"  • Progress: {performance['progress_percentage']:.1f}%")
     print(f"  • Content processed: {performance['content_processed']}/{performance['total_content']}")
     print(f"  • Average SEO improvement: +{performance['avg_seo_improvement']:.2f}")
     
-    print("\n📈 Performance by Content Type:")
+    print("\n Performance by Content Type:")
     for content_type, stats in performance['content_type_performance'].items():
         print(f"  • {content_type}: Avg score {stats['avg_score']:.2f} (+{stats['improvement']:.2f})")
     
@@ -878,7 +878,7 @@ async def example_content_optimization_workflow():
     Example 5: Advanced content optimization workflow
     Shows detailed optimization of different content types
     """
-    print("⚡ Example 5: Advanced Content Optimization Workflow")
+    print(" Example 5: Advanced Content Optimization Workflow")
     print("=" * 50)
     
     # Initialize optimization components
@@ -921,12 +921,12 @@ async def example_content_optimization_workflow():
         'publish_date': '2025-01-15'
     }
     
-    print(f"🎯 Optimizing content: '{content['title']}'")
+    print(f" Optimizing content: '{content['title']}'")
     
     # Step 1: Metadata optimization
     metadata_result = await metadata_optimizer.optimize_metadata(content)
     
-    print(f"\n📋 Metadata Optimization:")
+    print(f"\n Metadata Optimization:")
     print(f"  • Original title: {content['title']}")
     print(f"  • Optimized title: {metadata_result['title_tag']}")
     print(f"  • Meta description: {metadata_result['meta_description'][:80]}...")
@@ -935,7 +935,7 @@ async def example_content_optimization_workflow():
     # Step 2: Content structure optimization
     structure_result = await content_optimizer.optimize_structure(content)
     
-    print(f"\n🏗️ Structure Optimization:")
+    print(f"\n Structure Optimization:")
     print(f"  • Reading level: {structure_result['readability_score']:.1f}")
     print(f"  • Keyword density: {structure_result['keyword_density']:.2f}%")
     print(f"  • Suggested headings: {len(structure_result['headings'])}")
@@ -946,7 +946,7 @@ async def example_content_optimization_workflow():
     # Step 3: Link building
     link_result = await link_builder.build_content_links(content)
     
-    print(f"\n🔗 Link Building:")
+    print(f"\n Link Building:")
     print(f"  • Internal links added: {len(link_result['internal_links'])}")
     print(f"  • External links added: {len(link_result['external_links'])}")
     
@@ -971,7 +971,7 @@ async def example_metrics_and_reporting():
     Example 6: Metrics collection and automated reporting
     Demonstrates comprehensive metrics tracking and report generation
     """
-    print("📊 Example 6: Metrics Collection & Automated Reporting")
+    print(" Example 6: Metrics Collection & Automated Reporting")
     print("=" * 50)
     
     # Initialize metrics and reporting system
@@ -994,7 +994,7 @@ async def example_metrics_and_reporting():
     await report_generator.initialize()
     
     # Simulate collecting metrics over time
-    print("📈 Collecting sample metrics...")
+    print(" Collecting sample metrics...")
     
     # Simulate a week of data
     for day in range(7):
@@ -1038,7 +1038,7 @@ async def example_metrics_and_reporting():
     # Get performance dashboard
     dashboard = metrics_collector.get_performance_dashboard()
     
-    print(f"\n📊 Performance Dashboard:")
+    print(f"\n Performance Dashboard:")
     print(f"  • Total content analyzed: {dashboard['overview']['total_content_analyzed']}")
     print(f"  • Average SEO score: {dashboard['overview']['avg_seo_score']:.2f}")
     print(f"  • Keywords tracked: {dashboard['overview']['total_keywords_tracked']}")
@@ -1046,14 +1046,14 @@ async def example_metrics_and_reporting():
     
     # Content metrics summary
     content_metrics = dashboard['content_metrics']['seo_score']
-    print(f"\n📝 Content Performance (7 days):")
+    print(f"\n Content Performance (7 days):")
     print(f"  • Min SEO score: {content_metrics['min']:.2f}")
     print(f"  • Max SEO score: {content_metrics['max']:.2f}")
     print(f"  • Average: {content_metrics['mean']:.2f}")
     print(f"  • Trend: {content_metrics.get('trend', 'stable')}")
     
     # Generate comprehensive report
-    print(f"\n📄 Generating comprehensive report...")
+    print(f"\n Generating comprehensive report...")
     
     report_config = ReportConfig(
         report_type=ReportType.COMPREHENSIVE,
@@ -1069,14 +1069,14 @@ async def example_metrics_and_reporting():
     
     report_result = await report_generator.generate_report(report_config)
     
-    print(f"✅ Report generated successfully!")
+    print(f" Report generated successfully!")
     print(f"  • Report ID: {report_result['report_id']}")
     print(f"  • Format: {report_result['report']['format']}")
     print(f"  • Sections: {report_result['report']['metadata']['sections_count']}")
     print(f"  • Charts: {report_result['report']['metadata']['visualizations_count']}")
     
     # Show report preview
-    print(f"\n📋 Report Preview:")
+    print(f"\n Report Preview:")
     metadata = report_result['report']['metadata']
     print(f"  • Report Type: {metadata['report_type']}")
     print(f"  • Time Period: {metadata['time_period']['duration']}")
@@ -1090,7 +1090,7 @@ async def example_competitive_analysis():
     Example 7: Competitive analysis and benchmarking
     Shows how to analyze competitors and identify opportunities
     """
-    print("🏆 Example 7: Competitive Analysis & Benchmarking")
+    print(" Example 7: Competitive Analysis & Benchmarking")
     print("=" * 50)
     
     # Initialize competitor analyzer
@@ -1110,7 +1110,7 @@ async def example_competitive_analysis():
         'music production tips'
     ]
     
-    print(f"🔍 Analyzing competitors for {len(target_keywords)} keywords...")
+    print(f" Analyzing competitors for {len(target_keywords)} keywords...")
     
     # Perform competitive analysis
     competitor_analysis = await competitor_analyzer.analyze_competitors(
@@ -1119,7 +1119,7 @@ async def example_competitive_analysis():
         include_content_analysis=True
     )
     
-    print(f"\n🏆 Top Competitors Found: {len(competitor_analysis['competitors'])}")
+    print(f"\n Top Competitors Found: {len(competitor_analysis['competitors'])}")
     
     # Display competitor insights
     for i, competitor in enumerate(competitor_analysis['competitors'][:5], 1):
@@ -1135,7 +1135,7 @@ async def example_competitive_analysis():
             print(f"    - '{kw['keyword']}' (#{kw['position']})")
     
     # Keyword gap analysis
-    print(f"\n💎 Keyword Opportunities ({len(competitor_analysis['keyword_gaps'])} found):")
+    print(f"\n Keyword Opportunities ({len(competitor_analysis['keyword_gaps'])} found):")
     for gap in competitor_analysis['keyword_gaps'][:8]:
         print(f"  • '{gap['keyword']}' - Opportunity Score: {gap['opportunity_score']:.1f}/10")
         print(f"    Avg competitor position: #{gap['competitor_avg_position']:.1f}")
@@ -1144,7 +1144,7 @@ async def example_competitive_analysis():
     
     # Content gap analysis
     if 'content_gaps' in competitor_analysis:
-        print(f"📄 Content Gap Analysis:")
+        print(f" Content Gap Analysis:")
         for topic in competitor_analysis['content_gaps'][:5]:
             print(f"  • Topic: {topic['topic']}")
             print(f"    Coverage by competitors: {topic['competitor_coverage']}%")
@@ -1158,7 +1158,7 @@ async def example_multilingual_seo():
     Example 8: Multi-language SEO optimization
     Demonstrates SEO for content in multiple languages
     """
-    print("🌍 Example 8: Multi-language SEO Optimization")
+    print(" Example 8: Multi-language SEO Optimization")
     print("=" * 50)
     
     # Initialize SEO system with multi-language support
@@ -1190,14 +1190,14 @@ async def example_multilingual_seo():
         'target_markets': ['US', 'UK', 'Germany', 'France']
     }
     
-    print(f"🎵 Optimizing content for multiple languages:")
+    print(f" Optimizing content for multiple languages:")
     print(f"Original: {original_content['title']} ({original_content['language']})")
     
     # Analyze and optimize for each target language
     multilingual_results = {}
     
     for language in ['en', 'de', 'fr']:
-        print(f"\n🌐 Processing language: {language.upper()}")
+        print(f"\n Processing language: {language.upper()}")
         
         # Create localized content
         localized_content = original_content.copy()
@@ -1228,14 +1228,14 @@ async def example_multilingual_seo():
         multilingual_results[language] = analysis_result
     
     # Cross-language performance comparison
-    print(f"\n📊 Cross-language Performance Comparison:")
+    print(f"\n Cross-language Performance Comparison:")
     for lang, results in multilingual_results.items():
         score = results['seo_analysis']['seo_score']
         kw_count = len(results['keyword_research']['keywords'])
         print(f"  • {lang.upper()}: SEO Score {score:.2f} | {kw_count} keywords")
     
     # Generate multilingual campaign recommendations
-    print(f"\n💡 Multilingual Campaign Recommendations:")
+    print(f"\n Multilingual Campaign Recommendations:")
     print(f"  • Primary market: English (highest search volume)")
     print(f"  • Secondary market: German (good opportunity/competition ratio)")
     print(f"  • Tertiary market: French (emerging opportunity)")
@@ -1249,7 +1249,7 @@ async def example_real_time_monitoring():
     Example 9: Real-time SEO monitoring and alerts
     Shows continuous monitoring and alert system
     """
-    print("⚡ Example 9: Real-time SEO Monitoring & Alerts")
+    print(" Example 9: Real-time SEO Monitoring & Alerts")
     print("=" * 50)
     
     # Initialize monitoring system
@@ -1266,7 +1266,7 @@ async def example_real_time_monitoring():
     
     await metrics_collector.initialize()
     
-    print("🔍 Starting real-time monitoring simulation...")
+    print(" Starting real-time monitoring simulation...")
     print("Monitoring key SEO metrics with alert thresholds:")
     print("  • SEO Score drop: >5%")
     print("  • Ranking drop: >3 positions")
@@ -1277,23 +1277,23 @@ async def example_real_time_monitoring():
     monitoring_scenarios = [
         {
             'time': '09:00', 'seo_score': 0.85, 'ranking': 5, 'traffic': 1500, 'load_time': 2.1,
-            'status': '✅ Normal', 'description': 'All metrics within normal range'
+            'status': ' Normal', 'description': 'All metrics within normal range'
         },
         {
             'time': '09:15', 'seo_score': 0.84, 'ranking': 5, 'traffic': 1520, 'load_time': 2.0,
-            'status': '✅ Normal', 'description': 'Slight improvement in load time'
+            'status': ' Normal', 'description': 'Slight improvement in load time'
         },
         {
             'time': '09:30', 'seo_score': 0.79, 'ranking': 8, 'traffic': 1450, 'load_time': 2.8,
-            'status': '⚠️ ALERT', 'description': 'SEO score dropped 7%, ranking dropped 3 positions, load time increased'
+            'status': ' ALERT', 'description': 'SEO score dropped 7%, ranking dropped 3 positions, load time increased'
         },
         {
             'time': '09:45', 'seo_score': 0.77, 'ranking': 12, 'traffic': 1200, 'load_time': 3.2,
-            'status': '🚨 CRITICAL', 'description': 'Multiple critical thresholds exceeded'
+            'status': ' CRITICAL', 'description': 'Multiple critical thresholds exceeded'
         },
         {
             'time': '10:00', 'seo_score': 0.82, 'ranking': 7, 'traffic': 1400, 'load_time': 2.3,
-            'status': '🔄 Recovery', 'description': 'Metrics recovering, but still monitoring'
+            'status': ' Recovery', 'description': 'Metrics recovering, but still monitoring'
         }
     ]
     
@@ -1314,11 +1314,11 @@ async def example_real_time_monitoring():
         print(f"{scenario['time']} | {scenario['status']} | SEO: {scenario['seo_score']:.2f} | "
               f"Rank: #{scenario['ranking']} | Traffic: {scenario['traffic']} | "
               f"Load: {scenario['load_time']:.1f}s")
-        print(f"         └─ {scenario['description']}")
+        print(f"          {scenario['description']}")
         
         # Simulate alert if status is alert or critical
         if 'ALERT' in scenario['status'] or 'CRITICAL' in scenario['status']:
-            print(f"         └─ 🔔 Alert sent via email, Slack, and webhook")
+            print(f"           Alert sent via email, Slack, and webhook")
         
         print()
         
@@ -1329,12 +1329,12 @@ async def example_real_time_monitoring():
     dashboard = metrics_collector.get_performance_dashboard()
     alerts = dashboard.get('alerts', [])
     
-    print(f"📊 Monitoring Summary:")
+    print(f" Monitoring Summary:")
     print(f"  • Total alerts generated: {len(alerts)}")
-    print(f"  • Current status: {'⚠️ Issues detected' if alerts else '✅ All systems normal'}")
+    print(f"  • Current status: {' Issues detected' if alerts else ' All systems normal'}")
     
     if alerts:
-        print(f"\n🚨 Active Alerts:")
+        print(f"\n Active Alerts:")
         for alert in alerts[-3:]:  # Show last 3 alerts
             print(f"  • {alert['type']}: {alert['message']}")
             print(f"    Severity: {alert['severity']} | Time: {alert['timestamp']}")
@@ -1346,7 +1346,7 @@ async def run_all_examples():
     """
     Run all SEO Agent examples to demonstrate complete functionality
     """
-    print("🚀 SEO Agent Complete Functionality Demonstration")
+    print(" SEO Agent Complete Functionality Demonstration")
     print("=" * 70)
     print("Running comprehensive examples of all SEO Agent capabilities...")
     print("=" * 70 + "\n")
@@ -1375,23 +1375,23 @@ async def run_all_examples():
             # Short pause between examples
             await asyncio.sleep(0.5)
         
-        print("🎉 All examples completed successfully!")
+        print(" All examples completed successfully!")
         print("=" * 70)
         print("SEO Agent system demonstrates:")
-        print("✅ Content analysis and optimization")
-        print("✅ Advanced keyword research")
-        print("✅ Campaign management")
-        print("✅ Performance monitoring")
-        print("✅ Automated reporting")
-        print("✅ Competitive analysis")
-        print("✅ Multi-language support")
-        print("✅ Real-time monitoring")
+        print(" Content analysis and optimization")
+        print(" Advanced keyword research")
+        print(" Campaign management")
+        print(" Performance monitoring")
+        print(" Automated reporting")
+        print(" Competitive analysis")
+        print(" Multi-language support")
+        print(" Real-time monitoring")
         print("=" * 70)
         
         return results
         
     except Exception as e:
-        print(f"❌ Error running examples: {e}")
+        print(f" Error running examples: {e}")
         raise
 
 if __name__ == "__main__":

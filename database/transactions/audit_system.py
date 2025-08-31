@@ -9,7 +9,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -136,6 +136,9 @@ class AuditContext:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'user_id': self.user_id,
             'session_id': self.session_id,
@@ -200,6 +203,9 @@ class TransactionLog:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for serialization"""
+
+
+
         return {
             'log_id': self.log_id,
             'timestamp': self.timestamp.isoformat(),
@@ -1109,6 +1115,9 @@ class AuditSystem:
     
     async def _analyze_gdpr_compliance(self, logs: List[TransactionLog]) -> Dict[str, Any]:
         """Analyze GDPR compliance from audit logs"""
+
+
+
         
         return {
             'gdpr_analysis': {
@@ -1129,6 +1138,9 @@ class AuditSystem:
     
     async def _analyze_dmca_compliance(self, logs: List[TransactionLog]) -> Dict[str, Any]:
         """Analyze DMCA compliance from audit logs"""
+
+
+
         
         return {
             'dmca_analysis': {

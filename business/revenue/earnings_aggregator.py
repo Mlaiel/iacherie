@@ -1,5 +1,5 @@
 """
-🚀 Earnings Aggregator - Ultra-Advanced Multi-Source Revenue Aggregation
+ Earnings Aggregator - Ultra-Advanced Multi-Source Revenue Aggregation
 ========================================================================
 
 Industrial-grade earnings aggregation system that consolidates revenue
@@ -12,7 +12,7 @@ Created by: Fahed Mlaiel <mlaiel@live.de>
 Team Specialists:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
+ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED 
 Contact mlaiel@live.de for licensing inquiries.
 
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Earnings Aggregation
@@ -84,6 +84,9 @@ class EarningsAggregator:
         
     async def initialize(self):
         """Initialize earnings aggregator"""
+
+
+
         try:
             logger.info("Earnings aggregator initialized successfully")
             
@@ -96,6 +99,9 @@ class EarningsAggregator:
                                aggregation_type: AggregationType,
                                date_range: Tuple[datetime, datetime]) -> EarningsAggregate:
         """Aggregate earnings for specified period"""
+
+
+
         try:
             # Implementation would aggregate earnings from all sources
             aggregate = EarningsAggregate(
@@ -113,6 +119,9 @@ class EarningsAggregator:
 
     async def cleanup(self):
         """Cleanup aggregator resources"""
+
+
+
         try:
             logger.info("Earnings aggregator cleanup completed")
             

@@ -7,7 +7,7 @@ Implements professional image metrics and industry-standard quality assessment.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software and all associated concepts, algorithms, and implementations are the exclusive 
 intellectual property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, reproduction, 
 distribution, modification, or appropriation of this code, in whole or in part, without 
@@ -390,14 +390,23 @@ class ImageQualityAnalyzer(BaseAIModel):
     
     async def connect(self) -> bool:
         """Connect to image processing services."""
+
+
+
         return True
     
     async def disconnect(self) -> bool:
         """Disconnect from image processing services."""
+
+
+
         return True
     
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Process image quality assessment."""
+
+
+
         return await self.analyze_image_quality(data.get('image_data', b''), 
                                                data.get('profile', ImageQualityProfile()))
     
@@ -408,6 +417,9 @@ class ImageQualityAnalyzer(BaseAIModel):
         profile: ImageQualityProfile
     ):
         """Extract basic image properties"""
+
+
+
         try:
             profile.width, profile.height = pil_image.size
             profile.megapixels = (profile.width * profile.height) / 1000000
@@ -439,6 +451,9 @@ class ImageQualityAnalyzer(BaseAIModel):
         profile: ImageQualityProfile
     ):
         """Extract EXIF metadata"""
+
+
+
         try:
             exif_data = pil_image._getexif()
             if exif_data is not None:
@@ -472,6 +487,9 @@ class ImageQualityAnalyzer(BaseAIModel):
         profile: ImageQualityProfile
     ):
         """Analyze technical image quality"""
+
+
+
         try:
             # Convert to grayscale for analysis
             gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
@@ -514,6 +532,9 @@ class ImageQualityAnalyzer(BaseAIModel):
     
     def _estimate_noise_level(self, gray_image: np.ndarray) -> float:
         """Estimate noise level in image"""
+
+
+
         try:
             # Use high-pass filter to detect noise
             kernel = np.array([[-1, -1, -1],
@@ -536,6 +557,9 @@ class ImageQualityAnalyzer(BaseAIModel):
         profile: ImageQualityProfile
     ):
         """Analyze color quality and accuracy"""
+
+
+
         try:
             # Convert to different color spaces for analysis
             hsv = cv2.cvtColor(cv_image, cv2.COLOR_BGR2HSV)
@@ -594,6 +618,9 @@ class ImageQualityAnalyzer(BaseAIModel):
         profile: ImageQualityProfile
     ):
         """Analyze exposure and dynamic range"""
+
+
+
         try:
             gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
             
@@ -628,6 +655,9 @@ class ImageQualityAnalyzer(BaseAIModel):
         profile: ImageQualityProfile
     ):
         """Analyze image composition"""
+
+
+
         try:
             gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
             h, w = gray.shape
@@ -710,6 +740,9 @@ class ImageQualityAnalyzer(BaseAIModel):
     
     def _calculate_quality_scores(self, profile: ImageQualityProfile):
         """Calculate comprehensive quality scores"""
+
+
+
         try:
             # Technical score
             tech_score = (
@@ -856,6 +889,9 @@ class ImageQualityAnalyzer(BaseAIModel):
         metrics: ImageQualityMetrics
     ):
         """Analyze compliance with platform requirements"""
+
+
+
         try:
             # Instagram compliance
             instagram_req = self.platform_requirements['instagram']
@@ -931,6 +967,9 @@ class ImageQualityAnalyzer(BaseAIModel):
         metrics: ImageQualityMetrics
     ):
         """Analyze image content characteristics"""
+
+
+
         try:
             # Image type classification based on aspect ratio and composition
             aspect_ratio = metrics.profile.aspect_ratio
@@ -1025,6 +1064,9 @@ async def analyze_image_quality(image_path: Union[str, Path]) -> Dict[str, Any]:
     Returns:
         Dict containing image quality analysis results
     """
+
+
+
     try:
         result = await image_quality_analyzer.analyze_quality(image_path)
         return result

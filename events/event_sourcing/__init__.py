@@ -5,7 +5,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 Version: 3.0.0
 
-⚠️ LEGAL WARNING: Unauthorized use prohibited. See __init__.py for full notice.
+ LEGAL WARNING: Unauthorized use prohibited. See __init__.py for full notice.
 """
 from typing import Dict, Any, List, Optional, Type, Union, Callable
 from datetime import datetime, timezone
@@ -103,7 +103,10 @@ class PostgreSQLEventStore(EventStoreInterface):
     
     async def save_events(self, aggregate_id: str, events: List[DomainEvent], 
                          expected_version: int) -> None:
-        """Save events with optimistic concurrency control"""        try:
+        """Save events with optimistic concurrency control"""
+
+
+        try:
             async with self.db.transaction():
                 # Check current version
                 current_version_query = """                SELECT COALESCE(MAX(event_version), 0) as current_version
@@ -148,7 +151,10 @@ class PostgreSQLEventStore(EventStoreInterface):
     
     async def get_events(self, aggregate_id: str, 
                         from_version: int = 0) -> List[DomainEvent]:
-        """Retrieve and decrypt events for an aggregate"""        try:
+        """Retrieve and decrypt events for an aggregate"""
+
+
+        try:
             query = """            SELECT event_id, aggregate_id, aggregate_type, event_type,
                    event_data, event_version, occurred_at, user_id,
                    correlation_id, causation_id, metadata
@@ -189,7 +195,10 @@ class PostgreSQLEventStore(EventStoreInterface):
     
     async def get_all_events(self, from_event_id: str = None, 
                            limit: int = 1000) -> List[DomainEvent]:
-        """Retrieve all events with pagination"""        try:
+        """Retrieve all events with pagination"""
+
+
+        try:
             if from_event_id:
                 query = """                SELECT event_id, aggregate_id, aggregate_type, event_type,
                        event_data, event_version, occurred_at, user_id,
@@ -250,7 +259,10 @@ class AggregateRoot(ABC):
         """Mark all uncommitted events as committed"""        self.uncommitted_events.clear()
     
     def get_uncommitted_events(self) -> List[DomainEvent]:
-        """Get all uncommitted events"""        return self.uncommitted_events.copy()
+        """Get all uncommitted events"""
+
+
+        return self.uncommitted_events.copy()
     
     def apply_event(self, event: DomainEvent):
         """Apply an event to the aggregate"""        self._apply_event(event)
@@ -331,7 +343,10 @@ class SnapshotStore:
         asyncio.create_task(self.db.execute(create_snapshots_table))
     
     async def save_snapshot(self, aggregate: AggregateRoot):
-        """Save aggregate snapshot"""        try:
+        """Save aggregate snapshot"""
+
+
+        try:
             # Serialize aggregate state
             aggregate_data = {
                 "state": aggregate.__dict__,
@@ -363,7 +378,10 @@ class SnapshotStore:
     
     async def load_snapshot(self, aggregate_type: Type[AggregateRoot], 
                            aggregate_id: str) -> Optional[AggregateRoot]:
-        """Load aggregate snapshot"""        try:
+        """Load aggregate snapshot"""
+
+
+        try:
             query = """            SELECT aggregate_data, version 
             FROM aggregate_snapshots 
             WHERE aggregate_id = $1 AND aggregate_type = $2

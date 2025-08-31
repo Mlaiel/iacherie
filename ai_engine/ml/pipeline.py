@@ -7,7 +7,7 @@ including data processing, training, validation, and deployment.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Contact: mlaiel@live.de
@@ -241,10 +241,16 @@ class PipelineStep(ABC):
     
     def validate_inputs(self, inputs: Dict[str, Any]) -> bool:
         """Validate step inputs"""
+
+
+
         return True
     
     def validate_outputs(self, outputs: Dict[str, Any]) -> bool:
         """Validate step outputs"""
+
+
+
         return True
     
     async def run(self, inputs: Dict[str, Any]) -> Dict[str, Any]:
@@ -299,6 +305,9 @@ class PipelineStep(ABC):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert step to dictionary representation"""
+
+
+
         return {
             'step_id': self.step_id,
             'name': self.name,
@@ -566,6 +575,9 @@ class MLPipeline:
     
     def get_execution_order(self) -> List[str]:
         """Get topological order for pipeline execution"""
+
+
+
         try:
             return list(nx.topological_sort(self.execution_graph))
         except nx.NetworkXError as e:
@@ -719,6 +731,9 @@ class MLPipeline:
     
     async def execute_distributed(self, initial_inputs: Dict[str, Any] = None) -> Dict[str, Any]:
         """Execute pipeline with distributed computing"""
+
+
+
         try:
             from dask.distributed import Client, as_completed
             
@@ -760,6 +775,9 @@ class MLPipeline:
     
     def _execute_step_sync(self, step_id: str, inputs: Dict[str, Any]) -> Dict[str, Any]:
         """Synchronous wrapper for step execution (for Dask)"""
+
+
+
         return asyncio.run(self.execute_step(step_id, inputs))
     
     def _prepare_step_inputs(self, step_id: str, all_outputs: Dict[str, Any]) -> Dict[str, Any]:
@@ -914,6 +932,9 @@ class MLPipeline:
     
     def get_pipeline_status(self) -> Dict[str, Any]:
         """Get overall pipeline status"""
+
+
+
         return {
             'pipeline_id': self.execution_id,
             'name': self.config.name,

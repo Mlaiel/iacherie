@@ -43,6 +43,9 @@ class TestPaymentProcessor:
     @pytest.fixture
     def processor(self):
         """Create PaymentProcessor instance for testing"""
+
+
+
         return PaymentProcessor()
     
     @pytest.fixture
@@ -61,6 +64,9 @@ class TestPaymentProcessor:
     @pytest.fixture
     def sample_transaction_data(self):
         """Sample transaction data for testing"""
+
+
+
         return {
             "license_id": "license_123",
             "payer_id": "user_456",

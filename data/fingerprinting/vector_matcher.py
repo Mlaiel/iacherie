@@ -12,7 +12,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL WARNING ⚠️
+  CRITICAL WARNING 
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
 Any unauthorized use, reproduction, distribution, or reverse engineering 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -148,6 +148,9 @@ class VectorMatcher:
     
     def _initialize_index(self):
         """Initialize FAISS index based on configuration"""
+
+
+
         try:
             if not FAISS_AVAILABLE:
                 self.logger.warning("FAISS not available, using fallback similarity")
@@ -203,6 +206,9 @@ class VectorMatcher:
         Returns:
             True if vector was added successfully
         """
+
+
+
         try:
             # Validate vector dimensions
             if vector.shape[0] != self.config.dimension:
@@ -242,6 +248,9 @@ class VectorMatcher:
         Returns:
             Number of vectors successfully added
         """
+
+
+
         try:
             added_count = 0
             batch_vectors = []
@@ -303,6 +312,9 @@ class VectorMatcher:
         Returns:
             List of matching results sorted by similarity
         """
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -357,6 +369,9 @@ class VectorMatcher:
         Returns:
             Similarity score between 0 and 1
         """
+
+
+
         try:
             # Normalize vectors
             norm_vec1 = self._normalize_vector(vector1)
@@ -406,6 +421,9 @@ class VectorMatcher:
         Returns:
             True if vector was removed successfully
         """
+
+
+
         try:
             if vector_id not in self.vectors:
                 return False
@@ -436,6 +454,9 @@ class VectorMatcher:
         Returns:
             True if index was rebuilt successfully
         """
+
+
+
         try:
             if not self.faiss_index or not self.vectors:
                 return False
@@ -598,6 +619,9 @@ class VectorMatcher:
     def _calculate_similarity_sync(self, vector1: np.ndarray, vector2: np.ndarray, 
                                  metric: SimilarityMetric) -> float:
         """Synchronous similarity calculation for threading"""
+
+
+
         try:
             if metric == SimilarityMetric.COSINE:
                 return 1 - cosine(vector1, vector2)
@@ -626,6 +650,9 @@ class VectorMatcher:
     
     async def _get_cached_results(self, cache_key: str) -> Optional[List[MatchResult]]:
         """Get cached search results"""
+
+
+
         try:
             if not self.redis_client:
                 return None
@@ -652,6 +679,9 @@ class VectorMatcher:
     
     async def _cache_results(self, cache_key: str, results: List[MatchResult]):
         """Cache search results"""
+
+
+
         try:
             if not self.redis_client:
                 return
@@ -678,6 +708,9 @@ class VectorMatcher:
     
     async def _cache_vector(self, vector_id: str, vector: np.ndarray, metadata: Dict[str, Any]):
         """Cache individual vector"""
+
+
+
         try:
             if not self.redis_client:
                 return
@@ -701,6 +734,9 @@ class VectorMatcher:
     async def _cache_vectors_batch(self, vector_ids: List[str], vectors: List[np.ndarray], 
                                  metadata_list: List[Dict[str, Any]]):
         """Cache batch of vectors"""
+
+
+
         try:
             if not self.redis_client:
                 return
@@ -724,6 +760,9 @@ class VectorMatcher:
     
     async def _remove_cached_vector(self, vector_id: str):
         """Remove vector from cache"""
+
+
+
         try:
             if not self.redis_client:
                 return
@@ -736,6 +775,9 @@ class VectorMatcher:
     
     async def close(self):
         """Cleanup resources"""
+
+
+
         try:
             if self.thread_pool:
                 self.thread_pool.shutdown(wait=True)

@@ -341,10 +341,16 @@ class RateLimitManager:
     
     def get_rate_limit_rule(self, rule_name: str) -> Optional[RateLimitRule]:
         """Get a rate limiting rule by name."""
+
+
+
         return self.rate_limit_rules.get(rule_name)
     
     def get_quota_config(self, service_name: str) -> Optional[QuotaConfig]:
         """Get quota configuration for a service."""
+
+
+
         return self.quota_configs.get(service_name)
     
     def calculate_delay(

@@ -195,6 +195,9 @@ class ContentProcessingPipeline:
     
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default configuration"""
+
+
+
         return {
             "max_file_size": 500 * 1024 * 1024,  # 500MB
             "supported_formats": {
@@ -689,6 +692,9 @@ class ContentProcessingPipeline:
     # Validation Methods
     async def _validate_file_size(self, file_path: str, parameters: Dict[str, Any]) -> float:
         """Validate file size"""
+
+
+
         try:
             file_size = Path(file_path).stat().st_size
             max_size = self.config["max_file_size"]
@@ -698,6 +704,9 @@ class ContentProcessingPipeline:
     
     async def _validate_format_support(self, file_path: str, parameters: Dict[str, Any]) -> float:
         """Validate format support"""
+
+
+
         try:
             file_extension = Path(file_path).suffix.lower()
             all_formats = []
@@ -769,10 +778,16 @@ class ContentProcessingPipeline:
     # Public API Methods
     def get_processing_status(self, content_id: str) -> Optional[ProcessingResult]:
         """Get processing status"""
+
+
+
         return self.active_processes.get(content_id) or self.completed_processes.get(content_id)
     
     def get_active_processes(self) -> Dict[str, ProcessingResult]:
         """Get all active processes"""
+
+
+
         return self.active_processes.copy()
     
     def get_processing_metrics(self) -> Dict[str, Any]:

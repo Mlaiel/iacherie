@@ -4,21 +4,21 @@ Statistics Manager for IA-Influencer-Agent Platform
 Advanced statistics collection, analysis, and reporting for database indexing operations.
 Comprehensive performance metrics, trend analysis, and predictive insights.
 
-🚀 Enterprise Team Project Specialties:
-✅ Lead Dev + Architecte Développeur IA
-✅ Développeur Backend Senior (Python/FastAPI/Django)  
-✅ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face)
-✅ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
-✅ Spécialiste Sécurité Backend
-✅ Architecte Microservices
-✅ Développeur Audio
-✅ DevOps Engineer
-✅ IA Prompt Engineer
+ Enterprise Team Project Specialties:
+ Lead Dev + Architecte Développeur IA
+ Développeur Backend Senior (Python/FastAPI/Django)  
+ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face)
+ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
+ Spécialiste Sécurité Backend
+ Architecte Microservices
+ Développeur Audio
+ DevOps Engineer
+ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. 
 Unauthorized use, modification, or distribution by any individual or entity 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
@@ -173,6 +173,9 @@ class StatisticsManager:
     
     async def initialize(self) -> bool:
         """Initialize statistics manager"""
+
+
+
         try:
             # Initialize database connection
             await self.db_manager.initialize()
@@ -198,6 +201,9 @@ class StatisticsManager:
     
     async def start_collection(self):
         """Start statistics collection"""
+
+
+
         try:
             if self.collection_active:
                 logger.warning("Statistics collection already active")
@@ -218,6 +224,9 @@ class StatisticsManager:
     
     async def stop_collection(self):
         """Stop statistics collection"""
+
+
+
         try:
             self.collection_active = False
             
@@ -306,6 +315,9 @@ class StatisticsManager:
     
     async def _collect_index_usage_stats(self):
         """Collect index usage statistics"""
+
+
+
         try:
             timestamp = datetime.now()
             
@@ -357,6 +369,9 @@ class StatisticsManager:
     
     async def _collect_query_performance_stats(self):
         """Collect query performance statistics"""
+
+
+
         try:
             timestamp = datetime.now()
             
@@ -410,6 +425,9 @@ class StatisticsManager:
     
     async def _collect_storage_metrics(self):
         """Collect storage-related metrics"""
+
+
+
         try:
             timestamp = datetime.now()
             
@@ -434,6 +452,9 @@ class StatisticsManager:
     
     async def _collect_cache_efficiency_stats(self):
         """Collect cache efficiency statistics"""
+
+
+
         try:
             timestamp = datetime.now()
             
@@ -473,6 +494,9 @@ class StatisticsManager:
     
     async def _collect_system_resource_stats(self):
         """Collect system resource statistics"""
+
+
+
         try:
             timestamp = datetime.now()
             
@@ -498,6 +522,9 @@ class StatisticsManager:
     
     async def _collect_error_rate_stats(self):
         """Collect error rate statistics"""
+
+
+
         try:
             timestamp = datetime.now()
             
@@ -522,6 +549,9 @@ class StatisticsManager:
     
     async def _collect_custom_metrics(self):
         """Collect custom-defined metrics"""
+
+
+
         try:
             timestamp = datetime.now()
             
@@ -550,6 +580,9 @@ class StatisticsManager:
     
     async def _record_statistic(self, entry: StatisticEntry):
         """Record a statistic entry"""
+
+
+
         try:
             # Add to raw statistics buffer
             self.raw_statistics.append(entry)
@@ -572,6 +605,9 @@ class StatisticsManager:
     
     async def _aggregate_statistics(self, period: AggregationPeriod):
         """Aggregate statistics for given period"""
+
+
+
         try:
             now = datetime.now()
             interval_seconds = self.aggregation_intervals[period]
@@ -649,6 +685,9 @@ class StatisticsManager:
     
     async def _update_trend_analysis(self):
         """Update trend analysis for metrics"""
+
+
+
         try:
             # Analyze trends for each metric
             for period in [AggregationPeriod.HOUR, AggregationPeriod.DAY]:
@@ -659,6 +698,9 @@ class StatisticsManager:
     
     async def _analyze_trends_for_period(self, period: AggregationPeriod):
         """Analyze trends for specific period"""
+
+
+
         try:
             # Get recent aggregated data
             recent_data = await self._get_recent_aggregated_data(period, self.trend_window)
@@ -694,6 +736,9 @@ class StatisticsManager:
     async def _calculate_trend(self, metric_key: str, timestamps: List[datetime], 
                              values: List[float], period: AggregationPeriod) -> TrendAnalysis:
         """Calculate trend for metric"""
+
+
+
         try:
             # Convert timestamps to numeric values for regression
             start_time = timestamps[0]
@@ -758,6 +803,9 @@ class StatisticsManager:
     
     async def _detect_anomalies(self):
         """Detect anomalies in recent statistics"""
+
+
+
         try:
             # Look for anomalies in recent data
             for period in [AggregationPeriod.HOUR, AggregationPeriod.DAY]:
@@ -782,6 +830,9 @@ class StatisticsManager:
                                   metric_types: Optional[List[StatisticType]] = None,
                                   hours_back: int = 24) -> Dict[str, Any]:
         """Generate comprehensive statistics report"""
+
+
+
         try:
             end_time = datetime.now()
             start_time = end_time - timedelta(hours=hours_back)
@@ -864,6 +915,9 @@ class StatisticsManager:
     
     async def _get_query_performance_metrics(self) -> Dict[str, float]:
         """Get query performance metrics"""
+
+
+
         return {
             'avg_query_time': 0.5,
             'queries_per_second': 150.0,
@@ -872,6 +926,9 @@ class StatisticsManager:
     
     async def _get_storage_metrics(self) -> Dict[str, float]:
         """Get storage metrics"""
+
+
+
         return {
             'total_size': 10737418240,  # 10GB
             'index_size': 1073741824,   # 1GB
@@ -880,6 +937,9 @@ class StatisticsManager:
     
     async def _get_cache_metrics(self) -> Dict[str, float]:
         """Get cache metrics"""
+
+
+
         return {
             'hit_rate': 85.0,
             'memory_usage': 536870912  # 512MB
@@ -887,6 +947,9 @@ class StatisticsManager:
     
     async def _get_error_metrics(self) -> Dict[str, int]:
         """Get error metrics"""
+
+
+
         return {
             'connection_errors': 2,
             'query_errors': 1,
@@ -916,6 +979,9 @@ class StatisticsManager:
     
     async def _generate_forecast(self, x_values: np.ndarray, y_values: np.ndarray, horizon: int) -> List[float]:
         """Generate forecast values"""
+
+
+
         try:
             # Simple linear extrapolation
             coefficients = np.polyfit(x_values, y_values, 1)
@@ -933,6 +999,9 @@ class StatisticsManager:
     
     async def _detect_metric_anomalies(self, timestamps: List[datetime], values: List[float]) -> List[datetime]:
         """Detect anomalies in metric values"""
+
+
+
         try:
             if len(values) < 3:
                 return []
@@ -1007,6 +1076,9 @@ class StatisticsManager:
     
     async def _cleanup_old_data(self):
         """Clean up old statistics data"""
+
+
+
         try:
             current_time = datetime.now()
             
@@ -1047,6 +1119,9 @@ class StatisticsManager:
     
     async def cleanup(self):
         """Cleanup statistics manager"""
+
+
+
         try:
             # Stop collection
             await self.stop_collection()

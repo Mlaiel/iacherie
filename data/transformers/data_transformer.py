@@ -263,6 +263,9 @@ class DataTransformer:
         Returns:
             List of transformation results
         """
+
+
+
         return await self.batch_processor.process_batch(requests, self.transform)
     
     async def convert_audio(
@@ -464,6 +467,9 @@ class DataTransformer:
     
     def get_metrics(self) -> Dict[str, Any]:
         """Get transformation metrics."""
+
+
+
         return self.metrics.copy()
     
     def clear_cache(self):
@@ -512,6 +518,9 @@ class DataTransformer:
     
     def __del__(self):
         """Destructor to ensure cleanup."""
+
+
+
         try:
             asyncio.create_task(self.cleanup())
         except:
@@ -537,6 +546,9 @@ def create_transformer(
     Returns:
         Configured DataTransformer instance
     """
+
+
+
     return DataTransformer(
         max_workers=max_workers,
         enable_gpu=enable_gpu,

@@ -419,6 +419,9 @@ class SecurityRepository:
         Returns:
             UserSecurity: Profil de sécurité créé
         """
+
+
+
         try:
             # Génération du sel et hachage du mot de passe
             salt = secrets.token_hex(32)
@@ -533,6 +536,9 @@ class SecurityRepository:
         Returns:
             bool: True si le changement a réussi
         """
+
+
+
         try:
             # Vérification de l'ancien mot de passe
             if not self.verify_password(user_id, old_password):
@@ -583,6 +589,9 @@ class SecurityRepository:
         Returns:
             Optional[str]: Secret 2FA en base32
         """
+
+
+
         try:
             user_security = self.session.query(UserSecurity).filter(
                 UserSecurity.user_id == user_id
@@ -637,6 +646,9 @@ class SecurityRepository:
         Returns:
             Optional[str]: Clé API générée
         """
+
+
+
         try:
             user_security = self.session.query(UserSecurity).filter(
                 UserSecurity.user_id == user_id
@@ -689,6 +701,9 @@ class SecurityRepository:
         Returns:
             bool: True si enregistré avec succès
         """
+
+
+
         try:
             user_security = self.session.query(UserSecurity).filter(
                 UserSecurity.user_id == user_id
@@ -763,6 +778,9 @@ class SecurityRepository:
     
     def _hash_password(self, password: str, salt: str) -> str:
         """Hash un mot de passe avec un sel."""
+
+
+
         return hashlib.pbkdf2_hmac('sha256', password.encode(), salt.encode(), 100000).hex()
     
     def _generate_device_fingerprint(self, device_data: Dict[str, Any]) -> str:
@@ -778,6 +796,9 @@ class SecurityRepository:
                            event_type: SecurityEventType, description: str,
                            threat_level: ThreatLevel, event_data: Dict = None):
         """Enregistre un événement de sécurité."""
+
+
+
         try:
             security_log = UserSecurityLog(
                 user_security_id=user_security_id,

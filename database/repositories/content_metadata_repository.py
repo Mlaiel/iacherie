@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -83,6 +83,9 @@ class ContentMetadataRepository(BaseRepository[ContentMetadata]):
         Returns:
             Created ContentMetadata instance
         """
+
+
+
         try:
             # Validate confidence score
             if not (0.0 <= confidence_score <= 1.0):
@@ -168,6 +171,9 @@ class ContentMetadataRepository(BaseRepository[ContentMetadata]):
         Returns:
             Validation result dictionary
         """
+
+
+
         try:
             errors = []
             
@@ -229,6 +235,9 @@ class ContentMetadataRepository(BaseRepository[ContentMetadata]):
         Returns:
             List of ContentMetadata instances
         """
+
+
+
         try:
             query = self.db_session.query(ContentMetadata).filter(
                 ContentMetadata.content_id == content_id
@@ -277,6 +286,9 @@ class ContentMetadataRepository(BaseRepository[ContentMetadata]):
         Returns:
             List of content with matching metadata
         """
+
+
+
         try:
             # Build metadata search query
             query = self.db_session.query(
@@ -379,6 +391,9 @@ class ContentMetadataRepository(BaseRepository[ContentMetadata]):
         Returns:
             Updated ContentMetadata instance
         """
+
+
+
         try:
             metadata = self.get_by_id(metadata_id)
             if not metadata:
@@ -435,6 +450,9 @@ class ContentMetadataRepository(BaseRepository[ContentMetadata]):
         Returns:
             Dictionary containing metadata statistics
         """
+
+
+
         try:
             # Base query with content join for user filtering
             base_query = self.db_session.query(ContentMetadata).join(
@@ -552,6 +570,9 @@ class ContentMetadataRepository(BaseRepository[ContentMetadata]):
         Returns:
             List of improvement suggestions
         """
+
+
+
         try:
             metadata_entries = self.get_content_metadata(content_id)
             
@@ -659,6 +680,9 @@ class ContentMetadataRepository(BaseRepository[ContentMetadata]):
         Returns:
             Number of updated metadata entries
         """
+
+
+
         try:
             update_data = {
                 'status': new_status,

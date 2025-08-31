@@ -104,6 +104,9 @@ class TestConfig:
 # Fonctions utilitaires de base
 def get_default_config():
     """Retourne une configuration par défaut"""
+
+
+
     return TestConfig()
 
 def initialize():
@@ -121,10 +124,13 @@ __all__ = [
             with open(init_path, 'w', encoding='utf-8') as f:
                 f.write(minimal_content)
             
-            print(f"✅ Module minimal créé : {module_name}")
+            print(f" Module minimal créé : {module_name}")
     
     def fix_test_file(self, file_path: Path) -> bool:
         """Corrige un fichier de test"""
+
+
+
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
@@ -227,11 +233,11 @@ pyyaml>=6.0.0
         with open(requirements_path, 'w', encoding='utf-8') as f:
             f.write(requirements_content)
         
-        print(f"✅ Fichier requirements-test.txt créé")
+        print(f" Fichier requirements-test.txt créé")
     
     def run_fixes(self):
         """Exécute toutes les corrections"""
-        print("🔧 Démarrage des corrections des tests importés...")
+        print(" Démarrage des corrections des tests importés...")
         
         # Créer les modules manquants de base
         basic_modules = [
@@ -256,29 +262,29 @@ pyyaml>=6.0.0
                 if file.startswith("test_") and file.endswith(".py"):
                     file_path = Path(root) / file
                     if self.fix_test_file(file_path):
-                        print(f"🔧 Fichier corrigé : {file_path}")
+                        print(f" Fichier corrigé : {file_path}")
         
         # Créer le fichier requirements-test.txt
         self.create_test_requirements()
         
         # Rapport final
-        print(f"\n📊 Corrections terminées :")
-        print(f"✅ Fichiers corrigés : {len(self.fixed_files)}")
-        print(f"❌ Erreurs : {len(self.errors)}")
+        print(f"\n Corrections terminées :")
+        print(f" Fichiers corrigés : {len(self.fixed_files)}")
+        print(f" Erreurs : {len(self.errors)}")
         
         if self.errors:
-            print("\n❌ Erreurs rencontrées :")
+            print("\n Erreurs rencontrées :")
             for error in self.errors[:5]:  # Afficher seulement les 5 premières
                 print(f"  - {error}")
         
-        print(f"\n💡 Prochaines étapes :")
+        print(f"\n Prochaines étapes :")
         print(f"1. Installer les dépendances : pip install -r requirements-test.txt")
         print(f"2. Tester l'exécution : pytest tests/ai/core/ -v --tb=short")
         print(f"3. Compléter les modules minimaux créés")
 
 def main():
     """Fonction principale"""
-    print("🔧 Script de Correction des Tests Importés - Ainflue")
+    print(" Script de Correction des Tests Importés - Ainflue")
     print("=" * 55)
     
     fixer = TestFixer()

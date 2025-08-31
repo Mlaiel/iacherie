@@ -246,6 +246,9 @@ class PlatformIntegrationManager:
     
     async def initialize_session(self, platform_id: str) -> bool:
         """Initialize HTTP session for a platform"""
+
+
+
         try:
             platform_config = self.platforms.get(platform_id)
             if not platform_config:
@@ -555,6 +558,9 @@ class PlatformIntegrationManager:
     
     def get_supported_platforms(self) -> List[str]:
         """Get list of supported platforms"""
+
+
+
         return list(self.platforms.keys())
     
     def get_platform_info(self, platform_id: str) -> Optional[Dict[str, Any]]:
@@ -566,10 +572,16 @@ class PlatformIntegrationManager:
     
     def get_rate_limit_status(self, platform_id: str) -> Dict[str, Any]:
         """Get current rate limit status for a platform"""
+
+
+
         return self.rate_limits.get(platform_id, {})
     
     async def test_platform_connection(self, platform_id: str) -> bool:
         """Test connection to a platform"""
+
+
+
         try:
             # Make a simple test request based on platform
             if platform_id == "youtube":

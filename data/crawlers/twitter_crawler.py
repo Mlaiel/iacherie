@@ -12,7 +12,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL WARNING ⚠️
+  CRITICAL WARNING 
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
 Any unauthorized use, reproduction, distribution, or reverse engineering 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -103,6 +103,9 @@ class TwitterCrawler(PlatformCrawler):
     
     async def _initialize_api_client(self):
         """Initialize Twitter API client"""
+
+
+
         try:
             # Initialize Tweepy client with API v2
             self.twitter_api = tweepy.Client(
@@ -132,6 +135,9 @@ class TwitterCrawler(PlatformCrawler):
         Returns:
             List of found tweet items
         """
+
+
+
         try:
             await self._check_rate_limit()
             
@@ -185,6 +191,9 @@ class TwitterCrawler(PlatformCrawler):
         Returns:
             Content metadata dictionary
         """
+
+
+
         try:
             # Extract tweet ID from URL
             tweet_id = self._extract_tweet_id_from_url(content_url)
@@ -223,6 +232,9 @@ class TwitterCrawler(PlatformCrawler):
         Returns:
             Content data bytes or None if failed
         """
+
+
+
         try:
             # For Twitter, we primarily download media attachments
             tweet_id = self._extract_tweet_id_from_url(content_url)
@@ -266,6 +278,9 @@ class TwitterCrawler(PlatformCrawler):
         Returns:
             List of tweets containing the hashtags
         """
+
+
+
         try:
             all_results = []
             
@@ -306,6 +321,9 @@ class TwitterCrawler(PlatformCrawler):
         Returns:
             List of user's tweets
         """
+
+
+
         try:
             # Get user ID
             user = self.twitter_api.get_user(username=username)
@@ -342,6 +360,9 @@ class TwitterCrawler(PlatformCrawler):
         Returns:
             Monitoring session ID
         """
+
+
+
         try:
             monitoring_id = f"twitter_monitor_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
             
@@ -378,6 +399,9 @@ class TwitterCrawler(PlatformCrawler):
         Returns:
             List of all tweets in the thread
         """
+
+
+
         try:
             thread_tweets = []
             
@@ -527,6 +551,9 @@ class TwitterCrawler(PlatformCrawler):
     
     def _extract_tweet_id_from_url(self, url: str) -> Optional[str]:
         """Extract tweet ID from Twitter URL"""
+
+
+
         try:
             # Pattern for Twitter URLs
             pattern = r'(?:twitter\.com|x\.com)/(?:#!\/)?(\w+)\/status(?:es)?\/(\d+)'
@@ -589,6 +616,9 @@ class TwitterStreamListener(tweepy.asynchronous.AsyncStreamingClient):
     
     async def on_tweet(self, tweet):
         """Handle incoming tweets"""
+
+
+
         try:
             self.tweet_count += 1
             
@@ -618,6 +648,9 @@ class TwitterStreamListener(tweepy.asynchronous.AsyncStreamingClient):
     
     async def start_monitoring(self, rules: List[tweepy.StreamRule]):
         """Start monitoring with rules"""
+
+
+
         try:
             # Add rules
             if rules:
@@ -635,6 +668,9 @@ class TwitterStreamListener(tweepy.asynchronous.AsyncStreamingClient):
     
     async def _send_notification(self, tweet_data: Dict[str, Any]):
         """Send webhook notification for detected tweet"""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 await session.post(self.callback_url, json=tweet_data)

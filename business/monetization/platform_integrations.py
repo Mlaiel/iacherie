@@ -1,5 +1,5 @@
 """
-🔌 Platform Integrations - Industrial-Grade Multi-Platform Revenue Management
+ Platform Integrations - Industrial-Grade Multi-Platform Revenue Management
 ==================================================================
 
 Ultra-advanced platform integrations for comprehensive revenue tracking across
@@ -9,7 +9,7 @@ TikTok, OnlyFans, Patreon, and 20+ other platforms.
 Created by: Fahed Mlaiel <mlaiel@live.de>
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
+ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED 
 Contact mlaiel@live.de for licensing inquiries.
 
 Business Logic: Platform Connection → Data Sync → Revenue Aggregation → Performance Analytics
@@ -209,6 +209,9 @@ class BasePlatformConnector(ABC):
     
     def _decrypt_credentials(self, credentials: PlatformCredentials) -> Dict[str, str]:
         """Decrypt stored credentials"""
+
+
+
         try:
             decrypted = {}
             if credentials.access_token:
@@ -234,6 +237,9 @@ class SpotifyRevenue(BasePlatformConnector):
     
     async def authenticate(self, credentials: Dict[str, Any]) -> Dict[str, Any]:
         """Authenticate with Spotify API"""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 auth_url = "https://accounts.spotify.com/api/token"
@@ -269,6 +275,9 @@ class SpotifyRevenue(BasePlatformConnector):
         period_end: datetime
     ) -> List[PlatformRevenue]:
         """Fetch Spotify revenue data"""
+
+
+
         try:
             decrypted_creds = self._decrypt_credentials(credentials)
             revenue_data = []
@@ -311,6 +320,9 @@ class SpotifyRevenue(BasePlatformConnector):
         period_end: datetime
     ) -> PlatformMetrics:
         """Fetch Spotify performance metrics"""
+
+
+
         try:
             # This would use Spotify's API
             return PlatformMetrics(
@@ -342,6 +354,9 @@ class SpotifyRevenue(BasePlatformConnector):
     
     async def refresh_token(self, credentials: PlatformCredentials) -> Dict[str, Any]:
         """Refresh Spotify token"""
+
+
+
         try:
             # This would refresh the token using Spotify's API
             return {
@@ -363,6 +378,9 @@ class YouTubeRevenue(BasePlatformConnector):
     
     async def authenticate(self, credentials: Dict[str, Any]) -> Dict[str, Any]:
         """Authenticate with YouTube API"""
+
+
+
         try:
             # This would implement OAuth2 flow for YouTube
             return {
@@ -380,6 +398,9 @@ class YouTubeRevenue(BasePlatformConnector):
         period_end: datetime
     ) -> List[PlatformRevenue]:
         """Fetch YouTube revenue data"""
+
+
+
         try:
             revenue_data = []
             
@@ -417,6 +438,9 @@ class YouTubeRevenue(BasePlatformConnector):
         period_end: datetime
     ) -> PlatformMetrics:
         """Fetch YouTube performance metrics"""
+
+
+
         try:
             return PlatformMetrics(
                 platform=PlatformType.YOUTUBE,
@@ -453,6 +477,9 @@ class YouTubeRevenue(BasePlatformConnector):
     
     async def refresh_token(self, credentials: PlatformCredentials) -> Dict[str, Any]:
         """Refresh YouTube token"""
+
+
+
         try:
             # This would refresh using Google OAuth2
             return {
@@ -474,6 +501,9 @@ class InstagramRevenue(BasePlatformConnector):
     
     async def authenticate(self, credentials: Dict[str, Any]) -> Dict[str, Any]:
         """Authenticate with Instagram Basic Display API"""
+
+
+
         try:
             # This would implement Instagram OAuth
             return {
@@ -491,6 +521,9 @@ class InstagramRevenue(BasePlatformConnector):
         period_end: datetime
     ) -> List[PlatformRevenue]:
         """Fetch Instagram revenue data"""
+
+
+
         try:
             revenue_data = []
             
@@ -527,6 +560,9 @@ class InstagramRevenue(BasePlatformConnector):
         period_end: datetime
     ) -> PlatformMetrics:
         """Fetch Instagram performance metrics"""
+
+
+
         try:
             return PlatformMetrics(
                 platform=PlatformType.INSTAGRAM,
@@ -558,6 +594,9 @@ class InstagramRevenue(BasePlatformConnector):
     
     async def refresh_token(self, credentials: PlatformCredentials) -> Dict[str, Any]:
         """Refresh Instagram token"""
+
+
+
         try:
             # This would refresh using Facebook/Meta OAuth
             return {
@@ -578,6 +617,9 @@ class TikTokRevenue(BasePlatformConnector):
     
     async def authenticate(self, credentials: Dict[str, Any]) -> Dict[str, Any]:
         """Authenticate with TikTok API"""
+
+
+
         try:
             # This would implement TikTok OAuth
             return {
@@ -595,6 +637,9 @@ class TikTokRevenue(BasePlatformConnector):
         period_end: datetime
     ) -> List[PlatformRevenue]:
         """Fetch TikTok revenue data"""
+
+
+
         try:
             revenue_data = []
             
@@ -631,6 +676,9 @@ class TikTokRevenue(BasePlatformConnector):
         period_end: datetime
     ) -> PlatformMetrics:
         """Fetch TikTok performance metrics"""
+
+
+
         try:
             return PlatformMetrics(
                 platform=PlatformType.TIKTOK,
@@ -662,6 +710,9 @@ class TikTokRevenue(BasePlatformConnector):
     
     async def refresh_token(self, credentials: PlatformCredentials) -> Dict[str, Any]:
         """Refresh TikTok token"""
+
+
+
         try:
             # This would refresh using TikTok OAuth
             return {
@@ -689,6 +740,9 @@ class PlatformAnalytics:
         platforms: Optional[List[PlatformType]] = None
     ) -> Dict[str, Any]:
         """Generate comprehensive cross-platform analytics report"""
+
+
+
         try:
             # Fetch revenue data
             revenue_data = await self._fetch_platform_revenues(
@@ -753,6 +807,9 @@ class PlatformAnalytics:
         platforms: Optional[List[PlatformType]] = None
     ) -> List[PlatformRevenue]:
         """Fetch platform revenue data"""
+
+
+
         try:
             # This would query the database
             return []  # Placeholder
@@ -768,6 +825,9 @@ class PlatformAnalytics:
         platforms: Optional[List[PlatformType]] = None
     ) -> List[PlatformMetrics]:
         """Fetch platform metrics data"""
+
+
+
         try:
             # This would query the database
             return []  # Placeholder
@@ -781,6 +841,9 @@ class PlatformAnalytics:
         metrics_data: List[PlatformMetrics]
     ) -> Dict[str, Any]:
         """Compare performance across platforms"""
+
+
+
         try:
             platform_performance = {}
             
@@ -829,6 +892,9 @@ class PlatformAnalytics:
         metrics_data: List[PlatformMetrics]
     ) -> Dict[str, Any]:
         """Analyze audience overlap between platforms"""
+
+
+
         try:
             # This would perform sophisticated audience analysis
             return {
@@ -850,6 +916,9 @@ class PlatformAnalytics:
         metrics_data: List[PlatformMetrics]
     ) -> List[Dict[str, Any]]:
         """Identify revenue optimization opportunities"""
+
+
+
         try:
             opportunities = []
             
@@ -906,6 +975,9 @@ class PlatformAnalytics:
         metrics_data: List[PlatformMetrics]
     ) -> List[str]:
         """Generate actionable platform optimization recommendations"""
+
+
+
         try:
             recommendations = []
             
@@ -960,18 +1032,21 @@ class PlatformIntegrations:
     
     async def initialize(self) -> bool:
         """Initialize platform integrations"""
+
+
+
         try:
-            self.logger.info("🚀 Initializing Platform Integrations...")
+            self.logger.info(" Initializing Platform Integrations...")
             
             # Initialize all platform connectors
             for platform, connector in self.connectors.items():
                 self.logger.info(f"Initializing {platform.value} connector...")
             
-            self.logger.info("✅ Platform Integrations initialized successfully")
+            self.logger.info(" Platform Integrations initialized successfully")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Platform Integrations initialization failed: {e}")
+            self.logger.error(f" Platform Integrations initialization failed: {e}")
             return False
     
     async def connect_platform(
@@ -981,6 +1056,9 @@ class PlatformIntegrations:
         credentials: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Connect user to a platform"""
+
+
+
         try:
             if platform not in self.connectors:
                 return {
@@ -1035,6 +1113,9 @@ class PlatformIntegrations:
         period_end: Optional[datetime] = None
     ) -> Dict[str, Any]:
         """Sync data from connected platforms"""
+
+
+
         try:
             if period_start is None:
                 period_start = datetime.utcnow() - timedelta(days=30)
@@ -1136,6 +1217,9 @@ class PlatformIntegrations:
         platforms: Optional[List[PlatformType]] = None
     ) -> Dict[str, Any]:
         """Get cross-platform analytics"""
+
+
+
         return await self.analytics.generate_cross_platform_report(
             user_id, period_start, period_end, platforms
         )
@@ -1146,6 +1230,9 @@ class PlatformIntegrations:
         platform: PlatformType
     ) -> Dict[str, Any]:
         """Disconnect platform integration"""
+
+
+
         try:
             # Remove stored credentials
             await self._remove_platform_credentials(user_id, platform)
@@ -1167,6 +1254,9 @@ class PlatformIntegrations:
     
     async def _store_platform_credentials(self, credentials: PlatformCredentials):
         """Store platform credentials in database"""
+
+
+
         try:
             # This would store in the database with encryption
             pass
@@ -1180,6 +1270,9 @@ class PlatformIntegrations:
         platform: PlatformType
     ) -> Optional[PlatformCredentials]:
         """Get platform credentials from database"""
+
+
+
         try:
             # This would query the database
             return None  # Placeholder
@@ -1195,6 +1288,9 @@ class PlatformIntegrations:
     
     async def _refresh_platform_token(self, credentials: PlatformCredentials) -> Dict[str, Any]:
         """Refresh platform token"""
+
+
+
         try:
             if credentials.platform not in self.connectors:
                 return {'success': False, 'error': 'Platform not supported'}
@@ -1208,6 +1304,9 @@ class PlatformIntegrations:
     
     async def _store_platform_revenue(self, revenue: PlatformRevenue):
         """Store platform revenue data"""
+
+
+
         try:
             # This would store in the database
             pass
@@ -1216,6 +1315,9 @@ class PlatformIntegrations:
     
     async def _store_platform_metrics(self, metrics: PlatformMetrics):
         """Store platform metrics data"""
+
+
+
         try:
             # This would store in the database
             pass
@@ -1224,6 +1326,9 @@ class PlatformIntegrations:
     
     async def _update_sync_timestamp(self, credentials: PlatformCredentials):
         """Update last sync timestamp"""
+
+
+
         try:
             credentials.last_sync = datetime.utcnow()
             # This would update in the database
@@ -1232,6 +1337,9 @@ class PlatformIntegrations:
     
     async def _remove_platform_credentials(self, user_id: str, platform: PlatformType):
         """Remove platform credentials from database"""
+
+
+
         try:
             # This would remove from the database
             pass

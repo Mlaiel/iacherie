@@ -19,7 +19,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING 🚨
+ INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
@@ -410,6 +410,9 @@ class ShardRebalancer:
     
     def execute_rebalancing_plan(self, plan: RebalancingPlan) -> bool:
         """Execute rebalancing plan"""
+
+
+
         try:
             logger.info(f"Executing rebalancing plan: {plan.plan_id}")
             
@@ -430,6 +433,9 @@ class ShardRebalancer:
     
     def _execute_migration_task(self, task: MigrationTask) -> bool:
         """Execute individual migration task"""
+
+
+
         try:
             task.status = MigrationStatus.IN_PROGRESS
             task.started_at = datetime.utcnow()
@@ -490,6 +496,9 @@ class DataMigrationManager:
     def _estimate_migration_size(self, shard_id: str, table_name: str, 
                                key_ranges: List[Tuple[Any, Any]]) -> Tuple[int, float]:
         """Estimate migration size"""
+
+
+
         try:
             shard = self.shard_coordinator.shards[shard_id]
             
@@ -521,6 +530,9 @@ class DataMigrationManager:
     
     def _execute_migration(self, task: MigrationTask) -> bool:
         """Execute migration with zero downtime"""
+
+
+
         try:
             logger.info(f"Starting migration: {task.task_id}")
             
@@ -571,6 +583,9 @@ class DataMigrationManager:
     
     def _bulk_copy_data(self, task: MigrationTask, source_shard, target_shard) -> bool:
         """Perform initial bulk copy of data"""
+
+
+
         try:
             # Implementation would use efficient bulk copy methods
             # For example: pg_dump/pg_restore, COPY commands, or bulk insert
@@ -598,6 +613,9 @@ class DataMigrationManager:
     
     def _incremental_sync(self, task: MigrationTask, source_shard, target_shard) -> bool:
         """Sync incremental changes"""
+
+
+
         try:
             logger.info(f"Incremental sync for task: {task.task_id}")
             
@@ -616,6 +634,9 @@ class DataMigrationManager:
     
     def _final_cutover(self, task: MigrationTask, source_shard, target_shard) -> bool:
         """Perform final cutover with minimal downtime"""
+
+
+
         try:
             logger.info(f"Final cutover for task: {task.task_id}")
             
@@ -637,6 +658,9 @@ class DataMigrationManager:
     
     def _verify_migration(self, task: MigrationTask, source_shard, target_shard) -> bool:
         """Verify migration integrity"""
+
+
+
         try:
             logger.info(f"Verifying migration for task: {task.task_id}")
             
@@ -740,6 +764,9 @@ class DynamicShardingManager:
     
     def _monitoring_cycle(self):
         """Single monitoring cycle"""
+
+
+
         try:
             # Collect current metrics from all shards
             shard_metrics = self._collect_shard_metrics()
@@ -867,6 +894,9 @@ class DynamicShardingManager:
     
     def get_system_status(self) -> Dict[str, Any]:
         """Get comprehensive dynamic sharding system status"""
+
+
+
         try:
             # Recent hotspots summary
             recent_hotspots_summary = {}
@@ -936,6 +966,9 @@ class DynamicShardingManager:
     
     def force_rebalancing(self, strategy: ReshardingStrategy = ReshardingStrategy.REBALANCE_LOAD) -> bool:
         """Force manual rebalancing operation"""
+
+
+
         try:
             logger.info(f"Forcing manual rebalancing with strategy: {strategy}")
             
@@ -961,6 +994,9 @@ class DynamicShardingManager:
     
     def shutdown(self):
         """Shutdown dynamic sharding manager gracefully"""
+
+
+
         try:
             logger.info("Shutting down dynamic sharding manager...")
             

@@ -110,6 +110,9 @@ class AWSDeploymentManager:
         
     async def initialize(self) -> bool:
         """Initialize AWS connection and validate credentials"""
+
+
+
         try:
             async with self.session.client('sts') as sts:
                 caller_identity = await sts.get_caller_identity()
@@ -777,6 +780,9 @@ class AWSDeploymentManager:
     
     async def _get_deployment_endpoints(self) -> Dict[str, str]:
         """Get deployment endpoints"""
+
+
+
         return {
             "api_gateway": "https://api.ia-influencer.com",
             "web_app": "https://app.ia-influencer.com",
@@ -786,6 +792,9 @@ class AWSDeploymentManager:
     
     async def _calculate_deployment_cost(self) -> Dict[str, float]:
         """Calculate estimated deployment cost"""
+
+
+
         return {
             "monthly_estimate": 2500.0,
             "compute_cost": 800.0,
@@ -805,6 +814,9 @@ class AWSDeploymentManager:
     
     async def scale_service(self, service_name: str, desired_count: int) -> bool:
         """Scale ECS service"""
+
+
+
         try:
             async with self.session.client('ecs', region_name=self.credentials.region) as ecs:
                 await ecs.update_service(
@@ -820,6 +832,9 @@ class AWSDeploymentManager:
     
     async def get_service_status(self, service_name: str) -> Dict[str, Any]:
         """Get service status"""
+
+
+
         try:
             async with self.session.client('ecs', region_name=self.credentials.region) as ecs:
                 response = await ecs.describe_services(
@@ -847,6 +862,9 @@ class AWSDeploymentManager:
     
     async def get_deployment_costs(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
         """Get deployment costs for period"""
+
+
+
         try:
             async with self.session.client('ce', region_name='us-east-1') as ce:
                 response = await ce.get_cost_and_usage(
@@ -886,6 +904,9 @@ class AWSDeploymentManager:
     
     async def cleanup_resources(self, deployment_id: str) -> bool:
         """Cleanup deployment resources"""
+
+
+
         try:
             self.logger.info(f"Cleaning up resources for deployment: {deployment_id}")
             # Implementation for cleanup logic

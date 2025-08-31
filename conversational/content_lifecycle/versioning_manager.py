@@ -7,7 +7,7 @@ rollback capabilities, delta compression, and collaborative editing support.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will result in legal action.
@@ -190,6 +190,9 @@ class VersioningManager:
         tag: Optional[str] = None
     ) -> ContentVersion:
         """Create a new content version"""
+
+
+
         try:
             # Get current version if not specified
             if not parent_version:
@@ -275,6 +278,9 @@ class VersioningManager:
     
     async def get_version(self, version_id: str) -> Optional[ContentVersion]:
         """Get specific version by ID"""
+
+
+
         try:
             # Check cache first
             cached_version = await self.cache_manager.get(f"version:{version_id}")
@@ -299,6 +305,9 @@ class VersioningManager:
     
     async def get_current_version(self, content_id: str) -> Optional[ContentVersion]:
         """Get current active version for content"""
+
+
+
         try:
             # Check cache first
             cached_current = await self.cache_manager.get(f"current_version:{content_id}")
@@ -330,6 +339,9 @@ class VersioningManager:
         offset: int = 0
     ) -> List[ContentVersion]:
         """List versions for content"""
+
+
+
         try:
             return await self._fetch_versions_from_db(
                 content_id, branch_name, limit, offset
@@ -347,6 +359,9 @@ class VersioningManager:
         create_revert_version: bool = True
     ) -> Optional[ContentVersion]:
         """Revert content to a specific version"""
+
+
+
         try:
             target_version = await self.get_version(target_version_id)
             if not target_version:
@@ -398,6 +413,9 @@ class VersioningManager:
         version_b_id: str
     ) -> Dict[str, Any]:
         """Compare two versions and return differences"""
+
+
+
         try:
             version_a = await self.get_version(version_a_id)
             version_b = await self.get_version(version_b_id)
@@ -453,6 +471,9 @@ class VersioningManager:
         merge_strategy: MergeStrategy = MergeStrategy.MANUAL
     ) -> VersionBranch:
         """Create a new version branch"""
+
+
+
         try:
             # Validate branch name
             if await self._branch_exists(content_id, branch_name):
@@ -509,6 +530,9 @@ class VersioningManager:
         resolve_conflicts: Optional[Dict[str, Any]] = None
     ) -> ContentVersion:
         """Merge one branch into another"""
+
+
+
         try:
             # Get branches
             source_br = await self._get_branch(content_id, source_branch)
@@ -585,6 +609,9 @@ class VersioningManager:
         expires_after: Optional[timedelta] = None
     ) -> VersionSnapshot:
         """Create a snapshot backup of a version"""
+
+
+
         try:
             version = await self.get_version(version_id)
             if not version or version.content_id != content_id:
@@ -638,6 +665,9 @@ class VersioningManager:
         create_new_version: bool = True
     ) -> Optional[ContentVersion]:
         """Restore content from a snapshot"""
+
+
+
         try:
             # Load snapshot
             snapshot_data = await self._load_snapshot(snapshot_id)
@@ -693,6 +723,9 @@ class VersioningManager:
         max_depth: int = 100
     ) -> Dict[str, Any]:
         """Get complete version history with branch visualization"""
+
+
+
         try:
             versions = await self.list_versions(content_id, limit=max_depth)
             branches = await self._get_content_branches(content_id) if include_branches else []

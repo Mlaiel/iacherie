@@ -12,7 +12,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 
-⚠️ STRICT COPYRIGHT PROTECTION ⚠️
+ STRICT COPYRIGHT PROTECTION 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 
@@ -225,6 +225,9 @@ class YouTubeSurveillanceExtractor(BaseSurveillanceExtractor):
         
     async def can_handle(self, request: ExtractionRequest) -> bool:
         """Check if request is for YouTube surveillance"""
+
+
+
         return self.target_platform in str(request.source_url or request.metadata)
     
     async def search_content(self, keywords: List[str], content_type: str = "video") -> List[Dict[str, Any]]:
@@ -248,6 +251,9 @@ class YouTubeSurveillanceExtractor(BaseSurveillanceExtractor):
     
     async def _search_via_api(self, query: str) -> List[Dict[str, Any]]:
         """Search YouTube using API"""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 url = f"{self.base_url}/search"
@@ -382,6 +388,9 @@ class YouTubeSurveillanceExtractor(BaseSurveillanceExtractor):
     
     async def _get_video_details_api(self, video_id: str) -> Dict[str, Any]:
         """Get video details using YouTube API"""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 url = f"{self.base_url}/videos"
@@ -502,6 +511,9 @@ class YouTubeSurveillanceExtractor(BaseSurveillanceExtractor):
     
     def _add_timestamp_watermark(self, image_path: str, timestamp: str) -> str:
         """Add timestamp watermark to evidence screenshot"""
+
+
+
         try:
             image = Image.open(image_path)
             draw = ImageDraw.Draw(image)
@@ -545,6 +557,9 @@ class InstagramSurveillanceExtractor(BaseSurveillanceExtractor):
         
     async def can_handle(self, request: ExtractionRequest) -> bool:
         """Check if request is for Instagram surveillance"""
+
+
+
         return self.target_platform in str(request.source_url or request.metadata)
     
     async def search_content(self, keywords: List[str], content_type: str = "post") -> List[Dict[str, Any]]:
@@ -567,6 +582,9 @@ class InstagramSurveillanceExtractor(BaseSurveillanceExtractor):
     
     async def _search_instagram(self, query: str) -> List[Dict[str, Any]]:
         """Search Instagram using web scraping"""
+
+
+
         try:
             options = Options()
             options.add_argument('--headless')
@@ -670,6 +688,9 @@ class TikTokSurveillanceExtractor(BaseSurveillanceExtractor):
         
     async def can_handle(self, request: ExtractionRequest) -> bool:
         """Check if request is for TikTok surveillance"""
+
+
+
         return self.target_platform in str(request.source_url or request.metadata)
     
     async def search_content(self, keywords: List[str], content_type: str = "video") -> List[Dict[str, Any]]:
@@ -692,6 +713,9 @@ class TikTokSurveillanceExtractor(BaseSurveillanceExtractor):
     
     async def _search_tiktok(self, query: str) -> List[Dict[str, Any]]:
         """Search TikTok using web scraping"""
+
+
+
         try:
             options = Options()
             options.add_argument('--headless')
@@ -749,6 +773,9 @@ class GenericWebSurveillanceExtractor(BaseSurveillanceExtractor):
         
     async def can_handle(self, request: ExtractionRequest) -> bool:
         """Always can handle generic web requests"""
+
+
+
         return True
     
     async def search_content(self, keywords: List[str], content_type: str = "any") -> List[Dict[str, Any]]:
@@ -962,6 +989,9 @@ class SurveillanceManager:
     
     def _extract_violator_info(self, content: Dict[str, Any]) -> Dict[str, Any]:
         """Extract information about the violator"""
+
+
+
         return {
             'channel_id': content.get('channel_id'),
             'channel_title': content.get('channel_title'),
@@ -972,6 +1002,9 @@ class SurveillanceManager:
     
     async def _process_violation(self, violation: ViolationAlert):
         """Process detected violation"""
+
+
+
         try:
             # Capture evidence
             platform = violation.platform
@@ -1001,6 +1034,9 @@ class SurveillanceManager:
     
     def get_active_jobs(self) -> List[MonitoringJob]:
         """Get list of active monitoring jobs"""
+
+
+
         return [job for job in self.active_jobs.values() if job.status == MonitoringStatus.ACTIVE]
 
 

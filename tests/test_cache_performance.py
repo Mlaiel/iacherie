@@ -378,53 +378,53 @@ if __name__ == "__main__":
     test_cache.test_cache_middleware_initialization()
     test_cache.test_should_cache_request()
     test_cache.test_cache_statistics()
-    print("✓ Cache middleware tests passed")
+    print(" Cache middleware tests passed")
     
     # Test compression middleware
     test_compression = TestAssetCompressionMiddleware()
     test_compression.test_compression_middleware_initialization()
     test_compression.test_should_compress_logic()
     test_compression.test_compression_statistics()
-    print("✓ Compression middleware tests passed")
+    print(" Compression middleware tests passed")
     
     # Test Redis optimization
     test_redis = TestRedisClusterOptimization()
     test_redis.test_cluster_optimization_configuration()
     test_redis.test_cluster_optimization_methods_exist()
-    print("✓ Redis cluster optimization tests passed")
+    print(" Redis cluster optimization tests passed")
     
     # Test image optimizer
     test_image = TestImageOptimizer()
     test_image.test_image_optimizer_initialization()
     test_image.test_optimization_options()
     test_image.test_batch_optimizer()
-    print("✓ Image optimization tests passed")
+    print(" Image optimization tests passed")
     
     # Test session middleware
     test_session = TestSessionMiddleware()
     test_session.test_session_middleware_initialization()
     test_session.test_session_path_logic()
     test_session.test_session_statistics()
-    print("✓ Session middleware tests passed")
+    print(" Session middleware tests passed")
     
     # Test CDN optimization
     test_cdn = TestCDNOptimization()
     test_cdn.test_cdn_optimization_methods_exist()
-    print("✓ CDN optimization tests passed")
+    print(" CDN optimization tests passed")
     
     # Test integration
     test_integration = TestPerformanceIntegration()
     test_integration.test_cache_and_compression_integration()
     test_integration.test_session_and_cache_integration()
-    print("✓ Integration tests passed")
+    print(" Integration tests passed")
     
-    print("\n🎉 All Cache & Performance tests passed successfully!")
+    print("\n All Cache & Performance tests passed successfully!")
     print("\nImplemented features:")
-    print("- ✅ Redis cluster configuration")
-    print("- ✅ Cache invalidation strategies")
-    print("- ✅ Session management")
-    print("- ✅ API response caching")
-    print("- ✅ Database query caching")
-    print("- ✅ Static content CDN")
-    print("- ✅ Image optimization")
-    print("- ✅ Asset compression")
+    print("-  Redis cluster configuration")
+    print("-  Cache invalidation strategies")
+    print("-  Session management")
+    print("-  API response caching")
+    print("-  Database query caching")
+    print("-  Static content CDN")
+    print("-  Image optimization")
+    print("-  Asset compression")

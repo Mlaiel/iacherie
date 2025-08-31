@@ -229,6 +229,9 @@ class QueryAnalyzer:
         
     def analyze_query(self, query: str, duration: float) -> None:
         """Analyze a query for indexing opportunities"""
+
+
+
         try:
             # Normalize query
             normalized = self._normalize_query(query)
@@ -285,6 +288,9 @@ class QueryAnalyzer:
     
     def _generate_pattern_key(self, normalized_query: str) -> str:
         """Generate a unique key for query pattern"""
+
+
+
         return hashlib.md5(normalized_query.encode()).hexdigest()
     
     def _extract_tables(self, query: str) -> Set[str]:
@@ -521,6 +527,9 @@ class IndexOptimizer:
         
     async def analyze_indexes(self, engine: AsyncEngine) -> None:
         """Analyze existing indexes and their usage"""
+
+
+
         try:
             logger.info("Starting index analysis")
             
@@ -593,6 +602,9 @@ class IndexOptimizer:
     
     def _parse_index_definition(self, row) -> Optional[IndexInfo]:
         """Parse index definition from database row"""
+
+
+
         try:
             index_def = row.indexdef
             index_name = row.indexname
@@ -769,6 +781,9 @@ class IndexOptimizer:
     
     async def create_index(self, engine: AsyncEngine, recommendation: IndexRecommendation) -> bool:
         """Create an index based on recommendation"""
+
+
+
         try:
             if not self.config.auto_create:
                 logger.info(f"Auto-create disabled, skipping index creation: {recommendation.table_name}.{recommendation.columns}")
@@ -801,6 +816,9 @@ class IndexOptimizer:
     
     async def drop_index(self, engine: AsyncEngine, index_name: str) -> bool:
         """Drop an unused index"""
+
+
+
         try:
             if not self.config.auto_drop:
                 logger.info(f"Auto-drop disabled, skipping index drop: {index_name}")
@@ -871,6 +889,9 @@ class IndexOptimizer:
     
     async def get_stats(self) -> Dict[str, Any]:
         """Get comprehensive index statistics"""
+
+
+
         return {
             "total_indexes": self.metrics.total_indexes,
             "used_indexes": self.metrics.used_indexes,
@@ -1018,6 +1039,9 @@ class ContentProtectionIndexOptimizer:
     
     async def _create_vector_search_indexes(self, engine: AsyncEngine) -> None:
         """Create specialized indexes for vector similarity search"""
+
+
+
         try:
             async with engine.begin() as conn:
                 # Create GiST index for vector similarity if using pgvector
@@ -1103,6 +1127,9 @@ class MonetizationIndexOptimizer:
     
     async def _create_aggregation_indexes(self, engine: AsyncEngine) -> None:
         """Create specialized indexes for revenue aggregation"""
+
+
+
         try:
             async with engine.begin() as conn:
                 # Create partial index for recent revenue data
@@ -1189,6 +1216,9 @@ class MultimediaIndexOptimizer:
     
     async def _create_multimedia_specific_indexes(self, engine: AsyncEngine) -> None:
         """Create multimedia-specific specialized indexes"""
+
+
+
         try:
             async with engine.begin() as conn:
                 # Create GIN index for metadata search

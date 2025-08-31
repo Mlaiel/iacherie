@@ -189,6 +189,9 @@ class RedisHandler:
         
     def _connect(self):
         """Establish Redis connection"""
+
+
+
         try:
             if self.cluster_mode:
                 # Redis Cluster configuration
@@ -221,6 +224,9 @@ class RedisHandler:
     
     async def get(self, key: str) -> Optional[Any]:
         """Get value from Redis cache"""
+
+
+
         try:
             value = self.client.get(key)
             if value is None:
@@ -238,6 +244,9 @@ class RedisHandler:
     
     async def set(self, key: str, value: Any, ttl: Optional[int] = None) -> bool:
         """Set value in Redis cache"""
+
+
+
         try:
             # Serialize value
             if isinstance(value, (dict, list, tuple)):
@@ -259,6 +268,9 @@ class RedisHandler:
     
     async def delete(self, key: str) -> bool:
         """Delete key from Redis cache"""
+
+
+
         try:
             result = self.client.delete(key)
             return bool(result)
@@ -268,6 +280,9 @@ class RedisHandler:
     
     async def exists(self, key: str) -> bool:
         """Check if key exists in Redis"""
+
+
+
         try:
             return bool(self.client.exists(key))
         except Exception as e:
@@ -276,6 +291,9 @@ class RedisHandler:
     
     def get_info(self) -> Dict[str, Any]:
         """Get Redis server information"""
+
+
+
         try:
             info = self.client.info()
             return {
@@ -476,15 +494,24 @@ class CacheManager:
     
     def _lru_eviction(self) -> str:
         """LRU eviction strategy"""
+
+
+
         return next(iter(self.l1_cache))
     
     def _lfu_eviction(self) -> str:
         """LFU eviction strategy"""
+
+
+
         return min(self.l1_cache.keys(), 
                   key=lambda k: self.l1_cache[k].access_count)
     
     def _fifo_eviction(self) -> str:
         """FIFO eviction strategy"""
+
+
+
         return min(self.l1_cache.keys(), 
                   key=lambda k: self.l1_cache[k].created_at)
     
@@ -511,6 +538,9 @@ class CacheManager:
     
     def _calculate_size(self, obj: Any) -> int:
         """Calculate approximate size of object in bytes"""
+
+
+
         try:
             return len(pickle.dumps(obj))
         except Exception:

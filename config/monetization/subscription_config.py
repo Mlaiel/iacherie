@@ -526,6 +526,9 @@ class SubscriptionConfig:
     
     def get_billing_cycle_config(self, interval: BillingInterval) -> Optional[BillingCycle]:
         """Get billing cycle configuration for specific interval."""
+
+
+
         return self.AVAILABLE_BILLING_CYCLES.get(interval)
     
     def is_status_transition_allowed(self, from_status: SubscriptionStatus, 
@@ -536,6 +539,9 @@ class SubscriptionConfig:
     
     def get_tier_settings(self, tier: str) -> Dict[str, Any]:
         """Get tier-specific subscription settings."""
+
+
+
         return self.TIER_SPECIFIC_SETTINGS.get(tier.lower(), {})
     
     def calculate_proration(self, old_price: Decimal, new_price: Decimal, 
@@ -1042,10 +1048,16 @@ class SubscriptionConfig:
     
     def get_tier_config(self, tier_id: str) -> Optional[SubscriptionTierConfig]:
         """Get configuration for a specific subscription tier."""
+
+
+
         return self.SUBSCRIPTION_TIERS.get(tier_id)
     
     def get_available_tiers(self) -> List[str]:
         """Get list of available subscription tiers."""
+
+
+
         return list(self.SUBSCRIPTION_TIERS.keys())
     
     def calculate_proration(

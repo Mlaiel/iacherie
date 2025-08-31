@@ -30,7 +30,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 #
 # Created by: Fahed Mlaiel (mlaiel@live.de)
 # 
-# ⚠️  STRICT COPYRIGHT WARNING ⚠️ 
+#   STRICT COPYRIGHT WARNING  
 # This code, concept, and intellectual property belongs exclusively to Fahed Mlaiel.
 # ANY unauthorized use, reproduction, distribution, or theft of this code/concept 
 # without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is 
@@ -114,6 +114,9 @@ class TestVisualEmbeddingModel(unittest.TestCase):
     
     def _create_embedding_config(self):
         """Create embedding configuration for testing"""
+
+
+
         try:
             return EmbeddingConfig(
                 model_type='resnet50',
@@ -137,6 +140,9 @@ class TestVisualEmbeddingModel(unittest.TestCase):
     
     def test_single_image_embedding(self):
         """Test single image embedding generation"""
+
+
+
         try:
             embedding = self.embedding_model.generate_embedding(
                 image=self.test_image,
@@ -164,6 +170,9 @@ class TestVisualEmbeddingModel(unittest.TestCase):
     
     def test_batch_embedding_generation(self):
         """Test batch embedding generation"""
+
+
+
         try:
             embeddings = self.embedding_model.generate_batch_embeddings(
                 images=self.test_images,
@@ -186,6 +195,9 @@ class TestVisualEmbeddingModel(unittest.TestCase):
     
     def test_feature_extraction_layers(self):
         """Test feature extraction from different layers"""
+
+
+
         try:
             layer_features = self.embedding_model.extract_layer_features(
                 image=self.test_image,
@@ -204,6 +216,9 @@ class TestVisualEmbeddingModel(unittest.TestCase):
     
     def test_multi_scale_embeddings(self):
         """Test multi-scale embedding generation"""
+
+
+
         try:
             multi_scale_embeddings = self.embedding_model.generate_multi_scale_embeddings(
                 image=self.test_image,
@@ -226,6 +241,9 @@ class TestVisualEmbeddingModel(unittest.TestCase):
     
     def test_embedding_consistency(self):
         """Test embedding consistency for same image"""
+
+
+
         try:
             # Generate embedding twice for same image
             embedding1 = self.embedding_model.generate_embedding(
@@ -248,6 +266,9 @@ class TestVisualEmbeddingModel(unittest.TestCase):
     
     def test_embedding_robustness(self):
         """Test embedding robustness to small image changes"""
+
+
+
         try:
             # Original embedding
             original_embedding = self.embedding_model.generate_embedding(
@@ -322,6 +343,9 @@ class TestSimilarityMatcher(unittest.TestCase):
     
     def test_cosine_similarity_calculation(self):
         """Test cosine similarity calculation"""
+
+
+
         try:
             similarities = self.matcher.calculate_cosine_similarity(
                 query_embedding=self.query_embedding,
@@ -352,6 +376,9 @@ class TestSimilarityMatcher(unittest.TestCase):
     
     def test_euclidean_distance_calculation(self):
         """Test Euclidean distance calculation"""
+
+
+
         try:
             distances = self.matcher.calculate_euclidean_distance(
                 query_embedding=self.query_embedding,
@@ -375,6 +402,9 @@ class TestSimilarityMatcher(unittest.TestCase):
     
     def test_top_k_similarity_search(self):
         """Test top-k similarity search"""
+
+
+
         try:
             top_matches = self.matcher.find_top_k_similar(
                 query_embedding=self.query_embedding,
@@ -402,6 +432,9 @@ class TestSimilarityMatcher(unittest.TestCase):
     
     def test_threshold_based_matching(self):
         """Test threshold-based similarity matching"""
+
+
+
         try:
             threshold_matches = self.matcher.find_matches_above_threshold(
                 query_embedding=self.query_embedding,
@@ -424,6 +457,9 @@ class TestSimilarityMatcher(unittest.TestCase):
     
     def test_batch_similarity_matching(self):
         """Test batch similarity matching"""
+
+
+
         try:
             # Create multiple queries
             query_embeddings = [self.query_embedding, self.test_embeddings[0], self.test_embeddings[3]]
@@ -443,6 +479,9 @@ class TestSimilarityMatcher(unittest.TestCase):
     
     def test_similarity_matrix_computation(self):
         """Test similarity matrix computation"""
+
+
+
         try:
             similarity_matrix = self.matcher.compute_similarity_matrix(
                 embeddings=self.test_embeddings,
@@ -504,6 +543,9 @@ class TestContentMatcher(unittest.TestCase):
     
     def _create_content_database(self) -> Dict[str, Any]:
         """Create mock content database"""
+
+
+
         return {
             'contents': [
                 {
@@ -522,6 +564,9 @@ class TestContentMatcher(unittest.TestCase):
     
     def test_content_type_classification(self):
         """Test content type classification"""
+
+
+
         try:
             for i, image in enumerate(self.test_images):
                 content_type = self.content_matcher.classify_content_type(
@@ -543,6 +588,9 @@ class TestContentMatcher(unittest.TestCase):
     
     def test_duplicate_content_detection(self):
         """Test duplicate content detection"""
+
+
+
         try:
             # Create a duplicate of the first image with slight modifications
             duplicate_image = self.test_images[0].copy()
@@ -568,6 +616,9 @@ class TestContentMatcher(unittest.TestCase):
     
     def test_similar_content_retrieval(self):
         """Test similar content retrieval"""
+
+
+
         try:
             query_image = self.test_images[0]  # Use first geometric shape
             
@@ -589,6 +640,9 @@ class TestContentMatcher(unittest.TestCase):
     
     def test_content_clustering(self):
         """Test content clustering"""
+
+
+
         try:
             clustering_result = self.content_matcher.cluster_content(
                 images=self.test_images,
@@ -611,6 +665,9 @@ class TestContentMatcher(unittest.TestCase):
     
     def test_content_recommendation(self):
         """Test content recommendation"""
+
+
+
         try:
             query_image = self.test_images[0]
             
@@ -632,6 +689,9 @@ class TestContentMatcher(unittest.TestCase):
     
     def test_content_search_with_filters(self):
         """Test content search with filters"""
+
+
+
         try:
             search_filters = {
                 'content_type': 'geometric',
@@ -690,6 +750,9 @@ class TestEmbeddingDatabase(unittest.TestCase):
     
     def test_embedding_insertion(self):
         """Test embedding insertion into database"""
+
+
+
         try:
             for i, (embedding, metadata) in enumerate(zip(self.test_embeddings, self.test_metadata)):
                 result = self.db.insert_embedding(
@@ -710,6 +773,9 @@ class TestEmbeddingDatabase(unittest.TestCase):
     
     def test_embedding_retrieval(self):
         """Test embedding retrieval from database"""
+
+
+
         try:
             # First insert some embeddings
             embedding_ids = []
@@ -735,6 +801,9 @@ class TestEmbeddingDatabase(unittest.TestCase):
     
     def test_similarity_search_in_database(self):
         """Test similarity search within database"""
+
+
+
         try:
             # Insert embeddings into database
             for embedding, metadata in zip(self.test_embeddings, self.test_metadata):
@@ -759,6 +828,9 @@ class TestEmbeddingDatabase(unittest.TestCase):
     
     def test_batch_operations(self):
         """Test batch database operations"""
+
+
+
         try:
             # Batch insert
             batch_result = self.db.batch_insert_embeddings(
@@ -783,6 +855,9 @@ class TestEmbeddingDatabase(unittest.TestCase):
     
     def test_database_indexing(self):
         """Test database indexing for faster search"""
+
+
+
         try:
             # Insert embeddings
             for embedding, metadata in zip(self.test_embeddings, self.test_metadata):
@@ -813,6 +888,9 @@ class TestEmbeddingDatabase(unittest.TestCase):
     
     def test_database_persistence(self):
         """Test database persistence and loading"""
+
+
+
         try:
             # Insert some data
             for embedding, metadata in zip(self.test_embeddings[:3], self.test_metadata[:3]):
@@ -882,6 +960,9 @@ class TestClusteringEngine(unittest.TestCase):
     
     def test_kmeans_clustering(self):
         """Test K-means clustering"""
+
+
+
         try:
             clustering_result = self.clustering_engine.kmeans_clustering(
                 embeddings=self.test_embeddings,
@@ -908,6 +989,9 @@ class TestClusteringEngine(unittest.TestCase):
     
     def test_hierarchical_clustering(self):
         """Test hierarchical clustering"""
+
+
+
         try:
             clustering_result = self.clustering_engine.hierarchical_clustering(
                 embeddings=self.test_embeddings,
@@ -928,6 +1012,9 @@ class TestClusteringEngine(unittest.TestCase):
     
     def test_dbscan_clustering(self):
         """Test DBSCAN clustering"""
+
+
+
         try:
             clustering_result = self.clustering_engine.dbscan_clustering(
                 embeddings=self.test_embeddings,
@@ -948,6 +1035,9 @@ class TestClusteringEngine(unittest.TestCase):
     
     def test_optimal_cluster_number(self):
         """Test optimal cluster number detection"""
+
+
+
         try:
             optimal_k = self.clustering_engine.find_optimal_clusters(
                 embeddings=self.test_embeddings,
@@ -968,6 +1058,9 @@ class TestClusteringEngine(unittest.TestCase):
     
     def test_cluster_analysis(self):
         """Test cluster analysis and metrics"""
+
+
+
         try:
             # First perform clustering
             clustering_result = self.clustering_engine.kmeans_clustering(
@@ -1034,6 +1127,9 @@ class TestEmbeddingsIntegration(unittest.TestCase):
     
     def test_end_to_end_similarity_pipeline(self):
         """Test end-to-end similarity search pipeline"""
+
+
+
         try:
             # Step 1: Generate embeddings
             embeddings = []
@@ -1066,6 +1162,9 @@ class TestEmbeddingsIntegration(unittest.TestCase):
     
     def test_content_clustering_workflow(self):
         """Test content clustering workflow"""
+
+
+
         try:
             # Generate embeddings for all images
             embeddings = []
@@ -1097,6 +1196,9 @@ class TestEmbeddingsIntegration(unittest.TestCase):
     
     def test_duplicate_detection_workflow(self):
         """Test duplicate detection workflow"""
+
+
+
         try:
             # Create a duplicate with slight modifications
             original_image = self.test_images[0]
@@ -1126,6 +1228,9 @@ class TestEmbeddingsIntegration(unittest.TestCase):
     
     def test_performance_benchmarking(self):
         """Test performance of embeddings system"""
+
+
+
         try:
             start_time = time.time()
             
@@ -1160,6 +1265,9 @@ class TestEmbeddingsIntegration(unittest.TestCase):
     
     def test_scalability_simulation(self):
         """Test system scalability with larger datasets"""
+
+
+
         try:
             # Create larger dataset simulation
             large_embeddings = []

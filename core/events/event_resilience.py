@@ -5,7 +5,7 @@ Architecture: Advanced Resilience and Fault Tolerance for Event Processing
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 INTERDIT : Copie, reproduction, modification, ou usage sans autorisation écrite explicite.
 Toute violation sera poursuivie selon la loi allemande et française.
@@ -281,6 +281,9 @@ class CircuitBreaker:
     
     def get_metrics(self) -> MetricsSnapshot:
         """Retourne les métriques actuelles"""
+
+
+
         return MetricsSnapshot(
             total_calls=self.total_calls,
             successful_calls=self.successful_calls,
@@ -370,6 +373,9 @@ class Bulkhead:
     
     def get_metrics(self) -> Dict[str, Any]:
         """Retourne les métriques du bulkhead"""
+
+
+
         return {
             "name": self.name,
             "state": self.get_state().value,
@@ -647,6 +653,9 @@ class EventResilienceManager:
         fallback: Optional[Callable] = None
     ) -> ResilienceDecorator:
         """Crée un handler résilient"""
+
+
+
         return ResilienceDecorator(
             circuit_breaker=self.circuit_breakers.get(circuit_breaker_name) if circuit_breaker_name else None,
             bulkhead=self.bulkheads.get(bulkhead_name) if bulkhead_name else None,

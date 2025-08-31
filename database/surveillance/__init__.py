@@ -195,7 +195,10 @@ def get_module_info() -> Dict[str, Any]:
     
     Returns:
         Dict[str, Any]: Informations du module
-    """    return {
+    """
+
+
+    return {
         "name": "Surveillance Database",
         "version": __version__,
         "author": "Fahed Mlaiel",

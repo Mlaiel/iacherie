@@ -243,6 +243,9 @@ class AppleMusicCrawler(BaseCrawler):
         
     async def authenticate(self, developer_token: str, music_user_token: str = None) -> bool:
         """Authenticate with Apple Music API using developer token"""
+
+
+
         try:
             self.session_headers['Authorization'] = f'Bearer {developer_token}'
             if music_user_token:
@@ -581,6 +584,9 @@ class AppleMusicCrawler(BaseCrawler):
         Returns:
             Comprehensive artist performance analysis
         """
+
+
+
         try:
             artist = await self.get_artist_details(artist_id)
             if not artist:
@@ -642,6 +648,9 @@ class AppleMusicCrawler(BaseCrawler):
         Returns:
             Comprehensive trend analysis
         """
+
+
+
         try:
             if chart_types is None:
                 chart_types = ["songs", "albums"]
@@ -714,6 +723,9 @@ class AppleMusicCrawler(BaseCrawler):
     
     async def _parse_track_data(self, track_data: Dict) -> Optional[AppleMusicTrack]:
         """Parse Apple Music API track data into AppleMusicTrack model"""
+
+
+
         try:
             attributes = track_data.get('attributes', {})
             relationships = track_data.get('relationships', {})
@@ -788,6 +800,9 @@ class AppleMusicCrawler(BaseCrawler):
     
     async def _parse_artist_data(self, artist_data: Dict) -> Optional[AppleMusicArtist]:
         """Parse Apple Music API artist data into AppleMusicArtist model"""
+
+
+
         try:
             attributes = artist_data.get('attributes', {})
             
@@ -821,6 +836,9 @@ class AppleMusicCrawler(BaseCrawler):
     
     async def _parse_album_data(self, album_data: Dict) -> Optional[AppleMusicAlbum]:
         """Parse Apple Music API album data into AppleMusicAlbum model"""
+
+
+
         try:
             attributes = album_data.get('attributes', {})
             
@@ -865,6 +883,9 @@ class AppleMusicCrawler(BaseCrawler):
     
     async def _parse_playlist_data(self, playlist_data: Dict) -> Optional[AppleMusicPlaylist]:
         """Parse Apple Music API playlist data into AppleMusicPlaylist model"""
+
+
+
         try:
             attributes = playlist_data.get('attributes', {})
             
@@ -1175,6 +1196,9 @@ class AppleMusicCrawler(BaseCrawler):
     
     async def _analyze_track_performance(self, track: AppleMusicTrack) -> Dict[str, Any]:
         """Analyze individual track performance metrics"""
+
+
+
         return {
             'track_id': track.track_id,
             'name': track.name,

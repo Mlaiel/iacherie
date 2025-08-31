@@ -10,7 +10,7 @@ Fournit une interface unifiée, la découverte automatique des modules et la ges
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Tous droits réservés. Utilisation, reproduction ou distribution non autorisée interdite.
 
-⚠️ LOGICIEL PROPRIÉTAIRE - FAHED MLAIEL ⚠️
+ LOGICIEL PROPRIÉTAIRE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -167,13 +167,13 @@ class IndustrialCacheIndex:
         self._shutdown_event = asyncio.Event()
         self._background_tasks: List[asyncio.Task] = []
         
-        self.logger.info("🚀 Index de cache industriel initialisé")
+        self.logger.info(" Index de cache industriel initialisé")
     
     async def initialize(self) -> bool:
         """Initialise complètement l'index de cache."""
         async with self._initialization_lock:
             try:
-                self.logger.info("🔄 Démarrage de l'initialisation de l'index de cache...")
+                self.logger.info(" Démarrage de l'initialisation de l'index de cache...")
                 
                 # 1. Découverte des modules
                 await self._discover_modules()
@@ -194,17 +194,17 @@ class IndustrialCacheIndex:
                 await self._perform_health_check()
                 
                 self.status = CacheIndexStatus.READY
-                self.logger.info("✅ Index de cache industriel prêt")
+                self.logger.info(" Index de cache industriel prêt")
                 return True
                 
             except Exception as e:
-                self.logger.error(f"❌ Erreur initialisation index: {e}")
+                self.logger.error(f" Erreur initialisation index: {e}")
                 self.status = CacheIndexStatus.ERROR
                 return False
     
     async def _discover_modules(self) -> None:
         """Découvre automatiquement tous les modules de cache disponibles."""
-        self.logger.info("🔍 Découverte des modules de cache...")
+        self.logger.info(" Découverte des modules de cache...")
         
         # Modules core obligatoires
         core_modules = {
@@ -228,16 +228,16 @@ class IndustrialCacheIndex:
                 )
                 
                 self.modules[name] = module_info
-                self.logger.debug(f"✅ Module découvert: {name}")
+                self.logger.debug(f" Module découvert: {name}")
                 
             except Exception as e:
-                self.logger.error(f"❌ Erreur découverte module {name}: {e}")
+                self.logger.error(f" Erreur découverte module {name}: {e}")
         
         # Découverte automatique des modules optionnels
         await self._discover_optional_modules()
         
         self.stats.total_modules = len(self.modules)
-        self.logger.info(f"🎯 {self.stats.total_modules} modules découverts")
+        self.logger.info(f" {self.stats.total_modules} modules découverts")
     
     async def _discover_optional_modules(self) -> None:
         """Découvre les modules optionnels et extensions."""
@@ -266,12 +266,12 @@ class IndustrialCacheIndex:
                     )
                     
                     self.modules[module_name] = module_info
-                    self.logger.debug(f"✅ Module optionnel découvert: {module_name}")
+                    self.logger.debug(f" Module optionnel découvert: {module_name}")
                     
             except ImportError:
-                self.logger.debug(f"⚠️ Module optionnel non disponible: {module_name}")
+                self.logger.debug(f" Module optionnel non disponible: {module_name}")
             except Exception as e:
-                self.logger.warning(f"⚠️ Erreur découverte module {module_name}: {e}")
+                self.logger.warning(f" Erreur découverte module {module_name}: {e}")
     
     def _find_main_class(self, module: Any, module_name: str) -> Optional[Type]:
         """Trouve la classe principale d'un module."""
@@ -355,12 +355,12 @@ class IndustrialCacheIndex:
     
     async def _validate_dependencies(self) -> None:
         """Valide les dépendances entre modules."""
-        self.logger.info("🔍 Validation des dépendances...")
+        self.logger.info(" Validation des dépendances...")
         
         for module_name, module_info in self.modules.items():
             for dep in module_info.dependencies:
                 if dep not in self.modules:
-                    self.logger.warning(f"⚠️ Dépendance manquante pour {module_name}: {dep}")
+                    self.logger.warning(f" Dépendance manquante pour {module_name}: {dep}")
                     module_info.is_enabled = False
                 else:
                     self.dependencies[module_name].append(dep)
@@ -400,7 +400,7 @@ class IndustrialCacheIndex:
     
     async def _initialize_instances(self) -> None:
         """Initialise les instances des modules par ordre de priorité."""
-        self.logger.info("🚀 Initialisation des instances de modules...")
+        self.logger.info(" Initialisation des instances de modules...")
         
         # Tri par priorité
         modules_by_priority = sorted(
@@ -433,11 +433,11 @@ class IndustrialCacheIndex:
                 module_info.instance = instance
                 module_info.health_status = "healthy"
                 
-                self.logger.debug(f"✅ Instance initialisée: {module_name}")
+                self.logger.debug(f" Instance initialisée: {module_name}")
                 self.stats.active_modules += 1
                 
             except Exception as e:
-                self.logger.error(f"❌ Erreur initialisation {module_name}: {e}")
+                self.logger.error(f" Erreur initialisation {module_name}: {e}")
                 module_info.health_status = "failed"
                 module_info.error_count += 1
                 self.stats.failed_modules += 1
@@ -506,7 +506,7 @@ class IndustrialCacheIndex:
         cleanup_task = asyncio.create_task(self._cleanup_loop())
         self._background_tasks.append(cleanup_task)
         
-        self.logger.info("🔄 Tâches de fond démarrées")
+        self.logger.info(" Tâches de fond démarrées")
     
     async def _health_check_loop(self) -> None:
         """Boucle de vérification de santé."""
@@ -517,7 +517,7 @@ class IndustrialCacheIndex:
             except asyncio.CancelledError:
                 break
             except Exception as e:
-                self.logger.error(f"❌ Erreur vérification santé: {e}")
+                self.logger.error(f" Erreur vérification santé: {e}")
                 await asyncio.sleep(self.health_check_interval)
     
     async def _perform_health_check(self) -> None:
@@ -546,7 +546,7 @@ class IndustrialCacheIndex:
             except Exception as e:
                 module_info.health_status = "failed"
                 module_info.error_count += 1
-                self.logger.warning(f"⚠️ Santé dégradée {module_name}: {e}")
+                self.logger.warning(f" Santé dégradée {module_name}: {e}")
     
     async def _metrics_collection_loop(self) -> None:
         """Boucle de collecte de métriques."""
@@ -557,7 +557,7 @@ class IndustrialCacheIndex:
             except asyncio.CancelledError:
                 break
             except Exception as e:
-                self.logger.error(f"❌ Erreur collecte métriques: {e}")
+                self.logger.error(f" Erreur collecte métriques: {e}")
                 await asyncio.sleep(30)
     
     async def _collect_all_metrics(self) -> None:
@@ -566,7 +566,7 @@ class IndustrialCacheIndex:
             try:
                 await collector()
             except Exception as e:
-                self.logger.error(f"❌ Erreur collecteur métriques: {e}")
+                self.logger.error(f" Erreur collecteur métriques: {e}")
     
     async def _collect_system_metrics(self) -> None:
         """Collecte les métriques système."""
@@ -630,7 +630,7 @@ class IndustrialCacheIndex:
             except asyncio.CancelledError:
                 break
             except Exception as e:
-                self.logger.error(f"❌ Erreur nettoyage: {e}")
+                self.logger.error(f" Erreur nettoyage: {e}")
                 await asyncio.sleep(300)
     
     async def _perform_cleanup(self) -> None:
@@ -652,27 +652,45 @@ class IndustrialCacheIndex:
     # Méthodes de vérification d'alertes
     async def _check_error_rate(self) -> bool:
         """Vérifie le taux d'erreur."""
+
+
+
         return self.stats.error_rate > 0.05  # 5%
     
     async def _check_memory_pressure(self) -> bool:
         """Vérifie la pression mémoire."""
+
+
+
         return self.stats.memory_usage_mb > 1024  # 1GB
     
     async def _check_response_time(self) -> bool:
         """Vérifie le temps de réponse."""
+
+
+
         return self.stats.average_response_time > 100  # 100ms
     
     # API publique
     async def get_cache_manager(self) -> Optional[IndustrialCacheManager]:
         """Obtient le gestionnaire de cache principal."""
+
+
+
         return self.instances.get('cache_manager')
     
     async def get_module_instance(self, module_name: str) -> Optional[Any]:
         """Obtient l'instance d'un module spécifique."""
+
+
+
         return self.instances.get(module_name)
     
     def get_modules_by_type(self, module_type: CacheModuleType) -> List[ModuleInfo]:
         """Obtient tous les modules d'un type spécifique."""
+
+
+
         return [
             info for info in self.modules.values()
             if info.module_type == module_type
@@ -680,6 +698,9 @@ class IndustrialCacheIndex:
     
     def get_healthy_modules(self) -> List[str]:
         """Obtient la liste des modules en bonne santé."""
+
+
+
         return [
             name for name, info in self.modules.items()
             if info.health_status == "healthy"
@@ -715,15 +736,18 @@ class IndustrialCacheIndex:
             module_info.health_status = "healthy"
             module_info.error_count = 0
             
-            self.logger.info(f"✅ Module rechargé: {module_name}")
+            self.logger.info(f" Module rechargé: {module_name}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur rechargement {module_name}: {e}")
+            self.logger.error(f" Erreur rechargement {module_name}: {e}")
             return False
     
     async def get_status_report(self) -> Dict[str, Any]:
         """Génère un rapport d'état complet."""
+
+
+
         return {
             'index_status': self.status.value,
             'uptime_seconds': self.stats.uptime_seconds,
@@ -751,7 +775,7 @@ class IndustrialCacheIndex:
     
     async def shutdown(self) -> None:
         """Arrêt propre de l'index de cache."""
-        self.logger.info("🛑 Arrêt de l'index de cache...")
+        self.logger.info(" Arrêt de l'index de cache...")
         
         self.status = CacheIndexStatus.SHUTDOWN
         self._shutdown_event.set()
@@ -769,11 +793,11 @@ class IndustrialCacheIndex:
             try:
                 if hasattr(instance, 'shutdown'):
                     await instance.shutdown()
-                self.logger.debug(f"✅ Module arrêté: {module_name}")
+                self.logger.debug(f" Module arrêté: {module_name}")
             except Exception as e:
-                self.logger.error(f"❌ Erreur arrêt {module_name}: {e}")
+                self.logger.error(f" Erreur arrêt {module_name}: {e}")
         
-        self.logger.info("✅ Index de cache arrêté")
+        self.logger.info(" Index de cache arrêté")
 
 
 # Instance globale

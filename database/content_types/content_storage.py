@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Storage Architect, Cloud Infrastructure Expert, Performance Optimization Specialist
 Copyright: Fahed Mlaiel - All rights reserved
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
@@ -272,6 +272,9 @@ class StorageBackend(ABC):
     
     def get_metrics(self) -> StorageMetrics:
         """Get current storage metrics"""
+
+
+
         return self.metrics
     
     def update_metrics(self, operation: StorageOperation):
@@ -298,6 +301,9 @@ class LocalFilesystemBackend(StorageBackend):
     
     async def connect(self) -> bool:
         """Connect to local filesystem"""
+
+
+
         try:
             self.base_path = Path(self.config.base_path or "/tmp/content_storage")
             self.base_path.mkdir(parents=True, exist_ok=True)
@@ -429,6 +435,9 @@ class LocalFilesystemBackend(StorageBackend):
         limit: Optional[int] = None
     ) -> List[Dict[str, Any]]:
         """List files in local filesystem"""
+
+
+
         try:
             search_path = self.base_path / path_prefix.lstrip('/')
             files = []
@@ -457,6 +466,9 @@ class LocalFilesystemBackend(StorageBackend):
     
     async def file_exists(self, remote_path: str) -> bool:
         """Check if file exists in local filesystem"""
+
+
+
         try:
             file_path = self.base_path / remote_path.lstrip('/')
             return file_path.exists() and file_path.is_file()
@@ -465,6 +477,9 @@ class LocalFilesystemBackend(StorageBackend):
     
     async def get_file_metadata(self, remote_path: str) -> Dict[str, Any]:
         """Get file metadata from local filesystem"""
+
+
+
         try:
             file_path = self.base_path / remote_path.lstrip('/')
             
@@ -494,6 +509,9 @@ class LocalFilesystemBackend(StorageBackend):
     
     async def health_check(self) -> Dict[str, Any]:
         """Perform health check on local filesystem"""
+
+
+
         try:
             # Check if base path is accessible
             if not self.base_path.exists():
@@ -536,6 +554,9 @@ class AWSS3Backend(StorageBackend):
     
     async def connect(self) -> bool:
         """Connect to AWS S3"""
+
+
+
         try:
             session = boto3.Session(
                 aws_access_key_id=self.config.access_key,
@@ -691,6 +712,9 @@ class AWSS3Backend(StorageBackend):
         limit: Optional[int] = None
     ) -> List[Dict[str, Any]]:
         """List files in AWS S3"""
+
+
+
         try:
             prefix = f"{self.config.base_path or ''}/{path_prefix}".strip('/')
             
@@ -723,6 +747,9 @@ class AWSS3Backend(StorageBackend):
     
     async def file_exists(self, remote_path: str) -> bool:
         """Check if file exists in AWS S3"""
+
+
+
         try:
             key = f"{self.config.base_path or ''}/{remote_path}".strip('/')
             
@@ -741,6 +768,9 @@ class AWSS3Backend(StorageBackend):
     
     async def get_file_metadata(self, remote_path: str) -> Dict[str, Any]:
         """Get file metadata from AWS S3"""
+
+
+
         try:
             key = f"{self.config.base_path or ''}/{remote_path}".strip('/')
             
@@ -765,6 +795,9 @@ class AWSS3Backend(StorageBackend):
     
     async def health_check(self) -> Dict[str, Any]:
         """Perform health check on AWS S3"""
+
+
+
         try:
             # Test bucket access
             response = await asyncio.get_event_loop().run_in_executor(
@@ -807,6 +840,9 @@ class StorageManager:
     
     def _create_backend(self, config: StorageConfiguration):
         """Create a storage backend based on configuration"""
+
+
+
         try:
             if config.backend_type == StorageBackendType.LOCAL_FILESYSTEM:
                 backend = LocalFilesystemBackend(config)

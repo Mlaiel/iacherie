@@ -1,5 +1,5 @@
 """
-⚡ Performance Profiling System
+ Performance Profiling System
 ==============================
 
 Advanced performance monitoring and optimization system for the Ainflue platform.
@@ -159,6 +159,9 @@ class PerformanceProfiler:
         Returns:
             Session ID
         """
+
+
+
         try:
             session_id = f"profile_{int(time.time())}"
             profiler_types = profiler_types or [ProfilerType.CPU, ProfilerType.MEMORY]
@@ -211,6 +214,9 @@ class PerformanceProfiler:
         Returns:
             Profiling report
         """
+
+
+
         try:
             if session_id not in self.profiling_sessions:
                 logger.warning(f"Session {session_id} not found")
@@ -281,6 +287,9 @@ class PerformanceProfiler:
         Returns:
             Profiling data
         """
+
+
+
         try:
             function_name = f"{func.__module__}.{func.__name__}"
             
@@ -358,6 +367,9 @@ class PerformanceProfiler:
     
     async def get_real_time_metrics(self) -> Dict[str, Any]:
         """Get current real-time performance metrics"""
+
+
+
         try:
             # System metrics
             cpu_percent = psutil.cpu_percent(interval=1)
@@ -434,6 +446,9 @@ class PerformanceProfiler:
         Returns:
             Performance report
         """
+
+
+
         try:
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(hours=period_hours)
@@ -466,6 +481,9 @@ class PerformanceProfiler:
     
     async def _start_monitoring(self) -> None:
         """Start real-time performance monitoring"""
+
+
+
         try:
             self.monitoring_active = True
             
@@ -494,6 +512,9 @@ class PerformanceProfiler:
     
     async def _generate_cpu_report(self) -> Dict[str, Any]:
         """Generate CPU profiling report"""
+
+
+
         try:
             if not self.cpu_profiler:
                 return {"error": "No CPU profiler active"}
@@ -533,6 +554,9 @@ class PerformanceProfiler:
     
     async def _generate_memory_report(self) -> Dict[str, Any]:
         """Generate memory profiling report"""
+
+
+
         try:
             if not tracemalloc.is_tracing():
                 return {"error": "Memory tracking not active"}
@@ -659,6 +683,9 @@ class PerformanceProfiler:
     
     def _get_memory_usage(self) -> float:
         """Get current memory usage in bytes"""
+
+
+
         try:
             process = psutil.Process()
             return process.memory_info().rss
@@ -768,6 +795,9 @@ class PerformanceProfiler:
     
     def get_profiler_stats(self) -> Dict[str, Any]:
         """Get profiler statistics"""
+
+
+
         return {
             "total_metrics": len(self.performance_metrics),
             "active_sessions": len([s for s in self.profiling_sessions.values() if s.get("active", False)]),

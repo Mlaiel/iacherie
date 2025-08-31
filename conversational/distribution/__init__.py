@@ -10,7 +10,7 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 WARNING: This code is proprietary and protected. Unauthorized use, reproduction, 
 or distribution is strictly prohibited and will result in legal action.
 
-🎯 Distribution Module Features:
+ Distribution Module Features:
 - Multi-platform content distribution (15+ platforms)
 - AI-powered optimal timing and scheduling
 - Real-time analytics and performance tracking
@@ -20,21 +20,21 @@ or distribution is strictly prohibited and will result in legal action.
 - Enterprise-grade security and compliance
 - Scalable architecture with ML optimization
 
-🔧 Technical Stack:
+ Technical Stack:
 - FastAPI + SQLAlchemy + Redis + Celery
 - TensorFlow + PyTorch + scikit-learn
 - Multi-platform APIs integration
 - Real-time streaming and processing
 - GPU-accelerated content processing
 
-👨‍💻 Development Team:
+‍ Development Team:
 - Lead Developer & AI Engineer: Fahed Mlaiel
 - Backend Architecture: Enterprise-grade async patterns
 - Machine Learning: Advanced predictive models
 - Security: Military-grade encryption and protection
 - Monitoring: Real-time metrics and alerting
 
-📊 Supported Platforms:
+ Supported Platforms:
 YouTube, Instagram, TikTok, Twitter, LinkedIn, Spotify, Facebook, Pinterest, 
 Snapchat, Twitch, Reddit, Discord, Telegram, Medium, Substack
 """
@@ -241,7 +241,10 @@ class DistributionModuleManager:
         self._startup_time = datetime.utcnow()
         
     async def initialize(self):
-        """Initialize all distribution module components"""        try:
+        """Initialize all distribution module components"""
+
+
+        try:
             logger.info("Initializing IA Influencer Agent Distribution Module...")
             
             # Initialize platform manager
@@ -284,7 +287,10 @@ class DistributionModuleManager:
             raise DistributionModuleError(f"Module initialization failed: {e}")
     
     async def shutdown(self):
-        """Shutdown all distribution module components"""        try:
+        """Shutdown all distribution module components"""
+
+
+        try:
             logger.info("Shutting down Distribution Module...")
             
             # Shutdown components in reverse order
@@ -331,7 +337,10 @@ class DistributionModuleManager:
             return self.status
     
     async def _perform_health_check(self):
-        """Perform comprehensive health check of all components"""        try:
+        """Perform comprehensive health check of all components"""
+
+
+        try:
             # Check database connectivity
             self.status.database_status = "connected" if self.db else "disconnected"
             
@@ -361,7 +370,10 @@ class DistributionModuleManager:
             self.status.error_count += 1
     
     def get_module_info(self) -> Dict[str, Any]:
-        """Get comprehensive module information"""        return {
+        """Get comprehensive module information"""
+
+
+        return {
             "module_config": MODULE_CONFIG,
             "status": self.status,
             "initialization_time": self._startup_time,
@@ -417,23 +429,38 @@ async def create_content_adapter(db_session) -> EnterpriseContentAdapter:
 
 # Utility functions
 def get_supported_platforms() -> List[PlatformType]:
-    """Get list of all supported platforms"""    return list(PlatformType)
+    """Get list of all supported platforms"""
+
+
+    return list(PlatformType)
 
 
 def get_supported_content_formats() -> List[ContentFormat]:
-    """Get list of all supported content formats"""    return list(ContentFormat)
+    """Get list of all supported content formats"""
+
+
+    return list(ContentFormat)
 
 
 def get_available_strategies() -> List[DistributionStrategy]:
-    """Get list of all available distribution strategies"""    return list(DistributionStrategy)
+    """Get list of all available distribution strategies"""
+
+
+    return list(DistributionStrategy)
 
 
 def get_module_version() -> str:
-    """Get module version"""    return __version__
+    """Get module version"""
+
+
+    return __version__
 
 
 def get_module_info() -> Dict[str, Any]:
-    """Get basic module information"""    return MODULE_CONFIG
+    """Get basic module information"""
+
+
+    return MODULE_CONFIG
 
 # Export all public components
 __all__ = [
@@ -519,26 +546,26 @@ __all__ = [
 
 
 # Module initialization message
-logger.info(f"""🚀 IA Influencer Agent Distribution Module v{__version__} Loaded
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+logger.info(f""" IA Influencer Agent Distribution Module v{__version__} Loaded
 
-👨‍💻 Author: {__author__}
-📧 Contact: {__email__}
-🔐 License: {__license__}
 
-🎯 Features:
-  ✅ Multi-platform distribution (15+ platforms)
-  ✅ AI-powered optimization and scheduling
-  ✅ Real-time analytics and insights
-  ✅ Revenue tracking and monetization
-  ✅ Content adaptation and formatting
-  ✅ Enterprise-grade security
-  ✅ Scalable microservices architecture
+‍ Author: {__author__}
+ Contact: {__email__}
+ License: {__license__}
 
-🛡️  WARNING: This is proprietary software protected by copyright.
+ Features:
+   Multi-platform distribution (15+ platforms)
+   AI-powered optimization and scheduling
+   Real-time analytics and insights
+   Revenue tracking and monetization
+   Content adaptation and formatting
+   Enterprise-grade security
+   Scalable microservices architecture
+
+  WARNING: This is proprietary software protected by copyright.
     Unauthorized use, reproduction, or distribution is prohibited.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 """)
 
 
@@ -555,7 +582,10 @@ _component_registry = {
 
 
 def get_component_registry() -> Dict[str, Any]:
-    """Get the component registry for dependency injection"""    return _component_registry.copy()
+    """Get the component registry for dependency injection"""
+
+
+    return _component_registry.copy()
 
 
 def register_component(name: str, component_class: Any) -> None:
@@ -564,7 +594,10 @@ def register_component(name: str, component_class: Any) -> None:
 
 
 def get_component(name: str) -> Optional[Any]:
-    """Get a component class from the registry"""    return _component_registry.get(name)
+    """Get a component class from the registry"""
+
+
+    return _component_registry.get(name)
 
 
 # Performance monitoring
@@ -629,7 +662,10 @@ performance_monitor = ModulePerformanceMonitor()
 
 
 def get_performance_stats() -> Dict[str, Any]:
-    """Get module performance statistics"""    return performance_monitor.get_performance_stats()
+    """Get module performance statistics"""
+
+
+    return performance_monitor.get_performance_stats()
 
 
 # Module health check

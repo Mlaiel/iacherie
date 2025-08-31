@@ -7,7 +7,7 @@ enabling seamless team management, role-based permissions, and workflow orchestr
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will result in legal action.
@@ -83,6 +83,9 @@ class TeamMember:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert team member to dictionary representation"""
+
+
+
         return {
             "user_id": self.user_id,
             "username": self.username,
@@ -120,6 +123,9 @@ class CollaborationInvite:
     
     def is_expired(self) -> bool:
         """Check if invitation has expired"""
+
+
+
         return datetime.utcnow() > self.expires_at
 
 
@@ -143,6 +149,9 @@ class TeamManager:
         max_members: int = 10
     ) -> Dict[str, Any]:
         """Create new collaborative team for content project"""
+
+
+
         try:
             team_id = str(uuid.uuid4())
             
@@ -189,6 +198,9 @@ class TeamManager:
         added_by: str
     ) -> Dict[str, Any]:
         """Add new member to collaborative team"""
+
+
+
         try:
             team_data = await self.cache.get(f"team:{team_id}")
             if not team_data:
@@ -235,6 +247,9 @@ class TeamManager:
     
     async def get_team_members(self, team_id: str) -> List[TeamMember]:
         """Retrieve all team members with detailed profiles"""
+
+
+
         try:
             team_data = await self.cache.get(f"team:{team_id}")
             if not team_data:
@@ -273,6 +288,9 @@ class TeamManager:
     
     def _get_lead_permissions(self) -> List[str]:
         """Get default permissions for team lead"""
+
+
+
         return [
             "team.manage",
             "members.add",
@@ -336,6 +354,9 @@ class CollaboratorInviteService:
         deadline: Optional[datetime] = None
     ) -> Dict[str, Any]:
         """Send professional collaboration invitation"""
+
+
+
         try:
             invite_id = str(uuid.uuid4())
             expires_at = deadline or (datetime.utcnow() + timedelta(days=7))
@@ -397,6 +418,9 @@ class CollaboratorInviteService:
         message: Optional[str] = None
     ) -> Dict[str, Any]:
         """Respond to collaboration invitation"""
+
+
+
         try:
             invite_data = await self.cache.get(f"invite:{invite_id}")
             if not invite_data:
@@ -507,6 +531,9 @@ class RolePermissionManager:
         assigned_by: str
     ) -> Dict[str, Any]:
         """Assign new role to team member with permission validation"""
+
+
+
         try:
             # Validate assignor permissions
             if not await self._can_assign_roles(team_id, assigned_by):
@@ -576,6 +603,9 @@ class TeamWorkflowOrchestrator:
         created_by: str
     ) -> Dict[str, Any]:
         """Create collaborative workflow for team projects"""
+
+
+
         try:
             workflow_id = str(uuid.uuid4())
             
@@ -611,6 +641,9 @@ class TeamWorkflowOrchestrator:
         completion_notes: str
     ) -> Dict[str, Any]:
         """Advance workflow to next stage with validation"""
+
+
+
         try:
             workflow_data = await self.cache.get(f"workflow:{workflow_id}")
             if not workflow_data:
@@ -670,6 +703,9 @@ class CollaborationHub:
         user_id: str
     ) -> Dict[str, Any]:
         """Get comprehensive collaboration dashboard for user"""
+
+
+
         try:
             # Get user's teams
             user_teams = await self._get_user_teams(user_id)
@@ -698,6 +734,9 @@ class CollaborationHub:
     
     async def _get_user_teams(self, user_id: str) -> List[Dict[str, Any]]:
         """Get all teams user is member of"""
+
+
+
         try:
             # Get all team memberships for the user
             user_teams = []
@@ -724,6 +763,9 @@ class CollaborationHub:
     
     async def _get_pending_invites(self, user_id: str) -> List[Dict[str, Any]]:
         """Get pending collaboration invitations for user"""
+
+
+
         try:
             # Get pending invitations from cache
             pending_invites = []
@@ -753,6 +795,9 @@ class CollaborationHub:
     
     async def _get_active_projects(self, user_id: str) -> List[Dict[str, Any]]:
         """Get active collaborative projects for user"""
+
+
+
         try:
             active_projects = []
             
@@ -796,6 +841,9 @@ class CollaborationHub:
     
     async def _get_collaboration_metrics(self, user_id: str) -> Dict[str, Any]:
         """Get collaboration performance metrics for user"""
+
+
+
         try:
             # Calculate real metrics based on user's collaboration history
             total_collaborations = len(await self._get_user_teams(user_id))
@@ -845,6 +893,9 @@ class CollaborationHub:
     
     async def _get_user_role_in_team(self, user_id: str, team_id: str) -> str:
         """Get user's role in a specific team"""
+
+
+
         try:
             team_roles = await self.cache.get(f"team:{team_id}:roles")
             if team_roles and user_id in team_roles:
@@ -855,6 +906,9 @@ class CollaborationHub:
     
     def _determine_user_role_in_project(self, user_id: str, project_data: Dict[str, Any]) -> str:
         """Determine user's role in a project"""
+
+
+
         try:
             if project_data.get("created_by") == user_id:
                 return "project_manager"

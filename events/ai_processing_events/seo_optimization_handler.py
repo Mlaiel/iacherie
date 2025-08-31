@@ -107,6 +107,9 @@ class SEOMetrics:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert metrics to dictionary format"""
+
+
+
         return {
             'keyword_density': self.keyword_density,
             'readability_score': self.readability_score,
@@ -232,13 +235,13 @@ class SEOOptimizationResult:
     def _create_instagram_title(self, title: str, keywords: List[str], max_length: int) -> str:
         """Create Instagram-optimized title"""
         if keywords:
-            title = f"✨ {title} ✨"
+            title = f" {title} "
         return title[:max_length]
     
     def _create_tiktok_title(self, title: str, keywords: List[str], max_length: int) -> str:
         """Create TikTok-optimized title"""
         if keywords:
-            title = f"🔥 {title}"
+            title = f" {title}"
         return title[:max_length]
 
 class SEOOptimizationHandler(BaseEventHandler):
@@ -269,6 +272,9 @@ class SEOOptimizationHandler(BaseEventHandler):
     
     def _initialize_nlp_models(self):
         """Initialize NLP models for text analysis"""
+
+
+
         try:
             # Download required NLTK data
             nltk.download('punkt', quiet=True)
@@ -302,6 +308,9 @@ class SEOOptimizationHandler(BaseEventHandler):
     
     def _load_platform_configs(self) -> Dict[str, Dict[str, Any]]:
         """Load platform-specific SEO configurations"""
+
+
+
         return {
             "youtube": {
                 "title_length": 60,
@@ -404,6 +413,9 @@ class SEOOptimizationHandler(BaseEventHandler):
     
     async def _extract_keywords(self, content_data: Dict[str, Any]) -> Dict[str, float]:
         """Extract and score keywords from content"""
+
+
+
         try:
             text_content = self._extract_text_content(content_data)
             
@@ -462,6 +474,9 @@ class SEOOptimizationHandler(BaseEventHandler):
     
     def _extract_tfidf_keywords(self, text: str) -> Dict[str, float]:
         """Extract keywords using TF-IDF"""
+
+
+
         try:
             # Tokenize and remove stopwords
             stop_words = set(stopwords.words('english'))
@@ -491,6 +506,9 @@ class SEOOptimizationHandler(BaseEventHandler):
     
     def _extract_entity_keywords(self, text: str) -> Dict[str, float]:
         """Extract named entities as keywords"""
+
+
+
         try:
             doc = self.nlp(text)
             entities = {}
@@ -532,6 +550,9 @@ class SEOOptimizationHandler(BaseEventHandler):
     
     async def _analyze_readability(self, content_data: Dict[str, Any]) -> float:
         """Analyze content readability"""
+
+
+
         try:
             text_content = self._extract_text_content(content_data)
             
@@ -550,6 +571,9 @@ class SEOOptimizationHandler(BaseEventHandler):
     
     async def _analyze_sentiment(self, content_data: Dict[str, Any]) -> float:
         """Analyze content sentiment"""
+
+
+
         try:
             if not self.sentiment_analyzer:
                 return 0.0
@@ -572,6 +596,9 @@ class SEOOptimizationHandler(BaseEventHandler):
     async def _analyze_trends(self, content_data: Dict[str, Any], 
                             target_platforms: List[PlatformType]) -> Dict[str, Any]:
         """Analyze trending topics and keywords"""
+
+
+
         try:
             # Simulate trend analysis (in production, integrate with real trend APIs)
             trending_keywords = [
@@ -603,6 +630,9 @@ class SEOOptimizationHandler(BaseEventHandler):
     async def _analyze_competitors(self, content_data: Dict[str, Any], 
                                   target_platforms: List[PlatformType]) -> Dict[str, Any]:
         """Analyze competitor content and strategies"""
+
+
+
         try:
             # Simulate competitor analysis
             competitor_data = {
@@ -837,6 +867,9 @@ class SEOOptimizationHandler(BaseEventHandler):
     
     def get_optimization_statistics(self) -> Dict[str, Any]:
         """Get handler performance statistics"""
+
+
+
         return {
             'optimization_counts': dict(self.optimization_stats),
             'average_processing_time': np.mean(self.performance_metrics['processing_time']) if self.performance_metrics['processing_time'] else 0,

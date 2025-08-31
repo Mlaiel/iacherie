@@ -12,7 +12,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 
-⚠️ STRICT COPYRIGHT PROTECTION ⚠️
+ STRICT COPYRIGHT PROTECTION 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 """
@@ -268,6 +268,9 @@ class AudioContentExtractor(BaseExtractor):
     
     def _initialize_audio_models(self):
         """Initialize audio processing models"""
+
+
+
         try:
             if HAS_AUDIO:
                 # Initialize Essentia extractors
@@ -379,6 +382,9 @@ class AudioContentExtractor(BaseExtractor):
     
     async def _load_audio(self, request: ExtractionRequest) -> Tuple[Optional[np.ndarray], Optional[int]]:
         """Load audio data from various sources"""
+
+
+
         try:
             if request.file_path:
                 # Load from file
@@ -485,6 +491,9 @@ class AudioContentExtractor(BaseExtractor):
         self, audio_data: np.ndarray, sample_rate: int, features: AudioFeatures
     ):
         """Extract advanced features using Essentia"""
+
+
+
         try:
             # Convert to Essentia format
             audio_essentia = es.MonoLoader(filename="", sampleRate=sample_rate)()
@@ -534,6 +543,9 @@ class AudioContentExtractor(BaseExtractor):
         self, audio_data: np.ndarray, sample_rate: int
     ) -> str:
         """Generate spectral-based hash fingerprint"""
+
+
+
         try:
             # Compute spectrogram
             stft = librosa.stft(audio_data)
@@ -557,6 +569,9 @@ class AudioContentExtractor(BaseExtractor):
         self, audio_data: np.ndarray, sample_rate: int
     ) -> str:
         """Generate MFCC-based fingerprint"""
+
+
+
         try:
             mfcc = librosa.feature.mfcc(y=audio_data, sr=sample_rate, n_mfcc=13)
             mfcc_mean = np.mean(mfcc, axis=1)
@@ -666,6 +681,9 @@ class AudioContentExtractor(BaseExtractor):
         self, audio_features: AudioFeatures, ai_analysis: Dict[str, Any]
     ) -> float:
         """Analyze monetization potential based on audio characteristics"""
+
+
+
         
         try:
             score = 0.0
@@ -770,6 +788,9 @@ class AudioContentExtractor(BaseExtractor):
     
     async def _load_audio_data(self, request: ExtractionRequest) -> Optional[np.ndarray]:
         """Load audio data from various sources"""
+
+
+
         
         try:
             if request.source_data:
@@ -886,6 +907,9 @@ class AudioContentExtractor(BaseExtractor):
     
     async def _calculate_audio_quality(self, audio_data: np.ndarray) -> float:
         """Calculate audio quality score"""
+
+
+
         
         try:
             quality_factors = []
@@ -932,6 +956,9 @@ class VideoContentExtractor(BaseExtractor):
     
     def _initialize_video_models(self):
         """Initialize video AI models"""
+
+
+
         try:
             if HAS_VIDEO:
                 # Initialize object detection model
@@ -1056,6 +1083,9 @@ class VideoContentExtractor(BaseExtractor):
     
     async def _prepare_video_file(self, request: ExtractionRequest) -> Optional[str]:
         """Prepare video file for processing"""
+
+
+
         try:
             if request.file_path and Path(request.file_path).exists():
                 return request.file_path
@@ -1087,6 +1117,9 @@ class VideoContentExtractor(BaseExtractor):
     
     async def _extract_video_metadata(self, video_path: str) -> ContentMetadata:
         """Extract basic video metadata"""
+
+
+
         try:
             # Use ffprobe to get metadata
             probe = ffmpeg.probe(video_path)
@@ -1170,6 +1203,9 @@ class VideoContentExtractor(BaseExtractor):
     
     async def _extract_keyframes(self, cap, features: VideoFeatures):
         """Extract and analyze keyframes"""
+
+
+
         try:
             frame_interval = max(1, int(features.fps * 5))  # Every 5 seconds
             keyframes = []
@@ -1197,6 +1233,9 @@ class VideoContentExtractor(BaseExtractor):
     
     async def _analyze_dominant_colors(self, cap, features: VideoFeatures):
         """Analyze dominant colors in video"""
+
+
+
         try:
             cap.set(cv2.CAP_PROP_POS_FRAMES, 0)  # Reset to beginning
             
@@ -1236,6 +1275,9 @@ class VideoContentExtractor(BaseExtractor):
     
     async def _detect_scene_changes(self, cap, features: VideoFeatures):
         """Detect scene changes in video"""
+
+
+
         try:
             cap.set(cv2.CAP_PROP_POS_FRAMES, 0)  # Reset to beginning
             
@@ -1370,6 +1412,9 @@ class VideoContentExtractor(BaseExtractor):
     
     def _categorize_video_content(self, analysis: Dict[str, Any]) -> str:
         """Categorize video content based on analysis"""
+
+
+
         try:
             # Simple categorization logic
             if analysis['face_detection']:
@@ -1390,6 +1435,9 @@ class VideoContentExtractor(BaseExtractor):
     
     async def _generate_visual_hash(self, frames: List[np.ndarray]) -> str:
         """Generate visual similarity hash from frames"""
+
+
+
         try:
             if not frames:
                 return ""
@@ -1442,6 +1490,9 @@ class VideoContentExtractor(BaseExtractor):
     
     async def _generate_frame_fingerprint(self, video_path: str) -> str:
         """Generate fingerprint based on frame characteristics"""
+
+
+
         try:
             cap = cv2.VideoCapture(video_path)
             frame_hashes = []
@@ -1473,6 +1524,9 @@ class VideoContentExtractor(BaseExtractor):
     
     async def _generate_motion_fingerprint(self, video_path: str) -> str:
         """Generate fingerprint based on motion patterns"""
+
+
+
         try:
             cap = cv2.VideoCapture(video_path)
             motion_vectors = []
@@ -1518,6 +1572,9 @@ class VideoContentExtractor(BaseExtractor):
     
     async def _generate_color_fingerprint(self, video_path: str) -> str:
         """Generate fingerprint based on color characteristics"""
+
+
+
         try:
             cap = cv2.VideoCapture(video_path)
             color_histograms = []
@@ -1652,6 +1709,9 @@ class VideoContentExtractor(BaseExtractor):
         quality_metrics: Dict[str, float]
     ) -> float:
         """Analyze monetization potential for video content"""
+
+
+
         
         try:
             score = 0.0
@@ -1884,6 +1944,9 @@ class VideoContentExtractor(BaseExtractor):
     
     async def _calculate_video_quality(self, video_path: str) -> float:
         """Calculate video quality score"""
+
+
+
         
         try:
             quality_factors = []
@@ -1919,6 +1982,9 @@ class VideoContentExtractor(BaseExtractor):
     
     async def _generate_video_hash(self, video_path: str) -> str:
         """Generate perceptual hash for video"""
+
+
+
         
         try:
             # Sample frames and create composite hash
@@ -2038,6 +2104,9 @@ class ImageContentExtractor(BaseExtractor):
     
     async def _load_image(self, request: ExtractionRequest) -> Optional[Image.Image]:
         """Load image from various sources"""
+
+
+
         
         try:
             if request.source_data:
@@ -2174,6 +2243,9 @@ class ImageContentExtractor(BaseExtractor):
     
     async def _calculate_image_quality(self, image: Image.Image) -> float:
         """Calculate image quality score"""
+
+
+
         
         try:
             quality_factors = []
@@ -2206,6 +2278,9 @@ class ImageContentExtractor(BaseExtractor):
     
     async def _generate_image_hash(self, image: Image.Image) -> str:
         """Generate perceptual hash for image"""
+
+
+
         
         try:
             # Use multiple hash algorithms for better accuracy
@@ -2235,6 +2310,9 @@ class TextContentExtractor(BaseExtractor):
     
     async def can_handle(self, request: ExtractionRequest) -> bool:
         """Check if request contains text content"""
+
+
+
         return request.content_type == ContentType.TEXT
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
@@ -2286,6 +2364,9 @@ class TextContentExtractor(BaseExtractor):
     
     async def _load_text_content(self, request: ExtractionRequest) -> Optional[str]:
         """Load text content from various sources"""
+
+
+
         
         try:
             if request.source_data:
@@ -2417,6 +2498,9 @@ class TextContentExtractor(BaseExtractor):
     
     async def _calculate_text_quality(self, text_content: str) -> float:
         """Calculate text quality score"""
+
+
+
         
         try:
             quality_factors = []
@@ -2462,6 +2546,9 @@ class MetadataExtractor(BaseExtractor):
     
     async def can_handle(self, request: ExtractionRequest) -> bool:
         """Can handle any request for metadata extraction"""
+
+
+
         return "metadata" in request.extraction_types
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
@@ -2523,6 +2610,9 @@ class ThumbnailExtractor(BaseExtractor):
     
     async def can_handle(self, request: ExtractionRequest) -> bool:
         """Can handle image and video content for thumbnails"""
+
+
+
         return (request.content_type in [ContentType.IMAGE, ContentType.VIDEO] and
                 "thumbnail" in request.extraction_types)
     

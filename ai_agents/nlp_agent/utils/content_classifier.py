@@ -132,6 +132,9 @@ class ContentClassifier:
     
     def _load_category_keywords(self) -> Dict[str, Set[str]]:
         """Load keyword sets for each category"""
+
+
+
         return {
             "music": {
                 "song", "album", "artist", "band", "concert", "tour", "music", "melody",
@@ -185,6 +188,9 @@ class ContentClassifier:
     
     def _initialize_models(self):
         """Initialize classification models"""
+
+
+
         try:
             if TRANSFORMERS_AVAILABLE:
                 self._initialize_transformer_models()
@@ -201,6 +207,9 @@ class ContentClassifier:
     
     def _initialize_transformer_models(self):
         """Initialize transformer-based models"""
+
+
+
         try:
             # General content classification
             self.pipelines["content"] = pipeline(
@@ -235,6 +244,9 @@ class ContentClassifier:
     
     def _initialize_sklearn_models(self):
         """Initialize scikit-learn based models"""
+
+
+
         try:
             # Create TF-IDF + Naive Bayes classifier
             self.fallback_classifiers["tfidf_nb"] = SklearnPipeline([
@@ -424,6 +436,9 @@ class ContentClassifier:
         result: ClassificationResult
     ):
         """Classify using transformer model (zero-shot)"""
+
+
+
         try:
             classifier = self.pipelines["content"]
             
@@ -538,6 +553,9 @@ class ContentClassifier:
     
     async def _extract_keywords(self, text: str, max_keywords: int = 10) -> List[str]:
         """Extract key terms from text"""
+
+
+
         try:
             # Simple keyword extraction based on frequency and importance
             words = re.findall(r'\b[a-zA-Z]{3,}\b', text.lower())
@@ -584,7 +602,7 @@ class ContentClassifier:
         tone_indicators = {
             "professional": ["please", "thank you", "sincerely", "regards", "formal"],
             "casual": ["hey", "hi", "cool", "awesome", "yeah", "ok"],
-            "humorous": ["lol", "funny", "joke", "hilarious", "haha", "😂"],
+            "humorous": ["lol", "funny", "joke", "hilarious", "haha", ""],
             "serious": ["important", "urgent", "critical", "significant", "serious"],
             "friendly": ["welcome", "glad", "happy", "excited", "wonderful"]
         }
@@ -701,14 +719,23 @@ class ContentClassifier:
         **kwargs
     ) -> List[ClassificationResult]:
         """Classify multiple texts efficiently"""
+
+
+
         return await self.classify(texts, categories, **kwargs)
     
     def get_available_categories(self) -> List[str]:
         """Get list of available categories"""
+
+
+
         return [cat.value for cat in ContentCategory]
     
     def get_category_keywords(self, category: str) -> List[str]:
         """Get keywords for a specific category"""
+
+
+
         return list(self.category_keywords.get(category, []))
     
     def health_check(self) -> Dict[str, Any]:

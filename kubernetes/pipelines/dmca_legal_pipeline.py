@@ -210,6 +210,9 @@ class DMCATemplateGenerator:
                     
     def _get_dmca_standard_template(self) -> str:
         """Standard DMCA takedown notice template"""
+
+
+
         return """
 <!DOCTYPE html>
 <html>
@@ -304,6 +307,9 @@ class DMCATemplateGenerator:
         
     def _get_dmca_youtube_template(self) -> str:
         """YouTube-specific DMCA template"""
+
+
+
         return """
 DMCA TAKEDOWN NOTICE - YOUTUBE COPYRIGHT INFRINGEMENT
 
@@ -348,6 +354,9 @@ Date: {{ current_date }}
         
     def _get_dmca_instagram_template(self) -> str:
         """Instagram-specific DMCA template"""
+
+
+
         return """
 INTELLECTUAL PROPERTY INFRINGEMENT REPORT - INSTAGRAM
 
@@ -390,6 +399,9 @@ Date: {{ current_date }}
         
     def _get_dmca_tiktok_template(self) -> str:
         """TikTok-specific DMCA template"""
+
+
+
         return """
 COPYRIGHT INFRINGEMENT NOTIFICATION - TIKTOK
 
@@ -432,6 +444,9 @@ Date: {{ current_date }}
         
     def _get_copyright_eu_template(self) -> str:
         """EU Copyright Directive template"""
+
+
+
         return """
 NOTICE OF COPYRIGHT INFRINGEMENT - EU COPYRIGHT DIRECTIVE
 
@@ -480,6 +495,9 @@ Date: {{ current_date }}
         
     def _get_counter_notice_template(self) -> str:
         """Counter-notice response template"""
+
+
+
         return """
 DMCA COUNTER-NOTIFICATION RESPONSE
 
@@ -522,6 +540,9 @@ Date: {{ current_date }}
         
     async def generate_takedown_notice(self, request: TakedownRequest) -> str:
         """Generate takedown notice from template"""
+
+
+
         try:
             # Select appropriate template
             template_name = self._get_template_name(request.legal_framework, request.infringing_content.platform)
@@ -623,6 +644,9 @@ class PlatformSubmissionManager:
     async def _submit_via_email(self, request: TakedownRequest, notice_content: str, 
                               platform_config: Dict[str, Any]) -> Dict[str, Any]:
         """Submit takedown notice via email"""
+
+
+
         try:
             # Configure email
             smtp_server = self.config.get('smtp_server', 'smtp.gmail.com')
@@ -673,6 +697,9 @@ class PlatformSubmissionManager:
             
     async def _attach_evidence_file(self, msg: MIMEMultipart, file_path: str):
         """Attach evidence file to email"""
+
+
+
         try:
             async with aiofiles.open(file_path, 'rb') as f:
                 file_data = await f.read()
@@ -691,6 +718,9 @@ class PlatformSubmissionManager:
     async def _submit_via_web_form(self, request: TakedownRequest, notice_content: str,
                                  platform_config: Dict[str, Any]) -> Dict[str, Any]:
         """Submit takedown notice via web form (automated)"""
+
+
+
         try:
             # This would require selenium automation for each platform's specific form
             # Implementation would be platform-specific
@@ -713,6 +743,9 @@ class PlatformSubmissionManager:
     async def _submit_via_api(self, request: TakedownRequest, notice_content: str,
                             platform_config: Dict[str, Any]) -> Dict[str, Any]:
         """Submit takedown notice via platform API"""
+
+
+
         try:
             # Implementation would be platform-specific API integration
             # Most platforms don't provide public APIs for DMCA submissions
@@ -981,6 +1014,9 @@ class DMCALegalPipelineManager:
         
     def get_system_capabilities(self) -> Dict[str, Any]:
         """Get legal system capabilities and configuration"""
+
+
+
         return {
             'supported_frameworks': [framework.value for framework in LegalFramework],
             'supported_platforms': list(self.submission_manager.platform_configs.keys()),
@@ -995,4 +1031,7 @@ dmca_legal_pipeline_manager = DMCALegalPipelineManager()
 
 def get_dmca_pipeline_manager() -> DMCALegalPipelineManager:
     """Get global DMCA legal pipeline manager instance"""
+
+
+
     return dmca_legal_pipeline_manager

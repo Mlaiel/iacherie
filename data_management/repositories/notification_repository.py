@@ -1,5 +1,5 @@
 """
-🔔 Notification Repository - IA Influencer Agent Platform Enterprise
+ Notification Repository - IA Influencer Agent Platform Enterprise
 ====================================================================
 Module: backend/data_management/repositories/notification_repository.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Notification Management Repository - Production-Ready
 Responsibility: Advanced multi-channel notification system with AI-powered targeting
 ===================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
@@ -362,6 +362,9 @@ class NotificationRepository(BaseRepository):
                          data: Dict[str, Any], channels: List[NotificationChannel] = None,
                          priority: Priority = Priority.MEDIUM) -> List[Notification]:
         """Send notification to user across specified channels"""
+
+
+
         try:
             # Get user preferences
             preferences = self.get_user_preferences(user_id)
@@ -401,6 +404,9 @@ class NotificationRepository(BaseRepository):
 
     def process_event(self, event: NotificationEvent) -> List[Notification]:
         """Process notification event and trigger notifications"""
+
+
+
         try:
             # Get matching rules
             matching_rules = self._get_matching_rules(event)
@@ -440,6 +446,9 @@ class NotificationRepository(BaseRepository):
 
     def create_template(self, template_data: Dict[str, Any]) -> NotificationTemplate:
         """Create notification template"""
+
+
+
         try:
             template = NotificationTemplate(
                 template_id=self._generate_template_id(),
@@ -473,6 +482,9 @@ class NotificationRepository(BaseRepository):
 
     def create_rule(self, rule_data: Dict[str, Any]) -> NotificationRule:
         """Create notification rule"""
+
+
+
         try:
             rule = NotificationRule(
                 rule_id=self._generate_rule_id(),
@@ -506,6 +518,9 @@ class NotificationRepository(BaseRepository):
 
     def update_user_preferences(self, user_id: str, preferences_data: Dict[str, Any]) -> NotificationPreferences:
         """Update user notification preferences"""
+
+
+
         try:
             # Get existing preferences or create new
             existing_preferences = self.get_user_preferences(user_id)
@@ -543,6 +558,9 @@ class NotificationRepository(BaseRepository):
 
     def get_user_preferences(self, user_id: str) -> Optional[NotificationPreferences]:
         """Get user notification preferences"""
+
+
+
         try:
             # Check cache first
             if self._cache_enabled and self.cache:
@@ -566,6 +584,9 @@ class NotificationRepository(BaseRepository):
 
     def create_campaign(self, campaign_data: Dict[str, Any]) -> NotificationCampaign:
         """Create notification campaign"""
+
+
+
         try:
             campaign = NotificationCampaign(
                 campaign_id=self._generate_campaign_id(),
@@ -597,6 +618,9 @@ class NotificationRepository(BaseRepository):
 
     def launch_campaign(self, campaign_id: str) -> bool:
         """Launch notification campaign"""
+
+
+
         try:
             # Get campaign
             campaign = self.get_by_id(campaign_id)
@@ -642,6 +666,9 @@ class NotificationRepository(BaseRepository):
 
     def get_notification_analytics(self, filters: Dict[str, Any] = None) -> Dict[str, Any]:
         """Get comprehensive notification analytics"""
+
+
+
         try:
             filters = filters or {}
             
@@ -1044,6 +1071,9 @@ class AsyncNotificationRepository(AsyncBaseRepository):
 
     async def batch_send_notifications(self, notification_requests: List[Dict[str, Any]]) -> List[List[Notification]]:
         """Send multiple notifications concurrently"""
+
+
+
         try:
             semaphore = asyncio.Semaphore(self._max_concurrent_operations)
             
@@ -1074,6 +1104,9 @@ class AsyncNotificationRepository(AsyncBaseRepository):
                                     data: Dict[str, Any], channels: List[NotificationChannel] = None,
                                     priority: Priority = Priority.MEDIUM) -> List[Notification]:
         """Send notification asynchronously"""
+
+
+
         try:
             # Get user preferences
             preferences = await self.get_user_preferences_async(user_id)
@@ -1152,6 +1185,9 @@ class AsyncNotificationRepository(AsyncBaseRepository):
 
     async def get_user_preferences_async(self, user_id: str) -> Optional[NotificationPreferences]:
         """Get user notification preferences asynchronously"""
+
+
+
         try:
             # Check cache first
             if self._cache_enabled and self.cache:

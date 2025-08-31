@@ -9,7 +9,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA-Influencer Agent + Content Protection Platform
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps
 
-⚠️  COPYRIGHT WARNING:
+  COPYRIGHT WARNING:
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, modification, or distribution of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
@@ -308,6 +308,9 @@ class WatermarkConfig:
     
     def create_payload(self, owner_id: str, content_id: str, **kwargs) -> WatermarkPayload:
         """Create a watermark payload with specified parameters."""
+
+
+
         return WatermarkPayload(
             owner_id=owner_id,
             content_id=content_id,
@@ -525,6 +528,9 @@ class WatermarkConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert configuration to dictionary."""
+
+
+
         return {
             "enable_watermarking": self.enable_watermarking,
             "default_watermark_type": self.default_watermark_type,

@@ -7,7 +7,7 @@ content from various sources and formats.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
 
@@ -122,6 +122,9 @@ class AdvancedContentExtractor:
         
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default configuration"""
+
+
+
         return {
             'enable_entity_extraction': True,
             'enable_contact_extraction': True,
@@ -138,6 +141,9 @@ class AdvancedContentExtractor:
     
     def _load_entity_patterns(self) -> Dict[str, Dict[str, Any]]:
         """Load entity recognition patterns"""
+
+
+
         return {
             'person': {
                 'patterns': [
@@ -211,6 +217,9 @@ class AdvancedContentExtractor:
     
     def _initialize_keyword_extractors(self) -> Dict[str, Any]:
         """Initialize keyword extraction components"""
+
+
+
         return {
             'tfidf': 'tfidf_vectorizer',  # Would use actual TF-IDF
             'keybert': 'keybert_model',  # Would use KeyBERT
@@ -222,6 +231,9 @@ class AdvancedContentExtractor:
     
     def _initialize_topic_extractors(self) -> Dict[str, Any]:
         """Initialize topic extraction components"""
+
+
+
         return {
             'lda_model': 'latent_dirichlet_allocation',
             'bert_topic': 'bert_topic_model',
@@ -231,6 +243,9 @@ class AdvancedContentExtractor:
     
     def _build_topic_database(self) -> Dict[str, List[str]]:
         """Build comprehensive topic database"""
+
+
+
         return {
             'technology': ['tech', 'software', 'ai', 'machine learning', 'coding', 'programming', 'developer'],
             'lifestyle': ['fashion', 'beauty', 'fitness', 'health', 'wellness', 'self-care', 'routine'],
@@ -246,6 +261,9 @@ class AdvancedContentExtractor:
     
     def _initialize_summarizers(self) -> Dict[str, Any]:
         """Initialize summarization components"""
+
+
+
         return {
             'extractive': 'extractive_summarizer',  # Would use actual extractive summarizer
             'abstractive': 'abstractive_summarizer',  # Would use T5/BART
@@ -255,6 +273,9 @@ class AdvancedContentExtractor:
     
     def _load_contact_patterns(self) -> Dict[str, List[str]]:
         """Load contact information patterns"""
+
+
+
         return {
             'email': [
                 r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
@@ -291,6 +312,9 @@ class AdvancedContentExtractor:
     
     def _load_metrics_patterns(self) -> Dict[str, List[str]]:
         """Load content metrics patterns"""
+
+
+
         return {
             'engagement': [
                 r'\b\d+(\.\d+)?[kKmM]?\s*(likes?|comments?|shares?|views?)\b',

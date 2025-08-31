@@ -12,7 +12,7 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 Expert Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️ LEGAL WARNING: This code and concept are protected by intellectual property laws.
+ LEGAL WARNING: This code and concept are protected by intellectual property laws.
 Any unauthorized copying, modification, or distribution without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.
@@ -101,7 +101,7 @@ class ContentManagementSystem:
         Returns:
             bool: True if initialization successful, False otherwise
         """
-        logger.info("🚀 Initializing IA Influencer Content Management System...")
+        logger.info(" Initializing IA Influencer Content Management System...")
         start_time = datetime.now()
         
         try:
@@ -112,7 +112,7 @@ class ContentManagementSystem:
                 if engine_name in self.engine_registry:
                     success = await self._initialize_engine(engine_name)
                     if not success:
-                        logger.error(f"❌ Failed to initialize engine: {engine_name}")
+                        logger.error(f" Failed to initialize engine: {engine_name}")
                         return False
             
             # Perform post-initialization validation
@@ -124,16 +124,16 @@ class ContentManagementSystem:
                 self.health_status = "healthy"
                 
                 initialization_time = (self.startup_time - start_time).total_seconds()
-                logger.info(f"✅ Content Management System initialized successfully in {initialization_time:.2f}s")
-                logger.info(f"📊 Engines loaded: {len(self.engines)}/{len(self.engine_registry)}")
+                logger.info(f" Content Management System initialized successfully in {initialization_time:.2f}s")
+                logger.info(f" Engines loaded: {len(self.engines)}/{len(self.engine_registry)}")
                 
                 return True
             else:
-                logger.error("❌ System validation failed after initialization")
+                logger.error(" System validation failed after initialization")
                 return False
                 
         except Exception as e:
-            logger.error(f"❌ System initialization failed: {str(e)}")
+            logger.error(f" System initialization failed: {str(e)}")
             logger.error(traceback.format_exc())
             return False
     
@@ -152,7 +152,7 @@ class ContentManagementSystem:
             
             if not ready:
                 # Circular dependency or missing dependency
-                logger.warning(f"⚠️ Possible circular dependency detected. Remaining: {remaining}")
+                logger.warning(f" Possible circular dependency detected. Remaining: {remaining}")
                 ready = list(remaining)  # Force initialization
             
             for engine in ready:
@@ -163,10 +163,13 @@ class ContentManagementSystem:
     
     async def _initialize_engine(self, engine_name: str) -> bool:
         """Initialize a specific engine."""
+
+
+
         try:
             engine_class = self.engine_registry[engine_name]
             
-            logger.info(f"🔧 Initializing {engine_name}...")
+            logger.info(f" Initializing {engine_name}...")
             
             # Special handling for config
             if engine_name == 'config':
@@ -193,18 +196,18 @@ class ContentManagementSystem:
                     engine_instance.initialize()
             
             self.engines[engine_name] = engine_instance
-            logger.info(f"✅ {engine_name} initialized successfully")
+            logger.info(f" {engine_name} initialized successfully")
             
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize {engine_name}: {str(e)}")
+            logger.error(f" Failed to initialize {engine_name}: {str(e)}")
             logger.error(traceback.format_exc())
             return False
     
     async def _validate_system(self) -> bool:
         """Validate system integrity after initialization."""
-        logger.info("🔍 Validating system integrity...")
+        logger.info(" Validating system integrity...")
         
         validation_checks = [
             self._validate_engine_connectivity(),
@@ -218,9 +221,9 @@ class ContentManagementSystem:
         all_passed = all(result is True for result in results if not isinstance(result, Exception))
         
         if all_passed:
-            logger.info("✅ System validation passed")
+            logger.info(" System validation passed")
         else:
-            logger.error("❌ System validation failed")
+            logger.error(" System validation failed")
             for i, result in enumerate(results):
                 if isinstance(result, Exception) or result is False:
                     logger.error(f"Validation check {i+1} failed: {result}")
@@ -229,6 +232,9 @@ class ContentManagementSystem:
     
     async def _validate_engine_connectivity(self) -> bool:
         """Validate that all engines can communicate properly."""
+
+
+
         try:
             # Test basic engine availability
             required_engines = ['content_processor', 'format_handler', 'ai_enhancer']
@@ -247,9 +253,9 @@ class ContentManagementSystem:
                             health_status = engine.health_check()
                         
                         if not health_status:
-                            logger.warning(f"⚠️ Engine {engine_name} health check failed")
+                            logger.warning(f" Engine {engine_name} health check failed")
                     except Exception as e:
-                        logger.warning(f"⚠️ Engine {engine_name} health check error: {e}")
+                        logger.warning(f" Engine {engine_name} health check error: {e}")
             
             return True
             
@@ -259,6 +265,9 @@ class ContentManagementSystem:
     
     async def _validate_configuration(self) -> bool:
         """Validate system configuration."""
+
+
+
         try:
             # Check essential configuration
             if not hasattr(self.config, 'CONTENT_PROCESSING'):
@@ -281,23 +290,26 @@ class ContentManagementSystem:
     
     async def _validate_resources(self) -> bool:
         """Validate system resources."""
+
+
+
         try:
             import psutil
             
             # Memory check
             memory = psutil.virtual_memory()
             if memory.percent > 90:
-                logger.warning(f"⚠️ High memory usage: {memory.percent}%")
+                logger.warning(f" High memory usage: {memory.percent}%")
             
             # Disk space check
             disk = psutil.disk_usage('.')
             if disk.percent > 90:
-                logger.warning(f"⚠️ Low disk space: {disk.percent}% used")
+                logger.warning(f" Low disk space: {disk.percent}% used")
             
             return True
             
         except ImportError:
-            logger.warning("⚠️ psutil not available for resource validation")
+            logger.warning(" psutil not available for resource validation")
             return True
         except Exception as e:
             logger.error(f"Resource validation failed: {e}")
@@ -305,12 +317,15 @@ class ContentManagementSystem:
     
     async def _validate_security(self) -> bool:
         """Validate security settings."""
+
+
+
         try:
             # Check for sensitive files exposure
             sensitive_patterns = ['.env', '*.key', '*.pem']
             for pattern in sensitive_patterns:
                 if list(Path('.').glob(pattern)):
-                    logger.warning(f"⚠️ Sensitive files detected: {pattern}")
+                    logger.warning(f" Sensitive files detected: {pattern}")
             
             return True
             
@@ -320,10 +335,16 @@ class ContentManagementSystem:
     
     def get_engine(self, engine_name: str) -> Optional[Any]:
         """Get a specific engine instance."""
+
+
+
         return self.engines.get(engine_name)
     
     def get_all_engines(self) -> Dict[str, Any]:
         """Get all engine instances."""
+
+
+
         return self.engines.copy()
     
     async def health_check(self) -> Dict[str, Any]:
@@ -390,7 +411,7 @@ class ContentManagementSystem:
     
     async def shutdown(self):
         """Gracefully shutdown all engines."""
-        logger.info("🛑 Shutting down Content Management System...")
+        logger.info(" Shutting down Content Management System...")
         
         # Shutdown engines in reverse dependency order
         shutdown_order = list(reversed(self._resolve_dependency_order()))
@@ -401,22 +422,25 @@ class ContentManagementSystem:
                 
                 if hasattr(engine, 'shutdown') and callable(getattr(engine, 'shutdown')):
                     try:
-                        logger.info(f"🔧 Shutting down {engine_name}...")
+                        logger.info(f" Shutting down {engine_name}...")
                         if asyncio.iscoroutinefunction(engine.shutdown):
                             await engine.shutdown()
                         else:
                             engine.shutdown()
                     except Exception as e:
-                        logger.error(f"❌ Error shutting down {engine_name}: {e}")
+                        logger.error(f" Error shutting down {engine_name}: {e}")
         
         self.engines.clear()
         self.is_initialized = False
         self.health_status = "shutdown"
         
-        logger.info("✅ Content Management System shutdown complete")
+        logger.info(" Content Management System shutdown complete")
     
     def get_system_info(self) -> Dict[str, Any]:
         """Get comprehensive system information."""
+
+
+
         return {
             'system_name': 'IA Influencer Agent - Content Management System',
             'version': '1.0.0',
@@ -440,7 +464,7 @@ class ContentManagementSystem:
         if not self.is_initialized:
             raise RuntimeError("System not initialized")
         
-        logger.info("🎬 Starting content processing pipeline...")
+        logger.info(" Starting content processing pipeline...")
         
         try:
             # Step 1: Content Processing
@@ -470,7 +494,7 @@ class ContentManagementSystem:
                 processed_content['protection_fingerprint'] = protection_result.get('fingerprint')
                 processed_content['protection_status'] = protection_result.get('status')
             
-            logger.info("✅ Content processing pipeline completed successfully")
+            logger.info(" Content processing pipeline completed successfully")
             
             return {
                 'status': 'success',
@@ -480,7 +504,7 @@ class ContentManagementSystem:
             }
             
         except Exception as e:
-            logger.error(f"❌ Content processing pipeline failed: {str(e)}")
+            logger.error(f" Content processing pipeline failed: {str(e)}")
             return {
                 'status': 'error',
                 'error': str(e),
@@ -506,6 +530,9 @@ async def initialize_content_system(config: Optional[ContentConfig] = None) -> C
 
 def get_content_system() -> Optional[ContentManagementSystem]:
     """Get the global content management system instance."""
+
+
+
     return _content_system
 
 
@@ -567,12 +594,12 @@ __all__ = [
 async def main():
     """Example usage of the content management system."""
     print("""
-╔══════════════════════════════════════════════════════════════════════════════╗
-║                IA Influencer Agent - Content Management System              ║
-║                                                                              ║
-║  Industrial-Grade Content Processing Platform                               ║
-║  Author: Fahed Mlaiel <mlaiel@live.de>                                      ║
-╚══════════════════════════════════════════════════════════════════════════════╝
+
+                IA Influencer Agent - Content Management System              
+                                                                              
+  Industrial-Grade Content Processing Platform                               
+  Author: Fahed Mlaiel <mlaiel@live.de>                                      
+
     """)
     
     try:
@@ -581,14 +608,14 @@ async def main():
         
         # Display system information
         info = system.get_system_info()
-        print(f"🚀 System initialized successfully!")
+        print(f" System initialized successfully!")
         print(f"   - Engines loaded: {info['engines_count']}")
         print(f"   - Health status: {info['health_status']}")
         print(f"   - Startup time: {info['startup_time']}")
         
         # Perform health check
         health = await system.health_check()
-        print(f"\n📊 System Health: {health['status']}")
+        print(f"\n System Health: {health['status']}")
         print(f"   - Uptime: {health['uptime_seconds']:.2f} seconds")
         print(f"   - Memory usage: {health['system_metrics'].get('memory_mb', 'N/A')} MB")
         
@@ -605,23 +632,23 @@ async def main():
             }
         }
         
-        print(f"\n🎬 Processing sample content...")
+        print(f"\n Processing sample content...")
         result = await system.process_content(sample_content)
         
         if result['status'] == 'success':
-            print(f"✅ Content processed successfully!")
+            print(f" Content processed successfully!")
             print(f"   - Pipeline stages: {result['pipeline_stages']}")
             print(f"   - Quality score: {result['content'].get('quality_score', 'N/A')}")
             print(f"   - Protection status: {result['content'].get('protection_status', 'N/A')}")
         else:
-            print(f"❌ Content processing failed: {result.get('error')}")
+            print(f" Content processing failed: {result.get('error')}")
         
         # Shutdown system
         await shutdown_content_system()
-        print(f"\n🛑 System shutdown completed")
+        print(f"\n System shutdown completed")
         
     except Exception as e:
-        print(f"❌ System error: {str(e)}")
+        print(f" System error: {str(e)}")
         import traceback
         traceback.print_exc()
 

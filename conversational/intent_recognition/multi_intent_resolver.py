@@ -7,7 +7,7 @@ intent conflicts, priority management, and intelligent resolution strategies.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
@@ -96,6 +96,9 @@ class IntentPriorityManager:
     
     def _initialize_intent_priorities(self) -> Dict[IntentCategory, IntentPriority]:
         """Initialize default intent priorities"""
+
+
+
         return {
             # Critical priorities (security, urgent issues)
             IntentCategory.PROTECTION_REPORT: IntentPriority.CRITICAL,
@@ -127,6 +130,9 @@ class IntentPriorityManager:
     
     def _initialize_intent_dependencies(self) -> Dict[IntentCategory, List[IntentCategory]]:
         """Initialize intent dependency relationships"""
+
+
+
         return {
             # Content workflow dependencies
             IntentCategory.CONTENT_ENHANCE: [IntentCategory.CONTENT_UPLOAD],
@@ -155,6 +161,9 @@ class IntentPriorityManager:
     
     def _initialize_context_modifiers(self) -> Dict[str, Dict[IntentCategory, float]]:
         """Initialize context-based priority modifiers"""
+
+
+
         return {
             'urgent_context': {
                 IntentCategory.PROTECTION_REPORT: 1.5,
@@ -270,6 +279,9 @@ class IntentConflictResolver:
     
     def _initialize_conflict_rules(self) -> Dict[str, List[Tuple[IntentCategory, IntentCategory]]]:
         """Initialize intent conflict rules"""
+
+
+
         return {
             'mutually_exclusive': [
                 (IntentCategory.CONTENT_DELETE, IntentCategory.CONTENT_ENHANCE),
@@ -327,6 +339,9 @@ class IntentConflictResolver:
         context: Optional[Dict[str, Any]] = None
     ) -> MultiIntentResult:
         """Resolve conflicts using specified strategy"""
+
+
+
         
         try:
             if strategy == ResolutionStrategy.HIGHEST_CONFIDENCE:
@@ -606,6 +621,9 @@ class MultiIntentResolver(BaseService):
         Returns:
             Multi-intent resolution result
         """
+
+
+
         
         try:
             import time
@@ -771,6 +789,9 @@ class MultiIntentResolver(BaseService):
         success: bool
     ) -> None:
         """Update performance metrics"""
+
+
+
         try:
             self.performance_metrics['total_resolutions'] += 1
             
@@ -809,6 +830,9 @@ class MultiIntentResolver(BaseService):
         context: Optional[Dict[str, Any]] = None
     ) -> ResolutionStrategy:
         """Suggest optimal resolution strategy based on situation"""
+
+
+
         
         try:
             # Analyze the situation
@@ -847,6 +871,9 @@ class MultiIntentResolver(BaseService):
     
     def get_performance_summary(self) -> Dict[str, Any]:
         """Get performance summary for monitoring"""
+
+
+
         return {
             'metrics': self.performance_metrics.copy(),
             'history_size': len(self.resolution_history),

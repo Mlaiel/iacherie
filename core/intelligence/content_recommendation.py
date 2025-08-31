@@ -1,11 +1,11 @@
 """
-🎯 Content Recommendation Engine - IA Influencer Agent
+ Content Recommendation Engine - IA Influencer Agent
 ====================================================
 
 Advanced content recommendation system for creators based on performance analytics,
 audience behavior, trending patterns, and cross-platform optimization.
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE PROHIBITED
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE PROHIBITED
 ====================================================
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright © 2025 Fahed Mlaiel - All rights reserved
@@ -130,6 +130,9 @@ class ContentRecommendationEngine:
     
     def _initialize_models(self):
         """Initialize ML models for recommendations"""
+
+
+
         try:
             # Content embedding model
             self.content_embedder = AutoModel.from_pretrained(
@@ -212,6 +215,9 @@ class ContentRecommendationEngine:
         Returns:
             List of content recommendations
         """
+
+
+
         try:
             self.logger.info(f"Generating recommendations for user {user_id}")
             
@@ -491,6 +497,9 @@ class ContentRecommendationEngine:
     
     async def _get_personalization_profile(self, user_id: str) -> PersonalizationProfile:
         """Get or create user personalization profile"""
+
+
+
         try:
             # Try to get from cache first
             cache_key = f"profile:{user_id}"
@@ -538,6 +547,9 @@ class ContentRecommendationEngine:
     
     async def _get_trending_patterns(self, content_type: str = None, platform: str = None) -> Dict[str, Any]:
         """Get current trending patterns and data"""
+
+
+
         try:
             cache_key = f"trending:{content_type or 'all'}:{platform or 'all'}"
             cached_trends = await self.cache.get(cache_key)
@@ -563,6 +575,9 @@ class ContentRecommendationEngine:
     
     async def _get_performance_history(self, user_id: str) -> Dict[str, Any]:
         """Get user's historical performance data"""
+
+
+
         try:
             # Fetch performance data from analytics
             performance_data = await self.engagement_analytics.get_user_performance_history(
@@ -594,6 +609,9 @@ class ContentRecommendationEngine:
     
     def _generate_id(self) -> str:
         """Generate unique recommendation ID"""
+
+
+
         return hashlib.md5(f"{datetime.now().isoformat()}{hash(self)}".encode()).hexdigest()[:12]
 
 
@@ -619,6 +637,9 @@ class PersonalizationEngine:
     
     def _initialize_personalization_models(self):
         """Initialize ML models for personalization"""
+
+
+
         try:
             # User behavior embedding model
             class UserEmbeddingModel(nn.Module):
@@ -668,6 +689,9 @@ class PersonalizationEngine:
         interaction_data: Dict[str, Any]
     ) -> bool:
         """Update user preferences based on interactions"""
+
+
+
         try:
             # Process interaction data and update user model
             # This would involve training/updating the personalization models
@@ -685,6 +709,9 @@ class PersonalizationEngine:
         content_features: Dict[str, Any]
     ) -> float:
         """Calculate personalization score for content"""
+
+
+
         try:
             # Get user embedding
             user_features = await self._get_user_features(user_id)

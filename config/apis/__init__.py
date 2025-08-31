@@ -2,7 +2,7 @@
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL NOTICE:
+ CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission 
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in legal action.
@@ -152,7 +152,10 @@ def get_api_config(platform: str, environment: str = "production") -> Optional[D
     
     Returns:
         API configuration dictionary or None if not found
-    """    try:
+    """
+
+
+    try:
         all_configs = {
             **PLATFORM_CONFIGS,
             **PAYMENT_CONFIGS,
@@ -208,7 +211,10 @@ def initialize_api_manager(environment: str = "production") -> APIManager:
         
     Returns:
         Configured APIManager instance
-    """    try:
+    """
+
+
+    try:
         manager = APIManager(environment=environment)
         
         # Load all configurations
@@ -240,7 +246,10 @@ async def get_authenticated_client(platform: str, user_id: Optional[str] = None)
         
     Returns:
         Authenticated API client instance
-    """    try:
+    """
+
+
+    try:
         manager = initialize_api_manager()
         auth_manager = APIAuthenticationManager()
         

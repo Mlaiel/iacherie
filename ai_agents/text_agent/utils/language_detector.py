@@ -7,7 +7,7 @@ with enterprise-level accuracy and comprehensive language support.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -125,6 +125,9 @@ class LanguageDetector:
     
     def _init_detection_models(self):
         """Initialize language detection models"""
+
+
+
         try:
             # Initialize Google Translator (includes detection)
             self.google_translator = Translator()
@@ -214,6 +217,9 @@ class LanguageDetector:
         Returns:
             List of LanguageDetectionResult for detected languages
         """
+
+
+
         try:
             # Split text into segments
             segments = await self._segment_text_for_multilang_detection(text)
@@ -306,6 +312,9 @@ class LanguageDetector:
     
     async def _langdetect_detection(self, text: str) -> LanguageDetectionResult:
         """Detect language using langdetect library"""
+
+
+
         try:
             # Get top language
             detected_lang = detect(text)
@@ -339,6 +348,9 @@ class LanguageDetector:
     
     async def _polyglot_detection(self, text: str) -> LanguageDetectionResult:
         """Detect language using polyglot library"""
+
+
+
         try:
             detector = PolyglotDetector(text)
             
@@ -365,6 +377,9 @@ class LanguageDetector:
     
     async def _fasttext_detection(self, text: str) -> LanguageDetectionResult:
         """Detect language using FastText model"""
+
+
+
         try:
             # Predict language
             predictions = self.fasttext_model.predict(text, k=5)  # Top 5 predictions
@@ -405,6 +420,9 @@ class LanguageDetector:
     
     async def _google_detection(self, text: str) -> LanguageDetectionResult:
         """Detect language using Google Translate"""
+
+
+
         try:
             detection = self.google_translator.detect(text)
             
@@ -558,6 +576,9 @@ class LanguageDetector:
     
     def get_detection_stats(self) -> Dict[str, Any]:
         """Get detection statistics"""
+
+
+
         return {
             **self.detection_stats,
             "supported_languages_count": len(self.supported_languages),
@@ -593,6 +614,9 @@ class TranslationEngine:
     
     def _init_translation_services(self):
         """Initialize translation services"""
+
+
+
         try:
             # Google Translate
             self.translators['google'] = Translator()
@@ -742,6 +766,9 @@ class TranslationEngine:
         target_lang: str
     ) -> Tuple[str, float]:
         """Translate using Google Translate"""
+
+
+
         try:
             result = self.translators['google'].translate(
                 text,
@@ -766,6 +793,9 @@ class TranslationEngine:
         target_lang: str
     ) -> Tuple[str, float]:
         """Translate using Marian transformer model"""
+
+
+
         try:
             # Note: This is simplified - in practice you'd need specific models for each language pair
             result = self.translators['marian'](text)
@@ -789,6 +819,9 @@ class TranslationEngine:
         target_lang: str
     ) -> TranslationQuality:
         """Assess quality of translation"""
+
+
+
         try:
             # Basic quality metrics
             length_ratio = len(translated_text) / len(source_text) if source_text else 0
@@ -860,6 +893,9 @@ class TranslationEngine:
     
     def get_translation_stats(self) -> Dict[str, Any]:
         """Get translation statistics"""
+
+
+
         return {
             **self.translation_stats,
             "available_services": list(self.translators.keys()),

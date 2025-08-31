@@ -8,7 +8,7 @@ components and intelligent system bootstrap.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -131,6 +131,9 @@ class OrchestrationSystem:
         Returns:
             bool: True if initialization successful, False otherwise
         """
+
+
+
         try:
             self.logger.info("Initializing IA Influencer Agent Orchestration System...")
             self.startup_time = datetime.utcnow()
@@ -182,6 +185,9 @@ class OrchestrationSystem:
 
     async def _initialize_components(self):
         """Initialize all orchestration components."""
+
+
+
         try:
             # Initialize Resource Manager first (other components depend on it)
             self.logger.info("Initializing Resource Manager...")
@@ -302,6 +308,9 @@ class OrchestrationSystem:
 
     async def _check_component_health(self, component_name: str) -> bool:
         """Check the health of a specific component."""
+
+
+
         try:
             component = getattr(self, component_name, None)
             if component is None:
@@ -319,6 +328,9 @@ class OrchestrationSystem:
 
     async def _auto_remediate(self, health_status: Dict[str, Any]):
         """Attempt automatic remediation of health issues."""
+
+
+
         try:
             for issue in health_status.get("issues", []):
                 if "High" in issue and "usage" in issue:
@@ -460,6 +472,9 @@ class OrchestrationSystem:
 
     async def shutdown(self):
         """Gracefully shutdown the orchestration system."""
+
+
+
         try:
             self.logger.info("Shutting down orchestration system...")
             self.running = False
@@ -508,10 +523,16 @@ class OrchestrationSystem:
 
     def is_healthy(self) -> bool:
         """Check if the orchestration system is healthy."""
+
+
+
         return self.initialized and self.running and all(self.component_health.values())
 
     def get_component_status(self) -> Dict[str, Any]:
         """Get detailed status of all components."""
+
+
+
         return {
             "initialized": self.initialized,
             "running": self.running,
@@ -554,6 +575,9 @@ async def initialize_orchestration_system(
 
 def get_orchestration_system() -> Optional[OrchestrationSystem]:
     """Get the global orchestration system instance."""
+
+
+
     return _orchestration_system
 
 

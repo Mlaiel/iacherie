@@ -680,10 +680,10 @@ class EnterpriseResponseGenerator:
         
         # Add music-specific insights if relevant
         if "collaboration" in content.lower():
-            optimizations.append("\\n\\n🎵 **Music Collaboration Tip:** Consider cross-genre collaborations to expand your audience reach.")
+            optimizations.append("\\n\\n **Music Collaboration Tip:** Consider cross-genre collaborations to expand your audience reach.")
         
         if "monetization" in content.lower():
-            optimizations.append("\\n\\n💰 **Revenue Streams:** Don't forget about sync licensing, live performances, and merchandise sales.")
+            optimizations.append("\\n\\n **Revenue Streams:** Don't forget about sync licensing, live performances, and merchandise sales.")
         
         return content + "".join(optimizations)
     
@@ -698,10 +698,10 @@ class EnterpriseResponseGenerator:
         optimizations = []
         
         if "portfolio" in content.lower():
-            optimizations.append("\\n\\n📸 **Portfolio Tip:** Ensure your images have proper metadata and copyright information.")
+            optimizations.append("\\n\\n **Portfolio Tip:** Ensure your images have proper metadata and copyright information.")
         
         if "licensing" in content.lower():
-            optimizations.append("\\n\\n📄 **Licensing Advice:** Consider offering different licensing tiers for various use cases.")
+            optimizations.append("\\n\\n **Licensing Advice:** Consider offering different licensing tiers for various use cases.")
         
         return content + "".join(optimizations)
     
@@ -716,10 +716,10 @@ class EnterpriseResponseGenerator:
         optimizations = []
         
         if "seo" in content.lower() or "search" in content.lower():
-            optimizations.append("\\n\\n🔍 **SEO Tip:** Focus on long-tail keywords and user intent for better search rankings.")
+            optimizations.append("\\n\\n **SEO Tip:** Focus on long-tail keywords and user intent for better search rankings.")
         
         if "content" in content.lower():
-            optimizations.append("\\n\\n✍️ **Content Strategy:** Maintain a consistent publishing schedule and engage with your audience in comments.")
+            optimizations.append("\\n\\n **Content Strategy:** Maintain a consistent publishing schedule and engage with your audience in comments.")
         
         return content + "".join(optimizations)
     
@@ -737,7 +737,7 @@ class EnterpriseResponseGenerator:
             optimizations.append("\\n\\n🤝 **Brand Partnership Tip:** Maintain authenticity while clearly disclosing sponsored content.")
         
         if "engagement" in content.lower():
-            optimizations.append("\\n\\n📈 **Engagement Boost:** Use interactive stories and polls to increase audience participation.")
+            optimizations.append("\\n\\n **Engagement Boost:** Use interactive stories and polls to increase audience participation.")
         
         return content + "".join(optimizations)
     
@@ -752,10 +752,10 @@ class EnterpriseResponseGenerator:
         optimizations = []
         
         if "performance" in content.lower():
-            optimizations.append("\\n\\n🎤 **Performance Tip:** Record your sets to analyze audience reactions and refine your material.")
+            optimizations.append("\\n\\n **Performance Tip:** Record your sets to analyze audience reactions and refine your material.")
         
         if "content" in content.lower():
-            optimizations.append("\\n\\n😄 **Content Protection:** Consider timestamping your original material to protect against theft.")
+            optimizations.append("\\n\\n **Content Protection:** Consider timestamping your original material to protect against theft.")
         
         return content + "".join(optimizations)
     
@@ -781,6 +781,9 @@ class EnterpriseResponseGenerator:
         context_analysis: Dict[str, Any]
     ) -> List[str]:
         """Generate helpful suggestions"""
+
+
+
         return [
             "Consider diversifying your content portfolio",
             "Explore cross-platform promotion strategies",
@@ -865,6 +868,9 @@ class EnterpriseResponseGenerator:
     
     def _get_prompt_template(self, creator_type: str, response_type: ResponseType, tone: ResponseTone) -> str:
         """Get appropriate prompt template"""
+
+
+
         return self.creator_prompts.get(creator_type, {}).get(response_type.value, "")
     
     async def _build_contextualized_prompt(
@@ -917,6 +923,9 @@ class EnterpriseResponseGenerator:
         components: ResponseComponents
     ) -> List[Dict[str, Any]]:
         """Generate interactive elements for the response"""
+
+
+
         return []
     
     async def _generate_follow_up_prompts(
@@ -926,6 +935,9 @@ class EnterpriseResponseGenerator:
         context_analysis: Dict[str, Any]
     ) -> List[str]:
         """Generate follow-up conversation prompts"""
+
+
+
         return [
             "Would you like more specific advice on this topic?",
             "Do you have questions about implementing these recommendations?",
@@ -962,6 +974,9 @@ class EnterpriseResponseGenerator:
     
     def _extract_personalization_factors(self, creator_profile: Any) -> List[str]:
         """Extract personalization factors from creator profile"""
+
+
+
         return [
             creator_profile.creator_type.value,
             *creator_profile.specializations,
@@ -1004,6 +1019,9 @@ class EnterpriseResponseGenerator:
         error: str
     ) -> GeneratedResponse:
         """Generate fallback response in case of errors"""
+
+
+
         return GeneratedResponse(
             response_id=response_id,
             content="I apologize, but I'm having trouble generating a response right now. Please try again.",
@@ -1029,6 +1047,9 @@ class EnterpriseResponseGenerator:
     
     def get_quality_metrics(self) -> Dict[str, Any]:
         """Get current quality metrics"""
+
+
+
         return self.quality_metrics.copy()
 
 

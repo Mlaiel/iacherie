@@ -10,7 +10,7 @@ Created: 2025-08-30
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -290,6 +290,9 @@ class MusicTheoryEngine:
     
     def _initialize_scale_patterns(self) -> Dict[MelodyMode, List[int]]:
         """Initialize scale patterns in semitones"""
+
+
+
         return {
             MelodyMode.IONIAN: [0, 2, 4, 5, 7, 9, 11],
             MelodyMode.DORIAN: [0, 2, 3, 5, 7, 9, 10],
@@ -304,6 +307,9 @@ class MusicTheoryEngine:
     
     def _initialize_chord_progressions(self) -> Dict[str, List[str]]:
         """Initialize common chord progressions"""
+
+
+
         return {
             "pop": ["I", "V", "vi", "IV"],
             "jazz": ["ii", "V", "I", "vi"],
@@ -314,6 +320,9 @@ class MusicTheoryEngine:
     
     def _initialize_interval_weights(self) -> Dict[int, float]:
         """Initialize interval preference weights"""
+
+
+
         return {
             0: 0.1,   # Unison
             1: 0.3,   # Minor 2nd
@@ -332,6 +341,9 @@ class MusicTheoryEngine:
     
     async def get_scale_notes(self, key: str, mode: MelodyMode) -> List[int]:
         """Get scale notes for given key and mode"""
+
+
+
         try:
             # Convert key to root note number (C = 0)
             key_map = {
@@ -354,6 +366,9 @@ class MusicTheoryEngine:
     
     async def validate_melodic_intervals(self, melody_notes: List[int]) -> Dict[str, float]:
         """Validate melodic intervals for musicality"""
+
+
+
         try:
             if len(melody_notes) < 2:
                 return {"interval_score": 1.0, "leap_ratio": 0.0, "direction_changes": 0}
@@ -402,6 +417,9 @@ class MusicTheoryEngine:
     async def analyze_phrase_structure(self, melody_notes: List[int], 
                                      beats_per_measure: int = 4) -> Dict[str, Any]:
         """Analyze phrase structure of melody"""
+
+
+
         try:
             # Simplified phrase detection based on note patterns and rests
             phrase_boundaries = []
@@ -443,6 +461,9 @@ class MusicTheoryEngine:
     async def suggest_harmonization(self, melody_notes: List[int], 
                                   key: str, mode: MelodyMode) -> List[str]:
         """Suggest chord progression for melody harmonization"""
+
+
+
         try:
             scale_notes = await self.get_scale_notes(key, mode)
             
@@ -490,6 +511,9 @@ class MelodyAnalyzer:
     async def analyze_melody_quality(self, melody_notes: List[int], 
                                    parameters: MelodyParameters) -> Dict[str, float]:
         """Comprehensive melody quality analysis"""
+
+
+
         try:
             analysis = {}
             
@@ -525,6 +549,9 @@ class MelodyAnalyzer:
     
     async def _analyze_contour(self, melody_notes: List[int]) -> Dict[str, float]:
         """Analyze melodic contour characteristics"""
+
+
+
         try:
             if len(melody_notes) < 3:
                 return {"contour_smoothness": 1.0, "contour_variety": 0.0}
@@ -564,6 +591,9 @@ class MelodyAnalyzer:
     
     async def _analyze_rhythmic_variety(self, melody_notes: List[int]) -> float:
         """Analyze rhythmic variety (simplified analysis)"""
+
+
+
         try:
             # This is simplified - real implementation would analyze note durations
             # For now, we analyze note repetition patterns
@@ -596,6 +626,9 @@ class MelodyAnalyzer:
     async def _analyze_scale_adherence(self, melody_notes: List[int], 
                                      scale_notes: List[int]) -> float:
         """Analyze how well melody adheres to scale"""
+
+
+
         try:
             if not melody_notes:
                 return 1.0
@@ -615,6 +648,9 @@ class MelodyAnalyzer:
     async def _analyze_range_utilization(self, melody_notes: List[int], 
                                        target_range: int) -> float:
         """Analyze how well melody utilizes the available range"""
+
+
+
         try:
             if not melody_notes:
                 return 0.0
@@ -634,6 +670,9 @@ class MelodyAnalyzer:
     
     async def _calculate_overall_quality(self, analysis: Dict[str, float]) -> float:
         """Calculate overall quality score"""
+
+
+
         try:
             # Weights for different aspects
             weights = {
@@ -686,6 +725,9 @@ class MelodyGenerator:
     
     def _initialize_style_templates(self) -> Dict[MelodyStyle, Dict[str, Any]]:
         """Initialize style-specific generation templates"""
+
+
+
         return {
             MelodyStyle.CLASSICAL: {
                 "preferred_intervals": [2, 3, 4, 5, 7],
@@ -735,6 +777,9 @@ class MelodyGenerator:
                             complexity: MelodyComplexity = MelodyComplexity.MODERATE,
                             use_neural_network: bool = True) -> GeneratedMelody:
         """Generate melody with specified parameters"""
+
+
+
         try:
             start_time = datetime.now()
             melody_id = f"melody_{int(start_time.timestamp())}"
@@ -785,6 +830,9 @@ class MelodyGenerator:
                                           style: MelodyStyle, 
                                           complexity: MelodyComplexity) -> List[int]:
         """Generate melody using neural network"""
+
+
+
         try:
             # Convert parameters to tensor
             param_tensor = await self._parameters_to_tensor(parameters)
@@ -835,6 +883,9 @@ class MelodyGenerator:
                                  style: MelodyStyle,
                                  complexity: MelodyComplexity) -> List[int]:
         """Generate melody using music theory rules"""
+
+
+
         try:
             # Get scale notes
             scale_notes = await self.theory_engine.get_scale_notes(parameters.key_signature, parameters.mode)
@@ -875,6 +926,9 @@ class MelodyGenerator:
                               style_template: Dict[str, Any], parameters: MelodyParameters,
                               position: int, total_length: int) -> int:
         """Choose next note based on music theory and style"""
+
+
+
         try:
             # Get preferred intervals for style
             preferred_intervals = style_template["preferred_intervals"]
@@ -942,6 +996,9 @@ class MelodyGenerator:
     
     async def _parameters_to_tensor(self, parameters: MelodyParameters) -> torch.Tensor:
         """Convert parameters to tensor for neural network"""
+
+
+
         try:
             # Normalize parameters to 0-1 range
             param_values = [
@@ -967,6 +1024,9 @@ class MelodyGenerator:
     
     async def _note_name_to_midi(self, note_name: str) -> int:
         """Convert note name to MIDI number"""
+
+
+
         try:
             if len(note_name) < 2:
                 return 60  # Default to middle C
@@ -988,6 +1048,9 @@ class MelodyGenerator:
     async def _convert_to_midi(self, melody_notes: List[int], 
                              parameters: MelodyParameters) -> bytes:
         """Convert melody notes to MIDI data"""
+
+
+
         try:
             # Create MIDI file
             mid = mido.MidiFile()
@@ -1019,6 +1082,9 @@ class MelodyGenerator:
                               parameters: MelodyParameters,
                               sample_rate: int = 44100) -> np.ndarray:
         """Synthesize audio from melody notes"""
+
+
+
         try:
             # Calculate note duration in samples
             note_duration_beats = 0.5  # Eighth note
@@ -1060,6 +1126,9 @@ class MelodyGenerator:
     async def _analyze_harmony(self, melody_notes: List[int], 
                              parameters: MelodyParameters) -> Dict[str, Any]:
         """Analyze harmonic implications of melody"""
+
+
+
         try:
             # Get suggested chord progression
             chords = await self.theory_engine.suggest_harmonization(
@@ -1090,6 +1159,9 @@ class MelodyGenerator:
     async def _format_melody_notes(self, melody_notes: List[int], 
                                  parameters: MelodyParameters) -> List[Dict[str, Any]]:
         """Format melody notes with timing and musical information"""
+
+
+
         try:
             formatted_notes = []
             
@@ -1125,6 +1197,9 @@ class MelodyGenerator:
     async def harmonize_melody(self, melody_notes: List[int], 
                              parameters: MelodyParameters) -> Dict[str, Any]:
         """Generate harmonization for melody"""
+
+
+
         try:
             # Get chord progression
             chord_progression = await self.theory_engine.suggest_harmonization(
@@ -1155,6 +1230,9 @@ class MelodyGenerator:
     async def _generate_bass_line(self, chord_progression: List[str], 
                                 parameters: MelodyParameters) -> List[int]:
         """Generate bass line from chord progression"""
+
+
+
         try:
             bass_line = []
             
@@ -1193,6 +1271,9 @@ class MelodyGenerator:
                                    chords: List[str], 
                                    parameters: MelodyParameters) -> List[List[int]]:
         """Generate inner harmony voices"""
+
+
+
         try:
             # Simplified two-voice harmony
             alto_voice = []

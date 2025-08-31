@@ -9,7 +9,7 @@ for machine learning workflows.
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED 
 This software is protected by international copyright laws.
 Contact: mlaiel@live.de for licensing inquiries.
 """
@@ -117,6 +117,9 @@ class FeatureStoreDeployment:
     
     def _initialize_clients(self) -> None:
         """Initialize Kubernetes, Docker, and database clients"""
+
+
+
         try:
             # Kubernetes client
             config.load_incluster_config()
@@ -154,6 +157,9 @@ class FeatureStoreDeployment:
         Returns:
             Infrastructure deployment summary
         """
+
+
+
         try:
             self.status = "deploying_infrastructure"
             logger.info("Deploying feature store infrastructure")
@@ -250,6 +256,9 @@ class FeatureStoreDeployment:
         Returns:
             Feature group creation result
         """
+
+
+
         try:
             group_name = group_config.get("name")
             logger.info(f"Creating feature group: {group_name}")
@@ -323,6 +332,9 @@ class FeatureStoreDeployment:
         Returns:
             Ingestion result
         """
+
+
+
         try:
             logger.info(f"Ingesting features into group: {group_name}")
             
@@ -387,6 +399,9 @@ class FeatureStoreDeployment:
         Returns:
             Online features
         """
+
+
+
         try:
             logger.info(f"Getting online features from group: {group_name}")
             
@@ -430,6 +445,9 @@ class FeatureStoreDeployment:
         Returns:
             Offline features dataset
         """
+
+
+
         try:
             logger.info("Getting offline features for training")
             
@@ -461,6 +479,9 @@ class FeatureStoreDeployment:
     
     async def _ensure_feature_store_namespace(self) -> None:
         """Create feature store namespace"""
+
+
+
         try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
@@ -1011,6 +1032,9 @@ class FeatureStoreDeployment:
     
     async def _validate_feature_store_infrastructure(self) -> bool:
         """Validate feature store infrastructure deployment"""
+
+
+
         try:
             # Check essential services
             essential_services = [
@@ -1097,6 +1121,9 @@ class FeatureStoreDeployment:
     
     async def _get_feature_group_metadata(self, group_name: str) -> Optional[Dict[str, Any]]:
         """Get feature group metadata"""
+
+
+
         try:
             metadata = self._redis_client.hgetall(f"feature_group:{group_name}")
             return metadata if metadata else None
@@ -1146,6 +1173,9 @@ class FeatureStoreDeployment:
     
     async def _get_entity_features_from_online_store(self, group_name: str, entity_key: str) -> Optional[Dict[str, Any]]:
         """Get entity features from online store"""
+
+
+
         try:
             features = self._redis_client.hgetall(f"features:{group_name}:{entity_key}")
             return features if features else None
@@ -1165,6 +1195,9 @@ class FeatureStoreDeployment:
     
     async def _cleanup_failed_feature_group(self, group_name: str) -> None:
         """Clean up failed feature group creation"""
+
+
+
         try:
             # Remove metadata
             self._redis_client.delete(f"feature_group:{group_name}")
@@ -1174,6 +1207,9 @@ class FeatureStoreDeployment:
     
     async def get_feature_store_metrics(self) -> Dict[str, Any]:
         """Get comprehensive feature store metrics"""
+
+
+
         try:
             metrics = {
                 "infrastructure_status": self.status,
@@ -1196,6 +1232,9 @@ class FeatureStoreDeployment:
     
     async def _cleanup_failed_infrastructure(self) -> None:
         """Clean up failed feature store infrastructure"""
+
+
+
         try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
@@ -1205,6 +1244,9 @@ class FeatureStoreDeployment:
     
     async def cleanup(self) -> None:
         """Clean up entire feature store infrastructure"""
+
+
+
         try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)

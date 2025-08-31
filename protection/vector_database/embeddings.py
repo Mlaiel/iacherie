@@ -1,5 +1,5 @@
 """
-🔗 Vector Embeddings Engine
+ Vector Embeddings Engine
 ============================
 
 Advanced embedding generation for multi-modal content fingerprints.
@@ -593,6 +593,9 @@ class EmbeddingService:
         metadata: Optional[Dict[str, Any]] = None
     ) -> EmbeddingResult:
         """Generate embedding based on content type and features"""
+
+
+
         try:
             # Auto-detect embedding type if not specified
             if embedding_type is None:
@@ -661,6 +664,9 @@ class EmbeddingService:
         metadata: Optional[Dict[str, Any]] = None
     ) -> List[EmbeddingResult]:
         """Generate embeddings for multiple content items in batch"""
+
+
+
         try:
             tasks = []
             for content_features, content_id in content_features_list:
@@ -688,6 +694,9 @@ class EmbeddingService:
     
     def get_embedding_stats(self) -> Dict[str, Any]:
         """Get statistics about embedding generation"""
+
+
+
         return {
             'supported_types': [e.value for e in EmbeddingType],
             'dimensions': {

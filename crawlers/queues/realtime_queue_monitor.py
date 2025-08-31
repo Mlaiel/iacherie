@@ -8,7 +8,7 @@ Responsibility: Live queue monitoring with intelligent alerting and auto-recover
 Technologies: WebSocket streams, Real-time analytics, Predictive alerts, Auto-scaling
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -1385,6 +1385,9 @@ class RealtimeQueueMonitor:
     
     async def get_monitoring_status(self) -> Dict[str, Any]:
         """Get current monitoring status"""
+
+
+
         
         return {
             'is_monitoring': self.is_monitoring,

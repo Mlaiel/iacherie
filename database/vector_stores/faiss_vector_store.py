@@ -125,6 +125,9 @@ class FAISSVectorStore:
         Args:
             content_type: Content type (audio, video, image, text)
         """
+
+
+
         try:
             if content_type in self.indices:
                 logger.info(f"Index already exists for content type: {content_type}")
@@ -182,6 +185,9 @@ class FAISSVectorStore:
         Returns:
             List of FAISS internal IDs
         """
+
+
+
         try:
             if content_type not in self.indices:
                 await self.initialize_index(content_type)
@@ -267,6 +273,9 @@ class FAISSVectorStore:
         Returns:
             List of search results
         """
+
+
+
         try:
             self.search_stats["total_searches"] += 1
             start_time = datetime.now()
@@ -371,6 +380,9 @@ class FAISSVectorStore:
         Returns:
             Number of vectors removed
         """
+
+
+
         try:
             if content_type not in self.indices:
                 logger.warning(f"No index found for content type: {content_type}")
@@ -419,6 +431,9 @@ class FAISSVectorStore:
         Returns:
             Index statistics or None if index doesn't exist
         """
+
+
+
         try:
             if content_type not in self.indices:
                 return None
@@ -449,6 +464,9 @@ class FAISSVectorStore:
         Args:
             content_type: Content type to optimize
         """
+
+
+
         try:
             if content_type not in self.indices:
                 logger.warning(f"No index found for content type: {content_type}")
@@ -488,6 +506,9 @@ class FAISSVectorStore:
         Returns:
             Backup file path
         """
+
+
+
         try:
             if content_type not in self.indices:
                 raise VectorStoreError(f"No index found for content type: {content_type}")
@@ -545,6 +566,9 @@ class FAISSVectorStore:
     
     async def _get_fingerprint_info(self, content_id: str) -> Dict[str, Any]:
         """Get fingerprint information from database"""
+
+
+
         try:
             async with get_db_session() as session:
                 stmt = select(ContentFingerprint).where(
@@ -569,6 +593,9 @@ class FAISSVectorStore:
     
     async def _save_index(self, content_type: str) -> None:
         """Save index to persistent storage"""
+
+
+
         try:
             if content_type not in self.indices:
                 return
@@ -597,6 +624,9 @@ class FAISSVectorStore:
     
     async def _load_index(self, content_type: str) -> None:
         """Load index from persistent storage"""
+
+
+
         try:
             index_path = os.path.join(self.storage_path, f"{content_type}.index")
             metadata_path = os.path.join(self.storage_path, f"{content_type}_metadata.json")
@@ -636,6 +666,9 @@ class FAISSVectorStore:
     
     async def close(self) -> None:
         """Close vector store and cleanup resources"""
+
+
+
         try:
             # Save all indices
             for content_type in list(self.indices.keys()):

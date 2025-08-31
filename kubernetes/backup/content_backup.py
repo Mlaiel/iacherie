@@ -212,6 +212,9 @@ class ContentBackupService:
         Returns:
             Success status
         """
+
+
+
         try:
             self.logger.info("Starting content restoration...")
             
@@ -651,6 +654,9 @@ class ContentBackupService:
         Returns:
             Integrity status
         """
+
+
+
         try:
             # Get current content
             current_content = await self.content_repo.get_content_by_id(content_id)

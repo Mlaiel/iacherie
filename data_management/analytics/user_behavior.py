@@ -596,6 +596,9 @@ class UserBehaviorCollector:
         user_ids: Optional[List[str]] = None
     ) -> List[UserProfile]:
         """Generate comprehensive user behavioral profiles."""
+
+
+
         
         try:
             # Collect behavior metrics for users

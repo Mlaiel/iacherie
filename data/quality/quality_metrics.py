@@ -55,7 +55,7 @@ Quality Metrics - Quality Scoring and Analytics System
 Enterprise-grade quality metrics calculation and analytics for data quality management.
 Provides comprehensive scoring algorithms, trend analysis, and quality reporting.
 
-⚠️  COPYRIGHT WARNING ⚠️
+  COPYRIGHT WARNING 
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or theft of this code or concept without explicit 
 written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and 
@@ -852,6 +852,9 @@ class QualityMetrics:
     
     def get_dimension_weights(self) -> Dict[str, float]:
         """Get current dimension weights"""
+
+
+
         return self.default_weights.copy()
     
     def update_dimension_weights(self, new_weights: Dict[str, float]):
@@ -866,6 +869,9 @@ class QualityMetrics:
     
     def list_baselines(self) -> List[Dict[str, Any]]:
         """List all available baselines"""
+
+
+
         return [
             {
                 'name': baseline.name,
@@ -946,6 +952,9 @@ class QualityMetrics:
         Returns:
             Overall quality score (0-100)
         """
+
+
+
         try:
             # Use custom weights if provided, otherwise use default
             weights = custom_weights or self.dimension_weights
@@ -1044,6 +1053,9 @@ class QualityMetrics:
         Returns:
             Dimension score (0-100)
         """
+
+
+
         try:
             if dimension == QualityDimension.ACCURACY:
                 return self._calculate_accuracy_score(metrics, content_type)

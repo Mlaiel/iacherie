@@ -220,6 +220,9 @@ class RightsPackage:
     
     def has_right(self, right_name: str) -> bool:
         """Check if specific right is included"""
+
+
+
         return getattr(self, right_name, False)
     
     def get_granted_rights(self) -> List[str]:
@@ -372,6 +375,9 @@ class UsageGrant(BaseModel, TimestampMixin, AuditMixin):
     
     def has_usage_type(self, usage_type: str) -> bool:
         """Check if grant includes specific usage type"""
+
+
+
         return usage_type in (self.usage_types or [])
     
     def is_territory_permitted(self, territory: str) -> bool:
@@ -767,6 +773,9 @@ class UsageRightsService:
         Returns:
             Created usage grant
         """
+
+
+
         try:
             # Validate input data
             validated_data = await self._validate_grant_data(grant_data)
@@ -825,6 +834,9 @@ class UsageRightsService:
         Returns:
             Created usage log entry
         """
+
+
+
         try:
             # Find the grant
             grant = self.session.query(UsageGrant).filter_by(grant_id=grant_id).first()
@@ -893,6 +905,9 @@ class UsageRightsService:
         Returns:
             Created violation record if violation detected
         """
+
+
+
         try:
             # Check for applicable grants
             grants = await self._find_applicable_grants(usage_context)
@@ -955,6 +970,9 @@ class UsageRightsService:
         Returns:
             Detailed analytics report
         """
+
+
+
         try:
             # Build query filters
             filters = []
@@ -1096,6 +1114,9 @@ class UsageRightsService:
     
     async def _setup_real_time_monitoring(self, usage_context: UsageContext, grants: List[UsageGrant]):
         """Set up real-time monitoring for usage compliance"""
+
+
+
         try:
             monitoring_key = f"monitor:{usage_context.content_id}:{usage_context.user_id}"
             monitoring_data = {
@@ -1424,6 +1445,9 @@ class UsageRightsService:
     
     async def _update_aggregate_analytics(self, grant: UsageGrant, usage_log: UsageLog, usage_data: Dict[str, Any]):
         """Update platform-wide analytics"""
+
+
+
         try:
             cache_manager = CacheManager()
             
@@ -1455,6 +1479,9 @@ class UsageRightsService:
     
     async def _check_usage_thresholds(self, grant: UsageGrant, usage_data: Dict[str, Any]):
         """Check if usage has exceeded alert thresholds"""
+
+
+
         try:
             # Get monitoring configuration
             cache_manager = CacheManager()
@@ -1989,6 +2016,9 @@ class UsageRights(BaseModel):
 
     def to_dict(self) -> Dict[str, Any]:
         """Convertit les droits en dictionnaire"""
+
+
+
         return {
             "id": self.id,
             "rights_id": self.rights_id,
@@ -2137,6 +2167,9 @@ class UsageRightsManager:
         conditions: Optional[Dict] = None
     ) -> UsageRights:
         """Accorde des droits d'usage"""
+
+
+
         
         try:
             # Vérification des droits du concédant
@@ -2218,6 +2251,9 @@ class UsageRightsManager:
         metadata: Optional[Dict] = None
     ) -> UsageLog:
         """Enregistre une utilisation de contenu"""
+
+
+
         
         try:
             rights = self.db.query(UsageRights).filter(
@@ -2271,6 +2307,9 @@ class UsageRightsManager:
         evidence: Optional[Dict] = None
     ) -> RightsViolation:
         """Détecte et enregistre une violation de droits"""
+
+
+
         
         try:
             # Recherche des droits associés au contenu
@@ -2485,6 +2524,9 @@ class UsageRightsManager:
     
     def _check_admin_restrictions(self, grantor_id: int, content_id: int) -> Optional[str]:
         """Vérifier s'il y a des restrictions administratives"""
+
+
+
         try:
             # Vérifier les restrictions de contenu
             if content_id in [999, 1000]:  # Simulation de contenu restreint

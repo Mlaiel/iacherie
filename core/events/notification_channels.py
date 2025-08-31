@@ -4,7 +4,7 @@ Module: backend/core/events/notification_channels.py
 Architecture: Multi-Channel Notification Delivery
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 
 Description:
@@ -173,6 +173,9 @@ class NotificationChannel(ABC):
     
     def get_stats(self) -> Dict[str, Any]:
         """Retourne les statistiques du canal"""
+
+
+
         return {
             "channel_id": self.channel_id,
             "channel_type": self.channel_type.value,
@@ -201,6 +204,9 @@ class EmailChannel(NotificationChannel):
     
     async def validate_config(self) -> bool:
         """Valide la configuration SMTP"""
+
+
+
         try:
             if self.use_ssl:
                 server = smtplib.SMTP_SSL(self.smtp_host, self.smtp_port)
@@ -306,6 +312,9 @@ class WebSocketChannel(NotificationChannel):
     
     async def start_server(self):
         """Démarre le serveur WebSocket"""
+
+
+
         try:
             self.server = await websockets.serve(
                 self.handle_connection,
@@ -469,6 +478,9 @@ class PushNotificationChannel(NotificationChannel):
     
     def _initialize_firebase(self):
         """Initialise Firebase Admin SDK"""
+
+
+
         try:
             if not firebase_admin._apps:
                 if self.service_account_path:
@@ -485,6 +497,9 @@ class PushNotificationChannel(NotificationChannel):
     
     async def validate_config(self) -> bool:
         """Valide la configuration Firebase"""
+
+
+
         try:
             # Test simple d'accès à Firebase
             if firebase_admin._apps:

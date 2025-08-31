@@ -8,7 +8,7 @@ Optimized for audio, video, and image content processing.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️ CRITICAL LEGAL WARNING ⚠️
+ CRITICAL LEGAL WARNING 
 UNAUTHORIZED USE, COPYING, OR DISTRIBUTION IS STRICTLY PROHIBITED AND WILL RESULT IN IMMEDIATE LEGAL ACTION.
 This technology is EXCLUSIVE property of Fahed Mlaiel. Contact: mlaiel@live.de for licensing.
 """
@@ -166,6 +166,9 @@ class MediaScraper:
             
     async def _extract_video_content(self, url: str) -> Optional[MediaContent]:
         """Extract video content information."""
+
+
+
         try:
             # Get page content
             headers = {
@@ -215,6 +218,9 @@ class MediaScraper:
             
     async def _extract_audio_content(self, url: str) -> Optional[MediaContent]:
         """Extract audio content information."""
+
+
+
         try:
             headers = {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
@@ -262,6 +268,9 @@ class MediaScraper:
             
     async def _extract_image_content(self, url: str) -> Optional[MediaContent]:
         """Extract image content information."""
+
+
+
         try:
             headers = {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
@@ -313,6 +322,9 @@ class MediaScraper:
             
     async def _analyze_direct_image(self, url: str, headers: Dict[str, str]) -> Optional[MediaContent]:
         """Analyze direct image URL."""
+
+
+
         try:
             async with self.session.get(url, headers=headers) as response:
                 if response.status != 200:
@@ -370,6 +382,9 @@ class MediaScraper:
         
     def _generate_image_hash(self, image: Image.Image) -> str:
         """Generate perceptual hash for image similarity."""
+
+
+
         try:
             # Simple average hash implementation
             # Convert to grayscale and resize
@@ -522,6 +537,9 @@ class MediaScraper:
         
     async def _analyze_video_technical(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze video technical properties."""
+
+
+
         return {
             'duration_parsed': self._parse_duration(metadata.get('duration', '')),
             'quality_estimate': self._estimate_video_quality(metadata),
@@ -530,6 +548,9 @@ class MediaScraper:
         
     async def _analyze_audio_technical(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze audio technical properties."""
+
+
+
         return {
             'duration_parsed': self._parse_duration(metadata.get('duration', '')),
             'quality_estimate': self._estimate_audio_quality(metadata),
@@ -538,6 +559,9 @@ class MediaScraper:
         
     async def _analyze_image_technical(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze image technical properties."""
+
+
+
         return {
             'resolution_category': self._categorize_resolution(metadata.get('dimensions')),
             'quality_estimate': self._estimate_image_quality(metadata),
@@ -634,6 +658,9 @@ class MediaScraper:
         
     async def _extract_generic_media(self, url: str) -> Optional[MediaContent]:
         """Extract generic media content when type is unknown."""
+
+
+
         try:
             headers = {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'

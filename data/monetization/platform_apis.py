@@ -225,6 +225,9 @@ class PlatformAPIs:
         Returns:
             Connection success status
         """
+
+
+
         try:
             # Exchange auth code for access token
             credentials = await self._exchange_auth_code(platform, auth_code, user_id)
@@ -264,6 +267,9 @@ class PlatformAPIs:
         Returns:
             List of revenue data records
         """
+
+
+
         try:
             # Get user credentials
             credentials = await self._get_credentials(user_id, platform)
@@ -312,6 +318,9 @@ class PlatformAPIs:
         Returns:
             List of analytics data records
         """
+
+
+
         try:
             # Get user credentials
             credentials = await self._get_credentials(user_id, platform)
@@ -358,6 +367,9 @@ class PlatformAPIs:
         Returns:
             Real-time metrics data
         """
+
+
+
         try:
             # Check cache first
             cache_key = f"realtime_metrics:{user_id}:{platform.value}"
@@ -389,6 +401,9 @@ class PlatformAPIs:
         Returns:
             Dictionary of platform refresh results
         """
+
+
+
         try:
             results = {}
             
@@ -432,6 +447,9 @@ class PlatformAPIs:
         Returns:
             Platform status information
         """
+
+
+
         try:
             status = {}
             
@@ -483,6 +501,9 @@ class PlatformAPIs:
         Returns:
             Disconnection success status
         """
+
+
+
         try:
             # Get credentials
             credentials = await self._get_credentials(user_id, platform)
@@ -655,6 +676,9 @@ class PlatformAPIs:
     
     async def _get_from_cache(self, key: str) -> Optional[Dict]:
         """Get data from cache"""
+
+
+
         try:
             cached_data = await self.redis.get(key)
             return json.loads(cached_data) if cached_data else None
@@ -663,6 +687,9 @@ class PlatformAPIs:
     
     async def _save_to_cache(self, key: str, data: Dict, ttl: int = None):
         """Save data to cache"""
+
+
+
         try:
             ttl = ttl or self.cache_ttl
             await self.redis.setex(key, ttl, json.dumps(data, default=str))
@@ -689,6 +716,9 @@ class PlatformAPIs:
     
     async def _validate_credentials(self, credentials: PlatformCredentials) -> bool:
         """Validate credentials"""
+
+
+
         return bool(credentials.access_token and credentials.client_id)
     
     async def _test_api_connection(self, credentials: PlatformCredentials) -> APIResponse:

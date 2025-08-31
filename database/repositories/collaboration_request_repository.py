@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -90,6 +90,9 @@ class CollaborationRequestRepository(BaseRepository[CollaborationRequest]):
         Returns:
             Created CollaborationRequest instance
         """
+
+
+
         try:
             # Validate required skills
             if not required_skills:
@@ -244,6 +247,9 @@ class CollaborationRequestRepository(BaseRepository[CollaborationRequest]):
         Returns:
             Match potential score (0.0-100.0)
         """
+
+
+
         try:
             # Base score from skill commonality
             common_skills = ['content creation', 'social media', 'marketing', 'photography']
@@ -291,6 +297,9 @@ class CollaborationRequestRepository(BaseRepository[CollaborationRequest]):
         Args:
             request_id: Request ID to analyze
         """
+
+
+
         try:
             # In production, this would trigger a background job
             # For now, we'll update metadata to indicate matching should be performed
@@ -328,6 +337,9 @@ class CollaborationRequestRepository(BaseRepository[CollaborationRequest]):
         Returns:
             List of tuples (CollaborationRequest, match_score)
         """
+
+
+
         try:
             # Get open requests in user's categories
             query = self.db_session.query(CollaborationRequest).filter(
@@ -403,6 +415,9 @@ class CollaborationRequestRepository(BaseRepository[CollaborationRequest]):
         Returns:
             Match score (0.0-100.0)
         """
+
+
+
         try:
             total_score = 0.0
             
@@ -512,6 +527,9 @@ class CollaborationRequestRepository(BaseRepository[CollaborationRequest]):
         Returns:
             Application result dictionary
         """
+
+
+
         try:
             request = self.get_by_id(request_id)
             if not request:
@@ -584,6 +602,9 @@ class CollaborationRequestRepository(BaseRepository[CollaborationRequest]):
             request: CollaborationRequest instance
             application: Application details
         """
+
+
+
         try:
             # In production, this would send actual notifications
             notification_data = {
@@ -611,6 +632,9 @@ class CollaborationRequestRepository(BaseRepository[CollaborationRequest]):
         Returns:
             Analytics dictionary
         """
+
+
+
         try:
             request = self.get_by_id(request_id)
             if not request:

@@ -52,6 +52,9 @@ class MetricPoint:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'timestamp': self.timestamp.isoformat(),
             'value': self.value,
@@ -133,6 +136,9 @@ class MetricSeries:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'metric_name': self.metric_name,
             'metric_type': self.metric_type.value,
@@ -158,6 +164,9 @@ class PerformanceMetrics:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'platform_id': self.platform_id,
             'response_time_ms': self.response_time_ms,
@@ -187,6 +196,9 @@ class EngagementMetrics:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'platform_id': self.platform_id,
             'total_views': self.total_views,
@@ -431,6 +443,9 @@ class MetricsCollector:
     
     async def _collection_loop(self, platforms: List[PlatformBase]):
         """Main collection loop"""
+
+
+
         try:
             while self.collection_active:
                 logger.debug("Collecting platform metrics")
@@ -478,6 +493,9 @@ class MetricsCollector:
     
     def get_all_metrics(self) -> Dict[str, Any]:
         """Get metrics for all platforms"""
+
+
+
         return {
             platform_id: self.get_platform_metrics(platform_id)
             for platform_id in self.metrics.keys()

@@ -286,6 +286,9 @@ class PerformanceAnalyzer:
     
     async def start_monitoring(self, engine: AsyncEngine) -> None:
         """Start continuous performance monitoring"""
+
+
+
         try:
             logger.info("Starting performance monitoring")
             
@@ -342,6 +345,9 @@ class PerformanceAnalyzer:
         error: bool = False
     ) -> None:
         """Track query execution metrics"""
+
+
+
         try:
             # Generate query ID (normalized)
             query_id = self._generate_query_id(query)
@@ -524,6 +530,9 @@ class PerformanceAnalyzer:
     
     async def generate_report(self, start_time: datetime, end_time: datetime) -> PerformanceReport:
         """Generate comprehensive performance report"""
+
+
+
         try:
             logger.info(f"Generating performance report from {start_time} to {end_time}")
             
@@ -632,6 +641,9 @@ class PerformanceAnalyzer:
     
     def _create_empty_report(self, start_time: datetime, end_time: datetime) -> PerformanceReport:
         """Create empty report when no data is available"""
+
+
+
         return PerformanceReport(
             start_time=start_time,
             end_time=end_time,

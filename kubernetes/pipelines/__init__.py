@@ -253,6 +253,9 @@ __description__ = "IA Influencer Agent Enterprise Pipeline Management System wit
 # System capabilities check
 def check_system_capabilities() -> Dict[str, bool]:
     """Check which pipeline system capabilities are available"""
+
+
+
     return {
         "core_components": CORE_COMPONENTS_AVAILABLE,
         "content_protection": CONTENT_PROTECTION_AVAILABLE,

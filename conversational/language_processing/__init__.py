@@ -19,7 +19,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Specialist + DevOps Expert
 Copyright: Fahed Mlaiel - All Rights Reserved
 
-⚠️  STRICT LEGAL WARNING: 
+  STRICT LEGAL WARNING: 
     This proprietary code is protected by international copyright law.
     Unauthorized use, copying, distribution, modification, or reverse engineering 
     is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -149,7 +149,10 @@ __all__ = [
 
 # Module initialization
 def _initialize_module():
-    """Initialize the language processing module"""    try:
+    """Initialize the language processing module"""
+
+
+    try:
         import logging
         logger = logging.getLogger(__name__)
         logger.info(f"Language Processing Module v{__version__} initialized")

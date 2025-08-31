@@ -333,6 +333,9 @@ class AudioQualityAnalyzer:
         
     def _init_quality_thresholds(self) -> Dict[str, Dict[str, float]]:
         """Initialize quality assessment thresholds"""
+
+
+
         return {
             'snr_db': {
                 'excellent': 50.0,
@@ -375,6 +378,9 @@ class AudioQualityAnalyzer:
         Returns:
             QualityMetrics object with comprehensive analysis results
         """
+
+
+
         try:
             # Validate input
             self.validator.validate_audio_array(audio, sample_rate)
@@ -470,6 +476,9 @@ class AudioQualityAnalyzer:
     def _analyze_spectral_metrics(self, audio: np.ndarray, sample_rate: int,
                                  metrics: QualityMetrics):
         """Analyze frequency-domain characteristics"""
+
+
+
         try:
             # Spectral features using librosa
             spectral_centroids = librosa.feature.spectral_centroid(y=audio, sr=sample_rate)[0]
@@ -516,6 +525,9 @@ class AudioQualityAnalyzer:
     def _analyze_harmonic_metrics(self, audio: np.ndarray, sample_rate: int,
                                  metrics: QualityMetrics):
         """Analyze harmonic content"""
+
+
+
         try:
             # Fundamental frequency detection
             f0, voiced_flag, voiced_probs = librosa.pyin(audio, 
@@ -651,6 +663,9 @@ class AudioQualityAnalyzer:
     def _analyze_psychoacoustic_metrics(self, audio: np.ndarray, sample_rate: int,
                                        metrics: QualityMetrics):
         """Analyze psychoacoustic characteristics"""
+
+
+
         try:
             # Perceptual sharpness
             metrics.sharpness = self.psychoacoustic_analyzer.calculate_sharpness(audio, sample_rate)
@@ -747,6 +762,9 @@ class AudioQualityAnalyzer:
         Returns:
             ComparisonResult with detailed comparison analysis
         """
+
+
+
         try:
             # Analyze both audio signals
             ref_metrics = self.analyze_quality(reference_audio, sample_rate)
@@ -957,7 +975,7 @@ class AudioQualityAnalyzer:
         if warnings:
             report.append("=== WARNINGS ===")
             for warning in warnings:
-                report.append(f"⚠️  {warning}")
+                report.append(f"  {warning}")
             report.append("")
         
         # Quality recommendations
@@ -972,6 +990,6 @@ class AudioQualityAnalyzer:
         if recommendations:
             report.append("=== RECOMMENDATIONS ===")
             for rec in recommendations:
-                report.append(f"💡 {rec}")
+                report.append(f" {rec}")
         
         return "\n".join(report)

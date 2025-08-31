@@ -1,5 +1,5 @@
 """
-🔧 Environment Manager - IA-Influencer-Agent CI/CD
+ Environment Manager - IA-Influencer-Agent CI/CD
 ================================================================
 Expert: DEVOPS_ENGINEER + INFRASTRUCTURE_SPECIALIST
 Created: 2025-08-24
@@ -128,6 +128,9 @@ class EnvironmentManager:
     
     async def initialize(self) -> bool:
         """Initialize environment manager"""
+
+
+
         try:
             # Initialize Kubernetes client
             await self._initialize_kubernetes()
@@ -142,15 +145,18 @@ class EnvironmentManager:
             await self._load_environments()
             
             self.initialized = True
-            self.logger.info("✅ Environment manager initialized")
+            self.logger.info(" Environment manager initialized")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize environment manager: {e}")
+            self.logger.error(f" Failed to initialize environment manager: {e}")
             return False
     
     async def _initialize_kubernetes(self) -> None:
         """Initialize Kubernetes client"""
+
+
+
         try:
             # Try in-cluster config first
             try:
@@ -167,6 +173,9 @@ class EnvironmentManager:
     
     async def _initialize_docker(self) -> None:
         """Initialize Docker client"""
+
+
+
         try:
             self.docker_client = docker.from_env()
             self.docker_client.ping()
@@ -177,6 +186,9 @@ class EnvironmentManager:
     
     async def _initialize_aws(self) -> None:
         """Initialize AWS client"""
+
+
+
         try:
             self.aws_client = {
                 'ecs': boto3.client('ecs'),
@@ -195,6 +207,9 @@ class EnvironmentManager:
         wait_for_ready: bool = True
     ) -> bool:
         """Create new environment"""
+
+
+
         try:
             env_name = config.name
             self.logger.info(f"Creating environment: {env_name}")
@@ -224,7 +239,7 @@ class EnvironmentManager:
                 # Save configuration
                 await self._save_environments()
                 
-                self.logger.info(f"✅ Environment created successfully: {env_name}")
+                self.logger.info(f" Environment created successfully: {env_name}")
                 return True
             else:
                 self.environment_status[env_name] = EnvironmentStatus.ERROR
@@ -237,6 +252,9 @@ class EnvironmentManager:
     
     async def _create_kubernetes_environment(self, config: EnvironmentConfiguration) -> bool:
         """Create Kubernetes environment"""
+
+
+
         try:
             if not self.k8s_client:
                 raise RuntimeError("Kubernetes client not initialized")
@@ -373,6 +391,9 @@ class EnvironmentManager:
     
     def _get_api_service_manifest(self, config: EnvironmentConfiguration) -> Dict[str, Any]:
         """Get API service manifest"""
+
+
+
         return {
             "name": "api-service",
             "deployment": {
@@ -441,6 +462,9 @@ class EnvironmentManager:
     
     def _get_ai_service_manifest(self, config: EnvironmentConfiguration) -> Dict[str, Any]:
         """Get AI service manifest"""
+
+
+
         return {
             "name": "ai-service",
             "deployment": {
@@ -508,6 +532,9 @@ class EnvironmentManager:
     
     def _get_content_protection_service_manifest(self, config: EnvironmentConfiguration) -> Dict[str, Any]:
         """Get content protection service manifest"""
+
+
+
         return {
             "name": "content-protection-service",
             "deployment": {
@@ -575,6 +602,9 @@ class EnvironmentManager:
     
     def _get_database_service_manifest(self, config: EnvironmentConfiguration) -> Dict[str, Any]:
         """Get database service manifest"""
+
+
+
         return {
             "name": "database-service",
             "deployment": {
@@ -643,6 +673,9 @@ class EnvironmentManager:
     
     def _get_redis_service_manifest(self, config: EnvironmentConfiguration) -> Dict[str, Any]:
         """Get Redis service manifest"""
+
+
+
         return {
             "name": "redis-service",
             "deployment": {
@@ -706,6 +739,9 @@ class EnvironmentManager:
     
     async def _create_docker_compose_environment(self, config: EnvironmentConfiguration) -> bool:
         """Create Docker Compose environment"""
+
+
+
         try:
             compose_file = self._generate_docker_compose(config)
             compose_path = f"/tmp/docker-compose-{config.name}.yml"
@@ -731,6 +767,9 @@ class EnvironmentManager:
     
     def _generate_docker_compose(self, config: EnvironmentConfiguration) -> Dict[str, Any]:
         """Generate Docker Compose configuration"""
+
+
+
         return {
             "version": "3.8",
             "services": {
@@ -779,6 +818,9 @@ class EnvironmentManager:
     
     async def _create_local_environment(self, config: EnvironmentConfiguration) -> bool:
         """Create local development environment"""
+
+
+
         try:
             # Create local directories
             env_dir = Path(f"/tmp/ia_influencer_env_{config.name}")
@@ -831,6 +873,9 @@ echo "Environment directory: {env_dir}"
         updates: Dict[str, Any]
     ) -> bool:
         """Update existing environment"""
+
+
+
         try:
             if env_name not in self.environments:
                 return False
@@ -868,6 +913,9 @@ echo "Environment directory: {env_dir}"
     
     async def delete_environment(self, env_name: str) -> bool:
         """Delete environment"""
+
+
+
         try:
             if env_name not in self.environments:
                 return False
@@ -902,6 +950,9 @@ echo "Environment directory: {env_dir}"
     
     async def get_environment_status(self, env_name: str) -> Optional[EnvironmentStatus]:
         """Get environment status"""
+
+
+
         return self.environment_status.get(env_name)
     
     async def get_environment_info(self, env_name: str) -> Optional[Dict[str, Any]]:
@@ -965,6 +1016,9 @@ echo "Environment directory: {env_dir}"
     
     async def _check_k8s_health(self, config: EnvironmentConfiguration) -> bool:
         """Check Kubernetes environment health"""
+
+
+
         try:
             if not self.k8s_client:
                 return False

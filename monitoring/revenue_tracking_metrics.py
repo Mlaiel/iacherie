@@ -1,5 +1,5 @@
 """
-💰 Revenue Tracking Metrics - Advanced Revenue Analytics
+ Revenue Tracking Metrics - Advanced Revenue Analytics
 ======================================================
 
 Comprehensive revenue tracking and analysis system for the Ainflue platform.
@@ -134,6 +134,9 @@ class RevenueTracker:
             currency: Currency code
             metadata: Additional metadata
         """
+
+
+
         try:
             # Create revenue event
             event = RevenueEvent(
@@ -200,6 +203,9 @@ class RevenueTracker:
         Returns:
             Revenue analytics data
         """
+
+
+
         try:
             # Check cache
             cache_key = f"analytics_{period_days}"
@@ -323,6 +329,9 @@ class RevenueTracker:
     
     async def _calculate_revenue_trends(self, period_days: int) -> Dict[str, Any]:
         """Calculate revenue trends and patterns"""
+
+
+
         try:
             current_period = datetime.utcnow() - timedelta(days=period_days)
             previous_period = current_period - timedelta(days=period_days)
@@ -361,6 +370,9 @@ class RevenueTracker:
     
     async def _calculate_revenue_forecasts(self, events: List[RevenueEvent]) -> Dict[str, Any]:
         """Calculate revenue forecasts using simple linear regression"""
+
+
+
         try:
             if len(events) < 7:  # Need at least a week of data
                 return {"error": "Insufficient data for forecasting"}

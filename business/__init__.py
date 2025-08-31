@@ -1,4 +1,4 @@
-"""🚀 IA-Influencer-Agent - Advanced Business Logic Module
+""" IA-Influencer-Agent - Advanced Business Logic Module
 =======================================================
 
 This module orchestrates the complete business logic for the IA Influencer Agent platform,
@@ -12,7 +12,7 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Micro
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
+ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
 This code and concept are the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 Unauthorized access, copying, modification, distribution, reverse engineering,
@@ -265,7 +265,10 @@ class BusinessOrchestrator:
         logger.info("Business orchestrator initialized")
     
     async def initialize(self) -> bool:
-        """Initialize all business modules"""        try:
+        """Initialize all business modules"""
+
+
+        try:
             # Initialize modules based on configuration
             if "analytics" in self.config.enabled_modules:
                 self.modules["analytics"] = analytics
@@ -318,9 +321,9 @@ class BusinessOrchestrator:
                 core_initialized = await initialize_business_logic_core()
                 if core_initialized:
                     self.modules["business_logic_core"] = business_logic_core
-                    logger.info("✅ Business Logic Core with 53 agents integrated successfully")
+                    logger.info(" Business Logic Core with 53 agents integrated successfully")
                 else:
-                    logger.error("❌ Failed to initialize Business Logic Core")
+                    logger.error(" Failed to initialize Business Logic Core")
                     
             except ImportError as e:
                 logger.warning(f"Business Logic Core not available: {e}")
@@ -467,7 +470,10 @@ async def get_business_orchestrator(config: Optional[BusinessModuleConfig] = Non
 
 
 async def initialize_business_system(config: Optional[BusinessModuleConfig] = None) -> bool:
-    """Initialize the complete business system"""    try:
+    """Initialize the complete business system"""
+
+
+    try:
         orchestrator = await get_business_orchestrator(config)
         logger.info("Business system initialized successfully")
         return True
@@ -504,4 +510,4 @@ __all__ = [
 # Module initialization
 logger.info(f"IA Influencer Agent Business Module v{__version__} loaded")
 logger.info(f"Created by: {__author__} ({__email__})")
-logger.info("⚠️ Protected by copyright - Unauthorized use prohibited")
+logger.info(" Protected by copyright - Unauthorized use prohibited")

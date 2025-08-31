@@ -1,5 +1,5 @@
 """
-🔍 Spectral Analyzer - Advanced Frequency Domain Audio Analysis
+ Spectral Analyzer - Advanced Frequency Domain Audio Analysis
 
 Professional spectral analysis engine providing comprehensive frequency domain
 analysis, spectral feature extraction, and advanced signal processing capabilities.
@@ -64,7 +64,7 @@ class SpectralAnalysisResult:
 
 class SpectralAnalyzer:
     """
-    🎼 Professional Spectral Analysis Engine
+     Professional Spectral Analysis Engine
     
     Advanced frequency domain analysis with comprehensive spectral feature
     extraction, peak detection, harmonic analysis, and noise characterization.
@@ -144,6 +144,9 @@ class SpectralAnalyzer:
         Returns:
             Complete spectral analysis results
         """
+
+
+
         try:
             start_time = asyncio.get_event_loop().time()
             
@@ -369,6 +372,9 @@ class SpectralAnalyzer:
         Real-time spectral analysis for single frame
         Optimized for low-latency processing
         """
+
+
+
         try:
             # Apply window
             windowed_frame = frame * self.window[:len(frame)]

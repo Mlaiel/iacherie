@@ -8,7 +8,7 @@ message analytics, and customer engagement tracking.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
@@ -174,6 +174,9 @@ class WhatsAppCrawlerEngine(BaseCrawlerEngine):
     
     async def initialize(self) -> None:
         """Initialize the crawler engine"""
+
+
+
         try:
             await self._create_session()
             await self._verify_credentials()
@@ -221,6 +224,9 @@ class WhatsAppCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Business profile data
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -272,6 +278,9 @@ class WhatsAppCrawlerEngine(BaseCrawlerEngine):
         Returns:
             List of messages
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -332,6 +341,9 @@ class WhatsAppCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Message ID if successful
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -380,6 +392,9 @@ class WhatsAppCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Conversation analytics data
         """
+
+
+
         try:
             # Get messages from the specified period
             messages = await self.get_messages(limit=1000)
@@ -417,6 +432,9 @@ class WhatsAppCrawlerEngine(BaseCrawlerEngine):
     
     def _parse_business_profile(self, data: Dict[str, Any]) -> WhatsAppBusinessProfile:
         """Parse business profile data from API response"""
+
+
+
         try:
             return WhatsAppBusinessProfile(
                 business_id=str(data.get('id', '')),
@@ -443,6 +461,9 @@ class WhatsAppCrawlerEngine(BaseCrawlerEngine):
     
     def _parse_message_data(self, message_data: Dict[str, Any]) -> WhatsAppMessage:
         """Parse message data from API response"""
+
+
+
         try:
             return WhatsAppMessage(
                 id=str(message_data.get('id', '')),
@@ -555,6 +576,9 @@ class WhatsAppCrawlerEngine(BaseCrawlerEngine):
     
     async def cleanup(self) -> None:
         """Clean up resources"""
+
+
+
         try:
             if self.session:
                 await self.session.close()

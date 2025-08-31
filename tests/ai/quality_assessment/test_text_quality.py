@@ -24,17 +24,17 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
 Project Team Specialties:
-✅ Lead Dev + AI Developer Architect - Fahed Mlaiel
-✅ Senior Backend Developer (Python/FastAPI/Django) - Fahed Mlaiel  
-✅ Machine Learning Engineer (TensorFlow/PyTorch/Hugging Face) - Fahed Mlaiel
-✅ DBA & Data Engineer (PostgreSQL/Redis/MongoDB) - Fahed Mlaiel
-✅ Backend Security Specialist - Fahed Mlaiel
-✅ Microservices Architect - Fahed Mlaiel
-✅ Audio Developer - Fahed Mlaiel
-✅ DevOps Engineer - Fahed Mlaiel
-✅ AI Prompt Engineer - Fahed Mlaiel
+ Lead Dev + AI Developer Architect - Fahed Mlaiel
+ Senior Backend Developer (Python/FastAPI/Django) - Fahed Mlaiel  
+ Machine Learning Engineer (TensorFlow/PyTorch/Hugging Face) - Fahed Mlaiel
+ DBA & Data Engineer (PostgreSQL/Redis/MongoDB) - Fahed Mlaiel
+ Backend Security Specialist - Fahed Mlaiel
+ Microservices Architect - Fahed Mlaiel
+ Audio Developer - Fahed Mlaiel
+ DevOps Engineer - Fahed Mlaiel
+ AI Prompt Engineer - Fahed Mlaiel
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software and all associated concepts, algorithms, and implementations are the exclusive 
 intellectual property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, reproduction, 
 distribution, modification, or appropriation of this code, in whole or in part, without 
@@ -178,9 +178,9 @@ class TestTextQualityAnalyzer(TestCase):
         
         # Platform-specific content samples
         self.platform_samples = {
-            'twitter': "🚀 Excited to share our latest AI breakthrough! Revolutionary technology that's changing the game. #AI #Innovation #TechNews",
+            'twitter': " Excited to share our latest AI breakthrough! Revolutionary technology that's changing the game. #AI #Innovation #TechNews",
             'linkedin': "I'm pleased to announce our team's successful completion of the Q4 digital transformation project. This achievement represents months of dedicated collaboration and innovative problem-solving.",
-            'instagram': "Beautiful sunset vibes ✨ Nothing beats nature's perfect timing and colors. Grateful for these peaceful moments. #sunset #nature #gratitude #peaceful",
+            'instagram': "Beautiful sunset vibes  Nothing beats nature's perfect timing and colors. Grateful for these peaceful moments. #sunset #nature #gratitude #peaceful",
             'youtube': "Welcome back to our channel! Today we're diving deep into advanced Python programming techniques that will elevate your coding skills to the next level.",
             'blog': "Understanding the fundamentals of machine learning requires a solid grasp of mathematical concepts, programming skills, and practical application experience."
         }

@@ -5,7 +5,7 @@ Advanced fingerprinting, violation detection, and automated legal enforcement
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + Security Expert + Legal Tech + ML Engineer
 
-⚠️  COPYRIGHT WARNING ⚠️
+  COPYRIGHT WARNING 
 This code and concept are proprietary to Fahed Mlaiel.
 Unauthorized copying, distribution, or use without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -166,6 +166,9 @@ class EnterpriseRightsProtectionService:
         """
         Create comprehensive protection for content asset using multiple methods
         """
+
+
+
         try:
             if not protection_methods:
                 protection_methods = [
@@ -216,6 +219,9 @@ class EnterpriseRightsProtectionService:
 
     async def _generate_multi_layered_fingerprint(self, asset: ContentAsset) -> FingerprintResult:
         """Generate comprehensive fingerprint using multiple techniques"""
+
+
+
         try:
             # Generate content-specific fingerprints
             if asset.media_type == 'audio':
@@ -261,6 +267,9 @@ class EnterpriseRightsProtectionService:
 
     async def _generate_perceptual_hash(self, asset: ContentAsset) -> str:
         """Generate perceptual hash for content similarity detection"""
+
+
+
         try:
             if asset.media_type == 'image':
                 # Use PIL for image perceptual hashing
@@ -346,6 +355,9 @@ class EnterpriseRightsProtectionService:
         fingerprint_data: FingerprintResult
     ) -> ProtectionRecord:
         """Apply specific protection method to asset"""
+
+
+
         try:
             details = {}
             
@@ -421,6 +433,9 @@ class EnterpriseRightsProtectionService:
         fingerprint_data: FingerprintResult
     ) -> Dict[str, Any]:
         """Create blockchain anchor for immutable proof of ownership"""
+
+
+
         try:
             # This would implement actual blockchain integration
             # For now, simulate blockchain anchoring
@@ -451,6 +466,9 @@ class EnterpriseRightsProtectionService:
 
     async def _embed_watermark(self, asset: ContentAsset) -> Dict[str, Any]:
         """Embed invisible watermark in content"""
+
+
+
         try:
             if asset.media_type == 'image':
                 # Implement image watermarking using LSB or frequency domain
@@ -499,6 +517,9 @@ class EnterpriseRightsProtectionService:
         """
         Monitor platforms for content violations using AI detection
         """
+
+
+
         try:
             violations = []
             
@@ -708,6 +729,9 @@ class EnterpriseRightsProtectionService:
 
     async def _process_violation(self, db: Session, violation: ViolationDetection) -> None:
         """Process detected violation with automated actions"""
+
+
+
         try:
             # Create violation alert record
             alert = ProtectionAlert(
@@ -742,6 +766,9 @@ class EnterpriseRightsProtectionService:
 
     async def _send_dmca_takedown(self, violation: ViolationDetection) -> None:
         """Send automated DMCA takedown notice"""
+
+
+
         try:
             # This would implement actual DMCA notice sending
             logger.info(f"DMCA takedown notice sent for violation: {violation.violation_id}")
@@ -750,6 +777,9 @@ class EnterpriseRightsProtectionService:
 
     async def _report_to_platform(self, violation: ViolationDetection) -> None:
         """Report violation to platform"""
+
+
+
         try:
             # This would use platform-specific reporting APIs
             logger.info(f"Platform report submitted for violation: {violation.violation_id}")
@@ -758,6 +788,9 @@ class EnterpriseRightsProtectionService:
 
     async def _submit_monetization_claim(self, violation: ViolationDetection) -> None:
         """Submit monetization claim for commercial violations"""
+
+
+
         try:
             # This would implement Content ID or similar systems
             logger.info(f"Monetization claim submitted for violation: {violation.violation_id}")
@@ -766,6 +799,9 @@ class EnterpriseRightsProtectionService:
 
     async def _collect_violation_evidence(self, violation: ViolationDetection) -> None:
         """Collect additional evidence for violation"""
+
+
+
         try:
             # This would capture screenshots, download content, etc.
             logger.info(f"Evidence collected for violation: {violation.violation_id}")
@@ -869,6 +905,9 @@ class EnterpriseRightsProtectionService:
 
     async def _cache_protection_data(self, asset_id: int, report: ProtectionReport) -> None:
         """Cache protection data for quick access"""
+
+
+
         try:
             cache_key = f"protection:report:{asset_id}"
             self.redis_client.setex(

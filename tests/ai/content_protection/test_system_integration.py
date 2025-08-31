@@ -23,7 +23,7 @@ testing all component integrations, cross-system workflows, and enterprise scena
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-🔒 ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 🔒
+ ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 
 This code and all associated concepts, algorithms, and implementations are the 
 exclusive intellectual property of Fahed Mlaiel. Any unauthorized use, copying, 
 modification, or distribution without explicit written permission is STRICTLY 
@@ -77,6 +77,9 @@ logger = logging.getLogger(__name__)
 
 def create_protection_system(config=None):
     """Helper function to create protection system"""
+
+
+
     return ContentProtectionSystem(config)
 
 

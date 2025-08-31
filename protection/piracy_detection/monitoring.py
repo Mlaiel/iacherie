@@ -1,5 +1,5 @@
 """
-📊 Piracy Monitoring Service
+ Piracy Monitoring Service
 ===========================
 
 Real-time continuous monitoring for content piracy detection.
@@ -109,6 +109,9 @@ class PiracyMonitoringService:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             logger.info("Initializing Piracy Monitoring Service...")
             
@@ -315,6 +318,9 @@ class PiracyMonitoringService:
     
     def _get_default_platforms(self) -> List[str]:
         """Get default list of platforms to monitor."""
+
+
+
         return [
             'youtube', 'instagram', 'tiktok', 'twitter', 'facebook',
             'soundcloud', 'spotify', 'dailymotion', 'vimeo', 'twitch',
@@ -424,6 +430,9 @@ class PiracyMonitoringService:
     
     async def _trigger_auto_enforcement(self, session: MonitoringSession, violation: Any) -> None:
         """Trigger automated enforcement for violation."""
+
+
+
         try:
             from .enforcement import AutomatedEnforcement
             enforcement = AutomatedEnforcement(self.config.get('enforcement', {}))

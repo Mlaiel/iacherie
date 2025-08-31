@@ -66,12 +66,18 @@ class DatabaseConfig:
     @property
     def connection_url(self) -> str:
         """Generate SQLAlchemy connection URL"""
+
+
+
         return (f"postgresql://{self.username}:{self.password}"
                 f"@{self.host}:{self.port}/{self.database}")
     
     @property
     def async_connection_url(self) -> str:
         """Generate async SQLAlchemy connection URL"""
+
+
+
         return (f"postgresql+asyncpg://{self.username}:{self.password}"
                 f"@{self.host}:{self.port}/{self.database}")
     
@@ -188,6 +194,9 @@ class RedisConfig:
     
     def create_client(self) -> redis.Redis:
         """Create Redis client"""
+
+
+
         return redis.Redis(connection_pool=self.create_connection_pool())
 
 
@@ -345,10 +354,16 @@ class ElasticsearchConfig:
     
     def get_index_name(self, suffix: str) -> str:
         """Generate index name with prefix"""
+
+
+
         return f"{self.index_prefix}_{suffix}"
     
     def get_index_settings(self) -> Dict[str, Any]:
         """Get default index settings"""
+
+
+
         return {
             "settings": {
                 "number_of_shards": self.number_of_shards,
@@ -407,10 +422,16 @@ class VectorDatabaseConfig:
     
     def get_index_path(self, content_type: str) -> str:
         """Get index file path for specific content type"""
+
+
+
         return os.path.join(self.index_path, f"{content_type}_index.faiss")
     
     def get_metadata_path(self, content_type: str) -> str:
         """Get metadata file path for specific content type"""
+
+
+
         return os.path.join(self.metadata_path, f"{content_type}_metadata.json")
     
     def get_dimension_for_content_type(self, content_type: str) -> int:

@@ -342,6 +342,9 @@ class PlatformIntegrationRepository:
 
     def create_integration(self, integration_data: Dict[str, Any]) -> PlatformIntegration:
         """Créer une nouvelle intégration de plateforme."""
+
+
+
         try:
             # Chiffrer les tokens si disponible
             if self.cipher and 'access_token' in integration_data:
@@ -370,6 +373,9 @@ class PlatformIntegrationRepository:
     def update_integration_status(self, integration_id: str, status: IntegrationStatus, 
                                 error_message: str = None) -> bool:
         """Mettre à jour le statut d'une intégration."""
+
+
+
         try:
             integration = self.db.query(PlatformIntegration).filter(
                 PlatformIntegration.id == integration_id
@@ -403,6 +409,9 @@ class PlatformIntegrationRepository:
 
     def schedule_content_distribution(self, distribution_data: Dict[str, Any]) -> ContentDistribution:
         """Planifier une distribution de contenu."""
+
+
+
         try:
             distribution = ContentDistribution(**distribution_data)
             self.db.add(distribution)
@@ -419,6 +428,9 @@ class PlatformIntegrationRepository:
 
     def create_sync_task(self, task_data: Dict[str, Any]) -> SynchronizationTask:
         """Créer une tâche de synchronisation."""
+
+
+
         try:
             task = SynchronizationTask(**task_data)
             self.db.add(task)
@@ -435,6 +447,9 @@ class PlatformIntegrationRepository:
 
     def get_active_integrations(self, creator_id: str) -> List[PlatformIntegration]:
         """Obtenir les intégrations actives d'un créateur."""
+
+
+
         try:
             integrations = self.db.query(PlatformIntegration).filter(
                 PlatformIntegration.creator_id == creator_id,
@@ -450,6 +465,9 @@ class PlatformIntegrationRepository:
     def get_platform_analytics(self, creator_id: str, platform_type: PlatformType = None, 
                              days: int = 30) -> List[PlatformAnalytics]:
         """Obtenir les analytics de plateforme."""
+
+
+
         try:
             query = self.db.query(PlatformAnalytics).filter(
                 PlatformAnalytics.creator_id == creator_id,
@@ -471,6 +489,9 @@ class PlatformIntegrationRepository:
 
     def update_content_metrics(self, distribution_id: str, metrics: Dict[str, Any]) -> bool:
         """Mettre à jour les métriques d'un contenu distribué."""
+
+
+
         try:
             distribution = self.db.query(ContentDistribution).filter(
                 ContentDistribution.id == distribution_id
@@ -498,6 +519,9 @@ class PlatformIntegrationRepository:
 
     def get_cross_platform_performance(self, creator_id: str) -> Dict[str, Any]:
         """Obtenir la performance cross-platform d'un créateur."""
+
+
+
         try:
             # Récupérer toutes les intégrations actives
             integrations = self.get_active_integrations(creator_id)
@@ -546,6 +570,9 @@ class PlatformIntegrationRepository:
 
     def get_access_token(self, integration_id: str) -> Optional[str]:
         """Récupérer le token d'accès déchiffré."""
+
+
+
         try:
             if not self.cipher:
                 logger.warning("Cipher non configuré pour déchiffrer les tokens")

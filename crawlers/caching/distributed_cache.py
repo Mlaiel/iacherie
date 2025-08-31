@@ -10,7 +10,7 @@ data replication, and intelligent load balancing across nodes.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️ PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
+ PROPRIETARY SOFTWARE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -80,6 +80,9 @@ class ConsistentHashRing:
     
     def _hash(self, key: str) -> int:
         """Generate hash for key."""
+
+
+
         return int(hashlib.md5(key.encode()).hexdigest(), 16)
     
     def _build_ring(self) -> None:
@@ -235,6 +238,9 @@ class DistributedCache:
     async def _node_operation(self, node: CacheNode, operation: str, 
                             key: str, value: Any = None, **kwargs) -> Any:
         """Execute operation on specific node."""
+
+
+
         try:
             connection = await self._get_node_connection(node)
             
@@ -275,6 +281,9 @@ class DistributedCache:
         Returns:
             Cached value or None if not found
         """
+
+
+
         try:
             self._operations_count += 1
             
@@ -323,6 +332,9 @@ class DistributedCache:
         Returns:
             True if set on at least one node
         """
+
+
+
         try:
             self._operations_count += 1
             
@@ -366,6 +378,9 @@ class DistributedCache:
         Returns:
             True if deleted from at least one node
         """
+
+
+
         try:
             self._operations_count += 1
             
@@ -393,6 +408,9 @@ class DistributedCache:
     
     async def exists(self, key: str) -> bool:
         """Check if key exists in cache."""
+
+
+
         try:
             # Check primary node
             primary_node = self.hash_ring.get_node(key)

@@ -1,11 +1,11 @@
 """
-📊 Monitoring Stack Docker Configuration - IA-Influencer-Agent Platform
+ Monitoring Stack Docker Configuration - IA-Influencer-Agent Platform
 =======================================================================
 Expert: DevOps Engineer + Monitoring Specialist + Observability Expert
 Creator: Fahed Mlaiel <mlaiel@live.de>
 =======================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL 
 Tout vol, copie ou utilisation non autorisée de ce code source,
 de ce concept ou de cette propriété intellectuelle sans
 l'autorisation écrite explicite de Fahed Mlaiel est strictement
@@ -83,6 +83,9 @@ class MonitoringStackDockerConfig:
     
     def generate_prometheus_config(self) -> str:
         """Generate Prometheus configuration"""
+
+
+
         return f"""
 # IA-Influencer Prometheus Configuration
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -184,6 +187,9 @@ scrape_configs:
 
     def generate_alert_rules(self) -> str:
         """Generate Prometheus alert rules"""
+
+
+
         return """
 # IA-Influencer Alert Rules
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -594,5 +600,5 @@ groups:
             yaml.dump(service_config, f, default_flow_style=False)
         files_created.append(str(compose_config_path))
         
-        logger.info(f"✅ Monitoring Stack configuration files saved: {files_created}")
+        logger.info(f" Monitoring Stack configuration files saved: {files_created}")
         return files_created

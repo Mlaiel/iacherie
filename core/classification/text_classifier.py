@@ -12,7 +12,7 @@ Copyright © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, modification, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing and collaboration.
 
-⚠️ STRONG WARNING: This code and concept are the exclusive property of Fahed Mlaiel.
+ STRONG WARNING: This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted
 to the full extent of the law.
@@ -86,6 +86,9 @@ class TextContentClassifier:
 
     def _load_models(self, model_path: Optional[str]):
         """Load and initialize NLP models."""
+
+
+
         try:
             # BERT for general text understanding
             self.bert_tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
@@ -179,6 +182,9 @@ class TextContentClassifier:
         Returns:
             Classification results with confidence scores
         """
+
+
+
         try:
             if not text or not isinstance(text, str):
                 raise ClassificationError("Invalid text input")
@@ -228,6 +234,9 @@ class TextContentClassifier:
 
     def _get_basic_stats(self, text: str) -> Dict[str, Any]:
         """Extract basic text statistics."""
+
+
+
         try:
             words = text.split()
             sentences = text.split('.')
@@ -250,6 +259,9 @@ class TextContentClassifier:
 
     def _classify_content_type(self, text: str) -> Dict[str, Any]:
         """Classify the type of text content."""
+
+
+
         try:
             text_lower = text.lower()
             
@@ -301,6 +313,9 @@ class TextContentClassifier:
 
     def _classify_language(self, text: str) -> Dict[str, Any]:
         """Detect and classify language of the text."""
+
+
+
         try:
             # Use langdetect for primary language detection
             detected_lang = langdetect.detect(text)
@@ -348,6 +363,9 @@ class TextContentClassifier:
 
     def _analyze_sentiment(self, text: str) -> Dict[str, Any]:
         """Analyze sentiment and emotional tone of the text."""
+
+
+
         try:
             results = {}
             
@@ -388,6 +406,9 @@ class TextContentClassifier:
 
     def _analyze_emotions(self, text: str) -> Dict[str, Any]:
         """Analyze emotions expressed in the text."""
+
+
+
         try:
             # Use emotion classification model
             emotion_result = self.emotion_analyzer(text[:512])
@@ -434,6 +455,9 @@ class TextContentClassifier:
 
     def _detect_genre(self, text: str) -> Dict[str, Any]:
         """Detect music genre or content theme."""
+
+
+
         try:
             text_lower = text.lower()
             
@@ -498,6 +522,9 @@ class TextContentClassifier:
 
     def _extract_keywords(self, text: str) -> Dict[str, Any]:
         """Extract keywords and important terms from text."""
+
+
+
         try:
             # Simple frequency-based keywords
             words = re.findall(r'\b[a-zA-Z]{3,}\b', text.lower())
@@ -542,6 +569,9 @@ class TextContentClassifier:
 
     def _extract_entities(self, text: str) -> Dict[str, Any]:
         """Extract named entities from text."""
+
+
+
         try:
             if not self.nlp:
                 return {'entity_extraction': {'entities': [], 'entity_types': {}}}
@@ -592,6 +622,9 @@ class TextContentClassifier:
 
     def _extract_topics(self, text: str) -> Dict[str, Any]:
         """Extract main topics and themes from text."""
+
+
+
         try:
             # Simple topic detection based on keywords
             topic_keywords = {
@@ -632,6 +665,9 @@ class TextContentClassifier:
 
     def _assess_quality(self, text: str) -> Dict[str, Any]:
         """Assess the overall quality of the text."""
+
+
+
         try:
             # Basic quality metrics
             quality_metrics = {
@@ -667,6 +703,9 @@ class TextContentClassifier:
 
     def _assess_readability(self, text: str) -> Dict[str, Any]:
         """Assess text readability using various metrics."""
+
+
+
         try:
             # Flesch Reading Ease
             flesch_ease = flesch_reading_ease(text)
@@ -714,6 +753,9 @@ class TextContentClassifier:
 
     def _generate_text_hashes(self, text: str) -> Dict[str, str]:
         """Generate hash signatures for similarity matching."""
+
+
+
         try:
             hashes = {}
             
@@ -745,6 +787,9 @@ class TextContentClassifier:
 
     def _advanced_analysis(self, text: str) -> Dict[str, Any]:
         """Perform advanced text analysis."""
+
+
+
         try:
             # Text complexity analysis
             complexity = self._analyze_text_complexity(text)
@@ -777,6 +822,9 @@ class TextContentClassifier:
 
     def _calculate_sentiment_strength(self, roberta_result: Dict, vader_result: Dict) -> float:
         """Calculate combined sentiment strength."""
+
+
+
         try:
             roberta_strength = roberta_result.get('confidence', 0)
             vader_strength = abs(vader_result.get('compound', 0)) if vader_result else 0
@@ -820,6 +868,9 @@ class TextContentClassifier:
 
     def _estimate_grammar_quality(self, text: str) -> float:
         """Estimate grammar quality based on heuristics."""
+
+
+
         try:
             # Simple grammar checks
             score = 1.0
@@ -848,6 +899,9 @@ class TextContentClassifier:
 
     def _estimate_coherence(self, text: str) -> float:
         """Estimate text coherence based on semantic similarity between sentences."""
+
+
+
         try:
             sentences = [s.strip() for s in text.split('.') if s.strip()]
             
@@ -871,6 +925,9 @@ class TextContentClassifier:
 
     def _estimate_spelling_quality(self, text: str) -> float:
         """Estimate spelling quality based on word patterns."""
+
+
+
         try:
             words = re.findall(r'\b[a-zA-Z]+\b', text)
             if not words:
@@ -915,6 +972,9 @@ class TextContentClassifier:
 
     def _analyze_text_complexity(self, text: str) -> Dict[str, Any]:
         """Analyze text complexity."""
+
+
+
         try:
             words = text.split()
             sentences = text.split('.')
@@ -939,6 +999,9 @@ class TextContentClassifier:
 
     def _analyze_writing_style(self, text: str) -> Dict[str, Any]:
         """Analyze writing style characteristics."""
+
+
+
         try:
             # Style indicators
             exclamation_count = text.count('!')
@@ -983,6 +1046,9 @@ class TextContentClassifier:
 
     def _assess_copyright_risk(self, text: str) -> Dict[str, Any]:
         """Assess potential copyright infringement risk."""
+
+
+
         try:
             # Look for indicators of copyrighted content
             copyright_indicators = [
@@ -1038,6 +1104,9 @@ class TextContentClassifier:
         Returns:
             Similarity analysis results
         """
+
+
+
         try:
             # Clean texts
             clean_text1 = self.text_processor.clean_text(text1)
@@ -1100,6 +1169,9 @@ class TextContentClassifier:
 
     def get_classification_summary(self, results: Dict[str, Any]) -> str:
         """Generate a human-readable summary of classification results."""
+
+
+
         try:
             summary_parts = []
             

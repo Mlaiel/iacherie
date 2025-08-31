@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-⚠️  AVERTISSEMENT STRICT ⚠️
+  AVERTISSEMENT STRICT 
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Propriété intellectuelle de Fahed Mlaiel (mlaiel@live.de).
 """
@@ -71,6 +71,9 @@ class CPUMetrics:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return asdict(self)
 
 
@@ -92,6 +95,9 @@ class MemoryMetrics:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return asdict(self)
 
 
@@ -112,6 +118,9 @@ class DiskMetrics:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return asdict(self)
 
 
@@ -129,6 +138,9 @@ class NetworkMetrics:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return asdict(self)
 
 
@@ -147,6 +159,9 @@ class DatabaseResourceMetrics:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return asdict(self)
 
 
@@ -253,6 +268,9 @@ class ResourceMonitor:
     
     async def _establish_baseline(self) -> None:
         """Establish baseline resource metrics"""
+
+
+
         try:
             baseline_snapshots = []
             
@@ -273,6 +291,9 @@ class ResourceMonitor:
     
     async def _collect_resource_snapshot(self) -> Optional[ResourceSnapshot]:
         """Collect comprehensive resource snapshot"""
+
+
+
         try:
             timestamp = datetime.utcnow()
             
@@ -315,6 +336,9 @@ class ResourceMonitor:
     
     async def _collect_cpu_metrics(self) -> CPUMetrics:
         """Collect CPU utilization metrics"""
+
+
+
         try:
             # Get CPU times
             cpu_times = psutil.cpu_times()
@@ -365,6 +389,9 @@ class ResourceMonitor:
     
     async def _collect_memory_metrics(self) -> MemoryMetrics:
         """Collect memory utilization metrics"""
+
+
+
         try:
             memory = psutil.virtual_memory()
             swap = psutil.swap_memory()
@@ -399,6 +426,9 @@ class ResourceMonitor:
     
     async def _collect_disk_metrics(self) -> DiskMetrics:
         """Collect disk I/O and storage metrics"""
+
+
+
         try:
             # Get disk usage for database data directory
             data_dir = getattr(self.settings, 'database_data_dir', '/')
@@ -450,6 +480,9 @@ class ResourceMonitor:
     
     async def _collect_network_metrics(self) -> NetworkMetrics:
         """Collect network utilization metrics"""
+
+
+
         try:
             network_io = psutil.net_io_counters()
             
@@ -503,6 +536,9 @@ class ResourceMonitor:
     
     async def _collect_database_metrics(self) -> DatabaseResourceMetrics:
         """Collect database-specific resource metrics"""
+
+
+
         try:
             async with get_database_session() as session:
                 # Get database configuration
@@ -563,6 +599,9 @@ class ResourceMonitor:
     
     def _parse_pg_size(self, size_str: str) -> float:
         """Parse PostgreSQL size string to MB"""
+
+
+
         try:
             if not size_str:
                 return 0.0
@@ -749,6 +788,9 @@ class ResourceMonitor:
     
     async def _process_snapshot(self, snapshot: ResourceSnapshot) -> None:
         """Process resource snapshot"""
+
+
+
         try:
             # Store in history
             self.resource_history.append(snapshot)
@@ -769,6 +811,9 @@ class ResourceMonitor:
     
     async def _send_resource_alert(self, snapshot: ResourceSnapshot) -> None:
         """Send resource alert"""
+
+
+
         try:
             alert = {
                 "type": "resource_alert",
@@ -840,6 +885,9 @@ class ResourceMonitor:
     
     async def get_resource_summary(self) -> Dict[str, Any]:
         """Get current resource summary"""
+
+
+
         try:
             if not self.resource_history:
                 return {"error": "No resource data available", "monitoring_active": self.monitoring_active}
@@ -870,6 +918,9 @@ class ResourceMonitor:
     
     async def get_resource_history(self, hours: int = 24) -> List[Dict[str, Any]]:
         """Get resource history"""
+
+
+
         try:
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             
@@ -886,6 +937,9 @@ class ResourceMonitor:
     
     async def get_capacity_planning_report(self) -> Dict[str, Any]:
         """Generate capacity planning report"""
+
+
+
         try:
             if len(self.resource_history) < 100:  # Need sufficient data
                 return {"error": "Insufficient data for capacity planning"}
@@ -957,6 +1011,9 @@ class ResourceMonitor:
     
     def _project_capacity(self, trend: float, threshold: float) -> Dict[str, Any]:
         """Project when capacity threshold will be reached"""
+
+
+
         try:
             if trend <= 0:
                 return {"days_to_threshold": None, "action_needed": False}

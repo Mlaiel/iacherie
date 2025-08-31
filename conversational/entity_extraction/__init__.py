@@ -6,7 +6,7 @@ entity recognition with business intelligence and monetization insights.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
@@ -255,14 +255,23 @@ FEATURES = {
 }
 
 def get_feature_status() -> dict:
-    """Get the status of all module features"""    return FEATURES.copy()
+    """Get the status of all module features"""
+
+
+    return FEATURES.copy()
 
 def is_feature_enabled(feature_name: str) -> bool:
-    """Check if a specific feature is enabled"""    return FEATURES.get(feature_name, False)
+    """Check if a specific feature is enabled"""
+
+
+    return FEATURES.get(feature_name, False)
 
 # Module statistics
 def get_module_stats() -> dict:
-    """Get comprehensive module statistics"""    return {
+    """Get comprehensive module statistics"""
+
+
+    return {
         'version': __version__,
         'author': __author__,
         'features_enabled': sum(FEATURES.values()),
@@ -346,18 +355,18 @@ __all__.extend([
 ])
 
 # Module banner
-BANNER = f"""╔══════════════════════════════════════════════════════════════════════════════╗
-║                    IA Influencer Agent - Entity Extraction                  ║
-║                                Version {__version__}                                 ║
-║                                                                              ║
-║  Advanced AI-powered entity extraction for content creators and influencers ║
-║  with business intelligence, monetization analysis, and collaboration tools  ║
-║                                                                              ║
-║  Author: {__author__}                                           ║
-║  Copyright: {__copyright__}                     ║
-║                                                                              ║
-║  ⚠️  WARNING: This is proprietary software. Unauthorized use prohibited.    ║
-╚══════════════════════════════════════════════════════════════════════════════╝
+BANNER = f"""
+                    IA Influencer Agent - Entity Extraction                  
+                                Version {__version__}                                 
+                                                                              
+  Advanced AI-powered entity extraction for content creators and influencers 
+  with business intelligence, monetization analysis, and collaboration tools  
+                                                                              
+  Author: {__author__}                                           
+  Copyright: {__copyright__}                     
+                                                                              
+    WARNING: This is proprietary software. Unauthorized use prohibited.    
+
 """
 # Print banner on import (only in development)
 import os

@@ -36,14 +36,14 @@ try:
     import aiohttp
     import cryptography
     import pytest_asyncio
-    print("✓ All required dependencies are installed:")
+    print(" All required dependencies are installed:")
     print(f"  - passlib: {passlib.__version__}")
     print(f"  - pydantic-settings: Available")
     print(f"  - aiohttp: {aiohttp.__version__}")
     print(f"  - cryptography: {cryptography.__version__}")
     print(f"  - pytest-asyncio: Available")
 except ImportError as e:
-    print(f"❌ Missing dependency: {e}")
+    print(f" Missing dependency: {e}")
     sys.exit(1)
 
 # Create basic FastAPI app
@@ -72,7 +72,7 @@ async def health_check():
     )
 
 if __name__ == "__main__":
-    print("🚀 Starting basic Ainflue FastAPI test server...")
+    print(" Starting basic Ainflue FastAPI test server...")
     try:
         uvicorn.run(
             app,

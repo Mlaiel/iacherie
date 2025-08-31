@@ -1,11 +1,11 @@
-"""🐳 Containers Module - IA-Influencer-Agent Deployment Infrastructure
+""" Containers Module - IA-Influencer-Agent Deployment Infrastructure
 =====================================================================
 Expert Team: DevOps Engineer + Cloud Architect + Security Engineer
 Creator: Fahed Mlaiel <mlaiel@live.de>
 Company: IA-Influencer-Agent Professional Platform
 =====================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL 
 Tout vol, copie ou utilisation non autorisée de ce code source,
 de ce concept ou de cette propriété intellectuelle sans
 l'autorisation écrite explicite de Fahed Mlaiel est strictement

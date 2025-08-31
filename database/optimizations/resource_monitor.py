@@ -305,6 +305,9 @@ class ResourceMonitor:
     
     async def start_monitoring(self, database_engine: Optional[AsyncEngine] = None) -> None:
         """Start resource monitoring"""
+
+
+
         try:
             self._database_engine = database_engine
             
@@ -416,6 +419,9 @@ class ResourceMonitor:
     
     async def _collect_database_metrics(self, metrics: ResourceMetrics) -> None:
         """Collect database-specific metrics"""
+
+
+
         try:
             async with self._database_engine.begin() as conn:
                 # Connection stats
@@ -576,6 +582,9 @@ class ResourceMonitor:
     
     async def _send_metrics(self, metrics: ResourceMetrics) -> None:
         """Send metrics to monitoring system"""
+
+
+
         try:
             # System metrics
             self.metrics_collector.gauge("system_cpu_percent", metrics.cpu_percent)
@@ -612,6 +621,9 @@ class ResourceMonitor:
     
     def get_current_metrics(self) -> Optional[ResourceMetrics]:
         """Get the most recent metrics"""
+
+
+
         return self._metrics_history[-1] if self._metrics_history else None
     
     def get_metrics_history(self, hours: int = 1) -> List[ResourceMetrics]:
@@ -624,6 +636,9 @@ class ResourceMonitor:
     
     def get_active_alerts(self) -> List[ResourceAlert]:
         """Get all active alerts"""
+
+
+
         return list(self._active_alerts.values())
     
     def get_alert_history(self, hours: int = 24) -> List[ResourceAlert]:
@@ -636,6 +651,9 @@ class ResourceMonitor:
     
     def get_resource_trends(self) -> Dict[ResourceType, ResourceTrend]:
         """Get current resource trends"""
+
+
+
         return self.predictor.get_all_trends()
     
     async def get_resource_summary(self) -> Dict[str, Any]:

@@ -59,6 +59,9 @@ class VideoFingerprintEngine:
     def extract_fingerprint(self, video_file_path: str, 
                            sample_rate: int = 1) -> VideoFingerprint:
         """Extract comprehensive video fingerprint from file"""
+
+
+
         try:
             cap = cv2.VideoCapture(video_file_path)
             if not cap.isOpened():
@@ -141,6 +144,9 @@ class VideoFingerprintEngine:
             
     def _compute_frame_hash(self, frame: np.ndarray) -> str:
         """Compute hash for a single frame"""
+
+
+
         try:
             # Convert to grayscale
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -163,6 +169,9 @@ class VideoFingerprintEngine:
     def _compute_motion_vector(self, prev_frame: np.ndarray, 
                              curr_frame: np.ndarray) -> float:
         """Compute motion vector between two frames"""
+
+
+
         try:
             # Convert to grayscale
             prev_gray = cv2.cvtColor(prev_frame, cv2.COLOR_BGR2GRAY)
@@ -191,6 +200,9 @@ class VideoFingerprintEngine:
             
     def _detect_objects(self, frame: np.ndarray) -> List[Dict]:
         """Detect objects in frame using YOLO"""
+
+
+
         try:
             if not self.yolo_model:
                 return []
@@ -216,6 +228,9 @@ class VideoFingerprintEngine:
             
     def _compute_perceptual_hash(self, frame_hashes: List[str]) -> str:
         """Compute overall perceptual hash from frame hashes"""
+
+
+
         try:
             if not frame_hashes:
                 return ""
@@ -235,6 +250,9 @@ class VideoFingerprintEngine:
             
     def _compute_temporal_signature(self, motion_vectors: List[float]) -> str:
         """Compute temporal signature from motion vectors"""
+
+
+
         try:
             if not motion_vectors:
                 return ""
@@ -261,6 +279,9 @@ class VideoFingerprintEngine:
     def _calculate_confidence(self, frames_processed: int, duration: float, 
                             object_count: int) -> float:
         """Calculate confidence score based on video quality metrics"""
+
+
+
         try:
             # Frame coverage (more frames = better confidence)
             frame_score = min(1.0, frames_processed / 100.0)
@@ -284,6 +305,9 @@ class VideoFingerprintEngine:
     def compare_fingerprints(self, fp1: VideoFingerprint, 
                            fp2: VideoFingerprint) -> float:
         """Compare two video fingerprints and return similarity score (0-1)"""
+
+
+
         try:
             scores = []
             
@@ -323,6 +347,9 @@ class VideoFingerprintEngine:
             
     def _compare_frame_hashes(self, hashes1: List[str], hashes2: List[str]) -> float:
         """Compare frame hash sequences"""
+
+
+
         try:
             if not hashes1 or not hashes2:
                 return 0.0
@@ -343,6 +370,9 @@ class VideoFingerprintEngine:
             
     def _compare_motion_vectors(self, motion1: np.ndarray, motion2: np.ndarray) -> float:
         """Compare motion vector patterns"""
+
+
+
         try:
             if len(motion1) == 0 or len(motion2) == 0:
                 return 0.0
@@ -364,6 +394,9 @@ class VideoFingerprintEngine:
             
     def _compare_object_signatures(self, objects1: List[Dict], objects2: List[Dict]) -> float:
         """Compare object detection signatures"""
+
+
+
         try:
             if not objects1 or not objects2:
                 return 0.0 if not objects1 and not objects2 else 0.0

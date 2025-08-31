@@ -12,7 +12,7 @@ revenue tracking, and cross-platform data synchronization.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 Unauthorized use, copying, modification, or distribution of this code
 without explicit written permission from Fahed Mlaiel is strictly prohibited.
 Violations will be prosecuted under German and international copyright law.
@@ -246,22 +246,37 @@ class StreamsRegistry:
         
     def get_manager(self, name: str) -> Optional[DataStreamManager]:
         """Get registered stream manager by name"""
+
+
+
         return self._managers.get(name)
         
     def get_processor(self, name: str) -> Optional[RealTimeProcessor]:
         """Get registered processor by name"""
+
+
+
         return self._processors.get(name)
         
     def get_streamer(self, name: str) -> Optional[Any]:
         """Get registered streamer by name"""
+
+
+
         return self._streamers.get(name)
         
     def get_monitor(self, name: str) -> Optional[StreamMonitor]:
         """Get registered monitor by name"""
+
+
+
         return self._monitors.get(name)
         
     def list_components(self) -> Dict[str, List[str]]:
         """List all registered components"""
+
+
+
         return {
             "managers": list(self._managers.keys()),
             "processors": list(self._processors.keys()),
@@ -519,6 +534,9 @@ __all__ = [
 # Module initialization
 def get_module_info() -> Dict[str, Any]:
     """Get module information and metadata"""
+
+
+
     return {
         "name": "Data Streams Management Module",
         "version": __version__,
@@ -550,5 +568,5 @@ logger.info(f"Author: {__author__} ({__email__})")
 logger.info(f"Components available: {len(__all__)}")
 
 # Legal notice logging
-logger.warning("⚠️  LEGAL WARNING: This code is proprietary and protected by copyright.")
-logger.warning("📧 Contact mlaiel@live.de for licensing inquiries.")
+logger.warning("  LEGAL WARNING: This code is proprietary and protected by copyright.")
+logger.warning(" Contact mlaiel@live.de for licensing inquiries.")

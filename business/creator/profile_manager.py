@@ -12,7 +12,7 @@ Project: IA Influencer Agent + Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL WARNING:
+ CRITICAL LEGAL WARNING:
 This code, concept, and intellectual property are exclusively owned by Fahed Mlaiel.
 Any unauthorized use, copying, distribution, reverse engineering, or commercialization 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
@@ -276,6 +276,9 @@ class CreatorProfile(BaseModel):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert profile to dictionary format"""
+
+
+
         return {
             "creator_id": self.creator_id,
             "user_id": self.user_id,
@@ -359,6 +362,9 @@ class CreatorProfileManager:
         Raises:
             HTTPException: If profile creation fails
         """
+
+
+
         try:
             self.logger.info(f"Creating creator profile for user {user_id}")
             
@@ -455,6 +461,9 @@ class CreatorProfileManager:
         Returns:
             CreatorProfile or None if not found
         """
+
+
+
         try:
             # Check cache first
             cache_key = f"creator_profile:{identifier_type}:{profile_identifier}"
@@ -502,6 +511,9 @@ class CreatorProfileManager:
         Returns:
             Updated CreatorProfile or None if not found
         """
+
+
+
         try:
             profile = await self.get_creator_profile(creator_id)
             if not profile:
@@ -557,6 +569,9 @@ class CreatorProfileManager:
         Returns:
             True if successful, False otherwise
         """
+
+
+
         try:
             profile = await self.get_creator_profile(creator_id)
             if not profile:
@@ -599,6 +614,9 @@ class CreatorProfileManager:
         Returns:
             True if successful, False otherwise
         """
+
+
+
         try:
             profile = await self.get_creator_profile(creator_id)
             if not profile:
@@ -650,6 +668,9 @@ class CreatorProfileManager:
         Returns:
             True if successful, False otherwise
         """
+
+
+
         try:
             profile = await self.get_creator_profile(creator_id)
             if not profile:
@@ -694,6 +715,9 @@ class CreatorProfileManager:
         Returns:
             List of matching creator profiles
         """
+
+
+
         try:
             # Build query
             query = select(CreatorProfile)
@@ -745,6 +769,9 @@ class CreatorProfileManager:
         Returns:
             Analytics data dictionary
         """
+
+
+
         try:
             profile = await self.get_creator_profile(creator_id)
             if not profile:
@@ -826,6 +853,9 @@ class CreatorProfileManager:
     
     async def _cache_profile(self, profile: CreatorProfile) -> None:
         """Cache profile data"""
+
+
+
         try:
             profile_dict = profile.to_dict()
             
@@ -849,6 +879,9 @@ class CreatorProfileManager:
     
     async def _calculate_completion_score(self, profile: CreatorProfile) -> float:
         """Calculate profile completion score"""
+
+
+
         try:
             score = 0.0
             total_fields = 20
@@ -897,6 +930,9 @@ class CreatorProfileManager:
     
     async def _calculate_quality_score(self, profile: CreatorProfile) -> float:
         """Calculate profile quality score"""
+
+
+
         try:
             score = 0.0
             
@@ -940,6 +976,9 @@ class CreatorProfileManager:
     
     async def _initialize_ai_profile(self, profile: CreatorProfile) -> None:
         """Initialize AI personalization profile"""
+
+
+
         try:
             # Create corresponding AI profile for personalization
             # This would integrate with the AI personalization system

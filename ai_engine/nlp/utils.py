@@ -7,7 +7,7 @@ for the NLP processing pipeline.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
 
@@ -233,6 +233,9 @@ class TextCleaner:
     
     def _normalize_unicode(self, text: str) -> str:
         """Normalize unicode characters"""
+
+
+
         return unicodedata.normalize('NFKC', text)
     
     def _decode_html_entities(self, text: str) -> str:
@@ -247,6 +250,9 @@ class TextCleaner:
     
     def _normalize_whitespace(self, text: str) -> str:
         """Normalize whitespace"""
+
+
+
         return self.whitespace_pattern.sub(' ', text)
     
     def _normalize_social_elements(self, text: str) -> str:
@@ -728,6 +734,9 @@ class DateTimeUtils:
     def is_optimal_posting_time(platform: Platform, dt: datetime, 
                                timezone_str: str = 'UTC') -> bool:
         """Check if given time is optimal for posting"""
+
+
+
         try:
             # Convert to specified timezone
             if timezone_str != 'UTC':
@@ -921,8 +930,8 @@ def generate_variations(text: str, num_variations: int = 3) -> List[str]:
         variations.append(variation1)
     
     # Variation 2: Add emojis
-    if '✨' not in text:
-        variation2 = text + ' ✨'
+    if '' not in text:
+        variation2 = text + ' '
         variations.append(variation2)
     
     # Variation 3: Different capitalization

@@ -1,5 +1,5 @@
 """
-🌐 CDN Storage Provider - IA Influencer Agent Platform Enterprise
+ CDN Storage Provider - IA Influencer Agent Platform Enterprise
 ================================================================
 Module: backend/data_management/storage/cdn_storage.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Global CDN storage provider for content distribution with edge caching,
 geographic optimization, and real-time analytics for content creators.
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -296,6 +296,9 @@ class CDNStorageManager:
         patterns: Optional[List[str]] = None
     ) -> Dict[str, Any]:
         """Purge content from CDN cache"""
+
+
+
         try:
             # Determine what to purge
             purge_targets = []
@@ -341,6 +344,9 @@ class CDNStorageManager:
         end_date: Optional[datetime] = None
     ) -> Dict[str, Any]:
         """Get CDN analytics and performance metrics"""
+
+
+
         try:
             # Default to last 24 hours if no dates specified
             if not end_date:
@@ -381,6 +387,9 @@ class CDNStorageManager:
         prefix: Optional[str] = None
     ) -> List[Dict[str, Any]]:
         """List content distributed in CDN"""
+
+
+
         try:
             content_list = []
             
@@ -422,6 +431,9 @@ class CDNStorageManager:
         - Cache-optimized headers
         - Performance analytics
         """
+
+
+
         try:
             optimization_result = {
                 'original_size': len(content_data),
@@ -465,6 +477,9 @@ class CDNStorageManager:
     
     async def _optimize_css_content(self, css_data: bytes, optimization_level: str) -> Dict[str, Any]:
         """Optimize CSS content"""
+
+
+
         try:
             css_text = css_data.decode('utf-8')
             
@@ -523,6 +538,9 @@ class CDNStorageManager:
     
     async def _optimize_js_content(self, js_data: bytes, optimization_level: str) -> Dict[str, Any]:
         """Optimize JavaScript content"""
+
+
+
         try:
             js_text = js_data.decode('utf-8')
             
@@ -581,6 +599,9 @@ class CDNStorageManager:
     
     async def _optimize_image_content_cdn(self, image_data: bytes, optimization_level: str) -> Dict[str, Any]:
         """Optimize image content for CDN delivery"""
+
+
+
         try:
             # Use the image optimizer if available
             try:
@@ -639,6 +660,9 @@ class CDNStorageManager:
     
     async def _optimize_html_content(self, html_data: bytes, optimization_level: str) -> Dict[str, Any]:
         """Optimize HTML content"""
+
+
+
         try:
             html_text = html_data.decode('utf-8')
             
@@ -692,6 +716,9 @@ class CDNStorageManager:
     
     async def _optimize_generic_content_enhanced(self, content_data: bytes, optimization_level: str) -> Dict[str, Any]:
         """Enhanced generic content optimization"""
+
+
+
         try:
             # Apply compression
             import gzip
@@ -759,6 +786,9 @@ class CDNStorageManager:
         optimization_options: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Apply additional content optimizations"""
+
+
+
         try:
             if content_hash not in self.content_cache:
                 return {
@@ -798,6 +828,9 @@ class CDNStorageManager:
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Upload content to Cloudflare"""
+
+
+
         try:
             urls = []
             
@@ -931,6 +964,9 @@ class CDNStorageManager:
     
     async def _convert_to_webp(self, image_content: bytes) -> Optional[bytes]:
         """Convert image to WebP format"""
+
+
+
         try:
             from PIL import Image
             import io
@@ -950,6 +986,9 @@ class CDNStorageManager:
     
     async def _compress_image(self, image_content: bytes) -> Optional[bytes]:
         """Compress image with quality optimization"""
+
+
+
         try:
             from PIL import Image
             import io
@@ -986,6 +1025,9 @@ class CDNStorageManager:
     
     async def _compress_content(self, content: bytes) -> Optional[bytes]:
         """Apply general content compression"""
+
+
+
         try:
             import gzip
             
@@ -1068,6 +1110,9 @@ class CDNStorageManager:
         content_type: str
     ) -> None:
         """Configure CDN caching policies"""
+
+
+
         try:
             # Different caching strategies based on content type
             if content_type in ['image', 'audio', 'video']:
@@ -1132,6 +1177,9 @@ class CDNStorageManager:
         end_date: datetime
     ) -> Dict[str, Any]:
         """Get generic CDN analytics"""
+
+
+
         return {
             'requests': 0,
             'bandwidth': 0,
@@ -1175,6 +1223,9 @@ class CDNStorageManager:
         patterns: Optional[List[str]]
     ) -> Dict[str, Any]:
         """Purge generic CDN cache"""
+
+
+
         return {'success': True}
     
     # Content optimization methods (provider-specific)
@@ -1185,6 +1236,9 @@ class CDNStorageManager:
         options: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Optimize image content"""
+
+
+
         return {'success': True, 'optimizations_applied': []}
     
     async def _optimize_video_content(
@@ -1193,6 +1247,9 @@ class CDNStorageManager:
         options: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Optimize video content"""
+
+
+
         return {'success': True, 'optimizations_applied': []}
     
     async def _optimize_audio_content(
@@ -1201,6 +1258,9 @@ class CDNStorageManager:
         options: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Optimize audio content"""
+
+
+
         return {'success': True, 'optimizations_applied': []}
     
     async def _optimize_generic_content(
@@ -1209,10 +1269,16 @@ class CDNStorageManager:
         options: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Optimize generic content"""
+
+
+
         return {'success': True, 'optimizations_applied': []}
     
     def _calculate_performance_summary(self, analytics: Dict[str, Any]) -> Dict[str, Any]:
         """Calculate performance summary from analytics"""
+
+
+
         return {
             'total_requests': analytics.get('requests', 0),
             'total_bandwidth': analytics.get('bandwidth', 0),

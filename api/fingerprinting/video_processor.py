@@ -53,6 +53,9 @@ class VideoFingerprintProcessor:
         
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default configuration for video processing"""
+
+
+
         return {
             'sample_frames': 30,
             'keyframe_threshold': 0.3,
@@ -72,6 +75,9 @@ class VideoFingerprintProcessor:
         Returns:
             VideoFingerprint object with extracted features
         """
+
+
+
         try:
             # Load video file asynchronously
             loop = asyncio.get_event_loop()
@@ -323,6 +329,9 @@ class VideoFingerprintProcessor:
     
     def _extract_metadata(self, file_path: Path) -> Dict[str, Any]:
         """Extract file metadata"""
+
+
+
         return {
             'filename': file_path.name,
             'file_size': file_path.stat().st_size,
@@ -341,6 +350,9 @@ class VideoFingerprintProcessor:
         Returns:
             Similarity score between 0 and 1
         """
+
+
+
         try:
             # Content hash exact match
             if fp1.content_hash == fp2.content_hash:
@@ -411,6 +423,9 @@ class VideoFingerprintProcessor:
     
     def _cosine_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
         """Calculate cosine similarity between two vectors"""
+
+
+
         try:
             if len(vec1) != len(vec2):
                 return 0.0

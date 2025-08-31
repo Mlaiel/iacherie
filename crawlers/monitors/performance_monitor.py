@@ -122,6 +122,9 @@ class ResourceMonitor:
         
     async def collect_system_metrics(self) -> ResourceMetrics:
         """Collect comprehensive system metrics."""
+
+
+
         try:
             # CPU metrics
             cpu_percent = psutil.cpu_percent(interval=1)
@@ -247,6 +250,9 @@ class PerformanceMonitor(MonitorEngine):
     
     async def initialize(self) -> bool:
         """Initialize performance monitoring engine."""
+
+
+
         try:
             logger.info("Initializing performance monitor...")
             
@@ -262,6 +268,9 @@ class PerformanceMonitor(MonitorEngine):
     
     async def start_monitoring(self, targets: List[Any]) -> bool:
         """Start performance monitoring operations."""
+
+
+
         try:
             logger.info("Starting performance monitoring...")
             
@@ -284,6 +293,9 @@ class PerformanceMonitor(MonitorEngine):
     
     async def stop_monitoring(self) -> bool:
         """Stop performance monitoring operations."""
+
+
+
         try:
             await self.cleanup()
             return True
@@ -337,6 +349,9 @@ class PerformanceMonitor(MonitorEngine):
     
     async def _process_performance_event(self, event: Dict[str, Any]) -> None:
         """Process individual performance event."""
+
+
+
         try:
             event_type = event.get("type", "")
             
@@ -430,6 +445,9 @@ class PerformanceMonitor(MonitorEngine):
     
     async def _collect_application_metrics(self) -> PerformanceMetrics:
         """Collect application-specific performance metrics."""
+
+
+
         try:
             # Calculate metrics from stored history
             response_times = list(self.performance_history["response_time"])[-100:]

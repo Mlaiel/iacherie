@@ -1,5 +1,5 @@
 """
-🎵 Speech Synthesis Engine - Advanced Text-to-Speech and Voice Generation
+ Speech Synthesis Engine - Advanced Text-to-Speech and Voice Generation
 
 This module implements state-of-the-art speech synthesis technologies including
 neural TTS, voice cloning, and emotional speech generation.
@@ -7,7 +7,7 @@ neural TTS, voice cloning, and emotional speech generation.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ LEGAL WARNING: Unauthorized use prohibited. Contact mlaiel@live.de for licensing.
+ LEGAL WARNING: Unauthorized use prohibited. Contact mlaiel@live.de for licensing.
 """
 
 import torch
@@ -128,6 +128,9 @@ class TextPreprocessor:
         
     def _load_abbreviations(self) -> Dict[str, str]:
         """Load common abbreviations for expansion."""
+
+
+
         return {
             "Dr.": "Doctor",
             "Mr.": "Mister",
@@ -145,6 +148,9 @@ class TextPreprocessor:
         
     def _build_number_patterns(self) -> Dict[str, Any]:
         """Build number processing patterns."""
+
+
+
         return {
             'currency': re.compile(r'\$(\d+(?:\.\d{2})?)', re.IGNORECASE),
             'percentage': re.compile(r'(\d+(?:\.\d+)?)%'),
@@ -285,6 +291,9 @@ class TextPreprocessor:
         
     def text_to_phonemes(self, text: str) -> str:
         """Convert text to phonemes."""
+
+
+
         try:
             phonemes = phonemizer.phonemize(
                 text,
@@ -688,6 +697,9 @@ class VoiceCloningEngine:
         
     def _build_speaker_encoder(self) -> nn.Module:
         """Build speaker encoder network."""
+
+
+
         return nn.Sequential(
             nn.Conv1d(self.config.n_mels, 256, 3, padding=1),
             nn.ReLU(),
@@ -755,6 +767,9 @@ class EmotionalSpeechSynthesis:
         
     def _build_emotion_models(self) -> Dict[VoiceEmotion, Dict[str, float]]:
         """Build emotion parameter models."""
+
+
+
         return {
             VoiceEmotion.NEUTRAL: {
                 'pitch_shift': 0.0,

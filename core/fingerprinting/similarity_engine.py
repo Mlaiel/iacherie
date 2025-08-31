@@ -89,6 +89,9 @@ class SimilarityEngine:
     
     def _initialize_indices(self):
         """Initialize FAISS indices for each content type"""
+
+
+
         try:
             for content_type in [ContentType.AUDIO, ContentType.VIDEO, ContentType.IMAGE]:
                 index_id = f"{content_type.value}_index"
@@ -141,6 +144,9 @@ class SimilarityEngine:
         Returns:
             True if successful, False otherwise
         """
+
+
+
         try:
             if not fingerprint.success:
                 logger.warning(f"Skipping failed fingerprint: {fingerprint.request_id}")
@@ -175,6 +181,9 @@ class SimilarityEngine:
     
     async def _fingerprint_to_vector(self, fingerprint: FingerprintResult) -> Optional[np.ndarray]:
         """Convert fingerprint data to vector representation"""
+
+
+
         try:
             methods_data = fingerprint.fingerprint_data.get('methods', {})
             
@@ -197,6 +206,9 @@ class SimilarityEngine:
     
     async def _audio_fingerprint_to_vector(self, methods_data: Dict) -> Optional[np.ndarray]:
         """Convert audio fingerprint to vector"""
+
+
+
         try:
             features = []
             
@@ -264,6 +276,9 @@ class SimilarityEngine:
     
     async def _video_fingerprint_to_vector(self, methods_data: Dict) -> Optional[np.ndarray]:
         """Convert video fingerprint to vector"""
+
+
+
         try:
             features = []
             
@@ -339,6 +354,9 @@ class SimilarityEngine:
     
     async def _image_fingerprint_to_vector(self, methods_data: Dict) -> Optional[np.ndarray]:
         """Convert image fingerprint to vector"""
+
+
+
         try:
             features = []
             
@@ -443,6 +461,9 @@ class SimilarityEngine:
     
     def _hash_to_features(self, hash_str: str, target_length: int) -> List[float]:
         """Convert hash string to numeric features"""
+
+
+
         try:
             if not hash_str:
                 return [0.0] * target_length
@@ -463,6 +484,9 @@ class SimilarityEngine:
     
     def _normalize_features(self, features: List[float], target_length: int) -> List[float]:
         """Normalize and pad/truncate features to target length"""
+
+
+
         try:
             if not features:
                 return [0.0] * target_length
@@ -491,6 +515,9 @@ class SimilarityEngine:
         fingerprint: FingerprintResult
     ) -> bool:
         """Add vector to appropriate index"""
+
+
+
         try:
             if FAISS_AVAILABLE and not isinstance(self.indices[content_type], dict):
                 # FAISS index
@@ -538,6 +565,9 @@ class SimilarityEngine:
         Returns:
             List of similarity matches
         """
+
+
+
         try:
             if not query_fingerprint.success:
                 return []
@@ -576,6 +606,9 @@ class SimilarityEngine:
         threshold: float
     ) -> List[SimilarityMatch]:
         """Search using FAISS index"""
+
+
+
         try:
             index = self.indices[content_type]
             
@@ -642,6 +675,9 @@ class SimilarityEngine:
         threshold: float
     ) -> List[SimilarityMatch]:
         """Search using fallback index (simple cosine similarity)"""
+
+
+
         try:
             index = self.indices[content_type]
             
@@ -702,6 +738,9 @@ class SimilarityEngine:
         fp2: FingerprintResult
     ) -> Dict[str, float]:
         """Calculate similarity scores for each method using real algorithms"""
+
+
+
         try:
             method_similarities = {}
             
@@ -730,6 +769,9 @@ class SimilarityEngine:
         content_type: ContentType
     ) -> float:
         """Calculate similarity using method-specific algorithms."""
+
+
+
         try:
             # Audio-specific methods
             if content_type == ContentType.AUDIO:
@@ -776,6 +818,9 @@ class SimilarityEngine:
 
     def _chromaprint_similarity(self, data1: Dict, data2: Dict) -> float:
         """Real Chromaprint similarity calculation."""
+
+
+
         try:
             fp1 = data1.get('raw_fingerprint', '')
             fp2 = data2.get('raw_fingerprint', '')
@@ -797,6 +842,9 @@ class SimilarityEngine:
 
     def _mfcc_similarity(self, data1: Dict, data2: Dict) -> float:
         """Real MFCC similarity calculation."""
+
+
+
         try:
             mfcc1 = data1.get('coefficients', [])
             mfcc2 = data2.get('coefficients', [])
@@ -831,6 +879,9 @@ class SimilarityEngine:
 
     def _perceptual_hash_similarity(self, data1: Dict, data2: Dict) -> float:
         """Real perceptual hash similarity."""
+
+
+
         try:
             hash1 = data1.get('hash', '') or data1.get('phash', '')
             hash2 = data2.get('hash', '') or data2.get('phash', '')
@@ -856,6 +907,9 @@ class SimilarityEngine:
 
     def _color_histogram_similarity(self, data1: Dict, data2: Dict) -> float:
         """Real color histogram similarity."""
+
+
+
         try:
             hist1 = data1.get('histogram', []) or data1.get('color_histogram', [])
             hist2 = data2.get('histogram', []) or data2.get('color_histogram', [])
@@ -888,6 +942,9 @@ class SimilarityEngine:
 
     def _semantic_similarity(self, data1: Dict, data2: Dict) -> float:
         """Real semantic similarity using embeddings."""
+
+
+
         try:
             emb1 = data1.get('embedding', []) or data1.get('semantic_embedding', [])
             emb2 = data2.get('embedding', []) or data2.get('semantic_embedding', [])
@@ -921,6 +978,9 @@ class SimilarityEngine:
 
     def _feature_descriptor_similarity(self, data1: Dict, data2: Dict) -> float:
         """Similarity for feature descriptors (SIFT, ORB, etc.)."""
+
+
+
         try:
             # Compare number of features and their distributions
             count1 = data1.get('feature_count', 0) or data1.get('keypoint_count', 0)
@@ -949,6 +1009,9 @@ class SimilarityEngine:
 
     def _temporal_similarity(self, data1: Dict, data2: Dict) -> float:
         """Temporal similarity for video content."""
+
+
+
         try:
             # Compare temporal patterns
             pattern1 = data1.get('temporal_pattern', [])
@@ -977,6 +1040,9 @@ class SimilarityEngine:
 
     def _motion_similarity(self, data1: Dict, data2: Dict) -> float:
         """Motion similarity for video content."""
+
+
+
         try:
             motion1 = data1.get('motion_vectors', [])
             motion2 = data2.get('motion_vectors', [])
@@ -1013,6 +1079,9 @@ class SimilarityEngine:
 
     def _object_detection_similarity(self, data1: Dict, data2: Dict) -> float:
         """Object detection similarity."""
+
+
+
         try:
             objects1 = set(data1.get('detected_objects', []))
             objects2 = set(data2.get('detected_objects', []))
@@ -1033,6 +1102,9 @@ class SimilarityEngine:
 
     def _ngram_similarity(self, data1: Dict, data2: Dict) -> float:
         """N-gram similarity for text."""
+
+
+
         try:
             ngrams1 = set(data1.get('ngrams', []))
             ngrams2 = set(data2.get('ngrams', []))
@@ -1053,6 +1125,9 @@ class SimilarityEngine:
 
     def _tfidf_similarity(self, data1: Dict, data2: Dict) -> float:
         """TF-IDF similarity for text."""
+
+
+
         try:
             tfidf1 = data1.get('tfidf_vector', [])
             tfidf2 = data2.get('tfidf_vector', [])
@@ -1070,6 +1145,9 @@ class SimilarityEngine:
 
     def _spectral_similarity(self, data1: Dict, data2: Dict) -> float:
         """Spectral similarity for audio."""
+
+
+
         try:
             spec1 = data1.get('spectral_hash', '') or data1.get('hash', '')
             spec2 = data2.get('spectral_hash', '') or data2.get('hash', '')
@@ -1094,6 +1172,9 @@ class SimilarityEngine:
 
     def _generic_similarity(self, data1: Dict, data2: Dict) -> float:
         """Generic similarity fallback."""
+
+
+
         try:
             # Convert data to strings and compare
             str1 = str(data1)
@@ -1128,6 +1209,9 @@ class SimilarityEngine:
         Returns:
             Dictionary with success/failure counts
         """
+
+
+
         try:
             results = {'success': 0, 'failed': 0, 'skipped': 0}
             
@@ -1161,6 +1245,9 @@ class SimilarityEngine:
         fingerprints: List[FingerprintResult]
     ) -> Dict[str, int]:
         """Add batch of fingerprints of same content type"""
+
+
+
         try:
             results = {'success': 0, 'failed': 0}
             
@@ -1217,6 +1304,9 @@ class SimilarityEngine:
         Remove fingerprint from index
         Note: FAISS doesn't support efficient removal, so this marks as removed
         """
+
+
+
         try:
             # Find and mark as removed in mapping
             mappings = self.fingerprint_mappings[content_type]
@@ -1236,6 +1326,9 @@ class SimilarityEngine:
     
     def get_index_stats(self) -> Dict[str, Any]:
         """Get statistics about all indices"""
+
+
+
         try:
             stats = {
                 'engine': 'SimilarityEngine',
@@ -1271,6 +1364,9 @@ class SimilarityEngine:
     
     def save_indices(self, directory: Union[str, Path]) -> bool:
         """Save indices to disk"""
+
+
+
         try:
             directory = Path(directory)
             directory.mkdir(parents=True, exist_ok=True)
@@ -1300,6 +1396,9 @@ class SimilarityEngine:
     
     def load_indices(self, directory: Union[str, Path]) -> bool:
         """Load indices from disk"""
+
+
+
         try:
             directory = Path(directory)
             

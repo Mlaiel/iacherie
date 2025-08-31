@@ -7,7 +7,7 @@ content protection, fingerprinting, and monetization services.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ WARNING: This code is proprietary and confidential.
+ WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
@@ -232,6 +232,9 @@ class NginxManager:
         Initialize Nginx configuration for IA Influencer Agent platform
         Configures load balancing for all critical services
         """
+
+
+
         try:
             # Create directory structure
             await self._create_directory_structure()
@@ -402,6 +405,9 @@ class NginxManager:
     
     async def add_upstream(self, name: str, servers: List[UpstreamServer]) -> bool:
         """Add or update upstream server group"""
+
+
+
         try:
             self.upstream_servers[name] = servers
             
@@ -426,6 +432,9 @@ class NginxManager:
     
     async def _validate_upstream_server(self, server: UpstreamServer) -> bool:
         """Validate upstream server connectivity"""
+
+
+
         try:
             # Test basic connectivity
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -454,6 +463,9 @@ class NginxManager:
     
     async def add_virtual_host(self, name: str, config: Dict[str, Any]) -> bool:
         """Add virtual host configuration"""
+
+
+
         try:
             self.virtual_hosts[name] = config
             logger.info(f"Added virtual host '{name}'")
@@ -500,6 +512,9 @@ class NginxManager:
     
     async def _generate_main_configuration(self) -> bool:
         """Generate main Nginx configuration file"""
+
+
+
         try:
             main_config = self._build_main_config()
             
@@ -861,6 +876,9 @@ http {{
     
     async def reload_configuration(self) -> bool:
         """Reload Nginx configuration"""
+
+
+
         try:
             # Test configuration first
             result = subprocess.run(
@@ -923,6 +941,9 @@ http {{
     
     def _collect_connection_metrics(self) -> None:
         """Collect connection metrics from Nginx"""
+
+
+
         try:
             # This would typically parse nginx status page or use nginx-prometheus-exporter
             # For now, we'll collect basic system metrics
@@ -946,6 +967,9 @@ http {{
     
     def _collect_log_metrics(self) -> None:
         """Collect metrics from Nginx logs"""
+
+
+
         try:
             access_log = self.log_path / "access.log"
             if not access_log.exists():
@@ -983,6 +1007,9 @@ http {{
     
     async def get_metrics(self) -> Dict[str, Any]:
         """Get current metrics"""
+
+
+
         return self.metrics.copy()
     
     async def stop_monitoring(self) -> None:
@@ -994,6 +1021,9 @@ http {{
     
     async def emergency_maintenance_mode(self, enable: bool = True) -> bool:
         """Enable/disable emergency maintenance mode"""
+
+
+
         try:
             maintenance_config = f"""
 server {{

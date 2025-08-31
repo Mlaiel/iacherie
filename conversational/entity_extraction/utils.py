@@ -7,7 +7,7 @@ with performance optimization, data processing, and validation utilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
@@ -190,6 +190,9 @@ class PerformanceTimer:
     
     def get_stats(self) -> Dict[str, Any]:
         """Get performance statistics"""
+
+
+
         return {
             'completed_operations': len(self.durations),
             'active_operations': len(self.start_times),
@@ -477,6 +480,9 @@ def merge_entity_metadata(base_entity: Dict[str, Any], additional_metadata: Dict
 
 def format_extraction_results(results: Dict[str, Any]) -> Dict[str, Any]:
     """Format extraction results for API response"""
+
+
+
     return {
         'entities': results.get('entities', []),
         'total_count': len(results.get('entities', [])),

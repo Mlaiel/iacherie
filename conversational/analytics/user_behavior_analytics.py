@@ -7,7 +7,7 @@ providing deep behavioral insights, pattern recognition, and predictive modeling
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will result in legal action.
@@ -121,6 +121,9 @@ class UserBehaviorAnalytics:
         Returns:
             BehaviorMetrics: Comprehensive behavior analysis
         """
+
+
+
         try:
             cache_key = f"behavior_metrics:{user_id}:{period.days}"
             cached_result = await self.cache_manager.get(cache_key)
@@ -175,6 +178,9 @@ class UserBehaviorAnalytics:
         Returns:
             Dict containing user segmentation results
         """
+
+
+
         try:
             async with get_db_session() as session:
                 # Get user behavior data
@@ -230,6 +236,9 @@ class UserBehaviorAnalytics:
         Returns:
             Dict containing churn prediction
         """
+
+
+
         try:
             # Analyze current behavior
             current_behavior = await self.analyze_user_behavior(user_id)
@@ -284,6 +293,9 @@ class UserBehaviorAnalytics:
         Returns:
             Dict containing user journey analysis
         """
+
+
+
         try:
             async with get_db_session() as session:
                 # Get user journey data
@@ -343,6 +355,9 @@ class UserBehaviorAnalytics:
         Returns:
             Dict containing feature adoption analysis
         """
+
+
+
         try:
             async with get_db_session() as session:
                 # Get feature usage data
@@ -417,6 +432,9 @@ class UserBehaviorAnalyticsFactory:
     @staticmethod
     def create_analytics_engine() -> UserBehaviorAnalytics:
         """Create a new user behavior analytics engine"""
+
+
+
         return UserBehaviorAnalytics()
 
 

@@ -1,5 +1,5 @@
 """
-� Secrets Management Configuration - IA-Influencer-Agent
+ Secrets Management Configuration - IA-Influencer-Agent
 ==================================================================
 Project Creator & Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
@@ -7,7 +7,7 @@ Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert +
 Date: 2025-08-24
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -181,6 +181,9 @@ class SecretsManager:
     
     def _generate_master_key(self) -> str:
         """Generate a new master encryption key"""
+
+
+
         return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode()
     
     def _initialize_encryption(self) -> Fernet:
@@ -199,6 +202,9 @@ class SecretsManager:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             self.storage_backend = backend
             self.backend_config = backend_config
@@ -385,6 +391,9 @@ class SecretsManager:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             # Validate secret policy
             if not await self._validate_secret(value, policy or SecretPolicy()):
@@ -476,6 +485,9 @@ class SecretsManager:
         Returns:
             Secret value if authorized, None otherwise
         """
+
+
+
         try:
             if name not in self.secrets:
                 self.metrics["failed_accesses"] += 1
@@ -529,6 +541,9 @@ class SecretsManager:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             if name not in self.secrets:
                 raise ValueError(f"Secret not found: {name}")
@@ -606,6 +621,9 @@ class SecretsManager:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             if name not in self.secrets:
                 raise ValueError(f"Secret not found: {name}")
@@ -653,6 +671,9 @@ class SecretsManager:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             if name not in self.secrets:
                 raise ValueError(f"Secret not found: {name}")
@@ -722,14 +743,23 @@ class SecretsManager:
     
     def _generate_api_key(self, length: int) -> str:
         """Generate API key"""
+
+
+
         return secrets.token_urlsafe(length)
     
     def _generate_jwt_secret(self) -> str:
         """Generate JWT secret"""
+
+
+
         return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode()
     
     def _generate_random_string(self, length: int) -> str:
         """Generate random string"""
+
+
+
         return secrets.token_hex(length // 2)
     
     async def _deploy_rotated_secret(self, name: str) -> None:
@@ -865,4 +895,7 @@ class SecretsManager:
     
     async def get_status(self) -> Dict[str, Any]:
         """Get secrets manager status"""
+
+
+
         return await self.get_secrets_status()

@@ -5,7 +5,7 @@ Real-time metrics, predictive analytics, and comprehensive KPI dashboard
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + Data Scientist + DevOps Expert
 
-⚠️  COPYRIGHT WARNING ⚠️
+  COPYRIGHT WARNING 
 This code and concept are proprietary to Fahed Mlaiel.
 Unauthorized copying, distribution, or use without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -102,6 +102,9 @@ class AnalyticsService:
 
     async def _cache_get(self, key: str) -> Optional[Dict]:
         """Get data from Redis cache"""
+
+
+
         try:
             cached = self.redis_client.get(key)
             return json.loads(cached) if cached else None
@@ -111,6 +114,9 @@ class AnalyticsService:
 
     async def _cache_set(self, key: str, data: Dict, ttl: int = None) -> None:
         """Set data in Redis cache"""
+
+
+
         try:
             self.redis_client.setex(
                 key, 
@@ -266,6 +272,9 @@ class AnalyticsService:
 
     async def _calculate_seo_metrics(self, asset: ContentAsset) -> Dict[str, float]:
         """Calculate SEO optimization score"""
+
+
+
         try:
             seo_analysis = await self.seo_optimizer.analyze_content_seo(
                 title=asset.title,
@@ -279,6 +288,9 @@ class AnalyticsService:
 
     async def _calculate_trend_momentum(self, db: Session, asset: ContentAsset) -> float:
         """Calculate trending momentum using time-series analysis"""
+
+
+
         try:
             # Get recent performance data (last 7 days)
             week_ago = datetime.now() - timedelta(days=7)
@@ -469,6 +481,9 @@ class AnalyticsService:
         period_days: int = 30
     ) -> Dict[str, Any]:
         """Generate comprehensive performance report for creator"""
+
+
+
         try:
             # Get all assets for creator in period
             start_date = datetime.now() - timedelta(days=period_days)

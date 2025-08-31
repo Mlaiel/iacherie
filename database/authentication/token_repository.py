@@ -9,7 +9,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -194,6 +194,9 @@ class TokenRepository:
         scopes: Optional[List[str]] = None
     ) -> TokenResponse:
         """Generate access and refresh token pair"""
+
+
+
         try:
             # Generate access token
             access_payload = {
@@ -266,6 +269,9 @@ class TokenRepository:
     
     async def validate_token(self, token: str, required_permissions: Optional[List[str]] = None) -> Dict[str, Any]:
         """Validate token and check permissions"""
+
+
+
         try:
             # Check if token is blacklisted
             if await self._is_token_blacklisted(token):
@@ -303,6 +309,9 @@ class TokenRepository:
     
     async def refresh_token(self, refresh_token: str, metadata: TokenMetadata) -> TokenResponse:
         """Refresh access token using refresh token"""
+
+
+
         try:
             # Validate refresh token
             payload = await self.validate_token(refresh_token)
@@ -334,6 +343,9 @@ class TokenRepository:
     
     async def revoke_token(self, token: str, user_id: str, reason: str = "Manual revocation"):
         """Revoke a specific token"""
+
+
+
         try:
             token_hash = self._hash_token(token)
             
@@ -371,6 +383,9 @@ class TokenRepository:
     
     async def revoke_all_user_tokens(self, user_id: str, reason: str = "Revoke all sessions"):
         """Revoke all tokens for a specific user"""
+
+
+
         try:
             # Get all active tokens for user
             stmt = select(TokenDatabase).where(
@@ -411,6 +426,9 @@ class TokenRepository:
     
     async def get_user_sessions(self, user_id: str) -> List[Dict[str, Any]]:
         """Get all active sessions for a user"""
+
+
+
         try:
             stmt = select(TokenDatabase).where(
                 TokenDatabase.user_id == user_id,
@@ -445,6 +463,9 @@ class TokenRepository:
     
     async def cleanup_expired_tokens(self):
         """Clean up expired tokens from database and Redis"""
+
+
+
         try:
             current_time = datetime.now(timezone.utc)
             
@@ -483,6 +504,9 @@ class TokenRepository:
     
     def _hash_token(self, token: str) -> str:
         """Create secure hash of token"""
+
+
+
         return hashlib.sha256(token.encode()).hexdigest()
     
     async def _store_token(
@@ -495,6 +519,9 @@ class TokenRepository:
         scopes: Optional[List[str]] = None
     ):
         """Store token in database with encryption"""
+
+
+
         try:
             token_hash = self._hash_token(token)
             encrypted_token = self.fernet.encrypt(token.encode()).decode()
@@ -532,6 +559,9 @@ class TokenRepository:
     
     async def _cache_token(self, token: str, user_id: str, expires_in: timedelta):
         """Cache token in Redis for fast validation"""
+
+
+
         try:
             token_hash = self._hash_token(token)
             cache_data = {
@@ -551,6 +581,9 @@ class TokenRepository:
     
     async def _is_token_blacklisted(self, token: str) -> bool:
         """Check if token is blacklisted"""
+
+
+
         try:
             token_hash = self._hash_token(token)
             
@@ -584,6 +617,9 @@ class TokenRepository:
     
     async def _update_token_usage(self, token: str):
         """Update token last used timestamp"""
+
+
+
         try:
             token_hash = self._hash_token(token)
             

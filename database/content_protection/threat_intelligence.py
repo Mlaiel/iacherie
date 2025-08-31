@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + DBA + DevOps
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
+ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION 
 ==================================================================
 This code and all associated intellectual property are the EXCLUSIVE property of Fahed Mlaiel.
 ANY unauthorized use, copying, modification, distribution, or commercialization without 
@@ -200,6 +200,9 @@ class ThreatIntelligenceSystem:
         Returns:
             Dict containing threat analysis and intelligence
         """
+
+
+
         try:
             logger.info(f"Analyzing security incident: {incident_data.get('incident_id', 'Unknown')}")
             
@@ -302,6 +305,9 @@ class ThreatIntelligenceSystem:
         Returns:
             Dict containing threat landscape analysis
         """
+
+
+
         try:
             logger.info(f"Monitoring threat landscape across {len(monitoring_scope)} areas")
             
@@ -375,6 +381,9 @@ class ThreatIntelligenceSystem:
         Returns:
             Dict containing detailed threat actor profile
         """
+
+
+
         try:
             logger.info(f"Profiling threat actor with {len(actor_indicators)} indicators")
             
@@ -461,6 +470,9 @@ class ThreatIntelligenceSystem:
         Returns:
             Dict containing attack predictions and recommendations
         """
+
+
+
         try:
             logger.info(f"Predicting attack patterns for {prediction_horizon_days} days")
             
@@ -534,6 +546,9 @@ class ThreatIntelligenceSystem:
         Returns:
             Dict containing comprehensive threat report
         """
+
+
+
         try:
             logger.info(f"Generating {report_type} threat intelligence report")
             
@@ -663,6 +678,9 @@ class ThreatIntelligenceSystem:
     
     async def _store_threat_intelligence(self, intelligence_data: Dict[str, Any]) -> None:
         """Store threat intelligence in database"""
+
+
+
         try:
             threat_intel = ThreatIntelligence(
                 id=uuid4(),

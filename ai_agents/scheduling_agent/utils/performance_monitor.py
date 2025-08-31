@@ -10,7 +10,7 @@ with automatic optimization, anomaly detection, and predictive analytics.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -163,6 +163,9 @@ class RealTimePerformanceMonitor:
         metadata: Optional[Dict[str, Any]] = None
     ):
         """Record a performance metric for real-time monitoring"""
+
+
+
         try:
             metric_key = f"{metric_type.value}:{creator_id or 'global'}:{platform or 'all'}"
             
@@ -279,6 +282,9 @@ class RealTimePerformanceMonitor:
     
     async def _execute_resolution_action(self, alert: PerformanceAlert):
         """Execute automated resolution action"""
+
+
+
         try:
             logger.info(f"Executing resolution action: {alert.resolution_action}")
             
@@ -447,6 +453,9 @@ class RealTimePerformanceMonitor:
         hours_back: int = 24
     ) -> Dict[str, Any]:
         """Get comprehensive performance dashboard data"""
+
+
+
         try:
             cutoff_time = datetime.now() - timedelta(hours=hours_back)
             dashboard = {
@@ -571,6 +580,9 @@ class RealTimePerformanceMonitor:
 # Factory function for easy instantiation
 def create_performance_monitor() -> RealTimePerformanceMonitor:
     """Create and initialize a real-time performance monitor"""
+
+
+
     return RealTimePerformanceMonitor()
 
 # Export main classes

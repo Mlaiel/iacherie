@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -467,6 +467,9 @@ class CollaborationRequest(Base):
     
     def is_pending_response(self) -> bool:
         """Check if request is waiting for response"""
+
+
+
         return (
             self.request_status in [RequestStatus.SENT, RequestStatus.RECEIVED] and
             not self.is_expired() and
@@ -546,6 +549,9 @@ class CollaborationRequest(Base):
     
     def can_accept(self, user_id: str) -> bool:
         """Check if user can accept this request"""
+
+
+
         return (
             str(self.target_user_id) == user_id and
             self.request_status in [RequestStatus.SENT, RequestStatus.RECEIVED] and
@@ -555,6 +561,9 @@ class CollaborationRequest(Base):
     
     def can_modify(self, user_id: str) -> bool:
         """Check if user can modify this request"""
+
+
+
         return (
             str(self.requester_user_id) == user_id and
             self.request_status in [RequestStatus.DRAFT, RequestStatus.PENDING, RequestStatus.NEGOTIATING] and

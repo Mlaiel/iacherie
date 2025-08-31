@@ -8,7 +8,7 @@ Responsibility: Production-grade backup deployment and disaster recovery
 Technologies: Python, AWS S3, Restic, Velero, Kubernetes Backup, Multi-Cloud
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -206,7 +206,7 @@ class BackupMetrics:
 
 class BackupStorageManager:
     """
-    🎯 Industrial Backup Storage Manager - IA-Influencer-Agent
+     Industrial Backup Storage Manager - IA-Influencer-Agent
     
     Production-grade backup and disaster recovery management with:
     - Multi-cloud backup orchestration and redundancy
@@ -231,14 +231,17 @@ class BackupStorageManager:
         
         self._initialize_clients()
         
-        logger.info(f"🚀 BackupStorageManager initialized: {config.name}")
+        logger.info(f" BackupStorageManager initialized: {config.name}")
     
     def _initialize_clients(self):
         """Initialize backup destination clients"""
+
+
+
         try:
             if self.config.destination == BackupDestination.AWS_S3:
                 self._s3_client = boto3.client('s3')
-                logger.info("✅ AWS S3 client initialized")
+                logger.info(" AWS S3 client initialized")
             
             elif self.config.destination == BackupDestination.VELERO:
                 try:
@@ -247,18 +250,21 @@ class BackupStorageManager:
                     k8s_config.load_kube_config()
                 
                 self._k8s_client = client.CoreV1Api()
-                logger.info("✅ Kubernetes/Velero client initialized")
+                logger.info(" Kubernetes/Velero client initialized")
             
             # Additional clients can be initialized here
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize backup clients: {e}")
+            logger.error(f" Failed to initialize backup clients: {e}")
             raise
     
     async def deploy_backup_infrastructure(self) -> Dict[str, Any]:
         """Deploy complete backup infrastructure"""
+
+
+
         try:
-            logger.info(f"🚀 Starting backup infrastructure deployment...")
+            logger.info(f" Starting backup infrastructure deployment...")
             
             deployment_results = {}
             
@@ -294,28 +300,31 @@ class BackupStorageManager:
                 "deployment_time": datetime.now().isoformat()
             }
             
-            logger.info(f"✅ Backup infrastructure deployment completed")
+            logger.info(f" Backup infrastructure deployment completed")
             return final_result
             
         except Exception as e:
-            logger.error(f"❌ Backup infrastructure deployment failed: {e}")
+            logger.error(f" Backup infrastructure deployment failed: {e}")
             return {"success": False, "error": str(e)}
     
     async def _deploy_s3_backup_infrastructure(self) -> Dict[str, Any]:
         """Deploy S3-based backup infrastructure"""
+
+
+
         try:
             bucket_name = f"ia-influencer-backups-{self.config.name}"
             
             # Create S3 bucket if it doesn't exist
             try:
                 self._s3_client.head_bucket(Bucket=bucket_name)
-                logger.info(f"ℹ️ S3 bucket already exists: {bucket_name}")
+                logger.info(f"ℹ S3 bucket already exists: {bucket_name}")
             except:
                 self._s3_client.create_bucket(
                     Bucket=bucket_name,
                     CreateBucketConfiguration={'LocationConstraint': 'eu-west-1'}
                 )
-                logger.info(f"✅ S3 bucket created: {bucket_name}")
+                logger.info(f" S3 bucket created: {bucket_name}")
             
             # Configure bucket policies
             await self._configure_s3_backup_policies(bucket_name)
@@ -333,11 +342,14 @@ class BackupStorageManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ S3 backup infrastructure deployment failed: {e}")
+            logger.error(f" S3 backup infrastructure deployment failed: {e}")
             raise
     
     async def _configure_s3_backup_policies(self, bucket_name: str):
         """Configure S3 bucket policies for backup security"""
+
+
+
         try:
             # Enable versioning
             self._s3_client.put_bucket_versioning(
@@ -382,14 +394,17 @@ class BackupStorageManager:
                 Policy=json.dumps(bucket_policy)
             )
             
-            logger.info(f"✅ S3 backup policies configured: {bucket_name}")
+            logger.info(f" S3 backup policies configured: {bucket_name}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to configure S3 policies: {e}")
+            logger.error(f" Failed to configure S3 policies: {e}")
             raise
     
     async def _configure_s3_lifecycle_policies(self, bucket_name: str):
         """Configure S3 lifecycle policies for backup retention"""
+
+
+
         try:
             lifecycle_rules = [
                 {
@@ -435,20 +450,23 @@ class BackupStorageManager:
                 LifecycleConfiguration={"Rules": lifecycle_rules}
             )
             
-            logger.info(f"✅ S3 lifecycle policies configured: {bucket_name}")
+            logger.info(f" S3 lifecycle policies configured: {bucket_name}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to configure S3 lifecycle: {e}")
+            logger.error(f" Failed to configure S3 lifecycle: {e}")
             raise
     
     async def _deploy_velero_backup_infrastructure(self) -> Dict[str, Any]:
         """Deploy Velero-based Kubernetes backup infrastructure"""
+
+
+
         try:
             # Generate Velero installation manifest
             velero_config = await self._generate_velero_config()
             
             # Install Velero (this would typically be done via Helm or kubectl)
-            logger.info("ℹ️ Velero deployment requires manual installation via Helm/kubectl")
+            logger.info("ℹ Velero deployment requires manual installation via Helm/kubectl")
             
             # Create backup schedule
             schedule_manifest = await self._generate_velero_schedule()
@@ -462,11 +480,14 @@ class BackupStorageManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Velero backup infrastructure deployment failed: {e}")
+            logger.error(f" Velero backup infrastructure deployment failed: {e}")
             raise
     
     async def _generate_velero_config(self) -> Dict[str, Any]:
         """Generate Velero configuration"""
+
+
+
         return {
             "provider": "aws",
             "bucket": f"ia-influencer-velero-{self.config.name}",
@@ -481,6 +502,9 @@ class BackupStorageManager:
     
     async def _generate_velero_schedule(self) -> Dict[str, Any]:
         """Generate Velero backup schedule manifest"""
+
+
+
         return {
             "apiVersion": "velero.io/v1",
             "kind": "Schedule",
@@ -506,6 +530,9 @@ class BackupStorageManager:
     
     async def _deploy_restic_backup_infrastructure(self) -> Dict[str, Any]:
         """Deploy Restic-based backup infrastructure"""
+
+
+
         try:
             # Initialize Restic repository
             repo_path = f"/backup-repos/{self.config.name}"
@@ -539,7 +566,7 @@ class BackupStorageManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Restic backup infrastructure deployment failed: {e}")
+            logger.error(f" Restic backup infrastructure deployment failed: {e}")
             raise
     
     async def _generate_restic_backup_script(self, repo_path: str) -> str:
@@ -588,6 +615,9 @@ echo "Backup completed: $(date)"
     
     async def _deploy_local_backup_infrastructure(self) -> Dict[str, Any]:
         """Deploy local storage backup infrastructure"""
+
+
+
         try:
             backup_base_dir = Path(f"/backups/{self.config.name}")
             backup_base_dir.mkdir(parents=True, exist_ok=True)
@@ -608,7 +638,7 @@ echo "Backup completed: $(date)"
             }
             
         except Exception as e:
-            logger.error(f"❌ Local backup infrastructure deployment failed: {e}")
+            logger.error(f" Local backup infrastructure deployment failed: {e}")
             raise
     
     async def _generate_local_backup_script(self, backup_dir: Path) -> str:
@@ -668,6 +698,9 @@ echo "Backup completed: $(date)"
     
     async def _setup_backup_monitoring(self) -> Dict[str, Any]:
         """Setup backup monitoring and alerting"""
+
+
+
         try:
             monitoring_config = {
                 "metrics_collection": {
@@ -705,15 +738,18 @@ echo "Backup completed: $(date)"
             with open(config_path, 'w') as f:
                 yaml.dump(monitoring_config, f)
             
-            logger.info(f"✅ Backup monitoring configured: {self.config.name}")
+            logger.info(f" Backup monitoring configured: {self.config.name}")
             return monitoring_config
             
         except Exception as e:
-            logger.error(f"❌ Failed to setup backup monitoring: {e}")
+            logger.error(f" Failed to setup backup monitoring: {e}")
             return {"error": str(e)}
     
     async def _setup_backup_testing(self) -> Dict[str, Any]:
         """Setup automated backup testing"""
+
+
+
         try:
             if not self.config.test_restore:
                 return {"testing": "disabled"}
@@ -737,11 +773,11 @@ echo "Backup completed: $(date)"
             test_script = await self._generate_backup_test_script()
             testing_config["test_script"] = test_script
             
-            logger.info(f"✅ Backup testing configured: {self.config.name}")
+            logger.info(f" Backup testing configured: {self.config.name}")
             return testing_config
             
         except Exception as e:
-            logger.error(f"❌ Failed to setup backup testing: {e}")
+            logger.error(f" Failed to setup backup testing: {e}")
             return {"error": str(e)}
     
     async def _generate_backup_test_script(self) -> str:
@@ -760,9 +796,9 @@ if [ "{self.config.destination.value}" = "local-storage" ]; then
     LATEST_BACKUP=$(ls -t /backups/{self.config.name}/full/{self.config.name}_*.tar.gz | head -1)
     if [ -f "$LATEST_BACKUP" ]; then
         tar -xzf "$LATEST_BACKUP" -C "$TEST_DIR"
-        echo "✅ Backup extraction successful"
+        echo " Backup extraction successful"
     else
-        echo "❌ No backup found for testing"
+        echo " No backup found for testing"
         exit 1
     fi
 elif [ "{self.config.destination.value}" = "restic" ]; then
@@ -770,15 +806,15 @@ elif [ "{self.config.destination.value}" = "restic" ]; then
     export RESTIC_PASSWORD="{self.config.encryption_key or 'default-password'}"
     
     restic restore latest --target "$TEST_DIR"
-    echo "✅ Restic restore test successful"
+    echo " Restic restore test successful"
 fi
 
 # Verify restored data
 if [ -d "$TEST_DIR" ] && [ "$(ls -A $TEST_DIR)" ]; then
-    echo "✅ Restored data verification successful"
+    echo " Restored data verification successful"
     RESTORE_SUCCESS=true
 else
-    echo "❌ Restored data verification failed"
+    echo " Restored data verification failed"
     RESTORE_SUCCESS=false
 fi
 
@@ -786,10 +822,10 @@ fi
 rm -rf "$TEST_DIR"
 
 if [ "$RESTORE_SUCCESS" = true ]; then
-    echo "✅ Backup test completed successfully: $(date)"
+    echo " Backup test completed successfully: $(date)"
     exit 0
 else
-    echo "❌ Backup test failed: $(date)"
+    echo " Backup test failed: $(date)"
     exit 1
 fi
 """
@@ -806,6 +842,9 @@ fi
     
     async def _setup_backup_schedules(self) -> Dict[str, Any]:
         """Setup automated backup schedules"""
+
+
+
         try:
             if not self.config.schedule_enabled:
                 return {"scheduling": "disabled"}
@@ -821,17 +860,20 @@ fi
             cron_entry = f"{self.config.schedule_cron} /etc/backup-scripts/{self.config.name}-*.sh"
             
             # Add to system crontab (this would typically be done via configuration management)
-            logger.info(f"ℹ️ Cron entry to add: {cron_entry}")
+            logger.info(f"ℹ Cron entry to add: {cron_entry}")
             
-            logger.info(f"✅ Backup scheduling configured: {self.config.name}")
+            logger.info(f" Backup scheduling configured: {self.config.name}")
             return schedule_config
             
         except Exception as e:
-            logger.error(f"❌ Failed to setup backup scheduling: {e}")
+            logger.error(f" Failed to setup backup scheduling: {e}")
             return {"error": str(e)}
     
     async def execute_backup(self, backup_type: Optional[BackupType] = None) -> BackupJob:
         """Execute a backup job"""
+
+
+
         try:
             job_id = f"{self.config.name}-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
             backup_type = backup_type or self.config.backup_type
@@ -847,7 +889,7 @@ fi
             
             self._active_jobs[job_id] = job
             
-            logger.info(f"🚀 Starting backup job: {job_id}")
+            logger.info(f" Starting backup job: {job_id}")
             
             # Update job status
             job.status = BackupStatus.RUNNING
@@ -882,11 +924,11 @@ fi
                 self.metrics.successful_backups / self.metrics.total_backups * 100
             )
             
-            logger.info(f"✅ Backup job completed: {job_id}")
+            logger.info(f" Backup job completed: {job_id}")
             return job
             
         except Exception as e:
-            logger.error(f"❌ Backup job failed: {e}")
+            logger.error(f" Backup job failed: {e}")
             
             job.status = BackupStatus.FAILED
             job.error_message = str(e)
@@ -979,6 +1021,9 @@ fi
     
     async def get_backup_metrics(self) -> Dict[str, Any]:
         """Get comprehensive backup metrics"""
+
+
+
         try:
             metrics_result = {
                 "backup_name": self.config.name,
@@ -1009,17 +1054,20 @@ fi
                 "last_updated": datetime.now().isoformat()
             }
             
-            logger.info(f"📊 Retrieved backup metrics for {self.config.name}")
+            logger.info(f" Retrieved backup metrics for {self.config.name}")
             return metrics_result
             
         except Exception as e:
-            logger.error(f"❌ Failed to get backup metrics: {e}")
+            logger.error(f" Failed to get backup metrics: {e}")
             return {"error": str(e)}
     
     async def cleanup_backups(self) -> Dict[str, Any]:
         """Cleanup old backups according to retention policy"""
+
+
+
         try:
-            logger.info(f"🗑️ Starting backup cleanup: {self.config.name}")
+            logger.info(f" Starting backup cleanup: {self.config.name}")
             
             cleanup_results = []
             
@@ -1075,7 +1123,7 @@ fi
             }
             
         except Exception as e:
-            logger.error(f"❌ Backup cleanup failed: {e}")
+            logger.error(f" Backup cleanup failed: {e}")
             return {"success": False, "error": str(e)}
 
 
@@ -1086,6 +1134,9 @@ class BackupConfigurationManager:
     @staticmethod
     def load_config_from_file(config_path: Path) -> BackupConfig:
         """Load backup configuration from YAML file"""
+
+
+
         try:
             with open(config_path, 'r') as file:
                 config_data = yaml.safe_load(file)
@@ -1105,12 +1156,15 @@ class BackupConfigurationManager:
             )
             
         except Exception as e:
-            logger.error(f"❌ Failed to load config from {config_path}: {e}")
+            logger.error(f" Failed to load config from {config_path}: {e}")
             raise
     
     @staticmethod
     def save_config_to_file(config: BackupConfig, config_path: Path):
         """Save backup configuration to YAML file"""
+
+
+
         try:
             config_data = {
                 'name': config.name,
@@ -1133,10 +1187,10 @@ class BackupConfigurationManager:
             with open(config_path, 'w') as file:
                 yaml.dump(config_data, file, default_flow_style=False)
             
-            logger.info(f"✅ Configuration saved to {config_path}")
+            logger.info(f" Configuration saved to {config_path}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to save config to {config_path}: {e}")
+            logger.error(f" Failed to save config to {config_path}: {e}")
             raise
 
 
@@ -1164,6 +1218,9 @@ def create_backup_manager(
 # Usage Example
 async def main():
     """Example usage of BackupStorageManager"""
+
+
+
     try:
         # Create backup manager for content protection
         backup_manager = create_backup_manager(
@@ -1187,7 +1244,7 @@ async def main():
         print(f"Metrics: {metrics}")
         
     except Exception as e:
-        logger.error(f"❌ Example failed: {e}")
+        logger.error(f" Example failed: {e}")
 
 
 if __name__ == "__main__":

@@ -7,7 +7,7 @@ for web delivery, storage optimization, and cross-platform compatibility.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -191,6 +191,9 @@ class ImageFormatConverter:
 
     def _initialize_format_info(self) -> Dict[ImageFormat, FormatInfo]:
         """Initialize format information database"""
+
+
+
         return {
             ImageFormat.JPEG: FormatInfo(
                 supports_transparency=False,
@@ -382,6 +385,9 @@ class ImageFormatConverter:
         params: ConversionParams
     ) -> Image.Image:
         """Perform the actual image conversion"""
+
+
+
         try:
             # Work with a copy
             converted_image = source_image.copy()
@@ -411,6 +417,9 @@ class ImageFormatConverter:
 
     async def _resize_image(self, image: Image.Image, params: ConversionParams) -> Image.Image:
         """Resize image according to maximum dimensions"""
+
+
+
         try:
             current_width, current_height = image.size
             
@@ -452,6 +461,9 @@ class ImageFormatConverter:
         params: ConversionParams
     ) -> Image.Image:
         """Apply optimization-specific adjustments"""
+
+
+
         try:
             if params.optimization_level == OptimizationLevel.THUMBNAIL:
                 # Reduce colors for thumbnails
@@ -486,6 +498,9 @@ class ImageFormatConverter:
         params: ConversionParams
     ) -> None:
         """Save converted image with format-specific optimizations"""
+
+
+
         try:
             # Prepare save parameters
             save_kwargs = {
@@ -580,6 +595,9 @@ class ImageFormatConverter:
         tolerance: float = 0.1
     ) -> None:
         """Save image iteratively adjusting quality to meet target file size"""
+
+
+
         try:
             if 'quality' not in save_kwargs:
                 # Can't adjust quality for lossless formats
@@ -694,6 +712,9 @@ class ImageFormatConverter:
         optimization_level: OptimizationLevel
     ) -> ImageFormat:
         """Auto-detect best format for given image and optimization level"""
+
+
+
         try:
             # Analyze image characteristics
             has_transparency = image.mode in ['RGBA', 'LA'] or 'transparency' in image.info
@@ -735,6 +756,9 @@ class ImageFormatConverter:
 
     async def _is_photographic_image(self, image: Image.Image) -> bool:
         """Determine if image is photographic (vs graphic/drawing)"""
+
+
+
         try:
             # Convert to grayscale for analysis
             if image.mode != 'L':
@@ -770,6 +794,9 @@ class ImageFormatConverter:
         params: ConversionParams
     ) -> float:
         """Estimate quality retention after conversion"""
+
+
+
         try:
             # If formats are the same and lossless, retention is 100%
             if (params.target_format.value == original.format.lower() and 
@@ -836,6 +863,9 @@ class ImageFormatConverter:
         Returns:
             List of OptimizationResult for each conversion
         """
+
+
+
         try:
             target_dir = Path(target_directory)
             target_dir.mkdir(parents=True, exist_ok=True)
@@ -929,6 +959,9 @@ class ImageFormatConverter:
 
     async def get_format_info(self, format_type: ImageFormat) -> FormatInfo:
         """Get detailed information about image format"""
+
+
+
         return self.format_info.get(format_type, FormatInfo(
             supports_transparency=False,
             supports_animation=False,
@@ -957,6 +990,9 @@ class ImageFormatConverter:
         Returns:
             Dictionary with format recommendation and reasoning
         """
+
+
+
         try:
             with Image.open(image_path) as image:
                 has_transparency = image.mode in ['RGBA', 'LA'] or 'transparency' in image.info
@@ -1065,6 +1101,9 @@ class ImageFormatConverter:
 
     async def get_conversion_stats(self) -> Dict[str, Any]:
         """Get comprehensive conversion statistics"""
+
+
+
         try:
             stats = self.conversion_stats.copy()
             
@@ -1123,6 +1162,9 @@ class OptimizationEngine:
         Returns:
             Dictionary of optimization results by format
         """
+
+
+
         try:
             source_path = Path(source_path)
             target_dir = Path(target_directory)
@@ -1197,6 +1239,9 @@ class OptimizationEngine:
         Returns:
             OptimizationResult with compression metrics
         """
+
+
+
         try:
             optimization_level = OptimizationLevel.MINIMAL if preserve_quality else OptimizationLevel.STORAGE
             
@@ -1233,6 +1278,9 @@ class OptimizationEngine:
         Returns:
             Dictionary of results organized by format and size
         """
+
+
+
         try:
             source_path = Path(source_path)
             target_dir = Path(target_directory)
@@ -1285,6 +1333,9 @@ class OptimizationEngine:
         Returns:
             Analysis results with optimization recommendations
         """
+
+
+
         try:
             with Image.open(image_path) as image:
                 current_size = Path(image_path).stat().st_size

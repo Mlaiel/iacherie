@@ -7,7 +7,7 @@ content creators, influencers, and brand partnerships across all content formats
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
 
@@ -128,6 +128,9 @@ class BrandVoiceAnalyzer:
         
     async def initialize(self):
         """Initialize NLP models and analyzers"""
+
+
+
         try:
             # Load spaCy model
             self.nlp = spacy.load("en_core_web_sm")
@@ -148,6 +151,9 @@ class BrandVoiceAnalyzer:
     
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default configuration"""
+
+
+
         return {
             'consistency_threshold': 0.7,
             'min_content_length': 50,
@@ -169,6 +175,9 @@ class BrandVoiceAnalyzer:
     
     async def create_voice_profile(self, voice_profile: VoiceProfile) -> bool:
         """Create or update a brand voice profile"""
+
+
+
         try:
             # Validate voice profile
             if not self._validate_voice_profile(voice_profile):
@@ -198,6 +207,9 @@ class BrandVoiceAnalyzer:
         platform: Optional[str] = None
     ) -> VoiceAnalysisResult:
         """Analyze content against brand voice profile"""
+
+
+
         try:
             if brand_id not in self.voice_profiles:
                 raise ValueError(f"Brand voice profile not found: {brand_id}")
@@ -306,6 +318,9 @@ class BrandVoiceAnalyzer:
     
     async def _analyze_formality(self, content: str) -> float:
         """Analyze formality level (-1 = very casual, 1 = very formal)"""
+
+
+
         try:
             doc = self.nlp(content)
             
@@ -349,6 +364,9 @@ class BrandVoiceAnalyzer:
     
     async def _analyze_enthusiasm(self, content: str) -> float:
         """Analyze enthusiasm level (-1 = very calm, 1 = very enthusiastic)"""
+
+
+
         try:
             # Count exclamation marks
             exclamations = content.count('!')
@@ -387,6 +405,9 @@ class BrandVoiceAnalyzer:
     
     async def _analyze_expertise(self, content: str) -> float:
         """Analyze expertise level (-1 = very approachable, 1 = very expert)"""
+
+
+
         try:
             doc = self.nlp(content)
             
@@ -423,6 +444,9 @@ class BrandVoiceAnalyzer:
     
     async def _analyze_friendliness(self, content: str) -> float:
         """Analyze friendliness level (-1 = very professional, 1 = very personal)"""
+
+
+
         try:
             # Count personal pronouns
             personal_pronouns = len(re.findall(r'\b(I|we|you|us|our|your)\b', content, re.IGNORECASE))
@@ -459,6 +483,9 @@ class BrandVoiceAnalyzer:
     
     async def _analyze_confidence(self, content: str) -> float:
         """Analyze confidence level (-1 = very humble, 1 = very assertive)"""
+
+
+
         try:
             # Count confident words
             confident_words = [
@@ -492,6 +519,9 @@ class BrandVoiceAnalyzer:
     
     async def _analyze_creativity(self, content: str) -> float:
         """Analyze creativity level (-1 = very traditional, 1 = very innovative)"""
+
+
+
         try:
             # Count creative/innovative words
             creative_words = [
@@ -537,6 +567,9 @@ class BrandVoiceAnalyzer:
     
     async def _analyze_inclusivity(self, content: str) -> float:
         """Analyze inclusivity level (-1 = exclusive, 1 = very inclusive)"""
+
+
+
         try:
             # Count inclusive words
             inclusive_words = [
@@ -570,6 +603,9 @@ class BrandVoiceAnalyzer:
     
     async def _analyze_authenticity(self, content: str) -> float:
         """Analyze authenticity level (-1 = very polished/corporate, 1 = very authentic/personal)"""
+
+
+
         try:
             # Count personal experiences/stories
             personal_indicators = [
@@ -646,6 +682,9 @@ class BrandVoiceAnalyzer:
         voice_profile: VoiceProfile
     ) -> float:
         """Calculate overall voice consistency score"""
+
+
+
         try:
             dimension_consistency = 0.0
             total_weight = 0.0
@@ -683,6 +722,9 @@ class BrandVoiceAnalyzer:
         time_period: timedelta = None
     ) -> BrandVoiceEvolution:
         """Track brand voice evolution over time"""
+
+
+
         try:
             time_period = time_period or timedelta(days=90)
             cutoff_time = datetime.utcnow() - time_period
@@ -734,6 +776,9 @@ class BrandVoiceAnalyzer:
         content_formats: List[ContentFormat] = None
     ) -> Dict[str, Any]:
         """Generate comprehensive brand voice guidelines"""
+
+
+
         try:
             if brand_id not in self.voice_profiles:
                 raise ValueError(f"Brand voice profile not found: {brand_id}")

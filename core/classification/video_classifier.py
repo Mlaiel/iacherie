@@ -70,6 +70,9 @@ class VideoContentClassifier:
         
     def _initialize_models(self, model_path: Optional[str] = None) -> None:
         """Load pre-trained classification models."""
+
+
+
         try:
             # Load CLIP model for multimodal analysis
             self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -86,6 +89,9 @@ class VideoContentClassifier:
     
     def _load_fallback_models(self) -> None:
         """Load fallback models if primary models fail."""
+
+
+
         try:
             # Use OpenCV cascades as fallback
             self.face_cascade = cv2.CascadeClassifier(
@@ -98,6 +104,9 @@ class VideoContentClassifier:
     
     def _setup_feature_extractors(self) -> None:
         """Initialize video feature extractors."""
+
+
+
         try:
             # Color histogram extractor
             self.hist_bins = 256
@@ -144,6 +153,9 @@ class VideoContentClassifier:
         Returns:
             Dictionary containing classification results
         """
+
+
+
         try:
             # Load and preprocess video
             video_data = await self.video_processor.load_video(video_path, sample_rate)
@@ -242,6 +254,9 @@ class VideoContentClassifier:
         frame_features: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
         """Detect scene changes and boundaries in video."""
+
+
+
         try:
             scene_changes = []
             scenes = []
@@ -294,6 +309,9 @@ class VideoContentClassifier:
     
     async def _detect_objects(self, frames: List[np.ndarray]) -> Dict[str, Any]:
         """Detect objects in video frames using YOLO."""
+
+
+
         try:
             all_detections = []
             object_counts = {}
@@ -348,6 +366,9 @@ class VideoContentClassifier:
         frame_features: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
         """Classify video content type (music video, vlog, tutorial, etc.)."""
+
+
+
         try:
             # Extract representative frames
             sample_frames = frames[::max(1, len(frames) // 5)]  # 5 sample frames
@@ -429,6 +450,9 @@ class VideoContentClassifier:
         frame_features: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
         """Assess video quality and technical characteristics."""
+
+
+
         try:
             quality_metrics = {}
             frames = video_data['frames']
@@ -503,6 +527,9 @@ class VideoContentClassifier:
     
     async def _compute_video_hash(self, frames: List[np.ndarray]) -> Dict[str, Any]:
         """Compute perceptual hash for video similarity matching."""
+
+
+
         try:
             # Sample key frames for hashing
             key_frames = frames[::max(1, len(frames) // 8)]  # 8 key frames
@@ -541,6 +568,9 @@ class VideoContentClassifier:
     
     async def _detect_faces(self, frames: List[np.ndarray]) -> Dict[str, Any]:
         """Detect and recognize faces in video frames."""
+
+
+
         try:
             face_detections = []
             unique_faces = []
@@ -601,6 +631,9 @@ class VideoContentClassifier:
     
     async def _analyze_motion(self, frames: List[np.ndarray]) -> Dict[str, Any]:
         """Analyze motion and camera movement in video."""
+
+
+
         try:
             if len(frames) < 2:
                 return {'error': 'Not enough frames for motion analysis'}
@@ -675,6 +708,9 @@ class VideoContentClassifier:
     
     def _extract_texture_features(self, frame: np.ndarray) -> Dict[str, float]:
         """Extract texture features using Local Binary Pattern."""
+
+
+
         try:
             from skimage import feature
             
@@ -704,6 +740,9 @@ class VideoContentClassifier:
     
     def _extract_dominant_colors(self, frame: np.ndarray, k: int = 5) -> List[List[int]]:
         """Extract dominant colors using K-means clustering."""
+
+
+
         try:
             from sklearn.cluster import KMeans
             
@@ -973,6 +1012,9 @@ class VideoContentClassifier:
         video_file2: str
     ) -> Dict[str, Any]:
         """Compare similarity between two video files."""
+
+
+
         try:
             # Classify both videos
             result1 = await self.classify_video(video_file1, 'similarity')
@@ -1037,10 +1079,16 @@ class VideoContentClassifier:
     
     def get_supported_formats(self) -> List[str]:
         """Get list of supported video formats."""
+
+
+
         return ['mp4', 'avi', 'mov', 'mkv', 'webm', 'flv', 'wmv', 'm4v']
     
     def get_classification_categories(self) -> Dict[str, List[str]]:
         """Get available classification categories."""
+
+
+
         return {
             'content_types': ['music_video', 'vlog', 'tutorial', 'performance', 'interview', 'gameplay', 'animation'],
             'scene_types': ['dark_scene', 'bright_scene', 'complex_scene', 'simple_scene', 'normal_scene'],

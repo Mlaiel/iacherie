@@ -259,6 +259,9 @@ class DMCATemplateEngine:
     
     def generate_notice_html(self, dmca_notice: DMCANotice) -> str:
         """Generate HTML DMCA notice"""
+
+
+
         try:
             template = self.template_env.get_template("basic_dmca_notice.html")
             
@@ -288,6 +291,9 @@ class DMCATemplateEngine:
     
     def generate_notice_pdf(self, dmca_notice: DMCANotice) -> Path:
         """Generate PDF DMCA notice"""
+
+
+
         try:
             # Generate HTML first
             html_content = self.generate_notice_html(dmca_notice)
@@ -378,6 +384,9 @@ class PlatformSubmitter:
     
     async def submit_dmca_notice(self, dmca_notice: DMCANotice) -> bool:
         """Submit DMCA notice to platform"""
+
+
+
         try:
             config = self.platform_configs.get(dmca_notice.platform)
             if not config:
@@ -395,6 +404,9 @@ class PlatformSubmitter:
     
     async def _submit_via_api(self, dmca_notice: DMCANotice, config: PlatformConfig) -> bool:
         """Submit via platform API"""
+
+
+
         try:
             # Prepare API payload
             payload = {
@@ -446,6 +458,9 @@ class PlatformSubmitter:
     
     async def _submit_via_web_form(self, dmca_notice: DMCANotice, config: PlatformConfig) -> bool:
         """Submit via web form (using Selenium)"""
+
+
+
         try:
             from selenium import webdriver
             from selenium.webdriver.common.by import By
@@ -556,6 +571,9 @@ class DMCAHandler:
     
     async def submit_takedown_request(self, violation_evidence: ViolationEvidence, evidence_data: Any = None) -> str:
         """Submit automated DMCA takedown request"""
+
+
+
         try:
             # Generate notice ID
             notice_id = f"dmca_{violation_evidence.violation_id}_{int(datetime.utcnow().timestamp())}"
@@ -593,6 +611,9 @@ class DMCAHandler:
     
     def _detect_platform(self, url: str) -> PlatformType:
         """Detect platform from URL"""
+
+
+
         try:
             domain = urlparse(url).netloc.lower()
             

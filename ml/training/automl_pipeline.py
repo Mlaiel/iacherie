@@ -1,15 +1,15 @@
 """
-🚀 AutoML Pipeline - IA Influencer Agent Platform Enterprise
+ AutoML Pipeline - IA Influencer Agent Platform Enterprise
 ===========================================================
 Module: backend/ml/training/automl_pipeline.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ===========================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 PIPELINE AUTOML ENTERPRISE
+ PIPELINE AUTOML ENTERPRISE
 Pipeline automatisé d'entraînement de modèles ML
 - Hyperparameter tuning automatique
 - Architecture search et optimization
@@ -151,6 +151,9 @@ class AutoMLPipeline:
                            y: np.ndarray,
                            job_name: Optional[str] = None) -> str:
         """Démarre un job d'entraînement AutoML"""
+
+
+
         try:
             job_id = str(uuid.uuid4())
             if job_name:
@@ -217,6 +220,9 @@ class AutoMLPipeline:
     
     async def _preprocess_data(self, X: np.ndarray, y: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
         """Préprocessing des données"""
+
+
+
         try:
             # Normalisation des features
             scaler = StandardScaler()
@@ -325,6 +331,9 @@ class AutoMLPipeline:
     
     async def _save_model(self, job_id: str, model: Any) -> str:
         """Sauvegarde le modèle entraîné"""
+
+
+
         try:
             # Créer le répertoire si nécessaire
             models_dir = Path("models")
@@ -349,6 +358,9 @@ class AutoMLPipeline:
     
     async def get_job_status(self, job_id: str) -> Optional[TrainingJob]:
         """Récupère le statut d'un job"""
+
+
+
         return self.training_jobs.get(job_id)
     
     async def cancel_job(self, job_id: str) -> bool:
@@ -392,6 +404,9 @@ class AutoMLPipeline:
     
     async def get_training_history(self) -> List[TrainingJob]:
         """Récupère l'historique des entraînements"""
+
+
+
         return list(self.training_jobs.values())
     
     async def cleanup_old_jobs(self, days_old: int = 30):

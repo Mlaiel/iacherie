@@ -363,6 +363,9 @@ class DailymotionEngine:
     
     def _is_cache_valid(self, cache_time: datetime) -> bool:
         """Check if cached data is still valid"""
+
+
+
         return datetime.utcnow() - cache_time < self.cache_ttl
     
     def _get_cached_result(self, key: str) -> Optional[Any]:
@@ -478,6 +481,9 @@ class DailymotionEngine:
     
     async def _extract_video_metadata_api(self, video_id: str) -> Optional[DailymotionMetadata]:
         """Extract video metadata using Dailymotion API"""
+
+
+
         try:
             api_url = f"{self.api_url}/video/{video_id}"
             response = await self._make_request(api_url)
@@ -1039,23 +1045,23 @@ async def main():
         result = await engine.extract(test_urls[0])
         
         if result.success:
-            print(f"✅ Successfully extracted: {result.video_metadata.title}")
-            print(f"📊 Duration: {result.video_metadata.duration}s")
-            print(f"👀 Views: {result.video_metadata.view_count}")
-            print(f"🎥 Formats available: {len(result.video_metadata.video_formats)}")
+            print(f" Successfully extracted: {result.video_metadata.title}")
+            print(f" Duration: {result.video_metadata.duration}s")
+            print(f" Views: {result.video_metadata.view_count}")
+            print(f" Formats available: {len(result.video_metadata.video_formats)}")
         else:
-            print(f"❌ Extraction failed: {result.errors}")
+            print(f" Extraction failed: {result.errors}")
         
         # Batch extraction
         print("\nBatch extracting...")
         results = await engine.batch_extract(test_urls[:2])
         
         successful = sum(1 for r in results if r.success)
-        print(f"✅ Successfully extracted {successful}/{len(results)} items")
+        print(f" Successfully extracted {successful}/{len(results)} items")
         
         # Print statistics
         stats = engine.get_stats()
-        print(f"\n📈 Engine Statistics:")
+        print(f"\n Engine Statistics:")
         print(f"Success rate: {stats['success_rate']:.1f}%")
         print(f"Requests made: {stats['requests_made']}")
         print(f"Cache hits: {stats['cache_hits']}")

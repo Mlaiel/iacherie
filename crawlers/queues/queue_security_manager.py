@@ -8,7 +8,7 @@ Responsibility: Comprehensive security management for crawler queue operations
 Technologies: Security Analytics, Threat Detection, Access Control, Encryption
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -294,6 +294,9 @@ class ThreatDetectionEngine:
     
     def _initialize_threat_patterns(self) -> Dict[str, Dict[str, Any]]:
         """Initialize threat detection patterns"""
+
+
+
         
         return {
             'sql_injection': {
@@ -385,6 +388,9 @@ class ThreatDetectionEngine:
     
     async def _is_suspicious_ip(self, ip_address: str) -> bool:
         """Check if IP address is suspicious"""
+
+
+
         
         try:
             ip = ipaddress.ip_address(ip_address)
@@ -638,6 +644,9 @@ class QueueSecurityManager:
         required_permissions: List[AccessPermission] = None
     ) -> Optional[SecurityToken]:
         """Authenticate and authorize request"""
+
+
+
         
         try:
             # Validate token format
@@ -930,6 +939,9 @@ class QueueSecurityManager:
     
     async def _validate_jwt_token(self, token: str) -> Optional[Dict[str, Any]]:
         """Validate JWT token"""
+
+
+
         
         try:
             # In production, use proper JWT secret from secure storage
@@ -1221,6 +1233,9 @@ class QueueSecurityManager:
     
     async def _check_compliance_status(self) -> Dict[str, bool]:
         """Check compliance with security standards"""
+
+
+
         
         return {
             'gdpr_compliant': self.config.audit_logging_enabled and self.config.encryption_enabled,

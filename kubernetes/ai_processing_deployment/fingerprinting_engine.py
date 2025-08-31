@@ -16,7 +16,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team Specialization: Lead Dev IA + Backend Senior + ML Engineer + DBA + 
                     Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  WARNING: PROPRIETARY CODE
+  WARNING: PROPRIETARY CODE
 All code, concepts, and implementations in this module are proprietary 
 intellectual property of Fahed Mlaiel. Any unauthorized use, copying, 
 distribution, or commercial exploitation without explicit written 
@@ -182,6 +182,9 @@ class AudioFingerprintEngine:
     async def _generate_chromaprint(self, audio: np.ndarray, sr: int, 
                                   content_id: str, metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
         """Generate Chromaprint-based fingerprint."""
+
+
+
         try:
             # Convert to int16 for chromaprint
             audio_int16 = (audio * 32767).astype(np.int16)
@@ -207,6 +210,9 @@ class AudioFingerprintEngine:
     async def _generate_spectral_features(self, audio: np.ndarray, sr: int,
                                         content_id: str, metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
         """Generate spectral features-based fingerprint."""
+
+
+
         try:
             # Extract spectral features
             stft = librosa.stft(audio, n_fft=2048, hop_length=512)
@@ -243,6 +249,9 @@ class AudioFingerprintEngine:
     async def _generate_mfcc_fingerprint(self, audio: np.ndarray, sr: int,
                                        content_id: str, metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
         """Generate MFCC-based fingerprint."""
+
+
+
         try:
             # Extract MFCC features
             mfccs = librosa.feature.mfcc(y=audio, sr=sr, n_mfcc=13)
@@ -277,6 +286,9 @@ class AudioFingerprintEngine:
     async def _generate_perceptual_hash(self, audio: np.ndarray, sr: int,
                                       content_id: str, metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
         """Generate perceptual hash for audio."""
+
+
+
         try:
             # Convert to spectrogram
             S = librosa.stft(audio, n_fft=2048, hop_length=512)
@@ -391,6 +403,9 @@ class VideoFingerprintEngine:
     async def _generate_frame_fingerprint(self, cap: cv2.VideoCapture, frame_interval: int,
                                         content_id: str, metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
         """Generate fingerprint based on frame analysis."""
+
+
+
         try:
             frame_hashes = []
             frame_count = 0
@@ -444,6 +459,9 @@ class VideoFingerprintEngine:
     async def _generate_motion_fingerprint(self, cap: cv2.VideoCapture, frame_interval: int,
                                          content_id: str, metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
         """Generate fingerprint based on motion analysis."""
+
+
+
         try:
             motion_vectors = []
             prev_frame = None
@@ -514,6 +532,9 @@ class VideoFingerprintEngine:
     async def _generate_color_fingerprint(self, cap: cv2.VideoCapture, frame_interval: int,
                                         content_id: str, metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
         """Generate fingerprint based on color analysis."""
+
+
+
         try:
             color_histograms = []
             frame_count = 0
@@ -572,6 +593,9 @@ class VideoFingerprintEngine:
     async def _generate_temporal_fingerprint(self, cap: cv2.VideoCapture, frame_interval: int,
                                            content_id: str, metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
         """Generate fingerprint based on temporal features."""
+
+
+
         try:
             temporal_features = []
             prev_frame = None
@@ -751,6 +775,9 @@ class ImageFingerprintEngine:
     async def _generate_clip_embedding(self, image: Image.Image, content_id: str,
                                      metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
         """Generate CLIP semantic embedding."""
+
+
+
         try:
             # Process image with CLIP
             inputs = self.clip_processor(images=image, return_tensors="pt")
@@ -781,6 +808,9 @@ class ImageFingerprintEngine:
     async def _generate_feature_fingerprint(self, image: Image.Image, content_id: str,
                                           metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
         """Generate feature-based fingerprint using computer vision."""
+
+
+
         try:
             # Convert to OpenCV format
             image_cv = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
@@ -824,6 +854,9 @@ class ImageFingerprintEngine:
     async def _generate_color_fingerprint(self, image: Image.Image, content_id: str,
                                         metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
         """Generate color-based fingerprint."""
+
+
+
         try:
             # Convert to numpy array
             image_array = np.array(image)
@@ -936,6 +969,9 @@ class TextFingerprintEngine:
     async def _generate_semantic_embedding(self, text: str, content_id: str,
                                          metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
         """Generate semantic embedding using sentence transformers."""
+
+
+
         try:
             # Generate embedding
             embedding = self.sentence_transformer.encode(text)
@@ -962,6 +998,9 @@ class TextFingerprintEngine:
     async def _generate_ngram_fingerprint(self, text: str, content_id: str,
                                         metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
         """Generate n-gram based fingerprint."""
+
+
+
         try:
             # Clean and tokenize text
             words = text.lower().split()
@@ -1005,6 +1044,9 @@ class TextFingerprintEngine:
     async def _generate_linguistic_fingerprint(self, text: str, content_id: str,
                                              metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
         """Generate linguistic features fingerprint."""
+
+
+
         try:
             # Basic linguistic features
             words = text.split()
@@ -1061,6 +1103,9 @@ class TextFingerprintEngine:
     async def _generate_content_hash(self, text: str, content_id: str,
                                    metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
         """Generate content-based hash."""
+
+
+
         try:
             # Clean text for consistent hashing
             cleaned_text = ' '.join(text.lower().split())
@@ -1101,6 +1146,9 @@ class SimilaritySearchEngine:
         
     async def add_fingerprints(self, fingerprints: List[FingerprintResult]):
         """Add fingerprints to the search index."""
+
+
+
         try:
             for fingerprint in fingerprints:
                 if fingerprint.vector_embedding is not None:
@@ -1217,6 +1265,9 @@ class MultiformatFingerprintEngine:
         Returns:
             List[FingerprintResult]: Generated fingerprints
         """
+
+
+
         try:
             if content_type == ContentType.AUDIO:
                 fingerprints = await self.audio_engine.generate_fingerprint(content_path, metadata)
@@ -1269,6 +1320,9 @@ class MultiformatFingerprintEngine:
     
     async def get_engine_statistics(self) -> Dict[str, Any]:
         """Get comprehensive engine statistics."""
+
+
+
         return {
             'audio_engine': 'active',
             'video_engine': 'active', 

@@ -145,6 +145,9 @@ class ContentProtectionManager:
         Returns:
             Success status
         """
+
+
+
         try:
             # Validate content exists
             content = await self._get_content_by_id(content_id)
@@ -198,6 +201,9 @@ class ContentProtectionManager:
         Returns:
             List of detected violations
         """
+
+
+
         try:
             # Get protection config
             protection = await self._get_protection_config(content_id)
@@ -249,6 +255,9 @@ class ContentProtectionManager:
         Returns:
             Protection status information
         """
+
+
+
         try:
             # Check cache first
             cache_key = f"protection_status:{content_id}"
@@ -307,6 +316,9 @@ class ContentProtectionManager:
         Returns:
             Protection report
         """
+
+
+
         try:
             # Calculate date range
             end_date = datetime.utcnow()
@@ -360,6 +372,9 @@ class ContentProtectionManager:
         Returns:
             Success status
         """
+
+
+
         try:
             # Update protection status
             query = select(ProtectionModel).where(ProtectionModel.content_id == content_id)
@@ -421,6 +436,9 @@ class ContentProtectionManager:
         Returns:
             List of violation alerts
         """
+
+
+
         try:
             # Query violations for user's content
             query = """
@@ -580,6 +598,9 @@ class ContentProtectionManager:
     
     async def _get_from_cache(self, key: str) -> Optional[Dict]:
         """Get data from cache"""
+
+
+
         try:
             cached_data = await self.redis.get(key)
             return json.loads(cached_data) if cached_data else None
@@ -588,6 +609,9 @@ class ContentProtectionManager:
     
     async def _save_to_cache(self, key: str, data: Dict, ttl: int = None):
         """Save data to cache"""
+
+
+
         try:
             ttl = ttl or self.cache_ttl
             await self.redis.setex(key, ttl, json.dumps(data, default=str))

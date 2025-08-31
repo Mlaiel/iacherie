@@ -169,6 +169,9 @@ class MLOpsPipelineDeployment:
     
     def _initialize_clients(self) -> None:
         """Initialize Kubernetes, Docker, and Redis clients"""
+
+
+
         try:
             # Kubernetes client
             config.load_incluster_config()
@@ -205,6 +208,9 @@ class MLOpsPipelineDeployment:
         Returns:
             MLOps infrastructure deployment summary
         """
+
+
+
         try:
             self.status = "deploying_mlops_infrastructure"
             logger.info("Deploying MLOps infrastructure")
@@ -296,6 +302,9 @@ class MLOpsPipelineDeployment:
         Returns:
             Pipeline deployment result
         """
+
+
+
         try:
             pipeline_id = f"{config.pipeline_name}-{int(time.time())}"
             logger.info(f"Deploying MLOps pipeline: {pipeline_id}")
@@ -360,6 +369,9 @@ class MLOpsPipelineDeployment:
     
     async def _ensure_mlops_namespace(self) -> None:
         """Create MLOps namespace"""
+
+
+
         try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
@@ -944,6 +956,9 @@ class MLOpsPipelineDeployment:
     
     async def _validate_mlops_infrastructure(self) -> bool:
         """Validate MLOps infrastructure deployment"""
+
+
+
         try:
             # Check essential MLOps services
             essential_services = [
@@ -1231,6 +1246,9 @@ class MLOpsPipelineDeployment:
     
     async def get_mlops_metrics(self) -> Dict[str, Any]:
         """Get comprehensive MLOps metrics"""
+
+
+
         try:
             metrics = {
                 "infrastructure_status": self.status,
@@ -1264,6 +1282,9 @@ class MLOpsPipelineDeployment:
     
     async def _cleanup_failed_mlops_infrastructure(self) -> None:
         """Clean up failed MLOps infrastructure deployment"""
+
+
+
         try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
@@ -1273,6 +1294,9 @@ class MLOpsPipelineDeployment:
     
     async def _cleanup_failed_pipeline_deployment(self, pipeline_name: str) -> None:
         """Clean up failed pipeline deployment"""
+
+
+
         try:
             # Clean up pipeline-specific resources
             pipeline_keys = self._redis_client.keys(f"mlops:pipeline:*{pipeline_name}*")
@@ -1286,6 +1310,9 @@ class MLOpsPipelineDeployment:
     
     async def cleanup(self) -> None:
         """Clean up entire MLOps infrastructure"""
+
+
+
         try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)

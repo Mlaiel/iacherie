@@ -36,7 +36,7 @@ class PriorityCrawlerTester:
         
     async def test_spotify_crawler(self) -> Dict[str, Any]:
         """Test Spotify crawler functionality."""
-        logger.info("🎵 Testing Spotify Crawler...")
+        logger.info(" Testing Spotify Crawler...")
         
         try:
             # Import crawler
@@ -84,7 +84,7 @@ class PriorityCrawlerTester:
     
     async def test_youtube_crawler(self) -> Dict[str, Any]:
         """Test YouTube crawler functionality."""
-        logger.info("📺 Testing YouTube Crawler...")
+        logger.info(" Testing YouTube Crawler...")
         
         try:
             # Import crawler
@@ -132,7 +132,7 @@ class PriorityCrawlerTester:
     
     async def test_instagram_crawler(self) -> Dict[str, Any]:
         """Test Instagram crawler functionality."""
-        logger.info("📸 Testing Instagram Crawler...")
+        logger.info(" Testing Instagram Crawler...")
         
         try:
             # Import crawler
@@ -180,6 +180,9 @@ class PriorityCrawlerTester:
     
     async def _test_crawler_initialization(self, crawler, platform_name: str) -> Dict[str, Any]:
         """Test crawler initialization."""
+
+
+
         try:
             # Check if crawler has required attributes
             required_attrs = ['config', 'session', 'rate_limiter']
@@ -214,6 +217,9 @@ class PriorityCrawlerTester:
     
     def _test_required_methods(self, crawler, required_methods: List[str]) -> Dict[str, Any]:
         """Test if crawler has required methods."""
+
+
+
         try:
             missing_methods = []
             implemented_methods = []
@@ -257,6 +263,9 @@ class PriorityCrawlerTester:
     
     def _test_api_configuration(self, crawler, platform_name: str) -> Dict[str, Any]:
         """Test API configuration."""
+
+
+
         try:
             config_score = 0.0
             config_items = []
@@ -298,6 +307,9 @@ class PriorityCrawlerTester:
     
     async def _test_mock_functionality(self, crawler, platform: str) -> Dict[str, Any]:
         """Test crawler functionality with mocked responses."""
+
+
+
         try:
             # Mock successful API response
             mock_response_data = {
@@ -383,7 +395,7 @@ class PriorityCrawlerTester:
     
     async def test_api_connectivity(self) -> Dict[str, Any]:
         """Test external API connectivity for priority platforms."""
-        logger.info("🌐 Testing API Connectivity...")
+        logger.info(" Testing API Connectivity...")
         
         connectivity_tests = {}
         
@@ -439,7 +451,7 @@ class PriorityCrawlerTester:
     
     async def run_all_tests(self) -> Dict[str, Any]:
         """Run all priority crawler tests."""
-        logger.info("🚀 Starting Priority Crawler Functionality Tests")
+        logger.info(" Starting Priority Crawler Functionality Tests")
         logger.info("=" * 60)
         
         start_time = datetime.now()
@@ -538,15 +550,15 @@ async def main():
         json.dump(results, f, indent=2)
     
     # Print summary
-    print(f"\n✅ Priority Crawler Tests Complete!")
-    print(f"📁 Report saved to: {report_file}")
-    print(f"⏱️  Duration: {results['duration_seconds']:.2f} seconds")
-    print(f"📊 Overall Status: {results['overall_assessment']['overall_status']}")
-    print(f"🎯 Average Score: {results['overall_assessment']['average_crawler_score']}")
-    print(f"🌐 API Accessibility: {results['overall_assessment']['accessible_apis']}/{results['overall_assessment']['total_apis_tested']}")
+    print(f"\n Priority Crawler Tests Complete!")
+    print(f" Report saved to: {report_file}")
+    print(f"⏱  Duration: {results['duration_seconds']:.2f} seconds")
+    print(f" Overall Status: {results['overall_assessment']['overall_status']}")
+    print(f" Average Score: {results['overall_assessment']['average_crawler_score']}")
+    print(f" API Accessibility: {results['overall_assessment']['accessible_apis']}/{results['overall_assessment']['total_apis_tested']}")
     
     # Print individual crawler results
-    print(f"\n📋 Individual Crawler Results:")
+    print(f"\n Individual Crawler Results:")
     for platform, result in results['test_summary'].items():
         status = result.get('status', 'UNKNOWN')
         score = result.get('overall_score', 0.0)
@@ -554,7 +566,7 @@ async def main():
     
     # Print recommendations
     if results['overall_assessment']['recommendations']:
-        print(f"\n💡 Recommendations:")
+        print(f"\n Recommendations:")
         for i, rec in enumerate(results['overall_assessment']['recommendations'], 1):
             print(f"   {i}. {rec}")
     

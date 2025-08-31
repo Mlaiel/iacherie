@@ -91,6 +91,9 @@ class CrawlingJobManager(DatabaseManager):
             CrawlingJobError: If job creation fails
             ValidationError: If invalid parameters provided
         """
+
+
+
         try:
             # Validate job type
             if job_type not in [jt.value for jt in JobType]:
@@ -198,6 +201,9 @@ class CrawlingJobManager(DatabaseManager):
         Returns:
             Dict containing job data or None if not found
         """
+
+
+
         try:
             job = await self.db.query(CrawlingJob).filter(
                 CrawlingJob.job_id == job_id
@@ -253,6 +259,9 @@ class CrawlingJobManager(DatabaseManager):
         Returns:
             bool indicating success
         """
+
+
+
         try:
             update_data = {
                 'status': status.value,
@@ -309,6 +318,9 @@ class CrawlingJobManager(DatabaseManager):
         Returns:
             bool indicating success
         """
+
+
+
         try:
             result = await self.db.execute(
                 text("""
@@ -346,6 +358,9 @@ class CrawlingJobManager(DatabaseManager):
         Returns:
             bool indicating success
         """
+
+
+
         try:
             result = await self.db.execute(
                 text("""
@@ -383,6 +398,9 @@ class CrawlingJobManager(DatabaseManager):
         Returns:
             List of pending job dictionaries
         """
+
+
+
         try:
             query = self.db.query(CrawlingJob).filter(
                 and_(
@@ -431,6 +449,9 @@ class CrawlingJobManager(DatabaseManager):
         Returns:
             Dict containing job counts by status
         """
+
+
+
         try:
             # Query job counts by status for user's sessions
             result = await self.db.execute(
@@ -475,6 +496,9 @@ class CrawlingJobManager(DatabaseManager):
         Returns:
             Dict containing job analytics
         """
+
+
+
         try:
             since_time = datetime.utcnow() - time_range
             
@@ -569,6 +593,9 @@ class CrawlingJobManager(DatabaseManager):
         Returns:
             bool indicating if retry was scheduled
         """
+
+
+
         try:
             job_data = await self.get_job(job_id)
             if not job_data:
@@ -620,6 +647,9 @@ class CrawlingJobManager(DatabaseManager):
         Returns:
             Number of jobs cleaned up
         """
+
+
+
         try:
             result = await self.db.execute(
                 text("DELETE FROM crawling_jobs WHERE session_id = :session_id"),
@@ -640,6 +670,9 @@ class CrawlingJobManager(DatabaseManager):
         Returns:
             Dict containing health status
         """
+
+
+
         try:
             # Check pending jobs count
             pending_count = await self.db.query(func.count(CrawlingJob.job_id)).filter(

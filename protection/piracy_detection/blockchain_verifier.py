@@ -1,5 +1,5 @@
 """
-🔗 Blockchain Content Verification System
+ Blockchain Content Verification System
 =========================================
 
 Advanced blockchain-based content verification and authenticity tracking.
@@ -7,7 +7,7 @@ Advanced blockchain-based content verification and authenticity tracking.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
+ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
 and will result in immediate legal action under German and international copyright law.
 
@@ -192,6 +192,9 @@ class IPFSManager:
     
     def _initialize_client(self):
         """Initialize IPFS client."""
+
+
+
         try:
             self.client = ipfshttpclient.connect(
                 addr=self.config.get('api_address', '/ip4/127.0.0.1/tcp/5001'),
@@ -203,6 +206,9 @@ class IPFSManager:
     
     async def store_content_metadata(self, metadata: Dict[str, Any]) -> str:
         """Store content metadata on IPFS."""
+
+
+
         try:
             if not self.client:
                 raise Exception("IPFS client not initialized")
@@ -223,6 +229,9 @@ class IPFSManager:
     
     async def retrieve_content_metadata(self, ipfs_hash: str) -> Dict[str, Any]:
         """Retrieve content metadata from IPFS."""
+
+
+
         try:
             if not self.client:
                 raise Exception("IPFS client not initialized")
@@ -297,6 +306,9 @@ class CryptographicProcessor:
     
     def verify_signature(self, content_hash: str, signature: str, public_key_pem: str) -> bool:
         """Verify digital signature."""
+
+
+
         try:
             public_key = serialization.load_pem_public_key(public_key_pem.encode())
             message = content_hash.encode('utf-8')
@@ -367,6 +379,9 @@ class BlockchainContentVerifier:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             # Initialize smart contract manager
             network_configs = self.config.get('blockchain_networks', {})
@@ -466,6 +481,9 @@ class BlockchainContentVerifier:
         Returns:
             Tuple of (is_authentic, ownership_proof)
         """
+
+
+
         try:
             # Check cache first
             if content_id in self.verification_cache:
@@ -623,6 +641,9 @@ class BlockchainContentVerifier:
     
     def get_verification_statistics(self) -> Dict[str, Any]:
         """Get verification statistics."""
+
+
+
         return {
             **self.verification_stats,
             'cache_size': len(self.verification_cache),

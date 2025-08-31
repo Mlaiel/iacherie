@@ -7,7 +7,7 @@ authentication, and integrity verification across multi-platform integrations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission from Fahed Mlaiel <mlaiel@live.de> is strictly prohibited.
@@ -139,6 +139,9 @@ class SignatureValidator:
 
     async def initialize(self) -> None:
         """Initialize signature validator with required services"""
+
+
+
         try:
             # Initialize Redis connection for replay protection
             self._redis_client = await aioredis.from_url(
@@ -310,6 +313,9 @@ class SignatureValidator:
         Returns:
             Generated signature string
         """
+
+
+
         try:
             # Prepare payload
             if isinstance(payload, dict):
@@ -376,6 +382,9 @@ class SignatureValidator:
         tolerance_seconds: int = 300
     ) -> Dict[str, Any]:
         """Add signature configuration for platform"""
+
+
+
         try:
             config = SignatureConfig(
                 platform=platform,
@@ -423,6 +432,9 @@ class SignatureValidator:
         time_range: str = "24h"
     ) -> Dict[str, Any]:
         """Get signature validation metrics and analytics"""
+
+
+
         try:
             metrics_data = {
                 'time_range': time_range,
@@ -456,6 +468,9 @@ class SignatureValidator:
 
     async def health_check(self) -> Dict[str, Any]:
         """Comprehensive health check for signature validator"""
+
+
+
         return {
             'status': 'healthy',
             'redis_connected': self._redis_client is not None,
@@ -468,6 +483,9 @@ class SignatureValidator:
 
     async def shutdown(self) -> None:
         """Graceful shutdown of signature validator"""
+
+
+
         try:
             logger.info("Shutting down SignatureValidator")
             
@@ -663,6 +681,9 @@ class SignatureValidator:
         headers: Dict[str, str]
     ) -> Dict[str, Any]:
         """Validate signature based on configured method"""
+
+
+
         try:
             if config.method == SignatureMethod.HMAC_SHA256:
                 return await self._validate_hmac_sha256(payload_bytes, signature, config)

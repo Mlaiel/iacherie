@@ -12,7 +12,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 
-⚠️ STRICT COPYRIGHT PROTECTION ⚠️
+ STRICT COPYRIGHT PROTECTION 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 
@@ -172,6 +172,9 @@ class BaseWebExtractor(BaseExtractor):
     
     async def fetch_content(self, url: str, session: aiohttp.ClientSession) -> Tuple[str, Dict[str, Any]]:
         """Fetch web content with metadata"""
+
+
+
         try:
             async with session.get(url) as response:
                 if response.status >= 400:
@@ -218,6 +221,9 @@ class HTMLExtractor(BaseWebExtractor):
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
         """Extract HTML content and metadata"""
+
+
+
         try:
             content = ""
             fetch_metadata = {}
@@ -317,6 +323,9 @@ class HTMLExtractor(BaseWebExtractor):
     
     async def _extract_html_structure(self, soup: BeautifulSoup) -> Dict[str, Any]:
         """Extract HTML document structure"""
+
+
+
         return {
             'doctype': self._extract_doctype(soup),
             'html_tag': soup.html.attrs if soup.html else {},
@@ -796,6 +805,9 @@ class ArticleExtractor(BaseWebExtractor):
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
         """Extract clean article content"""
+
+
+
         try:
             if not request.source_url:
                 return ExtractionResult(

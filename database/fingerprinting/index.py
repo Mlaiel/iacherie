@@ -17,7 +17,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Email: mlaiel@live.de
 Project: IA Influencer Agent + Content Protection Platform
 
-⚠️  STRICT COPYRIGHT WARNING ⚠️
+  STRICT COPYRIGHT WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, modification, or distribution is strictly prohibited
 and will result in immediate legal action under German and international law.
@@ -157,6 +157,9 @@ class EnterpriseFingerprintingService:
     
     async def initialize(self, config: Optional[Dict[str, Any]] = None) -> bool:
         """Initialize all fingerprinting service components"""
+
+
+
         try:
             self.logger.info("Initializing Enterprise Fingerprinting Service...")
             
@@ -519,4 +522,4 @@ FINGERPRINTING_CONFIG = {
 # Module initialization log
 logger.info(f"Enterprise Fingerprinting Module v{__version__} loaded successfully")
 logger.info(f"Author: {__author__} <{__email__}>")
-logger.info("⚠️  This module is protected by strict copyright laws")
+logger.info("  This module is protected by strict copyright laws")

@@ -16,7 +16,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Specialist + DevOps Expert
 Copyright: Fahed Mlaiel - All Rights Reserved
 
-⚠️  STRICT LEGAL WARNING: 
+  STRICT LEGAL WARNING: 
     This proprietary code is protected by international copyright law.
     Unauthorized use, copying, distribution, modification, or reverse engineering 
     is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -145,6 +145,9 @@ class SummarizationEngine:
         
     def _initialize_models(self):
         """Initialize summarization models"""
+
+
+
         try:
             # Initialize spaCy
             self.nlp = spacy.load("en_core_web_lg")
@@ -193,6 +196,9 @@ class SummarizationEngine:
         Returns:
             SummaryResult with summary and analysis
         """
+
+
+
         try:
             start_time = datetime.now()
             
@@ -266,6 +272,9 @@ class SummarizationEngine:
         custom_length: Optional[int]
     ) -> int:
         """Calculate target number of sentences for summary"""
+
+
+
         try:
             sentences = sent_tokenize(text)
             total_sentences = len(sentences)
@@ -294,6 +303,9 @@ class SummarizationEngine:
         content_type: ContentType
     ) -> str:
         """Perform extractive summarization"""
+
+
+
         try:
             sentences = sent_tokenize(text)
             
@@ -330,6 +342,9 @@ class SummarizationEngine:
         target_sentences: int
     ) -> str:
         """Perform abstractive summarization using transformer models"""
+
+
+
         try:
             if not self.abstractive_model:
                 # Fallback to extractive
@@ -393,6 +408,9 @@ class SummarizationEngine:
         content_type: ContentType
     ) -> str:
         """Combine extractive and abstractive methods"""
+
+
+
         try:
             # First, use extractive to get important content
             extractive_summary = await self._extractive_summarization(
@@ -419,6 +437,9 @@ class SummarizationEngine:
         content_type: ContentType
     ) -> List[SentenceScore]:
         """Score sentences using multiple criteria"""
+
+
+
         try:
             scored_sentences = []
             
@@ -487,6 +508,9 @@ class SummarizationEngine:
             
     async def _calculate_tfidf_scores(self, sentences: List[str]) -> List[float]:
         """Calculate TF-IDF scores for sentences"""
+
+
+
         try:
             if len(sentences) < 2:
                 return [1.0] * len(sentences)
@@ -505,6 +529,9 @@ class SummarizationEngine:
             
     async def _extract_important_words(self, text: str) -> List[str]:
         """Extract important words for keyword scoring"""
+
+
+
         try:
             if not self.nlp:
                 return []
@@ -530,6 +557,9 @@ class SummarizationEngine:
             
     def _calculate_position_score(self, position: int, total_sentences: int) -> float:
         """Calculate score based on sentence position"""
+
+
+
         try:
             # Higher scores for beginning and end
             if total_sentences <= 3:
@@ -553,6 +583,9 @@ class SummarizationEngine:
             
     def _calculate_length_score(self, word_count: int) -> float:
         """Calculate score based on sentence length"""
+
+
+
         try:
             # Prefer medium-length sentences (10-25 words)
             if 10 <= word_count <= 25:
@@ -572,6 +605,9 @@ class SummarizationEngine:
             
     def _calculate_keyword_score(self, sentence: str, keywords: List[str]) -> float:
         """Calculate score based on keyword presence"""
+
+
+
         try:
             if not keywords:
                 return 0.5
@@ -593,6 +629,9 @@ class SummarizationEngine:
             
     def _calculate_content_type_score(self, sentence: str, content_type: ContentType) -> float:
         """Calculate score based on content type specific patterns"""
+
+
+
         try:
             sentence_lower = sentence.lower()
             
@@ -622,6 +661,9 @@ class SummarizationEngine:
             
     async def _extract_key_points(self, text: str) -> List[KeyPoint]:
         """Extract key points from text"""
+
+
+
         try:
             sentences = sent_tokenize(text)
             
@@ -659,6 +701,9 @@ class SummarizationEngine:
             
     async def _generate_bullet_points(self, text: str, key_points: List[KeyPoint]) -> List[str]:
         """Generate bullet points from text and key points"""
+
+
+
         try:
             bullet_points = []
             
@@ -695,6 +740,9 @@ class SummarizationEngine:
             
     async def _simplify_sentence(self, sentence: str) -> str:
         """Simplify a sentence for bullet point format"""
+
+
+
         try:
             # Remove unnecessary words and phrases
             simplified = sentence.strip()
@@ -725,6 +773,9 @@ class SummarizationEngine:
             
     async def _calculate_readability(self, text: str) -> float:
         """Calculate readability score of text"""
+
+
+
         try:
             # Simple readability metric based on average sentence length
             sentences = sent_tokenize(text)
@@ -750,6 +801,9 @@ class SummarizationEngine:
             
     async def _calculate_coverage(self, original_text: str, summary_text: str) -> float:
         """Calculate how well the summary covers the original content"""
+
+
+
         try:
             if not original_text or not summary_text:
                 return 0.0
@@ -795,6 +849,9 @@ class MultiDocumentSummarizer:
         Returns:
             SummaryResult with combined summary
         """
+
+
+
         try:
             if not documents:
                 raise ValueError("No documents provided")

@@ -1,5 +1,5 @@
 """
-🎛️ Professional Mixing Console - Advanced Channel Strip
+ Professional Mixing Console - Advanced Channel Strip
 
 Industrial-grade channel strip with comprehensive processing capabilities
 including EQ, dynamics, inserts, sends, and professional routing.
@@ -176,6 +176,9 @@ class ChannelStrip:
     
     def process(self, input_audio: np.ndarray) -> np.ndarray:
         """Process audio through complete channel strip"""
+
+
+
         try:
             if input_audio.size == 0:
                 return input_audio
@@ -394,6 +397,9 @@ class ChannelStrip:
     
     def get_channel_info(self) -> Dict[str, Any]:
         """Get complete channel information"""
+
+
+
         return {
             'channel_id': self.channel_id,
             'strip_type': self.strip_type.value,

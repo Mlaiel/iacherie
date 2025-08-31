@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -68,6 +68,9 @@ class BaseRepository(ABC, Generic[ModelType]):
         """
         Database transaction context manager with automatic rollback on error
         """
+
+
+
         try:
             yield self.db_session
             self.db_session.commit()
@@ -89,6 +92,9 @@ class BaseRepository(ABC, Generic[ModelType]):
         Raises:
             RepositoryException: If creation fails
         """
+
+
+
         try:
             entity = self.model_class(**kwargs)
             with self.transaction():
@@ -114,6 +120,9 @@ class BaseRepository(ABC, Generic[ModelType]):
         Returns:
             List of created entity instances
         """
+
+
+
         try:
             entities = [self.model_class(**data) for data in entities_data]
             with self.transaction():
@@ -135,6 +144,9 @@ class BaseRepository(ABC, Generic[ModelType]):
         Returns:
             Entity instance or None if not found
         """
+
+
+
         try:
             entity = self.db_session.query(self.model_class).filter(
                 self.model_class.id == entity_id
@@ -166,6 +178,9 @@ class BaseRepository(ABC, Generic[ModelType]):
         Returns:
             List of entity instances
         """
+
+
+
         try:
             query = self.db_session.query(self.model_class)
             
@@ -210,6 +225,9 @@ class BaseRepository(ABC, Generic[ModelType]):
         Returns:
             List of entity instances matching filters
         """
+
+
+
         try:
             query = self.db_session.query(self.model_class)
             
@@ -280,6 +298,9 @@ class BaseRepository(ABC, Generic[ModelType]):
         Returns:
             Updated entity instance or None if not found
         """
+
+
+
         try:
             entity = self.get_by_id(entity_id)
             if not entity:
@@ -315,6 +336,9 @@ class BaseRepository(ABC, Generic[ModelType]):
         Returns:
             Number of updated entities
         """
+
+
+
         try:
             query = self.db_session.query(self.model_class)
             
@@ -347,6 +371,9 @@ class BaseRepository(ABC, Generic[ModelType]):
         Returns:
             True if deleted, False if not found
         """
+
+
+
         try:
             entity = self.get_by_id(entity_id)
             if not entity:
@@ -380,6 +407,9 @@ class BaseRepository(ABC, Generic[ModelType]):
         Returns:
             Number of deleted entities
         """
+
+
+
         try:
             query = self.db_session.query(self.model_class)
             
@@ -418,6 +448,9 @@ class BaseRepository(ABC, Generic[ModelType]):
         Returns:
             Number of entities matching criteria
         """
+
+
+
         try:
             query = self.db_session.query(func.count(self.model_class.id))
             
@@ -445,6 +478,9 @@ class BaseRepository(ABC, Generic[ModelType]):
         Returns:
             True if entity exists, False otherwise
         """
+
+
+
         try:
             exists = self.db_session.query(
                 self.db_session.query(self.model_class).filter(
@@ -468,6 +504,9 @@ class BaseRepository(ABC, Generic[ModelType]):
         Returns:
             Query result
         """
+
+
+
         try:
             result = self.db_session.execute(text(query), params or {})
             self.logger.debug(f"Executed raw query: {query}")
@@ -484,6 +523,9 @@ class BaseRepository(ABC, Generic[ModelType]):
         Returns:
             Dictionary containing statistics
         """
+
+
+
         try:
             stats = {
                 'total_count': self.count(),
@@ -516,6 +558,9 @@ class BaseRepository(ABC, Generic[ModelType]):
         Returns:
             Optimization results
         """
+
+
+
         try:
             # Analyze table statistics
             analyze_query = f"ANALYZE {self.model_class.__tablename__}"
@@ -557,6 +602,9 @@ class BaseRepository(ABC, Generic[ModelType]):
         Returns:
             Health check results
         """
+
+
+
         try:
             # Test basic connectivity
             connection_test = self.db_session.execute(text("SELECT 1")).scalar()

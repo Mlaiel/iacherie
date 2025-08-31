@@ -9,7 +9,7 @@ and coordinated content surveillance across all platforms.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, modification, or distribution is strictly prohibited.
 Violators will face immediate legal action under German and international law.
@@ -128,6 +128,9 @@ class CrawlerOrchestrator:
     
     def _initialize_crawlers(self):
         """Initialize all available crawlers."""
+
+
+
         try:
             # YouTube crawler
             if self.config.get('youtube_api_key'):
@@ -158,6 +161,9 @@ class CrawlerOrchestrator:
     
     def add_monitoring_task(self, task: CrawlingTask) -> str:
         """Add a new monitoring task."""
+
+
+
         try:
             task_id = task.task_id
             self.tasks[task_id] = task
@@ -171,6 +177,9 @@ class CrawlerOrchestrator:
     
     def remove_monitoring_task(self, task_id: str) -> bool:
         """Remove a monitoring task."""
+
+
+
         try:
             if task_id in self.tasks:
                 del self.tasks[task_id]
@@ -184,6 +193,9 @@ class CrawlerOrchestrator:
     
     def update_task_status(self, task_id: str, active: bool) -> bool:
         """Update task active status."""
+
+
+
         try:
             if task_id in self.tasks:
                 self.tasks[task_id].active = active
@@ -299,6 +311,9 @@ class CrawlerOrchestrator:
     
     async def _execute_youtube_task(self, crawler: YouTubeCrawler, task: CrawlingTask) -> List[CrawlResult]:
         """Execute YouTube-specific crawling task."""
+
+
+
         try:
             operation = task.parameters.get('operation', 'search')
             
@@ -324,6 +339,9 @@ class CrawlerOrchestrator:
     
     async def _execute_tiktok_task(self, crawler: TikTokCrawler, task: CrawlingTask) -> List[CrawlResult]:
         """Execute TikTok-specific crawling task."""
+
+
+
         try:
             operation = task.parameters.get('operation', 'search')
             
@@ -349,6 +367,9 @@ class CrawlerOrchestrator:
     
     async def _execute_instagram_task(self, crawler: InstagramCrawler, task: CrawlingTask) -> List[CrawlResult]:
         """Execute Instagram-specific crawling task."""
+
+
+
         try:
             operation = task.parameters.get('operation', 'search')
             
@@ -374,6 +395,9 @@ class CrawlerOrchestrator:
     
     async def _execute_twitter_task(self, crawler: TwitterCrawler, task: CrawlingTask) -> List[CrawlResult]:
         """Execute Twitter-specific crawling task."""
+
+
+
         try:
             operation = task.parameters.get('operation', 'search')
             
@@ -399,6 +423,9 @@ class CrawlerOrchestrator:
     
     async def _execute_web_task(self, crawler: UniversalWebCrawler, task: CrawlingTask) -> List[CrawlResult]:
         """Execute web crawling task."""
+
+
+
         try:
             operation = task.parameters.get('operation', 'crawl_url')
             
@@ -423,6 +450,9 @@ class CrawlerOrchestrator:
     
     async def _analyze_violations(self, results: List[CrawlResult], task: CrawlingTask) -> List[CrawlResult]:
         """Analyze crawl results for potential violations."""
+
+
+
         try:
             violations = []
             
@@ -445,6 +475,9 @@ class CrawlerOrchestrator:
     
     def _check_violation_patterns(self, result: CrawlResult, task: CrawlingTask) -> bool:
         """Check for known violation patterns in content."""
+
+
+
         try:
             # Check title/description for known patterns
             text_content = f"{result.title} {result.description}".lower()
@@ -473,6 +506,9 @@ class CrawlerOrchestrator:
     
     def _check_youtube_violations(self, result: CrawlResult) -> bool:
         """Check YouTube-specific violation patterns."""
+
+
+
         try:
             metadata = result.metadata.get('platform_specific', {})
             
@@ -492,6 +528,9 @@ class CrawlerOrchestrator:
     
     def _check_tiktok_violations(self, result: CrawlResult) -> bool:
         """Check TikTok-specific violation patterns."""
+
+
+
         try:
             # Check for suspicious engagement patterns
             engagement = result.metadata.get('engagement', {})
@@ -510,6 +549,9 @@ class CrawlerOrchestrator:
     
     async def _send_violation_alerts(self, violations: List[CrawlResult], task: CrawlingTask) -> int:
         """Send alerts for detected violations."""
+
+
+
         try:
             alerts_sent = 0
             
@@ -536,6 +578,9 @@ class CrawlerOrchestrator:
     
     async def run_scheduled_tasks(self):
         """Run scheduled monitoring tasks."""
+
+
+
         try:
             current_time = datetime.now()
             tasks_to_run = []
@@ -594,6 +639,9 @@ class CrawlerOrchestrator:
     
     def get_task_status(self, task_id: str) -> Optional[Dict[str, Any]]:
         """Get status of a specific task."""
+
+
+
         try:
             task = self.tasks.get(task_id)
             if not task:
@@ -617,6 +665,9 @@ class CrawlerOrchestrator:
     
     def get_system_status(self) -> Dict[str, Any]:
         """Get overall system status."""
+
+
+
         try:
             active_tasks = sum(1 for task in self.tasks.values() if task.active)
             total_tasks = len(self.tasks)
@@ -647,6 +698,9 @@ class CrawlerOrchestrator:
     
     async def cleanup(self):
         """Clean up resources."""
+
+
+
         try:
             self.stop_monitoring()
             

@@ -16,7 +16,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team Specialization: Lead Dev IA + Backend Senior + ML Engineer + DBA + 
                     Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  WARNING: PROPRIETARY CODE
+  WARNING: PROPRIETARY CODE
 All code, concepts, and implementations in this module are proprietary 
 intellectual property of Fahed Mlaiel. Any unauthorized use, copying, 
 distribution, or commercial exploitation without explicit written 
@@ -440,6 +440,9 @@ class TaskScheduler:
     
     async def _assign_task_to_node(self, execution: TaskExecution, node: NodeCapacity):
         """Assign task execution to specific node."""
+
+
+
         try:
             # Update execution info
             execution.node_id = node.node_id
@@ -482,6 +485,9 @@ class TaskScheduler:
     
     def _execute_task(self, execution: TaskExecution) -> TaskExecution:
         """Execute task and return updated execution info."""
+
+
+
         try:
             start_time = time.time()
             
@@ -690,6 +696,9 @@ class WorkflowOrchestrator:
     
     async def _execute_workflow(self, execution: WorkflowExecution):
         """Execute workflow with dependency resolution and parallel execution."""
+
+
+
         try:
             execution.status = WorkflowStatus.RUNNING
             execution.started_at = datetime.utcnow()
@@ -889,6 +898,9 @@ class DistributedOrchestrator:
         
     async def initialize(self):
         """Initialize distributed orchestrator."""
+
+
+
         try:
             # Initialize Redis client
             await self._initialize_redis()
@@ -1173,6 +1185,9 @@ class DistributedOrchestrator:
     
     async def shutdown(self):
         """Shutdown distributed orchestrator."""
+
+
+
         try:
             # Stop task scheduler
             await self.task_scheduler.stop_scheduler()

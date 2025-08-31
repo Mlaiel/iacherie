@@ -1,11 +1,11 @@
 """
-⚡ Worker Cluster Docker Configuration - IA-Influencer-Agent Platform
+ Worker Cluster Docker Configuration - IA-Influencer-Agent Platform
 =====================================================================
 Expert: Backend Senior + DevOps Engineer + Scalability Specialist
 Creator: Fahed Mlaiel <mlaiel@live.de>
 =====================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL 
 Tout vol, copie ou utilisation non autorisée de ce code source,
 de ce concept ou de cette propriété intellectuelle sans
 l'autorisation écrite explicite de Fahed Mlaiel est strictement
@@ -111,6 +111,9 @@ class WorkerClusterDockerConfig:
     
     def generate_dockerfile(self) -> str:
         """Generate Dockerfile for worker cluster"""
+
+
+
         return f"""
 # Multi-stage build for Worker Cluster
 FROM python:3.11-slim AS builder
@@ -419,6 +422,9 @@ CMD ["celery", "worker", "-A", "workers.celery_app", "--loglevel=info"]
     
     def generate_worker_requirements(self) -> str:
         """Generate worker requirements.txt"""
+
+
+
         return """
 # Worker Cluster Requirements
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -780,6 +786,9 @@ AUTOSCALER_CONFIG: Dict[str, Any] = {
 }
 """
 
+
+
+
         return configs
     
     def generate_scripts(self) -> Dict[str, str]:
@@ -793,7 +802,7 @@ AUTOSCALER_CONFIG: Dict[str, Any] = {
 
 set -e
 
-echo "⚡ Starting IA-Influencer Worker Cluster..."
+echo " Starting IA-Influencer Worker Cluster..."
 
 # Initialize directories
 mkdir -p /app/logs/workers/{default,ai,fingerprinting,protection,monetization,notifications}
@@ -809,7 +818,7 @@ wait-for-it redis:6379 --timeout=60 --strict
 wait-for-it postgres-master:5432 --timeout=60 --strict
 
 # Initialize worker environment
-echo "🔧 Initializing worker environment..."
+echo " Initializing worker environment..."
 python -c "from workers.setup import initialize_worker_env; initialize_worker_env()"
 
 # Download and cache ML models
@@ -817,7 +826,7 @@ echo "🤖 Downloading ML models..."
 python -m workers.models.downloader
 
 # Start worker monitoring
-echo "📊 Starting worker monitoring..."
+echo " Starting worker monitoring..."
 python -m workers.monitoring &
 
 # Clear any stale celery state
@@ -829,13 +838,13 @@ if [ "$1" = "beat" ]; then
     echo "⏰ Starting Celery Beat scheduler..."
     exec celery -A workers.celery_app beat --loglevel=info --schedule=/app/data/schedule/celerybeat-schedule --pidfile=/app/data/schedule/celerybeat.pid
 elif [ "$1" = "flower" ]; then
-    echo "🌸 Starting Celery Flower monitoring..."
+    echo " Starting Celery Flower monitoring..."
     exec celery -A workers.celery_app flower --port=5555 --broker=redis://redis:6379/0
 elif [ "$1" = "autoscaler" ]; then
-    echo "📈 Starting Worker Autoscaler..."
+    echo " Starting Worker Autoscaler..."
     exec python -m workers.autoscaler
 else
-    echo "👷 Starting Celery Worker..."
+    echo " Starting Celery Worker..."
     exec "$@"
 fi
 """
@@ -847,19 +856,19 @@ fi
 
 # Check if celery worker is running
 if ! pgrep -f "celery worker" > /dev/null; then
-    echo "❌ Celery worker process not found"
+    echo " Celery worker process not found"
     exit 1
 fi
 
 # Check Redis connection
 if ! python -c "import redis; r = redis.Redis(host='redis', port=6379, db=0); r.ping()" 2>/dev/null; then
-    echo "❌ Cannot connect to Redis"
+    echo " Cannot connect to Redis"
     exit 1
 fi
 
 # Check PostgreSQL connection
 if ! python -c "import psycopg2; psycopg2.connect('host=postgres-master port=5432 dbname=ia_influencer user=ia_user password=${POSTGRES_PASSWORD}')" 2>/dev/null; then
-    echo "❌ Cannot connect to PostgreSQL"
+    echo " Cannot connect to PostgreSQL"
     exit 1
 fi
 
@@ -872,7 +881,7 @@ print(r.llen('$QUEUE_NAME'))
 " 2>/dev/null || echo "0")
 
 if [ "$QUEUE_LENGTH" -gt 1000 ]; then
-    echo "⚠️  Queue $QUEUE_NAME has $QUEUE_LENGTH pending tasks"
+    echo "  Queue $QUEUE_NAME has $QUEUE_LENGTH pending tasks"
     exit 1
 fi
 
@@ -884,11 +893,11 @@ print(mem.percent)
 " 2>/dev/null || echo "0")
 
 if [ "$(echo "$MEMORY_USAGE > 90" | bc -l 2>/dev/null || echo "0")" = "1" ]; then
-    echo "⚠️  High memory usage: ${MEMORY_USAGE}%"
+    echo "  High memory usage: ${MEMORY_USAGE}%"
     exit 1
 fi
 
-echo "✅ Worker health check passed"
+echo " Worker health check passed"
 exit 0
 """
 
@@ -905,7 +914,7 @@ echo "🤖 Downloading ML models for IA-Influencer workers..."
 mkdir -p /app/models/{text,audio,image,video}
 
 # Download text models
-echo "📝 Downloading text processing models..."
+echo " Downloading text processing models..."
 python -c "
 from transformers import AutoTokenizer, AutoModel
 from sentence_transformers import SentenceTransformer
@@ -920,21 +929,21 @@ model.save_pretrained('/app/models/text/bert-base-uncased')
 st_model = SentenceTransformer('all-MiniLM-L6-v2')
 st_model.save('/app/models/text/sentence-transformers')
 
-print('✅ Text models downloaded')
+print(' Text models downloaded')
 "
 
 # Download audio models
-echo "🎵 Downloading audio processing models..."
+echo " Downloading audio processing models..."
 python -c "
 import librosa
 import essentia.standard as es
 
 # Download audio analysis models (these are typically downloaded on first use)
-print('✅ Audio models ready')
+print(' Audio models ready')
 "
 
 # Download image models
-echo "🖼️ Downloading image processing models..."
+echo " Downloading image processing models..."
 python -c "
 from transformers import CLIPProcessor, CLIPModel
 
@@ -944,13 +953,13 @@ model = CLIPModel.from_pretrained('openai/clip-vit-base-patch32')
 processor.save_pretrained('/app/models/image/clip-vit-base-patch32')
 model.save_pretrained('/app/models/image/clip-vit-base-patch32')
 
-print('✅ Image models downloaded')
+print(' Image models downloaded')
 "
 
 # Set proper permissions
 chown -R worker:worker /app/models/
 
-echo "✅ All ML models downloaded successfully!"
+echo " All ML models downloaded successfully!"
 """
 
         return scripts
@@ -995,5 +1004,5 @@ echo "✅ All ML models downloaded successfully!"
             script_path.chmod(0o755)
             files_created.append(str(script_path))
         
-        logger.info(f"✅ Worker cluster configuration saved: {len(files_created)} files")
+        logger.info(f" Worker cluster configuration saved: {len(files_created)} files")
         return files_created

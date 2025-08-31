@@ -650,8 +650,11 @@ COMPLIANCE STATUS:
         
         if critical_count > 0:
             summary += f"""
-⚠️  CRITICAL ALERT: {critical_count} critical security issues require immediate attention.
+  CRITICAL ALERT: {critical_count} critical security issues require immediate attention.
 """
+
+
+
         
         return summary
 

@@ -242,6 +242,9 @@ class DistributedTracingConfig(BaseSettings):
     
     def get_span_processor_config(self) -> SpanProcessorConfig:
         """Get span processor configuration."""
+
+
+
         return SpanProcessorConfig(
             processor_type=self.span_processor_type,
             max_queue_size=self.span_processor_max_queue_size,
@@ -268,6 +271,9 @@ class DistributedTracingConfig(BaseSettings):
     
     def get_instrumentation_config(self) -> InstrumentationConfig:
         """Get instrumentation configuration."""
+
+
+
         return InstrumentationConfig(
             enabled=self.enabled,
             http_client=self.trace_http_client,
@@ -305,6 +311,9 @@ class DistributedTracingConfig(BaseSettings):
     
     def get_zipkin_config(self) -> Dict[str, Any]:
         """Get Zipkin-specific configuration."""
+
+
+
         return {
             "service_name": self.service_name,
             "zipkin_endpoint": self.zipkin_endpoint,
@@ -313,6 +322,9 @@ class DistributedTracingConfig(BaseSettings):
     
     def get_opentelemetry_config(self) -> Dict[str, Any]:
         """Get OpenTelemetry-specific configuration."""
+
+
+
         return {
             "service_name": self.service_name,
             "service_version": self.service_version,
@@ -327,6 +339,9 @@ class DistributedTracingConfig(BaseSettings):
     
     def get_tracing_config(self) -> Dict[str, Any]:
         """Get complete distributed tracing configuration."""
+
+
+
         return {
             "enabled": self.enabled,
             "backend": self.backend,

@@ -10,19 +10,19 @@ This content generation code, concepts, and intellectual property belong exclusi
 Any unauthorized use, reproduction, distribution, or theft without explicit written permission 
 is STRICTLY PROHIBITED and will result in immediate legal action.
 
-⚠️ WARNING: Intellectual Property Theft is a SERIOUS CRIME ⚠️
+ WARNING: Intellectual Property Theft is a SERIOUS CRIME 
 Contact Fahed Mlaiel (mlaiel@live.de) for any authorization requests.
 
 PROJECT TEAM SPECIALTIES:
-✅ Lead AI Developer: Advanced machine learning and neural networks
-✅ Senior Backend Engineer: Enterprise-grade system architecture  
-✅ ML Engineer: Deep learning models and AI optimization
-✅ Database Administrator: High-performance data management
-✅ Security Specialist: Cybersecurity and data protection
-✅ Microservices Architect: Scalable distributed systems
-✅ Audio Engineer: Digital signal processing and audio AI
-✅ DevOps Expert: CI/CD and infrastructure automation
-✅ IA Prompt Engineer: Advanced prompt engineering and LLM optimization
+ Lead AI Developer: Advanced machine learning and neural networks
+ Senior Backend Engineer: Enterprise-grade system architecture  
+ ML Engineer: Deep learning models and AI optimization
+ Database Administrator: High-performance data management
+ Security Specialist: Cybersecurity and data protection
+ Microservices Architect: Scalable distributed systems
+ Audio Engineer: Digital signal processing and audio AI
+ DevOps Expert: CI/CD and infrastructure automation
+ IA Prompt Engineer: Advanced prompt engineering and LLM optimization
 
 PROJECT OWNER: Fahed Mlaiel - mlaiel@live.de
 """
@@ -205,7 +205,10 @@ logger.info(f"Supported platforms: {', '.join(SUPPORTED_PLATFORMS)}")
 logger.info(f"Created by: {__author__} - {__email__}")
 
 def get_module_info() -> dict:
-    """Get comprehensive module information"""    return {
+    """Get comprehensive module information"""
+
+
+    return {
         "name": "content_generation",
         "version": __version__,
         "author": __author__, 
@@ -231,7 +234,10 @@ def get_module_info() -> dict:
     }
 
 def verify_installation() -> bool:
-    """Verify that all components are properly installed and configured"""    try:
+    """Verify that all components are properly installed and configured"""
+
+
+    try:
         # Test imports
         from .content_service import ContentService
         from .generation_manager import GenerationManager
@@ -293,15 +299,24 @@ __all__ = [
 
 
 def get_version():
-    """Get the current version of the content generation module."""    return __version__
+    """Get the current version of the content generation module."""
+
+
+    return __version__
 
 
 def get_copyright():
-    """Get the copyright information."""    return __copyright__
+    """Get the copyright information."""
+
+
+    return __copyright__
 
 
 def get_supported_formats():
-    """Get list of supported content formats."""    return [
+    """Get list of supported content formats."""
+
+
+    return [
         "text",
         "audio", 
         "video",
@@ -315,7 +330,10 @@ def get_supported_formats():
 
 
 def get_generation_engines():
-    """Get available content generation engines."""    return {
+    """Get available content generation engines."""
+
+
+    return {
         "text": TextContentGenerator,
         "audio": AudioContentGenerator,
         "video": VideoContentGenerator, 

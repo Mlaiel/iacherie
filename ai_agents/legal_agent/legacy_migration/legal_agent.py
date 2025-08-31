@@ -7,7 +7,7 @@ litigation support, and legal document processing for content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -143,6 +143,9 @@ class LegalAgent(BaseAgent):
     
     def _initialize_legal_systems(self):
         """Initialize legal processing systems"""
+
+
+
         try:
             # Initialize legal database connection
             self.legal_database = self._setup_legal_database()
@@ -164,6 +167,9 @@ class LegalAgent(BaseAgent):
     
     def _setup_legal_database(self):
         """Setup legal database connections and indexes"""
+
+
+
         try:
             db = get_db_session()
             
@@ -183,6 +189,9 @@ class LegalAgent(BaseAgent):
     
     def _setup_legal_ai_models(self):
         """Initialize AI models for legal processing"""
+
+
+
         try:
             # Legal document classifier
             self.document_classifier = pipeline(
@@ -236,6 +245,9 @@ class LegalAgent(BaseAgent):
         Returns:
             Complete legal analysis results
         """
+
+
+
         try:
             start_time = datetime.now(timezone.utc)
             
@@ -288,6 +300,9 @@ class LegalAgent(BaseAgent):
     
     async def _handle_contract_review(self, context: LegalContext) -> LegalResult:
         """Handle comprehensive contract review and analysis"""
+
+
+
         try:
             contract_content = context.metadata.get('contract_content', '')
             if not contract_content:
@@ -323,6 +338,9 @@ class LegalAgent(BaseAgent):
     
     async def _handle_ip_protection(self, context: LegalContext) -> LegalResult:
         """Handle intellectual property protection and analysis"""
+
+
+
         try:
             content_type = context.metadata.get('content_type', '')
             content_data = context.metadata.get('content_data', '')
@@ -354,6 +372,9 @@ class LegalAgent(BaseAgent):
     
     async def _handle_litigation_support(self, context: LegalContext) -> LegalResult:
         """Handle litigation support and case management"""
+
+
+
         try:
             case_type = context.metadata.get('case_type', '')
             case_details = context.metadata.get('case_details', {})
@@ -385,6 +406,9 @@ class LegalAgent(BaseAgent):
     
     async def _handle_compliance_check(self, context: LegalContext) -> LegalResult:
         """Handle comprehensive compliance checking"""
+
+
+
         try:
             content_type = context.metadata.get('content_type', '')
             platform = context.metadata.get('platform', '')
@@ -418,6 +442,9 @@ class LegalAgent(BaseAgent):
     
     async def _handle_document_generation(self, context: LegalContext) -> LegalResult:
         """Handle legal document generation"""
+
+
+
         try:
             document_type = context.metadata.get('document_type', '')
             template_data = context.metadata.get('template_data', {})
@@ -445,6 +472,9 @@ class LegalAgent(BaseAgent):
     
     async def _handle_legal_research(self, context: LegalContext) -> LegalResult:
         """Handle comprehensive legal research"""
+
+
+
         try:
             research_query = context.metadata.get('query', '')
             research_scope = context.metadata.get('scope', 'general')
@@ -476,6 +506,9 @@ class LegalAgent(BaseAgent):
     
     async def _handle_risk_assessment(self, context: LegalContext) -> LegalResult:
         """Handle comprehensive legal risk assessment"""
+
+
+
         try:
             risk_factors = context.metadata.get('risk_factors', [])
             business_context = context.metadata.get('business_context', {})
@@ -506,6 +539,9 @@ class LegalAgent(BaseAgent):
     
     async def _handle_negotiation_support(self, context: LegalContext) -> LegalResult:
         """Handle negotiation support and strategy"""
+
+
+
         try:
             negotiation_type = context.metadata.get('negotiation_type', '')
             counterparty_info = context.metadata.get('counterparty', {})
@@ -592,6 +628,9 @@ class LegalAgent(BaseAgent):
     # Helper methods for legal processing
     async def _extract_contract_terms(self, contract_content: str) -> List[Dict[str, Any]]:
         """Extract and categorize contract terms using AI"""
+
+
+
         try:
             if self.term_extractor:
                 entities = self.term_extractor(contract_content)
@@ -642,6 +681,9 @@ class LegalAgent(BaseAgent):
     
     def _table_exists(self, db: Session, table_name: str) -> bool:
         """Check if database table exists"""
+
+
+
         try:
             result = db.execute(f"SELECT 1 FROM {table_name} LIMIT 1")
             return True
@@ -650,6 +692,9 @@ class LegalAgent(BaseAgent):
     
     async def _log_legal_action(self, context: LegalContext, result: LegalResult):
         """Log legal action for audit trail and compliance"""
+
+
+
         try:
             with get_db_session() as db:
                 log_entry = {
@@ -679,6 +724,9 @@ class LegalAgentManager:
     
     def _initialize_manager(self):
         """Initialize legal agent manager"""
+
+
+
         try:
             # Create specialized legal agents for different jurisdictions
             jurisdictions = [
@@ -703,6 +751,9 @@ class LegalAgentManager:
     
     async def route_legal_request(self, context: LegalContext) -> LegalResult:
         """Route legal request to appropriate specialized agent"""
+
+
+
         try:
             jurisdiction_key = context.jurisdiction.value
             if jurisdiction_key not in self.agents:
@@ -837,6 +888,9 @@ class LegalAgent(BaseAgent):
         Returns:
             Comprehensive contract analysis
         """
+
+
+
         try:
             # Parse contract content
             contract_content = await self.document_parser.parse_legal_document(
@@ -902,6 +956,9 @@ class LegalAgent(BaseAgent):
         Returns:
             IP protection status and documentation
         """
+
+
+
         try:
             # Generate content fingerprint
             content_hash = await self._generate_content_fingerprint(content_data)
@@ -967,6 +1024,9 @@ class LegalAgent(BaseAgent):
         Returns:
             Generated legal document information
         """
+
+
+
         try:
             # Load appropriate legal template
             template = await self.legal_templates.get_template(
@@ -1036,6 +1096,9 @@ class LegalAgent(BaseAgent):
         Returns:
             Detailed legal risk analysis
         """
+
+
+
         try:
             # Analyze content for legal risks
             content_risks = await self._analyze_content_legal_risks(content_data, context)
@@ -1096,6 +1159,9 @@ class LegalAgent(BaseAgent):
 
     async def _initialize_legal_session(self, context: LegalContext) -> Dict[str, Any]:
         """Initialize legal processing session"""
+
+
+
         return {
             'session_id': f"legal_{uuid.uuid4().hex[:12]}",
             'start_time': datetime.now(timezone.utc),
@@ -1127,6 +1193,9 @@ class LegalAgent(BaseAgent):
 
     def _build_contract_analysis_prompt(self, content: str, context: LegalContext) -> str:
         """Build AI prompt for contract analysis"""
+
+
+
         return f"""
         Analyze the following contract under {context.jurisdiction.value} jurisdiction:
         

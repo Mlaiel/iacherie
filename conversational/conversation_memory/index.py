@@ -17,7 +17,7 @@ Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE ⚠️
+  CRITICAL LEGAL NOTICE 
 This software and all associated intellectual property are the exclusive property
 of Fahed Mlaiel. Unauthorized use, copying, distribution, modification, or 
 commercialization without explicit written permission is strictly prohibited.
@@ -394,6 +394,9 @@ class ConversationMemoryFactory:
     
     async def shutdown(self):
         """Shutdown all services"""
+
+
+
         try:
             logger.info("Shutting down ConversationMemoryFactory services...")
             
@@ -531,6 +534,9 @@ async def check_system_health() -> Dict[str, Any]:
 
 async def get_system_metrics() -> Dict[str, Any]:
     """Get system performance metrics"""
+
+
+
     try:
         factory = await get_conversation_memory_factory()
         metrics_service = factory.get_service(ServiceType.ANALYTICS, "memory_metrics")

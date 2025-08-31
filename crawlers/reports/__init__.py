@@ -391,7 +391,10 @@ class ReportsModuleManager:
         self.logger.info(f"ReportsModuleManager initialized with {len(self.available_components)} components")
     
     def _check_component_availability(self) -> Dict[str, bool]:
-        """Check which components are available."""        return {
+        """Check which components are available."""
+
+
+        return {
             "generators": GENERATORS_AVAILABLE,
             "analytics": ANALYTICS_AVAILABLE,
             "formatters": FORMATTERS_AVAILABLE,
@@ -545,10 +548,16 @@ class ReportsModuleManager:
         }
     
     def is_component_available(self, component_type: str) -> bool:
-        """Check if a component type is available."""        return self.available_components.get(component_type, False)
+        """Check if a component type is available."""
+
+
+        return self.available_components.get(component_type, False)
     
     def get_module_info(self) -> Dict[str, Any]:
-        """Get comprehensive module information."""        return {
+        """Get comprehensive module information."""
+
+
+        return {
             "version": __version__,
             "author": __author__,
             "copyright": __copyright__,

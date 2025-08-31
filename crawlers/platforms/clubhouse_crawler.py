@@ -315,6 +315,9 @@ class ClubhouseCrawler(BaseCrawler):
         Returns:
             bool: Authentication success status
         """
+
+
+
         try:
             headers = {
                 "CH-Languages": "en-US",
@@ -487,6 +490,9 @@ class ClubhouseCrawler(BaseCrawler):
         limit: int
     ) -> List[ClubhouseRoom]:
         """Search for Clubhouse rooms"""
+
+
+
         try:
             # Get current live rooms
             async with self.session.get(f"{self.base_url}/get_channels") as response:
@@ -525,6 +531,9 @@ class ClubhouseCrawler(BaseCrawler):
 
     async def _search_users(self, query: str, limit: int) -> List[ClubhouseUser]:
         """Search for Clubhouse users"""
+
+
+
         try:
             search_data = {
                 "query": query,
@@ -559,6 +568,9 @@ class ClubhouseCrawler(BaseCrawler):
 
     async def _search_clubs(self, query: str, limit: int) -> List[ClubhouseClub]:
         """Search for Clubhouse clubs"""
+
+
+
         try:
             search_data = {
                 "query": query
@@ -590,6 +602,9 @@ class ClubhouseCrawler(BaseCrawler):
 
     async def _search_events(self, query: str, limit: int) -> List[ClubhouseEvent]:
         """Search for Clubhouse events"""
+
+
+
         try:
             async with self.session.get(f"{self.base_url}/get_events") as response:
                 if response.status == 200:
@@ -744,6 +759,9 @@ class ClubhouseCrawler(BaseCrawler):
 
     async def _analyze_room_content(self, room: ClubhouseRoom) -> Optional[ClubhouseConversation]:
         """Analyze room content and create conversation object"""
+
+
+
         try:
             conversation = ClubhouseConversation(
                 conversation_id=f"conv_{room.channel}",
@@ -873,6 +891,9 @@ class ClubhouseCrawler(BaseCrawler):
         features2: Dict[str, Any]
     ) -> float:
         """Calculate similarity between conversation features"""
+
+
+
         try:
             scores = []
             
@@ -922,6 +943,9 @@ class ClubhouseCrawler(BaseCrawler):
         Returns:
             ClubhouseAnalytics: Comprehensive analytics data
         """
+
+
+
         try:
             start_time, end_time = analysis_period
             
@@ -983,6 +1007,9 @@ class ClubhouseCrawler(BaseCrawler):
 
     async def _parse_room_data(self, data: Dict[str, Any]) -> ClubhouseRoom:
         """Parse room data from API response"""
+
+
+
         try:
             # Parse channel user
             channel_user_data = data.get("channel_user", {})
@@ -1069,6 +1096,9 @@ class ClubhouseCrawler(BaseCrawler):
 
     async def _parse_user_data(self, data: Dict[str, Any]) -> ClubhouseUser:
         """Parse user data from API response"""
+
+
+
         return ClubhouseUser(
             user_id=data.get("user_id", ""),
             username=data.get("username", ""),
@@ -1090,6 +1120,9 @@ class ClubhouseCrawler(BaseCrawler):
 
     async def _parse_club_data(self, data: Dict[str, Any]) -> ClubhouseClub:
         """Parse club data from API response"""
+
+
+
         return ClubhouseClub(
             club_id=data.get("club_id", ""),
             name=data.get("name", ""),
@@ -1158,6 +1191,9 @@ class ClubhouseCrawler(BaseCrawler):
 
     async def close(self):
         """Close crawler and cleanup resources"""
+
+
+
         try:
             await self.cache_manager.close()
             await super().close()

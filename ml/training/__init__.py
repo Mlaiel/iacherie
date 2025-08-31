@@ -1,15 +1,15 @@
 """
-🚀 ML Training Module - IA Influencer Agent Platform Enterprise
+ ML Training Module - IA Influencer Agent Platform Enterprise
 ==============================================================
 Module: backend/ml/training/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ==============================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 MODULE D'ENTRAÎNEMENT ML
+ MODULE D'ENTRAÎNEMENT ML
 Composants d'entraînement et d'optimisation des modèles
 - AutoML Pipeline automatisé
 - Hyperparameter tuning avancé avec Optuna

@@ -8,7 +8,7 @@ collaboration tracking, and business entity processing.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
@@ -95,6 +95,9 @@ class EntityExtractionOrchestrator(BaseService):
     
     def _initialize_services(self, config: Optional[Dict[str, Any]]):
         """Initialize all comprehensive entity extraction services with advanced capabilities"""
+
+
+
         try:
             # Core entity extraction services
             self.entity_extractor = EntityExtractor(config)
@@ -603,6 +606,9 @@ class EntityExtractionOrchestrator(BaseService):
         content_metadata: Optional[ContentMetadata]
     ) -> List[ExtractedEntity]:
         """Extract general entities using core entity extractor"""
+
+
+
         try:
             result = await self.entity_extractor.extract_entities(text, content_metadata)
             return result.entities
@@ -616,6 +622,9 @@ class EntityExtractionOrchestrator(BaseService):
         platforms: Optional[List[PlatformType]]
     ) -> List[PlatformEntity]:
         """Extract platform-specific entities"""
+
+
+
         try:
             result = await self.platform_extractor.extract_platform_entities(
                 text, platforms
@@ -632,6 +641,9 @@ class EntityExtractionOrchestrator(BaseService):
         user_profile: Optional[Dict[str, Any]]
     ) -> List[CollaborationEntity]:
         """Extract collaboration opportunities"""
+
+
+
         try:
             result = await self.collaboration_tracker.track_collaboration_entities(
                 text, content_metadata, user_profile
@@ -647,6 +659,9 @@ class EntityExtractionOrchestrator(BaseService):
         content_metadata: Optional[ContentMetadata]
     ) -> List[Any]:
         """Extract business entities"""
+
+
+
         try:
             result = await self.business_processor.process_business_entities(text)
             return result.entities if hasattr(result, 'entities') else []
@@ -660,6 +675,9 @@ class EntityExtractionOrchestrator(BaseService):
         content_metadata: Optional[ContentMetadata]
     ) -> List[Any]:
         """Extract creative work entities"""
+
+
+
         try:
             result = await self.creative_detector.detect_creative_entities(text)
             return result.entities if hasattr(result, 'entities') else []
@@ -673,6 +691,9 @@ class EntityExtractionOrchestrator(BaseService):
         content_metadata: Optional[ContentMetadata]
     ) -> List[Any]:
         """Extract content-specific entities"""
+
+
+
         try:
             result = await self.content_analyzer.analyze_content_entities(text)
             return result.entities if hasattr(result, 'entities') else []
@@ -686,6 +707,9 @@ class EntityExtractionOrchestrator(BaseService):
         content_metadata: Optional[ContentMetadata]
     ) -> List[Any]:
         """Extract metadata entities"""
+
+
+
         try:
             result = await self.metadata_parser.parse_metadata_entities(text)
             return result.entities if hasattr(result, 'entities') else []
@@ -695,6 +719,9 @@ class EntityExtractionOrchestrator(BaseService):
     
     async def _extract_relationships(self, text: str) -> List[Any]:
         """Extract entity relationships"""
+
+
+
         try:
             result = await self.relationship_extractor.extract_relationships(text)
             return result.relationships if hasattr(result, 'relationships') else []
@@ -958,6 +985,9 @@ class EntityExtractionOrchestrator(BaseService):
     
     async def get_comprehensive_metrics(self) -> Dict[str, Any]:
         """Get comprehensive metrics from all services"""
+
+
+
         return await self.metrics.get_all_metrics()
 
 

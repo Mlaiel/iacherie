@@ -71,6 +71,9 @@ class AutomationCondition:
     
     def evaluate(self, context: Dict[str, Any]) -> bool:
         """Evaluate condition against context"""
+
+
+
         try:
             # Get value from context
             if self.platform_id:
@@ -137,6 +140,9 @@ class AutomationRule:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'rule_id': self.rule_id,
             'name': self.name,
@@ -217,10 +223,16 @@ class AutomationWorkflow:
     
     def is_complete(self) -> bool:
         """Check if workflow is complete"""
+
+
+
         return all(step.status == WorkflowStatus.COMPLETED for step in self.steps)
     
     def has_failed(self) -> bool:
         """Check if workflow has failed"""
+
+
+
         return any(step.status == WorkflowStatus.FAILED for step in self.steps)
 
 
@@ -639,6 +651,9 @@ class AutomationEngine:
     
     async def _automation_loop(self):
         """Main automation monitoring loop"""
+
+
+
         try:
             while self.engine_active:
                 try:
@@ -689,6 +704,9 @@ class AutomationEngine:
     
     def get_automation_stats(self) -> Dict[str, Any]:
         """Get automation engine statistics"""
+
+
+
         return {
             'engine_active': self.engine_active,
             'total_rules': len(self.rules),

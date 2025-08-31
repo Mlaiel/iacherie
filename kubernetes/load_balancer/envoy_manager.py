@@ -8,7 +8,7 @@ and circuit breaking capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ WARNING: This code is proprietary and confidential.
+ WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
@@ -293,6 +293,9 @@ class EnvoyManager:
     
     def add_cluster(self, cluster: EnvoyCluster) -> bool:
         """Add cluster configuration"""
+
+
+
         try:
             # Check if cluster already exists
             existing = next((c for c in self.clusters if c.name == cluster.name), None)
@@ -309,6 +312,9 @@ class EnvoyManager:
     
     def add_listener(self, listener: EnvoyListener) -> bool:
         """Add listener configuration"""
+
+
+
         try:
             # Check if listener already exists
             existing = next((l for l in self.listeners if l.name == listener.name), None)
@@ -325,6 +331,9 @@ class EnvoyManager:
     
     def configure_platform_services(self) -> bool:
         """Configure Envoy for platform services"""
+
+
+
         try:
             # Define health check configurations
             http_health_check = {
@@ -577,6 +586,9 @@ class EnvoyManager:
     
     def generate_configuration(self) -> Dict[str, Any]:
         """Generate complete Envoy configuration"""
+
+
+
         try:
             return self.config_generator.generate_complete_config(
                 clusters=self.clusters,
@@ -589,6 +601,9 @@ class EnvoyManager:
     
     def write_configuration(self) -> bool:
         """Write configuration to file"""
+
+
+
         try:
             config_data = self.generate_configuration()
             if not config_data:
@@ -614,6 +629,9 @@ class EnvoyManager:
     
     def test_configuration(self) -> bool:
         """Test Envoy configuration validity"""
+
+
+
         try:
             result = subprocess.run(
                 ['envoy', '--mode', 'validate', '--config-path', str(self.config_file)],
@@ -634,6 +652,9 @@ class EnvoyManager:
     
     def get_admin_stats(self) -> Dict[str, Any]:
         """Get Envoy admin statistics"""
+
+
+
         try:
             # Try to connect to admin interface
             response = requests.get("http://127.0.0.1:9901/stats/prometheus", timeout=5)
@@ -660,6 +681,9 @@ class EnvoyManager:
     
     def get_status(self) -> Dict[str, Any]:
         """Get Envoy status and health"""
+
+
+
         try:
             # Check if Envoy is running
             ps_result = subprocess.run(['pgrep', 'envoy'], capture_output=True, text=True)

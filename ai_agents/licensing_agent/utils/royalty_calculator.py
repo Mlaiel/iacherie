@@ -7,7 +7,7 @@ for multi-party content licensing across all platforms and territories.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -211,6 +211,9 @@ class RoyaltyCalculator:
         Returns:
             Detailed royalty calculation result
         """
+
+
+
         try:
             calculation_id = str(uuid.uuid4())
             period_start, period_end = calculation_period
@@ -321,6 +324,9 @@ class RoyaltyCalculator:
         Returns:
             List of individual royalty allocations
         """
+
+
+
         try:
             distributions = []
             remaining_royalty = total_royalty
@@ -400,6 +406,9 @@ class RoyaltyCalculator:
         Returns:
             Complete royalty statement
         """
+
+
+
         try:
             # Get all calculations for period
             calculations = await self._get_calculations_for_period(
@@ -640,6 +649,9 @@ class RevenueDistributor:
         payment_schedule: Optional[datetime] = None
     ) -> List[Dict[str, Any]]:
         """Process royalty payments to rights holders"""
+
+
+
         try:
             payment_results = []
             
@@ -669,6 +681,9 @@ class RevenueDistributor:
             
     async def _process_payment(self, instruction: PaymentInstruction) -> Dict[str, Any]:
         """Process individual payment"""
+
+
+
         try:
             processor = self.payment_processors.get(instruction.payment_method)
             if not processor:

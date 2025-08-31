@@ -14,7 +14,7 @@ Core functionalities:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code, algorithms, and business logic are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in legal action.
@@ -158,6 +158,9 @@ class TrendAgent(BaseAgent):
 
     async def initialize(self) -> bool:
         """Initialize all trend analysis components and connections"""
+
+
+
         try:
             logger.info(f"Initializing TrendAgent {self.agent_id}")
             
@@ -313,6 +316,9 @@ class TrendAgent(BaseAgent):
         Returns:
             ViralityScore: Virality prediction with confidence
         """
+
+
+
         try:
             with self._performance_monitor.time_operation("virality_prediction"):
                 # Prepare features for ML model
@@ -351,6 +357,9 @@ class TrendAgent(BaseAgent):
         limit: int = 50
     ) -> List[Dict[str, Any]]:
         """Get trending hashtags for specific content type and platforms"""
+
+
+
         try:
             cache_key = f"trending_hashtags:{content_type.value}:{':'.join(p.value for p in platforms)}"
             
@@ -423,6 +432,9 @@ class TrendAgent(BaseAgent):
         content_type: ContentType
     ) -> Dict[str, Any]:
         """Collect trending data from a specific platform"""
+
+
+
         try:
             return await self._platform_integrator.get_trending_data(
                 platform.value, content_type
@@ -562,6 +574,9 @@ class TrendAgent(BaseAgent):
 
     async def _update_global_trends(self):
         """Update global trend data in background"""
+
+
+
         try:
             logger.info("Updating global trend data")
             
@@ -599,6 +614,9 @@ class TrendAgent(BaseAgent):
 
     async def cleanup(self):
         """Clean up resources and connections"""
+
+
+
         try:
             logger.info(f"Cleaning up TrendAgent {self.agent_id}")
             

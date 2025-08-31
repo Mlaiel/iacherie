@@ -7,7 +7,7 @@ Provides standardized capabilities, status management, and communication protoco
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
@@ -202,6 +202,9 @@ class BaseAIAgent(ABC):
         
     async def initialize(self) -> bool:
         """Initialize the agent"""
+
+
+
         try:
             self.logger.info(f"Initializing agent {self.agent_name}")
             
@@ -403,6 +406,9 @@ class BaseAIAgent(ABC):
     
     async def _execute_capability_assessment_task(self, task: AgentTask) -> Dict[str, Any]:
         """Execute capability assessment task"""
+
+
+
         return {
             "task_type": "capability_assessment",
             "agent_id": self.agent_id,
@@ -747,6 +753,9 @@ class BaseAIAgent(ABC):
 @asynccontextmanager
 async def agent_lifecycle(agent: BaseAIAgent):
     """Context manager for agent lifecycle management"""
+
+
+
     try:
         # Initialize agent
         success = await agent.initialize()
@@ -813,6 +822,9 @@ class AgentRegistry:
     
     def get_available_agents(self) -> List[BaseAIAgent]:
         """Get all agents that are ready to handle tasks"""
+
+
+
         return [
             agent for agent in self.agents.values() 
             if agent.status in [AgentStatus.READY, AgentStatus.BUSY]
@@ -820,6 +832,9 @@ class AgentRegistry:
     
     def get_agent_by_id(self, agent_id: str) -> Optional[BaseAIAgent]:
         """Get agent by ID"""
+
+
+
         return self.agents.get(agent_id)
     
     def get_agent_by_name(self, agent_name: str) -> Optional[BaseAIAgent]:
@@ -964,6 +979,9 @@ class AgentFactory:
     @classmethod
     def get_available_types(cls) -> List[str]:
         """Get list of available agent types"""
+
+
+
         return list(cls._agent_classes.keys())
 
 
@@ -991,6 +1009,9 @@ async def create_agent_config(
 
 async def deploy_agent(agent: BaseAIAgent, registry: AgentRegistry) -> bool:
     """Deploy an agent to the registry"""
+
+
+
     try:
         # Initialize the agent
         success = await agent.initialize()

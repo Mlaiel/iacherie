@@ -19,7 +19,7 @@ Comprehensive Tests for Base AI Models and Core Components
 Enterprise-grade testing for foundational AI model classes
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
-⚠️  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
+  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
     code, or intellectual property without explicit written authorization 
     from Fahed Mlaiel is strictly prohibited and will result in legal action.
 
@@ -303,6 +303,9 @@ class TestBaseAIModel:
     @pytest.fixture
     def mock_config(self):
         """Fixture for mock model configuration"""
+
+
+
         return ModelConfig(
             name="mock_model",
             provider=ModelProvider.LOCAL,
@@ -312,6 +315,9 @@ class TestBaseAIModel:
     @pytest.fixture
     def mock_model(self, mock_config):
         """Fixture for mock AI model"""
+
+
+
         return MockAIModel(mock_config)
     
     def test_base_model_initialization(self, mock_model, mock_config):

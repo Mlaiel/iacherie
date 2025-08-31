@@ -11,7 +11,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -195,7 +195,7 @@ class AdvancedModelsMigration:
             """)
             
             conn.commit()
-            logger.info("✅ Custom ENUM types created successfully")
+            logger.info(" Custom ENUM types created successfully")
     
     def create_blockchain_rights_tables(self):
         """Create blockchain rights related tables"""
@@ -268,7 +268,7 @@ class AdvancedModelsMigration:
         )
         
         self.metadata.create_all(self.engine)
-        logger.info("✅ Blockchain rights tables created successfully")
+        logger.info(" Blockchain rights tables created successfully")
     
     def create_monitoring_tables(self):
         """Create cross-platform monitoring tables"""
@@ -340,7 +340,7 @@ class AdvancedModelsMigration:
         )
         
         self.metadata.create_all(self.engine)
-        logger.info("✅ Cross-platform monitoring tables created successfully")
+        logger.info(" Cross-platform monitoring tables created successfully")
     
     def create_ai_revenue_analytics_tables(self):
         """Create AI revenue analytics tables"""
@@ -423,7 +423,7 @@ class AdvancedModelsMigration:
         )
         
         self.metadata.create_all(self.engine)
-        logger.info("✅ AI revenue analytics tables created successfully")
+        logger.info(" AI revenue analytics tables created successfully")
     
     def create_team_collaboration_tables(self):
         """Create advanced team collaboration tables"""
@@ -520,7 +520,7 @@ class AdvancedModelsMigration:
         )
         
         self.metadata.create_all(self.engine)
-        logger.info("✅ Advanced team collaboration tables created successfully")
+        logger.info(" Advanced team collaboration tables created successfully")
     
     def create_indexes(self):
         """Create performance indexes for all new tables"""
@@ -582,11 +582,11 @@ class AdvancedModelsMigration:
             conn.execute("CREATE INDEX IF NOT EXISTS idx_ai_collaboration_matches_score ON ai_collaboration_matches(overall_match_score)")
             
             conn.commit()
-            logger.info("✅ Performance indexes created successfully")
+            logger.info(" Performance indexes created successfully")
     
     def run_migration(self):
         """Run the complete migration process"""
-        logger.info("🚀 Starting advanced models migration...")
+        logger.info(" Starting advanced models migration...")
         
         try:
             # Step 1: Create custom ENUMs
@@ -601,15 +601,15 @@ class AdvancedModelsMigration:
             # Step 3: Create performance indexes
             self.create_indexes()
             
-            logger.info("✅ Advanced models migration completed successfully!")
-            logger.info("📊 Summary:")
+            logger.info(" Advanced models migration completed successfully!")
+            logger.info(" Summary:")
             logger.info("   - 4 new model categories created")
             logger.info("   - 12 new tables created")
             logger.info("   - 25+ performance indexes created")
             logger.info("   - 15+ custom ENUM types created")
             
         except Exception as e:
-            logger.error(f"❌ Migration failed: {str(e)}")
+            logger.error(f" Migration failed: {str(e)}")
             raise
 
 

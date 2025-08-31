@@ -10,7 +10,7 @@ Project: IA-Influencer Agent + Content Protection Platform
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps
 
 Copyright Notice:
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This code and all associated concepts, algorithms, and implementations are the exclusive 
 intellectual property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, reproduction, 
 distribution, modification, or appropriation of this code, in whole or in part, without 
@@ -473,6 +473,9 @@ def validate_quality_assurance_config(config: QualityAssuranceConfig) -> bool:
     Returns:
         True if configuration is valid, False otherwise
     """
+
+
+
     try:
         # Validate thresholds
         for metric, thresholds in config.validation_config.quality_thresholds.items():
@@ -505,4 +508,7 @@ DEFAULT_QUALITY_ASSURANCE_CONFIG = QualityAssuranceConfig()
 
 def get_quality_assurance_config() -> QualityAssuranceConfig:
     """Get default quality assurance configuration"""
+
+
+
     return DEFAULT_QUALITY_ASSURANCE_CONFIG

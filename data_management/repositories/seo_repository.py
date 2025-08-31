@@ -1,5 +1,5 @@
 """
-🔍 SEO Repository - IA Influencer Agent Platform Enterprise
+ SEO Repository - IA Influencer Agent Platform Enterprise
 ===========================================================
 Module: backend/data_management/repositories/seo_repository.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial SEO Management Repository - Production-Ready
 Responsibility: Advanced SEO optimization for multi-platform content distribution
 ==========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
@@ -172,6 +172,9 @@ class SEORepository(BaseRepository):
 
     def _initialize_platform_configs(self) -> Dict[SEOPlatform, PlatformSEOConfig]:
         """Initialize platform-specific SEO configurations"""
+
+
+
         return {
             SEOPlatform.YOUTUBE: PlatformSEOConfig(
                 platform=SEOPlatform.YOUTUBE,
@@ -429,6 +432,9 @@ class SEORepository(BaseRepository):
     def optimize_content_for_platform(self, content_id: str, platform: SEOPlatform, 
                                     content_data: Dict[str, Any]) -> Dict[str, Any]:
         """Optimize content for specific platform"""
+
+
+
         try:
             platform_config = self.platform_configs.get(platform)
             if not platform_config:
@@ -463,6 +469,9 @@ class SEORepository(BaseRepository):
     def track_seo_performance(self, content_id: str, platform: SEOPlatform, 
                             performance_data: Dict[str, Any]) -> SEOPerformance:
         """Track and store SEO performance metrics"""
+
+
+
         try:
             performance = SEOPerformance(
                 content_id=content_id,
@@ -502,6 +511,9 @@ class SEORepository(BaseRepository):
     def get_content_performance(self, content_id: str, platform: SEOPlatform = None, 
                               time_range: str = "30d") -> Union[SEOPerformance, Dict[SEOPlatform, SEOPerformance]]:
         """Get performance data for content"""
+
+
+
         try:
             if platform:
                 # Get performance for specific platform
@@ -521,6 +533,9 @@ class SEORepository(BaseRepository):
 
     def get_optimization_suggestions(self, content_id: str, platform: SEOPlatform = None) -> List[SEOOptimizationSuggestion]:
         """Get AI-powered optimization suggestions"""
+
+
+
         try:
             if platform:
                 platforms = [platform]
@@ -556,6 +571,9 @@ class SEORepository(BaseRepository):
     def run_ab_test(self, content_id: str, platform: SEOPlatform, 
                    variations: List[Dict[str, Any]], test_duration: int = 7) -> str:
         """Run A/B test for SEO optimization"""
+
+
+
         try:
             test_id = self._generate_ab_test_id()
             
@@ -587,6 +605,9 @@ class SEORepository(BaseRepository):
     def get_trending_keywords(self, platform: SEOPlatform = None, 
                             content_type: ContentType = None, limit: int = 50) -> List[KeywordData]:
         """Get trending keywords for platform and content type"""
+
+
+
         try:
             # Get trending data from trend service
             trending_data = self._fetch_trending_keywords(platform, content_type)
@@ -697,6 +718,9 @@ class SEORepository(BaseRepository):
 
     def _store_seo_metadata(self, content_id: str, metadata: Dict[SEOPlatform, SEOMetadata]):
         """Store SEO metadata for content"""
+
+
+
         try:
             import json
             import time
@@ -742,6 +766,9 @@ class SEORepository(BaseRepository):
     def _store_optimization_results(self, content_id: str, platform: SEOPlatform, 
                                   optimized_content: Dict[str, Any], suggestions: List[Dict[str, Any]]):
         """Store optimization results and suggestions"""
+
+
+
         try:
             import json
             import time
@@ -797,6 +824,9 @@ class SEORepository(BaseRepository):
 
     def _trigger_performance_alerts(self, content_id: str, platform: SEOPlatform, issues: List[str]):
         """Trigger performance alerts for content issues"""
+
+
+
         try:
             import time
             
@@ -827,6 +857,9 @@ class SEORepository(BaseRepository):
 
     def _update_trending_analysis(self, content_id: str, platform: SEOPlatform, performance: SEOPerformance):
         """Update trending analysis with performance data"""
+
+
+
         try:
             import time
             
@@ -871,10 +904,16 @@ class SEORepository(BaseRepository):
 
     def _generate_ab_test_id(self) -> str:
         """Generate unique A/B test ID"""
+
+
+
         return f"ab_test_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{hashlib.md5(str(datetime.now()).encode()).hexdigest()[:8]}"
 
     def _store_ab_test_config(self, config: Dict[str, Any]):
         """Store A/B test configuration"""
+
+
+
         try:
             import time
             import uuid
@@ -905,6 +944,9 @@ class SEORepository(BaseRepository):
 
     def _initialize_ab_test_tracking(self, test_id: str, variations: List[Dict[str, Any]]):
         """Initialize A/B test tracking and analytics"""
+
+
+
         try:
             import time
             
@@ -1168,6 +1210,9 @@ class AsyncSEORepository(AsyncBaseRepository):
     async def batch_optimize_content(self, content_list: List[Dict[str, Any]], 
                                    platforms: List[SEOPlatform]) -> List[Dict[str, Any]]:
         """Batch optimize multiple content items for multiple platforms"""
+
+
+
         try:
             semaphore = asyncio.Semaphore(self._max_concurrent_operations)
             
@@ -1284,6 +1329,9 @@ class AsyncSEORepository(AsyncBaseRepository):
 
     async def _store_seo_metadata_async(self, content_id: str, metadata: Dict[SEOPlatform, SEOMetadata]):
         """Store SEO metadata asynchronously with validation and indexing"""
+
+
+
         try:
             self.logger.info(f"Storing SEO metadata for content {content_id}")
             
@@ -1347,6 +1395,9 @@ class AsyncSEORepository(AsyncBaseRepository):
     
     async def _validate_platform_metadata(self, platform: SEOPlatform, metadata: SEOMetadata) -> bool:
         """Validate metadata against platform-specific requirements"""
+
+
+
         try:
             # Basic validation
             if not metadata.title or len(metadata.title.strip()) == 0:
@@ -1403,6 +1454,9 @@ class AsyncSEORepository(AsyncBaseRepository):
     
     async def _update_search_index(self, content_id: str, metadata: Dict) -> None:
         """Update search index with SEO metadata for enhanced discoverability"""
+
+
+
         try:
             # Extract searchable text from metadata
             searchable_text = []
@@ -1437,6 +1491,9 @@ class AsyncSEORepository(AsyncBaseRepository):
     async def optimize_content_for_platform_async(self, content_id: str, platform: SEOPlatform, 
                                                 content_data: Dict[str, Any]) -> Dict[str, Any]:
         """Optimize content for specific platform asynchronously"""
+
+
+
         try:
             platform_config = self.sync_repo.platform_configs.get(platform)
             if not platform_config:

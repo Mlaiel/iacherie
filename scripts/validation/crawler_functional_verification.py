@@ -37,6 +37,9 @@ class CrawlerFunctionalVerifier:
         
     def verify_implementation_completeness(self, file_path: Path) -> FunctionalTest:
         """Verify that a crawler has real implementation vs stub."""
+
+
+
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
@@ -105,6 +108,9 @@ class CrawlerFunctionalVerifier:
     
     def verify_data_structures(self, file_path: Path) -> FunctionalTest:
         """Verify that crawler has proper data structures."""
+
+
+
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
@@ -160,6 +166,9 @@ class CrawlerFunctionalVerifier:
     
     def verify_api_integration(self, file_path: Path) -> FunctionalTest:
         """Verify that crawler has real API integration capabilities."""
+
+
+
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
@@ -210,6 +219,9 @@ class CrawlerFunctionalVerifier:
     
     def verify_error_handling(self, file_path: Path) -> FunctionalTest:
         """Verify that crawler has proper error handling."""
+
+
+
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
@@ -346,22 +358,22 @@ class CrawlerFunctionalVerifier:
     
     def print_summary(self, report: Dict[str, Any]):
         """Print a human-readable summary of the verification results."""
-        print("\n🔍 CRAWLER FUNCTIONAL VERIFICATION RESULTS")
+        print("\n CRAWLER FUNCTIONAL VERIFICATION RESULTS")
         print("=" * 50)
         
         summary = report["summary"]
         print(f"Total Tests: {summary['total_tests']}")
-        print(f"✅ Passed: {summary['passed']}")
-        print(f"❌ Failed: {summary['failed']}")
-        print(f"⚠️  Skipped: {summary['skipped']}")
+        print(f" Passed: {summary['passed']}")
+        print(f" Failed: {summary['failed']}")
+        print(f"  Skipped: {summary['skipped']}")
         print(f"Success Rate: {summary['success_rate']:.1%}")
         print()
         
         # Print crawler-specific results
         for crawler, test_dicts in report["crawler_results"].items():
-            print(f"📱 {crawler.upper()} CRAWLER:")
+            print(f" {crawler.upper()} CRAWLER:")
             for test_dict in test_dicts:
-                icon = "✅" if test_dict["status"] == "pass" else "❌" if test_dict["status"] == "fail" else "⚠️"
+                icon = "" if test_dict["status"] == "pass" else "" if test_dict["status"] == "fail" else ""
                 print(f"  {icon} {test_dict['test_name'].split(' - ')[0]}: {test_dict['message']}")
             print()
 
@@ -377,7 +389,7 @@ def main():
     with open('crawler_functional_verification_report.json', 'w') as f:
         json.dump(report, f, indent=2)
     
-    print("📄 Detailed report saved to: crawler_functional_verification_report.json")
+    print(" Detailed report saved to: crawler_functional_verification_report.json")
     
     # Return success if all priority crawlers pass core tests
     priority_tests = [t for t in report["detailed_results"] 
@@ -385,10 +397,10 @@ def main():
     core_tests = [t for t in priority_tests if "Implementation Completeness" in t["test_name"]]
     
     if all(t["status"] == "pass" for t in core_tests):
-        print("\n🎉 VERIFICATION SUCCESSFUL: All priority crawlers have real implementations!")
+        print("\n VERIFICATION SUCCESSFUL: All priority crawlers have real implementations!")
         return 0
     else:
-        print("\n⚠️  VERIFICATION INCOMPLETE: Some priority crawlers need attention.")
+        print("\n  VERIFICATION INCOMPLETE: Some priority crawlers need attention.")
         return 1
 
 if __name__ == "__main__":

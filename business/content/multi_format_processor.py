@@ -1,5 +1,5 @@
 """
-🎯 Multi-Format Content Processor - IA Influencer Agent Platform
+ Multi-Format Content Processor - IA Influencer Agent Platform
 ================================================================
 
 Ultra-advanced multi-format content processing engine supporting musicians, bloggers, 
@@ -23,7 +23,7 @@ Expert Team Specialties:
 
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
+ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
 This code and concept are the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 Unauthorized access, copying, modification, distribution, reverse engineering,
@@ -353,6 +353,9 @@ class MultiFormatContentProcessor:
                                    file_content: bytes, 
                                    metadata: ContentMetadata) -> ContentMetadata:
         """Analyze audio content using librosa and AI"""
+
+
+
         
         try:
             # Save temporary file for analysis
@@ -390,6 +393,9 @@ class MultiFormatContentProcessor:
                                    file_content: bytes, 
                                    metadata: ContentMetadata) -> ContentMetadata:
         """Analyze video content using OpenCV and AI"""
+
+
+
         
         try:
             # Save temporary file for analysis  
@@ -434,6 +440,9 @@ class MultiFormatContentProcessor:
                                    file_content: bytes, 
                                    metadata: ContentMetadata) -> ContentMetadata:
         """Analyze image content using PIL and AI vision models"""
+
+
+
         
         try:
             # Load image with PIL
@@ -474,6 +483,9 @@ class MultiFormatContentProcessor:
                                   file_content: bytes, 
                                   metadata: ContentMetadata) -> ContentMetadata:
         """Analyze text content using NLP and AI"""
+
+
+
         
         try:
             # Decode text content
@@ -580,6 +592,9 @@ class MultiFormatContentProcessor:
                                       content_path: str,
                                       metadata: ContentMetadata) -> Dict[str, Any]:
         """Apply content protection and generate fingerprints"""
+
+
+
         
         try:
             protection_result = await self.fingerprinting_engine.create_fingerprint(
@@ -648,6 +663,9 @@ class MultiFormatContentProcessor:
                                     creator_id: str,
                                     creator_type: CreatorType):
         """Integrate with monetization engine"""
+
+
+
         
         try:
             monetization_data = await self.revenue_engine.setup_content_monetization(
@@ -732,6 +750,9 @@ class MultiFormatContentProcessor:
 
     def _generate_og_tags(self, metadata: ContentMetadata) -> Dict[str, str]:
         """Generate Open Graph tags"""
+
+
+
         return {
             'og:title': self._generate_seo_title(metadata),
             'og:description': self._generate_seo_description(metadata, {}),
@@ -741,6 +762,9 @@ class MultiFormatContentProcessor:
 
     def _generate_schema_markup(self, metadata: ContentMetadata) -> Dict[str, Any]:
         """Generate Schema.org markup"""
+
+
+
         return {
             '@context': 'https://schema.org',
             '@type': 'CreativeWork',
@@ -777,6 +801,9 @@ class MultiFormatContentProcessor:
 
     async def get_statistics(self) -> Dict[str, Any]:
         """Get processing engine statistics"""
+
+
+
         return self.processing_stats.copy()
 
     async def cleanup_temp_files(self):

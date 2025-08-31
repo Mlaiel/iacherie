@@ -1,12 +1,12 @@
 """
-📋 Compliance Configuration Manager - IA-Influencer-Agent
+ Compliance Configuration Manager - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Compliance Officer + Security Architect + Legal + Audit
 Date: 2025-08-24
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -214,6 +214,9 @@ class ComplianceConfigManager:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             # Load compliance frameworks and requirements
             await self._load_compliance_frameworks()
@@ -725,6 +728,9 @@ class ComplianceConfigManager:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             if framework not in self.compliance_config.enabled_frameworks:
                 self.compliance_config.enabled_frameworks.append(framework)
@@ -761,6 +767,9 @@ class ComplianceConfigManager:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             if requirement_id not in self.compliance_config.requirements:
                 raise ValueError(f"Requirement not found: {requirement_id}")
@@ -793,6 +802,9 @@ class ComplianceConfigManager:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             # Generate hash for evidence integrity
             evidence.hash_value = hashlib.sha256(f"{evidence.location}{evidence.collection_date}".encode()).hexdigest()
@@ -828,6 +840,9 @@ class ComplianceConfigManager:
         Returns:
             Compliance report
         """
+
+
+
         try:
             # Get requirements for framework
             framework_requirements = [
@@ -958,4 +973,7 @@ class ComplianceConfigManager:
     
     async def get_status(self) -> Dict[str, Any]:
         """Get compliance manager status"""
+
+
+
         return await self.get_compliance_status()

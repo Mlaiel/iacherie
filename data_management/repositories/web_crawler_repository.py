@@ -1,5 +1,5 @@
 """
-🕷️ Web Crawler Repository - IA Influencer Agent Platform Enterprise
+ Web Crawler Repository - IA Influencer Agent Platform Enterprise
 ===================================================================
 Module: backend/data_management/repositories/web_crawler_repository.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Web Surveillance Repository - Production-Ready
 Responsibility: Advanced web crawling for content protection and monitoring
 ========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
@@ -253,6 +253,9 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     def _build_search_urls(self, platform: PlatformType, 
                           search_terms: List[str]) -> List[str]:
         """Build search URLs for the platform"""
+
+
+
         try:
             config = self.platform_configs.get(platform)
             if not config:
@@ -277,6 +280,9 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     def _extract_content_metadata(self, html: str, url: str, 
                                 platform: PlatformType) -> Dict[str, Any]:
         """Extract content metadata from HTML"""
+
+
+
         try:
             soup = BeautifulSoup(html, 'html.parser')
             metadata = {}
@@ -455,6 +461,9 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     def _check_content_similarity(self, content_metadata: Dict[str, Any],
                                 fingerprints: List[str]) -> Tuple[float, List[str]]:
         """Check content similarity against known fingerprints"""
+
+
+
         try:
             if not self.fingerprint_service:
                 return 0.0, []
@@ -487,6 +496,9 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     def _capture_evidence(self, url: str, content_metadata: Dict[str, Any],
                         detection_id: str) -> List[Evidence]:
         """Capture evidence for detected violation"""
+
+
+
         try:
             evidence_list = []
             
@@ -549,6 +561,9 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     
     def _capture_screenshot(self, url: str, detection_id: str) -> Optional[str]:
         """Capture screenshot of the page"""
+
+
+
         try:
             from selenium import webdriver
             from selenium.webdriver.chrome.options import Options
@@ -590,6 +605,9 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     def _save_html_source(self, url: str, content_metadata: Dict[str, Any], 
                          detection_id: str) -> Optional[str]:
         """Save HTML source of the page"""
+
+
+
         try:
             # Get HTML content
             response = requests.get(url, timeout=30)
@@ -614,6 +632,9 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     def _save_metadata(self, content_metadata: Dict[str, Any], 
                       detection_id: str) -> Optional[str]:
         """Save extracted metadata as JSON"""
+
+
+
         try:
             # Create evidence directory
             evidence_dir = f"{self.global_config['evidence_storage_path']}/{detection_id}"
@@ -633,6 +654,9 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     
     def _get_file_size(self, file_path: str) -> int:
         """Get file size in bytes"""
+
+
+
         try:
             import os
             return os.path.getsize(file_path)
@@ -641,6 +665,9 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     
     def _calculate_file_hash(self, file_path: str) -> str:
         """Calculate SHA-256 hash of file"""
+
+
+
         try:
             import hashlib
             hash_sha256 = hashlib.sha256()
@@ -654,6 +681,9 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     def _process_detected_content(self, job: CrawlJob, url: str, 
                                 content_metadata: Dict[str, Any]) -> Optional[DetectedContent]:
         """Process and analyze detected content"""
+
+
+
         try:
             # Check similarity against fingerprints
             similarity_score, matching_fingerprints = self._check_content_similarity(
@@ -749,6 +779,9 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     
     def _parse_int_metadata(self, content_metadata: Dict[str, Any], key: str) -> Optional[int]:
         """Parse integer metadata fields"""
+
+
+
         try:
             value = content_metadata.get(key)
             if value:
@@ -759,6 +792,9 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     
     def _estimate_revenue_loss(self, content_metadata: Dict[str, Any]) -> Optional[float]:
         """Estimate potential revenue loss from violation"""
+
+
+
         try:
             # This would implement revenue estimation logic based on views, platform, etc.
             view_count = self._parse_int_metadata(content_metadata, 'view_count')
@@ -772,6 +808,9 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     # Base Repository Implementation
     def create(self, entity: CrawlJob, **kwargs) -> CrawlJob:
         """Create new crawl job"""
+
+
+
         try:
             self._validate_entity(entity)
             
@@ -802,6 +841,9 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     
     def get_by_id(self, entity_id: str, use_cache: bool = True) -> Optional[CrawlJob]:
         """Get crawl job by ID"""
+
+
+
         try:
             # Check cache first
             if use_cache and self._cache_enabled and self.cache:
@@ -829,6 +871,9 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     
     def update(self, entity: CrawlJob, **kwargs) -> CrawlJob:
         """Update crawl job"""
+
+
+
         try:
             self._validate_entity(entity)
             
@@ -857,6 +902,9 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     
     def delete(self, entity_id: str, soft_delete: bool = True) -> bool:
         """Delete crawl job"""
+
+
+
         try:
             if soft_delete:
                 job = self.get_by_id(entity_id)
@@ -881,6 +929,9 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
     def list(self, filters: Dict[str, Any] = None, limit: int = 100, 
              offset: int = 0, order_by: str = None) -> List[CrawlJob]:
         """List crawl jobs with filtering"""
+
+
+
         try:
             query_filters = filters or {}
             
@@ -907,6 +958,9 @@ class WebCrawlerRepository(BaseRepository[CrawlJob]):
                           scheduled_at: datetime = None, priority: int = 5,
                           **kwargs) -> CrawlJob:
         """Schedule a new crawl job"""
+
+
+
         try:
             job_id = self._generate_job_id()
             
@@ -990,6 +1044,9 @@ class AsyncWebCrawlerRepository(AsyncBaseRepository[CrawlJob]):
     
     async def create(self, entity: CrawlJob, **kwargs) -> CrawlJob:
         """Create crawl job asynchronously"""
+
+
+
         try:
             await self._validate_entity(entity)
             
@@ -1020,6 +1077,9 @@ class AsyncWebCrawlerRepository(AsyncBaseRepository[CrawlJob]):
     
     async def get_by_id(self, entity_id: str, use_cache: bool = True) -> Optional[CrawlJob]:
         """Get crawl job by ID asynchronously"""
+
+
+
         try:
             # Check cache first
             if use_cache and self._cache_enabled and self.cache:
@@ -1047,6 +1107,9 @@ class AsyncWebCrawlerRepository(AsyncBaseRepository[CrawlJob]):
     
     async def update(self, entity: CrawlJob, **kwargs) -> CrawlJob:
         """Update crawl job asynchronously"""
+
+
+
         try:
             await self._validate_entity(entity)
             
@@ -1075,6 +1138,9 @@ class AsyncWebCrawlerRepository(AsyncBaseRepository[CrawlJob]):
     
     async def delete(self, entity_id: str, soft_delete: bool = True) -> bool:
         """Delete crawl job asynchronously"""
+
+
+
         try:
             if soft_delete:
                 job = await self.get_by_id(entity_id)
@@ -1099,6 +1165,9 @@ class AsyncWebCrawlerRepository(AsyncBaseRepository[CrawlJob]):
     async def list(self, filters: Dict[str, Any] = None, limit: int = 100, 
                   offset: int = 0, order_by: str = None) -> List[CrawlJob]:
         """List crawl jobs asynchronously"""
+
+
+
         try:
             query_filters = filters or {}
             
@@ -1237,6 +1306,9 @@ class AsyncWebCrawlerRepository(AsyncBaseRepository[CrawlJob]):
     
     async def _store_crawled_content(self, content: Dict[str, Any], job_id: str) -> None:
         """Store crawled content with job association"""
+
+
+
         try:
             # Add job metadata
             content["job_id"] = job_id

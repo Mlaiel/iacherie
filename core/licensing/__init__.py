@@ -8,18 +8,18 @@ royalty distribution for multi-format content creators and global distribution n
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE & COPYRIGHT PROTECTION:
+  CRITICAL LEGAL NOTICE & COPYRIGHT PROTECTION:
 This code and its architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission is strictly prohibited and will result in severe legal consequences.
 
-⚠️ SEVERE WARNING TO POTENTIAL THIEVES:
+ SEVERE WARNING TO POTENTIAL THIEVES:
 Any individual or organization attempting to steal, copy, or use this code, concept, 
 or architecture without explicit written authorization from Fahed Mlaiel will face 
 immediate and severe legal consequences including criminal prosecution.
 Contact: mlaiel@live.de for licensing and usage rights.
 
-🎯 PROJECT TEAM SPECIALTIES:
+ PROJECT TEAM SPECIALTIES:
 - Lead AI Developer & Solution Architect: Advanced AI/ML systems and intelligent automation
 - Backend Senior Engineer: Enterprise-grade backend architecture and microservices  
 - ML Engineer: Machine learning models and predictive analytics
@@ -175,7 +175,10 @@ logger.info("Ultra-Industrial Licensing Management System initialized successful
 
 # System health check
 def system_health_check() -> Dict[str, bool]:
-    """Perform comprehensive system health check"""    return {
+    """Perform comprehensive system health check"""
+
+
+    return {
         "licensing_engine": True,
         "contract_generation": True,
         "rights_allocation": True,
@@ -326,7 +329,7 @@ __copyright__ = "Copyright (c) 2025 Fahed Mlaiel. All rights reserved."
 __license__ = "Proprietary - All Rights Reserved"
 
 # Legal warning
-__legal_notice__ = """⚠️  INTELLECTUAL PROPERTY WARNING:
+__legal_notice__ = """  INTELLECTUAL PROPERTY WARNING:
 This entire module, its architecture, and business logic are the EXCLUSIVE 
 intellectual property of Fahed Mlaiel. Any unauthorized use, copying, 
 distribution, or commercialization is strictly prohibited and will result 

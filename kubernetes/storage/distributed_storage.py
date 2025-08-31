@@ -8,7 +8,7 @@ Responsibility: Production-grade distributed storage management and coordination
 Technologies: Python, HDFS, GlusterFS, Ceph, MinIO Cluster, Kubernetes CSI
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -173,7 +173,7 @@ class DistributedStorageMetrics:
 
 class DistributedStorageManager:
     """
-    🎯 Industrial Distributed Storage Manager - IA-Influencer-Agent
+     Industrial Distributed Storage Manager - IA-Influencer-Agent
     
     Production-grade distributed storage orchestration providing:
     - Multi-node cluster management and coordination
@@ -194,7 +194,7 @@ class DistributedStorageManager:
         self._session: Optional[aiohttp.ClientSession] = None
         self._running_tasks: Dict[str, asyncio.Task] = {}
         
-        logger.info(f"🚀 DistributedStorageManager initialized for cluster: {config.cluster_name}")
+        logger.info(f" DistributedStorageManager initialized for cluster: {config.cluster_name}")
     
     async def __aenter__(self):
         """Async context manager entry"""
@@ -216,8 +216,11 @@ class DistributedStorageManager:
     
     async def initialize_cluster(self) -> Dict[str, Any]:
         """Initialize distributed storage cluster"""
+
+
+
         try:
-            logger.info(f"🚀 Initializing distributed storage cluster: {self.config.cluster_name}")
+            logger.info(f" Initializing distributed storage cluster: {self.config.cluster_name}")
             
             # Initialize storage nodes
             node_results = await self._initialize_storage_nodes()
@@ -250,15 +253,18 @@ class DistributedStorageManager:
                 "cluster_ready": True
             }
             
-            logger.info(f"✅ Distributed storage cluster initialized successfully")
+            logger.info(f" Distributed storage cluster initialized successfully")
             return cluster_result
             
         except Exception as e:
-            logger.error(f"❌ Cluster initialization failed: {e}")
+            logger.error(f" Cluster initialization failed: {e}")
             return {"success": False, "error": str(e)}
     
     async def _initialize_storage_nodes(self) -> Dict[str, Any]:
         """Initialize all storage nodes in the cluster"""
+
+
+
         try:
             initialization_results = []
             
@@ -290,11 +296,14 @@ class DistributedStorageManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Node initialization failed: {e}")
+            logger.error(f" Node initialization failed: {e}")
             return {"success": False, "error": str(e)}
     
     async def _initialize_single_node(self, node_address: str) -> Dict[str, Any]:
         """Initialize a single storage node"""
+
+
+
         try:
             # Parse node address
             if ":" in node_address:
@@ -334,11 +343,14 @@ class DistributedStorageManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize node {node_address}: {e}")
+            logger.error(f" Failed to initialize node {node_address}: {e}")
             return {"success": False, "node_address": node_address, "error": str(e)}
     
     async def _check_node_health(self, hostname: str, port: int) -> Dict[str, Any]:
         """Check health of a storage node"""
+
+
+
         try:
             url = f"http://{hostname}:{port}/health"
             
@@ -350,11 +362,14 @@ class DistributedStorageManager:
                     return {"healthy": False, "status_code": response.status}
                     
         except Exception as e:
-            logger.warning(f"⚠️ Health check failed for {hostname}:{port}: {e}")
+            logger.warning(f" Health check failed for {hostname}:{port}: {e}")
             return {"healthy": False, "error": str(e)}
     
     async def _initialize_minio_node(self, hostname: str, port: int) -> Dict[str, Any]:
         """Initialize MinIO cluster node"""
+
+
+
         try:
             # MinIO-specific initialization
             from minio import Minio
@@ -381,11 +396,14 @@ class DistributedStorageManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ MinIO node initialization failed: {e}")
+            logger.error(f" MinIO node initialization failed: {e}")
             return {"success": False, "error": str(e)}
     
     async def _initialize_ceph_node(self, hostname: str, port: int) -> Dict[str, Any]:
         """Initialize Ceph cluster node"""
+
+
+
         try:
             # Ceph-specific initialization would go here
             # This is a placeholder for actual Ceph integration
@@ -398,11 +416,14 @@ class DistributedStorageManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Ceph node initialization failed: {e}")
+            logger.error(f" Ceph node initialization failed: {e}")
             return {"success": False, "error": str(e)}
     
     async def _initialize_gluster_node(self, hostname: str, port: int) -> Dict[str, Any]:
         """Initialize GlusterFS node"""
+
+
+
         try:
             # GlusterFS-specific initialization would go here
             
@@ -414,11 +435,14 @@ class DistributedStorageManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ GlusterFS node initialization failed: {e}")
+            logger.error(f" GlusterFS node initialization failed: {e}")
             return {"success": False, "error": str(e)}
     
     async def _initialize_generic_node(self, hostname: str, port: int) -> Dict[str, Any]:
         """Initialize generic storage node"""
+
+
+
         try:
             return {
                 "success": True,
@@ -427,13 +451,16 @@ class DistributedStorageManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Generic node initialization failed: {e}")
+            logger.error(f" Generic node initialization failed: {e}")
             return {"success": False, "error": str(e)}
     
     async def _setup_replication_strategy(self) -> Dict[str, Any]:
         """Setup data replication strategy"""
+
+
+
         try:
-            logger.info(f"⚙️ Setting up replication strategy: {self.config.replication_strategy.value}")
+            logger.info(f" Setting up replication strategy: {self.config.replication_strategy.value}")
             
             replication_config = {
                 "strategy": self.config.replication_strategy.value,
@@ -460,23 +487,29 @@ class DistributedStorageManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Replication setup failed: {e}")
+            logger.error(f" Replication setup failed: {e}")
             return {"success": False, "error": str(e)}
     
     async def _configure_node_replication(self, node: StorageNode, config: Dict[str, Any]):
         """Configure replication for a specific node"""
+
+
+
         try:
             # Node-specific replication configuration
             # This would send configuration to the actual storage node
             pass
             
         except Exception as e:
-            logger.error(f"❌ Failed to configure replication for node {node.node_id}: {e}")
+            logger.error(f" Failed to configure replication for node {node.node_id}: {e}")
     
     async def _configure_sharding(self) -> Dict[str, Any]:
         """Configure data sharding strategy"""
+
+
+
         try:
-            logger.info(f"⚙️ Configuring sharding strategy: {self.config.sharding_strategy.value}")
+            logger.info(f" Configuring sharding strategy: {self.config.sharding_strategy.value}")
             
             sharding_config = {
                 "strategy": self.config.sharding_strategy.value,
@@ -498,13 +531,16 @@ class DistributedStorageManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Sharding configuration failed: {e}")
+            logger.error(f" Sharding configuration failed: {e}")
             return {"success": False, "error": str(e)}
     
     async def _setup_cluster_monitoring(self) -> Dict[str, Any]:
         """Setup cluster monitoring and metrics collection"""
+
+
+
         try:
-            logger.info("📊 Setting up cluster monitoring...")
+            logger.info(" Setting up cluster monitoring...")
             
             monitoring_config = {
                 "metrics_collection": self.config.metrics_collection_enabled,
@@ -528,19 +564,22 @@ class DistributedStorageManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Monitoring setup failed: {e}")
+            logger.error(f" Monitoring setup failed: {e}")
             return {"success": False, "error": str(e)}
     
     async def _start_health_checks(self):
         """Start continuous health monitoring"""
+
+
+
         try:
             health_check_task = asyncio.create_task(self._health_check_loop())
             self._running_tasks["health_check"] = health_check_task
             
-            logger.info("❤️ Health monitoring started")
+            logger.info(" Health monitoring started")
             
         except Exception as e:
-            logger.error(f"❌ Failed to start health checks: {e}")
+            logger.error(f" Failed to start health checks: {e}")
     
     async def _health_check_loop(self):
         """Continuous health check loop"""
@@ -555,7 +594,7 @@ class DistributedStorageManager:
                     node.last_heartbeat = datetime.now()
                     
                     if not node.is_healthy:
-                        logger.warning(f"⚠️ Node {node_id} health check failed")
+                        logger.warning(f" Node {node_id} health check failed")
                         await self._handle_unhealthy_node(node)
                 
                 # Update cluster metrics
@@ -564,27 +603,33 @@ class DistributedStorageManager:
             except asyncio.CancelledError:
                 break
             except Exception as e:
-                logger.error(f"❌ Health check loop error: {e}")
+                logger.error(f" Health check loop error: {e}")
     
     async def _handle_unhealthy_node(self, node: StorageNode):
         """Handle unhealthy node detection"""
+
+
+
         try:
             node.error_count += 1
             
             if node.error_count >= 3:
-                logger.error(f"🚨 Node {node.node_id} marked as failed after {node.error_count} failures")
+                logger.error(f" Node {node.node_id} marked as failed after {node.error_count} failures")
                 node.status = "failed"
                 
                 # Trigger data rebalancing
                 await self._trigger_data_rebalancing(failed_node=node.node_id)
             
         except Exception as e:
-            logger.error(f"❌ Failed to handle unhealthy node {node.node_id}: {e}")
+            logger.error(f" Failed to handle unhealthy node {node.node_id}: {e}")
     
     async def _trigger_data_rebalancing(self, failed_node: str):
         """Trigger data rebalancing after node failure"""
+
+
+
         try:
-            logger.info(f"⚖️ Triggering data rebalancing due to failed node: {failed_node}")
+            logger.info(f" Triggering data rebalancing due to failed node: {failed_node}")
             
             # This would implement actual data rebalancing logic
             # depending on the storage system type
@@ -592,12 +637,15 @@ class DistributedStorageManager:
             self.metrics.rebalancing_operations += 1
             
         except Exception as e:
-            logger.error(f"❌ Data rebalancing failed: {e}")
+            logger.error(f" Data rebalancing failed: {e}")
     
     async def _validate_cluster_consistency(self) -> Dict[str, Any]:
         """Validate cluster data consistency"""
+
+
+
         try:
-            logger.info("🔍 Validating cluster consistency...")
+            logger.info(" Validating cluster consistency...")
             
             consistency_checks = {
                 "metadata_consistency": await self._check_metadata_consistency(),
@@ -615,11 +663,14 @@ class DistributedStorageManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Consistency validation failed: {e}")
+            logger.error(f" Consistency validation failed: {e}")
             return {"success": False, "error": str(e)}
     
     async def _check_metadata_consistency(self) -> Dict[str, Any]:
         """Check metadata consistency across nodes"""
+
+
+
         try:
             # Implementation would depend on storage system
             return {"consistent": True, "metadata_nodes_synced": len(self.nodes)}
@@ -629,6 +680,9 @@ class DistributedStorageManager:
     
     async def _check_data_integrity(self) -> Dict[str, Any]:
         """Check data integrity using checksums"""
+
+
+
         try:
             # Implementation would verify checksums across replicas
             return {"consistent": True, "integrity_violations": 0}
@@ -638,6 +692,9 @@ class DistributedStorageManager:
     
     async def _check_replica_consistency(self) -> Dict[str, Any]:
         """Check replica consistency"""
+
+
+
         try:
             # Implementation would compare replicas
             return {"consistent": True, "replica_mismatches": 0}
@@ -647,8 +704,11 @@ class DistributedStorageManager:
     
     async def store_data(self, data_key: str, data: bytes, metadata: Optional[Dict] = None) -> Dict[str, Any]:
         """Store data in distributed storage with replication"""
+
+
+
         try:
-            logger.info(f"💾 Storing data: {data_key} ({len(data)} bytes)")
+            logger.info(f" Storing data: {data_key} ({len(data)} bytes)")
             
             # Determine shard placement
             shard_nodes = await self._determine_shard_placement(data_key)
@@ -681,11 +741,14 @@ class DistributedStorageManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Data storage failed for {data_key}: {e}")
+            logger.error(f" Data storage failed for {data_key}: {e}")
             return {"success": False, "data_key": data_key, "error": str(e)}
     
     async def _determine_shard_placement(self, data_key: str) -> List[StorageNode]:
         """Determine which nodes should store the data"""
+
+
+
         try:
             available_nodes = [node for node in self.nodes.values() if node.is_healthy]
             
@@ -715,12 +778,15 @@ class DistributedStorageManager:
                 return available_nodes[:self.config.replication_factor]
                 
         except Exception as e:
-            logger.error(f"❌ Shard placement determination failed: {e}")
+            logger.error(f" Shard placement determination failed: {e}")
             raise
     
     async def _store_data_on_node(self, node: StorageNode, data_key: str, data: bytes, 
                                   metadata: Optional[Dict], is_primary: bool) -> Dict[str, Any]:
         """Store data on a specific node"""
+
+
+
         try:
             # This would implement the actual storage API call to the node
             # The implementation depends on the storage system type
@@ -744,11 +810,14 @@ class DistributedStorageManager:
                     raise Exception(f"Storage failed with status {response.status}")
                     
         except Exception as e:
-            logger.error(f"❌ Failed to store data on node {node.node_id}: {e}")
+            logger.error(f" Failed to store data on node {node.node_id}: {e}")
             return {"success": False, "node_id": node.node_id, "error": str(e)}
     
     async def _verify_storage_consistency(self, data_key: str, nodes: List[StorageNode]) -> bool:
         """Verify that data is consistently stored across nodes"""
+
+
+
         try:
             checksums = []
             
@@ -761,11 +830,14 @@ class DistributedStorageManager:
             return len(set(checksums)) == 1 and len(checksums) > 0
             
         except Exception as e:
-            logger.error(f"❌ Consistency verification failed: {e}")
+            logger.error(f" Consistency verification failed: {e}")
             return False
     
     async def _get_data_checksum(self, node: StorageNode, data_key: str) -> Optional[str]:
         """Get checksum of data stored on a node"""
+
+
+
         try:
             checksum_url = f"http://{node.hostname}:{node.port}/checksum/{data_key}"
             
@@ -775,14 +847,17 @@ class DistributedStorageManager:
                     return result.get("checksum")
                 
         except Exception as e:
-            logger.warning(f"⚠️ Failed to get checksum from node {node.node_id}: {e}")
+            logger.warning(f" Failed to get checksum from node {node.node_id}: {e}")
         
         return None
     
     async def retrieve_data(self, data_key: str) -> Dict[str, Any]:
         """Retrieve data from distributed storage"""
+
+
+
         try:
-            logger.info(f"📥 Retrieving data: {data_key}")
+            logger.info(f" Retrieving data: {data_key}")
             
             # Determine nodes that should have the data
             storage_nodes = await self._determine_shard_placement(data_key)
@@ -800,18 +875,21 @@ class DistributedStorageManager:
                             "retrieval_time": datetime.now().isoformat()
                         }
                 except Exception as e:
-                    logger.warning(f"⚠️ Failed to retrieve from node {node.node_id}: {e}")
+                    logger.warning(f" Failed to retrieve from node {node.node_id}: {e}")
                     continue
             
             # If all nodes failed
             raise Exception("Data not available from any replica")
             
         except Exception as e:
-            logger.error(f"❌ Data retrieval failed for {data_key}: {e}")
+            logger.error(f" Data retrieval failed for {data_key}: {e}")
             return {"success": False, "data_key": data_key, "error": str(e)}
     
     async def _retrieve_data_from_node(self, node: StorageNode, data_key: str) -> Optional[bytes]:
         """Retrieve data from a specific node"""
+
+
+
         try:
             retrieval_url = f"http://{node.hostname}:{node.port}/data/{data_key}"
             
@@ -820,12 +898,15 @@ class DistributedStorageManager:
                     return await response.read()
                 
         except Exception as e:
-            logger.error(f"❌ Failed to retrieve data from node {node.node_id}: {e}")
+            logger.error(f" Failed to retrieve data from node {node.node_id}: {e}")
         
         return None
     
     async def get_cluster_metrics(self) -> Dict[str, Any]:
         """Get comprehensive cluster metrics"""
+
+
+
         try:
             # Update node metrics
             for node in self.nodes.values():
@@ -888,11 +969,14 @@ class DistributedStorageManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to get cluster metrics: {e}")
+            logger.error(f" Failed to get cluster metrics: {e}")
             return {"error": str(e)}
     
     async def _update_node_metrics(self, node: StorageNode):
         """Update metrics for a specific node"""
+
+
+
         try:
             metrics_url = f"http://{node.hostname}:{node.port}/metrics"
             
@@ -910,7 +994,7 @@ class DistributedStorageManager:
                     node.memory_usage_percent = metrics_data.get("memory_usage_percent", 0)
                     
         except Exception as e:
-            logger.warning(f"⚠️ Failed to update metrics for node {node.node_id}: {e}")
+            logger.warning(f" Failed to update metrics for node {node.node_id}: {e}")
 
 
 # Configuration Manager
@@ -924,6 +1008,9 @@ class DistributedStorageConfigurationManager:
         capacity_tb: float = 10.0
     ) -> DistributedStorageConfig:
         """Create MinIO cluster configuration"""
+
+
+
         return DistributedStorageConfig(
             cluster_name=cluster_name,
             storage_type=DistributedStorageType.MINIO_CLUSTER,
@@ -942,6 +1029,9 @@ class DistributedStorageConfigurationManager:
         capacity_tb: float = 50.0
     ) -> DistributedStorageConfig:
         """Create Ceph cluster configuration"""
+
+
+
         return DistributedStorageConfig(
             cluster_name=cluster_name,
             storage_type=DistributedStorageType.CEPH,
@@ -987,6 +1077,9 @@ def create_distributed_storage_manager(
 # Usage Example
 async def main():
     """Example usage of DistributedStorageManager"""
+
+
+
     try:
         nodes = ["storage-node-1:9000", "storage-node-2:9000", "storage-node-3:9000"]
         
@@ -1014,7 +1107,7 @@ async def main():
             print(f"Cluster metrics: {metrics}")
             
     except Exception as e:
-        logger.error(f"❌ Example failed: {e}")
+        logger.error(f" Example failed: {e}")
 
 
 if __name__ == "__main__":

@@ -195,11 +195,11 @@ class SecuritySeedsManager:
                 'details': results
             }
             
-            logger.info(f"✅ Security seeds initialized successfully in {duration:.2f}s")
+            logger.info(f" Security seeds initialized successfully in {duration:.2f}s")
             return summary
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize security seeds: {str(e)}")
+            logger.error(f" Failed to initialize security seeds: {str(e)}")
             raise
     
     async def _initialize_security_policies(self) -> Dict[str, Any]:

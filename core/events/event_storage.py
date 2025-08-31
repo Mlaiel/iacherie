@@ -4,18 +4,18 @@ Module: backend/core/events/event_storage.py
 Architecture: Enterprise Event Persistence & Archival
 Auteur: Équipe Backend Senior + ML Engineer + Sécurité + Microservices + DBA + DevOps + IA Prompt Engineer
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT 
 © 2025 Équipe d'Experts. Tous droits réservés.
 
 SPÉCIALITÉS DE L'ÉQUIPE:
-🔹 Lead Dev IA: Architecture & prompt engineering
-🔹 Backend Senior: Microservices & performance  
-🔹 ML Engineer: Modèles & pipeline d'apprentissage
-🔹 DBA Expert: Optimisation & requêtes complexes
-🔹 Expert Sécurité: Protection & conformité
-🔹 Spécialiste Audio: Traitement signal & formats
-🔹 DevOps: Infrastructure & déploiement
-🔹 Expert Microservices: Distribution & scalabilité
+ Lead Dev IA: Architecture & prompt engineering
+ Backend Senior: Microservices & performance  
+ ML Engineer: Modèles & pipeline d'apprentissage
+ DBA Expert: Optimisation & requêtes complexes
+ Expert Sécurité: Protection & conformité
+ Spécialiste Audio: Traitement signal & formats
+ DevOps: Infrastructure & déploiement
+ Expert Microservices: Distribution & scalabilité
 
 Description:
     Système de stockage d'événements avec support multi-backend, archivage,
@@ -182,6 +182,9 @@ class PostgreSQLEventStorage(EventStorageInterface):
         
     async def initialize(self):
         """Initialiser la connexion PostgreSQL"""
+
+
+
         try:
             self.engine = create_async_engine(
                 self.config.connection_string,
@@ -206,6 +209,9 @@ class PostgreSQLEventStorage(EventStorageInterface):
     
     async def store_event(self, event: Event) -> str:
         """Stocker un événement"""
+
+
+
         try:
             async with self.session_factory() as session:
                 # Sérialisation et compression
@@ -245,6 +251,9 @@ class PostgreSQLEventStorage(EventStorageInterface):
     
     async def store_events_batch(self, events: List[Event]) -> List[str]:
         """Stocker un lot d'événements"""
+
+
+
         try:
             async with self.session_factory() as session:
                 values = []
@@ -287,6 +296,9 @@ class PostgreSQLEventStorage(EventStorageInterface):
     
     async def get_event(self, event_id: str) -> Optional[Event]:
         """Récupérer un événement par ID"""
+
+
+
         try:
             async with self.session_factory() as session:
                 query = text("""
@@ -308,6 +320,9 @@ class PostgreSQLEventStorage(EventStorageInterface):
     
     async def query_events(self, query: EventQuery) -> List[Event]:
         """Requête d'événements"""
+
+
+
         try:
             async with self.session_factory() as session:
                 # Construction de la requête
@@ -324,6 +339,9 @@ class PostgreSQLEventStorage(EventStorageInterface):
     
     async def count_events(self, query: EventQuery) -> int:
         """Compter les événements"""
+
+
+
         try:
             async with self.session_factory() as session:
                 sql_query, params = self._build_count_query(query)
@@ -339,6 +357,9 @@ class PostgreSQLEventStorage(EventStorageInterface):
     
     async def delete_event(self, event_id: str) -> bool:
         """Supprimer un événement"""
+
+
+
         try:
             async with self.session_factory() as session:
                 query = text("DELETE FROM events WHERE id = :event_id")
@@ -353,6 +374,9 @@ class PostgreSQLEventStorage(EventStorageInterface):
     
     async def get_storage_metrics(self) -> StorageMetrics:
         """Récupérer les métriques de stockage"""
+
+
+
         try:
             async with self.session_factory() as session:
                 metrics_query = text("""
@@ -381,6 +405,9 @@ class PostgreSQLEventStorage(EventStorageInterface):
     
     def _serialize_event(self, event: Event) -> str:
         """Sérialiser un événement"""
+
+
+
         return json.dumps({
             'id': event.id,
             'event_type': event.event_type.value,
@@ -448,6 +475,9 @@ class PostgreSQLEventStorage(EventStorageInterface):
     
     def _get_compression_handler(self):
         """Récupérer le gestionnaire de compression"""
+
+
+
         return {
             CompressionType.GZIP: (gzip.compress, gzip.decompress),
             CompressionType.BZIP2: (bz2.compress, bz2.decompress),
@@ -527,6 +557,9 @@ class PostgreSQLEventStorage(EventStorageInterface):
     
     async def _create_tables(self):
         """Créer les tables nécessaires"""
+
+
+
         try:
             async with self.session_factory() as session:
                 create_table_sql = text("""
@@ -578,6 +611,9 @@ class RedisEventStorage(EventStorageInterface):
         
     async def initialize(self):
         """Initialiser la connexion Redis"""
+
+
+
         try:
             self.redis = aioredis.from_url(
                 self.config.connection_string,
@@ -595,6 +631,9 @@ class RedisEventStorage(EventStorageInterface):
     
     async def store_event(self, event: Event) -> str:
         """Stocker un événement dans Redis"""
+
+
+
         try:
             event_data = self._serialize_event(event)
             
@@ -620,6 +659,9 @@ class RedisEventStorage(EventStorageInterface):
     
     async def store_events_batch(self, events: List[Event]) -> List[str]:
         """Stocker un lot d'événements"""
+
+
+
         try:
             pipe = self.redis.pipeline()
             ttl = self.config.retention_days * 24 * 3600
@@ -641,6 +683,9 @@ class RedisEventStorage(EventStorageInterface):
     
     async def get_event(self, event_id: str) -> Optional[Event]:
         """Récupérer un événement depuis Redis"""
+
+
+
         try:
             event_data = await self.redis.get(f"event:{event_id}")
             if event_data:
@@ -653,6 +698,9 @@ class RedisEventStorage(EventStorageInterface):
     
     async def query_events(self, query: EventQuery) -> List[Event]:
         """Requête d'événements depuis Redis"""
+
+
+
         try:
             events = []
             
@@ -683,6 +731,9 @@ class RedisEventStorage(EventStorageInterface):
     
     async def count_events(self, query: EventQuery) -> int:
         """Compter les événements"""
+
+
+
         try:
             count = 0
             
@@ -706,6 +757,9 @@ class RedisEventStorage(EventStorageInterface):
     
     async def delete_event(self, event_id: str) -> bool:
         """Supprimer un événement"""
+
+
+
         try:
             result = await self.redis.delete(f"event:{event_id}")
             return result > 0
@@ -716,6 +770,9 @@ class RedisEventStorage(EventStorageInterface):
     
     async def get_storage_metrics(self) -> StorageMetrics:
         """Récupérer les métriques Redis"""
+
+
+
         try:
             info = await self.redis.info("memory")
             keyspace = await self.redis.info("keyspace")
@@ -741,6 +798,9 @@ class RedisEventStorage(EventStorageInterface):
     
     def _serialize_event(self, event: Event) -> str:
         """Sérialiser un événement"""
+
+
+
         return json.dumps({
             'id': event.id,
             'event_type': event.event_type.value,
@@ -828,14 +888,23 @@ class HybridEventStorage(EventStorageInterface):
     
     async def store_events_batch(self, events: List[Event]) -> List[str]:
         """Déléguer au stockage primaire"""
+
+
+
         return await self.primary_storage.store_events_batch(events)
     
     async def query_events(self, query: EventQuery) -> List[Event]:
         """Déléguer au stockage primaire"""
+
+
+
         return await self.primary_storage.query_events(query)
     
     async def count_events(self, query: EventQuery) -> int:
         """Déléguer au stockage primaire"""
+
+
+
         return await self.primary_storage.count_events(query)
     
     async def delete_event(self, event_id: str) -> bool:
@@ -882,6 +951,9 @@ class EventArchiver:
         
     async def archive_events(self, request: ArchivalRequest) -> bool:
         """Archiver des événements"""
+
+
+
         try:
             # Récupération des événements à archiver
             events = await self.source_storage.query_events(request.query)

@@ -7,7 +7,7 @@ threat detection, mitigation strategies, and scenario modeling for content creat
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This risk analysis system and its algorithms are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -143,26 +143,26 @@ class RiskAnalyzer:
     
     Provides comprehensive multi-dimensional risk assessment capabilities:
     
-    🎯 Risk Assessment Capabilities:
+     Risk Assessment Capabilities:
     - Multi-dimensional risk evaluation across content, platform, brand, and market factors
     - Probability-impact matrix analysis with Monte Carlo simulations
     - Real-time risk monitoring with automated alert system
     - Predictive risk modeling using machine learning algorithms
     
-    📊 Risk Categories & Analysis:
+     Risk Categories & Analysis:
     - Content Performance Risk: View decline, engagement drop, algorithm changes
     - Platform Dependency Risk: Platform policy changes, account suspension risks
     - Brand Reputation Risk: Controversy, negative sentiment, brand safety issues
     - Monetization Risk: Revenue stream diversification, market volatility
     - Competitive Risk: Market saturation, competitor threats, niche disruption
     
-    🔍 Advanced Risk Modeling:
+     Advanced Risk Modeling:
     - Scenario-based risk analysis with multiple probability outcomes
     - Historical pattern analysis for risk trend identification
     - Cross-correlation analysis between different risk factors
     - Dynamic risk scoring with real-time factor weighting adjustments
     
-    ⚡ Risk Mitigation & Management:
+     Risk Mitigation & Management:
     - Automated mitigation strategy recommendations
     - Risk tolerance optimization based on creator goals
     - Contingency planning with actionable response strategies
@@ -238,6 +238,9 @@ class RiskAnalyzer:
         Returns:
             RiskProfile: Comprehensive risk assessment results
         """
+
+
+
         try:
             creator_id = creator_data.get('creator_id', '')
             
@@ -303,6 +306,9 @@ class RiskAnalyzer:
         Returns:
             List[RiskFactor]: Content-specific risk factors
         """
+
+
+
         try:
             content_risks = []
             
@@ -359,6 +365,9 @@ class RiskAnalyzer:
         Returns:
             List[RiskFactor]: Platform-specific risk factors
         """
+
+
+
         try:
             platform_risks = []
             platforms = platform_data.get('active_platforms', [])
@@ -414,6 +423,9 @@ class RiskAnalyzer:
         Returns:
             List[RiskFactor]: Market and competitive risk factors
         """
+
+
+
         try:
             market_risks = []
             
@@ -467,6 +479,9 @@ class RiskAnalyzer:
         Returns:
             List[RiskScenario]: Generated risk scenarios
         """
+
+
+
         try:
             scenarios = []
             
@@ -511,6 +526,9 @@ class RiskAnalyzer:
         Returns:
             List[RiskAlert]: Generated risk alerts
         """
+
+
+
         try:
             alerts = []
             
@@ -760,6 +778,9 @@ class ContentRiskAssessor:
     
     async def assess_viral_risk(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
         """Assess risks specific to viral content attempts"""
+
+
+
         return {
             'algorithm_risk': 0.3,
             'audience_backlash_risk': 0.2,
@@ -775,6 +796,9 @@ class PlatformRiskAnalyzer:
     
     async def analyze_policy_change_risk(self, platform: str) -> Dict[str, Any]:
         """Analyze risk of platform policy changes"""
+
+
+
         return {
             'monetization_policy_change_risk': 0.4,
             'content_policy_change_risk': 0.3,
@@ -790,6 +814,9 @@ class MarketRiskEvaluator:
     
     async def evaluate_economic_risks(self, market_data: Dict[str, Any]) -> Dict[str, Any]:
         """Evaluate economic risks affecting creator economy"""
+
+
+
         return {
             'recession_risk': 0.3,
             'inflation_impact_risk': 0.4,
@@ -805,6 +832,9 @@ class ReputationRiskPredictor:
     
     async def predict_reputation_threats(self, creator_data: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Predict potential reputation threats"""
+
+
+
         return [
             {
                 'threat_type': 'content_controversy',

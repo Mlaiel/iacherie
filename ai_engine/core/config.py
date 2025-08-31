@@ -8,7 +8,7 @@ and performance optimization parameters.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+ UNAUTHORIZED USE STRICTLY PROHIBITED 
 This configuration system contains sensitive business logic and security parameters.
 """
 
@@ -55,6 +55,9 @@ class AIEngineConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             "max_concurrent_models": self.max_concurrent_models,
             "auto_cleanup_interval": self.auto_cleanup_interval,
@@ -87,6 +90,9 @@ class ValidationConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             "enable_security_validation": self.enable_security_validation,
             "enable_quality_analysis": self.enable_quality_analysis,
@@ -119,6 +125,9 @@ class PerformanceConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             "monitoring_interval": self.monitoring_interval,
             "history_size": self.history_size,
@@ -149,6 +158,9 @@ class MetricsConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             "max_entries": self.max_entries,
             "auto_flush_interval": self.auto_flush_interval,
@@ -177,6 +189,9 @@ class PipelineConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             "max_concurrent_pipelines": self.max_concurrent_pipelines,
             "stage_timeout_seconds": self.stage_timeout_seconds,
@@ -217,6 +232,9 @@ class CoreConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert complete configuration to dictionary"""
+
+
+
         return {
             "environment": self.environment,
             "debug_mode": self.debug_mode,
@@ -364,6 +382,9 @@ class ConfigManager:
         
     def _load_from_file(self, config: CoreConfig, config_path: str):
         """Load configuration from JSON file"""
+
+
+
         try:
             with open(config_path, 'r') as f:
                 data = json.load(f)
@@ -441,6 +462,9 @@ class ConfigManager:
         
     def reload_config(self) -> CoreConfig:
         """Reload configuration from source"""
+
+
+
         return self.load_config()
         
     def update_config(self, updates: Dict[str, Any]) -> bool:
@@ -481,18 +505,30 @@ config_manager = ConfigManager()
 # Convenience functions
 def get_config() -> CoreConfig:
     """Get current AI core configuration"""
+
+
+
     return config_manager.get_config()
 
 def load_config(config_path: Optional[str] = None) -> CoreConfig:
     """Load AI core configuration"""
+
+
+
     return config_manager.load_config(config_path)
 
 def save_config(config_path: Optional[str] = None) -> bool:
     """Save current AI core configuration"""
+
+
+
     return config_manager.save_config(config_path)
 
 def update_config(updates: Dict[str, Any]) -> bool:
     """Update AI core configuration"""
+
+
+
     return config_manager.update_config(updates)
 
 def add_config_watcher(callback: Callable[[CoreConfig], None]):

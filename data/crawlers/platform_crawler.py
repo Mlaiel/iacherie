@@ -202,6 +202,9 @@ class PlatformCrawler(ABC):
         Returns:
             Crawler result with found matches
         """
+
+
+
         try:
             crawl_id = f"{self.config.platform_name}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
             start_time = datetime.utcnow()
@@ -300,6 +303,9 @@ class PlatformCrawler(ABC):
         Returns:
             List of similar content matches
         """
+
+
+
         try:
             # Generate search terms from fingerprints
             search_terms = await self._extract_search_terms_from_fingerprints(fingerprints)
@@ -350,6 +356,9 @@ class PlatformCrawler(ABC):
         Returns:
             Monitoring task ID
         """
+
+
+
         try:
             monitoring_id = f"monitor_{self.config.platform_name}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
             
@@ -424,6 +433,9 @@ class PlatformCrawler(ABC):
     async def _process_search_result(self, result: Dict[str, Any], 
                                    fingerprint_data: Dict[str, Any]) -> Optional[ContentMatch]:
         """Process individual search result"""
+
+
+
         try:
             # Extract metadata
             metadata = await self.extract_content_metadata(result.get('url', ''))
@@ -463,6 +475,9 @@ class PlatformCrawler(ABC):
     async def _calculate_content_similarity(self, content: Dict[str, Any], 
                                           fingerprint_data: Dict[str, Any]) -> float:
         """Calculate similarity between content and fingerprint"""
+
+
+
         try:
             # Text similarity (title, description)
             text_similarity = await self._calculate_text_similarity(content, fingerprint_data)
@@ -645,6 +660,9 @@ class PlatformCrawler(ABC):
     
     def get_crawler_stats(self) -> Dict[str, Any]:
         """Get crawler statistics"""
+
+
+
         return {
             'platform': self.config.platform_name,
             'status': self.status.value,

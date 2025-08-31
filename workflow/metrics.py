@@ -172,6 +172,9 @@ class WorkflowMetrics:
     
     def timer(self, metric_name: str, tags: Dict[str, str] = None) -> TimerContext:
         """Create a timer context manager."""
+
+
+
         return TimerContext(
             name=metric_name,
             tags=tags or {},

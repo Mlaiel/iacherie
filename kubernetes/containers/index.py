@@ -1,12 +1,12 @@
 """
-🐳 Container Management Index - IA-Influencer-Agent Platform
+ Container Management Index - IA-Influencer-Agent Platform
 ============================================================
 Expert Team: DevOps Engineers + Cloud Architects + Security Engineers
 Creator: Fahed Mlaiel <mlaiel@live.de>
 Company: IA-Influencer-Agent Professional Platform
 ============================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL 
 Tout vol, copie ou utilisation non autorisée de ce code source,
 de ce concept ou de cette propriété intellectuelle sans
 l'autorisation écrite explicite de Fahed Mlaiel est strictement
@@ -78,8 +78,11 @@ class ContainerPlatformManager:
     
     async def initialize(self) -> bool:
         """Initialize the complete container platform."""
+
+
+
         try:
-            self.logger.info("🚀 Initializing IA-Influencer Container Platform...")
+            self.logger.info(" Initializing IA-Influencer Container Platform...")
             
             # Create configuration directory
             self.config_path.mkdir(parents=True, exist_ok=True)
@@ -90,7 +93,7 @@ class ContainerPlatformManager:
             )
             security_initialized = await self.security_manager.initialize()
             if not security_initialized:
-                self.logger.error("❌ Failed to initialize security manager")
+                self.logger.error(" Failed to initialize security manager")
                 return False
             
             # Initialize monitoring manager
@@ -99,7 +102,7 @@ class ContainerPlatformManager:
             )
             monitoring_initialized = await self.monitoring_manager.initialize()
             if not monitoring_initialized:
-                self.logger.error("❌ Failed to initialize monitoring manager")
+                self.logger.error(" Failed to initialize monitoring manager")
                 return False
             
             # Initialize backup manager
@@ -157,20 +160,23 @@ class ContainerPlatformManager:
             # Validate platform readiness
             platform_ready = await self._validate_platform_readiness()
             if not platform_ready:
-                self.logger.error("❌ Platform readiness validation failed")
+                self.logger.error(" Platform readiness validation failed")
                 return False
             
             self.initialized = True
-            self.logger.info("✅ IA-Influencer Container Platform initialized successfully")
+            self.logger.info(" IA-Influencer Container Platform initialized successfully")
             
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize container platform: {e}")
+            self.logger.error(f" Failed to initialize container platform: {e}")
             return False
     
     async def _setup_ia_influencer_configurations(self):
         """Setup specific configurations for IA-Influencer platform."""
+
+
+
         try:
             # Setup service definitions for IA-Influencer components
             ia_services = {
@@ -293,14 +299,17 @@ class ContainerPlatformManager:
             
             self.platform_config["network_policies"] = network_policies
             
-            self.logger.info("✅ IA-Influencer specific configurations setup complete")
+            self.logger.info(" IA-Influencer specific configurations setup complete")
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to setup IA-Influencer configurations: {e}")
+            self.logger.error(f" Failed to setup IA-Influencer configurations: {e}")
             raise
     
     async def _validate_platform_readiness(self) -> bool:
         """Validate that the platform is ready for operations."""
+
+
+
         try:
             validation_results = {
                 "security_manager": False,
@@ -324,7 +333,7 @@ class ContainerPlatformManager:
                     # Simple connectivity test
                     validation_results["kubernetes_connectivity"] = True
             except Exception as e:
-                self.logger.warning(f"⚠️ Kubernetes connectivity test failed: {e}")
+                self.logger.warning(f" Kubernetes connectivity test failed: {e}")
             
             # Validate Docker connectivity
             try:
@@ -332,7 +341,7 @@ class ContainerPlatformManager:
                     # Simple connectivity test
                     validation_results["docker_connectivity"] = True
             except Exception as e:
-                self.logger.warning(f"⚠️ Docker connectivity test failed: {e}")
+                self.logger.warning(f" Docker connectivity test failed: {e}")
             
             # Validate registry connectivity
             try:
@@ -340,74 +349,80 @@ class ContainerPlatformManager:
                     # Simple connectivity test
                     validation_results["registry_connectivity"] = True
             except Exception as e:
-                self.logger.warning(f"⚠️ Registry connectivity test failed: {e}")
+                self.logger.warning(f" Registry connectivity test failed: {e}")
             
             # Check minimum requirements
             critical_components = ["security_manager", "monitoring_manager"]
             critical_ready = all(validation_results[comp] for comp in critical_components)
             
             if critical_ready:
-                self.logger.info("✅ Platform readiness validation passed")
+                self.logger.info(" Platform readiness validation passed")
                 return True
             else:
                 failed_components = [
                     comp for comp in critical_components 
                     if not validation_results[comp]
                 ]
-                self.logger.error(f"❌ Critical components failed: {failed_components}")
+                self.logger.error(f" Critical components failed: {failed_components}")
                 return False
                 
         except Exception as e:
-            self.logger.error(f"❌ Platform readiness validation error: {e}")
+            self.logger.error(f" Platform readiness validation error: {e}")
             return False
     
     async def deploy_ia_influencer_stack(self) -> bool:
         """Deploy the complete IA-Influencer application stack."""
+
+
+
         try:
             if not self.initialized:
-                self.logger.error("❌ Platform not initialized")
+                self.logger.error(" Platform not initialized")
                 return False
             
-            self.logger.info("🚀 Deploying IA-Influencer application stack...")
+            self.logger.info(" Deploying IA-Influencer application stack...")
             
             # Deploy infrastructure components first
             infrastructure_deployed = await self._deploy_infrastructure()
             if not infrastructure_deployed:
-                self.logger.error("❌ Infrastructure deployment failed")
+                self.logger.error(" Infrastructure deployment failed")
                 return False
             
             # Deploy application services
             services_deployed = await self._deploy_application_services()
             if not services_deployed:
-                self.logger.error("❌ Application services deployment failed")
+                self.logger.error(" Application services deployment failed")
                 return False
             
             # Configure service mesh
             if self.platform_config["service_mesh_enabled"]:
                 mesh_configured = await self._configure_service_mesh()
                 if not mesh_configured:
-                    self.logger.warning("⚠️ Service mesh configuration failed")
+                    self.logger.warning(" Service mesh configuration failed")
             
             # Setup monitoring and alerting
             monitoring_configured = await self._configure_monitoring()
             if not monitoring_configured:
-                self.logger.warning("⚠️ Monitoring configuration failed")
+                self.logger.warning(" Monitoring configuration failed")
             
             # Validate deployment
             deployment_valid = await self._validate_deployment()
             if not deployment_valid:
-                self.logger.error("❌ Deployment validation failed")
+                self.logger.error(" Deployment validation failed")
                 return False
             
-            self.logger.info("✅ IA-Influencer application stack deployed successfully")
+            self.logger.info(" IA-Influencer application stack deployed successfully")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Stack deployment failed: {e}")
+            self.logger.error(f" Stack deployment failed: {e}")
             return False
     
     async def _deploy_infrastructure(self) -> bool:
         """Deploy infrastructure components."""
+
+
+
         try:
             # Deploy storage components
             if self.storage_manager:
@@ -431,16 +446,19 @@ class ContainerPlatformManager:
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Infrastructure deployment failed: {e}")
+            self.logger.error(f" Infrastructure deployment failed: {e}")
             return False
     
     async def _deploy_application_services(self) -> bool:
         """Deploy IA-Influencer application services."""
+
+
+
         try:
             ia_services = self.platform_config["ia_services"]
             
             for service_name, service_config in ia_services.items():
-                self.logger.info(f"🔄 Deploying service: {service_name}")
+                self.logger.info(f" Deploying service: {service_name}")
                 
                 # Build and push image if needed
                 if self.registry_manager:
@@ -455,70 +473,85 @@ class ContainerPlatformManager:
                 # Verify deployment
                 service_ready = await self._verify_service_deployment(service_name)
                 if not service_ready:
-                    self.logger.error(f"❌ Service {service_name} deployment failed")
+                    self.logger.error(f" Service {service_name} deployment failed")
                     return False
                 
-                self.logger.info(f"✅ Service {service_name} deployed successfully")
+                self.logger.info(f" Service {service_name} deployed successfully")
             
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Application services deployment failed: {e}")
+            self.logger.error(f" Application services deployment failed: {e}")
             return False
     
     async def _configure_service_mesh(self) -> bool:
         """Configure service mesh for IA-Influencer services."""
+
+
+
         try:
             # Configure Istio/Linkerd service mesh
             # Setup traffic management, security policies, observability
-            self.logger.info("✅ Service mesh configured")
+            self.logger.info(" Service mesh configured")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Service mesh configuration failed: {e}")
+            self.logger.error(f" Service mesh configuration failed: {e}")
             return False
     
     async def _configure_monitoring(self) -> bool:
         """Configure monitoring and alerting."""
+
+
+
         try:
             if self.monitoring_manager:
                 # Configure dashboards, alerts, SLOs
                 pass
             
-            self.logger.info("✅ Monitoring configured")
+            self.logger.info(" Monitoring configured")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Monitoring configuration failed: {e}")
+            self.logger.error(f" Monitoring configuration failed: {e}")
             return False
     
     async def _verify_service_deployment(self, service_name: str) -> bool:
         """Verify that a service is properly deployed and healthy."""
+
+
+
         try:
             # Check pod status, readiness probes, health endpoints
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Service verification failed for {service_name}: {e}")
+            self.logger.error(f" Service verification failed for {service_name}: {e}")
             return False
     
     async def _validate_deployment(self) -> bool:
         """Validate the complete deployment."""
+
+
+
         try:
             # Run end-to-end tests
             # Verify service connectivity
             # Check health endpoints
             # Validate metrics collection
             
-            self.logger.info("✅ Deployment validation passed")
+            self.logger.info(" Deployment validation passed")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Deployment validation failed: {e}")
+            self.logger.error(f" Deployment validation failed: {e}")
             return False
     
     async def get_platform_status(self) -> Dict[str, Any]:
         """Get comprehensive platform status."""
+
+
+
         try:
             status = {
                 "platform_initialized": self.initialized,
@@ -554,11 +587,14 @@ class ContainerPlatformManager:
             return status
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to get platform status: {e}")
+            self.logger.error(f" Failed to get platform status: {e}")
             return {"error": str(e)}
     
     async def _get_service_status(self, service_name: str) -> Dict[str, Any]:
         """Get status of a specific service."""
+
+
+
         try:
             # Check pod status, health endpoints, metrics
             return {
@@ -569,11 +605,14 @@ class ContainerPlatformManager:
             }
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to get service status for {service_name}: {e}")
+            self.logger.error(f" Failed to get service status for {service_name}: {e}")
             return {"status": "unknown", "error": str(e)}
     
     async def scale_service(self, service_name: str, replicas: int) -> bool:
         """Scale a specific service."""
+
+
+
         try:
             if not self.initialized:
                 return False
@@ -582,15 +621,18 @@ class ContainerPlatformManager:
                 # Scale Kubernetes deployment
                 pass
             
-            self.logger.info(f"✅ Service {service_name} scaled to {replicas} replicas")
+            self.logger.info(f" Service {service_name} scaled to {replicas} replicas")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to scale service {service_name}: {e}")
+            self.logger.error(f" Failed to scale service {service_name}: {e}")
             return False
     
     async def update_service(self, service_name: str, new_image: str) -> bool:
         """Update a service with a new image."""
+
+
+
         try:
             if not self.initialized:
                 return False
@@ -599,7 +641,7 @@ class ContainerPlatformManager:
             if self.security_manager:
                 scan_result = await self.security_manager.scan_image(new_image)
                 if scan_result.critical_count > 0:
-                    self.logger.error(f"❌ Image {new_image} has critical vulnerabilities")
+                    self.logger.error(f" Image {new_image} has critical vulnerabilities")
                     return False
             
             # Perform rolling update
@@ -607,15 +649,18 @@ class ContainerPlatformManager:
                 # Update Kubernetes deployment
                 pass
             
-            self.logger.info(f"✅ Service {service_name} updated to {new_image}")
+            self.logger.info(f" Service {service_name} updated to {new_image}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to update service {service_name}: {e}")
+            self.logger.error(f" Failed to update service {service_name}: {e}")
             return False
     
     async def backup_platform(self) -> bool:
         """Backup the entire platform state."""
+
+
+
         try:
             if not self.backup_manager:
                 return False
@@ -643,20 +688,23 @@ class ContainerPlatformManager:
             all_successful = all(job.status == "completed" for job in backup_jobs)
             
             if all_successful:
-                self.logger.info("✅ Platform backup completed successfully")
+                self.logger.info(" Platform backup completed successfully")
             else:
-                self.logger.error("❌ Some platform backups failed")
+                self.logger.error(" Some platform backups failed")
             
             return all_successful
             
         except Exception as e:
-            self.logger.error(f"❌ Platform backup failed: {e}")
+            self.logger.error(f" Platform backup failed: {e}")
             return False
     
     async def shutdown(self) -> bool:
         """Gracefully shutdown the platform."""
+
+
+
         try:
-            self.logger.info("🔄 Initiating platform shutdown...")
+            self.logger.info(" Initiating platform shutdown...")
             
             # Stop monitoring loops
             if self.monitoring_manager:
@@ -666,7 +714,7 @@ class ContainerPlatformManager:
             # Backup critical data
             backup_success = await self.backup_platform()
             if not backup_success:
-                self.logger.warning("⚠️ Platform backup during shutdown failed")
+                self.logger.warning(" Platform backup during shutdown failed")
             
             # Scale down services
             if "ia_services" in self.platform_config:
@@ -674,11 +722,11 @@ class ContainerPlatformManager:
                     await self.scale_service(service_name, 0)
             
             self.initialized = False
-            self.logger.info("✅ Platform shutdown completed")
+            self.logger.info(" Platform shutdown completed")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Platform shutdown failed: {e}")
+            self.logger.error(f" Platform shutdown failed: {e}")
             return False
 
 
@@ -699,21 +747,27 @@ async def get_platform_manager() -> ContainerPlatformManager:
 
 async def deploy_ia_influencer_platform() -> bool:
     """Deploy the complete IA-Influencer platform."""
+
+
+
     try:
         platform = await get_platform_manager()
         return await platform.deploy_ia_influencer_stack()
     except Exception as e:
-        logger.error(f"❌ Platform deployment failed: {e}")
+        logger.error(f" Platform deployment failed: {e}")
         return False
 
 
 async def get_platform_health() -> Dict[str, Any]:
     """Get platform health status."""
+
+
+
     try:
         platform = await get_platform_manager()
         return await platform.get_platform_status()
     except Exception as e:
-        logger.error(f"❌ Failed to get platform health: {e}")
+        logger.error(f" Failed to get platform health: {e}")
         return {"error": str(e)}
 
 
@@ -731,9 +785,9 @@ if __name__ == "__main__":
         if command == "deploy":
             success = await deploy_ia_influencer_platform()
             if success:
-                print("✅ IA-Influencer platform deployed successfully")
+                print(" IA-Influencer platform deployed successfully")
             else:
-                print("❌ Platform deployment failed")
+                print(" Platform deployment failed")
                 sys.exit(1)
         
         elif command == "status":
@@ -744,9 +798,9 @@ if __name__ == "__main__":
             platform = await get_platform_manager()
             success = await platform.shutdown()
             if success:
-                print("✅ Platform shutdown completed")
+                print(" Platform shutdown completed")
             else:
-                print("❌ Platform shutdown failed")
+                print(" Platform shutdown failed")
                 sys.exit(1)
         
         else:

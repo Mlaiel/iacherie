@@ -180,6 +180,9 @@ class BasePaymentGateway(ABC):
     
     async def health_check(self) -> bool:
         """Check gateway health"""
+
+
+
         try:
             # Implement gateway-specific health check
             return await self._perform_health_check()
@@ -288,6 +291,9 @@ class StripeGateway(BasePaymentGateway):
     
     async def process_refund(self, transaction_id: str, amount: Decimal) -> PaymentResponse:
         """Process refund through Stripe"""
+
+
+
         try:
             refund = await self.stripe.Refund.create_async(
                 payment_intent=transaction_id,
@@ -312,6 +318,9 @@ class StripeGateway(BasePaymentGateway):
     
     async def get_transaction_status(self, transaction_id: str) -> PaymentStatus:
         """Get transaction status from Stripe"""
+
+
+
         try:
             payment_intent = await self.stripe.PaymentIntent.retrieve_async(transaction_id)
             return self._map_stripe_status(payment_intent['status'])
@@ -335,6 +344,9 @@ class StripeGateway(BasePaymentGateway):
     
     async def _perform_health_check(self) -> bool:
         """Stripe-specific health check"""
+
+
+
         try:
             # Test API connectivity
             await self.stripe.Account.retrieve_async()
@@ -344,6 +356,9 @@ class StripeGateway(BasePaymentGateway):
     
     async def _create_payment_intent(self, request: PaymentRequest) -> Dict[str, Any]:
         """Create Stripe payment intent"""
+
+
+
         return await self.stripe.PaymentIntent.create_async(
             amount=int(request.amount * 100),  # Convert to cents
             currency=request.currency.value.lower(),
@@ -357,6 +372,9 @@ class StripeGateway(BasePaymentGateway):
         payment_method: PaymentMethodType
     ) -> Dict[str, Any]:
         """Confirm Stripe payment intent"""
+
+
+
         return await self.stripe.PaymentIntent.confirm_async(
             intent_id,
             payment_method=self._get_stripe_payment_method(payment_method)
@@ -456,6 +474,9 @@ class PayPalGateway(BasePaymentGateway):
     
     async def process_refund(self, transaction_id: str, amount: Decimal) -> PaymentResponse:
         """Process refund through PayPal"""
+
+
+
         try:
             access_token = await self._get_access_token()
             
@@ -497,6 +518,9 @@ class PayPalGateway(BasePaymentGateway):
     
     async def get_transaction_status(self, transaction_id: str) -> PaymentStatus:
         """Get transaction status from PayPal"""
+
+
+
         try:
             access_token = await self._get_access_token()
             
@@ -530,6 +554,9 @@ class PayPalGateway(BasePaymentGateway):
     
     async def _perform_health_check(self) -> bool:
         """PayPal-specific health check"""
+
+
+
         try:
             access_token = await self._get_access_token()
             return access_token is not None
@@ -708,6 +735,9 @@ class PaymentGatewayManager:
         gateways: List[BasePaymentGateway]
     ) -> BasePaymentGateway:
         """Select gateway with highest success rate"""
+
+
+
         return max(gateways, key=lambda g: g.metrics.success_rate)
     
     async def _select_fastest_gateway(
@@ -715,6 +745,9 @@ class PaymentGatewayManager:
         gateways: List[BasePaymentGateway]
     ) -> BasePaymentGateway:
         """Select gateway with fastest processing"""
+
+
+
         return min(gateways, key=lambda g: g.metrics.average_processing_time)
     
     async def _select_balanced_gateway(

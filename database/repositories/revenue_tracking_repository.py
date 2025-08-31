@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -87,6 +87,9 @@ class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
         Returns:
             Created RevenueTracking instance
         """
+
+
+
         try:
             # Validate revenue amount
             if revenue_amount <= 0:
@@ -157,6 +160,9 @@ class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
         Returns:
             List of RevenueTracking instances
         """
+
+
+
         try:
             query = self.db_session.query(RevenueTracking).filter(
                 RevenueTracking.user_id == user_id
@@ -212,6 +218,9 @@ class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
         Returns:
             Dictionary containing revenue calculations
         """
+
+
+
         try:
             query = self.db_session.query(RevenueTracking).filter(
                 and_(
@@ -302,6 +311,9 @@ class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
         Returns:
             List of monthly revenue data
         """
+
+
+
         try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=months_back * 30)
@@ -377,6 +389,9 @@ class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
         Returns:
             List of platform performance data
         """
+
+
+
         try:
             query = self.db_session.query(
                 RevenueTracking.platform,
@@ -442,6 +457,9 @@ class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
         Returns:
             Updated RevenueTracking instance
         """
+
+
+
         try:
             revenue_entry = self.get_by_id(revenue_id)
             if not revenue_entry:
@@ -507,6 +525,9 @@ class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
         Returns:
             List of pending RevenueTracking instances
         """
+
+
+
         try:
             query = self.db_session.query(RevenueTracking).filter(
                 RevenueTracking.status == RevenueStatus.PENDING
@@ -554,6 +575,9 @@ class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
         Returns:
             Comprehensive revenue report
         """
+
+
+
         try:
             # Get revenue entries for period
             revenue_entries = self.get_user_revenue(
@@ -664,6 +688,9 @@ class RevenueTrackingRepository(BaseRepository[RevenueTracking]):
         Returns:
             Forecasting data and trends
         """
+
+
+
         try:
             # Get monthly trends
             monthly_trends = self.get_monthly_revenue_trends(

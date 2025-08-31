@@ -15,6 +15,9 @@ from typing import Dict, List, Any, Tuple
 
 def run_command(command: List[str], timeout: int = 300) -> Tuple[int, str, str]:
     """Run a command and return exit code, stdout, stderr"""
+
+
+
     try:
         result = subprocess.run(
             command,
@@ -65,7 +68,7 @@ def run_unit_tests() -> Dict[str, Any]:
 
 def run_integration_tests() -> Dict[str, Any]:
     """Run integration tests and return results"""
-    print("🔗 Running Integration Tests...")
+    print(" Running Integration Tests...")
     
     command = [
         "python", "-m", "pytest",
@@ -85,7 +88,7 @@ def run_integration_tests() -> Dict[str, Any]:
 
 def run_performance_tests() -> Dict[str, Any]:
     """Run performance tests and return results"""
-    print("⚡ Running Performance Tests...")
+    print(" Running Performance Tests...")
     
     command = [
         "python", "-m", "pytest",
@@ -106,7 +109,7 @@ def run_performance_tests() -> Dict[str, Any]:
 
 def generate_api_documentation() -> Dict[str, Any]:
     """Generate API documentation and return results"""
-    print("📚 Generating API Documentation...")
+    print(" Generating API Documentation...")
     
     command = ["python", "docs/swagger_documentation_generator.py"]
     exit_code, stdout, stderr = run_command(command)
@@ -127,7 +130,7 @@ def generate_api_documentation() -> Dict[str, Any]:
 
 def run_security_audit() -> Dict[str, Any]:
     """Run security audit and return results"""
-    print("🔒 Running Security Audit...")
+    print(" Running Security Audit...")
     
     command = ["python", "security/security_audit_framework.py"]
     exit_code, stdout, stderr = run_command(command)
@@ -149,7 +152,7 @@ def run_security_audit() -> Dict[str, Any]:
 
 def generate_test_coverage_report() -> Dict[str, Any]:
     """Generate test coverage report"""
-    print("📊 Generating Test Coverage Report...")
+    print(" Generating Test Coverage Report...")
     
     command = [
         "python", "-m", "pytest",
@@ -176,7 +179,7 @@ def generate_test_coverage_report() -> Dict[str, Any]:
 
 def validate_critical_modules() -> Dict[str, Any]:
     """Validate that critical modules are properly tested"""
-    print("✅ Validating Critical Module Coverage...")
+    print(" Validating Critical Module Coverage...")
     
     critical_modules = [
         "business_logic_core.py",
@@ -218,11 +221,11 @@ Generated: {timestamp}
 
 This report covers the implementation of comprehensive testing and documentation for the Ainflue AI Platform according to the French requirements:
 
-1. ✅ **Tests unitaires pour tous les modules critiques** (Unit tests for all critical modules)
-2. ✅ **Tests d'intégration API endpoints** (Integration tests for API endpoints)  
-3. ✅ **Tests de performance charge et stress** (Performance and stress testing)
-4. ✅ **Documentation API complète Swagger** (Complete Swagger API documentation)
-5. ✅ **Security audit complet infrastructure** (Complete security audit for infrastructure)
+1.  **Tests unitaires pour tous les modules critiques** (Unit tests for all critical modules)
+2.  **Tests d'intégration API endpoints** (Integration tests for API endpoints)  
+3.  **Tests de performance charge et stress** (Performance and stress testing)
+4.  **Documentation API complète Swagger** (Complete Swagger API documentation)
+5.  **Security audit complet infrastructure** (Complete security audit for infrastructure)
 
 ## Test Results Overview
 
@@ -238,7 +241,7 @@ This report covers the implementation of comprehensive testing and documentation
     
     # Individual test results
     for result in results:
-        status = "✅ PASSED" if result["passed"] else "❌ FAILED"
+        status = " PASSED" if result["passed"] else " FAILED"
         report += f"### {result['name']} - {status}\n\n"
         
         if result["exit_code"] != 0:
@@ -261,7 +264,7 @@ This report covers the implementation of comprehensive testing and documentation
         if "module_status" in result:
             report += "**Critical Modules Status**:\n"
             for module, status in result["module_status"].items():
-                status_icon = "✅" if status == "exists" else "❌"
+                status_icon = "" if status == "exists" else ""
                 report += f"- {module}: {status_icon} {status}\n"
             report += "\n"
         
@@ -279,31 +282,31 @@ This report covers the implementation of comprehensive testing and documentation
     report += """
 ## Implementation Summary
 
-### ✅ Unit Tests for Critical Modules
+###  Unit Tests for Critical Modules
 - **File**: `tests/unit/test_business_logic_core_comprehensive.py`
 - **Coverage**: Business logic core, creator types, workflow stages, content processing
 - **Test Cases**: 22 comprehensive test cases covering all critical functionality
 - **Features**: Mock implementations, async testing, performance validation
 
-### ✅ API Integration Tests  
+###  API Integration Tests  
 - **File**: `tests/integration/test_api_endpoints_comprehensive.py`
 - **Coverage**: All major API endpoints, error handling, data validation
 - **Test Cases**: 23 integration test scenarios
 - **Features**: Mock FastAPI implementation, response validation, workflow testing
 
-### ✅ Performance and Stress Testing
+###  Performance and Stress Testing
 - **File**: `tests/performance/test_load_stress_comprehensive.py`  
 - **Coverage**: Load testing, stress testing, scalability validation
 - **Test Cases**: 14 performance test scenarios
 - **Features**: Concurrent load simulation, latency measurement, throughput analysis
 
-### ✅ Complete Swagger API Documentation
+###  Complete Swagger API Documentation
 - **File**: `docs/swagger_documentation_generator.py`
 - **Output**: `docs/swagger.json` and `docs/swagger.yaml`
 - **Coverage**: 12 comprehensive API endpoints with full schemas
 - **Features**: OpenAPI 3.0.3 specification, security schemes, response examples
 
-### ✅ Security Audit Framework
+###  Security Audit Framework
 - **File**: `security/security_audit_framework.py`
 - **Coverage**: Authentication, data protection, network security, compliance
 - **Test Cases**: 21 security audit findings across 10 categories
@@ -346,18 +349,21 @@ This report covers the implementation of comprehensive testing and documentation
 
 ## Compliance Status
 
-✅ **Fully Implemented**: All requirements from the problem statement have been implemented
-✅ **Production Ready**: Tests can be integrated into development workflow
-✅ **Maintainable**: Modular design allows for easy extension and maintenance
-✅ **Documented**: Comprehensive documentation and examples provided
+ **Fully Implemented**: All requirements from the problem statement have been implemented
+ **Production Ready**: Tests can be integrated into development workflow
+ **Maintainable**: Modular design allows for easy extension and maintenance
+ **Documented**: Comprehensive documentation and examples provided
 
 """
+
+
+
     
     return report
 
 def main():
     """Main function to run comprehensive test suite"""
-    print("🚀 Starting Comprehensive Test Suite for Ainflue Platform")
+    print(" Starting Comprehensive Test Suite for Ainflue Platform")
     print("=" * 70)
     
     # Run all test components
@@ -394,7 +400,7 @@ def main():
             f.write(report)
         
         print("\n" + "=" * 70)
-        print("📊 COMPREHENSIVE TEST SUITE COMPLETED")
+        print(" COMPREHENSIVE TEST SUITE COMPLETED")
         print("=" * 70)
         
         # Print summary
@@ -406,21 +412,21 @@ def main():
         print(f"Failed: {total_suites - passed_suites}")
         print(f"Success Rate: {(passed_suites/total_suites)*100:.1f}%")
         
-        print(f"\n📋 Detailed report saved to: {report_filename}")
+        print(f"\n Detailed report saved to: {report_filename}")
         
         # Show any critical failures
         failures = [r for r in results if not r["passed"]]
         if failures:
-            print("\n⚠️  FAILURES DETECTED:")
+            print("\n  FAILURES DETECTED:")
             for failure in failures:
                 print(f"  - {failure['name']}: Exit code {failure['exit_code']}")
         else:
-            print("\n🎉 ALL TEST SUITES PASSED!")
+            print("\n ALL TEST SUITES PASSED!")
         
         return 0 if not failures else 1
         
     except Exception as e:
-        print(f"\n❌ Test suite execution failed: {str(e)}")
+        print(f"\n Test suite execution failed: {str(e)}")
         return 1
 
 if __name__ == "__main__":

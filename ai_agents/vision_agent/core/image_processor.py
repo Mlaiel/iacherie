@@ -9,7 +9,7 @@ for content creators and digital influencers.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -242,6 +242,9 @@ class ImageProcessor(BaseAgent):
 
     async def initialize(self) -> bool:
         """Initialize image processing components with advanced ML models"""
+
+
+
         try:
             logger.info("Initializing Enterprise Image Processor...")
             
@@ -280,6 +283,9 @@ class ImageProcessor(BaseAgent):
     
     def _init_enhancement_models(self):
         """Initialize AI models for image enhancement"""
+
+
+
         try:
             # Super-resolution model (ESRGAN)
             self.sr_model = None  # Would load actual ESRGAN model
@@ -300,6 +306,9 @@ class ImageProcessor(BaseAgent):
     
     def _init_face_detection_models(self):
         """Initialize face detection and landmark models"""
+
+
+
         try:
             # Initialize dlib face detector
             self.face_detector = dlib.get_frontal_face_detector()
@@ -346,6 +355,9 @@ class ImageProcessor(BaseAgent):
     
     async def _warm_up_models(self):
         """Warm up models with sample data for optimal performance"""
+
+
+
         try:
             # Create dummy image for warm-up
             dummy_image = np.random.randint(0, 255, (224, 224, 3), dtype=np.uint8)
@@ -507,6 +519,9 @@ class ImageProcessor(BaseAgent):
             
             async def _load_image(self, image_input: Union[str, bytes, np.ndarray, Image.Image]) -> Tuple[Optional[np.ndarray], str]:
         """Load image from various input formats with comprehensive validation"""
+
+
+
         try:
             original_format = "unknown"
             
@@ -689,6 +704,9 @@ class ImageProcessor(BaseAgent):
 
     async def _denoise_image(self, image: np.ndarray) -> np.ndarray:
         """Basic image denoising"""
+
+
+
         return cv2.fastNlMeansDenoisingColored(
             image,
             None,
@@ -1035,6 +1053,9 @@ class ImageProcessor(BaseAgent):
 
     async def _extract_image_metadata(self, image_path: str) -> Dict[str, Any]:
         """Extract comprehensive image metadata"""
+
+
+
         try:
             with Image.open(image_path) as img:
                 metadata = {
@@ -1062,6 +1083,9 @@ class ImageProcessor(BaseAgent):
 
     async def _assess_image_quality(self, image: np.ndarray) -> Dict[str, Any]:
         """Comprehensive image quality assessment"""
+
+
+
         try:
             # Convert to grayscale for some calculations
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -1131,6 +1155,9 @@ class ImageProcessor(BaseAgent):
         Returns:
             ImageMetrics object with comprehensive quality assessment
         """
+
+
+
         try:
             # Basic image information
             height, width = image.shape[:2]
@@ -1462,6 +1489,9 @@ class ImageProcessor(BaseAgent):
 
     def _calculate_dynamic_range(self, gray_image: np.ndarray) -> float:
         """Calculate dynamic range of the image"""
+
+
+
         return float(np.max(gray_image) - np.min(gray_image))
 
     def _analyze_histogram_uniformity(self, gray_image: np.ndarray) -> float:
@@ -1525,6 +1555,9 @@ class ImageProcessor(BaseAgent):
         Returns:
             Converted image as bytes
         """
+
+
+
         try:
             # Convert from BGR to RGB for PIL
             if len(image.shape) == 3:
@@ -1602,6 +1635,9 @@ class ImageProcessor(BaseAgent):
         Returns:
             Unique fingerprint string
         """
+
+
+
         try:
             # Convert to PIL Image for hashing
             if len(image.shape) == 3:
@@ -1675,6 +1711,9 @@ class ImageProcessor(BaseAgent):
 
     async def cleanup(self):
         """Cleanup resources and temporary files"""
+
+
+
         try:
             # Close thread and process pools
             if hasattr(self, 'thread_pool'):
@@ -1703,6 +1742,9 @@ class ImageProcessor(BaseAgent):
 
     async def get_statistics(self) -> Dict[str, Any]:
         """Get processing statistics"""
+
+
+
         return {
             'status': self.status.value,
             'version': self.version,
@@ -1783,6 +1825,9 @@ class ImageProcessor(BaseAgent):
         quality_target: str
     ) -> Dict[str, Any]:
         """Apply specific image operation"""
+
+
+
         try:
             operation_start = datetime.now()
             
@@ -1959,6 +2004,9 @@ class ImageProcessor(BaseAgent):
 
     async def _apply_watermark(self, image: np.ndarray) -> np.ndarray:
         """Apply watermark for content protection"""
+
+
+
         return await self.watermark_manager.apply_watermark(image)
 
     async def _generate_image_hash(self, image: np.ndarray) -> str:
@@ -2023,6 +2071,9 @@ class ImageProcessor(BaseAgent):
         quality: int = 95
     ) -> bytes:
         """Convert image to different format"""
+
+
+
         try:
             # Convert to PIL Image
             pil_image = Image.fromarray(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
@@ -2046,10 +2097,16 @@ class ImageProcessor(BaseAgent):
 
     async def assess_quality(self, image: np.ndarray) -> Dict[str, Any]:
         """Public method for image quality assessment"""
+
+
+
         return await self._assess_image_quality(image)
 
     async def cleanup(self) -> None:
         """Cleanup resources"""
+
+
+
         try:
             await self.performance_monitor.close()
             await self.watermark_manager.cleanup()
@@ -2059,6 +2116,9 @@ class ImageProcessor(BaseAgent):
 
     def get_supported_operations(self) -> List[str]:
         """Get list of supported image operations"""
+
+
+
         return [
             'enhance', 'denoise', 'sharpen', 'brightness', 
             'contrast', 'color_correct', 'resize', 'watermark'

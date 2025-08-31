@@ -8,7 +8,7 @@ components and enterprise-ready legal protection capabilities.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission is strictly prohibited and will result in immediate legal action.
@@ -80,6 +80,9 @@ class DMCAAgentIndex:
         Returns:
             Dict containing complete processing results
         """
+
+
+
         try:
             self.logger.info(f"Processing copyright violation for content: {content_info.get('content_id')}")
             
@@ -136,6 +139,9 @@ class DMCAAgentIndex:
         Returns:
             Dict containing verification results
         """
+
+
+
         try:
             # Convert claim info to CopyrightClaim object
             from .copyright_verification import CopyrightClaim, CopyrightType
@@ -199,6 +205,9 @@ class DMCAAgentIndex:
         Returns:
             Dict containing compliance results
         """
+
+
+
         try:
             # Convert framework string to enum
             legal_framework = LegalFramework(framework)
@@ -244,6 +253,9 @@ class DMCAAgentIndex:
         Returns:
             Dict containing generated document information
         """
+
+
+
         try:
             from .legal_document_generator import DocumentRequest, DocumentType, DocumentLanguage, DocumentFormat, UrgencyLevel
             
@@ -301,6 +313,9 @@ class DMCAAgentIndex:
         Returns:
             Dict containing takedown results
         """
+
+
+
         try:
             from .takedown_automation import EscalationLevel
             
@@ -347,6 +362,9 @@ class DMCAAgentIndex:
         Returns:
             Dict containing case status information
         """
+
+
+
         try:
             status_info = await self.orchestrator.get_case_status(case_id)
             
@@ -379,6 +397,9 @@ class DMCAAgentIndex:
         Returns:
             Dict containing system performance and usage statistics
         """
+
+
+
         try:
             # Get statistics from all components
             orchestrator_stats = await self.orchestrator.get_processing_statistics()
@@ -411,6 +432,9 @@ class DMCAAgentIndex:
         Returns:
             Dict containing health status information
         """
+
+
+
         try:
             health_status = {
                 "system_healthy": True,
@@ -479,6 +503,9 @@ class DMCAAgentIndex:
         Returns:
             Dict containing batch processing results
         """
+
+
+
         try:
             options = options or {}
             auto_execute = options.get("auto_execute", True)

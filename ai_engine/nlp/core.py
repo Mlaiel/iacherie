@@ -7,7 +7,7 @@ for content creators, influencers, and multi-format content processing.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
 
@@ -82,6 +82,9 @@ class AdvancedNLPEngine:
         
     async def initialize(self) -> bool:
         """Initialize all NLP models and processors"""
+
+
+
         try:
             logger.info("Initializing Advanced NLP Engine...")
             
@@ -186,6 +189,9 @@ class AdvancedNLPEngine:
     
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default configuration"""
+
+
+
         return {
             'max_content_length': 10000,
             'supported_languages': ['en', 'de', 'fr', 'es', 'it'],
@@ -309,6 +315,9 @@ class AdvancedNLPEngine:
     
     async def _semantic_analysis(self, content: str) -> Dict[str, Any]:
         """Perform semantic analysis"""
+
+
+
         try:
             # Generate embeddings
             embeddings = self.pipelines['feature_extraction'](content)
@@ -382,6 +391,9 @@ class AdvancedNLPEngine:
     
     async def _analyze_brand_voice(self, content: str) -> Dict[str, Any]:
         """Analyze brand voice characteristics"""
+
+
+
         try:
             # Sentiment analysis
             sentiment_result = self.pipelines['sentiment'](content)
@@ -577,6 +589,9 @@ class AdvancedNLPEngine:
     
     def _get_model_versions(self) -> Dict[str, str]:
         """Get versions of loaded models"""
+
+
+
         return {
             'spacy_version': spacy.__version__,
             'transformers_version': transformers.__version__,

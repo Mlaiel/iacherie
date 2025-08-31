@@ -4,7 +4,7 @@ Module: backend/core/events/event_bus.py
 Architecture: Core Event Bus for Real-time Event Distribution
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT STRICT 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 
 Description:
@@ -68,6 +68,9 @@ class Event:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit l'événement en dictionnaire"""
+
+
+
         return {
             "id": self.id,
             "type": self.type,
@@ -267,6 +270,9 @@ class EventBus:
         Returns:
             True si publié avec succès
         """
+
+
+
         try:
             # Validation de base
             if not event.type:
@@ -302,6 +308,9 @@ class EventBus:
     
     async def _handle_event(self, event: Event):
         """Traite un événement individuel"""
+
+
+
         try:
             event.status = EventStatus.PROCESSING
             matching_subscriptions = self._get_matching_subscriptions(event)
@@ -362,6 +371,9 @@ class EventBus:
     
     async def _execute_handler(self, event: Event, subscription: EventSubscription):
         """Exécute un handler d'événement"""
+
+
+
         try:
             # Exécution dans l'executor si handler synchrone
             if asyncio.iscoroutinefunction(subscription.handler):
@@ -377,6 +389,9 @@ class EventBus:
     
     def get_stats(self) -> Dict[str, Any]:
         """Retourne les statistiques du bus"""
+
+
+
         return {
             "name": self.name,
             "stats": self._stats.copy(),

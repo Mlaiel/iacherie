@@ -105,6 +105,9 @@ class TextAnalyzer:
     
     def _initialize_models(self):
         """Initialize NLP models"""
+
+
+
         try:
             # Initialize spaCy model for advanced features
             spacy_models = ["en_core_web_sm", "en_core_web_md"]
@@ -310,6 +313,9 @@ class TextAnalyzer:
     
     async def _extract_spacy_features(self, text: str, features: TextFeatures):
         """Extract features using spaCy"""
+
+
+
         try:
             nlp = self._nlp_models["spacy_en"]
             doc = nlp(text)
@@ -331,6 +337,9 @@ class TextAnalyzer:
     
     async def _extract_keywords(self, text: str, max_keywords: int = 10) -> List[str]:
         """Extract keywords using TF-IDF approach"""
+
+
+
         try:
             from sklearn.feature_extraction.text import TfidfVectorizer
             from nltk.corpus import stopwords
@@ -469,6 +478,9 @@ class TextAnalyzer:
     
     def health_check(self) -> Dict[str, Any]:
         """Perform health check"""
+
+
+
         return {
             "status": "healthy",
             "models_loaded": len(self._nlp_models),

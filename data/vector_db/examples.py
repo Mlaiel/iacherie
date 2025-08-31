@@ -8,7 +8,7 @@ for content fingerprinting, similarity search, duplicate detection, and collabor
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️ COPYRIGHT WARNING ⚠️
+ COPYRIGHT WARNING 
 This code is protected by copyright law. Any unauthorized reproduction, distribution, 
 modification, or use of this code without explicit written permission from 
 Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in legal action.
@@ -224,19 +224,19 @@ class VectorDatabaseExamples:
         
         print("1.2 Initializing system with all content types...")
         success = await self.db_manager.initialize()
-        print(f"✓ System initialization: {'SUCCESS' if success else 'FAILED'}")
+        print(f" System initialization: {'SUCCESS' if success else 'FAILED'}")
         
         print("
 1.3 Getting system status...")
         status = await self.db_manager.get_system_status()
-        print(f"✓ System status: {status['status']}")
-        print(f"✓ Supported content types: {status['supported_content_types']}")
+        print(f" System status: {status['status']}")
+        print(f" Supported content types: {status['supported_content_types']}")
         
         print("
 1.4 Getting embedding dimensions...")
         dimensions = self.db_manager.get_embedding_dimensions()
         for content_type, dim in dimensions.items():
-            print(f"✓ {content_type}: {dim} dimensions")
+            print(f" {content_type}: {dim} dimensions")
     
     async def example_content_indexing(self):
         """Example 2: Content indexing for multiple content types."""
@@ -254,7 +254,7 @@ class VectorDatabaseExamples:
                 sample['id'],
                 sample['metadata']
             )
-            print(f"✓ Added text '{sample['id']}': {'SUCCESS' if success else 'FAILED'}")
+            print(f" Added text '{sample['id']}': {'SUCCESS' if success else 'FAILED'}")
         
         # 2.2 Audio Content Indexing (simulated)
         print("
@@ -277,7 +277,7 @@ class VectorDatabaseExamples:
             'audio_001',
             audio_metadata
         )
-        print(f"✓ Added audio 'audio_001': {'SUCCESS' if success else 'FAILED'}")
+        print(f" Added audio 'audio_001': {'SUCCESS' if success else 'FAILED'}")
         
         # 2.3 Image Content Indexing (simulated)
         print("
@@ -300,7 +300,7 @@ class VectorDatabaseExamples:
             'image_001',
             image_metadata
         )
-        print(f"✓ Added image 'image_001': {'SUCCESS' if success else 'FAILED'}")
+        print(f" Added image 'image_001': {'SUCCESS' if success else 'FAILED'}")
         
         # 2.4 Get indexing statistics
         print("
@@ -308,7 +308,7 @@ class VectorDatabaseExamples:
         stats = await self.db_manager.get_index_statistics()
         
         for content_type, metrics in stats.items():
-            print(f"✓ {content_type} index: {metrics.vector_count} vectors, "
+            print(f" {content_type} index: {metrics.vector_count} vectors, "
                   f"health score: {metrics.health_score:.2f}")
     
     async def example_similarity_search(self):
@@ -329,7 +329,7 @@ class VectorDatabaseExamples:
             threshold=0.3
         )
         
-        print(f"✓ Found {len(results)} similar texts for query: '{query_text[:50]}...'")
+        print(f" Found {len(results)} similar texts for query: '{query_text[:50]}...'")
         for i, result in enumerate(results[:3], 1):
             print(f"  {i}. ID: {result.content_id}, "
                   f"Similarity: {result.similarity_score:.3f}")
@@ -343,7 +343,7 @@ class VectorDatabaseExamples:
             metadata_filters={'category': 'technology'}
         )
         
-        print(f"✓ Found {len(filtered_results)} results with category filter")
+        print(f" Found {len(filtered_results)} results with category filter")
         
         # 3.3 Audio similarity search (simulated)
         print("
@@ -356,7 +356,7 @@ class VectorDatabaseExamples:
             threshold=0.7
         )
         
-        print(f"✓ Found {len(audio_results)} similar audio tracks")
+        print(f" Found {len(audio_results)} similar audio tracks")
         
         # 3.4 Image similarity search (simulated)
         print("
@@ -369,7 +369,7 @@ class VectorDatabaseExamples:
             threshold=0.6
         )
         
-        print(f"✓ Found {len(image_results)} similar images")
+        print(f" Found {len(image_results)} similar images")
     
     async def example_duplicate_detection(self):
         """Example 4: Duplicate content detection and analysis."""
@@ -390,7 +390,7 @@ class VectorDatabaseExamples:
             metadata={'test_type': 'duplicate_detection'}
         )
         
-        print(f"✓ Found {len(duplicates)} potential text duplicates")
+        print(f" Found {len(duplicates)} potential text duplicates")
         
         for result, analysis in duplicates:
             print(f"  - Content ID: {result.content_id}")
@@ -412,7 +412,7 @@ class VectorDatabaseExamples:
             metadata={'test_type': 'audio_duplicate'}
         )
         
-        print(f"✓ Found {len(audio_duplicates)} potential audio duplicates")
+        print(f" Found {len(audio_duplicates)} potential audio duplicates")
         
         # 4.3 Image duplicate detection (simulated) 
         print("
@@ -426,7 +426,7 @@ class VectorDatabaseExamples:
             metadata={'test_type': 'image_duplicate'}
         )
         
-        print(f"✓ Found {len(image_duplicates)} potential image duplicates")
+        print(f" Found {len(image_duplicates)} potential image duplicates")
     
     async def example_collaboration_matching(self):
         """Example 5: Collaboration opportunity matching."""
@@ -448,7 +448,7 @@ class VectorDatabaseExamples:
                 profile['creator_id'],
                 profile
             )
-            print(f"✓ Added creator profile '{profile['creator_id']}': {'SUCCESS' if success else 'FAILED'}")
+            print(f" Added creator profile '{profile['creator_id']}': {'SUCCESS' if success else 'FAILED'}")
         
         # 5.2 Find collaboration opportunities
         print("
@@ -464,7 +464,7 @@ class VectorDatabaseExamples:
             'text'  # Using text representation for this example
         )
         
-        print(f"✓ Found {len(collaborations)} collaboration opportunities for {seeker_profile['name']}")
+        print(f" Found {len(collaborations)} collaboration opportunities for {seeker_profile['name']}")
         
         for match in collaborations:
             print(f"  - Creator ID: {match.creator_id}")
@@ -502,7 +502,7 @@ class VectorDatabaseExamples:
             'text'
         )
         
-        print(f"✓ Generated {len(recommendations)} content recommendations")
+        print(f" Generated {len(recommendations)} content recommendations")
         
         for rec in recommendations[:3]:  # Show top 3
             print(f"  - Content ID: {rec.content_id}")
@@ -525,12 +525,12 @@ class VectorDatabaseExamples:
         
         performance = await self.db_manager.get_performance_metrics()
         
-        print(f"✓ Total Queries: {performance.total_queries}")
-        print(f"✓ Average Query Time: {performance.avg_query_time_ms:.2f}ms")
-        print(f"✓ Cache Hit Rate: {performance.cache_hit_rate:.2%}")
-        print(f"✓ Memory Usage: {performance.memory_usage_mb:.2f}MB")
-        print(f"✓ Error Rate: {performance.error_rate:.2%}")
-        print(f"✓ Uptime: {performance.uptime_seconds:.0f} seconds")
+        print(f" Total Queries: {performance.total_queries}")
+        print(f" Average Query Time: {performance.avg_query_time_ms:.2f}ms")
+        print(f" Cache Hit Rate: {performance.cache_hit_rate:.2%}")
+        print(f" Memory Usage: {performance.memory_usage_mb:.2f}MB")
+        print(f" Error Rate: {performance.error_rate:.2%}")
+        print(f" Uptime: {performance.uptime_seconds:.0f} seconds")
         
         # 7.2 Index statistics
         print("
@@ -553,11 +553,11 @@ class VectorDatabaseExamples:
         
         health = await self.db_manager.health_check()
         
-        print(f"✓ Overall Status: {health['overall_status']}")
-        print(f"✓ Components Checked: {len(health['components'])}")
+        print(f" Overall Status: {health['overall_status']}")
+        print(f" Components Checked: {len(health['components'])}")
         
         if health['recommendations']:
-            print("⚠ Recommendations:")
+            print(" Recommendations:")
             for rec in health['recommendations']:
                 print(f"  - {rec}")
     
@@ -574,10 +574,10 @@ class VectorDatabaseExamples:
         
         backup_info = await self.db_manager.create_system_backup("demo_backup")
         
-        print(f"✓ Backup Created: {backup_info.backup_id}")
-        print(f"✓ Status: {backup_info.status.value}")
-        print(f"✓ Size: {backup_info.size_mb:.2f}MB")
-        print(f"✓ Path: {backup_info.backup_path}")
+        print(f" Backup Created: {backup_info.backup_id}")
+        print(f" Status: {backup_info.status.value}")
+        print(f" Size: {backup_info.size_mb:.2f}MB")
+        print(f" Path: {backup_info.backup_path}")
         
         # 8.2 Create content-specific backup
         print("
@@ -585,8 +585,8 @@ class VectorDatabaseExamples:
         
         text_backup = await self.db_manager.create_content_backup('text', 'text_demo_backup')
         
-        print(f"✓ Text Backup Created: {text_backup.backup_id}")
-        print(f"✓ Status: {text_backup.status.value}")
+        print(f" Text Backup Created: {text_backup.backup_id}")
+        print(f" Status: {text_backup.status.value}")
         
         # 8.3 List all backups
         print("
@@ -594,14 +594,14 @@ class VectorDatabaseExamples:
         
         backups = await self.db_manager.list_available_backups()
         
-        print(f"✓ Found {len(backups)} backups:")
+        print(f" Found {len(backups)} backups:")
         for backup in backups:
             print(f"  - {backup.backup_id} ({backup.status.value}) - {backup.size_mb:.2f}MB")
         
         # 8.4 Backup validation (simulation)
         print("
 8.4 Backup validation...")
-        print("✓ All backups validated successfully")
+        print(" All backups validated successfully")
     
     async def example_advanced_features(self):
         """Example 9: Advanced features and optimizations."""
@@ -615,14 +615,14 @@ class VectorDatabaseExamples:
 9.1 Optimizing system performance...")
         
         optimization_success = await self.db_manager.optimize_system()
-        print(f"✓ System optimization: {'SUCCESS' if optimization_success else 'FAILED'}")
+        print(f" System optimization: {'SUCCESS' if optimization_success else 'FAILED'}")
         
         # 9.2 Configuration management
         print("
 9.2 Configuration management...")
         
         current_config = self.db_manager.export_configuration()
-        print(f"✓ Current configuration exported: {len(current_config)} settings")
+        print(f" Current configuration exported: {len(current_config)} settings")
         
         # 9.3 Batch operations simulation
         print("
@@ -648,9 +648,9 @@ class VectorDatabaseExamples:
         batch_time = time.time() - batch_start
         successful_items = sum(batch_results)
         
-        print(f"✓ Batch operation: {successful_items}/{len(batch_texts)} items processed")
-        print(f"✓ Processing time: {batch_time:.2f} seconds")
-        print(f"✓ Throughput: {len(batch_texts)/batch_time:.1f} items/second")
+        print(f" Batch operation: {successful_items}/{len(batch_texts)} items processed")
+        print(f" Processing time: {batch_time:.2f} seconds")
+        print(f" Throughput: {len(batch_texts)/batch_time:.1f} items/second")
         
         # 9.4 Memory and resource usage
         print("
@@ -659,7 +659,7 @@ class VectorDatabaseExamples:
         final_status = await self.db_manager.get_system_status()
         performance = final_status['performance']
         
-        print(f"✓ Final system state:")
+        print(f" Final system state:")
         print(f"  - Total vectors indexed: {sum(idx['vector_count'] for idx in final_status['indices'].values())}")
         print(f"  - Memory usage: {performance['memory_usage_mb']:.2f}MB")
         print(f"  - Average query time: {performance['avg_query_time_ms']:.2f}ms")
@@ -667,11 +667,14 @@ class VectorDatabaseExamples:
     
     async def cleanup(self):
         """Clean up resources and temporary files."""
+
+
+
         try:
             import shutil
             shutil.rmtree(self.temp_dir, ignore_errors=True)
             print(f"
-✓ Cleanup completed: {self.temp_dir} removed")
+ Cleanup completed: {self.temp_dir} removed")
         except Exception as e:
             logger.error(f"Cleanup failed: {str(e)}")
 
@@ -725,7 +728,7 @@ async def example_content_protection_workflow():
         'original_001',
         original_content['metadata']
     )
-    print(f"✓ Original content indexed: {'SUCCESS' if success else 'FAILED'}")
+    print(f" Original content indexed: {'SUCCESS' if success else 'FAILED'}")
     
     # Simulate potential infringement detection
     print("
@@ -738,19 +741,19 @@ async def example_content_protection_workflow():
         metadata={'scanner': 'auto_protection', 'scan_date': '2025-01-21'}
     )
     
-    print(f"✓ Duplicate scan completed: {len(duplicates)} potential infringements found")
+    print(f" Duplicate scan completed: {len(duplicates)} potential infringements found")
     
     # Analyze results
     for result, analysis in duplicates:
         print(f"
-⚠ POTENTIAL INFRINGEMENT DETECTED:")
+ POTENTIAL INFRINGEMENT DETECTED:")
         print(f"  - Original Content ID: {result.content_id}")
         print(f"  - Similarity Score: {result.similarity_score:.3f}")
         print(f"  - Confidence Level: {analysis.confidence_score:.3f}")
         print(f"  - Action Recommended: {analysis.recommendation}")
         
         if analysis.is_duplicate and analysis.confidence_score > 0.8:
-            print(f"  - 🚨 HIGH CONFIDENCE INFRINGEMENT - TAKE ACTION!")
+            print(f"  -  HIGH CONFIDENCE INFRINGEMENT - TAKE ACTION!")
         else:
             print(f"  - ℹ Low confidence - manual review recommended")
     
@@ -759,7 +762,7 @@ async def example_content_protection_workflow():
     shutil.rmtree('./temp_protection_demo', ignore_errors=True)
     
     print("
-✓ Content protection workflow completed")
+ Content protection workflow completed")
 
 
 async def example_collaboration_platform():
@@ -810,7 +813,7 @@ async def example_collaboration_platform():
             creator['id'],
             creator['metadata']
         )
-        print(f"✓ Added {creator['metadata']['name']}: {'SUCCESS' if success else 'FAILED'}")
+        print(f" Added {creator['metadata']['name']}: {'SUCCESS' if success else 'FAILED'}")
     
     # Find collaborations
     print("
@@ -832,7 +835,7 @@ async def example_collaboration_platform():
         'text'
     )
     
-    print(f"✓ Found {len(matches)} potential collaboration matches")
+    print(f" Found {len(matches)} potential collaboration matches")
     
     for match in matches:
         print(f"
@@ -844,7 +847,7 @@ async def example_collaboration_platform():
         print(f"  - Suggested Projects: {', '.join(match.suggested_projects[:2]) if match.suggested_projects else 'General collaboration'}")
     
     print("
-✓ Collaboration platform example completed")
+ Collaboration platform example completed")
 
 
 async def example_recommendation_engine():
@@ -904,7 +907,7 @@ async def example_recommendation_engine():
             item['id'],
             item['metadata']
         )
-        print(f"✓ Added {item['id']}: {'SUCCESS' if success else 'FAILED'}")
+        print(f" Added {item['id']}: {'SUCCESS' if success else 'FAILED'}")
     
     # Simulate user preferences
     print("
@@ -928,11 +931,11 @@ async def example_recommendation_engine():
         'text'
     )
     
-    print(f"✓ Generated {len(recommendations)} personalized recommendations")
+    print(f" Generated {len(recommendations)} personalized recommendations")
     
     for i, rec in enumerate(recommendations, 1):
         print(f"
-📋 RECOMMENDATION #{i}:")
+ RECOMMENDATION #{i}:")
         print(f"  - Content ID: {rec.content_id}")
         print(f"  - Recommendation Score: {rec.recommendation_score:.3f}")
         print(f"  - Type: {rec.recommendation_type}")
@@ -941,13 +944,13 @@ async def example_recommendation_engine():
         print(f"  - Trend Alignment: {rec.trend_alignment:.2f}")
     
     print("
-✓ Recommendation engine example completed")
+ Recommendation engine example completed")
 
 
 # Main execution function
 async def main():
     """Main function to run all examples."""
-    print("🚀 Starting Vector Database Examples...")
+    print(" Starting Vector Database Examples...")
     print("Author: Fahed Mlaiel (mlaiel@live.de)")
     print("Copyright: © 2025 Fahed Mlaiel - All Rights Reserved")
     
@@ -961,7 +964,7 @@ async def main():
     await example_recommendation_engine()
     
     print("
-🎉 All examples completed successfully!")
+ All examples completed successfully!")
     print("
 This demonstrates the complete capabilities of the Vector Database System")
     print("for content protection, collaboration, and recommendation in the IA Influencer Agent platform.")
@@ -1011,6 +1014,9 @@ class VectorDBExamples:
     
     def _get_example_config(self) -> Dict[str, Any]:
         """Get configuration for examples."""
+
+
+
         return {
             'backend': 'faiss',
             'data_directory': './data/vector_db_examples',
@@ -1041,6 +1047,9 @@ class VectorDBExamples:
     
     def _generate_sample_data(self) -> Dict[str, List[Dict[str, Any]]]:
         """Generate sample data for demonstrations."""
+
+
+
         return {
             'audio_tracks': [
                 {
@@ -1131,33 +1140,36 @@ class VectorDBExamples:
     
     async def initialize_database(self) -> bool:
         """Initialize the vector database for examples."""
+
+
+
         try:
-            print("🚀 Initializing Vector Database for Examples...")
+            print(" Initializing Vector Database for Examples...")
             
             self.vector_db = await create_vector_database(self.config)
             
             if self.vector_db:
-                print("✅ Vector Database initialized successfully!")
+                print(" Vector Database initialized successfully!")
                 return True
             else:
-                print("❌ Failed to initialize Vector Database")
+                print(" Failed to initialize Vector Database")
                 return False
                 
         except Exception as e:
-            print(f"❌ Database initialization error: {str(e)}")
+            print(f" Database initialization error: {str(e)}")
             return False
     
     async def example_1_basic_content_addition(self):
         """Example 1: Basic content addition and indexing."""
         print("
 " + "="*60)
-        print("📝 EXAMPLE 1: Basic Content Addition and Indexing")
+        print(" EXAMPLE 1: Basic Content Addition and Indexing")
         print("="*60)
         
         try:
             # Add audio content
             print("
-🎵 Adding audio tracks...")
+ Adding audio tracks...")
             for track in self.sample_data['audio_tracks']:
                 success = await self.vector_db.add_content(
                     content=track['features'],
@@ -1172,13 +1184,13 @@ class VectorDBExamples:
                     }
                 )
                 if success:
-                    print(f"  ✅ Added: {track['title']}")
+                    print(f"   Added: {track['title']}")
                 else:
-                    print(f"  ❌ Failed to add: {track['title']}")
+                    print(f"   Failed to add: {track['title']}")
             
             # Add text content
             print("
-📄 Adding text content...")
+ Adding text content...")
             for text in self.sample_data['text_content']:
                 success = await self.vector_db.add_content(
                     content=text['content'],
@@ -1192,32 +1204,32 @@ class VectorDBExamples:
                     }
                 )
                 if success:
-                    print(f"  ✅ Added: {text['title']}")
+                    print(f"   Added: {text['title']}")
                 else:
-                    print(f"  ❌ Failed to add: {text['title']}")
+                    print(f"   Failed to add: {text['title']}")
             
             # Get system status
             status = self.vector_db.get_system_status()
             print(f"
-📊 System Status:")
+ System Status:")
             print(f"  - Total Indices: {status.get('index_summary', {}).get('total_indices', 0)}")
             print(f"  - Total Vectors: {status.get('index_summary', {}).get('total_vectors', 0)}")
             print(f"  - Backend: {status.get('backend_type', 'Unknown')}")
             
         except Exception as e:
-            print(f"❌ Error in basic content addition: {str(e)}")
+            print(f" Error in basic content addition: {str(e)}")
     
     async def example_2_similarity_search(self):
         """Example 2: Similarity search across content types."""
         print("
 " + "="*60)
-        print("🔍 EXAMPLE 2: Similarity Search Across Content Types")
+        print(" EXAMPLE 2: Similarity Search Across Content Types")
         print("="*60)
         
         try:
             # Search for similar audio
             print("
-🎵 Searching for similar audio...")
+ Searching for similar audio...")
             query_features = np.random.rand(384).astype(np.float32)
             
             audio_results = await self.vector_db.search_content(
@@ -1236,7 +1248,7 @@ class VectorDBExamples:
             
             # Search for similar text
             print("
-📄 Searching for similar text content...")
+ Searching for similar text content...")
             query_text = "Artificial intelligence and machine learning advancements"
             
             text_results = await self.vector_db.search_content(
@@ -1254,19 +1266,19 @@ class VectorDBExamples:
                     print(f"       Category: {result.metadata.get('category', 'Unknown')}")
             
         except Exception as e:
-            print(f"❌ Error in similarity search: {str(e)}")
+            print(f" Error in similarity search: {str(e)}")
     
     async def example_3_duplicate_detection(self):
         """Example 3: Advanced duplicate detection."""
         print("
 " + "="*60)
-        print("🔍 EXAMPLE 3: Advanced Duplicate Detection")
+        print(" EXAMPLE 3: Advanced Duplicate Detection")
         print("="*60)
         
         try:
             # Create a near-duplicate of existing content
             print("
-🎵 Testing audio duplicate detection...")
+ Testing audio duplicate detection...")
             
             # Get an existing track and create a slight variation
             original_track = self.sample_data['audio_tracks'][0]
@@ -1290,7 +1302,7 @@ class VectorDBExamples:
             
             # Test text duplicate detection
             print("
-📄 Testing text duplicate detection...")
+ Testing text duplicate detection...")
             duplicate_text = "AI is revolutionizing multiple industries across the globe"
             
             text_duplicates = await self.vector_db.operations.detect_duplicates(
@@ -1306,7 +1318,7 @@ class VectorDBExamples:
                 print(f"      Analysis: {analysis.analysis_details}")
             
         except Exception as e:
-            print(f"❌ Error in duplicate detection: {str(e)}")
+            print(f" Error in duplicate detection: {str(e)}")
     
     async def example_4_collaboration_matching(self):
         """Example 4: Collaboration matching between creators."""
@@ -1343,11 +1355,11 @@ class VectorDBExamples:
             ]
             
             print("
-🎯 Finding collaboration opportunities...")
+ Finding collaboration opportunities...")
             
             for creator in creator_profiles:
                 print(f"
-👤 Analyzing creator: {creator['name']}")
+ Analyzing creator: {creator['name']}")
                 print(f"   Specialties: {', '.join(creator['specialties'])}")
                 
                 # Find collaboration matches
@@ -1365,13 +1377,13 @@ class VectorDBExamples:
                     print(f"        Strengths: {', '.join(match.shared_strengths)}")
             
         except Exception as e:
-            print(f"❌ Error in collaboration matching: {str(e)}")
+            print(f" Error in collaboration matching: {str(e)}")
     
     async def example_5_content_recommendations(self):
         """Example 5: Content recommendations and inspiration."""
         print("
 " + "="*60)
-        print("💡 EXAMPLE 5: Content Recommendations and Inspiration")
+        print(" EXAMPLE 5: Content Recommendations and Inspiration")
         print("="*60)
         
         try:
@@ -1400,11 +1412,11 @@ class VectorDBExamples:
             ]
             
             print("
-🎯 Generating personalized recommendations...")
+ Generating personalized recommendations...")
             
             for user in user_profiles:
                 print(f"
-👤 User: {user['id']}")
+ User: {user['id']}")
                 print(f"   Interests: {', '.join(user['interests'])}")
                 print(f"   Preferred types: {', '.join(user['preferred_content_types'])}")
                 
@@ -1424,39 +1436,39 @@ class VectorDBExamples:
                     )
                     
                     print(f"
-   📋 {content_type.title()} Recommendations:")
+    {content_type.title()} Recommendations:")
                     for i, rec in enumerate(recommendations[:3], 1):
                         print(f"     {i}. Content: {rec.content_id}")
                         print(f"        Relevance: {rec.relevance_score:.3f}")
                         print(f"        Reason: {rec.recommendation_reason}")
                         if rec.trending_score > 0.7:
-                            print(f"        🔥 Trending!")
+                            print(f"         Trending!")
             
         except Exception as e:
-            print(f"❌ Error in content recommendations: {str(e)}")
+            print(f" Error in content recommendations: {str(e)}")
     
     async def example_6_performance_monitoring(self):
         """Example 6: Performance monitoring and optimization."""
         print("
 " + "="*60)
-        print("📊 EXAMPLE 6: Performance Monitoring and Optimization")
+        print(" EXAMPLE 6: Performance Monitoring and Optimization")
         print("="*60)
         
         try:
             print("
-🔍 Analyzing system performance...")
+ Analyzing system performance...")
             
             # Get comprehensive system status
             status = self.vector_db.get_system_status()
             
             print("
-📈 System Performance Metrics:")
+ System Performance Metrics:")
             print(f"   Initialized: {status.get('initialized', False)}")
             print(f"   Backend: {status.get('backend_type', 'Unknown')}")
             
             # Get index statistics
             print("
-📊 Index Statistics:")
+ Index Statistics:")
             index_summary = status.get('index_summary', {})
             print(f"   Total Indices: {index_summary.get('total_indices', 0)}")
             print(f"   Total Vectors: {index_summary.get('total_vectors', 0)}")
@@ -1467,7 +1479,7 @@ class VectorDBExamples:
             content_types = ['audio', 'text', 'image', 'video']
             
             print("
-⚡ Performance by Content Type:")
+ Performance by Content Type:")
             for content_type in content_types:
                 try:
                     stats = await self.vector_db.get_index_statistics(content_type)
@@ -1486,36 +1498,36 @@ class VectorDBExamples:
             system_resources = status.get('system_resources', {})
             if system_resources:
                 print("
-🖥️  System Resources:")
+  System Resources:")
                 print(f"   CPU Usage: {system_resources.get('cpu_percent', 0):.1f}%")
                 print(f"   Memory Usage: {system_resources.get('memory_percent', 0):.1f}%")
                 print(f"   Disk Usage: {system_resources.get('disk_percent', 0):.1f}%")
             
             # Test optimization
             print("
-🔧 Running system optimization...")
+ Running system optimization...")
             try:
                 optimization_success = await self.vector_db.optimize_system()
                 if optimization_success:
-                    print("   ✅ System optimization completed successfully")
+                    print("    System optimization completed successfully")
                 else:
-                    print("   ⚠️  System optimization had mixed results")
+                    print("     System optimization had mixed results")
             except Exception as e:
-                print(f"   ❌ Optimization error: {str(e)}")
+                print(f"    Optimization error: {str(e)}")
             
         except Exception as e:
-            print(f"❌ Error in performance monitoring: {str(e)}")
+            print(f" Error in performance monitoring: {str(e)}")
     
     async def example_7_backup_and_restore(self):
         """Example 7: Backup and restore operations."""
         print("
 " + "="*60)
-        print("💾 EXAMPLE 7: Backup and Restore Operations")
+        print(" EXAMPLE 7: Backup and Restore Operations")
         print("="*60)
         
         try:
             print("
-📦 Creating system backup...")
+ Creating system backup...")
             
             # Create a full system backup
             backup_info = await self.vector_db.create_system_backup(
@@ -1523,18 +1535,18 @@ class VectorDBExamples:
             )
             
             if backup_info:
-                print(f"   ✅ Backup created successfully!")
+                print(f"    Backup created successfully!")
                 print(f"   Backup ID: {backup_info.backup_id}")
                 print(f"   Size: {backup_info.size_bytes / (1024*1024):.2f} MB")
                 print(f"   Created: {backup_info.created_at}")
                 print(f"   Content Types: {', '.join(backup_info.content_types)}")
             else:
-                print("   ❌ Backup creation failed")
+                print("    Backup creation failed")
                 return
             
             # List all available backups
             print("
-📋 Listing available backups...")
+ Listing available backups...")
             backups = await self.vector_db.list_available_backups()
             
             print(f"   Found {len(backups)} backup(s):")
@@ -1546,29 +1558,29 @@ class VectorDBExamples:
             
             # Demonstrate content-specific backup
             print("
-🎵 Creating audio-specific backup...")
+ Creating audio-specific backup...")
             audio_backup = await self.vector_db.create_content_backup(
                 content_type='audio',
                 backup_name=f"audio_backup_{datetime.now().strftime('%H%M%S')}"
             )
             
             if audio_backup:
-                print(f"   ✅ Audio backup created: {audio_backup.backup_id}")
+                print(f"    Audio backup created: {audio_backup.backup_id}")
                 print(f"   Size: {audio_backup.size_bytes / 1024:.2f} KB")
             
         except Exception as e:
-            print(f"❌ Error in backup operations: {str(e)}")
+            print(f" Error in backup operations: {str(e)}")
     
     async def example_8_advanced_search_configurations(self):
         """Example 8: Advanced search configurations and filters."""
         print("
 " + "="*60)
-        print("⚙️ EXAMPLE 8: Advanced Search Configurations and Filters")
+        print(" EXAMPLE 8: Advanced Search Configurations and Filters")
         print("="*60)
         
         try:
             print("
-🔍 Testing advanced search configurations...")
+ Testing advanced search configurations...")
             
             # Test different search strategies
             search_configs = [
@@ -1609,7 +1621,7 @@ class VectorDBExamples:
             
             for search_test in search_configs:
                 print(f"
-🎯 {search_test['name']}:")
+ {search_test['name']}:")
                 print(f"   Strategy: {search_test['config'].ranking_strategy}")
                 print(f"   Threshold: {search_test['config'].similarity_threshold}")
                 print(f"   Max Results: {search_test['config'].max_results}")
@@ -1626,11 +1638,11 @@ class VectorDBExamples:
                         print(f"     {i}. ID: {result.content_id}, Score: {result.similarity:.3f}")
                         
                 except Exception as e:
-                    print(f"   ❌ Search failed: {str(e)}")
+                    print(f"    Search failed: {str(e)}")
             
             # Test metadata filtering
             print("
-🏷️  Testing metadata filtering...")
+  Testing metadata filtering...")
             
             metadata_filters = [
                 {'genre': 'electronic'},
@@ -1654,14 +1666,14 @@ class VectorDBExamples:
                         print(f"     {j}. {result.content_id} (Score: {result.similarity:.3f})")
                         
                 except Exception as e:
-                    print(f"   ❌ Filtered search failed: {str(e)}")
+                    print(f"    Filtered search failed: {str(e)}")
             
         except Exception as e:
-            print(f"❌ Error in advanced search configurations: {str(e)}")
+            print(f" Error in advanced search configurations: {str(e)}")
     
     async def run_all_examples(self):
         """Run all examples in sequence."""
-        print("🎬 Starting Vector Database Examples Demonstration")
+        print(" Starting Vector Database Examples Demonstration")
         print("=" * 80)
         
         start_time = time.time()
@@ -1670,7 +1682,7 @@ class VectorDBExamples:
             # Initialize database
             success = await self.initialize_database()
             if not success:
-                print("❌ Failed to initialize database. Stopping examples.")
+                print(" Failed to initialize database. Stopping examples.")
                 return
             
             # Run all examples
@@ -1689,34 +1701,34 @@ class VectorDBExamples:
                 try:
                     await example()
                     print(f"
-✅ Example {i} completed successfully!")
+ Example {i} completed successfully!")
                     
                     # Add small delay between examples
                     await asyncio.sleep(1)
                     
                 except Exception as e:
                     print(f"
-❌ Example {i} failed: {str(e)}")
+ Example {i} failed: {str(e)}")
                     continue
             
             # Final summary
             elapsed_time = time.time() - start_time
             print("
 " + "="*80)
-            print("🎉 ALL EXAMPLES COMPLETED!")
-            print(f"⏱️  Total execution time: {elapsed_time:.2f} seconds")
+            print(" ALL EXAMPLES COMPLETED!")
+            print(f"⏱  Total execution time: {elapsed_time:.2f} seconds")
             print("="*80)
             
             # Display final system status
             final_status = self.vector_db.get_system_status()
             print(f"
-📊 Final System Status:")
+ Final System Status:")
             print(f"   Total Indices: {final_status.get('index_summary', {}).get('total_indices', 0)}")
             print(f"   Total Vectors: {final_status.get('index_summary', {}).get('total_vectors', 0)}")
             print(f"   System Health: {final_status.get('index_summary', {}).get('avg_health_score', 0):.3f}")
             
         except Exception as e:
-            print(f"❌ Fatal error in examples: {str(e)}")
+            print(f" Fatal error in examples: {str(e)}")
         
         finally:
             # Cleanup
@@ -1726,13 +1738,13 @@ class VectorDBExamples:
                     print("
 🧹 Database cleanup completed")
                 except Exception as e:
-                    print(f"⚠️  Cleanup warning: {str(e)}")
+                    print(f"  Cleanup warning: {str(e)}")
 
 
 # Convenience functions for quick testing
 async def run_quick_demo():
     """Run a quick demonstration of key features."""
-    print("🚀 Quick Vector Database Demo")
+    print(" Quick Vector Database Demo")
     print("-" * 40)
     
     examples = VectorDBExamples()
@@ -1744,7 +1756,7 @@ async def run_quick_demo():
     await examples.example_6_performance_monitoring()
     
     print("
-✅ Quick demo completed!")
+ Quick demo completed!")
 
 
 async def run_full_demonstration():

@@ -12,7 +12,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 
-⚠️ STRICT COPYRIGHT PROTECTION ⚠️
+ STRICT COPYRIGHT PROTECTION 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 
@@ -127,14 +127,23 @@ class BaseDataExtractor(BaseExtractor):
         
     async def validate_data_format(self, content: bytes, format_hint: Optional[str] = None) -> bool:
         """Validate if content matches expected format"""
+
+
+
         return True
     
     async def extract_schema(self, data: Any) -> Dict[str, Any]:
         """Extract data schema information"""
+
+
+
         return {}
     
     async def validate_data_quality(self, data: Any) -> Tuple[float, List[str]]:
         """Validate data quality and return score with errors"""
+
+
+
         return 1.0, []
 
 
@@ -161,6 +170,9 @@ class JSONExtractor(BaseDataExtractor):
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
         """Extract JSON data and metadata"""
+
+
+
         try:
             # Get content
             if request.source_data:
@@ -466,6 +478,9 @@ class CSVExtractor(BaseDataExtractor):
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
         """Extract CSV data and metadata"""
+
+
+
         try:
             # Get content
             if request.source_data:
@@ -568,6 +583,9 @@ class CSVExtractor(BaseDataExtractor):
     
     def _is_numeric(self, value: str) -> bool:
         """Check if string represents a number"""
+
+
+
         try:
             float(value)
             return True
@@ -689,6 +707,9 @@ class CSVExtractor(BaseDataExtractor):
     
     async def _extract_csv_metadata(self, data: Dict, content: str, config: Dict) -> StructuredDataMetadata:
         """Extract CSV-specific metadata"""
+
+
+
         return StructuredDataMetadata(
             format_type='csv',
             record_count=data.get('data_rows', 0),
@@ -745,6 +766,9 @@ class XMLExtractor(BaseDataExtractor):
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
         """Extract XML data and metadata"""
+
+
+
         try:
             # Get content
             if request.source_data:

@@ -1,11 +1,11 @@
 """
-🔄 Content Format Converter - IA Influencer Agent Platform Enterprise
+ Content Format Converter - IA Influencer Agent Platform Enterprise
 ===================================================================
 Module: backend/data_management/transformers/format_converter.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ===================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -397,6 +397,9 @@ class ImageFormatConverter:
         config: ConversionConfig
     ) -> ConversionMetadata:
         """Crée les métadonnées de conversion"""
+
+
+
         
         return ConversionMetadata(
             source_format=self._detect_format(original_img.filename or ""),
@@ -644,6 +647,9 @@ class AudioFormatConverter:
         config: ConversionConfig
     ) -> ConversionMetadata:
         """Crée les métadonnées de conversion audio"""
+
+
+
         
         return ConversionMetadata(
             source_format=SupportedFormat.WAV,  # Format intermédiaire
@@ -891,6 +897,9 @@ class DocumentFormatConverter:
     
     def _create_document_metadata(self, config: ConversionConfig) -> ConversionMetadata:
         """Crée les métadonnées de conversion document"""
+
+
+
         
         return ConversionMetadata(
             source_format=config.source_format,
@@ -952,6 +961,9 @@ class FormatConverter:
         **kwargs
     ) -> FormatConversionResult:
         """Convertit un fichier vers le format cible"""
+
+
+
         
         try:
             # Validation des formats
@@ -1003,6 +1015,9 @@ class FormatConverter:
     
     def detect_format(self, file_path: str) -> Optional[SupportedFormat]:
         """Détecte automatiquement le format d'un fichier"""
+
+
+
         
         try:
             # Détection par extension

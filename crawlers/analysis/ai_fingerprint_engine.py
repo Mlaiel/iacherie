@@ -93,6 +93,9 @@ class FingerprintResult:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary representation."""
+
+
+
         return {
             'content_id': self.content_id,
             'fingerprint_type': self.fingerprint_type.value,
@@ -149,6 +152,9 @@ class AIFingerprintEngine:
     
     def _init_ai_models(self) -> None:
         """Initialize AI models for different content types."""
+
+
+
         try:
             # CLIP model for image and video analysis
             self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -169,6 +175,9 @@ class AIFingerprintEngine:
     
     def _init_vector_indices(self) -> None:
         """Initialize FAISS vector indices for different content types."""
+
+
+
         try:
             # Create separate indices for different content types
             self.audio_index = faiss.IndexFlatIP(self.vector_dimension)
@@ -290,6 +299,9 @@ class AIFingerprintEngine:
     
     def _extract_chromaprint_fingerprint(self, audio_array: np.ndarray, sample_rate: int) -> Optional[str]:
         """Extract Chromaprint fingerprint from audio."""
+
+
+
         try:
             # Convert to int16 format required by chromaprint
             audio_int16 = (audio_array * 32767).astype(np.int16)
@@ -305,6 +317,9 @@ class AIFingerprintEngine:
     
     def _extract_spectral_features(self, audio_array: np.ndarray, sample_rate: int) -> Optional[np.ndarray]:
         """Extract spectral features from audio."""
+
+
+
         try:
             # Extract spectral features
             spectral_centroid = librosa.feature.spectral_centroid(y=audio_array, sr=sample_rate)
@@ -335,6 +350,9 @@ class AIFingerprintEngine:
     
     def _extract_mfcc_features(self, audio_array: np.ndarray, sample_rate: int) -> Optional[np.ndarray]:
         """Extract MFCC features from audio."""
+
+
+
         try:
             # Extract MFCC features
             mfcc = librosa.feature.mfcc(y=audio_array, sr=sample_rate, n_mfcc=13)
@@ -414,6 +432,9 @@ class AIFingerprintEngine:
     
     async def _extract_clip_features(self, image: Image.Image) -> Optional[np.ndarray]:
         """Extract CLIP features from image."""
+
+
+
         try:
             # Process image
             inputs = self.clip_processor(images=image, return_tensors="pt")
@@ -473,6 +494,9 @@ class AIFingerprintEngine:
     
     async def _extract_semantic_features(self, text: str) -> Optional[np.ndarray]:
         """Extract semantic features from text."""
+
+
+
         try:
             # Get sentence embeddings
             embeddings = self.sentence_model.encode([text])
@@ -485,6 +509,9 @@ class AIFingerprintEngine:
     
     def _extract_ngram_hash(self, text: str, n: int = 3) -> Optional[str]:
         """Extract n-gram hash from text."""
+
+
+
         try:
             # Clean text
             cleaned_text = re.sub(r'[^\w\s]', '', text.lower())
@@ -508,6 +535,9 @@ class AIFingerprintEngine:
     
     async def add_to_index(self, fingerprint: FingerprintResult) -> bool:
         """Add fingerprint to appropriate vector index."""
+
+
+
         try:
             if fingerprint.vector_embeddings is None:
                 return False
@@ -652,6 +682,9 @@ class AIFingerprintEngine:
     
     async def get_index_stats(self) -> Dict[str, Any]:
         """Get statistics about the vector indices."""
+
+
+
         return {
             'audio_index_size': len(self.audio_content_ids),
             'video_index_size': len(self.video_content_ids),
@@ -674,6 +707,9 @@ class AIFingerprintEngine:
     
     def __del__(self):
         """Cleanup resources."""
+
+
+
         try:
             # Cleanup any remaining resources
             pass

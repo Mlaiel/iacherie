@@ -793,6 +793,9 @@ class TestPerformanceErrorHandling:
         
     def test_profiler_with_exceptions(self):
         """Test profiler behavior when profiled function raises exception"""
+
+
+
         try:
             with self.profiler.profile_operation("failing_operation"):
                 time.sleep(0.01)

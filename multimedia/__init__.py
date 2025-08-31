@@ -7,7 +7,7 @@ Project Team: Lead AI Developer + Backend Senior Engineer + ML Engineer +
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This code is proprietary and confidential. Any unauthorized use, reproduction, 
 distribution, or modification without written permission from Fahed Mlaiel 
 (mlaiel@live.de) is strictly prohibited and will be prosecuted to the full 

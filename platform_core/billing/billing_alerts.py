@@ -1,15 +1,15 @@
 """
-🚀 Billing Alerts System - IA Influencer Agent Platform Enterprise
+ Billing Alerts System - IA Influencer Agent Platform Enterprise
 ================================================================
 Module: backend/platform_core/billing/billing_alerts.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 SYSTÈME D'ALERTES BILLING INTELLIGENT
+ SYSTÈME D'ALERTES BILLING INTELLIGENT
 Monitoring et alertes automatiques pour la facturation
 - Détection anomalies et fraudes en temps réel
 - Alertes échéances et impayés automatiques
@@ -130,6 +130,9 @@ class BillingAlert:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit l'alerte en dictionnaire"""
+
+
+
         return {
             "alert_id": self.alert_id,
             "rule_id": self.rule_id,
@@ -569,6 +572,9 @@ class BillingAlerts:
         
     async def _save_alert(self, alert: BillingAlert):
         """Sauvegarde une alerte en base"""
+
+
+
         try:
             # In a real system, this would save to database
             # For now, just log the alert data

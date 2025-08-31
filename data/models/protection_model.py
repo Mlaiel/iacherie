@@ -8,7 +8,7 @@ Comprehensive protection tracking with alerts, violations, and enforcement actio
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  STRICT WARNING FOR UNAUTHORIZED USE:
+  STRICT WARNING FOR UNAUTHORIZED USE:
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use without explicit written 
 permission is strictly prohibited and will result in legal action.
@@ -263,6 +263,9 @@ class ProtectionModel(Base):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert model to dictionary representation"""
+
+
+
         return {
             'id': self.id,
             'user_id': self.user_id,
@@ -307,31 +310,49 @@ class ProtectionModel(Base):
     @property
     def is_copyright_violation(self) -> bool:
         """Check if violation is copyright-related"""
+
+
+
         return self.protection_type == ProtectionType.COPYRIGHT.value
     
     @property
     def is_high_severity(self) -> bool:
         """Check if violation is high severity"""
+
+
+
         return self.severity_level in [SeverityLevel.HIGH.value, SeverityLevel.CRITICAL.value, SeverityLevel.EMERGENCY.value]
     
     @property
     def is_resolved(self) -> bool:
         """Check if protection issue is resolved"""
+
+
+
         return self.status == ProtectionStatus.RESOLVED.value
     
     @property
     def is_under_investigation(self) -> bool:
         """Check if violation is under investigation"""
+
+
+
         return self.status in [ProtectionStatus.INVESTIGATING.value, ProtectionStatus.CONFIRMED.value]
     
     @property
     def is_takedown_in_progress(self) -> bool:
         """Check if takedown is in progress"""
+
+
+
         return self.status == ProtectionStatus.TAKEDOWN_REQUESTED.value
     
     @property
     def has_evidence(self) -> bool:
         """Check if evidence has been collected"""
+
+
+
         return bool(self.evidence_urls or self.evidence_files)
     
     @property

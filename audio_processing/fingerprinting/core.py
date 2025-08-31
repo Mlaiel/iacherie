@@ -74,6 +74,9 @@ class AudioFingerprintCore:
     
     def _default_config(self) -> Dict:
         """Default configuration for fingerprinting engine."""
+
+
+
         return {
             'sample_rate': 22050,
             'hop_length': 512,
@@ -340,6 +343,9 @@ class AudioFingerprintCore:
     
     def _chromaprint_similarity(self, fp1: str, fp2: str) -> float:
         """Calculate similarity between two chromaprint fingerprints."""
+
+
+
         try:
             # Decode fingerprints
             raw_fp1 = chromaprint.decode(fp1)

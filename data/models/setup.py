@@ -8,7 +8,7 @@ Handles dependencies, installation, and package configuration.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  STRICT WARNING FOR UNAUTHORIZED USE:
+  STRICT WARNING FOR UNAUTHORIZED USE:
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use without explicit written 
 permission is strictly prohibited and will result in legal action.
@@ -222,30 +222,30 @@ setup(
 def post_install_message():
     """Display post-installation message"""
     print("""
-╔═══════════════════════════════════════════════════════════════╗
-║                IA INFLUENCER AGENT DATA MODELS               ║
-║                     Successfully Installed!                  ║
-╠═══════════════════════════════════════════════════════════════╣
-║                                                               ║
-║  🎉 Thank you for choosing IA Influencer Agent Data Models   ║
-║                                                               ║
-║  📚 Documentation: README.md (EN), README.de.md (DE),       ║
-║                    README.fr.md (FR)                         ║
-║                                                               ║
-║  🚀 Quick Start:                                             ║
-║     from backend.data.models import ContentModel, UserModel  ║
-║                                                               ║
-║  🛠️  CLI Tools:                                              ║
-║     ia-models-migrate    - Database migrations               ║
-║     ia-models-validate   - Data validation                   ║
-║     ia-models-examples   - Usage examples                    ║
-║                                                               ║
-║  📧 Support: mlaiel@live.de                                  ║
-║                                                               ║
-║  ⚠️  WARNING: This is proprietary software.                 ║
-║      Unauthorized use is strictly prohibited.                ║
-║                                                               ║
-╚═══════════════════════════════════════════════════════════════╝
+
+                IA INFLUENCER AGENT DATA MODELS               
+                     Successfully Installed!                  
+
+                                                               
+   Thank you for choosing IA Influencer Agent Data Models   
+                                                               
+   Documentation: README.md (EN), README.de.md (DE),       
+                    README.fr.md (FR)                         
+                                                               
+   Quick Start:                                             
+     from backend.data.models import ContentModel, UserModel  
+                                                               
+    CLI Tools:                                              
+     ia-models-migrate    - Database migrations               
+     ia-models-validate   - Data validation                   
+     ia-models-examples   - Usage examples                    
+                                                               
+   Support: mlaiel@live.de                                  
+                                                               
+    WARNING: This is proprietary software.                 
+      Unauthorized use is strictly prohibited.                
+                                                               
+
     """)
 
 

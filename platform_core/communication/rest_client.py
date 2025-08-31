@@ -1,15 +1,15 @@
 """
-🚀 REST Client & Service Registry - IA Influencer Agent Platform Enterprise
+ REST Client & Service Registry - IA Influencer Agent Platform Enterprise
 =========================================================================
 Module: backend/platform_core/communication/rest_client.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 =========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 CLIENT REST & REGISTRE DE SERVICES
+ CLIENT REST & REGISTRE DE SERVICES
 Client HTTP intelligent avec découverte de services automatique
 - Pool de connexions optimisé avec circuit breaker
 - Load balancing intelligent et failover
@@ -74,6 +74,9 @@ class ServiceEndpoint:
     
     def is_available(self) -> bool:
         """Vérifie si le service est disponible"""
+
+
+
         return self.status in [ServiceStatus.HEALTHY, ServiceStatus.DEGRADED]
 
 @dataclass 
@@ -275,6 +278,9 @@ class ServiceRegistry:
             
     async def _check_service_health(self, endpoint: ServiceEndpoint):
         """Vérifie la santé d'un service spécifique"""
+
+
+
         try:
             start_time = time.time()
             
@@ -322,6 +328,9 @@ class ServiceRegistry:
         
     def get_service_stats(self) -> Dict[str, Any]:
         """Retourne les statistiques des services"""
+
+
+
         return {
             "total_services": sum(len(endpoints) for endpoints in self.services.values()),
             "services_by_status": {
@@ -436,22 +445,37 @@ class RestClient:
         
     async def get(self, service_name: str, path: str, **kwargs) -> Tuple[int, Dict[str, Any]]:
         """Requête GET"""
+
+
+
         return await self.request(service_name, RequestMethod.GET, path, **kwargs)
         
     async def post(self, service_name: str, path: str, **kwargs) -> Tuple[int, Dict[str, Any]]:
         """Requête POST"""
+
+
+
         return await self.request(service_name, RequestMethod.POST, path, **kwargs)
         
     async def put(self, service_name: str, path: str, **kwargs) -> Tuple[int, Dict[str, Any]]:
         """Requête PUT"""
+
+
+
         return await self.request(service_name, RequestMethod.PUT, path, **kwargs)
         
     async def patch(self, service_name: str, path: str, **kwargs) -> Tuple[int, Dict[str, Any]]:
         """Requête PATCH"""
+
+
+
         return await self.request(service_name, RequestMethod.PATCH, path, **kwargs)
         
     async def delete(self, service_name: str, path: str, **kwargs) -> Tuple[int, Dict[str, Any]]:
         """Requête DELETE"""
+
+
+
         return await self.request(service_name, RequestMethod.DELETE, path, **kwargs)
         
     async def _execute_request_with_retry(self, endpoint: ServiceEndpoint, **request_kwargs) -> Tuple[int, Dict[str, Any]]:
@@ -579,6 +603,9 @@ class RestClient:
         
     def get_client_stats(self) -> Dict[str, Any]:
         """Retourne les statistiques du client"""
+
+
+
         return {
             "auth_tokens_cached": len(self.auth_tokens),
             "session_active": self.session is not None,

@@ -5,7 +5,7 @@ Crawler Configuration Management
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 Unauthorized use, copying or distribution prohibited.
 
 Professional configuration management for web crawling operations.
@@ -175,6 +175,9 @@ class CrawlerConfig:
     
     def get_platform_config(self, platform: CrawlerType) -> Optional[PlatformConfig]:
         """Get configuration for a specific platform."""
+
+
+
         return self.platforms.get(platform.value)
     
     def is_platform_enabled(self, platform: CrawlerType) -> bool:
@@ -202,6 +205,9 @@ class CrawlerConfig:
     @classmethod
     def from_environment(cls) -> 'CrawlerConfig':
         """Create configuration from environment variables."""
+
+
+
         return cls(
             concurrent_crawlers=int(os.getenv("CRAWLER_CONCURRENT_CRAWLERS", "5")),
             max_workers_per_crawler=int(os.getenv("CRAWLER_MAX_WORKERS", "10")),

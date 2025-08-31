@@ -23,7 +23,7 @@ functionality with real implementations and performance benchmarks.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
 
@@ -320,7 +320,7 @@ class TestAdvancedContentProcessor:
     @pytest.mark.asyncio
     async def test_emoji_handling(self, content_processor):
         """Test emoji detection and handling"""
-        emoji_text = "I love this! 😍🎉 Great work! 👏✨ #amazing #love ❤️"
+        emoji_text = "I love this!  Great work!  #amazing #love "
         
         processed = await content_processor.process_emojis(
             text=emoji_text,
@@ -346,7 +346,7 @@ class TestAdvancedContentProcessor:
         # Should detect emojis
         detected_emojis = emoji_data['detected_emojis']
         assert len(detected_emojis) > 0
-        assert '😍' in [emoji['emoji'] for emoji in detected_emojis]
+        assert '' in [emoji['emoji'] for emoji in detected_emojis]
 
     @pytest.mark.asyncio
     async def test_hashtag_processing(self, content_processor, sample_social_content):
@@ -514,7 +514,7 @@ class TestAdvancedContentProcessor:
             "Deutsch: Ärger, Öl, Übung, ß",
             "Français: café, crème, âme, être",
             "Español: niño, señor, corazón",
-            "Mixed: Hello 世界 🌍 Привет мир"
+            "Mixed: Hello   Привет мир"
         ]
         
         for text in test_texts:

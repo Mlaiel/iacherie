@@ -8,7 +8,7 @@ dynamic routing capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ WARNING: This code is proprietary and confidential.
+ WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
@@ -118,6 +118,9 @@ class ConsistentHashRing:
     
     def _hash(self, key: str) -> int:
         """Generate hash for key"""
+
+
+
         return int(hashlib.md5(key.encode()).hexdigest(), 16)
     
     def add_server(self, server: TrafficServer) -> None:
@@ -402,6 +405,9 @@ class TrafficDistributor:
     
     def add_server(self, server: TrafficServer) -> bool:
         """Add server to traffic distribution"""
+
+
+
         try:
             with self.lock:
                 self.servers[server.id] = server
@@ -416,6 +422,9 @@ class TrafficDistributor:
     
     def remove_server(self, server_id: str) -> bool:
         """Remove server from traffic distribution"""
+
+
+
         try:
             with self.lock:
                 if server_id in self.servers:
@@ -433,6 +442,9 @@ class TrafficDistributor:
     
     def add_routing_rule(self, rule: RoutingRule) -> bool:
         """Add traffic routing rule"""
+
+
+
         try:
             with self.lock:
                 # Remove existing rule with same name
@@ -507,6 +519,9 @@ class TrafficDistributor:
     
     def distribute_request(self, request: TrafficRequest) -> Optional[TrafficServer]:
         """Distribute request to appropriate server"""
+
+
+
         try:
             with self.lock:
                 # Find matching routing rule
@@ -583,6 +598,9 @@ class TrafficDistributor:
     
     def update_server_metrics(self, server_id: str, metrics: ServerMetrics) -> bool:
         """Update server metrics"""
+
+
+
         try:
             with self.lock:
                 if server_id in self.servers:
@@ -603,6 +621,9 @@ class TrafficDistributor:
     
     def configure_platform_services(self) -> bool:
         """Configure traffic distribution for platform services"""
+
+
+
         try:
             # Configure servers for different services
             servers = [

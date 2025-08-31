@@ -258,6 +258,9 @@ class ScalingEngine(BaseAgent):
                                metrics: Dict[str, float],
                                current_instances: int) -> ScalingDecision:
         """Reactive scaling based on current metrics"""
+
+
+
         try:
             # Define scaling thresholds
             scale_up_score = 0
@@ -340,6 +343,9 @@ class ScalingEngine(BaseAgent):
                                  current_instances: int,
                                  predictions: Optional[Dict[str, ResourcePrediction]]) -> ScalingDecision:
         """Predictive scaling based on forecasted metrics"""
+
+
+
         try:
             if not predictions:
                 # Fallback to reactive if no predictions available
@@ -411,6 +417,9 @@ class ScalingEngine(BaseAgent):
                              current_instances: int,
                              predictions: Optional[Dict[str, ResourcePrediction]]) -> ScalingDecision:
         """Hybrid scaling combining reactive and predictive approaches"""
+
+
+
         try:
             # Get both reactive and predictive decisions
             reactive_decision = await self._reactive_scaling(service_name, metrics, current_instances)
@@ -469,6 +478,9 @@ class ScalingEngine(BaseAgent):
                                      metrics: Dict[str, float],
                                      current_instances: int) -> ScalingDecision:
         """Cost-optimized scaling to minimize infrastructure costs"""
+
+
+
         try:
             # Get baseline reactive decision
             base_decision = await self._reactive_scaling(service_name, metrics, current_instances)
@@ -521,6 +533,9 @@ class ScalingEngine(BaseAgent):
                                            metrics: Dict[str, float],
                                            current_instances: int) -> ScalingDecision:
         """Performance-optimized scaling to maximize system performance"""
+
+
+
         try:
             # Get baseline reactive decision
             base_decision = await self._reactive_scaling(service_name, metrics, current_instances)
@@ -578,6 +593,9 @@ class ScalingEngine(BaseAgent):
                                 metrics: Dict[str, float],
                                 current_instances: int) -> ScalingDecision:
         """Proactive scaling based on historical patterns"""
+
+
+
         try:
             # Analyze historical patterns
             historical_pattern = await self._analyze_historical_patterns(service_name)
@@ -623,6 +641,9 @@ class ScalingEngine(BaseAgent):
     async def _generate_predictions(self, service_name: str, 
                                    current_metrics: Dict[str, float]) -> Dict[str, ResourcePrediction]:
         """Generate resource predictions using ML models"""
+
+
+
         try:
             predictions = {}
             
@@ -650,6 +671,9 @@ class ScalingEngine(BaseAgent):
     async def _simple_trend_predictions(self, service_name: str, 
                                        current_metrics: Dict[str, float]) -> Dict[str, ResourcePrediction]:
         """Generate simple trend-based predictions"""
+
+
+
         try:
             predictions = {}
             
@@ -718,6 +742,9 @@ class ScalingEngine(BaseAgent):
                                    current_metrics: Dict[str, float],
                                    model: ScalingModel) -> Dict[str, ResourcePrediction]:
         """Generate ML-based predictions (placeholder for actual ML implementation)"""
+
+
+
         try:
             # This would use a trained ML model in production
             # For now, return enhanced trend-based predictions
@@ -736,6 +763,9 @@ class ScalingEngine(BaseAgent):
 
     async def _analyze_historical_patterns(self, service_name: str) -> Dict[str, Any]:
         """Analyze historical patterns for proactive scaling"""
+
+
+
         try:
             current_hour = datetime.now().hour
             current_day = datetime.now().weekday()
@@ -770,6 +800,9 @@ class ScalingEngine(BaseAgent):
                                            metrics: Dict[str, float],
                                            predictions: Optional[Dict[str, ResourcePrediction]]) -> float:
         """Calculate confidence score for scaling decision"""
+
+
+
         try:
             confidence_factors = []
             
@@ -834,6 +867,9 @@ class ScalingEngine(BaseAgent):
                                    metrics: Dict[str, float],
                                    predictions: Optional[Dict[str, ResourcePrediction]]) -> List[str]:
         """Generate human-readable reasoning for scaling decision"""
+
+
+
         try:
             reasoning = []
             
@@ -877,6 +913,9 @@ class ScalingEngine(BaseAgent):
 
     async def _estimate_cost_impact(self, decision: ScalingDecision) -> float:
         """Estimate cost impact of scaling decision"""
+
+
+
         try:
             # Simple cost estimation (would be more complex in production)
             instance_cost_per_hour = 0.50  # $0.50 per instance per hour
@@ -892,6 +931,9 @@ class ScalingEngine(BaseAgent):
 
     async def _estimate_performance_impact(self, decision: ScalingDecision) -> float:
         """Estimate performance impact of scaling decision"""
+
+
+
         try:
             # Simple performance estimation
             if decision.direction == ScalingDirection.UP:
@@ -915,6 +957,9 @@ class ScalingEngine(BaseAgent):
     async def record_scaling_outcome(self, service_name: str, decision: ScalingDecision, 
                                    success: bool, actual_performance_change: Optional[float] = None):
         """Record scaling outcome for learning and optimization"""
+
+
+
         try:
             outcome = {
                 "timestamp": datetime.now(),
@@ -941,6 +986,9 @@ class ScalingEngine(BaseAgent):
 
     async def _learn_from_outcome(self, outcome: Dict[str, Any]):
         """Learn from scaling outcome to improve future decisions"""
+
+
+
         try:
             # Simple learning: adjust feature weights based on success/failure
             decision = outcome["decision"]
@@ -963,6 +1011,9 @@ class ScalingEngine(BaseAgent):
 
     async def get_engine_status(self) -> Dict[str, Any]:
         """Get scaling engine status and statistics"""
+
+
+
         try:
             return {
                 "engine_stats": self.engine_stats,
@@ -982,6 +1033,9 @@ class ScalingEngine(BaseAgent):
 
     async def health_check(self) -> Dict[str, Any]:
         """Health check for scaling engine"""
+
+
+
         try:
             success_rate = 0.0
             if self.engine_stats["successful_scalings"] + self.engine_stats["failed_scalings"] > 0:

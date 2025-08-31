@@ -91,6 +91,9 @@ class AudioBuffer:
     
     def get_size_bytes(self) -> int:
         """Get buffer size in bytes"""
+
+
+
         return self.data.nbytes
     
     def get_rms_level(self) -> float:
@@ -453,10 +456,16 @@ class ConversionResult:
     
     def is_successful(self) -> bool:
         """Check if conversion was successful"""
+
+
+
         return self.success and self.error_message is None
     
     def has_warnings(self) -> bool:
         """Check if result has warnings"""
+
+
+
         return len(self.warnings) > 0
     
     def get_quality_grade(self) -> str:
@@ -474,6 +483,9 @@ class ConversionResult:
     
     def get_processing_summary(self) -> Dict[str, Any]:
         """Get processing summary"""
+
+
+
         return {
             'conversion_id': self.conversion_id,
             'success': self.success,
@@ -644,6 +656,9 @@ class BatchConversionResult:
     
     def get_summary(self) -> Dict[str, Any]:
         """Get batch processing summary"""
+
+
+
         return {
             'batch_id': self.batch_id,
             'total_requests': self.total_requests,

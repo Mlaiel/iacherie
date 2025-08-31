@@ -8,7 +8,7 @@ Responsibility: Advanced content lifecycle management with AI enhancement and op
 Technologies: Python, AI/ML Processing, Multi-Format Support, Cloud Storage, CDN
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -287,7 +287,7 @@ class ProcessingTask:
 
 class ContentManager(ABC):
     """
-    🎨 Advanced Multi-Format Content Manager - IA-Influencer-Agent
+     Advanced Multi-Format Content Manager - IA-Influencer-Agent
     
     Responsabilité:
     Gestionnaire industriel de contenu multi-format avec IA avancée
@@ -343,7 +343,7 @@ class ContentManager(ABC):
             "content_by_type": {ct.value: 0 for ct in ContentType}
         }
         
-        logger.info(f"🎨 Content Manager initialized - Storage: {self.config.storage_backend}")
+        logger.info(f" Content Manager initialized - Storage: {self.config.storage_backend}")
     
     @abstractmethod
     async def initialize_pool(self) -> bool:
@@ -456,6 +456,9 @@ class ContentManager(ABC):
         Returns:
             ContentItem: Created content item
         """
+
+
+
         try:
             # Determine format from filename
             file_extension = Path(filename).suffix.lower().lstrip('.')
@@ -494,11 +497,11 @@ class ContentManager(ABC):
                 self._metrics["total_content_items"] += 1
                 self._metrics["content_by_type"][content_type.value] += 1
             
-            logger.info(f"🎨 Content item created: {content_id}")
+            logger.info(f" Content item created: {content_id}")
             return content_item
             
         except Exception as e:
-            logger.error(f"❌ Content item creation failed: {e}")
+            logger.error(f" Content item creation failed: {e}")
             raise
     
     async def get_content_analytics(
@@ -639,6 +642,9 @@ class ContentManager(ABC):
         Returns:
             ContentItem: Optimized content item
         """
+
+
+
         try:
             content_item = self._content_items.get(content_id)
             if not content_item:
@@ -664,11 +670,11 @@ class ContentManager(ABC):
             await self._processing_queue.put(optimization_task)
             self._processing_tasks[optimization_task.id] = optimization_task
             
-            logger.info(f"🎨 Platform optimization queued: {content_id} for {platform}")
+            logger.info(f" Platform optimization queued: {content_id} for {platform}")
             return content_item
             
         except Exception as e:
-            logger.error(f"❌ Platform optimization failed: {e}")
+            logger.error(f" Platform optimization failed: {e}")
             raise
     
     async def search_content(
@@ -800,7 +806,7 @@ class ContentManager(ABC):
             worker_task = asyncio.create_task(self._processing_worker(i))
             self._worker_tasks.append(worker_task)
         
-        logger.info(f"🎨 Started {self.config.processing_workers} processing workers")
+        logger.info(f" Started {self.config.processing_workers} processing workers")
     
     async def _processing_worker(self, worker_id: int) -> None:
         """Background worker for content processing"""
@@ -821,11 +827,14 @@ class ContentManager(ABC):
             except asyncio.TimeoutError:
                 continue
             except Exception as e:
-                logger.error(f"❌ Processing worker {worker_id} error: {e}")
+                logger.error(f" Processing worker {worker_id} error: {e}")
                 await asyncio.sleep(1)
     
     async def _execute_processing_task(self, task: ProcessingTask) -> None:
         """Execute a content processing task"""
+
+
+
         try:
             task.status = "running"
             task.started_at = datetime.utcnow()
@@ -851,12 +860,12 @@ class ContentManager(ABC):
             with self._lock:
                 self._metrics["processing_completed"] += 1
             
-            logger.info(f"🎨 Processing completed: {task.id}")
+            logger.info(f" Processing completed: {task.id}")
             
         except Exception as e:
             task.status = "failed"
             task.error_message = str(e)
-            logger.error(f"❌ Processing failed for task {task.id}: {e}")
+            logger.error(f" Processing failed for task {task.id}: {e}")
             
             # Retry logic
             if task.retry_count < task.max_retries:
@@ -904,13 +913,16 @@ class ContentManager(ABC):
         """Context manager for content operations"""
         session_id = str(uuid.uuid4())
         try:
-            logger.info(f"🎨 Content session started: {session_id}")
+            logger.info(f" Content session started: {session_id}")
             yield session_id
         finally:
-            logger.info(f"🎨 Content session ended: {session_id}")
+            logger.info(f" Content session ended: {session_id}")
     
     async def cleanup(self) -> bool:
         """Cleanup content management resources"""
+
+
+
         try:
             # Stop processing workers
             self._processing_active = False
@@ -943,7 +955,7 @@ class ContentManager(ABC):
             return True
             
         except Exception as e:
-            logger.error(f"❌ Content cleanup failed: {e}")
+            logger.error(f" Content cleanup failed: {e}")
             return False
     
     def get_stats(self) -> Dict[str, Any]:

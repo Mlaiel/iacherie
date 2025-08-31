@@ -7,7 +7,7 @@ including archive entries, configurations, and metadata schemas.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -59,6 +59,9 @@ class ArchiveEntry:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary representation"""
+
+
+
         return {
             "archive_id": self.archive_id,
             "content_id": self.content_id,
@@ -153,16 +156,25 @@ class StorageQuota:
     @property
     def is_warning(self) -> bool:
         """Check if usage exceeds warning threshold"""
+
+
+
         return self.usage_percentage >= self.warning_threshold
     
     @property
     def is_critical(self) -> bool:
         """Check if usage exceeds critical threshold"""
+
+
+
         return self.usage_percentage >= self.critical_threshold
     
     @property
     def available_bytes(self) -> int:
         """Calculate available bytes"""
+
+
+
         return max(0, self.limit_bytes - self.used_bytes)
 
 

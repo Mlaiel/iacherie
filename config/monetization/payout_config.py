@@ -523,6 +523,9 @@ class PayoutConfig:
     
     def get_method_config(self, method: PayoutMethod) -> Optional[PayoutMethodConfig]:
         """Get configuration for a specific payout method."""
+
+
+
         return self.PAYOUT_METHODS.get(method)
     
     def get_enabled_methods(self) -> List[PayoutMethodConfig]:
@@ -532,6 +535,9 @@ class PayoutConfig:
     
     def get_methods_for_country(self, country_code: str) -> List[PayoutMethodConfig]:
         """Get available payout methods for a specific country."""
+
+
+
         return [
             config for config in self.get_enabled_methods()
             if country_code.upper() in config.supported_countries
@@ -540,6 +546,9 @@ class PayoutConfig:
     
     def get_methods_for_currency(self, currency: str) -> List[PayoutMethodConfig]:
         """Get available payout methods for a specific currency."""
+
+
+
         return [
             config for config in self.get_enabled_methods()
             if currency.upper() in config.supported_currencies
@@ -916,10 +925,16 @@ class PayoutConfig:
     
     def get_method_config(self, method: PayoutMethod) -> Optional[PayoutMethodConfig]:
         """Get configuration for a specific payout method."""
+
+
+
         return self.PAYOUT_METHODS.get(method)
     
     def get_enabled_methods(self) -> List[PayoutMethod]:
         """Get list of enabled payout methods."""
+
+
+
         return [
             method for method, config in self.PAYOUT_METHODS.items() 
             if config.enabled
@@ -927,6 +942,9 @@ class PayoutConfig:
     
     def get_methods_for_currency(self, currency: str) -> List[PayoutMethod]:
         """Get available payout methods for a specific currency."""
+
+
+
         return [
             method for method, config in self.PAYOUT_METHODS.items()
             if config.enabled and currency in config.supported_currencies
@@ -934,6 +952,9 @@ class PayoutConfig:
     
     def get_methods_for_country(self, country: str) -> List[PayoutMethod]:
         """Get available payout methods for a specific country."""
+
+
+
         return [
             method for method, config in self.PAYOUT_METHODS.items()
             if config.enabled and country in config.supported_countries
@@ -941,6 +962,9 @@ class PayoutConfig:
     
     def get_threshold_config(self, currency: str) -> Optional[PayoutThreshold]:
         """Get threshold configuration for a currency."""
+
+
+
         return self.PAYOUT_THRESHOLDS.get(
             currency, 
             self.PAYOUT_THRESHOLDS.get(self.DEFAULT_CURRENCY)

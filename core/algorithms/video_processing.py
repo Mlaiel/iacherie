@@ -76,6 +76,9 @@ class VideoProcessingEngine:
     
     def _initialize_models(self) -> None:
         """Initialize AI models for video analysis"""
+
+
+
         try:
             # CLIP model for scene understanding
             self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -93,12 +96,18 @@ class VideoProcessingEngine:
     
     def _initialize_opencv(self) -> None:
         """Initialize OpenCV components"""
+
+
+
         try:
             # Background subtractor for motion detection
             self.bg_subtractor = cv2.createBackgroundSubtractorMOG2()
             
     def _initialize_opencv(self) -> None:
         """Initialize OpenCV components"""
+
+
+
         try:
             # Background subtractor for motion detection
             self.bg_subtractor = cv2.createBackgroundSubtractorMOG2()
@@ -119,6 +128,9 @@ class VideoProcessingEngine:
     
     def _load_object_detection_models(self) -> None:
         """Load object detection models"""
+
+
+
         try:
             # YOLOv5 model
             self.yolo_model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
@@ -148,6 +160,9 @@ class VideoProcessingEngine:
     
     def _load_video_classification_models(self) -> None:
         """Load video classification models"""
+
+
+
         try:
             # Scene classification labels
             self.scene_labels = [
@@ -180,6 +195,9 @@ class VideoProcessingEngine:
         Returns:
             VideoFeatures: Complete video analysis results
         """
+
+
+
         try:
             # Open video file
             cap = cv2.VideoCapture(video_path)
@@ -220,6 +238,9 @@ class VideoProcessingEngine:
     
     def _extract_video_metadata(self, cap: cv2.VideoCapture, video_path: str) -> Dict[str, Any]:
         """Extract comprehensive video metadata"""
+
+
+
         try:
             fps = cap.get(cv2.CAP_PROP_FPS)
             frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -258,6 +279,9 @@ class VideoProcessingEngine:
     
     def _process_frames(self, cap: cv2.VideoCapture, config: Optional[Dict[str, Any]] = None) -> List[FrameAnalysis]:
         """Process video frames with AI analysis"""
+
+
+
         try:
             frame_analyses = []
             frame_number = 0
@@ -290,6 +314,9 @@ class VideoProcessingEngine:
     
     def _analyze_frame(self, frame: np.ndarray, frame_number: int, timestamp: float) -> FrameAnalysis:
         """Comprehensive analysis of a single frame"""
+
+
+
         try:
             # Object detection
             objects_detected = self._detect_objects(frame)
@@ -325,6 +352,9 @@ class VideoProcessingEngine:
     
     def _detect_objects(self, frame: np.ndarray) -> List[Dict[str, Any]]:
         """Detect objects in frame using YOLO"""
+
+
+
         try:
             if self.yolo_model is None:
                 return []
@@ -359,6 +389,9 @@ class VideoProcessingEngine:
     
     def _classify_scene(self, frame: np.ndarray) -> Dict[str, float]:
         """Classify scene content using CLIP"""
+
+
+
         try:
             # Convert frame to PIL Image
             rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -390,6 +423,9 @@ class VideoProcessingEngine:
     
     def _extract_frame_features(self, frame: np.ndarray) -> np.ndarray:
         """Extract visual features from frame"""
+
+
+
         try:
             # Resize frame for processing
             resized = cv2.resize(frame, (224, 224))
@@ -421,6 +457,9 @@ class VideoProcessingEngine:
     
     def _extract_sift_features(self, gray_frame: np.ndarray) -> np.ndarray:
         """Extract SIFT features from grayscale frame"""
+
+
+
         try:
             keypoints, descriptors = self.sift_detector.detectAndCompute(gray_frame, None)
             
@@ -441,6 +480,9 @@ class VideoProcessingEngine:
     
     def _assess_frame_quality(self, frame: np.ndarray) -> float:
         """Assess frame quality metrics"""
+
+
+
         try:
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
             
@@ -468,6 +510,9 @@ class VideoProcessingEngine:
     
     def _extract_visual_features(self, frame_analyses: List[FrameAnalysis]) -> Dict[str, np.ndarray]:
         """Extract aggregated visual features from all frames"""
+
+
+
         try:
             if not frame_analyses:
                 return {}
@@ -499,6 +544,9 @@ class VideoProcessingEngine:
     
     def _extract_dominant_colors(self, frame_analyses: List[FrameAnalysis]) -> np.ndarray:
         """Extract dominant colors from video"""
+
+
+
         try:
             # Sample color histograms from frames
             color_samples = []
@@ -524,6 +572,9 @@ class VideoProcessingEngine:
     def _extract_temporal_features(self, frame_analyses: List[FrameAnalysis], 
                                   metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Extract temporal features and patterns"""
+
+
+
         try:
             if not frame_analyses:
                 return {}
@@ -551,6 +602,9 @@ class VideoProcessingEngine:
     
     def _detect_scene_transitions(self, frame_analyses: List[FrameAnalysis]) -> List[float]:
         """Detect scene transitions based on visual changes"""
+
+
+
         try:
             transitions = []
             
@@ -574,6 +628,9 @@ class VideoProcessingEngine:
     
     def _create_object_timeline(self, frame_analyses: List[FrameAnalysis]) -> Dict[str, List[float]]:
         """Create timeline of object appearances"""
+
+
+
         try:
             object_timeline = {}
             
@@ -592,6 +649,9 @@ class VideoProcessingEngine:
     
     def _extract_motion_features(self, frame_analyses: List[FrameAnalysis]) -> Dict[str, np.ndarray]:
         """Extract motion and camera movement features"""
+
+
+
         try:
             # Motion intensity over time
             motion_intensity = []
@@ -625,6 +685,9 @@ class VideoProcessingEngine:
     
     def _extract_scene_features(self, frame_analyses: List[FrameAnalysis]) -> Dict[str, List[str]]:
         """Extract scene and content classification features"""
+
+
+
         try:
             # Aggregate scene classifications
             scene_votes = {}
@@ -658,6 +721,9 @@ class VideoProcessingEngine:
     
     def _classify_video_content(self, frame_analyses: List[FrameAnalysis]) -> str:
         """Classify overall video content type"""
+
+
+
         try:
             # Analyze object patterns and scene types
             object_counts = {}
@@ -686,6 +752,9 @@ class VideoProcessingEngine:
     def _assess_video_quality(self, frame_analyses: List[FrameAnalysis], 
                              metadata: Dict[str, Any]) -> Dict[str, float]:
         """Assess overall video quality metrics"""
+
+
+
         try:
             # Frame quality statistics
             quality_scores = [analysis.quality_score for analysis in frame_analyses]
@@ -721,6 +790,9 @@ class VideoProcessingEngine:
     
     def _generate_video_fingerprint(self, frame_analyses: List[FrameAnalysis]) -> np.ndarray:
         """Generate unique video fingerprint for content identification"""
+
+
+
         try:
             # Collect key visual features
             key_features = []
@@ -752,6 +824,9 @@ class VideoProcessingEngine:
     
     def _get_file_size(self, file_path: str) -> float:
         """Get file size in MB"""
+
+
+
         try:
             import os
             size_bytes = os.path.getsize(file_path)
@@ -764,6 +839,9 @@ class VideoProcessingEngine:
         """
         Compare similarity between two videos
         """
+
+
+
         try:
             similarity_scores = {}
             
@@ -797,6 +875,9 @@ class VideoProcessingEngine:
         """
         Extract key frames for thumbnail generation
         """
+
+
+
         try:
             cap = cv2.VideoCapture(video_path)
             frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -825,6 +906,9 @@ class VideoProcessingEngine:
         """
         Detect potential issues in video content
         """
+
+
+
         try:
             anomalies = {}
             
@@ -871,6 +955,9 @@ class VideoProcessingEngine:
     
     def _load_object_detection_models(self) -> None:
         """Load pre-trained object detection models"""
+
+
+
         try:
             # YOLOv5 model
             self.yolo_model = torch.hub.load('ultralytics/yolov5', 'yolov5s', pretrained=True)
@@ -897,6 +984,9 @@ class VideoProcessingEngine:
         Returns:
             Complete video analysis results
         """
+
+
+
         try:
             # Load and preprocess video
             if isinstance(video_data, str):
@@ -968,6 +1058,9 @@ class VideoProcessingEngine:
     def _extract_video_features(self, frames: List[np.ndarray], 
                                config: Dict[str, Any]) -> VideoFeatures:
         """Extract comprehensive video features"""
+
+
+
         try:
             # Visual features from individual frames
             visual_features = self._extract_visual_features(frames)
@@ -1161,6 +1254,9 @@ class VideoProcessingEngine:
     
     def _detect_objects(self, frame: np.ndarray) -> List[Dict[str, Any]]:
         """Detect objects in a single frame using YOLO"""
+
+
+
         try:
             # Convert BGR to RGB for YOLO
             rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -1186,6 +1282,9 @@ class VideoProcessingEngine:
     
     def _classify_scene(self, frame: np.ndarray) -> Dict[str, float]:
         """Classify scene content using CLIP"""
+
+
+
         try:
             # Convert frame to PIL Image
             rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -1268,6 +1367,9 @@ class VideoProcessingEngine:
     
     def _generate_video_fingerprint(self, frames: List[np.ndarray]) -> np.ndarray:
         """Generate video fingerprint for similarity matching"""
+
+
+
         try:
             if not frames:
                 return np.array([])
@@ -1487,6 +1589,9 @@ class VideoProcessingEngine:
     def calculate_similarity(self, fingerprint1: np.ndarray, 
                            fingerprint2: np.ndarray) -> float:
         """Calculate similarity between two video fingerprints"""
+
+
+
         try:
             if len(fingerprint1) == 0 or len(fingerprint2) == 0:
                 return 0.0

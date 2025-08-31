@@ -1,15 +1,15 @@
 """
-🚀 Notification System - IA Influencer Agent Platform Enterprise
+ Notification System - IA Influencer Agent Platform Enterprise
 ===============================================================
 Module: backend/platform_core/notifications/notification_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ===============================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 SYSTÈME DE NOTIFICATIONS MULTI-CANAL ENTERPRISE
+ SYSTÈME DE NOTIFICATIONS MULTI-CANAL ENTERPRISE
 Notifications intelligentes avec templates et targeting avancé
 - Email/SMS/Push/In-app notifications
 - Templates dynamiques avec personnalisation IA
@@ -131,17 +131,20 @@ class NotificationManager:
         self.sms_config = config.get("sms", {})
         self.push_config = config.get("push", {})
         
-        logger.info("✅ NotificationManager initialized")
+        logger.info(" NotificationManager initialized")
     
     async def send_notification(self, request: NotificationRequest) -> List[NotificationResult]:
         """Envoyer une notification"""
+
+
+
         try:
             results = []
             
             # Vérifier si c'est programmé
             if request.scheduled_at and request.scheduled_at > datetime.utcnow():
                 self.pending_notifications.append(request)
-                logger.info(f"📅 Notification {request.notification_id} scheduled for {request.scheduled_at}")
+                logger.info(f" Notification {request.notification_id} scheduled for {request.scheduled_at}")
                 return []
             
             # Traiter chaque destinataire
@@ -150,11 +153,11 @@ class NotificationManager:
                 results.append(result)
                 self.sent_notifications[f"{request.notification_id}_{recipient.user_id}"] = result
             
-            logger.info(f"✅ Notification {request.notification_id} sent to {len(results)} recipients")
+            logger.info(f" Notification {request.notification_id} sent to {len(results)} recipients")
             return results
             
         except Exception as e:
-            logger.error(f"❌ Failed to send notification: {e}")
+            logger.error(f" Failed to send notification: {e}")
             return [NotificationResult(
                 notification_id=request.notification_id,
                 recipient_id="error",
@@ -164,6 +167,9 @@ class NotificationManager:
     
     async def _send_to_recipient(self, request: NotificationRequest, recipient: NotificationRecipient) -> NotificationResult:
         """Envoyer la notification à un destinataire spécifique"""
+
+
+
         try:
             # Vérifier les préférences du destinataire
             if not self._check_recipient_preferences(request, recipient):
@@ -204,7 +210,7 @@ class NotificationManager:
             )
             
         except Exception as e:
-            logger.error(f"❌ Failed to send to recipient {recipient.user_id}: {e}")
+            logger.error(f" Failed to send to recipient {recipient.user_id}: {e}")
             return NotificationResult(
                 notification_id=request.notification_id,
                 recipient_id=recipient.user_id,
@@ -214,6 +220,9 @@ class NotificationManager:
     
     async def _prepare_content(self, request: NotificationRequest, recipient: NotificationRecipient) -> tuple[str, str]:
         """Préparer le contenu de la notification"""
+
+
+
         try:
             subject = request.subject or ""
             body = request.body or ""
@@ -240,11 +249,14 @@ class NotificationManager:
             return subject, body
             
         except Exception as e:
-            logger.error(f"❌ Failed to prepare content: {e}")
+            logger.error(f" Failed to prepare content: {e}")
             return request.subject or "Notification", request.body or ""
     
     async def _send_email(self, email: str, subject: str, body: str) -> tuple[bool, Optional[str]]:
         """Envoyer un email"""
+
+
+
         try:
             smtp_server = self.email_config.get("smtp_server", "localhost")
             smtp_port = self.email_config.get("smtp_port", 587)
@@ -260,48 +272,60 @@ class NotificationManager:
             msg.attach(MIMEText(body, "html"))
             
             # Pour cette implémentation placeholder, on simule l'envoi
-            logger.info(f"📧 Email sent to {email}: {subject}")
+            logger.info(f" Email sent to {email}: {subject}")
             return True, None
             
         except Exception as e:
-            logger.error(f"❌ Email send failed: {e}")
+            logger.error(f" Email send failed: {e}")
             return False, str(e)
     
     async def _send_sms(self, phone: str, message: str) -> tuple[bool, Optional[str]]:
         """Envoyer un SMS"""
+
+
+
         try:
             # Placeholder pour intégration SMS (Twilio, etc.)
-            logger.info(f"📱 SMS sent to {phone}: {message[:50]}...")
+            logger.info(f" SMS sent to {phone}: {message[:50]}...")
             return True, None
             
         except Exception as e:
-            logger.error(f"❌ SMS send failed: {e}")
+            logger.error(f" SMS send failed: {e}")
             return False, str(e)
     
     async def _send_push(self, push_token: str, title: str, body: str) -> tuple[bool, Optional[str]]:
         """Envoyer une notification push"""
+
+
+
         try:
             # Placeholder pour intégration push (Firebase, etc.)
-            logger.info(f"🔔 Push notification sent to {push_token[:20]}...: {title}")
+            logger.info(f" Push notification sent to {push_token[:20]}...: {title}")
             return True, None
             
         except Exception as e:
-            logger.error(f"❌ Push send failed: {e}")
+            logger.error(f" Push send failed: {e}")
             return False, str(e)
     
     async def _send_in_app(self, user_id: str, title: str, body: str) -> tuple[bool, Optional[str]]:
         """Envoyer une notification in-app"""
+
+
+
         try:
             # Stocker en base pour récupération par l'app
-            logger.info(f"💬 In-app notification sent to {user_id}: {title}")
+            logger.info(f" In-app notification sent to {user_id}: {title}")
             return True, None
             
         except Exception as e:
-            logger.error(f"❌ In-app send failed: {e}")
+            logger.error(f" In-app send failed: {e}")
             return False, str(e)
     
     def _check_recipient_preferences(self, request: NotificationRequest, recipient: NotificationRecipient) -> bool:
         """Vérifier les préférences du destinataire"""
+
+
+
         try:
             # Vérifier si le type est autorisé
             pref_key = f"allow_{request.type.value}"
@@ -315,18 +339,21 @@ class NotificationManager:
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to check preferences: {e}")
+            logger.error(f" Failed to check preferences: {e}")
             return True  # Permettre par défaut en cas d'erreur
     
     async def create_template(self, template: NotificationTemplate) -> bool:
         """Créer un template de notification"""
+
+
+
         try:
             self.templates[template.template_id] = template
-            logger.info(f"✅ Template created: {template.template_id}")
+            logger.info(f" Template created: {template.template_id}")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to create template: {e}")
+            logger.error(f" Failed to create template: {e}")
             return False
     
     async def send_bulk_notification(
@@ -337,6 +364,9 @@ class NotificationManager:
         notification_type: NotificationType = NotificationType.EMAIL
     ) -> List[NotificationResult]:
         """Envoyer une notification en masse"""
+
+
+
         try:
             request = NotificationRequest(
                 notification_id=f"bulk_{uuid.uuid4().hex[:12]}",
@@ -350,11 +380,14 @@ class NotificationManager:
             return await self.send_notification(request)
             
         except Exception as e:
-            logger.error(f"❌ Failed to send bulk notification: {e}")
+            logger.error(f" Failed to send bulk notification: {e}")
             return []
     
     async def process_scheduled_notifications(self) -> None:
         """Traiter les notifications programmées"""
+
+
+
         try:
             now = datetime.utcnow()
             to_send = []
@@ -376,13 +409,16 @@ class NotificationManager:
                 await self.send_notification(notification)
             
             if to_send:
-                logger.info(f"✅ Processed {len(to_send)} scheduled notifications")
+                logger.info(f" Processed {len(to_send)} scheduled notifications")
                 
         except Exception as e:
-            logger.error(f"❌ Failed to process scheduled notifications: {e}")
+            logger.error(f" Failed to process scheduled notifications: {e}")
     
     async def get_notification_analytics(self, days: int = 30) -> Dict[str, Any]:
         """Obtenir les analytics des notifications"""
+
+
+
         try:
             cutoff_date = datetime.utcnow() - timedelta(days=days)
             
@@ -415,7 +451,7 @@ class NotificationManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to get analytics: {e}")
+            logger.error(f" Failed to get analytics: {e}")
             return {"error": str(e)}
 
 
@@ -457,9 +493,9 @@ class TemplateManager:
                 template_id="piracy_detected",
                 name="Piratage détecté",
                 type=NotificationType.EMAIL,
-                subject_template="⚠️ Piratage détecté pour '{content_title}'",
+                subject_template=" Piratage détecté pour '{content_title}'",
                 body_template="""
-                <h2>⚠️ Alerte Piratage</h2>
+                <h2> Alerte Piratage</h2>
                 <p>Nous avons détecté un usage non autorisé de votre contenu '{content_title}'.</p>
                 <p>Plateforme: {platform}</p>
                 <p>Actions automatiques en cours...</p>
@@ -473,16 +509,22 @@ class TemplateManager:
     
     def get_template(self, template_id: str) -> Optional[NotificationTemplate]:
         """Récupérer un template"""
+
+
+
         return self.templates.get(template_id)
     
     def create_template(self, template: NotificationTemplate) -> bool:
         """Créer un nouveau template"""
+
+
+
         try:
             self.templates[template.template_id] = template
-            logger.info(f"✅ Template created: {template.template_id}")
+            logger.info(f" Template created: {template.template_id}")
             return True
         except Exception as e:
-            logger.error(f"❌ Failed to create template: {e}")
+            logger.error(f" Failed to create template: {e}")
             return False
 
 

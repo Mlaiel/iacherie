@@ -8,12 +8,12 @@ Handles subreddits, posts, comments, and user data extraction.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
 
-🏗️ Architecture Enterprise - Équipe Projet Spécialisée :
+ Architecture Enterprise - Équipe Projet Spécialisée :
 • Lead Developer IA : Fahed Mlaiel (mlaiel@live.de)
 • Backend Senior Engineer : Architecture microservices & APIs
 • ML/AI Engineer : Intelligence artificielle & algorithmes avancés
@@ -281,6 +281,9 @@ class RedditCrawlerEngine(BaseCrawlerEngine):
 
     async def authenticate(self) -> bool:
         """Authenticate with Reddit API"""
+
+
+
         try:
             if self.use_async:
                 self.async_reddit = asyncpraw.Reddit(
@@ -740,6 +743,9 @@ class RedditCrawlerEngine(BaseCrawlerEngine):
 
     async def _process_post_data(self, submission) -> Optional[RedditPostData]:
         """Process Reddit submission into RedditPostData object"""
+
+
+
         try:
             return RedditPostData(
                 post_id=submission.id,
@@ -788,6 +794,9 @@ class RedditCrawlerEngine(BaseCrawlerEngine):
 
     async def _process_post_data_async(self, submission) -> Optional[RedditPostData]:
         """Process async Reddit submission into RedditPostData object"""
+
+
+
         try:
             author_name = '[deleted]'
             if submission.author:
@@ -840,6 +849,9 @@ class RedditCrawlerEngine(BaseCrawlerEngine):
 
     async def _process_comment_data(self, comment) -> Optional[RedditCommentData]:
         """Process Reddit comment into RedditCommentData object"""
+
+
+
         try:
             return RedditCommentData(
                 comment_id=comment.id,
@@ -875,6 +887,9 @@ class RedditCrawlerEngine(BaseCrawlerEngine):
 
     async def _process_comment_data_async(self, comment) -> Optional[RedditCommentData]:
         """Process async Reddit comment into RedditCommentData object"""
+
+
+
         try:
             author_name = '[deleted]'
             if comment.author:
@@ -919,6 +934,9 @@ class RedditCrawlerEngine(BaseCrawlerEngine):
 
     def __del__(self):
         """Cleanup resources"""
+
+
+
         try:
             if self.async_reddit:
                 asyncio.create_task(self.close())

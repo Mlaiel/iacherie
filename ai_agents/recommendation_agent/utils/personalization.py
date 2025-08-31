@@ -7,7 +7,7 @@ behavior prediction, and preference modeling for multi-modal content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -88,6 +88,9 @@ class PersonalizationEngine(IPersonalizationEngine):
         Build comprehensive user profile from interaction history using
         advanced behavioral analysis and preference extraction.
         """
+
+
+
         try:
             self.logger.info(f"Building user profile for user {user_id}")
             
@@ -157,6 +160,9 @@ class PersonalizationEngine(IPersonalizationEngine):
         Update user personalization vector with new interaction data using
         incremental learning and temporal weighting.
         """
+
+
+
         try:
             self.logger.info(f"Updating personalization vector for user {user_id}")
             
@@ -231,6 +237,9 @@ class PersonalizationEngine(IPersonalizationEngine):
         Calculate comprehensive user preferences across multiple dimensions
         including content types, categories, creators, and behavioral patterns.
         """
+
+
+
         try:
             user_profile = await self._get_user_profile(user_id)
             if not user_profile:
@@ -286,6 +295,9 @@ class PersonalizationEngine(IPersonalizationEngine):
         Predict user behavior for given content items using machine learning models
         and behavioral pattern analysis.
         """
+
+
+
         try:
             user_vector = await self._get_personalization_vector(user_id)
             if not user_vector:
@@ -495,6 +507,9 @@ class PersonalizationEngine(IPersonalizationEngine):
     
     def _get_vector_dimension(self) -> int:
         """Get the dimension of personalization vectors"""
+
+
+
         return len(ContentType) * 3 + 50  # Content types + behavior features
     
     def _get_feature_names(self) -> List[str]:

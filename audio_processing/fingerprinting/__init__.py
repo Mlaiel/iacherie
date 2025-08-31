@@ -150,6 +150,9 @@ __all__ = [
 
 def get_system_info() -> dict:
     """Get comprehensive system information and capabilities."""
+
+
+
     try:
         import platform
         import psutil
@@ -189,6 +192,9 @@ def create_fingerprinting_pipeline(config: dict = None) -> AudioFingerprintCore:
     Returns:
         Configured AudioFingerprintCore instance
     """
+
+
+
     try:
         # Initialize configuration
         config_manager = FingerprintingConfigManager()
@@ -230,6 +236,9 @@ def create_complete_system(config: dict = None, database_url: str = None) -> Aud
     Returns:
         Fully configured AudioFingerprintingService instance
     """
+
+
+
     try:
         # Create service with configuration
         service = create_service(database_url=database_url)
@@ -254,4 +263,4 @@ logging.getLogger(__name__).addHandler(logging.NullHandler())
 # Module initialization message
 logger.info("Audio Fingerprinting System v%s initialized", __version__)
 logger.info("Developed by %s", __author__)
-logger.info("⚠️  Proprietary software - Unauthorized use prohibited")
+logger.info("  Proprietary software - Unauthorized use prohibited")

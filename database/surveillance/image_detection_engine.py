@@ -86,6 +86,9 @@ class ImageFeatureExtractor:
         
     async def extract_features(self, image_data: bytes) -> Dict[str, Any]:
         """Extract comprehensive image features from image data."""
+
+
+
         try:
             # Load image from bytes
             image_array = np.frombuffer(image_data, np.uint8)
@@ -441,6 +444,9 @@ class ImageSimilarityCalculator:
         features2: Dict[str, Any]
     ) -> Tuple[float, Dict[str, float]]:
         """Calculate comprehensive similarity between two image feature sets."""
+
+
+
         try:
             similarities = {}
             weighted_sum = 0.0
@@ -493,6 +499,9 @@ class ImageSimilarityCalculator:
     
     async def _calculate_hash_similarity(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> Optional[float]:
         """Calculate similarity using perceptual hashes."""
+
+
+
         try:
             hash_similarities = []
             
@@ -516,6 +525,9 @@ class ImageSimilarityCalculator:
     
     async def _calculate_color_similarity(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> Optional[float]:
         """Calculate color similarity using various color features."""
+
+
+
         try:
             color_similarities = []
             
@@ -551,6 +563,9 @@ class ImageSimilarityCalculator:
     
     async def _calculate_texture_similarity(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> Optional[float]:
         """Calculate texture similarity using LBP and GLCM features."""
+
+
+
         try:
             texture_similarities = []
             
@@ -577,6 +592,9 @@ class ImageSimilarityCalculator:
     
     async def _calculate_keypoint_similarity(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> Optional[float]:
         """Calculate keypoint similarity using descriptor features."""
+
+
+
         try:
             keypoint_similarities = []
             
@@ -603,6 +621,9 @@ class ImageSimilarityCalculator:
     
     async def _calculate_edge_similarity(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> Optional[float]:
         """Calculate edge similarity using edge features."""
+
+
+
         try:
             edge_similarities = []
             
@@ -655,6 +676,9 @@ class ImageDetectionEngine:
         
     async def initialize(self) -> bool:
         """Initialize the image detection engine."""
+
+
+
         try:
             # Initialize ChromaDB client
             self.chroma_client = chromadb.Client()
@@ -683,6 +707,9 @@ class ImageDetectionEngine:
         metadata: Dict[str, Any]
     ) -> ImageFingerprint:
         """Create image fingerprint from image data."""
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -733,6 +760,9 @@ class ImageDetectionEngine:
     
     async def _store_fingerprint(self, fingerprint: ImageFingerprint) -> None:
         """Store fingerprint in vector database."""
+
+
+
         try:
             # Create embedding vector from key features
             embedding_features = []
@@ -789,6 +819,9 @@ class ImageDetectionEngine:
         detection_metadata: Dict[str, Any]
     ) -> List[ImageMatch]:
         """Detect image matches against stored fingerprints."""
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -909,6 +942,9 @@ class ImageDetectionEngine:
         stored_features: Dict[str, Any]
     ) -> float:
         """Calculate confidence level for match."""
+
+
+
         try:
             # Base confidence from overall similarity
             confidence = similarity_score
@@ -936,6 +972,9 @@ class ImageDetectionEngine:
     
     async def get_detection_statistics(self) -> Dict[str, Any]:
         """Get detection engine statistics."""
+
+
+
         return {
             "engine_type": "image",
             "status": "active",
@@ -949,6 +988,9 @@ class ImageDetectionEngine:
     
     async def cleanup(self) -> None:
         """Cleanup resources."""
+
+
+
         try:
             if self.chroma_client:
                 # ChromaDB cleanup if needed

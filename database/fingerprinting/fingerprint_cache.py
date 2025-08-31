@@ -133,6 +133,9 @@ class MemoryCache:
     
     def get(self, key: str) -> Optional[Any]:
         """Get item from memory cache"""
+
+
+
         try:
             # Check if key exists and not expired
             if key not in self._cache:
@@ -158,6 +161,9 @@ class MemoryCache:
     
     def set(self, key: str, value: Any) -> bool:
         """Set item in memory cache"""
+
+
+
         try:
             # Check if we need to evict
             if len(self._cache) >= self.max_size and key not in self._cache:
@@ -181,6 +187,9 @@ class MemoryCache:
     
     def delete(self, key: str) -> bool:
         """Delete item from memory cache"""
+
+
+
         try:
             if key in self._cache:
                 self._remove_key(key)
@@ -234,6 +243,9 @@ class MemoryCache:
     
     def size(self) -> int:
         """Get current cache size"""
+
+
+
         return len(self._cache)
     
     def hit_rate(self) -> float:
@@ -260,6 +272,9 @@ class RedisCache:
     
     async def get(self, key: str) -> Optional[Any]:
         """Get item from Redis cache"""
+
+
+
         try:
             # Get data from Redis
             data = await self.redis.get(self._make_key(key))
@@ -290,6 +305,9 @@ class RedisCache:
         tags: Optional[List[str]] = None
     ) -> bool:
         """Set item in Redis cache"""
+
+
+
         try:
             # Serialize data
             data = pickle.dumps(value)
@@ -321,6 +339,9 @@ class RedisCache:
     
     async def delete(self, key: str) -> bool:
         """Delete item from Redis cache"""
+
+
+
         try:
             redis_key = self._make_key(key)
             result = await self.redis.delete(redis_key)
@@ -337,6 +358,9 @@ class RedisCache:
     
     async def mget(self, keys: List[str]) -> List[Optional[Any]]:
         """Get multiple items from Redis cache"""
+
+
+
         try:
             redis_keys = [self._make_key(key) for key in keys]
             data_list = await self.redis.mget(redis_keys)
@@ -370,6 +394,9 @@ class RedisCache:
     
     async def mset(self, items: Dict[str, Any], ttl: Optional[int] = None) -> bool:
         """Set multiple items in Redis cache"""
+
+
+
         try:
             if not items:
                 return True
@@ -409,6 +436,9 @@ class RedisCache:
     
     async def invalidate_by_tags(self, tags: List[str]) -> int:
         """Invalidate cache entries by tags"""
+
+
+
         try:
             if not self.config.dependency_tracking:
                 return 0
@@ -441,6 +471,9 @@ class RedisCache:
     
     async def _store_tags(self, key: str, tags: List[str]) -> None:
         """Store tags for a cache key"""
+
+
+
         try:
             redis_key = self._make_key(key)
             
@@ -457,6 +490,9 @@ class RedisCache:
     
     async def _remove_tags(self, key: str) -> None:
         """Remove tags for a cache key"""
+
+
+
         try:
             redis_key = self._make_key(key)
             
@@ -476,10 +512,16 @@ class RedisCache:
     
     def _make_key(self, key: str) -> str:
         """Create Redis key with prefix"""
+
+
+
         return f"{self.fingerprint_prefix}{key}"
     
     async def size(self) -> int:
         """Get approximate cache size"""
+
+
+
         try:
             info = await self.redis.info('memory')
             return info.get('used_memory', 0)
@@ -652,6 +694,9 @@ class FingerprintCacheManager:
     
     async def invalidate_fingerprint(self, fingerprint_id: str) -> bool:
         """Invalidate all cache entries for a fingerprint"""
+
+
+
         try:
             # Remove from L1 cache
             l1_deleted = False
@@ -673,6 +718,9 @@ class FingerprintCacheManager:
     
     async def invalidate_by_content_type(self, content_type: str) -> int:
         """Invalidate all cache entries for a content type"""
+
+
+
         try:
             # Clear L1 cache (no tag support, so clear all)
             self.l1_cache.clear()
@@ -690,6 +738,9 @@ class FingerprintCacheManager:
     
     async def invalidate_by_user(self, user_id: str) -> int:
         """Invalidate all cache entries for a user"""
+
+
+
         try:
             # Clear L1 cache
             self.l1_cache.clear()
@@ -711,6 +762,9 @@ class FingerprintCacheManager:
         batch_size: int = 50
     ) -> int:
         """Warm cache with specified fingerprints"""
+
+
+
         try:
             warmed_count = 0
             
@@ -743,6 +797,9 @@ class FingerprintCacheManager:
     
     async def _warm_fingerprint(self, fingerprint_id: str) -> bool:
         """Warm cache for a single fingerprint"""
+
+
+
         try:
             # This would typically fetch from database and store in cache
             # For now, we'll simulate the warming process
@@ -766,6 +823,9 @@ class FingerprintCacheManager:
     
     async def clear_all_caches(self) -> bool:
         """Clear all cache levels"""
+
+
+
         try:
             # Clear L1 cache
             self.l1_cache.clear()
@@ -790,6 +850,9 @@ class FingerprintCacheManager:
     
     async def get_cache_statistics(self) -> Dict[str, Any]:
         """Get detailed cache statistics"""
+
+
+
         try:
             metrics = self.get_cache_metrics()
             
@@ -877,6 +940,9 @@ class FingerprintCacheManager:
     
     async def health_check(self) -> Dict[str, Any]:
         """Perform health check on cache components"""
+
+
+
         try:
             health = {
                 "status": "healthy",

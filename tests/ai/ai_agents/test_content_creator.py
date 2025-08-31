@@ -24,22 +24,22 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Email: mlaiel@live.de
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  STRICT LEGAL WARNING ⚠️
+  STRICT LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, modification, or use of this code,
 concepts, or ideas without explicit written permission from Fahed Mlaiel
 is strictly prohibited and will result in legal action.
 
 Project Team Specialties:
-✅ Lead Dev + Architecte Développeur IA
-✅ Développeur Backend Senior (Python/FastAPI/Django)  
-✅ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face)
-✅ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
-✅ Spécialiste Sécurité Backend
-✅ Architecte Microservices
-✅ Développeur Audio
-✅ DevOps Engineer
-✅ IA Prompt Engineer
+ Lead Dev + Architecte Développeur IA
+ Développeur Backend Senior (Python/FastAPI/Django)  
+ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face)
+ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
+ Spécialiste Sécurité Backend
+ Architecte Microservices
+ Développeur Audio
+ DevOps Engineer
+ IA Prompt Engineer
 """
 
 import pytest
@@ -152,6 +152,9 @@ class TestableContentCreatorAgent(ContentCreatorAgent):
         
     async def _create_image_content(self, request: ContentCreationRequest) -> Dict[str, Any]:
         """Mock image content creation"""
+
+
+
         return {
             "image_path": f"/tmp/generated_image_{uuid.uuid4()}.{request.format}",
             "dimensions": request.resolution or "1920x1080",
@@ -161,6 +164,9 @@ class TestableContentCreatorAgent(ContentCreatorAgent):
         
     async def _create_audio_content(self, request: ContentCreationRequest) -> Dict[str, Any]:
         """Mock audio content creation"""
+
+
+
         return {
             "audio_path": f"/tmp/generated_audio_{uuid.uuid4()}.{request.format}",
             "duration": request.duration_seconds or 30,
@@ -171,6 +177,9 @@ class TestableContentCreatorAgent(ContentCreatorAgent):
         
     async def _create_video_content(self, request: ContentCreationRequest) -> Dict[str, Any]:
         """Mock video content creation"""
+
+
+
         return {
             "video_path": f"/tmp/generated_video_{uuid.uuid4()}.{request.format}",
             "duration": request.duration_seconds or 60,
@@ -186,6 +195,9 @@ class TestContentCreatorAgent:
     @pytest.fixture
     def creator_config(self) -> AgentConfiguration:
         """Content creator agent configuration"""
+
+
+
         return AgentConfiguration(
             agent_id="content_creator_001",
             agent_name="Advanced Content Creator",
@@ -220,6 +232,9 @@ class TestContentCreatorAgent:
     @pytest.fixture
     def text_creation_request(self) -> ContentCreationRequest:
         """Text content creation request"""
+
+
+
         return ContentCreationRequest(
             content_type=ContentType.TEXT,
             format=ContentFormat.MARKDOWN,
@@ -243,6 +258,9 @@ class TestContentCreatorAgent:
     @pytest.fixture
     def image_creation_request(self) -> ContentCreationRequest:
         """Image content creation request"""
+
+
+
         return ContentCreationRequest(
             content_type=ContentType.IMAGE,
             format=ContentFormat.PNG,
@@ -263,6 +281,9 @@ class TestContentCreatorAgent:
     @pytest.fixture
     def audio_creation_request(self) -> ContentCreationRequest:
         """Audio content creation request"""
+
+
+
         return ContentCreationRequest(
             content_type=ContentType.AUDIO,
             format=ContentFormat.MP3,
@@ -874,7 +895,7 @@ pytestmark = [
 # Manual test runner
 async def run_manual_content_creator_tests():
     """Run content creator tests manually"""
-    print("🎨 Running Content Creator Agent Tests...")
+    print(" Running Content Creator Agent Tests...")
     
     try:
         test_suite = TestContentCreatorAgent()
@@ -894,11 +915,11 @@ async def run_manual_content_creator_tests():
         agent = TestableContentCreatorAgent(config)
         await agent._custom_initialize()
         
-        print("✅ Content Creator Agent Tests Completed!")
+        print(" Content Creator Agent Tests Completed!")
         return True
         
     except Exception as e:
-        print(f"❌ Content Creator tests failed: {e}")
+        print(f" Content Creator tests failed: {e}")
         import traceback
         traceback.print_exc()
         return False
@@ -907,9 +928,9 @@ async def run_manual_content_creator_tests():
 if __name__ == "__main__":
     success = asyncio.run(run_manual_content_creator_tests())
     if success:
-        print("✅ All Content Creator tests passed!")
+        print(" All Content Creator tests passed!")
     else:
-        print("❌ Some Content Creator tests failed!")
+        print(" Some Content Creator tests failed!")
 
 import pytest
 import sys
@@ -937,6 +958,9 @@ class TestContentCreatorAgent:
     @pytest.fixture
     def content_agent_config(self) -> AgentConfiguration:
         """Content creator agent configuration"""
+
+
+
         return AgentConfiguration(
             agent_id="content_creator_test",
             agent_name="Test Content Creator",
@@ -1288,7 +1312,7 @@ class TestContentCreatorAgent:
     async def test_quality_assessment(self, content_agent):
         """Test content quality assessment"""
         content_for_assessment = {
-            "text": "Check out this amazing AI tool that will revolutionize your content creation! 🚀 With cutting-edge technology, you can now generate professional-quality content in seconds. Perfect for influencers, marketers, and creators! #AI #ContentCreation #Innovation",
+            "text": "Check out this amazing AI tool that will revolutionize your content creation!  With cutting-edge technology, you can now generate professional-quality content in seconds. Perfect for influencers, marketers, and creators! #AI #ContentCreation #Innovation",
             "type": "social_media_post",
             "platform": "instagram"
         }
@@ -1465,7 +1489,7 @@ class TestContentCreatorAgent:
         consistency_request = {
             "task_type": "brand_consistency_check",
             "content": {
-                "text": "Our innovative platform provides reliable solutions for your business needs. Transform your workflow with cutting-edge technology! 🚀 Contact us today to learn more.",
+                "text": "Our innovative platform provides reliable solutions for your business needs. Transform your workflow with cutting-edge technology!  Contact us today to learn more.",
                 "type": "marketing_copy"
             },
             "brand_guidelines": brand_guidelines

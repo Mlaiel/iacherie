@@ -118,6 +118,9 @@ class IPFSManager:
         Returns:
             IPFS hash of uploaded content
         """
+
+
+
         try:
             files = {"file": (filename, content_data)}
             response = requests.post(
@@ -147,6 +150,9 @@ class IPFSManager:
         Returns:
             IPFS hash of metadata JSON
         """
+
+
+
         try:
             metadata_json = json.dumps(asdict(metadata), indent=2)
             metadata_bytes = metadata_json.encode('utf-8')
@@ -159,6 +165,9 @@ class IPFSManager:
             
     def get_ipfs_url(self, ipfs_hash: str) -> str:
         """Get public IPFS URL for a hash."""
+
+
+
         return urljoin(self.ipfs_gateway, ipfs_hash)
 
 class NFTCreator:
@@ -191,6 +200,9 @@ class NFTCreator:
         Returns:
             NFT creation result with contract details and metadata
         """
+
+
+
         try:
             logger.info(f"Starting NFT creation for content: {request.content_hash}")
             
@@ -236,6 +248,9 @@ class NFTCreator:
 
     async def _validate_content(self, request: NFTCreationRequest) -> None:
         """Validate content before NFT creation."""
+
+
+
         try:
             # Check content accessibility
             response = requests.head(request.content_url, timeout=10)
@@ -273,6 +288,9 @@ class NFTCreator:
 
     async def _generate_metadata(self, request: NFTCreationRequest) -> NFTMetadata:
         """Generate comprehensive NFT metadata."""
+
+
+
         try:
             # Base metadata
             metadata = NFTMetadata(
@@ -330,6 +348,9 @@ class NFTCreator:
 
     async def _mint_nft(self, request: NFTCreationRequest, metadata_uri: str) -> Dict[str, Any]:
         """Mint NFT on the blockchain."""
+
+
+
         try:
             # Import here to avoid circular imports
             from .contracts import SmartContractManager, ContractType
@@ -388,6 +409,9 @@ class NFTCreator:
         mint_result: Dict[str, Any]
     ) -> Optional[str]:
         """Register NFT on specified marketplace."""
+
+
+
         try:
             if not request.marketplace:
                 return None
@@ -445,6 +469,9 @@ class NFTCreator:
         Returns:
             NFT information including metadata and ownership
         """
+
+
+
         try:
             # Implementation would query the blockchain for NFT details
             # For now, return mock data
@@ -466,6 +493,9 @@ class NFTCreator:
 
     def calculate_royalties(self, sale_price: Decimal, royalty_percentage: float) -> Decimal:
         """Calculate royalty amount for a sale."""
+
+
+
         return sale_price * Decimal(str(royalty_percentage / 100))
 
 # Initialize module exports

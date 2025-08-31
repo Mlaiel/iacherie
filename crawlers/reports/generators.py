@@ -153,6 +153,9 @@ class CreatorSuccessReportGenerator(ReportGenerator):
     
     async def generate_report(self, session: AsyncSession) -> Dict[str, Any]:
         """Generate comprehensive creator success analytics report."""
+
+
+
         try:
             await self.validate_configuration()
             
@@ -201,6 +204,9 @@ class CreatorSuccessReportGenerator(ReportGenerator):
     
     async def collect_data(self, session: AsyncSession) -> Dict[str, Any]:
         """Collect comprehensive creator performance data."""
+
+
+
         try:
             start_date = self.config.date_range["start_date"]
             end_date = self.config.date_range["end_date"]
@@ -1181,6 +1187,9 @@ class ReportGenerator(ABC):
     
     async def validate_configuration(self) -> bool:
         """Validate report configuration."""
+
+
+
         try:
             if not self.config.title:
                 raise ValueError("Report title is required")
@@ -1202,6 +1211,9 @@ class ReportGenerator(ABC):
     
     async def process_data(self, raw_data: Dict[str, Any]) -> Dict[str, Any]:
         """Process raw data for report generation."""
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -1289,6 +1301,9 @@ class ReportGenerator(ABC):
     
     async def save_report(self, report_data: Dict[str, Any]) -> str:
         """Save generated report."""
+
+
+
         try:
             report_path = self.config.output_path or f"reports/{self.config.report_id}.json"
             
@@ -1330,6 +1345,9 @@ class PerformanceReportGenerator(ReportGenerator):
     
     async def generate_report(self, session: AsyncSession) -> Dict[str, Any]:
         """Generate performance report."""
+
+
+
         try:
             await self.validate_configuration()
             
@@ -1365,6 +1383,9 @@ class PerformanceReportGenerator(ReportGenerator):
     
     async def collect_data(self, session: AsyncSession) -> Dict[str, Any]:
         """Collect performance data from database."""
+
+
+
         try:
             start_date = self.config.date_range["start_date"]
             end_date = self.config.date_range["end_date"]
@@ -1621,6 +1642,9 @@ class ContentReportGenerator(ReportGenerator):
     
     async def generate_report(self, session: AsyncSession) -> Dict[str, Any]:
         """Generate content report."""
+
+
+
         try:
             await self.validate_configuration()
             
@@ -1656,6 +1680,9 @@ class ContentReportGenerator(ReportGenerator):
     
     async def collect_data(self, session: AsyncSession) -> Dict[str, Any]:
         """Collect content data from database."""
+
+
+
         try:
             start_date = self.config.date_range["start_date"]
             end_date = self.config.date_range["end_date"]
@@ -1846,6 +1873,9 @@ class ProtectionReportGenerator(ReportGenerator):
     
     async def generate_report(self, session: AsyncSession) -> Dict[str, Any]:
         """Generate protection report."""
+
+
+
         try:
             await self.validate_configuration()
             
@@ -1881,6 +1911,9 @@ class ProtectionReportGenerator(ReportGenerator):
     
     async def collect_data(self, session: AsyncSession) -> Dict[str, Any]:
         """Collect protection data from database."""
+
+
+
         try:
             start_date = self.config.date_range["start_date"]
             end_date = self.config.date_range["end_date"]
@@ -2095,6 +2128,9 @@ class RevenueReportGenerator(ReportGenerator):
     
     async def generate_report(self, session: AsyncSession) -> Dict[str, Any]:
         """Generate revenue report."""
+
+
+
         try:
             await self.validate_configuration()
             
@@ -2130,6 +2166,9 @@ class RevenueReportGenerator(ReportGenerator):
     
     async def collect_data(self, session: AsyncSession) -> Dict[str, Any]:
         """Collect revenue data from database."""
+
+
+
         try:
             start_date = self.config.date_range["start_date"]
             end_date = self.config.date_range["end_date"]
@@ -2365,6 +2404,9 @@ class ComplianceReportGenerator(ReportGenerator):
     
     async def generate_report(self, session: AsyncSession) -> Dict[str, Any]:
         """Generate compliance report."""
+
+
+
         try:
             await self.validate_configuration()
             
@@ -2400,6 +2442,9 @@ class ComplianceReportGenerator(ReportGenerator):
     
     async def collect_data(self, session: AsyncSession) -> Dict[str, Any]:
         """Collect compliance data from database."""
+
+
+
         try:
             start_date = self.config.date_range["start_date"]
             end_date = self.config.date_range["end_date"]

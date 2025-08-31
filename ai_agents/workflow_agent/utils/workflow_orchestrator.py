@@ -15,7 +15,7 @@ Key Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 - All Rights Reserved
 
-⚠️ IMPORTANT LEGAL NOTICE ⚠️
+ IMPORTANT LEGAL NOTICE 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
@@ -167,6 +167,9 @@ class WorkflowOrchestrator(BaseAgent):
         Returns:
             Dict containing workflow execution results
         """
+
+
+
         try:
             workflow_id = context.workflow_id
             self.logger.info(f"Starting workflow orchestration: {workflow_id}")
@@ -223,6 +226,9 @@ class WorkflowOrchestrator(BaseAgent):
         workflow_id: str
     ):
         """Build workflow execution graph from definition."""
+
+
+
         try:
             nodes = workflow_definition.get('nodes', [])
             edges = workflow_definition.get('edges', [])
@@ -270,6 +276,9 @@ class WorkflowOrchestrator(BaseAgent):
 
     async def _validate_workflow(self, workflow_id: str) -> Dict[str, Any]:
         """Validate workflow graph for execution."""
+
+
+
         try:
             errors = []
             
@@ -373,6 +382,9 @@ class WorkflowOrchestrator(BaseAgent):
 
     async def _execute_adaptive(self, workflow_id: str) -> Dict[str, Any]:
         """Execute workflow using adaptive strategy."""
+
+
+
         try:
             # Analyze workflow characteristics
             analysis = await self._analyze_workflow_characteristics(workflow_id)
@@ -393,6 +405,9 @@ class WorkflowOrchestrator(BaseAgent):
 
     async def _execute_sequential(self, workflow_id: str) -> Dict[str, Any]:
         """Execute workflow nodes sequentially."""
+
+
+
         try:
             workflow_nodes = [
                 node for node in self.workflow_graph.nodes()
@@ -458,6 +473,9 @@ class WorkflowOrchestrator(BaseAgent):
 
     async def _execute_parallel(self, workflow_id: str) -> Dict[str, Any]:
         """Execute workflow nodes in parallel where possible."""
+
+
+
         try:
             workflow_nodes = [
                 node for node in self.workflow_graph.nodes()
@@ -759,6 +777,9 @@ class WorkflowOrchestrator(BaseAgent):
 
     async def get_workflow_status(self, workflow_id: str) -> Dict[str, Any]:
         """Get current workflow execution status."""
+
+
+
         try:
             if workflow_id not in self.execution_contexts:
                 return {'status': 'not_found'}
@@ -787,6 +808,9 @@ class WorkflowOrchestrator(BaseAgent):
 
     async def cancel_workflow(self, workflow_id: str) -> Dict[str, Any]:
         """Cancel a running workflow."""
+
+
+
         try:
             if workflow_id in self.active_workflows:
                 self.active_workflows.remove(workflow_id)
@@ -807,6 +831,9 @@ class WorkflowOrchestrator(BaseAgent):
 
     async def get_execution_stats(self) -> Dict[str, Any]:
         """Get workflow execution statistics."""
+
+
+
         return {
             'stats': self.execution_stats.copy(),
             'active_workflows': len(self.active_workflows),

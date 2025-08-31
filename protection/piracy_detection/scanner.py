@@ -1,5 +1,5 @@
 """
-🌐 Platform Scanner Service
+ Platform Scanner Service
 ===========================
 
 Multi-platform content scanning and crawling system.
@@ -117,6 +117,9 @@ class PlatformScanner:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             logger.info("Initializing Platform Scanner...")
             
@@ -645,6 +648,9 @@ class PlatformScanner:
     
     def _build_scraping_headers(self) -> Dict[str, str]:
         """Build headers for web scraping."""
+
+
+
         return {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -726,6 +732,9 @@ class PlatformScanner:
     
     async def get_scan_stats(self) -> Dict[str, Any]:
         """Get scanning performance statistics."""
+
+
+
         return self.scan_stats.copy()
     
     async def get_platform_status(self) -> Dict[str, Any]:

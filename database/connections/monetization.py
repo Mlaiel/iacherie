@@ -107,6 +107,9 @@ class RevenueRecord:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for storage"""
+
+
+
         return {
             "revenue_id": self.revenue_id,
             "tenant_id": self.tenant_id,
@@ -143,6 +146,9 @@ class PayoutRequest:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for storage"""
+
+
+
         return {
             "payout_id": self.payout_id,
             "tenant_id": self.tenant_id,
@@ -240,6 +246,9 @@ class MonetizationConnections:
         Returns:
             Revenue record ID
         """
+
+
+
         try:
             # Generate unique revenue ID
             revenue_id = self._generate_revenue_id(tenant_id, platform, period_start)
@@ -321,6 +330,9 @@ class MonetizationConnections:
         Returns:
             Payout request ID
         """
+
+
+
         try:
             # Validate available balance
             available_balance = await self._get_available_balance(tenant_id, currency)
@@ -395,6 +407,9 @@ class MonetizationConnections:
         Returns:
             License agreement ID
         """
+
+
+
         try:
             # Generate license ID
             license_id = self._generate_license_id(tenant_id, content_id)
@@ -462,6 +477,9 @@ class MonetizationConnections:
         Returns:
             Revenue analytics with breakdowns and trends
         """
+
+
+
         try:
             # Get total revenue statistics
             total_stats = await self._get_total_revenue_stats(
@@ -521,6 +539,9 @@ class MonetizationConnections:
         Returns:
             Processing results summary
         """
+
+
+
         try:
             # Get eligible payout requests
             eligible_payouts = await self._get_eligible_payouts()
@@ -567,6 +588,9 @@ class MonetizationConnections:
             
             async def commit(self):
                 """Commit monetization transaction across all database connections"""
+
+
+
                 try:
                     # PostgreSQL commit for financial data
                     if hasattr(self.postgresql, 'commit'):
@@ -585,15 +609,18 @@ class MonetizationConnections:
                     if self.elasticsearch and hasattr(self.elasticsearch, 'indices'):
                         await self.elasticsearch.indices.refresh(index='monetization*')
                         
-                    logger.info("💰 Monetization transaction committed successfully")
+                    logger.info(" Monetization transaction committed successfully")
                     
                 except Exception as e:
-                    logger.error(f"❌ Failed to commit monetization transaction: {e}")
+                    logger.error(f" Failed to commit monetization transaction: {e}")
                     await self.rollback()
                     raise
             
             async def rollback(self):
                 """Rollback monetization transaction across all database connections"""
+
+
+
                 try:
                     # PostgreSQL rollback - critical for financial integrity
                     if hasattr(self.postgresql, 'rollback'):
@@ -610,10 +637,10 @@ class MonetizationConnections:
                     # Elasticsearch rollback - more complex, may need compensating actions
                     # For now, we log and let manual intervention handle it
                     
-                    logger.warning("↩️ Monetization transaction rolled back")
+                    logger.warning("↩ Monetization transaction rolled back")
                     
                 except Exception as e:
-                    logger.error(f"❌ Failed to rollback monetization transaction: {e}")
+                    logger.error(f" Failed to rollback monetization transaction: {e}")
                     # Don't raise to avoid masking original error
         
         tx = TransactionContext({
@@ -734,6 +761,9 @@ class MonetizationConnections:
     
     async def get_monetization_metrics(self) -> Dict[str, Any]:
         """Get monetization operation metrics."""
+
+
+
         return {
             "operations_count": self.operations_count,
             "revenue_records_processed": self.revenue_records_processed,

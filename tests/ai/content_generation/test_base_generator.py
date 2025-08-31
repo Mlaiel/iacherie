@@ -92,6 +92,9 @@ class MockContentGenerator(BaseContentGenerator):
     
     async def validate_output(self, content: str, context: Any) -> bool:
         """Mock output validation"""
+
+
+
         return len(content) > 0
     
     async def _release_model_resources(self):
@@ -123,11 +126,17 @@ class TestBaseContentGenerator:
     @pytest.fixture
     def generator(self):
         """Create a mock generator instance"""
+
+
+
         return MockContentGenerator()
     
     @pytest.fixture
     def valid_request(self):
         """Create a valid generation request"""
+
+
+
         return {
             "topic": "AI technology trends",
             "content_type": "blog_post",
@@ -138,6 +147,9 @@ class TestBaseContentGenerator:
     @pytest.fixture
     def invalid_request(self):
         """Create an invalid generation request"""
+
+
+
         return {
             "content_type": "blog_post",
             "word_count": -100  # Invalid negative word count
@@ -456,6 +468,9 @@ class TestPerformanceMetrics:
     @pytest.fixture
     def generator(self):
         """Create a generator for performance testing"""
+
+
+
         return MockContentGenerator()
     
     @pytest.mark.asyncio

@@ -138,6 +138,9 @@ class CrawlerManager:
         Returns:
             CrawlResult object with search results
         """
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -210,6 +213,9 @@ class CrawlerManager:
         Returns:
             Surveillance task ID
         """
+
+
+
         try:
             logger.info(f"Starting surveillance for content {content_id}")
             
@@ -256,6 +262,9 @@ class CrawlerManager:
     
     async def stop_surveillance(self, task_id: str) -> bool:
         """Stop surveillance task."""
+
+
+
         try:
             if task_id in self.surveillance_tasks:
                 task_info = self.surveillance_tasks[task_id]
@@ -282,6 +291,9 @@ class CrawlerManager:
     
     async def get_platform_status(self, platform: str) -> Dict:
         """Get platform crawler status and statistics."""
+
+
+
         try:
             if platform not in self.crawlers:
                 return {"error": f"Platform not found: {platform}"}
@@ -314,6 +326,9 @@ class CrawlerManager:
     
     async def get_surveillance_status(self) -> Dict:
         """Get overall surveillance status."""
+
+
+
         try:
             active_tasks = []
             
@@ -351,6 +366,9 @@ class CrawlerManager:
     
     async def _surveillance_loop(self, task: SurveillanceTask):
         """Main surveillance loop for a task."""
+
+
+
         try:
             while task.status == CrawlerStatus.RUNNING:
                 logger.debug(f"Surveillance scan for task {task.id}")
@@ -393,6 +411,9 @@ class CrawlerManager:
                                      platform: str,
                                      search_terms: List[str]):
         """Scan specific platform for surveillance task."""
+
+
+
         try:
             # Check rate limit
             if not await self.rate_limiters[platform].acquire():
@@ -461,6 +482,9 @@ class CrawlerManager:
                           searches: List[Dict],
                           max_concurrent: int = None) -> List[CrawlResult]:
         """Perform batch searches across platforms."""
+
+
+
         try:
             if max_concurrent is None:
                 max_concurrent = self.config["max_concurrent_crawls"]
@@ -491,6 +515,9 @@ class CrawlerManager:
     
     def get_manager_stats(self) -> Dict:
         """Get crawler manager statistics."""
+
+
+
         return {
             "version": "1.0.0",
             "supported_platforms": list(self.crawlers.keys()),

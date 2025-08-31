@@ -9,7 +9,7 @@ multi-tier caching, intelligent strategies, and performance optimization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️ PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
+ PROPRIETARY SOFTWARE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -637,7 +637,10 @@ def get_cache_system_info() -> dict:
     
     Returns:
         Dictionary with system information
-    """    return {
+    """
+
+
+    return {
         'version': __version__,
         'author': __author__,
         'components': {

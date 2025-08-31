@@ -56,16 +56,25 @@ class TestDistributionService:
     @pytest.fixture
     def service(self):
         """Create a distribution service instance"""
+
+
+
         return DistributionService()
     
     @pytest.fixture
     def sample_content(self):
         """Create sample content for testing"""
+
+
+
         return "This is a sample social media post about AI technology trends. #AI #tech #innovation"
     
     @pytest.fixture
     def blog_content(self):
         """Create sample blog content"""
+
+
+
         return """
         # The Future of AI Technology
         
@@ -503,6 +512,9 @@ class TestPlatformConfig:
     @pytest.fixture
     def service(self):
         """Create service for platform config testing"""
+
+
+
         return DistributionService()
     
     def test_platform_configurations_exist(self, service):

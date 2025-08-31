@@ -1,11 +1,11 @@
 """
-🛡️ IA Influencer Agent - Protection Module Main Entry Point
+ IA Influencer Agent - Protection Module Main Entry Point
 ==================================================================
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
 ==================================================================
 
-⚠️  COPYRIGHT NOTICE & LEGAL WARNING ⚠️
+  COPYRIGHT NOTICE & LEGAL WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copy, distribution, or modification of this code
 without explicit written permission is strictly prohibited and will be
@@ -264,8 +264,11 @@ class ContentProtectionSystem:
     
     async def initialize(self) -> bool:
         """Initialize all protection system components"""
+
+
+
         try:
-            logger.info("🚀 Initializing IA Influencer Agent Protection System...")
+            logger.info(" Initializing IA Influencer Agent Protection System...")
             
             # Initialize core detection and fingerprinting
             self.content_detection_manager = ContentDetectionManager()
@@ -307,12 +310,12 @@ class ContentProtectionSystem:
                 await self.blockchain_consensus_engine.initialize()
             
             self.status = ProtectionSystemStatus.ACTIVE
-            logger.info("✅ Content Protection System successfully initialized")
+            logger.info(" Content Protection System successfully initialized")
             
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize protection system: {str(e)}")
+            logger.error(f" Failed to initialize protection system: {str(e)}")
             self.status = ProtectionSystemStatus.ERROR
             return False
     
@@ -330,7 +333,7 @@ class ContentProtectionSystem:
         result = ProtectionResult(request_id=request.request_id)
         
         try:
-            logger.info(f"🛡️ Starting content protection for request: {request.request_id}")
+            logger.info(f" Starting content protection for request: {request.request_id}")
             result.protection_started = datetime.now(timezone.utc)
             
             # Store request
@@ -338,7 +341,7 @@ class ContentProtectionSystem:
             
             # Step 1: Content Analysis & Fingerprinting
             if request.enable_fingerprinting and self.fingerprinting_service:
-                logger.info("🔍 Generating content fingerprint...")
+                logger.info(" Generating content fingerprint...")
                 
                 fingerprint_result = await self.fingerprinting_service.create_fingerprint(
                     content_path=request.content_file_path or request.content_url,
@@ -348,11 +351,11 @@ class ContentProtectionSystem:
                 if fingerprint_result:
                     result.fingerprint_created = True
                     result.detection_details['fingerprint'] = fingerprint_result.to_dict()
-                    logger.info("✅ Content fingerprint created successfully")
+                    logger.info(" Content fingerprint created successfully")
             
             # Step 2: Content Verification
             if self.content_verification_engine:
-                logger.info("🔒 Verifying content authenticity...")
+                logger.info(" Verifying content authenticity...")
                 
                 verification_result = await self.content_verification_engine.verify_content(
                     content_id=request.content_id,
@@ -365,11 +368,11 @@ class ContentProtectionSystem:
                 )
                 
                 result.detection_details['verification'] = verification_result
-                logger.info("✅ Content verification completed")
+                logger.info(" Content verification completed")
             
             # Step 3: Multi-Platform Monitoring Setup
             if request.enable_monitoring and self.crawler_manager:
-                logger.info("🌐 Setting up multi-platform monitoring...")
+                logger.info(" Setting up multi-platform monitoring...")
                 
                 # Create crawl targets for each platform
                 for platform in request.platforms_to_monitor or self.config.monitored_platforms:
@@ -385,11 +388,11 @@ class ContentProtectionSystem:
                     result.platforms_monitored += 1
                     result.violations_detected += len([r for r in crawl_results if r.similarity_score > 0.8])
                 
-                logger.info(f"✅ Monitoring active on {result.platforms_monitored} platforms")
+                logger.info(f" Monitoring active on {result.platforms_monitored} platforms")
             
             # Step 4: Rights Enforcement Setup
             if request.enable_enforcement and self.rights_enforcement_engine:
-                logger.info("⚖️ Configuring rights enforcement...")
+                logger.info(" Configuring rights enforcement...")
                 
                 enforcement_config = {
                     'content_id': request.content_id,
@@ -403,11 +406,11 @@ class ContentProtectionSystem:
                 )
                 
                 result.enforcement_details.append(enforcement_result)
-                logger.info("✅ Rights enforcement configured")
+                logger.info(" Rights enforcement configured")
             
             # Step 5: Anti-Piracy Engine Activation
             if self.anti_piracy_engine:
-                logger.info("🚨 Activating anti-piracy protection...")
+                logger.info(" Activating anti-piracy protection...")
                 
                 piracy_protection = await self.anti_piracy_engine.protect_content(
                     content_id=request.content_id,
@@ -418,11 +421,11 @@ class ContentProtectionSystem:
                 if piracy_protection:
                     result.enforcement_actions_taken += len(piracy_protection.get('actions', []))
                 
-                logger.info("✅ Anti-piracy protection active")
+                logger.info(" Anti-piracy protection active")
             
             # Step 6: Revenue Protection Setup
             if self.config.enable_revenue_protection and self.revenue_protection_service:
-                logger.info("💰 Setting up revenue protection...")
+                logger.info(" Setting up revenue protection...")
                 
                 revenue_config = {
                     'content_id': request.content_id,
@@ -438,11 +441,11 @@ class ContentProtectionSystem:
                 if revenue_result:
                     result.estimated_revenue_protected = revenue_result.get('protected_amount', 0.0)
                 
-                logger.info("✅ Revenue protection configured")
+                logger.info(" Revenue protection configured")
             
             # Step 7: Blockchain Verification (if enabled)
             if self.config.enable_blockchain_verification and self.blockchain_consensus_engine:
-                logger.info("⛓️ Registering content on blockchain...")
+                logger.info(" Registering content on blockchain...")
                 
                 blockchain_record = await self.blockchain_consensus_engine.register_content(
                     content_id=request.content_id,
@@ -452,7 +455,7 @@ class ContentProtectionSystem:
                 )
                 
                 result.detection_details['blockchain'] = blockchain_record
-                logger.info("✅ Content registered on blockchain")
+                logger.info(" Content registered on blockchain")
             
             # Update statistics
             self.stats['total_requests_processed'] += 1
@@ -464,25 +467,31 @@ class ContentProtectionSystem:
             result.last_updated = datetime.now(timezone.utc)
             self.protection_results[request.request_id] = result
             
-            logger.info(f"🎉 Content protection completed for request: {request.request_id}")
-            logger.info(f"📊 Violations detected: {result.violations_detected}")
-            logger.info(f"🛡️ Enforcement actions: {result.enforcement_actions_taken}")
-            logger.info(f"💰 Revenue protected: ${result.estimated_revenue_protected}")
+            logger.info(f" Content protection completed for request: {request.request_id}")
+            logger.info(f" Violations detected: {result.violations_detected}")
+            logger.info(f" Enforcement actions: {result.enforcement_actions_taken}")
+            logger.info(f" Revenue protected: ${result.estimated_revenue_protected}")
             
             return result
             
         except Exception as e:
-            logger.error(f"❌ Content protection failed: {str(e)}")
+            logger.error(f" Content protection failed: {str(e)}")
             result.status = "failed"
             result.error_messages.append(str(e))
             return result
     
     async def get_protection_status(self, request_id: str) -> Optional[ProtectionResult]:
         """Get current protection status for a request"""
+
+
+
         return self.protection_results.get(request_id)
     
     async def get_system_statistics(self) -> Dict[str, Any]:
         """Get comprehensive system statistics"""
+
+
+
         return {
             'system_status': self.status.value,
             'system_version': __version__,
@@ -508,8 +517,11 @@ class ContentProtectionSystem:
     
     async def shutdown(self):
         """Gracefully shutdown the protection system"""
+
+
+
         try:
-            logger.info("🔄 Shutting down Content Protection System...")
+            logger.info(" Shutting down Content Protection System...")
             self.status = ProtectionSystemStatus.SHUTTING_DOWN
             
             # Shutdown all components
@@ -530,15 +542,18 @@ class ContentProtectionSystem:
                 if component and hasattr(component, 'cleanup'):
                     await component.cleanup()
             
-            logger.info("✅ Content Protection System shutdown completed")
+            logger.info(" Content Protection System shutdown completed")
             
         except Exception as e:
-            logger.error(f"❌ Error during shutdown: {str(e)}")
+            logger.error(f" Error during shutdown: {str(e)}")
 
 # =============== CONVENIENCE FUNCTIONS ===============
 
 def create_protection_system(config: Optional[ProtectionSystemConfig] = None) -> ContentProtectionSystem:
     """Factory function to create a new protection system instance"""
+
+
+
     return ContentProtectionSystem(config)
 
 async def protect_content_simple(
@@ -585,10 +600,16 @@ async def protect_content_simple(
 
 def get_supported_creator_types() -> List[ContentCreatorType]:
     """Get list of supported content creator types"""
+
+
+
     return list(ContentCreatorType)
 
 def get_supported_platforms() -> List[PlatformType]:
     """Get list of supported platforms for monitoring"""
+
+
+
     return [
         PlatformType.YOUTUBE,
         PlatformType.INSTAGRAM,
@@ -616,7 +637,7 @@ if __name__ == "__main__":
     This demonstrates the basic usage of the protection system.
     """
     async def main():
-        print("🛡️ IA Influencer Agent - Content Protection System")
+        print(" IA Influencer Agent - Content Protection System")
         print(f"Version: {__version__}")
         print(f"Author: {__author__}")
         print(f"Copyright: {__copyright__}")
@@ -632,25 +653,25 @@ if __name__ == "__main__":
         system = ContentProtectionSystem(config)
         
         if await system.initialize():
-            print("✅ Protection system initialized successfully")
+            print(" Protection system initialized successfully")
             
             # Get system statistics
             stats = await system.get_system_statistics()
-            print("\n📊 System Statistics:")
+            print("\n System Statistics:")
             for key, value in stats.items():
                 print(f"  {key}: {value}")
             
-            print(f"\n🎯 Supported Creator Types: {len(get_supported_creator_types())}")
+            print(f"\n Supported Creator Types: {len(get_supported_creator_types())}")
             for creator_type in get_supported_creator_types():
                 print(f"  - {creator_type.value}")
             
-            print(f"\n🌐 Supported Platforms: {len(get_supported_platforms())}")
+            print(f"\n Supported Platforms: {len(get_supported_platforms())}")
             for platform in get_supported_platforms():
                 print(f"  - {platform.value}")
             
             await system.shutdown()
         else:
-            print("❌ Failed to initialize protection system")
+            print(" Failed to initialize protection system")
     
     # Run the main function
     asyncio.run(main())

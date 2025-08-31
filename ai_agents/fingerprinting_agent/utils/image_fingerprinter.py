@@ -7,7 +7,7 @@ and deep learning for precise image content identification and similarity matchi
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -63,7 +63,7 @@ and deep learning for precise image content identification and similarity matchi
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -216,6 +216,9 @@ class ImageFingerprinter:
     
     async def initialize(self):
         """Initialize all image processing models and detectors"""
+
+
+
         try:
             start_time = time.time()
             
@@ -358,6 +361,9 @@ class ImageFingerprinter:
     
     async def _load_and_preprocess_image(self, image_data: Union[str, np.ndarray, bytes, Image.Image]) -> Tuple[np.ndarray, Image.Image]:
         """Load and preprocess image data"""
+
+
+
         try:
             # Load image
             if isinstance(image_data, str):
@@ -439,6 +445,9 @@ class ImageFingerprinter:
     
     async def _extract_perceptual_hashes(self, image: Image.Image) -> Dict[str, str]:
         """Extract multiple types of perceptual hashes"""
+
+
+
         try:
             hashes = {}
             
@@ -793,6 +802,9 @@ class ImageFingerprinter:
     
     async def _extract_resnet_embedding(self, image: Image.Image) -> np.ndarray:
         """Extract ResNet deep learning embedding"""
+
+
+
         try:
             if self.resnet_model is None:
                 return np.array([])
@@ -819,6 +831,9 @@ class ImageFingerprinter:
     
     async def _extract_clip_embedding(self, image: Image.Image) -> np.ndarray:
         """Extract CLIP embedding for semantic understanding"""
+
+
+
         try:
             if self.clip_model is None:
                 return np.array([])
@@ -841,6 +856,9 @@ class ImageFingerprinter:
     
     async def _extract_image_metadata(self, image: Image.Image, image_array: np.ndarray) -> Dict[str, Any]:
         """Extract comprehensive image metadata"""
+
+
+
         try:
             # Basic image properties
             width, height = image.size
@@ -915,6 +933,9 @@ class ImageFingerprinter:
     
     async def _calculate_quality_metrics(self, image_array: np.ndarray, feature_vectors: List, deep_embeddings: Dict) -> Dict[str, float]:
         """Calculate fingerprint quality metrics"""
+
+
+
         try:
             quality_metrics = {}
             
@@ -943,6 +964,9 @@ class ImageFingerprinter:
     
     def _assess_image_quality(self, image_array: np.ndarray) -> Dict[str, float]:
         """Assess image quality"""
+
+
+
         try:
             # Convert to grayscale if needed
             if len(image_array.shape) == 3:
@@ -983,6 +1007,9 @@ class ImageFingerprinter:
     
     async def cleanup(self):
         """Clean up resources"""
+
+
+
         try:
             # Clean up models
             if hasattr(self, 'resnet_model') and self.resnet_model is not None:
@@ -1007,6 +1034,9 @@ class ImageFingerprinter:
     
     async def _initialize_resnet(self):
         """Initialize ResNet model"""
+
+
+
         try:
             self.resnet_model = resnet50(pretrained=True)
             self.resnet_model = nn.Sequential(*list(self.resnet_model.children())[:-1])  # Remove final FC layer
@@ -1020,6 +1050,9 @@ class ImageFingerprinter:
     
     async def _initialize_clip(self):
         """Initialize CLIP model"""
+
+
+
         try:
             self.clip_model, self.clip_processor = clip.load("ViT-B/32")
             self.clip_model.eval()
@@ -1033,6 +1066,9 @@ class ImageFingerprinter:
     
     async def _initialize_cv_detectors(self):
         """Initialize computer vision detectors"""
+
+
+
         try:
             # SIFT detector
             try:
@@ -1058,6 +1094,9 @@ class ImageFingerprinter:
     
     async def _precompile_extractors(self):
         """Pre-compile feature extraction functions"""
+
+
+
         try:
             # Pre-compilation placeholder
             logger.info("Feature extractors pre-compiled")
@@ -1069,6 +1108,9 @@ class ImageFingerprinter:
     
     def get_supported_formats(self) -> List[str]:
         """Get list of supported image formats"""
+
+
+
         return [
             '.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.tif',
             '.webp', '.ico', '.ppm', '.pgm', '.pbm'
@@ -1134,6 +1176,9 @@ class ImageFingerprinter:
         
     async def initialize(self):
         """Initialize image fingerprinting system"""
+
+
+
         try:
             # Initialize deep learning models
             await self._initialize_deep_models()
@@ -1302,6 +1347,9 @@ class ImageFingerprinter:
     
     async def _generate_perceptual_hashes(self, image: Image.Image) -> Dict[str, str]:
         """Generate multiple perceptual hashes for robustness"""
+
+
+
         try:
             # Generate different hash types
             phash = str(imagehash.phash(image, hash_size=self.hash_size))
@@ -1331,6 +1379,9 @@ class ImageFingerprinter:
     
     async def _extract_visual_features(self, image: Image.Image) -> np.ndarray:
         """Extract basic visual features"""
+
+
+
         try:
             # Convert to array for processing
             img_array = np.array(image)
@@ -1368,6 +1419,9 @@ class ImageFingerprinter:
     
     async def _extract_color_features(self, image: Image.Image) -> np.ndarray:
         """Extract color-based features"""
+
+
+
         try:
             img_array = np.array(image)
             features = []
@@ -1403,6 +1457,9 @@ class ImageFingerprinter:
     
     async def _extract_cv_features(self, image: Image.Image) -> np.ndarray:
         """Extract computer vision features using SIFT, ORB, etc."""
+
+
+
         try:
             # Convert to OpenCV format
             img_array = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
@@ -1467,6 +1524,9 @@ class ImageFingerprinter:
     
     async def _extract_texture_features(self, image: Image.Image) -> np.ndarray:
         """Extract texture features using various methods"""
+
+
+
         try:
             # Convert to grayscale for texture analysis
             gray_image = image.convert('L')
@@ -1512,6 +1572,9 @@ class ImageFingerprinter:
     
     async def _generate_deep_embedding(self, image: Image.Image) -> np.ndarray:
         """Generate deep learning embedding"""
+
+
+
         try:
             embeddings = []
             
@@ -1539,6 +1602,9 @@ class ImageFingerprinter:
     
     async def _get_resnet_embedding(self, image: Image.Image) -> np.ndarray:
         """Get ResNet embedding for image"""
+
+
+
         try:
             transform = transforms.Compose([
                 transforms.Resize(256),
@@ -1562,6 +1628,9 @@ class ImageFingerprinter:
     
     async def _get_clip_embedding(self, image: Image.Image) -> np.ndarray:
         """Get CLIP embedding for image"""
+
+
+
         try:
             image_input = self.clip_preprocess(image).unsqueeze(0)
             
@@ -1634,6 +1703,9 @@ class ImageFingerprinter:
     
     async def _initialize_deep_models(self):
         """Initialize deep learning models"""
+
+
+
         try:
             # Load ResNet
             self.resnet_model = resnet50(pretrained=True)
@@ -1650,6 +1722,9 @@ class ImageFingerprinter:
     
     async def _initialize_cv_components(self):
         """Initialize computer vision components"""
+
+
+
         try:
             # Initialize feature detectors
             self.sift_detector = cv2.SIFT_create(nfeatures=self.max_keypoints)
@@ -1662,6 +1737,9 @@ class ImageFingerprinter:
     
     async def _initialize_face_detection(self):
         """Initialize face detection"""
+
+
+
         try:
             # Load Haar cascade for face detection
             cascade_path = cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'

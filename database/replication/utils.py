@@ -105,6 +105,9 @@ class ReplicationUtils:
     
     def _derive_encryption_key(self) -> bytes:
         """Derive encryption key from configuration"""
+
+
+
         try:
             # Get master key from config or environment
             master_key = self.config.get_security_config().get("master_key", "default_key_change_me")
@@ -214,6 +217,9 @@ class ReplicationUtils:
     
     def _validate_email(self, email: str) -> bool:
         """Validate email format"""
+
+
+
         try:
             import re
             pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
@@ -288,6 +294,9 @@ class ReplicationUtils:
         Returns:
             Dict: Normalized data
         """
+
+
+
         try:
             normalized = {}
             
@@ -328,6 +337,9 @@ class ReplicationUtils:
         Returns:
             Dict: Transformed data
         """
+
+
+
         try:
             transformed = data.copy()
             
@@ -374,6 +386,9 @@ class ReplicationUtils:
         Returns:
             Dict: Data with encrypted sensitive fields
         """
+
+
+
         try:
             encrypted_data = data.copy()
             sensitive_fields = ["password", "api_key", "token", "credit_card", "ssn", "phone"]
@@ -400,6 +415,9 @@ class ReplicationUtils:
         Returns:
             Dict: Data with decrypted sensitive fields
         """
+
+
+
         try:
             decrypted_data = data.copy()
             
@@ -428,6 +446,9 @@ class ReplicationUtils:
         Returns:
             str: SHA-256 checksum
         """
+
+
+
         try:
             # Normalize and sort data for consistent checksum
             normalized_data = self.normalize_data_types(data)
@@ -452,6 +473,9 @@ class ReplicationUtils:
         Returns:
             bool: True if data integrity is valid
         """
+
+
+
         try:
             calculated_checksum = self.calculate_data_checksum(data)
             return calculated_checksum == expected_checksum
@@ -472,6 +496,9 @@ class ReplicationUtils:
         Returns:
             bytes: Compressed data
         """
+
+
+
         try:
             if isinstance(data, dict):
                 data_str = json.dumps(data, separators=(',', ':'))
@@ -503,6 +530,9 @@ class ReplicationUtils:
         Returns:
             str: Decompressed data
         """
+
+
+
         try:
             decompressed = gzip.decompress(compressed_data)
             return decompressed.decode()
@@ -574,6 +604,9 @@ class ReplicationUtils:
     
     async def _check_ssl_certificate(self, host: str, port: int) -> Dict[str, Any]:
         """Check SSL certificate validity"""
+
+
+
         try:
             context = ssl.create_default_context()
             
@@ -611,6 +644,9 @@ class ReplicationUtils:
         Returns:
             bool: True if valid IP address
         """
+
+
+
         try:
             ipaddress.ip_address(ip_address)
             return True
@@ -627,6 +663,9 @@ class ReplicationUtils:
         Returns:
             bool: True if private IP
         """
+
+
+
         try:
             ip = ipaddress.ip_address(ip_address)
             return ip.is_private
@@ -643,6 +682,9 @@ class ReplicationUtils:
         Returns:
             bool: True if IP is whitelisted
         """
+
+
+
         try:
             security_config = self.config.get_security_config()
             allowed_networks = security_config.get("allowed_networks", [])
@@ -675,6 +717,9 @@ class ReplicationUtils:
         Returns:
             str: Unique identifier
         """
+
+
+
         return f"{int(datetime.utcnow().timestamp())}_{secrets.token_hex(8)}"
     
     def parse_database_url(self, url: str) -> Dict[str, Any]:
@@ -687,6 +732,9 @@ class ReplicationUtils:
         Returns:
             Dict: URL components
         """
+
+
+
         try:
             from urllib.parse import urlparse
             
@@ -751,6 +799,9 @@ class ReplicationUtils:
         Returns:
             str: Sanitized table name
         """
+
+
+
         try:
             import re
             # Remove any non-alphanumeric characters except underscores
@@ -794,6 +845,9 @@ class ReplicationUtils:
             duration: Operation duration in seconds
             metadata: Additional metadata
         """
+
+
+
         try:
             metric_data = {
                 "operation": operation,

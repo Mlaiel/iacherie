@@ -8,7 +8,7 @@ legal compliance validation, and intelligent clause management.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing and usage rights.
@@ -140,6 +140,9 @@ class ContractGenerator:
         user_id: UUID = None
     ) -> Dict[str, Any]:
         """Generate comprehensive license contract"""
+
+
+
         try:
             # Get license agreement with full details
             license_agreement = await self.repository.get_license_agreement(
@@ -240,6 +243,9 @@ class ContractGenerator:
         jurisdiction: str = "international"
     ) -> Dict[str, Any]:
         """Generate reusable contract template"""
+
+
+
         try:
             # Validate template parameters
             validated_params = await self._validate_template_parameters(
@@ -297,6 +303,9 @@ class ContractGenerator:
         user_id: UUID
     ) -> Dict[str, Any]:
         """Customize contract clauses with AI-powered suggestions"""
+
+
+
         try:
             customized_contract = base_contract.copy()
             customization_log = []
@@ -359,6 +368,9 @@ class ContractGenerator:
         preserve_legal_terms: bool = True
     ) -> Dict[str, Any]:
         """Translate contract to target language with legal term preservation"""
+
+
+
         try:
             # Validate target language
             if target_language not in [lang.value for lang in ContractLanguage]:
@@ -416,6 +428,9 @@ class ContractGenerator:
         user_id: UUID
     ) -> Dict[str, Any]:
         """Generate formal contract amendments"""
+
+
+
         try:
             # Load original contract
             original_contract = await self._load_contract_by_id(original_contract_id)
@@ -758,6 +773,9 @@ class ContractGenerator:
         user_id: UUID = None
     ) -> Dict[str, Any]:
         """Generate complete license contract with legal language"""
+
+
+
         try:
             self._logger.info(
                 f"Generating contract for license {license_agreement.license_number} "
@@ -833,6 +851,9 @@ class ContractGenerator:
         language: str = ContractLanguage.ENGLISH.value
     ) -> Dict[str, Any]:
         """Generate contract from predefined template"""
+
+
+
         try:
             # Load template
             template = await self._get_contract_template(template_name, language)
@@ -864,6 +885,9 @@ class ContractGenerator:
         language: str = ContractLanguage.ENGLISH.value
     ) -> Dict[str, Any]:
         """Customize contract clauses with specific requirements"""
+
+
+
         try:
             customized_contract = base_contract.copy()
             
@@ -913,6 +937,9 @@ class ContractGenerator:
         language: str = ContractLanguage.ENGLISH.value
     ) -> Dict[str, Any]:
         """Generate contract amendment"""
+
+
+
         try:
             amendment_template = await self._get_amendment_template(language)
             
@@ -1178,6 +1205,9 @@ class ContractGenerator:
         user_id: UUID = None
     ) -> Dict[str, Any]:
         """Generate contract metadata"""
+
+
+
         return {
             "contract_id": await self._generate_contract_id(),
             "version": "1.0",
@@ -1214,6 +1244,9 @@ class ContractGenerator:
         license_agreement: LicenseAgreement
     ) -> Dict[str, Any]:
         """Generate signature requirements for contract"""
+
+
+
         return {
             "required_signatures": [
                 {
@@ -1286,4 +1319,7 @@ class ContractGenerator:
     
     async def _get_template_version(self, template_type: str) -> str:
         """Get template version"""
+
+
+
         return "1.0"

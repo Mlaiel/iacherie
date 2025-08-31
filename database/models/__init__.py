@@ -7,7 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -781,10 +781,16 @@ MODEL_REGISTRY = {
 }
 
 def get_model_class(model_name: str):
-    """Get model class by name"""    return MODEL_REGISTRY.get(model_name)
+    """Get model class by name"""
+
+
+    return MODEL_REGISTRY.get(model_name)
 
 def get_all_models():
-    """Get all model classes"""    return list(MODEL_REGISTRY.values())
+    """Get all model classes"""
+
+
+    return list(MODEL_REGISTRY.values())
 
 def create_all_tables(engine):
     """Create all database tables"""    Base.metadata.create_all(bind=engine)

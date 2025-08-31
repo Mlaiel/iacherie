@@ -212,6 +212,9 @@ class MessageRouter:
                                  rabbitmq_manager: Optional[RabbitMQManager] = None,
                                  celery_manager: Optional[CeleryManager] = None) -> None:
         """Initialize messaging protocol managers"""
+
+
+
         try:
             if kafka_manager:
                 self.protocols[MessageProtocol.KAFKA] = kafka_manager
@@ -324,6 +327,9 @@ class MessageRouter:
 
     async def remove_route(self, message_type: MessageType, protocol: MessageProtocol, destination: str) -> bool:
         """Remove routing configuration"""
+
+
+
         try:
             if message_type in self.routes:
                 self.routes[message_type] = [
@@ -340,6 +346,9 @@ class MessageRouter:
 
     async def route_message(self, message: Message) -> bool:
         """Route message to appropriate destination(s)"""
+
+
+
         try:
             # Get routes for message type
             routes = self.routes.get(message.type, [])
@@ -384,6 +393,9 @@ class MessageRouter:
 
     async def _apply_filters(self, message: Message, route: RouteConfig) -> bool:
         """Apply filters to message"""
+
+
+
         try:
             for filter_name in route.filters:
                 message_filter = self.filters.get(filter_name)
@@ -398,6 +410,9 @@ class MessageRouter:
 
     async def _apply_transformations(self, message: Message, route: RouteConfig) -> Message:
         """Apply transformations to message"""
+
+
+
         try:
             transformed_message = message.copy(deep=True)
             
@@ -414,6 +429,9 @@ class MessageRouter:
 
     async def _route_to_destination(self, message: Message, route: RouteConfig) -> bool:
         """Route message to specific destination"""
+
+
+
         try:
             protocol_manager = self.protocols.get(route.protocol)
             
@@ -438,6 +456,9 @@ class MessageRouter:
 
     async def _route_to_kafka(self, message: Message, route: RouteConfig, kafka_manager: KafkaManager) -> bool:
         """Route message to Kafka"""
+
+
+
         try:
             routing_key = message.routing_key or self._generate_routing_key(message, route)
             
@@ -453,6 +474,9 @@ class MessageRouter:
 
     async def _route_to_rabbitmq(self, message: Message, route: RouteConfig, rabbitmq_manager: RabbitMQManager) -> bool:
         """Route message to RabbitMQ"""
+
+
+
         try:
             routing_key = message.routing_key or self._generate_routing_key(message, route)
             priority = self._get_priority_value(message.priority)
@@ -470,6 +494,9 @@ class MessageRouter:
 
     async def _route_to_celery(self, message: Message, route: RouteConfig, celery_manager: CeleryManager) -> bool:
         """Route message to Celery"""
+
+
+
         try:
             # This would integrate with Celery task dispatch
             # For now, simulate successful routing
@@ -501,6 +528,9 @@ class MessageRouter:
 
     async def _send_to_dead_letter(self, message: Message, reason: str) -> None:
         """Send message to dead letter queue"""
+
+
+
         try:
             message.metadata["dead_letter_reason"] = reason
             message.metadata["dead_letter_timestamp"] = time.time()
@@ -534,6 +564,9 @@ class MessageRouter:
 
     async def process_message_with_handler(self, message: Message, handler_name: str) -> bool:
         """Process message with specific handler"""
+
+
+
         try:
             handler = self.handlers.get(handler_name)
             
@@ -576,6 +609,9 @@ class MessageRouter:
 
     async def get_routing_stats(self) -> Dict[str, Union[int, List[Dict]]]:
         """Get routing statistics"""
+
+
+
         try:
             total_routed = sum(v for k, v in self.message_stats.items() if "success" in k)
             total_failed = sum(v for k, v in self.message_stats.items() if "failed" in k)
@@ -617,10 +653,16 @@ class MessageRouter:
 
     async def get_dead_letter_messages(self, limit: int = 100) -> List[Dict]:
         """Get dead letter messages"""
+
+
+
         return [msg.dict() for msg in self.dead_letter_messages[-limit:]]
 
     async def reprocess_dead_letter_messages(self, message_ids: Optional[List[str]] = None) -> Dict[str, int]:
         """Reprocess dead letter messages"""
+
+
+
         try:
             reprocessed = 0
             failed = 0
@@ -656,6 +698,9 @@ class MessageRouter:
 
     def export_routing_config(self) -> Dict:
         """Export current routing configuration"""
+
+
+
         return {
             "routes": {
                 msg_type.value: [route.dict() for route in routes]

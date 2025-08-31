@@ -118,6 +118,9 @@ class MetadataManager:
         
     def _init_supported_formats(self) -> Dict[str, type]:
         """Initialize supported format handlers"""
+
+
+
         return {
             '.mp3': ID3,
             '.flac': FLAC,
@@ -130,6 +133,9 @@ class MetadataManager:
     
     def _init_tag_mappings(self) -> Dict[str, Dict[str, str]]:
         """Initialize tag mapping for different formats"""
+
+
+
         return {
             'id3v2': {
                 'title': 'TIT2',
@@ -188,6 +194,9 @@ class MetadataManager:
         Returns:
             AudioMetadata object with extracted information
         """
+
+
+
         try:
             metadata = AudioMetadata()
             
@@ -238,6 +247,9 @@ class MetadataManager:
         Returns:
             Success status
         """
+
+
+
         try:
             # Load existing file
             audio_file = mutagen.File(str(file_path))
@@ -283,6 +295,9 @@ class MetadataManager:
         Returns:
             Success status
         """
+
+
+
         try:
             # Extract metadata from source
             source_metadata = await self.extract_metadata(source_path)
@@ -503,6 +518,9 @@ class MetadataManager:
     
     async def _extract_cover_art(self, audio_file: mutagen.FileType, metadata: AudioMetadata):
         """Extract cover art from audio file"""
+
+
+
         try:
             cover_data = None
             mime_type = None
@@ -569,6 +587,9 @@ class MetadataManager:
     
     async def _generate_fingerprints(self, file_path: Path, metadata: AudioMetadata):
         """Generate content fingerprints for protection"""
+
+
+
         try:
             # Generate file hash
             with open(file_path, 'rb') as f:

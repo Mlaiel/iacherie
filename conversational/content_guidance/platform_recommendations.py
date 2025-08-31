@@ -160,6 +160,9 @@ class PlatformRecommendationEngine:
         
     def _initialize_platform_data(self) -> Dict[PlatformType, Dict[str, Any]]:
         """Initialize comprehensive platform characteristics data."""
+
+
+
         
         return {
             PlatformType.YOUTUBE: {
@@ -299,6 +302,9 @@ class PlatformRecommendationEngine:
     
     def _load_optimization_rules(self) -> Dict[str, Any]:
         """Load platform-specific optimization rules."""
+
+
+
         
         return {
             "hashtag_strategies": {
@@ -337,6 +343,9 @@ class PlatformRecommendationEngine:
     
     def _build_format_compatibility_matrix(self) -> Dict[PlatformType, List[ContentFormat]]:
         """Build content format compatibility matrix for platforms."""
+
+
+
         
         return {
             PlatformType.YOUTUBE: [
@@ -672,6 +681,9 @@ class PlatformRecommendationEngine:
     
     def _initialize_platform_data(self) -> Dict[PlatformType, Dict[str, Any]]:
         """Initialize platform-specific characteristics and optimization data."""
+
+
+
         
         return {
             PlatformType.YOUTUBE: {
@@ -766,6 +778,9 @@ class PlatformRecommendationEngine:
     
     def _load_and_train_models(self):
         """Load historical data and train ML models for recommendations."""
+
+
+
         try:
             # This would load actual historical data in production
             # For now, we'll use synthetic data for model training

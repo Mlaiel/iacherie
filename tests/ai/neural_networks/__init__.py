@@ -3,22 +3,22 @@
 Comprehensive test suite for all neural network architectures and functionalities.
 Tests cover all scenarios, edge cases, and performance requirements.
 
-🎯 Expert Development Team:
-✅ Lead Dev + AI Architect Developer
-✅ Senior Backend Developer (Python/FastAPI/Django)  
-✅ Machine Learning Engineer (TensorFlow/PyTorch/Hugging Face)
-✅ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
-✅ Backend Security Specialist
-✅ Microservices Architect
-✅ Audio Developer
-✅ DevOps Engineer
-✅ AI Prompt Engineer
+ Expert Development Team:
+ Lead Dev + AI Architect Developer
+ Senior Backend Developer (Python/FastAPI/Django)  
+ Machine Learning Engineer (TensorFlow/PyTorch/Hugging Face)
+ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
+ Backend Security Specialist
+ Microservices Architect
+ Audio Developer
+ DevOps Engineer
+ AI Prompt Engineer
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Email: mlaiel@live.de
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée est strictement interdite.

@@ -8,7 +8,7 @@ Handles tweet extraction, user analytics, and hashtag monitoring with API v2 int
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
@@ -174,6 +174,9 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
     
     def _setup_twitter_client(self) -> None:
         """Setup Twitter API v2 client"""
+
+
+
         try:
             self.client = tweepy.Client(
                 bearer_token=self.api_credentials.get('bearer_token'),
@@ -210,6 +213,9 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
     
     def _setup_selenium_driver(self) -> None:
         """Setup Selenium WebDriver for advanced scraping"""
+
+
+
         try:
             chrome_options = webdriver.ChromeOptions()
             chrome_options.add_argument('--headless')
@@ -586,6 +592,9 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
     
     async def _parse_user_data(self, user) -> TwitterUserData:
         """Parse Twitter API user data into structured format"""
+
+
+
         try:
             # Extract hashtags, mentions, and URLs from bio
             bio_text = user.description or ""
@@ -638,6 +647,9 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
     
     async def _parse_tweet_data(self, tweet) -> TwitterTweetData:
         """Parse Twitter API tweet data into structured format"""
+
+
+
         try:
             # Extract hashtags, mentions, and URLs
             hashtags = []
@@ -713,6 +725,9 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
     
     async def _calculate_user_engagement_rate(self, user) -> float:
         """Calculate user's average engagement rate"""
+
+
+
         try:
             if not user.public_metrics:
                 return 0.0
@@ -730,6 +745,9 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
     
     async def _calculate_influence_score(self, user) -> float:
         """Calculate user's influence score"""
+
+
+
         try:
             if not user.public_metrics:
                 return 0.0
@@ -753,6 +771,9 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
     
     async def _calculate_bot_probability(self, user) -> float:
         """Calculate probability that user is a bot"""
+
+
+
         try:
             bot_score = 0.0
             
@@ -795,6 +816,9 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
     
     async def _calculate_tweet_similarity(self, original: Dict, candidate: Dict) -> float:
         """Calculate similarity between original and candidate tweets"""
+
+
+
         try:
             # Text similarity
             original_text = original.get('text', '').lower()
@@ -841,6 +865,9 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
     
     async def _classify_theft_type(self, original: Dict, candidate: TwitterTweetData) -> str:
         """Classify the type of potential content theft"""
+
+
+
         try:
             # Exact copy
             if original.get('text', '').strip() == candidate.text.strip():
@@ -868,6 +895,9 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
     
     async def cleanup(self) -> None:
         """Cleanup resources"""
+
+
+
         try:
             if hasattr(self, 'driver') and self.driver:
                 self.driver.quit()
@@ -880,6 +910,9 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
     
     def __del__(self):
         """Destructor to ensure cleanup"""
+
+
+
         try:
             if hasattr(self, 'driver') and self.driver:
                 self.driver.quit()

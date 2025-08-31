@@ -1,12 +1,12 @@
 """
-✅ Validation Engine - IA-Influencer-Agent
+ Validation Engine - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: System Architect + DevOps Senior + Quality Engineer
 Date: 2025-08-24
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -136,6 +136,9 @@ class ValidationEngine:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             # Load default validation rules
             await self._load_default_rules()
@@ -962,6 +965,9 @@ class ValidationEngine:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             self.validation_rules[rule.id] = rule
             if rule.rule_function:
@@ -984,6 +990,9 @@ class ValidationEngine:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             if rule_id in self.validation_rules:
                 self.validation_rules[rule_id].enabled = False
@@ -1032,4 +1041,7 @@ class ValidationEngine:
     
     async def get_status(self) -> Dict[str, Any]:
         """Get validation engine status"""
+
+
+
         return await self.get_validation_status()

@@ -1,5 +1,5 @@
 """
-🚀 Tax Handler - Ultra-Advanced Tax Management System
+ Tax Handler - Ultra-Advanced Tax Management System
 ===================================================
 
 Industrial-grade tax management system handling international tax compliance,
@@ -12,7 +12,7 @@ Created by: Fahed Mlaiel <mlaiel@live.de>
 Team Specialists:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
+ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED 
 Contact mlaiel@live.de for licensing inquiries.
 
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Tax Management
@@ -100,6 +100,9 @@ class TaxHandler:
         
     async def initialize(self):
         """Initialize tax handler"""
+
+
+
         try:
             # Load tax rates and treaties
             await self._load_tax_configuration()
@@ -129,6 +132,9 @@ class TaxHandler:
         Returns:
             Tax calculation result
         """
+
+
+
         try:
             # Get creator tax profile
             tax_profile = await self._get_creator_tax_profile(creator_id)
@@ -182,6 +188,9 @@ class TaxHandler:
 
     async def cleanup(self):
         """Cleanup tax handler resources"""
+
+
+
         try:
             logger.info("Tax handler cleanup completed")
             

@@ -483,6 +483,9 @@ for config in DEFAULT_RATE_LIMITS:
 
 def get_rate_limiter() -> RateLimiter:
     """Get global rate limiter instance."""
+
+
+
     return _rate_limiter
 
 
@@ -492,6 +495,9 @@ async def check_rate_limit(
     tokens: int = 1
 ) -> RateLimitResult:
     """Check rate limit using global limiter."""
+
+
+
     return await _rate_limiter.check_rate_limit(config_name, identifier, tokens)
 
 

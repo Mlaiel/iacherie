@@ -1,5 +1,5 @@
 """
-🏗️ License Generator - Automated License Creation Engine
+ License Generator - Automated License Creation Engine
 =======================================================
 
 Professional license generation system with multi-jurisdiction support:
@@ -78,7 +78,7 @@ class LicenseMetadata:
 
 class LicenseGenerator:
     """
-    🚀 Professional license generation engine
+     Professional license generation engine
     
     Advanced system for creating legally compliant licenses with
     automated customization and multi-jurisdiction support.
@@ -110,6 +110,9 @@ class LicenseGenerator:
     
     def _load_license_templates(self):
         """Load and cache license templates."""
+
+
+
         try:
             if not self.template_path.exists():
                 self.template_path.mkdir(parents=True, exist_ok=True)
@@ -234,7 +237,7 @@ class LicenseGenerator:
         custom_terms: Dict[str, Any]
     ) -> Dict[str, Any]:
         """
-        🎯 Customize license template with specific content and terms
+         Customize license template with specific content and terms
         
         Args:
             template: Base license template
@@ -505,6 +508,9 @@ class LicenseGenerator:
     
     def get_available_templates(self) -> List[Dict[str, Any]]:
         """Get list of available license templates."""
+
+
+
         return [
             {
                 'name': template_name,
@@ -517,10 +523,16 @@ class LicenseGenerator:
     
     def get_supported_jurisdictions(self) -> List[str]:
         """Get list of supported legal jurisdictions."""
+
+
+
         return list(self.jurisdiction_rules.keys())
     
     def get_generator_metrics(self) -> Dict[str, Any]:
         """Get license generator performance metrics."""
+
+
+
         return {
             **self.metrics,
             'available_templates': len(self.template_cache),

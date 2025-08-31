@@ -560,7 +560,7 @@ class AlertManager:
         config = channel.config
         
         # Format message for Telegram
-        message = f"🚨 *{alert.severity.value.upper()}*: {alert.name}\n\n"
+        message = f" *{alert.severity.value.upper()}*: {alert.name}\n\n"
         message += f"*Message:* {alert.message}\n"
         message += f"*Source:* {alert.source}\n"
         message += f"*Time:* {alert.timestamp.strftime('%Y-%m-%d %H:%M:%S')}\n"
@@ -793,6 +793,9 @@ class AlertManager:
         
     def get_active_alerts(self) -> List[Dict[str, Any]]:
         """Get all active alerts"""
+
+
+
         return [
             {
                 "id": alert.id,

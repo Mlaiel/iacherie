@@ -3,7 +3,7 @@ IA Influencer Agent - Exemple d'utilisation de la pipeline créateur complète
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ AVERTISSEMENT DE PROPRIÉTÉ INTELLECTUELLE ⚠️
+ AVERTISSEMENT DE PROPRIÉTÉ INTELLECTUELLE 
 Ce code et tous les concepts associés sont la propriété exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation écrite 
 explicite de l'auteur est strictement interdite et constitue une violation du 
@@ -49,7 +49,7 @@ class CompleteCreatorWorkflowExample:
         Exemple complet pour un musicien :
         Upload chanson → Protection droits → SEO → Distribution → Monétisation
         """
-        logger.info("🎵 Démarrage du workflow musicien complet")
+        logger.info(" Démarrage du workflow musicien complet")
         
         # 1. Données du créateur musicien
         creator_data = {
@@ -80,7 +80,7 @@ class CompleteCreatorWorkflowExample:
         
         try:
             # 3. Traitement du contenu avec protection IA
-            logger.info("📝 Traitement et protection du contenu...")
+            logger.info(" Traitement et protection du contenu...")
             processed_content = await self.content_processor.process_creator_content(
                 content_data=content_data,
                 creator_profile=creator_data,
@@ -88,14 +88,14 @@ class CompleteCreatorWorkflowExample:
             )
             
             # 4. Transformation pour optimisation multi-plateformes
-            logger.info("🔄 Optimisation pour les plateformes...")
+            logger.info(" Optimisation pour les plateformes...")
             optimized_content = await self.content_transformer.optimize_for_platforms(
                 content=processed_content,
                 target_platforms=creator_data['target_platforms']
             )
             
             # 5. Orchestration du workflow de distribution
-            logger.info("🚀 Orchestration de la distribution...")
+            logger.info(" Orchestration de la distribution...")
             workflow_result = await self.workflow_orchestrator.execute_creator_workflow(
                 workflow_type='musician_distribution',
                 creator_data=creator_data,
@@ -103,7 +103,7 @@ class CompleteCreatorWorkflowExample:
             )
             
             # 6. Distribution multi-plateformes
-            logger.info("📡 Distribution sur les plateformes...")
+            logger.info(" Distribution sur les plateformes...")
             distribution_results = {}
             
             for platform in creator_data['target_platforms']:
@@ -114,13 +114,13 @@ class CompleteCreatorWorkflowExample:
                         creator_profile=creator_data
                     )
                     distribution_results[platform] = result
-                    logger.info(f"✅ Distribution réussie sur {platform}")
+                    logger.info(f" Distribution réussie sur {platform}")
                 except Exception as e:
-                    logger.error(f"❌ Erreur distribution {platform}: {e}")
+                    logger.error(f" Erreur distribution {platform}: {e}")
                     distribution_results[platform] = {'status': 'failed', 'error': str(e)}
             
             # 7. Analyse de monétisation et recommandations
-            logger.info("💰 Analyse des opportunités de monétisation...")
+            logger.info(" Analyse des opportunités de monétisation...")
             monetization_analysis = await self.monetization_analyzer.analyze_revenue_potential(
                 creator_profile=creator_data,
                 content_performance=distribution_results,
@@ -143,11 +143,11 @@ class CompleteCreatorWorkflowExample:
                 ]
             }
             
-            logger.info("✅ Workflow musicien terminé avec succès!")
+            logger.info(" Workflow musicien terminé avec succès!")
             return final_report
             
         except Exception as e:
-            logger.error(f"❌ Erreur dans le workflow musicien: {e}")
+            logger.error(f" Erreur dans le workflow musicien: {e}")
             raise
     
     async def run_blogger_workflow_example(self):
@@ -155,7 +155,7 @@ class CompleteCreatorWorkflowExample:
         Exemple complet pour un blogueur :
         Article → SEO → Distribution → Monétisation affiliate
         """
-        logger.info("📝 Démarrage du workflow blogueur complet")
+        logger.info(" Démarrage du workflow blogueur complet")
         
         creator_data = {
             'creator_id': 'blogger_001',
@@ -203,11 +203,11 @@ class CompleteCreatorWorkflowExample:
                 content_data=optimized_content
             )
             
-            logger.info("✅ Workflow blogueur terminé avec succès!")
+            logger.info(" Workflow blogueur terminé avec succès!")
             return workflow_result
             
         except Exception as e:
-            logger.error(f"❌ Erreur dans le workflow blogueur: {e}")
+            logger.error(f" Erreur dans le workflow blogueur: {e}")
             raise
     
     async def run_photographer_workflow_example(self):
@@ -215,7 +215,7 @@ class CompleteCreatorWorkflowExample:
         Exemple complet pour un photographe :
         Photo → Protection → Portfolio → Vente stock
         """
-        logger.info("📸 Démarrage du workflow photographe complet")
+        logger.info(" Démarrage du workflow photographe complet")
         
         creator_data = {
             'creator_id': 'photographer_001',
@@ -264,11 +264,11 @@ class CompleteCreatorWorkflowExample:
                 content_data=optimized_content
             )
             
-            logger.info("✅ Workflow photographe terminé avec succès!")
+            logger.info(" Workflow photographe terminé avec succès!")
             return workflow_result
             
         except Exception as e:
-            logger.error(f"❌ Erreur dans le workflow photographe: {e}")
+            logger.error(f" Erreur dans le workflow photographe: {e}")
             raise
 
 async def run_complete_examples():
@@ -277,7 +277,7 @@ async def run_complete_examples():
     """
     example = CompleteCreatorWorkflowExample()
     
-    print("🚀 Démarrage des exemples de workflows créateurs complets")
+    print(" Démarrage des exemples de workflows créateurs complets")
     print("=" * 60)
     
     # Exemple musicien
@@ -298,7 +298,7 @@ async def run_complete_examples():
     photographer_result = await example.run_photographer_workflow_example()
     print(f"Résultat photographe: {photographer_result}")
     
-    print("\n🎉 Tous les exemples ont été exécutés avec succès!")
+    print("\n Tous les exemples ont été exécutés avec succès!")
     print("La pipeline de monétisation créateur est opérationnelle.")
 
 if __name__ == "__main__":

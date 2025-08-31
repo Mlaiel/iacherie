@@ -10,7 +10,7 @@ Project: IA-Influencer Agent + Content Protection Platform
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps
 
 Copyright Notice:
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This code and all associated concepts, algorithms, and implementations are the exclusive 
 intellectual property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, reproduction, 
 distribution, modification, or appropriation of this code, in whole or in part, without 
@@ -459,6 +459,9 @@ def validate_real_time_config(config: RealTimeConfig) -> bool:
     Returns:
         True if configuration is valid, False otherwise
     """
+
+
+
     try:
         # Validate latency targets
         for profile, targets in config.latency_optimization_config.latency_targets.items():
@@ -518,4 +521,7 @@ DEFAULT_REAL_TIME_CONFIG = RealTimeConfig()
 
 def get_real_time_config() -> RealTimeConfig:
     """Get default real-time configuration"""
+
+
+
     return DEFAULT_REAL_TIME_CONFIG

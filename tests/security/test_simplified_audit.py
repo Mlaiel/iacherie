@@ -77,7 +77,7 @@ async def test_security_audit_trail():
         assert event.user_id == "test_user", "User ID should match"
         assert event.success is True, "Success flag should match"
         
-        print("✓ Security event logging works correctly")
+        print(" Security event logging works correctly")
         
         # Test filtering
         await audit_trail.log_security_event(
@@ -95,7 +95,7 @@ async def test_security_audit_trail():
         user_events = await audit_trail.get_audit_trail(user_id="test_user")
         assert len(user_events) == 1, "Should filter by user"
         
-        print("✓ Audit trail filtering works correctly")
+        print(" Audit trail filtering works correctly")
         
         # Test compliance report
         end_time = datetime.now(timezone.utc)
@@ -111,14 +111,14 @@ async def test_security_audit_trail():
         assert "total_events" in report, "Report should have total events"
         assert "event_breakdown" in report, "Report should have event breakdown"
         
-        print("✓ Compliance report generation works correctly")
+        print(" Compliance report generation works correctly")
         
         # Test integrity verification
         integrity_result = await audit_trail.verify_audit_integrity()
         assert integrity_result["status"] == "verified", "Integrity should be verified"
         assert integrity_result["total_events"] == 2, "Should count all events"
         
-        print("✓ Audit integrity verification works correctly")
+        print(" Audit integrity verification works correctly")
 
 
 @pytest.mark.asyncio 
@@ -153,7 +153,7 @@ async def test_security_monitoring():
         assert incident.title == "Test Security Incident", "Title should match"
         assert incident.severity == IncidentSeverity.MEDIUM, "Severity should match"
         
-        print("✓ Security incident creation works correctly")
+        print(" Security incident creation works correctly")
         
         # Test incident status update
         success = await dashboard.update_incident_status(
@@ -166,7 +166,7 @@ async def test_security_monitoring():
         assert incident.status == IncidentStatus.INVESTIGATING, "Status should be updated"
         assert incident.assigned_to == "analyst1", "Assignment should be updated"
         
-        print("✓ Incident status updates work correctly")
+        print(" Incident status updates work correctly")
         
         # Test incident report generation
         report = await dashboard.generate_incident_report(incident_id)
@@ -174,7 +174,7 @@ async def test_security_monitoring():
         assert "incident_details" in report, "Report should have incident details"
         assert "timeline" in report, "Report should have timeline"
         
-        print("✓ Incident report generation works correctly")
+        print(" Incident report generation works correctly")
 
 
 @pytest.mark.asyncio
@@ -202,7 +202,7 @@ async def test_security_policies():
         assert PolicyType.DATA_PROTECTION in policy_types, "Should have data protection policy"
         assert PolicyType.INCIDENT_RESPONSE in policy_types, "Should have incident response policy"
         
-        print("✓ Standard security policies are available")
+        print(" Standard security policies are available")
         
         # Test policy compliance report
         report = await policy_manager.generate_policy_compliance_report()
@@ -213,7 +213,7 @@ async def test_security_policies():
         compliance_score = report["summary"]["compliance_score"]
         assert 0 <= compliance_score <= 100, "Compliance score should be valid percentage"
         
-        print("✓ Policy compliance reporting works correctly")
+        print(" Policy compliance reporting works correctly")
         
         # Test incident response procedures
         response = await policy_manager.execute_incident_response(
@@ -227,7 +227,7 @@ async def test_security_policies():
         assert response["procedures_executed"] > 0, "Should execute procedures"
         assert "escalation_required" in response, "Should include escalation info"
         
-        print("✓ Incident response procedures work correctly")
+        print(" Incident response procedures work correctly")
 
 
 @pytest.mark.asyncio
@@ -247,14 +247,14 @@ async def test_vulnerability_scanner():
     assert scan_result.compliance_status in ["COMPLIANT", "NON_COMPLIANT"], "Should have compliance status"
     assert scan_result.total_vulnerabilities >= 0, "Should count vulnerabilities"
     
-    print("✓ Vulnerability scanning works correctly")
+    print(" Vulnerability scanning works correctly")
     
     # Test compliance status
     compliance_status = await scanner.get_compliance_status()
     assert "status" in compliance_status, "Should have status"
     assert "compliant" in compliance_status, "Should have compliance flag"
     
-    print("✓ Vulnerability compliance checking works correctly")
+    print(" Vulnerability compliance checking works correctly")
     
     # Test vulnerability report
     vuln_report = await scanner.get_vulnerability_report()
@@ -262,7 +262,7 @@ async def test_vulnerability_scanner():
         assert "scan_summary" in vuln_report, "Report should have scan summary"
         assert "compliance_check" in vuln_report, "Report should have compliance check"
     
-    print("✓ Vulnerability reporting works correctly")
+    print(" Vulnerability reporting works correctly")
 
 
 @pytest.mark.asyncio
@@ -302,15 +302,15 @@ async def test_integration():
         )
         assert auth_event_id is not None, "Authentication logging should work"
         
-        print("✓ Audit trail integration works correctly")
+        print(" Audit trail integration works correctly")
         
         # Test security status retrieval
         try:
             status = await get_security_status()
             assert isinstance(status, dict), "Status should be dictionary"
-            print("✓ Security status integration works correctly")
+            print(" Security status integration works correctly")
         except Exception as e:
-            print(f"⚠ Security status integration needs refinement: {e}")
+            print(f" Security status integration needs refinement: {e}")
         
         # Test incident creation
         try:
@@ -320,17 +320,17 @@ async def test_integration():
                 severity="low"
             )
             assert incident_id is not None, "Incident creation should work"
-            print("✓ Incident management integration works correctly")
+            print(" Incident management integration works correctly")
         except Exception as e:
-            print(f"⚠ Incident management integration needs refinement: {e}")
+            print(f" Incident management integration needs refinement: {e}")
         
         # Test policy functions
         try:
             policies = await get_security_policies()
             assert isinstance(policies, list), "Policies should be list"
-            print("✓ Policy management integration works correctly")
+            print(" Policy management integration works correctly")
         except Exception as e:
-            print(f"⚠ Policy management integration needs refinement: {e}")
+            print(f" Policy management integration needs refinement: {e}")
 
 
 async def run_all_tests():
@@ -348,26 +348,26 @@ async def run_all_tests():
         await test_integration()
         
         print("\n" + "=" * 60)
-        print("✅ ALL TESTS PASSED - Security Audit & Compliance Implementation Complete!")
+        print(" ALL TESTS PASSED - Security Audit & Compliance Implementation Complete!")
         print("=" * 60)
         
         # Summary of implemented features
-        print("\n📋 IMPLEMENTED FEATURES:")
-        print("✓ Security audit trail with tamper-proof logging")
-        print("✓ Access logging and monitoring")
-        print("✓ Security events monitoring and alerting")
-        print("✓ Vulnerability scanning and compliance checking")
-        print("✓ Security testing automation framework")
-        print("✓ Compliance reporting (GDPR, SOX, HIPAA, etc.)")
-        print("✓ Incident response procedures and workflows")
-        print("✓ Security policies documentation and management")
-        print("✓ Comprehensive security monitoring dashboard")
-        print("✓ Integration across all security components")
+        print("\n IMPLEMENTED FEATURES:")
+        print(" Security audit trail with tamper-proof logging")
+        print(" Access logging and monitoring")
+        print(" Security events monitoring and alerting")
+        print(" Vulnerability scanning and compliance checking")
+        print(" Security testing automation framework")
+        print(" Compliance reporting (GDPR, SOX, HIPAA, etc.)")
+        print(" Incident response procedures and workflows")
+        print(" Security policies documentation and management")
+        print(" Comprehensive security monitoring dashboard")
+        print(" Integration across all security components")
         
         return True
         
     except Exception as e:
-        print(f"\n❌ TEST FAILED: {e}")
+        print(f"\n TEST FAILED: {e}")
         import traceback
         traceback.print_exc()
         return False

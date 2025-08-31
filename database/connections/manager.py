@@ -187,6 +187,9 @@ class DatabaseConnectionManager:
     
     async def _verify_single_connection(self, db_type: DatabaseType, handler: Any) -> None:
         """Verify a single database connection"""
+
+
+
         try:
             await handler.health_check()
             self.logger.info(f"Connection verified for {db_type.value}")
@@ -242,6 +245,9 @@ class DatabaseConnectionManager:
     
     async def health_check(self) -> Dict[str, Any]:
         """Comprehensive health check for all database connections"""
+
+
+
         return await self.health_monitor.comprehensive_health_check()
     
     async def shutdown(self) -> None:

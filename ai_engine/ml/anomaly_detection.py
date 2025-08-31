@@ -95,6 +95,9 @@ class AnomalyDetector(BaseDetector):
     
     def _initialize_models(self):
         """Initialize anomaly detection models"""
+
+
+
         try:
             if SKLEARN_AVAILABLE:
                 self.isolation_forest = IsolationForest(
@@ -285,6 +288,9 @@ class FraudDetector(BaseDetector):
     
     def _initialize_models(self):
         """Initialize fraud detection models"""
+
+
+
         try:
             # Load known fraud patterns
             self.fraud_signatures = {
@@ -457,6 +463,9 @@ class ContentModerator(BaseDetector):
     
     def _initialize_models(self):
         """Initialize content moderation models"""
+
+
+
         try:
             # Define moderation categories and keywords
             self.moderation_rules = {

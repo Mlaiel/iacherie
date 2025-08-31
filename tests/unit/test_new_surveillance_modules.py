@@ -57,7 +57,7 @@ async def test_surveillance_modules():
     alert_system = ViolationAlertSystem()
     matching_engine = ContentMatchingEngine()
     
-    print("✓ All modules instantiated successfully")
+    print(" All modules instantiated successfully")
     
     # Test initialization
     try:
@@ -71,9 +71,9 @@ async def test_surveillance_modules():
         await alert_system.initialize()
         await matching_engine.initialize()
         
-        print("✓ All modules initialized successfully")
+        print(" All modules initialized successfully")
     except Exception as e:
-        print(f"⚠ Module initialization completed: {e}")
+        print(f" Module initialization completed: {e}")
     
     # Test status methods
     try:
@@ -87,7 +87,7 @@ async def test_surveillance_modules():
         alert_status = alert_system.get_alert_system_status()
         engine_status = matching_engine.get_engine_status()
         
-        print("✓ All status methods working")
+        print(" All status methods working")
         print(f"  - YouTube Monitor: {youtube_status['monitoring_active']}")
         print(f"  - TikTok Crawler: {tiktok_status['users_collected']} users")
         print(f"  - Instagram Detector: {instagram_status['detection_active']}")
@@ -101,7 +101,7 @@ async def test_surveillance_modules():
     except Exception as e:
         print(f"Status methods test error: {e}")
     
-    print("✓ New surveillance modules test completed successfully!")
+    print(" New surveillance modules test completed successfully!")
 
 if __name__ == "__main__":
     asyncio.run(test_surveillance_modules())

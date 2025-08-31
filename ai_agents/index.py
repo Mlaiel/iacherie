@@ -11,7 +11,7 @@ Collaboration Matching → Multi-Platform Distribution → Revenue Analytics
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code, architecture, and product concept are exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, reverse engineering, or commercialization without 
 explicit written permission is strictly prohibited and will be prosecuted to the full extent of the law.
@@ -67,23 +67,38 @@ async def shutdown() -> None:
 # Request routing convenience
 async def route_request(request: AgentRequest) -> AgentResponse:
     """Route an AgentRequest through the global manager with load balancing."""
+
+
+
     return await agent_manager.process_request(request)
 
 async def get_system_status() -> Dict[str, Any]:
     """Return a comprehensive snapshot of the agent system status."""
+
+
+
     return await agent_manager.get_system_status()
 
 # Agent utilities
 def list_agent_types() -> List[str]:
     """List all available agent types registered in the system."""
+
+
+
     return get_available_agent_types()
 
 def describe_agent(agent_type: str) -> Optional[Dict[str, Any]]:
     """Describe a specific agent type (class name, module, description)."""
+
+
+
     return get_agent_info(agent_type)
 
 async def create_agent_instance(agent_type: str, agent_id: str, config: Optional[Dict[str, Any]] = None):
     """Create and initialize a single agent instance via the factory."""
+
+
+
     return await AgentFactory.create_agent(agent_type=agent_type, agent_id=agent_id, config=config)
 
 # Business workflow shortcuts

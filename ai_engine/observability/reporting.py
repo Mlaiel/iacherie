@@ -8,7 +8,7 @@ for the IA Influencer platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -128,6 +128,9 @@ class KPI:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             **asdict(self),
             'performance_percentage': self.calculate_performance(),
@@ -160,6 +163,9 @@ class VisualizationEngine:
         
     async def create_executive_dashboard(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Create executive dashboard with key metrics"""
+
+
+
         try:
             if not HAS_PLOTTING:
                 return {"error": "Plotting libraries not available"}
@@ -199,6 +205,9 @@ class VisualizationEngine:
     
     async def _create_revenue_trend_chart(self, financial_data: List[Dict]) -> Dict[str, Any]:
         """Create revenue trend visualization"""
+
+
+
         try:
             df = pd.DataFrame(financial_data)
             if df.empty or 'date' not in df.columns or 'revenue' not in df.columns:
@@ -238,6 +247,9 @@ class VisualizationEngine:
     
     async def _create_engagement_chart(self, engagement_data: List[Dict]) -> Dict[str, Any]:
         """Create user engagement visualization"""
+
+
+
         try:
             df = pd.DataFrame(engagement_data)
             if df.empty:
@@ -298,6 +310,9 @@ class VisualizationEngine:
     
     async def _create_content_heatmap(self, content_data: List[Dict]) -> Dict[str, Any]:
         """Create content performance heatmap"""
+
+
+
         try:
             df = pd.DataFrame(content_data)
             if df.empty:
@@ -343,6 +358,9 @@ class VisualizationEngine:
     
     async def _create_kpi_scorecard(self, kpi_data: List[Dict]) -> Dict[str, Any]:
         """Create KPI scorecard visualization"""
+
+
+
         try:
             if not kpi_data:
                 return {"error": "No KPI data"}
@@ -511,6 +529,9 @@ class VisualizationEngine:
     
     def _get_dashboard_layout(self) -> Dict[str, Any]:
         """Get default dashboard layout configuration"""
+
+
+
         return {
             "grid": {
                 "columns": 12,
@@ -536,6 +557,9 @@ class ReportGenerator:
         
     async def generate_executive_report(self, data: Dict[str, Any], template_id: Optional[str] = None) -> Dict[str, Any]:
         """Generate comprehensive executive report"""
+
+
+
         try:
             report_id = str(uuid4())
             
@@ -600,6 +624,9 @@ class ReportGenerator:
     
     async def _generate_executive_summary(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Generate executive summary section"""
+
+
+
         try:
             summary = {
                 "title": "Executive Summary",
@@ -665,6 +692,9 @@ class ReportGenerator:
     
     async def _generate_kpi_section(self, kpi_data: List[Dict]) -> Dict[str, Any]:
         """Generate KPI performance section"""
+
+
+
         try:
             kpi_section = {
                 "title": "Key Performance Indicators",
@@ -719,6 +749,9 @@ class ReportGenerator:
     
     async def _generate_financial_section(self, financial_data: List[Dict]) -> Dict[str, Any]:
         """Generate financial performance section"""
+
+
+
         try:
             financial_section = {
                 "title": "Financial Performance",
@@ -778,6 +811,9 @@ class ReportGenerator:
     
     async def _generate_user_analytics_section(self, user_data: List[Dict]) -> Dict[str, Any]:
         """Generate user analytics section"""
+
+
+
         try:
             user_section = {
                 "title": "User Analytics & Behavior",
@@ -821,6 +857,9 @@ class ReportGenerator:
     
     async def _generate_content_section(self, content_data: List[Dict]) -> Dict[str, Any]:
         """Generate content performance section"""
+
+
+
         try:
             content_section = {
                 "title": "Content Performance Analysis",
@@ -861,6 +900,9 @@ class ReportGenerator:
     
     async def _generate_strategic_recommendations(self, data: Dict[str, Any]) -> Dict[str, Any]:
         """Generate strategic recommendations based on data analysis"""
+
+
+
         try:
             recommendations = {
                 "title": "Strategic Recommendations",
@@ -907,6 +949,9 @@ class ReportGenerator:
     
     def _get_default_executive_template(self) -> ReportTemplate:
         """Get default executive report template"""
+
+
+
         return ReportTemplate(
             name="Default Executive Template",
             report_type=ReportType.EXECUTIVE_SUMMARY,
@@ -1059,6 +1104,9 @@ class AutomatedReportingEngine:
     
     def schedule_report(self, report_config: Dict[str, Any]) -> str:
         """Schedule a report for automated generation"""
+
+
+
         try:
             report_id = str(uuid4())
             
@@ -1100,6 +1148,9 @@ class AutomatedReportingEngine:
     
     async def _generate_scheduled_report(self, report_id: str, schedule: Dict[str, Any]):
         """Generate a scheduled report"""
+
+
+
         try:
             self.logger.info(f"Generating scheduled report: {schedule['name']}")
             
@@ -1181,6 +1232,9 @@ class AutomatedReportingEngine:
     
     async def _distribute_report(self, report: Dict[str, Any], recipients: List[str]):
         """Distribute report to configured recipients"""
+
+
+
         try:
             # Here you would implement report distribution logic
             # - Email sending
@@ -1195,10 +1249,16 @@ class AutomatedReportingEngine:
     
     def get_scheduled_reports(self) -> List[Dict[str, Any]]:
         """Get list of all scheduled reports"""
+
+
+
         return list(self.scheduled_reports.values())
     
     def update_report_schedule(self, report_id: str, updates: Dict[str, Any]) -> bool:
         """Update a scheduled report configuration"""
+
+
+
         try:
             if report_id in self.scheduled_reports:
                 self.scheduled_reports[report_id].update(updates)
@@ -1210,6 +1270,9 @@ class AutomatedReportingEngine:
     
     def cancel_scheduled_report(self, report_id: str) -> bool:
         """Cancel a scheduled report"""
+
+
+
         try:
             if report_id in self.scheduled_reports:
                 self.scheduled_reports[report_id]["is_active"] = False
@@ -1226,6 +1289,9 @@ class AutomatedReportingEngine:
     
     async def _fetch_analytics_data(self) -> List[Dict[str, Any]]:
         """Fetch analytics data"""
+
+
+
         try:
             # Simulate analytics data fetching
             current_time = datetime.now(timezone.utc)
@@ -1249,6 +1315,9 @@ class AutomatedReportingEngine:
     
     async def _fetch_monitoring_data(self) -> List[Dict[str, Any]]:
         """Fetch monitoring data"""
+
+
+
         try:
             current_time = datetime.now(timezone.utc)
             return [
@@ -1271,6 +1340,9 @@ class AutomatedReportingEngine:
     
     async def _fetch_logging_data(self) -> List[Dict[str, Any]]:
         """Fetch logging data"""
+
+
+
         try:
             current_time = datetime.now(timezone.utc)
             return [
@@ -1293,6 +1365,9 @@ class AutomatedReportingEngine:
     
     async def _fetch_user_behavior_data(self) -> List[Dict[str, Any]]:
         """Fetch user behavior data"""
+
+
+
         try:
             current_time = datetime.now(timezone.utc)
             return [
@@ -1310,6 +1385,9 @@ class AutomatedReportingEngine:
     
     async def _fetch_performance_data(self) -> List[Dict[str, Any]]:
         """Fetch performance data"""
+
+
+
         try:
             current_time = datetime.now(timezone.utc)
             return [
@@ -1327,6 +1405,9 @@ class AutomatedReportingEngine:
     
     async def _fetch_security_data(self) -> List[Dict[str, Any]]:
         """Fetch security data"""
+
+
+
         try:
             current_time = datetime.now(timezone.utc)
             return [
@@ -1344,6 +1425,9 @@ class AutomatedReportingEngine:
     
     async def _fetch_business_data(self) -> List[Dict[str, Any]]:
         """Fetch business data"""
+
+
+
         try:
             current_time = datetime.now(timezone.utc)
             return [
@@ -1361,6 +1445,9 @@ class AutomatedReportingEngine:
     
     async def _fetch_generic_data(self, source: str) -> List[Dict[str, Any]]:
         """Fetch generic data from unknown source"""
+
+
+
         try:
             current_time = datetime.now(timezone.utc)
             return [

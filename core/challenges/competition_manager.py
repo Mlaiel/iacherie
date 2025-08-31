@@ -1,5 +1,5 @@
 """
-🏆 Competition Manager - IA Influencer Agent Platform Enterprise
+ Competition Manager - IA Influencer Agent Platform Enterprise
 ================================================================
 Module: backend/core/challenges/competition_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Competition Management System - Production-Ready
 Responsibility: Enterprise competition lifecycle and tournament management
 ==========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
@@ -240,6 +240,9 @@ class CompetitionManager:
     
     async def create_competition(self, config: CompetitionConfiguration) -> Dict[str, Any]:
         """Create a new competition with comprehensive setup"""
+
+
+
         try:
             # Validate competition configuration
             validation_result = await self._validate_competition_config(config)
@@ -326,6 +329,9 @@ class CompetitionManager:
                                  team_id: Optional[str] = None,
                                  registration_data: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """Register participant for competition"""
+
+
+
         try:
             # Get competition configuration
             competition = await self.competition_repository.get_competition(competition_id)
@@ -411,6 +417,9 @@ class CompetitionManager:
     
     async def start_competition(self, competition_id: str) -> Dict[str, Any]:
         """Start competition and begin first phase"""
+
+
+
         try:
             # Get competition configuration
             competition = await self.competition_repository.get_competition(competition_id)
@@ -516,6 +525,9 @@ class CompetitionManager:
     
     async def advance_phase(self, competition_id: str) -> Dict[str, Any]:
         """Advance competition to next phase"""
+
+
+
         try:
             # Get current competition state
             competition = await self.competition_repository.get_competition(competition_id)
@@ -601,6 +613,9 @@ class CompetitionManager:
                                 match_id: str,
                                 results: Dict[str, Any]) -> Dict[str, Any]:
         """Record match result and update standings"""
+
+
+
         try:
             # Validate match exists and is active
             match = await self.competition_repository.get_match(competition_id, match_id)
@@ -678,6 +693,9 @@ class CompetitionManager:
     
     async def get_competition_status(self, competition_id: str) -> Dict[str, Any]:
         """Get comprehensive competition status"""
+
+
+
         try:
             # Get competition data
             competition = await self.competition_repository.get_competition(competition_id)
@@ -740,6 +758,9 @@ class CompetitionManager:
                                  competition_id: str,
                                  limit: int = 50) -> Dict[str, Any]:
         """Get live competition leaderboard"""
+
+
+
         try:
             # Get current leaderboard
             leaderboard = await self.competition_repository.get_competition_leaderboard(
@@ -905,6 +926,9 @@ class CompetitionManager:
                              competition_id: str,
                              config: CompetitionConfiguration) -> Dict[str, Any]:
         """Perform participant seeding"""
+
+
+
         try:
             # Get all registered participants
             participants = await self.competition_repository.get_competition_participants(
@@ -940,6 +964,9 @@ class CompetitionManager:
                               phase: CompetitionPhase,
                               config: CompetitionConfiguration) -> Dict[str, Any]:
         """Initialize a competition phase"""
+
+
+
         try:
             if phase in [CompetitionPhase.PRELIMINARY, CompetitionPhase.QUARTER_FINAL,
                         CompetitionPhase.SEMI_FINAL, CompetitionPhase.FINAL]:
@@ -960,6 +987,9 @@ class CompetitionManager:
                                     phase: CompetitionPhase,
                                     config: CompetitionConfiguration) -> Dict[str, Any]:
         """Generate matches for a competitive phase"""
+
+
+
         try:
             # Get active participants for this phase
             participants = await self._get_active_participants(competition_id)
@@ -1051,6 +1081,9 @@ class CompetitionManager:
                                   competition_id: str,
                                   config: CompetitionConfiguration) -> Dict[str, Any]:
         """Complete competition and distribute prizes"""
+
+
+
         try:
             # Determine final rankings
             final_leaderboard = await self.competition_repository.get_competition_leaderboard(

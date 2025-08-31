@@ -44,7 +44,7 @@ def run_command(cmd, description):
 
 def main():
     """Main test runner."""
-    print("🚀 Ainflue Platform - Comprehensive Test Suite")
+    print(" Ainflue Platform - Comprehensive Test Suite")
     print("=" * 60)
     
     # Change to project directory
@@ -91,11 +91,11 @@ def main():
         })
         
         if not success and test["required"]:
-            print(f"\n❌ CRITICAL: Required test failed: {test['description']}")
+            print(f"\n CRITICAL: Required test failed: {test['description']}")
     
     # Summary
     print(f"\n{'='*60}")
-    print("📊 TEST SUMMARY")
+    print(" TEST SUMMARY")
     print(f"{'='*60}")
     
     total_tests = len(results)
@@ -110,18 +110,18 @@ def main():
     
     print(f"\nDetailed results:")
     for result in results:
-        status = "✅ PASS" if result["success"] else "❌ FAIL"
+        status = " PASS" if result["success"] else " FAIL"
         required = "(REQUIRED)" if result["required"] else "(OPTIONAL)"
         print(f"  {status} {result['description']} {required}")
     
     # Overall result
     if required_failed == 0:
-        print(f"\n🎉 SUCCESS: All required tests passed!")
-        print("✅ API Integration Tests: READY")
-        print("✅ Performance & Load Tests: READY")
+        print(f"\n SUCCESS: All required tests passed!")
+        print(" API Integration Tests: READY")
+        print(" Performance & Load Tests: READY")
         return 0
     else:
-        print(f"\n💥 FAILURE: {required_failed} required test(s) failed!")
+        print(f"\n FAILURE: {required_failed} required test(s) failed!")
         return 1
 
 if __name__ == "__main__":

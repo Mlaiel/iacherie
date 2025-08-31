@@ -54,6 +54,9 @@ class MarketIntelligenceEngine:
 
     async def start(self) -> None:
         """Start the market_intelligence processing engine"""
+
+
+
         try:
             self.is_running = True
             logger.info("MarketIntelligenceEngine started successfully")
@@ -63,6 +66,9 @@ class MarketIntelligenceEngine:
 
     async def process(self, data: Dict[str, Any]) -> MarketIntelligenceResult:
         """Process market_intelligence operation"""
+
+
+
         try:
             job_id = data.get('job_id', 'auto-generated')
             

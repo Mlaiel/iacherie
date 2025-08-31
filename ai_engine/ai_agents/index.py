@@ -7,7 +7,7 @@ Provides centralized initialization, configuration management, and system health
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
@@ -71,6 +71,9 @@ class AIAgentsSystem:
     
     async def initialize(self) -> bool:
         """Initialize the complete AI agents system"""
+
+
+
         try:
             logger.info("Initializing AI Agents System...")
             
@@ -356,6 +359,9 @@ class AIAgentsSystem:
     
     async def _validate_system_health(self) -> bool:
         """Validate that all critical components are healthy"""
+
+
+
         try:
             # Check core components
             if not all([self.registry, self.communication_hub, self.workflow_engine, self.task_manager]):
@@ -436,6 +442,9 @@ async def initialize_system(config: Dict[str, Any] = None) -> AIAgentsSystem:
 
 def get_system() -> Optional[AIAgentsSystem]:
     """Get the global system instance"""
+
+
+
     return _system_instance
 
 

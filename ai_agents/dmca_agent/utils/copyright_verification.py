@@ -8,7 +8,7 @@ digital signatures, and automated ownership validation for content protection.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -149,6 +149,9 @@ class CopyrightVerification:
     
     def _initialize_method_weights(self) -> Dict[VerificationMethod, float]:
         """Initialize verification method weights"""
+
+
+
         return {
             VerificationMethod.BLOCKCHAIN_PROOF: 0.25,
             VerificationMethod.DIGITAL_SIGNATURE: 0.20,
@@ -162,6 +165,9 @@ class CopyrightVerification:
     
     def _initialize_registries(self) -> Dict[str, Dict[str, Any]]:
         """Initialize copyright registry configurations"""
+
+
+
         return {
             "us_copyright_office": {
                 "name": "US Copyright Office",
@@ -210,6 +216,9 @@ class CopyrightVerification:
         Returns:
             VerificationResult with detailed verification analysis
         """
+
+
+
         try:
             self.logger.info(f"Starting copyright verification for claim {claim.claim_id}")
             
@@ -362,6 +371,9 @@ class CopyrightVerification:
         evidence: List[OwnershipEvidence]
     ) -> float:
         """Verify blockchain-based copyright proof"""
+
+
+
         try:
             if not claim.blockchain_hash:
                 return 0.0
@@ -403,6 +415,9 @@ class CopyrightVerification:
         evidence: List[OwnershipEvidence]
     ) -> float:
         """Verify digital signature authenticity"""
+
+
+
         try:
             if not claim.digital_signature:
                 return 0.0
@@ -449,6 +464,9 @@ class CopyrightVerification:
         evidence: List[OwnershipEvidence]
     ) -> float:
         """Verify copyright registry registration"""
+
+
+
         try:
             if not claim.registration_number:
                 return 0.0
@@ -491,6 +509,9 @@ class CopyrightVerification:
         evidence: List[OwnershipEvidence]
     ) -> float:
         """Verify creation timestamp consistency"""
+
+
+
         try:
             creation_evidences = []
             
@@ -540,6 +561,9 @@ class CopyrightVerification:
         evidence: List[OwnershipEvidence]
     ) -> float:
         """Verify platform metadata consistency"""
+
+
+
         try:
             metadata_evidences = [e for e in evidence if "platform_metadata" in e.evidence_type]
             
@@ -583,6 +607,9 @@ class CopyrightVerification:
         evidence: List[OwnershipEvidence]
     ) -> float:
         """Verify legal documentation"""
+
+
+
         try:
             legal_evidences = [e for e in evidence if "legal_documentation" in e.evidence_type]
             
@@ -611,6 +638,9 @@ class CopyrightVerification:
         evidence: List[OwnershipEvidence]
     ) -> float:
         """Verify digital watermarks in content"""
+
+
+
         try:
             watermark_evidences = [e for e in evidence if "watermark" in e.evidence_type]
             
@@ -637,6 +667,9 @@ class CopyrightVerification:
         evidence: List[OwnershipEvidence]
     ) -> float:
         """Verify content fingerprint matching"""
+
+
+
         try:
             fingerprint_evidences = [e for e in evidence if "fingerprint" in e.evidence_type]
             
@@ -719,6 +752,9 @@ class CopyrightVerification:
     
     async def _detect_conflicting_claims(self, claim: CopyrightClaim) -> List[str]:
         """Detect conflicting copyright claims"""
+
+
+
         try:
             # Search for existing claims on the same content
             with get_db_session() as session:
@@ -776,6 +812,9 @@ class CopyrightVerification:
     # Helper methods for specific verifications
     async def _extract_blockchain_evidence(self, claim: CopyrightClaim) -> Optional[OwnershipEvidence]:
         """Extract blockchain evidence"""
+
+
+
         try:
             if claim.blockchain_hash:
                 blockchain_data = await self.blockchain_client.get_transaction_details(
@@ -798,6 +837,9 @@ class CopyrightVerification:
     
     async def _extract_signature_evidence(self, claim: CopyrightClaim) -> Optional[OwnershipEvidence]:
         """Extract digital signature evidence"""
+
+
+
         try:
             if claim.digital_signature:
                 signature_data = await self.signature_validator.extract_signature_data(
@@ -925,26 +967,44 @@ class CopyrightVerification:
     # Additional verification helper methods (simplified for brevity)
     async def _check_uploader_match(self, metadata: Dict[str, Any], claimant_email: str) -> float:
         """Check if metadata uploader matches claimant"""
+
+
+
         return 0.8 if metadata.get("uploader_email") == claimant_email else 0.0
     
     async def _check_metadata_timestamp(self, metadata: Dict[str, Any], creation_date: datetime) -> float:
         """Check metadata timestamp consistency"""
+
+
+
         return 0.7  # Placeholder
     
     async def _check_verification_badges(self, metadata: Dict[str, Any]) -> float:
         """Check for platform verification badges"""
+
+
+
         return 0.5 if metadata.get("verified_account") else 0.0
     
     async def _analyze_legal_document(self, doc_data: Dict[str, Any], claim: CopyrightClaim) -> float:
         """Analyze legal document authenticity and relevance"""
+
+
+
         return 0.6  # Placeholder
     
     async def _watermark_contains_owner_info(self, watermark_data: Dict[str, Any], claim: CopyrightClaim) -> bool:
         """Check if watermark contains owner information"""
+
+
+
         return False  # Placeholder
     
     async def _calculate_fingerprint_similarity(self, fingerprint_data: Dict[str, Any], content_id: str) -> float:
         """Calculate fingerprint similarity"""
+
+
+
         return 0.9  # Placeholder
     
     async def batch_verify_claims(
@@ -983,6 +1043,9 @@ class CopyrightVerification:
     
     async def get_verification_statistics(self) -> Dict[str, Any]:
         """Get verification system statistics"""
+
+
+
         try:
             with get_db_session() as session:
                 total_verifications = session.query(CopyrightRecord).count()

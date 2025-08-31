@@ -44,6 +44,9 @@ class DatabaseManager:
         
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default database configuration"""
+
+
+
         return {
             'host': 'localhost',
             'port': 5432,
@@ -57,6 +60,9 @@ class DatabaseManager:
     
     async def initialize(self):
         """Initialize database connection pool and tables"""
+
+
+
         try:
             # Create connection pool
             self.pool = await asyncpg.create_pool(
@@ -214,6 +220,9 @@ class DatabaseManager:
     
     def _serialize_fingerprint(self, fingerprint: Union[AudioFingerprint, VideoFingerprint, ImageFingerprint, TextFingerprint]) -> bytes:
         """Serialize fingerprint object to bytes"""
+
+
+
         try:
             return pickle.dumps(fingerprint)
         except Exception as e:
@@ -222,6 +231,9 @@ class DatabaseManager:
     
     def _deserialize_fingerprint(self, data: bytes, content_type: str) -> Union[AudioFingerprint, VideoFingerprint, ImageFingerprint, TextFingerprint]:
         """Deserialize fingerprint object from bytes"""
+
+
+
         try:
             return pickle.loads(data)
         except Exception as e:

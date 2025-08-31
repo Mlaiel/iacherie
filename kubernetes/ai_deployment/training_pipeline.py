@@ -127,6 +127,9 @@ class TrainingPipelineDeployment:
     
     def _initialize_clients(self) -> None:
         """Initialize Kubernetes, Docker, and Redis clients"""
+
+
+
         try:
             # Kubernetes client
             config.load_incluster_config()
@@ -160,6 +163,9 @@ class TrainingPipelineDeployment:
         Returns:
             Infrastructure deployment summary
         """
+
+
+
         try:
             self.status = "deploying_infrastructure"
             logger.info("Deploying training pipeline infrastructure")
@@ -238,6 +244,9 @@ class TrainingPipelineDeployment:
         Returns:
             Training job submission result
         """
+
+
+
         try:
             job_id = f"{config.pipeline_name}-{datetime.utcnow().strftime('%Y%m%d-%H%M%S')}"
             logger.info(f"Submitting training job: {job_id}")
@@ -299,6 +308,9 @@ class TrainingPipelineDeployment:
     
     async def _ensure_training_namespace(self) -> None:
         """Create training namespace"""
+
+
+
         try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
@@ -923,6 +935,9 @@ class TrainingPipelineDeployment:
     
     async def _validate_training_infrastructure(self) -> bool:
         """Validate training infrastructure deployment"""
+
+
+
         try:
             # Check essential services
             essential_services = [
@@ -1224,6 +1239,9 @@ class TrainingPipelineDeployment:
     
     async def get_training_metrics(self) -> Dict[str, Any]:
         """Get comprehensive training metrics"""
+
+
+
         try:
             metrics = {
                 "infrastructure_status": self.status,
@@ -1258,6 +1276,9 @@ class TrainingPipelineDeployment:
     
     async def _cleanup_failed_infrastructure(self) -> None:
         """Clean up failed training infrastructure"""
+
+
+
         try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
@@ -1267,6 +1288,9 @@ class TrainingPipelineDeployment:
     
     async def cleanup(self) -> None:
         """Clean up entire training infrastructure"""
+
+
+
         try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)

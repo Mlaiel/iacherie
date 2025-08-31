@@ -149,6 +149,9 @@ class DailymotionCrawler(BaseCrawler):
         
     async def authenticate(self, api_key: str, api_secret: str = None, access_token: str = None) -> bool:
         """Authenticate with Dailymotion API"""
+
+
+
         try:
             if access_token:
                 self.access_token = access_token
@@ -505,6 +508,9 @@ class DailymotionCrawler(BaseCrawler):
         Returns:
             Comprehensive performance analysis
         """
+
+
+
         try:
             video = await self.get_video_details(video_id)
             if not video:
@@ -588,6 +594,9 @@ class DailymotionCrawler(BaseCrawler):
         Returns:
             Comprehensive trend analysis
         """
+
+
+
         try:
             # Get trending videos for analysis
             trending_videos = await self.get_trending_videos(country, language, limit=limit)
@@ -649,6 +658,9 @@ class DailymotionCrawler(BaseCrawler):
     
     async def _parse_video_data(self, video_data: Dict) -> Optional[DailymotionVideo]:
         """Parse Dailymotion API video data into DailymotionVideo model"""
+
+
+
         try:
             # Parse owner information
             owner_info = video_data.get('owner', {})
@@ -710,6 +722,9 @@ class DailymotionCrawler(BaseCrawler):
     
     async def _parse_user_data(self, user_data: Dict) -> Optional[DailymotionUser]:
         """Parse Dailymotion API user data into DailymotionUser model"""
+
+
+
         try:
             created_time = datetime.fromtimestamp(user_data.get('created_time', 0))
             
@@ -742,6 +757,9 @@ class DailymotionCrawler(BaseCrawler):
     
     async def _parse_channel_data(self, channel_data: Dict) -> Optional[DailymotionChannel]:
         """Parse Dailymotion API channel data into DailymotionChannel model"""
+
+
+
         try:
             created_time = datetime.fromtimestamp(channel_data.get('created_time', 0))
             updated_time = None

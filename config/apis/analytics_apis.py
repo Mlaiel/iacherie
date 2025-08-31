@@ -375,24 +375,39 @@ ANALYTICS_CONFIGS: Dict[str, AnalyticsAPIConfig] = {
 
 def get_analytics_config(service: str) -> Optional[AnalyticsAPIConfig]:
     """Get analytics service configuration by name"""
+
+
+
     return ANALYTICS_CONFIGS.get(service.lower())
 
 def get_services_by_type(service_type: AnalyticsServiceType) -> List[AnalyticsAPIConfig]:
     """Get all analytics services of specific type"""
+
+
+
     return [config for config in ANALYTICS_CONFIGS.values() 
             if config.service_type == service_type]
 
 def get_real_time_services() -> List[AnalyticsAPIConfig]:
     """Get services that support real-time analytics"""
+
+
+
     return [config for config in ANALYTICS_CONFIGS.values() 
             if config.real_time_enabled]
 
 def get_custom_event_services() -> List[AnalyticsAPIConfig]:
     """Get services that support custom events"""
+
+
+
     return [config for config in ANALYTICS_CONFIGS.values() 
             if config.custom_events_enabled]
 
 def get_ecommerce_services() -> List[AnalyticsAPIConfig]:
     """Get services that support ecommerce tracking"""
+
+
+
     return [config for config in ANALYTICS_CONFIGS.values() 
             if config.supports_ecommerce]

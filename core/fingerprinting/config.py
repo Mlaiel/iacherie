@@ -121,6 +121,9 @@ class FingerprintingConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert configuration to dictionary"""
+
+
+
         return {
             'max_file_size': self.max_file_size,
             'supported_formats': {
@@ -178,6 +181,9 @@ class FingerprintingConfig:
     @classmethod
     def from_dict(cls, config_dict: Dict[str, Any]) -> 'FingerprintingConfig':
         """Create configuration from dictionary"""
+
+
+
         return cls(
             max_file_size=config_dict.get('max_file_size', 500 * 1024 * 1024),
             supported_audio_formats=config_dict.get('supported_formats', {}).get('audio'),

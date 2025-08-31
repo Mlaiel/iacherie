@@ -7,7 +7,7 @@ challenges among content creators in the IA-Influencer-Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This social competition AI and algorithms are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED and will result in legal action.
@@ -153,6 +153,9 @@ class SocialCompetitionManager:
         Returns:
             Competition recommendations and updates
         """
+
+
+
         try:
             # Update user competition activity
             await self._update_user_competition_activity(user_id, activity_data)

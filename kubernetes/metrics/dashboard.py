@@ -5,7 +5,7 @@ Enterprise-grade real-time dashboard with advanced visualization and business in
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 
-⚠️  AVERTISSEMENT LÉGAL STRICT ⚠️
+  AVERTISSEMENT LÉGAL STRICT 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et fera l'objet de poursuites 
@@ -316,6 +316,9 @@ class MetricsDashboard:
     
     async def start(self) -> None:
         """Start dashboard engine with real-time capabilities"""
+
+
+
         try:
             if self._running:
                 self.logger.warning("Dashboard engine already running")
@@ -351,6 +354,9 @@ class MetricsDashboard:
     
     async def stop(self) -> None:
         """Stop dashboard engine gracefully"""
+
+
+
         try:
             self._running = False
             
@@ -390,6 +396,9 @@ class MetricsDashboard:
         business_category: str = "operational"
     ) -> str:
         """Create new comprehensive dashboard"""
+
+
+
         try:
             # Generate unique dashboard ID
             dashboard_id = str(uuid.uuid4())
@@ -431,6 +440,9 @@ class MetricsDashboard:
     
     async def get_dashboard(self, dashboard_id: str) -> Optional[DashboardConfig]:
         """Get dashboard configuration with enhanced caching"""
+
+
+
         try:
             if dashboard_id in self.dashboards:
                 return self.dashboards[dashboard_id]
@@ -455,6 +467,9 @@ class MetricsDashboard:
         real_time: bool = False
     ) -> Dict[str, Any]:
         """Get comprehensive dashboard data with business intelligence"""
+
+
+
         try:
             dashboard_config = await self.get_dashboard(dashboard_id)
             if not dashboard_config:
@@ -529,6 +544,9 @@ class MetricsDashboard:
         time_range: Optional[str] = None
     ) -> Dict[str, Any]:
         """Render complete dashboard with all charts"""
+
+
+
         try:
             config = await self.get_dashboard(dashboard_id)
             if not config:
@@ -595,6 +613,9 @@ class MetricsDashboard:
         chart_id: str
     ) -> Dict[str, Any]:
         """Render individual chart with advanced features"""
+
+
+
         try:
             # Get metrics data
             metrics_data = await self._get_chart_metrics_data(config, time_range)
@@ -671,6 +692,9 @@ class MetricsDashboard:
         dashboard_id: Optional[str] = None
     ) -> str:
         """Create new dashboard"""
+
+
+
         try:
             if not dashboard_id:
                 dashboard_id = f"dashboard_{len(self.dashboards)}_{int(datetime.utcnow().timestamp())}"
@@ -689,6 +713,9 @@ class MetricsDashboard:
     
     async def get_dashboard(self, dashboard_id: str) -> Optional[DashboardConfig]:
         """Get dashboard configuration"""
+
+
+
         try:
             if dashboard_id in self.dashboards:
                 return self.dashboards[dashboard_id]
@@ -711,6 +738,9 @@ class MetricsDashboard:
         time_range: Optional[str] = None
     ) -> Dict[str, Any]:
         """Render complete dashboard with all charts"""
+
+
+
         try:
             config = await self.get_dashboard(dashboard_id)
             if not config:
@@ -767,6 +797,9 @@ class MetricsDashboard:
         chart_id: str
     ) -> Dict[str, Any]:
         """Render individual chart"""
+
+
+
         try:
             # Get metrics data
             metrics_data = await self._get_chart_metrics_data(config, time_range)
@@ -824,6 +857,9 @@ class MetricsDashboard:
         time_range: str = "5m"
     ) -> Dict[str, Any]:
         """Get real-time metrics data for live updates"""
+
+
+
         try:
             # Parse time range
             minutes = int(time_range.replace('m', '').replace('h', '')) 
@@ -888,6 +924,9 @@ class MetricsDashboard:
         tenant_id: Optional[str] = None
     ) -> Dict[str, Any]:
         """Get alert dashboard data"""
+
+
+
         try:
             # Get active alerts
             if tenant_id:
@@ -936,6 +975,9 @@ class MetricsDashboard:
         time_range: Optional[str] = None
     ) -> Dict[str, Any]:
         """Export dashboard data"""
+
+
+
         try:
             dashboard_data = await self.render_dashboard(dashboard_id, time_range)
             
@@ -954,6 +996,9 @@ class MetricsDashboard:
     
     def _create_line_chart(self, data: List[Dict], config: ChartConfig) -> go.Figure:
         """Create line chart"""
+
+
+
         try:
             df = pd.DataFrame(data)
             
@@ -1004,6 +1049,9 @@ class MetricsDashboard:
     
     def _create_bar_chart(self, data: List[Dict], config: ChartConfig) -> go.Figure:
         """Create bar chart"""
+
+
+
         try:
             df = pd.DataFrame(data)
             
@@ -1052,6 +1100,9 @@ class MetricsDashboard:
     
     def _create_gauge_chart(self, data: List[Dict], config: ChartConfig) -> go.Figure:
         """Create gauge chart"""
+
+
+
         try:
             if not data:
                 current_value = 0
@@ -1090,6 +1141,9 @@ class MetricsDashboard:
     
     def _create_pie_chart(self, data: List[Dict], config: ChartConfig) -> go.Figure:
         """Create pie chart"""
+
+
+
         try:
             df = pd.DataFrame(data)
             
@@ -1123,6 +1177,9 @@ class MetricsDashboard:
     
     def _create_table_chart(self, data: List[Dict], config: ChartConfig) -> Dict[str, Any]:
         """Create table chart"""
+
+
+
         try:
             df = pd.DataFrame(data)
             
@@ -1181,6 +1238,9 @@ class MetricsDashboard:
         time_range: str
     ) -> List[Dict[str, Any]]:
         """Get metrics data for chart"""
+
+
+
         try:
             return await self.get_real_time_data(
                 config.metric_name,
@@ -1198,6 +1258,9 @@ class MetricsDashboard:
         config: DashboardConfig
     ) -> None:
         """Store dashboard configuration in Redis"""
+
+
+
         try:
             config_data = {
                 "title": config.title,
@@ -1239,6 +1302,9 @@ class MetricsDashboard:
     
     async def _load_dashboard_config(self, dashboard_id: str) -> Optional[DashboardConfig]:
         """Load dashboard configuration from Redis"""
+
+
+
         try:
             config_data = await self.redis_manager.get_json(f"dashboard_config:{dashboard_id}")
             

@@ -956,6 +956,9 @@ class HealthValidator(BaseComponent):
 
     async def _check_ai_agent_endpoint(self) -> Dict[str, Any]:
         """Check AI agent endpoint health"""
+
+
+
         try:
             async with self.http_session.get("http://ia-influencer-ai-agent:8000/health") as response:
                 if response.status == 200:
@@ -980,6 +983,9 @@ class HealthValidator(BaseComponent):
 
     async def _check_content_protection_endpoint(self) -> Dict[str, Any]:
         """Check content protection endpoint health"""
+
+
+
         try:
             async with self.http_session.get("http://ia-influencer-content-protection:8001/health") as response:
                 if response.status == 200:
@@ -1004,6 +1010,9 @@ class HealthValidator(BaseComponent):
 
     async def _check_api_gateway_endpoint(self) -> Dict[str, Any]:
         """Check API gateway endpoint health"""
+
+
+
         try:
             async with self.http_session.get("http://ia-influencer-api-gateway:8080/health") as response:
                 if response.status == 200:
@@ -1028,6 +1037,9 @@ class HealthValidator(BaseComponent):
 
     async def _check_postgresql_primary(self) -> Dict[str, Any]:
         """Check PostgreSQL primary database health"""
+
+
+
         try:
             connection_info = await self.db_manager.check_primary_connection()
             if connection_info['connected']:
@@ -1051,6 +1063,9 @@ class HealthValidator(BaseComponent):
 
     async def _check_postgresql_replicas(self) -> Dict[str, Any]:
         """Check PostgreSQL replica health"""
+
+
+
         try:
             replica_info = await self.db_manager.check_replica_connections()
             healthy_replicas = [r for r in replica_info if r['connected']]
@@ -1082,6 +1097,9 @@ class HealthValidator(BaseComponent):
 
     async def _check_redis_primary(self) -> Dict[str, Any]:
         """Check Redis primary health"""
+
+
+
         try:
             redis_info = await self.redis_manager.check_primary_health()
             if redis_info['healthy']:
@@ -1105,6 +1123,9 @@ class HealthValidator(BaseComponent):
 
     async def _check_redis_cluster(self) -> Dict[str, Any]:
         """Check Redis cluster health"""
+
+
+
         try:
             cluster_info = await self.redis_manager.check_cluster_health()
             healthy_nodes = cluster_info.get('healthy_nodes', 0)
@@ -1137,6 +1158,9 @@ class HealthValidator(BaseComponent):
 
     async def _check_celery_broker(self) -> Dict[str, Any]:
         """Check Celery broker health"""
+
+
+
         try:
             broker_info = await self.queue_manager.check_broker_health()
             if broker_info['healthy']:
@@ -1160,6 +1184,9 @@ class HealthValidator(BaseComponent):
 
     async def _check_celery_workers(self) -> Dict[str, Any]:
         """Check Celery workers health"""
+
+
+
         try:
             worker_info = await self.queue_manager.check_workers_health()
             active_workers = worker_info.get('active_workers', 0)
@@ -1192,6 +1219,9 @@ class HealthValidator(BaseComponent):
 
     async def _check_text_generation_model(self) -> Dict[str, Any]:
         """Check text generation AI model health"""
+
+
+
         try:
             # Test model with a simple prompt
             test_prompt = "Generate a brief test response:"
@@ -1221,6 +1251,9 @@ class HealthValidator(BaseComponent):
 
     async def _check_audio_analysis_model(self) -> Dict[str, Any]:
         """Check audio analysis AI model health"""
+
+
+
         try:
             # Test model health endpoint
             async with self.http_session.get(
@@ -1248,6 +1281,9 @@ class HealthValidator(BaseComponent):
 
     async def _check_image_analysis_model(self) -> Dict[str, Any]:
         """Check image analysis AI model health"""
+
+
+
         try:
             # Test model health endpoint
             async with self.http_session.get(
@@ -1275,6 +1311,9 @@ class HealthValidator(BaseComponent):
 
     async def _check_openai_api(self) -> Dict[str, Any]:
         """Check OpenAI API health"""
+
+
+
         try:
             async with self.http_session.get(
                 "https://api.openai.com/v1/models",
@@ -1301,6 +1340,9 @@ class HealthValidator(BaseComponent):
 
     async def _check_stripe_api(self) -> Dict[str, Any]:
         """Check Stripe API health"""
+
+
+
         try:
             async with self.http_session.get("https://api.stripe.com/v1/charges") as response:
                 if response.status == 401:  # Expected auth failure
@@ -1324,6 +1366,9 @@ class HealthValidator(BaseComponent):
 
     async def _check_youtube_api(self) -> Dict[str, Any]:
         """Check YouTube API health"""
+
+
+
         try:
             async with self.http_session.get(
                 "https://www.googleapis.com/youtube/v3/videos",

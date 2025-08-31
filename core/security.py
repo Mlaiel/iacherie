@@ -9,7 +9,7 @@ Email: mlaiel@live.de
 Project: IA Influencer Agent Platform
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️ COPYRIGHT & LICENSE WARNING ⚠️
+ COPYRIGHT & LICENSE WARNING 
 This code is proprietary and confidential. Any unauthorized copying, modification,
 distribution, or use without explicit written permission from Fahed Mlaiel is strictly
 prohibited and will result in legal action.
@@ -85,6 +85,9 @@ class ContentProtectionSecurityService:
         Returns:
             Base64-encoded encrypted data
         """
+
+
+
         try:
             if isinstance(data, str):
                 data = data.encode('utf-8')
@@ -116,6 +119,9 @@ class ContentProtectionSecurityService:
         Returns:
             Decrypted data as string
         """
+
+
+
         try:
             # Decode from base64
             encrypted_bytes = base64.b64decode(encrypted_data.encode('utf-8'))
@@ -148,6 +154,9 @@ class ContentProtectionSecurityService:
         Returns:
             Dictionary with hash and salt
         """
+
+
+
         try:
             if salt is None:
                 salt = secrets.token_hex(32)
@@ -193,6 +202,9 @@ class ContentProtectionSecurityService:
         Returns:
             True if verification successful, False otherwise
         """
+
+
+
         try:
             # Regenerate hash with stored salt
             new_hash = self.generate_secure_hash(data, stored_hash['salt'])
@@ -217,6 +229,9 @@ class ContentProtectionSecurityService:
         Returns:
             API key information
         """
+
+
+
         try:
             # Generate secure random key
             api_key = secrets.token_urlsafe(32)
@@ -262,6 +277,9 @@ class ContentProtectionSecurityService:
         Returns:
             Validation result
         """
+
+
+
         try:
             # Check expiration
             expires_at = datetime.fromisoformat(stored_key_data['expires_at'])
@@ -317,6 +335,9 @@ class ContentProtectionSecurityService:
         Returns:
             JWT token string
         """
+
+
+
         try:
             # Set expiration time
             exp_hours = expiry_hours or self.jwt_expiry_hours
@@ -354,6 +375,9 @@ class ContentProtectionSecurityService:
         Returns:
             Validation result with payload if valid
         """
+
+
+
         try:
             # Decode and validate token
             payload = jwt.decode(
@@ -400,6 +424,9 @@ class ContentProtectionSecurityService:
         Returns:
             Dictionary with private and public keys
         """
+
+
+
         try:
             # Generate private key
             private_key = rsa.generate_private_key(
@@ -446,6 +473,9 @@ class ContentProtectionSecurityService:
         Returns:
             Base64-encoded signature
         """
+
+
+
         try:
             # Load private key
             private_key = serialization.load_pem_private_key(
@@ -482,6 +512,9 @@ class ContentProtectionSecurityService:
         Returns:
             True if signature is valid, False otherwise
         """
+
+
+
         try:
             # Load public key
             public_key = serialization.load_pem_public_key(
@@ -523,6 +556,9 @@ class ContentProtectionSecurityService:
         Returns:
             Rate limit token
         """
+
+
+
         try:
             current_time = int(datetime.now(timezone.utc).timestamp())
             window_start = current_time - (current_time % window_seconds)
@@ -561,12 +597,18 @@ class ContentProtectionSecurityService:
     
     def _generate_jwt_secret(self) -> str:
         """Generate JWT secret if not provided"""
+
+
+
         return secrets.token_urlsafe(64)
 
 
 # Factory function
 def create_security_service(config: Optional[Dict[str, Any]] = None) -> ContentProtectionSecurityService:
     """Factory function to create security service"""
+
+
+
     return ContentProtectionSecurityService(config)
 
 
@@ -598,6 +640,9 @@ class SecurityManager:
     
     def __getattr__(self, name):
         """Delegate to the underlying service"""
+
+
+
         return getattr(self._service, name)
 
 
@@ -609,14 +654,23 @@ class EncryptionManager:
     
     def encrypt(self, data: str, key: Optional[str] = None) -> str:
         """Encrypt data using the service"""
+
+
+
         return self._service.encrypt_data(data, key)
     
     def decrypt(self, encrypted_data: str, key: Optional[str] = None) -> str:
         """Decrypt data using the service"""
+
+
+
         return self._service.decrypt_data(encrypted_data, key)
     
     def __getattr__(self, name):
         """Delegate to the underlying service"""
+
+
+
         return getattr(self._service, name)
 
 

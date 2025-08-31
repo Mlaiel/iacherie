@@ -149,6 +149,9 @@ class YouTubeCrawler:
         Returns:
             List of YouTube video objects
         """
+
+
+
         try:
             # Rate limiting check
             await self.rate_limiter.wait_if_needed()
@@ -216,6 +219,9 @@ class YouTubeCrawler:
     
     async def _get_video_details(self, video_ids: List[str]) -> List[YouTubeVideo]:
         """Get detailed information for video IDs."""
+
+
+
         try:
             # Rate limiting check
             await self.rate_limiter.wait_if_needed()
@@ -282,6 +288,9 @@ class YouTubeCrawler:
     
     async def get_channel_info(self, channel_id: str) -> Optional[YouTubeChannel]:
         """Get detailed channel information."""
+
+
+
         try:
             await self.rate_limiter.wait_if_needed()
             
@@ -363,6 +372,9 @@ class YouTubeCrawler:
         similarity_threshold: float = 0.8
     ) -> List[Dict]:
         """Search for content similar to reference video."""
+
+
+
         try:
             # Create search queries based on video metadata
             search_queries = [
@@ -458,6 +470,9 @@ class YouTubeCrawler:
     
     def _duration_to_seconds(self, duration_str: str) -> int:
         """Convert duration string to seconds."""
+
+
+
         try:
             parts = duration_str.split(':')
             if len(parts) == 3:  # HH:MM:SS
@@ -473,6 +488,9 @@ class YouTubeCrawler:
     
     async def scrape_with_selenium(self, url: str) -> Dict:
         """Fallback scraping using Selenium when API limits are reached."""
+
+
+
         try:
             driver = webdriver.Chrome(options=self.selenium_options)
             driver.get(url)
@@ -516,6 +534,9 @@ class YouTubeCrawler:
     
     async def get_video_captions(self, video_id: str, language: str = 'en') -> Optional[str]:
         """Extract video captions/transcripts."""
+
+
+
         try:
             await self.rate_limiter.wait_if_needed()
             
@@ -553,6 +574,9 @@ class YouTubeCrawler:
     
     async def analyze_engagement_metrics(self, video: YouTubeVideo) -> Dict:
         """Analyze video engagement metrics."""
+
+
+
         try:
             # Calculate engagement rate
             total_interactions = video.like_count + video.comment_count
@@ -586,6 +610,9 @@ class YouTubeCrawler:
     
     async def get_trending_content(self, region_code: str = 'US', category_id: str = '0') -> List[YouTubeVideo]:
         """Get trending videos for region and category."""
+
+
+
         try:
             await self.rate_limiter.wait_if_needed()
             

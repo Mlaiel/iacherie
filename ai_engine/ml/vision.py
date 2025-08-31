@@ -134,6 +134,9 @@ class ImageClassifier(BaseVisionModel):
         
     def load_model(self) -> bool:
         """Load pre-trained classification model"""
+
+
+
         try:
             if "resnet" in self.model_name:
                 self.model = resnet50(pretrained=True)
@@ -234,6 +237,9 @@ class ObjectDetector(BaseVisionModel):
         
     def load_model(self) -> bool:
         """Load object detection model"""
+
+
+
         try:
             # For demo purposes, we'll use a simple mock detector
             # In production, this would load actual YOLO or similar models
@@ -329,6 +335,9 @@ class FaceRecognizer(BaseVisionModel):
         
     def load_model(self) -> bool:
         """Load face recognition model"""
+
+
+
         try:
             # Load OpenCV face cascade for detection
             self.face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
@@ -456,6 +465,9 @@ class SceneAnalyzer(BaseVisionModel):
         
     def load_model(self) -> bool:
         """Load scene analysis model"""
+
+
+
         try:
             # Use a pre-trained model for scene classification
             self.model = self._create_scene_model()

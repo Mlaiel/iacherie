@@ -1,5 +1,5 @@
 """
-🔧 Module consolidé par BACKEND_SENIOR
+ Module consolidé par BACKEND_SENIOR
 Équipe d'Experts GitHub Copilot
 Date: 2025-07-31 06:16:14
 

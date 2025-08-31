@@ -1,4 +1,4 @@
-"""🚨 DMCA Automation Module - Enterprise Content Protection
+""" DMCA Automation Module - Enterprise Content Protection
 =========================================================
 
 Professional DMCA automation system for multi-format content protection.
@@ -8,7 +8,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
-⚠️  LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
+  LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION 
 ====================================================
 This software and all associated concepts, algorithms, and implementations are the
 exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de).
@@ -213,7 +213,10 @@ class DMCAEvidence:
     legal_admissible: bool = False
     
     def calculate_hash(self, content: bytes) -> str:
-        """Calculate SHA-256 hash for evidence integrity"""        return hashlib.sha256(content).hexdigest()
+        """Calculate SHA-256 hash for evidence integrity"""
+
+
+        return hashlib.sha256(content).hexdigest()
 
 
 @dataclass
@@ -437,7 +440,7 @@ class PlatformContact(BaseModel):
 
 
 class DMCAFactory:
-    """    🏭 Enterprise DMCA Factory - Complete System Builder
+    """     Enterprise DMCA Factory - Complete System Builder
     =================================================
     
     Central factory for creating and managing all DMCA system components.
@@ -535,7 +538,7 @@ class DMCAFactory:
 
 
 class DMCASystem:
-    """    🎯 Complete DMCA Automation System
+    """     Complete DMCA Automation System
     ================================
     
     Integrated system managing all DMCA operations with enterprise-grade
@@ -554,7 +557,10 @@ class DMCASystem:
         logger.info(f"DMCA System {self.system_id} initialized with {len(components)} components")
     
     def get_component(self, component_name: str):
-        """Get specific system component"""        return self.components.get(component_name)
+        """Get specific system component"""
+
+
+        return self.components.get(component_name)
     
     async def process_dmca_case(
         self,
@@ -654,7 +660,10 @@ class DMCASystem:
 
 # Additional helper functions
 def create_dmca_system(db_session=None, config: Optional[Dict[str, Any]] = None) -> DMCASystem:
-    """Factory function to create complete DMCA system"""    return DMCAFactory.create_complete_system(db_session, config)
+    """Factory function to create complete DMCA system"""
+
+
+    return DMCAFactory.create_complete_system(db_session, config)
 
 
 class DMCATemplate:
@@ -665,7 +674,10 @@ class DMCATemplate:
         )
     
     def _get_templates(self) -> Dict[str, str]:
-        """Templates professionnels pour notifications DMCA"""        return {
+        """Templates professionnels pour notifications DMCA"""
+
+
+        return {
             'takedown_notice': """Subject: DMCA Takedown Notice - Copyright Infringement
 
 To Whom It May Concern:
@@ -783,7 +795,10 @@ Date: {{ current_date }}
             """        }
     
     def generate_notice(self, template_name: str, context: Dict[str, Any]) -> str:
-        """Génère une notification DMCA à partir d'un template"""        try:
+        """Génère une notification DMCA à partir d'un template"""
+
+
+        try:
             template = self.template_env.get_template(template_name)
             return template.render(**context, current_date=datetime.now().strftime("%Y-%m-%d"))
         except Exception as e:
@@ -857,7 +872,10 @@ class DMCAAutomationService:
             self.platform_contacts[contact.platform] = contact
     
     async def initialize(self) -> bool:
-        """Initialise le service DMCA"""        try:
+        """Initialise le service DMCA"""
+
+
+        try:
             logger.info("Initialisation du service DMCA...")
             
             # Initialisation du client email
@@ -882,7 +900,10 @@ class DMCAAutomationService:
             return False
     
     async def _setup_email_client(self):
-        """Configure le client email pour l'envoi automatique"""        try:
+        """Configure le client email pour l'envoi automatique"""
+
+
+        try:
             # Configuration SMTP selon la config
             smtp_config = self.config.get('smtp', {})
             if smtp_config:
@@ -906,7 +927,10 @@ class DMCAAutomationService:
         platform: PlatformType,
         notice_type: NotificationType = NotificationType.TAKEDOWN
     ) -> DMCANotice:
-        """Crée une nouvelle notification DMCA"""        try:
+        """Crée une nouvelle notification DMCA"""
+
+
+        try:
             notice_id = self._generate_notice_id()
             
             notice = DMCANotice(
@@ -948,7 +972,10 @@ class DMCAAutomationService:
             raise
     
     async def generate_notice_content(self, notice_id: str) -> str:
-        """Génère le contenu textuel de la notification DMCA"""        try:
+        """Génère le contenu textuel de la notification DMCA"""
+
+
+        try:
             notice = self.active_notices.get(notice_id)
             if not notice:
                 raise ValueError(f"Notice {notice_id} non trouvée")
@@ -995,7 +1022,10 @@ class DMCAAutomationService:
             raise
     
     async def send_notice(self, notice_id: str, auto_send: bool = False) -> bool:
-        """Envoie une notification DMCA"""        try:
+        """Envoie une notification DMCA"""
+
+
+        try:
             notice = self.active_notices.get(notice_id)
             if not notice:
                 raise ValueError(f"Notice {notice_id} non trouvée")
@@ -1042,7 +1072,10 @@ class DMCAAutomationService:
             return False
     
     async def _send_via_email(self, notice: DMCANotice, contact: PlatformContact, content: str) -> bool:
-        """Envoie la notification par email"""        try:
+        """Envoie la notification par email"""
+
+
+        try:
             if not self.email_client:
                 logger.error("Client email non configuré")
                 return False
@@ -1092,7 +1125,10 @@ class DMCAAutomationService:
             return False
     
     async def _send_via_api(self, notice: DMCANotice, contact: PlatformContact, content: str) -> bool:
-        """Envoie la notification via API"""        try:
+        """Envoie la notification via API"""
+
+
+        try:
             async with aiohttp.ClientSession() as session:
                 payload = {
                     'notice_id': notice.id,
@@ -1115,7 +1151,10 @@ class DMCAAutomationService:
             return False
     
     async def _send_via_form(self, notice: DMCANotice, contact: PlatformContact, content: str) -> bool:
-        """Soumet la notification via formulaire web"""        try:
+        """Soumet la notification via formulaire web"""
+
+
+        try:
             # Implementation with web form submission
             try:
                 # Basic implementation using requests/aiohttp for form submission
@@ -1149,7 +1188,10 @@ class DMCAAutomationService:
             return False
     
     async def track_response(self, notice_id: str, response_data: Dict[str, Any]) -> bool:
-        """Enregistre une réponse à une notification DMCA"""        try:
+        """Enregistre une réponse à une notification DMCA"""
+
+
+        try:
             notice = self.active_notices.get(notice_id)
             if not notice:
                 return False
@@ -1181,7 +1223,10 @@ class DMCAAutomationService:
             return False
     
     async def escalate_notice(self, notice_id: str, reason: str = "No response") -> bool:
-        """Escalade une notification DMCA"""        try:
+        """Escalade une notification DMCA"""
+
+
+        try:
             notice = self.active_notices.get(notice_id)
             if not notice:
                 return False
@@ -1259,7 +1304,10 @@ class DMCAAutomationService:
                 await asyncio.sleep(86400)
     
     async def _load_active_notices(self):
-        """Charge les notices actives depuis le stockage persistant"""        try:
+        """Charge les notices actives depuis le stockage persistant"""
+
+
+        try:
             # Implementation: Load from database/storage
             try:
                 # Basic implementation - could be replaced with actual DB calls
@@ -1288,7 +1336,10 @@ class DMCAAutomationService:
         return f"DMCA-{timestamp}-{random_suffix}"
     
     async def get_notice_status(self, notice_id: str) -> Optional[Dict[str, Any]]:
-        """Récupère le statut détaillé d'une notification"""        try:
+        """Récupère le statut détaillé d'une notification"""
+
+
+        try:
             notice = self.active_notices.get(notice_id)
             if not notice:
                 return None
@@ -1311,7 +1362,10 @@ class DMCAAutomationService:
             return None
     
     async def generate_compliance_report(self, date_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Génère un rapport de conformité DMCA"""        try:
+        """Génère un rapport de conformité DMCA"""
+
+
+        try:
             start_date, end_date = date_range
             
             filtered_notices = [
@@ -1370,7 +1424,10 @@ class DMCAAutomationService:
             return {}
     
     async def shutdown(self):
-        """Arrêt propre du service DMCA"""        try:
+        """Arrêt propre du service DMCA"""
+
+
+        try:
             logger.info("Arrêt du service DMCA...")
             self.running = False
             
@@ -1387,7 +1444,10 @@ class DMCAAutomationService:
             logger.error(f"Erreur arrêt service DMCA: {e}")
     
     async def _save_active_notices(self):
-        """Sauvegarde les notices actives"""        try:
+        """Sauvegarde les notices actives"""
+
+
+        try:
             # Implementation: Save to database/storage
             try:
                 # Basic implementation - could be replaced with actual DB calls
@@ -1426,7 +1486,10 @@ dmca_service = DMCAAutomationService()
 
 
 async def get_dmca_service() -> DMCAAutomationService:
-    """Récupère l'instance du service DMCA"""    return dmca_service
+    """Récupère l'instance du service DMCA"""
+
+
+    return dmca_service
 
 
 __all__ = [

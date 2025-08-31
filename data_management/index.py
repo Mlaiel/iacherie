@@ -154,6 +154,9 @@ __all__ = [
 
 def get_module_info():
     """Get comprehensive module information"""
+
+
+
     return {
         "name": "Enterprise Data Management System",
         "version": __version__,
@@ -326,6 +329,9 @@ class DataManagementIndex:
 
     def _initialize_modules(self) -> None:
         """Initialise et découvre tous les modules de data management"""
+
+
+
         try:
             module_names = [
                 "models", "repositories", "processors", "transformers",
@@ -380,6 +386,9 @@ class DataManagementIndex:
 
     def _get_initial_metrics(self, module_name: str) -> Dict[str, float]:
         """Retourne les métriques initiales pour un module"""
+
+
+
         return {
             "uptime_percentage": 99.99,
             "response_time_ms": 50.0,
@@ -467,6 +476,9 @@ class DataManagementIndex:
 
     def _optimize_performance(self) -> None:
         """Optimise automatiquement les performances"""
+
+
+
         try:
             # Analyse des goulots d'étranglement
             slow_modules = [
@@ -504,6 +516,9 @@ class DataManagementIndex:
 
     def _collect_pipeline_metrics(self) -> None:
         """Collecte les métriques globales de la pipeline"""
+
+
+
         try:
             with self._lock:
                 # Calcul des métriques agrégées
@@ -538,6 +553,9 @@ class DataManagementIndex:
 
     def get_module_status(self, module_name: str) -> Optional[ModuleInfo]:
         """Retourne le statut d'un module spécifique"""
+
+
+
         return self.modules.get(module_name)
 
     def get_all_modules_status(self) -> Dict[str, ModuleInfo]:
@@ -547,6 +565,9 @@ class DataManagementIndex:
 
     def get_pipeline_metrics(self) -> PipelineMetrics:
         """Retourne les métriques de la pipeline"""
+
+
+
         return self.pipeline_metrics
 
     def get_health_report(self) -> Dict[str, Any]:
@@ -579,6 +600,9 @@ class DataManagementIndex:
 
     def restart_module(self, module_name: str) -> bool:
         """Redémarre un module spécifique"""
+
+
+
         try:
             if module_name in self.modules:
                 module_info = self.modules[module_name]
@@ -603,6 +627,9 @@ class DataManagementIndex:
 
     def scale_module(self, module_name: str, scale_factor: float) -> bool:
         """Ajuste la scalabilité d'un module"""
+
+
+
         try:
             if module_name in self.modules:
                 module_info = self.modules[module_name]
@@ -626,6 +653,9 @@ class DataManagementIndex:
 
     def shutdown(self) -> None:
         """Arrêt propre de l'index"""
+
+
+
         try:
             self._monitoring_active = False
             self._executor.shutdown(wait=True)

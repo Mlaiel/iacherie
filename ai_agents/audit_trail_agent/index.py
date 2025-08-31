@@ -7,7 +7,7 @@ initialization coordination, and service discovery.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, distribution, or commercialization is strictly prohibited.
 """
@@ -115,6 +115,9 @@ def get_module_info(module_name: str) -> Optional[Dict[str, Any]]:
     Returns:
         Module information dictionary or None if not found
     """
+
+
+
     return AUDIT_MODULES.get(module_name)
 
 def get_all_modules() -> Dict[str, Dict[str, Any]]:
@@ -124,6 +127,9 @@ def get_all_modules() -> Dict[str, Dict[str, Any]]:
     Returns:
         Dictionary of all module information
     """
+
+
+
     return AUDIT_MODULES.copy()
 
 def get_module_class(module_name: str) -> Optional[Type]:
@@ -146,6 +152,9 @@ def get_initialization_order() -> List[str]:
     Returns:
         List of module names in initialization order
     """
+
+
+
     return sorted(AUDIT_MODULES.keys(), key=lambda x: AUDIT_MODULES[x]["priority"])
 
 def get_module_dependencies(module_name: str) -> List[str]:
@@ -158,6 +167,9 @@ def get_module_dependencies(module_name: str) -> List[str]:
     Returns:
         List of dependency module names
     """
+
+
+
     return MODULE_DEPENDENCIES.get(module_name, [])
 
 def validate_module_dependencies() -> Dict[str, List[str]]:
@@ -206,6 +218,9 @@ def get_modules_by_capability(capability: str) -> List[str]:
     Returns:
         List of module names that provide the capability
     """
+
+
+
     return CAPABILITY_MATRIX.get(capability, [])
 
 def get_all_capabilities() -> List[str]:
@@ -215,6 +230,9 @@ def get_all_capabilities() -> List[str]:
     Returns:
         List of all capability names
     """
+
+
+
     return list(CAPABILITY_MATRIX.keys())
 
 # Module Status Tracking
@@ -250,6 +268,9 @@ def get_module_status(module_name: str) -> Optional[Dict[str, Any]]:
     Returns:
         Module status dictionary or None if not found
     """
+
+
+
     return module_status.get(module_name)
 
 def get_all_module_statuses() -> Dict[str, Dict[str, Any]]:
@@ -259,6 +280,9 @@ def get_all_module_statuses() -> Dict[str, Dict[str, Any]]:
     Returns:
         Dictionary of all module statuses
     """
+
+
+
     return module_status.copy()
 
 def get_healthy_modules() -> List[str]:
@@ -268,6 +292,9 @@ def get_healthy_modules() -> List[str]:
     Returns:
         List of healthy module names
     """
+
+
+
     return [
         name for name, status in module_status.items()
         if status.get("healthy", False) and status.get("initialized", False)
@@ -280,6 +307,9 @@ def get_unhealthy_modules() -> List[str]:
     Returns:
         List of unhealthy module names
     """
+
+
+
     return [
         name for name, status in module_status.items()
         if not status.get("healthy", False) or not status.get("initialized", False)
@@ -335,6 +365,9 @@ def get_module_config_template(module_name: str) -> Optional[Dict[str, Any]]:
     Returns:
         Configuration template dictionary or None if not found
     """
+
+
+
     return MODULE_CONFIG_TEMPLATES.get(module_name, {}).copy()
 
 def get_all_config_templates() -> Dict[str, Dict[str, Any]]:
@@ -344,6 +377,9 @@ def get_all_config_templates() -> Dict[str, Dict[str, Any]]:
     Returns:
         Dictionary of all configuration templates
     """
+
+
+
     return {name: template.copy() for name, template in MODULE_CONFIG_TEMPLATES.items()}
 
 # Export all public components

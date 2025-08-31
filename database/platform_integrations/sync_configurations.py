@@ -15,7 +15,7 @@ Auteur: Fahed Mlaiel <mlaiel@live.de>
 Email: mlaiel@live.de
 Équipe: Lead AI Developer, Backend Senior, Data Engineer, Platform Integration Specialist
 
-⚠️  AVERTISSEMENT LEGAL ⚠️
+  AVERTISSEMENT LEGAL 
 Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et fera l'objet de poursuites 

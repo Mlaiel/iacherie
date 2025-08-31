@@ -8,7 +8,7 @@ Responsibility: Specialized queue management for web crawler operations
 Technologies: Celery, Redis, Priority Queues, Load Balancing, Rate Limiting
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -180,7 +180,7 @@ class CrawlerMetrics:
 
 class CrawlerQueueManager:
     """
-    🕷️ Advanced Crawler Queue Manager - IA-Influencer-Agent
+     Advanced Crawler Queue Manager - IA-Influencer-Agent
     
     Enterprise-grade crawler queue management system featuring:
     - Multi-platform crawling orchestration
@@ -226,6 +226,9 @@ class CrawlerQueueManager:
     
     async def initialize(self, core_queue_manager: IntelligentQueueManager = None) -> bool:
         """Initialize crawler queue system"""
+
+
+
         try:
             self._core_queue_manager = core_queue_manager
             self._is_running = True
@@ -240,11 +243,11 @@ class CrawlerQueueManager:
             asyncio.create_task(self._metrics_updater())
             asyncio.create_task(self._dead_letter_processor())
             
-            logger.info("✅ Crawler Queue Manager initialized successfully")
+            logger.info(" Crawler Queue Manager initialized successfully")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Crawler queue initialization failed: {e}")
+            logger.error(f" Crawler queue initialization failed: {e}")
             return False
     
     async def enqueue_crawler_task(
@@ -253,6 +256,9 @@ class CrawlerQueueManager:
         immediate: bool = False
     ) -> str:
         """Enqueue crawler task with intelligent routing"""
+
+
+
         try:
             # Validate task
             if not self._validate_crawler_task(crawler_task):
@@ -292,16 +298,19 @@ class CrawlerQueueManager:
                 await self._core_queue_manager.enqueue_task(core_task)
             
             self.metrics.total_tasks_queued += 1
-            logger.info(f"🕷️ Crawler task queued: {crawler_task.task_id}")
+            logger.info(f" Crawler task queued: {crawler_task.task_id}")
             
             return crawler_task.task_id
             
         except Exception as e:
-            logger.error(f"❌ Failed to enqueue crawler task: {e}")
+            logger.error(f" Failed to enqueue crawler task: {e}")
             raise
     
     async def get_crawler_task_status(self, task_id: str) -> Dict[str, Any]:
         """Get comprehensive crawler task status"""
+
+
+
         try:
             task = self._active_tasks.get(task_id)
             if not task:
@@ -338,11 +347,14 @@ class CrawlerQueueManager:
             return status_info
             
         except Exception as e:
-            logger.error(f"❌ Failed to get crawler task status: {e}")
+            logger.error(f" Failed to get crawler task status: {e}")
             return {"error": str(e), "task_id": task_id}
     
     async def cancel_crawler_task(self, task_id: str) -> bool:
         """Cancel a crawler task"""
+
+
+
         try:
             # Remove from active tasks
             task = self._active_tasks.pop(task_id, None)
@@ -362,11 +374,11 @@ class CrawlerQueueManager:
                 worker_id = self._worker_assignments.pop(task_id)
                 await self._cancel_worker_task(worker_id, task_id)
             
-            logger.info(f"🚫 Crawler task cancelled: {task_id}")
+            logger.info(f" Crawler task cancelled: {task_id}")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to cancel crawler task: {e}")
+            logger.error(f" Failed to cancel crawler task: {e}")
             return False
     
     async def schedule_recurring_crawl(
@@ -377,6 +389,9 @@ class CrawlerQueueManager:
         priority: CrawlerPriority = CrawlerPriority.BACKGROUND_CRAWL
     ) -> str:
         """Schedule recurring crawler task"""
+
+
+
         try:
             recurring_task_id = f"recurring_crawl_{uuid.uuid4().hex}"
             
@@ -400,15 +415,18 @@ class CrawlerQueueManager:
                     metadata={"type": "recurring_crawl"}
                 )
             
-            logger.info(f"📅 Scheduled recurring crawl: {recurring_task_id}")
+            logger.info(f" Scheduled recurring crawl: {recurring_task_id}")
             return recurring_task_id
             
         except Exception as e:
-            logger.error(f"❌ Failed to schedule recurring crawl: {e}")
+            logger.error(f" Failed to schedule recurring crawl: {e}")
             raise
     
     async def get_crawler_metrics(self) -> Dict[str, Any]:
         """Get comprehensive crawler metrics"""
+
+
+
         try:
             # Update current metrics
             self.metrics.current_queue_size = sum(
@@ -441,11 +459,14 @@ class CrawlerQueueManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to get crawler metrics: {e}")
+            logger.error(f" Failed to get crawler metrics: {e}")
             return {"error": str(e)}
     
     async def optimize_crawler_performance(self) -> Dict[str, Any]:
         """Optimize crawler queue performance"""
+
+
+
         try:
             optimization_results = {
                 "queue_rebalancing": await self._rebalance_queues(),
@@ -454,11 +475,11 @@ class CrawlerQueueManager:
                 "priority_adjustment": await self._adjust_task_priorities()
             }
             
-            logger.info("⚡ Crawler performance optimization completed")
+            logger.info(" Crawler performance optimization completed")
             return optimization_results
             
         except Exception as e:
-            logger.error(f"❌ Crawler optimization failed: {e}")
+            logger.error(f" Crawler optimization failed: {e}")
             return {"error": str(e)}
     
     async def _queue_processor(self):
@@ -474,6 +495,9 @@ class CrawlerQueueManager:
     
     async def _process_priority_queues(self):
         """Process tasks from priority queues"""
+
+
+
         try:
             for queue_type in CrawlerQueueType:
                 queue = self._priority_queues[queue_type]
@@ -503,6 +527,9 @@ class CrawlerQueueManager:
     
     async def _assign_task_to_worker(self, task: CrawlerTask):
         """Assign crawler task to available worker"""
+
+
+
         try:
             # Find or create worker
             worker_id = await self._get_available_worker(task.platform)
@@ -532,6 +559,9 @@ class CrawlerQueueManager:
     
     async def _execute_crawler_task(self, worker_id: str, task: CrawlerTask):
         """Execute crawler task with worker"""
+
+
+
         try:
             start_time = time.time()
             
@@ -559,7 +589,7 @@ class CrawlerQueueManager:
             self._worker_assignments.pop(task.task_id, None)
             self._active_crawlers.pop(worker_id, None)
             
-            logger.info(f"✅ Crawler task completed: {task.task_id}")
+            logger.info(f" Crawler task completed: {task.task_id}")
             
         except Exception as e:
             logger.error(f"Crawler task execution error: {e}")
@@ -583,6 +613,9 @@ class CrawlerQueueManager:
     
     async def _process_crawl_results(self, task: CrawlerTask, result: Dict[str, Any]):
         """Process crawler results for protection analysis"""
+
+
+
         try:
             # Extract discovered content
             discovered_content = result.get("content_discovered", [])
@@ -606,6 +639,9 @@ class CrawlerQueueManager:
     
     async def _send_violation_notifications(self, task: CrawlerTask, violations: List[Dict]):
         """Send notifications for detected violations"""
+
+
+
         try:
             notification_data = {
                 "task_id": task.task_id,
@@ -631,6 +667,9 @@ class CrawlerQueueManager:
     
     async def _check_rate_limit(self, platform: PlatformType) -> bool:
         """Check if platform rate limit allows new request"""
+
+
+
         try:
             current_time = time.time()
             window = self._request_windows[platform]
@@ -755,7 +794,7 @@ class CrawlerQueueManager:
     async def _move_to_dead_letter_queue(self, task: CrawlerTask, error: str):
         """Move failed task to dead letter queue"""
         # Would implement dead letter queue logic
-        logger.warning(f"💀 Task moved to DLQ: {task.task_id} - {error}")
+        logger.warning(f" Task moved to DLQ: {task.task_id} - {error}")
     
     async def _cancel_worker_task(self, worker_id: str, task_id: str):
         """Cancel task being processed by worker"""
@@ -764,22 +803,37 @@ class CrawlerQueueManager:
     
     async def _rebalance_queues(self) -> Dict[str, Any]:
         """Rebalance crawler queues based on load"""
+
+
+
         return {"rebalanced": True}
     
     async def _optimize_rate_limits(self) -> Dict[str, Any]:
         """Optimize rate limits based on performance"""
+
+
+
         return {"optimized": True}
     
     async def _optimize_worker_allocation(self) -> Dict[str, Any]:
         """Optimize worker allocation across platforms"""
+
+
+
         return {"optimized": True}
     
     async def _adjust_task_priorities(self) -> Dict[str, Any]:
         """Adjust task priorities based on AI analysis"""
+
+
+
         return {"adjusted": True}
     
     async def shutdown(self):
         """Gracefully shutdown crawler queue manager"""
+
+
+
         try:
             self._is_running = False
             
@@ -787,13 +841,16 @@ class CrawlerQueueManager:
             for task_id in list(self._active_tasks.keys()):
                 await self.cancel_crawler_task(task_id)
             
-            logger.info("🛑 Crawler Queue Manager shutdown completed")
+            logger.info(" Crawler Queue Manager shutdown completed")
             
         except Exception as e:
-            logger.error(f"❌ Shutdown error: {e}")
+            logger.error(f" Shutdown error: {e}")
 
 
 # Factory function for easy instantiation
 def create_crawler_queue_manager(config: CrawlerQueueConfig = None) -> CrawlerQueueManager:
     """Create and return configured crawler queue manager"""
+
+
+
     return CrawlerQueueManager(config)

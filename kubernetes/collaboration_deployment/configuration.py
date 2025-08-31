@@ -22,7 +22,7 @@ Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  STRICT INTELLECTUAL PROPERTY WARNING ⚠️
+  STRICT INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any reproduction, modification, distribution or use without explicit 
 written authorization is STRICTLY PROHIBITED and will be subject to 
@@ -1119,10 +1119,16 @@ class CollaborationConfigManager:
     
     def get_environment_config(self, environment: str) -> Optional[EnvironmentConfig]:
         """Get configuration for a specific environment."""
+
+
+
         return self.environment_configs.get(environment)
     
     def get_global_config(self) -> Dict[str, Any]:
         """Get global configuration."""
+
+
+
         return self.global_config.copy()
     
     def update_service_config(self, service_name: str, config_updates: Dict[str, Any]) -> None:
@@ -1308,6 +1314,9 @@ class CollaborationConfigManager:
     
     def _generate_health_check_probe(self, health_check_config: Dict[str, Any]) -> Dict[str, Any]:
         """Generate health check probe configuration."""
+
+
+
         return {
             "httpGet": {
                 "path": health_check_config.get("path", "/health"),

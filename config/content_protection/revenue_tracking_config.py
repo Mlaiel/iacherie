@@ -10,7 +10,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA-Influencer Agent + Content Protection Platform
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  COPYRIGHT WARNING:
+  COPYRIGHT WARNING:
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, modification, or distribution of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
@@ -337,6 +337,9 @@ class RevenueTrackingConfig:
     
     def validate_config(self) -> bool:
         """Validate the revenue tracking configuration."""
+
+
+
         try:
             # Validate basic settings
             if not self.supported_platforms:
@@ -400,6 +403,9 @@ class RevenueTrackingConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert configuration to dictionary format."""
+
+
+
         return {
             'tracking_mode': self.tracking_mode.value,
             'supported_platforms': [platform.value for platform in self.supported_platforms],

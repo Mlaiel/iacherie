@@ -92,6 +92,9 @@ class AgentSecurityManager:
                           agent_id: str,
                           credentials: Dict[str, Any]) -> Optional[str]:
         """Authenticate an AI agent."""
+
+
+
         try:
             # Basic credential validation
             if not self._validate_credentials(agent_id, credentials):
@@ -129,6 +132,9 @@ class AgentSecurityManager:
     
     def _validate_credentials(self, agent_id: str, credentials: Dict) -> bool:
         """Validate agent credentials with comprehensive security checks."""
+
+
+
         try:
             # Validate required credential fields
             required_fields = ['api_key', 'timestamp', 'signature']
@@ -173,6 +179,9 @@ class AgentSecurityManager:
     
     def _generate_session_token(self, agent_id: str) -> str:
         """Generate secure session token."""
+
+
+
         try:
             payload = {
                 'agent_id': agent_id,
@@ -189,6 +198,9 @@ class AgentSecurityManager:
     
     def validate_session(self, token: str) -> Optional[str]:
         """Validate session token."""
+
+
+
         try:
             if token not in self.active_sessions:
                 return None
@@ -214,6 +226,9 @@ class AgentSecurityManager:
                         resource_id: str,
                         permission: str) -> bool:
         """Check if agent has permission for resource."""
+
+
+
         try:
             access_key = f"{agent_id}:{resource_id}"
             
@@ -240,6 +255,9 @@ class AgentSecurityManager:
                         security_level: SecurityLevel = SecurityLevel.PUBLIC,
                         expires_at: Optional[datetime] = None):
         """Grant permissions to agent."""
+
+
+
         try:
             access_key = f"{agent_id}:{resource_id}"
             
@@ -265,6 +283,9 @@ class AgentSecurityManager:
     
     def revoke_permission(self, agent_id: str, resource_id: str):
         """Revoke agent permissions."""
+
+
+
         try:
             access_key = f"{agent_id}:{resource_id}"
             
@@ -283,6 +304,9 @@ class AgentSecurityManager:
     
     def detect_threats(self, agent_id: str, activity_data: Dict) -> List[Dict]:
         """Detect potential security threats."""
+
+
+
         try:
             threats = []
             
@@ -319,6 +343,9 @@ class AgentSecurityManager:
     
     def _is_suspicious_activity(self, agent_id: str, activity_data: Dict) -> bool:
         """Check for suspicious activity patterns using advanced analytics."""
+
+
+
         try:
             suspicious_indicators = 0
             
@@ -355,6 +382,9 @@ class AgentSecurityManager:
     
     def _check_rate_limit(self, agent_id: str, activity_data: Dict) -> bool:
         """Check if agent is violating rate limits with adaptive thresholds."""
+
+
+
         try:
             current_requests = activity_data.get('requests_per_minute', 0)
             base_limit = self._get_agent_rate_limit(agent_id)
@@ -453,6 +483,9 @@ class AgentSecurityManager:
                            threat_level: ThreatLevel,
                            description: str):
         """Log security event."""
+
+
+
         try:
             event = SecurityEvent(
                 event_id=secrets.token_hex(16),
@@ -481,6 +514,9 @@ class AgentSecurityManager:
                            threat_level: Optional[ThreatLevel] = None,
                            limit: int = 100) -> List[SecurityEvent]:
         """Get security events."""
+
+
+
         try:
             events = self.security_events
             
@@ -503,6 +539,9 @@ class AgentSecurityManager:
     
     def get_security_summary(self) -> Dict[str, Any]:
         """Get security system summary."""
+
+
+
         try:
             total_events = len(self.security_events)
             active_sessions_count = len(self.active_sessions)
@@ -537,6 +576,9 @@ class AgentSecurityManager:
     
     def encrypt_data(self, data: str) -> str:
         """Encrypt sensitive data."""
+
+
+
         try:
             # Simple encryption using HMAC
             key = self.secret_key.encode()
@@ -550,6 +592,9 @@ class AgentSecurityManager:
     
     def decrypt_data(self, encrypted_data: str) -> Optional[str]:
         """Decrypt sensitive data."""
+
+
+
         try:
             if ':' not in encrypted_data:
                 return encrypted_data

@@ -100,7 +100,7 @@ def test_fingerprinting_processor_names():
     perceptual = MockProcessor("perceptual_analysis")
     assert perceptual.name == "perceptual_analysis"
     
-    print("✅ Fingerprinting processor names validation passed")
+    print(" Fingerprinting processor names validation passed")
 
 
 def test_watermarker_configurations():

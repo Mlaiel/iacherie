@@ -10,7 +10,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA-Influencer Agent + Content Protection Platform
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  COPYRIGHT WARNING:
+  COPYRIGHT WARNING:
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, modification, or distribution of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
@@ -220,6 +220,9 @@ class ContentProtectionConfigIndex:
     
     def get_config_class(self, config_type: str) -> Optional[Type]:
         """Get configuration class by type name."""
+
+
+
         return self._config_registry.get(config_type)
     
     def create_config(self, config_type: str, environment: str = 'production') -> Any:
@@ -285,10 +288,16 @@ class ContentProtectionConfigIndex:
     
     def get_supported_environments(self) -> List[str]:
         """Get list of supported environments."""
+
+
+
         return ['production', 'development', 'testing']
     
     def get_available_config_types(self) -> List[str]:
         """Get list of available configuration types."""
+
+
+
         return list(self._config_registry.keys())
     
     def export_config_summary(self, configs: Dict[str, Any]) -> Dict[str, Any]:

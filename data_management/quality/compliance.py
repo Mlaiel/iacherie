@@ -8,7 +8,7 @@ regulatory requirements, platform policies, and business rules.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-🔒 ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 🔒
+ ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use without explicit written permission from Fahed Mlaiel (mlaiel@live.de) 
 is STRICTLY PROHIBITED and will be prosecuted under international copyright law.
@@ -146,6 +146,9 @@ class ComplianceChecker:
     
     def _load_regulations(self) -> Dict[str, Dict[str, Any]]:
         """Load regulatory compliance rules."""
+
+
+
         return {
             'gdpr': {
                 'name': 'General Data Protection Regulation',
@@ -201,6 +204,9 @@ class ComplianceChecker:
     
     def _load_platform_policies(self) -> Dict[str, Dict[str, Any]]:
         """Load platform-specific compliance policies."""
+
+
+
         return {
             'youtube': {
                 'content_policies': [
@@ -280,6 +286,9 @@ class ComplianceChecker:
     
     def _load_business_rules(self) -> Dict[str, List[str]]:
         """Load business-specific compliance rules."""
+
+
+
         return {
             'content_quality': [
                 'minimum_resolution_standards',
@@ -309,6 +318,9 @@ class ComplianceChecker:
     
     def _load_content_filters(self) -> Dict[str, List[str]]:
         """Load content filtering rules."""
+
+
+
         return {
             'prohibited_keywords': [
                 # Violence and threats
@@ -823,6 +835,9 @@ class ComplianceChecker:
     
     def _analyze_content_sentiment(self, text: str) -> Dict[str, float]:
         """Analyze content sentiment for harmful content detection."""
+
+
+
         try:
             blob = TextBlob(text)
             polarity = blob.sentiment.polarity  # -1 to 1
@@ -1471,6 +1486,9 @@ class ContentComplianceValidator:
         content_metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Validate content compliance for specific platforms."""
+
+
+
         try:
             compliance_results = {}
             
@@ -1738,6 +1756,9 @@ class ContentComplianceValidator:
         content_type: str
     ) -> Optional[str]:
         """Extract text content for analysis."""
+
+
+
         try:
             if content_type == 'text':
                 if isinstance(content_data, bytes):
@@ -1795,6 +1816,9 @@ class ContentComplianceValidator:
         content_type: str
     ) -> Optional[str]:
         """Detect the format of content."""
+
+
+
         try:
             if isinstance(content_data, str) and os.path.exists(content_data):
                 # Use file extension
@@ -1875,6 +1899,9 @@ class ContentComplianceValidator:
         content_type: str
     ) -> Optional[float]:
         """Extract duration from audio/video content."""
+
+
+
         try:
             if content_type == 'audio' and HAS_MEDIA_LIBS:
                 if isinstance(content_data, str):
@@ -2086,6 +2113,9 @@ class CopyrightComplianceChecker:
         fair_use_context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Perform comprehensive copyright compliance check."""
+
+
+
         try:
             compliance_result = {
                 'copyright_compliant': False,
@@ -2274,6 +2304,9 @@ class CopyrightComplianceChecker:
         similarity_results: List[Dict[str, Any]]
     ) -> float:
         """Analyze content originality based on similarity results."""
+
+
+
         try:
             if not similarity_results:
                 return 0.95  # High originality if no similar content found
@@ -2479,6 +2512,9 @@ class CopyrightComplianceChecker:
         originality_score: float
     ) -> bool:
         """Determine if copyright clearance is needed."""
+
+
+
         try:
             # High-risk factors that require clearance
             high_risk_count = len([r for r in copyright_risks if r['risk_level'] == 'high'])

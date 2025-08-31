@@ -160,14 +160,23 @@ class SecurityAssessmentResult:
     
     def get_threats_by_level(self, level: SecurityThreatLevel) -> List[SecurityThreat]:
         """Get threats by threat level"""
+
+
+
         return [t for t in self.threats if t.threat_level == level]
     
     def get_critical_threats(self) -> List[SecurityThreat]:
         """Get critical threats"""
+
+
+
         return self.get_threats_by_level(SecurityThreatLevel.CRITICAL)
     
     def has_blocking_threats(self) -> bool:
         """Check if there are blocking security threats"""
+
+
+
         return self.critical_threats > 0 or self.high_threats > 0
     
     def to_dict(self) -> Dict[str, Any]:
@@ -201,6 +210,9 @@ class MalwareDetector:
         
     def _initialize_malware_patterns(self) -> Dict[str, Tuple[str, SecurityThreatLevel]]:
         """Initialize malware detection patterns"""
+
+
+
         return {
             # Suspicious URLs
             r'bit\.ly/[a-zA-Z0-9]+': ("Suspicious short URL", SecurityThreatLevel.MEDIUM),
@@ -233,6 +245,9 @@ class MalwareDetector:
     
     def _initialize_dangerous_extensions(self) -> Set[str]:
         """Initialize dangerous file extensions"""
+
+
+
         return {
             '.exe', '.scr', '.bat', '.cmd', '.com', '.pif', '.vbs', '.js',
             '.jar', '.app', '.deb', '.pkg', '.dmg', '.msi', '.reg'
@@ -293,6 +308,9 @@ class PhishingDetector:
         
     def _initialize_phishing_patterns(self) -> Dict[str, Tuple[str, SecurityThreatLevel]]:
         """Initialize phishing detection patterns"""
+
+
+
         return {
             # Urgency indicators
             r'urgent[ly]*\s+act': ("Urgency manipulation", SecurityThreatLevel.HIGH),
@@ -321,6 +339,9 @@ class PhishingDetector:
     
     def _initialize_social_engineering_keywords(self) -> Dict[str, SecurityThreatLevel]:
         """Initialize social engineering keywords"""
+
+
+
         return {
             'free money': SecurityThreatLevel.HIGH,
             'get rich quick': SecurityThreatLevel.HIGH,
@@ -417,6 +438,9 @@ class DataPrivacyScanner:
         
     def _initialize_privacy_patterns(self) -> Dict[str, Tuple[str, SecurityThreatLevel, ContentType]]:
         """Initialize privacy-sensitive data patterns"""
+
+
+
         return {
             # Email addresses
             r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b': (

@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -425,6 +425,9 @@ class PlatformIntegration(Base):
     
     def is_healthy(self) -> bool:
         """Check overall health status of integration"""
+
+
+
         return (
             self.integration_status == IntegrationStatus.ACTIVE and
             self.health_status == "healthy" and
@@ -458,6 +461,9 @@ class PlatformIntegration(Base):
     
     def should_retry_sync(self) -> bool:
         """Determine if sync should be retried"""
+
+
+
         return (
             self.sync_status in [SyncStatus.FAILED, SyncStatus.PARTIAL] and
             self.sync_retry_count < self.max_retry_attempts and
@@ -467,6 +473,9 @@ class PlatformIntegration(Base):
     @classmethod
     def create_integration(cls, platform_data: Dict[str, Any], user_id: str) -> 'PlatformIntegration':
         """Create PlatformIntegration from platform connection data"""
+
+
+
         return cls(
             user_id=user_id,
             platform=Platform(platform_data.get('platform', 'other')),

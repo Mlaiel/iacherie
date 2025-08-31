@@ -302,6 +302,9 @@ class WebScrapingEngine:
     
     def _setup_content_extractors(self):
         """Setup content extraction pipelines."""
+
+
+
         try:
             # Text summarization
             self.text_summarizer = pipeline(
@@ -332,6 +335,9 @@ class WebScrapingEngine:
         session_config: ScrapingSession
     ) -> str:
         """Create a new scraping session."""
+
+
+
         try:
             session_id = session_config.session_id or str(uuid.uuid4())
             session_config.session_id = session_id
@@ -375,6 +381,9 @@ class WebScrapingEngine:
     
     async def _create_browser_driver(self, config: ScrapingSession) -> webdriver.Remote:
         """Create browser driver for session."""
+
+
+
         try:
             options = self.chrome_options
             
@@ -440,6 +449,9 @@ class WebScrapingEngine:
         extract_types: List[ContentExtractorType] = None
     ) -> ScrapedContent:
         """Scrape content from a single URL."""
+
+
+
         try:
             start_time = time.time()
             
@@ -497,6 +509,9 @@ class WebScrapingEngine:
         url: str
     ) -> ScrapedContent:
         """Scrape URL using requests library."""
+
+
+
         try:
             # Prepare headers
             headers = self.default_headers.copy()
@@ -597,6 +612,9 @@ class WebScrapingEngine:
         url: str
     ) -> ScrapedContent:
         """Scrape URL using Selenium WebDriver."""
+
+
+
         try:
             driver = self.session_drivers.get(session_id)
             if not driver:
@@ -690,6 +708,9 @@ class WebScrapingEngine:
         url: str
     ) -> ScrapedContent:
         """Scrape URL using Scrapy framework."""
+
+
+
         try:
             # This would require a more complex implementation
             # For now, fall back to requests
@@ -705,6 +726,9 @@ class WebScrapingEngine:
         url: str
     ) -> ScrapedContent:
         """Hybrid scraping approach - try requests first, fallback to Selenium."""
+
+
+
         try:
             # Try requests first
             try:
@@ -739,6 +763,9 @@ class WebScrapingEngine:
         extract_type: ContentExtractorType
     ):
         """Extract specific content type from scraped data."""
+
+
+
         try:
             if extract_type == ContentExtractorType.STRUCTURED_DATA:
                 await self._extract_structured_data(content)
@@ -754,6 +781,9 @@ class WebScrapingEngine:
     
     async def _extract_structured_data(self, content: ScrapedContent):
         """Extract structured data (JSON-LD, microdata, etc.)."""
+
+
+
         try:
             soup = BeautifulSoup(content.html_content, 'lxml')
             structured_data = {}
@@ -802,6 +832,9 @@ class WebScrapingEngine:
     
     async def _extract_social_signals(self, content: ScrapedContent):
         """Extract social media signals and engagement metrics."""
+
+
+
         try:
             social_signals = {}
             
@@ -839,6 +872,9 @@ class WebScrapingEngine:
     
     async def _extract_ecommerce_data(self, content: ScrapedContent):
         """Extract e-commerce specific data."""
+
+
+
         try:
             soup = BeautifulSoup(content.html_content, 'lxml')
             ecommerce_data = {}
@@ -894,6 +930,9 @@ class WebScrapingEngine:
     
     async def _extract_article_data(self, content: ScrapedContent):
         """Extract news article specific data."""
+
+
+
         try:
             soup = BeautifulSoup(content.html_content, 'lxml')
             article_data = {}
@@ -976,6 +1015,9 @@ class WebScrapingEngine:
         max_concurrent: int = None
     ) -> List[ScrapedContent]:
         """Scrape multiple URLs concurrently."""
+
+
+
         try:
             session = self.active_sessions.get(session_id)
             if not session:
@@ -1021,6 +1063,9 @@ class WebScrapingEngine:
     
     async def close_session(self, session_id: str):
         """Close and cleanup scraping session."""
+
+
+
         try:
             # Close browser driver if exists
             if session_id in self.session_drivers:
@@ -1039,6 +1084,9 @@ class WebScrapingEngine:
     
     def get_metrics(self) -> Dict[str, Any]:
         """Get scraping performance metrics."""
+
+
+
         return {
             **self.metrics,
             "active_sessions": len(self.active_sessions),
@@ -1047,6 +1095,9 @@ class WebScrapingEngine:
     
     async def __aenter__(self):
         """Async context manager entry."""
+
+
+
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):

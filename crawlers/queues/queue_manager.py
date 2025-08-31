@@ -8,7 +8,7 @@ Responsibility: Complete system usage examples, best practices, integration demo
 Technologies: Full System Integration, Advanced Configuration, Real-world Scenarios
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -63,7 +63,7 @@ class QueueSystemDemo:
     async def run_complete_demonstration(self):
         """Run complete system demonstration"""
         
-        logger.info("🚀 Starting IA-Influencer-Agent Queue System Demonstration")
+        logger.info(" Starting IA-Influencer-Agent Queue System Demonstration")
         logger.info("=" * 80)
         logger.info("Author: Fahed Mlaiel (mlaiel@live.de)")
         logger.info("Demonstration: Complete Queue Management System")
@@ -94,16 +94,16 @@ class QueueSystemDemo:
             # Step 8: Health Management
             await self._demonstrate_health_management()
             
-            logger.info("✅ Complete demonstration finished successfully")
+            logger.info(" Complete demonstration finished successfully")
             
         except Exception as e:
-            logger.error(f"💥 Demonstration error: {e}")
+            logger.error(f" Demonstration error: {e}")
             raise
     
     async def _demonstrate_configuration_management(self):
         """Demonstrate configuration management capabilities"""
         
-        logger.info("\n📋 Step 1: Configuration Management Demonstration")
+        logger.info("\n Step 1: Configuration Management Demonstration")
         logger.info("-" * 50)
         
         # Create configuration manager
@@ -117,7 +117,7 @@ class QueueSystemDemo:
         ]
         
         for scenario_name, security_profile, performance_priority in scenarios:
-            logger.info(f"\n🎯 Generating configuration for: {scenario_name}")
+            logger.info(f"\n Generating configuration for: {scenario_name}")
             
             config = self.config_manager.generate_optimal_configuration(
                 security_profile=security_profile,
@@ -135,12 +135,12 @@ class QueueSystemDemo:
         
         # Export configuration template
         template_path = self.config_manager.export_configuration_template()
-        logger.info(f"📄 Configuration template exported to: {template_path}")
+        logger.info(f" Configuration template exported to: {template_path}")
     
     async def _demonstrate_system_initialization(self):
         """Demonstrate system initialization"""
         
-        logger.info("\n🚀 Step 2: System Initialization Demonstration")
+        logger.info("\n Step 2: System Initialization Demonstration")
         logger.info("-" * 50)
         
         # Initialize system with optimal configuration
@@ -166,7 +166,7 @@ class QueueSystemDemo:
     async def _demonstrate_basic_operations(self):
         """Demonstrate basic queue operations"""
         
-        logger.info("\n⚙️ Step 3: Basic Operations Demonstration")
+        logger.info("\n Step 3: Basic Operations Demonstration")
         logger.info("-" * 50)
         
         # Get system status
@@ -189,18 +189,18 @@ class QueueSystemDemo:
             for i in range(20)
         ]
         
-        logger.info(f"📤 Generated {len(sample_tasks)} demo tasks")
+        logger.info(f" Generated {len(sample_tasks)} demo tasks")
         
         # Simulate task processing
-        logger.info("🔄 Simulating task processing...")
+        logger.info(" Simulating task processing...")
         await asyncio.sleep(2)  # Simulate processing time
         
-        logger.info("✅ Basic operations completed")
+        logger.info(" Basic operations completed")
     
     async def _demonstrate_advanced_features(self):
         """Demonstrate advanced system features"""
         
-        logger.info("\n🎯 Step 4: Advanced Features Demonstration")
+        logger.info("\n Step 4: Advanced Features Demonstration")
         logger.info("-" * 50)
         
         # Get current system status to access components
@@ -211,21 +211,21 @@ class QueueSystemDemo:
             
             # Demonstrate orchestrator features
             if 'orchestrator' in components:
-                logger.info("🎭 Orchestrator features:")
+                logger.info(" Orchestrator features:")
                 orchestrator_status = components['orchestrator']
                 logger.info(f"  Active workers: {orchestrator_status.get('resources', {}).get('active_workers', 0)}")
                 logger.info(f"  Success rate: {orchestrator_status.get('performance', {}).get('success_rate', 0):.2%}")
             
             # Demonstrate monitoring features
             if 'monitor' in components:
-                logger.info("📊 Monitoring features:")
+                logger.info(" Monitoring features:")
                 monitor_status = components['monitor']
                 logger.info(f"  Health score: {monitor_status.get('health_score', 0):.2f}")
                 logger.info(f"  Active alerts: {monitor_status.get('stats', {}).get('active_alerts', 0)}")
             
             # Demonstrate security features
             if 'security' in components:
-                logger.info("🔒 Security features:")
+                logger.info(" Security features:")
                 security_status = components['security']
                 logger.info(f"  Security level: {security_status.get('security_level', 'unknown')}")
                 logger.info(f"  Encryption active: {security_status.get('encryption_active', False)}")
@@ -240,21 +240,21 @@ class QueueSystemDemo:
     async def _demonstrate_performance_monitoring(self):
         """Demonstrate performance monitoring capabilities"""
         
-        logger.info("\n📈 Step 5: Performance Monitoring Demonstration")
+        logger.info("\n Step 5: Performance Monitoring Demonstration")
         logger.info("-" * 50)
         
         # Get performance summary
         status = await get_system_status()
         performance_summary = status.get('performance_summary', {})
         
-        logger.info("📊 Performance Metrics:")
+        logger.info(" Performance Metrics:")
         logger.info(f"  Total measurements: {performance_summary.get('total_measurements', 0)}")
         logger.info(f"  Recent measurements: {performance_summary.get('recent_measurements', 0)}")
         
         # Display average metrics if available
         avg_metrics = performance_summary.get('average_metrics', {})
         if avg_metrics:
-            logger.info("📈 Average Performance Metrics:")
+            logger.info(" Average Performance Metrics:")
             for metric, value in avg_metrics.items():
                 if isinstance(value, float):
                     logger.info(f"  {metric}: {value:.2f}")
@@ -264,14 +264,14 @@ class QueueSystemDemo:
         # Get tuning recommendations
         recommendations = self.config_manager.get_performance_tuning_recommendations()
         if recommendations:
-            logger.info("💡 Performance Recommendations:")
+            logger.info(" Performance Recommendations:")
             for i, recommendation in enumerate(recommendations[:5], 1):
                 logger.info(f"  {i}. {recommendation}")
     
     async def _demonstrate_security_features(self):
         """Demonstrate security features"""
         
-        logger.info("\n🔒 Step 6: Security Features Demonstration")
+        logger.info("\n Step 6: Security Features Demonstration")
         logger.info("-" * 50)
         
         # Test different security profiles
@@ -283,7 +283,7 @@ class QueueSystemDemo:
         ]
         
         for profile in security_profiles:
-            logger.info(f"\n🛡️ Testing {profile.value} security profile:")
+            logger.info(f"\n Testing {profile.value} security profile:")
             
             config = self.config_manager.generate_optimal_configuration(
                 security_profile=profile,
@@ -295,16 +295,16 @@ class QueueSystemDemo:
             logger.info(f"  SSL: {'Enabled' if config.ssl_enabled else 'Disabled'}")
             logger.info(f"  Token expiry: {config.token_expiry_hours}h")
         
-        logger.info("\n🔐 Security best practices applied")
+        logger.info("\n Security best practices applied")
     
     async def _demonstrate_optimization(self):
         """Demonstrate system optimization"""
         
-        logger.info("\n⚡ Step 7: System Optimization Demonstration")
+        logger.info("\n Step 7: System Optimization Demonstration")
         logger.info("-" * 50)
         
         # Trigger system optimization
-        logger.info("🔧 Starting system optimization...")
+        logger.info(" Starting system optimization...")
         
         optimization_result = await optimize_performance()
         
@@ -325,12 +325,12 @@ class QueueSystemDemo:
                 security_result = results['security_audit']
                 logger.info(f"Security audit: {security_result.get('status', 'completed')}")
         
-        logger.info("✅ System optimization completed")
+        logger.info(" System optimization completed")
     
     async def _demonstrate_health_management(self):
         """Demonstrate health management"""
         
-        logger.info("\n💓 Step 8: Health Management Demonstration")
+        logger.info("\n Step 8: Health Management Demonstration")
         logger.info("-" * 50)
         
         # Perform comprehensive health check
@@ -342,7 +342,7 @@ class QueueSystemDemo:
         # Show component health
         component_health = health_result.get('component_health', {})
         if component_health:
-            logger.info("\n🏥 Component Health Status:")
+            logger.info("\n Component Health Status:")
             for component, health_data in component_health.items():
                 if isinstance(health_data, dict):
                     status = health_data.get('status', 'unknown')
@@ -352,13 +352,13 @@ class QueueSystemDemo:
         # Show issues and recommendations
         issues = health_result.get('issues', [])
         if issues:
-            logger.info("\n⚠️ Health Issues:")
+            logger.info("\n Health Issues:")
             for issue in issues[:3]:
                 logger.info(f"  - {issue}")
         
         recommendations = health_result.get('recommendations', [])
         if recommendations:
-            logger.info("\n💡 Health Recommendations:")
+            logger.info("\n Health Recommendations:")
             for recommendation in recommendations[:3]:
                 logger.info(f"  - {recommendation}")
 
@@ -370,7 +370,7 @@ class SimpleUsageExample:
     async def quick_start_example():
         """Quick start example with minimal setup"""
         
-        logger.info("\n🚀 Quick Start Example")
+        logger.info("\n Quick Start Example")
         logger.info("=" * 40)
         
         # 1. Initialize system with default settings
@@ -380,21 +380,21 @@ class SimpleUsageExample:
             'enable_monitoring': True
         })
         
-        logger.info(f"✅ System initialized: {result['status']}")
+        logger.info(f" System initialized: {result['status']}")
         
         # 2. Check system status
         status = await get_system_status()
-        logger.info(f"📊 System status: {status['system_status']}")
+        logger.info(f" System status: {status['system_status']}")
         
         # 3. Perform health check
         health = await perform_health_check()
-        logger.info(f"💓 Health score: {health['health_score']:.2f}")
+        logger.info(f" Health score: {health['health_score']:.2f}")
         
         # 4. Trigger optimization
         optimization = await optimize_performance()
-        logger.info(f"⚡ Optimization: {optimization['status']}")
+        logger.info(f" Optimization: {optimization['status']}")
         
-        logger.info("🎉 Quick start completed!")
+        logger.info(" Quick start completed!")
 
 
 class ProductionDeploymentExample:
@@ -404,7 +404,7 @@ class ProductionDeploymentExample:
     async def production_deployment_example():
         """Production deployment example"""
         
-        logger.info("\n🏭 Production Deployment Example")
+        logger.info("\n Production Deployment Example")
         logger.info("=" * 50)
         
         # 1. Create configuration manager
@@ -423,13 +423,13 @@ class ProductionDeploymentExample:
             }
         )
         
-        logger.info("📋 Production configuration generated")
+        logger.info(" Production configuration generated")
         
         # 3. Validate configuration
         validation = config_manager.validate_configuration(config)
         
         if not validation['valid']:
-            logger.error("❌ Configuration validation failed")
+            logger.error(" Configuration validation failed")
             for error in validation['errors']:
                 logger.error(f"  Error: {error}")
             return
@@ -444,7 +444,7 @@ class ProductionDeploymentExample:
             'enable_auto_recovery': config.auto_recovery_enabled
         })
         
-        logger.info(f"🚀 Production system: {result['status']}")
+        logger.info(f" Production system: {result['status']}")
         
         # 5. Setup monitoring loop
         await ProductionDeploymentExample._production_monitoring_loop()
@@ -453,7 +453,7 @@ class ProductionDeploymentExample:
     async def _production_monitoring_loop():
         """Production monitoring loop"""
         
-        logger.info("📊 Starting production monitoring...")
+        logger.info(" Starting production monitoring...")
         
         for i in range(3):  # Run for 3 iterations in demo
             # Health check
@@ -462,19 +462,19 @@ class ProductionDeploymentExample:
             
             # Performance optimization
             if health['health_score'] < 0.8:
-                logger.info("⚡ Triggering optimization due to low health score")
+                logger.info(" Triggering optimization due to low health score")
                 await optimize_performance()
             
             await asyncio.sleep(5)  # Wait 5 seconds between checks
         
-        logger.info("✅ Production monitoring completed")
+        logger.info(" Production monitoring completed")
 
 
 # Main demonstration runner
 async def run_all_examples():
     """Run all example demonstrations"""
     
-    logger.info("🎭 IA-Influencer-Agent Queue System - Complete Examples")
+    logger.info(" IA-Influencer-Agent Queue System - Complete Examples")
     logger.info("=" * 80)
     logger.info("Author: Fahed Mlaiel (mlaiel@live.de)")
     logger.info("=" * 80)
@@ -494,10 +494,10 @@ async def run_all_examples():
         # Run production example
         await ProductionDeploymentExample.production_deployment_example()
         
-        logger.info("\n🎉 All examples completed successfully!")
+        logger.info("\n All examples completed successfully!")
         
     except Exception as e:
-        logger.error(f"💥 Example execution failed: {e}")
+        logger.error(f" Example execution failed: {e}")
         raise
 
 

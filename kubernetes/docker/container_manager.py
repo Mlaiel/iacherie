@@ -1,11 +1,11 @@
 """
-🐳 Docker Container Manager - IA-Influencer-Agent Production Platform
+ Docker Container Manager - IA-Influencer-Agent Production Platform
 =====================================================================
 Expert: Lead DevOps Engineer + Docker Specialist + Kubernetes Expert
 Creator: Fahed Mlaiel <mlaiel@live.de>
 =====================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL 
 Tout vol, copie ou utilisation non autorisée de ce code source,
 de ce concept ou de cette propriété intellectuelle sans
 l'autorisation écrite explicite de Fahed Mlaiel est strictement
@@ -121,19 +121,22 @@ class DockerContainerManager:
         try:
             self.client = docker.from_env()
             self.client.ping()
-            self.logger.info("✅ Docker client connected successfully")
+            self.logger.info(" Docker client connected successfully")
         except DockerException as e:
-            self.logger.error(f"❌ Failed to connect to Docker: {e}")
+            self.logger.error(f" Failed to connect to Docker: {e}")
             raise
     
     async def register_container(self, config: ContainerConfig) -> str:
         """Register a new container configuration"""
+
+
+
         try:
             self.containers[config.name] = config
-            self.logger.info(f"📝 Registered container: {config.name}")
+            self.logger.info(f" Registered container: {config.name}")
             return config.name
         except Exception as e:
-            self.logger.error(f"❌ Failed to register container {config.name}: {e}")
+            self.logger.error(f" Failed to register container {config.name}: {e}")
             raise
     
     async def create_container(self, name: str, **kwargs) -> str:
@@ -175,16 +178,19 @@ class DockerContainerManager:
             container_id = container.id
             
             self.running_containers[name] = container
-            self.logger.info(f"🐳 Created container: {name} ({container_id[:12]})")
+            self.logger.info(f" Created container: {name} ({container_id[:12]})")
             
             return container_id
             
         except APIError as e:
-            self.logger.error(f"❌ Failed to create container {name}: {e}")
+            self.logger.error(f" Failed to create container {name}: {e}")
             raise
     
     async def start_container(self, name: str) -> bool:
         """Start a registered container"""
+
+
+
         try:
             if name in self.running_containers:
                 container = self.running_containers[name]
@@ -199,7 +205,7 @@ class DockerContainerManager:
                     container = self.running_containers[name]
             
             container.start()
-            self.logger.info(f"▶️ Started container: {name}")
+            self.logger.info(f" Started container: {name}")
             
             # Wait for container to be healthy
             await self._wait_for_healthy(name)
@@ -207,28 +213,34 @@ class DockerContainerManager:
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to start container {name}: {e}")
+            self.logger.error(f" Failed to start container {name}: {e}")
             return False
     
     async def stop_container(self, name: str, timeout: int = 30) -> bool:
         """Stop a running container"""
+
+
+
         try:
             if name not in self.running_containers:
-                self.logger.warning(f"⚠️ Container not found in running containers: {name}")
+                self.logger.warning(f" Container not found in running containers: {name}")
                 return False
             
             container = self.running_containers[name]
             container.stop(timeout=timeout)
             
-            self.logger.info(f"⏹️ Stopped container: {name}")
+            self.logger.info(f"⏹ Stopped container: {name}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to stop container {name}: {e}")
+            self.logger.error(f" Failed to stop container {name}: {e}")
             return False
     
     async def restart_container(self, name: str, timeout: int = 30) -> bool:
         """Restart a container"""
+
+
+
         try:
             if name not in self.running_containers:
                 return await self.start_container(name)
@@ -236,7 +248,7 @@ class DockerContainerManager:
             container = self.running_containers[name]
             container.restart(timeout=timeout)
             
-            self.logger.info(f"🔄 Restarted container: {name}")
+            self.logger.info(f" Restarted container: {name}")
             
             # Wait for container to be healthy
             await self._wait_for_healthy(name)
@@ -244,26 +256,32 @@ class DockerContainerManager:
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to restart container {name}: {e}")
+            self.logger.error(f" Failed to restart container {name}: {e}")
             return False
     
     async def remove_container(self, name: str, force: bool = False) -> bool:
         """Remove a container"""
+
+
+
         try:
             if name in self.running_containers:
                 container = self.running_containers[name]
                 container.remove(force=force)
                 del self.running_containers[name]
             
-            self.logger.info(f"🗑️ Removed container: {name}")
+            self.logger.info(f" Removed container: {name}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to remove container {name}: {e}")
+            self.logger.error(f" Failed to remove container {name}: {e}")
             return False
     
     async def get_container_status(self, name: str) -> Optional[ContainerStatus]:
         """Get current status of a container"""
+
+
+
         try:
             if name not in self.running_containers:
                 return None
@@ -287,11 +305,14 @@ class DockerContainerManager:
             return status_mapping.get(status.lower(), ContainerStatus.EXITED)
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to get container status {name}: {e}")
+            self.logger.error(f" Failed to get container status {name}: {e}")
             return None
     
     async def get_container_metrics(self, name: str) -> Optional[ContainerMetrics]:
         """Get performance metrics for a container"""
+
+
+
         try:
             if name not in self.running_containers:
                 return None
@@ -337,11 +358,14 @@ class DockerContainerManager:
             )
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to get container metrics {name}: {e}")
+            self.logger.error(f" Failed to get container metrics {name}: {e}")
             return None
     
     async def get_container_logs(self, name: str, lines: int = 100) -> Optional[str]:
         """Get recent logs from a container"""
+
+
+
         try:
             if name not in self.running_containers:
                 return None
@@ -352,11 +376,14 @@ class DockerContainerManager:
             return logs
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to get container logs {name}: {e}")
+            self.logger.error(f" Failed to get container logs {name}: {e}")
             return None
     
     async def execute_command(self, name: str, command: str) -> Optional[str]:
         """Execute a command inside a container"""
+
+
+
         try:
             if name not in self.running_containers:
                 return None
@@ -367,11 +394,14 @@ class DockerContainerManager:
             return result.output.decode('utf-8')
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to execute command in container {name}: {e}")
+            self.logger.error(f" Failed to execute command in container {name}: {e}")
             return None
     
     async def health_check(self, name: str) -> bool:
         """Perform health check on a container"""
+
+
+
         try:
             status = await self.get_container_status(name)
             if status != ContainerStatus.RUNNING:
@@ -388,13 +418,16 @@ class DockerContainerManager:
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Health check failed for container {name}: {e}")
+            self.logger.error(f" Health check failed for container {name}: {e}")
             return False
     
     async def auto_recover(self, name: str) -> bool:
         """Automatically recover a failed container"""
+
+
+
         try:
-            self.logger.info(f"🔧 Attempting auto-recovery for container: {name}")
+            self.logger.info(f" Attempting auto-recovery for container: {name}")
             
             # Stop container if running
             await self.stop_container(name)
@@ -406,14 +439,14 @@ class DockerContainerManager:
             success = await self.start_container(name)
             
             if success:
-                self.logger.info(f"✅ Auto-recovery successful for container: {name}")
+                self.logger.info(f" Auto-recovery successful for container: {name}")
             else:
-                self.logger.error(f"❌ Auto-recovery failed for container: {name}")
+                self.logger.error(f" Auto-recovery failed for container: {name}")
             
             return success
             
         except Exception as e:
-            self.logger.error(f"❌ Auto-recovery error for container {name}: {e}")
+            self.logger.error(f" Auto-recovery error for container {name}: {e}")
             return False
     
     async def _wait_for_healthy(self, name: str, timeout: int = 60) -> bool:
@@ -422,12 +455,12 @@ class DockerContainerManager:
         
         while (datetime.now() - start_time).seconds < timeout:
             if await self.health_check(name):
-                self.logger.info(f"✅ Container {name} is healthy")
+                self.logger.info(f" Container {name} is healthy")
                 return True
             
             await asyncio.sleep(2)
         
-        self.logger.warning(f"⚠️ Container {name} did not become healthy within {timeout}s")
+        self.logger.warning(f" Container {name} did not become healthy within {timeout}s")
         return False
     
     async def monitor_containers(self) -> Dict[str, ContainerMetrics]:
@@ -443,6 +476,9 @@ class DockerContainerManager:
     
     async def scale_service(self, service_type: ServiceType, replicas: int) -> bool:
         """Scale a service to specified number of replicas"""
+
+
+
         try:
             # Find containers of specified service type
             service_containers = [
@@ -487,11 +523,11 @@ class DockerContainerManager:
                     await self.stop_container(name)
                     await self.remove_container(name)
             
-            self.logger.info(f"📊 Scaled {service_type.value} service to {replicas} replicas")
+            self.logger.info(f" Scaled {service_type.value} service to {replicas} replicas")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to scale service {service_type.value}: {e}")
+            self.logger.error(f" Failed to scale service {service_type.value}: {e}")
             return False
     
     async def cleanup_orphaned_containers(self) -> int:
@@ -513,15 +549,18 @@ class DockerContainerManager:
                         container.remove(force=True)
                         cleaned_count += 1
             
-            self.logger.info(f"✅ Cleaned up {cleaned_count} orphaned containers")
+            self.logger.info(f" Cleaned up {cleaned_count} orphaned containers")
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to cleanup orphaned containers: {e}")
+            self.logger.error(f" Failed to cleanup orphaned containers: {e}")
         
         return cleaned_count
     
     async def backup_container_configs(self, backup_path: Path) -> bool:
         """Backup container configurations to file"""
+
+
+
         try:
             backup_data = {
                 'containers': {},
@@ -551,15 +590,18 @@ class DockerContainerManager:
             with open(backup_path, 'w') as f:
                 yaml.dump(backup_data, f, default_flow_style=False)
             
-            self.logger.info(f"💾 Container configurations backed up to {backup_path}")
+            self.logger.info(f" Container configurations backed up to {backup_path}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to backup container configs: {e}")
+            self.logger.error(f" Failed to backup container configs: {e}")
             return False
     
     async def restore_container_configs(self, backup_path: Path) -> bool:
         """Restore container configurations from backup file"""
+
+
+
         try:
             with open(backup_path, 'r') as f:
                 backup_data = yaml.load(f, Loader=yaml.SafeLoader)
@@ -584,11 +626,11 @@ class DockerContainerManager:
                 
                 await self.register_container(config)
             
-            self.logger.info(f"📥 Container configurations restored from {backup_path}")
+            self.logger.info(f" Container configurations restored from {backup_path}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to restore container configs: {e}")
+            self.logger.error(f" Failed to restore container configs: {e}")
             return False
 
 # Global container manager instance

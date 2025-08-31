@@ -8,7 +8,7 @@ Designed to bypass bot detection and maintain anonymity.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️ CRITICAL LEGAL WARNING ⚠️
+ CRITICAL LEGAL WARNING 
 UNAUTHORIZED USE, COPYING, OR DISTRIBUTION IS STRICTLY PROHIBITED AND WILL RESULT IN IMMEDIATE LEGAL ACTION.
 This technology is EXCLUSIVE property of Fahed Mlaiel. Contact: mlaiel@live.de for licensing.
 """
@@ -145,6 +145,9 @@ class StealthScraper:
         
     async def _validate_proxy(self, proxy: ProxyConfig) -> bool:
         """Validate proxy connectivity."""
+
+
+
         try:
             proxy_url = f"{proxy.protocol}://"
             if proxy.username and proxy.password:
@@ -219,6 +222,9 @@ class StealthScraper:
         
     def _get_random_user_agent(self) -> str:
         """Get randomized user agent."""
+
+
+
         try:
             return self.user_agent.random
         except:
@@ -447,6 +453,9 @@ class StealthScraper:
             
     async def _retry_with_selenium(self, url: str) -> Optional[str]:
         """Retry with Selenium."""
+
+
+
         return await self.stealth_selenium_get(url)
         
     async def _retry_with_different_proxy(self, url: str) -> Optional[str]:
@@ -496,6 +505,9 @@ class StealthScraper:
             
     def get_stealth_stats(self) -> Dict[str, Any]:
         """Get stealth scraping statistics."""
+
+
+
         return {
             'request_count': self.request_count,
             'session_age': (datetime.now() - self.session_start_time).total_seconds(),

@@ -272,6 +272,9 @@ class ContentAnalysisConfig(BaseSettings):
     
     def get_supported_formats(self) -> Dict[str, List[str]]:
         """Get all supported file formats by category."""
+
+
+
         return {
             "audio": self.SUPPORTED_AUDIO_FORMATS,
             "video": self.SUPPORTED_VIDEO_FORMATS,

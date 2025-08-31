@@ -1,4 +1,4 @@
-"""🚀 Analytics Module - IA-Influencer-Agent Enterprise Data Management
+""" Analytics Module - IA-Influencer-Agent Enterprise Data Management
 ===================================================================
 
 Module analytics professionnel pour créateurs multi-format avec business intelligence avancée.
@@ -9,18 +9,18 @@ Créateur Multi-Format → Upload Contenu → Protection IA → SEO Pro → Anal
 Matching Collaboration → Distribution Multi-Plateformes → Monétisation Avancée
 
 CRÉATEURS SUPPORTÉS:
-- 🎵 Musiciens (Spotify, SoundCloud, Apple Music)
-- 📱 Influenceurs (Instagram, TikTok, YouTube)  
-- 📸 Photographes (Instagram, portfolios web)
-- ✍️ Blogueurs (Medium, blogs personnels)
-- 🎭 Comédiens (YouTube, TikTok, Twitch)
+-  Musiciens (Spotify, SoundCloud, Apple Music)
+-  Influenceurs (Instagram, TikTok, YouTube)  
+-  Photographes (Instagram, portfolios web)
+-  Blogueurs (Medium, blogs personnels)
+-  Comédiens (YouTube, TikTok, Twitch)
 
 Équipe Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + 
 Microservices + Audio + DevOps + IA Prompt Engineer
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
+ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
 """
 # ========== ANALYTICS CORE ENTERPRISE ==========
 
@@ -206,7 +206,7 @@ from .advanced_enrichment import (
 # ========== FACTORY ENTERPRISE ANALYTICS ==========
 
 class AnalyticsEngineFactory:
-    """    🏭 Factory Enterprise - Création Moteurs Analytics IA-Influencer-Agent
+    """     Factory Enterprise - Création Moteurs Analytics IA-Influencer-Agent
     ====================================================================
     
     Factory class pour créer moteurs analytics avec configuration optimisée
@@ -295,7 +295,10 @@ class AnalyticsEngineFactory:
     
     @staticmethod
     def create_business_intelligence_suite(db_session, redis_client, storage_manager, vector_db):
-        """Crée suite business intelligence complète enterprise."""        return {
+        """Crée suite business intelligence complète enterprise."""
+
+
+        return {
             "market_intelligence": MarketIntelligenceAnalytics(db_session, redis_client, storage_manager, vector_db),
             "competition_intelligence": CompetitionIntelligenceAnalytics(db_session, redis_client, storage_manager, vector_db),
             "predictive_analytics": PredictiveAnalytics(db_session, redis_client, storage_manager, vector_db),
@@ -305,7 +308,10 @@ class AnalyticsEngineFactory:
     
     @staticmethod
     def get_supported_creator_types():
-        """Retourne types de créateurs supportés."""        return ['musician', 'influencer', 'photographer', 'blogger', 'comedian', 'all']
+        """Retourne types de créateurs supportés."""
+
+
+        return ['musician', 'influencer', 'photographer', 'blogger', 'comedian', 'all']
 
 # ========== EXPORTS ENTERPRISE IA-INFLUENCER-AGENT ==========
 
@@ -493,32 +499,32 @@ def validate_ia_influencer_business_logic():
     Returns:
         Dict avec statut validation logique métier
     """    business_flow_supported = [
-        "✅ Upload Contenu Multi-Format (Audio, Vidéo, Image, Texte)",
-        "✅ Protection IA Droits d'Auteur Avancée", 
-        "✅ Optimisation SEO Professionnelle",
-        "✅ Analytics Performance Temps Réel",
-        "✅ Matching Collaboration Intelligent IA",
-        "✅ Distribution Multi-Plateformes Automatisée",
-        "✅ Monétisation Avancée & Prédictions Revenus",
-        "✅ Business Intelligence Enterprise"
+        " Upload Contenu Multi-Format (Audio, Vidéo, Image, Texte)",
+        " Protection IA Droits d'Auteur Avancée", 
+        " Optimisation SEO Professionnelle",
+        " Analytics Performance Temps Réel",
+        " Matching Collaboration Intelligent IA",
+        " Distribution Multi-Plateformes Automatisée",
+        " Monétisation Avancée & Prédictions Revenus",
+        " Business Intelligence Enterprise"
     ]
     
     creator_types_validation = {
-        "musicians": "✅ Spotify, SoundCloud, Apple Music, Bandcamp",
-        "influencers": "✅ Instagram, TikTok, YouTube, Twitter", 
-        "photographers": "✅ Instagram, Flickr, 500px, Behance",
-        "bloggers": "✅ Medium, WordPress, Substack, LinkedIn",
-        "comedians": "✅ YouTube, TikTok, Twitch, Stand-up"
+        "musicians": " Spotify, SoundCloud, Apple Music, Bandcamp",
+        "influencers": " Instagram, TikTok, YouTube, Twitter", 
+        "photographers": " Instagram, Flickr, 500px, Behance",
+        "bloggers": " Medium, WordPress, Substack, LinkedIn",
+        "comedians": " YouTube, TikTok, Twitch, Stand-up"
     }
     
     ai_capabilities_validation = {
-        "content_analysis": "✅ Analyse qualité IA multi-format",
-        "performance_prediction": "✅ Prédictions performance ML",
-        "collaboration_matching": "✅ Matching créateurs-marques IA",
-        "revenue_optimization": "✅ Optimisation revenus IA",
-        "market_intelligence": "✅ Intelligence marché temps réel",
-        "seo_optimization": "✅ Optimisation SEO automatisée",
-        "audience_insights": "✅ Insights audience prédictifs"
+        "content_analysis": " Analyse qualité IA multi-format",
+        "performance_prediction": " Prédictions performance ML",
+        "collaboration_matching": " Matching créateurs-marques IA",
+        "revenue_optimization": " Optimisation revenus IA",
+        "market_intelligence": " Intelligence marché temps réel",
+        "seo_optimization": " Optimisation SEO automatisée",
+        "audience_insights": " Insights audience prédictifs"
     }
     
     return {
@@ -544,7 +550,10 @@ _ia_influencer_validation = validate_ia_influencer_business_logic()
 # ========== FONCTIONS UTILITAIRES ENTERPRISE ==========
 
 def get_analytics_summary():
-    """Obtient résumé complet des capacités analytics."""    return {
+    """Obtient résumé complet des capacités analytics."""
+
+
+    return {
         "module_version": __version__,
         "engines_available": __analytics_engines_count__,
         "creator_types": AnalyticsEngineFactory.get_supported_creator_types(),
@@ -582,15 +591,15 @@ _module_health_check = {
 }
 
 if not _module_health_check["all_exports_defined"]:
-    raise ImportError("❌ Module Analytics: Exports incomplets détectés")
+    raise ImportError(" Module Analytics: Exports incomplets détectés")
 
 if not _module_health_check["business_logic_validated"]:
-    raise ValueError("❌ Module Analytics: Logique métier IA-Influencer-Agent non validée")
+    raise ValueError(" Module Analytics: Logique métier IA-Influencer-Agent non validée")
 
 # ========== MODULE READY ========== 
-# ✅ Module Analytics IA-Influencer-Agent Enterprise Ready
-# ✅ 15 Moteurs Analytics Professionnels
-# ✅ 5 Types Créateurs Supportés  
-# ✅ 25+ Plateformes Intégrées
-# ✅ Logique Métier Validée
-# ✅ Production-Ready
+#  Module Analytics IA-Influencer-Agent Enterprise Ready
+#  15 Moteurs Analytics Professionnels
+#  5 Types Créateurs Supportés  
+#  25+ Plateformes Intégrées
+#  Logique Métier Validée
+#  Production-Ready

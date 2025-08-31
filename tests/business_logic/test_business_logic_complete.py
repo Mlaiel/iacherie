@@ -32,7 +32,7 @@ import logging
 from datetime import datetime
 from typing import Dict, List, Any
 
-from business_logic_core import (
+from core.business_logic_core import (
     BusinessLogicCore, 
     ContentUpload, 
     CreatorType, 
@@ -58,6 +58,9 @@ class TestBusinessLogicCore:
     @pytest.fixture
     def sample_content_musician(self):
         """Sample musician content for testing"""
+
+
+
         return ContentUpload(
             content_id="music_001",
             creator_id="musician_test",
@@ -77,6 +80,9 @@ class TestBusinessLogicCore:
     @pytest.fixture
     def sample_content_blogger(self):
         """Sample blogger content for testing"""
+
+
+
         return ContentUpload(
             content_id="blog_001",
             creator_id="blogger_test",
@@ -108,7 +114,7 @@ class TestBusinessLogicCore:
         assert workflow_status['total_workflows'] >= 1
         assert workflow_status['enabled_workflows'] >= 1
         
-        logger.info(f"✅ Business logic core initialized with {agent_status['total_agents']} agents")
+        logger.info(f" Business logic core initialized with {agent_status['total_agents']} agents")
     
     @pytest.mark.asyncio
     async def test_all_53_agents_present(self, initialized_core):
@@ -168,7 +174,7 @@ class TestBusinessLogicCore:
             assert agent['status'] == 'active', f"Agent {agent_name} not active"
             assert agent['initialized'] == True, f"Agent {agent_name} not initialized"
         
-        logger.info("✅ All 53 agents are properly registered and active")
+        logger.info(" All 53 agents are properly registered and active")
     
     @pytest.mark.asyncio
     async def test_complete_workflow_musician(self, initialized_core, sample_content_musician):
@@ -213,7 +219,7 @@ class TestBusinessLogicCore:
         assert monetization_result.data['monetization_enabled'] == True
         assert monetization_result.data['estimated_revenue'] > 0
         
-        logger.info("✅ Complete musician workflow test passed")
+        logger.info(" Complete musician workflow test passed")
     
     @pytest.mark.asyncio
     async def test_complete_workflow_blogger(self, initialized_core, sample_content_blogger):
@@ -237,7 +243,7 @@ class TestBusinessLogicCore:
         # Should include text-focused platforms
         assert any('youtube' in p or 'instagram' in p for p in platforms)
         
-        logger.info("✅ Complete blogger workflow test passed")
+        logger.info(" Complete blogger workflow test passed")
     
     @pytest.mark.asyncio
     async def test_agent_integration_capabilities(self, initialized_core):
@@ -258,7 +264,7 @@ class TestBusinessLogicCore:
             if agent_name in ['content_agent', 'protection_agent', 'monetization_agent']:
                 assert agent['priority'] == 'high'
         
-        logger.info("✅ Agent integration capabilities test passed")
+        logger.info(" Agent integration capabilities test passed")
     
     @pytest.mark.asyncio
     async def test_workflow_error_handling(self, initialized_core):
@@ -279,7 +285,7 @@ class TestBusinessLogicCore:
         # Should still return results (even if some fail)
         assert len(results) >= 1
         
-        logger.info("✅ Workflow error handling test passed")
+        logger.info(" Workflow error handling test passed")
     
     @pytest.mark.asyncio
     async def test_agent_status_monitoring(self, initialized_core):
@@ -294,7 +300,7 @@ class TestBusinessLogicCore:
         # All agent types should be unique
         assert len(set(status['agent_types'])) == len(status['agent_types'])
         
-        logger.info("✅ Agent status monitoring test passed")
+        logger.info(" Agent status monitoring test passed")
     
     @pytest.mark.asyncio
     async def test_global_business_logic_core(self):
@@ -320,7 +326,7 @@ class TestBusinessLogicCore:
         assert len(results) == 7
         assert all(r.success for r in results)
         
-        logger.info("✅ Global business logic core test passed")
+        logger.info(" Global business logic core test passed")
     
     @pytest.mark.asyncio
     async def test_multiple_creator_types(self, initialized_core):
@@ -350,7 +356,7 @@ class TestBusinessLogicCore:
             assert len(results) == 7
             assert all(r.success for r in results), f"Workflow failed for {creator_type.value}"
         
-        logger.info("✅ Multiple creator types test passed")
+        logger.info(" Multiple creator types test passed")
     
     def test_business_logic_core_import(self):
         """Test that business logic core can be imported correctly"""
@@ -360,7 +366,7 @@ class TestBusinessLogicCore:
         assert BusinessLogicCore is not None
         assert business_logic_core is not None
         
-        logger.info("✅ Business logic core import test passed")
+        logger.info(" Business logic core import test passed")
     
     @pytest.mark.asyncio
     async def test_workflow_performance(self, initialized_core, sample_content_musician):
@@ -377,7 +383,7 @@ class TestBusinessLogicCore:
         assert len(results) == 7
         assert all(r.success for r in results)
         
-        logger.info(f"✅ Workflow performance test passed ({duration:.2f}s)")
+        logger.info(f" Workflow performance test passed ({duration:.2f}s)")
 
 
 if __name__ == "__main__":
@@ -394,12 +400,12 @@ if __name__ == "__main__":
             core = BusinessLogicCore()
             await core.initialize()
             await test_instance.test_business_logic_core_initialization(core)
-            print("✅ Initialization test passed")
+            print(" Initialization test passed")
             
             # Test 2: All 53 agents
             print("🧪 Test 2: All 53 Agents")
             await test_instance.test_all_53_agents_present(core)
-            print("✅ All 53 agents test passed")
+            print(" All 53 agents test passed")
             
             # Test 3: Complete workflow
             print("🧪 Test 3: Complete Workflow")
@@ -412,17 +418,17 @@ if __name__ == "__main__":
                 metadata={"title": "Manual Test Song", "tags": ["test"]}
             )
             await test_instance.test_complete_workflow_musician(core, sample_content)
-            print("✅ Complete workflow test passed")
+            print(" Complete workflow test passed")
             
             # Test 4: Global instance
             print("🧪 Test 4: Global Instance")
             await test_instance.test_global_business_logic_core()
-            print("✅ Global instance test passed")
+            print(" Global instance test passed")
             
-            print("🏆 All tests passed successfully!")
+            print(" All tests passed successfully!")
             
         except Exception as e:
-            print(f"❌ Test failed: {e}")
+            print(f" Test failed: {e}")
             import traceback
             traceback.print_exc()
     

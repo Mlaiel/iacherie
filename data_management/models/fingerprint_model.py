@@ -1,5 +1,5 @@
 """
-🔍 Fingerprint Model - IA Influencer Agent Platform Enterprise
+ Fingerprint Model - IA Influencer Agent Platform Enterprise
 =============================================================
 Module: backend/data_management/models/fingerprint_model.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial AI Fingerprinting Data Model - Ultra Production-Ready
 Responsibility: Advanced AI fingerprinting models for multi-modal content protection and similarity detection
 ===============================================================================================================
 
-⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
+  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -503,6 +503,9 @@ class FingerPrintModel:
     
     def to_dict(self) -> Dict[str, Any]:
         """Conversion complète en dictionnaire"""
+
+
+
         return {
             "fingerprint_id": self.fingerprint_id,
             "content_id": self.content_id,

@@ -129,6 +129,9 @@ class ReplicationConfig:
     
     def _load_configuration(self) -> None:
         """Load configuration from files"""
+
+
+
         try:
             # Load main configuration
             if os.path.exists(self.config_path):
@@ -158,6 +161,9 @@ class ReplicationConfig:
     
     def _load_secrets(self) -> None:
         """Load and decrypt secrets"""
+
+
+
         try:
             if os.path.exists(self.secrets_path):
                 with open(self.secrets_path, 'rb') as f:
@@ -174,6 +180,9 @@ class ReplicationConfig:
     
     def _save_secrets(self) -> None:
         """Encrypt and save secrets"""
+
+
+
         try:
             json_data = json.dumps(self.secrets_data).encode()
             encrypted_data = self.cipher.encrypt(json_data)
@@ -189,6 +198,9 @@ class ReplicationConfig:
     
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default configuration"""
+
+
+
         return {
             "environment": self.environment,
             "replication": {
@@ -467,6 +479,9 @@ class ReplicationConfig:
     
     def _save_configuration(self) -> None:
         """Save configuration to file"""
+
+
+
         try:
             with open(self.config_path, 'w') as f:
                 yaml.dump(self.config_data, f, default_flow_style=False)
@@ -477,37 +492,58 @@ class ReplicationConfig:
     @property
     def health_check_interval(self) -> int:
         """Get health check interval in seconds"""
+
+
+
         return self.config_data.get("monitoring", {}).get("health_check_interval", 30)
     
     @property
     def lag_threshold(self) -> int:
         """Get replication lag threshold in milliseconds"""
+
+
+
         return self.config_data.get("monitoring", {}).get("lag_threshold", 1000)
     
     @property
     def max_error_count(self) -> int:
         """Get maximum error count before recovery"""
+
+
+
         return self.config_data.get("monitoring", {}).get("max_error_count", 5)
     
     @property
     def monitoring_interval(self) -> int:
         """Get monitoring interval in seconds"""
+
+
+
         return self.config_data.get("monitoring", {}).get("monitoring_interval", 60)
     
     @property
     def automatic_failover_enabled(self) -> bool:
         """Check if automatic failover is enabled"""
+
+
+
         return (self.topology_config and 
                 self.topology_config.failover_strategy == "automatic")
     
     @property
     def batch_size(self) -> int:
         """Get batch size for replication operations"""
+
+
+
         return self.config_data.get("performance", {}).get("batch_size", 1000)
     
     @property
     def parallel_workers(self) -> int:
         """Get number of parallel workers"""
+
+
+
         return self.config_data.get("performance", {}).get("parallel_workers", 4)
     
     def validate_configuration(self) -> List[str]:
@@ -550,6 +586,9 @@ class ReplicationConfig:
     
     def get_configuration_summary(self) -> Dict[str, Any]:
         """Get configuration summary for logging/debugging"""
+
+
+
         return {
             "environment": self.environment,
             "databases_configured": list(self.database_configs.keys()),

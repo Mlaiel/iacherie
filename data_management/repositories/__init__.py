@@ -1,4 +1,4 @@
-"""🗄️ Data Repositories Module - IA Influencer Agent Platform Enterprise
+""" Data Repositories Module - IA Influencer Agent Platform Enterprise
 ======================================================================
 Module: backend/data_management/repositories/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -7,7 +7,7 @@ Type: Industrial Data Repositories - Enterprise Production-Ready
 Responsibility: Couche d'accès aux données avec patterns Repository avancés
 ========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
@@ -17,14 +17,14 @@ Model → Repository Interface → DB Adapter → Connection Pool →
 Query Optimization → Cache Layer → Result Mapping → Business Logic
 
 ARCHITECTURE COMPLETE:
-✅ BaseRepository - Pattern abstraction avec audit et cache
-✅ ContentRepository - Multi-format avec AI processing
-✅ CreatorRepository - Gestion profils et collaborations
-✅ ProtectionRepository - AI monitoring et violations
-✅ AnalyticsRepository - Métriques avancées et insights
-✅ MonetizationRepository - Revenue tracking et paiements
-✅ CollaborationRepository - Matching et partnerships
-✅ FingerprintRepository - AI identification et duplicates
+ BaseRepository - Pattern abstraction avec audit et cache
+ ContentRepository - Multi-format avec AI processing
+ CreatorRepository - Gestion profils et collaborations
+ ProtectionRepository - AI monitoring et violations
+ AnalyticsRepository - Métriques avancées et insights
+ MonetizationRepository - Revenue tracking et paiements
+ CollaborationRepository - Matching et partnerships
+ FingerprintRepository - AI identification et duplicates
 """
 __version__ = "3.1.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
@@ -240,7 +240,10 @@ def validate_repository_health():
 
 # Performance Metrics
 def get_repository_metrics():
-    """Get performance metrics for all repositories"""    return {
+    """Get performance metrics for all repositories"""
+
+
+    return {
         'total_repositories': len(REPOSITORY_REGISTRY),
         'async_repositories': len(ASYNC_REPOSITORY_REGISTRY),
         'features_count': sum(len(module.get('features', [])) for module in REPOSITORY_MODULES.values()),

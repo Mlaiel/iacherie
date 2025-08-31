@@ -7,7 +7,7 @@ across multiple jurisdictions and frameworks.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -177,6 +177,9 @@ class RegulatoryMonitor:
     
     async def initialize_regulatory_sources(self):
         """Initialize comprehensive regulatory monitoring sources"""
+
+
+
         try:
             # GDPR Sources
             gdpr_sources = [
@@ -332,6 +335,9 @@ class RegulatoryMonitor:
     
     async def _fetch_source_updates(self, source: RegulatorySource) -> List[PolicyUpdate]:
         """Fetch updates from a regulatory source"""
+
+
+
         try:
             updates = []
             
@@ -359,6 +365,9 @@ class RegulatoryMonitor:
     
     async def _fetch_rss_updates(self, source: RegulatorySource) -> List[PolicyUpdate]:
         """Fetch updates from RSS feeds"""
+
+
+
         try:
             response = await self.http_client.get(source.url)
             response.raise_for_status()
@@ -418,6 +427,9 @@ class RegulatoryMonitor:
     
     async def _fetch_api_updates(self, source: RegulatorySource) -> List[PolicyUpdate]:
         """Fetch updates from API endpoints"""
+
+
+
         try:
             headers = {}
             if source.credentials:
@@ -479,6 +491,9 @@ class RegulatoryMonitor:
     
     async def _fetch_scraper_updates(self, source: RegulatorySource) -> List[PolicyUpdate]:
         """Fetch updates by scraping web pages"""
+
+
+
         try:
             response = await self.http_client.get(source.url)
             response.raise_for_status()
@@ -644,6 +659,9 @@ class RegulatoryMonitor:
     
     async def _process_policy_update(self, update: PolicyUpdate):
         """Process and store a policy update"""
+
+
+
         try:
             # Store the update
             self.policy_updates[update.id] = update
@@ -799,6 +817,9 @@ class RegulatoryMonitor:
     
     async def _send_policy_alert_notifications(self, alert: ComplianceAlert):
         """Send notifications for compliance alerts"""
+
+
+
         try:
             # This would integrate with notification systems (email, Slack, Teams, etc.)
             logger.info(f"Sending policy alert notifications for: {alert.message}")
@@ -826,6 +847,9 @@ class RegulatoryMonitor:
                                priority: Optional[PolicyPriority] = None,
                                days: int = 7) -> List[PolicyUpdate]:
         """Get recent policy updates with optional filtering"""
+
+
+
         try:
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=days)
             filtered_updates = []
@@ -868,6 +892,9 @@ class RegulatoryMonitor:
     
     async def get_active_alerts(self, acknowledged: bool = False) -> List[ComplianceAlert]:
         """Get active compliance alerts"""
+
+
+
         try:
             active_alerts = []
             
@@ -897,6 +924,9 @@ class RegulatoryMonitor:
     
     async def acknowledge_alert(self, alert_id: str, acknowledged_by: str) -> bool:
         """Acknowledge a compliance alert"""
+
+
+
         try:
             alert = self.compliance_alerts.get(alert_id)
             if not alert:
@@ -927,6 +957,9 @@ class RegulatoryMonitor:
     
     async def add_custom_source(self, source: RegulatorySource) -> bool:
         """Add a custom regulatory source"""
+
+
+
         try:
             self.sources[source.id] = source
             
@@ -969,6 +1002,9 @@ class PolicyTracker:
     
     async def track_policy_changes(self, framework: str, lookback_days: int = 90) -> Dict[str, Any]:
         """Track and analyze policy changes for a specific framework"""
+
+
+
         try:
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=lookback_days)
             

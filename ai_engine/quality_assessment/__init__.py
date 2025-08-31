@@ -6,7 +6,7 @@ Supports musicians, bloggers, photographers, influencers, comedians with industr
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software and all associated concepts, algorithms, and implementations are the exclusive 
 intellectual property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, reproduction, 
 distribution, modification, or appropriation of this code, in whole or in part, without 
@@ -348,7 +348,7 @@ import logging
 logger = logging.getLogger(__name__)
 logger.info(f"Quality Assessment Module v{__version__} initialized successfully")
 logger.info(f"Created by: {__author__} ({__email__})")
-logger.info("⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE PROHIBITED ⚠️")
+logger.info("  PROPRIETARY SOFTWARE - UNAUTHORIZED USE PROHIBITED ")
 
 __all__ = [
     # Core quality assessment

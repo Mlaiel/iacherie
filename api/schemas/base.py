@@ -5,7 +5,7 @@ Core foundational schemas for data validation and serialization
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
+ INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 """
 
@@ -97,6 +97,9 @@ class ApiResponse(GenericModel, Generic[DataT]):
         metadata: Optional[Dict[str, Any]] = None
     ) -> "ApiResponse[DataT]":
         """Create a successful API response."""
+
+
+
         return cls(
             success=True,
             data=data,
@@ -111,6 +114,9 @@ class ApiResponse(GenericModel, Generic[DataT]):
         metadata: Optional[Dict[str, Any]] = None
     ) -> "ApiResponse[None]":
         """Create an error API response."""
+
+
+
         return cls(
             success=False,
             data=None,

@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Audio Processing Expert, ML Engineer, Content Protection Specialist
 Copyright: Fahed Mlaiel - All rights reserved
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
@@ -155,6 +155,9 @@ class AudioContentManager:
         
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default configuration for audio processing"""
+
+
+
         return {
             "max_file_size_mb": 100,
             "default_sample_rate": 44100,
@@ -203,6 +206,9 @@ class AudioContentManager:
         Returns:
             Dict containing processed audio information
         """
+
+
+
         try:
             file_path = Path(file_path)
             self.logger.info(f"Processing audio file: {file_path}")
@@ -250,6 +256,9 @@ class AudioContentManager:
     
     async def _validate_audio_file(self, file_path: Path) -> bool:
         """Validate audio file format and accessibility"""
+
+
+
         try:
             # Check file existence and size
             if not file_path.exists():
@@ -282,6 +291,9 @@ class AudioContentManager:
         sample_rate: int
     ) -> AudioMetadata:
         """Extract comprehensive audio metadata"""
+
+
+
         try:
             # Basic technical metadata
             duration = len(audio_data) / sample_rate
@@ -397,6 +409,9 @@ class AudioContentManager:
         content_id: str
     ) -> AudioFingerprint:
         """Generate comprehensive audio fingerprint for content protection"""
+
+
+
         try:
             # Primary hash (raw audio data)
             primary_hash = hashlib.sha256(audio_data.tobytes()).hexdigest()
@@ -459,6 +474,9 @@ class AudioContentManager:
     
     def _generate_chromaprint_hash(self, audio_data: np.ndarray, sample_rate: int) -> str:
         """Generate Chromaprint-style hash for audio identification"""
+
+
+
         try:
             # Extract chroma features with specific parameters
             chroma = librosa.feature.chroma_stft(
@@ -489,6 +507,9 @@ class AudioContentManager:
     
     async def _generate_spectral_hash(self, audio_data: np.ndarray, sample_rate: int) -> str:
         """Generate spectral-based hash for content identification"""
+
+
+
         try:
             # Spectral centroid and rolloff
             spectral_centroids = librosa.feature.spectral_centroid(y=audio_data, sr=sample_rate)
@@ -508,6 +529,9 @@ class AudioContentManager:
     
     async def _generate_temporal_signature(self, audio_data: np.ndarray, sample_rate: int) -> str:
         """Generate temporal signature for rhythm and timing patterns"""
+
+
+
         try:
             # Onset detection
             onset_frames = librosa.onset.onset_detect(y=audio_data, sr=sample_rate)
@@ -534,6 +558,9 @@ class AudioContentManager:
     
     async def _analyze_audio_quality(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
         """Analyze audio quality metrics"""
+
+
+
         try:
             quality_metrics = {}
             
@@ -582,6 +609,9 @@ class AudioContentManager:
     
     async def _classify_audio_content(self, audio_data: np.ndarray, sample_rate: int) -> AudioContentType:
         """Classify audio content type using audio features"""
+
+
+
         try:
             # Extract features for classification
             mfcc = librosa.feature.mfcc(y=audio_data, sr=sample_rate, n_mfcc=13)
@@ -611,6 +641,9 @@ class AudioContentManager:
     
     async def store_content(self, audio_content: Dict[str, Any]) -> str:
         """Store processed audio content in database"""
+
+
+
         try:
             # Generate unique content ID
             content_id = hashlib.sha256(
@@ -629,6 +662,9 @@ class AudioContentManager:
     
     def get_supported_formats(self) -> List[str]:
         """Get list of supported audio formats"""
+
+
+
         return [fmt.value["ext"] for fmt in AudioFormat]
     
     def get_format_info(self, format_name: str) -> Optional[Dict[str, Any]]:

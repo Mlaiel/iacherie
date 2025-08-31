@@ -124,6 +124,9 @@ class CrisisManagerAgent(BaseAIAgent):
     
     async def monitor_for_crises(self) -> List[CrisisEvent]:
         """Monitor social media and online presence for potential crises"""
+
+
+
         try:
             detected_crises = []
             
@@ -157,6 +160,9 @@ class CrisisManagerAgent(BaseAIAgent):
     
     async def create_response_plan(self, crisis: CrisisEvent) -> CrisisResponse:
         """Create a comprehensive crisis response plan"""
+
+
+
         try:
             # Analyze crisis and determine strategy
             strategy = await self._determine_response_strategy(crisis)
@@ -183,6 +189,9 @@ class CrisisManagerAgent(BaseAIAgent):
     
     async def execute_response(self, crisis_id: str) -> bool:
         """Execute the crisis response plan"""
+
+
+
         try:
             if crisis_id not in self.response_plans:
                 logger.error(f"No response plan found for crisis {crisis_id}")
@@ -286,6 +295,9 @@ class CrisisManagerAgent(BaseAIAgent):
     
     async def _create_communication_plan(self, crisis: CrisisEvent, strategy: ResponseStrategy) -> Dict[str, Any]:
         """Create detailed communication plan"""
+
+
+
         return {
             "primary_message": f"Response to {crisis.crisis_type.value}",
             "tone": "authentic" if strategy == ResponseStrategy.ACKNOWLEDGE_APOLOGIZE else "informative",
@@ -322,6 +334,9 @@ class CrisisManagerAgent(BaseAIAgent):
     
     def _define_success_metrics(self, crisis: CrisisEvent) -> List[str]:
         """Define metrics to measure crisis response success"""
+
+
+
         return [
             "sentiment_recovery",
             "engagement_normalization",
@@ -333,6 +348,9 @@ class CrisisManagerAgent(BaseAIAgent):
     
     async def _execute_action(self, action: ResponseAction) -> bool:
         """Execute a specific response action"""
+
+
+
         try:
             # Simulate action execution
             await asyncio.sleep(0.1)  # Simulate processing time
@@ -347,6 +365,9 @@ class CrisisManagerAgent(BaseAIAgent):
     
     async def _execute_communication_plan(self, comm_plan: Dict[str, Any]) -> bool:
         """Execute the communication plan"""
+
+
+
         try:
             # Simulate communication execution
             logger.info(f"Executing communication plan: {comm_plan['primary_message']}")
@@ -359,6 +380,9 @@ class CrisisManagerAgent(BaseAIAgent):
     
     def _load_response_templates(self) -> Dict[str, str]:
         """Load pre-defined response templates"""
+
+
+
         return {
             "apology": "We sincerely apologize for the recent situation...",
             "clarification": "We want to clarify the recent misunderstanding...",

@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Legal Technology Expert, Rights Management Specialist, Revenue Optimization Expert
 Copyright: Fahed Mlaiel - All rights reserved
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
@@ -128,6 +128,9 @@ class LicenseTerms:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for storage"""
+
+
+
         return {
             'usage_scope': self.usage_scope.value,
             'duration_days': self.duration.days,
@@ -151,6 +154,9 @@ class LicenseTerms:
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'LicenseTerms':
         """Create from dictionary"""
+
+
+
         return cls(
             usage_scope=UsageScope(data['usage_scope']),
             duration=timedelta(days=data['duration_days']),
@@ -238,6 +244,9 @@ class ContentLicense(Base):
     
     def get_terms(self) -> LicenseTerms:
         """Get license terms as typed object"""
+
+
+
         return LicenseTerms.from_dict(self.license_terms)
     
     def set_terms(self, terms: LicenseTerms):
@@ -393,6 +402,9 @@ class LicenseManager:
                               license_type: LicenseType,
                               terms: LicenseTerms) -> ContentLicense:
         """Create a standard content license"""
+
+
+
         try:
             license = ContentLicense(
                 content_id=content_id,
@@ -495,6 +507,9 @@ class LicenseManager:
     def track_usage(self, license_id: str, platform: str, usage_type: str,
                    usage_data: Dict[str, Any]) -> LicenseUsage:
         """Track license usage"""
+
+
+
         try:
             usage = LicenseUsage(
                 license_id=license_id,
@@ -526,6 +541,9 @@ class LicenseManager:
     def calculate_license_revenue(self, license: ContentLicense, 
                                 usage: LicenseUsage) -> RevenueTransaction:
         """Calculate and create revenue transaction"""
+
+
+
         try:
             # Calculate license fee based on revenue model
             license_fee = license.calculate_revenue(
@@ -570,6 +588,9 @@ class LicenseManager:
     
     def check_compliance(self, license: ContentLicense, usage: LicenseUsage) -> bool:
         """Check if usage complies with license terms"""
+
+
+
         try:
             terms = license.get_terms()
             
@@ -606,6 +627,9 @@ class LicenseManager:
                               start_date: datetime = None,
                               end_date: datetime = None) -> Dict[str, Any]:
         """Generate comprehensive license usage report"""
+
+
+
         try:
             # This would query the database for usage data
             # For now, return a template structure

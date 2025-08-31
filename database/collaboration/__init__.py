@@ -414,7 +414,10 @@ def get_module_info() -> dict:
     
     Returns:
         Module information dictionary
-    """    return {
+    """
+
+
+    return {
         'name': 'Collaboration Database Module',
         'version': __version__,
         'author': __author__,
@@ -433,7 +436,10 @@ def get_collaboration_statistics() -> dict:
     
     Returns:
         Module statistics
-    """    return {
+    """
+
+
+    return {
         'total_database_models': 25,
         'total_manager_classes': 12,
         'total_enum_types': 20,

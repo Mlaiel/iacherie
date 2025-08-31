@@ -91,6 +91,9 @@ class TokenManager:
         tenant_id: Optional[str] = None
     ) -> str:
         """Create JWT access token with enhanced security"""
+
+
+
         try:
             to_encode = data.copy()
             
@@ -128,6 +131,9 @@ class TokenManager:
         tenant_id: Optional[str] = None
     ) -> str:
         """Create long-lived refresh token"""
+
+
+
         try:
             data = {
                 "sub": user_id,
@@ -153,6 +159,9 @@ class TokenManager:
     
     async def verify_token(self, token: str) -> Dict[str, Any]:
         """Verify and decode JWT token with security checks"""
+
+
+
         try:
             # Decode token
             payload = jwt.decode(token, self.secret_key, algorithms=[self.algorithm])
@@ -180,6 +189,9 @@ class TokenManager:
     
     async def revoke_token(self, token: str) -> bool:
         """Revoke token by adding to blacklist"""
+
+
+
         try:
             payload = jwt.decode(
                 token, 
@@ -223,6 +235,9 @@ class MultiTenantAuth:
         tenant_id: str
     ) -> Optional[AuthToken]:
         """Authenticate user within specific tenant context"""
+
+
+
         try:
             # Validate tenant
             if not await self.validate_tenant(tenant_id):
@@ -288,6 +303,9 @@ class MultiTenantAuth:
     
     def verify_password(self, plain_password: str, hashed_password: str) -> bool:
         """Verify password using bcrypt"""
+
+
+
         return bcrypt.checkpw(
             plain_password.encode('utf-8'), 
             hashed_password.encode('utf-8')
@@ -350,6 +368,9 @@ class OAuth2Manager:
         state: str
     ) -> Dict[str, Any]:
         """Exchange authorization code for access token"""
+
+
+
         try:
             if provider not in self.providers:
                 raise AuthenticationError("Unsupported OAuth2 provider")
@@ -412,6 +433,9 @@ class TwoFactorAuth:
     
     def generate_secret(self) -> str:
         """Generate TOTP secret for user"""
+
+
+
         return pyotp.random_base32()
     
     def generate_qr_code(self, secret: str, user_email: str) -> bytes:
@@ -437,6 +461,9 @@ class TwoFactorAuth:
     
     async def enable_2fa(self, user_id: str, secret: str) -> bool:
         """Enable 2FA for user"""
+
+
+
         try:
             # Store secret securely in database
             # Implementation depends on your user model
@@ -471,6 +498,9 @@ class AuthenticationManager:
         mfa_token: Optional[str] = None
     ) -> AuthToken:
         """Main authentication endpoint"""
+
+
+
         try:
             # Basic authentication
             auth_token = await self.multi_tenant_auth.authenticate_tenant_user(
@@ -497,6 +527,9 @@ class AuthenticationManager:
         credentials: HTTPAuthorizationCredentials = Depends(HTTPBearer())
     ) -> AuthUser:
         """Get current authenticated user from token"""
+
+
+
         try:
             token = credentials.credentials
             payload = await self.token_manager.verify_token(token)
@@ -544,6 +577,9 @@ class JWTManager:
         audience: Optional[str] = None
     ) -> str:
         """Create custom JWT token with specific payload"""
+
+
+
         try:
             custom_data = payload.copy()
             
@@ -561,6 +597,9 @@ class JWTManager:
     
     async def verify_audience(self, token: str, expected_audience: str) -> bool:
         """Verify token audience"""
+
+
+
         try:
             payload = await self.token_manager.verify_token(token)
             return payload.get("aud") == expected_audience

@@ -7,7 +7,7 @@ processing with intelligent format conversion, compression, and quality optimiza
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This file processing technology is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, reverse engineering, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -202,6 +202,9 @@ class FileProcessor:
     
     def _load_default_config(self) -> Dict[str, Any]:
         """Load default processing configuration"""
+
+
+
         return {
             'temp_dir': '/tmp/file_processing',
             'max_workers': 4,
@@ -394,6 +397,9 @@ class FileProcessor:
         Returns:
             Dictionary with file information
         """
+
+
+
         try:
             file_path = Path(file_path)
             
@@ -440,6 +446,9 @@ class FileProcessor:
         options: ProcessingOptions
     ) -> ProcessingResult:
         """Process audio file with format conversion and optimization"""
+
+
+
         try:
             # Load audio file
             audio_data, sample_rate = librosa.load(str(input_path), sr=options.sample_rate)
@@ -506,6 +515,9 @@ class FileProcessor:
         options: ProcessingOptions
     ) -> ProcessingResult:
         """Process video file with format conversion and optimization"""
+
+
+
         try:
             # Determine target format
             target_format = self._get_best_video_format(input_path.suffix, options)
@@ -569,6 +581,9 @@ class FileProcessor:
         options: ProcessingOptions
     ) -> ProcessingResult:
         """Process image with optimization and format conversion"""
+
+
+
         try:
             # Open image
             with Image.open(input_path) as img:
@@ -643,6 +658,9 @@ class FileProcessor:
         options: ProcessingOptions
     ) -> ProcessingResult:
         """Process document with text extraction and optimization"""
+
+
+
         try:
             # Extract text content based on format
             text_content = ""
@@ -705,6 +723,9 @@ class FileProcessor:
         options: ProcessingOptions
     ) -> ProcessingResult:
         """Generic file processing (compression only)"""
+
+
+
         try:
             if options.compression_level > 0:
                 # Compress file
@@ -739,6 +760,9 @@ class FileProcessor:
     
     async def _get_audio_metadata(self, file_path: Path) -> Dict[str, Any]:
         """Extract audio metadata"""
+
+
+
         try:
             y, sr = librosa.load(str(file_path), sr=None)
             duration = librosa.get_duration(y=y, sr=sr)
@@ -762,6 +786,9 @@ class FileProcessor:
     
     async def _get_video_metadata(self, file_path: Path) -> Dict[str, Any]:
         """Extract video metadata"""
+
+
+
         try:
             # Use OpenCV for basic info
             cap = cv2.VideoCapture(str(file_path))
@@ -793,6 +820,9 @@ class FileProcessor:
     
     async def _get_image_metadata(self, file_path: Path) -> Dict[str, Any]:
         """Extract image metadata"""
+
+
+
         try:
             with Image.open(file_path) as img:
                 return {
@@ -813,6 +843,9 @@ class FileProcessor:
     
     def _detect_file_format(self, file_path: Path) -> str:
         """Detect file format from path and content"""
+
+
+
         return file_path.suffix[1:].lower() if file_path.suffix else ""
     
     def _determine_file_category(self, mime_type: Optional[str]) -> str:
@@ -900,6 +933,9 @@ class FileProcessor:
     
     async def _extract_metadata(self, file_path: str, category: str) -> Dict[str, Any]:
         """Extract comprehensive file metadata"""
+
+
+
         try:
             path = Path(file_path)
             
@@ -961,6 +997,9 @@ class FileProcessor:
     
     async def get_processing_statistics(self) -> Dict[str, Any]:
         """Get comprehensive processing statistics"""
+
+
+
         return {
             'statistics': self.stats.copy(),
             'supported_formats': {
@@ -973,6 +1012,9 @@ class FileProcessor:
     
     async def cleanup(self):
         """Cleanup processor resources"""
+
+
+
         try:
             # Clean temporary files older than 1 hour
             cutoff_time = datetime.utcnow() - timedelta(hours=1)

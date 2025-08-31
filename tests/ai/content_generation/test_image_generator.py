@@ -65,11 +65,17 @@ class TestImageGenerator:
     @pytest.fixture
     def sample_prompt(self):
         """Create sample image generation prompt"""
+
+
+
         return "A futuristic cityscape with flying cars, neon lights, and holographic advertisements, cyberpunk style, high detail, 4k resolution"
     
     @pytest.fixture
     def image_config(self):
         """Create sample image configuration"""
+
+
+
         return ImageConfig(
             width=1024,
             height=1024,

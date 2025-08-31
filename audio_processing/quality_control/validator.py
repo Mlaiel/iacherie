@@ -1,5 +1,5 @@
 """
-🎯 Audio Quality Validator - Professional Audio Validation System
+ Audio Quality Validator - Professional Audio Validation System
 
 Advanced audio quality validation engine for comprehensive audio content
 assessment. Provides detailed quality analysis, scoring, and validation
@@ -9,7 +9,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Developer + DevOps + DBA + Security + Microservices
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ AVERTISSEMENT STRICT ⚠️
+ AVERTISSEMENT STRICT 
 Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou reproduction sans 
 autorisation écrite explicite de Fahed Mlaiel (mlaiel@live.de) est strictement 
@@ -66,7 +66,7 @@ class ValidationResult:
 
 class AudioQualityValidator:
     """
-    🎯 Professional Audio Quality Validator
+     Professional Audio Quality Validator
     
     Comprehensive audio validation system:
     - Technical quality analysis

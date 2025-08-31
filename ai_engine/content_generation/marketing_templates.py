@@ -38,7 +38,7 @@ class MarketingTemplates:
         # Email Marketing Templates
         self.email_templates = {
             'welcome_series': {
-                'structure': """Subject: Welcome to {brand_name}! Here's what's next 👋
+                'structure': """Subject: Welcome to {brand_name}! Here's what's next 
 
 Hi {first_name},
 
@@ -476,6 +476,9 @@ Final URL: {final_url}""",
         Returns:
             Template structure and metadata
         """
+
+
+
         try:
             category_templates = getattr(self, f"{template_category}_templates", {})
             template = category_templates.get(template_type, {})
@@ -507,6 +510,9 @@ Final URL: {final_url}""",
         Returns:
             Complete marketing content
         """
+
+
+
         try:
             template = self.get_template(template_category, template_type, content_data)
             
@@ -584,7 +590,7 @@ Final URL: {final_url}""",
         if '{benefits_list}' in content:
             benefits = content_data.get('benefits', [])
             if benefits:
-                benefits_formatted = '\n'.join([f"✅ {benefit}" for benefit in benefits])
+                benefits_formatted = '\n'.join([f" {benefit}" for benefit in benefits])
                 content = content.replace('{benefits_list}', benefits_formatted)
         
         # Fill features benefits
@@ -601,7 +607,7 @@ Final URL: {final_url}""",
         if '{learning_outcomes}' in content:
             outcomes = content_data.get('learning_outcomes', [])
             if outcomes:
-                outcomes_formatted = '\n'.join([f"✓ {outcome}" for outcome in outcomes])
+                outcomes_formatted = '\n'.join([f" {outcome}" for outcome in outcomes])
                 content = content.replace('{learning_outcomes}', outcomes_formatted)
         
         return content
@@ -631,7 +637,7 @@ Final URL: {final_url}""",
         # Fill trust signals
         if '{trust_signals}' in content:
             trust_signals = self.conversion_elements['trust_signals'][:3]
-            signals_formatted = '\n'.join([f"🔒 {signal}" for signal in trust_signals])
+            signals_formatted = '\n'.join([f" {signal}" for signal in trust_signals])
             content = content.replace('{trust_signals}', signals_formatted)
         
         return content
@@ -670,18 +676,18 @@ Final URL: {final_url}""",
         if '{call_to_action}' in content:
             cta_text = content_data.get('cta_text', 'Get Started Now')
             cta_url = content_data.get('cta_url', '#')
-            cta = f"[{cta_text}]({cta_url}) 👈 Click here!"
+            cta = f"[{cta_text}]({cta_url})  Click here!"
             content = content.replace('{call_to_action}', cta)
         
         # Fill purchase CTA
         if '{purchase_cta}' in content:
             product_name = content_data.get('product_name', 'this product')
-            cta = f"🛒 **[Get {product_name} Now]({content_data.get('purchase_url', '#')})**"
+            cta = f" **[Get {product_name} Now]({content_data.get('purchase_url', '#')})**"
             content = content.replace('{purchase_cta}', cta)
         
         # Fill sign up CTA
         if '{sign_up_cta}' in content:
-            cta = f"📧 **[Join the Early Bird List]({content_data.get('signup_url', '#')})**"
+            cta = f" **[Join the Early Bird List]({content_data.get('signup_url', '#')})**"
             content = content.replace('{sign_up_cta}', cta)
         
         return content
@@ -691,7 +697,7 @@ Final URL: {final_url}""",
         # Add guarantee if not present
         if '{guarantee}' in content:
             guarantee_text = content_data.get('guarantee', '30-day money-back guarantee')
-            guarantee = f"🛡️ **{guarantee_text}** - Risk-free purchase!"
+            guarantee = f" **{guarantee_text}** - Risk-free purchase!"
             content = content.replace('{guarantee}', guarantee)
         
         # Add pricing section
@@ -813,7 +819,7 @@ Best regards,
         
         if optimization_type in optimizations:
             optimization_text = random.choice(optimizations[optimization_type])
-            content += f"\n\n🎯 **{optimization_text}**"
+            content += f"\n\n **{optimization_text}**"
         
         return content
     
@@ -913,6 +919,9 @@ class CampaignTemplate:
     
     def get_structure(self) -> Dict[str, Any]:
         """Get campaign template structure"""
+
+
+
         return {
             'campaign_type': self.campaign_type,
             'title': self.title,

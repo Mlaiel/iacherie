@@ -7,7 +7,7 @@ conditional logic, and multi-language support.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -109,6 +109,9 @@ class TemplateProcessor:
     def process_template(self, template: str, variables: Dict[str, Any], 
                         functions: Optional[Dict[str, Callable]] = None) -> str:
         """Process template with variables, conditionals, and functions"""
+
+
+
         try:
             result = template
             
@@ -341,6 +344,9 @@ class TemplateEngine:
     
     def get_performance_stats(self, template_id: str) -> Optional[Dict[str, Any]]:
         """Get performance statistics for template"""
+
+
+
         return self.performance_stats.get(template_id)
     
     def clear_cache(self, template_id: str = None):

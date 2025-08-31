@@ -15,7 +15,7 @@ Project Team Specializations:
 - DBA + Time Series Databases
 - Frontend Engineer + Dashboard Development
 
-⚠️ STRONG WARNING FOR UNAUTHORIZED USE:
+ STRONG WARNING FOR UNAUTHORIZED USE:
 This code contains proprietary metrics algorithms and trade secrets of Fahed Mlaiel.
 Any unauthorized copying, modification, distribution, or use of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is
@@ -271,6 +271,9 @@ class MetricsReportingDeploymentManager:
     
     def _init_kubernetes_client(self):
         """Initialize Kubernetes client"""
+
+
+
         try:
             config.load_incluster_config()
         except:
@@ -289,6 +292,9 @@ class MetricsReportingDeploymentManager:
     
     def _init_docker_client(self):
         """Initialize Docker client"""
+
+
+
         try:
             self.docker_client = docker.from_env()
             logger.info("Docker client initialized")
@@ -298,6 +304,9 @@ class MetricsReportingDeploymentManager:
     
     def _init_redis_client(self):
         """Initialize Redis client for caching"""
+
+
+
         try:
             redis_host = os.getenv('REDIS_HOST', 'localhost')
             redis_port = int(os.getenv('REDIS_PORT', '6379'))
@@ -317,6 +326,9 @@ class MetricsReportingDeploymentManager:
     
     def _init_database_client(self):
         """Initialize database client"""
+
+
+
         try:
             db_url = os.getenv('DATABASE_URL', 'postgresql://user:pass@localhost:5432/ia_influencer')
             self.db_engine = create_engine(db_url)
@@ -327,6 +339,9 @@ class MetricsReportingDeploymentManager:
     
     def _init_prometheus_client(self):
         """Initialize Prometheus client"""
+
+
+
         try:
             prometheus_url = os.getenv('PROMETHEUS_URL', 'http://localhost:9090')
             self.prometheus_url = prometheus_url
@@ -338,6 +353,9 @@ class MetricsReportingDeploymentManager:
     
     def _init_grafana_client(self):
         """Initialize Grafana client"""
+
+
+
         try:
             grafana_url = os.getenv('GRAFANA_URL', 'http://localhost:3000')
             grafana_token = os.getenv('GRAFANA_API_TOKEN')
@@ -357,6 +375,9 @@ class MetricsReportingDeploymentManager:
     
     def _init_elasticsearch_client(self):
         """Initialize Elasticsearch client"""
+
+
+
         try:
             es_host = os.getenv('ELASTICSEARCH_HOST', 'localhost')
             es_port = int(os.getenv('ELASTICSEARCH_PORT', '9200'))
@@ -372,6 +393,9 @@ class MetricsReportingDeploymentManager:
     
     def _init_influxdb_client(self):
         """Initialize InfluxDB client"""
+
+
+
         try:
             influx_host = os.getenv('INFLUXDB_HOST', 'localhost')
             influx_port = int(os.getenv('INFLUXDB_PORT', '8086'))
@@ -671,6 +695,9 @@ class MetricsReportingDeploymentManager:
     
     def _create_prometheus_config(self) -> Dict[str, Any]:
         """Create Prometheus configuration"""
+
+
+
         return {
             'global': {
                 'scrape_interval': '15s',
@@ -730,6 +757,9 @@ class MetricsReportingDeploymentManager:
     
     def _create_grafana_dashboard_json(self, dashboard_config: DashboardConfig) -> Dict[str, Any]:
         """Create Grafana dashboard JSON configuration"""
+
+
+
         return {
             'id': None,
             'title': dashboard_config.dashboard_name,
@@ -927,6 +957,9 @@ class MetricsReportingDeploymentManager:
     
     def _create_namespace(self, namespace: str):
         """Create Kubernetes namespace if it doesn't exist"""
+
+
+
         try:
             self.core_v1.read_namespace(name=namespace)
         except ApiException as e:
@@ -941,6 +974,9 @@ class MetricsReportingDeploymentManager:
     
     def _create_or_update_configmap(self, configmap_manifest: Dict[str, Any]):
         """Create or update ConfigMap"""
+
+
+
         try:
             self.core_v1.read_namespaced_config_map(
                 name=configmap_manifest['metadata']['name'],
@@ -1005,6 +1041,9 @@ class MetricsReportingDeploymentManager:
     
     def _generate_report_summary(self, metrics: Dict[str, Any]) -> Dict[str, Any]:
         """Generate report summary"""
+
+
+
         return {
             'total_metrics': len(metrics),
             'healthy_metrics': sum(1 for m in metrics.values() if m.get('status') == 'healthy'),
@@ -1069,11 +1108,11 @@ def main():
     
     # Deploy Prometheus
     if manager.deploy_prometheus(deployment_config):
-        print("✅ Prometheus deployed successfully")
+        print(" Prometheus deployed successfully")
     
     # Deploy Grafana
     if manager.deploy_grafana(deployment_config):
-        print("✅ Grafana deployed successfully")
+        print(" Grafana deployed successfully")
     
     # Create example dashboard
     dashboard_config = DashboardConfig(
@@ -1085,11 +1124,11 @@ def main():
     )
     
     if manager.create_dashboard(dashboard_config):
-        print("✅ Dashboard created successfully")
+        print(" Dashboard created successfully")
     
     # Collect metrics
     metrics = manager.collect_metrics()
-    print(f"✅ Collected {len(metrics)} metrics")
+    print(f" Collected {len(metrics)} metrics")
     
     # Generate report
     report = manager.generate_report(
@@ -1097,13 +1136,13 @@ def main():
         datetime.now() - timedelta(days=1),
         datetime.now()
     )
-    print(f"✅ Generated report with {len(report['metrics'])} metrics")
+    print(f" Generated report with {len(report['metrics'])} metrics")
     
     # Health check
     health = manager.health_check()
-    print(f"✅ Health check completed: {health['overall_status']}")
+    print(f" Health check completed: {health['overall_status']}")
     
-    print("\n🎯 Metrics and Reporting Deployment Manager test completed")
+    print("\n Metrics and Reporting Deployment Manager test completed")
 
 
 if __name__ == "__main__":

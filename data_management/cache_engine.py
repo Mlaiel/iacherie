@@ -85,6 +85,9 @@ class CacheEntry:
     @property
     def age_seconds(self) -> int:
         """Get age of cache entry in seconds"""
+
+
+
         return int((datetime.utcnow() - self.created_at).total_seconds())
     
     def update_access(self):
@@ -151,6 +154,9 @@ class IntelligentCacheManager:
     
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default cache configuration"""
+
+
+
         return {
             "l1_max_size": 100 * 1024 * 1024,  # 100MB
             "l1_max_entries": 10000,
@@ -170,6 +176,9 @@ class IntelligentCacheManager:
     
     async def _initialize_cache(self):
         """Initialize cache system"""
+
+
+
         try:
             # Initialize Redis connection
             if self.config.get("enable_redis", True):
@@ -310,6 +319,9 @@ class IntelligentCacheManager:
         """
         Set value in cache with intelligent distribution across levels
         """
+
+
+
         try:
             async with self._lock:
                 # Serialize and prepare value
@@ -368,6 +380,9 @@ class IntelligentCacheManager:
     
     async def delete(self, key: str) -> bool:
         """Delete key from all cache levels"""
+
+
+
         try:
             async with self._lock:
                 deleted = False
@@ -401,6 +416,9 @@ class IntelligentCacheManager:
     
     async def clear(self, level: Optional[CacheLevel] = None) -> bool:
         """Clear cache at specified level or all levels"""
+
+
+
         try:
             async with self._lock:
                 if level is None or level == CacheLevel.L1_MEMORY:
@@ -460,6 +478,9 @@ class IntelligentCacheManager:
     
     async def _deserialize_value(self, value: bytes, entry: CacheEntry) -> Any:
         """Deserialize value from storage"""
+
+
+
         try:
             # Decrypt if needed
             if entry.encrypted and self.encryption_service:
@@ -493,6 +514,9 @@ class IntelligentCacheManager:
     
     def _hash_key(self, key: str) -> str:
         """Generate hash for cache key"""
+
+
+
         return hashlib.sha256(key.encode()).hexdigest()
     
     async def _determine_cache_level(
@@ -519,6 +543,9 @@ class IntelligentCacheManager:
         policy: Optional[CachePolicy]
     ) -> bool:
         """Store entry in specified cache level"""
+
+
+
         try:
             if level == CacheLevel.L1_MEMORY:
                 # Check if eviction is needed

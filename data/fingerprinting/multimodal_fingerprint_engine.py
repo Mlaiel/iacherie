@@ -1,15 +1,15 @@
 """
-🔍 Multi-Modal Fingerprint Engine - IA-Influencer-Agent Enterprise
+ Multi-Modal Fingerprint Engine - IA-Influencer-Agent Enterprise
 ================================================================
 
 Moteur de fingerprinting IA professionnel pour contenu multi-format avec détection
 de similarité haute performance et protection intelligente.
 
 FINGERPRINTING ENTERPRISE:
-- 🎵 Audio: Chromaprint + Essentia + Spectral Analysis (>95% précision)
-- 🎥 Vidéo: OpenCV + YOLO + pHash + Frame Analysis (>90% précision)  
-- 📸 Image: CLIP + ImageHash + Perceptual Hash (>92% précision)
-- 📝 Texte: BERT + RoBERTa + Vector Similarity (>88% précision)
+-  Audio: Chromaprint + Essentia + Spectral Analysis (>95% précision)
+-  Vidéo: OpenCV + YOLO + pHash + Frame Analysis (>90% précision)  
+-  Image: CLIP + ImageHash + Perceptual Hash (>92% précision)
+-  Texte: BERT + RoBERTa + Vector Similarity (>88% précision)
 
 LOGIQUE MÉTIER:
 Upload Créateur → Fingerprinting Multi-Modal → Base Vectorielle → 
@@ -17,7 +17,7 @@ Surveillance Web → Détection Violations → Protection Automatisée
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
+ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
 """
 
 import hashlib
@@ -147,15 +147,15 @@ class MultiModalFingerprint:
 
 class MultiModalFingerprintEngine:
     """
-    🔍 Moteur Enterprise de Fingerprinting Multi-Modal IA-Influencer-Agent
+     Moteur Enterprise de Fingerprinting Multi-Modal IA-Influencer-Agent
     ======================================================================
     
     Fingerprinting professionnel pour protection contenu créateurs multi-format :
-    - 🎵 Musiciens: Spotify, SoundCloud, Apple Music, Bandcamp
-    - 📱 Influenceurs: Instagram, TikTok, YouTube, Twitter
-    - 📸 Photographes: Instagram, portfolios web, Flickr
-    - ✍️ Blogueurs: Medium, blogs personnels, Substack
-    - 🎭 Comédiens: YouTube, TikTok, Twitch, Stand-up
+    -  Musiciens: Spotify, SoundCloud, Apple Music, Bandcamp
+    -  Influenceurs: Instagram, TikTok, YouTube, Twitter
+    -  Photographes: Instagram, portfolios web, Flickr
+    -  Blogueurs: Medium, blogs personnels, Substack
+    -  Comédiens: YouTube, TikTok, Twitch, Stand-up
     
     PERFORMANCES CIBLES:
     - Audio: >95% précision (Chromaprint + Essentia)
@@ -214,10 +214,13 @@ class MultiModalFingerprintEngine:
         self.fingerprint_cache_ttl = 86400  # 24h
         self.similarity_cache_ttl = 3600    # 1h
         
-        self.logger.info("🔍 MultiModalFingerprintEngine enterprise initialisé")
+        self.logger.info(" MultiModalFingerprintEngine enterprise initialisé")
     
     async def initialize_ai_models(self) -> None:
         """Initialise les modèles IA pour fingerprinting enterprise."""
+
+
+
         try:
             self.logger.info("🧠 Chargement modèles IA enterprise...")
             
@@ -226,29 +229,29 @@ class MultiModalFingerprintEngine:
                 model_name = self.config.get('models', {}).get('clip_model', "openai/clip-vit-base-patch32")
                 self.clip_model = CLIPModel.from_pretrained(model_name)
                 self.clip_processor = CLIPProcessor.from_pretrained(model_name)
-                self.logger.info(f"✅ Modèle CLIP chargé: {model_name}")
+                self.logger.info(f" Modèle CLIP chargé: {model_name}")
             
             # BERT pour texte  
             if self.config.get('models', {}).get('bert_enabled', True):
                 bert_model = self.config.get('models', {}).get('bert_model', "bert-base-uncased")
                 self.bert_tokenizer = AutoTokenizer.from_pretrained(bert_model)
                 self.bert_model = AutoModel.from_pretrained(bert_model)
-                self.logger.info(f"✅ Modèle BERT chargé: {bert_model}")
+                self.logger.info(f" Modèle BERT chargé: {bert_model}")
             
             # RoBERTa pour texte avancé
             if self.config.get('models', {}).get('roberta_enabled', True):
                 roberta_model = self.config.get('models', {}).get('roberta_model', "roberta-base")
                 self.roberta_tokenizer = AutoTokenizer.from_pretrained(roberta_model)
                 self.roberta_model = AutoModel.from_pretrained(roberta_model)
-                self.logger.info(f"✅ Modèle RoBERTa chargé: {roberta_model}")
+                self.logger.info(f" Modèle RoBERTa chargé: {roberta_model}")
             
             # Initialisation index FAISS optimisés
             await self._initialize_faiss_indexes()
             
-            self.logger.info("🚀 Modèles IA enterprise prêts pour production")
+            self.logger.info(" Modèles IA enterprise prêts pour production")
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur chargement modèles IA: {str(e)}")
+            self.logger.error(f" Erreur chargement modèles IA: {str(e)}")
             raise RuntimeError(f"Échec initialisation IA: {str(e)}")
     
     async def generate_creator_fingerprint(
@@ -284,7 +287,7 @@ class MultiModalFingerprintEngine:
         start_time = datetime.now()
         
         try:
-            self.logger.info(f"🔍 Génération fingerprint {creator_type} - {content_format.value}: {content_id}")
+            self.logger.info(f" Génération fingerprint {creator_type} - {content_format.value}: {content_id}")
             
             # Méthodes optimisées selon type créateur
             if methods is None:
@@ -306,7 +309,7 @@ class MultiModalFingerprintEngine:
                         embeddings.append(fingerprint.vector_embedding)
                         
                 except Exception as e:
-                    self.logger.warning(f"⚠️ Échec fingerprint {method.value}: {str(e)}")
+                    self.logger.warning(f" Échec fingerprint {method.value}: {str(e)}")
             
             if not fingerprints:
                 raise RuntimeError("Aucun fingerprint généré avec succès")
@@ -361,7 +364,7 @@ class MultiModalFingerprintEngine:
             
             # Log métrique réussite
             self.logger.info(
-                f"✅ Fingerprint créateur généré - "
+                f" Fingerprint créateur généré - "
                 f"Type: {creator_type} | Format: {content_format.value} | "
                 f"Qualité: {global_quality:.3f} | Temps: {processing_time:.0f}ms | "
                 f"Méthodes: {len(fingerprints)}/{len(methods)}"
@@ -372,7 +375,7 @@ class MultiModalFingerprintEngine:
         except Exception as e:
             processing_time = (datetime.now() - start_time).total_seconds() * 1000
             self.logger.error(
-                f"❌ Erreur génération fingerprint créateur: {str(e)} | "
+                f" Erreur génération fingerprint créateur: {str(e)} | "
                 f"Créateur: {creator_type} | Temps: {processing_time:.0f}ms"
             )
             raise
@@ -401,9 +404,12 @@ class MultiModalFingerprintEngine:
         Returns:
             Liste matches avec évaluation risque violation
         """
+
+
+
         try:
             self.logger.info(
-                f"🔎 Recherche violations pour créateur {query_fingerprint.creator_type}: "
+                f" Recherche violations pour créateur {query_fingerprint.creator_type}: "
                 f"{query_fingerprint.content_id}"
             )
             
@@ -453,7 +459,7 @@ class MultiModalFingerprintEngine:
             # Log résultats détaillés
             violation_counts = self._count_violations_by_risk(matches)
             self.logger.info(
-                f"🎯 Détection violations terminée - "
+                f" Détection violations terminée - "
                 f"Total: {len(matches)} | Critiques: {violation_counts.get('critical', 0)} | "
                 f"Élevées: {violation_counts.get('high', 0)} | "
                 f"Moyennes: {violation_counts.get('medium', 0)} | "
@@ -463,7 +469,7 @@ class MultiModalFingerprintEngine:
             return matches
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur recherche violations: {str(e)}")
+            self.logger.error(f" Erreur recherche violations: {str(e)}")
             return []
     
     def _get_optimized_methods(
@@ -634,6 +640,9 @@ class MultiModalFingerprintEngine:
         violation_detection: bool
     ) -> Optional[SimilarityMatch]:
         """Valide match et évalue risque violation."""
+
+
+
         try:
             # Détermination niveau confiance
             if similarity_score >= 0.98:
@@ -683,7 +692,7 @@ class MultiModalFingerprintEngine:
             )
             
         except Exception as e:
-            self.logger.warning(f"⚠️ Erreur validation match violation: {str(e)}")
+            self.logger.warning(f" Erreur validation match violation: {str(e)}")
             return None
     
     def _assess_violation_risk(
@@ -747,6 +756,9 @@ class MultiModalFingerprintEngine:
     
     async def _store_in_enterprise_vector_db(self, fingerprint: MultiModalFingerprint) -> None:
         """Stockage enterprise optimisé dans base vectorielle."""
+
+
+
         try:
             if fingerprint.primary_embedding.size > 0:
                 # Stockage avec métadonnées enterprise
@@ -775,13 +787,13 @@ class MultiModalFingerprintEngine:
                     )
                     
                     self.logger.debug(
-                        f"💾 Fingerprint enterprise stocké - "
+                        f" Fingerprint enterprise stocké - "
                         f"Créateur: {fingerprint.creator_type} | "
                         f"Index: {fingerprint.content_format.value}"
                     )
                     
         except Exception as e:
-            self.logger.warning(f"⚠️ Erreur stockage enterprise vector DB: {str(e)}")
+            self.logger.warning(f" Erreur stockage enterprise vector DB: {str(e)}")
     
     async def _save_enterprise_mapping(
         self,
@@ -804,6 +816,9 @@ class MultiModalFingerprintEngine:
     
     async def _cache_fingerprint_enterprise(self, fingerprint: MultiModalFingerprint) -> None:
         """Cache fingerprint avec métadonnées enterprise."""
+
+
+
         try:
             cache_key = f"fingerprint_enterprise:{fingerprint.content_id}"
             
@@ -826,7 +841,7 @@ class MultiModalFingerprintEngine:
             )
             
         except Exception as e:
-            self.logger.warning(f"⚠️ Erreur cache enterprise: {str(e)}")
+            self.logger.warning(f" Erreur cache enterprise: {str(e)}")
 
 
 # Export des classes enterprise

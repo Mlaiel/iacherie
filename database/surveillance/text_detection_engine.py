@@ -98,6 +98,9 @@ class TextFeatureExtractor:
     
     async def initialize(self) -> bool:
         """Initialize NLP models."""
+
+
+
         try:
             # Load sentence transformer
             self.sentence_transformer = SentenceTransformer('all-MiniLM-L6-v2')
@@ -117,6 +120,9 @@ class TextFeatureExtractor:
     
     async def extract_features(self, text: str) -> Dict[str, Any]:
         """Extract comprehensive text features from text content."""
+
+
+
         try:
             # Preprocess text
             cleaned_text = self._preprocess_text(text)
@@ -404,6 +410,9 @@ class TextSimilarityCalculator:
         features2: Dict[str, Any]
     ) -> Tuple[float, Dict[str, float]]:
         """Calculate comprehensive similarity between two text feature sets."""
+
+
+
         try:
             similarities = {}
             weighted_sum = 0.0
@@ -449,6 +458,9 @@ class TextSimilarityCalculator:
     
     async def _calculate_semantic_similarity(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> Optional[float]:
         """Calculate semantic similarity using embeddings."""
+
+
+
         try:
             semantic_similarities = []
             
@@ -470,6 +482,9 @@ class TextSimilarityCalculator:
     
     async def _calculate_lexical_similarity(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> Optional[float]:
         """Calculate lexical similarity using statistical features."""
+
+
+
         try:
             lexical_similarities = []
             
@@ -499,6 +514,9 @@ class TextSimilarityCalculator:
     
     async def _calculate_stylistic_similarity(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> Optional[float]:
         """Calculate stylistic similarity."""
+
+
+
         try:
             stylistic_similarities = []
             
@@ -521,6 +539,9 @@ class TextSimilarityCalculator:
     
     async def _calculate_ngram_similarity(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> Optional[float]:
         """Calculate n-gram similarity."""
+
+
+
         try:
             ngram_similarities = []
             
@@ -582,6 +603,9 @@ class TextDetectionEngine:
         
     async def initialize(self) -> bool:
         """Initialize the text detection engine."""
+
+
+
         try:
             # Initialize feature extractor
             await self.feature_extractor.initialize()
@@ -613,6 +637,9 @@ class TextDetectionEngine:
         metadata: Dict[str, Any]
     ) -> TextFingerprint:
         """Create text fingerprint from text content."""
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -662,6 +689,9 @@ class TextDetectionEngine:
     
     async def _store_fingerprint(self, fingerprint: TextFingerprint) -> None:
         """Store fingerprint in vector database."""
+
+
+
         try:
             # Create embedding vector from semantic features
             embedding_features = []
@@ -722,6 +752,9 @@ class TextDetectionEngine:
         detection_metadata: Dict[str, Any]
     ) -> List[TextMatch]:
         """Detect text matches against stored fingerprints."""
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -849,6 +882,9 @@ class TextDetectionEngine:
         stored_features: Dict[str, Any]
     ) -> float:
         """Calculate confidence level for match."""
+
+
+
         try:
             # Base confidence from overall similarity
             confidence = similarity_score
@@ -880,6 +916,9 @@ class TextDetectionEngine:
         feature_similarities: Dict[str, float]
     ) -> str:
         """Determine the type of plagiarism based on feature similarities."""
+
+
+
         try:
             semantic_sim = feature_similarities.get("semantic", 0)
             lexical_sim = feature_similarities.get("lexical", 0)
@@ -916,6 +955,9 @@ class TextDetectionEngine:
     
     async def get_detection_statistics(self) -> Dict[str, Any]:
         """Get detection engine statistics."""
+
+
+
         return {
             "engine_type": "text",
             "status": "active",
@@ -929,6 +971,9 @@ class TextDetectionEngine:
     
     def _detect_language(self, text: str) -> str:
         """Detect the language of the input text."""
+
+
+
         try:
             # Simple heuristic-based language detection
             text_lower = text.lower()
@@ -975,6 +1020,9 @@ class TextDetectionEngine:
     
     async def cleanup(self) -> None:
         """Cleanup resources."""
+
+
+
         try:
             if self.chroma_client:
                 # ChromaDB cleanup if needed

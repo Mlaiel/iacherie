@@ -294,6 +294,9 @@ class AudioManager:
     
     async def _load_and_validate_audio(self, file_path: str) -> AudioData:
         """Load and validate audio file"""
+
+
+
         return await self.signal_processor.load_audio_file(file_path)
     
     async def _analyze_audio(
@@ -302,6 +305,9 @@ class AudioManager:
         request: AudioUploadRequest
     ) -> MusicAnalysisResult:
         """Analyze audio content"""
+
+
+
         return await self.music_analyzer.analyze_complete(
             audio_data.samples,
             content_type=request.content_type
@@ -313,6 +319,9 @@ class AudioManager:
         request: AudioUploadRequest
     ) -> AudioFingerprint:
         """Generate audio fingerprint"""
+
+
+
         return await self.fingerprinter.generate_comprehensive_fingerprint(
             audio_data.samples,
             audio_data.sample_rate,
@@ -330,6 +339,9 @@ class AudioManager:
         request: AudioUploadRequest
     ) -> ProtectionResult:
         """Protect audio content"""
+
+
+
         return await self.content_protector.protect_audio_content(
             audio_data,
             fingerprint,
@@ -344,6 +356,9 @@ class AudioManager:
         request: AudioUploadRequest
     ) -> RightsResult:
         """Manage audio rights"""
+
+
+
         return await self.rights_manager.register_rights(
             fingerprint,
             user_id=request.user_id,
@@ -420,6 +435,9 @@ class AudioManager:
         request: AudioUploadRequest
     ) -> MonetizationResult:
         """Setup monetization tracking"""
+
+
+
         return await self.monetization_engine.setup_monetization(
             processing_result.fingerprint,
             user_id=request.user_id,
@@ -488,6 +506,9 @@ class AudioManager:
     
     def get_processing_status(self, processing_id: str) -> Optional[AudioProcessingResult]:
         """Get processing status by ID"""
+
+
+
         return self.active_processes.get(processing_id)
     
     def get_user_processing_history(

@@ -270,6 +270,9 @@ class FailoverManager:
     
     async def _perform_failover(self, db_type: str, reason: str) -> bool:
         """Perform failover to next available endpoint"""
+
+
+
         try:
             current_endpoint_id = self.active_endpoints.get(db_type)
             
@@ -400,10 +403,16 @@ class FailoverManager:
     
     def get_all_endpoints(self, db_type: str) -> List[DatabaseEndpoint]:
         """Get all endpoints for database type"""
+
+
+
         return self.endpoints.get(db_type, [])
     
     async def force_failover(self, db_type: str, target_endpoint_id: Optional[str] = None) -> bool:
         """Force failover to specific endpoint or best available"""
+
+
+
         try:
             if target_endpoint_id:
                 target_endpoint = self._get_endpoint(db_type, target_endpoint_id)

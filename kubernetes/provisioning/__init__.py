@@ -6,7 +6,7 @@ across cloud environments.
 
 Project Owner: Fahed Mlaiel (mlaiel@live.de)
 
-⚠️ CRITICAL LEGAL WARNING:
+ CRITICAL LEGAL WARNING:
 This software and all associated intellectual property belong exclusively to Fahed Mlaiel.
 Any unauthorized use, reproduction, distribution, or appropriation of this code, concept, 
 or business idea without explicit written permission from Fahed Mlaiel (mlaiel@live.de) 

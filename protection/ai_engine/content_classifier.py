@@ -1,5 +1,5 @@
 """
-🎯 Content Classifier Engine
+ Content Classifier Engine
 ===========================
 
 Advanced multi-modal content classification using state-of-the-art AI models:
@@ -56,6 +56,9 @@ class ContentClassifierEngine:
     
     def _load_models(self):
         """Load all AI models for content classification"""
+
+
+
         try:
             # CLIP for visual content
             self.models['clip'] = CLIPModel.from_pretrained("openai/clip-vit-base-patch32").to(self.device)
@@ -87,6 +90,9 @@ class ContentClassifierEngine:
         """
         Main classification entry point for all content types
         """
+
+
+
         try:
             content_type = content_data.get('type', 'unknown')
             file_path = content_data.get('file_path')
@@ -127,6 +133,9 @@ class ContentClassifierEngine:
     
     async def _classify_image(self, file_path: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Classify image content using CLIP and specialized models"""
+
+
+
         try:
             # Load and preprocess image
             image = Image.open(file_path).convert('RGB')
@@ -185,6 +194,9 @@ class ContentClassifierEngine:
     
     async def _classify_video(self, file_path: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Classify video content using frame analysis and audio extraction"""
+
+
+
         try:
             # Extract key frames
             cap = cv2.VideoCapture(file_path)
@@ -248,6 +260,9 @@ class ContentClassifierEngine:
     
     async def _classify_audio(self, file_path: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Classify audio content using Whisper and audio analysis"""
+
+
+
         try:
             # Load audio
             audio, sr = librosa.load(file_path, sr=16000)
@@ -308,6 +323,9 @@ class ContentClassifierEngine:
     
     async def _classify_text(self, text_content: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Classify text content using advanced NLP models"""
+
+
+
         try:
             if not text_content.strip():
                 return {
@@ -375,6 +393,9 @@ class ContentClassifierEngine:
     
     async def update_model(self, feedback_data: List[Dict[str, Any]]) -> Dict[str, Any]:
         """Update models based on feedback data"""
+
+
+
         try:
             update_results = {
                 'timestamp': datetime.utcnow().isoformat(),
@@ -486,6 +507,9 @@ class ContentClassifierEngine:
     
     async def _classify_unknown(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
         """Handle unknown content types"""
+
+
+
         return {
             'classifications': {'unknown_type': True},
             'confidence_scores': {'overall': 0.0},

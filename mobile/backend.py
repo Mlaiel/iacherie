@@ -89,6 +89,9 @@ class MobileSession:
     
     def is_expired(self) -> bool:
         """Check if session is expired."""
+
+
+
         return datetime.utcnow() > self.expires_at
     
     def refresh_activity(self):
@@ -168,10 +171,16 @@ class MobileDeviceManager:
     
     async def get_device(self, device_id: str) -> Optional[MobileDevice]:
         """Get device by ID."""
+
+
+
         return self.devices.get(device_id)
     
     async def get_user_devices(self, user_id: str) -> List[MobileDevice]:
         """Get all devices for a user."""
+
+
+
         return [
             device for device in self.devices.values()
             if device.user_id == user_id and device.is_active
@@ -263,6 +272,9 @@ class MobileAuthManager:
         device_id: Optional[str] = None
     ) -> Dict[str, Any]:
         """Verify mobile JWT token."""
+
+
+
         
         try:
             payload = verify_token(token)
@@ -476,6 +488,9 @@ class MobileAPIServer:
         @app.get("/mobile/health")
         async def health_check():
             """Mobile API health check."""
+
+
+
             return {
                 "status": "healthy",
                 "timestamp": datetime.utcnow().isoformat(),
@@ -493,6 +508,9 @@ def create_mobile_app() -> FastAPI:
 # Dependency injection functions
 def get_device_manager() -> MobileDeviceManager:
     """Get device manager instance."""
+
+
+
     return MobileDeviceManager()
 
 
@@ -500,6 +518,9 @@ def get_auth_manager(
     device_manager: MobileDeviceManager = Depends(get_device_manager)
 ) -> MobileAuthManager:
     """Get auth manager instance."""
+
+
+
     return MobileAuthManager(device_manager)
 
 
@@ -508,6 +529,9 @@ async def get_mobile_user(
     auth_manager: MobileAuthManager = Depends(get_auth_manager)
 ) -> Dict[str, Any]:
     """Dependency to get authenticated mobile user."""
+
+
+
     return await auth_manager.verify_mobile_token(credentials.credentials)
 
 

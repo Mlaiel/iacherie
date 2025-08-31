@@ -18,11 +18,11 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 """
 Tests Ultra-Industriels Avancés pour le Module Content Protection Core
 
-🚨 AVERTISSEMENT STRICT : Ce code, concept et architecture sont la propriété intellectuelle exclusive de Fahed Mlaiel (mlaiel@live.de). 
+ AVERTISSEMENT STRICT : Ce code, concept et architecture sont la propriété intellectuelle exclusive de Fahed Mlaiel (mlaiel@live.de). 
 Toute utilisation, copie, distribution ou exploitation sans autorisation écrite explicite est STRICTEMENT INTERDITE et poursuivie 
 au maximum de la loi. Tous droits réservés. Copyright © 2025 Fahed Mlaiel.
 
-⚖️ INTERDICTION FORMELLE : Il est formellement interdit de copier, voler, utiliser ou s'inspirer de ce code/concept sans 
+ INTERDICTION FORMELLE : Il est formellement interdit de copier, voler, utiliser ou s'inspirer de ce code/concept sans 
 autorisation personnelle écrite de Fahed Mlaiel. Violation = Poursuites légales immédiates.
 
 Équipe Projet Expert - Dirigée par Fahed Mlaiel (mlaiel@live.de):
@@ -93,6 +93,9 @@ class TestContentProtectorUltraIndustrial:
     @pytest.fixture
     def enterprise_protection_config(self):
         """Configuration ultra-avancée pour le système de protection"""
+
+
+
         return {
             'protection_engines': {
                 'watermarking': {

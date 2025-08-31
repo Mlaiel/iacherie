@@ -47,6 +47,9 @@ class YouTubePlatform(PlatformBase):
     
     async def authenticate(self) -> bool:
         """Authenticate with YouTube using OAuth2"""
+
+
+
         try:
             # If we have a refresh token, use it
             if self.config.credentials.refresh_token:
@@ -168,6 +171,9 @@ class YouTubePlatform(PlatformBase):
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
         """Upload video content to YouTube"""
+
+
+
         try:
             if not os.path.exists(content_path):
                 return UploadResult(
@@ -291,6 +297,9 @@ class YouTubePlatform(PlatformBase):
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
         """Get YouTube analytics for a video"""
+
+
+
         try:
             # Get video statistics
             video_stats = await self._make_request(
@@ -394,6 +403,9 @@ class YouTubePlatform(PlatformBase):
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
         """Get user's videos from YouTube"""
+
+
+
         try:
             # Get channel info first
             if user_id:
@@ -443,6 +455,9 @@ class YouTubePlatform(PlatformBase):
     
     async def delete_content(self, content_id: str) -> bool:
         """Delete video from YouTube"""
+
+
+
         try:
             result = await self._make_request(
                 'DELETE',
@@ -456,6 +471,9 @@ class YouTubePlatform(PlatformBase):
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
         """Update video metadata on YouTube"""
+
+
+
         try:
             # First get current video data
             current_data = await self._make_request(

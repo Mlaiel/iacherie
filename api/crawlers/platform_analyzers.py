@@ -230,6 +230,9 @@ class PlatformAnalyzer:
         
     def _setup_platform_clients(self):
         """Setup platform API clients."""
+
+
+
         try:
             # Instagram client
             if self.config.get("instagram_credentials"):
@@ -273,6 +276,9 @@ class PlatformAnalyzer:
     
     def _setup_ml_models(self):
         """Setup machine learning models for analysis."""
+
+
+
         try:
             # Sentiment analysis
             self.sentiment_analyzer = pipeline(
@@ -312,6 +318,9 @@ class PlatformAnalyzer:
         Returns:
             CompetitorProfile: Complete competitor analysis
         """
+
+
+
         try:
             self.logger.info(f"Starting competitor analysis: {competitor_id}")
             
@@ -382,6 +391,9 @@ class PlatformAnalyzer:
         platform: str
     ) -> Optional[PlatformMetrics]:
         """Analyze competitor on specific platform."""
+
+
+
         try:
             if platform == "instagram":
                 return await self._analyze_instagram_competitor(competitor_id)
@@ -403,6 +415,9 @@ class PlatformAnalyzer:
     
     async def _analyze_instagram_competitor(self, competitor_id: str) -> PlatformMetrics:
         """Analyze Instagram competitor metrics."""
+
+
+
         try:
             # Rate limiting
             await self.rate_limiter.acquire("instagram")
@@ -462,6 +477,9 @@ class PlatformAnalyzer:
     
     async def _analyze_twitter_competitor(self, competitor_id: str) -> PlatformMetrics:
         """Analyze Twitter competitor metrics."""
+
+
+
         try:
             # Rate limiting
             await self.rate_limiter.acquire("twitter")
@@ -516,6 +534,9 @@ class PlatformAnalyzer:
     
     async def _analyze_youtube_competitor(self, competitor_id: str) -> PlatformMetrics:
         """Analyze YouTube competitor metrics."""
+
+
+
         try:
             # Rate limiting
             await self.rate_limiter.acquire("youtube")
@@ -562,6 +583,9 @@ class PlatformAnalyzer:
     
     async def _analyze_tiktok_competitor(self, competitor_id: str) -> PlatformMetrics:
         """Analyze TikTok competitor metrics using web scraping."""
+
+
+
         try:
             # Rate limiting
             await self.rate_limiter.acquire("tiktok")
@@ -605,6 +629,9 @@ class PlatformAnalyzer:
     
     async def _analyze_spotify_competitor(self, competitor_id: str) -> PlatformMetrics:
         """Analyze Spotify artist metrics."""
+
+
+
         try:
             # Rate limiting
             await self.rate_limiter.acquire("spotify")
@@ -654,6 +681,9 @@ class PlatformAnalyzer:
     
     async def _cross_platform_analysis(self, profile: CompetitorProfile):
         """Perform cross-platform analysis for competitor."""
+
+
+
         try:
             # Calculate total reach across platforms
             total_followers = sum(
@@ -697,6 +727,9 @@ class PlatformAnalyzer:
     
     def _calculate_competitive_score(self, profile: CompetitorProfile) -> float:
         """Calculate overall competitive score."""
+
+
+
         try:
             score = 0.0
             total_weight = 0.0
@@ -749,6 +782,9 @@ class PlatformAnalyzer:
     
     def _determine_market_position(self, profile: CompetitorProfile) -> str:
         """Determine competitor's market position."""
+
+
+
         try:
             score = profile.competitive_score
             
@@ -906,6 +942,9 @@ class PlatformAnalyzer:
     
     def _is_fresh_analysis(self, cached_data: Dict[str, Any]) -> bool:
         """Check if cached analysis is still fresh."""
+
+
+
         try:
             last_analyzed = datetime.fromisoformat(cached_data.get("last_analyzed", ""))
             return (datetime.utcnow() - last_analyzed).total_seconds() < 3600  # 1 hour
@@ -929,6 +968,9 @@ class PlatformAnalyzer:
         Returns:
             List[TrendAnalysis]: Trending content analysis
         """
+
+
+
         try:
             self.logger.info(f"Analyzing trends for {platform} in {category}")
             
@@ -1110,6 +1152,9 @@ class PlatformAnalyzer:
         Returns:
             Dict containing comprehensive insights and recommendations
         """
+
+
+
         try:
             self.logger.info("Generating comprehensive insights report")
             
@@ -1325,6 +1370,9 @@ class PlatformAnalyzer:
     
     def _identify_most_competitive_platform(self, profiles: List[CompetitorProfile]) -> str:
         """Identify the most competitive platform."""
+
+
+
         try:
             platform_scores = defaultdict(list)
             

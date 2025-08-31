@@ -117,6 +117,9 @@ class RightsProtectionEngine:
     
     def _initialize_protection_models(self) -> None:
         """Initialize AI models for content protection"""
+
+
+
         try:
             # Text similarity model
             self.text_tokenizer = AutoTokenizer.from_pretrained('sentence-transformers/all-MiniLM-L6-v2')
@@ -161,6 +164,9 @@ class RightsProtectionEngine:
     def create_content_fingerprint(self, content_path: str, content_type: ContentType, 
                                  creator_id: str, metadata: Dict[str, Any] = None) -> ContentFingerprint:
         """Create comprehensive digital fingerprint for content"""
+
+
+
         try:
             content_id = self._generate_content_id(content_path, creator_id)
             
@@ -208,6 +214,9 @@ class RightsProtectionEngine:
     
     def _create_audio_fingerprint(self, audio_path: str) -> Dict[str, Any]:
         """Create audio fingerprint using multiple techniques"""
+
+
+
         try:
             # Load audio file
             y, sr = librosa.load(audio_path, sr=self.audio_sample_rate)
@@ -246,6 +255,9 @@ class RightsProtectionEngine:
     
     def _create_video_fingerprint(self, video_path: str) -> Dict[str, Any]:
         """Create video fingerprint using frame analysis"""
+
+
+
         try:
             cap = cv2.VideoCapture(video_path)
             
@@ -303,6 +315,9 @@ class RightsProtectionEngine:
     
     def _create_image_fingerprint(self, image_path: str) -> Dict[str, Any]:
         """Create image fingerprint using multiple hash algorithms"""
+
+
+
         try:
             image = Image.open(image_path)
             
@@ -343,6 +358,9 @@ class RightsProtectionEngine:
     
     def _create_text_fingerprint(self, text_path: str) -> Dict[str, Any]:
         """Create text fingerprint using NLP techniques"""
+
+
+
         try:
             with open(text_path, 'r', encoding='utf-8') as f:
                 text = f.read()
@@ -423,6 +441,9 @@ class RightsProtectionEngine:
     
     async def monitor_content(self, content_id: str) -> List[InfringementDetection]:
         """Monitor content for infringement across platforms"""
+
+
+
         try:
             if content_id not in self.fingerprint_database:
                 raise ValueError(f"Content {content_id} not found in database")
@@ -452,6 +473,9 @@ class RightsProtectionEngine:
     async def _search_platform_for_infringement(self, fingerprint: ContentFingerprint, 
                                               platform: str) -> List[InfringementDetection]:
         """Search specific platform for potential infringement"""
+
+
+
         try:
             infringements = []
             
@@ -483,6 +507,9 @@ class RightsProtectionEngine:
     
     def compare_content(self, content_id: str, suspected_content_path: str) -> Dict[str, Any]:
         """Compare protected content with suspected infringing content"""
+
+
+
         try:
             if content_id not in self.fingerprint_database:
                 raise ValueError(f"Content {content_id} not found")
@@ -536,6 +563,9 @@ class RightsProtectionEngine:
                                     suspected_fp: Dict[str, Any], 
                                     content_type: ContentType) -> float:
         """Calculate similarity between two content fingerprints"""
+
+
+
         try:
             if content_type == ContentType.AUDIO:
                 return self._calculate_audio_similarity(original_fp, suspected_fp)
@@ -554,6 +584,9 @@ class RightsProtectionEngine:
     
     def _calculate_audio_similarity(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
         """Calculate audio similarity score"""
+
+
+
         try:
             # MFCC similarity
             mfcc1 = np.array(fp1.get('mfcc_mean', []))
@@ -591,6 +624,9 @@ class RightsProtectionEngine:
     
     def _calculate_video_similarity(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
         """Calculate video similarity score"""
+
+
+
         try:
             # Frame hash similarity
             hashes1 = fp1.get('frame_hashes', [])
@@ -618,6 +654,9 @@ class RightsProtectionEngine:
     
     def _calculate_image_similarity(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
         """Calculate image similarity score"""
+
+
+
         try:
             hashes1 = fp1.get('hashes', {})
             hashes2 = fp2.get('hashes', {})
@@ -645,6 +684,9 @@ class RightsProtectionEngine:
     
     def _calculate_text_similarity(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> float:
         """Calculate text similarity score"""
+
+
+
         try:
             # Embedding similarity
             emb1 = np.array(fp1.get('embeddings', []))
@@ -708,6 +750,9 @@ class RightsProtectionEngine:
     def _get_comparison_details(self, original_fp: Dict[str, Any], 
                               suspected_fp: Dict[str, Any]) -> Dict[str, Any]:
         """Get detailed comparison information"""
+
+
+
         return {
             'features_compared': list(original_fp.keys()),
             'matching_features': [
@@ -735,6 +780,9 @@ class RightsProtectionEngine:
     
     def get_protection_report(self, content_id: str) -> ProtectionReport:
         """Generate protection report for content"""
+
+
+
         try:
             if content_id not in self.protection_analytics:
                 return ProtectionReport(
@@ -773,6 +821,9 @@ class RightsProtectionEngine:
     
     def _count_actions_taken(self, content_id: str) -> int:
         """Count actions taken for content protection"""
+
+
+
         return len([
             case for case in self.infringement_cases
             if case.original_content_id == content_id and case.status == 'action_taken'
@@ -785,6 +836,9 @@ class RightsProtectionEngine:
     
     async def initiate_takedown_request(self, infringement: InfringementDetection) -> bool:
         """Initiate DMCA takedown request"""
+
+
+
         try:
             # Implement DMCA takedown automation
             logger.info(f"Initiating takedown for {infringement.detection_id}")

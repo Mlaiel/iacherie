@@ -19,7 +19,7 @@ Key Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED 
 """
 
 import asyncio
@@ -181,6 +181,9 @@ class FingerprintingClusterManager:
     
     def _init_kubernetes_client(self):
         """Initialize Kubernetes client for cluster management"""
+
+
+
         try:
             config.load_incluster_config()
         except:
@@ -223,6 +226,9 @@ class FingerprintingClusterManager:
         Returns:
             bool: True if deployment successful
         """
+
+
+
         try:
             self.logger.info("Deploying fingerprinting cluster")
             
@@ -344,6 +350,9 @@ class FingerprintingClusterManager:
         Returns:
             List[FingerprintMatch]: Similar content matches
         """
+
+
+
         try:
             matches = []
             
@@ -540,6 +549,9 @@ class FingerprintingClusterManager:
     
     async def _generate_chromaprint(self, audio_data: bytes) -> Tuple[str, float]:
         """Generate Chromaprint fingerprint for audio"""
+
+
+
         try:
             # Save temporary file for processing
             temp_file = f"/tmp/audio_{int(time.time())}.wav"
@@ -568,6 +580,9 @@ class FingerprintingClusterManager:
     
     async def _generate_spectral_fingerprint(self, audio_data: bytes) -> Tuple[np.ndarray, float]:
         """Generate spectral fingerprint for audio"""
+
+
+
         try:
             # Save temporary file
             temp_file = f"/tmp/audio_{int(time.time())}.wav"
@@ -604,6 +619,9 @@ class FingerprintingClusterManager:
     
     async def _generate_mfcc_fingerprint(self, audio_data: bytes) -> Tuple[np.ndarray, float]:
         """Generate MFCC fingerprint for audio"""
+
+
+
         try:
             # Save temporary file
             temp_file = f"/tmp/audio_{int(time.time())}.wav"
@@ -641,6 +659,9 @@ class FingerprintingClusterManager:
     # Video fingerprinting methods
     async def _generate_video_perceptual_hash(self, video_data: bytes) -> Tuple[str, float]:
         """Generate perceptual hash for video"""
+
+
+
         try:
             # Save video file temporarily
             temp_file = f"/tmp/video_{int(time.time())}.mp4"
@@ -683,6 +704,9 @@ class FingerprintingClusterManager:
     
     async def _generate_frame_hash(self, video_data: bytes) -> Tuple[List[str], float]:
         """Generate hash for individual video frames"""
+
+
+
         try:
             # Save video file temporarily
             temp_file = f"/tmp/video_{int(time.time())}.mp4"
@@ -723,6 +747,9 @@ class FingerprintingClusterManager:
     # Image fingerprinting methods
     async def _generate_image_perceptual_hash(self, image_data: bytes) -> Tuple[str, float]:
         """Generate perceptual hash for image"""
+
+
+
         try:
             # Load image
             image = Image.open(io.BytesIO(image_data))
@@ -744,6 +771,9 @@ class FingerprintingClusterManager:
     
     async def _generate_phash(self, image_data: bytes) -> Tuple[str, float]:
         """Generate pHash for image"""
+
+
+
         try:
             image = Image.open(io.BytesIO(image_data))
             phash = imagehash.phash(image, hash_size=16)  # 16x16 = 256-bit hash
@@ -757,6 +787,9 @@ class FingerprintingClusterManager:
     
     async def _generate_clip_embedding(self, image_data: bytes) -> Tuple[np.ndarray, float]:
         """Generate CLIP embedding for image"""
+
+
+
         try:
             # Load CLIP model
             model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
@@ -790,6 +823,9 @@ class FingerprintingClusterManager:
     # Text fingerprinting methods
     async def _generate_semantic_fingerprint(self, text_content: str) -> Tuple[np.ndarray, float]:
         """Generate semantic fingerprint for text"""
+
+
+
         try:
             # Load sentence transformer model
             model = SentenceTransformer('all-MiniLM-L6-v2')
@@ -812,6 +848,9 @@ class FingerprintingClusterManager:
     
     async def _generate_bert_embedding(self, text_content: str) -> Tuple[np.ndarray, float]:
         """Generate BERT embedding for text"""
+
+
+
         try:
             # Load BERT model
             model = AutoModel.from_pretrained('bert-base-uncased')
@@ -838,6 +877,9 @@ class FingerprintingClusterManager:
     
     async def _generate_ngram_fingerprint(self, text_content: str) -> Tuple[np.ndarray, float]:
         """Generate n-gram fingerprint for text"""
+
+
+
         try:
             # Generate character n-grams
             ngrams = []
@@ -895,6 +937,9 @@ class FingerprintingClusterManager:
     
     async def _store_fingerprints(self, result: FingerprintResult):
         """Store fingerprints in vector database"""
+
+
+
         try:
             # Determine content type from result
             content_type = None
@@ -951,6 +996,9 @@ class FingerprintingClusterManager:
     
     async def _save_index(self, content_type: str, index):
         """Save FAISS index to storage"""
+
+
+
         try:
             index_path = f"/data/indexes/{content_type}_index.faiss"
             faiss.write_index(index, index_path)
@@ -959,6 +1007,9 @@ class FingerprintingClusterManager:
     
     async def _store_metadata(self, result: FingerprintResult):
         """Store fingerprint metadata in PostgreSQL"""
+
+
+
         try:
             # This would connect to PostgreSQL and store metadata
             # Implementation depends on your database schema
@@ -1009,6 +1060,9 @@ class FingerprintingClusterManager:
     
     async def _send_callback(self, callback_url: str, result: FingerprintResult):
         """Send callback with fingerprint result"""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 payload = {

@@ -238,6 +238,9 @@ class FingerprintingConfigManager:
     
     def _load_from_file(self, config_path: str):
         """Load configuration from YAML or JSON file."""
+
+
+
         try:
             config_file = Path(config_path)
             
@@ -261,6 +264,9 @@ class FingerprintingConfigManager:
     
     def _apply_config_data(self, config_data: Dict[str, Any]):
         """Apply configuration data to configuration objects."""
+
+
+
         try:
             # Audio processing configuration
             if 'audio_processing' in config_data:
@@ -378,6 +384,9 @@ class FingerprintingConfigManager:
     
     def get_config_dict(self) -> Dict[str, Any]:
         """Get complete configuration as dictionary."""
+
+
+
         return {
             'environment': self.environment.value,
             'audio_processing': self.audio_processing.__dict__,
@@ -391,6 +400,9 @@ class FingerprintingConfigManager:
     
     def update_runtime_setting(self, section: str, key: str, value: Any):
         """Update a runtime configuration setting."""
+
+
+
         try:
             config_section = getattr(self, section)
             if hasattr(config_section, key):
@@ -435,6 +447,9 @@ class FingerprintingConfigManager:
     
     def export_config(self, output_path: str, format: str = 'yaml'):
         """Export current configuration to file."""
+
+
+
         try:
             config_dict = self.get_config_dict()
             output_file = Path(output_path)
@@ -452,6 +467,9 @@ class FingerprintingConfigManager:
     
     def get_runtime_overrides(self) -> Dict[str, Any]:
         """Get current runtime configuration overrides."""
+
+
+
         return self._runtime_overrides.copy()
     
     def reset_to_defaults(self):
@@ -479,39 +497,63 @@ config_manager = FingerprintingConfigManager()
 
 def get_config() -> FingerprintingConfigManager:
     """Get the global configuration manager instance."""
+
+
+
     return config_manager
 
 
 def get_audio_config() -> AudioProcessingConfig:
     """Get audio processing configuration."""
+
+
+
     return config_manager.audio_processing
 
 
 def get_fingerprinting_config() -> FingerprintingConfig:
     """Get fingerprinting configuration."""
+
+
+
     return config_manager.fingerprinting
 
 
 def get_matching_config() -> MatchingConfig:
     """Get matching configuration."""
+
+
+
     return config_manager.matching
 
 
 def get_database_config() -> DatabaseConfig:
     """Get database configuration."""
+
+
+
     return config_manager.database
 
 
 def get_security_config() -> SecurityConfig:
     """Get security configuration."""
+
+
+
     return config_manager.security
 
 
 def get_performance_config() -> PerformanceConfig:
     """Get performance configuration."""
+
+
+
     return config_manager.performance
 
 
 def get_monitoring_config() -> MonitoringConfig:
     """Get monitoring configuration."""
+
+
+
     return config_manager.monitoring

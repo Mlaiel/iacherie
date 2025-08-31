@@ -116,6 +116,9 @@ class PlatformConnection(BaseModel):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit la connexion en dictionnaire."""
+
+
+
         return {
             "id": str(self.id),
             "platform_name": self.platform_name,

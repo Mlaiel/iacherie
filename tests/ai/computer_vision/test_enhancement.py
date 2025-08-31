@@ -30,7 +30,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 #
 # Created by: Fahed Mlaiel (mlaiel@live.de)
 # 
-# ⚠️  STRICT COPYRIGHT WARNING ⚠️ 
+#   STRICT COPYRIGHT WARNING  
 # This code, concept, and intellectual property belongs exclusively to Fahed Mlaiel.
 # ANY unauthorized use, reproduction, distribution, or theft of this code/concept 
 # without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is 
@@ -117,6 +117,9 @@ class TestNoiseReducer(unittest.TestCase):
     
     def test_gaussian_noise_reduction(self):
         """Test Gaussian noise reduction"""
+
+
+
         try:
             denoised = self.reducer.reduce_gaussian_noise(self.noisy_image)
             
@@ -135,6 +138,9 @@ class TestNoiseReducer(unittest.TestCase):
     
     def test_bilateral_filtering(self):
         """Test bilateral filtering for noise reduction"""
+
+
+
         try:
             filtered = self.reducer.bilateral_filter(self.noisy_image)
             
@@ -150,6 +156,9 @@ class TestNoiseReducer(unittest.TestCase):
     
     def test_median_filtering(self):
         """Test median filtering for impulse noise"""
+
+
+
         try:
             filtered = self.reducer.median_filter(self.noisy_image, kernel_size=5)
             
@@ -164,6 +173,9 @@ class TestNoiseReducer(unittest.TestCase):
     
     def test_adaptive_denoising(self):
         """Test adaptive denoising algorithm"""
+
+
+
         try:
             denoised = self.reducer.adaptive_denoise(self.noisy_image)
             
@@ -178,6 +190,9 @@ class TestNoiseReducer(unittest.TestCase):
     
     def test_noise_estimation(self):
         """Test noise level estimation"""
+
+
+
         try:
             noise_level = self.reducer.estimate_noise_level(self.noisy_image)
             
@@ -242,6 +257,9 @@ class TestColorCorrector(unittest.TestCase):
     
     def test_brightness_adjustment(self):
         """Test brightness adjustment"""
+
+
+
         try:
             # Brighten dark image
             brightened = self.corrector.adjust_brightness(self.dark_image, factor=1.5)
@@ -261,6 +279,9 @@ class TestColorCorrector(unittest.TestCase):
     
     def test_contrast_adjustment(self):
         """Test contrast adjustment"""
+
+
+
         try:
             # Increase contrast
             high_contrast = self.corrector.adjust_contrast(self.test_image, factor=1.5)
@@ -280,6 +301,9 @@ class TestColorCorrector(unittest.TestCase):
     
     def test_saturation_adjustment(self):
         """Test saturation adjustment"""
+
+
+
         try:
             # Increase saturation
             saturated = self.corrector.adjust_saturation(self.test_image, factor=1.3)
@@ -301,6 +325,9 @@ class TestColorCorrector(unittest.TestCase):
     
     def test_white_balance_correction(self):
         """Test white balance correction"""
+
+
+
         try:
             corrected = self.corrector.correct_white_balance(self.test_image)
             
@@ -315,6 +342,9 @@ class TestColorCorrector(unittest.TestCase):
     
     def test_gamma_correction(self):
         """Test gamma correction"""
+
+
+
         try:
             # Test different gamma values
             gamma_high = self.corrector.gamma_correction(self.test_image, gamma=2.2)
@@ -332,6 +362,9 @@ class TestColorCorrector(unittest.TestCase):
     
     def test_histogram_equalization(self):
         """Test histogram equalization"""
+
+
+
         try:
             equalized = self.corrector.histogram_equalization(self.dark_image)
             
@@ -370,6 +403,9 @@ class TestResolutionUpscaler(unittest.TestCase):
     
     def test_bicubic_upscaling(self):
         """Test bicubic interpolation upscaling"""
+
+
+
         try:
             upscaled = self.upscaler.bicubic_upscale(self.low_res_image, scale_factor=2.0)
             
@@ -386,6 +422,9 @@ class TestResolutionUpscaler(unittest.TestCase):
     
     def test_lanczos_upscaling(self):
         """Test Lanczos upscaling"""
+
+
+
         try:
             upscaled = self.upscaler.lanczos_upscale(self.low_res_image, scale_factor=3.0)
             
@@ -401,6 +440,9 @@ class TestResolutionUpscaler(unittest.TestCase):
     
     def test_super_resolution_upscaling(self):
         """Test AI-based super resolution upscaling"""
+
+
+
         try:
             upscaled = self.upscaler.super_resolution_upscale(self.low_res_image, scale_factor=4.0)
             
@@ -416,6 +458,9 @@ class TestResolutionUpscaler(unittest.TestCase):
     
     def test_edge_preserving_upscaling(self):
         """Test edge-preserving upscaling"""
+
+
+
         try:
             upscaled = self.upscaler.edge_preserving_upscale(self.low_res_image, scale_factor=2.0)
             
@@ -435,6 +480,9 @@ class TestResolutionUpscaler(unittest.TestCase):
     
     def test_upscaling_quality_metrics(self):
         """Test upscaling quality assessment"""
+
+
+
         try:
             # Create reference high-res image
             reference = cv2.resize(self.low_res_image, (200, 200), interpolation=cv2.INTER_CUBIC)
@@ -480,6 +528,9 @@ class TestImageEnhancer(unittest.TestCase):
     
     def _create_enhancement_settings(self):
         """Create enhancement settings for testing"""
+
+
+
         try:
             return EnhancementSettings(
                 noise_reduction=True,
@@ -506,6 +557,9 @@ class TestImageEnhancer(unittest.TestCase):
     
     def test_comprehensive_enhancement(self):
         """Test comprehensive image enhancement"""
+
+
+
         try:
             enhanced = self.enhancer.enhance(self.test_image, settings=self.settings)
             
@@ -530,6 +584,9 @@ class TestImageEnhancer(unittest.TestCase):
     
     def test_selective_enhancement(self):
         """Test selective enhancement features"""
+
+
+
         try:
             # Test noise reduction only
             noise_reduced = self.enhancer.enhance(self.test_image, 
@@ -550,6 +607,9 @@ class TestImageEnhancer(unittest.TestCase):
     
     def test_sharpening_enhancement(self):
         """Test image sharpening"""
+
+
+
         try:
             # Create a slightly blurred image
             blurred = cv2.GaussianBlur(self.test_image, (5, 5), 1.0)
@@ -571,6 +631,9 @@ class TestImageEnhancer(unittest.TestCase):
     
     def test_enhancement_quality_assessment(self):
         """Test enhancement quality assessment"""
+
+
+
         try:
             enhanced = self.enhancer.enhance(self.test_image, settings=self.settings)
             
@@ -587,6 +650,9 @@ class TestImageEnhancer(unittest.TestCase):
     
     def test_batch_enhancement(self):
         """Test batch image enhancement"""
+
+
+
         try:
             # Create multiple test images
             images = [self.test_image for _ in range(3)]
@@ -650,6 +716,9 @@ class TestVideoEnhancer(unittest.TestCase):
     
     def test_video_enhancement(self):
         """Test video enhancement"""
+
+
+
         try:
             # Create output path
             output_file = tempfile.NamedTemporaryFile(suffix='.mp4', delete=False)
@@ -681,6 +750,9 @@ class TestVideoEnhancer(unittest.TestCase):
     
     def test_frame_by_frame_enhancement(self):
         """Test frame-by-frame video enhancement"""
+
+
+
         try:
             enhanced_frames = self.enhancer.enhance_frames(self.test_video_path, max_frames=10)
             
@@ -696,6 +768,9 @@ class TestVideoEnhancer(unittest.TestCase):
     
     def test_video_stabilization(self):
         """Test video stabilization"""
+
+
+
         try:
             stabilized_path = self.enhancer.stabilize_video(self.test_video_path)
             
@@ -712,6 +787,9 @@ class TestVideoEnhancer(unittest.TestCase):
     
     def test_temporal_noise_reduction(self):
         """Test temporal noise reduction"""
+
+
+
         try:
             denoised_path = self.enhancer.temporal_denoise(self.test_video_path)
             
@@ -764,6 +842,9 @@ class TestEnhancementIntegration(unittest.TestCase):
     
     def test_complete_enhancement_pipeline(self):
         """Test complete enhancement pipeline"""
+
+
+
         try:
             # Step 1: Noise reduction
             denoised = self.noise_reducer.reduce_gaussian_noise(self.test_image)
@@ -789,6 +870,9 @@ class TestEnhancementIntegration(unittest.TestCase):
     
     def test_enhancement_quality_comparison(self):
         """Test enhancement quality comparison"""
+
+
+
         try:
             # Enhance using different methods
             method1 = self.image_enhancer.enhance(self.test_image, 
@@ -816,6 +900,9 @@ class TestEnhancementIntegration(unittest.TestCase):
     
     def test_performance_benchmarking(self):
         """Test enhancement performance"""
+
+
+
         try:
             start_time = time.time()
             

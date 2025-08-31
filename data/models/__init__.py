@@ -8,13 +8,13 @@ fingerprinting, revenue tracking, content protection, and licensing.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  STRICT WARNING FOR UNAUTHORIZED USE:
+  STRICT WARNING FOR UNAUTHORIZED USE:
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use without explicit written 
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 
-🚀 TEAM SPECIALISTS:
+ TEAM SPECIALISTS:
 • Lead Dev IA + Backend Senior: Fahed Mlaiel
 • ML Engineer + Audio Specialist: Advanced AI Processing
 • DevOps + Infrastructure: Enterprise Deployment
@@ -114,10 +114,19 @@ RELATIONSHIP_MAPPINGS = {
 }
 
 def get_model_by_table_name(table_name: str):
-    """Get model class by table name"""    return MODEL_REGISTRY.get(table_name)
+    """Get model class by table name"""
+
+
+    return MODEL_REGISTRY.get(table_name)
 
 def get_all_models():
-    """Get all registered models"""    return list(MODEL_REGISTRY.values())
+    """Get all registered models"""
+
+
+    return list(MODEL_REGISTRY.values())
 
 def get_model_relationships():
-    """Get model relationship information"""    return RELATIONSHIP_MAPPINGS
+    """Get model relationship information"""
+
+
+    return RELATIONSHIP_MAPPINGS

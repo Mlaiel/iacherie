@@ -8,7 +8,7 @@ Responsibility: Production-grade CDN deployment and global content distribution
 Technologies: Python, CloudFlare, AWS CloudFront, Azure CDN, Multi-CDN
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -182,7 +182,7 @@ class CDNMetrics:
 
 class CDNManager:
     """
-    🎯 Industrial CDN Manager - IA-Influencer-Agent
+     Industrial CDN Manager - IA-Influencer-Agent
     
     Production-grade CDN and global content distribution with:
     - Multi-provider CDN orchestration (CloudFlare, CloudFront, Azure)
@@ -206,14 +206,17 @@ class CDNManager:
         
         self._initialize_clients()
         
-        logger.info(f"🚀 CDNManager initialized: {config.name} ({config.provider.value})")
+        logger.info(f" CDNManager initialized: {config.name} ({config.provider.value})")
     
     def _initialize_clients(self):
         """Initialize CDN provider clients"""
+
+
+
         try:
             if self.config.provider == CDNProvider.AWS_CLOUDFRONT:
                 self._cloudfront_client = boto3.client('cloudfront')
-                logger.info("✅ AWS CloudFront client initialized")
+                logger.info(" AWS CloudFront client initialized")
             
             elif self.config.provider == CDNProvider.CLOUDFLARE:
                 self._cloudflare_client = {
@@ -221,18 +224,21 @@ class CDNManager:
                     'zone_id': os.getenv('CLOUDFLARE_ZONE_ID'),
                     'base_url': 'https://api.cloudflare.com/client/v4'
                 }
-                logger.info("✅ CloudFlare client initialized")
+                logger.info(" CloudFlare client initialized")
             
             # Additional provider clients can be initialized here
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize CDN clients: {e}")
+            logger.error(f" Failed to initialize CDN clients: {e}")
             raise
     
     async def deploy_cdn_distribution(self) -> Dict[str, Any]:
         """Deploy CDN distribution with complete configuration"""
+
+
+
         try:
-            logger.info(f"🚀 Starting CDN distribution deployment...")
+            logger.info(f" Starting CDN distribution deployment...")
             
             # Deploy based on provider
             if self.config.provider == CDNProvider.AWS_CLOUDFRONT:
@@ -279,16 +285,19 @@ class CDNManager:
             self.metrics.distribution_id = deployment_result.get("distribution_id", self.metrics.distribution_id)
             self.metrics.status = DistributionStatus.DEPLOYED
             
-            logger.info(f"✅ CDN distribution deployment completed")
+            logger.info(f" CDN distribution deployment completed")
             return final_result
             
         except Exception as e:
-            logger.error(f"❌ CDN distribution deployment failed: {e}")
+            logger.error(f" CDN distribution deployment failed: {e}")
             self.metrics.status = DistributionStatus.FAILED
             return {"success": False, "error": str(e)}
     
     async def _deploy_cloudfront_distribution(self) -> Dict[str, Any]:
         """Deploy AWS CloudFront distribution"""
+
+
+
         try:
             # Generate CloudFront distribution configuration
             distribution_config = self._generate_cloudfront_config()
@@ -313,7 +322,7 @@ class CDNManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ CloudFront deployment failed: {e}")
+            logger.error(f" CloudFront deployment failed: {e}")
             raise
     
     def _generate_cloudfront_config(self) -> Dict[str, Any]:
@@ -457,6 +466,9 @@ class CDNManager:
     
     async def _wait_for_cloudfront_deployment(self, distribution_id: str):
         """Wait for CloudFront distribution deployment to complete"""
+
+
+
         try:
             logger.info(f"⏳ Waiting for CloudFront deployment: {distribution_id}")
             
@@ -470,14 +482,17 @@ class CDNManager:
             )
             
             self.metrics.status = DistributionStatus.DEPLOYED
-            logger.info(f"✅ CloudFront deployment completed: {distribution_id}")
+            logger.info(f" CloudFront deployment completed: {distribution_id}")
             
         except Exception as e:
-            logger.error(f"❌ CloudFront deployment wait failed: {e}")
+            logger.error(f" CloudFront deployment wait failed: {e}")
             self.metrics.status = DistributionStatus.FAILED
     
     async def _deploy_cloudflare_distribution(self) -> Dict[str, Any]:
         """Deploy CloudFlare CDN distribution"""
+
+
+
         try:
             if not self._cloudflare_client or not self._cloudflare_client['api_token']:
                 raise ValueError("CloudFlare API token not configured")
@@ -516,11 +531,14 @@ class CDNManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ CloudFlare deployment failed: {e}")
+            logger.error(f" CloudFlare deployment failed: {e}")
             raise
     
     async def _create_cloudflare_page_rules(self, headers: Dict[str, str]):
         """Create CloudFlare page rules for cache optimization"""
+
+
+
         try:
             url = f"{self._cloudflare_client['base_url']}/zones/{self._cloudflare_client['zone_id']}/pagerules"
             
@@ -543,18 +561,21 @@ class CDNManager:
             for rule in cache_rules:
                 response = requests.post(url, headers=headers, json=rule)
                 if response.status_code == 200:
-                    logger.info(f"✅ CloudFlare page rule created")
+                    logger.info(f" CloudFlare page rule created")
                 else:
-                    logger.warning(f"⚠️ Failed to create CloudFlare page rule: {response.text}")
+                    logger.warning(f" Failed to create CloudFlare page rule: {response.text}")
                     
         except Exception as e:
-            logger.warning(f"⚠️ Failed to create CloudFlare page rules: {e}")
+            logger.warning(f" Failed to create CloudFlare page rules: {e}")
     
     async def _deploy_azure_cdn_distribution(self) -> Dict[str, Any]:
         """Deploy Azure CDN distribution"""
+
+
+
         try:
             # This would integrate with Azure SDK
-            logger.info("ℹ️ Azure CDN deployment requires Azure SDK integration")
+            logger.info("ℹ Azure CDN deployment requires Azure SDK integration")
             
             return {
                 "distribution_id": f"azure-{self.config.name}",
@@ -563,11 +584,14 @@ class CDNManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Azure CDN deployment failed: {e}")
+            logger.error(f" Azure CDN deployment failed: {e}")
             raise
     
     async def _configure_ssl_certificates(self) -> Dict[str, Any]:
         """Configure SSL certificates for CDN"""
+
+
+
         try:
             if not self.config.ssl_enabled:
                 return {"ssl": "disabled"}
@@ -590,11 +614,14 @@ class CDNManager:
             return {"ssl": "configured"}
             
         except Exception as e:
-            logger.error(f"❌ SSL configuration failed: {e}")
+            logger.error(f" SSL configuration failed: {e}")
             return {"ssl": "failed", "error": str(e)}
     
     async def _configure_custom_domain(self) -> Dict[str, Any]:
         """Configure custom domain for CDN"""
+
+
+
         try:
             if not self.config.custom_domain:
                 return {"custom_domain": "not_configured"}
@@ -610,11 +637,14 @@ class CDNManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Custom domain configuration failed: {e}")
+            logger.error(f" Custom domain configuration failed: {e}")
             return {"custom_domain": "failed", "error": str(e)}
     
     async def _configure_cache_policies(self) -> Dict[str, Any]:
         """Configure cache policies for different content types"""
+
+
+
         try:
             cache_config = {
                 "default_policy": self.config.default_cache_policy.value,
@@ -630,15 +660,18 @@ class CDNManager:
                     "path_pattern": self._get_path_pattern(content_type)
                 }
             
-            logger.info(f"✅ Cache policies configured: {len(self.config.cache_policies)} policies")
+            logger.info(f" Cache policies configured: {len(self.config.cache_policies)} policies")
             return cache_config
             
         except Exception as e:
-            logger.error(f"❌ Cache policy configuration failed: {e}")
+            logger.error(f" Cache policy configuration failed: {e}")
             return {"cache_policies": "failed", "error": str(e)}
     
     async def _configure_security_policies(self) -> Dict[str, Any]:
         """Configure WAF and security policies"""
+
+
+
         try:
             security_config = {
                 "waf_enabled": self.config.waf_enabled,
@@ -661,15 +694,18 @@ class CDNManager:
                     "bot_detection"
                 ]
             
-            logger.info(f"✅ Security policies configured")
+            logger.info(f" Security policies configured")
             return security_config
             
         except Exception as e:
-            logger.error(f"❌ Security policy configuration failed: {e}")
+            logger.error(f" Security policy configuration failed: {e}")
             return {"security_policies": "failed", "error": str(e)}
     
     async def _configure_analytics(self) -> Dict[str, Any]:
         """Configure CDN analytics and monitoring"""
+
+
+
         try:
             analytics_config = {
                 "analytics_enabled": self.config.analytics_enabled,
@@ -694,15 +730,18 @@ class CDNManager:
                 if self.config.provider == CDNProvider.AWS_CLOUDFRONT:
                     await self._setup_cloudwatch_alarms()
             
-            logger.info(f"✅ Analytics and monitoring configured")
+            logger.info(f" Analytics and monitoring configured")
             return analytics_config
             
         except Exception as e:
-            logger.error(f"❌ Analytics configuration failed: {e}")
+            logger.error(f" Analytics configuration failed: {e}")
             return {"analytics": "failed", "error": str(e)}
     
     async def _setup_cloudwatch_alarms(self):
         """Setup CloudWatch alarms for CloudFront monitoring"""
+
+
+
         try:
             cloudwatch = boto3.client('cloudwatch')
             
@@ -741,13 +780,16 @@ class CDNManager:
                     ]
                 )
             
-            logger.info(f"✅ CloudWatch alarms configured: {len(alarms)} alarms")
+            logger.info(f" CloudWatch alarms configured: {len(alarms)} alarms")
             
         except Exception as e:
-            logger.warning(f"⚠️ Failed to setup CloudWatch alarms: {e}")
+            logger.warning(f" Failed to setup CloudWatch alarms: {e}")
     
     async def get_cdn_metrics(self) -> Dict[str, Any]:
         """Get comprehensive CDN metrics and analytics"""
+
+
+
         try:
             if self.config.provider == CDNProvider.AWS_CLOUDFRONT:
                 metrics_data = await self._get_cloudfront_metrics()
@@ -798,15 +840,18 @@ class CDNManager:
                 }
             }
             
-            logger.info(f"📊 Retrieved CDN metrics for {self.config.name}")
+            logger.info(f" Retrieved CDN metrics for {self.config.name}")
             return metrics_result
             
         except Exception as e:
-            logger.error(f"❌ Failed to get CDN metrics: {e}")
+            logger.error(f" Failed to get CDN metrics: {e}")
             return {"error": str(e)}
     
     async def _get_cloudfront_metrics(self) -> Dict[str, Any]:
         """Get CloudFront-specific metrics"""
+
+
+
         try:
             cloudwatch = boto3.client('cloudwatch')
             
@@ -870,11 +915,14 @@ class CDNManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to get CloudFront metrics: {e}")
+            logger.error(f" Failed to get CloudFront metrics: {e}")
             return {}
     
     async def _get_cloudflare_metrics(self) -> Dict[str, Any]:
         """Get CloudFlare-specific metrics"""
+
+
+
         try:
             if not self._cloudflare_client:
                 return {}
@@ -905,15 +953,18 @@ class CDNManager:
                     "avg_response_time_ms": 0.0  # Not available in basic API
                 }
             else:
-                logger.warning(f"⚠️ Failed to get CloudFlare metrics: {response.status_code}")
+                logger.warning(f" Failed to get CloudFlare metrics: {response.status_code}")
                 return {}
                 
         except Exception as e:
-            logger.error(f"❌ Failed to get CloudFlare metrics: {e}")
+            logger.error(f" Failed to get CloudFlare metrics: {e}")
             return {}
     
     async def _get_generic_metrics(self) -> Dict[str, Any]:
         """Get generic metrics for unsupported providers"""
+
+
+
         return {
             "requests_24h": 0,
             "bandwidth_gb_24h": 0.0,
@@ -924,8 +975,11 @@ class CDNManager:
     
     async def purge_cache(self, paths: Optional[List[str]] = None) -> Dict[str, Any]:
         """Purge CDN cache for specified paths or entire distribution"""
+
+
+
         try:
-            logger.info(f"🔄 Purging CDN cache: {self.config.name}")
+            logger.info(f" Purging CDN cache: {self.config.name}")
             
             if self.config.provider == CDNProvider.AWS_CLOUDFRONT:
                 return await self._purge_cloudfront_cache(paths)
@@ -935,11 +989,14 @@ class CDNManager:
                 raise ValueError(f"Cache purge not supported for provider: {self.config.provider}")
                 
         except Exception as e:
-            logger.error(f"❌ Cache purge failed: {e}")
+            logger.error(f" Cache purge failed: {e}")
             return {"success": False, "error": str(e)}
     
     async def _purge_cloudfront_cache(self, paths: Optional[List[str]]) -> Dict[str, Any]:
         """Purge CloudFront cache"""
+
+
+
         try:
             invalidation_paths = paths or ["/*"]
             
@@ -964,11 +1021,14 @@ class CDNManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ CloudFront cache purge failed: {e}")
+            logger.error(f" CloudFront cache purge failed: {e}")
             raise
     
     async def _purge_cloudflare_cache(self, paths: Optional[List[str]]) -> Dict[str, Any]:
         """Purge CloudFlare cache"""
+
+
+
         try:
             headers = {
                 'Authorization': f"Bearer {self._cloudflare_client['api_token']}",
@@ -994,13 +1054,16 @@ class CDNManager:
                 raise Exception(f"CloudFlare API error: {response.text}")
                 
         except Exception as e:
-            logger.error(f"❌ CloudFlare cache purge failed: {e}")
+            logger.error(f" CloudFlare cache purge failed: {e}")
             raise
     
     async def cleanup_cdn_distribution(self) -> Dict[str, Any]:
         """Cleanup and delete CDN distribution"""
+
+
+
         try:
-            logger.info(f"🗑️ Starting CDN distribution cleanup: {self.config.name}")
+            logger.info(f" Starting CDN distribution cleanup: {self.config.name}")
             
             if self.config.provider == CDNProvider.AWS_CLOUDFRONT:
                 cleanup_result = await self._cleanup_cloudfront_distribution()
@@ -1019,11 +1082,14 @@ class CDNManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ CDN cleanup failed: {e}")
+            logger.error(f" CDN cleanup failed: {e}")
             return {"success": False, "error": str(e)}
     
     async def _cleanup_cloudfront_distribution(self) -> Dict[str, Any]:
         """Cleanup CloudFront distribution"""
+
+
+
         try:
             # First disable the distribution
             distribution = self._cloudfront_client.get_distribution(Id=self.metrics.distribution_id)
@@ -1047,11 +1113,14 @@ class CDNManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ CloudFront cleanup failed: {e}")
+            logger.error(f" CloudFront cleanup failed: {e}")
             raise
     
     async def _cleanup_cloudflare_distribution(self) -> Dict[str, Any]:
         """Cleanup CloudFlare distribution (reset zone settings)"""
+
+
+
         try:
             # Reset zone settings to defaults
             # This is a simplified cleanup - actual implementation would be more comprehensive
@@ -1063,7 +1132,7 @@ class CDNManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ CloudFlare cleanup failed: {e}")
+            logger.error(f" CloudFlare cleanup failed: {e}")
             raise
 
 
@@ -1074,6 +1143,9 @@ class CDNConfigurationManager:
     @staticmethod
     def load_config_from_file(config_path: Path) -> CDNConfig:
         """Load CDN configuration from YAML file"""
+
+
+
         try:
             with open(config_path, 'r') as file:
                 config_data = yaml.safe_load(file)
@@ -1093,12 +1165,15 @@ class CDNConfigurationManager:
             )
             
         except Exception as e:
-            logger.error(f"❌ Failed to load config from {config_path}: {e}")
+            logger.error(f" Failed to load config from {config_path}: {e}")
             raise
     
     @staticmethod
     def save_config_to_file(config: CDNConfig, config_path: Path):
         """Save CDN configuration to YAML file"""
+
+
+
         try:
             config_data = {
                 'name': config.name,
@@ -1120,10 +1195,10 @@ class CDNConfigurationManager:
             with open(config_path, 'w') as file:
                 yaml.dump(config_data, file, default_flow_style=False)
             
-            logger.info(f"✅ Configuration saved to {config_path}")
+            logger.info(f" Configuration saved to {config_path}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to save config to {config_path}: {e}")
+            logger.error(f" Failed to save config to {config_path}: {e}")
             raise
 
 
@@ -1149,6 +1224,9 @@ def create_cdn_manager(
 # Usage Example
 async def main():
     """Example usage of CDNManager"""
+
+
+
     try:
         # Create CDN manager for global content distribution
         cdn_manager = create_cdn_manager(
@@ -1171,7 +1249,7 @@ async def main():
         print(f"Cache Purge: {purge_result}")
         
     except Exception as e:
-        logger.error(f"❌ Example failed: {e}")
+        logger.error(f" Example failed: {e}")
 
 
 if __name__ == "__main__":

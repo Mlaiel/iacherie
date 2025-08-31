@@ -135,37 +135,70 @@ def create_nlp_agent(config: Optional[NLPAgentConfig] = None) -> NLPOrchestrator
     
     Returns:
         Configured NLPOrchestrator instance
-    """    return NLPOrchestrator(config)
+    """
+
+
+    return NLPOrchestrator(config)
 
 def create_text_analyzer(config: Optional[NLPAgentConfig] = None) -> TextAnalyzer:
-    """Create a text analyzer instance"""    return TextAnalyzer(config)
+    """Create a text analyzer instance"""
+
+
+    return TextAnalyzer(config)
 
 def create_sentiment_engine(config: Optional[NLPAgentConfig] = None) -> SentimentEngine:
-    """Create a sentiment analysis engine"""    return SentimentEngine(config)
+    """Create a sentiment analysis engine"""
+
+
+    return SentimentEngine(config)
 
 def create_language_detector(config: Optional[NLPAgentConfig] = None) -> LanguageDetector:
-    """Create a language detection engine"""    return LanguageDetector(config)
+    """Create a language detection engine"""
+
+
+    return LanguageDetector(config)
 
 def create_content_classifier(config: Optional[NLPAgentConfig] = None) -> ContentClassifier:
-    """Create a content classification engine"""    return ContentClassifier(config)
+    """Create a content classification engine"""
+
+
+    return ContentClassifier(config)
 
 def create_semantic_processor(config: Optional[NLPAgentConfig] = None) -> SemanticProcessor:
-    """Create a semantic processing engine"""    return SemanticProcessor(config)
+    """Create a semantic processing engine"""
+
+
+    return SemanticProcessor(config)
 
 def create_intent_recognizer(config: Optional[NLPAgentConfig] = None) -> IntentRecognizer:
-    """Create an intent recognition engine"""    return IntentRecognizer(config)
+    """Create an intent recognition engine"""
+
+
+    return IntentRecognizer(config)
 
 def create_entity_extractor(config: Optional[NLPAgentConfig] = None) -> EntityExtractor:
-    """Create an entity extraction engine"""    return EntityExtractor(config)
+    """Create an entity extraction engine"""
+
+
+    return EntityExtractor(config)
 
 def create_topic_modeler(config: Optional[NLPAgentConfig] = None) -> TopicModeler:
-    """Create a topic modeling engine"""    return TopicModeler(config)
+    """Create a topic modeling engine"""
+
+
+    return TopicModeler(config)
 
 def create_text_fingerprinter(config: Optional[NLPAgentConfig] = None) -> TextFingerprinter:
-    """Create a text fingerprinting engine"""    return TextFingerprinter(config)
+    """Create a text fingerprinting engine"""
+
+
+    return TextFingerprinter(config)
 
 def create_embeddings_engine(config: Optional[NLPAgentConfig] = None) -> EmbeddingsEngine:
-    """Create an embeddings engine"""    return EmbeddingsEngine(config)
+    """Create an embeddings engine"""
+
+
+    return EmbeddingsEngine(config)
 
 def get_supported_languages() -> List[str]:
     """Get list of supported languages for analysis"""    # This would typically return languages supported by the models
@@ -175,7 +208,10 @@ def get_supported_languages() -> List[str]:
     ]
 
 def get_available_models() -> Dict[str, List[str]]:
-    """Get available models for different NLP tasks"""    return {
+    """Get available models for different NLP tasks"""
+
+
+    return {
         'sentiment': [
             'cardiffnlp/twitter-roberta-base-sentiment-latest',
             'nlptown/bert-base-multilingual-uncased-sentiment',
@@ -226,7 +262,10 @@ logger.info(f"Description: {__description__}")
 
 # Health check function for module
 def module_health_check() -> Dict[str, Any]:
-    """Perform health check for entire NLP module"""    try:
+    """Perform health check for entire NLP module"""
+
+
+    try:
         orchestrator = create_nlp_agent()
         health_status = orchestrator.health_check()
         
@@ -263,4 +302,7 @@ __all__ = [
 ]
 
 def create_nlp_agent():
-    """Factory function to create configured NLP agent"""    return NLPOrchestrator()
+    """Factory function to create configured NLP agent"""
+
+
+    return NLPOrchestrator()

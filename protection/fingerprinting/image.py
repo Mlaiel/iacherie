@@ -1,5 +1,5 @@
 """
-🖼️ Image Content Fingerprinting Service
+ Image Content Fingerprinting Service
 =======================================
 
 Enterprise-grade image fingerprinting with advanced computer vision:
@@ -82,6 +82,9 @@ class PerceptualImageHashing:
         Returns:
             Dictionary containing various hash types
         """
+
+
+
         try:
             # Load image
             with Image.open(image_path) as img:
@@ -162,6 +165,9 @@ class CLIPEmbeddingExtractor:
         
     def _initialize_model(self):
         """Initialize CLIP model."""
+
+
+
         try:
             self.processor = CLIPProcessor.from_pretrained(self.model_name)
             self.model = CLIPModel.from_pretrained(self.model_name)
@@ -230,6 +236,9 @@ class CLIPEmbeddingExtractor:
     
     def _extract_semantic_features(self, embeddings: np.ndarray) -> Dict[str, float]:
         """Extract semantic features from embeddings."""
+
+
+
         return {
             "embedding_mean": float(np.mean(embeddings)),
             "embedding_std": float(np.std(embeddings)),
@@ -261,6 +270,9 @@ class TraditionalFeatureExtractor:
         Returns:
             Dictionary containing extracted features
         """
+
+
+
         try:
             # Load image
             img = cv2.imread(image_path)
@@ -305,6 +317,9 @@ class TraditionalFeatureExtractor:
     
     def _extract_sift_features(self, gray: np.ndarray) -> Dict[str, Any]:
         """Extract SIFT features."""
+
+
+
         try:
             keypoints, descriptors = self.sift.detectAndCompute(gray, None)
             
@@ -344,6 +359,9 @@ class TraditionalFeatureExtractor:
     
     def _extract_orb_features(self, gray: np.ndarray) -> Dict[str, Any]:
         """Extract ORB features."""
+
+
+
         try:
             keypoints, descriptors = self.orb.detectAndCompute(gray, None)
             
@@ -408,6 +426,9 @@ class TraditionalFeatureExtractor:
     
     def _extract_corner_features(self, gray: np.ndarray) -> Dict[str, Any]:
         """Extract corner features using Harris corner detection."""
+
+
+
         try:
             # Harris corner detection
             corners = cv2.cornerHarris(gray, 2, 3, 0.04)
@@ -444,6 +465,9 @@ class TraditionalFeatureExtractor:
     
     def _extract_edge_features(self, gray: np.ndarray) -> Dict[str, Any]:
         """Extract edge features using Canny edge detection."""
+
+
+
         try:
             # Canny edge detection
             edges = cv2.Canny(gray, 50, 150)
@@ -517,6 +541,9 @@ class ColorAnalyzer:
         Returns:
             Dictionary containing color analysis results
         """
+
+
+
         try:
             # Load image
             with Image.open(image_path) as img:
@@ -555,6 +582,9 @@ class ColorAnalyzer:
     
     def _extract_dominant_colors(self, image_path: str) -> List[Dict[str, Any]]:
         """Extract dominant colors using ColorThief."""
+
+
+
         try:
             color_thief = ColorThief(image_path)
             
@@ -584,6 +614,9 @@ class ColorAnalyzer:
     
     def _compute_color_histogram(self, img: Image.Image) -> Dict[str, List[float]]:
         """Compute color histograms in different color spaces."""
+
+
+
         try:
             # Convert to numpy array
             img_array = np.array(img)
@@ -613,6 +646,9 @@ class ColorAnalyzer:
     
     def _compute_color_statistics(self, img: Image.Image) -> Dict[str, float]:
         """Compute color statistics."""
+
+
+
         try:
             stat = ImageStat.Stat(img)
             
@@ -788,6 +824,9 @@ class TextureAnalyzer:
         Returns:
             Dictionary containing texture analysis results
         """
+
+
+
         try:
             # Load image
             img = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
@@ -826,6 +865,9 @@ class TextureAnalyzer:
     
     def _analyze_lbp(self, img: np.ndarray) -> Dict[str, Any]:
         """Analyze Local Binary Patterns."""
+
+
+
         try:
             # Compute LBP
             lbp = feature.local_binary_pattern(img, self.lbp_n_points, self.lbp_radius, method='uniform')
@@ -860,6 +902,9 @@ class TextureAnalyzer:
     
     def _analyze_gabor_filters(self, img: np.ndarray) -> Dict[str, Any]:
         """Analyze image using Gabor filters."""
+
+
+
         try:
             # Define Gabor filter parameters
             frequencies = [0.1, 0.3, 0.5]
@@ -908,6 +953,9 @@ class TextureAnalyzer:
     
     def _analyze_glcm(self, img: np.ndarray) -> Dict[str, Any]:
         """Analyze Gray-Level Co-occurrence Matrix."""
+
+
+
         try:
             # Resize image if too large (for performance)
             if img.shape[0] > 256 or img.shape[1] > 256:
@@ -964,6 +1012,9 @@ class TextureAnalyzer:
     
     def _analyze_fractal_dimension(self, img: np.ndarray) -> Dict[str, Any]:
         """Analyze fractal dimension of the image."""
+
+
+
         try:
             # Simple box-counting method for fractal dimension
             def box_count(img, k):
@@ -1066,6 +1117,9 @@ class ImageFingerprintingService:
         Returns:
             FingerprintResult containing all fingerprint data
         """
+
+
+
         try:
             logger.info(f"Processing image fingerprint for: {image_path}")
             
@@ -1119,6 +1173,9 @@ class ImageFingerprintingService:
     
     async def _extract_metadata(self, image_path: str) -> ImageMetadata:
         """Extract comprehensive image metadata."""
+
+
+
         try:
             with Image.open(image_path) as img:
                 width, height = img.size
@@ -1178,30 +1235,45 @@ class ImageFingerprintingService:
     
     async def _run_perceptual_hashing(self, image_path: str) -> Dict[str, Any]:
         """Run perceptual hashing."""
+
+
+
         return await asyncio.get_event_loop().run_in_executor(
             None, self.perceptual_hasher.extract_hashes, image_path
         )
     
     async def _run_clip_extraction(self, image_path: str) -> Dict[str, Any]:
         """Run CLIP embedding extraction."""
+
+
+
         return await asyncio.get_event_loop().run_in_executor(
             None, self.clip_extractor.extract_embeddings, image_path
         )
     
     async def _run_traditional_features(self, image_path: str) -> Dict[str, Any]:
         """Run traditional feature extraction."""
+
+
+
         return await asyncio.get_event_loop().run_in_executor(
             None, self.traditional_extractor.extract_features, image_path
         )
     
     async def _run_color_analysis(self, image_path: str) -> Dict[str, Any]:
         """Run color analysis."""
+
+
+
         return await asyncio.get_event_loop().run_in_executor(
             None, self.color_analyzer.analyze_colors, image_path
         )
     
     async def _run_texture_analysis(self, image_path: str) -> Dict[str, Any]:
         """Run texture analysis."""
+
+
+
         return await asyncio.get_event_loop().run_in_executor(
             None, self.texture_analyzer.analyze_texture, image_path
         )
@@ -1309,6 +1381,9 @@ class ImageFingerprintingService:
     
     def _cosine_similarity(self, vec1: List[float], vec2: List[float]) -> float:
         """Calculate cosine similarity between vectors."""
+
+
+
         try:
             vec1_array = np.array(vec1)
             vec2_array = np.array(vec2)

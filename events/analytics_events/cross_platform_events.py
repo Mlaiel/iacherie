@@ -6,7 +6,7 @@ Provides comprehensive platform synchronization, unified analytics, and optimiza
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel - All rights reserved
-⚠️  WARNING: This code and concept are proprietary to Fahed Mlaiel.
+  WARNING: This code and concept are proprietary to Fahed Mlaiel.
     Any unauthorized use, copying, or distribution without explicit written 
     permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 
@@ -121,6 +121,9 @@ class CrossPlatformEvent(BaseEvent):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert cross-platform event to dictionary"""
+
+
+
         return {
             **asdict(self),
             'platforms': [p.value for p in self.platforms],
@@ -182,6 +185,9 @@ class CrossPlatformEventHandler(BaseEventHandler):
         
     async def handle(self, event: CrossPlatformEvent) -> Dict[str, Any]:
         """Process cross-platform event with comprehensive analysis"""
+
+
+
         try:
             # Validate event data
             await self._validate_event(event)

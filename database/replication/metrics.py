@@ -88,6 +88,9 @@ class MetricSeries:
     
     def get_latest_value(self) -> Optional[Union[int, float]]:
         """Get the most recent value"""
+
+
+
         return self.points[-1].value if self.points else None
     
     def get_average(self, duration_minutes: int = 60) -> Optional[float]:
@@ -452,6 +455,9 @@ class ReplicationMetricsCollector:
     
     async def export_metrics(self):
         """Export metrics to configured systems"""
+
+
+
         try:
             # Export to files
             await self._export_to_json()
@@ -470,6 +476,9 @@ class ReplicationMetricsCollector:
     
     async def _export_to_json(self):
         """Export metrics to JSON files"""
+
+
+
         try:
             export_dir = Path(self.config.get('export_directory', '/tmp/replication_metrics'))
             export_dir.mkdir(parents=True, exist_ok=True)

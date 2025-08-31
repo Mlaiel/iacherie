@@ -266,6 +266,9 @@ class CircuitBreaker:
     
     def get_state(self) -> Dict[str, Any]:
         """Get circuit breaker state"""
+
+
+
         return {
             'state': self.state.value,
             'failure_count': self.failure_count,
@@ -420,6 +423,9 @@ class EnhancedConnectionPoolManager:
     
     async def release_connection_optimized(self, pool_id: str, connection: Any):
         """Release connection with metrics update"""
+
+
+
         try:
             await self.base_manager.release_connection(pool_id, connection)
             

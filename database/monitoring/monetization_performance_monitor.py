@@ -9,7 +9,7 @@ Project: IA Influencer Agent + Content Protection Platform
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-⚠️  AVERTISSEMENT STRICT - PROPRIÉTÉ INTELLECTUELLE ⚠️
+  AVERTISSEMENT STRICT - PROPRIÉTÉ INTELLECTUELLE 
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute violation sera poursuivie selon les lois en vigueur.
@@ -83,6 +83,9 @@ class MonetizationMetrics:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for JSON serialization"""
+
+
+
         return {
             'creator_id': self.creator_id,
             'content_id': self.content_id,
@@ -120,6 +123,9 @@ class MonetizationPerformanceSnapshot:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'timestamp': self.timestamp.isoformat(),
             'total_active_creators': self.total_active_creators,
@@ -208,6 +214,9 @@ class MonetizationPerformanceMonitor:
                                  revenue_source: RevenueSource, revenue_amount: Decimal,
                                  platform_name: str = "", metadata: Dict[str, Any] = None) -> None:
         """Track a revenue generation event"""
+
+
+
         try:
             metrics = MonetizationMetrics(
                 creator_id=creator_id,
@@ -250,6 +259,9 @@ class MonetizationPerformanceMonitor:
     
     async def _enrich_monetization_metrics(self, metrics: MonetizationMetrics) -> None:
         """Enrich monetization metrics with additional calculations"""
+
+
+
         try:
             # Get platform configuration
             platform_config = self.platform_configs.get(metrics.platform_name.lower(), {})
@@ -273,6 +285,9 @@ class MonetizationPerformanceMonitor:
     
     async def _get_content_audience_data(self, content_id: str) -> Optional[Dict[str, Any]]:
         """Get audience data for content"""
+
+
+
         try:
             # Try cache first
             cached_data = await self.cache.get(f"content:{content_id}:audience")
@@ -313,6 +328,9 @@ class MonetizationPerformanceMonitor:
     
     async def _calculate_roi(self, metrics: MonetizationMetrics) -> float:
         """Calculate ROI for monetization effort"""
+
+
+
         try:
             # Get content production cost (simplified calculation)
             production_cost = await self._get_content_production_cost(metrics.content_id)
@@ -328,6 +346,9 @@ class MonetizationPerformanceMonitor:
     
     async def _get_content_production_cost(self, content_id: str) -> float:
         """Get estimated production cost for content"""
+
+
+
         try:
             # This would typically come from content metadata or cost tracking
             # For now, return a simplified estimate based on content type
@@ -344,6 +365,9 @@ class MonetizationPerformanceMonitor:
     
     async def _calculate_optimization_score(self, metrics: MonetizationMetrics) -> float:
         """Calculate optimization score based on multiple factors"""
+
+
+
         try:
             score = 0.0
             
@@ -379,6 +403,9 @@ class MonetizationPerformanceMonitor:
     
     async def _store_monetization_metrics(self, metrics: MonetizationMetrics) -> None:
         """Store monetization metrics in database"""
+
+
+
         try:
             async with get_database_session() as session:
                 await session.execute(text("""
@@ -416,6 +443,9 @@ class MonetizationPerformanceMonitor:
     
     async def _check_monetization_performance(self, metrics: MonetizationMetrics) -> None:
         """Check monetization performance against thresholds"""
+
+
+
         try:
             alerts = []
             
@@ -452,6 +482,9 @@ class MonetizationPerformanceMonitor:
     
     async def _send_monetization_alert(self, metrics: MonetizationMetrics, alert: Dict[str, Any]) -> None:
         """Send monetization performance alert"""
+
+
+
         try:
             alert_data = {
                 'alert_type': 'monetization_performance',
@@ -479,6 +512,9 @@ class MonetizationPerformanceMonitor:
     
     async def get_creator_revenue_analytics(self, creator_id: str, days: int = 30) -> Dict[str, Any]:
         """Get comprehensive revenue analytics for a creator"""
+
+
+
         try:
             cutoff_time = datetime.utcnow() - timedelta(days=days)
             
@@ -535,6 +571,9 @@ class MonetizationPerformanceMonitor:
     
     async def _calculate_revenue_growth_trend(self, creator_id: str, days: int) -> float:
         """Calculate revenue growth trend for creator"""
+
+
+
         try:
             # Split period into two halves
             half_days = days // 2
@@ -566,6 +605,9 @@ class MonetizationPerformanceMonitor:
     
     async def get_platform_performance_comparison(self) -> Dict[str, Any]:
         """Get performance comparison across platforms"""
+
+
+
         try:
             platform_metrics = defaultdict(lambda: {
                 'total_revenue': 0.0,
@@ -614,4 +656,7 @@ class MonetizationPerformanceMonitor:
 
 async def create_monetization_performance_monitor(settings: Settings) -> MonetizationPerformanceMonitor:
     """Factory function to create monetization performance monitor"""
+
+
+
     return MonetizationPerformanceMonitor(settings)

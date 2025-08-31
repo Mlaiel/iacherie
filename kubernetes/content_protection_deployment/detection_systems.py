@@ -18,7 +18,7 @@ Key Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED 
 """
 
 import asyncio
@@ -206,6 +206,9 @@ class CopyrightDetectionEngine:
     
     def _init_similarity_algorithms(self) -> Dict[str, Any]:
         """Initialize similarity detection algorithms"""
+
+
+
         return {
             'audio': {
                 'chromaprint_similarity': self._chromaprint_similarity,
@@ -231,6 +234,9 @@ class CopyrightDetectionEngine:
     
     def _init_ml_models(self) -> Dict[str, Any]:
         """Initialize machine learning models for detection"""
+
+
+
         return {
             'violation_classifier': None,  # Load pre-trained model
             'confidence_predictor': None,  # Load confidence prediction model
@@ -389,6 +395,9 @@ class CopyrightDetectionEngine:
                                          match_data: Dict[str, Any],
                                          creator_id: str) -> Optional[ViolationDetection]:
         """Analyze a potential violation match"""
+
+
+
         try:
             # Calculate similarity scores
             similarity_scores = {}
@@ -440,6 +449,9 @@ class CopyrightDetectionEngine:
     
     async def _calculate_similarity(self, fp_type: str, fp1: Any, fp2: Any) -> float:
         """Calculate similarity between two fingerprints"""
+
+
+
         try:
             content_type = self._get_content_type_from_fingerprint(fp_type)
             algorithm = self.similarity_algorithms.get(content_type, {}).get(f"{fp_type}_similarity")
@@ -597,6 +609,9 @@ class CopyrightDetectionEngine:
     
     async def _estimate_revenue_loss(self, detection: ViolationDetection) -> float:
         """Estimate potential revenue loss from violation"""
+
+
+
         try:
             # Get engagement metrics from violating content
             violator_metrics = detection.violator_info.get('engagement_metrics', {})
@@ -705,6 +720,9 @@ class CopyrightDetectionEngine:
     
     async def _perceptual_similarity(self, fp1: str, fp2: str) -> float:
         """Calculate perceptual hash similarity"""
+
+
+
         return self._string_similarity(fp1, fp2)
     
     async def _phash_similarity(self, fp1: str, fp2: str) -> float:
@@ -790,6 +808,9 @@ class CopyrightDetectionEngine:
     
     async def _store_detection(self, detection: ViolationDetection):
         """Store violation detection in database"""
+
+
+
         try:
             detection_data = {
                 'detection_id': detection.detection_id,
@@ -951,6 +972,9 @@ Sincerely,
     
     def _init_platform_enforcers(self) -> Dict[str, Any]:
         """Initialize platform-specific enforcement methods"""
+
+
+
         return {
             'youtube': self._enforce_youtube,
             'tiktok': self._enforce_tiktok,
@@ -974,6 +998,9 @@ Sincerely,
         Returns:
             str: Action ID
         """
+
+
+
         try:
             action_id = str(uuid.uuid4())
             
@@ -1023,6 +1050,9 @@ Sincerely,
                                         action: EnforcementAction,
                                         detection: ViolationDetection) -> bool:
         """Execute specific enforcement action"""
+
+
+
         try:
             if action.action_type == EnforcementAction.DMCA_TAKEDOWN:
                 return await self._send_dmca_takedown(action, detection)
@@ -1051,6 +1081,9 @@ Sincerely,
                                 action: EnforcementAction,
                                 detection: ViolationDetection) -> bool:
         """Send DMCA takedown notice"""
+
+
+
         try:
             # Generate DMCA notice
             dmca_notice = self._generate_dmca_notice(action, detection)
@@ -1087,6 +1120,9 @@ Sincerely,
                                action: EnforcementAction,
                                detection: ViolationDetection) -> bool:
         """Send cease and desist notice"""
+
+
+
         try:
             # Generate cease and desist letter
             cease_desist_letter = self._generate_cease_desist_letter(action, detection)
@@ -1120,6 +1156,9 @@ Sincerely,
                                     action: EnforcementAction,
                                     detection: ViolationDetection) -> bool:
         """Initiate revenue claim process"""
+
+
+
         try:
             # Create revenue claim
             claim = RevenueClaim(
@@ -1147,6 +1186,9 @@ Sincerely,
                                 action: EnforcementAction,
                                 detection: ViolationDetection) -> bool:
         """Report violation to platform"""
+
+
+
         try:
             # Platform-specific reporting
             platform_enforcer = self.platform_enforcers.get(detection.platform)
@@ -1165,6 +1207,9 @@ Sincerely,
                                    action: EnforcementAction,
                                    detection: ViolationDetection) -> bool:
         """Initiate formal legal action"""
+
+
+
         try:
             # This would integrate with legal service providers
             # For now, just create documentation
@@ -1223,6 +1268,9 @@ Sincerely,
                                      action: EnforcementAction,
                                      detection: ViolationDetection) -> str:
         """Generate legal action summary document"""
+
+
+
         return f"""
 LEGAL ACTION SUMMARY
 
@@ -1257,6 +1305,9 @@ EVIDENCE:
                         body: str,
                         attachment_data: Optional[bytes] = None) -> bool:
         """Send email notification"""
+
+
+
         try:
             if not self.email_config:
                 self.logger.warning("Email configuration not provided")
@@ -1347,6 +1398,9 @@ EVIDENCE:
     
     async def _notify_legal_team(self, action: EnforcementAction, detection: ViolationDetection):
         """Notify legal team of escalated case"""
+
+
+
         try:
             legal_email = "legal@ia-influencer.com"
             subject = f"Legal Action Required - Case {action.action_id}"
@@ -1377,22 +1431,37 @@ Please review and take appropriate legal action.
     
     async def _enforce_tiktok(self, action: EnforcementAction, detection: ViolationDetection) -> bool:
         """TikTok-specific enforcement"""
+
+
+
         return False
     
     async def _enforce_instagram(self, action: EnforcementAction, detection: ViolationDetection) -> bool:
         """Instagram-specific enforcement"""
+
+
+
         return False
     
     async def _enforce_twitter(self, action: EnforcementAction, detection: ViolationDetection) -> bool:
         """Twitter-specific enforcement"""
+
+
+
         return False
     
     async def _enforce_generic_web(self, action: EnforcementAction, detection: ViolationDetection) -> bool:
         """Generic web platform enforcement"""
+
+
+
         return False
     
     async def _store_enforcement_action(self, action: EnforcementAction):
         """Store enforcement action in database"""
+
+
+
         try:
             action_data = {
                 'action_id': action.action_id,
@@ -1421,6 +1490,9 @@ Please review and take appropriate legal action.
     
     async def _store_revenue_claim(self, claim: RevenueClaim):
         """Store revenue claim in database"""
+
+
+
         try:
             claim_data = {
                 'claim_id': claim.claim_id,

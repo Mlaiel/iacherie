@@ -12,7 +12,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 
-⚠️ STRICT COPYRIGHT PROTECTION ⚠️
+ STRICT COPYRIGHT PROTECTION 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 
@@ -266,6 +266,9 @@ class PerformanceAnalyticsExtractor(BaseExtractor):
     
     def _initialize_analytics_models(self):
         """Initialize ML models for analytics"""
+
+
+
         try:
             if HAS_ML_LIBS:
                 # Performance prediction models
@@ -295,6 +298,9 @@ class PerformanceAnalyticsExtractor(BaseExtractor):
     
     async def can_handle(self, request: ExtractionRequest) -> bool:
         """Check if request is for performance analytics"""
+
+
+
         return any([
             "performance" in request.extraction_types,
             "analytics" in request.extraction_types,
@@ -620,6 +626,9 @@ class AudienceAnalyticsExtractor(BaseExtractor):
     
     def _initialize_audience_models(self):
         """Initialize models for audience analysis"""
+
+
+
         try:
             if HAS_ML_LIBS:
                 self.segmentation_models = {
@@ -641,6 +650,9 @@ class AudienceAnalyticsExtractor(BaseExtractor):
     
     async def can_handle(self, request: ExtractionRequest) -> bool:
         """Check if request is for audience analytics"""
+
+
+
         return any([
             "audience" in request.extraction_types,
             "segmentation" in request.extraction_types,
@@ -734,6 +746,9 @@ class AudienceAnalyticsExtractor(BaseExtractor):
 # Factory function for analytics extractors
 def create_analytics_extractor_suite() -> Dict[str, BaseExtractor]:
     """Create a complete suite of analytics extractors"""
+
+
+
     return {
         'performance_analytics': PerformanceAnalyticsExtractor(),
         'audience_analytics': AudienceAnalyticsExtractor()

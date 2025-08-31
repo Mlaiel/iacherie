@@ -1,5 +1,5 @@
 """
-⚙️ Configuration Management for Content Fingerprinting System
+ Configuration Management for Content Fingerprinting System
 =============================================================
 
 Centralized configuration system for multi-modal content fingerprinting.

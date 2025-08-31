@@ -8,7 +8,7 @@ perceptual hashing, and vector similarity for content protection and matching.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -100,6 +100,9 @@ class VisualSimilarity(BaseAgent):
 
     async def initialize(self) -> bool:
         """Initialize similarity detection components"""
+
+
+
         try:
             logger.info("Initializing Visual Similarity...")
             
@@ -128,6 +131,9 @@ class VisualSimilarity(BaseAgent):
 
     async def _initialize_feature_extractor(self) -> None:
         """Initialize deep learning feature extraction model"""
+
+
+
         try:
             # Use ResNet50 as feature extractor
             self.feature_model = models.resnet50(pretrained=True)
@@ -151,6 +157,9 @@ class VisualSimilarity(BaseAgent):
 
     async def _initialize_similarity_index(self) -> None:
         """Initialize FAISS index for fast similarity search"""
+
+
+
         try:
             # Initialize FAISS index for cosine similarity
             self.similarity_index = faiss.IndexFlatIP(self.feature_dimension)
@@ -249,6 +258,9 @@ class VisualSimilarity(BaseAgent):
 
     async def _generate_perceptual_hashes(self, image: np.ndarray) -> Dict[str, str]:
         """Generate multiple perceptual hashes"""
+
+
+
         try:
             # Convert to PIL Image
             if len(image.shape) == 3:
@@ -274,6 +286,9 @@ class VisualSimilarity(BaseAgent):
 
     async def _extract_deep_features(self, image: np.ndarray) -> List[float]:
         """Extract deep learning features"""
+
+
+
         try:
             # Convert to PIL and preprocess
             if len(image.shape) == 3:
@@ -300,6 +315,9 @@ class VisualSimilarity(BaseAgent):
 
     async def _generate_color_histogram(self, image: np.ndarray) -> Dict[str, List[float]]:
         """Generate color histogram fingerprint"""
+
+
+
         try:
             histograms = {}
             
@@ -331,6 +349,9 @@ class VisualSimilarity(BaseAgent):
 
     async def _extract_structural_features(self, image: np.ndarray) -> Dict[str, float]:
         """Extract structural features like edges, corners, etc."""
+
+
+
         try:
             # Convert to grayscale if needed
             if len(image.shape) == 3:
@@ -371,6 +392,9 @@ class VisualSimilarity(BaseAgent):
 
     async def _combine_fingerprints(self, fingerprint_data: Dict[str, Any]) -> str:
         """Combine all fingerprint components into single hash"""
+
+
+
         try:
             # Collect all fingerprint components
             components = []
@@ -544,6 +568,9 @@ class VisualSimilarity(BaseAgent):
         features2: List[float]
     ) -> float:
         """Compare deep learning features using cosine similarity"""
+
+
+
         try:
             features1_array = np.array(features1).reshape(1, -1)
             features2_array = np.array(features2).reshape(1, -1)
@@ -604,6 +631,9 @@ class VisualSimilarity(BaseAgent):
 
     async def _calculate_overall_similarity(self, similarity_scores: Dict[str, Any]) -> float:
         """Calculate weighted overall similarity score"""
+
+
+
         try:
             total_weight = 0.0
             weighted_sum = 0.0
@@ -681,6 +711,9 @@ class VisualSimilarity(BaseAgent):
         Returns:
             List of similar content with similarity scores
         """
+
+
+
         try:
             # This would query the database for similar fingerprints
             # For now, return empty list as placeholder
@@ -707,6 +740,9 @@ class VisualSimilarity(BaseAgent):
         fingerprint_data: Dict[str, Any]
     ) -> bool:
         """Add fingerprint to similarity index"""
+
+
+
         try:
             if 'deep_features' in fingerprint_data:
                 features = np.array(fingerprint_data['deep_features'], dtype=np.float32)
@@ -734,6 +770,9 @@ class VisualSimilarity(BaseAgent):
 
     async def cleanup(self) -> None:
         """Cleanup resources"""
+
+
+
         try:
             await self.performance_monitor.close()
             
@@ -753,6 +792,9 @@ class VisualSimilarity(BaseAgent):
 
     def get_similarity_stats(self) -> Dict[str, Any]:
         """Get similarity detection statistics"""
+
+
+
         return {
             'indexed_fingerprints': len(self.indexed_fingerprints),
             'similarity_thresholds': self.similarity_thresholds,

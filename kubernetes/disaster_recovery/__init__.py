@@ -21,7 +21,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Content Protection
 License: Proprietary - All rights reserved
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code and all associated concepts are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, modification, or distribution without explicit written 
 permission from the author is strictly prohibited and will result in immediate legal action.

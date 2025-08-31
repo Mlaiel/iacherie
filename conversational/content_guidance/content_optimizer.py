@@ -140,6 +140,9 @@ class ContentOptimizer:
         
     def _initialize_models(self):
         """Initialize AI models for content optimization."""
+
+
+
         try:
             # Text analysis models
             self.text_tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
@@ -163,6 +166,9 @@ class ContentOptimizer:
     
     def _load_platform_rules(self) -> Dict[str, Dict[str, Any]]:
         """Load platform-specific optimization rules."""
+
+
+
         return {
             "youtube": {
                 "title_length": {"min": 10, "max": 100, "optimal": 60},
@@ -454,6 +460,9 @@ class OptimizationEngine:
     
     def _load_optimization_models(self):
         """Load AI models for content optimization."""
+
+
+
         try:
             # Text optimization models
             self.tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
@@ -1827,6 +1836,9 @@ class ContentOptimizer:
     
     async def get_optimization_history(self, content_id: str) -> Optional[OptimizationResult]:
         """Get optimization history for specific content."""
+
+
+
         return self.optimization_history.get(content_id)
     
     async def bulk_optimize(

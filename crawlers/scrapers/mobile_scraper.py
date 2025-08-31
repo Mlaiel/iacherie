@@ -8,7 +8,7 @@ Handles mobile user agents, viewport emulation, and app-specific content.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️ CRITICAL LEGAL WARNING ⚠️
+ CRITICAL LEGAL WARNING 
 UNAUTHORIZED USE, COPYING, OR DISTRIBUTION IS STRICTLY PROHIBITED AND WILL RESULT IN IMMEDIATE LEGAL ACTION.
 This technology is EXCLUSIVE property of Fahed Mlaiel. Contact: mlaiel@live.de for licensing.
 """
@@ -159,6 +159,9 @@ class MobileScraper:
             
     async def scrape_mobile_content(self, url: str) -> MobileContent:
         """Scrape content optimized for mobile."""
+
+
+
         try:
             async with self.session.get(url) as response:
                 html = await response.text()
@@ -385,6 +388,9 @@ class MobileScraper:
         
     async def scrape_amp_content(self, amp_url: str) -> Optional[MobileContent]:
         """Scrape AMP (Accelerated Mobile Pages) content."""
+
+
+
         try:
             async with self.session.get(amp_url) as response:
                 html = await response.text()
@@ -408,6 +414,9 @@ class MobileScraper:
             
     def get_device_capabilities(self) -> Dict[str, Any]:
         """Get current device capabilities."""
+
+
+
         return {
             'name': self.current_device.name,
             'user_agent': self.current_device.user_agent,

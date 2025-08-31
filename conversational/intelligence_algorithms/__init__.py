@@ -15,7 +15,7 @@ This module implements revolutionary AI algorithms for:
 - Revenue-optimized conversation strategies
 - Collaboration-focused conversation intelligence
 
-🏗️ ENTERPRISE ARCHITECTURE:
+ ENTERPRISE ARCHITECTURE:
 - Neural Conversation Processing: BERT + GPT + Custom Models
 - Behavioral Analytics: Advanced ML + Statistical Analysis
 - Real-time Intelligence: WebSocket + Event-driven AI
@@ -34,7 +34,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Email: mlaiel@live.de
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL INTELLECTUAL PROPERTY WARNING ⚠️
+ CRITICAL INTELLECTUAL PROPERTY WARNING 
 This revolutionary AI conversation intelligence system, all algorithms, neural architectures,
 and intellectual property are the EXCLUSIVE property of Fahed Mlaiel.
 

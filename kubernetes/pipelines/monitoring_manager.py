@@ -297,6 +297,9 @@ class MetricsStorage:
         
     def _initialize_database(self):
         """Initialize SQLite database for metrics storage"""
+
+
+
         try:
             with sqlite3.connect(str(self.db_path)) as conn:
                 conn.execute('''
@@ -327,6 +330,9 @@ class MetricsStorage:
             
     def store_metric(self, metric_data: MetricData):
         """Store metric data point"""
+
+
+
         try:
             with sqlite3.connect(str(self.db_path)) as conn:
                 conn.execute(
@@ -346,6 +352,9 @@ class MetricsStorage:
                    end_time: Optional[datetime] = None,
                    labels: Optional[Dict[str, str]] = None) -> List[MetricData]:
         """Retrieve metrics from storage"""
+
+
+
         try:
             with sqlite3.connect(str(self.db_path)) as conn:
                 query = 'SELECT name, value, labels, timestamp FROM metrics WHERE name = ? AND timestamp >= ?'
@@ -383,6 +392,9 @@ class MetricsStorage:
             
     def cleanup_old_metrics(self, retention_days: int = 30):
         """Clean up old metrics data"""
+
+
+
         try:
             cutoff_date = datetime.utcnow() - timedelta(days=retention_days)
             
@@ -646,12 +658,18 @@ class PipelineMonitoringManager:
     def get_pipeline_analytics(self, pipeline_name: str, environment: str,
                              hours: int = 24) -> Dict[str, Any]:
         """Get comprehensive pipeline analytics"""
+
+
+
         return self.analyzer.analyze_pipeline_performance(
             pipeline_name, environment, hours
         )
         
     def check_alerts(self) -> List[Dict[str, Any]]:
         """Check for active alerts"""
+
+
+
         return self.analyzer.check_alerts()
         
     def set_alert_threshold(self, metric_name: str, threshold: float,

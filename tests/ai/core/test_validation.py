@@ -23,7 +23,7 @@ Tests multi-format validation, security, quality analysis, and creator-specific 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  COPYRIGHT WARNING: This file is protected by copyright law. Unauthorized copying,
+  COPYRIGHT WARNING: This file is protected by copyright law. Unauthorized copying,
 distribution, modification, or use is strictly prohibited. Violations will result in
 legal action. Contact mlaiel@live.de for licensing inquiries.
 
@@ -1211,7 +1211,7 @@ class TestContentValidatorIntegration:
         """Test complete content validation workflow for musicians"""
         # Song description
         song_description = """
-        🎵 New Single Release: "Digital Dreams" 🎵
+         New Single Release: "Digital Dreams" 
         
         I'm excited to share my latest track "Digital Dreams" - a fusion of electronic and acoustic elements.
         This song explores themes of technology and human connection in our modern world.
@@ -1242,7 +1242,7 @@ class TestContentValidatorIntegration:
         """Test complete content validation workflow for photographers"""
         # Photo description
         photo_description = """
-        📸 Golden Hour Magic at the Coast 📸
+         Golden Hour Magic at the Coast 
         
         Captured this stunning sunset landscape during my recent trip to the Pacific Coast.
         The interplay of light and shadow creates such dramatic contrast.
@@ -1328,10 +1328,10 @@ class TestContentValidatorIntegration:
         As a content creator, I'm always looking for tools that enhance creativity while saving time.
         
         Over the next week, I'll be testing their new smart camera system and sharing:
-        ✨ Real-world performance tests
-        ✨ Creative shooting techniques
-        ✨ Honest reviews and feedback
-        ✨ Behind-the-scenes content
+         Real-world performance tests
+         Creative shooting techniques
+         Honest reviews and feedback
+         Behind-the-scenes content
         
         This is a paid partnership, but all opinions are my own. I only work with brands
         that align with my values and provide genuine value to my community.

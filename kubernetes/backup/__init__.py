@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️ INTELLECTUAL PROPERTY WARNING ⚠️
+ INTELLECTUAL PROPERTY WARNING 
 This code, concept, and implementation are the exclusive intellectual property
 of Fahed Mlaiel (mlaiel@live.de). Any unauthorized copying, distribution,
 modification, or commercial use without explicit written permission is strictly
@@ -127,7 +127,10 @@ def get_module_info() -> Dict[str, Any]:
     
     Returns:
         Module metadata and capabilities
-    """    return {
+    """
+
+
+    return {
         "name": "backup",
         "version": __version__,
         "author": __author__,
@@ -202,7 +205,10 @@ def create_default_config() -> Dict[str, Any]:
     
     Returns:
         Default configuration
-    """    return {
+    """
+
+
+    return {
         "storage": {
             "backend": "local_filesystem",
             "path": "/var/backups/ia_influencer",

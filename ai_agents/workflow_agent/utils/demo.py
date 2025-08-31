@@ -6,7 +6,7 @@ Demonstration script showing how to use the Workflow Agent module for various us
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 - All Rights Reserved
 
-⚠️ IMPORTANT LEGAL NOTICE ⚠️
+ IMPORTANT LEGAL NOTICE 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
@@ -45,7 +45,7 @@ logger = logging.getLogger(__name__)
 async def demo_basic_setup():
     """Demonstrate basic workflow agent setup."""
     print("\n" + "="*60)
-    print("🚀 DEMO: Basic Workflow Agent Setup")
+    print(" DEMO: Basic Workflow Agent Setup")
     print("="*60)
     
     try:
@@ -54,7 +54,7 @@ async def demo_basic_setup():
         
         # Get agent status
         status = await agent.get_status()
-        print(f"✅ Agent initialized successfully!")
+        print(f" Agent initialized successfully!")
         print(f"   - Status: {status['status']}")
         print(f"   - Components: {len(status['components'])} active")
         print(f"   - Templates: {len(status['templates'])} available")
@@ -63,14 +63,14 @@ async def demo_basic_setup():
         return True
         
     except Exception as e:
-        print(f"❌ Error in basic setup demo: {str(e)}")
+        print(f" Error in basic setup demo: {str(e)}")
         return False
 
 
 async def demo_template_recommendations():
     """Demonstrate template recommendations based on user profile."""
     print("\n" + "="*60)
-    print("📋 DEMO: Template Recommendations")
+    print(" DEMO: Template Recommendations")
     print("="*60)
     
     try:
@@ -95,12 +95,12 @@ async def demo_template_recommendations():
                 profile_info['profile']
             )
             
-            print(f"\n🎯 {profile_info['name']} Recommendations:")
+            print(f"\n {profile_info['name']} Recommendations:")
             for i, template in enumerate(recommendations, 1):
                 print(f"   {i}. {template}")
         
         # Show templates by category
-        print("\n📂 Templates by Category:")
+        print("\n Templates by Category:")
         categories = ['music', 'social_media', 'content_protection', 'analytics']
         
         for category in categories:
@@ -112,14 +112,14 @@ async def demo_template_recommendations():
         return True
         
     except Exception as e:
-        print(f"❌ Error in template recommendations demo: {str(e)}")
+        print(f" Error in template recommendations demo: {str(e)}")
         return False
 
 
 async def demo_simple_workflow_creation():
     """Demonstrate creating and executing a simple workflow."""
     print("\n" + "="*60)
-    print("⚡ DEMO: Simple Workflow Creation & Execution")
+    print(" DEMO: Simple Workflow Creation & Execution")
     print("="*60)
     
     try:
@@ -151,14 +151,14 @@ async def demo_simple_workflow_creation():
         ]
         
         # Create workflow
-        print("📝 Creating simple content workflow...")
+        print(" Creating simple content workflow...")
         workflow_id = await create_simple_workflow(
             agent=agent,
             name="Content Creation Pipeline",
             tasks=tasks
         )
         
-        print(f"✅ Workflow created with ID: {workflow_id}")
+        print(f" Workflow created with ID: {workflow_id}")
         
         # Get workflow details
         workflow_info = await agent.get_workflow_info(workflow_id)
@@ -166,7 +166,7 @@ async def demo_simple_workflow_creation():
         print(f"   - Category: {workflow_info.get('category', 'N/A')}")
         
         # Execute workflow (simulation mode)
-        print("\n🎯 Executing workflow...")
+        print("\n Executing workflow...")
         execution_context = {
             'topic': 'AI in Content Creation',
             'target_audience': 'content creators',
@@ -179,7 +179,7 @@ async def demo_simple_workflow_creation():
             execution_mode=ExecutionMode.ASYNCHRONOUS
         )
         
-        print(f"✅ Workflow execution started: {execution_id}")
+        print(f" Workflow execution started: {execution_id}")
         
         # Monitor execution (simplified)
         await asyncio.sleep(2)  # Simulate execution time
@@ -192,14 +192,14 @@ async def demo_simple_workflow_creation():
         return True
         
     except Exception as e:
-        print(f"❌ Error in simple workflow demo: {str(e)}")
+        print(f" Error in simple workflow demo: {str(e)}")
         return False
 
 
 async def demo_music_release_workflow():
     """Demonstrate creating a complete music release workflow."""
     print("\n" + "="*60)
-    print("🎵 DEMO: Music Release Workflow")
+    print(" DEMO: Music Release Workflow")
     print("="*60)
     
     try:
@@ -209,7 +209,7 @@ async def demo_music_release_workflow():
         # Define release platforms
         release_platforms = ['spotify', 'apple_music', 'youtube_music', 'soundcloud']
         
-        print(f"🎼 Creating music release workflow for platforms: {', '.join(release_platforms)}")
+        print(f" Creating music release workflow for platforms: {', '.join(release_platforms)}")
         
         # Create comprehensive music release workflow
         workflow_id = await QuickWorkflowBuilder.create_music_release_workflow(
@@ -218,16 +218,16 @@ async def demo_music_release_workflow():
             protection_enabled=True
         )
         
-        print(f"✅ Music release workflow created: {workflow_id}")
+        print(f" Music release workflow created: {workflow_id}")
         
         # Get workflow structure
         workflow_info = await agent.get_workflow_info(workflow_id)
         print(f"   - Total nodes: {len(workflow_info.get('nodes', []))}")
-        print(f"   - Protection enabled: ✅")
+        print(f"   - Protection enabled: ")
         print(f"   - Distribution platforms: {len(release_platforms)}")
         
         # Show workflow structure
-        print("\n📋 Workflow Structure:")
+        print("\n Workflow Structure:")
         for i, node in enumerate(workflow_info.get('nodes', []), 1):
             print(f"   {i}. {node.get('name', 'Unknown Node')}")
         
@@ -246,21 +246,21 @@ async def demo_music_release_workflow():
             }
         )
         
-        print(f"✅ Release scheduled: {schedule_id}")
+        print(f" Release scheduled: {schedule_id}")
         print(f"   - Scheduled for: {(datetime.now() + timedelta(hours=24)).strftime('%Y-%m-%d %H:%M')}")
         
         await agent.shutdown()
         return True
         
     except Exception as e:
-        print(f"❌ Error in music release demo: {str(e)}")
+        print(f" Error in music release demo: {str(e)}")
         return False
 
 
 async def demo_bulk_workflow_execution():
     """Demonstrate bulk workflow execution and monitoring."""
     print("\n" + "="*60)
-    print("⚡ DEMO: Bulk Workflow Execution & Monitoring")
+    print(" DEMO: Bulk Workflow Execution & Monitoring")
     print("="*60)
     
     try:
@@ -292,21 +292,21 @@ async def demo_bulk_workflow_execution():
                 'strategy': 'adaptive'
             })
         
-        print(f"📝 Created {len(workflow_configs)} workflows for bulk execution")
+        print(f" Created {len(workflow_configs)} workflows for bulk execution")
         
         # Execute all workflows in parallel
-        print("\n🚀 Executing workflows in parallel...")
+        print("\n Executing workflows in parallel...")
         results = await WorkflowUtilities.bulk_execute_workflows(
             agent=agent,
             workflow_configs=workflow_configs
         )
         
-        print(f"✅ Bulk execution completed: {len(results)} results")
+        print(f" Bulk execution completed: {len(results)} results")
         
         # Monitor workflow health
         workflow_ids = [config['workflow_id'] for config in workflow_configs]
         
-        print("\n📊 Monitoring workflow health...")
+        print("\n Monitoring workflow health...")
         health_statuses = await WorkflowUtilities.monitor_workflow_health(
             agent=agent,
             workflow_ids=workflow_ids
@@ -315,7 +315,7 @@ async def demo_bulk_workflow_execution():
         # Generate performance summary
         performance_summary = WorkflowUtilities.get_performance_summary(health_statuses)
         
-        print("\n📈 Performance Summary:")
+        print("\n Performance Summary:")
         print(f"   - Total workflows: {performance_summary.get('total_workflows', 0)}")
         print(f"   - Healthy workflows: {performance_summary.get('healthy_workflows', 0)}")
         print(f"   - Health percentage: {performance_summary.get('health_percentage', 0):.1f}%")
@@ -325,7 +325,7 @@ async def demo_bulk_workflow_execution():
         return True
         
     except Exception as e:
-        print(f"❌ Error in bulk execution demo: {str(e)}")
+        print(f" Error in bulk execution demo: {str(e)}")
         return False
 
 
@@ -352,7 +352,7 @@ async def demo_advanced_scheduling():
             tasks=tasks
         )
         
-        print(f"📝 Created workflow for scheduling: {workflow_id}")
+        print(f" Created workflow for scheduling: {workflow_id}")
         
         # Schedule different types of executions
         schedules = []
@@ -387,13 +387,13 @@ async def demo_advanced_scheduling():
         )
         schedules.append(('Weekday 9AM', schedule_id_cron))
         
-        print("\n📅 Created schedules:")
+        print("\n Created schedules:")
         for schedule_type, schedule_id in schedules:
             print(f"   - {schedule_type}: {schedule_id}")
         
         # Get active schedules
         active_schedules = await agent.get_active_schedules()
-        print(f"\n✅ Total active schedules: {len(active_schedules)}")
+        print(f"\n Total active schedules: {len(active_schedules)}")
         
         # Show schedule details
         for schedule in active_schedules[-3:]:  # Show last 3 created
@@ -406,14 +406,14 @@ async def demo_advanced_scheduling():
         return True
         
     except Exception as e:
-        print(f"❌ Error in advanced scheduling demo: {str(e)}")
+        print(f" Error in advanced scheduling demo: {str(e)}")
         return False
 
 
 async def demo_content_publishing_workflow():
     """Demonstrate content publishing workflow creation."""
     print("\n" + "="*60)
-    print("📢 DEMO: Content Publishing Workflow")
+    print(" DEMO: Content Publishing Workflow")
     print("="*60)
     
     try:
@@ -424,7 +424,7 @@ async def demo_content_publishing_workflow():
         platforms = ['instagram', 'tiktok', 'youtube', 'twitter', 'linkedin']
         content_type = "video"
         
-        print(f"📱 Creating content publishing workflow for: {content_type}")
+        print(f" Creating content publishing workflow for: {content_type}")
         print(f"   Platforms: {', '.join(platforms)}")
         
         # Create content publishing workflow
@@ -434,13 +434,13 @@ async def demo_content_publishing_workflow():
             content_type=content_type
         )
         
-        print(f"✅ Content publishing workflow created: {workflow_id}")
+        print(f" Content publishing workflow created: {workflow_id}")
         
         # Get workflow details
         workflow_info = await agent.get_workflow_info(workflow_id)
         nodes = workflow_info.get('nodes', [])
         
-        print(f"\n📋 Workflow contains {len(nodes)} nodes:")
+        print(f"\n Workflow contains {len(nodes)} nodes:")
         for node in nodes:
             print(f"   • {node.get('name', 'Unknown')}")
         
@@ -464,14 +464,14 @@ async def demo_content_publishing_workflow():
         }
         
         # Execute workflow
-        print("\n🚀 Executing content publishing workflow...")
+        print("\n Executing content publishing workflow...")
         execution_id = await agent.execute_workflow(
             workflow_id=workflow_id,
             execution_context=execution_context,
             execution_mode=ExecutionMode.ASYNCHRONOUS
         )
         
-        print(f"✅ Execution started: {execution_id}")
+        print(f" Execution started: {execution_id}")
         
         # Monitor progress
         await asyncio.sleep(1)  # Simulate processing time
@@ -484,15 +484,15 @@ async def demo_content_publishing_workflow():
         return True
         
     except Exception as e:
-        print(f"❌ Error in content publishing demo: {str(e)}")
+        print(f" Error in content publishing demo: {str(e)}")
         return False
 
 
 async def run_all_demos():
     """Run all demonstration functions."""
-    print("🎭" + "="*59)
+    print("" + "="*59)
     print("    IA-INFLUENCER AGENT - WORKFLOW MODULE DEMO")
-    print("🎭" + "="*59)
+    print("" + "="*59)
     print(f"Started at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     
     demos = [
@@ -509,17 +509,17 @@ async def run_all_demos():
     
     for demo_name, demo_func in demos:
         try:
-            print(f"\n🎯 Running: {demo_name}")
+            print(f"\n Running: {demo_name}")
             success = await demo_func()
             results.append((demo_name, success))
             
             if success:
-                print(f"✅ {demo_name} completed successfully!")
+                print(f" {demo_name} completed successfully!")
             else:
-                print(f"❌ {demo_name} failed!")
+                print(f" {demo_name} failed!")
                 
         except Exception as e:
-            print(f"💥 {demo_name} crashed: {str(e)}")
+            print(f" {demo_name} crashed: {str(e)}")
             results.append((demo_name, False))
         
         # Brief pause between demos
@@ -527,7 +527,7 @@ async def run_all_demos():
     
     # Final summary
     print("\n" + "="*60)
-    print("📊 DEMO SUMMARY")
+    print(" DEMO SUMMARY")
     print("="*60)
     
     successful = sum(1 for _, success in results if success)

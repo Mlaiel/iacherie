@@ -94,6 +94,9 @@ class DataStreamManager:
         
     async def initialize(self) -> None:
         """Initialize stream manager with Redis connection and handlers"""
+
+
+
         try:
             self.redis = await get_redis_client()
             await self._register_default_handlers()
@@ -135,6 +138,9 @@ class DataStreamManager:
         Returns:
             Stream identifier
         """
+
+
+
         try:
             stream_id = str(uuid4())
             
@@ -191,6 +197,9 @@ class DataStreamManager:
         Returns:
             Success status
         """
+
+
+
         try:
             if stream_id not in self.active_streams:
                 logger.warning(f"Stream {stream_id} not found")
@@ -251,6 +260,9 @@ class DataStreamManager:
         Returns:
             List of stream events
         """
+
+
+
         try:
             events = []
             stream_data = await self.redis.xrange(
@@ -287,6 +299,9 @@ class DataStreamManager:
         Returns:
             Success status
         """
+
+
+
         try:
             if stream_id in self.active_streams:
                 # Update stream status
@@ -325,6 +340,9 @@ class DataStreamManager:
         
     async def get_stream_metrics(self, stream_id: str) -> Optional[StreamMetrics]:
         """Get performance metrics for stream"""
+
+
+
         return self.metrics.get(stream_id)
         
     async def list_active_streams(self, user_id: Optional[str] = None) -> List[Dict[str, Any]]:
@@ -372,6 +390,9 @@ class DataStreamManager:
                 
     async def _archive_metrics(self, stream_id: str) -> None:
         """Archive stream metrics to database"""
+
+
+
         try:
             metrics = self.metrics.get(stream_id)
             if metrics:
@@ -418,6 +439,9 @@ class DataStreamManager:
         
     async def shutdown(self) -> None:
         """Gracefully shutdown stream manager"""
+
+
+
         try:
             self._shutdown_event.set()
             

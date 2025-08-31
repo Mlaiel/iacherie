@@ -26,7 +26,7 @@ Email: mlaiel@live.de
 Project Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE - ZERO TOLERANCE FOR INTELLECTUAL PROPERTY THEFT ⚠️
+  CRITICAL LEGAL NOTICE - ZERO TOLERANCE FOR INTELLECTUAL PROPERTY THEFT 
 
 This revolutionary voice processing data model architecture, neural audio algorithms, 
 and advanced biometric schemas are the EXCLUSIVE intellectual property of Fahed Mlaiel 
@@ -424,6 +424,9 @@ class EmotionAnalysisResult:
     
     def is_emotional_event(self, threshold: float = 0.7) -> bool:
         """Determine if this represents a significant emotional event."""
+
+
+
         return (self.emotion_confidence > threshold and 
                 self.emotion_intensity > threshold and
                 self.primary_emotion != EmotionCategory.NEUTRAL)
@@ -816,6 +819,9 @@ class VoiceAnalysisResponseModel(BaseModel):
 
 def create_audio_metadata(file_path: str) -> AudioMetadata:
     """Create AudioMetadata from audio file."""
+
+
+
     try:
         # Load audio file
         audio_data, sample_rate = librosa.load(file_path, sr=None)

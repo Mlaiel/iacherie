@@ -1,5 +1,5 @@
 """
-⚡ Performance Optimizer - Enterprise Database Performance Enhancement Engine
+ Performance Optimizer - Enterprise Database Performance Enhancement Engine
 ============================================================================
 
 Ultra-advanced database performance optimization for IA Influencer Agent:
@@ -13,7 +13,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+ UNAUTHORIZED USE STRICTLY PROHIBITED 
 This performance optimization engine is protected intellectual property.
 Contact mlaiel@live.de for licensing inquiries.
 """
@@ -785,4 +785,7 @@ class PerformanceOptimizer:
         
     async def _get_session(self) -> Session:
         """Get database session"""
+
+
+
         return self.session_maker()

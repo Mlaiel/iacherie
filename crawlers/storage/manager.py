@@ -160,6 +160,9 @@ class StorageManager:
     
     def load_configuration(self, config_path: str) -> None:
         """Load storage configuration from file."""
+
+
+
         try:
             config_file = Path(config_path)
             if not config_file.exists():
@@ -215,6 +218,9 @@ class StorageManager:
         config: ProviderConfig
     ) -> bool:
         """Register a new storage provider."""
+
+
+
         try:
             # Store provider and configuration
             self.providers[config.provider_id] = provider
@@ -245,6 +251,9 @@ class StorageManager:
     
     async def unregister_provider(self, provider_id: str) -> bool:
         """Unregister a storage provider."""
+
+
+
         try:
             if provider_id in self.providers:
                 # Stop health monitoring
@@ -861,6 +870,9 @@ class FailoverManager:
     
     async def _recovery_task(self, provider_id: str) -> None:
         """Recovery task for failed provider."""
+
+
+
         try:
             breaker = self.circuit_breakers[provider_id]
             

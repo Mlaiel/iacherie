@@ -102,6 +102,9 @@ class BackupManager:
     
     def _load_configuration(self) -> None:
         """Load backup configuration"""
+
+
+
         try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r') as f:
@@ -116,6 +119,9 @@ class BackupManager:
     
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default backup configuration"""
+
+
+
         return {
             "database": {
                 "host": "localhost",
@@ -156,6 +162,9 @@ class BackupManager:
     
     def _initialize_storage_clients(self) -> None:
         """Initialize storage provider clients"""
+
+
+
         try:
             storage_config = self.config.get("storage", {})
             provider = storage_config.get("provider", "aws_s3")
@@ -279,6 +288,9 @@ class BackupManager:
     
     def _backup_database(self, job: BackupJob) -> bool:
         """Backup database"""
+
+
+
         try:
             logger.info("Starting database backup")
             
@@ -336,6 +348,9 @@ class BackupManager:
     
     def _backup_application_files(self, job: BackupJob) -> bool:
         """Backup application files"""
+
+
+
         try:
             logger.info("Starting application files backup")
             
@@ -394,6 +409,9 @@ class BackupManager:
     
     def _backup_user_data(self, job: BackupJob) -> bool:
         """Backup user data"""
+
+
+
         try:
             logger.info("Starting user data backup")
             
@@ -450,6 +468,9 @@ class BackupManager:
     
     def _backup_generic(self, job: BackupJob) -> bool:
         """Generic backup implementation"""
+
+
+
         try:
             logger.info(f"Starting generic backup: {job.config.name}")
             
@@ -473,6 +494,9 @@ class BackupManager:
     
     def _upload_to_storage(self, job: BackupJob, backup_files: List[str]) -> bool:
         """Upload backup files to storage"""
+
+
+
         try:
             logger.info("Uploading backup files to storage")
             
@@ -493,6 +517,9 @@ class BackupManager:
     
     def _upload_to_s3(self, job: BackupJob, backup_files: List[str], storage_config: Dict[str, Any]) -> bool:
         """Upload files to S3-compatible storage"""
+
+
+
         try:
             s3_client = self.storage_clients.get("s3") or self.storage_clients.get("minio")
             if not s3_client:
@@ -547,6 +574,9 @@ class BackupManager:
     
     def _upload_to_local(self, job: BackupJob, backup_files: List[str], storage_config: Dict[str, Any]) -> bool:
         """Upload files to local storage"""
+
+
+
         try:
             local_path = storage_config.get("path", "/backup/storage")
             backup_dir = os.path.join(local_path, job.config.name, datetime.now().strftime('%Y/%m/%d'))
@@ -575,6 +605,9 @@ class BackupManager:
     
     def _send_backup_notification(self, job: BackupJob) -> None:
         """Send backup completion notification"""
+
+
+
         try:
             notification_config = self.config.get("notifications", {})
             
@@ -595,7 +628,7 @@ class BackupManager:
     
     def _create_notification_message(self, job: BackupJob) -> str:
         """Create notification message"""
-        status = "✅ SUCCESS" if job.status == BackupStatus.COMPLETED else "❌ FAILED"
+        status = " SUCCESS" if job.status == BackupStatus.COMPLETED else " FAILED"
         duration = (job.end_time - job.start_time).total_seconds() if job.end_time and job.start_time else 0
         
         size_mb = job.size_bytes / (1024 * 1024)
@@ -620,6 +653,9 @@ End Time: {job.end_time}
     
     def _send_email_notification(self, message: str, email_config: Dict[str, Any]) -> None:
         """Send email notification"""
+
+
+
         try:
             # This would integrate with email service (SES, SendGrid, etc.)
             logger.info("Email notification sent")
@@ -629,6 +665,9 @@ End Time: {job.end_time}
     
     def _send_slack_notification(self, message: str, slack_config: Dict[str, Any]) -> None:
         """Send Slack notification"""
+
+
+
         try:
             import requests
             
@@ -642,6 +681,9 @@ End Time: {job.end_time}
     
     def _cleanup_temporary_files(self, job: BackupJob) -> None:
         """Clean up temporary backup files"""
+
+
+
         try:
             # Remove temporary files from /tmp/backups
             for root, dirs, files in os.walk("/tmp/backups"):
@@ -666,6 +708,9 @@ End Time: {job.end_time}
         Returns:
             str: Schedule ID
         """
+
+
+
         try:
             schedule_id = f"schedule_{int(time.time())}_{config.name}"
             
@@ -699,6 +744,9 @@ End Time: {job.end_time}
         Returns:
             bool: True if successful, False otherwise
         """
+
+
+
         try:
             logger.info(f"Starting restore from {backup_path}")
             
@@ -726,6 +774,9 @@ End Time: {job.end_time}
     
     def _download_backup_if_needed(self, backup_path: str) -> Optional[str]:
         """Download backup from remote storage if needed"""
+
+
+
         try:
             if backup_path.startswith("s3://"):
                 # Download from S3
@@ -743,6 +794,9 @@ End Time: {job.end_time}
     
     def _download_from_s3(self, s3_path: str) -> Optional[str]:
         """Download backup from S3"""
+
+
+
         try:
             # Parse S3 path
             parts = s3_path.replace("s3://", "").split("/", 1)
@@ -768,6 +822,9 @@ End Time: {job.end_time}
     
     def _restore_database(self, backup_file: str) -> bool:
         """Restore database from backup"""
+
+
+
         try:
             logger.info(f"Restoring database from {backup_file}")
             
@@ -805,6 +862,9 @@ End Time: {job.end_time}
     
     def _restore_application(self, backup_file: str) -> bool:
         """Restore application files from backup"""
+
+
+
         try:
             logger.info(f"Restoring application from {backup_file}")
             
@@ -832,6 +892,9 @@ End Time: {job.end_time}
     
     def _restore_user_data(self, backup_file: str) -> bool:
         """Restore user data from backup"""
+
+
+
         try:
             logger.info(f"Restoring user data from {backup_file}")
             
@@ -859,6 +922,9 @@ End Time: {job.end_time}
     
     def cleanup_old_backups(self) -> None:
         """Clean up old backups based on retention policy"""
+
+
+
         try:
             logger.info("Starting backup cleanup")
             
@@ -877,6 +943,9 @@ End Time: {job.end_time}
     
     def _cleanup_s3_backups(self, retention_config: Dict[str, int]) -> None:
         """Clean up old S3 backups"""
+
+
+
         try:
             s3_client = self.storage_clients.get("s3")
             if not s3_client:
@@ -912,6 +981,9 @@ End Time: {job.end_time}
     
     def _cleanup_local_backups(self, retention_config: Dict[str, int]) -> None:
         """Clean up old local backups"""
+
+
+
         try:
             local_path = self.config.get("storage", {}).get("path", "/backup/storage")
             
@@ -937,6 +1009,9 @@ End Time: {job.end_time}
     
     def get_backup_status(self, job_id: str) -> Optional[Dict[str, Any]]:
         """Get backup job status"""
+
+
+
         try:
             if job_id in self.active_jobs:
                 job = self.active_jobs[job_id]
@@ -964,6 +1039,9 @@ End Time: {job.end_time}
     
     def list_backups(self, limit: int = 50) -> List[Dict[str, Any]]:
         """List recent backups"""
+
+
+
         try:
             all_jobs = list(self.active_jobs.values()) + self.completed_jobs
             

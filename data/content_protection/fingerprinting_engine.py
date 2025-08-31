@@ -8,7 +8,7 @@ Provides AI-powered similarity detection and vector-based matching capabilities.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  AVERTISSEMENT STRICT - PROPRIÉTÉ INTELLECTUELLE ⚠️
+  AVERTISSEMENT STRICT - PROPRIÉTÉ INTELLECTUELLE 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, modification ou distribution sans autorisation 
 écrite explicite de l'auteur est strictement interdite et constitue une violation 
@@ -173,6 +173,9 @@ class FingerprintingEngine:
     
     def _initialize_models(self):
         """Initialize ML models for fingerprinting"""
+
+
+
         try:
             # Initialize text models
             self.text_tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
@@ -201,6 +204,9 @@ class FingerprintingEngine:
     
     def _initialize_vector_index(self):
         """Initialize FAISS vector index for similarity search"""
+
+
+
         try:
             # Create FAISS index for high-dimensional vectors
             dimension = 768  # BERT embedding dimension
@@ -228,6 +234,9 @@ class FingerprintingEngine:
         Returns:
             List of fingerprint extraction results
         """
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -528,6 +537,9 @@ class FingerprintingEngine:
         Returns:
             List of similarity matches
         """
+
+
+
         try:
             matches = []
             
@@ -566,6 +578,9 @@ class FingerprintingEngine:
     
     async def _extract_chromaprint(self, audio_data: np.ndarray, sample_rate: int) -> str:
         """Extract Chromaprint audio fingerprint"""
+
+
+
         try:
             # Convert to appropriate format for Chromaprint
             audio_int16 = (audio_data * 32767).astype(np.int16)
@@ -580,6 +595,9 @@ class FingerprintingEngine:
     
     async def _extract_mfcc_features(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
         """Extract MFCC features from audio"""
+
+
+
         try:
             # Extract MFCC features
             mfcc = librosa.feature.mfcc(
@@ -617,6 +635,9 @@ class FingerprintingEngine:
     
     async def _extract_spectral_hash(self, audio_data: np.ndarray, sample_rate: int) -> str:
         """Extract spectral hash from audio"""
+
+
+
         try:
             # Compute spectrogram
             stft = librosa.stft(audio_data, hop_length=self.audio_hop_length)
@@ -638,6 +659,9 @@ class FingerprintingEngine:
     
     async def _extract_frame_hash(self, frame: np.ndarray) -> str:
         """Extract perceptual hash from video frame"""
+
+
+
         try:
             # Resize frame
             frame_resized = cv2.resize(frame, self.video_resize_target)
@@ -657,6 +681,9 @@ class FingerprintingEngine:
     
     async def _extract_clip_embedding(self, image: Image.Image) -> Optional[np.ndarray]:
         """Extract CLIP embedding from image"""
+
+
+
         try:
             # This would require CLIP model integration
             # Placeholder implementation
@@ -668,6 +695,9 @@ class FingerprintingEngine:
     
     async def _extract_bert_embedding(self, text: str) -> np.ndarray:
         """Extract BERT embedding from text"""
+
+
+
         try:
             # Tokenize text
             inputs = self.text_tokenizer(
@@ -690,6 +720,9 @@ class FingerprintingEngine:
     
     async def _extract_sentence_embedding(self, text: str) -> Optional[np.ndarray]:
         """Extract sentence embedding using SentenceTransformer"""
+
+
+
         try:
             embedding = self.sentence_transformer.encode(text)
             return embedding
@@ -769,6 +802,9 @@ class FingerprintingEngine:
     
     async def _store_fingerprint(self, fingerprint: FingerprintResult):
         """Store fingerprint in database"""
+
+
+
         try:
             # Implementation would store in database
             pass
@@ -777,6 +813,9 @@ class FingerprintingEngine:
     
     async def _cache_fingerprint(self, fingerprint: FingerprintResult):
         """Cache fingerprint data"""
+
+
+
         try:
             cache_key = f"fingerprint:{fingerprint.fingerprint_id}"
             fingerprint_data = asdict(fingerprint)

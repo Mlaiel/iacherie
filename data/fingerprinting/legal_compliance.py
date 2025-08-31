@@ -12,7 +12,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL WARNING ⚠️
+  CRITICAL WARNING 
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
 Any unauthorized use, reproduction, distribution, or reverse engineering 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -470,6 +470,9 @@ For legal matters, contact: {legal_contact}
         jurisdiction: LegalJurisdiction = LegalJurisdiction.US
     ) -> ComplianceAssessment:
         """Perform comprehensive legal compliance assessment"""
+
+
+
         try:
             assessment = ComplianceAssessment(
                 content_id=content_id,
@@ -831,6 +834,9 @@ For legal matters, contact: {legal_contact}
         template_variables: Dict[str, Any]
     ) -> LegalDocument:
         """Generate legal document from template"""
+
+
+
         try:
             # Get template
             template_key = document_type.value
@@ -975,6 +981,9 @@ For legal matters, contact: {legal_contact}
         assessment: ComplianceAssessment
     ) -> LegalCase:
         """Create new legal case"""
+
+
+
         try:
             case = LegalCase(
                 title=f"Copyright Infringement - {violation_data.get('content_id', 'Unknown')}",

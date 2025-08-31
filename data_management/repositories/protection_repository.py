@@ -1,5 +1,5 @@
 """
-🛡️ Protection Repository - IA Influencer Agent Platform Enterprise
+ Protection Repository - IA Influencer Agent Platform Enterprise
 ==================================================================
 Module: backend/data_management/repositories/protection_repository.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Content Protection Repository - Production-Ready
 Responsibility: Advanced AI-powered content protection and monitoring system
 ==================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
@@ -160,6 +160,9 @@ class ProtectionRepository(BaseRepository[ProtectionModel]):
     
     def _generate_protection_fingerprint(self, content_data: Dict[str, Any]) -> str:
         """Generate unique protection fingerprint"""
+
+
+
         try:
             if not self.fingerprint_service:
                 # Fallback to basic hash
@@ -175,6 +178,9 @@ class ProtectionRepository(BaseRepository[ProtectionModel]):
     
     def _setup_monitoring(self, protection: ProtectionModel) -> bool:
         """Setup real-time monitoring for protected content"""
+
+
+
         try:
             if not self.monitoring_service:
                 return False
@@ -198,6 +204,9 @@ class ProtectionRepository(BaseRepository[ProtectionModel]):
     
     def _get_monitoring_platforms(self) -> List[str]:
         """Get list of platforms to monitor"""
+
+
+
         return [
             'youtube', 'instagram', 'tiktok', 'twitter', 'facebook',
             'spotify', 'soundcloud', 'bandcamp', 'pinterest',
@@ -229,6 +238,9 @@ class ProtectionRepository(BaseRepository[ProtectionModel]):
     
     def _classify_violation(self, violation_data: Dict[str, Any]) -> ViolationType:
         """Classify type of violation using AI"""
+
+
+
         try:
             # Analyze violation context
             url = violation_data.get('detected_url', '')
@@ -259,6 +271,9 @@ class ProtectionRepository(BaseRepository[ProtectionModel]):
     def _determine_response_action(self, violation: ViolationDetails, 
                                  protection_settings: ProtectionSettings) -> ResponseAction:
         """Determine appropriate response action"""
+
+
+
         try:
             if not protection_settings.auto_response_enabled:
                 return ResponseAction.MONITOR_ONLY
@@ -288,6 +303,9 @@ class ProtectionRepository(BaseRepository[ProtectionModel]):
                                action: ResponseAction, 
                                protection: ProtectionModel) -> bool:
         """Execute automated response action"""
+
+
+
         try:
             if action == ResponseAction.MONITOR_ONLY:
                 return True
@@ -319,6 +337,9 @@ class ProtectionRepository(BaseRepository[ProtectionModel]):
     
     def _send_warning_notice(self, response_data: Dict[str, Any]) -> bool:
         """Send warning notice to violator"""
+
+
+
         try:
             if not self.legal_service:
                 return False
@@ -331,6 +352,9 @@ class ProtectionRepository(BaseRepository[ProtectionModel]):
     
     def _request_takedown(self, response_data: Dict[str, Any]) -> bool:
         """Request content takedown from platform"""
+
+
+
         try:
             if not self.legal_service:
                 return False
@@ -343,6 +367,9 @@ class ProtectionRepository(BaseRepository[ProtectionModel]):
     
     def _send_legal_notice(self, response_data: Dict[str, Any]) -> bool:
         """Send formal legal notice"""
+
+
+
         try:
             if not self.legal_service:
                 return False
@@ -355,6 +382,9 @@ class ProtectionRepository(BaseRepository[ProtectionModel]):
     
     def _file_dmca_takedown(self, response_data: Dict[str, Any]) -> bool:
         """File DMCA takedown notice"""
+
+
+
         try:
             if not self.legal_service:
                 return False
@@ -367,6 +397,9 @@ class ProtectionRepository(BaseRepository[ProtectionModel]):
     
     def _calculate_protection_metrics(self, protection_id: str) -> MonitoringMetrics:
         """Calculate protection monitoring metrics"""
+
+
+
         try:
             if not self.monitoring_service:
                 return MonitoringMetrics(
@@ -398,6 +431,9 @@ class ProtectionRepository(BaseRepository[ProtectionModel]):
     # Base Repository Implementation
     def create(self, protection: ProtectionModel, **kwargs) -> ProtectionModel:
         """Create new protection with monitoring setup"""
+
+
+
         try:
             # Validate protection
             self._validate_protection(protection)
@@ -472,6 +508,9 @@ class ProtectionRepository(BaseRepository[ProtectionModel]):
     
     def get_by_id(self, entity_id: str, use_cache: bool = True) -> Optional[ProtectionModel]:
         """Get protection by ID with cache support"""
+
+
+
         try:
             # Check cache first
             if use_cache and self._cache_enabled and self.cache:
@@ -500,6 +539,9 @@ class ProtectionRepository(BaseRepository[ProtectionModel]):
     
     def update(self, protection: ProtectionModel, **kwargs) -> ProtectionModel:
         """Update protection with monitoring reconfiguration"""
+
+
+
         try:
             # Validate protection
             self._validate_protection(protection)
@@ -546,6 +588,9 @@ class ProtectionRepository(BaseRepository[ProtectionModel]):
     
     def delete(self, entity_id: str, soft_delete: bool = True) -> bool:
         """Delete protection with monitoring cleanup"""
+
+
+
         try:
             # Get protection for audit
             protection = self.get_by_id(entity_id)
@@ -589,6 +634,9 @@ class ProtectionRepository(BaseRepository[ProtectionModel]):
     def list(self, filters: Dict[str, Any] = None, limit: int = 100, 
              offset: int = 0, order_by: str = None) -> List[ProtectionModel]:
         """List protections with advanced filtering"""
+
+
+
         try:
             # Build query
             query_filters = filters or {}
@@ -633,6 +681,9 @@ class ProtectionRepository(BaseRepository[ProtectionModel]):
     
     def process_violation_detection(self, violation_data: Dict[str, Any]) -> ViolationDetails:
         """Process detected violation and create response"""
+
+
+
         try:
             # Create violation details
             violation = ViolationDetails(
@@ -674,6 +725,9 @@ class ProtectionRepository(BaseRepository[ProtectionModel]):
     def get_protection_analytics(self, creator_id: str = None, 
                                time_period: str = '30d') -> Dict[str, Any]:
         """Get comprehensive protection analytics"""
+
+
+
         try:
             filters = {}
             if creator_id:
@@ -785,6 +839,9 @@ class AsyncProtectionRepository(AsyncBaseRepository[ProtectionModel]):
     
     async def create(self, protection: ProtectionModel, **kwargs) -> ProtectionModel:
         """Create protection asynchronously with monitoring setup"""
+
+
+
         try:
             # Validate protection
             await self._validate_protection(protection)
@@ -838,6 +895,9 @@ class AsyncProtectionRepository(AsyncBaseRepository[ProtectionModel]):
     
     async def get_by_id(self, entity_id: str, use_cache: bool = True) -> Optional[ProtectionModel]:
         """Get protection by ID asynchronously"""
+
+
+
         try:
             # Check cache first
             if use_cache and self._cache_enabled and self.cache:
@@ -865,6 +925,9 @@ class AsyncProtectionRepository(AsyncBaseRepository[ProtectionModel]):
     
     async def update(self, protection: ProtectionModel, **kwargs) -> ProtectionModel:
         """Update protection asynchronously"""
+
+
+
         try:
             # Implementation similar to sync version but with async operations
             await self._validate_protection(protection)
@@ -906,6 +969,9 @@ class AsyncProtectionRepository(AsyncBaseRepository[ProtectionModel]):
     
     async def delete(self, entity_id: str, soft_delete: bool = True) -> bool:
         """Delete protection asynchronously"""
+
+
+
         try:
             protection = await self.get_by_id(entity_id)
             if not protection:
@@ -946,6 +1012,9 @@ class AsyncProtectionRepository(AsyncBaseRepository[ProtectionModel]):
     async def list(self, filters: Dict[str, Any] = None, limit: int = 100, 
                   offset: int = 0, order_by: str = None) -> List[ProtectionModel]:
         """List protections asynchronously"""
+
+
+
         try:
             query_filters = filters or {}
             
@@ -970,6 +1039,9 @@ class AsyncProtectionRepository(AsyncBaseRepository[ProtectionModel]):
     
     async def _generate_protection_fingerprint_async(self, content_data: Dict[str, Any]) -> str:
         """Generate protection fingerprint asynchronously"""
+
+
+
         try:
             import hashlib
             import json
@@ -1009,6 +1081,9 @@ class AsyncProtectionRepository(AsyncBaseRepository[ProtectionModel]):
 
     async def _setup_monitoring_async(self, protection: ProtectionModel) -> bool:
         """Setup monitoring for protected content asynchronously"""
+
+
+
         try:
             import time
             

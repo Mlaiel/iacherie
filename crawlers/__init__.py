@@ -223,7 +223,10 @@ class CrawlerOrchestrator:
         target: SurveillanceTarget,
         violations: List[Dict[str, Any]]
     ) -> None:
-        """Handle violations detected by surveillance system."""        try:
+        """Handle violations detected by surveillance system."""
+
+
+        try:
             logger.warning(
                 f"Surveillance violations detected for {target.platform}/{target.identifier}: "
                 f"{len(violations)} violations"
@@ -250,7 +253,10 @@ class CrawlerOrchestrator:
         """Handle surveillance task errors."""        logger.error(f"Surveillance task failed: {task.task_id} - {error}")
     
     async def _handle_content_violation(self, analysis_result: AnalysisResult) -> None:
-        """Handle content violations detected by analysis."""        try:
+        """Handle content violations detected by analysis."""
+
+
+        try:
             logger.warning(
                 f"Content violation detected for {analysis_result.content_id}: "
                 f"risk={analysis_result.risk_score:.2f}, "
@@ -290,7 +296,10 @@ class CrawlerOrchestrator:
         target: SurveillanceTarget,
         violations: List[Dict[str, Any]]
     ) -> None:
-        """Persist violation data to disk."""        try:
+        """Persist violation data to disk."""
+
+
+        try:
             violations_dir = self.data_dir / "violations"
             violations_dir.mkdir(exist_ok=True)
             

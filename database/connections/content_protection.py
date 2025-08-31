@@ -84,6 +84,9 @@ class ContentFingerprint:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for storage"""
+
+
+
         return {
             "fingerprint_id": self.fingerprint_id,
             "tenant_id": self.tenant_id,
@@ -116,6 +119,9 @@ class ProtectionAlert:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for storage"""
+
+
+
         return {
             "alert_id": self.alert_id,
             "fingerprint_id": self.fingerprint_id, 
@@ -196,6 +202,9 @@ class ContentProtectionConnections:
         Returns:
             Fingerprint ID for tracking
         """
+
+
+
         try:
             # Generate unique fingerprint ID
             fingerprint_id = self._generate_fingerprint_id(tenant_id, file_content)
@@ -270,6 +279,9 @@ class ContentProtectionConnections:
         Returns:
             List of (fingerprint_id, similarity_score) tuples
         """
+
+
+
         try:
             # Perform vector similarity search
             similar_vectors = await self.vector_store.similarity_search(
@@ -313,6 +325,9 @@ class ContentProtectionConnections:
         Returns:
             Alert ID for tracking
         """
+
+
+
         try:
             # Get fingerprint data
             fingerprint = await self._get_fingerprint_data(fingerprint_id)
@@ -388,6 +403,9 @@ class ContentProtectionConnections:
         Returns:
             Protection summary with metrics and recent activity
         """
+
+
+
         try:
             start_date = datetime.utcnow() - timedelta(days=days_back)
             
@@ -454,6 +472,9 @@ class ContentProtectionConnections:
         Returns:
             True if update successful
         """
+
+
+
         try:
             # Get current alert data
             alert_data = await self._get_alert_data(alert_id)
@@ -505,6 +526,9 @@ class ContentProtectionConnections:
             
             async def commit(self):
                 """Commit transaction across all database connections"""
+
+
+
                 try:
                     # PostgreSQL commit
                     if hasattr(self.postgresql, 'commit'):
@@ -524,15 +548,18 @@ class ContentProtectionConnections:
                     if self.elasticsearch and hasattr(self.elasticsearch, 'indices'):
                         await self.elasticsearch.indices.refresh(index='_all')
                         
-                    logger.info("🔒 Content protection transaction committed successfully")
+                    logger.info(" Content protection transaction committed successfully")
                     
                 except Exception as e:
-                    logger.error(f"❌ Failed to commit content protection transaction: {e}")
+                    logger.error(f" Failed to commit content protection transaction: {e}")
                     await self.rollback()
                     raise
             
             async def rollback(self):
                 """Rollback transaction across all database connections"""
+
+
+
                 try:
                     # PostgreSQL rollback
                     if hasattr(self.postgresql, 'rollback'):
@@ -551,10 +578,10 @@ class ContentProtectionConnections:
                     if hasattr(self.vector_store, 'rollback'):
                         await self.vector_store.rollback()
                     
-                    logger.warning("↩️ Content protection transaction rolled back")
+                    logger.warning("↩ Content protection transaction rolled back")
                     
                 except Exception as e:
-                    logger.error(f"❌ Failed to rollback content protection transaction: {e}")
+                    logger.error(f" Failed to rollback content protection transaction: {e}")
                     # Log the error but don't raise to avoid masking original error
         
         tx = TransactionContext({
@@ -679,6 +706,9 @@ class ContentProtectionConnections:
     
     async def get_protection_metrics(self) -> Dict[str, Any]:
         """Get protection operation metrics."""
+
+
+
         return {
             "operations_count": self.operations_count,
             "fingerprints_stored": self.fingerprints_stored,

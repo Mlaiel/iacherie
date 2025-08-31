@@ -5,7 +5,7 @@
 IA Influencer Agent - Core Surveillance Engine
 ==============================================
 
-⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
+ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
 © 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
@@ -132,6 +132,9 @@ class SurveillanceEngine:
     
     async def initialize(self) -> None:
         """Initialize the surveillance engine."""
+
+
+
         try:
             self._logger.info("Initializing surveillance engine...")
             
@@ -153,6 +156,9 @@ class SurveillanceEngine:
     
     async def start(self) -> None:
         """Start the surveillance engine."""
+
+
+
         try:
             if self.status == EngineStatus.RUNNING:
                 self._logger.warning("Surveillance engine is already running")
@@ -185,6 +191,9 @@ class SurveillanceEngine:
     
     async def stop(self) -> None:
         """Stop the surveillance engine."""
+
+
+
         try:
             if self.status == EngineStatus.STOPPED:
                 self._logger.warning("Surveillance engine is already stopped")
@@ -232,6 +241,9 @@ class SurveillanceEngine:
         Returns:
             Task ID
         """
+
+
+
         try:
             if self.status != EngineStatus.RUNNING:
                 raise RuntimeError(f"Engine not running (status: {self.status})")
@@ -259,6 +271,9 @@ class SurveillanceEngine:
         Returns:
             True if cancelled successfully
         """
+
+
+
         try:
             # Check if task is running
             if task_id in self.running_tasks:
@@ -287,6 +302,9 @@ class SurveillanceEngine:
     
     def get_status(self) -> Dict[str, Any]:
         """Get engine status and metrics."""
+
+
+
         return {
             'status': self.status.value,
             'uptime_seconds': (
@@ -417,6 +435,9 @@ class SurveillanceEngine:
             task: Task to execute
             worker_id: Worker executing the task
         """
+
+
+
         try:
             self._logger.debug(f"Worker {worker_id} executing task {task.task_id}")
             
@@ -586,6 +607,9 @@ class SurveillanceEngine:
     
     async def _update_metrics(self) -> None:
         """Update engine metrics."""
+
+
+
         try:
             # Update task counts
             self.metrics.tasks_pending = len(self.pending_tasks)
@@ -634,6 +658,9 @@ class SurveillanceEngine:
     
     async def _notify_callbacks(self, event: str, **kwargs) -> None:
         """Notify event callbacks."""
+
+
+
         try:
             callbacks = self.task_callbacks.get(event, [])
             
@@ -676,6 +703,9 @@ def create_surveillance_task(
     Returns:
         Created surveillance task
     """
+
+
+
     return SurveillanceTask(
         task_id=str(uuid.uuid4()),
         task_type=task_type,

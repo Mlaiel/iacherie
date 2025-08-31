@@ -117,6 +117,9 @@ class ProxyManager:
     
     def _get_proxy_key(self, proxy: ProxyInfo) -> str:
         """Generate unique key for proxy."""
+
+
+
         return f"{proxy.host}:{proxy.port}"
     
     async def get_proxy(self, target_country: Optional[str] = None) -> Optional[ProxyInfo]:
@@ -298,6 +301,9 @@ class ProxyManager:
     
     async def validate_proxy(self, proxy: ProxyInfo) -> bool:
         """Validate if proxy is working."""
+
+
+
         try:
             proxy_url = self._build_proxy_url(proxy)
             

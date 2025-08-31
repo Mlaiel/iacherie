@@ -1,5 +1,5 @@
 """
-⚡ Enterprise Batch Processing System for Content Fingerprinting
+ Enterprise Batch Processing System for Content Fingerprinting
 ===============================================================
 
 High-performance batch processing system for large-scale content fingerprinting operations.
@@ -130,6 +130,9 @@ class ResourceMonitor:
                 
     def _collect_stats(self) -> Dict[str, float]:
         """Collect current resource statistics."""
+
+
+
         return {
             'cpu_percent': psutil.cpu_percent(),
             'memory_percent': psutil.virtual_memory().percent,
@@ -143,6 +146,9 @@ class ResourceMonitor:
     
     def get_current_stats(self) -> Optional[Dict[str, float]]:
         """Get most recent resource statistics."""
+
+
+
         return self.stats_history[-1] if self.stats_history else None
     
     def get_average_stats(self, window_seconds: int = 60) -> Dict[str, float]:
@@ -505,6 +511,9 @@ class BatchProcessor:
     
     def _process_single_task(self, task: ProcessingTask) -> Optional[FingerprintResult]:
         """Process a single fingerprinting task."""
+
+
+
         try:
             # Use synchronous processing for now
             # In a real implementation, this would be properly async
@@ -555,10 +564,16 @@ class BatchProcessor:
     
     def get_job_status(self, job_id: str) -> Optional[BatchProcessingJob]:
         """Get current status of a batch job."""
+
+
+
         return self.active_jobs.get(job_id)
     
     def get_all_jobs(self) -> List[BatchProcessingJob]:
         """Get status of all active jobs."""
+
+
+
         return list(self.active_jobs.values())
     
     def cancel_job(self, job_id: str) -> bool:

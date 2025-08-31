@@ -126,6 +126,9 @@ class HashtagIntelligence:
         Returns:
             HashtagStrategy with categorized hashtag recommendations
         """
+
+
+
         try:
             logger.info(f"Generating hashtag strategy for {len(target_platforms)} platforms")
             
@@ -765,6 +768,9 @@ class HashtagIntelligence:
 
     def _initialize_trending_hashtags(self) -> Dict[str, List[str]]:
         """Initialize trending hashtags database"""
+
+
+
         
         return {
             "general": [
@@ -791,6 +797,9 @@ class HashtagIntelligence:
 
     def _get_platform_limits(self) -> Dict[Platform, int]:
         """Get hashtag limits for each platform"""
+
+
+
         
         return {
             Platform.INSTAGRAM: 30,
@@ -893,6 +902,9 @@ class HashtagIntelligence:
 
     def _hashtag_to_dict(self, hashtag_suggestion: HashtagSuggestion) -> Dict[str, Any]:
         """Convert HashtagSuggestion to dictionary"""
+
+
+
         
         return {
             "hashtag": hashtag_suggestion.hashtag,

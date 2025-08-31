@@ -8,7 +8,7 @@ Provides unified access to all scraping functionalities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️ CRITICAL LEGAL WARNING ⚠️
+ CRITICAL LEGAL WARNING 
 UNAUTHORIZED USE, COPYING, OR DISTRIBUTION IS STRICTLY PROHIBITED AND WILL RESULT IN IMMEDIATE LEGAL ACTION.
 This technology is EXCLUSIVE property of Fahed Mlaiel. Contact: mlaiel@live.de for licensing.
 
@@ -100,6 +100,9 @@ class ScrapersManager:
         
     def get_all_scrapers(self) -> Dict[str, Any]:
         """Get all available scrapers."""
+
+
+
         return {
             'web': self.web_scraper,
             'content': self.content_scraper,
@@ -117,5 +120,8 @@ class ScrapersManager:
         
     def list_available_scrapers(self) -> list:
         """List all available scraper types."""
+
+
+
         return ['web', 'content', 'platform', 'stealth', 'batch', 'realtime', 
                 'social', 'media', 'selenium', 'api', 'proxy', 'mobile']

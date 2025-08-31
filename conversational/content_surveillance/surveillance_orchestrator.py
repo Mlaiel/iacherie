@@ -19,7 +19,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING - ZERO TOLERANCE POLICY ⚠️
+  CRITICAL LEGAL WARNING - ZERO TOLERANCE POLICY 
 This orchestration system is the EXCLUSIVE intellectual property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution.
 """
@@ -161,6 +161,9 @@ class SurveillanceOrchestrator:
         Returns:
             str: Task ID
         """
+
+
+
         try:
             # Create surveillance task
             task = SurveillanceTask(
@@ -234,6 +237,9 @@ class SurveillanceOrchestrator:
     
     async def _process_task_queue(self):
         """Process pending tasks in priority queue"""
+
+
+
         try:
             # Check if we can process more tasks
             if len(self.active_tasks) >= self.max_concurrent_tasks:
@@ -275,6 +281,9 @@ class SurveillanceOrchestrator:
     
     async def _assign_and_start_task(self, task: SurveillanceTask, worker: WorkerNode):
         """Assign task to worker and start execution"""
+
+
+
         try:
             # Assign task
             task.assigned_worker = worker.worker_id
@@ -313,6 +322,9 @@ class SurveillanceOrchestrator:
     
     async def _monitor_task_execution(self, task: SurveillanceTask):
         """Monitor task execution and handle completion"""
+
+
+
         try:
             session_id = task.metadata.get('surveillance_session_id')
             if not session_id:
@@ -344,6 +356,9 @@ class SurveillanceOrchestrator:
     
     async def _handle_task_completion(self, task: SurveillanceTask, surveillance_status: Dict):
         """Handle successful task completion"""
+
+
+
         try:
             # Update task status
             task.status = OperationStatus.COMPLETED
@@ -381,6 +396,9 @@ class SurveillanceOrchestrator:
     
     async def _handle_task_failure(self, task: SurveillanceTask, error_message: str):
         """Handle task failure with retry logic"""
+
+
+
         try:
             task.retry_count += 1
             
@@ -430,6 +448,9 @@ class SurveillanceOrchestrator:
     
     async def _handle_task_timeout(self, task: SurveillanceTask):
         """Handle task timeout"""
+
+
+
         try:
             # Stop surveillance if running
             session_id = task.metadata.get('surveillance_session_id')
@@ -455,6 +476,9 @@ class SurveillanceOrchestrator:
     
     async def _process_surveillance_results(self, task: SurveillanceTask, surveillance_status: Dict):
         """Process surveillance results and update metrics"""
+
+
+
         try:
             report = surveillance_status.get('report')
             if not report:
@@ -514,6 +538,9 @@ class SurveillanceOrchestrator:
     
     async def _handle_worker_failure(self, worker_id: str):
         """Handle worker node failure"""
+
+
+
         try:
             # Find tasks assigned to failed worker
             failed_tasks = [
@@ -576,6 +603,9 @@ class SurveillanceOrchestrator:
     
     async def _analyze_performance_patterns(self):
         """Analyze system performance patterns"""
+
+
+
         try:
             # Analyze completion times by priority
             # Analyze worker utilization patterns
@@ -586,6 +616,9 @@ class SurveillanceOrchestrator:
     
     async def _optimize_resource_allocation(self):
         """Optimize resource allocation based on demand"""
+
+
+
         try:
             # Adjust worker capacities based on performance
             # Rebalance tasks across workers
@@ -596,6 +629,9 @@ class SurveillanceOrchestrator:
     
     async def _tune_system_parameters(self):
         """Tune system parameters for optimal performance"""
+
+
+
         try:
             # Adjust queue processing intervals
             # Tune timeout values
@@ -606,6 +642,9 @@ class SurveillanceOrchestrator:
     
     async def register_worker(self, worker: WorkerNode) -> bool:
         """Register new worker node"""
+
+
+
         try:
             self.worker_nodes[worker.worker_id] = worker
             worker.last_heartbeat = datetime.utcnow()
@@ -625,6 +664,9 @@ class SurveillanceOrchestrator:
     
     async def worker_heartbeat(self, worker_id: str, metrics: Dict[str, Any] = None) -> bool:
         """Update worker heartbeat and metrics"""
+
+
+
         try:
             if worker_id not in self.worker_nodes:
                 return False
@@ -644,6 +686,9 @@ class SurveillanceOrchestrator:
     
     async def get_orchestration_status(self) -> Dict[str, Any]:
         """Get comprehensive orchestration status"""
+
+
+
         try:
             return {
                 'metrics': self.metrics.__dict__,
@@ -658,6 +703,9 @@ class SurveillanceOrchestrator:
     
     async def cancel_task(self, task_id: str, user_id: int) -> bool:
         """Cancel surveillance task"""
+
+
+
         try:
             # Find task
             task = self.active_tasks.get(task_id)

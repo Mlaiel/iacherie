@@ -7,7 +7,7 @@ evidence collection, timeline reconstruction, and threat attribution.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, distribution, or commercialization is strictly prohibited.
 """
@@ -181,6 +181,9 @@ class ForensicAnalyzer:
         Returns:
             Unique case ID
         """
+
+
+
         try:
             case_id = str(uuid.uuid4())
             initiated_at = datetime.now(timezone.utc)
@@ -249,6 +252,9 @@ class ForensicAnalyzer:
         Returns:
             Evidence ID
         """
+
+
+
         try:
             evidence_id = str(uuid.uuid4())
             collected_at = datetime.now(timezone.utc)
@@ -327,6 +333,9 @@ class ForensicAnalyzer:
         Returns:
             Comprehensive timeline analysis
         """
+
+
+
         try:
             # Validate case
             if case_id not in self.active_cases:
@@ -398,6 +407,9 @@ class ForensicAnalyzer:
         Returns:
             Threat attribution analysis results
         """
+
+
+
         try:
             # Validate case
             if case_id not in self.active_cases:
@@ -469,6 +481,9 @@ class ForensicAnalyzer:
         Returns:
             Comprehensive forensic report
         """
+
+
+
         try:
             # Validate case
             if case_id not in self.active_cases:
@@ -565,6 +580,9 @@ class ForensicAnalyzer:
         Returns:
             Case closure results
         """
+
+
+
         try:
             # Validate case
             if case_id not in self.active_cases:

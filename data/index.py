@@ -1,12 +1,12 @@
 """
-🚀 Data Management Index - IA Influencer Agent Platform Enterprise
+ Data Management Index - IA Influencer Agent Platform Enterprise
 ================================================================
 
 Index central pour le système de gestion des données IA-Influencer-Agent.
 Fournit un accès unifié à tous les composants de gestion des données enterprise.
 
 LOGIQUE MÉTIER CORE:
-Créateur Multi-Format (🎵🎭📸✍️📱) → Upload Contenu → Protection IA Droits → 
+Créateur Multi-Format () → Upload Contenu → Protection IA Droits → 
 SEO Pro → Matching Collaboration → Distribution Multi-Plateformes → Monétisation Avancée
 
 Architecture Enterprise 3-Niveaux:
@@ -16,7 +16,7 @@ Architecture Enterprise 3-Niveaux:
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
-⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
+ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
 """
 
 from typing import Dict, Any, Optional, List, Union
@@ -27,22 +27,22 @@ from dataclasses import dataclass
 
 # Core modules enterprise - Architecture organisée
 from . import (
-    analytics,              # 📊 Analytics & Business Intelligence Enterprise
-    content_protection,     # 🛡️ Protection Contenu IA Multi-Format
-    crawlers,              # 🕷️ Surveillance Web Multi-Plateformes  
-    fingerprinting,        # 🔍 Fingerprinting IA Avancé
-    ingestion,             # 📥 Ingestion Contenu Multi-Format
-    licensing,             # 📄 Gestion Licences Automatisée
-    models,                # 📊 Modèles Données Enterprise
-    monetization,          # 💰 Monétisation Avancée
-    pipelines,             # 🔄 Pipelines Données Enterprise
-    processors,            # ⚙️ Processeurs Contenu Spécialisés
-    quality,               # ✅ Assurance Qualité Enterprise
-    storage,               # 💾 Gestion Stockage Enterprise
-    streams,               # 🌊 Flux Temps Réel
-    transformers,          # 🔄 Transformateurs Données
-    validators,            # ✅ Validateurs Enterprise
-    vector_db              # 🔍 Base Données Vectorielle
+    analytics,              #  Analytics & Business Intelligence Enterprise
+    content_protection,     #  Protection Contenu IA Multi-Format
+    crawlers,              #  Surveillance Web Multi-Plateformes  
+    fingerprinting,        #  Fingerprinting IA Avancé
+    ingestion,             #  Ingestion Contenu Multi-Format
+    licensing,             #  Gestion Licences Automatisée
+    models,                #  Modèles Données Enterprise
+    monetization,          #  Monétisation Avancée
+    pipelines,             #  Pipelines Données Enterprise
+    processors,            #  Processeurs Contenu Spécialisés
+    quality,               #  Assurance Qualité Enterprise
+    storage,               #  Gestion Stockage Enterprise
+    streams,               #  Flux Temps Réel
+    transformers,          #  Transformateurs Données
+    validators,            #  Validateurs Enterprise
+    vector_db              #  Base Données Vectorielle
 )
 
 # Classes principales pour logique métier IA-Influencer-Agent
@@ -154,17 +154,17 @@ class SystemHealth:
 
 class DataManagementSystem:
     """
-    🚀 Coordinateur Central - Système de Gestion des Données IA-Influencer-Agent
+     Coordinateur Central - Système de Gestion des Données IA-Influencer-Agent
     ===========================================================================
     
     Fournit une interface unifiée pour le traitement, la protection, et la 
     monétisation de contenu pour créateurs multi-format :
     
-    - 🎵 Musiciens (Spotify, SoundCloud, Apple Music)
-    - 📱 Influenceurs (Instagram, TikTok, YouTube)  
-    - 📸 Photographes (Instagram, portfolios web)
-    - ✍️ Blogueurs (Medium, blogs personnels)
-    - 🎭 Comédiens (YouTube, TikTok, Twitch)
+    -  Musiciens (Spotify, SoundCloud, Apple Music)
+    -  Influenceurs (Instagram, TikTok, YouTube)  
+    -  Photographes (Instagram, portfolios web)
+    -  Blogueurs (Medium, blogs personnels)
+    -  Comédiens (YouTube, TikTok, Twitch)
     
     FLUX MÉTIER PRINCIPAL:
     Upload Multi-Format → Protection IA → SEO → Collaboration → Distribution → Monétisation
@@ -198,7 +198,7 @@ class DataManagementSystem:
         self.revenue_generated = 0.0
         self.active_collaborations = 0
         
-        self.logger.info(f"🚀 Data Management System IA-Influencer-Agent initialisé - ID: {self.system_id}")
+        self.logger.info(f" Data Management System IA-Influencer-Agent initialisé - ID: {self.system_id}")
     
     async def initialize_components(self, db_session, redis_client, vector_db_client=None):
         """
@@ -209,8 +209,11 @@ class DataManagementSystem:
             redis_client: Client Redis pour cache et queues
             vector_db_client: Client base de données vectorielle (FAISS/Pinecone)
         """
+
+
+
         try:
-            self.logger.info("🔧 Initialisation des composants enterprise...")
+            self.logger.info(" Initialisation des composants enterprise...")
             
             # === STOCKAGE ET INFRASTRUCTURE ===
             self.storage = StorageManager(self.config.get('storage', {}))
@@ -273,10 +276,10 @@ class DataManagementSystem:
                 surveillance_config=self.config.get('surveillance', {})
             )
             
-            self.logger.info("✅ Tous les composants enterprise initialisés avec succès")
+            self.logger.info(" Tous les composants enterprise initialisés avec succès")
             
         except Exception as e:
-            self.logger.error(f"❌ Échec initialisation composants: {str(e)}")
+            self.logger.error(f" Échec initialisation composants: {str(e)}")
             raise RuntimeError(f"Erreur critique initialisation système: {str(e)}")
     
     async def process_creator_content(
@@ -301,9 +304,12 @@ class DataManagementSystem:
         Returns:
             Résultats du traitement complet
         """
+
+
+
         try:
             processing_id = f"proc_{creator_profile.creator_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
-            self.logger.info(f"🚀 Début traitement contenu créateur {creator_profile.creator_type}: {processing_id}")
+            self.logger.info(f" Début traitement contenu créateur {creator_profile.creator_type}: {processing_id}")
             
             results = {
                 'processing_id': processing_id,
@@ -321,7 +327,7 @@ class DataManagementSystem:
                     content_formats=creator_profile.content_formats
                 )
                 results['steps']['ingestion'] = ingestion_result
-                self.logger.info(f"✅ Ingestion terminée - Qualité: {ingestion_result.get('quality_score', 'N/A')}")
+                self.logger.info(f" Ingestion terminée - Qualité: {ingestion_result.get('quality_score', 'N/A')}")
             
             # === ÉTAPE 2: PROTECTION IA (si activée) ===
             if protection_enabled and self.protection:
@@ -333,7 +339,7 @@ class DataManagementSystem:
                 results['steps']['protection'] = protection_result
                 if protection_result.get('protected', False):
                     self.protected_content_count += 1
-                self.logger.info(f"🛡️ Protection IA terminée - Statut: {protection_result.get('status', 'N/A')}")
+                self.logger.info(f" Protection IA terminée - Statut: {protection_result.get('status', 'N/A')}")
             
             # === ÉTAPE 3: ANALYTICS ET OPTIMISATION SEO ===
             if self.analytics:
@@ -344,7 +350,7 @@ class DataManagementSystem:
                     seo_optimization=True
                 )
                 results['steps']['analytics'] = analytics_result
-                self.logger.info(f"📊 Analytics terminé - Score SEO: {analytics_result.get('seo_score', 'N/A')}")
+                self.logger.info(f" Analytics terminé - Score SEO: {analytics_result.get('seo_score', 'N/A')}")
             
             # === ÉTAPE 4: MONÉTISATION (si activée) ===
             if monetization_enabled and self.monetization:
@@ -356,7 +362,7 @@ class DataManagementSystem:
                 results['steps']['monetization'] = monetization_result
                 estimated_revenue = monetization_result.get('estimated_monthly_revenue', 0)
                 self.revenue_generated += estimated_revenue
-                self.logger.info(f"💰 Monétisation calculée - Potentiel: €{estimated_revenue}/mois")
+                self.logger.info(f" Monétisation calculée - Potentiel: €{estimated_revenue}/mois")
             
             # === FINALISATION ===
             results['status'] = 'completed'
@@ -370,12 +376,12 @@ class DataManagementSystem:
             }
             
             self.processed_content_count += 1
-            self.logger.info(f"🎉 Traitement complet terminé avec succès: {processing_id}")
+            self.logger.info(f" Traitement complet terminé avec succès: {processing_id}")
             
             return results
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur traitement contenu créateur: {str(e)}")
+            self.logger.error(f" Erreur traitement contenu créateur: {str(e)}")
             results['status'] = 'error'
             results['error'] = str(e)
             return results
@@ -395,6 +401,9 @@ class DataManagementSystem:
         Returns:
             Liste des matches de collaboration
         """
+
+
+
         try:
             if not self.analytics:
                 return []
@@ -411,7 +420,7 @@ class DataManagementSystem:
             return matches
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur recherche collaborations: {str(e)}")
+            self.logger.error(f" Erreur recherche collaborations: {str(e)}")
             return []
 
 
@@ -423,6 +432,9 @@ class DataManagementSystem:
         Returns:
             État de santé détaillé du système
         """
+
+
+
         try:
             uptime = (datetime.now() - self.startup_time).total_seconds()
             
@@ -485,7 +497,7 @@ class DataManagementSystem:
             )
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur vérification santé système: {str(e)}")
+            self.logger.error(f" Erreur vérification santé système: {str(e)}")
             return SystemHealth(
                 status='error',
                 uptime=0,
@@ -506,6 +518,9 @@ class DataManagementSystem:
     
     def _get_memory_usage(self) -> float:
         """Obtient l'utilisation mémoire en MB."""
+
+
+
         try:
             import psutil
             process = psutil.Process()
@@ -526,6 +541,9 @@ data_management_system: Optional[DataManagementSystem] = None
 
 def get_system() -> Optional[DataManagementSystem]:
     """Obtient l'instance globale du système de gestion des données."""
+
+
+
     return data_management_system
 
 
@@ -556,27 +574,27 @@ MODULE_INFO = {
     
     # Créateurs supportés
     'creator_types': {
-        'musicians': '🎵 Musiciens (Spotify, SoundCloud, Apple Music, Bandcamp)',
-        'influencers': '📱 Influenceurs (Instagram, TikTok, YouTube, Twitter)',
-        'photographers': '📸 Photographes (Instagram, Flickr, 500px, portfolios)',
-        'bloggers': '✍️ Blogueurs (Medium, WordPress, Substack, blogs personnels)',
-        'comedians': '🎭 Comédiens (YouTube, TikTok, Twitch, Stand-up)'
+        'musicians': ' Musiciens (Spotify, SoundCloud, Apple Music, Bandcamp)',
+        'influencers': ' Influenceurs (Instagram, TikTok, YouTube, Twitter)',
+        'photographers': ' Photographes (Instagram, Flickr, 500px, portfolios)',
+        'bloggers': ' Blogueurs (Medium, WordPress, Substack, blogs personnels)',
+        'comedians': ' Comédiens (YouTube, TikTok, Twitch, Stand-up)'
     },
     
     # Composants enterprise
     'components': [
-        '📊 Analytics Engine - Business Intelligence Enterprise',
-        '🛡️ Content Protection - Protection IA Multi-Format', 
-        '🕷️ Multi-Platform Crawlers - Surveillance Web Automatisée',
-        '🔍 AI Fingerprinting - Empreintes Numériques Avancées',
-        '📥 Content Ingestion - Traitement Multi-Format',
-        '📄 Licensing Management - Gestion Licences Automatisée',
-        '💰 Revenue Calculation - Monétisation Avancée',
-        '💾 Storage Management - Gestion Stockage Enterprise',
-        '🔍 Vector Database - Recherche Similarité IA',
-        '🔄 Data Pipelines - Pipelines Données Temps Réel',
-        '✅ Quality Assurance - Assurance Qualité Enterprise',
-        '🌊 Real-time Streaming - Flux Données Temps Réel',
+        ' Analytics Engine - Business Intelligence Enterprise',
+        ' Content Protection - Protection IA Multi-Format', 
+        ' Multi-Platform Crawlers - Surveillance Web Automatisée',
+        ' AI Fingerprinting - Empreintes Numériques Avancées',
+        ' Content Ingestion - Traitement Multi-Format',
+        ' Licensing Management - Gestion Licences Automatisée',
+        ' Revenue Calculation - Monétisation Avancée',
+        ' Storage Management - Gestion Stockage Enterprise',
+        ' Vector Database - Recherche Similarité IA',
+        ' Data Pipelines - Pipelines Données Temps Réel',
+        ' Quality Assurance - Assurance Qualité Enterprise',
+        ' Real-time Streaming - Flux Données Temps Réel',
         '🤝 Collaboration Matching - Partenariats IA Intelligents'
     ],
     
@@ -602,16 +620,16 @@ MODULE_INFO = {
     
     # Plateformes intégrées
     'platforms_supported': [
-        '🎵 Spotify (Artists API, Web Playback SDK)',
-        '🎥 YouTube (Creator API, Analytics)',
-        '📱 Instagram (Creator API, Graph API)',
-        '🎬 TikTok (Creator Fund API, Analytics)',
-        '🎧 SoundCloud (API v2, Creator Hub)',
-        '🎮 Twitch (Creator API, Analytics)',
-        '📝 Medium (Partner Program API)',
-        '📊 Twitter/X (Creator API, Analytics)',
-        '💼 LinkedIn (Creator API, Publishing)',
-        '🌐 Generic Web (Scrapy, Selenium)',
+        ' Spotify (Artists API, Web Playback SDK)',
+        ' YouTube (Creator API, Analytics)',
+        ' Instagram (Creator API, Graph API)',
+        ' TikTok (Creator Fund API, Analytics)',
+        ' SoundCloud (API v2, Creator Hub)',
+        ' Twitch (Creator API, Analytics)',
+        ' Medium (Partner Program API)',
+        ' Twitter/X (Creator API, Analytics)',
+        ' LinkedIn (Creator API, Publishing)',
+        ' Generic Web (Scrapy, Selenium)',
     ],
     
     # Fonctionnalités IA avancées
@@ -647,21 +665,33 @@ MODULE_INFO = {
 
 def get_module_info() -> Dict[str, Any]:
     """Obtient les informations complètes du module enterprise."""
+
+
+
     return MODULE_INFO
 
 
 def get_supported_creator_types() -> List[str]:
     """Obtient la liste des types de créateurs supportés."""
+
+
+
     return list(MODULE_INFO['creator_types'].keys())
 
 
 def get_supported_platforms() -> List[str]:
     """Obtient la liste des plateformes intégrées."""
+
+
+
     return MODULE_INFO['platforms_supported']
 
 
 def get_ai_capabilities() -> Dict[str, List[str]]:
     """Obtient les capacités IA disponibles."""
+
+
+
     return MODULE_INFO['ai_features']
 
 

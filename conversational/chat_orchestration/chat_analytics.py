@@ -126,6 +126,9 @@ class ChatAnalytics:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             session_data = {
                 "session_id": session.session_id,
@@ -167,6 +170,9 @@ class ChatAnalytics:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             message_data = {
                 "session_id": session_id,
@@ -206,6 +212,9 @@ class ChatAnalytics:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             # Calculate session metrics
             session_duration = (session.updated_at - session.created_at).total_seconds()
@@ -254,6 +263,9 @@ class ChatAnalytics:
         Returns:
             SystemMetrics: Comprehensive system metrics
         """
+
+
+
         try:
             # Determine date range
             end_date = end_date or datetime.utcnow()
@@ -302,6 +314,9 @@ class ChatAnalytics:
         Returns:
             UserBehaviorInsights: Comprehensive user insights
         """
+
+
+
         try:
             # Fetch user activity data
             user_sessions = await self._fetch_user_sessions(user_id, timeframe)
@@ -368,6 +383,9 @@ class ChatAnalytics:
         Returns:
             Dict containing creator-specific analytics
         """
+
+
+
         try:
             end_date = datetime.utcnow()
             start_date = self._calculate_start_date(timeframe, end_date)
@@ -410,6 +428,9 @@ class ChatAnalytics:
         Returns:
             Dict containing conversation flow analysis
         """
+
+
+
         try:
             end_date = datetime.utcnow()
             start_date = self._calculate_start_date(timeframe, end_date)
@@ -450,6 +471,9 @@ class ChatAnalytics:
         Returns:
             Dict containing exported report data
         """
+
+
+
         try:
             report_data = {
                 "report_type": report_type,
@@ -476,6 +500,9 @@ class ChatAnalytics:
     
     async def _store_analytics_event(self, event_data: Dict[str, Any]) -> bool:
         """Store analytics event in database"""
+
+
+
         try:
             query = """
                 INSERT INTO chat_analytics_events (
@@ -505,6 +532,9 @@ class ChatAnalytics:
     
     async def _update_real_time_metrics(self, event_type: str, event_data: Dict[str, Any]):
         """Update real-time metrics cache"""
+
+
+
         try:
             current_hour = datetime.utcnow().replace(minute=0, second=0, microsecond=0)
             cache_key = f"{event_type}_{current_hour.isoformat()}"
@@ -529,6 +559,9 @@ class ChatAnalytics:
     
     async def _calculate_session_metrics(self, session: Any) -> SessionMetrics:
         """Calculate comprehensive metrics for a session"""
+
+
+
         try:
             # Extract session data
             duration = (session.updated_at - session.created_at).total_seconds()
@@ -586,6 +619,9 @@ class ChatAnalytics:
     
     def _calculate_engagement_score(self, session: Any, message_count: int, duration: float) -> float:
         """Calculate engagement score for session"""
+
+
+
         try:
             # Base score from message count and duration
             base_score = min(1.0, message_count / 10)  # Normalize to max 10 messages
@@ -609,6 +645,9 @@ class ChatAnalytics:
     
     async def _store_session_metrics(self, metrics: SessionMetrics) -> bool:
         """Store session metrics in database"""
+
+
+
         try:
             query = """
                 INSERT INTO chat_session_metrics (
@@ -677,6 +716,9 @@ class ChatAnalytics:
     
     async def _fetch_sessions_metrics(self, start_date: datetime, end_date: datetime) -> List[Dict[str, Any]]:
         """Fetch session metrics from database"""
+
+
+
         try:
             query = """
                 SELECT session_id, user_id, creator_type, start_time, end_time,
@@ -699,6 +741,9 @@ class ChatAnalytics:
     
     def _create_empty_system_metrics(self, timeframe: AnalyticsTimeframe) -> SystemMetrics:
         """Create empty system metrics for fallback"""
+
+
+
         return SystemMetrics(
             timeframe=timeframe,
             total_sessions=0,
@@ -716,6 +761,9 @@ class ChatAnalytics:
     
     def _create_empty_user_insights(self, user_id: str) -> UserBehaviorInsights:
         """Create empty user insights for fallback"""
+
+
+
         return UserBehaviorInsights(
             user_id=user_id,
             creator_type="unknown",
@@ -733,10 +781,16 @@ class ChatAnalytics:
     
     async def _fetch_messages_metrics(self, start_date: datetime, end_date: datetime) -> List[Dict[str, Any]]:
         """Fetch message metrics"""
+
+
+
         return []
     
     async def _fetch_users_metrics(self, start_date: datetime, end_date: datetime) -> List[Dict[str, Any]]:
         """Fetch user metrics"""
+
+
+
         return []
     
     def _calculate_avg_session_duration(self, sessions_data: List[Dict[str, Any]]) -> float:
@@ -774,20 +828,35 @@ class ChatAnalytics:
     
     async def _calculate_intent_accuracy(self, start_date: datetime, end_date: datetime) -> float:
         """Calculate intent classification accuracy"""
+
+
+
         return 0.85  # Placeholder
     
     async def _calculate_avg_response_time(self, start_date: datetime, end_date: datetime) -> float:
         """Calculate average system response time"""
+
+
+
         return 1.2  # Placeholder
     
     async def _calculate_user_satisfaction(self, start_date: datetime, end_date: datetime) -> float:
         """Calculate user satisfaction average"""
+
+
+
         return 4.2  # Placeholder
     
     async def _get_top_intents(self, start_date: datetime, end_date: datetime) -> List[Tuple[str, int]]:
         """Get top intents by frequency"""
+
+
+
         return [("content_analysis", 150), ("monetization_question", 120)]  # Placeholder
     
     async def _calculate_feature_adoption(self, start_date: datetime, end_date: datetime) -> Dict[str, float]:
         """Calculate feature adoption rates"""
+
+
+
         return {"content_upload": 0.75, "analytics": 0.60}  # Placeholder

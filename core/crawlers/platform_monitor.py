@@ -221,6 +221,9 @@ class PlatformMonitoringService:
         Returns:
             str: ID de la cible créée
         """
+
+
+
         try:
             target_id = self._generate_target_id(target_type, target_data)
             
@@ -273,6 +276,9 @@ class PlatformMonitoringService:
         target_data: Dict[str, Any]
     ) -> None:
         """Enregistre la cible avec les composants appropriés"""
+
+
+
         try:
             if target.target_type == 'content':
                 # Enregistrement pour protection copyright
@@ -363,6 +369,9 @@ class PlatformMonitoringService:
 
     async def start_monitoring(self) -> None:
         """Démarre le service de surveillance"""
+
+
+
         try:
             self.monitoring_status = MonitoringStatus.ACTIVE
             self.logger.info("Démarrage du service de surveillance multi-plateformes")
@@ -428,6 +437,9 @@ class PlatformMonitoringService:
         platforms: List[str]
     ) -> None:
         """Surveille une cible sur les plateformes sociales"""
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -546,6 +558,9 @@ class PlatformMonitoringService:
         platform: str
     ) -> None:
         """Traite une violation détectée"""
+
+
+
         try:
             # Mise à jour des compteurs
             target.violation_count += 1
@@ -639,6 +654,9 @@ class PlatformMonitoringService:
         violation: Dict[str, Any]
     ) -> None:
         """Déclenche des actions automatiques"""
+
+
+
         try:
             if alert.priority == AlertPriority.CRITICAL:
                 # Actions d'urgence
@@ -828,6 +846,9 @@ class PlatformMonitoringService:
 
     async def _run_websocket_server(self) -> None:
         """Démarre le serveur WebSocket pour temps réel"""
+
+
+
         try:
             async def handle_client(websocket, path):
                 self.websocket_clients.add(websocket)
@@ -867,6 +888,9 @@ class PlatformMonitoringService:
         Returns:
             Dict[str, Any]: Données du dashboard
         """
+
+
+
         return {
             'status': self.monitoring_status.value,
             'metrics': asdict(self.real_time_metrics),

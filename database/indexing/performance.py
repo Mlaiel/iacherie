@@ -4,21 +4,21 @@ Performance Monitor for IA-Influencer-Agent Platform
 Real-time performance monitoring and optimization for database indexing operations.
 Advanced metrics collection, analysis, and automated optimization triggers.
 
-🚀 Enterprise Team Project Specialties:
-✅ Lead Dev + Architecte Développeur IA
-✅ Développeur Backend Senior (Python/FastAPI/Django)  
-✅ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face)
-✅ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
-✅ Spécialiste Sécurité Backend
-✅ Architecte Microservices
-✅ Développeur Audio
-✅ DevOps Engineer
-✅ IA Prompt Engineer
+ Enterprise Team Project Specialties:
+ Lead Dev + Architecte Développeur IA
+ Développeur Backend Senior (Python/FastAPI/Django)  
+ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face)
+ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
+ Spécialiste Sécurité Backend
+ Architecte Microservices
+ Développeur Audio
+ DevOps Engineer
+ IA Prompt Engineer
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. 
 Unauthorized use, modification, or distribution by any individual or entity 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
@@ -163,6 +163,9 @@ class PerformanceMonitor:
     
     async def initialize(self) -> bool:
         """Initialize performance monitor"""
+
+
+
         try:
             # Initialize performance tracker
             await self.performance_tracker.initialize()
@@ -182,6 +185,9 @@ class PerformanceMonitor:
     
     async def start_monitoring(self):
         """Start performance monitoring tasks"""
+
+
+
         try:
             if self.monitoring_active:
                 logger.warning("Monitoring already active")
@@ -203,6 +209,9 @@ class PerformanceMonitor:
     
     async def stop_monitoring(self):
         """Stop performance monitoring tasks"""
+
+
+
         try:
             self.monitoring_active = False
             
@@ -282,6 +291,9 @@ class PerformanceMonitor:
     
     async def _collect_system_metrics(self):
         """Collect system-level performance metrics"""
+
+
+
         try:
             timestamp = datetime.now()
             
@@ -320,6 +332,9 @@ class PerformanceMonitor:
     
     async def _collect_index_metrics(self):
         """Collect index-specific performance metrics"""
+
+
+
         try:
             timestamp = datetime.now()
             
@@ -346,6 +361,9 @@ class PerformanceMonitor:
     
     async def _collect_cache_metrics(self, timestamp: datetime):
         """Collect cache performance metrics"""
+
+
+
         try:
             # This would connect to Redis and collect cache metrics
             # Simplified implementation
@@ -359,6 +377,9 @@ class PerformanceMonitor:
     
     async def _collect_database_metrics(self, timestamp: datetime):
         """Collect database performance metrics"""
+
+
+
         try:
             # This would connect to PostgreSQL and collect DB metrics
             # Simplified implementation
@@ -383,6 +404,9 @@ class PerformanceMonitor:
                          operation_type: Optional[str] = None, 
                          context: Optional[Dict[str, Any]] = None):
         """Add metric to buffer"""
+
+
+
         try:
             metric = PerformanceMetric(
                 metric_type=metric_type,
@@ -408,6 +432,9 @@ class PerformanceMonitor:
     
     async def _flush_metrics(self):
         """Flush metrics buffer to persistent storage"""
+
+
+
         try:
             if not self.metrics_buffer:
                 return
@@ -434,6 +461,9 @@ class PerformanceMonitor:
     
     async def _analyze_metrics(self):
         """Analyze recent metrics for patterns and anomalies"""
+
+
+
         try:
             current_time = datetime.now()
             analysis_window = current_time - timedelta(minutes=10)
@@ -481,6 +511,9 @@ class PerformanceMonitor:
     
     async def _check_thresholds(self):
         """Check metrics against performance thresholds"""
+
+
+
         try:
             current_time = datetime.now()
             
@@ -506,6 +539,9 @@ class PerformanceMonitor:
     
     async def _evaluate_threshold(self, value: float, threshold: PerformanceThreshold) -> Optional[AlertLevel]:
         """Evaluate if value exceeds threshold"""
+
+
+
         try:
             operator = threshold.operator
             
@@ -540,6 +576,9 @@ class PerformanceMonitor:
     async def _create_alert(self, metric_type: MetricType, level: AlertLevel, 
                           value: float, threshold: PerformanceThreshold, timestamp: datetime):
         """Create performance alert"""
+
+
+
         try:
             alert_id = f"{metric_type.value}_{level.value}_{int(timestamp.timestamp())}"
             
@@ -580,6 +619,9 @@ class PerformanceMonitor:
     async def _check_alert_resolution(self, metric_type: MetricType, value: float, 
                                     threshold: PerformanceThreshold):
         """Check if existing alerts should be resolved"""
+
+
+
         try:
             # Find active alerts for this metric type
             alerts_to_resolve = []
@@ -604,6 +646,9 @@ class PerformanceMonitor:
     
     async def _handle_alert(self, alert: PerformanceAlert):
         """Handle performance alert"""
+
+
+
         try:
             # Different handling based on alert level
             if alert.level == AlertLevel.EMERGENCY:
@@ -621,6 +666,9 @@ class PerformanceMonitor:
     
     async def _handle_emergency_alert(self, alert: PerformanceAlert):
         """Handle emergency-level alert"""
+
+
+
         try:
             logger.critical(f"EMERGENCY: {alert.message}")
             
@@ -639,6 +687,9 @@ class PerformanceMonitor:
     
     async def _handle_critical_alert(self, alert: PerformanceAlert):
         """Handle critical-level alert"""
+
+
+
         try:
             logger.error(f"CRITICAL: {alert.message}")
             
@@ -652,6 +703,9 @@ class PerformanceMonitor:
     
     async def _handle_warning_alert(self, alert: PerformanceAlert):
         """Handle warning-level alert"""
+
+
+
         try:
             logger.warning(f"WARNING: {alert.message}")
             
@@ -666,6 +720,9 @@ class PerformanceMonitor:
     
     async def _trigger_optimizations(self):
         """Trigger automated optimizations based on performance analysis"""
+
+
+
         try:
             # Check if optimizations are needed
             for metric_type, analysis_data in self.trend_analysis.items():
@@ -697,6 +754,9 @@ class PerformanceMonitor:
     
     async def get_performance_report(self, hours: int = 24) -> Dict[str, Any]:
         """Generate comprehensive performance report"""
+
+
+
         try:
             end_time = datetime.now()
             start_time = end_time - timedelta(hours=hours)
@@ -857,6 +917,9 @@ class PerformanceMonitor:
     
     async def _cleanup_old_data(self):
         """Clean up old metrics and alerts"""
+
+
+
         try:
             cutoff_time = datetime.now() - timedelta(days=self.retention_days)
             
@@ -885,6 +948,9 @@ class PerformanceMonitor:
     
     async def cleanup(self):
         """Cleanup performance monitor"""
+
+
+
         try:
             # Stop monitoring
             await self.stop_monitoring()

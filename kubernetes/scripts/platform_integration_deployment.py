@@ -138,6 +138,9 @@ class PlatformIntegrationDeploymentManager:
         
     def _load_configuration(self) -> Dict[str, Any]:
         """Load platform integration deployment configuration"""
+
+
+
         try:
             with open(self.config_path, 'r') as f:
                 config = yaml.safe_load(f)
@@ -149,6 +152,9 @@ class PlatformIntegrationDeploymentManager:
     
     def _get_default_platform_config(self) -> Dict[str, Any]:
         """Get default platform integration configuration"""
+
+
+
         return {
             'platforms': {
                 'spotify': {
@@ -586,6 +592,9 @@ class PlatformIntegrationDeploymentManager:
     
     def _create_platform_orchestrator_manifest(self, config: PlatformDeploymentConfig) -> Dict[str, Any]:
         """Create platform orchestrator deployment manifest"""
+
+
+
         return {
             'apiVersion': 'apps/v1',
             'kind': 'Deployment',

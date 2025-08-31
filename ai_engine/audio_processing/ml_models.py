@@ -93,7 +93,7 @@ class PredictionResult:
 
 class AudioCNN1D(nn.Module):
     """
-    🏗️ 1D Convolutional Neural Network for Audio Features
+     1D Convolutional Neural Network for Audio Features
     
     Optimized for processing audio feature sequences:
     - Temporal pattern recognition
@@ -159,7 +159,7 @@ class AudioCNN1D(nn.Module):
 
 class AudioCNN2D(nn.Module):
     """
-    🖼️ 2D Convolutional Neural Network for Spectrograms
+     2D Convolutional Neural Network for Spectrograms
     
     Specialized for processing audio spectrograms:
     - Frequency-time pattern recognition
@@ -224,7 +224,7 @@ class AudioCNN2D(nn.Module):
 
 class AudioLSTM(nn.Module):
     """
-    🔄 LSTM Network for Sequential Audio Analysis
+     LSTM Network for Sequential Audio Analysis
     
     Optimized for temporal dependencies:
     - Long-term pattern recognition
@@ -288,7 +288,7 @@ class AudioLSTM(nn.Module):
 
 class AudioTransformer(nn.Module):
     """
-    🎯 Transformer Network for Audio Analysis
+     Transformer Network for Audio Analysis
     
     State-of-the-art attention-based architecture:
     - Self-attention mechanisms
@@ -401,6 +401,9 @@ class MLModelManager:
     
     def _init_feature_extractors(self) -> Dict[str, Callable]:
         """Initialize feature extraction functions"""
+
+
+
         return {
             'mfcc': self._extract_mfcc,
             'chroma': self._extract_chroma,
@@ -471,6 +474,9 @@ class MLModelManager:
                              sample_rate: int,
                              feature_names: List[str]) -> Dict[str, np.ndarray]:
         """Extract specified features from audio data"""
+
+
+
         try:
             features = {}
             
@@ -490,6 +496,9 @@ class MLModelManager:
     
     async def _extract_mfcc(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
         """Extract MFCC features"""
+
+
+
         return librosa.feature.mfcc(
             y=audio_data, 
             sr=sample_rate, 
@@ -499,6 +508,9 @@ class MLModelManager:
     
     async def _extract_chroma(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
         """Extract chroma features"""
+
+
+
         return librosa.feature.chroma_stft(
             y=audio_data, 
             sr=sample_rate,
@@ -507,6 +519,9 @@ class MLModelManager:
     
     async def _extract_spectral_contrast(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
         """Extract spectral contrast features"""
+
+
+
         return librosa.feature.spectral_contrast(
             y=audio_data, 
             sr=sample_rate,
@@ -520,6 +535,9 @@ class MLModelManager:
     
     async def _extract_zcr(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
         """Extract zero crossing rate"""
+
+
+
         return librosa.feature.zero_crossing_rate(
             audio_data, 
             hop_length=512
@@ -527,6 +545,9 @@ class MLModelManager:
     
     async def _extract_spectral_centroid(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
         """Extract spectral centroid"""
+
+
+
         return librosa.feature.spectral_centroid(
             y=audio_data, 
             sr=sample_rate,
@@ -535,6 +556,9 @@ class MLModelManager:
     
     async def _extract_spectral_bandwidth(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
         """Extract spectral bandwidth"""
+
+
+
         return librosa.feature.spectral_bandwidth(
             y=audio_data, 
             sr=sample_rate,
@@ -543,6 +567,9 @@ class MLModelManager:
     
     async def _extract_spectral_rolloff(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
         """Extract spectral rolloff"""
+
+
+
         return librosa.feature.spectral_rolloff(
             y=audio_data, 
             sr=sample_rate,
@@ -557,6 +584,9 @@ class MLModelManager:
     
     async def _extract_onset_strength(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
         """Extract onset strength"""
+
+
+
         return librosa.onset.onset_strength(
             y=audio_data, 
             sr=sample_rate,
@@ -582,6 +612,9 @@ class MLModelManager:
     
     async def _extract_mel_spectrogram(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
         """Extract mel spectrogram"""
+
+
+
         return librosa.feature.melspectrogram(
             y=audio_data, 
             sr=sample_rate,
@@ -591,6 +624,9 @@ class MLModelManager:
     
     async def _extract_rms_energy(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
         """Extract RMS energy"""
+
+
+
         return librosa.feature.rms(
             y=audio_data,
             hop_length=512
@@ -598,6 +634,9 @@ class MLModelManager:
     
     async def create_model(self, model_config: ModelConfig) -> nn.Module:
         """Create a neural network model based on configuration"""
+
+
+
         try:
             architecture = model_config.architecture
             num_classes = len(model_config.output_classes)
@@ -684,6 +723,9 @@ class MLModelManager:
         Returns:
             Training results and metrics
         """
+
+
+
         try:
             if model_type not in self.model_configs:
                 raise ValueError(f"No configuration found for {model_type}")
@@ -773,6 +815,9 @@ class MLModelManager:
                                   y_train: np.ndarray,
                                   y_val: np.ndarray) -> Dict[str, Any]:
         """Train neural network models"""
+
+
+
         try:
             # Create model
             model = await self.create_model(config)
@@ -869,6 +914,9 @@ class MLModelManager:
                                   y_train: np.ndarray,
                                   y_val: np.ndarray) -> Dict[str, Any]:
         """Train traditional ML models (Random Forest, SVM, etc.)"""
+
+
+
         try:
             # Determine if classification or regression
             is_regression = len(config.output_classes) == 1 and 'score' in config.output_classes[0]
@@ -1039,6 +1087,9 @@ class MLModelManager:
                         scaler: StandardScaler,
                         config: ModelConfig):
         """Save trained model to disk"""
+
+
+
         try:
             model_dir = self.models_directory / model_type.value
             model_dir.mkdir(parents=True, exist_ok=True)
@@ -1077,6 +1128,9 @@ class MLModelManager:
     
     async def _load_model(self, model_type: ModelType):
         """Load trained model from disk"""
+
+
+
         try:
             model_dir = self.models_directory / model_type.value
             
@@ -1134,6 +1188,9 @@ class MLModelManager:
                              model_types: List[ModelType],
                              weights: Optional[List[float]] = None) -> Dict[str, PredictionResult]:
         """Make ensemble predictions using multiple models"""
+
+
+
         try:
             if weights is None:
                 weights = [1.0] * len(model_types)
@@ -1159,6 +1216,9 @@ class MLModelManager:
     
     def get_available_models(self) -> List[ModelType]:
         """Get list of available model types"""
+
+
+
         return list(self.model_configs.keys())
     
     def get_model_info(self, model_type: ModelType) -> Dict[str, Any]:

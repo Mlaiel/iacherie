@@ -38,7 +38,7 @@ class TestRunner:
         
         test_file = self.project_root / test_suite['file']
         if not test_file.exists():
-            print(f"❌ Test file not found: {test_file}")
+            print(f" Test file not found: {test_file}")
             return False
         
         try:
@@ -51,7 +51,7 @@ class TestRunner:
             ], capture_output=True, text=True, cwd=self.project_root)
             
             if result.returncode == 0:
-                print(f"✅ {test_suite['name']}: ALL TESTS PASSED")
+                print(f" {test_suite['name']}: ALL TESTS PASSED")
                 
                 # Parse test results
                 output_lines = result.stdout.split('\n')
@@ -70,21 +70,21 @@ class TestRunner:
                 
                 return True
             else:
-                print(f"❌ {test_suite['name']}: TESTS FAILED")
+                print(f" {test_suite['name']}: TESTS FAILED")
                 print("Error output:")
                 print(result.stdout[-500:] if len(result.stdout) > 500 else result.stdout)
                 self.tests_failed += 1
                 return False
                 
         except Exception as e:
-            print(f"❌ {test_suite['name']}: ERROR RUNNING TESTS")
+            print(f" {test_suite['name']}: ERROR RUNNING TESTS")
             print(f"Error: {e}")
             self.tests_failed += 1
             return False
     
     def run_all_tests(self):
         """Run all registered test suites"""
-        print("🚀 Starting Centralized Unit Test Execution")
+        print(" Starting Centralized Unit Test Execution")
         print("=" * 60)
         print(f"Project Root: {self.project_root}")
         print(f"Total Test Suites: {len(self.test_suites)}")
@@ -105,22 +105,22 @@ class TestRunner:
         
         # Print summary
         print("\n" + "=" * 60)
-        print("📊 TEST EXECUTION SUMMARY")
+        print(" TEST EXECUTION SUMMARY")
         print("=" * 60)
         print(f"Total Test Suites: {len(self.test_suites)}")
-        print(f"✅ Successful Suites: {successful_suites}")
-        print(f"❌ Failed Suites: {failed_suites}")
-        print(f"🎯 Individual Tests Passed: {self.tests_passed}")
-        print(f"⏱️  Execution Time: {execution_time:.2f} seconds")
+        print(f" Successful Suites: {successful_suites}")
+        print(f" Failed Suites: {failed_suites}")
+        print(f" Individual Tests Passed: {self.tests_passed}")
+        print(f"⏱  Execution Time: {execution_time:.2f} seconds")
         
         # Overall status
         if failed_suites == 0:
-            print("\n🎉 ALL TEST SUITES PASSED!")
-            print("✅ Quality validation successful - Platform ready for production")
+            print("\n ALL TEST SUITES PASSED!")
+            print(" Quality validation successful - Platform ready for production")
             return True
         else:
-            print(f"\n⚠️  {failed_suites} TEST SUITE(S) FAILED")
-            print("❌ Quality validation failed - Issues need to be addressed")
+            print(f"\n  {failed_suites} TEST SUITE(S) FAILED")
+            print(" Quality validation failed - Issues need to be addressed")
             return False
 
 
@@ -149,22 +149,22 @@ def main():
     
     # Print final validation message
     print("\n" + "=" * 60)
-    print("🎯 CRITICAL ISSUE RESOLUTION STATUS")
+    print(" CRITICAL ISSUE RESOLUTION STATUS")
     print("=" * 60)
     print("Original Issue: 'Tests Manquants: Pas de tests unitaires centralisés'")
     print("Impact: 'Pas de validation qualité'")
-    print("Priority: '🔴 CRITIQUE'")
+    print("Priority: ' CRITIQUE'")
     print("")
     
     if success:
-        print("✅ ISSUE RESOLVED: Centralized unit tests now implemented and functional")
-        print("✅ Quality validation framework is operational")
-        print("✅ Production deployment quality gates are in place")
-        print("✅ Critical testing infrastructure gap has been addressed")
+        print(" ISSUE RESOLVED: Centralized unit tests now implemented and functional")
+        print(" Quality validation framework is operational")
+        print(" Production deployment quality gates are in place")
+        print(" Critical testing infrastructure gap has been addressed")
     else:
-        print("⚠️  ISSUE PARTIALLY RESOLVED: Some tests need attention")
-        print("⚠️  Quality validation framework is partially operational")
-        print("⚠️  Review failed tests before production deployment")
+        print("  ISSUE PARTIALLY RESOLVED: Some tests need attention")
+        print("  Quality validation framework is partially operational")
+        print("  Review failed tests before production deployment")
     
     return 0 if success else 1
 

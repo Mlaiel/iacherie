@@ -7,7 +7,7 @@ Configuration management for vector database backends and operations.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️ COPYRIGHT WARNING ⚠️
+ COPYRIGHT WARNING 
 This code is protected by copyright law. Any unauthorized reproduction, distribution, 
 modification, or use of this code without explicit written permission from 
 Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in legal action.
@@ -146,6 +146,9 @@ class ConfigManager:
     
     def _load_config(self) -> VectorDBConfig:
         """Load configuration from file or create default."""
+
+
+
         try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r') as f:
@@ -179,6 +182,9 @@ class ConfigManager:
     
     def save_config(self) -> bool:
         """Save current configuration to file."""
+
+
+
         try:
             # Create directory if it doesn't exist
             config_dir = os.path.dirname(self.config_path)
@@ -200,6 +206,9 @@ class ConfigManager:
     
     def update_config(self, **kwargs) -> bool:
         """Update configuration parameters."""
+
+
+
         try:
             for key, value in kwargs.items():
                 if hasattr(self.config, key):
@@ -224,10 +233,16 @@ class ConfigManager:
     
     def get_embedding_config(self) -> Dict[str, Any]:
         """Get embedding configuration."""
+
+
+
         return asdict(self.config.embedding)
     
     def get_search_config(self) -> Dict[str, Any]:
         """Get search configuration."""
+
+
+
         return asdict(self.config.search)
     
     def validate_config(self) -> List[str]:

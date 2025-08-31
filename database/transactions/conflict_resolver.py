@@ -9,7 +9,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -90,11 +90,17 @@ class TransactionInfo:
     @property
     def age(self) -> float:
         """Get transaction age in seconds"""
+
+
+
         return (datetime.now(timezone.utc) - self.created_at).total_seconds()
     
     @property
     def is_expired(self) -> bool:
         """Check if transaction has expired"""
+
+
+
         return self.age > self.timeout
 
 
@@ -115,6 +121,9 @@ class ConflictInfo:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for serialization"""
+
+
+
         return {
             'conflict_id': self.conflict_id,
             'conflict_type': self.conflict_type.value,
@@ -1072,6 +1081,9 @@ class ConflictResolver:
     
     def _get_blocking_transactions(self, transaction_id: str) -> List[str]:
         """Get transactions blocking this transaction"""
+
+
+
         
         return list(self.wait_for_graph.graph.successors(transaction_id))
     

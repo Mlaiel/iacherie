@@ -228,9 +228,9 @@ def main():
     print("=" * 60)
     target_conformity = 80
     achieved = improvement_results['new'] >= target_conformity
-    print(f"Target conformity (80%): {'✅ ACHIEVED' if achieved else '❌ NOT ACHIEVED'}")
-    print(f"Minimum improvement (50%): {'✅ ACHIEVED' if improvement_results['improvement'] >= 50 else '❌ NOT ACHIEVED'}")
-    print(f"Comprehensive enhancements: {'✅ ACHIEVED' if enhanced_files >= 4 else '❌ NOT ACHIEVED'}")
+    print(f"Target conformity (80%): {' ACHIEVED' if achieved else ' NOT ACHIEVED'}")
+    print(f"Minimum improvement (50%): {' ACHIEVED' if improvement_results['improvement'] >= 50 else ' NOT ACHIEVED'}")
+    print(f"Comprehensive enhancements: {' ACHIEVED' if enhanced_files >= 4 else ' NOT ACHIEVED'}")
 
 if __name__ == "__main__":
     main()

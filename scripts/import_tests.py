@@ -48,8 +48,11 @@ class TestImporter:
     
     def download_and_extract_repo(self) -> bool:
         """Télécharge et extrait l'ancien projet"""
+
+
+
         try:
-            print("📥 Téléchargement de l'ancien projet...")
+            print(" Téléchargement de l'ancien projet...")
             
             # Créer un répertoire temporaire
             self.temp_dir = tempfile.mkdtemp()
@@ -73,16 +76,16 @@ class TestImporter:
                 self.old_tests_path = Path(repo_dir) / "IA-Influencer-Agent" / "tests_backend"
                 
                 if self.old_tests_path.exists():
-                    print(f"✅ Tests trouvés dans : {self.old_tests_path}")
+                    print(f" Tests trouvés dans : {self.old_tests_path}")
                     return True
                 else:
-                    print(f"❌ Dossier tests non trouvé dans : {repo_dir}")
+                    print(f" Dossier tests non trouvé dans : {repo_dir}")
                     return False
             
             return False
             
         except Exception as e:
-            print(f"❌ Erreur lors du téléchargement : {e}")
+            print(f" Erreur lors du téléchargement : {e}")
             return False
     
     def analyze_test_structure(self) -> Dict[str, List[str]]:
@@ -135,6 +138,9 @@ class TestImporter:
     
     def copy_and_adapt_file(self, source_file: Path, target_file: Path) -> bool:
         """Copie et adapte un fichier de test"""
+
+
+
         try:
             # Créer le répertoire cible si nécessaire
             target_file.parent.mkdir(parents=True, exist_ok=True)
@@ -152,11 +158,11 @@ class TestImporter:
                 f.write(adapted_content)
             
             self.imported_files.append(str(target_file))
-            print(f"✅ Fichier adapté : {source_file.name} -> {target_file}")
+            print(f" Fichier adapté : {source_file.name} -> {target_file}")
             return True
             
         except Exception as e:
-            print(f"❌ Erreur lors de l'adaptation de {source_file} : {e}")
+            print(f" Erreur lors de l'adaptation de {source_file} : {e}")
             return False
     
     def import_test_module(self, module_path: str, test_info: Dict) -> bool:
@@ -165,7 +171,7 @@ class TestImporter:
         target_module_path = TESTS_DIR / module_path
         
         if not source_module_path.exists():
-            print(f"⚠️  Module source non trouvé : {source_module_path}")
+            print(f"  Module source non trouvé : {source_module_path}")
             return False
         
         success_count = 0
@@ -187,7 +193,7 @@ class TestImporter:
             if self.copy_and_adapt_file(source_file, target_file):
                 success_count += 1
         
-        print(f"📊 Module {module_path} : {success_count}/{total_files} fichiers importés")
+        print(f" Module {module_path} : {success_count}/{total_files} fichiers importés")
         return success_count > 0
     
     def create_master_conftest(self) -> bool:
@@ -245,6 +251,9 @@ def event_loop():
 @pytest.fixture(scope="session")
 def test_config():
     """Configuration de test globale"""
+
+
+
     return {
         "test_env": "pytest",
         "project_root": str(PROJECT_ROOT),
@@ -255,6 +264,9 @@ def test_config():
 @pytest.fixture
 def temp_dir(tmp_path):
     """Répertoire temporaire pour les tests"""
+
+
+
     return tmp_path
 
 # Hook pour modifier la collection de tests
@@ -279,10 +291,10 @@ logger.info("🧪 Configuration pytest Ainflue chargée")
             conftest_path.parent.mkdir(parents=True, exist_ok=True)
             with open(conftest_path, 'w', encoding='utf-8') as f:
                 f.write(conftest_content)
-            print("✅ conftest.py principal créé")
+            print(" conftest.py principal créé")
             return True
         except Exception as e:
-            print(f"❌ Erreur lors de la création de conftest.py : {e}")
+            print(f" Erreur lors de la création de conftest.py : {e}")
             return False
     
     def create_pytest_ini(self) -> bool:
@@ -331,44 +343,44 @@ log_cli_date_format = %Y-%m-%d %H:%M:%S
         try:
             with open(pytest_ini_path, 'w', encoding='utf-8') as f:
                 f.write(pytest_ini_content)
-            print("✅ pytest.ini créé")
+            print(" pytest.ini créé")
             return True
         except Exception as e:
-            print(f"❌ Erreur lors de la création de pytest.ini : {e}")
+            print(f" Erreur lors de la création de pytest.ini : {e}")
             return False
     
     def generate_import_report(self) -> str:
         """Génère un rapport d'importation"""
         report = f"""
-# 📊 Rapport d'Importation des Tests
+#  Rapport d'Importation des Tests
 
 **Date :** {sys.version}
 **Projet source :** IA-Influencer
 **Projet cible :** Ainflue
 
-## 📈 Statistiques
+##  Statistiques
 
 - **Fichiers importés :** {len(self.imported_files)}
 - **Adaptations effectuées :** {len(self.adaptation_log)}
 
-## 📁 Fichiers Importés
+##  Fichiers Importés
 
 {chr(10).join(f"- {f}" for f in self.imported_files)}
 
-## 🔧 Adaptations Effectuées
+##  Adaptations Effectuées
 
 {chr(10).join(f"- {adapt}" for adapt in self.adaptation_log[:20])}
 
 {'...' if len(self.adaptation_log) > 20 else ''}
 
-## 🚀 Prochaines Étapes
+##  Prochaines Étapes
 
 1. Exécuter les tests : `pytest tests/ -v`
 2. Vérifier les imports manquants
 3. Adapter les modules spécifiques au nouveau projet
 4. Compléter les fixtures selon les besoins
 
-## 💡 Commandes Utiles
+##  Commandes Utiles
 
 ```bash
 # Exécuter tous les tests
@@ -394,22 +406,25 @@ pytest tests/ai/ -v
     
     def run_import(self) -> bool:
         """Exécute l'importation complète"""
+
+
+
         try:
-            print("🚀 Démarrage de l'importation des tests...")
+            print(" Démarrage de l'importation des tests...")
             
             # Télécharger l'ancien projet
             if not self.download_and_extract_repo():
                 return False
             
             # Analyser la structure
-            print("🔍 Analyse de la structure des tests...")
+            print(" Analyse de la structure des tests...")
             test_structure = self.analyze_test_structure()
             
             if not test_structure:
-                print("❌ Aucun test trouvé dans l'ancien projet")
+                print(" Aucun test trouvé dans l'ancien projet")
                 return False
             
-            print(f"📊 {len(test_structure)} modules de tests trouvés")
+            print(f" {len(test_structure)} modules de tests trouvés")
             
             # Créer les fichiers de configuration
             self.create_master_conftest()
@@ -428,13 +443,13 @@ pytest tests/ai/ -v
             # Importer les modules prioritaires
             for module in priority_modules:
                 if module in test_structure:
-                    print(f"📦 Importation du module prioritaire : {module}")
+                    print(f" Importation du module prioritaire : {module}")
                     self.import_test_module(module, test_structure[module])
             
             # Importer les autres modules
             for module_path, test_info in test_structure.items():
                 if module_path not in priority_modules and module_path:
-                    print(f"📦 Importation du module : {module_path}")
+                    print(f" Importation du module : {module_path}")
                     self.import_test_module(module_path, test_info)
             
             # Générer le rapport
@@ -443,13 +458,13 @@ pytest tests/ai/ -v
             with open(report_path, 'w', encoding='utf-8') as f:
                 f.write(report)
             
-            print(f"✅ Importation terminée ! Rapport généré : {report_path}")
-            print(f"📊 {len(self.imported_files)} fichiers importés")
+            print(f" Importation terminée ! Rapport généré : {report_path}")
+            print(f" {len(self.imported_files)} fichiers importés")
             
             return True
             
         except Exception as e:
-            print(f"❌ Erreur lors de l'importation : {e}")
+            print(f" Erreur lors de l'importation : {e}")
             return False
         
         finally:
@@ -457,17 +472,17 @@ pytest tests/ai/ -v
 
 def main():
     """Fonction principale"""
-    print("🔄 Script d'Importation des Tests - Ainflue")
+    print(" Script d'Importation des Tests - Ainflue")
     print("=" * 50)
     
     importer = TestImporter()
     
     if importer.run_import():
-        print("\n🎉 Importation réussie !")
-        print("💡 Vous pouvez maintenant exécuter : pytest tests/ -v")
+        print("\n Importation réussie !")
+        print(" Vous pouvez maintenant exécuter : pytest tests/ -v")
         return 0
     else:
-        print("\n❌ Échec de l'importation")
+        print("\n Échec de l'importation")
         return 1
 
 if __name__ == "__main__":

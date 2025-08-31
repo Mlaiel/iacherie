@@ -395,11 +395,17 @@ class RoyaltyCalculation(BaseModel, TimestampMixin, AuditMixin):
     @hybrid_property
     def effective_royalty_percentage(self):
         """Calculate effective royalty percentage"""
+
+
+
         return self.effective_rate * self.ownership_percentage * Decimal('100')
     
     @hybrid_property
     def total_deductions_amount(self):
         """Calculate total deductions amount"""
+
+
+
         return sum(Decimal(str(amount)) for amount in self.deductions.values() if isinstance(amount, (int, float, str)))
     
     def recalculate(self, rate_structure: RoyaltyRateStructure, context: Dict[str, Any]) -> Decimal:
@@ -617,6 +623,9 @@ class RoyaltyDistributionService:
         Returns:
             RevenueReport: Processed revenue report
         """
+
+
+
         try:
             # Generate unique report ID
             report_id = self._generate_report_id()
@@ -1014,6 +1023,9 @@ class RoyaltyDistributionService:
     
     async def _calculate_royalties_for_report(self, revenue_report: RevenueReport):
         """Asynchronously calculate royalties for a revenue report"""
+
+
+
         try:
             await self.calculate_royalties(str(revenue_report.id))
         except Exception as e:
@@ -1259,6 +1271,9 @@ class RoyaltyCalculation(BaseModel):
 
     def to_dict(self) -> Dict[str, Any]:
         """Convertit le calcul en dictionnaire"""
+
+
+
         return {
             "id": self.id,
             "calculation_id": self.calculation_id,
@@ -1330,6 +1345,9 @@ class RoyaltyPayment(BaseModel):
 
     def can_retry(self) -> bool:
         """Vérifie si le paiement peut être retenté"""
+
+
+
         return (
             self.status == PaymentStatus.FAILED.value and
             self.retry_count < self.max_retries
@@ -1355,6 +1373,9 @@ class RoyaltyPayment(BaseModel):
 
     def to_dict(self) -> Dict[str, Any]:
         """Convertit le paiement en dictionnaire"""
+
+
+
         return {
             "id": self.id,
             "payment_id": self.payment_id,
@@ -1437,6 +1458,9 @@ class RoyaltyDistributionManager:
         distribution_method: DistributionMethod = DistributionMethod.OWNERSHIP_PERCENTAGE
     ) -> RoyaltyCalculation:
         """Crée un nouveau calcul de royalties"""
+
+
+
         
         try:
             # Calcul des revenus nets
@@ -1479,6 +1503,9 @@ class RoyaltyDistributionManager:
         scheduled_date: Optional[datetime] = None
     ) -> List[RoyaltyPayment]:
         """Traite les paiements pour un calcul donné"""
+
+
+
         
         try:
             calculation = self.db.query(RoyaltyCalculation).filter(
@@ -1532,6 +1559,9 @@ class RoyaltyDistributionManager:
 
     def execute_payment(self, payment_id: str) -> bool:
         """Exécute un paiement individuel"""
+
+
+
         
         try:
             payment = self.db.query(RoyaltyPayment).filter(
@@ -1979,6 +2009,9 @@ class RoyaltyDistributionManager:
     
     def _validate_iban(self, iban: str) -> bool:
         """Validation basique de l'IBAN"""
+
+
+
         try:
             # Supprimer les espaces et convertir en majuscules
             iban = iban.replace(' ', '').upper()
@@ -2004,6 +2037,9 @@ class RoyaltyDistributionManager:
 
     def _load_default_rates(self) -> Dict[str, RoyaltyRate]:
         """Charge les taux de royalties par défaut"""
+
+
+
         
         return {
             "spotify_streaming": RoyaltyRate(
@@ -2156,6 +2192,9 @@ class RoyaltyDistributionManager:
     
     def _calculate_trend_metrics(self, user_id: int, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
         """Calcule les métriques de tendance"""
+
+
+
         return {
             "momentum": "increasing" if user_id % 2 == 0 else "stable",
             "volatility": "low" if user_id % 4 == 0 else "medium",

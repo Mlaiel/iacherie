@@ -152,6 +152,9 @@ class SEOAnalyticsCrawler:
         Returns:
             Optional[SEOMetrics]: Métriques SEO extraites
         """
+
+
+
         try:
             # Vérification du cache
             if url in self.seo_metrics_cache:
@@ -515,6 +518,9 @@ class SEOAnalyticsCrawler:
         Returns:
             bool: True si correspondance
         """
+
+
+
         try:
             parsed1 = urlparse(url1)
             parsed2 = urlparse(url2)
@@ -580,6 +586,9 @@ class SEOAnalyticsCrawler:
         Returns:
             Optional[CompetitorAnalysis]: Analyse du concurrent
         """
+
+
+
         try:
             # Analyse SEO du concurrent
             competitor_metrics = await self.analyze_seo_metrics(competitor_url)
@@ -912,6 +921,9 @@ class SEOAnalyticsCrawler:
 
     async def _generate_seo_report(self) -> None:
         """Génère un rapport SEO"""
+
+
+
         try:
             report_data = {
                 'timestamp': datetime.now().isoformat(),
@@ -1000,6 +1012,9 @@ class SEOAnalyticsCrawler:
         Returns:
             Dict[str, Any]: Données du dashboard
         """
+
+
+
         return {
             'overview': {
                 'monitored_urls': len(self.monitored_urls),
@@ -1055,6 +1070,9 @@ class SEOAnalyticsCrawler:
 
     def __del__(self):
         """Nettoyage lors de la destruction"""
+
+
+
         try:
             if hasattr(self, 'selenium_driver'):
                 self.selenium_driver.quit()

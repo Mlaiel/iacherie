@@ -7,12 +7,12 @@ resolution, priority handling, and execution coordination for the IA-Influencer-
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This task scheduling system is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization.
 
-🎯 BUSINESS LOGIC:
+ BUSINESS LOGIC:
 Task Creation → Scheduling → Dependency Resolution → Resource Allocation → Execution → Monitoring
 """
 
@@ -284,6 +284,9 @@ class TaskScheduler:
     
     def register_task(self, configuration: TaskConfiguration) -> bool:
         """Register a new task configuration"""
+
+
+
         try:
             # Validate configuration
             if not self._validate_task_configuration(configuration):
@@ -308,6 +311,9 @@ class TaskScheduler:
     
     def _validate_task_configuration(self, config: TaskConfiguration) -> bool:
         """Validate task configuration"""
+
+
+
         try:
             # Required fields validation
             if not all([config.task_id, config.name, config.task_type]):
@@ -333,6 +339,9 @@ class TaskScheduler:
     
     def _validate_schedule(self, schedule: TaskSchedule) -> bool:
         """Validate task schedule configuration"""
+
+
+
         try:
             if schedule.schedule_type == ScheduleType.CRON:
                 if not schedule.cron_expression:
@@ -364,6 +373,9 @@ class TaskScheduler:
     
     def _schedule_next_execution(self, config: TaskConfiguration):
         """Schedule next execution for a task"""
+
+
+
         try:
             next_time = self._calculate_next_execution_time(config)
             if next_time:
@@ -386,6 +398,9 @@ class TaskScheduler:
     
     def _calculate_next_execution_time(self, config: TaskConfiguration) -> Optional[datetime]:
         """Calculate next execution time for a task"""
+
+
+
         try:
             now = datetime.now(pytz.timezone(config.schedule.timezone))
             
@@ -488,6 +503,9 @@ class TaskScheduler:
     
     def _are_dependencies_satisfied(self, task_id: str) -> bool:
         """Check if all dependencies for a task are satisfied"""
+
+
+
         try:
             config = self.task_configurations.get(task_id)
             if not config:
@@ -537,6 +555,9 @@ class TaskScheduler:
     
     async def _execute_task(self, scheduled_task: ScheduledTask):
         """Execute a scheduled task"""
+
+
+
         try:
             config = self.task_configurations.get(scheduled_task.task_id)
             if not config:
@@ -627,6 +648,9 @@ class TaskScheduler:
     
     def _is_recurring_task(self, config: TaskConfiguration) -> bool:
         """Check if task is recurring"""
+
+
+
         return config.schedule.schedule_type in [
             ScheduleType.INTERVAL,
             ScheduleType.CRON,
@@ -635,6 +659,9 @@ class TaskScheduler:
     
     async def _complete_task_execution(self, execution: TaskExecution):
         """Complete task execution and cleanup"""
+
+
+
         try:
             # Calculate execution time
             if execution.started_at:
@@ -660,6 +687,9 @@ class TaskScheduler:
     
     async def _handle_task_failure(self, execution: TaskExecution):
         """Handle task execution failure"""
+
+
+
         try:
             # Check for retry
             if execution.retry_count < execution.configuration.retry_count:
@@ -690,6 +720,9 @@ class TaskScheduler:
     
     async def _retry_task_execution(self, execution: TaskExecution):
         """Retry failed task execution"""
+
+
+
         try:
             execution.status = TaskStatus.RUNNING
             execution.started_at = datetime.now(timezone.utc)
@@ -723,6 +756,9 @@ class TaskScheduler:
     
     async def _emit_task_event(self, event_type: str, execution: TaskExecution):
         """Emit task events to registered handlers"""
+
+
+
         try:
             event_data = {
                 "event_type": event_type,
@@ -756,6 +792,9 @@ class TaskScheduler:
         parameters: Dict[str, Any] = None
     ) -> str:
         """Schedule a one-time task execution"""
+
+
+
         try:
             if task_id not in self.task_configurations:
                 raise ValueError(f"Task '{task_id}' not found")
@@ -787,6 +826,9 @@ class TaskScheduler:
     
     def cancel_task(self, execution_id: str) -> bool:
         """Cancel a scheduled or running task"""
+
+
+
         try:
             # Check if task is active
             if execution_id in self.active_executions:
@@ -863,6 +905,9 @@ class TaskScheduler:
     
     def enable_task(self, task_id: str) -> bool:
         """Enable a task for scheduling"""
+
+
+
         try:
             if task_id in self.task_configurations:
                 config = self.task_configurations[task_id]
@@ -877,6 +922,9 @@ class TaskScheduler:
     
     def disable_task(self, task_id: str) -> bool:
         """Disable a task from scheduling"""
+
+
+
         try:
             if task_id in self.task_configurations:
                 self.task_configurations[task_id].enabled = False
@@ -898,6 +946,9 @@ class TaskScheduler:
     
     def shutdown(self):
         """Shutdown task scheduler and cleanup"""
+
+
+
         try:
             self.stop_scheduler()
             

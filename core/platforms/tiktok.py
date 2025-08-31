@@ -48,6 +48,9 @@ class TikTokPlatform(PlatformBase):
     
     async def authenticate(self) -> bool:
         """Authenticate with TikTok using OAuth2"""
+
+
+
         try:
             # If we have an access token, validate it
             if self.config.credentials.access_token:
@@ -113,6 +116,9 @@ class TikTokPlatform(PlatformBase):
     
     async def _validate_token(self) -> bool:
         """Validate TikTok access token"""
+
+
+
         try:
             result = await self._make_request('POST', '/user/info/')
             return result is not None and result.get('data') is not None
@@ -187,6 +193,9 @@ class TikTokPlatform(PlatformBase):
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
         """Upload video content to TikTok"""
+
+
+
         try:
             if not os.path.exists(content_path):
                 return UploadResult(
@@ -287,6 +296,9 @@ class TikTokPlatform(PlatformBase):
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
         """Get TikTok analytics for a video"""
+
+
+
         try:
             # Get video info
             video_data = {
@@ -338,6 +350,9 @@ class TikTokPlatform(PlatformBase):
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
         """Search content on TikTok"""
+
+
+
         try:
             search_data = {
                 'query': query,
@@ -378,6 +393,9 @@ class TikTokPlatform(PlatformBase):
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
         """Get user's videos from TikTok"""
+
+
+
         try:
             video_data = {
                 'fields': ['id', 'create_time', 'cover_image_url', 'share_url', 'view_count', 'like_count', 'comment_count', 'share_count']
@@ -413,6 +431,9 @@ class TikTokPlatform(PlatformBase):
     
     async def delete_content(self, content_id: str) -> bool:
         """Delete video from TikTok"""
+
+
+
         try:
             delete_data = {
                 'video_id': content_id
@@ -438,6 +459,9 @@ class TikTokPlatform(PlatformBase):
     
     async def get_user_info(self, user_id: str = None) -> Optional[Dict[str, Any]]:
         """Get user information"""
+
+
+
         try:
             user_data = {
                 'fields': ['open_id', 'union_id', 'avatar_url', 'display_name', 'bio_description', 'profile_deep_link', 'is_verified', 'follower_count', 'following_count', 'likes_count', 'video_count']
@@ -451,6 +475,9 @@ class TikTokPlatform(PlatformBase):
     
     async def get_video_comments(self, video_id: str, cursor: int = 0, count: int = 20) -> List[Dict[str, Any]]:
         """Get comments for a video"""
+
+
+
         try:
             comment_data = {
                 'video_id': video_id,
@@ -475,6 +502,9 @@ class TikTokPlatform(PlatformBase):
     
     async def get_trending_videos(self, cursor: int = 0, count: int = 20) -> List[Dict[str, Any]]:
         """Get trending videos"""
+
+
+
         try:
             trending_data = {
                 'cursor': cursor,

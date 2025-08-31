@@ -104,6 +104,9 @@ class EngagementAnalyzer:
     
     def _load_engagement_benchmarks(self) -> Dict[str, Dict[str, float]]:
         """Load platform-specific engagement benchmarks"""
+
+
+
         return {
             Platform.INSTAGRAM.value: {
                 "engagement_rate": {"excellent": 0.06, "good": 0.03, "average": 0.015},
@@ -142,6 +145,9 @@ class EngagementAnalyzer:
                                   reach: int = 0, impressions: int = 0,
                                   published_at: Optional[datetime] = None) -> ContentPerformance:
         """Analyze performance of a specific piece of content"""
+
+
+
         try:
             if published_at is None:
                 published_at = datetime.utcnow()
@@ -270,6 +276,9 @@ class EngagementAnalyzer:
     def analyze_engagement_trend(self, platform: Platform, metric_type: EngagementType, 
                                time_frame: TimeFrame, days_back: int = 30) -> EngagementTrend:
         """Analyze engagement trends over time"""
+
+
+
         try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=days_back)
@@ -429,6 +438,9 @@ class EngagementAnalyzer:
                                    metric_type: EngagementType,
                                    days_back: int = 30) -> Dict[str, Any]:
         """Compare performance across multiple platforms"""
+
+
+
         try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=days_back)
@@ -497,6 +509,9 @@ class EngagementAnalyzer:
     def get_content_recommendations(self, platform: Platform, 
                                  target_audience: Optional[str] = None) -> Dict[str, Any]:
         """Get content recommendations based on performance analysis"""
+
+
+
         try:
             # Analyze recent performance data
             recent_data = [
@@ -634,6 +649,9 @@ class EngagementAnalyzer:
     
     def get_analytics_summary(self, days_back: int = 30) -> Dict[str, Any]:
         """Get comprehensive analytics summary"""
+
+
+
         try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=days_back)

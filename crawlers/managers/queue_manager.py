@@ -364,6 +364,9 @@ class TaskQueue:
             
     def get_size(self) -> int:
         """Get current queue size."""
+
+
+
         return (len(self._priority_queue) + len(self._fifo_queue) + 
                 len(self._scheduled_tasks) + len(self._processing_tasks))
                 
@@ -435,6 +438,9 @@ class QueueManager:
         
     def _initialize_redis(self):
         """Initialize Redis connection for distributed queues."""
+
+
+
         try:
             self.redis_client = redis.Redis(
                 host=self.config.REDIS_HOST,
@@ -455,6 +461,9 @@ class QueueManager:
             
     async def start(self):
         """Start queue manager."""
+
+
+
         try:
             # Create default queues
             await self.create_queue("default", QueueType.PRIORITY)
@@ -475,6 +484,9 @@ class QueueManager:
             
     async def create_queue(self, name: str, queue_type: QueueType = QueueType.PRIORITY) -> bool:
         """Create a new queue."""
+
+
+
         try:
             if name in self.queues:
                 self.logger.warning(f"Queue {name} already exists")
@@ -495,6 +507,9 @@ class QueueManager:
             
     async def submit_task(self, task: CrawlerTask, queue_name: str = "default") -> bool:
         """Submit task to specified queue."""
+
+
+
         try:
             if queue_name not in self.queues:
                 self.logger.error(f"Queue {queue_name} does not exist")
@@ -520,6 +535,9 @@ class QueueManager:
             
     async def _store_task_in_redis(self, task: CrawlerTask, queue_name: str):
         """Store task in Redis for distributed processing."""
+
+
+
         try:
             task_data = {
                 'task': asdict(task),
@@ -541,6 +559,9 @@ class QueueManager:
             
     async def get_task(self, queue_name: str = None, worker_id: str = None, timeout: float = 5.0) -> Optional[CrawlerTask]:
         """Get next task from queue(s)."""
+
+
+
         try:
             # Register worker if provided
             if worker_id:
@@ -597,6 +618,9 @@ class QueueManager:
         
     async def complete_task(self, task_id: str, result: Optional[Dict[str, Any]] = None, queue_name: str = "default") -> bool:
         """Mark task as completed."""
+
+
+
         try:
             if queue_name not in self.queues:
                 return False
@@ -623,6 +647,9 @@ class QueueManager:
             
     async def fail_task(self, task_id: str, error: str, queue_name: str = "default", retry: bool = True) -> bool:
         """Mark task as failed."""
+
+
+
         try:
             if queue_name not in self.queues:
                 return False
@@ -650,6 +677,9 @@ class QueueManager:
             
     async def register_worker(self, worker_id: str) -> bool:
         """Register a worker."""
+
+
+
         try:
             if worker_id not in self.workers:
                 self.workers[worker_id] = WorkerMetrics(worker_id=worker_id)
@@ -668,6 +698,9 @@ class QueueManager:
             
     async def unregister_worker(self, worker_id: str) -> bool:
         """Unregister a worker."""
+
+
+
         try:
             if worker_id in self.workers:
                 self.workers.pop(worker_id)
@@ -701,6 +734,9 @@ class QueueManager:
             
     async def set_queue_weight(self, queue_name: str, weight: float) -> bool:
         """Set queue weight for load balancing."""
+
+
+
         try:
             if queue_name not in self.queues:
                 return False
@@ -753,14 +789,23 @@ class QueueManager:
         
     async def get_worker_metrics(self, worker_id: str) -> Optional[WorkerMetrics]:
         """Get metrics for a specific worker."""
+
+
+
         return self.workers.get(worker_id)
         
     async def get_all_worker_metrics(self) -> Dict[str, WorkerMetrics]:
         """Get metrics for all workers."""
+
+
+
         return self.workers.copy()
         
     async def get_global_stats(self) -> Dict[str, Any]:
         """Get global queue manager statistics."""
+
+
+
         return self.global_stats.copy()
         
     async def _monitoring_loop(self):
@@ -815,6 +860,9 @@ class QueueManager:
             
     async def _collect_and_send_metrics(self):
         """Collect and send metrics to monitoring system."""
+
+
+
         try:
             # Collect queue metrics
             queue_metrics = await self.get_all_queue_metrics()
@@ -836,6 +884,9 @@ class QueueManager:
             
     async def shutdown(self):
         """Shutdown queue manager."""
+
+
+
         try:
             # Stop monitoring
             if self.monitoring_task:
@@ -863,6 +914,9 @@ class QueueManager:
 # Factory function
 def create_queue_manager(config: Optional[QueueConfig] = None) -> QueueManager:
     """Create and return a queue manager instance."""
+
+
+
     return QueueManager(config)
 
 

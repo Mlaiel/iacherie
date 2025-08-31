@@ -525,11 +525,11 @@ def upgrade():
             FOR EACH ROW EXECUTE FUNCTION audit_trigger_function();
         """)
     
-    print("✅ Migration de création du schéma terminée avec succès")
-    print("📊 Tables créées: 7 tables principales + 1 table d'audit")
-    print("🔍 Index créés: 25+ index pour optimiser les performances")
-    print("👁️ Vues créées: 3 vues métier pour les requêtes communes")
-    print("🔔 Triggers d'audit: Audit automatique activé sur les tables principales")
+    print(" Migration de création du schéma terminée avec succès")
+    print(" Tables créées: 7 tables principales + 1 table d'audit")
+    print(" Index créés: 25+ index pour optimiser les performances")
+    print(" Vues créées: 3 vues métier pour les requêtes communes")
+    print(" Triggers d'audit: Audit automatique activé sur les tables principales")
 
 
 def downgrade():
@@ -556,5 +556,5 @@ def downgrade():
     op.drop_table('rights_holders')
     op.drop_table('content_metadata')
     
-    print("⚠️ Migration de suppression terminée")
-    print("🗑️ Toutes les tables, vues, triggers et fonctions ont été supprimés")
+    print(" Migration de suppression terminée")
+    print(" Toutes les tables, vues, triggers et fonctions ont été supprimés")

@@ -8,12 +8,12 @@ IA-Influencer-Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This workflow orchestration system is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization.
 
-🎯 BUSINESS LOGIC:
+ BUSINESS LOGIC:
 Content Upload → Analysis → Protection → Optimization → Distribution → Monitoring
 """
 
@@ -268,6 +268,9 @@ class WorkflowCoordinator:
     
     def register_workflow(self, workflow_definition: WorkflowDefinition) -> bool:
         """Register a new workflow definition"""
+
+
+
         try:
             # Validate workflow definition
             if not self._validate_workflow_definition(workflow_definition):
@@ -283,6 +286,9 @@ class WorkflowCoordinator:
     
     def _validate_workflow_definition(self, workflow: WorkflowDefinition) -> bool:
         """Validate workflow definition integrity"""
+
+
+
         try:
             # Check for duplicate step IDs
             step_ids = [step.step_id for step in workflow.steps]
@@ -342,6 +348,9 @@ class WorkflowCoordinator:
         priority_override: Optional[WorkflowPriority] = None
     ) -> str:
         """Execute a workflow with specified parameters"""
+
+
+
         try:
             if workflow_id not in self.workflow_definitions:
                 raise ValueError(f"Workflow '{workflow_id}' not found")
@@ -383,6 +392,9 @@ class WorkflowCoordinator:
     
     async def _execute_workflow_async(self, execution: WorkflowExecution):
         """Execute workflow asynchronously with proper coordination"""
+
+
+
         try:
             execution.status = WorkflowStatus.RUNNING
             execution.started_at = datetime.now(timezone.utc)
@@ -488,6 +500,9 @@ class WorkflowCoordinator:
     
     async def _execute_step(self, execution: WorkflowExecution, step: WorkflowStep) -> Dict[str, Any]:
         """Execute individual workflow step"""
+
+
+
         try:
             start_time = datetime.now(timezone.utc)
             
@@ -536,6 +551,9 @@ class WorkflowCoordinator:
     
     async def _emit_workflow_event(self, event_type: str, execution: WorkflowExecution):
         """Emit workflow events to registered handlers"""
+
+
+
         try:
             event_data = {
                 "event_type": event_type,
@@ -566,6 +584,9 @@ class WorkflowCoordinator:
     
     async def _process_next_queued_workflow(self):
         """Process next workflow from queue if resources are available"""
+
+
+
         try:
             if (self.execution_queue and 
                 len(self.active_executions) < self.max_concurrent_workflows):
@@ -601,6 +622,9 @@ class WorkflowCoordinator:
     
     def cancel_workflow(self, execution_id: str) -> bool:
         """Cancel running workflow execution"""
+
+
+
         try:
             if execution_id in self.active_executions:
                 execution = self.active_executions[execution_id]

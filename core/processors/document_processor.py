@@ -7,7 +7,7 @@ Handles document parsing, analysis, conversion, and AI-powered content extractio
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 This software is proprietary and confidential. Any unauthorized use, copying, 
 distribution, or commercialization without explicit written permission is 
 strictly prohibited and will result in legal action.
@@ -240,7 +240,7 @@ class DocumentAnalysisResult:
 
 class DocumentProcessor:
     """
-    📄 ENTERPRISE DOCUMENT PROCESSOR
+     ENTERPRISE DOCUMENT PROCESSOR
     
     Industrial-grade document processing engine with advanced content extraction,
     structure analysis, and AI-powered insights for creators and businesses.
@@ -272,6 +272,9 @@ class DocumentProcessor:
     
     async def initialize(self) -> bool:
         """Initialize the document processor"""
+
+
+
         try:
             # Determine supported formats
             if DOC_LIBS_AVAILABLE:
@@ -306,11 +309,11 @@ class DocumentProcessor:
                     self.logger.warning("Failed to download NLTK data")
             
             self._initialized = True
-            self.logger.info(f"✅ Document processor initialized with {len(self._supported_formats)} supported formats")
+            self.logger.info(f" Document processor initialized with {len(self._supported_formats)} supported formats")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize document processor: {e}")
+            self.logger.error(f" Failed to initialize document processor: {e}")
             return False
     
     async def process(
@@ -439,6 +442,9 @@ class DocumentProcessor:
         metadata: Dict[str, Any]
     ) -> Tuple[Optional[bytes], Optional[DocumentMetadata]]:
         """Load document data and extract basic metadata"""
+
+
+
         try:
             doc_data = None
             filename = None
@@ -495,6 +501,9 @@ class DocumentProcessor:
     
     async def _detect_format(self, data: bytes, filename: str) -> Tuple[Optional[DocumentFormat], Optional[str]]:
         """Detect document format and MIME type"""
+
+
+
         try:
             # First try MIME type detection
             mime_type, _ = mimetypes.guess_type(filename)
@@ -593,6 +602,9 @@ class DocumentProcessor:
     
     async def _extract_content(self, data: bytes, metadata: DocumentMetadata) -> Optional[str]:
         """Extract text content from document based on format"""
+
+
+
         try:
             if metadata.format == DocumentFormat.PDF:
                 return await self._extract_pdf_content(data)
@@ -630,6 +642,9 @@ class DocumentProcessor:
     
     async def _extract_pdf_content(self, data: bytes) -> Optional[str]:
         """Extract text from PDF document"""
+
+
+
         try:
             # Try PyMuPDF first (better quality)
             if ADVANCED_DOC_LIBS_AVAILABLE:
@@ -669,6 +684,9 @@ class DocumentProcessor:
     
     async def _extract_docx_content(self, data: bytes) -> Optional[str]:
         """Extract text from DOCX document"""
+
+
+
         try:
             if not DOC_LIBS_AVAILABLE:
                 return None
@@ -698,6 +716,9 @@ class DocumentProcessor:
     
     async def _extract_doc_content(self, data: bytes) -> Optional[str]:
         """Extract text from DOC document"""
+
+
+
         try:
             if ADVANCED_DOC_LIBS_AVAILABLE:
                 # Save to temporary file for processing
@@ -719,6 +740,9 @@ class DocumentProcessor:
     
     async def _extract_xlsx_content(self, data: bytes) -> Optional[str]:
         """Extract text from XLSX spreadsheet"""
+
+
+
         try:
             if not DOC_LIBS_AVAILABLE:
                 return None
@@ -746,6 +770,9 @@ class DocumentProcessor:
     
     async def _extract_xls_content(self, data: bytes) -> Optional[str]:
         """Extract text from XLS spreadsheet"""
+
+
+
         try:
             if ADVANCED_DOC_LIBS_AVAILABLE:
                 # Save to temporary file
@@ -782,6 +809,9 @@ class DocumentProcessor:
     
     async def _extract_pptx_content(self, data: bytes) -> Optional[str]:
         """Extract text from PPTX presentation"""
+
+
+
         try:
             if not DOC_LIBS_AVAILABLE:
                 return None
@@ -804,6 +834,9 @@ class DocumentProcessor:
     
     async def _extract_csv_content(self, data: bytes) -> Optional[str]:
         """Extract text from CSV file"""
+
+
+
         try:
             # Try different encodings
             for encoding in ['utf-8', 'latin-1', 'cp1252']:
@@ -831,6 +864,9 @@ class DocumentProcessor:
     
     async def _extract_txt_content(self, data: bytes) -> Optional[str]:
         """Extract text from plain text file"""
+
+
+
         try:
             # Try different encodings
             for encoding in ['utf-8', 'latin-1', 'cp1252']:
@@ -848,6 +884,9 @@ class DocumentProcessor:
     
     async def _extract_rtf_content(self, data: bytes) -> Optional[str]:
         """Extract text from RTF document"""
+
+
+
         try:
             # Basic RTF parsing (simplified)
             text = data.decode('utf-8', errors='ignore')
@@ -869,6 +908,9 @@ class DocumentProcessor:
     
     async def _extract_html_content(self, data: bytes) -> Optional[str]:
         """Extract text from HTML document"""
+
+
+
         try:
             text = data.decode('utf-8', errors='ignore')
             
@@ -892,6 +934,9 @@ class DocumentProcessor:
     
     async def _extract_xml_content(self, data: bytes) -> Optional[str]:
         """Extract text from XML document"""
+
+
+
         try:
             text = data.decode('utf-8', errors='ignore')
             root = ET.fromstring(text)
@@ -912,6 +957,9 @@ class DocumentProcessor:
     
     async def _extract_json_content(self, data: bytes) -> Optional[str]:
         """Extract text from JSON document"""
+
+
+
         try:
             text = data.decode('utf-8', errors='ignore')
             json_data = json.loads(text)
@@ -940,6 +988,9 @@ class DocumentProcessor:
     
     async def _extract_markdown_content(self, data: bytes) -> Optional[str]:
         """Extract text from Markdown document"""
+
+
+
         try:
             text = data.decode('utf-8', errors='ignore')
             
@@ -965,6 +1016,9 @@ class DocumentProcessor:
     
     async def _analyze_structure(self, data: bytes, metadata: DocumentMetadata) -> Optional[DocumentStructure]:
         """Analyze document structure"""
+
+
+
         try:
             structure = DocumentStructure()
             
@@ -1134,6 +1188,9 @@ class DocumentProcessor:
     
     async def _analyze_content(self, text: str) -> Optional[ContentAnalysis]:
         """Analyze document content"""
+
+
+
         try:
             analysis = ContentAnalysis()
             
@@ -1195,6 +1252,9 @@ class DocumentProcessor:
     
     async def _extract_topics(self, text: str) -> List[str]:
         """Extract main topics from text"""
+
+
+
         try:
             # Simplified topic extraction using keyword frequency
             if not TEXT_ANALYSIS_AVAILABLE:
@@ -1225,6 +1285,9 @@ class DocumentProcessor:
     
     async def _analyze_sentiment(self, text: str) -> Tuple[float, str]:
         """Analyze sentiment of text"""
+
+
+
         try:
             # Basic sentiment analysis
             positive_words = ['good', 'great', 'excellent', 'amazing', 'wonderful', 'fantastic', 'positive', 'love', 'like', 'happy']
@@ -1273,6 +1336,9 @@ class DocumentProcessor:
     
     async def _generate_summary(self, text: str) -> Optional[str]:
         """Generate summary of text content"""
+
+
+
         try:
             # Simple extractive summarization
             if not TEXT_ANALYSIS_AVAILABLE:
@@ -1298,6 +1364,9 @@ class DocumentProcessor:
     
     async def _calculate_quality_metrics(self, text: str) -> Dict[str, float]:
         """Calculate text quality metrics"""
+
+
+
         try:
             metrics = {}
             
@@ -1343,6 +1412,9 @@ class DocumentProcessor:
     
     async def _perform_ocr(self, data: bytes, metadata: DocumentMetadata) -> Optional[str]:
         """Perform OCR on image-based documents"""
+
+
+
         try:
             if not self._ocr_available or metadata.format != DocumentFormat.PDF:
                 return None
@@ -1382,6 +1454,9 @@ class DocumentProcessor:
         features: DocumentFeatures
     ) -> Optional[Dict[str, Any]]:
         """Extract structured data from document"""
+
+
+
         try:
             structured_data = {
                 "document_info": {
@@ -1424,6 +1499,9 @@ class DocumentProcessor:
     
     async def _generate_fingerprint(self, data: bytes) -> str:
         """Generate document fingerprint"""
+
+
+
         try:
             # Create hash of document content
             fingerprint = hashlib.sha256(data).hexdigest()[:32]
@@ -1434,6 +1512,9 @@ class DocumentProcessor:
     
     async def _generate_content_hash(self, content: str) -> str:
         """Generate hash of extracted content"""
+
+
+
         try:
             # Normalize content and create hash
             normalized_content = ' '.join(content.split()).lower()
@@ -1508,6 +1589,9 @@ class DocumentProcessor:
     
     async def health_check(self) -> Dict[str, Any]:
         """Perform health check on the document processor"""
+
+
+
         return {
             "status": "healthy" if self._initialized else "not_initialized",
             "doc_libs_available": DOC_LIBS_AVAILABLE,

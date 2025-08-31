@@ -84,7 +84,7 @@ class MonitoringSetupManager:
     async def run_complete_setup(self) -> bool:
         """Run complete monitoring system setup"""
         
-        self.logger.info("🚀 Starting IA Influencer Agent Monitoring System Setup")
+        self.logger.info(" Starting IA Influencer Agent Monitoring System Setup")
         self.logger.info(f"Environment: {os.getenv('ENVIRONMENT', 'development')}")
         self.logger.info(f"Configuration Profile: {self.config.get('profile', 'unknown')}")
         
@@ -107,7 +107,7 @@ class MonitoringSetupManager:
         completed_steps = 0
         
         for step_name, step_function in setup_steps:
-            self.logger.info(f"📋 Step {completed_steps + 1}/{total_steps}: {step_name}")
+            self.logger.info(f" Step {completed_steps + 1}/{total_steps}: {step_name}")
             
             status = SetupStatus(
                 component=step_name,
@@ -123,19 +123,19 @@ class MonitoringSetupManager:
                     status.status = "completed"
                     status.end_time = datetime.now()
                     completed_steps += 1
-                    self.logger.info(f"✅ {step_name} completed successfully")
+                    self.logger.info(f" {step_name} completed successfully")
                 else:
                     status.status = "failed"
                     status.end_time = datetime.now()
                     status.error_message = "Step returned False"
-                    self.logger.error(f"❌ {step_name} failed")
+                    self.logger.error(f" {step_name} failed")
                     break
                     
             except Exception as e:
                 status.status = "failed"
                 status.end_time = datetime.now()
                 status.error_message = str(e)
-                self.logger.error(f"❌ {step_name} failed with error: {e}")
+                self.logger.error(f" {step_name} failed with error: {e}")
                 break
         
         # Generate setup report
@@ -143,9 +143,9 @@ class MonitoringSetupManager:
         
         success = completed_steps == total_steps
         if success:
-            self.logger.info("🎉 Monitoring system setup completed successfully!")
+            self.logger.info(" Monitoring system setup completed successfully!")
         else:
-            self.logger.error("💥 Monitoring system setup failed")
+            self.logger.error(" Monitoring system setup failed")
         
         return success
     
@@ -197,7 +197,7 @@ class MonitoringSetupManager:
         except ImportError:
             self.logger.warning("psutil not available, skipping resource checks")
         
-        self.logger.info("✅ System requirements verified")
+        self.logger.info(" System requirements verified")
         return True
     
     async def _setup_database(self) -> bool:
@@ -249,7 +249,7 @@ class MonitoringSetupManager:
             conn_params["database"] = db_config.database
             self.db_connection = psycopg2.connect(**conn_params)
             
-            self.logger.info("✅ Database setup completed")
+            self.logger.info(" Database setup completed")
             return True
             
         except Exception as e:
@@ -303,7 +303,7 @@ class MonitoringSetupManager:
                 except Exception as e:
                     self.logger.warning(f"Could not set Redis config {config_key}: {e}")
             
-            self.logger.info("✅ Redis setup completed")
+            self.logger.info(" Redis setup completed")
             return True
             
         except Exception as e:
@@ -467,7 +467,7 @@ class MonitoringSetupManager:
             
             cursor.close()
             
-            self.logger.info("✅ Database schema created successfully")
+            self.logger.info(" Database schema created successfully")
             return True
             
         except Exception as e:
@@ -545,7 +545,7 @@ class MonitoringSetupManager:
                 }
             )
             
-            self.logger.info("✅ Redis structures initialized")
+            self.logger.info(" Redis structures initialized")
             return True
             
         except Exception as e:
@@ -571,7 +571,7 @@ class MonitoringSetupManager:
                 server.login(alerting_config.smtp_username, alerting_config.smtp_password)
                 server.quit()
                 
-                self.logger.info("✅ Email alerting configured and tested")
+                self.logger.info(" Email alerting configured and tested")
                 
             except Exception as e:
                 self.logger.warning(f"Email alerting setup failed: {e}")
@@ -582,7 +582,7 @@ class MonitoringSetupManager:
                 test_message = {
                     "channel": alerting_config.slack_channel,
                     "username": alerting_config.slack_username,
-                    "text": "🚀 IA Influencer Agent Monitoring Setup Test",
+                    "text": " IA Influencer Agent Monitoring Setup Test",
                     "attachments": [{
                         "color": "good",
                         "fields": [{
@@ -600,7 +600,7 @@ class MonitoringSetupManager:
                 )
                 
                 if response.status_code == 200:
-                    self.logger.info("✅ Slack alerting configured and tested")
+                    self.logger.info(" Slack alerting configured and tested")
                 else:
                     self.logger.warning(f"Slack test failed: HTTP {response.status_code}")
                     
@@ -613,7 +613,7 @@ class MonitoringSetupManager:
                 telegram_url = f"https://api.telegram.org/bot{alerting_config.telegram_bot_token}/sendMessage"
                 test_message = {
                     "chat_id": alerting_config.telegram_chat_id,
-                    "text": "🚀 IA Influencer Agent Monitoring Setup Test\n\nAlerting channels configuration test",
+                    "text": " IA Influencer Agent Monitoring Setup Test\n\nAlerting channels configuration test",
                     "parse_mode": "Markdown"
                 }
                 
@@ -624,14 +624,14 @@ class MonitoringSetupManager:
                 )
                 
                 if response.status_code == 200:
-                    self.logger.info("✅ Telegram alerting configured and tested")
+                    self.logger.info(" Telegram alerting configured and tested")
                 else:
                     self.logger.warning(f"Telegram test failed: HTTP {response.status_code}")
                     
             except Exception as e:
                 self.logger.warning(f"Telegram alerting setup failed: {e}")
         
-        self.logger.info("✅ Alerting channels setup completed")
+        self.logger.info(" Alerting channels setup completed")
         return True
     
     async def _setup_dashboard(self) -> bool:
@@ -667,7 +667,7 @@ class MonitoringSetupManager:
             
             self.redis_client.hset("monitoring:dashboard:metrics", mapping=dashboard_metrics)
             
-            self.logger.info("✅ Dashboard setup completed")
+            self.logger.info(" Dashboard setup completed")
             return True
             
         except Exception as e:
@@ -723,7 +723,7 @@ class MonitoringSetupManager:
             for counter in security_counters:
                 self.redis_client.set(counter, 0)
             
-            self.logger.info("✅ Security rules deployed")
+            self.logger.info(" Security rules deployed")
             return True
             
         except Exception as e:
@@ -789,7 +789,7 @@ class MonitoringSetupManager:
                     }
                 )
             
-            self.logger.info("✅ AI model monitoring initialized")
+            self.logger.info(" AI model monitoring initialized")
             return True
             
         except Exception as e:
@@ -845,7 +845,7 @@ class MonitoringSetupManager:
                     }
                 )
             
-            self.logger.info("✅ Business intelligence setup completed")
+            self.logger.info(" Business intelligence setup completed")
             return True
             
         except Exception as e:
@@ -896,7 +896,7 @@ class MonitoringSetupManager:
             
             self.redis_client.hset("monitoring:performance:thresholds", mapping=thresholds)
             
-            self.logger.info(f"✅ Performance baseline established (DB: {db_response_time:.2f}ms, Redis: {redis_response_time:.2f}ms)")
+            self.logger.info(f" Performance baseline established (DB: {db_response_time:.2f}ms, Redis: {redis_response_time:.2f}ms)")
             return True
             
         except Exception as e:
@@ -968,9 +968,9 @@ class MonitoringSetupManager:
             )
         
         if overall_health:
-            self.logger.info("✅ Comprehensive health check passed")
+            self.logger.info(" Comprehensive health check passed")
         else:
-            self.logger.warning("⚠️ Health check completed with warnings")
+            self.logger.warning(" Health check completed with warnings")
         
         return True  # Always return True as this is the final step
     
@@ -1035,11 +1035,11 @@ class MonitoringSetupManager:
                 duration = f" ({(status.end_time - status.start_time).total_seconds():.2f}s)"
             
             status_icon = {
-                "completed": "✅",
-                "failed": "❌",
-                "running": "🔄",
+                "completed": "",
+                "failed": "",
+                "running": "",
                 "pending": "⏳"
-            }.get(status.status, "❓")
+            }.get(status.status, "")
             
             report_lines.append(f"{status_icon} {component.upper()}: {status.status.upper()}{duration}")
             
@@ -1070,7 +1070,7 @@ class MonitoringSetupManager:
         
         # Log the report
         for line in report_lines:
-            if line.startswith(("✅", "❌", "🔄", "⏳")):
+            if line.startswith(("", "", "", "⏳")):
                 self.logger.info(line)
             elif line.startswith("=") or line.startswith("-"):
                 continue
@@ -1082,7 +1082,7 @@ class MonitoringSetupManager:
             report_file = Path("monitoring_setup_report.txt")
             with open(report_file, "w") as f:
                 f.write(report_content)
-            self.logger.info(f"📄 Setup report saved to: {report_file.absolute()}")
+            self.logger.info(f" Setup report saved to: {report_file.absolute()}")
         except Exception as e:
             self.logger.warning(f"Could not save setup report: {e}")
 

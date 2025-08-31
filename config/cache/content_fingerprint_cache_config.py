@@ -201,6 +201,9 @@ class FingerprintCacheManager:
     
     def get_cache_metrics(self) -> Dict[str, Any]:
         """Get current cache performance metrics"""
+
+
+
         return {
             "cache_size_mb": self._performance_metrics.get("cache_size_mb", 0),
             "hit_rate": self._performance_metrics.get("hit_rate", 0.0),

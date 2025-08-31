@@ -443,6 +443,9 @@ class RevenueCacheManager:
     
     def get_revenue_statistics(self) -> Dict[str, Any]:
         """Get comprehensive revenue cache statistics"""
+
+
+
         return {
             "total_revenue_streams": len(self.config.get_all_revenue_settings()),
             "cache_performance": {
@@ -471,11 +474,17 @@ class RevenueCacheManager:
     def _get_historical_revenue_data(self, user_id: str, revenue_type: RevenueType, 
                                    days: int) -> List[Dict[str, Any]]:
         """Get historical revenue data (mock implementation)"""
+
+
+
         return []
     
     def _get_recent_revenue_data(self, user_id: str, revenue_type: RevenueType,
                                platform: PlatformProvider, hours: int) -> List[Dict[str, Any]]:
         """Get recent revenue data for anomaly detection (mock implementation)"""
+
+
+
         return []
     
     def _count_alert_types(self) -> Dict[str, int]:

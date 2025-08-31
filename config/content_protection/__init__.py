@@ -9,7 +9,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA-Influencer Agent + Content Protection Platform
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps
 
-⚠️  COPYRIGHT WARNING:
+  COPYRIGHT WARNING:
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, modification, or distribution of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
@@ -30,16 +30,16 @@ MODULES OVERVIEW:
 
 FEATURES:
 =========
-✅ Multi-format fingerprinting (Audio, Video, Image, Text)
-✅ Real-time content surveillance across platforms
-✅ AI-powered similarity matching and duplicate detection
-✅ Invisible watermarking with robustness testing
-✅ Automated DMCA takedown procedures
-✅ Smart licensing with automated negotiations
-✅ Revenue tracking and royalty distribution
-✅ Legal compliance and audit trails
-✅ Enterprise-grade security and performance
-✅ Industrial scalability and reliability
+ Multi-format fingerprinting (Audio, Video, Image, Text)
+ Real-time content surveillance across platforms
+ AI-powered similarity matching and duplicate detection
+ Invisible watermarking with robustness testing
+ Automated DMCA takedown procedures
+ Smart licensing with automated negotiations
+ Revenue tracking and royalty distribution
+ Legal compliance and audit trails
+ Enterprise-grade security and performance
+ Industrial scalability and reliability
 """
 from .fingerprint_engine_config import (
     FingerprintEngineConfig,

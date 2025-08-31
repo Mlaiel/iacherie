@@ -1,11 +1,11 @@
 """
-📊 Container Monitoring Manager - IA-Influencer-Agent Infrastructure
+ Container Monitoring Manager - IA-Influencer-Agent Infrastructure
 ==================================================================
 Expert: DevOps Engineer + Monitoring Specialist + SRE
 Creator: Fahed Mlaiel <mlaiel@live.de>
 ==================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL 
 Tout vol, copie ou utilisation non autorisée de ce code source,
 de ce concept ou de cette propriété intellectuelle sans
 l'autorisation écrite explicite de Fahed Mlaiel est strictement
@@ -141,6 +141,9 @@ class ContainerMonitoringManager:
         
     async def initialize(self) -> bool:
         """Initialize container monitoring manager"""
+
+
+
         try:
             # Initialize Docker client
             self.docker_client = docker.from_env()
@@ -169,15 +172,18 @@ class ContainerMonitoringManager:
             await self._start_monitoring_loops()
             
             self.initialized = True
-            self.logger.info("✅ ContainerMonitoringManager initialized successfully")
+            self.logger.info(" ContainerMonitoringManager initialized successfully")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error initializing ContainerMonitoringManager: {e}")
+            self.logger.error(f" Error initializing ContainerMonitoringManager: {e}")
             return False
     
     async def _initialize_metrics(self) -> None:
         """Initialize Prometheus metrics"""
+
+
+
         try:
             # Define core metrics for IA-Influencer services
             metric_definitions = [
@@ -305,13 +311,16 @@ class ContainerMonitoringManager:
                         registry=self.prometheus_registry
                     )
             
-            self.logger.info(f"✅ Initialized {len(metric_definitions)} Prometheus metrics")
+            self.logger.info(f" Initialized {len(metric_definitions)} Prometheus metrics")
             
         except Exception as e:
-            self.logger.error(f"❌ Error initializing metrics: {e}")
+            self.logger.error(f" Error initializing metrics: {e}")
     
     async def _setup_alert_rules(self) -> None:
         """Setup alert rules for IA-Influencer services"""
+
+
+
         try:
             alert_rules = [
                 AlertRule(
@@ -418,13 +427,16 @@ class ContainerMonitoringManager:
             # Save alert rules to file
             await self._save_alert_rules()
             
-            self.logger.info(f"✅ Setup {len(alert_rules)} alert rules")
+            self.logger.info(f" Setup {len(alert_rules)} alert rules")
             
         except Exception as e:
-            self.logger.error(f"❌ Error setting up alert rules: {e}")
+            self.logger.error(f" Error setting up alert rules: {e}")
     
     async def _save_alert_rules(self) -> None:
         """Save alert rules to Prometheus format"""
+
+
+
         try:
             prometheus_rules = {
                 "groups": [{
@@ -446,13 +458,16 @@ class ContainerMonitoringManager:
             with open(rules_file, 'w') as f:
                 yaml.dump(prometheus_rules, f, default_flow_style=False)
             
-            self.logger.info(f"✅ Saved alert rules to {rules_file}")
+            self.logger.info(f" Saved alert rules to {rules_file}")
             
         except Exception as e:
-            self.logger.error(f"❌ Error saving alert rules: {e}")
+            self.logger.error(f" Error saving alert rules: {e}")
     
     async def _setup_monitoring_targets(self) -> None:
         """Setup monitoring targets for IA-Influencer services"""
+
+
+
         try:
             # Define monitoring targets
             targets = [
@@ -600,13 +615,16 @@ class ContainerMonitoringManager:
             # Generate Prometheus configuration
             await self._generate_prometheus_config()
             
-            self.logger.info(f"✅ Setup {len(targets)} monitoring targets")
+            self.logger.info(f" Setup {len(targets)} monitoring targets")
             
         except Exception as e:
-            self.logger.error(f"❌ Error setting up monitoring targets: {e}")
+            self.logger.error(f" Error setting up monitoring targets: {e}")
     
     async def _generate_prometheus_config(self) -> None:
         """Generate Prometheus configuration file"""
+
+
+
         try:
             prometheus_config = {
                 "global": {
@@ -662,13 +680,16 @@ class ContainerMonitoringManager:
             with open(config_file, 'w') as f:
                 yaml.dump(prometheus_config, f, default_flow_style=False)
             
-            self.logger.info(f"✅ Generated Prometheus configuration: {config_file}")
+            self.logger.info(f" Generated Prometheus configuration: {config_file}")
             
         except Exception as e:
-            self.logger.error(f"❌ Error generating Prometheus config: {e}")
+            self.logger.error(f" Error generating Prometheus config: {e}")
     
     async def _start_monitoring_loops(self) -> None:
         """Start monitoring loops"""
+
+
+
         try:
             # Start health check loop
             asyncio.create_task(self._health_check_loop())
@@ -679,10 +700,10 @@ class ContainerMonitoringManager:
             # Start alert evaluation loop
             asyncio.create_task(self._alert_evaluation_loop())
             
-            self.logger.info("✅ Started monitoring loops")
+            self.logger.info(" Started monitoring loops")
             
         except Exception as e:
-            self.logger.error(f"❌ Error starting monitoring loops: {e}")
+            self.logger.error(f" Error starting monitoring loops: {e}")
     
     async def _health_check_loop(self) -> None:
         """Health check monitoring loop"""
@@ -719,11 +740,14 @@ class ContainerMonitoringManager:
                 await asyncio.sleep(15)  # Health check every 15 seconds
                 
             except Exception as e:
-                self.logger.error(f"❌ Error in health check loop: {e}")
+                self.logger.error(f" Error in health check loop: {e}")
                 await asyncio.sleep(30)
     
     async def _perform_health_check(self, health_check: HealthCheck) -> HealthStatus:
         """Perform individual health check"""
+
+
+
         try:
             if health_check.method == "GET":
                 async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(health_check.timeout)) as session:
@@ -777,11 +801,14 @@ class ContainerMonitoringManager:
                 await asyncio.sleep(30)  # Collect every 30 seconds
                 
             except Exception as e:
-                self.logger.error(f"❌ Error in metrics collection loop: {e}")
+                self.logger.error(f" Error in metrics collection loop: {e}")
                 await asyncio.sleep(60)
     
     async def _collect_docker_metrics(self) -> None:
         """Collect Docker container metrics"""
+
+
+
         try:
             containers = self.docker_client.containers.list()
             
@@ -826,10 +853,13 @@ class ContainerMonitoringManager:
                         ).inc(net_stats["tx_bytes"])
                 
         except Exception as e:
-            self.logger.error(f"❌ Error collecting Docker metrics: {e}")
+            self.logger.error(f" Error collecting Docker metrics: {e}")
     
     def _calculate_cpu_percentage(self, stats: Dict[str, Any]) -> float:
         """Calculate CPU usage percentage from Docker stats"""
+
+
+
         try:
             cpu_stats = stats["cpu_stats"]
             precpu_stats = stats["precpu_stats"]
@@ -848,6 +878,9 @@ class ContainerMonitoringManager:
     
     async def _collect_system_metrics(self) -> None:
         """Collect system-level metrics"""
+
+
+
         try:
             # CPU usage
             cpu_percent = psutil.cpu_percent(interval=1)
@@ -865,10 +898,13 @@ class ContainerMonitoringManager:
             # These would be separate system metrics, not container-specific
             
         except Exception as e:
-            self.logger.error(f"❌ Error collecting system metrics: {e}")
+            self.logger.error(f" Error collecting system metrics: {e}")
     
     async def _collect_application_metrics(self) -> None:
         """Collect application-specific metrics"""
+
+
+
         try:
             # Collect metrics from application endpoints
             for target_name, target in self.monitoring_targets.items():
@@ -885,7 +921,7 @@ class ContainerMonitoringManager:
                     self.logger.debug(f"Failed to collect metrics from {target_name}: {e}")
                     
         except Exception as e:
-            self.logger.error(f"❌ Error collecting application metrics: {e}")
+            self.logger.error(f" Error collecting application metrics: {e}")
     
     async def _alert_evaluation_loop(self) -> None:
         """Alert evaluation loop"""
@@ -923,11 +959,14 @@ class ContainerMonitoringManager:
                 await asyncio.sleep(60)  # Evaluate every minute
                 
             except Exception as e:
-                self.logger.error(f"❌ Error in alert evaluation loop: {e}")
+                self.logger.error(f" Error in alert evaluation loop: {e}")
                 await asyncio.sleep(120)
     
     async def _evaluate_alert_rule(self, rule: AlertRule) -> Dict[str, Any]:
         """Evaluate individual alert rule"""
+
+
+
         try:
             # Simplified alert evaluation
             # In real implementation, would use PromQL evaluation
@@ -958,11 +997,14 @@ class ContainerMonitoringManager:
             }
             
         except Exception as e:
-            self.logger.error(f"❌ Error evaluating alert rule {rule.name}: {e}")
+            self.logger.error(f" Error evaluating alert rule {rule.name}: {e}")
             return {"active": False, "value": 0, "evaluated_at": datetime.now()}
     
     async def _send_alert(self, rule: AlertRule, status: Dict[str, Any]) -> None:
         """Send alert notification"""
+
+
+
         try:
             alert_message = {
                 "alert_name": rule.name,
@@ -976,7 +1018,7 @@ class ContainerMonitoringManager:
             
             # Log alert
             self.logger.warning(
-                f"🚨 ALERT: {rule.name} - {rule.description} (Value: {status['value']})"
+                f" ALERT: {rule.name} - {rule.description} (Value: {status['value']})"
             )
             
             # Send to external systems (webhook, email, Slack, etc.)
@@ -984,29 +1026,35 @@ class ContainerMonitoringManager:
                 await self._send_webhook_alert(alert_message)
             
         except Exception as e:
-            self.logger.error(f"❌ Error sending alert: {e}")
+            self.logger.error(f" Error sending alert: {e}")
     
     async def _send_webhook_alert(self, alert_message: Dict[str, Any]) -> None:
         """Send alert via webhook"""
+
+
+
         try:
             webhook_url = self.monitoring_config["alertmanager"]["webhook_url"]
             
             async with aiohttp.ClientSession() as session:
                 async with session.post(webhook_url, json=alert_message) as response:
                     if response.status == 200:
-                        self.logger.info(f"✅ Alert sent via webhook: {alert_message['alert_name']}")
+                        self.logger.info(f" Alert sent via webhook: {alert_message['alert_name']}")
                     else:
-                        self.logger.error(f"❌ Failed to send webhook alert: {response.status}")
+                        self.logger.error(f" Failed to send webhook alert: {response.status}")
                         
         except Exception as e:
-            self.logger.error(f"❌ Error sending webhook alert: {e}")
+            self.logger.error(f" Error sending webhook alert: {e}")
     
     async def _resolve_alert(self, rule_name: str) -> None:
         """Resolve active alert"""
+
+
+
         try:
             alert = self.active_alerts[rule_name]
             
-            self.logger.info(f"✅ RESOLVED: Alert {rule_name}")
+            self.logger.info(f" RESOLVED: Alert {rule_name}")
             
             # Send resolution notification
             resolution_message = {
@@ -1020,19 +1068,25 @@ class ContainerMonitoringManager:
                 await self._send_webhook_alert(resolution_message)
                 
         except Exception as e:
-            self.logger.error(f"❌ Error resolving alert: {e}")
+            self.logger.error(f" Error resolving alert: {e}")
     
     async def get_metrics_export(self) -> str:
         """Export metrics in Prometheus format"""
+
+
+
         try:
             return generate_latest(self.prometheus_registry).decode('utf-8')
             
         except Exception as e:
-            self.logger.error(f"❌ Error exporting metrics: {e}")
+            self.logger.error(f" Error exporting metrics: {e}")
             return ""
     
     async def get_health_status(self) -> Dict[str, Any]:
         """Get overall health status"""
+
+
+
         try:
             total_checks = len(self.health_status)
             healthy_checks = len([
@@ -1054,11 +1108,14 @@ class ContainerMonitoringManager:
             }
             
         except Exception as e:
-            self.logger.error(f"❌ Error getting health status: {e}")
+            self.logger.error(f" Error getting health status: {e}")
             return {"overall_status": "unknown", "error": str(e)}
     
     async def get_active_alerts(self) -> Dict[str, Any]:
         """Get currently active alerts"""
+
+
+
         try:
             active_alerts_info = {}
             
@@ -1079,7 +1136,7 @@ class ContainerMonitoringManager:
             }
             
         except Exception as e:
-            self.logger.error(f"❌ Error getting active alerts: {e}")
+            self.logger.error(f" Error getting active alerts: {e}")
             return {"total_active_alerts": 0, "alerts": {}, "error": str(e)}
 
 class MetricsCollector:
@@ -1093,19 +1150,25 @@ class MetricsCollector:
     
     async def initialize(self) -> bool:
         """Initialize metrics collector"""
+
+
+
         try:
             # Setup custom metric collection
             await self._setup_custom_metrics()
             
-            self.logger.info("✅ MetricsCollector initialized")
+            self.logger.info(" MetricsCollector initialized")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error initializing MetricsCollector: {e}")
+            self.logger.error(f" Error initializing MetricsCollector: {e}")
             return False
     
     async def _setup_custom_metrics(self) -> None:
         """Setup custom metrics for IA-Influencer platform"""
+
+
+
         try:
             # Start custom collection tasks
             self.collection_tasks["ai_processing"] = asyncio.create_task(
@@ -1121,7 +1184,7 @@ class MetricsCollector:
             )
             
         except Exception as e:
-            self.logger.error(f"❌ Error setting up custom metrics: {e}")
+            self.logger.error(f" Error setting up custom metrics: {e}")
     
     async def _collect_ai_processing_metrics(self) -> None:
         """Collect AI processing metrics"""
@@ -1144,7 +1207,7 @@ class MetricsCollector:
                 await asyncio.sleep(60)
                 
             except Exception as e:
-                self.logger.error(f"❌ Error collecting AI metrics: {e}")
+                self.logger.error(f" Error collecting AI metrics: {e}")
                 await asyncio.sleep(120)
     
     async def _collect_content_protection_metrics(self) -> None:
@@ -1185,7 +1248,7 @@ class MetricsCollector:
                 await asyncio.sleep(120)
                 
             except Exception as e:
-                self.logger.error(f"❌ Error collecting content protection metrics: {e}")
+                self.logger.error(f" Error collecting content protection metrics: {e}")
                 await asyncio.sleep(180)
     
     async def _collect_monetization_metrics(self) -> None:
@@ -1212,7 +1275,7 @@ class MetricsCollector:
                 await asyncio.sleep(300)  # Update every 5 minutes
                 
             except Exception as e:
-                self.logger.error(f"❌ Error collecting monetization metrics: {e}")
+                self.logger.error(f" Error collecting monetization metrics: {e}")
                 await asyncio.sleep(360)
 
 class AlertManager:
@@ -1227,6 +1290,9 @@ class AlertManager:
     
     async def initialize(self) -> bool:
         """Initialize alert manager"""
+
+
+
         try:
             # Setup notification channels
             await self._setup_notification_channels()
@@ -1234,15 +1300,18 @@ class AlertManager:
             # Setup escalation rules
             await self._setup_escalation_rules()
             
-            self.logger.info("✅ AlertManager initialized")
+            self.logger.info(" AlertManager initialized")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error initializing AlertManager: {e}")
+            self.logger.error(f" Error initializing AlertManager: {e}")
             return False
     
     async def _setup_notification_channels(self) -> None:
         """Setup notification channels"""
+
+
+
         try:
             self.notification_channels = {
                 "email": {
@@ -1267,10 +1336,13 @@ class AlertManager:
             }
             
         except Exception as e:
-            self.logger.error(f"❌ Error setting up notification channels: {e}")
+            self.logger.error(f" Error setting up notification channels: {e}")
     
     async def _setup_escalation_rules(self) -> None:
         """Setup alert escalation rules"""
+
+
+
         try:
             self.escalation_rules = {
                 "critical": {
@@ -1288,7 +1360,7 @@ class AlertManager:
             }
             
         except Exception as e:
-            self.logger.error(f"❌ Error setting up escalation rules: {e}")
+            self.logger.error(f" Error setting up escalation rules: {e}")
     
     async def send_notification(
         self, 
@@ -1297,9 +1369,12 @@ class AlertManager:
         severity: AlertSeverity = AlertSeverity.INFO
     ) -> bool:
         """Send notification via specified channel"""
+
+
+
         try:
             if channel not in self.notification_channels:
-                self.logger.error(f"❌ Unknown notification channel: {channel}")
+                self.logger.error(f" Unknown notification channel: {channel}")
                 return False
             
             channel_config = self.notification_channels[channel]
@@ -1319,22 +1394,28 @@ class AlertManager:
             return False
             
         except Exception as e:
-            self.logger.error(f"❌ Error sending notification via {channel}: {e}")
+            self.logger.error(f" Error sending notification via {channel}: {e}")
             return False
     
     async def _send_email_notification(self, message: str, config: Dict[str, Any]) -> bool:
         """Send email notification"""
+
+
+
         try:
             # Simplified email sending implementation
-            self.logger.info(f"📧 Email notification sent: {message[:100]}...")
+            self.logger.info(f" Email notification sent: {message[:100]}...")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error sending email: {e}")
+            self.logger.error(f" Error sending email: {e}")
             return False
     
     async def _send_slack_notification(self, message: str, config: Dict[str, Any]) -> bool:
         """Send Slack notification"""
+
+
+
         try:
             webhook_url = config.get("webhook_url")
             if not webhook_url:
@@ -1349,18 +1430,21 @@ class AlertManager:
             async with aiohttp.ClientSession() as session:
                 async with session.post(webhook_url, json=payload) as response:
                     if response.status == 200:
-                        self.logger.info(f"💬 Slack notification sent")
+                        self.logger.info(f" Slack notification sent")
                         return True
                     else:
-                        self.logger.error(f"❌ Slack notification failed: {response.status}")
+                        self.logger.error(f" Slack notification failed: {response.status}")
                         return False
                         
         except Exception as e:
-            self.logger.error(f"❌ Error sending Slack notification: {e}")
+            self.logger.error(f" Error sending Slack notification: {e}")
             return False
     
     async def _send_webhook_notification(self, message: str, config: Dict[str, Any]) -> bool:
         """Send webhook notification"""
+
+
+
         try:
             webhook_url = config.get("url")
             if not webhook_url:
@@ -1375,24 +1459,27 @@ class AlertManager:
             async with aiohttp.ClientSession() as session:
                 async with session.post(webhook_url, json=payload) as response:
                     if response.status == 200:
-                        self.logger.info(f"🔗 Webhook notification sent")
+                        self.logger.info(f" Webhook notification sent")
                         return True
                     else:
                         return False
                         
         except Exception as e:
-            self.logger.error(f"❌ Error sending webhook notification: {e}")
+            self.logger.error(f" Error sending webhook notification: {e}")
             return False
     
     async def _send_sms_notification(self, message: str, config: Dict[str, Any]) -> bool:
         """Send SMS notification"""
+
+
+
         try:
             # Simplified SMS implementation
-            self.logger.info(f"📱 SMS notification sent: {message[:50]}...")
+            self.logger.info(f" SMS notification sent: {message[:50]}...")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error sending SMS: {e}")
+            self.logger.error(f" Error sending SMS: {e}")
             return False
 
 __all__ = [

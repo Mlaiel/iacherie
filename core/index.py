@@ -10,7 +10,7 @@ Created: 2025-08-20
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -231,7 +231,7 @@ class CoreSystemManager:
             )
         
         self.metrics["total_modules"] = len(self.modules)
-        logger.info(f"🏭 Initialized {len(self.modules)} core modules")
+        logger.info(f" Initialized {len(self.modules)} core modules")
     
     async def perform_health_check(self) -> Dict[str, Any]:
         """
@@ -240,6 +240,9 @@ class CoreSystemManager:
         Returns:
             Dict contenant l'état de santé détaillé
         """
+
+
+
         try:
             health_results = {
                 "timestamp": datetime.now().isoformat(),
@@ -288,11 +291,11 @@ class CoreSystemManager:
                 "uptime_seconds": health_results["uptime_seconds"]
             })
             
-            logger.info(f"✅ Health check completed: {self.status.value}")
+            logger.info(f" Health check completed: {self.status.value}")
             return health_results
             
         except Exception as e:
-            logger.error(f"❌ Health check failed: {e}")
+            logger.error(f" Health check failed: {e}")
             self.status = SystemStatus.FAILED
             return {
                 "error": str(e),
@@ -302,6 +305,9 @@ class CoreSystemManager:
     
     async def _check_module_health(self, module_name: str) -> ModuleHealth:
         """Check health of individual module"""
+
+
+
         try:
             # Simulated health check - in production this would check actual module status
             if module_name in ["managers", "security", "algorithms"]:
@@ -317,6 +323,9 @@ class CoreSystemManager:
     
     def get_system_status(self) -> Dict[str, Any]:
         """Get current system status"""
+
+
+
         return {
             "status": self.status.value,
             "uptime_seconds": (datetime.now() - self.start_time).total_seconds(),
@@ -342,36 +351,42 @@ class CoreSystemManager:
     
     async def initialize_system(self) -> bool:
         """Initialize complete core system"""
+
+
+
         try:
-            logger.info("🚀 Initializing IA-Influencer-Agent Core System...")
+            logger.info(" Initializing IA-Influencer-Agent Core System...")
             
             # Perform initial health check
             health_results = await self.perform_health_check()
             
             if health_results.get("summary", {}).get("critical", 0) == 0:
                 self.status = SystemStatus.RUNNING
-                logger.info("✅ Core system initialization successful")
+                logger.info(" Core system initialization successful")
                 return True
             else:
                 self.status = SystemStatus.FAILED
-                logger.error("❌ Core system initialization failed - critical modules")
+                logger.error(" Core system initialization failed - critical modules")
                 return False
                 
         except Exception as e:
-            logger.error(f"❌ Core system initialization failed: {e}")
+            logger.error(f" Core system initialization failed: {e}")
             self.status = SystemStatus.FAILED
             return False
     
     def shutdown_system(self) -> bool:
         """Graceful system shutdown"""
+
+
+
         try:
-            logger.info("🔄 Shutting down IA-Influencer-Agent Core System...")
+            logger.info(" Shutting down IA-Influencer-Agent Core System...")
             self.status = SystemStatus.MAINTENANCE
             # Here we would clean up resources, close connections, etc.
-            logger.info("✅ Core system shutdown complete")
+            logger.info(" Core system shutdown complete")
             return True
         except Exception as e:
-            logger.error(f"❌ Core system shutdown failed: {e}")
+            logger.error(f" Core system shutdown failed: {e}")
             return False
 
 # Global core system manager instance
@@ -384,18 +399,30 @@ async def initialize_core_system() -> bool:
     Returns:
         bool: True if initialization successful
     """
+
+
+
     return await core_system_manager.initialize_system()
 
 def get_core_status() -> Dict[str, Any]:
     """Get current core system status"""
+
+
+
     return core_system_manager.get_system_status()
 
 async def get_system_health() -> Dict[str, Any]:
     """Get detailed system health report"""
+
+
+
     return await core_system_manager.perform_health_check()
 
 def get_module_info(module_name: Optional[str] = None) -> Union[Dict[str, Any], CoreModuleInfo]:
     """Get information about core modules"""
+
+
+
     return core_system_manager.get_module_info(module_name)
 
 def validate_core_installation() -> Dict[str, Any]:
@@ -405,6 +432,9 @@ def validate_core_installation() -> Dict[str, Any]:
     Returns:
         Dict with validation results
     """
+
+
+
     try:
         validation_results = {
             "status": "success",
@@ -441,11 +471,11 @@ def validate_core_installation() -> Dict[str, Any]:
             if len(validation_results["modules_missing"]) > 5:
                 validation_results["status"] = "error"
         
-        logger.info(f"📊 Core validation: {len(validation_results['modules_found'])}/{len(expected_modules)} modules available")
+        logger.info(f" Core validation: {len(validation_results['modules_found'])}/{len(expected_modules)} modules available")
         return validation_results
         
     except Exception as e:
-        logger.error(f"❌ Core validation failed: {e}")
+        logger.error(f" Core validation failed: {e}")
         return {
             "status": "error",
             "timestamp": datetime.now().isoformat(),
@@ -482,6 +512,9 @@ CORE_CAPABILITIES = {
 
 def get_core_capabilities() -> Dict[str, Any]:
     """Get complete core system capabilities"""
+
+
+
     return CORE_CAPABILITIES.copy()
 
 # Export principal
@@ -501,6 +534,6 @@ __all__ = [
 ]
 
 # Auto-initialize logging
-logger.info(f"🏭 IA-Influencer-Agent Core Index v{__version__} loaded")
-logger.info(f"👨‍💻 Enterprise system by {__author__} ({__email__})")
-logger.info(f"📊 Managing {len(core_system_manager.modules)} core modules")
+logger.info(f" IA-Influencer-Agent Core Index v{__version__} loaded")
+logger.info(f"‍ Enterprise system by {__author__} ({__email__})")
+logger.info(f" Managing {len(core_system_manager.modules)} core modules")

@@ -104,6 +104,9 @@ class IntentClassifier:
         Returns:
             IntentClassificationResult: Complete intent classification
         """
+
+
+
         try:
             message_content = processed_message.processed_content
             has_attachments = len(processed_message.attachments) > 0
@@ -226,6 +229,9 @@ class IntentClassifier:
     
     async def _extract_linguistic_features(self, message: str) -> Dict[str, Any]:
         """Extract linguistic features for classification"""
+
+
+
         try:
             features = {
                 "message_length": len(message),
@@ -260,6 +266,9 @@ class IntentClassifier:
         linguistic_features: Dict[str, Any]
     ) -> Dict[PrimaryIntent, float]:
         """Classify intent using pattern matching"""
+
+
+
         try:
             scores = {intent: 0.0 for intent in PrimaryIntent}
             message_lower = message.lower()
@@ -312,6 +321,9 @@ class IntentClassifier:
         context_analysis: Dict[str, Any]
     ) -> Dict[PrimaryIntent, float]:
         """Classify with creator-type specific patterns"""
+
+
+
         try:
             scores = {intent: 0.0 for intent in PrimaryIntent}
             message_lower = message.lower()
@@ -371,6 +383,9 @@ class IntentClassifier:
         has_attachments: bool
     ) -> Dict[PrimaryIntent, float]:
         """Enhance classification with context analysis"""
+
+
+
         try:
             scores = {intent: 0.0 for intent in PrimaryIntent}
             
@@ -426,6 +441,9 @@ class IntentClassifier:
         creator_type: str
     ) -> Dict[PrimaryIntent, float]:
         """ML-based intent classification (placeholder for future ML model)"""
+
+
+
         try:
             # This would integrate with actual ML models in production
             # For now, return uniform low scores
@@ -451,6 +469,9 @@ class IntentClassifier:
         ml_scores: Dict[PrimaryIntent, float]
     ) -> Dict[PrimaryIntent, float]:
         """Combine scores from different classification methods"""
+
+
+
         try:
             combined_scores = {}
             
@@ -487,6 +508,9 @@ class IntentClassifier:
         combined_scores: Dict[PrimaryIntent, float]
     ) -> Tuple[PrimaryIntent, List[PrimaryIntent]]:
         """Determine primary and secondary intents"""
+
+
+
         try:
             # Sort intents by score
             sorted_intents = sorted(
@@ -521,6 +545,9 @@ class IntentClassifier:
         linguistic_features: Dict[str, Any]
     ) -> Tuple[float, IntentConfidence]:
         """Calculate classification confidence"""
+
+
+
         try:
             primary_score = combined_scores.get(primary_intent, 0.0)
             
@@ -567,6 +594,9 @@ class IntentClassifier:
         creator_type: str
     ) -> List[str]:
         """Extract specific indicators that led to intent classification"""
+
+
+
         try:
             indicators = []
             message_lower = message.lower()
@@ -607,6 +637,9 @@ class IntentClassifier:
         confidence: float
     ) -> str:
         """Generate human-readable classification reasoning"""
+
+
+
         try:
             primary_score = combined_scores.get(primary_intent, 0.0)
             
@@ -634,6 +667,9 @@ class IntentClassifier:
     
     def _create_fallback_classification(self, processed_message: Any) -> IntentClassificationResult:
         """Create fallback classification when main classification fails"""
+
+
+
         return IntentClassificationResult(
             primary_intent=PrimaryIntent.GENERAL_CHAT,
             secondary_intents=[],
@@ -765,6 +801,9 @@ class IntentClassifier:
     
     async def _analyze_grammar_indicators(self, message: str) -> Dict[str, bool]:
         """Analyze grammatical indicators"""
+
+
+
         return {
             "has_questions": '?' in message,
             "has_imperatives": any(word in message.lower() for word in ['help', 'show', 'tell']),

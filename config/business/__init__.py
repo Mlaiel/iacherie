@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA-Influencer Agent + Content Protection Platform
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 =====================================
 This code is the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, modification, or distribution of this code
@@ -16,8 +16,8 @@ without explicit written permission from Fahed Mlaiel is STRICTLY PROHIBITED
 and will result in immediate legal action under German and International law.
 
 For licensing, collaboration, or business inquiries:
-📧 Contact: mlaiel@live.de
-🌐 Official Project: IA-Influencer Agent Platform
+ Contact: mlaiel@live.de
+ Official Project: IA-Influencer Agent Platform
 """
 # Import all business configuration modules
 from .workflow_config import (

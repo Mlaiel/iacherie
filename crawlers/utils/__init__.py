@@ -315,7 +315,10 @@ PLATFORM_CONFIGS = {
 }
 
 def get_platform_config(platform: str) -> dict:
-    """Get configuration for specific platform."""    return PLATFORM_CONFIGS.get(platform, {
+    """Get configuration for specific platform."""
+
+
+    return PLATFORM_CONFIGS.get(platform, {
         "base_delay": 1.0,
         "max_requests_per_minute": 60,
         "burst_limit": 5,

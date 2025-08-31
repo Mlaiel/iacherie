@@ -7,7 +7,7 @@ production-ready settings, optimization parameters, and deployment options.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING / AVERTISSEMENT LÉGAL ⚠️
+  LEGAL WARNING / AVERTISSEMENT LÉGAL 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """

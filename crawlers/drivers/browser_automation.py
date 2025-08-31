@@ -8,7 +8,7 @@ Provides intelligent session management, stealth configurations, and performance
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  LEGAL WARNING:
+  LEGAL WARNING:
 This code is proprietary and confidential. Any unauthorized copying, modification, 
 distribution, or use without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and may result in legal action.
@@ -213,6 +213,9 @@ class ChromeDriver:
     @staticmethod
     def create_service() -> ChromeService:
         """Create Chrome service with automatic driver management"""
+
+
+
         return ChromeService(ChromeDriverManager().install())
 
 
@@ -267,6 +270,9 @@ class FirefoxDriver:
     @staticmethod
     def create_service() -> FirefoxService:
         """Create Firefox service with automatic driver management"""
+
+
+
         return FirefoxService(GeckoDriverManager().install())
 
 
@@ -313,6 +319,9 @@ class BrowserManager:
     
     async def initialize(self) -> bool:
         """Initialize browser manager"""
+
+
+
         try:
             self.logger.info("Initializing browser manager...")
             
@@ -512,6 +521,9 @@ class BrowserManager:
     
     async def health_check(self) -> bool:
         """Perform health check on browser manager"""
+
+
+
         try:
             # Check if we can create a test session
             test_config = BrowserConfiguration(
@@ -586,6 +598,9 @@ class BrowserManager:
     
     async def _apply_stealth_modifications(self, session: BrowserSession):
         """Apply stealth modifications to browser session"""
+
+
+
         try:
             # Remove webdriver property
             session.driver.execute_script(
@@ -641,6 +656,9 @@ class BrowserManager:
 # Convenience functions
 def create_browser_manager(max_sessions: int = 5, **kwargs) -> BrowserManager:
     """Create browser manager instance"""
+
+
+
     return BrowserManager(max_sessions=max_sessions, **kwargs)
 
 
@@ -649,6 +667,9 @@ def create_stealth_config(
     user_agent: Optional[str] = None
 ) -> BrowserConfiguration:
     """Create stealth browser configuration"""
+
+
+
     return BrowserConfiguration(
         browser_type=browser_type,
         mode=BrowserMode.STEALTH,
@@ -663,6 +684,9 @@ def create_performance_config(
     browser_type: BrowserType = BrowserType.CHROME
 ) -> BrowserConfiguration:
     """Create performance-optimized browser configuration"""
+
+
+
     return BrowserConfiguration(
         browser_type=browser_type,
         mode=BrowserMode.PERFORMANCE,

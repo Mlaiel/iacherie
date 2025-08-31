@@ -127,6 +127,9 @@ class ContentProcessor:
         Returns:
             bool: Initialization success status
         """
+
+
+
         try:
             logger.info("Initializing Content Processor...")
             
@@ -298,6 +301,9 @@ class ContentProcessor:
         Returns:
             Dict containing SEO metadata
         """
+
+
+
         try:
             seo_metadata = {
                 'title': '',
@@ -342,6 +348,9 @@ class ContentProcessor:
         Returns:
             Path to optimized content file
         """
+
+
+
         try:
             platform_configs = {
                 'youtube': {
@@ -397,6 +406,9 @@ class ContentProcessor:
     
     async def _initialize_ai_models(self):
         """Initialize AI models for content analysis"""
+
+
+
         try:
             # Text analysis model
             self.text_analyzer = pipeline(
@@ -535,6 +547,9 @@ class ContentProcessor:
     
     async def _extract_audio_metadata(self, file_path: str, metadata: ContentMetadata):
         """Extract audio-specific metadata"""
+
+
+
         try:
             y, sr = librosa.load(file_path, sr=None)
             metadata.duration = librosa.get_duration(y=y, sr=sr)
@@ -546,6 +561,9 @@ class ContentProcessor:
     
     async def _extract_video_metadata(self, file_path: str, metadata: ContentMetadata):
         """Extract video-specific metadata"""
+
+
+
         try:
             cap = cv2.VideoCapture(file_path)
             if cap.isOpened():
@@ -564,6 +582,9 @@ class ContentProcessor:
     
     async def _extract_image_metadata(self, file_path: str, metadata: ContentMetadata):
         """Extract image-specific metadata"""
+
+
+
         try:
             with Image.open(file_path) as img:
                 metadata.dimensions = img.size
@@ -574,6 +595,9 @@ class ContentProcessor:
     
     async def _extract_text_metadata(self, file_path: str, metadata: ContentMetadata):
         """Extract text-specific metadata"""
+
+
+
         try:
             async with aiofiles.open(file_path, 'r', encoding='utf-8') as f:
                 content = await f.read()

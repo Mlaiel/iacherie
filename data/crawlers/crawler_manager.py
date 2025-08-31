@@ -147,6 +147,9 @@ class CrawlerManager:
     
     async def initialize(self):
         """Initialize the crawler manager"""
+
+
+
         try:
             self.logger.info("Initializing Crawler Manager")
             
@@ -163,6 +166,9 @@ class CrawlerManager:
     
     async def shutdown(self):
         """Shutdown the crawler manager gracefully"""
+
+
+
         try:
             self.logger.info("Shutting down Crawler Manager")
             
@@ -227,6 +233,9 @@ class CrawlerManager:
         Returns:
             Task ID
         """
+
+
+
         try:
             # Validate crawler type
             if crawler_type not in self.crawler_configs:
@@ -307,6 +316,9 @@ class CrawlerManager:
         Returns:
             True if task was cancelled, False if not found
         """
+
+
+
         try:
             async with self.task_lock:
                 if task_id in self.tasks:
@@ -338,6 +350,9 @@ class CrawlerManager:
         Returns:
             Task status information or None if not found
         """
+
+
+
         try:
             if task_id not in self.tasks:
                 return None
@@ -368,6 +383,9 @@ class CrawlerManager:
     
     async def get_all_tasks_status(self) -> List[Dict[str, Any]]:
         """Get status of all tasks"""
+
+
+
         try:
             all_status = []
             
@@ -397,6 +415,9 @@ class CrawlerManager:
         Returns:
             Dictionary of results per platform
         """
+
+
+
         try:
             if platforms is None:
                 platforms = list(self.crawler_configs.keys())
@@ -471,6 +492,9 @@ class CrawlerManager:
     
     async def _scheduler_loop(self):
         """Main scheduler loop"""
+
+
+
         try:
             while self.is_running:
                 try:
@@ -497,6 +521,9 @@ class CrawlerManager:
     
     async def _monitor_loop(self):
         """Monitor loop for health checks and alerts"""
+
+
+
         try:
             while self.is_running:
                 try:
@@ -548,6 +575,9 @@ class CrawlerManager:
     
     async def _start_crawler_task(self, task: CrawlerTask):
         """Start execution of a crawler task"""
+
+
+
         try:
             # Create and start async task
             async_task = asyncio.create_task(self._execute_crawler_task(task))
@@ -654,6 +684,9 @@ class CrawlerManager:
     
     async def _search_single_platform(self, platform: str, fingerprint_data: Dict[str, Any], max_results: int) -> List[Dict[str, Any]]:
         """Search single platform"""
+
+
+
         try:
             # Create temporary config
             base_config = self.crawler_configs[platform]
@@ -683,6 +716,9 @@ class CrawlerManager:
     
     async def _process_crawler_result(self, task: CrawlerTask, result: CrawlerResult):
         """Process crawler result and trigger notifications"""
+
+
+
         try:
             # Filter high-confidence matches
             high_confidence_matches = [
@@ -783,6 +819,9 @@ class CrawlerManager:
     
     async def _trigger_event_callbacks(self, event_type: str, event_data: Dict[str, Any]):
         """Trigger event callbacks"""
+
+
+
         try:
             callbacks = self.event_callbacks.get(event_type, [])
             for callback in callbacks:
@@ -801,6 +840,9 @@ class CrawlerManager:
     
     async def _send_callback_notification(self, task: CrawlerTask, result: CrawlerResult):
         """Send callback notification"""
+
+
+
         try:
             notification_data = {
                 'task_id': task.task_id,

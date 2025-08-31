@@ -28,6 +28,9 @@ class SimpleCrawlerVerifier:
     
     def load_crawler_class(self, file_path: Path) -> Any:
         """Dynamically load crawler class from file."""
+
+
+
         try:
             spec = importlib.util.spec_from_file_location("crawler_module", file_path)
             if spec is None:
@@ -51,6 +54,9 @@ class SimpleCrawlerVerifier:
     
     def analyze_crawler_source(self, file_path: Path) -> Dict[str, Any]:
         """Analyze crawler source code for implementation quality."""
+
+
+
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
@@ -186,7 +192,7 @@ class SimpleCrawlerVerifier:
     
     async def run_verification(self) -> Dict[str, Any]:
         """Run complete verification process."""
-        logger.info("🔍 Starting Crawler Verification")
+        logger.info(" Starting Crawler Verification")
         logger.info("=" * 50)
         
         # Find priority crawlers
@@ -299,21 +305,21 @@ async def main():
         json.dump(results, f, indent=2)
     
     # Print results
-    print("\n✅ Crawler Verification Complete!")
-    print(f"📁 Report saved to: {report_file}")
-    print(f"\n📊 Summary:")
+    print("\n Crawler Verification Complete!")
+    print(f" Report saved to: {report_file}")
+    print(f"\n Summary:")
     summary = results['summary']
     print(f"   - Total crawlers analyzed: {summary['total_crawlers_analyzed']}")
     print(f"   - Real implementations: {summary['real_implementations']}")
     print(f"   - Stub implementations: {summary['stub_implementations']}")
     print(f"   - Accessible APIs: {summary['accessible_apis']}/{summary['total_apis_tested']}")
     
-    print(f"\n🎯 Priority Crawler Status:")
+    print(f"\n Priority Crawler Status:")
     for platform, status in summary['priority_crawler_status'].items():
         print(f"   - {platform.title()}: {status}")
     
     if results['recommendations']:
-        print(f"\n💡 Recommendations:")
+        print(f"\n Recommendations:")
         for i, rec in enumerate(results['recommendations'], 1):
             print(f"   {i}. {rec}")
     

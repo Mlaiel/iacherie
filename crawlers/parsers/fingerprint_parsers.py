@@ -8,7 +8,7 @@ Handles audio, video, image, and text content analysis for digital rights manage
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
@@ -117,6 +117,9 @@ class AudioFingerprintParser(BaseFingerprintParser):
     
     async def parse_for_fingerprint(self, audio_path: str, **kwargs) -> Dict[str, Any]:
         """Parse audio file for fingerprinting"""
+
+
+
         try:
             if not AUDIO_AVAILABLE:
                 raise FingerprintParsingError(
@@ -166,6 +169,9 @@ class AudioFingerprintParser(BaseFingerprintParser):
     
     async def _load_audio_file(self, audio_path: str) -> Tuple[np.ndarray, int]:
         """Load audio file using librosa"""
+
+
+
         try:
             # Load with librosa, convert to mono and normalize
             audio_data, sample_rate = librosa.load(audio_path, sr=None, mono=True)
@@ -179,6 +185,9 @@ class AudioFingerprintParser(BaseFingerprintParser):
     
     async def _extract_audio_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
         """Extract audio features for analysis"""
+
+
+
         try:
             # Extract MFCC features
             mfccs = librosa.feature.mfcc(y=audio_data, sr=sample_rate, n_mfcc=13)
@@ -230,6 +239,9 @@ class AudioFingerprintParser(BaseFingerprintParser):
     
     async def _generate_audio_fingerprint(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
         """Generate audio fingerprint for copyright detection"""
+
+
+
         try:
             # Simplified audio fingerprinting approach
             # In production, you'd use more sophisticated algorithms like Shazam's or Gracenote's
@@ -308,6 +320,9 @@ class VideoFingerprintParser(BaseFingerprintParser):
     
     async def parse_for_fingerprint(self, video_path: str, **kwargs) -> Dict[str, Any]:
         """Parse video file for fingerprinting"""
+
+
+
         try:
             # Extract basic metadata
             file_metadata = self._extract_file_metadata(video_path)
@@ -346,6 +361,9 @@ class VideoFingerprintParser(BaseFingerprintParser):
     
     async def _extract_video_properties(self, video_path: str) -> Dict[str, Any]:
         """Extract video properties using OpenCV"""
+
+
+
         try:
             cap = cv2.VideoCapture(video_path)
             
@@ -385,6 +403,9 @@ class VideoFingerprintParser(BaseFingerprintParser):
     
     async def _generate_visual_fingerprint(self, video_path: str) -> Dict[str, Any]:
         """Generate visual fingerprint from video frames"""
+
+
+
         try:
             cap = cv2.VideoCapture(video_path)
             
@@ -568,6 +589,9 @@ class ImageFingerprintParser(BaseFingerprintParser):
     
     async def parse_for_fingerprint(self, image_path: str, **kwargs) -> Dict[str, Any]:
         """Parse image file for fingerprinting"""
+
+
+
         try:
             # Extract basic metadata
             file_metadata = self._extract_file_metadata(image_path)
@@ -600,6 +624,9 @@ class ImageFingerprintParser(BaseFingerprintParser):
     
     async def _extract_image_properties(self, image_path: str) -> Dict[str, Any]:
         """Extract image properties and EXIF data"""
+
+
+
         try:
             with Image.open(image_path) as img:
                 # Basic properties
@@ -660,6 +687,9 @@ class ImageFingerprintParser(BaseFingerprintParser):
     
     async def _generate_image_fingerprint(self, image_path: str) -> Dict[str, Any]:
         """Generate perceptual fingerprint for image"""
+
+
+
         try:
             with Image.open(image_path) as img:
                 # Convert to RGB if necessary
@@ -842,6 +872,9 @@ class TextFingerprintParser(BaseFingerprintParser):
     
     async def parse_for_fingerprint(self, text_path: str, **kwargs) -> Dict[str, Any]:
         """Parse text file for fingerprinting"""
+
+
+
         try:
             # Extract basic metadata
             file_metadata = self._extract_file_metadata(text_path)
@@ -939,6 +972,9 @@ class TextFingerprintParser(BaseFingerprintParser):
     
     async def _generate_text_fingerprint(self, text: str) -> Dict[str, Any]:
         """Generate fingerprint for text content"""
+
+
+
         try:
             import re
             

@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-🐳 Docker Infrastructure Index - IA-Influencer-Agent Production Platform
+ Docker Infrastructure Index - IA-Influencer-Agent Production Platform
 =========================================================================
 Expert: Lead Dev IA + Backend Senior + DevOps Engineer + Docker Specialist  
 Creator: Fahed Mlaiel <mlaiel@live.de>
 =========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL 
 Tout vol, copie ou utilisation non autorisée de ce code source,
 de ce concept ou de cette propriété intellectuelle sans
 l'autorisation écrite explicite de Fahed Mlaiel est strictement
@@ -57,7 +57,7 @@ console = Console()
 def display_header():
     """Display application header"""
     header_text = Text()
-    header_text.append("🐳 IA-Influencer Docker Infrastructure Manager\n", style="bold blue")
+    header_text.append(" IA-Influencer Docker Infrastructure Manager\n", style="bold blue")
     header_text.append("Production-Ready Enterprise Platform Deployment\n\n", style="bold green")
     header_text.append("Creator: ", style="bold")
     header_text.append("Fahed Mlaiel ", style="bold yellow")
@@ -78,7 +78,7 @@ def display_team_specialties():
         "IA Prompt Engineer + Content Analysis"
     ]
     
-    table = Table(title="🎯 Expert Team Specialties", show_header=True, header_style="bold magenta")
+    table = Table(title=" Expert Team Specialties", show_header=True, header_style="bold magenta")
     table.add_column("Specialty", style="cyan", no_wrap=True)
     table.add_column("Focus Area", style="green")
     
@@ -117,7 +117,7 @@ def display_available_services():
         ("Monitoring Stack", "Observability", "Prometheus + Grafana", "9090/3000")
     ]
     
-    table = Table(title="🏗️ Available Docker Services", show_header=True, header_style="bold magenta")
+    table = Table(title=" Available Docker Services", show_header=True, header_style="bold magenta")
     table.add_column("Service", style="cyan", no_wrap=True)
     table.add_column("Purpose", style="green")
     table.add_column("Technology", style="yellow")
@@ -136,7 +136,7 @@ def display_deployment_environments():
         ("Production", "32+ cores", "64GB+", "500GB+", "Live environment")
     ]
     
-    table = Table(title="📈 Deployment Environment Requirements", show_header=True, header_style="bold magenta")
+    table = Table(title=" Deployment Environment Requirements", show_header=True, header_style="bold magenta")
     table.add_column("Environment", style="cyan", no_wrap=True)
     table.add_column("CPU", style="green")
     table.add_column("Memory", style="yellow")
@@ -167,7 +167,7 @@ def info():
     
     # Legal warning
     warning_text = Text()
-    warning_text.append("⚠️  INTELLECTUAL PROPERTY WARNING ⚠️\n\n", style="bold red")
+    warning_text.append("  INTELLECTUAL PROPERTY WARNING \n\n", style="bold red")
     warning_text.append("Any theft, copying, or unauthorized use of this source code, concept, or intellectual property ", style="yellow")
     warning_text.append("without the explicit written authorization of Fahed Mlaiel is strictly FORBIDDEN ", style="bold red")
     warning_text.append("and will constitute a violation of copyright laws.\n\n", style="yellow")
@@ -182,7 +182,7 @@ def info():
 @click.option('--registry', '-r', default='registry.ia-influencer.com', help='Docker registry URL')
 def generate(environment: str, output_dir: str, registry: str):
     """Generate complete Docker deployment configuration"""
-    console.print(f"\n🚀 Generating Docker deployment configuration...")
+    console.print(f"\n Generating Docker deployment configuration...")
     console.print(f"Environment: [bold cyan]{environment}[/bold cyan]")
     console.print(f"Output directory: [bold green]{output_dir}[/bold green]")
     console.print(f"Registry URL: [bold yellow]{registry}[/bold yellow]\n")
@@ -199,10 +199,10 @@ def generate(environment: str, output_dir: str, registry: str):
         with console.status("[bold green]Generating configuration files..."):
             files_created = manager.save_deployment_configuration(output_dir)
         
-        console.print(f"✅ Successfully generated [bold green]{len(files_created)}[/bold green] configuration files!")
+        console.print(f" Successfully generated [bold green]{len(files_created)}[/bold green] configuration files!")
         
         # Display created files
-        table = Table(title="📁 Generated Files", show_header=True, header_style="bold magenta")
+        table = Table(title=" Generated Files", show_header=True, header_style="bold magenta")
         table.add_column("File Path", style="cyan")
         table.add_column("Type", style="green")
         
@@ -218,7 +218,7 @@ def generate(environment: str, output_dir: str, registry: str):
         
         # Display next steps
         next_steps = Text()
-        next_steps.append("📋 Next Steps:\n\n", style="bold blue")
+        next_steps.append(" Next Steps:\n\n", style="bold blue")
         next_steps.append("1. Review generated configuration files\n", style="white")
         next_steps.append("2. Configure environment variables in .env file\n", style="white")
         next_steps.append("3. Generate SSL certificates if needed\n", style="white")
@@ -230,7 +230,7 @@ def generate(environment: str, output_dir: str, registry: str):
         console.print(Panel(next_steps, title="[bold]Next Steps[/bold]", border_style="green"))
         
     except Exception as e:
-        console.print(f"❌ Error generating configuration: [bold red]{e}[/bold red]")
+        console.print(f" Error generating configuration: [bold red]{e}[/bold red]")
         logger.error(f"Configuration generation failed: {e}")
         sys.exit(1)
 
@@ -239,7 +239,7 @@ def generate(environment: str, output_dir: str, registry: str):
 @click.option('--environment', '-e', default='production', help='Environment')
 def deploy(output_dir: str, environment: str):
     """Deploy the complete IA-Influencer platform"""
-    console.print(f"\n🚀 Deploying IA-Influencer platform...")
+    console.print(f"\n Deploying IA-Influencer platform...")
     console.print(f"Environment: [bold cyan]{environment}[/bold cyan]")
     console.print(f"Deployment directory: [bold green]{output_dir}[/bold green]\n")
     
@@ -254,11 +254,11 @@ def deploy(output_dir: str, environment: str):
                 success = await manager.deploy_platform(output_dir)
             
             if success:
-                console.print("✅ [bold green]Platform deployed successfully![/bold green]")
+                console.print(" [bold green]Platform deployed successfully![/bold green]")
                 
                 # Display access information
                 access_info = Text()
-                access_info.append("🌐 Platform Access:\n\n", style="bold blue")
+                access_info.append(" Platform Access:\n\n", style="bold blue")
                 access_info.append("Main API: ", style="white")
                 access_info.append("https://api.ia-influencer.com\n", style="bold green")
                 access_info.append("Monitoring: ", style="white")
@@ -268,11 +268,11 @@ def deploy(output_dir: str, environment: str):
                 
                 console.print(Panel(access_info, title="[bold]Access Information[/bold]", border_style="green"))
             else:
-                console.print("❌ [bold red]Platform deployment failed![/bold red]")
+                console.print(" [bold red]Platform deployment failed![/bold red]")
                 sys.exit(1)
                 
         except Exception as e:
-            console.print(f"❌ Deployment error: [bold red]{e}[/bold red]")
+            console.print(f" Deployment error: [bold red]{e}[/bold red]")
             logger.error(f"Deployment failed: {e}")
             sys.exit(1)
     
@@ -281,7 +281,7 @@ def deploy(output_dir: str, environment: str):
 @cli.command()
 def validate():
     """Validate Docker configuration and requirements"""
-    console.print("\n🔍 Validating Docker environment...")
+    console.print("\n Validating Docker environment...")
     
     checks = [
         ("Docker Engine", "docker --version"),
@@ -291,7 +291,7 @@ def validate():
         ("Network Connectivity", "ping -c 1 8.8.8.8")
     ]
     
-    table = Table(title="🔧 Environment Validation", show_header=True, header_style="bold magenta")
+    table = Table(title=" Environment Validation", show_header=True, header_style="bold magenta")
     table.add_column("Check", style="cyan")
     table.add_column("Command", style="yellow")
     table.add_column("Status", style="green")
@@ -301,9 +301,9 @@ def validate():
     for check_name, command in checks:
         try:
             result = subprocess.run(command.split(), capture_output=True, text=True, timeout=10)
-            status = "✅ PASS" if result.returncode == 0 else "❌ FAIL"
+            status = " PASS" if result.returncode == 0 else " FAIL"
         except Exception:
-            status = "❌ ERROR"
+            status = " ERROR"
         
         table.add_row(check_name, command, status)
     
@@ -313,7 +313,7 @@ def validate():
 @click.option('--service', '-s', help='Specific service to check')
 def status(service: Optional[str]):
     """Check platform status"""
-    console.print(f"\n📊 Checking platform status...")
+    console.print(f"\n Checking platform status...")
     
     if service:
         console.print(f"Service: [bold cyan]{service}[/bold cyan]\n")
@@ -333,8 +333,8 @@ if __name__ == "__main__":
     try:
         cli()
     except KeyboardInterrupt:
-        console.print("\n👋 Goodbye!")
+        console.print("\n Goodbye!")
     except Exception as e:
-        console.print(f"\n❌ Unexpected error: [bold red]{e}[/bold red]")
+        console.print(f"\n Unexpected error: [bold red]{e}[/bold red]")
         logger.error(f"Unexpected error: {e}")
         sys.exit(1)

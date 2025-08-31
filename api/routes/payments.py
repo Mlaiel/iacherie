@@ -185,6 +185,9 @@ async def add_payment_method(
     user: dict = Depends(get_current_user)
 ):
     """Add a new payment method"""
+
+
+
     try:
         # Validate payment method details
         validation_result = await payment_processor.validate_payment_method(method)
@@ -254,6 +257,9 @@ async def get_payment_methods(
     user: dict = Depends(get_current_user)
 ):
     """Get user's payment methods"""
+
+
+
     try:
         async with database_manager.get_postgres_session() as session:
             result = await session.execute("""
@@ -296,6 +302,9 @@ async def process_payment(
     user: dict = Depends(get_current_user)
 ):
     """Process a payment"""
+
+
+
     try:
         # Get payment method details
         async with database_manager.get_postgres_session() as session:
@@ -366,6 +375,9 @@ async def process_payout(
     user: dict = Depends(get_current_user)
 ):
     """Process a payout to user"""
+
+
+
     try:
         # Check user balance
         balance = await _get_user_balance(user['user_id'], payout.currency.value)
@@ -444,6 +456,9 @@ async def process_refund(
     user: dict = Depends(get_current_user)
 ):
     """Process a refund"""
+
+
+
     try:
         # Get original transaction
         async with database_manager.get_postgres_session() as session:
@@ -524,6 +539,9 @@ async def get_transactions(
     user: dict = Depends(get_current_user)
 ):
     """Get user's transactions"""
+
+
+
     try:
         start_date = datetime.utcnow() - timedelta(days=days)
         
@@ -589,6 +607,9 @@ async def get_balance(
     user: dict = Depends(get_current_user)
 ):
     """Get user's account balance"""
+
+
+
     try:
         async with database_manager.get_postgres_session() as session:
             # Get balance by currency
@@ -638,6 +659,9 @@ async def get_payment_analytics(
     user: dict = Depends(get_current_user)
 ):
     """Get payment analytics"""
+
+
+
     try:
         start_date = datetime.utcnow() - timedelta(days=days)
         
@@ -748,6 +772,9 @@ async def delete_payment_method(
     user: dict = Depends(get_current_user)
 ):
     """Delete a payment method"""
+
+
+
     try:
         async with database_manager.get_postgres_session() as session:
             # Check if method exists and belongs to user
@@ -811,6 +838,9 @@ async def delete_payment_method(
 # Helper functions
 async def _get_user_balance(user_id: str, currency: str) -> Decimal:
     """Get user balance for specific currency"""
+
+
+
     try:
         async with database_manager.get_postgres_session() as session:
             result = await session.execute("""
@@ -832,6 +862,9 @@ async def _get_user_balance(user_id: str, currency: str) -> Decimal:
 async def _process_payment_async(transaction_id: str, payment: PaymentRequest, 
                                 method_type: str, payment_details: Dict[str, Any], user: dict):
     """Process payment asynchronously"""
+
+
+
     try:
         # Update status to processing
         await _update_transaction_status(transaction_id, PaymentStatus.PROCESSING)
@@ -868,6 +901,9 @@ async def _process_payment_async(transaction_id: str, payment: PaymentRequest,
 async def _process_payout_async(transaction_id: str, payout: PayoutRequest,
                                method_type: str, payout_details: Dict[str, Any], user: dict):
     """Process payout asynchronously"""
+
+
+
     try:
         # Update status to processing
         await _update_transaction_status(transaction_id, PaymentStatus.PROCESSING)
@@ -908,6 +944,9 @@ async def _process_payout_async(transaction_id: str, payout: PayoutRequest,
 async def _process_refund_async(transaction_id: str, refund: RefundRequest,
                                transaction_info: tuple, user: dict):
     """Process refund asynchronously"""
+
+
+
     try:
         # Update status to processing
         await _update_transaction_status(transaction_id, PaymentStatus.PROCESSING)
@@ -949,6 +988,9 @@ async def _update_transaction_status(transaction_id: str, status: PaymentStatus,
                                    fees: Optional[Dict[str, Any]] = None,
                                    error_message: Optional[str] = None):
     """Update transaction status"""
+
+
+
     try:
         async with database_manager.get_postgres_session() as session:
             if status == PaymentStatus.COMPLETED:

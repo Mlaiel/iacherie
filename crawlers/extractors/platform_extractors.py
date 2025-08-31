@@ -12,7 +12,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 
-⚠️ STRICT COPYRIGHT PROTECTION ⚠️
+ STRICT COPYRIGHT PROTECTION 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 
@@ -383,6 +383,9 @@ class BasePlatformExtractor(BaseExtractor):
     
     async def analyze_content_sentiment(self, content: str) -> Dict[str, float]:
         """Analyze content sentiment using basic text analysis"""
+
+
+
         try:
             # Simple sentiment analysis based on keywords
             positive_words = [
@@ -420,6 +423,9 @@ class BasePlatformExtractor(BaseExtractor):
     async def calculate_virality_score(self, engagement: PlatformEngagement, 
                                      metadata: PlatformMetadata) -> float:
         """Calculate virality score based on engagement metrics"""
+
+
+
         try:
             score = 0.0
             
@@ -453,6 +459,9 @@ class BasePlatformExtractor(BaseExtractor):
     async def estimate_monetization_potential(self, metadata: PlatformMetadata, 
                                             revenue: RevenueMetrics) -> float:
         """Estimate monetization potential based on content characteristics"""
+
+
+
         try:
             score = 0.0
             
@@ -493,6 +502,9 @@ class BasePlatformExtractor(BaseExtractor):
     
     def _calculate_demographic_value(self, demographics: Dict[str, Any]) -> float:
         """Calculate demographic value for monetization"""
+
+
+
         try:
             score = 50  # Base score
             
@@ -520,10 +532,16 @@ class BasePlatformExtractor(BaseExtractor):
         
     async def extract_platform_metadata(self, content: str, url: str) -> PlatformMetadata:
         """Extract platform-specific metadata"""
+
+
+
         return PlatformMetadata()
     
     async def normalize_url(self, url: str) -> str:
         """Normalize platform URL to canonical form"""
+
+
+
         return url
     
     async def detect_content_type(self, url: str, content: str) -> ContentType:
@@ -660,6 +678,9 @@ class YouTubeExtractor(BasePlatformExtractor):
     
     async def _normalize_youtube_url(self, url: str) -> str:
         """Normalize YouTube URL to standard format"""
+
+
+
         try:
             # Handle youtu.be short URLs
             if 'youtu.be' in url:
@@ -682,6 +703,9 @@ class YouTubeExtractor(BasePlatformExtractor):
     
     async def _identify_content_type(self, url: str) -> Tuple[Optional[str], Optional[str]]:
         """Identify YouTube content type and extract ID"""
+
+
+
         try:
             # Video content
             video_match = self.video_pattern.search(url)
@@ -752,6 +776,9 @@ class YouTubeExtractor(BasePlatformExtractor):
     
     async def _extract_with_ytdlp(self, url: str) -> Dict[str, Any]:
         """Extract content using yt-dlp library"""
+
+
+
         try:
             ydl_opts = {
                 'quiet': True,
@@ -802,6 +829,9 @@ class YouTubeExtractor(BasePlatformExtractor):
     
     async def _extract_with_youtube_api(self, video_id: str) -> Dict[str, Any]:
         """Extract content using YouTube Data API v3"""
+
+
+
         try:
             if not self.api_key:
                 return {}
@@ -889,6 +919,9 @@ class YouTubeExtractor(BasePlatformExtractor):
     
     def _parse_duration(self, duration_str: str) -> int:
         """Parse YouTube duration format (PT#M#S) to seconds"""
+
+
+
         try:
             import re
             pattern = re.compile(r'PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?')
@@ -908,6 +941,9 @@ class YouTubeExtractor(BasePlatformExtractor):
     
     async def _extract_with_web_scraping(self, url: str) -> Dict[str, Any]:
         """Extract content using web scraping as fallback"""
+
+
+
         try:
             if not HAS_BS4:
                 return {}
@@ -1157,6 +1193,9 @@ class YouTubeExtractor(BasePlatformExtractor):
     
     async def _extract_topics(self, text: str) -> List[str]:
         """Extract topics from text content"""
+
+
+
         try:
             # Simple keyword-based topic extraction
             tech_keywords = ['AI', 'technology', 'programming', 'software', 'coding', 'tech']
@@ -1187,6 +1226,9 @@ class YouTubeExtractor(BasePlatformExtractor):
     
     async def _classify_content(self, video_data: Dict[str, Any]) -> Dict[str, float]:
         """Classify content into categories"""
+
+
+
         try:
             # Simple classification based on available data
             duration = video_data.get('duration', 0)
@@ -1249,6 +1291,9 @@ class YouTubeExtractor(BasePlatformExtractor):
     
     async def _predict_engagement(self, video_data: Dict[str, Any]) -> float:
         """Predict engagement potential based on video features"""
+
+
+
         try:
             score = 50.0  # Base score
             
@@ -1296,6 +1341,9 @@ class YouTubeExtractor(BasePlatformExtractor):
     
     async def _assess_content_quality(self, video_data: Dict[str, Any]) -> float:
         """Assess overall content quality"""
+
+
+
         try:
             score = 0.0
             
@@ -1335,6 +1383,9 @@ class YouTubeExtractor(BasePlatformExtractor):
     
     async def _analyze_comments_sentiment(self, comments: List[Dict]) -> Dict[str, Any]:
         """Analyze sentiment of video comments"""
+
+
+
         try:
             if not comments:
                 return {'overall_sentiment': 'neutral', 'positive_ratio': 0.5}
@@ -1450,6 +1501,9 @@ class YouTubeExtractor(BasePlatformExtractor):
     
     async def _estimate_cpm(self, video_data: Dict[str, Any]) -> float:
         """Estimate CPM (Cost Per Mille) for the video"""
+
+
+
         try:
             base_cpm = 2.0  # Base CPM for general content
             
@@ -1811,6 +1865,9 @@ class YouTubeExtractor(BasePlatformExtractor):
     
     def _calculate_data_completeness(self, video_data: Dict[str, Any]) -> float:
         """Calculate data completeness score"""
+
+
+
         try:
             total_fields = 20  # Total important fields
             filled_fields = 0
@@ -1940,6 +1997,9 @@ class YouTubeExtractor(BasePlatformExtractor):
     
     async def _extract_youtube_metadata(self, data: Dict, url: str) -> PlatformMetadata:
         """Extract YouTube-specific metadata"""
+
+
+
         return PlatformMetadata(
             platform_id=self._extract_video_id(url),
             platform_url=url,
@@ -1968,6 +2028,9 @@ class YouTubeExtractor(BasePlatformExtractor):
     
     def _extract_hashtags(self, text: str) -> List[str]:
         """Extract hashtags from text"""
+
+
+
         return re.findall(r'#(\w+)', text)
     
     async def normalize_url(self, url: str) -> str:
@@ -1995,6 +2058,9 @@ class InstagramExtractor(BasePlatformExtractor):
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
         """Extract Instagram content and metadata"""
+
+
+
         try:
             url = await self.normalize_url(request.source_url)
             
@@ -2091,6 +2157,9 @@ class InstagramExtractor(BasePlatformExtractor):
     
     async def _extract_with_requests(self, url: str) -> Dict[str, Any]:
         """Extract Instagram content using requests (limited)"""
+
+
+
         try:
             headers = {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
@@ -2163,10 +2232,16 @@ class InstagramExtractor(BasePlatformExtractor):
     
     def _extract_mentions(self, text: str) -> List[str]:
         """Extract mentions from text"""
+
+
+
         return re.findall(r'@(\w+)', text)
     
     async def normalize_url(self, url: str) -> str:
         """Normalize Instagram URL to canonical form"""
+
+
+
         return url.split('?')[0]  # Remove query parameters
 
 
@@ -2186,6 +2261,9 @@ class TikTokExtractor(BasePlatformExtractor):
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
         """Extract TikTok content and metadata"""
+
+
+
         try:
             url = await self.normalize_url(request.source_url)
             
@@ -2400,6 +2478,9 @@ class TwitterExtractor(BasePlatformExtractor):
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
         """Extract Twitter content and metadata"""
+
+
+
         try:
             url = await self.normalize_url(request.source_url)
             tweet_id = self._extract_tweet_id(url)
@@ -2623,6 +2704,9 @@ class FacebookExtractor(BasePlatformExtractor):
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
         """Extract Facebook content and metadata"""
+
+
+
         try:
             url = await self.normalize_url(request.source_url)
             post_id = self._extract_post_id(url)
@@ -2770,6 +2854,9 @@ class FacebookExtractor(BasePlatformExtractor):
     
     async def normalize_url(self, url: str) -> str:
         """Normalize Facebook URL to canonical form"""
+
+
+
         return url.split('?')[0]  # Remove query parameters
 
 
@@ -2794,6 +2881,9 @@ class SpotifyExtractor(BasePlatformExtractor):
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
         """Extract Spotify content and metadata"""
+
+
+
         try:
             url = await self.normalize_url(request.source_url)
             
@@ -2990,6 +3080,9 @@ class SpotifyExtractor(BasePlatformExtractor):
     
     async def _extract_spotify_metadata(self, data: Dict, url: str) -> PlatformMetadata:
         """Extract Spotify-specific metadata"""
+
+
+
         return PlatformMetadata(
             platform_id=data.get('id'),
             platform_url=url,
@@ -3017,6 +3110,9 @@ class SpotifyExtractor(BasePlatformExtractor):
     
     async def normalize_url(self, url: str) -> str:
         """Normalize Spotify URL to canonical form"""
+
+
+
         return url.split('?')[0]  # Remove query parameters
 
 
@@ -3034,6 +3130,9 @@ class PlatformExtractorFactory:
     @classmethod
     def get_extractor(cls, platform: str) -> Optional[BasePlatformExtractor]:
         """Get extractor for specific platform"""
+
+
+
         return cls._extractors.get(platform.lower())
     
     @classmethod
@@ -3050,6 +3149,9 @@ class PlatformExtractorFactory:
     @classmethod
     def list_supported_platforms(cls) -> List[str]:
         """List all supported platforms"""
+
+
+
         return list(cls._extractors.keys())
 
 

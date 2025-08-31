@@ -246,10 +246,16 @@ def get_crawler_by_platform(platform_name: str):
     return crawler_mapping[platform_name.lower()]
 
 def get_supported_platforms():
-    """Get list of all supported platform names."""    return list(PLATFORM_METADATA.keys())
+    """Get list of all supported platform names."""
+
+
+    return list(PLATFORM_METADATA.keys())
 
 def get_platforms_by_category(category: str):
-    """Get platforms filtered by category."""    return [
+    """Get platforms filtered by category."""
+
+
+    return [
         platform for platform, metadata in PLATFORM_METADATA.items()
         if metadata.get("category") == category
     ]
@@ -349,7 +355,13 @@ def get_platform_crawler(platform: str):
     return crawler_map[platform]()
 
 def get_supported_platforms():
-    """Get list of supported platforms."""    return list(PLATFORM_CAPABILITIES.keys())
+    """Get list of supported platforms."""
+
+
+    return list(PLATFORM_CAPABILITIES.keys())
 
 def get_platform_capabilities(platform: str):
-    """Get capabilities for specific platform."""    return PLATFORM_CAPABILITIES.get(platform, {})
+    """Get capabilities for specific platform."""
+
+
+    return PLATFORM_CAPABILITIES.get(platform, {})

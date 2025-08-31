@@ -62,6 +62,9 @@ class PostgreSQLCredentials:
 
     def get_decrypted_password(self) -> str:
         """Decrypt password using encryption key"""
+
+
+
         try:
             fernet = Fernet(self.encryption_key.encode())
             return fernet.decrypt(self.password_encrypted.encode()).decode()
@@ -149,6 +152,9 @@ class PostgreSQLConfig:
 
     def _load_credentials(self) -> PostgreSQLCredentials:
         """Load PostgreSQL credentials from environment"""
+
+
+
         return PostgreSQLCredentials(
             host=os.getenv(f"POSTGRES_HOST_{self.environment.value.upper()}", "localhost"),
             port=int(os.getenv(f"POSTGRES_PORT_{self.environment.value.upper()}", "5432")),
@@ -230,6 +236,9 @@ class PostgreSQLConfig:
         Returns:
             Secure PostgreSQL connection URL
         """
+
+
+
         try:
             password = self.credentials.get_decrypted_password()
             db_name = database_name or self.credentials.database

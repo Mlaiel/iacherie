@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -82,6 +82,9 @@ class BlockchainRightsRepository(BaseRepository[BlockchainRights]):
         Returns:
             Created BlockchainRights instance
         """
+
+
+
         try:
             rights_data = {
                 "content_fingerprint_id": content_fingerprint_id,
@@ -131,6 +134,9 @@ class BlockchainRightsRepository(BaseRepository[BlockchainRights]):
         Returns:
             Updated BlockchainRights instance
         """
+
+
+
         try:
             blockchain_rights = await self.get_by_id(rights_id)
             if not blockchain_rights:
@@ -173,6 +179,9 @@ class BlockchainRightsRepository(BaseRepository[BlockchainRights]):
         Returns:
             Updated BlockchainRights instance
         """
+
+
+
         try:
             blockchain_rights = await self.get_by_id(rights_id)
             if not blockchain_rights:
@@ -213,6 +222,9 @@ class BlockchainRightsRepository(BaseRepository[BlockchainRights]):
         Returns:
             List of BlockchainRights instances
         """
+
+
+
         try:
             query = self.db_session.query(self.model).filter(
                 self.model.user_id == user_id
@@ -249,6 +261,9 @@ class BlockchainRightsRepository(BaseRepository[BlockchainRights]):
         Returns:
             BlockchainRights instance or None
         """
+
+
+
         try:
             blockchain_rights = self.db_session.query(self.model).filter(
                 self.model.smart_contract_address == contract_address
@@ -286,6 +301,9 @@ class BlockchainRightsRepository(BaseRepository[BlockchainRights]):
         Returns:
             Created ViolationReport instance
         """
+
+
+
         try:
             violation_data = {
                 "blockchain_rights_id": rights_id,
@@ -339,6 +357,9 @@ class BlockchainRightsRepository(BaseRepository[BlockchainRights]):
         Returns:
             Created LicenseAutomation instance
         """
+
+
+
         try:
             license_data = {
                 "blockchain_rights_id": rights_id,
@@ -375,6 +396,9 @@ class BlockchainRightsRepository(BaseRepository[BlockchainRights]):
         Returns:
             Dictionary containing portfolio analytics
         """
+
+
+
         try:
             # Total rights registered
             total_rights = self.db_session.query(func.count(self.model.id)).filter(
@@ -475,6 +499,9 @@ class BlockchainRightsRepository(BaseRepository[BlockchainRights]):
         Returns:
             List of rights requiring action with context
         """
+
+
+
         try:
             action_items = []
             

@@ -8,7 +8,7 @@ Handles post metadata extraction, subscriber analysis, and content engagement tr
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
@@ -164,6 +164,9 @@ class SubstackCrawlerEngine(BaseCrawlerEngine):
     
     async def initialize(self) -> None:
         """Initialize the crawler engine"""
+
+
+
         try:
             await self._create_session()
             self._setup_selenium()
@@ -193,6 +196,9 @@ class SubstackCrawlerEngine(BaseCrawlerEngine):
     
     def _setup_selenium(self) -> None:
         """Setup Selenium WebDriver"""
+
+
+
         try:
             options = webdriver.ChromeOptions()
             options.add_argument('--headless')
@@ -221,6 +227,9 @@ class SubstackCrawlerEngine(BaseCrawlerEngine):
         Returns:
             List of Substack publications
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -284,6 +293,9 @@ class SubstackCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Publication details or None if not found
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -335,6 +347,9 @@ class SubstackCrawlerEngine(BaseCrawlerEngine):
         Returns:
             List of recent posts
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -411,6 +426,9 @@ class SubstackCrawlerEngine(BaseCrawlerEngine):
     
     def _parse_publication_element(self, pub_element) -> Optional[SubstackPublication]:
         """Parse publication element from discovery page"""
+
+
+
         try:
             # Extract publication name
             name_elem = pub_element.find_element(By.CSS_SELECTOR, '.publication-name')
@@ -467,6 +485,9 @@ class SubstackCrawlerEngine(BaseCrawlerEngine):
     
     def _parse_post_data(self, post_data: Dict[str, Any], subdomain: str) -> SubstackPost:
         """Parse post data from API response"""
+
+
+
         try:
             return SubstackPost(
                 id=str(post_data.get('id', '')),
@@ -514,6 +535,9 @@ class SubstackCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Newsletter trend analysis
         """
+
+
+
         try:
             trend_analysis = {
                 'top_categories': [],
@@ -559,6 +583,9 @@ class SubstackCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Content distribution monitoring results
         """
+
+
+
         try:
             monitoring_results = {
                 'content_title': content_title,
@@ -580,6 +607,9 @@ class SubstackCrawlerEngine(BaseCrawlerEngine):
     
     async def cleanup(self) -> None:
         """Clean up resources"""
+
+
+
         try:
             if self.session:
                 await self.session.close()

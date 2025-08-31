@@ -1,5 +1,5 @@
 """
-🗄️ Backup Storage - Multi-Cloud Storage Management System
+ Backup Storage - Multi-Cloud Storage Management System
 ======================================================
 Module: backend/data_management/backups/backup_storage.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Storage System - Enterprise Production-Ready
 Responsibility: Stockage multi-cloud sécurisé avec redondance et optimisation
 ===============================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -51,6 +51,9 @@ class StorageConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit la configuration en dictionnaire"""
+
+
+
         return {
             "provider": self.provider,
             "region": self.region,
@@ -143,6 +146,9 @@ class S3StorageProvider(StorageProvider):
     
     def _initialize_client(self):
         """Initialise le client S3"""
+
+
+
         try:
             session_config = {}
             
@@ -189,6 +195,9 @@ class S3StorageProvider(StorageProvider):
         Returns:
             StorageLocation: Informations sur l'emplacement de stockage
         """
+
+
+
         try:
             file_size = local_path.stat().st_size
             start_time = datetime.now()
@@ -317,6 +326,9 @@ class S3StorageProvider(StorageProvider):
     
     async def _verify_upload(self, remote_path: str, expected_size: int):
         """Vérifie que l'upload s'est bien déroulé"""
+
+
+
         try:
             response = self.client.head_object(
                 Bucket=self.config.bucket_name,
@@ -341,6 +353,9 @@ class S3StorageProvider(StorageProvider):
         Returns:
             bool: True si le download a réussi
         """
+
+
+
         try:
             local_path.parent.mkdir(parents=True, exist_ok=True)
             
@@ -371,6 +386,9 @@ class S3StorageProvider(StorageProvider):
         Returns:
             bool: True si la suppression a réussi
         """
+
+
+
         try:
             self.client.delete_object(
                 Bucket=self.config.bucket_name,
@@ -395,6 +413,9 @@ class S3StorageProvider(StorageProvider):
         Returns:
             List[Dict[str, Any]]: Liste des fichiers avec métadonnées
         """
+
+
+
         try:
             files = []
             paginator = self.client.get_paginator("list_objects_v2")
@@ -432,6 +453,9 @@ class S3StorageProvider(StorageProvider):
         Returns:
             Dict[str, Any]: Métadonnées du fichier
         """
+
+
+
         try:
             response = self.client.head_object(
                 Bucket=self.config.bucket_name,
@@ -483,6 +507,9 @@ class AzureStorageProvider(StorageProvider):
     
     async def upload_file(self, local_path: Path, remote_path: str, metadata: Optional[Dict[str, Any]] = None) -> StorageLocation:
         """Upload vers Azure Blob Storage"""
+
+
+
         try:
             # Basic Azure Blob Storage implementation placeholder
             logger.info(f"Azure upload: {local_path} -> {remote_path}")
@@ -507,6 +534,9 @@ class AzureStorageProvider(StorageProvider):
     
     async def download_file(self, remote_path: str, local_path: Path) -> bool:
         """Download depuis Azure Blob Storage"""
+
+
+
         try:
             logger.info(f"Azure download: {remote_path} -> {local_path}")
             # Placeholder implementation - would normally download from Azure
@@ -520,6 +550,9 @@ class AzureStorageProvider(StorageProvider):
     
     async def delete_file(self, remote_path: str) -> bool:
         """Suppression depuis Azure Blob Storage"""
+
+
+
         try:
             logger.info(f"Azure delete: {remote_path}")
             # Placeholder implementation - would normally delete from Azure
@@ -530,6 +563,9 @@ class AzureStorageProvider(StorageProvider):
     
     async def list_files(self, prefix: str = "", limit: int = 1000) -> List[Dict[str, Any]]:
         """Liste des fichiers Azure Blob Storage"""
+
+
+
         try:
             logger.info(f"Azure list files with prefix: {prefix}")
             # Placeholder implementation - would normally list from Azure
@@ -540,6 +576,9 @@ class AzureStorageProvider(StorageProvider):
     
     async def get_file_metadata(self, remote_path: str) -> Dict[str, Any]:
         """Métadonnées Azure Blob Storage"""
+
+
+
         try:
             logger.info(f"Azure get metadata: {remote_path}")
             # Placeholder implementation - would normally get metadata from Azure
@@ -569,6 +608,9 @@ class GoogleCloudStorageProvider(StorageProvider):
     
     async def upload_file(self, local_path: Path, remote_path: str, metadata: Optional[Dict[str, Any]] = None) -> StorageLocation:
         """Upload vers Google Cloud Storage"""
+
+
+
         try:
             # Basic Google Cloud Storage implementation placeholder
             logger.info(f"GCS upload: {local_path} -> {remote_path}")
@@ -593,6 +635,9 @@ class GoogleCloudStorageProvider(StorageProvider):
     
     async def download_file(self, remote_path: str, local_path: Path) -> bool:
         """Download depuis Google Cloud Storage"""
+
+
+
         try:
             logger.info(f"GCS download: {remote_path} -> {local_path}")
             # Placeholder implementation - would normally download from GCS
@@ -606,6 +651,9 @@ class GoogleCloudStorageProvider(StorageProvider):
     
     async def delete_file(self, remote_path: str) -> bool:
         """Suppression depuis Google Cloud Storage"""
+
+
+
         try:
             logger.info(f"GCS delete: {remote_path}")
             # Placeholder implementation - would normally delete from GCS
@@ -616,6 +664,9 @@ class GoogleCloudStorageProvider(StorageProvider):
     
     async def list_files(self, prefix: str = "", limit: int = 1000) -> List[Dict[str, Any]]:
         """Liste des fichiers Google Cloud Storage"""
+
+
+
         try:
             logger.info(f"GCS list files with prefix: {prefix}")
             # Placeholder implementation - would normally list from GCS
@@ -626,6 +677,9 @@ class GoogleCloudStorageProvider(StorageProvider):
     
     async def get_file_metadata(self, remote_path: str) -> Dict[str, Any]:
         """Métadonnées Google Cloud Storage"""
+
+
+
         try:
             logger.info(f"GCS get metadata: {remote_path}")
             # Placeholder implementation - would normally get metadata from GCS
@@ -663,6 +717,9 @@ class LocalStorageProvider(StorageProvider):
     
     async def upload_file(self, local_path: Path, remote_path: str, metadata: Optional[Dict[str, Any]] = None) -> StorageLocation:
         """Upload vers stockage local"""
+
+
+
         try:
             dest_path = self.storage_root / remote_path
             dest_path.parent.mkdir(parents=True, exist_ok=True)
@@ -705,6 +762,9 @@ class LocalStorageProvider(StorageProvider):
     
     async def download_file(self, remote_path: str, local_path: Path) -> bool:
         """Download depuis stockage local"""
+
+
+
         try:
             source_path = self.storage_root / remote_path
             
@@ -725,6 +785,9 @@ class LocalStorageProvider(StorageProvider):
     
     async def delete_file(self, remote_path: str) -> bool:
         """Supprime un fichier du stockage local"""
+
+
+
         try:
             file_path = self.storage_root / remote_path
             metadata_path = self.metadata_dir / f"{remote_path.replace('/', '_')}.json"
@@ -744,6 +807,9 @@ class LocalStorageProvider(StorageProvider):
     
     async def list_files(self, prefix: str = "", limit: int = 1000) -> List[Dict[str, Any]]:
         """Liste les fichiers du stockage local"""
+
+
+
         try:
             files = []
             search_path = self.storage_root / prefix if prefix else self.storage_root
@@ -765,6 +831,9 @@ class LocalStorageProvider(StorageProvider):
     
     async def get_file_metadata(self, remote_path: str) -> Dict[str, Any]:
         """Récupère les métadonnées d'un fichier local"""
+
+
+
         try:
             metadata_path = self.metadata_dir / f"{remote_path.replace('/', '_')}.json"
             
@@ -1017,6 +1086,9 @@ class BackupStorage:
         Returns:
             List[Dict[str, Any]]: Liste des sauvegardes
         """
+
+
+
         try:
             files = await self.primary_provider.list_files("backups/", limit * 10)  # Marge pour filtering
             
@@ -1177,6 +1249,9 @@ class EncryptedStorage:
         Returns:
             StorageLocation: Emplacement du fichier chiffré
         """
+
+
+
         try:
             # Génération clé de chiffrement
             encryption_key = await self.encryption_manager.generate_backup_key(user_id, backup_id)
@@ -1224,6 +1299,9 @@ class EncryptedStorage:
         Returns:
             bool: True si la récupération a réussi
         """
+
+
+
         try:
             # Recherche fichiers chiffrés
             remote_path = f"encrypted_backups/{user_id}/{backup_id}/"
@@ -1283,6 +1361,9 @@ class CostOptimizer:
     
     def _load_cost_models(self) -> Dict[str, Any]:
         """Charge les modèles de coût des différents providers"""
+
+
+
         return {
             "s3": {
                 "standard": {"storage": 0.023, "requests": 0.0004},

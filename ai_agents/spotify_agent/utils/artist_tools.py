@@ -7,7 +7,7 @@ release strategy planning, and career development insights for Spotify artists.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 """
@@ -255,6 +255,9 @@ class ArtistProfileManager:
     
     def _is_recent_release(self, album: Dict[str, Any]) -> bool:
         """Check if album is a recent release (last 12 months)"""
+
+
+
         try:
             release_date = album.get("release_date", "")
             if not release_date:
@@ -681,6 +684,9 @@ class ReleaseOptimizer:
                                     competitive_landscape: Dict[str, Any],
                                     audience_behavior: Dict[str, Any]) -> Dict[str, Any]:
         """Generate comprehensive release optimization plan"""
+
+
+
         
         try:
             # Analyze optimal timing windows

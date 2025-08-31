@@ -174,6 +174,9 @@ class CaptchaDetector:
         page_url: str
     ) -> Optional[CaptchaChallenge]:
         """Extract CAPTCHA details from HTML."""
+
+
+
         try:
             import re
             
@@ -219,6 +222,9 @@ class CaptchaDetector:
     
     async def _detect_image_captcha(self, html_content: str, page_url: str) -> Optional[CaptchaChallenge]:
         """Detect image-based CAPTCHAs."""
+
+
+
         try:
             import re
             
@@ -263,6 +269,9 @@ class BaseCaptchaSolver:
     
     async def solve(self, challenge: CaptchaChallenge) -> CaptchaSolution:
         """Solve CAPTCHA challenge - base implementation."""
+
+
+
         try:
             import time
             start_time = time.time()
@@ -379,6 +388,9 @@ class ImageCaptchaSolver(BaseCaptchaSolver):
     
     def can_solve(self, captcha_type: CaptchaType) -> bool:
         """Check if can solve this type."""
+
+
+
         return captcha_type in self.supported_types
     
     async def solve(self, challenge: CaptchaChallenge) -> CaptchaSolution:
@@ -431,6 +443,9 @@ class ImageCaptchaSolver(BaseCaptchaSolver):
     
     async def _download_image(self, url: str) -> Optional[bytes]:
         """Download CAPTCHA image."""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
@@ -443,6 +458,9 @@ class ImageCaptchaSolver(BaseCaptchaSolver):
     
     def _preprocess_image(self, image_data: bytes) -> np.ndarray:
         """Preprocess CAPTCHA image for better OCR."""
+
+
+
         try:
             # Convert to PIL Image
             image = Image.open(io.BytesIO(image_data))
@@ -481,6 +499,9 @@ class ImageCaptchaSolver(BaseCaptchaSolver):
     
     def _extract_text(self, image: np.ndarray) -> Optional[str]:
         """Extract text from preprocessed image using OCR."""
+
+
+
         try:
             import pytesseract
             
@@ -578,6 +599,9 @@ class ExternalCaptchaSolver(BaseCaptchaSolver):
     
     async def _solve_2captcha(self, challenge: CaptchaChallenge, start_time: float) -> CaptchaSolution:
         """Solve using 2captcha service."""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 # Submit CAPTCHA
@@ -776,14 +800,23 @@ class CaptchaSolver:
 # Utility functions
 def create_image_captcha_solver() -> ImageCaptchaSolver:
     """Create image CAPTCHA solver."""
+
+
+
     return ImageCaptchaSolver()
 
 def create_2captcha_solver(api_key: str) -> ExternalCaptchaSolver:
     """Create 2captcha external solver."""
+
+
+
     return ExternalCaptchaSolver('2captcha', api_key)
 
 def create_anticaptcha_solver(api_key: str) -> ExternalCaptchaSolver:
     """Create AntiCaptcha external solver."""
+
+
+
     return ExternalCaptchaSolver('anticaptcha', api_key)
 
 def setup_default_captcha_solver(

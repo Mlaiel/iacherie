@@ -229,6 +229,9 @@ class PipelineError(Exception):
     
     def can_retry(self) -> bool:
         """Check if error can be retried"""
+
+
+
         return (
             self.is_recoverable and 
             self.recovery_strategy in [RecoveryStrategy.RETRY, RecoveryStrategy.CIRCUIT_BREAKER] and
@@ -248,6 +251,9 @@ class PipelineError(Exception):
     
     def should_escalate(self) -> bool:
         """Check if error should be escalated"""
+
+
+
         return (
             self.severity in [ErrorSeverity.CRITICAL, ErrorSeverity.EMERGENCY] or
             self.impact in [ErrorImpact.SEVERE, ErrorImpact.CATASTROPHIC] or
@@ -279,6 +285,9 @@ class PipelineError(Exception):
     
     def get_correlation_id(self) -> str:
         """Get correlation ID for error tracking"""
+
+
+
         return self.context.correlation_id or self.context.error_id
     
     def add_context_data(self, key: str, value: Any):
@@ -313,6 +322,9 @@ class PipelineError(Exception):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert error to dictionary"""
+
+
+
         return {
             "error_id": self.context.error_id,
             "error_code": self.error_code,
@@ -363,6 +375,9 @@ class PipelineError(Exception):
     
     def to_alert_payload(self) -> Dict[str, Any]:
         """Convert to alert payload for monitoring systems"""
+
+
+
         return {
             "alert_type": "error",
             "error_id": self.context.error_id,
@@ -957,6 +972,9 @@ class ErrorDetails:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             "error_id": self.error_id,
             "error_type": self.error_type,

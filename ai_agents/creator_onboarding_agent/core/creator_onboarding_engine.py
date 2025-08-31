@@ -54,6 +54,9 @@ class CreatorOnboardingEngine:
 
     async def start(self) -> None:
         """Start the creator_onboarding processing engine"""
+
+
+
         try:
             self.is_running = True
             logger.info("CreatorOnboardingEngine started successfully")
@@ -63,6 +66,9 @@ class CreatorOnboardingEngine:
 
     async def process(self, data: Dict[str, Any]) -> CreatorOnboardingResult:
         """Process creator_onboarding operation"""
+
+
+
         try:
             job_id = data.get('job_id', 'auto-generated')
             

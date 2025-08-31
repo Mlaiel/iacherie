@@ -14,7 +14,7 @@
 #
 # Created by: Fahed Mlaiel (mlaiel@live.de)
 # 
-# ⚠️  STRICT COPYRIGHT WARNING ⚠️ 
+#   STRICT COPYRIGHT WARNING  
 # This code, concept, and intellectual property belongs exclusively to Fahed Mlaiel.
 # ANY unauthorized use, reproduction, distribution, or theft of this code/concept 
 # without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is 
@@ -586,6 +586,9 @@ class ResolutionUpscaler(BaseEnhancer):
                 
             def _make_residual_block(self, num_features):
                 """Create residual block with enhanced feature learning"""
+
+
+
                 return nn.Sequential(
                     nn.Conv2d(num_features, num_features, 3, padding=1),
                     nn.ReLU(inplace=True),
@@ -923,6 +926,9 @@ class VideoEnhancer:
     
     def enhance_video(self, video_path: str, output_path: str, settings: EnhancementSettings) -> Dict[str, Any]:
         """Enhanced video processing with temporal consistency"""
+
+
+
         try:
             cap = cv2.VideoCapture(video_path)
             
@@ -1093,6 +1099,9 @@ class QualityProcessor:
     
     def _assess_noise(self, image: np.ndarray) -> float:
         """Assess noise level using wavelet decomposition"""
+
+
+
         try:
             from skimage.restoration import estimate_sigma
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
@@ -1254,6 +1263,9 @@ class QualityProcessor:
     
     def _assess_similarity(self, image: np.ndarray, reference: np.ndarray) -> float:
         """Assess similarity between processed and reference images"""
+
+
+
         try:
             from skimage.metrics import structural_similarity as ssim
             

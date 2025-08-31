@@ -1,5 +1,5 @@
 """
-🔐 Access Controller - IA Influencer Agent Platform Enterprise
+ Access Controller - IA Influencer Agent Platform Enterprise
 =============================================================
 Module: backend/data_management/storage/access_controller.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Enterprise access control system with permission management,
 audit logging, and role-based security for storage resources.
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -313,6 +313,9 @@ class AccessController:
     
     def _initialize_access_directories(self) -> None:
         """Initialize access control directories"""
+
+
+
         try:
             directories = [
                 self.config.storage_root_path,
@@ -342,6 +345,9 @@ class AccessController:
     
     async def create_user(self, user_data: Dict[str, Any]) -> Dict[str, Any]:
         """Create new user account"""
+
+
+
         try:
             # Validate required fields
             required_fields = ['username', 'email', 'password']
@@ -445,6 +451,9 @@ class AccessController:
         user_agent: str = ""
     ) -> Dict[str, Any]:
         """Authenticate user credentials"""
+
+
+
         try:
             start_time = time.time()
             
@@ -597,6 +606,9 @@ class AccessController:
         context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Check if user has access to resource with specified permissions"""
+
+
+
         try:
             start_time = time.time()
             
@@ -684,6 +696,9 @@ class AccessController:
     
     async def create_access_policy(self, policy_data: Dict[str, Any]) -> Dict[str, Any]:
         """Create new access policy"""
+
+
+
         try:
             # Validate required fields
             required_fields = ['name', 'resource_patterns']
@@ -759,6 +774,9 @@ class AccessController:
     
     async def get_user_permissions(self, user_id: str, resource_path: str) -> Dict[str, Any]:
         """Get effective permissions for user on resource"""
+
+
+
         try:
             if user_id not in self.users:
                 return {
@@ -812,6 +830,9 @@ class AccessController:
         limit: int = 100
     ) -> Dict[str, Any]:
         """Get audit log entries with filtering"""
+
+
+
         try:
             return await self.audit_manager.get_audit_entries(filters, limit)
             
@@ -824,6 +845,9 @@ class AccessController:
     
     def get_access_statistics(self) -> Dict[str, Any]:
         """Get comprehensive access control statistics"""
+
+
+
         try:
             # User statistics
             total_users = len(self.users)
@@ -910,6 +934,9 @@ class AccessController:
     
     async def _load_initial_data(self) -> None:
         """Load initial data from disk"""
+
+
+
         try:
             # Load users
             users_dir = Path(self.config.users_directory)
@@ -988,6 +1015,9 @@ class AccessController:
     
     async def _start_background_tasks(self) -> None:
         """Start background maintenance tasks"""
+
+
+
         try:
             # Start session cleanup
             asyncio.create_task(self._session_cleanup_task())
@@ -1063,6 +1093,9 @@ class AccessController:
     
     async def _save_user(self, user: User) -> None:
         """Save user to disk"""
+
+
+
         try:
             user_path = Path(self.config.users_directory) / f"{user.user_id}.json"
             
@@ -1095,6 +1128,9 @@ class AccessController:
     
     async def _save_policy(self, policy: AccessPolicy) -> None:
         """Save policy to disk"""
+
+
+
         try:
             policy_path = Path(self.config.policies_directory) / "active" / f"{policy.policy_id}.json"
             
@@ -1135,6 +1171,9 @@ class AuthenticationManager:
     
     async def generate_token(self, user: User) -> str:
         """Generate JWT token for user"""
+
+
+
         try:
             payload = {
                 'user_id': user.user_id,
@@ -1158,6 +1197,9 @@ class AuthenticationManager:
     
     async def verify_token(self, token: str) -> Dict[str, Any]:
         """Verify JWT token"""
+
+
+
         try:
             payload = jwt.decode(
                 token,
@@ -1197,6 +1239,9 @@ class AuthorizationManager:
     
     async def make_decision(self, request: AccessRequest, user: User) -> AccessDecision:
         """Make authorization decision"""
+
+
+
         try:
             start_time = datetime.now()
             
@@ -1251,6 +1296,9 @@ class AuthorizationManager:
     
     async def calculate_effective_permissions(self, user: User, resource_path: str) -> List[str]:
         """Calculate effective permissions for user on resource"""
+
+
+
         try:
             # Get applicable policies
             request = AccessRequest(
@@ -1393,6 +1441,9 @@ class AuditManager:
         duration_ms: Optional[float] = None
     ) -> None:
         """Log audit action"""
+
+
+
         try:
             if not self.access_controller.config.audit_enabled:
                 return
@@ -1432,6 +1483,9 @@ class AuditManager:
         limit: int = 100
     ) -> Dict[str, Any]:
         """Get audit entries with filtering"""
+
+
+
         try:
             filters = filters or {}
             filtered_entries = []
@@ -1497,6 +1551,9 @@ class AuditManager:
     
     async def _save_audit_entry(self, audit_entry: AuditEntry) -> None:
         """Save audit entry to disk"""
+
+
+
         try:
             # Create date-based directory structure
             date_str = audit_entry.timestamp.strftime("%Y/%m/%d")
@@ -1538,6 +1595,9 @@ class SessionManager:
     
     async def create_session(self, user: User, ip_address: str, user_agent: str) -> str:
         """Create new user session"""
+
+
+
         try:
             session_id = secrets.token_urlsafe(32)
             
@@ -1577,6 +1637,9 @@ class SessionManager:
     
     async def validate_session(self, session_id: str) -> Dict[str, Any]:
         """Validate session"""
+
+
+
         try:
             if session_id not in self.access_controller.active_sessions:
                 return {
@@ -1611,6 +1674,9 @@ class SessionManager:
     
     async def terminate_session(self, session_id: str) -> Dict[str, Any]:
         """Terminate session"""
+
+
+
         try:
             if session_id in self.access_controller.active_sessions:
                 session_data = self.access_controller.active_sessions[session_id]

@@ -104,6 +104,9 @@ class ReportGenerator:
     
     def _initialize_default_templates(self):
         """Initialize default report templates."""
+
+
+
         try:
             # Executive Summary Report
             executive_template = ReportTemplate(
@@ -194,6 +197,9 @@ class ReportGenerator:
     
     async def generate_report(self, template_id: str, data: Dict[str, Any], period: Optional[Tuple[datetime, datetime]] = None) -> ReportData:
         """Generate a report using specified template and data."""
+
+
+
         try:
             self.logger.info(f"Generating report with template: {template_id}")
             
@@ -260,6 +266,9 @@ class ReportGenerator:
     
     async def _generate_section_data(self, section: str, data: Dict[str, Any], period: Tuple[datetime, datetime]) -> Dict[str, Any]:
         """Generate data for a specific report section."""
+
+
+
         try:
             section_generators = {
                 "executive_summary": self._generate_executive_section,
@@ -290,6 +299,9 @@ class ReportGenerator:
     
     async def _generate_key_metrics_section(self, data: Dict[str, Any], period: Tuple[datetime, datetime]) -> Dict[str, Any]:
         """Generate key metrics section."""
+
+
+
         try:
             competitors = data.get("competitors", [])
             market_data = data.get("market_data", {})
@@ -328,6 +340,9 @@ class ReportGenerator:
     
     async def _generate_competitor_profiles_section(self, data: Dict[str, Any], period: Tuple[datetime, datetime]) -> Dict[str, Any]:
         """Generate competitor profiles section."""
+
+
+
         try:
             competitors = data.get("competitors", [])
             
@@ -366,6 +381,9 @@ class ReportGenerator:
     
     async def _generate_report_charts(self, template: ReportTemplate, data: Dict[str, Any], period: Tuple[datetime, datetime]) -> List[Dict[str, Any]]:
         """Generate charts for the report."""
+
+
+
         try:
             charts = []
             
@@ -401,6 +419,9 @@ class ReportGenerator:
     
     async def _create_market_share_chart(self, data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         """Create market share pie chart."""
+
+
+
         try:
             competitors = data.get("competitors", [])
             if not competitors:
@@ -440,6 +461,9 @@ class ReportGenerator:
     
     async def _create_trend_analysis_chart(self, data: Dict[str, Any], period: Tuple[datetime, datetime]) -> Optional[Dict[str, Any]]:
         """Create trend analysis line chart."""
+
+
+
         try:
             trends = data.get("trends", [])
             if not trends:
@@ -489,6 +513,9 @@ class ReportGenerator:
     
     async def _generate_report_file(self, report_data: ReportData, template: ReportTemplate) -> str:
         """Generate the actual report file."""
+
+
+
         try:
             if template.format_type == "html":
                 return await self._generate_html_report(report_data, template)
@@ -505,6 +532,9 @@ class ReportGenerator:
     
     async def _generate_html_report(self, report_data: ReportData, template: ReportTemplate) -> str:
         """Generate HTML report."""
+
+
+
         try:
             # HTML template
             html_template = """
@@ -603,6 +633,9 @@ class ReportGenerator:
     
     async def get_report_history(self, limit: int = 50) -> List[ReportData]:
         """Get report generation history."""
+
+
+
         try:
             # Sort by generation time (newest first)
             sorted_reports = sorted(self.generated_reports, key=lambda x: x.generated_at, reverse=True)
@@ -614,6 +647,9 @@ class ReportGenerator:
     
     async def schedule_report(self, template_id: str, frequency: str, recipients: List[str]):
         """Schedule automated report generation."""
+
+
+
         try:
             if template_id not in self.report_templates:
                 raise ReportError(f"Template not found: {template_id}")
@@ -631,6 +667,9 @@ class ReportGenerator:
     
     async def get_generator_status(self) -> Dict[str, Any]:
         """Get report generator status."""
+
+
+
         return {
             "total_templates": len(self.report_templates),
             "generated_reports": len(self.generated_reports),

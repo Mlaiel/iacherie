@@ -97,6 +97,9 @@ class AudioMatcher:
         
     async def generate_signature(self, audio_data: bytes, metadata: Dict[str, Any]) -> ContentSignature:
         """Generate comprehensive audio signature"""
+
+
+
         try:
             # Basic hash
             content_hash = hashlib.sha256(audio_data).hexdigest()
@@ -127,6 +130,9 @@ class AudioMatcher:
     
     def _generate_audio_perceptual_hash(self, audio_data: bytes) -> str:
         """Generate perceptual hash for audio content"""
+
+
+
         try:
             # Simulate advanced audio fingerprinting
             # In real implementation, would use Chromaprint or similar
@@ -139,6 +145,9 @@ class AudioMatcher:
     
     async def _extract_audio_features(self, audio_data: bytes) -> List[float]:
         """Extract ML features from audio"""
+
+
+
         try:
             # Simulate feature extraction
             # In real implementation, would use librosa, essentia, or similar
@@ -155,6 +164,9 @@ class AudioMatcher:
         signature2: ContentSignature
     ) -> MatchResult:
         """Match two audio signatures"""
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -225,6 +237,9 @@ class AudioMatcher:
     
     def _compare_feature_vectors(self, vec1: List[float], vec2: List[float]) -> float:
         """Compare feature vectors using cosine similarity"""
+
+
+
         try:
             if len(vec1) != len(vec2):
                 return 0.0
@@ -269,6 +284,9 @@ class VideoMatcher:
     
     async def generate_signature(self, video_data: bytes, metadata: Dict[str, Any]) -> ContentSignature:
         """Generate comprehensive video signature"""
+
+
+
         try:
             content_hash = hashlib.sha256(video_data).hexdigest()
             
@@ -297,6 +315,9 @@ class VideoMatcher:
     
     async def _generate_video_perceptual_hash(self, video_data: bytes) -> str:
         """Generate perceptual hash for video content"""
+
+
+
         try:
             # Simulate video frame hashing
             # In real implementation, would extract key frames and hash them
@@ -309,6 +330,9 @@ class VideoMatcher:
     
     async def _extract_video_features(self, video_data: bytes) -> List[float]:
         """Extract ML features from video"""
+
+
+
         try:
             # Simulate video feature extraction
             # In real implementation, would use OpenCV, YOLO, or similar
@@ -325,6 +349,9 @@ class VideoMatcher:
         signature2: ContentSignature
     ) -> MatchResult:
         """Match two video signatures"""
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -393,6 +420,9 @@ class VideoMatcher:
     
     def _compare_feature_vectors(self, vec1: List[float], vec2: List[float]) -> float:
         """Compare video feature vectors"""
+
+
+
         try:
             if len(vec1) != len(vec2):
                 return 0.0
@@ -436,6 +466,9 @@ class TextMatcher:
     
     async def generate_signature(self, text_content: str, metadata: Dict[str, Any]) -> ContentSignature:
         """Generate comprehensive text signature"""
+
+
+
         try:
             content_hash = hashlib.sha256(text_content.encode()).hexdigest()
             
@@ -465,6 +498,9 @@ class TextMatcher:
     
     def _generate_text_semantic_hash(self, text: str) -> str:
         """Generate semantic hash for text content"""
+
+
+
         try:
             # Simulate semantic hashing
             # In real implementation, would use word embeddings or similar
@@ -479,6 +515,9 @@ class TextMatcher:
     
     async def _extract_text_features(self, text: str) -> List[float]:
         """Extract ML features from text"""
+
+
+
         try:
             # Simulate text feature extraction
             # In real implementation, would use BERT, RoBERTa, or similar
@@ -512,6 +551,9 @@ class TextMatcher:
     
     def _extract_keywords(self, text: str) -> List[str]:
         """Extract keywords from text"""
+
+
+
         try:
             # Simple keyword extraction
             # In real implementation, would use NLP libraries like spaCy or NLTK
@@ -540,6 +582,9 @@ class TextMatcher:
         signature2: ContentSignature
     ) -> MatchResult:
         """Match two text signatures"""
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -616,6 +661,9 @@ class TextMatcher:
     
     def _compare_feature_vectors(self, vec1: List[float], vec2: List[float]) -> float:
         """Compare text feature vectors"""
+
+
+
         try:
             if len(vec1) != len(vec2):
                 return 0.0
@@ -637,6 +685,9 @@ class TextMatcher:
     
     def _compare_keywords(self, keywords1: List[str], keywords2: List[str]) -> float:
         """Compare keyword lists using Jaccard similarity"""
+
+
+
         try:
             if not keywords1 or not keywords2:
                 return 0.0
@@ -693,6 +744,9 @@ class ContentMatchingEngine:
         metadata: Optional[Dict[str, Any]] = None
     ) -> ContentSignature:
         """Generate content signature based on type"""
+
+
+
         try:
             metadata = metadata or {}
             
@@ -722,6 +776,9 @@ class ContentMatchingEngine:
         signature2: ContentSignature
     ) -> MatchResult:
         """Match two content signatures"""
+
+
+
         try:
             if signature1.content_type != signature2.content_type:
                 raise ValueError("Cannot match signatures of different content types")
@@ -751,6 +808,9 @@ class ContentMatchingEngine:
         min_similarity: Optional[float] = None
     ) -> List[MatchResult]:
         """Batch match target against multiple candidates"""
+
+
+
         try:
             min_similarity = min_similarity or self.similarity_threshold
             
@@ -797,6 +857,9 @@ class ContentMatchingEngine:
         similarity_threshold: Optional[float] = None
     ) -> List[Tuple[ContentSignature, ContentSignature, float]]:
         """Find duplicate content within a set of signatures"""
+
+
+
         try:
             threshold = similarity_threshold or self.similarity_threshold
             duplicates = []
@@ -832,6 +895,9 @@ class ContentMatchingEngine:
     
     def _cache_signature(self, signature: ContentSignature):
         """Cache signature for performance"""
+
+
+
         try:
             # Implement LRU cache behavior
             if len(self.signature_cache) >= self.cache_max_size:
@@ -846,6 +912,9 @@ class ContentMatchingEngine:
     
     def get_cached_signature(self, content_id: str) -> Optional[ContentSignature]:
         """Retrieve signature from cache"""
+
+
+
         return self.signature_cache.get(content_id)
     
     def clear_cache(self):
@@ -855,6 +924,9 @@ class ContentMatchingEngine:
     
     async def get_matching_statistics(self) -> Dict[str, Any]:
         """Get matching engine statistics"""
+
+
+
         try:
             stats = {
                 'cache_size': len(self.signature_cache),
@@ -875,6 +947,9 @@ class ContentMatchingEngine:
     
     async def shutdown(self):
         """Shutdown matching engine"""
+
+
+
         try:
             self.executor.shutdown(wait=True)
             self.clear_cache()
@@ -890,6 +965,9 @@ matching_engine = ContentMatchingEngine()
 
 async def get_matching_engine() -> ContentMatchingEngine:
     """Get the global content matching engine instance"""
+
+
+
     return matching_engine
 
 

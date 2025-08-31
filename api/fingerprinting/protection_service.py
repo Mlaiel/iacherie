@@ -55,6 +55,9 @@ class ContentProtectionService:
         
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default configuration"""
+
+
+
         return {
             'similarity_threshold': 0.85,
             'batch_size': 50,
@@ -70,6 +73,9 @@ class ContentProtectionService:
     
     async def initialize(self):
         """Initialize the content protection service"""
+
+
+
         try:
             await self.db_manager.initialize()
             logger.info("Content protection service initialized successfully")
@@ -109,6 +115,9 @@ class ContentProtectionService:
         Returns:
             Processing result with fingerprint ID and duplicate information
         """
+
+
+
         try:
             if not file_path.exists():
                 raise FileNotFoundError(f"File not found: {file_path}")
@@ -190,6 +199,9 @@ class ContentProtectionService:
         Returns:
             Processing result with fingerprint ID and duplicate information
         """
+
+
+
         try:
             # Process text content
             fingerprint = await self.text_processor.process_text_content(text_content)
@@ -284,6 +296,9 @@ class ContentProtectionService:
         Returns:
             List of processing results
         """
+
+
+
         try:
             if not directory_path.exists() or not directory_path.is_dir():
                 raise ValueError(f"Invalid directory: {directory_path}")
@@ -341,6 +356,9 @@ class ContentProtectionService:
     
     async def get_protection_status(self, fingerprint_id: int) -> Dict[str, Any]:
         """Get protection status for a specific fingerprint"""
+
+
+
         try:
             fingerprint = await self.db_manager.get_fingerprint(fingerprint_id)
             if not fingerprint:
@@ -374,6 +392,9 @@ class ContentProtectionService:
     
     async def get_service_statistics(self) -> Dict[str, Any]:
         """Get service statistics"""
+
+
+
         try:
             db_stats = await self.db_manager.get_statistics()
             
@@ -401,6 +422,9 @@ class ContentProtectionService:
     
     async def cleanup_old_data(self, days_to_keep: int = 90) -> Dict[str, Any]:
         """Cleanup old protection data"""
+
+
+
         try:
             deleted_count = await self.db_manager.cleanup_old_records(days_to_keep)
             
@@ -416,6 +440,9 @@ class ContentProtectionService:
     
     async def close(self):
         """Close the content protection service"""
+
+
+
         try:
             await self.db_manager.close()
             logger.info("Content protection service closed successfully")

@@ -7,7 +7,7 @@ Supports advanced metadata operations, EXIF data, technical specifications, and 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -181,6 +181,9 @@ class DescriptiveMetadata:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {k: v for k, v in asdict(self).items() if v is not None and v != []}
 
 
@@ -234,6 +237,9 @@ class MultimediaMetadataSet:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             "file_path": self.file_path,
             "technical": self.technical.to_dict(),
@@ -252,6 +258,9 @@ class MultimediaMetadataSet:
         
     def get_summary(self) -> Dict[str, Any]:
         """Get metadata summary"""
+
+
+
         return {
             "title": self.descriptive.title,
             "format": self.technical.file_format,
@@ -296,6 +305,9 @@ class MultimediaMetadata:
         
     async def initialize(self):
         """Initialize metadata system"""
+
+
+
         try:
             # Initialize metadata extractors
             await self._initialize_extractors()
@@ -378,6 +390,9 @@ class MultimediaMetadata:
         max_concurrent: int = 5
     ) -> List[MultimediaMetadataSet]:
         """Extract metadata from multiple files in batch"""
+
+
+
         try:
             semaphore = asyncio.Semaphore(max_concurrent)
             
@@ -409,6 +424,9 @@ class MultimediaMetadata:
         category: MetadataCategory = MetadataCategory.DESCRIPTIVE
     ) -> bool:
         """Update metadata for a file"""
+
+
+
         try:
             # Get existing metadata
             metadata_set = await self.extract_metadata(file_path)
@@ -455,6 +473,9 @@ class MultimediaMetadata:
         file_paths: Optional[List[str]] = None
     ) -> List[MultimediaMetadataSet]:
         """Search metadata by criteria"""
+
+
+
         try:
             results = []
             
@@ -480,6 +501,9 @@ class MultimediaMetadata:
         file_path2: str
     ) -> Dict[str, Any]:
         """Compare metadata between two files"""
+
+
+
         try:
             metadata1 = await self.extract_metadata(file_path1)
             metadata2 = await self.extract_metadata(file_path2)
@@ -505,6 +529,9 @@ class MultimediaMetadata:
         include_raw: bool = False
     ) -> str:
         """Export metadata to various formats"""
+
+
+
         try:
             metadata_set = await self.extract_metadata(file_path)
             
@@ -531,6 +558,9 @@ class MultimediaMetadata:
             
     async def get_metadata_stats(self) -> Dict[str, Any]:
         """Get metadata extraction statistics"""
+
+
+
         return {
             **self.extraction_stats,
             "cache_size": len(self.metadata_cache),
@@ -539,6 +569,9 @@ class MultimediaMetadata:
         
     async def health_check(self) -> Dict[str, Any]:
         """Metadata system health check"""
+
+
+
         try:
             status = "healthy"
             
@@ -580,6 +613,9 @@ class MultimediaMetadata:
         
     async def _extract_file_info(self, file_path: str, metadata_set: MultimediaMetadataSet):
         """Extract basic file information"""
+
+
+
         try:
             path_obj = Path(file_path)
             stat_info = path_obj.stat()
@@ -740,6 +776,9 @@ class MultimediaMetadata:
                 
     async def _extract_geolocation(self, metadata_set: MultimediaMetadataSet):
         """Extract geolocation data from EXIF GPS tags"""
+
+
+
         try:
             gps_info = metadata_set.exif_data.get('GPSInfo')
             if not gps_info:
@@ -786,6 +825,9 @@ class MultimediaMetadata:
             
     async def _extract_custom_metadata(self, file_path: str, metadata_set: MultimediaMetadataSet):
         """Extract custom metadata using configured extractors"""
+
+
+
         try:
             for extractor_name, extractor_config in self.custom_extractors.items():
                 # This would implement custom metadata extraction logic
@@ -797,6 +839,9 @@ class MultimediaMetadata:
             
     async def _map_exif_to_metadata(self, tag: str, value: Any, metadata_set: MultimediaMetadataSet):
         """Map EXIF tags to structured metadata"""
+
+
+
         try:
             if tag == 'Make':
                 metadata_set.technical.camera_make = str(value)
@@ -828,6 +873,9 @@ class MultimediaMetadata:
             
     async def _map_audio_tags_to_metadata(self, key: str, value: Any, metadata_set: MultimediaMetadataSet):
         """Map audio tags to structured metadata"""
+
+
+
         try:
             key_lower = key.lower()
             
@@ -857,6 +905,9 @@ class MultimediaMetadata:
         category: MetadataCategory
     ):
         """Write metadata back to file (if supported)"""
+
+
+
         try:
             file_format = metadata_set.technical.file_format
             
@@ -904,6 +955,9 @@ class MultimediaMetadata:
         
     def _generate_cache_key(self, file_path: str) -> str:
         """Generate cache key for metadata"""
+
+
+
         try:
             stat_info = Path(file_path).stat()
             key_string = f"{file_path}_{stat_info.st_mtime}_{stat_info.st_size}"
@@ -913,6 +967,9 @@ class MultimediaMetadata:
             
     def _generate_file_id(self, file_path: str) -> str:
         """Generate unique file ID"""
+
+
+
         return hashlib.sha256(file_path.encode()).hexdigest()
         
     async def _calculate_checksum(self, file_path: str) -> str:
@@ -939,6 +996,9 @@ class MultimediaMetadata:
         
     def _matches_query(self, metadata_set: MultimediaMetadataSet, query: Dict[str, Any]) -> bool:
         """Check if metadata matches search query"""
+
+
+
         try:
             for key, value in query.items():
                 if key == 'format':

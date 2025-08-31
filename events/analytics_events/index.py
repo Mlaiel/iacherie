@@ -8,7 +8,7 @@ capabilities for multi-format content creators.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel - All rights reserved
-⚠️  WARNING: This code and concept are proprietary to Fahed Mlaiel.
+  WARNING: This code and concept are proprietary to Fahed Mlaiel.
     Any unauthorized use, copying, or distribution without explicit written 
     permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 
@@ -129,46 +129,46 @@ try:
     )
     
     IMPORTS_SUCCESSFUL = True
-    logger.info("✅ All analytics events modules imported successfully")
+    logger.info(" All analytics events modules imported successfully")
     
 except ImportError as e:
     IMPORTS_SUCCESSFUL = False
-    logger.error(f"❌ Failed to import analytics modules: {e}")
+    logger.error(f" Failed to import analytics modules: {e}")
     logger.warning("Some analytics features may not be available")
 
 
 def print_analytics_banner():
     """Print the ultra-advanced analytics events banner"""
     banner = """
-╔══════════════════════════════════════════════════════════════════════════════╗
-║                      ANALYTICS EVENTS SYSTEM - INDEX                        ║
-║                   IA-Influencer-Agent Ultra-Advanced                        ║
-║                                                                              ║
-║  📊 ULTRA-ADVANCED ANALYTICS EVENTS ORCHESTRATOR                           ║
-║  ════════════════════════════════════════════════════                      ║
-║                                                                              ║
-║  🎯 CORE ANALYTICS HANDLERS:                                                ║
-║  • Base Analytics Events         - ✅ Core Infrastructure                   ║
-║  • Engagement Analytics         - ✅ Real-time Tracking                    ║
-║  • Content Performance          - ✅ AI-Powered Analysis                   ║
-║  • Protection Analytics         - ✅ Advanced Fingerprinting               ║
-║  • Collaboration Analytics      - ✅ Creator Matching Engine               ║
-║  • Monetization Analytics       - ✅ Revenue Optimization                  ║
-║                                                                              ║
-║  🚀 ADVANCED FEATURES:                                                      ║
-║  • ML-Powered Predictions (6+ AI Models)                                   ║
-║  • Real-time Processing (<100ms latency)                                   ║
-║  • Statistical Analysis & Feature Engineering                              ║
-║  • Comprehensive Testing Suite                                             ║
-║  • Enterprise Configuration Management                                     ║
-║  • Multi-Platform Integration                                              ║
-║                                                                              ║
-║  🎵 SUPPORTED CREATORS: Musicians, Bloggers, Photographers, Influencers    ║
-║  🌐 PLATFORMS: YouTube, Instagram, TikTok, Twitter, Spotify, SoundCloud+   ║
-║                                                                              ║
-║  Author: Fahed Mlaiel (mlaiel@live.de)                                     ║
-║  ⚠️  PROPRIETARY SOFTWARE - ALL RIGHTS RESERVED                           ║
-╚══════════════════════════════════════════════════════════════════════════════╝
+
+                      ANALYTICS EVENTS SYSTEM - INDEX                        
+                   IA-Influencer-Agent Ultra-Advanced                        
+                                                                              
+   ULTRA-ADVANCED ANALYTICS EVENTS ORCHESTRATOR                           
+                        
+                                                                              
+   CORE ANALYTICS HANDLERS:                                                
+  • Base Analytics Events         -  Core Infrastructure                   
+  • Engagement Analytics         -  Real-time Tracking                    
+  • Content Performance          -  AI-Powered Analysis                   
+  • Protection Analytics         -  Advanced Fingerprinting               
+  • Collaboration Analytics      -  Creator Matching Engine               
+  • Monetization Analytics       -  Revenue Optimization                  
+                                                                              
+   ADVANCED FEATURES:                                                      
+  • ML-Powered Predictions (6+ AI Models)                                   
+  • Real-time Processing (<100ms latency)                                   
+  • Statistical Analysis & Feature Engineering                              
+  • Comprehensive Testing Suite                                             
+  • Enterprise Configuration Management                                     
+  • Multi-Platform Integration                                              
+                                                                              
+   SUPPORTED CREATORS: Musicians, Bloggers, Photographers, Influencers    
+   PLATFORMS: YouTube, Instagram, TikTok, Twitter, Spotify, SoundCloud+   
+                                                                              
+  Author: Fahed Mlaiel (mlaiel@live.de)                                     
+    PROPRIETARY SOFTWARE - ALL RIGHTS RESERVED                           
+
     """
     print(banner)
 
@@ -192,11 +192,14 @@ class AnalyticsEventsOrchestrator:
     
     async def initialize_system(self) -> bool:
         """Initialize the complete analytics events system"""
+
+
+
         try:
-            logger.info("🚀 Initializing Ultra-Advanced Analytics Events System...")
+            logger.info(" Initializing Ultra-Advanced Analytics Events System...")
             
             if not IMPORTS_SUCCESSFUL:
-                logger.error("❌ Cannot initialize system - import failures detected")
+                logger.error(" Cannot initialize system - import failures detected")
                 return False
             
             # Initialize all handlers
@@ -213,20 +216,23 @@ class AnalyticsEventsOrchestrator:
             
             if system_health:
                 self.system_status['initialized'] = True
-                logger.info("✅ Analytics Events System initialized successfully!")
-                logger.info(f"📊 Handlers loaded: {self.system_status['handlers_loaded']}")
-                logger.info(f"⚡ Processors active: {self.system_status['processors_active']}")
+                logger.info(" Analytics Events System initialized successfully!")
+                logger.info(f" Handlers loaded: {self.system_status['handlers_loaded']}")
+                logger.info(f" Processors active: {self.system_status['processors_active']}")
                 return True
             else:
-                logger.error("❌ System health check failed")
+                logger.error(" System health check failed")
                 return False
                 
         except Exception as e:
-            logger.error(f"❌ Failed to initialize analytics system: {str(e)}")
+            logger.error(f" Failed to initialize analytics system: {str(e)}")
             return False
     
     async def _initialize_handlers(self) -> None:
         """Initialize all analytics event handlers"""
+
+
+
         try:
             # Base engagement handler
             self.handlers['engagement'] = EngagementAnalyticsEventHandler(
@@ -264,14 +270,17 @@ class AnalyticsEventsOrchestrator:
             )
             
             self.system_status['handlers_loaded'] = len(self.handlers)
-            logger.info(f"✅ Initialized {len(self.handlers)} analytics handlers")
+            logger.info(f" Initialized {len(self.handlers)} analytics handlers")
             
         except Exception as e:
-            logger.error(f"❌ Error initializing handlers: {str(e)}")
+            logger.error(f" Error initializing handlers: {str(e)}")
             raise
     
     async def _configure_global_processor(self) -> None:
         """Configure the global event processor with all handlers"""
+
+
+
         try:
             # Register handlers with appropriate event categories
             global_event_processor.register_handler(
@@ -299,14 +308,17 @@ class AnalyticsEventsOrchestrator:
                 [EventCategory.REVENUE, EventCategory.MONETIZATION]
             )
             
-            logger.info("✅ Global event processor configured successfully")
+            logger.info(" Global event processor configured successfully")
             
         except Exception as e:
-            logger.error(f"❌ Error configuring global processor: {str(e)}")
+            logger.error(f" Error configuring global processor: {str(e)}")
             raise
     
     async def _start_background_processing(self) -> None:
         """Start background processing for all handlers"""
+
+
+
         try:
             active_processors = 0
             
@@ -314,19 +326,22 @@ class AnalyticsEventsOrchestrator:
                 try:
                     await handler.start_background_processing()
                     active_processors += 1
-                    logger.info(f"✅ Started background processing for {handler_name}")
+                    logger.info(f" Started background processing for {handler_name}")
                 except Exception as e:
-                    logger.warning(f"⚠️  Failed to start background processing for {handler_name}: {e}")
+                    logger.warning(f"  Failed to start background processing for {handler_name}: {e}")
             
             self.system_status['processors_active'] = active_processors
-            logger.info(f"✅ Started {active_processors} background processors")
+            logger.info(f" Started {active_processors} background processors")
             
         except Exception as e:
-            logger.error(f"❌ Error starting background processing: {str(e)}")
+            logger.error(f" Error starting background processing: {str(e)}")
             raise
     
     async def _verify_system_health(self) -> bool:
         """Verify the health of the analytics system"""
+
+
+
         try:
             health_checks = []
             
@@ -334,9 +349,9 @@ class AnalyticsEventsOrchestrator:
             try:
                 metrics = await global_event_processor.get_processor_metrics()
                 health_checks.append(True)
-                logger.info(f"📊 Global processor metrics: {metrics['processor_metrics']['total_events']} events processed")
+                logger.info(f" Global processor metrics: {metrics['processor_metrics']['total_events']} events processed")
             except Exception as e:
-                logger.warning(f"⚠️  Global processor health check failed: {e}")
+                logger.warning(f"  Global processor health check failed: {e}")
                 health_checks.append(False)
             
             # Check individual handlers
@@ -344,24 +359,27 @@ class AnalyticsEventsOrchestrator:
                 try:
                     handler_metrics = await handler.get_handler_metrics()
                     health_checks.append(handler_metrics['is_active'])
-                    logger.info(f"📈 {handler_name}: {handler_metrics['events_processed']} events processed")
+                    logger.info(f" {handler_name}: {handler_metrics['events_processed']} events processed")
                 except Exception as e:
-                    logger.warning(f"⚠️  {handler_name} health check failed: {e}")
+                    logger.warning(f"  {handler_name} health check failed: {e}")
                     health_checks.append(False)
             
             # System is healthy if at least 80% of checks pass
             health_score = sum(health_checks) / len(health_checks)
             is_healthy = health_score >= 0.8
             
-            logger.info(f"🏥 System health score: {health_score:.2f} ({'✅ Healthy' if is_healthy else '❌ Unhealthy'})")
+            logger.info(f" System health score: {health_score:.2f} ({' Healthy' if is_healthy else ' Unhealthy'})")
             return is_healthy
             
         except Exception as e:
-            logger.error(f"❌ Error verifying system health: {str(e)}")
+            logger.error(f" Error verifying system health: {str(e)}")
             return False
     
     async def get_system_status(self) -> Dict[str, Any]:
         """Get comprehensive system status"""
+
+
+
         try:
             # Get global processor metrics
             global_metrics = await global_event_processor.get_processor_metrics()
@@ -401,11 +419,14 @@ class AnalyticsEventsOrchestrator:
             return status
             
         except Exception as e:
-            logger.error(f"❌ Error getting system status: {str(e)}")
+            logger.error(f" Error getting system status: {str(e)}")
             return {'error': str(e)}
     
     async def process_sample_events(self) -> Dict[str, Any]:
         """Process sample events to demonstrate system capabilities"""
+
+
+
         try:
             logger.info("🧪 Processing sample analytics events...")
             
@@ -476,25 +497,28 @@ class AnalyticsEventsOrchestrator:
             revenue_results = await global_event_processor.process_event(revenue_event)
             results['monetization'] = revenue_results
             
-            logger.info("✅ Sample events processed successfully")
+            logger.info(" Sample events processed successfully")
             return results
             
         except Exception as e:
-            logger.error(f"❌ Error processing sample events: {str(e)}")
+            logger.error(f" Error processing sample events: {str(e)}")
             return {'error': str(e)}
     
     async def run_comprehensive_tests(self) -> Dict[str, Any]:
         """Run comprehensive test suite"""
+
+
+
         try:
             logger.info("🧪 Running comprehensive analytics test suite...")
             
             test_results = await run_comprehensive_test_suite()
             
-            logger.info("✅ Comprehensive test suite completed")
+            logger.info(" Comprehensive test suite completed")
             return test_results
             
         except Exception as e:
-            logger.error(f"❌ Error running tests: {str(e)}")
+            logger.error(f" Error running tests: {str(e)}")
             return {'error': str(e)}
 
 
@@ -504,44 +528,56 @@ global_analytics_orchestrator = AnalyticsEventsOrchestrator()
 
 async def initialize_analytics_system() -> bool:
     """Initialize the global analytics events system"""
+
+
+
     return await global_analytics_orchestrator.initialize_system()
 
 
 async def get_analytics_status() -> Dict[str, Any]:
     """Get analytics system status"""
+
+
+
     return await global_analytics_orchestrator.get_system_status()
 
 
 async def demo_analytics_capabilities() -> Dict[str, Any]:
     """Demonstrate analytics capabilities with sample data"""
+
+
+
     return await global_analytics_orchestrator.process_sample_events()
 
 
 async def test_analytics_system() -> Dict[str, Any]:
     """Test the analytics system comprehensively"""
+
+
+
     return await global_analytics_orchestrator.run_comprehensive_tests()
 
 
 def print_help():
     """Print help information for analytics events"""
     help_text = """
-🆘 Analytics Events System - Help
-════════════════════════════════
+ Analytics Events System - Help
 
-📊 AVAILABLE FUNCTIONS:
+
+ AVAILABLE FUNCTIONS:
   initialize_analytics_system()  - Initialize the complete system
   get_analytics_status()         - Get comprehensive system status
   demo_analytics_capabilities()  - Run demonstration with sample data
   test_analytics_system()        - Run comprehensive test suite
 
-🎯 EVENT CATEGORIES:
+ EVENT CATEGORIES:
   • Engagement Analytics     - Real-time engagement tracking
   • Content Performance      - AI-powered content analysis  
   • Protection Analytics     - Advanced content protection
   • Collaboration Analytics  - Creator matching and partnerships
   • Monetization Analytics   - Revenue optimization and forecasting
 
-🚀 ADVANCED FEATURES:
+ ADVANCED FEATURES:
   • ML-Powered Predictions (6+ AI Models)
   • Real-time Processing (<100ms latency)
   • Statistical Analysis & Feature Engineering
@@ -549,13 +585,13 @@ def print_help():
   • Comprehensive Testing Suite
   • Multi-Platform Integration
 
-🎵 SUPPORTED CREATORS:
+ SUPPORTED CREATORS:
   Musicians, Bloggers, Photographers, Influencers, Comedians, Video Creators
 
-🌐 SUPPORTED PLATFORMS:
+ SUPPORTED PLATFORMS:
   YouTube, Instagram, TikTok, Twitter, Spotify, SoundCloud, Twitch, LinkedIn
 
-⚠️  PROPRIETARY SOFTWARE
+  PROPRIETARY SOFTWARE
     Author: Fahed Mlaiel (mlaiel@live.de)
     All rights reserved. Unauthorized use prohibited.
 """
@@ -567,19 +603,19 @@ async def main():
     print_analytics_banner()
     
     if not IMPORTS_SUCCESSFUL:
-        logger.error("❌ Cannot start analytics system due to import failures")
+        logger.error(" Cannot start analytics system due to import failures")
         print("Please ensure all dependencies are installed:")
         print("pip install -r requirements.txt")
         return
     
-    logger.info("🚀 Starting Analytics Events System...")
+    logger.info(" Starting Analytics Events System...")
     
     # Initialize system
     success = await initialize_analytics_system()
     
     if success:
-        print("\n✅ Analytics Events System Ready!")
-        print("📊 Use the following functions to interact with the system:")
+        print("\n Analytics Events System Ready!")
+        print(" Use the following functions to interact with the system:")
         print("  • await get_analytics_status()")
         print("  • await demo_analytics_capabilities()")
         print("  • await test_analytics_system()")
@@ -587,13 +623,13 @@ async def main():
         
         # Show initial status
         status = await get_analytics_status()
-        print(f"\n📈 System Status:")
+        print(f"\n System Status:")
         print(f"  • Handlers Loaded: {status['system_status']['handlers_loaded']}")
         print(f"  • Processors Active: {status['system_status']['processors_active']}")
         print(f"  • Events Processed: {status['performance_metrics'].get('total_processing_time', 0):.2f}s total")
         
     else:
-        print("\n❌ Failed to initialize Analytics Events System")
+        print("\n Failed to initialize Analytics Events System")
         print("Check logs for detailed error information")
 
 

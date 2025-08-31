@@ -9,7 +9,7 @@ for comprehensive content surveillance and rights protection.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, modification, or distribution is strictly prohibited.
 Violators will face immediate legal action under German and international law.
@@ -112,6 +112,9 @@ class TikTokAPIManager:
     
     async def _initialize_business_api(self):
         """Initialize TikTok Business API with OAuth 2.0."""
+
+
+
         try:
             # TikTok Business API OAuth endpoint
             token_url = "https://business-api.tiktok.com/open_api/oauth2/access_token/"
@@ -213,6 +216,9 @@ class TikTokWebScraper:
     
     async def scrape_video_data(self, video_url: str) -> Optional[TikTokVideoData]:
         """Scrape comprehensive video data from TikTok video page."""
+
+
+
         try:
             self.driver.get(video_url)
             
@@ -257,6 +263,9 @@ class TikTokWebScraper:
     
     def _extract_video_from_state(self, state_data: Dict[str, Any], video_id: str) -> Optional[TikTokVideoData]:
         """Extract video data from TikTok initial state object."""
+
+
+
         try:
             # Navigate through TikTok's complex state structure
             video_detail = None
@@ -320,6 +329,9 @@ class TikTokWebScraper:
     
     def _extract_video_from_dom(self, video_id: str) -> Optional[TikTokVideoData]:
         """Fallback method to extract video data from DOM elements."""
+
+
+
         try:
             # Extract basic information from DOM
             title_element = self.driver.find_element(By.CSS_SELECTOR, "[data-e2e='browse-video-desc']")
@@ -377,6 +389,9 @@ class TikTokWebScraper:
     
     def _parse_count(self, count_text: str) -> int:
         """Parse count strings like '1.2M', '50.3K' to integers."""
+
+
+
         try:
             count_text = count_text.lower().strip()
             if 'm' in count_text:
@@ -390,6 +405,9 @@ class TikTokWebScraper:
     
     async def search_hashtag(self, hashtag: str, limit: int = 100) -> List[str]:
         """Search videos by hashtag and return video URLs."""
+
+
+
         try:
             search_url = f"https://www.tiktok.com/tag/{hashtag.replace('#', '')}"
             self.driver.get(search_url)
@@ -450,6 +468,9 @@ class TikTokCrawler(BaseCrawler):
     
     async def crawl_video(self, video_url: str) -> Optional[CrawlResult]:
         """Crawl comprehensive data for a specific TikTok video."""
+
+
+
         try:
             # Scrape video data
             video_data = await self.web_scraper.scrape_video_data(video_url)
@@ -499,6 +520,9 @@ class TikTokCrawler(BaseCrawler):
         time_range: Optional[timedelta] = None
     ) -> List[CrawlResult]:
         """Search for potentially infringing content on TikTok."""
+
+
+
         try:
             results = []
             
@@ -536,6 +560,9 @@ class TikTokCrawler(BaseCrawler):
         check_period: timedelta = timedelta(hours=24)
     ) -> List[CrawlResult]:
         """Monitor a specific user for new content."""
+
+
+
         try:
             user_url = f"https://www.tiktok.com/@{username}"
             self.web_scraper.driver.get(user_url)

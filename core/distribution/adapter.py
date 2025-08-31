@@ -154,6 +154,9 @@ class BasePlatformAdapter(ABC):
         
     async def initialize(self) -> bool:
         """Initialize the adapter."""
+
+
+
         try:
             # Create HTTP session
             self.session = aiohttp.ClientSession(
@@ -228,6 +231,9 @@ class BasePlatformAdapter(ABC):
     
     def _get_default_headers(self) -> Dict[str, str]:
         """Get default HTTP headers."""
+
+
+
         return {
             'User-Agent': f'IA-Influencer-Agent/{self.platform_name}/1.0',
             'Accept': 'application/json',
@@ -305,6 +311,9 @@ class BasePlatformAdapter(ABC):
     
     async def test_connection(self) -> bool:
         """Test connection to platform."""
+
+
+
         try:
             # This would make a simple API call to test connectivity
             # Implementation varies by platform
@@ -324,6 +333,9 @@ class YouTubeAdapter(BasePlatformAdapter):
     
     async def authenticate(self, credentials: PlatformCredentials) -> bool:
         """Authenticate with YouTube API."""
+
+
+
         try:
             # Test authentication with a simple API call
             headers = {
@@ -347,6 +359,9 @@ class YouTubeAdapter(BasePlatformAdapter):
     
     async def publish_content(self, request: PublicationRequest) -> PublicationResponse:
         """Publish video to YouTube."""
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -426,6 +441,9 @@ class YouTubeAdapter(BasePlatformAdapter):
     
     async def get_content_status(self, platform_id: str) -> Dict[str, Any]:
         """Get YouTube video status."""
+
+
+
         try:
             response = await self._make_api_request(
                 method='GET',
@@ -456,6 +474,9 @@ class YouTubeAdapter(BasePlatformAdapter):
     
     async def delete_content(self, platform_id: str) -> bool:
         """Delete YouTube video."""
+
+
+
         try:
             await self._make_api_request(
                 method='DELETE',
@@ -470,6 +491,9 @@ class YouTubeAdapter(BasePlatformAdapter):
     
     async def get_analytics(self, platform_id: str) -> Dict[str, Any]:
         """Get YouTube video analytics."""
+
+
+
         try:
             # Get basic statistics
             response = await self._make_api_request(
@@ -512,6 +536,9 @@ class YouTubeAdapter(BasePlatformAdapter):
     
     async def _upload_thumbnail(self, video_id: str, thumbnail_path: str) -> bool:
         """Upload video thumbnail."""
+
+
+
         try:
             with open(thumbnail_path, 'rb') as thumb_file:
                 files = {'thumbnail': thumb_file}
@@ -531,6 +558,9 @@ class YouTubeAdapter(BasePlatformAdapter):
     
     async def _upload_captions(self, video_id: str, captions_path: str) -> bool:
         """Upload video captions."""
+
+
+
         try:
             caption_metadata = {
                 'snippet': {
@@ -570,6 +600,9 @@ class InstagramAdapter(BasePlatformAdapter):
     
     async def authenticate(self, credentials: PlatformCredentials) -> bool:
         """Authenticate with Instagram API."""
+
+
+
         try:
             # Test authentication
             response = await self._make_api_request(
@@ -588,6 +621,9 @@ class InstagramAdapter(BasePlatformAdapter):
     
     async def publish_content(self, request: PublicationRequest) -> PublicationResponse:
         """Publish content to Instagram."""
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -725,6 +761,9 @@ class InstagramAdapter(BasePlatformAdapter):
     
     async def get_content_status(self, platform_id: str) -> Dict[str, Any]:
         """Get Instagram content status."""
+
+
+
         try:
             response = await self._make_api_request(
                 method='GET',
@@ -749,6 +788,9 @@ class InstagramAdapter(BasePlatformAdapter):
     
     async def delete_content(self, platform_id: str) -> bool:
         """Delete Instagram content."""
+
+
+
         try:
             await self._make_api_request(
                 method='DELETE',
@@ -763,6 +805,9 @@ class InstagramAdapter(BasePlatformAdapter):
     
     async def get_analytics(self, platform_id: str) -> Dict[str, Any]:
         """Get Instagram content analytics."""
+
+
+
         try:
             response = await self._make_api_request(
                 method='GET',
@@ -818,6 +863,9 @@ class PlatformAdapter:
     
     async def initialize(self) -> bool:
         """Initialize all platform adapters."""
+
+
+
         try:
             self.logger.info("Initializing Platform Adapter Manager")
             
@@ -856,14 +904,23 @@ class PlatformAdapter:
     
     def get_adapter(self, platform: str) -> Optional[BasePlatformAdapter]:
         """Get adapter for specific platform."""
+
+
+
         return self.adapters.get(platform)
     
     def is_platform_supported(self, platform: str) -> bool:
         """Check if platform is supported."""
+
+
+
         return platform in self.adapters
     
     def get_supported_platforms(self) -> List[str]:
         """Get list of supported platforms."""
+
+
+
         return list(self.adapters.keys())
     
     async def publish_to_platform(

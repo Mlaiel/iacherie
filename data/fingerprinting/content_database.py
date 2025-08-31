@@ -12,7 +12,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL WARNING ⚠️
+  CRITICAL WARNING 
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
 Any unauthorized use, reproduction, distribution, or reverse engineering 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -201,6 +201,9 @@ class ContentDatabaseManager:
     
     async def initialize(self):
         """Initialize database connections and schema"""
+
+
+
         try:
             # Initialize primary database (PostgreSQL)
             await self._initialize_postgresql()
@@ -224,6 +227,9 @@ class ContentDatabaseManager:
     
     async def _initialize_postgresql(self):
         """Initialize PostgreSQL connection"""
+
+
+
         try:
             db_url = getattr(self.config, 'postgresql_url', 
                            'postgresql://localhost:5432/fingerprinting')
@@ -245,6 +251,9 @@ class ContentDatabaseManager:
     
     async def _initialize_mongodb(self):
         """Initialize MongoDB connection"""
+
+
+
         try:
             mongo_url = getattr(self.config, 'mongodb_url', 
                               'mongodb://localhost:27017/fingerprinting')
@@ -261,6 +270,9 @@ class ContentDatabaseManager:
     
     async def _initialize_elasticsearch(self):
         """Initialize Elasticsearch connection"""
+
+
+
         try:
             es_url = getattr(self.config, 'elasticsearch_url', 
                            'http://localhost:9200')
@@ -279,6 +291,9 @@ class ContentDatabaseManager:
     
     async def _initialize_redis(self):
         """Initialize Redis connection"""
+
+
+
         try:
             redis_url = getattr(self.config, 'redis_url', 
                               'redis://localhost:6379')
@@ -308,6 +323,9 @@ class ContentDatabaseManager:
     
     async def _create_postgresql_schema(self):
         """Create PostgreSQL schema"""
+
+
+
         try:
             pool = self.connections[DatabaseType.POSTGRESQL]
             
@@ -385,6 +403,9 @@ class ContentDatabaseManager:
     
     async def _create_mongodb_schema(self):
         """Create MongoDB schema"""
+
+
+
         try:
             db = self.connections[DatabaseType.MONGODB]
             collection = db.content_records
@@ -406,6 +427,9 @@ class ContentDatabaseManager:
     
     async def _create_elasticsearch_schema(self):
         """Create Elasticsearch schema"""
+
+
+
         try:
             es = self.connections[DatabaseType.ELASTICSEARCH]
             
@@ -445,6 +469,9 @@ class ContentDatabaseManager:
     
     async def store_content_record(self, record: ContentRecord) -> str:
         """Store content record in database"""
+
+
+
         try:
             record.updated_at = datetime.utcnow()
             
@@ -600,6 +627,9 @@ class ContentDatabaseManager:
     
     async def get_content_record(self, fingerprint_id: str) -> Optional[ContentRecord]:
         """Retrieve content record by fingerprint ID"""
+
+
+
         try:
             # Try cache first
             cached_record = await self._get_cached_record(fingerprint_id)
@@ -737,6 +767,9 @@ class ContentDatabaseManager:
         options: QueryOptions
     ) -> List[ContentRecord]:
         """Query content records with filters"""
+
+
+
         try:
             if self.primary_db == DatabaseType.POSTGRESQL:
                 return await self._query_postgresql_records(options)
@@ -840,6 +873,9 @@ class ContentDatabaseManager:
         updates: Dict[str, Any]
     ) -> bool:
         """Update content record"""
+
+
+
         try:
             updates['updated_at'] = datetime.utcnow()
             
@@ -943,6 +979,9 @@ class ContentDatabaseManager:
     
     async def delete_content_record(self, fingerprint_id: str) -> bool:
         """Delete content record"""
+
+
+
         try:
             if self.primary_db == DatabaseType.POSTGRESQL:
                 success = await self._delete_postgresql_record(fingerprint_id)
@@ -978,6 +1017,9 @@ class ContentDatabaseManager:
     
     async def _delete_fallback_record(self, fingerprint_id: str) -> bool:
         """Delete record using fallback method"""
+
+
+
         return False
     
     async def _delete_secondary_records(self, fingerprint_id: str):
@@ -1013,6 +1055,9 @@ class ContentDatabaseManager:
         limit: int = 10
     ) -> List[Tuple[ContentRecord, float]]:
         """Find similar content using vector similarity"""
+
+
+
         try:
             if DatabaseType.ELASTICSEARCH in self.connections:
                 return await self._find_similar_elasticsearch(vector_embedding, threshold, limit)
@@ -1120,6 +1165,9 @@ class ContentDatabaseManager:
     
     async def _update_statistics(self):
         """Update database statistics"""
+
+
+
         try:
             if self.primary_db == DatabaseType.POSTGRESQL:
                 await self._update_postgresql_stats()
@@ -1167,6 +1215,9 @@ class ContentDatabaseManager:
     
     async def cleanup_expired_records(self) -> int:
         """Clean up expired records"""
+
+
+
         try:
             current_time = datetime.utcnow()
             
@@ -1197,6 +1248,9 @@ class ContentDatabaseManager:
     
     async def close(self):
         """Close all database connections"""
+
+
+
         try:
             # Close PostgreSQL pool
             if DatabaseType.POSTGRESQL in self.connection_pools:
@@ -1217,6 +1271,9 @@ class ContentDatabaseManager:
     
     def _dict_to_metadata(self, metadata_dict: Dict[str, Any]) -> Optional[ContentMetadata]:
         """Convert dictionary to ContentMetadata object"""
+
+
+
         try:
             # Create ContentMetadata from dictionary
             metadata = ContentMetadata(

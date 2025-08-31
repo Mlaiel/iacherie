@@ -122,6 +122,9 @@ class MongoDBConnectionPool(IConnectionPool):
     
     async def initialize(self) -> bool:
         """Initialize MongoDB connection and database"""
+
+
+
         try:
             # Build connection URI
             connection_uri = self._build_connection_uri()
@@ -179,11 +182,11 @@ class MongoDBConnectionPool(IConnectionPool):
             if self.config.enable_monitoring:
                 self._health_check_task = asyncio.create_task(self._health_monitor())
             
-            logger.info(f"✅ MongoDB pool initialized - Database: {self.connection_info.database}")
+            logger.info(f" MongoDB pool initialized - Database: {self.connection_info.database}")
             return True
             
         except Exception as e:
-            logger.error(f"❌ MongoDB pool initialization failed: {e}")
+            logger.error(f" MongoDB pool initialization failed: {e}")
             self.state = ConnectionState.FAILED
             return False
     
@@ -366,7 +369,7 @@ class MongoDBConnectionPool(IConnectionPool):
                         except Exception as e:
                             logger.warning(f"Index creation failed for {collection_name}: {e}")
                 
-                logger.info(f"✅ Collection {collection_name} initialized")
+                logger.info(f" Collection {collection_name} initialized")
                 
             except Exception as e:
                 logger.error(f"Failed to initialize collection {collection_name}: {e}")
@@ -405,7 +408,7 @@ class MongoDBConnectionPool(IConnectionPool):
                         )
                     )
                     self._change_stream_tasks[collection_name] = task
-                    logger.info(f"✅ Change stream started for {collection_name}")
+                    logger.info(f" Change stream started for {collection_name}")
                 except Exception as e:
                     logger.error(f"Failed to start change stream for {collection_name}: {e}")
     
@@ -428,18 +431,24 @@ class MongoDBConnectionPool(IConnectionPool):
     
     async def _handle_protection_alert(self, change: Dict) -> None:
         """Handle new protection alert"""
+
+
+
         try:
             document = change.get("fullDocument", {})
-            logger.info(f"🚨 New protection alert: {document.get('detected_url')} on {document.get('platform')}")
+            logger.info(f" New protection alert: {document.get('detected_url')} on {document.get('platform')}")
             # Add notification logic here
         except Exception as e:
             logger.error(f"Error handling protection alert: {e}")
     
     async def _handle_revenue_update(self, change: Dict) -> None:
         """Handle revenue update"""
+
+
+
         try:
             document = change.get("fullDocument", {})
-            logger.info(f"💰 Revenue update: {document.get('revenue_amount')} {document.get('currency', 'EUR')}")
+            logger.info(f" Revenue update: {document.get('revenue_amount')} {document.get('currency', 'EUR')}")
             # Add revenue processing logic here
         except Exception as e:
             logger.error(f"Error handling revenue update: {e}")
@@ -468,6 +477,9 @@ class MongoDBConnectionPool(IConnectionPool):
     
     async def insert_content_fingerprint(self, fingerprint_data: Dict[str, Any]) -> bson.ObjectId:
         """Insert content fingerprint with validation"""
+
+
+
         try:
             collection = await self.get_collection("content_fingerprints")
             result = await collection.insert_one(fingerprint_data)
@@ -485,6 +497,9 @@ class MongoDBConnectionPool(IConnectionPool):
     async def find_similar_fingerprints(self, vector_embedding: List[float], 
                                        content_type: str, threshold: float = 0.8) -> List[Dict]:
         """Find similar content fingerprints using vector similarity"""
+
+
+
         try:
             collection = await self.get_collection("content_fingerprints")
             
@@ -573,6 +588,9 @@ class MongoDBConnectionPool(IConnectionPool):
     async def aggregate_revenue_stats(self, user_id: bson.ObjectId, 
                                     start_date: datetime, end_date: datetime) -> Dict[str, Any]:
         """Aggregate revenue statistics for user"""
+
+
+
         try:
             collection = await self.get_collection("revenue_tracking")
             
@@ -629,6 +647,9 @@ class MongoDBConnectionPool(IConnectionPool):
     
     async def health_check(self) -> bool:
         """Check MongoDB health"""
+
+
+
         try:
             # Ping the database
             await self.client.admin.command('ping')
@@ -664,6 +685,9 @@ class MongoDBConnectionPool(IConnectionPool):
     
     async def _update_collection_stats(self) -> None:
         """Update collection statistics"""
+
+
+
         try:
             for collection_name in self.collections:
                 collection = self.collections[collection_name]
@@ -694,6 +718,9 @@ class MongoDBConnectionPool(IConnectionPool):
     
     async def close(self) -> None:
         """Close MongoDB pool"""
+
+
+
         try:
             self.state = ConnectionState.CLOSED
             
@@ -704,7 +731,7 @@ class MongoDBConnectionPool(IConnectionPool):
                     await task
                 except asyncio.CancelledError:
                     pass
-                logger.info(f"✅ Change stream {task_name} closed")
+                logger.info(f" Change stream {task_name} closed")
             
             # Cancel health monitoring
             if self._health_check_task:
@@ -718,7 +745,7 @@ class MongoDBConnectionPool(IConnectionPool):
             if self.client:
                 self.client.close()
             
-            logger.info("✅ MongoDB pool closed")
+            logger.info(" MongoDB pool closed")
             
         except Exception as e:
             logger.error(f"Error closing MongoDB pool: {e}")

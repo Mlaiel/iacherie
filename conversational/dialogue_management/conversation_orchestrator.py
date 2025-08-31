@@ -8,7 +8,7 @@ for content creators across different platforms and collaboration scenarios.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -964,6 +964,9 @@ class ConversationOrchestrator:
 
     async def _persist_orchestration(self, context: OrchestrationContext):
         """Persist orchestration context to Redis"""
+
+
+
         try:
             # Serialize context for storage
             context_data = {
@@ -1107,6 +1110,9 @@ class ConversationOrchestrator:
 
     def get_orchestration_metrics(self) -> Dict[str, Any]:
         """Get overall orchestration metrics"""
+
+
+
         return {
             "current_metrics": self.metrics,
             "active_orchestrations": len(self.active_orchestrations),

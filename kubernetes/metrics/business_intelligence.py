@@ -5,7 +5,7 @@ Advanced business intelligence with ML-powered analytics and revenue optimizatio
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 
-⚠️  AVERTISSEMENT LÉGAL STRICT ⚠️
+  AVERTISSEMENT LÉGAL STRICT 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et fera l'objet de poursuites 
@@ -284,6 +284,9 @@ class BusinessIntelligenceEngine:
     
     async def start(self) -> None:
         """Start business intelligence engine"""
+
+
+
         try:
             if self._running:
                 self.logger.warning("Business Intelligence Engine already running")
@@ -329,6 +332,9 @@ class BusinessIntelligenceEngine:
     
     async def stop(self) -> None:
         """Stop business intelligence engine"""
+
+
+
         try:
             self._running = False
             
@@ -358,6 +364,9 @@ class BusinessIntelligenceEngine:
         time_range: str = "30d"
     ) -> Dict[str, BusinessKPI]:
         """Calculate comprehensive business KPIs"""
+
+
+
         try:
             kpis = {}
             
@@ -418,6 +427,9 @@ class BusinessIntelligenceEngine:
         analysis_type: AnalysisType = AnalysisType.DESCRIPTIVE
     ) -> Dict[str, Any]:
         """Analyze customer behavior patterns"""
+
+
+
         try:
             # Get customer data
             customer_data = await self._get_customer_data(tenant_id)
@@ -459,6 +471,9 @@ class BusinessIntelligenceEngine:
         forecast_days: int = 30
     ) -> RevenueAnalysis:
         """Predict revenue using ML models"""
+
+
+
         try:
             # Get historical revenue data
             revenue_data = await self._get_revenue_data(tenant_id)
@@ -550,6 +565,9 @@ class BusinessIntelligenceEngine:
         tenant_id: Optional[str] = None
     ) -> Dict[str, CustomerInsight]:
         """Predict customer churn using ML models"""
+
+
+
         try:
             # Get customer data
             customer_data = await self._get_customer_data(tenant_id)
@@ -619,6 +637,9 @@ class BusinessIntelligenceEngine:
         tenant_id: Optional[str] = None
     ) -> RevenueBreakdown:
         """Analyze revenue performance and trends"""
+
+
+
         try:
             end_time = datetime.utcnow()
             start_time = end_time - time_period
@@ -676,6 +697,9 @@ class BusinessIntelligenceEngine:
         tenant_id: Optional[str] = None
     ) -> Dict[str, Any]:
         """Analyze user engagement metrics"""
+
+
+
         try:
             end_time = datetime.utcnow()
             start_time = end_time - time_period
@@ -733,6 +757,9 @@ class BusinessIntelligenceEngine:
         tenant_id: Optional[str] = None
     ) -> Dict[str, Any]:
         """Analyze content performance metrics"""
+
+
+
         try:
             end_time = datetime.utcnow()
             start_time = end_time - time_period
@@ -799,6 +826,9 @@ class BusinessIntelligenceEngine:
         tenant_id: Optional[str] = None
     ) -> List[BusinessKPI]:
         """Calculate key business KPIs"""
+
+
+
         try:
             kpis = []
             
@@ -883,6 +913,9 @@ class BusinessIntelligenceEngine:
         tenant_id: Optional[str] = None
     ) -> Dict[str, Any]:
         """Generate comprehensive business report"""
+
+
+
         try:
             report = {
                 "report_type": report_type,
@@ -953,6 +986,9 @@ class BusinessIntelligenceEngine:
         tenant_id: Optional[str] = None
     ) -> Dict[str, Any]:
         """Forecast business metrics using machine learning"""
+
+
+
         try:
             # Get historical data
             end_time = datetime.utcnow()
@@ -1028,6 +1064,9 @@ class BusinessIntelligenceEngine:
         time_period: timedelta = timedelta(days=30)
     ) -> Dict[str, Any]:
         """Compare performance across multiple tenants"""
+
+
+
         try:
             comparison = {
                 "time_period": {
@@ -1094,6 +1133,9 @@ class BusinessIntelligenceEngine:
         tenant_id: Optional[str] = None
     ) -> List[Dict[str, Any]]:
         """Get revenue data from storage"""
+
+
+
         try:
             # This would fetch from actual revenue tracking storage
             # Placeholder implementation
@@ -1140,6 +1182,9 @@ class BusinessIntelligenceEngine:
         tenant_id: Optional[str] = None
     ) -> List[Dict[str, Any]]:
         """Get user activity data"""
+
+
+
         try:
             # This would fetch from actual user activity storage
             # Placeholder implementation
@@ -1179,6 +1224,9 @@ class BusinessIntelligenceEngine:
     
     def _calculate_daily_active_users(self, activity_data: List[Dict]) -> Dict[str, int]:
         """Calculate daily active users from activity data"""
+
+
+
         try:
             daily_users = {}
             
@@ -1200,6 +1248,9 @@ class BusinessIntelligenceEngine:
     
     def _create_empty_revenue_breakdown(self) -> RevenueBreakdown:
         """Create empty revenue breakdown"""
+
+
+
         return RevenueBreakdown(
             total_revenue=0.0,
             revenue_by_platform={},
@@ -1233,6 +1284,9 @@ class BusinessIntelligenceEngine:
     
     def _initialize_business_targets(self) -> Dict[str, float]:
         """Initialize business targets"""
+
+
+
         return {
             "monthly_revenue": 100000.0,  # EUR
             "monthly_active_users": 10000,
@@ -1244,6 +1298,9 @@ class BusinessIntelligenceEngine:
     
     def _initialize_kpi_thresholds(self) -> Dict[str, Dict[str, float]]:
         """Initialize KPI thresholds"""
+
+
+
         return {
             "revenue": {
                 "excellent": 1.2,

@@ -113,6 +113,9 @@ class ImageFingerprintEngine:
     
     async def _load_image(self, image_path: Path) -> Optional[np.ndarray]:
         """Load and preprocess image"""
+
+
+
         try:
             # Load with OpenCV (BGR format)
             image = cv2.imread(str(image_path))
@@ -144,6 +147,9 @@ class ImageFingerprintEngine:
     
     async def _get_image_info(self, image_path: Path, image: np.ndarray) -> Dict[str, any]:
         """Extract image metadata"""
+
+
+
         try:
             height, width, channels = image.shape
             
@@ -170,6 +176,9 @@ class ImageFingerprintEngine:
     
     async def _extract_perceptual_hash(self, image: np.ndarray) -> Dict[str, any]:
         """Extract multiple perceptual hash fingerprints"""
+
+
+
         try:
             # Convert BGR to RGB for PIL
             rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -211,6 +220,9 @@ class ImageFingerprintEngine:
     
     async def _extract_histogram_features(self, image: np.ndarray) -> Dict[str, any]:
         """Extract color histogram features"""
+
+
+
         try:
             # Convert to different color spaces for comprehensive analysis
             hsv_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
@@ -257,6 +269,9 @@ class ImageFingerprintEngine:
     
     async def _extract_dominant_colors(self, image: np.ndarray, k: int = 5) -> List[List[int]]:
         """Extract dominant colors using K-means clustering"""
+
+
+
         try:
             # Reshape image to be a list of pixels
             pixels = image.reshape((-1, 3)).astype(np.float32)
@@ -277,6 +292,9 @@ class ImageFingerprintEngine:
     
     async def _extract_sift_features(self, image: np.ndarray) -> Dict[str, any]:
         """Extract SIFT (Scale-Invariant Feature Transform) features"""
+
+
+
         try:
             # Convert to grayscale
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -326,6 +344,9 @@ class ImageFingerprintEngine:
     
     async def _extract_texture_features(self, image: np.ndarray) -> Dict[str, any]:
         """Extract texture analysis features"""
+
+
+
         try:
             # Convert to grayscale for texture analysis
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -363,6 +384,9 @@ class ImageFingerprintEngine:
     
     async def _calculate_lbp(self, gray_image: np.ndarray) -> np.ndarray:
         """Calculate Local Binary Pattern histogram"""
+
+
+
         try:
             # Simple LBP implementation
             height, width = gray_image.shape
@@ -398,6 +422,9 @@ class ImageFingerprintEngine:
     
     async def _calculate_gabor_features(self, gray_image: np.ndarray) -> np.ndarray:
         """Calculate Gabor filter responses for texture analysis"""
+
+
+
         try:
             # Define Gabor filter parameters
             orientations = [0, 45, 90, 135]  # degrees
@@ -426,6 +453,9 @@ class ImageFingerprintEngine:
     
     async def _calculate_edge_features(self, gray_image: np.ndarray) -> np.ndarray:
         """Calculate edge-based texture features"""
+
+
+
         try:
             # Sobel edge detection
             sobel_x = cv2.Sobel(gray_image, cv2.CV_64F, 1, 0, ksize=3)
@@ -456,6 +486,9 @@ class ImageFingerprintEngine:
     
     def _generate_combined_hash(self, methods_data: Dict[str, any]) -> str:
         """Generate combined hash from all fingerprinting methods"""
+
+
+
         try:
             hash_parts = []
             
@@ -536,6 +569,9 @@ class ImageFingerprintEngine:
         method: str
     ) -> float:
         """Compare two fingerprints using specific method"""
+
+
+
         try:
             if 'error' in data1 or 'error' in data2:
                 return 0.0
@@ -557,6 +593,9 @@ class ImageFingerprintEngine:
     
     def _compare_perceptual_hash(self, data1: Dict, data2: Dict) -> float:
         """Compare perceptual hash fingerprints"""
+
+
+
         try:
             hashes1 = data1.get('hashes', {})
             hashes2 = data2.get('hashes', {})
@@ -591,6 +630,9 @@ class ImageFingerprintEngine:
     
     def _compare_histogram(self, data1: Dict, data2: Dict) -> float:
         """Compare histogram features"""
+
+
+
         try:
             # Compare BGR histograms
             bgr_hists1 = data1.get('bgr_histograms', [])
@@ -627,6 +669,9 @@ class ImageFingerprintEngine:
     
     def _compare_sift_features(self, data1: Dict, data2: Dict) -> float:
         """Compare SIFT features"""
+
+
+
         try:
             stats1 = data1.get('descriptor_stats', {})
             stats2 = data2.get('descriptor_stats', {})
@@ -655,6 +700,9 @@ class ImageFingerprintEngine:
     
     def _compare_texture_analysis(self, data1: Dict, data2: Dict) -> float:
         """Compare texture analysis features"""
+
+
+
         try:
             # Compare LBP histograms
             lbp1 = np.array(data1.get('lbp_histogram', []))
@@ -727,6 +775,9 @@ class ImageFingerprintEngine:
     
     def get_engine_info(self) -> Dict[str, any]:
         """Get engine configuration and capabilities"""
+
+
+
         return {
             'engine': 'ImageFingerprintEngine',
             'version': '1.0.0',

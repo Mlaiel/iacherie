@@ -1,5 +1,5 @@
 """
-💰 Enterprise Revenue Monitoring Crawler
+ Enterprise Revenue Monitoring Crawler
 ========================================
 
 Advanced monetization tracking and revenue surveillance system for multi-platform
@@ -31,7 +31,7 @@ Supported Monetization Platforms:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
+ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
 """
@@ -227,6 +227,9 @@ class RevenueMonitoringCrawler(BasePlatformCrawler):
                                     start_date: datetime, 
                                     end_date: datetime) -> List[RevenueMetrics]:
         """Crawl YouTube monetization data using YouTube Analytics API."""
+
+
+
         try:
             # YouTube Analytics API call for revenue data
             api_response = await self.platform_apis.call_api(
@@ -278,6 +281,9 @@ class RevenueMonitoringCrawler(BasePlatformCrawler):
                                    start_date: datetime, 
                                    end_date: datetime) -> List[RevenueMetrics]:
         """Crawl TikTok Creator Fund and brand partnership revenue."""
+
+
+
         try:
             # TikTok Creator Fund API integration
             api_response = await self.platform_apis.call_api(
@@ -325,6 +331,9 @@ class RevenueMonitoringCrawler(BasePlatformCrawler):
                                       start_date: datetime, 
                                       end_date: datetime) -> List[RevenueMetrics]:
         """Crawl Instagram Creator Fund and branded content revenue."""
+
+
+
         try:
             # Instagram Creator API for monetization insights
             api_response = await self.platform_apis.call_api(
@@ -377,6 +386,9 @@ class RevenueMonitoringCrawler(BasePlatformCrawler):
                                     start_date: datetime, 
                                     end_date: datetime) -> List[RevenueMetrics]:
         """Crawl Spotify royalty and streaming revenue data."""
+
+
+
         try:
             # Spotify for Artists API integration
             api_response = await self.platform_apis.call_api(
@@ -428,6 +440,9 @@ class RevenueMonitoringCrawler(BasePlatformCrawler):
                                      start_date: datetime, 
                                      end_date: datetime) -> List[RevenueMetrics]:
         """Crawl Facebook Creator Bonus and ad revenue."""
+
+
+
         try:
             # Facebook Graph API for creator insights
             api_response = await self.platform_apis.call_api(
@@ -479,6 +494,9 @@ class RevenueMonitoringCrawler(BasePlatformCrawler):
                                    start_date: datetime, 
                                    end_date: datetime) -> List[RevenueMetrics]:
         """Crawl Twitch Partner Program revenue and subscription data."""
+
+
+
         try:
             # Twitch API for analytics and revenue
             api_response = await self.platform_apis.call_api(
@@ -529,6 +547,9 @@ class RevenueMonitoringCrawler(BasePlatformCrawler):
                                     start_date: datetime, 
                                     end_date: datetime) -> List[RevenueMetrics]:
         """Crawl Patreon subscription revenue and patron data."""
+
+
+
         try:
             # Patreon API for creator earnings
             api_response = await self.platform_apis.call_api(
@@ -574,6 +595,9 @@ class RevenueMonitoringCrawler(BasePlatformCrawler):
                                      start_date: datetime, 
                                      end_date: datetime) -> List[RevenueMetrics]:
         """Crawl OnlyFans subscription and tip revenue."""
+
+
+
         try:
             # OnlyFans API integration (limited public API)
             # Note: OnlyFans has restricted API access, using estimation methods
@@ -726,6 +750,9 @@ class RevenueMonitoringCrawler(BasePlatformCrawler):
     
     async def _calculate_indirect_impact(self, alert: UnauthorizedUsageAlert) -> Dict[str, Any]:
         """Calculate indirect impact including brand damage and lost opportunities."""
+
+
+
         return {
             "brand_impact_score": 0.7,  # Scale 0-1
             "lost_collaborations": 2,
@@ -882,6 +909,9 @@ class UnauthorizedUsageDetector:
     
     def _create_usage_alert(self, content: Dict, similarity: float) -> UnauthorizedUsageAlert:
         """Create unauthorized usage alert from detected content."""
+
+
+
         return UnauthorizedUsageAlert(
             original_content_id="original_123",
             infringing_url=content.get("url", ""),
@@ -1020,6 +1050,9 @@ class RevenueAlertManager:
     
     async def _create_anomaly_alert(self, metric: RevenueMetrics) -> Dict[str, Any]:
         """Create anomaly alert for unusual revenue pattern."""
+
+
+
         return {
             "type": "anomaly",
             "platform": metric.platform,
@@ -1032,6 +1065,9 @@ class RevenueAlertManager:
     
     async def _create_threshold_alert(self, metric: RevenueMetrics) -> Dict[str, Any]:
         """Create threshold breach alert."""
+
+
+
         return {
             "type": "threshold_breach",
             "platform": metric.platform,

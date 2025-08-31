@@ -133,6 +133,9 @@ class BaseValidator(ABC):
     
     def _check_file_accessibility(self, file_path: Path) -> bool:
         """Check if file is accessible and readable"""
+
+
+
         try:
             return file_path.exists() and file_path.is_file() and file_path.stat().st_size > 0
         except:
@@ -150,6 +153,9 @@ class AudioValidator(BaseValidator):
     
     def _initialize_rules(self) -> List[ValidationRule]:
         """Initialize audio validation rules"""
+
+
+
         return [
             ValidationRule(
                 name="file_accessibility",
@@ -360,6 +366,9 @@ class AudioValidator(BaseValidator):
     async def _calculate_quality_score(self, content_path: Path, 
                                      result: ValidationResult) -> float:
         """Calculate overall audio quality score"""
+
+
+
         try:
             audio, sr = librosa.load(str(content_path), sr=None)
             
@@ -491,6 +500,9 @@ class VideoValidator(BaseValidator):
     
     def _initialize_rules(self) -> List[ValidationRule]:
         """Initialize video validation rules"""
+
+
+
         return [
             ValidationRule(
                 name="file_accessibility",
@@ -774,6 +786,9 @@ class VideoValidator(BaseValidator):
     async def _calculate_quality_score(self, content_path: Path, 
                                      result: ValidationResult) -> float:
         """Calculate overall video quality score"""
+
+
+
         try:
             quality_factors = []
             
@@ -910,6 +925,9 @@ class ImageValidator(BaseValidator):
     
     def _initialize_rules(self) -> List[ValidationRule]:
         """Initialize image validation rules"""
+
+
+
         return [
             ValidationRule(
                 name="file_accessibility",
@@ -1162,6 +1180,9 @@ class ImageValidator(BaseValidator):
     async def _calculate_quality_score(self, content_path: Path, 
                                      result: ValidationResult) -> float:
         """Calculate overall image quality score"""
+
+
+
         try:
             quality_factors = []
             
@@ -1425,6 +1446,9 @@ class MediaValidator:
     
     def get_supported_formats(self) -> Dict[ContentFormat, List[str]]:
         """Get all supported formats by content type"""
+
+
+
         return {
             ContentFormat.AUDIO: [fmt.value for fmt in AudioFormat],
             ContentFormat.VIDEO: [fmt.value for fmt in VideoFormat],

@@ -96,9 +96,9 @@ class PlatformValidator:
             }
             
             if overall_result['overall_status'] == 'PASS':
-                logger.info("✅ Ecosystem validation PASSED - All systems operational")
+                logger.info(" Ecosystem validation PASSED - All systems operational")
             else:
-                logger.error("❌ Ecosystem validation FAILED - Issues detected")
+                logger.error(" Ecosystem validation FAILED - Issues detected")
             
             return overall_result
             
@@ -117,6 +117,9 @@ class PlatformValidator:
     
     def _validate_platform_registry(self) -> Dict[str, Any]:
         """Validate platform registry completeness"""
+
+
+
         try:
             expected_platforms = 28  # Based on requirements
             actual_platforms = len(PLATFORM_REGISTRY)
@@ -169,6 +172,9 @@ class PlatformValidator:
     
     def _validate_platform_factory(self) -> Dict[str, Any]:
         """Validate platform factory functionality"""
+
+
+
         try:
             # Test factory methods
             available_platforms = get_available_platforms()
@@ -355,7 +361,7 @@ class PlatformValidator:
         """Generate human-readable validation report"""
         report = []
         report.append("=" * 80)
-        report.append("🔍 PLATFORM ECOSYSTEM VALIDATION REPORT")
+        report.append(" PLATFORM ECOSYSTEM VALIDATION REPORT")
         report.append("=" * 80)
         report.append("")
         
@@ -363,25 +369,25 @@ class PlatformValidator:
         summary = validation_results.get('summary', {})
         status = validation_results.get('overall_status', 'UNKNOWN')
         
-        report.append(f"📊 OVERALL STATUS: {status}")
-        report.append(f"⏱️  VALIDATION TIME: {validation_results.get('validation_timestamp', 'N/A')}")
-        report.append(f"⚡ DURATION: {validation_results.get('validation_duration_seconds', 0):.2f} seconds")
-        report.append(f"🎯 PLATFORMS SUPPORTED: {validation_results.get('total_platforms_supported', 0)}")
+        report.append(f" OVERALL STATUS: {status}")
+        report.append(f"⏱  VALIDATION TIME: {validation_results.get('validation_timestamp', 'N/A')}")
+        report.append(f" DURATION: {validation_results.get('validation_duration_seconds', 0):.2f} seconds")
+        report.append(f" PLATFORMS SUPPORTED: {validation_results.get('total_platforms_supported', 0)}")
         report.append("")
         
         # Validation summary
-        report.append("📈 VALIDATION SUMMARY:")
-        report.append(f"   ✅ Total Validations: {summary.get('total_validations', 0)}")
-        report.append(f"   ✅ Passed: {summary.get('passed_validations', 0)}")
-        report.append(f"   ❌ Failed: {summary.get('failed_validations', 0)}")
-        report.append(f"   🚨 Errors: {summary.get('total_errors', 0)}")
-        report.append(f"   ⚠️  Warnings: {summary.get('total_warnings', 0)}")
+        report.append(" VALIDATION SUMMARY:")
+        report.append(f"    Total Validations: {summary.get('total_validations', 0)}")
+        report.append(f"    Passed: {summary.get('passed_validations', 0)}")
+        report.append(f"    Failed: {summary.get('failed_validations', 0)}")
+        report.append(f"    Errors: {summary.get('total_errors', 0)}")
+        report.append(f"     Warnings: {summary.get('total_warnings', 0)}")
         report.append("")
         
         # Detailed results
-        report.append("📋 DETAILED RESULTS:")
+        report.append(" DETAILED RESULTS:")
         for category, result in validation_results.get('validation_results', {}).items():
-            status_icon = "✅" if result.get('status') == 'PASS' else "❌" if result.get('status') == 'FAIL' else "⚠️"
+            status_icon = "" if result.get('status') == 'PASS' else "" if result.get('status') == 'FAIL' else ""
             report.append(f"   {status_icon} {category.replace('_', ' ').title()}: {result.get('status', 'UNKNOWN')}")
         
         report.append("")
@@ -389,17 +395,17 @@ class PlatformValidator:
         # Errors
         errors = validation_results.get('errors', [])
         if errors:
-            report.append("🚨 ERRORS:")
+            report.append(" ERRORS:")
             for error in errors:
-                report.append(f"   ❌ {error}")
+                report.append(f"    {error}")
             report.append("")
         
         # Warnings
         warnings = validation_results.get('warnings', [])
         if warnings:
-            report.append("⚠️ WARNINGS:")
+            report.append(" WARNINGS:")
             for warning in warnings:
-                report.append(f"   ⚠️ {warning}")
+                report.append(f"    {warning}")
             report.append("")
         
         # Footer
@@ -418,6 +424,9 @@ async def validate_platform_ecosystem() -> Dict[str, Any]:
 
 def quick_validation() -> bool:
     """Quick validation check - returns True if basic functionality works"""
+
+
+
     try:
         # Check basic imports
         from . import base, distributor, aggregator, monitor, connector
@@ -441,11 +450,17 @@ def quick_validation() -> bool:
 
 async def async_quick_validation() -> bool:
     """Async version of quick validation check"""
+
+
+
     return quick_validation()
 
 
 def get_ecosystem_health() -> Dict[str, Any]:
     """Get current ecosystem health status"""
+
+
+
     try:
         return {
             'status': 'HEALTHY',
@@ -468,7 +483,7 @@ if __name__ == "__main__":
     import asyncio
     
     async def main():
-        print("🔍 Running Platform Ecosystem Validation...")
+        print(" Running Platform Ecosystem Validation...")
         results = await validate_platform_ecosystem()
         
         validator = PlatformValidator()

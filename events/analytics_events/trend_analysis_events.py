@@ -6,7 +6,7 @@ Provides comprehensive trend tracking, viral content identification, and future 
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel - All rights reserved
-⚠️  WARNING: This code and concept are proprietary to Fahed Mlaiel.
+  WARNING: This code and concept are proprietary to Fahed Mlaiel.
     Any unauthorized use, copying, or distribution without explicit written 
     permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 
@@ -119,6 +119,9 @@ class TrendAnalysisEvent(BaseEvent):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert trend analysis event to dictionary"""
+
+
+
         return {
             **asdict(self),
             'trend_type': self.trend_type.value,
@@ -175,6 +178,9 @@ class TrendAnalysisEventHandler(BaseEventHandler):
         
     async def handle(self, event: TrendAnalysisEvent) -> Dict[str, Any]:
         """Process trend analysis event with comprehensive insights"""
+
+
+
         try:
             # Validate event data
             await self._validate_event(event)

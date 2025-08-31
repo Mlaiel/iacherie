@@ -1,5 +1,5 @@
 """
-🛡️ Protection Enforcer - IA Influencer Agent Surveillance Module
+ Protection Enforcer - IA Influencer Agent Surveillance Module
 ==============================================================
 
 Advanced protection enforcement system that coordinates all protective measures,
@@ -201,6 +201,9 @@ class TakedownRequestAction(BaseProtectionAction):
     
     async def _execute_action(self, incident: ProtectionIncident, context: Dict[str, Any]) -> Dict[str, Any]:
         """Execute takedown request"""
+
+
+
         try:
             # Get takedown manager from context
             takedown_manager = context.get("takedown_manager")
@@ -276,6 +279,9 @@ class AlertAction(BaseProtectionAction):
     
     async def _execute_action(self, incident: ProtectionIncident, context: Dict[str, Any]) -> Dict[str, Any]:
         """Execute alert action"""
+
+
+
         try:
             alert_system = context.get("alert_system")
             if not alert_system:
@@ -328,6 +334,9 @@ class ContentBlockAction(BaseProtectionAction):
     
     async def _execute_action(self, incident: ProtectionIncident, context: Dict[str, Any]) -> Dict[str, Any]:
         """Execute content blocking"""
+
+
+
         try:
             # In production, this would interface with CDN/firewall systems
             blocked_urls = []
@@ -367,6 +376,9 @@ class FingerprintProtectionAction(BaseProtectionAction):
     
     async def _execute_action(self, incident: ProtectionIncident, context: Dict[str, Any]) -> Dict[str, Any]:
         """Execute fingerprint protection enhancement"""
+
+
+
         try:
             # Simulate enhancing fingerprint protection
             if incident.content_id:
@@ -422,6 +434,9 @@ class ProtectionEnforcer:
     
     async def initialize(self) -> None:
         """Initialize protection enforcer"""
+
+
+
         try:
             # Initialize action handlers
             action_config = self.surveillance_system.config.get("protection_actions", {})
@@ -603,6 +618,9 @@ class ProtectionEnforcer:
     
     async def _process_protection_incident(self, incident: ProtectionIncident) -> None:
         """Process a single protection incident"""
+
+
+
         try:
             # Find matching protection rules
             matching_rules = await self._find_matching_rules(incident)
@@ -981,6 +999,9 @@ class ProtectionEnforcer:
     
     async def health_check(self) -> Dict[str, Any]:
         """Perform health check on protection enforcer"""
+
+
+
         return {
             "enforcer": "healthy" if self.initialized else "unhealthy",
             "protection_rules": len(self.protection_rules),

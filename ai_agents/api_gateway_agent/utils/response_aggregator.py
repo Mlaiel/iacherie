@@ -7,7 +7,7 @@ microservices responses with intelligent caching and streaming capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -104,6 +104,9 @@ class ResponseAggregator:
         Returns:
             Aggregated FastAPI Response
         """
+
+
+
         try:
             # Check for cached response
             cache_key = self._generate_cache_key(request_path, service_responses.keys())
@@ -140,6 +143,9 @@ class ResponseAggregator:
         rule: Optional[AggregationRule] = None
     ) -> Dict[str, Any]:
         """Merge responses into single JSON object"""
+
+
+
         try:
             merged_data = {
                 "data": {},
@@ -195,6 +201,9 @@ class ResponseAggregator:
         rule: Optional[AggregationRule] = None
     ) -> Dict[str, Any]:
         """Concatenate responses into single array"""
+
+
+
         try:
             concatenated_data = {
                 "items": [],
@@ -263,6 +272,9 @@ class ResponseAggregator:
         rule: Optional[AggregationRule] = None
     ) -> Dict[str, Any]:
         """Transform responses using custom logic"""
+
+
+
         try:
             # This would contain custom transformation logic
             # For now, implement a generic transformation
@@ -310,6 +322,9 @@ class ResponseAggregator:
         rule: Optional[AggregationRule] = None
     ) -> Dict[str, Any]:
         """Collect responses with minimal processing"""
+
+
+
         try:
             collection = {
                 "responses": {},
@@ -392,6 +407,9 @@ class ResponseAggregator:
         service_responses: Dict[str, ServiceResponse]
     ) -> Response:
         """Create FastAPI response from aggregated data"""
+
+
+
         try:
             # Determine appropriate status code
             status_code = self._determine_status_code(service_responses)
@@ -422,6 +440,9 @@ class ResponseAggregator:
     
     def _determine_status_code(self, service_responses: Dict[str, ServiceResponse]) -> int:
         """Determine appropriate HTTP status code for aggregated response"""
+
+
+
         try:
             if not service_responses:
                 return 204  # No Content
@@ -454,6 +475,9 @@ class ResponseAggregator:
     
     def _create_error_response(self, error_message: str, status_code: int) -> Response:
         """Create error response"""
+
+
+
         return JSONResponse(
             content={
                 "error": error_message,
@@ -474,6 +498,9 @@ class ResponseAggregator:
     
     async def _get_cached_response(self, cache_key: str) -> Optional[Dict[str, Any]]:
         """Get cached response"""
+
+
+
         try:
             # Check in-memory cache first
             if cache_key in self.response_cache:
@@ -503,6 +530,9 @@ class ResponseAggregator:
         ttl: int
     ):
         """Cache response"""
+
+
+
         try:
             # Prepare cache data
             cache_data = {
@@ -531,6 +561,9 @@ class ResponseAggregator:
     
     def _create_response_from_cache(self, cached_data: Dict[str, Any]) -> Response:
         """Create response from cached data"""
+
+
+
         return JSONResponse(
             content=json.loads(cached_data["content"]) if cached_data.get("content") else {},
             status_code=cached_data.get("status_code", 200),
@@ -539,6 +572,9 @@ class ResponseAggregator:
     
     def add_aggregation_rule(self, rule: AggregationRule) -> bool:
         """Add aggregation rule"""
+
+
+
         try:
             self.aggregation_rules[rule.pattern] = rule
             logger.info(f"Added aggregation rule: {rule.pattern} -> {rule.aggregation_type}")
@@ -550,6 +586,9 @@ class ResponseAggregator:
     
     def remove_aggregation_rule(self, pattern: str) -> bool:
         """Remove aggregation rule"""
+
+
+
         try:
             if pattern in self.aggregation_rules:
                 del self.aggregation_rules[pattern]
@@ -563,6 +602,9 @@ class ResponseAggregator:
     
     async def clear_cache(self, pattern: Optional[str] = None) -> bool:
         """Clear response cache"""
+
+
+
         try:
             if pattern:
                 # Clear specific pattern
@@ -594,6 +636,9 @@ class ResponseAggregator:
     
     def get_aggregator_stats(self) -> Dict[str, Any]:
         """Get aggregator statistics"""
+
+
+
         try:
             return {
                 "aggregation_rules": len(self.aggregation_rules),

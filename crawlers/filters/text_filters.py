@@ -12,7 +12,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 
-⚠️ STRICT COPYRIGHT PROTECTION ⚠️
+ STRICT COPYRIGHT PROTECTION 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 
@@ -65,6 +65,9 @@ class TextQualityAnalyzer:
     
     def analyze_text_quality(self, text: str) -> Dict[str, float]:
         """Analyze comprehensive text quality metrics."""
+
+
+
         try:
             quality_metrics = {}
             
@@ -92,6 +95,9 @@ class TextQualityAnalyzer:
     
     def _calculate_basic_stats(self, text: str) -> Dict[str, float]:
         """Calculate basic text statistics."""
+
+
+
         try:
             # Clean text for analysis
             clean_text = re.sub(r'\s+', ' ', text.strip())
@@ -129,6 +135,9 @@ class TextQualityAnalyzer:
     
     def _calculate_readability(self, text: str) -> Dict[str, float]:
         """Calculate readability scores."""
+
+
+
         try:
             # Clean text
             clean_text = re.sub(r'[^\w\s.!?]', '', text)
@@ -172,6 +181,9 @@ class TextQualityAnalyzer:
     
     def _count_syllables(self, word: str) -> int:
         """Count syllables in a word (simplified algorithm)."""
+
+
+
         try:
             word = word.lower()
             vowels = 'aeiouy'
@@ -195,6 +207,9 @@ class TextQualityAnalyzer:
     
     def _analyze_language_quality(self, text: str) -> Dict[str, float]:
         """Analyze language quality metrics."""
+
+
+
         try:
             # Vocabulary diversity (Type-Token Ratio)
             words = re.findall(r'\b\w+\b', text.lower())
@@ -234,6 +249,9 @@ class TextQualityAnalyzer:
     
     def _analyze_structure(self, text: str) -> Dict[str, float]:
         """Analyze text structure and organization."""
+
+
+
         try:
             paragraphs = [p.strip() for p in text.split('\n\n') if p.strip()]
             
@@ -282,6 +300,9 @@ class TextQualityAnalyzer:
     
     def _calculate_quality_score(self, metrics: Dict[str, float]) -> float:
         """Calculate overall quality score from individual metrics."""
+
+
+
         try:
             scores = []
             weights = []
@@ -334,6 +355,9 @@ class TextSentimentAnalyzer:
     
     def analyze_sentiment(self, text: str) -> Dict[str, float]:
         """Analyze text sentiment and emotional content."""
+
+
+
         try:
             if not self.sentiment_analyzer:
                 return self._fallback_sentiment_analysis(text)
@@ -364,6 +388,9 @@ class TextSentimentAnalyzer:
     
     def _fallback_sentiment_analysis(self, text: str) -> Dict[str, float]:
         """Fallback sentiment analysis without NLTK."""
+
+
+
         try:
             text_lower = text.lower()
             
@@ -431,6 +458,9 @@ class TextSentimentAnalyzer:
     
     def _analyze_emotional_content(self, text: str) -> Dict[str, float]:
         """Analyze emotional content beyond basic sentiment."""
+
+
+
         try:
             text_lower = text.lower()
             
@@ -477,6 +507,9 @@ class TextToxicityDetector:
     
     def detect_toxicity(self, text: str) -> Dict[str, Any]:
         """Detect toxic and harmful content in text."""
+
+
+
         try:
             toxicity_metrics = {}
             
@@ -502,6 +535,9 @@ class TextToxicityDetector:
     
     def _detect_profanity(self, text: str) -> Dict[str, float]:
         """Detect profanity in text."""
+
+
+
         try:
             # Basic profanity list (simplified)
             profanity_words = {
@@ -527,6 +563,9 @@ class TextToxicityDetector:
     
     def _detect_hate_speech(self, text: str) -> Dict[str, float]:
         """Detect hate speech patterns."""
+
+
+
         try:
             text_lower = text.lower()
             
@@ -557,6 +596,9 @@ class TextToxicityDetector:
     
     def _detect_spam_patterns(self, text: str) -> Dict[str, float]:
         """Detect spam-like patterns in text."""
+
+
+
         try:
             spam_indicators = 0
             
@@ -601,6 +643,9 @@ class TextToxicityDetector:
     
     def _calculate_toxicity_score(self, metrics: Dict[str, Any]) -> float:
         """Calculate overall toxicity score."""
+
+
+
         try:
             scores = []
             
@@ -645,6 +690,9 @@ class TextContentFilter:
         strict_mode: bool = False
     ) -> FilterResponse:
         """Asynchronously filter text content."""
+
+
+
         return await asyncio.get_event_loop().run_in_executor(
             None, self.filter, content, ai_validation, strict_mode
         )
@@ -718,6 +766,9 @@ class TextContentFilter:
     
     def _extract_text_content(self, content: ContentItem) -> Tuple[str, Dict[str, Any]]:
         """Extract and validate text content."""
+
+
+
         try:
             metadata = {}
             text_data = ""
@@ -835,6 +886,9 @@ class TextContentFilter:
     
     def _detect_language(self, text: str) -> Dict[str, Any]:
         """Detect the language of the text."""
+
+
+
         try:
             if HAS_NLP_LIBS:
                 try:

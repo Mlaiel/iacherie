@@ -12,7 +12,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL WARNING ⚠️
+  CRITICAL WARNING 
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
 Any unauthorized use, reproduction, distribution, or reverse engineering 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -282,6 +282,9 @@ class ConfigManager:
     
     def load_config(self, environment: str = "production") -> FingerprintingSystemConfig:
         """Load configuration for specific environment"""
+
+
+
         try:
             if environment in self._config_cache:
                 return self._config_cache[environment]
@@ -403,10 +406,16 @@ class ConfigManager:
     
     def _get_default_config(self) -> FingerprintingSystemConfig:
         """Get failsafe default configuration"""
+
+
+
         return FingerprintingSystemConfig()
     
     def optimize_for_hardware(self, config: FingerprintingSystemConfig) -> FingerprintingSystemConfig:
         """Optimize configuration based on available hardware"""
+
+
+
         try:
             import psutil
             import torch
@@ -451,6 +460,9 @@ class ConfigManager:
     
     def export_config(self, config: FingerprintingSystemConfig, path: str):
         """Export configuration to file"""
+
+
+
         try:
             import json
             from dataclasses import asdict

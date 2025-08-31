@@ -1,11 +1,11 @@
 """
-💾 Container Storage Manager - IA-Influencer-Agent Infrastructure
+ Container Storage Manager - IA-Influencer-Agent Infrastructure
 =================================================================
 Expert: Storage Engineer + DevOps + Data Architect
 Creator: Fahed Mlaiel <mlaiel@live.de>
 =================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL 
 Tout vol, copie ou utilisation non autorisée de ce code source,
 de ce concept ou de cette propriété intellectuelle sans
 l'autorisation écrite explicite de Fahed Mlaiel est strictement
@@ -162,6 +162,9 @@ class ContainerStorageManager:
         
     async def initialize(self) -> bool:
         """Initialize container storage manager"""
+
+
+
         try:
             # Initialize Kubernetes client
             try:
@@ -192,15 +195,18 @@ class ContainerStorageManager:
             asyncio.create_task(self._cleanup_old_snapshots())
             
             self.initialized = True
-            self.logger.info("✅ ContainerStorageManager initialized successfully")
+            self.logger.info(" ContainerStorageManager initialized successfully")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error initializing ContainerStorageManager: {e}")
+            self.logger.error(f" Error initializing ContainerStorageManager: {e}")
             return False
     
     async def _initialize_cloud_storage(self) -> None:
         """Initialize cloud storage clients"""
+
+
+
         try:
             # Initialize AWS S3 client
             try:
@@ -210,33 +216,36 @@ class ContainerStorageManager:
                     aws_secret_access_key=os.getenv('AWS_SECRET_ACCESS_KEY'),
                     region_name=os.getenv('AWS_REGION', 'eu-central-1')
                 )
-                self.logger.info("✅ AWS S3 client initialized")
+                self.logger.info(" AWS S3 client initialized")
             except Exception as e:
-                self.logger.warning(f"⚠️ Could not initialize S3 client: {e}")
+                self.logger.warning(f" Could not initialize S3 client: {e}")
             
             # Initialize Azure Blob Storage client
             try:
                 connection_string = os.getenv('AZURE_STORAGE_CONNECTION_STRING')
                 if connection_string:
                     self.azure_client = BlobServiceClient.from_connection_string(connection_string)
-                    self.logger.info("✅ Azure Blob Storage client initialized")
+                    self.logger.info(" Azure Blob Storage client initialized")
             except Exception as e:
-                self.logger.warning(f"⚠️ Could not initialize Azure client: {e}")
+                self.logger.warning(f" Could not initialize Azure client: {e}")
             
             # Initialize Google Cloud Storage client
             try:
                 credentials_path = os.getenv('GOOGLE_APPLICATION_CREDENTIALS')
                 if credentials_path:
                     self.gcs_client = gcs.Client()
-                    self.logger.info("✅ Google Cloud Storage client initialized")
+                    self.logger.info(" Google Cloud Storage client initialized")
             except Exception as e:
-                self.logger.warning(f"⚠️ Could not initialize GCS client: {e}")
+                self.logger.warning(f" Could not initialize GCS client: {e}")
                 
         except Exception as e:
-            self.logger.error(f"❌ Error initializing cloud storage: {e}")
+            self.logger.error(f" Error initializing cloud storage: {e}")
     
     async def _load_configurations(self) -> None:
         """Load existing storage configurations"""
+
+
+
         try:
             # Load storage classes
             storage_classes_file = self.config_path / "storage_classes.yml"
@@ -266,10 +275,13 @@ class ContainerStorageManager:
                         self.backup_configs[backup.name] = backup
                         
         except Exception as e:
-            self.logger.warning(f"⚠️ Error loading configurations: {e}")
+            self.logger.warning(f" Error loading configurations: {e}")
     
     async def _setup_default_storage_classes(self) -> None:
         """Setup default storage classes"""
+
+
+
         try:
             # Fast SSD storage class
             fast_ssd_sc = StorageClass(
@@ -384,10 +396,13 @@ class ContainerStorageManager:
             await self._save_storage_classes()
             
         except Exception as e:
-            self.logger.error(f"❌ Error setting up default storage classes: {e}")
+            self.logger.error(f" Error setting up default storage classes: {e}")
     
     async def _setup_default_storage(self) -> None:
         """Setup default storage for IA-Influencer platform"""
+
+
+
         try:
             # Database PVC
             database_pvc = PersistentVolumeClaim(
@@ -492,10 +507,13 @@ class ContainerStorageManager:
             await self._save_backup_configs()
             
         except Exception as e:
-            self.logger.error(f"❌ Error setting up default storage: {e}")
+            self.logger.error(f" Error setting up default storage: {e}")
     
     async def _setup_default_backups(self) -> None:
         """Setup default backup configurations"""
+
+
+
         try:
             # Database backup
             database_backup = BackupConfig(
@@ -566,10 +584,13 @@ class ContainerStorageManager:
                 self.backup_configs[backup.name] = backup
                 
         except Exception as e:
-            self.logger.error(f"❌ Error setting up default backups: {e}")
+            self.logger.error(f" Error setting up default backups: {e}")
     
     async def _save_storage_classes(self) -> None:
         """Save storage classes configuration"""
+
+
+
         try:
             data = {
                 "storage_classes": [asdict(sc) for sc in self.storage_classes.values()]
@@ -577,10 +598,13 @@ class ContainerStorageManager:
             with open(self.config_path / "storage_classes.yml", 'w') as f:
                 yaml.dump(data, f, default_flow_style=False)
         except Exception as e:
-            self.logger.error(f"❌ Error saving storage classes: {e}")
+            self.logger.error(f" Error saving storage classes: {e}")
     
     async def _save_pvcs(self) -> None:
         """Save PVCs configuration"""
+
+
+
         try:
             data = {
                 "pvcs": [asdict(pvc) for pvc in self.persistent_volume_claims.values()]
@@ -588,10 +612,13 @@ class ContainerStorageManager:
             with open(self.config_path / "pvcs.yml", 'w') as f:
                 yaml.dump(data, f, default_flow_style=False)
         except Exception as e:
-            self.logger.error(f"❌ Error saving PVCs: {e}")
+            self.logger.error(f" Error saving PVCs: {e}")
     
     async def _save_backup_configs(self) -> None:
         """Save backup configurations"""
+
+
+
         try:
             data = {
                 "backups": [asdict(backup) for backup in self.backup_configs.values()]
@@ -599,10 +626,13 @@ class ContainerStorageManager:
             with open(self.config_path / "backups.yml", 'w') as f:
                 yaml.dump(data, f, default_flow_style=False)
         except Exception as e:
-            self.logger.error(f"❌ Error saving backup configs: {e}")
+            self.logger.error(f" Error saving backup configs: {e}")
     
     async def create_storage_class(self, storage_class: StorageClass) -> bool:
         """Create Kubernetes storage class"""
+
+
+
         try:
             storage_v1 = client.StorageV1Api()
             
@@ -633,22 +663,25 @@ class ContainerStorageManager:
                 self.storage_classes[storage_class.name] = storage_class
                 await self._save_storage_classes()
                 
-                self.logger.info(f"✅ Created storage class: {storage_class.name}")
+                self.logger.info(f" Created storage class: {storage_class.name}")
                 return True
                 
             except client.rest.ApiException as e:
                 if e.status == 409:  # Already exists
-                    self.logger.info(f"ℹ️ Storage class {storage_class.name} already exists")
+                    self.logger.info(f"ℹ Storage class {storage_class.name} already exists")
                     return True
                 else:
                     raise e
                     
         except Exception as e:
-            self.logger.error(f"❌ Error creating storage class: {e}")
+            self.logger.error(f" Error creating storage class: {e}")
             return False
     
     async def create_persistent_volume_claim(self, pvc: PersistentVolumeClaim) -> bool:
         """Create persistent volume claim"""
+
+
+
         try:
             v1 = client.CoreV1Api()
             
@@ -689,22 +722,25 @@ class ContainerStorageManager:
                 self.persistent_volume_claims[pvc_key] = pvc
                 await self._save_pvcs()
                 
-                self.logger.info(f"✅ Created PVC: {pvc.name}")
+                self.logger.info(f" Created PVC: {pvc.name}")
                 return True
                 
             except client.rest.ApiException as e:
                 if e.status == 409:  # Already exists
-                    self.logger.info(f"ℹ️ PVC {pvc.name} already exists")
+                    self.logger.info(f"ℹ PVC {pvc.name} already exists")
                     return True
                 else:
                     raise e
                     
         except Exception as e:
-            self.logger.error(f"❌ Error creating PVC: {e}")
+            self.logger.error(f" Error creating PVC: {e}")
             return False
     
     async def create_volume_snapshot(self, snapshot: VolumeSnapshot) -> bool:
         """Create volume snapshot"""
+
+
+
         try:
             # Note: VolumeSnapshot requires snapshot.storage.k8s.io/v1 API
             # This is a simplified implementation
@@ -730,15 +766,18 @@ class ContainerStorageManager:
             snapshot_key = f"{snapshot.namespace}/{snapshot.name}"
             self.volume_snapshots[snapshot_key] = snapshot
             
-            self.logger.info(f"✅ Created volume snapshot: {snapshot.name}")
+            self.logger.info(f" Created volume snapshot: {snapshot.name}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error creating volume snapshot: {e}")
+            self.logger.error(f" Error creating volume snapshot: {e}")
             return False
     
     async def resize_pvc(self, namespace: str, pvc_name: str, new_size: str) -> bool:
         """Resize persistent volume claim"""
+
+
+
         try:
             v1 = client.CoreV1Api()
             
@@ -756,7 +795,7 @@ class ContainerStorageManager:
                 )
                 
                 if not storage_class.allow_volume_expansion:
-                    self.logger.error(f"❌ Storage class {pvc.spec.storage_class_name} does not allow expansion")
+                    self.logger.error(f" Storage class {pvc.spec.storage_class_name} does not allow expansion")
                     return False
             
             # Update PVC size
@@ -768,11 +807,11 @@ class ContainerStorageManager:
                 body=pvc
             )
             
-            self.logger.info(f"✅ Resized PVC {pvc_name} to {new_size}")
+            self.logger.info(f" Resized PVC {pvc_name} to {new_size}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error resizing PVC: {e}")
+            self.logger.error(f" Error resizing PVC: {e}")
             return False
     
     async def _monitor_storage_usage(self) -> None:
@@ -813,22 +852,25 @@ class ContainerStorageManager:
                 await asyncio.sleep(300)  # Check every 5 minutes
                 
             except Exception as e:
-                self.logger.error(f"❌ Error monitoring storage usage: {e}")
+                self.logger.error(f" Error monitoring storage usage: {e}")
                 await asyncio.sleep(300)
     
     async def _check_storage_alerts(self) -> None:
         """Check for storage alerts"""
+
+
+
         try:
             for pvc_key, usage_info in self.storage_usage.items():
                 # Check for PVCs in pending state
                 if usage_info["status"] == "Pending":
-                    self.logger.warning(f"⚠️ PVC {usage_info['name']} is in Pending state")
+                    self.logger.warning(f" PVC {usage_info['name']} is in Pending state")
                 
                 # Check for old PVCs without recent access
                 # This would require more detailed metrics
                 
         except Exception as e:
-            self.logger.error(f"❌ Error checking storage alerts: {e}")
+            self.logger.error(f" Error checking storage alerts: {e}")
     
     async def _backup_scheduler(self) -> None:
         """Backup scheduler task"""
@@ -844,11 +886,14 @@ class ContainerStorageManager:
                 await asyncio.sleep(3600)  # Check every hour
                 
             except Exception as e:
-                self.logger.error(f"❌ Error in backup scheduler: {e}")
+                self.logger.error(f" Error in backup scheduler: {e}")
                 await asyncio.sleep(3600)
     
     async def _should_run_backup(self, backup_config: BackupConfig, current_time: datetime) -> bool:
         """Check if backup should run based on schedule"""
+
+
+
         try:
             # Simplified cron parsing - in production, use a proper cron library
             schedule_parts = backup_config.schedule.split()
@@ -871,13 +916,16 @@ class ContainerStorageManager:
             return minute != "*" and hour != "*" and int(minute) == current_time.minute and int(hour) == current_time.hour
             
         except Exception as e:
-            self.logger.error(f"❌ Error checking backup schedule: {e}")
+            self.logger.error(f" Error checking backup schedule: {e}")
             return False
     
     async def _perform_backup(self, backup_config: BackupConfig) -> bool:
         """Perform backup operation"""
+
+
+
         try:
-            self.logger.info(f"🔄 Starting backup: {backup_config.name}")
+            self.logger.info(f" Starting backup: {backup_config.name}")
             
             # Create volume snapshot first
             snapshot_name = f"{backup_config.name}-{datetime.now().strftime('%Y%m%d-%H%M%S')}"
@@ -896,7 +944,7 @@ class ContainerStorageManager:
             success = await self.create_volume_snapshot(snapshot)
             
             if not success:
-                self.logger.error(f"❌ Failed to create snapshot for backup {backup_config.name}")
+                self.logger.error(f" Failed to create snapshot for backup {backup_config.name}")
                 return False
             
             # Export snapshot to cloud storage
@@ -907,25 +955,28 @@ class ContainerStorageManager:
             elif backup_config.destination_type == "gcs":
                 success = await self._export_to_gcs(snapshot, backup_config)
             else:
-                self.logger.error(f"❌ Unsupported backup destination: {backup_config.destination_type}")
+                self.logger.error(f" Unsupported backup destination: {backup_config.destination_type}")
                 return False
             
             if success:
-                self.logger.info(f"✅ Backup completed: {backup_config.name}")
+                self.logger.info(f" Backup completed: {backup_config.name}")
             else:
-                self.logger.error(f"❌ Backup failed: {backup_config.name}")
+                self.logger.error(f" Backup failed: {backup_config.name}")
             
             return success
             
         except Exception as e:
-            self.logger.error(f"❌ Error performing backup: {e}")
+            self.logger.error(f" Error performing backup: {e}")
             return False
     
     async def _export_to_s3(self, snapshot: VolumeSnapshot, backup_config: BackupConfig) -> bool:
         """Export snapshot to S3"""
+
+
+
         try:
             if not self.s3_client:
-                self.logger.error("❌ S3 client not initialized")
+                self.logger.error(" S3 client not initialized")
                 return False
             
             bucket = backup_config.destination_config.get("bucket")
@@ -952,42 +1003,48 @@ class ContainerStorageManager:
             }
             
             # In a real scenario, upload the actual backup data
-            self.logger.info(f"📤 Would upload backup to s3://{bucket}/{backup_key}")
+            self.logger.info(f" Would upload backup to s3://{bucket}/{backup_key}")
             
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error exporting to S3: {e}")
+            self.logger.error(f" Error exporting to S3: {e}")
             return False
     
     async def _export_to_azure(self, snapshot: VolumeSnapshot, backup_config: BackupConfig) -> bool:
         """Export snapshot to Azure Blob Storage"""
+
+
+
         try:
             if not self.azure_client:
-                self.logger.error("❌ Azure client not initialized")
+                self.logger.error(" Azure client not initialized")
                 return False
             
             # Similar implementation as S3
-            self.logger.info(f"📤 Would upload backup to Azure Blob Storage")
+            self.logger.info(f" Would upload backup to Azure Blob Storage")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error exporting to Azure: {e}")
+            self.logger.error(f" Error exporting to Azure: {e}")
             return False
     
     async def _export_to_gcs(self, snapshot: VolumeSnapshot, backup_config: BackupConfig) -> bool:
         """Export snapshot to Google Cloud Storage"""
+
+
+
         try:
             if not self.gcs_client:
-                self.logger.error("❌ GCS client not initialized")
+                self.logger.error(" GCS client not initialized")
                 return False
             
             # Similar implementation as S3
-            self.logger.info(f"📤 Would upload backup to Google Cloud Storage")
+            self.logger.info(f" Would upload backup to Google Cloud Storage")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error exporting to GCS: {e}")
+            self.logger.error(f" Error exporting to GCS: {e}")
             return False
     
     async def _cleanup_old_snapshots(self) -> None:
@@ -1013,11 +1070,14 @@ class ContainerStorageManager:
                 await asyncio.sleep(24 * 3600)  # Run daily
                 
             except Exception as e:
-                self.logger.error(f"❌ Error in cleanup task: {e}")
+                self.logger.error(f" Error in cleanup task: {e}")
                 await asyncio.sleep(24 * 3600)
     
     async def _cleanup_old_backups(self, backup_config: BackupConfig, current_time: datetime) -> None:
         """Cleanup old backups for a specific backup configuration"""
+
+
+
         try:
             cutoff_date = current_time - timedelta(days=backup_config.retention_days)
             
@@ -1037,13 +1097,16 @@ class ContainerStorageManager:
                             Bucket=bucket,
                             Key=obj["Key"]
                         )
-                        self.logger.info(f"🗑️ Deleted old backup: s3://{bucket}/{obj['Key']}")
+                        self.logger.info(f" Deleted old backup: s3://{bucket}/{obj['Key']}")
                         
         except Exception as e:
-            self.logger.error(f"❌ Error cleaning up old backups: {e}")
+            self.logger.error(f" Error cleaning up old backups: {e}")
     
     async def get_storage_usage_report(self, namespace: str = None) -> Dict[str, Any]:
         """Get storage usage report"""
+
+
+
         try:
             report = {
                 "total_pvcs": 0,
@@ -1095,19 +1158,22 @@ class ContainerStorageManager:
             return report
             
         except Exception as e:
-            self.logger.error(f"❌ Error generating storage usage report: {e}")
+            self.logger.error(f" Error generating storage usage report: {e}")
             return {}
     
     async def restore_backup(self, backup_name: str, target_pvc: str, target_namespace: str) -> bool:
         """Restore backup to PVC"""
+
+
+
         try:
             if backup_name not in self.backup_configs:
-                self.logger.error(f"❌ Backup configuration not found: {backup_name}")
+                self.logger.error(f" Backup configuration not found: {backup_name}")
                 return False
             
             backup_config = self.backup_configs[backup_name]
             
-            self.logger.info(f"🔄 Starting restore from backup: {backup_name}")
+            self.logger.info(f" Starting restore from backup: {backup_name}")
             
             # In a real implementation, this would:
             # 1. Download backup from cloud storage
@@ -1116,15 +1182,18 @@ class ContainerStorageManager:
             # 4. Extract and restore data
             # 5. Verify integrity
             
-            self.logger.info(f"✅ Restore completed: {backup_name} -> {target_namespace}/{target_pvc}")
+            self.logger.info(f" Restore completed: {backup_name} -> {target_namespace}/{target_pvc}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error restoring backup: {e}")
+            self.logger.error(f" Error restoring backup: {e}")
             return False
     
     async def clone_pvc(self, source_pvc: str, source_namespace: str, target_pvc: str, target_namespace: str) -> bool:
         """Clone PVC"""
+
+
+
         try:
             v1 = client.CoreV1Api()
             
@@ -1161,11 +1230,11 @@ class ContainerStorageManager:
                 body=target_pvc_manifest
             )
             
-            self.logger.info(f"✅ Cloned PVC: {source_namespace}/{source_pvc} -> {target_namespace}/{target_pvc}")
+            self.logger.info(f" Cloned PVC: {source_namespace}/{source_pvc} -> {target_namespace}/{target_pvc}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error cloning PVC: {e}")
+            self.logger.error(f" Error cloning PVC: {e}")
             return False
 
 class StorageMetricsCollector:
@@ -1178,6 +1247,9 @@ class StorageMetricsCollector:
     
     async def collect_metrics(self) -> Dict[str, Any]:
         """Collect storage metrics"""
+
+
+
         try:
             metrics = {
                 "timestamp": datetime.now().isoformat(),
@@ -1214,7 +1286,7 @@ class StorageMetricsCollector:
             return metrics
             
         except Exception as e:
-            self.logger.error(f"❌ Error collecting storage metrics: {e}")
+            self.logger.error(f" Error collecting storage metrics: {e}")
             return {}
 
 __all__ = [

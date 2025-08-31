@@ -766,6 +766,9 @@ backup_metrics = BackupMetrics()
 
 def get_backup_metrics() -> BackupMetrics:
     """Get global backup metrics instance."""
+
+
+
     return backup_metrics
 
 

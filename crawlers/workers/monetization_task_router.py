@@ -8,7 +8,7 @@ Responsibility: Advanced task routing for revenue optimization and platform anal
 Technologies: ML-based Routing, Revenue Prediction, Platform Analytics, Performance Optimization
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -200,8 +200,11 @@ class MonetizationTaskRouter:
 
     async def initialize(self) -> bool:
         """Initialize the monetization task router"""
+
+
+
         try:
-            logger.info(f"🚀 Initializing Monetization Task Router {self.router_id}")
+            logger.info(f" Initializing Monetization Task Router {self.router_id}")
             
             # Initialize revenue analytics worker
             self.revenue_analytics_worker = RevenueAnalyticsWorker()
@@ -222,18 +225,21 @@ class MonetizationTaskRouter:
             asyncio.create_task(self._optimization_loop())
             
             self.initialized = True
-            logger.info(f"✅ Monetization Task Router {self.router_id} initialized successfully")
+            logger.info(f" Monetization Task Router {self.router_id} initialized successfully")
             
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize monetization task router: {e}")
+            logger.error(f" Failed to initialize monetization task router: {e}")
             return False
 
     async def route_task(self, task: MonetizationTask) -> RoutingDecision:
         """Route monetization task to optimal worker"""
+
+
+
         try:
-            logger.info(f"🎯 Routing monetization task: {task.task_id} ({task.task_type.value})")
+            logger.info(f" Routing monetization task: {task.task_id} ({task.task_type.value})")
             routing_start = time.time()
             
             # Validate task
@@ -299,12 +305,12 @@ class MonetizationTaskRouter:
                 self.routing_stats['total_tasks_routed']
             )
             
-            logger.info(f"✅ Task routed: {task.task_id} → {best_worker} (confidence: {confidence:.3f}, revenue impact: {revenue_impact:.3f})")
+            logger.info(f" Task routed: {task.task_id} → {best_worker} (confidence: {confidence:.3f}, revenue impact: {revenue_impact:.3f})")
             
             return decision
             
         except Exception as e:
-            logger.error(f"❌ Failed to route monetization task {task.task_id}: {e}")
+            logger.error(f" Failed to route monetization task {task.task_id}: {e}")
             return RoutingDecision(
                 selected_worker=None,
                 confidence_score=0.0,
@@ -315,12 +321,15 @@ class MonetizationTaskRouter:
 
     async def register_worker(self, profile: MonetizationWorkerProfile) -> bool:
         """Register a new monetization worker"""
+
+
+
         try:
-            logger.info(f"📝 Registering monetization worker: {profile.worker_id}")
+            logger.info(f" Registering monetization worker: {profile.worker_id}")
             
             # Validate profile
             if not await self._validate_worker_profile(profile):
-                logger.error(f"❌ Invalid worker profile: {profile.worker_id}")
+                logger.error(f" Invalid worker profile: {profile.worker_id}")
                 return False
             
             # Store profile
@@ -329,11 +338,11 @@ class MonetizationTaskRouter:
             # Initialize performance tracking
             self.performance_history[profile.worker_id] = deque(maxlen=1000)
             
-            logger.info(f"✅ Monetization worker registered: {profile.worker_id}")
+            logger.info(f" Monetization worker registered: {profile.worker_id}")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to register worker: {e}")
+            logger.error(f" Failed to register worker: {e}")
             return False
 
     async def update_worker_performance(
@@ -343,9 +352,12 @@ class MonetizationTaskRouter:
         performance_data: Dict[str, Any]
     ) -> None:
         """Update worker performance metrics"""
+
+
+
         try:
             if worker_id not in self.worker_profiles:
-                logger.warning(f"⚠️ Worker not found: {worker_id}")
+                logger.warning(f" Worker not found: {worker_id}")
                 return
             
             profile = self.worker_profiles[worker_id]
@@ -385,16 +397,19 @@ class MonetizationTaskRouter:
             
             profile.last_updated = datetime.utcnow()
             
-            logger.debug(f"📊 Worker performance updated: {worker_id}")
+            logger.debug(f" Worker performance updated: {worker_id}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to update worker performance: {e}")
+            logger.error(f" Failed to update worker performance: {e}")
 
     async def get_routing_analytics(
         self, 
         time_range: timedelta = timedelta(days=7)
     ) -> Dict[str, Any]:
         """Get comprehensive routing analytics"""
+
+
+
         try:
             end_time = datetime.utcnow()
             start_time = end_time - time_range
@@ -462,11 +477,14 @@ class MonetizationTaskRouter:
             return analytics
             
         except Exception as e:
-            logger.error(f"❌ Failed to get routing analytics: {e}")
+            logger.error(f" Failed to get routing analytics: {e}")
             return {}
 
     async def _get_eligible_workers(self, task: MonetizationTask) -> List[str]:
         """Get workers eligible for the task"""
+
+
+
         try:
             eligible_workers = []
             
@@ -494,7 +512,7 @@ class MonetizationTaskRouter:
             return eligible_workers
             
         except Exception as e:
-            logger.error(f"❌ Failed to get eligible workers: {e}")
+            logger.error(f" Failed to get eligible workers: {e}")
             return []
 
     async def _calculate_worker_scores(
@@ -503,6 +521,9 @@ class MonetizationTaskRouter:
         eligible_workers: List[str]
     ) -> Dict[str, float]:
         """Calculate optimization scores for eligible workers"""
+
+
+
         try:
             worker_scores = {}
             
@@ -539,7 +560,7 @@ class MonetizationTaskRouter:
             return worker_scores
             
         except Exception as e:
-            logger.error(f"❌ Failed to calculate worker scores: {e}")
+            logger.error(f" Failed to calculate worker scores: {e}")
             return {}
 
     async def _select_best_worker(
@@ -548,6 +569,9 @@ class MonetizationTaskRouter:
         task: MonetizationTask
     ) -> Tuple[Optional[str], float]:
         """Select the best worker based on scores"""
+
+
+
         try:
             if not worker_scores:
                 return None, 0.0
@@ -559,13 +583,13 @@ class MonetizationTaskRouter:
             
             # Check minimum confidence threshold
             if best_score < self.config['min_confidence_threshold']:
-                logger.warning(f"⚠️ Best worker score ({best_score:.3f}) below threshold ({self.config['min_confidence_threshold']})")
+                logger.warning(f" Best worker score ({best_score:.3f}) below threshold ({self.config['min_confidence_threshold']})")
                 return None, best_score
             
             return best_worker, best_score
             
         except Exception as e:
-            logger.error(f"❌ Failed to select best worker: {e}")
+            logger.error(f" Failed to select best worker: {e}")
             return None, 0.0
 
     async def _calculate_revenue_potential(
@@ -574,6 +598,9 @@ class MonetizationTaskRouter:
         profile: MonetizationWorkerProfile
     ) -> float:
         """Calculate revenue optimization potential"""
+
+
+
         try:
             # Base revenue potential based on task amount
             if task.amount_involved > 0:
@@ -597,7 +624,7 @@ class MonetizationTaskRouter:
             return total_potential
             
         except Exception as e:
-            logger.error(f"❌ Failed to calculate revenue potential: {e}")
+            logger.error(f" Failed to calculate revenue potential: {e}")
             return 0.5
 
     async def _calculate_urgency_alignment(
@@ -606,6 +633,9 @@ class MonetizationTaskRouter:
         profile: MonetizationWorkerProfile
     ) -> float:
         """Calculate urgency alignment score"""
+
+
+
         try:
             # Base urgency score
             urgency_scores = {
@@ -628,11 +658,14 @@ class MonetizationTaskRouter:
             return min(1.0, alignment_score)
             
         except Exception as e:
-            logger.error(f"❌ Failed to calculate urgency alignment: {e}")
+            logger.error(f" Failed to calculate urgency alignment: {e}")
             return 0.5
 
     async def _calculate_revenue_impact(self, task: MonetizationTask, worker_id: str) -> float:
         """Calculate potential revenue impact of routing decision"""
+
+
+
         try:
             if not worker_id or worker_id not in self.worker_profiles:
                 return 0.0
@@ -654,11 +687,14 @@ class MonetizationTaskRouter:
             return min(10.0, total_impact)  # Cap at 10.0
             
         except Exception as e:
-            logger.error(f"❌ Failed to calculate revenue impact: {e}")
+            logger.error(f" Failed to calculate revenue impact: {e}")
             return 0.0
 
     async def _estimate_completion_time(self, task: MonetizationTask, worker_id: str) -> datetime:
         """Estimate task completion time"""
+
+
+
         try:
             if not worker_id or worker_id not in self.worker_profiles:
                 return datetime.utcnow() + timedelta(hours=1)  # Default 1 hour
@@ -689,7 +725,7 @@ class MonetizationTaskRouter:
             return datetime.utcnow() + timedelta(seconds=estimated_seconds)
             
         except Exception as e:
-            logger.error(f"❌ Failed to estimate completion time: {e}")
+            logger.error(f" Failed to estimate completion time: {e}")
             return datetime.utcnow() + timedelta(hours=1)
 
     async def _generate_optimization_suggestions(
@@ -698,6 +734,9 @@ class MonetizationTaskRouter:
         worker_scores: Dict[str, float]
     ) -> List[str]:
         """Generate optimization suggestions for task routing"""
+
+
+
         try:
             suggestions = []
             
@@ -731,11 +770,14 @@ class MonetizationTaskRouter:
             return suggestions
             
         except Exception as e:
-            logger.error(f"❌ Failed to generate optimization suggestions: {e}")
+            logger.error(f" Failed to generate optimization suggestions: {e}")
             return []
 
     async def _generate_revenue_insights(self, start_time: datetime, end_time: datetime) -> Dict[str, Any]:
         """Generate revenue insights for analytics"""
+
+
+
         try:
             insights = {
                 'top_performing_platforms': {},
@@ -779,11 +821,14 @@ class MonetizationTaskRouter:
             return insights
             
         except Exception as e:
-            logger.error(f"❌ Failed to generate revenue insights: {e}")
+            logger.error(f" Failed to generate revenue insights: {e}")
             return {}
 
     async def _validate_task(self, task: MonetizationTask) -> bool:
         """Validate monetization task"""
+
+
+
         try:
             # Check required fields
             if not all([task.task_id, task.user_id, task.task_type, task.platform]):
@@ -803,11 +848,14 @@ class MonetizationTaskRouter:
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to validate task: {e}")
+            logger.error(f" Failed to validate task: {e}")
             return False
 
     async def _validate_worker_profile(self, profile: MonetizationWorkerProfile) -> bool:
         """Validate worker profile"""
+
+
+
         try:
             # Check required fields
             if not all([profile.worker_id, profile.supported_platforms, profile.supported_task_types]):
@@ -825,11 +873,14 @@ class MonetizationTaskRouter:
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to validate worker profile: {e}")
+            logger.error(f" Failed to validate worker profile: {e}")
             return False
 
     async def _record_routing_decision(self, task: MonetizationTask, decision: RoutingDecision) -> None:
         """Record routing decision for analysis"""
+
+
+
         try:
             # Add to task history
             if decision.selected_worker:
@@ -845,21 +896,27 @@ class MonetizationTaskRouter:
             platform_stats['avg_revenue'] = platform_stats['total_revenue'] / platform_stats['tasks']
             
         except Exception as e:
-            logger.error(f"❌ Failed to record routing decision: {e}")
+            logger.error(f" Failed to record routing decision: {e}")
 
     async def _load_worker_profiles(self) -> None:
         """Load worker profiles from storage"""
+
+
+
         try:
             # This would load from database in production
             # For now, we'll start with empty profiles
             self.worker_profiles = {}
-            logger.info("💼 Worker profiles loaded")
+            logger.info(" Worker profiles loaded")
             
         except Exception as e:
-            logger.error(f"❌ Failed to load worker profiles: {e}")
+            logger.error(f" Failed to load worker profiles: {e}")
 
     async def _performance_monitor_loop(self) -> None:
         """Performance monitoring loop"""
+
+
+
         try:
             while True:
                 try:
@@ -868,14 +925,17 @@ class MonetizationTaskRouter:
                     await asyncio.sleep(300)  # Every 5 minutes
                     
                 except Exception as e:
-                    logger.error(f"❌ Error in performance monitor loop: {e}")
+                    logger.error(f" Error in performance monitor loop: {e}")
                     await asyncio.sleep(60)
                     
         except asyncio.CancelledError:
-            logger.info("🛑 Performance monitor loop cancelled")
+            logger.info(" Performance monitor loop cancelled")
 
     async def _optimization_loop(self) -> None:
         """Optimization loop for continuous improvement"""
+
+
+
         try:
             while True:
                 try:
@@ -884,14 +944,17 @@ class MonetizationTaskRouter:
                     await asyncio.sleep(3600)  # Every hour
                     
                 except Exception as e:
-                    logger.error(f"❌ Error in optimization loop: {e}")
+                    logger.error(f" Error in optimization loop: {e}")
                     await asyncio.sleep(300)
                     
         except asyncio.CancelledError:
-            logger.info("🛑 Optimization loop cancelled")
+            logger.info(" Optimization loop cancelled")
 
     async def _analyze_worker_performance(self) -> None:
         """Analyze worker performance and update profiles"""
+
+
+
         try:
             for worker_id, profile in self.worker_profiles.items():
                 # Analyze recent performance
@@ -910,10 +973,13 @@ class MonetizationTaskRouter:
                         profile.average_processing_time = profile.average_processing_time * 0.9 + avg_processing_time * 0.1
             
         except Exception as e:
-            logger.error(f"❌ Failed to analyze worker performance: {e}")
+            logger.error(f" Failed to analyze worker performance: {e}")
 
     async def _optimize_routing_parameters(self) -> None:
         """Optimize routing parameters based on performance"""
+
+
+
         try:
             # Analyze routing success rates and adjust weights
             recent_decisions = []  # Would be loaded from decision history
@@ -928,13 +994,16 @@ class MonetizationTaskRouter:
                 self.config['performance_weight'] = min(0.5, self.config['performance_weight'] * 1.1)
                 self.config['revenue_weight'] = max(0.2, self.config['revenue_weight'] * 0.95)
             
-            logger.debug("🎛️ Routing parameters optimized")
+            logger.debug(" Routing parameters optimized")
             
         except Exception as e:
-            logger.error(f"❌ Failed to optimize routing parameters: {e}")
+            logger.error(f" Failed to optimize routing parameters: {e}")
 
     async def get_router_stats(self) -> Dict[str, Any]:
         """Get comprehensive router statistics"""
+
+
+
         try:
             return {
                 'router_id': self.router_id,
@@ -949,24 +1018,27 @@ class MonetizationTaskRouter:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to get router stats: {e}")
+            logger.error(f" Failed to get router stats: {e}")
             return {}
 
     async def shutdown(self) -> bool:
         """Gracefully shutdown the router"""
+
+
+
         try:
-            logger.info(f"🛑 Shutting down Monetization Task Router {self.router_id}")
+            logger.info(f" Shutting down Monetization Task Router {self.router_id}")
             
             # Save state if necessary
             # Clean up resources
             
             self.initialized = False
-            logger.info(f"✅ Monetization Task Router {self.router_id} shutdown complete")
+            logger.info(f" Monetization Task Router {self.router_id} shutdown complete")
             
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to shutdown router: {e}")
+            logger.error(f" Failed to shutdown router: {e}")
             return False
 
 
@@ -989,7 +1061,7 @@ async def initialize_monetization_task_router(router_id: str = None) -> bool:
             return await _monetization_task_router.initialize()
         return True
     except Exception as e:
-        logger.error(f"❌ Failed to initialize monetization task router: {e}")
+        logger.error(f" Failed to initialize monetization task router: {e}")
         return False
 
 
@@ -1003,5 +1075,5 @@ async def shutdown_monetization_task_router() -> bool:
             return result
         return True
     except Exception as e:
-        logger.error(f"❌ Failed to shutdown monetization task router: {e}")
+        logger.error(f" Failed to shutdown monetization task router: {e}")
         return False

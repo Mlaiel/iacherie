@@ -10,7 +10,7 @@ adaptive algorithms, and real-time optimization for maximum performance.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️ PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
+ PROPRIETARY SOFTWARE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -199,11 +199,14 @@ class MemoryCacheStats:
     @property
     def utilization_ratio(self) -> float:
         """Calculate memory utilization ratio."""
+
+
+
         return self.current_size_bytes / self.max_size_bytes if self.max_size_bytes > 0 else 0.0
 
 class IndustrialMemoryCache:
     """
-    🎯 Industrial-Grade Ultra-High-Performance Memory Cache
+     Industrial-Grade Ultra-High-Performance Memory Cache
     
     Advanced in-memory caching system featuring:
     - Multiple eviction policies with adaptive selection
@@ -254,10 +257,13 @@ class IndustrialMemoryCache:
         self._access_predictors = {}
         self._memory_pressure_detector = MemoryPressureDetector()
         
-        self.logger.info("🚀 Industrial Memory Cache initialized")
+        self.logger.info(" Industrial Memory Cache initialized")
 
     async def initialize(self) -> bool:
         """Initialize cache components and background tasks."""
+
+
+
         try:
             # Start background tasks
             self._cleanup_task = asyncio.create_task(self._cleanup_loop())
@@ -267,11 +273,11 @@ class IndustrialMemoryCache:
             if self.config.enable_memory_monitoring:
                 await self._memory_pressure_detector.initialize()
             
-            self.logger.info("✅ Memory Cache fully initialized")
+            self.logger.info(" Memory Cache fully initialized")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Memory Cache initialization failed: {e}")
+            self.logger.error(f" Memory Cache initialization failed: {e}")
             return False
 
     async def get(self, key: str, default: Any = None) -> Any:
@@ -323,7 +329,7 @@ class IndustrialMemoryCache:
                 return value
                 
         except Exception as e:
-            self.logger.error(f"❌ Cache get failed for key '{key}': {e}")
+            self.logger.error(f" Cache get failed for key '{key}': {e}")
             return default
 
     async def set(
@@ -347,6 +353,9 @@ class IndustrialMemoryCache:
         Returns:
             Success status
         """
+
+
+
         try:
             with self._get_lock():
                 # Calculate value size
@@ -402,11 +411,14 @@ class IndustrialMemoryCache:
                 return True
                 
         except Exception as e:
-            self.logger.error(f"❌ Cache set failed for key '{key}': {e}")
+            self.logger.error(f" Cache set failed for key '{key}': {e}")
             return False
 
     async def delete(self, key: str) -> bool:
         """Delete key from cache."""
+
+
+
         try:
             with self._get_lock():
                 if key in self._data:
@@ -415,11 +427,14 @@ class IndustrialMemoryCache:
                 return False
                 
         except Exception as e:
-            self.logger.error(f"❌ Cache delete failed for key '{key}': {e}")
+            self.logger.error(f" Cache delete failed for key '{key}': {e}")
             return False
 
     async def clear(self) -> None:
         """Clear all cache entries."""
+
+
+
         try:
             with self._get_lock():
                 self._data.clear()
@@ -430,13 +445,16 @@ class IndustrialMemoryCache:
                 # Force garbage collection
                 gc.collect()
                 
-                self.logger.info("🗑️ Memory cache cleared")
+                self.logger.info(" Memory cache cleared")
                 
         except Exception as e:
-            self.logger.error(f"❌ Cache clear failed: {e}")
+            self.logger.error(f" Cache clear failed: {e}")
 
     async def get_stats(self) -> MemoryCacheStats:
         """Get comprehensive cache statistics."""
+
+
+
         try:
             with self._get_lock():
                 # Update performance metrics
@@ -453,7 +471,7 @@ class IndustrialMemoryCache:
                 return self.stats
                 
         except Exception as e:
-            self.logger.error(f"❌ Failed to get cache stats: {e}")
+            self.logger.error(f" Failed to get cache stats: {e}")
             return MemoryCacheStats()
 
     async def optimize_performance(self) -> Dict[str, Any]:
@@ -498,7 +516,7 @@ class IndustrialMemoryCache:
             return optimization_results
             
         except Exception as e:
-            self.logger.error(f"❌ Cache optimization failed: {e}")
+            self.logger.error(f" Cache optimization failed: {e}")
             return {"status": "optimization_failed", "error": str(e)}
             
         finally:
@@ -517,6 +535,9 @@ class IndustrialMemoryCache:
 
     def _calculate_size(self, value: Any) -> int:
         """Calculate memory size of value with high accuracy."""
+
+
+
         try:
             if hasattr(value, '__sizeof__'):
                 return value.__sizeof__()
@@ -671,10 +692,10 @@ class IndustrialMemoryCache:
                         self.stats.evictions_by_ttl += 1
                 
                 if expired_keys:
-                    self.logger.debug(f"🗑️ Cleaned up {len(expired_keys)} expired entries")
+                    self.logger.debug(f" Cleaned up {len(expired_keys)} expired entries")
                 
             except Exception as e:
-                self.logger.error(f"❌ Cleanup loop error: {e}")
+                self.logger.error(f" Cleanup loop error: {e}")
 
     async def _optimization_loop(self) -> None:
         """Background optimization task."""
@@ -686,7 +707,7 @@ class IndustrialMemoryCache:
                     await self.optimize_performance()
                 
             except Exception as e:
-                self.logger.error(f"❌ Optimization loop error: {e}")
+                self.logger.error(f" Optimization loop error: {e}")
 
 class MemoryPressureDetector:
     """Detects system memory pressure for cache optimization."""
@@ -700,6 +721,9 @@ class MemoryPressureDetector:
     
     async def get_pressure(self) -> float:
         """Get current memory pressure (0.0 - 1.0)."""
+
+
+
         try:
             memory_info = psutil.virtual_memory()
             return memory_info.percent / 100.0
@@ -816,6 +840,9 @@ class TTLCache(IndustrialMemoryCache):
         Returns:
             True if successful
         """
+
+
+
         try:
             # Calculate value size
             size_bytes = self._calculate_size(value)

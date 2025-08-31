@@ -1,5 +1,5 @@
 """
-🔧 Payment Gateways - IA-Influencer-Agent Infrastructure
+ Payment Gateways - IA-Influencer-Agent Infrastructure
 ==================================================================
 Expert: INTEGRATION_SPECIALIST + API_EXPERT
 Date: 2025-07-31 06:28:26
@@ -24,12 +24,15 @@ class PaymentGatewaysManager:
     
     async def initialize(self) -> bool:
         """Initialisation du module"""
+
+
+
         try:
             self.initialized = True
-            self.logger.info(f"✅ {self.__class__.__name__} initialisé")
+            self.logger.info(f" {self.__class__.__name__} initialisé")
             return True
         except Exception as e:
-            self.logger.error(f"❌ Erreur initialisation: {e}")
+            self.logger.error(f" Erreur initialisation: {e}")
             return False
 
 __all__ = ["PaymentGatewaysManager"]

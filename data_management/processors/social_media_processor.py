@@ -1,5 +1,5 @@
 """
-📱 Social Media Processor - IA Influencer Agent Platform Enterprise
+ Social Media Processor - IA Influencer Agent Platform Enterprise
 ===================================================================
 Module: backend/data_management/processors/social_media_processor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Social Media Management - Enterprise Production-Ready Ultra Adv
 Responsibility: Gestion complète des réseaux sociaux avec automatisation intelligente
 ==========================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Toute tentative de vol de ce concept, de cette idée ou de ce code sans autorisation personnelle claire 
 et écrite de Fahed Mlaiel est strictement interdite et sera poursuivie en justice selon la loi allemande.
@@ -199,6 +199,9 @@ class SocialMediaProcessor(BaseProcessor):
         
     def _init_database(self):
         """Initialise la base de données SQLite"""
+
+
+
         try:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
@@ -549,6 +552,9 @@ class SocialMediaProcessor(BaseProcessor):
     
     def _store_post_in_db(self, post: SocialMediaPost) -> str:
         """Stocke le post dans la base de données"""
+
+
+
         try:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
@@ -737,6 +743,9 @@ class SocialMediaProcessor(BaseProcessor):
     
     def _publish_post(self, platform: str, post_data: Dict[str, Any]):
         """Publie un post sur la plateforme"""
+
+
+
         try:
             post_id = post_data['post_id']
             post_info = post_data['post_data']
@@ -764,6 +773,9 @@ class SocialMediaProcessor(BaseProcessor):
     
     def _update_post_status(self, post_id: str, status: str, timestamp: datetime):
         """Met à jour le statut du post dans la base de données"""
+
+
+
         try:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
@@ -1110,4 +1122,7 @@ class AsyncSocialMediaProcessor(AsyncBaseProcessor):
     
     async def validate_input(self, input_data: Any) -> bool:
         """Validation asynchrone"""
+
+
+
         return self.sync_processor.validate_input(input_data)

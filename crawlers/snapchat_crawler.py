@@ -293,6 +293,9 @@ class SnapchatCrawler(BaseCrawler):
         Returns:
             bool: Authentication success status
         """
+
+
+
         try:
             self.session_token = session_token
             self.user_id = user_id
@@ -519,6 +522,9 @@ class SnapchatCrawler(BaseCrawler):
         Returns:
             SnapchatAnalytics: Comprehensive analytics data
         """
+
+
+
         try:
             start_time, end_time = analysis_period
             
@@ -646,6 +652,9 @@ class SnapchatCrawler(BaseCrawler):
     
     async def _search_users(self, query: str, limit: int) -> List[SnapchatUser]:
         """Search for Snapchat users"""
+
+
+
         try:
             params = {
                 "query": query,
@@ -676,6 +685,9 @@ class SnapchatCrawler(BaseCrawler):
 
     async def _search_discover(self, query: str, limit: int) -> List[SnapchatDiscover]:
         """Search Discover content"""
+
+
+
         try:
             params = {
                 "query": query,
@@ -706,6 +718,9 @@ class SnapchatCrawler(BaseCrawler):
 
     async def _search_lenses(self, query: str, limit: int) -> List[SnapchatLens]:
         """Search for lenses"""
+
+
+
         try:
             params = {
                 "query": query,
@@ -731,6 +746,9 @@ class SnapchatCrawler(BaseCrawler):
 
     async def _get_user_recent_stories(self, username: str) -> List[SnapchatStory]:
         """Get recent stories from user"""
+
+
+
         try:
             async with self.session.get(f"{self.api_base}/users/{username}/stories") as response:
                 if response.status == 200:
@@ -752,6 +770,9 @@ class SnapchatCrawler(BaseCrawler):
 
     async def _parse_user_data(self, data: Dict[str, Any]) -> SnapchatUser:
         """Parse user data from API response"""
+
+
+
         return SnapchatUser(
             user_id=str(data.get("id", "")),
             username=data.get("username", ""),
@@ -846,6 +867,9 @@ class SnapchatCrawler(BaseCrawler):
 
     async def _parse_lens_data(self, data: Dict[str, Any]) -> SnapchatLens:
         """Parse lens data"""
+
+
+
         return SnapchatLens(
             lens_id=str(data.get("id", "")),
             name=data.get("name", ""),
@@ -887,6 +911,9 @@ class SnapchatCrawler(BaseCrawler):
         features2: Dict[str, Any]
     ) -> float:
         """Calculate similarity between story features"""
+
+
+
         try:
             scores = []
             
@@ -954,6 +981,9 @@ class SnapchatCrawler(BaseCrawler):
 
     async def _cleanup_expired_content(self):
         """Clean up expired content from cache"""
+
+
+
         try:
             # Implementation would clean up expired stories
             current_time = datetime.utcnow()
@@ -996,6 +1026,9 @@ class SnapchatCrawler(BaseCrawler):
 
     async def close(self):
         """Close crawler and cleanup resources"""
+
+
+
         try:
             await self.cache_manager.close()
             await super().close()

@@ -82,18 +82,18 @@ class AnalyticsServiceManager:
                 try:
                     await task
                     results[service_name] = True
-                    logger.info(f"✅ {service_name} initialized successfully")
+                    logger.info(f" {service_name} initialized successfully")
                 except Exception as e:
                     results[service_name] = False
-                    logger.error(f"❌ Failed to initialize {service_name}: {e}")
+                    logger.error(f" Failed to initialize {service_name}: {e}")
             
             # Check if all services initialized successfully
             all_successful = all(results.values())
             if all_successful:
                 self._initialized = True
-                logger.info("🚀 All analytics services initialized successfully")
+                logger.info(" All analytics services initialized successfully")
             else:
-                logger.warning("⚠️ Some analytics services failed to initialize")
+                logger.warning(" Some analytics services failed to initialize")
             
             return {
                 "status": "completed",
@@ -288,7 +288,7 @@ class AnalyticsServiceManager:
             # Execute refresh tasks
             try:
                 await asyncio.gather(*refresh_tasks, return_exceptions=True)
-                logger.info(f"✅ All analytics data refreshed for creator {creator_id}")
+                logger.info(f" All analytics data refreshed for creator {creator_id}")
             except Exception as e:
                 logger.warning(f"Some analytics refresh tasks failed: {e}")
             
@@ -305,6 +305,9 @@ class AnalyticsServiceManager:
 
     def get_service_status(self) -> Dict[str, Any]:
         """Get status of all analytics services"""
+
+
+
         return {
             "analytics_services_initialized": self._initialized,
             "available_services": [
@@ -339,7 +342,7 @@ async def initialize_analytics_services(redis_client: redis.Redis, db_pool: asyn
     if analytics_manager is None:
         analytics_manager = AnalyticsServiceManager(redis_client, db_pool)
         await analytics_manager.initialize_all_services()
-        logger.info("🚀 Global analytics manager initialized successfully")
+        logger.info(" Global analytics manager initialized successfully")
     
     return analytics_manager
 

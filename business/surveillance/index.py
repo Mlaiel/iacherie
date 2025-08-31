@@ -1,5 +1,5 @@
 """
-🚀 Surveillance Module Index - IA Influencer Agent Business Layer
+ Surveillance Module Index - IA Influencer Agent Business Layer
 ==============================================================
 
 Central index and orchestration file for the surveillance business module,
@@ -12,7 +12,7 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Micro
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
+ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
 This code and concept are the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 Unauthorized access, copying, modification, distribution, reverse engineering,
@@ -164,6 +164,9 @@ class SurveillanceOrchestrator:
     
     async def initialize(self) -> bool:
         """Initialize all surveillance services"""
+
+
+
         try:
             logger.info("Starting surveillance orchestrator initialization...")
             
@@ -194,6 +197,9 @@ class SurveillanceOrchestrator:
     
     async def _initialize_connections(self):
         """Initialize database and Redis connections"""
+
+
+
         try:
             # Initialize Redis
             if self.config.redis_url:
@@ -219,6 +225,9 @@ class SurveillanceOrchestrator:
     
     async def _initialize_services(self):
         """Initialize all surveillance services"""
+
+
+
         try:
             # Storage paths
             storage_path = self.config.storage_path or Path("surveillance_data")
@@ -376,6 +385,9 @@ class SurveillanceOrchestrator:
     
     async def _perform_health_checks(self):
         """Perform health checks on all services"""
+
+
+
         try:
             for service_name, service in self.services.items():
                 health = self.service_health[service_name]
@@ -413,6 +425,9 @@ class SurveillanceOrchestrator:
     
     async def _collect_metrics(self):
         """Collect metrics from all services"""
+
+
+
         try:
             for service_name, service in self.services.items():
                 try:
@@ -434,6 +449,9 @@ class SurveillanceOrchestrator:
     
     async def _verify_services(self) -> bool:
         """Verify all services are properly initialized"""
+
+
+
         try:
             verification_results = {}
             
@@ -469,10 +487,16 @@ class SurveillanceOrchestrator:
     
     async def get_service_health(self) -> Dict[str, ServiceHealth]:
         """Get health status of all services"""
+
+
+
         return self.service_health.copy()
     
     async def get_service(self, service_name: str) -> Optional[Any]:
         """Get specific service instance"""
+
+
+
         return self.services.get(service_name)
     
     async def execute_surveillance_task(
@@ -482,6 +506,9 @@ class SurveillanceOrchestrator:
         priority: int = 5
     ) -> str:
         """Execute a surveillance task"""
+
+
+
         try:
             task_id = f"task_{int(datetime.now().timestamp())}_{task_type}"
             
@@ -612,6 +639,9 @@ class SurveillanceOrchestrator:
     
     async def get_system_status(self) -> Dict[str, Any]:
         """Get comprehensive system status"""
+
+
+
         try:
             # Calculate overall health
             healthy_services = sum(
@@ -668,6 +698,9 @@ class SurveillanceOrchestrator:
     
     async def shutdown(self):
         """Graceful shutdown of orchestrator"""
+
+
+
         try:
             logger.info("Starting surveillance orchestrator shutdown...")
             
@@ -721,6 +754,9 @@ def get_orchestrator(config: Optional[SurveillanceConfig] = None) -> Surveillanc
 
 async def initialize_surveillance_module(config: Optional[SurveillanceConfig] = None) -> bool:
     """Initialize the entire surveillance module"""
+
+
+
     try:
         orchestrator = get_orchestrator(config)
         return await orchestrator.initialize()

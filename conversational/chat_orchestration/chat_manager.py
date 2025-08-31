@@ -317,6 +317,9 @@ class ChatManager:
         Returns:
             ChatSession: New chat session instance
         """
+
+
+
         try:
             # Validate user and get profile
             user_profile = await self.security.get_user_profile(user_id)
@@ -387,6 +390,9 @@ class ChatManager:
         Returns:
             Dict containing AI response and session updates
         """
+
+
+
         try:
             # Get active session
             session = await self._get_active_session(session_id)
@@ -499,6 +505,9 @@ class ChatManager:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             session = await self._get_active_session(session_id)
             if not session:
@@ -546,6 +555,9 @@ class ChatManager:
         Returns:
             Dict containing session history and metadata
         """
+
+
+
         try:
             session = await self.session_controller.get_session(session_id)
             if not session:
@@ -592,6 +604,9 @@ class ChatManager:
         Returns:
             List of active session summaries
         """
+
+
+
         try:
             sessions = []
             for session in self.active_sessions.values():

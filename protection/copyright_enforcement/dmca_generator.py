@@ -384,6 +384,9 @@ class DMCATemplateManager:
     
     def _get_youtube_template(self) -> str:
         """Get YouTube DMCA template content"""
+
+
+
         return """
 DMCA Takedown Notice for YouTube
 
@@ -426,13 +429,13 @@ CLAIMED DAMAGES: {{ damages_claimed }} {{ currency }}
 {% endif %}
 
 SWORN STATEMENTS:
-{% if sworn_statement %}✓{% else %}✗{% endif %} I swear, under penalty of perjury, that the information in this notification is accurate and that I am the copyright owner, or am authorized to act on behalf of the owner, of an exclusive right that is allegedly infringed.
+{% if sworn_statement %}{% else %}{% endif %} I swear, under penalty of perjury, that the information in this notification is accurate and that I am the copyright owner, or am authorized to act on behalf of the owner, of an exclusive right that is allegedly infringed.
 
-{% if good_faith_belief %}✓{% else %}✗{% endif %} I have a good faith belief that use of the copyrighted materials described above on the infringing web pages is not authorized by the copyright owner, or its agent, or the law.
+{% if good_faith_belief %}{% else %}{% endif %} I have a good faith belief that use of the copyrighted materials described above on the infringing web pages is not authorized by the copyright owner, or its agent, or the law.
 
-{% if accuracy_statement %}✓{% else %}✗{% endif %} I certify that the information contained in this notice is both true and accurate.
+{% if accuracy_statement %}{% else %}{% endif %} I certify that the information contained in this notice is both true and accurate.
 
-{% if perjury_acknowledgment %}✓{% else %}✗{% endif %} I acknowledge that making false claims may result in liability for damages, costs, and attorney fees.
+{% if perjury_acknowledgment %}{% else %}{% endif %} I acknowledge that making false claims may result in liability for damages, costs, and attorney fees.
 
 ELECTRONIC SIGNATURE: {{ electronic_signature }}
 Date: {{ submission_date.strftime('%B %d, %Y') }}
@@ -451,6 +454,9 @@ Respectfully submitted,
     
     def _get_instagram_template(self) -> str:
         """Get Instagram DMCA template content"""
+
+
+
         return """
 Instagram Copyright Infringement Report
 
@@ -485,6 +491,9 @@ Date: {{ submission_date.strftime('%B %d, %Y') }}
     
     def _get_tiktok_template(self) -> str:
         """Get TikTok DMCA template content"""
+
+
+
         return """
 Subject: DMCA Takedown Notice - Copyright Infringement Report
 
@@ -527,6 +536,9 @@ Best regards,
     
     def _get_facebook_template(self) -> str:
         """Get Facebook DMCA template content"""
+
+
+
         return """
 Facebook Copyright Infringement Report
 
@@ -551,9 +563,9 @@ Email: {{ copyright_owner.email }}
 {% if copyright_owner.organization %}Organization: {{ copyright_owner.organization }}{% endif %}
 
 SWORN STATEMENTS:
-✓ I have a good faith belief that the use is not authorized
-✓ This information is accurate under penalty of perjury
-✓ I am authorized to act on behalf of the copyright owner
+ I have a good faith belief that the use is not authorized
+ This information is accurate under penalty of perjury
+ I am authorized to act on behalf of the copyright owner
 
 Signature: {{ electronic_signature }}
 Submission Date: {{ submission_date.strftime('%B %d, %Y') }}
@@ -561,6 +573,9 @@ Submission Date: {{ submission_date.strftime('%B %d, %Y') }}
     
     def _get_twitter_template(self) -> str:
         """Get Twitter DMCA template content"""
+
+
+
         return """
 Twitter Copyright Complaint
 
@@ -595,6 +610,9 @@ Date: {{ submission_date.strftime('%B %d, %Y') }}
     
     def _get_spotify_template(self) -> str:
         """Get Spotify DMCA template content"""
+
+
+
         return """
 Subject: DMCA Takedown Notice - Spotify Copyright Infringement
 
@@ -636,6 +654,9 @@ Sincerely,
     
     async def get_template(self, platform: PlatformType) -> Optional[DMCATemplate]:
         """Get DMCA template for specific platform"""
+
+
+
         try:
             return self.templates.get(platform)
         except Exception as e:
@@ -648,6 +669,9 @@ Sincerely,
         request_data: Dict[str, Any]
     ) -> DMCAValidationResult:
         """Validate DMCA request against template requirements"""
+
+
+
         try:
             template = await self.get_template(platform)
             if not template:
@@ -785,9 +809,9 @@ Content Type: {{ content_type }}
 Description: {{ description }}
 
 LEGAL CERTIFICATIONS:
-✓ I have good faith belief the use is not authorized
-✓ Information provided is accurate under penalty of perjury  
-✓ I am authorized to act for the copyright owner
+ I have good faith belief the use is not authorized
+ Information provided is accurate under penalty of perjury  
+ I am authorized to act for the copyright owner
 
 Contact Information: {{ contact_email }}
 Electronic Signature: {{ signature }}
@@ -816,6 +840,9 @@ Date: {{ submission_date }}
     
     def get_template(self, platform: str) -> Optional[DMCATemplate]:
         """Get DMCA template for platform"""
+
+
+
         return self.templates.get(platform.lower())
     
     def add_custom_template(self, template: DMCATemplate) -> None:
@@ -863,6 +890,9 @@ class DMCAGenerator:
         Returns:
             Tuple[success, notice_content, notice_id]
         """
+
+
+
         try:
             # Validate request data
             is_valid, validation_errors = await self._validate_dmca_request(request)
@@ -911,6 +941,9 @@ class DMCAGenerator:
         auto_submit: bool = False
     ) -> Tuple[bool, str]:
         """Submit DMCA notice to platform"""
+
+
+
         try:
             # Get notice from database
             notice = await self._get_notice_by_id(session, notice_id)
@@ -951,6 +984,9 @@ class DMCAGenerator:
         session: AsyncSession
     ) -> Dict[str, Any]:
         """Track response status of submitted DMCA notice"""
+
+
+
         try:
             notice = await self._get_notice_by_id(session, notice_id)
             if not notice:
@@ -1089,6 +1125,9 @@ class DMCAGenerator:
         template: DMCATemplate
     ) -> Tuple[bool, str]:
         """Submit DMCA notice via email"""
+
+
+
         try:
             await self.email_service.send_email(
                 to=template.submission_endpoint,
@@ -1208,6 +1247,9 @@ class BulkDMCAProcessor:
         session: AsyncSession
     ) -> Tuple[bool, str, Optional[str]]:
         """Process single violation into DMCA notice"""
+
+
+
         try:
             request = DMCARequest(**violation_data)
             return await self.dmca_generator.generate_dmca_notice(request, session)

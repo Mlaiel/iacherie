@@ -12,7 +12,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL WARNING ⚠️
+  CRITICAL WARNING 
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
 Any unauthorized use, reproduction, distribution, or reverse engineering 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -312,6 +312,9 @@ class RumbleCrawler(PlatformCrawler):
         Returns:
             List of crawler results
         """
+
+
+
         try:
             await self._check_rate_limit()
             
@@ -331,6 +334,9 @@ class RumbleCrawler(PlatformCrawler):
     
     async def _crawl_videos(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Rumble videos"""
+
+
+
         try:
             results = []
             
@@ -385,6 +391,9 @@ class RumbleCrawler(PlatformCrawler):
     
     async def _crawl_channels(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Rumble channels"""
+
+
+
         try:
             results = []
             
@@ -435,6 +444,9 @@ class RumbleCrawler(PlatformCrawler):
     
     async def _crawl_users(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Rumble users"""
+
+
+
         try:
             results = []
             
@@ -482,6 +494,9 @@ class RumbleCrawler(PlatformCrawler):
     
     async def _crawl_comments(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Rumble comments"""
+
+
+
         try:
             results = []
             
@@ -531,6 +546,9 @@ class RumbleCrawler(PlatformCrawler):
     
     async def _crawl_live_streams(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Rumble live streams"""
+
+
+
         try:
             results = []
             
@@ -583,6 +601,9 @@ class RumbleCrawler(PlatformCrawler):
     
     async def _crawl_trending(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl trending Rumble content"""
+
+
+
         try:
             results = []
             
@@ -615,6 +636,9 @@ class RumbleCrawler(PlatformCrawler):
     
     async def _crawl_featured(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl featured Rumble content"""
+
+
+
         try:
             results = []
             
@@ -647,6 +671,9 @@ class RumbleCrawler(PlatformCrawler):
     
     async def _crawl_search(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """General Rumble search"""
+
+
+
         try:
             results = []
             
@@ -858,6 +885,9 @@ class RumbleCrawler(PlatformCrawler):
     
     async def _parse_video_data(self, video_data: Dict[str, Any]) -> Optional[RumbleVideo]:
         """Parse video data"""
+
+
+
         try:
             uploaded_at = datetime.fromisoformat(video_data.get('uploaded_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             published_at = datetime.fromisoformat(video_data.get('published_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
@@ -920,6 +950,9 @@ class RumbleCrawler(PlatformCrawler):
     
     async def _parse_channel_data(self, channel_data: Dict[str, Any]) -> Optional[RumbleChannel]:
         """Parse channel data"""
+
+
+
         try:
             created_at = datetime.fromisoformat(channel_data.get('created_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
@@ -973,6 +1006,9 @@ class RumbleCrawler(PlatformCrawler):
     
     async def _parse_user_data(self, user_data: Dict[str, Any]) -> Optional[RumbleUser]:
         """Parse user data"""
+
+
+
         try:
             joined_at = datetime.fromisoformat(user_data.get('joined_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
@@ -1015,6 +1051,9 @@ class RumbleCrawler(PlatformCrawler):
     
     async def _parse_comment_data(self, comment_data: Dict[str, Any]) -> Optional[RumbleComment]:
         """Parse comment data"""
+
+
+
         try:
             posted_at = datetime.fromisoformat(comment_data.get('posted_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
@@ -1055,6 +1094,9 @@ class RumbleCrawler(PlatformCrawler):
     
     async def _parse_live_stream_data(self, stream_data: Dict[str, Any]) -> Optional[RumbleLiveStream]:
         """Parse live stream data"""
+
+
+
         try:
             started_at = datetime.fromisoformat(stream_data.get('started_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             ended_at = None
@@ -1107,6 +1149,9 @@ class RumbleCrawler(PlatformCrawler):
     
     async def _check_rate_limit(self):
         """Check and enforce rate limiting"""
+
+
+
         try:
             current_time = time.time()
             time_since_last = current_time - self.last_request_time
@@ -1124,6 +1169,9 @@ class RumbleCrawler(PlatformCrawler):
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
         """Extract metadata from Rumble content"""
+
+
+
         try:
             # Parse Rumble URL
             parsed_url = urlparse(url)
@@ -1180,6 +1228,9 @@ class RumbleCrawler(PlatformCrawler):
     
     def get_platform_info(self) -> Dict[str, Any]:
         """Get Rumble platform information"""
+
+
+
         return {
             'platform_name': 'Rumble',
             'base_url': self.base_url,

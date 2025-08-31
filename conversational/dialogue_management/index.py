@@ -21,7 +21,7 @@ Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
 
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE - INTELLECTUAL PROPERTY PROTECTION:
+  CRITICAL LEGAL NOTICE - INTELLECTUAL PROPERTY PROTECTION:
 This dialogue management system index, all import configurations, API structures, 
 and integration patterns are the exclusive intellectual property of Fahed Mlaiel. 
 Any unauthorized use, copying, modification, distribution, reverse engineering, or 
@@ -304,10 +304,16 @@ def create_enterprise_system(config: dict = None) -> dict:
 
 def get_component(component_name: str):
     """Get a specific dialogue management component by name"""
+
+
+
     return DIALOGUE_COMPONENTS.get(component_name)
 
 def list_available_components() -> list:
     """List all available dialogue management components"""
+
+
+
     return list(DIALOGUE_COMPONENTS.keys())
 
 # Version and Metadata

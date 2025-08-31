@@ -11,7 +11,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
             Microservices Architect + Audio Engineer + DevOps Engineer + IA Prompt Engineer
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 © 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
@@ -179,6 +179,9 @@ class CommissionProcessor:
     
     async def initialize(self) -> None:
         """Initialize processor connection"""
+
+
+
         try:
             await self._setup_client()
             await self._validate_credentials()
@@ -332,6 +335,9 @@ class CommissionProcessor:
     
     async def shutdown(self) -> None:
         """Shutdown processor"""
+
+
+
         try:
             self.status = ProcessorStatus.INACTIVE
             if self._client:
@@ -356,6 +362,9 @@ class StripeProcessor(CommissionProcessor):
     
     async def _validate_credentials(self) -> None:
         """Validate Stripe credentials"""
+
+
+
         try:
             # Test API connection
             await asyncio.to_thread(stripe.Account.retrieve)
@@ -364,6 +373,9 @@ class StripeProcessor(CommissionProcessor):
     
     async def _execute_payment(self, request: PaymentRequest) -> Dict[str, Any]:
         """Execute payment with Stripe"""
+
+
+
         try:
             # Create payment intent
             payment_intent = await asyncio.to_thread(
@@ -418,6 +430,9 @@ class StripeProcessor(CommissionProcessor):
         refund_amount: Optional[Decimal] = None
     ) -> PaymentResult:
         """Process Stripe refund"""
+
+
+
         try:
             refund_data = {"payment_intent": original_transaction_id}
             if refund_amount:
@@ -446,6 +461,9 @@ class StripeProcessor(CommissionProcessor):
     
     async def get_transaction_status(self, transaction_id: str) -> Dict[str, Any]:
         """Get Stripe transaction status"""
+
+
+
         try:
             payment_intent = await asyncio.to_thread(
                 stripe.PaymentIntent.retrieve,
@@ -466,6 +484,9 @@ class StripeProcessor(CommissionProcessor):
     
     async def handle_webhook(self, payload: Dict[str, Any], signature: str) -> Dict[str, Any]:
         """Handle Stripe webhook"""
+
+
+
         try:
             # Verify webhook signature
             event = stripe.Webhook.construct_event(
@@ -520,6 +541,9 @@ class PayPalProcessor(CommissionProcessor):
     
     async def _validate_credentials(self) -> None:
         """Validate PayPal credentials"""
+
+
+
         try:
             # Test API connection by creating a dummy order request
             request = OrdersCreateRequest()
@@ -543,6 +567,9 @@ class PayPalProcessor(CommissionProcessor):
     
     async def _execute_payment(self, request: PaymentRequest) -> Dict[str, Any]:
         """Execute payment with PayPal"""
+
+
+
         try:
             # Create PayPal order
             order_request = OrdersCreateRequest()
@@ -598,6 +625,9 @@ class PayPalProcessor(CommissionProcessor):
         refund_amount: Optional[Decimal] = None
     ) -> PaymentResult:
         """Process PayPal refund"""
+
+
+
         try:
             logger = get_structured_logger(__name__)
             logger.info(f"Processing PayPal refund for transaction {original_transaction_id}")
@@ -665,6 +695,9 @@ class PayPalProcessor(CommissionProcessor):
     
     async def get_transaction_status(self, transaction_id: str) -> Dict[str, Any]:
         """Get PayPal transaction status"""
+
+
+
         try:
             logger = get_structured_logger(__name__)
             logger.info(f"Getting PayPal transaction status for {transaction_id}")
@@ -758,6 +791,9 @@ class CryptocurrencyProcessor(CommissionProcessor):
     
     async def _execute_payment(self, request: PaymentRequest) -> Dict[str, Any]:
         """Execute cryptocurrency payment"""
+
+
+
         try:
             # For cryptocurrency payments, we typically generate a payment address
             # and wait for the transaction to be confirmed on the blockchain
@@ -796,6 +832,9 @@ class CryptocurrencyProcessor(CommissionProcessor):
         refund_amount: Optional[Decimal] = None
     ) -> PaymentResult:
         """Process crypto refund"""
+
+
+
         try:
             logger = get_structured_logger(__name__)
             logger.warning(f"Crypto refund requested for transaction {original_transaction_id}")
@@ -878,6 +917,9 @@ class ProcessorManager:
     
     async def initialize(self) -> None:
         """Initialize all processors"""
+
+
+
         try:
             logger.info("Initializing payment processors...")
             
@@ -909,6 +951,9 @@ class ProcessorManager:
     
     def add_processor(self, config: ProcessorConfig) -> None:
         """Add payment processor"""
+
+
+
         try:
             if config.processor == PaymentProcessor.STRIPE:
                 processor = StripeProcessor(config)
@@ -930,6 +975,9 @@ class ProcessorManager:
     
     async def process_payment(self, request: PaymentRequest) -> PaymentResult:
         """Route and process payment"""
+
+
+
         try:
             # Select best processor for this payment
             processor = await self._select_processor(request)
@@ -951,6 +999,9 @@ class ProcessorManager:
     
     async def _select_processor(self, request: PaymentRequest) -> Optional[CommissionProcessor]:
         """Select best processor for payment request"""
+
+
+
         try:
             # Check if specific processor requested
             if request.preferred_processor and request.preferred_processor in self._processors:
@@ -995,6 +1046,9 @@ class ProcessorManager:
         signature: str
     ) -> Dict[str, Any]:
         """Handle webhook from payment processor"""
+
+
+
         try:
             if processor not in self._processors:
                 raise PaymentError(f"Unknown processor: {processor}")
@@ -1020,6 +1074,9 @@ class ProcessorManager:
     
     async def shutdown(self) -> None:
         """Shutdown all processors"""
+
+
+
         try:
             logger.info("Shutting down payment processors...")
             

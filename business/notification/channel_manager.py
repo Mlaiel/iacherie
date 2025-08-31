@@ -237,6 +237,9 @@ class EmailProvider(ChannelProvider):
     
     async def health_check(self) -> bool:
         """Check email provider health."""
+
+
+
         try:
             # Perform health check based on provider
             if self.config.provider == "sendgrid":
@@ -365,6 +368,9 @@ class SMSProvider(ChannelProvider):
     
     async def health_check(self) -> bool:
         """Check SMS provider health."""
+
+
+
         try:
             if self.config.provider == "twilio":
                 # Check Twilio account status
@@ -514,6 +520,9 @@ class PushProvider(ChannelProvider):
     
     async def health_check(self) -> bool:
         """Check push provider health."""
+
+
+
         try:
             if self.config.provider == "fcm":
                 # Simple health check for FCM
@@ -730,6 +739,9 @@ class ChannelManager:
         Returns:
             List of optimal channel names
         """
+
+
+
         try:
             # Get user preferences if available
             user_preferences = request.recipient.preferences or {}
@@ -783,6 +795,9 @@ class ChannelManager:
         self, available_channels: List[str], request: NotificationRequest
     ) -> List[str]:
         """Apply intelligent channel selection based on performance and business rules."""
+
+
+
         try:
             scored_channels = []
             
@@ -803,6 +818,9 @@ class ChannelManager:
         self, channel: str, request: NotificationRequest
     ) -> float:
         """Calculate channel suitability score."""
+
+
+
         try:
             channel_obj = self.channels[channel]
             provider = self.providers.get(channel)
@@ -861,6 +879,9 @@ class ChannelManager:
         Returns:
             List of delivery results
         """
+
+
+
         try:
             delivery_tasks = []
             
@@ -924,6 +945,9 @@ class ChannelManager:
         channel: str
     ) -> DeliveryResult:
         """Deliver notification to specific channel."""
+
+
+
         try:
             provider = self.providers[channel]
             
@@ -960,6 +984,9 @@ class ChannelManager:
     
     async def _check_rate_limit(self, channel: str) -> bool:
         """Check if channel is within rate limits."""
+
+
+
         try:
             limiter = self.rate_limiters[channel]
             now = datetime.now(timezone.utc)
@@ -987,6 +1014,9 @@ class ChannelManager:
     
     async def _create_rate_limited_result(self, channel: str) -> DeliveryResult:
         """Create result for rate-limited delivery."""
+
+
+
         return DeliveryResult(
             channel=channel,
             success=False,
@@ -997,6 +1027,9 @@ class ChannelManager:
     
     async def _update_delivery_metrics(self, results: List[DeliveryResult]):
         """Update overall delivery performance metrics."""
+
+
+
         try:
             for result in results:
                 self.performance_metrics["total_deliveries"] += 1
@@ -1044,6 +1077,9 @@ class ChannelManager:
     
     async def optimize_channels(self, optimization_config: Dict[str, Any]) -> bool:
         """Optimize channel performance based on analytics."""
+
+
+
         try:
             # Optimize rate limits based on performance
             if "rate_limit_optimization" in optimization_config:
@@ -1109,6 +1145,9 @@ class ChannelManager:
     
     async def get_channel_status(self) -> Dict[str, Any]:
         """Get comprehensive channel status."""
+
+
+
         try:
             status = {
                 "total_channels": len(self.channels),
@@ -1149,8 +1188,14 @@ class ChannelManager:
     
     def get_performance_metrics(self) -> Dict[str, Any]:
         """Get performance metrics for all channels."""
+
+
+
         return self.performance_metrics.copy()
     
     def get_channel_costs(self) -> Dict[str, float]:
         """Get cost breakdown by channel."""
+
+
+
         return self.performance_metrics.get("cost_tracking", {}).copy()

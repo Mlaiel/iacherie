@@ -8,7 +8,7 @@ across all content formats (audio, video, image, text) for creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Enterprise Content Protection Platform - Rights Management Core
 
-⚠️  COPYRIGHT NOTICE ⚠️
+  COPYRIGHT NOTICE 
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
@@ -152,6 +152,9 @@ class RightsManager:
         Returns:
             Registration result with rights ID and protection details
         """
+
+
+
         try:
             # Validate user permissions
             user = await self._get_user(user_id)
@@ -247,6 +250,9 @@ class RightsManager:
         Returns:
             Comprehensive validation result
         """
+
+
+
         try:
             # Generate fingerprint for validation
             fingerprint_result = await self._generate_fingerprint(
@@ -321,6 +327,9 @@ class RightsManager:
         Returns:
             Transfer result with updated rights information
         """
+
+
+
         try:
             # Validate current ownership
             rights_record = await self._get_rights_record(content_id)
@@ -392,6 +401,9 @@ class RightsManager:
         Returns:
             Revocation result
         """
+
+
+
         try:
             # Validate ownership
             rights_record = await self._get_rights_record(content_id)

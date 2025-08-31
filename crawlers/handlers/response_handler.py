@@ -128,6 +128,9 @@ class ResponseMetadata:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary."""
+
+
+
         return asdict(self)
 
 
@@ -253,6 +256,9 @@ class ResponseValidator:
         Returns:
             Tuple of (is_valid, errors, parsed_response)
         """
+
+
+
         try:
             errors = []
             
@@ -382,6 +388,9 @@ class ResponseNormalizer:
     
     def _load_platform_mappings(self) -> Dict[str, Dict[str, str]]:
         """Load platform field mappings for normalization."""
+
+
+
         return {
             'youtube': {
                 'id': 'video_id',
@@ -424,6 +433,9 @@ class ResponseNormalizer:
         Returns:
             Normalized response data
         """
+
+
+
         try:
             if platform not in self.platform_mappings:
                 return raw_data
@@ -450,6 +462,9 @@ class ResponseNormalizer:
     
     def _extract_nested_value(self, data: Dict[str, Any], path: str) -> Any:
         """Extract value from nested dictionary using dot notation."""
+
+
+
         try:
             keys = path.split('.')
             value = data
@@ -467,6 +482,9 @@ class ResponseNormalizer:
     
     def _normalize_value(self, value: Any, field_name: str) -> Any:
         """Normalize individual field values."""
+
+
+
         try:
             # Numeric fields
             if field_name.endswith('_count') or field_name in ['view_count', 'like_count']:
@@ -562,6 +580,9 @@ class ResponseProcessor:
         Returns:
             Processed response data
         """
+
+
+
         try:
             processing_start = datetime.utcnow()
             response_id = str(uuid.uuid4())
@@ -729,6 +750,9 @@ class ResponseProcessor:
     
     def _calculate_processing_quality(self, response_data: Dict[str, Any]) -> str:
         """Calculate overall processing quality."""
+
+
+
         try:
             error_count = len(response_data.get('errors', []))
             warning_count = len(response_data.get('warnings', []))
@@ -747,6 +771,9 @@ class ResponseProcessor:
     
     def _calculate_data_completeness(self, response_data: Dict[str, Any]) -> float:
         """Calculate data completeness percentage."""
+
+
+
         try:
             data = response_data.get('data', {})
             if not data:
@@ -763,6 +790,9 @@ class ResponseProcessor:
     
     async def _store_response(self, response_data: Dict[str, Any]):
         """Store processed response in database."""
+
+
+
         try:
             async with async_session() as session:
                 crawler_response = CrawlerResponse(
@@ -809,6 +839,9 @@ class ResponseHandler:
         Returns:
             Processed response result
         """
+
+
+
         try:
             # Rate limiting check
             source = context.get('source', 'unknown') if context else 'unknown'
@@ -833,6 +866,9 @@ class ResponseHandler:
         responses: List[Tuple[Dict[str, Any], ResponseType, Optional[Dict[str, Any]]]]
     ) -> List[Dict[str, Any]]:
         """Handle multiple responses in batch."""
+
+
+
         try:
             tasks = []
             for raw_response, response_type, context in responses:
@@ -859,4 +895,7 @@ class ResponseHandler:
 # Factory function
 def create_response_handler() -> ResponseHandler:
     """Create and return a ResponseHandler instance."""
+
+
+
     return ResponseHandler()

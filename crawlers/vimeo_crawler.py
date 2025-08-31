@@ -118,6 +118,9 @@ class VimeoCrawler(BaseCrawler):
         
     async def authenticate(self, access_token: str) -> bool:
         """Authenticate with Vimeo API using OAuth2"""
+
+
+
         try:
             self.session_headers['Authorization'] = f'Bearer {access_token}'
             
@@ -379,6 +382,9 @@ class VimeoCrawler(BaseCrawler):
         Returns:
             Comprehensive performance analysis
         """
+
+
+
         try:
             video = await self.get_video_details(video_id)
             if not video:
@@ -439,6 +445,9 @@ class VimeoCrawler(BaseCrawler):
         Returns:
             List of trending videos
         """
+
+
+
         try:
             # Vimeo doesn't have a direct trending API, so we'll use popular/staff picks
             endpoint = f"{self.api_base}/channels/staffpicks/videos"
@@ -496,6 +505,9 @@ class VimeoCrawler(BaseCrawler):
     
     async def _parse_video_data(self, video_data: Dict) -> Optional[VimeoVideo]:
         """Parse Vimeo API video data into VimeoVideo model"""
+
+
+
         try:
             # Extract video ID from URI
             video_id = video_data.get('uri', '').split('/')[-1]
@@ -564,6 +576,9 @@ class VimeoCrawler(BaseCrawler):
     
     async def _parse_user_data(self, user_data: Dict) -> Optional[VimeoChannel]:
         """Parse Vimeo API user data into VimeoChannel model"""
+
+
+
         try:
             user_id = user_data.get('uri', '').split('/')[-1]
             

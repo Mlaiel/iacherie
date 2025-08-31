@@ -152,6 +152,9 @@ class SeparationEngine:
     
     async def _load_demucs_model(self) -> None:
         """Load Demucs model for high-quality separation."""
+
+
+
         try:
             import demucs.api
             
@@ -174,6 +177,9 @@ class SeparationEngine:
     
     async def _load_spleeter_model(self) -> None:
         """Load Spleeter model."""
+
+
+
         try:
             from spleeter.separator import Separator
             
@@ -192,6 +198,9 @@ class SeparationEngine:
     
     async def _load_openunmix_model(self) -> None:
         """Load Open-Unmix model."""
+
+
+
         try:
             import openunmix
             
@@ -226,6 +235,9 @@ class SeparationEngine:
     
     def _get_spleeter_model_name(self) -> str:
         """Get appropriate Spleeter model name."""
+
+
+
         return "spleeter:4stems-16kHz"
     
     async def separate(
@@ -278,6 +290,9 @@ class SeparationEngine:
     
     async def _validate_audio_file(self, audio_path: Path) -> None:
         """Validate audio file format and properties."""
+
+
+
         try:
             info = librosa.get_samplerate(str(audio_path))
             duration = librosa.get_duration(filename=str(audio_path))
@@ -400,6 +415,9 @@ class SeparationEngine:
     
     async def _enhance_vocal_separation(self, audio_path: Path) -> Optional[np.ndarray]:
         """Enhance vocal separation using secondary model."""
+
+
+
         try:
             if 'spleeter' not in self.models:
                 return None
@@ -507,6 +525,9 @@ class SeparationEngine:
     
     async def cleanup(self) -> None:
         """Clean up resources and temporary files."""
+
+
+
         try:
             # Clear models
             self.models.clear()

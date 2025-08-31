@@ -199,27 +199,27 @@ setup(
 def print_post_install_message():
     """Print post-installation message"""
     message = """
-╔══════════════════════════════════════════════════════════════════════════════╗
-║                                                                              ║
-║    🎉 IA Influencer Agent Pipeline System Successfully Installed!           ║
-║                                                                              ║
-║    Author: Fahed Mlaiel <mlaiel@live.de>                                   ║
-║    Copyright: © 2025 Fahed Mlaiel. All rights reserved.                    ║
-║                                                                              ║
-║    ⚠️  WARNING: This software is proprietary and confidential.              ║
-║        Unauthorized use is strictly prohibited.                             ║
-║                                                                              ║
-║    🚀 Quick Start:                                                          ║
-║       • ia-pipeline --help          # Show all commands                     ║
-║       • ia-pipeline start            # Start pipeline system                ║
-║       • ia-pipeline-api             # Start REST API server                 ║
-║                                                                              ║
-║    📚 Documentation:                                                        ║
-║       • README.md    (English)                                             ║
-║       • README.de.md (Deutsch)                                             ║
-║       • README.fr.md (Français)                                            ║
-║                                                                              ║
-╚══════════════════════════════════════════════════════════════════════════════╝
+
+                                                                              
+     IA Influencer Agent Pipeline System Successfully Installed!           
+                                                                              
+    Author: Fahed Mlaiel <mlaiel@live.de>                                   
+    Copyright: © 2025 Fahed Mlaiel. All rights reserved.                    
+                                                                              
+      WARNING: This software is proprietary and confidential.              
+        Unauthorized use is strictly prohibited.                             
+                                                                              
+     Quick Start:                                                          
+       • ia-pipeline --help          # Show all commands                     
+       • ia-pipeline start            # Start pipeline system                
+       • ia-pipeline-api             # Start REST API server                 
+                                                                              
+     Documentation:                                                        
+       • README.md    (English)                                             
+       • README.de.md (Deutsch)                                             
+       • README.fr.md (Français)                                            
+                                                                              
+
     """
     print(message)
 

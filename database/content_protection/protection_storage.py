@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + DBA + DevOps
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
+ CRITICAL LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION 
 ==================================================================
 This code and all associated intellectual property are the EXCLUSIVE property of Fahed Mlaiel.
 ANY unauthorized use, copying, modification, distribution, or commercialization without 
@@ -117,6 +117,9 @@ class ProtectionStorageManager:
         Raises:
             ProtectionStorageError: If storage operation fails
         """
+
+
+
         try:
             # Validate input data
             await self._validate_fingerprint_data(fingerprint_data, content_type)
@@ -195,6 +198,9 @@ class ProtectionStorageManager:
         Returns:
             List of tuples (fingerprint, similarity_score)
         """
+
+
+
         try:
             # Generate vector embedding for target
             target_embedding = await self._generate_vector_embedding(target_fingerprint)
@@ -252,6 +258,9 @@ class ProtectionStorageManager:
         Returns:
             ProtectionAlert: Created alert record
         """
+
+
+
         try:
             # Encrypt evidence data
             encrypted_evidence = await self.encryption_manager.encrypt_data(
@@ -301,6 +310,9 @@ class ProtectionStorageManager:
         Returns:
             List of created ContentFingerprint records
         """
+
+
+
         try:
             created_fingerprints = []
             batch_start_time = datetime.now()
@@ -388,6 +400,9 @@ class ProtectionStorageManager:
         Returns:
             List of ContentFingerprint records
         """
+
+
+
         try:
             query = self.db_session.query(ContentFingerprint).filter(
                 and_(
@@ -432,6 +447,9 @@ class ProtectionStorageManager:
         Returns:
             Success status
         """
+
+
+
         try:
             fingerprint = await self.db_session.get(ContentFingerprint, fingerprint_id)
             
@@ -485,6 +503,9 @@ class ProtectionStorageManager:
         Returns:
             Dictionary with cleanup statistics
         """
+
+
+
         try:
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=retention_days)
             
@@ -548,6 +569,9 @@ class ProtectionStorageManager:
         Returns:
             Dictionary with detailed storage statistics
         """
+
+
+
         try:
             # Count active records
             total_fingerprints = await self.db_session.query(ContentFingerprint).filter(
@@ -632,6 +656,9 @@ class ProtectionStorageManager:
         fingerprint_data: Dict[str, Any]
     ) -> bytes:
         """Generate vector embedding for similarity search"""
+
+
+
         try:
             # Extract numeric features for embedding
             features = []
@@ -674,6 +701,9 @@ class ProtectionStorageManager:
         embedding2: bytes
     ) -> float:
         """Calculate cosine similarity between vector embeddings"""
+
+
+
         try:
             vec1 = np.frombuffer(embedding1, dtype=np.float32)
             vec2 = np.frombuffer(embedding2, dtype=np.float32)

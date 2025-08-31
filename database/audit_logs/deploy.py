@@ -20,7 +20,7 @@ Enterprise Deployment Features:
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Team: Multi-Expert Lead AI Developer & DevOps Security Specialist
 
-⚠️ ULTRA-STRONG INTELLECTUAL PROPERTY WARNING ⚠️
+ ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 
 This revolutionary deployment automation system is the EXCLUSIVE property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
@@ -88,16 +88,16 @@ class AuditLogsDeployment:
                     text=True,
                     check=True
                 )
-                logger.info(f"✅ {name}: {result.stdout.strip()}")
+                logger.info(f" {name}: {result.stdout.strip()}")
             except (subprocess.CalledProcessError, FileNotFoundError):
-                logger.error(f"❌ {name}: Not found or not working")
+                logger.error(f" {name}: Not found or not working")
                 missing.append(name)
         
         if missing:
             logger.error(f"Missing prerequisites: {', '.join(missing)}")
             return False
         
-        logger.info("✅ All prerequisites satisfied")
+        logger.info(" All prerequisites satisfied")
         return True
     
     def install_python_dependencies(self) -> bool:
@@ -134,11 +134,11 @@ class AuditLogsDeployment:
                     sys.executable, "-m", "pip", "install", requirement
                 ], check=True, capture_output=True)
             
-            logger.info("✅ Python dependencies installed successfully")
+            logger.info(" Python dependencies installed successfully")
             return True
             
         except subprocess.CalledProcessError as e:
-            logger.error(f"❌ Failed to install dependencies: {e}")
+            logger.error(f" Failed to install dependencies: {e}")
             return False
     
     def create_database_schema(self) -> bool:
@@ -161,11 +161,11 @@ class AuditLogsDeployment:
             # Create all tables
             Base.metadata.create_all(engine)
             
-            logger.info("✅ Database schema created successfully")
+            logger.info(" Database schema created successfully")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to create database schema: {e}")
+            logger.error(f" Failed to create database schema: {e}")
             return False
     
     def setup_elasticsearch_indices(self) -> bool:
@@ -228,15 +228,15 @@ class AuditLogsDeployment:
             for index_name, mapping in mappings.items():
                 if not es.indices.exists(index=index_name):
                     es.indices.create(index=index_name, body=mapping)
-                    logger.info(f"✅ Created index: {index_name}")
+                    logger.info(f" Created index: {index_name}")
                 else:
-                    logger.info(f"ℹ️  Index already exists: {index_name}")
+                    logger.info(f"ℹ  Index already exists: {index_name}")
             
-            logger.info("✅ Elasticsearch indices setup completed")
+            logger.info(" Elasticsearch indices setup completed")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to setup Elasticsearch indices: {e}")
+            logger.error(f" Failed to setup Elasticsearch indices: {e}")
             return False
     
     def configure_redis_cache(self) -> bool:
@@ -277,11 +277,11 @@ class AuditLogsDeployment:
                 if not r.exists(key):
                     r.hset(key, "initialized", "true")
             
-            logger.info("✅ Redis cache configured successfully")
+            logger.info(" Redis cache configured successfully")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to configure Redis: {e}")
+            logger.error(f" Failed to configure Redis: {e}")
             return False
     
     def setup_s3_storage(self) -> bool:
@@ -311,7 +311,7 @@ class AuditLogsDeployment:
             # Check if bucket exists
             try:
                 s3_client.head_bucket(Bucket=config.s3.bucket_name)
-                logger.info(f"✅ S3 bucket exists: {config.s3.bucket_name}")
+                logger.info(f" S3 bucket exists: {config.s3.bucket_name}")
             except:
                 # Create bucket if it doesn't exist
                 s3_client.create_bucket(
@@ -320,7 +320,7 @@ class AuditLogsDeployment:
                         'LocationConstraint': config.s3.region
                     }
                 )
-                logger.info(f"✅ Created S3 bucket: {config.s3.bucket_name}")
+                logger.info(f" Created S3 bucket: {config.s3.bucket_name}")
             
             # Setup bucket policies and lifecycle rules
             bucket_policy = {
@@ -340,11 +340,11 @@ class AuditLogsDeployment:
                 Policy=json.dumps(bucket_policy)
             )
             
-            logger.info("✅ S3 storage setup completed")
+            logger.info(" S3 storage setup completed")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to setup S3 storage: {e}")
+            logger.error(f" Failed to setup S3 storage: {e}")
             return False
     
     def create_configuration_files(self) -> bool:
@@ -386,11 +386,11 @@ class AuditLogsDeployment:
                 f.write(f"AUDIT_S3_BUCKET={config.s3.bucket_name}\n")
                 f.write(f"AWS_REGION={config.s3.region}\n")
             
-            logger.info(f"✅ Configuration files created in {config_dir}")
+            logger.info(f" Configuration files created in {config_dir}")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to create configuration files: {e}")
+            logger.error(f" Failed to create configuration files: {e}")
             return False
     
     def setup_monitoring_and_alerts(self) -> bool:
@@ -415,7 +415,7 @@ class AuditLogsDeployment:
 ENVIRONMENT=${1:-production}
 CONFIG_FILE="/opt/ia-influencer-agent/config/audit_logs/${ENVIRONMENT}.yml"
 
-echo "🔍 Checking Audit Logs System Health..."
+echo " Checking Audit Logs System Health..."
 
 # Check database connectivity
 python3 -c "
@@ -426,7 +426,7 @@ config = create_config('${ENVIRONMENT}')
 engine = create_engine(config.database.primary_url)
 conn = engine.connect()
 conn.close()
-print('✅ Database: Connected')
+print(' Database: Connected')
 "
 
 # Check Redis connectivity
@@ -437,7 +437,7 @@ from backend.database.audit_logs.config import create_config
 config = create_config('${ENVIRONMENT}')
 r = redis.Redis(host=config.redis.host, port=config.redis.port)
 r.ping()
-print('✅ Redis: Connected')
+print(' Redis: Connected')
 "
 
 # Check Elasticsearch connectivity
@@ -448,10 +448,10 @@ from backend.database.audit_logs.config import create_config
 config = create_config('${ENVIRONMENT}')
 es = Elasticsearch(config.elasticsearch.hosts)
 health = es.cluster.health()
-print(f'✅ Elasticsearch: {health[\"status\"].title()}')
+print(f' Elasticsearch: {health[\"status\"].title()}')
 "
 
-echo "🎯 Health check completed successfully!"
+echo " Health check completed successfully!"
 """
             
             with open(monitoring_dir / "health_check.sh", 'w') as f:
@@ -487,11 +487,11 @@ WantedBy=multi-user.target
                 with open(systemd_dir / "audit-logs.service", 'w') as f:
                     f.write(systemd_service)
             
-            logger.info("✅ Monitoring and alerts setup completed")
+            logger.info(" Monitoring and alerts setup completed")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to setup monitoring: {e}")
+            logger.error(f" Failed to setup monitoring: {e}")
             return False
     
     def run_tests(self) -> bool:
@@ -512,14 +512,14 @@ WantedBy=multi-user.target
             ], capture_output=True, text=True)
             
             if result.returncode == 0:
-                logger.info("✅ All tests passed")
+                logger.info(" All tests passed")
                 return True
             else:
-                logger.error(f"❌ Tests failed:\n{result.stdout}\n{result.stderr}")
+                logger.error(f" Tests failed:\n{result.stdout}\n{result.stderr}")
                 return False
                 
         except Exception as e:
-            logger.error(f"❌ Failed to run tests: {e}")
+            logger.error(f" Failed to run tests: {e}")
             return False
     
     def deploy(self) -> bool:
@@ -529,10 +529,10 @@ WantedBy=multi-user.target
         Returns:
             bool: True if deployment successful
         """
-        logger.info("🚀 Starting Audit Logs Module Deployment")
+        logger.info(" Starting Audit Logs Module Deployment")
         logger.info("=" * 80)
         logger.info("Author: Fahed Mlaiel <mlaiel@live.de>")
-        logger.info("⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - Unauthorized use prohibited")
+        logger.info("  EXCLUSIVE INTELLECTUAL PROPERTY - Unauthorized use prohibited")
         logger.info("=" * 80)
         
         deployment_steps = [
@@ -548,25 +548,25 @@ WantedBy=multi-user.target
         ]
         
         for step_name, step_function in deployment_steps:
-            logger.info(f"\n📋 {step_name}...")
+            logger.info(f"\n {step_name}...")
             try:
                 if not step_function():
-                    logger.error(f"❌ {step_name} failed. Deployment aborted.")
+                    logger.error(f" {step_name} failed. Deployment aborted.")
                     return False
-                logger.info(f"✅ {step_name} completed successfully")
+                logger.info(f" {step_name} completed successfully")
             except Exception as e:
-                logger.error(f"❌ {step_name} failed with exception: {e}")
+                logger.error(f" {step_name} failed with exception: {e}")
                 return False
         
-        logger.info("\n🎉 Audit Logs Module Deployment Completed Successfully!")
-        logger.info("\n📋 Next Steps:")
+        logger.info("\n Audit Logs Module Deployment Completed Successfully!")
+        logger.info("\n Next Steps:")
         logger.info("1. Update your application configuration to use the audit logs module")
         logger.info("2. Configure monitoring dashboards and alerts")
         logger.info("3. Set up log rotation and archival policies")
         logger.info("4. Train your team on the audit logging capabilities")
         logger.info("5. Perform security and compliance verification")
         
-        logger.info("\n🔍 For usage examples, check:")
+        logger.info("\n For usage examples, check:")
         logger.info(f"   - {self.base_path / 'usage_examples.py'}")
         logger.info(f"   - {self.base_path / 'README.md'}")
         
@@ -614,10 +614,10 @@ def main():
     success = deployment.deploy()
     
     if success:
-        logger.info("🎯 Deployment completed successfully!")
+        logger.info(" Deployment completed successfully!")
         sys.exit(0)
     else:
-        logger.error("💥 Deployment failed!")
+        logger.error(" Deployment failed!")
         sys.exit(1)
 
 

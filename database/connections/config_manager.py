@@ -66,6 +66,9 @@ class DatabaseConfig:
     
     def to_url(self, driver: str = "postgresql+asyncpg") -> str:
         """Convert to database URL"""
+
+
+
         return (
             f"{driver}://{self.username}:{self.password}@"
             f"{self.host}:{self.port}/{self.database}"
@@ -434,6 +437,9 @@ class DatabaseConfigurationManager:
     
     def _validate_config(self, db_type: str, config: Dict[str, Any]) -> bool:
         """Validate specific database configuration"""
+
+
+
         
         try:
             if db_type == "postgresql":
@@ -520,14 +526,23 @@ class DatabaseConfigurationManager:
     
     def get_tenant_config(self, tenant_id: str) -> Optional[TenantConfig]:
         """Get tenant configuration"""
+
+
+
         return self.tenant_configs.get(tenant_id)
     
     def list_tenants(self) -> List[str]:
         """List all configured tenants"""
+
+
+
         return list(self.tenant_configs.keys())
     
     async def add_tenant(self, tenant_config: TenantConfig) -> bool:
         """Add new tenant configuration"""
+
+
+
         
         try:
             # Validate configuration
@@ -556,6 +571,9 @@ class DatabaseConfigurationManager:
     
     async def update_tenant(self, tenant_id: str, updates: Dict[str, Any]) -> bool:
         """Update tenant configuration"""
+
+
+
         
         try:
             if tenant_id not in self.tenant_configs:
@@ -589,6 +607,9 @@ class DatabaseConfigurationManager:
     
     async def remove_tenant(self, tenant_id: str) -> bool:
         """Remove tenant configuration"""
+
+
+
         
         try:
             if tenant_id not in self.tenant_configs:
@@ -667,6 +688,9 @@ class DatabaseConfigurationManager:
     
     async def save_configuration(self) -> bool:
         """Save current configuration to files"""
+
+
+
         
         try:
             # Ensure config directory exists
@@ -694,6 +718,9 @@ class DatabaseConfigurationManager:
     
     async def get_metrics(self) -> Dict[str, Any]:
         """Get configuration manager metrics"""
+
+
+
         
         return {
             "environment": self.environment.value,

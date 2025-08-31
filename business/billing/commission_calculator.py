@@ -82,6 +82,9 @@ class CommissionCalculatorEngine:
         
     async def initialize(self) -> None:
         """Initialize commission calculator engine"""
+
+
+
         try:
             await self._setup_database_tables()
             await self._load_commission_rules()
@@ -161,6 +164,9 @@ class CommissionCalculatorEngine:
 
     async def _load_commission_rules(self) -> None:
         """Load commission rules into memory"""
+
+
+
         try:
             # Initialize default commission rules
             default_rules = [
@@ -189,6 +195,9 @@ class CommissionCalculatorEngine:
 
     async def _initialize_tier_thresholds(self) -> None:
         """Initialize creator tier thresholds"""
+
+
+
         try:
             tier_thresholds = {
                 CommissionTier.BRONZE: {'min_revenue': 0, 'min_sales': 0, 'multiplier': 1.0},
@@ -209,6 +218,9 @@ class CommissionCalculatorEngine:
                                  commission_type: CommissionType,
                                  calculation_period: tuple[datetime, datetime]) -> CommissionData:
         """Calculate commission for creator based on revenue and performance"""
+
+
+
         try:
             # Get creator's current tier
             creator_tier = await self._get_creator_tier(creator_id, calculation_period[1])
@@ -277,6 +289,9 @@ class CommissionCalculatorEngine:
 
     async def _get_creator_tier(self, creator_id: str, as_of_date: datetime) -> CommissionTier:
         """Get creator's current tier based on performance"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 # Get creator's performance metrics
@@ -316,6 +331,9 @@ class CommissionCalculatorEngine:
 
     async def _get_creator_performance(self, creator_id: str, calculation_period: tuple[datetime, datetime]) -> Dict[str, Any]:
         """Get creator performance metrics for period"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 metrics = await conn.fetchrow("""
@@ -342,6 +360,9 @@ class CommissionCalculatorEngine:
 
     def _calculate_performance_multiplier(self, performance_metrics: Dict[str, Any], rule: CommissionRule) -> Decimal:
         """Calculate performance-based multiplier"""
+
+
+
         try:
             base_multiplier = rule.performance_multiplier
             
@@ -368,6 +389,9 @@ class CommissionCalculatorEngine:
     async def _calculate_performance_bonus(self, creator_id: str, revenue_amount: Decimal,
                                          performance_metrics: Dict[str, Any], tier: CommissionTier) -> Decimal:
         """Calculate additional performance bonus"""
+
+
+
         try:
             bonus = Decimal('0.00')
             
@@ -412,6 +436,9 @@ class CommissionCalculatorEngine:
 
     async def _store_commission_calculation(self, commission_data: CommissionData) -> None:
         """Store commission calculation in database"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 await conn.execute("""
@@ -439,6 +466,9 @@ class CommissionCalculatorEngine:
 
     async def calculate_bulk_commissions(self, calculation_date: datetime) -> Dict[str, List[CommissionData]]:
         """Calculate commissions for all creators for a specific period"""
+
+
+
         try:
             # Get all active creators
             async with self.db_pool.acquire() as conn:
@@ -495,6 +525,9 @@ class CommissionCalculatorEngine:
 
     async def _get_creator_revenue_data(self, creator_id: str, period: tuple[datetime, datetime]) -> Dict[str, float]:
         """Get revenue data by type for creator"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 revenue_data = await conn.fetchrow("""
@@ -517,6 +550,9 @@ class CommissionCalculatorEngine:
 
     async def get_commission_dashboard_data(self, creator_id: str) -> Dict[str, Any]:
         """Get comprehensive commission dashboard data"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 # Commission summary

@@ -403,6 +403,9 @@ class ContentVectorCacheManager:
     
     def get_search_statistics(self) -> Dict[str, Any]:
         """Get comprehensive search statistics"""
+
+
+
         return {
             "total_searches": self._search_metrics.get("total_searches", 0),
             "avg_search_time_ms": self._search_metrics.get("avg_search_time_ms", 0),

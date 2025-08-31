@@ -8,7 +8,7 @@ scalable social media automation, content protection, and monetization tracking.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ CRITICAL LEGAL NOTICE:
+ CRITICAL LEGAL NOTICE:
 This code, architecture, and business concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, reverse engineering, or commercialization without 
 explicit written permission is strictly prohibited and will result in immediate legal action.
@@ -163,6 +163,9 @@ class SocialMediaAgentRegistry:
         health_check_url: Optional[str] = None
     ) -> bool:
         """Register a service component with the registry"""
+
+
+
         try:
             if name in self.services:
                 logger.warning(f"Service {name} already registered, updating...")
@@ -195,6 +198,9 @@ class SocialMediaAgentRegistry:
 
     def unregister_service(self, name: str) -> bool:
         """Unregister a service from the registry"""
+
+
+
         try:
             if name not in self.services:
                 logger.warning(f"Service {name} not found for unregistration")
@@ -343,6 +349,9 @@ class SocialMediaAgentRegistry:
 
     def get_dependency_graph(self) -> Dict[str, List[str]]:
         """Get the service dependency graph"""
+
+
+
         return {name: list(deps) for name, deps in self.dependency_graph.items()}
 
     async def shutdown_all_services(self) -> Dict[str, bool]:
@@ -504,6 +513,9 @@ def set_global_registry(registry: SocialMediaAgentRegistry) -> None:
         
     def register_component(self, name: str, component_class: Type, config: Optional[Dict] = None):
         """Register a component class with configuration"""
+
+
+
         try:
             if config is None:
                 config = {}
@@ -529,6 +541,9 @@ def set_global_registry(registry: SocialMediaAgentRegistry) -> None:
     
     def initialize_all(self, global_config: Optional[Dict] = None):
         """Initialize all core social media components"""
+
+
+
         try:
             if global_config is None:
                 global_config = {}
@@ -553,6 +568,9 @@ def set_global_registry(registry: SocialMediaAgentRegistry) -> None:
     
     def get_status(self) -> Dict[str, Any]:
         """Get registry status and component health"""
+
+
+
         return {
             'initialized': self.initialized,
             'version': self.version,

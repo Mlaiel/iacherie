@@ -1,5 +1,5 @@
 """
-🎯 Processors Index - IA Influencer Agent Platform Enterprise
+ Processors Index - IA Influencer Agent Platform Enterprise
 =============================================================
 Module: backend/data_management/processors/index.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Data Processing Hub - Enterprise Production-Ready Ultra Advance
 Responsibility: Point d'entrée principal pour tous les processeurs de données
 =====================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Toute tentative de vol de ce concept, de cette idée ou de ce code sans autorisation personnelle claire 
 et écrite de Fahed Mlaiel est strictement interdite et sera poursuivie en justice selon la loi allemande.
@@ -102,6 +102,9 @@ class ProcessorRegistry:
         
     def get_processor(self, processor_type: str, config: Dict[str, Any] = None, async_mode: bool = False) -> Union[BaseProcessor, AsyncBaseProcessor]:
         """Récupère ou crée une instance de processeur"""
+
+
+
         try:
             if async_mode:
                 processor_class = self.async_processors.get(processor_type)
@@ -129,6 +132,9 @@ class ProcessorRegistry:
     
     def list_available_processors(self) -> Dict[str, List[str]]:
         """Liste tous les processeurs disponibles"""
+
+
+
         return {
             'sync_processors': list(self.sync_processors.keys()),
             'async_processors': list(self.async_processors.keys())
@@ -136,6 +142,9 @@ class ProcessorRegistry:
     
     def get_processor_info(self, processor_type: str) -> Dict[str, Any]:
         """Récupère les informations d'un processeur"""
+
+
+
         try:
             if processor_type not in self.sync_processors:
                 raise ValueError(f"Unknown processor type: {processor_type}")
@@ -158,6 +167,9 @@ class ProcessorRegistry:
     
     def update_global_config(self, config: Dict[str, Any]):
         """Met à jour la configuration globale"""
+
+
+
         try:
             self.global_config.update(config)
             self.logger.info("Global configuration updated")
@@ -176,6 +188,9 @@ class ProcessorRegistry:
     
     def get_performance_metrics(self) -> Dict[str, Any]:
         """Récupère les métriques de performance"""
+
+
+
         return {
             'global_metrics': self.performance_metrics.copy(),
             'active_processors': len(self.active_processors),
@@ -185,6 +200,9 @@ class ProcessorRegistry:
     
     def cleanup_inactive_processors(self):
         """Nettoie les processeurs inactifs"""
+
+
+
         try:
             # Implémenter la logique de nettoyage si nécessaire
             self.logger.info("Processor cleanup completed")
@@ -201,10 +219,16 @@ class ProcessorFactory:
     
     def create_processor(self, processor_type: str, config: Dict[str, Any] = None, async_mode: bool = False) -> Union[BaseProcessor, AsyncBaseProcessor]:
         """Crée un processeur avec la configuration spécifiée"""
+
+
+
         return self.registry.get_processor(processor_type, config, async_mode)
     
     def create_processing_pipeline(self, pipeline_config: List[Dict[str, Any]]) -> 'ProcessingPipeline':
         """Crée un pipeline de processeurs"""
+
+
+
         return ProcessingPipeline(pipeline_config, self.registry)
     
     def batch_create_processors(self, processor_configs: Dict[str, Dict[str, Any]]) -> Dict[str, BaseProcessor]:
@@ -233,6 +257,9 @@ class ProcessingPipeline:
     
     def _build_pipeline(self):
         """Construit le pipeline de processeurs"""
+
+
+
         try:
             for step_config in self.pipeline_config:
                 processor_type = step_config.get('processor_type')
@@ -362,14 +389,23 @@ class ProcessorManager:
     
     def get_processor(self, processor_type: str, config: Dict[str, Any] = None, async_mode: bool = False) -> Union[BaseProcessor, AsyncBaseProcessor]:
         """Interface principale pour récupérer un processeur"""
+
+
+
         return self.registry.get_processor(processor_type, config, async_mode)
     
     def create_pipeline(self, pipeline_config: List[Dict[str, Any]]) -> ProcessingPipeline:
         """Crée un pipeline de traitement"""
+
+
+
         return self.factory.create_processing_pipeline(pipeline_config)
     
     def process_single(self, processor_type: str, input_data: Any, config: Dict[str, Any] = None) -> Dict[str, Any]:
         """Traite des données avec un seul processeur"""
+
+
+
         try:
             processor = self.get_processor(processor_type, config)
             result = processor.process(input_data)
@@ -391,6 +427,9 @@ class ProcessorManager:
     
     async def process_single_async(self, processor_type: str, input_data: Any, config: Dict[str, Any] = None) -> Dict[str, Any]:
         """Traite des données avec un seul processeur asynchrone"""
+
+
+
         try:
             processor = self.get_processor(processor_type, config, async_mode=True)
             result = await processor.process(input_data)
@@ -454,6 +493,9 @@ class ProcessorManager:
     
     def _track_processing_metrics(self, processor_type: str, result: Dict[str, Any]):
         """Suit les métriques de traitement"""
+
+
+
         try:
             if processor_type not in self.performance_tracker:
                 self.performance_tracker[processor_type] = {
@@ -479,6 +521,9 @@ class ProcessorManager:
     
     def get_system_status(self) -> Dict[str, Any]:
         """Récupère le statut complet du système"""
+
+
+
         return {
             'processor_registry': self.registry.get_performance_metrics(),
             'available_processors': self.registry.list_available_processors(),
@@ -489,6 +534,9 @@ class ProcessorManager:
     
     def shutdown(self):
         """Arrêt propre du manager"""
+
+
+
         try:
             self.registry.cleanup_inactive_processors()
             self.logger.info("ProcessorManager shutdown completed")
@@ -504,26 +552,44 @@ _global_manager = ProcessorManager()
 # Fonctions de convenance pour accès rapide
 def get_processor(processor_type: str, config: Dict[str, Any] = None, async_mode: bool = False) -> Union[BaseProcessor, AsyncBaseProcessor]:
     """Fonction de convenance pour récupérer un processeur"""
+
+
+
     return _global_manager.get_processor(processor_type, config, async_mode)
 
 def process_data(processor_type: str, input_data: Any, config: Dict[str, Any] = None) -> Dict[str, Any]:
     """Fonction de convenance pour traiter des données"""
+
+
+
     return _global_manager.process_single(processor_type, input_data, config)
 
 async def process_data_async(processor_type: str, input_data: Any, config: Dict[str, Any] = None) -> Dict[str, Any]:
     """Fonction de convenance pour traiter des données asynchrone"""
+
+
+
     return await _global_manager.process_single_async(processor_type, input_data, config)
 
 def create_pipeline(pipeline_config: List[Dict[str, Any]]) -> ProcessingPipeline:
     """Fonction de convenance pour créer un pipeline"""
+
+
+
     return _global_manager.create_pipeline(pipeline_config)
 
 def get_available_processors() -> Dict[str, List[str]]:
     """Fonction de convenance pour lister les processeurs"""
+
+
+
     return _global_registry.list_available_processors()
 
 def get_system_status() -> Dict[str, Any]:
     """Fonction de convenance pour le statut système"""
+
+
+
     return _global_manager.get_system_status()
 
 
@@ -580,22 +646,22 @@ __all__ = [
 
 if __name__ == "__main__":
     # Example d'utilisation
-    print("🎯 IA Influencer Agent - Processors Module")
+    print(" IA Influencer Agent - Processors Module")
     print("=" * 50)
     
     # Lister les processeurs disponibles
     processors = get_available_processors()
-    print(f"📋 Processeurs synchrones disponibles: {len(processors['sync_processors'])}")
+    print(f" Processeurs synchrones disponibles: {len(processors['sync_processors'])}")
     for proc in processors['sync_processors']:
         print(f"   • {proc}")
     
-    print(f"\n⚡ Processeurs asynchrones disponibles: {len(processors['async_processors'])}")
+    print(f"\n Processeurs asynchrones disponibles: {len(processors['async_processors'])}")
     for proc in processors['async_processors']:
         print(f"   • {proc}")
     
-    print(f"\n📊 Statut système:")
+    print(f"\n Statut système:")
     status = get_system_status()
     print(f"   • Processeurs actifs: {status['processor_registry']['active_processors']}")
     print(f"   • Processeurs async actifs: {status['processor_registry']['active_async_processors']}")
     
-    print("\n✅ Module processors initialisé avec succès!")
+    print("\n Module processors initialisé avec succès!")

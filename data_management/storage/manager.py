@@ -1,5 +1,5 @@
 """
-🗄️ Storage Manager - IA Influencer Agent Platform Enterprise
+ Storage Manager - IA Influencer Agent Platform Enterprise
 ============================================================
 Module: backend/data_management/storage/manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Enterprise-grade storage management system for multi-format content
 with intelligent tiering, multi-cloud support, and advanced features.
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 """
@@ -126,6 +126,9 @@ class StorageManager:
     
     def _initialize_providers(self) -> None:
         """Initialize storage providers based on configuration"""
+
+
+
         try:
             # Cloud providers
             if self.config.get('cloud_enabled', True):
@@ -159,6 +162,9 @@ class StorageManager:
     
     def _initialize_engines(self) -> None:
         """Initialize processing engines"""
+
+
+
         try:
             self.engines['lifecycle'] = LifecycleEngine(
                 self.config.get('lifecycle_config', {})
@@ -300,6 +306,9 @@ class StorageManager:
         include_metadata: bool = True
     ) -> Optional[Dict[str, Any]]:
         """Retrieve content by storage ID with optional metadata"""
+
+
+
         try:
             # Check cache first for fast retrieval
             if 'cache' in self.providers:
@@ -336,6 +345,9 @@ class StorageManager:
     
     async def delete_content(self, storage_id: str) -> bool:
         """Delete content from all storage locations"""
+
+
+
         try:
             success_count = 0
             total_providers = len(self.providers)
@@ -372,6 +384,9 @@ class StorageManager:
         offset: int = 0
     ) -> List[Dict[str, Any]]:
         """List stored content with filtering options"""
+
+
+
         try:
             # Use primary provider for listing
             primary_provider = self.providers.get('cloud') or self.providers.get('local')
@@ -396,6 +411,9 @@ class StorageManager:
     
     async def get_storage_statistics(self) -> Dict[str, Any]:
         """Get comprehensive storage statistics"""
+
+
+
         try:
             # Collect statistics from all providers
             provider_stats = {}
@@ -422,6 +440,9 @@ class StorageManager:
     
     async def optimize_storage(self) -> Dict[str, Any]:
         """Run storage optimization tasks"""
+
+
+
         try:
             optimization_results = {}
             
@@ -463,10 +484,16 @@ class StorageManager:
     
     def _calculate_hash(self, content: bytes) -> str:
         """Calculate SHA-256 hash of content"""
+
+
+
         return hashlib.sha256(content).hexdigest()
     
     async def _check_duplicate(self, content_hash: str) -> Optional[StorageResponse]:
         """Check if content with same hash already exists"""
+
+
+
         try:
             if 'deduplication' in self.engines:
                 return await self.engines['deduplication'].check_duplicate(content_hash)
@@ -482,6 +509,9 @@ class StorageManager:
         content_type: ContentType
     ) -> Dict[str, Any]:
         """Analyze content and extract metadata"""
+
+
+
         try:
             # Basic metadata
             metadata = {
@@ -518,6 +548,9 @@ class StorageManager:
         metadata: Dict[str, Any]
     ) -> StorageTier:
         """Determine optimal storage tier based on content and business rules"""
+
+
+
         try:
             # Business logic for tier assignment
             

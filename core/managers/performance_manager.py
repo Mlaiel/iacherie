@@ -8,7 +8,7 @@ Responsibility: Advanced performance monitoring with real-time optimization and 
 Technologies: Python, Performance Monitoring, Auto-scaling, Resource Optimization
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -328,7 +328,7 @@ class SystemHealthCheck:
 
 class PerformanceManager(ABC):
     """
-    📊 Advanced Performance Manager - IA-Influencer-Agent
+     Advanced Performance Manager - IA-Influencer-Agent
     
     Responsabilité:
     Gestionnaire industriel pour monitoring performance et optimisation système
@@ -413,7 +413,7 @@ class PerformanceManager(ABC):
             "performance_trend": "stable"
         }
         
-        logger.info(f"📊 Performance Manager initialized - Monitoring {len(MetricType)} metric types")
+        logger.info(f" Performance Manager initialized - Monitoring {len(MetricType)} metric types")
     
     @abstractmethod
     async def initialize_monitoring(self) -> bool:
@@ -483,6 +483,9 @@ class PerformanceManager(ABC):
             tags: Optional metric tags
             metadata: Optional metric metadata
         """
+
+
+
         try:
             # Create metric data point
             metric_point = MetricDataPoint(
@@ -506,10 +509,10 @@ class PerformanceManager(ABC):
             # Update performance baselines
             await self._update_performance_baselines(metric_type, value)
             
-            logger.debug(f"📊 Metric recorded: {metric_type.value} = {value}")
+            logger.debug(f" Metric recorded: {metric_type.value} = {value}")
             
         except Exception as e:
-            logger.error(f"❌ Metric recording failed: {e}")
+            logger.error(f" Metric recording failed: {e}")
     
     async def create_alert_rule(
         self,
@@ -532,6 +535,9 @@ class PerformanceManager(ABC):
         Returns:
             str: Alert rule ID
         """
+
+
+
         try:
             rule_id = str(uuid.uuid4())
             
@@ -549,11 +555,11 @@ class PerformanceManager(ABC):
             with self._lock:
                 self._alert_rules[metric_type].append(alert_rule)
             
-            logger.info(f"📊 Alert rule created: {metric_type.value} {condition} {threshold}")
+            logger.info(f" Alert rule created: {metric_type.value} {condition} {threshold}")
             return rule_id
             
         except Exception as e:
-            logger.error(f"❌ Alert rule creation failed: {e}")
+            logger.error(f" Alert rule creation failed: {e}")
             raise
     
     async def get_performance_dashboard(
@@ -569,6 +575,9 @@ class PerformanceManager(ABC):
         Returns:
             Dict: Complete dashboard data
         """
+
+
+
         try:
             # Default to last 24 hours
             if not time_range:
@@ -718,7 +727,7 @@ class PerformanceManager(ABC):
                 }
             
         except Exception as e:
-            logger.error(f"❌ Dashboard generation failed: {e}")
+            logger.error(f" Dashboard generation failed: {e}")
             raise
     
     async def optimize_performance_automatically(
@@ -734,6 +743,9 @@ class PerformanceManager(ABC):
         Returns:
             Dict: Optimization results
         """
+
+
+
         try:
             targets = target_metrics or {
                 MetricType.CPU_USAGE: self.config.target_cpu_usage_percent,
@@ -783,11 +795,11 @@ class PerformanceManager(ABC):
             optimization_results["success_rate"] = success_rate
             optimization_results["optimization_timestamp"] = datetime.utcnow().isoformat()
             
-            logger.info(f"📊 Auto-optimization completed: {optimization_results['actions_successful']}/{optimization_results['actions_executed']} successful")
+            logger.info(f" Auto-optimization completed: {optimization_results['actions_successful']}/{optimization_results['actions_executed']} successful")
             return optimization_results
             
         except Exception as e:
-            logger.error(f"❌ Auto-optimization failed: {e}")
+            logger.error(f" Auto-optimization failed: {e}")
             raise
     
     async def _evaluate_alert_rules(self, metric_point: MetricDataPoint) -> None:
@@ -856,6 +868,9 @@ class PerformanceManager(ABC):
     
     def _calculate_system_uptime(self) -> float:
         """Calculate system uptime in hours"""
+
+
+
         try:
             return time.time() - psutil.boot_time()
         except:
@@ -901,6 +916,9 @@ class PerformanceManager(ABC):
     
     def _calculate_resource_utilization(self) -> Dict[str, float]:
         """Calculate current resource utilization"""
+
+
+
         return {
             "cpu": self._current_metrics.get(MetricType.CPU_USAGE, MetricDataPoint(MetricType.CPU_USAGE, 0.0, datetime.utcnow())).value,
             "memory": self._current_metrics.get(MetricType.MEMORY_USAGE, MetricDataPoint(MetricType.MEMORY_USAGE, 0.0, datetime.utcnow())).value,
@@ -1007,13 +1025,16 @@ class PerformanceManager(ABC):
         """Context manager for performance monitoring operations"""
         session_id = str(uuid.uuid4())
         try:
-            logger.info(f"📊 Performance session started: {session_id} for {component_name}")
+            logger.info(f" Performance session started: {session_id} for {component_name}")
             yield session_id
         finally:
-            logger.info(f"📊 Performance session ended: {session_id}")
+            logger.info(f" Performance session ended: {session_id}")
     
     async def cleanup(self) -> bool:
         """Cleanup performance monitoring resources"""
+
+
+
         try:
             # Stop monitoring
             self._monitoring_active = False
@@ -1064,7 +1085,7 @@ class PerformanceManager(ABC):
             return True
             
         except Exception as e:
-            logger.error(f"❌ Performance cleanup failed: {e}")
+            logger.error(f" Performance cleanup failed: {e}")
             return False
     
     def get_stats(self) -> Dict[str, Any]:

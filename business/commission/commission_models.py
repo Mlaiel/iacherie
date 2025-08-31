@@ -11,7 +11,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
             Microservices Architect + Audio Engineer + DevOps Engineer + IA Prompt Engineer
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 © 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.

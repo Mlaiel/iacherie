@@ -7,7 +7,7 @@ Provides flexible, configurable processing chains with error handling and monito
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -179,6 +179,9 @@ class MultimediaPipeline:
         
     async def initialize(self):
         """Initialize pipeline engine"""
+
+
+
         try:
             await self.registry.initialize()
             await self._load_default_pipelines()
@@ -191,6 +194,9 @@ class MultimediaPipeline:
             
     async def register_pipeline(self, pipeline_def: PipelineDefinition) -> bool:
         """Register new pipeline definition"""
+
+
+
         try:
             # Validate pipeline
             validation_result = await self._validate_pipeline(pipeline_def)
@@ -344,6 +350,9 @@ class MultimediaPipeline:
         
     async def cancel_execution(self, execution_id: str) -> bool:
         """Cancel pipeline execution"""
+
+
+
         try:
             context = self.active_executions.get(execution_id)
             if not context or context.status not in [PipelineStatus.PENDING, PipelineStatus.RUNNING]:
@@ -368,6 +377,9 @@ class MultimediaPipeline:
             
     async def pause_execution(self, execution_id: str) -> bool:
         """Pause pipeline execution"""
+
+
+
         try:
             context = self.active_executions.get(execution_id)
             if not context or context.status != PipelineStatus.RUNNING:
@@ -391,6 +403,9 @@ class MultimediaPipeline:
             
     async def resume_execution(self, execution_id: str) -> bool:
         """Resume paused pipeline execution"""
+
+
+
         try:
             context = self.active_executions.get(execution_id)
             if not context or context.status != PipelineStatus.PAUSED:
@@ -435,6 +450,9 @@ class MultimediaPipeline:
         
     async def get_pipeline_stats(self) -> Dict[str, Any]:
         """Get pipeline statistics"""
+
+
+
         return {
             **self.pipeline_stats,
             "active_executions": len(self.active_executions),
@@ -444,6 +462,9 @@ class MultimediaPipeline:
         
     async def health_check(self) -> Dict[str, Any]:
         """Pipeline engine health check"""
+
+
+
         try:
             # Check registry health
             registry_health = await self.registry.health_check()
@@ -484,6 +505,9 @@ class MultimediaPipeline:
     
     async def _execute_pipeline_steps(self, pipeline_def: PipelineDefinition, context: PipelineContext):
         """Execute pipeline steps"""
+
+
+
         try:
             if pipeline_def.execution_mode == ExecutionMode.SEQUENTIAL:
                 await self._execute_sequential_steps(pipeline_def, context)

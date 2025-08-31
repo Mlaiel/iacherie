@@ -69,6 +69,9 @@ class TestAudioGenerator:
     @pytest.fixture
     def sample_script(self):
         """Create sample script for audio generation"""
+
+
+
         return """
         Welcome to our AI technology podcast. Today we'll explore the fascinating world
         of artificial intelligence and its impact on modern society. 
@@ -86,6 +89,9 @@ class TestAudioGenerator:
     @pytest.fixture
     def voice_config(self):
         """Create sample voice configuration"""
+
+
+
         return VoiceConfig(
             voice_id="neural_voice_01",
             language="en-US",

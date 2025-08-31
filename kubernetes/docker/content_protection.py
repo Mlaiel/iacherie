@@ -1,11 +1,11 @@
 """
-🛡️ Content Protection Docker Configuration - IA-Influencer-Agent Platform
+ Content Protection Docker Configuration - IA-Influencer-Agent Platform
 ===========================================================================
 Expert: Security Engineer + Content Protection Specialist + ML Security
 Creator: Fahed Mlaiel <mlaiel@live.de>
 ===========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL 
 Tout vol, copie ou utilisation non autorisée de ce code source,
 de ce concept ou de cette propriété intellectuelle sans
 l'autorisation écrite explicite de Fahed Mlaiel est strictement
@@ -129,6 +129,9 @@ class ContentProtectionDockerConfig:
     
     def generate_dockerfile(self) -> str:
         """Generate production Dockerfile for Content Protection"""
+
+
+
         return f"""
 # IA-Influencer Content Protection - Production Docker Image
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -314,6 +317,9 @@ CMD ["gunicorn", \\
 
     def generate_docker_compose_service(self) -> Dict[str, Any]:
         """Generate docker-compose service configuration"""
+
+
+
         return {
             "image": f"{self.image_name}:{self.image_tag}",
             "container_name": self.container_name,
@@ -402,6 +408,9 @@ CMD ["gunicorn", \\
 
     def generate_crawler_worker_service(self) -> Dict[str, Any]:
         """Generate crawler worker service configuration"""
+
+
+
         return {
             "image": f"{self.image_name}:{self.image_tag}",
             "container_name": f"{self.container_name}-crawler",
@@ -466,6 +475,9 @@ CMD ["gunicorn", \\
 
     def generate_requirements_txt(self) -> str:
         """Generate content protection requirements.txt"""
+
+
+
         return """
 # IA-Influencer Content Protection - Production Dependencies
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -633,5 +645,5 @@ flake8==6.1.0
             yaml.dump(service_config, f, default_flow_style=False)
         files_created.append(str(compose_config_path))
         
-        logger.info(f"✅ Content Protection configuration files saved: {files_created}")
+        logger.info(f" Content Protection configuration files saved: {files_created}")
         return files_created

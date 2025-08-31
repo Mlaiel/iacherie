@@ -362,10 +362,16 @@ class PaymentProcessorConfig:
     
     def get_processor_config(self, processor: PaymentProcessor) -> Optional[ProcessorConfig]:
         """Get configuration for a specific payment processor."""
+
+
+
         return self.PROCESSORS.get(processor)
     
     def get_regional_processors(self, country_code: str) -> List[PaymentProcessor]:
         """Get recommended processors for a specific country/region."""
+
+
+
         return self.REGIONAL_PROCESSORS.get(
             country_code.upper(), 
             self.REGIONAL_PROCESSORS["GLOBAL"]
@@ -746,10 +752,16 @@ class PaymentProcessorConfig:
     
     def get_provider_config(self, provider: PaymentProvider) -> Optional[PaymentProviderConfig]:
         """Get configuration for a specific payment provider."""
+
+
+
         return self.PAYMENT_PROVIDERS.get(provider)
     
     def get_enabled_providers(self) -> List[PaymentProvider]:
         """Get list of enabled payment providers."""
+
+
+
         return [
             provider for provider, config in self.PAYMENT_PROVIDERS.items() 
             if config.enabled
@@ -768,6 +780,9 @@ class PaymentProcessorConfig:
     
     def get_supported_methods(self, provider: PaymentProvider) -> List[PaymentMethod]:
         """Get supported payment methods for a provider."""
+
+
+
         return self.PROVIDER_PAYMENT_METHODS.get(provider, [])
     
     def calculate_processing_fee(

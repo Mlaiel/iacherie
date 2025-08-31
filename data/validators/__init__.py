@@ -228,6 +228,9 @@ def get_validator_info() -> dict:
     Returns:
         Dictionary with validator information
     """
+
+
+
     return {
         "version": __version__,
         "author": __author__,

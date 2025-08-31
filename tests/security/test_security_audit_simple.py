@@ -151,7 +151,7 @@ class TestSecurityConfigAudit:
         
         # In this test environment, debug mode might be enabled, so we just report the findings
         if issues_found:
-            print(f"🚨 Security audit found debug mode issues: {issues_found}")
+            print(f" Security audit found debug mode issues: {issues_found}")
         
         # Test passes regardless - we're auditing, not enforcing in test environment
         assert True, "Debug mode audit completed"
@@ -180,7 +180,7 @@ class TestSecurityConfigAudit:
         
         # We expect to find weak credentials in our test data
         assert len(weak_credentials_found) > 0, "Should detect weak credentials in test data"
-        print(f"🚨 Security audit detected weak credentials: {weak_credentials_found}")
+        print(f" Security audit detected weak credentials: {weak_credentials_found}")
         
         # Test that we can identify strong credentials
         strong_creds = self._check_credential_strength("admin", "MyStr0ng!P@ssw0rd2024")
@@ -257,7 +257,7 @@ class TestSecurityVulnerabilityBasics:
         assert len(detected_patterns) == len(injection_patterns), \
             f"Should detect all SQL injection patterns. Detected: {len(detected_patterns)}/{len(injection_patterns)}"
         
-        print(f"🚨 Security audit detected SQL injection patterns: {detected_patterns}")
+        print(f" Security audit detected SQL injection patterns: {detected_patterns}")
 
     def test_xss_pattern_detection(self):
         """Test XSS pattern detection"""

@@ -7,7 +7,7 @@ and their capabilities within the IA-Influencer-Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING / AVERTISSEMENT LÉGAL ⚠️
+  LEGAL WARNING / AVERTISSEMENT LÉGAL 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
@@ -385,10 +385,16 @@ MODALITY_SUPPORT: Dict[str, List[str]] = {
 
 def get_networks_by_capability(capability: str) -> List[str]:
     """Get all networks that support a specific capability"""
+
+
+
     return CAPABILITY_INDEX.get(capability, [])
 
 def get_networks_by_modality(modality: str) -> List[str]:
     """Get all networks that support a specific modality"""
+
+
+
     return MODALITY_SUPPORT.get(modality, [])
 
 def get_network_info(network_name: str) -> Dict:
@@ -400,10 +406,16 @@ def get_network_info(network_name: str) -> Dict:
 
 def get_production_ready_networks() -> List[str]:
     """Get all production-ready networks"""
+
+
+
     return CAPABILITY_INDEX["production_ready"]
 
 def get_networks_by_type(network_type: NetworkType) -> List[str]:
     """Get all networks of a specific type"""
+
+
+
     return NETWORK_TYPE_MAPPING.get(network_type, [])
 
 # Export registry for external use

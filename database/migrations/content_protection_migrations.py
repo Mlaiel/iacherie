@@ -1,5 +1,5 @@
 """
-🎯 Content Protection Migrations - Ultra-Industrial Content Security Engine
+ Content Protection Migrations - Ultra-Industrial Content Security Engine
 ===========================================================================
 Module: backend/database/migrations/content_protection_migrations.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Content Security - Ultra Enterprise Production-Ready
 Responsibility: Advanced content protection database migrations for multi-format fingerprinting
 ============================================================================================
 
-⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
+  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -58,14 +58,14 @@ class ContentProtectionMigrationSuite:
         self.metadata = MetaData()
         self.migration_history: List[Dict[str, Any]] = []
         
-        logger.info("✅ Content Protection Migration Suite initialized")
+        logger.info(" Content Protection Migration Suite initialized")
     
     async def create_core_protection_schema(self, engine: sa.Engine) -> Dict[str, Any]:
         """Create core content protection schema"""
         
         migration_id = f"cp_core_schema_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
-        logger.info("🛡️ Creating core content protection schema")
+        logger.info(" Creating core content protection schema")
         
         try:
             async with engine.begin() as conn:
@@ -203,7 +203,7 @@ class ContentProtectionMigrationSuite:
                 # Create triggers for updated_at
                 await self._create_protection_triggers(conn)
                 
-                logger.info("✅ Core content protection schema created")
+                logger.info(" Core content protection schema created")
                 
                 return {
                     "migration_id": migration_id,
@@ -218,7 +218,7 @@ class ContentProtectionMigrationSuite:
                 }
                 
         except Exception as e:
-            logger.error(f"❌ Failed to create core protection schema: {e}")
+            logger.error(f" Failed to create core protection schema: {e}")
             return {
                 "migration_id": migration_id,
                 "success": False,
@@ -230,7 +230,7 @@ class ContentProtectionMigrationSuite:
         
         migration_id = f"cp_fingerprint_schema_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
-        logger.info("🔍 Creating advanced fingerprinting schema")
+        logger.info(" Creating advanced fingerprinting schema")
         
         try:
             async with engine.begin() as conn:
@@ -364,7 +364,7 @@ class ContentProtectionMigrationSuite:
                 # Create specialized indexes
                 await self._create_fingerprint_indexes(conn)
                 
-                logger.info("✅ Advanced fingerprinting schema created")
+                logger.info(" Advanced fingerprinting schema created")
                 
                 return {
                     "migration_id": migration_id,
@@ -379,7 +379,7 @@ class ContentProtectionMigrationSuite:
                 }
                 
         except Exception as e:
-            logger.error(f"❌ Failed to create fingerprinting schema: {e}")
+            logger.error(f" Failed to create fingerprinting schema: {e}")
             return {
                 "migration_id": migration_id,
                 "success": False,
@@ -391,7 +391,7 @@ class ContentProtectionMigrationSuite:
         
         migration_id = f"cp_enforcement_schema_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
-        logger.info("⚖️ Creating content protection enforcement schema")
+        logger.info(" Creating content protection enforcement schema")
         
         try:
             async with engine.begin() as conn:
@@ -553,7 +553,7 @@ class ContentProtectionMigrationSuite:
                 # Create enforcement indexes
                 await self._create_enforcement_indexes(conn)
                 
-                logger.info("✅ Content protection enforcement schema created")
+                logger.info(" Content protection enforcement schema created")
                 
                 return {
                     "migration_id": migration_id,
@@ -568,7 +568,7 @@ class ContentProtectionMigrationSuite:
                 }
                 
         except Exception as e:
-            logger.error(f"❌ Failed to create enforcement schema: {e}")
+            logger.error(f" Failed to create enforcement schema: {e}")
             return {
                 "migration_id": migration_id,
                 "success": False,
@@ -720,7 +720,7 @@ class ContentProtectionMigrationSuite:
                 # Create ML indexes
                 await self._create_ml_indexes(conn)
                 
-                logger.info("✅ ML-based protection schema created")
+                logger.info(" ML-based protection schema created")
                 
                 return {
                     "migration_id": migration_id,
@@ -734,7 +734,7 @@ class ContentProtectionMigrationSuite:
                 }
                 
         except Exception as e:
-            logger.error(f"❌ Failed to create ML protection schema: {e}")
+            logger.error(f" Failed to create ML protection schema: {e}")
             return {
                 "migration_id": migration_id,
                 "success": False,

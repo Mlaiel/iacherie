@@ -131,6 +131,9 @@ class CompressionMetrics:
     @property
     def space_saved_bytes(self) -> int:
         """Total bytes saved through compression"""
+
+
+
         return self.bytes_before_compression - self.bytes_after_compression
     
     @property
@@ -352,6 +355,9 @@ class CacheCompressionConfig(BaseModel):
     
     def get_configuration_summary(self) -> Dict[str, Any]:
         """Get configuration summary"""
+
+
+
         return {
             "enabled": self.enabled,
             "default_algorithm": self.default_algorithm,
@@ -669,6 +675,9 @@ class CompressionEngine:
     
     def get_metrics_summary(self) -> Dict[str, Any]:
         """Get compression metrics summary"""
+
+
+
         return {
             "total_compressions": self.metrics.total_compressions,
             "total_decompressions": self.metrics.total_decompressions,

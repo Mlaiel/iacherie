@@ -68,6 +68,9 @@ class TestSecurityValidator:
     @pytest.fixture
     def validator(self):
         """Create a SecurityValidator instance for testing"""
+
+
+
         return SecurityValidator()
     
     def test_validator_initialization(self, validator):

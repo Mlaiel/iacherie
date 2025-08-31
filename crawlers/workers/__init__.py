@@ -7,7 +7,7 @@ Responsibility: Module exports, component registry, and system initialization
 Technologies: Python Module System, Component Registration, Factory Patterns
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -234,8 +234,11 @@ class WorkerSystemStatus(Enum):
 
 # Unified initialization functions
 async def initialize_workers(system_config: Dict[str, Any] = None) -> bool:
-    """Initialize the complete worker system"""    try:
-        logger.info("🚀 Initializing IA-Influencer-Agent Worker System...")
+    """Initialize the complete worker system"""
+
+
+    try:
+        logger.info(" Initializing IA-Influencer-Agent Worker System...")
         
         config = system_config or {}
         
@@ -295,20 +298,23 @@ async def initialize_workers(system_config: Dict[str, Any] = None) -> bool:
             success &= await initialize_monetization_task_router()
         
         if success:
-            logger.info("✅ IA-Influencer-Agent Worker System initialized successfully")
+            logger.info(" IA-Influencer-Agent Worker System initialized successfully")
         else:
-            logger.error("❌ Some worker components failed to initialize")
+            logger.error(" Some worker components failed to initialize")
         
         return success
         
     except Exception as e:
-        logger.error(f"❌ Failed to initialize worker system: {e}")
+        logger.error(f" Failed to initialize worker system: {e}")
         return False
 
 
 async def shutdown_workers() -> bool:
-    """Gracefully shutdown the worker system"""    try:
-        logger.info("🛑 Shutting down IA-Influencer-Agent Worker System...")
+    """Gracefully shutdown the worker system"""
+
+
+    try:
+        logger.info(" Shutting down IA-Influencer-Agent Worker System...")
         
         # Shutdown components in reverse order
         await shutdown_monetization_task_router()
@@ -325,16 +331,19 @@ async def shutdown_workers() -> bool:
         await shutdown_worker_pool()
         await shutdown_crawler_worker()
         
-        logger.info("✅ IA-Influencer-Agent Worker System shutdown complete")
+        logger.info(" IA-Influencer-Agent Worker System shutdown complete")
         return True
         
     except Exception as e:
-        logger.error(f"❌ Failed to shutdown worker system: {e}")
+        logger.error(f" Failed to shutdown worker system: {e}")
         return False
 
 
 async def get_workers_status() -> Dict[str, Any]:
-    """Get comprehensive status of all worker components"""    try:
+    """Get comprehensive status of all worker components"""
+
+
+    try:
         status = {
             "system_version": __version__,
             "components": {},
@@ -387,7 +396,7 @@ async def get_workers_status() -> Dict[str, Any]:
         return status
         
     except Exception as e:
-        logger.error(f"❌ Failed to get workers status: {e}")
+        logger.error(f" Failed to get workers status: {e}")
         return {"error": str(e)}
 
 
@@ -587,7 +596,7 @@ __all__ = [
 
 
 # Module initialization message
-logger.info(f"📦 IA-Influencer-Agent Workers Module v{__version__} loaded")
-logger.info(f"👤 Author: {__author__} ({__email__})")
-logger.info(f"⚖️ {__copyright__}")
-logger.info(f"🔧 Available Components: {len(__all__)} exports")
+logger.info(f" IA-Influencer-Agent Workers Module v{__version__} loaded")
+logger.info(f" Author: {__author__} ({__email__})")
+logger.info(f" {__copyright__}")
+logger.info(f" Available Components: {len(__all__)} exports")

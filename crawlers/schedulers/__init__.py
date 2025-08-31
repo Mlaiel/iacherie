@@ -300,11 +300,17 @@ class SchedulerFactory:
     
     @classmethod
     def get_instance(cls, name: str) -> Optional[Any]:
-        """Get scheduler instance by name."""        return cls._instances.get(name)
+        """Get scheduler instance by name."""
+
+
+        return cls._instances.get(name)
     
     @classmethod
     def list_instances(cls) -> List[str]:
-        """List all scheduler instance names."""        return list(cls._instances.keys())
+        """List all scheduler instance names."""
+
+
+        return list(cls._instances.keys())
     
     @classmethod
     async def initialize_all(cls) -> None:
@@ -369,7 +375,10 @@ class SchedulerManager:
         self,
         configuration: Optional[SchedulerConfiguration] = None
     ) -> None:
-        """Initialize scheduler system."""        try:
+        """Initialize scheduler system."""
+
+
+        try:
             # Create main scheduler
             self.main_scheduler = SchedulerFactory.create_main_scheduler(
                 configuration=configuration

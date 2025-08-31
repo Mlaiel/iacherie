@@ -1,5 +1,5 @@
 """
-🛡️ Protection Processor - IA Influencer Agent Platform Enterprise
+ Protection Processor - IA Influencer Agent Platform Enterprise
 =================================================================
 Module: backend/data_management/processors/protection_processor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Content Protection - Enterprise Production-Ready Ultra Advanced
 Responsibility: Système de protection contenu avec surveillance et réponse automatique
 =================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Toute tentative de vol de ce concept, de cette idée ou de ce code sans autorisation personnelle claire 
 et écrite de Fahed Mlaiel est strictement interdite et sera poursuivie en justice selon la loi allemande.
@@ -99,6 +99,9 @@ class ProtectionProcessor(BaseProcessor):
     
     def _load_legal_templates(self) -> Dict[str, str]:
         """Charge les modèles juridiques pour les notices"""
+
+
+
         return {
             'dmca_takedown': """
 DMCA TAKEDOWN NOTICE
@@ -302,6 +305,9 @@ Contact: {contact_information}
     
     def _analyze_audio_violation(self, original: Dict, suspected: Dict, similarity: float) -> Dict[str, Any]:
         """Analyse spécialisée pour violation audio"""
+
+
+
         return {
             'chromaprint_match': similarity > 0.90,
             'mfcc_similarity': similarity,
@@ -317,6 +323,9 @@ Contact: {contact_information}
     
     def _analyze_video_violation(self, original: Dict, suspected: Dict, similarity: float) -> Dict[str, Any]:
         """Analyse spécialisée pour violation vidéo"""
+
+
+
         return {
             'frame_similarity': similarity,
             'duration_match': abs(
@@ -332,6 +341,9 @@ Contact: {contact_information}
     
     def _analyze_image_violation(self, original: Dict, suspected: Dict, similarity: float) -> Dict[str, Any]:
         """Analyse spécialisée pour violation image"""
+
+
+
         return {
             'perceptual_hash_match': similarity > 0.90,
             'clip_semantic_similarity': similarity,
@@ -349,6 +361,9 @@ Contact: {contact_information}
     
     def _analyze_text_violation(self, original: Dict, suspected: Dict, similarity: float) -> Dict[str, Any]:
         """Analyse spécialisée pour violation texte"""
+
+
+
         return {
             'semantic_similarity': similarity,
             'length_comparison': {
@@ -537,6 +552,9 @@ Contact: {contact_information}
     
     def _capture_screenshot(self, url: str) -> Optional[str]:
         """Capture une capture d'écran de l'URL"""
+
+
+
         try:
             # This would typically use Selenium or similar tool
             # For now, return a placeholder path
@@ -554,6 +572,9 @@ Contact: {contact_information}
     
     def _create_content_comparison(self, original: Dict, suspected: Dict) -> Dict[str, Any]:
         """Crée une comparaison visuelle du contenu"""
+
+
+
         return {
             'comparison_type': 'side_by_side',
             'original_info': {
@@ -589,6 +610,9 @@ Contact: {contact_information}
     
     def _extract_content_metadata(self, content: Dict) -> Dict[str, Any]:
         """Extrait les métadonnées du contenu"""
+
+
+
         return {
             'title': content.get('title'),
             'description': content.get('description'),
@@ -602,6 +626,9 @@ Contact: {contact_information}
     
     def _perform_technical_analysis(self, original: Dict, suspected: Dict) -> Dict[str, Any]:
         """Effectue une analyse technique approfondie"""
+
+
+
         return {
             'similarity_analysis': {
                 'fingerprint_match': True,  # Would implement actual comparison
@@ -800,6 +827,9 @@ class AsyncProtectionProcessor(AsyncBaseProcessor):
     
     async def validate_input(self, input_data: Any) -> bool:
         """Validation asynchrone"""
+
+
+
         return self.sync_processor.validate_input(input_data)
     
     async def generate_legal_notices(self, violation_assessment: Dict, evidence: Dict, suspected_content: Dict) -> Dict[str, str]:

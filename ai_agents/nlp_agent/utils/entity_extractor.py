@@ -128,6 +128,9 @@ class EntityExtractor:
     
     def _load_entity_patterns(self) -> Dict[str, List[str]]:
         """Load regex patterns for entity recognition"""
+
+
+
         return {
             "email": [
                 r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
@@ -173,6 +176,9 @@ class EntityExtractor:
     
     def _load_entity_mappings(self) -> Dict[str, str]:
         """Load entity type to category mappings"""
+
+
+
         return {
             "PERSON": "people",
             "PER": "people",
@@ -201,6 +207,9 @@ class EntityExtractor:
     
     def _initialize_models(self):
         """Initialize entity extraction models"""
+
+
+
         try:
             # Initialize spaCy if available
             if SPACY_AVAILABLE:

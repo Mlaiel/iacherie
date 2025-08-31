@@ -906,6 +906,9 @@ class BusinessMetricsCollector:
         
     async def _store_metrics(self, metrics: List[BusinessMetric]):
         """Store metrics in Redis"""
+
+
+
         try:
             pipeline = self.redis_client.pipeline()
             
@@ -1179,6 +1182,9 @@ class BusinessMetricsCollector:
         
     def get_metric_definitions(self) -> Dict[str, Dict[str, Any]]:
         """Get all metric definitions"""
+
+
+
         return self._metric_definitions.copy()
 
 

@@ -8,7 +8,7 @@ Advanced metrics, insights, and predictive analytics for content creators.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  STRICT WARNING FOR UNAUTHORIZED USE:
+  STRICT WARNING FOR UNAUTHORIZED USE:
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use without explicit written 
 permission is strictly prohibited and will result in legal action.
@@ -251,6 +251,9 @@ class AnalyticsModel(Base):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert model to dictionary representation"""
+
+
+
         return {
             'id': self.id,
             'user_id': self.user_id,
@@ -301,26 +304,41 @@ class AnalyticsModel(Base):
     @property
     def is_performance_analytics(self) -> bool:
         """Check if analytics is performance type"""
+
+
+
         return self.analytics_type == AnalyticsType.PERFORMANCE.value
     
     @property
     def is_audience_analytics(self) -> bool:
         """Check if analytics is audience type"""
+
+
+
         return self.analytics_type == AnalyticsType.AUDIENCE.value
     
     @property
     def is_revenue_analytics(self) -> bool:
         """Check if analytics is revenue type"""
+
+
+
         return self.analytics_type == AnalyticsType.REVENUE.value
     
     @property
     def is_trending_up(self) -> bool:
         """Check if metric is trending upward"""
+
+
+
         return self.trend_direction == "up"
     
     @property
     def is_trending_down(self) -> bool:
         """Check if metric is trending downward"""
+
+
+
         return self.trend_direction == "down"
     
     @property
@@ -357,7 +375,7 @@ class AnalyticsModel(Base):
             return "0%"
         
         change = float(self.change_percentage)
-        direction = "▲" if change > 0 else "▼" if change < 0 else "→"
+        direction = "" if change > 0 else "" if change < 0 else "→"
         return f"{direction} {abs(change):.1f}%"
     
     @property

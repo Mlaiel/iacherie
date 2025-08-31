@@ -203,6 +203,9 @@ class RateLimiter:
         user_id: Optional[str] = None
     ) -> Tuple[bool, Optional[str]]:
         """Check if request exceeds rate limits"""
+
+
+
         try:
             source_ip = self._get_client_ip(request)
             endpoint = str(request.url.path)
@@ -271,6 +274,9 @@ class RateLimiter:
         user_id: Optional[str]
     ) -> Tuple[bool, Optional[str]]:
         """Check if specific rule is violated"""
+
+
+
         try:
             current_time = time.time()
             
@@ -353,6 +359,9 @@ class DDoSProtection:
     
     async def detect_ddos(self, request: Request) -> Tuple[bool, Optional[str]]:
         """Detect DDoS attack patterns"""
+
+
+
         try:
             current_time = time.time()
             source_ip = self.rate_limiter._get_client_ip(request)
@@ -380,6 +389,9 @@ class DDoSProtection:
     
     async def _is_ip_blocked(self, ip_address: str) -> bool:
         """Check if IP address is blocked"""
+
+
+
         try:
             # Check exact IP
             if ip_address in self.blocked_ips:
@@ -405,6 +417,9 @@ class DDoSProtection:
     
     async def _update_metrics(self, source_ip: str, request: Request):
         """Update DDoS detection metrics"""
+
+
+
         try:
             current_minute = int(time.time() // 60)
             
@@ -436,6 +451,9 @@ class DDoSProtection:
     
     async def _check_attack_patterns(self) -> Tuple[bool, Optional[str]]:
         """Check for DDoS attack patterns"""
+
+
+
         try:
             current_minute = int(time.time() // 60)
             
@@ -469,6 +487,9 @@ class DDoSProtection:
     
     async def _implement_protection(self, source_ip: str, reason: str):
         """Implement DDoS protection measures"""
+
+
+
         try:
             # Block IP temporarily
             block_duration = 300  # 5 minutes
@@ -570,6 +591,9 @@ class RequestFilter:
     
     async def filter_request(self, request: Request) -> Tuple[bool, Optional[str], ThreatLevel]:
         """Filter incoming request through security rules"""
+
+
+
         try:
             source_ip = self._get_client_ip(request)
             
@@ -605,6 +629,9 @@ class RequestFilter:
     
     async def _check_geo_blocking(self, ip_address: str) -> Tuple[bool, Optional[str]]:
         """Check if request should be geo-blocked"""
+
+
+
         try:
             # Skip private/local IPs
             ip = ipaddress.ip_address(ip_address)
@@ -650,6 +677,9 @@ class RequestFilter:
     
     async def _check_rule_pattern(self, request: Request, rule: SecurityRule) -> Tuple[bool, str]:
         """Check if request matches security rule pattern"""
+
+
+
         try:
             # Check URL path
             url_path = str(request.url.path)
@@ -680,6 +710,9 @@ class RequestFilter:
     
     def _pattern_matches(self, pattern: str, text: str, is_regex: bool) -> bool:
         """Check if pattern matches text"""
+
+
+
         try:
             if is_regex:
                 return bool(re.search(pattern, text))
@@ -717,6 +750,9 @@ class SecurityGateway:
         user_id: Optional[str] = None
     ) -> RequestAnalysis:
         """Comprehensive request analysis"""
+
+
+
         try:
             source_ip = self._get_client_ip(request)
             endpoint = str(request.url.path)
@@ -782,6 +818,9 @@ class SecurityGateway:
     
     def _detect_bot(self, user_agent: str) -> bool:
         """Detect if request is from a bot"""
+
+
+
         try:
             if not user_agent:
                 return True  # No user agent is suspicious
@@ -811,6 +850,9 @@ class SecurityGateway:
     
     async def _get_geolocation(self, ip_address: str) -> Optional[Dict[str, str]]:
         """Get geolocation for IP address"""
+
+
+
         try:
             # Check cache first
             cache_key = f"geolocation:{ip_address}"
@@ -864,6 +906,9 @@ class APIFirewall(BaseHTTPMiddleware):
     
     async def dispatch(self, request: Request, call_next: RequestResponseEndpoint) -> Response:
         """Process request through security gateway"""
+
+
+
         try:
             start_time = time.time()
             

@@ -1,5 +1,5 @@
 """
-🔄 Vector Database Replication Manager
+ Vector Database Replication Manager
 ======================================
 
 Advanced multi-region replication and synchronization for vector databases.
@@ -8,7 +8,7 @@ Ensures high availability and data consistency across distributed deployments.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL IMPORTANT ⚠️
+  AVERTISSEMENT LÉGAL IMPORTANT 
 =====================================
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
@@ -105,6 +105,9 @@ class VectorHashCalculator:
     @staticmethod
     def calculate_vector_hash(vector_id: str, embedding: np.ndarray, metadata: Dict[str, Any]) -> str:
         """Calculate deterministic hash for vector data"""
+
+
+
         try:
             # Create consistent data representation
             data_components = [
@@ -123,6 +126,9 @@ class VectorHashCalculator:
     @staticmethod
     def calculate_index_hash(index_metadata: Dict[str, Any]) -> str:
         """Calculate hash for entire index state"""
+
+
+
         try:
             # Include key index characteristics
             index_data = {
@@ -163,6 +169,9 @@ class ConflictResolver:
         strategy: Optional[str] = None
     ) -> ConflictResolution:
         """Resolve conflict between multiple versions"""
+
+
+
         try:
             strategy = strategy or self.default_strategy
             
@@ -297,6 +306,9 @@ class ReplicationManager:
     
     def _initialize_cluster(self):
         """Initialize replication cluster configuration"""
+
+
+
         try:
             # Load node configurations
             nodes_config = self.config.get('cluster_nodes', [])
@@ -318,6 +330,9 @@ class ReplicationManager:
     
     async def start_replication(self):
         """Start background replication tasks"""
+
+
+
         try:
             if self.sync_task is None:
                 self.sync_task = asyncio.create_task(self._sync_loop())
@@ -332,6 +347,9 @@ class ReplicationManager:
     
     async def stop_replication(self):
         """Stop background replication tasks"""
+
+
+
         try:
             if self.sync_task:
                 self.sync_task.cancel()
@@ -364,6 +382,9 @@ class ReplicationManager:
         target_nodes: Optional[List[str]] = None
     ) -> str:
         """Queue operation for replication"""
+
+
+
         try:
             operation_id = f"{self.local_node_id}_{int(time.time() * 1000000)}"
             
@@ -419,6 +440,9 @@ class ReplicationManager:
     
     async def sync_with_node(self, node_id: str) -> bool:
         """Synchronize with specific node"""
+
+
+
         try:
             if node_id not in self.nodes:
                 raise ValueError(f"Unknown node: {node_id}")
@@ -515,6 +539,9 @@ class ReplicationManager:
     
     async def _check_node_health(self, node: ReplicationNode) -> bool:
         """Check if node is healthy and responsive"""
+
+
+
         try:
             # This would typically make an HTTP request to the node's health endpoint
             # For now, we'll simulate based on last heartbeat
@@ -533,6 +560,9 @@ class ReplicationManager:
     
     async def _send_operation_to_node(self, operation: ReplicationOperation, node: ReplicationNode) -> bool:
         """Send operation to specific node"""
+
+
+
         try:
             # This would typically send HTTP request to node's replication endpoint
             # For simulation, we'll just log and return success
@@ -554,6 +584,9 @@ class ReplicationManager:
     
     async def _cleanup_old_operations(self):
         """Clean up old completed operations"""
+
+
+
         try:
             current_time = time.time()
             retention_period = self.config.get('operation_retention_seconds', 3600)  # 1 hour
@@ -581,6 +614,9 @@ class ReplicationManager:
     
     def get_replication_status(self) -> Dict[str, Any]:
         """Get current replication status and statistics"""
+
+
+
         try:
             # Calculate statistics
             total_operations = len(self.operation_log)

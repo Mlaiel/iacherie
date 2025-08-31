@@ -7,13 +7,13 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Content Management Expert, Database Architect, Protection Specialist
 Copyright: Fahed Mlaiel - All rights reserved
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
 
-🎯 ÉQUIPE PROJET:
+ ÉQUIPE PROJET:
 - Lead Developer IA: Fahed Mlaiel
 - Backend Senior Engineer: Fahed Mlaiel  
 - ML Engineer: Fahed Mlaiel
@@ -582,7 +582,10 @@ def validate_content_metadata(content_type: str, metadata: Dict[str, Any]) -> bo
         
     Returns:
         True if valid, False otherwise
-    """    try:
+    """
+
+
+    try:
         manager = get_content_manager(content_type)
         
         # Basic validation - check required fields exist
@@ -721,7 +724,10 @@ def create_comprehensive_content_suite():
     
     Returns:
         Dictionary containing all managers and systems
-    """    return {
+    """
+
+
+    return {
         'managers': {
             'audio': AudioContentManager(),
             'video': VideoContentManager(),
@@ -739,7 +745,10 @@ def get_content_security_features() -> Dict[str, List[str]]:
     
     Returns:
         Dictionary of security features by category
-    """    return {
+    """
+
+
+    return {
         'fingerprinting': [
             'perceptual_hashing',
             'audio_chromaprint',
@@ -955,7 +964,10 @@ def get_module_info() -> Dict[str, Any]:
     
     Returns:
         Dict[str, Any]: Complete module information including capabilities
-    """    return {
+    """
+
+
+    return {
         "name": "Content Types Database Module",
         "version": __version__,
         "author": __author__,
@@ -995,7 +1007,10 @@ def initialize_content_system(config: Optional[Dict[str, Any]] = None) -> Dict[s
         
     Returns:
         Dict[str, Any]: Initialization status and component information
-    """    try:
+    """
+
+
+    try:
         logger.info("Initializing Content Types Database System...")
         
         # Default configuration
@@ -1074,7 +1089,10 @@ def get_supported_formats() -> Dict[str, List[str]]:
     
     Returns:
         Dict[str, List[str]]: Mapping of content types to supported formats
-    """    return {
+    """
+
+
+    return {
         "audio": ["MP3", "WAV", "FLAC", "AAC", "OGG", "M4A", "WMA", "AIFF"],
         "video": ["MP4", "AVI", "MOV", "WebM", "MKV", "FLV", "WMV", "3GP"],
         "image": ["JPEG", "PNG", "TIFF", "WebP", "HEIF", "BMP", "GIF", "SVG"],

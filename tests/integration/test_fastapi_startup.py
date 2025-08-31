@@ -48,7 +48,7 @@ class TestFastAPIApplicationStartup:
     @pytest.fixture(scope="class")
     def app_process(self):
         """Start the FastAPI application for testing"""
-        print("🚀 Starting FastAPI application...")
+        print(" Starting FastAPI application...")
         
         # Start server in background
         process = subprocess.Popen([
@@ -68,7 +68,7 @@ class TestFastAPIApplicationStartup:
             try:
                 response = requests.get("http://127.0.0.1:8000/health", timeout=2)
                 if response.status_code == 200:
-                    print("✅ FastAPI server started successfully")
+                    print(" FastAPI server started successfully")
                     break
             except:
                 if i < max_retries - 1:
@@ -80,14 +80,14 @@ class TestFastAPIApplicationStartup:
         yield process
         
         # Cleanup
-        print("🛑 Stopping FastAPI application...")
+        print(" Stopping FastAPI application...")
         process.terminate()
         process.wait()
     
     def test_application_startup_successful(self, app_process):
         """Test that the FastAPI application starts successfully"""
         assert app_process.poll() is None, "Application process should be running"
-        print("✅ Application startup successful")
+        print(" Application startup successful")
     
     def test_root_endpoint_accessible(self, app_process):
         """Test that the root endpoint is accessible and returns correct response"""
@@ -100,7 +100,7 @@ class TestFastAPIApplicationStartup:
         assert "Ainflue AI Platform is running!" in data["message"], "Message should indicate platform is running"
         assert data["status"] == "success", "Status should be success"
         
-        print("✅ Root endpoint accessible and returning correct response")
+        print(" Root endpoint accessible and returning correct response")
     
     def test_health_endpoint_functional(self, app_process):
         """Test that the health endpoint is functional"""
@@ -113,7 +113,7 @@ class TestFastAPIApplicationStartup:
         assert "Platform is healthy" in data["message"], "Health message should indicate platform health"
         assert data["status"] == "operational", "Health status should be operational"
         
-        print("✅ Health endpoint functional")
+        print(" Health endpoint functional")
     
     def test_api_documentation_accessible(self, app_process):
         """Test that API documentation is accessible"""
@@ -122,7 +122,7 @@ class TestFastAPIApplicationStartup:
         assert response.status_code == 200, f"Documentation endpoint failed with status {response.status_code}"
         assert "swagger" in response.text.lower(), "Documentation should contain Swagger UI"
         
-        print("✅ API documentation accessible")
+        print(" API documentation accessible")
     
     def test_openapi_schema_generation(self, app_process):
         """Test that OpenAPI schema is properly generated"""
@@ -140,7 +140,7 @@ class TestFastAPIApplicationStartup:
         assert "title" in info, "Schema info should contain title"
         assert "Ainflue" in info["title"], "Title should reference Ainflue platform"
         
-        print("✅ OpenAPI schema properly generated")
+        print(" OpenAPI schema properly generated")
     
     def test_cors_configuration(self, app_process):
         """Test CORS configuration if enabled"""
@@ -154,7 +154,7 @@ class TestFastAPIApplicationStartup:
         # CORS might not be configured in minimal app, so we just test it doesn't crash
         assert response.status_code in [200, 405], "CORS preflight should not crash the application"
         
-        print("✅ CORS configuration stable")
+        print(" CORS configuration stable")
     
     def test_application_metadata(self, app_process):
         """Test that application metadata is correctly configured"""
@@ -166,7 +166,7 @@ class TestFastAPIApplicationStartup:
         assert data["environment"] in ["development", "testing", "staging", "production"], \
             "Environment should be a valid environment type"
         
-        print("✅ Application metadata correctly configured")
+        print(" Application metadata correctly configured")
 
 
 if __name__ == "__main__":

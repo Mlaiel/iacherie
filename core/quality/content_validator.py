@@ -135,10 +135,16 @@ class ValidationResult:
     
     def get_critical_issues(self) -> List[QualityIssue]:
         """Get all critical issues"""
+
+
+
         return [issue for issue in self.issues if issue.severity == ValidationSeverity.CRITICAL]
     
     def has_blocking_issues(self) -> bool:
         """Check if there are any blocking issues"""
+
+
+
         return any(issue.severity in [ValidationSeverity.CRITICAL, ValidationSeverity.ERROR] 
                   for issue in self.issues)
 
@@ -257,6 +263,9 @@ class ImageQualityAnalyzer:
         
     def analyze_image_quality(self, file_path: Path, result: ValidationResult):
         """Analyze image quality metrics"""
+
+
+
         try:
             with Image.open(file_path) as img:
                 width, height = img.size
@@ -352,6 +361,9 @@ class TextQualityAnalyzer:
         
     def analyze_text_quality(self, content: str, result: ValidationResult):
         """Analyze text quality metrics"""
+
+
+
         try:
             # Basic length validation
             content_length = len(content.strip())

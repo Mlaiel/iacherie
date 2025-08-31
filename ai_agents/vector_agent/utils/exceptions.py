@@ -7,7 +7,7 @@ debugging context, and recovery strategies for all vector operations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Any attempt to steal the concept, idea, or code without explicit written authorization
@@ -50,6 +50,9 @@ class VectorAgentBaseException(Exception):
         
     def to_dict(self) -> Dict[str, Any]:
         """Convert exception to dictionary for logging/serialization"""
+
+
+
         return {
             "error_type": self.__class__.__name__,
             "error_code": self.error_code,
@@ -553,6 +556,9 @@ def handle_vector_exception(func):
 
 def create_error_response(exception: VectorAgentBaseException) -> Dict[str, Any]:
     """Create standardized error response from exception"""
+
+
+
     return {
         "success": False,
         "error": {

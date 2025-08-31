@@ -183,6 +183,9 @@ class TimeSeriesStorageProvider(BaseStorageProvider):
 
     async def initialize(self) -> None:
         """Initialize time-series storage provider."""
+
+
+
         try:
             await self._create_connections()
             await self._create_tables()
@@ -196,6 +199,9 @@ class TimeSeriesStorageProvider(BaseStorageProvider):
 
     async def store_metric(self, metric: TimeSeriesMetric) -> bool:
         """Store single time-series metric."""
+
+
+
         try:
             # Add to buffer
             self.metric_buffer.append(metric)
@@ -213,6 +219,9 @@ class TimeSeriesStorageProvider(BaseStorageProvider):
 
     async def store_metrics_batch(self, metrics: List[TimeSeriesMetric]) -> int:
         """Store multiple metrics in batch."""
+
+
+
         try:
             # Sort by timestamp for optimal insertion
             sorted_metrics = sorted(metrics, key=lambda m: m.timestamp)
@@ -244,6 +253,9 @@ class TimeSeriesStorageProvider(BaseStorageProvider):
 
     async def query_time_series(self, query: TimeSeriesQuery) -> TimeSeriesResult:
         """Query time-series data with aggregation."""
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -291,6 +303,9 @@ class TimeSeriesStorageProvider(BaseStorageProvider):
         tags_filter: Optional[Dict[str, str]] = None
     ) -> TimeSeriesStatistics:
         """Get comprehensive statistics for a time series."""
+
+
+
         try:
             # Query raw data
             query = TimeSeriesQuery(
@@ -346,6 +361,9 @@ class TimeSeriesStorageProvider(BaseStorageProvider):
         sensitivity: float = 2.0
     ) -> List[Dict[str, Any]]:
         """Detect anomalies in time series data."""
+
+
+
         try:
             # Get series data
             query = TimeSeriesQuery(
@@ -403,6 +421,9 @@ class TimeSeriesStorageProvider(BaseStorageProvider):
         model_type: str = "linear_regression"
     ) -> TimeSeriesForecast:
         """Generate forecast for time series."""
+
+
+
         try:
             # Get historical data
             query = TimeSeriesQuery(
@@ -461,6 +482,9 @@ class TimeSeriesStorageProvider(BaseStorageProvider):
         granularity: TimeGranularity
     ) -> Dict[str, List[TimeSeriesAggregation]]:
         """Aggregate multiple time series."""
+
+
+
         try:
             results = {}
             
@@ -505,6 +529,9 @@ class TimeSeriesStorageProvider(BaseStorageProvider):
         aggregation: AggregationType = AggregationType.AVERAGE
     ) -> List[TimeSeriesPoint]:
         """Downsample time series to lower resolution."""
+
+
+
         try:
             query = TimeSeriesQuery(
                 series_names=[series_name],
@@ -523,6 +550,9 @@ class TimeSeriesStorageProvider(BaseStorageProvider):
 
     async def cleanup_old_data(self, retention_days: Optional[int] = None) -> int:
         """Clean up old time-series data."""
+
+
+
         try:
             if retention_days is None:
                 retention_days = self.retention_days
@@ -547,6 +577,9 @@ class TimeSeriesStorageProvider(BaseStorageProvider):
 
     async def get_health_status(self) -> HealthStatus:
         """Get health status of time-series storage."""
+
+
+
         try:
             status = HealthStatus(
                 provider_id=self.provider_id,

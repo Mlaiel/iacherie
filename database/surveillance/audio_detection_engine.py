@@ -71,6 +71,9 @@ class AudioFeatureExtractor:
         
     async def extract_features(self, audio_data: bytes) -> Dict[str, np.ndarray]:
         """Extract comprehensive audio features from audio data."""
+
+
+
         try:
             # Load audio from bytes
             audio_array, sr = librosa.load(io.BytesIO(audio_data), sr=self.sample_rate)
@@ -186,6 +189,9 @@ class AudioSimilarityCalculator:
         features2: Dict[str, np.ndarray]
     ) -> Tuple[float, Dict[str, float]]:
         """Calculate comprehensive similarity between two audio feature sets."""
+
+
+
         try:
             similarities = {}
             weighted_sum = 0.0
@@ -285,6 +291,9 @@ class AudioDetectionEngine:
         
     async def initialize(self) -> bool:
         """Initialize the audio detection engine."""
+
+
+
         try:
             # Initialize ChromaDB client
             self.chroma_client = chromadb.Client()
@@ -313,6 +322,9 @@ class AudioDetectionEngine:
         metadata: Dict[str, Any]
     ) -> AudioFingerprint:
         """Create audio fingerprint from audio data."""
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -357,6 +369,9 @@ class AudioDetectionEngine:
     
     async def _store_fingerprint(self, fingerprint: AudioFingerprint) -> None:
         """Store fingerprint in vector database."""
+
+
+
         try:
             # Create embedding vector from key features
             embedding_features = []
@@ -405,6 +420,9 @@ class AudioDetectionEngine:
         detection_metadata: Dict[str, Any]
     ) -> List[AudioMatch]:
         """Detect audio matches against stored fingerprints."""
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -513,6 +531,9 @@ class AudioDetectionEngine:
         stored_features: Dict[str, Any]
     ) -> float:
         """Calculate confidence level for match."""
+
+
+
         try:
             # Base confidence from overall similarity
             confidence = similarity_score
@@ -537,6 +558,9 @@ class AudioDetectionEngine:
     
     async def get_detection_statistics(self) -> Dict[str, Any]:
         """Get detection engine statistics."""
+
+
+
         return {
             "engine_type": "audio",
             "status": "active",
@@ -551,6 +575,9 @@ class AudioDetectionEngine:
     def _calculate_time_alignment(self, detected_features: Dict[str, np.ndarray], 
                                  reference_features: Dict[str, np.ndarray]) -> float:
         """Calculate time offset between detected and reference audio."""
+
+
+
         try:
             # Use MFCC features for time alignment
             detected_mfcc = detected_features.get('mfcc')
@@ -593,6 +620,9 @@ class AudioDetectionEngine:
 
     async def cleanup(self) -> None:
         """Cleanup resources."""
+
+
+
         try:
             if self.chroma_client:
                 # ChromaDB cleanup if needed

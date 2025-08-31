@@ -7,12 +7,12 @@ conflict resolution, and coordination across distributed components.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This synchronization system is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization.
 
-🎯 BUSINESS LOGIC:
+ BUSINESS LOGIC:
 Data Change → Conflict Detection → Resolution Strategy → Sync Execution → Verification
 """
 
@@ -329,6 +329,9 @@ class SyncManager:
     
     def register_data_source(self, data_source: DataSource) -> bool:
         """Register a new data source"""
+
+
+
         try:
             # Validate data source
             if not self._validate_data_source(data_source):
@@ -344,6 +347,9 @@ class SyncManager:
     
     def _validate_data_source(self, data_source: DataSource) -> bool:
         """Validate data source configuration"""
+
+
+
         try:
             # Required fields
             if not all([data_source.source_id, data_source.name, data_source.source_type]):
@@ -363,6 +369,9 @@ class SyncManager:
     
     def register_sync_configuration(self, sync_config: SyncConfiguration) -> bool:
         """Register a new synchronization configuration"""
+
+
+
         try:
             # Validate sync configuration
             if not self._validate_sync_configuration(sync_config):
@@ -378,6 +387,9 @@ class SyncManager:
     
     def _validate_sync_configuration(self, sync_config: SyncConfiguration) -> bool:
         """Validate synchronization configuration"""
+
+
+
         try:
             # Required fields
             if not all([sync_config.sync_id, sync_config.name, sync_config.sync_type]):
@@ -402,6 +414,9 @@ class SyncManager:
     
     async def start_sync(self, sync_id: str, manual: bool = False) -> str:
         """Start synchronization process"""
+
+
+
         try:
             if sync_id not in self.sync_configurations:
                 raise ValueError(f"Sync configuration not found: {sync_id}")
@@ -482,6 +497,9 @@ class SyncManager:
     
     def _is_sync_due(self, sync_config: SyncConfiguration, current_time: datetime) -> bool:
         """Check if synchronization is due"""
+
+
+
         try:
             # Get last sync time
             last_sync_time = self._get_last_sync_time(sync_config.sync_id)
@@ -525,6 +543,9 @@ class SyncManager:
     
     async def _execute_sync(self, sync_config: SyncConfiguration, execution: SyncExecution):
         """Execute synchronization process"""
+
+
+
         try:
             start_time = datetime.now(timezone.utc)
             execution.status = SyncStatus.IN_PROGRESS
@@ -610,6 +631,9 @@ class SyncManager:
         sync_config: SyncConfiguration
     ) -> Dict[str, DataRecord]:
         """Fetch data from source"""
+
+
+
         try:
             # Simulate data fetching based on source type
             if source_config.source_type == DataSourceType.DATABASE:
@@ -632,6 +656,9 @@ class SyncManager:
         sync_config: SyncConfiguration
     ) -> Dict[str, DataRecord]:
         """Fetch data from target"""
+
+
+
         try:
             # Use cached data if available
             cache_key = f"{target_config.source_id}:{sync_config.sync_id}"
@@ -807,6 +834,9 @@ class SyncManager:
         sync_config: SyncConfiguration
     ) -> Optional[ConflictRecord]:
         """Detect conflicts in data changes"""
+
+
+
         try:
             if change["type"] != "update":
                 return None  # No conflict for create/delete
@@ -843,6 +873,9 @@ class SyncManager:
     
     async def _handle_conflict(self, conflict: ConflictRecord, sync_config: SyncConfiguration):
         """Handle detected conflict"""
+
+
+
         try:
             # Get conflict resolver
             resolver = self.conflict_resolvers.get(conflict.resolution_strategy)
@@ -900,6 +933,9 @@ class SyncManager:
         sync_config: SyncConfiguration
     ) -> Optional[DataRecord]:
         """Resolve conflict using merge strategy"""
+
+
+
         try:
             # Create merged data
             merged_data = conflict.target_data.data.copy()
@@ -926,10 +962,16 @@ class SyncManager:
         sync_config: SyncConfiguration
     ) -> Optional[DataRecord]:
         """Resolve conflict by aborting (no changes)"""
+
+
+
         return None
     
     async def _apply_change(self, change: Dict[str, Any], sync_config: SyncConfiguration) -> bool:
         """Apply data change to target"""
+
+
+
         try:
             # Simulate applying change
             await asyncio.sleep(0.01)
@@ -948,6 +990,9 @@ class SyncManager:
     
     async def _apply_resolution(self, conflict: ConflictRecord, sync_config: SyncConfiguration):
         """Apply conflict resolution"""
+
+
+
         try:
             if conflict.resolution_data:
                 # Update version tracking
@@ -960,6 +1005,9 @@ class SyncManager:
     
     async def _emit_sync_event(self, event_type: str, execution: SyncExecution):
         """Emit synchronization events"""
+
+
+
         try:
             event_data = {
                 "event_type": event_type,
@@ -1063,6 +1111,9 @@ class SyncManager:
     
     def shutdown(self):
         """Shutdown sync manager and cleanup"""
+
+
+
         try:
             self.stop_scheduler()
             

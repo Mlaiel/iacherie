@@ -201,6 +201,9 @@ class MultiPlatformDistributionManager:
         
     def _init_platform_apis(self) -> Dict[str, Any]:
         """Initialise les APIs des plateformes de distribution"""
+
+
+
         return {
             "spotify": {
                 "api_url": "https://api.spotify.com/v1/",
@@ -238,119 +241,119 @@ class MultiPlatformDistributionManager:
         """Charge les templates de notification de distribution"""
         templates = {
             "distribution_started": Template("""
-                🚀 DISTRIBUTION LANCÉE
+                 DISTRIBUTION LANCÉE
                 
-                🎵 Contenu: {{ content_title }}
-                📊 Plateformes: {{ total_platforms }}
+                 Contenu: {{ content_title }}
+                 Plateformes: {{ total_platforms }}
                 ⏰ Démarrage: {{ start_time }}
                 
-                📈 Stratégie: {{ optimization_strategy }}
-                🎯 Timing optimal: {{ optimal_timing }}
+                 Stratégie: {{ optimization_strategy }}
+                 Timing optimal: {{ optimal_timing }}
                 
-                🔄 Statut par plateforme:
+                 Statut par plateforme:
                 {{ platform_status | join('\n') }}
                 
-                📱 Suivre progression: {{ tracking_url }}
+                 Suivre progression: {{ tracking_url }}
                 
-                ⚡ Notifications automatiques activées
+                 Notifications automatiques activées
             """),
             
             "platform_published": Template("""
-                ✅ PUBLIÉ SUR {{ platform.upper() }}!
+                 PUBLIÉ SUR {{ platform.upper() }}!
                 
-                🎵 "{{ content_title }}"
-                🔗 {{ platform_url }}
+                 "{{ content_title }}"
+                 {{ platform_url }}
                 
-                📊 Statut: {{ status }}
+                 Statut: {{ status }}
                 ⏰ Publié: {{ published_time }}
-                👀 Vues initiales: {{ initial_views }}
+                 Vues initiales: {{ initial_views }}
                 
-                💡 Optimisations appliquées:
+                 Optimisations appliquées:
                 {{ optimizations | join('\n• ') }}
                 
-                🎯 Prochaines étapes:
+                 Prochaines étapes:
                 {{ next_steps | join('\n• ') }}
                 
-                📈 Dashboard: {{ analytics_url }}
+                 Dashboard: {{ analytics_url }}
             """),
             
             "distribution_completed": Template("""
-                🏆 DISTRIBUTION TERMINÉE
+                 DISTRIBUTION TERMINÉE
                 
-                🎵 "{{ content_title }}"
+                 "{{ content_title }}"
                 
-                📊 Résultats:
-                ✅ Succès: {{ successful_platforms }}/{{ total_platforms }}
-                ❌ Échecs: {{ failed_platforms }}
-                ⏱️ Durée: {{ total_duration }}
+                 Résultats:
+                 Succès: {{ successful_platforms }}/{{ total_platforms }}
+                 Échecs: {{ failed_platforms }}
+                ⏱ Durée: {{ total_duration }}
                 
-                🔥 Meilleures performances:
+                 Meilleures performances:
                 {{ top_platforms | join('\n') }}
                 
-                💰 Potentiel revenus estimé:
+                 Potentiel revenus estimé:
                 {{ revenue_estimates | join('\n') }}
                 
-                📈 Voir analytics complètes: {{ full_report_url }}
+                 Voir analytics complètes: {{ full_report_url }}
             """),
             
             "distribution_failed": Template("""
-                ⚠️ ÉCHEC DISTRIBUTION - {{ platform.upper() }}
+                 ÉCHEC DISTRIBUTION - {{ platform.upper() }}
                 
-                🎵 Contenu: {{ content_title }}
-                ❌ Erreur: {{ error_message }}
+                 Contenu: {{ content_title }}
+                 Erreur: {{ error_message }}
                 
-                🔄 Tentatives: {{ retry_count }}/{{ max_retries }}
+                 Tentatives: {{ retry_count }}/{{ max_retries }}
                 ⏰ Prochaine tentative: {{ next_retry_time }}
                 
-                💡 Solutions possibles:
+                 Solutions possibles:
                 {{ suggested_solutions | join('\n• ') }}
                 
-                🛠️ Action manuelle requise: {{ manual_action_required }}
+                 Action manuelle requise: {{ manual_action_required }}
                 
-                📞 Support: {{ support_contact }}
+                 Support: {{ support_contact }}
             """),
             
             "performance_alert": Template("""
-                📈 ALERTE PERFORMANCE - {{ alert_type.upper() }}
+                 ALERTE PERFORMANCE - {{ alert_type.upper() }}
                 
-                🎵 Contenu: {{ content_title }}
-                📊 Plateforme: {{ platform }}
+                 Contenu: {{ content_title }}
+                 Plateforme: {{ platform }}
                 
-                📈 Métrique: {{ metric_name }}
-                🔥 Valeur actuelle: {{ current_value }}
-                🎯 Seuil: {{ threshold_value }}
+                 Métrique: {{ metric_name }}
+                 Valeur actuelle: {{ current_value }}
+                 Seuil: {{ threshold_value }}
                 
                 {% if alert_type == 'viral' %}
-                🚀 CONTENU VIRAL DÉTECTÉ!
-                💡 Amplification recommandée sur d'autres plateformes
+                 CONTENU VIRAL DÉTECTÉ!
+                 Amplification recommandée sur d'autres plateformes
                 {% elif alert_type == 'underperforming' %}
-                📉 Performance en dessous des attentes
-                💡 Optimisations suggérées disponibles
+                 Performance en dessous des attentes
+                 Optimisations suggérées disponibles
                 {% endif %}
                 
-                🔧 Actions recommandées:
+                 Actions recommandées:
                 {{ recommended_actions | join('\n• ') }}
                 
-                📊 Analytics: {{ dashboard_url }}
+                 Analytics: {{ dashboard_url }}
             """),
             
             "optimization_suggestion": Template("""
-                💡 OPTIMISATION INTELLIGENTE DISPONIBLE
+                 OPTIMISATION INTELLIGENTE DISPONIBLE
                 
-                🎵 Contenu: {{ content_title }}
-                🎯 Opportunité: {{ optimization_type }}
+                 Contenu: {{ content_title }}
+                 Opportunité: {{ optimization_type }}
                 
-                📊 Analyse IA:
+                 Analyse IA:
                 {{ ai_analysis }}
                 
-                🚀 Améliorations suggérées:
+                 Améliorations suggérées:
                 {{ suggestions | join('\n• ') }}
                 
-                📈 Impact estimé:
+                 Impact estimé:
                 {{ impact_estimates | join('\n• ') }}
                 
-                ⚡ Appliquer automatiquement: {{ auto_apply_url }}
-                🔧 Configurer manuellement: {{ manual_config_url }}
+                 Appliquer automatiquement: {{ auto_apply_url }}
+                 Configurer manuellement: {{ manual_config_url }}
             """)
         }
         
@@ -358,6 +361,9 @@ class MultiPlatformDistributionManager:
 
     def _init_optimization_models(self) -> Dict[str, Any]:
         """Initialise les modèles d'optimisation IA"""
+
+
+
         return {
             "timing_optimizer": None,  # Modèle ML pour timing optimal
             "audience_matcher": None,  # Modèle pour matching audience
@@ -382,6 +388,9 @@ class MultiPlatformDistributionManager:
         Returns:
             Dict contenant les résultats de la création du job
         """
+
+
+
         try:
             # Validation du contenu
             validated_content = await self._validate_content_data(content_data)
@@ -620,6 +629,9 @@ class MultiPlatformDistributionManager:
         content_analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Optimise la stratégie de distribution basée sur l'analyse IA"""
+
+
+
         try:
             # Analyse historique de performance
             historical_performance = await self._analyze_historical_performance(user_id)

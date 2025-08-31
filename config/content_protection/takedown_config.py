@@ -9,7 +9,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA-Influencer Agent + Content Protection Platform
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps
 
-⚠️  COPYRIGHT WARNING:
+  COPYRIGHT WARNING:
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, modification, or distribution of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
@@ -409,6 +409,9 @@ Sincerely,
     
     def get_enabled_platforms(self) -> List[PlatformType]:
         """Get list of enabled platforms."""
+
+
+
         return [platform for platform, config in self.platforms.items() if config.enabled]
     
     def should_auto_takedown(self, similarity_score: float, content_value: float = 0.0) -> bool:
@@ -504,6 +507,9 @@ Sincerely,
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert configuration to dictionary."""
+
+
+
         return {
             "enable_takedown_system": self.enable_takedown_system,
             "default_takedown_type": self.default_takedown_type,

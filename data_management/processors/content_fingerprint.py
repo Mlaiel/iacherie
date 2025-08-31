@@ -77,6 +77,9 @@ class ContentFingerprintProcessor:
         metadata: Optional[Dict] = None
     ) -> Dict[str, Any]:
         """Generate comprehensive fingerprint for any content type"""
+
+
+
         try:
             logger.info(f"Generating fingerprint for content {content_id}")
             
@@ -115,6 +118,9 @@ class ContentFingerprintProcessor:
 
     async def _generate_audio_fingerprint(self, file_path: str) -> Dict[str, Any]:
         """Generate advanced audio fingerprint using multiple techniques"""
+
+
+
         try:
             # Load audio file
             y, sr = librosa.load(file_path, sr=self.audio_params['sample_rate'])
@@ -164,6 +170,9 @@ class ContentFingerprintProcessor:
 
     async def _generate_image_fingerprint(self, file_path: str) -> Dict[str, Any]:
         """Generate advanced image fingerprint using multiple hash algorithms"""
+
+
+
         try:
             # Load image
             image = Image.open(file_path)
@@ -208,6 +217,9 @@ class ContentFingerprintProcessor:
 
     async def _generate_video_fingerprint(self, file_path: str) -> Dict[str, Any]:
         """Generate advanced video fingerprint by sampling frames and audio"""
+
+
+
         try:
             cap = cv2.VideoCapture(file_path)
             
@@ -259,6 +271,9 @@ class ContentFingerprintProcessor:
 
     async def _generate_text_fingerprint(self, file_path: str) -> Dict[str, Any]:
         """Generate advanced text fingerprint using NLP techniques"""
+
+
+
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 text = f.read()
@@ -321,6 +336,9 @@ class ContentFingerprintProcessor:
 
     async def _generate_binary_fingerprint(self, file_path: str) -> Dict[str, Any]:
         """Generate fingerprint for binary files"""
+
+
+
         try:
             with open(file_path, 'rb') as f:
                 content = f.read()
@@ -338,6 +356,9 @@ class ContentFingerprintProcessor:
 
     async def _generate_universal_hash(self, file_path: str) -> str:
         """Generate universal hash for any file type"""
+
+
+
         try:
             with open(file_path, 'rb') as f:
                 content = f.read()
@@ -348,6 +369,9 @@ class ContentFingerprintProcessor:
 
     def _calculate_texture_features(self, gray_image: np.ndarray) -> List[float]:
         """Calculate texture features using statistical methods"""
+
+
+
         try:
             # Calculate co-occurrence matrix features
             from skimage.feature import greycomatrix, greycoprops
@@ -404,6 +428,9 @@ class ContentFingerprintProcessor:
 
     async def _store_fingerprint(self, fingerprint_data: Dict[str, Any]) -> None:
         """Store fingerprint data in database"""
+
+
+
         try:
             query = """
             INSERT INTO content_fingerprints 
@@ -434,6 +461,9 @@ class ContentFingerprintProcessor:
         threshold: float = None
     ) -> List[Dict[str, Any]]:
         """Find similar content based on fingerprint comparison"""
+
+
+
         try:
             threshold = threshold or self.similarity_threshold
             
@@ -478,6 +508,9 @@ class ContentFingerprintProcessor:
         content_type: str
     ) -> float:
         """Calculate similarity between two fingerprints"""
+
+
+
         try:
             if content_type.startswith('audio'):
                 return self._calculate_audio_similarity(fingerprint1, fingerprint2)
@@ -496,6 +529,9 @@ class ContentFingerprintProcessor:
 
     def _calculate_audio_similarity(self, fp1: Dict, fp2: Dict) -> float:
         """Calculate similarity between audio fingerprints"""
+
+
+
         try:
             # Compare MFCC features
             mfcc1 = np.array(fp1.get('mfcc_mean', []))
@@ -527,6 +563,9 @@ class ContentFingerprintProcessor:
 
     def _calculate_image_similarity(self, fp1: Dict, fp2: Dict) -> float:
         """Calculate similarity between image fingerprints"""
+
+
+
         try:
             # Compare perceptual hashes
             hash1 = fp1.get('perceptual_hash', '')
@@ -555,6 +594,9 @@ class ContentFingerprintProcessor:
 
     def _calculate_video_similarity(self, fp1: Dict, fp2: Dict) -> float:
         """Calculate similarity between video fingerprints"""
+
+
+
         try:
             # Compare frame hashes
             frames1 = fp1.get('frame_hashes', [])
@@ -594,6 +636,9 @@ class ContentFingerprintProcessor:
 
     def _calculate_text_similarity(self, fp1: Dict, fp2: Dict) -> float:
         """Calculate similarity between text fingerprints"""
+
+
+
         try:
             # Compare TF-IDF features
             features1 = fp1.get('top_tfidf_features', {})
@@ -624,6 +669,9 @@ class ContentFingerprintProcessor:
 
     def _calculate_hash_similarity(self, fp1: Dict, fp2: Dict) -> float:
         """Calculate similarity between hash fingerprints"""
+
+
+
         try:
             hash1 = fp1.get('sha256_hash', '')
             hash2 = fp2.get('sha256_hash', '')
@@ -638,6 +686,9 @@ class ContentFingerprintProcessor:
 
     async def cleanup_old_fingerprints(self, days_old: int = 365) -> int:
         """Clean up old fingerprint records"""
+
+
+
         try:
             query = """
             DELETE FROM content_fingerprints

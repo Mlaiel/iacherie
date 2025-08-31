@@ -5,7 +5,7 @@ Content Quality Assessor - Multi-Format Content Quality Assessment
 Enterprise-grade content quality assessment system for audio, video, image, and text content.
 Provides sophisticated quality scoring algorithms and content optimization recommendations.
 
-⚠️  COPYRIGHT WARNING ⚠️
+  COPYRIGHT WARNING 
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or theft of this code or concept without explicit 
 written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and 
@@ -118,6 +118,9 @@ class QualityMetric:
     @property
     def normalized_score(self) -> float:
         """Get normalized score (0-100)"""
+
+
+
         return min(100.0, max(0.0, (self.value / self.max_value) * 100))
     
     def to_dict(self) -> Dict[str, Any]:

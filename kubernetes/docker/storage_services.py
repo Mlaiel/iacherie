@@ -1,11 +1,11 @@
 """
-🗄️ Storage Services Configuration - IA-Influencer-Agent Platform
+ Storage Services Configuration - IA-Influencer-Agent Platform
 =================================================================
 Expert: Storage Engineer + Cloud Architect + Data Management Specialist
 Creator: Fahed Mlaiel <mlaiel@live.de>
 =================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL 
 Tout vol, copie ou utilisation non autorisée de ce code source,
 de ce concept ou de cette propriété intellectuelle sans
 l'autorisation écrite explicite de Fahed Mlaiel est strictement
@@ -46,6 +46,9 @@ class StorageServicesDockerConfig:
     
     def generate_minio_service(self) -> Dict[str, Any]:
         """Generate MinIO service for object storage"""
+
+
+
         return {
             "image": f"minio/minio:{self.minio_version}",
             "container_name": "ia-influencer-minio",
@@ -94,6 +97,9 @@ class StorageServicesDockerConfig:
     
     def generate_file_processor_service(self) -> Dict[str, Any]:
         """Generate file processing service"""
+
+
+
         return {
             "build": {
                 "context": "./file-processor",
@@ -139,6 +145,9 @@ class StorageServicesDockerConfig:
     
     def generate_backup_service(self) -> Dict[str, Any]:
         """Generate backup service for automated backups"""
+
+
+
         return {
             "build": {
                 "context": "./backup-service",
@@ -183,6 +192,9 @@ class StorageServicesDockerConfig:
     
     def generate_cdn_service(self) -> Dict[str, Any]:
         """Generate CDN service for content delivery"""
+
+
+
         return {
             "image": "nginx:alpine",
             "container_name": "ia-influencer-cdn",
@@ -214,6 +226,9 @@ class StorageServicesDockerConfig:
     
     def generate_file_processor_dockerfile(self) -> str:
         """Generate Dockerfile for file processor service"""
+
+
+
         return """
 # IA-Influencer File Processor Dockerfile
 # Multi-format content processing service
@@ -263,6 +278,9 @@ CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000
     
     def generate_file_processor_requirements(self) -> str:
         """Generate requirements.txt for file processor"""
+
+
+
         return """
 # File Processing Dependencies
 fastapi==0.104.1
@@ -305,6 +323,9 @@ prometheus-client==0.19.0
     
     def generate_backup_service_dockerfile(self) -> str:
         """Generate Dockerfile for backup service"""
+
+
+
         return """
 # IA-Influencer Backup Service Dockerfile
 # Automated backup and recovery system
@@ -354,6 +375,9 @@ CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000
     
     def generate_backup_service_requirements(self) -> str:
         """Generate requirements.txt for backup service"""
+
+
+
         return """
 # Backup Service Dependencies
 fastapi==0.104.1
@@ -379,6 +403,9 @@ prometheus-client==0.19.0
     
     def generate_cdn_nginx_config(self) -> str:
         """Generate Nginx configuration for CDN service"""
+
+
+
         return """
 # IA-Influencer CDN Nginx Configuration
 # High-performance content delivery
@@ -571,5 +598,5 @@ http {
             yaml.dump(compose_config, f, default_flow_style=False, indent=2)
         files_created.append(str(compose_file))
         
-        logger.info(f"✅ Storage services configuration saved: {len(files_created)} files created")
+        logger.info(f" Storage services configuration saved: {len(files_created)} files created")
         return files_created

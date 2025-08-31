@@ -1,11 +1,11 @@
-"""🔧 Environments Configuration - IA-Influencer-Agent
+""" Environments Configuration - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps + Backend Senior + ML Engineer + DBA + Security + Cloud Architect
 Date: 2025-08-15
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -190,7 +190,10 @@ class EnvironmentManagerFactory:
         
     @classmethod
     def get_available_environments(cls) -> Dict[str, Any]:
-        """Retourne les environnements disponibles avec leurs descriptions"""        return {
+        """Retourne les environnements disponibles avec leurs descriptions"""
+
+
+        return {
             "environments": {
                 env_type.value: {
                     "name": env_type.value.title(),
@@ -213,7 +216,10 @@ class EnvironmentManagerFactory:
 
 # Configuration par défaut du système
 def get_default_config() -> BaseEnvironmentConfigManager:
-    """Retourne la configuration par défaut avec détection automatique"""    return EnvironmentManagerFactory.create_manager(auto_detect=True)
+    """Retourne la configuration par défaut avec détection automatique"""
+
+
+    return EnvironmentManagerFactory.create_manager(auto_detect=True)
 
 
 def create_config_from_env() -> BaseEnvironmentConfigManager:
@@ -255,7 +261,7 @@ def validate_all_configurations() -> Dict[str, bool]:
             results[f"environment_{env_type.value}"] = manager.validate_configuration()
         except Exception as e:
             results[f"environment_{env_type.value}"] = False
-            print(f"❌ Erreur validation {env_type.value}: {e}")
+            print(f" Erreur validation {env_type.value}: {e}")
             
     # Test des déploiements spécialisés
     specialized_configs = {
@@ -276,7 +282,7 @@ def validate_all_configurations() -> Dict[str, bool]:
             results[f"specialized_{config_name}"] = manager.validate_configuration()
         except Exception as e:
             results[f"specialized_{config_name}"] = False
-            print(f"❌ Erreur validation {config_name}: {e}")
+            print(f" Erreur validation {config_name}: {e}")
             
     return results
 

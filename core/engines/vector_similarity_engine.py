@@ -38,7 +38,7 @@ class VectorSimilarityEngineConfig:
 
 class VectorSimilarityEngine(ABC):
     """
-    🚀 Moteur VectorSimilarityEngine - IA-Influencer-Agent
+     Moteur VectorSimilarityEngine - IA-Influencer-Agent
     
     Responsabilité:
     Fonctionnalité spécialisée IA-Influencer-Agent
@@ -58,7 +58,7 @@ class VectorSimilarityEngine(ABC):
         self.config = config or VectorSimilarityEngineConfig()
         self.status = VectorSimilarityEngineStatus.IDLE
         self._performance_metrics = {}
-        logger.info(f"🚀 Initialisation {self.__class__.__name__}")
+        logger.info(f" Initialisation {self.__class__.__name__}")
     
     @abstractmethod
     async def initialize(self) -> bool:
@@ -100,6 +100,9 @@ class VectorSimilarityEngine(ABC):
         Returns:
             Dict: Métriques de santé
         """
+
+
+
         return {
             "status": self.status.value,
             "config": self.config.__dict__,
@@ -114,6 +117,9 @@ class VectorSimilarityEngine(ABC):
         Returns:
             Dict: Métriques actuelles
         """
+
+
+
         return self._performance_metrics.copy()
 
 

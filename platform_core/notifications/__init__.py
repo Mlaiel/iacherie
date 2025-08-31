@@ -1,14 +1,14 @@
-"""🚀 Platform Core Notifications - IA Influencer Agent Platform Enterprise
+""" Platform Core Notifications - IA Influencer Agent Platform Enterprise
 ========================================================================
 Module: backend/platform_core/notifications/
 Author: Fahed Mlaiel (mlaiel@live.de)
 ========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 SYSTÈME DE NOTIFICATIONS MULTI-CANAL ENTERPRISE
+ SYSTÈME DE NOTIFICATIONS MULTI-CANAL ENTERPRISE
 Notifications intelligentes avec templates et targeting avancé
 - Email/SMS/Push/In-app notifications
 - Templates dynamiques avec personnalisation IA

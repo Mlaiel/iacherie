@@ -7,7 +7,7 @@ compliance requirements, forensic investigations, and AI-powered threat detectio
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Team: Multi-Expert Lead AI Developer & Security Architect
 
-⚠️ ULTRA-STRONG INTELLECTUAL PROPERTY WARNING ⚠️
+ ULTRA-STRONG INTELLECTUAL PROPERTY WARNING 
 This revolutionary audit logging system is the EXCLUSIVE property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
@@ -290,7 +290,10 @@ def get_module_info() -> Dict[str, Any]:
     
     Returns:
         Dict[str, Any]: Detailed module information
-    """    return {
+    """
+
+
+    return {
         "name": "Ultra-Advanced Enterprise Audit Logs Database",
         "version": __version__,
         "build": __build__,
@@ -468,5 +471,5 @@ logging.basicConfig(
 )
 
 logger.info(f"Ultra-Advanced Audit Logs Module v{__version__} initialized by {__author__}")
-logger.info("⚠️ PROPRIETARY SOFTWARE - Unauthorized use strictly prohibited")
+logger.info(" PROPRIETARY SOFTWARE - Unauthorized use strictly prohibited")
 logger.info(f"Contact {__email__} for licensing and authorization")

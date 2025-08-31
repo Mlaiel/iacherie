@@ -1,5 +1,5 @@
 """
-🚀 Revenue Forecaster - AI-Powered Revenue Prediction Engine
+ Revenue Forecaster - AI-Powered Revenue Prediction Engine
 ==========================================================
 
 Ultra-advanced revenue forecasting system using machine learning,
@@ -12,7 +12,7 @@ Created by: Fahed Mlaiel <mlaiel@live.de>
 Team Specialists:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED ⚠️
+ STRICT COPYRIGHT WARNING - UNAUTHORIZED USE PROHIBITED 
 Contact mlaiel@live.de for licensing inquiries.
 
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Revenue Forecasting
@@ -140,6 +140,9 @@ class RevenueForecaster:
         
     async def initialize(self):
         """Initialize the revenue forecaster"""
+
+
+
         try:
             # Initialize ML pipeline
             await self.ml_pipeline.initialize()
@@ -178,6 +181,9 @@ class RevenueForecaster:
         Returns:
             Comprehensive forecast results
         """
+
+
+
         try:
             # Validate inputs
             await self._validate_forecast_request(creator_id, horizon, model)
@@ -262,6 +268,9 @@ class RevenueForecaster:
                                      creator_id: str,
                                      horizon: ForecastHorizon) -> pd.DataFrame:
         """Prepare historical revenue data for modeling"""
+
+
+
         try:
             # Determine lookback period based on horizon
             if horizon == ForecastHorizon.SHORT_TERM:
@@ -336,6 +345,9 @@ class RevenueForecaster:
                                historical_data: pd.DataFrame,
                                horizon: ForecastHorizon) -> pd.DataFrame:
         """Engineer features for forecasting models"""
+
+
+
         try:
             df = historical_data.copy()
             df['date'] = pd.to_datetime(df['date'])
@@ -406,6 +418,9 @@ class RevenueForecaster:
 
     async def _train_ensemble_model(self, train_data: pd.DataFrame, validation_data: pd.DataFrame) -> Dict[str, Any]:
         """Train ensemble model combining multiple algorithms"""
+
+
+
         try:
             # Prepare training data
             feature_cols = [col for col in train_data.columns if col not in ['date', 'net_revenue']]
@@ -483,6 +498,9 @@ class RevenueForecaster:
                                   features_df: pd.DataFrame,
                                   horizon: ForecastHorizon) -> List[Dict[str, Any]]:
         """Generate revenue predictions using trained model"""
+
+
+
         try:
             predictions = []
             
@@ -527,6 +545,9 @@ class RevenueForecaster:
 
     async def _predict_ensemble(self, model_info: Dict[str, Any], features: np.ndarray) -> float:
         """Make prediction using ensemble model"""
+
+
+
         try:
             weighted_predictions = []
             
@@ -556,6 +577,9 @@ class RevenueForecaster:
                                 features_df: pd.DataFrame,
                                 horizon: ForecastHorizon) -> Dict[str, List[float]]:
         """Generate optimistic, pessimistic, and realistic scenarios"""
+
+
+
         try:
             # Get baseline predictions
             baseline_predictions = await self._generate_predictions(model_info, features_df, horizon)
@@ -589,6 +613,9 @@ class RevenueForecaster:
 
     async def get_forecast_accuracy(self, creator_id: str) -> Dict[str, Any]:
         """Get forecast accuracy metrics for a creator"""
+
+
+
         try:
             # Get recent forecasts and actual results
             query = """
@@ -637,6 +664,9 @@ class RevenueForecaster:
 
     async def cleanup(self):
         """Cleanup forecaster resources"""
+
+
+
         try:
             # Clear model cache
             self._forecast_cache.clear()

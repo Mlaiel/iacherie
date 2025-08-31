@@ -7,7 +7,7 @@ in the IA-Influencer-Agent platform with load balancing, failover, and scaling.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -418,6 +418,9 @@ class AgentManager:
     
     async def _scale_up_pool(self, pool: AgentPool):
         """Scale up agent pool by adding new instance"""
+
+
+
         try:
             if pool.agent_class is None:
                 logger.warning(f"Cannot scale up {pool.agent_type}: missing agent_class")
@@ -435,6 +438,9 @@ class AgentManager:
     
     async def _scale_down_pool(self, pool: AgentPool):
         """Scale down agent pool by removing underutilized instance"""
+
+
+
         try:
             # Find agent with lowest load
             min_load_agent = None

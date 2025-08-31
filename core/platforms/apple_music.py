@@ -43,6 +43,9 @@ class AppleMusicPlatform(PlatformBase):
     
     async def authenticate(self) -> bool:
         """Authenticate with Apple Music using JWT"""
+
+
+
         try:
             # Generate JWT token for Apple Music API
             token = self._generate_jwt_token()
@@ -64,6 +67,9 @@ class AppleMusicPlatform(PlatformBase):
     
     def _generate_jwt_token(self) -> Optional[str]:
         """Generate JWT token for Apple Music API"""
+
+
+
         try:
             # JWT payload
             payload = {
@@ -92,6 +98,9 @@ class AppleMusicPlatform(PlatformBase):
     
     async def refresh_token(self) -> bool:
         """Refresh Apple Music JWT token"""
+
+
+
         return await self.authenticate()  # JWT tokens are regenerated
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
@@ -153,6 +162,9 @@ class AppleMusicPlatform(PlatformBase):
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
         """Get Apple Music analytics (limited public API access)"""
+
+
+
         try:
             # Get song/album data
             result = await self._make_request('GET', f'catalog/us/songs/{content_id}')
@@ -193,6 +205,9 @@ class AppleMusicPlatform(PlatformBase):
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
         """Search content on Apple Music"""
+
+
+
         try:
             search_types = []
             
@@ -266,6 +281,9 @@ class AppleMusicPlatform(PlatformBase):
     
     async def get_album_tracks(self, album_id: str) -> List[Dict[str, Any]]:
         """Get tracks from an album"""
+
+
+
         try:
             result = await self._make_request('GET', f'catalog/us/albums/{album_id}/tracks')
             
@@ -295,6 +313,9 @@ class AppleMusicPlatform(PlatformBase):
     
     async def get_artist_albums(self, artist_id: str) -> List[Dict[str, Any]]:
         """Get albums by an artist"""
+
+
+
         try:
             result = await self._make_request('GET', f'catalog/us/artists/{artist_id}/albums')
             
@@ -324,6 +345,9 @@ class AppleMusicPlatform(PlatformBase):
     
     async def get_playlist_tracks(self, playlist_id: str) -> List[Dict[str, Any]]:
         """Get tracks from a playlist"""
+
+
+
         try:
             result = await self._make_request('GET', f'catalog/us/playlists/{playlist_id}/tracks')
             
@@ -351,6 +375,9 @@ class AppleMusicPlatform(PlatformBase):
     
     async def get_charts(self, chart_type: str = 'songs', genre: str = None) -> List[Dict[str, Any]]:
         """Get Apple Music charts"""
+
+
+
         try:
             endpoint = f'catalog/us/charts'
             params = {'types': chart_type}
@@ -394,6 +421,9 @@ class AppleMusicPlatform(PlatformBase):
     
     async def get_genres(self) -> List[Dict[str, Any]]:
         """Get available genres"""
+
+
+
         try:
             result = await self._make_request('GET', 'catalog/us/genres')
             

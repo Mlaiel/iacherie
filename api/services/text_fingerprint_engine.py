@@ -96,6 +96,9 @@ class TextFingerprintEngine:
         
     def extract_fingerprint(self, text: str, title: str = "") -> TextFingerprint:
         """Extract comprehensive text fingerprint"""
+
+
+
         try:
             # Clean text
             cleaned_text = self._clean_text(text)
@@ -154,6 +157,9 @@ class TextFingerprintEngine:
             
     def _clean_text(self, text: str) -> str:
         """Clean and normalize text"""
+
+
+
         try:
             # Remove extra whitespace
             text = re.sub(r'\s+', ' ', text)
@@ -175,6 +181,9 @@ class TextFingerprintEngine:
             
     def _extract_semantic_embedding(self, text: str) -> np.ndarray:
         """Extract semantic embedding using transformer model"""
+
+
+
         try:
             if not self.model or not self.tokenizer:
                 return np.array([])
@@ -207,6 +216,9 @@ class TextFingerprintEngine:
             
     def _extract_tfidf_features(self, text: str) -> np.ndarray:
         """Extract TF-IDF features"""
+
+
+
         try:
             # Fit and transform text
             tfidf_matrix = self.tfidf_vectorizer.fit_transform([text])
@@ -219,6 +231,9 @@ class TextFingerprintEngine:
             
     def _compute_content_hash(self, text: str) -> str:
         """Compute content-based hash"""
+
+
+
         try:
             # Normalize text for hashing
             normalized = text.lower()
@@ -233,6 +248,9 @@ class TextFingerprintEngine:
             
     def _compute_structure_hash(self, text: str) -> str:
         """Compute structure-based hash (paragraphs, sentences, etc.)"""
+
+
+
         try:
             # Extract structural features
             paragraphs = text.split('\n\n')
@@ -259,6 +277,9 @@ class TextFingerprintEngine:
             
     def _extract_stylometric_features(self, text: str) -> Dict:
         """Extract stylometric features for authorship analysis"""
+
+
+
         try:
             words = word_tokenize(text.lower())
             sentences = sent_tokenize(text)
@@ -301,6 +322,9 @@ class TextFingerprintEngine:
             
     def _extract_ngram_signatures(self, text: str, max_n: int = 3) -> Dict:
         """Extract character and word n-gram signatures"""
+
+
+
         try:
             words = word_tokenize(text.lower())
             
@@ -325,6 +349,9 @@ class TextFingerprintEngine:
             
     def _compute_readability_scores(self, text: str) -> Dict:
         """Compute readability and complexity scores"""
+
+
+
         try:
             return {
                 'flesch_reading_ease': flesch_reading_ease(text),
@@ -339,6 +366,9 @@ class TextFingerprintEngine:
             
     def _detect_language(self, text: str) -> str:
         """Detect text language"""
+
+
+
         try:
             # Simple heuristic language detection
             # Count common English words
@@ -356,6 +386,9 @@ class TextFingerprintEngine:
             
     def _calculate_confidence(self, text: str, word_count: int) -> float:
         """Calculate confidence score based on text quality"""
+
+
+
         try:
             # Length factor
             length_score = min(1.0, word_count / 100.0)  # Up to 100 words
@@ -381,6 +414,9 @@ class TextFingerprintEngine:
             
     def compare_fingerprints(self, fp1: TextFingerprint, fp2: TextFingerprint) -> float:
         """Compare two text fingerprints and return similarity score (0-1)"""
+
+
+
         try:
             scores = []
             
@@ -426,6 +462,9 @@ class TextFingerprintEngine:
             
     def _compare_stylometric_features(self, features1: Dict, features2: Dict) -> float:
         """Compare stylometric features"""
+
+
+
         try:
             if not features1 or not features2:
                 return 0.0
@@ -466,6 +505,9 @@ class TextFingerprintEngine:
             
     def detect_plagiarism(self, text1: str, text2: str, threshold: float = 0.8) -> Dict:
         """Detect potential plagiarism between two texts"""
+
+
+
         try:
             fp1 = self.extract_fingerprint(text1)
             fp2 = self.extract_fingerprint(text2)

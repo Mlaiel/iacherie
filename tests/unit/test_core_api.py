@@ -42,6 +42,9 @@ class TestCoreAPIStructure:
     
     def test_api_config_exists(self):
         """Test that API configuration exists and is accessible"""
+
+
+
         try:
             from config import API_CONFIG
             assert API_CONFIG is not None

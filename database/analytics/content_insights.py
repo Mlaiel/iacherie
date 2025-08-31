@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -182,6 +182,9 @@ class ContentTrend:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for JSON serialization"""
+
+
+
         return {
             "trend_id": self.trend_id,
             "trend_name": self.trend_name,
@@ -217,6 +220,9 @@ class ContentOptimizationRecommendation:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for JSON serialization"""
+
+
+
         return {
             "recommendation_id": self.recommendation_id,
             "title": self.title,
@@ -269,6 +275,9 @@ class ContentInsights:
         Returns:
             Content insights model with analysis results
         """
+
+
+
         try:
             self.logger.info(f"Analyzing content {content_id} for user {user_id}")
             
@@ -704,6 +713,9 @@ class ContentInsights:
         Returns:
             List of content insights
         """
+
+
+
         try:
             start_date = datetime.utcnow() - timedelta(days=days_back)
             
@@ -751,6 +763,9 @@ class TrendAnalyzer:
         Returns:
             List of detected trends
         """
+
+
+
         try:
             # Build query filters
             filters = []
@@ -990,6 +1005,9 @@ class TrendAnalyzer:
         Returns:
             List of optimization recommendations
         """
+
+
+
         try:
             # Get current trends
             current_trends = await self.detect_emerging_trends(

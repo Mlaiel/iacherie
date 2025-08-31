@@ -8,7 +8,7 @@ optimization for the IA-Influencer-Agent ML platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This feature extraction system and methodologies are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission
 is strictly PROHIBITED and will result in legal action.
@@ -355,6 +355,9 @@ class FeatureExtractor:
     
     async def initialize(self) -> bool:
         """Initialize feature extractor"""
+
+
+
         try:
             # Load NLP models
             if self.config.get("enable_nlp", True):
@@ -467,6 +470,9 @@ class FeatureExtractor:
         """
         Comprehensive text feature extraction
         """
+
+
+
         try:
             logger.info("Starting text feature extraction")
             
@@ -526,6 +532,9 @@ class FeatureExtractor:
         """
         Comprehensive image feature extraction
         """
+
+
+
         try:
             logger.info("Starting image feature extraction")
             
@@ -585,6 +594,9 @@ class FeatureExtractor:
         """
         Comprehensive audio feature extraction
         """
+
+
+
         try:
             logger.info("Starting audio feature extraction")
             
@@ -644,6 +656,9 @@ class FeatureExtractor:
         """
         Comprehensive video feature extraction
         """
+
+
+
         try:
             logger.info("Starting video feature extraction")
             
@@ -719,6 +734,9 @@ class FeatureExtractor:
         """
         Advanced feature selection using multiple methods
         """
+
+
+
         try:
             logger.info("Starting feature selection")
             
@@ -799,6 +817,9 @@ class FeatureExtractor:
         """
         Advanced dimensionality reduction
         """
+
+
+
         try:
             logger.info("Starting dimensionality reduction")
             
@@ -960,6 +981,9 @@ class FeatureExtractor:
 
     def _initialize_feature_extractors(self) -> Dict[str, Dict[str, Any]]:
         """Initialize feature extractors registry"""
+
+
+
         return {
             "text": {
                 "statistical": ["word_count", "char_count", "sentence_count", "avg_word_length"],
@@ -998,6 +1022,9 @@ class FeatureExtractor:
 
     async def _load_nlp_models(self):
         """Load NLP models"""
+
+
+
         try:
             # Load spaCy model
             try:
@@ -1023,6 +1050,9 @@ class FeatureExtractor:
 
     async def _load_pretrained_models(self):
         """Load pre-trained models"""
+
+
+
         try:
             # Load Transformers models (lightweight versions)
             if self.config.get("enable_transformers", False):
@@ -1057,6 +1087,9 @@ class FeatureExtractor:
 
     async def _preprocess_text(self, text: str, config: FeatureConfig) -> str:
         """Preprocess text for feature extraction"""
+
+
+
         try:
             # Basic cleaning
             text = text.lower().strip()
@@ -1076,6 +1109,9 @@ class FeatureExtractor:
 
     async def _preprocess_image(self, image: np.ndarray, config: FeatureConfig) -> np.ndarray:
         """Preprocess image for feature extraction"""
+
+
+
         try:
             if not CV2_AVAILABLE:
                 return image
@@ -1098,6 +1134,9 @@ class FeatureExtractor:
 
     async def _preprocess_audio(self, audio: np.ndarray, sample_rate: int, config: FeatureConfig) -> np.ndarray:
         """Preprocess audio for feature extraction"""
+
+
+
         try:
             if not AUDIO_AVAILABLE:
                 return audio
@@ -1186,6 +1225,9 @@ class FeaturePipeline:
                             steps: List[Dict[str, Any]],
                             pipeline_name: str) -> str:
         """Create feature processing pipeline"""
+
+
+
         try:
             pipeline_config = {
                 "pipeline_id": str(uuid.uuid4()),
@@ -1211,6 +1253,9 @@ class FeaturePipeline:
                              content: Any,
                              content_type: str) -> FeatureExtractionResult:
         """Execute feature processing pipeline"""
+
+
+
         try:
             logger.info(f"Executing pipeline: {pipeline_id}")
             

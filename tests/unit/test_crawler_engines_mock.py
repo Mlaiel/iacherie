@@ -96,6 +96,9 @@ class MockPlatformCrawler:
     
     async def search_by_fingerprint(self, fingerprint: str) -> List[Dict]:
         """Mock fingerprint-based search"""
+
+
+
         return [{
             'platform': self.platform_name,
             'content_id': f"fp_match_{fingerprint[:8]}",
@@ -191,10 +194,16 @@ class MockYouTubeCrawler(MockPlatformCrawler):
     
     async def search_videos(self, query: str, max_results: int = 10) -> List[Dict]:
         """Search YouTube videos"""
+
+
+
         return await self.crawl_content(query, max_results)
     
     async def get_video_details(self, video_id: str) -> Dict:
         """Get detailed video information"""
+
+
+
         return {
             'video_id': video_id,
             'title': f"Mock video {video_id}",
@@ -215,10 +224,16 @@ class MockSpotifyCrawler(MockPlatformCrawler):
     
     async def search_tracks(self, query: str, limit: int = 10) -> List[Dict]:
         """Search Spotify tracks"""
+
+
+
         return await self.crawl_content(query, limit)
     
     async def get_track_features(self, track_id: str) -> Dict:
         """Get audio features for track"""
+
+
+
         return {
             'track_id': track_id,
             'tempo': 120.0,
@@ -237,10 +252,16 @@ class MockTikTokCrawler(MockPlatformCrawler):
     
     async def search_videos(self, hashtag: str, count: int = 10) -> List[Dict]:
         """Search TikTok videos by hashtag"""
+
+
+
         return await self.crawl_content(f"#{hashtag}", count)
     
     async def get_user_videos(self, username: str, count: int = 10) -> List[Dict]:
         """Get videos from specific user"""
+
+
+
         return await self.crawl_content(f"@{username}", count)
 
 

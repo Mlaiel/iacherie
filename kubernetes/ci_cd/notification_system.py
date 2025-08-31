@@ -1,5 +1,5 @@
 """
-🔧 Notification System - IA-Influencer-Agent CI/CD
+ Notification System - IA-Influencer-Agent CI/CD
 ================================================================
 Expert: DEVOPS_ENGINEER + COMMUNICATION_SPECIALIST
 Created: 2025-08-24
@@ -127,6 +127,9 @@ class NotificationSystem:
     
     async def initialize(self) -> bool:
         """Initialize notification system"""
+
+
+
         try:
             # Setup notification channels
             await self._setup_notification_channels()
@@ -138,11 +141,11 @@ class NotificationSystem:
             await self._initialize_rate_limiting()
             
             self.initialized = True
-            self.logger.info("✅ Notification system initialized")
+            self.logger.info(" Notification system initialized")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize notification system: {e}")
+            self.logger.error(f" Failed to initialize notification system: {e}")
             return False
     
     async def _setup_notification_channels(self) -> None:
@@ -290,6 +293,9 @@ class NotificationSystem:
         custom_channels: Optional[List[NotificationChannel]] = None
     ) -> Dict[NotificationChannel, bool]:
         """Send notification across configured channels"""
+
+
+
         try:
             notification_msg = NotificationMessage(
                 event_type=event_type,
@@ -356,6 +362,9 @@ class NotificationSystem:
         message: NotificationMessage
     ) -> bool:
         """Send notification to specific channel"""
+
+
+
         try:
             if channel == NotificationChannel.EMAIL:
                 return await self._send_email_notification(config, message)
@@ -383,6 +392,9 @@ class NotificationSystem:
         message: NotificationMessage
     ) -> bool:
         """Send email notification"""
+
+
+
         try:
             email_config = config.email_config
             
@@ -427,6 +439,9 @@ class NotificationSystem:
         message: NotificationMessage
     ) -> bool:
         """Send Slack notification"""
+
+
+
         try:
             slack_config = config.slack_config
             webhook_url = slack_config['webhook_url']
@@ -495,6 +510,9 @@ class NotificationSystem:
         message: NotificationMessage
     ) -> bool:
         """Send Microsoft Teams notification"""
+
+
+
         try:
             webhook_url = config.webhook_url
             color = self._get_priority_color(message.priority)
@@ -542,6 +560,9 @@ class NotificationSystem:
         message: NotificationMessage
     ) -> bool:
         """Send Discord notification"""
+
+
+
         try:
             webhook_url = config.webhook_url
             color = int(self._get_priority_color(message.priority).replace("#", ""), 16)
@@ -593,6 +614,9 @@ class NotificationSystem:
         message: NotificationMessage
     ) -> bool:
         """Send PagerDuty notification"""
+
+
+
         try:
             webhook_url = config.webhook_url
             
@@ -629,6 +653,9 @@ class NotificationSystem:
         message: NotificationMessage
     ) -> bool:
         """Send generic webhook notification"""
+
+
+
         try:
             webhook_url = config.webhook_url
             

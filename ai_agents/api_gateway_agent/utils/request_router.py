@@ -7,7 +7,7 @@ and dynamic routing rules for the API Gateway.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -71,6 +71,9 @@ class RequestRouter:
     
     def _initialize_routing_rules(self):
         """Initialize routing rules from configuration"""
+
+
+
         try:
             # Create routing rules from service configuration
             for service_name, service_config in self.config.service_routes.items():
@@ -117,6 +120,9 @@ class RequestRouter:
         Returns:
             Service name or None if no match found
         """
+
+
+
         try:
             headers = headers or {}
             
@@ -165,6 +171,9 @@ class RequestRouter:
         headers: Dict[str, str]
     ) -> bool:
         """Check if routing rule matches the request"""
+
+
+
         try:
             # Match based on strategy
             path_match = False
@@ -193,6 +202,9 @@ class RequestRouter:
     
     def _wildcard_match(self, pattern: str, path: str) -> bool:
         """Perform wildcard matching (* and ? supported)"""
+
+
+
         try:
             # Convert wildcard pattern to regex
             regex_pattern = pattern.replace("*", ".*").replace("?", ".")
@@ -209,6 +221,9 @@ class RequestRouter:
         headers: Dict[str, str]
     ) -> bool:
         """Check additional routing conditions"""
+
+
+
         try:
             # Method conditions
             if "methods" in conditions:
@@ -247,6 +262,9 @@ class RequestRouter:
     
     def add_routing_rule(self, rule: RoutingRule) -> bool:
         """Add new routing rule dynamically"""
+
+
+
         try:
             # Compile regex if needed
             if rule.strategy == RoutingStrategy.REGEX_MATCH:
@@ -269,6 +287,9 @@ class RequestRouter:
     
     def remove_routing_rule(self, pattern: str, service: str) -> bool:
         """Remove routing rule"""
+
+
+
         try:
             initial_count = len(self.routing_rules)
             
@@ -292,6 +313,9 @@ class RequestRouter:
     
     def update_service_registry(self, services: Dict[str, Dict[str, Any]]):
         """Update service registry from service discovery"""
+
+
+
         try:
             self.service_registry = services.copy()
             
@@ -305,6 +329,9 @@ class RequestRouter:
     
     def _update_rules_from_registry(self):
         """Update routing rules based on service registry"""
+
+
+
         try:
             # Add rules for newly discovered services
             for service_name, service_info in self.service_registry.items():
@@ -332,6 +359,9 @@ class RequestRouter:
     
     def get_routing_stats(self) -> Dict[str, Any]:
         """Get routing statistics"""
+
+
+
         try:
             service_counts = {}
             strategy_counts = {}
@@ -356,6 +386,9 @@ class RequestRouter:
     
     def list_routing_rules(self) -> List[Dict[str, Any]]:
         """List all routing rules"""
+
+
+
         try:
             rules_list = []
             

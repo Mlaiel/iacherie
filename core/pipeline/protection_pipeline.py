@@ -385,6 +385,9 @@ class ProtectionProcessingPipeline:
     
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default configuration"""
+
+
+
         return {
             "protection_levels": {
                 "basic": {
@@ -956,10 +959,16 @@ class ProtectionProcessingPipeline:
     # Public API Methods
     def get_protection_status(self, protection_id: str) -> Optional[ProtectionResult]:
         """Get protection status"""
+
+
+
         return self.active_protections.get(protection_id) or self.completed_protections.get(protection_id)
     
     def get_active_protections(self) -> Dict[str, ProtectionResult]:
         """Get all active protections"""
+
+
+
         return self.active_protections.copy()
     
     def get_protection_metrics(self) -> Dict[str, Any]:

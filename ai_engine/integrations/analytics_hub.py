@@ -179,6 +179,9 @@ class BaseAnalyticsConnector(ABC):
     
     def _cache_key(self, *args) -> str:
         """Generate cache key"""
+
+
+
         return hashlib.md5(str(args).encode()).hexdigest()
     
     async def _get_cached_data(self, cache_key: str) -> Optional[Any]:
@@ -207,6 +210,9 @@ class GoogleAnalyticsConnector(BaseAnalyticsConnector):
         
     async def authenticate(self) -> bool:
         """Authenticate with Google Analytics"""
+
+
+
         try:
             # Implement Google Analytics authentication
             self.logger.info("Google Analytics authentication successful")
@@ -221,6 +227,9 @@ class GoogleAnalyticsConnector(BaseAnalyticsConnector):
                          dimensions: Optional[List[str]] = None,
                          filters: Optional[Dict[str, Any]] = None) -> List[MetricSeries]:
         """Get Google Analytics metrics"""
+
+
+
         try:
             # Implement GA4 API calls
             metrics_data = []
@@ -261,6 +270,9 @@ class GoogleAnalyticsConnector(BaseAnalyticsConnector):
     
     async def get_available_metrics(self) -> List[MetricDefinition]:
         """Get available Google Analytics metrics"""
+
+
+
         return [
             MetricDefinition(
                 name="sessions",
@@ -304,6 +316,9 @@ class SpotifyAnalyticsConnector(BaseAnalyticsConnector):
         
     async def authenticate(self) -> bool:
         """Authenticate with Spotify API"""
+
+
+
         try:
             self.logger.info("Spotify Analytics authentication successful")
             return True
@@ -317,6 +332,9 @@ class SpotifyAnalyticsConnector(BaseAnalyticsConnector):
                          dimensions: Optional[List[str]] = None,
                          filters: Optional[Dict[str, Any]] = None) -> List[MetricSeries]:
         """Get Spotify analytics metrics"""
+
+
+
         try:
             metrics_data = []
             
@@ -364,6 +382,9 @@ class SpotifyAnalyticsConnector(BaseAnalyticsConnector):
     
     async def get_available_metrics(self) -> List[MetricDefinition]:
         """Get available Spotify metrics"""
+
+
+
         return [
             MetricDefinition(
                 name="streams",
@@ -415,6 +436,9 @@ class YouTubeAnalyticsConnector(BaseAnalyticsConnector):
         
     async def authenticate(self) -> bool:
         """Authenticate with YouTube API"""
+
+
+
         try:
             self.logger.info("YouTube Analytics authentication successful")
             return True
@@ -428,6 +452,9 @@ class YouTubeAnalyticsConnector(BaseAnalyticsConnector):
                          dimensions: Optional[List[str]] = None,
                          filters: Optional[Dict[str, Any]] = None) -> List[MetricSeries]:
         """Get YouTube analytics metrics"""
+
+
+
         try:
             metrics_data = []
             
@@ -474,6 +501,9 @@ class YouTubeAnalyticsConnector(BaseAnalyticsConnector):
     
     async def get_available_metrics(self) -> List[MetricDefinition]:
         """Get available YouTube metrics"""
+
+
+
         return [
             MetricDefinition(
                 name="views",
@@ -641,26 +671,26 @@ class InsightGenerator:
             # Generate trend insights
             if trend_analysis["trend"] == "increasing":
                 insights.append(
-                    f"📈 {metric.metric_name.title()} shows strong growth with "
+                    f" {metric.metric_name.title()} shows strong growth with "
                     f"{trend_analysis['percentage_change']:.1f}% increase over the period"
                 )
             elif trend_analysis["trend"] == "decreasing":
                 insights.append(
-                    f"📉 {metric.metric_name.title()} is declining with "
+                    f" {metric.metric_name.title()} is declining with "
                     f"{abs(trend_analysis['percentage_change']):.1f}% decrease - attention needed"
                 )
             
             # Volatility insights
             if trend_analysis["volatility"] > 0.5:
                 insights.append(
-                    f"⚠️ {metric.metric_name.title()} shows high volatility - "
+                    f" {metric.metric_name.title()} shows high volatility - "
                     f"consider stabilization strategies"
                 )
             
             # Anomaly insights
             if trend_analysis["anomalies"]:
                 insights.append(
-                    f"🔍 Detected {len(trend_analysis['anomalies'])} anomalies in "
+                    f" Detected {len(trend_analysis['anomalies'])} anomalies in "
                     f"{metric.metric_name} - investigate unusual spikes or drops"
                 )
         
@@ -670,7 +700,7 @@ class InsightGenerator:
             best_metric = max(metrics, key=lambda m: 
                              sum(dp.value for dp in m.data_points))
             insights.append(
-                f"🏆 Best performing metric: {best_metric.metric_name.title()} "
+                f" Best performing metric: {best_metric.metric_name.title()} "
                 f"with total value of {sum(dp.value for dp in best_metric.data_points)}"
             )
         
@@ -686,23 +716,23 @@ class InsightGenerator:
             if trend_analysis["trend"] == "decreasing":
                 if metric.metric_name in ["engagement", "views", "streams"]:
                     recommendations.append(
-                        "🎯 Focus on content quality and audience engagement to reverse declining trends"
+                        " Focus on content quality and audience engagement to reverse declining trends"
                     )
                 elif metric.metric_name in ["conversion", "revenue"]:
                     recommendations.append(
-                        "💰 Review monetization strategy and optimize conversion funnels"
+                        " Review monetization strategy and optimize conversion funnels"
                     )
             
             if trend_analysis["volatility"] > 0.3:
                 recommendations.append(
-                    "📊 Implement consistent posting schedule to reduce metric volatility"
+                    " Implement consistent posting schedule to reduce metric volatility"
                 )
         
         # General recommendations
         recommendations.extend([
-            "🔄 Set up automated alerts for significant metric changes",
-            "📈 Create benchmarks based on historical performance",
-            "🎨 A/B test different content formats to optimize engagement"
+            " Set up automated alerts for significant metric changes",
+            " Create benchmarks based on historical performance",
+            " A/B test different content formats to optimize engagement"
         ])
         
         return recommendations[:5]  # Return top 5 recommendations
@@ -723,6 +753,9 @@ class AnalyticsHub:
     async def add_connector(self, provider: AnalyticsProvider, 
                           credentials: Dict[str, Any]) -> bool:
         """Add analytics connector"""
+
+
+
         try:
             connector_classes = {
                 AnalyticsProvider.GOOGLE_ANALYTICS: GoogleAnalyticsConnector,
@@ -845,6 +878,9 @@ class AnalyticsHub:
                                        alert_thresholds: Dict[str, Dict[str, float]],
                                        callback: Callable) -> bool:
         """Setup real-time metric monitoring"""
+
+
+
         try:
             # This would setup real-time data streams
             self.logger.info("Real-time monitoring setup completed")

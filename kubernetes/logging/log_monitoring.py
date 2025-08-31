@@ -60,6 +60,9 @@ class NotificationConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return asdict(self)
 
 
@@ -223,6 +226,9 @@ class EmailNotificationSender(NotificationSender):
             </table>
         </div>
         """
+
+
+
         
         return html
 
@@ -897,6 +903,9 @@ class LogMonitoringService:
     
     def get_service_status(self) -> Dict[str, Any]:
         """Get monitoring service status"""
+
+
+
         return {
             "state": self.state.value,
             "enabled_rules": len([r for r in self.monitoring_rules if r.enabled]),

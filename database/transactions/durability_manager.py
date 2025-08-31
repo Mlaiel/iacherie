@@ -9,7 +9,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -112,6 +112,9 @@ class TransactionLogEntry:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for serialization"""
+
+
+
         return {
             'transaction_id': self.transaction_id,
             'operation_type': self.operation_type,
@@ -126,6 +129,9 @@ class TransactionLogEntry:
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'TransactionLogEntry':
         """Create from dictionary"""
+
+
+
         return cls(
             transaction_id=data['transaction_id'],
             operation_type=data['operation_type'],

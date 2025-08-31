@@ -1,5 +1,5 @@
 """
-🔧 Artifact Manager - IA-Influencer-Agent CI/CD
+ Artifact Manager - IA-Influencer-Agent CI/CD
 ================================================================
 Expert: DEVOPS_ENGINEER + STORAGE_SPECIALIST
 Created: 2025-08-24
@@ -109,6 +109,9 @@ class ArtifactManager:
     
     async def initialize(self) -> bool:
         """Initialize artifact manager"""
+
+
+
         try:
             # Initialize storage backend
             await self._initialize_storage_backend()
@@ -120,11 +123,11 @@ class ArtifactManager:
             await self._load_metadata()
             
             self.initialized = True
-            self.logger.info("✅ Artifact manager initialized")
+            self.logger.info(" Artifact manager initialized")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize artifact manager: {e}")
+            self.logger.error(f" Failed to initialize artifact manager: {e}")
             return False
     
     async def _initialize_storage_backend(self) -> None:
@@ -160,6 +163,9 @@ class ArtifactManager:
         tags: Optional[List[str]] = None
     ) -> str:
         """Store artifact with metadata"""
+
+
+
         try:
             if not os.path.exists(file_path):
                 raise FileNotFoundError(f"Artifact file not found: {file_path}")
@@ -226,6 +232,9 @@ class ArtifactManager:
         local_path: Optional[str] = None
     ) -> str:
         """Retrieve artifact from storage"""
+
+
+
         try:
             if artifact_id not in self.metadata_store:
                 raise ValueError(f"Artifact not found: {artifact_id}")
@@ -289,6 +298,9 @@ class ArtifactManager:
     
     async def delete_artifact(self, artifact_id: str) -> bool:
         """Delete artifact and its metadata"""
+
+
+
         try:
             if artifact_id not in self.metadata_store:
                 return False
@@ -329,10 +341,16 @@ class ArtifactManager:
     
     async def get_artifact_metadata(self, artifact_id: str) -> Optional[ArtifactMetadata]:
         """Get artifact metadata"""
+
+
+
         return self.metadata_store.get(artifact_id)
     
     async def update_artifact_tags(self, artifact_id: str, tags: List[str]) -> bool:
         """Update artifact tags"""
+
+
+
         try:
             if artifact_id not in self.metadata_store:
                 return False
@@ -540,6 +558,9 @@ class ArtifactVersionManager:
         changelog: Optional[str] = None
     ) -> str:
         """Create new version of artifact"""
+
+
+
         try:
             # Store artifact with version
             artifact_id = await self.artifact_manager.store_artifact(
@@ -607,6 +628,9 @@ class ArtifactVersionManager:
         target_environment: str
     ) -> str:
         """Promote artifact version to target environment"""
+
+
+
         try:
             # Get current artifact metadata
             metadata = await self.artifact_manager.get_artifact_metadata(artifact_id)

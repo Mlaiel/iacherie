@@ -16,7 +16,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Specialist + DevOps Expert
 Copyright: Fahed Mlaiel - All Rights Reserved
 
-⚠️  STRICT LEGAL WARNING: 
+  STRICT LEGAL WARNING: 
     This proprietary code is protected by international copyright law.
     Unauthorized use, copying, distribution, modification, or reverse engineering 
     is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -114,6 +114,9 @@ class GrammarChecker:
         
     def _initialize_tools(self):
         """Initialize grammar checking tools"""
+
+
+
         try:
             # Initialize LanguageTool
             self.language_tool = language_tool_python.LanguageTool('en-US')
@@ -143,6 +146,9 @@ class GrammarChecker:
         Returns:
             WritingAnalysis with detailed results
         """
+
+
+
         try:
             # Clean text
             cleaned_text = clean_text(text)
@@ -209,6 +215,9 @@ class GrammarChecker:
             
     async def _check_grammar_errors(self, text: str) -> List[WritingError]:
         """Check for grammar errors using LanguageTool"""
+
+
+
         try:
             if not self.language_tool:
                 return []
@@ -274,6 +283,9 @@ class GrammarChecker:
             
     async def _check_spelling_errors(self, text: str) -> List[WritingError]:
         """Check for spelling errors"""
+
+
+
         try:
             words = word_tokenize(text)
             errors = []
@@ -317,6 +329,9 @@ class GrammarChecker:
             
     async def _analyze_style(self, text: str) -> List[WritingError]:
         """Analyze writing style and suggest improvements"""
+
+
+
         try:
             errors = []
             
@@ -340,6 +355,9 @@ class GrammarChecker:
             
     async def _check_passive_voice(self, text: str) -> List[WritingError]:
         """Check for excessive passive voice usage"""
+
+
+
         try:
             errors = []
             
@@ -373,6 +391,9 @@ class GrammarChecker:
             
     async def _check_redundancy(self, text: str) -> List[WritingError]:
         """Check for redundant phrases and words"""
+
+
+
         try:
             errors = []
             
@@ -413,6 +434,9 @@ class GrammarChecker:
             
     async def _check_clarity_issues(self, text: str) -> List[WritingError]:
         """Check for clarity and readability issues"""
+
+
+
         try:
             errors = []
             sentences = sent_tokenize(text)
@@ -455,6 +479,9 @@ class GrammarChecker:
             
     async def _apply_corrections(self, text: str, errors: List[WritingError]) -> str:
         """Apply corrections to text"""
+
+
+
         try:
             corrected_text = text
             
@@ -479,6 +506,9 @@ class GrammarChecker:
             
     async def _calculate_style_score(self, text: str, style_errors: List[WritingError]) -> float:
         """Calculate style quality score"""
+
+
+
         try:
             if not text:
                 return 0.0
@@ -503,6 +533,9 @@ class GrammarChecker:
             
     async def _calculate_clarity_score(self, text: str) -> float:
         """Calculate clarity score"""
+
+
+
         try:
             sentences = sent_tokenize(text)
             if not sentences:
@@ -530,6 +563,9 @@ class GrammarChecker:
             
     async def _calculate_readability_score(self, text: str) -> float:
         """Calculate readability score"""
+
+
+
         try:
             import textstat
             flesch_score = textstat.flesch_reading_ease(text)
@@ -540,6 +576,9 @@ class GrammarChecker:
             
     async def _analyze_tone(self, text: str) -> Dict[str, float]:
         """Analyze tone of the text"""
+
+
+
         try:
             # Simple tone analysis based on word patterns
             tone_indicators = {
@@ -566,6 +605,9 @@ class GrammarChecker:
             
     async def _analyze_vocabulary_level(self, text: str) -> str:
         """Analyze vocabulary complexity level"""
+
+
+
         try:
             words = [word.lower() for word in word_tokenize(text) if word.isalpha()]
             
@@ -595,6 +637,9 @@ class GrammarChecker:
         readability_score: float
     ) -> str:
         """Assess overall writing quality"""
+
+
+
         try:
             overall_score = (style_score + clarity_score + readability_score) / 3
             
@@ -621,6 +666,9 @@ class GrammarChecker:
         clarity_score: float
     ) -> List[str]:
         """Generate writing improvement suggestions"""
+
+
+
         try:
             suggestions = []
             
@@ -687,6 +735,9 @@ class WritingAssistant:
         Returns:
             WritingAnalysis with improvements and suggestions
         """
+
+
+
         try:
             # Basic grammar and style check
             analysis = await self.grammar_checker.check_grammar(text)
@@ -715,6 +766,9 @@ class WritingAssistant:
         target_audience: str
     ) -> List[str]:
         """Get suggestions based on target audience"""
+
+
+
         try:
             suggestions = []
             
@@ -744,6 +798,9 @@ class WritingAssistant:
         writing_goal: str
     ) -> List[str]:
         """Get suggestions based on writing goal"""
+
+
+
         try:
             suggestions = []
             

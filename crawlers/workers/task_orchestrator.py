@@ -8,7 +8,7 @@ Responsibility: Intelligent task coordination and workflow management
 Technologies: ML-driven orchestration, Graph workflows, Adaptive scheduling
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -234,8 +234,11 @@ class TaskOrchestrator:
 
     async def start(self) -> bool:
         """Start task orchestrator"""
+
+
+
         try:
-            logger.info(f"🚀 Starting task orchestrator: {self.orchestrator_id}")
+            logger.info(f" Starting task orchestrator: {self.orchestrator_id}")
             
             # Initialize components
             await self._initialize_components()
@@ -245,17 +248,20 @@ class TaskOrchestrator:
             
             self.is_running = True
             
-            logger.info(f"✅ Task orchestrator {self.orchestrator_id} started successfully")
+            logger.info(f" Task orchestrator {self.orchestrator_id} started successfully")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to start task orchestrator {self.orchestrator_id}: {e}")
+            logger.error(f" Failed to start task orchestrator {self.orchestrator_id}: {e}")
             return False
 
     async def stop(self) -> None:
         """Stop task orchestrator gracefully"""
+
+
+
         try:
-            logger.info(f"🛑 Stopping task orchestrator: {self.orchestrator_id}")
+            logger.info(f" Stopping task orchestrator: {self.orchestrator_id}")
             
             self.is_running = False
             self.shutdown_event.set()
@@ -274,43 +280,49 @@ class TaskOrchestrator:
             # Shutdown thread pool
             self.thread_pool.shutdown(wait=True, timeout=30)
             
-            logger.info(f"✅ Task orchestrator {self.orchestrator_id} stopped")
+            logger.info(f" Task orchestrator {self.orchestrator_id} stopped")
             
         except Exception as e:
-            logger.error(f"❌ Error stopping task orchestrator {self.orchestrator_id}: {e}")
+            logger.error(f" Error stopping task orchestrator {self.orchestrator_id}: {e}")
 
     async def register_workflow(self, workflow_def: WorkflowDefinition) -> bool:
         """Register a workflow definition"""
+
+
+
         try:
             # Validate workflow
             if not await self._validate_workflow(workflow_def):
-                logger.warning(f"❌ Invalid workflow: {workflow_def.workflow_id}")
+                logger.warning(f" Invalid workflow: {workflow_def.workflow_id}")
                 return False
             
             # Build and validate execution graph
             execution_graph = await self._build_execution_graph(workflow_def)
             if not execution_graph:
-                logger.warning(f"❌ Invalid workflow graph: {workflow_def.workflow_id}")
+                logger.warning(f" Invalid workflow graph: {workflow_def.workflow_id}")
                 return False
             
             # Store workflow
             self.workflow_definitions[workflow_def.workflow_id] = workflow_def
             
-            logger.info(f"✅ Workflow registered: {workflow_def.workflow_id} ({len(workflow_def.tasks)} tasks)")
+            logger.info(f" Workflow registered: {workflow_def.workflow_id} ({len(workflow_def.tasks)} tasks)")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to register workflow {workflow_def.workflow_id}: {e}")
+            logger.error(f" Failed to register workflow {workflow_def.workflow_id}: {e}")
             return False
 
     async def execute_workflow(self, workflow_id: str, 
                              execution_variables: Optional[Dict[str, Any]] = None,
                              priority: TaskPriority = TaskPriority.NORMAL) -> Optional[str]:
         """Execute a workflow"""
+
+
+
         try:
             workflow_def = self.workflow_definitions.get(workflow_id)
             if not workflow_def:
-                logger.warning(f"⚠️ Workflow not found: {workflow_id}")
+                logger.warning(f" Workflow not found: {workflow_id}")
                 return None
             
             # Create execution instance
@@ -325,19 +337,22 @@ class TaskOrchestrator:
             priority_value = priority.value
             await self.execution_queue.put((priority_value, time.time(), execution))
             
-            logger.info(f"🚀 Workflow queued for execution: {workflow_id} -> {execution.execution_id}")
+            logger.info(f" Workflow queued for execution: {workflow_id} -> {execution.execution_id}")
             return execution.execution_id
             
         except Exception as e:
-            logger.error(f"❌ Failed to execute workflow {workflow_id}: {e}")
+            logger.error(f" Failed to execute workflow {workflow_id}: {e}")
             return None
 
     async def pause_workflow(self, execution_id: str) -> bool:
         """Pause workflow execution"""
+
+
+
         try:
             execution = self.active_executions.get(execution_id)
             if not execution:
-                logger.warning(f"⚠️ Execution not found: {execution_id}")
+                logger.warning(f" Execution not found: {execution_id}")
                 return False
             
             execution.status = WorkflowStatus.PAUSED
@@ -348,19 +363,22 @@ class TaskOrchestrator:
                 if task_execution and task_execution.status == WorkflowStatus.RUNNING:
                     await self._pause_task(task_execution)
             
-            logger.info(f"⏸️ Workflow paused: {execution_id}")
+            logger.info(f"⏸ Workflow paused: {execution_id}")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to pause workflow {execution_id}: {e}")
+            logger.error(f" Failed to pause workflow {execution_id}: {e}")
             return False
 
     async def resume_workflow(self, execution_id: str) -> bool:
         """Resume paused workflow execution"""
+
+
+
         try:
             execution = self.active_executions.get(execution_id)
             if not execution or execution.status != WorkflowStatus.PAUSED:
-                logger.warning(f"⚠️ Cannot resume workflow: {execution_id}")
+                logger.warning(f" Cannot resume workflow: {execution_id}")
                 return False
             
             execution.status = WorkflowStatus.RUNNING
@@ -371,19 +389,22 @@ class TaskOrchestrator:
                 if task_execution and task_execution.status == WorkflowStatus.PAUSED:
                     await self._resume_task(task_execution)
             
-            logger.info(f"▶️ Workflow resumed: {execution_id}")
+            logger.info(f" Workflow resumed: {execution_id}")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to resume workflow {execution_id}: {e}")
+            logger.error(f" Failed to resume workflow {execution_id}: {e}")
             return False
 
     async def cancel_workflow(self, execution_id: str) -> bool:
         """Cancel workflow execution"""
+
+
+
         try:
             execution = self.active_executions.get(execution_id)
             if not execution:
-                logger.warning(f"⚠️ Execution not found: {execution_id}")
+                logger.warning(f" Execution not found: {execution_id}")
                 return False
             
             execution.status = WorkflowStatus.CANCELLED
@@ -399,15 +420,18 @@ class TaskOrchestrator:
             self.completed_executions.append(execution)
             del self.active_executions[execution_id]
             
-            logger.info(f"❌ Workflow cancelled: {execution_id}")
+            logger.info(f" Workflow cancelled: {execution_id}")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to cancel workflow {execution_id}: {e}")
+            logger.error(f" Failed to cancel workflow {execution_id}: {e}")
             return False
 
     async def get_workflow_status(self, execution_id: str) -> Optional[Dict[str, Any]]:
         """Get detailed workflow execution status"""
+
+
+
         try:
             execution = self.active_executions.get(execution_id)
             if not execution:
@@ -458,11 +482,14 @@ class TaskOrchestrator:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to get workflow status {execution_id}: {e}")
+            logger.error(f" Failed to get workflow status {execution_id}: {e}")
             return None
 
     async def get_orchestrator_status(self) -> Dict[str, Any]:
         """Get comprehensive orchestrator status"""
+
+
+
         try:
             return {
                 "orchestrator_id": self.orchestrator_id,
@@ -492,11 +519,14 @@ class TaskOrchestrator:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to get orchestrator status: {e}")
+            logger.error(f" Failed to get orchestrator status: {e}")
             return {"error": str(e)}
 
     async def optimize_execution_plan(self, workflow_id: str) -> Dict[str, Any]:
         """Optimize workflow execution plan using ML"""
+
+
+
         try:
             workflow_def = self.workflow_definitions.get(workflow_id)
             if not workflow_def:
@@ -531,22 +561,28 @@ class TaskOrchestrator:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to optimize execution plan for {workflow_id}: {e}")
+            logger.error(f" Failed to optimize execution plan for {workflow_id}: {e}")
             return {"error": str(e)}
 
     async def _initialize_components(self) -> None:
         """Initialize orchestrator components"""
+
+
+
         try:
             # Components should be injected or retrieved from global registry
             # For now, we'll create placeholder connections
-            logger.info(f"✅ Components initialized for orchestrator {self.orchestrator_id}")
+            logger.info(f" Components initialized for orchestrator {self.orchestrator_id}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize components: {e}")
+            logger.error(f" Failed to initialize components: {e}")
             raise
 
     async def _start_background_tasks(self) -> None:
         """Start background orchestration tasks"""
+
+
+
         try:
             # Workflow executor
             executor_task = asyncio.create_task(self._workflow_executor_loop())
@@ -564,10 +600,10 @@ class TaskOrchestrator:
             health_task = asyncio.create_task(self._health_check_loop())
             self.background_tasks.add(health_task)
             
-            logger.info(f"✅ Background tasks started for orchestrator {self.orchestrator_id}")
+            logger.info(f" Background tasks started for orchestrator {self.orchestrator_id}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to start background tasks: {e}")
+            logger.error(f" Failed to start background tasks: {e}")
             raise
 
     async def _workflow_executor_loop(self) -> None:
@@ -587,14 +623,14 @@ class TaskOrchestrator:
                 asyncio.create_task(self._execute_workflow_instance(execution))
                 
             except Exception as e:
-                logger.error(f"❌ Workflow executor loop error: {e}")
+                logger.error(f" Workflow executor loop error: {e}")
                 await asyncio.sleep(5)
 
     async def _execute_workflow_instance(self, execution: WorkflowExecution) -> None:
         """Execute a workflow instance"""
         async with self.execution_semaphore:
             try:
-                logger.info(f"🚀 Executing workflow: {execution.execution_id}")
+                logger.info(f" Executing workflow: {execution.execution_id}")
                 
                 execution.status = WorkflowStatus.RUNNING
                 execution.started_at = datetime.utcnow()
@@ -622,10 +658,10 @@ class TaskOrchestrator:
                 self.metrics["successful_workflows"] += 1
                 await self._update_performance_metrics(execution)
                 
-                logger.info(f"✅ Workflow completed: {execution.execution_id}")
+                logger.info(f" Workflow completed: {execution.execution_id}")
                 
             except Exception as e:
-                logger.error(f"❌ Workflow execution failed {execution.execution_id}: {e}")
+                logger.error(f" Workflow execution failed {execution.execution_id}: {e}")
                 
                 execution.status = WorkflowStatus.FAILED
                 execution.completed_at = datetime.utcnow()
@@ -644,6 +680,9 @@ class TaskOrchestrator:
 
     async def _execute_dag_workflow(self, execution: WorkflowExecution) -> None:
         """Execute workflow using DAG strategy"""
+
+
+
         try:
             graph = execution.execution_graph
             if not graph:
@@ -699,7 +738,7 @@ class TaskOrchestrator:
                         in_progress.discard(task_id)
                         
                     except Exception as e:
-                        logger.error(f"❌ Task failed in DAG workflow: {task_id}: {e}")
+                        logger.error(f" Task failed in DAG workflow: {task_id}: {e}")
                         execution.failed_tasks.add(task_id)
                         execution.current_tasks.discard(task_id)
                         in_progress.discard(task_id)
@@ -710,11 +749,14 @@ class TaskOrchestrator:
                         # Continue with other tasks if on_failure == "continue"
             
         except Exception as e:
-            logger.error(f"❌ DAG workflow execution failed: {e}")
+            logger.error(f" DAG workflow execution failed: {e}")
             raise
 
     async def _execute_pipeline_workflow(self, execution: WorkflowExecution) -> None:
         """Execute workflow using pipeline strategy"""
+
+
+
         try:
             for task_def in execution.workflow_def.tasks:
                 task_execution = await self._create_task_execution(execution, task_def)
@@ -726,7 +768,7 @@ class TaskOrchestrator:
                     execution.completed_tasks.add(task_def.task_id)
                     
                 except Exception as e:
-                    logger.error(f"❌ Pipeline task failed: {task_def.task_id}: {e}")
+                    logger.error(f" Pipeline task failed: {task_def.task_id}: {e}")
                     execution.failed_tasks.add(task_def.task_id)
                     
                     if execution.workflow_def.on_failure == "stop":
@@ -736,11 +778,14 @@ class TaskOrchestrator:
                     execution.current_tasks.discard(task_def.task_id)
             
         except Exception as e:
-            logger.error(f"❌ Pipeline workflow execution failed: {e}")
+            logger.error(f" Pipeline workflow execution failed: {e}")
             raise
 
     async def _execute_parallel_workflow(self, execution: WorkflowExecution) -> None:
         """Execute workflow using parallel strategy"""
+
+
+
         try:
             task_futures = []
             
@@ -760,7 +805,7 @@ class TaskOrchestrator:
                     execution.completed_tasks.add(task_id)
                     
                 except Exception as e:
-                    logger.error(f"❌ Parallel task failed: {task_id}: {e}")
+                    logger.error(f" Parallel task failed: {task_id}: {e}")
                     execution.failed_tasks.add(task_id)
                     
                     if execution.workflow_def.on_failure == "stop":
@@ -774,11 +819,14 @@ class TaskOrchestrator:
                     execution.current_tasks.discard(task_id)
             
         except Exception as e:
-            logger.error(f"❌ Parallel workflow execution failed: {e}")
+            logger.error(f" Parallel workflow execution failed: {e}")
             raise
 
     async def _execute_sequential_workflow(self, execution: WorkflowExecution) -> None:
         """Execute workflow using sequential strategy"""
+
+
+
         try:
             for task_def in execution.workflow_def.tasks:
                 task_execution = await self._create_task_execution(execution, task_def)
@@ -790,7 +838,7 @@ class TaskOrchestrator:
                     execution.completed_tasks.add(task_def.task_id)
                     
                 except Exception as e:
-                    logger.error(f"❌ Sequential task failed: {task_def.task_id}: {e}")
+                    logger.error(f" Sequential task failed: {task_def.task_id}: {e}")
                     execution.failed_tasks.add(task_def.task_id)
                     
                     if execution.workflow_def.on_failure == "stop":
@@ -800,11 +848,14 @@ class TaskOrchestrator:
                     execution.current_tasks.discard(task_def.task_id)
             
         except Exception as e:
-            logger.error(f"❌ Sequential workflow execution failed: {e}")
+            logger.error(f" Sequential workflow execution failed: {e}")
             raise
 
     async def _execute_adaptive_workflow(self, execution: WorkflowExecution) -> None:
         """Execute workflow using adaptive strategy with ML optimization"""
+
+
+
         try:
             # Use ML to determine optimal execution strategy
             optimal_strategy = await self.task_predictor.predict_optimal_execution_order(
@@ -822,16 +873,19 @@ class TaskOrchestrator:
                 await self._execute_sequential_workflow(execution)
             
         except Exception as e:
-            logger.error(f"❌ Adaptive workflow execution failed: {e}")
+            logger.error(f" Adaptive workflow execution failed: {e}")
             raise
 
     async def _execute_task(self, task_execution: TaskExecution) -> None:
         """Execute a single task"""
+
+
+
         try:
             task_execution.status = WorkflowStatus.RUNNING
             task_execution.started_at = datetime.utcnow()
             
-            logger.debug(f"🚀 Executing task: {task_execution.task_def.task_id}")
+            logger.debug(f" Executing task: {task_execution.task_def.task_id}")
             
             # Allocate resources
             if task_execution.task_def.resource_requirements:
@@ -858,10 +912,10 @@ class TaskOrchestrator:
             # Update metrics
             self.metrics["successful_tasks"] += 1
             
-            logger.debug(f"✅ Task completed: {task_execution.task_def.task_id}")
+            logger.debug(f" Task completed: {task_execution.task_def.task_id}")
             
         except Exception as e:
-            logger.error(f"❌ Task execution failed {task_execution.task_def.task_id}: {e}")
+            logger.error(f" Task execution failed {task_execution.task_def.task_id}: {e}")
             
             task_execution.status = WorkflowStatus.FAILED
             task_execution.completed_at = datetime.utcnow()
@@ -885,6 +939,9 @@ class TaskOrchestrator:
 
     async def _execute_crawler_task(self, task_execution: TaskExecution) -> Dict[str, Any]:
         """Execute crawler task"""
+
+
+
         try:
             config = task_execution.task_def.task_config
             
@@ -916,11 +973,14 @@ class TaskOrchestrator:
                 raise Exception("Worker pool not available")
             
         except Exception as e:
-            logger.error(f"❌ Crawler task execution failed: {e}")
+            logger.error(f" Crawler task execution failed: {e}")
             raise
 
     async def _execute_analysis_task(self, task_execution: TaskExecution) -> Dict[str, Any]:
         """Execute analysis task"""
+
+
+
         try:
             # Placeholder for analysis task execution
             config = task_execution.task_def.task_config
@@ -936,11 +996,14 @@ class TaskOrchestrator:
             }
             
         except Exception as e:
-            logger.error(f"❌ Analysis task execution failed: {e}")
+            logger.error(f" Analysis task execution failed: {e}")
             raise
 
     async def _execute_fingerprint_task(self, task_execution: TaskExecution) -> Dict[str, Any]:
         """Execute fingerprint generation task"""
+
+
+
         try:
             # Placeholder for fingerprint task execution
             config = task_execution.task_def.task_config
@@ -956,11 +1019,14 @@ class TaskOrchestrator:
             }
             
         except Exception as e:
-            logger.error(f"❌ Fingerprint task execution failed: {e}")
+            logger.error(f" Fingerprint task execution failed: {e}")
             raise
 
     async def _execute_notification_task(self, task_execution: TaskExecution) -> Dict[str, Any]:
         """Execute notification task"""
+
+
+
         try:
             config = task_execution.task_def.task_config
             
@@ -978,11 +1044,14 @@ class TaskOrchestrator:
                 raise Exception("Notification engine not available")
             
         except Exception as e:
-            logger.error(f"❌ Notification task execution failed: {e}")
+            logger.error(f" Notification task execution failed: {e}")
             raise
 
     async def _execute_custom_task(self, task_execution: TaskExecution) -> Dict[str, Any]:
         """Execute custom task"""
+
+
+
         try:
             # Placeholder for custom task execution
             config = task_execution.task_def.task_config
@@ -997,11 +1066,14 @@ class TaskOrchestrator:
             }
             
         except Exception as e:
-            logger.error(f"❌ Custom task execution failed: {e}")
+            logger.error(f" Custom task execution failed: {e}")
             raise
 
     async def _validate_workflow(self, workflow_def: WorkflowDefinition) -> bool:
         """Validate workflow definition"""
+
+
+
         try:
             if not workflow_def.workflow_id or not workflow_def.tasks:
                 return False
@@ -1009,24 +1081,27 @@ class TaskOrchestrator:
             # Check for duplicate task IDs
             task_ids = [task.task_id for task in workflow_def.tasks]
             if len(task_ids) != len(set(task_ids)):
-                logger.warning(f"⚠️ Duplicate task IDs in workflow: {workflow_def.workflow_id}")
+                logger.warning(f" Duplicate task IDs in workflow: {workflow_def.workflow_id}")
                 return False
             
             # Validate task dependencies
             for task in workflow_def.tasks:
                 for dep_id in task.dependencies:
                     if dep_id not in task_ids:
-                        logger.warning(f"⚠️ Invalid dependency {dep_id} in task {task.task_id}")
+                        logger.warning(f" Invalid dependency {dep_id} in task {task.task_id}")
                         return False
             
             return True
             
         except Exception as e:
-            logger.error(f"❌ Workflow validation failed: {e}")
+            logger.error(f" Workflow validation failed: {e}")
             return False
 
     async def _build_execution_graph(self, workflow_def: WorkflowDefinition) -> Optional[nx.DiGraph]:
         """Build execution graph from workflow definition"""
+
+
+
         try:
             graph = nx.DiGraph()
             
@@ -1041,18 +1116,21 @@ class TaskOrchestrator:
             
             # Check for cycles
             if not nx.is_directed_acyclic_graph(graph):
-                logger.warning(f"⚠️ Workflow contains cycles: {workflow_def.workflow_id}")
+                logger.warning(f" Workflow contains cycles: {workflow_def.workflow_id}")
                 return None
             
             return graph
             
         except Exception as e:
-            logger.error(f"❌ Failed to build execution graph: {e}")
+            logger.error(f" Failed to build execution graph: {e}")
             return None
 
     async def _create_workflow_execution(self, workflow_def: WorkflowDefinition, 
                                        variables: Dict[str, Any]) -> WorkflowExecution:
         """Create workflow execution instance"""
+
+
+
         try:
             execution = WorkflowExecution(
                 execution_id=str(uuid.uuid4()),
@@ -1063,12 +1141,15 @@ class TaskOrchestrator:
             return execution
             
         except Exception as e:
-            logger.error(f"❌ Failed to create workflow execution: {e}")
+            logger.error(f" Failed to create workflow execution: {e}")
             raise
 
     async def _create_task_execution(self, workflow_execution: WorkflowExecution,
                                    task_def: TaskDefinition) -> TaskExecution:
         """Create task execution instance"""
+
+
+
         try:
             task_execution = TaskExecution(
                 execution_id=f"{workflow_execution.execution_id}_{task_def.task_id}",
@@ -1079,11 +1160,14 @@ class TaskOrchestrator:
             return task_execution
             
         except Exception as e:
-            logger.error(f"❌ Failed to create task execution: {e}")
+            logger.error(f" Failed to create task execution: {e}")
             raise
 
     async def _allocate_task_resources(self, task_execution: TaskExecution) -> None:
         """Allocate resources for task execution"""
+
+
+
         try:
             if self.resource_manager and task_execution.task_def.resource_requirements:
                 allocations = await self.resource_manager.allocate_resources(
@@ -1098,20 +1182,26 @@ class TaskOrchestrator:
                 }
             
         except Exception as e:
-            logger.error(f"❌ Failed to allocate task resources: {e}")
+            logger.error(f" Failed to allocate task resources: {e}")
 
     async def _deallocate_task_resources(self, task_execution: TaskExecution) -> None:
         """Deallocate task resources"""
+
+
+
         try:
             if self.resource_manager and task_execution.resource_allocations:
                 for allocation_id in task_execution.resource_allocations.values():
                     await self.resource_manager.deallocate_resources(allocation_id)
             
         except Exception as e:
-            logger.error(f"❌ Failed to deallocate task resources: {e}")
+            logger.error(f" Failed to deallocate task resources: {e}")
 
     async def _retry_task(self, task_execution: TaskExecution) -> None:
         """Retry failed task"""
+
+
+
         try:
             task_execution.retry_count += 1
             task_execution.status = WorkflowStatus.PENDING
@@ -1122,62 +1212,80 @@ class TaskOrchestrator:
             backoff_factor = task_execution.task_def.retry_config.get("backoff_factor", 2.0)
             delay = retry_delay * (backoff_factor ** (task_execution.retry_count - 1))
             
-            logger.info(f"🔄 Retrying task {task_execution.task_def.task_id} in {delay}s (attempt {task_execution.retry_count})")
+            logger.info(f" Retrying task {task_execution.task_def.task_id} in {delay}s (attempt {task_execution.retry_count})")
             
             # Schedule retry
             asyncio.create_task(self._delayed_task_retry(task_execution, delay))
             
         except Exception as e:
-            logger.error(f"❌ Failed to retry task: {e}")
+            logger.error(f" Failed to retry task: {e}")
 
     async def _delayed_task_retry(self, task_execution: TaskExecution, delay: float) -> None:
         """Execute delayed task retry"""
+
+
+
         try:
             await asyncio.sleep(delay)
             await self._execute_task(task_execution)
             
         except Exception as e:
-            logger.error(f"❌ Task retry failed: {e}")
+            logger.error(f" Task retry failed: {e}")
 
     async def _pause_task(self, task_execution: TaskExecution) -> None:
         """Pause task execution"""
+
+
+
         try:
             task_execution.status = WorkflowStatus.PAUSED
             task_execution.paused_at = datetime.utcnow()
             
         except Exception as e:
-            logger.error(f"❌ Failed to pause task: {e}")
+            logger.error(f" Failed to pause task: {e}")
 
     async def _resume_task(self, task_execution: TaskExecution) -> None:
         """Resume paused task execution"""
+
+
+
         try:
             task_execution.status = WorkflowStatus.RUNNING
             task_execution.paused_at = None
             
         except Exception as e:
-            logger.error(f"❌ Failed to resume task: {e}")
+            logger.error(f" Failed to resume task: {e}")
 
     async def _cancel_task(self, task_execution: TaskExecution) -> None:
         """Cancel task execution"""
+
+
+
         try:
             task_execution.status = WorkflowStatus.CANCELLED
             task_execution.completed_at = datetime.utcnow()
             
         except Exception as e:
-            logger.error(f"❌ Failed to cancel task: {e}")
+            logger.error(f" Failed to cancel task: {e}")
 
     async def _send_workflow_notification(self, execution: WorkflowExecution, event_type: str) -> None:
         """Send workflow status notification"""
+
+
+
         try:
             if self.notification_engine and execution.workflow_def.notifications:
                 # Implementation would depend on notification configuration
                 pass
             
         except Exception as e:
-            logger.error(f"❌ Failed to send workflow notification: {e}")
+            logger.error(f" Failed to send workflow notification: {e}")
 
     async def _get_historical_performance_data(self, workflow_id: str) -> Dict[str, Any]:
         """Get historical performance data for workflow"""
+
+
+
         try:
             # Placeholder for historical data retrieval
             return {
@@ -1188,12 +1296,15 @@ class TaskOrchestrator:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to get historical performance data: {e}")
+            logger.error(f" Failed to get historical performance data: {e}")
             return {}
 
     async def _generate_resource_recommendations(self, workflow_def: WorkflowDefinition,
                                                historical_data: Dict[str, Any]) -> Dict[str, Any]:
         """Generate resource optimization recommendations"""
+
+
+
         try:
             # Placeholder for resource recommendations
             return {
@@ -1203,13 +1314,16 @@ class TaskOrchestrator:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to generate resource recommendations: {e}")
+            logger.error(f" Failed to generate resource recommendations: {e}")
             return {}
 
     async def _calculate_estimated_improvements(self, workflow_def: WorkflowDefinition,
                                               optimal_strategy: str,
                                               resource_recommendations: Dict[str, Any]) -> Dict[str, Any]:
         """Calculate estimated improvements from optimizations"""
+
+
+
         try:
             # Placeholder for improvement calculations
             return {
@@ -1219,11 +1333,14 @@ class TaskOrchestrator:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to calculate estimated improvements: {e}")
+            logger.error(f" Failed to calculate estimated improvements: {e}")
             return {}
 
     async def _update_performance_metrics(self, execution: WorkflowExecution) -> None:
         """Update performance metrics from execution"""
+
+
+
         try:
             if execution.started_at and execution.completed_at:
                 duration = (execution.completed_at - execution.started_at).total_seconds()
@@ -1246,10 +1363,13 @@ class TaskOrchestrator:
                     self.metrics["average_task_duration"] = new_avg
             
         except Exception as e:
-            logger.error(f"❌ Failed to update performance metrics: {e}")
+            logger.error(f" Failed to update performance metrics: {e}")
 
     async def _graceful_shutdown(self) -> None:
         """Gracefully shutdown active workflows"""
+
+
+
         try:
             if not self.active_executions:
                 return
@@ -1265,12 +1385,12 @@ class TaskOrchestrator:
             
             # Cancel remaining workflows
             if self.active_executions:
-                logger.warning(f"⚠️ Cancelling {len(self.active_executions)} remaining workflows")
+                logger.warning(f" Cancelling {len(self.active_executions)} remaining workflows")
                 for execution_id in list(self.active_executions.keys()):
                     await self.cancel_workflow(execution_id)
             
         except Exception as e:
-            logger.error(f"❌ Failed graceful shutdown: {e}")
+            logger.error(f" Failed graceful shutdown: {e}")
 
     async def _performance_monitor_loop(self) -> None:
         """Background performance monitoring loop"""
@@ -1281,28 +1401,31 @@ class TaskOrchestrator:
                 await asyncio.sleep(300)  # Monitor every 5 minutes
                 
             except Exception as e:
-                logger.error(f"❌ Performance monitor error: {e}")
+                logger.error(f" Performance monitor error: {e}")
                 await asyncio.sleep(600)
 
     async def _monitor_performance(self) -> None:
         """Monitor orchestrator performance"""
+
+
+
         try:
             # Check queue size
             if self.execution_queue.qsize() > 100:
-                logger.warning(f"⚠️ High execution queue size: {self.execution_queue.qsize()}")
+                logger.warning(f" High execution queue size: {self.execution_queue.qsize()}")
             
             # Check active executions
             if len(self.active_executions) > 40:
-                logger.warning(f"⚠️ High number of active executions: {len(self.active_executions)}")
+                logger.warning(f" High number of active executions: {len(self.active_executions)}")
             
             # Check success rate
             total_workflows = self.metrics["total_workflows"]
             failed_workflows = self.metrics["failed_workflows"]
             if total_workflows > 10 and (failed_workflows / total_workflows) > 0.1:
-                logger.warning(f"⚠️ High workflow failure rate: {failed_workflows / total_workflows * 100:.1f}%")
+                logger.warning(f" High workflow failure rate: {failed_workflows / total_workflows * 100:.1f}%")
             
         except Exception as e:
-            logger.error(f"❌ Failed to monitor performance: {e}")
+            logger.error(f" Failed to monitor performance: {e}")
 
     async def _optimization_loop(self) -> None:
         """Background optimization loop"""
@@ -1312,24 +1435,27 @@ class TaskOrchestrator:
                 await asyncio.sleep(1800)  # Optimize every 30 minutes
                 
             except Exception as e:
-                logger.error(f"❌ Optimization loop error: {e}")
+                logger.error(f" Optimization loop error: {e}")
                 await asyncio.sleep(3600)
 
     async def _run_optimization_cycle(self) -> None:
         """Run optimization cycle for all workflows"""
+
+
+
         try:
             for workflow_id in self.workflow_definitions.keys():
                 try:
                     optimization_result = await self.optimize_execution_plan(workflow_id)
                     if optimization_result and "estimated_improvements" in optimization_result:
                         improvements = optimization_result["estimated_improvements"]
-                        logger.info(f"🔧 Optimization available for {workflow_id}: {improvements}")
+                        logger.info(f" Optimization available for {workflow_id}: {improvements}")
                         
                 except Exception as e:
-                    logger.error(f"❌ Failed to optimize workflow {workflow_id}: {e}")
+                    logger.error(f" Failed to optimize workflow {workflow_id}: {e}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to run optimization cycle: {e}")
+            logger.error(f" Failed to run optimization cycle: {e}")
 
     async def _health_check_loop(self) -> None:
         """Background health check loop"""
@@ -1339,11 +1465,14 @@ class TaskOrchestrator:
                 await asyncio.sleep(300)  # Check every 5 minutes
                 
             except Exception as e:
-                logger.error(f"❌ Health check loop error: {e}")
+                logger.error(f" Health check loop error: {e}")
                 await asyncio.sleep(600)
 
     async def _perform_health_checks(self) -> None:
         """Perform health checks on orchestrator components"""
+
+
+
         try:
             # Check component availability
             components_health = {
@@ -1356,10 +1485,10 @@ class TaskOrchestrator:
             unhealthy_components = [name for name, healthy in components_health.items() if not healthy]
             
             if unhealthy_components:
-                logger.warning(f"⚠️ Unhealthy components: {unhealthy_components}")
+                logger.warning(f" Unhealthy components: {unhealthy_components}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to perform health checks: {e}")
+            logger.error(f" Failed to perform health checks: {e}")
 
 
 # Global task orchestrator instance
@@ -1378,12 +1507,15 @@ def get_task_orchestrator(orchestrator_id: str = "default") -> TaskOrchestrator:
 
 async def initialize_task_orchestrator(orchestrator_id: str = "default") -> bool:
     """Initialize global task orchestrator"""
+
+
+
     try:
         orchestrator = get_task_orchestrator(orchestrator_id)
         return await orchestrator.start()
         
     except Exception as e:
-        logger.error(f"❌ Failed to initialize task orchestrator: {e}")
+        logger.error(f" Failed to initialize task orchestrator: {e}")
         return False
 
 

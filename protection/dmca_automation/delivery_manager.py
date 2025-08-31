@@ -7,7 +7,7 @@ intelligent routing, delivery optimization, and failure recovery.
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 
-⚠️ COPYRIGHT WARNING ⚠️
+ COPYRIGHT WARNING 
 Unauthorized copying or distribution prohibited. All rights reserved © 2025 Fahed Mlaiel
 """
 
@@ -180,6 +180,9 @@ class DeliveryManager:
         Returns:
             DeliveryResult with delivery status and details
         """
+
+
+
         try:
             self.logger.info(f"Starting delivery for notice: {notice_id}")
             
@@ -301,6 +304,9 @@ class DeliveryManager:
         Returns:
             New delivery result
         """
+
+
+
         try:
             self.logger.info(f"Retrying failed delivery: {delivery_id}")
             
@@ -360,6 +366,9 @@ class DeliveryManager:
         Returns:
             Detailed delivery status information
         """
+
+
+
         try:
             # Retrieve delivery record
             delivery_record = await self._get_delivery_record(delivery_id)
@@ -406,6 +415,9 @@ class DeliveryManager:
         Returns:
             Detailed analytics data
         """
+
+
+
         try:
             # Set default time range
             if not time_range:
@@ -543,6 +555,9 @@ class DeliveryManager:
     
     async def _get_notice_content(self, notice_id: str) -> Optional[TakedownNotice]:
         """Retrieve notice content from database"""
+
+
+
         try:
             query = "SELECT * FROM dmca_notices WHERE notice_id = %s"
             result = await self.db.fetch_one(query, [notice_id])
@@ -605,6 +620,9 @@ class DeliveryManager:
     
     def _format_email_notice(self, notice: TakedownNotice) -> str:
         """Format notice for email delivery"""
+
+
+
         return f"""
 Subject: DMCA Takedown Notice - Copyright Infringement
 
@@ -617,6 +635,9 @@ For questions, please contact: {notice.copyright_owner_contact.get('email', '')}
     
     def _format_web_form_notice(self, notice: TakedownNotice) -> str:
         """Format notice for web form submission"""
+
+
+
         return notice.notice_content  # Web forms typically use the raw content
     
     async def _generate_delivery_headers(self, 
@@ -743,6 +764,9 @@ For questions, please contact: {notice.copyright_owner_contact.get('email', '')}
                                    request: DeliveryRequest,
                                    result: DeliveryResult) -> None:
         """Store delivery record in database"""
+
+
+
         try:
             query = """
                 INSERT INTO dmca_delivery_records (

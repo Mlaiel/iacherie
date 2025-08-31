@@ -7,7 +7,7 @@ configuration management, and service orchestration for the Spotify Agent ecosys
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -94,6 +94,9 @@ class SpotifyAgentFactory:
 
     async def create_service(self, config: ServiceConfiguration) -> Any:
         """Create a Spotify agent service based on configuration"""
+
+
+
         try:
             service_key = f"{config.service_type.value}_{config.deployment_mode.value}"
             
@@ -131,6 +134,9 @@ class SpotifyAgentFactory:
 
     async def create_full_stack(self, deployment_mode: DeploymentMode = DeploymentMode.PRODUCTION) -> Dict[str, Any]:
         """Create complete Spotify agent stack with all services"""
+
+
+
         try:
             stack = {}
             
@@ -259,6 +265,9 @@ class SpotifyServiceOrchestrator:
         
     async def process_comprehensive_request(self, request_type: str, request_data: Dict[str, Any]) -> Dict[str, Any]:
         """Process comprehensive requests that span multiple services"""
+
+
+
         try:
             if request_type == "full_artist_analysis":
                 return await self._process_full_artist_analysis(request_data)
@@ -429,6 +438,9 @@ class SpotifyIntegrationHub:
         
     async def get_agent_for_tenant(self, tenant_id: str) -> SpotifyAgent:
         """Get Spotify agent instance for specific tenant"""
+
+
+
         return await self.agent_manager.get_agent(tenant_id)
     
     async def authenticate_user(self, user_id: str, tenant_id: str, 

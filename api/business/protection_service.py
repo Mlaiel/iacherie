@@ -62,6 +62,9 @@ class ProtectionService:
         Returns:
             Protection results and security metadata
         """
+
+
+
         try:
             if not db:
                 db = next(get_db())
@@ -153,6 +156,9 @@ class ProtectionService:
         """
         Verify content integrity and detect tampering.
         """
+
+
+
         try:
             if not db:
                 db = next(get_db())
@@ -207,6 +213,9 @@ class ProtectionService:
         """
         Detect potential copyright infringement using advanced AI analysis.
         """
+
+
+
         try:
             if not db:
                 db = next(get_db())
@@ -265,6 +274,9 @@ class ProtectionService:
         """
         Process DMCA takedown request with automated workflow.
         """
+
+
+
         try:
             db = next(get_db())
             
@@ -314,6 +326,9 @@ class ProtectionService:
         """
         Apply ultra-advanced protection with anti-recreation techniques.
         """
+
+
+
         try:
             if not db:
                 db = next(get_db())
@@ -388,6 +403,9 @@ class ProtectionService:
     
     async def _generate_digital_fingerprint(self, content: Content) -> Dict[str, Any]:
         """Generate unique digital fingerprint for content"""
+
+
+
         try:
             fingerprint_data = await self.fingerprint_generator.generate_fingerprint(
                 content.file_path, 
@@ -408,6 +426,9 @@ class ProtectionService:
     
     async def _apply_watermarking(self, content: Content) -> Dict[str, Any]:
         """Apply invisible watermarking based on content type"""
+
+
+
         try:
             if content.file_type in ["image", "video"]:
                 watermark_result = await self.watermark_processor.apply_image_watermark(
@@ -432,6 +453,9 @@ class ProtectionService:
     
     async def _register_blockchain_ownership(self, content: Content, fingerprint_data: Dict[str, Any]) -> Dict[str, Any]:
         """Register ownership on blockchain"""
+
+
+
         try:
             blockchain_record = await self.blockchain_recorder.register_content(
                 content_id=str(content.id),
@@ -452,6 +476,9 @@ class ProtectionService:
     
     async def _setup_content_monitoring(self, content: Content, fingerprint_data: Dict[str, Any]) -> Dict[str, Any]:
         """Setup real-time monitoring for unauthorized usage"""
+
+
+
         try:
             monitoring_config = await self.monitoring_service.setup_content_monitoring(
                 content_id=str(content.id),
@@ -468,6 +495,9 @@ class ProtectionService:
     
     async def _generate_protection_certificate(self, content: Content, protection_id: str) -> Dict[str, Any]:
         """Generate digital protection certificate"""
+
+
+
         try:
             certificate_data = {
                 "certificate_id": str(uuid.uuid4()),
@@ -489,6 +519,9 @@ class ProtectionService:
     
     async def _log_protection_event(self, content_id: str, event_type: str, event_data: Any) -> None:
         """Log protection-related events"""
+
+
+
         try:
             db = next(get_db())
             

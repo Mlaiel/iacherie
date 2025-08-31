@@ -7,7 +7,7 @@ Ensures brand guidelines compliance and maintains visual/textual coherence.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -223,6 +223,9 @@ class ConsistencyChecker:
 
     async def load_brand_guidelines(self, guidelines_config: Dict[str, Any]) -> None:
         """Load and configure brand guidelines"""
+
+
+
         try:
             self.guidelines = BrandGuidelines(
                 brand_id=self.brand_id,
@@ -253,6 +256,9 @@ class ConsistencyChecker:
 
     async def check_content_consistency(self, content_items: List[Dict[str, Any]]) -> ConsistencyReport:
         """Check consistency across multiple content items"""
+
+
+
         try:
             if not self.guidelines:
                 raise ValueError("Brand guidelines not loaded")
@@ -463,6 +469,9 @@ class ConsistencyChecker:
 
     def _calculate_color_distance(self, color1: str, color2: str) -> float:
         """Calculate perceptual distance between two colors"""
+
+
+
         try:
             # Convert hex to RGB
             rgb1 = self._hex_to_rgb(color1)
@@ -574,6 +583,9 @@ class ConsistencyChecker:
 
     def _find_similar_approved_font(self, font_name: str) -> Optional[str]:
         """Find similar approved font for suggestion"""
+
+
+
         try:
             all_approved = self.guidelines.primary_fonts + self.guidelines.secondary_fonts
             
@@ -698,6 +710,9 @@ class ConsistencyChecker:
 
     async def _calculate_area_score(self, violations: List[ConsistencyViolation], total_content: int) -> float:
         """Calculate consistency score for specific area"""
+
+
+
         try:
             if total_content == 0:
                 return 100.0
@@ -783,6 +798,9 @@ class ConsistencyChecker:
 
     async def _generate_type_specific_fix(self, violation_type: str, violations: List[ConsistencyViolation]) -> Optional[str]:
         """Generate specific fix for violation type"""
+
+
+
         try:
             count = len(violations)
             
@@ -809,6 +827,9 @@ class ConsistencyChecker:
 
     async def monitor_brand_consistency(self, monitoring_config: Dict[str, Any]) -> None:
         """Start continuous brand consistency monitoring"""
+
+
+
         try:
             platforms = monitoring_config.get("platforms", [])
             check_interval = monitoring_config.get("interval", 3600)  # 1 hour default
@@ -839,6 +860,9 @@ class ConsistencyChecker:
 
     async def generate_style_guide_compliance_report(self) -> Dict[str, Any]:
         """Generate comprehensive style guide compliance report"""
+
+
+
         try:
             if not self.consistency_history:
                 return {"error": "No consistency data available"}
@@ -897,6 +921,9 @@ class StyleGuardian:
 
     async def configure_enforcement_rules(self, rules_config: Dict[str, Any]) -> None:
         """Configure style enforcement rules and automation"""
+
+
+
         try:
             self.enforcement_rules = rules_config
             self.auto_fix_enabled = rules_config.get("auto_fix_enabled", False)
@@ -910,6 +937,9 @@ class StyleGuardian:
 
     async def enforce_style_compliance(self, content_item: Dict[str, Any]) -> Dict[str, Any]:
         """Enforce style compliance on content item"""
+
+
+
         try:
             # Check compliance
             violations = await self.consistency_checker._analyze_content_item(content_item)
@@ -960,6 +990,9 @@ class StyleGuardian:
 
     def get_compliance_dashboard_data(self) -> Dict[str, Any]:
         """Get data for compliance dashboard"""
+
+
+
         try:
             if not self.consistency_checker.consistency_history:
                 return {"status": "no_data"}
@@ -987,6 +1020,9 @@ class StyleGuardian:
 
     def _calculate_compliance_trend_indicator(self) -> str:
         """Calculate compliance trend indicator"""
+
+
+
         try:
             if len(self.consistency_checker.consistency_history) < 2:
                 return "stable"

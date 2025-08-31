@@ -8,7 +8,7 @@ Responsibility: Storage performance monitoring and optimization analytics
 Technologies: Python, Prometheus, Grafana, Real-time metrics, ML predictions
 ==============================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -289,6 +289,9 @@ class PerformanceMonitor:
     
     def _start_prometheus_server(self):
         """Start Prometheus metrics server"""
+
+
+
         try:
             start_http_server(self.prometheus_port)
             self.logger.info(f"Prometheus server started on port {self.prometheus_port}")
@@ -328,6 +331,9 @@ class PerformanceMonitor:
             provider: Storage provider used
             metadata: Additional operation metadata
         """
+
+
+
         try:
             labels = {
                 'operation': operation_type,
@@ -368,6 +374,9 @@ class PerformanceMonitor:
             labels: Optional labels
             metadata: Optional metadata
         """
+
+
+
         try:
             if metric_name in self.metrics:
                 self.metrics[metric_name].add_point(value, labels, metadata)
@@ -384,6 +393,9 @@ class PerformanceMonitor:
         Args:
             alert: Performance alert configuration
         """
+
+
+
         try:
             self.alerts[alert.id] = alert
             self.logger.info(f"Added alert: {alert.name} ({alert.id})")
@@ -403,6 +415,9 @@ class PerformanceMonitor:
         Returns:
             Summary statistics dictionary
         """
+
+
+
         try:
             if metric_name not in self.metrics:
                 return {}
@@ -444,6 +459,9 @@ class PerformanceMonitor:
         Returns:
             List of active performance alerts
         """
+
+
+
         return [alert for alert in self.alerts.values() if alert.is_active]
     
     def get_performance_report(self, hours: int = 24) -> PerformanceReport:
@@ -456,6 +474,9 @@ class PerformanceMonitor:
         Returns:
             Performance report
         """
+
+
+
         try:
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(hours=hours)
@@ -516,6 +537,9 @@ class PerformanceMonitor:
         Returns:
             Prediction results or None if not available
         """
+
+
+
         try:
             if not ML_AVAILABLE or metric_name not in self.prediction_models:
                 return None
@@ -610,6 +634,9 @@ class PerformanceMonitor:
     
     async def _check_alert_condition(self, alert: PerformanceAlert):
         """Check if alert condition is met"""
+
+
+
         try:
             if alert.metric_name not in self.metrics:
                 return

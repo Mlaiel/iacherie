@@ -430,6 +430,9 @@ class MetricsCollector(MonitorEngine):
     
     async def start_monitoring(self) -> bool:
         """Start the metrics collection service."""
+
+
+
         try:
             self.status = "running"
             
@@ -462,6 +465,9 @@ class MetricsCollector(MonitorEngine):
     
     async def stop_monitoring(self) -> bool:
         """Stop the metrics collection service."""
+
+
+
         try:
             self.status = "stopped"
             
@@ -485,6 +491,9 @@ class MetricsCollector(MonitorEngine):
     
     async def _initialize_redis(self):
         """Initialize Redis connection for metrics storage."""
+
+
+
         try:
             self.redis_client = await aioredis.from_url(
                 "redis://localhost:6379", 
@@ -555,6 +564,9 @@ class MetricsCollector(MonitorEngine):
     
     async def _collect_system_metric(self, metric_name: str, metric_def: MetricDefinition):
         """Collect system-specific metrics."""
+
+
+
         try:
             if metric_name == "cpu_usage_percent":
                 value = psutil.cpu_percent(interval=1)
@@ -605,6 +617,9 @@ class MetricsCollector(MonitorEngine):
     
     async def _collect_system_metrics(self) -> Dict[str, Any]:
         """Collect all system metrics."""
+
+
+
         try:
             metrics = {}
             
@@ -676,6 +691,9 @@ class MetricsCollector(MonitorEngine):
                           labels: Optional[Dict[str, str]] = None, 
                           timestamp: Optional[datetime] = None):
         """Record a metric value."""
+
+
+
         try:
             if metric_name not in self.metrics_definitions:
                 logger.warning(f"Unknown metric: {metric_name}")
@@ -721,6 +739,9 @@ class MetricsCollector(MonitorEngine):
     
     async def _store_metric_in_redis(self, data_point: MetricDataPoint):
         """Store metric data point in Redis."""
+
+
+
         try:
             key = f"metrics:{data_point.metric_name}:{data_point.timestamp.strftime('%Y%m%d%H%M%S')}"
             value = {
@@ -736,6 +757,9 @@ class MetricsCollector(MonitorEngine):
     
     async def _check_alert_thresholds(self, metric_name: str, value: float):
         """Check if metric value exceeds alert thresholds."""
+
+
+
         try:
             metric_def = self.metrics_definitions[metric_name]
             thresholds = metric_def.alert_thresholds
@@ -772,6 +796,9 @@ class MetricsCollector(MonitorEngine):
     
     async def calculate_kpi(self, kpi_name: str) -> Optional[KPIResult]:
         """Calculate a specific KPI."""
+
+
+
         try:
             if kpi_name not in self.kpi_definitions:
                 logger.error(f"Unknown KPI: {kpi_name}")
@@ -838,6 +865,9 @@ class MetricsCollector(MonitorEngine):
     
     async def _evaluate_kpi_formula(self, formula: str, metrics: Dict[str, List[float]]) -> Optional[float]:
         """Evaluate KPI formula with metric values."""
+
+
+
         try:
             # Simple formula evaluation (extend for more complex formulas)
             context = {}
@@ -908,6 +938,9 @@ class MetricsCollector(MonitorEngine):
     
     async def _cleanup_redis_data(self, current_time: datetime):
         """Clean up old Redis metric data."""
+
+
+
         try:
             # Get all metric keys
             keys = await self.redis_client.keys("metrics:*")
@@ -931,6 +964,9 @@ class MetricsCollector(MonitorEngine):
                                start_time: Optional[datetime] = None,
                                end_time: Optional[datetime] = None) -> List[MetricDataPoint]:
         """Get historical metric data."""
+
+
+
         try:
             if metric_name not in self.metrics_data:
                 return []
@@ -956,6 +992,9 @@ class MetricsCollector(MonitorEngine):
     
     async def get_kpi_history(self, kpi_name: str) -> List[KPIResult]:
         """Get historical KPI results."""
+
+
+
         try:
             if kpi_name not in self.kpi_results:
                 return []
@@ -968,6 +1007,9 @@ class MetricsCollector(MonitorEngine):
     
     async def generate_metrics_dashboard(self) -> Dict[str, Any]:
         """Generate metrics dashboard data."""
+
+
+
         try:
             dashboard_data = {
                 "timestamp": datetime.utcnow().isoformat(),

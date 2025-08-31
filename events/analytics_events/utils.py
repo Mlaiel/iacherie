@@ -6,7 +6,7 @@ data transformation, statistical analysis, and ML feature engineering.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel - All rights reserved
-⚠️  WARNING: This code and concept are proprietary to Fahed Mlaiel.
+  WARNING: This code and concept are proprietary to Fahed Mlaiel.
     Any unauthorized use, copying, or distribution without explicit written 
     permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 
@@ -61,6 +61,9 @@ class TimeSeriesAnalyzer:
         Returns:
             Dictionary with trend analysis results
         """
+
+
+
         try:
             df = pd.DataFrame(data)
             df[time_column] = pd.to_datetime(df[time_column])
@@ -158,6 +161,9 @@ class TimeSeriesAnalyzer:
     
     def _extract_seasonality(self, values: np.ndarray, period: int = 24) -> np.ndarray:
         """Extract seasonal component from time series"""
+
+
+
         try:
             if len(values) < period * 2:
                 return np.zeros_like(values)
@@ -199,6 +205,9 @@ class FeatureEngineering:
         Returns:
             Dictionary with engineered features
         """
+
+
+
         try:
             features = {}
             
@@ -261,6 +270,9 @@ class FeatureEngineering:
     
     def _extract_temporal_features(self, timestamp: pd.Timestamp) -> Dict[str, Any]:
         """Extract temporal features from timestamp"""
+
+
+
         return {
             'hour': timestamp.hour,
             'day_of_week': timestamp.dayofweek,
@@ -430,6 +442,9 @@ class EventHasher:
     
     def validate_event_id(self, event_id: str) -> bool:
         """Validate if event ID is properly formatted"""
+
+
+
         try:
             decoded = self.hashids.decode(event_id)
             return len(decoded) == 2 and all(isinstance(x, int) for x in decoded)

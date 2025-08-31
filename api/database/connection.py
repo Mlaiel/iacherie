@@ -123,6 +123,9 @@ class DatabaseConnection:
     
     async def _initialize_postgresql(self):
         """Initialize PostgreSQL connection with pooling"""
+
+
+
         try:
             config = ConnectionConfig(
                 host=settings.DATABASE_HOST,
@@ -186,6 +189,9 @@ class DatabaseConnection:
     
     async def _initialize_redis(self):
         """Initialize Redis connections"""
+
+
+
         try:
             # Primary Redis connection
             self.connections["redis_primary"] = redis.Redis(
@@ -305,6 +311,9 @@ class DatabaseConnection:
     
     async def _perform_health_check(self, connection_name: str):
         """Perform health check for a specific connection"""
+
+
+
         try:
             connection = self.connections.get(connection_name)
             if not connection:
@@ -393,6 +402,9 @@ class DatabaseConnection:
     
     def get_connection_health(self) -> Dict[str, Any]:
         """Get health status of all connections"""
+
+
+
         return {
             "states": dict(self.connection_states),
             "metrics": dict(self.metrics),
@@ -588,6 +600,9 @@ class SessionManager:
     
     def get_session_statistics(self) -> Dict[str, Any]:
         """Get session statistics"""
+
+
+
         return {
             "active_sessions": {
                 session_type: len(sessions) 

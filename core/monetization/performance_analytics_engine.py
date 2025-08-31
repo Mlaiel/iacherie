@@ -66,6 +66,9 @@ class PerformanceMetric:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             "metric_type": self.metric_type.value,
             "value": self.value,
@@ -93,6 +96,9 @@ class PerformanceInsight:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             "insight_id": self.insight_id,
             "insight_type": self.insight_type.value,
@@ -146,6 +152,9 @@ class RevenueAnalyzer:
         session: AsyncSession
     ) -> Dict[str, Any]:
         """Comprehensive revenue performance analysis"""
+
+
+
         
         try:
             # Get revenue data
@@ -571,6 +580,9 @@ class EngagementAnalyzer:
         session: AsyncSession
     ) -> Dict[str, Any]:
         """Analyze engagement performance across platforms"""
+
+
+
         
         try:
             # Get engagement data from revenue records
@@ -679,6 +691,9 @@ class PerformanceAnalyticsEngine:
         session: AsyncSession
     ) -> Dict[str, Any]:
         """Generate comprehensive performance analytics report"""
+
+
+
         
         try:
             # Run all analyses in parallel

@@ -1,5 +1,5 @@
 """
-🔐 User Credentials Management - Enterprise Password & Security System
+ User Credentials Management - Enterprise Password & Security System
 ======================================================================
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -7,7 +7,7 @@ Project: IA Influencer Agent + Content Protection Platform
 Type: Production-Ready Credential Management System
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ INTELLECTUAL PROPERTY WARNING: Unauthorized use strictly prohibited.
+ INTELLECTUAL PROPERTY WARNING: Unauthorized use strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 
 Business Logic: User Registration → Credential Encryption → Security Policy Enforcement → 
@@ -243,6 +243,9 @@ class UserCredentialsRepository:
         metadata: Optional[CredentialMetadata] = None
     ) -> str:
         """Create new user credentials with policy validation"""
+
+
+
         try:
             # Validate password against policy
             if credential_type == CredentialType.PASSWORD:
@@ -313,6 +316,9 @@ class UserCredentialsRepository:
         credential_type: CredentialType = CredentialType.PASSWORD
     ) -> Dict[str, Any]:
         """Verify user credentials with security checks"""
+
+
+
         try:
             # Check account status and lockout
             account_status = await self._check_account_status(user_id)
@@ -375,6 +381,9 @@ class UserCredentialsRepository:
         metadata: Optional[CredentialMetadata] = None
     ) -> bool:
         """Change user password with validation"""
+
+
+
         try:
             # Verify old password
             verification = await self.verify_credentials(user_id, old_password)
@@ -469,6 +478,9 @@ class UserCredentialsRepository:
         questions_and_answers: List[Tuple[str, str]]
     ) -> bool:
         """Setup security questions for account recovery"""
+
+
+
         try:
             if len(questions_and_answers) < 3:
                 raise ValueError("At least 3 security questions are required")
@@ -515,6 +527,9 @@ class UserCredentialsRepository:
     
     async def generate_recovery_codes(self, user_id: str, count: int = 10) -> List[str]:
         """Generate backup recovery codes"""
+
+
+
         try:
             recovery_codes = []
             
@@ -560,6 +575,9 @@ class UserCredentialsRepository:
     
     async def _is_password_reused(self, user_id: str, password: str) -> bool:
         """Check if password was recently used"""
+
+
+
         try:
             stmt = select(PasswordHistory).where(
                 PasswordHistory.user_id == user_id
@@ -612,6 +630,9 @@ class UserCredentialsRepository:
     
     async def _check_account_status(self, user_id: str) -> Dict[str, Any]:
         """Check if account can authenticate"""
+
+
+
         try:
             stmt = select(AccountSecurity).where(AccountSecurity.user_id == user_id)
             result = await self.session.execute(stmt)
@@ -643,6 +664,9 @@ class UserCredentialsRepository:
     
     async def _record_failed_attempt(self, user_id: str, reason: str):
         """Record failed authentication attempt"""
+
+
+
         try:
             stmt = select(AccountSecurity).where(AccountSecurity.user_id == user_id)
             result = await self.session.execute(stmt)
@@ -672,6 +696,9 @@ class UserCredentialsRepository:
     
     async def _record_successful_authentication(self, user_id: str, credential_id: str):
         """Record successful authentication"""
+
+
+
         try:
             # Reset failed attempts
             stmt = select(AccountSecurity).where(AccountSecurity.user_id == user_id)
@@ -706,6 +733,9 @@ class UserCredentialsRepository:
         security_questions_set: bool = False
     ):
         """Update account security settings"""
+
+
+
         try:
             stmt = select(AccountSecurity).where(AccountSecurity.user_id == user_id)
             result = await self.session.execute(stmt)

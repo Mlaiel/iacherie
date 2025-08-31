@@ -8,7 +8,7 @@ copyright verification, and international legal framework compliance.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -291,6 +291,9 @@ Date: {date}
         Returns:
             ComplianceResult with detailed compliance status
         """
+
+
+
         try:
             self.logger.info(f"Starting compliance check for case {case_data.get('case_id')}")
             
@@ -429,6 +432,9 @@ Date: {date}
         result: ComplianceResult
     ) -> float:
         """Check jurisdiction-specific legal requirements"""
+
+
+
         try:
             if not jurisdiction:
                 # Attempt to detect jurisdiction from case data
@@ -707,6 +713,9 @@ Date: {date}
         case_data: Dict[str, Any]
     ) -> str:
         """Generate legal document from template"""
+
+
+
         try:
             template_key = f"{framework.value}_notice"
             if template_key.replace(f"_{framework.value.split('_')[1]}", "_takedown") in self.legal_templates:

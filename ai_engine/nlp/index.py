@@ -9,22 +9,22 @@ multilingual processing, and advanced NLP pipeline management.
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 
 Team Specialties:
-✅ Lead Dev IA + AI Architect Developer
-✅ NLP Engineer (BERT/GPT/T5/RoBERTa)
-✅ Computational Linguistics Specialist
-✅ Language Model Fine-tuning Expert
-✅ Multilingual Processing Engineer
-✅ Text Analytics & Mining Specialist
-✅ Sentiment Analysis Expert
-✅ Named Entity Recognition Specialist
-✅ Information Extraction Engineer
-✅ Conversational AI Developer
+ Lead Dev IA + AI Architect Developer
+ NLP Engineer (BERT/GPT/T5/RoBERTa)
+ Computational Linguistics Specialist
+ Language Model Fine-tuning Expert
+ Multilingual Processing Engineer
+ Text Analytics & Mining Specialist
+ Sentiment Analysis Expert
+ Named Entity Recognition Specialist
+ Information Extraction Engineer
+ Conversational AI Developer
 
 Business Logic Coverage:
 Text Input → Language Detection → Preprocessing → Feature Extraction → Model Processing
@@ -650,14 +650,23 @@ class NLPFrameworkManager:
     
     def get_supported_languages(self) -> List[str]:
         """Get list of all supported languages."""
+
+
+
         return sorted(list(self.supported_languages))
     
     def get_supported_models(self) -> List[str]:
         """Get list of all supported language models."""
+
+
+
         return [lm.value for lm in LanguageModel]
     
     def get_task_types(self) -> List[str]:
         """Get list of all supported task types."""
+
+
+
         return [tt.value for tt in TaskType]
     
     def get_nlp_capabilities(self) -> Dict[str, Any]:

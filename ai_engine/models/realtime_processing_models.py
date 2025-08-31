@@ -3,7 +3,7 @@ Advanced Real-Time Processing Models for IA Influencer Agent Platform
 Enterprise-grade real-time content processing and streaming models
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
-⚠️  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
+  STRICT WARNING: Unauthorized use, copying, or stealing of this concept, 
     code, or intellectual property without explicit written authorization 
     from Fahed Mlaiel is strictly prohibited and will result in legal action.
 
@@ -210,6 +210,9 @@ class RealTimeAudioProcessor(BaseAIModel):
         callback: Optional[Callable] = None
     ) -> None:
         """Start real-time audio streaming and processing"""
+
+
+
         try:
             self.is_streaming = True
             self.logger.info("Starting real-time audio streaming")
@@ -243,6 +246,9 @@ class RealTimeAudioProcessor(BaseAIModel):
         callback: Optional[Callable]
     ) -> None:
         """Capture audio from device (microphone, audio interface)"""
+
+
+
         try:
             import sounddevice as sd
             
@@ -284,6 +290,9 @@ class RealTimeAudioProcessor(BaseAIModel):
         result_callback: Optional[Callable]
     ) -> None:
         """Capture audio from custom callback function"""
+
+
+
         try:
             while self.is_streaming:
                 try:
@@ -310,6 +319,9 @@ class RealTimeAudioProcessor(BaseAIModel):
     
     async def _processing_loop(self) -> None:
         """Main audio processing loop"""
+
+
+
         try:
             while self.is_streaming:
                 try:
@@ -352,6 +364,9 @@ class RealTimeAudioProcessor(BaseAIModel):
     
     async def _process_audio_chunk(self, audio_data: Dict[str, Any]) -> Dict[str, Any]:
         """Process single audio chunk in real-time"""
+
+
+
         try:
             audio_tensor = audio_data["audio"]
             
@@ -419,6 +434,9 @@ class RealTimeAudioProcessor(BaseAIModel):
     
     def _calculate_quality_score(self, original: torch.Tensor, enhanced: torch.Tensor) -> float:
         """Calculate audio quality score"""
+
+
+
         try:
             # Simple SNR-based quality metric
             noise = original - enhanced
@@ -609,6 +627,9 @@ class RealTimeVideoProcessor(BaseAIModel):
         callback: Optional[Callable] = None
     ) -> None:
         """Start real-time video streaming and processing"""
+
+
+
         try:
             self.is_streaming = True
             self.logger.info("Starting real-time video streaming")
@@ -636,6 +657,9 @@ class RealTimeVideoProcessor(BaseAIModel):
         callback: Optional[Callable]
     ) -> None:
         """Capture video frames from source"""
+
+
+
         try:
             if isinstance(video_source, (str, int)):
                 cap = cv2.VideoCapture(video_source)
@@ -678,6 +702,9 @@ class RealTimeVideoProcessor(BaseAIModel):
     
     async def _video_processing_loop(self) -> None:
         """Main video processing loop"""
+
+
+
         try:
             while self.is_streaming:
                 try:
@@ -717,6 +744,9 @@ class RealTimeVideoProcessor(BaseAIModel):
     
     async def _process_video_frame(self, frame_data: Dict[str, Any]) -> Dict[str, Any]:
         """Process single video frame in real-time"""
+
+
+
         try:
             frame_tensor = frame_data["frame"].unsqueeze(0)  # Add batch dimension
             
@@ -758,6 +788,9 @@ class RealTimeVideoProcessor(BaseAIModel):
     
     def _calculate_frame_quality(self, original: torch.Tensor, enhanced: torch.Tensor) -> float:
         """Calculate frame quality score"""
+
+
+
         try:
             # Calculate PSNR-based quality
             mse = torch.mean((original - enhanced) ** 2)

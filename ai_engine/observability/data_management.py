@@ -8,7 +8,7 @@ for logs, metrics, traces, and analytics data.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -131,10 +131,16 @@ class DataRecord:
     
     def get_age_days(self) -> int:
         """Get age of record in days"""
+
+
+
         return (datetime.utcnow() - self.created_at).days
     
     def is_compressed(self) -> bool:
         """Check if record is compressed"""
+
+
+
         return self.compression != CompressionType.NONE
     
     def compression_ratio(self) -> float:
@@ -200,6 +206,9 @@ class RetentionPolicy:
     
     def should_compress(self, record: DataRecord) -> bool:
         """Check if record should be compressed"""
+
+
+
         return (record.get_age_days() >= self.compression_after_days and 
                 record.compression == CompressionType.NONE)
 
@@ -288,6 +297,9 @@ class FileSystemStorageBackend(BaseStorageBackend):
     
     async def delete_data(self, file_path: str) -> bool:
         """Delete data from filesystem"""
+
+
+
         try:
             full_path = self.base_path / file_path
             if full_path.exists():
@@ -1097,6 +1109,9 @@ class DataManager:
     
     async def start(self):
         """Start data management services"""
+
+
+
         try:
             # Start lifecycle management
             cleanup_interval = self.config.get("cleanup_interval_hours", 1)
@@ -1110,6 +1125,9 @@ class DataManager:
     
     async def stop(self):
         """Stop data management services"""
+
+
+
         try:
             await self.lifecycle_manager.stop_lifecycle_management()
             self.logger.info("Data management stopped successfully")
@@ -1121,6 +1139,9 @@ class DataManager:
                                      metadata: Dict[str, Any] = None, 
                                      tags: Set[str] = None) -> str:
         """Store observability data"""
+
+
+
         try:
             record_id = await self.lifecycle_manager.store_data(data_type, data, metadata, tags)
             self.stats["operations"]["store"] += 1
@@ -1133,6 +1154,9 @@ class DataManager:
     
     async def retrieve_observability_data(self, record_id: str) -> Optional[bytes]:
         """Retrieve observability data"""
+
+
+
         try:
             data = await self.lifecycle_manager.retrieve_data(record_id)
             self.stats["operations"]["retrieve"] += 1
@@ -1145,6 +1169,9 @@ class DataManager:
     
     async def delete_observability_data(self, record_id: str) -> bool:
         """Delete observability data"""
+
+
+
         try:
             success = await self.lifecycle_manager.delete_data(record_id)
             self.stats["operations"]["delete"] += 1
@@ -1182,12 +1209,18 @@ class DataManager:
     
     def get_stats(self) -> Dict[str, Any]:
         """Get basic statistics"""
+
+
+
         return self.get_comprehensive_statistics()
 
 
 # Factory function
 def create_data_manager(config: Dict[str, Any] = None) -> DataManager:
     """Factory function to create data manager"""
+
+
+
     return DataManager(config)
 
 

@@ -661,6 +661,9 @@ class ProvisioningOrchestrator:
 
     async def list_active_deployments(self) -> List[DeploymentContext]:
         """Liste tous les déploiements actifs."""
+
+
+
         return list(self.active_deployments.values())
 
     async def cancel_deployment(self, deployment_id: str) -> bool:

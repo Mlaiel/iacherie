@@ -1,4 +1,4 @@
-"""🔍 Ultra-Industrial Vector Database Orchestration Service
+""" Ultra-Industrial Vector Database Orchestration Service
 =========================================================
 
 Enterprise-grade vector similarity search ecosystem for content fingerprint
@@ -23,7 +23,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Team Expertise: Lead AI Developer + ML Engineer + Security Architect + Legal Tech + DevOps + DBA
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  STRICT INTELLECTUAL PROPERTY PROTECTION ⚠️
+  STRICT INTELLECTUAL PROPERTY PROTECTION 
 ===============================================
 This software and all concepts are protected by international copyright law,
 trade secret law, and patent pending status. Unauthorized use, reproduction,
@@ -111,13 +111,13 @@ logger = logging.getLogger(__name__)
 
 
 class VectorDatabaseService:
-    """    🔍 Ultra-Advanced Vector Database Service
+    """     Ultra-Advanced Vector Database Service
     ========================================
     
     Enterprise-grade vector database for content fingerprint storage and search.
     Integrates all advanced components for comprehensive content protection.
     
-    🎯 PROJECT TEAM SPECIALTIES:
+     PROJECT TEAM SPECIALTIES:
     ===========================
     Lead Developer & Project Owner: Fahed Mlaiel (mlaiel@live.de)
     - Backend Senior: Advanced Python & FastAPI Architecture
@@ -129,7 +129,7 @@ class VectorDatabaseService:
     - DevOps Engineer: Infrastructure & Cloud Deployment
     - IA Prompt Engineer: AI Model Integration & Optimization
     
-    ⚠️  LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
+      LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION 
     =======================================================
     This code is the exclusive intellectual property of Fahed Mlaiel.
     Any use, copying, modification or distribution without explicit written 
@@ -137,7 +137,7 @@ class VectorDatabaseService:
     copyright laws punishable by legal action.
     Contact: mlaiel@live.de
     
-    🚀 FEATURES:
+     FEATURES:
     ============
     - Multi-modal embedding generation (Audio, Video, Image, Text, Composite)
     - High-performance FAISS vector indexing with multiple index types
@@ -183,7 +183,10 @@ class VectorDatabaseService:
         self.logger.info("VectorDatabaseService instance created")
     
     async def initialize(self) -> bool:
-        """Initialize all vector database components"""        try:
+        """Initialize all vector database components"""
+
+
+        try:
             self.logger.info("Initializing VectorDatabaseService...")
             
             # Initialize embedding service
@@ -260,7 +263,10 @@ class VectorDatabaseService:
             
         Returns:
             bool: Success status
-        """        try:
+        """
+
+
+        try:
             if not self._initialized:
                 await self.initialize()
             
@@ -305,7 +311,10 @@ class VectorDatabaseService:
             
         Returns:
             List[bool]: Success status for each item
-        """        try:
+        """
+
+
+        try:
             if not self._initialized:
                 await self.initialize()
             
@@ -366,7 +375,10 @@ class VectorDatabaseService:
             
         Returns:
             List[SearchResult]: Similar content results
-        """        try:
+        """
+
+
+        try:
             if not self._initialized:
                 await self.initialize()
             
@@ -411,7 +423,10 @@ class VectorDatabaseService:
             
         Returns:
             List[List[str]]: Groups of duplicate content IDs
-        """        try:
+        """
+
+
+        try:
             if not self._initialized:
                 await self.initialize()
             
@@ -435,7 +450,10 @@ class VectorDatabaseService:
             return []
     
     async def remove_content_fingerprint(self, content_id: str) -> bool:
-        """Remove content fingerprint from database"""        try:
+        """Remove content fingerprint from database"""
+
+
+        try:
             # Remove from index manager (handles all indexes)
             success = await self.index_manager.remove_vector(content_id)
             
@@ -449,7 +467,10 @@ class VectorDatabaseService:
             return False
     
     async def update_content_metadata(self, content_id: str, metadata: Dict[str, Any]) -> bool:
-        """Update metadata for content fingerprint"""        try:
+        """Update metadata for content fingerprint"""
+
+
+        try:
             # Update in storage manager
             success = await self.storage_manager.route_operation(
                 'update_metadata',
@@ -464,7 +485,10 @@ class VectorDatabaseService:
             return False
     
     async def optimize_indexes(self) -> Dict[str, bool]:
-        """Optimize all vector indexes"""        try:
+        """Optimize all vector indexes"""
+
+
+        try:
             results = await self.index_manager.optimize_indexes()
             self.logger.info(f"Index optimization completed: {results}")
             return results
@@ -474,7 +498,10 @@ class VectorDatabaseService:
             return {}
     
     async def save_indexes(self) -> Dict[str, str]:
-        """Save all indexes to disk"""        try:
+        """Save all indexes to disk"""
+
+
+        try:
             results = await self.index_manager.save_indexes()
             self.logger.info("All indexes saved successfully")
             return results
@@ -484,7 +511,10 @@ class VectorDatabaseService:
             return {}
     
     async def get_service_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive service statistics"""        try:
+        """Get comprehensive service statistics"""
+
+
+        try:
             # Get index statistics
             index_info = await self.index_manager.get_index_info()
             
@@ -515,7 +545,10 @@ class VectorDatabaseService:
             return {'error': str(e)}
     
     async def _auto_save_loop(self):
-        """Background task for automatic index saving"""        try:
+        """Background task for automatic index saving"""
+
+
+        try:
             interval = self.config.get('auto_save_interval', 3600)
             
             while True:
@@ -531,7 +564,10 @@ class VectorDatabaseService:
             self.logger.error(f"Auto-save task failed: {e}")
     
     async def _auto_optimize_loop(self):
-        """Background task for automatic index optimization"""        try:
+        """Background task for automatic index optimization"""
+
+
+        try:
             interval = self.config.get('auto_optimize_interval', 86400)  # 24 hours
             
             while True:
@@ -547,7 +583,10 @@ class VectorDatabaseService:
             self.logger.error(f"Auto-optimization task failed: {e}")
     
     async def shutdown(self):
-        """Graceful shutdown of the service"""        try:
+        """Graceful shutdown of the service"""
+
+
+        try:
             self.logger.info("Shutting down VectorDatabaseService...")
             
             # Cancel background tasks
@@ -603,7 +642,10 @@ __all__ = [
         logger.info("Vector Database Service initialized")
 
     async def initialize(self) -> bool:
-        """Initialize the vector database service."""        try:
+        """Initialize the vector database service."""
+
+
+        try:
             # Create storage directory
             self.storage_path.mkdir(parents=True, exist_ok=True)
             
@@ -938,7 +980,10 @@ __all__ = [
         return True
 
     async def _save_faiss_index(self) -> None:
-        """Save FAISS index to disk."""        try:
+        """Save FAISS index to disk."""
+
+
+        try:
             if self.faiss_index is not None:
                 index_path = self.storage_path / 'faiss_index.bin'
                 metadata_path = self.storage_path / 'faiss_metadata.json'

@@ -7,7 +7,7 @@ cross-platform insights, and comprehensive business intelligence for the IA Infl
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE - INTELLECTUAL PROPERTY PROTECTION:
+  CRITICAL LEGAL NOTICE - INTELLECTUAL PROPERTY PROTECTION:
 This software and all related code are the EXCLUSIVE INTELLECTUAL PROPERTY 
 of Fahed Mlaiel (mlaiel@live.de). Unauthorized use, copying, or distribution 
 without written authorization is STRICTLY PROHIBITED and will result in 
@@ -199,6 +199,9 @@ class AnalyticsCollector(BaseAgent):
     
     async def initialize(self) -> bool:
         """Initialize analytics collector"""
+
+
+
         try:
             # Initialize database
             await self.db.initialize()
@@ -248,6 +251,9 @@ class AnalyticsCollector(BaseAgent):
         Returns:
             Collected analytics data
         """
+
+
+
         try:
             if platform not in self.platform_adapters:
                 raise AnalyticsError(f"No adapter for platform {platform}")
@@ -300,6 +306,9 @@ class AnalyticsCollector(BaseAgent):
         Returns:
             Cross-platform insights
         """
+
+
+
         try:
             # Collect data from all platforms
             platform_data = {}
@@ -372,6 +381,9 @@ class AnalyticsCollector(BaseAgent):
         Returns:
             Trend analysis result
         """
+
+
+
         try:
             # Get historical data
             end_date = datetime.utcnow()
@@ -432,6 +444,9 @@ class AnalyticsCollector(BaseAgent):
     
     async def query_analytics(self, query: AnalyticsQuery) -> Dict[str, Any]:
         """Execute complex analytics query"""
+
+
+
         try:
             results = {}
             
@@ -483,6 +498,9 @@ class AnalyticsCollector(BaseAgent):
         end_date: datetime
     ) -> Dict[str, Any]:
         """Generate comprehensive insights report"""
+
+
+
         try:
             report = {
                 'period': {'start': start_date.isoformat(), 'end': end_date.isoformat()},
@@ -628,6 +646,9 @@ class AnalyticsCollector(BaseAgent):
     
     async def _collect_platform_scheduled(self, platform: str) -> None:
         """Scheduled collection for specific platform"""
+
+
+
         try:
             self.active_collections.add(platform)
             

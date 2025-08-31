@@ -5,7 +5,7 @@ Violation Detection Engine
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 Unauthorized use, copying or distribution prohibited.
 
 Advanced AI-powered violation detection system for content protection.
@@ -120,6 +120,9 @@ class ViolationDetector:
         Returns:
             ViolationMatch if violation detected, None otherwise
         """
+
+
+
         
         try:
             # Extract content signature from crawled content
@@ -159,6 +162,9 @@ class ViolationDetector:
     
     def _extract_content_signature(self, crawled_content: Dict[str, Any]) -> Optional[ContentSignature]:
         """Extract comprehensive signature from crawled content."""
+
+
+
         
         try:
             content_type = self._determine_content_type(crawled_content)
@@ -402,6 +408,9 @@ class ViolationDetector:
     
     def create_violation_record(self, crawled_content: Dict[str, Any]) -> Dict[str, Any]:
         """Create a structured violation record for database storage."""
+
+
+
         
         return {
             'detected_url': crawled_content.get('url'),
@@ -459,6 +468,9 @@ class ViolationDetector:
     
     def _extract_metadata_signature(self, content: Dict[str, Any]) -> Dict[str, Any]:
         """Extract metadata signature for matching."""
+
+
+
         
         return {
             'title': content.get('title', '').lower().strip(),

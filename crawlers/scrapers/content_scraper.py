@@ -8,7 +8,7 @@ Designed for content discovery and protection monitoring.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️ CRITICAL LEGAL WARNING ⚠️
+ CRITICAL LEGAL WARNING 
 UNAUTHORIZED USE, COPYING, OR DISTRIBUTION IS STRICTLY PROHIBITED AND WILL RESULT IN IMMEDIATE LEGAL ACTION.
 This technology is EXCLUSIVE property of Fahed Mlaiel. Contact: mlaiel@live.de for licensing.
 """
@@ -137,6 +137,9 @@ class ContentScraper:
         
     def _extract_with_newspaper(self, url: str) -> Dict[str, Any]:
         """Extract content using Newspaper3k."""
+
+
+
         try:
             article = newspaper.Article(url)
             article.download()
@@ -160,6 +163,9 @@ class ContentScraper:
             
     def _extract_with_goose(self, html: str) -> Dict[str, Any]:
         """Extract content using Goose3."""
+
+
+
         try:
             article = self.goose.extract(raw_html=html)
             
@@ -349,6 +355,9 @@ class ContentScraper:
         
     def _detect_language(self, text: str) -> str:
         """Detect content language."""
+
+
+
         try:
             if len(text) > 50:
                 detected = langdetect.detect(text)
@@ -361,6 +370,9 @@ class ContentScraper:
     
     def _analyze_sentiment(self, text: str) -> float:
         """Analyze sentiment of content text."""
+
+
+
         try:
             # Simple sentiment analysis using TextBlob
             from textblob import TextBlob
@@ -393,6 +405,9 @@ class ContentScraper:
         
     def _calculate_readability(self, text: str) -> float:
         """Calculate readability score."""
+
+
+
         try:
             if len(text) > 100:
                 # Use Flesch Reading Ease score (0-100, higher is easier)
@@ -545,6 +560,9 @@ class ContentScraper:
         
     def analyze_media_content(self, url: str) -> Optional[MediaContent]:
         """Analyze media content (images, videos, audio)."""
+
+
+
         try:
             response = requests.head(url, timeout=10)
             content_type = response.headers.get('content-type', '')

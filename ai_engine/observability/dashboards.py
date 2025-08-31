@@ -7,7 +7,7 @@ interactive visualizations, real-time data display, and customizable monitoring 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -101,6 +101,9 @@ class WidgetConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'widget_id': self.widget_id,
             'title': self.title,
@@ -138,6 +141,9 @@ class Dashboard:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'dashboard_id': self.dashboard_id,
             'name': self.name,
@@ -166,6 +172,9 @@ class WidgetData:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'widget_id': self.widget_id,
             'data': self.data,
@@ -189,6 +198,9 @@ class DataProvider:
         
     async def fetch_data(self, query: str, options: Optional[Dict[str, Any]] = None) -> Any:
         """Fetch data based on query - base implementation"""
+
+
+
         try:
             # Basic implementation that returns simulated data
             logger.info(f"Fetching data for query: {query}")
@@ -240,10 +252,16 @@ class DataProvider:
     
     async def validate_query(self, query: str) -> bool:
         """Validate query syntax"""
+
+
+
         return True  # Default implementation allows all queries
     
     def format_data(self, raw_data: Any, widget_type: WidgetType) -> Any:
         """Format data for specific widget type"""
+
+
+
         return raw_data  # Default implementation returns raw data
 
 
@@ -257,6 +275,9 @@ class MetricsDataProvider(DataProvider):
     
     async def fetch_data(self, query: str, options: Optional[Dict[str, Any]] = None) -> Any:
         """Fetch metrics data"""
+
+
+
         try:
             # Parse query to extract metric name and aggregation
             parts = query.split()
@@ -286,6 +307,9 @@ class MetricsDataProvider(DataProvider):
     
     async def _get_current_metric(self, metric_name: str) -> Dict[str, Any]:
         """Get current metric value"""
+
+
+
         try:
             # Simulate getting current metric value
             current_value = getattr(self.metrics_collector, 'get_current_value', lambda x: 0)(metric_name)
@@ -302,6 +326,9 @@ class MetricsDataProvider(DataProvider):
     
     async def _get_metric_history(self, metric_name: str, timeframe: str) -> List[Dict[str, Any]]:
         """Get metric history"""
+
+
+
         try:
             # Simulate historical data generation
             data_points = []
@@ -334,6 +361,9 @@ class MetricsDataProvider(DataProvider):
     
     async def _get_metric_average(self, metric_name: str, timeframe: str) -> Dict[str, Any]:
         """Get metric average over timeframe"""
+
+
+
         try:
             history = await self._get_metric_history(metric_name, timeframe)
             
@@ -366,6 +396,9 @@ class AlertsDataProvider(DataProvider):
     
     async def fetch_data(self, query: str, options: Optional[Dict[str, Any]] = None) -> Any:
         """Fetch alerts data"""
+
+
+
         try:
             if query == "active":
                 return await self._get_active_alerts(options)
@@ -382,6 +415,9 @@ class AlertsDataProvider(DataProvider):
     
     async def _get_active_alerts(self, options: Optional[Dict[str, Any]] = None) -> List[Dict[str, Any]]:
         """Get active alerts"""
+
+
+
         try:
             filters = options.get('filters', {}) if options else {}
             alerts = self.alert_manager.get_active_alerts(filters)
@@ -394,6 +430,9 @@ class AlertsDataProvider(DataProvider):
     
     async def _get_recent_alerts(self, options: Optional[Dict[str, Any]] = None) -> List[Dict[str, Any]]:
         """Get recent alerts"""
+
+
+
         try:
             limit = options.get('limit', 50) if options else 50
             
@@ -408,6 +447,9 @@ class AlertsDataProvider(DataProvider):
     
     async def _get_alerts_summary(self, options: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """Get alerts summary"""
+
+
+
         try:
             active_alerts = self.alert_manager.get_active_alerts()
             
@@ -449,6 +491,9 @@ class SystemDataProvider(DataProvider):
     
     async def fetch_data(self, query: str, options: Optional[Dict[str, Any]] = None) -> Any:
         """Fetch system data"""
+
+
+
         try:
             if query == "health":
                 return await self._get_system_health()
@@ -465,6 +510,9 @@ class SystemDataProvider(DataProvider):
     
     async def _get_system_health(self) -> Dict[str, Any]:
         """Get system health information"""
+
+
+
         try:
             # Simulate system health data
             health = {
@@ -489,6 +537,9 @@ class SystemDataProvider(DataProvider):
     
     async def _get_resource_usage(self) -> Dict[str, Any]:
         """Get resource usage information"""
+
+
+
         try:
             # Simulate resource usage data
             resources = {
@@ -522,6 +573,9 @@ class SystemDataProvider(DataProvider):
     
     async def _get_service_status(self) -> List[Dict[str, Any]]:
         """Get service status information"""
+
+
+
         try:
             # Simulate service status data
             services = [
@@ -578,6 +632,9 @@ class DashboardEngine:
     
     def register_data_provider(self, provider: DataProvider):
         """Register a data provider"""
+
+
+
         try:
             self.data_providers[provider.provider_name] = provider
             logger.info(f"Registered data provider: {provider.provider_name}")
@@ -587,6 +644,9 @@ class DashboardEngine:
     
     def create_dashboard(self, dashboard: Dashboard) -> bool:
         """Create a new dashboard"""
+
+
+
         try:
             # Validate dashboard
             if not dashboard.dashboard_id or not dashboard.name:
@@ -616,6 +676,9 @@ class DashboardEngine:
     
     def _validate_widget(self, widget: WidgetConfig) -> bool:
         """Validate widget configuration"""
+
+
+
         try:
             # Check required fields
             if not widget.widget_id or not widget.title or not widget.data_source:
@@ -639,6 +702,9 @@ class DashboardEngine:
     
     def update_dashboard(self, dashboard_id: str, updates: Dict[str, Any]) -> bool:
         """Update existing dashboard"""
+
+
+
         try:
             if dashboard_id not in self.dashboards:
                 logger.error(f"Dashboard not found: {dashboard_id}")
@@ -667,6 +733,9 @@ class DashboardEngine:
     
     def delete_dashboard(self, dashboard_id: str) -> bool:
         """Delete dashboard"""
+
+
+
         try:
             if dashboard_id not in self.dashboards:
                 logger.error(f"Dashboard not found: {dashboard_id}")
@@ -686,10 +755,16 @@ class DashboardEngine:
     
     def get_dashboard(self, dashboard_id: str) -> Optional[Dashboard]:
         """Get dashboard by ID"""
+
+
+
         return self.dashboards.get(dashboard_id)
     
     def list_dashboards(self, filters: Optional[Dict[str, Any]] = None) -> List[Dashboard]:
         """List dashboards with optional filtering"""
+
+
+
         try:
             dashboards = list(self.dashboards.values())
             
@@ -723,6 +798,9 @@ class DashboardEngine:
     
     async def get_widget_data(self, widget: WidgetConfig, force_refresh: bool = False) -> WidgetData:
         """Get data for a specific widget"""
+
+
+
         try:
             # Check cache first
             cache_key = f"{widget.widget_id}_{hash(widget.query)}"
@@ -784,6 +862,9 @@ class DashboardEngine:
     
     async def get_dashboard_data(self, dashboard_id: str, force_refresh: bool = False) -> Dict[str, Any]:
         """Get complete dashboard data"""
+
+
+
         try:
             dashboard = self.get_dashboard(dashboard_id)
             
@@ -833,6 +914,9 @@ class DashboardEngine:
     
     def _invalidate_dashboard_cache(self, dashboard_id: str):
         """Invalidate cache for a dashboard"""
+
+
+
         try:
             dashboard = self.get_dashboard(dashboard_id)
             if not dashboard:
@@ -858,6 +942,9 @@ class DashboardEngine:
     
     async def start_real_time_updates(self):
         """Start real-time dashboard updates"""
+
+
+
         try:
             logger.info("Starting real-time dashboard updates")
             self.update_task = asyncio.create_task(self._update_loop())
@@ -867,6 +954,9 @@ class DashboardEngine:
     
     async def stop_real_time_updates(self):
         """Stop real-time dashboard updates"""
+
+
+
         try:
             logger.info("Stopping real-time dashboard updates")
             
@@ -901,6 +991,9 @@ class DashboardEngine:
     
     async def _update_real_time_widgets(self):
         """Update widgets that need real-time refresh"""
+
+
+
         try:
             current_time = datetime.now(timezone.utc)
             widgets_to_update = []
@@ -937,6 +1030,9 @@ class DashboardEngine:
     
     async def _cleanup_cache(self):
         """Clean up old cache entries"""
+
+
+
         try:
             current_time = datetime.now(timezone.utc)
             max_cache_age = self.cache_ttl * 3  # Keep cache 3x longer than TTL
@@ -958,6 +1054,9 @@ class DashboardEngine:
     
     def get_performance_stats(self) -> Dict[str, Any]:
         """Get dashboard performance statistics"""
+
+
+
         try:
             stats = {
                 'dashboard_views': dict(self.performance_stats['dashboard_views']),

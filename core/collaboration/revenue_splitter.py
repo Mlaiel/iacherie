@@ -1,12 +1,12 @@
 """
-💰 REVENUE SPLITTER - Advanced Revenue Distribution System
+ REVENUE SPLITTER - Advanced Revenue Distribution System
 ========================================================
 
 Developed by: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved - Unauthorized use is strictly prohibited
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive property of Fahed Mlaiel.
 Any attempt to steal, copy, or reproduce this concept, idea, or code
 without explicit written authorization from Fahed Mlaiel is strictly forbidden
@@ -255,6 +255,9 @@ class RevenueSplitter:
         performance_data: Optional[Dict[str, Any]] = None
     ) -> List[Dict[str, Any]]:
         """Calculate revenue splits with advanced algorithms"""
+
+
+
         try:
             logger.info(f"Calculating revenue splits for transaction {transaction.transaction_id}")
             
@@ -346,6 +349,9 @@ class RevenueSplitter:
         force_payout: bool = False
     ) -> List[PayoutRecord]:
         """Process automated payouts based on schedules"""
+
+
+
         try:
             logger.info(f"Processing automated payouts for partnership {partnership_id}")
             
@@ -407,6 +413,9 @@ class RevenueSplitter:
         conditions: Dict[str, Any]
     ) -> str:
         """Create escrow transaction for secure payments"""
+
+
+
         try:
             logger.info(f"Creating escrow transaction: {amount} {currency.value}")
             
@@ -454,6 +463,9 @@ class RevenueSplitter:
         include_tax_details: bool = True
     ) -> Dict[str, Any]:
         """Generate comprehensive financial report"""
+
+
+
         try:
             logger.info(f"Generating financial report for {partnership_id}")
             
@@ -601,6 +613,9 @@ class RevenueSplitter:
             
     async def _execute_payout(self, payout: PayoutRecord) -> bool:
         """Execute payout through payment processor"""
+
+
+
         try:
             # Get recipient payment details
             payment_details = await self._get_payment_details(payout.recipient_id)
@@ -685,14 +700,23 @@ class RevenueSplitter:
         
     async def _get_active_payout_schedules(self, partnership_id: str) -> List[PayoutSchedule]:
         """Get active payout schedules"""
+
+
+
         return []
         
     async def _get_pending_amounts(self, schedule: PayoutSchedule) -> Dict[str, Dict[str, Any]]:
         """Get pending amounts for payout"""
+
+
+
         return {}
         
     async def _create_payout_record(self, recipient_id: str, schedule: PayoutSchedule, amount: Decimal, transactions: List) -> PayoutRecord:
         """Create payout record"""
+
+
+
         return PayoutRecord(
             payout_id=str(uuid.uuid4()),
             recipient_id=recipient_id,
@@ -742,6 +766,9 @@ class RevenueSplitter:
         
     async def _update_payout_record(self, payout: PayoutRecord) -> None:
         """Update payout record in database with current status and details"""
+
+
+
         try:
             if hasattr(self, 'db_manager') and self.db_manager:
                 update_query = """
@@ -784,14 +811,17 @@ class RevenueSplitter:
                     }
                     await self.cache_manager.set(cache_key, json.dumps(payout_data), expire_seconds=3600)
                 
-                logger.info(f"💰 Updated payout record: {payout.payout_id} -> {payout.status}")
+                logger.info(f" Updated payout record: {payout.payout_id} -> {payout.status}")
                 
         except Exception as e:
-            logger.error(f"❌ Failed to update payout record {payout.payout_id}: {e}")
+            logger.error(f" Failed to update payout record {payout.payout_id}: {e}")
             raise
     
     async def _save_escrow_record(self, escrow_data: Dict[str, Any]) -> None:
         """Save escrow transaction record for partnership revenue"""
+
+
+
         try:
             if hasattr(self, 'db_manager') and self.db_manager:
                 insert_query = """
@@ -826,14 +856,17 @@ class RevenueSplitter:
                     }
                     await self.cache_manager.set(cache_key, json.dumps(cache_data), expire_seconds=7200)
                 
-                logger.info(f"💰 Saved escrow record: {escrow_data.get('escrow_id')} -> ${escrow_data.get('amount')}")
+                logger.info(f" Saved escrow record: {escrow_data.get('escrow_id')} -> ${escrow_data.get('amount')}")
                 
         except Exception as e:
-            logger.error(f"❌ Failed to save escrow record: {e}")
+            logger.error(f" Failed to save escrow record: {e}")
             raise
     
     async def _save_financial_report(self, partnership_id: str, report: Dict[str, Any]) -> None:
         """Save financial report for partnership revenue tracking"""
+
+
+
         try:
             if hasattr(self, 'db_manager') and self.db_manager:
                 insert_query = """
@@ -873,10 +906,10 @@ class RevenueSplitter:
                     }
                     await self.cache_manager.set(cache_key, json.dumps(report_summary), expire_seconds=3600)
                 
-                logger.info(f"📊 Saved financial report: {partnership_id} -> {report_id}")
+                logger.info(f" Saved financial report: {partnership_id} -> {report_id}")
                 
         except Exception as e:
-            logger.error(f"❌ Failed to save financial report for {partnership_id}: {e}")
+            logger.error(f" Failed to save financial report for {partnership_id}: {e}")
             raise
     """Payout frequency options"""
     IMMEDIATE = "immediate"
@@ -957,6 +990,9 @@ class RevenueSplitter:
         performance_metrics: Optional[Dict[str, Any]] = None
     ) -> SplitRule:
         """Create a new revenue split rule"""
+
+
+
         try:
             logger.info(f"Creating split rule for partnership {partnership_id}")
             
@@ -1004,6 +1040,9 @@ class RevenueSplitter:
         performance_data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Calculate revenue split based on active rules"""
+
+
+
         try:
             logger.info(f"Calculating revenue split for {total_revenue} {currency.value}")
             
@@ -1071,6 +1110,9 @@ class RevenueSplitter:
         split_calculation: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Schedule payout based on calculation and schedule"""
+
+
+
         try:
             logger.info(f"Scheduling payout for partnership {partnership_id}")
             
@@ -1135,6 +1177,9 @@ class RevenueSplitter:
             
     async def process_pending_payouts(self) -> Dict[str, Any]:
         """Process all pending payouts that are ready for release"""
+
+
+
         try:
             logger.info("Processing pending payouts")
             
@@ -1196,6 +1241,9 @@ class RevenueSplitter:
         participant_id: Optional[str] = None
     ) -> Dict[str, Any]:
         """Get comprehensive revenue analytics"""
+
+
+
         try:
             # Get revenue data
             revenue_data = await self._get_revenue_data(
@@ -1234,6 +1282,9 @@ class RevenueSplitter:
         evidence: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Handle payout dispute"""
+
+
+
         try:
             logger.info(f"Handling dispute for payout {payout_id}")
             
@@ -1373,6 +1424,9 @@ class RevenueSplitter:
         
     async def _select_applicable_rule(self, rules: List[SplitRule], revenue_source: str, performance_data: Optional[Dict[str, Any]]) -> SplitRule:
         """Select most applicable rule"""
+
+
+
         return rules[0] if rules else None
         
     async def _calculate_base_split(self, rule: SplitRule, total_revenue: Decimal, performance_data: Optional[Dict[str, Any]]) -> Dict[str, Decimal]:
@@ -1388,14 +1442,23 @@ class RevenueSplitter:
         
     async def _apply_performance_adjustments(self, base_split: Dict[str, Decimal], rule: SplitRule, performance_data: Optional[Dict[str, Any]]) -> Dict[str, Decimal]:
         """Apply performance-based adjustments"""
+
+
+
         return base_split  # Placeholder - would implement performance adjustments
         
     async def _apply_deductions(self, split: Dict[str, Decimal], partnership_id: str, revenue_source: str) -> Dict[str, Decimal]:
         """Apply platform fees and other deductions"""
+
+
+
         return split  # Placeholder - would apply fees/deductions
         
     async def _calculate_taxes(self, split: Dict[str, Decimal], currency: CurrencyType) -> Dict[str, Dict[str, Decimal]]:
         """Calculate taxes for each participant"""
+
+
+
         return {}  # Placeholder - would calculate taxes
         
     async def _save_split_calculation(self, calculation: Dict[str, Any]) -> None:
@@ -1428,10 +1491,16 @@ class RevenueSplitter:
         
     async def _get_ready_payouts(self) -> List[Dict[str, Any]]:
         """Get payouts ready for processing"""
+
+
+
         return []
         
     async def _process_individual_payout(self, payout: Dict[str, Any]) -> Dict[str, Any]:
         """Process individual payout"""
+
+
+
         return {'success': True}
         
     async def _update_payout_status(self, payout_id: str, status: PayoutStatus, result: Optional[Dict[str, Any]] = None) -> None:
@@ -1466,6 +1535,9 @@ class RevenueSplitter:
         
     async def _validate_dispute_authority(self, payout: Dict[str, Any], disputing_party: str) -> None:
         """Validate that the disputing party has authority to dispute this payout"""
+
+
+
         try:
             # Check if disputing party is a participant in the payout
             participants = payout.get('participants', [])
@@ -1493,14 +1565,17 @@ class RevenueSplitter:
                 if result and result[0] > 0:
                     raise ValueError("An active dispute already exists for this payout")
             
-            logger.info(f"✅ Dispute authority validated: {disputing_party} can dispute payout {payout.get('payout_id')}")
+            logger.info(f" Dispute authority validated: {disputing_party} can dispute payout {payout.get('payout_id')}")
             
         except Exception as e:
-            logger.error(f"❌ Dispute authority validation failed: {e}")
+            logger.error(f" Dispute authority validation failed: {e}")
             raise
     
     async def _save_dispute_record(self, dispute_record: Dict[str, Any]) -> None:
         """Save dispute record to database and initiate dispute process"""
+
+
+
         try:
             if hasattr(self, 'db_manager') and self.db_manager:
                 insert_query = """
@@ -1537,14 +1612,17 @@ class RevenueSplitter:
                     }
                     await self.cache_manager.set(cache_key, json.dumps(cache_data), expire_seconds=3600)
                 
-                logger.info(f"⚖️ Saved dispute record: {dispute_id}")
+                logger.info(f" Saved dispute record: {dispute_id}")
                 
         except Exception as e:
-            logger.error(f"❌ Failed to save dispute record: {e}")
+            logger.error(f" Failed to save dispute record: {e}")
             raise
     
     async def _notify_dispute_parties(self, dispute_record: Dict[str, Any]) -> None:
         """Notify all relevant parties about the dispute"""
+
+
+
         try:
             # Get all parties involved in the payout
             payout_id = dispute_record.get('payout_id')
@@ -1577,7 +1655,7 @@ class RevenueSplitter:
                             message_template = f"A dispute has been raised regarding payout {payout_id}."
                         
                         notification = {
-                            "subject": "⚖️ Payout Dispute Notification",
+                            "subject": " Payout Dispute Notification",
                             "body": f"{message_template}\n\nDispute ID: {dispute_record.get('dispute_id')}\nReason: {dispute_record.get('reason')}",
                             "template_type": "dispute_notification",
                             "priority": "high"
@@ -1593,21 +1671,24 @@ class RevenueSplitter:
                 # Notify platform administrators
                 if hasattr(self, 'admin_notification_manager'):
                     admin_notification = {
-                        "subject": "🚨 New Payout Dispute Requires Review",
+                        "subject": " New Payout Dispute Requires Review",
                         "body": f"A new dispute has been filed:\n\nDispute ID: {dispute_record.get('dispute_id')}\nPayout ID: {payout_id}\nReason: {dispute_record.get('reason')}\n\nPlease review and assign a mediator.",
                         "template_type": "admin_dispute_alert",
                         "priority": "high"
                     }
                     await self.admin_notification_manager.send_to_admins(admin_notification)
                 
-                logger.info(f"📧 Dispute notifications sent for: {dispute_record.get('dispute_id')}")
+                logger.info(f" Dispute notifications sent for: {dispute_record.get('dispute_id')}")
                 
         except Exception as e:
-            logger.error(f"❌ Failed to notify dispute parties: {e}")
+            logger.error(f" Failed to notify dispute parties: {e}")
             # Don't raise - notification failure shouldn't block dispute creation
         
     async def _hold_disputed_funds(self, payout: Dict[str, Any]) -> None:
         """Hold disputed funds in escrow until dispute is resolved"""
+
+
+
         try:
             payout_id = payout.get('payout_id')
             amount = payout.get('amount', 0)
@@ -1699,8 +1780,8 @@ class RevenueSplitter:
                     hold_until="dispute_resolved"
                 )
             
-            logger.warning(f"🔒 Disputed funds held in escrow: {payout_id} -> ${amount} {currency}")
+            logger.warning(f" Disputed funds held in escrow: {payout_id} -> ${amount} {currency}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to hold disputed funds for {payout.get('payout_id')}: {e}")
+            logger.error(f" Failed to hold disputed funds for {payout.get('payout_id')}: {e}")
             raise

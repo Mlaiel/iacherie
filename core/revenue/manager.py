@@ -4,7 +4,7 @@ Revenue Management System - Strategic revenue portfolio and target management
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  STRICT COPYRIGHT WARNING ⚠️
+  STRICT COPYRIGHT WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, reproduction, modification, or distribution without explicit 
 written permission from the author is strictly prohibited.
@@ -99,11 +99,17 @@ class RevenueTarget:
     @property
     def remaining_amount(self) -> Decimal:
         """Calculate remaining amount to reach target"""
+
+
+
         return max(Decimal('0'), self.target_amount - self.current_amount)
     
     @property
     def days_remaining(self) -> int:
         """Calculate days remaining to reach target"""
+
+
+
         return max(0, (self.end_date - datetime.utcnow()).days)
     
     @property
@@ -138,11 +144,17 @@ class RevenuePortfolio:
     @property
     def target_count(self) -> int:
         """Get number of targets in portfolio"""
+
+
+
         return len(self.targets)
     
     @property
     def achieved_targets(self) -> int:
         """Get number of achieved targets"""
+
+
+
         return len([t for t in self.targets if t.progress_percentage >= 100])
 
 
@@ -181,6 +193,9 @@ class RevenueManager:
         
     async def initialize(self) -> None:
         """Initialize revenue manager"""
+
+
+
         try:
             # Load existing portfolios and targets
             await self._load_portfolios()
@@ -235,6 +250,9 @@ class RevenueManager:
         description: Optional[str] = None
     ) -> str:
         """Create new revenue portfolio"""
+
+
+
         try:
             portfolio_id = str(uuid.uuid4())
             
@@ -273,6 +291,9 @@ class RevenueManager:
         description: str = ""
     ) -> str:
         """Create new revenue target"""
+
+
+
         try:
             if portfolio_id not in self.portfolios:
                 raise RevenueManagementError(f"Portfolio not found: {portfolio_id}")
@@ -314,6 +335,9 @@ class RevenueManager:
     
     async def update_target_progress(self, target_id: str, amount: Decimal) -> None:
         """Update target progress"""
+
+
+
         try:
             if target_id not in self.targets:
                 raise RevenueManagementError(f"Target not found: {target_id}")
@@ -340,6 +364,9 @@ class RevenueManager:
     
     async def _check_milestone_achievements(self, target: RevenueTarget) -> None:
         """Check and record milestone achievements"""
+
+
+
         try:
             progress = target.progress_percentage
             
@@ -369,6 +396,9 @@ class RevenueManager:
     
     async def _update_diversification_score(self, portfolio_id: str) -> None:
         """Update portfolio diversification score"""
+
+
+
         try:
             portfolio = self.portfolios[portfolio_id]
             
@@ -408,6 +438,9 @@ class RevenueManager:
     
     async def analyze_portfolio_performance(self, portfolio_id: str, period_days: int = 30) -> PerformanceMetrics:
         """Analyze portfolio performance"""
+
+
+
         try:
             if portfolio_id not in self.portfolios:
                 raise RevenueManagementError(f"Portfolio not found: {portfolio_id}")
@@ -465,6 +498,9 @@ class RevenueManager:
     
     async def get_portfolio_recommendations(self, portfolio_id: str) -> List[Dict[str, Any]]:
         """Get portfolio optimization recommendations"""
+
+
+
         try:
             if portfolio_id not in self.portfolios:
                 raise RevenueManagementError(f"Portfolio not found: {portfolio_id}")
@@ -572,6 +608,9 @@ class RevenueManager:
         scenarios: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
         """Simulate different portfolio scenarios"""
+
+
+
         try:
             if portfolio_id not in self.portfolios:
                 raise RevenueManagementError(f"Portfolio not found: {portfolio_id}")
@@ -690,6 +729,9 @@ class RevenueManager:
     
     async def get_target_insights(self, target_id: str) -> Dict[str, Any]:
         """Get detailed insights for specific target"""
+
+
+
         try:
             if target_id not in self.targets:
                 raise RevenueManagementError(f"Target not found: {target_id}")
@@ -719,6 +761,9 @@ class RevenueManager:
     
     async def _calculate_achievement_probability(self, target: RevenueTarget) -> float:
         """Calculate probability of target achievement"""
+
+
+
         try:
             # Simple probability calculation based on current progress and time remaining
             progress = target.progress_percentage
@@ -820,6 +865,9 @@ class RevenueManager:
     
     async def export_portfolio_report(self, portfolio_id: str) -> Dict[str, Any]:
         """Export comprehensive portfolio report"""
+
+
+
         try:
             if portfolio_id not in self.portfolios:
                 raise RevenueManagementError(f"Portfolio not found: {portfolio_id}")

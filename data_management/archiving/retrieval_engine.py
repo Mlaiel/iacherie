@@ -7,7 +7,7 @@ parallel fetching, and optimization for different access patterns and storage ti
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -204,10 +204,16 @@ class RetrievalQueue:
     
     def get_queue_size(self) -> int:
         """Get current queue size"""
+
+
+
         return len(self.request_lookup)
     
     def get_pending_requests(self) -> List[RetrievalRequest]:
         """Get all pending requests"""
+
+
+
         return list(self.request_lookup.values())
 
 
@@ -254,6 +260,9 @@ class ContentCache:
                   compression_method: Optional[CompressionMethod] = None,
                   ttl_seconds: Optional[int] = None) -> bool:
         """Put content in cache"""
+
+
+
         try:
             content_size = len(content_data)
             
@@ -452,10 +461,16 @@ class HotTierRetrievalManager(TierRetrievalManager):
     
     async def get_retrieval_cost(self, entry: ArchiveEntry, size_bytes: int) -> float:
         """Hot storage has no retrieval cost"""
+
+
+
         return 0.0
     
     async def estimate_retrieval_time(self, entry: ArchiveEntry, size_bytes: int) -> float:
         """Hot storage retrieval time"""
+
+
+
         return 0.01  # 10ms
 
 
@@ -471,10 +486,16 @@ class ColdTierRetrievalManager(TierRetrievalManager):
     
     async def get_retrieval_cost(self, entry: ArchiveEntry, size_bytes: int) -> float:
         """Cold storage retrieval cost"""
+
+
+
         return size_bytes * 0.01 / (1024**3)  # $0.01/GB
     
     async def estimate_retrieval_time(self, entry: ArchiveEntry, size_bytes: int) -> float:
         """Cold storage retrieval time"""
+
+
+
         return 0.1 + (size_bytes / (1024**2)) * 0.01  # Base + size factor
 
 
@@ -490,10 +511,16 @@ class FrozenTierRetrievalManager(TierRetrievalManager):
     
     async def get_retrieval_cost(self, entry: ArchiveEntry, size_bytes: int) -> float:
         """Frozen storage retrieval cost"""
+
+
+
         return size_bytes * 0.03 / (1024**3)  # $0.03/GB
     
     async def estimate_retrieval_time(self, entry: ArchiveEntry, size_bytes: int) -> float:
         """Frozen storage retrieval time"""
+
+
+
         return 1.0 + (size_bytes / (1024**2)) * 0.1  # Base + size factor
 
 
@@ -509,10 +536,16 @@ class DeepArchiveTierRetrievalManager(TierRetrievalManager):
     
     async def get_retrieval_cost(self, entry: ArchiveEntry, size_bytes: int) -> float:
         """Deep archive retrieval cost"""
+
+
+
         return size_bytes * 0.10 / (1024**3)  # $0.10/GB
     
     async def estimate_retrieval_time(self, entry: ArchiveEntry, size_bytes: int) -> float:
         """Deep archive retrieval time"""
+
+
+
         return 5.0 + (size_bytes / (1024**2)) * 1.0  # Base + size factor
 
 
@@ -557,6 +590,9 @@ class ArchivalRetrievalEngine:
     
     async def submit_retrieval_request(self, request: RetrievalRequest) -> str:
         """Submit a new retrieval request"""
+
+
+
         try:
             # Validate request
             if not await self._validate_request(request):
@@ -597,6 +633,9 @@ class ArchivalRetrievalEngine:
         Returns:
             Tuple of content data and performance metrics
         """
+
+
+
         try:
             # Generate request ID
             request_id = f"retr_{archive_id}_{int(time.time() * 1000)}"
@@ -657,6 +696,9 @@ class ArchivalRetrievalEngine:
     
     async def cancel_request(self, request_id: str) -> bool:
         """Cancel a retrieval request"""
+
+
+
         try:
             if request_id in self.active_requests:
                 request = self.active_requests[request_id]
@@ -676,6 +718,9 @@ class ArchivalRetrievalEngine:
     
     async def prefetch_content(self, archive_ids: List[str]) -> List[str]:
         """Prefetch content for predictive caching"""
+
+
+
         try:
             prefetched = []
             
@@ -708,6 +753,9 @@ class ArchivalRetrievalEngine:
     
     async def get_retrieval_stats(self) -> Dict[str, Any]:
         """Get comprehensive retrieval statistics"""
+
+
+
         try:
             # Calculate average performance
             total_requests = len(self.performance_history)
@@ -743,6 +791,9 @@ class ArchivalRetrievalEngine:
     
     async def _process_request(self, request: RetrievalRequest) -> bytes:
         """Process a retrieval request"""
+
+
+
         try:
             request.status = "in_progress"
             request.started_at = datetime.utcnow()
@@ -801,6 +852,9 @@ class ArchivalRetrievalEngine:
     
     async def _validate_request(self, request: RetrievalRequest) -> bool:
         """Validate retrieval request"""
+
+
+
         try:
             # Basic validation
             if not request.request_id or not request.archive_id:

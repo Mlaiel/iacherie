@@ -83,6 +83,9 @@ class DockerConfig:
     
     def _get_base_images(self) -> Dict[str, str]:
         """Define base images for different service types"""
+
+
+
         return {
             "python_ai": "python:3.11-slim-bullseye",
             "python_ml": "tensorflow/tensorflow:2.13.0-gpu",
@@ -96,6 +99,9 @@ class DockerConfig:
     
     def get_main_api_image_config(self) -> DockerImageConfig:
         """Main FastAPI application image configuration"""
+
+
+
         return DockerImageConfig(
             name=f"{self.project_name}-api",
             tag=f"latest-{self.environment}",
@@ -118,6 +124,9 @@ class DockerConfig:
     
     def get_ai_fingerprinting_image_config(self) -> DockerImageConfig:
         """AI Fingerprinting service image configuration"""
+
+
+
         return DockerImageConfig(
             name=f"{self.project_name}-ai-fingerprinting",
             tag=f"latest-{self.environment}",
@@ -139,6 +148,9 @@ class DockerConfig:
     
     def get_content_protection_image_config(self) -> DockerImageConfig:
         """Content Protection service image configuration"""
+
+
+
         return DockerImageConfig(
             name=f"{self.project_name}-content-protection",
             tag=f"latest-{self.environment}",
@@ -160,6 +172,9 @@ class DockerConfig:
     
     def get_monetization_engine_image_config(self) -> DockerImageConfig:
         """Monetization Engine service image configuration"""
+
+
+
         return DockerImageConfig(
             name=f"{self.project_name}-monetization",
             tag=f"latest-{self.environment}",
@@ -180,6 +195,9 @@ class DockerConfig:
     
     def get_web_crawlers_image_config(self) -> DockerImageConfig:
         """Web Crawlers service image configuration"""
+
+
+
         return DockerImageConfig(
             name=f"{self.project_name}-web-crawlers",
             tag=f"latest-{self.environment}",
@@ -326,6 +344,9 @@ class DockerConfig:
     
     def _get_database_services(self) -> Dict[str, DockerServiceConfig]:
         """Generate database services configuration"""
+
+
+
         return {
             "postgres": DockerServiceConfig(
                 image="postgres:15.4-alpine",
@@ -395,6 +416,9 @@ class DockerConfig:
     
     def _get_infrastructure_services(self) -> Dict[str, DockerServiceConfig]:
         """Generate infrastructure services configuration"""
+
+
+
         return {
             "nginx": DockerServiceConfig(
                 image="nginx:1.25-alpine",
@@ -525,6 +549,9 @@ class DockerConfig:
     
     def _get_api_dockerfile(self) -> str:
         """Generate main API Dockerfile"""
+
+
+
         return '''# Multi-stage build for IA-Influencer Agent API
 FROM python:3.11-slim-bullseye as base
 
@@ -575,6 +602,9 @@ CMD ["uvicorn", "backend.app.main:app", "--host", "0.0.0.0", "--port", "8000"]
     
     def _get_ai_fingerprinting_dockerfile(self) -> str:
         """Generate AI Fingerprinting service Dockerfile"""
+
+
+
         return '''# AI Fingerprinting Service with GPU support
 FROM tensorflow/tensorflow:2.13.0-gpu
 
@@ -627,6 +657,9 @@ CMD ["python", "-m", "backend.ai.fingerprinting_service"]
     
     def _get_content_protection_dockerfile(self) -> str:
         """Generate Content Protection service Dockerfile"""
+
+
+
         return '''# Content Protection Service
 FROM python:3.11-slim-bullseye
 
@@ -673,6 +706,9 @@ CMD ["python", "-m", "backend.content_protection.protection_service"]
     
     def _get_monetization_dockerfile(self) -> str:
         """Generate Monetization Engine service Dockerfile"""
+
+
+
         return '''# Monetization Engine Service
 FROM python:3.11-slim-bullseye
 
@@ -714,6 +750,9 @@ CMD ["python", "-m", "backend.business.monetization_service"]
     
     def _get_crawlers_dockerfile(self) -> str:
         """Generate Web Crawlers service Dockerfile"""
+
+
+
         return '''# Web Crawlers Service
 FROM python:3.11-slim-bullseye
 
@@ -758,6 +797,9 @@ CMD ["python", "-m", "backend.integrations.crawlers.crawler_service"]
     
     def _get_nginx_config(self) -> str:
         """Generate Nginx configuration"""
+
+
+
         return '''# Nginx configuration for IA-Influencer Agent
 worker_processes auto;
 error_log /var/log/nginx/error.log warn;
@@ -886,6 +928,9 @@ http {
     
     def _get_postgres_init(self) -> str:
         """Generate PostgreSQL initialization script"""
+
+
+
         return '''-- PostgreSQL initialization for IA-Influencer Agent
 -- Author: Fahed Mlaiel <mlaiel@live.de>
 
@@ -947,6 +992,9 @@ SELECT pg_reload_conf();
     
     def _get_redis_config(self) -> str:
         """Generate Redis configuration"""
+
+
+
         return '''# Redis configuration for IA-Influencer Agent
 # Author: Fahed Mlaiel <mlaiel@live.de>
 
@@ -996,6 +1044,9 @@ notify-keyspace-events Ex
     
     def _get_mongo_config(self) -> str:
         """Generate MongoDB configuration"""
+
+
+
         return '''# MongoDB configuration for IA-Influencer Agent
 # Author: Fahed Mlaiel <mlaiel@live.de>
 
@@ -1040,6 +1091,9 @@ net:
 
     def get_build_script(self) -> str:
         """Generate build script for all Docker images"""
+
+
+
         return '''#!/bin/bash
 # Docker build script for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -1051,14 +1105,14 @@ ENVIRONMENT="${ENVIRONMENT:-development}"
 BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')
 VCS_REF=$(git rev-parse --short HEAD)
 
-echo "🚀 Building IA-Influencer Agent Docker images..."
+echo " Building IA-Influencer Agent Docker images..."
 echo "Registry: $REGISTRY_URL"
 echo "Environment: $ENVIRONMENT"
 echo "Build Date: $BUILD_DATE"
 echo "VCS Ref: $VCS_REF"
 
 # Build main API
-echo "📦 Building main API service..."
+echo " Building main API service..."
 docker build \
     --build-arg ENVIRONMENT=$ENVIRONMENT \
     --build-arg BUILD_DATE=$BUILD_DATE \
@@ -1074,44 +1128,47 @@ docker build \
     -f docker/ai-fingerprinting/Dockerfile .
 
 # Build content protection service
-echo "🛡️ Building content protection service..."
+echo " Building content protection service..."
 docker build \
     --build-arg ENVIRONMENT=$ENVIRONMENT \
     -t $REGISTRY_URL/ia-influencer-agent-content-protection:latest-$ENVIRONMENT \
     -f docker/content-protection/Dockerfile .
 
 # Build monetization engine
-echo "💰 Building monetization engine..."
+echo " Building monetization engine..."
 docker build \
     --build-arg ENVIRONMENT=$ENVIRONMENT \
     -t $REGISTRY_URL/ia-influencer-agent-monetization:latest-$ENVIRONMENT \
     -f docker/monetization/Dockerfile .
 
 # Build web crawlers
-echo "🕷️ Building web crawlers service..."
+echo " Building web crawlers service..."
 docker build \
     --build-arg ENVIRONMENT=$ENVIRONMENT \
     -t $REGISTRY_URL/ia-influencer-agent-web-crawlers:latest-$ENVIRONMENT \
     -f docker/crawlers/Dockerfile .
 
-echo "✅ All images built successfully!"
+echo " All images built successfully!"
 
 # Push to registry (if not local)
 if [ "$REGISTRY_URL" != "localhost:5000" ]; then
-    echo "📤 Pushing images to registry..."
+    echo " Pushing images to registry..."
     docker push $REGISTRY_URL/ia-influencer-agent-api:latest-$ENVIRONMENT
     docker push $REGISTRY_URL/ia-influencer-agent-ai-fingerprinting:latest-$ENVIRONMENT
     docker push $REGISTRY_URL/ia-influencer-agent-content-protection:latest-$ENVIRONMENT
     docker push $REGISTRY_URL/ia-influencer-agent-monetization:latest-$ENVIRONMENT
     docker push $REGISTRY_URL/ia-influencer-agent-web-crawlers:latest-$ENVIRONMENT
-    echo "✅ All images pushed successfully!"
+    echo " All images pushed successfully!"
 fi
 
-echo "🎉 Docker build process completed!"
+echo " Docker build process completed!"
 '''
 
     def get_deployment_script(self) -> str:
         """Generate deployment script"""
+
+
+
         return '''#!/bin/bash
 # Deployment script for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -1121,24 +1178,24 @@ set -e
 ENVIRONMENT="${ENVIRONMENT:-development}"
 COMPOSE_FILE="${COMPOSE_FILE:-docker-compose.yml}"
 
-echo "🚀 Deploying IA-Influencer Agent Platform..."
+echo " Deploying IA-Influencer Agent Platform..."
 echo "Environment: $ENVIRONMENT"
 echo "Compose file: $COMPOSE_FILE"
 
 # Check prerequisites
 if ! command -v docker &> /dev/null; then
-    echo "❌ Docker is not installed"
+    echo " Docker is not installed"
     exit 1
 fi
 
 if ! command -v docker compose &> /dev/null; then
-    echo "❌ Docker Compose is not installed"
+    echo " Docker Compose is not installed"
     exit 1
 fi
 
 # Load environment variables
 if [ -f ".env.$ENVIRONMENT" ]; then
-    echo "📝 Loading environment variables from .env.$ENVIRONMENT"
+    echo " Loading environment variables from .env.$ENVIRONMENT"
     export $(cat .env.$ENVIRONMENT | xargs)
 fi
 
@@ -1147,39 +1204,39 @@ mkdir -p logs uploads models temp screenshots crawler_data
 
 # Pull latest images (if using remote registry)
 if [ "$ENVIRONMENT" != "development" ]; then
-    echo "📥 Pulling latest images..."
+    echo " Pulling latest images..."
     docker compose -f $COMPOSE_FILE pull
 fi
 
 # Stop existing services
-echo "🛑 Stopping existing services..."
+echo " Stopping existing services..."
 docker compose -f $COMPOSE_FILE down --remove-orphans
 
 # Start services
-echo "🎬 Starting services..."
+echo " Starting services..."
 docker compose -f $COMPOSE_FILE up -d
 
 # Wait for services to be healthy
-echo "⏱️ Waiting for services to be ready..."
+echo "⏱ Waiting for services to be ready..."
 for service in postgres redis mongo api; do
     echo "Checking $service..."
     until docker compose -f $COMPOSE_FILE exec $service healthcheck 2>/dev/null; do
         echo "Waiting for $service to be healthy..."
         sleep 5
     done
-    echo "✅ $service is healthy"
+    echo " $service is healthy"
 done
 
 # Run database migrations (if needed)
-echo "🗄️ Running database migrations..."
+echo " Running database migrations..."
 docker compose -f $COMPOSE_FILE exec api python -m backend.database.migrations.run
 
 # Display status
-echo "📊 Deployment status:"
+echo " Deployment status:"
 docker compose -f $COMPOSE_FILE ps
 
-echo "🎉 IA-Influencer Agent Platform deployed successfully!"
-echo "🌐 Access the API at: http://localhost:8000"
-echo "📝 API documentation: http://localhost:8000/docs"
-echo "💻 Admin interface: http://localhost:8000/admin"
+echo " IA-Influencer Agent Platform deployed successfully!"
+echo " Access the API at: http://localhost:8000"
+echo " API documentation: http://localhost:8000/docs"
+echo " Admin interface: http://localhost:8000/admin"
 '''

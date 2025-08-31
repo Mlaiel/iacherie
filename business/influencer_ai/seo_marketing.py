@@ -1,5 +1,5 @@
 """
-🔍 SEO Marketing - IA-Influencer-Agent Business Module
+ SEO Marketing - IA-Influencer-Agent Business Module
 ================================================================
 Architecture: Enterprise 3-Tier Professional (Backend Level 2)
 Expert Team: SEO_EXPERT + MARKETING_STRATEGIST + NLP_ENGINEER + DATA_SCIENTIST
@@ -8,7 +8,7 @@ Type: SEO_MARKETING_SERVICE
 Created: 2025-08-14
 ================================================================
 
-🚨 STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
+ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
 This code is EXCLUSIVE PROPERTY of Fahed Mlaiel.
 Unauthorized access, copying, or usage is STRICTLY PROHIBITED.
@@ -261,6 +261,9 @@ class SEOMarketingManager:
         
     async def initialize(self) -> bool:
         """Initialisation du gestionnaire"""
+
+
+
         try:
             if not self.config.enabled:
                 self.logger.warning("SEO Marketing is disabled")
@@ -291,6 +294,9 @@ class SEOMarketingManager:
     
     async def _initialize_nlp_models(self):
         """Initialiser les modèles NLP"""
+
+
+
         try:
             # Modèle de vectorisation TF-IDF
             self.seo_models['tfidf'] = TfidfVectorizer(
@@ -316,6 +322,9 @@ class SEOMarketingManager:
     
     async def _initialize_api_connectors(self):
         """Initialiser les connecteurs API"""
+
+
+
         try:
             # Configuration des APIs SEO
             self.api_configs = {
@@ -340,6 +349,9 @@ class SEOMarketingManager:
     
     async def _start_trend_monitoring(self):
         """Démarrer la surveillance des tendances"""
+
+
+
         try:
             async def trend_monitor():
                 while True:
@@ -354,6 +366,9 @@ class SEOMarketingManager:
     
     async def _start_competitor_monitoring(self):
         """Démarrer la surveillance concurrentielle"""
+
+
+
         try:
             async def competitor_monitor():
                 while True:
@@ -373,6 +388,9 @@ class SEOMarketingManager:
         language: str = "en"
     ) -> List[Keyword]:
         """Rechercher des mots-clés optimaux"""
+
+
+
         try:
             all_keywords = []
             
@@ -406,6 +424,9 @@ class SEOMarketingManager:
         language: str
     ) -> List[Keyword]:
         """Rechercher des mots-clés pour une plateforme spécifique"""
+
+
+
         try:
             keywords = []
             
@@ -536,6 +557,9 @@ class SEOMarketingManager:
         platform: SEOPlatform
     ) -> ContentSEOAnalysis:
         """Analyser le SEO du contenu"""
+
+
+
         try:
             # Analyse du titre
             title_score = await self._analyze_title_seo(title, target_keywords, platform)
@@ -685,6 +709,9 @@ class SEOMarketingManager:
     
     async def _calculate_readability_score(self, content: str) -> float:
         """Calculer le score de lisibilité"""
+
+
+
         try:
             if len(content.strip()) == 0:
                 return 0.0
@@ -855,9 +882,9 @@ class SEOMarketingManager:
         
         # Ajouter des call-to-action selon la plateforme
         cta_additions = {
-            SEOPlatform.YOUTUBE: "\n\n👍 Like and subscribe for more content!",
-            SEOPlatform.INSTAGRAM: "\n\n💙 Follow for more inspiration!",
-            SEOPlatform.TIKTOK: "\n\n🔥 Follow for trending content!"
+            SEOPlatform.YOUTUBE: "\n\n Like and subscribe for more content!",
+            SEOPlatform.INSTAGRAM: "\n\n Follow for more inspiration!",
+            SEOPlatform.TIKTOK: "\n\n Follow for trending content!"
         }
         
         if platform in cta_additions:
@@ -900,6 +927,9 @@ class SEOMarketingManager:
     
     async def _generate_meta_tags(self, title: str, description: str, keywords: List[str]) -> Dict[str, str]:
         """Générer les meta tags"""
+
+
+
         return {
             'title': title[:60],  # Limite Google
             'description': description[:160],  # Limite Google
@@ -912,6 +942,9 @@ class SEOMarketingManager:
     
     async def _update_trending_keywords(self):
         """Mettre à jour les mots-clés tendance"""
+
+
+
         try:
             # Simulation de récupération des tendances
             trending_topics = [
@@ -944,6 +977,9 @@ class SEOMarketingManager:
     
     async def _update_competitor_analysis(self):
         """Mettre à jour l'analyse concurrentielle"""
+
+
+
         try:
             # Simulation d'analyse concurrentielle
             competitors = ["competitor_a", "competitor_b", "competitor_c"]
@@ -985,6 +1021,9 @@ class SEOMarketingService(ISEOMarketingService):
         
     async def initialize(self) -> bool:
         """Initialiser le service"""
+
+
+
         return await self.manager.initialize()
     
     async def research_keywords(
@@ -994,6 +1033,9 @@ class SEOMarketingService(ISEOMarketingService):
         language: str = "en"
     ) -> List[Keyword]:
         """Rechercher des mots-clés optimaux"""
+
+
+
         return await self.manager.research_keywords(seed_keywords, target_platforms, language)
     
     async def analyze_content_seo(
@@ -1005,6 +1047,9 @@ class SEOMarketingService(ISEOMarketingService):
         platform: SEOPlatform
     ) -> ContentSEOAnalysis:
         """Analyser le SEO du contenu"""
+
+
+
         return await self.manager.analyze_content_seo(
             title, description, content_body, target_keywords, platform
         )
@@ -1016,6 +1061,9 @@ class SEOMarketingService(ISEOMarketingService):
         time_range_days: int = 30
     ) -> List[TrendAnalysis]:
         """Analyser les tendances"""
+
+
+
         try:
             trend_analyses = []
             
@@ -1059,6 +1107,9 @@ class SEOMarketingService(ISEOMarketingService):
         focus_keywords: List[str]
     ) -> List[CompetitorAnalysis]:
         """Analyser les concurrents"""
+
+
+
         try:
             competitor_analyses = []
             
@@ -1109,6 +1160,9 @@ class SEOMarketingService(ISEOMarketingService):
         platforms: List[SEOPlatform]
     ) -> SEOStrategy:
         """Générer une stratégie SEO personnalisée"""
+
+
+
         try:
             # Recherche de mots-clés pour la niche
             seed_keywords = [niche, f"{niche} tips", f"{niche} guide"]
@@ -1166,10 +1220,16 @@ class SEOMarketingService(ISEOMarketingService):
 
 def create_seo_marketing_service(config: Optional[SEOMarketingConfig] = None) -> SEOMarketingService:
     """Factory pour créer un service SEO Marketing"""
+
+
+
     return SEOMarketingService(config)
 
 def create_seo_marketing_manager(config: Optional[SEOMarketingConfig] = None) -> SEOMarketingManager:
     """Factory pour créer un gestionnaire SEO Marketing"""
+
+
+
     return SEOMarketingManager(config)
 
 # =============== MODULE EXPORTS ===============

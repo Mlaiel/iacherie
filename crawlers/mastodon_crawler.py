@@ -370,6 +370,9 @@ class MastodonCrawler(BaseCrawler):
         Returns:
             bool: Authentication success status
         """
+
+
+
         try:
             instance_url = instance_url or self.primary_instance
             
@@ -426,6 +429,9 @@ class MastodonCrawler(BaseCrawler):
         Returns:
             Dict[str, str]: Application credentials
         """
+
+
+
         try:
             if not instance_url.startswith('http'):
                 instance_url = f"https://{instance_url}"
@@ -563,6 +569,9 @@ class MastodonCrawler(BaseCrawler):
         resolve: bool
     ) -> Dict[str, List[Any]]:
         """Search specific Mastodon instance"""
+
+
+
         try:
             if not instance_url.startswith('http'):
                 instance_url = f"https://{instance_url}"
@@ -768,6 +777,9 @@ class MastodonCrawler(BaseCrawler):
         limit: int = 40
     ) -> List[MastodonStatus]:
         """Get federated timeline from instance"""
+
+
+
         try:
             if not instance_url.startswith('http'):
                 instance_url = f"https://{instance_url}"
@@ -806,6 +818,9 @@ class MastodonCrawler(BaseCrawler):
         limit: int = 20
     ) -> List[MastodonStatus]:
         """Get hashtag timeline from instance"""
+
+
+
         try:
             if not instance_url.startswith('http'):
                 instance_url = f"https://{instance_url}"
@@ -905,6 +920,9 @@ class MastodonCrawler(BaseCrawler):
         features2: Dict[str, Any]
     ) -> float:
         """Calculate similarity between status features"""
+
+
+
         try:
             scores = []
             
@@ -954,6 +972,9 @@ class MastodonCrawler(BaseCrawler):
         Returns:
             MastodonAnalytics: Comprehensive analytics data
         """
+
+
+
         try:
             start_time, end_time = analysis_period
             instance_url = instance_url or self.primary_instance
@@ -1128,6 +1149,9 @@ class MastodonCrawler(BaseCrawler):
 
     async def _parse_account_data(self, data: Dict[str, Any], instance_url: str) -> MastodonAccount:
         """Parse account data from API response"""
+
+
+
         try:
             # Parse custom emojis
             emojis = []
@@ -1181,6 +1205,9 @@ class MastodonCrawler(BaseCrawler):
 
     async def _parse_status_data(self, data: Dict[str, Any], instance_url: str) -> MastodonStatus:
         """Parse status data from API response"""
+
+
+
         try:
             # Parse account
             account = await self._parse_account_data(data.get("account", {}), instance_url)
@@ -1313,6 +1340,9 @@ class MastodonCrawler(BaseCrawler):
         instance_url: str
     ) -> List[MastodonStatus]:
         """Get account's statuses in a specific time period"""
+
+
+
         try:
             if not instance_url.startswith('http'):
                 instance_url = f"https://{instance_url}"
@@ -1355,6 +1385,9 @@ class MastodonCrawler(BaseCrawler):
 
     async def discover_instances(self, limit: int = 100) -> List[MastodonInstance]:
         """Discover active Mastodon instances"""
+
+
+
         try:
             # Use instance directory services
             directory_urls = [
@@ -1387,6 +1420,9 @@ class MastodonCrawler(BaseCrawler):
 
     async def _parse_instance_data(self, data: Dict[str, Any]) -> MastodonInstance:
         """Parse instance data"""
+
+
+
         return MastodonInstance(
             uri=data.get("name", ""),
             title=data.get("title", ""),
@@ -1404,6 +1440,9 @@ class MastodonCrawler(BaseCrawler):
 
     async def close(self):
         """Close crawler and cleanup resources"""
+
+
+
         try:
             await self.cache_manager.close()
             await super().close()

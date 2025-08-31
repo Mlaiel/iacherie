@@ -171,6 +171,9 @@ class AudioEnhancementSystem:
         Returns:
             Dictionary with comprehensive enhancement results
         """
+
+
+
         try:
             # Configure pipeline
             pipeline_config = PipelineConfig(
@@ -256,6 +259,9 @@ class AudioEnhancementSystem:
         Returns:
             Dictionary with quality metrics and analysis
         """
+
+
+
         try:
             metrics = self.quality_analyzer.analyze_quality(
                 audio, sample_rate, detailed=detailed
@@ -306,6 +312,9 @@ class AudioEnhancementSystem:
         Returns:
             Dictionary with comparison results
         """
+
+
+
         try:
             comparison = self.quality_analyzer.compare_quality(
                 original_audio, enhanced_audio, sample_rate
@@ -438,6 +447,9 @@ class AudioEnhancementSystem:
         Returns:
             List of preset information dictionaries
         """
+
+
+
         try:
             category_enum = None
             if category:
@@ -474,6 +486,9 @@ class AudioEnhancementSystem:
         Returns:
             Preset information dictionary or None
         """
+
+
+
         try:
             preset = self.config_manager.get_preset(preset_name)
             if not preset:
@@ -610,6 +625,9 @@ class AudioEnhancementSystem:
 # Factory functions for easy instantiation
 def create_enhancement_system(config_dir: Optional[Union[str, Path]] = None) -> AudioEnhancementSystem:
     """Create a new audio enhancement system instance"""
+
+
+
     return AudioEnhancementSystem(config_dir)
 
 
@@ -652,16 +670,25 @@ def analyze_audio_quick(audio: np.ndarray,
 # Module-level convenience functions
 def get_version() -> str:
     """Get module version"""
+
+
+
     return __version__
 
 
 def get_author() -> str:
     """Get module author"""
+
+
+
     return __author__
 
 
 def get_supported_formats() -> List[str]:
     """Get list of supported audio formats"""
+
+
+
     return [
         "WAV", "FLAC", "MP3", "AAC", "OGG", "M4A", "WMA",
         "AIFF", "AU", "CAF", "RF64", "BWF"
@@ -670,27 +697,42 @@ def get_supported_formats() -> List[str]:
 
 def get_supported_sample_rates() -> Tuple[int, int]:
     """Get supported sample rate range"""
+
+
+
     return (8000, 192000)  # 8 kHz to 192 kHz
 
 
 def get_supported_bit_depths() -> List[int]:
     """Get supported bit depths"""
+
+
+
     return [16, 24, 32]
 
 
 def get_processing_modes() -> List[str]:
     """Get available processing modes"""
+
+
+
     return ["low_latency", "balanced", "high_quality", "ultra_quality"]
 
 
 def get_content_types() -> List[str]:
     """Get supported content types"""
+
+
+
     return ["music", "speech", "podcast", "audiobook", "voiceover", 
            "instrument", "sound_effect", "general"]
 
 
 def get_quality_levels() -> List[str]:
     """Get available quality levels"""
+
+
+
     return ["fast", "balanced", "high_quality"]
 
 
@@ -720,6 +762,9 @@ SYSTEM_INFO = {
 
 def get_system_info() -> Dict[str, Any]:
     """Get comprehensive system information"""
+
+
+
     return SYSTEM_INFO.copy()
 
 

@@ -1,5 +1,5 @@
 """
-📊 Business Metrics - Advanced KPI Tracking System
+ Business Metrics - Advanced KPI Tracking System
 =================================================
 
 Enterprise-grade business metrics collection and analysis for the Ainflue platform.
@@ -246,6 +246,9 @@ class BusinessMetricsCollector:
             labels: Optional labels for categorization
             metadata: Optional metadata
         """
+
+
+
         try:
             # Get metric definition
             metric_def = self.kpi_definitions.get(name, {})
@@ -284,6 +287,9 @@ class BusinessMetricsCollector:
         license_id: Optional[int] = None
     ) -> None:
         """Record revenue event"""
+
+
+
         try:
             labels = {"source": source}
             metadata = {}
@@ -312,6 +318,9 @@ class BusinessMetricsCollector:
         content_id: Optional[int] = None
     ) -> None:
         """Record user engagement event"""
+
+
+
         try:
             labels = {
                 "user_id": str(user_id),
@@ -341,6 +350,9 @@ class BusinessMetricsCollector:
         content_type: Optional[str] = None
     ) -> None:
         """Record content performance metric"""
+
+
+
         try:
             labels = {"content_id": str(content_id)}
             metadata = {"content_id": content_id}
@@ -362,6 +374,9 @@ class BusinessMetricsCollector:
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
         """Record license activity"""
+
+
+
         try:
             labels = {
                 "license_id": str(license_id),
@@ -392,6 +407,9 @@ class BusinessMetricsCollector:
         Returns:
             MetricAggregation or None if no data
         """
+
+
+
         try:
             if metric_name not in self.metrics:
                 return None
@@ -462,6 +480,9 @@ class BusinessMetricsCollector:
         Returns:
             Dict: Dashboard data with all KPIs
         """
+
+
+
         try:
             dashboard = {
                 "timestamp": datetime.utcnow().isoformat(),
@@ -520,6 +541,9 @@ class BusinessMetricsCollector:
         Returns:
             List of metric data points
         """
+
+
+
         try:
             if metric_name not in self.metrics:
                 return []
@@ -568,6 +592,9 @@ class BusinessMetricsCollector:
     
     async def _calculate_kpi(self, kpi_name: str, kpi_def: Dict[str, Any]) -> Dict[str, Any]:
         """Calculate individual KPI with status and alerts"""
+
+
+
         try:
             current_aggregation = await self.compute_aggregations(kpi_name, MetricPeriod.DAY)
             
@@ -645,6 +672,9 @@ class BusinessMetricsCollector:
     
     async def _calculate_trend(self, kpi_name: str) -> Optional[Dict[str, Any]]:
         """Calculate trend for KPI (current vs previous period)"""
+
+
+
         try:
             current = await self.compute_aggregations(kpi_name, MetricPeriod.DAY)
             
@@ -688,6 +718,9 @@ class BusinessMetricsCollector:
     
     async def _check_metric_alerts(self, metric: BusinessMetric) -> None:
         """Check if metric triggers any alerts"""
+
+
+
         try:
             if not self.alerting_config.get("enabled", True):
                 return
@@ -713,6 +746,9 @@ class BusinessMetricsCollector:
     
     async def _trigger_alert(self, metric: BusinessMetric, level: str, message: str) -> None:
         """Trigger alert for metric"""
+
+
+
         try:
             alert = {
                 "metric_name": metric.name,
@@ -725,9 +761,9 @@ class BusinessMetricsCollector:
             
             # Log alert
             if level == "critical":
-                logger.critical(f"🚨 CRITICAL ALERT: {message}")
+                logger.critical(f" CRITICAL ALERT: {message}")
             else:
-                logger.warning(f"⚠️ WARNING ALERT: {message}")
+                logger.warning(f" WARNING ALERT: {message}")
             
             # Update stats
             self.collector_stats["alerts_triggered"] += 1

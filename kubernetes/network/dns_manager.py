@@ -7,7 +7,7 @@ Copyright: All rights reserved - Unauthorized use prohibited
 Project: IA Influencer Agent Platform - Content Protection & Monetization
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  AVERTISSEMENT SÉVÈRE ⚠️
+  AVERTISSEMENT SÉVÈRE 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
@@ -209,6 +209,9 @@ class DNSManager:
     
     async def initialize(self) -> None:
         """Initialize DNS manager"""
+
+
+
         try:
             logger.info("Initializing DNS Manager...")
             
@@ -238,6 +241,9 @@ class DNSManager:
     
     async def create_dns_zone(self, zone: DNSZone) -> bool:
         """Create new DNS zone"""
+
+
+
         try:
             logger.info(f"Creating DNS zone: {zone.domain}")
             
@@ -286,6 +292,9 @@ class DNSManager:
     
     async def delete_dns_zone(self, zone_name: str) -> bool:
         """Delete DNS zone"""
+
+
+
         try:
             if zone_name not in self.zones:
                 logger.error(f"DNS zone not found: {zone_name}")
@@ -323,6 +332,9 @@ class DNSManager:
     
     async def add_dns_record(self, zone_name: str, record: DNSRecord) -> bool:
         """Add DNS record to zone"""
+
+
+
         try:
             if zone_name not in self.zones:
                 logger.error(f"DNS zone not found: {zone_name}")
@@ -368,6 +380,9 @@ class DNSManager:
     
     async def remove_dns_record(self, zone_name: str, record_name: str, record_type: DNSRecordType) -> bool:
         """Remove DNS record from zone"""
+
+
+
         try:
             if zone_name not in self.zones:
                 logger.error(f"DNS zone not found: {zone_name}")
@@ -420,6 +435,9 @@ class DNSManager:
     
     async def create_health_check(self, zone_name: str, health_check: HealthCheck) -> bool:
         """Create DNS health check"""
+
+
+
         try:
             if zone_name not in self.zones:
                 logger.error(f"DNS zone not found: {zone_name}")
@@ -454,6 +472,9 @@ class DNSManager:
     
     async def setup_dns_failover(self, config: DNSFailoverConfiguration) -> bool:
         """Setup DNS failover configuration"""
+
+
+
         try:
             logger.info(f"Setting up DNS failover: {config.name}")
             
@@ -508,6 +529,9 @@ class DNSManager:
     
     async def setup_geo_dns(self, config: GeoDNSConfiguration) -> bool:
         """Setup geographic DNS routing"""
+
+
+
         try:
             logger.info(f"Setting up Geo DNS: {config.name}")
             
@@ -545,6 +569,9 @@ class DNSManager:
     
     async def query_dns_record(self, name: str, record_type: DNSRecordType) -> List[str]:
         """Query DNS record"""
+
+
+
         try:
             start_time = datetime.now()
             
@@ -573,6 +600,9 @@ class DNSManager:
     
     async def get_dns_status(self) -> Dict[str, Any]:
         """Get comprehensive DNS status"""
+
+
+
         try:
             status = {
                 'total_zones': len(self.zones),
@@ -615,6 +645,9 @@ class DNSManager:
     
     def _initialize_providers(self) -> None:
         """Initialize DNS provider clients"""
+
+
+
         try:
             # AWS Route 53
             if 'aws' in self.provider_credentials:
@@ -647,6 +680,9 @@ class DNSManager:
     
     async def _load_configuration(self) -> None:
         """Load DNS configuration"""
+
+
+
         try:
             with open(self.config_path, 'r') as f:
                 config_data = yaml.safe_load(f)

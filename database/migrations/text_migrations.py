@@ -1,5 +1,5 @@
 """
-📝 Text Content Migrations - Advanced Text Processing & Protection Schema Evolution
+ Text Content Migrations - Advanced Text Processing & Protection Schema Evolution
 =================================================================================
 Module: backend/database/migrations/text_migrations.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Text Migration Engine - Ultra Enterprise Production-Ready
 Responsibility: Database schema evolution for text content processing, NLP analysis, and protection
 ========================================================================================================
 
-⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
+  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -296,6 +296,9 @@ class TextMigrations:
             BEFORE INSERT OR UPDATE ON text_files
             FOR EACH ROW EXECUTE FUNCTION update_text_search_vector();
         """
+
+
+
         
         return await self.migration_manager.execute_migration(
             migration_sql,
@@ -405,6 +408,9 @@ class TextMigrations:
         -- Similarity search
         CREATE INDEX IF NOT EXISTS idx_text_sentences_similarity ON text_sentences(similarity_hash);
         """
+
+
+
         
         return await self.migration_manager.execute_migration(
             migration_sql,
@@ -518,6 +524,9 @@ class TextMigrations:
         CREATE INDEX IF NOT EXISTS idx_text_fingerprints_binary ON text_fingerprints USING HASH(fingerprint_binary) 
         WHERE fingerprint_binary IS NOT NULL;
         """
+
+
+
         
         return await self.migration_manager.execute_migration(
             migration_sql,
@@ -625,6 +634,9 @@ class TextMigrations:
         CREATE INDEX IF NOT EXISTS idx_text_analytics_keywords ON text_analytics USING GIN(search_keywords);
         CREATE INDEX IF NOT EXISTS idx_text_analytics_sections ON text_analytics USING GIN(most_read_sections);
         """
+
+
+
         
         return await self.migration_manager.execute_migration(
             migration_sql,
@@ -708,6 +720,9 @@ class TextMigrations:
         ON text_files USING GIN(suggested_title gin_trgm_ops)
         WHERE suggested_title IS NOT NULL;
         """
+
+
+
         
         return await self.migration_manager.execute_migration(
             migration_sql,

@@ -8,7 +8,7 @@ Comprehensive revenue analytics with multi-platform support.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  STRICT WARNING FOR UNAUTHORIZED USE:
+  STRICT WARNING FOR UNAUTHORIZED USE:
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use without explicit written 
 permission is strictly prohibited and will result in legal action.
@@ -236,6 +236,9 @@ class RevenueModel(Base):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert model to dictionary representation"""
+
+
+
         return {
             'id': self.id,
             'user_id': self.user_id,
@@ -275,21 +278,33 @@ class RevenueModel(Base):
     @property
     def is_paid(self) -> bool:
         """Check if revenue has been paid"""
+
+
+
         return self.status == RevenueStatus.PAID.value
     
     @property
     def is_pending(self) -> bool:
         """Check if revenue is pending"""
+
+
+
         return self.status == RevenueStatus.PENDING.value
     
     @property
     def is_streaming_revenue(self) -> bool:
         """Check if revenue is from streaming"""
+
+
+
         return self.revenue_source == RevenueSource.STREAMING.value
     
     @property
     def is_advertising_revenue(self) -> bool:
         """Check if revenue is from advertising"""
+
+
+
         return self.revenue_source == RevenueSource.ADVERTISING.value
     
     @property

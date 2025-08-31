@@ -60,6 +60,9 @@ class PinterestAdapter(BasePlatformAdapter):
     
     def _verify_credentials(self):
         """Verify Pinterest API credentials."""
+
+
+
         try:
             # Test API connection
             response = self.session.get(f"{self.BASE_URL}/user_account")
@@ -76,6 +79,9 @@ class PinterestAdapter(BasePlatformAdapter):
     
     async def authenticate_user(self, user_id: str) -> Dict[str, Any]:
         """Generate Pinterest OAuth URL for user authentication."""
+
+
+
         try:
             auth_params = {
                 "response_type": "code",
@@ -167,6 +173,9 @@ class PinterestAdapter(BasePlatformAdapter):
     
     async def upload_content(self, distribution_request: DistributionRequest) -> DistributionResult:
         """Upload content (pin) to Pinterest."""
+
+
+
         try:
             # Validate content first
             validation = await self.validate_content(distribution_request.content_metadata)
@@ -219,6 +228,9 @@ class PinterestAdapter(BasePlatformAdapter):
     
     async def _get_or_create_board(self, user_id: str, board_name: str, board_description: str) -> str:
         """Get existing board or create new one."""
+
+
+
         try:
             # First, try to find existing board
             response = self.session.get(f"{self.BASE_URL}/boards")
@@ -251,6 +263,9 @@ class PinterestAdapter(BasePlatformAdapter):
     
     async def _create_default_board(self) -> str:
         """Create a default board as fallback."""
+
+
+
         try:
             board_data = {
                 "name": "IA Influencer Content",
@@ -271,6 +286,9 @@ class PinterestAdapter(BasePlatformAdapter):
     
     async def _create_pin(self, board_id: str, file_path: Optional[str], content_metadata: ContentMetadata) -> Dict:
         """Create pin on Pinterest."""
+
+
+
         try:
             pin_data = {
                 "board_id": board_id,
@@ -344,6 +362,9 @@ class PinterestAdapter(BasePlatformAdapter):
     
     async def _upload_image_media(self, file_path: str) -> Dict:
         """Upload image media for pin."""
+
+
+
         try:
             # Pinterest uses direct file upload
             with open(file_path, 'rb') as image_file:
@@ -373,6 +394,9 @@ class PinterestAdapter(BasePlatformAdapter):
     
     async def _upload_video_media(self, file_path: str) -> Dict:
         """Upload video media for pin."""
+
+
+
         try:
             # Pinterest video upload is similar to image
             with open(file_path, 'rb') as video_file:
@@ -402,6 +426,9 @@ class PinterestAdapter(BasePlatformAdapter):
     
     async def get_analytics(self, content_id: str, date_range: tuple = None) -> PlatformAnalytics:
         """Retrieve analytics data for Pinterest pin."""
+
+
+
         try:
             pin_id = content_id.replace("pinterest_", "")
             
@@ -464,6 +491,9 @@ class PinterestAdapter(BasePlatformAdapter):
     
     async def get_revenue_data(self, content_id: str, date_range: tuple = None) -> RevenueData:
         """Estimate revenue from Pinterest content (shopping, affiliate, traffic)."""
+
+
+
         try:
             analytics = await self.get_analytics(content_id, date_range)
             
@@ -501,6 +531,9 @@ class PinterestAdapter(BasePlatformAdapter):
     
     async def update_content_metadata(self, content_id: str, metadata: Dict[str, Any]) -> bool:
         """Update Pinterest pin metadata."""
+
+
+
         try:
             pin_id = content_id.replace("pinterest_", "")
             
@@ -538,6 +571,9 @@ class PinterestAdapter(BasePlatformAdapter):
     
     async def delete_content(self, content_id: str) -> bool:
         """Delete Pinterest pin."""
+
+
+
         try:
             pin_id = content_id.replace("pinterest_", "")
             
@@ -556,6 +592,9 @@ class PinterestAdapter(BasePlatformAdapter):
     
     def get_platform_limits(self) -> Dict[str, Any]:
         """Return platform-specific limits and requirements."""
+
+
+
         return {
             "max_image_size_mb": self.MAX_IMAGE_SIZE_MB,
             "max_video_size_mb": self.MAX_VIDEO_SIZE_MB,

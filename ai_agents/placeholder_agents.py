@@ -23,6 +23,9 @@ class ProtectionAgent(BaseAgent):
     
     def get_required_config_keys(self) -> list:
         """Return required configuration keys"""
+
+
+
         return ["fingerprint_threshold", "protection_level"]
     
     async def process(self, request: Dict[str, Any]) -> Dict[str, Any]:
@@ -55,6 +58,9 @@ class SEOAgent(BaseAgent):
     
     def get_required_config_keys(self) -> list:
         """Return required configuration keys"""
+
+
+
         return ["seo_level", "target_platforms"]
     
     async def process(self, request: Dict[str, Any]) -> Dict[str, Any]:
@@ -86,6 +92,9 @@ class CollaborationAgent(BaseAgent):
     
     def get_required_config_keys(self) -> list:
         """Return required configuration keys"""
+
+
+
         return ["matching_algorithm", "min_score"]
     
     async def process(self, request: Dict[str, Any]) -> Dict[str, Any]:
@@ -129,6 +138,9 @@ class DistributionAgent(BaseAgent):
     
     def get_required_config_keys(self) -> list:
         """Return required configuration keys"""
+
+
+
         return ["target_platforms", "distribution_strategy"]
     
     async def process(self, request: Dict[str, Any]) -> Dict[str, Any]:
@@ -168,6 +180,9 @@ class MonetizationAgent(BaseAgent):
     
     def get_required_config_keys(self) -> list:
         """Return required configuration keys"""
+
+
+
         return ["revenue_model", "tracking_level"]
     
     async def process(self, request: Dict[str, Any]) -> Dict[str, Any]:

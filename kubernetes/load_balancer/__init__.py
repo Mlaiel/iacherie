@@ -7,7 +7,7 @@ protection, fingerprinting, and monetization services.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ WARNING: This code is proprietary and confidential.
+ WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
@@ -105,10 +105,19 @@ MODULE_INFO = {
 }
 
 def get_module_info():
-    """Get comprehensive module information"""    return MODULE_INFO
+    """Get comprehensive module information"""
+
+
+    return MODULE_INFO
 
 def get_version():
-    """Get module version"""    return __version__
+    """Get module version"""
+
+
+    return __version__
 
 def get_available_components():
-    """Get list of available load balancer components"""    return __all__
+    """Get list of available load balancer components"""
+
+
+    return __all__

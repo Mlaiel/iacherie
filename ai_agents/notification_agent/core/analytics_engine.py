@@ -8,7 +8,7 @@ optimization insights for the IA Influencer platform notification ecosystem.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE - INTELLECTUAL PROPERTY PROTECTION:
+  CRITICAL LEGAL NOTICE - INTELLECTUAL PROPERTY PROTECTION:
 This code, concept, and intellectual property are the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 
 STRICTLY PROHIBITED WITHOUT EXPLICIT WRITTEN AUTHORIZATION:
@@ -300,6 +300,9 @@ class NotificationAnalyticsEngine:
             channel_type: Communication channel used
             metadata: Additional event metadata
         """
+
+
+
         try:
             event_data = {
                 'user_id': user_id,
@@ -361,6 +364,9 @@ class NotificationAnalyticsEngine:
         """
         Get detailed engagement insights for specific user
         """
+
+
+
         try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=analysis_period_days)
@@ -401,6 +407,9 @@ class NotificationAnalyticsEngine:
         """
         Get comprehensive business performance dashboard data
         """
+
+
+
         try:
             dashboard_data = {
                 'overview': await self._get_overview_metrics(timeframe),
@@ -498,6 +507,9 @@ class NotificationAnalyticsEngine:
     
     async def _calculate_click_rate(self, query: AnalyticsQuery) -> float:
         """Calculate notification click-through rate"""
+
+
+
         return 0.24
     
     async def _calculate_engagement_score(self, query: AnalyticsQuery) -> float:
@@ -615,6 +627,9 @@ class NotificationAnalyticsEngine:
     
     def _generate_cache_key(self, metric_type: MetricType, query: AnalyticsQuery) -> str:
         """Generate cache key for metric result"""
+
+
+
         return f"{metric_type.value}_{query.timeframe.value}_{query.start_date.isoformat()}_{query.end_date.isoformat()}"
     
     def _summarize_performance(self, metrics: List[MetricResult]) -> Dict[str, Any]:

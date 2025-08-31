@@ -1,11 +1,11 @@
 """
-☸️ Kubernetes Cluster Orchestrator - IA-Influencer-Agent Production Platform
+ Kubernetes Cluster Orchestrator - IA-Influencer-Agent Production Platform
 ===========================================================================
 Expert: Lead Kubernetes Engineer + DevOps Specialist + Cloud Architect
 Creator: Fahed Mlaiel <mlaiel@live.de>
 ===========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL 
 Tout vol, copie ou utilisation non autorisée de ce code source,
 de ce concept ou de cette propriété intellectuelle sans
 l'autorisation écrite explicite de Fahed Mlaiel est strictement
@@ -118,7 +118,7 @@ class KubernetesClusterOrchestrator:
             try:
                 config.load_kube_config()  # For local development
             except Exception as e:
-                self.logger.warning(f"⚠️ Could not load Kubernetes config: {e}")
+                self.logger.warning(f" Could not load Kubernetes config: {e}")
         
         # Initialize Kubernetes clients
         self.v1 = client.CoreV1Api()
@@ -126,21 +126,27 @@ class KubernetesClusterOrchestrator:
         self.autoscaling_v1 = client.AutoscalingV1Api()
         self.networking_v1 = client.NetworkingV1Api()
         
-        self.logger.info("✅ Kubernetes cluster orchestrator initialized")
+        self.logger.info(" Kubernetes cluster orchestrator initialized")
     
     async def register_deployment(self, config: ClusterConfig) -> str:
         """Register a new deployment configuration"""
+
+
+
         try:
             deployment_key = f"{config.namespace}/{config.name}"
             self.deployments[deployment_key] = config
-            self.logger.info(f"📝 Registered deployment: {deployment_key}")
+            self.logger.info(f" Registered deployment: {deployment_key}")
             return deployment_key
         except Exception as e:
-            self.logger.error(f"❌ Failed to register deployment {config.name}: {e}")
+            self.logger.error(f" Failed to register deployment {config.name}: {e}")
             raise
     
     async def create_namespace(self, namespace: str, namespace_type: NamespaceType) -> bool:
         """Create a new Kubernetes namespace"""
+
+
+
         try:
             namespace_manifest = client.V1Namespace(
                 metadata=client.V1ObjectMeta(
@@ -155,24 +161,24 @@ class KubernetesClusterOrchestrator:
             )
             
             self.v1.create_namespace(body=namespace_manifest)
-            self.logger.info(f"📂 Created namespace: {namespace}")
+            self.logger.info(f" Created namespace: {namespace}")
             return True
             
         except ApiException as e:
             if e.status == 409:  # Namespace already exists
-                self.logger.info(f"📂 Namespace already exists: {namespace}")
+                self.logger.info(f" Namespace already exists: {namespace}")
                 return True
             else:
-                self.logger.error(f"❌ Failed to create namespace {namespace}: {e}")
+                self.logger.error(f" Failed to create namespace {namespace}: {e}")
                 return False
         except Exception as e:
-            self.logger.error(f"❌ Failed to create namespace {namespace}: {e}")
+            self.logger.error(f" Failed to create namespace {namespace}: {e}")
             return False
     
     async def create_deployment(self, deployment_key: str) -> bool:
         """Create a Kubernetes deployment"""
         if deployment_key not in self.deployments:
-            self.logger.error(f"❌ Deployment configuration not found: {deployment_key}")
+            self.logger.error(f" Deployment configuration not found: {deployment_key}")
             return False
         
         config = self.deployments[deployment_key]
@@ -230,24 +236,24 @@ class KubernetesClusterOrchestrator:
                 namespace=config.namespace
             )
             
-            self.logger.info(f"🚀 Created deployment: {deployment_key}")
+            self.logger.info(f" Created deployment: {deployment_key}")
             return True
             
         except ApiException as e:
             if e.status == 409:  # Deployment already exists
-                self.logger.info(f"🚀 Deployment already exists: {deployment_key}")
+                self.logger.info(f" Deployment already exists: {deployment_key}")
                 return await self.update_deployment(deployment_key)
             else:
-                self.logger.error(f"❌ Failed to create deployment {deployment_key}: {e}")
+                self.logger.error(f" Failed to create deployment {deployment_key}: {e}")
                 return False
         except Exception as e:
-            self.logger.error(f"❌ Failed to create deployment {deployment_key}: {e}")
+            self.logger.error(f" Failed to create deployment {deployment_key}: {e}")
             return False
     
     async def create_service(self, deployment_key: str) -> bool:
         """Create a Kubernetes service for deployment"""
         if deployment_key not in self.deployments:
-            self.logger.error(f"❌ Deployment configuration not found: {deployment_key}")
+            self.logger.error(f" Deployment configuration not found: {deployment_key}")
             return False
         
         config = self.deployments[deployment_key]
@@ -279,24 +285,24 @@ class KubernetesClusterOrchestrator:
                 namespace=config.namespace
             )
             
-            self.logger.info(f"🌐 Created service: {deployment_key}")
+            self.logger.info(f" Created service: {deployment_key}")
             return True
             
         except ApiException as e:
             if e.status == 409:  # Service already exists
-                self.logger.info(f"🌐 Service already exists: {deployment_key}")
+                self.logger.info(f" Service already exists: {deployment_key}")
                 return True
             else:
-                self.logger.error(f"❌ Failed to create service {deployment_key}: {e}")
+                self.logger.error(f" Failed to create service {deployment_key}: {e}")
                 return False
         except Exception as e:
-            self.logger.error(f"❌ Failed to create service {deployment_key}: {e}")
+            self.logger.error(f" Failed to create service {deployment_key}: {e}")
             return False
     
     async def update_deployment(self, deployment_key: str) -> bool:
         """Update an existing Kubernetes deployment"""
         if deployment_key not in self.deployments:
-            self.logger.error(f"❌ Deployment configuration not found: {deployment_key}")
+            self.logger.error(f" Deployment configuration not found: {deployment_key}")
             return False
         
         config = self.deployments[deployment_key]
@@ -318,17 +324,17 @@ class KubernetesClusterOrchestrator:
                 body=current
             )
             
-            self.logger.info(f"🔄 Updated deployment: {deployment_key}")
+            self.logger.info(f" Updated deployment: {deployment_key}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to update deployment {deployment_key}: {e}")
+            self.logger.error(f" Failed to update deployment {deployment_key}: {e}")
             return False
     
     async def scale_deployment(self, deployment_key: str, replicas: int) -> bool:
         """Scale a deployment to specified number of replicas"""
         if deployment_key not in self.deployments:
-            self.logger.error(f"❌ Deployment configuration not found: {deployment_key}")
+            self.logger.error(f" Deployment configuration not found: {deployment_key}")
             return False
         
         config = self.deployments[deployment_key]
@@ -352,17 +358,17 @@ class KubernetesClusterOrchestrator:
                 body=scale
             )
             
-            self.logger.info(f"📊 Scaled deployment {deployment_key} to {replicas} replicas")
+            self.logger.info(f" Scaled deployment {deployment_key} to {replicas} replicas")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to scale deployment {deployment_key}: {e}")
+            self.logger.error(f" Failed to scale deployment {deployment_key}: {e}")
             return False
     
     async def delete_deployment(self, deployment_key: str) -> bool:
         """Delete a Kubernetes deployment"""
         if deployment_key not in self.deployments:
-            self.logger.error(f"❌ Deployment configuration not found: {deployment_key}")
+            self.logger.error(f" Deployment configuration not found: {deployment_key}")
             return False
         
         config = self.deployments[deployment_key]
@@ -386,11 +392,11 @@ class KubernetesClusterOrchestrator:
             # Remove from registry
             del self.deployments[deployment_key]
             
-            self.logger.info(f"🗑️ Deleted deployment: {deployment_key}")
+            self.logger.info(f" Deleted deployment: {deployment_key}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to delete deployment {deployment_key}: {e}")
+            self.logger.error(f" Failed to delete deployment {deployment_key}: {e}")
             return False
     
     async def get_deployment_status(self, deployment_key: str) -> Optional[DeploymentStatus]:
@@ -418,7 +424,7 @@ class KubernetesClusterOrchestrator:
                 return DeploymentStatus.FAILED
                 
         except Exception as e:
-            self.logger.error(f"❌ Failed to get deployment status {deployment_key}: {e}")
+            self.logger.error(f" Failed to get deployment status {deployment_key}: {e}")
             return DeploymentStatus.FAILED
     
     async def get_deployment_metrics(self, deployment_key: str) -> Optional[DeploymentMetrics]:
@@ -450,7 +456,7 @@ class KubernetesClusterOrchestrator:
             )
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to get deployment metrics {deployment_key}: {e}")
+            self.logger.error(f" Failed to get deployment metrics {deployment_key}: {e}")
             return None
     
     async def create_horizontal_pod_autoscaler(self, deployment_key: str, 
@@ -459,7 +465,7 @@ class KubernetesClusterOrchestrator:
                                              target_cpu_percent: int = 80) -> bool:
         """Create horizontal pod autoscaler for deployment"""
         if deployment_key not in self.deployments:
-            self.logger.error(f"❌ Deployment configuration not found: {deployment_key}")
+            self.logger.error(f" Deployment configuration not found: {deployment_key}")
             return False
         
         config = self.deployments[deployment_key]
@@ -489,24 +495,24 @@ class KubernetesClusterOrchestrator:
                 namespace=config.namespace
             )
             
-            self.logger.info(f"📈 Created HPA for deployment: {deployment_key}")
+            self.logger.info(f" Created HPA for deployment: {deployment_key}")
             return True
             
         except ApiException as e:
             if e.status == 409:  # HPA already exists
-                self.logger.info(f"📈 HPA already exists for deployment: {deployment_key}")
+                self.logger.info(f" HPA already exists for deployment: {deployment_key}")
                 return True
             else:
-                self.logger.error(f"❌ Failed to create HPA for {deployment_key}: {e}")
+                self.logger.error(f" Failed to create HPA for {deployment_key}: {e}")
                 return False
         except Exception as e:
-            self.logger.error(f"❌ Failed to create HPA for {deployment_key}: {e}")
+            self.logger.error(f" Failed to create HPA for {deployment_key}: {e}")
             return False
     
     async def deploy_full_stack(self, deployment_key: str) -> bool:
         """Deploy complete stack (namespace, deployment, service, HPA)"""
         if deployment_key not in self.deployments:
-            self.logger.error(f"❌ Deployment configuration not found: {deployment_key}")
+            self.logger.error(f" Deployment configuration not found: {deployment_key}")
             return False
         
         config = self.deployments[deployment_key]
@@ -526,11 +532,11 @@ class KubernetesClusterOrchestrator:
             # Create HPA
             await self.create_horizontal_pod_autoscaler(deployment_key)
             
-            self.logger.info(f"🎯 Full stack deployed: {deployment_key}")
+            self.logger.info(f" Full stack deployed: {deployment_key}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to deploy full stack {deployment_key}: {e}")
+            self.logger.error(f" Failed to deploy full stack {deployment_key}: {e}")
             return False
     
     async def monitor_cluster(self) -> Dict[str, DeploymentMetrics]:
@@ -556,6 +562,9 @@ class KubernetesClusterOrchestrator:
     
     async def backup_cluster_config(self, backup_path: Path) -> bool:
         """Backup cluster configurations to file"""
+
+
+
         try:
             backup_data = {
                 'deployments': {},
@@ -581,11 +590,11 @@ class KubernetesClusterOrchestrator:
             with open(backup_path, 'w') as f:
                 yaml.dump(backup_data, f, default_flow_style=False)
             
-            self.logger.info(f"💾 Cluster configurations backed up to {backup_path}")
+            self.logger.info(f" Cluster configurations backed up to {backup_path}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to backup cluster configs: {e}")
+            self.logger.error(f" Failed to backup cluster configs: {e}")
             return False
 
 # Global cluster orchestrator instance

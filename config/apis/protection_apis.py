@@ -344,24 +344,39 @@ PROTECTION_CONFIGS: Dict[str, ProtectionAPIConfig] = {
 
 def get_protection_config(service: str) -> Optional[ProtectionAPIConfig]:
     """Get protection service configuration by name"""
+
+
+
     return PROTECTION_CONFIGS.get(service.lower())
 
 def get_services_by_type(service_type: ProtectionServiceType) -> List[ProtectionAPIConfig]:
     """Get all protection services of specific type"""
+
+
+
     return [config for config in PROTECTION_CONFIGS.values() 
             if config.service_type == service_type]
 
 def get_services_by_content_type(content_type: ContentType) -> List[ProtectionAPIConfig]:
     """Get protection services supporting specific content type"""
+
+
+
     return [config for config in PROTECTION_CONFIGS.values() 
             if content_type in config.supported_content_types]
 
 def get_real_time_services() -> List[ProtectionAPIConfig]:
     """Get services that support real-time processing"""
+
+
+
     return [config for config in PROTECTION_CONFIGS.values() 
             if config.supports_real_time]
 
 def get_monitoring_services() -> List[ProtectionAPIConfig]:
     """Get services that support web monitoring"""
+
+
+
     return [config for config in PROTECTION_CONFIGS.values() 
             if config.supports_web_monitoring]

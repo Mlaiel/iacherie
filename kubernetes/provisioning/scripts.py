@@ -7,7 +7,7 @@ validation scripts, rollback procedures, backup automation, and monitoring setup
 
 Project Owner: Fahed Mlaiel (mlaiel@live.de)
 
-⚠️ CRITICAL LEGAL WARNING:
+ CRITICAL LEGAL WARNING:
 This software and all associated intellectual property belong exclusively to Fahed Mlaiel.
 Any unauthorized use, reproduction, distribution, or appropriation of this code, concept, 
 or business idea without explicit written permission from Fahed Mlaiel (mlaiel@live.de) 
@@ -140,6 +140,9 @@ class BaseProvisioningScript(ABC):
     
     def _check_prerequisite(self, prerequisite: str) -> bool:
         """Check if a specific prerequisite is met"""
+
+
+
         try:
             # Check if it's a command
             if prerequisite.startswith('command:'):
@@ -270,6 +273,9 @@ class BootstrapScript(BaseProvisioningScript):
     
     def generate_script_content(self) -> str:
         """Generate bootstrap script content"""
+
+
+
         return f'''#!/bin/bash
 set -euo pipefail
 
@@ -277,7 +283,7 @@ set -euo pipefail
 # Environment: {self.config.environment}
 # Generated: {time.strftime('%Y-%m-%d %H:%M:%S')}
 
-echo "🚀 Starting IA Influencer Platform Bootstrap..."
+echo " Starting IA Influencer Platform Bootstrap..."
 echo "Environment: {self.config.environment}"
 echo "Timestamp: $(date)"
 
@@ -670,7 +676,7 @@ main() {{
     setup_ssh_keys
     verify_installations
     
-    success "🎉 Bootstrap process completed successfully!"
+    success " Bootstrap process completed successfully!"
     echo ""
     echo "Next steps:"
     echo "1. Configure AWS credentials: aws configure"
@@ -739,6 +745,9 @@ class DeploymentScript(BaseProvisioningScript):
     
     def generate_script_content(self) -> str:
         """Generate deployment script content"""
+
+
+
         return f'''#!/bin/bash
 set -euo pipefail
 
@@ -746,7 +755,7 @@ set -euo pipefail
 # Environment: {self.config.environment}
 # Deployment Type: {self.deployment_config.get('type', 'full')}
 
-echo "🚀 Starting IA Influencer Platform Deployment..."
+echo " Starting IA Influencer Platform Deployment..."
 
 # Color codes for output
 RED='\\033[0;31m'
@@ -992,7 +1001,7 @@ main() {{
             ;;
     esac
     
-    success "🎉 Deployment process completed successfully!"
+    success " Deployment process completed successfully!"
     echo ""
     echo "Access Information:"
     echo "- API Endpoint: https://api-{self.config.environment}.ia-influencer.com"
@@ -1058,13 +1067,16 @@ class ValidationScript(BaseProvisioningScript):
     
     def generate_script_content(self) -> str:
         """Generate validation script content"""
+
+
+
         return f'''#!/bin/bash
 set -euo pipefail
 
 # IA Influencer Platform Validation Script
 # Environment: {self.config.environment}
 
-echo "🔍 Starting IA Influencer Platform Validation..."
+echo " Starting IA Influencer Platform Validation..."
 
 # Color codes for output
 RED='\\033[0;31m'
@@ -1096,10 +1108,10 @@ check() {{
     log "Checking: $test_name"
     
     if eval "$command" &> /dev/null; then
-        success "✓ $test_name"
+        success " $test_name"
         return 0
     else
-        error "✗ $test_name"
+        error " $test_name"
         return 1
     fi
 }}
@@ -1184,9 +1196,9 @@ validate_networking() {{
     LB_HOSTNAME=$(kubectl get svc ingress-nginx-controller -n ingress-nginx -o jsonpath='{{.status.loadBalancer.ingress[0].hostname}}' 2>/dev/null || echo "")
     
     if [[ -n "$LB_HOSTNAME" ]]; then
-        success "✓ Load Balancer Hostname: $LB_HOSTNAME"
+        success " Load Balancer Hostname: $LB_HOSTNAME"
     else
-        warning "⚠ Load Balancer hostname not found"
+        warning " Load Balancer hostname not found"
     fi
     
     success "Networking validation completed"
@@ -1310,7 +1322,7 @@ main() {{
     validate_performance
     generate_report
     
-    success "🎉 Validation process completed successfully!"
+    success " Validation process completed successfully!"
     echo ""
     echo "Summary:"
     echo "- AWS Infrastructure: Validated"
@@ -1380,6 +1392,9 @@ class RollbackScript(BaseProvisioningScript):
     
     def generate_script_content(self) -> str:
         """Generate rollback script content"""
+
+
+
         return f'''#!/bin/bash
 set -euo pipefail
 
@@ -1387,7 +1402,7 @@ set -euo pipefail
 # Environment: {self.config.environment}
 # Rollback Type: {self.rollback_config.get('type', 'application')}
 
-echo "🔄 Starting IA Influencer Platform Rollback..."
+echo " Starting IA Influencer Platform Rollback..."
 
 # Color codes for output
 RED='\\033[0;31m'
@@ -1468,7 +1483,7 @@ main() {{
             ;;
     esac
     
-    success "🎉 Rollback process completed successfully!"
+    success " Rollback process completed successfully!"
 }}
 
 # Execute main function
@@ -1564,6 +1579,9 @@ class ScriptManager:
     
     def get_all_scripts(self) -> List[str]:
         """Get list of all registered scripts"""
+
+
+
         return list(self.scripts.keys())
 
 
@@ -1589,6 +1607,9 @@ def create_script(script_type: ScriptType, config: ScriptConfig,
 def create_default_script_config(name: str, script_type: ScriptType, 
                                 environment: str) -> ScriptConfig:
     """Create a default script configuration"""
+
+
+
     return ScriptConfig(
         name=name,
         script_type=script_type,

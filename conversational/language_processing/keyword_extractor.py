@@ -16,7 +16,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Specialist + DevOps Expert
 Copyright: Fahed Mlaiel - All Rights Reserved
 
-⚠️  STRICT LEGAL WARNING: 
+  STRICT LEGAL WARNING: 
     This proprietary code is protected by international copyright law.
     Unauthorized use, copying, distribution, modification, or reverse engineering 
     is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -146,6 +146,9 @@ class KeywordExtractor:
         
     def _initialize_models(self):
         """Initialize keyword extraction models"""
+
+
+
         try:
             # Initialize spaCy
             self.nlp = spacy.load("en_core_web_lg")
@@ -197,6 +200,9 @@ class KeywordExtractor:
         Returns:
             KeywordExtractionResult with extracted keywords and topics
         """
+
+
+
         try:
             start_time = datetime.now()
             
@@ -272,6 +278,9 @@ class KeywordExtractor:
         num_keywords: int
     ) -> List[Keyword]:
         """Extract keywords using specific method"""
+
+
+
         try:
             if method == ExtractionMethod.TFIDF:
                 return await self._extract_tfidf_keywords(text, num_keywords)
@@ -294,6 +303,9 @@ class KeywordExtractor:
             
     async def _extract_tfidf_keywords(self, text: str, num_keywords: int) -> List[Keyword]:
         """Extract keywords using TF-IDF"""
+
+
+
         try:
             # Prepare documents (sentences)
             sentences = sent_tokenize(text)
@@ -344,6 +356,9 @@ class KeywordExtractor:
             
     async def _extract_yake_keywords(self, text: str, num_keywords: int) -> List[Keyword]:
         """Extract keywords using YAKE"""
+
+
+
         try:
             if not self.yake_extractor:
                 return []
@@ -375,6 +390,9 @@ class KeywordExtractor:
             
     async def _extract_ner_keywords(self, text: str, num_keywords: int) -> List[Keyword]:
         """Extract keywords using Named Entity Recognition"""
+
+
+
         try:
             if not self.nlp:
                 return []
@@ -427,6 +445,9 @@ class KeywordExtractor:
         
     async def _extract_statistical_keywords(self, text: str, num_keywords: int) -> List[Keyword]:
         """Extract keywords using statistical methods"""
+
+
+
         try:
             # Tokenize and filter words
             words = word_tokenize(text.lower())
@@ -465,6 +486,9 @@ class KeywordExtractor:
             
     async def _extract_transformer_keywords(self, text: str, num_keywords: int) -> List[Keyword]:
         """Extract keywords using transformer models"""
+
+
+
         try:
             # This is a simplified implementation
             # In a full implementation, you would use more sophisticated transformer-based methods
@@ -508,6 +532,9 @@ class KeywordExtractor:
             
     async def _extract_hybrid_keywords(self, text: str, num_keywords: int) -> List[Keyword]:
         """Extract keywords using hybrid approach"""
+
+
+
         try:
             # Combine multiple methods
             tfidf_keywords = await self._extract_tfidf_keywords(text, num_keywords // 2)
@@ -525,6 +552,9 @@ class KeywordExtractor:
             
     async def _merge_and_rank_keywords(self, keywords: List[Keyword]) -> List[Keyword]:
         """Merge duplicate keywords and rank by combined scores"""
+
+
+
         try:
             keyword_map = {}
             
@@ -552,6 +582,9 @@ class KeywordExtractor:
             
     async def _categorize_keywords(self, keywords: List[Keyword]) -> Tuple[List[Keyword], List[Keyword]]:
         """Categorize keywords into primary and secondary"""
+
+
+
         try:
             # Sort by relevance score
             sorted_keywords = sorted(keywords, key=lambda x: x.relevance_score, reverse=True)
@@ -574,6 +607,9 @@ class KeywordExtractor:
             
     async def _extract_entities(self, text: str) -> List[Keyword]:
         """Extract named entities as keywords"""
+
+
+
         try:
             if not self.nlp:
                 return []
@@ -604,6 +640,9 @@ class KeywordExtractor:
             
     async def _extract_topics(self, text: str, num_topics: int = 5) -> List[Topic]:
         """Extract topics using LDA"""
+
+
+
         try:
             # Prepare text for topic modeling
             sentences = sent_tokenize(text)
@@ -661,6 +700,9 @@ class KeywordExtractor:
             
     async def _cluster_keywords(self, keywords: List[Keyword]) -> Dict[str, List[str]]:
         """Cluster related keywords"""
+
+
+
         try:
             if len(keywords) < 3:
                 return {}
@@ -701,6 +743,9 @@ class KeywordExtractor:
             
     async def _find_semantic_relationships(self, keywords: List[Keyword]) -> Dict[str, List[str]]:
         """Find semantic relationships between keywords"""
+
+
+
         try:
             relationships = {}
             
@@ -731,6 +776,9 @@ class KeywordExtractor:
         text: str
     ) -> List[str]:
         """Generate SEO optimization suggestions"""
+
+
+
         try:
             suggestions = []
             
@@ -767,6 +815,9 @@ class KeywordExtractor:
         keywords: List[Keyword]
     ) -> List[str]:
         """Categorize content based on topics and keywords"""
+
+
+
         try:
             categories = []
             
@@ -828,6 +879,9 @@ class TopicModeling:
         Returns:
             List of discovered topics
         """
+
+
+
         try:
             if model_type == TopicModelType.LDA:
                 return await self._lda_topic_modeling(documents, num_topics)
@@ -844,6 +898,9 @@ class TopicModeling:
             
     async def _lda_topic_modeling(self, documents: List[str], num_topics: int) -> List[Topic]:
         """Perform LDA topic modeling using scikit-learn"""
+
+
+
         try:
             # Preprocess documents
             vectorizer = CountVectorizer(
@@ -898,6 +955,9 @@ class TopicModeling:
             
     async def _nmf_topic_modeling(self, documents: List[str], num_topics: int) -> List[Topic]:
         """Perform NMF topic modeling"""
+
+
+
         try:
             # Use TF-IDF for NMF
             vectorizer = TfidfVectorizer(
@@ -951,6 +1011,9 @@ class TopicModeling:
             
     async def _gensim_lda_modeling(self, documents: List[str], num_topics: int) -> List[Topic]:
         """Perform LDA topic modeling using Gensim"""
+
+
+
         try:
             # Preprocess documents
             processed_docs = []

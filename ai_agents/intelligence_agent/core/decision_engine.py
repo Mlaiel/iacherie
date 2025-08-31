@@ -8,7 +8,7 @@ Author: Fahed Mlaiel
 Contact: mlaiel@live.de
 Copyright: 2025 - All rights reserved
 
-⚠️ IMPORTANT LEGAL NOTICE ⚠️
+ IMPORTANT LEGAL NOTICE 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
@@ -234,6 +234,9 @@ class DecisionEngine:
         Returns:
             DecisionResult: Comprehensive decision result with reasoning
         """
+
+
+
         try:
             decision_id = f"decision_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{category.value}"
             
@@ -402,6 +405,9 @@ class DecisionEngine:
         option: DecisionOption
     ) -> DecisionOption:
         """Evaluate a single option using ML models."""
+
+
+
         try:
             # Get model for this category
             model = self.models.get(category.value)
@@ -444,6 +450,9 @@ class DecisionEngine:
     
     def _extract_option_features(self, option: DecisionOption) -> np.ndarray:
         """Extract features from a decision option."""
+
+
+
         return np.array([
             option.expected_outcome.get('success_probability', 0.0),
             option.risk_assessment.get('overall_risk', 0.0),
@@ -680,6 +689,9 @@ class DecisionEngine:
     
     def _load_pretrained_model(self, category: str):
         """Load pre-trained model weights if available."""
+
+
+
         try:
             model_path = f"models/decision_engine_{category}.joblib"
             scaler_path = f"models/decision_scaler_{category}.joblib"

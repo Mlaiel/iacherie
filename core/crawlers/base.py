@@ -5,7 +5,7 @@ Base Crawler Abstract Class
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 Unauthorized use, copying or distribution prohibited.
 
 Abstract base class defining the common interface for all platform-specific
@@ -336,6 +336,9 @@ class BaseCrawler(ABC):
         Returns:
             True if crawler is healthy
         """
+
+
+
         
         try:
             # Test basic connectivity
@@ -353,6 +356,9 @@ class BaseCrawler(ABC):
     
     def _get_health_check_url(self) -> Optional[str]:
         """Get URL for health check - can be overridden by specific crawlers."""
+
+
+
         return self.config.base_url if self.config.base_url else None
     
     def get_performance_metrics(self) -> Dict[str, Any]:
@@ -427,6 +433,9 @@ class BaseCrawler(ABC):
     
     def _extract_content_id(self, url: str) -> Optional[str]:
         """Extract content ID from URL - to be implemented by specific crawlers."""
+
+
+
         return None
     
     def _determine_content_type(self, metadata: Dict[str, Any]) -> ContentType:

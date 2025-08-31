@@ -1,11 +1,11 @@
 """
-🎛️ Mastering Analyzer - Professional Audio Mastering Quality Assessment Engine
+ Mastering Analyzer - Professional Audio Mastering Quality Assessment Engine
 
 Ultra-advanced mastering analysis system providing comprehensive evaluation of
 audio production quality, mastering techniques, and professional audio standards
 compliance for the IA Influencer Agent platform.
 
-⚡ INDUSTRIAL CAPABILITIES:
+ INDUSTRIAL CAPABILITIES:
 - Professional mastering chain analysis with industry standards
 - Loudness measurement (LUFS, RMS, Peak) compliance checking
 - Dynamic range analysis and preservation assessment
@@ -22,12 +22,12 @@ compliance for the IA Influencer Agent platform.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-🛡️ TEAM SPECIALTIES:
+ TEAM SPECIALTIES:
 - Lead Mastering Engineer & Audio Specialist: Fahed Mlaiel
 - Professional Audio Standards Expert: Fahed Mlaiel  
 - Digital Signal Processing Expert: Fahed Mlaiel
 
-⚠️ COPYRIGHT & INTELLECTUAL PROPERTY WARNING:
+ COPYRIGHT & INTELLECTUAL PROPERTY WARNING:
 This professional mastering analysis system contains proprietary algorithms
 for audio quality assessment and mastering evaluation developed exclusively
 by Fahed Mlaiel. Unauthorized use, copying, or commercial exploitation is
@@ -195,7 +195,7 @@ class MasteringAnalysisResult:
 
 class MasteringAnalyzer:
     """
-    🎛️ Ultra-Advanced Professional Mastering Quality Analyzer
+     Ultra-Advanced Professional Mastering Quality Analyzer
     
     Professional-grade mastering analysis engine providing comprehensive
     evaluation of audio production quality, mastering techniques, and 
@@ -735,6 +735,9 @@ class MasteringAnalyzer:
     # Professional measurement methods
     def _calculate_integrated_lufs(self, audio: np.ndarray, sample_rate: int) -> float:
         """Calculate integrated loudness in LUFS (simplified implementation)"""
+
+
+
         try:
             # Apply K-weighting filter (simplified)
             # In production, would implement proper ITU-R BS.1770-4 filter
@@ -773,6 +776,9 @@ class MasteringAnalyzer:
     
     def _calculate_momentary_loudness(self, audio: np.ndarray, sample_rate: int) -> np.ndarray:
         """Calculate momentary loudness (400ms sliding window)"""
+
+
+
         try:
             window_size = int(0.4 * sample_rate)
             hop_size = int(0.1 * sample_rate)
@@ -794,6 +800,9 @@ class MasteringAnalyzer:
     
     def _calculate_short_term_loudness(self, audio: np.ndarray, sample_rate: int) -> np.ndarray:
         """Calculate short-term loudness (3s sliding window)"""
+
+
+
         try:
             window_size = int(3.0 * sample_rate)
             hop_size = int(1.0 * sample_rate)
@@ -815,6 +824,9 @@ class MasteringAnalyzer:
     
     def _calculate_loudness_range(self, short_term_loudness: np.ndarray) -> float:
         """Calculate Loudness Range (LRA) in LU"""
+
+
+
         try:
             if len(short_term_loudness) == 0:
                 return 0.0
@@ -837,6 +849,9 @@ class MasteringAnalyzer:
     
     def _calculate_true_peak(self, audio_stereo: np.ndarray, sample_rate: int) -> float:
         """Calculate true peak level in dBFS"""
+
+
+
         try:
             # Oversample by factor of 4 for true peak detection
             oversample_factor = 4
@@ -861,6 +876,9 @@ class MasteringAnalyzer:
     
     def _calculate_dr_meter_value(self, audio_stereo: np.ndarray, sample_rate: int) -> float:
         """Calculate official DR meter value"""
+
+
+
         try:
             # DR meter calculation according to EBU standard
             dr_values = []
@@ -913,6 +931,9 @@ class MasteringAnalyzer:
     
     def _calculate_overall_quality(self, *analysis_results) -> float:
         """Calculate overall mastering quality score"""
+
+
+
         try:
             loudness_result, dynamic_result, frequency_result, stereo_result, distortion_result, transient_result = analysis_results
             
@@ -963,6 +984,9 @@ class MasteringAnalyzer:
     # Default analysis results for error cases
     def _default_loudness_analysis(self) -> LoudnessAnalysis:
         """Default loudness analysis result"""
+
+
+
         return LoudnessAnalysis(
             integrated_lufs=-16.0,
             momentary_max_lufs=-12.0,
@@ -977,6 +1001,9 @@ class MasteringAnalyzer:
     
     def _default_dynamic_analysis(self) -> DynamicRangeAnalysis:
         """Default dynamic range analysis result"""
+
+
+
         return DynamicRangeAnalysis(
             dr_value=14.0,
             peak_to_rms_ratio=12.0,
@@ -989,6 +1016,9 @@ class MasteringAnalyzer:
     
     def _default_frequency_analysis(self) -> FrequencyAnalysis:
         """Default frequency analysis result"""
+
+
+
         return FrequencyAnalysis(
             band_energies={band.value: 0.14 for band in FrequencyBand},
             frequency_balance_score=0.8,
@@ -1001,6 +1031,9 @@ class MasteringAnalyzer:
     
     def _default_stereo_analysis(self) -> StereoAnalysis:
         """Default stereo analysis result"""
+
+
+
         return StereoAnalysis(
             stereo_width=0.5,
             mono_compatibility=0.9,
@@ -1013,6 +1046,9 @@ class MasteringAnalyzer:
     
     def _default_distortion_analysis(self) -> DistortionAnalysis:
         """Default distortion analysis result"""
+
+
+
         return DistortionAnalysis(
             thd_percentage=0.1,
             thd_n_percentage=0.15,
@@ -1025,6 +1061,9 @@ class MasteringAnalyzer:
     
     def _default_transient_analysis(self) -> TransientAnalysis:
         """Default transient analysis result"""
+
+
+
         return TransientAnalysis(
             attack_preservation=0.8,
             decay_integrity=0.8,
@@ -1039,70 +1078,121 @@ class MasteringAnalyzer:
     
     def _assess_transient_preservation(self, audio: np.ndarray, sample_rate: int) -> float:
         """Assess transient preservation quality"""
+
+
+
         return 0.8  # Placeholder
     
     def _estimate_compression_ratio(self, audio: np.ndarray, sample_rate: int) -> float:
         """Estimate compression ratio"""
+
+
+
         return 3.0  # Placeholder
     
     def _detect_limiting_artifacts(self, audio: np.ndarray, sample_rate: int) -> bool:
         """Detect limiting artifacts"""
+
+
+
         return False  # Placeholder
     
     def _detect_pumping_artifacts(self, audio: np.ndarray, sample_rate: int) -> bool:
         """Detect pumping artifacts"""
+
+
+
         return False  # Placeholder
     
     def _analyze_tonal_balance(self, freqs: np.ndarray, psd: np.ndarray) -> Dict[str, float]:
         """Analyze tonal balance characteristics"""
+
+
+
         return {'brightness': 0.5, 'warmth': 0.5, 'presence': 0.5}
     
     def _detect_masking_issues(self, freqs: np.ndarray, psd: np.ndarray) -> List[str]:
         """Detect frequency masking issues"""
+
+
+
         return []
     
     def _find_resonance_peaks(self, freqs: np.ndarray, psd: np.ndarray) -> List[Tuple[float, float]]:
         """Find resonance peaks"""
+
+
+
         return []
     
     def _calculate_spectral_tilt(self, freqs: np.ndarray, psd: np.ndarray) -> float:
         """Calculate spectral tilt"""
+
+
+
         return 0.0
     
     def _find_hf_rolloff_frequency(self, freqs: np.ndarray, psd: np.ndarray) -> float:
         """Find high frequency rolloff point"""
+
+
+
         return 16000.0
     
     def _calculate_phase_coherence(self, left: np.ndarray, right: np.ndarray, sample_rate: int) -> float:
         """Calculate phase coherence between channels"""
+
+
+
         return 0.9
     
     def _assess_center_stability(self, mid: np.ndarray, sample_rate: int) -> float:
         """Assess center image stability"""
+
+
+
         return 0.8
     
     def _assess_spatial_depth(self, audio_stereo: np.ndarray, sample_rate: int) -> float:
         """Assess spatial depth perception"""
+
+
+
         return 0.7
     
     def _calculate_thd(self, audio: np.ndarray, sample_rate: int) -> float:
         """Calculate Total Harmonic Distortion"""
+
+
+
         return 0.1
     
     def _calculate_thd_n(self, audio: np.ndarray, sample_rate: int) -> float:
         """Calculate THD+N"""
+
+
+
         return 0.15
     
     def _analyze_harmonic_spectrum(self, audio: np.ndarray, sample_rate: int) -> Dict[int, float]:
         """Analyze harmonic spectrum"""
+
+
+
         return {2: -40.0, 3: -50.0, 4: -60.0, 5: -60.0}
     
     def _calculate_intermodulation_distortion(self, audio: np.ndarray, sample_rate: int) -> float:
         """Calculate intermodulation distortion"""
+
+
+
         return 0.05
     
     def _analyze_saturation_character(self, audio: np.ndarray, sample_rate: int) -> str:
         """Analyze saturation character"""
+
+
+
         return 'none'
     
     def _calculate_clipping_percentage(self, audio: np.ndarray) -> float:
@@ -1112,34 +1202,58 @@ class MasteringAnalyzer:
     
     def _detect_digital_artifacts(self, audio: np.ndarray, sample_rate: int) -> List[str]:
         """Detect digital processing artifacts"""
+
+
+
         return []
     
     def _assess_attack_preservation(self, audio: np.ndarray, sample_rate: int) -> float:
         """Assess attack transient preservation"""
+
+
+
         return 0.8
     
     def _assess_decay_integrity(self, audio: np.ndarray, sample_rate: int) -> float:
         """Assess decay integrity"""
+
+
+
         return 0.8
     
     def _calculate_punch_factor(self, audio: np.ndarray, sample_rate: int) -> float:
         """Calculate punch factor"""
+
+
+
         return 0.7
     
     def _assess_micro_dynamics(self, audio: np.ndarray, sample_rate: int) -> float:
         """Assess micro-dynamics preservation"""
+
+
+
         return 0.6
     
     def _detect_transient_smearing(self, audio: np.ndarray, sample_rate: int) -> float:
         """Detect transient smearing"""
+
+
+
         return 0.1
     
     def _assess_overshoot_control(self, audio: np.ndarray, sample_rate: int) -> float:
         """Assess overshoot control quality"""
+
+
+
         return 0.9
     
     async def _generate_compliance_report(self, *analysis_results, target_standard: MasteringStandard) -> ComplianceReport:
         """Generate professional compliance report"""
+
+
+
         try:
             loudness_result = analysis_results[0]
             
@@ -1266,6 +1380,9 @@ class MasteringAnalyzer:
     
     def __del__(self):
         """Cleanup resources"""
+
+
+
         try:
             if hasattr(self, 'executor'):
                 self.executor.shutdown(wait=False)

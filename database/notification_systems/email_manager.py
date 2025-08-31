@@ -138,6 +138,9 @@ class EmailDeliverabilityManager:
         
     async def check_reputation(self, domain: str) -> Dict[str, Any]:
         """Vérifier la réputation d'un domaine"""
+
+
+
         try:
             # Récupérer les métriques du domaine
             reputation_data = await self.redis.hgetall(f"{self.reputation_key}:{domain}")
@@ -182,6 +185,9 @@ class EmailDeliverabilityManager:
     
     async def update_delivery_stats(self, domain: str, event: str):
         """Mettre à jour les statistiques de livraison"""
+
+
+
         try:
             key = f"{self.reputation_key}:{domain}"
             
@@ -218,6 +224,9 @@ class EmailProviderSMTP:
     
     async def send_email(self, message: EmailMessage) -> Dict[str, Any]:
         """Envoyer un email via SMTP"""
+
+
+
         try:
             # Créer le message MIME
             msg = MIMEMultipart('alternative')
@@ -273,6 +282,9 @@ class EmailProviderSMTP:
     
     def _add_attachment(self, msg: MIMEMultipart, attachment: Dict[str, Any]):
         """Ajouter une pièce jointe"""
+
+
+
         try:
             part = MIMEBase('application', 'octet-stream')
             part.set_payload(attachment['content'])
@@ -294,6 +306,9 @@ class EmailProviderSendGrid:
     
     async def send_email(self, message: EmailMessage) -> Dict[str, Any]:
         """Envoyer un email via SendGrid"""
+
+
+
         try:
             mail = Mail(
                 from_email=(message.from_email, message.from_name),
@@ -346,6 +361,9 @@ class EmailTemplateEngine:
     
     def render_template(self, template_id: str, data: Dict[str, Any]) -> Dict[str, str]:
         """Rendre un template avec les données"""
+
+
+
         try:
             template = self.templates.get(template_id)
             if not template:
@@ -402,6 +420,9 @@ class EmailManager:
     
     async def send_email(self, message: EmailMessage) -> str:
         """Envoyer un email"""
+
+
+
         try:
             # Vérifier la réputation du domaine
             domain = message.to_email.split("@")[1]
@@ -438,6 +459,9 @@ class EmailManager:
     
     async def _send_now(self, message: EmailMessage):
         """Envoyer immédiatement un email"""
+
+
+
         try:
             provider = self.providers.get(message.provider, self.providers[self.default_provider])
             result = await provider.send_email(message)
@@ -471,6 +495,9 @@ class EmailManager:
     
     async def _schedule_email(self, message: EmailMessage):
         """Programmer un email"""
+
+
+
         try:
             # Ajouter à la queue Redis avec délai
             delay = (message.scheduled_at - datetime.utcnow()).total_seconds()
@@ -487,6 +514,9 @@ class EmailManager:
     
     async def process_scheduled_emails(self):
         """Traiter les emails programmés"""
+
+
+
         try:
             now = datetime.utcnow().timestamp()
             

@@ -8,7 +8,7 @@ Responsibility: Multi-layer encryption for content protection & security complia
 Technologies: Python, AES-256, RSA, Cryptographic APIs, Key management
 ==============================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -183,6 +183,9 @@ class EncryptionManager:
     
     def _initialize_default_keys(self):
         """Initialize default encryption keys"""
+
+
+
         try:
             # Generate default symmetric key
             default_key = self.generate_key(
@@ -214,6 +217,9 @@ class EncryptionManager:
         Returns:
             Key ID for the generated key
         """
+
+
+
         try:
             algorithm = algorithm or self.config.default_algorithm
             
@@ -274,6 +280,9 @@ class EncryptionManager:
         Returns:
             Tuple of (public_key_id, private_key_id)
         """
+
+
+
         try:
             if algorithm == EncryptionAlgorithm.RSA_4096:
                 # Generate RSA key pair
@@ -358,6 +367,9 @@ class EncryptionManager:
         Returns:
             Encryption result
         """
+
+
+
         try:
             # Get or generate key
             if key_id is None:
@@ -438,6 +450,9 @@ class EncryptionManager:
         Returns:
             Decryption result
         """
+
+
+
         try:
             if key_id not in self.keys:
                 return DecryptionResult(
@@ -528,6 +543,9 @@ class EncryptionManager:
         Returns:
             New key ID
         """
+
+
+
         try:
             if key_id not in self.keys:
                 raise ValueError(f"Key not found: {key_id}")
@@ -572,6 +590,9 @@ class EncryptionManager:
         Returns:
             Key ID for derived key
         """
+
+
+
         try:
             if salt is None:
                 salt = secrets.token_bytes(32)
@@ -625,6 +646,9 @@ class EncryptionManager:
         Returns:
             Key information dictionary
         """
+
+
+
         try:
             if key_id not in self.keys:
                 return None
@@ -658,6 +682,9 @@ class EncryptionManager:
         Returns:
             List of key information dictionaries
         """
+
+
+
         try:
             keys_info = []
             
@@ -686,6 +713,9 @@ class EncryptionManager:
         Returns:
             Exported key data (base64 encoded)
         """
+
+
+
         try:
             if key_id not in self.keys:
                 return None
@@ -727,6 +757,9 @@ class EncryptionManager:
         Returns:
             Imported key ID
         """
+
+
+
         try:
             # Decrypt export data
             encrypted_data = base64.b64decode(exported_data)
@@ -791,6 +824,9 @@ class EncryptionManager:
     
     def _generate_master_key(self) -> bytes:
         """Generate a new master key"""
+
+
+
         return secrets.token_bytes(32)
     
     def _generate_key_id(self, algorithm: EncryptionAlgorithm, metadata: Dict[str, Any]) -> str:
@@ -802,6 +838,9 @@ class EncryptionManager:
     
     def _encrypt_key_data(self, key_data: bytes) -> bytes:
         """Encrypt key data with master key"""
+
+
+
         try:
             # Use Fernet for key encryption (key wrapping)
             fernet = Fernet(base64.urlsafe_b64encode(self.master_key))
@@ -812,6 +851,9 @@ class EncryptionManager:
     
     def _decrypt_key_data(self, encrypted_key_data: bytes) -> bytes:
         """Decrypt key data with master key"""
+
+
+
         try:
             fernet = Fernet(base64.urlsafe_b64encode(self.master_key))
             return fernet.decrypt(encrypted_key_data)

@@ -449,6 +449,9 @@ class MonetizationAnalyzer:
         creator_profile: Dict[str, Any]
     ) -> RevenueMetrics:
         """Calculate comprehensive revenue metrics."""
+
+
+
         try:
             # Extract revenue data
             total_revenue = Decimal(str(revenue_data.get('total_revenue', 0)))
@@ -537,6 +540,9 @@ class MonetizationAnalyzer:
         revenue_metrics: RevenueMetrics
     ) -> MonetizationPotential:
         """Assess overall monetization potential."""
+
+
+
         try:
             followers = creator_profile.get('follower_count', 0)
             engagement_rate = engagement_data.get('engagement_rate', 0.0)
@@ -881,6 +887,9 @@ class MonetizationAnalyzer:
         engagement_data: Dict[str, Any]
     ) -> BrandCollaborationAnalysis:
         """Analyze brand collaboration potential."""
+
+
+
         try:
             followers = creator_profile.get('follower_count', 0)
             engagement_rate = engagement_data.get('engagement_rate', 0.0)
@@ -1285,6 +1294,9 @@ class MonetizationAnalyzer:
     
     def _get_industry_trends(self) -> List[str]:
         """Get current industry trends."""
+
+
+
         return [
             "Increased focus on authentic partnerships",
             "Growing demand for video content",

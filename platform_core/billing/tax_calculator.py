@@ -1,15 +1,15 @@
 """
-🚀 Tax Calculator - IA Influencer Agent Platform Enterprise
+ Tax Calculator - IA Influencer Agent Platform Enterprise
 ========================================================
 Module: backend/platform_core/billing/tax_calculator.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ========================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 CALCULATEUR DE TAXES INTERNATIONALES
+ CALCULATEUR DE TAXES INTERNATIONALES
 Système de calcul automatique des taxes selon les juridictions
 - Support TVA/TPS/HST/Sales Tax internationales
 - Règles par pays/état/province configurables
@@ -129,6 +129,9 @@ class TaxCalculationResult:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit en dictionnaire"""
+
+
+
         return {
             "subtotal": float(self.subtotal),
             "total_tax": float(self.total_tax),
@@ -551,6 +554,9 @@ class TaxCalculator:
         
     def get_calculator_stats(self) -> Dict[str, Any]:
         """Retourne les statistiques du calculateur"""
+
+
+
         return {
             "total_rules": len(self.tax_rules),
             "rules_by_country": {},

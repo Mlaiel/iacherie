@@ -8,7 +8,7 @@ optimized for their specific content and workflow requirements.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent - Content Protection Platform
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
@@ -347,6 +347,9 @@ class CreatorConfigurations:
     @classmethod
     def get_all_configs(cls) -> Dict[CreatorType, CreatorConfigPreset]:
         """Get all creator configurations"""
+
+
+
         return {
             CreatorType.MUSICIAN: cls.MUSICIAN_CONFIG,
             CreatorType.BLOGGER: cls.BLOGGER_CONFIG,
@@ -427,6 +430,9 @@ class PlatformOptimizations:
     @classmethod
     def get_platform_specs(cls, platform: str) -> Dict[str, Any]:
         """Get specifications for specific platform"""
+
+
+
         return cls.PLATFORM_SPECS.get(platform, {})
     
     @classmethod

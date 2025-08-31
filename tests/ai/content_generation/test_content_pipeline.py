@@ -75,6 +75,9 @@ class TestContentGenerationPipeline:
     @pytest.fixture
     def mock_generators(self):
         """Create mock generators for testing"""
+
+
+
         return {
             'text': AsyncMock(),
             'audio': AsyncMock(),
@@ -85,6 +88,9 @@ class TestContentGenerationPipeline:
     @pytest.fixture
     def mock_optimizers(self):
         """Create mock optimizers for testing"""
+
+
+
         return {
             'seo': AsyncMock(),
             'quality': AsyncMock(),
@@ -94,6 +100,9 @@ class TestContentGenerationPipeline:
     @pytest.fixture
     def valid_request(self):
         """Create a valid pipeline request"""
+
+
+
         return ContentGenerationRequest(
             content_type="blog_post",
             topic="AI technology trends",
@@ -106,6 +115,9 @@ class TestContentGenerationPipeline:
     @pytest.fixture
     def blog_request(self):
         """Create a blog-specific request"""
+
+
+
         return ContentGenerationRequest(
             content_type="blog_post",
             topic="Future of Machine Learning",
@@ -118,6 +130,9 @@ class TestContentGenerationPipeline:
     @pytest.fixture
     def social_request(self):
         """Create a social media request"""
+
+
+
         return ContentGenerationRequest(
             content_type="instagram_post",
             topic="Daily motivation",
@@ -582,6 +597,9 @@ class TestPipelineConfiguration:
     @pytest.fixture
     def pipeline(self):
         """Create a pipeline for configuration testing"""
+
+
+
         return ContentGenerationPipeline()
     
     def test_default_configuration(self, pipeline):

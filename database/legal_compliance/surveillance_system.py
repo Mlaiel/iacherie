@@ -199,6 +199,9 @@ class ContentSurveillanceManager:
             platforms_to_monitor: Specific platforms to monitor
             sensitivity_level: Detection sensitivity (0.0-1.0)
         """
+
+
+
         try:
             # Generate AI fingerprints using multiple algorithms
             ai_fingerprints = await self._generate_multi_algorithm_fingerprints(
@@ -376,6 +379,9 @@ class ContentSurveillanceManager:
     
     async def perform_surveillance_scan(self, target_id: str) -> List[InfringementDetection]:
         """Perform surveillance scan for a specific target."""
+
+
+
         try:
             target = self.surveillance_targets.get(target_id)
             if not target or not target.surveillance_enabled:
@@ -608,6 +614,9 @@ class ContentSurveillanceManager:
     
     async def _process_infringement_detection(self, detection: InfringementDetection) -> None:
         """Process and store infringement detection."""
+
+
+
         try:
             # Store detection
             self.infringement_detections[detection.detection_id] = detection
@@ -657,6 +666,9 @@ class ContentSurveillanceManager:
         action: EnforcementAction
     ) -> bool:
         """Execute a specific enforcement action."""
+
+
+
         try:
             if action == EnforcementAction.SEND_DMCA:
                 return await self._send_dmca_takedown(detection)
@@ -712,6 +724,9 @@ class ContentSurveillanceManager:
         period_days: int = 30
     ) -> SurveillanceReport:
         """Generate comprehensive surveillance report for a creator."""
+
+
+
         try:
             period_start = datetime.utcnow() - timedelta(days=period_days)
             period_end = datetime.utcnow()
@@ -790,6 +805,9 @@ class ContentSurveillanceManager:
         new_sensitivity: float
     ) -> bool:
         """Update surveillance sensitivity for a target."""
+
+
+
         try:
             target = self.surveillance_targets.get(target_id)
             if not target:
@@ -807,6 +825,9 @@ class ContentSurveillanceManager:
     
     async def disable_surveillance(self, target_id: str) -> bool:
         """Disable surveillance for a specific target."""
+
+
+
         try:
             target = self.surveillance_targets.get(target_id)
             if not target:

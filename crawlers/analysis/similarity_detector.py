@@ -164,6 +164,9 @@ class SimilarityDetector:
     
     def _initialize_models(self) -> None:
         """Initialize similarity detection models."""
+
+
+
         try:
             # Text vectorizer
             self.text_vectorizer = TfidfVectorizer(
@@ -896,6 +899,9 @@ class SimilarityDetector:
         domain: ContentDomain
     ) -> None:
         """Add content to the similarity index for future searches."""
+
+
+
         try:
             if domain == ContentDomain.TEXT and 'text' in content_features:
                 embeddings = content_features['text'].get('embeddings')

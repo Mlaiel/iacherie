@@ -65,6 +65,9 @@ class ConversionResult:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert result to dictionary"""
+
+
+
         return {
             'success': self.success,
             'input_file': self.input_file,
@@ -224,6 +227,9 @@ class AudioConverter:
     
     async def _get_audio_info(self, file_path: str) -> Dict[str, Any]:
         """Get audio file information"""
+
+
+
         try:
             probe = ffmpeg.probe(file_path)
             
@@ -432,6 +438,9 @@ class VideoConverter:
     
     async def _get_video_info(self, file_path: str) -> Dict[str, Any]:
         """Get video file information"""
+
+
+
         try:
             probe = ffmpeg.probe(file_path)
             
@@ -472,6 +481,9 @@ class VideoConverter:
     async def create_thumbnail(self, video_file: str, thumbnail_file: str,
                              timestamp: float = 1.0, size: Tuple[int, int] = (320, 240)) -> bool:
         """Create video thumbnail"""
+
+
+
         try:
             input_stream = ffmpeg.input(video_file, ss=timestamp)
             output_stream = ffmpeg.output(
@@ -629,6 +641,9 @@ class ImageConverter:
     
     def _get_image_info(self, file_path: str) -> Dict[str, Any]:
         """Get image file information"""
+
+
+
         try:
             with Image.open(file_path) as img:
                 return {

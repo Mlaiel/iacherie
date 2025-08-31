@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -209,6 +209,9 @@ class CrossPlatformBridge:
         
     async def initialize_platform_bridges(self) -> bool:
         """Initialize all platform communication bridges"""
+
+
+
         try:
             # Initialize platform adapters
             await self._initialize_platform_adapters()
@@ -241,6 +244,9 @@ class CrossPlatformBridge:
         configuration: Dict[str, Any] = None
     ) -> str:
         """Register new platform integration"""
+
+
+
         try:
             # Encrypt credentials
             encrypted_credentials = await self._encrypt_credentials(credentials)
@@ -291,6 +297,9 @@ class CrossPlatformBridge:
         metadata: Dict[str, Any] = None
     ) -> str:
         """Send message across multiple platforms"""
+
+
+
         try:
             message_id = str(uuid.uuid4())
             
@@ -327,6 +336,9 @@ class CrossPlatformBridge:
     
     async def _process_message_delivery(self, message: CrossPlatformMessage) -> None:
         """Process cross-platform message delivery"""
+
+
+
         try:
             delivery_tasks = []
             
@@ -375,6 +387,9 @@ class CrossPlatformBridge:
         integration: PlatformIntegration
     ) -> bool:
         """Deliver message to specific platform"""
+
+
+
         try:
             # Get platform adapter
             adapter = self.platform_adapters.get(platform)
@@ -416,6 +431,9 @@ class CrossPlatformBridge:
         signature: str = None
     ) -> bool:
         """Receive and process platform webhook"""
+
+
+
         try:
             # Verify webhook signature
             if signature and not await self._verify_webhook_signature(
@@ -457,6 +475,9 @@ class CrossPlatformBridge:
         sync_type: str = "full"
     ) -> Dict[str, Any]:
         """Sync data from platform"""
+
+
+
         try:
             # Get platform integration
             integration = await self._get_platform_integration(user_id, platform)
@@ -498,6 +519,9 @@ class CrossPlatformBridge:
         metrics: List[str] = None
     ) -> Dict[str, Any]:
         """Get platform-specific analytics"""
+
+
+
         try:
             # Get platform integration
             integration = await self._get_platform_integration(user_id, platform)
@@ -538,6 +562,9 @@ class CrossPlatformBridge:
     
     async def get_integration_status(self, user_id: str) -> Dict[str, Any]:
         """Get status of all platform integrations for user"""
+
+
+
         try:
             integrations = self.db_session.query(PlatformIntegration).filter(
                 PlatformIntegration.user_id == user_id
@@ -570,6 +597,9 @@ class CrossPlatformBridge:
     
     async def _initialize_platform_adapters(self) -> None:
         """Initialize platform-specific adapters"""
+
+
+
         try:
             # YouTube adapter
             self.platform_adapters[PlatformType.YOUTUBE] = await self._create_youtube_adapter()
@@ -600,6 +630,9 @@ class CrossPlatformBridge:
     
     async def _encrypt_credentials(self, credentials: PlatformCredentials) -> Dict[str, Any]:
         """Encrypt platform credentials"""
+
+
+
         try:
             credentials_dict = asdict(credentials)
             credentials_json = json.dumps(credentials_dict)
@@ -617,6 +650,9 @@ class CrossPlatformBridge:
     
     async def _decrypt_credentials(self, encrypted_credentials: Dict[str, Any]) -> PlatformCredentials:
         """Decrypt platform credentials"""
+
+
+
         try:
             encrypted_data = encrypted_credentials['encrypted_data'].encode()
             decrypted_data = self.cipher_suite.decrypt(encrypted_data)
@@ -630,6 +666,9 @@ class CrossPlatformBridge:
     
     async def cleanup_old_message_logs(self, days_to_keep: int = 90) -> int:
         """Cleanup old cross-platform message logs"""
+
+
+
         try:
             cutoff_date = datetime.utcnow() - timedelta(days=days_to_keep)
             

@@ -80,6 +80,9 @@ class VideoFeatureExtractor:
         
     async def extract_features(self, video_data: bytes) -> Dict[str, Any]:
         """Extract comprehensive video features from video data."""
+
+
+
         try:
             # Save video data to temporary file for OpenCV processing
             import tempfile
@@ -356,6 +359,9 @@ class VideoSimilarityCalculator:
         features2: Dict[str, Any]
     ) -> Tuple[float, Dict[str, float]]:
         """Calculate comprehensive similarity between two video feature sets."""
+
+
+
         try:
             similarities = {}
             weighted_sum = 0.0
@@ -401,6 +407,9 @@ class VideoSimilarityCalculator:
     
     async def _calculate_visual_similarity(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> Optional[float]:
         """Calculate visual similarity using ORB and SIFT descriptors."""
+
+
+
         try:
             visual_similarities = []
             
@@ -435,6 +444,9 @@ class VideoSimilarityCalculator:
     
     async def _calculate_temporal_similarity(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> Optional[float]:
         """Calculate temporal similarity using frame difference patterns."""
+
+
+
         try:
             temporal_similarities = []
             
@@ -457,6 +469,9 @@ class VideoSimilarityCalculator:
     
     async def _calculate_color_similarity(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> Optional[float]:
         """Calculate color similarity using histograms and color statistics."""
+
+
+
         try:
             color_similarities = []
             
@@ -487,6 +502,9 @@ class VideoSimilarityCalculator:
     
     async def _calculate_motion_similarity(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> Optional[float]:
         """Calculate motion similarity using motion intensity patterns."""
+
+
+
         try:
             motion_similarities = []
             
@@ -540,6 +558,9 @@ class VideoDetectionEngine:
         
     async def initialize(self) -> bool:
         """Initialize the video detection engine."""
+
+
+
         try:
             # Initialize ChromaDB client
             self.chroma_client = chromadb.Client()
@@ -568,6 +589,9 @@ class VideoDetectionEngine:
         metadata: Dict[str, Any]
     ) -> VideoFingerprint:
         """Create video fingerprint from video data."""
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -617,6 +641,9 @@ class VideoDetectionEngine:
     
     async def _store_fingerprint(self, fingerprint: VideoFingerprint) -> None:
         """Store fingerprint in vector database."""
+
+
+
         try:
             # Create embedding vector from key features
             embedding_features = []
@@ -666,6 +693,9 @@ class VideoDetectionEngine:
         detection_metadata: Dict[str, Any]
     ) -> List[VideoMatch]:
         """Detect video matches against stored fingerprints."""
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -779,6 +809,9 @@ class VideoDetectionEngine:
         stored_features: Dict[str, Any]
     ) -> float:
         """Calculate confidence level for match."""
+
+
+
         try:
             # Base confidence from overall similarity
             confidence = similarity_score
@@ -810,6 +843,9 @@ class VideoDetectionEngine:
     
     async def get_detection_statistics(self) -> Dict[str, Any]:
         """Get detection engine statistics."""
+
+
+
         return {
             "engine_type": "video",
             "status": "active",
@@ -824,6 +860,9 @@ class VideoDetectionEngine:
     def _calculate_audio_similarity(self, detected_features: Dict[str, np.ndarray], 
                                    reference_features: Dict[str, np.ndarray]) -> float:
         """Calculate audio similarity score between detected and reference video."""
+
+
+
         try:
             # Extract audio features if available
             detected_audio = detected_features.get('audio_features')
@@ -868,6 +907,9 @@ class VideoDetectionEngine:
     
     async def cleanup(self) -> None:
         """Cleanup resources."""
+
+
+
         try:
             if self.chroma_client:
                 # ChromaDB cleanup if needed

@@ -7,7 +7,7 @@ and real-time surveillance capabilities for content protection and collaboration
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -376,6 +376,9 @@ class CrawlingAgent(BaseAgent):
 
     async def _crawl_single_page(self, url: str, content_types: List[str]) -> Optional[CrawledContent]:
         """Crawl and extract content from a single web page"""
+
+
+
         try:
             headers = {
                 'User-Agent': self.user_agent_rotator.get_random_agent(),
@@ -581,6 +584,9 @@ class CrawlingAgent(BaseAgent):
 
     def _analyze_sentiment(self, text: str) -> float:
         """Analyze content sentiment using TextBlob"""
+
+
+
         try:
             blob = TextBlob(text)
             return blob.sentiment.polarity
@@ -629,6 +635,9 @@ class CrawlingAgent(BaseAgent):
 
     def _detect_language(self, text: str) -> str:
         """Detect content language"""
+
+
+
         try:
             blob = TextBlob(text)
             return blob.detect_language()
@@ -637,6 +646,9 @@ class CrawlingAgent(BaseAgent):
 
     def _is_valid_url(self, url: str) -> bool:
         """Validate URL format and accessibility"""
+
+
+
         try:
             parsed = urlparse(url)
             return bool(parsed.scheme and parsed.netloc)
@@ -1165,6 +1177,9 @@ class CrawlingAgent(BaseAgent):
 
     def _serialize_crawled_content(self, content: CrawledContent) -> Dict[str, Any]:
         """Serialize CrawledContent object to dictionary"""
+
+
+
         return {
             'url': content.url,
             'title': content.title,
@@ -1188,6 +1203,9 @@ class CrawlingAgent(BaseAgent):
 
     async def _load_surveillance_targets(self) -> None:
         """Load surveillance targets from database"""
+
+
+
         try:
             # Implementation would load from database
             # This is a placeholder
@@ -1197,6 +1215,9 @@ class CrawlingAgent(BaseAgent):
 
     async def _save_surveillance_target(self, target: SurveillanceTarget) -> None:
         """Save surveillance target to database"""
+
+
+
         try:
             # Implementation would save to database
             # This is a placeholder
@@ -1206,6 +1227,9 @@ class CrawlingAgent(BaseAgent):
 
     async def _update_surveillance_target(self, target: SurveillanceTarget) -> None:
         """Update surveillance target in database"""
+
+
+
         try:
             # Implementation would update database record
             pass
@@ -1243,6 +1267,9 @@ class CrawlingAgent(BaseAgent):
 
     async def _process_queued_request(self, request: Dict) -> None:
         """Process queued crawling request"""
+
+
+
         try:
             # Process based on request type
             request_type = request.get('type')
@@ -1296,6 +1323,9 @@ class CrawlingAgentManager:
     
     async def get_agent(self, agent_id: str) -> Optional[CrawlingAgent]:
         """Get existing crawling agent"""
+
+
+
         return self.agents.get(agent_id)
     
     async def distribute_request(self, request: AgentRequest) -> AgentResponse:

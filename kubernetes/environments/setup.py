@@ -7,7 +7,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project Team: Multi-format Creator Platform with AI Protection & Monetization
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -66,6 +66,9 @@ class EnvironmentSetupManager:
         
     async def setup_all_environments(self, environment_types: Optional[List[str]] = None) -> Dict[str, Any]:
         """Setup all or specified environments"""
+
+
+
         try:
             logger.info("Starting environment setup process...")
             
@@ -128,6 +131,9 @@ class EnvironmentSetupManager:
     
     async def _check_prerequisites(self) -> Dict[str, Any]:
         """Check system prerequisites"""
+
+
+
         try:
             prereq_results = {
                 'all_satisfied': True,
@@ -219,6 +225,9 @@ class EnvironmentSetupManager:
     
     async def _validate_configurations(self, environments: List[EnvironmentType]) -> Dict[str, Any]:
         """Validate environment configurations"""
+
+
+
         try:
             validation_results = {
                 'overall_valid': True,
@@ -258,6 +267,9 @@ class EnvironmentSetupManager:
     
     async def _setup_security(self) -> Dict[str, Any]:
         """Setup security configurations"""
+
+
+
         try:
             security_results = {
                 'ssl_certificates': False,
@@ -300,6 +312,9 @@ class EnvironmentSetupManager:
     
     async def _generate_setup_summary(self) -> Dict[str, Any]:
         """Generate setup summary report"""
+
+
+
         try:
             summary = {
                 'setup_completion_time': self._get_current_timestamp(),
@@ -341,6 +356,9 @@ class EnvironmentSetupManager:
     # Helper methods
     def _get_available_disk_space(self) -> float:
         """Get available disk space in GB"""
+
+
+
         try:
             import shutil
             total, used, free = shutil.disk_usage('/')
@@ -350,6 +368,9 @@ class EnvironmentSetupManager:
     
     def _get_available_memory(self) -> float:
         """Get available memory in GB"""
+
+
+
         try:
             import psutil
             memory = psutil.virtual_memory()
@@ -359,6 +380,9 @@ class EnvironmentSetupManager:
     
     async def _check_network_connectivity(self) -> Dict[str, Any]:
         """Check network connectivity"""
+
+
+
         try:
             import aiohttp
             async with aiohttp.ClientSession() as session:
@@ -372,6 +396,9 @@ class EnvironmentSetupManager:
     
     def _check_docker_availability(self) -> Dict[str, Any]:
         """Check Docker availability"""
+
+
+
         try:
             import subprocess
             result = subprocess.run(['docker', '--version'], capture_output=True, text=True)
@@ -384,6 +411,9 @@ class EnvironmentSetupManager:
     
     def _check_kubernetes_availability(self) -> Dict[str, Any]:
         """Check Kubernetes availability"""
+
+
+
         try:
             import subprocess
             result = subprocess.run(['kubectl', 'version', '--client'], capture_output=True, text=True)
@@ -396,6 +426,9 @@ class EnvironmentSetupManager:
     
     def _validate_cross_environment_configurations(self, environments: List[EnvironmentType]) -> Dict[str, Any]:
         """Validate cross-environment configurations"""
+
+
+
         return {
             'conflicts': [],
             'recommendations': [
@@ -436,6 +469,9 @@ class EnvironmentSetupManager:
     
     def _generate_next_steps(self) -> List[str]:
         """Generate next steps recommendations"""
+
+
+
         return [
             "Review environment configurations",
             "Run health checks",
@@ -446,6 +482,9 @@ class EnvironmentSetupManager:
     
     def _get_documentation_links(self) -> List[str]:
         """Get documentation links"""
+
+
+
         return [
             "README.md - Environment overview",
             "README.de.md - German documentation",

@@ -7,7 +7,7 @@ Provides detailed performance insights, bottleneck detection, and optimization r
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -831,6 +831,9 @@ class PerformanceAnalyzer:
 
     async def _simulate_content_load_time(self, content_path: str, content_type: ContentType) -> float:
         """Simulate content loading time based on file size and type"""
+
+
+
         
         try:
             file_size = Path(content_path).stat().st_size
@@ -1143,6 +1146,9 @@ class PerformanceAnalyzer:
 
     def _load_performance_baselines(self) -> Dict[str, Dict[str, float]]:
         """Load performance baselines for comparison"""
+
+
+
         
         return {
             "audio": {
@@ -1173,6 +1179,9 @@ class PerformanceAnalyzer:
 
     def _load_performance_thresholds(self) -> Dict[str, Dict[str, Dict[str, float]]]:
         """Load performance thresholds for different metrics"""
+
+
+
         
         return {
             "audio": {
@@ -1321,6 +1330,9 @@ class PerformanceAnalyzer:
         analysis_result: PerformanceAnalysisResult
     ) -> None:
         """Update performance history for trend analysis"""
+
+
+
         
         try:
             if content_id not in self.performance_history:
@@ -1359,6 +1371,9 @@ class MetricsCalculator:
         operation: str = "load"
     ) -> Dict[str, float]:
         """Calculate basic performance metrics for content"""
+
+
+
         
         try:
             metrics = {}
@@ -1413,6 +1428,9 @@ class MetricsCalculator:
         content_type: ContentType
     ) -> float:
         """Calculate efficiency score from metrics"""
+
+
+
         
         try:
             efficiency_factors = []

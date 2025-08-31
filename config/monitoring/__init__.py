@@ -192,7 +192,10 @@ class MonitoringConfiguration:
         self.business_intelligence = business_intelligence_config
     
     def get_unified_config(self) -> Dict[str, Any]:
-        """Get unified monitoring configuration for all components"""        return {
+        """Get unified monitoring configuration for all components"""
+
+
+        return {
             "prometheus": self.prometheus.export_configuration(),
             "grafana": self.grafana.export_configuration(),
             "alerting": self.alerting.export_configuration(),
@@ -256,7 +259,10 @@ class MonitoringConfiguration:
         pass
     
     def get_monitoring_health(self) -> Dict[str, Any]:
-        """Get health status of all monitoring components"""        return {
+        """Get health status of all monitoring components"""
+
+
+        return {
             "timestamp": datetime.utcnow().isoformat(),
             "overall_status": "healthy",
             "components": {
@@ -288,7 +294,10 @@ def create_monitoring_stack():
     
     Returns:
         Dict containing all monitoring configurations
-    """    return {
+    """
+
+
+    return {
         'prometheus': PrometheusConfig(),
         'grafana': GrafanaConfig(),
         'alerting': AlertingConfig(),
@@ -309,7 +318,10 @@ def validate_monitoring_config() -> bool:
     
     Returns:
         bool: True if all required configurations are valid
-    """    try:
+    """
+
+
+    try:
         monitoring_stack = create_monitoring_stack()
         
         # Validate each component

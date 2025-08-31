@@ -181,6 +181,9 @@ class BaseMetricsCalculator(ABC):
     
     def _normalize_score(self, value: float, min_val: float = 0.0, max_val: float = 100.0) -> float:
         """Normalize a score to a 0-100 range."""
+
+
+
         return max(0.0, min(100.0, ((value - min_val) / (max_val - min_val)) * 100))
     
     def _calculate_growth_rate(self, current: float, previous: float) -> float:
@@ -237,6 +240,9 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
         **kwargs
     ) -> List[MetricResult]:
         """Calculate comprehensive creator success metrics."""
+
+
+
         try:
             metrics = []
             
@@ -277,6 +283,9 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
     
     async def _calculate_overall_success_score(self, data: Dict[str, Any]) -> float:
         """Calculate overall creator success score (0-100)."""
+
+
+
         try:
             weights = {
                 'content_quality': 0.25,
@@ -566,6 +575,9 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
     
     async def _predict_growth_trajectory(self, historical_metrics: List[Dict[str, Any]]) -> Dict[str, float]:
         """Predict growth trajectory using time series analysis."""
+
+
+
         try:
             # Extract follower count time series
             dates = [datetime.fromisoformat(m['date']) for m in historical_metrics]

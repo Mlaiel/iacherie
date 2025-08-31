@@ -6,7 +6,7 @@ Provides comprehensive user interaction analysis, personalization, and retention
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel - All rights reserved
-⚠️  WARNING: This code and concept are proprietary to Fahed Mlaiel.
+  WARNING: This code and concept are proprietary to Fahed Mlaiel.
     Any unauthorized use, copying, or distribution without explicit written 
     permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 
@@ -125,6 +125,9 @@ class UserBehaviorEvent(BaseEvent):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert user behavior event to dictionary"""
+
+
+
         return {
             **asdict(self),
             'behavior_type': self.behavior_type.value,
@@ -180,6 +183,9 @@ class UserBehaviorEventHandler(BaseEventHandler):
         
     async def handle(self, event: UserBehaviorEvent) -> Dict[str, Any]:
         """Process user behavior event with comprehensive analysis"""
+
+
+
         try:
             # Validate event data
             await self._validate_event(event)

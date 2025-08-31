@@ -21,7 +21,7 @@ Ultra-professional test suite for Prompts Models system
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️ COPYRIGHT WARNING ⚠️
+ COPYRIGHT WARNING 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
@@ -50,6 +50,9 @@ class TestPromptsModels:
     @pytest.fixture
     def sample_prompt_context(self):
         """Create sample prompt context for testing"""
+
+
+
         return PromptContext(
             user_id="user_12345",
             creator_type="musician",
@@ -72,6 +75,9 @@ class TestPromptsModels:
     @pytest.fixture
     def sample_prompt_template(self):
         """Create sample prompt template for testing"""
+
+
+
         return PromptTemplate(
             id="template_001",
             name="Electronic Music Promotion",
@@ -87,6 +93,9 @@ class TestPromptsModels:
     @pytest.fixture
     def sample_generated_prompt(self, sample_prompt_context):
         """Create sample generated prompt for testing"""
+
+
+
         return GeneratedPrompt(
             prompt_type=PromptType.CONTENT_CREATION,
             status=PromptStatus.COMPLETED,

@@ -163,6 +163,9 @@ class AudioEnhancer:
     
     def _reduce_noise(self, audio_data: np.ndarray, settings: EnhancementSettings) -> np.ndarray:
         """Reduce noise using spectral subtraction technique"""
+
+
+
         try:
             strength = settings.strength
             
@@ -188,6 +191,9 @@ class AudioEnhancer:
     
     def _enhance_dynamics(self, audio_data: np.ndarray, settings: EnhancementSettings) -> np.ndarray:
         """Enhance dynamic range"""
+
+
+
         try:
             strength = settings.strength
             
@@ -226,6 +232,9 @@ class AudioEnhancer:
     
     def _enhance_spectrum(self, audio_data: np.ndarray, settings: EnhancementSettings) -> np.ndarray:
         """Enhance spectral content"""
+
+
+
         try:
             strength = settings.strength
             
@@ -258,6 +267,9 @@ class AudioEnhancer:
     
     def _enhance_vocals(self, audio_data: np.ndarray, settings: EnhancementSettings) -> np.ndarray:
         """Enhance vocal frequencies"""
+
+
+
         try:
             strength = settings.strength
             
@@ -288,6 +300,9 @@ class AudioEnhancer:
     
     def _boost_bass(self, audio_data: np.ndarray, settings: EnhancementSettings) -> np.ndarray:
         """Boost bass frequencies"""
+
+
+
         try:
             strength = settings.strength
             bass_boost = 1.0 + strength * 0.6
@@ -313,6 +328,9 @@ class AudioEnhancer:
     
     def _boost_treble(self, audio_data: np.ndarray, settings: EnhancementSettings) -> np.ndarray:
         """Boost treble frequencies"""
+
+
+
         try:
             strength = settings.strength
             treble_boost = 1.0 + strength * 0.5
@@ -338,6 +356,9 @@ class AudioEnhancer:
     
     def _widen_stereo(self, audio_data: np.ndarray, settings: EnhancementSettings) -> np.ndarray:
         """Widen stereo image (for stereo audio)"""
+
+
+
         try:
             # For mono audio, just return original
             if len(audio_data.shape) == 1:
@@ -372,6 +393,9 @@ class AudioEnhancer:
     
     def _enhance_harmonics(self, audio_data: np.ndarray, settings: EnhancementSettings) -> np.ndarray:
         """Enhance harmonic content"""
+
+
+
         try:
             strength = settings.strength
             
@@ -394,6 +418,9 @@ class AudioEnhancer:
     
     def _boost_clarity(self, audio_data: np.ndarray, settings: EnhancementSettings) -> np.ndarray:
         """Boost audio clarity"""
+
+
+
         try:
             strength = settings.strength
             
@@ -420,6 +447,9 @@ class AudioEnhancer:
     
     def _enhance_warmth(self, audio_data: np.ndarray, settings: EnhancementSettings) -> np.ndarray:
         """Enhance warmth (analog-like character)"""
+
+
+
         try:
             strength = settings.strength
             
@@ -458,6 +488,9 @@ class AudioEnhancer:
     
     def _apply_auto_gain(self, enhanced_audio: np.ndarray, original_audio: np.ndarray) -> np.ndarray:
         """Apply automatic gain compensation"""
+
+
+
         try:
             original_rms = np.sqrt(np.mean(original_audio ** 2))
             enhanced_rms = np.sqrt(np.mean(enhanced_audio ** 2))
@@ -476,6 +509,9 @@ class AudioEnhancer:
     
     def _prevent_clipping(self, audio_data: np.ndarray) -> np.ndarray:
         """Prevent digital clipping"""
+
+
+
         try:
             max_val = np.max(np.abs(audio_data))
             if max_val > 0.95:  # Leave some headroom
@@ -487,6 +523,9 @@ class AudioEnhancer:
     
     def _calculate_quality_metrics(self, original: np.ndarray, enhanced: np.ndarray) -> Dict[str, float]:
         """Calculate enhancement quality metrics"""
+
+
+
         try:
             metrics = {}
             
@@ -528,6 +567,9 @@ class AudioEnhancer:
     
     def _calculate_spectral_centroid(self, audio_data: np.ndarray) -> float:
         """Calculate spectral centroid"""
+
+
+
         try:
             fft = np.fft.fft(audio_data[:8192])  # Use first 8192 samples
             magnitude = np.abs(fft[:4096])  # First half (positive frequencies)
@@ -548,6 +590,9 @@ class AudioEnhancer:
     
     def _calculate_enhancement_gain(self, original: np.ndarray, enhanced: np.ndarray) -> float:
         """Calculate overall enhancement gain in dB"""
+
+
+
         try:
             original_rms = np.sqrt(np.mean(original ** 2))
             enhanced_rms = np.sqrt(np.mean(enhanced ** 2))
@@ -563,6 +608,9 @@ class AudioEnhancer:
     
     def _analyze_frequency_response(self, original: np.ndarray, enhanced: np.ndarray) -> Dict[str, float]:
         """Analyze frequency response changes"""
+
+
+
         try:
             # Calculate frequency response in different bands
             bands = {
@@ -607,6 +655,9 @@ class AudioEnhancer:
     
     def _check_enhancement_quality(self, result: EnhancementResult):
         """Check for potential enhancement quality issues"""
+
+
+
         try:
             warnings = []
             
@@ -653,6 +704,9 @@ class AudioEnhancer:
                                 strength: float, quality_level: QualityLevel = QualityLevel.MEDIUM,
                                 **kwargs) -> EnhancementSettings:
         """Create an enhancement preset"""
+
+
+
         return EnhancementSettings(
             enhancement_type=enhancement_type,
             strength=strength,

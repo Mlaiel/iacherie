@@ -54,6 +54,9 @@ class LegalEngine:
 
     async def start(self) -> None:
         """Start the legal processing engine"""
+
+
+
         try:
             self.is_running = True
             logger.info("LegalEngine started successfully")
@@ -63,6 +66,9 @@ class LegalEngine:
 
     async def process(self, data: Dict[str, Any]) -> LegalResult:
         """Process legal operation"""
+
+
+
         try:
             job_id = data.get('job_id', 'auto-generated')
             

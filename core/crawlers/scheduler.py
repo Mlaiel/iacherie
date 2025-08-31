@@ -5,7 +5,7 @@ Crawling Scheduler System
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 Unauthorized use, copying or distribution prohibited.
 
 Professional scheduling system for automated content monitoring.
@@ -438,6 +438,9 @@ class CrawlingScheduler:
     
     async def _execute_scheduled_task(self, task: ScheduledTask, manual_trigger: bool = False) -> Optional[str]:
         """Execute a scheduled task."""
+
+
+
         
         try:
             # Check platform load balancing
@@ -571,6 +574,9 @@ class CrawlingScheduler:
     
     async def _persist_task(self, task: ScheduledTask):
         """Persist scheduled task to Redis."""
+
+
+
         
         try:
             task_data = {
@@ -612,6 +618,9 @@ class CrawlingScheduler:
     
     async def _load_persisted_schedules(self):
         """Load scheduled tasks from Redis."""
+
+
+
         
         try:
             # Find all scheduled task keys

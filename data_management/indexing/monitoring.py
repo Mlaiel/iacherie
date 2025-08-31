@@ -8,7 +8,7 @@ with real-time metrics, performance tracking, and alerting capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent - Content Protection Platform
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
@@ -141,6 +141,9 @@ class MetricsCollector:
     
     async def initialize(self):
         """Initialize metrics collector"""
+
+
+
         try:
             self.redis_client = Redis.from_url(self.redis_url)
             await self.redis_client.ping()
@@ -160,6 +163,9 @@ class MetricsCollector:
         metadata: Dict[str, Any] = None
     ):
         """Record metrics for an indexing operation"""
+
+
+
         try:
             # Record in Prometheus
             self.processing_time.labels(
@@ -231,6 +237,9 @@ class MetricsCollector:
     
     async def _get_queue_depth(self) -> int:
         """Get current queue depth"""
+
+
+
         try:
             depth = await self.redis_client.llen("indexing_queue")
             self.queue_depth.set(depth)
@@ -240,6 +249,9 @@ class MetricsCollector:
     
     async def get_current_metrics(self) -> IndexingMetrics:
         """Get current aggregated metrics"""
+
+
+
         try:
             now = datetime.now(timezone.utc)
             last_hour = now - timedelta(hours=1)
@@ -311,6 +323,9 @@ class MetricsCollector:
     
     async def _calculate_storage_usage(self) -> float:
         """Calculate total storage usage in GB"""
+
+
+
         try:
             # This would typically query your storage backend
             # For now, return a placeholder value
@@ -331,6 +346,9 @@ class AlertManager:
         
     async def initialize(self):
         """Initialize alert manager"""
+
+
+
         try:
             self.redis_client = Redis.from_url(self.redis_url)
             await self.redis_client.ping()
@@ -343,6 +361,9 @@ class AlertManager:
     
     async def add_alert_rule(self, rule: AlertRule):
         """Add a new alert rule"""
+
+
+
         try:
             self.alert_rules[rule.name] = rule
             
@@ -361,6 +382,9 @@ class AlertManager:
     
     async def _load_alert_rules(self):
         """Load alert rules from Redis"""
+
+
+
         try:
             rules_data = await self.redis_client.hgetall("alert_rules")
             
@@ -376,6 +400,9 @@ class AlertManager:
     
     async def check_alerts(self, metrics: IndexingMetrics):
         """Check all alert rules against current metrics"""
+
+
+
         try:
             for rule_name, rule in self.alert_rules.items():
                 if not rule.enabled:
@@ -418,6 +445,9 @@ class AlertManager:
     
     async def _trigger_alert(self, rule: AlertRule, metric_value: float):
         """Trigger an alert"""
+
+
+
         try:
             alert_key = f"alert:{rule.name}"
             
@@ -454,6 +484,9 @@ class AlertManager:
     
     async def _resolve_alert(self, rule_name: str):
         """Resolve an active alert"""
+
+
+
         try:
             alert_key = f"alert:{rule_name}"
             
@@ -472,6 +505,9 @@ class AlertManager:
         self, alert_data: Dict[str, Any], channels: List[str]
     ):
         """Send alert notifications"""
+
+
+
         try:
             for channel in channels:
                 if channel == "email":
@@ -511,6 +547,9 @@ class PerformanceAnalyzer:
         self, time_window_hours: int = 24
     ) -> Dict[str, Any]:
         """Analyze performance trends over specified time window"""
+
+
+
         try:
             cutoff_time = datetime.now(timezone.utc) - timedelta(hours=time_window_hours)
             

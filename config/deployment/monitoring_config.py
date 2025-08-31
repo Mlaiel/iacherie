@@ -117,6 +117,9 @@ class MonitoringConfig:
     
     def _get_prometheus_config(self) -> Dict[str, Any]:
         """Get Prometheus configuration"""
+
+
+
         return {
             "global": {
                 "scrape_interval": "15s",
@@ -306,6 +309,9 @@ class MonitoringConfig:
     
     def _get_grafana_config(self) -> Dict[str, Any]:
         """Get Grafana configuration"""
+
+
+
         return {
             "server": {
                 "domain": f"monitoring.{self.project_name}-{self.environment}.com",
@@ -400,6 +406,9 @@ class MonitoringConfig:
     
     def _get_alertmanager_config(self) -> Dict[str, Any]:
         """Get AlertManager configuration"""
+
+
+
         return {
             "global": {
                 "smtp_smarthost": "${SMTP_HOST}:587",
@@ -468,7 +477,7 @@ class MonitoringConfig:
                     "email_configs": [
                         {
                             "to": f"critical@{self.project_name}.com",
-                            "subject": "🚨 CRITICAL: IA-Influencer Agent Alert",
+                            "subject": " CRITICAL: IA-Influencer Agent Alert",
                             "body": self._get_email_template()
                         }
                     ],
@@ -476,7 +485,7 @@ class MonitoringConfig:
                         {
                             "api_url": "${SLACK_WEBHOOK_URL}",
                             "channel": "#critical-alerts",
-                            "title": "🚨 Critical Alert: {{ .GroupLabels.alertname }}",
+                            "title": " Critical Alert: {{ .GroupLabels.alertname }}",
                             "text": self._get_slack_template(),
                             "color": "danger"
                         }
@@ -487,7 +496,7 @@ class MonitoringConfig:
                     "email_configs": [
                         {
                             "to": f"high-priority@{self.project_name}.com",
-                            "subject": "⚠️ HIGH: IA-Influencer Agent Alert",
+                            "subject": " HIGH: IA-Influencer Agent Alert",
                             "body": self._get_email_template()
                         }
                     ],
@@ -495,7 +504,7 @@ class MonitoringConfig:
                         {
                             "api_url": "${SLACK_WEBHOOK_URL}",
                             "channel": "#high-alerts",
-                            "title": "⚠️ High Priority Alert: {{ .GroupLabels.alertname }}",
+                            "title": " High Priority Alert: {{ .GroupLabels.alertname }}",
                             "text": self._get_slack_template(),
                             "color": "warning"
                         }
@@ -525,7 +534,7 @@ class MonitoringConfig:
                     "email_configs": [
                         {
                             "to": f"business-team@{self.project_name}.com",
-                            "subject": "💰 Business Metric Alert: {{ .GroupLabels.alertname }}",
+                            "subject": " Business Metric Alert: {{ .GroupLabels.alertname }}",
                             "body": self._get_email_template()
                         }
                     ]
@@ -546,6 +555,9 @@ class MonitoringConfig:
     
     def _get_jaeger_config(self) -> Dict[str, Any]:
         """Get Jaeger tracing configuration"""
+
+
+
         return {
             "service_name": f"{self.project_name}-{self.environment}",
             "sampler": {
@@ -576,6 +588,9 @@ class MonitoringConfig:
     
     def _get_elk_config(self) -> Dict[str, Any]:
         """Get ELK Stack configuration"""
+
+
+
         return {
             "elasticsearch": {
                 "cluster.name": f"{self.project_name}-{self.environment}",
@@ -659,6 +674,9 @@ class MonitoringConfig:
     
     def _get_email_template(self) -> str:
         """Get email alert template"""
+
+
+
         return """
 Alert: {{ .GroupLabels.alertname }}
 Environment: {{ .CommonLabels.environment }}
@@ -678,6 +696,9 @@ Generated at: {{ .Timestamp }}
     
     def _get_slack_template(self) -> str:
         """Get Slack alert template"""
+
+
+
         return """
 {{ range .Alerts }}
 *Alert:* {{ .Labels.alertname }}
@@ -694,6 +715,9 @@ Generated at: {{ .Timestamp }}
     
     def _define_custom_metrics(self) -> List[MetricDefinition]:
         """Define custom application metrics"""
+
+
+
         return [
             # API Metrics
             MetricDefinition(
@@ -829,6 +853,9 @@ Generated at: {{ .Timestamp }}
     
     def _define_alert_rules(self) -> List[AlertRule]:
         """Define alert rules"""
+
+
+
         return [
             # Critical Alerts
             AlertRule(
@@ -963,6 +990,9 @@ Generated at: {{ .Timestamp }}
     
     def _define_dashboards(self) -> List[Dashboard]:
         """Define Grafana dashboards"""
+
+
+
         return [
             Dashboard(
                 name="ia-platform-overview",
@@ -1134,6 +1164,9 @@ Generated at: {{ .Timestamp }}
     
     def get_docker_compose_monitoring(self) -> str:
         """Get Docker Compose configuration for monitoring stack"""
+
+
+
         return f'''version: '3.8'
 
 services:
@@ -1322,6 +1355,9 @@ networks:
     
     def get_kubernetes_monitoring_manifests(self) -> Dict[str, str]:
         """Get Kubernetes manifests for monitoring stack"""
+
+
+
         return {
             "namespace.yaml": f'''
 apiVersion: v1
@@ -1585,37 +1621,37 @@ spec:
 
 set -e
 
-echo "🚀 Deploying monitoring stack for {self.project_name}..."
+echo " Deploying monitoring stack for {self.project_name}..."
 
 # Deploy with Docker Compose
 if command -v docker-compose &> /dev/null; then
-    echo "📦 Starting monitoring services with Docker Compose..."
+    echo " Starting monitoring services with Docker Compose..."
     docker-compose -f docker-compose.monitoring.yml up -d
     
     echo "⏳ Waiting for services to be ready..."
     sleep 60
     
-    echo "✅ Monitoring stack deployed successfully!"
-    echo "📊 Grafana: http://localhost:3000 (admin/admin)"
-    echo "🔍 Prometheus: http://localhost:9090"
-    echo "🚨 AlertManager: http://localhost:9093"
-    echo "🔎 Jaeger: http://localhost:16686"
-    echo "📈 Kibana: http://localhost:5601"
+    echo " Monitoring stack deployed successfully!"
+    echo " Grafana: http://localhost:3000 (admin/admin)"
+    echo " Prometheus: http://localhost:9090"
+    echo " AlertManager: http://localhost:9093"
+    echo " Jaeger: http://localhost:16686"
+    echo " Kibana: http://localhost:5601"
 fi
 
 # Deploy to Kubernetes
 if command -v kubectl &> /dev/null; then
-    echo "☸️  Deploying to Kubernetes..."
+    echo "  Deploying to Kubernetes..."
     kubectl apply -f kubernetes/
     
     echo "⏳ Waiting for pods to be ready..."
     kubectl wait --for=condition=ready pod -l app=prometheus -n {self.project_name}-monitoring --timeout=300s
     kubectl wait --for=condition=ready pod -l app=grafana -n {self.project_name}-monitoring --timeout=300s
     
-    echo "✅ Kubernetes monitoring stack deployed!"
+    echo " Kubernetes monitoring stack deployed!"
 fi
 
-echo "🎯 Monitoring deployment completed successfully!"
+echo " Monitoring deployment completed successfully!"
 '''
         
         script_path = Path(output_dir) / "deploy-monitoring.sh"

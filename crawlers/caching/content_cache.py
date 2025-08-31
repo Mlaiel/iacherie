@@ -56,6 +56,9 @@ class ContentMetadata:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for serialization."""
+
+
+
         return {
             "content_type": self.content_type.value,
             "mime_type": self.mime_type,
@@ -241,10 +244,16 @@ class ContentCache:
     
     def _make_metadata_key(self, content_key: str) -> str:
         """Create metadata key for content."""
+
+
+
         return f"{self.key_prefixes['metadata']}{content_key}"
     
     def _make_index_key(self, index_type: str, value: str) -> str:
         """Create index key for lookups."""
+
+
+
         return f"{self.key_prefixes['index']}{index_type}:{value}"
     
     async def store_content(self, key: str, content: Any, 
@@ -266,6 +275,9 @@ class ContentCache:
         Returns:
             True if successful
         """
+
+
+
         try:
             cache_manager = await self._get_cache_manager()
             
@@ -324,6 +336,9 @@ class ContentCache:
         Returns:
             Tuple of (content, metadata) or None if not found
         """
+
+
+
         try:
             cache_manager = await self._get_cache_manager()
             
@@ -354,6 +369,9 @@ class ContentCache:
     async def get_content_metadata(self, key: str, 
                                  content_type: Optional[ContentType] = None) -> Optional[ContentMetadata]:
         """Get only content metadata."""
+
+
+
         try:
             # If content type is known, try direct lookup
             if content_type:
@@ -375,6 +393,9 @@ class ContentCache:
     
     async def _get_content_metadata(self, content_key: str) -> Optional[ContentMetadata]:
         """Get metadata for content key."""
+
+
+
         try:
             cache_manager = await self._get_cache_manager()
             metadata_key = self._make_metadata_key(content_key)
@@ -401,6 +422,9 @@ class ContentCache:
         Returns:
             True if any content was deleted
         """
+
+
+
         try:
             cache_manager = await self._get_cache_manager()
             deleted = False
@@ -428,6 +452,9 @@ class ContentCache:
     
     async def find_by_fingerprint(self, fingerprint_hash: str) -> List[Tuple[str, ContentMetadata]]:
         """Find content by fingerprint hash."""
+
+
+
         try:
             cache_manager = await self._get_cache_manager()
             index_key = self._make_index_key("fingerprint", fingerprint_hash)
@@ -453,6 +480,9 @@ class ContentCache:
     async def find_by_type(self, content_type: ContentType, 
                           limit: int = 100) -> List[Tuple[str, ContentMetadata]]:
         """Find content by type."""
+
+
+
         try:
             cache_manager = await self._get_cache_manager()
             
@@ -467,6 +497,9 @@ class ContentCache:
     async def _create_indexes(self, key: str, content_type: ContentType, 
                             metadata: ContentMetadata) -> None:
         """Create indexes for efficient lookups."""
+
+
+
         try:
             cache_manager = await self._get_cache_manager()
             content_key = self._make_content_key(key, content_type)
@@ -494,6 +527,9 @@ class ContentCache:
     
     async def _remove_indexes(self, key: str, content_type: ContentType) -> None:
         """Remove content from indexes."""
+
+
+
         try:
             cache_manager = await self._get_cache_manager()
             content_key = self._make_content_key(key, content_type)
@@ -510,6 +546,9 @@ class ContentCache:
     
     async def get_stats(self) -> Dict[str, Any]:
         """Get content cache statistics."""
+
+
+
         try:
             cache_manager = await self._get_cache_manager()
             

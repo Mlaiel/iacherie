@@ -8,7 +8,7 @@ Provides high-level interface for parsing workflows and batch operations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
@@ -110,6 +110,9 @@ class ParserManager:
     
     async def __aenter__(self):
         """Async context manager entry"""
+
+
+
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
@@ -129,6 +132,9 @@ class ParserManager:
         timeout: Optional[float] = None
     ) -> ParseResult:
         """Parse single content item"""
+
+
+
         try:
             # Create task
             task_id = self.generate_task_id()
@@ -160,6 +166,9 @@ class ParserManager:
         timeout: Optional[float] = None
     ) -> List[ParseResult]:
         """Parse multiple content items in batch"""
+
+
+
         try:
             # Create tasks
             tasks = []
@@ -195,6 +204,9 @@ class ParserManager:
         priority: ParsePriority = ParsePriority.NORMAL
     ) -> str:
         """Queue a parsing task for later execution"""
+
+
+
         try:
             task_id = self.generate_task_id()
             task = ParseTask(
@@ -221,6 +233,9 @@ class ParserManager:
         timeout: Optional[float] = None
     ) -> List[ParseResult]:
         """Execute all queued tasks"""
+
+
+
         try:
             # Get pending tasks sorted by priority
             pending_tasks = [
@@ -415,6 +430,9 @@ class ParserManager:
     
     def get_task_status(self, task_id: str) -> Optional[ParseTask]:
         """Get status of a specific task"""
+
+
+
         return self._tasks.get(task_id)
     
     def get_all_tasks(self, status_filter: Optional[ParseStatus] = None) -> List[ParseTask]:
@@ -428,6 +446,9 @@ class ParserManager:
     
     def get_statistics(self) -> Dict[str, Any]:
         """Get parsing statistics"""
+
+
+
         return {
             **self._stats,
             'pending_tasks': len([t for t in self._tasks.values() if t.status == ParseStatus.PENDING]),
@@ -465,6 +486,9 @@ class ParserManager:
     
     async def cancel_task(self, task_id: str) -> bool:
         """Cancel a queued or running task"""
+
+
+
         try:
             task = self._tasks.get(task_id)
             if not task:
@@ -504,6 +528,9 @@ class ParserManager:
     
     async def shutdown(self):
         """Shutdown the parser manager"""
+
+
+
         try:
             # Cancel all running tasks
             for task_id, running_task in self._running_tasks.items():
@@ -523,6 +550,9 @@ class ParserManager:
     
     async def validate_content(self, content_path: str, expected_type: Optional[str] = None) -> Dict[str, Any]:
         """Validate content before parsing"""
+
+
+
         try:
             import os
             from pathlib import Path
@@ -584,6 +614,9 @@ class ParserManager:
     
     async def get_parser_capabilities(self) -> Dict[str, Any]:
         """Get information about parser capabilities"""
+
+
+
         return {
             'available_parsers': [pt.value for pt in self.factory.get_available_parser_types()],
             'categories': [cat.value for cat in self.factory.get_categories()],
@@ -602,6 +635,9 @@ class ParserManager:
         timeout: Optional[float] = None
     ) -> ParseResult:
         """Parse content with automatic parser type detection"""
+
+
+
         try:
             # Validate content
             validation = await self.validate_content(content_path)

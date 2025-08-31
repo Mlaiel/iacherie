@@ -377,6 +377,9 @@ class AdvancedSocialScheduler(BaseCrawler):
         Returns:
             ContentCalendar: Created calendar
         """
+
+
+
         try:
             calendar_id = hashlib.md5(f"{calendar_name}_{datetime.utcnow()}".encode()).hexdigest()
             
@@ -445,6 +448,9 @@ class AdvancedSocialScheduler(BaseCrawler):
         Returns:
             str: Post ID for tracking
         """
+
+
+
         try:
             post_id = hashlib.md5(f"{platform.value}_{content}_{datetime.utcnow()}".encode()).hexdigest()
             
@@ -631,6 +637,9 @@ class AdvancedSocialScheduler(BaseCrawler):
         Returns:
             bool: Success status
         """
+
+
+
         try:
             if post_id not in self.scheduled_posts:
                 return False
@@ -671,6 +680,9 @@ class AdvancedSocialScheduler(BaseCrawler):
         Returns:
             bool: Success status
         """
+
+
+
         try:
             if post_id in self.scheduled_posts:
                 post = self.scheduled_posts[post_id]
@@ -689,6 +701,9 @@ class AdvancedSocialScheduler(BaseCrawler):
     
     async def _scheduler_loop(self):
         """Main scheduler loop for processing scheduled posts"""
+
+
+
         try:
             while self.scheduler_active:
                 try:
@@ -718,6 +733,9 @@ class AdvancedSocialScheduler(BaseCrawler):
 
     async def _publisher_loop(self):
         """Main publisher loop for publishing posts"""
+
+
+
         try:
             while self.publisher_active:
                 try:
@@ -757,6 +775,9 @@ class AdvancedSocialScheduler(BaseCrawler):
 
     async def _retry_loop(self):
         """Retry loop for failed posts"""
+
+
+
         try:
             while self.publisher_active:
                 try:
@@ -782,6 +803,9 @@ class AdvancedSocialScheduler(BaseCrawler):
 
     async def _publish_post(self, post: ScheduledPost) -> PostingResult:
         """Publish post to social media platform"""
+
+
+
         try:
             await self.rate_limiters[post.platform].acquire()
             
@@ -1037,6 +1061,9 @@ class AdvancedSocialScheduler(BaseCrawler):
 
     async def _calculate_timing_confidence(self, historical_data: List[Dict[str, Any]]) -> Dict[str, float]:
         """Calculate confidence metrics for timing analysis"""
+
+
+
         return {
             'accuracy': 0.85,
             'confidence': 0.9,
@@ -1100,6 +1127,9 @@ class AdvancedSocialScheduler(BaseCrawler):
 
     async def close(self):
         """Close scheduler and cleanup resources"""
+
+
+
         try:
             await self.stop_scheduler()
             await self.cache_manager.close()

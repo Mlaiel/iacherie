@@ -7,7 +7,7 @@ Provides environment-specific settings, security configurations, and performance
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
@@ -255,6 +255,9 @@ class ConfigManager:
     
     def _load_config_file(self, file_path: str) -> Dict[str, Any]:
         """Load configuration from a file"""
+
+
+
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 if file_path.endswith('.json'):
@@ -414,11 +417,17 @@ def get_config_manager() -> ConfigManager:
 
 def get_config() -> AIAgentsConfig:
     """Get the current configuration"""
+
+
+
     return get_config_manager().get_config()
 
 
 def load_config(config_path: Optional[str] = None) -> AIAgentsConfig:
     """Load configuration from files and environment"""
+
+
+
     return get_config_manager().load_config(config_path)
 
 

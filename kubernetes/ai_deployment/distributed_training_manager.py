@@ -9,7 +9,7 @@ and advanced training strategies for large-scale AI model development.
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED 
 This software is protected by international copyright laws.
 Contact: mlaiel@live.de for licensing inquiries.
 """
@@ -158,6 +158,9 @@ class DistributedTrainingManager:
     
     def _initialize_clients(self) -> None:
         """Initialize Kubernetes, Docker, and training clients"""
+
+
+
         try:
             # Kubernetes client
             config.load_incluster_config()
@@ -185,6 +188,9 @@ class DistributedTrainingManager:
     
     def _initialize_training_frameworks(self) -> None:
         """Initialize training frameworks and backends"""
+
+
+
         try:
             # Initialize Ray for distributed training
             if not ray.is_initialized():
@@ -219,6 +225,9 @@ class DistributedTrainingManager:
         Returns:
             Infrastructure deployment summary
         """
+
+
+
         try:
             self.status = "deploying_infrastructure"
             logger.info("Deploying distributed training infrastructure")
@@ -300,6 +309,9 @@ class DistributedTrainingManager:
         Returns:
             Training job details and status
         """
+
+
+
         try:
             training_id = f"train_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
             logger.info(f"Starting distributed training job: {training_id}")
@@ -386,6 +398,9 @@ class DistributedTrainingManager:
         Returns:
             Scaling result
         """
+
+
+
         try:
             logger.info(f"Scaling training cluster {training_id} to {target_nodes} nodes")
             
@@ -440,6 +455,9 @@ class DistributedTrainingManager:
         Returns:
             Recovery result
         """
+
+
+
         try:
             logger.warning(f"Handling training failure for job {training_id}")
             
@@ -661,6 +679,9 @@ class DistributedTrainingManager:
     
     async def _start_ray_training(self, training_id: str, config: Dict[str, Any]) -> Dict[str, Any]:
         """Start Ray-based distributed training"""
+
+
+
         try:
             # Create Ray Train configuration
             scaling_config = ScalingConfig(
@@ -730,6 +751,9 @@ class DistributedTrainingManager:
     
     async def _start_pytorch_ddp_training(self, training_id: str, config: Dict[str, Any]) -> Dict[str, Any]:
         """Start PyTorch DDP training"""
+
+
+
         try:
             # Create DDP training job specification
             ddp_job = {
@@ -897,6 +921,9 @@ class DistributedTrainingManager:
     
     async def get_training_metrics(self) -> Dict[str, Any]:
         """Get comprehensive training metrics"""
+
+
+
         try:
             active_jobs = [job for job in self.training_jobs.values() if job.get("status") == "running"]
             
@@ -928,6 +955,9 @@ class DistributedTrainingManager:
     
     async def _ensure_training_namespace(self) -> None:
         """Create training namespace"""
+
+
+
         try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
@@ -985,6 +1015,9 @@ class DistributedTrainingManager:
     
     async def _validate_training_infrastructure(self) -> bool:
         """Validate training infrastructure deployment"""
+
+
+
         try:
             # Check essential services
             essential_services = [
@@ -1013,6 +1046,9 @@ class DistributedTrainingManager:
     
     async def _cleanup_failed_infrastructure(self) -> None:
         """Clean up failed training infrastructure"""
+
+
+
         try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
@@ -1022,6 +1058,9 @@ class DistributedTrainingManager:
     
     async def _cleanup_failed_training_job(self, training_id: str) -> None:
         """Clean up failed training job"""
+
+
+
         try:
             # Remove from tracking
             if training_id in self.training_jobs:
@@ -1038,6 +1077,9 @@ class DistributedTrainingManager:
     
     async def cleanup(self) -> None:
         """Clean up entire distributed training infrastructure"""
+
+
+
         try:
             # Stop Ray if initialized
             if ray.is_initialized():

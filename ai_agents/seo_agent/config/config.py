@@ -7,7 +7,7 @@ settings, AI model configurations, and optimization parameters.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -191,6 +191,9 @@ class SEOAgentConfig:
     
     def _get_development_config(self) -> Dict[str, Any]:
         """Development environment configuration"""
+
+
+
         return {
             'seo_agent': {
                 'optimization_mode': OptimizationMode.STANDARD,
@@ -224,6 +227,9 @@ class SEOAgentConfig:
     
     def _get_testing_config(self) -> Dict[str, Any]:
         """Testing environment configuration"""
+
+
+
         return {
             'seo_agent': {
                 'optimization_mode': OptimizationMode.BASIC,
@@ -252,6 +258,9 @@ class SEOAgentConfig:
     
     def _get_staging_config(self) -> Dict[str, Any]:
         """Staging environment configuration"""
+
+
+
         return {
             'seo_agent': {
                 'optimization_mode': OptimizationMode.ADVANCED,
@@ -283,6 +292,9 @@ class SEOAgentConfig:
     
     def _get_production_config(self) -> Dict[str, Any]:
         """Production environment configuration"""
+
+
+
         return {
             'seo_agent': {
                 'optimization_mode': OptimizationMode.EXPERT,
@@ -410,6 +422,9 @@ class SEOAgentConfig:
     
     def get_api_config(self, api_name: str) -> Optional[APIConfig]:
         """Get configuration for a specific API"""
+
+
+
         return self.apis.get(api_name)
     
     def is_feature_enabled(self, feature_name: str) -> bool:
@@ -424,6 +439,9 @@ class SEOAgentConfig:
     
     def get_optimization_weights(self) -> Dict[str, float]:
         """Get optimization weights for SEO scoring"""
+
+
+
         return {
             'keyword_relevance': 0.25,
             'content_quality': 0.20,
@@ -435,6 +453,9 @@ class SEOAgentConfig:
     
     def get_performance_thresholds(self) -> Dict[str, float]:
         """Get performance thresholds for SEO metrics"""
+
+
+
         return {
             'min_seo_score': 0.6,
             'min_content_quality': 0.7,

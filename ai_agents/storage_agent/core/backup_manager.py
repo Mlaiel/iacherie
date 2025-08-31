@@ -7,7 +7,7 @@ encryption, compression, and multi-backend redundancy for data protection.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This backup management technology is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, reverse engineering, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -171,6 +171,9 @@ class BackupManager:
     
     def _setup_backup_scheduler(self):
         """Setup automatic backup scheduling"""
+
+
+
         try:
             @aiocron.crontab(self.config.schedule)
             async def scheduled_backup():
@@ -409,6 +412,9 @@ class BackupManager:
         Returns:
             List of backup metadata matching filters
         """
+
+
+
         try:
             filtered_backups = self.backup_history.copy()
             
@@ -451,6 +457,9 @@ class BackupManager:
         Returns:
             True if deletion successful
         """
+
+
+
         try:
             # Find backup metadata
             backup_metadata = self._find_backup_metadata(backup_id)
@@ -502,6 +511,9 @@ class BackupManager:
         Returns:
             Cleanup statistics
         """
+
+
+
         try:
             cutoff_date = datetime.utcnow() - timedelta(days=self.config.retention_days)
             
@@ -544,6 +556,9 @@ class BackupManager:
     
     async def get_backup_statistics(self) -> Dict[str, Any]:
         """Get comprehensive backup statistics"""
+
+
+
         try:
             # Current backup statistics
             current_stats = self.stats.copy()
@@ -775,6 +790,9 @@ class BackupManager:
     
     async def _encrypt_backup(self, backup_path: Path, backup_id: str) -> Path:
         """Encrypt backup file"""
+
+
+
         try:
             encrypted_path = backup_path.with_suffix(backup_path.suffix + '.enc')
             
@@ -792,6 +810,9 @@ class BackupManager:
     
     async def _verify_backup(self, backup_path: Path, metadata: BackupMetadata) -> bool:
         """Verify backup integrity"""
+
+
+
         try:
             # Calculate checksum
             calculated_checksum = await self._calculate_file_checksum(backup_path)
@@ -820,6 +841,9 @@ class BackupManager:
     
     async def _calculate_backup_stats(self, backup_path: Path) -> Dict[str, Any]:
         """Calculate backup statistics"""
+
+
+
         try:
             backup_size = backup_path.stat().st_size
             checksum = await self._calculate_file_checksum(backup_path)
@@ -855,6 +879,9 @@ class BackupManager:
     
     async def _calculate_file_checksum(self, file_path: Path) -> str:
         """Calculate SHA256 checksum of file"""
+
+
+
         try:
             hash_sha256 = hashlib.sha256()
             
@@ -906,6 +933,9 @@ class BackupManager:
         restore_operation: RestoreOperation
     ):
         """Extract backup to target location"""
+
+
+
         try:
             # Decrypt if necessary
             if backup_path.suffix == '.enc':
@@ -943,6 +973,9 @@ class BackupManager:
         target_path: Path
     ) -> bool:
         """Verify restoration integrity"""
+
+
+
         try:
             # Basic existence check
             if not target_path.exists():
@@ -1064,6 +1097,9 @@ class BackupManager:
     
     async def create_automated_backup(self):
         """Create automated backup based on configuration"""
+
+
+
         try:
             logger.info("Starting automated backup process")
             
@@ -1077,6 +1113,9 @@ class BackupManager:
     
     async def cleanup(self):
         """Cleanup backup manager resources"""
+
+
+
         try:
             # Cancel backup scheduler
             if self.backup_scheduler:
@@ -1092,6 +1131,9 @@ class BackupManager:
     
     async def _save_backup_history(self):
         """Save backup history to persistent storage"""
+
+
+
         try:
             history_file = self.backup_dir / 'backup_history.json'
             
@@ -1112,6 +1154,9 @@ class BackupManager:
     
     async def _load_backup_history(self):
         """Load backup history from persistent storage"""
+
+
+
         try:
             history_file = self.backup_dir / 'backup_history.json'
             

@@ -170,6 +170,9 @@ class Task:
     
     def can_execute(self, completed_tasks: Set[str]) -> bool:
         """Check if task can be executed based on dependencies"""
+
+
+
         return self.dependencies.issubset(completed_tasks)
     
     def add_dependency(self, task_id: str):
@@ -191,6 +194,9 @@ class Task:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert task to dictionary"""
+
+
+
         return {
             'id': self.id,
             'type': self.type.value,
@@ -275,6 +281,9 @@ class TaskQueue:
     
     async def is_empty(self) -> bool:
         """Check if queue is empty"""
+
+
+
         return await self.size() == 0
     
     async def clear(self):
@@ -390,6 +399,9 @@ class Workflow:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert workflow to dictionary"""
+
+
+
         return {
             'id': self.id,
             'name': self.name,
@@ -540,6 +552,9 @@ class WorkflowEngine:
     
     async def execute_workflow(self, workflow: Workflow) -> Dict[str, Any]:
         """Execute a complete workflow"""
+
+
+
         try:
             workflow.status = WorkflowStatus.STARTED
             workflow.started_at = datetime.utcnow()
@@ -932,11 +947,17 @@ workflow_engine = WorkflowEngine(task_executor)
 
 async def get_task_scheduler() -> TaskScheduler:
     """Get the global task scheduler instance"""
+
+
+
     return task_scheduler
 
 
 async def get_workflow_engine() -> WorkflowEngine:
     """Get the global workflow engine instance"""
+
+
+
     return workflow_engine
 
 

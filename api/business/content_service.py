@@ -56,6 +56,9 @@ class ContentService:
         Returns:
             Created content instance
         """
+
+
+
         try:
             if not db:
                 db = next(get_db())
@@ -112,6 +115,9 @@ class ContentService:
     
     async def get_content_by_id(self, content_id: str, db: Session = None) -> Optional[Content]:
         """Get content by ID with owner information"""
+
+
+
         try:
             if not db:
                 db = next(get_db())
@@ -136,6 +142,9 @@ class ContentService:
         """
         Get user's content with filtering and pagination.
         """
+
+
+
         try:
             if not db:
                 db = next(get_db())
@@ -163,6 +172,9 @@ class ContentService:
         """
         Update content metadata and settings.
         """
+
+
+
         try:
             if not db:
                 db = next(get_db())
@@ -195,6 +207,9 @@ class ContentService:
         """
         Soft delete content and cleanup associated files.
         """
+
+
+
         try:
             if not db:
                 db = next(get_db())
@@ -225,6 +240,9 @@ class ContentService:
         """
         Check if user has access to content based on privacy settings.
         """
+
+
+
         try:
             # Public content is accessible to everyone
             if content.privacy_level == "public":
@@ -253,6 +271,9 @@ class ContentService:
     
     async def increment_view_count(self, content_id: str, db: Session = None) -> None:
         """Increment content view count"""
+
+
+
         try:
             if not db:
                 db = next(get_db())
@@ -272,6 +293,9 @@ class ContentService:
         """
         Toggle like/unlike for content.
         """
+
+
+
         try:
             if not db:
                 db = next(get_db())
@@ -319,6 +343,9 @@ class ContentService:
         """
         Search public content with full-text search and filters.
         """
+
+
+
         try:
             if not db:
                 db = next(get_db())
@@ -405,6 +432,9 @@ class ContentService:
         """
         Get trending content based on engagement metrics.
         """
+
+
+
         try:
             if not db:
                 db = next(get_db())
@@ -479,6 +509,9 @@ class ContentService:
         """
         Generate thumbnail for content if applicable.
         """
+
+
+
         try:
             if not db:
                 db = next(get_db())
@@ -512,6 +545,9 @@ class ContentService:
     
     async def track_download(self, content_id: str, user_id: str, db: Session = None) -> None:
         """Track content download"""
+
+
+
         try:
             if not db:
                 db = next(get_db())
@@ -529,6 +565,9 @@ class ContentService:
     
     async def get_content_statistics(self, content_id: str, db: Session = None) -> Dict[str, Any]:
         """Get detailed content statistics"""
+
+
+
         try:
             if not db:
                 db = next(get_db())
@@ -559,6 +598,9 @@ class ContentService:
     
     async def get_ai_analysis_results(self, content_id: str, db: Session = None) -> Dict[str, Any]:
         """Get AI analysis results for content"""
+
+
+
         try:
             if not db:
                 db = next(get_db())
@@ -577,6 +619,9 @@ class ContentService:
     
     async def _post_creation_tasks(self, content_id: str) -> None:
         """Background tasks after content creation"""
+
+
+
         try:
             # Generate thumbnail
             await self.generate_thumbnail(content_id)
@@ -589,6 +634,9 @@ class ContentService:
     
     async def _cleanup_content_files(self, content_id: str, file_path: str) -> None:
         """Cleanup content files after deletion"""
+
+
+
         try:
             # Wait a bit before cleanup (grace period)
             await asyncio.sleep(3600)  # 1 hour
@@ -615,6 +663,9 @@ class ContentService:
     
     async def _update_search_index(self, content_id: str) -> None:
         """Update external search index"""
+
+
+
         try:
             # This would integrate with Elasticsearch or similar
             # Simplified for now

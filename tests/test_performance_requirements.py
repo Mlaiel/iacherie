@@ -132,6 +132,9 @@ class TestAutoScaling:
     @pytest.fixture
     def auto_scaling_config(self):
         """Create auto-scaling config for testing"""
+
+
+
         try:
             from kubernetes.ai_deployment.auto_scaling_manager import AutoScalingConfig
             return AutoScalingConfig()
@@ -163,6 +166,9 @@ class TestBusinessMetrics:
     @pytest.fixture
     def metrics_collector(self):
         """Create business metrics collector for testing"""
+
+
+
         try:
             from monitoring.metrics.business_metrics import BusinessMetricsCollector
             return BusinessMetricsCollector()
@@ -266,6 +272,9 @@ class TestSecurityCompliance:
     
     async def test_vulnerability_scan_scoring(self):
         """Test vulnerability scanning score tracking"""
+
+
+
         try:
             from monitoring.metrics.business_metrics import BusinessMetricsCollector
             collector = BusinessMetricsCollector()
@@ -286,6 +295,9 @@ class TestAPIDocumentationCoverage:
     
     async def test_api_documentation_metric_tracking(self):
         """Test API documentation coverage is tracked"""
+
+
+
         try:
             from monitoring.metrics.business_metrics import BusinessMetricsCollector
             collector = BusinessMetricsCollector()
@@ -305,6 +317,9 @@ class TestTestCoverage:
     
     async def test_code_coverage_metric_tracking(self):
         """Test code coverage is tracked and meets requirements"""
+
+
+
         try:
             from monitoring.metrics.business_metrics import BusinessMetricsCollector
             collector = BusinessMetricsCollector()

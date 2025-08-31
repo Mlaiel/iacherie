@@ -89,6 +89,9 @@ class CrawlingDatabaseManager(DatabaseManager):
             CrawlingSessionError: If session initialization fails
             RateLimitExceededError: If platform rate limits exceeded
         """
+
+
+
         try:
             # Check rate limits for platform
             if not await self.rate_limits.check_platform_quota(platform, user_id):
@@ -163,6 +166,9 @@ class CrawlingDatabaseManager(DatabaseManager):
         Returns:
             Dict containing job details and scheduling information
         """
+
+
+
         try:
             # Validate session exists and is active
             session_info = await self.sessions.get_session(session_id)
@@ -225,6 +231,9 @@ class CrawlingDatabaseManager(DatabaseManager):
         Returns:
             Dict containing stored content information
         """
+
+
+
         try:
             # Validate session and job
             session_info = await self.sessions.get_session(session_id)
@@ -283,6 +292,9 @@ class CrawlingDatabaseManager(DatabaseManager):
         Returns:
             Dict containing dashboard metrics and statistics
         """
+
+
+
         try:
             since_time = datetime.utcnow() - time_range
             
@@ -343,6 +355,9 @@ class CrawlingDatabaseManager(DatabaseManager):
         Returns:
             Dict containing cleanup statistics
         """
+
+
+
         try:
             cutoff_time = datetime.utcnow() - timedelta(hours=max_age_hours)
             
@@ -397,6 +412,9 @@ class CrawlingDatabaseManager(DatabaseManager):
         Returns:
             Dict containing health status of all components
         """
+
+
+
         try:
             health_status = {
                 'overall_status': 'healthy',

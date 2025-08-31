@@ -184,14 +184,23 @@ class EngineRegistry:
         Returns:
             Engine class or None if not found
         """
+
+
+
         return self._engines.get(platform.lower())
         
     def list_engines(self) -> List[str]:
         """List all available engine platforms"""
+
+
+
         return list(self._engines.keys())
         
     def list_categories(self) -> List[str]:
         """List all available categories"""
+
+
+
         return list(self._categories.keys())
         
     def get_engines_by_category(self, category: str) -> List[str]:
@@ -204,6 +213,9 @@ class EngineRegistry:
         Returns:
             List of engine platform names
         """
+
+
+
         return self._categories.get(category, [])
         
     def get_engine_categories(self, platform: str) -> List[str]:
@@ -337,6 +349,9 @@ class EngineRegistry:
         Returns:
             Dictionary with registry statistics
         """
+
+
+
         return {
             'total_engines': len(self._engines),
             'total_categories': len(self._categories),
@@ -359,30 +374,51 @@ engine_registry = EngineRegistry()
 # Convenience functions
 def get_engine(platform: str) -> Optional[Type]:
     """Get engine class for platform"""
+
+
+
     return engine_registry.get_engine(platform)
 
 def list_engines() -> List[str]:
     """List all available engines"""
+
+
+
     return engine_registry.list_engines()
 
 def get_engines_by_category(category: str) -> List[str]:
     """Get engines by category"""
+
+
+
     return engine_registry.get_engines_by_category(category)
 
 def search_engines(query: str) -> List[str]:
     """Search engines by query"""
+
+
+
     return engine_registry.search_engines(query)
 
 def get_engine_info(platform: str) -> Dict[str, Any]:
     """Get engine information"""
+
+
+
     return engine_registry.get_engine_info(platform)
 
 def validate_engines() -> Dict[str, bool]:
     """Validate all engines"""
+
+
+
     return engine_registry.validate_engines()
 
 def get_registry_statistics() -> Dict[str, Any]:
     """Get registry statistics"""
+
+
+
     return engine_registry.get_statistics()
 
 

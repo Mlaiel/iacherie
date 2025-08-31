@@ -1,4 +1,4 @@
-"""🗄️ Data Models Module - IA Influencer Agent Platform Enterprise
+""" Data Models Module - IA Influencer Agent Platform Enterprise
 ===============================================================
 Module: backend/data_management/models/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -7,7 +7,7 @@ Type: Industrial Data Models - Ultra Enterprise Production-Ready
 Responsibility: Advanced data models for multi-format creators with AI protection and monetization
 ==================================================================================================
 
-⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
+  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -125,10 +125,16 @@ MODEL_REGISTRY = {
 
 def get_model(model_name: str):
     """Get model class by name"""
+
+
+
     return MODEL_REGISTRY.get(model_name.lower())
 
 def list_available_models():
     """List all available model names"""
+
+
+
     return list(MODEL_REGISTRY.keys())
 
 # Export all models

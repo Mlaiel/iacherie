@@ -54,6 +54,9 @@ class TextEngine:
 
     async def start(self) -> None:
         """Start the text processing engine"""
+
+
+
         try:
             self.is_running = True
             logger.info("TextEngine started successfully")
@@ -63,6 +66,9 @@ class TextEngine:
 
     async def process(self, data: Dict[str, Any]) -> TextResult:
         """Process text operation"""
+
+
+
         try:
             job_id = data.get('job_id', 'auto-generated')
             

@@ -15,7 +15,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Specialist + DevOps Expert
 Copyright: Fahed Mlaiel - All Rights Reserved
 
-⚠️  STRICT LEGAL WARNING: 
+  STRICT LEGAL WARNING: 
     This proprietary code is protected by international copyright law.
     Unauthorized use, copying, distribution, modification, or reverse engineering 
     is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -244,6 +244,9 @@ class LanguageDetector:
         
     def _initialize_models(self):
         """Initialize language detection models"""
+
+
+
         try:
             # Initialize transformer-based language detection
             self.multilingual_model = pipeline(
@@ -310,6 +313,9 @@ class LanguageDetector:
         Returns:
             LanguageDetectionResult with detailed analysis
         """
+
+
+
         try:
             # Cache key for performance
             cache_key = f"lang_detect_{hashlib.md5(text.encode()).hexdigest()}"
@@ -379,6 +385,9 @@ class LanguageDetector:
             
     async def _detect_with_langdetect(self, text: str) -> Dict[str, Any]:
         """Detect language using langdetect library"""
+
+
+
         try:
             # Detect primary language
             detected_lang = detect(text)
@@ -411,6 +420,9 @@ class LanguageDetector:
             
     async def _detect_with_transformer(self, text: str) -> Dict[str, Any]:
         """Detect language using transformer model"""
+
+
+
         try:
             if not self.multilingual_model:
                 return {'language': 'en', 'confidence': 0.5}
@@ -437,6 +449,9 @@ class LanguageDetector:
             
     def _detect_script(self, text: str) -> Script:
         """Detect writing script of the text"""
+
+
+
         try:
             # Count characters from different scripts
             script_counts = {
@@ -502,6 +517,9 @@ class LanguageDetector:
             
     async def _analyze_multilingual_content(self, text: str) -> Tuple[bool, Dict[str, float]]:
         """Analyze if content contains multiple languages"""
+
+
+
         try:
             # Split text into sentences
             sentences = re.split(r'[.!?]+', text)
@@ -538,6 +556,9 @@ class LanguageDetector:
             
     async def _detect_dialect(self, text: str, language: str) -> Optional[str]:
         """Detect dialect or regional variant with comprehensive support"""
+
+
+
         try:
             # Comprehensive dialect detection patterns for global coverage
             dialect_patterns = {
@@ -624,15 +645,15 @@ class LanguageDetector:
                     'milanese': ['porca miseria', 'cosa', 'belin', 'scialla']
                 },
                 'zh': {
-                    'mandarin': ['你好', '谢谢', '再见', '什么', '怎么'],
-                    'cantonese': ['你好', '多謝', '再見', '乜嘢', '點解'],
-                    'taiwanese': ['你好', '多謝', '掰掰', '啥物', '按怎'],
-                    'shanghainese': ['侬好', '谢谢侬', '再会', '啥个', '哪能'],
+                    'mandarin': ['', '', '', '', ''],
+                    'cantonese': ['', '', '', '', ''],
+                    'taiwanese': ['', '', '', '', ''],
+                    'shanghainese': ['', '', '', '', ''],
                     # Enhanced Chinese local dialects
-                    'hakka': ['你好無', '恁仔', '还好', '麼个', '仰般'],
-                    'teochew': ['汝好', '多谢', '再會', '乜个', '怎呢'],
-                    'hokkien': ['汝好', '多謝', '閣會', '啥物', '按怎'],
-                    'wenzhounese': ['侬好', '夜谢', '再会', '啥号', '哪恁']
+                    'hakka': ['', '', '', '', ''],
+                    'teochew': ['', '', '', '', ''],
+                    'hokkien': ['', '', '', '', ''],
+                    'wenzhounese': ['', '', '', '', '']
                 },
                 'hi': {
                     'standard': ['आप', 'है', 'में', 'और', 'का'],
@@ -696,6 +717,9 @@ class LanguageDetector:
             
     async def _analyze_formality(self, text: str) -> str:
         """Analyze formality level of the text"""
+
+
+
         try:
             formal_indicators = [
                 'therefore', 'furthermore', 'consequently', 'moreover', 'nevertheless',
@@ -725,6 +749,9 @@ class LanguageDetector:
             
     async def _calculate_language_complexity(self, text: str) -> float:
         """Calculate language complexity score"""
+
+
+
         try:
             words = text.split()
             
@@ -765,6 +792,9 @@ class LanguageDetector:
             
     def _select_best_language(self, primary: Dict, transformer: Dict, user_context: Optional[Dict]) -> str:
         """Select the best language detection result"""
+
+
+
         try:
             # If confidences are similar, prefer primary detection
             if abs(primary['confidence'] - transformer.get('confidence', 0)) < 0.1:
@@ -810,6 +840,9 @@ class LanguageClassifier:
         Returns:
             LanguageProfile for content optimization
         """
+
+
+
         try:
             # Detect primary language
             detection_result = await self.detector.detect_language(text)
@@ -865,6 +898,9 @@ class LanguageClassifier:
             
     async def _determine_cultural_context(self, language: SupportedLanguage, dialect: Optional[str]) -> str:
         """Determine cultural context from language and dialect"""
+
+
+
         try:
             cultural_mappings = {
                 SupportedLanguage.ENGLISH: "international" if not dialect else f"english_{dialect}",
@@ -890,6 +926,9 @@ class LanguageClassifier:
         target_audience: Optional[Dict]
     ) -> List[str]:
         """Determine target geographical regions"""
+
+
+
         try:
             # Default regions by language
             region_mappings = {
@@ -925,6 +964,9 @@ class LanguageClassifier:
         content_type: str
     ) -> Dict[str, Any]:
         """Create localization preferences based on detected language"""
+
+
+
         try:
             prefs = {
                 "date_format": "ISO",
@@ -950,7 +992,7 @@ class LanguageClassifier:
                 })
             elif detection_result.detected_language == SupportedLanguage.CHINESE:
                 prefs.update({
-                    "date_format": "YYYY年MM月DD日",
+                    "date_format": "YYYYMMDD",
                     "number_format": "chinese",
                     "cultural_adaptations": True
                 })

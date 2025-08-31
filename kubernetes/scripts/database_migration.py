@@ -85,6 +85,9 @@ class DatabaseMigrationManager:
     
     def _load_configuration(self) -> None:
         """Load migration configuration"""
+
+
+
         try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r') as f:
@@ -99,6 +102,9 @@ class DatabaseMigrationManager:
     
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default migration configuration"""
+
+
+
         return {
             "database": {
                 "host": "localhost",
@@ -124,6 +130,9 @@ class DatabaseMigrationManager:
     
     def _initialize_database_connection(self) -> None:
         """Initialize database connection"""
+
+
+
         try:
             db_config = self.config.get("database", {})
             
@@ -146,6 +155,9 @@ class DatabaseMigrationManager:
     
     def _initialize_migration_tracking(self) -> None:
         """Initialize migration tracking table"""
+
+
+
         try:
             table_name = self.config.get("migration", {}).get("table", "schema_migrations")
             
@@ -182,6 +194,9 @@ class DatabaseMigrationManager:
     
     def _discover_migrations(self) -> None:
         """Discover migration files from directory"""
+
+
+
         try:
             os.makedirs(self.migrations_dir, exist_ok=True)
             
@@ -226,6 +241,9 @@ class DatabaseMigrationManager:
     
     def _parse_migration_file(self, file_path: Path) -> Optional[Migration]:
         """Parse migration file and extract metadata"""
+
+
+
         try:
             if file_path.suffix == ".sql":
                 return self._parse_sql_migration(file_path)
@@ -241,6 +259,9 @@ class DatabaseMigrationManager:
     
     def _parse_sql_migration(self, file_path: Path) -> Optional[Migration]:
         """Parse SQL migration file"""
+
+
+
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
@@ -280,6 +301,9 @@ class DatabaseMigrationManager:
     
     def _parse_python_migration(self, file_path: Path) -> Optional[Migration]:
         """Parse Python migration file"""
+
+
+
         try:
             # This would load and execute Python migration files
             # For now, we'll create a placeholder
@@ -326,6 +350,9 @@ class DatabaseMigrationManager:
     
     def _get_applied_migration_ids(self) -> List[str]:
         """Get list of applied migration IDs from database"""
+
+
+
         try:
             table_name = self.config.get("migration", {}).get("table", "schema_migrations")
             
@@ -350,6 +377,9 @@ class DatabaseMigrationManager:
         Returns:
             bool: True if successful, False otherwise
         """
+
+
+
         try:
             logger.info(f"Starting migration {'(dry run)' if dry_run else ''}")
             
@@ -395,6 +425,9 @@ class DatabaseMigrationManager:
     
     def _validate_pending_migrations(self) -> bool:
         """Validate pending migrations"""
+
+
+
         try:
             logger.info("Validating pending migrations")
             
@@ -420,6 +453,9 @@ class DatabaseMigrationManager:
     
     def _check_dependency_cycles(self) -> bool:
         """Check for dependency cycles in migrations"""
+
+
+
         try:
             # Build dependency graph
             dependency_graph = {}
@@ -458,6 +494,9 @@ class DatabaseMigrationManager:
     
     def _verify_migration_checksums(self) -> bool:
         """Verify migration checksums against database records"""
+
+
+
         try:
             table_name = self.config.get("migration", {}).get("table", "schema_migrations")
             
@@ -479,6 +518,9 @@ class DatabaseMigrationManager:
     
     def _validate_sql_syntax(self) -> bool:
         """Validate SQL syntax in migrations"""
+
+
+
         try:
             for migration in self.pending_migrations:
                 if migration.migration_type == MigrationType.SCHEMA:
@@ -515,6 +557,9 @@ class DatabaseMigrationManager:
     
     def _compare_versions(self, version1: str, version2: str) -> int:
         """Compare two version strings"""
+
+
+
         try:
             v1_parts = [int(x) for x in version1.split('.')]
             v2_parts = [int(x) for x in version2.split('.')]
@@ -538,6 +583,9 @@ class DatabaseMigrationManager:
     
     def _create_pre_migration_backup(self) -> bool:
         """Create backup before migration"""
+
+
+
         try:
             logger.info("Creating pre-migration backup")
             
@@ -571,6 +619,9 @@ class DatabaseMigrationManager:
     
     def _apply_migration(self, migration: Migration, dry_run: bool = False) -> bool:
         """Apply single migration"""
+
+
+
         try:
             logger.info(f"Applying migration: {migration.id} {'(dry run)' if dry_run else ''}")
             
@@ -609,6 +660,9 @@ class DatabaseMigrationManager:
     
     def _check_migration_dependencies(self, migration: Migration) -> bool:
         """Check if migration dependencies are satisfied"""
+
+
+
         try:
             applied_migration_ids = self._get_applied_migration_ids()
             
@@ -625,6 +679,9 @@ class DatabaseMigrationManager:
     
     def _execute_migration_sql(self, migration: Migration) -> bool:
         """Execute migration SQL"""
+
+
+
         try:
             with self.connection.cursor() as cursor:
                 # Execute migration SQL
@@ -640,6 +697,9 @@ class DatabaseMigrationManager:
     
     def _validate_migration_sql(self, migration: Migration) -> bool:
         """Validate migration SQL (dry run)"""
+
+
+
         try:
             with self.connection.cursor() as cursor:
                 # Use EXPLAIN to validate SQL without executing
@@ -659,6 +719,9 @@ class DatabaseMigrationManager:
     
     def _record_migration(self, migration: Migration, execution_time: int) -> None:
         """Record migration in database"""
+
+
+
         try:
             table_name = self.config.get("migration", {}).get("table", "schema_migrations")
             
@@ -686,6 +749,9 @@ class DatabaseMigrationManager:
     
     def _rollback_failed_migration(self, migration: Migration) -> bool:
         """Rollback failed migration"""
+
+
+
         try:
             logger.info(f"Rolling back migration: {migration.id}")
             
@@ -717,6 +783,9 @@ class DatabaseMigrationManager:
         Returns:
             bool: True if successful, False otherwise
         """
+
+
+
         try:
             logger.info(f"Starting rollback to version {target_version or f'{steps} steps'}")
             
@@ -744,6 +813,9 @@ class DatabaseMigrationManager:
     
     def _get_rollback_migrations(self, target_version: Optional[str], steps: int) -> List[Migration]:
         """Get migrations to rollback"""
+
+
+
         try:
             # Get applied migrations in reverse order
             applied_migrations = sorted(
@@ -771,6 +843,9 @@ class DatabaseMigrationManager:
     
     def _rollback_migration(self, migration: Migration) -> bool:
         """Rollback single migration"""
+
+
+
         try:
             logger.info(f"Rolling back migration: {migration.id}")
             
@@ -800,6 +875,9 @@ class DatabaseMigrationManager:
     
     def get_migration_status(self) -> Dict[str, Any]:
         """Get migration status summary"""
+
+
+
         try:
             applied_migration_ids = self._get_applied_migration_ids()
             
@@ -818,6 +896,9 @@ class DatabaseMigrationManager:
     
     def _get_current_version(self) -> Optional[str]:
         """Get current database version"""
+
+
+
         try:
             if not self.applied_migrations:
                 return None
@@ -836,6 +917,9 @@ class DatabaseMigrationManager:
     
     def create_migration(self, name: str, migration_type: str = "schema", description: str = "") -> str:
         """Create new migration file"""
+
+
+
         try:
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             migration_id = f"{timestamp}_{name}"
@@ -870,6 +954,9 @@ class DatabaseMigrationManager:
     
     def list_migrations(self, status: Optional[str] = None) -> List[Dict[str, Any]]:
         """List migrations with optional status filter"""
+
+
+
         try:
             all_migrations = self.applied_migrations + self.pending_migrations
             

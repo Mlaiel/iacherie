@@ -8,7 +8,7 @@ Responsibility: Dynamic task prioritization with machine learning optimization
 Technologies: Priority Queues, ML Priority Scoring, Business Logic Rules
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -186,6 +186,9 @@ class PriorityCalculator:
         factors: PriorityFactors
     ) -> PriorityScore:
         """Calculate comprehensive priority score for task"""
+
+
+
         try:
             score = PriorityScore()
             
@@ -226,7 +229,7 @@ class PriorityCalculator:
             return score
             
         except Exception as e:
-            logger.error(f"❌ Priority calculation failed: {e}")
+            logger.error(f" Priority calculation failed: {e}")
             # Return default score
             return PriorityScore(
                 total_score=25.0,
@@ -411,6 +414,9 @@ class PriorityCalculator:
     
     async def optimize_weights(self) -> Dict[str, float]:
         """Optimize scoring weights based on historical performance"""
+
+
+
         try:
             # Would implement ML-based weight optimization
             # For now, return current weights
@@ -422,6 +428,9 @@ class PriorityCalculator:
     
     async def get_priority_statistics(self) -> Dict[str, Any]:
         """Get priority calculation statistics"""
+
+
+
         try:
             if not self.priority_history:
                 return {"message": "No priority history available"}
@@ -464,7 +473,7 @@ class PriorityCalculator:
 
 class DynamicPriorityManager:
     """
-    🎯 Dynamic Priority Manager - IA-Influencer-Agent
+     Dynamic Priority Manager - IA-Influencer-Agent
     
     Advanced priority management system featuring:
     - Real-time priority adjustment
@@ -496,6 +505,9 @@ class DynamicPriorityManager:
     
     async def initialize(self) -> bool:
         """Initialize dynamic priority manager"""
+
+
+
         try:
             self._is_running = True
             
@@ -507,11 +519,11 @@ class DynamicPriorityManager:
                 asyncio.create_task(self._queue_balancer())
             ])
             
-            logger.info("✅ Dynamic Priority Manager initialized")
+            logger.info(" Dynamic Priority Manager initialized")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Priority manager initialization failed: {e}")
+            logger.error(f" Priority manager initialization failed: {e}")
             return False
     
     async def calculate_task_priority(
@@ -520,6 +532,9 @@ class DynamicPriorityManager:
         priority_factors: Optional[PriorityFactors] = None
     ) -> PriorityScore:
         """Calculate or retrieve cached priority for task"""
+
+
+
         try:
             # Check cache first
             cached_score = await self._get_cached_priority(task.task_id)
@@ -539,7 +554,7 @@ class DynamicPriorityManager:
             return score
             
         except Exception as e:
-            logger.error(f"❌ Task priority calculation failed: {e}")
+            logger.error(f" Task priority calculation failed: {e}")
             # Return default priority
             return PriorityScore(
                 total_score=25.0,
@@ -554,6 +569,9 @@ class DynamicPriorityManager:
         reason: str = "Manual adjustment"
     ) -> bool:
         """Dynamically adjust task priority"""
+
+
+
         try:
             # Remove from cache to force recalculation
             self.priority_cache.pop(task_id, None)
@@ -568,15 +586,18 @@ class DynamicPriorityManager:
             }
             self.adjustment_history.append(adjustment_record)
             
-            logger.info(f"🎯 Task priority adjusted: {task_id} - {reason}")
+            logger.info(f" Task priority adjusted: {task_id} - {reason}")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to adjust task priority: {e}")
+            logger.error(f" Failed to adjust task priority: {e}")
             return False
     
     async def optimize_queue_priorities(self, queue_type: CrawlerQueueType) -> Dict[str, Any]:
         """Optimize priorities for specific queue"""
+
+
+
         try:
             queue = self.priority_queues[queue_type]
             
@@ -605,15 +626,18 @@ class DynamicPriorityManager:
             self.priority_queues[queue_type] = updated_queue
             optimization_results["reordered_tasks"] = len(updated_queue)
             
-            logger.info(f"⚡ Queue optimization completed: {queue_type.value}")
+            logger.info(f" Queue optimization completed: {queue_type.value}")
             return optimization_results
             
         except Exception as e:
-            logger.error(f"❌ Queue optimization failed: {e}")
+            logger.error(f" Queue optimization failed: {e}")
             return {"error": str(e)}
     
     async def get_priority_insights(self) -> Dict[str, Any]:
         """Get insights into priority management performance"""
+
+
+
         try:
             # Priority distribution
             priority_distribution = defaultdict(int)
@@ -651,11 +675,14 @@ class DynamicPriorityManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to get priority insights: {e}")
+            logger.error(f" Failed to get priority insights: {e}")
             return {"error": str(e)}
     
     async def shutdown(self):
         """Gracefully shutdown priority manager"""
+
+
+
         try:
             self._is_running = False
             
@@ -667,10 +694,10 @@ class DynamicPriorityManager:
             self.priority_cache.clear()
             self.cache_expiry.clear()
             
-            logger.info("🛑 Dynamic Priority Manager shutdown completed")
+            logger.info(" Dynamic Priority Manager shutdown completed")
             
         except Exception as e:
-            logger.error(f"❌ Priority manager shutdown error: {e}")
+            logger.error(f" Priority manager shutdown error: {e}")
     
     async def _get_cached_priority(self, task_id: str) -> Optional[PriorityScore]:
         """Get cached priority if still valid"""
@@ -788,4 +815,7 @@ class DynamicPriorityManager:
 # Factory function
 def create_priority_manager() -> DynamicPriorityManager:
     """Create and return configured priority manager"""
+
+
+
     return DynamicPriorityManager()

@@ -13,7 +13,7 @@ Usage:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This demonstration module showcases proprietary algorithms and AI systems
 developed by Fahed Mlaiel. Unauthorized use is strictly prohibited.
 """
@@ -65,10 +65,10 @@ try:
         CollaborationFormat
     )
     
-    logger.info("✅ All matching module components imported successfully")
+    logger.info(" All matching module components imported successfully")
     
 except ImportError as e:
-    logger.error(f"❌ Error importing matching module components: {e}")
+    logger.error(f" Error importing matching module components: {e}")
     sys.exit(1)
 
 
@@ -132,6 +132,9 @@ class MockDatabaseSession:
     
     def query(self, model):
         """Mock query method"""
+
+
+
         return MockQuery(self.creators)
 
 
@@ -251,10 +254,10 @@ class MatchingModuleDemo:
     async def run_comprehensive_demo(self):
         """Run comprehensive demonstration of all features"""
         
-        print("🎯 " + "="*80)
-        print("🎯 ENTERPRISE CREATOR COLLABORATION MATCHING SYSTEM")
-        print("🎯 Advanced AI-Powered Demonstration")
-        print("🎯 " + "="*80)
+        print(" " + "="*80)
+        print(" ENTERPRISE CREATOR COLLABORATION MATCHING SYSTEM")
+        print(" Advanced AI-Powered Demonstration")
+        print(" " + "="*80)
         print()
         
         # Step 1: System Health Check
@@ -278,54 +281,54 @@ class MatchingModuleDemo:
         # Step 7: Performance Metrics
         await self._demo_performance_metrics()
         
-        print("\n🎉 " + "="*80)
-        print("🎉 DEMONSTRATION COMPLETED SUCCESSFULLY")
-        print("🎉 Enterprise AI matching system fully operational")
-        print("🎉 " + "="*80)
+        print("\n " + "="*80)
+        print(" DEMONSTRATION COMPLETED SUCCESSFULLY")
+        print(" Enterprise AI matching system fully operational")
+        print(" " + "="*80)
     
     async def _demo_health_check(self):
         """Demonstrate system health monitoring"""
         
-        print("🔍 SYSTEM HEALTH CHECK")
+        print(" SYSTEM HEALTH CHECK")
         print("-" * 40)
         
         try:
             health_status = await self.matching_service.get_service_health()
             
-            print(f"✅ Overall Status: {health_status.get('overall_status', 'unknown').upper()}")
-            print(f"✅ Services Operational: {len(health_status.get('services', {}))}")
-            print(f"✅ Cache Status: {'Operational' if await self.cache_manager.ping() else 'Down'}")
-            print(f"✅ Last Updated: {health_status.get('last_updated', 'unknown')}")
+            print(f" Overall Status: {health_status.get('overall_status', 'unknown').upper()}")
+            print(f" Services Operational: {len(health_status.get('services', {}))}")
+            print(f" Cache Status: {'Operational' if await self.cache_manager.ping() else 'Down'}")
+            print(f" Last Updated: {health_status.get('last_updated', 'unknown')}")
             
             if 'performance_metrics' in health_status:
                 metrics = health_status['performance_metrics']
-                print(f"📊 Cache Hit Rate: {metrics.get('cache_hit_rate', 0):.2%}")
-                print(f"📊 Avg Response Time: {metrics.get('average_response_time', 0)}ms")
-                print(f"📊 Error Rate: {metrics.get('error_rate', 0):.2%}")
+                print(f" Cache Hit Rate: {metrics.get('cache_hit_rate', 0):.2%}")
+                print(f" Avg Response Time: {metrics.get('average_response_time', 0)}ms")
+                print(f" Error Rate: {metrics.get('error_rate', 0):.2%}")
             
         except Exception as e:
-            print(f"❌ Health check failed: {e}")
+            print(f" Health check failed: {e}")
         
         print()
     
     async def _demo_creator_profiles(self):
         """Demonstrate creator profile analysis"""
         
-        print("👥 CREATOR PROFILE ANALYSIS")
+        print(" CREATOR PROFILE ANALYSIS")
         print("-" * 40)
         
         creators = self.db_session.creators
         
-        print(f"📋 Total Creators in Database: {len(creators)}")
+        print(f" Total Creators in Database: {len(creators)}")
         print()
         
         for creator in creators[:3]:  # Show first 3 creators
-            print(f"🎨 {creator['name']} (ID: {creator['id']})")
-            print(f"   📺 Content Types: {', '.join(creator['content_types'])}")
-            print(f"   🎵 Genres: {', '.join(creator['genres'])}")
-            print(f"   👥 Audience Size: {creator['audience_size']:,}")
-            print(f"   📈 Engagement Rate: {creator['engagement_rate']:.1%}")
-            print(f"   📍 Location: {creator['location']}")
+            print(f" {creator['name']} (ID: {creator['id']})")
+            print(f"    Content Types: {', '.join(creator['content_types'])}")
+            print(f"    Genres: {', '.join(creator['genres'])}")
+            print(f"    Audience Size: {creator['audience_size']:,}")
+            print(f"    Engagement Rate: {creator['engagement_rate']:.1%}")
+            print(f"    Location: {creator['location']}")
             print()
     
     async def _demo_compatibility_analysis(self):
@@ -339,39 +342,39 @@ class MatchingModuleDemo:
             creator_a_id = 1
             creator_b_id = 2
             
-            print(f"🔍 Analyzing compatibility between Creator {creator_a_id} and Creator {creator_b_id}")
+            print(f" Analyzing compatibility between Creator {creator_a_id} and Creator {creator_b_id}")
             
             # In a real implementation, this would call the actual compatibility analyzer
             # For demo purposes, we'll simulate the analysis
             
             compatibility_score = 0.78  # Simulated score
             
-            print(f"✅ Overall Compatibility Score: {compatibility_score:.2%}")
-            print("📊 Dimension Breakdown:")
-            print(f"   🎨 Content Synergy: {0.82:.1%}")
-            print(f"   👥 Audience Compatibility: {0.75:.1%}")
-            print(f"   🏢 Brand Alignment: {0.80:.1%}")
-            print(f"   💡 Creative Harmony: {0.74:.1%}")
-            print(f"   ⚙️  Technical Compatibility: {0.85:.1%}")
+            print(f" Overall Compatibility Score: {compatibility_score:.2%}")
+            print(" Dimension Breakdown:")
+            print(f"    Content Synergy: {0.82:.1%}")
+            print(f"    Audience Compatibility: {0.75:.1%}")
+            print(f"    Brand Alignment: {0.80:.1%}")
+            print(f"    Creative Harmony: {0.74:.1%}")
+            print(f"     Technical Compatibility: {0.85:.1%}")
             
-            print("\n💡 Key Strengths:")
+            print("\n Key Strengths:")
             print("   • Strong content style compatibility")
             print("   • Complementary audience demographics")
             print("   • Aligned brand values")
             
-            print("\n⚠️  Considerations:")
+            print("\n  Considerations:")
             print("   • Different engagement patterns")
             print("   • Geographic distance for in-person collaboration")
             
         except Exception as e:
-            print(f"❌ Compatibility analysis failed: {e}")
+            print(f" Compatibility analysis failed: {e}")
         
         print()
     
     async def _demo_recommendation_engine(self):
         """Demonstrate AI-powered recommendation engine"""
         
-        print("🎯 AI RECOMMENDATION ENGINE")
+        print(" AI RECOMMENDATION ENGINE")
         print("-" * 40)
         
         try:
@@ -387,21 +390,21 @@ class MatchingModuleDemo:
             ]
             
             for i, rec_type in enumerate(recommendation_types, 1):
-                print(f"\n📋 {rec_type.value.replace('_', ' ').title()}")
-                print(f"   🎯 Target Creator: Creator {i + 1}")
+                print(f"\n {rec_type.value.replace('_', ' ').title()}")
+                print(f"    Target Creator: Creator {i + 1}")
                 print(f"   🤝 Format: {CollaborationFormat.JOINT_CONTENT.value}")
-                print(f"   📊 Success Probability: {0.70 + i * 0.05:.1%}")
-                print(f"   💰 Revenue Potential: ${1000 + i * 500:,}")
-                print(f"   ⏱️  Timeline: {2 + i} weeks")
-                print(f"   🎪 Expected Reach: {50000 + i * 25000:,} users")
+                print(f"    Success Probability: {0.70 + i * 0.05:.1%}")
+                print(f"    Revenue Potential: ${1000 + i * 500:,}")
+                print(f"   ⏱  Timeline: {2 + i} weeks")
+                print(f"    Expected Reach: {50000 + i * 25000:,} users")
             
-            print("\n🎉 Recommendation Summary:")
-            print(f"   📈 Average Success Rate: {0.78:.1%}")
-            print(f"   💵 Total Revenue Potential: ${6500:,}")
-            print(f"   👥 Combined Audience Reach: {200000:,}")
+            print("\n Recommendation Summary:")
+            print(f"    Average Success Rate: {0.78:.1%}")
+            print(f"    Total Revenue Potential: ${6500:,}")
+            print(f"    Combined Audience Reach: {200000:,}")
             
         except Exception as e:
-            print(f"❌ Recommendation generation failed: {e}")
+            print(f" Recommendation generation failed: {e}")
         
         print()
     
@@ -412,7 +415,7 @@ class MatchingModuleDemo:
         print("-" * 40)
         
         try:
-            print("🔬 Analyzing collaboration potential using neural networks...")
+            print(" Analyzing collaboration potential using neural networks...")
             
             # Simulate advanced scoring metrics
             scoring_components = {
@@ -425,69 +428,69 @@ class MatchingModuleDemo:
                 'Timeline Feasibility': 0.76
             }
             
-            print("\n📊 AI Scoring Breakdown:")
+            print("\n AI Scoring Breakdown:")
             for component, score in scoring_components.items():
                 if component == 'Risk Assessment':
-                    print(f"   🛡️  {component}: {score:.1%} (Low Risk)")
+                    print(f"     {component}: {score:.1%} (Low Risk)")
                 else:
-                    print(f"   📈 {component}: {score:.1%}")
+                    print(f"    {component}: {score:.1%}")
             
             overall_score = sum(score for component, score in scoring_components.items() 
                               if component != 'Risk Assessment') / (len(scoring_components) - 1)
             
-            print(f"\n🎯 Overall AI Score: {overall_score:.1%}")
+            print(f"\n Overall AI Score: {overall_score:.1%}")
             
             # Business intelligence insights
-            print("\n💼 Business Intelligence Insights:")
-            print("   📊 Market trend alignment: Strong")
-            print("   💰 ROI prediction: 285% over 6 months")
-            print("   🎪 Audience growth potential: High")
-            print("   ⚡ Execution complexity: Medium")
+            print("\n Business Intelligence Insights:")
+            print("    Market trend alignment: Strong")
+            print("    ROI prediction: 285% over 6 months")
+            print("    Audience growth potential: High")
+            print("    Execution complexity: Medium")
             
         except Exception as e:
-            print(f"❌ Advanced scoring failed: {e}")
+            print(f" Advanced scoring failed: {e}")
         
         print()
     
     async def _demo_workflow_management(self):
         """Demonstrate enterprise workflow management"""
         
-        print("⚙️  ENTERPRISE WORKFLOW MANAGEMENT")
+        print("  ENTERPRISE WORKFLOW MANAGEMENT")
         print("-" * 40)
         
         try:
-            print("🔄 Executing enterprise collaboration workflow...")
+            print(" Executing enterprise collaboration workflow...")
             
             workflow_stages = [
-                ('Discovery', '✅ Completed - 2.3s'),
-                ('Analysis', '✅ Completed - 4.7s'),
-                ('Scoring', '✅ Completed - 1.8s'),
-                ('Validation', '✅ Completed - 0.9s'),
-                ('Recommendation', '✅ Completed - 2.1s'),
+                ('Discovery', ' Completed - 2.3s'),
+                ('Analysis', ' Completed - 4.7s'),
+                ('Scoring', ' Completed - 1.8s'),
+                ('Validation', ' Completed - 0.9s'),
+                ('Recommendation', ' Completed - 2.1s'),
                 ('Optimization', '⏳ In Progress...')
             ]
             
             for stage, status in workflow_stages:
-                print(f"   🔸 {stage}: {status}")
+                print(f"    {stage}: {status}")
                 if '⏳' in status:
                     await asyncio.sleep(1)  # Simulate processing time
-                    print(f"   🔸 {stage}: ✅ Completed - 3.2s")
+                    print(f"    {stage}:  Completed - 3.2s")
             
-            print("\n📋 Workflow Summary:")
-            print("   ⏱️  Total Execution Time: 15.0 seconds")
-            print("   🎯 Success Rate: 100%")
-            print("   📊 Quality Score: 94%")
-            print("   🔧 Optimization Applied: Advanced neural ensemble")
+            print("\n Workflow Summary:")
+            print("   ⏱  Total Execution Time: 15.0 seconds")
+            print("    Success Rate: 100%")
+            print("    Quality Score: 94%")
+            print("    Optimization Applied: Advanced neural ensemble")
             
         except Exception as e:
-            print(f"❌ Workflow execution failed: {e}")
+            print(f" Workflow execution failed: {e}")
         
         print()
     
     async def _demo_performance_metrics(self):
         """Demonstrate performance monitoring and metrics"""
         
-        print("📈 PERFORMANCE METRICS & ANALYTICS")
+        print(" PERFORMANCE METRICS & ANALYTICS")
         print("-" * 40)
         
         try:
@@ -502,27 +505,27 @@ class MatchingModuleDemo:
                 'Active Collaborations': 1834
             }
             
-            print("🎯 System Performance:")
+            print(" System Performance:")
             for metric, value in metrics.items():
                 if 'Rate' in metric and isinstance(value, float):
-                    print(f"   📊 {metric}: {value:.1%}")
+                    print(f"    {metric}: {value:.1%}")
                 elif 'Time' in metric:
-                    print(f"   ⚡ {metric}: {value}ms")
+                    print(f"    {metric}: {value}ms")
                 elif 'Satisfaction' in metric:
-                    print(f"   ⭐ {metric}: {value}/5.0")
+                    print(f"    {metric}: {value}/5.0")
                 elif 'Revenue' in metric:
-                    print(f"   💰 {metric}: ${value:,}")
+                    print(f"    {metric}: ${value:,}")
                 else:
-                    print(f"   📈 {metric}: {value:,}")
+                    print(f"    {metric}: {value:,}")
             
-            print("\n🎉 Key Achievements:")
-            print("   🏆 99.7% uptime this month")
-            print("   🚀 50% improvement in matching accuracy")
-            print("   💎 Top-tier enterprise performance standards")
-            print("   🌟 Industry-leading user satisfaction")
+            print("\n Key Achievements:")
+            print("    99.7% uptime this month")
+            print("    50% improvement in matching accuracy")
+            print("    Top-tier enterprise performance standards")
+            print("    Industry-leading user satisfaction")
             
         except Exception as e:
-            print(f"❌ Performance metrics collection failed: {e}")
+            print(f" Performance metrics collection failed: {e}")
         
         print()
     
@@ -547,18 +550,18 @@ class MatchingModuleDemo:
             try:
                 print(f"🧪 Testing {test_name}... ", end="")
                 await test_func()
-                print("✅ PASSED")
+                print(" PASSED")
                 passed += 1
             except Exception as e:
-                print(f"❌ FAILED - {e}")
+                print(f" FAILED - {e}")
         
         print("\n" + "=" * 50)
-        print(f"🎯 Test Results: {passed}/{total} tests passed ({passed/total:.1%})")
+        print(f" Test Results: {passed}/{total} tests passed ({passed/total:.1%})")
         
         if passed == total:
-            print("🎉 All tests passed! System is fully operational.")
+            print(" All tests passed! System is fully operational.")
         else:
-            print("⚠️  Some tests failed. Check system configuration.")
+            print("  Some tests failed. Check system configuration.")
     
     async def _test_service_init(self):
         """Test service initialization"""
@@ -589,7 +592,7 @@ class MatchingModuleDemo:
     async def run_benchmark(self):
         """Run performance benchmark"""
         
-        print("🏁 PERFORMANCE BENCHMARK")
+        print(" PERFORMANCE BENCHMARK")
         print("=" * 50)
         
         benchmarks = [
@@ -600,12 +603,12 @@ class MatchingModuleDemo:
         ]
         
         for benchmark_name, benchmark_func in benchmarks:
-            print(f"\n🚀 Benchmarking {benchmark_name}...")
+            print(f"\n Benchmarking {benchmark_name}...")
             try:
                 result = await benchmark_func()
-                print(f"✅ {benchmark_name}: {result}")
+                print(f" {benchmark_name}: {result}")
             except Exception as e:
-                print(f"❌ {benchmark_name}: Failed - {e}")
+                print(f" {benchmark_name}: Failed - {e}")
     
     async def _benchmark_profile_processing(self):
         """Benchmark profile processing speed"""
@@ -733,9 +736,9 @@ Examples:
                 await demo.run_benchmark()
                 
         except KeyboardInterrupt:
-            print("\n\n🛑 Demonstration interrupted by user")
+            print("\n\n Demonstration interrupted by user")
         except Exception as e:
-            logger.error(f"❌ Error during execution: {e}")
+            logger.error(f" Error during execution: {e}")
             sys.exit(1)
     
     # Run the async actions

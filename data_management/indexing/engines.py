@@ -8,7 +8,7 @@ vector search, fingerprinting, and metadata management with enterprise-grade sca
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent - Content Protection Platform
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
@@ -82,6 +82,9 @@ class BaseIndexEngine(ABC):
     
     async def health_check(self) -> Dict[str, Any]:
         """Check engine health status"""
+
+
+
         return {
             "engine": self.__class__.__name__,
             "status": "healthy" if self._initialized else "not_initialized",
@@ -102,6 +105,9 @@ class VectorSearchEngine(BaseIndexEngine):
         
     async def initialize(self) -> None:
         """Initialize FAISS index and embedding models"""
+
+
+
         try:
             # Initialize Redis connection
             self.redis_client = Redis.from_url(self.config.redis_url)
@@ -140,6 +146,9 @@ class VectorSearchEngine(BaseIndexEngine):
     
     async def _generate_embedding(self, text: str) -> np.ndarray:
         """Generate text embedding using transformer model"""
+
+
+
         try:
             inputs = self.tokenizer(
                 text, 
@@ -164,6 +173,9 @@ class VectorSearchEngine(BaseIndexEngine):
     
     async def index_content(self, content_id: str, data: Dict[str, Any]) -> Dict[str, Any]:
         """Index content with vector embeddings"""
+
+
+
         try:
             text_content = data.get("text", "")
             metadata = data.get("metadata", {})
@@ -211,6 +223,9 @@ class VectorSearchEngine(BaseIndexEngine):
     
     async def search(self, query: str, filters: Dict = None, top_k: int = 10) -> List[Dict[str, Any]]:
         """Perform similarity search"""
+
+
+
         try:
             # Generate query embedding
             query_embedding = await self._generate_embedding(query)
@@ -253,6 +268,9 @@ class VectorSearchEngine(BaseIndexEngine):
     
     async def delete_index(self, content_id: str) -> bool:
         """Delete indexed content"""
+
+
+
         try:
             # Find vector_id from Redis
             vector_data = await self.redis_client.hgetall(f"vector:{content_id}")
@@ -282,6 +300,9 @@ class ContentIndexEngine(BaseIndexEngine):
         
     async def initialize(self) -> None:
         """Initialize Elasticsearch connection"""
+
+
+
         try:
             hosts = self.config.elasticsearch_hosts or ["http://localhost:9200"]
             self.es_client = AsyncElasticsearch(hosts=hosts)
@@ -324,6 +345,9 @@ class ContentIndexEngine(BaseIndexEngine):
     
     async def index_content(self, content_id: str, data: Dict[str, Any]) -> Dict[str, Any]:
         """Index content in Elasticsearch"""
+
+
+
         try:
             index_name = f"{self.config.index_prefix}_content"
             
@@ -361,6 +385,9 @@ class ContentIndexEngine(BaseIndexEngine):
     
     async def search(self, query: Dict, filters: Dict = None) -> List[Dict[str, Any]]:
         """Search indexed content"""
+
+
+
         try:
             index_name = f"{self.config.index_prefix}_content"
             
@@ -422,6 +449,9 @@ class ContentIndexEngine(BaseIndexEngine):
     
     async def delete_index(self, content_id: str) -> bool:
         """Delete indexed content"""
+
+
+
         try:
             index_name = f"{self.config.index_prefix}_content"
             response = await self.es_client.delete(
@@ -445,6 +475,9 @@ class FingerprintIndexEngine(BaseIndexEngine):
         
     async def initialize(self) -> None:
         """Initialize fingerprint storage"""
+
+
+
         try:
             self.redis_client = Redis.from_url(self.config.redis_url)
             await self.redis_client.ping()
@@ -458,6 +491,9 @@ class FingerprintIndexEngine(BaseIndexEngine):
     
     async def index_content(self, content_id: str, data: Dict[str, Any]) -> Dict[str, Any]:
         """Generate and index content fingerprints"""
+
+
+
         try:
             content_type = data.get("content_type", "unknown")
             fingerprints = {}
@@ -633,6 +669,9 @@ class FingerprintIndexEngine(BaseIndexEngine):
     
     async def search(self, query: Dict, filters: Dict = None) -> List[Dict[str, Any]]:
         """Search for similar fingerprints"""
+
+
+
         try:
             query_fingerprints = query.get("fingerprints", {})
             similarity_threshold = query.get("threshold", self.config.similarity_threshold)
@@ -688,6 +727,9 @@ class FingerprintIndexEngine(BaseIndexEngine):
     
     async def delete_index(self, content_id: str) -> bool:
         """Delete fingerprint index"""
+
+
+
         try:
             if content_id in self.fingerprint_store:
                 del self.fingerprint_store[content_id]
@@ -710,6 +752,9 @@ class MetadataIndexEngine(BaseIndexEngine):
         
     async def initialize(self) -> None:
         """Initialize metadata storage"""
+
+
+
         try:
             self.redis_client = Redis.from_url(self.config.redis_url)
             await self.redis_client.ping()
@@ -723,6 +768,9 @@ class MetadataIndexEngine(BaseIndexEngine):
     
     async def index_content(self, content_id: str, data: Dict[str, Any]) -> Dict[str, Any]:
         """Index content metadata"""
+
+
+
         try:
             metadata = {
                 "content_id": content_id,
@@ -795,6 +843,9 @@ class MetadataIndexEngine(BaseIndexEngine):
     
     async def search(self, query: Dict, filters: Dict = None) -> List[Dict[str, Any]]:
         """Search metadata with advanced filtering"""
+
+
+
         try:
             results = []
             content_ids = set()
@@ -892,6 +943,9 @@ class MetadataIndexEngine(BaseIndexEngine):
     
     async def delete_index(self, content_id: str) -> bool:
         """Delete metadata index"""
+
+
+
         try:
             if content_id not in self.metadata_store:
                 return False
@@ -928,6 +982,9 @@ class MetadataIndexEngine(BaseIndexEngine):
     
     async def get_aggregations(self, field: str, filters: Dict = None) -> Dict[str, int]:
         """Get aggregation statistics for a field"""
+
+
+
         try:
             aggregations = {}
             

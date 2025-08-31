@@ -1,5 +1,5 @@
 """
-📊 Metadata Processor - IA Influencer Agent Platform Enterprise
+ Metadata Processor - IA Influencer Agent Platform Enterprise
 ================================================================
 Module: backend/data_management/processors/metadata_processor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Metadata Processing - Enterprise Production-Ready
 Responsibility: Extraction et traitement avancé des métadonnées pour tous types de contenu
 =======================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -82,6 +82,9 @@ class MetadataProcessor(BaseProcessor):
     
     def _init_extractors(self):
         """Initialize metadata extraction tools"""
+
+
+
         try:
             # AI models for content analysis
             self.content_classifier = pipeline(
@@ -120,6 +123,9 @@ class MetadataProcessor(BaseProcessor):
     
     def process(self, input_data: Any) -> Dict[str, Any]:
         """Traite et extrait toutes les métadonnées"""
+
+
+
         try:
             # Determine content type
             content_type = self._detect_content_type(input_data)
@@ -407,6 +413,9 @@ class MetadataProcessor(BaseProcessor):
     
     def _extract_pdf_metadata(self, file_path: str) -> Dict[str, Any]:
         """Extrait les métadonnées PDF"""
+
+
+
         try:
             with open(file_path, 'rb') as file:
                 pdf_reader = PyPDF2.PdfReader(file)
@@ -435,6 +444,9 @@ class MetadataProcessor(BaseProcessor):
     
     def _extract_docx_metadata(self, file_path: str) -> Dict[str, Any]:
         """Extrait les métadonnées DOCX"""
+
+
+
         try:
             doc = docx.Document(file_path)
             
@@ -725,6 +737,9 @@ class MetadataProcessor(BaseProcessor):
     
     def _calculate_data_hashes(self, data: bytes) -> Dict[str, str]:
         """Calcule les hashes des données binaires"""
+
+
+
         return {
             "md5": hashlib.md5(data).hexdigest(),
             "sha1": hashlib.sha1(data).hexdigest(),
@@ -733,6 +748,9 @@ class MetadataProcessor(BaseProcessor):
     
     def _parse_gps_data(self, gps_info: Dict) -> Optional[Dict[str, Any]]:
         """Parse les données GPS depuis EXIF"""
+
+
+
         try:
             def convert_to_degrees(value):
                 d, m, s = value
@@ -809,6 +827,9 @@ class MetadataProcessor(BaseProcessor):
     
     def _enrich_temporal_data(self, creation_time: str) -> Dict[str, Any]:
         """Enrichit les données temporelles"""
+
+
+
         try:
             # Parse creation time
             if 'T' in creation_time:
@@ -1006,6 +1027,9 @@ class MetadataProcessor(BaseProcessor):
     
     def _extract_duration(self, format_specific: Dict) -> Optional[float]:
         """Extrait la durée"""
+
+
+
         return format_specific.get('length_seconds') or format_specific.get('duration_seconds')
     
     def _extract_quality_metrics(self, format_specific: Dict) -> Dict[str, Any]:

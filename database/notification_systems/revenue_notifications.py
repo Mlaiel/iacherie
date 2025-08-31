@@ -160,90 +160,90 @@ class RevenueNotificationManager:
         """Charge les templates de notification de revenus"""
         templates = {
             "payment_received": Template("""
-                💰 PAIEMENT REÇU - {{ amount }} {{ currency }}
+                 PAIEMENT REÇU - {{ amount }} {{ currency }}
                 
                 Source: {{ source }}
                 Plateforme: {{ platform }}
                 Contenu: {{ content_title }}
                 
-                💳 Montant brut: {{ gross_amount }} {{ currency }}
-                🏦 Frais: {{ fees }} {{ currency }}
-                ✅ Net reçu: {{ net_amount }} {{ currency }}
+                 Montant brut: {{ gross_amount }} {{ currency }}
+                 Frais: {{ fees }} {{ currency }}
+                 Net reçu: {{ net_amount }} {{ currency }}
                 
-                📊 Total du mois: {{ monthly_total }} {{ currency }}
-                📈 Progression objectif: {{ goal_progress }}%
+                 Total du mois: {{ monthly_total }} {{ currency }}
+                 Progression objectif: {{ goal_progress }}%
                 
-                🔗 Voir détails: {{ transaction_url }}
+                 Voir détails: {{ transaction_url }}
             """),
             
             "threshold_reached": Template("""
-                🎯 SEUIL DE REVENUS ATTEINT!
+                 SEUIL DE REVENUS ATTEINT!
                 
-                💰 Vous avez atteint {{ threshold_amount }} {{ currency }}
-                📅 Période: {{ period }}
-                🚀 Progression: +{{ percentage_increase }}% vs période précédente
+                 Vous avez atteint {{ threshold_amount }} {{ currency }}
+                 Période: {{ period }}
+                 Progression: +{{ percentage_increase }}% vs période précédente
                 
-                💎 Top sources:
+                 Top sources:
                 {{ top_sources | join('\n') }}
                 
-                🎊 Félicitations! Continuez sur cette lancée!
+                 Félicitations! Continuez sur cette lancée!
                 
-                📊 Dashboard: {{ dashboard_url }}
+                 Dashboard: {{ dashboard_url }}
             """),
             
             "goal_achieved": Template("""
-                🏆 OBJECTIF ATTEINT! 🎉
+                 OBJECTIF ATTEINT! 
                 
-                🎯 Objectif: {{ goal_amount }} {{ currency }}
+                 Objectif: {{ goal_amount }} {{ currency }}
                 ⏰ Atteint {{ days_early }} jours en avance!
                 
-                📈 Performance exceptionnelle:
+                 Performance exceptionnelle:
                 - Total période: {{ total_earned }} {{ currency }}
                 - Dépassement: +{{ excess_amount }} {{ currency }}
                 - Moyenne journalière: {{ daily_average }} {{ currency }}
                 
-                🌟 Nouveau record personnel!
+                 Nouveau record personnel!
                 
-                🎯 Définir nouvel objectif: {{ new_goal_url }}
+                 Définir nouvel objectif: {{ new_goal_url }}
             """),
             
             "weekly_report": Template("""
-                📊 RAPPORT HEBDOMADAIRE DE REVENUS
+                 RAPPORT HEBDOMADAIRE DE REVENUS
                 
-                📅 Semaine du {{ week_start }} au {{ week_end }}
+                 Semaine du {{ week_start }} au {{ week_end }}
                 
-                💰 Total: {{ total_amount }} {{ currency }}
-                📈 Évolution: {{ change_percentage }}% vs semaine précédente
+                 Total: {{ total_amount }} {{ currency }}
+                 Évolution: {{ change_percentage }}% vs semaine précédente
                 
-                🔝 Top performances:
+                 Top performances:
                 {{ top_content | join('\n') }}
                 
-                📊 Répartition par source:
+                 Répartition par source:
                 {{ revenue_breakdown | join('\n') }}
                 
-                🎯 Objectifs:
+                 Objectifs:
                 {{ goal_progress | join('\n') }}
                 
-                📈 Prédiction semaine prochaine: {{ next_week_prediction }} {{ currency }}
+                 Prédiction semaine prochaine: {{ next_week_prediction }} {{ currency }}
             """),
             
             "anomaly_detected": Template("""
-                ⚠️ ANOMALIE REVENUS DÉTECTÉE
+                 ANOMALIE REVENUS DÉTECTÉE
                 
-                📊 Variation inhabituelle détectée:
+                 Variation inhabituelle détectée:
                 {{ anomaly_description }}
                 
-                📈 Données:
+                 Données:
                 - Revenus actuels: {{ current_amount }} {{ currency }}
                 - Revenus attendus: {{ expected_amount }} {{ currency }}
                 - Écart: {{ deviation_percentage }}%
                 
-                🔍 Causes possibles:
+                 Causes possibles:
                 {{ possible_causes | join('\n- ') }}
                 
-                🚨 Action recommandée: {{ recommended_action }}
+                 Action recommandée: {{ recommended_action }}
                 
-                📞 Support: {{ support_contact }}
+                 Support: {{ support_contact }}
             """)
         }
         
@@ -251,6 +251,9 @@ class RevenueNotificationManager:
 
     def _init_payment_providers(self) -> Dict[str, Any]:
         """Initialise les fournisseurs de paiement"""
+
+
+
         return {
             "stripe": {
                 "client": stripe,
@@ -281,6 +284,9 @@ class RevenueNotificationManager:
         Returns:
             Dict contenant les résultats du traitement
         """
+
+
+
         try:
             # Validation et enrichissement transaction
             validated_transaction = await self._validate_and_enrich_transaction(transaction)
@@ -330,6 +336,9 @@ class RevenueNotificationManager:
         goals: List[RevenueGoal]
     ) -> Dict[str, Any]:
         """Configure les objectifs de revenus pour un utilisateur"""
+
+
+
         try:
             saved_goals = []
             

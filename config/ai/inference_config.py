@@ -257,6 +257,9 @@ class InferenceConfig(BaseSettings):
     
     def _get_default_endpoint(self, model_name: str, task_type: str) -> InferenceEndpoint:
         """Get default inference endpoint configuration."""
+
+
+
         return InferenceEndpoint(
             name=f"{model_name}_default",
             model_path=f"/models/{model_name}",
@@ -299,6 +302,9 @@ class InferenceConfig(BaseSettings):
     
     def get_serving_config(self) -> Dict[str, Any]:
         """Get model serving configuration."""
+
+
+
         return {
             "server": {
                 "host": self.MODEL_SERVING_HOST,
@@ -330,6 +336,9 @@ class InferenceConfig(BaseSettings):
     
     def get_caching_config(self) -> Dict[str, Any]:
         """Get caching configuration."""
+
+
+
         return {
             "strategy": self.CACHING_STRATEGY,
             "default_ttl": self.CACHE_TTL_DEFAULT,
@@ -356,6 +365,9 @@ class InferenceConfig(BaseSettings):
     
     def get_monitoring_config(self) -> Dict[str, Any]:
         """Get monitoring and observability configuration."""
+
+
+
         return {
             "metrics": {
                 "enabled": self.METRICS_ENABLED,
@@ -383,6 +395,9 @@ class InferenceConfig(BaseSettings):
     
     def get_load_balancing_config(self) -> Dict[str, Any]:
         """Get load balancing configuration."""
+
+
+
         return {
             "enabled": self.LOAD_BALANCING_ENABLED,
             "strategy": self.LOAD_BALANCER_STRATEGY,
@@ -403,6 +418,9 @@ class InferenceConfig(BaseSettings):
     
     def get_batching_config(self) -> Dict[str, Any]:
         """Get request batching configuration."""
+
+
+
         return {
             "strategy": self.BATCHING_STRATEGY,
             "default_batch_size": self.DEFAULT_BATCH_SIZE,

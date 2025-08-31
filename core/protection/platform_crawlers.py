@@ -186,6 +186,9 @@ class PlatformCrawler:
     
     async def start_monitoring(self, fingerprints: List[ContentFingerprint]) -> List[CrawlResult]:
         """Start monitoring for content violations"""
+
+
+
         try:
             self.status = CrawlerStatus.RUNNING
             results = []
@@ -568,6 +571,9 @@ class PlatformCrawler:
     
     async def _check_content_similarity(self, fingerprint: ContentFingerprint, result: CrawlResult) -> float:
         """Check similarity between original content and crawled result"""
+
+
+
         try:
             # Download and fingerprint the crawled content
             if result.thumbnail_url:
@@ -593,6 +599,9 @@ class PlatformCrawler:
     
     async def _download_content(self, url: str) -> Optional[bytes]:
         """Download content from URL"""
+
+
+
         try:
             if not self._session:
                 self._session = aiohttp.ClientSession()
@@ -608,6 +617,9 @@ class PlatformCrawler:
     
     async def _collect_evidence(self, result: CrawlResult):
         """Collect evidence for potential violation"""
+
+
+
         try:
             if self.config.capture_screenshots:
                 # Take screenshot of the page

@@ -1,11 +1,11 @@
 """
-🔧 Data Pipeline Transformer - IA Influencer Agent Platform Enterprise
+ Data Pipeline Transformer - IA Influencer Agent Platform Enterprise
 =====================================================================
 Module: backend/data_management/transformers/pipeline_transformer.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 =====================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -142,6 +142,9 @@ class PipelineStageBase(ABC):
     
     def get_stage_type(self) -> PipelineStageType:
         """Retourne le type d'étape"""
+
+
+
         return PipelineStageType.TRANSFORMATION
 
 class DataExtractionStage(PipelineStageBase):
@@ -240,6 +243,9 @@ class DataExtractionStage(PipelineStageBase):
     
     def _calculate_size(self, data: Any) -> int:
         """Calcule la taille des données"""
+
+
+
         try:
             if isinstance(data, str):
                 return len(data.encode('utf-8'))
@@ -369,6 +375,9 @@ class DataValidationStage(PipelineStageBase):
     
     def _calculate_size_mb(self, data: Any) -> float:
         """Calcule la taille en MB"""
+
+
+
         try:
             if isinstance(data, str):
                 return len(data.encode('utf-8')) / (1024 * 1024)
@@ -610,6 +619,9 @@ class DataTransformationStage(PipelineStageBase):
     
     def _calculate_size(self, data: Any) -> int:
         """Calcule la taille des données"""
+
+
+
         try:
             if isinstance(data, str):
                 return len(data.encode('utf-8'))
@@ -624,6 +636,9 @@ class DataTransformationStage(PipelineStageBase):
     
     def _calculate_transformation_ratio(self, input_data: Any, output_data: Any) -> float:
         """Calcule le ratio de transformation"""
+
+
+
         try:
             input_size = self._calculate_size(input_data)
             output_size = self._calculate_size(output_data)
@@ -1182,6 +1197,9 @@ class PipelineExecutor:
     
     def _estimate_memory_usage(self, input_data: Any, output_data: Any) -> float:
         """Estime l'usage mémoire"""
+
+
+
         try:
             import sys
             input_size = sys.getsizeof(input_data) if input_data is not None else 0
@@ -1196,6 +1214,9 @@ class PipelineExecutor:
         stage_results: List[StageResult]
     ) -> PipelineMetadata:
         """Crée les métadonnées du pipeline"""
+
+
+
         
         return PipelineMetadata(
             pipeline_name=config.name,

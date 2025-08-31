@@ -938,6 +938,9 @@ class RevenueOptimizationWorkflow:
     
     def _compile_optimization_data(self, context: Dict[str, Any]) -> Dict[str, Any]:
         """Compile comprehensive optimization data."""
+
+
+
         return {
             "pipeline_id": context.get("pipeline_id"),
             "execution_time": datetime.utcnow().isoformat(),

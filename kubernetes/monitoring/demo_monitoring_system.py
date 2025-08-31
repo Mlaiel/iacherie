@@ -81,7 +81,7 @@ class MonitoringSystemDemo:
     async def setup_monitoring_system(self):
         """Setup the complete monitoring system"""
         
-        logger.info("🚀 Setting up IA Influencer Agent Monitoring System...")
+        logger.info(" Setting up IA Influencer Agent Monitoring System...")
         
         # Create enterprise-grade monitoring configuration
         config = MonitoringStackConfig(
@@ -118,7 +118,7 @@ class MonitoringSystemDemo:
         # Initialize specialized collectors
         await self._setup_specialized_collectors()
         
-        logger.info("✅ Monitoring system setup completed successfully!")
+        logger.info(" Monitoring system setup completed successfully!")
         
     async def _setup_specialized_collectors(self):
         """Setup specialized monitoring collectors"""
@@ -145,12 +145,12 @@ class MonitoringSystemDemo:
         )
         await self.intelligence_engine.start_intelligence_processing()
         
-        logger.info("🔧 Specialized collectors initialized")
+        logger.info(" Specialized collectors initialized")
         
     async def start_demo_simulation(self):
         """Start demo data simulation"""
         
-        logger.info("🎬 Starting monitoring demo simulation...")
+        logger.info(" Starting monitoring demo simulation...")
         self.demo_running = True
         
         # Start simulation tasks
@@ -165,10 +165,10 @@ class MonitoringSystemDemo:
         try:
             await asyncio.gather(*simulation_tasks)
         except KeyboardInterrupt:
-            logger.info("🛑 Demo simulation stopped by user")
+            logger.info(" Demo simulation stopped by user")
             self.demo_running = False
         except Exception as e:
-            logger.error(f"❌ Error in demo simulation: {e}")
+            logger.error(f" Error in demo simulation: {e}")
             self.demo_running = False
     
     async def _simulate_ai_fingerprinting(self):
@@ -341,11 +341,11 @@ class MonitoringSystemDemo:
             try:
                 await asyncio.sleep(60)  # Display every minute
                 
-                logger.info("📊 === MONITORING INSIGHTS ===")
+                logger.info(" === MONITORING INSIGHTS ===")
                 
                 # Display system health
                 health_status = await self.monitoring_stack.get_health_status()
-                logger.info(f"🏥 System Health: {health_status['status']} "
+                logger.info(f" System Health: {health_status['status']} "
                            f"({health_status['components_healthy']}/{health_status['components_total']} components healthy)")
                 
                 # Display AI fingerprinting stats
@@ -356,18 +356,18 @@ class MonitoringSystemDemo:
                                       max(stats.get('total_operations', 1), 1) * 100)
                         avg_time = (stats.get('total_time_ms', 0) / 
                                   max(stats.get('operations_count', 1), 1))
-                        logger.info(f"🔍 {fingerprint_type.value}: {success_rate:.1f}% success, "
+                        logger.info(f" {fingerprint_type.value}: {success_rate:.1f}% success, "
                                    f"{avg_time:.1f}ms avg time")
                 
                 # Display revenue overview
                 revenue_overview = await self.revenue_monitor.get_platform_revenue_overview()
-                logger.info(f"💰 Total Platform Revenue: €{revenue_overview['total_platform_revenue']}")
-                logger.info(f"🎨 Active Creators: {revenue_overview['active_creators']}")
+                logger.info(f" Total Platform Revenue: €{revenue_overview['total_platform_revenue']}")
+                logger.info(f" Active Creators: {revenue_overview['active_creators']}")
                 
                 # Display optimization recommendations
                 ai_recommendations = await self.ai_fingerprint_collector.get_optimization_recommendations()
                 if ai_recommendations:
-                    logger.info(f"🚀 AI Optimization Recommendations: {len(ai_recommendations)} items")
+                    logger.info(f" AI Optimization Recommendations: {len(ai_recommendations)} items")
                     for rec in ai_recommendations[:2]:  # Show first 2
                         logger.info(f"   • {rec['type']}: {rec['recommendation']}")
                 
@@ -376,7 +376,7 @@ class MonitoringSystemDemo:
                     intelligence_overview = await self.intelligence_engine.get_platform_intelligence_overview()
                     if intelligence_overview.get('platform_health_score'):
                         overall_score = intelligence_overview['platform_health_score'].get('overall', 0)
-                        logger.info(f"📈 Platform Health Score: {overall_score:.1f}/100")
+                        logger.info(f" Platform Health Score: {overall_score:.1f}/100")
                 
                 logger.info("=" * 50)
                 
@@ -387,7 +387,7 @@ class MonitoringSystemDemo:
     async def demonstrate_monitoring_features(self):
         """Demonstrate specific monitoring features"""
         
-        logger.info("🎯 Demonstrating Advanced Monitoring Features...")
+        logger.info(" Demonstrating Advanced Monitoring Features...")
         
         # Demonstrate manual alert triggering
         await self.monitoring_stack.trigger_alert(
@@ -409,12 +409,12 @@ class MonitoringSystemDemo:
         
         # Get comprehensive system overview
         system_overview = await self.monitoring_stack.get_system_overview()
-        logger.info("📋 System Overview Generated:")
+        logger.info(" System Overview Generated:")
         logger.info(f"   • Monitoring Health: {system_overview.get('monitoring_health', {}).get('status', 'unknown')}")
         logger.info(f"   • Business Metrics Available: {bool(system_overview.get('business_metrics'))}")
         logger.info(f"   • AI Performance Tracked: {bool(system_overview.get('ai_performance'))}")
         
-        logger.info("✅ Advanced features demonstration completed!")
+        logger.info(" Advanced features demonstration completed!")
     
     async def cleanup_demo(self):
         """Cleanup demo resources"""
@@ -438,23 +438,23 @@ class MonitoringSystemDemo:
         if self.monitoring_stack:
             await self.monitoring_stack.stop()
         
-        logger.info("✅ Demo cleanup completed!")
+        logger.info(" Demo cleanup completed!")
 
 
 async def run_monitoring_demo():
     """Run the complete monitoring system demo"""
     
-    print("🌟" + "=" * 70 + "🌟")
-    print("🚀 IA INFLUENCER AGENT - MONITORING SYSTEM DEMO 🚀")
-    print("🌟" + "=" * 70 + "🌟")
+    print("" + "=" * 70 + "")
+    print(" IA INFLUENCER AGENT - MONITORING SYSTEM DEMO ")
+    print("" + "=" * 70 + "")
     print()
     print("Author: Fahed Mlaiel <mlaiel@live.de>")
     print("Industrial-Grade Content Protection Platform Monitoring")
     print()
-    print("⚠️  COPYRIGHT WARNING - Fahed Mlaiel 2025 - ALL RIGHTS RESERVED")
+    print("  COPYRIGHT WARNING - Fahed Mlaiel 2025 - ALL RIGHTS RESERVED")
     print("    Unauthorized use, reproduction, or distribution is strictly prohibited")
     print()
-    print("📊 Demo Features:")
+    print(" Demo Features:")
     print("   • Enterprise-grade monitoring stack")
     print("   • AI fingerprinting performance tracking")
     print("   • Real-time revenue monitoring & optimization")
@@ -475,23 +475,23 @@ async def run_monitoring_demo():
         await demo.demonstrate_monitoring_features()
         
         # Start demo simulation
-        print("▶️  Starting real-time demo simulation...")
+        print("  Starting real-time demo simulation...")
         print("   (Press Ctrl+C to stop the demo)")
         print()
         
         await demo.start_demo_simulation()
         
     except KeyboardInterrupt:
-        print("\n🛑 Demo stopped by user")
+        print("\n Demo stopped by user")
     except Exception as e:
-        print(f"\n❌ Demo error: {e}")
+        print(f"\n Demo error: {e}")
         logger.error(f"Demo error: {e}")
     finally:
         await demo.cleanup_demo()
-        print("\n✅ Demo completed successfully!")
+        print("\n Demo completed successfully!")
         print()
-        print("🎉 Thank you for exploring the IA Influencer Agent Monitoring System!")
-        print("📧 Contact: mlaiel@live.de for enterprise licensing and support")
+        print(" Thank you for exploring the IA Influencer Agent Monitoring System!")
+        print(" Contact: mlaiel@live.de for enterprise licensing and support")
         print()
 
 

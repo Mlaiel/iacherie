@@ -1,5 +1,5 @@
 """
-🎬 YouTube Content Crawler
+ YouTube Content Crawler
 ==========================
 
 Professional YouTube content discovery and monitoring system.
@@ -8,7 +8,7 @@ Integrates YouTube Data API v3 with Selenium for comprehensive crawling.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
+ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
 """
@@ -510,6 +510,9 @@ class YouTubeCrawler(BasePlatformCrawler):
         filters: Optional[Dict[str, Any]] = None
     ) -> List[CrawlResult]:
         """Search using YouTube API."""
+
+
+
         try:
             # Apply filters
             search_params = {}

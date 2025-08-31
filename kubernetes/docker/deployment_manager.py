@@ -1,11 +1,11 @@
 """
-🚀 Docker Deployment Manager - IA-Influencer-Agent Platform
+ Docker Deployment Manager - IA-Influencer-Agent Platform
 ===========================================================
 Expert: Lead Dev IA + DevOps Engineer + Orchestration Specialist
 Creator: Fahed Mlaiel <mlaiel@live.de>
 ===========================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL 
 Tout vol, copie ou utilisation non autorisée de ce code source,
 de ce concept ou de cette propriété intellectuelle sans
 l'autorisation écrite explicite de Fahed Mlaiel est strictement
@@ -161,6 +161,9 @@ class DockerDeploymentManager:
     
     def _generate_infrastructure_services(self) -> Dict[str, Any]:
         """Generate infrastructure services (Redis, Elasticsearch, etc.)"""
+
+
+
         return {
             # Redis Cluster
             "redis": {
@@ -341,34 +344,34 @@ class DockerDeploymentManager:
 
 set -e
 
-echo "🚀 Building IA-Influencer Platform v{self.platform_version}"
+echo " Building IA-Influencer Platform v{self.platform_version}"
 
 # Build all service images
-echo "📦 Building API Gateway..."
+echo " Building API Gateway..."
 docker build -t {self.registry_url}/api-gateway:{self.platform_version} ./api-gateway/
 
-echo "📦 Building Backend Services..."
+echo " Building Backend Services..."
 docker build -t {self.registry_url}/backend-services:{self.platform_version} ./backend-services/
 
-echo "📦 Building AI Engines..."
+echo " Building AI Engines..."
 docker build -t {self.registry_url}/ai-engines:{self.platform_version} ./ai-engines/
 
-echo "📦 Building Fingerprinting Engine..."
+echo " Building Fingerprinting Engine..."
 docker build -t {self.registry_url}/fingerprinting-engine:{self.platform_version} ./fingerprinting-engine/
 
-echo "📦 Building Content Protection..."
+echo " Building Content Protection..."
 docker build -t {self.registry_url}/content-protection:{self.platform_version} ./content-protection/
 
-echo "📦 Building Monetization Engine..."
+echo " Building Monetization Engine..."
 docker build -t {self.registry_url}/monetization-engine:{self.platform_version} ./monetization-engine/
 
-echo "📦 Building Database Master..."
+echo " Building Database Master..."
 docker build -f ./database-cluster/Dockerfile.master -t {self.registry_url}/postgres-master:15.5 ./database-cluster/
 
-echo "📦 Building Database Replica..."
+echo " Building Database Replica..."
 docker build -f ./database-cluster/Dockerfile.replica -t {self.registry_url}/postgres-replica:15.5 ./database-cluster/
 
-echo "✅ All images built successfully!"
+echo " All images built successfully!"
 """
 
         # Deploy script
@@ -378,7 +381,7 @@ echo "✅ All images built successfully!"
 
 set -e
 
-echo "🚀 Deploying IA-Influencer Platform v{self.platform_version}"
+echo " Deploying IA-Influencer Platform v{self.platform_version}"
 
 # Create necessary directories
 mkdir -p logs/{{api-gateway,backend,ai-engines,fingerprinting,protection,monetization,postgres,nginx}}
@@ -398,7 +401,7 @@ chmod -R 755 uploads/
 chmod -R 755 models/
 
 # Deploy infrastructure first
-echo "🔧 Deploying infrastructure services..."
+echo " Deploying infrastructure services..."
 docker-compose -f docker-compose.infrastructure.yml up -d
 
 # Wait for infrastructure to be ready
@@ -406,7 +409,7 @@ echo "⏳ Waiting for infrastructure services..."
 sleep 30
 
 # Deploy application services
-echo "🚀 Deploying application services..."
+echo " Deploying application services..."
 docker-compose -f docker-compose.yml up -d
 
 # Wait for services to be ready
@@ -415,13 +418,13 @@ sleep 60
 
 # Deploy monitoring stack
 if [ "{str(self.enable_monitoring).lower()}" = "true" ]; then
-    echo "📊 Deploying monitoring stack..."
+    echo " Deploying monitoring stack..."
     docker-compose -f docker-compose.monitoring.yml up -d
 fi
 
-echo "✅ Deployment completed successfully!"
-echo "🌐 Platform available at: https://app.ia-influencer.com"
-echo "📊 Monitoring available at: https://monitoring.ia-influencer.com"
+echo " Deployment completed successfully!"
+echo " Platform available at: https://app.ia-influencer.com"
+echo " Monitoring available at: https://monitoring.ia-influencer.com"
 """
 
         # Health check script
@@ -429,7 +432,7 @@ echo "📊 Monitoring available at: https://monitoring.ia-influencer.com"
 # IA-Influencer Platform Health Check Script
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
-echo "🏥 Checking IA-Influencer Platform Health..."
+echo " Checking IA-Influencer Platform Health..."
 
 # Check core services
 services=(
@@ -449,13 +452,13 @@ for service in "${services[@]}"; do
     port="${service#*:}"
     
     if docker exec "$name" curl -f "http://localhost:$port/health" >/dev/null 2>&1; then
-        echo "✅ $name: Healthy"
+        echo " $name: Healthy"
     else
-        echo "❌ $name: Unhealthy"
+        echo " $name: Unhealthy"
     fi
 done
 
-echo "🏥 Health check completed!"
+echo " Health check completed!"
 """
 
         # Backup script
@@ -468,24 +471,24 @@ set -e
 BACKUP_DIR="./backups/$(date +%Y%m%d_%H%M%S)"
 mkdir -p "$BACKUP_DIR"
 
-echo "💾 Starting backup to $BACKUP_DIR..."
+echo " Starting backup to $BACKUP_DIR..."
 
 # Backup database
-echo "📁 Backing up PostgreSQL database..."
+echo " Backing up PostgreSQL database..."
 docker exec postgres-master pg_dump -U ia_user ia_influencer | gzip > "$BACKUP_DIR/database.sql.gz"
 
 # Backup volumes
-echo "📁 Backing up Docker volumes..."
+echo " Backing up Docker volumes..."
 docker run --rm -v ia-influencer_postgres_master_data:/data -v "$PWD/$BACKUP_DIR":/backup alpine tar czf /backup/postgres_data.tar.gz -C /data .
 docker run --rm -v ia-influencer_redis_data:/data -v "$PWD/$BACKUP_DIR":/backup alpine tar czf /backup/redis_data.tar.gz -C /data .
 docker run --rm -v ia-influencer_elasticsearch_data:/data -v "$PWD/$BACKUP_DIR":/backup alpine tar czf /backup/elasticsearch_data.tar.gz -C /data .
 
 # Backup configurations
-echo "📁 Backing up configurations..."
+echo " Backing up configurations..."
 tar czf "$BACKUP_DIR/config.tar.gz" config/
 tar czf "$BACKUP_DIR/ssl.tar.gz" ssl/
 
-echo "✅ Backup completed: $BACKUP_DIR"
+echo " Backup completed: $BACKUP_DIR"
 """
 
         return scripts
@@ -547,11 +550,14 @@ echo "✅ Backup completed: $BACKUP_DIR"
             f.write(self._generate_deployment_readme())
         files_created.append(str(readme_path))
         
-        logger.info(f"✅ Complete deployment configuration saved: {len(files_created)} files created")
+        logger.info(f" Complete deployment configuration saved: {len(files_created)} files created")
         return files_created
     
     def _generate_env_file(self) -> str:
         """Generate environment variables file"""
+
+
+
         return f"""
 # IA-Influencer Platform Environment Configuration
 # Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -628,8 +634,11 @@ SMTP_PASSWORD=your_email_password_here
 
     def _generate_deployment_readme(self) -> str:
         """Generate deployment README"""
+
+
+
         return f"""
-# 🚀 IA-Influencer Platform - Docker Deployment Guide
+#  IA-Influencer Platform - Docker Deployment Guide
 
 ## Expert Team Specialties
 - **Lead Dev IA + Backend Senior**: Architecture & Development
@@ -644,7 +653,7 @@ SMTP_PASSWORD=your_email_password_here
 ## Creator & Copyright
 **Creator**: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️ **AVERTISSEMENT LÉGAL** ⚠️  
+ **AVERTISSEMENT LÉGAL**   
 Tout vol, copie ou utilisation non autorisée de ce code source, de ce concept ou de cette propriété intellectuelle sans l'autorisation écrite explicite de Fahed Mlaiel est strictement interdite et constituera une violation des lois sur le droit d'auteur.
 
 ## Platform Overview
@@ -652,11 +661,11 @@ Tout vol, copie ou utilisation non autorisée de ce code source, de ce concept o
 IA-Influencer v{self.platform_version} is a comprehensive AI-powered platform for content protection and monetization, featuring:
 
 - 🧠 **AI Engines**: Advanced content analysis and processing
-- 🔍 **Fingerprinting Engine**: Multi-format content identification
-- 🛡️ **Content Protection**: Real-time violation detection and monitoring
-- 💰 **Monetization Engine**: Revenue tracking and automated payouts
-- 📊 **Analytics Dashboard**: Comprehensive business intelligence
-- 🔐 **Enterprise Security**: Multi-layer security and compliance
+-  **Fingerprinting Engine**: Multi-format content identification
+-  **Content Protection**: Real-time violation detection and monitoring
+-  **Monetization Engine**: Revenue tracking and automated payouts
+-  **Analytics Dashboard**: Comprehensive business intelligence
+-  **Enterprise Security**: Multi-layer security and compliance
 
 ## Quick Start
 
@@ -788,34 +797,37 @@ Unauthorized use, copying, or distribution is strictly prohibited.
 
     async def deploy_platform(self, output_dir: str) -> bool:
         """Deploy the entire IA-Influencer platform"""
+
+
+
         try:
-            logger.info("🚀 Starting IA-Influencer platform deployment...")
+            logger.info(" Starting IA-Influencer platform deployment...")
             
             # Save all configuration files
             files_created = self.save_deployment_configuration(output_dir)
-            logger.info(f"📝 Configuration files created: {len(files_created)}")
+            logger.info(f" Configuration files created: {len(files_created)}")
             
             # Build all images
-            logger.info("🔨 Building Docker images...")
+            logger.info(" Building Docker images...")
             build_script = Path(output_dir) / "scripts" / "build.sh"
             if build_script.exists():
                 result = subprocess.run([str(build_script)], capture_output=True, text=True)
                 if result.returncode != 0:
-                    logger.error(f"❌ Build failed: {result.stderr}")
+                    logger.error(f" Build failed: {result.stderr}")
                     return False
             
             # Deploy services
-            logger.info("🚀 Deploying services...")
+            logger.info(" Deploying services...")
             deploy_script = Path(output_dir) / "scripts" / "deploy.sh" 
             if deploy_script.exists():
                 result = subprocess.run([str(deploy_script)], capture_output=True, text=True)
                 if result.returncode != 0:
-                    logger.error(f"❌ Deployment failed: {result.stderr}")
+                    logger.error(f" Deployment failed: {result.stderr}")
                     return False
             
-            logger.info("✅ IA-Influencer platform deployed successfully!")
+            logger.info(" IA-Influencer platform deployed successfully!")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Deployment failed: {e}")
+            logger.error(f" Deployment failed: {e}")
             return False

@@ -363,6 +363,9 @@ class ProtocolAdapter(ABC):
     
     async def health_check(self) -> bool:
         """Perform health check on the connection."""
+
+
+
         try:
             if self.config.protocol in [ProtocolType.HTTP, ProtocolType.HTTPS]:
                 response = await self.send_request("HEAD", "/health")
@@ -396,6 +399,9 @@ class HTTPAdapter(ProtocolAdapter):
     
     async def connect(self) -> bool:
         """Initialize HTTP session."""
+
+
+
         try:
             timeout = aiohttp.ClientTimeout(total=self.config.timeout)
             connector = aiohttp.TCPConnector(
@@ -502,18 +508,30 @@ class HTTPAdapter(ProtocolAdapter):
     
     async def get(self, path: str, **kwargs) -> ProtocolResponse:
         """Send GET request."""
+
+
+
         return await self.send_request('GET', path, **kwargs)
     
     async def post(self, path: str, data: Any = None, **kwargs) -> ProtocolResponse:
         """Send POST request."""
+
+
+
         return await self.send_request('POST', path, data, **kwargs)
     
     async def put(self, path: str, data: Any = None, **kwargs) -> ProtocolResponse:
         """Send PUT request."""
+
+
+
         return await self.send_request('PUT', path, data, **kwargs)
     
     async def delete(self, path: str, **kwargs) -> ProtocolResponse:
         """Send DELETE request."""
+
+
+
         return await self.send_request('DELETE', path, **kwargs)
 
 class HTTPSAdapter(HTTPAdapter):
@@ -527,6 +545,9 @@ class HTTPSAdapter(HTTPAdapter):
     
     async def connect(self) -> bool:
         """Initialize HTTPS session with SSL."""
+
+
+
         try:
             # Setup SSL context
             ssl_context = None
@@ -582,6 +603,9 @@ class WebSocketSecureAdapter(ProtocolAdapter):
     
     async def connect(self) -> bool:
         """Connect to secure WebSocket."""
+
+
+
         try:
             # Setup SSL context
             ssl_context = None
@@ -687,6 +711,9 @@ class WebSocketSecureAdapter(ProtocolAdapter):
     
     async def _message_listener(self):
         """Listen for incoming WebSocket messages."""
+
+
+
         try:
             async for message in self.websocket:
                 try:
@@ -716,6 +743,9 @@ class WebSocketSecureAdapter(ProtocolAdapter):
     
     async def send_message(self, message: Union[str, Dict]) -> ProtocolResponse:
         """Send raw message via WebSocket."""
+
+
+
         return await self.send_request('SEND', '', message)
 
 class FTPAdapter(ProtocolAdapter):
@@ -733,6 +763,9 @@ class FTPAdapter(ProtocolAdapter):
     
     async def connect(self) -> bool:
         """Connect to FTP server."""
+
+
+
         try:
             self.ftp_client = aioftp.Client()
             
@@ -849,14 +882,23 @@ class FTPAdapter(ProtocolAdapter):
     
     async def list_directory(self, path: str = '.') -> ProtocolResponse:
         """List directory contents."""
+
+
+
         return await self.send_request('LIST', path)
     
     async def download_file(self, remote_path: str, local_path: str) -> ProtocolResponse:
         """Download file from FTP server."""
+
+
+
         return await self.send_request('DOWNLOAD', remote_path, local_path=local_path)
     
     async def upload_file(self, local_path: str, remote_path: str) -> ProtocolResponse:
         """Upload file to FTP server."""
+
+
+
         return await self.send_request('UPLOAD', remote_path, local_path=local_path)
 
 class SFTPAdapter(ProtocolAdapter):
@@ -875,6 +917,9 @@ class SFTPAdapter(ProtocolAdapter):
     
     async def connect(self) -> bool:
         """Connect to SFTP server."""
+
+
+
         try:
             # Prepare authentication
             auth_kwargs = {}
@@ -1009,6 +1054,9 @@ class TCPAdapter(ProtocolAdapter):
     
     async def connect(self) -> bool:
         """Connect to TCP server."""
+
+
+
         try:
             self.reader, self.writer = await asyncio.open_connection(
                 self.config.host,
@@ -1118,10 +1166,16 @@ class TCPAdapter(ProtocolAdapter):
     
     async def send_raw(self, data: bytes, **kwargs) -> ProtocolResponse:
         """Send raw TCP data."""
+
+
+
         return await self.send_request('SEND', '', data, **kwargs)
     
     async def receive_data(self, buffer_size: int = 1024, timeout: float = 5.0) -> Optional[bytes]:
         """Receive data from TCP connection."""
+
+
+
         try:
             data = await asyncio.wait_for(
                 self.reader.read(buffer_size),

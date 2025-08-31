@@ -345,6 +345,9 @@ class FileProcessingConfig:
     
     def get_supported_formats(self) -> Dict[str, List[str]]:
         """Get all supported input formats by content type."""
+
+
+
         return {
             'audio': self.audio_config.supported_input_formats,
             'video': self.video_config.supported_input_formats,
@@ -376,6 +379,9 @@ class FileProcessingConfig:
     
     def get_processing_priority(self, content_type: str) -> int:
         """Get processing priority for content type."""
+
+
+
         return self.priority_levels.get(content_type, 5)  # Default priority
     
     def get_max_processing_time(self, content_type: str, file_size_mb: float) -> int:
@@ -467,6 +473,9 @@ class FileProcessingConfig:
     
     def export_configuration(self) -> Dict[str, Any]:
         """Export processing configuration to JSON-serializable format."""
+
+
+
         return {
             'max_file_size_mb': self.max_file_size_mb,
             'processing_timeout_seconds': self.processing_timeout_seconds,

@@ -48,7 +48,7 @@ def test_main_py_starts():
     
     # Check if process is still running (no immediate crash)
     if proc.poll() is None:
-        print("✅ SUCCESS: main.py started and is running")
+        print(" SUCCESS: main.py started and is running")
         
         # Terminate the process
         proc.terminate()
@@ -60,7 +60,7 @@ def test_main_py_starts():
         
         return True
     else:
-        print("❌ FAILED: main.py exited immediately")
+        print(" FAILED: main.py exited immediately")
         stdout, _ = proc.communicate()
         print(f"Output: {stdout}")
         return False
@@ -88,18 +88,18 @@ def test_health_endpoint():
             if response.status_code == 200:
                 data = response.json()
                 if "status" in data and "message" in data:
-                    print("✅ SUCCESS: /health endpoint responds correctly")
+                    print(" SUCCESS: /health endpoint responds correctly")
                     print(f"   Response: {data}")
                     return True
                 else:
-                    print("❌ FAILED: /health endpoint response missing required fields")
+                    print(" FAILED: /health endpoint response missing required fields")
                     print(f"   Response: {data}")
                     return False
             else:
-                print(f"❌ FAILED: /health endpoint returned status {response.status_code}")
+                print(f" FAILED: /health endpoint returned status {response.status_code}")
                 return False
         except requests.RequestException as e:
-            print(f"❌ FAILED: Could not connect to /health endpoint: {e}")
+            print(f" FAILED: Could not connect to /health endpoint: {e}")
             return False
     
     finally:
@@ -122,7 +122,7 @@ def test_configuration():
         # Test that we can at least import and run basic functionality
         from main import app, settings
         
-        print("✅ SUCCESS: Basic imports work")
+        print(" SUCCESS: Basic imports work")
         print(f"   App title: {app.title}")
         print(f"   Environment: {settings.app.environment}")
         print(f"   Host: {settings.app.host}")
@@ -131,12 +131,12 @@ def test_configuration():
         return True
         
     except Exception as e:
-        print(f"❌ FAILED: Configuration import failed: {e}")
+        print(f" FAILED: Configuration import failed: {e}")
         return False
 
 def main():
     """Run all tests"""
-    print("🚀 Starting Application Startup Tests")
+    print(" Starting Application Startup Tests")
     print("=" * 50)
     
     tests = [
@@ -148,31 +148,31 @@ def main():
     results = []
     
     for test_name, test_func in tests:
-        print(f"\n📋 Test: {test_name}")
+        print(f"\n Test: {test_name}")
         print("-" * 30)
         success = test_func()
         results.append((test_name, success))
         print()
     
     # Summary
-    print("📊 TEST SUMMARY")
+    print(" TEST SUMMARY")
     print("=" * 50)
     all_passed = True
     
     for test_name, success in results:
-        status = "✅ PASS" if success else "❌ FAIL"
+        status = " PASS" if success else " FAIL"
         print(f"{status} {test_name}")
         if not success:
             all_passed = False
     
     print("\n" + "=" * 50)
     if all_passed:
-        print("🎉 ALL TESTS PASSED! Application meets requirements:")
-        print("   ✅ python main.py starts without error")
-        print("   ✅ API responds on /health")
-        print("   ✅ Tests pass without error configuration")
+        print(" ALL TESTS PASSED! Application meets requirements:")
+        print("    python main.py starts without error")
+        print("    API responds on /health")
+        print("    Tests pass without error configuration")
     else:
-        print("💥 SOME TESTS FAILED!")
+        print(" SOME TESTS FAILED!")
         sys.exit(1)
 
 if __name__ == "__main__":

@@ -52,7 +52,7 @@ def test_security_components():
     for email in invalid_emails:
         assert validate_email(email) is False
     
-    print("✓ Security components tests passed")
+    print(" Security components tests passed")
 
 
 async def test_business_logic():
@@ -109,7 +109,7 @@ async def test_business_logic():
     assert compatibility > 0
     assert compatibility < 1  # Reasonable compatibility score
     
-    print("✓ Business logic tests passed")
+    print(" Business logic tests passed")
 
 
 async def test_fingerprinting_simulation():
@@ -141,7 +141,7 @@ async def test_fingerprinting_simulation():
     fingerprint3 = generate_fingerprint(different_features)
     assert fingerprint1 != fingerprint3
     
-    print("✓ Fingerprinting simulation tests passed")
+    print(" Fingerprinting simulation tests passed")
 
 
 async def test_api_simulation():
@@ -190,7 +190,7 @@ async def test_api_simulation():
     assert is_valid is False
     assert len(errors) > 0
     
-    print("✓ API simulation tests passed")
+    print(" API simulation tests passed")
 
 
 async def test_workflow_simulation():
@@ -242,7 +242,7 @@ async def test_workflow_simulation():
     assert 'fingerprint' in workflow_result['results']['fingerprinting']
     assert workflow_result['results']['protection_setup']['status'] == 'active'
     
-    print("✓ Workflow simulation tests passed")
+    print(" Workflow simulation tests passed")
 
 
 async def main():
@@ -257,11 +257,11 @@ async def main():
     await test_workflow_simulation()
     
     print("\n=== All Critical Tests Completed Successfully ===")
-    print("✓ Security Components: PASSED")
-    print("✓ Business Logic: PASSED")
-    print("✓ Fingerprinting: PASSED")
-    print("✓ API Endpoints: PASSED")
-    print("✓ Workflow Integration: PASSED")
+    print(" Security Components: PASSED")
+    print(" Business Logic: PASSED")
+    print(" Fingerprinting: PASSED")
+    print(" API Endpoints: PASSED")
+    print(" Workflow Integration: PASSED")
     print("\nTest Coverage Summary:")
     print("- Authentication & Authorization")
     print("- Input Validation & Security")

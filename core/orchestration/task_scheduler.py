@@ -7,7 +7,7 @@ and intelligent load balancing for complex multi-tenant content processing workf
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -238,6 +238,9 @@ class TaskScheduler:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             if not asyncio.iscoroutinefunction(executor_func):
                 raise ValueError("Executor must be an async function")
@@ -269,6 +272,9 @@ class TaskScheduler:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             # Validate task
             if not await self._validate_task(task):
@@ -567,6 +573,9 @@ class TaskScheduler:
         decision: SchedulingDecision
     ) -> None:
         """Asynchronous task execution wrapper."""
+
+
+
         try:
             # Get executor function
             executor_func = self.task_executors[decision.executor_id]
@@ -644,6 +653,9 @@ class TaskScheduler:
         decision: SchedulingDecision
     ) -> None:
         """Cleanup after task execution."""
+
+
+
         try:
             # Release resources
             await self._release_task_resources(task, decision.executor_id)
@@ -750,6 +762,9 @@ class TaskScheduler:
     
     async def _validate_task(self, task: ScheduledTask) -> bool:
         """Validate task definition."""
+
+
+
         try:
             if not task.task_id or not task.executor:
                 return False
@@ -861,6 +876,9 @@ class TaskScheduler:
     
     async def cancel_task(self, task_id: str) -> bool:
         """Cancel a scheduled or running task."""
+
+
+
         try:
             # Remove from scheduled tasks
             if task_id in self.scheduled_tasks:
@@ -902,6 +920,9 @@ class TaskScheduler:
     
     async def get_scheduling_stats(self) -> Dict[str, Any]:
         """Get scheduler performance statistics."""
+
+
+
         return {
             **self.scheduling_stats,
             'active_tasks': len(self.active_executions),

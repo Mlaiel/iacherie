@@ -6,7 +6,7 @@ Provides Terraform, Ansible, Pulumi, and Helm templates for automated infrastruc
 
 Project Owner: Fahed Mlaiel (mlaiel@live.de)
 
-⚠️ CRITICAL LEGAL WARNING:
+ CRITICAL LEGAL WARNING:
 This software and all associated intellectual property belong exclusively to Fahed Mlaiel.
 Any unauthorized use, reproduction, distribution, or appropriation of this code, concept, 
 or business idea without explicit written permission from Fahed Mlaiel (mlaiel@live.de) 
@@ -125,6 +125,9 @@ class TerraformTemplate(BaseTemplate):
     
     def _get_terraform_main_template(self) -> str:
         """Get main Terraform template"""
+
+
+
         return '''
 # IA Influencer Agent Infrastructure - Terraform Configuration
 # Generated for: {{ deployment_target }} environment
@@ -685,6 +688,9 @@ output "s3_buckets" {
     
     def _prepare_terraform_variables(self) -> Dict[str, Any]:
         """Prepare variables for Terraform template"""
+
+
+
         return {
             'deployment_target': self.config.deployment_target.value,
             'cloud_provider': self.config.cloud_provider,
@@ -749,6 +755,9 @@ class AnsiblePlaybook(BaseTemplate):
     
     def _get_ansible_playbook_template(self) -> str:
         """Get main Ansible playbook template"""
+
+
+
         return '''---
 # IA Influencer Agent Platform Configuration Playbook
 # Environment: {{ environment }}
@@ -999,6 +1008,9 @@ class AnsiblePlaybook(BaseTemplate):
     
     def _prepare_ansible_variables(self) -> Dict[str, Any]:
         """Prepare variables for Ansible playbook"""
+
+
+
         return {
             'environment': self.config.deployment_target.value,
             'deployment_target': self.config.deployment_target.value,
@@ -1050,6 +1062,9 @@ class HelmChart(BaseTemplate):
     
     def _generate_chart_yaml(self) -> str:
         """Generate Chart.yaml for Helm chart"""
+
+
+
         return '''apiVersion: v2
 name: ia-influencer-platform
 description: IA Influencer Agent + Content Protection Platform
@@ -1096,6 +1111,9 @@ dependencies:
     
     def _generate_values_yaml(self) -> str:
         """Generate values.yaml for Helm chart"""
+
+
+
         return f'''# IA Influencer Platform Helm Chart Values
 # Environment: {self.config.deployment_target.value}
 
@@ -1350,6 +1368,9 @@ serviceMesh:
     
     def _generate_kubernetes_templates(self) -> Dict[str, str]:
         """Generate Kubernetes template files"""
+
+
+
         return {
             'deployment.yaml': self._get_deployment_template(),
             'service.yaml': self._get_service_template(),
@@ -1364,6 +1385,9 @@ serviceMesh:
     
     def _get_deployment_template(self) -> str:
         """Get Kubernetes deployment template"""
+
+
+
         return '''apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -1575,6 +1599,9 @@ def create_default_config(name: str, template_type: TemplateType,
                          deployment_target: DeploymentTarget, 
                          cloud_provider: str, region: str) -> TemplateConfig:
     """Create a default template configuration"""
+
+
+
     return TemplateConfig(
         name=name,
         template_type=template_type,

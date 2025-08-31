@@ -1,15 +1,15 @@
 """
-🚀 Workflow Validator - IA Influencer Agent Platform Enterprise
+ Workflow Validator - IA Influencer Agent Platform Enterprise
 ==============================================================
 Module: backend/data_management/validation/workflow_validator.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ==============================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 VALIDATION WORKFLOW MULTI-CRÉATEURS
+ VALIDATION WORKFLOW MULTI-CRÉATEURS
 Validation complète des workflows de création de contenu
 - Workflows spécialisés par type de créateur
 - Validation étapes métier multi-formats
@@ -140,6 +140,9 @@ class WorkflowOrchestrator:
     
     def _initialize_creator_workflows(self) -> Dict[CreatorType, Dict[str, Any]]:
         """Initialise les configurations de workflow par créateur"""
+
+
+
         return {
             CreatorType.MUSICIAN: {
                 'priority_steps': [
@@ -808,10 +811,16 @@ class WorkflowValidator:
     
     def get_active_workflows(self) -> Dict[str, WorkflowResult]:
         """Retourne les workflows actifs"""
+
+
+
         return self.orchestrator._active_workflows.copy()
     
     def get_workflow_status(self, workflow_id: str) -> Optional[WorkflowResult]:
         """Retourne le status d'un workflow spécifique"""
+
+
+
         return self.orchestrator._active_workflows.get(workflow_id)
 
 # Export des classes principales

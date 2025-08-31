@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 """
-🔒 CONTENT PROTECTION MANAGER - ENTERPRISE AI-POWERED CONTENT SECURITY SYSTEM
+ CONTENT PROTECTION MANAGER - ENTERPRISE AI-POWERED CONTENT SECURITY SYSTEM
 ===============================================================================
 
 Ultra-advanced content protection and rights management system featuring real-time
@@ -10,19 +10,19 @@ monitoring, automated DMCA processing, AI-powered violation detection, and
 comprehensive legal automation with enterprise-grade security and blockchain
 evidence storage for maximum content creator protection.
 
-🎯 ENTERPRISE CONTENT PROTECTION FEATURES :
-- ✅ Real-time Global Content Monitoring (24/7 surveillance)
-- ✅ Automated DMCA Takedown Processing & Legal Documentation
-- ✅ AI-Powered Similarity Detection (>99.5% accuracy)
-- ✅ Multi-Platform Surveillance (200+ platforms monitored)
-- ✅ Blockchain-based Proof of Ownership & Evidence Chain
-- ✅ Revenue Loss Prevention & Recovery Automation
-- ✅ Legal Evidence Collection & Court-Ready Documentation
-- ✅ Cross-Platform Analytics & Violation Intelligence
-- ✅ Automated Copyright Registration & Rights Management
-- ✅ Instant Violation Alerts & Emergency Response System
+ ENTERPRISE CONTENT PROTECTION FEATURES :
+-  Real-time Global Content Monitoring (24/7 surveillance)
+-  Automated DMCA Takedown Processing & Legal Documentation
+-  AI-Powered Similarity Detection (>99.5% accuracy)
+-  Multi-Platform Surveillance (200+ platforms monitored)
+-  Blockchain-based Proof of Ownership & Evidence Chain
+-  Revenue Loss Prevention & Recovery Automation
+-  Legal Evidence Collection & Court-Ready Documentation
+-  Cross-Platform Analytics & Violation Intelligence
+-  Automated Copyright Registration & Rights Management
+-  Instant Violation Alerts & Emergency Response System
 
-🔧 CUTTING-EDGE PROTECTION TECHNOLOGY :
+ CUTTING-EDGE PROTECTION TECHNOLOGY :
 - AI Security : CLIP + Vision Transformers + Multi-Modal Detection
 - Real-time Monitoring : WebSocket + Event Streaming + Instant Alerts
 - Legal Automation : DMCA APIs + Court Documentation + Evidence Chain
@@ -31,14 +31,14 @@ evidence storage for maximum content creator protection.
 - Performance : <5s global detection, >99.5% violation accuracy
 - Coverage : 200+ platforms, 24/7 automated surveillance
 
-⚡ COMPREHENSIVE PROTECTION WORKFLOW :
+ COMPREHENSIVE PROTECTION WORKFLOW :
 Content Registration → AI Fingerprint Generation → Blockchain Ownership Proof → 
 Global Platform Monitoring → Real-time Violation Detection → Evidence Collection → 
 Legal Documentation → DMCA Automation → Takedown Processing → 
 Revenue Recovery → Court-Ready Evidence → Compliance Monitoring → 
 Protection Analytics → Continuous Surveillance → Rights Enforcement
 
-🏗️ DEVELOPED BY ELITE CONTENT SECURITY SPECIALISTS :
+ DEVELOPED BY ELITE CONTENT SECURITY SPECIALISTS :
 Lead Content Security Engineer : Fahed Mlaiel <mlaiel@live.de>
 - Legal Tech Architect : DMCA automation & rights management systems
 - AI Security Expert : Violation detection & content fingerprinting
@@ -46,7 +46,7 @@ Lead Content Security Engineer : Fahed Mlaiel <mlaiel@live.de>
 - Legal Automation Engineer : Court documentation & compliance systems
 - Security Operations Specialist : 24/7 monitoring & incident response
 
-⚠️  STRICT INTELLECTUAL PROPERTY WARNING :
+  STRICT INTELLECTUAL PROPERTY WARNING :
 This content protection system is the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 UNAUTHORIZED USE IS STRICTLY PROHIBITED AND LEGALLY PROSECUTED.
 Contact: mlaiel@live.de for enterprise licensing.
@@ -146,12 +146,12 @@ class PlatformType(Enum):
 
 class ContentProtectionManager:
     """
-    🔒 GESTIONNAIRE DE PROTECTION DE CONTENU ULTRA-AVANCÉ
+     GESTIONNAIRE DE PROTECTION DE CONTENU ULTRA-AVANCÉ
     
     Système de protection en temps réel utilisant l'IA pour détecter,
     documenter et traiter automatiquement les violations de droits d'auteur.
     
-    ⚡ CARACTÉRISTIQUES TECHNIQUES :
+     CARACTÉRISTIQUES TECHNIQUES :
     - Surveillance temps réel multi-plateforme
     - Détection IA avec >95% de précision
     - Collecte automatique de preuves légales
@@ -210,6 +210,9 @@ class ContentProtectionManager:
     
     async def initialize(self):
         """Initialisation asynchrone des connexions et services."""
+
+
+
         try:
             # Database connections
             self.redis_client = await get_redis_client()
@@ -224,14 +227,17 @@ class ContentProtectionManager:
             # Start monitoring services
             await self._start_monitoring_services()
             
-            logger.info("✅ Content Protection Manager initialized successfully")
+            logger.info(" Content Protection Manager initialized successfully")
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize protection manager: {e}")
+            logger.error(f" Failed to initialize protection manager: {e}")
             raise ProtectionError(f"Initialization failed: {e}")
     
     def _initialize_ai_models(self):
         """Initialisation des modèles IA pour la détection."""
+
+
+
         try:
             # CLIP for image/video similarity
             self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
@@ -243,14 +249,17 @@ class ContentProtectionManager:
             # Initialize FAISS index for fast similarity search
             self.similarity_index = faiss.IndexFlatIP(512)  # 512-dimensional vectors
             
-            logger.info("✅ AI models initialized for content protection")
+            logger.info(" AI models initialized for content protection")
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize AI models: {e}")
+            logger.error(f" Failed to initialize AI models: {e}")
             raise ProtectionError(f"AI model initialization failed: {e}")
     
     async def _initialize_blockchain(self):
         """Initialisation de la connexion blockchain pour les preuves."""
+
+
+
         try:
             # Connect to Ethereum network (or other blockchain)
             self.web3 = Web3(Web3.HTTPProvider(self.settings.BLOCKCHAIN_RPC_URL))
@@ -262,10 +271,10 @@ class ContentProtectionManager:
                     abi=self._load_contract_abi()
                 )
             
-            logger.info("✅ Blockchain connection initialized")
+            logger.info(" Blockchain connection initialized")
             
         except Exception as e:
-            logger.warning(f"⚠️ Blockchain initialization failed: {e}")
+            logger.warning(f" Blockchain initialization failed: {e}")
             self.web3 = None
             self.evidence_contract = None
     
@@ -277,7 +286,7 @@ class ContentProtectionManager:
         protection_level: str = "standard"
     ) -> Dict[str, Any]:
         """
-        🔒 ENREGISTREMENT DE CONTENU POUR PROTECTION
+         ENREGISTREMENT DE CONTENU POUR PROTECTION
         
         Enregistre un contenu dans le système de protection avec
         surveillance automatique et détection de violations.
@@ -291,6 +300,9 @@ class ContentProtectionManager:
         Returns:
             Dict contenant les détails de l'enregistrement
         """
+
+
+
         try:
             # Create protection record
             protection_record = {
@@ -336,7 +348,7 @@ class ContentProtectionManager:
             
             self.metrics.increment('content_registrations_total')
             
-            logger.info(f"✅ Content registered for protection: {protection_record['id']}")
+            logger.info(f" Content registered for protection: {protection_record['id']}")
             
             return {
                 'protection_id': protection_record['id'],
@@ -347,7 +359,7 @@ class ContentProtectionManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Content registration failed: {e}")
+            logger.error(f" Content registration failed: {e}")
             raise ProtectionError(f"Registration failed: {e}")
     
     def _get_monitoring_frequency(self, protection_level: str) -> int:
@@ -362,6 +374,9 @@ class ContentProtectionManager:
     
     async def _schedule_content_monitoring(self, protection_record: Dict[str, Any]):
         """Planifie la surveillance automatique du contenu."""
+
+
+
         try:
             # Create Celery task for monitoring
             monitoring_task = {
@@ -376,10 +391,10 @@ class ContentProtectionManager:
             # This would be implemented with Celery beat or similar
             await self._create_monitoring_task(monitoring_task)
             
-            logger.info(f"✅ Monitoring scheduled for {protection_record['id']}")
+            logger.info(f" Monitoring scheduled for {protection_record['id']}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to schedule monitoring: {e}")
+            logger.error(f" Failed to schedule monitoring: {e}")
             raise ProtectionError(f"Monitoring schedule failed: {e}")
     
     async def scan_platforms_for_violations(
@@ -388,7 +403,7 @@ class ContentProtectionManager:
         platforms: Optional[List[PlatformType]] = None
     ) -> Dict[str, Any]:
         """
-        🔍 SCAN DES PLATEFORMES POUR VIOLATIONS
+         SCAN DES PLATEFORMES POUR VIOLATIONS
         
         Scanne les plateformes spécifiées à la recherche de violations
         du contenu protégé.
@@ -400,6 +415,9 @@ class ContentProtectionManager:
         Returns:
             Dict avec les résultats du scan
         """
+
+
+
         try:
             # Get protection record
             redis_key = f"protection:{protection_id}"
@@ -469,12 +487,12 @@ class ContentProtectionManager:
             self.metrics.increment('platform_scans_total')
             self.metrics.gauge('violations_detected_total', scan_results['total_violations'])
             
-            logger.info(f"✅ Platform scan completed: {scan_results['total_violations']} violations found")
+            logger.info(f" Platform scan completed: {scan_results['total_violations']} violations found")
             
             return scan_results
             
         except Exception as e:
-            logger.error(f"❌ Platform scan failed: {e}")
+            logger.error(f" Platform scan failed: {e}")
             raise ViolationDetectionError(f"Platform scan failed: {e}")
     
     async def _scan_single_platform(
@@ -499,7 +517,7 @@ class ContentProtectionManager:
             return violations
             
         except Exception as e:
-            logger.error(f"❌ {platform.value} scan failed: {e}")
+            logger.error(f" {platform.value} scan failed: {e}")
             return []
     
     async def _scan_youtube(
@@ -558,7 +576,7 @@ class ContentProtectionManager:
             return violations
             
         except Exception as e:
-            logger.error(f"❌ YouTube scan error: {e}")
+            logger.error(f" YouTube scan error: {e}")
             return []
     
     async def _scan_instagram(
@@ -579,7 +597,7 @@ class ContentProtectionManager:
             return violations
             
         except Exception as e:
-            logger.error(f"❌ Instagram scan error: {e}")
+            logger.error(f" Instagram scan error: {e}")
             return []
     
     async def _scan_tiktok(
@@ -599,7 +617,7 @@ class ContentProtectionManager:
             return violations
             
         except Exception as e:
-            logger.error(f"❌ TikTok scan error: {e}")
+            logger.error(f" TikTok scan error: {e}")
             return []
     
     async def _scan_generic_web(
@@ -658,7 +676,7 @@ class ContentProtectionManager:
             return violations
             
         except Exception as e:
-            logger.error(f"❌ Generic web scan error: {e}")
+            logger.error(f" Generic web scan error: {e}")
             return []
     
     def _generate_search_queries(self, metadata: Dict[str, Any]) -> List[str]:
@@ -689,6 +707,9 @@ class ContentProtectionManager:
         content_type: str
     ) -> float:
         """Calcule la similarité entre le contenu candidat et l'empreinte."""
+
+
+
         try:
             if content_type == 'video':
                 # For video, analyze title and description similarity
@@ -711,7 +732,7 @@ class ContentProtectionManager:
             return 0.0
             
         except Exception as e:
-            logger.error(f"❌ Similarity calculation failed: {e}")
+            logger.error(f" Similarity calculation failed: {e}")
             return 0.0
     
     async def _process_detected_violations(
@@ -720,6 +741,9 @@ class ContentProtectionManager:
         violations: List[Dict[str, Any]]
     ):
         """Traite les violations détectées."""
+
+
+
         try:
             for violation in violations:
                 # Create violation record
@@ -747,14 +771,17 @@ class ContentProtectionManager:
                 if severity in [ViolationSeverity.HIGH, ViolationSeverity.CRITICAL]:
                     await self._trigger_immediate_action(violation_record)
             
-            logger.info(f"✅ Processed {len(violations)} violations")
+            logger.info(f" Processed {len(violations)} violations")
             
         except Exception as e:
-            logger.error(f"❌ Violation processing failed: {e}")
+            logger.error(f" Violation processing failed: {e}")
             raise ProtectionError(f"Violation processing failed: {e}")
     
     async def _collect_violation_evidence(self, violation_record: Dict[str, Any]):
         """Collecte automatique de preuves pour violation."""
+
+
+
         try:
             evidence = {
                 'violation_id': violation_record['id'],
@@ -790,14 +817,17 @@ class ContentProtectionManager:
             violation_record['evidence_collected'] = True
             await self._update_violation_record(violation_record)
             
-            logger.info(f"✅ Evidence collected for violation {violation_record['id']}")
+            logger.info(f" Evidence collected for violation {violation_record['id']}")
             
         except Exception as e:
-            logger.error(f"❌ Evidence collection failed: {e}")
+            logger.error(f" Evidence collection failed: {e}")
             raise EvidenceCollectionError(f"Evidence collection failed: {e}")
     
     async def _capture_screenshot(self, url: str) -> Optional[str]:
         """Capture une capture d'écran de l'URL violatrice."""
+
+
+
         try:
             # This would typically use Selenium or Playwright
             # Placeholder implementation
@@ -805,11 +835,14 @@ class ContentProtectionManager:
             return f"screenshots/{uuid.uuid4()}.png"
             
         except Exception as e:
-            logger.error(f"❌ Screenshot capture failed: {e}")
+            logger.error(f" Screenshot capture failed: {e}")
             return None
     
     async def _archive_page_content(self, url: str) -> Optional[str]:
         """Archive le contenu de la page violatrice."""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
@@ -820,7 +853,7 @@ class ContentProtectionManager:
             return None
             
         except Exception as e:
-            logger.error(f"❌ Page archiving failed: {e}")
+            logger.error(f" Page archiving failed: {e}")
             return None
     
     def _assess_violation_severity(self, violation: Dict[str, Any]) -> ViolationSeverity:
@@ -842,6 +875,9 @@ class ContentProtectionManager:
     
     async def _trigger_immediate_action(self, violation_record: Dict[str, Any]):
         """Déclenche une action immédiate pour violations critiques."""
+
+
+
         try:
             # Send DMCA takedown notice
             await self._send_dmca_takedown(violation_record)
@@ -853,14 +889,17 @@ class ContentProtectionManager:
             if self.settings.AUTO_LEGAL_ESCALATION:
                 await self._escalate_to_legal(violation_record)
             
-            logger.info(f"✅ Immediate action triggered for {violation_record['id']}")
+            logger.info(f" Immediate action triggered for {violation_record['id']}")
             
         except Exception as e:
-            logger.error(f"❌ Immediate action failed: {e}")
+            logger.error(f" Immediate action failed: {e}")
             raise LegalActionError(f"Immediate action failed: {e}")
     
     async def _send_dmca_takedown(self, violation_record: Dict[str, Any]):
         """Envoie un avis de retrait DMCA automatique."""
+
+
+
         try:
             # Get platform-specific DMCA contact information
             platform_contacts = {
@@ -892,7 +931,7 @@ class ContentProtectionManager:
                 await self._store_legal_action(legal_action)
             
         except Exception as e:
-            logger.error(f"❌ DMCA takedown failed: {e}")
+            logger.error(f" DMCA takedown failed: {e}")
             raise LegalActionError(f"DMCA takedown failed: {e}")
     
     def _generate_dmca_notice(self, violation_record: Dict[str, Any]) -> str:
@@ -943,10 +982,13 @@ IA-Influencer-Agent Legal Team
         time_range: str = '30d'
     ) -> Dict[str, Any]:
         """
-        📊 TABLEAU DE BORD DE PROTECTION
+         TABLEAU DE BORD DE PROTECTION
         
         Fournit un aperçu complet de l'état de protection du contenu.
         """
+
+
+
         try:
             # Calculate time range
             time_ranges = {
@@ -1026,11 +1068,14 @@ IA-Influencer-Agent Legal Team
             return dashboard
             
         except Exception as e:
-            logger.error(f"❌ Dashboard generation failed: {e}")
+            logger.error(f" Dashboard generation failed: {e}")
             raise ProtectionError(f"Dashboard generation failed: {e}")
     
     async def _get_recent_alerts(self, user_id: int, limit: int) -> List[Dict[str, Any]]:
         """Récupère les alertes récentes pour l'utilisateur."""
+
+
+
         try:
             query = {
                 "query": {
@@ -1059,12 +1104,15 @@ IA-Influencer-Agent Legal Team
             return alerts
             
         except Exception as e:
-            logger.error(f"❌ Recent alerts query failed: {e}")
+            logger.error(f" Recent alerts query failed: {e}")
             return []
     
     # Helper methods for data storage
     async def _store_violation_record(self, violation: Dict[str, Any]):
         """Stocke un enregistrement de violation."""
+
+
+
         try:
             await self.elasticsearch_client.index(
                 index="violations",
@@ -1072,10 +1120,13 @@ IA-Influencer-Agent Legal Team
                 body=violation
             )
         except Exception as e:
-            logger.error(f"❌ Failed to store violation: {e}")
+            logger.error(f" Failed to store violation: {e}")
     
     async def _store_evidence_record(self, evidence: Dict[str, Any]):
         """Stocke un enregistrement de preuve."""
+
+
+
         try:
             await self.elasticsearch_client.index(
                 index="evidence",
@@ -1083,10 +1134,13 @@ IA-Influencer-Agent Legal Team
                 body=evidence
             )
         except Exception as e:
-            logger.error(f"❌ Failed to store evidence: {e}")
+            logger.error(f" Failed to store evidence: {e}")
     
     async def _store_legal_action(self, action: Dict[str, Any]):
         """Stocke une action légale."""
+
+
+
         try:
             await self.elasticsearch_client.index(
                 index="legal_actions",
@@ -1094,10 +1148,13 @@ IA-Influencer-Agent Legal Team
                 body=action
             )
         except Exception as e:
-            logger.error(f"❌ Failed to store legal action: {e}")
+            logger.error(f" Failed to store legal action: {e}")
     
     async def _update_violation_record(self, violation: Dict[str, Any]):
         """Met à jour un enregistrement de violation."""
+
+
+
         try:
             await self.elasticsearch_client.update(
                 index="violations",
@@ -1105,10 +1162,13 @@ IA-Influencer-Agent Legal Team
                 body={"doc": violation}
             )
         except Exception as e:
-            logger.error(f"❌ Failed to update violation: {e}")
+            logger.error(f" Failed to update violation: {e}")
     
     async def _get_fingerprint_data(self, fingerprint_id: str) -> Dict[str, Any]:
         """Récupère les données d'empreinte."""
+
+
+
         try:
             redis_key = f"fingerprint:{fingerprint_id}"
             data = await self.redis_client.get(redis_key)
@@ -1117,7 +1177,7 @@ IA-Influencer-Agent Legal Team
             else:
                 raise ProtectionError(f"Fingerprint not found: {fingerprint_id}")
         except Exception as e:
-            logger.error(f"❌ Failed to get fingerprint data: {e}")
+            logger.error(f" Failed to get fingerprint data: {e}")
             raise
     
     # Placeholder methods for notification and legal escalation
@@ -1135,6 +1195,9 @@ IA-Influencer-Agent Legal Team
     
     def _parse_search_results(self, html: str) -> List[Dict[str, Any]]:
         """Parse les résultats de recherche HTML."""
+
+
+
         try:
             soup = BeautifulSoup(html, 'html.parser')
             results = []
@@ -1150,11 +1213,14 @@ IA-Influencer-Agent Legal Team
             return results
             
         except Exception as e:
-            logger.error(f"❌ Search results parsing failed: {e}")
+            logger.error(f" Search results parsing failed: {e}")
             return []
     
     async def _analyze_web_content(self, url: str, fingerprint_data: Dict[str, Any]) -> float:
         """Analyse le contenu web pour similarité."""
+
+
+
         try:
             # Simplified web content analysis
             async with aiohttp.ClientSession() as session:
@@ -1170,7 +1236,7 @@ IA-Influencer-Agent Legal Team
             return 0.0
             
         except Exception as e:
-            logger.error(f"❌ Web content analysis failed: {e}")
+            logger.error(f" Web content analysis failed: {e}")
             return 0.0
     
     def _load_contract_abi(self) -> List[Dict]:
@@ -1185,11 +1251,11 @@ IA-Influencer-Agent Legal Team
                 # This would create a blockchain transaction
                 logger.info(f"Blockchain ownership recorded for {protection_id}")
             except Exception as e:
-                logger.error(f"❌ Blockchain recording failed: {e}")
+                logger.error(f" Blockchain recording failed: {e}")
     
     async def _start_monitoring_services(self):
         """Démarre les services de surveillance."""
-        logger.info("✅ Monitoring services started")
+        logger.info(" Monitoring services started")
 
 # Factory function
 async def create_protection_manager() -> ContentProtectionManager:

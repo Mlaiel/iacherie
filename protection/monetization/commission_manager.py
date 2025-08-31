@@ -162,6 +162,9 @@ class Affiliate:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert affiliate to dictionary."""
+
+
+
         return {
             "affiliate_id": self.affiliate_id,
             "user_id": self.user_id,
@@ -200,6 +203,9 @@ class Commission:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert commission to dictionary."""
+
+
+
         return {
             "commission_id": self.commission_id,
             "affiliate_id": self.affiliate_id,
@@ -254,6 +260,9 @@ class StandardCommissionCalculator(CommissionCalculator):
         metadata: Dict[str, Any] = None
     ) -> Decimal:
         """Calculate commission using standard rules."""
+
+
+
         return rule.calculate_commission(amount, metadata)
 
 
@@ -276,6 +285,9 @@ class CommissionManager:
     
     async def initialize(self) -> bool:
         """Initialize commission manager."""
+
+
+
         try:
             # Create default commission rules
             for rule in self.default_rules:
@@ -467,6 +479,9 @@ class CommissionManager:
         payout_method: PayoutMethod = PayoutMethod.BANK_TRANSFER
     ) -> PayoutBatch:
         """Process commission payouts."""
+
+
+
         try:
             # Find approved commissions ready for payout
             eligible_commissions = []
@@ -617,6 +632,9 @@ class CommissionManager:
     
     def get_affiliate(self, affiliate_id: str) -> Optional[Affiliate]:
         """Get affiliate by ID."""
+
+
+
         return self.affiliates.get(affiliate_id)
     
     def get_affiliate_by_code(self, referral_code: str) -> Optional[Affiliate]:
@@ -628,6 +646,9 @@ class CommissionManager:
     
     def get_commission(self, commission_id: str) -> Optional[Commission]:
         """Get commission by ID."""
+
+
+
         return self.commissions.get(commission_id)
     
     def list_affiliate_commissions(

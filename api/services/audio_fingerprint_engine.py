@@ -54,6 +54,9 @@ class AudioFingerprintEngine:
         
     def extract_fingerprint(self, audio_file_path: str) -> AudioFingerprint:
         """Extract comprehensive audio fingerprint from file"""
+
+
+
         try:
             # Load audio with librosa
             y, sr = librosa.load(audio_file_path, sr=self.sample_rate)
@@ -94,6 +97,9 @@ class AudioFingerprintEngine:
             
     def _extract_chromaprint(self, audio_file_path: str) -> str:
         """Extract Chromaprint fingerprint"""
+
+
+
         try:
             duration, fp_encoded = acoustid.fingerprint_file(audio_file_path)
             return fp_encoded
@@ -103,6 +109,9 @@ class AudioFingerprintEngine:
             
     def _extract_spectral_hash(self, y: np.ndarray, sr: int) -> str:
         """Extract custom spectral hash using Essentia"""
+
+
+
         try:
             # Convert to mono if stereo
             if len(y.shape) > 1:
@@ -134,6 +143,9 @@ class AudioFingerprintEngine:
             
     def _calculate_confidence(self, y: np.ndarray, sr: int) -> float:
         """Calculate confidence score based on audio quality metrics"""
+
+
+
         try:
             # Signal-to-noise ratio estimation
             signal_power = np.mean(y ** 2)
@@ -159,6 +171,9 @@ class AudioFingerprintEngine:
             
     def compare_fingerprints(self, fp1: AudioFingerprint, fp2: AudioFingerprint) -> float:
         """Compare two audio fingerprints and return similarity score (0-1)"""
+
+
+
         try:
             scores = []
             
@@ -195,6 +210,9 @@ class AudioFingerprintEngine:
             
     def _chromaprint_similarity(self, hash1: str, hash2: str) -> float:
         """Calculate Chromaprint hash similarity"""
+
+
+
         try:
             # Decode fingerprints
             fp1 = chromaprint.decode_fingerprint(hash1)[0]
@@ -215,6 +233,9 @@ class AudioFingerprintEngine:
             
     def _mfcc_similarity(self, mfcc1: np.ndarray, mfcc2: np.ndarray) -> float:
         """Calculate MFCC feature similarity using cosine similarity"""
+
+
+
         try:
             # Average MFCC features across time
             avg_mfcc1 = np.mean(mfcc1, axis=1)

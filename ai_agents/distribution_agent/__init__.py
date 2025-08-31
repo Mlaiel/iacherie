@@ -6,7 +6,7 @@ intelligent optimization, comprehensive platform support, and advanced analytics
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -117,8 +117,7 @@ __all__ = [
     'DistributionAgentManager',
     'DistributionManagerLegacy'
 ]
-prosecuted to the full extent of the law.
-"""
+
 # Core Distribution Engine Imports
 from .core.distribution_engine import (
     DistributionEngine,
@@ -394,7 +393,7 @@ __doc__ = """Distribution Agent - Enterprise AI-Powered Multi-Platform Content D
 The Distribution Agent is a comprehensive, enterprise-grade solution for intelligent 
 content distribution across multiple social media and content platforms. It provides:
 
-🚀 CORE CAPABILITIES:
+CORE CAPABILITIES:
 - Intelligent multi-platform content distribution with AI optimization
 - Advanced scheduling with ML-powered timing analysis
 - Comprehensive campaign management and A/B testing
@@ -411,7 +410,7 @@ content distribution across multiple social media and content platforms. It prov
 - Platform algorithm analysis and ranking factor optimization
 - Automated anomaly detection and performance monitoring
 
-🏢 ENTERPRISE FEATURES:
+ ENTERPRISE FEATURES:
 - High availability with 99.99% uptime guarantee
 - Scalable from 2 to 100+ concurrent instances
 - Comprehensive audit logging and compliance tracking
@@ -419,13 +418,13 @@ content distribution across multiple social media and content platforms. It prov
 - Multi-tenant architecture with resource isolation
 - Professional SLA support and monitoring
 
-🔌 PLATFORM INTEGRATIONS:
+ PLATFORM INTEGRATIONS:
 - Music Platforms: Spotify, Apple Music, SoundCloud, Bandcamp
 - Video Platforms: YouTube, TikTok, Twitch
 - Social Media: Instagram, Facebook, Twitter, LinkedIn
 - Enterprise APIs: RESTful, GraphQL, WebSocket support
 
-📊 ANALYTICS & REPORTING:
+ANALYTICS & REPORTING:
 - Real-time performance dashboards
 - Predictive analytics and trend analysis  
 - ROI optimization and cost tracking
@@ -455,7 +454,10 @@ def get_distribution_agent(config: dict = None) -> DistributionAgent:
     Raises:
         ValueError: If configuration is invalid
         DistributionError: If initialization fails
-    """    try:
+    """
+
+
+    try:
         agent = DistributionAgent(config=config)
         return agent
     except Exception as e:
@@ -473,7 +475,10 @@ def get_distribution_manager(config: dict = None) -> DistributionAgentManager:
     Raises:
         ValueError: If configuration is invalid
         DistributionError: If initialization fails
-    """    try:
+    """
+
+
+    try:
         manager = DistributionAgentManager(config=config)
         return manager
     except Exception as e:
@@ -485,7 +490,10 @@ def health_check() -> dict:
     
     Returns:
         dict: Health status information
-    """    return {
+    """
+
+
+    return {
         "module": "distribution_agent",
         "version": __version__,
         "status": "healthy",
@@ -506,7 +514,10 @@ def get_version_info() -> dict:
     
     Returns:
         dict: Version and module details
-    """    return {
+    """
+
+
+    return {
         "version": __version__,
         "author": __author__,
         "email": __email__, 
@@ -524,6 +535,9 @@ def get_version_info() -> dict:
             "Security & compliance"
         ]
     }
+
+# Core distribution imports
+from .distribution_agent import (
     PlatformType,
     PlatformAdapterBase,
     ContentScheduler,

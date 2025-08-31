@@ -154,6 +154,9 @@ class BackupConfig:
     
     def get_database_backup_configs(self) -> List[DatabaseBackupConfig]:
         """Get database backup configurations"""
+
+
+
         return [
             # PostgreSQL main database
             DatabaseBackupConfig(
@@ -215,6 +218,9 @@ class BackupConfig:
     
     def get_filesystem_backup_configs(self) -> List[FileSystemBackupConfig]:
         """Get file system backup configurations"""
+
+
+
         return [
             # User uploads and media files
             FileSystemBackupConfig(
@@ -544,7 +550,7 @@ handle_error() {{
         curl -X POST "$SLACK_WEBHOOK_URL" \
              -H 'Content-type: application/json' \
              --data "{{
-                 \\"text\\": \\"🚨 Backup Failed: $BACKUP_NAME in {self.environment} environment\\"
+                 \\"text\\": \\" Backup Failed: $BACKUP_NAME in {self.environment} environment\\"
              }}" || true
     fi
     
@@ -667,7 +673,7 @@ if [[ -n "$SLACK_WEBHOOK_URL" ]]; then
     curl -X POST "$SLACK_WEBHOOK_URL" \\
          -H 'Content-type: application/json' \\
          --data "{{
-             \\"text\\": \\"✅ Backup Completed: $BACKUP_NAME in {self.environment} environment. Size: $BACKUP_SIZE\\"
+             \\"text\\": \\" Backup Completed: $BACKUP_NAME in {self.environment} environment. Size: $BACKUP_SIZE\\"
          }}" || true
 fi
 
@@ -936,6 +942,9 @@ If any issues are found, restore from the backup files created during this proce
     
     def generate_monitoring_script(self) -> str:
         """Generate backup monitoring and alerting script"""
+
+
+
         return f"""#!/bin/bash
 # Backup Monitoring Script for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
@@ -970,14 +979,14 @@ send_alert() {{
     
     # Slack notification
     if [[ -n "$SLACK_WEBHOOK_URL" ]]; then
-        local emoji="⚠️"
+        local emoji=""
         local color="warning"
         
         if [[ "$severity" == "CRITICAL" ]]; then
-            emoji="🚨"
+            emoji=""
             color="danger"
         elif [[ "$severity" == "OK" ]]; then
-            emoji="✅"
+            emoji=""
             color="good"
         fi
         

@@ -15,7 +15,7 @@ Team Specialties:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️ STRICT WARNING ⚠️
+ STRICT WARNING 
 This monitoring technology and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, copying, or reproduction without explicit written permission
 will result in immediate legal prosecution under international copyright laws.
@@ -173,6 +173,9 @@ class AnomalyDetector:
         """
         Detect anomalies in performance metrics using ML models
         """
+
+
+
         try:
             anomalies = []
             component = metrics.component
@@ -395,6 +398,9 @@ class PipelineMonitor:
         """
         Start comprehensive pipeline monitoring
         """
+
+
+
         try:
             logger.info("Starting pipeline monitoring system")
             self.monitoring_active = True
@@ -465,6 +471,9 @@ class PipelineMonitor:
         """
         Perform health check for specific component
         """
+
+
+
         try:
             if component == PipelineComponent.ANALYTICS:
                 return await self._check_analytics_health()
@@ -515,6 +524,9 @@ class PipelineMonitor:
         """
         Check analytics pipeline health
         """
+
+
+
         try:
             metrics = {}
             details = {}
@@ -588,6 +600,9 @@ class PipelineMonitor:
         """
         Check content protection pipeline health
         """
+
+
+
         try:
             metrics = {}
             details = {}
@@ -655,6 +670,9 @@ class PipelineMonitor:
         """
         Check database health and performance
         """
+
+
+
         try:
             metrics = {}
             details = {}
@@ -728,6 +746,9 @@ class PipelineMonitor:
         """
         Check Redis cache health
         """
+
+
+
         try:
             metrics = {}
             details = {}
@@ -839,6 +860,9 @@ class PipelineMonitor:
     # Monitoring utility methods...
     def _update_prometheus_metrics(self, component: PipelineComponent, health_check: HealthCheck):
         """Update Prometheus metrics with health check data"""
+
+
+
         try:
             # Health status (convert to numeric)
             status_value = {
@@ -868,6 +892,9 @@ class PipelineMonitor:
 
     async def _get_queue_size(self, queue_name: str) -> int:
         """Get queue size for monitoring"""
+
+
+
         try:
             # Implementation would check actual queue size
             # This is a placeholder
@@ -879,6 +906,9 @@ class PipelineMonitor:
         """
         Generate comprehensive monitoring dashboard data
         """
+
+
+
         try:
             dashboard = {
                 "timestamp": datetime.utcnow().isoformat(),
@@ -924,6 +954,9 @@ class PipelineMonitor:
 
     async def _get_system_resources(self) -> Dict[str, Any]:
         """Get current system resource usage"""
+
+
+
         try:
             cpu_percent = psutil.cpu_percent(interval=1)
             memory = psutil.virtual_memory()
@@ -972,6 +1005,9 @@ class HealthCheckResult:
 
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return asdict(self)
 
 
@@ -1033,6 +1069,9 @@ class HealthChecker:
         """
         Run health checks for specified components or all components
         """
+
+
+
         try:
             components_to_check = components or list(self.health_checks.keys())
             results = {}
@@ -1101,6 +1140,9 @@ class HealthChecker:
 
     async def _check_database_health(self) -> Dict[str, Any]:
         """Check database health and performance"""
+
+
+
         try:
             async with AsyncDatabaseSession() as session:
                 # Test basic connectivity
@@ -1153,6 +1195,9 @@ class HealthChecker:
 
     async def _check_redis_health(self) -> Dict[str, Any]:
         """Check Redis health and performance"""
+
+
+
         try:
             redis = aioredis.from_url(settings.REDIS_URL)
             
@@ -1194,6 +1239,9 @@ class HealthChecker:
 
     async def _check_storage_health(self) -> Dict[str, Any]:
         """Check storage system health"""
+
+
+
         try:
             # Test storage connectivity
             health_result = await self.storage_manager.health_check()
@@ -1219,6 +1267,9 @@ class HealthChecker:
 
     async def _check_system_health(self) -> Dict[str, Any]:
         """Check system resource health"""
+
+
+
         try:
             # CPU usage
             cpu_usage = psutil.cpu_percent(interval=1)
@@ -1261,6 +1312,9 @@ class HealthChecker:
 
     async def _check_fingerprinting_health(self) -> Dict[str, Any]:
         """Check fingerprinting engine health"""
+
+
+
         try:
             # Test fingerprinting service availability
             # This would check if the AI models are loaded and responding
@@ -1297,6 +1351,9 @@ class HealthChecker:
 
     async def _check_protection_health(self) -> Dict[str, Any]:
         """Check protection pipeline health"""
+
+
+
         try:
             # Check protection service components
             # This would verify monitoring, crawlers, etc. are operational
@@ -1318,6 +1375,9 @@ class HealthChecker:
 
     async def _check_monetization_health(self) -> Dict[str, Any]:
         """Check monetization pipeline health"""
+
+
+
         try:
             # Check monetization services
             return {
@@ -1337,6 +1397,9 @@ class HealthChecker:
 
     async def _check_analytics_health(self) -> Dict[str, Any]:
         """Check analytics pipeline health"""
+
+
+
         try:
             # Check analytics services
             return {
@@ -1575,6 +1638,9 @@ class PipelineMonitor:
 
     async def export_prometheus_metrics(self) -> str:
         """Export metrics in Prometheus format"""
+
+
+
         return generate_latest().decode('utf-8')
 
     async def _continuous_health_monitoring(self):

@@ -338,4 +338,7 @@ settings = Settings()
 # Compatibility aliases for existing code
 def get_settings():
     """Get settings instance for dependency injection."""
+
+
+
     return settings

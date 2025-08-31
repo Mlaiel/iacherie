@@ -79,6 +79,9 @@ class EnsembleManager:
     def add_model(self, model_id: str, model: Any, model_name: str = None,
                  weight: float = 1.0, metadata: Dict[str, Any] = None) -> bool:
         """Add a model to the ensemble"""
+
+
+
         try:
             if model_name is None:
                 model_name = f"Model_{len(self.models) + 1}"
@@ -102,6 +105,9 @@ class EnsembleManager:
     
     def remove_model(self, model_id: str) -> bool:
         """Remove a model from the ensemble"""
+
+
+
         try:
             original_count = len(self.models)
             self.models = [m for m in self.models if m.model_id != model_id]
@@ -120,6 +126,9 @@ class EnsembleManager:
     
     def fit(self, X: np.ndarray, y: np.ndarray) -> 'EnsembleManager':
         """Fit the ensemble on training data"""
+
+
+
         try:
             if len(self.models) < 2:
                 raise ValueError("Ensemble requires at least 2 models")
@@ -169,6 +178,9 @@ class EnsembleManager:
     
     def _fit_meta_model(self, X: np.ndarray, y: np.ndarray):
         """Fit meta-model for stacking ensemble"""
+
+
+
         try:
             # Generate meta-features using cross-validation
             meta_features = self._generate_meta_features(X, y)
@@ -223,6 +235,9 @@ class EnsembleManager:
     
     def _calculate_blend_weights(self, X: np.ndarray, y: np.ndarray):
         """Calculate blending weights for models"""
+
+
+
         try:
             if self.config.blending_strategy == BlendingStrategy.SIMPLE_AVERAGE:
                 # Equal weights
@@ -272,6 +287,9 @@ class EnsembleManager:
     
     def predict(self, X: np.ndarray) -> np.ndarray:
         """Make ensemble predictions"""
+
+
+
         try:
             if not self.is_fitted:
                 raise ValueError("Ensemble not fitted. Call fit() first.")
@@ -379,10 +397,16 @@ class EnsembleManager:
     
     def get_model_weights(self) -> Dict[str, float]:
         """Get current ensemble weights for all models"""
+
+
+
         return self.ensemble_weights.copy()
     
     def get_ensemble_info(self) -> Dict[str, Any]:
         """Get comprehensive ensemble information"""
+
+
+
         return {
             "num_models": len(self.models),
             "strategy": self.config.strategy.value,
@@ -422,6 +446,9 @@ class ModelBlender:
     
     def calculate_blend_weights(self, target_values: Optional[np.ndarray] = None) -> Dict[str, float]:
         """Calculate optimal blending weights"""
+
+
+
         try:
             if self.blending_strategy == BlendingStrategy.SIMPLE_AVERAGE:
                 # Equal weights
@@ -487,6 +514,9 @@ class ModelBlender:
     
     def blend_predictions(self) -> np.ndarray:
         """Generate blended predictions"""
+
+
+
         try:
             if not self.model_predictions:
                 raise ValueError("No model predictions available")
@@ -545,6 +575,9 @@ class VotingClassifier:
     
     def fit(self, X: np.ndarray, y: np.ndarray) -> 'VotingClassifier':
         """Fit all classifiers in the ensemble"""
+
+
+
         try:
             self.logger.info(f"Fitting voting classifier with {len(self.classifiers)} classifiers")
             
@@ -575,6 +608,9 @@ class VotingClassifier:
     
     def predict(self, X: np.ndarray) -> np.ndarray:
         """Make predictions using voting"""
+
+
+
         try:
             if not self.is_fitted:
                 raise ValueError("Voting classifier not fitted. Call fit() first.")
@@ -665,6 +701,9 @@ class VotingClassifier:
     
     def predict_proba(self, X: np.ndarray) -> np.ndarray:
         """Get ensemble prediction probabilities"""
+
+
+
         try:
             if not self.is_fitted:
                 raise ValueError("Voting classifier not fitted. Call fit() first.")

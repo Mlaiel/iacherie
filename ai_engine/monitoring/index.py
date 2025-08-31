@@ -282,6 +282,9 @@ class MonitoringIndex:
         @self.app.get("/api/services", response_model=List[ServiceInfo])
         async def get_services():
             """Get all registered monitoring services"""
+
+
+
             return list(self.services.values())
             
         @self.app.get("/api/services/{service_id}", response_model=ServiceInfo)
@@ -359,6 +362,9 @@ class MonitoringIndex:
                 
     async def _update_dashboard_data(self) -> None:
         """Update real-time dashboard data"""
+
+
+
         try:
             # Get system health
             overall_health = HealthStatus.HEALTHY
@@ -463,6 +469,9 @@ class MonitoringIndex:
                 
     async def _check_service_running(self, service_id: str) -> bool:
         """Check if a service is actually running"""
+
+
+
         try:
             if service_id == "ai_performance" and self.ai_monitor:
                 return hasattr(self.ai_monitor, 'is_monitoring') and self.ai_monitor.is_monitoring
@@ -525,7 +534,7 @@ class MonitoringIndex:
         </head>
         <body>
             <div class="header">
-                <h1>🚀 IA Influencer Agent - Monitoring Dashboard</h1>
+                <h1> IA Influencer Agent - Monitoring Dashboard</h1>
                 <div class="subtitle">Real-time system monitoring and analytics • Enterprise-grade AI platform</div>
                 <div class="subtitle">© 2025 Fahed Mlaiel (mlaiel@live.de) - All rights reserved</div>
             </div>
@@ -631,6 +640,9 @@ class MonitoringIndex:
         
     async def _get_system_load(self) -> float:
         """Get current system load"""
+
+
+
         try:
             import psutil
             return psutil.cpu_percent(interval=1) / 100.0
@@ -639,6 +651,9 @@ class MonitoringIndex:
             
     async def _get_memory_usage(self) -> float:
         """Get current memory usage"""
+
+
+
         try:
             import psutil
             return psutil.virtual_memory().percent / 100.0
@@ -693,6 +708,9 @@ async def startup_event():
 @monitoring_app.get("/")
 async def root():
     """Root endpoint"""
+
+
+
     return {
         "service": "IA Influencer Agent - Monitoring Index",
         "version": "1.0.0",

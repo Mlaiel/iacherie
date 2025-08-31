@@ -1,5 +1,5 @@
 """
-🚨 DMCA Template Engine - Professional Legal Document Generator
+ DMCA Template Engine - Professional Legal Document Generator
 ==============================================================
 
 Enterprise-grade template system for automated DMCA notice generation with multi-language support.
@@ -8,7 +8,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
-⚠️  LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION ⚠️
+  LEGAL WARNING - INTELLECTUAL PROPERTY PROTECTION 
 ====================================================
 This software and all associated concepts, algorithms, and implementations are the
 exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de).
@@ -82,6 +82,9 @@ class DMCATemplateEngine:
         
     def _initialize_templates(self) -> Dict[str, str]:
         """Initialize all professional DMCA templates"""
+
+
+
         return {
             # English Templates
             'takedown_urgent_en': self._get_urgent_takedown_template_en(),
@@ -202,17 +205,17 @@ class DMCATemplateEngine:
         """Generate appropriate subject line"""
         if language == 'de':
             if context.priority_level >= DMCAPriority.URGENT:
-                return f"🚨 DRINGEND: DMCA Löschungsantrag - Fall {context.case_id}"
+                return f" DRINGEND: DMCA Löschungsantrag - Fall {context.case_id}"
             else:
                 return f"DMCA Löschungsantrag - Fall {context.case_id}"
         elif language == 'fr':
             if context.priority_level >= DMCAPriority.URGENT:
-                return f"🚨 URGENT: Demande de retrait DMCA - Cas {context.case_id}"
+                return f" URGENT: Demande de retrait DMCA - Cas {context.case_id}"
             else:
                 return f"Demande de retrait DMCA - Cas {context.case_id}"
         else:  # English
             if context.priority_level >= DMCAPriority.URGENT:
-                return f"🚨 URGENT: DMCA Takedown Notice - Case {context.case_id}"
+                return f" URGENT: DMCA Takedown Notice - Case {context.case_id}"
             else:
                 return f"DMCA Takedown Notice - Case {context.case_id}"
     
@@ -270,7 +273,7 @@ class DMCATemplateEngine:
 <body>
     <div class="container">
         <div class="header">
-            <h1 style="color: #dc3545; margin: 0;">🚨 URGENT DMCA TAKEDOWN NOTICE</h1>
+            <h1 style="color: #dc3545; margin: 0;"> URGENT DMCA TAKEDOWN NOTICE</h1>
             <div class="urgent-badge">PRIORITY {{ priority_level }} - IMMEDIATE ACTION REQUIRED</div>
             <p style="margin: 10px 0 0 0; color: #6c757d;">Digital Millennium Copyright Act § 512(c) Notice</p>
         </div>
@@ -285,7 +288,7 @@ class DMCATemplateEngine:
         </div>
 
         <div class="highlight">
-            <h2 style="color: #dc3545; margin-top: 0;">⚠️ URGENT COPYRIGHT INFRINGEMENT DETECTED</h2>
+            <h2 style="color: #dc3545; margin-top: 0;"> URGENT COPYRIGHT INFRINGEMENT DETECTED</h2>
             <p><strong>This notice concerns viral content causing significant revenue damage. Immediate action is required within {{ response_days }} day(s) to minimize further harm.</strong></p>
         </div>
 
@@ -334,7 +337,7 @@ class DMCATemplateEngine:
         {% endif %}
 
         <div class="highlight">
-            <h2 style="color: #dc3545; margin-top: 0;">🔥 IMMEDIATE ACTION REQUIRED</h2>
+            <h2 style="color: #dc3545; margin-top: 0;"> IMMEDIATE ACTION REQUIRED</h2>
             <p><strong>Due to the viral nature and revenue impact of this infringement, we request immediate removal within {{ response_days }} day(s).</strong></p>
             <p>Failure to act promptly may result in escalation to legal action and claims for all damages incurred.</p>
         </div>
@@ -484,7 +487,7 @@ class DMCATemplateEngine:
 <body>
     <div class="container">
         <div class="header">
-            <h1 style="color: #fd7e14; margin: 0;">⚖️ DMCA ESCALATION NOTICE</h1>
+            <h1 style="color: #fd7e14; margin: 0;"> DMCA ESCALATION NOTICE</h1>
             <div class="warning-badge">FORMAL ESCALATION - LEGAL ACTION PENDING</div>
             <p style="margin: 10px 0 0 0; color: #6c757d;">Follow-up to Previous DMCA Notice</p>
         </div>
@@ -550,12 +553,12 @@ class DMCATemplateEngine:
 <body>
     <div class="container">
         <div class="header">
-            <h1 style="color: #dc3545; margin: 0;">🚨 DRINGENDER DMCA LÖSCHUNGSANTRAG</h1>
+            <h1 style="color: #dc3545; margin: 0;"> DRINGENDER DMCA LÖSCHUNGSANTRAG</h1>
             <div class="urgent-badge">PRIORITÄT {{ priority_level }} - SOFORTIGE MASSNAHMEN ERFORDERLICH</div>
         </div>
 
         <div class="highlight">
-            <h2 style="color: #dc3545; margin-top: 0;">⚠️ DRINGENDE URHEBERRECHTSVERLETZUNG ERKANNT</h2>
+            <h2 style="color: #dc3545; margin-top: 0;"> DRINGENDE URHEBERRECHTSVERLETZUNG ERKANNT</h2>
             <p><strong>Diese Mitteilung betrifft viralen Inhalt, der erheblichen Umsatzschaden verursacht. Sofortige Maßnahmen sind innerhalb von {{ response_days }} Tag(en) erforderlich.</strong></p>
         </div>
 
@@ -587,12 +590,12 @@ class DMCATemplateEngine:
 <body>
     <div class="container">
         <div class="header">
-            <h1 style="color: #dc3545; margin: 0;">🚨 DEMANDE DE RETRAIT DMCA URGENTE</h1>
+            <h1 style="color: #dc3545; margin: 0;"> DEMANDE DE RETRAIT DMCA URGENTE</h1>
             <div class="urgent-badge">PRIORITÉ {{ priority_level }} - ACTION IMMÉDIATE REQUISE</div>
         </div>
 
         <div class="highlight">
-            <h2 style="color: #dc3545; margin-top: 0;">⚠️ VIOLATION DE DROITS D'AUTEUR URGENTE DÉTECTÉE</h2>
+            <h2 style="color: #dc3545; margin-top: 0;"> VIOLATION DE DROITS D'AUTEUR URGENTE DÉTECTÉE</h2>
             <p><strong>Cet avis concerne du contenu viral causant des dommages financiers importants. Une action immédiate est requise dans les {{ response_days }} jour(s).</strong></p>
         </div>
 
@@ -628,4 +631,7 @@ class DMCATemplateEngine:
 # Factory function
 def create_template_engine() -> DMCATemplateEngine:
     """Factory function to create DMCA template engine"""
+
+
+
     return DMCATemplateEngine()

@@ -118,6 +118,9 @@ class TopologyManager:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             self.logger.info("Initializing topology manager...")
             
@@ -142,6 +145,9 @@ class TopologyManager:
     
     async def _load_topology_configuration(self) -> None:
         """Load topology configuration from config"""
+
+
+
         try:
             topology_config = self.config.get_topology_config()
             
@@ -167,6 +173,9 @@ class TopologyManager:
     
     async def _discover_database_nodes(self) -> None:
         """Discover and register database nodes"""
+
+
+
         try:
             # Get database configurations
             database_configs = {
@@ -211,6 +220,9 @@ class TopologyManager:
         suffix: str = ""
     ) -> Optional[DatabaseNode]:
         """Create database node from configuration"""
+
+
+
         try:
             node_id = f"{db_type}_{role.value}"
             if suffix:
@@ -240,6 +252,9 @@ class TopologyManager:
     
     async def _validate_topology(self) -> None:
         """Validate topology configuration"""
+
+
+
         try:
             issues = []
             
@@ -322,6 +337,9 @@ class TopologyManager:
     
     async def _check_node_health(self, node: DatabaseNode) -> Dict[str, Any]:
         """Check health of a specific node"""
+
+
+
         try:
             health_data = {
                 "node_id": node.id,
@@ -354,6 +372,9 @@ class TopologyManager:
     
     async def _check_postgresql_health(self, node: DatabaseNode) -> Dict[str, Any]:
         """Check PostgreSQL node health"""
+
+
+
         try:
             import asyncpg
             
@@ -397,6 +418,9 @@ class TopologyManager:
     
     async def _check_redis_health(self, node: DatabaseNode) -> Dict[str, Any]:
         """Check Redis node health"""
+
+
+
         try:
             import aioredis
             
@@ -436,6 +460,9 @@ class TopologyManager:
     
     async def _check_mongodb_health(self, node: DatabaseNode) -> Dict[str, Any]:
         """Check MongoDB node health"""
+
+
+
         try:
             from motor.motor_asyncio import AsyncIOMotorClient
             
@@ -475,6 +502,9 @@ class TopologyManager:
     
     async def _check_elasticsearch_health(self, node: DatabaseNode) -> Dict[str, Any]:
         """Check Elasticsearch node health"""
+
+
+
         try:
             from elasticsearch import AsyncElasticsearch
             
@@ -502,6 +532,9 @@ class TopologyManager:
     
     def _handle_node_health_update(self, node: DatabaseNode, health_data: Dict[str, Any]) -> None:
         """Handle node health update"""
+
+
+
         try:
             node.last_seen = datetime.utcnow()
             node.latency_ms = health_data.get("latency_ms", 0.0)
@@ -529,6 +562,9 @@ class TopologyManager:
     
     def _handle_node_failure(self, node: DatabaseNode, error: str) -> None:
         """Handle node failure"""
+
+
+
         try:
             node.status = NodeStatus.FAILED
             self._record_node_failure(node)
@@ -559,6 +595,9 @@ class TopologyManager:
     
     async def _trigger_failover(self, failed_node: DatabaseNode) -> None:
         """Trigger failover for failed primary node"""
+
+
+
         try:
             self.logger.critical(f"Triggering failover for failed primary: {failed_node.id}")
             
@@ -592,6 +631,9 @@ class TopologyManager:
     
     async def _promote_secondary_to_primary(self, candidate: DatabaseNode, failed_primary: DatabaseNode) -> None:
         """Promote secondary node to primary"""
+
+
+
         try:
             self.logger.info(f"Promoting {candidate.id} to primary for {failed_primary.database_type}")
             
@@ -612,6 +654,9 @@ class TopologyManager:
     
     async def _notify_failover_complete(self, new_primary: DatabaseNode, old_primary: DatabaseNode) -> None:
         """Notify other systems about completed failover"""
+
+
+
         try:
             # This would integrate with the broader system notification mechanism
             notification = {
@@ -637,6 +682,9 @@ class TopologyManager:
     
     async def _update_performance_metrics(self) -> None:
         """Update topology performance metrics"""
+
+
+
         try:
             # Calculate aggregate metrics
             healthy_nodes = [node for node in self.active_nodes.values() 
@@ -663,6 +711,9 @@ class TopologyManager:
     
     async def _detect_failures(self) -> None:
         """Detect and handle node failures"""
+
+
+
         try:
             current_time = datetime.utcnow()
             
@@ -680,6 +731,9 @@ class TopologyManager:
     
     async def _update_routing_cache(self) -> None:
         """Update routing cache for optimal node selection"""
+
+
+
         try:
             self.routing_cache.clear()
             
@@ -715,6 +769,9 @@ class TopologyManager:
     
     async def _log_topology_status(self) -> None:
         """Log current topology status"""
+
+
+
         try:
             status_summary = {
                 "total_nodes": len(self.topology.nodes),
@@ -792,6 +849,9 @@ class TopologyManager:
         Returns:
             Database node or None if not found
         """
+
+
+
         return self.topology.nodes.get(node_id)
     
     def get_nodes_by_type(self, database_type: str) -> List[DatabaseNode]:
@@ -804,6 +864,9 @@ class TopologyManager:
         Returns:
             List of database nodes
         """
+
+
+
         return [
             node for node in self.topology.nodes.values()
             if node.database_type == database_type
@@ -819,6 +882,9 @@ class TopologyManager:
         Returns:
             List of database nodes in region
         """
+
+
+
         return [
             node for node in self.topology.nodes.values()
             if node.region == region
@@ -831,6 +897,9 @@ class TopologyManager:
         Returns:
             Dict containing topology metrics
         """
+
+
+
         return {
             "topology_summary": {
                 "total_nodes": len(self.topology.nodes),
@@ -903,6 +972,9 @@ class TopologyManager:
     
     async def shutdown(self) -> None:
         """Shutdown topology manager"""
+
+
+
         try:
             self.logger.info("Shutting down topology manager...")
             

@@ -8,7 +8,7 @@ and demographic analysis for content creators and security applications.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -70,6 +70,9 @@ class FaceRecognition(BaseAgent):
 
     async def initialize(self) -> bool:
         """Initialize face recognition components"""
+
+
+
         try:
             logger.info("Initializing Face Recognition...")
             
@@ -230,6 +233,9 @@ class FaceRecognition(BaseAgent):
         bbox: Tuple[int, int, int, int]
     ) -> Dict[str, Any]:
         """Assess technical quality of detected face"""
+
+
+
         try:
             x, y, w, h = bbox
             quality_metrics = {}
@@ -294,6 +300,9 @@ class FaceRecognition(BaseAgent):
 
     async def _detect_emotions(self, face_roi: np.ndarray) -> Dict[str, Any]:
         """Basic emotion detection (privacy-aware)"""
+
+
+
         try:
             # This is a simplified emotion detection
             # In production, use proper emotion recognition models
@@ -338,6 +347,9 @@ class FaceRecognition(BaseAgent):
 
     async def _estimate_demographics(self, face_roi: np.ndarray) -> Dict[str, Any]:
         """Basic demographic estimation (privacy-sensitive)"""
+
+
+
         try:
             # Note: This is a very basic implementation
             # Real demographic estimation requires specialized models
@@ -372,6 +384,9 @@ class FaceRecognition(BaseAgent):
 
     async def _estimate_pose(self, face_roi: np.ndarray) -> Dict[str, Any]:
         """Estimate face pose and orientation"""
+
+
+
         try:
             # Basic pose estimation using face geometry
             height, width = face_roi.shape[:2]
@@ -411,6 +426,9 @@ class FaceRecognition(BaseAgent):
 
     async def _apply_privacy_protection(self, face_info: Dict[str, Any]) -> Dict[str, Any]:
         """Apply privacy protection to face information"""
+
+
+
         try:
             # Remove or anonymize sensitive information
             protected_info = face_info.copy()
@@ -454,6 +472,9 @@ class FaceRecognition(BaseAgent):
         
         Note: This implementation prioritizes privacy and doesn't store biometric data
         """
+
+
+
         try:
             logger.warning("Face recognition disabled for privacy protection")
             
@@ -494,6 +515,9 @@ class FaceRecognition(BaseAgent):
         Returns:
             Image with blurred faces
         """
+
+
+
         try:
             # Ensure blur strength is odd
             if blur_strength % 2 == 0:
@@ -540,6 +564,9 @@ class FaceRecognition(BaseAgent):
         Returns:
             Image with anonymized faces
         """
+
+
+
         try:
             if method == 'blur':
                 return await self.blur_faces(image, blur_all=True)
@@ -607,6 +634,9 @@ class FaceRecognition(BaseAgent):
 
     def get_privacy_settings(self) -> Dict[str, Any]:
         """Get current privacy settings"""
+
+
+
         return {
             'privacy_mode_enabled': self.privacy_mode,
             'blur_unknown_faces': self.blur_unknown_faces,
@@ -617,6 +647,9 @@ class FaceRecognition(BaseAgent):
 
     async def cleanup(self) -> None:
         """Cleanup resources"""
+
+
+
         try:
             await self.performance_monitor.close()
             await self.privacy_manager.cleanup()
@@ -626,6 +659,9 @@ class FaceRecognition(BaseAgent):
 
     def get_detection_capabilities(self) -> Dict[str, Any]:
         """Get face detection capabilities"""
+
+
+
         return {
             'max_faces_per_image': self.max_faces_per_image,
             'detection_confidence_threshold': self.detection_confidence_threshold,

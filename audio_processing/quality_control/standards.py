@@ -1,5 +1,5 @@
 """
-🎯 Quality Standards - Professional Quality Standards Framework
+ Quality Standards - Professional Quality Standards Framework
 
 Comprehensive quality standards system defining quality profiles, rules,
 and requirements for different audio content types and platforms.
@@ -8,7 +8,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Developer + DevOps + DBA + Security + Microservices
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ AVERTISSEMENT STRICT ⚠️
+ AVERTISSEMENT STRICT 
 Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou reproduction sans 
 autorisation écrite explicite de Fahed Mlaiel (mlaiel@live.de) est strictement 
@@ -118,7 +118,7 @@ class QualityProfile:
 
 class QualityStandards:
     """
-    🎯 Professional Quality Standards Manager
+     Professional Quality Standards Manager
     
     Comprehensive quality standards system:
     - Pre-defined quality profiles for different content types
@@ -445,18 +445,30 @@ class QualityStandards:
     
     def get_profile(self, profile_name: str) -> Optional[QualityProfile]:
         """Get quality profile by name"""
+
+
+
         return self.profiles.get(profile_name)
     
     def get_default_profile(self) -> QualityProfile:
         """Get default quality profile"""
+
+
+
         return self.profiles[self.default_profile_name]
     
     def list_profiles(self) -> List[str]:
         """List all available profile names"""
+
+
+
         return list(self.profiles.keys())
     
     def get_profiles_by_content_type(self, content_type: ContentType) -> List[QualityProfile]:
         """Get profiles filtered by content type"""
+
+
+
         return [
             profile for profile in self.profiles.values()
             if profile.content_type == content_type
@@ -464,6 +476,9 @@ class QualityStandards:
     
     def get_profiles_by_platform(self, platform_type: PlatformType) -> List[QualityProfile]:
         """Get profiles filtered by platform type"""
+
+
+
         return [
             profile for profile in self.profiles.values()
             if profile.platform_type == platform_type or profile.platform_type == PlatformType.GENERAL
@@ -471,6 +486,9 @@ class QualityStandards:
     
     def get_profiles_by_quality_level(self, quality_level: QualityLevel) -> List[QualityProfile]:
         """Get profiles filtered by quality level"""
+
+
+
         return [
             profile for profile in self.profiles.values()
             if profile.quality_level == quality_level
@@ -685,6 +703,9 @@ class QualityStandards:
     
     def import_profiles(self, file_path: str, overwrite: bool = False):
         """Import quality profiles from JSON file"""
+
+
+
         
         try:
             with open(file_path, 'r') as f:

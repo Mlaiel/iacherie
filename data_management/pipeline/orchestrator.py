@@ -142,6 +142,9 @@ class DataPipelineOrchestrator:
 
     def _register_builtin_processors(self):
         """Register built-in task processors"""
+
+
+
         try:
             # Register core content processing processors
             builtin_processors = [
@@ -217,6 +220,9 @@ class DataPipelineOrchestrator:
 
     async def create_pipeline(self, definition: PipelineDefinition) -> str:
         """Create a new data pipeline"""
+
+
+
         try:
             # Validate pipeline definition
             await self._validate_pipeline_definition(definition)
@@ -293,6 +299,9 @@ class DataPipelineOrchestrator:
 
     async def _store_pipeline_definition(self, definition: PipelineDefinition) -> str:
         """Store pipeline definition in database"""
+
+
+
         try:
             query = """
             INSERT INTO data_pipelines (
@@ -331,6 +340,9 @@ class DataPipelineOrchestrator:
 
     def _task_to_dict(self, task: PipelineTask) -> Dict[str, Any]:
         """Convert task to dictionary for storage"""
+
+
+
         return {
             'id': task.id,
             'name': task.name,
@@ -359,6 +371,9 @@ class DataPipelineOrchestrator:
         override_config: Optional[Dict[str, Any]] = None
     ) -> str:
         """Execute a data pipeline"""
+
+
+
         try:
             # Load pipeline definition
             definition = await self._load_pipeline_definition(pipeline_id)
@@ -395,6 +410,9 @@ class DataPipelineOrchestrator:
 
     async def _load_pipeline_definition(self, pipeline_id: str) -> PipelineDefinition:
         """Load pipeline definition from database"""
+
+
+
         try:
             query = """
             SELECT id, name, description, user_id, definition,
@@ -429,6 +447,9 @@ class DataPipelineOrchestrator:
 
     def _dict_to_task(self, task_data: Dict[str, Any]) -> PipelineTask:
         """Convert dictionary to task object"""
+
+
+
         return PipelineTask(
             id=task_data['id'],
             name=task_data['name'],
@@ -487,6 +508,9 @@ class DataPipelineOrchestrator:
         tasks: List[PipelineTask]
     ):
         """Create execution record in database"""
+
+
+
         try:
             query = """
             INSERT INTO pipeline_executions (
@@ -516,6 +540,9 @@ class DataPipelineOrchestrator:
         tasks: List[PipelineTask]
     ):
         """Execute pipeline asynchronously"""
+
+
+
         try:
             logger.info(f"Executing pipeline: {execution_id}")
             
@@ -598,6 +625,9 @@ class DataPipelineOrchestrator:
 
     async def _execute_task(self, task: PipelineTask) -> Dict[str, Any]:
         """Execute a single task"""
+
+
+
         try:
             logger.info(f"Executing task: {task.id}")
             
@@ -651,6 +681,9 @@ class DataPipelineOrchestrator:
 
     def _get_memory_usage(self) -> float:
         """Get current memory usage in MB"""
+
+
+
         try:
             import psutil
             process = psutil.Process()
@@ -660,6 +693,9 @@ class DataPipelineOrchestrator:
 
     async def _update_task_status(self, execution_id: str, task: PipelineTask):
         """Update task status in database"""
+
+
+
         try:
             query = """
             UPDATE pipeline_executions
@@ -694,6 +730,9 @@ class DataPipelineOrchestrator:
         error_message: Optional[str] = None
     ):
         """Update execution status in database"""
+
+
+
         try:
             query = """
             UPDATE pipeline_executions
@@ -733,6 +772,9 @@ class DataPipelineOrchestrator:
 
     async def _process_queued_task(self, task_info: Dict[str, Any]):
         """Process a queued task from the pipeline"""
+
+
+
         try:
             import time
             import uuid
@@ -807,6 +849,9 @@ class DataPipelineOrchestrator:
 
     async def _cleanup_old_executions(self):
         """Clean up old pipeline executions"""
+
+
+
         try:
             # Delete executions older than 30 days
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=30)
@@ -838,6 +883,9 @@ class DataPipelineOrchestrator:
 
     async def _check_scheduled_pipelines(self):
         """Check for scheduled pipelines that need to run"""
+
+
+
         try:
             query = """
             SELECT id, schedule, user_id
@@ -863,6 +911,9 @@ class DataPipelineOrchestrator:
 
     async def get_pipeline_status(self, execution_id: str) -> Dict[str, Any]:
         """Get pipeline execution status"""
+
+
+
         try:
             query = """
             SELECT id, pipeline_id, status, tasks, created_at, 
@@ -895,6 +946,9 @@ class DataPipelineOrchestrator:
 
     async def cancel_pipeline(self, execution_id: str) -> bool:
         """Cancel a running pipeline execution"""
+
+
+
         try:
             if execution_id in self.running_pipelines:
                 # Cancel the task
@@ -919,6 +973,9 @@ class DataPipelineOrchestrator:
 
     async def list_pipelines(self, user_id: str) -> List[Dict[str, Any]]:
         """List pipelines for a user"""
+
+
+
         try:
             query = """
             SELECT id, name, description, schedule, enabled, 
@@ -950,6 +1007,9 @@ class DataPipelineOrchestrator:
 
     async def get_pipeline_metrics(self, pipeline_id: str) -> Dict[str, Any]:
         """Get pipeline execution metrics"""
+
+
+
         try:
             query = """
             SELECT status, COUNT(*) as count,

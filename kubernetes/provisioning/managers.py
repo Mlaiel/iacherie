@@ -6,7 +6,7 @@ Handles Kubernetes deployments, rolling updates, canary deployments, and infrast
 
 Project Owner: Fahed Mlaiel (mlaiel@live.de)
 
-⚠️ CRITICAL LEGAL WARNING:
+ CRITICAL LEGAL WARNING:
 This software and all associated intellectual property belong exclusively to Fahed Mlaiel.
 Any unauthorized use, reproduction, distribution, or appropriation of this code, concept, 
 or business idea without explicit written permission from Fahed Mlaiel (mlaiel@live.de) 
@@ -177,6 +177,9 @@ class DeploymentResult:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert result to dictionary"""
+
+
+
         return {
             'success': self.success,
             'status': self.status.value if isinstance(self.status, DeploymentStatus) else self.status,
@@ -233,6 +236,9 @@ class BaseDeploymentManager(ABC):
     
     def get_deployment_history(self) -> List[Dict[str, Any]]:
         """Get deployment history"""
+
+
+
         return [result.to_dict() for result in self.deployment_history]
 
 
@@ -251,6 +257,9 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
         
     def _initialize_kubernetes_clients(self):
         """Initialize Kubernetes API clients"""
+
+
+
         try:
             if self.kubeconfig_path:
                 config.load_kube_config(config_file=self.kubeconfig_path)
@@ -525,6 +534,9 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
     
     async def _recreate_deployment(self) -> List[str]:
         """Perform recreate deployment (delete and create)"""
+
+
+
         try:
             # Delete existing deployment
             self.apps_v1_api.delete_namespaced_deployment(
@@ -689,6 +701,9 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
     
     async def _ensure_namespace_exists(self):
         """Ensure the target namespace exists"""
+
+
+
         try:
             self.core_v1_api.read_namespace(name=self.config.namespace)
         except client.ApiException as e:
@@ -933,6 +948,9 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
     
     async def _get_current_service(self) -> client.V1Service:
         """Get current service configuration"""
+
+
+
         return self.core_v1_api.read_namespaced_service(
             name=self.config.name,
             namespace=self.config.namespace
@@ -940,6 +958,9 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
     
     async def rollback(self, revision: Optional[int] = None) -> DeploymentResult:
         """Rollback deployment to previous version"""
+
+
+
         try:
             self.logger.info(f"Rolling back deployment: {self.config.name}")
             
@@ -991,6 +1012,9 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
     
     async def scale(self, replicas: int) -> DeploymentResult:
         """Scale the deployment"""
+
+
+
         try:
             self.logger.info(f"Scaling deployment {self.config.name} to {replicas} replicas")
             
@@ -1036,6 +1060,9 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
     
     async def get_status(self) -> Dict[str, Any]:
         """Get current deployment status"""
+
+
+
         try:
             deployment = self.apps_v1_api.read_namespaced_deployment(
                 name=self.config.name,
@@ -2041,6 +2068,9 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
     
     async def validate_deployment(self) -> bool:
         """Validate Kubernetes deployment health"""
+
+
+
         try:
             # Check deployment status
             deployment = self.apps_client.read_namespaced_deployment(
@@ -2075,6 +2105,9 @@ class KubernetesDeploymentManager(BaseDeploymentManager):
     
     async def get_deployment_status(self) -> DeploymentStatus:
         """Get current deployment status"""
+
+
+
         try:
             deployment = self.apps_client.read_namespaced_deployment(
                 name=self.deployment_name,
@@ -2194,6 +2227,9 @@ class TerraformInfrastructureManager(BaseDeploymentManager):
     
     async def validate_deployment(self) -> bool:
         """Validate Terraform infrastructure"""
+
+
+
         try:
             # Check if state file exists and is valid
             if not self.terraform_state_file.exists():
@@ -2356,7 +2392,7 @@ class DeploymentOrchestrator:
         ])
         
         for name, result in results.items():
-            status_symbol = "✓" if result.status == DeploymentStatus.SUCCESS else "✗"
+            status_symbol = "" if result.status == DeploymentStatus.SUCCESS else ""
             
             report_lines.extend([
                 f"{status_symbol} {name.upper()}",

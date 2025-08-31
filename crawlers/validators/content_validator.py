@@ -115,22 +115,34 @@ class ValidationResult:
     @property
     def has_errors(self) -> bool:
         """Check if validation has errors"""
+
+
+
         return any(issue.level in [ValidationStatus.ERROR, ValidationStatus.BLOCKED] 
                   for issue in self.issues)
     
     @property
     def has_warnings(self) -> bool:
         """Check if validation has warnings"""
+
+
+
         return any(issue.level == ValidationStatus.WARNING for issue in self.issues)
     
     @property
     def error_count(self) -> int:
         """Count of error-level issues"""
+
+
+
         return len([i for i in self.issues if i.level in [ValidationStatus.ERROR, ValidationStatus.BLOCKED]])
     
     @property
     def warning_count(self) -> int:
         """Count of warning-level issues"""
+
+
+
         return len([i for i in self.issues if i.level == ValidationStatus.WARNING])
 
 
@@ -868,6 +880,9 @@ class ContentValidator:
     
     def _load_business_rules(self) -> Dict[str, Dict[str, Any]]:
         """Load business rules configuration"""
+
+
+
         return {
             'text': {
                 'min_length': 10,
@@ -914,6 +929,9 @@ class ContentValidator:
     
     def _load_security_patterns(self) -> Dict[str, str]:
         """Load security threat patterns"""
+
+
+
         return {
             'xss_script': r'<script[^>]*>.*?</script>',
             'javascript_url': r'javascript:',
@@ -929,6 +947,9 @@ class ContentValidator:
     
     def _load_quality_metrics(self) -> Dict[str, Any]:
         """Load quality assessment metrics"""
+
+
+
         return {
             'optimal_length': {
                 'text': (50, 5000),
@@ -948,6 +969,9 @@ class ContentValidator:
     
     def _load_platform_requirements(self) -> Dict[str, Dict[str, Any]]:
         """Load platform-specific requirements"""
+
+
+
         return {
             'twitter': {
                 'content_length': {

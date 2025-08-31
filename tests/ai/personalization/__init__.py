@@ -6,7 +6,7 @@ Includes unit tests, integration tests, performance tests, and security tests.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  STRICT COPYRIGHT WARNING ⚠️
+  STRICT COPYRIGHT WARNING 
 This test code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 ANY unauthorized use, reproduction, or distribution is STRICTLY PROHIBITED.
 Legal action will be taken against violators under German and international law.
@@ -71,7 +71,7 @@ logger = logging.getLogger(__name__)
 class UserPreferenceTests(unittest.TestCase):
     """Ultra-Advanced User Preference Test Suite"""    
     def setUp(self):
-        logger.info("🔧 Setting up User Preference Tests")
+        logger.info(" Setting up User Preference Tests")
     
     def test_user_preference(self):
         logger.info("🧪 Testing user preference")
@@ -80,7 +80,7 @@ class UserPreferenceTests(unittest.TestCase):
 class ContentCustomizationTests(unittest.TestCase):
     """Ultra-Advanced Content Customization Test Suite"""    
     def setUp(self):
-        logger.info("🔧 Setting up Content Customization Tests")
+        logger.info(" Setting up Content Customization Tests")
     
     def test_content_customization(self):
         logger.info("🧪 Testing content customization")
@@ -89,7 +89,7 @@ class ContentCustomizationTests(unittest.TestCase):
 class AdaptiveInterfaceTests(unittest.TestCase):
     """Ultra-Advanced Adaptive Interface Test Suite"""    
     def setUp(self):
-        logger.info("🔧 Setting up Adaptive Interface Tests")
+        logger.info(" Setting up Adaptive Interface Tests")
     
     def test_adaptive_interface(self):
         logger.info("🧪 Testing adaptive interface")
@@ -98,7 +98,7 @@ class AdaptiveInterfaceTests(unittest.TestCase):
 class BehavioralAnalysisTests(unittest.TestCase):
     """Ultra-Advanced Behavioral Analysis Test Suite"""    
     def setUp(self):
-        logger.info("🔧 Setting up Behavioral Analysis Tests")
+        logger.info(" Setting up Behavioral Analysis Tests")
     
     def test_behavioral_analysis(self):
         logger.info("🧪 Testing behavioral analysis")
@@ -107,7 +107,7 @@ class BehavioralAnalysisTests(unittest.TestCase):
 class RecommendationPersonalizationTests(unittest.TestCase):
     """Ultra-Advanced Recommendation Personalization Test Suite"""    
     def setUp(self):
-        logger.info("🔧 Setting up Recommendation Personalization Tests")
+        logger.info(" Setting up Recommendation Personalization Tests")
     
     def test_recommendation_personalization(self):
         logger.info("🧪 Testing recommendation personalization")

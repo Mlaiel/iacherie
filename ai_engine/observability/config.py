@@ -8,7 +8,7 @@ and performance tuning parameters.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -253,10 +253,16 @@ class ObservabilityConfig:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert configuration to dictionary"""
+
+
+
         return asdict(self)
     
     def to_json(self) -> str:
         """Convert configuration to JSON string"""
+
+
+
         return json.dumps(self.to_dict(), indent=2, default=str)
     
     @classmethod
@@ -374,6 +380,9 @@ class ConfigurationManager:
     
     def load_config(self, config_file: Optional[Path] = None) -> ObservabilityConfig:
         """Load configuration from file or create default"""
+
+
+
         try:
             config_file = config_file or self.config_path
             
@@ -405,6 +414,9 @@ class ConfigurationManager:
     
     def save_config(self, config: ObservabilityConfig, config_file: Optional[Path] = None):
         """Save configuration to file"""
+
+
+
         try:
             config_file = config_file or self.config_path
             
@@ -427,6 +439,9 @@ class ConfigurationManager:
     
     def update_config(self, updates: Dict[str, Any]) -> bool:
         """Update configuration with new values"""
+
+
+
         try:
             current_config = self.get_config()
             config_dict = current_config.to_dict()
@@ -509,14 +524,23 @@ def get_config_manager() -> ConfigurationManager:
 
 def get_config() -> ObservabilityConfig:
     """Get current observability configuration"""
+
+
+
     return get_config_manager().get_config()
 
 def update_config(updates: Dict[str, Any]) -> bool:
     """Update observability configuration"""
+
+
+
     return get_config_manager().update_config(updates)
 
 def load_config_from_file(config_file: Path) -> ObservabilityConfig:
     """Load configuration from specific file"""
+
+
+
     return get_config_manager().load_config(config_file)
 
 # Export key classes and functions

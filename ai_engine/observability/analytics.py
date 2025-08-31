@@ -7,7 +7,7 @@ comprehensive data analysis, business intelligence, and predictive insights.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -77,6 +77,9 @@ class AnalyticsDataPoint:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'timestamp': self.timestamp.isoformat(),
             'metric_name': self.metric_name,
@@ -100,6 +103,9 @@ class AnalyticsResult:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'metric_name': self.metric_name,
             'timeframe': self.timeframe.value,
@@ -127,6 +133,9 @@ class BusinessInsight:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'title': self.title,
             'description': self.description,
@@ -186,6 +195,9 @@ class RealTimeAnalytics:
     
     async def start_processing(self):
         """Start real-time processing"""
+
+
+
         try:
             logger.info("Starting real-time analytics processing")
             self.is_processing = True
@@ -196,6 +208,9 @@ class RealTimeAnalytics:
     
     async def stop_processing(self):
         """Stop real-time processing"""
+
+
+
         try:
             logger.info("Stopping real-time analytics processing")
             self.is_processing = False
@@ -234,6 +249,9 @@ class RealTimeAnalytics:
     
     def ingest_data_point(self, data_point: AnalyticsDataPoint):
         """Ingest a single data point"""
+
+
+
         try:
             with self._lock:
                 self.data_buffer.append(data_point)
@@ -254,6 +272,9 @@ class RealTimeAnalytics:
     
     def ingest_batch(self, data_points: List[AnalyticsDataPoint]):
         """Ingest multiple data points"""
+
+
+
         try:
             with self._lock:
                 for data_point in data_points:
@@ -276,6 +297,9 @@ class RealTimeAnalytics:
     
     async def _process_buffered_data(self):
         """Process data from buffer"""
+
+
+
         try:
             if not self.data_buffer:
                 return
@@ -398,6 +422,9 @@ class RealTimeAnalytics:
     
     async def _update_metrics_cache(self):
         """Update metrics cache for quick access"""
+
+
+
         try:
             current_time = datetime.now(timezone.utc)
             
@@ -430,6 +457,9 @@ class RealTimeAnalytics:
     
     async def _calculate_summary_stats(self) -> Dict[str, Any]:
         """Calculate summary statistics"""
+
+
+
         try:
             stats = {
                 'total_data_points': len(self.data_buffer),
@@ -458,6 +488,9 @@ class RealTimeAnalytics:
     
     async def _cleanup_old_data(self):
         """Clean up old data"""
+
+
+
         try:
             cutoff_time = datetime.now(timezone.utc) - timedelta(minutes=self.retention_minutes)
             
@@ -475,6 +508,9 @@ class RealTimeAnalytics:
     
     async def _trigger_callbacks(self, data_point: AnalyticsDataPoint):
         """Trigger real-time callbacks"""
+
+
+
         try:
             metric_callbacks = self.event_callbacks.get(data_point.metric_name, [])
             global_callbacks = self.event_callbacks.get('*', [])
@@ -493,6 +529,9 @@ class RealTimeAnalytics:
     
     async def _trigger_batch_callbacks(self, data_points: List[AnalyticsDataPoint]):
         """Trigger batch callbacks"""
+
+
+
         try:
             batch_callbacks = self.event_callbacks.get('batch', [])
             
@@ -515,6 +554,9 @@ class RealTimeAnalytics:
     
     def get_live_metrics(self) -> Dict[str, Any]:
         """Get current live metrics"""
+
+
+
         return self.metrics_cache.copy()
     
     def get_metric_value(self, metric_name: str, dimensions: Optional[Dict[str, str]] = None) -> float:
@@ -528,6 +570,9 @@ class RealTimeAnalytics:
     
     async def get_creator_performance_insights(self, creator_id: str) -> Dict[str, Any]:
         """Get performance insights for a specific creator"""
+
+
+
         try:
             insights = {
                 'creator_id': creator_id,
@@ -564,6 +609,9 @@ class RealTimeAnalytics:
     
     async def get_content_performance(self, content_id: str) -> Dict[str, Any]:
         """Get performance metrics for specific content"""
+
+
+
         try:
             performance = {
                 'content_id': content_id,
@@ -628,6 +676,9 @@ class HistoricalAnalytics:
     
     def store_data_point(self, data_point: AnalyticsDataPoint):
         """Store a data point for historical analysis"""
+
+
+
         try:
             metric_key = data_point.metric_name
             self.historical_data[metric_key].append(data_point)
@@ -644,6 +695,9 @@ class HistoricalAnalytics:
     
     async def analyze_trends(self, metric_name: str, timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
         """Analyze trends for a specific metric"""
+
+
+
         try:
             cache_key = f"trends_{metric_name}_{timeframe.value}"
             
@@ -700,6 +754,9 @@ class HistoricalAnalytics:
     async def _perform_trend_analysis(self, data_points: List[AnalyticsDataPoint], 
                                     timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
         """Perform detailed trend analysis"""
+
+
+
         try:
             # Sort by timestamp
             sorted_data = sorted(data_points, key=lambda x: x.timestamp)
@@ -763,6 +820,9 @@ class HistoricalAnalytics:
     async def _calculate_trend_indicators(self, values: List[float], 
                                         timestamps: List[datetime]) -> Dict[str, Any]:
         """Calculate trend indicators"""
+
+
+
         try:
             indicators = {}
             
@@ -855,6 +915,9 @@ class HistoricalAnalytics:
     async def _detect_seasonal_patterns(self, values: List[float], 
                                       timestamps: List[datetime]) -> Dict[str, Any]:
         """Detect seasonal patterns in data"""
+
+
+
         try:
             patterns = {
                 'hourly_pattern': {},
@@ -910,6 +973,9 @@ class HistoricalAnalytics:
                             period1_start: datetime, period1_end: datetime,
                             period2_start: datetime, period2_end: datetime) -> Dict[str, Any]:
         """Compare two time periods for a metric"""
+
+
+
         try:
             data_points = self.historical_data.get(metric_name, [])
             
@@ -1003,6 +1069,9 @@ class PredictiveAnalytics:
                                    historical_data: List[AnalyticsDataPoint],
                                    hours_ahead: int = 24) -> Dict[str, Any]:
         """Predict future values for a metric"""
+
+
+
         try:
             if len(historical_data) < self.min_data_points:
                 return {'error': f'Insufficient data points. Need at least {self.min_data_points}'}
@@ -1035,6 +1104,9 @@ class PredictiveAnalytics:
                                   timestamps: List[datetime],
                                   hours_ahead: int) -> List[Dict[str, Any]]:
         """Generate predictions using trend analysis"""
+
+
+
         try:
             predictions = []
             
@@ -1083,6 +1155,9 @@ class PredictiveAnalytics:
     async def detect_anomaly_predictions(self, metric_name: str,
                                        historical_data: List[AnalyticsDataPoint]) -> Dict[str, Any]:
         """Predict potential anomalies"""
+
+
+
         try:
             if len(historical_data) < 20:
                 return {'error': 'Insufficient data for anomaly prediction'}

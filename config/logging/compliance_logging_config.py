@@ -10,7 +10,7 @@ Project: IA-Influencer Agent + Content Protection Platform
 Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                  Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This code, concept, and intellectual property are exclusively owned by Fahed Mlaiel.
 Any unauthorized use, copying, distribution, reverse engineering, or commercialization 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
@@ -504,6 +504,9 @@ class ComplianceLogger:
     
     def get_compliance_metrics(self) -> Dict[str, Any]:
         """Get compliance system metrics"""
+
+
+
         return {
             "gdpr_logging_enabled": self.config.enable_gdpr_logging,
             "ccpa_logging_enabled": self.config.enable_ccpa_logging,
@@ -526,11 +529,17 @@ class ComplianceLoggingConfig:
     @staticmethod
     def create_default_config() -> ComplianceLogConfig:
         """Create default compliance logging configuration"""
+
+
+
         return ComplianceLogConfig()
     
     @staticmethod
     def create_full_compliance_config() -> ComplianceLogConfig:
         """Create full compliance logging configuration for all regulations"""
+
+
+
         return ComplianceLogConfig(
             enable_gdpr_logging=True,
             enable_ccpa_logging=True,

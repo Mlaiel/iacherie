@@ -12,7 +12,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL WARNING ⚠️
+  CRITICAL WARNING 
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
 Any unauthorized use, reproduction, distribution, or reverse engineering 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -264,6 +264,9 @@ class BandcampCrawler(PlatformCrawler):
         Returns:
             List of crawler results
         """
+
+
+
         try:
             await self._check_rate_limit()
             
@@ -283,6 +286,9 @@ class BandcampCrawler(PlatformCrawler):
     
     async def _crawl_tracks(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Bandcamp tracks"""
+
+
+
         try:
             results = []
             
@@ -344,6 +350,9 @@ class BandcampCrawler(PlatformCrawler):
     
     async def _crawl_albums(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Bandcamp albums"""
+
+
+
         try:
             results = []
             
@@ -405,6 +414,9 @@ class BandcampCrawler(PlatformCrawler):
     
     async def _crawl_artists(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Bandcamp artists"""
+
+
+
         try:
             results = []
             
@@ -455,6 +467,9 @@ class BandcampCrawler(PlatformCrawler):
     
     async def _crawl_labels(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Bandcamp labels"""
+
+
+
         try:
             results = []
             
@@ -495,6 +510,9 @@ class BandcampCrawler(PlatformCrawler):
     
     async def _crawl_fans(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Bandcamp fans"""
+
+
+
         try:
             results = []
             
@@ -535,6 +553,9 @@ class BandcampCrawler(PlatformCrawler):
     
     async def _crawl_search(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """General Bandcamp search"""
+
+
+
         try:
             results = []
             
@@ -555,6 +576,9 @@ class BandcampCrawler(PlatformCrawler):
     
     async def _crawl_discover(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Bandcamp discover page"""
+
+
+
         try:
             results = []
             
@@ -588,6 +612,9 @@ class BandcampCrawler(PlatformCrawler):
     
     async def _crawl_genres(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Bandcamp by genres"""
+
+
+
         try:
             results = []
             
@@ -764,6 +791,9 @@ class BandcampCrawler(PlatformCrawler):
     
     async def _get_genres(self) -> List[str]:
         """Get available genres"""
+
+
+
         return [
             'indie', 'experimental', 'electronic', 'ambient', 'rock', 'folk',
             'jazz', 'classical', 'hip-hop', 'punk', 'metal', 'pop', 'world',
@@ -789,6 +819,9 @@ class BandcampCrawler(PlatformCrawler):
     
     async def _parse_track_data(self, track_data: Dict[str, Any]) -> Optional[BandcampTrack]:
         """Parse track data"""
+
+
+
         try:
             release_date = datetime.fromisoformat(track_data.get('release_date', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
@@ -833,6 +866,9 @@ class BandcampCrawler(PlatformCrawler):
     
     async def _parse_album_data(self, album_data: Dict[str, Any]) -> Optional[BandcampAlbum]:
         """Parse album data"""
+
+
+
         try:
             release_date = datetime.fromisoformat(album_data.get('release_date', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
@@ -877,6 +913,9 @@ class BandcampCrawler(PlatformCrawler):
     
     async def _parse_artist_data(self, artist_data: Dict[str, Any]) -> Optional[BandcampArtist]:
         """Parse artist data"""
+
+
+
         try:
             signup_date = None
             if artist_data.get('signup_date'):
@@ -921,6 +960,9 @@ class BandcampCrawler(PlatformCrawler):
     
     async def _parse_label_data(self, label_data: Dict[str, Any]) -> Optional[BandcampLabel]:
         """Parse label data"""
+
+
+
         try:
             established_date = None
             if label_data.get('established_date'):
@@ -955,6 +997,9 @@ class BandcampCrawler(PlatformCrawler):
     
     async def _parse_fan_data(self, fan_data: Dict[str, Any]) -> Optional[BandcampFan]:
         """Parse fan data"""
+
+
+
         try:
             signup_date = None
             if fan_data.get('signup_date'):
@@ -990,6 +1035,9 @@ class BandcampCrawler(PlatformCrawler):
     
     async def _check_rate_limit(self):
         """Check and enforce rate limiting"""
+
+
+
         try:
             current_time = time.time()
             time_since_last = current_time - self.last_request_time
@@ -1007,6 +1055,9 @@ class BandcampCrawler(PlatformCrawler):
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
         """Extract metadata from Bandcamp content"""
+
+
+
         try:
             # Parse Bandcamp URL
             parsed_url = urlparse(url)
@@ -1051,6 +1102,9 @@ class BandcampCrawler(PlatformCrawler):
     
     def get_platform_info(self) -> Dict[str, Any]:
         """Get Bandcamp platform information"""
+
+
+
         return {
             'platform_name': 'Bandcamp',
             'base_url': self.base_url,

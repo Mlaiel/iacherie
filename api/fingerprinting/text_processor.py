@@ -85,6 +85,9 @@ class TextFingerprintProcessor:
         
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default configuration for text processing"""
+
+
+
         return {
             'similarity_threshold': 0.8,
             'max_text_length': 100000,
@@ -94,6 +97,9 @@ class TextFingerprintProcessor:
     
     def _initialize_tools(self):
         """Initialize language processing tools"""
+
+
+
         try:
             self.grammar_tool = language_tool_python.LanguageTool('en-US')
         except Exception as e:
@@ -109,6 +115,9 @@ class TextFingerprintProcessor:
         Returns:
             TextFingerprint object with extracted features
         """
+
+
+
         try:
             # Load text file asynchronously
             loop = asyncio.get_event_loop()
@@ -137,6 +146,9 @@ class TextFingerprintProcessor:
         Returns:
             TextFingerprint object with extracted features
         """
+
+
+
         try:
             # Truncate if too long
             if len(text_content) > self.config['max_text_length']:
@@ -190,6 +202,9 @@ class TextFingerprintProcessor:
     
     def _load_text_file(self, file_path: str) -> str:
         """Load text file content"""
+
+
+
         try:
             # Try different encodings
             encodings = ['utf-8', 'latin-1', 'cp1252']
@@ -449,6 +464,9 @@ class TextFingerprintProcessor:
     
     def _extract_metadata(self, file_path: Path) -> Dict[str, Any]:
         """Extract file metadata"""
+
+
+
         return {
             'filename': file_path.name,
             'file_size': file_path.stat().st_size,
@@ -467,6 +485,9 @@ class TextFingerprintProcessor:
         Returns:
             Similarity score between 0 and 1
         """
+
+
+
         try:
             # Content hash exact match
             if fp1.content_hash == fp2.content_hash:
@@ -532,6 +553,9 @@ class TextFingerprintProcessor:
     
     def _cosine_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
         """Calculate cosine similarity between two vectors"""
+
+
+
         try:
             if len(vec1) != len(vec2):
                 return 0.0
@@ -551,6 +575,9 @@ class TextFingerprintProcessor:
     
     def _readability_similarity(self, scores1: Dict[str, float], scores2: Dict[str, float]) -> float:
         """Calculate similarity between readability scores"""
+
+
+
         try:
             similarities = []
             

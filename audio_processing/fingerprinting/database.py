@@ -115,6 +115,9 @@ class FingerprintDatabaseManager:
     
     def _default_config(self) -> Dict:
         """Default configuration for database operations."""
+
+
+
         return {
             'pool_size': 20,
             'max_overflow': 30,
@@ -130,6 +133,9 @@ class FingerprintDatabaseManager:
     
     async def initialize(self):
         """Initialize database connections and create tables if needed."""
+
+
+
         try:
             # Create async engine
             self.engine = create_async_engine(
@@ -292,6 +298,9 @@ class FingerprintDatabaseManager:
         Returns:
             ID of the stored record
         """
+
+
+
         try:
             # Serialize spectral features if present
             spectral_data = None
@@ -362,6 +371,9 @@ class FingerprintDatabaseManager:
         Returns:
             FingerprintRecord or None if not found
         """
+
+
+
         try:
             async with self.get_session() as session:
                 stmt = """
@@ -401,6 +413,9 @@ class FingerprintDatabaseManager:
         Returns:
             List of similar FingerprintRecord objects
         """
+
+
+
         try:
             # Build dynamic query
             conditions = ["is_active = TRUE"]
@@ -448,6 +463,9 @@ class FingerprintDatabaseManager:
         Returns:
             ID of the stored match record
         """
+
+
+
         try:
             match_record.detection_timestamp = datetime.now(timezone.utc)
             
@@ -503,6 +521,9 @@ class FingerprintDatabaseManager:
         Returns:
             List of FingerprintRecord objects
         """
+
+
+
         try:
             async with self.get_session() as session:
                 stmt = """
@@ -536,6 +557,9 @@ class FingerprintDatabaseManager:
             fingerprint_id: ID of the fingerprint to delete
             user_id: Optional user ID for authorization
         """
+
+
+
         try:
             async with self.get_session() as session:
                 conditions = ["id = :fingerprint_id"]
@@ -579,6 +603,9 @@ class FingerprintDatabaseManager:
         Returns:
             List of MatchRecord objects
         """
+
+
+
         try:
             async with self.get_session() as session:
                 stmt = """
@@ -621,6 +648,9 @@ class FingerprintDatabaseManager:
     
     def _serialize_features(self, features: np.ndarray) -> bytes:
         """Serialize numpy array features for database storage."""
+
+
+
         try:
             # Pickle and compress the features
             pickled = pickle.dumps(features)
@@ -632,6 +662,9 @@ class FingerprintDatabaseManager:
     
     def _deserialize_features(self, data: bytes) -> Optional[np.ndarray]:
         """Deserialize features from database."""
+
+
+
         try:
             if not data:
                 return None
@@ -646,6 +679,9 @@ class FingerprintDatabaseManager:
     
     def _row_to_fingerprint_record(self, row) -> FingerprintRecord:
         """Convert database row to FingerprintRecord."""
+
+
+
         return FingerprintRecord(
             id=row.id,
             user_id=row.user_id,
@@ -670,6 +706,9 @@ class FingerprintDatabaseManager:
     
     async def _update_user_stats(self, session: AsyncSession, user_id: int, action: str):
         """Update user content statistics."""
+
+
+
         try:
             if action == 'fingerprint_added':
                 stmt = """
@@ -699,6 +738,9 @@ class FingerprintDatabaseManager:
     
     async def cleanup(self):
         """Cleanup database connections."""
+
+
+
         try:
             if self.engine:
                 await self.engine.dispose()

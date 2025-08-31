@@ -23,7 +23,7 @@ content similarity detection, and plagiarism prevention with real implementation
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
 
@@ -119,8 +119,8 @@ class TestAdvancedContentFingerprinter:
     async def test_similarity_detection(self, fingerprint_engine):
         """Test content similarity detection"""
         # Create similar contents
-        original_content = "This is an amazing product that will change your life! 🌟"
-        similar_content = "This is a fantastic product that will transform your life! ✨"
+        original_content = "This is an amazing product that will change your life! "
+        similar_content = "This is a fantastic product that will transform your life! "
         different_content = "Today I went to the grocery store and bought some apples."
         
         # Generate fingerprints
@@ -361,8 +361,8 @@ class TestAdvancedContentFingerprinter:
                 'expected_similarity': 'high'  # Paraphrasing
             },
             {
-                'original': "Beautiful sunset at the beach 🌅",
-                'modified': "Gorgeous sunrise at the mountains ⛰️",
+                'original': "Beautiful sunset at the beach ",
+                'modified': "Gorgeous sunrise at the mountains ",
                 'expected_similarity': 'medium'  # Similar structure, different content
             },
             {

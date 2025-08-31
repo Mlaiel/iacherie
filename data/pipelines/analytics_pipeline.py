@@ -15,7 +15,7 @@ Team Specialties:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️ STRICT WARNING ⚠️
+ STRICT WARNING 
 This proprietary analytics technology and algorithms belong exclusively to
 Fahed Mlaiel. Any unauthorized use, data extraction, or competitive analysis
 without explicit written permission will result in immediate legal action.
@@ -159,6 +159,9 @@ class MetricsAggregator:
         """
         Calculate comprehensive performance metrics across all platforms
         """
+
+
+
         try:
             logger.info(f"Calculating comprehensive metrics for user {user_id}")
             
@@ -273,6 +276,9 @@ class MetricsAggregator:
         end_date: datetime
     ) -> Dict[str, Any]:
         """Calculate overall performance score using weighted metrics"""
+
+
+
         try:
             # Collect platform data
             platform_scores = {}
@@ -542,6 +548,9 @@ class MetricsAggregator:
         end_date: datetime
     ) -> Dict[str, Any]:
         """Calculate detailed metrics for specific platform"""
+
+
+
         try:
             platform_data = await self._get_platform_analytics_data(
                 user_id, platform, start_date, end_date
@@ -612,6 +621,9 @@ class MetricsAggregator:
         end_date: datetime
     ) -> Dict[str, Any]:
         """Analyze individual content performance"""
+
+
+
         try:
             content_analysis = {
                 "total_content_analyzed": len(content_ids),
@@ -666,6 +678,9 @@ class MetricsAggregator:
         end_date: datetime
     ) -> Dict[str, Any]:
         """Generate comprehensive audience insights"""
+
+
+
         try:
             audience_insights = {
                 "total_audience_size": 0,
@@ -773,6 +788,9 @@ class AnalyticsPipeline:
         """
         Generate comprehensive analytics report
         """
+
+
+
         try:
             logger.info(f"Generating {report_type.value} report for user {user_id}")
             
@@ -1048,6 +1066,9 @@ class AnalyticsPipeline:
 
     async def _save_analytics_report(self, report: Dict[str, Any]):
         """Save analytics report to database"""
+
+
+
         try:
             async with AsyncDatabaseSession() as session:
                 analytics_model = AnalyticsModel(
@@ -1076,14 +1097,23 @@ class AnalyticsPipeline:
 
     async def _create_platform_comparison_chart(self, metrics: Dict[str, Any]) -> str:
         """Create platform comparison chart"""
+
+
+
         return "platform_comparison_chart_url"
 
     async def _create_demographics_chart(self, metrics: Dict[str, Any]) -> str:
         """Create audience demographics chart"""
+
+
+
         return "demographics_chart_url"
 
     async def _create_growth_metrics_chart(self, metrics: Dict[str, Any]) -> str:
         """Create growth metrics chart"""
+
+
+
         return "growth_metrics_chart_url"
 )
 from backend.models.content import ContentModel
@@ -1173,6 +1203,9 @@ class MetricsAggregator:
         """
         Aggregate comprehensive performance metrics across platforms
         """
+
+
+
         try:
             logger.info(f"Aggregating performance metrics for user {user_id}")
             
@@ -1227,6 +1260,9 @@ class MetricsAggregator:
         """
         Calculate advanced engagement score with AI insights
         """
+
+
+
         try:
             # Get content metrics
             content_metrics = await self._get_content_metrics(content_id, platform)
@@ -1277,6 +1313,9 @@ class MetricsAggregator:
         """
         Advanced audience behavior analysis with ML clustering
         """
+
+
+
         try:
             logger.info(f"Analyzing audience behavior for user {user_id}")
             
@@ -1332,6 +1371,9 @@ class MetricsAggregator:
         """
         Generate AI-powered content optimization recommendations
         """
+
+
+
         try:
             optimization_report = {
                 "user_id": user_id,
@@ -1763,6 +1805,9 @@ class AnalyticsPipeline:
         """
         Generate comprehensive analytics report for creator
         """
+
+
+
         try:
             logger.info(f"Generating comprehensive analytics report for user {user_id}")
             
@@ -1851,6 +1896,9 @@ class AnalyticsPipeline:
         """
         Get real-time dashboard data for creator
         """
+
+
+
         try:
             # Check cache first
             cached_dashboard = await self.cache_manager.get(

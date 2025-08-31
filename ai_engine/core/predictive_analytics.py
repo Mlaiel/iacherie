@@ -7,7 +7,7 @@ and business intelligence for content creators platform.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+ UNAUTHORIZED USE STRICTLY PROHIBITED 
 This cutting-edge predictive analytics system is protected intellectual property.
 Any unauthorized copying, distribution, or use will result in immediate legal action.
 
@@ -269,6 +269,9 @@ class TimeSeriesAnalyzer:
                                 data_points: List[DataPoint],
                                 prediction_horizons: List[int] = None) -> Dict[str, Any]:
         """Comprehensive time series analysis"""
+
+
+
         try:
             if not data_points:
                 return {"error": "No data points provided"}
@@ -331,6 +334,9 @@ class TimeSeriesAnalyzer:
     
     def _calculate_basic_statistics(self, df: pd.DataFrame) -> Dict[str, float]:
         """Calculate basic statistical measures"""
+
+
+
         try:
             if df.empty:
                 return {}
@@ -354,6 +360,9 @@ class TimeSeriesAnalyzer:
     
     async def _analyze_trends(self, df: pd.DataFrame) -> Dict[str, Any]:
         """Analyze trends in the time series"""
+
+
+
         try:
             if len(df) < 2:
                 return {"error": "Insufficient data for trend analysis"}
@@ -404,6 +413,9 @@ class TimeSeriesAnalyzer:
     
     def _detect_seasonality(self, df: pd.DataFrame) -> Dict[str, Any]:
         """Detect seasonal patterns in the data"""
+
+
+
         try:
             if len(df) < 14:  # Need at least 2 weeks of data
                 return {"seasonal_detected": False, "reason": "Insufficient data"}
@@ -439,6 +451,9 @@ class TimeSeriesAnalyzer:
     
     def _calculate_autocorrelation(self, values: np.ndarray, lag: int) -> float:
         """Calculate autocorrelation at specific lag"""
+
+
+
         try:
             if len(values) <= lag:
                 return 0.0
@@ -467,6 +482,9 @@ class TimeSeriesAnalyzer:
     
     def _detect_anomalies(self, df: pd.DataFrame) -> List[Dict[str, Any]]:
         """Detect anomalies in the time series"""
+
+
+
         try:
             if len(df) < 3:
                 return []
@@ -499,6 +517,9 @@ class TimeSeriesAnalyzer:
     
     async def _predict_future_values(self, df: pd.DataFrame, horizon: int) -> Dict[str, Any]:
         """Predict future values using ML models"""
+
+
+
         try:
             if len(df) < 5:
                 return {"error": "Insufficient data for prediction"}
@@ -555,6 +576,9 @@ class TimeSeriesAnalyzer:
     
     def _create_lag_features(self, values: np.ndarray, lags: List[int]) -> np.ndarray:
         """Create lag features for time series prediction"""
+
+
+
         try:
             max_lag = max(lags)
             if len(values) <= max_lag:
@@ -573,6 +597,9 @@ class TimeSeriesAnalyzer:
     
     async def _select_best_model(self, X: np.ndarray, y: np.ndarray):
         """Select the best model for prediction"""
+
+
+
         try:
             if not ML_AVAILABLE:
                 # Fallback to simple mean prediction
@@ -628,6 +655,9 @@ class TimeSeriesAnalyzer:
     
     def _detect_change_points(self, df: pd.DataFrame) -> List[Dict[str, Any]]:
         """Detect significant change points in the time series"""
+
+
+
         try:
             if len(df) < 10:
                 return []
@@ -667,6 +697,9 @@ class TimeSeriesAnalyzer:
     
     def _analyze_volatility(self, df: pd.DataFrame) -> Dict[str, float]:
         """Analyze volatility in the time series"""
+
+
+
         try:
             if len(df) < 2:
                 return {}
@@ -698,6 +731,9 @@ class TimeSeriesAnalyzer:
     
     def _calculate_max_drawdown(self, values: np.ndarray) -> float:
         """Calculate maximum drawdown"""
+
+
+
         try:
             peak = values[0]
             max_dd = 0
@@ -737,6 +773,9 @@ class PredictiveModelEngine:
                                 timeframe: str = "30_days",
                                 additional_features: Dict[str, Any] = None) -> PredictionResult:
         """Generate comprehensive prediction"""
+
+
+
         try:
             additional_features = additional_features or {}
             
@@ -838,6 +877,9 @@ class PredictiveModelEngine:
                                   data_points_count: int,
                                   prediction_type: PredictionType) -> float:
         """Calculate confidence score for prediction"""
+
+
+
         try:
             base_confidence = 0.5
             
@@ -1029,6 +1071,9 @@ class PredictiveModelEngine:
                                analysis_results: Dict[str, Any],
                                prediction_type: PredictionType) -> float:
         """Estimate model accuracy based on historical performance"""
+
+
+
         try:
             base_accuracy = 0.7
             
@@ -1088,6 +1133,9 @@ class BusinessIntelligenceEngine:
                                metrics_data: Dict[str, List[DataPoint]],
                                report_type: str = "comprehensive") -> BusinessIntelligenceReport:
         """Generate comprehensive business intelligence report"""
+
+
+
         try:
             # Analyze each metric
             metric_analyses = {}
@@ -1362,6 +1410,9 @@ class BusinessIntelligenceEngine:
                                      creator_id: str,
                                      metric_analyses: Dict[str, Any]) -> Dict[str, Any]:
         """Generate competitive analysis insights"""
+
+
+
         return {
             "market_position": "growing",
             "competitive_advantages": [
@@ -1388,6 +1439,9 @@ class BusinessIntelligenceEngine:
     
     def _generate_audience_insights(self, metric_analyses: Dict[str, Any]) -> Dict[str, Any]:
         """Generate audience insights"""
+
+
+
         return {
             "audience_behavior": {
                 "engagement_patterns": "consistent",
@@ -1413,6 +1467,9 @@ class BusinessIntelligenceEngine:
                                  metric_analyses: Dict[str, Any],
                                  key_metrics: Dict[str, float]) -> Dict[str, Any]:
         """Generate revenue analysis"""
+
+
+
         return {
             "revenue_streams": {
                 "primary_sources": ["advertising", "sponsorships", "affiliate"],
@@ -1490,6 +1547,9 @@ class BusinessIntelligenceEngine:
                                 predictions: List[PredictionResult],
                                 performance_insights: Dict[str, Any]) -> str:
         """Create executive summary"""
+
+
+
         try:
             summary_parts = []
             

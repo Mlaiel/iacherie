@@ -181,6 +181,9 @@ class BaseTranslationEngine(ABC):
         
     def is_language_supported(self, language: LanguageCode) -> bool:
         """Check if language is supported"""
+
+
+
         return language.value in self.supported_languages
 
 
@@ -194,6 +197,9 @@ class MultilingualTranslator(BaseTranslationEngine):
         
     def load_model(self) -> bool:
         """Load multilingual translation model"""
+
+
+
         try:
             if TRANSFORMERS_AVAILABLE:
                 # Load multilingual translation pipeline
@@ -234,6 +240,9 @@ class MultilingualTranslator(BaseTranslationEngine):
     
     def _load_translation_dictionary(self) -> Dict[str, Dict[str, str]]:
         """Load simple translation dictionary as fallback"""
+
+
+
         return {
             "en": {
                 "hello": {"fr": "bonjour", "de": "hallo", "es": "hola", "it": "ciao"},
@@ -390,8 +399,8 @@ class MultilingualTranslator(BaseTranslationEngine):
         # Simple cultural adjustments based on language and context
         adjustments = {
             LanguageCode.JAPANESE: {
-                CulturalContext.FORMAL: lambda t: f"{t}です",  # Add formal ending
-                CulturalContext.BUSINESS: lambda t: f"お{t}",    # Add honorific prefix
+                CulturalContext.FORMAL: lambda t: f"{t}",  # Add formal ending
+                CulturalContext.BUSINESS: lambda t: f"{t}",    # Add honorific prefix
             },
             LanguageCode.GERMAN: {
                 CulturalContext.FORMAL: lambda t: t.replace("du", "Sie"),  # Formal address
@@ -506,6 +515,9 @@ class LanguageAdapter(BaseTranslationEngine):
         
     def _load_regional_variations(self) -> Dict[str, Dict[str, Dict[str, str]]]:
         """Load regional language variations"""
+
+
+
         return {
             "en": {
                 "us": {"colour": "color", "realise": "realize", "centre": "center"},
@@ -525,6 +537,9 @@ class LanguageAdapter(BaseTranslationEngine):
     
     def load_model(self) -> bool:
         """Load language adaptation model"""
+
+
+
         try:
             self.is_loaded = True
             logger.info(f"Language adapter {self.engine_name} loaded successfully")
@@ -632,6 +647,9 @@ class LanguageAdapter(BaseTranslationEngine):
     
     def analyze_multilingual_content(self, text: str) -> MultilingualAnalysis:
         """Analyze content for multiple languages"""
+
+
+
         try:
             # Simple multilingual detection
             detected_languages = []

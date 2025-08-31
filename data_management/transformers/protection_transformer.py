@@ -1,11 +1,11 @@
 """
-🔍 Content Protection Transformer - IA Influencer Agent Platform Enterprise
+ Content Protection Transformer - IA Influencer Agent Platform Enterprise
 ========================================================================
 Module: backend/data_management/transformers/protection_transformer.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -178,6 +178,9 @@ class AudioWatermarkTransformer:
         output_path: str
     ) -> Dict[str, Any]:
         """Applique un watermark inaudible dans l'audio"""
+
+
+
         
         try:
             # Chargement audio
@@ -274,6 +277,9 @@ class ImageWatermarkTransformer:
         output_path: str
     ) -> Dict[str, Any]:
         """Applique un watermark visible sur l'image"""
+
+
+
         
         try:
             # Chargement de l'image
@@ -330,6 +336,9 @@ class ImageWatermarkTransformer:
         output_path: str
     ) -> Dict[str, Any]:
         """Applique un watermark invisible (LSB steganography)"""
+
+
+
         
         try:
             # Chargement de l'image
@@ -604,6 +613,9 @@ class ContentEncryptionTransformer:
         output_path: str
     ) -> Dict[str, Any]:
         """Chiffre le contenu selon la configuration"""
+
+
+
         
         try:
             # Lecture du contenu
@@ -763,6 +775,9 @@ class ContentLicenseTransformer:
         output_path: str
     ) -> Dict[str, Any]:
         """Intègre les informations de licence dans le contenu"""
+
+
+
         
         try:
             # Génération des métadonnées de licence
@@ -1160,6 +1175,9 @@ class ContentProtectionTransformer:
         protection_config: ProtectionConfig
     ) -> Dict[str, Any]:
         """Applique l'empreinte digitale"""
+
+
+
         
         try:
             # Configuration de l'empreinte selon le type de contenu
@@ -1216,6 +1234,9 @@ class ContentProtectionTransformer:
         output_path: str
     ) -> Dict[str, Any]:
         """Applique le watermarking"""
+
+
+
         
         try:
             content_type = self._detect_content_type(content_path)

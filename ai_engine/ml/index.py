@@ -9,22 +9,22 @@ recommendation systems, and advanced ML pipeline management.
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, or distribution without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 
 Team Specialties:
-✅ Lead Dev IA + AI Architect Developer
-✅ Machine Learning Engineer (TensorFlow/PyTorch/Hugging Face)
-✅ Senior Backend Developer (Python/FastAPI/Django)
-✅ Data Scientist & ML Research Specialist
-✅ Audio Intelligence Engineer
-✅ Computer Vision ML Specialist
-✅ NLP & Language Model Engineer
-✅ MLOps & Model Deployment Engineer
-✅ Performance Optimization Specialist
-✅ ML Security & Audit Specialist
+ Lead Dev IA + AI Architect Developer
+ Machine Learning Engineer (TensorFlow/PyTorch/Hugging Face)
+ Senior Backend Developer (Python/FastAPI/Django)
+ Data Scientist & ML Research Specialist
+ Audio Intelligence Engineer
+ Computer Vision ML Specialist
+ NLP & Language Model Engineer
+ MLOps & Model Deployment Engineer
+ Performance Optimization Specialist
+ ML Security & Audit Specialist
 
 Business Logic Coverage:
 Data Ingestion → ML Model Training → Model Validation → Performance Optimization
@@ -560,10 +560,16 @@ class MLFrameworkManager:
     
     def get_supported_model_types(self) -> List[str]:
         """Get list of all supported model types."""
+
+
+
         return [mt.value for mt in ModelType]
     
     def get_supported_frameworks(self) -> List[str]:
         """Get list of all supported ML frameworks."""
+
+
+
         return [fr.value for fr in MLFramework]
     
     def get_ml_capabilities(self) -> Dict[str, Any]:

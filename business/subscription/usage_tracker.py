@@ -440,6 +440,9 @@ class UsageTracker:
         db: Session
     ) -> Optional[UserSubscription]:
         """Get active subscription for user."""
+
+
+
         return db.query(UserSubscription).filter(
             UserSubscription.user_id == user_id,
             UserSubscription.status.in_([
@@ -504,6 +507,9 @@ class UsageTracker:
         db: Session
     ) -> Optional[UsageMetrics]:
         """Get current usage metric for feature."""
+
+
+
         return db.query(UsageMetrics).filter(
             UsageMetrics.user_id == user_id,
             UsageMetrics.feature_name == feature_name,

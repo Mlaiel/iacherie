@@ -1,5 +1,5 @@
 """
-🔄 Migration Engine - IA Influencer Agent Platform Enterprise
+ Migration Engine - IA Influencer Agent Platform Enterprise
 ===========================================================
 Module: backend/data_management/storage/migration_engine.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Enterprise data migration system with legacy conversion,
 platform transitions, and schema evolution capabilities.
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -330,6 +330,9 @@ class MigrationEngine:
     
     def _initialize_migration_directories(self) -> None:
         """Initialize migration directories"""
+
+
+
         try:
             directories = [
                 self.config.storage_root_path,
@@ -366,6 +369,9 @@ class MigrationEngine:
     
     async def create_migration_plan(self, plan_data: Dict[str, Any]) -> Dict[str, Any]:
         """Create new migration plan"""
+
+
+
         try:
             # Validate required fields
             required_fields = ['name', 'migration_type', 'source_config', 'destination_config']
@@ -445,6 +451,9 @@ class MigrationEngine:
     
     async def execute_migration(self, plan_id: str, execution_options: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """Execute migration plan"""
+
+
+
         try:
             if plan_id not in self.migration_plans:
                 return {
@@ -503,6 +512,9 @@ class MigrationEngine:
     
     async def get_migration_status(self, execution_id: str) -> Dict[str, Any]:
         """Get migration execution status"""
+
+
+
         try:
             if execution_id not in self.active_executions:
                 return {
@@ -561,6 +573,9 @@ class MigrationEngine:
     
     async def pause_migration(self, execution_id: str) -> Dict[str, Any]:
         """Pause migration execution"""
+
+
+
         try:
             if execution_id not in self.active_executions:
                 return {
@@ -600,6 +615,9 @@ class MigrationEngine:
     
     async def resume_migration(self, execution_id: str) -> Dict[str, Any]:
         """Resume paused migration"""
+
+
+
         try:
             if execution_id not in self.active_executions:
                 return {
@@ -640,6 +658,9 @@ class MigrationEngine:
     
     async def cancel_migration(self, execution_id: str) -> Dict[str, Any]:
         """Cancel migration execution"""
+
+
+
         try:
             if execution_id not in self.active_executions:
                 return {
@@ -693,6 +714,9 @@ class MigrationEngine:
     
     async def rollback_migration(self, execution_id: str) -> Dict[str, Any]:
         """Rollback completed migration"""
+
+
+
         try:
             return await self.rollback_manager.execute_rollback(execution_id)
             
@@ -705,6 +729,9 @@ class MigrationEngine:
     
     async def validate_data(self, execution_id: str, sample_size: Optional[int] = None) -> Dict[str, Any]:
         """Validate migrated data"""
+
+
+
         try:
             return await self.validation_engine.validate_migration_data(execution_id, sample_size)
             
@@ -717,6 +744,9 @@ class MigrationEngine:
     
     async def get_migration_history(self, filters: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """Get migration execution history"""
+
+
+
         try:
             filters = filters or {}
             
@@ -785,6 +815,9 @@ class MigrationEngine:
     
     def get_migration_statistics(self) -> Dict[str, Any]:
         """Get comprehensive migration statistics"""
+
+
+
         try:
             # Basic statistics
             total_plans = len(self.migration_plans)
@@ -855,6 +888,9 @@ class MigrationEngine:
     
     async def _validate_migration_plan(self, plan: MigrationPlan) -> Dict[str, Any]:
         """Validate migration plan configuration"""
+
+
+
         try:
             # Validate source configuration
             if not plan.source_config.get('type'):
@@ -894,6 +930,9 @@ class MigrationEngine:
     
     async def _check_source_accessibility(self, source_config: Dict[str, Any]) -> Dict[str, Any]:
         """Check if source is accessible"""
+
+
+
         try:
             source_type = source_config.get('type', '')
             
@@ -918,6 +957,9 @@ class MigrationEngine:
     
     async def _check_destination_accessibility(self, dest_config: Dict[str, Any]) -> Dict[str, Any]:
         """Check if destination is accessible"""
+
+
+
         try:
             dest_type = dest_config.get('type', '')
             
@@ -944,6 +986,9 @@ class MigrationEngine:
     
     async def _estimate_migration_duration(self, plan: MigrationPlan) -> Optional[int]:
         """Estimate migration duration in seconds"""
+
+
+
         try:
             # This would implement actual duration estimation
             # Based on data size, complexity, historical data, etc.
@@ -973,6 +1018,9 @@ class MigrationEngine:
     
     async def _estimate_source_size(self, source_config: Dict[str, Any]) -> Optional[int]:
         """Estimate number of items in source"""
+
+
+
         try:
             source_type = source_config.get('type', '')
             
@@ -1001,6 +1049,9 @@ class MigrationEngine:
         options: Dict[str, Any]
     ) -> None:
         """Execute migration asynchronously"""
+
+
+
         try:
             with self.execution_lock:
                 execution.status = MigrationStatus.RUNNING
@@ -1094,6 +1145,9 @@ class MigrationEngine:
     
     async def _resume_migration_async(self, execution: MigrationExecution, plan: MigrationPlan) -> None:
         """Resume migration from checkpoint"""
+
+
+
         try:
             # Resume data processing from checkpoint
             await self.data_processor.resume_migration_processing(execution, plan)
@@ -1109,6 +1163,9 @@ class MigrationEngine:
     
     async def _create_checkpoint(self, execution: MigrationExecution) -> None:
         """Create migration checkpoint"""
+
+
+
         try:
             checkpoint_data = {
                 'execution_id': execution.execution_id,
@@ -1132,6 +1189,9 @@ class MigrationEngine:
     
     async def _create_pre_migration_backup(self, execution: MigrationExecution, plan: MigrationPlan) -> Dict[str, Any]:
         """Create backup before migration"""
+
+
+
         try:
             backup_id = f"backup_{execution.execution_id}_{int(time.time())}"
             backup_dir = Path(self.config.backup_directory) / "pre_migration" / backup_id
@@ -1172,6 +1232,9 @@ class MigrationEngine:
     
     async def _cleanup_migration_resources(self, execution: MigrationExecution) -> None:
         """Clean up migration resources"""
+
+
+
         try:
             # Clean up temporary files
             temp_pattern = f"*{execution.execution_id}*"
@@ -1188,6 +1251,9 @@ class MigrationEngine:
     
     def _execution_to_dict(self, execution: MigrationExecution) -> Dict[str, Any]:
         """Convert execution to dictionary"""
+
+
+
         return {
             'execution_id': execution.execution_id,
             'plan_id': execution.plan_id,
@@ -1207,6 +1273,9 @@ class MigrationEngine:
     
     async def _load_initial_data(self) -> None:
         """Load initial data from disk"""
+
+
+
         try:
             # Load migration plans
             plans_dir = Path(self.config.plans_directory)
@@ -1239,6 +1308,9 @@ class MigrationEngine:
     
     async def _start_background_tasks(self) -> None:
         """Start background maintenance tasks"""
+
+
+
         try:
             # Start progress monitoring
             if self.config.enable_monitoring:
@@ -1290,6 +1362,9 @@ class MigrationEngine:
     
     async def _save_migration_plan(self, plan: MigrationPlan) -> None:
         """Save migration plan to disk"""
+
+
+
         try:
             plan_path = Path(self.config.plans_directory) / f"{plan.plan_id}.json"
             
@@ -1331,6 +1406,9 @@ class MigrationEngine:
 
     async def _save_completed_execution(self, execution: MigrationExecution) -> None:
         """Save completed execution to disk"""
+
+
+
         try:
             executions_dir = Path(self.config.storage_root_path) / "executions"
             executions_dir.mkdir(exist_ok=True)
@@ -1370,6 +1448,9 @@ class ValidationEngine:
     
     async def validate_migration_data(self, execution_id: str, sample_size: Optional[int] = None) -> Dict[str, Any]:
         """Validate migrated data"""
+
+
+
         try:
             # This would implement actual data validation
             # For now, return a placeholder
@@ -1402,6 +1483,9 @@ class RollbackManager:
     
     async def execute_rollback(self, execution_id: str) -> Dict[str, Any]:
         """Execute migration rollback"""
+
+
+
         try:
             if execution_id not in self.migration_engine.active_executions:
                 return {
@@ -1448,6 +1532,9 @@ class DataProcessor:
     
     async def process_migration(self, execution: MigrationExecution, plan: MigrationPlan) -> None:
         """Process migration data"""
+
+
+
         try:
             # Estimate total items
             execution.total_items = await self.migration_engine._estimate_source_size(plan.source_config) or 0
@@ -1487,6 +1574,9 @@ class DataProcessor:
     
     async def resume_migration_processing(self, execution: MigrationExecution, plan: MigrationPlan) -> None:
         """Resume migration processing from checkpoint"""
+
+
+
         try:
             execution.status = MigrationStatus.RUNNING
             
@@ -1517,6 +1607,9 @@ class ProgressTracker:
     
     async def update_progress(self, execution: MigrationExecution) -> None:
         """Update progress metrics"""
+
+
+
         try:
             # Calculate performance metrics
             if execution.started_at:

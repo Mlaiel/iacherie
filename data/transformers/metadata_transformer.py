@@ -219,6 +219,9 @@ class MetadataTransformer:
         Returns:
             Dictionary containing extracted metadata
         """
+
+
+
         try:
             file_path_obj = Path(file_path)
             if not file_path_obj.exists():
@@ -273,6 +276,9 @@ class MetadataTransformer:
         Returns:
             Standardized metadata schema
         """
+
+
+
         try:
             schema = MetadataSchema()
             
@@ -314,6 +320,9 @@ class MetadataTransformer:
         Returns:
             Validation results
         """
+
+
+
         try:
             validation_result = {
                 'valid': True,
@@ -376,6 +385,9 @@ class MetadataTransformer:
     
     async def _extract_audio_metadata(self, file_path: Path) -> Dict[str, Any]:
         """Extract audio metadata using mutagen."""
+
+
+
         try:
             audio_file = mutagen.File(str(file_path))
             if not audio_file:
@@ -408,6 +420,9 @@ class MetadataTransformer:
     
     async def _extract_image_metadata(self, file_path: Path) -> Dict[str, Any]:
         """Extract image metadata (EXIF)."""
+
+
+
         try:
             metadata = {}
             
@@ -522,6 +537,9 @@ class MetadataTransformer:
         settings: MetadataSettings
     ) -> Union[Dict[str, Any], MetadataSchema]:
         """Transform metadata according to settings."""
+
+
+
         try:
             # Standardize metadata
             if settings.standard != MetadataStandard.CUSTOM:
@@ -559,6 +577,9 @@ class MetadataTransformer:
         settings: MetadataSettings
     ):
         """Save metadata in specified format."""
+
+
+
         try:
             output_path.parent.mkdir(parents=True, exist_ok=True)
             
@@ -624,6 +645,9 @@ class MetadataTransformer:
     
     async def _normalize_dates(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Normalize date formats in metadata."""
+
+
+
         try:
             date_fields = ['date', 'creation_date', 'modification_date', 'creation_time', 'modification_time']
             
@@ -667,6 +691,9 @@ class MetadataTransformer:
     
     async def _calculate_file_hash(self, file_path: Path, algorithm: str = 'md5') -> str:
         """Calculate file hash."""
+
+
+
         try:
             if algorithm == 'md5':
                 hash_obj = hashlib.md5()
@@ -734,6 +761,9 @@ class MetadataTransformer:
     
     async def cleanup(self):
         """Cleanup temporary files and resources."""
+
+
+
         try:
             # Clean temp directory
             if self.temp_dir.exists():
@@ -754,6 +784,9 @@ class MetadataExtractor:
     
     async def extract(self, file_path: str) -> Dict[str, Any]:
         """Extract metadata from file."""
+
+
+
         return await self.transformer.extract_metadata(file_path)
 
 
@@ -769,6 +802,9 @@ class MetadataStandardizer:
         standard: str = "dublin_core"
     ) -> MetadataSchema:
         """Standardize metadata to schema."""
+
+
+
         return await self.transformer.standardize_metadata(
             metadata, 
             MetadataStandard(standard)

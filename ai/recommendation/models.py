@@ -64,6 +64,9 @@ class Engagement:
     
     def calculate_total_engagement(self) -> int:
         """Calculate total engagement."""
+
+
+
         return self.likes + self.comments + self.shares + self.saves
 
 
@@ -116,6 +119,9 @@ class CreatorProfile:
     
     def get_total_followers(self) -> int:
         """Get total followers across all platforms."""
+
+
+
         return sum(self.follower_count.values())
     
     def get_average_engagement_rate(self) -> float:
@@ -280,6 +286,9 @@ class RecommendationResponse:
     
     def get_top_recommendations(self, n: int) -> List[Dict[str, Any]]:
         """Get top N recommendations."""
+
+
+
         return self.recommendations[:n]
 
 

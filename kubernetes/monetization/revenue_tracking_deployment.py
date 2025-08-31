@@ -8,7 +8,7 @@ tracking, analytics, and automated payment processing systems.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+ UNAUTHORIZED USE STRICTLY PROHIBITED 
 This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized copying, distribution, or use without written permission
 will result in legal action under German and international copyright law.
@@ -187,6 +187,9 @@ class RevenueTrackingDeployment:
     
     def _initialize_clients(self) -> None:
         """Initialize Kubernetes, Docker, and Redis clients"""
+
+
+
         try:
             # Kubernetes client
             config.load_incluster_config()
@@ -219,6 +222,9 @@ class RevenueTrackingDeployment:
         Returns:
             Infrastructure deployment summary
         """
+
+
+
         try:
             self.deployment_status = "deploying_infrastructure"
             logger.info("Deploying revenue tracking infrastructure")
@@ -313,6 +319,9 @@ class RevenueTrackingDeployment:
     
     async def _ensure_namespace(self) -> None:
         """Create namespace if it doesn't exist"""
+
+
+
         try:
             self.k8s_core_v1.read_namespace(name=self.config.namespace)
         except client.exceptions.ApiException as e:
@@ -1313,6 +1322,9 @@ class RevenueTrackingDeployment:
     
     async def _validate_deployment(self) -> bool:
         """Validate the deployment"""
+
+
+
         try:
             essential_services = [
                 "revenue-platform-integrations", "revenue-calculation-engine", 
@@ -1350,6 +1362,9 @@ class RevenueTrackingDeployment:
     
     async def get_deployment_status(self) -> Dict[str, Any]:
         """Get deployment status and metrics"""
+
+
+
         try:
             services_status = {}
             
@@ -1393,6 +1408,9 @@ class RevenueTrackingDeployment:
     
     async def _cleanup_failed_deployment(self) -> None:
         """Clean up failed deployment"""
+
+
+
         try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.config.namespace)
@@ -1402,6 +1420,9 @@ class RevenueTrackingDeployment:
     
     async def cleanup(self) -> None:
         """Clean up the entire deployment"""
+
+
+
         try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.config.namespace)

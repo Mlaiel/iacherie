@@ -1,12 +1,12 @@
 """
-🏗️ Container Registry Manager - IA-Influencer-Agent Infrastructure
+ Container Registry Manager - IA-Influencer-Agent Infrastructure
 =================================================================
 Expert Team: DevOps Engineer + Registry Specialist + Security Engineer + CI/CD Engineer
 Creator: Fahed Mlaiel <mlaiel@live.de>
 Company: IA-Influencer-Agent Professional Platform
 =================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL 
 Tout vol, copie ou utilisation non autorisée de ce code source,
 de ce concept ou de cette propriété intellectuelle sans
 l'autorisation écrite explicite de Fahed Mlaiel est strictement
@@ -140,6 +140,9 @@ class ContainerRegistryManager:
         
     async def initialize(self) -> bool:
         """Initialize container registry manager"""
+
+
+
         try:
             # Initialize Docker client
             self.docker_client = docker.from_env()
@@ -157,15 +160,18 @@ class ContainerRegistryManager:
             asyncio.create_task(self._build_worker())
             
             self.initialized = True
-            self.logger.info("✅ ContainerRegistryManager initialized successfully")
+            self.logger.info(" ContainerRegistryManager initialized successfully")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error initializing ContainerRegistryManager: {e}")
+            self.logger.error(f" Error initializing ContainerRegistryManager: {e}")
             return False
     
     async def _load_registry_configs(self) -> None:
         """Load existing registry configurations"""
+
+
+
         try:
             config_files = self.config_path.glob("registry_*.yml")
             for config_file in config_files:
@@ -175,10 +181,13 @@ class ContainerRegistryManager:
                     self.registries[registry_config.name] = registry_config
                     
         except Exception as e:
-            self.logger.warning(f"⚠️ Error loading registry configs: {e}")
+            self.logger.warning(f" Error loading registry configs: {e}")
     
     async def _setup_default_registries(self) -> None:
         """Setup default registries for IA-Influencer platform"""
+
+
+
         try:
             # Private registry for IA-Influencer images
             private_registry = RegistryConfig(
@@ -234,23 +243,29 @@ class ContainerRegistryManager:
                 await self._save_registry_config(name, registry)
             
         except Exception as e:
-            self.logger.error(f"❌ Error setting up default registries: {e}")
+            self.logger.error(f" Error setting up default registries: {e}")
     
     async def _save_registry_config(self, name: str, config: RegistryConfig) -> None:
         """Save registry configuration to file"""
+
+
+
         try:
             config_file = self.config_path / f"registry_{name}.yml"
             with open(config_file, 'w') as f:
                 yaml.dump(asdict(config), f, default_flow_style=False)
                 
         except Exception as e:
-            self.logger.error(f"❌ Error saving registry config {name}: {e}")
+            self.logger.error(f" Error saving registry config {name}: {e}")
     
     async def authenticate_registry(self, registry_name: str) -> bool:
         """Authenticate with container registry"""
+
+
+
         try:
             if registry_name not in self.registries:
-                self.logger.error(f"❌ Registry {registry_name} not found")
+                self.logger.error(f" Registry {registry_name} not found")
                 return False
             
             registry = self.registries[registry_name]
@@ -267,11 +282,14 @@ class ContainerRegistryManager:
                 return await self._authenticate_generic(registry)
                 
         except Exception as e:
-            self.logger.error(f"❌ Error authenticating with registry {registry_name}: {e}")
+            self.logger.error(f" Error authenticating with registry {registry_name}: {e}")
             return False
     
     async def _authenticate_docker_hub(self, registry: RegistryConfig) -> bool:
         """Authenticate with Docker Hub"""
+
+
+
         try:
             login_result = self.docker_client.login(
                 username=registry.username,
@@ -280,17 +298,20 @@ class ContainerRegistryManager:
             )
             
             if "Login Succeeded" in login_result.get("Status", ""):
-                self.logger.info(f"✅ Authenticated with Docker Hub")
+                self.logger.info(f" Authenticated with Docker Hub")
                 return True
             else:
                 return False
                 
         except Exception as e:
-            self.logger.error(f"❌ Docker Hub authentication failed: {e}")
+            self.logger.error(f" Docker Hub authentication failed: {e}")
             return False
     
     async def _authenticate_aws_ecr(self, registry: RegistryConfig) -> bool:
         """Authenticate with AWS ECR"""
+
+
+
         try:
             # Get ECR login token
             ecr_client = boto3.client('ecr', region_name='eu-central-1')
@@ -306,17 +327,20 @@ class ContainerRegistryManager:
             )
             
             if "Login Succeeded" in login_result.get("Status", ""):
-                self.logger.info(f"✅ Authenticated with AWS ECR")
+                self.logger.info(f" Authenticated with AWS ECR")
                 return True
             else:
                 return False
                 
         except Exception as e:
-            self.logger.error(f"❌ AWS ECR authentication failed: {e}")
+            self.logger.error(f" AWS ECR authentication failed: {e}")
             return False
     
     async def _authenticate_azure_acr(self, registry: RegistryConfig) -> bool:
         """Authenticate with Azure ACR"""
+
+
+
         try:
             login_result = self.docker_client.login(
                 username=registry.username,
@@ -325,17 +349,20 @@ class ContainerRegistryManager:
             )
             
             if "Login Succeeded" in login_result.get("Status", ""):
-                self.logger.info(f"✅ Authenticated with Azure ACR")
+                self.logger.info(f" Authenticated with Azure ACR")
                 return True
             else:
                 return False
                 
         except Exception as e:
-            self.logger.error(f"❌ Azure ACR authentication failed: {e}")
+            self.logger.error(f" Azure ACR authentication failed: {e}")
             return False
     
     async def _authenticate_harbor(self, registry: RegistryConfig) -> bool:
         """Authenticate with Harbor registry"""
+
+
+
         try:
             login_result = self.docker_client.login(
                 username=registry.username,
@@ -344,17 +371,20 @@ class ContainerRegistryManager:
             )
             
             if "Login Succeeded" in login_result.get("Status", ""):
-                self.logger.info(f"✅ Authenticated with Harbor registry")
+                self.logger.info(f" Authenticated with Harbor registry")
                 return True
             else:
                 return False
                 
         except Exception as e:
-            self.logger.error(f"❌ Harbor authentication failed: {e}")
+            self.logger.error(f" Harbor authentication failed: {e}")
             return False
     
     async def _authenticate_generic(self, registry: RegistryConfig) -> bool:
         """Authenticate with generic registry"""
+
+
+
         try:
             auth_config = {}
             if registry.username and registry.password:
@@ -375,13 +405,13 @@ class ContainerRegistryManager:
                 )
                 
                 if "Login Succeeded" in login_result.get("Status", ""):
-                    self.logger.info(f"✅ Authenticated with registry {registry.name}")
+                    self.logger.info(f" Authenticated with registry {registry.name}")
                     return True
             
             return False
             
         except Exception as e:
-            self.logger.error(f"❌ Generic registry authentication failed: {e}")
+            self.logger.error(f" Generic registry authentication failed: {e}")
             return False
     
     async def build_image(
@@ -390,6 +420,9 @@ class ContainerRegistryManager:
         registry_names: List[str] = None
     ) -> str:
         """Queue image build"""
+
+
+
         try:
             build_id = hashlib.md5(f"{build_config.name}_{datetime.now()}".encode()).hexdigest()
             
@@ -404,11 +437,11 @@ class ContainerRegistryManager:
             await self.build_queue.put(build_request)
             self.active_builds[build_id] = build_request
             
-            self.logger.info(f"📋 Queued build for {build_config.name} (ID: {build_id})")
+            self.logger.info(f" Queued build for {build_config.name} (ID: {build_id})")
             return build_id
             
         except Exception as e:
-            self.logger.error(f"❌ Error queuing build: {e}")
+            self.logger.error(f" Error queuing build: {e}")
             return ""
     
     async def _build_worker(self) -> None:
@@ -426,7 +459,7 @@ class ContainerRegistryManager:
                 self.active_builds[build_id]["status"] = ImageBuildStatus.BUILDING
                 self.active_builds[build_id]["started_at"] = datetime.now()
                 
-                self.logger.info(f"🔨 Starting build: {build_config.name}")
+                self.logger.info(f" Starting build: {build_config.name}")
                 
                 # Perform build
                 success = await self._perform_build(build_id, build_config, registry_names)
@@ -445,7 +478,7 @@ class ContainerRegistryManager:
                 self.build_queue.task_done()
                 
             except Exception as e:
-                self.logger.error(f"❌ Error in build worker: {e}")
+                self.logger.error(f" Error in build worker: {e}")
                 await asyncio.sleep(10)
     
     async def _perform_build(
@@ -455,6 +488,9 @@ class ContainerRegistryManager:
         registry_names: List[str]
     ) -> bool:
         """Perform actual image build"""
+
+
+
         try:
             # Build image
             image_tags = []
@@ -472,7 +508,7 @@ class ContainerRegistryManager:
                     image_tags.append(image_tag)
             
             # Build with Docker client
-            self.logger.info(f"🔨 Building image: {config.name}")
+            self.logger.info(f" Building image: {config.name}")
             
             image, build_logs = self.docker_client.images.build(
                 path=config.context_path,
@@ -499,7 +535,7 @@ class ContainerRegistryManager:
             manifest = await self._generate_image_manifest(image, config.name)
             self.image_cache[build_id] = manifest
             
-            self.logger.info(f"✅ Successfully built image: {config.name}")
+            self.logger.info(f" Successfully built image: {config.name}")
             
             # Push to registries
             push_success = await self._push_to_registries(image_tags, registry_names)
@@ -507,11 +543,14 @@ class ContainerRegistryManager:
             return push_success
             
         except Exception as e:
-            self.logger.error(f"❌ Error building image: {e}")
+            self.logger.error(f" Error building image: {e}")
             return False
     
     async def _generate_image_manifest(self, image, name: str) -> ImageManifest:
         """Generate image manifest"""
+
+
+
         try:
             attrs = image.attrs
             config = attrs.get("Config", {})
@@ -533,7 +572,7 @@ class ContainerRegistryManager:
             return manifest
             
         except Exception as e:
-            self.logger.error(f"❌ Error generating image manifest: {e}")
+            self.logger.error(f" Error generating image manifest: {e}")
             return ImageManifest(
                 name=name, tag="latest", digest="", size=0,
                 created=datetime.now(), architecture="amd64", os="linux"
@@ -541,6 +580,9 @@ class ContainerRegistryManager:
     
     async def _push_to_registries(self, image_tags: List[str], registry_names: List[str]) -> bool:
         """Push image to registries"""
+
+
+
         try:
             push_success = True
             
@@ -550,43 +592,46 @@ class ContainerRegistryManager:
                 # Authenticate with registry
                 auth_success = await self.authenticate_registry(registry_name)
                 if not auth_success:
-                    self.logger.error(f"❌ Failed to authenticate with registry {registry_name}")
+                    self.logger.error(f" Failed to authenticate with registry {registry_name}")
                     push_success = False
                     continue
                 
                 # Push image
-                self.logger.info(f"📤 Pushing image to {registry_name}: {tag}")
+                self.logger.info(f" Pushing image to {registry_name}: {tag}")
                 
                 try:
                     push_logs = self.docker_client.images.push(tag, stream=True)
                     
                     for log in push_logs:
                         if 'error' in log:
-                            self.logger.error(f"❌ Push error: {log['error']}")
+                            self.logger.error(f" Push error: {log['error']}")
                             push_success = False
                             break
                         elif 'status' in log:
                             self.logger.debug(log['status'])
                     
                     if push_success:
-                        self.logger.info(f"✅ Successfully pushed to {registry_name}")
+                        self.logger.info(f" Successfully pushed to {registry_name}")
                     
                 except Exception as e:
-                    self.logger.error(f"❌ Error pushing to {registry_name}: {e}")
+                    self.logger.error(f" Error pushing to {registry_name}: {e}")
                     push_success = False
             
             return push_success
             
         except Exception as e:
-            self.logger.error(f"❌ Error pushing to registries: {e}")
+            self.logger.error(f" Error pushing to registries: {e}")
             return False
     
     async def scan_image(self, image_name: str, registry_name: str) -> Dict[str, Any]:
         """Scan image for vulnerabilities"""
+
+
+
         try:
             scan_id = hashlib.md5(f"{image_name}_{datetime.now()}".encode()).hexdigest()
             
-            self.logger.info(f"🔍 Starting security scan for image: {image_name}")
+            self.logger.info(f" Starting security scan for image: {image_name}")
             
             # Use Trivy for vulnerability scanning
             scan_result = await self._scan_with_trivy(image_name)
@@ -608,11 +653,14 @@ class ContainerRegistryManager:
             return self.scan_results[scan_id]
             
         except Exception as e:
-            self.logger.error(f"❌ Error scanning image: {e}")
+            self.logger.error(f" Error scanning image: {e}")
             return {"status": ImageScanStatus.FAILED, "error": str(e)}
     
     async def _scan_with_trivy(self, image_name: str) -> Dict[str, Any]:
         """Scan image with Trivy"""
+
+
+
         try:
             result = subprocess.run([
                 "trivy", "image", 
@@ -652,11 +700,14 @@ class ContainerRegistryManager:
             }
             
         except Exception as e:
-            self.logger.error(f"❌ Error with Trivy scan: {e}")
+            self.logger.error(f" Error with Trivy scan: {e}")
             return {"vulnerabilities": [], "critical_count": 0, "high_count": 0, "medium_count": 0, "low_count": 0}
     
     async def list_images(self, registry_name: str, repository: str = None) -> List[Dict[str, Any]]:
         """List images in registry"""
+
+
+
         try:
             if registry_name not in self.registries:
                 return []
@@ -673,11 +724,14 @@ class ContainerRegistryManager:
                 return await self._list_generic_images(registry, repository)
                 
         except Exception as e:
-            self.logger.error(f"❌ Error listing images: {e}")
+            self.logger.error(f" Error listing images: {e}")
             return []
     
     async def _list_ecr_images(self, registry: RegistryConfig, repository: str = None) -> List[Dict[str, Any]]:
         """List images in AWS ECR"""
+
+
+
         try:
             ecr_client = boto3.client('ecr', region_name='eu-central-1')
             
@@ -714,21 +768,27 @@ class ContainerRegistryManager:
             return images
             
         except Exception as e:
-            self.logger.error(f"❌ Error listing ECR images: {e}")
+            self.logger.error(f" Error listing ECR images: {e}")
             return []
     
     async def _list_acr_images(self, registry: RegistryConfig, repository: str = None) -> List[Dict[str, Any]]:
         """List images in Azure ACR"""
+
+
+
         try:
             # Simplified ACR implementation
             return []
             
         except Exception as e:
-            self.logger.error(f"❌ Error listing ACR images: {e}")
+            self.logger.error(f" Error listing ACR images: {e}")
             return []
     
     async def _list_harbor_images(self, registry: RegistryConfig, repository: str = None) -> List[Dict[str, Any]]:
         """List images in Harbor registry"""
+
+
+
         try:
             # Use Harbor API
             base_url = f"https://{registry.url}/api/v2.0"
@@ -775,11 +835,14 @@ class ContainerRegistryManager:
                     return images
                     
         except Exception as e:
-            self.logger.error(f"❌ Error listing Harbor images: {e}")
+            self.logger.error(f" Error listing Harbor images: {e}")
             return []
     
     async def _list_generic_images(self, registry: RegistryConfig, repository: str = None) -> List[Dict[str, Any]]:
         """List images in generic registry"""
+
+
+
         try:
             # Generic Docker Registry API v2
             base_url = f"https://{registry.url}/v2"
@@ -830,11 +893,14 @@ class ContainerRegistryManager:
                     return images
                     
         except Exception as e:
-            self.logger.error(f"❌ Error listing generic registry images: {e}")
+            self.logger.error(f" Error listing generic registry images: {e}")
             return []
     
     async def delete_image(self, registry_name: str, repository: str, tag: str) -> bool:
         """Delete image from registry"""
+
+
+
         try:
             if registry_name not in self.registries:
                 return False
@@ -849,11 +915,14 @@ class ContainerRegistryManager:
                 return await self._delete_generic_image(registry, repository, tag)
                 
         except Exception as e:
-            self.logger.error(f"❌ Error deleting image: {e}")
+            self.logger.error(f" Error deleting image: {e}")
             return False
     
     async def _delete_ecr_image(self, registry: RegistryConfig, repository: str, tag: str) -> bool:
         """Delete image from AWS ECR"""
+
+
+
         try:
             ecr_client = boto3.client('ecr', region_name='eu-central-1')
             
@@ -864,17 +933,20 @@ class ContainerRegistryManager:
             
             deleted_images = response.get('imageIds', [])
             if deleted_images:
-                self.logger.info(f"✅ Deleted image {repository}:{tag} from ECR")
+                self.logger.info(f" Deleted image {repository}:{tag} from ECR")
                 return True
             else:
                 return False
                 
         except Exception as e:
-            self.logger.error(f"❌ Error deleting ECR image: {e}")
+            self.logger.error(f" Error deleting ECR image: {e}")
             return False
     
     async def _delete_harbor_image(self, registry: RegistryConfig, repository: str, tag: str) -> bool:
         """Delete image from Harbor registry"""
+
+
+
         try:
             base_url = f"https://{registry.url}/api/v2.0"
             project_name = repository.split('/')[0]
@@ -887,17 +959,20 @@ class ContainerRegistryManager:
                 auth = aiohttp.BasicAuth(registry.username, registry.password)
                 async with session.delete(delete_url, auth=auth) as response:
                     if response.status == 200:
-                        self.logger.info(f"✅ Deleted image {repository}:{tag} from Harbor")
+                        self.logger.info(f" Deleted image {repository}:{tag} from Harbor")
                         return True
                     else:
                         return False
                         
         except Exception as e:
-            self.logger.error(f"❌ Error deleting Harbor image: {e}")
+            self.logger.error(f" Error deleting Harbor image: {e}")
             return False
     
     async def _delete_generic_image(self, registry: RegistryConfig, repository: str, tag: str) -> bool:
         """Delete image from generic registry"""
+
+
+
         try:
             # Generic Docker Registry API v2 delete
             base_url = f"https://{registry.url}/v2"
@@ -924,17 +999,20 @@ class ContainerRegistryManager:
                     delete_url = f"{base_url}/{repository}/manifests/{digest}"
                     async with session.delete(delete_url, auth=auth) as delete_response:
                         if delete_response.status == 202:
-                            self.logger.info(f"✅ Deleted image {repository}:{tag} from registry")
+                            self.logger.info(f" Deleted image {repository}:{tag} from registry")
                             return True
                         else:
                             return False
                             
         except Exception as e:
-            self.logger.error(f"❌ Error deleting generic registry image: {e}")
+            self.logger.error(f" Error deleting generic registry image: {e}")
             return False
     
     async def get_build_status(self, build_id: str) -> Dict[str, Any]:
         """Get build status"""
+
+
+
         try:
             if build_id in self.active_builds:
                 return {
@@ -958,7 +1036,7 @@ class ContainerRegistryManager:
                 return {"build_id": build_id, "status": "not_found"}
                 
         except Exception as e:
-            self.logger.error(f"❌ Error getting build status: {e}")
+            self.logger.error(f" Error getting build status: {e}")
             return {"build_id": build_id, "status": "error", "error": str(e)}
 
 class ImagePipelineManager:
@@ -972,19 +1050,25 @@ class ImagePipelineManager:
     
     async def initialize(self) -> bool:
         """Initialize pipeline manager"""
+
+
+
         try:
             # Setup default pipelines for IA-Influencer services
             await self._setup_default_pipelines()
             
-            self.logger.info("✅ ImagePipelineManager initialized")
+            self.logger.info(" ImagePipelineManager initialized")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error initializing ImagePipelineManager: {e}")
+            self.logger.error(f" Error initializing ImagePipelineManager: {e}")
             return False
     
     async def _setup_default_pipelines(self) -> None:
         """Setup default CI/CD pipelines"""
+
+
+
         try:
             # Web API Pipeline
             web_api_pipeline = [
@@ -1077,13 +1161,16 @@ class ImagePipelineManager:
             }
             
         except Exception as e:
-            self.logger.error(f"❌ Error setting up default pipelines: {e}")
+            self.logger.error(f" Error setting up default pipelines: {e}")
     
     async def run_pipeline(self, pipeline_name: str, environment: Dict[str, str] = None) -> str:
         """Run CI/CD pipeline"""
+
+
+
         try:
             if pipeline_name not in self.pipelines:
-                self.logger.error(f"❌ Pipeline {pipeline_name} not found")
+                self.logger.error(f" Pipeline {pipeline_name} not found")
                 return ""
             
             run_id = hashlib.md5(f"{pipeline_name}_{datetime.now()}".encode()).hexdigest()
@@ -1105,15 +1192,18 @@ class ImagePipelineManager:
             # Run pipeline stages
             asyncio.create_task(self._execute_pipeline(run_id))
             
-            self.logger.info(f"🚀 Started pipeline {pipeline_name} (Run ID: {run_id})")
+            self.logger.info(f" Started pipeline {pipeline_name} (Run ID: {run_id})")
             return run_id
             
         except Exception as e:
-            self.logger.error(f"❌ Error running pipeline: {e}")
+            self.logger.error(f" Error running pipeline: {e}")
             return ""
     
     async def _execute_pipeline(self, run_id: str) -> None:
         """Execute pipeline stages"""
+
+
+
         try:
             pipeline_run = self.pipeline_runs[run_id]
             stages = pipeline_run["stages"]
@@ -1138,10 +1228,10 @@ class ImagePipelineManager:
                         if success:
                             executed_stages.add(stage.name)
                             pipeline_run["completed_stages"].append(stage.name)
-                            self.logger.info(f"✅ Stage {stage.name} completed successfully")
+                            self.logger.info(f" Stage {stage.name} completed successfully")
                         else:
                             pipeline_run["failed_stages"].append(stage.name)
-                            self.logger.error(f"❌ Stage {stage.name} failed")
+                            self.logger.error(f" Stage {stage.name} failed")
                             
                             if not stage.continue_on_error:
                                 pipeline_run["status"] = "failed"
@@ -1165,7 +1255,7 @@ class ImagePipelineManager:
             pipeline_run["completed_at"] = datetime.now()
             
         except Exception as e:
-            self.logger.error(f"❌ Error executing pipeline: {e}")
+            self.logger.error(f" Error executing pipeline: {e}")
             if run_id in self.pipeline_runs:
                 self.pipeline_runs[run_id]["status"] = "error"
                 self.pipeline_runs[run_id]["error"] = str(e)
@@ -1173,8 +1263,11 @@ class ImagePipelineManager:
     
     async def _execute_stage(self, stage: PipelineStage, environment: Dict[str, str]) -> bool:
         """Execute individual pipeline stage"""
+
+
+
         try:
-            self.logger.info(f"🔄 Executing stage: {stage.name}")
+            self.logger.info(f" Executing stage: {stage.name}")
             
             # Set up environment
             env = {**environment, **stage.environment}
@@ -1198,13 +1291,13 @@ class ImagePipelineManager:
                 )
                 
                 if result.returncode != 0:
-                    self.logger.error(f"❌ Command failed: {command}")
+                    self.logger.error(f" Command failed: {command}")
                     self.logger.error(f"Error output: {result.stderr}")
                     
                     # Retry if configured
                     if stage.retry_count > 1:
                         for retry in range(stage.retry_count - 1):
-                            self.logger.info(f"🔄 Retrying command (attempt {retry + 2})")
+                            self.logger.info(f" Retrying command (attempt {retry + 2})")
                             
                             result = subprocess.run(
                                 command,
@@ -1228,14 +1321,17 @@ class ImagePipelineManager:
             return True
             
         except subprocess.TimeoutExpired:
-            self.logger.error(f"❌ Stage {stage.name} timed out after {stage.timeout} seconds")
+            self.logger.error(f" Stage {stage.name} timed out after {stage.timeout} seconds")
             return False
         except Exception as e:
-            self.logger.error(f"❌ Error executing stage {stage.name}: {e}")
+            self.logger.error(f" Error executing stage {stage.name}: {e}")
             return False
     
     async def get_pipeline_status(self, run_id: str) -> Dict[str, Any]:
         """Get pipeline run status"""
+
+
+
         try:
             if run_id not in self.pipeline_runs:
                 return {"run_id": run_id, "status": "not_found"}
@@ -1255,7 +1351,7 @@ class ImagePipelineManager:
             }
             
         except Exception as e:
-            self.logger.error(f"❌ Error getting pipeline status: {e}")
+            self.logger.error(f" Error getting pipeline status: {e}")
             return {"run_id": run_id, "status": "error", "error": str(e)}
 
 class ArtifactManager:
@@ -1269,6 +1365,9 @@ class ArtifactManager:
     
     async def initialize(self) -> bool:
         """Initialize artifact manager"""
+
+
+
         try:
             # Setup retention policies
             await self._setup_retention_policies()
@@ -1276,15 +1375,18 @@ class ArtifactManager:
             # Start cleanup task
             asyncio.create_task(self._cleanup_task())
             
-            self.logger.info("✅ ArtifactManager initialized")
+            self.logger.info(" ArtifactManager initialized")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error initializing ArtifactManager: {e}")
+            self.logger.error(f" Error initializing ArtifactManager: {e}")
             return False
     
     async def _setup_retention_policies(self) -> None:
         """Setup artifact retention policies"""
+
+
+
         try:
             self.retention_policies = {
                 "development": {
@@ -1302,7 +1404,7 @@ class ArtifactManager:
             }
             
         except Exception as e:
-            self.logger.error(f"❌ Error setting up retention policies: {e}")
+            self.logger.error(f" Error setting up retention policies: {e}")
     
     async def _cleanup_task(self) -> None:
         """Background task for artifact cleanup"""
@@ -1317,11 +1419,14 @@ class ArtifactManager:
                 await asyncio.sleep(24 * 3600)  # Run daily
                 
             except Exception as e:
-                self.logger.error(f"❌ Error in cleanup task: {e}")
+                self.logger.error(f" Error in cleanup task: {e}")
                 await asyncio.sleep(3600)  # Retry in 1 hour
     
     async def _cleanup_registry_images(self, registry_name: str) -> None:
         """Cleanup images in registry based on retention policy"""
+
+
+
         try:
             images = await self.registry_manager.list_images(registry_name)
             
@@ -1371,10 +1476,10 @@ class ArtifactManager:
                             registry_name, image['repository'], tag
                         )
                         if success:
-                            self.logger.info(f"🗑️ Deleted old image: {image['repository']}:{tag}")
+                            self.logger.info(f" Deleted old image: {image['repository']}:{tag}")
                 
         except Exception as e:
-            self.logger.error(f"❌ Error cleaning up registry {registry_name}: {e}")
+            self.logger.error(f" Error cleaning up registry {registry_name}: {e}")
 
 __all__ = [
     "ContainerRegistryManager",

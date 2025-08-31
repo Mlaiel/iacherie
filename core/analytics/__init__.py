@@ -10,7 +10,7 @@ Business Intelligence → Revenue Tracking → Collaboration Analytics → Platf
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 ANY unauthorized use, reproduction, or distribution is STRICTLY PROHIBITED.
 Legal action will be taken against violators under German and international law.

@@ -6,7 +6,7 @@ Met à jour le registre des agents selon l'état réel du système
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use is strictly prohibited. Contact: mlaiel@live.de
 """
@@ -14,11 +14,11 @@ Unauthorized use is strictly prohibited. Contact: mlaiel@live.de
 # REGISTRE COMPLET DES AGENTS EXISTANTS - État Réel du 13 Août 2025
 
 EXISTING_AGENTS_REGISTRY = {
-    # ═══════════════════════════════════════════════════════════════
+    # 
     # AGENTS CORE BUSINESS (Critiques pour le métier)
-    # ═══════════════════════════════════════════════════════════════
+    # 
     
-    # 🎯 Content & Protection (Cœur de métier)
+    #  Content & Protection (Cœur de métier)
     'content_agent': {
         'path': '/backend/ai_agents/content_agent/',
         'status': 'active',
@@ -89,9 +89,9 @@ EXISTING_AGENTS_REGISTRY = {
         'dependencies': ['nlp_agent', 'analytics_agent', 'trend_agent']
     },
     
-    # ═══════════════════════════════════════════════════════════════
+    # 
     # AGENTS TRAITEMENT MÉDIA (Spécialisés par format)
-    # ═══════════════════════════════════════════════════════════════
+    # 
     
     'audio_agent': {
         'path': '/backend/ai_agents/audio_agent/',
@@ -143,9 +143,9 @@ EXISTING_AGENTS_REGISTRY = {
         'dependencies': ['nlp_agent', 'ml_agent']
     },
     
-    # ═══════════════════════════════════════════════════════════════
+    # 
     # AGENTS IA AVANCÉS (Machine Learning & Analyse)
-    # ═══════════════════════════════════════════════════════════════
+    # 
     
     'ml_agent': {
         'path': '/backend/ai_agents/ml_agent/',
@@ -197,9 +197,9 @@ EXISTING_AGENTS_REGISTRY = {
         'dependencies': ['ml_agent', 'analytics_agent', 'vector_agent']
     },
     
-    # ═══════════════════════════════════════════════════════════════
+    # 
     # AGENTS PLATEFORMES & INTÉGRATIONS
-    # ═══════════════════════════════════════════════════════════════
+    # 
     
     'platform_agent': {
         'path': '/backend/ai_agents/platform_agent/',
@@ -241,9 +241,9 @@ EXISTING_AGENTS_REGISTRY = {
         'dependencies': ['api_gateway_agent', 'notification_agent']
     },
     
-    # ═══════════════════════════════════════════════════════════════
+    # 
     # AGENTS ANALYTICS & MONITORING
-    # ═══════════════════════════════════════════════════════════════
+    # 
     
     'analytics_agent': {
         'path': '/backend/ai_agents/analytics_agent/',
@@ -285,9 +285,9 @@ EXISTING_AGENTS_REGISTRY = {
         'dependencies': ['crawling_agent', 'analytics_agent']
     },
     
-    # ═══════════════════════════════════════════════════════════════
+    # 
     # AGENTS SÉCURITÉ & COMPLIANCE
-    # ═══════════════════════════════════════════════════════════════
+    # 
     
     'compliance_agent': {
         'path': '/backend/ai_agents/compliance_agent/',
@@ -349,9 +349,9 @@ EXISTING_AGENTS_REGISTRY = {
         'dependencies': ['compliance_agent']
     },
     
-    # ═══════════════════════════════════════════════════════════════
+    # 
     # AGENTS BUSINESS & REVENUE  
-    # ═══════════════════════════════════════════════════════════════
+    # 
     
     'revenue_agent': {
         'path': '/backend/ai_agents/revenue_agent/',
@@ -403,9 +403,9 @@ EXISTING_AGENTS_REGISTRY = {
         'dependencies': ['payment_processing_agent', 'revenue_agent']
     },
     
-    # ═══════════════════════════════════════════════════════════════
+    # 
     # AGENTS CONTENU & ENGAGEMENT
-    # ═══════════════════════════════════════════════════════════════
+    # 
     
     'moderation_agent': {
         'path': '/backend/ai_agents/moderation_agent/',
@@ -457,9 +457,9 @@ EXISTING_AGENTS_REGISTRY = {
         'dependencies': ['analytics_agent', 'ml_agent', 'social_media_agent']
     },
     
-    # ═══════════════════════════════════════════════════════════════
+    # 
     # AGENTS UTILISATEUR & SUPPORT
-    # ═══════════════════════════════════════════════════════════════
+    # 
     
     'creator_onboarding_agent': {
         'path': '/backend/ai_agents/creator_onboarding_agent/',
@@ -491,9 +491,9 @@ EXISTING_AGENTS_REGISTRY = {
         'dependencies': ['ml_agent', 'analytics_agent']
     },
     
-    # ═══════════════════════════════════════════════════════════════
+    # 
     # AGENTS INFRASTRUCTURE & TECHNIQUE
-    # ═══════════════════════════════════════════════════════════════
+    # 
     
     'api_gateway_agent': {
         'path': '/backend/ai_agents/api_gateway_agent/',
@@ -575,9 +575,9 @@ EXISTING_AGENTS_REGISTRY = {
         'dependencies': []
     },
     
-    # ═══════════════════════════════════════════════════════════════
+    # 
     # AGENTS BLOCKCHAIN & CRYPTO (Futur/Experimental)
-    # ═══════════════════════════════════════════════════════════════
+    # 
     
     'blockchain_agent': {
         'path': '/backend/ai_agents/blockchain_agent/',
@@ -590,9 +590,9 @@ EXISTING_AGENTS_REGISTRY = {
     }
 }
 
-# ═══════════════════════════════════════════════════════════════
+# 
 # STATISTIQUES SYSTÈME
-# ═══════════════════════════════════════════════════════════════
+# 
 
 def get_agents_statistics():
     """Retourne les statistiques complètes du système d'agents"""
@@ -639,6 +639,9 @@ def validate_agent_dependencies():
 
 def get_agents_by_category(category: str):
     """Retourne tous les agents d'une catégorie donnée"""
+
+
+
     return {
         agent_id: config 
         for agent_id, config in EXISTING_AGENTS_REGISTRY.items() 
@@ -647,6 +650,9 @@ def get_agents_by_category(category: str):
 
 def get_critical_agents():
     """Retourne tous les agents critiques"""
+
+
+
     return {
         agent_id: config 
         for agent_id, config in EXISTING_AGENTS_REGISTRY.items() 
@@ -661,7 +667,7 @@ if __name__ == "__main__":
     print()
     
     stats = get_agents_statistics()
-    print(f"📊 STATISTIQUES SYSTÈME:")
+    print(f" STATISTIQUES SYSTÈME:")
     print(f"  • Total agents: {stats['total_agents']}")
     print(f"  • Par catégorie: {dict(stats['by_category'])}")
     print(f"  • Par priorité: {dict(stats['by_priority'])}")
@@ -671,20 +677,20 @@ if __name__ == "__main__":
     # Validation des dépendances
     errors = validate_agent_dependencies()
     if errors:
-        print("❌ ERREURS DE DÉPENDANCES:")
+        print(" ERREURS DE DÉPENDANCES:")
         for error in errors:
             print(f"  • {error}")
     else:
-        print("✅ Toutes les dépendances sont valides")
+        print(" Toutes les dépendances sont valides")
     
     print()
-    print("🔥 AGENTS CRITIQUES:")
+    print(" AGENTS CRITIQUES:")
     critical = get_critical_agents()
     for agent_id, config in critical.items():
         print(f"  • {agent_id}: {config['description']}")
     
     print()
-    print("⚠️  NOTICE LÉGALE:")
+    print("  NOTICE LÉGALE:")
     print("Ce registre et tous les agents listés sont la propriété exclusive de Fahed Mlaiel.")
     print("Toute utilisation non autorisée est strictement interdite.")
     print("Contact: mlaiel@live.de")

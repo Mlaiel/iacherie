@@ -111,9 +111,9 @@ class InternationalizationManager:
             LanguageInfo("be", "Belarusian", "Беларуская", LanguageRegion.EUROPE, LanguageScript.CYRILLIC),
             
             # Asian languages
-            LanguageInfo("zh", "Chinese", "中文", LanguageRegion.ASIA, LanguageScript.CHINESE),
-            LanguageInfo("ja", "Japanese", "日本語", LanguageRegion.ASIA, LanguageScript.JAPANESE),
-            LanguageInfo("ko", "Korean", "한국어", LanguageRegion.ASIA, LanguageScript.KOREAN),
+            LanguageInfo("zh", "Chinese", "", LanguageRegion.ASIA, LanguageScript.CHINESE),
+            LanguageInfo("ja", "Japanese", "", LanguageRegion.ASIA, LanguageScript.JAPANESE),
+            LanguageInfo("ko", "Korean", "", LanguageRegion.ASIA, LanguageScript.KOREAN),
             LanguageInfo("hi", "Hindi", "हिन्दी", LanguageRegion.ASIA, LanguageScript.DEVANAGARI),
             LanguageInfo("ar", "Arabic", "العربية", LanguageRegion.ASIA, LanguageScript.ARABIC, rtl=True),
             LanguageInfo("fa", "Persian", "فارسی", LanguageRegion.ASIA, LanguageScript.ARABIC, rtl=True),
@@ -267,39 +267,39 @@ class InternationalizationManager:
         # CRITICAL: Add Amazigh/Berber languages (missing from original)
         amazigh_berber_languages = [
             # Primary Amazigh/Berber Languages
-            ("tzm", "Central Atlas Tamazight", "ⵜⴰⵎⴰⵣⵉⵖⵜ"),
-            ("rif", "Tarifit (Rif Berber)", "ⵜⴰⵔⵉⴼⵉⵜ"),
-            ("shi", "Tashelhit (Souss Berber)", "ⵜⴰⵛⵍⵃⵉⵜ"),
-            ("kab", "Kabyle", "ⵜⴰⵇⴱⴰⵢⵍⵉⵜ"),
-            ("shy", "Chaouia (Shawiya)", "ⵜⴰⵛⴰⵡⵉⵜ"),
-            ("mzb", "Tumzabt (Mozabite)", "ⵜⵓⵎⵣⴰⴱⵜ"),
-            ("thv", "Tahaggart Tamahaq", "ⵜⴰⵀⴰⴳⴳⴰⵔⵜ"),
-            ("ttq", "Tawallammat Tamajaq", "ⵜⴰⵡⴰⵍⵍⴰⵎⵎⴰⵜ"),
-            ("taq", "Tamasheq", "ⵜⴰⵎⴰⵛⴻⵖ"),
-            ("zen", "Zenaga", "ⵜⵓⵣⵏⴰⴳⴰ"),
+            ("tzm", "Central Atlas Tamazight", ""),
+            ("rif", "Tarifit (Rif Berber)", ""),
+            ("shi", "Tashelhit (Souss Berber)", ""),
+            ("kab", "Kabyle", ""),
+            ("shy", "Chaouia (Shawiya)", ""),
+            ("mzb", "Tumzabt (Mozabite)", ""),
+            ("thv", "Tahaggart Tamahaq", ""),
+            ("ttq", "Tawallammat Tamajaq", ""),
+            ("taq", "Tamasheq", ""),
+            ("zen", "Zenaga", ""),
             
             # Regional Amazigh Dialects - Morocco
-            ("tzm-MA-cent", "Central Morocco Tamazight", "ⵜⴰⵎⴰⵣⵉⵖⵜ ⵏ ⵡⴰⵟⵍⴰⵙ"),
-            ("rif-MA-north", "Northern Morocco Tarifit", "ⵜⴰⵔⵉⴼⵉⵜ ⵏ ⵓⴳⴰⴼⴰⵢ"),
-            ("shi-MA-south", "Southern Morocco Tashelhit", "ⵜⴰⵛⵍⵃⵉⵜ ⵏ ⵓⵏⵣⵓⵍ"),
+            ("tzm-MA-cent", "Central Morocco Tamazight", "  "),
+            ("rif-MA-north", "Northern Morocco Tarifit", "  "),
+            ("shi-MA-south", "Southern Morocco Tashelhit", "  "),
             
             # Regional Amazigh Dialects - Algeria  
-            ("kab-DZ-tizi", "Tizi Ouzou Kabyle", "ⵜⴰⵇⴱⴰⵢⵍⵉⵜ ⵏ ⵜⵉⵣⵉ ⵡⴻⵣⵣⵓ"),
-            ("shy-DZ-aures", "Aurès Chaouia", "ⵜⴰⵛⴰⵡⵉⵜ ⵏ ⵡⴰⵡⵔⴰⵙ"),
-            ("mzb-DZ-ghardaia", "Ghardaïa Mozabite", "ⵜⵓⵎⵣⴰⴱⵜ ⵏ ⵖⴰⵔⴷⴰⵢⴰ"),
+            ("kab-DZ-tizi", "Tizi Ouzou Kabyle", "   "),
+            ("shy-DZ-aures", "Aurès Chaouia", "  "),
+            ("mzb-DZ-ghardaia", "Ghardaïa Mozabite", "  "),
             
             # Regional Amazigh Dialects - Tuareg (Multi-country)
-            ("thv-DZ-hoggar", "Hoggar Tuareg (Algeria)", "ⵜⴰⵀⴰⴳⴳⴰⵔⵜ ⵏ ⵍⵣⴰⵢⴻⵔ"),
-            ("ttq-NE-niger", "Niger Tuareg", "ⵜⴰⵎⴰⵊⴰⵖ ⵏ ⵏⵉⵊⴻⵔ"),
-            ("taq-ML-mali", "Mali Tuareg", "ⵜⴰⵎⴰⵛⴻⵖ ⵏ ⵎⴰⵍⵉ"),
-            ("thv-LY-fezzan", "Fezzan Tuareg (Libya)", "ⵜⴰⵀⴰⴳⴳⴰⵔⵜ ⵏ ⴼⴻⵣⵣⴰⵏ"),
+            ("thv-DZ-hoggar", "Hoggar Tuareg (Algeria)", "  "),
+            ("ttq-NE-niger", "Niger Tuareg", "  "),
+            ("taq-ML-mali", "Mali Tuareg", "  "),
+            ("thv-LY-fezzan", "Fezzan Tuareg (Libya)", "  "),
             
             # Additional Berber Languages
-            ("siz", "Siwi (Siwa Oasis)", "ⵙⵉⵡⵉ"),
-            ("jbn", "Nafusi (Jebel Nafusa)", "ⵏⴰⴼⵓⵙⵉ"),
-            ("gha", "Ghadamès Berber", "ⵖⴰⴷⴰⵎⴻⵙ"),
-            ("auj", "Awjila Berber", "ⴰⵡⵊⵉⵍⴰ"),
-            ("soc", "Sokna Berber", "ⵙⵓⴽⵏⴰ"),
+            ("siz", "Siwi (Siwa Oasis)", ""),
+            ("jbn", "Nafusi (Jebel Nafusa)", ""),
+            ("gha", "Ghadamès Berber", ""),
+            ("auj", "Awjila Berber", ""),
+            ("soc", "Sokna Berber", ""),
             
             # Canary Islands (Historical)
             ("guanche", "Guanche (Canary Islands)", "Guanche"),
@@ -522,6 +522,9 @@ class InternationalizationManager:
         context: Optional[Dict[str, Any]] = None
     ) -> str:
         """Get translation for a key in specified language"""
+
+
+
         try:
             # Check if language is supported
             if language not in self.languages:
@@ -552,6 +555,9 @@ class InternationalizationManager:
     
     async def _load_translation(self, key: str, language: str) -> Optional[str]:
         """Load translation from storage or translation service"""
+
+
+
         try:
             # Try to load from local translation files
             translation_file = Path(f"translations/{language}.json")
@@ -573,6 +579,9 @@ class InternationalizationManager:
     
     async def _auto_translate(self, text: str, target_language: str) -> Optional[str]:
         """Auto-translate text using AI translation services"""
+
+
+
         try:
             # This would integrate with translation services like:
             # - Google Translate API
@@ -617,6 +626,9 @@ class InternationalizationManager:
     
     def _apply_context(self, translation: str, context: Dict[str, Any]) -> str:
         """Apply context variables to translation"""
+
+
+
         try:
             # Simple variable substitution
             for key, value in context.items():
@@ -630,24 +642,39 @@ class InternationalizationManager:
     
     def get_language_info(self, language: str) -> Optional[LanguageInfo]:
         """Get detailed language information"""
+
+
+
         return self.languages.get(language)
     
     def get_supported_languages(self) -> List[LanguageInfo]:
         """Get list of all supported languages"""
+
+
+
         return [lang for lang in self.languages.values() if lang.enabled]
     
     def get_languages_by_region(self, region: LanguageRegion) -> List[LanguageInfo]:
         """Get languages by region"""
+
+
+
         return [lang for lang in self.languages.values() 
                 if lang.region == region and lang.enabled]
     
     def get_rtl_languages(self) -> List[str]:
         """Get list of right-to-left languages"""
+
+
+
         return [code for code, lang in self.languages.items() 
                 if lang.rtl and lang.enabled]
     
     async def detect_language(self, text: str) -> Optional[str]:
         """Detect language of given text"""
+
+
+
         try:
             # This would integrate with language detection services
             # For now, return a simple heuristic
@@ -659,13 +686,13 @@ class InternationalizationManager:
                 return 'ar'
             elif re.search(r'[а-я]', text):
                 return 'ru'
-            elif re.search(r'[一-龯]', text):
+            elif re.search(r'[-]', text):
                 return 'zh'
-            elif re.search(r'[ひらがな]|[カタカナ]', text):
+            elif re.search(r'[]|[]', text):
                 return 'ja'
-            elif re.search(r'[가-힣]', text):
+            elif re.search(r'[-]', text):
                 return 'ko'
-            elif re.search(r'[ⴰ-ⵯ]', text):  # Tifinagh script range
+            elif re.search(r'[-]', text):  # Tifinagh script range
                 return 'tzm'  # Default to Central Atlas Tamazight
             else:
                 return 'en'  # Default to English
@@ -681,6 +708,9 @@ class InternationalizationManager:
         language: str
     ) -> str:
         """Format currency according to language conventions"""
+
+
+
         try:
             lang_info = self.languages.get(language)
             if not lang_info:
@@ -705,6 +735,9 @@ class InternationalizationManager:
         language: str
     ) -> str:
         """Format date according to language conventions"""
+
+
+
         try:
             lang_info = self.languages.get(language)
             if not lang_info:
@@ -722,6 +755,9 @@ class InternationalizationManager:
         language: str
     ) -> str:
         """Format number according to language conventions"""
+
+
+
         try:
             lang_info = self.languages.get(language)
             if not lang_info:

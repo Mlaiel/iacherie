@@ -8,7 +8,7 @@ Responsibility: Intelligent resource allocation and optimization for workers
 Technologies: ML Resource Prediction, Dynamic Allocation, Cost Optimization
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -186,8 +186,11 @@ class ResourceManager:
 
     async def start(self) -> bool:
         """Start resource manager"""
+
+
+
         try:
-            logger.info("🚀 Starting resource manager")
+            logger.info(" Starting resource manager")
             
             # Initialize resource limits
             await self._initialize_resource_limits()
@@ -200,17 +203,20 @@ class ResourceManager:
             
             self.is_running = True
             
-            logger.info("✅ Resource manager started successfully")
+            logger.info(" Resource manager started successfully")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to start resource manager: {e}")
+            logger.error(f" Failed to start resource manager: {e}")
             return False
 
     async def stop(self) -> None:
         """Stop resource manager"""
+
+
+
         try:
-            logger.info("🛑 Stopping resource manager")
+            logger.info(" Stopping resource manager")
             
             self.is_running = False
             self.shutdown_event.set()
@@ -230,14 +236,17 @@ class ResourceManager:
             if self.docker_client:
                 self.docker_client.close()
             
-            logger.info("✅ Resource manager stopped")
+            logger.info(" Resource manager stopped")
             
         except Exception as e:
-            logger.error(f"❌ Error stopping resource manager: {e}")
+            logger.error(f" Error stopping resource manager: {e}")
 
     async def allocate_resources(self, worker_id: str, required_resources: Dict[ResourceType, float],
                                priority: int = 1, timeout: int = 300) -> Dict[ResourceType, ResourceAllocation]:
         """Allocate resources to a worker"""
+
+
+
         try:
             allocations = {}
             
@@ -261,11 +270,11 @@ class ResourceManager:
                 )
                 allocations[resource_type] = allocation
             
-            logger.info(f"✅ Resources allocated to worker {worker_id}: {list(required_resources.keys())}")
+            logger.info(f" Resources allocated to worker {worker_id}: {list(required_resources.keys())}")
             return allocations
             
         except Exception as e:
-            logger.error(f"❌ Failed to allocate resources to worker {worker_id}: {e}")
+            logger.error(f" Failed to allocate resources to worker {worker_id}: {e}")
             
             # Rollback partial allocations
             for allocation in allocations.values():
@@ -275,10 +284,13 @@ class ResourceManager:
 
     async def deallocate_resources(self, allocation_id: str) -> bool:
         """Deallocate resources"""
+
+
+
         try:
             allocation = self.current_allocations.get(allocation_id)
             if not allocation:
-                logger.warning(f"⚠️ Allocation not found: {allocation_id}")
+                logger.warning(f" Allocation not found: {allocation_id}")
                 return False
             
             # Free the resource
@@ -287,15 +299,18 @@ class ResourceManager:
             # Remove from tracking
             del self.current_allocations[allocation_id]
             
-            logger.info(f"✅ Resources deallocated: {allocation_id}")
+            logger.info(f" Resources deallocated: {allocation_id}")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to deallocate resources {allocation_id}: {e}")
+            logger.error(f" Failed to deallocate resources {allocation_id}: {e}")
             return False
 
     async def get_resource_status(self) -> Dict[str, Any]:
         """Get comprehensive resource status"""
+
+
+
         try:
             # Update current resource usage
             await self._update_resource_usage()
@@ -334,13 +349,16 @@ class ResourceManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to get resource status: {e}")
+            logger.error(f" Failed to get resource status: {e}")
             return {"error": str(e)}
 
     async def optimize_allocation(self, target_metric: str = "cost") -> Dict[str, Any]:
         """Optimize resource allocation based on target metric"""
+
+
+
         try:
-            logger.info(f"🔄 Optimizing resource allocation for: {target_metric}")
+            logger.info(f" Optimizing resource allocation for: {target_metric}")
             
             # Analyze current allocations
             analysis = await self._analyze_current_allocations()
@@ -360,15 +378,18 @@ class ResourceManager:
                 "timestamp": datetime.utcnow().isoformat()
             }
             
-            logger.info(f"✅ Resource allocation optimization completed")
+            logger.info(f" Resource allocation optimization completed")
             return result
             
         except Exception as e:
-            logger.error(f"❌ Failed to optimize allocation: {e}")
+            logger.error(f" Failed to optimize allocation: {e}")
             return {"error": str(e)}
 
     async def predict_resource_needs(self, horizon_hours: int = 24) -> Dict[ResourceType, ResourcePrediction]:
         """Predict future resource needs using ML"""
+
+
+
         try:
             predictions = {}
             
@@ -389,18 +410,21 @@ class ResourceManager:
             # Store predictions
             self.predictions = predictions
             
-            logger.info(f"🔮 Generated resource predictions for {horizon_hours} hours")
+            logger.info(f" Generated resource predictions for {horizon_hours} hours")
             return predictions
             
         except Exception as e:
-            logger.error(f"❌ Failed to predict resource needs: {e}")
+            logger.error(f" Failed to predict resource needs: {e}")
             return {}
 
     async def handle_resource_alert(self, resource_type: ResourceType, 
                                   alert_type: str, current_value: float) -> bool:
         """Handle resource alert and take corrective action"""
+
+
+
         try:
-            logger.warning(f"⚠️ Resource alert: {resource_type.value} - {alert_type} - {current_value}")
+            logger.warning(f" Resource alert: {resource_type.value} - {alert_type} - {current_value}")
             
             if alert_type == "high_usage":
                 return await self._handle_high_usage_alert(resource_type, current_value)
@@ -411,15 +435,18 @@ class ResourceManager:
             elif alert_type == "prediction_threshold":
                 return await self._handle_prediction_threshold_alert(resource_type, current_value)
             else:
-                logger.warning(f"⚠️ Unknown alert type: {alert_type}")
+                logger.warning(f" Unknown alert type: {alert_type}")
                 return False
                 
         except Exception as e:
-            logger.error(f"❌ Failed to handle resource alert: {e}")
+            logger.error(f" Failed to handle resource alert: {e}")
             return False
 
     async def _initialize_resource_limits(self) -> None:
         """Initialize resource limits based on system capabilities"""
+
+
+
         try:
             # Get system information
             cpu_count = psutil.cpu_count()
@@ -472,26 +499,32 @@ class ResourceManager:
                 hard_limit=950.0
             )
             
-            logger.info("✅ Resource limits initialized")
+            logger.info(" Resource limits initialized")
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize resource limits: {e}")
+            logger.error(f" Failed to initialize resource limits: {e}")
             raise
 
     async def _start_monitoring(self) -> None:
         """Start resource monitoring"""
+
+
+
         try:
             # Initial resource usage update
             await self._update_resource_usage()
             
-            logger.info("✅ Resource monitoring started")
+            logger.info(" Resource monitoring started")
             
         except Exception as e:
-            logger.error(f"❌ Failed to start monitoring: {e}")
+            logger.error(f" Failed to start monitoring: {e}")
             raise
 
     async def _start_background_tasks(self) -> None:
         """Start background resource management tasks"""
+
+
+
         try:
             # Resource monitor
             monitor_task = asyncio.create_task(self._resource_monitor())
@@ -509,14 +542,17 @@ class ResourceManager:
             cleanup_task = asyncio.create_task(self._resource_cleanup_task())
             self.background_tasks.add(cleanup_task)
             
-            logger.info("✅ Background resource tasks started")
+            logger.info(" Background resource tasks started")
             
         except Exception as e:
-            logger.error(f"❌ Failed to start background tasks: {e}")
+            logger.error(f" Failed to start background tasks: {e}")
             raise
 
     async def _check_resource_availability(self, required_resources: Dict[ResourceType, float]) -> Dict[ResourceType, bool]:
         """Check if required resources are available"""
+
+
+
         try:
             availability = {}
             
@@ -539,12 +575,15 @@ class ResourceManager:
             return availability
             
         except Exception as e:
-            logger.error(f"❌ Failed to check resource availability: {e}")
+            logger.error(f" Failed to check resource availability: {e}")
             return {rt: False for rt in required_resources.keys()}
 
     async def _allocate_single_resource(self, worker_id: str, resource_type: ResourceType, 
                                       amount: float, priority: int) -> ResourceAllocation:
         """Allocate a single resource"""
+
+
+
         try:
             allocation_id = f"{worker_id}_{resource_type.value}_{int(time.time())}"
             
@@ -570,11 +609,14 @@ class ResourceManager:
             return allocation
             
         except Exception as e:
-            logger.error(f"❌ Failed to allocate single resource: {e}")
+            logger.error(f" Failed to allocate single resource: {e}")
             raise
 
     async def _free_single_resource(self, allocation: ResourceAllocation) -> None:
         """Free a single resource allocation"""
+
+
+
         try:
             # Update resource limits
             limit = self.resource_limits[allocation.resource_type]
@@ -584,11 +626,14 @@ class ResourceManager:
             await self._apply_system_deallocation(allocation)
             
         except Exception as e:
-            logger.error(f"❌ Failed to free single resource: {e}")
+            logger.error(f" Failed to free single resource: {e}")
             raise
 
     async def _apply_system_allocation(self, allocation: ResourceAllocation) -> None:
         """Apply allocation at system level (Docker, Kubernetes, etc.)"""
+
+
+
         try:
             if allocation.resource_type == ResourceType.CPU:
                 await self._apply_cpu_allocation(allocation)
@@ -597,10 +642,13 @@ class ResourceManager:
             # Add other resource types as needed
             
         except Exception as e:
-            logger.error(f"❌ Failed to apply system allocation: {e}")
+            logger.error(f" Failed to apply system allocation: {e}")
 
     async def _apply_system_deallocation(self, allocation: ResourceAllocation) -> None:
         """Apply deallocation at system level"""
+
+
+
         try:
             if allocation.resource_type == ResourceType.CPU:
                 await self._apply_cpu_deallocation(allocation)
@@ -609,10 +657,13 @@ class ResourceManager:
             # Add other resource types as needed
             
         except Exception as e:
-            logger.error(f"❌ Failed to apply system deallocation: {e}")
+            logger.error(f" Failed to apply system deallocation: {e}")
 
     async def _apply_cpu_allocation(self, allocation: ResourceAllocation) -> None:
         """Apply CPU allocation using cgroups or container limits"""
+
+
+
         try:
             # Docker container CPU limit
             if self.docker_client:
@@ -635,10 +686,13 @@ class ResourceManager:
                     process.cpu_affinity(list(range(cpu_cores)))
             
         except Exception as e:
-            logger.error(f"❌ Failed to apply CPU allocation: {e}")
+            logger.error(f" Failed to apply CPU allocation: {e}")
 
     async def _apply_memory_allocation(self, allocation: ResourceAllocation) -> None:
         """Apply memory allocation using cgroups or container limits"""
+
+
+
         try:
             # Docker container memory limit
             if self.docker_client:
@@ -657,10 +711,13 @@ class ResourceManager:
                 pass
             
         except Exception as e:
-            logger.error(f"❌ Failed to apply memory allocation: {e}")
+            logger.error(f" Failed to apply memory allocation: {e}")
 
     async def _apply_cpu_deallocation(self, allocation: ResourceAllocation) -> None:
         """Remove CPU allocation constraints"""
+
+
+
         try:
             worker_pid = self._get_worker_pid(allocation.worker_id)
             if worker_pid:
@@ -669,31 +726,40 @@ class ResourceManager:
                 process.cpu_affinity(list(range(psutil.cpu_count())))
             
         except Exception as e:
-            logger.error(f"❌ Failed to apply CPU deallocation: {e}")
+            logger.error(f" Failed to apply CPU deallocation: {e}")
 
     async def _apply_memory_deallocation(self, allocation: ResourceAllocation) -> None:
         """Remove memory allocation constraints"""
+
+
+
         try:
             # Remove memory constraints
             # Implementation depends on the system
             pass
             
         except Exception as e:
-            logger.error(f"❌ Failed to apply memory deallocation: {e}")
+            logger.error(f" Failed to apply memory deallocation: {e}")
 
     def _get_worker_pid(self, worker_id: str) -> Optional[int]:
         """Get process ID for a worker"""
+
+
+
         try:
             # This would need to be implemented based on how workers are tracked
             # For now, return None
             return None
             
         except Exception as e:
-            logger.error(f"❌ Failed to get worker PID: {e}")
+            logger.error(f" Failed to get worker PID: {e}")
             return None
 
     async def _update_resource_usage(self) -> None:
         """Update current resource usage metrics"""
+
+
+
         try:
             current_time = datetime.utcnow()
             
@@ -750,10 +816,13 @@ class ResourceManager:
             self.usage_history[ResourceType.NETWORK].append(network_usage_record)
             
         except Exception as e:
-            logger.error(f"❌ Failed to update resource usage: {e}")
+            logger.error(f" Failed to update resource usage: {e}")
 
     async def _get_system_resource_info(self) -> Dict[str, Any]:
         """Get comprehensive system resource information"""
+
+
+
         try:
             # Basic system info
             cpu_count = psutil.cpu_count()
@@ -789,11 +858,14 @@ class ResourceManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to get system resource info: {e}")
+            logger.error(f" Failed to get system resource info: {e}")
             return {}
 
     async def _calculate_resource_utilization(self) -> Dict[str, float]:
         """Calculate resource utilization percentages"""
+
+
+
         try:
             utilization = {}
             
@@ -806,11 +878,14 @@ class ResourceManager:
             return utilization
             
         except Exception as e:
-            logger.error(f"❌ Failed to calculate resource utilization: {e}")
+            logger.error(f" Failed to calculate resource utilization: {e}")
             return {}
 
     async def _get_resource_predictions(self) -> Dict[str, Any]:
         """Get current resource predictions"""
+
+
+
         try:
             predictions_dict = {}
             
@@ -826,11 +901,14 @@ class ResourceManager:
             return predictions_dict
             
         except Exception as e:
-            logger.error(f"❌ Failed to get resource predictions: {e}")
+            logger.error(f" Failed to get resource predictions: {e}")
             return {}
 
     def _get_allocations_summary(self) -> Dict[str, Any]:
         """Get summary of current allocations"""
+
+
+
         try:
             summary = {
                 "total_allocations": len(self.current_allocations),
@@ -847,7 +925,7 @@ class ResourceManager:
             return dict(summary)
             
         except Exception as e:
-            logger.error(f"❌ Failed to get allocations summary: {e}")
+            logger.error(f" Failed to get allocations summary: {e}")
             return {}
 
     async def _resource_monitor(self) -> None:
@@ -858,7 +936,7 @@ class ResourceManager:
                 await asyncio.sleep(30)  # Update every 30 seconds
                 
             except Exception as e:
-                logger.error(f"❌ Resource monitor error: {e}")
+                logger.error(f" Resource monitor error: {e}")
                 await asyncio.sleep(60)
 
     async def _resource_predictor_task(self) -> None:
@@ -869,7 +947,7 @@ class ResourceManager:
                 await asyncio.sleep(3600)  # Update every hour
                 
             except Exception as e:
-                logger.error(f"❌ Resource predictor error: {e}")
+                logger.error(f" Resource predictor error: {e}")
                 await asyncio.sleep(1800)
 
     async def _resource_optimizer_task(self) -> None:
@@ -880,7 +958,7 @@ class ResourceManager:
                 await asyncio.sleep(1800)  # Optimize every 30 minutes
                 
             except Exception as e:
-                logger.error(f"❌ Resource optimizer error: {e}")
+                logger.error(f" Resource optimizer error: {e}")
                 await asyncio.sleep(3600)
 
     async def _resource_cleanup_task(self) -> None:
@@ -892,11 +970,14 @@ class ResourceManager:
                 await asyncio.sleep(300)  # Cleanup every 5 minutes
                 
             except Exception as e:
-                logger.error(f"❌ Resource cleanup error: {e}")
+                logger.error(f" Resource cleanup error: {e}")
                 await asyncio.sleep(600)
 
     async def _cleanup_expired_allocations(self) -> None:
         """Clean up expired resource allocations"""
+
+
+
         try:
             current_time = datetime.utcnow()
             expired_allocations = []
@@ -910,10 +991,13 @@ class ResourceManager:
                 logger.info(f"🧹 Cleaned up expired allocation: {allocation_id}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to cleanup expired allocations: {e}")
+            logger.error(f" Failed to cleanup expired allocations: {e}")
 
     async def _cleanup_old_usage_data(self) -> None:
         """Clean up old usage data to prevent memory growth"""
+
+
+
         try:
             cutoff_time = datetime.utcnow() - timedelta(hours=24)
             
@@ -924,12 +1008,15 @@ class ResourceManager:
                     self.usage_history[resource_type].popleft()
             
         except Exception as e:
-            logger.error(f"❌ Failed to cleanup old usage data: {e}")
+            logger.error(f" Failed to cleanup old usage data: {e}")
 
     async def _handle_resource_shortage(self, required_resources: Dict[ResourceType, float], priority: int) -> None:
         """Handle resource shortage by freeing or scaling resources"""
+
+
+
         try:
-            logger.warning(f"⚠️ Handling resource shortage for priority {priority}")
+            logger.warning(f" Handling resource shortage for priority {priority}")
             
             # Try to free up resources from lower priority allocations
             freed_resources = await self._free_lower_priority_resources(required_resources, priority)
@@ -939,11 +1026,14 @@ class ResourceManager:
                 await self._scale_up_resources(required_resources)
             
         except Exception as e:
-            logger.error(f"❌ Failed to handle resource shortage: {e}")
+            logger.error(f" Failed to handle resource shortage: {e}")
 
     async def _free_lower_priority_resources(self, required_resources: Dict[ResourceType, float], 
                                            min_priority: int) -> bool:
         """Free resources from lower priority allocations"""
+
+
+
         try:
             freed_any = False
             
@@ -967,28 +1057,34 @@ class ResourceManager:
                     freed_amount += allocation.allocated_amount
                     freed_any = True
                     
-                    logger.info(f"🔄 Freed {allocation.allocated_amount} {resource_type.value} from worker {allocation.worker_id}")
+                    logger.info(f" Freed {allocation.allocated_amount} {resource_type.value} from worker {allocation.worker_id}")
             
             return freed_any
             
         except Exception as e:
-            logger.error(f"❌ Failed to free lower priority resources: {e}")
+            logger.error(f" Failed to free lower priority resources: {e}")
             return False
 
     async def _scale_up_resources(self, required_resources: Dict[ResourceType, float]) -> None:
         """Scale up resources if possible"""
+
+
+
         try:
             # Implementation would depend on the infrastructure
             # For example, scaling Kubernetes pods, adding Docker containers, etc.
-            logger.info(f"📈 Attempting to scale up resources: {list(required_resources.keys())}")
+            logger.info(f" Attempting to scale up resources: {list(required_resources.keys())}")
             
             # Placeholder for actual scaling logic
             
         except Exception as e:
-            logger.error(f"❌ Failed to scale up resources: {e}")
+            logger.error(f" Failed to scale up resources: {e}")
 
     async def _analyze_current_allocations(self) -> Dict[str, Any]:
         """Analyze current resource allocations for optimization"""
+
+
+
         try:
             # Placeholder for allocation analysis
             return {
@@ -999,22 +1095,28 @@ class ResourceManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to analyze allocations: {e}")
+            logger.error(f" Failed to analyze allocations: {e}")
             return {}
 
     async def _generate_optimization_recommendations(self, analysis: Dict[str, Any], 
                                                    target_metric: str) -> List[Dict[str, Any]]:
         """Generate optimization recommendations"""
+
+
+
         try:
             # Placeholder for optimization recommendations
             return []
             
         except Exception as e:
-            logger.error(f"❌ Failed to generate optimization recommendations: {e}")
+            logger.error(f" Failed to generate optimization recommendations: {e}")
             return []
 
     async def _apply_optimizations(self, recommendations: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """Apply safe optimization recommendations"""
+
+
+
         try:
             applied = []
             
@@ -1027,11 +1129,14 @@ class ResourceManager:
             return applied
             
         except Exception as e:
-            logger.error(f"❌ Failed to apply optimizations: {e}")
+            logger.error(f" Failed to apply optimizations: {e}")
             return []
 
     def _calculate_estimated_savings(self, applied_optimizations: List[Dict[str, Any]]) -> Dict[str, float]:
         """Calculate estimated savings from optimizations"""
+
+
+
         try:
             return {
                 "cost_savings_percent": 0.0,
@@ -1040,55 +1145,70 @@ class ResourceManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Failed to calculate estimated savings: {e}")
+            logger.error(f" Failed to calculate estimated savings: {e}")
             return {}
 
     async def _handle_high_usage_alert(self, resource_type: ResourceType, current_value: float) -> bool:
         """Handle high resource usage alert"""
+
+
+
         try:
             # Scale up if possible
             await self._scale_up_resources({resource_type: current_value * 0.2})
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to handle high usage alert: {e}")
+            logger.error(f" Failed to handle high usage alert: {e}")
             return False
 
     async def _handle_low_availability_alert(self, resource_type: ResourceType, current_value: float) -> bool:
         """Handle low resource availability alert"""
+
+
+
         try:
             # Free up resources from low priority tasks
             await self._free_lower_priority_resources({resource_type: current_value}, priority=1)
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to handle low availability alert: {e}")
+            logger.error(f" Failed to handle low availability alert: {e}")
             return False
 
     async def _handle_allocation_failure_alert(self, resource_type: ResourceType, current_value: float) -> bool:
         """Handle allocation failure alert"""
+
+
+
         try:
             # Try emergency resource freeing
             await self._emergency_resource_cleanup(resource_type)
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to handle allocation failure alert: {e}")
+            logger.error(f" Failed to handle allocation failure alert: {e}")
             return False
 
     async def _handle_prediction_threshold_alert(self, resource_type: ResourceType, current_value: float) -> bool:
         """Handle prediction threshold alert"""
+
+
+
         try:
             # Proactively scale based on prediction
             await self._proactive_scaling(resource_type, current_value)
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to handle prediction threshold alert: {e}")
+            logger.error(f" Failed to handle prediction threshold alert: {e}")
             return False
 
     async def _emergency_resource_cleanup(self, resource_type: ResourceType) -> None:
         """Emergency resource cleanup"""
+
+
+
         try:
             # Force garbage collection
             gc.collect()
@@ -1096,22 +1216,25 @@ class ResourceManager:
             # Clear caches
             # Implementation specific to resource type
             
-            logger.warning(f"🚨 Emergency cleanup performed for {resource_type.value}")
+            logger.warning(f" Emergency cleanup performed for {resource_type.value}")
             
         except Exception as e:
-            logger.error(f"❌ Failed emergency resource cleanup: {e}")
+            logger.error(f" Failed emergency resource cleanup: {e}")
 
     async def _proactive_scaling(self, resource_type: ResourceType, predicted_value: float) -> None:
         """Proactive scaling based on predictions"""
+
+
+
         try:
             # Scale up before hitting limits
             scale_amount = predicted_value * 0.1  # Scale by 10% of predicted need
             await self._scale_up_resources({resource_type: scale_amount})
             
-            logger.info(f"📈 Proactive scaling triggered for {resource_type.value}: {scale_amount}")
+            logger.info(f" Proactive scaling triggered for {resource_type.value}: {scale_amount}")
             
         except Exception as e:
-            logger.error(f"❌ Failed proactive scaling: {e}")
+            logger.error(f" Failed proactive scaling: {e}")
 
 
 # Resource manager factory and singleton
@@ -1130,12 +1253,15 @@ def get_resource_manager(allocation_strategy: AllocationStrategy = AllocationStr
 
 async def initialize_resource_manager(allocation_strategy: AllocationStrategy = AllocationStrategy.BALANCED) -> bool:
     """Initialize global resource manager"""
+
+
+
     try:
         manager = get_resource_manager(allocation_strategy)
         return await manager.start()
         
     except Exception as e:
-        logger.error(f"❌ Failed to initialize resource manager: {e}")
+        logger.error(f" Failed to initialize resource manager: {e}")
         return False
 
 

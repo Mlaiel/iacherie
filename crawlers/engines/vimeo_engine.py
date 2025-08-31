@@ -8,7 +8,7 @@ Handles video metadata extraction, channel analysis, and engagement tracking.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
@@ -169,6 +169,9 @@ class VimeoCrawlerEngine(BaseCrawlerEngine):
     
     async def initialize(self) -> None:
         """Initialize the crawler engine"""
+
+
+
         try:
             await self._create_session()
             logger.info("Vimeo engine initialized successfully")
@@ -215,6 +218,9 @@ class VimeoCrawlerEngine(BaseCrawlerEngine):
         Returns:
             List of videos matching the query
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -273,6 +279,9 @@ class VimeoCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Video details or None if not found
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -317,6 +326,9 @@ class VimeoCrawlerEngine(BaseCrawlerEngine):
         Returns:
             User profile data or None if not found
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -353,6 +365,9 @@ class VimeoCrawlerEngine(BaseCrawlerEngine):
     
     def _parse_video_data(self, video_data: Dict[str, Any]) -> VimeoVideo:
         """Parse video data from API response"""
+
+
+
         try:
             return VimeoVideo(
                 id=str(video_data.get('id', '')),
@@ -388,6 +403,9 @@ class VimeoCrawlerEngine(BaseCrawlerEngine):
     
     def _parse_user_data(self, user_data: Dict[str, Any]) -> VimeoUser:
         """Parse user data from API response"""
+
+
+
         try:
             metadata = user_data.get('metadata', {})
             connections = metadata.get('connections', {})
@@ -438,6 +456,9 @@ class VimeoCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Performance monitoring data
         """
+
+
+
         try:
             video = await self.get_video_details(video_id)
             if not video:
@@ -506,6 +527,9 @@ class VimeoCrawlerEngine(BaseCrawlerEngine):
     
     async def cleanup(self) -> None:
         """Clean up resources"""
+
+
+
         try:
             if self.session:
                 await self.session.close()

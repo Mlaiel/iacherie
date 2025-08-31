@@ -5,7 +5,7 @@ Architecture consolidée avec agents métier regroupés
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE
+ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE
 Cette architecture est la propriété exclusive de Fahed Mlaiel.
 Contact: mlaiel@live.de
 """
@@ -82,8 +82,14 @@ MODULE_INFO = {
 
 def get_module_info():
     """Get module information"""
+
+
+
     return MODULE_INFO.copy()
 
 def get_default_config():
     """Get default configuration"""
+
+
+
     return DEFAULT_CONFIG.copy()

@@ -5,7 +5,7 @@ Enterprise-grade metrics collection engine for multi-tenant AI platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 
-⚠️  AVERTISSEMENT LÉGAL STRICT ⚠️
+  AVERTISSEMENT LÉGAL STRICT 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et fera l'objet de poursuites 
@@ -166,6 +166,9 @@ class MetricsCollector:
         
     async def start(self) -> None:
         """Start metrics collection"""
+
+
+
         try:
             if self._running:
                 self.logger.warning("Metrics collector already running")
@@ -199,6 +202,9 @@ class MetricsCollector:
     
     async def stop(self) -> None:
         """Stop metrics collection"""
+
+
+
         try:
             self._running = False
             self.logger.info("Stopping metrics collector...")
@@ -225,6 +231,9 @@ class MetricsCollector:
     
     def register_metric(self, definition: MetricDefinition) -> None:
         """Register new metric definition"""
+
+
+
         try:
             self.metric_definitions[definition.name] = definition
             self._metrics_buffer[definition.name] = []
@@ -236,6 +245,9 @@ class MetricsCollector:
     
     def register_collector(self, name: str, collector_func: Callable) -> None:
         """Register custom metric collector function"""
+
+
+
         try:
             self._collectors[name] = collector_func
             self.logger.info(f"Collector registered: {name}")
@@ -252,6 +264,9 @@ class MetricsCollector:
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
         """Collect single metric value"""
+
+
+
         try:
             if name not in self.metric_definitions:
                 self.logger.warning(f"Unknown metric: {name}")
@@ -290,6 +305,9 @@ class MetricsCollector:
         ip_address: Optional[str] = None
     ) -> None:
         """Collect HTTP request metrics"""
+
+
+
         try:
             # Request count
             await self.collect_metric(
@@ -344,6 +362,9 @@ class MetricsCollector:
         success: bool = True
     ) -> None:
         """Collect AI model metrics"""
+
+
+
         try:
             # Prediction count
             await self.collect_metric(
@@ -398,6 +419,9 @@ class MetricsCollector:
         similarity_score: Optional[float] = None
     ) -> None:
         """Collect content protection metrics"""
+
+
+
         try:
             # Fingerprint creation
             await self.collect_metric(
@@ -450,6 +474,9 @@ class MetricsCollector:
         fee_amount: Optional[float] = None
     ) -> None:
         """Collect revenue tracking metrics"""
+
+
+
         try:
             # Revenue amount
             await self.collect_metric(
@@ -490,6 +517,9 @@ class MetricsCollector:
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
         """Collect user activity metrics"""
+
+
+
         try:
             # Activity count
             await self.collect_metric(
@@ -520,6 +550,9 @@ class MetricsCollector:
     
     async def _collection_loop(self, interval: CollectionInterval) -> None:
         """Main collection loop for specific interval"""
+
+
+
         try:
             self.logger.info(f"Starting collection loop for interval: {interval.name}")
             
@@ -547,6 +580,9 @@ class MetricsCollector:
     
     async def _buffer_flush_loop(self) -> None:
         """Buffer flush loop"""
+
+
+
         try:
             while self._running:
                 await self._flush_all_buffers()
@@ -559,6 +595,9 @@ class MetricsCollector:
     
     async def _aggregation_loop(self) -> None:
         """Metrics aggregation loop"""
+
+
+
         try:
             while self._running:
                 await self._aggregate_metrics()
@@ -571,6 +610,9 @@ class MetricsCollector:
     
     async def _flush_all_buffers(self) -> None:
         """Flush all metric buffers"""
+
+
+
         try:
             for metric_name in self._metrics_buffer.keys():
                 await self._flush_metric_buffer(metric_name)
@@ -580,6 +622,9 @@ class MetricsCollector:
     
     async def _flush_metric_buffer(self, metric_name: str) -> None:
         """Flush specific metric buffer"""
+
+
+
         try:
             buffer = self._metrics_buffer.get(metric_name, [])
             if not buffer:
@@ -597,6 +642,9 @@ class MetricsCollector:
     
     async def _store_metric(self, metric: CollectedMetric) -> None:
         """Store metric in Redis"""
+
+
+
         try:
             # Create storage key
             timestamp_key = metric.timestamp.strftime("%Y%m%d%H%M")
@@ -628,6 +676,9 @@ class MetricsCollector:
     
     async def _aggregate_metrics(self) -> None:
         """Aggregate metrics for reporting"""
+
+
+
         try:
             current_time = datetime.utcnow()
             
@@ -657,6 +708,9 @@ class MetricsCollector:
         time_range: timedelta
     ) -> List[CollectedMetric]:
         """Get recent metrics from storage"""
+
+
+
         try:
             end_time = datetime.utcnow()
             start_time = end_time - time_range
@@ -700,6 +754,9 @@ class MetricsCollector:
         functions: List[str]
     ) -> Dict[str, float]:
         """Calculate metric aggregations"""
+
+
+
         try:
             values = [metric.value for metric in metrics]
             
@@ -736,6 +793,9 @@ class MetricsCollector:
         timestamp: datetime
     ) -> None:
         """Store metric aggregations"""
+
+
+
         try:
             timestamp_key = timestamp.strftime("%Y%m%d%H%M")
             key = f"aggregations:{metric_name}:{timestamp_key}"
@@ -867,6 +927,9 @@ class MetricsCollector:
     
     async def _collect_cpu_metrics(self) -> None:
         """Collect CPU metrics"""
+
+
+
         try:
             cpu_percent = psutil.cpu_percent(interval=None, percpu=True)
             for i, cpu in enumerate(cpu_percent):
@@ -880,6 +943,9 @@ class MetricsCollector:
     
     async def _collect_memory_metrics(self) -> None:
         """Collect memory metrics"""
+
+
+
         try:
             memory = psutil.virtual_memory()
             
@@ -900,6 +966,9 @@ class MetricsCollector:
     
     async def _collect_database_metrics(self) -> None:
         """Collect database metrics"""
+
+
+
         try:
             # This would be implemented with actual database connection monitoring
             # Placeholder for demonstration
@@ -909,6 +978,9 @@ class MetricsCollector:
     
     async def _collect_cache_metrics(self) -> None:
         """Collect cache metrics"""
+
+
+
         try:
             # Get cache statistics from Redis
             info = await self.redis_manager.info()

@@ -7,7 +7,7 @@ security controls, performance optimization, and monitoring integration.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -354,10 +354,16 @@ class FingerprintingConfig:
     
     def is_production(self) -> bool:
         """Check if running in production environment"""
+
+
+
         return self.environment == Environment.PRODUCTION
     
     def get_database_url(self) -> str:
         """Get database connection URL"""
+
+
+
         return (
             f"postgresql://{self.database.username}:{self.database.password}"
             f"@{self.database.host}:{self.database.port}/{self.database.database}"

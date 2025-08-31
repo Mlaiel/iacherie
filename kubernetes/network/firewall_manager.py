@@ -7,7 +7,7 @@ Copyright: All rights reserved - Unauthorized use prohibited
 Project: IA Influencer Agent Platform - Content Protection & Monetization
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  AVERTISSEMENT SÉVÈRE ⚠️
+  AVERTISSEMENT SÉVÈRE 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
@@ -178,6 +178,9 @@ class FirewallManager:
     
     async def initialize(self) -> None:
         """Initialize firewall manager"""
+
+
+
         try:
             logger.info("Initializing Firewall Manager...")
             
@@ -210,6 +213,9 @@ class FirewallManager:
     
     async def add_firewall_rule(self, rule: FirewallRule) -> bool:
         """Add new firewall rule"""
+
+
+
         try:
             logger.info(f"Adding firewall rule: {rule.name}")
             
@@ -246,6 +252,9 @@ class FirewallManager:
     
     async def remove_firewall_rule(self, rule_name: str) -> bool:
         """Remove firewall rule"""
+
+
+
         try:
             if rule_name not in self.rules:
                 logger.warning(f"Firewall rule not found: {rule_name}")
@@ -268,6 +277,9 @@ class FirewallManager:
     
     async def apply_security_policy(self, policy: SecurityPolicy) -> bool:
         """Apply comprehensive security policy"""
+
+
+
         try:
             logger.info(f"Applying security policy: {policy.name}")
             
@@ -301,6 +313,9 @@ class FirewallManager:
         duration: Optional[timedelta] = None
     ) -> bool:
         """Block specific IP address"""
+
+
+
         try:
             logger.info(f"Blocking IP address: {ip_address} - {reason}")
             
@@ -344,6 +359,9 @@ class FirewallManager:
     
     async def unblock_ip_address(self, ip_address: str) -> bool:
         """Unblock specific IP address"""
+
+
+
         try:
             if ip_address not in self.blocked_ips:
                 logger.warning(f"IP address not blocked: {ip_address}")
@@ -375,6 +393,9 @@ class FirewallManager:
         allowed_countries: Optional[List[str]] = None
     ) -> bool:
         """Enable geographic blocking"""
+
+
+
         try:
             logger.info(f"Enabling geo-blocking for countries: {blocked_countries}")
             
@@ -405,6 +426,9 @@ class FirewallManager:
         action: FirewallAction = FirewallAction.RATE_LIMIT
     ) -> bool:
         """Enable DDoS protection"""
+
+
+
         try:
             logger.info(f"Enabling DDoS protection with threshold: {threshold}")
             
@@ -433,6 +457,9 @@ class FirewallManager:
     
     async def update_threat_intelligence(self, threat_data: ThreatIntelligence) -> bool:
         """Update threat intelligence data"""
+
+
+
         try:
             logger.info(f"Updating threat intelligence for IP: {threat_data.ip_address}")
             
@@ -456,6 +483,9 @@ class FirewallManager:
     
     async def get_firewall_status(self) -> Dict[str, Any]:
         """Get comprehensive firewall status"""
+
+
+
         try:
             status = {
                 'total_rules': len(self.rules),
@@ -503,6 +533,9 @@ class FirewallManager:
     
     def _initialize_components(self) -> None:
         """Initialize firewall components"""
+
+
+
         try:
             # Initialize iptables if available
             try:
@@ -530,6 +563,9 @@ class FirewallManager:
     
     async def _load_configuration(self) -> None:
         """Load firewall configuration"""
+
+
+
         try:
             with open(self.config_path, 'r') as f:
                 config_data = yaml.safe_load(f)
@@ -557,6 +593,9 @@ class FirewallManager:
     
     async def _initialize_geoip(self) -> None:
         """Initialize GeoIP database"""
+
+
+
         try:
             import geoip2.database
             self.geoip_reader = geoip2.database.Reader(self.geoip_database_path)
@@ -566,6 +605,9 @@ class FirewallManager:
     
     async def _initialize_threat_intelligence(self) -> None:
         """Initialize threat intelligence feeds"""
+
+
+
         try:
             # Load existing threat data
             for feed_url in self.threat_feeds:
@@ -577,6 +619,9 @@ class FirewallManager:
     
     async def _setup_firewall_backends(self) -> None:
         """Setup firewall backend systems"""
+
+
+
         try:
             # Configure iptables rules
             if self.iptables_manager:
@@ -592,6 +637,9 @@ class FirewallManager:
     
     async def _apply_default_policies(self) -> None:
         """Apply default security policies"""
+
+
+
         try:
             # Create default policy for IA platform protection
             default_policy = SecurityPolicy(

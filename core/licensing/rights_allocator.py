@@ -9,7 +9,7 @@ records, and sophisticated rights chain management for global content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE & COPYRIGHT PROTECTION:
+  CRITICAL LEGAL NOTICE & COPYRIGHT PROTECTION:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written 
 permission is strictly prohibited and will result in severe legal consequences.
@@ -688,6 +688,9 @@ class UltraAdvancedRightsAllocator:
         session: AsyncSession
     ) -> List[Dict[str, Any]]:
         """Get history of rights allocations for specific content"""
+
+
+
         try:
             # Implementation would query database for historical allocations
             # This is a placeholder for the actual database query
@@ -707,6 +710,9 @@ class UltraAdvancedRightsAllocator:
         session: AsyncSession
     ) -> bool:
         """Validate rights ownership for specific content and right type"""
+
+
+
         try:
             # Implementation would verify rights ownership in database
             # This is a placeholder for the actual validation logic
@@ -734,6 +740,9 @@ class UltraAdvancedRightsAllocator:
         session: AsyncSession
     ) -> bool:
         """Transfer rights between holders"""
+
+
+
         try:
             # Validate source ownership
             if not await self.validate_rights_ownership(
@@ -848,6 +857,9 @@ class RightsAllocator:
     
     async def initialize(self) -> None:
         """Initialize rights allocator and verification systems"""
+
+
+
         try:
             self.logger.info("Initializing RightsAllocator")
             
@@ -1195,6 +1207,9 @@ class RightsAllocator:
     
     async def get_content_ownership(self, content_id: str) -> Optional[RightsAllocation]:
         """Get complete ownership information for content"""
+
+
+
         return await self._get_content_allocation(content_id)
     
     async def get_owner_rights(

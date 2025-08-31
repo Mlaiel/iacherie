@@ -7,7 +7,7 @@ Copyright: All rights reserved - Unauthorized use prohibited
 Project: IA Influencer Agent Platform - Content Protection & Monetization
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  AVERTISSEMENT SÉVÈRE ⚠️
+  AVERTISSEMENT SÉVÈRE 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
@@ -137,6 +137,9 @@ class IngressManager:
         
     async def initialize(self) -> None:
         """Initialize ingress manager"""
+
+
+
         try:
             logger.info("Initializing Ingress Manager...")
             
@@ -163,6 +166,9 @@ class IngressManager:
     
     async def add_ingress_rule(self, rule: IngressRule) -> bool:
         """Add new ingress rule"""
+
+
+
         try:
             logger.info(f"Adding ingress rule for {rule.host}{rule.path}")
             
@@ -193,6 +199,9 @@ class IngressManager:
     
     async def remove_ingress_rule(self, host: str, path: str) -> bool:
         """Remove ingress rule"""
+
+
+
         try:
             rule_key = f"{host}{path}"
             
@@ -222,6 +231,9 @@ class IngressManager:
         services: List[BackendService]
     ) -> bool:
         """Register backend services for load balancing"""
+
+
+
         try:
             logger.info(f"Registering backend services for {service_name}")
             
@@ -249,6 +261,9 @@ class IngressManager:
     
     async def configure_ssl_certificate(self, certificate: SSLCertificate) -> bool:
         """Configure SSL certificate"""
+
+
+
         try:
             logger.info(f"Configuring SSL certificate: {certificate.name}")
             
@@ -282,6 +297,9 @@ class IngressManager:
         method: LoadBalancingMethod
     ) -> bool:
         """Update load balancing method for service"""
+
+
+
         try:
             if service_name not in self.services:
                 logger.error(f"Service not found: {service_name}")
@@ -305,6 +323,9 @@ class IngressManager:
     
     async def get_ingress_status(self) -> Dict[str, Any]:
         """Get comprehensive ingress status"""
+
+
+
         try:
             status = {
                 'total_rules': len(self.rules),
@@ -360,6 +381,9 @@ class IngressManager:
     
     async def _load_ingress_configuration(self) -> None:
         """Load ingress configuration from file"""
+
+
+
         try:
             with open(self.config_path, 'r') as f:
                 config_data = yaml.safe_load(f)
@@ -450,6 +474,9 @@ class IngressManager:
     
     async def _apply_kubernetes_ingress(self, rule: IngressRule) -> None:
         """Apply Kubernetes ingress configuration"""
+
+
+
         try:
             ingress_name = f"ingress-{rule.service_name}"
             namespace = "default"
@@ -573,6 +600,9 @@ class IngressManager:
     
     def _load_configuration(self) -> None:
         """Load initial configuration"""
+
+
+
         try:
             asyncio.create_task(self._load_ingress_configuration())
         except Exception as e:

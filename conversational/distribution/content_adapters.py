@@ -140,6 +140,9 @@ class BaseContentAdapter(ABC):
     
     def _initialize_platform_specs(self) -> Dict[PlatformType, PlatformSpecs]:
         """Initialize platform-specific specifications"""
+
+
+
         return {
             PlatformType.YOUTUBE: PlatformSpecs(
                 max_file_size=128 * 1024 * 1024 * 1024,  # 128GB
@@ -301,6 +304,9 @@ class AudioContentAdapter(BaseContentAdapter):
         quality: AdaptationQuality = AdaptationQuality.HIGH
     ) -> AdaptationResult:
         """Adapt audio content for platform requirements"""
+
+
+
         try:
             platform_specs = self.platform_specs[platform]
             
@@ -418,6 +424,9 @@ class AudioContentAdapter(BaseContentAdapter):
     
     def _estimate_bitrate(self, file_path: str) -> int:
         """Estimate audio bitrate from file"""
+
+
+
         try:
             import os
             file_size = os.path.getsize(file_path)
@@ -534,6 +543,9 @@ class VideoContentAdapter(BaseContentAdapter):
         quality: AdaptationQuality = AdaptationQuality.HIGH
     ) -> AdaptationResult:
         """Adapt video content for platform requirements"""
+
+
+
         try:
             platform_specs = self.platform_specs[platform]
             
@@ -842,6 +854,9 @@ class ImageContentAdapter(BaseContentAdapter):
         quality: AdaptationQuality = AdaptationQuality.HIGH
     ) -> AdaptationResult:
         """Adapt image content for platform requirements"""
+
+
+
         try:
             platform_specs = self.platform_specs[platform]
             
@@ -1054,6 +1069,9 @@ class TextContentAdapter(BaseContentAdapter):
         quality: AdaptationQuality = AdaptationQuality.HIGH
     ) -> AdaptationResult:
         """Adapt text content for platform requirements"""
+
+
+
         try:
             platform_specs = self.platform_specs[platform]
             

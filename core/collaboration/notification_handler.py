@@ -1,12 +1,12 @@
 """
-📧 NOTIFICATION HANDLER - Communication Management System
+ NOTIFICATION HANDLER - Communication Management System
 ========================================================
 
 Developed by: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved - Unauthorized use is strictly prohibited
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive property of Fahed Mlaiel.
 Any attempt to steal, copy, or reproduce this concept, idea, or code
 without explicit written authorization from Fahed Mlaiel is strictly forbidden
@@ -320,6 +320,9 @@ class NotificationHandler:
         immediate: bool = False
     ) -> Dict[str, DeliveryResult]:
         """Send notification through multiple channels"""
+
+
+
         try:
             logger.info(f"Sending notification {notification.id} to user {notification.recipient_id}")
             
@@ -398,6 +401,9 @@ class NotificationHandler:
         batch_size: int = 100
     ) -> Dict[str, Dict[str, DeliveryResult]]:
         """Send multiple notifications in batches"""
+
+
+
         try:
             logger.info(f"Sending {len(notifications)} bulk notifications")
             
@@ -439,6 +445,9 @@ class NotificationHandler:
         template: NotificationTemplate
     ) -> NotificationTemplate:
         """Create notification template"""
+
+
+
         try:
             logger.info(f"Creating template: {template.name}")
             
@@ -475,6 +484,9 @@ class NotificationHandler:
         preferences: UserPreferences
     ) -> UserPreferences:
         """Update user notification preferences"""
+
+
+
         try:
             logger.info(f"Updating preferences for user {user_id}")
             
@@ -513,6 +525,9 @@ class NotificationHandler:
         end_date: Optional[datetime] = None
     ) -> Dict[str, Any]:
         """Get notification analytics and metrics"""
+
+
+
         try:
             logger.info("Retrieving notification analytics")
             
@@ -579,6 +594,9 @@ class NotificationHandler:
         test_message: str = "Test notification"
     ) -> DeliveryResult:
         """Test notification delivery for a specific channel"""
+
+
+
         try:
             logger.info(f"Testing notification delivery for user {user_id} via {channel.value}")
             
@@ -804,14 +822,23 @@ class NotificationHandler:
             
     async def _calculate_channel_performance(self) -> Dict[str, Any]:
         """Calculate performance metrics by channel"""
+
+
+
         return {}  # Placeholder
         
     async def _calculate_optimal_send_times(self, user_id: Optional[str]) -> Dict[str, Any]:
         """Calculate optimal send times"""
+
+
+
         return {}  # Placeholder
         
     async def _get_preferences_summary(self) -> Dict[str, Any]:
         """Get summary of user preferences"""
+
+
+
         return {}  # Placeholder
     MILESTONE_COMPLETED = "milestone_completed"
     PAYMENT_RECEIVED = "payment_received"
@@ -944,6 +971,9 @@ class NotificationHandler:
         template_id: Optional[str] = None
     ) -> Dict[str, Any]:
         """Send notification through appropriate channels"""
+
+
+
         try:
             logger.info(f"Sending notification to {payload.recipient_id}: {payload.notification_type}")
             
@@ -1012,6 +1042,9 @@ class NotificationHandler:
         batch_size: int = 100
     ) -> Dict[str, Any]:
         """Send bulk notifications with batch processing"""
+
+
+
         try:
             logger.info(f"Sending {len(payloads)} bulk notifications")
             
@@ -1072,6 +1105,9 @@ class NotificationHandler:
         template_id: Optional[str] = None
     ) -> str:
         """Schedule notification for future delivery"""
+
+
+
         try:
             logger.info(f"Scheduling notification for {send_at}")
             
@@ -1095,6 +1131,9 @@ class NotificationHandler:
         notification_id: str
     ) -> Dict[str, Any]:
         """Get detailed delivery report for notification"""
+
+
+
         try:
             # Get notification details
             notification = await self._get_notification_details(notification_id)
@@ -1121,6 +1160,9 @@ class NotificationHandler:
         preferences: NotificationPreferences
     ) -> bool:
         """Update user notification preferences"""
+
+
+
         try:
             logger.info(f"Updating preferences for user {user_id}")
             
@@ -1144,6 +1186,9 @@ class NotificationHandler:
             
     async def create_template(self, template: NotificationTemplate) -> bool:
         """Create new notification template"""
+
+
+
         try:
             logger.info(f"Creating template: {template.template_id}")
             
@@ -1172,6 +1217,9 @@ class NotificationHandler:
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
         """Track user interaction with notification"""
+
+
+
         try:
             # Record interaction
             await self._record_interaction(notification_id, interaction_type, metadata)
@@ -1202,6 +1250,9 @@ class NotificationHandler:
         attachments: Optional[List[str]] = None
     ) -> Dict[str, Any]:
         """Send email notification"""
+
+
+
         try:
             msg = MIMEMultipart()
             msg['From'] = self.email_config['from_address']
@@ -1248,6 +1299,9 @@ class NotificationHandler:
         message: str
     ) -> Dict[str, Any]:
         """Send SMS notification"""
+
+
+
         try:
             # Use configured SMS provider (Twilio, AWS SNS, etc.)
             if self.sms_config['provider'] == 'twilio':
@@ -1270,6 +1324,9 @@ class NotificationHandler:
         data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Send push notification"""
+
+
+
         try:
             message = messaging.Message(
                 notification=messaging.Notification(
@@ -1364,6 +1421,9 @@ class NotificationHandler:
         preferences: NotificationPreferences
     ) -> Dict[str, str]:
         """Generate notification content without template"""
+
+
+
         return {
             'subject': payload.title,
             'body': payload.message,
@@ -1405,6 +1465,9 @@ class NotificationHandler:
     # Complete implementation methods
     async def _check_rate_limit(self, user_id: str, channel: NotificationChannel) -> bool:
         """Advanced rate limiting with adaptive throttling"""
+
+
+
         try:
             # Define rate limits per channel (per hour)
             rate_limits = {
@@ -1437,6 +1500,9 @@ class NotificationHandler:
         
     async def _update_rate_limit(self, user_id: str, channel: NotificationChannel) -> None:
         """Update rate limit counter with sliding window"""
+
+
+
         try:
             current_hour = datetime.utcnow().hour
             cache_key = f"rate_limit:{user_id}:{channel.value}:{current_hour}"
@@ -1449,6 +1515,9 @@ class NotificationHandler:
         
     async def _create_notification_record(self, payload: NotificationPayload) -> str:
         """Create comprehensive notification record in database"""
+
+
+
         try:
             notification_id = f"notif_{uuid.uuid4().hex}"
             
@@ -1492,6 +1561,9 @@ class NotificationHandler:
         
     async def _update_notification_status(self, notification_id: str, results: Dict[str, Any]) -> None:
         """Update notification status with comprehensive delivery results"""
+
+
+
         try:
             # Calculate overall status
             channel_results = results.get('channels', {})
@@ -1543,6 +1615,9 @@ class NotificationHandler:
         
     async def _create_scheduled_notification(self, payload: NotificationPayload, send_at: datetime, template_id: Optional[str]) -> str:
         """Create sophisticated scheduled notification with timezone handling"""
+
+
+
         try:
             scheduled_id = f"sched_{uuid.uuid4().hex}"
             
@@ -1598,6 +1673,9 @@ class NotificationHandler:
         
     async def _add_to_schedule_queue(self, scheduled_id: str, send_at: datetime) -> None:
         """Add notification to advanced scheduling queue with priority handling"""
+
+
+
         try:
             # Calculate delay in seconds
             delay_seconds = (send_at - datetime.utcnow()).total_seconds()
@@ -1627,6 +1705,9 @@ class NotificationHandler:
         
     async def _get_notification_details(self, notification_id: str) -> Dict[str, Any]:
         """Get comprehensive notification details with full history"""
+
+
+
         try:
             # Get main notification record
             query = """
@@ -1672,6 +1753,9 @@ class NotificationHandler:
         
     async def _get_delivery_reports(self, notification_id: str) -> List[DeliveryReport]:
         """Get detailed delivery reports for all channels"""
+
+
+
         try:
             query = """
             SELECT * FROM delivery_reports 
@@ -1705,6 +1789,9 @@ class NotificationHandler:
         
     async def _calculate_delivery_metrics(self, reports: List[DeliveryReport]) -> Dict[str, Any]:
         """Calculate comprehensive delivery and performance metrics"""
+
+
+
         try:
             if not reports:
                 return {}
@@ -1770,6 +1857,9 @@ class NotificationHandler:
         
     async def _cache_user_preferences(self, user_id: str, preferences: NotificationPreferences) -> None:
         """Cache user notification preferences for fast access"""
+
+
+
         try:
             if hasattr(self, 'cache_manager') and self.cache_manager:
                 cache_key = f"notification_prefs:{user_id}"
@@ -1794,13 +1884,16 @@ class NotificationHandler:
                     expire_seconds=3600  # 1 hour cache
                 )
                 
-                logger.debug(f"📊 Cached notification preferences for user {user_id}")
+                logger.debug(f" Cached notification preferences for user {user_id}")
                 
         except Exception as e:
-            logger.error(f"❌ Failed to cache user preferences for {user_id}: {e}")
+            logger.error(f" Failed to cache user preferences for {user_id}: {e}")
     
     async def _cache_template(self, template: NotificationTemplate) -> None:
         """Cache notification template for fast access"""
+
+
+
         try:
             if hasattr(self, 'cache_manager') and self.cache_manager:
                 cache_key = f"notification_template:{template.template_id}"
@@ -1823,13 +1916,16 @@ class NotificationHandler:
                     expire_seconds=1800  # 30 minutes cache
                 )
                 
-                logger.debug(f"📊 Cached notification template {template.template_id}")
+                logger.debug(f" Cached notification template {template.template_id}")
                 
         except Exception as e:
-            logger.error(f"❌ Failed to cache template {template.template_id}: {e}")
+            logger.error(f" Failed to cache template {template.template_id}: {e}")
     
     async def _record_interaction(self, notification_id: str, interaction_type: str, metadata: Optional[Dict[str, Any]]) -> None:
         """Record user interaction with notification for analytics"""
+
+
+
         try:
             interaction_data = {
                 "notification_id": notification_id,
@@ -1872,13 +1968,16 @@ class NotificationHandler:
                     f"{interaction_type}_count": await self.cache_manager.get(counter_key) or 1
                 })
             
-            logger.debug(f"📊 Recorded interaction: {notification_id} -> {interaction_type}")
+            logger.debug(f" Recorded interaction: {notification_id} -> {interaction_type}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to record interaction for {notification_id}: {e}")
+            logger.error(f" Failed to record interaction for {notification_id}: {e}")
     
     async def _update_delivery_report_interaction(self, notification_id: str, interaction_type: str, timestamp: datetime) -> None:
         """Update delivery report with interaction data"""
+
+
+
         try:
             if hasattr(self, 'db_manager') and self.db_manager:
                 update_query = """
@@ -1897,13 +1996,16 @@ class NotificationHandler:
                     notification_id
                 )
                 
-                logger.debug(f"📊 Updated delivery report: {notification_id} -> {interaction_type}")
+                logger.debug(f" Updated delivery report: {notification_id} -> {interaction_type}")
                 
         except Exception as e:
-            logger.error(f"❌ Failed to update delivery report for {notification_id}: {e}")
+            logger.error(f" Failed to update delivery report for {notification_id}: {e}")
     
     async def _update_interaction_analytics(self, notification_id: str, interaction_type: str, metadata: Optional[Dict[str, Any]]) -> None:
         """Update aggregated analytics for notification interactions"""
+
+
+
         try:
             current_hour = datetime.utcnow().strftime("%Y-%m-%d-%H")
             
@@ -1923,10 +2025,10 @@ class NotificationHandler:
                 global_key = f"analytics:global:interactions"
                 await self.cache_manager.hincrby(global_key, interaction_type, 1)
             
-            logger.debug(f"📊 Updated interaction analytics: {interaction_type}")
+            logger.debug(f" Updated interaction analytics: {interaction_type}")
             
         except Exception as e:
-            logger.error(f"❌ Failed to update interaction analytics: {e}")
+            logger.error(f" Failed to update interaction analytics: {e}")
         
     async def _send_twilio_sms(self, phone_number: str, message: str) -> Dict[str, Any]:
         return {"status": "sent"}

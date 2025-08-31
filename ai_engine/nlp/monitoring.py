@@ -7,7 +7,7 @@ sentiment tracking, and trend analysis.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
 
@@ -275,6 +275,9 @@ class AdvancedNLPMonitor:
     
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default monitoring configuration"""
+
+
+
         return {
             'collection_interval': 60,  # seconds
             'metrics_retention_days': 30,
@@ -520,6 +523,9 @@ class AdvancedNLPMonitor:
     
     async def _generate_periodic_report(self):
         """Generate periodic performance report"""
+
+
+
         try:
             report = await self.report_generator.generate_report(
                 self.metrics_store, self.active_alerts

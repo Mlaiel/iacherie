@@ -75,6 +75,9 @@ class ProcessorIndex:
     
     def _initialize_registry(self):
         """Initialize the processor registry with all available processors"""
+
+
+
         try:
             # Register core processors
             self._register_processor(
@@ -190,6 +193,9 @@ class ProcessorIndex:
     
     def get_processor_info(self, processor_name: str) -> Optional[ProcessorInfo]:
         """Get information about a specific processor"""
+
+
+
         return self._processors.get(processor_name)
     
     def list_processors(self, category: Optional[str] = None) -> List[ProcessorInfo]:
@@ -208,6 +214,9 @@ class ProcessorIndex:
     
     def get_processor_instance(self, processor_name: str, config: Optional[Dict[str, Any]] = None):
         """Get or create a processor instance"""
+
+
+
         try:
             # Check if instance already exists
             if processor_name in self._instances:
@@ -259,6 +268,9 @@ class ProcessorIndex:
         config: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Process content while tracking metrics"""
+
+
+
         try:
             start_time = time.time()
             
@@ -294,6 +306,9 @@ class ProcessorIndex:
     
     async def _update_metrics(self, processor_name: str, success: bool, processing_time: float):
         """Update processing metrics for a processor"""
+
+
+
         try:
             metrics = self._metrics.get(processor_name)
             if not metrics:
@@ -318,10 +333,16 @@ class ProcessorIndex:
     
     def get_processor_metrics(self, processor_name: str) -> Optional[ProcessorMetrics]:
         """Get performance metrics for a specific processor"""
+
+
+
         return self._metrics.get(processor_name)
     
     def get_all_metrics(self) -> Dict[str, ProcessorMetrics]:
         """Get performance metrics for all processors"""
+
+
+
         return self._metrics.copy()
     
     def reset_metrics(self, processor_name: Optional[str] = None):
@@ -350,6 +371,9 @@ class ProcessorIndex:
     
     def get_system_status(self) -> Dict[str, Any]:
         """Get overall system status and health"""
+
+
+
         try:
             active_processors = sum(1 for p in self._processors.values() if p.is_active)
             total_processors = len(self._processors)
@@ -386,14 +410,23 @@ processor_index = ProcessorIndex()
 # Convenience functions for easy access
 def get_processor(processor_name: str, config: Optional[Dict[str, Any]] = None):
     """Get a processor instance"""
+
+
+
     return processor_index.get_processor_instance(processor_name, config)
 
 def list_all_processors(category: Optional[str] = None) -> List[ProcessorInfo]:
     """List all available processors"""
+
+
+
     return processor_index.list_processors(category)
 
 def find_processors_for_format(file_format: str) -> List[str]:
     """Find processors compatible with a file format"""
+
+
+
     return processor_index.find_processors_for_format(file_format)
 
 async def process_content_with_metrics(
@@ -402,10 +435,16 @@ async def process_content_with_metrics(
     config: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
     """Process content with automatic metrics tracking"""
+
+
+
     return await processor_index.process_with_metrics(processor_name, content_data, config)
 
 def get_system_status() -> Dict[str, Any]:
     """Get overall system health status"""
+
+
+
     return processor_index.get_system_status()
 
 # Export main components

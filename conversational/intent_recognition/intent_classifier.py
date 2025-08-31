@@ -8,7 +8,7 @@ and contextual understanding.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
@@ -160,6 +160,9 @@ class IntentClassifier(BaseService):
         
     async def _initialize_models(self) -> None:
         """Initialize all classification models and components"""
+
+
+
         try:
             self.logger.info("Initializing intent classification models...")
             
@@ -183,6 +186,9 @@ class IntentClassifier(BaseService):
     
     async def _load_transformer_model(self) -> None:
         """Load fine-tuned transformer model for intent classification"""
+
+
+
         try:
             model_name = self.config.transformer_model_name
             
@@ -209,6 +215,9 @@ class IntentClassifier(BaseService):
     
     async def _load_ensemble_models(self) -> None:
         """Load ensemble models for improved accuracy"""
+
+
+
         try:
             # TF-IDF + Random Forest for fallback classification
             self.tfidf_vectorizer = TfidfVectorizer(
@@ -237,6 +246,9 @@ class IntentClassifier(BaseService):
     
     async def _load_text_processors(self) -> None:
         """Load NLP processing components"""
+
+
+
         try:
             # Load spaCy model for text preprocessing
             self.nlp_processor = spacy.load(self.config.spacy_model)
@@ -254,6 +266,9 @@ class IntentClassifier(BaseService):
     
     async def _load_calibration_data(self) -> None:
         """Load confidence calibration data"""
+
+
+
         try:
             if self.config.calibration_data_path:
                 with open(self.config.calibration_data_path, 'rb') as f:
@@ -266,6 +281,9 @@ class IntentClassifier(BaseService):
     
     def _get_creative_entity_patterns(self) -> List[Dict[str, Any]]:
         """Get entity patterns specific to creative industry"""
+
+
+
         return [
             # Music-related patterns
             {"label": "MUSIC_GENRE", "pattern": [{"LOWER": {"IN": ["pop", "rock", "jazz", "classical", "electronic", "hip-hop", "country"]}}]},
@@ -345,6 +363,9 @@ class IntentClassifier(BaseService):
     
     async def _preprocess_text(self, text: str) -> str:
         """Preprocess input text for classification"""
+
+
+
         try:
             # Basic cleaning
             text = text.strip().lower()
@@ -407,6 +428,9 @@ class IntentClassifier(BaseService):
         features: Dict[str, Any]
     ) -> Tuple[IntentCategory, float]:
         """Classify intent using transformer model"""
+
+
+
         try:
             if not self.transformer_model or not self.transformer_tokenizer:
                 raise ModelLoadError("Transformer model not loaded")
@@ -443,6 +467,9 @@ class IntentClassifier(BaseService):
         features: Dict[str, Any]
     ) -> Tuple[Optional[IntentCategory], float]:
         """Classify intent using ensemble models"""
+
+
+
         try:
             if not self.ensemble_models or not self.tfidf_vectorizer:
                 return None, 0.0
@@ -528,6 +555,9 @@ class IntentClassifier(BaseService):
     
     def _calibrate_confidence(self, confidence: float, intent: IntentCategory) -> float:
         """Calibrate confidence score using historical data"""
+
+
+
         try:
             if not self.calibration_data:
                 return confidence
@@ -601,6 +631,9 @@ class IntentClassifier(BaseService):
     
     def _calculate_text_clarity(self, text: str) -> float:
         """Calculate clarity score for input text"""
+
+
+
         try:
             # Simple heuristics for text clarity
             words = text.split()
@@ -653,6 +686,9 @@ class IntentClassifier(BaseService):
     
     async def _update_metrics(self, result: ClassificationResult, processing_time: float) -> None:
         """Update performance metrics"""
+
+
+
         try:
             # Record classification metrics
             self.metrics.record_counter('classifications_total')
@@ -700,6 +736,9 @@ class IntentClassifier(BaseService):
         Returns:
             List of classification results
         """
+
+
+
         try:
             # Prepare inputs
             if contexts is None:
@@ -742,6 +781,9 @@ class IntentClassifier(BaseService):
         time_window_hours: int = 24
     ) -> Dict[str, float]:
         """Get confidence score distribution for specific intent"""
+
+
+
         try:
             # In production, this would query historical data
             # Placeholder implementation
@@ -762,6 +804,9 @@ class IntentClassifier(BaseService):
         feedback_data: List[Dict[str, Any]]
     ) -> None:
         """Update model performance based on user feedback"""
+
+
+
         try:
             # Process feedback for model improvement
             for feedback in feedback_data:
@@ -788,6 +833,9 @@ class IntentClassifier(BaseService):
     
     def get_model_info(self) -> Dict[str, Any]:
         """Get information about loaded models and performance"""
+
+
+
         return {
             'transformer_model': self.config.transformer_model_name,
             'model_version': self.config.model_version,

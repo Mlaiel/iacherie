@@ -15,7 +15,7 @@ Key Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 - All Rights Reserved
 
-⚠️ IMPORTANT LEGAL NOTICE ⚠️
+ IMPORTANT LEGAL NOTICE 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
@@ -260,6 +260,9 @@ class WorkflowEngine(BaseAgent):
         execution_id: str
     ) -> ExecutionPlan:
         """Create optimized execution plan for workflow."""
+
+
+
         try:
             # Analyze workflow characteristics
             analysis = await self._analyze_workflow_for_execution(workflow_definition)
@@ -303,6 +306,9 @@ class WorkflowEngine(BaseAgent):
 
     async def _execute_asynchronous(self, plan: ExecutionPlan) -> Dict[str, Any]:
         """Execute workflow asynchronously with optimal concurrency."""
+
+
+
         try:
             results = {}
             completed_tasks = set()
@@ -356,6 +362,9 @@ class WorkflowEngine(BaseAgent):
         context_results: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Execute a stage of tasks asynchronously."""
+
+
+
         try:
             # Filter tasks ready for execution
             ready_tasks = [
@@ -401,6 +410,9 @@ class WorkflowEngine(BaseAgent):
         context_results: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Execute a single task with fault tolerance."""
+
+
+
         try:
             # Check circuit breaker
             if self._should_circuit_break(task.name):
@@ -461,6 +473,9 @@ class WorkflowEngine(BaseAgent):
 
     async def _execute_batch(self, plan: ExecutionPlan) -> Dict[str, Any]:
         """Execute workflow in batch mode for high-throughput processing."""
+
+
+
         try:
             # Collect all tasks into batches
             batches = await self._create_execution_batches(plan)
@@ -496,6 +511,9 @@ class WorkflowEngine(BaseAgent):
 
     async def _execute_streaming(self, plan: ExecutionPlan) -> Dict[str, Any]:
         """Execute workflow in streaming mode for real-time processing."""
+
+
+
         try:
             # Set up streaming pipeline
             stream_results = {}
@@ -548,6 +566,9 @@ class WorkflowEngine(BaseAgent):
 
     async def _execute_hybrid(self, plan: ExecutionPlan) -> Dict[str, Any]:
         """Execute workflow using hybrid approach optimized for the specific workflow."""
+
+
+
         try:
             # Analyze workflow for optimal execution strategy per stage
             stage_strategies = await self._determine_stage_strategies(plan)
@@ -614,6 +635,9 @@ class WorkflowEngine(BaseAgent):
 
     async def _analyze_workflow_for_execution(self, workflow_definition: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze workflow for optimal execution planning."""
+
+
+
         try:
             nodes = workflow_definition.get('nodes', [])
             edges = workflow_definition.get('edges', [])
@@ -651,6 +675,9 @@ class WorkflowEngine(BaseAgent):
 
     def _calculate_workflow_depth(self, nodes: List[Dict], edges: List[Dict]) -> int:
         """Calculate maximum depth of workflow."""
+
+
+
         try:
             # Simple implementation - would be more sophisticated in practice
             if not edges:
@@ -690,6 +717,9 @@ class WorkflowEngine(BaseAgent):
 
     def _calculate_parallelization_factor(self, nodes: List[Dict], edges: List[Dict]) -> float:
         """Calculate potential parallelization factor."""
+
+
+
         try:
             if not nodes:
                 return 1.0
@@ -716,6 +746,9 @@ class WorkflowEngine(BaseAgent):
 
     def _hash_workflow_definition(self, workflow_definition: Dict[str, Any]) -> str:
         """Generate hash for workflow definition for caching."""
+
+
+
         try:
             # Create a canonical representation for hashing
             canonical = json.dumps(workflow_definition, sort_keys=True)
@@ -772,6 +805,9 @@ class WorkflowEngine(BaseAgent):
 
     async def get_performance_metrics(self) -> Dict[str, Any]:
         """Get current performance metrics."""
+
+
+
         return {
             'metrics': self.performance_metrics.copy(),
             'active_executions': len(self.active_executions),
@@ -782,6 +818,9 @@ class WorkflowEngine(BaseAgent):
 
     async def shutdown(self):
         """Shutdown the workflow engine gracefully."""
+
+
+
         try:
             self.logger.info("Shutting down workflow engine...")
             

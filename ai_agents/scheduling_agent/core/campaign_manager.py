@@ -10,7 +10,7 @@ content campaigns with automated distribution, performance tracking, and optimiz
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -179,6 +179,9 @@ class CampaignManager:
         Returns:
             Campaign ID
         """
+
+
+
         try:
             logger.info(f"Creating campaign: {config.name}")
             
@@ -233,6 +236,9 @@ class CampaignManager:
         Returns:
             Execution status and initial metrics
         """
+
+
+
         try:
             logger.info(f"Executing campaign {campaign_id} in {execution_mode} mode")
             
@@ -301,6 +307,9 @@ class CampaignManager:
         Returns:
             Campaign performance metrics
         """
+
+
+
         try:
             logger.info(f"Monitoring campaign performance: {campaign_id}")
             
@@ -377,6 +386,9 @@ class CampaignManager:
         Returns:
             Optimization results and recommendations
         """
+
+
+
         try:
             logger.info(f"Optimizing campaign {campaign_id} using {optimization_type} optimization")
             
@@ -803,6 +815,9 @@ class CampaignManager:
         monitoring_config: Dict[str, Any]
     ) -> str:
         """Store campaign configuration in database"""
+
+
+
         try:
             campaign_id = config.id
             
@@ -1086,6 +1101,9 @@ class CampaignManager:
 # Factory function
 def create_campaign_manager() -> CampaignManager:
     """Create and initialize campaign manager"""
+
+
+
     return CampaignManager()
 
 # Export main classes

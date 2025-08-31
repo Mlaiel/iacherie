@@ -8,7 +8,7 @@ Integrates with platform-specific crawlers and APIs.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️ CRITICAL LEGAL WARNING ⚠️
+ CRITICAL LEGAL WARNING 
 UNAUTHORIZED USE, COPYING, OR DISTRIBUTION IS STRICTLY PROHIBITED AND WILL RESULT IN IMMEDIATE LEGAL ACTION.
 This technology is EXCLUSIVE property of Fahed Mlaiel. Contact: mlaiel@live.de for licensing.
 """
@@ -100,6 +100,9 @@ class PlatformScraper:
         
     def _initialize_crawlers(self) -> Dict[str, Any]:
         """Initialize platform-specific crawlers."""
+
+
+
         return {
             'youtube': YouTubeCrawler(),
             'instagram': InstagramCrawler(),
@@ -359,6 +362,9 @@ class PlatformScraper:
         
     def _normalize_profile(self, platform: str, url: str, raw_data: Dict[str, Any]) -> PlatformProfile:
         """Normalize raw profile data to standard structure."""
+
+
+
         return PlatformProfile(
             platform=platform,
             username=str(self._get_nested_value(raw_data, 'username') or ''),
@@ -471,6 +477,9 @@ class PlatformScraper:
         
     def _detect_language(self, text: str) -> str:
         """Detect language from text."""
+
+
+
         try:
             import langdetect
             if text and len(text) > 20:
@@ -548,6 +557,9 @@ class PlatformScraper:
             
     def get_supported_platforms(self) -> List[str]:
         """Get list of supported platforms."""
+
+
+
         return self.supported_platforms
         
     def get_platform_capabilities(self, platform: str) -> Dict[str, bool]:

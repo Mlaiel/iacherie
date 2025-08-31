@@ -379,26 +379,41 @@ class TenantConfig:
     @classmethod
     def generate_tenant_id(cls) -> str:
         """Generate unique tenant identifier."""
+
+
+
         return f"tenant_{uuid.uuid4().hex[:12]}"
 
     @classmethod
     def get_resource_limits(cls, tier: TenantTier) -> ResourceLimits:
         """Get resource limits for tenant tier."""
+
+
+
         return cls.TIER_LIMITS.get(tier, cls.TIER_LIMITS[TenantTier.STARTER])
 
     @classmethod
     def get_feature_access(cls, tier: TenantTier) -> FeatureAccess:
         """Get feature access configuration for tenant tier."""
+
+
+
         return cls.TIER_FEATURES.get(tier, cls.TIER_FEATURES[TenantTier.STARTER])
 
     @classmethod
     def get_pricing_info(cls, tier: TenantTier) -> Dict[str, Any]:
         """Get pricing information for tenant tier."""
+
+
+
         return cls.TIER_PRICING.get(tier, cls.TIER_PRICING[TenantTier.STARTER])
 
     @classmethod
     def get_isolation_config(cls, tier: TenantTier) -> Dict[str, Any]:
         """Get data isolation configuration for tenant tier."""
+
+
+
         return cls.ISOLATION_CONFIGS.get(tier, cls.ISOLATION_CONFIGS[TenantTier.STARTER])
 
     @classmethod
@@ -439,6 +454,9 @@ class TenantConfig:
     @classmethod
     def get_regional_config(cls, region: RegionCode) -> Dict[str, Any]:
         """Get regional configuration for data residency."""
+
+
+
         return cls.REGIONAL_CONFIGS.get(region, cls.REGIONAL_CONFIGS[RegionCode.US_EAST])
 
     @classmethod
@@ -456,4 +474,7 @@ class TenantConfig:
     @classmethod
     def get_sla_metrics(cls, tier: TenantTier) -> Dict[str, Any]:
         """Get SLA metrics for tenant tier."""
+
+
+
         return cls.SLA_METRICS.get(tier, cls.SLA_METRICS[TenantTier.STARTER])

@@ -1,5 +1,5 @@
 """
-🎵 TikTok Content Crawler  
+ TikTok Content Crawler  
 ========================
 
 Professional TikTok content discovery and monitoring system.
@@ -8,7 +8,7 @@ Advanced scraping with anti-detection and content protection focus.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
+ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
 """
@@ -279,6 +279,9 @@ class TikTokSeleniumCrawler:
     
     async def _extract_video_info(self, container) -> Optional[TikTokVideoInfo]:
         """Extract video information from container element."""
+
+
+
         try:
             # Video URL
             link_element = container.find_element(By.CSS_SELECTOR, 'a')
@@ -386,8 +389,8 @@ class TikTokSeleniumCrawler:
             )
             music_text = music_element.text
             
-            # Parse music text (usually "♪ song - artist")
-            if music_text.startswith('♪'):
+            # Parse music text (usually " song - artist")
+            if music_text.startswith(''):
                 music_text = music_text[1:].strip()
                 
                 if ' - ' in music_text:
@@ -617,6 +620,9 @@ class TikTokCrawler(BasePlatformCrawler):
     
     async def search_by_sound(self, sound_name: str, max_results: int = 20) -> List[CrawlResult]:
         """Search content by sound/music."""
+
+
+
         return await self.search_content(
             query=f"sound:{sound_name}",
             max_results=max_results
@@ -624,6 +630,9 @@ class TikTokCrawler(BasePlatformCrawler):
     
     async def monitor_trending(self, callback_func: callable = None) -> List[CrawlResult]:
         """Monitor trending TikTok content."""
+
+
+
         try:
             # Search for trending content
             trending_results = await self.search_content(

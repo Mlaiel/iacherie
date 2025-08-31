@@ -7,7 +7,7 @@ health checks, diagnostics, and system status monitoring.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -69,6 +69,9 @@ class HealthCheckResult:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'component_name': self.component_name,
             'component_type': self.component_type.value,
@@ -100,6 +103,9 @@ class SystemHealthSummary:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'overall_status': self.overall_status.value,
             'healthy_components': self.healthy_components,
@@ -193,6 +199,9 @@ class DatabaseHealthCheck(BaseHealthCheck):
     
     async def _perform_check(self) -> Dict[str, Any]:
         """Check database connectivity and performance"""
+
+
+
         try:
             # Simulate database connection check
             # In production, this would use actual database drivers
@@ -253,6 +262,9 @@ class CacheHealthCheck(BaseHealthCheck):
     
     async def _perform_check(self) -> Dict[str, Any]:
         """Check cache connectivity and performance"""
+
+
+
         try:
             # Simulate cache connection check
             connection_start = time.time()
@@ -316,6 +328,9 @@ class StorageHealthCheck(BaseHealthCheck):
     
     async def _perform_check(self) -> Dict[str, Any]:
         """Check storage capacity and performance"""
+
+
+
         try:
             # Get disk usage statistics
             try:
@@ -386,6 +401,9 @@ class APIServiceHealthCheck(BaseHealthCheck):
     
     async def _perform_check(self) -> Dict[str, Any]:
         """Check API service availability and response"""
+
+
+
         try:
             if not self.endpoint_url:
                 return {
@@ -458,6 +476,9 @@ class AIModelHealthCheck(BaseHealthCheck):
     
     async def _perform_check(self) -> Dict[str, Any]:
         """Check AI model availability and performance"""
+
+
+
         try:
             if not self.model_endpoint:
                 return {
@@ -522,6 +543,9 @@ class SystemResourceHealthCheck(BaseHealthCheck):
     
     async def _perform_check(self) -> Dict[str, Any]:
         """Check system resources (CPU, Memory, etc.)"""
+
+
+
         try:
             # Get system metrics
             try:
@@ -602,6 +626,9 @@ class NetworkHealthCheck(BaseHealthCheck):
     
     async def _perform_check(self) -> Dict[str, Any]:
         """Check network connectivity"""
+
+
+
         try:
             connectivity_results = []
             total_tests = len(self.test_hosts)
@@ -702,6 +729,9 @@ class HealthMonitor:
     
     def _get_system_info(self) -> Dict[str, Any]:
         """Get system information"""
+
+
+
         try:
             return {
                 'platform': platform.system(),
@@ -719,6 +749,9 @@ class HealthMonitor:
     
     def register_health_check(self, health_check: BaseHealthCheck):
         """Register a health check"""
+
+
+
         try:
             with self._lock:
                 self.health_checks[health_check.name] = health_check
@@ -729,6 +762,9 @@ class HealthMonitor:
     
     def unregister_health_check(self, name: str):
         """Unregister a health check"""
+
+
+
         try:
             with self._lock:
                 if name in self.health_checks:
@@ -742,6 +778,9 @@ class HealthMonitor:
     
     async def start_monitoring(self):
         """Start health monitoring"""
+
+
+
         try:
             logger.info("Starting health monitoring")
             self.is_monitoring = True
@@ -752,6 +791,9 @@ class HealthMonitor:
     
     async def stop_monitoring(self):
         """Stop health monitoring"""
+
+
+
         try:
             logger.info("Stopping health monitoring")
             self.is_monitoring = False
@@ -784,6 +826,9 @@ class HealthMonitor:
     
     async def perform_health_checks(self) -> SystemHealthSummary:
         """Perform all registered health checks"""
+
+
+
         try:
             check_start_time = datetime.now(timezone.utc)
             results = []
@@ -878,6 +923,9 @@ class HealthMonitor:
     def _create_health_summary(self, results: List[HealthCheckResult], 
                               check_time: datetime) -> SystemHealthSummary:
         """Create system health summary from check results"""
+
+
+
         try:
             # Count status types
             status_counts = {
@@ -968,6 +1016,9 @@ class HealthMonitor:
     
     async def get_health_status(self) -> Optional[SystemHealthSummary]:
         """Get current health status"""
+
+
+
         try:
             if not self.health_history:
                 # Perform one-time health check
@@ -981,6 +1032,9 @@ class HealthMonitor:
     
     def get_component_health(self, component_name: str) -> Optional[HealthCheckResult]:
         """Get health status for specific component"""
+
+
+
         try:
             if component_name in self.component_history:
                 history = self.component_history[component_name]
@@ -995,6 +1049,9 @@ class HealthMonitor:
     
     def get_health_history(self, limit: int = 50) -> List[SystemHealthSummary]:
         """Get health check history"""
+
+
+
         try:
             history_list = list(self.health_history)
             return history_list[-limit:] if limit else history_list
@@ -1005,6 +1062,9 @@ class HealthMonitor:
     
     def get_component_history(self, component_name: str, limit: int = 20) -> List[HealthCheckResult]:
         """Get health history for specific component"""
+
+
+
         try:
             if component_name in self.component_history:
                 history_list = list(self.component_history[component_name])
@@ -1018,6 +1078,9 @@ class HealthMonitor:
     
     def get_monitoring_stats(self) -> Dict[str, Any]:
         """Get monitoring statistics"""
+
+
+
         try:
             current_time = datetime.now(timezone.utc)
             
@@ -1061,6 +1124,9 @@ class HealthMonitor:
     
     def create_standard_health_checks(self) -> Dict[str, BaseHealthCheck]:
         """Create standard health checks for common components"""
+
+
+
         try:
             standard_checks = {}
             

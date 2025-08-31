@@ -9,7 +9,7 @@ monitoring capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  INTELLECTUAL PROPERTY WARNING ⚠️
+  INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, modification, or distribution is strictly prohibited.
 Violators will face immediate legal action under German and international law.
@@ -57,6 +57,9 @@ class CrawlerManagerSingleton:
     
     def initialize(self, config: Dict[str, Any]):
         """Initialize the crawler system with configuration."""
+
+
+
         try:
             self.config = config
             self.orchestrator = CrawlerOrchestrator(config)
@@ -118,6 +121,9 @@ def initialize_crawler_system(config: Dict[str, Any]) -> bool:
     Returns:
         bool: True if initialization successful, False otherwise
     """
+
+
+
     return crawler_manager.initialize(config)
 
 async def start_crawler_system():
@@ -130,6 +136,9 @@ def stop_crawler_system():
 
 def get_system_status() -> Dict[str, Any]:
     """Get comprehensive system status and metrics."""
+
+
+
     return crawler_manager.get_status()
 
 def create_monitoring_task(
@@ -219,22 +228,37 @@ def get_historical_metrics(
 # Convenience functions for quick crawler creation
 def create_youtube_crawler(config: Dict[str, Any]) -> YouTubeCrawler:
     """Create and configure a YouTube crawler."""
+
+
+
     return YouTubeCrawler(config)
 
 def create_tiktok_crawler(config: Dict[str, Any]) -> TikTokCrawler:
     """Create and configure a TikTok crawler."""
+
+
+
     return TikTokCrawler(config)
 
 def create_instagram_crawler(config: Dict[str, Any]) -> InstagramCrawler:
     """Create and configure an Instagram crawler."""
+
+
+
     return InstagramCrawler(config)
 
 def create_twitter_crawler(config: Dict[str, Any]) -> TwitterCrawler:
     """Create and configure a Twitter crawler."""
+
+
+
     return TwitterCrawler(config)
 
 def create_web_crawler(config: Dict[str, Any]) -> UniversalWebCrawler:
     """Create and configure a universal web crawler."""
+
+
+
     return UniversalWebCrawler(config)
 
 # Quick setup functions

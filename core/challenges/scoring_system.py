@@ -1,5 +1,5 @@
 """
-📊 Scoring System - IA Influencer Agent Platform Enterprise
+ Scoring System - IA Influencer Agent Platform Enterprise
 ===========================================================
 Module: backend/core/challenges/scoring_system.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Scoring and Ranking System - Production-Ready
 Responsibility: Enterprise scoring algorithms and leaderboard management
 ========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
@@ -180,6 +180,9 @@ class ScoreCalculator:
                        modifiers: Optional[List[ScoreModifier]] = None,
                        context: Optional[Dict[str, Any]] = None) -> ScoreCalculation:
         """Calculate comprehensive score from components"""
+
+
+
         try:
             total_score = Decimal('0.00')
             weighted_score = Decimal('0.00')
@@ -391,6 +394,9 @@ class RankingEngine:
                              user_data: Dict[str, Any],
                              historical_performance: Optional[List[Dict[str, Any]]] = None) -> Dict[str, Any]:
         """Calculate comprehensive user ranking"""
+
+
+
         try:
             # Extract score components from user data
             components = self._extract_score_components(user_data)
@@ -775,6 +781,9 @@ class LeaderboardManager:
                                  limit: int = 100,
                                  include_trends: bool = True) -> List[LeaderboardEntry]:
         """Generate comprehensive leaderboard"""
+
+
+
         try:
             # Calculate rankings for all users
             ranked_users = []
@@ -877,6 +886,9 @@ class ScoringSystem:
     
     async def calculate_user_score(self, user_id: str) -> Dict[str, Any]:
         """Calculate comprehensive user score"""
+
+
+
         try:
             # Get user data
             user_data = await self._get_user_data(user_id)
@@ -911,6 +923,9 @@ class ScoringSystem:
     
     async def generate_global_leaderboard(self, limit: int = 100) -> Dict[str, Any]:
         """Generate global leaderboard"""
+
+
+
         try:
             # Get top users data
             users_data = await self._get_top_users_data(limit * 2)  # Get more for filtering

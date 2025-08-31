@@ -26,7 +26,7 @@ Email: mlaiel@live.de
 Project Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE - ZERO TOLERANCE FOR INTELLECTUAL PROPERTY THEFT ⚠️
+  CRITICAL LEGAL NOTICE - ZERO TOLERANCE FOR INTELLECTUAL PROPERTY THEFT 
 
 This revolutionary speech recognition system, neural audio algorithms, and advanced 
 language processing architectures are the EXCLUSIVE intellectual property of Fahed 
@@ -191,6 +191,9 @@ class AdvancedSpeechRecognizer:
     
     def _initialize_engines(self) -> None:
         """Initialize all configured recognition engines."""
+
+
+
         try:
             # Initialize Whisper
             if self.config.primary_engine in [VoiceEngine.WHISPER_OPENAI, VoiceEngine.WHISPER_LARGE_V3]:
@@ -216,6 +219,9 @@ class AdvancedSpeechRecognizer:
     
     def _initialize_whisper(self) -> None:
         """Initialize Whisper recognition engine."""
+
+
+
         try:
             # Load Whisper model
             if self.config.whisper_device == "auto":
@@ -250,6 +256,9 @@ class AdvancedSpeechRecognizer:
     
     def _initialize_google_speech(self) -> None:
         """Initialize Google Cloud Speech engine."""
+
+
+
         try:
             # Initialize Google Cloud Speech client
             client = speech.SpeechClient()
@@ -263,6 +272,9 @@ class AdvancedSpeechRecognizer:
     
     def _initialize_azure_speech(self) -> None:
         """Initialize Azure Speech Services."""
+
+
+
         try:
             # Get Azure credentials from environment
             import os
@@ -284,6 +296,9 @@ class AdvancedSpeechRecognizer:
     
     def _initialize_aws_transcribe(self) -> None:
         """Initialize AWS Transcribe."""
+
+
+
         try:
             # Initialize AWS Transcribe client
             client = boto3.client('transcribe')
@@ -565,6 +580,9 @@ class AdvancedSpeechRecognizer:
         self, audio_data: np.ndarray, sample_rate: int
     ) -> Dict[str, Any]:
         """Detect the language of the audio."""
+
+
+
         try:
             if not self.config.auto_language_detection or not hasattr(self, 'language_detector'):
                 return {
@@ -592,6 +610,9 @@ class AdvancedSpeechRecognizer:
         self, audio_data: np.ndarray, sample_rate: int
     ) -> List[SpeakerSegment]:
         """Perform speaker diarization to identify different speakers."""
+
+
+
         try:
             # Simplified speaker diarization
             # Real implementation would use models like pyannote.audio
@@ -614,6 +635,9 @@ class AdvancedSpeechRecognizer:
         self, audio_data: np.ndarray, sample_rate: int, language_info: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Perform the actual speech recognition."""
+
+
+
         try:
             # Try primary engine first
             if self.config.primary_engine == VoiceEngine.WHISPER_LARGE_V3:
@@ -651,6 +675,9 @@ class AdvancedSpeechRecognizer:
         self, audio_data: np.ndarray, sample_rate: int, language_info: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Recognize speech using Whisper."""
+
+
+
         try:
             if 'whisper_local' in self.engines:
                 model = self.engines['whisper_local']['model']
@@ -711,6 +738,9 @@ class AdvancedSpeechRecognizer:
         self, audio_data: np.ndarray, sample_rate: int, language_info: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Recognize speech using Google Cloud Speech."""
+
+
+
         try:
             if 'google_cloud' not in self.engines:
                 raise Exception("Google Cloud Speech not available")
@@ -766,6 +796,9 @@ class AdvancedSpeechRecognizer:
         self, audio_data: np.ndarray, sample_rate: int, language_info: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Recognize speech using Azure Speech Services."""
+
+
+
         try:
             if 'azure_speech' not in self.engines:
                 raise Exception("Azure Speech not available")
@@ -816,6 +849,9 @@ class AdvancedSpeechRecognizer:
         self, audio_data: np.ndarray, text: str, sample_rate: int
     ) -> List[WordAlignment]:
         """Perform word-level alignment."""
+
+
+
         try:
             # Simplified word alignment
             # Real implementation would use forced alignment models
@@ -846,6 +882,9 @@ class AdvancedSpeechRecognizer:
         self, audio_data: np.ndarray, recognition_result: Dict[str, Any]
     ) -> Dict[str, float]:
         """Assess the quality of recognition."""
+
+
+
         try:
             # Calculate audio quality metrics
             rms_energy = np.sqrt(np.mean(audio_data ** 2))
@@ -874,6 +913,9 @@ class AdvancedSpeechRecognizer:
     
     async def _analyze_content(self, text: str) -> Dict[str, Any]:
         """Analyze content for profanity, sentiment, and topics."""
+
+
+
         try:
             # Profanity detection
             profanity_detected = False
@@ -906,6 +948,9 @@ class AdvancedSpeechRecognizer:
         self, audio_chunk: bytes, session_id: str
     ) -> Optional[RecognitionResult]:
         """Process streaming audio chunk."""
+
+
+
         try:
             session = self.streaming_sessions[session_id]
             session.audio_buffer += audio_chunk
@@ -951,6 +996,9 @@ class AdvancedSpeechRecognizer:
         self, audio_data: np.ndarray, sample_rate: int
     ) -> Dict[str, Any]:
         """Quick recognition for streaming."""
+
+
+
         try:
             # Use fastest available engine for streaming
             if 'whisper_local' in self.engines:

@@ -1,15 +1,15 @@
 """
-🚀 Validation Metrics & Analytics - IA Influencer Agent Platform Enterprise
+ Validation Metrics & Analytics - IA Influencer Agent Platform Enterprise
 ========================================================================
 Module: backend/data_management/validation/metrics.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 SYSTÈME DE MÉTRIQUES ET ANALYTICS DE VALIDATION
+ SYSTÈME DE MÉTRIQUES ET ANALYTICS DE VALIDATION
 Analytics avancées pour monitoring et optimisation
 - Métriques de performance de validation
 - Analytics temps réel
@@ -107,6 +107,9 @@ class MetricsCollector:
     
     def record_validation_event(self, event: ValidationEvent):
         """Enregistre un événement de validation"""
+
+
+
         try:
             # Génération automatique de métriques à partir de l'événement
             auto_metrics = self._generate_auto_metrics(event)
@@ -130,6 +133,9 @@ class MetricsCollector:
     
     def record_metric(self, metric: ValidationMetric):
         """Enregistre une métrique individuelle"""
+
+
+
         try:
             self.metrics_buffer.append(metric)
             
@@ -811,14 +817,23 @@ class ValidationMetrics:
     
     def get_performance_report(self, days: int = 30) -> Dict[str, Any]:
         """Récupère un rapport de performance"""
+
+
+
         return self.analyzer.generate_performance_report(days)
     
     def get_real_time_dashboard(self) -> Dict[str, Any]:
         """Récupère le dashboard temps réel"""
+
+
+
         return self.dashboard.get_real_time_stats()
     
     def get_creator_dashboard(self, creator_type: str) -> Dict[str, Any]:
         """Récupère le dashboard d'un type de créateur"""
+
+
+
         return self.dashboard.get_creator_type_dashboard(creator_type)
     
     def export_metrics(self, start_time: datetime, end_time: datetime, format: str = 'json') -> str:

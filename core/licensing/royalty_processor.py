@@ -10,7 +10,7 @@ multi-format content IP rights monetization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing and usage rights.
@@ -417,6 +417,9 @@ class RoyaltyProcessor:
     
     async def initialize(self) -> None:
         """Initialize royalty processor and payment systems"""
+
+
+
         try:
             self.logger.info("Initializing RoyaltyProcessor")
             
@@ -663,6 +666,9 @@ class RoyaltyProcessor:
         termination_date: datetime
     ) -> RoyaltyCalculation:
         """Calculate final royalty distribution upon license termination"""
+
+
+
         try:
             # Get all unreported revenue for the license
             unreported_revenue = await self._get_unreported_revenue(
@@ -705,6 +711,9 @@ class RoyaltyProcessor:
         period_days: int = 30
     ) -> Dict[str, Any]:
         """Get comprehensive revenue analytics for a license"""
+
+
+
         try:
             end_date = datetime.now()
             start_date = end_date - timedelta(days=period_days)
@@ -754,6 +763,9 @@ class RoyaltyProcessor:
         final_amount: Decimal
     ) -> Dict[str, Any]:
         """Process final payment upon license termination"""
+
+
+
         try:
             if final_amount <= 0:
                 return {'success': True, 'message': 'No final payment required'}

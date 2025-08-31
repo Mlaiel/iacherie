@@ -1,5 +1,5 @@
 """
-🛒 Intelligent Creator Marketplace - IA Influencer Agent Platform
+ Intelligent Creator Marketplace - IA Influencer Agent Platform
 ================================================================
 
 Ultra-advanced marketplace engine with AI-powered creator discovery, smart matching,
@@ -23,7 +23,7 @@ Expert Team Specialties:
 
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
+ STRICT COPYRIGHT WARNING - INTELLECTUAL PROPERTY PROTECTION
 ================================================================
 This code and concept are the EXCLUSIVE PROPERTY of Fahed Mlaiel.
 Unauthorized access, copying, modification, distribution, reverse engineering,
@@ -236,6 +236,9 @@ class IntelligentDiscoveryEngine:
 
     async def initialize_discovery_models(self):
         """Initialize AI models for intelligent discovery"""
+
+
+
         
         try:
             logger.info("Initializing discovery AI models")
@@ -280,6 +283,9 @@ class IntelligentDiscoveryEngine:
         Returns:
             List[DiscoveryResult]: Ranked discovery results
         """
+
+
+
         try:
             logger.info(f"Starting intelligent creator discovery with criteria: {search_criteria}")
             
@@ -326,6 +332,9 @@ class IntelligentDiscoveryEngine:
                                        timeframe: timedelta = timedelta(days=7),
                                        category: str = None) -> List[DiscoveryResult]:
         """Discover creators currently trending based on various signals"""
+
+
+
         
         try:
             # Analyze trending signals
@@ -375,6 +384,9 @@ class IntelligentDiscoveryEngine:
                                   radius_km: float = 50.0,
                                   creator_types: List[str] = None) -> List[DiscoveryResult]:
         """Discover local talent within specified geographic radius"""
+
+
+
         
         try:
             # Parse location
@@ -431,6 +443,9 @@ class IntelligentDiscoveryEngine:
                                                  creator_id: str,
                                                  collaboration_types: List[str] = None) -> List[DiscoveryResult]:
         """Discover potential collaboration opportunities for a specific creator"""
+
+
+
         
         try:
             # Get creator profile
@@ -488,6 +503,9 @@ class IntelligentDiscoveryEngine:
     async def create_marketplace_opportunity(self, 
                                            opportunity_data: Dict[str, Any]) -> MarketplaceOpportunity:
         """Create a new marketplace opportunity with AI-powered targeting"""
+
+
+
         
         try:
             # Validate opportunity data
@@ -801,6 +819,9 @@ class IntelligentDiscoveryEngine:
 
     async def _calculate_location_proximity(self, location1: str, location2: str) -> float:
         """Calculate location proximity score"""
+
+
+
         
         try:
             coords1 = await self._geocode_location(location1)

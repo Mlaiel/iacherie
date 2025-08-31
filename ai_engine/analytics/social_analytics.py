@@ -3,7 +3,7 @@ Social Analytics - Advanced Social Media Analytics and Intelligence
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED 
 This software is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, reproduction, distribution, or modification is strictly 
 prohibited and will result in severe legal consequences.
@@ -270,6 +270,9 @@ class SocialAnalyticsEngine:
     
     def _initialize_ai_models(self):
         """Initialize AI models for social analytics"""
+
+
+
         try:
             # Sentiment analysis model
             self.sentiment_model = None  # Initialize with actual model
@@ -289,6 +292,9 @@ class SocialAnalyticsEngine:
     
     async def track_engagement(self, engagement: SocialEngagement) -> bool:
         """Track individual social media engagement"""
+
+
+
         try:
             # Validate engagement data
             if not self._validate_engagement(engagement):
@@ -324,6 +330,9 @@ class SocialAnalyticsEngine:
     
     async def _enhance_engagement_data(self, engagement: SocialEngagement) -> SocialEngagement:
         """Enhance engagement data with AI insights"""
+
+
+
         try:
             # Sentiment analysis on content
             if engagement.content_text:
@@ -430,6 +439,9 @@ class SocialAnalyticsEngine:
         engagements: List[SocialEngagement]
     ):
         """Analyze audience demographic breakdown"""
+
+
+
         try:
             # Simulate demographic analysis (in production, integrate with platform APIs)
             profile.total_followers = len(set(eng.user_id for eng in engagements))
@@ -469,6 +481,9 @@ class SocialAnalyticsEngine:
         engagements: List[SocialEngagement]
     ):
         """Analyze audience engagement patterns"""
+
+
+
         try:
             # Engagement type preferences
             engagement_counts = Counter(eng.engagement_type.value for eng in engagements)
@@ -508,6 +523,9 @@ class SocialAnalyticsEngine:
         engagements: List[SocialEngagement]
     ):
         """Analyze audience interests and content preferences"""
+
+
+
         try:
             # Extract interests from engagement metadata and content
             interest_keywords = []
@@ -555,6 +573,9 @@ class SocialAnalyticsEngine:
         engagements: List[SocialEngagement]
     ):
         """Calculate audience influence and virality metrics"""
+
+
+
         try:
             # Count influencer followers (users with high influence scores)
             high_influence_threshold = 7.0  # Out of 10
@@ -586,6 +607,9 @@ class SocialAnalyticsEngine:
         engagements: List[SocialEngagement]
     ):
         """Analyze audience platform preferences"""
+
+
+
         try:
             # Platform usage distribution
             platform_counts = Counter(eng.platform.value for eng in engagements)
@@ -618,6 +642,9 @@ class SocialAnalyticsEngine:
         timeframe: Optional[timedelta] = None
     ) -> List[SocialTrend]:
         """Detect emerging and trending topics across social platforms"""
+
+
+
         try:
             if not timeframe:
                 timeframe = timedelta(hours=24)  # Last 24 hours for trend detection
@@ -747,6 +774,9 @@ class SocialAnalyticsEngine:
         timeframe: timedelta
     ) -> float:
         """Calculate trend velocity (rate of change)"""
+
+
+
         try:
             # Get historical data (simplified)
             current_mentions = await self._count_keyword_mentions(keyword, platform, timedelta(hours=6))
@@ -770,6 +800,9 @@ class SocialAnalyticsEngine:
         engagements: List[SocialEngagement]
     ) -> SocialTrend:
         """Enhance trend with additional analysis"""
+
+
+
         try:
             # Sentiment analysis
             trend_engagements = [
@@ -825,6 +858,9 @@ class SocialAnalyticsEngine:
         engagements: List[SocialEngagement]
     ) -> float:
         """Calculate monetization potential of a trend"""
+
+
+
         try:
             factors = []
             
@@ -925,6 +961,9 @@ class SocialAnalyticsEngine:
         timeframe: timedelta
     ):
         """Analyze competitor's social media presence"""
+
+
+
         try:
             # Simulate competitor data (in production, integrate with platform APIs)
             intelligence.platforms = [
@@ -957,6 +996,9 @@ class SocialAnalyticsEngine:
         duration_days: int = 7
     ) -> SocialCampaign:
         """Create and initialize a new social media campaign"""
+
+
+
         try:
             campaign = SocialCampaign(
                 campaign_id=f"campaign_{creator_id}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}",

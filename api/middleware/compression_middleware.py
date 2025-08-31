@@ -114,6 +114,9 @@ class AssetCompressionMiddleware(BaseHTTPMiddleware):
     
     async def _compress_response_gzip(self, response: Response) -> Response:
         """Compress response using gzip"""
+
+
+
         
         try:
             # Get response body
@@ -153,6 +156,9 @@ class AssetCompressionMiddleware(BaseHTTPMiddleware):
     
     async def _compress_response_deflate(self, response: Response) -> Response:
         """Compress response using deflate"""
+
+
+
         
         try:
             # Get response body
@@ -272,6 +278,9 @@ class StaticAssetOptimizationMiddleware(BaseHTTPMiddleware):
     
     def _minify_css(self, response: Response) -> Response:
         """Basic CSS minification"""
+
+
+
         
         try:
             body = self._get_response_body_as_string(response)
@@ -308,6 +317,9 @@ class StaticAssetOptimizationMiddleware(BaseHTTPMiddleware):
     
     def _minify_javascript(self, response: Response) -> Response:
         """Basic JavaScript minification"""
+
+
+
         
         try:
             body = self._get_response_body_as_string(response)
@@ -345,6 +357,9 @@ class StaticAssetOptimizationMiddleware(BaseHTTPMiddleware):
     
     def _minify_html(self, response: Response) -> Response:
         """Basic HTML minification"""
+
+
+
         
         try:
             body = self._get_response_body_as_string(response)

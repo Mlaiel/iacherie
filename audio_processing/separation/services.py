@@ -9,7 +9,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel - Unauthorized use strictly prohibited
 License: Proprietary - Contact for licensing
 
-⚠️ WARNING: This code is the intellectual property of Fahed Mlaiel.
+ WARNING: This code is the intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or modification is strictly
 prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -298,6 +298,9 @@ class SeparationService:
     
     async def get_service_status(self) -> Dict[str, Any]:
         """Get service status and statistics."""
+
+
+
         return {
             "service": "SeparationService",
             "status": "running",
@@ -487,6 +490,9 @@ class RealtimeProcessor:
     
     def get_streaming_status(self) -> Dict[str, Any]:
         """Get real-time streaming status."""
+
+
+
         return {
             "is_streaming": self.is_streaming,
             "buffer_size": self.buffer_size,
@@ -561,6 +567,9 @@ class ServiceRegistry:
     @classmethod
     def list_services(cls) -> List[str]:
         """List all registered services."""
+
+
+
         return list(cls._instances.keys())
     
     @classmethod

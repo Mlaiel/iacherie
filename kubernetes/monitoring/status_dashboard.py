@@ -136,6 +136,9 @@ class DashboardTemplates:
     @staticmethod
     def get_main_template() -> str:
         """Get main dashboard template"""
+
+
+
         return '''
 <!DOCTYPE html>
 <html lang="en">
@@ -443,6 +446,9 @@ class DashboardTemplates:
     @staticmethod
     def get_overview_template() -> str:
         """Get overview section template"""
+
+
+
         return '''
         <div class="row">
             <div class="col-md-3">
@@ -794,6 +800,9 @@ class StatusDashboard:
     
     async def serve_dashboard(self, request: web.Request) -> web.Response:
         """Serve main dashboard page"""
+
+
+
         try:
             # Get current system status
             system_status = await self.get_system_overview()
@@ -839,6 +848,9 @@ class StatusDashboard:
     
     async def get_system_status(self, request: web.Request) -> web.Response:
         """Get overall system status"""
+
+
+
         try:
             status_data = await self.get_system_overview()
             return web.json_response(status_data)
@@ -852,6 +864,9 @@ class StatusDashboard:
     
     async def get_components(self, request: web.Request) -> web.Response:
         """Get all system components"""
+
+
+
         try:
             # Update component statuses
             await self.update_component_statuses()
@@ -907,6 +922,9 @@ class StatusDashboard:
     
     async def get_incidents(self, request: web.Request) -> web.Response:
         """Get all incidents with filtering"""
+
+
+
         try:
             # Get query parameters
             status_filter = request.query.get('status')
@@ -1241,7 +1259,7 @@ class StatusDashboard:
         <body>
             <div id="dashboard">
                 <header>
-                    <h1>🚀 IA Influencer Agent Platform</h1>
+                    <h1> IA Influencer Agent Platform</h1>
                     <div class="status-indicator" id="overall-status">
                         <span class="status-dot operational"></span>
                         <span>All Systems Operational</span>
@@ -1273,7 +1291,7 @@ class StatusDashboard:
                 
                 <footer>
                     <p>© 2025 Fahed Mlaiel - IA Influencer Agent Platform</p>
-                    <p><strong>⚠️ Proprietary System - Unauthorized access prohibited</strong></p>
+                    <p><strong> Proprietary System - Unauthorized access prohibited</strong></p>
                 </footer>
             </div>
             
@@ -1477,6 +1495,9 @@ class StatusDashboard:
             }
         }
         """
+
+
+
         
         return web.Response(text=css, content_type='text/css')
         
@@ -1541,7 +1562,7 @@ class StatusDashboard:
                 }
                 
                 statusEl.className = `connection-status ${connected ? 'connected' : 'disconnected'}`;
-                statusEl.textContent = connected ? '🟢 Connected' : '🔴 Disconnected';
+                statusEl.textContent = connected ? '🟢 Connected' : ' Disconnected';
             }
             
             async loadInitialData() {
@@ -1900,6 +1921,9 @@ class StatusDashboard:
     
     async def get_section_data(self, section: str) -> Dict[str, Any]:
         """Get data for a specific dashboard section"""
+
+
+
         try:
             if section == "overview":
                 return await self.get_overview_data()
@@ -2045,6 +2069,9 @@ class StatusDashboard:
     
     async def render_section_template(self, section: str, data: Dict[str, Any]) -> str:
         """Render HTML template for a section"""
+
+
+
         try:
             if section == "overview":
                 return self.templates.get_overview_template().format(**data)
@@ -2125,6 +2152,9 @@ class StatusDashboard:
     
     async def start_dashboard(self):
         """Start the status dashboard"""
+
+
+
         try:
             if self._dashboard_running:
                 logger.warning("Dashboard is already running")
@@ -2151,6 +2181,9 @@ class StatusDashboard:
     
     async def stop_dashboard(self):
         """Stop the status dashboard"""
+
+
+
         try:
             self._dashboard_running = False
             
@@ -2174,6 +2207,9 @@ class StatusDashboard:
     
     async def _update_loop(self):
         """Background update loop for real-time data"""
+
+
+
         try:
             while self._dashboard_running:
                 # Update component statuses

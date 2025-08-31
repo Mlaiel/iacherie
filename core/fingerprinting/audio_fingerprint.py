@@ -114,6 +114,9 @@ class AudioFingerprintEngine:
     
     async def _extract_chromaprint(self, y: np.ndarray, sr: int) -> Dict[str, any]:
         """Extract Chromaprint fingerprint"""
+
+
+
         try:
             # Convert to int16 for chromaprint
             audio_int16 = (y * 32767).astype(np.int16)
@@ -139,6 +142,9 @@ class AudioFingerprintEngine:
     
     async def _extract_spectral_hash(self, y: np.ndarray, sr: int) -> Dict[str, any]:
         """Extract spectral-based hash fingerprint"""
+
+
+
         try:
             # Compute spectrogram
             D = librosa.stft(y, hop_length=self.hop_length)
@@ -174,6 +180,9 @@ class AudioFingerprintEngine:
     
     async def _extract_mfcc_features(self, y: np.ndarray, sr: int) -> Dict[str, any]:
         """Extract MFCC-based fingerprint"""
+
+
+
         try:
             # Extract MFCC features
             mfccs = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13, hop_length=self.hop_length)
@@ -201,6 +210,9 @@ class AudioFingerprintEngine:
     
     async def _extract_tempo_rhythm(self, y: np.ndarray, sr: int) -> Dict[str, any]:
         """Extract tempo and rhythm features"""
+
+
+
         try:
             # Tempo estimation
             tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
@@ -235,6 +247,9 @@ class AudioFingerprintEngine:
     
     def _generate_combined_hash(self, methods_data: Dict[str, any]) -> str:
         """Generate combined hash from all fingerprinting methods"""
+
+
+
         try:
             hash_parts = []
             
@@ -315,6 +330,9 @@ class AudioFingerprintEngine:
         method: str
     ) -> float:
         """Compare two fingerprints using specific method"""
+
+
+
         try:
             if 'error' in data1 or 'error' in data2:
                 return 0.0
@@ -336,6 +354,9 @@ class AudioFingerprintEngine:
     
     def _compare_chromaprint(self, data1: Dict, data2: Dict) -> float:
         """Compare chromaprint fingerprints"""
+
+
+
         try:
             hash1 = data1.get('hash', '')
             hash2 = data2.get('hash', '')
@@ -356,6 +377,9 @@ class AudioFingerprintEngine:
     
     def _compare_spectral(self, data1: Dict, data2: Dict) -> float:
         """Compare spectral hash fingerprints"""
+
+
+
         try:
             # Compare statistical features
             centroid_diff = abs(data1.get('centroid_mean', 0) - data2.get('centroid_mean', 0))
@@ -376,6 +400,9 @@ class AudioFingerprintEngine:
     
     def _compare_mfcc(self, data1: Dict, data2: Dict) -> float:
         """Compare MFCC fingerprints"""
+
+
+
         try:
             means1 = np.array(data1.get('mfcc_means', []))
             means2 = np.array(data2.get('mfcc_means', []))
@@ -397,6 +424,9 @@ class AudioFingerprintEngine:
     
     def _compare_rhythm(self, data1: Dict, data2: Dict) -> float:
         """Compare rhythm/tempo fingerprints"""
+
+
+
         try:
             tempo1 = data1.get('tempo', 0)
             tempo2 = data2.get('tempo', 0)
@@ -465,6 +495,9 @@ class AudioFingerprintEngine:
     
     def get_engine_info(self) -> Dict[str, any]:
         """Get engine configuration and capabilities"""
+
+
+
         return {
             'engine': 'AudioFingerprintEngine',
             'version': '1.0.0',

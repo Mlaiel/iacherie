@@ -8,7 +8,7 @@ influencers, content creators, and creative industry professionals.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
@@ -185,6 +185,9 @@ class RelationshipExtractor(BaseService):
         
     async def initialize(self):
         """Initialize comprehensive relationship extraction resources and models"""
+
+
+
         try:
             self.logger.info("Initializing advanced RelationshipExtractor...")
             
@@ -226,6 +229,9 @@ class RelationshipExtractor(BaseService):
     
     async def _load_advanced_spacy_model(self):
         """Load advanced spaCy model with custom relationship components"""
+
+
+
         try:
             # Load the most capable spaCy model available
             try:
@@ -272,6 +278,9 @@ class RelationshipExtractor(BaseService):
     
     async def _load_relationship_classifiers(self):
         """Load ensemble of relationship classification models"""
+
+
+
         try:
             # Primary relationship classifier
             self.primary_relation_classifier = pipeline(
@@ -457,6 +466,9 @@ class RelationshipExtractor(BaseService):
     
     async def _initialize_pattern_matchers(self):
         """Initialize sophisticated pattern matchers for relationship extraction"""
+
+
+
         try:
             # Add patterns to spaCy matcher
             for relation_type, patterns in self.relationship_patterns.items():
@@ -497,6 +509,9 @@ class RelationshipExtractor(BaseService):
     
     async def _load_fallback_classifiers(self):
         """Load simplified fallback classifiers if advanced models fail"""
+
+
+
         try:
             self.primary_relation_classifier = pipeline(
                 "text-classification",
@@ -520,6 +535,9 @@ class RelationshipExtractor(BaseService):
     
     async def _load_spacy_model(self):
         """Load spaCy model for dependency parsing"""
+
+
+
         try:
             self.nlp = spacy.load("en_core_web_sm")
             self.logger.info("Loaded spaCy model for relationship extraction")
@@ -530,6 +548,9 @@ class RelationshipExtractor(BaseService):
     
     async def _load_relation_classifier(self):
         """Load machine learning model for relationship classification"""
+
+
+
         try:
             # Use a pre-trained model fine-tuned for relationship classification
             model_name = "microsoft/DialoGPT-medium"  # Would be replaced with actual relation classifier
@@ -771,6 +792,9 @@ class RelationshipExtractor(BaseService):
     
     async def _load_relationship_graph(self):
         """Load existing relationship graph"""
+
+
+
         try:
             # In production, this would load from a persistent graph database
             self.relationship_graph = nx.DiGraph()
@@ -1470,6 +1494,9 @@ class RelationshipExtractor(BaseService):
     
     async def get_relationship_statistics(self) -> Dict[str, Any]:
         """Get relationship extraction statistics"""
+
+
+
         return {
             **self.extraction_stats,
             'graph_stats': {
@@ -1500,6 +1527,9 @@ class RelationshipExtractor(BaseService):
     
     async def health_check(self) -> Dict[str, Any]:
         """Health check for relationship extractor"""
+
+
+
         return {
             'status': 'healthy',
             'spacy_available': self.nlp is not None,

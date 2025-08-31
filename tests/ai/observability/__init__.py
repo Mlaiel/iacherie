@@ -13,30 +13,30 @@ Comprehensive test suite for the observability module including:
 - Security event tracking and threat detection tests
 
 Expert Team Specialties:
-✅ Lead Dev + Architecte Développeur IA
-✅ Développeur Backend Senior (Python/FastAPI/Django)
-✅ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face)
-✅ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
-✅ Spécialiste Sécurité Backend
-✅ Architecte Microservices
-✅ Développeur Audio
-✅ DevOps Engineer
-✅ IA Prompt Engineer
+ Lead Dev + Architecte Développeur IA
+ Développeur Backend Senior (Python/FastAPI/Django)
+ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face)
+ DBA & Data Engineer (PostgreSQL/Redis/MongoDB)
+ Spécialiste Sécurité Backend
+ Architecte Microservices
+ Développeur Audio
+ DevOps Engineer
+ IA Prompt Engineer
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Email: mlaiel@live.de
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  STRICT LEGAL WARNING & COPYRIGHT PROTECTION ⚠️
+  STRICT LEGAL WARNING & COPYRIGHT PROTECTION 
 This entire test suite, concept, and implementation is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 
-🚫 UNAUTHORIZED USE STRICTLY PROHIBITED:
+ UNAUTHORIZED USE STRICTLY PROHIBITED:
 - NO copying, cloning, or replication without explicit written authorization
 - NO commercial use without licensing agreement  
 - NO redistribution under any circumstances
 - NO reverse engineering or code analysis
 
-⚖️ LEGAL CONSEQUENCES:
+ LEGAL CONSEQUENCES:
 Any attempt to steal, copy, or use this test code/concept without explicit written permission
 from Fahed Mlaiel will result in immediate legal action under German and international
 copyright law, financial damages claims, and criminal prosecution where applicable.

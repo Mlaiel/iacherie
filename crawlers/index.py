@@ -126,10 +126,16 @@ class CrawlerModuleIndex:
     
     def get_supported_platforms(self) -> List[str]:
         """Get list of supported platforms."""
+
+
+
         return list(self._crawlers.keys()) if self._initialized else []
     
     def get_available_engines(self) -> List[str]:
         """Get list of available intelligence engines."""
+
+
+
         return list(self._engines.keys()) if self._initialized else []
 
 # Global module index instance
@@ -142,26 +148,44 @@ async def initialize_crawlers():
 
 def get_content_intelligence() -> ContentIntelligenceEngine:
     """Get content intelligence engine."""
+
+
+
     return crawler_index.get_content_intelligence_engine()
 
 def get_trend_detection() -> TrendDetectionEngine:
     """Get trend detection engine."""
+
+
+
     return crawler_index.get_trend_detection_engine()
 
 def get_collaboration_matching() -> CollaborationMatchingEngine:
     """Get collaboration matching engine."""
+
+
+
     return crawler_index.get_collaboration_matching_engine()
 
 def get_orchestration() -> OrchestrationEngine:
     """Get orchestration engine."""
+
+
+
     return crawler_index.get_orchestration_engine()
 
 def get_revenue_intelligence() -> RevenueIntelligenceEngine:
     """Get revenue intelligence engine."""
+
+
+
     return crawler_index.get_revenue_intelligence_engine()
 
 def get_platform_crawler(platform: str):
     """Get platform-specific crawler."""
+
+
+
     return crawler_index.get_platform_crawler(platform)
 
 # Module exports

@@ -276,6 +276,9 @@ class WebhookEndpoints:
     @classmethod
     def get_endpoints(cls, provider: WebhookProvider) -> Dict[str, str]:
         """Get webhook endpoints for a specific provider."""
+
+
+
         return cls.ENDPOINTS.get(provider, {})
 
 
@@ -299,6 +302,9 @@ class WebhookManager:
     
     def get_retry_config(self) -> WebhookRetry:
         """Get retry configuration for webhook delivery."""
+
+
+
         return WebhookRetry(
             max_attempts=self.config.webhook_retry_attempts,
             initial_delay=self.config.webhook_retry_delay,
@@ -334,6 +340,9 @@ class WebhookManager:
     
     def get_handler(self, event_type: str) -> Optional[Callable]:
         """Get webhook event handler."""
+
+
+
         return self.handlers.get(event_type)
     
     def get_provider_config(self, provider: WebhookProvider) -> Dict[str, Any]:

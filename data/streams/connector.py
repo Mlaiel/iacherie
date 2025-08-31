@@ -125,10 +125,16 @@ class BaseConnector(ABC):
         
     async def get_status(self) -> ConnectionStatus:
         """Get connection status"""
+
+
+
         return self.status
         
     async def get_metrics(self) -> ConnectionMetrics:
         """Get performance metrics"""
+
+
+
         return self.metrics
         
     def _update_metrics(self, success: bool, response_time: float = 0, data_size: int = 0):
@@ -469,6 +475,9 @@ class StreamConnector:
         
     async def initialize(self) -> None:
         """Initialize stream connector manager"""
+
+
+
         try:
             # Start health check task
             asyncio.create_task(self._health_check_loop())
@@ -489,6 +498,9 @@ class StreamConnector:
         Returns:
             Success status
         """
+
+
+
         try:
             if config.connector_type not in self.connector_types:
                 logger.error(f"Unsupported connector type: {config.connector_type}")
@@ -526,6 +538,9 @@ class StreamConnector:
         Returns:
             Success status
         """
+
+
+
         try:
             if connector_id in self.connectors:
                 connector = self.connectors[connector_id]
@@ -557,6 +572,9 @@ class StreamConnector:
         Returns:
             Success status
         """
+
+
+
         try:
             if connector_id not in self.connectors:
                 logger.error(f"Connector {connector_id} not found")
@@ -591,6 +609,9 @@ class StreamConnector:
         Returns:
             Received data or None
         """
+
+
+
         try:
             if connector_id not in self.connectors:
                 logger.error(f"Connector {connector_id} not found")
@@ -643,6 +664,9 @@ class StreamConnector:
         
     async def enable_connector(self, connector_id: str) -> bool:
         """Enable connector"""
+
+
+
         try:
             if connector_id not in self.connectors:
                 return False
@@ -661,6 +685,9 @@ class StreamConnector:
             
     async def disable_connector(self, connector_id: str) -> bool:
         """Disable connector"""
+
+
+
         try:
             if connector_id not in self.connectors:
                 return False
@@ -679,6 +706,9 @@ class StreamConnector:
             
     async def reconnect_connector(self, connector_id: str) -> bool:
         """Reconnect specific connector"""
+
+
+
         try:
             if connector_id not in self.connectors:
                 return False
@@ -721,6 +751,9 @@ class StreamConnector:
                 
     async def shutdown(self) -> None:
         """Gracefully shutdown connector manager"""
+
+
+
         try:
             self._shutdown_event.set()
             

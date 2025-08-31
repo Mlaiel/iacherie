@@ -1,5 +1,5 @@
 """
-💰 Monetization Migrations - Ultra-Industrial Revenue Engine
+ Monetization Migrations - Ultra-Industrial Revenue Engine
 ===========================================================
 Module: backend/database/migrations/monetization_migrations.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Revenue Engine - Ultra Enterprise Production-Ready
 Responsibility: Advanced monetization database migrations for creator revenue optimization
 =======================================================================================
 
-⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
+  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -58,14 +58,14 @@ class MonetizationMigrationSuite:
         self.metadata = MetaData()
         self.migration_history: List[Dict[str, Any]] = []
         
-        logger.info("✅ Monetization Migration Suite initialized")
+        logger.info(" Monetization Migration Suite initialized")
     
     async def create_core_monetization_schema(self, engine: sa.Engine) -> Dict[str, Any]:
         """Create core monetization and revenue tracking schema"""
         
         migration_id = f"monetization_core_schema_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
-        logger.info("💰 Creating core monetization schema")
+        logger.info(" Creating core monetization schema")
         
         try:
             async with engine.begin() as conn:
@@ -290,7 +290,7 @@ class MonetizationMigrationSuite:
                 # Create triggers for updated_at
                 await self._create_monetization_triggers(conn)
                 
-                logger.info("✅ Core monetization schema created")
+                logger.info(" Core monetization schema created")
                 
                 return {
                     "migration_id": migration_id,
@@ -305,7 +305,7 @@ class MonetizationMigrationSuite:
                 }
                 
         except Exception as e:
-            logger.error(f"❌ Failed to create core monetization schema: {e}")
+            logger.error(f" Failed to create core monetization schema: {e}")
             return {
                 "migration_id": migration_id,
                 "success": False,
@@ -317,7 +317,7 @@ class MonetizationMigrationSuite:
         
         migration_id = f"monetization_payment_schema_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
-        logger.info("💳 Creating payment processing schema")
+        logger.info(" Creating payment processing schema")
         
         try:
             async with engine.begin() as conn:
@@ -534,7 +534,7 @@ class MonetizationMigrationSuite:
                 # Create payment processing indexes
                 await self._create_payment_indexes(conn)
                 
-                logger.info("✅ Payment processing schema created")
+                logger.info(" Payment processing schema created")
                 
                 return {
                     "migration_id": migration_id,
@@ -549,7 +549,7 @@ class MonetizationMigrationSuite:
                 }
                 
         except Exception as e:
-            logger.error(f"❌ Failed to create payment processing schema: {e}")
+            logger.error(f" Failed to create payment processing schema: {e}")
             return {
                 "migration_id": migration_id,
                 "success": False,
@@ -561,7 +561,7 @@ class MonetizationMigrationSuite:
         
         migration_id = f"monetization_analytics_schema_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
-        logger.info("📊 Creating monetization analytics schema")
+        logger.info(" Creating monetization analytics schema")
         
         try:
             async with engine.begin() as conn:
@@ -782,7 +782,7 @@ class MonetizationMigrationSuite:
                 # Create analytics indexes
                 await self._create_analytics_indexes(conn)
                 
-                logger.info("✅ Monetization analytics schema created")
+                logger.info(" Monetization analytics schema created")
                 
                 return {
                     "migration_id": migration_id,
@@ -796,7 +796,7 @@ class MonetizationMigrationSuite:
                 }
                 
         except Exception as e:
-            logger.error(f"❌ Failed to create analytics schema: {e}")
+            logger.error(f" Failed to create analytics schema: {e}")
             return {
                 "migration_id": migration_id,
                 "success": False,

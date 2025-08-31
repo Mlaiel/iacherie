@@ -22,7 +22,7 @@ Contact: mlaiel@live.de
 - DevOps Engineer: Fahed Mlaiel
 - IA Prompt Engineer: Fahed Mlaiel
 
-⚠️ ATTENTION IMPORTANTE ⚠️
+ ATTENTION IMPORTANTE 
 Toute tentative de vol, copie, ou utilisation non autorisée de ce code, 
 concept ou idée sans autorisation écrite explicite de Fahed Mlaiel 
 sera poursuivie selon la loi allemande et internationale.
@@ -32,7 +32,7 @@ Contact autorisé: mlaiel@live.de
 FONCTIONNALITÉS ENTERPRISE:
 =========================
 
-🔄 MIGRATION AVANCÉE:
+ MIGRATION AVANCÉE:
 - Système de versioning complet
 - Rollback automatique en cas d'erreur
 - Migration différentielle intelligente
@@ -40,7 +40,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Migration en parallèle pour performance
 - Validation pré/post migration
 
-⚡ PERFORMANCE OPTIMISÉE:
+ PERFORMANCE OPTIMISÉE:
 - Exécution parallèle des migrations
 - Optimisation automatique des requêtes
 - Gestion intelligente des locks
@@ -48,7 +48,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Cache intelligent des metadata
 - Compression des logs de migration
 
-🛡️ SÉCURITÉ ET FIABILITÉ:
+ SÉCURITÉ ET FIABILITÉ:
 - Backup automatique avant migration
 - Vérification d'intégrité des données
 - Chiffrement des scripts de migration
@@ -56,7 +56,7 @@ FONCTIONNALITÉS ENTERPRISE:
 - Rollback transactionnel garanti
 - Protection contre les injections SQL
 
-📊 MONITORING ET REPORTING:
+ MONITORING ET REPORTING:
 - Dashboard temps réel des migrations
 - Métriques de performance détaillées
 - Alertes automatiques en cas d'erreur
@@ -262,8 +262,11 @@ class DatabaseMigrationEngine:
     
     def _initialize_migration_runner(self):
         """Initialise le système de migration"""
+
+
+
         try:
-            self.logger.info("🔄 Initializing database migration engine...")
+            self.logger.info(" Initializing database migration engine...")
             
             # Création des dossiers
             self.migrations_path.mkdir(parents=True, exist_ok=True)
@@ -272,14 +275,17 @@ class DatabaseMigrationEngine:
             # Chargement des migrations
             asyncio.create_task(self._load_migrations())
             
-            self.logger.info("✅ Database migration engine initialized")
+            self.logger.info(" Database migration engine initialized")
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize migration engine: {e}")
+            self.logger.error(f" Failed to initialize migration engine: {e}")
             raise
     
     async def _load_migrations(self):
         """Charge les migrations depuis le système de fichiers"""
+
+
+
         try:
             migration_files = list(self.migrations_path.glob("*.sql"))
             migration_files.extend(list(self.migrations_path.glob("*.json")))
@@ -303,6 +309,9 @@ class DatabaseMigrationEngine:
     
     async def _parse_migration_file(self, file_path: Path) -> Optional[MigrationScript]:
         """Parse un fichier de migration"""
+
+
+
         try:
             if file_path.suffix == '.json':
                 return await self._parse_json_migration(file_path)
@@ -317,6 +326,9 @@ class DatabaseMigrationEngine:
     
     async def _parse_json_migration(self, file_path: Path) -> Optional[MigrationScript]:
         """Parse une migration au format JSON"""
+
+
+
         try:
             async with aiofiles.open(file_path, 'r', encoding='utf-8') as f:
                 content = await f.read()
@@ -351,6 +363,9 @@ class DatabaseMigrationEngine:
     
     async def _parse_sql_migration(self, file_path: Path) -> Optional[MigrationScript]:
         """Parse une migration au format SQL avec métadonnées en commentaires"""
+
+
+
         try:
             async with aiofiles.open(file_path, 'r', encoding='utf-8') as f:
                 content = await f.read()
@@ -414,6 +429,9 @@ class DatabaseMigrationEngine:
     
     async def _load_migration_history(self):
         """Charge l'historique des migrations depuis la base"""
+
+
+
         try:
             if not self.db_pool:
                 return
@@ -457,6 +475,9 @@ class DatabaseMigrationEngine:
     
     async def _create_migration_history_table(self, conn: asyncpg.Connection):
         """Crée la table d'historique des migrations"""
+
+
+
         try:
             await conn.execute("""
                 CREATE TABLE IF NOT EXISTS migration_history (
@@ -492,7 +513,7 @@ class DatabaseMigrationEngine:
                 ON migration_history(started_at);
             """)
             
-            self.logger.info("✅ Migration history table created")
+            self.logger.info(" Migration history table created")
             
         except Exception as e:
             self.logger.error(f"Failed to create migration history table: {e}")
@@ -521,6 +542,9 @@ class DatabaseMigrationEngine:
         Returns:
             Script de migration créé
         """
+
+
+
         try:
             # Génération de l'ID et version
             migration_id = self._generate_migration_id(name)
@@ -573,11 +597,11 @@ class DatabaseMigrationEngine:
                 }
             )
             
-            self.logger.info(f"✅ Migration created: {migration_id}")
+            self.logger.info(f" Migration created: {migration_id}")
             return migration
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to create migration: {e}")
+            self.logger.error(f" Failed to create migration: {e}")
             raise
     
     def _generate_migration_id(self, name: str) -> str:
@@ -603,6 +627,9 @@ class DatabaseMigrationEngine:
     
     async def _encrypt_migration(self, migration: MigrationScript) -> MigrationScript:
         """Chiffre les scripts d'une migration"""
+
+
+
         try:
             if migration.up_script:
                 migration.up_script = await self.encryption_manager.encrypt_data(
@@ -624,6 +651,9 @@ class DatabaseMigrationEngine:
     
     async def _decrypt_migration(self, migration: MigrationScript) -> MigrationScript:
         """Déchiffre les scripts d'une migration"""
+
+
+
         try:
             if migration.encrypted:
                 if migration.up_script:
@@ -648,6 +678,9 @@ class DatabaseMigrationEngine:
     
     async def _save_migration(self, migration: MigrationScript):
         """Sauvegarde une migration sur disque"""
+
+
+
         try:
             file_path = self.migrations_path / f"{migration.id}.json"
             
@@ -703,6 +736,9 @@ class DatabaseMigrationEngine:
         Returns:
             Résultat de l'exécution
         """
+
+
+
         try:
             if migration_id not in self.migrations:
                 raise ValueError(f"Migration {migration_id} not found")
@@ -786,7 +822,7 @@ class DatabaseMigrationEngine:
                     }
                 )
                 
-                self.logger.info(f"✅ Migration {migration_id} executed successfully")
+                self.logger.info(f" Migration {migration_id} executed successfully")
                 
             except Exception as e:
                 result.status = MigrationStatus.FAILED
@@ -796,7 +832,7 @@ class DatabaseMigrationEngine:
                 if not dry_run:
                     await self._record_migration_result(result)
                 
-                self.logger.error(f"❌ Migration {migration_id} failed: {e}")
+                self.logger.error(f" Migration {migration_id} failed: {e}")
                 raise
             
             finally:
@@ -810,6 +846,9 @@ class DatabaseMigrationEngine:
     
     async def _is_migration_applied(self, migration_id: str) -> bool:
         """Vérifie si une migration a déjà été appliquée"""
+
+
+
         try:
             if not self.db_pool:
                 return False
@@ -832,6 +871,9 @@ class DatabaseMigrationEngine:
     
     async def _validate_dependencies(self, migration: MigrationScript):
         """Valide que toutes les dépendances sont satisfaites"""
+
+
+
         try:
             for dep_id in migration.dependencies:
                 if not await self._is_migration_applied(dep_id):
@@ -848,6 +890,9 @@ class DatabaseMigrationEngine:
     
     async def _create_backup_before_migration(self, migration_id: str):
         """Crée un backup avant l'exécution de la migration"""
+
+
+
         try:
             backup_name = f"backup_{migration_id}_{int(datetime.utcnow().timestamp())}"
             backup_path = self.backup_path / f"{backup_name}.sql"
@@ -877,6 +922,9 @@ class DatabaseMigrationEngine:
     
     async def _run_validation(self, validation_script: str, validation_type: str) -> bool:
         """Exécute un script de validation"""
+
+
+
         try:
             if not self.db_pool:
                 return True
@@ -898,6 +946,9 @@ class DatabaseMigrationEngine:
     
     async def _validate_sql_syntax(self, sql_script: str):
         """Valide la syntaxe SQL d'un script"""
+
+
+
         try:
             # Validation basique avec sqlparse
             import sqlparse
@@ -917,6 +968,9 @@ class DatabaseMigrationEngine:
     
     async def _execute_sql_script(self, migration: MigrationScript, result: MigrationResult):
         """Exécute le script SQL de migration"""
+
+
+
         try:
             if not self.db_pool:
                 raise ValueError("Database pool not available")
@@ -947,6 +1001,9 @@ class DatabaseMigrationEngine:
     
     async def _execute_statements(self, conn: asyncpg.Connection, script: str) -> int:
         """Exécute les statements SQL individuels"""
+
+
+
         try:
             import sqlparse
             
@@ -979,6 +1036,9 @@ class DatabaseMigrationEngine:
     
     async def _record_migration_result(self, result: MigrationResult):
         """Enregistre le résultat de migration dans l'historique"""
+
+
+
         try:
             if not self.db_pool:
                 return
@@ -1025,10 +1085,16 @@ class DatabaseMigrationEngine:
         Returns:
             Résultat du rollback
         """
+
+
+
         return await self._rollback_migration(migration_id)
     
     async def _rollback_migration(self, migration_id: str) -> MigrationResult:
         """Effectue le rollback interne d'une migration"""
+
+
+
         try:
             if migration_id not in self.migrations:
                 raise ValueError(f"Migration {migration_id} not found")
@@ -1075,7 +1141,7 @@ class DatabaseMigrationEngine:
                     }
                 )
                 
-                self.logger.info(f"✅ Migration {migration_id} rolled back successfully")
+                self.logger.info(f" Migration {migration_id} rolled back successfully")
                 
             except Exception as e:
                 result.status = MigrationStatus.ROLLBACK_FAILED
@@ -1084,7 +1150,7 @@ class DatabaseMigrationEngine:
                 
                 await self._record_migration_result(result)
                 
-                self.logger.error(f"❌ Rollback failed for migration {migration_id}: {e}")
+                self.logger.error(f" Rollback failed for migration {migration_id}: {e}")
                 raise
             
             return result
@@ -1095,6 +1161,9 @@ class DatabaseMigrationEngine:
     
     async def _execute_rollback_script(self, migration: MigrationScript, result: MigrationResult):
         """Exécute le script de rollback"""
+
+
+
         try:
             if not self.db_pool:
                 raise ValueError("Database pool not available")
@@ -1131,6 +1200,9 @@ class DatabaseMigrationEngine:
         Returns:
             Plan de migration créé
         """
+
+
+
         try:
             plan_id = str(uuid.uuid4())
             
@@ -1163,7 +1235,7 @@ class DatabaseMigrationEngine:
                 created_at=datetime.utcnow()
             )
             
-            self.logger.info(f"✅ Migration plan created: {plan_id}")
+            self.logger.info(f" Migration plan created: {plan_id}")
             return plan
             
         except Exception as e:
@@ -1172,6 +1244,9 @@ class DatabaseMigrationEngine:
     
     async def _analyze_dependencies(self, migration_ids: List[str]) -> List[List[str]]:
         """Analyse les dépendances et crée les groupes d'exécution parallèle"""
+
+
+
         try:
             # Construction du graphe de dépendances
             dependency_graph = {}
@@ -1222,6 +1297,9 @@ class DatabaseMigrationEngine:
     
     async def _estimate_execution_time(self, migration_ids: List[str]) -> int:
         """Estime le temps d'exécution total en minutes"""
+
+
+
         try:
             total_minutes = 0
             
@@ -1266,8 +1344,11 @@ class DatabaseMigrationEngine:
         Returns:
             Liste des résultats d'exécution
         """
+
+
+
         try:
-            self.logger.info(f"🔄 Executing migration plan: {plan.name}")
+            self.logger.info(f" Executing migration plan: {plan.name}")
             
             results = []
             
@@ -1335,15 +1416,18 @@ class DatabaseMigrationEngine:
                 }
             )
             
-            self.logger.info(f"✅ Migration plan executed: {plan.name}")
+            self.logger.info(f" Migration plan executed: {plan.name}")
             return results
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to execute migration plan: {e}")
+            self.logger.error(f" Failed to execute migration plan: {e}")
             raise
     
     async def _create_plan_backup(self, plan_id: str):
         """Crée un backup complet avant l'exécution du plan"""
+
+
+
         try:
             backup_name = f"plan_backup_{plan_id}_{int(datetime.utcnow().timestamp())}"
             
@@ -1455,6 +1539,9 @@ class DatabaseMigrationEngine:
     
     def _get_pg_dump_version(self) -> str:
         """Récupère la version de pg_dump"""
+
+
+
         try:
             import subprocess
             result = subprocess.run(['pg_dump', '--version'], capture_output=True, text=True)
@@ -1466,6 +1553,9 @@ class DatabaseMigrationEngine:
     
     def _calculate_file_checksum(self, file_path: Path) -> str:
         """Calcule le checksum SHA256 d'un fichier"""
+
+
+
         try:
             import hashlib
             sha256_hash = hashlib.sha256()
@@ -1479,6 +1569,9 @@ class DatabaseMigrationEngine:
     
     async def _create_logical_backup(self, plan_id: str, backup_name: str):
         """Crée un backup logique simple comme fallback"""
+
+
+
         try:
             self.logger.info(f"Creating logical backup for plan {plan_id}")
             
@@ -1507,6 +1600,9 @@ class DatabaseMigrationEngine:
     
     async def _rollback_migration_plan(self, plan: MigrationPlan, results: List[MigrationResult]):
         """Effectue le rollback d'un plan de migration"""
+
+
+
         try:
             self.logger.warning(f"Rolling back migration plan: {plan.name}")
             
@@ -1527,6 +1623,9 @@ class DatabaseMigrationEngine:
     
     async def get_migration_status(self) -> Dict[str, Any]:
         """Récupère le statut des migrations"""
+
+
+
         try:
             total_migrations = len(self.migrations)
             applied_migrations = 0
@@ -1563,6 +1662,9 @@ class DatabaseMigrationEngine:
     
     async def health_check(self) -> Dict[str, Any]:
         """Vérification de santé du système de migration"""
+
+
+
         try:
             health_status = {
                 'status': 'healthy',
@@ -1614,8 +1716,11 @@ class DatabaseMigrationEngine:
     
     async def shutdown(self):
         """Arrêt propre du système de migration"""
+
+
+
         try:
-            self.logger.info("🔒 Shutting down migration engine...")
+            self.logger.info(" Shutting down migration engine...")
             
             # Attente de la fin des migrations actives
             if self.active_migrations:
@@ -1638,10 +1743,10 @@ class DatabaseMigrationEngine:
             if self.db_pool:
                 await self.db_pool.close()
             
-            self.logger.info("✅ Migration engine shutdown completed")
+            self.logger.info(" Migration engine shutdown completed")
             
         except Exception as e:
-            self.logger.error(f"❌ Migration engine shutdown failed: {e}")
+            self.logger.error(f" Migration engine shutdown failed: {e}")
 
 
 # Factory function

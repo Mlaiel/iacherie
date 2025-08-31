@@ -75,10 +75,16 @@ class RetentionPolicy:
     
     def get_retention_days(self, period: RetentionPeriod) -> int:
         """Convert retention period to days"""
+
+
+
         return int(period.value[:-1])
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return asdict(self)
 
 
@@ -114,10 +120,16 @@ class LogFile:
     
     def get_size_mb(self) -> float:
         """Get file size in MB"""
+
+
+
         return self.size / (1024 * 1024)
     
     def matches_pattern(self, pattern: str) -> bool:
         """Check if file matches pattern"""
+
+
+
         return self.path.match(pattern)
 
 
@@ -524,6 +536,9 @@ class LogRetentionManager:
     
     async def save_config(self):
         """Save retention configuration to file"""
+
+
+
         try:
             self.config_path.parent.mkdir(parents=True, exist_ok=True)
             

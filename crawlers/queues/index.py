@@ -8,7 +8,7 @@ Responsibility: Main entry point for complete queue management ecosystem
 Technologies: Multi-Component Integration, System Orchestration, Health Management
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -49,7 +49,7 @@ class QueueSystemManager:
     async def initialize_complete_system(self) -> Dict[str, Any]:
         """Initialize the complete queue management system"""
         
-        logger.info("🚀 Starting IA-Influencer-Agent Queue Management System")
+        logger.info(" Starting IA-Influencer-Agent Queue Management System")
         logger.info("=" * 80)
         logger.info("Author: Fahed Mlaiel (mlaiel@live.de)")
         logger.info("System: Industrial Crawler Queue Management")
@@ -81,8 +81,8 @@ class QueueSystemManager:
                 # Start performance tracking
                 await self._start_performance_tracking()
                 
-                logger.info("✅ Queue Management System successfully initialized")
-                logger.info(f"🎯 Features enabled: {list(self.queue_system['features'].keys())}")
+                logger.info(" Queue Management System successfully initialized")
+                logger.info(f" Features enabled: {list(self.queue_system['features'].keys())}")
                 
                 return {
                     'status': 'success',
@@ -93,7 +93,7 @@ class QueueSystemManager:
             else:
                 self.system_status = "failed"
                 error_msg = self.queue_system.get('error', 'Unknown initialization error')
-                logger.error(f"❌ System initialization failed: {error_msg}")
+                logger.error(f" System initialization failed: {error_msg}")
                 
                 return {
                     'status': 'failed',
@@ -104,7 +104,7 @@ class QueueSystemManager:
                 
         except Exception as e:
             self.system_status = "error"
-            logger.error(f"💥 Critical error during initialization: {e}")
+            logger.error(f" Critical error during initialization: {e}")
             
             return {
                 'status': 'error',
@@ -285,7 +285,7 @@ class QueueSystemManager:
     async def shutdown_system(self) -> Dict[str, Any]:
         """Gracefully shutdown the queue management system"""
         
-        logger.info("🛑 Initiating graceful system shutdown")
+        logger.info(" Initiating graceful system shutdown")
         
         shutdown_results = {}
         
@@ -312,7 +312,7 @@ class QueueSystemManager:
             
             self.system_status = "shutdown"
             
-            logger.info("✅ System shutdown completed successfully")
+            logger.info(" System shutdown completed successfully")
             
             return {
                 'status': 'success',
@@ -332,6 +332,9 @@ class QueueSystemManager:
     
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default system configuration"""
+
+
+
         
         return {
             'max_workers': 100,
@@ -353,15 +356,15 @@ class QueueSystemManager:
         components = self.queue_system.keys()
         features = self.queue_system.get('features', {})
         
-        logger.info("📋 System Components Initialized:")
+        logger.info(" System Components Initialized:")
         for component in components:
             if component != 'features' and component != 'status':
-                status = "✅" if self.queue_system[component] else "❌"
+                status = "" if self.queue_system[component] else ""
                 logger.info(f"  {status} {component}")
         
-        logger.info("🎯 Advanced Features:")
+        logger.info(" Advanced Features:")
         for feature, enabled in features.items():
-            status = "✅" if enabled else "❌"
+            status = "" if enabled else ""
             logger.info(f"  {status} {feature}")
     
     async def _start_health_monitoring(self):
@@ -373,7 +376,7 @@ class QueueSystemManager:
                     health_status = await self.perform_system_health_check()
                     
                     if health_status['health_score'] < 0.5:
-                        logger.warning(f"⚠️ System health degraded: {health_status['health_score']:.2f}")
+                        logger.warning(f" System health degraded: {health_status['health_score']:.2f}")
                     
                     await asyncio.sleep(300)  # Check every 5 minutes
                     
@@ -382,7 +385,7 @@ class QueueSystemManager:
                     await asyncio.sleep(60)
         
         asyncio.create_task(health_monitoring_loop())
-        logger.info("💓 System health monitoring started")
+        logger.info(" System health monitoring started")
     
     async def _start_performance_tracking(self):
         """Start performance tracking"""
@@ -404,7 +407,7 @@ class QueueSystemManager:
                     await asyncio.sleep(60)
         
         asyncio.create_task(performance_tracking_loop())
-        logger.info("📊 Performance tracking started")
+        logger.info(" Performance tracking started")
     
     def _get_component_summary(self) -> Dict[str, str]:
         """Get summary of system components"""
@@ -479,6 +482,9 @@ class QueueSystemManager:
     
     async def _check_orchestrator_health(self) -> Dict[str, Any]:
         """Check orchestrator health"""
+
+
+
         
         try:
             status = await self.queue_system['orchestrator'].get_orchestration_status()
@@ -521,6 +527,9 @@ class QueueSystemManager:
     
     async def _check_monitor_health(self) -> Dict[str, Any]:
         """Check monitoring system health"""
+
+
+
         
         try:
             status = await self.queue_system['monitor'].get_monitoring_status()
@@ -556,6 +565,9 @@ class QueueSystemManager:
     
     async def _check_diagnostics_health(self) -> Dict[str, Any]:
         """Check diagnostics system health"""
+
+
+
         
         try:
             status = await self.queue_system['diagnostics'].get_diagnostic_status()
@@ -653,6 +665,9 @@ async def shutdown_system() -> Dict[str, Any]:
 
 def get_system_manager() -> Optional[QueueSystemManager]:
     """Get the global system manager instance"""
+
+
+
     return _system_manager
 
 

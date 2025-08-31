@@ -85,7 +85,7 @@ async def initialize_adapter_system(environment: Environment, config_dir: Path =
             validation = config_manager.validate_configuration(adapter_name)
             validation_results[adapter_name] = validation
             
-            status = "✓ VALID" if validation['valid'] else "✗ INVALID"
+            status = " VALID" if validation['valid'] else " INVALID"
             logger.info(f"  - {adapter_name}: {status}")
             
             if validation['errors']:
@@ -141,7 +141,7 @@ async def initialize_adapter_system(environment: Environment, config_dir: Path =
         
         # Calculate total initialization time
         total_time = (datetime.utcnow() - start_time).total_seconds()
-        logger.info(f"✓ Adapter system initialization completed in {total_time:.2f}s")
+        logger.info(f" Adapter system initialization completed in {total_time:.2f}s")
         
         return {
             'success': True,
@@ -256,18 +256,18 @@ def main():
         )
         
         if result['success']:
-            print("\n✓ Adapter system initialization SUCCESSFUL!")
+            print("\n Adapter system initialization SUCCESSFUL!")
             
             if args.test_operations:
                 print("\nRunning adapter operation tests...")
                 test_result = await test_adapter_operations()
                 if test_result:
-                    print("✓ Adapter operation tests PASSED!")
+                    print(" Adapter operation tests PASSED!")
                 else:
-                    print("✗ Adapter operation tests FAILED!")
+                    print(" Adapter operation tests FAILED!")
                     return 1
         else:
-            print(f"\n✗ Adapter system initialization FAILED: {result['error']}")
+            print(f"\n Adapter system initialization FAILED: {result['error']}")
             return 1
         
         print("\nAdapter system is ready for use!")

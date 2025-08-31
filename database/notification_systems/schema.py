@@ -1543,8 +1543,8 @@ async def initialize_notification_database(db_pool):
             # Insert initial escalation policies
             await conn.execute(INITIAL_ESCALATION_POLICIES)
             
-            print("✅ Base de données notification systems initialisée avec succès")
+            print(" Base de données notification systems initialisée avec succès")
             
         except Exception as e:
-            print(f"❌ Erreur lors de l'initialisation de la base de données: {e}")
+            print(f" Erreur lors de l'initialisation de la base de données: {e}")
             raise

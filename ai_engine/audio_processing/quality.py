@@ -1,5 +1,5 @@
 """
-🎯 Audio Quality Assessment - Professional Quality Analysis Engine
+ Audio Quality Assessment - Professional Quality Analysis Engine
 
 Advanced quality assessment system for comprehensive audio evaluation.
 Includes perceptual quality metrics, technical analysis, and optimization recommendations.
@@ -78,7 +78,7 @@ class QualityReport:
 
 class PerceptualQualityAnalyzer:
     """
-    👂 Perceptual Quality Analysis
+     Perceptual Quality Analysis
     
     Human-perceptual quality assessment:
     - Psychoacoustic modeling
@@ -108,6 +108,9 @@ class PerceptualQualityAnalyzer:
     
     def _init_masking_thresholds(self) -> Dict[str, float]:
         """Initialize masking threshold parameters"""
+
+
+
         return {
             'tonality_threshold': 0.5,
             'simultaneous_masking_slope': 15.0,  # dB/Bark
@@ -119,6 +122,9 @@ class PerceptualQualityAnalyzer:
                                        audio_data: np.ndarray,
                                        sample_rate: int) -> Dict[str, float]:
         """Analyze perceptual quality aspects"""
+
+
+
         try:
             metrics = {}
             
@@ -160,6 +166,9 @@ class PerceptualQualityAnalyzer:
                                          magnitude: np.ndarray,
                                          sample_rate: int) -> float:
         """Analyze perceptual loudness using psychoacoustic principles"""
+
+
+
         try:
             # Convert to Bark scale bands
             freqs = librosa.fft_frequencies(sr=sample_rate, n_fft=magnitude.shape[0]*2-1)
@@ -218,6 +227,9 @@ class PerceptualQualityAnalyzer:
                                        magnitude: np.ndarray,
                                        sample_rate: int) -> float:
         """Analyze frequency balance across spectrum"""
+
+
+
         try:
             # Define frequency bands (bass, mids, treble)
             freqs = librosa.fft_frequencies(sr=sample_rate, n_fft=magnitude.shape[0]*2-1)
@@ -275,6 +287,9 @@ class PerceptualQualityAnalyzer:
                                       magnitude: np.ndarray,
                                       sample_rate: int) -> float:
         """Analyze spectral clarity and definition"""
+
+
+
         try:
             # Calculate spectral centroid variation
             spectral_centroid = []
@@ -313,6 +328,9 @@ class PerceptualQualityAnalyzer:
     
     async def _analyze_temporal_smoothness(self, magnitude: np.ndarray) -> float:
         """Analyze temporal smoothness of the audio"""
+
+
+
         try:
             # Calculate frame-to-frame energy variations
             energy_per_frame = np.sum(magnitude ** 2, axis=0)
@@ -343,7 +361,7 @@ class PerceptualQualityAnalyzer:
 
 class TechnicalQualityAnalyzer:
     """
-    🔧 Technical Quality Analysis
+     Technical Quality Analysis
     
     Objective technical quality assessment:
     - SNR and dynamic range
@@ -361,6 +379,9 @@ class TechnicalQualityAnalyzer:
                                       audio_data: np.ndarray,
                                       sample_rate: int) -> Dict[str, float]:
         """Analyze technical quality aspects"""
+
+
+
         try:
             metrics = {}
             
@@ -396,6 +417,9 @@ class TechnicalQualityAnalyzer:
     
     async def _analyze_snr(self, audio_data: np.ndarray) -> float:
         """Analyze signal-to-noise ratio"""
+
+
+
         try:
             # Simple SNR estimation using quiet segments
             # Real implementation would use more sophisticated noise estimation
@@ -435,6 +459,9 @@ class TechnicalQualityAnalyzer:
     
     async def _analyze_dynamic_range(self, audio_data: np.ndarray) -> float:
         """Analyze dynamic range"""
+
+
+
         try:
             # Calculate peak and RMS levels
             peak_level = np.max(np.abs(audio_data))
@@ -467,6 +494,9 @@ class TechnicalQualityAnalyzer:
     
     async def _analyze_thd_n(self, audio_data: np.ndarray, sample_rate: int) -> float:
         """Analyze Total Harmonic Distortion + Noise"""
+
+
+
         try:
             # Simplified THD+N analysis
             # Real implementation would use sine wave analysis
@@ -518,6 +548,9 @@ class TechnicalQualityAnalyzer:
     
     async def _analyze_clipping(self, audio_data: np.ndarray) -> float:
         """Analyze clipping artifacts"""
+
+
+
         try:
             # Detect hard clipping
             max_val = np.max(np.abs(audio_data))
@@ -549,6 +582,9 @@ class TechnicalQualityAnalyzer:
                                         audio_data: np.ndarray,
                                         sample_rate: int) -> float:
         """Analyze frequency response flatness"""
+
+
+
         try:
             # Calculate power spectral density
             freqs, psd = signal.welch(audio_data, sample_rate, nperseg=2048)
@@ -617,6 +653,9 @@ class TechnicalQualityAnalyzer:
     
     async def _analyze_peak_rms_ratio(self, audio_data: np.ndarray) -> float:
         """Analyze peak-to-RMS ratio"""
+
+
+
         try:
             peak_level = np.max(np.abs(audio_data))
             rms_level = np.sqrt(np.mean(audio_data ** 2))
@@ -645,7 +684,7 @@ class TechnicalQualityAnalyzer:
 
 class AudioQualityAssessor:
     """
-    🎯 Comprehensive Audio Quality Assessor
+     Comprehensive Audio Quality Assessor
     
     Professional quality assessment system:
     - Perceptual and technical analysis
@@ -850,6 +889,9 @@ class AudioQualityAssessor:
                                         audio_data: np.ndarray,
                                         sample_rate: int) -> Dict[str, float]:
         """Analyze additional quality metrics"""
+
+
+
         try:
             metrics = {}
             
@@ -881,6 +923,9 @@ class AudioQualityAssessor:
     
     async def _analyze_silence_ratio(self, audio_data: np.ndarray) -> float:
         """Analyze ratio of silence in audio"""
+
+
+
         try:
             # Define silence threshold (e.g., -60dB)
             silence_threshold = 0.001  # About -60dB
@@ -905,6 +950,9 @@ class AudioQualityAssessor:
     
     async def _analyze_stereo_imaging(self, stereo_audio: np.ndarray) -> float:
         """Analyze stereo imaging quality"""
+
+
+
         try:
             left_channel = stereo_audio[0, :]
             right_channel = stereo_audio[1, :]
@@ -938,6 +986,9 @@ class AudioQualityAssessor:
     
     async def _estimate_noise_level(self, audio_data: np.ndarray) -> float:
         """Estimate background noise level"""
+
+
+
         try:
             # Use minimum RMS in sliding windows as noise estimate
             window_size = int(0.1 * len(audio_data))  # 100ms windows
@@ -1178,6 +1229,9 @@ class AudioQualityAssessor:
                             audio2: np.ndarray,
                             sample_rate: int) -> Dict[str, Any]:
         """Compare quality between two audio files"""
+
+
+
         try:
             # Assess both files
             report1 = await self.assess_quality(audio1, sample_rate)

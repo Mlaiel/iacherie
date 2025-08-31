@@ -11,7 +11,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
             Microservices Architect + Audio Engineer + DevOps Engineer + IA Prompt Engineer
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 © 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
@@ -166,6 +166,9 @@ class FeeCalculatorEngine:
     
     async def initialize(self) -> None:
         """Initialize all calculator components"""
+
+
+
         try:
             logger.info("Initializing Fee Calculator Engine...")
             
@@ -260,6 +263,9 @@ class FeeCalculatorEngine:
     
     async def _calculate_percentage_fee(self, request: FeeCalculationRequest) -> FeeCalculationResult:
         """Calculate percentage-based fee"""
+
+
+
         try:
             # Get base rate for platform and tier
             base_rate = await self._get_base_rate(request.platform, request.tier, request.commission_type)
@@ -321,6 +327,9 @@ class FeeCalculatorEngine:
     
     async def _calculate_tiered_fee(self, request: FeeCalculationRequest) -> FeeCalculationResult:
         """Calculate tiered fee based on volume thresholds"""
+
+
+
         try:
             if not self._tiered_calculator:
                 raise CommissionError("Tiered calculator not initialized")
@@ -333,6 +342,9 @@ class FeeCalculatorEngine:
     
     async def _calculate_performance_based_fee(self, request: FeeCalculationRequest) -> FeeCalculationResult:
         """Calculate performance-based fee"""
+
+
+
         try:
             if not self._performance_calculator:
                 raise CommissionError("Performance calculator not initialized")
@@ -345,6 +357,9 @@ class FeeCalculatorEngine:
     
     async def _calculate_ai_optimized_fee(self, request: FeeCalculationRequest) -> FeeCalculationResult:
         """Calculate AI-optimized fee using machine learning"""
+
+
+
         try:
             if not self._ml_model:
                 # Fallback to percentage calculation if ML not available
@@ -403,6 +418,9 @@ class FeeCalculatorEngine:
         commission_type: CommissionType
     ) -> Decimal:
         """Get base commission rate for platform, tier and type"""
+
+
+
         try:
             # Platform-specific base rates
             platform_rates = {
@@ -508,6 +526,9 @@ class FeeCalculatorEngine:
     
     async def _initialize_ml_components(self) -> None:
         """Initialize machine learning components"""
+
+
+
         try:
             self._ml_model = LinearRegression()
             self._scaler = StandardScaler()
@@ -529,6 +550,9 @@ class FeeCalculatorEngine:
     
     async def _prepare_ml_features(self, request: FeeCalculationRequest) -> List[float]:
         """Prepare features for ML model"""
+
+
+
         try:
             features = [
                 float(request.transaction_amount),
@@ -552,6 +576,9 @@ class FeeCalculatorEngine:
         result: FeeCalculationResult
     ) -> None:
         """Update ML training data with new calculation"""
+
+
+
         try:
             features = await self._prepare_ml_features(request)
             target = float(result.effective_rate)
@@ -568,6 +595,9 @@ class FeeCalculatorEngine:
     
     async def _retrain_ml_model(self) -> None:
         """Retrain ML model with updated data"""
+
+
+
         try:
             if len(self._feature_history) < 10:
                 return
@@ -660,6 +690,9 @@ class FeeCalculatorEngine:
     # Cache methods
     async def _get_cached_result(self, request: FeeCalculationRequest) -> Optional[FeeCalculationResult]:
         """Get cached calculation result"""
+
+
+
         try:
             if not self._redis_client:
                 return None
@@ -677,6 +710,9 @@ class FeeCalculatorEngine:
     
     async def _cache_result(self, request: FeeCalculationRequest, result: FeeCalculationResult) -> None:
         """Cache calculation result"""
+
+
+
         try:
             if not self._redis_client:
                 return
@@ -704,6 +740,9 @@ class FeeCalculatorEngine:
     
     async def shutdown(self) -> None:
         """Shutdown Fee Calculator Engine"""
+
+
+
         try:
             logger.info("Shutting down Fee Calculator Engine...")
             # Cleanup resources

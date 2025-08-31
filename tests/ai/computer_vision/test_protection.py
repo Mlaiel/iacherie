@@ -30,7 +30,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 #
 # Created by: Fahed Mlaiel (mlaiel@live.de)
 # 
-# ⚠️  STRICT COPYRIGHT WARNING ⚠️ 
+#   STRICT COPYRIGHT WARNING  
 # This code, concept, and intellectual property belongs exclusively to Fahed Mlaiel.
 # ANY unauthorized use, reproduction, distribution, or theft of this code/concept 
 # without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is 
@@ -132,6 +132,9 @@ class TestContentProtector(unittest.TestCase):
     
     def _create_protection_settings(self):
         """Create protection settings for testing"""
+
+
+
         try:
             return ProtectionSettings(
                 watermark_text="© 2024 Fahed Mlaiel",
@@ -157,6 +160,9 @@ class TestContentProtector(unittest.TestCase):
     
     def test_protect_content_basic(self):
         """Test basic content protection"""
+
+
+
         try:
             protected_content = self.protector.protect_content(
                 self.test_image,
@@ -177,6 +183,9 @@ class TestContentProtector(unittest.TestCase):
     
     def test_multi_layer_protection(self):
         """Test multi-layer protection system"""
+
+
+
         try:
             # Apply multiple protection layers
             protection_layers = ['watermark', 'fingerprint', 'encryption']
@@ -199,6 +208,9 @@ class TestContentProtector(unittest.TestCase):
     
     def test_protection_verification(self):
         """Test protection verification"""
+
+
+
         try:
             # First protect the content
             protected_content = self.protector.protect_content(
@@ -223,10 +235,16 @@ class TestContentProtector(unittest.TestCase):
     
     def _calculate_image_hash(self, image: np.ndarray) -> str:
         """Calculate hash of image for verification"""
+
+
+
         return hashlib.md5(image.tobytes()).hexdigest()
     
     def test_tamper_detection(self):
         """Test tamper detection capabilities"""
+
+
+
         try:
             # Protect the image
             protected_content = self.protector.protect_content(
@@ -274,6 +292,9 @@ class TestWatermarkGenerator(unittest.TestCase):
     
     def _create_watermark_settings(self):
         """Create watermark settings for testing"""
+
+
+
         try:
             return WatermarkSettings(
                 text="© Fahed Mlaiel",
@@ -299,6 +320,9 @@ class TestWatermarkGenerator(unittest.TestCase):
     
     def test_text_watermark_generation(self):
         """Test text watermark generation"""
+
+
+
         try:
             watermarked = self.generator.add_text_watermark(
                 self.test_image,
@@ -318,6 +342,9 @@ class TestWatermarkGenerator(unittest.TestCase):
     
     def test_image_watermark_generation(self):
         """Test image watermark generation"""
+
+
+
         try:
             # Create a small logo-like watermark
             logo = np.zeros((50, 100, 3), dtype=np.uint8)
@@ -339,6 +366,9 @@ class TestWatermarkGenerator(unittest.TestCase):
     
     def test_invisible_watermark(self):
         """Test invisible/steganographic watermark"""
+
+
+
         try:
             # Add invisible watermark
             watermarked = self.generator.add_invisible_watermark(
@@ -368,6 +398,9 @@ class TestWatermarkGenerator(unittest.TestCase):
     
     def test_frequency_domain_watermark(self):
         """Test frequency domain watermarking (DCT/DWT)"""
+
+
+
         try:
             watermarked = self.generator.add_frequency_watermark(
                 self.test_image,
@@ -392,6 +425,9 @@ class TestWatermarkGenerator(unittest.TestCase):
     
     def test_watermark_robustness(self):
         """Test watermark robustness against attacks"""
+
+
+
         try:
             # Add robust watermark
             watermarked = self.generator.add_text_watermark(
@@ -478,6 +514,9 @@ class TestFingerprintExtractor(unittest.TestCase):
     
     def test_perceptual_hash_extraction(self):
         """Test perceptual hash extraction"""
+
+
+
         try:
             phash = self.extractor.extract_perceptual_hash(self.test_image)
             
@@ -494,6 +533,9 @@ class TestFingerprintExtractor(unittest.TestCase):
     
     def test_difference_hash_extraction(self):
         """Test difference hash extraction"""
+
+
+
         try:
             dhash = self.extractor.extract_difference_hash(self.test_image)
             
@@ -514,6 +556,9 @@ class TestFingerprintExtractor(unittest.TestCase):
     
     def test_wavelet_hash_extraction(self):
         """Test wavelet-based hash extraction"""
+
+
+
         try:
             whash = self.extractor.extract_wavelet_hash(self.test_image)
             
@@ -525,6 +570,9 @@ class TestFingerprintExtractor(unittest.TestCase):
     
     def test_color_histogram_fingerprint(self):
         """Test color histogram fingerprint"""
+
+
+
         try:
             histogram_fp = self.extractor.extract_color_histogram_fingerprint(self.test_image)
             
@@ -541,6 +589,9 @@ class TestFingerprintExtractor(unittest.TestCase):
     
     def test_texture_fingerprint(self):
         """Test texture-based fingerprint"""
+
+
+
         try:
             texture_fp = self.extractor.extract_texture_fingerprint(self.test_image)
             
@@ -552,6 +603,9 @@ class TestFingerprintExtractor(unittest.TestCase):
     
     def test_edge_fingerprint(self):
         """Test edge-based fingerprint"""
+
+
+
         try:
             edge_fp = self.extractor.extract_edge_fingerprint(self.test_image)
             
@@ -563,6 +617,9 @@ class TestFingerprintExtractor(unittest.TestCase):
     
     def test_comprehensive_fingerprint(self):
         """Test comprehensive fingerprint combining multiple methods"""
+
+
+
         try:
             comprehensive_fp = self.extractor.extract_comprehensive_fingerprint(self.test_image)
             
@@ -580,6 +637,9 @@ class TestFingerprintExtractor(unittest.TestCase):
     
     def test_fingerprint_comparison(self):
         """Test fingerprint comparison and similarity"""
+
+
+
         try:
             # Extract fingerprints from multiple images
             fingerprints = []
@@ -628,6 +688,9 @@ class TestCopyrightValidator(unittest.TestCase):
     
     def _create_mock_copyright_database(self) -> Dict[str, Any]:
         """Create mock copyright database"""
+
+
+
         return {
             'registered_works': [
                 {
@@ -653,6 +716,9 @@ class TestCopyrightValidator(unittest.TestCase):
     
     def test_copyright_notice_detection(self):
         """Test copyright notice detection in images"""
+
+
+
         try:
             copyright_info = self.validator.detect_copyright_notice(self.test_image)
             
@@ -669,6 +735,9 @@ class TestCopyrightValidator(unittest.TestCase):
     
     def test_ownership_validation(self):
         """Test ownership validation"""
+
+
+
         try:
             validation_result = self.validator.validate_ownership(
                 self.test_image,
@@ -690,6 +759,9 @@ class TestCopyrightValidator(unittest.TestCase):
     
     def test_plagiarism_detection(self):
         """Test plagiarism detection"""
+
+
+
         try:
             # Create a modified version of the test image
             modified_image = self.test_image.copy()
@@ -713,6 +785,9 @@ class TestCopyrightValidator(unittest.TestCase):
     
     def test_license_validation(self):
         """Test license validation"""
+
+
+
         try:
             license_info = {
                 'type': 'Creative Commons',
@@ -740,6 +815,9 @@ class TestCopyrightValidator(unittest.TestCase):
     
     def test_dmca_compliance_check(self):
         """Test DMCA compliance checking"""
+
+
+
         try:
             dmca_result = self.validator.check_dmca_compliance(
                 self.test_image,
@@ -807,6 +885,9 @@ class TestIntegrityValidator(unittest.TestCase):
     
     def test_image_integrity_validation(self):
         """Test image integrity validation"""
+
+
+
         try:
             # Calculate original hash
             original_hash = self.validator.calculate_image_hash(self.test_image)
@@ -830,6 +911,9 @@ class TestIntegrityValidator(unittest.TestCase):
     
     def test_tampering_detection(self):
         """Test tampering detection"""
+
+
+
         try:
             # Create tampered version
             tampered_image = self.test_image.copy()
@@ -858,6 +942,9 @@ class TestIntegrityValidator(unittest.TestCase):
     
     def test_metadata_integrity(self):
         """Test metadata integrity validation"""
+
+
+
         try:
             # Save image with metadata
             temp_file = tempfile.NamedTemporaryFile(suffix='.jpg', delete=False)
@@ -882,6 +969,9 @@ class TestIntegrityValidator(unittest.TestCase):
     
     def test_video_integrity_validation(self):
         """Test video integrity validation"""
+
+
+
         try:
             integrity_result = self.validator.validate_video_integrity(self.test_video_path)
             
@@ -898,6 +988,9 @@ class TestIntegrityValidator(unittest.TestCase):
     
     def test_blockchain_verification(self):
         """Test blockchain-based verification"""
+
+
+
         try:
             # Mock blockchain verification
             blockchain_result = self.validator.verify_blockchain_integrity(
@@ -950,6 +1043,9 @@ class TestProtectionIntegration(unittest.TestCase):
     
     def test_complete_protection_workflow(self):
         """Test complete protection workflow"""
+
+
+
         try:
             # Step 1: Extract original fingerprint
             original_fingerprint = self.fingerprint_extractor.extract_perceptual_hash(self.test_image)
@@ -995,6 +1091,9 @@ class TestProtectionIntegration(unittest.TestCase):
     
     def test_protection_verification_workflow(self):
         """Test protection verification workflow"""
+
+
+
         try:
             # Protect the content
             protected_content = self.content_protector.protect_content(
@@ -1033,6 +1132,9 @@ class TestProtectionIntegration(unittest.TestCase):
     
     def test_attack_resistance_workflow(self):
         """Test protection resistance against various attacks"""
+
+
+
         try:
             # Apply robust protection
             protected_content = self.content_protector.protect_content(
@@ -1067,6 +1169,9 @@ class TestProtectionIntegration(unittest.TestCase):
     
     def _add_noise_attack(self, image: np.ndarray) -> Optional[np.ndarray]:
         """Simulate noise attack"""
+
+
+
         try:
             noise = np.random.normal(0, 15, image.shape).astype(np.int16)
             return np.clip(image.astype(np.int16) + noise, 0, 255).astype(np.uint8)
@@ -1075,6 +1180,9 @@ class TestProtectionIntegration(unittest.TestCase):
     
     def _compression_attack(self, image: np.ndarray) -> Optional[np.ndarray]:
         """Simulate compression attack"""
+
+
+
         try:
             temp_file = tempfile.NamedTemporaryFile(suffix='.jpg', delete=False)
             temp_path = temp_file.name
@@ -1090,6 +1198,9 @@ class TestProtectionIntegration(unittest.TestCase):
     
     def _crop_attack(self, image: np.ndarray) -> Optional[np.ndarray]:
         """Simulate cropping attack"""
+
+
+
         try:
             h, w = image.shape[:2]
             crop_h, crop_w = int(h * 0.8), int(w * 0.8)
@@ -1101,6 +1212,9 @@ class TestProtectionIntegration(unittest.TestCase):
     
     def _brightness_attack(self, image: np.ndarray) -> Optional[np.ndarray]:
         """Simulate brightness adjustment attack"""
+
+
+
         try:
             bright_image = image.astype(np.float32) * 1.3
             return np.clip(bright_image, 0, 255).astype(np.uint8)
@@ -1109,6 +1223,9 @@ class TestProtectionIntegration(unittest.TestCase):
     
     def test_performance_integration(self):
         """Test performance of integrated protection system"""
+
+
+
         try:
             start_time = time.time()
             

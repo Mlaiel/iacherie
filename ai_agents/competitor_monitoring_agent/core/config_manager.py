@@ -103,6 +103,9 @@ class ConfigurationManager:
     
     def _load_configurations(self):
         """Load configurations from file and environment variables."""
+
+
+
         try:
             # Load from file if exists
             if os.path.exists(self.config_path):
@@ -124,6 +127,9 @@ class ConfigurationManager:
     
     def _apply_config_data(self, config_data: Dict[str, Any]):
         """Apply configuration data from loaded config."""
+
+
+
         try:
             # Monitoring config
             if "monitoring" in config_data:
@@ -180,6 +186,9 @@ class ConfigurationManager:
     
     def _load_from_environment(self):
         """Load configuration values from environment variables."""
+
+
+
         try:
             # Monitoring environment variables
             if os.getenv("COMPETITOR_UPDATE_INTERVAL"):
@@ -221,6 +230,9 @@ class ConfigurationManager:
     
     def _validate_configurations(self):
         """Validate configuration values."""
+
+
+
         try:
             # Validate monitoring config
             if self.monitoring_config.update_interval < 60:
@@ -252,6 +264,9 @@ class ConfigurationManager:
     
     def get_full_config(self) -> Dict[str, Any]:
         """Get complete configuration as dictionary."""
+
+
+
         return {
             "monitoring": asdict(self.monitoring_config),
             "alerts": asdict(self.alert_config),
@@ -261,22 +276,37 @@ class ConfigurationManager:
     
     def get_monitoring_config(self) -> MonitoringConfig:
         """Get monitoring configuration."""
+
+
+
         return self.monitoring_config
     
     def get_alert_config(self) -> AlertConfig:
         """Get alert configuration."""
+
+
+
         return self.alert_config
     
     def get_data_source_config(self) -> DataSourceConfig:
         """Get data source configuration."""
+
+
+
         return self.data_source_config
     
     def get_analysis_config(self) -> AnalysisConfig:
         """Get analysis configuration."""
+
+
+
         return self.analysis_config
     
     def update_config(self, config_type: str, updates: Dict[str, Any]):
         """Update specific configuration section."""
+
+
+
         try:
             if config_type == "monitoring":
                 for key, value in updates.items():
@@ -314,6 +344,9 @@ class ConfigurationManager:
     
     def save_config(self):
         """Save current configuration to file."""
+
+
+
         try:
             # Ensure config directory exists
             config_dir = os.path.dirname(self.config_path)
@@ -333,6 +366,9 @@ class ConfigurationManager:
     
     def load_credentials(self) -> Dict[str, Any]:
         """Load encrypted credentials."""
+
+
+
         try:
             if os.path.exists(self.credentials_path):
                 return self.secure_handler.decrypt_file(self.credentials_path)
@@ -344,6 +380,9 @@ class ConfigurationManager:
     
     def save_credentials(self, credentials: Dict[str, Any]):
         """Save encrypted credentials."""
+
+
+
         try:
             # Ensure credentials directory exists
             creds_dir = os.path.dirname(self.credentials_path)
@@ -359,6 +398,9 @@ class ConfigurationManager:
     
     def get_api_credentials(self, service: str) -> Dict[str, str]:
         """Get API credentials for a specific service."""
+
+
+
         try:
             credentials = self.load_credentials()
             return credentials.get(service, {})
@@ -369,6 +411,9 @@ class ConfigurationManager:
     
     def validate_api_credentials(self, service: str) -> bool:
         """Validate API credentials for a service."""
+
+
+
         try:
             credentials = self.get_api_credentials(service)
             
@@ -396,6 +441,9 @@ class ConfigurationManager:
     
     def get_config_status(self) -> Dict[str, Any]:
         """Get configuration status and health."""
+
+
+
         return {
             "config_loaded": True,
             "config_file_exists": os.path.exists(self.config_path),

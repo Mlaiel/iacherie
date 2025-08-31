@@ -8,7 +8,7 @@ Gère les flux automatisés, les approbations et les transitions d'état.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2024-2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LEGAL STRICT ⚠️
+  AVERTISSEMENT LEGAL STRICT 
 Ce code et tous les concepts associés sont la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants s'exposent à des poursuites judiciaires.
@@ -91,6 +91,9 @@ class LicenseWorkflowEngine:
     
     async def initialize(self):
         """Initialise le moteur de workflow."""
+
+
+
         try:
             await self._setup_state_transitions()
             await self._setup_workflow_rules()

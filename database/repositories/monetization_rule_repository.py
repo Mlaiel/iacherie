@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -86,6 +86,9 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
         Returns:
             Created MonetizationRule instance
         """
+
+
+
         try:
             # Validate priority range
             if not (1 <= priority <= 100):
@@ -215,6 +218,9 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
         Returns:
             List of potentially conflicting rules
         """
+
+
+
         try:
             # Find rules with similar triggers and higher or equal priority
             existing_rules = self.db_session.query(MonetizationRule).filter(
@@ -305,6 +311,9 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
         Returns:
             List of MonetizationRule instances
         """
+
+
+
         try:
             query = self.db_session.query(MonetizationRule).filter(
                 MonetizationRule.user_id == user_id
@@ -349,6 +358,9 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
         Returns:
             Execution result dictionary
         """
+
+
+
         try:
             rule = self.get_by_id(rule_id)
             if not rule:
@@ -421,6 +433,9 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
         Returns:
             True if conditions are met, False otherwise
         """
+
+
+
         try:
             # Revenue threshold check
             if 'threshold_amount' in conditions:
@@ -486,6 +501,9 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
         Returns:
             Action execution result
         """
+
+
+
         try:
             action_type = action['type']
             
@@ -517,6 +535,9 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
                                   action: Dict[str, Any],
                                   context: Dict[str, Any]) -> Dict[str, Any]:
         """Execute pricing adjustment action"""
+
+
+
         try:
             adjustment_percentage = action.get('adjustment_percentage', 0)
             target_content = context.get('content_id')
@@ -539,6 +560,9 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
                           action: Dict[str, Any],
                           context: Dict[str, Any]) -> Dict[str, Any]:
         """Execute tag update action"""
+
+
+
         try:
             new_tags = action.get('tags', [])
             target_content = context.get('content_id')
@@ -562,6 +586,9 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
                                  context: Dict[str, Any],
                                  rule: MonetizationRule) -> Dict[str, Any]:
         """Execute user notification action"""
+
+
+
         try:
             message_template = action.get('message', 'Monetization rule triggered')
             notification_type = action.get('notification_type', 'info')
@@ -585,6 +612,9 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
                                     action: Dict[str, Any],
                                     context: Dict[str, Any]) -> Dict[str, Any]:
         """Execute content distribution action"""
+
+
+
         try:
             target_platforms = action.get('platforms', [])
             content_id = context.get('content_id')
@@ -607,6 +637,9 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
                                  action: Dict[str, Any],
                                  context: Dict[str, Any]) -> Dict[str, Any]:
         """Execute analytics trigger action"""
+
+
+
         try:
             analytics_type = action.get('analytics_type', 'performance_report')
             
@@ -632,6 +665,9 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
             rule_id: Rule ID
             success: Whether execution was successful
         """
+
+
+
         try:
             rule = self.get_by_id(rule_id)
             if not rule:
@@ -661,6 +697,9 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
         Returns:
             Performance metrics dictionary
         """
+
+
+
         try:
             rule = self.get_by_id(rule_id)
             if not rule:

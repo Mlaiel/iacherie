@@ -1,5 +1,5 @@
 """
-📊 Analytics Repository - IA Influencer Agent Platform Enterprise
+ Analytics Repository - IA Influencer Agent Platform Enterprise
 ================================================================
 Module: backend/data_management/repositories/analytics_repository.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Analytics Repository - Production-Ready
 Responsibility: Advanced analytics and performance metrics with AI insights
 ================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
@@ -179,6 +179,9 @@ class AnalyticsRepository(BaseRepository):
     def calculate_engagement_metrics(self, creator_id: str, 
                                    time_range: TimeRange = TimeRange.LAST_30D) -> EngagementMetrics:
         """Calculate comprehensive engagement metrics"""
+
+
+
         try:
             # Check cache first
             cache_key = self._generate_cache_key("engagement", creator_id=creator_id, time_range=time_range.value)
@@ -216,6 +219,9 @@ class AnalyticsRepository(BaseRepository):
     def calculate_performance_metrics(self, creator_id: str,
                                     time_range: TimeRange = TimeRange.LAST_30D) -> PerformanceMetrics:
         """Calculate comprehensive performance metrics"""
+
+
+
         try:
             cache_key = self._generate_cache_key("performance", creator_id=creator_id, time_range=time_range.value)
             if self._cache_enabled and self.cache:
@@ -249,6 +255,9 @@ class AnalyticsRepository(BaseRepository):
     def calculate_growth_metrics(self, creator_id: str,
                                time_range: TimeRange = TimeRange.LAST_30D) -> GrowthMetrics:
         """Calculate comprehensive growth metrics"""
+
+
+
         try:
             cache_key = self._generate_cache_key("growth", creator_id=creator_id, time_range=time_range.value)
             if self._cache_enabled and self.cache:
@@ -282,6 +291,9 @@ class AnalyticsRepository(BaseRepository):
     def calculate_revenue_metrics(self, creator_id: str,
                                 time_range: TimeRange = TimeRange.LAST_30D) -> RevenueMetrics:
         """Calculate comprehensive revenue metrics"""
+
+
+
         try:
             cache_key = self._generate_cache_key("revenue", creator_id=creator_id, time_range=time_range.value)
             if self._cache_enabled and self.cache:
@@ -321,10 +333,16 @@ class AnalyticsRepository(BaseRepository):
     
     def get_by_content(self, content_id: str) -> List[AnalyticsModel]:
         """Récupère les analytics pour un contenu"""
+
+
+
         return self.list(filters={"content_id": content_id})
     
     def generate_predictive_analytics(self, creator_id: str) -> PredictiveAnalytics:
         """Generate AI-powered predictive analytics"""
+
+
+
         try:
             if not self.ai_processor or not self.prediction_service:
                 return PredictiveAnalytics(
@@ -364,6 +382,9 @@ class AnalyticsRepository(BaseRepository):
     
     def generate_competitive_analytics(self, creator_id: str) -> CompetitiveAnalytics:
         """Generate competitive analysis and market positioning"""
+
+
+
         try:
             if not self.ai_processor:
                 return CompetitiveAnalytics(
@@ -398,6 +419,9 @@ class AnalyticsRepository(BaseRepository):
                                     time_range: TimeRange = TimeRange.LAST_30D,
                                     include_predictions: bool = True) -> Dict[str, Any]:
         """Generate comprehensive analytics report"""
+
+
+
         try:
             # Calculate all metrics
             engagement = self.calculate_engagement_metrics(creator_id, time_range)
@@ -521,22 +545,37 @@ class AnalyticsRepository(BaseRepository):
     # Data fetching methods (placeholders - would connect to actual data sources)
     def _get_engagement_data(self, creator_id: str, time_range: TimeRange) -> Dict[str, Any]:
         """Fetch engagement data from database"""
+
+
+
         return {}
     
     def _get_performance_data(self, creator_id: str, time_range: TimeRange) -> Dict[str, Any]:
         """Fetch performance data from database"""
+
+
+
         return {}
     
     def _get_growth_data(self, creator_id: str, time_range: TimeRange) -> Dict[str, Any]:
         """Fetch growth data from database"""
+
+
+
         return {}
     
     def _get_revenue_data(self, creator_id: str, time_range: TimeRange) -> Dict[str, Any]:
         """Fetch revenue data from database"""
+
+
+
         return {}
     
     def _get_historical_data(self, creator_id: str) -> Dict[str, Any]:
         """Fetch historical data for predictions"""
+
+
+
         return {}
 
 

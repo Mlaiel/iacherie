@@ -42,7 +42,7 @@ async def example_musician_onboarding():
     This example demonstrates the full deployment of AI processing,
     content protection, and monetization services for a premium musician.
     """
-    logger.info("🎵 Starting musician onboarding example")
+    logger.info(" Starting musician onboarding example")
     
     # Initialize orchestrator
     config = {
@@ -70,7 +70,7 @@ async def example_musician_onboarding():
         result = await orchestrator.deploy_creator_ecosystem(request)
         
         if result["success"]:
-            logger.info(f"✅ Musician onboarding successful!")
+            logger.info(f" Musician onboarding successful!")
             logger.info(f"   Workflow ID: {result['workflow_id']}")
             logger.info(f"   Services: {', '.join(result['services_deployed'])}")
             logger.info(f"   Estimated completion: {result['estimated_completion']}")
@@ -81,17 +81,17 @@ async def example_musician_onboarding():
             logger.info(f"   Current status: {status}")
             
         else:
-            logger.error(f"❌ Musician onboarding failed: {result['error']}")
+            logger.error(f" Musician onboarding failed: {result['error']}")
             
     except Exception as e:
-        logger.error(f"❌ Exception during musician onboarding: {str(e)}")
+        logger.error(f" Exception during musician onboarding: {str(e)}")
 
 
 async def example_video_creator_onboarding():
     """
     Example: Video creator onboarding with high-performance requirements.
     """
-    logger.info("🎬 Starting video creator onboarding example")
+    logger.info(" Starting video creator onboarding example")
     
     orchestrator = create_automation_orchestrator({
         'gpu_acceleration': True,
@@ -112,10 +112,10 @@ async def example_video_creator_onboarding():
     result = await orchestrator.deploy_creator_ecosystem(request)
     
     if result["success"]:
-        logger.info(f"✅ Video creator onboarding successful!")
+        logger.info(f" Video creator onboarding successful!")
         logger.info(f"   Enterprise tier with GPU acceleration enabled")
     else:
-        logger.error(f"❌ Video creator onboarding failed: {result['error']}")
+        logger.error(f" Video creator onboarding failed: {result['error']}")
 
 
 async def example_emergency_content_protection():
@@ -125,7 +125,7 @@ async def example_emergency_content_protection():
     This demonstrates rapid deployment of protection systems when
     unauthorized use of creator content is detected.
     """
-    logger.info("🚨 Starting emergency content protection example")
+    logger.info(" Starting emergency content protection example")
     
     orchestrator = create_automation_orchestrator({
         'emergency_mode': True,
@@ -148,7 +148,7 @@ async def example_emergency_content_protection():
     result = await orchestrator.deploy_creator_ecosystem(request)
     
     if result["success"]:
-        logger.info(f"🛡️ Emergency protection deployed!")
+        logger.info(f" Emergency protection deployed!")
         logger.info(f"   Response time optimized for urgent threat")
         
         # Demonstrate emergency scaling
@@ -157,10 +157,10 @@ async def example_emergency_content_protection():
             estimated_traffic_multiplier=8.0  # High threat level
         )
         
-        logger.info(f"⚡ Emergency scaling applied: {scaling_result['estimated_capacity']}")
+        logger.info(f" Emergency scaling applied: {scaling_result['estimated_capacity']}")
         
     else:
-        logger.error(f"❌ Emergency protection failed: {result['error']}")
+        logger.error(f" Emergency protection failed: {result['error']}")
 
 
 async def example_ai_model_deployment():
@@ -194,14 +194,14 @@ async def example_ai_model_deployment():
         logger.info(f"   Models: {', '.join(result['models'])}")
         logger.info(f"   Pipeline ID: {result['pipeline_id']}")
     else:
-        logger.error(f"❌ AI model deployment failed")
+        logger.error(f" AI model deployment failed")
 
 
 async def example_monetization_setup():
     """
     Example: Setting up monetization infrastructure for multiple platforms.
     """
-    logger.info("💰 Starting monetization setup example")
+    logger.info(" Starting monetization setup example")
     
     orchestrator = create_automation_orchestrator({
         'payment_processing_enabled': True,
@@ -224,11 +224,11 @@ async def example_monetization_setup():
     result = await orchestrator.deploy_creator_ecosystem(request)
     
     if result["success"]:
-        logger.info(f"💸 Monetization system deployed!")
+        logger.info(f" Monetization system deployed!")
         logger.info(f"   Multi-platform revenue tracking enabled")
         logger.info(f"   Automated licensing and payouts configured")
     else:
-        logger.error(f"❌ Monetization setup failed: {result['error']}")
+        logger.error(f" Monetization setup failed: {result['error']}")
 
 
 async def example_multi_creator_batch_deployment():
@@ -238,7 +238,7 @@ async def example_multi_creator_batch_deployment():
     This demonstrates handling multiple creator onboardings simultaneously
     with different requirements and tiers.
     """
-    logger.info("👥 Starting multi-creator batch deployment example")
+    logger.info(" Starting multi-creator batch deployment example")
     
     orchestrator = create_automation_orchestrator({
         'batch_processing': True,
@@ -302,10 +302,10 @@ async def example_multi_creator_batch_deployment():
     successful = sum(1 for r in deployment_results if r["result"]["success"])
     total = len(deployment_results)
     
-    logger.info(f"📊 Batch deployment completed: {successful}/{total} successful")
+    logger.info(f" Batch deployment completed: {successful}/{total} successful")
     
     for deployment in deployment_results:
-        status = "✅" if deployment["result"]["success"] else "❌"
+        status = "" if deployment["result"]["success"] else ""
         logger.info(f"   {status} {deployment['creator_type']}")
 
 
@@ -313,7 +313,7 @@ async def example_disaster_recovery():
     """
     Example: Emergency rollback and disaster recovery procedures.
     """
-    logger.info("🆘 Starting disaster recovery example")
+    logger.info(" Starting disaster recovery example")
     
     orchestrator = create_automation_orchestrator({
         'disaster_recovery_mode': True,
@@ -323,7 +323,7 @@ async def example_disaster_recovery():
     # Simulate a failed deployment that needs rollback
     failed_deployment_id = "deployment_failed_123"
     
-    logger.info(f"🔄 Executing emergency rollback for {failed_deployment_id}")
+    logger.info(f" Executing emergency rollback for {failed_deployment_id}")
     
     rollback_result = await orchestrator.emergency_rollback(
         deployment_id=failed_deployment_id,
@@ -331,18 +331,18 @@ async def example_disaster_recovery():
     )
     
     if rollback_result.get("success"):
-        logger.info(f"✅ Emergency rollback successful!")
+        logger.info(f" Emergency rollback successful!")
         logger.info(f"   Data preservation: {rollback_result.get('data_preserved', True)}")
         logger.info(f"   Services restored: {rollback_result.get('services_restored', [])}")
     else:
-        logger.error(f"❌ Emergency rollback failed!")
+        logger.error(f" Emergency rollback failed!")
 
 
 async def run_all_examples():
     """
     Run all deployment automation examples.
     """
-    logger.info("🚀 Starting IA Influencer Agent Deployment Automation Examples")
+    logger.info(" Starting IA Influencer Agent Deployment Automation Examples")
     logger.info("=" * 70)
     
     try:
@@ -373,10 +373,10 @@ async def run_all_examples():
         await example_disaster_recovery()
         
         logger.info("=" * 70)
-        logger.info("🎉 All deployment automation examples completed successfully!")
+        logger.info(" All deployment automation examples completed successfully!")
         
     except Exception as e:
-        logger.error(f"❌ Example execution failed: {str(e)}")
+        logger.error(f" Example execution failed: {str(e)}")
         raise
 
 
@@ -387,17 +387,17 @@ if __name__ == "__main__":
     Run this script to see all deployment automation capabilities in action.
     """
     print("""
-    🎯 IA Influencer Agent - Deployment Automation Examples
+     IA Influencer Agent - Deployment Automation Examples
     
     This script demonstrates the complete deployment automation capabilities
     of the IA Influencer Agent platform including:
     
-    ✅ Creator onboarding workflows (musicians, video creators, photographers, writers)
-    ✅ Emergency content protection deployment
-    ✅ AI model deployment and management  
-    ✅ Monetization system setup
-    ✅ Multi-creator batch operations
-    ✅ Disaster recovery procedures
+     Creator onboarding workflows (musicians, video creators, photographers, writers)
+     Emergency content protection deployment
+     AI model deployment and management  
+     Monetization system setup
+     Multi-creator batch operations
+     Disaster recovery procedures
     
     Author: Fahed Mlaiel <mlaiel@live.de>
     Copyright: All rights reserved - Unauthorized use prohibited

@@ -309,6 +309,9 @@ class BlockchainConfig:
     
     def get_contract_abi(self, contract_type: ContractType) -> Optional[List[Dict]]:
         """Get smart contract ABI for specified type"""
+
+
+
         return self.contract_abis.get(contract_type)
     
     def get_contract_instance(self, contract_type: ContractType, 

@@ -476,6 +476,9 @@ class PlatformSEOAdapter:
         Returns:
             PlatformOptimizationResult with optimized content
         """
+
+
+
         try:
             if platform not in self.adapters:
                 raise ValueError(f"Platform {platform} not supported")
@@ -645,6 +648,9 @@ class PlatformSEOAdapter:
     
     def get_supported_platforms(self) -> List[Platform]:
         """Get list of supported platforms"""
+
+
+
         return list(self.adapters.keys())
     
     def get_platform_config(self, platform: Platform) -> PlatformSEOConfig:

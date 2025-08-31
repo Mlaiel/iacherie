@@ -45,6 +45,9 @@ class VulnerabilityScanner:
     
     async def scan_image(self, image_id: str, name: str, tag: str):
         """Mock scan returning empty vulnerabilities."""
+
+
+
         return []
 
 class MetricsCollector:
@@ -207,6 +210,9 @@ class ContainerRegistryManager(BaseDeploymentManager):
         Returns:
             True if registration successful, False otherwise
         """
+
+
+
         try:
             # Validate registry configuration
             if not self._validate_registry_config(config):
@@ -247,6 +253,9 @@ class ContainerRegistryManager(BaseDeploymentManager):
 
     async def _test_registry_connection(self, config: RegistryConfig) -> bool:
         """Test registry connection."""
+
+
+
         try:
             # Implementation would test actual registry connection
             self.logger.info(f"Testing connection to registry '{config.name}'")
@@ -259,6 +268,9 @@ class ContainerRegistryManager(BaseDeploymentManager):
 
     def _create_docker_client(self, config: RegistryConfig) -> Optional[docker.DockerClient]:
         """Create Docker client for registry."""
+
+
+
         try:
             # Create Docker client with registry configuration
             client = docker.from_env()
@@ -286,6 +298,9 @@ class ContainerRegistryManager(BaseDeploymentManager):
         Returns:
             Image ID if build successful, None otherwise
         """
+
+
+
         try:
             # Validate build configuration
             if not self._validate_image_config(config):
@@ -383,6 +398,9 @@ class ContainerRegistryManager(BaseDeploymentManager):
         Returns:
             Scan result or None if scan failed
         """
+
+
+
         try:
             if image_key not in self.images:
                 self.logger.error(f"Image '{image_key}' not found")
@@ -465,6 +483,9 @@ class ContainerRegistryManager(BaseDeploymentManager):
         Returns:
             True if push successful, False otherwise
         """
+
+
+
         try:
             if image_key not in self.images:
                 self.logger.error(f"Image '{image_key}' not found")
@@ -520,6 +541,9 @@ class ContainerRegistryManager(BaseDeploymentManager):
         Returns:
             True if pull successful, False otherwise
         """
+
+
+
         try:
             if registry_name not in self.registries:
                 self.logger.error(f"Registry '{registry_name}' not found")
@@ -564,6 +588,9 @@ class ContainerRegistryManager(BaseDeploymentManager):
         Returns:
             True if deletion successful, False otherwise
         """
+
+
+
         try:
             if image_key not in self.images:
                 self.logger.error(f"Image '{image_key}' not found")
@@ -600,6 +627,9 @@ class ContainerRegistryManager(BaseDeploymentManager):
 
     async def _check_image_in_use(self, image_key: str) -> bool:
         """Check if image is currently in use by running containers."""
+
+
+
         try:
             # This would check Kubernetes deployments, running containers, etc.
             # For now, we'll simulate the check
@@ -637,6 +667,9 @@ class ContainerRegistryManager(BaseDeploymentManager):
         Returns:
             Number of images cleaned up
         """
+
+
+
         try:
             retention_days = retention_days or self.security_policies["retention_days"]
             cutoff_date = datetime.now() - timedelta(days=retention_days)
@@ -685,6 +718,9 @@ class ContainerRegistryManager(BaseDeploymentManager):
         Returns:
             True if mirroring successful, False otherwise
         """
+
+
+
         try:
             if target_registry not in self.registries:
                 self.logger.error(f"Target registry '{target_registry}' not found")
@@ -743,6 +779,9 @@ class ContainerRegistryManager(BaseDeploymentManager):
         Returns:
             Report data
         """
+
+
+
         try:
             images = await self.list_images(registry_name)
             
@@ -818,6 +857,9 @@ class ContainerRegistryManager(BaseDeploymentManager):
         Returns:
             True if policy updated successfully, False otherwise
         """
+
+
+
         try:
             if policy_name in self.security_policies:
                 self.security_policies[policy_name] = value
@@ -838,6 +880,9 @@ class ContainerRegistryManager(BaseDeploymentManager):
         Returns:
             True if cleanup successful, False otherwise
         """
+
+
+
         try:
             # Close Docker clients
             for client in self.docker_clients.values():

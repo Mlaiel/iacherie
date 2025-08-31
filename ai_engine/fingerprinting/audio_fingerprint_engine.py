@@ -80,6 +80,9 @@ class AudioFingerprintEngine:
         Returns:
             AudioFingerprint: Complete fingerprint data
         """
+
+
+
         try:
             logger.info(f"Generating audio fingerprint for: {audio_file_path}")
             
@@ -137,6 +140,9 @@ class AudioFingerprintEngine:
     
     async def _generate_chromaprint(self, audio_data: np.ndarray, sr: int) -> str:
         """Generate Chromaprint fingerprint hash"""
+
+
+
         try:
             # Convert to 16-bit PCM for chromaprint
             audio_16bit = (audio_data * 32767).astype(np.int16)
@@ -159,6 +165,9 @@ class AudioFingerprintEngine:
     
     async def _extract_spectral_features(self, audio_data: np.ndarray, sr: int) -> Dict[str, Any]:
         """Extract comprehensive spectral features"""
+
+
+
         try:
             # Basic spectral features
             spectral_centroid = librosa.feature.spectral_centroid(y=audio_data, sr=sr)
@@ -190,6 +199,9 @@ class AudioFingerprintEngine:
     
     async def _extract_melody_pattern(self, audio_data: np.ndarray, sr: int) -> List[float]:
         """Extract melody pattern using pitch tracking"""
+
+
+
         try:
             # Estimate pitch using piptrack
             pitches, magnitudes = librosa.piptrack(y=audio_data, sr=sr, threshold=0.1)
@@ -215,6 +227,9 @@ class AudioFingerprintEngine:
     
     async def _extract_rhythm_pattern(self, audio_data: np.ndarray, sr: int) -> List[float]:
         """Extract rhythm pattern using onset detection"""
+
+
+
         try:
             # Onset detection
             onset_frames = librosa.onset.onset_detect(y=audio_data, sr=sr, units='frames')
@@ -238,6 +253,9 @@ class AudioFingerprintEngine:
     
     async def _extract_harmonic_features(self, audio_data: np.ndarray, sr: int) -> Dict[str, Any]:
         """Extract harmonic and percussive components"""
+
+
+
         try:
             # Harmonic-percussive separation
             y_harmonic, y_percussive = librosa.effects.hpss(audio_data)
@@ -264,6 +282,9 @@ class AudioFingerprintEngine:
     
     async def _detect_tempo(self, audio_data: np.ndarray, sr: int) -> float:
         """Detect tempo using beat tracking"""
+
+
+
         try:
             tempo, _ = librosa.beat.beat_track(y=audio_data, sr=sr)
             return float(tempo)
@@ -274,6 +295,9 @@ class AudioFingerprintEngine:
     
     async def _detect_key(self, audio_data: np.ndarray, sr: int) -> str:
         """Detect musical key using chroma analysis"""
+
+
+
         try:
             # Chroma features
             chroma = librosa.feature.chroma_stft(y=audio_data, sr=sr)
@@ -312,6 +336,9 @@ class AudioFingerprintEngine:
     
     async def _calculate_confidence_score(self, results: List[Any]) -> float:
         """Calculate overall confidence score based on fingerprint quality"""
+
+
+
         try:
             confidence_factors = []
             
@@ -361,6 +388,9 @@ class AudioFingerprintEngine:
         Returns:
             float: Similarity score between 0 and 1
         """
+
+
+
         try:
             similarities = []
             
@@ -406,6 +436,9 @@ class AudioFingerprintEngine:
     
     async def _compare_spectral_features(self, features1: Dict, features2: Dict) -> float:
         """Compare spectral features between two fingerprints"""
+
+
+
         try:
             similarity_scores = []
             
@@ -427,6 +460,9 @@ class AudioFingerprintEngine:
     
     async def _compare_sequences(self, seq1: List[float], seq2: List[float]) -> float:
         """Compare two sequences using correlation"""
+
+
+
         try:
             if not seq1 or not seq2:
                 return 0.0

@@ -78,6 +78,9 @@ security = HTTPBearer(auto_error=False)
 @router.post("/register", response_model=TokenResponse, status_code=status.HTTP_201_CREATED)
 async def register_user(user_data: UserRegistration):
     """Register a new user account"""
+
+
+
     try:
         # Validate terms acceptance
         if not user_data.terms_accepted:
@@ -162,6 +165,9 @@ async def register_user(user_data: UserRegistration):
 @router.post("/login", response_model=TokenResponse)
 async def login_user(credentials: UserLogin):
     """Authenticate user and return tokens"""
+
+
+
     try:
         async with database_manager.get_postgres_session() as session:
             # Get user by email
@@ -235,6 +241,9 @@ async def login_user(credentials: UserLogin):
 @router.post("/refresh", response_model=TokenResponse)
 async def refresh_token(refresh_token: str = Body(..., embed=True)):
     """Refresh access token using refresh token"""
+
+
+
     try:
         # Generate new access token
         new_access_token = security_manager.jwt_manager.refresh_access_token(refresh_token)
@@ -305,6 +314,9 @@ async def get_user_profile(
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
     """Get current user profile"""
+
+
+
     try:
         user_id = current_user["user_id"]
         
@@ -366,6 +378,9 @@ async def update_user_profile(
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
     """Update user profile"""
+
+
+
     try:
         user_id = current_user["user_id"]
         
@@ -427,6 +442,9 @@ async def change_password(
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
     """Change user password"""
+
+
+
     try:
         user_id = current_user["user_id"]
         
@@ -483,6 +501,9 @@ async def logout_user(
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
     """Logout user (invalidate tokens)"""
+
+
+
     try:
         user_id = current_user["user_id"]
         

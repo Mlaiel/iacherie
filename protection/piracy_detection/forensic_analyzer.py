@@ -1,5 +1,5 @@
 """
-🔬 Digital Forensic Analysis Engine
+ Digital Forensic Analysis Engine
 ===================================
 
 Advanced digital forensics and evidence collection for content piracy cases.
@@ -7,7 +7,7 @@ Advanced digital forensics and evidence collection for content piracy cases.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚖️ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
+ LEGAL WARNING: This software is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
 and will result in immediate legal action under German and international copyright law.
 
@@ -283,6 +283,9 @@ class MetadataAnalyzer:
     
     async def extract_metadata(self, file_path: str) -> Dict[str, Any]:
         """Extract comprehensive metadata from file."""
+
+
+
         try:
             file_extension = Path(file_path).suffix.lower()
             file_type = self._determine_file_type(file_extension)
@@ -314,6 +317,9 @@ class MetadataAnalyzer:
     
     async def _extract_basic_metadata(self, file_path: str) -> Dict[str, Any]:
         """Extract basic file metadata."""
+
+
+
         try:
             file_stat = Path(file_path).stat()
             mime_type = magic.from_file(file_path, mime=True)
@@ -332,6 +338,9 @@ class MetadataAnalyzer:
     
     async def _extract_image_metadata(self, file_path: str) -> Dict[str, Any]:
         """Extract image-specific metadata including EXIF."""
+
+
+
         try:
             metadata = {}
             
@@ -363,6 +372,9 @@ class MetadataAnalyzer:
     
     async def _extract_audio_metadata(self, file_path: str) -> Dict[str, Any]:
         """Extract audio-specific metadata."""
+
+
+
         try:
             # Use librosa for audio analysis
             y, sr = librosa.load(file_path)
@@ -387,6 +399,9 @@ class MetadataAnalyzer:
     
     async def _extract_video_metadata(self, file_path: str) -> Dict[str, Any]:
         """Extract video-specific metadata."""
+
+
+
         try:
             cap = cv2.VideoCapture(file_path)
             
@@ -407,6 +422,9 @@ class MetadataAnalyzer:
     
     async def _calculate_file_hash(self, file_path: str) -> str:
         """Calculate SHA-256 hash of file."""
+
+
+
         try:
             sha256_hash = hashlib.sha256()
             with open(file_path, "rb") as f:
@@ -430,6 +448,9 @@ class SteganographyDetector:
     
     async def detect_hidden_data(self, file_path: str) -> Dict[str, Any]:
         """Detect potential steganographic content."""
+
+
+
         try:
             results = {}
             
@@ -448,6 +469,9 @@ class SteganographyDetector:
     
     async def _detect_image_steganography(self, file_path: str) -> Dict[str, Any]:
         """Detect steganography in images."""
+
+
+
         try:
             img = cv2.imread(file_path)
             results = {}
@@ -469,6 +493,9 @@ class SteganographyDetector:
     
     async def _detect_audio_steganography(self, file_path: str) -> Dict[str, Any]:
         """Detect steganography in audio files."""
+
+
+
         try:
             y, sr = librosa.load(file_path)
             results = {}
@@ -665,6 +692,9 @@ class DigitalForensicsAnalyzer:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             # Create evidence preservation directory
             Path(self.evidence_preservation_path).mkdir(parents=True, exist_ok=True)
@@ -766,6 +796,9 @@ class DigitalForensicsAnalyzer:
     
     async def _preserve_evidence(self, original_path: str, analysis_id: str) -> str:
         """Preserve original evidence with integrity verification."""
+
+
+
         try:
             preserved_filename = f"{analysis_id}_{Path(original_path).name}"
             preserved_path = Path(self.evidence_preservation_path) / preserved_filename
@@ -790,6 +823,9 @@ class DigitalForensicsAnalyzer:
     
     async def _collect_metadata_evidence(self, file_path: str, analysis_id: str) -> DigitalEvidence:
         """Collect metadata evidence from file."""
+
+
+
         try:
             metadata = await self.metadata_analyzer.extract_metadata(file_path)
             
@@ -814,6 +850,9 @@ class DigitalForensicsAnalyzer:
     
     async def _collect_steganography_evidence(self, file_path: str, analysis_id: str) -> DigitalEvidence:
         """Collect steganography analysis evidence."""
+
+
+
         try:
             steganography_results = await self.steganography_detector.detect_hidden_data(file_path)
             
@@ -843,6 +882,9 @@ class DigitalForensicsAnalyzer:
     
     async def _reconstruct_timeline(self, metadata_evidence: DigitalEvidence, analysis_id: str) -> ForensicTimeline:
         """Reconstruct timeline of content creation and modification."""
+
+
+
         try:
             metadata = metadata_evidence.data
             
@@ -908,6 +950,9 @@ class DigitalForensicsAnalyzer:
                                  steganography_evidence: DigitalEvidence,
                                  analysis_id: str) -> AttributionResult:
         """Analyze content attribution and source identification."""
+
+
+
         try:
             attribution_indicators = []
             device_fingerprints = []
@@ -971,6 +1016,9 @@ class DigitalForensicsAnalyzer:
     
     async def _assess_overall_confidence(self, evidence_list: List[DigitalEvidence]) -> Dict[str, Any]:
         """Assess overall confidence in forensic findings."""
+
+
+
         try:
             confidence_scores = []
             evidence_types = []
@@ -1034,6 +1082,9 @@ class DigitalForensicsAnalyzer:
     
     def get_analysis_statistics(self) -> Dict[str, Any]:
         """Get forensic analysis statistics."""
+
+
+
         return {
             **self.analysis_stats,
             'evidence_database_size': len(self.evidence_database),

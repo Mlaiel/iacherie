@@ -19,7 +19,7 @@ Features:
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED 
 """
 
 import asyncio
@@ -154,6 +154,9 @@ class CloudResourceManager:
         
     async def deploy_resource_management_infrastructure(self, spec: CloudResourceManagementSpec) -> Dict[str, Any]:
         """Deploy comprehensive cloud resource management infrastructure"""
+
+
+
         try:
             results = {}
             logger.info("Deploying cloud resource management infrastructure for IA Influencer platform")
@@ -216,6 +219,9 @@ class CloudResourceManager:
     
     async def _deploy_autoscaling_infrastructure(self, spec: CloudResourceManagementSpec) -> Dict[str, Any]:
         """Deploy intelligent auto-scaling infrastructure"""
+
+
+
         try:
             # Deploy Horizontal Pod Autoscaler (HPA) controller
             hpa_controller = client.V1Deployment(
@@ -319,6 +325,9 @@ class CloudResourceManager:
     
     async def _deploy_cost_optimization_engine(self, spec: CloudResourceManagementSpec) -> Dict[str, Any]:
         """Deploy intelligent cost optimization engine"""
+
+
+
         try:
             # Deploy cost optimization service
             cost_optimizer = client.V1Deployment(
@@ -430,6 +439,9 @@ class CloudResourceManager:
     
     async def _create_ia_influencer_hpas(self, spec: CloudResourceManagementSpec) -> Dict[str, Any]:
         """Create IA Influencer specific Horizontal Pod Autoscalers"""
+
+
+
         try:
             hpas_created = []
             
@@ -622,6 +634,9 @@ class CloudResourceManager:
     async def scale_resource(self, resource_name: str, target_replicas: int, 
                            namespace: str = "ia-influencer-production") -> Dict[str, Any]:
         """Scale a specific resource manually"""
+
+
+
         try:
             # Get current deployment
             deployment = self.apps_v1.read_namespaced_deployment(
@@ -666,6 +681,9 @@ class CloudResourceManager:
     
     async def get_resource_management_status(self, namespace: str = "ia-influencer-resources") -> Dict[str, Any]:
         """Get comprehensive resource management status"""
+
+
+
         try:
             status = {
                 'overall_health': 'healthy',
@@ -774,6 +792,9 @@ def calculate_optimal_replica_count(current_replicas: int, current_utilization: 
 
 def estimate_cost_savings(current_cost: float, optimization_percentage: float) -> float:
     """Estimate cost savings from optimization"""
+
+
+
     return current_cost * (optimization_percentage / 100)
 
 def generate_scaling_policy(resource_type: ResourceType, workload_pattern: str) -> ScalingPolicy:

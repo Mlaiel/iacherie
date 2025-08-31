@@ -10,7 +10,7 @@ Project: IA-Influencer Agent + Content Protection Platform
 Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                  Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This code, concept, and intellectual property are exclusively owned by Fahed Mlaiel.
 Any unauthorized use, copying, distribution, reverse engineering, or commercialization 
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
@@ -563,6 +563,9 @@ class MultiFormatLogger:
     
     def get_multi_format_metrics(self) -> Dict[str, Any]:
         """Get multi-format processing system metrics"""
+
+
+
         return {
             "format_conversion_logging": self.config.enable_format_conversion_logging,
             "quality_tracking": self.config.enable_quality_tracking,
@@ -584,11 +587,17 @@ class MultiFormatLoggingConfig:
     @staticmethod
     def create_default_config() -> MultiFormatLogConfig:
         """Create default multi-format logging configuration"""
+
+
+
         return MultiFormatLogConfig()
     
     @staticmethod
     def create_high_performance_config() -> MultiFormatLogConfig:
         """Create high-performance multi-format logging configuration"""
+
+
+
         return MultiFormatLogConfig(
             enable_format_conversion_logging=True,
             enable_quality_tracking=True,

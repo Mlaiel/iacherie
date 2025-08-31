@@ -7,7 +7,7 @@ interpretation, and legal precedent research for content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -140,6 +140,9 @@ class LegalResearch:
     
     def _initialize_research_systems(self):
         """Initialize legal research systems and databases"""
+
+
+
         try:
             # Setup research databases
             self._setup_research_databases()
@@ -161,6 +164,9 @@ class LegalResearch:
     
     def _setup_research_databases(self):
         """Setup connections to legal research databases"""
+
+
+
         try:
             # Setup Elasticsearch for full-text search
             if self.config.get('elasticsearch_enabled', False):
@@ -197,6 +203,9 @@ class LegalResearch:
     
     def _setup_ai_research_models(self):
         """Setup AI models for legal research enhancement"""
+
+
+
         try:
             # Legal reasoning model
             self.legal_reasoner = self.ai_processor.load_model(
@@ -297,6 +306,9 @@ class LegalResearch:
     
     def _setup_search_indexes(self):
         """Setup search indexes for efficient legal research"""
+
+
+
         try:
             # Create indexes for different legal content types
             if self.elasticsearch_client:
@@ -348,6 +360,9 @@ class LegalResearch:
         Returns:
             Comprehensive research results with analysis
         """
+
+
+
         try:
             start_time = datetime.now(timezone.utc)
             research_id = f"research_{start_time.strftime('%Y%m%d_%H%M%S')}"
@@ -427,6 +442,9 @@ class LegalResearch:
     
     async def _expand_research_query(self, query: ResearchQuery) -> Dict[str, Any]:
         """Expand and enhance research query using AI"""
+
+
+
         try:
             expanded_query = {
                 'original_query': query.query_text,
@@ -517,6 +535,9 @@ class LegalResearch:
     
     async def _search_elasticsearch_cases(self, expanded_query: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Search cases using Elasticsearch"""
+
+
+
         try:
             search_body = {
                 'query': {
@@ -572,6 +593,9 @@ class LegalResearch:
     
     async def _rank_case_results(self, cases: List[Dict[str, Any]], expanded_query: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Rank case results by relevance using AI or traditional methods"""
+
+
+
         try:
             if self.relevance_scorer and cases:
                 # Use AI relevance scoring
@@ -626,6 +650,9 @@ class LegalResearch:
     
     async def _calculate_ai_relevance(self, case: Dict[str, Any], expanded_query: Dict[str, Any]) -> float:
         """Calculate AI-based relevance score for case"""
+
+
+
         try:
             relevance_input = {
                 'case_title': case.get('title', ''),
@@ -682,6 +709,9 @@ class LegalResearch:
     
     async def _search_elasticsearch_statutes(self, expanded_query: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Search statutes using Elasticsearch"""
+
+
+
         try:
             search_body = {
                 'query': {
@@ -793,6 +823,9 @@ class LegalResearch:
                                       regulations: List[Dict[str, Any]], secondary: List[Dict[str, Any]], 
                                       expanded_query: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze and synthesize research results"""
+
+
+
         try:
             analysis = {
                 'key_findings': [],
@@ -998,6 +1031,9 @@ class LegalResearch:
     async def _generate_research_summary(self, analysis: Dict[str, Any], cases: List[Dict[str, Any]], 
                                        statutes: List[Dict[str, Any]]) -> str:
         """Generate comprehensive research summary"""
+
+
+
         try:
             summary_parts = []
             
@@ -1082,6 +1118,9 @@ class LegalResearch:
     
     async def _store_research_results(self, result: ResearchResult):
         """Store research results for future reference"""
+
+
+
         try:
             # Store in database for future reference and caching
             with get_db_session() as db:
@@ -1116,6 +1155,9 @@ class CaseLawAnalyzer:
     
     def _initialize_case_analysis(self):
         """Initialize case law analysis systems"""
+
+
+
         try:
             # Setup specialized precedent analysis
             logger.info("Case Law Analyzer initialized successfully")
@@ -1134,6 +1176,9 @@ class CaseLawAnalyzer:
         Returns:
             Analysis of precedential impact and influence
         """
+
+
+
         try:
             impact_analysis = {
                 'case_citation': case_citation,
@@ -1341,6 +1386,9 @@ class CaseLawAnalyzer:
         Returns:
             Precedent analysis results
         """
+
+
+
         try:
             # Search for relevant cases
             relevant_cases = await self._search_relevant_cases(
@@ -1402,6 +1450,9 @@ class CaseLawAnalyzer:
         Returns:
             Statutory framework analysis
         """
+
+
+
         try:
             # Search relevant statutes
             relevant_statutes = await self._search_relevant_statutes(
@@ -1466,6 +1517,9 @@ class CaseLawAnalyzer:
         Returns:
             Formatted legal memorandum
         """
+
+
+
         try:
             # Structure memorandum sections
             memo_sections = await self._structure_memorandum_sections(
@@ -1529,6 +1583,9 @@ class CaseLawAnalyzer:
 
     async def _research_case_law(self, query: ResearchQuery) -> List[Dict[str, Any]]:
         """Research case law for query"""
+
+
+
         try:
             # Build case law search query
             search_params = await self._build_case_search_params(query)
@@ -1557,6 +1614,9 @@ class CaseLawAnalyzer:
 
     async def _research_statutes(self, query: ResearchQuery) -> List[Dict[str, Any]]:
         """Research statutes for query"""
+
+
+
         try:
             # Build statutory search query
             search_params = await self._build_statutory_search_params(query)
@@ -1675,6 +1735,9 @@ class CaseLawAnalyzer:
         jurisdiction: str
     ) -> Dict[str, Any]:
         """Analyze line of cases following a leading case"""
+
+
+
         
         try:
             # Identify citing cases

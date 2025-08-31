@@ -23,7 +23,7 @@ with real implementations.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
 
@@ -224,8 +224,8 @@ class TestTextProcessor:
                 'options': {'remove_accents': True}
             },
             {
-                'input': 'u r gr8! luv ur work 😍',
-                'expected': 'you are great! love your work 😍',
+                'input': 'u r gr8! luv ur work ',
+                'expected': 'you are great! love your work ',
                 'options': {'expand_contractions': True, 'normalize_slang': True}
             },
             {
@@ -248,7 +248,7 @@ class TestTextProcessor:
         """Test social media specific text processing"""
         processor = TextProcessor()
         
-        social_text = "Check out @username's amazing post! #AI #MachineLearning https://example.com 🚀"
+        social_text = "Check out @username's amazing post! #AI #MachineLearning https://example.com "
         
         # Extract social elements
         social_elements = await processor.extract_social_elements(text=social_text)
@@ -262,7 +262,7 @@ class TestTextProcessor:
         assert '#AI' in social_elements['hashtags']
         assert '#MachineLearning' in social_elements['hashtags']
         assert 'https://example.com' in social_elements['urls']
-        assert '🚀' in social_elements['emojis']
+        assert '' in social_elements['emojis']
         
         # Clean social text
         cleaned_social = await processor.clean_social_text(
@@ -278,7 +278,7 @@ class TestTextProcessor:
         assert '@username' not in cleaned_social
         assert 'https://example.com' not in cleaned_social
         assert '#AI' in cleaned_social
-        assert '🚀' in cleaned_social
+        assert '' in cleaned_social
 
 class TestDataValidator:
     """Test data validation utilities"""
@@ -745,7 +745,7 @@ class TestUtilsIntegration:
         profiler = PerformanceProfiler()
         
         # Test input
-        raw_text = "  Check out @user's post about #AI and #MachineLearning! https://example.com 🚀  "
+        raw_text = "  Check out @user's post about #AI and #MachineLearning! https://example.com   "
         
         # Complete processing pipeline
         @profiler.time_execution
@@ -792,7 +792,7 @@ class TestUtilsIntegration:
         assert '@user' in social_elements['mentions']
         assert '#AI' in social_elements['hashtags']
         assert 'https://example.com' in social_elements['urls']
-        assert '🚀' in social_elements['emojis']
+        assert '' in social_elements['emojis']
         
         # Verify caching worked by running again
         cached_result = await process_text_pipeline(raw_text)

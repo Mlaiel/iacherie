@@ -1,5 +1,5 @@
 """
-🎹 Key Detector - Professional Musical Key Detection
+ Key Detector - Professional Musical Key Detection
 
 Advanced key detection engine for identifying musical key signatures,
 mode analysis, and tonal characteristics of audio signals.
@@ -30,6 +30,9 @@ class KeyDetector:
     
     async def detect_key(self, audio_data: np.ndarray) -> Dict[str, Any]:
         """Detect musical key"""
+
+
+
         try:
             # Extract chroma features
             chroma = librosa.feature.chroma_stft(y=audio_data, sr=self.sample_rate)

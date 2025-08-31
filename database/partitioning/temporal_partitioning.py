@@ -19,7 +19,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING 🚨
+ INTELLECTUAL PROPERTY WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
@@ -140,6 +140,9 @@ class CompressionScheduler:
         
     def schedule_compression(self, partition: PartitionWindow) -> bool:
         """Schedule compression for partition"""
+
+
+
         try:
             # Check if partition is eligible for compression
             age_days = (datetime.utcnow() - partition.start_time).days
@@ -177,6 +180,9 @@ class CompressionScheduler:
     
     def execute_compression(self, partition_name: str) -> bool:
         """Execute compression for partition"""
+
+
+
         try:
             with self.session_factory() as session:
                 # PostgreSQL table compression (simplified)
@@ -227,6 +233,9 @@ class ArchivalManager:
     
     def execute_archival_task(self, task: ArchivalTask) -> bool:
         """Execute archival task"""
+
+
+
         try:
             task.status = "in_progress"
             task.started_at = datetime.utcnow()
@@ -260,6 +269,9 @@ class ArchivalManager:
     
     def _compress_partition(self, task: ArchivalTask) -> bool:
         """Compress partition data"""
+
+
+
         try:
             with self.session_factory() as session:
                 # Example compression implementation
@@ -334,6 +346,9 @@ class TemporalPartitionManager:
     
     def register_table(self, config: TimePartitionConfig) -> bool:
         """Register table for temporal partitioning"""
+
+
+
         try:
             with self._lock:
                 # Validate configuration
@@ -374,6 +389,9 @@ class TemporalPartitionManager:
     
     def _create_initial_partitions(self, config: TimePartitionConfig):
         """Create initial partitions for table"""
+
+
+
         try:
             current_time = datetime.utcnow().replace(tzinfo=timezone.utc)
             
@@ -456,6 +474,9 @@ class TemporalPartitionManager:
     
     def _create_partition_for_time(self, config: TimePartitionConfig, start_time: datetime) -> bool:
         """Create partition for specific time"""
+
+
+
         try:
             # Calculate end time
             end_time = self._calculate_partition_end(start_time, config.strategy)
@@ -530,6 +551,9 @@ class TemporalPartitionManager:
     
     def _create_database_partition(self, config: TimePartitionConfig, partition: PartitionWindow):
         """Create actual database partition"""
+
+
+
         try:
             with self.session_factory() as session:
                 # Create partition table (PostgreSQL syntax)
@@ -552,6 +576,9 @@ class TemporalPartitionManager:
     
     def _create_partition_indexes(self, session: Session, config: TimePartitionConfig, partition: PartitionWindow):
         """Create indexes for partition"""
+
+
+
         try:
             # Time column index
             session.execute(text(f"""
@@ -613,6 +640,9 @@ class TemporalPartitionManager:
     
     def _maintenance_cycle(self):
         """Single maintenance cycle"""
+
+
+
         try:
             current_time = datetime.utcnow()
             
@@ -644,6 +674,9 @@ class TemporalPartitionManager:
     
     def _ensure_future_partitions(self, config: TimePartitionConfig):
         """Ensure adequate future partitions exist"""
+
+
+
         try:
             current_time = datetime.utcnow().replace(tzinfo=timezone.utc)
             current_partitions = self.partition_windows[config.table_name]
@@ -675,6 +708,9 @@ class TemporalPartitionManager:
     
     def _process_archival(self, config: TimePartitionConfig):
         """Process archival for old partitions"""
+
+
+
         try:
             current_time = datetime.utcnow()
             archive_cutoff = current_time - timedelta(days=config.archive_threshold_days)
@@ -698,6 +734,9 @@ class TemporalPartitionManager:
     
     def _process_purge(self, config: TimePartitionConfig):
         """Process purge for expired partitions"""
+
+
+
         try:
             current_time = datetime.utcnow()
             purge_cutoff = current_time - timedelta(days=config.retention_days)
@@ -724,6 +763,9 @@ class TemporalPartitionManager:
     
     def _purge_partition(self, partition: PartitionWindow) -> bool:
         """Purge partition data"""
+
+
+
         try:
             with self.session_factory() as session:
                 # Drop partition table
@@ -738,6 +780,9 @@ class TemporalPartitionManager:
     
     def _update_partition_statistics(self, table_name: str):
         """Update partition statistics"""
+
+
+
         try:
             with self.session_factory() as session:
                 for partition in self.partition_windows[table_name]:
@@ -764,6 +809,9 @@ class TemporalPartitionManager:
     
     def get_partition_info(self, table_name: str) -> Dict[str, Any]:
         """Get comprehensive partition information"""
+
+
+
         try:
             config = self.partition_configs.get(table_name)
             partitions = self.partition_windows.get(table_name, [])
@@ -820,6 +868,9 @@ class TemporalPartitionManager:
     
     def force_maintenance(self, table_name: str = None) -> bool:
         """Force immediate maintenance for table(s)"""
+
+
+
         try:
             tables_to_maintain = [table_name] if table_name else list(self.partition_configs.keys())
             
@@ -846,6 +897,9 @@ class TemporalPartitionManager:
     
     def get_system_status(self) -> Dict[str, Any]:
         """Get comprehensive temporal partitioning system status"""
+
+
+
         try:
             total_tables = len(self.partition_configs)
             total_partitions = sum(len(partitions) for partitions in self.partition_windows.values())
@@ -896,6 +950,9 @@ class TemporalPartitionManager:
     
     def shutdown(self):
         """Shutdown temporal partition manager gracefully"""
+
+
+
         try:
             logger.info("Shutting down temporal partition manager...")
             

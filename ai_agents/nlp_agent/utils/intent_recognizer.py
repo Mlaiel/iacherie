@@ -105,6 +105,9 @@ class IntentRecognizer:
     
     def _load_intent_patterns(self) -> Dict[str, Dict[str, List[str]]]:
         """Load patterns for intent recognition"""
+
+
+
         return {
             "question": {
                 "patterns": [
@@ -200,6 +203,9 @@ class IntentRecognizer:
     
     def _load_context_analyzers(self) -> Dict[str, List[str]]:
         """Load context analyzers for intent refinement"""
+
+
+
         return {
             "urgency": {
                 "high": ["urgent", "asap", "immediately", "emergency", "critical", "now"],
@@ -225,6 +231,9 @@ class IntentRecognizer:
     
     def _initialize_models(self):
         """Initialize intent recognition models"""
+
+
+
         try:
             if TRANSFORMERS_AVAILABLE:
                 # Intent classification model
@@ -385,6 +394,9 @@ class IntentRecognizer:
     
     async def _recognize_with_transformer(self, text: str, result: IntentResult):
         """Recognize intent using transformer model"""
+
+
+
         try:
             # Use zero-shot classification for intent recognition
             intent_pipeline = self.pipelines.get("intent")
@@ -637,10 +649,16 @@ class IntentRecognizer:
     
     def get_supported_intents(self) -> List[str]:
         """Get list of supported intent types"""
+
+
+
         return list(self.intent_patterns.keys())
     
     def get_intent_patterns(self, intent: str) -> Dict[str, Any]:
         """Get patterns for a specific intent"""
+
+
+
         return self.intent_patterns.get(intent, {})
     
     def health_check(self) -> Dict[str, Any]:
@@ -703,6 +721,9 @@ def calculate_intent_similarity(result1: IntentResult, result2: IntentResult) ->
 
 def extract_intent_features(result: IntentResult) -> Dict[str, Any]:
     """Extract key features from intent result"""
+
+
+
     return {
         "primary_intent": result.primary_intent,
         "primary_category": result.primary_category,

@@ -423,6 +423,9 @@ class AlertSystemAPI:
         current_user: str = Depends(get_current_user)
     ) -> BulkOperationResult:
         """Perform bulk actions on multiple alerts."""
+
+
+
         try:
             if request.action == "acknowledge":
                 result = await self.alert_manager.bulk_acknowledge_alerts(
@@ -473,6 +476,9 @@ class AlertSystemAPI:
         current_user: str = Depends(get_current_user)
     ) -> AlertStatisticsResponse:
         """Get comprehensive alert statistics and metrics."""
+
+
+
         try:
             # Get basic statistics
             stats = await self.alert_manager.get_alert_statistics()
@@ -525,6 +531,9 @@ class AlertSystemAPI:
     # Background task handlers
     async def _handle_new_alert_background(self, alert_id: str):
         """Handle background tasks for new alerts."""
+
+
+
         try:
             # Trigger ML classification
             alert = await self.alert_manager.get_alert(alert_id)
@@ -549,6 +558,9 @@ class AlertSystemAPI:
 
     async def _handle_alert_update_background(self, alert_id: str):
         """Handle background tasks for alert updates."""
+
+
+
         try:
             # Update metrics
             await self.metrics_collector.record_alert_update(alert_id)
@@ -563,6 +575,9 @@ class AlertSystemAPI:
 
     async def _handle_bulk_action_background(self, action: str, alert_ids: List[str]):
         """Handle background tasks for bulk actions."""
+
+
+
         try:
             # Update metrics for bulk operations
             await self.metrics_collector.record_bulk_operation(action, len(alert_ids))

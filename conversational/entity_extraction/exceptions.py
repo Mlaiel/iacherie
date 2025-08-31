@@ -7,7 +7,7 @@ with specific error types for different failure scenarios.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
@@ -29,6 +29,9 @@ class EntityExtractionError(Exception):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert exception to dictionary for API responses"""
+
+
+
         return {
             'error': self.error_code,
             'message': self.message,
@@ -399,6 +402,9 @@ class ErrorHandler:
     @staticmethod
     def create_error_response(error: EntityExtractionError) -> Dict[str, Any]:
         """Create standardized error response for APIs"""
+
+
+
         return {
             'success': False,
             'error': error.to_dict(),

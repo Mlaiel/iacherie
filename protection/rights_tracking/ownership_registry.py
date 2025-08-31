@@ -66,6 +66,9 @@ class OwnershipChain(BaseModel):
     
     def add_link(self, transaction_data: Dict[str, Any]) -> bool:
         """Ajoute un maillon à la chaîne"""
+
+
+
         try:
             link = {
                 'link_id': str(uuid.uuid4()),
@@ -112,6 +115,9 @@ class OwnershipRegistry:
         content_metadata: Optional[Dict[str, Any]] = None
     ) -> str:
         """Enregistre une création originale avec preuves"""
+
+
+
         try:
             chain_id = self._generate_chain_id()
             
@@ -160,6 +166,9 @@ class OwnershipRegistry:
         evidence: Optional[List[CreatorshipEvidence]] = None
     ) -> bool:
         """Transfère la propriété avec vérification"""
+
+
+
         try:
             if content_id not in self.ownership_records:
                 raise ValueError(f"Contenu {content_id} non trouvé dans le registre")
@@ -206,6 +215,9 @@ class OwnershipRegistry:
         verification_evidence: Optional[List[CreatorshipEvidence]] = None
     ) -> Dict[str, Any]:
         """Vérifie la propriété d'un contenu"""
+
+
+
         try:
             if content_id not in self.ownership_records:
                 return {
@@ -259,6 +271,9 @@ class OwnershipRegistry:
         include_evidence: bool = False
     ) -> Optional[Dict[str, Any]]:
         """Récupère l'historique complet de propriété"""
+
+
+
         try:
             if content_id not in self.ownership_records:
                 return None
@@ -318,6 +333,9 @@ class OwnershipRegistry:
         content_id: str
     ) -> List[Dict[str, Any]]:
         """Détecte les conflits de propriété potentiels"""
+
+
+
         try:
             conflicts = []
             
@@ -370,6 +388,9 @@ class OwnershipRegistry:
         certificate_type: str = "standard"
     ) -> Optional[Dict[str, Any]]:
         """Génère un certificat de propriété officiel"""
+
+
+
         try:
             if content_id not in self.ownership_records:
                 return None
@@ -427,6 +448,9 @@ class OwnershipRegistry:
         verification_evidence: Optional[List[CreatorshipEvidence]] = None
     ) -> float:
         """Calcule le score de confiance de propriété"""
+
+
+
         try:
             confidence_factors = []
             
@@ -466,6 +490,9 @@ class OwnershipRegistry:
     
     async def _verify_chain_integrity(self, ownership_chain: OwnershipChain) -> bool:
         """Vérifie l'intégrité de la chaîne de propriété"""
+
+
+
         try:
             if not ownership_chain.chain_links:
                 return True
@@ -498,6 +525,9 @@ class OwnershipRegistry:
     
     async def _assess_fraud_risk(self, content_id: str, claimed_holder: str) -> float:
         """Évalue le risque de fraude"""
+
+
+
         try:
             risk_factors = []
             
@@ -531,6 +561,9 @@ class OwnershipRegistry:
     
     async def _find_similar_content_claims(self, content_id: str) -> List[Dict[str, Any]]:
         """Trouve les réclamations de contenu similaire"""
+
+
+
         try:
             # Placeholder pour recherche de similarité
             # À implémenter avec une base de données vectorielle
@@ -546,10 +579,16 @@ class OwnershipRegistry:
     
     def _generate_chain_id(self) -> str:
         """Génère un ID unique pour la chaîne de propriété"""
+
+
+
         return f"OWN-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
     
     def _generate_certificate_id(self) -> str:
         """Génère un ID unique pour le certificat"""
+
+
+
         return f"CERT-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
     
     def _generate_digital_signature(
@@ -559,6 +598,9 @@ class OwnershipRegistry:
         owner_id: str
     ) -> str:
         """Génère une signature numérique pour le certificat"""
+
+
+
         try:
             signature_data = f"{certificate_id}:{content_id}:{owner_id}:{datetime.utcnow().isoformat()}"
             return hashlib.sha256(signature_data.encode()).hexdigest()
@@ -568,6 +610,9 @@ class OwnershipRegistry:
     
     async def get_registry_statistics(self) -> Dict[str, Any]:
         """Retourne les statistiques du registre"""
+
+
+
         try:
             total_contents = len(self.ownership_records)
             total_transfers = 0

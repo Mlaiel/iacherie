@@ -7,7 +7,7 @@ trend detection, content protection, and creator collaboration systems.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  STRICT LEGAL WARNING ⚠️
+  STRICT LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, modification, or distribution is strictly prohibited
 and will result in immediate legal action and substantial damages claims.
@@ -749,16 +749,28 @@ QUALITY_METRICS = {
 }
 
 def get_available_models() -> dict:
-    """Get dictionary of all available ML models"""    return AVAILABLE_MODELS.copy()
+    """Get dictionary of all available ML models"""
+
+
+    return AVAILABLE_MODELS.copy()
 
 def get_model_categories() -> dict:
-    """Get model categories for organization"""    return MODEL_CATEGORIES.copy()
+    """Get model categories for organization"""
+
+
+    return MODEL_CATEGORIES.copy()
 
 def get_default_config(model_type: str) -> dict:
-    """Get default configuration for a model type"""    return DEFAULT_MODEL_CONFIGS.get(model_type, {})
+    """Get default configuration for a model type"""
+
+
+    return DEFAULT_MODEL_CONFIGS.get(model_type, {})
 
 def get_training_config(model_architecture: str) -> dict:
-    """Get training configuration for a model architecture"""    return TRAINING_CONFIGS.get(model_architecture, {})
+    """Get training configuration for a model architecture"""
+
+
+    return TRAINING_CONFIGS.get(model_architecture, {})
 
 def create_model(model_type: str, config: dict = None):
     """Factory function to create a model instance"""    if model_type not in AVAILABLE_MODELS:

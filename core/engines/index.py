@@ -40,7 +40,7 @@ logger = logging.getLogger(__name__)
 
 class EngineIndexService:
     """
-    🎯 ENTERPRISE ENGINE INDEX SERVICE
+     ENTERPRISE ENGINE INDEX SERVICE
     
     Central service for engine management, discovery, and monitoring
     with comprehensive configuration and health tracking capabilities.
@@ -53,7 +53,7 @@ class EngineIndexService:
         
     def get_engine_catalog(self) -> Dict[str, Any]:
         """
-        📋 Get comprehensive engine catalog
+         Get comprehensive engine catalog
         
         Returns:
             Complete catalog of available engines with metadata
@@ -98,11 +98,14 @@ class EngineIndexService:
     
     def get_quick_start_guide(self) -> Dict[str, Any]:
         """
-        🚀 Get quick start guide for engine usage
+         Get quick start guide for engine usage
         
         Returns:
             Step-by-step guide for getting started
         """
+
+
+
         return {
             "title": "IA-Influencer-Agent Core Engines - Quick Start Guide",
             "overview": {
@@ -276,11 +279,14 @@ engine_metrics = await protection_engine.get_metrics()
     
     def get_configuration_reference(self) -> Dict[str, Any]:
         """
-        ⚙️ Get complete configuration reference
+         Get complete configuration reference
         
         Returns:
             Comprehensive configuration documentation
         """
+
+
+
         return {
             "engine_config": {
                 "description": "Main configuration class for all engines",
@@ -383,11 +389,14 @@ engine_metrics = await protection_engine.get_metrics()
     
     def get_api_examples(self) -> Dict[str, Any]:
         """
-        📚 Get comprehensive API usage examples
+         Get comprehensive API usage examples
         
         Returns:
             Code examples for all major engine operations
         """
+
+
+
         return {
             "content_protection": {
                 "basic_protection": """
@@ -543,6 +552,9 @@ recommendations = await ai_engine.get_recommendations({
     
     def _get_runtime_info(self, engine_name: str) -> Dict[str, Any]:
         """Get runtime information for engine"""
+
+
+
         try:
             engine = get_engine(engine_name)
             return {
@@ -562,21 +574,33 @@ index_service = EngineIndexService()
 # Convenience functions
 def get_engine_catalog() -> Dict[str, Any]:
     """Get engine catalog"""
+
+
+
     return index_service.get_engine_catalog()
 
 
 def get_quick_start_guide() -> Dict[str, Any]:
     """Get quick start guide"""
+
+
+
     return index_service.get_quick_start_guide()
 
 
 def get_configuration_reference() -> Dict[str, Any]:
     """Get configuration reference"""
+
+
+
     return index_service.get_configuration_reference()
 
 
 def get_api_examples() -> Dict[str, Any]:
     """Get API examples"""
+
+
+
     return index_service.get_api_examples()
 
 
@@ -591,4 +615,4 @@ __all__ = [
 ]
 
 
-logger.info("📇 Engine Index Service initialized - Enterprise documentation and discovery ready")
+logger.info(" Engine Index Service initialized - Enterprise documentation and discovery ready")

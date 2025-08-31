@@ -316,6 +316,9 @@ class SecurityLoggingConfig:
     
     def _initialize_geoip(self, database_path: str) -> None:
         """Initialize GeoIP database reader"""
+
+
+
         try:
             self._geo_reader = geoip2.database.Reader(database_path)
             logging.info(f"Initialized GeoIP database: {database_path}")
@@ -325,6 +328,9 @@ class SecurityLoggingConfig:
     
     def _initialize_security_logger(self) -> structlog.BoundLogger:
         """Initialize structured security logger"""
+
+
+
         return structlog.get_logger("ia_influencer_security")
     
     def _create_default_attack_patterns(self) -> List[AttackPattern]:
@@ -611,6 +617,9 @@ class SecurityLoggingConfig:
     
     def _calculate_basic_ip_reputation(self, ip: str) -> Optional[IPReputation]:
         """Calculate basic IP reputation"""
+
+
+
         try:
             ip_obj = ipaddress.ip_address(ip)
             
@@ -639,10 +648,16 @@ class SecurityLoggingConfig:
     
     def _is_ip_whitelisted(self, ip: str) -> bool:
         """Check if IP is in whitelist"""
+
+
+
         return ip in self.ip_whitelist
     
     def _is_ip_blacklisted(self, ip: str) -> bool:
         """Check if IP is in blacklist"""
+
+
+
         return ip in self.ip_blacklist
     
     def _update_statistics(self, event: SecurityEvent) -> None:
@@ -656,6 +671,9 @@ class SecurityLoggingConfig:
     
     def _log_security_event(self, event: SecurityEvent) -> None:
         """Log security event using structured logging"""
+
+
+
         try:
             event_dict = asdict(event)
             
@@ -953,6 +971,9 @@ class SecurityLoggingConfig:
     
     def get_config_status(self) -> Dict[str, Any]:
         """Get current configuration status"""
+
+
+
         return {
             "enabled": self.enabled,
             "threat_detection_enabled": self.threat_detection_enabled,

@@ -7,7 +7,7 @@ contextual understanding, and multi-platform conversation management.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -152,6 +152,9 @@ class ResponseGenerator:
 
     async def initialize(self) -> bool:
         """Initialize response generator with AI models and templates"""
+
+
+
         try:
             # Load NLP models
             self.nlp = spacy.load("en_core_web_sm")
@@ -194,6 +197,9 @@ class ResponseGenerator:
         Returns:
             Optional[Dict]: Generated response with metadata
         """
+
+
+
         try:
             # Analyze input message
             message_analysis = await self._analyze_input_message(context.original_message)
@@ -285,6 +291,9 @@ class ResponseGenerator:
         Returns:
             Dict: Generated conversation starter with variants
         """
+
+
+
         try:
             # Analyze audience preferences
             audience_analysis = await self._analyze_audience_preferences(audience_context)
@@ -357,6 +366,9 @@ class ResponseGenerator:
         Returns:
             Dict: Optimized templates and recommendations
         """
+
+
+
         try:
             # Analyze template performance
             template_analysis = await self._analyze_template_performance(performance_data)
@@ -429,6 +441,9 @@ class ResponseGenerator:
     
     async def _analyze_input_message(self, message: str) -> Dict[str, Any]:
         """Analyze input message for content, sentiment, and characteristics"""
+
+
+
         try:
             # Basic text analysis
             doc = self.nlp(message)
@@ -476,6 +491,9 @@ class ResponseGenerator:
     async def _determine_conversation_context(self, 
                                             context: ResponseContext) -> ConversationContext:
         """Determine conversation context based on user history and current interaction"""
+
+
+
         try:
             user_history = context.conversation_history
             
@@ -521,6 +539,9 @@ class ResponseGenerator:
                                       intent: str,
                                       context: ResponseContext) -> bool:
         """Determine if automated response should be generated"""
+
+
+
         try:
             # Don't respond to spam or low-quality messages
             if message_analysis.get('length', 0) < 3:
@@ -580,6 +601,9 @@ class ResponseGenerator:
                                        message_analysis: Dict[str, Any],
                                        intent: str) -> str:
         """Generate response content using AI and templates"""
+
+
+
         try:
             response_type = response_strategy['type']
             
@@ -618,6 +642,9 @@ class ResponseGenerator:
                                   context: ResponseContext,
                                   conversation_context: ConversationContext) -> str:
         """Personalize response based on user context and history"""
+
+
+
         try:
             personalized_content = response_content
             
@@ -628,7 +655,7 @@ class ResponseGenerator:
             
             # Add context-specific personalization
             if conversation_context == ConversationContext.VIP_MEMBER:
-                personalized_content = f"✨ {personalized_content}"
+                personalized_content = f" {personalized_content}"
             
             elif conversation_context == ConversationContext.RETURNING_USER:
                 personalized_content = f"Great to see you again! {personalized_content}"
@@ -639,9 +666,9 @@ class ResponseGenerator:
             # Add relevant emojis based on sentiment
             sentiment_score = context.user_profile.get('sentiment_history', [0])[-1]
             if sentiment_score > 0.5:
-                personalized_content += " 😊"
+                personalized_content += " "
             elif sentiment_score < -0.5:
-                personalized_content += " 💙"
+                personalized_content += " "
             
             return personalized_content
             
@@ -653,6 +680,9 @@ class ResponseGenerator:
                                           response: str,
                                           platform: str) -> str:
         """Apply platform-specific formatting"""
+
+
+
         try:
             formatted_response = response
             
@@ -668,7 +698,7 @@ class ResponseGenerator:
             elif platform == 'linkedin':
                 # More professional tone
                 formatted_response = formatted_response.replace("!", ".")
-                formatted_response = formatted_response.replace("😊", "")
+                formatted_response = formatted_response.replace("", "")
                 
             elif platform == 'tiktok':
                 # Add trending hashtags
@@ -684,6 +714,9 @@ class ResponseGenerator:
                                response: str,
                                context: ResponseContext) -> Dict[str, Any]:
         """Validate response quality and safety"""
+
+
+
         try:
             validation_result = {
                 'valid': True,
@@ -759,6 +792,9 @@ class AutoResponder:
         Returns:
             Dict: Setup confirmation and active rules
         """
+
+
+
         try:
             # Validate response rules
             validation_result = await self._validate_response_rules(response_rules)
@@ -812,6 +848,9 @@ class AutoResponder:
         Returns:
             Dict: Processing results and generated responses
         """
+
+
+
         try:
             processing_results = {
                 'processed_count': len(messages),
@@ -878,6 +917,9 @@ class AutoResponder:
 
     async def execute_scheduled_responses(self) -> Dict[str, Any]:
         """Execute scheduled responses that are due"""
+
+
+
         try:
             execution_results = {
                 'checked_responses': 0,
@@ -934,6 +976,9 @@ class AutoResponder:
                                              message: Dict[str, Any],
                                              response: Dict[str, Any]) -> datetime:
         """Calculate optimal time to send response"""
+
+
+
         try:
             current_time = datetime.utcnow()
             

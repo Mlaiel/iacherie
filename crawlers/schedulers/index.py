@@ -178,6 +178,9 @@ class SchedulerAPI:
         
     async def initialize(self, configuration: Optional[SchedulerConfiguration] = None) -> None:
         """Initialize the scheduler system."""
+
+
+
         try:
             self.manager = await initialize_schedulers(configuration)
             self.is_initialized = True
@@ -422,6 +425,9 @@ class ContentProtectionAPI:
     async def protect_content(self, content_id: str, creator_id: str, 
                             content_type: str, protection_level: str = "high") -> Dict[str, Any]:
         """Comprehensive content protection workflow."""
+
+
+
         try:
             # Step 1: Create fingerprinting task
             fingerprint_task = await self.scheduler_api.create_fingerprinting_task(

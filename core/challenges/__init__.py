@@ -1,5 +1,5 @@
 """
-🎯 Challenge System Core Module - IA Influencer Agent Platform Enterprise
+ Challenge System Core Module - IA Influencer Agent Platform Enterprise
 ==========================================================================
 Module: backend/core/challenges/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Challenge System Core - Production-Ready
 Responsibility: Enterprise challenge and competition management system
 ============================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de

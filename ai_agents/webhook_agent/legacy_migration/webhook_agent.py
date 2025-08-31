@@ -7,7 +7,7 @@ platform integrations, and automated notification management.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission from Fahed Mlaiel <mlaiel@live.de> is strictly prohibited.
@@ -179,6 +179,9 @@ class WebhookAgent(BaseAgent):
 
     async def initialize(self) -> None:
         """Initialize webhook agent with all required services"""
+
+
+
         try:
             await super().initialize()
             
@@ -409,6 +412,9 @@ class WebhookAgent(BaseAgent):
         headers: Dict[str, str] = None
     ) -> Dict[str, Any]:
         """Register new webhook endpoint for platform"""
+
+
+
         try:
             endpoint = WebhookEndpoint(
                 url=url,
@@ -458,6 +464,9 @@ class WebhookAgent(BaseAgent):
         time_range: str = "24h"
     ) -> Dict[str, Any]:
         """Get webhook processing metrics and analytics"""
+
+
+
         try:
             metrics = await self.webhook_analytics.get_metrics(platform, time_range)
             
@@ -530,6 +539,9 @@ class WebhookAgent(BaseAgent):
 
     async def shutdown(self) -> None:
         """Graceful shutdown of webhook agent"""
+
+
+
         try:
             logger.info(f"Shutting down WebhookAgent: {self.agent_id}")
             
@@ -611,6 +623,9 @@ class WebhookAgent(BaseAgent):
 
     async def _process_webhook_event(self, webhook_event: WebhookEvent) -> None:
         """Process individual webhook event"""
+
+
+
         try:
             # Process with event processor
             processing_result = await self.event_processor.process_event(webhook_event)
@@ -643,6 +658,9 @@ class WebhookAgent(BaseAgent):
         timeout: int = 30
     ) -> Dict[str, Any]:
         """Send HTTP request for outgoing webhook"""
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.post(

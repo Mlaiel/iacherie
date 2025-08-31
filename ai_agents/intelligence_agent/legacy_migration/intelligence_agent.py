@@ -15,7 +15,7 @@ Key Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 - All Rights Reserved
 
-⚠️ IMPORTANT LEGAL NOTICE ⚠️
+ IMPORTANT LEGAL NOTICE 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
@@ -221,6 +221,9 @@ class IntelligenceAgent(BaseAgent):
         Returns:
             bool: Registration success status
         """
+
+
+
         try:
             if agent_id in self.registered_agents:
                 self.logger.warning(f"Agent {agent_id} already registered, updating...")
@@ -268,6 +271,9 @@ class IntelligenceAgent(BaseAgent):
         Returns:
             Decision: The intelligent decision with confidence score
         """
+
+
+
         try:
             decision_id = str(uuid.uuid4())
             
@@ -328,6 +334,9 @@ class IntelligenceAgent(BaseAgent):
         Returns:
             Dict[str, Any]: Optimization results and recommendations
         """
+
+
+
         try:
             if agent_id not in self.registered_agents:
                 raise ValueError(f"Agent not registered: {agent_id}")
@@ -378,6 +387,9 @@ class IntelligenceAgent(BaseAgent):
         Returns:
             Dict[str, Any]: Trend predictions with confidence intervals
         """
+
+
+
         try:
             predictions = {}
             
@@ -452,6 +464,9 @@ class IntelligenceAgent(BaseAgent):
         Returns:
             Dict[str, Any]: Workflow coordination plan and assignments
         """
+
+
+
         try:
             # Find suitable agents for each capability
             capability_assignments = {}
@@ -557,6 +572,9 @@ class IntelligenceAgent(BaseAgent):
     
     def _create_workflow_routing_model(self):
         """Create ML model for workflow routing decisions."""
+
+
+
         return {
             'model_type': 'workflow_routing',
             'features': ['agent_load', 'capability_match', 'response_time', 'success_rate'],
@@ -565,6 +583,9 @@ class IntelligenceAgent(BaseAgent):
     
     def _create_resource_allocation_model(self):
         """Create ML model for resource allocation decisions."""
+
+
+
         return {
             'model_type': 'resource_allocation',
             'features': ['current_usage', 'predicted_demand', 'cost', 'performance_impact'],
@@ -573,6 +594,9 @@ class IntelligenceAgent(BaseAgent):
     
     def _create_quality_control_model(self):
         """Create ML model for quality control decisions."""
+
+
+
         return {
             'model_type': 'quality_control',
             'features': ['accuracy_score', 'processing_time', 'resource_usage', 'error_rate'],
@@ -581,6 +605,9 @@ class IntelligenceAgent(BaseAgent):
     
     def _create_performance_tuning_model(self):
         """Create ML model for performance tuning decisions."""
+
+
+
         return {
             'model_type': 'performance_tuning',
             'features': ['latency', 'throughput', 'resource_utilization', 'error_rate'],
@@ -698,6 +725,9 @@ class IntelligenceAgent(BaseAgent):
     
     async def _execute_optimization_rule(self, rule: Dict[str, Any]):
         """Execute an optimization rule."""
+
+
+
         try:
             action = rule['action']
             self.logger.info(f"Executing optimization rule: {rule['name']}")
@@ -881,6 +911,9 @@ class IntelligenceAgent(BaseAgent):
         priority: int
     ) -> Dict[str, Any]:
         """Create detailed execution plan for workflow."""
+
+
+
         return {
             'workflow_id': workflow_id,
             'total_steps': len(capability_assignments),
@@ -1043,4 +1076,7 @@ class IntelligenceAgent(BaseAgent):
     
     def _get_last_optimization_time(self) -> str:
         """Get timestamp of last optimization."""
+
+
+
         return (datetime.now() - timedelta(minutes=45)).isoformat()

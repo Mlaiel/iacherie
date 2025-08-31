@@ -114,6 +114,9 @@ class ExcelExporter:
         Returns:
             Path to exported file
         """
+
+
+
         try:
             # Create workbook
             wb = Workbook()
@@ -242,7 +245,7 @@ class ExcelExporter:
                 status = "🟡 Good"
                 status_color = "F39C12"
             else:
-                status = "🔴 Needs Attention"
+                status = " Needs Attention"
                 status_color = "E74C3C"
                 
             ws[f'E{i}'] = status
@@ -398,6 +401,9 @@ class PDFReporter:
         Returns:
             Path to exported PDF file
         """
+
+
+
         try:
             # This would typically use libraries like reportlab or weasyprint
             # For demonstration, creating an HTML version that can be converted to PDF
@@ -525,7 +531,7 @@ class PDFReporter:
             </div>
             
             <div class="warning">
-                ⚠️ INTELLECTUAL PROPERTY WARNING ⚠️<br>
+                 INTELLECTUAL PROPERTY WARNING <br>
                 This report and its contents are proprietary to Fahed Mlaiel (mlaiel@live.de).<br>
                 Unauthorized reproduction, distribution, or use of this content is strictly prohibited.<br>
                 All concepts, methodologies, and data presented are protected intellectual property.
@@ -639,6 +645,9 @@ class APIExporter:
         Returns:
             Success status
         """
+
+
+
         try:
             import aiohttp
             
@@ -703,6 +712,9 @@ class DataLakeExporter:
         Returns:
             Data lake path
         """
+
+
+
         try:
             # Create data lake directory structure
             base_path = Path("data_lake")
@@ -767,6 +779,9 @@ class ScheduledExporter:
         Returns:
             Job ID
         """
+
+
+
         try:
             job_id = f"export_{job_name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             

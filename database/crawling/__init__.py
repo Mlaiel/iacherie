@@ -145,7 +145,10 @@ def get_module_info() -> Dict[str, Any]:
     
     Returns:
         Dict containing module metadata, capabilities, and team information
-    """    return {
+    """
+
+
+    return {
         "module_name": "Enterprise Crawling Database Module",
         "version": "2.0.0",
         "description": "Advanced database layer for multi-platform web surveillance, crawling operations, and content discovery with AI-powered protection",

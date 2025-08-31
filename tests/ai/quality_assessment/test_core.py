@@ -25,17 +25,17 @@ Project Lead: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
 Team Expertise:
-✅ Lead Dev + Architecte Développeur IA - Fahed Mlaiel
-✅ Développeur Backend Senior (Python/FastAPI/Django) - Fahed Mlaiel
-✅ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face) - Fahed Mlaiel
-✅ DBA & Data Engineer (PostgreSQL/Redis/MongoDB) - Fahed Mlaiel
-✅ Spécialiste Sécurité Backend - Fahed Mlaiel
-✅ Architecte Microservices - Fahed Mlaiel
-✅ Développeur Audio - Fahed Mlaiel
-✅ DevOps Engineer - Fahed Mlaiel
-✅ IA Prompt Engineer - Fahed Mlaiel
+ Lead Dev + Architecte Développeur IA - Fahed Mlaiel
+ Développeur Backend Senior (Python/FastAPI/Django) - Fahed Mlaiel
+ Ingénieur Machine Learning (TensorFlow/PyTorch/Hugging Face) - Fahed Mlaiel
+ DBA & Data Engineer (PostgreSQL/Redis/MongoDB) - Fahed Mlaiel
+ Spécialiste Sécurité Backend - Fahed Mlaiel
+ Architecte Microservices - Fahed Mlaiel
+ Développeur Audio - Fahed Mlaiel
+ DevOps Engineer - Fahed Mlaiel
+ IA Prompt Engineer - Fahed Mlaiel
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software and all associated concepts, algorithms, and implementations are the exclusive 
 intellectual property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, reproduction, 
 distribution, modification, or appropriation of this code, in whole or in part, without 

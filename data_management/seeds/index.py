@@ -87,7 +87,7 @@ class SeedsOrchestrator:
         Returns:
             Comprehensive initialization results
         """
-        logger.info("🚀 Starting comprehensive seeds initialization...")
+        logger.info(" Starting comprehensive seeds initialization...")
         start_time = datetime.now(timezone.utc)
         
         results = {}
@@ -108,7 +108,7 @@ class SeedsOrchestrator:
                 results.update(batch_results)
                 initialized.update(batch)
                 
-                logger.info(f"✅ Completed batch: {', '.join(batch)}")
+                logger.info(f" Completed batch: {', '.join(batch)}")
             
             # Validate all seed data if requested
             if validate:
@@ -119,11 +119,11 @@ class SeedsOrchestrator:
             duration = (datetime.now(timezone.utc) - start_time).total_seconds()
             summary = self._generate_summary(results, duration)
             
-            logger.info(f"🎉 All seeds initialized successfully in {duration:.2f}s")
+            logger.info(f" All seeds initialized successfully in {duration:.2f}s")
             return summary
             
         except Exception as e:
-            logger.error(f"❌ Seeds initialization failed: {str(e)}")
+            logger.error(f" Seeds initialization failed: {str(e)}")
             # Attempt rollback of partial initialization
             await self._rollback_initialization(initialized)
             raise
@@ -138,10 +138,10 @@ class SeedsOrchestrator:
         
         try:
             result = await manager.initialize()
-            logger.info(f"✅ {module_name} initialized successfully")
+            logger.info(f" {module_name} initialized successfully")
             return result
         except Exception as e:
-            logger.error(f"❌ {module_name} initialization failed: {str(e)}")
+            logger.error(f" {module_name} initialization failed: {str(e)}")
             raise
     
     async def export_seeds(self, output_path: Path) -> Dict[str, Any]:
@@ -371,11 +371,17 @@ seeds_orchestrator = SeedsOrchestrator()
 
 async def initialize_all_seeds(**kwargs) -> Dict[str, Any]:
     """Convenience function to initialize all seeds."""
+
+
+
     return await seeds_orchestrator.initialize_all(**kwargs)
 
 
 async def initialize_seed_module(module_name: str) -> Dict[str, Any]:
     """Convenience function to initialize a specific seed module."""
+
+
+
     return await seeds_orchestrator.initialize_module(module_name)
 
 

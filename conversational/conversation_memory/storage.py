@@ -7,7 +7,7 @@ storage, short-term caching, and vector storage for semantic search capabilities
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING: Unauthorized use strictly prohibited ⚠️
+  LEGAL WARNING: Unauthorized use strictly prohibited 
 Contact: mlaiel@live.de
 """
 
@@ -88,6 +88,9 @@ class LongTermMemory(StorageInterface):
     
     async def initialize(self):
         """Initialize database connections and indexes"""
+
+
+
         try:
             # Create any missing indexes
             await self._ensure_indexes()
@@ -107,6 +110,9 @@ class LongTermMemory(StorageInterface):
         Returns:
             Success status
         """
+
+
+
         try:
             async with get_async_session() as session:
                 # Encrypt conversation data if needed
@@ -153,6 +159,9 @@ class LongTermMemory(StorageInterface):
         Returns:
             ConversationRecord or None
         """
+
+
+
         try:
             async with get_async_session() as session:
                 query = select(ConversationRecord).where(
@@ -176,6 +185,9 @@ class LongTermMemory(StorageInterface):
     
     async def get(self, conversation_id: str) -> Optional[ConversationRecord]:
         """Alias for retrieve method"""
+
+
+
         return await self.retrieve(conversation_id)
     
     async def delete(self, conversation_id: str) -> bool:
@@ -188,6 +200,9 @@ class LongTermMemory(StorageInterface):
         Returns:
             Success status
         """
+
+
+
         try:
             async with get_async_session() as session:
                 query = delete(ConversationRecord).where(
@@ -218,6 +233,9 @@ class LongTermMemory(StorageInterface):
         Returns:
             List of matching conversation records
         """
+
+
+
         try:
             async with get_async_session() as session:
                 # Build query based on parameters
@@ -346,6 +364,9 @@ class LongTermMemory(StorageInterface):
         Returns:
             Number of records deleted
         """
+
+
+
         try:
             async with get_async_session() as session:
                 # First, archive records that are not already archived
@@ -403,6 +424,9 @@ class LongTermMemory(StorageInterface):
     
     async def _ensure_indexes(self):
         """Ensure required database indexes exist"""
+
+
+
         try:
             async with get_async_session() as session:
                 # Create indexes for common queries
@@ -446,6 +470,9 @@ class ShortTermMemory(StorageInterface):
     
     async def initialize(self):
         """Initialize Redis connection"""
+
+
+
         try:
             self.redis_client = aioredis.from_url(
                 settings.REDIS_URL,
@@ -470,6 +497,9 @@ class ShortTermMemory(StorageInterface):
         Returns:
             Success status
         """
+
+
+
         try:
             if not self.redis_client:
                 await self.initialize()
@@ -511,6 +541,9 @@ class ShortTermMemory(StorageInterface):
         Returns:
             ConversationRecord or None
         """
+
+
+
         try:
             if not self.redis_client:
                 await self.initialize()
@@ -533,6 +566,9 @@ class ShortTermMemory(StorageInterface):
     
     async def get(self, conversation_id: str) -> Optional[ConversationRecord]:
         """Alias for retrieve method"""
+
+
+
         return await self.retrieve(conversation_id)
     
     async def delete(self, conversation_id: str) -> bool:
@@ -545,6 +581,9 @@ class ShortTermMemory(StorageInterface):
         Returns:
             Success status
         """
+
+
+
         try:
             if not self.redis_client:
                 await self.initialize()
@@ -572,6 +611,9 @@ class ShortTermMemory(StorageInterface):
         Returns:
             List of matching conversation records
         """
+
+
+
         try:
             if not self.redis_client:
                 await self.initialize()
@@ -608,6 +650,9 @@ class ShortTermMemory(StorageInterface):
         Returns:
             Number of entries cleaned
         """
+
+
+
         try:
             if not self.redis_client:
                 await self.initialize()
@@ -642,6 +687,9 @@ class ShortTermMemory(StorageInterface):
     
     async def _update_user_conversation_list(self, user_id: str, conversation_id: str):
         """Update user's conversation list for faster lookup"""
+
+
+
         try:
             key = f"user_conversations:{user_id}"
             
@@ -659,6 +707,9 @@ class ShortTermMemory(StorageInterface):
     
     async def _get_user_conversation_list(self, user_id: str) -> List[str]:
         """Get user's conversation list from cache"""
+
+
+
         try:
             key = f"user_conversations:{user_id}"
             conversation_ids = await self.redis_client.lrange(key, 0, -1)
@@ -742,6 +793,9 @@ class VectorStore:
     
     async def initialize(self):
         """Initialize FAISS index"""
+
+
+
         try:
             # Create FAISS index for similarity search
             self.index = faiss.IndexFlatIP(self.dimension)  # Inner product for cosine similarity
@@ -772,6 +826,9 @@ class VectorStore:
         Returns:
             Success status
         """
+
+
+
         try:
             if self.index is None:
                 await self.initialize()
@@ -817,6 +874,9 @@ class VectorStore:
         Returns:
             List of similar conversations with scores
         """
+
+
+
         try:
             if self.index is None or self.index.ntotal == 0:
                 return []
@@ -873,6 +933,9 @@ class VectorStore:
         Returns:
             Success status
         """
+
+
+
         try:
             # Find index position
             if conversation_id not in self.conversation_ids:
@@ -905,6 +968,9 @@ class VectorStore:
         Returns:
             Number of vectors removed
         """
+
+
+
         try:
             removed_count = 0
             conversations_to_remove = []
@@ -942,6 +1008,9 @@ class VectorStore:
     
     async def save_index(self, file_path: str) -> bool:
         """Save FAISS index to file"""
+
+
+
         try:
             if self.index:
                 faiss.write_index(self.index, file_path)
@@ -962,6 +1031,9 @@ class VectorStore:
     
     async def load_index(self, file_path: str) -> bool:
         """Load FAISS index from file"""
+
+
+
         try:
             self.index = faiss.read_index(file_path)
             
@@ -1020,6 +1092,9 @@ class ConversationDatabase:
         Returns:
             Success status
         """
+
+
+
         try:
             # Store in long-term database
             db_success = await self.long_term_memory.store(record)
@@ -1109,6 +1184,9 @@ class MemoryCache:
         Returns:
             Success status
         """
+
+
+
         try:
             # Check if cache is full
             if len(self.cache) >= self.max_entries:
@@ -1136,6 +1214,9 @@ class MemoryCache:
         Returns:
             MemoryEntry or None
         """
+
+
+
         try:
             entry = self.cache.get(entry_id)
             
@@ -1157,6 +1238,9 @@ class MemoryCache:
     
     async def _evict_entries(self):
         """Evict least important entries from cache"""
+
+
+
         try:
             # Calculate eviction scores
             eviction_candidates = []

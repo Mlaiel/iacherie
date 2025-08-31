@@ -108,6 +108,9 @@ class NotificationBusinessException(Exception):
     
     def _create_default_context(self) -> ErrorContext:
         """Create default error context."""
+
+
+
         return ErrorContext(
             error_id=f"ERR_{datetime.utcnow().strftime('%Y%m%d_%H%M%S_%f')}",
             timestamp=datetime.utcnow(),
@@ -116,6 +119,9 @@ class NotificationBusinessException(Exception):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert exception to dictionary for logging and monitoring."""
+
+
+
         return {
             "error_code": self.error_code,
             "message": self.message,
@@ -150,10 +156,16 @@ class NotificationBusinessException(Exception):
     
     def get_user_friendly_message(self) -> str:
         """Get user-friendly error message."""
+
+
+
         return self.message
     
     def get_technical_details(self) -> Dict[str, Any]:
         """Get technical details for debugging."""
+
+
+
         return {
             "error_code": self.error_code,
             "category": self.category.value,
@@ -750,6 +762,9 @@ def create_business_rule_error(
     severity: ErrorSeverity = ErrorSeverity.HIGH
 ) -> BusinessRuleViolationError:
     """Create a standardized business rule violation error."""
+
+
+
     return BusinessRuleViolationError(
         message=f"Business rule violation: {violation_details}",
         rule_name=rule_name,
@@ -783,6 +798,9 @@ def create_delivery_error(
     notification_id: Optional[str] = None
 ) -> NotificationDeliveryError:
     """Create a standardized delivery error."""
+
+
+
     return NotificationDeliveryError(
         message=f"Delivery failed for channel '{channel}': {provider_error}",
         channel=channel,

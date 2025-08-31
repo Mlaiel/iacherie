@@ -9,7 +9,7 @@ Project: IA Influencer Agent + Content Protection Platform
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-⚠️  AVERTISSEMENT STRICT - PROPRIÉTÉ INTELLECTUELLE ⚠️
+  AVERTISSEMENT STRICT - PROPRIÉTÉ INTELLECTUELLE 
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute violation sera poursuivie selon les lois en vigueur.
@@ -73,6 +73,9 @@ class ComponentRegistry:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             'component_type': self.component_type.value,
             'component_class': self.component_class.__name__,
@@ -105,6 +108,9 @@ class MonitoringOrchestrator:
         
     def _initialize_component_registry(self):
         """Initialize the component registry with all monitoring components"""
+
+
+
         try:
             # Register all monitoring components with their dependencies
             components = [
@@ -241,6 +247,9 @@ class MonitoringOrchestrator:
             
     async def start_monitoring(self, components: Optional[List[MonitoringComponentType]] = None):
         """Start monitoring with specified components or all enabled components"""
+
+
+
         try:
             if self._orchestrator_active:
                 self.logger.warning("Monitoring orchestrator already active")
@@ -271,6 +280,9 @@ class MonitoringOrchestrator:
             
     async def stop_monitoring(self):
         """Stop all monitoring components"""
+
+
+
         try:
             self._orchestrator_active = False
             
@@ -291,6 +303,9 @@ class MonitoringOrchestrator:
             
     async def _start_components_by_priority(self, components_to_start: List[MonitoringComponentType]):
         """Start components in dependency order"""
+
+
+
         try:
             # Sort components by priority
             sorted_components = sorted(
@@ -306,6 +321,9 @@ class MonitoringOrchestrator:
             
     async def _start_component(self, comp_type: MonitoringComponentType):
         """Start individual monitoring component"""
+
+
+
         try:
             registry = self.component_registry.get(comp_type)
             if not registry or not registry.enabled:
@@ -336,6 +354,9 @@ class MonitoringOrchestrator:
             
     async def _stop_components_by_priority(self):
         """Stop components in reverse priority order"""
+
+
+
         try:
             # Sort components by reverse priority
             sorted_components = sorted(
@@ -352,6 +373,9 @@ class MonitoringOrchestrator:
             
     async def _stop_component(self, comp_type: MonitoringComponentType):
         """Stop individual monitoring component"""
+
+
+
         try:
             component = self.active_components.get(comp_type)
             if not component:
@@ -383,6 +407,9 @@ class MonitoringOrchestrator:
                 
     async def _health_check_components(self):
         """Health check all active components"""
+
+
+
         try:
             for comp_type, component in self.active_components.items():
                 try:
@@ -406,6 +433,9 @@ class MonitoringOrchestrator:
             
     async def _collect_orchestrator_metrics(self):
         """Collect orchestrator metrics"""
+
+
+
         try:
             metrics = {
                 'active_components': len(self.active_components),
@@ -431,10 +461,16 @@ class MonitoringOrchestrator:
             
     async def get_component(self, comp_type: MonitoringComponentType) -> Optional[Any]:
         """Get active monitoring component"""
+
+
+
         return self.active_components.get(comp_type)
         
     async def restart_component(self, comp_type: MonitoringComponentType):
         """Restart specific monitoring component"""
+
+
+
         try:
             if comp_type in self.active_components:
                 await self._stop_component(comp_type)
@@ -448,6 +484,9 @@ class MonitoringOrchestrator:
             
     async def get_monitoring_status(self) -> Dict[str, Any]:
         """Get comprehensive monitoring status"""
+
+
+
         try:
             return {
                 'orchestrator_active': self._orchestrator_active,
@@ -516,6 +555,9 @@ async def create_monitoring_index(settings: Settings) -> MonitoringOrchestrator:
 
 async def get_monitoring_orchestrator() -> Optional[MonitoringOrchestrator]:
     """Get global monitoring orchestrator"""
+
+
+
     return _orchestrator
 
 

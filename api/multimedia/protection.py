@@ -8,7 +8,7 @@ Project Team: Lead AI Developer + Backend Senior Engineer + ML Engineer +
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This code is proprietary and confidential. Any unauthorized use, reproduction, 
 distribution, or modification without written permission from Fahed Mlaiel 
 (mlaiel@live.de) is strictly prohibited and will be prosecuted to the full 
@@ -353,6 +353,9 @@ class AudioProtector(BaseProtector):
     async def generate_fingerprint(self, content_path: Path, 
                                  fingerprint_config: FingerprintConfig) -> str:
         """Generate audio fingerprint"""
+
+
+
         try:
             audio, sr = librosa.load(str(content_path), sr=None)
             
@@ -584,6 +587,9 @@ class VideoProtector(BaseProtector):
     async def generate_fingerprint(self, content_path: Path,
                                  fingerprint_config: FingerprintConfig) -> str:
         """Generate video fingerprint"""
+
+
+
         try:
             video_clip = VideoFileClip(str(content_path))
             duration = video_clip.duration
@@ -892,6 +898,9 @@ class ImageProtector(BaseProtector):
     async def generate_fingerprint(self, content_path: Path,
                                  fingerprint_config: FingerprintConfig) -> str:
         """Generate image fingerprint using perceptual hashing"""
+
+
+
         try:
             with Image.open(content_path) as image:
                 fingerprint_components = []

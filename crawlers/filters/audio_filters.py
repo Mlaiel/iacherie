@@ -12,7 +12,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 
-⚠️ STRICT COPYRIGHT PROTECTION ⚠️
+ STRICT COPYRIGHT PROTECTION 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 
@@ -62,6 +62,9 @@ class AudioQualityMetrics:
     
     def calculate_snr(self, audio_data: np.ndarray, sample_rate: int) -> float:
         """Calculate Signal-to-Noise Ratio."""
+
+
+
         try:
             # Use spectral analysis for SNR estimation
             stft = librosa.stft(audio_data)
@@ -85,6 +88,9 @@ class AudioQualityMetrics:
     
     def calculate_dynamic_range(self, audio_data: np.ndarray) -> float:
         """Calculate dynamic range of audio."""
+
+
+
         try:
             # Calculate RMS values in windows
             window_size = 2048
@@ -115,6 +121,9 @@ class AudioQualityMetrics:
     
     def calculate_spectral_centroid(self, audio_data: np.ndarray, sample_rate: int) -> float:
         """Calculate spectral centroid for brightness analysis."""
+
+
+
         try:
             centroid = librosa.feature.spectral_centroid(y=audio_data, sr=sample_rate)[0]
             return float(np.mean(centroid))
@@ -124,6 +133,9 @@ class AudioQualityMetrics:
     
     def calculate_zero_crossing_rate(self, audio_data: np.ndarray) -> float:
         """Calculate zero crossing rate for percussiveness analysis."""
+
+
+
         try:
             zcr = librosa.feature.zero_crossing_rate(audio_data)[0]
             return float(np.mean(zcr))
@@ -133,6 +145,9 @@ class AudioQualityMetrics:
     
     def calculate_mfcc_variance(self, audio_data: np.ndarray, sample_rate: int) -> float:
         """Calculate MFCC variance for timbral complexity."""
+
+
+
         try:
             mfccs = librosa.feature.mfcc(y=audio_data, sr=sample_rate, n_mfcc=13)
             variance = np.var(mfccs, axis=1)
@@ -161,6 +176,9 @@ class AdvancedAudioAnalyzer:
     
     async def analyze_audio_fingerprint(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
         """Generate comprehensive audio fingerprint for protection."""
+
+
+
         try:
             if not HAS_AUDIO_LIBS:
                 return {"error": "Audio libraries not available"}
@@ -336,6 +354,9 @@ class AudioContentClassifier:
     
     async def classify_content_type(self, features: Dict[str, Any]) -> Dict[str, float]:
         """Classify audio content type with confidence scores."""
+
+
+
         try:
             spectral = features.get("spectral", {})
             temporal = features.get("temporal", {})
@@ -468,6 +489,9 @@ class AudioContentClassifier:
     
     def detect_clipping(self, audio_data: np.ndarray, threshold: float = 0.99) -> float:
         """Detect audio clipping percentage."""
+
+
+
         try:
             clipped_samples = np.sum(np.abs(audio_data) >= threshold)
             clipping_percentage = (clipped_samples / len(audio_data)) * 100
@@ -488,6 +512,9 @@ class AudioCopyrightDetector:
     
     def generate_chromaprint_fingerprint(self, audio_data: np.ndarray, sample_rate: int) -> str:
         """Generate Chromaprint fingerprint for audio."""
+
+
+
         try:
             # Simulate Chromaprint fingerprinting
             # In real implementation, use pyacoustid or similar
@@ -506,6 +533,9 @@ class AudioCopyrightDetector:
     
     def generate_essentia_fingerprint(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
         """Generate Essentia-based audio fingerprint."""
+
+
+
         try:
             if not HAS_AUDIO_LIBS:
                 return {'error': 'Essentia not available'}
@@ -579,6 +609,9 @@ class AudioGenreClassifier:
     
     def extract_audio_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
         """Extract features for genre classification."""
+
+
+
         try:
             features = {}
             
@@ -680,6 +713,9 @@ class AudioContentFilter:
         strict_mode: bool = False
     ) -> FilterResponse:
         """Asynchronously filter audio content."""
+
+
+
         return await asyncio.get_event_loop().run_in_executor(
             None, self.filter, content, ai_validation, strict_mode
         )
@@ -763,6 +799,9 @@ class AudioContentFilter:
     
     def _load_audio_content(self, content: ContentItem) -> Tuple[Optional[np.ndarray], int, Dict[str, Any]]:
         """Load and validate audio content."""
+
+
+
         try:
             metadata = {}
             
@@ -910,6 +949,9 @@ class AudioContentFilter:
     
     def _analyze_genre(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
         """Analyze audio genre using ML classification."""
+
+
+
         try:
             features = self.genre_classifier.extract_audio_features(audio_data, sample_rate)
             genre_result = self.genre_classifier.classify_genre(features)
@@ -922,6 +964,9 @@ class AudioContentFilter:
     
     def _analyze_mood(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
         """Analyze audio mood and emotional content."""
+
+
+
         try:
             # Simplified mood analysis based on audio features
             # In real implementation, use specialized mood detection models

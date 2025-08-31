@@ -119,6 +119,9 @@ class RevenueTrackingProcessor:
         user_id: str
     ) -> List[RevenueRecord]:
         """Process raw revenue data from various platforms"""
+
+
+
         try:
             logger.info(f"Processing revenue data for user {user_id} from {platform}")
             
@@ -200,6 +203,9 @@ class RevenueTrackingProcessor:
         user_id: str
     ) -> List[Dict[str, Any]]:
         """Parse platform-specific data format"""
+
+
+
         try:
             if platform == 'spotify':
                 return await self._parse_spotify_data(raw_data, user_id)
@@ -421,6 +427,9 @@ class RevenueTrackingProcessor:
         platform: str
     ) -> RevenueRecord:
         """Process a single revenue record"""
+
+
+
         try:
             # Generate unique ID
             record_id = self._generate_record_id(record_data, platform)
@@ -530,6 +539,9 @@ class RevenueTrackingProcessor:
 
     async def _get_cached_exchange_rate(self, cache_key: str) -> Optional[Decimal]:
         """Get cached exchange rate if available and not expired"""
+
+
+
         try:
             import json
             
@@ -557,6 +569,9 @@ class RevenueTrackingProcessor:
 
     async def _cache_exchange_rate(self, cache_key: str, rate: Decimal) -> None:
         """Cache exchange rate with expiration"""
+
+
+
         try:
             import redis.asyncio as redis
             import json
@@ -609,6 +624,9 @@ class RevenueTrackingProcessor:
 
     async def _store_revenue_records(self, records: List[RevenueRecord]) -> None:
         """Store revenue records in database"""
+
+
+
         try:
             query = """
             INSERT INTO revenue_records (
@@ -663,6 +681,9 @@ class RevenueTrackingProcessor:
         user_id: str
     ) -> None:
         """Update revenue analytics and aggregations"""
+
+
+
         try:
             # Update daily aggregations
             await self._update_daily_aggregations(records, user_id)
@@ -746,6 +767,9 @@ class RevenueTrackingProcessor:
         user_id: str
     ) -> None:
         """Check if revenue notifications should be sent"""
+
+
+
         try:
             # Calculate total revenue from this batch
             total_revenue = sum(record.net_amount for record in records)
@@ -779,6 +803,9 @@ class RevenueTrackingProcessor:
         platform: Optional[str] = None
     ) -> Dict[str, Any]:
         """Get comprehensive revenue summary for user"""
+
+
+
         try:
             # Set default date range
             if not end_date:
@@ -888,6 +915,9 @@ class RevenueTrackingProcessor:
 
     async def cleanup_old_records(self, days_old: int = 2555) -> int:
         """Clean up old revenue records"""
+
+
+
         try:
             query = """
             DELETE FROM revenue_records

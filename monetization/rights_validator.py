@@ -199,6 +199,9 @@ class RightsValidator:
         Returns:
             bool: True if licensing rights are valid
         """
+
+
+
         try:
             # Create validation request
             request = ValidationRequest(
@@ -357,6 +360,9 @@ class RightsValidator:
         Returns:
             bool: True if registration successful
         """
+
+
+
         try:
             # Create rights chain if not exists
             if content_id not in self.content_rights:
@@ -421,6 +427,9 @@ class RightsValidator:
         Returns:
             bool: True if transfer successful
         """
+
+
+
         try:
             if content_id not in self.content_rights:
                 return False
@@ -501,10 +510,16 @@ class RightsValidator:
     
     async def get_validation_report(self, request_id: str) -> Optional[ValidationReport]:
         """Get validation report by request ID"""
+
+
+
         return self.validation_reports.get(request_id)
     
     async def get_content_rights(self, content_id: int) -> Optional[Dict[str, Any]]:
         """Get rights information for content"""
+
+
+
         try:
             if content_id not in self.content_rights:
                 return None
@@ -566,6 +581,9 @@ class RightsValidator:
         rights_chain: RightsChain
     ) -> bool:
         """Verify ownership rights"""
+
+
+
         try:
             # Check if requester is current owner
             if rights_chain.current_owner == requester_id:
@@ -717,6 +735,9 @@ class RightsValidator:
         rights_chain: RightsChain
     ) -> bool:
         """Validate territory restrictions"""
+
+
+
         try:
             # For worldwide requests, need worldwide or specific territory rights
             if request.territory == "worldwide":
@@ -746,6 +767,9 @@ class RightsValidator:
         rights_chain: RightsChain
     ) -> bool:
         """Validate commercial use rights"""
+
+
+
         try:
             # Check for commercial or higher level rights
             commercial_rights = [RightType.COMMERCIAL, RightType.COPYRIGHT, RightType.LICENSING]
@@ -814,6 +838,9 @@ class RightsValidator:
         start_time: datetime
     ) -> None:
         """Update validation metrics"""
+
+
+
         try:
             self.metrics["total_validations"] += 1
             
@@ -839,6 +866,9 @@ class RightsValidator:
     
     def get_validator_stats(self) -> Dict[str, Any]:
         """Get rights validator statistics"""
+
+
+
         try:
             total_content = len(self.content_rights)
             total_rights = sum(len(chain.active_rights) for chain in self.content_rights.values())

@@ -1,12 +1,12 @@
 """
-✅ Deployment Templates - IA-Influencer-Agent
+ Deployment Templates - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps Architect + Cloud Engineer + Infrastructure Expert
 Date: 2025-08-24
 
 PROPRIÉTAIRE EXCLUSIF: Fahed Mlaiel
-⚠️  AVERTISSEMENT LÉGAL STRICT:
+  AVERTISSEMENT LÉGAL STRICT:
 Toute tentative de copie, vol, réutilisation sans autorisation
 écrite explicite du propriétaire constitue une violation grave
 des droits d'auteur et sera poursuivie selon la loi allemande.
@@ -130,6 +130,9 @@ class DeploymentTemplateManager:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             # Create template directories
             await self._create_template_directories()
@@ -169,18 +172,30 @@ class DeploymentTemplateManager:
         # Custom filters
         def to_yaml(value, indent=2):
             """Convert value to YAML"""
+
+
+
             return yaml.dump(value, default_flow_style=False, indent=indent)
         
         def to_json(value, indent=2):
             """Convert value to JSON"""
+
+
+
             return json.dumps(value, indent=indent)
         
         def resource_name(name, environment):
             """Generate resource name"""
+
+
+
             return f"{name}-{environment}"
         
         def namespace_name(app_name, environment):
             """Generate namespace name"""
+
+
+
             return f"{app_name}-{environment}"
         
         # Create Jinja2 environment
@@ -290,6 +305,9 @@ class DeploymentTemplateManager:
     
     def _get_kubernetes_deployment_template(self) -> str:
         """Get Kubernetes deployment template"""
+
+
+
         return """---
 apiVersion: v1
 kind: Namespace
@@ -525,6 +543,9 @@ spec:
 
     def _get_docker_compose_template(self) -> str:
         """Get Docker Compose template"""
+
+
+
         return """version: '3.8'
 
 services:
@@ -646,6 +667,9 @@ networks:
 
     def _get_terraform_aws_template(self) -> str:
         """Get Terraform AWS template"""
+
+
+
         return """terraform {
   required_version = ">= 1.0"
   required_providers {
@@ -950,6 +974,9 @@ output "vpc_id" {
 
     def _get_helm_chart_template(self) -> str:
         """Get Helm chart template"""
+
+
+
         return """apiVersion: v2
 name: {{ application_name }}
 description: A Helm chart for {{ application_name }}
@@ -970,6 +997,9 @@ dependencies:
 
     def _get_ansible_playbook_template(self) -> str:
         """Get Ansible playbook template"""
+
+
+
         return """---
 - name: Deploy {{ application_name }}
   hosts: all
@@ -1323,6 +1353,9 @@ spec:
         Returns:
             Rendered template content
         """
+
+
+
         try:
             if template_name not in self.templates:
                 raise ValueError(f"Template not found: {template_name}")
@@ -1401,6 +1434,9 @@ spec:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             # Create output directory
             output_path = Path(output_directory)
@@ -1458,6 +1494,9 @@ spec:
         Returns:
             bool: True if successful
         """
+
+
+
         try:
             self.templates[template.name] = template
             self.logger.info(f"Custom template added: {template.name}")
@@ -1478,6 +1517,9 @@ spec:
         Returns:
             Validation result
         """
+
+
+
         try:
             # Attempt to render template
             rendered_content = await self.render_template(template_name, context)
@@ -1522,6 +1564,9 @@ spec:
     
     async def get_template_list(self) -> List[Dict[str, Any]]:
         """Get list of available templates"""
+
+
+
         
         return [
             {
@@ -1538,6 +1583,9 @@ spec:
     
     async def get_status(self) -> Dict[str, Any]:
         """Get template manager status"""
+
+
+
         
         return {
             "total_templates": len(self.templates),

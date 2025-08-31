@@ -157,6 +157,9 @@ class StripeAdapter(BasePlatformAdapter):
     
     async def authenticate(self) -> bool:
         """Authenticate with Stripe API."""
+
+
+
         try:
             response = await self.make_request(
                 method="GET",
@@ -178,6 +181,9 @@ class StripeAdapter(BasePlatformAdapter):
                                    customer_id: Optional[str] = None,
                                    metadata: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """Create a Stripe payment intent."""
+
+
+
         try:
             payment_data = {
                 "amount": amount,  # Amount in cents
@@ -213,6 +219,9 @@ class StripeAdapter(BasePlatformAdapter):
     async def create_subscription(self, customer_id: str, price_id: str,
                                  metadata: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """Create a Stripe subscription."""
+
+
+
         try:
             subscription_data = {
                 "customer": customer_id,
@@ -245,6 +254,9 @@ class StripeAdapter(BasePlatformAdapter):
     async def create_transfer(self, amount: int, destination: str, currency: str = "usd",
                              metadata: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """Create a transfer to a connected account."""
+
+
+
         try:
             transfer_data = {
                 "amount": amount,
@@ -276,6 +288,9 @@ class StripeAdapter(BasePlatformAdapter):
     async def get_revenue_analytics(self, start_date: Optional[datetime] = None,
                                    end_date: Optional[datetime] = None) -> RevenueAnalytics:
         """Get Stripe revenue analytics."""
+
+
+
         try:
             # Calculate date range
             if not start_date:
@@ -340,6 +355,9 @@ class StripeAdapter(BasePlatformAdapter):
     
     async def webhook_verify(self, payload: str, signature: str, webhook_secret: str) -> bool:
         """Verify Stripe webhook signature."""
+
+
+
         try:
             expected_signature = hmac.new(
                 webhook_secret.encode('utf-8'),
@@ -354,6 +372,9 @@ class StripeAdapter(BasePlatformAdapter):
     
     async def health_check(self) -> bool:
         """Perform Stripe API health check."""
+
+
+
         try:
             response = await self.make_request(
                 method="GET",
@@ -399,6 +420,9 @@ class PayPalAdapter(BasePlatformAdapter):
     
     async def authenticate(self) -> bool:
         """Authenticate with PayPal API using OAuth2."""
+
+
+
         try:
             # Get access token
             auth_string = base64.b64encode(
@@ -433,6 +457,9 @@ class PayPalAdapter(BasePlatformAdapter):
                             return_url: str = "", cancel_url: str = "",
                             description: str = "") -> Dict[str, Any]:
         """Create a PayPal payment."""
+
+
+
         try:
             payment_data = {
                 "intent": "sale",
@@ -477,6 +504,9 @@ class PayPalAdapter(BasePlatformAdapter):
     
     async def execute_payment(self, payment_id: str, payer_id: str) -> Dict[str, Any]:
         """Execute an approved PayPal payment."""
+
+
+
         try:
             execution_data = {"payer_id": payer_id}
             
@@ -502,6 +532,9 @@ class PayPalAdapter(BasePlatformAdapter):
     async def create_payout(self, recipient_email: str, amount: str, 
                            currency: str = "USD", note: str = "") -> Dict[str, Any]:
         """Create a PayPal payout."""
+
+
+
         try:
             payout_data = {
                 "sender_batch_header": {
@@ -541,6 +574,9 @@ class PayPalAdapter(BasePlatformAdapter):
     
     async def health_check(self) -> bool:
         """Perform PayPal API health check."""
+
+
+
         try:
             # Test with a simple API call
             response = await self.make_request(
@@ -585,6 +621,9 @@ class WiseAdapter(BasePlatformAdapter):
     
     async def authenticate(self) -> bool:
         """Authenticate with Wise API."""
+
+
+
         try:
             response = await self.make_request(
                 method="GET",
@@ -605,6 +644,9 @@ class WiseAdapter(BasePlatformAdapter):
     async def get_exchange_rate(self, source_currency: str, target_currency: str, 
                                amount: Optional[float] = None) -> Dict[str, Any]:
         """Get real-time exchange rate from Wise."""
+
+
+
         try:
             params = {
                 "source": source_currency.upper(),
@@ -635,6 +677,9 @@ class WiseAdapter(BasePlatformAdapter):
     
     async def health_check(self) -> bool:
         """Perform Wise API health check."""
+
+
+
         try:
             response = await self.make_request(
                 method="GET",
@@ -667,6 +712,9 @@ class PaymentAdapterFactory:
     @classmethod
     def get_supported_gateways(cls) -> List[PaymentGateway]:
         """Get list of supported payment gateways."""
+
+
+
         return list(cls._adapters.keys())
 
 # Export all classes

@@ -120,6 +120,9 @@ class SmartContractManager:
     
     async def initialize(self) -> bool:
         """Initialize blockchain connection and account"""
+
+
+
         try:
             # Initialize Web3 connection
             rpc_url = self.network_config['rpc_url']
@@ -161,6 +164,9 @@ class SmartContractManager:
     
     async def _load_deployed_contracts(self):
         """Load deployed contract addresses from configuration"""
+
+
+
         try:
             # In production, load from database or configuration file
             deployed_contracts = {
@@ -178,6 +184,9 @@ class SmartContractManager:
     
     async def deploy_contract(self, config: ContractDeploymentConfig) -> Tuple[str, str]:
         """Deploy a smart contract to the blockchain"""
+
+
+
         try:
             if not self.w3 or not self.account:
                 raise ContractDeploymentError("Web3 or account not initialized")
@@ -233,6 +242,9 @@ class SmartContractManager:
     
     async def _estimate_deployment_gas(self, contract: Contract, constructor_args: List[Any]) -> int:
         """Estimate gas for contract deployment"""
+
+
+
         try:
             gas_estimate = contract.constructor(*constructor_args).estimate_gas({
                 'from': self.account.address
@@ -253,6 +265,9 @@ class SmartContractManager:
         rights_description: str
     ) -> Tuple[str, int]:
         """Register copyright on blockchain"""
+
+
+
         try:
             contract_address = self.contract_addresses.get(ContractType.COPYRIGHT_REGISTRY)
             if not contract_address:
@@ -317,6 +332,9 @@ class SmartContractManager:
         creator_address: str
     ) -> bool:
         """Verify content authenticity on blockchain"""
+
+
+
         try:
             contract_address = self.contract_addresses.get(ContractType.CONTENT_AUTHENTICITY)
             if not contract_address:
@@ -354,6 +372,9 @@ class SmartContractManager:
         duration_seconds: int
     ) -> Tuple[str, int]:
         """Create a usage license on blockchain"""
+
+
+
         try:
             contract_address = self.contract_addresses.get(ContractType.USAGE_LICENSE)
             if not contract_address:
@@ -408,6 +429,9 @@ class SmartContractManager:
     
     def _extract_registration_id(self, receipt) -> int:
         """Extract registration ID from transaction receipt"""
+
+
+
         try:
             # Parse logs to extract registration ID
             for log in receipt.logs:
@@ -419,6 +443,9 @@ class SmartContractManager:
     
     def _extract_license_id(self, receipt) -> int:
         """Extract license ID from transaction receipt"""
+
+
+
         try:
             # Parse logs to extract license ID
             for log in receipt.logs:
@@ -440,6 +467,9 @@ class SmartContractManager:
     
     def _get_copyright_registry_abi(self) -> List[Dict[str, Any]]:
         """Get Copyright Registry contract ABI"""
+
+
+
         return [
             {
                 "inputs": [
@@ -468,6 +498,9 @@ class SmartContractManager:
     
     def _get_content_authenticity_abi(self) -> List[Dict[str, Any]]:
         """Get Content Authenticity contract ABI"""
+
+
+
         return [
             {
                 "inputs": [
@@ -484,6 +517,9 @@ class SmartContractManager:
     
     def _get_usage_license_abi(self) -> List[Dict[str, Any]]:
         """Get Usage License contract ABI"""
+
+
+
         return [
             {
                 "inputs": [
@@ -501,14 +537,23 @@ class SmartContractManager:
     
     def _get_royalty_distribution_abi(self) -> List[Dict[str, Any]]:
         """Get Royalty Distribution contract ABI"""
+
+
+
         return []
     
     def _get_ownership_transfer_abi(self) -> List[Dict[str, Any]]:
         """Get Ownership Transfer contract ABI"""
+
+
+
         return []
     
     def _get_access_control_abi(self) -> List[Dict[str, Any]]:
         """Get Access Control contract ABI"""
+
+
+
         return []
 
 
@@ -518,6 +563,9 @@ class GasOptimizer:
     @staticmethod
     def estimate_optimal_gas_price(w3: Web3, priority: str = "standard") -> int:
         """Estimate optimal gas price based on network conditions"""
+
+
+
         try:
             # Get gas price from network
             current_gas_price = w3.eth.gas_price

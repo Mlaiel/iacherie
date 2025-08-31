@@ -91,6 +91,9 @@ class AlertingConfig:
     
     def get_system_alert_rules(self) -> List[AlertRule]:
         """Get system-level alert rules"""
+
+
+
         return [
             AlertRule(
                 alert_name="ServiceDown",
@@ -130,6 +133,9 @@ class AlertingConfig:
     
     def get_application_alert_rules(self) -> List[AlertRule]:
         """Get application-level alert rules"""
+
+
+
         return [
             AlertRule(
                 alert_name="HighErrorRate",
@@ -168,6 +174,9 @@ class AlertingConfig:
     
     def get_ai_services_alert_rules(self) -> List[AlertRule]:
         """Get AI services alert rules"""
+
+
+
         return [
             AlertRule(
                 alert_name="AIModelInferenceLatency",
@@ -207,6 +216,9 @@ class AlertingConfig:
     
     def get_content_protection_alert_rules(self) -> List[AlertRule]:
         """Get content protection alert rules"""
+
+
+
         return [
             AlertRule(
                 alert_name="ContentProtectionDown",
@@ -245,6 +257,9 @@ class AlertingConfig:
     
     def get_security_alert_rules(self) -> List[AlertRule]:
         """Get security alert rules"""
+
+
+
         return [
             AlertRule(
                 alert_name="AuthenticationFailureSpike",
@@ -284,6 +299,9 @@ class AlertingConfig:
     
     def get_business_alert_rules(self) -> List[AlertRule]:
         """Get business-level alert rules"""
+
+
+
         return [
             AlertRule(
                 alert_name="RevenueDropSignificant",
@@ -335,7 +353,7 @@ class AlertingConfig:
                     "smarthost": f"{self.smtp_host}:{self.smtp_port}",
                     "auth_username": self.smtp_username,
                     "auth_password": self.smtp_password,
-                    "subject": "🚨 {{ .GroupLabels.alertname }} - {{ .GroupLabels.severity }}",
+                    "subject": " {{ .GroupLabels.alertname }} - {{ .GroupLabels.severity }}",
                     "body": """
 Alert: {{ .GroupLabels.alertname }}
 Severity: {{ .GroupLabels.severity }}
@@ -385,7 +403,7 @@ Details:
                 config={
                     "bot_token": self.telegram_token,
                     "chat_id": self.telegram_chat_id,
-                    "message": "🚨 *{{ .GroupLabels.alertname }}*\n{{ .CommonAnnotations.description }}",
+                    "message": " *{{ .GroupLabels.alertname }}*\n{{ .CommonAnnotations.description }}",
                     "parse_mode": "Markdown"
                 }
             ))
@@ -504,6 +522,9 @@ Details:
     
     def get_all_alert_rules(self) -> Dict[str, List[AlertRule]]:
         """Get all alert rules organized by category"""
+
+
+
         return {
             "system": self.get_system_alert_rules(),
             "application": self.get_application_alert_rules(),

@@ -1,5 +1,5 @@
 """
-💾 Migration Backup Manager - Ultra-Industrial Backup Engine
+ Migration Backup Manager - Ultra-Industrial Backup Engine
 ============================================================
 Module: backend/database/migrations/backup_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Backup Engine - Ultra Enterprise Production-Ready
 Responsibility: Advanced backup and recovery for content protection and monetization migrations
 ============================================================================================
 
-⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
+  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -137,10 +137,13 @@ class EnterpriseBackupManager:
         # Executor for parallel operations
         self.executor = ThreadPoolExecutor(max_workers=8)
         
-        logger.info("✅ Enterprise Backup Manager initialized")
+        logger.info(" Enterprise Backup Manager initialized")
     
     async def initialize(self) -> bool:
         """Initialize backup manager with storage and verification"""
+
+
+
         try:
             # Create backup directories
             await self._ensure_backup_directories()
@@ -154,11 +157,11 @@ class EnterpriseBackupManager:
             # Load existing recovery points
             await self._load_recovery_points()
             
-            logger.info("🚀 Backup Manager fully initialized")
+            logger.info(" Backup Manager fully initialized")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize Backup Manager: {e}")
+            logger.error(f" Failed to initialize Backup Manager: {e}")
             return False
     
     async def create_pre_migration_backup(
@@ -171,7 +174,7 @@ class EnterpriseBackupManager:
         
         backup_id = f"pre_migration_{migration_id}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
-        logger.info(f"🔄 Creating pre-migration backup: {backup_id}")
+        logger.info(f" Creating pre-migration backup: {backup_id}")
         
         try:
             # Configure backup operation
@@ -197,7 +200,7 @@ class EnterpriseBackupManager:
                     f"Pre-migration backup for {migration_id}"
                 )
                 
-                logger.info(f"✅ Pre-migration backup completed: {backup_result['backup_file']}")
+                logger.info(f" Pre-migration backup completed: {backup_result['backup_file']}")
                 return {
                     "success": True,
                     "backup_id": backup_id,
@@ -207,14 +210,14 @@ class EnterpriseBackupManager:
                     "verification_passed": backup_result.get("verification_passed", False)
                 }
             else:
-                logger.error(f"❌ Pre-migration backup failed: {backup_result.get('error')}")
+                logger.error(f" Pre-migration backup failed: {backup_result.get('error')}")
                 return {
                     "success": False,
                     "error": backup_result.get("error", "Unknown backup error")
                 }
                 
         except Exception as e:
-            logger.error(f"❌ Pre-migration backup exception: {e}")
+            logger.error(f" Pre-migration backup exception: {e}")
             return {
                 "success": False,
                 "error": str(e)
@@ -229,7 +232,7 @@ class EnterpriseBackupManager:
         
         backup_id = f"incremental_{base_backup_id}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
-        logger.info(f"📈 Creating incremental backup: {backup_id}")
+        logger.info(f" Creating incremental backup: {backup_id}")
         
         try:
             # Find base backup
@@ -257,14 +260,14 @@ class EnterpriseBackupManager:
             )
             
             if backup_result["success"]:
-                logger.info(f"✅ Incremental backup completed: {backup_result['backup_file']}")
+                logger.info(f" Incremental backup completed: {backup_result['backup_file']}")
                 return backup_result
             else:
-                logger.error(f"❌ Incremental backup failed: {backup_result.get('error')}")
+                logger.error(f" Incremental backup failed: {backup_result.get('error')}")
                 return backup_result
                 
         except Exception as e:
-            logger.error(f"❌ Incremental backup exception: {e}")
+            logger.error(f" Incremental backup exception: {e}")
             return {
                 "success": False,
                 "error": str(e)
@@ -273,7 +276,7 @@ class EnterpriseBackupManager:
     async def verify_backup_integrity(self, backup_id: str) -> Dict[str, Any]:
         """Verify backup file integrity and restorability"""
         
-        logger.info(f"🔍 Verifying backup integrity: {backup_id}")
+        logger.info(f" Verifying backup integrity: {backup_id}")
         
         try:
             # Find backup record
@@ -321,7 +324,7 @@ class EnterpriseBackupManager:
                 for result in verification_results.values()
             )
             
-            logger.info(f"✅ Backup verification completed: {'PASSED' if all_checks_passed else 'FAILED'}")
+            logger.info(f" Backup verification completed: {'PASSED' if all_checks_passed else 'FAILED'}")
             return {
                 "success": True,
                 "backup_id": backup_id,
@@ -331,7 +334,7 @@ class EnterpriseBackupManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Backup verification exception: {e}")
+            logger.error(f" Backup verification exception: {e}")
             return {
                 "success": False,
                 "error": str(e)
@@ -347,7 +350,7 @@ class EnterpriseBackupManager:
         
         restore_id = f"restore_{backup_id}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
-        logger.info(f"🔄 Starting database restore: {restore_id}")
+        logger.info(f" Starting database restore: {restore_id}")
         
         try:
             # Find and validate backup
@@ -383,7 +386,7 @@ class EnterpriseBackupManager:
                     backup_record
                 )
                 
-                logger.info(f"✅ Database restore completed: {restore_id}")
+                logger.info(f" Database restore completed: {restore_id}")
                 return {
                     "success": True,
                     "restore_id": restore_id,
@@ -394,11 +397,11 @@ class EnterpriseBackupManager:
                     "timestamp": datetime.utcnow().isoformat()
                 }
             else:
-                logger.error(f"❌ Database restore failed: {restore_result.get('error')}")
+                logger.error(f" Database restore failed: {restore_result.get('error')}")
                 return restore_result
                 
         except Exception as e:
-            logger.error(f"❌ Database restore exception: {e}")
+            logger.error(f" Database restore exception: {e}")
             return {
                 "success": False,
                 "error": str(e)
@@ -441,7 +444,7 @@ class EnterpriseBackupManager:
             return backup_result
             
         except Exception as e:
-            logger.error(f"❌ Point-in-time backup exception: {e}")
+            logger.error(f" Point-in-time backup exception: {e}")
             return {
                 "success": False,
                 "error": str(e)
@@ -482,7 +485,7 @@ class EnterpriseBackupManager:
             # Cleanup temporary files
             temp_cleanup = await self._cleanup_temporary_files()
             
-            logger.info(f"✅ Backup cleanup completed: {len(cleanup_results)} backups processed")
+            logger.info(f" Backup cleanup completed: {len(cleanup_results)} backups processed")
             return {
                 "success": True,
                 "cleaned_backups": len([r for r in cleanup_results.values() if r.get("success")]),
@@ -492,7 +495,7 @@ class EnterpriseBackupManager:
             }
             
         except Exception as e:
-            logger.error(f"❌ Backup cleanup exception: {e}")
+            logger.error(f" Backup cleanup exception: {e}")
             return {
                 "success": False,
                 "error": str(e)
@@ -500,6 +503,9 @@ class EnterpriseBackupManager:
     
     async def get_backup_status(self, backup_id: str = None) -> Dict[str, Any]:
         """Get status of specific backup or all backups"""
+
+
+
         
         try:
             if backup_id:
@@ -539,7 +545,7 @@ class EnterpriseBackupManager:
                 }
                 
         except Exception as e:
-            logger.error(f"❌ Get backup status exception: {e}")
+            logger.error(f" Get backup status exception: {e}")
             return {
                 "success": False,
                 "error": str(e)
@@ -561,21 +567,21 @@ class EnterpriseBackupManager:
         for directory in directories:
             os.makedirs(directory, exist_ok=True)
         
-        logger.info(f"📁 Backup directories ensured: {len(directories)} paths")
+        logger.info(f" Backup directories ensured: {len(directories)} paths")
     
     async def _initialize_encryption(self):
         """Initialize encryption for backups"""
         # Implementation would setup encryption keys and configuration
-        logger.info("🔐 Backup encryption initialized")
+        logger.info(" Backup encryption initialized")
     
     async def _setup_backup_monitoring(self):
         """Setup monitoring for backup operations"""
-        logger.info("📊 Backup monitoring configured")
+        logger.info(" Backup monitoring configured")
     
     async def _load_recovery_points(self):
         """Load existing recovery points from storage"""
         # Implementation would load from database or file system
-        logger.info("📋 Recovery points loaded")
+        logger.info(" Recovery points loaded")
     
     async def _execute_backup_operation(
         self,
@@ -633,7 +639,7 @@ class EnterpriseBackupManager:
             return result
             
         except Exception as e:
-            logger.error(f"❌ Backup operation failed: {e}")
+            logger.error(f" Backup operation failed: {e}")
             return {
                 "success": False,
                 "error": str(e)
@@ -645,6 +651,9 @@ class EnterpriseBackupManager:
         database_config: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Execute full database backup"""
+
+
+
         
         try:
             # Build pg_dump command
@@ -701,6 +710,9 @@ class EnterpriseBackupManager:
         database_config: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Execute schema-only backup"""
+
+
+
         
         try:
             # Build pg_dump command for schema only
@@ -758,6 +770,9 @@ class EnterpriseBackupManager:
         database_config: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Execute data-only backup"""
+
+
+
         
         try:
             # Build pg_dump command for data only

@@ -1,14 +1,14 @@
-"""🚀 Platform Core Support System - IA Influencer Agent Platform Enterprise
+""" Platform Core Support System - IA Influencer Agent Platform Enterprise
 =========================================================================
 Module: backend/platform_core/support/
 Author: Fahed Mlaiel (mlaiel@live.de)
 =========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 SYSTÈME DE SUPPORT CLIENT ENTERPRISE
+ SYSTÈME DE SUPPORT CLIENT ENTERPRISE
 Support intelligent avec IA et automatisation avancée
 - Ticketing system avec routing intelligent
 - Live chat avec agents IA et humains

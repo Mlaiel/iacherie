@@ -7,7 +7,7 @@ Comprehensive verification and integrity check for the complete parsers module.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
@@ -339,7 +339,7 @@ class ModuleIntegrityVerifier:
     
     def generate_integrity_report(self) -> str:
         """Generate comprehensive integrity report"""
-        print("🔍 Running comprehensive module integrity verification...")
+        print(" Running comprehensive module integrity verification...")
         
         # Run all verifications
         structure_result = self.verify_file_structure()
@@ -351,68 +351,68 @@ class ModuleIntegrityVerifier:
         # Generate report
         report = []
         report.append("=" * 80)
-        report.append("🚀 IA-INFLUENCER-AGENT PARSERS MODULE - INTEGRITY VERIFICATION REPORT")
+        report.append(" IA-INFLUENCER-AGENT PARSERS MODULE - INTEGRITY VERIFICATION REPORT")
         report.append("=" * 80)
-        report.append(f"📧 Author: Fahed Mlaiel <mlaiel@live.de>")
-        report.append(f"⚖️ © 2025 Fahed Mlaiel. All rights reserved.")
-        report.append(f"📅 Report Generated: {datetime.now().isoformat()}")
+        report.append(f" Author: Fahed Mlaiel <mlaiel@live.de>")
+        report.append(f" © 2025 Fahed Mlaiel. All rights reserved.")
+        report.append(f" Report Generated: {datetime.now().isoformat()}")
         report.append("=" * 80)
         
         # Overall summary
-        report.append(f"\n🎯 OVERALL MODULE ASSESSMENT")
+        report.append(f"\n OVERALL MODULE ASSESSMENT")
         report.append(f"   Grade: {completeness_result['overall_grade']}")
         report.append(f"   Completion: {completeness_result['completion_percentage']:.1f}%")
         
         # File structure verification
-        report.append(f"\n📁 FILE STRUCTURE VERIFICATION: {structure_result['status']}")
+        report.append(f"\n FILE STRUCTURE VERIFICATION: {structure_result['status']}")
         if structure_result['missing_files']:
-            report.append(f"   ❌ Missing files: {', '.join(structure_result['missing_files'])}")
+            report.append(f"    Missing files: {', '.join(structure_result['missing_files'])}")
         else:
-            report.append(f"   ✅ All {len(structure_result['file_details'])} required files present")
+            report.append(f"    All {len(structure_result['file_details'])} required files present")
         
         # Code quality verification
-        report.append(f"\n💻 CODE QUALITY VERIFICATION: {quality_result['status']}")
+        report.append(f"\n CODE QUALITY VERIFICATION: {quality_result['status']}")
         metrics = quality_result['total_metrics']
-        report.append(f"   📊 Total lines: {metrics['total_lines']:,}")
-        report.append(f"   🔧 Total functions: {metrics['total_functions']:,}")
-        report.append(f"   🏗️ Total classes: {metrics['total_classes']:,}")
+        report.append(f"    Total lines: {metrics['total_lines']:,}")
+        report.append(f"    Total functions: {metrics['total_functions']:,}")
+        report.append(f"    Total classes: {metrics['total_classes']:,}")
         
         if quality_result['syntax_errors']:
-            report.append(f"   ❌ Syntax errors: {len(quality_result['syntax_errors'])}")
+            report.append(f"    Syntax errors: {len(quality_result['syntax_errors'])}")
         else:
-            report.append(f"   ✅ No syntax errors found")
+            report.append(f"    No syntax errors found")
         
         # Copyright compliance
-        report.append(f"\n⚖️ COPYRIGHT COMPLIANCE: {copyright_result['status']}")
+        report.append(f"\n COPYRIGHT COMPLIANCE: {copyright_result['status']}")
         if copyright_result['files_without_copyright']:
-            report.append(f"   ⚠️ Files without proper copyright: {len(copyright_result['files_without_copyright'])}")
+            report.append(f"    Files without proper copyright: {len(copyright_result['files_without_copyright'])}")
         else:
-            report.append(f"   ✅ All files properly copyrighted")
+            report.append(f"    All files properly copyrighted")
         
         # Documentation completeness
-        report.append(f"\n📚 DOCUMENTATION VERIFICATION: {doc_result['status']}")
+        report.append(f"\n DOCUMENTATION VERIFICATION: {doc_result['status']}")
         if doc_result['missing_documentation']:
-            report.append(f"   ❌ Missing documentation: {', '.join(doc_result['missing_documentation'])}")
+            report.append(f"    Missing documentation: {', '.join(doc_result['missing_documentation'])}")
         else:
-            report.append(f"   ✅ All documentation files present")
+            report.append(f"    All documentation files present")
         
         # Component scores
-        report.append(f"\n📈 COMPONENT SCORES:")
+        report.append(f"\n COMPONENT SCORES:")
         for component, score in completeness_result['component_scores'].items():
-            status = "✅" if score >= 90 else "⚠️" if score >= 70 else "❌"
+            status = "" if score >= 90 else "" if score >= 70 else ""
             report.append(f"   {status} {component.replace('_', ' ').title()}: {score:.1f}%")
         
         # Final assessment
-        report.append(f"\n🏆 FINAL ASSESSMENT")
+        report.append(f"\n FINAL ASSESSMENT")
         if completeness_result['overall_grade'] in ['A+', 'A']:
-            report.append(f"   🎉 EXCELLENT - Module ready for production deployment")
+            report.append(f"    EXCELLENT - Module ready for production deployment")
         elif completeness_result['overall_grade'] in ['B+', 'B']:
-            report.append(f"   👍 GOOD - Module ready with minor optimizations")
+            report.append(f"    GOOD - Module ready with minor optimizations")
         else:
-            report.append(f"   ⚠️ NEEDS IMPROVEMENT - Review required before deployment")
+            report.append(f"    NEEDS IMPROVEMENT - Review required before deployment")
         
         report.append("=" * 80)
-        report.append("🔒 PROPRIETARY SOFTWARE - Unauthorized use strictly prohibited")
+        report.append(" PROPRIETARY SOFTWARE - Unauthorized use strictly prohibited")
         report.append("=" * 80)
         
         return "\n".join(report)
@@ -432,8 +432,8 @@ def main():
     with open(report_file, 'w', encoding='utf-8') as f:
         f.write(report)
     
-    print(f"\n📄 Full report saved to: {report_file}")
-    print("🚀 Module integrity verification completed!")
+    print(f"\n Full report saved to: {report_file}")
+    print(" Module integrity verification completed!")
 
 
 if __name__ == "__main__":

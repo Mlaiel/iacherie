@@ -431,6 +431,9 @@ class AdvancedContentAnalyzer(BaseCrawler):
     
     async def _analyze_sentiment(self, content: str) -> SentimentAnalysis:
         """Perform sentiment analysis on content"""
+
+
+
         try:
             # Simplified sentiment analysis (would use ML models in production)
             positive_words = [
@@ -488,6 +491,9 @@ class AdvancedContentAnalyzer(BaseCrawler):
 
     async def _classify_content(self, content: str, content_type: ContentType) -> ContentClassification:
         """Classify content into categories"""
+
+
+
         try:
             # Simplified classification based on keywords
             category_keywords = {
@@ -558,6 +564,9 @@ class AdvancedContentAnalyzer(BaseCrawler):
 
     async def _assess_quality(self, content: str, content_type: ContentType) -> QualityAssessment:
         """Assess content quality across multiple metrics"""
+
+
+
         try:
             metrics = []
             
@@ -625,6 +634,9 @@ class AdvancedContentAnalyzer(BaseCrawler):
 
     async def _detect_toxicity(self, content: str) -> ToxicityAnalysis:
         """Detect toxic content and harmful language"""
+
+
+
         try:
             # Simplified toxicity detection
             toxic_words = [
@@ -847,6 +859,9 @@ class AdvancedContentAnalyzer(BaseCrawler):
 
     async def close(self):
         """Close analyzer and cleanup resources"""
+
+
+
         try:
             await self.cache_manager.close()
             await super().close()

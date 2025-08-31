@@ -208,6 +208,9 @@ class IntelligentContentPipeline:
     
     def get_context(self, key: str, default: Any = None) -> Any:
         """Get context data."""
+
+
+
         return self.context.get(key, default)
     
     async def execute(self, content_item: ContentItem = None) -> Dict[str, Any]:
@@ -626,6 +629,9 @@ class IntelligentContentPipeline:
     
     def get_execution_graph(self) -> Dict[str, List[str]]:
         """Get the execution dependency graph."""
+
+
+
         return dict(self.execution_graph)
     
     async def finalize_execution(self) -> Dict[str, Any]:

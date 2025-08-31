@@ -112,6 +112,9 @@ class TestingConfig:
     
     def _setup_test_infrastructure(self) -> None:
         """Setup testing infrastructure"""
+
+
+
         try:
             # Initialize Docker client
             self.docker_client = docker.from_env()
@@ -126,6 +129,9 @@ class TestingConfig:
     
     def get_pytest_configuration(self) -> Dict[str, Any]:
         """Get pytest configuration"""
+
+
+
         return {
             "pytest_config": {
                 "testpaths": [
@@ -180,6 +186,9 @@ class TestingConfig:
     
     def get_unit_test_configuration(self) -> Dict[str, Any]:
         """Get unit test configuration"""
+
+
+
         return {
             "unit_tests": {
                 "test_modules": [
@@ -257,6 +266,9 @@ class TestingConfig:
     
     def get_integration_test_configuration(self) -> Dict[str, Any]:
         """Get integration test configuration"""
+
+
+
         return {
             "integration_tests": {
                 "test_scenarios": [
@@ -349,6 +361,9 @@ class TestingConfig:
     
     def get_performance_test_configuration(self) -> Dict[str, Any]:
         """Get performance test configuration"""
+
+
+
         return {
             "performance_tests": {
                 "load_testing": {
@@ -403,6 +418,9 @@ class TestingConfig:
     
     def get_security_test_configuration(self) -> Dict[str, Any]:
         """Get security test configuration"""
+
+
+
         return {
             "security_tests": {
                 "vulnerability_scanning": {
@@ -474,6 +492,9 @@ class TestingConfig:
     
     def get_chaos_engineering_configuration(self) -> Dict[str, Any]:
         """Get chaos engineering test configuration"""
+
+
+
         return {
             "chaos_tests": {
                 "failure_scenarios": [
@@ -621,6 +642,9 @@ class TestingConfig:
     
     def _get_conftest_content(self) -> str:
         """Generate conftest.py content"""
+
+
+
         return '''"""
 Pytest configuration and fixtures for IA-Influencer Agent Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -716,6 +740,9 @@ def mock_kubernetes_client():
 @pytest.fixture(scope="session")
 def docker_client():
     """Docker client for container tests."""
+
+
+
     return docker.from_env()
 
 
@@ -729,6 +756,9 @@ def setup_test_environment(monkeypatch):
     
     def _get_test_fixtures_content(self) -> str:
         """Generate test_fixtures.py content"""
+
+
+
         return '''"""
 Test fixtures and data for IA-Influencer Agent Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -745,6 +775,9 @@ from pathlib import Path
 @pytest.fixture
 def sample_audio_data() -> Dict[str, Any]:
     """Sample audio data for testing."""
+
+
+
     return {
         "title": "Test Audio Track",
         "artist": "Test Artist",
@@ -760,6 +793,9 @@ def sample_audio_data() -> Dict[str, Any]:
 @pytest.fixture
 def sample_video_data() -> Dict[str, Any]:
     """Sample video data for testing."""
+
+
+
     return {
         "title": "Test Video Content",
         "creator": "Test Creator",
@@ -775,6 +811,9 @@ def sample_video_data() -> Dict[str, Any]:
 @pytest.fixture
 def sample_user_data() -> Dict[str, Any]:
     """Sample user data for testing."""
+
+
+
     return {
         "id": "test_user_123",
         "username": "testuser",
@@ -789,6 +828,9 @@ def sample_user_data() -> Dict[str, Any]:
 @pytest.fixture
 def sample_protection_config() -> Dict[str, Any]:
     """Sample content protection configuration."""
+
+
+
     return {
         "sensitivity": 0.85,
         "match_threshold": 0.9,
@@ -818,6 +860,9 @@ def temp_audio_file():
 @pytest.fixture
 def mock_api_responses() -> Dict[str, Any]:
     """Mock API responses for testing."""
+
+
+
     return {
         "fingerprint_success": {
             "status": "success",
@@ -850,6 +895,9 @@ def mock_api_responses() -> Dict[str, Any]:
     
     def _get_test_data_factory_content(self) -> str:
         """Generate test_data_factory.py content"""
+
+
+
         return '''"""
 Test data factory for IA-Influencer Agent Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -998,11 +1046,17 @@ class TestDataFactory:
     @staticmethod
     def create_bulk_data(factory_method, count: int = 10, **kwargs) -> List[Dict[str, Any]]:
         """Create bulk test data."""
+
+
+
         return [factory_method(**kwargs) for _ in range(count)]
 '''
     
     def _get_test_utils_content(self) -> str:
         """Generate test_utils.py content"""
+
+
+
         return '''"""
 Test utilities for IA-Influencer Agent Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -1065,6 +1119,9 @@ class TestUtils:
     @staticmethod
     def mock_database_session():
         """Mock database session."""
+
+
+
         return MagicMock()
     
     @staticmethod
@@ -1173,6 +1230,9 @@ class KubernetesTestUtils:
     @staticmethod
     def create_test_deployment(name: str, image: str, replicas: int = 1) -> Dict[str, Any]:
         """Create test Kubernetes deployment manifest."""
+
+
+
         return {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
@@ -1215,6 +1275,9 @@ class KubernetesTestUtils:
     
     def create_docker_compose_test(self) -> str:
         """Create Docker Compose for testing"""
+
+
+
         return f'''version: '3.8'
 
 services:
@@ -1328,6 +1391,9 @@ networks:
     
     def get_test_runner_scripts(self) -> Dict[str, str]:
         """Get test runner scripts"""
+
+
+
         return {
             "run_tests.sh": f'''#!/bin/bash
 # Test runner for IA-Influencer Agent Platform
@@ -1338,7 +1404,7 @@ set -e
 echo "🧪 Running tests for IA-Influencer Agent Platform..."
 
 # Start test services
-echo "🐳 Starting test services..."
+echo " Starting test services..."
 docker-compose -f docker-compose.test.yml up -d
 
 # Wait for services to be ready
@@ -1346,26 +1412,26 @@ echo "⏳ Waiting for services to be ready..."
 sleep 30
 
 # Run tests
-echo "🚀 Running unit tests..."
+echo " Running unit tests..."
 pytest tests_backend -m unit -v
 
-echo "🔗 Running integration tests..."
+echo " Running integration tests..."
 pytest tests_backend -m integration -v
 
-echo "🌐 Running end-to-end tests..."
+echo " Running end-to-end tests..."
 pytest tests_backend -m e2e -v
 
-echo "⚡ Running performance tests..."
+echo " Running performance tests..."
 pytest tests_backend -m performance -v
 
-echo "🔒 Running security tests..."
+echo " Running security tests..."
 pytest tests_backend -m security -v
 
 # Cleanup
 echo "🧹 Cleaning up test services..."
 docker-compose -f docker-compose.test.yml down -v
 
-echo "✅ All tests completed!"
+echo " All tests completed!"
 ''',
             "run_specific_tests.sh": '''#!/bin/bash
 # Run specific test categories
@@ -1411,13 +1477,13 @@ case $CATEGORY in
         ;;
 esac
 
-echo "✅ $CATEGORY tests completed!"
+echo " $CATEGORY tests completed!"
 ''',
             "generate_coverage.sh": '''#!/bin/bash
 # Generate test coverage reports
 # Author: Fahed Mlaiel <mlaiel@live.de>
 
-echo "📊 Generating test coverage reports..."
+echo " Generating test coverage reports..."
 
 # Run tests with coverage
 pytest tests_backend \\
@@ -1427,7 +1493,7 @@ pytest tests_backend \\
     --cov-report=term-missing \\
     --cov-fail-under=80
 
-echo "📈 Coverage reports generated:"
+echo " Coverage reports generated:"
 echo "  - HTML: htmlcov/index.html"
 echo "  - XML: coverage.xml"
 echo "  - Terminal output above"

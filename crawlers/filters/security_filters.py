@@ -12,7 +12,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 
-⚠️ STRICT COPYRIGHT PROTECTION ⚠️
+ STRICT COPYRIGHT PROTECTION 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 
@@ -82,6 +82,9 @@ class MalwareDetector:
     
     def scan_content(self, content: ContentItem) -> Dict[str, Any]:
         """Scan content for malware signatures."""
+
+
+
         try:
             scan_results = {
                 'is_malicious': False,
@@ -119,6 +122,9 @@ class MalwareDetector:
     
     def _scan_binary_signatures(self, data: bytes) -> Dict[str, Any]:
         """Scan binary data for malicious signatures."""
+
+
+
         try:
             threats = []
             confidence_scores = []
@@ -166,6 +172,9 @@ class MalwareDetector:
     
     def _scan_text_patterns(self, text: str) -> Dict[str, Any]:
         """Scan text content for suspicious patterns."""
+
+
+
         try:
             threats = []
             confidence_scores = []
@@ -229,6 +238,9 @@ class MalwareDetector:
     
     def _check_file_extension(self, file_path: str) -> Dict[str, Any]:
         """Check file extension for security risks."""
+
+
+
         try:
             path = Path(file_path)
             extension = path.suffix.lower()
@@ -282,6 +294,9 @@ class MalwareDetector:
     
     def _calculate_entropy(self, data: bytes) -> float:
         """Calculate Shannon entropy of binary data."""
+
+
+
         try:
             if not data:
                 return 0.0
@@ -308,6 +323,9 @@ class MalwareDetector:
     
     def _assess_threat_level(self, scan_results: Dict[str, Any]) -> Dict[str, Any]:
         """Assess overall threat level based on scan results."""
+
+
+
         try:
             all_threats = []
             
@@ -386,6 +404,9 @@ class PhishingDetector:
     
     def detect_phishing(self, content: ContentItem) -> Dict[str, Any]:
         """Detect phishing attempts in content."""
+
+
+
         try:
             phishing_results = {
                 'is_phishing': False,
@@ -425,6 +446,9 @@ class PhishingDetector:
     
     def _analyze_text_content(self, text: str) -> Dict[str, Any]:
         """Analyze text content for phishing indicators."""
+
+
+
         try:
             text_lower = text.lower()
             indicators = []
@@ -507,6 +531,9 @@ class PhishingDetector:
     
     def _extract_urls(self, content: ContentItem) -> List[str]:
         """Extract URLs from content."""
+
+
+
         try:
             urls = []
             
@@ -523,6 +550,9 @@ class PhishingDetector:
     
     def _analyze_urls(self, urls: List[str]) -> Dict[str, Any]:
         """Analyze URLs for suspicious characteristics."""
+
+
+
         try:
             url_analysis = {
                 'total_urls': len(urls),
@@ -551,6 +581,9 @@ class PhishingDetector:
     
     def _analyze_single_url(self, url: str) -> Dict[str, Any]:
         """Analyze a single URL for suspicious characteristics."""
+
+
+
         try:
             url_analysis = {
                 'url': url,
@@ -637,6 +670,9 @@ class SecurityContentFilter:
         strict_mode: bool = False
     ) -> FilterResponse:
         """Asynchronously filter content for security threats."""
+
+
+
         return await asyncio.get_event_loop().run_in_executor(
             None, self.filter, content, ai_validation, strict_mode
         )
@@ -724,6 +760,9 @@ class SecurityContentFilter:
     
     def _validate_file_security(self, content: ContentItem) -> Dict[str, Any]:
         """Validate file for security compliance."""
+
+
+
         try:
             validation_results = {
                 'is_valid': True,
@@ -790,6 +829,9 @@ class SecurityContentFilter:
     
     def _perform_hash_analysis(self, content: ContentItem) -> Dict[str, Any]:
         """Perform hash-based security analysis."""
+
+
+
         try:
             hash_results = {
                 'hashes': {},
@@ -839,6 +881,9 @@ class SecurityContentFilter:
     
     def _calculate_security_score(self, analysis_results: Dict[str, Any], strict_mode: bool) -> float:
         """Calculate overall security score."""
+
+
+
         try:
             # Start with perfect security score
             score = 1.0
@@ -896,6 +941,9 @@ class SecurityContentFilter:
         strict_mode: bool
     ) -> FilterResult:
         """Determine security filter result."""
+
+
+
         try:
             # Check for immediate blocking conditions
             malware_data = analysis_results.get('malware', {})

@@ -11,7 +11,7 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
             Microservices Architect + Audio Engineer + DevOps Engineer + IA Prompt Engineer
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 © 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 This software, concept and intellectual property are protected by international copyright laws.
@@ -153,6 +153,9 @@ class CommissionManager:
     
     async def initialize(self) -> None:
         """Initialize all commission management services and processors"""
+
+
+
         try:
             logger.info("Initializing Commission Manager services...")
             
@@ -208,6 +211,9 @@ class CommissionManager:
         Returns:
             Commission calculation result
         """
+
+
+
         try:
             logger.info(f"Calculating commission for creator {creator_id} on {platform}")
             
@@ -266,6 +272,9 @@ class CommissionManager:
         Returns:
             Payment processing result
         """
+
+
+
         try:
             logger.info(f"Processing commission payment {commission_id}")
             
@@ -324,6 +333,9 @@ class CommissionManager:
         Returns:
             Batch processing results
         """
+
+
+
         try:
             batch_id = batch_id or str(uuid.uuid4())
             logger.info(f"Processing commission batch {batch_id} with {len(batch_data)} transactions")
@@ -396,6 +408,9 @@ class CommissionManager:
         Returns:
             Commission analytics data
         """
+
+
+
         try:
             logger.info(f"Generating commission analytics for timeframe {timeframe}")
             
@@ -432,6 +447,9 @@ class CommissionManager:
         Returns:
             Optimization results and recommendations
         """
+
+
+
         try:
             logger.info(f"Optimizing commission structure for platform {platform}")
             
@@ -454,6 +472,9 @@ class CommissionManager:
     # Helper methods
     async def _get_creator_tier(self, creator_id: str) -> Dict[str, Any]:
         """Get creator tier information"""
+
+
+
         try:
             if self._redis_client and self.config.enable_caching:
                 cached_tier = await self._redis_client.get(f"creator_tier:{creator_id}")
@@ -488,6 +509,9 @@ class CommissionManager:
         tier_info: Dict[str, Any]
     ) -> CommissionStructure:
         """Get commission structure for platform and tier"""
+
+
+
         try:
             # Base commission rates by platform
             platform_rates = {
@@ -523,6 +547,9 @@ class CommissionManager:
         creator_id: str
     ) -> Dict[str, Any]:
         """Perform fraud detection on commission calculation"""
+
+
+
         try:
             # Implement fraud detection logic
             # This is a simplified version - real implementation would be more complex
@@ -561,6 +588,9 @@ class CommissionManager:
     
     async def _store_commission_calculation(self, calculation: CommissionCalculation) -> None:
         """Store commission calculation in database"""
+
+
+
         try:
             # Implement database storage logic
             pass
@@ -569,6 +599,9 @@ class CommissionManager:
             
     async def _get_commission_calculation(self, commission_id: str) -> Optional[CommissionCalculation]:
         """Retrieve commission calculation by ID"""
+
+
+
         try:
             # Implement database retrieval logic
             return None
@@ -578,6 +611,9 @@ class CommissionManager:
     
     async def _check_payment_eligibility(self, commission: CommissionCalculation) -> Dict[str, Any]:
         """Check if commission is eligible for payment"""
+
+
+
         try:
             eligible = True
             reasons = []
@@ -613,6 +649,9 @@ class CommissionManager:
         status: CommissionStatus
     ) -> None:
         """Update commission status in database"""
+
+
+
         try:
             # Implement database update logic
             pass
@@ -625,6 +664,9 @@ class CommissionManager:
         payment_result: Dict[str, Any]
     ) -> None:
         """Record commission transaction"""
+
+
+
         try:
             # Implement transaction recording logic
             pass
@@ -637,6 +679,9 @@ class CommissionManager:
         hours: int = 24
     ) -> List[CommissionCalculation]:
         """Get recent commission calculations for creator"""
+
+
+
         try:
             # Implement database query logic
             return []
@@ -650,6 +695,9 @@ class CommissionManager:
         reason: str
     ) -> None:
         """Flag commission calculation for manual review"""
+
+
+
         try:
             # Implement flagging logic
             logger.warning(f"Commission flagged for review: {calculation.id} - {reason}")
@@ -658,6 +706,9 @@ class CommissionManager:
     
     async def shutdown(self) -> None:
         """Graceful shutdown of Commission Manager"""
+
+
+
         try:
             logger.info("Shutting down Commission Manager...")
             

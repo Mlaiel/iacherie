@@ -474,6 +474,9 @@ def create_backup_platform(config: Dict[str, Any]) -> BackupPlatform:
     Returns:
         Initialized backup platform
     """
+
+
+
     return BackupPlatform(config)
 
 

@@ -55,6 +55,9 @@ class ImageFingerprintProcessor:
         
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default configuration for image processing"""
+
+
+
         return {
             'resize_width': 512,
             'resize_height': 512,
@@ -75,6 +78,9 @@ class ImageFingerprintProcessor:
         Returns:
             ImageFingerprint object with extracted features
         """
+
+
+
         try:
             # Load image asynchronously
             loop = asyncio.get_event_loop()
@@ -322,6 +328,9 @@ class ImageFingerprintProcessor:
     
     def _extract_metadata(self, file_path: Path) -> Dict[str, Any]:
         """Extract file metadata"""
+
+
+
         return {
             'filename': file_path.name,
             'file_size': file_path.stat().st_size,
@@ -340,6 +349,9 @@ class ImageFingerprintProcessor:
         Returns:
             Similarity score between 0 and 1
         """
+
+
+
         try:
             # Content hash exact match
             if fp1.content_hash == fp2.content_hash:
@@ -403,6 +415,9 @@ class ImageFingerprintProcessor:
     
     def _histogram_intersection(self, hist1: np.ndarray, hist2: np.ndarray) -> float:
         """Calculate histogram intersection similarity"""
+
+
+
         try:
             if len(hist1) != len(hist2):
                 return 0.0
@@ -415,6 +430,9 @@ class ImageFingerprintProcessor:
     
     def _cosine_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
         """Calculate cosine similarity between two vectors"""
+
+
+
         try:
             if len(vec1) != len(vec2):
                 return 0.0

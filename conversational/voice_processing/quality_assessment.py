@@ -47,6 +47,9 @@ class VoiceQualityAssessor:
                            include_detailed_analysis: bool = False,
                            professional_standards: bool = False) -> VoiceQualityMetrics:
         """Assess comprehensive voice quality metrics"""
+
+
+
         try:
             # Calculate basic quality metrics
             snr = self._calculate_snr(audio_data)
@@ -185,10 +188,16 @@ class VoiceQualityAssessor:
     
     def _check_broadcast_compliance(self, snr: float, dynamic_range: float, lufs: float) -> bool:
         """Check broadcast standard compliance"""
+
+
+
         return snr > 20 and dynamic_range > 12 and -30 < lufs < -16
     
     def _check_streaming_compliance(self, peak_level: float, rms_level: float) -> bool:
         """Check streaming platform compliance"""
+
+
+
         return peak_level < 0.95 and rms_level > 0.1
     
     async def shutdown(self) -> None:

@@ -40,16 +40,16 @@ def create_optimized_app() -> FastAPI:
     # Optimize Redis cluster performance
     try:
         redis_config.optimize_cluster_performance()
-        print("✅ Redis cluster optimized")
+        print(" Redis cluster optimized")
     except Exception as e:
-        print(f"⚠️ Redis cluster optimization skipped: {e}")
+        print(f" Redis cluster optimization skipped: {e}")
     
     # Create Redis client for caching
     try:
         redis_client = redis_config.create_client()
-        print("✅ Redis cache backend initialized")
+        print(" Redis cache backend initialized")
     except Exception as e:
-        print(f"⚠️ Redis client creation failed: {e}")
+        print(f" Redis client creation failed: {e}")
         redis_client = None
     
     # Add performance middleware (order matters!)
@@ -115,7 +115,7 @@ def create_optimized_app() -> FastAPI:
         allow_headers=["*"],
     )
     
-    print("✅ All performance middleware added")
+    print(" All performance middleware added")
     
     return app, redis_client
 
@@ -129,7 +129,7 @@ def setup_optimization_services(redis_client):
     image_optimizer = ImageOptimizer()
     batch_image_optimizer = BatchImageOptimizer()
     
-    print("✅ Image optimization services initialized")
+    print(" Image optimization services initialized")
     
     return {
         'image_optimizer': image_optimizer,
@@ -147,6 +147,9 @@ def add_optimized_routes(app: FastAPI, services: dict):
     @app.get("/health")
     async def health_check():
         """Health check endpoint (excluded from caching)"""
+
+
+
         return {"status": "healthy", "timestamp": "2025-01-27"}
     
     @app.get("/api/content/{content_id}")
@@ -268,7 +271,7 @@ def add_optimized_routes(app: FastAPI, services: dict):
             "session_active": True
         }
     
-    print("✅ Optimized routes added")
+    print(" Optimized routes added")
 
 
 def main():
@@ -276,7 +279,7 @@ def main():
     Main function to demonstrate the complete setup
     """
     
-    print("🚀 Setting up Ainflue with Cache & Performance Optimizations...")
+    print(" Setting up Ainflue with Cache & Performance Optimizations...")
     
     # Create optimized FastAPI app
     app, redis_client = create_optimized_app()
@@ -287,17 +290,17 @@ def main():
     # Add example routes
     add_optimized_routes(app, services)
     
-    print("\n✅ Setup complete! All cache & performance features are active:")
-    print("   - Redis cluster configuration ✓")
-    print("   - Cache invalidation strategies ✓")
-    print("   - Session management ✓")
-    print("   - API response caching ✓")
-    print("   - Database query caching ✓")
-    print("   - Static content CDN ✓")
-    print("   - Image optimization ✓")
-    print("   - Asset compression ✓")
+    print("\n Setup complete! All cache & performance features are active:")
+    print("   - Redis cluster configuration ")
+    print("   - Cache invalidation strategies ")
+    print("   - Session management ")
+    print("   - API response caching ")
+    print("   - Database query caching ")
+    print("   - Static content CDN ")
+    print("   - Image optimization ")
+    print("   - Asset compression ")
     
-    print("\n🌟 Performance Features:")
+    print("\n Performance Features:")
     print("   - Automatic response caching with Redis backend")
     print("   - Gzip/Deflate compression for all responses")
     print("   - CSS/JS/HTML minification")
@@ -306,18 +309,18 @@ def main():
     print("   - Multi-format image optimization")
     print("   - Responsive image generation")
     
-    print("\n📊 Monitoring Endpoints:")
+    print("\n Monitoring Endpoints:")
     print("   - GET /api/cache/stats - Cache performance statistics")
     print("   - GET /health - Health check")
     
-    print("\n🎯 Example API Endpoints:")
+    print("\n Example API Endpoints:")
     print("   - GET /api/content/{id} - Cached content retrieval")
     print("   - POST /api/content/ - Content creation with cache invalidation")
     print("   - POST /api/optimize/image - Single image optimization")
     print("   - POST /api/optimize/batch-images - Batch image optimization")
     print("   - GET /api/user/profile - Session-protected user data")
     
-    print(f"\n🚀 Ready to serve at high performance!")
+    print(f"\n Ready to serve at high performance!")
     
     return app
 
@@ -330,12 +333,12 @@ if __name__ == "__main__":
     print("CACHE & PERFORMANCE IMPLEMENTATION COMPLETE")
     print("="*60)
     print("All checklist items have been implemented:")
-    print("☑️ Redis cluster configuration")
-    print("☑️ Cache invalidation strategies")
-    print("☑️ Session management")
-    print("☑️ API response caching")
-    print("☑️ Database query caching")
-    print("☑️ Static content CDN")
-    print("☑️ Image optimization")
-    print("☑️ Asset compression")
+    print(" Redis cluster configuration")
+    print(" Cache invalidation strategies")
+    print(" Session management")
+    print(" API response caching")
+    print(" Database query caching")
+    print(" Static content CDN")
+    print(" Image optimization")
+    print(" Asset compression")
     print("="*60)

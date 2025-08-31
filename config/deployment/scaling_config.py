@@ -126,10 +126,16 @@ class ScalingConfig:
         
     def _get_scaling_enabled(self) -> bool:
         """Check if auto-scaling is enabled for environment"""
+
+
+
         return self.environment in ["staging", "production"]
     
     def get_scaling_metrics(self) -> Dict[str, ScalingMetric]:
         """Get scaling metrics for different services"""
+
+
+
         return {
             # CPU utilization
             "cpu_usage": ScalingMetric(
@@ -585,6 +591,9 @@ class ScalingConfig:
     
     def get_prometheus_scaling_rules(self) -> Dict[str, Any]:
         """Get Prometheus-based scaling rules for custom metrics"""
+
+
+
         return {
             "recording_rules": [
                 {
@@ -659,6 +668,9 @@ class ScalingConfig:
     
     def generate_scaling_script(self) -> str:
         """Generate manual scaling script"""
+
+
+
         return f"""#!/bin/bash
 # Manual Scaling Script for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>

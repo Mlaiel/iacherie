@@ -86,6 +86,9 @@ class ColorPalette:
     
     def _is_valid_color(self, color: str) -> bool:
         """Validate hex color format"""
+
+
+
         try:
             ImageColor.getcolor(color, "RGB")
             return True
@@ -94,6 +97,9 @@ class ColorPalette:
     
     def get_contrasting_text_color(self, background_color: str) -> str:
         """Get contrasting text color for background"""
+
+
+
         try:
             rgb = ImageColor.getcolor(background_color, "RGB")
             luminance = (0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2]) / 255
@@ -257,6 +263,9 @@ class AssetProcessor:
         
     async def process_logo(self, file_data: bytes, output_format: str = 'png') -> Dict[str, Any]:
         """Process and optimize logo"""
+
+
+
         try:
             # Create different sizes
             sizes = [32, 64, 128, 256, 512]
@@ -289,6 +298,9 @@ class AssetProcessor:
     
     async def optimize_image(self, file_data: bytes, max_size_kb: int = 500) -> bytes:
         """Optimize image file size"""
+
+
+
         try:
             with Image.open(io.BytesIO(file_data)) as img:
                 # Progressive optimization
@@ -326,6 +338,9 @@ class ThemeGenerator:
     
     async def generate_theme_from_color(self, base_color: str, harmony_type: str = 'monochromatic') -> ColorPalette:
         """Generate complete color palette from base color"""
+
+
+
         try:
             rgb = ImageColor.getcolor(base_color, "RGB")
             hsv = colorsys.rgb_to_hsv(rgb[0]/255, rgb[1]/255, rgb[2]/255)
@@ -406,6 +421,9 @@ class WhiteLabelManager:
     
     async def _initialize_default_templates(self):
         """Initialize default customization templates"""
+
+
+
         try:
             default_templates = [
                 {
@@ -483,6 +501,9 @@ class WhiteLabelManager:
         template_id: Optional[str] = None
     ) -> WhiteLabelConfiguration:
         """Create new tenant white-label configuration"""
+
+
+
         try:
             # Use template or create default theme
             if template_id and template_id in self._templates:
@@ -532,6 +553,9 @@ class WhiteLabelManager:
         theme_updates: Dict[str, Any]
     ) -> BrandingTheme:
         """Update branding theme for tenant"""
+
+
+
         try:
             if tenant_id not in self._configurations:
                 raise ValueError(f"Tenant configuration not found: {tenant_id}")
@@ -590,6 +614,9 @@ class WhiteLabelManager:
         alt_text: str = ""
     ) -> BrandAsset:
         """Upload and process brand asset"""
+
+
+
         try:
             if tenant_id not in self._configurations:
                 raise ValueError(f"Tenant configuration not found: {tenant_id}")
@@ -640,6 +667,9 @@ class WhiteLabelManager:
         ssl_certificate: Optional[str] = None
     ) -> bool:
         """Configure custom domain for tenant"""
+
+
+
         try:
             if tenant_id not in self._configurations:
                 raise ValueError(f"Tenant configuration not found: {tenant_id}")
@@ -664,14 +694,23 @@ class WhiteLabelManager:
     
     async def get_tenant_configuration(self, tenant_id: str) -> Optional[WhiteLabelConfiguration]:
         """Get tenant white-label configuration"""
+
+
+
         return self._configurations.get(tenant_id)
     
     async def get_available_templates(self) -> List[CustomizationTemplate]:
         """Get available customization templates"""
+
+
+
         return list(self._templates.values())
     
     async def export_theme_configuration(self, tenant_id: str) -> Dict[str, Any]:
         """Export theme configuration for backup/migration"""
+
+
+
         try:
             if tenant_id not in self._configurations:
                 raise ValueError(f"Tenant configuration not found: {tenant_id}")
@@ -704,6 +743,9 @@ class WhiteLabelManager:
     
     async def health_check(self) -> Dict[str, Any]:
         """Health check for white-label manager"""
+
+
+
         try:
             return {
                 'status': 'healthy',

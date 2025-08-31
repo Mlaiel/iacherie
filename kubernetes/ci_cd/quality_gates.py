@@ -1,5 +1,5 @@
 """
-🔧 Quality Gates Validator - IA-Influencer-Agent CI/CD
+ Quality Gates Validator - IA-Influencer-Agent CI/CD
 ================================================================
 Expert: DEVOPS_ENGINEER + QA_ENGINEER
 Created: 2025-08-24
@@ -121,15 +121,18 @@ class QualityGateValidator:
         
     async def initialize(self) -> bool:
         """Initialize quality gate validator"""
+
+
+
         try:
             # Verify required tools are available
             await self._verify_quality_tools()
             
             self.initialized = True
-            self.logger.info("✅ Quality gate validator initialized")
+            self.logger.info(" Quality gate validator initialized")
             return True
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize quality validator: {e}")
+            self.logger.error(f" Failed to initialize quality validator: {e}")
             return False
     
     async def _verify_quality_tools(self) -> None:
@@ -154,6 +157,9 @@ class QualityGateValidator:
     
     async def _check_tool_available(self, tool: str) -> bool:
         """Check if a tool is available in PATH"""
+
+
+
         try:
             result = await self._run_command([tool, "--version"], timeout=30)
             return result.returncode == 0
@@ -214,11 +220,11 @@ class QualityGateValidator:
             
             self.validation_history.append(report)
             
-            self.logger.info(f"✅ Quality validation completed. Overall score: {overall_score:.1f}%")
+            self.logger.info(f" Quality validation completed. Overall score: {overall_score:.1f}%")
             return report
             
         except Exception as e:
-            self.logger.error(f"❌ Quality validation failed: {e}")
+            self.logger.error(f" Quality validation failed: {e}")
             
             # Return failed report
             return QualityValidationReport(
@@ -284,6 +290,9 @@ class QualityGateValidator:
         config: QualityGateConfig
     ) -> QualityGateResult:
         """Validate code coverage"""
+
+
+
         try:
             # Run pytest with coverage
             cmd = [
@@ -332,6 +341,9 @@ class QualityGateValidator:
         config: QualityGateConfig
     ) -> QualityGateResult:
         """Validate code linting"""
+
+
+
         try:
             # Run flake8 linting
             cmd = [
@@ -389,6 +401,9 @@ class QualityGateValidator:
         config: QualityGateConfig
     ) -> QualityGateResult:
         """Validate type checking"""
+
+
+
         try:
             # Run mypy type checking
             cmd = [
@@ -444,6 +459,9 @@ class QualityGateValidator:
         config: QualityGateConfig
     ) -> QualityGateResult:
         """Validate security scanning"""
+
+
+
         try:
             # Run bandit security scan
             cmd = [
@@ -516,6 +534,9 @@ class QualityGateValidator:
         config: QualityGateConfig
     ) -> QualityGateResult:
         """Validate dependency vulnerabilities"""
+
+
+
         try:
             # Run safety check for known vulnerabilities
             cmd = ["safety", "check", "--json"]
@@ -564,6 +585,9 @@ class QualityGateValidator:
         config: QualityGateConfig
     ) -> QualityGateResult:
         """Validate code complexity"""
+
+
+
         try:
             # Run radon complexity analysis
             cmd = [
@@ -635,6 +659,9 @@ class QualityGateValidator:
         config: QualityGateConfig
     ) -> QualityGateResult:
         """Validate performance tests"""
+
+
+
         try:
             # Run performance tests using pytest-benchmark
             cmd = [
@@ -691,6 +718,9 @@ class QualityGateValidator:
         config: QualityGateConfig
     ) -> QualityGateResult:
         """Validate documentation coverage"""
+
+
+
         try:
             # Check for documentation files
             doc_files = []
@@ -825,6 +855,9 @@ class QualityGateValidator:
         timeout: int = 300
     ) -> subprocess.CompletedProcess:
         """Run shell command asynchronously"""
+
+
+
         try:
             process = await asyncio.create_subprocess_exec(
                 *cmd,
@@ -852,6 +885,9 @@ class QualityGateValidator:
     
     def get_validation_history(self, limit: int = 10) -> List[QualityValidationReport]:
         """Get validation history"""
+
+
+
         return self.validation_history[-limit:]
     
     def get_quality_trends(self) -> Dict[str, Any]:

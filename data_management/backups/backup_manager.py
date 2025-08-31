@@ -1,5 +1,5 @@
 """
-💾 Backup Manager - Enterprise Backup Orchestration System
+ Backup Manager - Enterprise Backup Orchestration System
 ========================================================
 Module: backend/data_management/backups/backup_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Backup Management - Enterprise Production-Ready
 Responsibility: Orchestration intelligente des sauvegardes multi-format
 ===========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -55,6 +55,9 @@ class BackupConfiguration:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convertit la configuration en dictionnaire"""
+
+
+
         return {
             "backup_type": self.backup_type,
             "compression_enabled": self.compression_enabled,
@@ -131,6 +134,9 @@ class BackupManager:
         Returns:
             BackupJob: Job de sauvegarde créé
         """
+
+
+
         try:
             # Génération job unique
             job_id = str(uuid.uuid4())
@@ -170,6 +176,9 @@ class BackupManager:
         Args:
             job: Job de sauvegarde à exécuter
         """
+
+
+
         try:
             # Mise à jour statut
             job.status = BackupStatus.RUNNING
@@ -553,6 +562,9 @@ class BackupOrchestrator:
     
     def _create_load_balancer(self):
         """Create intelligent load balancer for backup managers"""
+
+
+
         try:
             # Create load balancer with round-robin and health checking
             load_balancer_config = {

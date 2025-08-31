@@ -1,15 +1,15 @@
 """
-🚀 Metadata Extractor - IA Influencer Agent Platform Enterprise
+ Metadata Extractor - IA Influencer Agent Platform Enterprise
 ==============================================================
 Module: backend/data_management/validation/metadata_extractor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ==============================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 EXTRACTION MÉTADONNÉES AVANCÉE
+ EXTRACTION MÉTADONNÉES AVANCÉE
 Extraction complète de métadonnées multi-format avec IA
 - EXIF/GPS pour images haute précision
 - Tags audio ID3/FLAC/MP4 complets
@@ -161,6 +161,9 @@ class ImageMetadataExtractor:
     
     def extract_metadata(self, file_path: str) -> ContentMetadata:
         """Extrait toutes les métadonnées d'une image"""
+
+
+
         try:
             # Ouverture de l'image
             image = Image.open(file_path)
@@ -274,6 +277,9 @@ class ImageMetadataExtractor:
     
     def _extract_geolocation(self, exif_data: Dict[str, Any]) -> Optional[GeolocationData]:
         """Extrait la géolocalisation depuis EXIF"""
+
+
+
         try:
             # Recherche des données GPS
             gps_latitude = None
@@ -304,6 +310,9 @@ class ImageMetadataExtractor:
     
     def _convert_gps_coordinate(self, coordinate: tuple, reference: str) -> float:
         """Convertit les coordonnées GPS EXIF en degrés décimaux"""
+
+
+
         try:
             if len(coordinate) >= 3:
                 degrees = float(coordinate[0])
@@ -376,6 +385,9 @@ class ImageMetadataExtractor:
     
     def _extract_dominant_colors(self, image: Image.Image, num_colors: int = 5) -> List[str]:
         """Extrait les couleurs dominantes"""
+
+
+
         try:
             # Redimensionner pour performance
             image_small = image.resize((150, 150))
@@ -440,6 +452,9 @@ class ImageMetadataExtractor:
     
     def _create_error_metadata(self, file_path: str, error: str) -> ContentMetadata:
         """Crée des métadonnées d'erreur"""
+
+
+
         return ContentMetadata(
             file_path=file_path,
             technical=TechnicalMetadata(
@@ -469,6 +484,9 @@ class AudioMetadataExtractor:
     
     def extract_metadata(self, file_path: str) -> ContentMetadata:
         """Extrait toutes les métadonnées d'un fichier audio"""
+
+
+
         try:
             # Métadonnées techniques
             technical = self._extract_technical_metadata(file_path)
@@ -761,6 +779,9 @@ class AudioMetadataExtractor:
     
     def _classify_audio_genre(self, mfcc_mean, spectral_centroid, spectral_rolloff, zero_crossing_rate, tempo):
         """Simple rule-based audio genre classification"""
+
+
+
         try:
             # Genre classification based on audio features
             # These are simplified rules - in production, you'd use a trained ML model
@@ -803,6 +824,9 @@ class AudioMetadataExtractor:
     
     def _create_error_metadata(self, file_path: str, error: str) -> ContentMetadata:
         """Crée des métadonnées d'erreur"""
+
+
+
         return ContentMetadata(
             file_path=file_path,
             technical=TechnicalMetadata(
@@ -824,6 +848,9 @@ class VideoMetadataExtractor:
     
     def extract_metadata(self, file_path: str) -> ContentMetadata:
         """Extrait toutes les métadonnées d'un fichier vidéo"""
+
+
+
         try:
             # Métadonnées techniques
             technical = self._extract_technical_metadata(file_path)
@@ -1027,6 +1054,9 @@ class VideoMetadataExtractor:
     
     def _create_error_metadata(self, file_path: str, error: str) -> ContentMetadata:
         """Crée des métadonnées d'erreur"""
+
+
+
         return ContentMetadata(
             file_path=file_path,
             technical=TechnicalMetadata(
@@ -1058,6 +1088,9 @@ class TextMetadataExtractor:
     
     def extract_metadata(self, file_path: str) -> ContentMetadata:
         """Extrait toutes les métadonnées d'un fichier texte"""
+
+
+
         try:
             # Lecture du contenu
             content = self._read_text_content(file_path)
@@ -1092,6 +1125,9 @@ class TextMetadataExtractor:
     
     def _read_text_content(self, file_path: str) -> str:
         """Lit le contenu du fichier texte avec détection d'encodage"""
+
+
+
         try:
             # Détection d'encodage
             with open(file_path, 'rb') as f:
@@ -1241,6 +1277,9 @@ class TextMetadataExtractor:
     
     def _create_error_metadata(self, file_path: str, error: str) -> ContentMetadata:
         """Crée des métadonnées d'erreur"""
+
+
+
         return ContentMetadata(
             file_path=file_path,
             technical=TechnicalMetadata(
@@ -1357,6 +1396,9 @@ class MetadataExtractor:
     
     def _create_error_metadata(self, file_path: str, error: str) -> ContentMetadata:
         """Crée des métadonnées d'erreur"""
+
+
+
         return ContentMetadata(
             file_path=file_path,
             technical=TechnicalMetadata(

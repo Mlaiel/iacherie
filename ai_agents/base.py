@@ -7,7 +7,7 @@ for all AI agents in the IA-Influencer-Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -261,6 +261,9 @@ class BaseAgent(ABC):
         
     async def initialize(self) -> bool:
         """Initialize agent resources and dependencies"""
+
+
+
         try:
             await self._setup_database_connection()
             await self._setup_redis_connection()
@@ -278,6 +281,9 @@ class BaseAgent(ABC):
     
     async def _setup_database_connection(self):
         """Setup database connection with connection pooling"""
+
+
+
         try:
             self._db_session = await get_db_session()
             logger.debug(f"Database connection established for agent {self.agent_id}")
@@ -287,6 +293,9 @@ class BaseAgent(ABC):
     
     async def _setup_redis_connection(self):
         """Setup Redis connection for caching and message queuing"""
+
+
+
         try:
             self._redis_client = aioredis.Redis(
                 host=settings.REDIS_HOST,
@@ -320,6 +329,9 @@ class BaseAgent(ABC):
     @abstractmethod
     def get_required_config_keys(self) -> List[str]:
         """Return list of required configuration keys for this agent"""
+
+
+
         return []
     
     async def process_request(self, request: AgentRequest) -> AgentResponse:
@@ -376,6 +388,9 @@ class BaseAgent(ABC):
     @asynccontextmanager
     async def _request_timeout(self, timeout_seconds: int):
         """Context manager for request timeout handling"""
+
+
+
         try:
             async with asyncio.timeout(timeout_seconds):
                 yield
@@ -428,6 +443,9 @@ class BaseAgent(ABC):
     
     async def _validate_request_data(self, data: Dict[str, Any]):
         """Validate request data structure and content"""
+
+
+
         try:
             # Basic data structure validation
             if not isinstance(data, dict):
@@ -545,6 +563,9 @@ class BaseAgent(ABC):
         error_code: str
     ) -> AgentResponse:
         """Create standardized error response"""
+
+
+
         return AgentResponse(
             success=False,
             request_id=request.request_id,

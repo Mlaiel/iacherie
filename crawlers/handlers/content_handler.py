@@ -114,6 +114,9 @@ class ContentTypeDetector:
         Returns:
             Tuple of (content_type, metadata)
         """
+
+
+
         try:
             # Get file information
             file_stat = os.stat(file_path)
@@ -174,6 +177,9 @@ class ContentTypeDetector:
     
     def _get_audio_metadata(self, file_path: str) -> Dict[str, Any]:
         """Extract audio-specific metadata."""
+
+
+
         try:
             y, sr = librosa.load(file_path)
             duration = librosa.get_duration(y=y, sr=sr)
@@ -197,6 +203,9 @@ class ContentTypeDetector:
     
     def _get_video_metadata(self, file_path: str) -> Dict[str, Any]:
         """Extract video-specific metadata."""
+
+
+
         try:
             cap = cv2.VideoCapture(file_path)
             
@@ -223,6 +232,9 @@ class ContentTypeDetector:
     
     def _get_image_metadata(self, file_path: str) -> Dict[str, Any]:
         """Extract image-specific metadata."""
+
+
+
         try:
             with Image.open(file_path) as img:
                 metadata = {
@@ -252,6 +264,9 @@ class ContentTypeDetector:
     
     def _get_text_metadata(self, file_path: str) -> Dict[str, Any]:
         """Extract text-specific metadata."""
+
+
+
         try:
             # Detect encoding
             with open(file_path, 'rb') as f:
@@ -315,6 +330,9 @@ class ContentProcessor:
         Returns:
             Processed content information
         """
+
+
+
         try:
             # Security validation
             await self._validate_security(content_data, filename)
@@ -364,6 +382,9 @@ class ContentProcessor:
     
     async def _validate_security(self, content_data: Union[str, bytes], filename: str):
         """Validate content security and safety."""
+
+
+
         try:
             # File extension validation
             if not self.file_validator.is_allowed_extension(filename):
@@ -387,6 +408,9 @@ class ContentProcessor:
         filename: str
     ) -> str:
         """Save content to temporary file for processing."""
+
+
+
         try:
             # Generate unique temporary filename
             timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
@@ -421,6 +445,9 @@ class ContentProcessor:
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Process content based on its type."""
+
+
+
         try:
             if content_type == 'audio':
                 return await self._process_audio(file_path, metadata)
@@ -527,6 +554,9 @@ class ContentProcessor:
     
     async def _process_text(self, file_path: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
         """Process text content for fingerprinting."""
+
+
+
         try:
             # Read text content
             encoding = metadata.get('encoding', 'utf-8')
@@ -572,6 +602,9 @@ class ContentProcessor:
         processed_data: Dict[str, Any]
     ) -> Dict[str, Any]:
         """Prepare processed content for fingerprinting systems."""
+
+
+
         try:
             fingerprint_data = {
                 'content_type': content_type,
@@ -610,6 +643,9 @@ class ContentProcessor:
     
     async def cleanup_temporary_file(self, file_path: str):
         """Clean up temporary files after processing."""
+
+
+
         try:
             if os.path.exists(file_path):
                 os.remove(file_path)
@@ -644,6 +680,9 @@ class ContentHandler:
         Returns:
             Complete processing result
         """
+
+
+
         try:
             logger.info(f"Processing content: {filename} for user {user_id}")
             
@@ -667,4 +706,7 @@ class ContentHandler:
 # Factory function for easy instantiation
 def create_content_handler() -> ContentHandler:
     """Create and return a ContentHandler instance."""
+
+
+
     return ContentHandler()

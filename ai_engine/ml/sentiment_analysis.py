@@ -7,7 +7,7 @@ in the IA Influencer platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Contact: mlaiel@live.de
@@ -289,6 +289,9 @@ class TextSentimentAnalyzer(SentimentAnalyzer):
     
     async def load_model(self):
         """Load text sentiment analysis models"""
+
+
+
         try:
             # Load RoBERTa model for sentiment
             self.roberta_pipeline = pipeline(
@@ -403,8 +406,8 @@ class TextSentimentAnalyzer(SentimentAnalyzer):
     def _process_emojis(self, text: str) -> str:
         """Convert emojis to text sentiment indicators"""
         # Define emoji sentiment mapping
-        positive_emojis = ['😊', '😄', '😁', '🙂', '😍', '🥰', '😘', '🤗', '👍', '❤️', '💕', '🎉']
-        negative_emojis = ['😢', '😭', '😔', '😞', '😒', '😠', '😡', '🤬', '💔', '😰', '😱', '👎']
+        positive_emojis = ['', '', '', '', '', '🥰', '', '🤗', '', '', '', '']
+        negative_emojis = ['', '', '', '', '', '', '', '🤬', '', '', '', '']
         
         for emoji_char in positive_emojis:
             if emoji_char in text:
@@ -639,6 +642,9 @@ class TextSentimentAnalyzer(SentimentAnalyzer):
     
     def _load_intensity_modifiers(self) -> Dict[str, float]:
         """Load intensity modifiers"""
+
+
+
         return {
             'very': 1.3,
             'extremely': 1.5,
@@ -671,6 +677,9 @@ class MultiModalSentimentAnalyzer:
     
     async def load_models(self):
         """Load all modal-specific analyzers"""
+
+
+
         try:
             await self.text_analyzer.load_model()
             # Additional modal analyzers would be loaded here
@@ -941,6 +950,9 @@ class ToneAnalyzer(TextSentimentAnalyzer):
     
     async def analyze_tone_only(self, text: str) -> ToneAnalysisResult:
         """Analyze only tone characteristics"""
+
+
+
         return await self._analyze_tone(text)
 
 

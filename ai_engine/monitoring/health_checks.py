@@ -520,6 +520,9 @@ class HealthChecks:
         
     async def _check_database(self, name: str, config: Dict[str, Any]) -> HealthCheckResult:
         """Check database health"""
+
+
+
         try:
             if self.database_session:
                 # Test database connection with a simple query
@@ -558,6 +561,9 @@ class HealthChecks:
             
     async def _check_cache(self, name: str, config: Dict[str, Any]) -> HealthCheckResult:
         """Check cache (Redis) health"""
+
+
+
         try:
             if self.redis_client:
                 # Test Redis connection
@@ -677,6 +683,9 @@ class HealthChecks:
             
     async def _check_ai_model(self, name: str, config: Dict[str, Any]) -> HealthCheckResult:
         """Check AI model health"""
+
+
+
         try:
             # This would integrate with actual AI model monitoring
             # For now, simulate a model health check
@@ -729,6 +738,9 @@ class HealthChecks:
             
     async def _check_storage(self, name: str, config: Dict[str, Any]) -> HealthCheckResult:
         """Check storage health"""
+
+
+
         try:
             # This would integrate with actual storage system (S3, etc.)
             # For now, simulate storage health check
@@ -785,6 +797,9 @@ class HealthChecks:
             
     async def _check_queue(self, name: str, config: Dict[str, Any]) -> HealthCheckResult:
         """Check message queue health"""
+
+
+
         try:
             # This would integrate with actual queue system (Celery/Redis)
             # For now, simulate queue health check
@@ -870,6 +885,9 @@ class HealthChecks:
             
     async def _check_microservice(self, name: str, config: Dict[str, Any]) -> HealthCheckResult:
         """Check microservice health"""
+
+
+
         return await self._check_api(name, config)  # Same as API check
         
     async def _check_network(self, name: str, config: Dict[str, Any]) -> HealthCheckResult:
@@ -914,6 +932,9 @@ class HealthChecks:
             
     async def _check_system(self, name: str, config: Dict[str, Any]) -> HealthCheckResult:
         """Check system resources health"""
+
+
+
         try:
             # Get system metrics
             cpu_percent = psutil.cpu_percent(interval=1)

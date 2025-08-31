@@ -1,5 +1,5 @@
 """
-⚙️ Audio Processing Configuration - Professional Configuration Management
+ Audio Processing Configuration - Professional Configuration Management
 
 Centralized configuration system for all audio processing components.
 Supports multiple environments, validation, and dynamic updates.
@@ -41,7 +41,7 @@ class LogLevel(Enum):
 @dataclass
 class AudioProcessingConfig:
     """
-    🔧 Comprehensive Audio Processing Configuration
+     Comprehensive Audio Processing Configuration
     
     Centralized configuration for all audio processing components:
     - Audio parameters and quality settings
@@ -282,6 +282,9 @@ class AudioProcessingConfig:
     
     def get_api_timeout(self, api_name: str) -> float:
         """Get timeout for specific API"""
+
+
+
         return self.api_timeouts.get(api_name, self.api_timeouts.get("default", 30.0))
     
     def update_parameter(self, parameter_path: str, value: Any):
@@ -374,7 +377,7 @@ class AudioProcessingConfig:
 
 class ConfigurationManager:
     """
-    🔧 Configuration Manager
+     Configuration Manager
     
     Advanced configuration management system:
     - Environment-specific configurations
@@ -585,6 +588,9 @@ class ConfigurationManager:
     
     def get_environment_config(self, environment: Environment) -> AudioProcessingConfig:
         """Get configuration for specific environment"""
+
+
+
         return self.load_config("default", environment)
     
     def list_available_configs(self) -> List[str]:
@@ -601,6 +607,9 @@ class ConfigurationManager:
     
     def get_current_config(self) -> Optional[AudioProcessingConfig]:
         """Get current configuration"""
+
+
+
         return self.current_config
     
     def set_current_config(self, config: AudioProcessingConfig):
@@ -630,6 +639,9 @@ def set_config(config: AudioProcessingConfig):
 def load_config(config_name: str = "default", 
                environment: Optional[Environment] = None) -> AudioProcessingConfig:
     """Load configuration from file"""
+
+
+
     return _config_manager.load_config(config_name, environment)
 
 
@@ -642,12 +654,18 @@ def save_config(config: AudioProcessingConfig,
 
 def get_template(template_name: str) -> AudioProcessingConfig:
     """Get configuration template"""
+
+
+
     return _config_manager.get_template(template_name)
 
 
 def create_config_from_template(template_name: str,
                                overrides: Optional[Dict[str, Any]] = None) -> AudioProcessingConfig:
     """Create configuration from template"""
+
+
+
     return _config_manager.create_config_from_template(template_name, overrides)
 
 

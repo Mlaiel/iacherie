@@ -7,7 +7,7 @@ Provides comprehensive indexing, search, and retrieval capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -173,6 +173,9 @@ class MultimediaIndex:
         
     async def initialize(self):
         """Initialize index system"""
+
+
+
         try:
             await self.analyzer.initialize()
             await self.metadata_extractor.initialize()
@@ -199,6 +202,9 @@ class MultimediaIndex:
         metadata: Dict[str, Any] = None
     ) -> str:
         """Index multimedia content"""
+
+
+
         try:
             # Generate content ID
             content_id = self._generate_content_id(file_path)
@@ -254,6 +260,9 @@ class MultimediaIndex:
         metadata_list: Optional[List[Dict[str, Any]]] = None
     ) -> List[str]:
         """Index multiple files in batch"""
+
+
+
         try:
             # Create semaphore for parallel processing
             semaphore = asyncio.Semaphore(self.batch_size)
@@ -343,6 +352,9 @@ class MultimediaIndex:
         similarity_threshold: float = 0.7
     ) -> List[SearchResult]:
         """Find similar content"""
+
+
+
         try:
             content = self.indexed_content.get(content_id)
             if not content:
@@ -381,6 +393,9 @@ class MultimediaIndex:
             
     async def get_content(self, content_id: str) -> Optional[IndexedContent]:
         """Get indexed content by ID"""
+
+
+
         return self.indexed_content.get(content_id)
         
     async def update_content(
@@ -389,6 +404,9 @@ class MultimediaIndex:
         updates: Dict[str, Any]
     ) -> bool:
         """Update indexed content"""
+
+
+
         try:
             content = self.indexed_content.get(content_id)
             if not content:
@@ -413,6 +431,9 @@ class MultimediaIndex:
             
     async def remove_content(self, content_id: str) -> bool:
         """Remove content from index"""
+
+
+
         try:
             if content_id not in self.indexed_content:
                 return False
@@ -438,6 +459,9 @@ class MultimediaIndex:
             
     async def get_index_stats(self) -> Dict[str, Any]:
         """Get index statistics"""
+
+
+
         return {
             **self.index_stats,
             "index_size_mb": sum(content.file_size for content in self.indexed_content.values()) / (1024 * 1024),
@@ -446,6 +470,9 @@ class MultimediaIndex:
         
     async def health_check(self) -> Dict[str, Any]:
         """Index health check"""
+
+
+
         try:
             # Check search engines
             search_engines_status = {}

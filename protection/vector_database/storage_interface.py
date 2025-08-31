@@ -1,5 +1,5 @@
 """
-🔄 Vector Storage Interface
+ Vector Storage Interface
 ===========================
 
 Unified interface for different vector storage backends.
@@ -138,6 +138,9 @@ class MemoryVectorStorage(VectorStorageInterface):
     
     async def initialize(self) -> bool:
         """Initialize memory storage"""
+
+
+
         try:
             self.logger.info("Initializing memory vector storage")
             return True
@@ -147,6 +150,9 @@ class MemoryVectorStorage(VectorStorageInterface):
     
     async def add_vector(self, record: VectorRecord) -> bool:
         """Add a single vector record"""
+
+
+
         try:
             if len(self.vectors) >= self.max_vectors:
                 self.logger.warning(f"Maximum vector limit ({self.max_vectors}) reached")
@@ -180,6 +186,9 @@ class MemoryVectorStorage(VectorStorageInterface):
     
     async def search(self, query: SearchQuery) -> List[SearchResultItem]:
         """Search for similar vectors"""
+
+
+
         try:
             self.total_searches += 1
             
@@ -226,6 +235,9 @@ class MemoryVectorStorage(VectorStorageInterface):
     
     def _calculate_similarity(self, vector1: np.ndarray, vector2: np.ndarray) -> float:
         """Calculate similarity between two vectors"""
+
+
+
         try:
             if self.similarity_metric == 'cosine':
                 # Cosine similarity
@@ -267,10 +279,16 @@ class MemoryVectorStorage(VectorStorageInterface):
     
     async def get_vector(self, vector_id: str) -> Optional[VectorRecord]:
         """Get a specific vector by ID"""
+
+
+
         return self.vectors.get(vector_id)
     
     async def update_metadata(self, vector_id: str, metadata: Dict[str, Any]) -> bool:
         """Update metadata for a vector"""
+
+
+
         try:
             if vector_id not in self.vectors:
                 return False
@@ -284,6 +302,9 @@ class MemoryVectorStorage(VectorStorageInterface):
     
     async def remove_vector(self, vector_id: str) -> bool:
         """Remove a vector"""
+
+
+
         try:
             if vector_id in self.vectors:
                 del self.vectors[vector_id]
@@ -315,6 +336,9 @@ class MemoryVectorStorage(VectorStorageInterface):
     
     async def save(self, path: str) -> bool:
         """Save storage to disk"""
+
+
+
         try:
             import pickle
             
@@ -336,6 +360,9 @@ class MemoryVectorStorage(VectorStorageInterface):
     
     async def load(self, path: str) -> bool:
         """Load storage from disk"""
+
+
+
         try:
             import pickle
             
@@ -356,6 +383,9 @@ class MemoryVectorStorage(VectorStorageInterface):
     
     async def clear(self) -> bool:
         """Clear all vectors"""
+
+
+
         try:
             self.vectors.clear()
             self.dimension = None
@@ -420,6 +450,9 @@ class VectorStorageManager:
         storage_config: Optional[Dict[str, Any]] = None
     ) -> bool:
         """Create a new storage instance"""
+
+
+
         try:
             backend = backend or self.default_backend
             config = storage_config or self.config.get('storage_configs', {}).get(storage_name, {})
@@ -440,6 +473,9 @@ class VectorStorageManager:
     
     def get_storage(self, storage_name: str) -> Optional[VectorStorageInterface]:
         """Get a storage instance"""
+
+
+
         return self.storages.get(storage_name)
     
     async def route_operation(
@@ -449,6 +485,9 @@ class VectorStorageManager:
         **kwargs
     ) -> Any:
         """Route operation to appropriate storage"""
+
+
+
         try:
             # Use specified storage or default
             if storage_name and storage_name in self.storages:
@@ -490,6 +529,9 @@ class VectorStorageManager:
     
     def list_storages(self) -> List[str]:
         """List available storage instances"""
+
+
+
         return list(self.storages.keys())
     
     async def get_all_stats(self) -> Dict[str, Dict[str, Any]]:
@@ -506,6 +548,9 @@ class VectorStorageManager:
     
     async def remove_storage(self, storage_name: str) -> bool:
         """Remove a storage instance"""
+
+
+
         try:
             if storage_name in self.storages:
                 del self.storages[storage_name]

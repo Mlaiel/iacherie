@@ -7,7 +7,7 @@ data structures for the recommendation system.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -227,6 +227,9 @@ class InteractionEvent:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert interaction event to dictionary for storage"""
+
+
+
         return {
             'event_id': self.event_id,
             'user_id': self.user_id,
@@ -379,6 +382,9 @@ class SimilarityScore:
     
     def is_significant(self, threshold: float = 0.7) -> bool:
         """Check if similarity score is significant"""
+
+
+
         return self.score >= threshold and self.confidence >= 0.8
 
 

@@ -15,7 +15,7 @@ Team Specialties:
 - DevOps Engineer: Fahed Mlaiel
 - IA Prompt Engineer: Fahed Mlaiel
 
-⚠️  PROPRIETARY SOFTWARE WARNING ⚠️
+  PROPRIETARY SOFTWARE WARNING 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, modification, or distribution of this code
 without explicit written permission from the author is strictly prohibited

@@ -7,7 +7,7 @@ for content discovery, surveillance, and monitoring operations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -476,6 +476,9 @@ class CrawlingServiceInterface:
         Returns:
             Service performance and usage statistics
         """
+
+
+
         return {
             'service_stats': self.service_stats,
             'agent_pool_size': len(self.agent_manager.agents),

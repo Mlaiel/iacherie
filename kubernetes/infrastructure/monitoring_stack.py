@@ -16,7 +16,7 @@ Features:
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED 
 """
 
 import asyncio
@@ -191,6 +191,9 @@ class MonitoringStackManager:
         
     async def deploy_monitoring_stack(self, spec: MonitoringStackSpec) -> Dict[str, Any]:
         """Deploy comprehensive monitoring and observability infrastructure"""
+
+
+
         try:
             results = {}
             logger.info("Deploying monitoring stack for IA Influencer platform")
@@ -270,6 +273,9 @@ class MonitoringStackManager:
     
     async def _deploy_prometheus_stack(self, spec: MonitoringStackSpec) -> Dict[str, Any]:
         """Deploy Prometheus monitoring infrastructure"""
+
+
+
         try:
             # Deploy Prometheus Operator first
             prometheus_operator = client.V1Deployment(
@@ -342,6 +348,9 @@ class MonitoringStackManager:
     
     async def _deploy_grafana_stack(self, spec: MonitoringStackSpec) -> Dict[str, Any]:
         """Deploy Grafana visualization infrastructure"""
+
+
+
         try:
             # Deploy Grafana
             grafana_deployment = client.V1Deployment(
@@ -476,6 +485,9 @@ class MonitoringStackManager:
     
     async def _deploy_ia_influencer_monitoring(self, spec: MonitoringStackSpec) -> Dict[str, Any]:
         """Deploy IA Influencer specific monitoring infrastructure"""
+
+
+
         try:
             # Deploy content protection monitoring
             content_protection_monitor = client.V1Deployment(
@@ -566,6 +578,9 @@ class MonitoringStackManager:
     
     async def _create_ia_influencer_dashboards(self, spec: MonitoringStackSpec) -> Dict[str, Any]:
         """Create comprehensive IA Influencer dashboards"""
+
+
+
         try:
             dashboards = {}
             
@@ -781,6 +796,9 @@ class MonitoringStackManager:
     
     async def get_monitoring_status(self, namespace: str = "ia-influencer-monitoring") -> Dict[str, Any]:
         """Get comprehensive monitoring stack status"""
+
+
+
         try:
             status = {
                 'overall_health': 'healthy',
@@ -863,6 +881,9 @@ class MonitoringStackManager:
         
     async def deploy_monitoring_stack(self, spec: MonitoringSpec) -> Dict[str, Any]:
         """Deploy complete monitoring stack"""
+
+
+
         try:
             results = {}
             
@@ -949,6 +970,9 @@ class MonitoringStackManager:
     
     async def _create_monitoring_namespace(self, namespace: str) -> Dict[str, Any]:
         """Create monitoring namespace"""
+
+
+
         try:
             namespace_obj = client.V1Namespace(
                 metadata=client.V1ObjectMeta(
@@ -978,6 +1002,9 @@ class MonitoringStackManager:
     
     async def _deploy_prometheus(self, spec: MonitoringSpec) -> Dict[str, Any]:
         """Deploy Prometheus server"""
+
+
+
         try:
             # Create Prometheus ConfigMap
             prometheus_config = self._generate_prometheus_config()
@@ -1120,6 +1147,9 @@ class MonitoringStackManager:
     
     def _generate_prometheus_config(self) -> Dict[str, Any]:
         """Generate Prometheus configuration"""
+
+
+
         return {
             'global': {
                 'scrape_interval': '15s',
@@ -1201,6 +1231,9 @@ class MonitoringStackManager:
     
     async def _create_prometheus_rbac(self, namespace: str) -> Dict[str, Any]:
         """Create RBAC for Prometheus"""
+
+
+
         try:
             # Service Account
             service_account = client.V1ServiceAccount(
@@ -1261,6 +1294,9 @@ class MonitoringStackManager:
     
     async def _deploy_grafana(self, spec: MonitoringSpec) -> Dict[str, Any]:
         """Deploy Grafana dashboard"""
+
+
+
         try:
             # Grafana deployment
             deployment = client.V1Deployment(
@@ -1369,6 +1405,9 @@ class MonitoringStackManager:
     
     async def _deploy_alertmanager(self, spec: MonitoringSpec) -> Dict[str, Any]:
         """Deploy AlertManager"""
+
+
+
         try:
             # AlertManager configuration
             alertmanager_config = {
@@ -1492,6 +1531,9 @@ class MonitoringStackManager:
     
     async def _deploy_jaeger(self, spec: MonitoringSpec) -> Dict[str, Any]:
         """Deploy Jaeger for distributed tracing"""
+
+
+
         try:
             # Jaeger all-in-one deployment
             deployment = client.V1Deployment(
@@ -1570,6 +1612,9 @@ class MonitoringStackManager:
     
     async def _deploy_node_exporter(self, spec: MonitoringSpec) -> Dict[str, Any]:
         """Deploy Node Exporter as DaemonSet"""
+
+
+
         try:
             daemonset = client.V1DaemonSet(
                 metadata=client.V1ObjectMeta(
@@ -1633,6 +1678,9 @@ class MonitoringStackManager:
     
     async def _deploy_application_exporters(self, spec: MonitoringSpec) -> Dict[str, Any]:
         """Deploy application-specific exporters"""
+
+
+
         try:
             results = {}
             
@@ -1729,6 +1777,9 @@ class MonitoringStackManager:
     
     async def create_ia_influencer_dashboards(self) -> Dict[str, Any]:
         """Create IA Influencer specific Grafana dashboards"""
+
+
+
         try:
             dashboards = []
             
@@ -1837,6 +1888,9 @@ class MonitoringStackManager:
     
     async def create_alert_rules(self) -> Dict[str, Any]:
         """Create alert rules for IA Influencer platform"""
+
+
+
         try:
             alert_rules = [
                 AlertRule(
@@ -1885,6 +1939,9 @@ class MonitoringStackManager:
     
     async def get_monitoring_status(self, namespace: str = "monitoring") -> Dict[str, Any]:
         """Get monitoring stack status"""
+
+
+
         try:
             if not self.apps_v1:
                 return {'status': 'success', 'message': 'Monitoring stack configured'}

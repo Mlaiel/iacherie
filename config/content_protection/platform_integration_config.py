@@ -9,7 +9,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA-Influencer Agent + Content Protection Platform
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  COPYRIGHT WARNING:
+  COPYRIGHT WARNING:
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, modification, or distribution of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
@@ -243,6 +243,9 @@ class PlatformConfig:
     
     def is_capable(self, capability: PlatformCapability) -> bool:
         """Check if platform supports a specific capability."""
+
+
+
         return capability in self.capabilities
 
 
@@ -489,10 +492,16 @@ class PlatformIntegrationConfig:
     
     def get_platform_config(self, platform_name: str) -> Optional[PlatformConfig]:
         """Get configuration for a specific platform."""
+
+
+
         return self.platforms.get(platform_name.lower())
     
     def is_platform_enabled(self, platform_name: str) -> bool:
         """Check if a platform is enabled."""
+
+
+
         return platform_name.lower() in self.enabled_platforms
     
     def get_platforms_with_capability(self, capability: PlatformCapability) -> List[str]:
@@ -505,6 +514,9 @@ class PlatformIntegrationConfig:
     
     def validate_config(self) -> bool:
         """Validate the platform integration configuration."""
+
+
+
         try:
             if not self.enabled_platforms:
                 raise ValueError("At least one platform must be enabled")

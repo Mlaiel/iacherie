@@ -1,11 +1,11 @@
 """
-🌐 Container Networking Manager - IA-Influencer-Agent Infrastructure
+ Container Networking Manager - IA-Influencer-Agent Infrastructure
 ====================================================================
 Expert: Network Engineer + DevOps + Service Mesh Specialist
 Creator: Fahed Mlaiel <mlaiel@live.de>
 ====================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL 
 Tout vol, copie ou utilisation non autorisée de ce code source,
 de ce concept ou de cette propriété intellectuelle sans
 l'autorisation écrite explicite de Fahed Mlaiel est strictement
@@ -169,6 +169,9 @@ class ContainerNetworkingManager:
         
     async def initialize(self) -> bool:
         """Initialize container networking manager"""
+
+
+
         try:
             # Initialize Kubernetes client
             try:
@@ -195,15 +198,18 @@ class ContainerNetworkingManager:
             asyncio.create_task(self._health_check_task())
             
             self.initialized = True
-            self.logger.info("✅ ContainerNetworkingManager initialized successfully")
+            self.logger.info(" ContainerNetworkingManager initialized successfully")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error initializing ContainerNetworkingManager: {e}")
+            self.logger.error(f" Error initializing ContainerNetworkingManager: {e}")
             return False
     
     async def _initialize_service_discovery(self) -> None:
         """Initialize service discovery clients"""
+
+
+
         try:
             # Initialize Consul client
             try:
@@ -211,9 +217,9 @@ class ContainerNetworkingManager:
                     host=os.getenv('CONSUL_HOST', 'localhost'),
                     port=int(os.getenv('CONSUL_PORT', 8500))
                 )
-                self.logger.info("✅ Consul client initialized")
+                self.logger.info(" Consul client initialized")
             except Exception as e:
-                self.logger.warning(f"⚠️ Could not initialize Consul client: {e}")
+                self.logger.warning(f" Could not initialize Consul client: {e}")
             
             # Initialize etcd client
             try:
@@ -221,15 +227,18 @@ class ContainerNetworkingManager:
                     host=os.getenv('ETCD_HOST', 'localhost'),
                     port=int(os.getenv('ETCD_PORT', 2379))
                 )
-                self.logger.info("✅ etcd client initialized")
+                self.logger.info(" etcd client initialized")
             except Exception as e:
-                self.logger.warning(f"⚠️ Could not initialize etcd client: {e}")
+                self.logger.warning(f" Could not initialize etcd client: {e}")
                 
         except Exception as e:
-            self.logger.error(f"❌ Error initializing service discovery: {e}")
+            self.logger.error(f" Error initializing service discovery: {e}")
     
     async def _load_configurations(self) -> None:
         """Load existing networking configurations"""
+
+
+
         try:
             # Load services
             services_file = self.config_path / "services.yml"
@@ -259,10 +268,13 @@ class ContainerNetworkingManager:
                         self.network_policies[f"{policy.namespace}/{policy.name}"] = policy
                         
         except Exception as e:
-            self.logger.warning(f"⚠️ Error loading configurations: {e}")
+            self.logger.warning(f" Error loading configurations: {e}")
     
     async def _setup_default_networking(self) -> None:
         """Setup default networking for IA-Influencer platform"""
+
+
+
         try:
             # Web API Service
             web_api_service = ServiceConfig(
@@ -434,10 +446,13 @@ class ContainerNetworkingManager:
             await self._save_configurations()
             
         except Exception as e:
-            self.logger.error(f"❌ Error setting up default networking: {e}")
+            self.logger.error(f" Error setting up default networking: {e}")
     
     async def _setup_network_policies(self) -> None:
         """Setup network policies for IA-Influencer"""
+
+
+
         try:
             # Web API ingress policy
             web_api_policy = NetworkPolicy(
@@ -565,10 +580,13 @@ class ContainerNetworkingManager:
                 self.network_policies[policy_key] = policy
                 
         except Exception as e:
-            self.logger.error(f"❌ Error setting up network policies: {e}")
+            self.logger.error(f" Error setting up network policies: {e}")
     
     async def _setup_service_mesh(self) -> None:
         """Setup service mesh configuration"""
+
+
+
         try:
             # Istio service mesh for IA-Influencer
             istio_config = ServiceMeshConfig(
@@ -643,10 +661,13 @@ class ContainerNetworkingManager:
             self.service_mesh_configs["ia-influencer-mesh"] = istio_config
             
         except Exception as e:
-            self.logger.error(f"❌ Error setting up service mesh: {e}")
+            self.logger.error(f" Error setting up service mesh: {e}")
     
     async def _save_configurations(self) -> None:
         """Save networking configurations"""
+
+
+
         try:
             # Save services
             services_data = {
@@ -670,10 +691,13 @@ class ContainerNetworkingManager:
                 yaml.dump(policies_data, f, default_flow_style=False)
                 
         except Exception as e:
-            self.logger.error(f"❌ Error saving configurations: {e}")
+            self.logger.error(f" Error saving configurations: {e}")
     
     async def create_service(self, service_config: ServiceConfig) -> bool:
         """Create Kubernetes service"""
+
+
+
         try:
             v1 = client.CoreV1Api()
             
@@ -720,7 +744,7 @@ class ContainerNetworkingManager:
                 service_key = f"{service_config.namespace}/{service_config.name}"
                 self.services[service_key] = service_config
                 
-                self.logger.info(f"✅ Created service: {service_config.name}")
+                self.logger.info(f" Created service: {service_config.name}")
                 
                 # Register with service discovery
                 await self._register_service(service_config)
@@ -729,17 +753,20 @@ class ContainerNetworkingManager:
                 
             except client.rest.ApiException as e:
                 if e.status == 409:  # Already exists
-                    self.logger.info(f"ℹ️ Service {service_config.name} already exists")
+                    self.logger.info(f"ℹ Service {service_config.name} already exists")
                     return True
                 else:
                     raise e
                     
         except Exception as e:
-            self.logger.error(f"❌ Error creating service: {e}")
+            self.logger.error(f" Error creating service: {e}")
             return False
     
     async def create_ingress(self, ingress_config: IngressConfig) -> bool:
         """Create Kubernetes ingress"""
+
+
+
         try:
             networking_v1 = client.NetworkingV1Api()
             
@@ -789,22 +816,25 @@ class ContainerNetworkingManager:
                 ingress_key = f"{ingress_config.namespace}/{ingress_config.name}"
                 self.ingresses[ingress_key] = ingress_config
                 
-                self.logger.info(f"✅ Created ingress: {ingress_config.name}")
+                self.logger.info(f" Created ingress: {ingress_config.name}")
                 return True
                 
             except client.rest.ApiException as e:
                 if e.status == 409:  # Already exists
-                    self.logger.info(f"ℹ️ Ingress {ingress_config.name} already exists")
+                    self.logger.info(f"ℹ Ingress {ingress_config.name} already exists")
                     return True
                 else:
                     raise e
                     
         except Exception as e:
-            self.logger.error(f"❌ Error creating ingress: {e}")
+            self.logger.error(f" Error creating ingress: {e}")
             return False
     
     async def create_network_policy(self, policy: NetworkPolicy) -> bool:
         """Create Kubernetes network policy"""
+
+
+
         try:
             networking_v1 = client.NetworkingV1Api()
             
@@ -841,22 +871,25 @@ class ContainerNetworkingManager:
                 policy_key = f"{policy.namespace}/{policy.name}"
                 self.network_policies[policy_key] = policy
                 
-                self.logger.info(f"✅ Created network policy: {policy.name}")
+                self.logger.info(f" Created network policy: {policy.name}")
                 return True
                 
             except client.rest.ApiException as e:
                 if e.status == 409:  # Already exists
-                    self.logger.info(f"ℹ️ Network policy {policy.name} already exists")
+                    self.logger.info(f"ℹ Network policy {policy.name} already exists")
                     return True
                 else:
                     raise e
                     
         except Exception as e:
-            self.logger.error(f"❌ Error creating network policy: {e}")
+            self.logger.error(f" Error creating network policy: {e}")
             return False
     
     async def _register_service(self, service_config: ServiceConfig) -> None:
         """Register service with service discovery"""
+
+
+
         try:
             # Register with Consul
             if self.consul_client:
@@ -879,7 +912,7 @@ class ContainerNetworkingManager:
                         )
                     )
                     
-                    self.logger.debug(f"📝 Registered service {service_id} with Consul")
+                    self.logger.debug(f" Registered service {service_id} with Consul")
             
             # Register with etcd
             if self.etcd_client:
@@ -893,10 +926,10 @@ class ContainerNetworkingManager:
                 }
                 
                 self.etcd_client.put(service_key, json.dumps(service_data))
-                self.logger.debug(f"📝 Registered service with etcd: {service_key}")
+                self.logger.debug(f" Registered service with etcd: {service_key}")
                 
         except Exception as e:
-            self.logger.warning(f"⚠️ Error registering service: {e}")
+            self.logger.warning(f" Error registering service: {e}")
     
     async def _monitor_endpoints(self) -> None:
         """Monitor service endpoints"""
@@ -948,11 +981,14 @@ class ContainerNetworkingManager:
                 await asyncio.sleep(30)  # Check every 30 seconds
                 
             except Exception as e:
-                self.logger.error(f"❌ Error monitoring endpoints: {e}")
+                self.logger.error(f" Error monitoring endpoints: {e}")
                 await asyncio.sleep(60)
     
     async def _update_service_discovery(self) -> None:
         """Update service discovery with current endpoints"""
+
+
+
         try:
             for endpoint_key, endpoint_info in self.endpoints.items():
                 service_name = endpoint_info["name"]
@@ -978,7 +1014,7 @@ class ContainerNetworkingManager:
                                     ]
                                 )
                     except Exception as e:
-                        self.logger.warning(f"⚠️ Error updating Consul for {endpoint_key}: {e}")
+                        self.logger.warning(f" Error updating Consul for {endpoint_key}: {e}")
                 
                 # Update etcd
                 if self.etcd_client:
@@ -986,10 +1022,10 @@ class ContainerNetworkingManager:
                         endpoint_key_etcd = f"/endpoints/{namespace}/{service_name}"
                         self.etcd_client.put(endpoint_key_etcd, json.dumps(endpoint_info))
                     except Exception as e:
-                        self.logger.warning(f"⚠️ Error updating etcd for {endpoint_key}: {e}")
+                        self.logger.warning(f" Error updating etcd for {endpoint_key}: {e}")
                         
         except Exception as e:
-            self.logger.error(f"❌ Error updating service discovery: {e}")
+            self.logger.error(f" Error updating service discovery: {e}")
     
     async def _health_check_task(self) -> None:
         """Health check task for services"""
@@ -1001,16 +1037,19 @@ class ContainerNetworkingManager:
                 await asyncio.sleep(60)  # Check every minute
                 
             except Exception as e:
-                self.logger.error(f"❌ Error in health check task: {e}")
+                self.logger.error(f" Error in health check task: {e}")
                 await asyncio.sleep(60)
     
     async def _check_service_health(self, service_config: ServiceConfig) -> None:
         """Check health of a service"""
+
+
+
         try:
             endpoint_key = f"{service_config.namespace}/{service_config.name}"
             
             if endpoint_key not in self.endpoints:
-                self.logger.warning(f"⚠️ No endpoints found for service {service_config.name}")
+                self.logger.warning(f" No endpoints found for service {service_config.name}")
                 return
             
             endpoint_info = self.endpoints[endpoint_key]
@@ -1046,13 +1085,16 @@ class ContainerNetworkingManager:
                             # Mark service as unhealthy
                             pass
                 except Exception as e:
-                    self.logger.warning(f"⚠️ Error updating health status in Consul: {e}")
+                    self.logger.warning(f" Error updating health status in Consul: {e}")
                     
         except Exception as e:
-            self.logger.error(f"❌ Error checking service health: {e}")
+            self.logger.error(f" Error checking service health: {e}")
     
     async def setup_load_balancer(self, service_name: str, namespace: str, lb_config: LoadBalancerConfig) -> bool:
         """Setup load balancer for service"""
+
+
+
         try:
             # This would integrate with cloud provider LB or ingress controller
             # For now, we'll store the configuration
@@ -1092,15 +1134,18 @@ class ContainerNetworkingManager:
                 body=service
             )
             
-            self.logger.info(f"✅ Setup load balancer for service: {service_name}")
+            self.logger.info(f" Setup load balancer for service: {service_name}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error setting up load balancer: {e}")
+            self.logger.error(f" Error setting up load balancer: {e}")
             return False
     
     async def discover_services(self, namespace: str = None) -> List[Dict[str, Any]]:
         """Discover services in cluster"""
+
+
+
         try:
             v1 = client.CoreV1Api()
             
@@ -1138,11 +1183,14 @@ class ContainerNetworkingManager:
             return discovered_services
             
         except Exception as e:
-            self.logger.error(f"❌ Error discovering services: {e}")
+            self.logger.error(f" Error discovering services: {e}")
             return []
     
     async def get_service_topology(self, namespace: str = None) -> Dict[str, Any]:
         """Get service topology and dependencies"""
+
+
+
         try:
             services = await self.discover_services(namespace)
             
@@ -1204,11 +1252,14 @@ class ContainerNetworkingManager:
             return topology
             
         except Exception as e:
-            self.logger.error(f"❌ Error getting service topology: {e}")
+            self.logger.error(f" Error getting service topology: {e}")
             return {"nodes": [], "edges": [], "clusters": {}}
     
     async def cleanup_networking(self, namespace: str) -> bool:
         """Cleanup networking resources in namespace"""
+
+
+
         try:
             v1 = client.CoreV1Api()
             networking_v1 = client.NetworkingV1Api()
@@ -1222,9 +1273,9 @@ class ContainerNetworkingManager:
                             name=service.metadata.name,
                             namespace=namespace
                         )
-                        self.logger.info(f"🗑️ Deleted service: {service.metadata.name}")
+                        self.logger.info(f" Deleted service: {service.metadata.name}")
                     except Exception as e:
-                        self.logger.warning(f"⚠️ Error deleting service {service.metadata.name}: {e}")
+                        self.logger.warning(f" Error deleting service {service.metadata.name}: {e}")
             
             # Delete ingresses
             ingresses = networking_v1.list_namespaced_ingress(namespace=namespace)
@@ -1235,9 +1286,9 @@ class ContainerNetworkingManager:
                             name=ingress.metadata.name,
                             namespace=namespace
                         )
-                        self.logger.info(f"🗑️ Deleted ingress: {ingress.metadata.name}")
+                        self.logger.info(f" Deleted ingress: {ingress.metadata.name}")
                     except Exception as e:
-                        self.logger.warning(f"⚠️ Error deleting ingress {ingress.metadata.name}: {e}")
+                        self.logger.warning(f" Error deleting ingress {ingress.metadata.name}: {e}")
             
             # Delete network policies
             policies = networking_v1.list_namespaced_network_policy(namespace=namespace)
@@ -1248,9 +1299,9 @@ class ContainerNetworkingManager:
                             name=policy.metadata.name,
                             namespace=namespace
                         )
-                        self.logger.info(f"🗑️ Deleted network policy: {policy.metadata.name}")
+                        self.logger.info(f" Deleted network policy: {policy.metadata.name}")
                     except Exception as e:
-                        self.logger.warning(f"⚠️ Error deleting network policy {policy.metadata.name}: {e}")
+                        self.logger.warning(f" Error deleting network policy {policy.metadata.name}: {e}")
             
             # Cleanup service discovery entries
             if self.consul_client:
@@ -1260,9 +1311,9 @@ class ContainerNetworkingManager:
                     for service_id, service_info in services.items():
                         if "ia-influencer" in service_info.get("tags", []):
                             self.consul_client.agent.service.deregister(service_id)
-                            self.logger.info(f"🗑️ Deregistered service from Consul: {service_id}")
+                            self.logger.info(f" Deregistered service from Consul: {service_id}")
                 except Exception as e:
-                    self.logger.warning(f"⚠️ Error cleaning up Consul services: {e}")
+                    self.logger.warning(f" Error cleaning up Consul services: {e}")
             
             if self.etcd_client:
                 try:
@@ -1270,15 +1321,15 @@ class ContainerNetworkingManager:
                     for key_prefix in [f"/services/{namespace}/", f"/endpoints/{namespace}/"]:
                         for key, _ in self.etcd_client.get_prefix(key_prefix):
                             self.etcd_client.delete(key)
-                            self.logger.info(f"🗑️ Deleted etcd key: {key}")
+                            self.logger.info(f" Deleted etcd key: {key}")
                 except Exception as e:
-                    self.logger.warning(f"⚠️ Error cleaning up etcd entries: {e}")
+                    self.logger.warning(f" Error cleaning up etcd entries: {e}")
             
-            self.logger.info(f"✅ Cleaned up networking resources in namespace: {namespace}")
+            self.logger.info(f" Cleaned up networking resources in namespace: {namespace}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error cleaning up networking: {e}")
+            self.logger.error(f" Error cleaning up networking: {e}")
             return False
 
 class ServiceDiscoveryManager:
@@ -1292,6 +1343,9 @@ class ServiceDiscoveryManager:
     
     async def register_service(self, service_endpoint: ServiceEndpoint) -> bool:
         """Register service endpoint"""
+
+
+
         try:
             service_key = f"{service_endpoint.name}:{service_endpoint.port}"
             self.service_registry[service_key] = service_endpoint
@@ -1303,15 +1357,18 @@ class ServiceDiscoveryManager:
                 "consecutive_failures": 0
             }
             
-            self.logger.info(f"✅ Registered service endpoint: {service_endpoint.name}")
+            self.logger.info(f" Registered service endpoint: {service_endpoint.name}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error registering service endpoint: {e}")
+            self.logger.error(f" Error registering service endpoint: {e}")
             return False
     
     async def discover_service(self, service_name: str) -> List[ServiceEndpoint]:
         """Discover service endpoints"""
+
+
+
         try:
             endpoints = []
             
@@ -1324,11 +1381,14 @@ class ServiceDiscoveryManager:
             return endpoints
             
         except Exception as e:
-            self.logger.error(f"❌ Error discovering service: {e}")
+            self.logger.error(f" Error discovering service: {e}")
             return []
     
     async def get_service_health(self, service_name: str) -> Dict[str, Any]:
         """Get service health status"""
+
+
+
         try:
             health_info = {
                 "service_name": service_name,
@@ -1360,7 +1420,7 @@ class ServiceDiscoveryManager:
             return health_info
             
         except Exception as e:
-            self.logger.error(f"❌ Error getting service health: {e}")
+            self.logger.error(f" Error getting service health: {e}")
             return {}
 
 __all__ = [

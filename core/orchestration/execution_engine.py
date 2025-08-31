@@ -7,7 +7,7 @@ fault tolerance, and performance optimization across multi-node environments.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL WARNING:
+  CRITICAL LEGAL WARNING:
 This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -195,6 +195,9 @@ class ExecutionEngine:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             self.task_handlers[handler_name] = handler_func
             
@@ -221,6 +224,9 @@ class ExecutionEngine:
         Returns:
             bool: Success status
         """
+
+
+
         try:
             self.executor_nodes[node.node_id] = node
             
@@ -332,6 +338,9 @@ class ExecutionEngine:
         Returns:
             str: Batch execution ID
         """
+
+
+
         try:
             batch.status = ExecutionStatus.RUNNING
             batch.started_at = datetime.now()
@@ -470,6 +479,9 @@ class ExecutionEngine:
     
     async def _execute_asynchronous(self, task: ExecutionTask, context: ExecutionContext) -> None:
         """Execute task asynchronously."""
+
+
+
         try:
             result = await self._execute_synchronous(task, context)
             self.execution_results[context.execution_id] = result
@@ -479,6 +491,9 @@ class ExecutionEngine:
     
     async def _execute_parallel(self, task: ExecutionTask, context: ExecutionContext) -> None:
         """Execute task with parallel processing."""
+
+
+
         try:
             # For parallel execution, we might split the task into sub-tasks
             # This is a simplified implementation
@@ -490,6 +505,9 @@ class ExecutionEngine:
     
     async def _execute_distributed(self, task: ExecutionTask, context: ExecutionContext) -> None:
         """Execute task on distributed nodes."""
+
+
+
         try:
             # For distributed execution, we would send task to remote nodes
             # This is a simplified implementation
@@ -613,6 +631,9 @@ class ExecutionEngine:
     
     async def _validate_task(self, task: ExecutionTask) -> bool:
         """Validate task definition."""
+
+
+
         try:
             if not task.task_id or not task.handler:
                 return False
@@ -630,14 +651,23 @@ class ExecutionEngine:
     
     async def get_execution_result(self, execution_id: str) -> Optional[ExecutionResult]:
         """Get execution result by ID."""
+
+
+
         return self.execution_results.get(execution_id)
     
     async def get_batch_status(self, batch_id: str) -> Optional[BatchExecution]:
         """Get batch execution status."""
+
+
+
         return self.batch_executions.get(batch_id)
     
     async def cancel_execution(self, execution_id: str) -> bool:
         """Cancel running execution."""
+
+
+
         try:
             if execution_id in self.active_executions:
                 context = self.active_executions[execution_id]

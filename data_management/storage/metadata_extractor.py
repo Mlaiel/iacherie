@@ -1,5 +1,5 @@
 """
-📊 Metadata Extractor - IA Influencer Agent Platform Enterprise
+ Metadata Extractor - IA Influencer Agent Platform Enterprise
 ===============================================================
 Module: backend/data_management/storage/metadata_extractor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Advanced metadata extraction for multi-format content analysis
 with AI-powered enhancement and professional-grade accuracy.
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -195,6 +195,9 @@ class AudioMetadataExtractor:
     @staticmethod
     def _extract_mp3_metadata(file_path: str) -> Dict[str, Any]:
         """Extract MP3-specific metadata"""
+
+
+
         try:
             mp3_file = MP3(file_path)
             return {
@@ -211,6 +214,9 @@ class AudioMetadataExtractor:
     @staticmethod
     def _extract_flac_metadata(file_path: str) -> Dict[str, Any]:
         """Extract FLAC-specific metadata"""
+
+
+
         try:
             flac_file = FLAC(file_path)
             return {
@@ -226,6 +232,9 @@ class AudioMetadataExtractor:
     @staticmethod
     def _extract_mp4_metadata(file_path: str) -> Dict[str, Any]:
         """Extract MP4-specific metadata"""
+
+
+
         try:
             mp4_file = MP4(file_path)
             return {
@@ -240,6 +249,9 @@ class AudioMetadataExtractor:
     @staticmethod
     async def _analyze_audio_content(content_data: bytes) -> Dict[str, Any]:
         """Analyze audio content for additional insights"""
+
+
+
         try:
             # Basic analysis
             analysis = {
@@ -313,6 +325,9 @@ class ImageMetadataExtractor:
     @staticmethod
     def _extract_exif_data(image: Image.Image) -> Optional[Dict[str, Any]]:
         """Extract EXIF metadata from image"""
+
+
+
         try:
             exif_dict = image._getexif()
             if not exif_dict:
@@ -346,6 +361,9 @@ class ImageMetadataExtractor:
     @staticmethod
     async def _analyze_image_content(image: Image.Image, content_data: bytes) -> Dict[str, Any]:
         """Analyze image content for insights"""
+
+
+
         try:
             analysis = {
                 'file_size_mb': len(content_data) / (1024 * 1024),
@@ -457,6 +475,9 @@ class VideoMetadataExtractor:
     @staticmethod
     def _extract_opencv_metadata(file_path: str) -> Dict[str, Any]:
         """Extract metadata using OpenCV"""
+
+
+
         try:
             cap = cv2.VideoCapture(file_path)
             
@@ -485,6 +506,9 @@ class VideoMetadataExtractor:
     @staticmethod
     def _extract_ffmpeg_metadata(file_path: str) -> Dict[str, Any]:
         """Extract metadata using FFmpeg"""
+
+
+
         try:
             probe = ffmpeg.probe(file_path)
             
@@ -523,6 +547,9 @@ class VideoMetadataExtractor:
     @staticmethod
     async def _analyze_video_content(content_data: bytes) -> Dict[str, Any]:
         """Analyze video content for insights"""
+
+
+
         try:
             analysis = {
                 'file_size_mb': len(content_data) / (1024 * 1024),
@@ -570,6 +597,9 @@ class DocumentMetadataExtractor:
     @staticmethod
     def _extract_pdf_metadata(content_data: bytes) -> Dict[str, Any]:
         """Extract PDF metadata"""
+
+
+
         try:
             pdf_reader = PyPDF2.PdfReader(io.BytesIO(content_data))
             
@@ -606,6 +636,9 @@ class DocumentMetadataExtractor:
     @staticmethod
     def _extract_docx_metadata(content_data: bytes) -> Dict[str, Any]:
         """Extract DOCX metadata"""
+
+
+
         try:
             doc = docx.Document(io.BytesIO(content_data))
             
@@ -645,6 +678,9 @@ class DocumentMetadataExtractor:
     @staticmethod
     def _extract_text_metadata(content_data: bytes) -> Dict[str, Any]:
         """Extract text file metadata"""
+
+
+
         try:
             # Try different encodings
             text_content = None

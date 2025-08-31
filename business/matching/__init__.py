@@ -18,7 +18,7 @@ Expert Team Specialties:
 - DevOps & Infrastructure Engineer
 - AI Prompt Engineering Expert
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 © 2025 Fahed Mlaiel. ALL RIGHTS RESERVED.
 
 This software, concept and intellectual property are protected by international copyright laws.

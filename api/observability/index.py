@@ -8,7 +8,7 @@ de niveau entreprise de la plateforme IA Influencer Agent.
 Auteur: Fahed Mlaiel (mlaiel@live.de)
 Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
 
-🚨 PROPRIÉTÉ INTELLECTUELLE PROTÉGÉE 🚨
+ PROPRIÉTÉ INTELLECTUELLE PROTÉGÉE 
 Ce code est la propriété exclusive de Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 """
@@ -376,6 +376,9 @@ class ObservabilityIndex:
         
     async def get_status(self) -> Dict[str, Any]:
         """Retourne l'état complet du système d'observabilité."""
+
+
+
         return {
             "initialized": self._initialized,
             "running": self._running,
@@ -408,71 +411,113 @@ class ObservabilityIndex:
     @property
     def metrics(self) -> Optional[MetricsCollector]:
         """Accès au collecteur de métriques."""
+
+
+
         return self._metrics_collector
         
     @property
     def content_metrics(self) -> Optional[ContentMetricsCollector]:
         """Accès aux métriques de contenu."""
+
+
+
         return self._content_metrics
         
     @property
     def ai_metrics(self) -> Optional[AIMetricsCollector]:
         """Accès aux métriques IA."""
+
+
+
         return self._ai_metrics
         
     @property
     def tracing(self) -> Optional[TracingManager]:
         """Accès au gestionnaire de tracing."""
+
+
+
         return self._tracing_manager
         
     @property
     def distributed_tracer(self) -> Optional[DistributedTracer]:
         """Accès au traceur distribué."""
+
+
+
         return self._distributed_tracer
         
     @property
     def request_tracer(self) -> Optional[RequestTracer]:
         """Accès au traceur de requêtes."""
+
+
+
         return self._request_tracer
         
     @property
     def alerts(self) -> Optional[AlertManager]:
         """Accès au gestionnaire d'alertes."""
+
+
+
         return self._alert_manager
         
     @property
     def monitoring(self) -> Optional[SystemMonitor]:
         """Accès au surveillant système."""
+
+
+
         return self._system_monitor
         
     @property
     def sla(self) -> Optional[SLAMonitor]:
         """Accès au moniteur SLA."""
+
+
+
         return self._sla_monitor
         
     @property
     def logger(self) -> Optional[StructuredLogger]:
         """Accès au logger structuré."""
+
+
+
         return self._structured_logger
         
     @property
     def audit_logger(self) -> Optional[AuditLogger]:
         """Accès au logger d'audit."""
+
+
+
         return self._audit_logger
         
     @property
     def security_logger(self) -> Optional[SecurityLogger]:
         """Accès au logger de sécurité."""
+
+
+
         return self._security_logger
         
     @property
     def dashboards(self) -> Optional[DashboardManager]:
         """Accès au gestionnaire de dashboards."""
+
+
+
         return self._dashboard_manager
         
     @property
     def health(self) -> Optional[HealthChecker]:
         """Accès au vérificateur de santé."""
+
+
+
         return self._health_checker
 
 

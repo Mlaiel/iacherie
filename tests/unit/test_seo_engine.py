@@ -53,14 +53,14 @@ def test_content_seo_optimizer():
             language="en"
         )
         
-        print(f"✓ Content optimization score: {result.analysis.optimization_score:.1f}")
-        print(f"✓ Readability score: {result.analysis.readability_score:.1f}")
-        print(f"✓ Improvements made: {len(result.improvements)}")
+        print(f" Content optimization score: {result.analysis.optimization_score:.1f}")
+        print(f" Readability score: {result.analysis.readability_score:.1f}")
+        print(f" Improvements made: {len(result.improvements)}")
         
         return True
         
     except Exception as e:
-        print(f"✗ Content SEO Optimizer test failed: {str(e)}")
+        print(f" Content SEO Optimizer test failed: {str(e)}")
         return False
 
 
@@ -81,15 +81,15 @@ def test_keyword_generator():
             max_keywords=50
         )
         
-        print(f"✓ Total keywords generated: {result.total_keywords}")
-        print(f"✓ Primary keywords: {len(result.primary_keywords)}")
-        print(f"✓ Long-tail keywords: {len(result.long_tail_keywords)}")
-        print(f"✓ Trending keywords: {len(result.trending_keywords)}")
+        print(f" Total keywords generated: {result.total_keywords}")
+        print(f" Primary keywords: {len(result.primary_keywords)}")
+        print(f" Long-tail keywords: {len(result.long_tail_keywords)}")
+        print(f" Trending keywords: {len(result.trending_keywords)}")
         
         return True
         
     except Exception as e:
-        print(f"✗ Keyword Generator test failed: {str(e)}")
+        print(f" Keyword Generator test failed: {str(e)}")
         return False
 
 
@@ -112,15 +112,15 @@ def test_platform_seo_adapter():
             title="Marketing Guide"
         )
         
-        print(f"✓ Platform: {result.platform.value}")
-        print(f"✓ SEO score: {result.seo_score:.1f}")
-        print(f"✓ Hashtags generated: {len(result.hashtags)}")
-        print(f"✓ Recommendations: {len(result.recommendations)}")
+        print(f" Platform: {result.platform.value}")
+        print(f" SEO score: {result.seo_score:.1f}")
+        print(f" Hashtags generated: {len(result.hashtags)}")
+        print(f" Recommendations: {len(result.recommendations)}")
         
         return True
         
     except Exception as e:
-        print(f"✗ Platform SEO Adapter test failed: {str(e)}")
+        print(f" Platform SEO Adapter test failed: {str(e)}")
         return False
 
 
@@ -144,15 +144,15 @@ def test_meta_optimizer():
             content_type=ContentType.ARTICLE
         )
         
-        print(f"✓ SEO score: {result.seo_score:.1f}")
-        print(f"✓ Meta tags created: {len(result.meta_tags)}")
-        print(f"✓ Open Graph tags: {len(result.open_graph_tags)}")
-        print(f"✓ Schema markup generated: {'@type' in result.schema_markup}")
+        print(f" SEO score: {result.seo_score:.1f}")
+        print(f" Meta tags created: {len(result.meta_tags)}")
+        print(f" Open Graph tags: {len(result.open_graph_tags)}")
+        print(f" Schema markup generated: {'@type' in result.schema_markup}")
         
         return True
         
     except Exception as e:
-        print(f"✗ Meta Optimizer test failed: {str(e)}")
+        print(f" Meta Optimizer test failed: {str(e)}")
         return False
 
 
@@ -175,15 +175,15 @@ def test_hashtag_intelligence():
             industry="marketing"
         )
         
-        print(f"✓ Total hashtags: {result.total_hashtags}")
-        print(f"✓ Strategy score: {result.strategy_score:.1f}")
-        print(f"✓ Primary hashtags: {len(result.primary_hashtags)}")
-        print(f"✓ Trending hashtags: {len(result.trending_hashtags)}")
+        print(f" Total hashtags: {result.total_hashtags}")
+        print(f" Strategy score: {result.strategy_score:.1f}")
+        print(f" Primary hashtags: {len(result.primary_hashtags)}")
+        print(f" Trending hashtags: {len(result.trending_hashtags)}")
         
         return True
         
     except Exception as e:
-        print(f"✗ Hashtag Intelligence test failed: {str(e)}")
+        print(f" Hashtag Intelligence test failed: {str(e)}")
         return False
 
 
@@ -213,15 +213,15 @@ def test_multilingual_seo():
             localization_level=LocalizationLevel.INTERMEDIATE
         )
         
-        print(f"✓ Overall score: {result.overall_score:.1f}")
-        print(f"✓ Localized versions: {len(result.localized_versions)}")
-        print(f"✓ Hreflang tags: {len(result.hreflang_tags)}")
-        print(f"✓ Technical recommendations: {len(result.technical_recommendations)}")
+        print(f" Overall score: {result.overall_score:.1f}")
+        print(f" Localized versions: {len(result.localized_versions)}")
+        print(f" Hreflang tags: {len(result.hreflang_tags)}")
+        print(f" Technical recommendations: {len(result.technical_recommendations)}")
         
         return True
         
     except Exception as e:
-        print(f"✗ Multilingual SEO test failed: {str(e)}")
+        print(f" Multilingual SEO test failed: {str(e)}")
         return False
 
 
@@ -241,15 +241,15 @@ def test_trending_analyzer():
             time_frame=TimeFrame.DAY
         )
         
-        print(f"✓ Recommendation score: {result.recommendation_score:.1f}")
-        print(f"✓ Trending topics: {len(result.trending_topics)}")
-        print(f"✓ Emerging trends: {len(result.emerging_trends)}")
-        print(f"✓ Platform trends: {len(result.platform_trends)}")
+        print(f" Recommendation score: {result.recommendation_score:.1f}")
+        print(f" Trending topics: {len(result.trending_topics)}")
+        print(f" Emerging trends: {len(result.emerging_trends)}")
+        print(f" Platform trends: {len(result.platform_trends)}")
         
         return True
         
     except Exception as e:
-        print(f"✗ Trending Analyzer test failed: {str(e)}")
+        print(f" Trending Analyzer test failed: {str(e)}")
         return False
 
 
@@ -269,16 +269,16 @@ def test_competitor_intelligence():
             analysis_types=[AnalysisType.KEYWORD_GAP, AnalysisType.CONTENT_GAP]
         )
         
-        print(f"✓ Analysis score: {result.analysis_score:.1f}")
-        print(f"✓ Competitor profiles: {len(result.competitor_profiles)}")
-        print(f"✓ Keyword gaps: {len(result.keyword_gaps)}")
-        print(f"✓ Content gaps: {len(result.content_gaps)}")
-        print(f"✓ Strategic recommendations: {len(result.strategic_recommendations)}")
+        print(f" Analysis score: {result.analysis_score:.1f}")
+        print(f" Competitor profiles: {len(result.competitor_profiles)}")
+        print(f" Keyword gaps: {len(result.keyword_gaps)}")
+        print(f" Content gaps: {len(result.content_gaps)}")
+        print(f" Strategic recommendations: {len(result.strategic_recommendations)}")
         
         return True
         
     except Exception as e:
-        print(f"✗ Competitor Intelligence test failed: {str(e)}")
+        print(f" Competitor Intelligence test failed: {str(e)}")
         return False
 
 
@@ -299,17 +299,17 @@ def test_seo_performance_tracker():
             include_competitive=True
         )
         
-        print(f"✓ Overall score: {result.overall_score:.1f}")
-        print(f"✓ Metric categories: {len(result.metrics)}")
-        print(f"✓ Keyword performance: {len(result.keyword_performance)}")
-        print(f"✓ Page performance: {len(result.page_performance)}")
-        print(f"✓ Alerts generated: {len(result.alerts)}")
-        print(f"✓ Recommendations: {len(result.recommendations)}")
+        print(f" Overall score: {result.overall_score:.1f}")
+        print(f" Metric categories: {len(result.metrics)}")
+        print(f" Keyword performance: {len(result.keyword_performance)}")
+        print(f" Page performance: {len(result.page_performance)}")
+        print(f" Alerts generated: {len(result.alerts)}")
+        print(f" Recommendations: {len(result.recommendations)}")
         
         return True
         
     except Exception as e:
-        print(f"✗ SEO Performance Tracker test failed: {str(e)}")
+        print(f" SEO Performance Tracker test failed: {str(e)}")
         return False
 
 
@@ -339,26 +339,26 @@ def run_all_tests():
             if test_func():
                 passed += 1
         except Exception as e:
-            print(f"✗ Test {test_func.__name__} failed with exception: {str(e)}")
+            print(f" Test {test_func.__name__} failed with exception: {str(e)}")
     
     print("\n" + "=" * 60)
     print(f"TEST RESULTS: {passed}/{total} tests passed")
     print("=" * 60)
     
     if passed == total:
-        print("🎉 All SEO Optimization Engine components are working correctly!")
+        print(" All SEO Optimization Engine components are working correctly!")
         print("\nFeatures successfully implemented:")
-        print("✓ Content SEO Optimizer - AI-powered content optimization")
-        print("✓ Platform SEO Adapter - Multi-platform optimization")
-        print("✓ Keyword Generator AI - Intelligent keyword research")
-        print("✓ Meta Optimizer - Complete meta-data optimization")
-        print("✓ Hashtag Intelligence - Smart hashtag generation")
-        print("✓ Multilingual SEO - International SEO optimization")
-        print("✓ Trending Analyzer - Real-time trend analysis")
-        print("✓ Competitor Intelligence - Competitive analysis")
-        print("✓ SEO Performance Tracker - Comprehensive performance monitoring")
+        print(" Content SEO Optimizer - AI-powered content optimization")
+        print(" Platform SEO Adapter - Multi-platform optimization")
+        print(" Keyword Generator AI - Intelligent keyword research")
+        print(" Meta Optimizer - Complete meta-data optimization")
+        print(" Hashtag Intelligence - Smart hashtag generation")
+        print(" Multilingual SEO - International SEO optimization")
+        print(" Trending Analyzer - Real-time trend analysis")
+        print(" Competitor Intelligence - Competitive analysis")
+        print(" SEO Performance Tracker - Comprehensive performance monitoring")
     else:
-        print(f"⚠️  {total - passed} components need attention")
+        print(f"  {total - passed} components need attention")
     
     return passed == total
 

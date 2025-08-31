@@ -80,6 +80,9 @@ class RoyaltyCalculator:
         calculation_method: str = "percentage"
     ) -> RoyaltyCalculation:
         """Calculate royalties for a license agreement"""
+
+
+
         try:
             # Get license agreement
             license_agreement = await self.repository.get_license_agreement(
@@ -164,6 +167,9 @@ class RoyaltyCalculator:
         currency: str = "USD"
     ) -> Decimal:
         """Calculate royalties using tiered structure"""
+
+
+
         try:
             total_royalty = Decimal("0")
             remaining_revenue = net_revenue
@@ -202,6 +208,9 @@ class RoyaltyCalculator:
         performance_thresholds: Dict[str, Any]
     ) -> Decimal:
         """Calculate performance-based royalty adjustments"""
+
+
+
         try:
             adjusted_royalty = base_royalty
             total_bonus = Decimal("0")
@@ -238,6 +247,9 @@ class RoyaltyCalculator:
         distribution_method: str = "proportional"
     ) -> RevenueDistribution:
         """Calculate revenue distribution among stakeholders"""
+
+
+
         try:
             # Get royalty calculation
             royalty_calculations, _ = await self.repository.get_royalty_calculations(
@@ -299,6 +311,9 @@ class RoyaltyCalculator:
         license_agreement: LicenseAgreement
     ) -> Dict[str, Any]:
         """Validate royalty calculation for accuracy and compliance"""
+
+
+
         try:
             validation_results = {
                 "is_valid": True,

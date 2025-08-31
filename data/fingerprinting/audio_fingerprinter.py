@@ -12,7 +12,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL WARNING ⚠️
+  CRITICAL WARNING 
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
 Any unauthorized use, reproduction, distribution, or reverse engineering 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -125,6 +125,9 @@ class AudioFingerprinter:
     
     def _initialize_essentia(self):
         """Initialize Essentia audio analysis algorithms"""
+
+
+
         try:
             # Tempo and rhythm analysis
             self.tempo_estimator = RhythmExtractor2013()
@@ -160,6 +163,9 @@ class AudioFingerprinter:
         Returns:
             Complete audio fingerprint or None if failed
         """
+
+
+
         try:
             # Validate file exists
             if not Path(file_path).exists():
@@ -221,6 +227,9 @@ class AudioFingerprinter:
         Returns:
             List of similar audio content with similarity scores
         """
+
+
+
         try:
             threshold = similarity_threshold or self.similarity_threshold
             
@@ -319,6 +328,9 @@ class AudioFingerprinter:
         Returns:
             List of segment comparison results
         """
+
+
+
         try:
             # Load both audio files
             audio1, sr1 = await self._load_audio_safe(audio1_path)
@@ -387,6 +399,9 @@ class AudioFingerprinter:
     
     async def _load_audio_safe(self, file_path: str) -> Tuple[Optional[np.ndarray], Optional[int]]:
         """Safely load audio file with error handling"""
+
+
+
         try:
             # Try librosa first
             audio_data, sample_rate = librosa.load(file_path, sr=None, mono=True)
@@ -406,6 +421,9 @@ class AudioFingerprinter:
     
     async def _extract_audio_features(self, audio_data: np.ndarray) -> AudioFeatures:
         """Extract comprehensive audio features"""
+
+
+
         try:
             # Basic spectral features
             spectral_centroid = librosa.feature.spectral_centroid(
@@ -475,6 +493,9 @@ class AudioFingerprinter:
     
     async def _generate_chromaprint(self, file_path: str) -> str:
         """Generate Chromaprint acoustic fingerprint"""
+
+
+
         try:
             # Load audio for chromaprint (it has specific requirements)
             duration, raw_fingerprint = chromaprint.decode(file_path)
@@ -493,6 +514,9 @@ class AudioFingerprinter:
     
     async def _generate_perceptual_hash(self, audio_data: np.ndarray) -> str:
         """Generate perceptual hash of audio"""
+
+
+
         try:
             # Generate spectral features for hashing
             stft = librosa.stft(audio_data, hop_length=self.hop_length, n_fft=self.n_fft)
@@ -519,6 +543,9 @@ class AudioFingerprinter:
     
     async def _generate_vector_embedding(self, features: AudioFeatures) -> List[float]:
         """Generate vector embedding from audio features"""
+
+
+
         try:
             # Combine multiple features into a single vector
             embedding_components = []
@@ -575,6 +602,9 @@ class AudioFingerprinter:
     
     async def _store_fingerprint_vector(self, fingerprint: AudioFingerprint):
         """Store fingerprint vector in vector database"""
+
+
+
         try:
             await self.vector_db.store_vector(
                 vector_id=fingerprint.content_id,
@@ -603,6 +633,9 @@ class AudioFingerprinter:
     async def _calculate_detailed_similarity(self, fp1: AudioFingerprint, 
                                            fp2: AudioFingerprint) -> Dict[str, float]:
         """Calculate detailed similarity metrics between two fingerprints"""
+
+
+
         try:
             similarities = {}
             
@@ -643,6 +676,9 @@ class AudioFingerprinter:
     
     def _calculate_spectral_similarity(self, features1: AudioFeatures, features2: AudioFeatures) -> float:
         """Calculate spectral similarity between two feature sets"""
+
+
+
         try:
             # Compare MFCC features
             mfcc1_mean = np.mean(features1.mfcc_features, axis=1)
@@ -663,6 +699,9 @@ class AudioFingerprinter:
     
     async def _compare_audio_segments(self, segment1: np.ndarray, segment2: np.ndarray) -> float:
         """Compare two audio segments for similarity"""
+
+
+
         try:
             # Extract features for both segments
             features1 = await self._extract_segment_features(segment1)
@@ -678,6 +717,9 @@ class AudioFingerprinter:
     
     async def _extract_segment_features(self, segment: np.ndarray) -> np.ndarray:
         """Extract features from audio segment"""
+
+
+
         try:
             # MFCC features
             mfcc = librosa.feature.mfcc(
@@ -711,6 +753,9 @@ class AudioFingerprinter:
     
     async def verify_audio_integrity(self, fingerprint: AudioFingerprint) -> Dict[str, Any]:
         """Verify audio file integrity using fingerprint"""
+
+
+
         try:
             # Re-generate fingerprint from file
             current_fingerprint = await self.generate_fingerprint(

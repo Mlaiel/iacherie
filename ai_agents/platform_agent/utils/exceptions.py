@@ -7,7 +7,7 @@ in all Platform Agent components with detailed error reporting.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -81,10 +81,16 @@ class PlatformAgentBaseException(Exception):
         
     def _generate_user_message(self) -> str:
         """Generate user-friendly error message"""
+
+
+
         return f"An error occurred in {self.category.value}. Please try again."
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert exception to dictionary for serialization"""
+
+
+
         return {
             "error_code": self.error_code,
             "message": self.message,

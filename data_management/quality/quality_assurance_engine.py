@@ -1,5 +1,5 @@
 """
-🗄️ Advanced Quality Assurance Engine - IA Influencer Agent Platform Enterprise
+ Advanced Quality Assurance Engine - IA Influencer Agent Platform Enterprise
 ==============================================================================
 Module: backend/data_management/quality/quality_assurance_engine.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Quality Assurance Engine - Enterprise Production-Ready
 Responsibility: Validation et assurance qualité multi-format avec IA et métriques avancées
 =========================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -20,12 +20,12 @@ Security Scan → Platform Compliance → Enhancement Recommendations →
 Quality Score Generation → Continuous Monitoring → Improvement Feedback
 
 DIMENSIONS QUALITÉ:
-📊 Technical Quality: Resolution, Bitrate, Compression, Format Compliance
-🎨 Aesthetic Quality: Composition, Color, Lighting, Visual Appeal
-🔊 Audio Quality: Clarity, Dynamic Range, Noise Level, Frequency Response
-📝 Content Quality: Readability, SEO, Grammar, Relevance
-🛡️ Security Quality: Malware Scan, Privacy Check, Copyright Compliance
-🚀 Performance Quality: Load Time, Compression Ratio, Streaming Readiness
+ Technical Quality: Resolution, Bitrate, Compression, Format Compliance
+ Aesthetic Quality: Composition, Color, Lighting, Visual Appeal
+ Audio Quality: Clarity, Dynamic Range, Noise Level, Frequency Response
+ Content Quality: Readability, SEO, Grammar, Relevance
+ Security Quality: Malware Scan, Privacy Check, Copyright Compliance
+ Performance Quality: Load Time, Compression Ratio, Streaming Readiness
 """
 
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -337,6 +337,9 @@ class QualityAssuranceEngine:
     
     async def _assess_audio_quality(self, audio_path: str, assessment: QualityAssessment):
         """Évalue la qualité audio"""
+
+
+
         try:
             # Chargement de l'audio
             y, sr = librosa.load(audio_path, sr=None)
@@ -463,6 +466,9 @@ class QualityAssuranceEngine:
     
     async def _assess_video_quality(self, video_path: str, assessment: QualityAssessment):
         """Évalue la qualité vidéo"""
+
+
+
         try:
             cap = cv2.VideoCapture(video_path)
             
@@ -597,6 +603,9 @@ class QualityAssuranceEngine:
     
     async def _assess_image_quality(self, image_path: str, assessment: QualityAssessment):
         """Évalue la qualité image"""
+
+
+
         try:
             # Chargement de l'image
             image = Image.open(image_path)
@@ -771,6 +780,9 @@ class QualityAssuranceEngine:
     
     async def _assess_text_quality(self, text_path: str, assessment: QualityAssessment):
         """Évalue la qualité du texte"""
+
+
+
         try:
             with open(text_path, 'r', encoding='utf-8') as f:
                 content = f.read()
@@ -962,6 +974,9 @@ class QualityAssuranceEngine:
     
     async def _assess_security_quality(self, content_path: str, assessment: QualityAssessment):
         """Évalue la sécurité du contenu"""
+
+
+
         try:
             # Détection du type de fichier
             file_type = magic.from_file(content_path, mime=True)
@@ -1042,6 +1057,9 @@ class QualityAssuranceEngine:
     
     async def _assess_performance_quality(self, content_path: str, assessment: QualityAssessment):
         """Évalue la performance du contenu"""
+
+
+
         try:
             file_size = Path(content_path).stat().st_size
             

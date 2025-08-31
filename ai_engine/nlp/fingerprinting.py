@@ -7,7 +7,7 @@ creators and influencers. Provides robust content identification and plagiarism 
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
 
@@ -106,6 +106,9 @@ class AdvancedContentFingerprinter:
     
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default configuration"""
+
+
+
         return {
             'similarity_threshold': 0.8,
             'semantic_threshold': 0.7,
@@ -524,6 +527,9 @@ class AdvancedContentFingerprinter:
     
     def _gather_violation_evidence(self, similarity_match: SimilarityMatch) -> Dict[str, Any]:
         """Gather evidence for copyright violation"""
+
+
+
         return {
             'similarity_breakdown': similarity_match.matching_elements,
             'overall_similarity': similarity_match.similarity_score,
@@ -724,6 +730,9 @@ class SemanticFingerprintGenerator(FingerprintGenerator):
     
     async def generate_fingerprint(self, content: str, metadata: Dict[str, Any] = None) -> Dict[str, Any]:
         """Generate semantic fingerprint"""
+
+
+
         
         try:
             # Generate TF-IDF vector
@@ -761,6 +770,9 @@ class LinguisticFingerprintGenerator(FingerprintGenerator):
     
     async def generate_fingerprint(self, content: str, metadata: Dict[str, Any] = None) -> Dict[str, Any]:
         """Generate linguistic fingerprint"""
+
+
+
         
         try:
             # Download required NLTK data if not present
@@ -860,6 +872,9 @@ class NGramFingerprintGenerator(FingerprintGenerator):
     
     async def generate_fingerprint(self, content: str, metadata: Dict[str, Any] = None) -> Dict[str, Any]:
         """Generate n-gram fingerprint"""
+
+
+
         
         try:
             # Tokenize content
@@ -954,6 +969,9 @@ class ContentProtectionSystem:
     
     def get_protection_stats(self) -> Dict[str, Any]:
         """Get protection system statistics"""
+
+
+
         return {
             'protected_content_count': len(self.protected_content),
             'total_violations_detected': len(self.violation_alerts),

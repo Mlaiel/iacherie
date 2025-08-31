@@ -7,7 +7,7 @@ Auteur: Fahed Mlaiel - Lead Developer & AI Architect
 Email: mlaiel@live.de
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps
 
-⚠️  AVERTISSEMENT LÉGAL - PROPRIÉTÉ INTELLECTUELLE PROTÉGÉE ⚠️
+  AVERTISSEMENT LÉGAL - PROPRIÉTÉ INTELLECTUELLE PROTÉGÉE 
 Ce code est la propriété exclusive de Fahed Mlaiel et est protégé par les lois
 sur la propriété intellectuelle. Toute reproduction, distribution, ou utilisation
 non autorisée est strictement interdite et passible de poursuites judiciaires.
@@ -241,6 +241,9 @@ class RoyaltyCalculator:
     
     async def _load_default_rules(self):
         """Charge les règles de redevances par défaut"""
+
+
+
         try:
             # Règle streaming standard
             streaming_rule = RoyaltyRule(
@@ -337,6 +340,9 @@ class RoyaltyCalculator:
     
     async def _initialize_exchange_rates(self):
         """Initialise les taux de change"""
+
+
+
         try:
             # Taux de change fictifs pour démonstration
             # Dans un environnement réel, intégrer des APIs comme ECB, Fed, etc.
@@ -392,6 +398,9 @@ class RoyaltyCalculator:
         force_currency: Optional[CurrencyCode] = None
     ) -> RoyaltyCalculation:
         """Calcule les redevances pour un contenu sur une période"""
+
+
+
         try:
             calculation_id = self._generate_calculation_id()
             
@@ -533,6 +542,9 @@ class RoyaltyCalculator:
         holder_preferences: Optional[Dict[str, Dict[str, Any]]] = None
     ) -> Dict[str, PaymentInstruction]:
         """Calcule la répartition des redevances entre détenteurs"""
+
+
+
         try:
             if calculation_id not in self.calculations:
                 raise ValueError(f"Calcul {calculation_id} non trouvé")
@@ -644,6 +656,9 @@ class RoyaltyCalculator:
         parallel_processing: bool = True
     ) -> List[RoyaltyCalculation]:
         """Traite des calculs de redevances en lot"""
+
+
+
         try:
             if parallel_processing:
                 # Traitement parallèle
@@ -703,6 +718,9 @@ class RoyaltyCalculator:
         forecast_periods: int = 12
     ) -> Dict[str, Any]:
         """Génère des prévisions de redevances basées sur l'historique"""
+
+
+
         try:
             if not historical_data:
                 return {'error': 'Pas de données historiques disponibles'}
@@ -856,14 +874,23 @@ class RoyaltyCalculator:
     
     def _generate_calculation_id(self) -> str:
         """Génère un ID unique pour le calcul"""
+
+
+
         return f"CALC-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
     
     def _generate_payment_id(self) -> str:
         """Génère un ID unique pour le paiement"""
+
+
+
         return f"PAY-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
     
     async def get_calculator_statistics(self) -> Dict[str, Any]:
         """Retourne les statistiques du calculateur"""
+
+
+
         try:
             total_calculations = len(self.calculations)
             total_payments = len(self.payment_instructions)

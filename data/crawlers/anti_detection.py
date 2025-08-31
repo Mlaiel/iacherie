@@ -12,7 +12,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL WARNING ⚠️
+  CRITICAL WARNING 
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
 Any unauthorized use, reproduction, distribution, or reverse engineering 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -153,6 +153,9 @@ class ProxyManager:
     
     async def get_working_proxy(self) -> Optional[ProxyServer]:
         """Get a working proxy server with rotation"""
+
+
+
         try:
             # Perform health check if needed
             if (datetime.utcnow() - self.last_health_check).total_seconds() > self.health_check_interval:
@@ -182,6 +185,9 @@ class ProxyManager:
     
     async def _perform_health_check(self):
         """Perform health check on all proxy servers"""
+
+
+
         try:
             self.logger.info("Performing proxy health check")
             
@@ -204,6 +210,9 @@ class ProxyManager:
     
     async def _test_proxy_health(self, proxy: ProxyServer):
         """Test individual proxy health"""
+
+
+
         try:
             start_time = time.time()
             
@@ -236,6 +245,9 @@ class ProxyManager:
     
     def update_proxy_performance(self, proxy: ProxyServer, success: bool, response_time: float = 0):
         """Update proxy performance metrics"""
+
+
+
         try:
             if success:
                 proxy.success_rate = min(proxy.success_rate * 1.05, 1.0)
@@ -303,6 +315,9 @@ class AntiDetectionSystem:
     
     async def _initialize_browser_profiles(self):
         """Initialize pool of realistic browser profiles"""
+
+
+
         try:
             self.logger.info("Initializing browser profiles")
             
@@ -323,6 +338,9 @@ class AntiDetectionSystem:
     async def _generate_browser_profile(self, platforms: List[str], 
                                       languages: List[str], timezones: List[str]) -> BrowserProfile:
         """Generate a realistic browser profile"""
+
+
+
         try:
             # Select random characteristics
             platform = random.choice(platforms)
@@ -384,6 +402,9 @@ class AntiDetectionSystem:
     
     def _generate_user_agent(self, browser_type: BrowserType, platform: str) -> str:
         """Generate realistic user agent string"""
+
+
+
         try:
             if browser_type == BrowserType.CHROME:
                 return self.user_agent_generator.chrome
@@ -450,6 +471,9 @@ class AntiDetectionSystem:
     
     async def create_stealth_session(self, target_domain: str = None) -> str:
         """Create a new stealth crawling session"""
+
+
+
         try:
             session_id = f"session_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{random.randint(1000, 9999)}"
             
@@ -478,6 +502,9 @@ class AntiDetectionSystem:
     
     async def create_stealth_driver(self, session_id: str) -> webdriver.Chrome:
         """Create Selenium WebDriver with anti-detection measures"""
+
+
+
         try:
             session = self.active_sessions.get(session_id)
             if not session:
@@ -531,6 +558,9 @@ class AntiDetectionSystem:
     
     async def _apply_stealth_scripts(self, driver: webdriver.Chrome, profile: BrowserProfile):
         """Apply JavaScript stealth scripts to driver"""
+
+
+
         try:
             # Hide webdriver property
             driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
@@ -582,6 +612,9 @@ class AntiDetectionSystem:
     
     async def human_like_delay(self, base_delay: float = None) -> None:
         """Apply human-like delay between actions"""
+
+
+
         try:
             if base_delay is None:
                 delay = random.uniform(*self.request_delay_range)
@@ -597,6 +630,9 @@ class AntiDetectionSystem:
     
     async def human_like_typing(self, driver: webdriver.Chrome, element, text: str):
         """Type text with human-like timing"""
+
+
+
         try:
             element.clear()
             
@@ -611,6 +647,9 @@ class AntiDetectionSystem:
     async def human_like_mouse_movement(self, driver: webdriver.Chrome, 
                                       target_element, steps: int = None):
         """Move mouse to element with human-like path"""
+
+
+
         try:
             if steps is None:
                 steps = random.randint(*self.mouse_movement_steps)
@@ -648,6 +687,9 @@ class AntiDetectionSystem:
     async def detect_anti_bot_measures(self, driver: webdriver.Chrome, 
                                      response_text: str = None) -> Dict[str, bool]:
         """Detect if anti-bot measures are present"""
+
+
+
         try:
             detections = {
                 'captcha': False,
@@ -709,6 +751,9 @@ class AntiDetectionSystem:
     async def handle_detection_evasion(self, session_id: str, 
                                      detections: Dict[str, bool]) -> bool:
         """Handle detected anti-bot measures"""
+
+
+
         try:
             session = self.active_sessions.get(session_id)
             if not session:
@@ -776,6 +821,9 @@ class AntiDetectionSystem:
     
     async def _rotate_session(self, session_id: str) -> str:
         """Rotate session with new profile and proxy"""
+
+
+
         try:
             old_session = self.active_sessions.get(session_id)
             if old_session:
@@ -793,6 +841,9 @@ class AntiDetectionSystem:
     
     async def cleanup_sessions(self):
         """Clean up inactive and expired sessions"""
+
+
+
         try:
             current_time = datetime.utcnow()
             expired_sessions = []
@@ -818,6 +869,9 @@ class AntiDetectionSystem:
     
     def get_detection_statistics(self) -> Dict[str, Any]:
         """Get anti-detection system statistics"""
+
+
+
         try:
             stats = {
                 'active_sessions': len(self.active_sessions),

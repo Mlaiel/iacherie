@@ -12,7 +12,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL WARNING ⚠️
+  CRITICAL WARNING 
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
 Any unauthorized use, reproduction, distribution, or reverse engineering 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -173,6 +173,9 @@ class TextFingerprinter:
     
     def _initialize_nlp_models(self):
         """Initialize NLP models and components"""
+
+
+
         try:
             # Initialize transformers model
             if TRANSFORMERS_AVAILABLE:
@@ -244,6 +247,9 @@ class TextFingerprinter:
         Returns:
             List of text fingerprints
         """
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -298,6 +304,9 @@ class TextFingerprinter:
         Returns:
             Text match result with similarity metrics
         """
+
+
+
         try:
             if fingerprint1.fingerprint_type != fingerprint2.fingerprint_type:
                 raise ValueError("Cannot compare different fingerprint types")
@@ -386,6 +395,9 @@ class TextFingerprinter:
         Returns:
             List of matching text results sorted by similarity
         """
+
+
+
         try:
             # Filter candidates by fingerprint type
             compatible_candidates = [
@@ -434,6 +446,9 @@ class TextFingerprinter:
         Returns:
             List of potential plagiarism matches
         """
+
+
+
         try:
             # Extract fingerprints for query text
             query_id = f"query_{hashlib.md5(query_text.encode()).hexdigest()[:8]}"
@@ -490,6 +505,9 @@ class TextFingerprinter:
     
     async def _preprocess_text(self, text: str) -> str:
         """Preprocess text for fingerprinting"""
+
+
+
         try:
             # Basic cleaning
             text = text.strip()
@@ -511,6 +529,9 @@ class TextFingerprinter:
                                         fingerprint_type: TextFingerprintType,
                                         language: str) -> TextFingerprint:
         """Extract single type of fingerprint"""
+
+
+
         try:
             if fingerprint_type == TextFingerprintType.LEXICAL_HASH:
                 fingerprint_data = await self._extract_lexical_hash(preprocessed_text)
@@ -543,6 +564,9 @@ class TextFingerprinter:
     
     async def _extract_lexical_hash(self, text: str) -> str:
         """Extract lexical hash based on word patterns"""
+
+
+
         try:
             if NLTK_AVAILABLE:
                 # Tokenize and normalize
@@ -574,6 +598,9 @@ class TextFingerprinter:
     
     async def _extract_semantic_embedding(self, text: str) -> np.ndarray:
         """Extract semantic embedding using transformers"""
+
+
+
         try:
             if not self.model or not self.tokenizer:
                 raise ValueError("Transformer model not available")
@@ -616,6 +643,9 @@ class TextFingerprinter:
     
     async def _extract_ngram_signature(self, text: str) -> Dict[str, float]:
         """Extract n-gram signature"""
+
+
+
         try:
             # Generate various n-grams
             ngram_counts = {}
@@ -654,6 +684,9 @@ class TextFingerprinter:
     
     async def _extract_stylometric_features(self, text: str) -> Dict[str, float]:
         """Extract stylometric features for authorship analysis"""
+
+
+
         try:
             features = {}
             
@@ -714,6 +747,9 @@ class TextFingerprinter:
     
     async def _extract_syntactic_pattern(self, text: str) -> Dict[str, Any]:
         """Extract syntactic patterns"""
+
+
+
         try:
             patterns = {}
             
@@ -760,6 +796,9 @@ class TextFingerprinter:
     
     async def _extract_topic_vector(self, text: str) -> np.ndarray:
         """Extract topic vector using TF-IDF"""
+
+
+
         try:
             if not SKLEARN_AVAILABLE or not self.tfidf_vectorizer:
                 return np.array([])
@@ -781,6 +820,9 @@ class TextFingerprinter:
     
     async def _extract_structure_hash(self, text: str) -> str:
         """Extract structural hash based on document structure"""
+
+
+
         try:
             # Document structure features
             paragraphs = text.split('\n\n')
@@ -808,6 +850,9 @@ class TextFingerprinter:
     
     async def _compare_lexical_hashes(self, hash1: str, hash2: str) -> float:
         """Compare lexical hashes"""
+
+
+
         try:
             return 1.0 if hash1 == hash2 else 0.0
         except Exception as e:
@@ -816,6 +861,9 @@ class TextFingerprinter:
     
     async def _compare_semantic_embeddings(self, emb1: np.ndarray, emb2: np.ndarray) -> float:
         """Compare semantic embeddings"""
+
+
+
         try:
             if len(emb1) == 0 or len(emb2) == 0:
                 return 0.0
@@ -830,6 +878,9 @@ class TextFingerprinter:
     
     async def _compare_ngram_signatures(self, sig1: Dict[str, Any], sig2: Dict[str, Any]) -> float:
         """Compare n-gram signatures"""
+
+
+
         try:
             if not sig1 or not sig2:
                 return 0.0
@@ -865,6 +916,9 @@ class TextFingerprinter:
     
     async def _compare_stylometric_features(self, features1: Dict[str, float], features2: Dict[str, float]) -> float:
         """Compare stylometric features"""
+
+
+
         try:
             if not features1 or not features2:
                 return 0.0
@@ -901,6 +955,9 @@ class TextFingerprinter:
     
     async def _compare_syntactic_patterns(self, patterns1: Dict[str, Any], patterns2: Dict[str, Any]) -> float:
         """Compare syntactic patterns"""
+
+
+
         try:
             if not patterns1 or not patterns2:
                 return 0.0
@@ -947,6 +1004,9 @@ class TextFingerprinter:
                                     fingerprint1: TextFingerprint,
                                     fingerprint2: TextFingerprint) -> Dict[str, float]:
         """Calculate confidence metrics for the match"""
+
+
+
         try:
             # Text length compatibility
             len1 = fingerprint1.text_length
@@ -980,6 +1040,9 @@ class TextFingerprinter:
                                   fingerprint1: TextFingerprint,
                                   fingerprint2: TextFingerprint) -> float:
         """Assess quality of fingerprints for comparison"""
+
+
+
         try:
             quality_score = 1.0
             
@@ -1012,6 +1075,9 @@ class TextFingerprinter:
                               fingerprint2: TextFingerprint,
                               similarity_score: float) -> Dict[str, Any]:
         """Generate detailed match information"""
+
+
+
         try:
             details = {
                 'fingerprint_type': fingerprint1.fingerprint_type.value,
@@ -1057,6 +1123,9 @@ class TextFingerprinter:
     
     async def close(self):
         """Cleanup resources"""
+
+
+
         try:
             if self.thread_pool:
                 self.thread_pool.shutdown(wait=True)

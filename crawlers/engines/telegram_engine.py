@@ -8,12 +8,12 @@ Handles channels, groups, messages, and media extraction.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
 
-🏗️ Architecture Enterprise - Équipe Projet Spécialisée :
+ Architecture Enterprise - Équipe Projet Spécialisée :
 • Lead Developer IA : Fahed Mlaiel (mlaiel@live.de)
 • Backend Senior Engineer : Architecture microservices & APIs
 • ML/AI Engineer : Intelligence artificielle & algorithmes avancés
@@ -240,6 +240,9 @@ class TelegramCrawlerEngine(BaseCrawlerEngine):
 
     async def authenticate(self) -> bool:
         """Authenticate with Telegram API"""
+
+
+
         try:
             # Initialize client
             if self.proxy_config:
@@ -288,6 +291,9 @@ class TelegramCrawlerEngine(BaseCrawlerEngine):
 
     async def complete_authentication(self, code: str) -> bool:
         """Complete authentication with received code"""
+
+
+
         try:
             await self.client.sign_in(self.phone_number, code)
             self.is_authenticated = True
@@ -613,6 +619,9 @@ class TelegramCrawlerEngine(BaseCrawlerEngine):
 
     async def _process_message_data(self, message, channel) -> Optional[TelegramMessageData]:
         """Process Telegram message into TelegramMessageData object"""
+
+
+
         try:
             # Extract sender information
             sender_id = getattr(message.sender, 'id', 0) if message.sender else 0
@@ -734,6 +743,9 @@ class TelegramCrawlerEngine(BaseCrawlerEngine):
 
     def __del__(self):
         """Cleanup resources"""
+
+
+
         try:
             if self.client:
                 asyncio.create_task(self.close())

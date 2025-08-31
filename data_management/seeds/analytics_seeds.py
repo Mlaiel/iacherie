@@ -206,11 +206,11 @@ class AnalyticsSeedsManager:
                 'details': results
             }
             
-            logger.info(f"✅ Analytics seeds initialized successfully in {duration:.2f}s")
+            logger.info(f" Analytics seeds initialized successfully in {duration:.2f}s")
             return summary
             
         except Exception as e:
-            logger.error(f"❌ Failed to initialize analytics seeds: {str(e)}")
+            logger.error(f" Failed to initialize analytics seeds: {str(e)}")
             raise
     
     async def _initialize_metrics_definitions(self) -> Dict[str, Any]:

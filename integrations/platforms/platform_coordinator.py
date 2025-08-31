@@ -138,6 +138,9 @@ class PlatformCoordinator:
         state: str
     ) -> bool:
         """Complete OAuth authentication and store tokens"""
+
+
+
         try:
             tokens = await self.oauth_manager.exchange_code_for_tokens(
                 platform, authorization_code, state
@@ -523,6 +526,9 @@ class PlatformCoordinator:
         
     async def disconnect_platform(self, user_id: str, platform: str) -> bool:
         """Disconnect a platform for a user"""
+
+
+
         try:
             # Remove stored tokens
             if user_id in self.tokens_storage and platform in self.tokens_storage[user_id]:

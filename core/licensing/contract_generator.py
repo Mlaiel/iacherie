@@ -9,7 +9,7 @@ and multi-format licensing support for comprehensive intellectual property manag
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing and usage rights.
@@ -330,6 +330,9 @@ class ContractGenerator:
     
     async def initialize(self) -> None:
         """Initialize contract generator and load templates"""
+
+
+
         try:
             self.logger.info("Initializing ContractGenerator")
             
@@ -523,6 +526,9 @@ class ContractGenerator:
         changes: Dict[str, Any]
     ) -> ContractGenerationResult:
         """Regenerate contract with updated terms"""
+
+
+
         try:
             # Find existing contract
             existing_contract_id = None
@@ -601,6 +607,9 @@ class ContractGenerator:
     
     def _extract_license_data(self, license: Any) -> Dict[str, Any]:
         """Extract relevant data from license object"""
+
+
+
         return {
             'license_id': license.license_id,
             'content_id': license.content_id,
@@ -785,6 +794,9 @@ class ContractGenerator:
         language: str
     ) -> str:
         """Generate contract content from template and variables"""
+
+
+
         try:
             # Render template with variables
             content = await self.template_engine.render_template(

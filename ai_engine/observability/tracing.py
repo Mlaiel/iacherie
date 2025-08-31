@@ -7,7 +7,7 @@ platform, providing end-to-end visibility across microservices and AI operations
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -56,6 +56,9 @@ class SpanEvent:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert span event to dictionary"""
+
+
+
         return {
             'name': self.name,
             'timestamp': self.timestamp.isoformat(),
@@ -72,6 +75,9 @@ class SpanLink:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert span link to dictionary"""
+
+
+
         return {
             'trace_id': self.trace_id,
             'span_id': self.span_id,
@@ -182,6 +188,9 @@ class Span:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert span to dictionary"""
+
+
+
         return {
             'trace_id': self.trace_id,
             'span_id': self.span_id,
@@ -203,6 +212,9 @@ class Span:
     
     def to_json(self) -> str:
         """Convert span to JSON string"""
+
+
+
         return json.dumps(self.to_dict(), default=str, ensure_ascii=False)
 
 
@@ -233,14 +245,23 @@ class Trace:
     
     def get_root_spans(self) -> List[Span]:
         """Get root spans (spans without parents)"""
+
+
+
         return [span for span in self.spans if span.parent_span_id is None]
     
     def get_span_children(self, span_id: str) -> List[Span]:
         """Get child spans of a given span"""
+
+
+
         return [span for span in self.spans if span.parent_span_id == span_id]
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert trace to dictionary"""
+
+
+
         return {
             'trace_id': self.trace_id,
             'spans': [span.to_dict() for span in self.spans],
@@ -261,6 +282,9 @@ class SpanContext:
     
     def get_current_span(self) -> Optional[Span]:
         """Get the current active span"""
+
+
+
         return getattr(self._local, 'current_span', None)
     
     def set_current_span(self, span: Optional[Span]):
@@ -372,10 +396,16 @@ class SpanManager:
     
     def _generate_trace_id(self) -> str:
         """Generate a new trace ID"""
+
+
+
         return uuid.uuid4().hex
     
     def _generate_span_id(self) -> str:
         """Generate a new span ID"""
+
+
+
         return uuid.uuid4().hex[:16]
     
     def _should_sample(self, trace_id: str) -> bool:
@@ -481,6 +511,9 @@ class SpanManager:
     
     def get_metrics(self) -> Dict[str, Any]:
         """Get tracing metrics"""
+
+
+
         return {
             **self.metrics,
             'active_traces': len(self.active_traces),
@@ -595,10 +628,16 @@ class DistributedTracer:
     
     def get_current_span(self) -> Optional[Span]:
         """Get the current active span"""
+
+
+
         return _span_context.get_current_span()
     
     def get_current_trace_id(self) -> Optional[str]:
         """Get the current trace ID"""
+
+
+
         return _span_context.get_trace_id()
     
     def finish_span(self, span: Span, status: SpanStatus = SpanStatus.OK, 
@@ -846,6 +885,9 @@ class DistributedTracer:
     
     def get_metrics(self) -> Dict[str, Any]:
         """Get tracing metrics"""
+
+
+
         return self.span_manager.get_metrics()
 
 
@@ -881,6 +923,9 @@ class TraceAnalyzer:
     
     async def analyze_traces(self, traces: List[Trace]) -> Dict[str, Any]:
         """Analyze a batch of traces"""
+
+
+
         
         try:
             analysis_results = {
@@ -1400,6 +1445,9 @@ class AIOperationTracer:
                            epoch: int,
                            batch_count: int):
         """Trace model training operations"""
+
+
+
         
         return self.tracer.span(
             f"ai.training.{model_name}",
@@ -1416,6 +1464,9 @@ class AIOperationTracer:
                                operation: str,
                                record_count: int):
         """Trace data preprocessing operations"""
+
+
+
         
         return self.tracer.span(
             f"ai.preprocessing.{operation}",
@@ -1451,21 +1502,33 @@ class AIOperationTracer:
 # Factory functions for creating tracers
 def create_tracer(service_name: str, config: Optional[Dict[str, Any]] = None) -> DistributedTracer:
     """Factory function for creating distributed tracers"""
+
+
+
     return DistributedTracer(service_name, config)
 
 
 def create_request_tracker(tracer: DistributedTracer) -> RequestTracker:
     """Factory function for creating request trackers"""
+
+
+
     return RequestTracker(tracer)
 
 
 def create_performance_tracer(tracer: DistributedTracer) -> PerformanceTracer:
     """Factory function for creating performance tracers"""
+
+
+
     return PerformanceTracer(tracer)
 
 
 def create_ai_operation_tracer(tracer: DistributedTracer) -> AIOperationTracer:
     """Factory function for creating AI operation tracers"""
+
+
+
     return AIOperationTracer(tracer)
 
 
@@ -1475,6 +1538,9 @@ _global_tracer: Optional[DistributedTracer] = None
 
 def get_global_tracer() -> Optional[DistributedTracer]:
     """Get the global tracer instance"""
+
+
+
     return _global_tracer
 
 

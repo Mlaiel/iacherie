@@ -160,7 +160,7 @@ try:
         create_workflow_processor
     )
     
-    logger.info("🚀 All processors imported successfully")
+    logger.info(" All processors imported successfully")
     
 except ImportError as e:
     logger.warning(f"Some processor imports failed: {str(e)}")
@@ -289,7 +289,7 @@ class ProcessingResponse:
 
 
 class ProcessorRegistry:
-    """    🏭 ENTERPRISE PROCESSOR REGISTRY
+    """     ENTERPRISE PROCESSOR REGISTRY
     
     Central registry for managing all content processors
     with dependency injection and configuration management
@@ -305,7 +305,7 @@ class ProcessorRegistry:
         else:
             self._config = config
             
-        logger.info(f"🔧 Processor registry configured with {len(vars(self._config))} parameters")
+        logger.info(f" Processor registry configured with {len(vars(self._config))} parameters")
     
     async def initialize_processors(
         self,
@@ -462,10 +462,10 @@ class ProcessorRegistry:
                 
                 self._processors[processor_type] = processor
                 initialization_results[processor_type] = True
-                logger.info(f"✅ {processor_type.value} processor initialized successfully")
+                logger.info(f" {processor_type.value} processor initialized successfully")
                 
             except Exception as e:
-                logger.error(f"❌ Failed to initialize {processor_type.value} processor: {str(e)}")
+                logger.error(f" Failed to initialize {processor_type.value} processor: {str(e)}")
                 initialization_results[processor_type] = False
         
         self._initialized = True
@@ -473,7 +473,7 @@ class ProcessorRegistry:
         success_count = sum(1 for result in initialization_results.values() if result)
         total_count = len(initialization_results)
         
-        logger.info(f"🏭 Processor registry initialization complete: {success_count}/{total_count} processors initialized")
+        logger.info(f" Processor registry initialization complete: {success_count}/{total_count} processors initialized")
         
         return initialization_results
     
@@ -487,10 +487,16 @@ class ProcessorRegistry:
         return self._processors[processor_type]
     
     def list_processors(self) -> List[ProcessorType]:
-        """List all initialized processors"""        return list(self._processors.keys())
+        """List all initialized processors"""
+
+
+        return list(self._processors.keys())
     
     def is_initialized(self) -> bool:
-        """Check if registry is initialized"""        return self._initialized
+        """Check if registry is initialized"""
+
+
+        return self._initialized
     
     async def process_content(self, request: ProcessingRequest) -> ProcessingResponse:
         """        Process content using the appropriate processor
@@ -550,12 +556,12 @@ class ProcessorRegistry:
                 warnings=result.get('warnings', [])
             )
             
-            logger.info(f"✅ Content processed successfully: {request_id} ({response.processing_time:.2f}s)")
+            logger.info(f" Content processed successfully: {request_id} ({response.processing_time:.2f}s)")
             
             return response
             
         except Exception as e:
-            logger.error(f"❌ Content processing failed: {request_id} - {str(e)}")
+            logger.error(f" Content processing failed: {request_id} - {str(e)}")
             
             return ProcessingResponse(
                 request_id=request_id,
@@ -646,19 +652,31 @@ async def initialize_processors(
 
 
 def get_processor(processor_type: ProcessorType) -> Any:
-    """Get an initialized processor"""    return processor_registry.get_processor(processor_type)
+    """Get an initialized processor"""
+
+
+    return processor_registry.get_processor(processor_type)
 
 
 def list_processors() -> List[ProcessorType]:
-    """List all initialized processors"""    return processor_registry.list_processors()
+    """List all initialized processors"""
+
+
+    return processor_registry.list_processors()
 
 
 async def process_content(request: ProcessingRequest) -> ProcessingResponse:
-    """Process content using the appropriate processor"""    return await processor_registry.process_content(request)
+    """Process content using the appropriate processor"""
+
+
+    return await processor_registry.process_content(request)
 
 
 async def health_check() -> Dict[str, Any]:
-    """Perform health check on all processors"""    return await processor_registry.health_check()
+    """Perform health check on all processors"""
+
+
+    return await processor_registry.health_check()
 
 
 # Export des classes et fonctions principales
@@ -818,7 +836,7 @@ PROCESSORS_INFO = {
 }
 
 
-logger.info(f"🎯 IA-Influencer-Agent Core Processors Module loaded - {len(__all__)} exports available")
-logger.info(f"📋 Processor categories: {list(PROCESSORS_INFO.keys())}")
-logger.info(f"🔧 Total processors available: {sum(len(processors) for processors in PROCESSORS_INFO.values())}")
-logger.info("💼 Ready for enterprise multi-format content processing operations")
+logger.info(f" IA-Influencer-Agent Core Processors Module loaded - {len(__all__)} exports available")
+logger.info(f" Processor categories: {list(PROCESSORS_INFO.keys())}")
+logger.info(f" Total processors available: {sum(len(processors) for processors in PROCESSORS_INFO.values())}")
+logger.info(" Ready for enterprise multi-format content processing operations")

@@ -23,7 +23,7 @@ engagement optimization, hashtag strategies, optimal timing, and audience analys
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
@@ -52,6 +52,9 @@ class TestSocialMediaManagerAgent:
     @pytest.fixture
     def social_media_config(self) -> AgentConfiguration:
         """Social media manager agent configuration"""
+
+
+
         return AgentConfiguration(
             agent_id="social_media_test",
             agent_name="Test Social Media Manager",
@@ -121,7 +124,7 @@ class TestSocialMediaManagerAgent:
             "task_type": "platform_posting",
             "platform": "instagram",
             "content": {
-                "text": "Check out this amazing AI tool! 🚀 #AI #Innovation #TechTrends",
+                "text": "Check out this amazing AI tool!  #AI #Innovation #TechTrends",
                 "image_url": "https://example.com/image.jpg",
                 "video_url": None
             },
@@ -335,7 +338,7 @@ class TestSocialMediaManagerAgent:
                 "comments": [
                     {"id": "c1", "text": "Great content!", "user": "user1", "sentiment": "positive"},
                     {"id": "c2", "text": "How does this work?", "user": "user2", "sentiment": "neutral"},
-                    {"id": "c3", "text": "Amazing innovation! 🔥", "user": "user3", "sentiment": "positive"}
+                    {"id": "c3", "text": "Amazing innovation! ", "user": "user3", "sentiment": "positive"}
                 ],
                 "mentions": [
                     {"id": "m1", "text": "@brand this is incredible", "user": "user4", "sentiment": "positive"}
@@ -455,7 +458,7 @@ class TestSocialMediaManagerAgent:
             "content_queue": [
                 {
                     "content_id": "content_1",
-                    "text": "Monday motivation with AI! 💪",
+                    "text": "Monday motivation with AI! ",
                     "media_url": "https://example.com/monday.jpg",
                     "content_type": "motivational"
                 },
@@ -467,7 +470,7 @@ class TestSocialMediaManagerAgent:
                 },
                 {
                     "content_id": "content_3",
-                    "text": "Wisdom Wednesday insights 💡",
+                    "text": "Wisdom Wednesday insights ",
                     "media_url": "https://example.com/wednesday.jpg",
                     "content_type": "insights"
                 }

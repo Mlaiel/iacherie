@@ -1,11 +1,11 @@
 """
-🏷️ Metadata Transformation Engine - IA Influencer Agent Platform Enterprise
+ Metadata Transformation Engine - IA Influencer Agent Platform Enterprise
 =========================================================================
 Module: backend/data_management/transformers/metadata_transformer.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 =========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
@@ -133,6 +133,9 @@ class MetadataExtractor:
     
     def extract_metadata(self, file_path: str) -> Dict[str, Any]:
         """Extrait toutes les métadonnées disponibles d'un fichier"""
+
+
+
         
         try:
             file_path_obj = Path(file_path)
@@ -231,6 +234,9 @@ class MetadataExtractor:
     
     def _extract_gps_info(self, exif_data: Dict) -> Optional[Dict[str, float]]:
         """Extrait les informations GPS des données EXIF"""
+
+
+
         
         try:
             gps_info = exif_data.get(34853)  # GPS tag
@@ -429,6 +435,9 @@ class MetadataExtractor:
     
     def _calculate_content_hash(self, file_path: str) -> str:
         """Calcule un hash SHA-256 du contenu du fichier"""
+
+
+
         
         try:
             sha256_hash = hashlib.sha256()
@@ -560,6 +569,9 @@ class MetadataEnricher:
     
     def _generate_color_tags(self, image_path: str) -> List[str]:
         """Génère des tags basés sur les couleurs dominantes"""
+
+
+
         
         try:
             from PIL import Image
@@ -1025,6 +1037,9 @@ class MetadataNormalizer:
         target_standard: MetadataStandard
     ) -> Dict[str, Any]:
         """Normalise les métadonnées vers un standard spécifique"""
+
+
+
         
         try:
             if target_standard == MetadataStandard.DUBLIN_CORE:

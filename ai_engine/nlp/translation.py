@@ -7,7 +7,7 @@ and influencers to reach international audiences effectively.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
+ STRICT COPYRIGHT WARNING - Unauthorized use prohibited 
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
 
@@ -75,6 +75,9 @@ class AdvancedTranslator:
         
     def _get_default_config(self) -> Dict[str, Any]:
         """Get default configuration"""
+
+
+
         return {
             'cache_translations': True,
             'max_cache_size': 1000,
@@ -87,6 +90,9 @@ class AdvancedTranslator:
     
     def _load_supported_languages(self) -> Dict[str, Dict[str, Any]]:
         """Load supported languages with metadata"""
+
+
+
         return {
             'en': {
                 'name': 'English',
@@ -132,21 +138,21 @@ class AdvancedTranslator:
             },
             'ja': {
                 'name': 'Japanese',
-                'native_name': '日本語',
+                'native_name': '',
                 'direction': 'ltr',
                 'family': 'Japonic',
                 'complexity': 'very_high'
             },
             'ko': {
                 'name': 'Korean',
-                'native_name': '한국어',
+                'native_name': '',
                 'direction': 'ltr',
                 'family': 'Koreanic',
                 'complexity': 'high'
             },
             'zh': {
                 'name': 'Chinese',
-                'native_name': '中文',
+                'native_name': '',
                 'direction': 'ltr',
                 'family': 'Sino-Tibetan',
                 'complexity': 'very_high'
@@ -176,6 +182,9 @@ class AdvancedTranslator:
     
     def _load_cultural_rules(self) -> Dict[str, Dict[str, Any]]:
         """Load cultural adaptation rules"""
+
+
+
         return {
             'color_associations': {
                 'en': {'red': 'passion', 'white': 'purity', 'black': 'elegance'},
@@ -657,6 +666,9 @@ class AdvancedTranslator:
     
     def _validate_languages(self, source_lang: str, target_lang: str) -> bool:
         """Validate if language pair is supported"""
+
+
+
         return (source_lang in self.supported_languages and 
                 target_lang in self.supported_languages)
     
@@ -761,6 +773,9 @@ class AdvancedTranslator:
     
     async def _create_fallback_translation(self, request: TranslationRequest, error_message: str) -> TranslationResult:
         """Create fallback translation result"""
+
+
+
         return TranslationResult(
             request_id=self._generate_request_id(request),
             original_text=request.text,
@@ -1012,6 +1027,9 @@ class MultiLanguageContentManager:
     
     def get_supported_languages(self) -> Dict[str, str]:
         """Get list of supported languages"""
+
+
+
         return {
             code: info['name']
             for code, info in self.translator.supported_languages.items()

@@ -631,10 +631,16 @@ class PricingConfig:
     
     def get_tier_config(self, tier: PricingTier) -> Optional[PricingTierConfig]:
         """Get configuration for a specific pricing tier."""
+
+
+
         return self.PRICING_TIERS.get(tier)
     
     def get_enabled_tiers(self) -> List[PricingTier]:
         """Get list of enabled pricing tiers."""
+
+
+
         return [
             tier for tier, config in self.PRICING_TIERS.items() 
             if config.enabled

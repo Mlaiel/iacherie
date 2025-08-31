@@ -20,7 +20,7 @@ Copyright: All rights reserved. Unauthorized use prohibited.
 Project: IA Influencer Agent - Ultra-Advanced Industrial Platform
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + DevOps + Legal Automation
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 ALL RIGHTS RESERVED. UNAUTHORIZED USE PROHIBITED.
 This code belongs exclusively to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use will result in immediate legal action.
@@ -159,6 +159,9 @@ class ContentAnalysisEngine:
     
     def _initialize_models(self) -> None:
         """Initialize all AI models"""
+
+
+
         try:
             # Text analysis models
             self.sentence_transformer = SentenceTransformer('all-MiniLM-L6-v2')
@@ -186,6 +189,9 @@ class ContentAnalysisEngine:
         content_id: str
     ) -> ContentFeatures:
         """Extract comprehensive features from content"""
+
+
+
         try:
             features = ContentFeatures(
                 content_id=content_id,
@@ -224,6 +230,9 @@ class ContentAnalysisEngine:
     
     async def _extract_audio_features(self, audio_path: str) -> np.ndarray:
         """Extract advanced audio features"""
+
+
+
         try:
             # Load audio file
             y, sr = librosa.load(audio_path, sr=22050)
@@ -266,6 +275,9 @@ class ContentAnalysisEngine:
     
     async def _extract_image_features(self, image_path: str) -> np.ndarray:
         """Extract advanced image features using CLIP"""
+
+
+
         try:
             # Load and preprocess image
             image = cv2.imread(image_path)
@@ -284,6 +296,9 @@ class ContentAnalysisEngine:
     
     async def _extract_video_features(self, video_path: str) -> np.ndarray:
         """Extract video visual features"""
+
+
+
         try:
             cap = cv2.VideoCapture(video_path)
             frame_features = []
@@ -320,6 +335,9 @@ class ContentAnalysisEngine:
     
     async def _extract_text_features(self, text_content: str) -> np.ndarray:
         """Extract advanced text features"""
+
+
+
         try:
             # Use sentence transformer for semantic embeddings
             embeddings = self.sentence_transformer.encode(text_content)
@@ -343,6 +361,9 @@ class ContentAnalysisEngine:
     
     async def _generate_audio_fingerprint(self, audio_path: str) -> str:
         """Generate audio fingerprint using chromaprint"""
+
+
+
         try:
             # This would use a library like pyacoustid for chromaprint
             # For now, return a hash of the audio features
@@ -353,6 +374,9 @@ class ContentAnalysisEngine:
     
     async def _generate_perceptual_hash(self, image_path: str) -> str:
         """Generate perceptual hash for image"""
+
+
+
         try:
             import imagehash
             from PIL import Image
@@ -370,6 +394,9 @@ class ContentAnalysisEngine:
         methods: List[SimilarityMethod] = None
     ) -> SimilarityAnalysisResult:
         """Calculate comprehensive similarity between content items"""
+
+
+
         try:
             if methods is None:
                 methods = [
@@ -457,6 +484,9 @@ class ContentAnalysisEngine:
         features2: ContentFeatures
     ) -> float:
         """Calculate feature-based similarity"""
+
+
+
         try:
             similarities = []
             
@@ -484,6 +514,9 @@ class ContentAnalysisEngine:
         features2: ContentFeatures
     ) -> float:
         """Calculate perceptual hash similarity"""
+
+
+
         try:
             if features1.perceptual_hash and features2.perceptual_hash:
                 # Calculate Hamming distance for perceptual hashes
@@ -508,6 +541,9 @@ class ContentAnalysisEngine:
         features2: ContentFeatures
     ) -> float:
         """Calculate semantic similarity for text content"""
+
+
+
         try:
             if features1.text_features is not None and features2.text_features is not None:
                 return cosine_similarity([features1.text_features], [features2.text_features])[0][0]
@@ -522,6 +558,9 @@ class ContentAnalysisEngine:
         modality_scores: Dict[ContentModality, float]
     ) -> float:
         """Calculate confidence score for similarity analysis"""
+
+
+
         try:
             # Base confidence on consistency between methods
             if len(method_scores) < 2:
@@ -551,6 +590,9 @@ class ContentAnalysisEngine:
         modality_scores: Dict[ContentModality, float]
     ) -> Tuple[str, str]:
         """Assess risk level and recommend action"""
+
+
+
         try:
             # High similarity with high confidence
             if similarity > 0.9 and confidence > 0.8:
@@ -574,6 +616,9 @@ class ContentAnalysisEngine:
         evidence_data: List[Dict[str, Any]]
     ) -> LegalAnalysisResult:
         """Analyze legal strength of copyright case using AI"""
+
+
+
         try:
             # Extract key factors for legal analysis
             copyright_factors = await self._analyze_copyright_validity(case_data)
@@ -622,6 +667,9 @@ class ContentAnalysisEngine:
     
     async def _analyze_copyright_validity(self, case_data: Dict[str, Any]) -> float:
         """Analyze copyright validity factors"""
+
+
+
         try:
             score = 0.5  # Base score
             
@@ -653,6 +701,9 @@ class ContentAnalysisEngine:
     
     async def _analyze_evidence_quality(self, evidence_data: List[Dict[str, Any]]) -> float:
         """Analyze quality of evidence using AI"""
+
+
+
         try:
             if not evidence_data:
                 return 0.0
@@ -697,6 +748,9 @@ class ContentAnalysisEngine:
     
     async def _analyze_jurisdictional_factors(self, case_data: Dict[str, Any]) -> Dict[str, float]:
         """Analyze jurisdictional factors affecting the case"""
+
+
+
         try:
             factors = {}
             
@@ -736,6 +790,9 @@ class ContentAnalysisEngine:
         jurisdictional_factors: Dict[str, float]
     ) -> float:
         """Predict case success probability using AI"""
+
+
+
         try:
             # Simple ML-based prediction
             # In production, this would use a trained model
@@ -763,6 +820,9 @@ class ContentAnalysisEngine:
         evidence_data: List[Dict[str, Any]]
     ) -> List[str]:
         """Identify potential risk factors for the case"""
+
+
+
         try:
             risk_factors = []
             
@@ -806,6 +866,9 @@ class ContentAnalysisEngine:
         case_data: Dict[str, Any]
     ) -> List[str]:
         """Generate AI-powered legal recommendations"""
+
+
+
         try:
             recommendations = []
             
@@ -850,6 +913,9 @@ class ContentAnalysisEngine:
         ai_analysis: LegalAnalysisResult
     ) -> str:
         """Generate legal documents using AI"""
+
+
+
         try:
             if not self.settings.openai_api_key:
                 logger.warning("OpenAI API key not configured")
@@ -911,6 +977,9 @@ class ContentAnalysisEngine:
     
     async def cleanup_models(self) -> None:
         """Cleanup AI models and free memory"""
+
+
+
         try:
             del self.text_model
             del self.clip_model
@@ -940,6 +1009,9 @@ class IntelligentEnforcementStrategy:
         legal_analysis: LegalAnalysisResult
     ) -> Dict[str, Any]:
         """Recommend optimal enforcement strategy using AI"""
+
+
+
         try:
             # Analyze multiple factors
             urgency_score = self._calculate_urgency(violation_data, similarity_analysis)

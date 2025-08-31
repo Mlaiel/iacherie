@@ -3,12 +3,12 @@ Distribution Schemas for IA Influencer Agent - Professional Content Distribution
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚖️ LEGAL WARNING:
+ LEGAL WARNING:
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 
-🚀 Professional Team Expertise:
+ Professional Team Expertise:
 - Lead IA Developer: Advanced AI/ML Architecture
 - Senior Backend Engineer: Enterprise-grade Infrastructure  
 - ML Engineer: Deep Learning & Data Processing

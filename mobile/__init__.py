@@ -5,7 +5,7 @@ Enterprise-grade mobile backend services and infrastructure
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️ STRICT COPYRIGHT NOTICE ⚠️
+ STRICT COPYRIGHT NOTICE 
 This code is proprietary and confidential to Fahed Mlaiel.
 Any unauthorized use, copying, modification, or distribution
 without explicit written permission is strictly prohibited.

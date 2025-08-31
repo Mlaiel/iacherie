@@ -7,7 +7,7 @@ and intelligent content extraction for major social and content platforms.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -198,6 +198,9 @@ class PlatformCrawler:
 
     async def initialize(self) -> None:
         """Initialize platform clients and connections"""
+
+
+
         try:
             # Initialize HTTP session
             connector = aiohttp.TCPConnector(
@@ -604,6 +607,9 @@ class PlatformCrawler:
 
     def _process_spotify_artist(self, artist: Dict) -> PlatformContent:
         """Process Spotify artist data"""
+
+
+
         return PlatformContent(
             platform=PlatformType.SPOTIFY,
             content_id=artist['id'],
@@ -627,6 +633,9 @@ class PlatformCrawler:
 
     def _process_spotify_playlist(self, playlist: Dict) -> PlatformContent:
         """Process Spotify playlist data"""
+
+
+
         return PlatformContent(
             platform=PlatformType.SPOTIFY,
             content_id=playlist['id'],
@@ -928,10 +937,16 @@ class PlatformCrawler:
 
     def get_platform_statistics(self) -> Dict[str, Dict]:
         """Get crawling statistics for all platforms"""
+
+
+
         return self.crawling_stats.copy()
 
     def get_active_crawls(self) -> List[str]:
         """Get list of active crawl IDs"""
+
+
+
         return list(self.active_crawls)
 
     async def cleanup(self) -> None:

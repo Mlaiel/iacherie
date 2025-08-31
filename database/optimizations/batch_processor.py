@@ -153,11 +153,17 @@ class BatchResult:
     @property
     def is_successful(self) -> bool:
         """Check if batch was successful"""
+
+
+
         return self.status == BatchStatus.COMPLETED and self.metrics.failed_items == 0
     
     @property
     def has_partial_success(self) -> bool:
         """Check if batch had partial success"""
+
+
+
         return (self.status == BatchStatus.PARTIALLY_COMPLETED or 
                 (self.status == BatchStatus.COMPLETED and self.metrics.failed_items > 0))
 
@@ -644,6 +650,9 @@ class BatchProcessor(Generic[T]):
     
     def _get_available_memory_mb(self) -> float:
         """Get available system memory in MB"""
+
+
+
         try:
             import psutil
             memory = psutil.virtual_memory()
@@ -653,6 +662,9 @@ class BatchProcessor(Generic[T]):
     
     def _get_memory_usage_mb(self) -> float:
         """Get current memory usage in MB"""
+
+
+
         try:
             import psutil
             process = psutil.Process()
@@ -662,6 +674,9 @@ class BatchProcessor(Generic[T]):
     
     def _get_cpu_usage(self) -> float:
         """Get current CPU usage percentage"""
+
+
+
         try:
             import psutil
             return psutil.cpu_percent(interval=0.1)
@@ -670,6 +685,9 @@ class BatchProcessor(Generic[T]):
     
     async def _send_batch_metrics(self, metrics: BatchMetrics, status: BatchStatus) -> None:
         """Send batch metrics to monitoring system"""
+
+
+
         try:
             self.metrics_collector.counter(
                 "batch_processing_total",
@@ -705,6 +723,9 @@ class BatchProcessor(Generic[T]):
     
     def get_batch_status(self, batch_id: str) -> Optional[BatchMetrics]:
         """Get current status of a batch"""
+
+
+
         return self._active_batches.get(batch_id)
     
     def add_progress_callback(self, callback: Callable[[BatchMetrics], Awaitable[None]]) -> None:

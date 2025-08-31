@@ -33,7 +33,7 @@ import unittest
 
 def test_module_structure():
     """Test that all required module files exist"""
-    print("🔍 Testing Advanced Metrics Module Structure...")
+    print(" Testing Advanced Metrics Module Structure...")
     
     base_path = "monitoring/advanced_metrics"
     required_files = [
@@ -53,21 +53,21 @@ def test_module_structure():
     for file in required_files:
         file_path = os.path.join(base_path, file)
         if os.path.exists(file_path):
-            print(f"✅ {file}")
+            print(f" {file}")
         else:
-            print(f"❌ {file} - MISSING")
+            print(f" {file} - MISSING")
             all_files_exist = False
     
     if all_files_exist:
-        print("✅ All required files exist!")
+        print(" All required files exist!")
     else:
-        print("❌ Some files are missing!")
+        print(" Some files are missing!")
     
     return all_files_exist
 
 def test_documentation_content():
     """Test documentation files contain required content"""
-    print("\n📚 Testing Documentation Content...")
+    print("\n Testing Documentation Content...")
     
     base_path = "monitoring/advanced_metrics"
     
@@ -90,11 +90,11 @@ def test_documentation_content():
             
             for check, description in checks:
                 if check in content:
-                    print(f"✅ {description}")
+                    print(f" {description}")
                 else:
-                    print(f"❌ {description} - MISSING")
+                    print(f" {description} - MISSING")
     except Exception as e:
-        print(f"❌ Error reading README.md: {e}")
+        print(f" Error reading README.md: {e}")
         return False
     
     # Test French README
@@ -103,11 +103,11 @@ def test_documentation_content():
         with open(readme_fr_path, 'r', encoding='utf-8') as f:
             content = f.read()
             if "AVERTISSEMENT CRITIQUE" in content and "Fahed Mlaiel" in content:
-                print("✅ French documentation")
+                print(" French documentation")
             else:
-                print("❌ French documentation - INCOMPLETE")
+                print(" French documentation - INCOMPLETE")
     except Exception as e:
-        print(f"❌ Error reading README.fr.md: {e}")
+        print(f" Error reading README.fr.md: {e}")
     
     # Test German README
     readme_de_path = os.path.join(base_path, "README.de.md")
@@ -115,17 +115,17 @@ def test_documentation_content():
         with open(readme_de_path, 'r', encoding='utf-8') as f:
             content = f.read()
             if "KRITISCHE URHEBERRECHTS-WARNUNG" in content and "Fahed Mlaiel" in content:
-                print("✅ German documentation")
+                print(" German documentation")
             else:
-                print("❌ German documentation - INCOMPLETE")
+                print(" German documentation - INCOMPLETE")
     except Exception as e:
-        print(f"❌ Error reading README.de.md: {e}")
+        print(f" Error reading README.de.md: {e}")
     
     return True
 
 def test_business_logic_concepts():
     """Test business logic concepts and data structures"""
-    print("\n💼 Testing Business Logic Concepts...")
+    print("\n Testing Business Logic Concepts...")
     
     # Test business KPI structure
     business_kpi = {
@@ -140,9 +140,9 @@ def test_business_logic_concepts():
     kpi_valid = all(field in business_kpi for field in required_fields)
     
     if kpi_valid:
-        print("✅ Business KPI data structure")
+        print(" Business KPI data structure")
     else:
-        print("❌ Business KPI data structure - INVALID")
+        print(" Business KPI data structure - INVALID")
     
     # Test engagement event structure
     engagement_event = {
@@ -159,9 +159,9 @@ def test_business_logic_concepts():
     event_valid = all(field in engagement_event for field in event_required_fields)
     
     if event_valid:
-        print("✅ Engagement event data structure")
+        print(" Engagement event data structure")
     else:
-        print("❌ Engagement event data structure - INVALID")
+        print(" Engagement event data structure - INVALID")
     
     # Test content performance structure
     content_performance = {
@@ -181,15 +181,15 @@ def test_business_logic_concepts():
     content_valid = all(field in content_performance for field in content_required_fields)
     
     if content_valid:
-        print("✅ Content performance data structure")
+        print(" Content performance data structure")
     else:
-        print("❌ Content performance data structure - INVALID")
+        print(" Content performance data structure - INVALID")
     
     return kpi_valid and event_valid and content_valid
 
 def test_integration_concepts():
     """Test integration and workflow concepts"""
-    print("\n🔗 Testing Integration Concepts...")
+    print("\n Testing Integration Concepts...")
     
     # Test metrics aggregation workflow
     metrics_workflow = [
@@ -201,7 +201,7 @@ def test_integration_concepts():
         "optimization"
     ]
     
-    print("✅ Metrics workflow stages defined")
+    print(" Metrics workflow stages defined")
     
     # Test business logic flow
     business_flow = [
@@ -214,7 +214,7 @@ def test_integration_concepts():
         "metrics_analysis"
     ]
     
-    print("✅ Business logic flow defined")
+    print(" Business logic flow defined")
     
     # Test supported platforms
     supported_platforms = [
@@ -223,9 +223,9 @@ def test_integration_concepts():
     ]
     
     if len(supported_platforms) >= 8:
-        print("✅ Platform coverage adequate")
+        print(" Platform coverage adequate")
     else:
-        print("❌ Platform coverage insufficient")
+        print(" Platform coverage insufficient")
     
     # Test content types
     content_types = [
@@ -234,15 +234,15 @@ def test_integration_concepts():
     ]
     
     if len(content_types) >= 8:
-        print("✅ Content type coverage adequate")
+        print(" Content type coverage adequate")
     else:
-        print("❌ Content type coverage insufficient")
+        print(" Content type coverage insufficient")
     
     return True
 
 def test_security_and_compliance():
     """Test security and compliance concepts"""
-    print("\n🔐 Testing Security & Compliance Concepts...")
+    print("\n Testing Security & Compliance Concepts...")
     
     # Test data anonymization concept
     sensitive_data = {
@@ -261,9 +261,9 @@ def test_security_and_compliance():
     # Verify PII is not in anonymized data
     pii_removed = "user@example.com" not in str(anonymized_data)
     if pii_removed:
-        print("✅ Data anonymization concept")
+        print(" Data anonymization concept")
     else:
-        print("❌ Data anonymization concept - FAILED")
+        print(" Data anonymization concept - FAILED")
     
     # Test access control concept
     user_permissions = {
@@ -281,15 +281,15 @@ def test_security_and_compliance():
     viewer_can_read_public = check_permission("viewer", "read_public_metrics")
     
     if admin_can_read and analyst_cannot_delete and viewer_can_read_public:
-        print("✅ Access control concept")
+        print(" Access control concept")
     else:
-        print("❌ Access control concept - FAILED")
+        print(" Access control concept - FAILED")
     
     return pii_removed and admin_can_read
 
 def test_performance_concepts():
     """Test performance and scalability concepts"""
-    print("\n⚡ Testing Performance Concepts...")
+    print("\n Testing Performance Concepts...")
     
     # Test large dataset handling concept
     large_dataset = {
@@ -302,9 +302,9 @@ def test_performance_concepts():
     
     dataset_size_ok = len(large_dataset) == 1000
     if dataset_size_ok:
-        print("✅ Large dataset handling")
+        print(" Large dataset handling")
     else:
-        print("❌ Large dataset handling - FAILED")
+        print(" Large dataset handling - FAILED")
     
     # Test metrics aggregation efficiency
     sample_metrics = [
@@ -317,15 +317,15 @@ def test_performance_concepts():
     aggregation_works = 0 < weighted_average < 1000
     
     if aggregation_works:
-        print("✅ Metrics aggregation concept")
+        print(" Metrics aggregation concept")
     else:
-        print("❌ Metrics aggregation concept - FAILED")
+        print(" Metrics aggregation concept - FAILED")
     
     return dataset_size_ok and aggregation_works
 
 def run_all_tests():
     """Run all validation tests"""
-    print("🎯 Advanced Metrics Module Validation")
+    print(" Advanced Metrics Module Validation")
     print("=" * 50)
     print(f"Author: Fahed Mlaiel (mlaiel@live.de)")
     print(f"Timestamp: {datetime.now().isoformat()}")
@@ -343,7 +343,7 @@ def run_all_tests():
     
     # Summary
     print("\n" + "=" * 50)
-    print("📊 VALIDATION SUMMARY")
+    print(" VALIDATION SUMMARY")
     print("=" * 50)
     
     passed_tests = sum(test_results)
@@ -354,11 +354,11 @@ def run_all_tests():
     print(f"Success Rate: {success_rate:.1f}%")
     
     if success_rate >= 90:
-        print("🎉 VALIDATION SUCCESSFUL - Module ready for production")
+        print(" VALIDATION SUCCESSFUL - Module ready for production")
     elif success_rate >= 75:
-        print("⚠️  VALIDATION PARTIAL - Minor issues to address")
+        print("  VALIDATION PARTIAL - Minor issues to address")
     else:
-        print("❌ VALIDATION FAILED - Major issues require attention")
+        print(" VALIDATION FAILED - Major issues require attention")
     
     print("\n© 2025 Fahed Mlaiel - All Rights Reserved")
     print("Contact: mlaiel@live.de")

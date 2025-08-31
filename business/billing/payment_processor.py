@@ -92,6 +92,9 @@ class PaymentProcessorEngine:
         
     async def initialize(self) -> None:
         """Initialize payment processor engine"""
+
+
+
         try:
             await self._setup_database_tables()
             await self._load_gateway_configurations()
@@ -158,6 +161,9 @@ class PaymentProcessorEngine:
 
     async def _load_gateway_configurations(self) -> None:
         """Load payment gateway configurations"""
+
+
+
         try:
             # In production, these would come from secure environment variables
             self.gateway_configs = {
@@ -186,6 +192,9 @@ class PaymentProcessorEngine:
 
     async def _initialize_fraud_detection(self) -> None:
         """Initialize fraud detection system"""
+
+
+
         try:
             # Load fraud detection rules and patterns
             fraud_rules = {
@@ -206,6 +215,9 @@ class PaymentProcessorEngine:
                             gateway_provider: GatewayProvider, 
                             payment_data: Dict[str, Any]) -> PaymentData:
         """Process payment transaction"""
+
+
+
         try:
             # Get invoice details
             invoice = await self._get_invoice_details(invoice_id)
@@ -272,6 +284,9 @@ class PaymentProcessorEngine:
 
     async def _get_invoice_details(self, invoice_id: str) -> Optional[Dict[str, Any]]:
         """Get invoice details for payment processing"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 invoice = await conn.fetchrow("""
@@ -288,6 +303,9 @@ class PaymentProcessorEngine:
 
     async def _check_fraud_risk(self, invoice: Dict[str, Any], payment_data: Dict[str, Any]) -> float:
         """Check fraud risk score for transaction"""
+
+
+
         try:
             risk_score = 0.0
             
@@ -324,6 +342,9 @@ class PaymentProcessorEngine:
 
     def _calculate_payment_fees(self, amount: Decimal, gateway: GatewayProvider) -> tuple[Decimal, Decimal]:
         """Calculate payment processing fees"""
+
+
+
         try:
             config = self.gateway_configs.get(gateway, {})
             fee_rate = Decimal(str(config.get('fee_rate', 0.029)))
@@ -340,6 +361,9 @@ class PaymentProcessorEngine:
 
     async def _process_with_gateway(self, payment: PaymentData, payment_data: Dict[str, Any]) -> Dict[str, Any]:
         """Process payment with specific gateway"""
+
+
+
         try:
             if payment.gateway_provider == GatewayProvider.STRIPE:
                 return await self._process_stripe_payment(payment, payment_data)
@@ -359,6 +383,9 @@ class PaymentProcessorEngine:
 
     async def _process_stripe_payment(self, payment: PaymentData, payment_data: Dict[str, Any]) -> Dict[str, Any]:
         """Process payment via Stripe"""
+
+
+
         try:
             # Simulate Stripe API call
             # In production, this would use the actual Stripe SDK
@@ -382,6 +409,9 @@ class PaymentProcessorEngine:
 
     async def _process_paypal_payment(self, payment: PaymentData, payment_data: Dict[str, Any]) -> Dict[str, Any]:
         """Process payment via PayPal"""
+
+
+
         try:
             # Simulate PayPal API call
             transaction_id = f"paypal_{int(datetime.now().timestamp())}"
@@ -402,6 +432,9 @@ class PaymentProcessorEngine:
 
     async def _process_wise_payment(self, payment: PaymentData, payment_data: Dict[str, Any]) -> Dict[str, Any]:
         """Process payment via Wise"""
+
+
+
         try:
             # Simulate Wise API call
             transaction_id = f"wise_{int(datetime.now().timestamp())}"
@@ -422,6 +455,9 @@ class PaymentProcessorEngine:
 
     async def _process_generic_payment(self, payment: PaymentData, payment_data: Dict[str, Any]) -> Dict[str, Any]:
         """Process payment with generic gateway"""
+
+
+
         try:
             transaction_id = f"generic_{int(datetime.now().timestamp())}"
             
@@ -441,6 +477,9 @@ class PaymentProcessorEngine:
 
     async def _store_payment(self, payment: PaymentData) -> None:
         """Store payment record in database"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 await conn.execute("""
@@ -466,6 +505,9 @@ class PaymentProcessorEngine:
 
     async def _update_payment_status(self, payment: PaymentData) -> None:
         """Update payment status in database"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 await conn.execute("""
@@ -484,6 +526,9 @@ class PaymentProcessorEngine:
 
     async def _update_invoice_payment_status(self, invoice_id: str, status: str) -> None:
         """Update invoice payment status"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 await conn.execute("""
@@ -496,6 +541,9 @@ class PaymentProcessorEngine:
 
     async def _send_payment_notifications(self, payment: PaymentData) -> None:
         """Send payment notifications"""
+
+
+
         try:
             notification_data = {
                 'payment_id': payment.payment_id,
@@ -512,6 +560,9 @@ class PaymentProcessorEngine:
 
     async def _get_customer_payment_history(self, customer_id: str) -> Dict[str, Any]:
         """Get customer payment history for fraud detection"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 history = await conn.fetchrow("""
@@ -538,6 +589,9 @@ class PaymentProcessorEngine:
 
     async def _get_recent_payments(self, customer_id: str, hours: int = 24) -> List[Dict[str, Any]]:
         """Get recent payments for velocity checks"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 payments = await conn.fetch("""
@@ -556,6 +610,9 @@ class PaymentProcessorEngine:
 
     async def _check_ip_reputation(self, ip_address: str) -> float:
         """Check IP address reputation for fraud detection"""
+
+
+
         try:
             # This would integrate with IP reputation services
             # For now, return a mock score
@@ -576,6 +633,9 @@ class PaymentProcessorEngine:
     async def process_refund(self, payment_id: str, amount: Optional[Decimal] = None, 
                            reason: str = "Customer request") -> RefundData:
         """Process payment refund"""
+
+
+
         try:
             # Get original payment
             payment = await self._get_payment_by_id(payment_id)
@@ -615,6 +675,9 @@ class PaymentProcessorEngine:
 
     async def _get_payment_by_id(self, payment_id: str) -> Optional[Dict[str, Any]]:
         """Get payment by ID"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 payment = await conn.fetchrow("""
@@ -629,6 +692,9 @@ class PaymentProcessorEngine:
 
     async def _store_refund(self, refund: RefundData) -> None:
         """Store refund record in database"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 await conn.execute("""
@@ -647,6 +713,9 @@ class PaymentProcessorEngine:
 
     async def _update_refund_status(self, refund: RefundData) -> None:
         """Update refund status in database"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 await conn.execute("""
@@ -663,6 +732,9 @@ class PaymentProcessorEngine:
 
     async def _process_gateway_refund(self, payment: Dict[str, Any], refund: RefundData) -> Dict[str, Any]:
         """Process refund with payment gateway"""
+
+
+
         try:
             gateway = GatewayProvider(payment['gateway_provider'])
             
@@ -678,6 +750,9 @@ class PaymentProcessorEngine:
 
     async def get_payment_dashboard_data(self, customer_id: str) -> Dict[str, Any]:
         """Get comprehensive payment dashboard data"""
+
+
+
         try:
             async with self.db_pool.acquire() as conn:
                 # Payment summary

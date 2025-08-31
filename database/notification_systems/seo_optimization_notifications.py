@@ -157,6 +157,9 @@ class SEOOptimizationManager:
         Returns:
             Résultat du traitement
         """
+
+
+
         try:
             # Channels par défaut si non spécifiés
             if notification_channels is None:
@@ -227,7 +230,7 @@ class SEOOptimizationManager:
             ranking_change = data.previous_ranking - data.current_ranking if data.previous_ranking else 0
             return {
                 **base_data,
-                "title": f"📈 Amélioration du classement!",
+                "title": f" Amélioration du classement!",
                 "message": f"Votre contenu est passé de la position {data.previous_ranking} à {data.current_ranking} pour '{data.keyword}' sur {data.search_engine.value.title()}.",
                 "priority": "high" if ranking_change > 10 else "normal",
                 "category": "seo_improvement",
@@ -241,7 +244,7 @@ class SEOOptimizationManager:
             ranking_drop = data.current_ranking - data.previous_ranking if data.previous_ranking else 0
             return {
                 **base_data,
-                "title": f"📉 Baisse de classement détectée",
+                "title": f" Baisse de classement détectée",
                 "message": f"Votre position pour '{data.keyword}' a chuté de {data.previous_ranking} à {data.current_ranking} sur {data.search_engine.value.title()}.",
                 "priority": "high" if ranking_drop > 20 else "medium",
                 "category": "seo_alert",
@@ -254,7 +257,7 @@ class SEOOptimizationManager:
         elif event_type == SEOEventType.NEW_KEYWORD_OPPORTUNITY:
             return {
                 **base_data,
-                "title": f"🎯 Nouvelle opportunité de mot-clé",
+                "title": f" Nouvelle opportunité de mot-clé",
                 "message": f"Opportunité détectée pour le mot-clé '{data.keyword}' avec {data.search_volume} recherches/mois.",
                 "priority": "medium",
                 "category": "seo_opportunity",
@@ -272,7 +275,7 @@ class SEOOptimizationManager:
             optimization_count = len(data.optimization_suggestions)
             return {
                 **base_data,
-                "title": f"⚡ Optimisations suggérées",
+                "title": f" Optimisations suggérées",
                 "message": f"{optimization_count} optimisations recommandées pour améliorer votre visibilité.",
                 "priority": "medium",
                 "category": "content_optimization",
@@ -285,7 +288,7 @@ class SEOOptimizationManager:
         elif event_type == SEOEventType.SOCIAL_MENTION_DETECTED:
             return {
                 **base_data,
-                "title": f"👥 Mention sociale détectée",
+                "title": f" Mention sociale détectée",
                 "message": f"Votre contenu a été mentionné sur les réseaux sociaux avec un engagement positif.",
                 "priority": "normal",
                 "category": "social_seo",
@@ -298,7 +301,7 @@ class SEOOptimizationManager:
             volume_increase = data.seo_metadata.get("volume_increase_percent", 0)
             return {
                 **base_data,
-                "title": f"🔥 Pic de recherches détecté",
+                "title": f" Pic de recherches détecté",
                 "message": f"Le volume de recherche pour '{data.keyword}' a augmenté de {volume_increase}%. Opportunité d'optimisation!",
                 "priority": "high",
                 "category": "trending_opportunity",
@@ -319,7 +322,7 @@ class SEOOptimizationManager:
             audit_score = data.seo_metadata.get("audit_score", 0)
             return {
                 **base_data,
-                "title": f"🔍 Audit SEO terminé",
+                "title": f" Audit SEO terminé",
                 "message": f"Audit SEO complété avec un score de {audit_score}/100. Consultez les recommandations.",
                 "priority": "normal",
                 "category": "seo_audit",
@@ -337,7 +340,7 @@ class SEOOptimizationManager:
             issue_severity = data.seo_metadata.get("issue_severity", "medium")
             return {
                 **base_data,
-                "title": f"⚠️ Problème technique SEO",
+                "title": f" Problème technique SEO",
                 "message": f"Problème technique détecté: {data.seo_metadata.get('issue_description', 'Unknown issue')}",
                 "priority": "urgent" if issue_severity == "critical" else "high",
                 "category": "technical_seo",
@@ -354,7 +357,7 @@ class SEOOptimizationManager:
         else:
             return {
                 **base_data,
-                "title": f"📢 Événement SEO {event_type.value}",
+                "title": f" Événement SEO {event_type.value}",
                 "message": f"Un événement SEO s'est produit pour votre contenu.",
                 "priority": "normal",
                 "category": "general_seo",
@@ -412,6 +415,9 @@ class SEOOptimizationManager:
         data: SEONotificationData
     ):
         """Traitement spécialisé selon le type d'événement SEO"""
+
+
+
         
         try:
             if event_type == SEOEventType.RANKING_IMPROVED:
@@ -563,22 +569,37 @@ class SEOOptimizationManager:
     # Méthodes de traitement spécialisé (stubs pour intégration future)
     async def _get_next_optimization_opportunities(self, data: SEONotificationData) -> List[str]:
         """Retourne les prochaines opportunités d'optimisation"""
+
+
+
         return ["Optimiser les meta descriptions", "Améliorer les liens internes", "Créer du contenu connexe"]
 
     async def _get_recovery_suggestions(self, data: SEONotificationData) -> List[str]:
         """Retourne des suggestions de récupération de classement"""
+
+
+
         return ["Analyser la concurrence", "Mettre à jour le contenu", "Améliorer les backlinks"]
 
     async def _create_optimization_roadmap(self, data: SEONotificationData) -> Dict[str, Any]:
         """Crée une feuille de route d'optimisation"""
+
+
+
         return {"phase_1": "Research", "phase_2": "Content", "phase_3": "Promotion"}
 
     async def _estimate_optimization_impact(self, data: SEONotificationData) -> Dict[str, Any]:
         """Estime l'impact des optimisations"""
+
+
+
         return {"expected_ranking_improvement": 5, "timeline": "2-4 weeks"}
 
     async def _identify_engagement_opportunities(self, data: SEONotificationData) -> List[str]:
         """Identifie les opportunités d'engagement"""
+
+
+
         return ["Répondre aux commentaires", "Partager sur les réseaux", "Créer du contenu similaire"]
 
     # Méthodes de traitement spécialisé

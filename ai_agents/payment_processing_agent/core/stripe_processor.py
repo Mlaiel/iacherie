@@ -7,7 +7,7 @@ error handling, webhook processing, and comprehensive payment method support.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -165,6 +165,9 @@ class StripeProcessor(BaseProcessor):
         Returns:
             PaymentResult with Stripe payment details
         """
+
+
+
         try:
             # Convert amount to cents (Stripe requirement)
             amount_cents = int(Decimal(str(amount)) * 100)
@@ -238,6 +241,9 @@ class StripeProcessor(BaseProcessor):
         Returns:
             PayoutResult with payout details
         """
+
+
+
         try:
             if not self.connect_enabled:
                 raise PaymentProcessingError("Stripe Connect not enabled for payouts")
@@ -314,6 +320,9 @@ class StripeProcessor(BaseProcessor):
         Returns:
             BalanceResult with balance information
         """
+
+
+
         try:
             result = await self._make_request("GET", "balance")
             
@@ -363,6 +372,9 @@ class StripeProcessor(BaseProcessor):
         Returns:
             True if signature is valid
         """
+
+
+
         try:
             webhook_secret = secret or self.webhook_secret
             if not webhook_secret:
@@ -450,6 +462,9 @@ class StripeProcessor(BaseProcessor):
         Returns:
             Created account details
         """
+
+
+
         try:
             account_data = {
                 "type": account_type,
@@ -499,6 +514,9 @@ class StripeProcessor(BaseProcessor):
         Returns:
             Account link URL
         """
+
+
+
         try:
             link_data = {
                 "account": account_id,
@@ -530,6 +548,9 @@ class StripeProcessor(BaseProcessor):
     
     async def get_supported_currencies(self) -> List[str]:
         """Get Stripe supported currencies."""
+
+
+
         return [
             "EUR", "USD", "GBP", "CHF", "SEK", "NOK", "DKK",
             "CAD", "AUD", "JPY", "PLN", "CZK", "HUF"
@@ -537,6 +558,9 @@ class StripeProcessor(BaseProcessor):
     
     async def get_supported_countries(self) -> List[str]:
         """Get Stripe supported countries."""
+
+
+
         return [
             "AD", "AE", "AT", "AU", "BE", "BG", "BR", "CA", "CH", "CY",
             "CZ", "DE", "DK", "EE", "ES", "FI", "FR", "GB", "GR", "HK",

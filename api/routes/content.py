@@ -58,6 +58,9 @@ async def upload_content(
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
     """Upload and process content"""
+
+
+
     try:
         user_id = current_user["user_id"]
         content_id = str(uuid.uuid4())
@@ -157,6 +160,9 @@ async def list_user_content(
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
     """List user's content"""
+
+
+
     try:
         user_id = current_user["user_id"]
         
@@ -203,6 +209,9 @@ async def get_content(
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
     """Get specific content details"""
+
+
+
     try:
         user_id = current_user["user_id"]
         
@@ -270,6 +279,9 @@ async def analyze_content(
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
     """Analyze content for SEO and platform optimization"""
+
+
+
     try:
         user_id = current_user["user_id"]
         
@@ -319,6 +331,9 @@ async def delete_content(
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
     """Delete content"""
+
+
+
     try:
         user_id = current_user["user_id"]
         

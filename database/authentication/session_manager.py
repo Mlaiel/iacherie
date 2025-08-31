@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -456,6 +456,9 @@ class SessionManager:
     
     def _generate_csrf_token(self) -> str:
         """Generate CSRF protection token"""
+
+
+
         return hashlib.sha256(uuid.uuid4().hex.encode()).hexdigest()[:32]
     
     def _enforce_concurrent_session_limits(self, user_id: str):
@@ -558,6 +561,9 @@ class SessionManager:
     
     def _build_session_info_from_record(self, record: SessionStore) -> SessionInfo:
         """Build SessionInfo from database record"""
+
+
+
         return SessionInfo(
             session_id=record.session_id,
             user_id=str(record.user_id),

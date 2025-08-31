@@ -143,6 +143,9 @@ class WebSocketManager:
         
     async def connect(self, websocket: WebSocket, user_id: str, session_id: str) -> str:
         """Connecter un WebSocket"""
+
+
+
         try:
             await websocket.accept()
             
@@ -165,6 +168,9 @@ class WebSocketManager:
     
     async def disconnect(self, connection_id: str):
         """Déconnecter un WebSocket"""
+
+
+
         try:
             connection = self.connections.get(connection_id)
             if not connection:
@@ -187,6 +193,9 @@ class WebSocketManager:
     
     async def send_to_connection(self, connection_id: str, message: Dict[str, Any]):
         """Envoyer un message à une connexion"""
+
+
+
         try:
             connection = self.connections.get(connection_id)
             if not connection or not connection.socket:
@@ -262,6 +271,9 @@ class SocketIOManager:
         @self.sio.event
         async def connect(sid, environ, auth):
             """Événement de connexion"""
+
+
+
             try:
                 user_id = auth.get("user_id") if auth else None
                 session_id = auth.get("session_id") if auth else str(uuid.uuid4())
@@ -294,6 +306,9 @@ class SocketIOManager:
         @self.sio.event
         async def disconnect(sid):
             """Événement de déconnexion"""
+
+
+
             try:
                 connection = self.connections.get(sid)
                 if connection:
@@ -308,6 +323,9 @@ class SocketIOManager:
         @self.sio.event
         async def join_room(sid, data):
             """Rejoindre une room"""
+
+
+
             try:
                 room_id = data.get("room_id")
                 if room_id:
@@ -324,6 +342,9 @@ class SocketIOManager:
         @self.sio.event
         async def leave_room(sid, data):
             """Quitter une room"""
+
+
+
             try:
                 room_id = data.get("room_id")
                 if room_id:
@@ -340,6 +361,9 @@ class SocketIOManager:
         @self.sio.event
         async def send_message(sid, data):
             """Envoyer un message"""
+
+
+
             try:
                 connection = self.connections.get(sid)
                 if not connection:
@@ -381,6 +405,9 @@ class SocketIOManager:
     
     async def send_to_room(self, room_id: str, event: str, data: Dict[str, Any]):
         """Envoyer un événement à une room"""
+
+
+
         try:
             await self.sio.emit(event, data, room=room_id)
         except Exception as e:
@@ -399,6 +426,9 @@ class PresenceManager:
                             location: Optional[str] = None,
                             device_info: Optional[Dict[str, Any]] = None):
         """Mettre à jour la présence d'un utilisateur"""
+
+
+
         try:
             presence = UserPresence(
                 user_id=user_id,
@@ -431,6 +461,9 @@ class PresenceManager:
     
     async def get_presence(self, user_id: str) -> Optional[UserPresence]:
         """Récupérer la présence d'un utilisateur"""
+
+
+
         try:
             key = f"presence:{user_id}"
             data = await self.redis.hgetall(key)
@@ -454,6 +487,9 @@ class PresenceManager:
     
     async def get_online_users(self) -> List[str]:
         """Récupérer la liste des utilisateurs en ligne"""
+
+
+
         try:
             pattern = "presence:*"
             keys = await self.redis.keys(pattern)
@@ -474,6 +510,9 @@ class PresenceManager:
     
     async def cleanup_expired_presence(self):
         """Nettoyer les présences expirées"""
+
+
+
         try:
             pattern = "presence:*"
             keys = await self.redis.keys(pattern)
@@ -504,6 +543,9 @@ class MessageBroker:
         
     async def start(self):
         """Démarrer le courtier"""
+
+
+
         try:
             self.pubsub = self.redis.pubsub()
             await self.pubsub.subscribe("realtime:messages")
@@ -517,6 +559,9 @@ class MessageBroker:
     
     async def stop(self):
         """Arrêter le courtier"""
+
+
+
         try:
             if self.pubsub:
                 await self.pubsub.unsubscribe("realtime:messages")
@@ -527,6 +572,9 @@ class MessageBroker:
     
     async def publish_message(self, message: RealtimeMessage):
         """Publier un message"""
+
+
+
         try:
             message_data = {
                 "id": message.id,
@@ -555,6 +603,9 @@ class MessageBroker:
     
     async def _listen_loop(self):
         """Boucle d'écoute des messages"""
+
+
+
         try:
             while True:
                 message = await self.pubsub.get_message(ignore_subscribe_messages=True)
@@ -566,6 +617,9 @@ class MessageBroker:
     
     async def _handle_message(self, data: bytes):
         """Traiter un message reçu"""
+
+
+
         try:
             message_data = json.loads(data.decode())
             message = RealtimeMessage(
@@ -615,6 +669,9 @@ class RealtimeCommunicationManager:
     
     async def start(self):
         """Démarrer le gestionnaire"""
+
+
+
         try:
             await self.message_broker.start()
             logger.info("Gestionnaire communications temps réel démarré")
@@ -624,6 +681,9 @@ class RealtimeCommunicationManager:
     
     async def stop(self):
         """Arrêter le gestionnaire"""
+
+
+
         try:
             await self.message_broker.stop()
             logger.info("Gestionnaire communications temps réel arrêté")
@@ -648,6 +708,9 @@ class RealtimeCommunicationManager:
     
     async def send_message(self, message: RealtimeMessage) -> bool:
         """Envoyer un message temps réel"""
+
+
+
         try:
             # Sauvegarder le message en base si nécessaire
             if message.delivery_receipt or message.read_receipt:
@@ -664,6 +727,9 @@ class RealtimeCommunicationManager:
     
     async def _handle_distributed_message(self, message: RealtimeMessage):
         """Traiter un message distribué"""
+
+
+
         try:
             if message.target_type == "user":
                 # Envoyer à un utilisateur spécifique
@@ -714,6 +780,9 @@ class RealtimeCommunicationManager:
     
     def _serialize_message(self, message: RealtimeMessage) -> Dict[str, Any]:
         """Sérialiser un message pour l'envoi"""
+
+
+
         return {
             "id": message.id,
             "type": message.type.value,
@@ -726,6 +795,9 @@ class RealtimeCommunicationManager:
     
     async def create_room(self, room: Room) -> str:
         """Créer une room"""
+
+
+
         try:
             # Sauvegarder en base
             room_id = await self._save_room(room)
@@ -741,6 +813,9 @@ class RealtimeCommunicationManager:
     
     async def join_room(self, user_id: str, room_id: str) -> bool:
         """Rejoindre une room"""
+
+
+
         try:
             # Vérifier les permissions
             room = await self._get_room(room_id)
@@ -773,6 +848,9 @@ class RealtimeCommunicationManager:
     
     async def leave_room(self, user_id: str, room_id: str) -> bool:
         """Quitter une room"""
+
+
+
         try:
             room = await self._get_room(room_id)
             if not room:
@@ -901,10 +979,16 @@ class RealtimeCommunicationManager:
     
     async def get_user_presence(self, user_id: str) -> Optional[UserPresence]:
         """Récupérer la présence d'un utilisateur"""
+
+
+
         return await self.presence_manager.get_presence(user_id)
     
     async def get_online_users(self) -> List[str]:
         """Récupérer les utilisateurs en ligne"""
+
+
+
         return await self.presence_manager.get_online_users()
     
     async def get_room_members(self, room_id: str) -> List[str]:
@@ -914,6 +998,9 @@ class RealtimeCommunicationManager:
     
     async def cleanup_expired_data(self):
         """Nettoyer les données expirées"""
+
+
+
         try:
             # Nettoyer les présences expirées
             await self.presence_manager.cleanup_expired_presence()

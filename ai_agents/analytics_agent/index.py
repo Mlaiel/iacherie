@@ -5,7 +5,7 @@ Enterprise-grade analytics entry point and orchestration for IA Influencer Agent
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️  CRITICAL LEGAL NOTICE ⚠️
+  CRITICAL LEGAL NOTICE 
 This code, architectural design, and innovative concepts are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, reverse engineering, or commercialization is STRICTLY PROHIBITED.
 Legal action will be pursued against violators to the full extent of the law.
@@ -171,6 +171,9 @@ class EnterpriseAnalyticsService:
     
     async def health_check(self) -> ServiceHealth:
         """Comprehensive service health check"""
+
+
+
         try:
             # Calculate uptime
             uptime = (datetime.utcnow() - self.start_time).total_seconds()
@@ -233,6 +236,9 @@ class EnterpriseAnalyticsService:
     
     async def _check_redis_health(self) -> ServiceStatus:
         """Check Redis connection health"""
+
+
+
         try:
             await asyncio.wait_for(
                 asyncio.create_task(
@@ -246,6 +252,9 @@ class EnterpriseAnalyticsService:
     
     def _get_memory_usage(self) -> float:
         """Get current memory usage in MB"""
+
+
+
         try:
             import psutil
             process = psutil.Process()
@@ -255,6 +264,9 @@ class EnterpriseAnalyticsService:
     
     def _get_cpu_usage(self) -> float:
         """Get current CPU usage percentage"""
+
+
+
         try:
             import psutil
             return psutil.cpu_percent(interval=1)
@@ -263,6 +275,9 @@ class EnterpriseAnalyticsService:
     
     async def _get_cache_metrics(self) -> float:
         """Get cache hit rate metrics"""
+
+
+
         try:
             info = self.redis_client.info()
             hits = float(info.get('keyspace_hits', 0))
@@ -274,6 +289,9 @@ class EnterpriseAnalyticsService:
     
     async def _get_performance_metrics(self) -> float:
         """Get average response time metrics"""
+
+
+
         try:
             # Get metrics from Redis
             metrics_key = f"performance_metrics:{self.service_id}"
@@ -287,6 +305,9 @@ class EnterpriseAnalyticsService:
     
     async def _get_queue_metrics(self) -> int:
         """Get current queue depth metrics"""
+
+
+
         try:
             queue_key = f"analytics_queue:{self.service_id}"
             return self.redis_client.llen(queue_key)
@@ -382,6 +403,9 @@ async def health_endpoint():
 @app.get("/metrics")
 async def metrics_endpoint():
     """Prometheus metrics endpoint"""
+
+
+
     return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
 
 @app.post("/analytics/process", response_model=AnalyticsResponseModel)

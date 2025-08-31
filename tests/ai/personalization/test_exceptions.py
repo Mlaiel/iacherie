@@ -536,6 +536,9 @@ class TestErrorHandler(IsolatedAsyncioTestCase):
 
     async def _working_service(self):
         """Mock working service"""
+
+
+
         return "success"
 
     async def test_error_categorization(self):

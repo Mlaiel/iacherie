@@ -7,7 +7,7 @@ for all payment processors in the IA Influencer payment ecosystem.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -379,6 +379,9 @@ class BaseProcessor(ABC):
         Returns:
             True if signature is valid
         """
+
+
+
         try:
             # Basic implementation - should be overridden with actual signature verification
             if not payload or not signature:
@@ -419,6 +422,9 @@ class BaseProcessor(ABC):
         Returns:
             Standardized webhook data
         """
+
+
+
         try:
             # Basic webhook parsing - should be overridden for specific processor formats
             return {
@@ -544,6 +550,9 @@ class BaseProcessor(ABC):
         Returns:
             True if processor is healthy
         """
+
+
+
         try:
             start_time = datetime.utcnow()
             
@@ -664,6 +673,9 @@ class BaseProcessor(ABC):
     
     async def __aenter__(self):
         """Async context manager entry."""
+
+
+
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
@@ -672,10 +684,16 @@ class BaseProcessor(ABC):
     
     def __str__(self) -> str:
         """String representation of processor."""
+
+
+
         return f"{self.name}Processor(environment={self.environment})"
     
     def __repr__(self) -> str:
         """Detailed string representation."""
+
+
+
         return (
             f"{self.__class__.__name__}("
             f"name='{self.name}', "

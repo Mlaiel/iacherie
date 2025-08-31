@@ -114,6 +114,9 @@ class BackupEncryption:
 
     def is_enabled(self) -> bool:
         """Check if encryption is enabled."""
+
+
+
         return self.master_key is not None
 
     async def encrypt_data(
@@ -350,6 +353,9 @@ class BackupEncryption:
         Returns:
             Success status
         """
+
+
+
         try:
             self.logger.info(f"Rotating encryption key: {old_key_id} -> {new_key_id}")
             
@@ -376,6 +382,9 @@ class BackupEncryption:
         Returns:
             Encryption statistics
         """
+
+
+
         return {
             "encryption_enabled": self.is_enabled(),
             "default_algorithm": self.config.algorithm.value,
@@ -402,6 +411,9 @@ class BackupEncryption:
         Returns:
             Integrity status
         """
+
+
+
         try:
             # Unpackage to get metadata
             _, metadata = await self._unpackage_encrypted_data(encrypted_data)
@@ -679,6 +691,9 @@ class BackupEncryption:
 
     def _get_default_config(self) -> EncryptionConfig:
         """Get default encryption configuration."""
+
+
+
         return EncryptionConfig(
             algorithm=EncryptionAlgorithm.AES_256_GCM,
             key_size=32,  # 256 bits

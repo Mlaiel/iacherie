@@ -1,11 +1,11 @@
 """
-⚓ Kubernetes Configuration Manager - IA-Influencer-Agent Infrastructure
+ Kubernetes Configuration Manager - IA-Influencer-Agent Infrastructure
 =======================================================================
 Expert: DevOps Engineer + Cloud Architect + Kubernetes Specialist
 Creator: Fahed Mlaiel <mlaiel@live.de>
 =======================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE - AVERTISSEMENT LÉGAL 
 Tout vol, copie ou utilisation non autorisée de ce code source,
 de ce concept ou de cette propriété intellectuelle sans
 l'autorisation écrite explicite de Fahed Mlaiel est strictement
@@ -93,14 +93,17 @@ class KubernetesConfigManager:
         
     async def initialize(self) -> bool:
         """Initialize Kubernetes configuration manager"""
+
+
+
         try:
             # Load Kubernetes configuration
             try:
                 config.load_incluster_config()  # In-cluster config
-                self.logger.info("📡 Using in-cluster Kubernetes configuration")
+                self.logger.info(" Using in-cluster Kubernetes configuration")
             except:
                 config.load_kube_config()  # Local kubeconfig
-                self.logger.info("🏠 Using local Kubernetes configuration")
+                self.logger.info(" Using local Kubernetes configuration")
             
             # Initialize API clients
             self.apps_v1_api = client.AppsV1Api()
@@ -119,20 +122,23 @@ class KubernetesConfigManager:
             await self._generate_default_resources()
             
             self.initialized = True
-            self.logger.info("✅ KubernetesConfigManager initialized successfully")
+            self.logger.info(" KubernetesConfigManager initialized successfully")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error initializing KubernetesConfigManager: {e}")
+            self.logger.error(f" Error initializing KubernetesConfigManager: {e}")
             return False
     
     async def _create_namespace(self) -> None:
         """Create namespace if it doesn't exist"""
+
+
+
         try:
             # Check if namespace exists
             try:
                 self.core_v1_api.read_namespace(name=self.namespace)
-                self.logger.info(f"📁 Namespace '{self.namespace}' already exists")
+                self.logger.info(f" Namespace '{self.namespace}' already exists")
             except client.exceptions.ApiException as e:
                 if e.status == 404:
                     # Create namespace
@@ -148,12 +154,12 @@ class KubernetesConfigManager:
                     )
                     
                     self.core_v1_api.create_namespace(body=namespace_body)
-                    self.logger.info(f"✅ Created namespace: {self.namespace}")
+                    self.logger.info(f" Created namespace: {self.namespace}")
                 else:
                     raise e
                     
         except Exception as e:
-            self.logger.error(f"❌ Error creating namespace: {e}")
+            self.logger.error(f" Error creating namespace: {e}")
     
     async def _generate_default_resources(self) -> None:
         """Generate default Kubernetes resources for IA-Influencer services"""
@@ -579,6 +585,9 @@ class KubernetesConfigManager:
     
     async def _save_resource(self, name: str, resource: KubernetesResource) -> None:
         """Save Kubernetes resource to file"""
+
+
+
         try:
             resource_file = self.config_path / f"{name}.yaml"
             resource_dict = asdict(resource)
@@ -595,13 +604,16 @@ class KubernetesConfigManager:
                 yaml.dump(manifest, f, default_flow_style=False)
                 
         except Exception as e:
-            self.logger.error(f"❌ Error saving resource {name}: {e}")
+            self.logger.error(f" Error saving resource {name}: {e}")
     
     async def apply_resource(self, resource_name: str) -> bool:
         """Apply Kubernetes resource"""
+
+
+
         try:
             if resource_name not in self.resources:
-                self.logger.error(f"❌ Resource {resource_name} not found")
+                self.logger.error(f" Resource {resource_name} not found")
                 return False
             
             resource = self.resources[resource_name]
@@ -619,15 +631,18 @@ class KubernetesConfigManager:
             elif resource.kind == "HorizontalPodAutoscaler":
                 return await self._apply_hpa(resource)
             else:
-                self.logger.warning(f"⚠️ Unsupported resource type: {resource.kind}")
+                self.logger.warning(f" Unsupported resource type: {resource.kind}")
                 return False
                 
         except Exception as e:
-            self.logger.error(f"❌ Error applying resource {resource_name}: {e}")
+            self.logger.error(f" Error applying resource {resource_name}: {e}")
             return False
     
     async def _apply_deployment(self, resource: KubernetesResource) -> bool:
         """Apply Deployment resource"""
+
+
+
         try:
             deployment_body = client.V1Deployment(
                 api_version=resource.api_version,
@@ -643,7 +658,7 @@ class KubernetesConfigManager:
                     namespace=resource.namespace,
                     body=deployment_body
                 )
-                self.logger.info(f"✅ Updated deployment: {resource.metadata['name']}")
+                self.logger.info(f" Updated deployment: {resource.metadata['name']}")
                 
             except client.exceptions.ApiException as e:
                 if e.status == 404:
@@ -652,18 +667,21 @@ class KubernetesConfigManager:
                         namespace=resource.namespace,
                         body=deployment_body
                     )
-                    self.logger.info(f"✅ Created deployment: {resource.metadata['name']}")
+                    self.logger.info(f" Created deployment: {resource.metadata['name']}")
                 else:
                     raise e
             
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error applying deployment: {e}")
+            self.logger.error(f" Error applying deployment: {e}")
             return False
     
     async def _apply_service(self, resource: KubernetesResource) -> bool:
         """Apply Service resource"""
+
+
+
         try:
             service_body = client.V1Service(
                 api_version=resource.api_version,
@@ -678,7 +696,7 @@ class KubernetesConfigManager:
                     namespace=resource.namespace,
                     body=service_body
                 )
-                self.logger.info(f"✅ Updated service: {resource.metadata['name']}")
+                self.logger.info(f" Updated service: {resource.metadata['name']}")
                 
             except client.exceptions.ApiException as e:
                 if e.status == 404:
@@ -686,18 +704,21 @@ class KubernetesConfigManager:
                         namespace=resource.namespace,
                         body=service_body
                     )
-                    self.logger.info(f"✅ Created service: {resource.metadata['name']}")
+                    self.logger.info(f" Created service: {resource.metadata['name']}")
                 else:
                     raise e
             
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error applying service: {e}")
+            self.logger.error(f" Error applying service: {e}")
             return False
     
     async def _apply_configmap(self, resource: KubernetesResource) -> bool:
         """Apply ConfigMap resource"""
+
+
+
         try:
             configmap_body = client.V1ConfigMap(
                 api_version=resource.api_version,
@@ -712,7 +733,7 @@ class KubernetesConfigManager:
                     namespace=resource.namespace,
                     body=configmap_body
                 )
-                self.logger.info(f"✅ Updated configmap: {resource.metadata['name']}")
+                self.logger.info(f" Updated configmap: {resource.metadata['name']}")
                 
             except client.exceptions.ApiException as e:
                 if e.status == 404:
@@ -720,18 +741,21 @@ class KubernetesConfigManager:
                         namespace=resource.namespace,
                         body=configmap_body
                     )
-                    self.logger.info(f"✅ Created configmap: {resource.metadata['name']}")
+                    self.logger.info(f" Created configmap: {resource.metadata['name']}")
                 else:
                     raise e
             
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error applying configmap: {e}")
+            self.logger.error(f" Error applying configmap: {e}")
             return False
     
     async def _apply_secret(self, resource: KubernetesResource) -> bool:
         """Apply Secret resource"""
+
+
+
         try:
             secret_body = client.V1Secret(
                 api_version=resource.api_version,
@@ -747,7 +771,7 @@ class KubernetesConfigManager:
                     namespace=resource.namespace,
                     body=secret_body
                 )
-                self.logger.info(f"✅ Updated secret: {resource.metadata['name']}")
+                self.logger.info(f" Updated secret: {resource.metadata['name']}")
                 
             except client.exceptions.ApiException as e:
                 if e.status == 404:
@@ -755,18 +779,21 @@ class KubernetesConfigManager:
                         namespace=resource.namespace,
                         body=secret_body
                     )
-                    self.logger.info(f"✅ Created secret: {resource.metadata['name']}")
+                    self.logger.info(f" Created secret: {resource.metadata['name']}")
                 else:
                     raise e
             
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error applying secret: {e}")
+            self.logger.error(f" Error applying secret: {e}")
             return False
     
     async def _apply_ingress(self, resource: KubernetesResource) -> bool:
         """Apply Ingress resource"""
+
+
+
         try:
             ingress_body = client.V1Ingress(
                 api_version=resource.api_version,
@@ -781,7 +808,7 @@ class KubernetesConfigManager:
                     namespace=resource.namespace,
                     body=ingress_body
                 )
-                self.logger.info(f"✅ Updated ingress: {resource.metadata['name']}")
+                self.logger.info(f" Updated ingress: {resource.metadata['name']}")
                 
             except client.exceptions.ApiException as e:
                 if e.status == 404:
@@ -789,18 +816,21 @@ class KubernetesConfigManager:
                         namespace=resource.namespace,
                         body=ingress_body
                     )
-                    self.logger.info(f"✅ Created ingress: {resource.metadata['name']}")
+                    self.logger.info(f" Created ingress: {resource.metadata['name']}")
                 else:
                     raise e
             
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error applying ingress: {e}")
+            self.logger.error(f" Error applying ingress: {e}")
             return False
     
     async def _apply_hpa(self, resource: KubernetesResource) -> bool:
         """Apply HorizontalPodAutoscaler resource"""
+
+
+
         try:
             hpa_body = client.V1HorizontalPodAutoscaler(
                 api_version=resource.api_version,
@@ -815,7 +845,7 @@ class KubernetesConfigManager:
                     namespace=resource.namespace,
                     body=hpa_body
                 )
-                self.logger.info(f"✅ Updated HPA: {resource.metadata['name']}")
+                self.logger.info(f" Updated HPA: {resource.metadata['name']}")
                 
             except client.exceptions.ApiException as e:
                 if e.status == 404:
@@ -823,18 +853,21 @@ class KubernetesConfigManager:
                         namespace=resource.namespace,
                         body=hpa_body
                     )
-                    self.logger.info(f"✅ Created HPA: {resource.metadata['name']}")
+                    self.logger.info(f" Created HPA: {resource.metadata['name']}")
                 else:
                     raise e
             
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error applying HPA: {e}")
+            self.logger.error(f" Error applying HPA: {e}")
             return False
     
     async def deploy_all_resources(self) -> bool:
         """Deploy all Kubernetes resources"""
+
+
+
         try:
             success_count = 0
             total_count = len(self.resources)
@@ -851,21 +884,24 @@ class KubernetesConfigManager:
                 if resource_name in self.resources:
                     if await self.apply_resource(resource_name):
                         success_count += 1
-                        self.logger.info(f"✅ Successfully deployed: {resource_name}")
+                        self.logger.info(f" Successfully deployed: {resource_name}")
                     else:
-                        self.logger.error(f"❌ Failed to deploy: {resource_name}")
+                        self.logger.error(f" Failed to deploy: {resource_name}")
             
             success_rate = (success_count / total_count) * 100
-            self.logger.info(f"📊 Deployment completed: {success_count}/{total_count} resources ({success_rate:.1f}%)")
+            self.logger.info(f" Deployment completed: {success_count}/{total_count} resources ({success_rate:.1f}%)")
             
             return success_count == total_count
             
         except Exception as e:
-            self.logger.error(f"❌ Error deploying all resources: {e}")
+            self.logger.error(f" Error deploying all resources: {e}")
             return False
     
     async def get_resource_status(self, resource_name: str) -> Dict[str, Any]:
         """Get status of deployed resource"""
+
+
+
         try:
             if resource_name not in self.resources:
                 return {"status": "not_found", "error": "Resource not configured"}
@@ -915,6 +951,9 @@ class KubernetesDeploymentManager:
     
     async def rolling_update(self, deployment_name: str, new_image: str) -> bool:
         """Perform rolling update of deployment"""
+
+
+
         try:
             # Get current deployment
             deployment = self.config_manager.apps_v1_api.read_namespaced_deployment(
@@ -934,15 +973,18 @@ class KubernetesDeploymentManager:
                 body=deployment
             )
             
-            self.logger.info(f"✅ Started rolling update for {deployment_name} with image {new_image}")
+            self.logger.info(f" Started rolling update for {deployment_name} with image {new_image}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error performing rolling update: {e}")
+            self.logger.error(f" Error performing rolling update: {e}")
             return False
     
     async def scale_deployment(self, deployment_name: str, replicas: int) -> bool:
         """Scale deployment to specified number of replicas"""
+
+
+
         try:
             # Scale deployment
             scale_body = client.V1Scale(
@@ -955,11 +997,11 @@ class KubernetesDeploymentManager:
                 body=scale_body
             )
             
-            self.logger.info(f"✅ Scaled {deployment_name} to {replicas} replicas")
+            self.logger.info(f" Scaled {deployment_name} to {replicas} replicas")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error scaling deployment: {e}")
+            self.logger.error(f" Error scaling deployment: {e}")
             return False
 
 class KubernetesPodManager:
@@ -971,6 +1013,9 @@ class KubernetesPodManager:
     
     async def get_pods(self, label_selector: str = None) -> List[Dict[str, Any]]:
         """Get pods in namespace"""
+
+
+
         try:
             pods_list = self.config_manager.core_v1_api.list_namespaced_pod(
                 namespace=self.config_manager.namespace,
@@ -991,11 +1036,14 @@ class KubernetesPodManager:
             return pods
             
         except Exception as e:
-            self.logger.error(f"❌ Error getting pods: {e}")
+            self.logger.error(f" Error getting pods: {e}")
             return []
     
     async def get_pod_logs(self, pod_name: str, container_name: str = None, lines: int = 100) -> str:
         """Get logs from pod"""
+
+
+
         try:
             logs = self.config_manager.core_v1_api.read_namespaced_pod_log(
                 name=pod_name,
@@ -1007,11 +1055,14 @@ class KubernetesPodManager:
             return logs
             
         except Exception as e:
-            self.logger.error(f"❌ Error getting pod logs: {e}")
+            self.logger.error(f" Error getting pod logs: {e}")
             return ""
     
     async def execute_command(self, pod_name: str, command: List[str], container_name: str = None) -> str:
         """Execute command in pod"""
+
+
+
         try:
             from kubernetes.stream import stream
             
@@ -1029,7 +1080,7 @@ class KubernetesPodManager:
             return response
             
         except Exception as e:
-            self.logger.error(f"❌ Error executing command in pod: {e}")
+            self.logger.error(f" Error executing command in pod: {e}")
             return ""
 
 __all__ = [

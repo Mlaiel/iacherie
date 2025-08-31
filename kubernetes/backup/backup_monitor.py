@@ -703,6 +703,9 @@ class BackupMonitor:
 
     async def _get_alerts_count_24h(self) -> int:
         """Get number of alerts sent in last 24 hours."""
+
+
+
         return await self.alert_manager.get_alerts_count_24h()
 
     async def _evaluate_system_alerts(self) -> None:
@@ -804,6 +807,9 @@ class BackupMonitor:
 
     def _get_default_thresholds(self) -> Dict[str, Any]:
         """Get default alert thresholds."""
+
+
+
         return {
             "cpu_warning": 80.0,
             "cpu_critical": 95.0,

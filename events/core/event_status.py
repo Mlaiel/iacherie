@@ -146,21 +146,33 @@ class EventStatus(Enum):
     @classmethod
     def get_all_statuses(cls) -> List['EventStatus']:
         """Get list of all available statuses"""
+
+
+
         return list(cls)
     
     @classmethod
     def get_terminal_statuses(cls) -> Set['EventStatus']:
         """Get set of terminal statuses"""
+
+
+
         return {status for status in cls if status.is_terminal()}
     
     @classmethod
     def get_active_statuses(cls) -> Set['EventStatus']:
         """Get set of active processing statuses"""
+
+
+
         return {status for status in cls if status.is_active()}
     
     @classmethod
     def get_error_statuses(cls) -> Set['EventStatus']:
         """Get set of error statuses"""
+
+
+
         return {status for status in cls if status.is_error()}
 
 # Export enum

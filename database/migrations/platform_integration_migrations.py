@@ -1,5 +1,5 @@
 """
-🔗 Platform Integration Migrations - Ultra-Industrial Multi-Platform Engine
+ Platform Integration Migrations - Ultra-Industrial Multi-Platform Engine
 ============================================================================
 Module: backend/database/migrations/platform_integration_migrations.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Platform Engine - Ultra Enterprise Production-Ready
 Responsibility: Advanced platform integration database migrations for multi-platform orchestration
 ==========================================================================================
 
-⚠️  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL ⚠️
+  EXCLUSIVE INTELLECTUAL PROPERTY - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -58,14 +58,14 @@ class PlatformIntegrationMigrationSuite:
         self.metadata = MetaData()
         self.migration_history: List[Dict[str, Any]] = []
         
-        logger.info("✅ Platform Integration Migration Suite initialized")
+        logger.info(" Platform Integration Migration Suite initialized")
     
     async def create_platform_registry_schema(self, engine: sa.Engine) -> Dict[str, Any]:
         """Create platform registry and configuration schema"""
         
         migration_id = f"platform_registry_schema_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
-        logger.info("🔗 Creating platform registry schema")
+        logger.info(" Creating platform registry schema")
         
         try:
             async with engine.begin() as conn:
@@ -303,7 +303,7 @@ class PlatformIntegrationMigrationSuite:
                 # Create triggers for updated_at
                 await self._create_platform_registry_triggers(conn)
                 
-                logger.info("✅ Platform registry schema created")
+                logger.info(" Platform registry schema created")
                 
                 return {
                     "migration_id": migration_id,
@@ -317,7 +317,7 @@ class PlatformIntegrationMigrationSuite:
                 }
                 
         except Exception as e:
-            logger.error(f"❌ Failed to create platform registry schema: {e}")
+            logger.error(f" Failed to create platform registry schema: {e}")
             return {
                 "migration_id": migration_id,
                 "success": False,
@@ -329,7 +329,7 @@ class PlatformIntegrationMigrationSuite:
         
         migration_id = f"sync_orchestration_schema_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
-        logger.info("🔄 Creating sync orchestration schema")
+        logger.info(" Creating sync orchestration schema")
         
         try:
             async with engine.begin() as conn:
@@ -531,7 +531,7 @@ class PlatformIntegrationMigrationSuite:
                 # Create sync orchestration indexes
                 await self._create_sync_orchestration_indexes(conn)
                 
-                logger.info("✅ Sync orchestration schema created")
+                logger.info(" Sync orchestration schema created")
                 
                 return {
                     "migration_id": migration_id,
@@ -544,7 +544,7 @@ class PlatformIntegrationMigrationSuite:
                 }
                 
         except Exception as e:
-            logger.error(f"❌ Failed to create sync orchestration schema: {e}")
+            logger.error(f" Failed to create sync orchestration schema: {e}")
             return {
                 "migration_id": migration_id,
                 "success": False,
@@ -556,7 +556,7 @@ class PlatformIntegrationMigrationSuite:
         
         migration_id = f"cross_platform_analytics_schema_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
-        logger.info("📊 Creating cross-platform analytics schema")
+        logger.info(" Creating cross-platform analytics schema")
         
         try:
             async with engine.begin() as conn:
@@ -750,7 +750,7 @@ class PlatformIntegrationMigrationSuite:
                 # Create cross-platform analytics indexes
                 await self._create_cross_platform_analytics_indexes(conn)
                 
-                logger.info("✅ Cross-platform analytics schema created")
+                logger.info(" Cross-platform analytics schema created")
                 
                 return {
                     "migration_id": migration_id,
@@ -762,7 +762,7 @@ class PlatformIntegrationMigrationSuite:
                 }
                 
         except Exception as e:
-            logger.error(f"❌ Failed to create cross-platform analytics schema: {e}")
+            logger.error(f" Failed to create cross-platform analytics schema: {e}")
             return {
                 "migration_id": migration_id,
                 "success": False,

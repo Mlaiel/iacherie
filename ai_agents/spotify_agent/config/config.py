@@ -7,7 +7,7 @@ feature flags, performance tuning, security configurations, and operational para
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -327,6 +327,9 @@ class ConfigurationManager:
 
     def _load_defaults(self) -> Dict[str, Any]:
         """Load default configuration"""
+
+
+
         return {
             "environment": self.environment.value,
             "debug": self.environment in (Environment.DEVELOPMENT, Environment.TESTING)
@@ -417,10 +420,16 @@ def get_config_manager(config_path: Optional[str] = None, environment: Optional[
 
 def get_config() -> SpotifyAgentConfig:
     """Get current Spotify agent configuration"""
+
+
+
     return get_config_manager().get_config()
 
 def reload_config() -> SpotifyAgentConfig:
     """Reload configuration from all sources"""
+
+
+
     return get_config_manager().reload_config()
 
 # Export main components

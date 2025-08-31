@@ -9,7 +9,7 @@ automated territory-specific contract generation for global content distribution
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE & COPYRIGHT PROTECTION:
+  CRITICAL LEGAL NOTICE & COPYRIGHT PROTECTION:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written 
 permission is strictly prohibited and will result in severe legal consequences.
@@ -313,6 +313,9 @@ class UltraAdvancedTerritoryManager:
         """
         Get comprehensive territory information with legal requirements and risk assessment
         """
+
+
+
         try:
             # Check cache first
             cached_info = await self._get_cached_territory_info(territory_code)
@@ -401,6 +404,9 @@ class UltraAdvancedTerritoryManager:
         """
         Assess compliance for specific content in a territory
         """
+
+
+
         try:
             # Security validation
             await self.security_manager.validate_territory_operation(
@@ -504,6 +510,9 @@ class UltraAdvancedTerritoryManager:
         """
         Perform global territory analysis for content distribution
         """
+
+
+
         try:
             # Use target territories or get all major territories
             territories = target_territories or await self._get_major_territories()
@@ -570,6 +579,9 @@ class UltraAdvancedTerritoryManager:
     
     async def _get_licensing_requirements(self, territory_code: str) -> List[str]:
         """Get licensing requirements for territory"""
+
+
+
         try:
             requirements = await self.jurisdiction_database.get_licensing_requirements(territory_code)
             return requirements or []
@@ -579,6 +591,9 @@ class UltraAdvancedTerritoryManager:
     
     async def _get_compliance_frameworks(self, territory_code: str) -> List[str]:
         """Get compliance frameworks for territory"""
+
+
+
         try:
             frameworks = await self.jurisdiction_database.get_compliance_frameworks(territory_code)
             return frameworks or []
@@ -588,6 +603,9 @@ class UltraAdvancedTerritoryManager:
     
     async def _get_data_protection_laws(self, territory_code: str) -> List[str]:
         """Get data protection laws for territory"""
+
+
+
         try:
             laws = await self.jurisdiction_database.get_data_protection_laws(territory_code)
             return laws or []
@@ -636,6 +654,9 @@ class UltraAdvancedTerritoryManager:
         content_type: str
     ) -> List[LegalRequirement]:
         """Get all legal requirements for territory and content type"""
+
+
+
         try:
             # Check cache first
             cache_key = f"requirements:{territory_code}:{content_type}"
@@ -681,6 +702,9 @@ class UltraAdvancedTerritoryManager:
         license_id: Optional[str]
     ) -> bool:
         """Assess if a specific requirement is met"""
+
+
+
         try:
             # This would implement specific compliance checks based on requirement type
             # For now, return a simplified assessment
@@ -703,6 +727,9 @@ class UltraAdvancedTerritoryManager:
     
     async def _cache_territory_info(self, territory: TerritoryInfo) -> None:
         """Cache territory information"""
+
+
+
         try:
             if self.redis_client:
                 cache_key = f"territory:info:{territory.territory_code}"
@@ -730,6 +757,9 @@ class UltraAdvancedTerritoryManager:
     
     async def _get_cached_territory_info(self, territory_code: str) -> Optional[TerritoryInfo]:
         """Get cached territory information"""
+
+
+
         try:
             # Check memory cache first
             if territory_code in self._territory_cache:
@@ -846,6 +876,9 @@ class TerritoryManager:
     
     async def initialize(self) -> None:
         """Initialize territory manager and jurisdiction database"""
+
+
+
         try:
             self.logger.info("Initializing TerritoryManager")
             
@@ -960,6 +993,9 @@ class TerritoryManager:
     
     async def is_valid_territory(self, territory: str) -> bool:
         """Check if territory is valid and supported"""
+
+
+
         try:
             territory_info = await self._get_territory_info(territory)
             return territory_info is not None
@@ -1099,6 +1135,9 @@ class TerritoryManager:
         license_type: str
     ) -> Dict[str, Any]:
         """Resolve conflicts between multiple territories for licensing"""
+
+
+
         try:
             conflict_analysis = {
                 'territories': territories,
@@ -1265,6 +1304,9 @@ class TerritoryManager:
     
     async def _get_all_territory_rules(self, territory: str) -> List[LicensingRule]:
         """Get all rules for specific territory"""
+
+
+
         return [rule for rule in self.licensing_rules.values() if rule.territory_id == territory]
     
     async def _get_tax_requirements(self, territory: str) -> List[str]:

@@ -230,10 +230,16 @@ class CredentialEncryption:
     
     def _generate_master_key(self) -> str:
         """Generate a new master key"""
+
+
+
         return base64.urlsafe_b64encode(secrets.token_bytes(32)).decode()
     
     def _init_cipher(self) -> None:
         """Initialize cipher suite"""
+
+
+
         try:
             key_bytes = base64.urlsafe_b64decode(self.master_key.encode())
             self._cipher_suite = Fernet(base64.urlsafe_b64encode(key_bytes))
@@ -243,6 +249,9 @@ class CredentialEncryption:
     
     def encrypt_credential(self, credential_data: Dict[str, Any], credential_type: CredentialType) -> EncryptedCredential:
         """Encrypt credential data"""
+
+
+
         try:
             # Serialize credential data
             data_json = json.dumps(credential_data, sort_keys=True)
@@ -268,6 +277,9 @@ class CredentialEncryption:
     
     def decrypt_credential(self, encrypted_credential: EncryptedCredential) -> Dict[str, Any]:
         """Decrypt credential data"""
+
+
+
         try:
             # Check expiration
             if encrypted_credential.expires_at and datetime.utcnow() > encrypted_credential.expires_at:
@@ -293,6 +305,9 @@ class ConfigurationValidator:
     
     def validate_pool_config(self, pool_type: DatabaseType, config_data: Dict[str, Any]) -> Tuple[bool, List[str]]:
         """Validate pool configuration"""
+
+
+
         try:
             schema = POOL_CONFIG_SCHEMA.get(pool_type.value)
             if not schema:
@@ -312,6 +327,9 @@ class ConfigurationValidator:
     
     def validate_connection_info(self, connection_data: Dict[str, Any]) -> Tuple[bool, List[str]]:
         """Validate connection information"""
+
+
+
         try:
             self.validator.schema = CONNECTION_INFO_SCHEMA
             is_valid = self.validator.validate(connection_data)
@@ -327,6 +345,9 @@ class ConfigurationValidator:
     
     def apply_defaults(self, pool_type: DatabaseType, config_data: Dict[str, Any]) -> Dict[str, Any]:
         """Apply default values to configuration"""
+
+
+
         try:
             schema = POOL_CONFIG_SCHEMA.get(pool_type.value)
             if not schema:
@@ -398,6 +419,9 @@ class PoolConfigurationManager:
     
     async def initialize(self) -> bool:
         """Initialize configuration manager"""
+
+
+
         try:
             # Load existing configurations
             await self._load_all_configurations()
@@ -411,11 +435,11 @@ class PoolConfigurationManager:
             # Start file watching
             await self._start_file_watching()
             
-            logger.info("✅ Pool configuration manager initialized")
+            logger.info(" Pool configuration manager initialized")
             return True
             
         except Exception as e:
-            logger.error(f"❌ Configuration manager initialization failed: {e}")
+            logger.error(f" Configuration manager initialization failed: {e}")
             return False
     
     async def create_configuration_set(self, environment: EnvironmentType, 
@@ -423,6 +447,9 @@ class PoolConfigurationManager:
                                      connection_infos: Dict[str, Dict[str, Any]],
                                      global_settings: Optional[Dict[str, Any]] = None) -> bool:
         """Create a new configuration set"""
+
+
+
         try:
             with self._lock:
                 # Validate configurations
@@ -474,7 +501,7 @@ class PoolConfigurationManager:
                 # Notify listeners
                 await self._notify_change_listeners(f"configuration_set.{environment.value}", asdict(config_set))
                 
-                logger.info(f"✅ Configuration set created for environment: {environment.value}")
+                logger.info(f" Configuration set created for environment: {environment.value}")
                 return True
                 
         except Exception as e:
@@ -483,6 +510,9 @@ class PoolConfigurationManager:
     
     async def get_configuration_set(self, environment: EnvironmentType) -> Optional[PoolConfigurationSet]:
         """Get configuration set for environment"""
+
+
+
         try:
             with self._lock:
                 return self.configurations.get(environment)
@@ -493,6 +523,9 @@ class PoolConfigurationManager:
     async def update_pool_config(self, environment: EnvironmentType, pool_id: str, 
                                config_updates: Dict[str, Any]) -> bool:
         """Update pool configuration"""
+
+
+
         try:
             with self._lock:
                 config_set = self.configurations.get(environment)
@@ -534,7 +567,7 @@ class PoolConfigurationManager:
                 # Notify listeners
                 await self._notify_change_listeners(f"pool_config.{pool_id}", asdict(new_config))
                 
-                logger.info(f"✅ Pool configuration updated: {pool_id}")
+                logger.info(f" Pool configuration updated: {pool_id}")
                 return True
                 
         except Exception as e:
@@ -545,6 +578,9 @@ class PoolConfigurationManager:
                                        credential_type: CredentialType,
                                        credential_id: Optional[str] = None) -> str:
         """Store encrypted credential"""
+
+
+
         try:
             with self._lock:
                 # Encrypt credential
@@ -562,7 +598,7 @@ class PoolConfigurationManager:
                 # Log audit
                 await self._log_audit_event("create", "encrypted_credential", encrypted_credential.credential_id, None, None, None)
                 
-                logger.info(f"✅ Encrypted credential stored: {encrypted_credential.credential_id}")
+                logger.info(f" Encrypted credential stored: {encrypted_credential.credential_id}")
                 return encrypted_credential.credential_id
                 
         except Exception as e:
@@ -571,6 +607,9 @@ class PoolConfigurationManager:
     
     async def get_decrypted_credential(self, credential_id: str) -> Optional[Dict[str, Any]]:
         """Get decrypted credential"""
+
+
+
         try:
             with self._lock:
                 encrypted_credential = self.encrypted_credentials.get(credential_id)
@@ -595,6 +634,9 @@ class PoolConfigurationManager:
                                           required_fields: List[str], optional_fields: List[str],
                                           validation_schema: Dict[str, Any]) -> bool:
         """Create configuration template"""
+
+
+
         try:
             with self._lock:
                 template = ConfigurationTemplate(
@@ -614,7 +656,7 @@ class PoolConfigurationManager:
                 # Save templates
                 await self._save_templates_file()
                 
-                logger.info(f"✅ Configuration template created: {template_id}")
+                logger.info(f" Configuration template created: {template_id}")
                 return True
                 
         except Exception as e:
@@ -623,6 +665,9 @@ class PoolConfigurationManager:
     
     async def generate_from_template(self, template_id: str, variables: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         """Generate configuration from template"""
+
+
+
         try:
             template = self.templates.get(template_id)
             if not template:
@@ -669,6 +714,9 @@ class PoolConfigurationManager:
     
     def _get_default_monitoring_settings(self, environment: EnvironmentType) -> Dict[str, Any]:
         """Get default monitoring settings for environment"""
+
+
+
         return {
             "enable_metrics": True,
             "metrics_interval": 30,
@@ -680,6 +728,9 @@ class PoolConfigurationManager:
     
     async def _load_all_configurations(self) -> None:
         """Load all configuration files"""
+
+
+
         try:
             for env_file in self.config_dir.glob("*.json"):
                 env_name = env_file.stem
@@ -693,6 +744,9 @@ class PoolConfigurationManager:
     
     async def _load_configuration_file(self, file_path: Path, environment: EnvironmentType) -> None:
         """Load configuration from file"""
+
+
+
         try:
             if file_path.exists():
                 async with aiofiles.open(file_path, 'r') as f:
@@ -702,12 +756,15 @@ class PoolConfigurationManager:
                 config_set = self._dict_to_configuration_set(config_data, environment)
                 self.configurations[environment] = config_set
                 
-                logger.info(f"✅ Configuration loaded for environment: {environment.value}")
+                logger.info(f" Configuration loaded for environment: {environment.value}")
         except Exception as e:
             logger.error(f"Failed to load configuration file {file_path}: {e}")
     
     async def _save_configuration_file(self, environment: EnvironmentType, config_set: PoolConfigurationSet) -> None:
         """Save configuration to file"""
+
+
+
         try:
             file_path = self.config_dir / f"{environment.value}.json"
             config_data = self._configuration_set_to_dict(config_set)
@@ -720,6 +777,9 @@ class PoolConfigurationManager:
     
     async def _load_templates(self) -> None:
         """Load configuration templates"""
+
+
+
         try:
             templates_file = self.config_dir / "templates.json"
             if templates_file.exists():
@@ -734,6 +794,9 @@ class PoolConfigurationManager:
     
     async def _save_templates_file(self) -> None:
         """Save templates to file"""
+
+
+
         try:
             templates_file = self.config_dir / "templates.json"
             templates_data = [asdict(template) for template in self.templates.values()]
@@ -745,6 +808,9 @@ class PoolConfigurationManager:
     
     async def _load_encrypted_credentials(self) -> None:
         """Load encrypted credentials"""
+
+
+
         try:
             credentials_file = self.config_dir / "credentials.enc"
             if credentials_file.exists():
@@ -759,6 +825,9 @@ class PoolConfigurationManager:
     
     async def _save_encrypted_credentials_file(self) -> None:
         """Save encrypted credentials to file"""
+
+
+
         try:
             credentials_file = self.config_dir / "credentials.enc"
             credentials_data = [asdict(cred) for cred in self.encrypted_credentials.values()]
@@ -794,22 +863,31 @@ class PoolConfigurationManager:
     
     def _configuration_set_to_dict(self, config_set: PoolConfigurationSet) -> Dict[str, Any]:
         """Convert PoolConfigurationSet to dictionary"""
+
+
+
         return asdict(config_set)
     
     async def _start_file_watching(self) -> None:
         """Start file system watching for configuration changes"""
+
+
+
         try:
             self.file_handler = ConfigurationFileHandler(self)
             self.file_observer = Observer()
             self.file_observer.schedule(self.file_handler, str(self.config_dir), recursive=False)
             self.file_observer.start()
             
-            logger.info("✅ Configuration file watching started")
+            logger.info(" Configuration file watching started")
         except Exception as e:
             logger.error(f"Failed to start file watching: {e}")
     
     async def reload_configuration_file(self, file_path: str) -> None:
         """Reload configuration from file"""
+
+
+
         try:
             file_path = Path(file_path)
             env_name = file_path.stem
@@ -822,7 +900,7 @@ class PoolConfigurationManager:
             if config_set:
                 await self._notify_change_listeners(f"configuration_reload.{environment.value}", asdict(config_set))
             
-            logger.info(f"✅ Configuration reloaded: {environment.value}")
+            logger.info(f" Configuration reloaded: {environment.value}")
         except Exception as e:
             logger.error(f"Failed to reload configuration: {e}")
     
@@ -830,6 +908,9 @@ class PoolConfigurationManager:
                              user_id: Optional[str], old_values: Optional[Dict[str, Any]],
                              new_values: Optional[Dict[str, Any]]) -> None:
         """Log audit event"""
+
+
+
         try:
             audit_log = ConfigurationAuditLog(
                 log_id=hashlib.sha256(f"{action}_{resource_type}_{resource_id}_{datetime.utcnow().isoformat()}".encode()).hexdigest()[:16],
@@ -857,6 +938,9 @@ class PoolConfigurationManager:
     
     async def _notify_change_listeners(self, change_type: str, data: Dict[str, Any]) -> None:
         """Notify configuration change listeners"""
+
+
+
         try:
             for listener in self._change_listeners:
                 try:
@@ -868,17 +952,23 @@ class PoolConfigurationManager:
     
     def get_audit_logs(self, limit: int = 100) -> List[ConfigurationAuditLog]:
         """Get recent audit logs"""
+
+
+
         return self.audit_logs[-limit:]
     
     async def close(self) -> None:
         """Close configuration manager"""
+
+
+
         try:
             # Stop file watching
             if self.file_observer:
                 self.file_observer.stop()
                 self.file_observer.join()
             
-            logger.info("✅ Pool configuration manager closed")
+            logger.info(" Pool configuration manager closed")
         except Exception as e:
             logger.error(f"Error closing configuration manager: {e}")
 

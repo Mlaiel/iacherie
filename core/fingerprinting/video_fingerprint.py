@@ -124,6 +124,9 @@ class VideoFingerprintEngine:
     
     async def _get_video_info(self, video_path: Path) -> Dict[str, any]:
         """Extract video metadata"""
+
+
+
         try:
             cap = cv2.VideoCapture(str(video_path))
             
@@ -151,6 +154,9 @@ class VideoFingerprintEngine:
     
     async def _extract_frames(self, video_path: Path, video_info: Dict) -> List[np.ndarray]:
         """Extract frames from video for analysis"""
+
+
+
         try:
             cap = cv2.VideoCapture(str(video_path))
             frames = []
@@ -188,6 +194,9 @@ class VideoFingerprintEngine:
     
     async def _extract_perceptual_hash(self, frames: List[np.ndarray]) -> Dict[str, any]:
         """Extract perceptual hash fingerprints for frames"""
+
+
+
         try:
             hashes = []
             hash_strings = []
@@ -235,6 +244,9 @@ class VideoFingerprintEngine:
     
     async def _extract_histogram_features(self, frames: List[np.ndarray]) -> Dict[str, any]:
         """Extract color histogram features"""
+
+
+
         try:
             histograms = []
             
@@ -287,6 +299,9 @@ class VideoFingerprintEngine:
     
     async def _extract_optical_flow(self, frames: List[np.ndarray]) -> Dict[str, any]:
         """Extract optical flow features for motion analysis"""
+
+
+
         try:
             if len(frames) < 2:
                 return {'error': 'Need at least 2 frames for optical flow', 'algorithm': 'optical_flow'}
@@ -356,6 +371,9 @@ class VideoFingerprintEngine:
     
     async def _extract_edge_features(self, frames: List[np.ndarray]) -> Dict[str, any]:
         """Extract edge detection features"""
+
+
+
         try:
             edge_features = []
             
@@ -420,6 +438,9 @@ class VideoFingerprintEngine:
     
     def _generate_combined_hash(self, methods_data: Dict[str, any]) -> str:
         """Generate combined hash from all fingerprinting methods"""
+
+
+
         try:
             hash_parts = []
             
@@ -500,6 +521,9 @@ class VideoFingerprintEngine:
         method: str
     ) -> float:
         """Compare two fingerprints using specific method"""
+
+
+
         try:
             if 'error' in data1 or 'error' in data2:
                 return 0.0
@@ -521,6 +545,9 @@ class VideoFingerprintEngine:
     
     def _compare_perceptual_hash(self, data1: Dict, data2: Dict) -> float:
         """Compare perceptual hash sequences"""
+
+
+
         try:
             seq1 = data1.get('hash_sequence', [])
             seq2 = data2.get('hash_sequence', [])
@@ -571,6 +598,9 @@ class VideoFingerprintEngine:
     
     def _compare_histogram(self, data1: Dict, data2: Dict) -> float:
         """Compare histogram features"""
+
+
+
         try:
             hist1 = data1.get('average_histogram', {})
             hist2 = data2.get('average_histogram', {})
@@ -596,6 +626,9 @@ class VideoFingerprintEngine:
     
     def _compare_optical_flow(self, data1: Dict, data2: Dict) -> float:
         """Compare optical flow features"""
+
+
+
         try:
             mag1 = data1.get('average_magnitude', 0)
             mag2 = data2.get('average_magnitude', 0)
@@ -617,6 +650,9 @@ class VideoFingerprintEngine:
     
     def _compare_edge_detection(self, data1: Dict, data2: Dict) -> float:
         """Compare edge detection features"""
+
+
+
         try:
             density1 = data1.get('average_edge_density', 0)
             density2 = data2.get('average_edge_density', 0)
@@ -687,6 +723,9 @@ class VideoFingerprintEngine:
     
     def get_engine_info(self) -> Dict[str, any]:
         """Get engine configuration and capabilities"""
+
+
+
         return {
             'engine': 'VideoFingerprintEngine',
             'version': '1.0.0',

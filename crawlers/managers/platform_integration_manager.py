@@ -16,7 +16,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  IMPORTANT LEGAL NOTICE ⚠️
+  IMPORTANT LEGAL NOTICE 
 This code is the intellectual property of Fahed Mlaiel. Any unauthorized use,
 reproduction, distribution, or commercialization without explicit written 
 permission is strictly prohibited and will result in legal action.
@@ -289,6 +289,9 @@ class PlatformIntegrationManager:
         Returns:
             bool: True if initialization successful
         """
+
+
+
         try:
             if platform not in self.platforms:
                 self.logger.error(f"Unsupported platform: {platform}")
@@ -485,6 +488,9 @@ class PlatformIntegrationManager:
     
     async def _refresh_authentication(self, platform: PlatformType):
         """Refresh authentication credentials for platform."""
+
+
+
         try:
             credentials = self.platforms[platform].credentials
             
@@ -567,6 +573,9 @@ class PlatformIntegrationManager:
     
     def _get_default_headers(self, platform: PlatformType) -> Dict[str, str]:
         """Get default headers for platform."""
+
+
+
         return {
             "User-Agent": f"IA-Influencer-Agent/1.0 ({platform.value})",
             "Accept": "application/json",
@@ -575,6 +584,9 @@ class PlatformIntegrationManager:
     
     async def _perform_health_check(self, platform: PlatformType) -> bool:
         """Perform health check for platform."""
+
+
+
         try:
             platform_config = self.platforms[platform]
             if not platform_config.health_check_url:
@@ -618,6 +630,9 @@ class PlatformIntegrationManager:
     
     async def _encrypt_and_store_credentials(self, platform: PlatformType, credentials: PlatformCredentials):
         """Encrypt and store platform credentials."""
+
+
+
         try:
             # Serialize credentials
             credentials_data = {
@@ -661,14 +676,23 @@ class PlatformIntegrationManager:
     
     async def get_platform_metrics(self, platform: PlatformType) -> Optional[PlatformMetrics]:
         """Get metrics for specific platform."""
+
+
+
         return self.metrics.get(platform)
     
     async def get_all_platform_metrics(self) -> Dict[PlatformType, PlatformMetrics]:
         """Get metrics for all platforms."""
+
+
+
         return self.metrics.copy()
     
     async def check_platform_health(self, platform: PlatformType) -> bool:
         """Check health status of specific platform."""
+
+
+
         return await self._perform_health_check(platform)
     
     async def check_all_platform_health(self) -> Dict[PlatformType, bool]:
@@ -682,6 +706,9 @@ class PlatformIntegrationManager:
     
     async def close(self):
         """Close all platform connections and cleanup resources."""
+
+
+
         try:
             # Close all HTTP sessions
             for session in self.sessions.values():
@@ -702,6 +729,9 @@ class PlatformIntegrationManager:
     
     async def __aenter__(self):
         """Async context manager entry."""
+
+
+
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
@@ -712,6 +742,9 @@ class PlatformIntegrationManager:
 # Factory functions and utilities
 async def create_platform_integration_manager(config: Optional[PlatformConfig] = None) -> PlatformIntegrationManager:
     """Create and initialize platform integration manager."""
+
+
+
     return PlatformIntegrationManager(config)
 
 
@@ -730,6 +763,9 @@ async def initialize_all_platforms(
 
 async def perform_bulk_health_check(manager: PlatformIntegrationManager) -> Dict[PlatformType, bool]:
     """Perform health check on all configured platforms."""
+
+
+
     return await manager.check_all_platform_health()
 
 

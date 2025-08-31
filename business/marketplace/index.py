@@ -10,7 +10,7 @@ Project Team Specialists: Lead AI Dev, Backend Senior, ML Engineer, DBA, Securit
                          Microservices Architect, Audio Processing Expert, DevOps Engineer, 
                          AI Prompt Engineer
 
-⚠️  STRICT COPYRIGHT WARNING ⚠️
+  STRICT COPYRIGHT WARNING 
 This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Legal action will be pursued against any infringement.
@@ -49,6 +49,9 @@ class MarketplaceIndex:
         
     def _initialize_services(self) -> Dict[str, Any]:
         """Initialize all marketplace services"""
+
+
+
         return {
             'content_manager': ContentManager(),
             'creator_profile': CreatorProfileManager(),
@@ -68,6 +71,9 @@ class MarketplaceIndex:
         @self.router.get("/", response_model=Dict[str, Any])
         async def marketplace_index():
             """Get marketplace overview and available services"""
+
+
+
             return {
                 "marketplace": "IA Influencer Agent Marketplace",
                 "version": "1.0.0",
@@ -109,6 +115,9 @@ class MarketplaceIndex:
         @self.router.get("/metrics", response_model=MarketplaceMetrics)
         async def get_marketplace_metrics():
             """Get comprehensive marketplace metrics"""
+
+
+
             return await self.services['metrics_collector'].collect_metrics()
         
         @self.router.post("/content/upload")
@@ -117,6 +126,9 @@ class MarketplaceIndex:
             creator_id: str = Depends(self._get_current_user)
         ):
             """Upload and process content"""
+
+
+
             try:
                 # Content processing
                 content_metadata = await self.services['content_manager'].process_content(
@@ -204,6 +216,9 @@ class MarketplaceIndex:
             creator_id: str = Depends(self._get_current_user)
         ):
             """Find collaboration opportunities based on criteria"""
+
+
+
             try:
                 opportunities = await self.services['collaboration_engine'].find_matches(
                     creator_id, criteria
@@ -229,6 +244,9 @@ class MarketplaceIndex:
             creator_id: str = Depends(self._get_current_user)
         ):
             """Create or update monetization strategy"""
+
+
+
             try:
                 strategy = await self.services['monetization_engine'].create_strategy(
                     creator_id, strategy_data
@@ -254,6 +272,9 @@ class MarketplaceIndex:
             creator_id: str = Depends(self._get_current_user)
         ):
             """Distribute content across multiple platforms"""
+
+
+
             try:
                 distribution_results = await self.services['distribution_manager'].distribute_content(
                     creator_id, distribution_config
@@ -285,6 +306,9 @@ class MarketplaceIndex:
     
     def get_service(self, service_name: str) -> Optional[Any]:
         """Get specific marketplace service"""
+
+
+
         return self.services.get(service_name)
     
     async def shutdown(self):
@@ -325,6 +349,9 @@ class MarketplaceServiceRegistry:
     
     def get_all_services(self) -> Dict[str, Any]:
         """Get all registered services"""
+
+
+
         return self._services.copy()
     
     async def initialize_services(self):

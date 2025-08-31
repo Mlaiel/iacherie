@@ -119,6 +119,9 @@ class ConversationRouter:
         Returns:
             RoutingDecision: Complete routing decision with confidence
         """
+
+
+
         try:
             # Extract key routing factors
             creator_type = session.creator_type
@@ -449,6 +452,9 @@ class ConversationRouter:
     
     def _determine_detail_level(self, expertise_level: str) -> str:
         """Determine response detail level"""
+
+
+
         return {
             "beginner": "basic",
             "intermediate": "moderate",
@@ -472,6 +478,9 @@ class ConversationRouter:
     
     def _create_fallback_decision(self) -> RoutingDecision:
         """Create safe fallback routing decision"""
+
+
+
         return RoutingDecision(
             strategy=RoutingStrategy.GENERAL_CHAT,
             engine_type=EngineType.GENERAL_CONVERSATIONAL,

@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-🚨 INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
+ INTELLECTUAL PROPERTY WARNING: This code, concept, and architecture are 
 the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de). 
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
@@ -82,6 +82,9 @@ class ContentFingerprintRepository(BaseRepository[ContentFingerprint]):
         Returns:
             Created ContentFingerprint instance
         """
+
+
+
         try:
             # Check for duplicate fingerprints
             existing = self.get_by_fingerprint_hash(fingerprint_hash)
@@ -131,6 +134,9 @@ class ContentFingerprintRepository(BaseRepository[ContentFingerprint]):
         Returns:
             ContentFingerprint instance or None
         """
+
+
+
         try:
             return self.db_session.query(ContentFingerprint).filter(
                 ContentFingerprint.fingerprint_hash == fingerprint_hash
@@ -159,6 +165,9 @@ class ContentFingerprintRepository(BaseRepository[ContentFingerprint]):
         Returns:
             List of ContentFingerprint instances
         """
+
+
+
         try:
             query = self.db_session.query(ContentFingerprint).filter(
                 ContentFingerprint.user_id == user_id
@@ -209,6 +218,9 @@ class ContentFingerprintRepository(BaseRepository[ContentFingerprint]):
         Returns:
             List of similar fingerprints with similarity scores
         """
+
+
+
         try:
             # Find exact hash matches first
             exact_matches = self.db_session.query(ContentFingerprint).filter(
@@ -271,6 +283,9 @@ class ContentFingerprintRepository(BaseRepository[ContentFingerprint]):
         Returns:
             List of similar fingerprints with similarity scores
         """
+
+
+
         try:
             # Get all fingerprints of the same content type
             query = self.db_session.query(ContentFingerprint).filter(
@@ -330,6 +345,9 @@ class ContentFingerprintRepository(BaseRepository[ContentFingerprint]):
         Returns:
             Similarity score between 0.0 and 1.0
         """
+
+
+
         try:
             # Hamming distance for binary hashes
             if len(hash1) == len(hash2):
@@ -365,6 +383,9 @@ class ContentFingerprintRepository(BaseRepository[ContentFingerprint]):
         Returns:
             Dictionary containing various statistics
         """
+
+
+
         try:
             base_query = self.db_session.query(ContentFingerprint)
             
@@ -428,6 +449,9 @@ class ContentFingerprintRepository(BaseRepository[ContentFingerprint]):
         Returns:
             Number of updated fingerprints
         """
+
+
+
         try:
             updated_count = self.db_session.query(ContentFingerprint).filter(
                 ContentFingerprint.id.in_(fingerprint_ids)
@@ -462,6 +486,9 @@ class ContentFingerprintRepository(BaseRepository[ContentFingerprint]):
         Returns:
             Number of deleted fingerprints
         """
+
+
+
         try:
             expiry_date = datetime.utcnow() - timedelta(days=retention_days)
             
@@ -504,6 +531,9 @@ class ContentFingerprintRepository(BaseRepository[ContentFingerprint]):
         Returns:
             Dictionary containing user content summary
         """
+
+
+
         try:
             user_fingerprints = self.get_by_user_id(user_id)
             

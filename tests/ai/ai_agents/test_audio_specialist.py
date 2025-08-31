@@ -23,7 +23,7 @@ audio enhancement, and podcast production capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  LEGAL WARNING ⚠️
+  LEGAL WARNING 
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
@@ -82,6 +82,9 @@ class TestAudioSpecialistAgent:
     @pytest.fixture
     def audio_config(self) -> AgentConfiguration:
         """Audio specialist agent configuration"""
+
+
+
         return AgentConfiguration(
             agent_id="audio_specialist_test",
             agent_name="Test Audio Specialist Agent",

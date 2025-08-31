@@ -8,7 +8,7 @@ Handles album metadata extraction, artist analysis, and fan engagement data.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
@@ -155,6 +155,9 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
     
     async def initialize(self) -> None:
         """Initialize the crawler engine"""
+
+
+
         try:
             await self._create_session()
             self._setup_selenium()
@@ -183,6 +186,9 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
     
     def _setup_selenium(self) -> None:
         """Setup Selenium WebDriver for dynamic content"""
+
+
+
         try:
             options = webdriver.ChromeOptions()
             options.add_argument('--headless')
@@ -215,6 +221,9 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
         Returns:
             List of search results
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -272,6 +281,9 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Artist information or None if not found
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -313,6 +325,9 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Album information or None if not found
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -354,6 +369,9 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
         Returns:
             Track information or None if not found
         """
+
+
+
         try:
             await self.rate_limiter.acquire()
             
@@ -387,6 +405,9 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
     
     def _parse_search_result(self, result_element) -> Optional[Dict[str, Any]]:
         """Parse a search result element"""
+
+
+
         try:
             result_type = "unknown"
             
@@ -421,6 +442,9 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
     
     def _parse_artist_page(self, soup: BeautifulSoup, url: str) -> BandcampArtist:
         """Parse artist page data"""
+
+
+
         try:
             # Extract artist name
             name_elem = soup.find('p', id='band-name-location')
@@ -475,6 +499,9 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
     
     def _parse_album_page(self, soup: BeautifulSoup, url: str) -> BandcampAlbum:
         """Parse album page data"""
+
+
+
         try:
             # Extract album title
             title_elem = soup.find('h2', class_='trackTitle')
@@ -539,6 +566,9 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
     
     def _parse_track_page(self, soup: BeautifulSoup, url: str) -> BandcampTrack:
         """Parse track page data"""
+
+
+
         try:
             # Extract track title
             title_elem = soup.find('h2', class_='trackTitle')
@@ -661,6 +691,9 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
         Returns:
             List of new releases
         """
+
+
+
         try:
             # Search for recent releases
             results = await self.search_music(
@@ -692,6 +725,9 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
     
     async def cleanup(self) -> None:
         """Clean up resources"""
+
+
+
         try:
             if self.session:
                 await self.session.close()

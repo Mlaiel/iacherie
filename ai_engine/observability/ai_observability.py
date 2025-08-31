@@ -8,7 +8,7 @@ explainability monitoring, and model lifecycle management.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -960,9 +960,9 @@ class ModelExplainabilityAnalyzer:
         explanation += f"which accounts for {top_feature[1]:.1%} of the decision-making process.\n\n"
         
         if result.explanation_quality > 0.7:
-            explanation += "✅ The model provides clear, understandable decision patterns.\n"
+            explanation += " The model provides clear, understandable decision patterns.\n"
         else:
-            explanation += "⚠️ The model's decision patterns may be complex and harder to interpret.\n"
+            explanation += " The model's decision patterns may be complex and harder to interpret.\n"
         
         explanation += f"\nOverall model interpretability: {result.interpretability_score:.1%}"
         
@@ -977,9 +977,9 @@ class ModelExplainabilityAnalyzer:
         explanation += f"Decision Consistency: {result.consistency_score:.1%}\n\n"
         
         if result.explanation_quality > 0.8 and result.interpretability_score > 0.6:
-            explanation += "✅ Model meets explainability requirements for regulatory compliance.\n"
+            explanation += " Model meets explainability requirements for regulatory compliance.\n"
         else:
-            explanation += "⚠️ Model may require additional documentation for regulatory compliance.\n"
+            explanation += " Model may require additional documentation for regulatory compliance.\n"
         
         explanation += "\nRecommendations for compliance:\n"
         if result.explanation_quality < 0.8:
@@ -1092,6 +1092,9 @@ class AIObservabilityEngine:
     
     async def _collect_monitor_metrics(self, monitor: BaseModelMonitor):
         """Collect metrics from a single monitor"""
+
+
+
         try:
             metrics = await monitor.collect_metrics()
             self.metrics_history.append(metrics)
@@ -1278,6 +1281,9 @@ class AIObservabilityEngine:
     
     def get_comprehensive_statistics(self) -> Dict[str, Any]:
         """Get comprehensive AI observability statistics"""
+
+
+
         return {
             "registered_models": len(self.monitors),
             "monitoring_active": self._running,
@@ -1296,12 +1302,18 @@ class AIObservabilityEngine:
     
     def get_stats(self) -> Dict[str, Any]:
         """Get basic statistics"""
+
+
+
         return self.get_comprehensive_statistics()
 
 
 # Factory function
 def create_ai_observability_engine(config: Dict[str, Any] = None) -> AIObservabilityEngine:
     """Factory function to create AI observability engine"""
+
+
+
     return AIObservabilityEngine(config)
 
 

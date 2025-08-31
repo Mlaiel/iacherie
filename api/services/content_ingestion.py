@@ -5,7 +5,7 @@ Handles upload, validation, storage, and initial AI processing for all content t
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Engineer + DevOps Expert
 
-⚠️  COPYRIGHT WARNING ⚠️
+  COPYRIGHT WARNING 
 This code and concept are proprietary to Fahed Mlaiel.
 Unauthorized copying, distribution, or use without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -75,6 +75,9 @@ class ContentIngestionService:
 
     def _detect_content_type(self, file_path: Path) -> str:
         """Detect content type using file magic and extension validation"""
+
+
+
         try:
             mime_type = magic.from_file(str(file_path), mime=True)
             extension = file_path.suffix.lower()
@@ -96,6 +99,9 @@ class ContentIngestionService:
 
     def _validate_file_security(self, file_path: Path, content_type: str) -> bool:
         """Enterprise security validation including virus scanning"""
+
+
+
         try:
             # Check file size limits
             file_size = file_path.stat().st_size
@@ -143,6 +149,9 @@ class ContentIngestionService:
 
     async def _extract_audio_metadata(self, file_path: Path) -> Dict[str, Any]:
         """Extract audio-specific metadata using librosa"""
+
+
+
         try:
             y, sr = librosa.load(str(file_path))
             duration = len(y) / sr
@@ -166,6 +175,9 @@ class ContentIngestionService:
 
     async def _extract_video_metadata(self, file_path: Path) -> Dict[str, Any]:
         """Extract video-specific metadata using moviepy"""
+
+
+
         try:
             with VideoFileClip(str(file_path)) as clip:
                 return {
@@ -182,6 +194,9 @@ class ContentIngestionService:
 
     async def _extract_image_metadata(self, file_path: Path) -> Dict[str, Any]:
         """Extract image-specific metadata using PIL"""
+
+
+
         try:
             with Image.open(file_path) as img:
                 return {
@@ -198,6 +213,9 @@ class ContentIngestionService:
 
     async def _extract_text_metadata(self, file_path: Path) -> Dict[str, Any]:
         """Extract text-specific metadata"""
+
+
+
         try:
             async with aiofiles.open(file_path, 'r', encoding='utf-8') as f:
                 content = await f.read()
@@ -239,6 +257,9 @@ class ContentIngestionService:
 
     async def _generate_content_fingerprint(self, file_path: Path, content_type: str) -> Optional[str]:
         """Generate AI fingerprint for content protection"""
+
+
+
         try:
             if content_type == 'audio':
                 return await self.audio_engine.generate_fingerprint(str(file_path))
@@ -264,6 +285,9 @@ class ContentIngestionService:
         """
         Enterprise upload persistence with comprehensive processing pipeline
         """
+
+
+
         try:
             # Create temporary file for processing
             temp_path = Path(f"/tmp/{uuid.uuid4().hex}_{filename}")

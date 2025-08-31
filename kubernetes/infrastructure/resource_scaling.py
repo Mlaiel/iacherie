@@ -7,7 +7,7 @@ vertical pod autoscaling, cluster autoscaling, and custom metrics-based scaling.
 Project: IA Influencer Agent + Content Protection Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 
-⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
+  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED 
 """
 
 import asyncio
@@ -103,6 +103,9 @@ class ResourceScalingManager:
         
     async def create_horizontal_pod_autoscaler(self, hpa_spec: HPASpec) -> Dict[str, Any]:
         """Create Horizontal Pod Autoscaler"""
+
+
+
         try:
             # Convert metrics to HPA format
             hpa_metrics = []
@@ -219,6 +222,9 @@ class ResourceScalingManager:
     
     async def create_vertical_pod_autoscaler(self, vpa_spec: VPASpec) -> Dict[str, Any]:
         """Create Vertical Pod Autoscaler"""
+
+
+
         try:
             # VPA resource definition
             vpa_resource = {
@@ -273,6 +279,9 @@ class ResourceScalingManager:
     
     async def create_cluster_autoscaler(self, ca_spec: ClusterAutoscalerSpec) -> Dict[str, Any]:
         """Create Cluster Autoscaler"""
+
+
+
         try:
             # Cluster Autoscaler deployment
             deployment = client.V1Deployment(
@@ -357,6 +366,9 @@ class ResourceScalingManager:
     
     async def _create_cluster_autoscaler_rbac(self, namespace: str) -> Dict[str, Any]:
         """Create RBAC for Cluster Autoscaler"""
+
+
+
         try:
             # Service Account
             service_account = client.V1ServiceAccount(
@@ -461,6 +473,9 @@ class ResourceScalingManager:
     
     async def create_ia_influencer_autoscaling(self, namespace: str = "ia-influencer") -> Dict[str, Any]:
         """Create comprehensive autoscaling for IA Influencer platform"""
+
+
+
         try:
             results = {}
             
@@ -678,6 +693,9 @@ class ResourceScalingManager:
     
     async def get_scaling_status(self, namespace: str = "ia-influencer") -> Dict[str, Any]:
         """Get comprehensive scaling status"""
+
+
+
         try:
             status = {}
             
@@ -726,6 +744,9 @@ class ResourceScalingManager:
     
     async def update_scaling_policy(self, name: str, namespace: str, new_spec: HPASpec) -> Dict[str, Any]:
         """Update existing HPA scaling policy"""
+
+
+
         try:
             if self.autoscaling_v2:
                 # Delete existing HPA
@@ -749,6 +770,9 @@ class ResourceScalingManager:
     
     async def scale_deployment_manually(self, deployment_name: str, namespace: str, replicas: int) -> Dict[str, Any]:
         """Manually scale a deployment"""
+
+
+
         try:
             if self.apps_v1:
                 # Patch deployment with new replica count

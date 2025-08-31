@@ -62,6 +62,9 @@ class SecurityPolicy:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary"""
+
+
+
         return {
             "policy_id": self.policy_id,
             "title": self.title,
@@ -551,14 +554,23 @@ class SecurityPolicyManager:
     
     async def get_policy(self, policy_id: str) -> Optional[SecurityPolicy]:
         """Get specific security policy"""
+
+
+
         return self.policies.get(policy_id)
     
     async def get_all_policies(self) -> List[SecurityPolicy]:
         """Get all security policies"""
+
+
+
         return list(self.policies.values())
     
     async def get_policies_by_type(self, policy_type: PolicyType) -> List[SecurityPolicy]:
         """Get policies by type"""
+
+
+
         return [p for p in self.policies.values() if p.policy_type == policy_type]
     
     async def add_policy(self, policy: SecurityPolicy) -> str:
@@ -689,6 +701,9 @@ class SecurityPolicyManager:
         phase: str = "detection"
     ) -> Dict[str, Any]:
         """Execute incident response procedures"""
+
+
+
         
         return await self.incident_procedures.execute_response_procedure(
             incident_id=incident_id,
@@ -703,6 +718,9 @@ class SecurityPolicyManager:
         incident_data: Dict[str, Any]
     ) -> Dict[str, str]:
         """Generate incident communication"""
+
+
+
         
         return await self.incident_procedures.generate_incident_communication(
             template_type=template_type,
@@ -723,6 +741,9 @@ async def get_security_policies() -> List[Dict[str, Any]]:
 
 async def get_policy_compliance_report() -> Dict[str, Any]:
     """Get policy compliance report"""
+
+
+
     return await security_policy_manager.generate_policy_compliance_report()
 
 
@@ -733,6 +754,9 @@ async def execute_incident_response_procedure(
     phase: str = "detection"
 ) -> Dict[str, Any]:
     """Execute incident response procedure"""
+
+
+
     return await security_policy_manager.execute_incident_response(
         incident_id=incident_id,
         incident_type=incident_type,

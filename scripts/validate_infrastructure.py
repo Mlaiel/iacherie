@@ -42,7 +42,7 @@ class InfrastructureValidator:
         
     def run_docker_validation(self) -> Tuple[bool, Dict]:
         """Run Docker Compose services validation"""
-        logger.info("🐳 Running Docker Compose Services Validation...")
+        logger.info(" Running Docker Compose Services Validation...")
         
         try:
             # Run Docker services validation script
@@ -61,12 +61,12 @@ class InfrastructureValidator:
             }
             
         except Exception as e:
-            logger.error(f"❌ Error running Docker validation: {str(e)}")
+            logger.error(f" Error running Docker validation: {str(e)}")
             return False, {'success': False, 'error': str(e)}
     
     def run_monitoring_validation(self) -> Tuple[bool, Dict]:
         """Run monitoring configuration validation"""
-        logger.info("📊 Running Monitoring Configuration Validation...")
+        logger.info(" Running Monitoring Configuration Validation...")
         
         try:
             # Run monitoring validation script
@@ -85,12 +85,12 @@ class InfrastructureValidator:
             }
             
         except Exception as e:
-            logger.error(f"❌ Error running monitoring validation: {str(e)}")
+            logger.error(f" Error running monitoring validation: {str(e)}")
             return False, {'success': False, 'error': str(e)}
     
     def run_database_validation(self) -> Tuple[bool, Dict]:
         """Run database schema and migration validation"""
-        logger.info("🗄️ Running Database Schema and Migration Validation...")
+        logger.info(" Running Database Schema and Migration Validation...")
         
         try:
             # Run database validation script
@@ -109,7 +109,7 @@ class InfrastructureValidator:
             }
             
         except Exception as e:
-            logger.error(f"❌ Error running database validation: {str(e)}")
+            logger.error(f" Error running database validation: {str(e)}")
             return False, {'success': False, 'error': str(e)}
     
     def check_prerequisites(self) -> Tuple[bool, List[str]]:
@@ -119,27 +119,27 @@ class InfrastructureValidator:
         # Check Docker
         try:
             subprocess.run(['docker', '--version'], capture_output=True, check=True)
-            logger.info("✅ Docker is available")
+            logger.info(" Docker is available")
         except (subprocess.CalledProcessError, FileNotFoundError):
             issues.append("Docker is not available")
         
         # Check Docker Compose
         try:
             subprocess.run(['docker', 'compose', 'version'], capture_output=True, check=True)
-            logger.info("✅ Docker Compose is available")
+            logger.info(" Docker Compose is available")
         except (subprocess.CalledProcessError, FileNotFoundError):
             issues.append("Docker Compose is not available")
         
         # Check Python
         try:
             import yaml
-            logger.info("✅ PyYAML is available")
+            logger.info(" PyYAML is available")
         except ImportError:
             issues.append("PyYAML is not available (run: pip install pyyaml)")
         
         try:
             import requests
-            logger.info("✅ Requests is available")
+            logger.info(" Requests is available")
         except ImportError:
             issues.append("Requests is not available (run: pip install requests)")
         
@@ -148,7 +148,7 @@ class InfrastructureValidator:
     def generate_infrastructure_startup_guide(self) -> str:
         """Generate comprehensive startup guide"""
         guide = """
-# 🚀 Ainflue Platform Infrastructure Startup Guide
+#  Ainflue Platform Infrastructure Startup Guide
 
 ## Prerequisites
 - Docker Engine 20.10+
@@ -247,21 +247,24 @@ docker exec [redis-container] redis-cli ping
 
 For support: mlaiel@live.de
 """
+
+
+
         return guide
     
     def run_comprehensive_validation(self) -> Dict:
         """Run all infrastructure validations"""
-        logger.info("🏗️ Starting Comprehensive Infrastructure Validation")
+        logger.info(" Starting Comprehensive Infrastructure Validation")
         logger.info("="*80)
         
         start_time = time.time()
         
         # Check prerequisites
-        logger.info("\n📋 Checking Prerequisites...")
+        logger.info("\n Checking Prerequisites...")
         prereq_success, prereq_issues = self.check_prerequisites()
         
         if not prereq_success:
-            logger.error("❌ Prerequisites check failed:")
+            logger.error(" Prerequisites check failed:")
             for issue in prereq_issues:
                 logger.error(f"   • {issue}")
             return {
@@ -270,7 +273,7 @@ For support: mlaiel@live.de
                 'message': 'Prerequisites not met'
             }
         
-        logger.info("✅ Prerequisites check passed")
+        logger.info(" Prerequisites check passed")
         
         # Run individual validations
         validations = {}
@@ -321,7 +324,7 @@ AINFLUE PLATFORM - INFRASTRUCTURE VALIDATION REPORT
 
 Validation completed in {results['duration']:.2f} seconds
 
-OVERALL STATUS: {'✅ PASSED' if results['overall_success'] else '❌ FAILED'}
+OVERALL STATUS: {' PASSED' if results['overall_success'] else ' FAILED'}
 
 COMPONENT VALIDATION RESULTS:
 ============================
@@ -330,7 +333,7 @@ COMPONENT VALIDATION RESULTS:
         
         # Prerequisites
         prereq = results['prerequisites']
-        report += f"📋 Prerequisites: {'✅ PASSED' if prereq['success'] else '❌ FAILED'}\n"
+        report += f" Prerequisites: {' PASSED' if prereq['success'] else ' FAILED'}\n"
         if prereq.get('issues'):
             for issue in prereq['issues']:
                 report += f"   • {issue}\n"
@@ -340,15 +343,15 @@ COMPONENT VALIDATION RESULTS:
         validations = results['validations']
         
         components = [
-            ('docker', '🐳 Docker Compose Services'),
-            ('monitoring', '📊 Monitoring Configuration'),
-            ('database', '🗄️ Database Schema & Migrations')
+            ('docker', ' Docker Compose Services'),
+            ('monitoring', ' Monitoring Configuration'),
+            ('database', ' Database Schema & Migrations')
         ]
         
         for component_key, component_name in components:
             if component_key in validations:
                 validation = validations[component_key]
-                status = '✅ PASSED' if validation['success'] else '❌ FAILED'
+                status = ' PASSED' if validation['success'] else ' FAILED'
                 report += f"{component_name}: {status}\n"
                 
                 if not validation['success']:
@@ -381,11 +384,11 @@ COMPONENT VALIDATION RESULTS:
         for file_name in generated_files:
             file_path = self.project_root / file_name
             if file_path.exists():
-                report += f"✅ {file_name}\n"
+                report += f" {file_name}\n"
             else:
-                report += f"⚠️ {file_name} (not found)\n"
+                report += f" {file_name} (not found)\n"
         
-        report += f"\n📖 Startup Guide: {results['startup_guide']}\n"
+        report += f"\n Startup Guide: {results['startup_guide']}\n"
         
         # Summary and next steps
         report += "\nSUMMARY & NEXT STEPS:\n"
@@ -393,11 +396,11 @@ COMPONENT VALIDATION RESULTS:
         
         if results['overall_success']:
             report += """
-🎉 All infrastructure components are validated and ready!
+ All infrastructure components are validated and ready!
 
-✅ Docker Compose configurations are valid
-✅ Monitoring stack is properly configured  
-✅ Database schema and migrations are set up
+ Docker Compose configurations are valid
+ Monitoring stack is properly configured  
+ Database schema and migrations are set up
 
 NEXT STEPS:
 1. Start basic services: docker compose up -d
@@ -408,7 +411,7 @@ NEXT STEPS:
 """
         else:
             report += """
-⚠️ Some infrastructure components need attention.
+ Some infrastructure components need attention.
 
 Please review the individual component reports for details:
 - docker_services_validation_report.txt
@@ -423,11 +426,14 @@ Fix the reported issues and re-run this validation.
 SUPPORT:
 ========
 For technical support and deployment assistance:
-📧 Email: mlaiel@live.de
-📖 Documentation: See generated reports and startup guide
+ Email: mlaiel@live.de
+ Documentation: See generated reports and startup guide
 
 © 2025 Fahed Mlaiel. All rights reserved.
 """
+
+
+
         
         return report
 
@@ -438,7 +444,7 @@ def main():
     project_root = script_dir.parent
     
     print("""
-🏗️ AINFLUE PLATFORM - INFRASTRUCTURE VALIDATION
+ AINFLUE PLATFORM - INFRASTRUCTURE VALIDATION
 ===============================================
 Validating Docker Compose, Monitoring, and Database components...
 """)
@@ -452,16 +458,16 @@ Validating Docker Compose, Monitoring, and Database components...
     report_path.write_text(report)
     
     print(report)
-    logger.info(f"📄 Comprehensive report saved to: {report_path}")
+    logger.info(f" Comprehensive report saved to: {report_path}")
     
     # Return appropriate exit code
     if results['overall_success']:
-        logger.info("🎉 All infrastructure validation passed!")
-        print("\n🚀 Your Ainflue Platform infrastructure is ready for deployment!")
+        logger.info(" All infrastructure validation passed!")
+        print("\n Your Ainflue Platform infrastructure is ready for deployment!")
         return 0
     else:
-        logger.warning("⚠️ Some infrastructure validation failed!")
-        print("\n⚠️ Please review the issues above and fix before deployment.")
+        logger.warning(" Some infrastructure validation failed!")
+        print("\n Please review the issues above and fix before deployment.")
         return 1
 
 

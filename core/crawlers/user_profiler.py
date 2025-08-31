@@ -375,6 +375,9 @@ class AdvancedUserProfiler(BaseCrawler):
         Returns:
             str: Profile ID
         """
+
+
+
         try:
             profile_id = hashlib.md5(f"{user_id}_{platform}_{datetime.utcnow()}".encode()).hexdigest()
             
@@ -564,6 +567,9 @@ class AdvancedUserProfiler(BaseCrawler):
         Returns:
             Dict[str, Any]: Comparison analysis
         """
+
+
+
         try:
             if profile_id_1 not in self.user_profiles or profile_id_2 not in self.user_profiles:
                 return {}
@@ -624,6 +630,9 @@ class AdvancedUserProfiler(BaseCrawler):
         Returns:
             Dict[str, Any]: Profile insights
         """
+
+
+
         try:
             if profile_id not in self.user_profiles:
                 return {}
@@ -1164,6 +1173,9 @@ class AdvancedUserProfiler(BaseCrawler):
 
     async def close(self):
         """Close profiler and cleanup resources"""
+
+
+
         try:
             await self.cache_manager.close()
             await super().close()

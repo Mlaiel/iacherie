@@ -8,7 +8,7 @@ support across 12+ languages.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -214,6 +214,9 @@ class MultiLanguageManager:
         user_id: Optional[str] = None
     ) -> Tuple[SupportedLanguage, float]:
         """Detect language of input text with confidence score"""
+
+
+
         try:
             # Check user's language profile first
             if user_id and user_id in self.language_profiles:
@@ -289,6 +292,9 @@ class MultiLanguageManager:
         use_cache: bool = True
     ) -> TranslationResult:
         """Translate text with cultural adaptation"""
+
+
+
         try:
             start_time = datetime.now()
             
@@ -367,6 +373,9 @@ class MultiLanguageManager:
         variables: Optional[Dict[str, Any]] = None
     ) -> str:
         """Get culturally adapted response template"""
+
+
+
         try:
             # Get user's cultural context
             cultural_context = await self._get_cultural_context(language, user_id)
@@ -411,6 +420,9 @@ class MultiLanguageManager:
         preferences: Optional[Dict[str, Any]] = None
     ) -> LanguageProfile:
         """Create or update user language profile"""
+
+
+
         try:
             # Create profile
             profile = LanguageProfile(
@@ -463,6 +475,9 @@ class MultiLanguageManager:
         user_id: Optional[str] = None
     ) -> str:
         """Format content according to locale (dates, numbers, currency)"""
+
+
+
         try:
             cultural_context = await self._get_cultural_context(language, user_id)
             locale_code = f"{language.value}_{cultural_context.country_code}" if cultural_context.country_code else language.value
@@ -489,6 +504,9 @@ class MultiLanguageManager:
     
     async def get_language_analytics(self) -> Dict[str, Any]:
         """Get language usage analytics"""
+
+
+
         try:
             analytics = {
                 "total_translations": self.translation_stats["total_translations"],
@@ -523,6 +541,9 @@ class MultiLanguageManager:
     
     async def _initialize_cultural_contexts(self):
         """Initialize cultural context data for supported languages"""
+
+
+
         try:
             # Define cultural contexts for major languages
             contexts = [
@@ -590,6 +611,9 @@ class MultiLanguageManager:
     
     async def _load_language_models(self):
         """Load additional language processing models"""
+
+
+
         try:
             # Load spaCy models for supported languages
             supported_spacy_models = {
@@ -623,6 +647,9 @@ class MultiLanguageManager:
         request: TranslationRequest
     ) -> TranslationResult:
         """Apply cultural adaptations to translation"""
+
+
+
         try:
             cultural_context = self.cultural_contexts.get(
                 f"{request.target_language.value}_{request.target_language.value.upper()}"
@@ -667,6 +694,9 @@ class MultiLanguageManager:
         request: TranslationRequest
     ) -> TranslationResult:
         """Post-process translation for quality and formatting"""
+
+
+
         try:
             processed_text = result.translated_text
             
@@ -694,6 +724,9 @@ class MultiLanguageManager:
         target_language: SupportedLanguage
     ) -> str:
         """Fix common translation issues"""
+
+
+
         try:
             # Language-specific fixes
             if target_language == SupportedLanguage.GERMAN:
@@ -746,6 +779,9 @@ class MultiLanguageManager:
         cultural_context: CulturalContext
     ) -> str:
         """Adapt response style to cultural context"""
+
+
+
         try:
             adapted_text = text
             
@@ -782,6 +818,9 @@ class MultiLanguageManager:
         cultural_context: CulturalContext
     ) -> str:
         """Substitute variables with localized formatting"""
+
+
+
         try:
             localized_text = template
             
@@ -811,6 +850,9 @@ class MultiLanguageManager:
         confidence: float
     ):
         """Update user language profile with detection results"""
+
+
+
         try:
             profile = await self.get_language_profile(user_id)
             
@@ -834,6 +876,9 @@ class MultiLanguageManager:
     
     async def _infer_cultural_settings(self, country_code: str) -> Dict[str, str]:
         """Infer cultural settings from country code"""
+
+
+
         try:
             country = pycountry.countries.get(alpha_2=country_code.upper())
             if not country:
@@ -864,6 +909,9 @@ class MultiLanguageManager:
     
     async def _get_cached_translation(self, cache_key: str) -> Optional[TranslationResult]:
         """Get cached translation result"""
+
+
+
         try:
             cached_data = await self.redis_client.get(f"translation_cache:{cache_key}")
             if cached_data:
@@ -887,6 +935,9 @@ class MultiLanguageManager:
     
     async def _cache_translation(self, cache_key: str, result: TranslationResult):
         """Cache translation result"""
+
+
+
         try:
             data = {
                 "original_text": result.original_text,
@@ -912,6 +963,9 @@ class MultiLanguageManager:
     
     async def _cache_language_profile(self, profile: LanguageProfile):
         """Cache user language profile"""
+
+
+
         try:
             data = {
                 "user_id": profile.user_id,
@@ -944,6 +998,9 @@ class MultiLanguageManager:
     
     async def _load_cached_language_profile(self, user_id: str) -> Optional[LanguageProfile]:
         """Load cached language profile"""
+
+
+
         try:
             data = await self.redis_client.get(f"language_profile:{user_id}")
             if data:

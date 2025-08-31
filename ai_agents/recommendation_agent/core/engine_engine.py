@@ -7,7 +7,7 @@ collaboration matching, and revenue optimization for multi-modal creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -80,6 +80,9 @@ class HybridRecommendationEngine(IRecommendationEngine):
         """
         Generate personalized recommendations using hybrid approach
         """
+
+
+
         try:
             # Check cache first
             cache_key = f"rec:{user_id}:{hash(str(context.__dict__))}"
@@ -169,6 +172,9 @@ class HybridRecommendationEngine(IRecommendationEngine):
         count: int
     ) -> List[ContentItem]:
         """Generate recommendations using collaborative filtering"""
+
+
+
         try:
             # Find similar users
             similar_users = await self._find_similar_users(user_profile, limit=100)
@@ -210,6 +216,9 @@ class HybridRecommendationEngine(IRecommendationEngine):
         count: int
     ) -> List[ContentItem]:
         """Generate recommendations using content-based filtering"""
+
+
+
         try:
             # Get user's content preferences
             user_vector = user_profile.to_vector()
@@ -264,6 +273,9 @@ class HybridRecommendationEngine(IRecommendationEngine):
         count: int
     ) -> List[ContentItem]:
         """Generate recommendations based on trending content"""
+
+
+
         try:
             # Get trending content
             trending_data = await self._get_trending_content(
@@ -292,6 +304,9 @@ class HybridRecommendationEngine(IRecommendationEngine):
         count: int
     ) -> List[ContentItem]:
         """Generate recommendations based on social connections"""
+
+
+
         try:
             # Get user's social connections
             following_list = await self._get_user_following(user_profile.user_id)
@@ -330,6 +345,9 @@ class HybridRecommendationEngine(IRecommendationEngine):
         count: int
     ) -> List[ContentItem]:
         """Generate recommendations optimized for revenue"""
+
+
+
         try:
             # Get content with high revenue potential
             high_revenue_content = await self._get_high_revenue_content(
@@ -365,6 +383,9 @@ class HybridRecommendationEngine(IRecommendationEngine):
         count: int
     ) -> List[ContentItem]:
         """Combine results from different algorithms using weighted fusion"""
+
+
+
         try:
             content_scores = {}
             
@@ -452,6 +473,9 @@ class HybridRecommendationEngine(IRecommendationEngine):
         interactions: List[InteractionEvent]
     ) -> bool:
         """Update user model with new interaction data"""
+
+
+
         try:
             return await self.personalization_engine.update_personalization_vector(
                 user_id, interactions
@@ -467,6 +491,9 @@ class HybridRecommendationEngine(IRecommendationEngine):
         similarity_type: str
     ) -> SimilarityScore:
         """Calculate similarity between entities"""
+
+
+
         try:
             if similarity_type == "user-user":
                 return await self._calculate_user_similarity(entity_a_id, entity_b_id)
@@ -494,6 +521,9 @@ class HybridRecommendationEngine(IRecommendationEngine):
         time_range: str = "24h"
     ) -> List['TrendData']:
         """Get trending content based on criteria"""
+
+
+
         return await self._get_trending_content(
             time_range, content_type, geographic_filter
         )
@@ -501,6 +531,9 @@ class HybridRecommendationEngine(IRecommendationEngine):
     # Helper methods
     async def _get_user_profile(self, user_id: str) -> Optional[UserProfile]:
         """Retrieve user profile from storage"""
+
+
+
         try:
             cache_key = f"user_profile:{user_id}"
             cached_profile = self.redis_client.get(cache_key)
@@ -521,6 +554,9 @@ class HybridRecommendationEngine(IRecommendationEngine):
         count: int
     ) -> RecommendationResult:
         """Generate recommendations for new users"""
+
+
+
         try:
             # Get popular content for cold start
             popular_content = await self._get_popular_content(count * 2)
@@ -557,6 +593,9 @@ class HybridRecommendationEngine(IRecommendationEngine):
     
     async def _cache_recommendations(self, cache_key: str, result: RecommendationResult) -> None:
         """Cache recommendation results"""
+
+
+
         try:
             # Serialize result for caching (would need proper serialization)
             self.recommendation_cache[cache_key] = {
@@ -568,6 +607,9 @@ class HybridRecommendationEngine(IRecommendationEngine):
     
     async def _get_cached_recommendations(self, cache_key: str) -> Optional[RecommendationResult]:
         """Retrieve cached recommendations"""
+
+
+
         try:
             cached_data = self.recommendation_cache.get(cache_key)
             if cached_data:

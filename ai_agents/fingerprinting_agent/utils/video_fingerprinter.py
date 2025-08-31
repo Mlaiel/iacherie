@@ -7,7 +7,7 @@ and deep learning for precise video content identification and similarity matchi
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -62,7 +62,7 @@ and deep learning for precise video content identification and similarity matchi
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -203,6 +203,9 @@ class VideoFingerprinter:
     
     async def initialize(self):
         """Initialize all video processing models and components"""
+
+
+
         try:
             start_time = time.time()
             
@@ -350,6 +353,9 @@ class VideoFingerprinter:
     
     async def _extract_video_components(self, video_data: Union[str, bytes]) -> Tuple[List[np.ndarray], Optional[np.ndarray], Dict[str, Any]]:
         """Extract frames, audio, and metadata from video"""
+
+
+
         try:
             if isinstance(video_data, str):
                 # Load from file path
@@ -386,6 +392,9 @@ class VideoFingerprinter:
     
     async def _extract_video_metadata(self, video_path: str) -> Dict[str, Any]:
         """Extract comprehensive video metadata"""
+
+
+
         try:
             # Use OpenCV to get basic properties
             cap = cv2.VideoCapture(video_path)
@@ -433,6 +442,9 @@ class VideoFingerprinter:
     
     async def _extract_frames(self, video_path: str, metadata: Dict[str, Any]) -> List[np.ndarray]:
         """Extract representative frames from video"""
+
+
+
         try:
             cap = cv2.VideoCapture(video_path)
             frames = []
@@ -484,6 +496,9 @@ class VideoFingerprinter:
     
     async def _extract_audio_track(self, video_path: str) -> Optional[np.ndarray]:
         """Extract audio track from video"""
+
+
+
         try:
             # Use ffmpeg to extract audio
             temp_audio_path = f"/tmp/audio_{uuid.uuid4()}.wav"
@@ -511,6 +526,9 @@ class VideoFingerprinter:
     
     def _create_video_hash(self, frames: List[np.ndarray], metadata: Dict[str, Any]) -> str:
         """Create fast hash of video data for quick lookups"""
+
+
+
         try:
             # Create hash from video statistics
             video_stats = [
@@ -547,6 +565,9 @@ class VideoFingerprinter:
     
     async def _extract_frame_hashes(self, frames: List[np.ndarray]) -> List[str]:
         """Extract perceptual hashes for each frame"""
+
+
+
         try:
             frame_hashes = []
             
@@ -569,6 +590,9 @@ class VideoFingerprinter:
     
     async def cleanup(self):
         """Clean up resources"""
+
+
+
         try:
             # Clean up models
             if hasattr(self, 'resnet_model') and self.resnet_model is not None:
@@ -588,6 +612,9 @@ class VideoFingerprinter:
     
     def get_supported_formats(self) -> List[str]:
         """Get list of supported video formats"""
+
+
+
         return [
             '.mp4', '.avi', '.mov', '.wmv', '.flv', '.webm', '.mkv',
             '.m4v', '.3gp', '.ogv', '.ts', '.mts'
@@ -652,6 +679,9 @@ class VideoFingerprinter:
         
     async def initialize(self):
         """Initialize video fingerprinting system"""
+
+
+
         try:
             # Initialize deep learning models
             await self._initialize_deep_models()
@@ -1115,6 +1145,9 @@ class VideoFingerprinter:
     
     async def _initialize_deep_models(self):
         """Initialize deep learning models"""
+
+
+
         try:
             # Load ResNet for visual features
             self.resnet_model = resnet50(pretrained=True)
@@ -1132,6 +1165,9 @@ class VideoFingerprinter:
     
     async def _initialize_cv_components(self):
         """Initialize computer vision components"""
+
+
+
         try:
             # Initialize optical flow
             self.optical_flow = cv2.FarnebackOpticalFlow_create()

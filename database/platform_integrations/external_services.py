@@ -15,7 +15,7 @@ Auteur: Fahed Mlaiel <mlaiel@live.de>
 Email: mlaiel@live.de
 Équipe: Lead AI Developer, Backend Senior, Platform Integration Specialist, DevOps Engineer
 
-⚠️  AVERTISSEMENT LEGAL ⚠️
+  AVERTISSEMENT LEGAL 
 Ce code et concept sont la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution sans autorisation 
 écrite explicite est strictement interdite et fera l'objet de poursuites 
@@ -246,6 +246,9 @@ def get_services_by_type(service_type: ServiceType) -> List[str]:
     Returns:
         Liste des noms de services
     """
+
+
+
     return [
         key for key, config in EXTERNAL_SERVICES_CATALOG.items()
         if config["service_type"] == service_type

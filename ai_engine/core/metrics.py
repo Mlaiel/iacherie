@@ -33,6 +33,9 @@ except ImportError:
 
 def utc_now():
     """Get current UTC datetime in a timezone-aware manner"""
+
+
+
     return datetime.now(timezone.utc)
 
 logger = logging.getLogger(__name__)
@@ -90,6 +93,9 @@ class MetricEntry:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert metric entry to dictionary for serialization"""
+
+
+
         return {
             "name": self.name,
             "value": self.value,
@@ -504,6 +510,9 @@ class MetricsCollector:
         auto_gc: bool = False
     ) -> TimerContext:
         """Create a timer context manager"""
+
+
+
         return TimerContext(
             self,
             name,
@@ -743,6 +752,9 @@ def track_business_metric(
 @contextmanager
 def capture_errors(metric_name: str, tags: Optional[Dict[str, str]] = None):
     """Context manager to capture and track errors"""
+
+
+
     try:
         yield
     except Exception as e:
@@ -811,10 +823,16 @@ def capture_errors(metric_name: str, tags: Optional[Dict[str, str]] = None):
     
     def get_counter(self, name: str) -> int:
         """Get current counter value"""
+
+
+
         return self.counters.get(name, 0)
     
     def get_gauge(self, name: str) -> Optional[float]:
         """Get current gauge value"""
+
+
+
         return self.gauges.get(name)
     
     def get_histogram_stats(self, name: str) -> Optional[Dict[str, float]]:
@@ -836,10 +854,16 @@ def capture_errors(metric_name: str, tags: Optional[Dict[str, str]] = None):
     
     def get_timer_stats(self, name: str) -> Optional[Dict[str, float]]:
         """Get timer statistics"""
+
+
+
         return self.get_histogram_stats(name)  # Same statistics as histogram
     
     def get_all_metrics(self) -> Dict[str, Any]:
         """Get all current metrics"""
+
+
+
         return {
             "counters": dict(self.counters),
             "gauges": dict(self.gauges),
@@ -856,6 +880,9 @@ def capture_errors(metric_name: str, tags: Optional[Dict[str, str]] = None):
     
     def get_metrics_by_type(self, metric_type: MetricType) -> List[MetricEntry]:
         """Get metrics by type"""
+
+
+
         return [m for m in self.metrics if m.metric_type == metric_type]
     
     def clear_metrics(self) -> None:

@@ -6,7 +6,7 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Company: Ultra-Industrial AI Solutions
 
-⚠️ COPYRIGHT PROTECTION - FAHED MLAIEL ⚠️
+ COPYRIGHT PROTECTION - FAHED MLAIEL 
 """
 # Core compliance components
 from .manager import GDPRComplianceManager

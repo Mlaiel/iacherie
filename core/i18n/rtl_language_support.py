@@ -8,7 +8,7 @@ Responsibility: Comprehensive RTL text processing, layout adaptation, and bidire
 Technologies: Python, Unicode BiDi Algorithm, CSS RTL, Layout Processing
 ================================================================================
 
-⚠️  PROPRIETARY SOFTWARE - FAHED MLAIEL ⚠️
+  PROPRIETARY SOFTWARE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use strictly prohibited and subject to legal prosecution.
 Contact: mlaiel@live.de
@@ -265,6 +265,9 @@ class RTLLanguageSupport:
     
     async def detect_text_direction(self, text: str) -> TextDirection:
         """Detect overall text direction"""
+
+
+
         try:
             if not text.strip():
                 return TextDirection.LTR
@@ -312,6 +315,9 @@ class RTLLanguageSupport:
     
     async def analyze_bidi_text(self, text: str) -> BiDiAnalysis:
         """Perform bidirectional text analysis"""
+
+
+
         try:
             # Check cache
             if text in self.bidi_cache:
@@ -464,6 +470,9 @@ class RTLLanguageSupport:
         custom_requirements: Dict[str, Any] = None
     ) -> RTLAdaptation:
         """Create RTL adaptation instructions"""
+
+
+
         try:
             # Get language processor
             processor = self.rtl_languages.get(language_code)
@@ -603,6 +612,9 @@ class RTLLanguageSupport:
         base_direction: TextDirection = TextDirection.AUTO
     ) -> Dict[str, Any]:
         """Process text with mixed LTR/RTL content"""
+
+
+
         try:
             # Analyze the text
             analysis = await self.analyze_bidi_text(text)
@@ -699,6 +711,9 @@ class RTLLanguageSupport:
         components: List[LayoutComponent] = None
     ) -> Dict[str, Any]:
         """Adapt UI layout for RTL language"""
+
+
+
         try:
             # Check if language requires RTL
             if target_language not in self.rtl_languages:
@@ -738,6 +753,9 @@ class RTLLanguageSupport:
     
     async def get_rtl_metrics(self) -> Dict[str, Any]:
         """Get RTL processing metrics"""
+
+
+
         return {
             "supported_languages": list(self.rtl_languages.keys()),
             "cache_size": len(self.bidi_cache),
@@ -749,6 +767,9 @@ class RTLLanguageSupport:
     
     async def validate_rtl_text(self, text: str, language_code: str) -> Dict[str, Any]:
         """Validate RTL text for correctness"""
+
+
+
         try:
             analysis = await self.analyze_bidi_text(text)
             
@@ -788,6 +809,9 @@ class RTLLanguageSupport:
     
     async def health_check(self) -> bool:
         """Health check for RTL language support"""
+
+
+
         try:
             # Check if RTL languages are loaded
             if not self.rtl_languages:

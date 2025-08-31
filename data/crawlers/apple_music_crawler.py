@@ -12,7 +12,7 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 
-⚠️  CRITICAL WARNING ⚠️
+  CRITICAL WARNING 
 This code is PROPRIETARY and CONFIDENTIAL intellectual property.
 Any unauthorized use, reproduction, distribution, or reverse engineering 
 is STRICTLY PROHIBITED and will result in immediate legal action.
@@ -236,6 +236,9 @@ class AppleMusicCrawler(PlatformCrawler):
         Returns:
             List of crawler results
         """
+
+
+
         try:
             await self._check_rate_limit()
             
@@ -255,6 +258,9 @@ class AppleMusicCrawler(PlatformCrawler):
     
     async def _crawl_tracks(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Apple Music tracks"""
+
+
+
         try:
             results = []
             
@@ -311,6 +317,9 @@ class AppleMusicCrawler(PlatformCrawler):
     
     async def _crawl_albums(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Apple Music albums"""
+
+
+
         try:
             results = []
             
@@ -367,6 +376,9 @@ class AppleMusicCrawler(PlatformCrawler):
     
     async def _crawl_artists(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Apple Music artists"""
+
+
+
         try:
             results = []
             
@@ -415,6 +427,9 @@ class AppleMusicCrawler(PlatformCrawler):
     
     async def _crawl_playlists(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Apple Music playlists"""
+
+
+
         try:
             results = []
             
@@ -461,6 +476,9 @@ class AppleMusicCrawler(PlatformCrawler):
     
     async def _crawl_stations(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Apple Music radio stations"""
+
+
+
         try:
             results = []
             
@@ -499,6 +517,9 @@ class AppleMusicCrawler(PlatformCrawler):
     
     async def _crawl_charts(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Apple Music charts"""
+
+
+
         try:
             results = []
             
@@ -537,6 +558,9 @@ class AppleMusicCrawler(PlatformCrawler):
     
     async def _crawl_search(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """General Apple Music search"""
+
+
+
         try:
             results = []
             
@@ -557,6 +581,9 @@ class AppleMusicCrawler(PlatformCrawler):
     
     async def _crawl_genres(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
         """Crawl Apple Music by genres"""
+
+
+
         try:
             results = []
             
@@ -715,6 +742,9 @@ class AppleMusicCrawler(PlatformCrawler):
     
     async def _get_genres(self) -> List[Dict[str, Any]]:
         """Get available genres"""
+
+
+
         return [
             {'id': 'pop', 'name': 'Pop'},
             {'id': 'rock', 'name': 'Rock'},
@@ -745,6 +775,9 @@ class AppleMusicCrawler(PlatformCrawler):
     
     async def _parse_track_data(self, track_data: Dict[str, Any]) -> Optional[AppleMusicTrack]:
         """Parse track data"""
+
+
+
         try:
             release_date = datetime.fromisoformat(track_data.get('releaseDate', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
@@ -789,6 +822,9 @@ class AppleMusicCrawler(PlatformCrawler):
     
     async def _parse_album_data(self, album_data: Dict[str, Any]) -> Optional[AppleMusicAlbum]:
         """Parse album data"""
+
+
+
         try:
             release_date = datetime.fromisoformat(album_data.get('releaseDate', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
@@ -825,6 +861,9 @@ class AppleMusicCrawler(PlatformCrawler):
     
     async def _parse_artist_data(self, artist_data: Dict[str, Any]) -> Optional[AppleMusicArtist]:
         """Parse artist data"""
+
+
+
         try:
             artist = AppleMusicArtist(
                 artist_id=artist_data.get('id', ''),
@@ -852,6 +891,9 @@ class AppleMusicCrawler(PlatformCrawler):
     
     async def _parse_playlist_data(self, playlist_data: Dict[str, Any]) -> Optional[AppleMusicPlaylist]:
         """Parse playlist data"""
+
+
+
         try:
             last_modified = datetime.fromisoformat(playlist_data.get('lastModifiedDate', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
@@ -879,6 +921,9 @@ class AppleMusicCrawler(PlatformCrawler):
     
     async def _parse_station_data(self, station_data: Dict[str, Any]) -> Optional[AppleMusicStation]:
         """Parse station data"""
+
+
+
         try:
             station = AppleMusicStation(
                 station_id=station_data.get('id', ''),
@@ -901,6 +946,9 @@ class AppleMusicCrawler(PlatformCrawler):
     
     async def _check_rate_limit(self):
         """Check and enforce rate limiting"""
+
+
+
         try:
             current_time = time.time()
             time_since_last = current_time - self.last_request_time
@@ -918,6 +966,9 @@ class AppleMusicCrawler(PlatformCrawler):
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
         """Extract metadata from Apple Music content"""
+
+
+
         try:
             # Parse Apple Music URL
             parsed_url = urlparse(url)
@@ -953,6 +1004,9 @@ class AppleMusicCrawler(PlatformCrawler):
     
     def get_platform_info(self) -> Dict[str, Any]:
         """Get Apple Music platform information"""
+
+
+
         return {
             'platform_name': 'Apple Music',
             'base_url': self.base_url,

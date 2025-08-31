@@ -164,26 +164,41 @@ class PlatformBase(ABC):
     @property
     def platform_id(self) -> str:
         """Get platform identifier"""
+
+
+
         return self.config.platform_id
     
     @property
     def platform_name(self) -> str:
         """Get platform name"""
+
+
+
         return self.config.platform_name
     
     @property
     def platform_type(self) -> PlatformType:
         """Get platform type"""
+
+
+
         return self.config.platform_type
     
     @property
     def is_authenticated(self) -> bool:
         """Check if platform is authenticated"""
+
+
+
         return self.config.credentials.access_token is not None
     
     @property
     def is_active(self) -> bool:
         """Check if platform is active"""
+
+
+
         return self.status == PlatformStatus.ACTIVE
     
     @abstractmethod
@@ -228,6 +243,9 @@ class PlatformBase(ABC):
     
     async def test_connection(self) -> bool:
         """Test platform connection"""
+
+
+
         try:
             if not self.is_authenticated:
                 return await self.authenticate()
@@ -283,10 +301,16 @@ class PlatformManager:
     
     def get_platform(self, platform_id: str) -> Optional[PlatformBase]:
         """Get platform by ID"""
+
+
+
         return self.platforms.get(platform_id)
     
     def get_platforms_by_type(self, platform_type: PlatformType) -> List[PlatformBase]:
         """Get platforms by type"""
+
+
+
         return [
             platform for platform in self.platforms.values()
             if platform.platform_type == platform_type
@@ -294,6 +318,9 @@ class PlatformManager:
     
     def get_active_platforms(self) -> List[PlatformBase]:
         """Get active platforms"""
+
+
+
         return [
             platform for platform in self.platforms.values()
             if platform.is_active

@@ -2,7 +2,7 @@
 Universal Web Crawler - Crawler Web Générique
 =============================================
 
-⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
+ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
 © 2024 IA Influencer Agent Development Team. All rights reserved.
 This software is proprietary and confidential. Unauthorized reproduction,
@@ -211,6 +211,9 @@ class UniversalWebCrawler:
     
     async def initialize(self) -> None:
         """Initialize the universal web crawler."""
+
+
+
         try:
             self._logger.info("Initializing universal web crawler...")
             
@@ -232,6 +235,9 @@ class UniversalWebCrawler:
     
     async def _initialize_session(self) -> None:
         """Initialize HTTP session."""
+
+
+
         try:
             # This would initialize aiohttp session with proper configuration
             # For now, implement placeholder
@@ -244,6 +250,9 @@ class UniversalWebCrawler:
     
     async def _initialize_browser(self) -> None:
         """Initialize browser for JavaScript rendering."""
+
+
+
         try:
             # This would initialize Selenium or Playwright browser
             # For now, implement placeholder
@@ -256,6 +265,9 @@ class UniversalWebCrawler:
     
     async def _setup_violation_detection(self) -> None:
         """Setup violation detection systems."""
+
+
+
         try:
             # This would setup actual ML models for violation detection
             # For now, implement placeholder
@@ -267,6 +279,9 @@ class UniversalWebCrawler:
     
     async def start_crawling(self) -> None:
         """Start universal web crawling operations."""
+
+
+
         try:
             if self._crawling_active:
                 self._logger.warning("Universal web crawling is already active")
@@ -288,6 +303,9 @@ class UniversalWebCrawler:
     
     async def stop_crawling(self) -> None:
         """Stop universal web crawling operations."""
+
+
+
         try:
             if not self._crawling_active:
                 self._logger.warning("Universal web crawling is not active")
@@ -313,6 +331,9 @@ class UniversalWebCrawler:
         job_config: Optional[Dict[str, Any]] = None
     ) -> str:
         """Create a new crawl job."""
+
+
+
         try:
             job_id = f"job_{datetime.now().timestamp()}_{hash(str(start_urls)) % 10000}"
             
@@ -355,6 +376,9 @@ class UniversalWebCrawler:
     
     async def start_crawl_job(self, job_id: str) -> bool:
         """Start a specific crawl job."""
+
+
+
         try:
             if job_id not in self.crawl_jobs:
                 self._logger.error(f"Crawl job not found: {job_id}")
@@ -385,6 +409,9 @@ class UniversalWebCrawler:
     
     async def stop_crawl_job(self, job_id: str) -> bool:
         """Stop a specific crawl job."""
+
+
+
         try:
             if job_id not in self.active_jobs:
                 self._logger.warning(f"Crawl job not active: {job_id}")
@@ -415,6 +442,9 @@ class UniversalWebCrawler:
         job_config: Optional[Dict[str, Any]] = None
     ) -> Optional[WebPage]:
         """Crawl a single URL."""
+
+
+
         try:
             self._logger.debug(f"Crawling single URL: {url}")
             
@@ -468,6 +498,9 @@ class UniversalWebCrawler:
     
     async def _execute_crawl_job(self, job_id: str) -> None:
         """Execute a crawl job."""
+
+
+
         try:
             job = self.crawl_jobs[job_id]
             result = self.crawl_results[job_id]
@@ -559,6 +592,9 @@ class UniversalWebCrawler:
     
     async def _crawl_url(self, job_id: str, url: str, depth: int) -> None:
         """Crawl a single URL."""
+
+
+
         try:
             job = self.crawl_jobs[job_id]
             result = self.crawl_results[job_id]
@@ -616,6 +652,9 @@ class UniversalWebCrawler:
     
     async def _fetch_page_content(self, url: str, job: CrawlJob) -> Optional[Dict[str, Any]]:
         """Fetch page content."""
+
+
+
         try:
             # Simulate HTTP request
             await asyncio.sleep(0.2)
@@ -659,6 +698,9 @@ class UniversalWebCrawler:
     
     def _is_url_allowed(self, url: str, job: CrawlJob) -> bool:
         """Check if URL is allowed to be crawled."""
+
+
+
         try:
             parsed_url = urlparse(url)
             domain = parsed_url.netloc
@@ -747,6 +789,9 @@ class UniversalWebCrawler:
     
     def get_crawler_status(self) -> Dict[str, Any]:
         """Get current crawler status."""
+
+
+
         return {
             'crawling_active': self._crawling_active,
             'active_jobs': len(self.active_jobs),
@@ -844,6 +889,9 @@ class UniversalWebCrawler:
     
     async def shutdown(self) -> None:
         """Shutdown the universal web crawler."""
+
+
+
         try:
             self._logger.info("Shutting down universal web crawler...")
             

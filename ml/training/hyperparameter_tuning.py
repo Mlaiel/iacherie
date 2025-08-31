@@ -1,15 +1,15 @@
 """
-🚀 Hyperparameter Tuning - IA Influencer Agent Platform Enterprise
+ Hyperparameter Tuning - IA Influencer Agent Platform Enterprise
 ================================================================
 Module: backend/ml/training/hyperparameter_tuning.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 ================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 HYPERPARAMETER TUNING AVANCÉ
+ HYPERPARAMETER TUNING AVANCÉ
 Optimisation automatique des hyperparamètres
 - Bayesian Optimization avec Optuna
 - Multi-objective optimization
@@ -226,6 +226,9 @@ class HyperparameterTuner:
                           y: np.ndarray,
                           scoring: str) -> float:
         """Fonction objective pour l'optimisation"""
+
+
+
         
         try:
             # Suggérer les hyperparamètres
@@ -303,6 +306,9 @@ class HyperparameterTuner:
     
     def get_study(self, study_name: str) -> Optional[optuna.Study]:
         """Récupère une étude par nom"""
+
+
+
         return self.studies.get(study_name)
     
     def plot_optimization_history(self, study_name: str) -> Any:
@@ -425,6 +431,9 @@ class HyperparameterTuner:
                                 y: np.ndarray,
                                 objectives: List[str]) -> List[float]:
         """Fonction objective multi-objectifs"""
+
+
+
         
         try:
             # Suggérer les hyperparamètres
@@ -489,6 +498,9 @@ class CommonParameterSpaces:
     @staticmethod
     def random_forest_space() -> List[HyperparameterSpace]:
         """Espace de paramètres pour Random Forest"""
+
+
+
         return [
             HyperparameterSpace("n_estimators", "int", low=50, high=500),
             HyperparameterSpace("max_depth", "int", low=3, high=20),
@@ -501,6 +513,9 @@ class CommonParameterSpaces:
     @staticmethod
     def gradient_boosting_space() -> List[HyperparameterSpace]:
         """Espace de paramètres pour Gradient Boosting"""
+
+
+
         return [
             HyperparameterSpace("n_estimators", "int", low=50, high=300),
             HyperparameterSpace("learning_rate", "float", low=0.01, high=0.3),
@@ -512,6 +527,9 @@ class CommonParameterSpaces:
     @staticmethod
     def svm_space() -> List[HyperparameterSpace]:
         """Espace de paramètres pour SVM"""
+
+
+
         return [
             HyperparameterSpace("C", "loguniform", low=0.1, high=100),
             HyperparameterSpace("kernel", "categorical", 

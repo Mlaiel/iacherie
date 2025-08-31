@@ -8,13 +8,13 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Data Analytics Expert, Performance Optimization Specialist, BI Engineer
 Copyright: Fahed Mlaiel - All rights reserved
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
 
-🎯 LOGIQUE MÉTIER PERFORMANCE :
+ LOGIQUE MÉTIER PERFORMANCE :
 Upload → IA Processing → Protection → Distribution → Performance Tracking → Revenue Optimization
 """
 
@@ -334,6 +334,9 @@ class PerformanceAnalyzer:
                                         start_date: datetime = None,
                                         end_date: datetime = None) -> Dict[str, Any]:
         """Perform comprehensive performance analysis"""
+
+
+
         try:
             if not start_date:
                 start_date = datetime.utcnow() - timedelta(days=self.trend_window_days)
@@ -681,6 +684,9 @@ class PerformanceReportGenerator:
     async def generate_comprehensive_report(self, content_id: str,
                                           report_type: str = 'monthly') -> Dict[str, Any]:
         """Generate comprehensive performance report"""
+
+
+
         try:
             # Determine time period based on report type
             if report_type == 'daily':
@@ -749,6 +755,9 @@ class PerformanceReportGenerator:
     
     def _generate_visualization_config(self, analysis: Dict[str, Any]) -> Dict[str, Any]:
         """Generate configuration for data visualizations"""
+
+
+
         return {
             'charts': [
                 {

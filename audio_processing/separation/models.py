@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel - Unauthorized use strictly prohibited
 License: Proprietary - Contact for licensing
 
-⚠️ WARNING: This code is the intellectual property of Fahed Mlaiel.
+ WARNING: This code is the intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or modification is strictly
 prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -98,6 +98,9 @@ class VocalSeparator(BaseSeparator):
         
     async def load_model(self) -> None:
         """Load vocal separation model."""
+
+
+
         try:
             logger.info(f"Loading vocal separation model: {self.model_name}")
             
@@ -221,6 +224,9 @@ class InstrumentSeparator(BaseSeparator):
         
     async def load_model(self) -> None:
         """Load instrument separation model."""
+
+
+
         try:
             logger.info("Loading instrument separation model")
             
@@ -385,6 +391,9 @@ class DrumSeparator(BaseSeparator):
         
     async def load_model(self) -> None:
         """Load drum separation model."""
+
+
+
         try:
             logger.info("Loading drum separation model")
             
@@ -541,6 +550,9 @@ class DrumSeparator(BaseSeparator):
     
     def _calculate_rhythm_consistency(self, audio: np.ndarray, expected_tempo: float) -> float:
         """Calculate rhythm consistency score."""
+
+
+
         try:
             detected_tempo, _ = librosa.beat.beat_track(y=audio, sr=self.sample_rate)
             
@@ -554,6 +566,9 @@ class DrumSeparator(BaseSeparator):
     
     def _calculate_percussive_clarity(self, audio: np.ndarray) -> float:
         """Calculate percussive clarity score."""
+
+
+
         try:
             # Separate harmonic and percussive components
             _, percussive = librosa.effects.hpss(audio)
@@ -581,6 +596,9 @@ class BassSeparator(BaseSeparator):
         
     async def load_model(self) -> None:
         """Load bass separation model."""
+
+
+
         try:
             logger.info("Loading bass separation model")
             
@@ -764,6 +782,9 @@ class BassSeparator(BaseSeparator):
     
     def _calculate_frequency_fidelity(self, audio: np.ndarray, component: str) -> float:
         """Calculate frequency domain fidelity."""
+
+
+
         try:
             # Compute power spectral density
             freqs, psd = librosa.core.spectrum._spectrogram(
@@ -794,6 +815,9 @@ class BassSeparator(BaseSeparator):
     
     def _calculate_temporal_consistency(self, audio: np.ndarray, reference: np.ndarray) -> float:
         """Calculate temporal consistency."""
+
+
+
         try:
             # Align lengths
             min_len = min(len(audio), len(reference))

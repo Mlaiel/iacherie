@@ -113,6 +113,9 @@ class S3ObjectStorageProvider(BaseStorageProvider):
     
     async def connect(self) -> None:
         """Establish S3 connection."""
+
+
+
         try:
             # Create async boto3 session
             self.session = aioboto3.Session(
@@ -151,6 +154,9 @@ class S3ObjectStorageProvider(BaseStorageProvider):
     
     async def disconnect(self) -> None:
         """Close S3 connection."""
+
+
+
         try:
             if self.s3_client:
                 await self.s3_client.__aexit__(None, None, None)
@@ -167,6 +173,9 @@ class S3ObjectStorageProvider(BaseStorageProvider):
     
     async def health_check(self) -> bool:
         """Check S3 storage health."""
+
+
+
         try:
             if not self.is_connected or not self.s3_client:
                 return False
@@ -181,6 +190,9 @@ class S3ObjectStorageProvider(BaseStorageProvider):
     
     async def _create_bucket(self) -> None:
         """Create S3 bucket if it doesn't exist."""
+
+
+
         try:
             if self.region_name == 'us-east-1':
                 # us-east-1 doesn't require LocationConstraint
@@ -201,6 +213,9 @@ class S3ObjectStorageProvider(BaseStorageProvider):
     
     async def _configure_bucket(self) -> None:
         """Configure S3 bucket settings."""
+
+
+
         try:
             # Enable versioning if requested
             if self.enable_versioning:
@@ -600,6 +615,9 @@ class S3ObjectStorageProvider(BaseStorageProvider):
     
     async def delete_record(self, record_id: str) -> bool:
         """Delete a record from S3."""
+
+
+
         try:
             object_key = self._get_object_key(record_id)
             metadata_key = self._get_metadata_key(record_id)
@@ -688,6 +706,9 @@ class S3ObjectStorageProvider(BaseStorageProvider):
     
     async def exists(self, record_id: str) -> bool:
         """Check if record exists in S3."""
+
+
+
         try:
             object_key = self._get_object_key(record_id)
             
@@ -709,6 +730,9 @@ class S3ObjectStorageProvider(BaseStorageProvider):
         options: QueryOptions
     ) -> AsyncIterator[Tuple[str, Any, Optional[StorageMetadata]]]:
         """Query records using S3 list operations."""
+
+
+
         try:
             # List objects with prefix
             paginator = self.s3_client.get_paginator('list_objects_v2')
@@ -779,6 +803,9 @@ class S3ObjectStorageProvider(BaseStorageProvider):
         filters: Optional[List[QueryFilter]] = None
     ) -> int:
         """Count records in S3."""
+
+
+
         try:
             count = 0
             
@@ -811,10 +838,16 @@ class S3ObjectStorageProvider(BaseStorageProvider):
         metadata: Optional[StorageMetadata] = None
     ) -> bool:
         """Update an existing record (same as store for object storage)."""
+
+
+
         return await self.store_record(record_id, data, metadata)
     
     async def get_statistics(self) -> StorageStats:
         """Get S3 storage statistics."""
+
+
+
         try:
             total_records = 0
             total_size = 0
@@ -965,6 +998,9 @@ class S3ContentStorageProvider(ContentStorageProvider, S3ObjectStorageProvider):
         media_files: Optional[List[Dict[str, Any]]] = None
     ) -> bool:
         """Store content with associated media files."""
+
+
+
         try:
             # Store main content data
             content_metadata = StorageMetadata(
@@ -1027,6 +1063,9 @@ class S3ContentStorageProvider(ContentStorageProvider, S3ObjectStorageProvider):
         include_media: bool = True
     ) -> Optional[Dict[str, Any]]:
         """Retrieve content with optional media files."""
+
+
+
         try:
             # Get main content
             result = await self.retrieve_record(content_id, include_metadata=True)

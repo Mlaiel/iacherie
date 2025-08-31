@@ -1,5 +1,5 @@
 """
-🔐 Enterprise Authentication Manager
+ Enterprise Authentication Manager
 ===================================
 
 Advanced authentication management system for multi-platform API access
@@ -21,7 +21,7 @@ Features:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
+ STRICT WARNING: Unauthorized use, copying, or distribution of this code 
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
 """
@@ -120,6 +120,9 @@ class SecureCredentialStore:
     
     async def store_credentials(self, platform: str, credentials: Dict[str, Any]):
         """Store encrypted credentials for platform."""
+
+
+
         try:
             # Encrypt credentials
             credentials_json = json.dumps(credentials)
@@ -139,6 +142,9 @@ class SecureCredentialStore:
     
     async def load_credentials(self, platform: str) -> Optional[Dict[str, Any]]:
         """Load and decrypt credentials for platform."""
+
+
+
         try:
             file_path = self.storage_path / f"{platform}_credentials.enc"
             if not file_path.exists():
@@ -161,6 +167,9 @@ class SecureCredentialStore:
     
     async def delete_credentials(self, platform: str) -> bool:
         """Delete stored credentials for platform."""
+
+
+
         try:
             file_path = self.storage_path / f"{platform}_credentials.enc"
             if file_path.exists():
@@ -175,6 +184,9 @@ class SecureCredentialStore:
     
     async def list_stored_platforms(self) -> List[str]:
         """List platforms with stored credentials."""
+
+
+
         try:
             platforms = []
             for file_path in self.storage_path.glob("*_credentials.enc"):
@@ -237,6 +249,9 @@ class YouTubeAuthenticator(PlatformAuthenticator):
     
     async def validate_token(self, access_token: str) -> bool:
         """Validate YouTube API key or token."""
+
+
+
         try:
             url = "https://www.googleapis.com/youtube/v3/channels"
             headers = {"Authorization": f"Bearer {access_token}"}
@@ -279,6 +294,9 @@ class InstagramAuthenticator(PlatformAuthenticator):
     
     async def validate_token(self, access_token: str) -> bool:
         """Validate Instagram access token."""
+
+
+
         try:
             url = "https://graph.instagram.com/me"
             params = {"fields": "id,username", "access_token": access_token}
@@ -292,6 +310,9 @@ class InstagramAuthenticator(PlatformAuthenticator):
     
     async def _get_token_info(self, access_token: str) -> Dict[str, Any]:
         """Get token information."""
+
+
+
         try:
             url = "https://graph.instagram.com/access_token"
             params = {"grant_type": "ig_exchange_token", "access_token": access_token}
@@ -330,6 +351,9 @@ class TwitterAuthenticator(PlatformAuthenticator):
     
     async def validate_token(self, access_token: str) -> bool:
         """Validate Twitter bearer token."""
+
+
+
         try:
             url = "https://api.twitter.com/2/users/me"
             headers = {"Authorization": f"Bearer {access_token}"}
@@ -366,6 +390,9 @@ class TikTokAuthenticator(PlatformAuthenticator):
     
     async def validate_token(self, access_token: str) -> bool:
         """Validate TikTok access token."""
+
+
+
         try:
             url = "https://open-api.tiktok.com/oauth/userinfo/"
             headers = {"Authorization": f"Bearer {access_token}"}
@@ -405,6 +432,9 @@ class EnterpriseAuthenticationManager:
     
     def _initialize_platform_configs(self) -> Dict[str, AuthenticationConfig]:
         """Initialize platform authentication configurations."""
+
+
+
         return {
             "youtube": AuthenticationConfig(
                 platform="youtube",
@@ -602,6 +632,9 @@ class EnterpriseAuthenticationManager:
     
     async def revoke_platform_access(self, platform: str) -> bool:
         """Revoke access for platform."""
+
+
+
         try:
             # Revoke token if authenticator supports it
             if platform in self.authenticators and platform in self.auth_cache:

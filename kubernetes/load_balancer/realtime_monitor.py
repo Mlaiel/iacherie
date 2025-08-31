@@ -8,7 +8,7 @@ with ML-powered performance prediction and anomaly detection.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ WARNING: This code is proprietary and confidential.
+ WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
@@ -85,6 +85,9 @@ class MonitoringMetric:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert metric to dictionary"""
+
+
+
         return {
             'service_name': self.service_name,
             'metric_type': self.metric_type.value,
@@ -113,10 +116,16 @@ class Alert:
     
     def is_resolved(self) -> bool:
         """Check if alert is resolved"""
+
+
+
         return self.resolved_at is not None
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert alert to dictionary"""
+
+
+
         return {
             'id': self.id,
             'service_name': self.service_name,
@@ -324,6 +333,9 @@ class RealtimeMonitor:
     
     async def initialize(self) -> bool:
         """Initialize monitoring system"""
+
+
+
         try:
             # Load configuration
             await self._load_configuration()
@@ -346,6 +358,9 @@ class RealtimeMonitor:
     
     async def _load_configuration(self) -> None:
         """Load monitoring configuration"""
+
+
+
         try:
             config_file = Path(self.config_path)
             if config_file.exists():
@@ -363,6 +378,9 @@ class RealtimeMonitor:
     
     def _get_default_configuration(self) -> Dict[str, Any]:
         """Get default monitoring configuration"""
+
+
+
         return {
             'monitoring': {
                 'interval_seconds': 10,
@@ -396,6 +414,9 @@ class RealtimeMonitor:
     
     async def _initialize_redis(self) -> None:
         """Initialize Redis connection for distributed monitoring"""
+
+
+
         try:
             self.redis_client = redis.Redis(
                 host='localhost',
@@ -453,6 +474,9 @@ class RealtimeMonitor:
     
     async def _initialize_websocket_server(self) -> None:
         """Initialize WebSocket server for real-time dashboard feeds"""
+
+
+
         try:
             websocket_port = self.config.get('monitoring', {}).get('websocket_port', 9001)
             
@@ -529,6 +553,9 @@ class RealtimeMonitor:
     
     async def _collect_system_metrics(self, timestamp: datetime) -> None:
         """Collect system-level metrics"""
+
+
+
         try:
             # CPU usage
             cpu_percent = psutil.cpu_percent(interval=1)
@@ -566,6 +593,9 @@ class RealtimeMonitor:
     
     async def _collect_load_balancer_metrics(self, timestamp: datetime) -> None:
         """Collect load balancer specific metrics"""
+
+
+
         try:
             # Connection count (simulated)
             active_connections = len(self.websocket_clients)
@@ -594,6 +624,9 @@ class RealtimeMonitor:
     
     async def _collect_service_health_metrics(self, service_name: str, timestamp: datetime) -> None:
         """Collect health metrics for a specific service"""
+
+
+
         try:
             # This would typically make HTTP requests to service health endpoints
             # For demo purposes, we'll generate realistic metrics
@@ -734,6 +767,9 @@ class RealtimeMonitor:
     
     async def _process_metrics(self) -> None:
         """Process collected metrics for analysis"""
+
+
+
         try:
             # Calculate performance score
             current_score = self._calculate_performance_score()
@@ -861,6 +897,9 @@ class RealtimeMonitor:
     
     def get_active_alerts(self) -> List[Alert]:
         """Get all active alerts"""
+
+
+
         return list(self.active_alerts.values())
     
     def resolve_alert(self, alert_id: str) -> bool:
@@ -874,6 +913,9 @@ class RealtimeMonitor:
     
     def get_performance_summary(self) -> Dict[str, Any]:
         """Get performance summary and statistics"""
+
+
+
         return {
             'current_score': self.last_performance_score,
             'average_score_1h': statistics.mean(list(self.performance_history)[-360:]) if self.performance_history else 0,
@@ -888,6 +930,9 @@ class RealtimeMonitor:
     
     def get_predictions(self, service_name: str, metric_type: MonitoringMetricType) -> Dict[str, float]:
         """Get performance predictions for service"""
+
+
+
         return self.performance_predictor.get_predictions(service_name, metric_type)
     
     async def stop_monitoring(self) -> None:
@@ -905,6 +950,9 @@ class RealtimeMonitor:
     
     async def get_status(self) -> Dict[str, Any]:
         """Get comprehensive status of monitoring system"""
+
+
+
         return {
             'is_monitoring': self.is_monitoring,
             'config_loaded': bool(self.config),
@@ -930,7 +978,7 @@ async def main():
         
         # Add alert callback for demo
         def alert_handler(alert: Alert):
-            print(f"🚨 ALERT: {alert.severity.value.upper()} - {alert.message}")
+            print(f" ALERT: {alert.severity.value.upper()} - {alert.message}")
         
         monitor.add_alert_callback(alert_handler)
         

@@ -33,18 +33,27 @@ FIXTURES_DIR.mkdir(exist_ok=True)
 @pytest.fixture(scope="session")
 def test_config():
     """Global test configuration fixture"""
+
+
+
     return TEST_CONFIG.copy()
 
 
 @pytest.fixture(scope="session") 
 def test_data_config():
     """Test data configuration fixture"""
+
+
+
     return TEST_DATA_CONFIG.copy()
 
 
 @pytest.fixture(scope="session")
 def mock_creators():
     """Mock creator data fixture"""
+
+
+
     return MOCK_CREATORS.copy()
 
 
@@ -131,6 +140,9 @@ def mock_text_file(temp_dir):
 @pytest.fixture
 def sample_content_data():
     """Sample content data for testing"""
+
+
+
     return {
         "audio": {
             "type": "audio",
@@ -193,6 +205,9 @@ def mock_ai_model():
 @pytest.fixture
 def mock_performance_data():
     """Mock performance data fixture"""
+
+
+
     return {
         "cpu_percent": 45.5,
         "memory_percent": 65.2,
@@ -301,6 +316,9 @@ async def async_test_client():
 @pytest.fixture(scope="session")
 def performance_benchmarks():
     """Performance benchmark thresholds"""
+
+
+
     return {
         "validation_max_time": 0.1,  # 100ms
         "ai_inference_max_time": 1.0,  # 1 second

@@ -4,7 +4,7 @@ Professional prompts management for multi-format content creators
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 
-⚠️ COPYRIGHT WARNING ⚠️
+ COPYRIGHT WARNING 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
@@ -84,7 +84,10 @@ PROMPTS_REGISTRY = {
 PROMPTS_REGISTRY = {k: v for k, v in PROMPTS_REGISTRY.items() if v is not None}
 
 def get_prompts_info() -> Dict[str, Any]:
-    """Get comprehensive information about the prompts system"""    return {
+    """Get comprehensive information about the prompts system"""
+
+
+    return {
         "version": __version__,
         "author": __author__,
         "team": __team__,
@@ -131,7 +134,10 @@ class PromptSystemManager:
         self.logger = logging.getLogger(__name__)
     
     def get_system(self, system_name: str) -> Any:
-        """Get a specific prompt system"""        return self.systems.get(system_name)
+        """Get a specific prompt system"""
+
+
+        return self.systems.get(system_name)
     
     def generate_content_creator_prompt(self, creator_type: str, content_format: str, 
                                       category: str, **kwargs) -> Dict[str, Any]:
@@ -456,16 +462,28 @@ QUALITY_CRITERIA = {
 }
 
 def get_prompt_categories() -> dict:
-    """Get available prompt categories"""    return PROMPT_CATEGORIES.copy()
+    """Get available prompt categories"""
+
+
+    return PROMPT_CATEGORIES.copy()
 
 def get_content_formats() -> dict:
-    """Get content format specifications"""    return CONTENT_FORMATS.copy()
+    """Get content format specifications"""
+
+
+    return CONTENT_FORMATS.copy()
 
 def get_tone_styles() -> dict:
-    """Get available tone and style options"""    return TONE_STYLES.copy()
+    """Get available tone and style options"""
+
+
+    return TONE_STYLES.copy()
 
 def get_platform_optimizations() -> dict:
-    """Get platform-specific optimization settings"""    return PLATFORM_OPTIMIZATIONS.copy()
+    """Get platform-specific optimization settings"""
+
+
+    return PLATFORM_OPTIMIZATIONS.copy()
 
 def create_prompt_template(
     category: str,

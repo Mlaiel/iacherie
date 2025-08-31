@@ -12,7 +12,7 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 
-⚠️ STRICT COPYRIGHT PROTECTION ⚠️
+ STRICT COPYRIGHT PROTECTION 
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 
@@ -353,6 +353,9 @@ def _override_with_env_vars(config: ExtractionConfig) -> ExtractionConfig:
 
 def load_config_from_file(config_path: str) -> ExtractionConfig:
     """Load configuration from JSON file"""
+
+
+
     try:
         with open(config_path, 'r') as f:
             config_data = json.load(f)
@@ -366,6 +369,9 @@ def load_config_from_file(config_path: str) -> ExtractionConfig:
 
 def save_config_to_file(config: ExtractionConfig, config_path: str):
     """Save configuration to JSON file"""
+
+
+
     try:
         config_dict = {
             field.name: getattr(config, field.name)

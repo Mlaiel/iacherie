@@ -87,6 +87,9 @@ class FingerprintManager:
         Returns:
             Detected content type
         """
+
+
+
         try:
             file_path = Path(file_path)
             extension = file_path.suffix.lower()
@@ -191,6 +194,9 @@ class FingerprintManager:
         methods: Optional[List[str]]
     ) -> Dict:
         """Route fingerprinting request to appropriate engine"""
+
+
+
         try:
             if content_type == ContentType.AUDIO:
                 return await self.audio_engine.extract_fingerprint(file_path, methods)
@@ -220,6 +226,9 @@ class FingerprintManager:
         Returns:
             List of fingerprint results
         """
+
+
+
         try:
             # Group files by content type
             files_by_type = {
@@ -267,6 +276,9 @@ class FingerprintManager:
         methods: Optional[List[str]]
     ) -> List[FingerprintResult]:
         """Process batch of files of same content type"""
+
+
+
         try:
             tasks = []
             for file_path in file_paths:
@@ -313,6 +325,9 @@ class FingerprintManager:
         Returns:
             Dictionary with similarity scores
         """
+
+
+
         try:
             if not fingerprint1.success or not fingerprint2.success:
                 return {'overall': 0.0, 'error': 'One or both fingerprints failed'}
@@ -362,6 +377,9 @@ class FingerprintManager:
         Returns:
             List of tuples (fingerprint, similarity_score) sorted by similarity
         """
+
+
+
         try:
             similar_results = []
             
@@ -386,10 +404,16 @@ class FingerprintManager:
     
     def get_cached_result(self, request_id: str) -> Optional[FingerprintResult]:
         """Get cached fingerprint result by request ID"""
+
+
+
         return self.results_cache.get(request_id)
     
     def clear_cache(self, older_than_hours: Optional[int] = None):
         """Clear results cache, optionally only entries older than specified hours"""
+
+
+
         try:
             if older_than_hours is None:
                 # Clear all cache
@@ -424,6 +448,9 @@ class FingerprintManager:
         Returns:
             True if successful, False otherwise
         """
+
+
+
         try:
             output_data = {
                 'request_id': result.request_id,
@@ -456,6 +483,9 @@ class FingerprintManager:
         Returns:
             FingerprintResult if successful, None otherwise
         """
+
+
+
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
@@ -482,6 +512,9 @@ class FingerprintManager:
     
     def get_manager_stats(self) -> Dict[str, any]:
         """Get statistics about the fingerprint manager"""
+
+
+
         try:
             cache_stats = {
                 'total_cached': len(self.results_cache),

@@ -8,7 +8,7 @@ Author: Fahed Mlaiel
 Contact: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  WARNING: Unauthorized use, reproduction, or distribution of this code is strictly prohibited.
+  WARNING: Unauthorized use, reproduction, or distribution of this code is strictly prohibited.
     This system is proprietary and protected by international copyright laws.
     Violations will be prosecuted to the full extent of the law.
 """
@@ -222,6 +222,9 @@ class DMCAHandler:
         Returns:
             Dict: Counter-notification processing result
         """
+
+
+
         try:
             # Validate counter-notification requirements
             validation = await self._validate_counter_notification(counter_data)
@@ -286,6 +289,9 @@ class DMCAHandler:
         Returns:
             Dict: Repeat infringer assessment
         """
+
+
+
         try:
             # Get user's DMCA history
             with self.db_manager.get_session() as session:
@@ -340,6 +346,9 @@ class DMCAHandler:
         Returns:
             Dict: Comprehensive compliance report
         """
+
+
+
         try:
             start_date = datetime.now() - timedelta(days=period_days)
             
@@ -502,6 +511,9 @@ class DMCAHandler:
     
     async def _create_dmca_notice(self, request: DMCARequest) -> str:
         """Create DMCA notice record in database"""
+
+
+
         try:
             with self.db_manager.get_session() as session:
                 notice = DMCANotice(
@@ -534,6 +546,9 @@ class DMCAHandler:
     
     async def _execute_takedown_action(self, request: DMCARequest, action: TakedownAction):
         """Execute the determined takedown action"""
+
+
+
         try:
             if action == TakedownAction.REMOVE_CONTENT:
                 # Remove content from all platforms
@@ -558,6 +573,9 @@ class DMCAHandler:
                                      notice_id: str, 
                                      action: TakedownAction):
         """Send DMCA-related notifications to relevant parties"""
+
+
+
         try:
             # Notify complainant
             await self.email_service.send_templated_email(
@@ -580,6 +598,9 @@ class DMCAHandler:
     
     async def get_compliance_metrics(self) -> Dict[str, Any]:
         """Get comprehensive DMCA compliance metrics"""
+
+
+
         try:
             cache_key = "dmca_metrics"
             cached_metrics = await self.cache_manager.get(cache_key)

@@ -123,6 +123,9 @@ class PlatformCredentials:
     
     def get_authorization_header(self) -> Dict[str, str]:
         """Generate secure authorization header"""
+
+
+
         return {
             "Authorization": f"{self.token_type} {self.access_token}",
             "User-Agent": f"IA-Influencer-Agent/1.0 (+{settings.BASE_URL})"
@@ -239,6 +242,9 @@ class PlatformDistributionManager:
     
     def _load_platform_configs(self) -> Dict[PlatformType, Dict[str, Any]]:
         """Load comprehensive platform-specific configuration"""
+
+
+
         return {
             PlatformType.YOUTUBE: {
                 "api_base": "https://www.googleapis.com/youtube/v3",
@@ -665,6 +671,9 @@ class PlatformDistributionManager:
         credentials: PlatformCredentials
     ) -> bool:
         """Refresh expired platform credentials"""
+
+
+
         try:
             if not credentials.refresh_token:
                 return False
@@ -767,6 +776,9 @@ class PlatformDistributionManager:
         request: DistributionRequest
     ) -> DistributionResult:
         """Distribute content to a specific platform"""
+
+
+
         try:
             credentials = await self._get_platform_credentials(
                 request.user_id, platform
@@ -983,6 +995,9 @@ class PlatformDistributionManager:
         self, user_id: int, task_id: str
     ) -> bool:
         """Cancel a scheduled distribution task"""
+
+
+
         try:
             from celery import current_app
             
@@ -1739,6 +1754,9 @@ class PlatformDistributionManager:
     
     async def __aenter__(self):
         """Async context manager entry"""
+
+
+
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):

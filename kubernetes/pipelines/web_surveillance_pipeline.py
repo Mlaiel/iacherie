@@ -808,6 +808,9 @@ class WebSurveillancePipelineManager:
         
     async def _capture_evidence_screenshot(self, url: str) -> Optional[str]:
         """Capture screenshot evidence of detected content"""
+
+
+
         try:
             chrome_options = Options()
             chrome_options.add_argument("--headless")
@@ -882,6 +885,9 @@ class WebSurveillancePipelineManager:
         
     def get_surveillance_statistics(self) -> Dict[str, Any]:
         """Get surveillance system statistics"""
+
+
+
         return {
             **self.surveillance_stats,
             'recent_matches': len([m for m in self.detected_matches 
@@ -900,6 +906,9 @@ class WebSurveillancePipelineManager:
         
     def _get_system_capabilities(self) -> Dict[str, bool]:
         """Get system capabilities status"""
+
+
+
         return {
             'selenium_available': SELENIUM_AVAILABLE,
             'scrapy_available': SCRAPY_AVAILABLE,
@@ -914,4 +923,7 @@ surveillance_pipeline_manager = WebSurveillancePipelineManager()
 
 def get_surveillance_pipeline_manager() -> WebSurveillancePipelineManager:
     """Get global surveillance pipeline manager instance"""
+
+
+
     return surveillance_pipeline_manager

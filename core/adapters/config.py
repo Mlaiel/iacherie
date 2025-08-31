@@ -196,6 +196,9 @@ class ConfigurationManager:
     
     def _load_from_file(self, config_file: Path):
         """Load configuration from a YAML or JSON file."""
+
+
+
         try:
             with open(config_file, 'r') as f:
                 if config_file.suffix.lower() == '.yaml' or config_file.suffix.lower() == '.yml':
@@ -315,6 +318,9 @@ class ConfigurationManager:
     
     def get_adapter_config(self, adapter_name: str) -> Optional[AdapterBaseConfig]:
         """Get configuration for a specific adapter."""
+
+
+
         return self.configurations.get(adapter_name)
     
     def update_adapter_config(self, adapter_name: str, config: AdapterBaseConfig):
@@ -353,6 +359,9 @@ class ConfigurationManager:
     
     def list_adapters(self) -> List[str]:
         """List all configured adapters."""
+
+
+
         return list(self.configurations.keys())
     
     def validate_configuration(self, adapter_name: str) -> Dict[str, Any]:
@@ -406,6 +415,9 @@ class ConfigurationManager:
     
     def get_environment_info(self) -> Dict[str, Any]:
         """Get information about the current environment configuration."""
+
+
+
         return {
             'environment': self.environment.value,
             'config_dir': str(self.config_dir),

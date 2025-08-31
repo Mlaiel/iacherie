@@ -133,6 +133,9 @@ class EncryptionManager:
         Returns:
             Encrypted content bytes
         """
+
+
+
         try:
             f = Fernet(key.encode('utf-8'))
             encrypted_content = f.encrypt(content)
@@ -153,6 +156,9 @@ class EncryptionManager:
         Returns:
             Decrypted content bytes
         """
+
+
+
         try:
             f = Fernet(key.encode('utf-8'))
             decrypted_content = f.decrypt(encrypted_content)
@@ -193,6 +199,9 @@ class IPFSConnector:
         Returns:
             Tuple of (IPFS hash, gateway URL)
         """
+
+
+
         try:
             # Prepare multipart form data
             data = aiohttp.FormData()
@@ -230,6 +239,9 @@ class IPFSConnector:
         Returns:
             Content bytes
         """
+
+
+
         try:
             url = urljoin(self.gateway_base, ipfs_hash)
             
@@ -254,6 +266,9 @@ class IPFSConnector:
         Returns:
             True if pinning successful
         """
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.post(
@@ -279,6 +294,9 @@ class IPFSConnector:
         Returns:
             True if unpinning successful
         """
+
+
+
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.post(
@@ -358,6 +376,9 @@ class DecentralizedStorageManager:
         Returns:
             Storage metadata with access information
         """
+
+
+
         try:
             if not provider:
                 provider = StorageProvider.IPFS
@@ -428,6 +449,9 @@ class DecentralizedStorageManager:
         Returns:
             Tuple of (content bytes, storage metadata)
         """
+
+
+
         try:
             metadata = self.storage_metadata.get(content_id)
             if not metadata:
@@ -480,6 +504,9 @@ class DecentralizedStorageManager:
         Returns:
             Storage metadata for the fingerprint
         """
+
+
+
         try:
             # Serialize fingerprint data
             fingerprint_json = json.dumps(fingerprint_data, indent=2)
@@ -518,6 +545,9 @@ class DecentralizedStorageManager:
         Returns:
             Storage metadata for the metadata file
         """
+
+
+
         try:
             # Serialize metadata
             metadata_json = json.dumps(metadata_dict, indent=2)
@@ -552,6 +582,9 @@ class DecentralizedStorageManager:
         Returns:
             List of storage metadata for each item
         """
+
+
+
         try:
             tasks = []
             for content, filename, content_type, creator_address in content_list:
@@ -594,6 +627,9 @@ class DecentralizedStorageManager:
         Returns:
             Dictionary mapping providers to storage metadata
         """
+
+
+
         try:
             # Get original content
             original_metadata = self.storage_metadata.get(content_id)
@@ -644,6 +680,9 @@ class DecentralizedStorageManager:
         Returns:
             True if permission granted successfully
         """
+
+
+
         try:
             metadata = self.storage_metadata.get(content_id)
             if not metadata:
@@ -669,6 +708,9 @@ class DecentralizedStorageManager:
         Returns:
             True if permission revoked successfully
         """
+
+
+
         try:
             metadata = self.storage_metadata.get(content_id)
             if not metadata:
@@ -685,6 +727,9 @@ class DecentralizedStorageManager:
 
     def list_content_by_creator(self, creator_address: str) -> List[StorageMetadata]:
         """List all content stored by a specific creator."""
+
+
+
         return [
             metadata for metadata in self.storage_metadata.values()
             if metadata.creator_address == creator_address

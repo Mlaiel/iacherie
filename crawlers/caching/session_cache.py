@@ -65,6 +65,9 @@ class SessionData:
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for serialization."""
+
+
+
         return {
             "session_id": self.session_id,
             "session_type": self.session_type.value,
@@ -158,14 +161,23 @@ class SessionCache:
     
     def _make_session_key(self, session_id: str) -> str:
         """Create session cache key."""
+
+
+
         return f"{self.session_key_prefix}{session_id}"
     
     def _make_user_index_key(self, user_id: str) -> str:
         """Create user session index key."""
+
+
+
         return f"{self.user_index_prefix}{user_id}"
     
     def _make_type_index_key(self, session_type: SessionType) -> str:
         """Create type session index key."""
+
+
+
         return f"{self.type_index_prefix}{session_type.value}"
     
     async def create_session(self, session_type: SessionType,
@@ -186,6 +198,9 @@ class SessionCache:
         Returns:
             Session ID
         """
+
+
+
         try:
             cache_manager = await self._get_cache_manager()
             
@@ -242,6 +257,9 @@ class SessionCache:
         Returns:
             Session data or None if not found/expired
         """
+
+
+
         try:
             cache_manager = await self._get_cache_manager()
             session_key = self._make_session_key(session_id)
@@ -287,6 +305,9 @@ class SessionCache:
         Returns:
             True if successful
         """
+
+
+
         try:
             session_data = await self.get_session(session_id)
             if not session_data:
@@ -328,6 +349,9 @@ class SessionCache:
         Returns:
             True if successful
         """
+
+
+
         try:
             # Get session data for cleanup
             session_data = await self.get_session(session_id)
@@ -352,6 +376,9 @@ class SessionCache:
     
     async def get_user_sessions(self, user_id: str) -> List[SessionData]:
         """Get all sessions for user."""
+
+
+
         try:
             cache_manager = await self._get_cache_manager()
             user_index_key = self._make_user_index_key(user_id)
@@ -372,6 +399,9 @@ class SessionCache:
     
     async def delete_user_sessions(self, user_id: str) -> int:
         """Delete all sessions for user."""
+
+
+
         try:
             sessions = await self.get_user_sessions(user_id)
             deleted_count = 0
@@ -396,6 +426,9 @@ class SessionCache:
     
     async def get_sessions_by_type(self, session_type: SessionType) -> List[SessionData]:
         """Get all sessions of specific type."""
+
+
+
         try:
             cache_manager = await self._get_cache_manager()
             type_index_key = self._make_type_index_key(session_type)
@@ -416,6 +449,9 @@ class SessionCache:
     
     async def cleanup_expired_sessions(self) -> int:
         """Clean up expired sessions."""
+
+
+
         try:
             cleaned_count = 0
             
@@ -436,6 +472,9 @@ class SessionCache:
     
     async def _add_to_indexes(self, session_data: SessionData) -> None:
         """Add session to indexes."""
+
+
+
         try:
             cache_manager = await self._get_cache_manager()
             
@@ -462,6 +501,9 @@ class SessionCache:
     
     async def _remove_from_indexes(self, session_data: SessionData) -> None:
         """Remove session from indexes."""
+
+
+
         try:
             cache_manager = await self._get_cache_manager()
             
@@ -488,6 +530,9 @@ class SessionCache:
     
     async def _cleanup_user_sessions(self, user_id: str) -> None:
         """Cleanup old sessions if user has too many."""
+
+
+
         try:
             sessions = await self.get_user_sessions(user_id)
             
@@ -505,6 +550,9 @@ class SessionCache:
     
     async def get_stats(self) -> Dict[str, Any]:
         """Get session cache statistics."""
+
+
+
         try:
             stats = {
                 "total_sessions": self.session_count,

@@ -7,7 +7,7 @@ for content creators with enterprise-level quality control and customization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  IMPORTANT LEGAL NOTICE:
+  IMPORTANT LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -159,6 +159,9 @@ class AITextGenerator:
     
     def _init_generation_models(self):
         """Initialize text generation models"""
+
+
+
         try:
             device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
             
@@ -294,6 +297,9 @@ class AITextGenerator:
         Returns:
             List of text variations
         """
+
+
+
         try:
             variations = []
             
@@ -419,6 +425,9 @@ class AITextGenerator:
         model_name: str
     ) -> str:
         """Generate text using specified model"""
+
+
+
         try:
             if model_name == "gpt2":
                 return await self._generate_with_gpt2(prompt, config)
@@ -436,6 +445,9 @@ class AITextGenerator:
     
     async def _generate_with_gpt2(self, prompt: str, config: GenerationConfig) -> str:
         """Generate text using GPT-2 model"""
+
+
+
         try:
             # Tokenize input
             inputs = self.gpt2_tokenizer.encode(prompt, return_tensors='pt').to(self.device)
@@ -469,6 +481,9 @@ class AITextGenerator:
     
     async def _generate_with_t5(self, prompt: str, config: GenerationConfig) -> str:
         """Generate text using T5 model"""
+
+
+
         try:
             # Format prompt for T5
             t5_prompt = f"generate text: {prompt}"
@@ -500,6 +515,9 @@ class AITextGenerator:
     
     async def _generate_with_bart(self, prompt: str, config: GenerationConfig) -> str:
         """Generate text using BART model"""
+
+
+
         try:
             # Tokenize input
             inputs = self.bart_tokenizer.encode(prompt, return_tensors='pt').to(self.device)
@@ -574,6 +592,9 @@ class AITextGenerator:
     
     async def _calculate_text_similarity(self, text1: str, text2: str) -> float:
         """Calculate similarity between two texts"""
+
+
+
         try:
             embeddings = self.sentence_model.encode([text1, text2])
             similarity = cosine_similarity([embeddings[0]], [embeddings[1]])[0][0]
@@ -583,6 +604,9 @@ class AITextGenerator:
     
     async def _assess_content_quality(self, generated_text: str, prompt: str) -> float:
         """Assess quality of generated content"""
+
+
+
         try:
             # Basic quality metrics
             word_count = len(generated_text.split())
@@ -608,6 +632,9 @@ class AITextGenerator:
     
     async def _assess_creativity(self, generated_text: str, prompt: str) -> float:
         """Assess creativity of generated content"""
+
+
+
         try:
             # Measure diversity of vocabulary
             words = generated_text.lower().split()
@@ -633,6 +660,9 @@ class AITextGenerator:
     
     async def _assess_relevance(self, generated_text: str, prompt: str) -> float:
         """Assess relevance of generated content to prompt"""
+
+
+
         return await self._calculate_text_similarity(generated_text, prompt)
     
     async def _update_generation_stats(self, result: GenerationResult):
@@ -658,6 +688,9 @@ class AITextGenerator:
     
     def get_generation_stats(self) -> Dict[str, Any]:
         """Get generation statistics"""
+
+
+
         return {
             **self.generation_stats,
             "success_rate": (
@@ -694,6 +727,9 @@ class ContentSynthesizer:
         Returns:
             Dict containing synthesized content and metadata
         """
+
+
+
         try:
             if not source_texts:
                 raise ValidationError("No source texts provided for synthesis")

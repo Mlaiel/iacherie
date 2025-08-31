@@ -7,7 +7,7 @@ Handles automated responses, sentiment analysis, community management, and audie
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -146,6 +146,9 @@ class EngagementAgent(BaseAgent):
 
     async def initialize(self) -> bool:
         """Initialize engagement agent with platform connections"""
+
+
+
         try:
             await super().initialize()
             
@@ -193,6 +196,9 @@ class EngagementAgent(BaseAgent):
         Returns:
             EngagementMetrics: Comprehensive engagement analytics
         """
+
+
+
         try:
             # Fetch platform-specific metrics
             raw_metrics = await self.social_integrator.get_content_metrics(
@@ -267,6 +273,9 @@ class EngagementAgent(BaseAgent):
         Returns:
             Dict: Optimized engagement strategy
         """
+
+
+
         try:
             # Analyze historical performance
             historical_data = await self._fetch_historical_engagement(
@@ -332,6 +341,9 @@ class EngagementAgent(BaseAgent):
         Returns:
             Optional[str]: Generated response or None if no response needed
         """
+
+
+
         try:
             # Analyze comment sentiment and intent
             sentiment_analysis = await self.sentiment_analyzer.analyze(comment_text)
@@ -387,6 +399,9 @@ class EngagementAgent(BaseAgent):
             platforms: Target platforms
             callback: Optional callback for real-time updates
         """
+
+
+
         try:
             monitoring_tasks = []
             
@@ -422,6 +437,9 @@ class EngagementAgent(BaseAgent):
                                        content_id: str, 
                                        platform: str) -> float:
         """Analyze sentiment of content and associated comments"""
+
+
+
         try:
             # Get content text and comments
             content_data = await self.social_integrator.get_content_details(
@@ -473,6 +491,9 @@ class EngagementAgent(BaseAgent):
                                      content_id: str, 
                                      platform: str) -> float:
         """Assess quality of engaged audience"""
+
+
+
         try:
             # Get audience engagement data
             audience_data = await self.social_integrator.get_audience_insights(
@@ -504,6 +525,9 @@ class EngagementAgent(BaseAgent):
 
     async def _predict_optimal_posting_time(self, platform: str) -> datetime:
         """Predict optimal posting time for platform"""
+
+
+
         try:
             # Get historical engagement data by hour
             engagement_by_hour = await self.social_integrator.get_engagement_by_hour(
@@ -543,6 +567,9 @@ class EngagementAgent(BaseAgent):
                                               content_id: str,
                                               platform: str) -> List[str]:
         """Generate optimized hashtag recommendations"""
+
+
+
         try:
             # Get content details
             content_data = await self.social_integrator.get_content_details(
@@ -599,6 +626,9 @@ class EngagementAgent(BaseAgent):
 
     async def _generate_audience_insights(self, platform: str) -> Dict[str, Any]:
         """Generate detailed audience insights"""
+
+
+
         try:
             insights = await self.social_integrator.get_detailed_audience_insights(platform)
             
@@ -618,6 +648,9 @@ class EngagementAgent(BaseAgent):
 
     async def _load_engagement_strategies(self) -> None:
         """Load engagement strategies from database"""
+
+
+
         try:
             # Implementation would load from database
             # For now, initialize with default strategies
@@ -632,12 +665,15 @@ class EngagementAgent(BaseAgent):
 
     async def _setup_auto_responses(self) -> None:
         """Setup automated response templates"""
+
+
+
         try:
             # Default auto-response templates
             self.auto_responses = {
                 'appreciation': EngagementResponse(
                     trigger_keywords=['thanks', 'thank you', 'appreciate', 'love'],
-                    response_template="Thank you so much for your support! 🙏 It means the world to me!",
+                    response_template="Thank you so much for your support!  It means the world to me!",
                     personalization_level=0.7
                 ),
                 'question': EngagementResponse(
@@ -657,6 +693,9 @@ class EngagementAgent(BaseAgent):
 
     async def process_request(self, request_data: Dict[str, Any]) -> Dict[str, Any]:
         """Process engagement agent requests"""
+
+
+
         try:
             request_type = request_data.get('type')
             
@@ -708,6 +747,9 @@ class EngagementAgentManager:
         
     async def get_agent(self, agent_id: str) -> Optional[EngagementAgent]:
         """Get existing engagement agent"""
+
+
+
         return self.agents.get(agent_id)
         
     async def remove_agent(self, agent_id: str) -> bool:
@@ -754,6 +796,9 @@ class EngagementAgentManager:
                                          creator_id: str, 
                                          platforms: List[str]) -> Dict[str, Any]:
         """Fetch historical engagement data for analysis"""
+
+
+
         try:
             historical_data = {}
             for platform in platforms:
@@ -769,6 +814,9 @@ class EngagementAgentManager:
     async def _analyze_content_performance(self, 
                                          historical_data: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze content performance patterns"""
+
+
+
         try:
             analysis = {
                 'top_performing_formats': [],
@@ -815,6 +863,9 @@ class EngagementAgentManager:
                                         goals: Dict[str, Any],
                                         content_analysis: Dict[str, Any]) -> Dict[str, Any]:
         """Generate platform-specific strategy"""
+
+
+
         try:
             strategy = {
                 'platform': platform,
@@ -869,6 +920,9 @@ class EngagementAgentManager:
                                        creator_id: str, 
                                        platforms: List[str]) -> Dict[str, Any]:
         """Optimize posting schedule across platforms"""
+
+
+
         try:
             schedule = {}
             for platform in platforms:
@@ -895,6 +949,9 @@ class EngagementAgentManager:
                                                   creator_id: str, 
                                                   platforms: List[str]) -> List[Dict[str, Any]]:
         """Identify potential collaboration opportunities"""
+
+
+
         try:
             opportunities = []
             
@@ -933,6 +990,9 @@ class EngagementAgentManager:
                                           creator_id: str, 
                                           strategies: Dict[str, Any]) -> Dict[str, Any]:
         """Calculate growth projections based on strategies"""
+
+
+
         try:
             projections = {}
             
@@ -967,6 +1027,9 @@ class EngagementAgentManager:
     async def _create_optimization_timeline(self, 
                                           goals: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Create optimization implementation timeline"""
+
+
+
         try:
             timeline = []
             
@@ -1030,6 +1093,9 @@ class EngagementAgentManager:
                                        creator_id: str, 
                                        strategy: Dict[str, Any]) -> bool:
         """Store engagement strategy in database"""
+
+
+
         try:
             db_manager = DatabaseManager()
             await db_manager.store_engagement_strategy(creator_id, strategy)
@@ -1040,6 +1106,9 @@ class EngagementAgentManager:
 
     async def _classify_comment_intent(self, comment_text: str) -> str:
         """Classify the intent of a comment"""
+
+
+
         try:
             comment_lower = comment_text.lower()
             
@@ -1071,6 +1140,9 @@ class EngagementAgentManager:
                                  intent: str, 
                                  context: Dict[str, Any]) -> bool:
         """Determine if auto-response is appropriate"""
+
+
+
         try:
             # Always respond to questions and support requests
             if intent in ['question', 'support_request', 'collaboration']:
@@ -1099,6 +1171,9 @@ class EngagementAgentManager:
                                              platform: str, 
                                              intent: str) -> Optional[str]:
         """Find matching response template"""
+
+
+
         try:
             template_key = f"{intent}_{platform}"
             return self.auto_responses.get(template_key, 
@@ -1112,6 +1187,9 @@ class EngagementAgentManager:
                                        sentiment_analysis: Dict[str, Any], 
                                        context: Dict[str, Any]) -> str:
         """Generate dynamic AI response"""
+
+
+
         try:
             # Use the response generator for dynamic responses
             prompt = f"Generate a friendly, engaging response to: '{comment_text}'"
@@ -1133,6 +1211,9 @@ class EngagementAgentManager:
                                            comment_text: str, 
                                            context: Dict[str, Any]) -> str:
         """Personalize response template with context"""
+
+
+
         try:
             personalized = template
             
@@ -1143,9 +1224,9 @@ class EngagementAgentManager:
             
             # Add contextual elements
             if 'music' in comment_text.lower():
-                personalized += " 🎵"
+                personalized += " "
             elif 'art' in comment_text.lower():
-                personalized += " 🎨"
+                personalized += " "
             
             return personalized
         except Exception as e:
@@ -1156,6 +1237,9 @@ class EngagementAgentManager:
                                        response: str, 
                                        context: Dict[str, Any]) -> bool:
         """Validate response quality and appropriateness"""
+
+
+
         try:
             # Basic quality checks
             if len(response.strip()) < 5:
@@ -1179,6 +1263,9 @@ class EngagementAgentManager:
                                         platform: str, 
                                         callback: Optional[Any] = None) -> None:
         """Monitor content engagement in real-time"""
+
+
+
         try:
             monitoring_duration = 3600  # 1 hour
             check_interval = 300  # 5 minutes
@@ -1215,6 +1302,9 @@ class EngagementAgentManager:
                                        platform: str, 
                                        metrics: Dict[str, Any]) -> None:
         """Store engagement snapshot for historical analysis"""
+
+
+
         try:
             db_manager = DatabaseManager()
             await db_manager.store_engagement_snapshot(
@@ -1225,6 +1315,9 @@ class EngagementAgentManager:
 
     def _calculate_optimal_frequency(self, audience_data: Dict[str, Any]) -> Dict[str, Any]:
         """Calculate optimal posting frequency"""
+
+
+
         try:
             # Simple frequency calculation based on audience size and engagement
             audience_size = audience_data.get('total_followers', 1000)
@@ -1256,6 +1349,9 @@ class EngagementAgentManager:
 
     def _suggest_content_mix(self, platform: str) -> Dict[str, float]:
         """Suggest content mix percentages for platform"""
+
+
+
         try:
             content_mixes = {
                 'spotify': {
@@ -1298,6 +1394,9 @@ class EngagementAgentManager:
                                          target_creator_id: str, 
                                          creator_data: Dict[str, Any]) -> float:
         """Calculate collaboration potential score"""
+
+
+
         try:
             # Factors that influence collaboration potential
             similarity_score = creator_data.get('similarity_score', 0.5)
@@ -1321,6 +1420,9 @@ class EngagementAgentManager:
                                   target_creator_id: str, 
                                   platform: str) -> str:
         """Suggest type of collaboration"""
+
+
+
         try:
             platform_collaborations = {
                 'spotify': ['track_collab', 'playlist_feature', 'joint_release'],

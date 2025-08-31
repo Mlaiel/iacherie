@@ -1,5 +1,5 @@
 """
-🗄️ Data Management Module - IA Influencer Agent Platform Enterprise
+ Data Management Module - IA Influencer Agent Platform Enterprise
 ==================================================================
 Module: backend/data_management/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Data Management - Enterprise Production-Ready
 Responsibility: Gestion avancée des données multi-format et protection contenu
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -19,11 +19,11 @@ Indexation Vectorielle → Stockage Optimisé → Analytics Real-time →
 Protection IA → Archivage Automatique → Gouvernance Compliance
 
 SUPPORTS FORMATS:
-🎵 Audio: MP3, WAV, FLAC, OGG, M4A, AIFF (Musiciens)
-🎬 Vidéo: MP4, AVI, MOV, MKV, WEBM, FLV (Influenceurs/Comédiens)
-📸 Images: JPG, PNG, GIF, SVG, WEBP, TIFF (Photographes)
-📝 Texte: TXT, MD, HTML, PDF, DOCX (Blogueurs)
-📊 Données: JSON, CSV, XML, YAML (Analytics)
+ Audio: MP3, WAV, FLAC, OGG, M4A, AIFF (Musiciens)
+ Vidéo: MP4, AVI, MOV, MKV, WEBM, FLV (Influenceurs/Comédiens)
+ Images: JPG, PNG, GIF, SVG, WEBP, TIFF (Photographes)
+ Texte: TXT, MD, HTML, PDF, DOCX (Blogueurs)
+ Données: JSON, CSV, XML, YAML (Analytics)
 """
 
 __version__ = "3.0.0"
@@ -168,6 +168,9 @@ __all__ = [
 
 def get_data_management_info() -> Dict[str, Any]:
     """Retourne les informations du module data management"""
+
+
+
     return {
         "version": __version__,
         "author": __author__,

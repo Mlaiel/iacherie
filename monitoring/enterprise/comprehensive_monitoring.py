@@ -423,6 +423,9 @@ class AlertManager:
     
     async def _evaluate_rule(self, rule: AlertRule) -> None:
         """Evaluate a single alert rule"""
+
+
+
         try:
             # Get current metric value
             current_value = self.metrics_collector.get_metric_value(

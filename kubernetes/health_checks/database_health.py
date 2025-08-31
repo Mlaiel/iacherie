@@ -606,6 +606,9 @@ class DatabaseHealthChecker:
 
     async def cleanup_connections(self):
         """Clean up database connections"""
+
+
+
         try:
             if self._postgres_pool:
                 await self._postgres_pool.close()

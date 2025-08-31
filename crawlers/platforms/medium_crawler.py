@@ -304,6 +304,9 @@ class MediumCrawler(BaseCrawler):
         Returns:
             bool: Authentication success status
         """
+
+
+
         try:
             if session_cookies:
                 # Use provided session cookies
@@ -343,6 +346,9 @@ class MediumCrawler(BaseCrawler):
 
     async def _extract_user_info_from_html(self, html_content: str):
         """Extract user information from HTML page"""
+
+
+
         try:
             # Look for embedded user data in script tags
             soup = BeautifulSoup(html_content, 'html.parser')
@@ -462,6 +468,9 @@ class MediumCrawler(BaseCrawler):
         limit: int
     ) -> List[MediumStory]:
         """Search for Medium stories"""
+
+
+
         try:
             # Use GraphQL search
             search_query = {
@@ -536,6 +545,9 @@ class MediumCrawler(BaseCrawler):
 
     async def _search_users(self, query: str, limit: int) -> List[MediumUser]:
         """Search for Medium users"""
+
+
+
         try:
             # Simple search using web scraping
             search_url = f"{self.base_url}/search/users"
@@ -555,6 +567,9 @@ class MediumCrawler(BaseCrawler):
 
     async def _search_publications(self, query: str, limit: int) -> List[MediumPublication]:
         """Search for Medium publications"""
+
+
+
         try:
             # Search publications using web scraping
             search_url = f"{self.base_url}/search/publications"
@@ -574,6 +589,9 @@ class MediumCrawler(BaseCrawler):
 
     async def _search_tags(self, query: str, limit: int) -> List[MediumTag]:
         """Search for Medium tags"""
+
+
+
         try:
             # Search tags using API
             search_url = f"{self.base_url}/search/tags"
@@ -804,6 +822,9 @@ class MediumCrawler(BaseCrawler):
         features2: Dict[str, Any]
     ) -> float:
         """Calculate similarity between story features"""
+
+
+
         try:
             scores = []
             
@@ -854,6 +875,9 @@ class MediumCrawler(BaseCrawler):
         Returns:
             MediumAnalytics: Comprehensive analytics data
         """
+
+
+
         try:
             start_time, end_time = analysis_period
             
@@ -1015,6 +1039,9 @@ class MediumCrawler(BaseCrawler):
 
     async def _parse_story_from_html(self, html_content: str, url: str) -> Optional[MediumStory]:
         """Parse story from HTML page"""
+
+
+
         try:
             soup = BeautifulSoup(html_content, 'html.parser')
             
@@ -1122,6 +1149,9 @@ class MediumCrawler(BaseCrawler):
 
     async def close(self):
         """Close crawler and cleanup resources"""
+
+
+
         try:
             await self.cache_manager.close()
             await super().close()

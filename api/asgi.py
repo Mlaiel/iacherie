@@ -84,14 +84,14 @@ def custom_openapi():
         title="Ainflue AI Platform - Complete API Documentation",
         version="2.0.0",
         description="""
-        # 🚀 Ainflue AI Platform - Enterprise Content Protection & Monetization
+        #  Ainflue AI Platform - Enterprise Content Protection & Monetization
 
         ## Overview
         The Ainflue AI Platform provides comprehensive AI-powered content protection, monetization, 
         and collaboration services for content creators worldwide. Our platform supports multiple 
         content formats including audio, video, images, and documents.
 
-        ## 🎯 Core Features
+        ##  Core Features
         - **AI-Powered Content Fingerprinting**: Advanced algorithms for content identification
         - **Multi-Platform Protection**: Monitor 500+ platforms worldwide
         - **Revenue Optimization**: Intelligent monetization strategies
@@ -99,24 +99,24 @@ def custom_openapi():
         - **Real-time Analytics**: Comprehensive business intelligence
         - **Enterprise Security**: Zero-trust security architecture
 
-        ## 🔐 Security & Compliance
+        ##  Security & Compliance
         - End-to-end encryption
         - GDPR, CCPA, DMCA compliance
         - Multi-factor authentication
         - Comprehensive audit trails
         - Real-time threat detection
 
-        ## 📊 Business Logic Flow
+        ##  Business Logic Flow
         ```
         Content Upload → AI Processing → Fingerprinting → Protection → Monetization → Analytics
         ```
 
-        ## 🛡️ Rate Limiting
+        ##  Rate Limiting
         - **Authenticated Users**: 1000 requests/hour
         - **Unauthenticated**: 100 requests/hour
         - **Burst Limit**: 50 requests/minute
 
-        ## 📞 Support
+        ##  Support
         - **Technical Support**: mlaiel@live.de
         - **Documentation**: [API Docs](https://docs.ainflue.com)
         - **Status Page**: [Status](https://status.ainflue.com)
@@ -401,6 +401,9 @@ async def health():
     - External service connectivity
     - Performance metrics
     """
+
+
+
     return {
         "status": "healthy",
         "timestamp": datetime.utcnow().isoformat(),
@@ -429,6 +432,9 @@ async def ready():
     Returns 200 when system is ready to accept traffic.
     Returns 503 when system is not ready.
     """
+
+
+
     return {
         "status": "ready",
         "timestamp": datetime.utcnow().isoformat(),
@@ -445,6 +451,9 @@ async def root():
     """
     API root endpoint with basic information and navigation.
     """
+
+
+
     return {
         "message": "Welcome to Ainflue AI Platform API",
         "version": "2.0.0",

@@ -95,6 +95,9 @@ class TestReportingCore:
     @pytest.fixture
     def report_test_config(self):
         """Reporting system configuration for testing."""
+
+
+
         return {
             "data_sources": {
                 "performance_metrics": {

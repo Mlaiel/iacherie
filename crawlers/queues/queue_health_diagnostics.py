@@ -8,7 +8,7 @@ Responsibility: Advanced health monitoring with automated diagnostics and recove
 Technologies: Health scoring, Diagnostic algorithms, Recovery automation, Performance analysis
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -603,6 +603,9 @@ class AutomatedRecoveryEngine:
                                   queue_manager: Optional[IntelligentQueueManager],
                                   distribution_engine: Optional[TaskDistributionEngine]) -> Dict[str, Any]:
         """Scale workers recovery action"""
+
+
+
         
         try:
             # This would interface with actual scaling systems
@@ -629,6 +632,9 @@ class AutomatedRecoveryEngine:
                                               queue_manager: Optional[IntelligentQueueManager],
                                               distribution_engine: Optional[TaskDistributionEngine]) -> Dict[str, Any]:
         """Restart unhealthy workers action"""
+
+
+
         
         try:
             logger.info("Executing automated unhealthy worker restart")
@@ -654,6 +660,9 @@ class AutomatedRecoveryEngine:
                                           queue_manager: Optional[IntelligentQueueManager],
                                           distribution_engine: Optional[TaskDistributionEngine]) -> Dict[str, Any]:
         """Optimize distribution strategy action"""
+
+
+
         
         try:
             if distribution_engine:
@@ -686,6 +695,9 @@ class AutomatedRecoveryEngine:
                                         queue_manager: Optional[IntelligentQueueManager],
                                         distribution_engine: Optional[TaskDistributionEngine]) -> Dict[str, Any]:
         """Clear queue backlog action"""
+
+
+
         
         try:
             logger.info("Executing queue backlog clearing")
@@ -711,6 +723,9 @@ class AutomatedRecoveryEngine:
                                        queue_manager: Optional[IntelligentQueueManager],
                                        distribution_engine: Optional[TaskDistributionEngine]) -> Dict[str, Any]:
         """Adjust rate limits action"""
+
+
+
         
         try:
             logger.info("Executing rate limit adjustment")
@@ -736,6 +751,9 @@ class AutomatedRecoveryEngine:
                                        queue_manager: Optional[IntelligentQueueManager],
                                        distribution_engine: Optional[TaskDistributionEngine]) -> Dict[str, Any]:
         """Emergency throttle action"""
+
+
+
         
         try:
             logger.info("Executing emergency throttling")
@@ -758,6 +776,9 @@ class AutomatedRecoveryEngine:
     
     async def get_recovery_status(self) -> Dict[str, Any]:
         """Get current recovery status"""
+
+
+
         
         return {
             'active_recoveries': len(self.active_recoveries),
@@ -970,6 +991,9 @@ class QueueHealthDiagnostics:
     
     async def _collect_monitor_metrics(self):
         """Collect monitoring system metrics"""
+
+
+
         
         try:
             if hasattr(self.monitor, 'get_monitoring_status'):
@@ -1477,6 +1501,9 @@ class QueueHealthDiagnostics:
     
     async def get_current_health_report(self) -> Optional[HealthReport]:
         """Get current health report"""
+
+
+
         return self.current_health_report
     
     async def get_diagnostic_status(self) -> Dict[str, Any]:

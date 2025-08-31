@@ -8,7 +8,7 @@ Provides content extraction and structure analysis capabilities.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️ STRICT COPYRIGHT WARNING ⚠️
+ STRICT COPYRIGHT WARNING 
 This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
@@ -81,6 +81,9 @@ class HTMLContentParser(BaseContentParser):
     
     async def parse(self, content: Union[str, bytes], **kwargs) -> Dict[str, Any]:
         """Parse HTML content and extract structured information"""
+
+
+
         try:
             if isinstance(content, bytes):
                 content = content.decode('utf-8', errors='ignore')
@@ -483,6 +486,9 @@ class MarkdownParser(BaseContentParser):
     
     async def parse(self, content: Union[str, bytes], **kwargs) -> Dict[str, Any]:
         """Parse Markdown content"""
+
+
+
         try:
             if isinstance(content, bytes):
                 content = content.decode('utf-8', errors='ignore')
@@ -600,6 +606,9 @@ class JSONContentParser(BaseContentParser):
     
     async def parse(self, content: Union[str, bytes], **kwargs) -> Dict[str, Any]:
         """Parse JSON content"""
+
+
+
         try:
             if isinstance(content, bytes):
                 content = content.decode('utf-8', errors='ignore')
@@ -712,6 +721,9 @@ class XMLContentParser(BaseContentParser):
     
     async def parse(self, content: Union[str, bytes], **kwargs) -> Dict[str, Any]:
         """Parse XML content"""
+
+
+
         try:
             if isinstance(content, bytes):
                 content = content.decode('utf-8', errors='ignore')
@@ -824,6 +836,9 @@ class CSVParser(BaseContentParser):
     
     async def parse(self, content: Union[str, bytes], **kwargs) -> Dict[str, Any]:
         """Parse CSV content"""
+
+
+
         try:
             if isinstance(content, bytes):
                 content = content.decode('utf-8', errors='ignore')
@@ -951,6 +966,9 @@ class RSSParser(BaseContentParser):
     
     async def parse(self, content: Union[str, bytes], **kwargs) -> Dict[str, Any]:
         """Parse RSS feed content"""
+
+
+
         try:
             if isinstance(content, bytes):
                 content = content.decode('utf-8', errors='ignore')
@@ -1062,6 +1080,9 @@ class SitemapParser(BaseContentParser):
     
     async def parse(self, content: Union[str, bytes], **kwargs) -> Dict[str, Any]:
         """Parse XML sitemap content"""
+
+
+
         try:
             if isinstance(content, bytes):
                 content = content.decode('utf-8', errors='ignore')

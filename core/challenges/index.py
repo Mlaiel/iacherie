@@ -1,5 +1,5 @@
 """
-🎯 Challenge System Index - IA Influencer Agent Platform Enterprise
+ Challenge System Index - IA Influencer Agent Platform Enterprise
 ===================================================================
 Module: backend/core/challenges/index.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Challenge System Registry - Production-Ready
 Responsibility: Centralized challenge system management and service orchestration
 ============================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
@@ -224,6 +224,9 @@ class ChallengeSystemRegistry:
     
     async def start_system(self) -> Dict[str, Any]:
         """Start the complete challenge system"""
+
+
+
         try:
             self.logger.info("Starting Challenge System...")
             start_time = datetime.now()
@@ -318,6 +321,9 @@ class ChallengeSystemRegistry:
     
     async def _start_service(self, service_type: ServiceType, config: ServiceConfiguration) -> Optional[Any]:
         """Start individual service"""
+
+
+
         try:
             if service_type == ServiceType.CHALLENGE_ENGINE:
                 return ChallengeEngine(
@@ -396,26 +402,44 @@ class ChallengeSystemRegistry:
     
     def get_service(self, service_type: ServiceType) -> Optional[Any]:
         """Get service instance"""
+
+
+
         return self._services.get(service_type)
     
     def get_challenge_engine(self) -> Optional[ChallengeEngine]:
         """Get challenge engine instance"""
+
+
+
         return self.get_service(ServiceType.CHALLENGE_ENGINE)
     
     def get_competition_manager(self) -> Optional[CompetitionManager]:
         """Get competition manager instance"""
+
+
+
         return self.get_service(ServiceType.COMPETITION_MANAGER)
     
     def get_scoring_system(self) -> Optional[ScoringSystem]:
         """Get scoring system instance"""
+
+
+
         return self.get_service(ServiceType.SCORING_SYSTEM)
     
     def get_challenge_validator(self) -> Optional[ChallengeValidator]:
         """Get challenge validator instance"""
+
+
+
         return self.get_service(ServiceType.CHALLENGE_VALIDATOR)
     
     async def health_check(self) -> Dict[str, Any]:
         """Perform comprehensive system health check"""
+
+
+
         try:
             health_status = {
                 "system_healthy": True,
@@ -470,6 +494,9 @@ class ChallengeSystemRegistry:
     
     async def _check_service_health(self, service_type: ServiceType, service: Any) -> Dict[str, Any]:
         """Check individual service health"""
+
+
+
         try:
             # Basic availability check
             if not service:
@@ -498,6 +525,9 @@ class ChallengeSystemRegistry:
     
     async def get_system_metrics(self) -> Dict[str, Any]:
         """Get comprehensive system metrics"""
+
+
+
         try:
             metrics = {
                 "system_uptime_seconds": 0.0,
@@ -587,6 +617,9 @@ class ChallengeSystemRegistry:
     
     async def _start_monitoring(self):
         """Start background monitoring tasks"""
+
+
+
         try:
             while self._system_started:
                 # Update service metrics
@@ -603,6 +636,9 @@ class ChallengeSystemRegistry:
     
     async def _update_service_metrics(self):
         """Update service metrics"""
+
+
+
         try:
             for service_type, service in self._services.items():
                 metrics = self._service_metrics.get(service_type)
@@ -627,6 +663,9 @@ class ChallengeSystemRegistry:
     
     async def _periodic_health_checks(self):
         """Perform periodic health checks"""
+
+
+
         try:
             for service_type, service in self._services.items():
                 config = self._service_configs.get(service_type)
@@ -654,6 +693,9 @@ class ChallengeSystemRegistry:
     
     async def shutdown_system(self) -> Dict[str, Any]:
         """Gracefully shutdown the challenge system"""
+
+
+
         try:
             self.logger.info("Shutting down Challenge System...")
             
@@ -714,6 +756,9 @@ class ChallengeSystemRegistry:
     @asynccontextmanager
     async def system_context(self):
         """Context manager for system lifecycle"""
+
+
+
         try:
             # Start system
             startup_result = await self.start_system()
@@ -732,48 +777,78 @@ class ChallengeServiceFactory:
     @staticmethod
     def create_challenge_engine(**dependencies) -> ChallengeEngine:
         """Create configured challenge engine"""
+
+
+
         return ChallengeEngine(**dependencies)
     
     @staticmethod
     def create_competition_manager(**dependencies) -> CompetitionManager:
         """Create configured competition manager"""
+
+
+
         return CompetitionManager(**dependencies)
     
     @staticmethod
     def create_scoring_system(**dependencies) -> ScoringSystem:
         """Create configured scoring system"""
+
+
+
         return ScoringSystem(**dependencies)
     
     @staticmethod
     def create_challenge_validator(**dependencies) -> ChallengeValidator:
         """Create configured challenge validator"""
+
+
+
         return ChallengeValidator(**dependencies)
     
     @staticmethod
     def create_complete_system(**dependencies) -> ChallengeSystemRegistry:
         """Create complete challenge system registry"""
+
+
+
         return ChallengeSystemRegistry(**dependencies)
 
 # Factory functions for easy service creation
 
 def create_challenge_system(**dependencies) -> ChallengeSystemRegistry:
     """Factory function to create configured challenge system"""
+
+
+
     return ChallengeSystemRegistry(**dependencies)
 
 def create_challenge_engine(**dependencies) -> ChallengeEngine:
     """Factory function to create challenge engine"""
+
+
+
     return ChallengeServiceFactory.create_challenge_engine(**dependencies)
 
 def create_competition_manager(**dependencies) -> CompetitionManager:
     """Factory function to create competition manager"""
+
+
+
     return ChallengeServiceFactory.create_competition_manager(**dependencies)
 
 def create_scoring_system(**dependencies) -> ScoringSystem:
     """Factory function to create scoring system"""
+
+
+
     return ChallengeServiceFactory.create_scoring_system(**dependencies)
 
 def create_challenge_validator(**dependencies) -> ChallengeValidator:
     """Factory function to create challenge validator"""
+
+
+
     return ChallengeServiceFactory.create_challenge_validator(**dependencies)
 
 # Default system instance (singleton pattern)
@@ -781,6 +856,9 @@ _default_system: Optional[ChallengeSystemRegistry] = None
 
 def get_default_challenge_system() -> Optional[ChallengeSystemRegistry]:
     """Get default challenge system instance"""
+
+
+
     return _default_system
 
 def set_default_challenge_system(system: ChallengeSystemRegistry):
@@ -843,6 +921,9 @@ async def system_metrics() -> Dict[str, Any]:
 
 def get_production_config() -> Dict[str, Any]:
     """Get production-ready configuration"""
+
+
+
     return {
         "health_check_intervals": {
             "challenge_engine": 60,
@@ -862,6 +943,9 @@ def get_production_config() -> Dict[str, Any]:
 
 def get_development_config() -> Dict[str, Any]:
     """Get development configuration"""
+
+
+
     return {
         "health_check_intervals": {
             "challenge_engine": 300,

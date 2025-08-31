@@ -7,7 +7,7 @@ Optimized for streaming, storage, and distribution platforms.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
@@ -173,6 +173,9 @@ class MultimediaEncoder:
     
     def _initialize_encoding_profiles(self) -> Dict[str, EncodingSettings]:
         """Initialize predefined encoding profiles"""
+
+
+
         return {
             'streaming_4k': EncodingSettings(
                 codec=EncodingCodec.H265,
@@ -399,6 +402,9 @@ class MultimediaEncoder:
         input_metadata: Dict[str, Any]
     ) -> Tuple[bool, int]:
         """Perform actual encoding operation"""
+
+
+
         try:
             # Determine content type
             content_type = input_metadata.get('type', 'unknown')
@@ -474,6 +480,9 @@ class MultimediaEncoder:
     
     async def _encode_raw_data(self, job: EncodingJob) -> Tuple[bool, int]:
         """Encode raw data"""
+
+
+
         try:
             # Apply encoding to raw data
             if isinstance(job.input_data, bytes):
@@ -501,6 +510,9 @@ class MultimediaEncoder:
     
     async def _get_codec_info(self, job: EncodingJob) -> Dict[str, Any]:
         """Get codec information from encoded file"""
+
+
+
         return {
             'codec': job.settings.codec.value,
             'profile': job.settings.profile,
@@ -621,6 +633,9 @@ class MultimediaEncoder:
     
     def get_supported_codecs(self) -> Dict[str, List[str]]:
         """Get supported codecs by category"""
+
+
+
         return {
             'video': [codec.value for codec in EncodingCodec if codec.value in ['h264', 'h265', 'vp8', 'vp9', 'av1']],
             'audio': [codec.value for codec in EncodingCodec if codec.value in ['aac', 'mp3', 'opus', 'vorbis', 'flac']],

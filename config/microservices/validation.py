@@ -425,11 +425,17 @@ microservices_validator = MicroservicesValidator()
 
 async def run_full_validation() -> Tuple[bool, List[ValidationResult]]:
     """Run comprehensive microservices validation"""
+
+
+
     return await microservices_validator.run_full_validation()
 
 
 def get_validation_summary() -> Dict[str, Any]:
     """Get validation summary"""
+
+
+
     return microservices_validator.get_validation_summary()
 
 

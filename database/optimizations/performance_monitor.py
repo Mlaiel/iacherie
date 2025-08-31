@@ -214,6 +214,9 @@ class MetricsCollector:
     
     def get_active_alerts(self) -> List[PerformanceAlert]:
         """Get currently active alerts"""
+
+
+
         return [alert for alert in self.alerts.values() if not alert.resolved_at]
     
     def cleanup_old_data(self):
@@ -335,6 +338,9 @@ class DatabasePerformanceMonitor:
     
     async def _collect_engine_metrics(self, engine_name: str, engine: AsyncEngine):
         """Collect metrics for a specific database engine"""
+
+
+
         try:
             async with engine.begin() as conn:
                 # Connection metrics
@@ -431,6 +437,9 @@ class DatabasePerformanceMonitor:
     
     async def _collect_component_metrics(self):
         """Collect metrics from optimization components"""
+
+
+
         try:
             # Index manager metrics
             if self.index_manager:
@@ -542,6 +551,9 @@ class DatabasePerformanceMonitor:
     
     def get_dashboard_data(self, hours_back: int = 1) -> Dict[str, Any]:
         """Get dashboard data for the specified time period"""
+
+
+
         try:
             dashboard_data = {
                 'timestamp': datetime.now().isoformat(),
@@ -583,6 +595,9 @@ class DatabasePerformanceMonitor:
     
     def get_metric_trend(self, metric_name: str, hours_back: int = 24) -> Dict[str, Any]:
         """Get trend data for a specific metric"""
+
+
+
         try:
             end_time = datetime.now()
             start_time = end_time - timedelta(hours=hours_back)
@@ -627,6 +642,9 @@ class DatabasePerformanceMonitor:
     
     async def generate_performance_report(self, hours_back: int = 24) -> Dict[str, Any]:
         """Generate comprehensive performance report"""
+
+
+
         try:
             report = {
                 'report_generated_at': datetime.now().isoformat(),

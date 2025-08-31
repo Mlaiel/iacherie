@@ -1,5 +1,5 @@
 """
-🗣️ Voice Activity Detector - Advanced Speech/Voice Detection System
+ Voice Activity Detector - Advanced Speech/Voice Detection System
 
 Professional voice activity detection engine for speech/music discrimination,
 vocal segment identification, and voice quality analysis.
@@ -36,6 +36,9 @@ class VoiceActivityDetector:
     async def detect_voice_activity(self, 
                                    audio_data: np.ndarray) -> List[VoiceSegment]:
         """Detect voice activity segments"""
+
+
+
         try:
             segments = []
             

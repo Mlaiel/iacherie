@@ -1,15 +1,15 @@
 """
-🚀 Model Performance Monitor - IA Influencer Agent Platform Enterprise
+ Model Performance Monitor - IA Influencer Agent Platform Enterprise
 =====================================================================
 Module: backend/ml/monitoring/performance_monitor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
 =====================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Contact: mlaiel@live.de
 
-🎯 MONITORING DES PERFORMANCES DE MODÈLES
+ MONITORING DES PERFORMANCES DE MODÈLES
 Surveillance en temps réel des modèles ML en production
 - Data drift detection et model drift monitoring
 - Performance degradation alerts
@@ -217,6 +217,9 @@ class ModelPerformanceMonitor:
                                value: float, 
                                timestamp: datetime):
         """Vérifie les thresholds et génère des alertes"""
+
+
+
         
         try:
             # Récupérer les thresholds pour ce modèle
@@ -283,6 +286,9 @@ class ModelPerformanceMonitor:
     
     async def _analyze_performance(self, model_id: str):
         """Analyse la performance globale d'un modèle"""
+
+
+
         
         try:
             predictions = list(self.predictions[model_id])
@@ -307,6 +313,9 @@ class ModelPerformanceMonitor:
     
     async def _detect_drift(self, model_id: str):
         """Détecte le drift des données et du modèle"""
+
+
+
         
         try:
             # Récupérer les données récentes
@@ -360,6 +369,9 @@ class ModelPerformanceMonitor:
     
     async def _create_reference_distribution(self, model_id: str, features: List[np.ndarray]):
         """Crée la distribution de référence pour le drift detection"""
+
+
+
         
         try:
             if not features:
@@ -389,6 +401,9 @@ class ModelPerformanceMonitor:
     
     async def _calculate_feature_drift(self, model_id: str, recent_features: List[np.ndarray]) -> Optional[DriftAnalysis]:
         """Calcule le drift des features"""
+
+
+
         
         try:
             if model_id not in self.reference_distributions:
@@ -445,6 +460,9 @@ class ModelPerformanceMonitor:
     
     async def _calculate_prediction_drift(self, model_id: str, recent_predictions: List[Dict]) -> Optional[DriftAnalysis]:
         """Calcule le drift des prédictions"""
+
+
+
         
         try:
             # Extraire les prédictions
@@ -517,6 +535,9 @@ class ModelPerformanceMonitor:
                                    model_id: str, 
                                    hours_back: int = 24) -> Optional[PerformanceReport]:
         """Génère un rapport de performance"""
+
+
+
         
         try:
             end_time = datetime.now()
@@ -611,6 +632,9 @@ class ModelPerformanceMonitor:
     
     async def export_metrics(self, model_id: str, filepath: str):
         """Exporte les métriques vers un fichier"""
+
+
+
         
         try:
             export_data = {
@@ -703,6 +727,9 @@ class MonitorFactory:
     @staticmethod
     def create_development_monitor() -> ModelPerformanceMonitor:
         """Moniteur pour développement avec alertes plus permissives"""
+
+
+
         return ModelPerformanceMonitor(
             buffer_size=10000,
             drift_detection_window=500,
@@ -719,7 +746,7 @@ async def example_usage():
     
     # Callback pour les alertes
     def alert_handler(alert: Alert):
-        print(f"🚨 ALERTE: {alert.message} (Sévérité: {alert.severity.value})")
+        print(f" ALERTE: {alert.message} (Sévérité: {alert.severity.value})")
     
     monitor.add_alert_callback(alert_handler)
     
@@ -749,7 +776,7 @@ async def example_usage():
     # Générer un rapport
     report = await monitor.get_performance_report(model_id, hours_back=1)
     if report:
-        print(f"\n📊 RAPPORT DE PERFORMANCE:")
+        print(f"\n RAPPORT DE PERFORMANCE:")
         print(f"Prédictions totales: {report.total_predictions}")
         print(f"Latence moyenne: {report.avg_latency:.3f}s")
         print(f"Latence P95: {report.p95_latency:.3f}s")
@@ -758,7 +785,7 @@ async def example_usage():
     
     # Lister les alertes actives
     active_alerts = await monitor.get_active_alerts(model_id)
-    print(f"\n🔔 Alertes actives: {len(active_alerts)}")
+    print(f"\n Alertes actives: {len(active_alerts)}")
     
     for alert in active_alerts:
         print(f"  - {alert.message}")

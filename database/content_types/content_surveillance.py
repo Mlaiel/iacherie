@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team: AI Security Expert, Web Crawler Specialist, Legal Compliance Expert
 Copyright: Fahed Mlaiel - All rights reserved
 
-⚠️  AVERTISSEMENT LÉGAL ⚠️
+  AVERTISSEMENT LÉGAL 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
@@ -301,6 +301,9 @@ class PlatformCrawler:
     
     async def take_screenshot(self, url: str) -> Optional[str]:
         """Take screenshot of content for evidence"""
+
+
+
         try:
             # This would integrate with a screenshot service
             # For now, return placeholder
@@ -477,6 +480,9 @@ class ContentSurveillanceManager:
     
     def _initialize_crawlers(self) -> Dict[PlatformType, PlatformCrawler]:
         """Initialize platform-specific crawlers"""
+
+
+
         return {
             PlatformType.YOUTUBE: YouTubeCrawler(self.config.get('youtube', {})),
             PlatformType.INSTAGRAM: InstagramCrawler(self.config.get('instagram', {})),
@@ -563,6 +569,9 @@ class ContentSurveillanceManager:
                                  fingerprints: List[ContentFingerprint],
                                  threshold: float) -> Optional[ContentViolation]:
         """Check if detection result represents a violation"""
+
+
+
         try:
             # This would implement actual fingerprint comparison
             # For now, use simple similarity threshold

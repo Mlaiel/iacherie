@@ -8,7 +8,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 
-⚠️  AVERTISSEMENT STRICT ⚠️
+  AVERTISSEMENT STRICT 
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Propriété intellectuelle de Fahed Mlaiel (mlaiel@live.de).
 """
@@ -191,6 +191,9 @@ class QueryAnalyzer:
         Returns:
             Analysis results
         """
+
+
+
         try:
             # Parse and normalize query
             pattern = self._analyze_query_pattern(query)
@@ -238,6 +241,9 @@ class QueryAnalyzer:
     
     def _analyze_query_pattern(self, query: str) -> QueryPattern:
         """Analyze SQL query pattern"""
+
+
+
         try:
             # Parse SQL
             parsed = sqlparse.parse(query)[0]
@@ -403,6 +409,9 @@ class QueryAnalyzer:
     
     def _extract_order_by_columns(self, parsed) -> List[str]:
         """Extract ORDER BY columns"""
+
+
+
         try:
             query_str = str(parsed)
             order_match = re.search(r'\bORDER\s+BY\s+(.*?)(?:\s+LIMIT|$)', 
@@ -417,6 +426,9 @@ class QueryAnalyzer:
     
     def _extract_group_by_columns(self, parsed) -> List[str]:
         """Extract GROUP BY columns"""
+
+
+
         try:
             query_str = str(parsed)
             group_match = re.search(r'\bGROUP\s+BY\s+(.*?)(?:\s+ORDER\s+BY|\s+LIMIT|$)', 
@@ -459,6 +471,9 @@ class QueryAnalyzer:
     
     def _get_query_hash(self, query: str) -> str:
         """Generate hash for query"""
+
+
+
         return hashlib.md5(query.encode()).hexdigest()
     
     async def _update_performance_metrics(
@@ -469,6 +484,9 @@ class QueryAnalyzer:
         rows_returned: int = None
     ) -> None:
         """Update performance metrics for query"""
+
+
+
         try:
             now = datetime.utcnow()
             
@@ -519,6 +537,9 @@ class QueryAnalyzer:
     
     async def _generate_optimization_recommendations(self, query_hash: str) -> None:
         """Generate optimization recommendations for query"""
+
+
+
         try:
             if query_hash not in self.query_patterns:
                 return
@@ -595,6 +616,9 @@ class QueryAnalyzer:
     
     async def get_slow_queries(self, limit: int = 20) -> List[Dict[str, Any]]:
         """Get slowest queries"""
+
+
+
         try:
             # Sort by average execution time
             sorted_queries = sorted(
@@ -623,6 +647,9 @@ class QueryAnalyzer:
     
     async def get_frequent_queries(self, limit: int = 20) -> List[Dict[str, Any]]:
         """Get most frequently executed queries"""
+
+
+
         try:
             # Sort by execution count
             sorted_queries = sorted(
@@ -654,6 +681,9 @@ class QueryAnalyzer:
         priority: OptimizationPriority = None
     ) -> List[Dict[str, Any]]:
         """Get optimization recommendations"""
+
+
+
         try:
             all_recommendations = []
             
@@ -691,6 +721,9 @@ class QueryAnalyzer:
         session: AsyncSession
     ) -> Dict[str, Any]:
         """Analyze query execution plan"""
+
+
+
         try:
             # Get execution plan
             plan_query = f"EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON) {query}"
@@ -719,6 +752,9 @@ class QueryAnalyzer:
     
     def _extract_total_cost(self, plan_data: List[Dict]) -> float:
         """Extract total cost from execution plan"""
+
+
+
         try:
             if plan_data and len(plan_data) > 0:
                 return plan_data[0].get("Plan", {}).get("Total Cost", 0.0)

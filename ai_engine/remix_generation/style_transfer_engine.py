@@ -10,7 +10,7 @@ Created: 2025-08-30
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 ================================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
@@ -125,17 +125,20 @@ class StyleAnalyzer:
     
     def _initialize_analyzers(self):
         """Initialize analysis models and parameters"""
+
+
+
         try:
-            self.logger.info("🎯 Initializing style analyzers...")
+            self.logger.info(" Initializing style analyzers...")
             
             # Initialize neural networks for style analysis
             self.style_classifier = self._create_style_classifier()
             self.genre_classifier = self._create_genre_classifier()
             
-            self.logger.info("✅ Style analyzers initialized successfully")
+            self.logger.info(" Style analyzers initialized successfully")
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize analyzers: {e}")
+            self.logger.error(f" Failed to initialize analyzers: {e}")
             raise
     
     def _create_style_classifier(self) -> torch_nn.Module:
@@ -206,8 +209,11 @@ class StyleAnalyzer:
         Returns:
             Detailed style analysis results
         """
+
+
+
         try:
-            self.logger.info(f"🔍 Analyzing style for: {audio_path}")
+            self.logger.info(f" Analyzing style for: {audio_path}")
             
             # Load audio
             audio, sr = librosa.load(audio_path, sr=self.sample_rate)
@@ -259,15 +265,18 @@ class StyleAnalyzer:
                 }
             )
             
-            self.logger.info(f"✅ Style analysis completed with confidence: {confidence_score:.3f}")
+            self.logger.info(f" Style analysis completed with confidence: {confidence_score:.3f}")
             return result
             
         except Exception as e:
-            self.logger.error(f"❌ Style analysis failed: {e}")
+            self.logger.error(f" Style analysis failed: {e}")
             raise
     
     async def _extract_spectral_features(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
         """Extract spectral characteristics"""
+
+
+
         try:
             # Mel-frequency cepstral coefficients
             mfcc = librosa.feature.mfcc(y=audio, sr=sr, n_mfcc=13)
@@ -292,11 +301,14 @@ class StyleAnalyzer:
             }
             
         except Exception as e:
-            self.logger.error(f"❌ Spectral feature extraction failed: {e}")
+            self.logger.error(f" Spectral feature extraction failed: {e}")
             raise
     
     async def _extract_temporal_features(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
         """Extract temporal characteristics"""
+
+
+
         try:
             # RMS energy
             rms = librosa.feature.rms(y=audio)
@@ -317,11 +329,14 @@ class StyleAnalyzer:
             }
             
         except Exception as e:
-            self.logger.error(f"❌ Temporal feature extraction failed: {e}")
+            self.logger.error(f" Temporal feature extraction failed: {e}")
             raise
     
     async def _extract_harmonic_features(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
         """Extract harmonic and melodic characteristics"""
+
+
+
         try:
             # Chroma features
             chroma = librosa.feature.chroma_stft(y=audio, sr=sr)
@@ -346,11 +361,14 @@ class StyleAnalyzer:
             }
             
         except Exception as e:
-            self.logger.error(f"❌ Harmonic feature extraction failed: {e}")
+            self.logger.error(f" Harmonic feature extraction failed: {e}")
             raise
     
     async def _extract_rhythmic_features(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
         """Extract rhythmic characteristics"""
+
+
+
         try:
             # Tempo estimation
             tempo, beats = librosa.beat.beat_track(y=audio, sr=sr)
@@ -373,11 +391,14 @@ class StyleAnalyzer:
             }
             
         except Exception as e:
-            self.logger.error(f"❌ Rhythmic feature extraction failed: {e}")
+            self.logger.error(f" Rhythmic feature extraction failed: {e}")
             raise
     
     async def _classify_genre(self, audio: np.ndarray, sr: int) -> Dict[str, float]:
         """Classify musical genre"""
+
+
+
         try:
             # Extract mel spectrogram for genre classification
             mel_spec = librosa.feature.melspectrogram(y=audio, sr=sr, n_mels=self.n_mels)
@@ -396,7 +417,7 @@ class StyleAnalyzer:
             return dict(zip(genres, probabilities))
             
         except Exception as e:
-            self.logger.error(f"❌ Genre classification failed: {e}")
+            self.logger.error(f" Genre classification failed: {e}")
             return {}
 
 class NeuralStyleTransfer:
@@ -428,6 +449,9 @@ class NeuralStyleTransfer:
     
     def _initialize_networks(self):
         """Initialize neural networks for style transfer"""
+
+
+
         try:
             self.logger.info("🧠 Initializing neural style transfer networks...")
             
@@ -443,10 +467,10 @@ class NeuralStyleTransfer:
             # Loss calculation network
             self.loss_network = self._create_loss_network()
             
-            self.logger.info("✅ Neural networks initialized successfully")
+            self.logger.info(" Neural networks initialized successfully")
             
         except Exception as e:
-            self.logger.error(f"❌ Failed to initialize networks: {e}")
+            self.logger.error(f" Failed to initialize networks: {e}")
             raise
     
     def _create_content_encoder(self) -> torch_nn.Module:
@@ -547,7 +571,7 @@ class NeuralStyleTransfer:
         start_time = datetime.utcnow()
         
         try:
-            self.logger.info(f"🎨 Starting style transfer: {request.transfer_mode.value}")
+            self.logger.info(f" Starting style transfer: {request.transfer_mode.value}")
             
             # Load source audio
             source_audio, sr = librosa.load(request.source_audio_path, sr=self.sample_rate)
@@ -603,12 +627,12 @@ class NeuralStyleTransfer:
                 }
             )
             
-            self.logger.info(f"✅ Style transfer completed in {processing_time:.2f}s")
+            self.logger.info(f" Style transfer completed in {processing_time:.2f}s")
             return result
             
         except Exception as e:
             processing_time = (datetime.utcnow() - start_time).total_seconds()
-            self.logger.error(f"❌ Style transfer failed: {e}")
+            self.logger.error(f" Style transfer failed: {e}")
             
             return StyleTransferResult(
                 output_audio_path="",
@@ -624,6 +648,9 @@ class NeuralStyleTransfer:
     async def _perform_neural_transfer(self, source: torch.Tensor, target: torch.Tensor, 
                                      request: StyleTransferRequest) -> torch.Tensor:
         """Perform the actual neural style transfer"""
+
+
+
         try:
             # Initialize output as copy of source
             output = source.clone().requires_grad_(True)
@@ -663,11 +690,14 @@ class NeuralStyleTransfer:
             return output.detach()
             
         except Exception as e:
-            self.logger.error(f"❌ Neural transfer failed: {e}")
+            self.logger.error(f" Neural transfer failed: {e}")
             raise
     
     async def _generate_style_from_description(self, description: str) -> np.ndarray:
         """Generate style audio from text description"""
+
+
+
         try:
             # Simulate style generation from description
             # In production, this would use text-to-music models
@@ -691,12 +721,15 @@ class NeuralStyleTransfer:
             return audio
             
         except Exception as e:
-            self.logger.error(f"❌ Style generation failed: {e}")
+            self.logger.error(f" Style generation failed: {e}")
             raise
     
     async def _calculate_style_similarity(self, output: torch.Tensor, 
                                         target: torch.Tensor) -> float:
         """Calculate style similarity between output and target"""
+
+
+
         try:
             output_style = self.style_encoder(output)
             target_style = self.style_encoder(target)
@@ -708,11 +741,14 @@ class NeuralStyleTransfer:
             return float(similarity.item())
             
         except Exception as e:
-            self.logger.error(f"❌ Style similarity calculation failed: {e}")
+            self.logger.error(f" Style similarity calculation failed: {e}")
             return 0.0
     
     async def _calculate_quality_score(self, audio: torch.Tensor) -> float:
         """Calculate quality score of transferred audio"""
+
+
+
         try:
             # Simple quality metrics
             audio_np = audio.cpu().numpy().flatten()
@@ -728,7 +764,7 @@ class NeuralStyleTransfer:
             return float(quality_score)
             
         except Exception as e:
-            self.logger.error(f"❌ Quality score calculation failed: {e}")
+            self.logger.error(f" Quality score calculation failed: {e}")
             return 0.0
 
 class StyleTransferProcessor:
@@ -758,6 +794,9 @@ class StyleTransferProcessor:
         Returns:
             Style transfer result with all metadata
         """
+
+
+
         try:
             # Add to processing queue if at capacity
             if len(self.active_transfers) >= self.max_concurrent_transfers:
@@ -799,7 +838,7 @@ class StyleTransferProcessor:
                     asyncio.create_task(self.process_style_transfer(next_request))
             
         except Exception as e:
-            self.logger.error(f"❌ Style transfer processing failed: {e}")
+            self.logger.error(f" Style transfer processing failed: {e}")
             raise
 
 class StyleConverter:
@@ -828,8 +867,11 @@ class StyleConverter:
         Returns:
             Path to interpolated style audio
         """
+
+
+
         try:
-            self.logger.info(f"🔄 Interpolating styles with factor: {interpolation_factor}")
+            self.logger.info(f" Interpolating styles with factor: {interpolation_factor}")
             
             # Analyze both styles
             analyzer = StyleAnalyzer()
@@ -845,11 +887,11 @@ class StyleConverter:
             # Generate interpolated audio (simplified)
             output_path = f"output/interpolated_style_{int(datetime.utcnow().timestamp())}.wav"
             
-            self.logger.info(f"✅ Style interpolation completed")
+            self.logger.info(f" Style interpolation completed")
             return output_path
             
         except Exception as e:
-            self.logger.error(f"❌ Style interpolation failed: {e}")
+            self.logger.error(f" Style interpolation failed: {e}")
             raise
     
     async def extract_style_template(self, audio_path: str) -> Dict[str, Any]:
@@ -862,6 +904,9 @@ class StyleConverter:
         Returns:
             Style template dictionary
         """
+
+
+
         try:
             analyzer = StyleAnalyzer()
             analysis = await analyzer.analyze_style(audio_path)
@@ -877,7 +922,7 @@ class StyleConverter:
             return template
             
         except Exception as e:
-            self.logger.error(f"❌ Style template extraction failed: {e}")
+            self.logger.error(f" Style template extraction failed: {e}")
             raise
 
 # Export main classes

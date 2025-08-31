@@ -74,6 +74,9 @@ class PerformanceContentFilter:
     
     def filter(self, content: ContentItem, ai_validation: bool = True, strict_mode: bool = False) -> FilterResponse:
         """Synchronous performance filter."""
+
+
+
         return asyncio.run(self.filter_async(content, ai_validation, strict_mode))
 
 
@@ -120,6 +123,9 @@ class QualityContentFilter:
     
     def filter(self, content: ContentItem, ai_validation: bool = True, strict_mode: bool = False) -> FilterResponse:
         """Synchronous quality filter."""
+
+
+
         return asyncio.run(self.filter_async(content, ai_validation, strict_mode))
 
 
@@ -163,6 +169,9 @@ class RelevanceContentFilter:
     
     def filter(self, content: ContentItem, ai_validation: bool = True, strict_mode: bool = False) -> FilterResponse:
         """Synchronous relevance filter."""
+
+
+
         return asyncio.run(self.filter_async(content, ai_validation, strict_mode))
 
 
@@ -221,4 +230,7 @@ class DuplicateContentFilter:
     
     def filter(self, content: ContentItem, ai_validation: bool = True, strict_mode: bool = False) -> FilterResponse:
         """Synchronous duplicate filter."""
+
+
+
         return asyncio.run(self.filter_async(content, ai_validation, strict_mode))

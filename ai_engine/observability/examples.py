@@ -8,7 +8,7 @@ for the IA Influencer Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  AVERTISSEMENT LÉGAL / LEGAL WARNING ⚠️
+  AVERTISSEMENT LÉGAL / LEGAL WARNING 
 Ce code est la propriété intellectuelle exclusive de Fahed Mlaiel.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
@@ -42,30 +42,30 @@ logger = logging.getLogger(__name__)
 async def demonstrate_complete_observability_suite():
     """Demonstrate complete observability suite capabilities"""
     
-    print("🚀 IA Influencer Agent - Enterprise Observability Suite Demo")
+    print(" IA Influencer Agent - Enterprise Observability Suite Demo")
     print("=" * 70)
     
     # Initialize the observability suite
-    print("\n📋 Step 1: Initializing Observability Suite...")
+    print("\n Step 1: Initializing Observability Suite...")
     success = await initialize_observability()
     
     if not success:
-        print("❌ Failed to initialize observability suite")
+        print(" Failed to initialize observability suite")
         return
     
-    print("✅ Observability suite initialized successfully")
+    print(" Observability suite initialized successfully")
     
     # Get observability index
     obs_index = get_observability_index()
     
     # Demonstrate system capabilities
-    print("\n📋 Step 2: System Capabilities Overview")
+    print("\n Step 2: System Capabilities Overview")
     capabilities = obs_index.get_system_capabilities()
-    print(f"📊 Version: {capabilities['observability_suite_version']}")
-    print(f"📈 Components: {len(capabilities['available_components'])}")
-    print("🔧 Key Capabilities:")
+    print(f" Version: {capabilities['observability_suite_version']}")
+    print(f" Components: {len(capabilities['available_components'])}")
+    print(" Key Capabilities:")
     for capability, enabled in capabilities['capabilities'].items():
-        status = "✅" if enabled else "❌"
+        status = "" if enabled else ""
         print(f"  {status} {capability.replace('_', ' ').title()}")
     
     # Demonstrate content performance analysis
@@ -86,12 +86,12 @@ async def demonstrate_complete_observability_suite():
     # Generate executive dashboard
     await demonstrate_executive_dashboard(obs_index)
     
-    print("\n🎉 Observability Suite Demonstration Complete!")
+    print("\n Observability Suite Demonstration Complete!")
 
 
 async def demonstrate_content_analysis(obs_index):
     """Demonstrate content performance analysis"""
-    print("\n📋 Step 3: Content Performance Analysis")
+    print("\n Step 3: Content Performance Analysis")
     print("-" * 50)
     
     # Sample content data (simulating real creator uploads)
@@ -143,33 +143,33 @@ async def demonstrate_content_analysis(obs_index):
     content_analyzer = obs_index.get_content_analyzer()
     
     if content_analyzer:
-        print("🔍 Analyzing content performance...")
+        print(" Analyzing content performance...")
         analysis_results = await content_analyzer.analyze_content_performance(content_data)
         
-        print(f"📊 Overall Engagement Rate: {analysis_results.get('overall_engagement_rate', 0):.1f}%")
-        print(f"🚀 Viral Potential Score: {analysis_results.get('viral_potential_score', 0):.1f}")
-        print(f"⭐ Content Quality Index: {analysis_results.get('content_quality_index', 0):.1f}")
+        print(f" Overall Engagement Rate: {analysis_results.get('overall_engagement_rate', 0):.1f}%")
+        print(f" Viral Potential Score: {analysis_results.get('viral_potential_score', 0):.1f}")
+        print(f" Content Quality Index: {analysis_results.get('content_quality_index', 0):.1f}")
         
         # Show cross-platform performance
         cross_platform = analysis_results.get('cross_platform_performance', {})
         if cross_platform:
-            print("\n🌐 Cross-Platform Performance:")
+            print("\n Cross-Platform Performance:")
             for platform, metrics in cross_platform.items():
-                print(f"  📱 {platform.title()}: {metrics.get('engagement_rate', 0):.1f}% engagement")
+                print(f"   {platform.title()}: {metrics.get('engagement_rate', 0):.1f}% engagement")
         
         # Show trending topics
         trending = analysis_results.get('trending_topics', [])[:3]
         if trending:
-            print("\n📈 Top Trending Topics:")
+            print("\n Top Trending Topics:")
             for topic in trending:
-                print(f"  #️⃣ {topic.get('topic', 'N/A')}: {topic.get('trend_score', 0):.1f} trend score")
+                print(f"  #⃣ {topic.get('topic', 'N/A')}: {topic.get('trend_score', 0):.1f} trend score")
     
-    print("✅ Content analysis complete")
+    print(" Content analysis complete")
 
 
 async def demonstrate_user_analytics(obs_index):
     """Demonstrate user behavior analytics"""
-    print("\n📋 Step 4: User Behavior Analytics")
+    print("\n Step 4: User Behavior Analytics")
     print("-" * 50)
     
     # Sample user behavior data
@@ -213,41 +213,41 @@ async def demonstrate_user_analytics(obs_index):
     user_analytics = obs_index.get_user_analytics()
     
     if user_analytics:
-        print("👥 Analyzing user behavior...")
+        print(" Analyzing user behavior...")
         behavior_results = await user_analytics.analyze_user_behavior(user_data)
         
         # User segmentation results
         segmentation = behavior_results.get('user_segmentation', {})
         if 'segments' in segmentation:
-            print("\n🎯 User Segmentation Results:")
+            print("\n User Segmentation Results:")
             for segment_id, segment_info in list(segmentation['segments'].items())[:3]:
                 size = segment_info.get('size', 0)
                 engagement = segment_info.get('avg_engagement', 0)
-                print(f"  👤 {segment_id}: {size} users, {engagement:.1f}% avg engagement")
+                print(f"   {segment_id}: {size} users, {engagement:.1f}% avg engagement")
         
         # Churn prediction
         churn_info = behavior_results.get('churn_prediction', {})
         if churn_info:
             high_risk = churn_info.get('high_risk_percentage', 0)
-            print(f"\n⚠️ Churn Risk Analysis:")
-            print(f"  🚨 High-risk users: {high_risk:.1f}% of user base")
+            print(f"\n Churn Risk Analysis:")
+            print(f"   High-risk users: {high_risk:.1f}% of user base")
             
             if high_risk > 20:
-                print("  💡 Recommendation: Implement retention campaigns")
+                print("   Recommendation: Implement retention campaigns")
         
         # Engagement scoring
         engagement_dist = behavior_results.get('engagement_scoring', {}).get('engagement_distribution', {})
         if engagement_dist:
-            print("\n📊 Engagement Distribution:")
+            print("\n Engagement Distribution:")
             for level, count in engagement_dist.items():
-                print(f"  📈 {level.replace('_', ' ').title()}: {count} users")
+                print(f"   {level.replace('_', ' ').title()}: {count} users")
     
-    print("✅ User behavior analysis complete")
+    print(" User behavior analysis complete")
 
 
 async def demonstrate_roi_analysis(obs_index):
     """Demonstrate ROI optimization"""
-    print("\n📋 Step 5: ROI Analysis & Optimization")
+    print("\n Step 5: ROI Analysis & Optimization")
     print("-" * 50)
     
     # Sample financial data
@@ -288,7 +288,7 @@ async def demonstrate_roi_analysis(obs_index):
     roi_optimizer = obs_index.get_roi_optimizer()
     
     if roi_optimizer:
-        print("💰 Analyzing ROI performance...")
+        print(" Analyzing ROI performance...")
         roi_results = await roi_optimizer.analyze_roi_performance(financial_data)
         
         # Overall ROI
@@ -298,49 +298,49 @@ async def demonstrate_roi_analysis(obs_index):
             total_cost = overall_roi.get('total_cost', 0)
             roi_percentage = overall_roi.get('roi_percentage', 0)
             
-            print(f"💵 Total Revenue: ${total_revenue:,.2f}")
-            print(f"💸 Total Cost: ${total_cost:,.2f}")
-            print(f"📈 ROI: {roi_percentage:.1f}%")
+            print(f" Total Revenue: ${total_revenue:,.2f}")
+            print(f" Total Cost: ${total_cost:,.2f}")
+            print(f" ROI: {roi_percentage:.1f}%")
         
         # Channel performance
         channel_roi = roi_results.get('channel_roi', {})
         if channel_roi:
-            print("\n📊 Channel Performance:")
+            print("\n Channel Performance:")
             for channel, metrics in channel_roi.items():
                 roi = metrics.get('roi', 0)
                 efficiency = metrics.get('efficiency_score', 0)
-                print(f"  📺 {channel.replace('_', ' ').title()}: {roi:.1f}% ROI, {efficiency:.2f} efficiency")
+                print(f"   {channel.replace('_', ' ').title()}: {roi:.1f}% ROI, {efficiency:.2f} efficiency")
         
         # Optimization recommendations
         optimizations = roi_results.get('cost_optimization', [])
         if optimizations:
-            print("\n💡 Optimization Recommendations:")
+            print("\n Optimization Recommendations:")
             for opt in optimizations[:2]:
-                print(f"  🎯 {opt.get('recommendation', 'N/A')}")
+                print(f"   {opt.get('recommendation', 'N/A')}")
                 savings = opt.get('estimated_savings', 0)
                 if savings > 0:
-                    print(f"     💰 Potential savings: ${savings:,.2f}")
+                    print(f"      Potential savings: ${savings:,.2f}")
     
-    print("✅ ROI analysis complete")
+    print(" ROI analysis complete")
 
 
 async def demonstrate_intelligent_monitoring(obs_index):
     """Demonstrate intelligent monitoring capabilities"""
-    print("\n📋 Step 6: Intelligent Monitoring & Predictions")
+    print("\n Step 6: Intelligent Monitoring & Predictions")
     print("-" * 50)
     
     # Get monitoring system
     monitoring_system = obs_index.get_monitoring_system()
     
     if monitoring_system:
-        print("🔍 Getting system status...")
+        print(" Getting system status...")
         
         # Get system status
         status = await monitoring_system.get_system_status()
         
         print(f"⏰ Monitoring Status: {'Active' if status.get('monitoring_active') else 'Inactive'}")
-        print(f"📊 Metrics Collected: {status.get('system_health', {}).get('total_metrics_collected', 0)}")
-        print(f"🚨 Active Incidents: {status.get('alert_status', {}).get('active_incidents', 0)}")
+        print(f" Metrics Collected: {status.get('system_health', {}).get('total_metrics_collected', 0)}")
+        print(f" Active Incidents: {status.get('alert_status', {}).get('active_incidents', 0)}")
         
         # Run anomaly detection
         print("\n🤖 Running anomaly detection...")
@@ -348,34 +348,34 @@ async def demonstrate_intelligent_monitoring(obs_index):
         
         anomalies = anomaly_analysis.get('anomalies', [])
         if anomalies:
-            print(f"⚠️ Found {len(anomalies)} potential anomalies")
+            print(f" Found {len(anomalies)} potential anomalies")
             for anomaly in anomalies[:2]:
                 title = anomaly.get('title', 'Unknown')
                 confidence = anomaly.get('confidence', 0)
-                print(f"  🚨 {title} (Confidence: {confidence:.1f}%)")
+                print(f"   {title} (Confidence: {confidence:.1f}%)")
         else:
-            print("✅ No significant anomalies detected")
+            print(" No significant anomalies detected")
         
         # Capacity prediction
-        print("\n📈 Running capacity predictions...")
+        print("\n Running capacity predictions...")
         capacity_analysis = await monitoring_system.run_manual_analysis("capacity_prediction")
         
         predictions = capacity_analysis.get('predictions', [])
         if predictions:
-            print(f"🔮 Generated {len(predictions)} capacity predictions")
+            print(f" Generated {len(predictions)} capacity predictions")
             for prediction in predictions[:2]:
                 title = prediction.get('title', 'Unknown')
                 confidence = prediction.get('confidence', 0)
-                print(f"  📊 {title} (Confidence: {confidence:.1f}%)")
+                print(f"   {title} (Confidence: {confidence:.1f}%)")
         else:
-            print("✅ No capacity concerns predicted")
+            print(" No capacity concerns predicted")
     
-    print("✅ Intelligent monitoring demonstration complete")
+    print(" Intelligent monitoring demonstration complete")
 
 
 async def demonstrate_automated_reporting(obs_index):
     """Demonstrate automated reporting capabilities"""
-    print("\n📋 Step 7: Automated Reporting System")
+    print("\n Step 7: Automated Reporting System")
     print("-" * 50)
     
     # Schedule an automated report
@@ -391,18 +391,18 @@ async def demonstrate_automated_reporting(obs_index):
         }
     }
     
-    print("📋 Scheduling automated report...")
+    print(" Scheduling automated report...")
     report_id = await obs_index.generate_automated_report(report_config)
     
     if report_id:
-        print(f"✅ Automated report scheduled: {report_id[:8]}...")
-        print("📧 Recipients will receive weekly reports automatically")
-        print("📊 Report includes: Executive summary, KPIs, Predictions")
+        print(f" Automated report scheduled: {report_id[:8]}...")
+        print(" Recipients will receive weekly reports automatically")
+        print(" Report includes: Executive summary, KPIs, Predictions")
     else:
-        print("❌ Failed to schedule automated report")
+        print(" Failed to schedule automated report")
     
     # Generate immediate report
-    print("\n📄 Generating sample executive report...")
+    print("\n Generating sample executive report...")
     report_generator = obs_index.get_report_generator()
     
     if report_generator:
@@ -415,26 +415,26 @@ async def demonstrate_automated_reporting(obs_index):
         report = await report_generator.generate_executive_report(sample_data)
         
         if 'error' not in report:
-            print("✅ Executive report generated successfully")
-            print(f"📄 Report ID: {report.get('report_id', 'N/A')[:8]}...")
-            print(f"📊 Sections: {len(report.get('sections', {}))}")
+            print(" Executive report generated successfully")
+            print(f" Report ID: {report.get('report_id', 'N/A')[:8]}...")
+            print(f" Sections: {len(report.get('sections', {}))}")
             
             # Show executive summary highlights
             exec_summary = report.get('sections', {}).get('executive_summary', {})
             highlights = exec_summary.get('key_highlights', [])
             if highlights:
-                print("\n✨ Key Highlights:")
+                print("\n Key Highlights:")
                 for highlight in highlights[:2]:
-                    print(f"  📈 {highlight}")
+                    print(f"   {highlight}")
         else:
-            print(f"❌ Report generation failed: {report['error']}")
+            print(f" Report generation failed: {report['error']}")
     
-    print("✅ Automated reporting demonstration complete")
+    print(" Automated reporting demonstration complete")
 
 
 async def demonstrate_executive_dashboard(obs_index):
     """Demonstrate executive dashboard generation"""
-    print("\n📋 Step 8: Executive Dashboard Generation")
+    print("\n Step 8: Executive Dashboard Generation")
     print("-" * 50)
     
     # Comprehensive sample data
@@ -507,20 +507,20 @@ async def demonstrate_executive_dashboard(obs_index):
         ]
     }
     
-    print("📊 Generating executive dashboard...")
+    print(" Generating executive dashboard...")
     dashboard = await obs_index.generate_executive_dashboard(dashboard_data)
     
     if 'error' not in dashboard:
-        print("✅ Executive dashboard generated successfully")
+        print(" Executive dashboard generated successfully")
         
         sections = dashboard.get('sections', {})
-        print(f"📄 Dashboard sections: {len(sections)}")
+        print(f" Dashboard sections: {len(sections)}")
         
         # Show system health
         system_health = sections.get('system_health', {})
         if system_health:
             monitoring_active = system_health.get('monitoring_active', False)
-            print(f"💚 System Health: {'Healthy' if monitoring_active else 'Issues'}")
+            print(f" System Health: {'Healthy' if monitoring_active else 'Issues'}")
         
         # Show analytics summary  
         analytics = sections.get('analytics', {})
@@ -528,34 +528,34 @@ async def demonstrate_executive_dashboard(obs_index):
             exec_summary = analytics['executive_summary']
             highlights = exec_summary.get('key_highlights', [])
             if highlights:
-                print("\n🌟 Business Highlights:")
+                print("\n Business Highlights:")
                 for highlight in highlights[:3]:
-                    print(f"  📊 {highlight}")
+                    print(f"   {highlight}")
         
         # Show visualizations
         visualizations = sections.get('visualizations', {})
         if visualizations and 'elements' in visualizations:
             viz_count = len(visualizations['elements'])
-            print(f"\n📈 Generated {viz_count} visualization components")
+            print(f"\n Generated {viz_count} visualization components")
         
         print(f"⏰ Dashboard generated at: {dashboard.get('generated_at', 'N/A')}")
     else:
-        print(f"❌ Dashboard generation failed: {dashboard['error']}")
+        print(f" Dashboard generation failed: {dashboard['error']}")
     
-    print("✅ Executive dashboard demonstration complete")
+    print(" Executive dashboard demonstration complete")
 
 
 async def demonstrate_configuration_management():
     """Demonstrate configuration management"""
-    print("\n📋 Bonus: Configuration Management")
+    print("\n Bonus: Configuration Management")
     print("-" * 50)
     
     # Get current configuration
     config = get_config()
-    print(f"⚙️ Environment: {config.environment.value}")
-    print(f"📊 Monitoring enabled: {config.monitoring.enabled}")
-    print(f"📈 Analytics enabled: {config.analytics.enabled}")
-    print(f"📄 Reporting enabled: {config.reporting.enabled}")
+    print(f" Environment: {config.environment.value}")
+    print(f" Monitoring enabled: {config.monitoring.enabled}")
+    print(f" Analytics enabled: {config.analytics.enabled}")
+    print(f" Reporting enabled: {config.reporting.enabled}")
     
     # Update configuration example
     updates = {
@@ -567,16 +567,16 @@ async def demonstrate_configuration_management():
         }
     }
     
-    print("\n🔧 Updating configuration...")
+    print("\n Updating configuration...")
     success = update_config(updates)
     
     if success:
-        print("✅ Configuration updated successfully")
+        print(" Configuration updated successfully")
         updated_config = get_config()
-        print(f"📊 New metric interval: {updated_config.monitoring.metric_collection_interval}s")
-        print(f"🎯 New confidence threshold: {updated_config.analytics.confidence_threshold}")
+        print(f" New metric interval: {updated_config.monitoring.metric_collection_interval}s")
+        print(f" New confidence threshold: {updated_config.analytics.confidence_threshold}")
     else:
-        print("❌ Configuration update failed")
+        print(" Configuration update failed")
 
 
 if __name__ == "__main__":

@@ -7,7 +7,7 @@ harmful content detection, and automated compliance enforcement across multiple 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
-⚠️  CRITICAL LEGAL NOTICE:
+  CRITICAL LEGAL NOTICE:
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
@@ -197,6 +197,9 @@ class ModerationAgent(BaseAgent):
     
     async def _load_models_and_resources(self):
         """Load AI models for content moderation"""
+
+
+
         try:
             # Load text moderation models
             await self._load_text_moderation_models()
@@ -218,6 +221,9 @@ class ModerationAgent(BaseAgent):
     
     async def _load_text_moderation_models(self):
         """Load models for text content moderation"""
+
+
+
         try:
             # Load Detoxify for toxicity detection
             self.detoxify_model = Detoxify('multilingual')
@@ -243,6 +249,9 @@ class ModerationAgent(BaseAgent):
     
     async def _load_image_moderation_models(self):
         """Load models for image content moderation"""
+
+
+
         try:
             # Load NSFW detector
             self.nsfw_detector = NSFWDetector()
@@ -268,6 +277,9 @@ class ModerationAgent(BaseAgent):
     
     async def _load_audio_moderation_models(self):
         """Load models for audio content moderation"""
+
+
+
         try:
             # Load Whisper for speech-to-text
             self.whisper_model = whisper.load_model("base")
@@ -283,6 +295,9 @@ class ModerationAgent(BaseAgent):
     
     async def _load_video_moderation_models(self):
         """Load models for video content moderation"""
+
+
+
         try:
             # Video moderation uses combination of image and audio models
             # Plus frame-by-frame analysis capabilities
@@ -594,6 +609,9 @@ class ModerationAgent(BaseAgent):
     
     async def _detect_hate_speech(self, text: str) -> Dict[str, Any]:
         """Detect hate speech in text"""
+
+
+
         try:
             # Tokenize input
             inputs = self.hate_speech_tokenizer(
@@ -660,6 +678,9 @@ class ModerationAgent(BaseAgent):
     
     def _load_moderation_rules(self) -> Dict[str, Any]:
         """Load moderation rules configuration"""
+
+
+
         return {
             'auto_approve_threshold': 0.1,
             'auto_flag_threshold': 0.6,
@@ -678,6 +699,9 @@ class ModerationAgent(BaseAgent):
     
     def _load_confidence_thresholds(self) -> Dict[str, float]:
         """Load confidence thresholds for different violation types"""
+
+
+
         return {
             'toxicity_toxicity': 0.7,
             'toxicity_severe_toxicity': 0.6,
@@ -693,6 +717,9 @@ class ModerationAgent(BaseAgent):
     
     async def _detect_spam_text(self, text: str) -> Dict[str, Any]:
         """Detect spam content in text"""
+
+
+
         try:
             # Spam detection features
             spam_indicators = {
@@ -725,6 +752,9 @@ class ModerationAgent(BaseAgent):
     
     async def _detect_self_harm_content(self, text: str) -> Dict[str, Any]:
         """Detect self-harm related content"""
+
+
+
         try:
             # Self-harm keywords and patterns
             self_harm_keywords = [
@@ -753,6 +783,9 @@ class ModerationAgent(BaseAgent):
     
     async def _detect_nsfw_image(self, image_path: str) -> Dict[str, Any]:
         """Detect NSFW content in images"""
+
+
+
         try:
             if not self.nsfw_detector:
                 return {'is_nsfw': False, 'confidence': 0.0, 'error': 'NSFW detector not loaded'}
@@ -772,6 +805,9 @@ class ModerationAgent(BaseAgent):
     
     async def _detect_image_violence(self, image_array: np.ndarray) -> Dict[str, Any]:
         """Detect violent content in images"""
+
+
+
         try:
             if not self.violence_detector:
                 return {'detected': False, 'confidence': 0.0, 'error': 'Violence detector not loaded'}
@@ -791,6 +827,9 @@ class ModerationAgent(BaseAgent):
     
     async def _extract_video_frames(self, video_path: str, max_frames: int = 30) -> List[np.ndarray]:
         """Extract frames from video for analysis"""
+
+
+
         try:
             cap = cv2.VideoCapture(video_path)
             frames = []
@@ -849,6 +888,9 @@ class ModerationAgent(BaseAgent):
     
     async def _extract_video_audio(self, video_path: str) -> str:
         """Extract audio from video"""
+
+
+
         try:
             import subprocess
             import tempfile
@@ -870,6 +912,9 @@ class ModerationAgent(BaseAgent):
     
     async def _analyze_video_metrics(self, video_path: str) -> Dict[str, Any]:
         """Analyze overall video metrics for suspicious content"""
+
+
+
         try:
             cap = cv2.VideoCapture(video_path)
             
@@ -910,6 +955,9 @@ class ModerationAgent(BaseAgent):
     
     async def _analyze_audio_features(self, audio_path: str) -> Dict[str, Any]:
         """Analyze audio features for suspicious patterns"""
+
+
+
         try:
             # Load audio
             y, sr = librosa.load(audio_path)
@@ -972,6 +1020,9 @@ class ModerationAgent(BaseAgent):
     
     async def _monitor_stream_content(self, stream_id: str, stream_url: str, interval: int):
         """Continuously monitor live stream content"""
+
+
+
         try:
             while True:
                 # Capture frame from stream
@@ -993,6 +1044,9 @@ class ModerationAgent(BaseAgent):
     
     async def _capture_stream_frame(self, stream_url: str) -> Optional[np.ndarray]:
         """Capture a frame from live stream"""
+
+
+
         try:
             cap = cv2.VideoCapture(stream_url)
             ret, frame = cap.read()
@@ -1006,6 +1060,9 @@ class ModerationAgent(BaseAgent):
     
     async def _handle_live_stream_violations(self, stream_id: str, violations: List[ViolationDetection]):
         """Handle violations detected in live stream"""
+
+
+
         try:
             # Determine severity of violations
             max_severity = max(v.severity for v in violations)
@@ -1254,6 +1311,9 @@ class ModerationAgent(BaseAgent):
     
     def _violation_to_dict(self, violation: ViolationDetection) -> Dict[str, Any]:
         """Convert ViolationDetection to dictionary"""
+
+
+
         return {
             'violation_type': violation.violation_type.value,
             'confidence': violation.confidence,
@@ -1265,6 +1325,9 @@ class ModerationAgent(BaseAgent):
     
     def _get_model_versions(self) -> Dict[str, str]:
         """Get versions of loaded models"""
+
+
+
         return {
             'detoxify': 'multilingual-v1',
             'whisper': 'base',
@@ -1274,6 +1337,9 @@ class ModerationAgent(BaseAgent):
     
     async def _log_moderation_decision(self, result: ModerationResult, user_id: str):
         """Log moderation decision for audit purposes"""
+
+
+
         try:
             log_entry = {
                 'timestamp': result.timestamp.isoformat(),
@@ -1294,6 +1360,9 @@ class ModerationAgent(BaseAgent):
     
     async def _log_review_decision(self, review_result: Dict[str, Any]):
         """Log human review decision"""
+
+
+
         try:
             # In production, this would write to audit log
             logger.info(f"Review decision logged: {review_result}")
@@ -1302,6 +1371,9 @@ class ModerationAgent(BaseAgent):
     
     async def _log_stream_violations(self, stream_id: str, violations: List[ViolationDetection]):
         """Log live stream violations"""
+
+
+
         try:
             log_entry = {
                 'timestamp': datetime.now(timezone.utc).isoformat(),

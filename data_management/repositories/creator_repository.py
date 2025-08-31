@@ -1,5 +1,5 @@
 """
-👤 Creator Repository - IA Influencer Agent Platform Enterprise
+ Creator Repository - IA Influencer Agent Platform Enterprise
 ===============================================================
 Module: backend/data_management/repositories/creator_repository.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -8,7 +8,7 @@ Type: Industrial Creator Management Repository - Production-Ready
 Responsibility: Advanced creator profile management with AI insights and collaboration features
 ========================================================================
 
-⚠️  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL ⚠️
+  PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - FAHED MLAIEL 
 © 2025 Fahed Mlaiel. Tous droits réservés.
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Email: mlaiel@live.de
@@ -157,6 +157,9 @@ class CreatorRepository(BaseRepository[CreatorModel]):
     
     def _analyze_creator_skills(self, creator: CreatorModel) -> CreatorSkills:
         """Analyze creator skills using AI and content history"""
+
+
+
         try:
             if not self.ai_processor:
                 # Default skills for new creators
@@ -213,6 +216,9 @@ class CreatorRepository(BaseRepository[CreatorModel]):
     
     def _calculate_creator_analytics(self, creator_id: str) -> CreatorAnalytics:
         """Calculate comprehensive creator analytics"""
+
+
+
         try:
             if not self.analytics_service:
                 return CreatorAnalytics(
@@ -251,6 +257,9 @@ class CreatorRepository(BaseRepository[CreatorModel]):
     def _determine_creator_tier(self, analytics: CreatorAnalytics, 
                               subscription_plan: str = None) -> CreatorTier:
         """Determine appropriate creator tier based on analytics and subscription"""
+
+
+
         try:
             # Subscription-based tier
             if subscription_plan:
@@ -278,6 +287,9 @@ class CreatorRepository(BaseRepository[CreatorModel]):
     
     def _generate_creator_recommendations(self, creator: CreatorModel) -> List[str]:
         """Generate personalized recommendations for creator growth"""
+
+
+
         try:
             recommendations = []
             
@@ -315,6 +327,9 @@ class CreatorRepository(BaseRepository[CreatorModel]):
                                 content_id: str = None, 
                                 achievement: str = None) -> CreatorPortfolio:
         """Update creator portfolio with new content or achievements"""
+
+
+
         try:
             portfolio = creator.portfolio or CreatorPortfolio(
                 featured_content_ids=[],
@@ -350,6 +365,9 @@ class CreatorRepository(BaseRepository[CreatorModel]):
     # Base Repository Implementation
     def create(self, creator: CreatorModel, **kwargs) -> CreatorModel:
         """Create new creator with comprehensive setup"""
+
+
+
         try:
             # Validate creator
             self._validate_creator(creator)
@@ -421,6 +439,9 @@ class CreatorRepository(BaseRepository[CreatorModel]):
     
     def get_by_id(self, entity_id: str, use_cache: bool = True) -> Optional[CreatorModel]:
         """Get creator by ID with cache support"""
+
+
+
         try:
             # Check cache first
             if use_cache and self._cache_enabled and self.cache:
@@ -449,6 +470,9 @@ class CreatorRepository(BaseRepository[CreatorModel]):
     
     def update(self, creator: CreatorModel, **kwargs) -> CreatorModel:
         """Update creator with automatic analytics refresh"""
+
+
+
         try:
             # Validate creator
             self._validate_creator(creator)
@@ -512,6 +536,9 @@ class CreatorRepository(BaseRepository[CreatorModel]):
     
     def delete(self, entity_id: str, soft_delete: bool = True) -> bool:
         """Delete creator with content cleanup"""
+
+
+
         try:
             # Get creator for audit
             creator = self.get_by_id(entity_id)
@@ -554,6 +581,9 @@ class CreatorRepository(BaseRepository[CreatorModel]):
     def list(self, filters: Dict[str, Any] = None, limit: int = 100, 
              offset: int = 0, order_by: str = None) -> List[CreatorModel]:
         """List creators with advanced filtering"""
+
+
+
         try:
             # Build query
             query_filters = filters or {}
@@ -583,6 +613,9 @@ class CreatorRepository(BaseRepository[CreatorModel]):
     
     def get_by_username(self, username: str, use_cache: bool = True) -> Optional[CreatorModel]:
         """Get creator by username"""
+
+
+
         try:
             # Check cache first
             if use_cache and self._cache_enabled and self.cache:
@@ -625,6 +658,9 @@ class CreatorRepository(BaseRepository[CreatorModel]):
                                genre: str = None, 
                                limit: int = 20) -> List[CreatorModel]:
         """Find creators suitable for collaboration"""
+
+
+
         try:
             if not self.collaboration_service:
                 return []
@@ -658,6 +694,9 @@ class CreatorRepository(BaseRepository[CreatorModel]):
                             creator_type: CreatorType = None,
                             limit: int = 50) -> List[CreatorModel]:
         """Get trending creators based on recent performance"""
+
+
+
         try:
             filters = {
                 'status': CreatorStatus.ACTIVE.value,
@@ -716,6 +755,9 @@ class AsyncCreatorRepository(AsyncBaseRepository[CreatorModel]):
     
     async def create(self, creator: CreatorModel, **kwargs) -> CreatorModel:
         """Create creator asynchronously with full setup"""
+
+
+
         try:
             # Validate creator
             await self._validate_creator(creator)
@@ -759,6 +801,9 @@ class AsyncCreatorRepository(AsyncBaseRepository[CreatorModel]):
     
     async def get_by_id(self, entity_id: str, use_cache: bool = True) -> Optional[CreatorModel]:
         """Get creator by ID asynchronously"""
+
+
+
         try:
             # Check cache first
             if use_cache and self._cache_enabled and self.cache:
@@ -786,6 +831,9 @@ class AsyncCreatorRepository(AsyncBaseRepository[CreatorModel]):
     
     async def update(self, creator: CreatorModel, **kwargs) -> CreatorModel:
         """Update creator asynchronously"""
+
+
+
         try:
             # Implementation similar to sync version but with async operations
             await self._validate_creator(creator)
@@ -838,6 +886,9 @@ class AsyncCreatorRepository(AsyncBaseRepository[CreatorModel]):
     
     async def delete(self, entity_id: str, soft_delete: bool = True) -> bool:
         """Delete creator asynchronously"""
+
+
+
         try:
             creator = await self.get_by_id(entity_id)
             if not creator:
@@ -874,6 +925,9 @@ class AsyncCreatorRepository(AsyncBaseRepository[CreatorModel]):
     async def list(self, filters: Dict[str, Any] = None, limit: int = 100, 
                   offset: int = 0, order_by: str = None) -> List[CreatorModel]:
         """List creators asynchronously"""
+
+
+
         try:
             query_filters = filters or {}
             
@@ -919,6 +973,9 @@ class AsyncCreatorRepository(AsyncBaseRepository[CreatorModel]):
     
     def get_by_id(self, creator_id: str) -> Optional[CreatorModel]:
         """Récupère un créateur par ID"""
+
+
+
         try:
             # Cache check
             if self.cache:
@@ -937,6 +994,9 @@ class AsyncCreatorRepository(AsyncBaseRepository[CreatorModel]):
     
     def update(self, creator: CreatorModel) -> CreatorModel:
         """Met à jour un créateur"""
+
+
+
         try:
             creator.updated_at = datetime.now(timezone.utc)
             creator_dict = creator.to_dict()
@@ -957,6 +1017,9 @@ class AsyncCreatorRepository(AsyncBaseRepository[CreatorModel]):
     
     def delete(self, creator_id: str) -> bool:
         """Supprime un créateur"""
+
+
+
         try:
             # result = self.db.delete(self.table_name, {"creator_id": creator_id})
             
@@ -972,6 +1035,9 @@ class AsyncCreatorRepository(AsyncBaseRepository[CreatorModel]):
     
     def list(self, filters: Dict[str, Any] = None, limit: int = 100, offset: int = 0) -> List[CreatorModel]:
         """Liste les créateurs avec filtres"""
+
+
+
         try:
             # Simulation de la requête
             return []
@@ -981,18 +1047,30 @@ class AsyncCreatorRepository(AsyncBaseRepository[CreatorModel]):
     
     def get_by_email(self, email: str) -> Optional[CreatorModel]:
         """Récupère un créateur par email"""
+
+
+
         return self.list(filters={"email": email}, limit=1)[0] if self.list(filters={"email": email}, limit=1) else None
     
     def get_by_type(self, creator_type: CreatorType, limit: int = 100) -> List[CreatorModel]:
         """Récupère les créateurs par type"""
+
+
+
         return self.list(filters={"creator_type": creator_type.value}, limit=limit)
     
     def get_verified(self, limit: int = 100) -> List[CreatorModel]:
         """Récupère les créateurs vérifiés"""
+
+
+
         return self.list(filters={"is_verified": True}, limit=limit)
     
     def get_trending(self, limit: int = 20) -> List[CreatorModel]:
         """Récupère les créateurs tendance"""
+
+
+
         return self.list(filters={"is_trending": True}, limit=limit)
 
 class AsyncCreatorRepository(AsyncBaseRepository[CreatorModel]):
@@ -1005,6 +1083,9 @@ class AsyncCreatorRepository(AsyncBaseRepository[CreatorModel]):
     
     async def create(self, creator: CreatorModel) -> CreatorModel:
         """Crée un nouveau créateur de manière asynchrone"""
+
+
+
         try:
             creator.created_at = datetime.now(timezone.utc)
             creator_dict = creator.to_dict()
@@ -1023,6 +1104,9 @@ class AsyncCreatorRepository(AsyncBaseRepository[CreatorModel]):
     
     async def get_by_id(self, creator_id: str) -> Optional[CreatorModel]:
         """Récupère un créateur par ID de manière asynchrone"""
+
+
+
         try:
             if self.cache:
                 cache_key = f"creator:{creator_id}"
@@ -1038,6 +1122,9 @@ class AsyncCreatorRepository(AsyncBaseRepository[CreatorModel]):
     
     async def update(self, creator: CreatorModel) -> CreatorModel:
         """Met à jour un créateur de manière asynchrone"""
+
+
+
         try:
             creator.updated_at = datetime.now(timezone.utc)
             # await self.db.update_async(...)
@@ -1048,6 +1135,9 @@ class AsyncCreatorRepository(AsyncBaseRepository[CreatorModel]):
     
     async def delete(self, creator_id: str) -> bool:
         """Supprime un créateur de manière asynchrone"""
+
+
+
         try:
             # await self.db.delete_async(...)
             return True
@@ -1057,4 +1147,7 @@ class AsyncCreatorRepository(AsyncBaseRepository[CreatorModel]):
     
     async def list(self, filters: Dict[str, Any] = None, limit: int = 100, offset: int = 0) -> List[CreatorModel]:
         """Liste les créateurs de manière asynchrone"""
+
+
+
         return []

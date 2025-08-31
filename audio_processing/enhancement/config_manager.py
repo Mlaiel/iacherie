@@ -325,6 +325,9 @@ class EnhancementConfigManager:
     
     def get_preset(self, name: str) -> Optional[EnhancementPreset]:
         """Get preset by name"""
+
+
+
         return self.presets.get(name)
     
     def list_presets(self, category: Optional[PresetCategory] = None) -> List[str]:
@@ -491,6 +494,9 @@ class EnhancementConfigManager:
     
     def save_presets(self):
         """Save presets to file"""
+
+
+
         try:
             presets_data = {
                 name: preset.to_dict() 
@@ -508,6 +514,9 @@ class EnhancementConfigManager:
     
     def load_presets(self):
         """Load presets from file"""
+
+
+
         try:
             if not self.presets_file.exists():
                 self.logger.info("No presets file found, using defaults only")
@@ -534,6 +543,9 @@ class EnhancementConfigManager:
     
     def save_adaptive_config(self):
         """Save adaptive configuration to file"""
+
+
+
         try:
             config_data = asdict(self.adaptive_config)
             
@@ -548,6 +560,9 @@ class EnhancementConfigManager:
     
     def load_adaptive_config(self):
         """Load adaptive configuration from file"""
+
+
+
         try:
             if not self.adaptive_config_file.exists():
                 self.logger.info("No adaptive config file found, using defaults")
